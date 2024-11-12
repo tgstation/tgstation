@@ -17,7 +17,6 @@
 ///From /datum/fish_evolution/check_conditions: (fish, mate, evolution)
 #define COMSIG_AQUARIUM_CHECK_EVOLUTION_CONDITIONS "aquarium_check_evolution_conditions"
 	#define COMPONENT_ALLOW_EVOLUTION (1<<0)
-	#define COMPONENT_STOP_EVOLUTION (1<<1)
 
 ///Updates the appearance of a newly generated aquarium content visual:(visual)
 #define COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE "aquarium_content_apply_appearance"
@@ -28,7 +27,6 @@
 
 // Fish signals
 #define COMSIG_FISH_STATUS_CHANGED "fish_status_changed"
-#define COMSIG_FISH_STIRRED "fish_stirred"
 ///From /obj/item/fish/process: (seconds_per_tick)
 #define COMSIG_FISH_LIFE "fish_life"
 ///From /datum/fish_trait/eat_fish: (predator)

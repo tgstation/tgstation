@@ -59,16 +59,15 @@
 	. += emissive_appearance(icon, "fish_analyzer_emissive", src)
 
 /obj/item/fish_analyzer/interact_with_atom(atom/target, mob/living/user, list/modifiers)
-	if(!isfish(target) && !isaquarium(target))
+	if(!isfish(target) && !HAS_TRAIT(target, TRAIT_IS_AQUARIUM))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
 		return ITEM_INTERACT_BLOCKING
 
-	if(isfish(target) || isaquarium(target))
-		scanned_item = WEAKREF(target)
-		SEND_SIGNAL(src, COMSIG_FISH_ANALYZER_ANALYZE_STATUS, target, user)
-		ui_interact(user)
-		return ITEM_INTERACT_SUCCESS
+	scanned_item = WEAKREF(target)
+	SEND_SIGNAL(src, COMSIG_FISH_ANALYZER_ANALYZE_STATUS, target, user)
+	ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 	return NONE
 

@@ -2,32 +2,48 @@
 #define MIN_AQUARIUM_BEAUTY -3500
 #define MAX_AQUARIUM_BEAUTY 6000
 
+/**
+ * The component that manages the aquariums UI, fluid, temperature, the current fish inside the parent object, as well as beauty,
+ * and a few other common aquarium features.
+ */
 /datum/component/aquarium
 	/// list of fishes inside the parent object, sorted by type - does not include things with aquarium visuals that are not fish
 	var/list/tracked_fish_by_type
 
+	///The current type of fluid of the aquarium
 	var/fluid_type = AQUARIUM_FLUID_FRESHWATER
+	///The current temperature of the fluid of the aquarium
 	var/fluid_temp = DEFAULT_AQUARIUM_TEMP
-	var/min_fluid_temp = MIN_AQUARIUM_TEMP
-	var/max_fluid_temp = MAX_AQUARIUM_TEMP
 
+	///A lazy list of key instances and assoc vals representing how much beauty they contribute to the aquarium
 	var/list/beauty_by_content
 
+	///The default beauty of the aquarium when empty.
 	var/default_beauty
 
+	///A list of layers that are currently being used for the various overlays of the aquarium (from aquarium_content comp)
 	var/list/used_layers = list()
 
-	//This is the area where fish can swim
+	///The minimum pixel x of the area where vis overlays should be displayed
 	var/aquarium_zone_min_px
+	///The maximum pixel x of the area where vis overlays should be displayed
 	var/aquarium_zone_max_px
+	///The minimum pixel y of the area where vis overlays should be displayed
 	var/aquarium_zone_min_py
+	///The maximum pixel y of the area where vis overlays should be displayed
 	var/aquarium_zone_max_py
 
-	///While the feed storage is not empty, this is the interval which the fish are fed.
+	///While the feed (reagent) storage is not empty, this is the interval which the fish are fed.
 	var/feeding_interval = 3 MINUTES
 	///The last time fishes were fed by the acquarium itsef.
 	var/last_feeding
 
+	///The minimum fluid temperature that can be reached by this aquarium
+	var/min_fluid_temp = MIN_AQUARIUM_TEMP
+	///The maximum fluid temperature that can be reached by this aquarium
+	var/max_fluid_temp = MAX_AQUARIUM_TEMP
+
+	///static list of available fluid types.
 	var/static/list/fluid_types = list(
 		AQUARIUM_FLUID_SALTWATER,
 		AQUARIUM_FLUID_FRESHWATER,
@@ -35,7 +51,17 @@
 		AQUARIUM_FLUID_AIR,
 	)
 
-/datum/component/aquarium/Initialize(min_px, max_px, min_py, max_py, default_beauty = 0, reagents_size = 6, min_fluid_temp, max_fluid_temp)
+/datum/component/aquarium/Initialize(
+	min_px,
+	max_px,
+	min_py,
+	max_py,
+	default_beauty = 0,
+	reagents_size = 6,
+	min_fluid_temp = MIN_AQUARIUM_TEMP,
+	max_fluid_temp = MAX_AQUARIUM_TEMP,
+)
+
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -48,11 +74,8 @@
 	aquarium_zone_min_py = min_py
 	aquarium_zone_max_py = max_py
 
-	if(!isnull(min_fluid_temp))
-		src.min_fluid_temp = min_fluid_temp
-	if(!isnull(max_fluid_temp))
-		src.min_fluid_temp = max_fluid_temp
-
+	src.min_fluid_temp = min_fluid_temp
+	src.max_fluid_temp = max_fluid_temp
 	fluid_temp = clamp(fluid_temp, min_fluid_temp, max_fluid_temp)
 
 	RegisterSignals(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON), PROC_REF(on_entered))
@@ -66,7 +89,7 @@
 
 	var/atom/movable/movable = parent
 
-	ADD_KEEP_TOGETHER(movable, INNATE_TRAIT)
+	ADD_KEEP_TOGETHER(movable, REF(src)) //render the fish on the same layer of the aquarium.
 
 	if(reagents_size > 0)
 		RegisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
@@ -84,30 +107,37 @@
 		RegisterSignal(movable, COMSIG_ATOM_UI_INTERACT, PROC_REF(interact))
 
 	AddElement(/datum/element/relay_attackers)
-	RegisterSignal(movable, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+
+	for(var/atom/movable/content as anything in movable.contents)
+		if(content.flags_1 & INITIALIZED_1)
+			on_entered(movable, content)
+
+	ADD_TRAIT(movable, TRAIT_IS_AQUARIUM, REF(src))
 
 /datum/component/aquarium/Destroy()
+	var/atom/movable/movable = parent
 	beauty_by_content = null
+	tracked_fish_by_type = null
+	movable.remove_traits(list(TRAIT_IS_AQUARIUM, TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), REF(src))
+	REMOVE_KEEP_TOGETHER(movable, REF(src))
 	return ..()
 
 /datum/component/aquarium/proc/on_click_alt(atom/movable/source, mob/living/user)
 	SIGNAL_HANDLER
 	var/closing = HAS_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN)
 	if(closing)
-		REMOVE_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, INNATE_TRAIT)
+		REMOVE_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(src))
+		source.reagents.flags &= ~(TRANSPARENT|REFILLABLE)
 		SStgui.close_uis(src)
 	else
-		ADD_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, INNATE_TRAIT)
-
-	source.balloon_alert(user, "panel [closing ? "closed" : "open"]")
-	if(closing)
-		source.reagents.flags &= ~(TRANSPARENT|REFILLABLE)
-	else
+		ADD_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(src))
 		source.reagents.flags |= TRANSPARENT|REFILLABLE
 
+	source.balloon_alert(user, "panel [closing ? "closed" : "open"]")
 	source.update_appearance()
 	return CLICK_ACTION_SUCCESS
 
+///This proc handles feeding the aquarium and inserting aquarium content.
 /datum/component/aquarium/proc/on_item_interaction(atom/movable/source, mob/living/user, obj/item/item, modifiers)
 	SIGNAL_HANDLER
 	var/broken = source.get_integrity_percentage() <= source.integrity_failure
@@ -127,7 +157,9 @@
 			source.balloon_alert(user, "cannot add to aquarium!")
 			return ITEM_INTERACT_BLOCKING
 
-	if(istype(item, /obj/item/reagent_containers/cup/fish_feed) && !HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
+	if(istype(item, /obj/item/reagent_containers/cup/fish_feed))
+		if(source.reagents && HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
+			return //don't block, we'll be transferring reagents to the feed storage.
 		if(!item.reagents.total_volume)
 			source.balloon_alert(user, "[item] is empty!")
 			return ITEM_INTERACT_BLOCKING
@@ -140,17 +172,13 @@
 		source.balloon_alert(user, "fed the fish")
 		return ITEM_INTERACT_SUCCESS
 
-/datum/component/aquarium/proc/on_attacked(datum/source, mob/attacker, attack_flags)
-	SIGNAL_HANDLER
-	var/list/fishes = get_fishes()
-	for(var/obj/item/fish/fish as anything in fishes)
-		SEND_SIGNAL(fish, COMSIG_FISH_STIRRED)
-
+///Called when the feed storage is no longer empty.
 /datum/component/aquarium/proc/start_autofeed(atom/movable/source, new_reagent, amount, reagtemp, data, no_react)
 	SIGNAL_HANDLER
 	START_PROCESSING(SSobj, src)
 	UnregisterSignal(source.reagents, COMSIG_REAGENTS_NEW_REAGENT)
 
+///Feed the fish at defined intervals until the feed storage is empty.
 /datum/component/aquarium/process(seconds_per_tick)
 	var/atom/movable/movable = parent
 	if(!movable.reagents?.total_volume)
@@ -185,6 +213,7 @@ datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
 	if(panel_open && source.reagents.total_volume)
 		examine_list += span_notice("You can use a plunger to empty the feed storage.")
 
+///Handles aquarium content insertion
 /datum/component/aquarium/proc/on_entered(atom/movable/source, atom/movable/entered)
 	SIGNAL_HANDLER
 	get_content_beauty(entered)
@@ -198,17 +227,20 @@ datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
 	check_fluid_and_temperature(fish)
 	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_fish_status_changed))
 
+///update the beauty_by_content of a 'beauty_by_content' key and then recalculate the beauty.
 /datum/component/aquarium/proc/get_content_beauty(atom/movable/content)
 	var/list/beauty_holder = list()
 	SEND_SIGNAL(content, COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY, beauty_holder)
 	var/beauty = beauty_holder[1]
-	if(beauty)
-		var/old_beauty = default_beauty
-		for(var/key in beauty_by_content)
-			old_beauty += beauty_by_content[key]
-		LAZYSET(beauty_by_content, content, beauty)
-		update_aquarium_beauty(old_beauty)
+	if(!beauty)
+		return
+	var/old_beauty = default_beauty
+	for(var/key in beauty_by_content)
+		old_beauty += beauty_by_content[key]
+	LAZYSET(beauty_by_content, content, beauty)
+	update_aquarium_beauty(old_beauty)
 
+///Handles aquarium content removal.
 /datum/component/aquarium/proc/on_exited(atom/movable/source, atom/movable/gone)
 	SIGNAL_HANDLER
 	var/beauty = beauty_by_content?[gone]
@@ -228,7 +260,9 @@ datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
 	fish.fish_flags &= ~(FISH_FLAG_SAFE_TEMPERATURE|FISH_FLAG_SAFE_FLUID)
 	UnregisterSignal(gone, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_fish_status_changed))
 
+///Return a list of fish which our fishie can reproduce with (including itself if self-reproducing)
 /datum/component/aquarium/proc/get_candidates(atom/movable/source, obj/item/fish/fish, list/candidates)
+	SIGNAL_HANDLER
 	var/list/types_to_mate_with = tracked_fish_by_type
 	if(!HAS_TRAIT(fish, TRAIT_FISH_CROSSBREEDER))
 		var/list/types_to_check = list(fish.type)
@@ -242,6 +276,7 @@ datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
 			continue
 		candidates += type_fishes
 
+///Check if an offspring of two fish (or one if self-reproducing) can evolve.
 /datum/component/aquarium/proc/check_evolution(atom/movable/source, obj/item/fish/fish, obj/item/fish/mate, datum/fish_evolution/evolution)
 	SIGNAL_HANDLER
 	//chances are halved if only one parent has this evolution.
@@ -249,11 +284,15 @@ datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
 	if(HAS_TRAIT(fish, TRAIT_FISH_MUTAGENIC) || (mate && HAS_TRAIT(mate, TRAIT_FISH_MUTAGENIC)))
 		real_probability *= 3
 	if(!prob(real_probability))
-		return COMPONENT_STOP_EVOLUTION
+		return NONE
 	if(!ISINRANGE(fluid_temp, evolution.required_temperature_min, evolution.required_temperature_max))
-		return COMPONENT_STOP_EVOLUTION
+		return NONE
 	return COMPONENT_ALLOW_EVOLUTION
 
+/**
+ * Toggles a couple flags that determine if the fish is in safe waters so that we won't have to use signals or
+ * access this comp in multiple places just to confirm that.
+ */
 /datum/component/aquarium/proc/check_fluid_and_temperature(obj/item/fish/fish)
 	if(compatible_fluid_type(fish.required_fluid_type, fluid_type) || (fluid_type == AQUARIUM_FLUID_AIR && HAS_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS)))
 		fish.fish_flags |= FISH_FLAG_SAFE_FLUID
@@ -283,11 +322,13 @@ datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
 	if(new_beauty)
 		parent.AddElement(/datum/element/beauty, new_beauty)
 
+///Remove a visual overlay from an aquarium_content comp
 /datum/component/aquarium/proc/remove_visual(atom/movable/source, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
 	source.vis_contents -= visual
 	used_layers -= visual.layer
 
+///set values for a visual overlay for an aquarium_content comp
 /datum/component/aquarium/proc/set_visual(atom/movable/source, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
 	used_layers -= visual.layer
@@ -344,7 +385,7 @@ datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
 	. = ..()
 	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
-	.["allowBreeding"] = HAS_TRAIT(source, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH)
+	.["allowBreeding"] = HAS_TRAIT_FROM(source, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src))
 	.["fishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
 	.["propData"] = list()
@@ -398,9 +439,9 @@ datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
 			. = TRUE
 		if("allow_breeding")
 			if(HAS_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH))
-				REMOVE_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, INNATE_TRAIT)
+				REMOVE_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src))
 			else
-				ADD_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, INNATE_TRAIT)
+				ADD_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src))
 			. = TRUE
 		if("feeding_interval")
 			feeding_interval = params["feeding_interval"] MINUTES
@@ -439,7 +480,6 @@ datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
 		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_bad : /datum/mood_event/aquarium_positive)
 	else if(dead_fish > 0)
 		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_good : /datum/mood_event/aquarium_negative)
-	// Could maybe scale power of this mood with number/types of fish
 
 #undef MIN_AQUARIUM_BEAUTY
 #undef MAX_AQUARIUM_BEAUTY

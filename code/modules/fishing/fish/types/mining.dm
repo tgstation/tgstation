@@ -78,7 +78,7 @@
 	if(hunger >= 0.4) //I'm hungry and angry
 		anger += growth * 0.6
 
-	if(!isaquarium(loc))
+	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
 		return
 
 	if(HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH)) //the aquarium has breeding disabled

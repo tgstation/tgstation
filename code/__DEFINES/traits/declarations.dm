@@ -812,10 +812,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  * instead, it'll allow the fishing dud to be there unless there's at least one fish that likes the bait
  */
 #define TRAIT_BAIT_ALLOW_FISHING_DUD "bait_dont_affect_fishing_dud"
+/**
+ * This location has the aquarium component. Not much different than a GetComponent()
+ * disguised as an 'is_x' macro, but I don't have to hide anything here.
+ * I just don't want a confusing 'is_aquarium(A)' macro which people think it's interchangable with
+ * an 'istype(A, /obj/structure/aquarium)' when it's the component what truly matters.
+ */
+#define TRAIT_IS_AQUARIUM "is_aquarium"
 /// A location (probably aquarium) that amplifies the zaps of electricity-generating fish.
 #define TRAIT_BIOELECTRIC_GENERATOR "bioelectric_generator"
 /// A location (likely aquarium) that doesn't allow fish to growth and reproduce
-#define TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH "allow_fish_reproduction_and_growth"
+#define TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH "stop_fish_reproduction_and_growth"
 /// This is an aquarium with an open panel
 #define TRAIT_AQUARIUM_PANEL_OPEN "aquarium_panel_open"
 /// Plants that were mutated as a result of passive instability, not a mutation threshold.

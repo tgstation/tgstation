@@ -178,7 +178,7 @@
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_DO_ANIMATION, PROC_REF(update_aquarium_animation))
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_RANDOMIZE_POSITION, PROC_REF(randomize_aquarium_position))
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(update_aquarium_appearance))
-	AddComponent(/datum/component/aquarium_content, list(COMSIG_FISH_STIRRED))
+	AddComponent(/datum/component/aquarium_content, list(COMSIG_ATOM_WAS_ATTACKED))
 
 	RegisterSignal(src, COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY, PROC_REF(get_aquarium_beauty))
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
@@ -869,9 +869,8 @@
 		return
 
 	// Do additional stuff
-	var/in_aquarium = isaquarium(loc)
 	// Start flopping if outside of fish container
-	var/should_be_flopping = status == FISH_ALIVE && !HAS_TRAIT(src, TRAIT_FISH_STASIS) && !in_aquarium
+	var/should_be_flopping = status == FISH_ALIVE && !HAS_TRAIT(src, TRAIT_FISH_STASIS) && loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
 
 	if(should_be_flopping)
 		start_flopping()
@@ -910,7 +909,7 @@
 			stop_flopping()
 			if(!silent)
 				var/message = span_notice(replacetext(death_text, "%SRC", "[src]"))
-				if(isaquarium(loc))
+				if(loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
 					loc.visible_message(message)
 				else
 					visible_message(message)
@@ -1085,9 +1084,8 @@
 
 /// Checks if our current environment lets us live.
 /obj/item/fish/proc/proper_environment(temp_range_min = required_temperature_min, temp_range_max = required_temperature_max)
-	if(isaquarium(loc))
-		var/required_flags = FISH_FLAG_SAFE_TEMPERATURE|FISH_FLAG_SAFE_FLUID
-		if((fish_flags & required_flags) != required_flags)
+	if(loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
+		if(!(fish_flags & FISH_FLAG_SAFE_TEMPERATURE) || !(fish_flags & FISH_FLAG_SAFE_FLUID))
 			return FALSE
 		return TRUE
 
@@ -1144,7 +1142,7 @@
 /// Returns tracked_fish_by_type but flattened and without the items in the blacklist, also shuffled if shuffle is TRUE.
 /obj/item/fish/proc/get_aquarium_fishes(shuffle = FALSE, blacklist)
 	. = list()
-	for(var/obj/item/fish in loc)
+	for(var/obj/item/fish/fish in loc)
 		. += fish
 	. -= blacklist
 	if(shuffle)
@@ -1152,7 +1150,7 @@
 	return .
 
 /obj/item/fish/proc/ready_to_reproduce(being_targeted = FALSE)
-	if(!isaquarium(loc))
+	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
 		return FALSE
 	if(being_targeted && HAS_TRAIT(src, TRAIT_FISH_NO_MATING))
 		return FALSE
@@ -1161,7 +1159,7 @@
 	return !HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH) && health >= initial(health) * 0.8 && stable_population >= 1 && world.time >= breeding_wait
 
 /obj/item/fish/proc/try_to_reproduce()
-	if(!isaquarium(loc))
+	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
 		return FALSE
 
 	var/obj/item/fish/second_fish
@@ -1382,7 +1380,7 @@
 		happiness_value++
 	if(get_hunger() < 0.5)
 		happiness_value++
-	if(isaquarium(loc))
+	if(loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
 		if(fish_flags & FISH_FLAG_SAFE_FLUID)
 			happiness_value++
 		if(fish_flags & FISH_FLAG_SAFE_TEMPERATURE)
@@ -1400,7 +1398,7 @@
 	pet_fish(user)
 
 /obj/item/fish/proc/pet_fish(mob/living/user)
-	var/in_aquarium = isaquarium(loc)
+	var/in_aquarium = loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
 	if(status == FISH_DEAD)
 		to_chat(user, span_warning("You try to pet [src], but [p_theyre()] motionless!"))
 		return FALSE

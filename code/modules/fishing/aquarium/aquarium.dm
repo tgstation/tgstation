@@ -10,9 +10,6 @@
 
 	integrity_failure = 0.3
 
-	var/min_fluid_temp = MIN_AQUARIUM_TEMP
-	var/max_fluid_temp = MAX_AQUARIUM_TEMP
-
 	//This is the area where fish can swim
 	var/aquarium_zone_min_px = 2
 	var/aquarium_zone_max_px = 31
@@ -28,7 +25,7 @@
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	AddComponent(src, /datum/component/aquarium, aquarium_zone_min_px, aquarium_zone_max_px, aquarium_zone_min_py, aquarium_zone_max_py, default_beauty)
+	AddComponent(/datum/component/aquarium, aquarium_zone_min_px, aquarium_zone_max_px, aquarium_zone_min_py, aquarium_zone_max_py, default_beauty)
 	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
 	RegisterSignal(src, COMSIG_AQUARIUM_FLUID_CHANGED, PROC_REF(on_aquarium_liquid_changed))
 

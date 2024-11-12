@@ -19,16 +19,14 @@
 	/// Does this behviour need additional processing in aquarium, will be added to SSobj processing on insertion
 	var/processing = FALSE
 
-	/// Signals of the parent that will trigger animation update
-	var/animation_update_signals
+	/// Signals for the aquarium we're in that trigger an animation update
+	var/list/animation_update_signals
 
 /datum/component/aquarium_content/Initialize(animation_update_signals)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.animation_update_signals = animation_update_signals
-	if(animation_update_signals)
-		RegisterSignals(parent, animation_update_signals, PROC_REF(generate_animation))
+	src.animation_update_signals = islist(animation_update_signals) ? animation_update_signals : list(animation_update_signals)
 
 	ADD_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, REF(src))
 	RegisterSignal(parent, COMSIG_TRY_INSERTING_IN_AQUARIUM, PROC_REF(is_ready_to_insert))
@@ -36,7 +34,7 @@
 
 	//If component is added to something already in aquarium at the time initialize it properly.
 	var/atom/movable/movable_parent = parent
-	if(isaquarium(movable_parent.loc))
+	if(HAS_TRAIT(movable_parent.loc, TRAIT_IS_AQUARIUM))
 		on_inserted(movable_parent.loc)
 
 /datum/component/aquarium_content/PreTransfer()
@@ -45,7 +43,7 @@
 
 /datum/component/aquarium_content/Destroy(force)
 	var/atom/movable/movable = parent
-	if(isaquarium(movable.loc))
+	if(HAS_TRAIT(movable, TRAIT_IS_AQUARIUM))
 		remove_from_aquarium(movable.loc)
 	QDEL_NULL(vc_obj)
 	return ..()
@@ -53,7 +51,7 @@
 /datum/component/aquarium_content/proc/enter_aquarium(datum/source, OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
-	if(isaquarium(movable_parent.loc))
+	if(HAS_TRAIT(movable_parent, TRAIT_IS_AQUARIUM))
 		on_inserted(movable_parent.loc)
 
 /datum/component/aquarium_content/proc/is_ready_to_insert(datum/source, atom/movable/aquarium)
@@ -69,6 +67,7 @@
 /datum/component/aquarium_content/proc/on_inserted(atom/movable/aquarium)
 	RegisterSignal(aquarium, COMSIG_ATOM_EXITED, PROC_REF(on_removed))
 	RegisterSignal(aquarium, COMSIG_AQUARIUM_FLUID_CHANGED, PROC_REF(on_fluid_changed))
+	RegisterSignals(aquarium, animation_update_signals, PROC_REF(animation_update_signal_proc))
 
 	if(processing)
 		START_PROCESSING(SSobj, src)
@@ -89,10 +88,14 @@
 	vc_obj.fluid_type = new_fluid_type
 	generate_animation()
 
+///Called when one of the signals in the 'animation_update_signals' is sent
+/datum/component/aquarium_content/proc/animation_update_signal_proc(datum/source)
+	generate_animation()
+
 ///Sends a signal to the parent to get them to update the aquarium animation of the visual object
-/datum/component/aquarium_content/proc/generate_animation(reset=FALSE)
+/datum/component/aquarium_content/proc/generate_animation(reset = FALSE)
 	var/atom/movable/movable = parent
-	SEND_SIGNAL(parent, COMSIG_AQUARIUM_CONTENT_DO_ANIMATION, reset ? null : current_animation, movable.loc, vc_obj)
+	SEND_SIGNAL(movable, COMSIG_AQUARIUM_CONTENT_DO_ANIMATION, reset ? null : current_animation, movable.loc, vc_obj)
 
 /// Generates common visual object, propeties that don't depend on aquarium surface
 /datum/component/aquarium_content/proc/generate_base_vc()
@@ -112,7 +115,7 @@
 	remove_from_aquarium(aquarium)
 
 /datum/component/aquarium_content/proc/remove_from_aquarium(atom/movable/aquarium)
-	UnregisterSignal(aquarium, list(COMSIG_AQUARIUM_FLUID_CHANGED, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EXITED))
+	UnregisterSignal(aquarium, list(COMSIG_AQUARIUM_FLUID_CHANGED, COMSIG_ATOM_EXITED) + animation_update_signals)
 	SEND_SIGNAL(aquarium, COMSIG_AQUARIUM_REMOVE_VISUAL, vc_obj)
 
 ///The visual overlay of the aquarium content. It can hold a few vars with values about the component of the aquarium it's in.

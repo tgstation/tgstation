@@ -45,14 +45,12 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
  */
 /datum/fish_evolution/proc/check_conditions(obj/item/fish/source, obj/item/fish/mate, atom/movable/aquarium)
 	SHOULD_CALL_PARENT(TRUE)
-	var/aquarium_return_flag = aquarium && SEND_SIGNAL(aquarium, COMSIG_AQUARIUM_CHECK_EVOLUTION_CONDITIONS, source, mate, src)
-	switch(aquarium_return_flag)
-		if(COMPONENT_ALLOW_EVOLUTION)
-			return TRUE
-		if(COMPONENT_STOP_EVOLUTION)
-			return FALSE
-		else //the fish don't reproduce outside of aquariums but can still grow there, so we just check if the temperature is right.
-			return source.proper_environment(required_temperature_min, required_temperature_max)
+	//the fish don't reproduce outside of aquariums but can still grow there, so we just check if the temperature is right.
+	if(!aquarium)
+		return source.proper_environment(required_temperature_min, required_temperature_max)
+	if(SEND_SIGNAL(aquarium, COMSIG_AQUARIUM_CHECK_EVOLUTION_CONDITIONS, source, mate, src) & COMPONENT_ALLOW_EVOLUTION)
+		return TRUE
+	return FALSE
 
 ///This is called when the evolution is set as the result type of a fish_growth component
 /datum/fish_evolution/proc/growth_checks(obj/item/fish/source, seconds_per_tick, growth)
@@ -83,7 +81,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	new_traits = list(/datum/fish_trait/lubed)
 	conditions_note = "The fish must be fed lube beforehand."
 
-/datum/fish_evolution/lubefish/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
+/datum/fish_evolution/lubefish/check_conditions(obj/item/fish/source, obj/item/fish/mate, atom/movable/aquarium)
 	if(!HAS_TRAIT(source, TRAIT_FISH_FED_LUBE))
 		return FALSE
 	return ..()
@@ -102,7 +100,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	conditions_note = "The fish (and its mate) needs to be unusually big both in size and weight."
 	show_result_on_wiki = FALSE
 
-/datum/fish_evolution/mastodon/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
+/datum/fish_evolution/mastodon/check_conditions(obj/item/fish/source, obj/item/fish/mate, atom/movable/aquarium)
 	if((source.size < 120 || source.weight < 3000) || (mate && (mate.size < 120 || mate.weight < 3000)))
 		return FALSE
 	return ..()
@@ -130,7 +128,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	new_traits = list(/datum/fish_trait/predator, /datum/fish_trait/aggressive)
 	conditions_note = "The fish needs to be unusually big and aggressive"
 
-/datum/fish_evolution/chainsawfish/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
+/datum/fish_evolution/chainsawfish/check_conditions(obj/item/fish/source, obj/item/fish/mate, atom/movable/aquarium)
 	var/double_avg_size = /obj/item/fish/goldfish::average_size * 2
 	var/double_avg_weight = /obj/item/fish/goldfish::average_weight * 2
 	if(source.size >= double_avg_size && source.weight >= double_avg_weight && (/datum/fish_trait/aggressive in source.fish_traits))
@@ -142,7 +140,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	new_fish_type = /obj/item/fish/pike/armored
 	conditions_note = "The fish needs to have the stinger trait"
 
-/datum/fish_evolution/armored_pike/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
+/datum/fish_evolution/armored_pike/check_conditions(obj/item/fish/source, obj/item/fish/mate, atom/movable/aquarium)
 	if(HAS_TRAIT(source, TRAIT_FISH_STINGER))
 		return ..()
 	return FALSE
@@ -158,7 +156,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	conditions_note = "The final stage of fritterfish growth. It gotta be big!"
 	show_result_on_wiki = FALSE
 
-/datum/fish_evolution/nessiefish/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
+/datum/fish_evolution/nessiefish/check_conditions(obj/item/fish/source, obj/item/fish/mate, atom/movable/aquarium)
 	if(source.size >= (/obj/item/fish/fryish/fritterish::average_size * 1.5) && source.size >= (/obj/item/fish/fryish/fritterish::average_weight * 1.5))
 		return ..()
 	return FALSE
