@@ -26,7 +26,7 @@
 	/// Speed modifier given when in gravity
 	var/datum/movespeed_modifier/speed_modifier = /datum/movespeed_modifier/grounded_voidwalker
 	/// The void eater weapon
-	var/obj/item/glass_breaker = /obj/item/void_eater
+	var/obj/item/glass_breaker
 	/// Our brain transmit telepathy spell
 	var/datum/action/transmit = /datum/action/cooldown/spell/list_target/telepathy/voidwalker
 
@@ -72,8 +72,7 @@
 	transmit.Remove(organ_owner)
 	transmit = initial(transmit)
 
-	if(glass_breaker)
-		qdel(glass_breaker)
+	QDEL_NULL(glass_breaker)
 
 /obj/item/organ/brain/voidwalker/proc/on_atom_entering(mob/living/carbon/organ_owner, atom/entering)
 	SIGNAL_HANDLER
