@@ -96,4 +96,4 @@ GLOBAL_LIST_INIT(prototype_organs, typecacheof(list(
 	/obj/item/organ/cyberimp/chest,
 	/obj/item/organ/cyberimp/eyes,
 	/obj/item/organ/alien,
-)))
+), only_root_path = TRUE))
