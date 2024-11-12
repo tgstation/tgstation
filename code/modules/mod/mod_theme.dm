@@ -1289,6 +1289,7 @@
 		/obj/item/melee/baton,
 		/obj/item/melee/energy/sword,
 		/obj/item/shield/energy,
+		/obj/item/gun/ballistic/shotgun/spes12,
 	)
 	variants = list(
 		"elite" = list(
