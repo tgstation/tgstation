@@ -394,7 +394,7 @@ datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
 			var/obj/item/fish/fish = item
 			.["fishData"] += list(list(
 				"fish_ref" = REF(fish),
-				"fish_name" = fish.name,
+				"fish_name" = uppertext(fish.name),
 				"fish_happiness" = fish.get_happiness_value(),
 				"fish_icon" = fish::icon,
 				"fish_icon_state" = fish::icon_state,

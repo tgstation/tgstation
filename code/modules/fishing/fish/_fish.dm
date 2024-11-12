@@ -994,7 +994,7 @@
 	visual.icon_state = dedicated_in_aquarium_icon_state || "[initial(icon_state)]_small"
 	visual.color = aquarium_vc_color
 
-/obj/item/fish/proc/randomize_aquarium_position(datum/source, obj/structure/aquarium/current_aquarium, obj/effect/aquarium/visual)
+/obj/item/fish/proc/randomize_aquarium_position(datum/source, atom/movable/current_aquarium, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
 	var/avg_width = round(sprite_width * 0.5)
 	var/avg_height = round(sprite_height * 0.5)

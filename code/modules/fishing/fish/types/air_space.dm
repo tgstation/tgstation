@@ -167,7 +167,7 @@
 
 	AddComponent(/datum/component/fish_growth, /mob/living/basic/carp/advanced, growth_rate)
 
-/obj/item/fish/baby_carp/proc/growth_checks(datum/source, seconds_per_tick)
+/obj/item/fish/baby_carp/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
 	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.

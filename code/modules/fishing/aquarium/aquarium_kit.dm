@@ -72,7 +72,13 @@
 	name = "imported fish case"
 
 /obj/item/storage/fish_case/tiziran/get_fish_type()
-	return pick(/obj/item/fish/dwarf_moonfish, /obj/item/fish/gunner_jellyfish, /obj/item/fish/needlefish, /obj/item/fish/armorfish)
+	return pick_weight(list(
+		/obj/item/fish/moonfish/dwarf = 2,
+		/obj/item/fish/gunner_jellyfish = 2,
+		/obj/item/fish/needlefish = 2,
+		/obj/item/fish/armorfish = 2,
+		/obj/item/fish/moonfish = 1,
+	))
 
 ///Subtype bought from the blackmarket at a gratuitously cheap price. The catch? The fish inside it is dead.
 /obj/item/storage/fish_case/blackmarket
