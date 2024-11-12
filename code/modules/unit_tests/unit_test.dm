@@ -285,13 +285,13 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
 	returnable_list += typesof(/obj/effect/baseturf_helper)
 	//No tauma to pass in
-	returnable_list += typesof(/mob/camera/imaginary_friend)
+	returnable_list += typesof(/mob/eye/imaginary_friend)
 	//No heart to give
 	returnable_list += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
-	returnable_list += typesof(/mob/camera/ai_eye/remote/base_construction)
+	returnable_list += typesof(/mob/eye/ai_eye/remote/base_construction)
 	//See above
-	returnable_list += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
+	returnable_list += typesof(/mob/eye/ai_eye/remote/shuttle_docker)
 	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
 	returnable_list += typesof(/obj/effect/anomaly/grav/high)
 	//See above

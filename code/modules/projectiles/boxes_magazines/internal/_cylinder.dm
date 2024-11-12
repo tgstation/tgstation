@@ -34,7 +34,7 @@
 		rotate()
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_list()
-	var/list/no_nulls_ammo = stored_ammo.Copy()
+	var/list/no_nulls_ammo = ..()
 	list_clear_nulls(no_nulls_ammo)
 	return no_nulls_ammo
 
@@ -44,7 +44,7 @@
 
 	for(var/i in 1 to stored_ammo.len)
 		var/obj/item/ammo_casing/bullet = stored_ammo[i]
-		if (!istype(bullet) || bullet.loaded_projectile)
+		if (istype(bullet) && bullet.loaded_projectile)
 			continue
 		// found a spent ammo
 		stored_ammo[i] = R

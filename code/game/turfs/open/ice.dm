@@ -60,13 +60,16 @@
 	if(!do_after(user, 5 SECONDS, src))
 		return FALSE
 	balloon_alert(user, "dug hole")
+	spawn_hole()
+	return TRUE
+
+/turf/open/misc/ice/proc/spawn_hole()
 	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/ice_fishing])
 	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	add_overlay(mutable_appearance('icons/turf/overlays.dmi', "ice_hole"))
 	can_make_hole = FALSE
 	RemoveElement(/datum/element/contextual_screentip_tools, tool_screentips)
 	flags_1 &= ~HAS_CONTEXTUAL_SCREENTIPS_1
-	return TRUE
 
 /turf/open/misc/ice/smooth
 	icon_state = "ice_turf-255"
@@ -82,13 +85,18 @@
 
 /turf/open/misc/ice/icemoon/no_planet_atmos
 	planetary_atmos = FALSE
-	can_make_hole = FALSE
+
+///Ice turf with a fishing spot already dug
+/turf/open/misc/ice/icemoon/no_planet_atmos/holed
+
+/turf/open/misc/ice/icemoon/no_planet_atmos/holed/Initialize(mapload)
+	. = ..()
+	spawn_hole()
 
 /turf/open/misc/ice/temperate
 	baseturfs = /turf/open/misc/ice/temperate
 	desc = "Somehow, it is not melting under these conditions. Must be some very thick ice. Just as slippery too."
 	initial_gas_mix = COLD_ATMOS //it works with /turf/open/misc/asteroid/snow/temperatre
-	can_make_hole = FALSE
 
 //For when you want real, genuine ice in your kitchen's cold room.
 /turf/open/misc/ice/coldroom

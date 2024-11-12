@@ -42,6 +42,20 @@
 	composition = list(/datum/material/iron=1, /datum/material/plasma=1)
 	mat_rust_resistance = RUST_RESISTANCE_REINFORCED
 	added_slowdown = 0.05
+	fish_weight_modifier = 1.75
+	fishing_difficulty_modifier = 5
+	fishing_experience_multiplier = 1.1
+	fishing_gravity_mult = 1.6
+
+/datum/material/alloy/plasteel/on_applied(atom/target, mat_amount, multiplier)
+	. = ..()
+	if(istype(target, /obj/item/fishing_rod))
+		ADD_TRAIT(target, TRAIT_ROD_LAVA_USABLE, REF(src))
+
+/datum/material/alloy/plasteel/on_removed(atom/target, mat_amount, multiplier)
+	. = ..()
+	if(istype(target, /obj/item/fishing_rod))
+		REMOVE_TRAIT(target, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /** Plastitanium
  *
@@ -65,6 +79,20 @@
 	)
 	composition = list(/datum/material/titanium=1, /datum/material/plasma=1)
 	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
+	fish_weight_modifier = 1.1
+	fishing_difficulty_modifier = -7
+	fishing_cast_range = 1
+	fishing_experience_multiplier = 0.95
+
+/datum/material/alloy/plastitanium/on_applied(atom/target, mat_amount, multiplier)
+	. = ..()
+	if(istype(target, /obj/item/fishing_rod))
+		ADD_TRAIT(target, TRAIT_ROD_LAVA_USABLE, REF(src))
+
+/datum/material/alloy/plastitanium/on_removed(atom/target, mat_amount, multiplier)
+	. = ..()
+	if(istype(target, /obj/item/fishing_rod))
+		REMOVE_TRAIT(target, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /** Plasmaglass
  *
@@ -90,6 +118,10 @@
 		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
 	)
 	composition = list(/datum/material/glass=1, /datum/material/plasma=0.5)
+	fish_weight_modifier = 1.2
+	fishing_difficulty_modifier = 5
+	fishing_experience_multiplier = 1.3
+	fishing_gravity_mult = 0.9
 
 /** Titaniumglass
  *
@@ -114,6 +146,10 @@
 		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
 	)
 	composition = list(/datum/material/glass=1, /datum/material/titanium=0.5)
+	fish_weight_modifier = 1.25
+	fishing_difficulty_modifier = -5
+	fishing_experience_multiplier = 1.25
+	fishing_gravity_mult = 0.95
 
 /** Plastitanium Glass
  *
@@ -139,6 +175,9 @@
 		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
 	)
 	composition = list(/datum/material/glass=1, /datum/material/alloy/plastitanium=0.5)
+	fish_weight_modifier = 1.2
+	fishing_experience_multiplier = 1.5
+	fishing_gravity_mult = 0.9
 
 /** Alien Alloy
  *
@@ -164,13 +203,26 @@
 	)
 	composition = list(/datum/material/iron=2, /datum/material/plasma=2)
 	added_slowdown = 0.1
+	fish_weight_modifier = 2.4
+	fishing_difficulty_modifier = -20
+	fishing_cast_range = 2
+	fishing_experience_multiplier = 0.5
+	fishing_completion_speed = 2
+	fishing_bait_speed_mult = 1.25
+	fishing_deceleration_mult = 1.5
+	fishing_bounciness_mult = 0.5
+	fishing_gravity_mult = 2
 
 /datum/material/alloy/alien/on_applied(atom/target, mat_amount, multiplier)
 	. = ..()
 	if(isobj(target))
 		target.AddElement(/datum/element/obj_regen, _rate=0.02) // 2% regen per tick.
+	if(istype(target, /obj/item/fishing_rod))
+		ADD_TRAIT(target, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /datum/material/alloy/alien/on_removed(atom/target, mat_amount, multiplier)
 	. = ..()
 	if(isobj(target))
 		target.RemoveElement(/datum/element/obj_regen, _rate=0.02)
+	if(istype(target, /obj/item/fishing_rod))
+		REMOVE_TRAIT(target, TRAIT_ROD_LAVA_USABLE, REF(src))

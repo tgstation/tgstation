@@ -355,7 +355,7 @@
 	if(!iscarbon(exposed_mob) || (exposed_mob.stat == DEAD))
 		return
 
-	if(methods & (INGEST|VAPOR|INJECT))
+	if(methods & (INGEST|VAPOR|INJECT|INHALE))
 		exposed_mob.adjust_nutrition(-5)
 		if(show_message)
 			to_chat(exposed_mob, span_warning("Your stomach feels empty and cramps!"))
@@ -772,17 +772,9 @@
 /datum/reagent/medicine/inacusiate/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
 	if(creation_purity >= 1)
-		RegisterSignal(affected_mob, COMSIG_MOVABLE_HEAR, PROC_REF(owner_hear))
-
-//Lets us hear whispers from far away!
-/datum/reagent/medicine/inacusiate/proc/owner_hear(datum/source, message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
-	SIGNAL_HANDLER
-	if(!isliving(holder.my_atom))
-		return
-	var/mob/living/affected_mob = holder.my_atom
-	var/atom/movable/composer = holder.my_atom
-	if(message_mods[WHISPER_MODE])
-		message = composer.compose_message(affected_mob, message_language, message, null, spans, message_mods)
+		ADD_TRAIT(affected_mob, TRAIT_GOOD_HEARING, type)
+		if(affected_mob.can_hear())
+			to_chat(affected_mob, span_nicegreen("You can feel your hearing drastically improve!"))
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -794,7 +786,9 @@
 
 /datum/reagent/medicine/inacusiate/on_mob_delete(mob/living/affected_mob)
 	. = ..()
-	UnregisterSignal(affected_mob, COMSIG_MOVABLE_HEAR)
+	REMOVE_TRAIT(affected_mob, TRAIT_GOOD_HEARING, type)
+	if(affected_mob.can_hear())
+		to_chat(affected_mob, span_notice("Your hearing returns to its normal acuity."))
 
 /datum/reagent/medicine/atropine
 	name = "Atropine"
@@ -954,7 +948,7 @@
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body does not react..."))
 		return
 
-	if(iscarbon(exposed_mob) && !(methods & INGEST)) //simplemobs can still be splashed
+	if(iscarbon(exposed_mob) && !(methods & (INGEST|INHALE))) //simplemobs can still be splashed
 		return ..()
 
 	if(HAS_TRAIT(exposed_mob, TRAIT_HUSK))
