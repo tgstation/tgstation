@@ -802,6 +802,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/camouflage/proc/reset_alpha(obj/item/fish/source)
 	SIGNAL_HANDLER
+	if(QDELETED(source))
+		return
 	var/init_alpha = initial(source.alpha)
 	if(init_alpha != source.alpha)
 		animate(source.alpha, alpha = init_alpha, time = 1.2 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
