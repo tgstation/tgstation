@@ -312,8 +312,12 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	return reward
 
 /// Returns the fish table, with with the unavailable items from fish_counts removed.
-/datum/fish_source/proc/get_fish_table()
+/datum/fish_source/proc/get_fish_table(from_explosion = FALSE)
 	var/list/table = fish_table.Copy()
+	//message bottles cannot spawn from explosions. They're meant to be one-time messages (rarely) and photos from past rounds
+	//and it would suck if the pool of bottle messages were constantly being emptied by explosive fishing.
+	if(from_explosion)
+		table -= /obj/effect/spawner/message_in_a_bottle
 	for(var/result in table)
 		if(!isnull(fish_counts[result]) && fish_counts[result] <= 0)
 			table -= result
@@ -468,7 +472,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
 	if(!(fish_source_flags & FISH_SOURCE_FLAG_EXPLOSIVE_MALUS))
-		explosive_spawn(location, severity)
+		explosive_spawn(isturf(location) ? location : location.drop_location(), severity)
 		return
 	if(isnull(exploded_turfs))
 		exploded_turfs = list()
@@ -487,7 +491,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	for(var/i in 1 to (severity + 2))
 		if(!prob((100 + 100 * severity)/i * multiplier))
 			continue
-		var/reward_loot = pick_weight(get_fish_table())
+		var/reward_loot = pick_weight(get_fish_table(from_explosion = TRUE))
 		var/atom/movable/reward = simple_dispense_reward(reward_loot, location, location)
 		if(isnull(reward))
 			continue
