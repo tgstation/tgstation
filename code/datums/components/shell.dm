@@ -350,7 +350,7 @@
 		if(drop_location)
 			attached_circuit.forceMove(drop_location)
 		else
-			attached.circuit.moveToNullspace()
+			attached_circuit.moveToNullspace()
 
 	for(var/obj/item/circuit_component/to_remove as anything in unremovable_circuit_components)
 		attached_circuit.remove_component(to_remove)
