@@ -1273,6 +1273,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "apC" = (
@@ -55832,6 +55833,7 @@
 	pixel_y = 3
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/detectives_office/private_investigators_office)
 "nXY" = (
@@ -57722,7 +57724,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "oxV" = (
-/obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -92438,7 +92439,6 @@
 	},
 /area/station/science/lobby)
 "xeF" = (
-/obj/structure/cable,
 /obj/item/kirbyplants/random,
 /obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/wood,
