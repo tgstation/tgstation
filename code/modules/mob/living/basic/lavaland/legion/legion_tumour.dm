@@ -56,7 +56,7 @@
 	stage = 0
 	elapsed_time = 0
 
-/obj/item/organ/legion_tumour/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/legion_tumour/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags, movement_flags)
 	. = ..()
 	owner.log_message("has received [src] which will eventually turn them into a Legion.", LOG_VICTIM)
 

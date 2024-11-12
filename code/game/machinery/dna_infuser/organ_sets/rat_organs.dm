@@ -74,7 +74,7 @@
 	//but 1.5 damage
 	human_receiver.physiology?.damage_resistance -= 50
 
-/obj/item/organ/heart/rat/on_mob_remove(mob/living/carbon/heartless, special)
+/obj/item/organ/heart/rat/on_mob_remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
 	if(!ishuman(heartless))
 		return
@@ -110,7 +110,7 @@
 	if(message == "hi?")
 		speech_args[SPEECH_MESSAGE] = "Um... cheesed to meet you?"
 
-/obj/item/organ/tongue/rat/on_mob_insert(mob/living/carbon/tongue_owner, special, movement_flags)
+/obj/item/organ/tongue/rat/on_mob_insert(mob/living/carbon/tongue_owner, special, movement_flags, movement_flags)
 	. = ..()
 	RegisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN, PROC_REF(its_on_the_mouse))
 

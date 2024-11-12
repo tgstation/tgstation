@@ -59,7 +59,7 @@
 	if(brain_size > 1)
 		. += span_notice("It is bigger than average...")
 
-/obj/item/organ/brain/mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
+/obj/item/organ/brain/on_mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return
@@ -115,7 +115,7 @@
 	if(!special && !(brain_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
 		brain_owner.update_body_parts()
 
-/obj/item/organ/brain/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/brain/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
 	if(!QDELETED(organ_owner) && length(skillchips))
 		if(!special)
@@ -132,7 +132,7 @@
 		BT.on_lose(TRUE)
 		BT.owner = null
 
-	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !(movement_flags & NO_ID_TRANSFER))
+
 		transfer_identity(organ_owner)
 	if(!special)
 		if(!(organ_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
@@ -456,12 +456,12 @@
 	can_smoothen_out = FALSE
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
 
-/obj/item/organ/brain/lustrous/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/brain/lustrous/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	organ_owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
 	organ_owner.RemoveElement(/datum/element/tenacious)
 
-/obj/item/organ/brain/lustrous/on_mob_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/brain/lustrous/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	organ_owner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
 	organ_owner.AddElement(/datum/element/tenacious)

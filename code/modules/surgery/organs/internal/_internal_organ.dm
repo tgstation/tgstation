@@ -5,7 +5,7 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags, movement_flags)
 	. = ..()
 
 	// organs_slot must ALWAYS be ordered in the same way as organ_process_order
@@ -14,7 +14,7 @@
 
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/organ/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	. = ..()
 
 	if((organ_flags & ORGAN_VITAL) && !special && !HAS_TRAIT(organ_owner, TRAIT_GODMODE))

@@ -50,7 +50,7 @@
 	/// Scarring on this organ
 	var/scarring = NONE
 
-/obj/item/organ/eyes/mob_insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/eyes/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	receiver.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
@@ -80,7 +80,7 @@
 	if(call_update)
 		affected_human.update_body()
 
-/obj/item/organ/eyes/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/eyes/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	if(ishuman(organ_owner))
@@ -550,7 +550,7 @@
 	deactivate(close_ui = TRUE)
 
 /// Set the initial color of the eyes on insert to be the mob's previous eye color.
-/obj/item/organ/eyes/robotic/glow/mob_insert(mob/living/carbon/eye_recipient, special = FALSE, movement_flags = DELETE_IF_REPLACED)
+/obj/item/organ/eyes/robotic/glow/on_mob_insert(mob/living/carbon/eye_recipient, special = FALSE, movement_flags)
 	. = ..()
 	left_eye_color_string = eye_color_left
 	right_eye_color_string = eye_color_right
@@ -860,6 +860,6 @@
 		apply_organ_damage(-10) //heal quickly
 	. = ..()
 
-/obj/item/organ/eyes/night_vision/maintenance_adapted/on_mob_remove(mob/living/carbon/unadapted, special = FALSE)
+/obj/item/organ/eyes/night_vision/maintenance_adapted/on_mob_remove(mob/living/carbon/unadapted, special = FALSE, movement_flags)
 	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
 	return ..()

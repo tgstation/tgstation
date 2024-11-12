@@ -47,7 +47,7 @@
  * movement_flags - Flags for how we behave in movement. See DEFINES/organ_movement for flags
  */
 /obj/item/organ/proc/mob_insert(mob/living/carbon/receiver, special, movement_flags)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(!iscarbon(receiver))
 		//We try to insert the organ in a corgi when running the test, expecting it to return FALSE.
@@ -90,7 +90,7 @@
 /// Called after the organ is inserted into a mob.
 /// Adds Traits, Actions, and Status Effects on the mob in which the organ is impanted.
 /// Override this proc to create unique side-effects for inserting your organ. Must be called by overrides.
-/obj/item/organ/proc/on_mob_insert(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
+/obj/item/organ/proc/on_mob_insert(mob/living/carbon/organ_owner, special = FALSE, movement_flags, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	for(var/trait in organ_traits)
@@ -146,7 +146,7 @@
  * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
 /obj/item/organ/proc/mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(organ_owner)
 		if(organ_owner.organs_slot[slot] == src)
@@ -162,7 +162,7 @@
 /// Called after the organ is removed from a mob.
 /// Removes Traits, Actions, and Status Effects on the mob in which the organ was impanted.
 /// Override this proc to create unique side-effects for removing your organ. Must be called by overrides.
-/obj/item/organ/proc/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
+/obj/item/organ/proc/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!iscarbon(organ_owner))
