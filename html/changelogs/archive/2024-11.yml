@@ -388,3 +388,16 @@
   - bugfix: Abstract nullrod types can no longer be burned or melted with acid.
   - bugfix: Monk staff now properly does not block projectiles, and uses the correct
       force before being wielded.
+2024-11-12:
+  Djiq:
+  - refactor: Refactors heretic tree coode
+  EnterTheJake:
+  - balance: The Uplink cost of the energy sword has been lowered from 8 to 6 TC.
+  Ghommie:
+  - bugfix: AI-controlled mobs can now cross open space if they won't fall.
+  Melbert:
+  - image: The animation for being dusted now takes into account your sprite, rather
+      than being a normal nude spaceman
+  grungussuss:
+  - qol: you can now mitigate motion sickness from screen shake by enabling "darken
+      screen shake" in preferences

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "AI-controlled mobs can now cross open space if they won't fall."
