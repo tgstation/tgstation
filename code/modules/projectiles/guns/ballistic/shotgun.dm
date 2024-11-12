@@ -402,6 +402,13 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/spes12
 
+/obj/item/gun/ballistic/shotgun/spes12/Initialize(mapload)
+	. = ..()
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Switch firemode", \
+	)
+
 /obj/item/gun/ballistic/shotgun/spes12/examine(mob/user)
 	. = ..()
 	. += "It is currently firing in [semi_auto ? "semi-auto" : "pump-action"] mode. Right-click to toggle mode."
@@ -436,9 +443,6 @@
 	balloon_alert(user, "now [semi_auto ? "semi-auto" : "pump-action"]")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/gun/ballistic/shotgun/spes12/unrestricted
-	pin = /obj/item/firing_pin
-
 /obj/item/gun/ballistic/shotgun/spes12/update_icon_state()
 	var/mob/living/carbon/human/human = loc
 	if(!istype(human))
@@ -447,3 +451,6 @@
 	inhand_icon_state = "[initial(inhand_icon_state)][human.get_num_held_items() != 1 ? "" : "_w"]"
 	human.update_held_items()
 	return ..()
+
+/obj/item/gun/ballistic/shotgun/spes12/unrestricted
+	pin = /obj/item/firing_pin
