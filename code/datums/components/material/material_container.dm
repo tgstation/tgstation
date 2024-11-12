@@ -81,8 +81,7 @@
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 
 		//to insert stuff into the container
-		var/signal = (mat_container_flags & MATCONTAINER_HIGH_PRIORITY) ? COMSIG_ATOM_ITEM_INTERACTION : COMSIG_ATOM_ATTACKBY
-		RegisterSignal(atom_target, signal, signal == COMSIG_ATOM_ATTACKBY ? PROC_REF(on_attack_by) : PROC_REF(on_item_insert))
+		RegisterSignal(atom_target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
 
 		//screen tips for inserting items
 		atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
@@ -99,7 +98,7 @@
 	var/list/signals = list()
 
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-		signals += (mat_container_flags & MATCONTAINER_HIGH_PRIORITY) ? COMSIG_ATOM_ITEM_INTERACTION : COMSIG_ATOM_ATTACKBY
+		signals += COMSIG_ATOM_ITEM_INTERACTION
 		signals +=  COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
 		signals +=  COMSIG_ATOM_EXAMINE
@@ -130,11 +129,10 @@
 		else if(old_flags & MATCONTAINER_EXAMINE && !(mat_container_flags & MATCONTAINER_EXAMINE))
 			UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
-		var/signal = (mat_container_flags & MATCONTAINER_HIGH_PRIORITY) ? COMSIG_ATOM_ITEM_INTERACTION : COMSIG_ATOM_ATTACKBY
 		if(old_flags & MATCONTAINER_NO_INSERT && !(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, signal, signal == COMSIG_ATOM_ATTACKBY ? PROC_REF(on_attack_by) : PROC_REF(on_item_insert))
+			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
 		else if(!(old_flags & MATCONTAINER_NO_INSERT) && mat_container_flags & MATCONTAINER_NO_INSERT)
-			UnregisterSignal(parent, signal)
+			UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
 
 /**
  * 3 Types of Procs
@@ -500,11 +498,6 @@
 
 	return ITEM_INTERACT_SUCCESS
 
-/datum/component/material_container/proc/on_attack_by(datum/source, obj/item/weapon, mob/living/user, list/modifiers)
-	SIGNAL_HANDLER
-
-	if(on_item_insert(source, user, weapon, modifiers))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
 //===============================================================================================
 
 
