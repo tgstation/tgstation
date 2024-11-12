@@ -34,7 +34,7 @@
 
 	//If component is added to something already in aquarium at the time initialize it properly.
 	var/atom/movable/movable_parent = parent
-	if(HAS_TRAIT(movable_parent.loc, TRAIT_IS_AQUARIUM))
+	if(movable_parent.loc && HAS_TRAIT(movable_parent.loc, TRAIT_IS_AQUARIUM))
 		on_inserted(movable_parent.loc)
 
 /datum/component/aquarium_content/PreTransfer()
@@ -43,7 +43,7 @@
 
 /datum/component/aquarium_content/Destroy(force)
 	var/atom/movable/movable = parent
-	if(HAS_TRAIT(movable, TRAIT_IS_AQUARIUM))
+	if(movable.loc && HAS_TRAIT(movable.loc, TRAIT_IS_AQUARIUM))
 		remove_from_aquarium(movable.loc)
 	QDEL_NULL(vc_obj)
 	return ..()
