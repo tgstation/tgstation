@@ -12,7 +12,6 @@
 	))
 
 /datum/unit_test/organ_sanity/Run()
-	var/list/
 	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ) - GLOB.prototype_organs)
 		organ_test_insert(organ_type)
 
