@@ -68,7 +68,7 @@
 	else if(is_old_turf && !isturf(source.loc))
 		source.lose_area_sensitivity(BEAUTY_ELEMENT_TRAIT)
 		UnregisterSignal(source, list(COMSIG_ENTER_AREA, COMSIG_EXIT_AREA))
-		exit_area(source, old_loc)
+		exit_area(source, get_area(old_loc))
 
 /datum/element/beauty/Detach(atom/source)
 	if(!beauty_counter[source])
