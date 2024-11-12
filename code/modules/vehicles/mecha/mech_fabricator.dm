@@ -10,7 +10,7 @@
 
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 
-	interaction_flags_atom = INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 	/// Current items in the build queue.
 	var/list/datum/design/queue = list()
 
