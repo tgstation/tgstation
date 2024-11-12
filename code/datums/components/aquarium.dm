@@ -192,14 +192,14 @@
 	for(var/obj/item/fish/fish as anything in fishes)
 		fish.feed(movable.reagents)
 
-datum/component/aquarium/proc/on_plunger_act(atom/movable/source, obj/item/plunger/plunger, mob/living/user, reinforced)
+/datum/component/aquarium/proc/on_plunger_act(atom/movable/source, obj/item/plunger/plunger, mob/living/user, reinforced)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
 		return
 	INVOKE_ASYNC(src, PROC_REF(do_plunging), source, user)
 	return COMPONENT_NO_AFTERATTACK
 
-datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
+/datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
 	user.balloon_alert_to_viewers("plunging...")
 	if(do_after(user, 3 SECONDS, target = source))
 		user.balloon_alert_to_viewers("finished plunging")

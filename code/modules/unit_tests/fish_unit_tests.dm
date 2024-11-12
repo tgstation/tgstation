@@ -193,7 +193,7 @@
 ///During the fish_growth unit test, we spawn a fish outside of the aquarium and check that this actually stops it from growing
 /datum/fish_evolution/dummy/two/growth_checks(obj/item/fish/source, seconds_per_tick, growth)
 	. = ..()
-	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
+	if(!source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		return COMPONENT_DONT_GROW
 
 ///A test that checks that fishing portals can be linked and function as expected

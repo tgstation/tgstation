@@ -69,8 +69,6 @@
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS
 
-	return NONE
-
 /obj/item/fish_analyzer/ui_interact(mob/user, datum/tgui/ui)
 	if(isnull(scanned_item?.resolve()))
 		balloon_alert(user, "no specimen data!")
