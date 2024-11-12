@@ -233,7 +233,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	if(mist && !(actually_on && current_temperature != SHOWER_FREEZING))
 		qdel(mist)
 
-
 /obj/machinery/shower/proc/on_entered(datum/source, atom/movable/enterer)
 	SIGNAL_HANDLER
 

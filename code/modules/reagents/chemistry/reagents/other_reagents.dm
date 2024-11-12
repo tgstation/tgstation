@@ -309,6 +309,15 @@
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
+	if(methods & (TOUCH|VAPOR)) // wakey wakey eggs and bakey
+		exposed_mob.adjust_dizzy(-2 SECONDS)
+		exposed_mob.adjust_confusion(-2 SECONDS)
+		exposed_mob.adjust_drowsiness(-4 SECONDS)
+		exposed_mob.adjust_jitter(-4 SECONDS)
+		exposed_mob.AdjustSleeping(-150)
+		exposed_mob.AdjustUnconscious(-80)
+		exposed_mob.adjust_drunk_effect(-0.1)
+
 	if((methods & INGEST) && HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) && reac_volume >= 4)
 		exposed_mob.adjust_wet_stacks(0.15 * reac_volume)
 

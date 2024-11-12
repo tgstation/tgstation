@@ -662,15 +662,18 @@
 			alert_type = /atom/movable/screen/alert/status_effect/shower_regen/hater
 		else
 			alert_type = /atom/movable/screen/alert/status_effect/shower_regen
-	else if(!shower_reagent) // we have dirty shower
+	else if(!shower_reagent) // dirty shower
 		alert_type  = /atom/movable/screen/alert/status_effect/shower_regen/dislike
 
 /datum/status_effect/shower_regen/tick(seconds_between_ticks)
 	. = ..()
 
+	var/is_disgusted = FALSE
+
 	if(istype(shower_reagent, /datum/reagent/water))
 		var/water_adaptation = HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION)
 		var/heal_or_deal = HAS_TRAIT(owner, TRAIT_WATER_HATER) && !water_adaptation ? 1 : -1
+		is_disgusted = HAS_TRAIT(owner, TRAIT_WATER_HATER) && !water_adaptation
 		var/healed = 0
 		if(water_adaptation) //very mild healing for those with the water adaptation trait (fish infusion)
 			healed += owner.adjustOxyLoss(-1.5 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
@@ -681,3 +684,11 @@
 		healed += owner.adjustStaminaLoss(stamina_heal_per_tick * heal_or_deal * seconds_between_ticks, updating_stamina = FALSE)
 		if(healed)
 			owner.updatehealth()
+	else if(istype(shower_reagent, /datum/reagent/blood))
+		var/enjoy_bloody_showers = HAS_TRAIT(owner, TRAIT_MORBID) || HAS_TRAIT(owner, TRAIT_EVIL) || (owner.mob_biotypes & MOB_UNDEAD)
+		is_disgusted = !enjoy_bloody_showers
+	else if(!shower_reagent) // dirty shower
+		is_disgusted = TRUE
+
+	if(is_disgusted)
+		owner.adjust_disgust(3)
