@@ -1,0 +1,4 @@
+author: "harryob"
+delete-after: True
+changes:
+  - bugfix: "certain tgui inputs no longer require 2 clicks to open"
