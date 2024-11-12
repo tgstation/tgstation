@@ -15,6 +15,16 @@
 	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ) - GLOB.prototype_organs)
 		organ_test_insert(organ_type)
 
+		var/abort = FALSE
+		for(var/zone in GLOB.all_body_zones)
+			var/obj/item/bodypart/bodypart = get_bodypart(zone)
+			if(QDELETED(bodypart)
+				TEST_FAIL("Couldn't find [zone] after [organ_type] was tested")
+				abort = TRUE
+		//we cannot proceed with the loop as that would probably lead to a fuckton of other runtimes if a bodypart is missing.
+		if(abort)
+			return
+
 /datum/unit_test/organ_sanity/proc/organ_test_insert(obj/item/organ/organ_type)
 	// Appropriate mob (Human) which will receive organ.
 	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)

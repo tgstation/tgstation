@@ -48,7 +48,7 @@
 	. = ..()
 	update_temp_deafness()
 
-/obj/item/organ/ears/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags, movement_flags)
+/obj/item/organ/ears/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	update_temp_deafness()
 

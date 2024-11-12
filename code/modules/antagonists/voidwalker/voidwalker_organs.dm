@@ -30,7 +30,7 @@
 	/// Our brain transmit telepathy spell
 	var/datum/action/transmit = /datum/action/cooldown/spell/list_target/telepathy/voidwalker
 
-/obj/item/organ/brain/voidwalker/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags, movement_flags)
+/obj/item/organ/brain/voidwalker/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))

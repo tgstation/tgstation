@@ -34,7 +34,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_They radiate%PRONOUN_s an aura of serenity.")
 	AddElement(/datum/element/update_icon_blocker)
 
-/obj/item/organ/heart/gondola/on_mob_insert(mob/living/carbon/receiver, special, movement_flags, movement_flags)
+/obj/item/organ/heart/gondola/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	if(!(FACTION_HOSTILE in receiver.faction))
 		factions_to_remove += FACTION_HOSTILE

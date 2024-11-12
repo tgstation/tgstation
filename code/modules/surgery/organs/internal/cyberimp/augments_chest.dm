@@ -283,7 +283,7 @@
 	to_chat(owner, span_warning("You feel sheering pain as your body is crushed like a soda can!"))
 	owner.apply_damage(20/severity, BRUTE, def_zone = BODY_ZONE_CHEST)
 
-/obj/item/organ/cyberimp/chest/spine/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags, movement_flags)
+/obj/item/organ/cyberimp/chest/spine/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	stone_overlay = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "stone")
 	organ_owner.add_overlay(stone_overlay)
