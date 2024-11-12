@@ -11,33 +11,28 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-  const { act, data } = useBackend();
-  const { modpacks = [] } = data;
+const { act, data } = useBackend();
+const { modpacks = [] } = data;
 
 export const Modpacks = (props, context) => {
-
   return (
     <Window title="Список модификаций" width={480} height={580}>
-      <Window.Content scrollable>
-	    <NoticeBox>
-            В данный момент идёт наполнение меню модпаков, в игре модицикаций больше чем вы можете тут видеть.
-        </NoticeBox>
-        {modpacks.length === 0 ? (
-          <NoticeBox>
-            Этот сервер не использует какие-либо модификации
-          </NoticeBox>
-        ) : (
-          <Stack fill vertical>
-            <ModpackList modpacks={modpacks} />
-          </Stack>
-        )}
-      </Window.Content>
+      <NoticeBox>
+        В данный момент идёт наполнение меню модпаков, в игре модицикаций больше
+        чем вы можете тут видеть.
+      </NoticeBox>
+      {modpacks.length === 0 ? (
+        <NoticeBox>Этот сервер не использует какие-либо модификации</NoticeBox>
+      ) : (
+        <Stack fill vertical>
+          <ModpackList modpacks={modpacks} />
+        </Stack>
+      )}
     </Window>
   );
 };
 
 const ModpackList = ({ modpacks }) => {
-  
   const [searchText, setSearchText] = useLocalState('searchText', '');
 
   const searchBar = (
