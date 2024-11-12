@@ -64,7 +64,7 @@
 	var/alias = our_client?.prefs?.read_preference(/datum/preference/name/hacker_alias) || pick(GLOB.hacker_aliases)
 
 	if(alias && avatar.real_name != alias)
-		avatar.fully_replace_character_name(avatar.real_name, alias)
+		avatar.fully_replace_character_name(newname = alias)
 
 	for(var/skill_type in old_mind.known_skills)
 		avatar.mind.set_experience(skill_type, old_mind.get_skill_exp(skill_type), silent = TRUE)
