@@ -691,4 +691,4 @@
 		is_disgusted = TRUE
 
 	if(is_disgusted)
-		owner.adjust_disgust(3)
+		owner.adjust_disgust(2)
