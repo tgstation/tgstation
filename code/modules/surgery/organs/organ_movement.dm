@@ -83,7 +83,7 @@
 	receiver.organs_slot[slot] = src
 	owner = receiver
 
-	on_mob_insert(receiver, special)
+	on_mob_insert(receiver, special, movement_flags)
 
 	return TRUE
 
@@ -154,7 +154,7 @@
 
 	owner = null
 
-	on_mob_remove(organ_owner, special)
+	on_mob_remove(organ_owner, special, movement_flags)
 
 	return TRUE
 
