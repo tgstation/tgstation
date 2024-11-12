@@ -17,7 +17,6 @@
 	required_drink_type = /datum/reagent/blood
 	name = "glass of tomato juice"
 	desc = "Are you sure this is tomato juice?"
-	icon_state = "glass_red"
 
 	// FEED ME
 /datum/reagent/blood/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)

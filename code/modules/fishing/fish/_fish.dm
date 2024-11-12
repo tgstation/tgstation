@@ -212,7 +212,7 @@
 	if(src == held_item)
 		context[SCREENTIP_CONTEXT_LMB] = "Pet"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(held_item, /obj/item/fish_feed))
+	if(istype(held_item, /obj/item/reagent_containers/cup/fish_feed))
 		context[SCREENTIP_CONTEXT_LMB] = "Feed"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(istype(held_item, /obj/item/fish_analyzer))
@@ -227,7 +227,7 @@
 		balloon_alert(user, "it's stuck to your hand!")
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "releasing fish...")
-	if(!do_after(src, 3 SECONDS, interacting_with))
+	if(!do_after(user, 3 SECONDS, interacting_with))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "fish released")
 	var/goodbye_text = "Bye bye [name]."
@@ -419,7 +419,7 @@
 	return ..()
 
 /obj/item/fish/attackby(obj/item/item, mob/living/user, params)
-	if(!istype(item, /obj/item/fish_feed))
+	if(!istype(item, /obj/item/reagent_containers/cup/fish_feed))
 		return ..()
 	if(!item.reagents.total_volume)
 		balloon_alert(user, "[item.name] is empty!")
