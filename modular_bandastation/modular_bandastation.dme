@@ -7,6 +7,7 @@
 #include "_singletons/_singletons.dme"
 #include "admin/_admin.dme"
 #include "aesthetics/_aesthetics.dme"
+#include "aesthetics_sounds/_aesthetics_sounds.dme"
 #include "automapper/_automapper.dme"
 #include "ai_laws/_ai_laws.dme"
 #include "autohiss/_autohiss.dme"
@@ -35,3 +36,4 @@
 #include "preferences/_preferences.dme"
 #include "jukebox/_jukebox.dme"
 #include "objects/_objects.dme"
+#include "overrides/_overrides.dme"

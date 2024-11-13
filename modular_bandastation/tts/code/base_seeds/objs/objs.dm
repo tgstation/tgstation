@@ -1,5 +1,13 @@
+// Adding
+/obj/item/taperecorder/add_tts_component()
+	AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/xenia)
+
 /obj/machinery/add_tts_component()
 	AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/glados)
+
+// Removal
+/obj/item/modular_computer/add_tts_component()
+	return
 
 /obj/machinery/airalarm/add_tts_component()
 	return
@@ -19,11 +27,8 @@
 /obj/machinery/mecha_part_fabricator/add_tts_component()
 	return
 
-/obj/item/modular_computer/add_tts_component()
+/obj/machinery/newscaster/add_tts_component()
 	return
 
-/obj/item/taperecorder/add_tts_component()
-	AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/xenia)
-
-/obj/machinery/newscaster/add_tts_component()
+/obj/machinery/scanner_gate/add_tts_component()
 	return
