@@ -140,7 +140,7 @@
 		organ_owner.clear_mood_event("brain_damage")
 
 /obj/item/organ/brain/update_icon_state()
-	icon_state = "[initial(icon_state)][smooth_brain ? "-smooth_brain" : ""]"
+	icon_state = "[initial(icon_state)][smooth_brain ? "-smooth" : ""]"
 	return ..()
 
 /obj/item/organ/brain/proc/transfer_identity(mob/living/L)
