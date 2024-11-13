@@ -4763,6 +4763,7 @@
 #include "code\modules\mining\lavaland\necropolis_chests.dm"
 #include "code\modules\mining\lavaland\tendril_loot.dm"
 #include "code\modules\mob\emote.dm"
+#include "code\modules\mob\init_signals.dm"
 #include "code\modules\mob\inventory.dm"
 #include "code\modules\mob\login.dm"
 #include "code\modules\mob\logout.dm"

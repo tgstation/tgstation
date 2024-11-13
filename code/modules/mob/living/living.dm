@@ -3,7 +3,6 @@
 	if(initial_size != RESIZE_DEFAULT_SIZE)
 		update_transform(initial_size)
 	AddElement(/datum/element/movetype_handler)
-	register_init_signals()
 	if(unique_name)
 		set_name()
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
