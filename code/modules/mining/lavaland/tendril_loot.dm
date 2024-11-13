@@ -759,11 +759,12 @@
 	if(attack_type == PROJECTILE_ATTACK)
 		berserk_value *= PROJECTILE_HIT_MULTIPLIER
 	berserk_charge = clamp(round(berserk_charge + berserk_value), 0, MAX_BERSERK_CHARGE)
-	var/datum/action/item_action/berserk_mode/ragemode = locate() in actions
 	if(berserk_charge >= MAX_BERSERK_CHARGE)
+		var/datum/action/item_action/berserk_mode/ragemode = locate() in actions
 		to_chat(owner, span_notice("Berserk mode is fully charged."))
 		balloon_alert(owner, "berserk charged")
 		ragemode?.build_all_button_icons(UPDATE_BUTTON_STATUS)
+
 /obj/item/clothing/head/hooded/berserker/IsReflect()
 	if(berserk_active)
 		return TRUE
@@ -782,6 +783,7 @@
 	berserk_active = TRUE
 	START_PROCESSING(SSobj, src)
 	ragemode?.build_all_button_icons(UPDATE_BUTTON_STATUS)
+
 /// Ends berserk, reverting the changes from the proc [berserk_mode]
 /obj/item/clothing/head/hooded/berserker/proc/end_berserk(mob/living/carbon/human/user)
 	if(!berserk_active)
