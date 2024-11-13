@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "You can no longer crush random unsuspecting people with vendors by ventcrawling while cursed."
-  - qol: "AFK players don't count as \"watchers\" for cursed stuff."

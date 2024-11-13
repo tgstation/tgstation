@@ -1,4 +1,0 @@
-author: "Goat"
-delete-after: True
-changes:
-  - qol: "Curator console's inventory screen will now update when you change pages or remove items."

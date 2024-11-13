@@ -1,4 +1,0 @@
-author: "harryob"
-delete-after: True
-changes:
-  - bugfix: "ghosts observing ghosts can no longer click on their screen alerts"
