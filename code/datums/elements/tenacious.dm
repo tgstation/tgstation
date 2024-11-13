@@ -18,8 +18,9 @@
 /datum/element/tenacious/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_MOB_STATCHANGE)
 	REMOVE_TRAIT(target, TRAIT_TENACIOUS, ELEMENT_TRAIT(type))
-	if(target.remove_movespeed_modifier(/datum/movespeed_modifier/tenacious))
-		target.balloon_alert(target, "your tenacity wears off")
+	var/mob/living/carbon/human/valid_target = target
+	if(valid_target.remove_movespeed_modifier(/datum/movespeed_modifier/tenacious))
+		valid_target.balloon_alert(valid_target, "your tenacity wears off")
 	return ..()
 
 ///signal called by the stat of the target changing
