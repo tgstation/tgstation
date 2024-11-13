@@ -21,18 +21,18 @@
 	src.beauty = beauty
 
 	var/atom/atom = target
-	var/area/current_area = (!isitem(atom)|| isturf(atom.loc)) ? get_area(atom) : null
+	var/area/current_area = get_area(atom)
 	if(!beauty_counter[target] && ismovable(atom))
 		var/atom/movable/mov_target = atom
+		var/is_item = isitem(mov_target)
+		var/register_signals = (!is_item || isturf(mov_target.loc))
 		mov_target.become_area_sensitive(BEAUTY_ELEMENT_TRAIT)
-		if(isitem(target))
+		if(is_item)
 			RegisterSignal(mov_target, COMSIG_MOVABLE_MOVED, PROC_REF(on_item_moved))
-			if(current_area)
-				mov_target.become_area_sensitive(BEAUTY_ELEMENT_TRAIT)
-		else
+		if(register_signals)
 			mov_target.become_area_sensitive(BEAUTY_ELEMENT_TRAIT)
-		RegisterSignal(mov_target, COMSIG_ENTER_AREA, PROC_REF(enter_area))
-		RegisterSignal(mov_target, COMSIG_EXIT_AREA, PROC_REF(exit_area))
+			RegisterSignal(mov_target, COMSIG_ENTER_AREA, PROC_REF(enter_area))
+			RegisterSignal(mov_target, COMSIG_EXIT_AREA, PROC_REF(exit_area))
 
 	beauty_counter[atom]++
 
