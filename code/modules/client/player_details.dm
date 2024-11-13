@@ -39,6 +39,8 @@ GLOBAL_LIST_EMPTY_TYPED(player_details, /datum/player_details)
 
 /// Returns the full version string (i.e 515.1642) of the BYOND version and build.
 /datum/player_details/proc/full_byond_version()
+	if(!byond_version)
+		return "Unknown"
 	return "[byond_version].[byond_build || "xxx"]"
 
 /// Adds the new names to the player's played_names list on their /datum/player_details for use of admins.
