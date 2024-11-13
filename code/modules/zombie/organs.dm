@@ -25,7 +25,7 @@
 
 /obj/item/organ/zombie_infection/on_mob_insert(mob/living/carbon/M, special = FALSE, movement_flags)
 	. = ..()
-
+	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(organ_owner_died))
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/zombie_infection/on_mob_remove(mob/living/carbon/M, special = FALSE, movement_flags)
@@ -35,13 +35,6 @@
 		M.set_species(old_species)
 	if(timer_id)
 		deltimer(timer_id)
-
-/obj/item/organ/zombie_infection/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
-	. = ..()
-	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(organ_owner_died))
-
-/obj/item/organ/zombie_infection/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
-	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_LIVING_DEATH)
 
 /obj/item/organ/zombie_infection/proc/organ_owner_died(mob/living/carbon/source, gibbed)

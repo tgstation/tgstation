@@ -96,7 +96,7 @@
 /obj/item/organ/heart/gland/on_mob_insert(mob/living/carbon/gland_owner, special = FALSE, movement_flags)
 	. = ..()
 
-	if(!special && uses) // Special 2 means abductor surgery
+	if(!(movement_flags & FROM_ABDUCTOR_SURGERY) && uses)
 		Start()
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 	hud.add_atom_to_hud(gland_owner)

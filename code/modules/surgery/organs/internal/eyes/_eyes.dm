@@ -56,6 +56,8 @@
 	apply_damaged_eye_effects()
 	refresh(receiver, call_update = TRUE)
 	RegisterSignal(receiver, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
+	if (scarring)
+		apply_scarring_effects()
 
 /// Refreshes the visuals of the eyes
 /// If call_update is TRUE, we also will call update_body
@@ -259,11 +261,6 @@
 	owner.cure_nearsighted(side == RIGHT_EYE_SCAR ? TRAIT_RIGHT_EYE_SCAR : TRAIT_LEFT_EYE_SCAR)
 	owner.cure_blind(EYE_SCARRING_TRAIT)
 	owner.update_body()
-
-/obj/item/organ/eyes/on_mob_insert(mob/living/carbon/eye_owner)
-	. = ..()
-	if (scarring)
-		apply_scarring_effects()
 
 /obj/item/organ/eyes/on_mob_remove(mob/living/carbon/eye_owner)
 	. = ..()
@@ -555,9 +552,6 @@
 	left_eye_color_string = eye_color_left
 	right_eye_color_string = eye_color_right
 	update_mob_eye_color(eye_recipient)
-
-/obj/item/organ/eyes/robotic/glow/on_mob_insert(mob/living/carbon/eye_recipient)
-	. = ..()
 	deactivate(close_ui = TRUE)
 	eye.forceMove(eye_recipient)
 
