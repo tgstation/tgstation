@@ -175,8 +175,7 @@ export const OreRedemptionMachine = (props) => {
 };
 
 const MaterialRow = (props) => {
-  const { compact } = props;
-  const { material, onRelease } = props;
+  const { compact, material, onRelease } = props;
 
   const sheet_amounts = Math.floor(material.amount);
   const print_amount = 5;
