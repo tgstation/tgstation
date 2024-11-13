@@ -115,16 +115,15 @@
 /datum/wound/blunt/bone/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT(victim, TRAIT_ANALGESIA))
-		return NONE
 	if(victim.get_active_hand() != limb || !proximity || !victim.combat_mode || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
 		return NONE
 
 	// With a severe or critical wound, you have a 15% or 30% chance to proc pain on hit
 	if(prob((severity - 1) * 15))
 		// And you have a 70% or 50% chance to actually land the blow, respectively
-		if(prob(70 - 20 * (severity - 1)))
-			to_chat(victim, span_userdanger("The fracture in your [limb.plaintext_zone] shoots with pain as you strike [target]!"))
+		if(HAS_TRAIT(victim, TRAIT_ANALGESIA) || prob(70 - 20 * (severity - 1)))
+			if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+				to_chat(victim, span_userdanger("The fracture in your [limb.plaintext_zone] shoots with pain as you strike [target]!"))
 			victim.apply_damage(rand(1, 5), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 		else
 			victim.visible_message(span_danger("[victim] weakly strikes [target] with [victim.p_their()] broken [limb.plaintext_zone], recoiling from pain!"), \
@@ -140,9 +139,6 @@
 /datum/wound/blunt/bone/proc/firing_with_messed_up_hand(datum/source, obj/item/gun/gun, atom/firing_at, params, zone, bonus_spread_values)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT(victim, TRAIT_ANALGESIA))
-		return
-
 	switch(limb.body_zone)
 		if(BODY_ZONE_L_ARM)
 			if(!IS_LEFT(victim.get_held_index_of_item(gun)))
@@ -156,10 +152,12 @@
 			return
 
 	if(gun.recoil > 0 && severity >= WOUND_SEVERITY_SEVERE && prob(25 * (severity - 1)))
-		to_chat(victim, span_danger("The fracture in your [limb.plaintext_zone] shoots with pain as [gun] kicks back!"))
+		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+			to_chat(victim, span_danger("The fracture in your [limb.plaintext_zone] explodes with pain as [gun] kicks back!"))
 		victim.apply_damage(rand(1, 5) * (severity - 1), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 
-	bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (15 * severity * (limb.current_gauze?.splint_factor || 1))
+	if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+		bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (15 * severity * (limb.current_gauze?.splint_factor || 1))
 
 /datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE)
