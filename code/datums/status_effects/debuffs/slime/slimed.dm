@@ -62,7 +62,7 @@
 /datum/status_effect/slimed/on_apply()
 	if(owner.get_organic_health() <= MIN_HEALTH)
 		return FALSE
-	to_chat(owner, span_userdanger("You have been covered in a thick layer of slime! Find a way to wash it off!"))
+	to_chat(owner, span_userdanger("You have been covered in a thick layer of slime! Find a way to wash it off with water, or try to clean it off by clicking the status effect alert!"))
 	return ..()
 
 /datum/status_effect/slimed/proc/remove_stacks(stacks_to_remove = 1)
