@@ -11,8 +11,7 @@
 	if(!ishuman(target))
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/carbon/human/valid_target = target
-	if(valid_target.stat == SOFT_CRIT)
-		on_stat_change(valid_target, new_stat = valid_target.stat) //immediately try adding movement bonus if they're in soft crit
+	on_stat_change(valid_target, new_stat = valid_target.stat) //immediately try adding movement bonus if they're in soft crit
 	RegisterSignal(target, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 	ADD_TRAIT(target, TRAIT_TENACIOUS, ELEMENT_TRAIT(type))
 
