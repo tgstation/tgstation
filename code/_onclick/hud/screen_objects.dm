@@ -241,7 +241,7 @@
 	. = ..()
 
 	if(!handcuff_overlay)
-		var/state = IS_RIGHT(held_index % 2) ? "markus" : "gabrielle"
+		var/state = IS_RIGHT(held_index) ? "markus" : "gabrielle"
 		handcuff_overlay = mutable_appearance('icons/hud/screen_gen.dmi', state)
 
 	if(!hud?.mymob)
