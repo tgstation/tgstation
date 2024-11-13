@@ -31,4 +31,4 @@
 		target.balloon_alert(target, "your tenacity kicks in")
 		target.add_movespeed_modifier(/datum/movespeed_modifier/tenacious)
 	else if(target.remove_movespeed_modifier(/datum/movespeed_modifier/tenacious))
-			target.balloon_alert(target, "your tenacity wears off")
+		target.balloon_alert(target, "your tenacity wears off")
