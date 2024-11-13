@@ -11,13 +11,17 @@
 	if(!ishuman(target))
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/carbon/human/valid_target = target
-	on_stat_change(valid_target, new_stat = valid_target.stat) //immediately try adding movement bonus if they're in soft crit
+	if(valid_target.stat == SOFT_CRIT)
+		on_stat_change(valid_target, new_stat = valid_target.stat) //immediately try adding movement bonus if they're in soft crit
 	RegisterSignal(target, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 	ADD_TRAIT(target, TRAIT_TENACIOUS, ELEMENT_TRAIT(type))
 
 /datum/element/tenacious/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_MOB_STATCHANGE)
 	REMOVE_TRAIT(target, TRAIT_TENACIOUS, ELEMENT_TRAIT(type))
+	if(valid_target.stat == SOFT_CRIT)
+		target.balloon_alert(target, "your tenacity wears off")
+		target.remove_movespeed_modifier(/datum/movespeed_modifier/tenacious)
 	return ..()
 
 ///signal called by the stat of the target changing
