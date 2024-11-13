@@ -20,17 +20,18 @@
 
 	src.beauty = beauty
 
-	var/atom/atom = target
-	var/area/current_area = get_area(atom)
+	var/area/current_area = get_area(target)
 	var/beauty_active = TRUE
-	if(ismovable(atom))
-		var/atom/movable/mov_target = atom
+	if(ismovable(target))
+		var/atom/movable/mov_target = target
 		var/is_item = isitem(mov_target)
-		beauty_active = (!is_item || isturf(mov_target.loc))
+		beauty_active = !is_item || isturf(mov_target.loc)
 		if(!beauty_counter[target])
 			if(is_item)
 				RegisterSignal(mov_target, COMSIG_MOVABLE_MOVED, PROC_REF(on_item_moved))
 			if(beauty_active)
+				if(istype(mov_target.loc, /mob/living/basic/mining/goldgrub))
+					stack_trace("higgs buggson")
 				mov_target.become_area_sensitive(BEAUTY_ELEMENT_TRAIT)
 				RegisterSignal(mov_target, COMSIG_ENTER_AREA, PROC_REF(enter_area))
 				RegisterSignal(mov_target, COMSIG_EXIT_AREA, PROC_REF(exit_area))
@@ -58,9 +59,12 @@
 	old_area.update_beauty()
 
 ///Items only contribute to beauty while not inside other objects or mobs (e.g on the floor, on a table etc.).
-/datum/element/beauty/proc/on_item_moved(obj/item/source, atom/old_loc)
+/datum/element/beauty/proc/on_item_moved(obj/item/source, atom/old_loc, direction, forced)
 	SIGNAL_HANDLER
+
 	var/is_old_turf = isturf(old_loc)
+	if(istype(source, /obj/item/stack/ore))
+		stack_trace("buggson higgs")
 	if(!is_old_turf && isturf(source.loc))
 		source.become_area_sensitive(BEAUTY_ELEMENT_TRAIT)
 		RegisterSignal(source, COMSIG_ENTER_AREA, PROC_REF(enter_area))
@@ -75,7 +79,7 @@
 	if(!beauty_counter[source])
 		return ..()
 
-	var/area/current_area = (!isitem(source)|| isturf(source.loc)) ? get_area(source) : null
+	var/area/current_area = (!isitem(source) || isturf(source.loc)) ? get_area(source) : null
 	if(!QDELETED(source))//lower the 'counter' down by one, update the area, and call parent if it's reached zero.
 		beauty_counter[source]--
 		if(current_area && !current_area.outdoors)
