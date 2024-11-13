@@ -2,6 +2,7 @@
 set -e
 # Generate maps
 tools/nanomap_renderer/nanomap-renderer minimap --w 2040 --h 2040 "./_maps/map_files/Birdshot/birdshot.dmm"
+tools/nanomap_renderer/nanomap-renderer minimap --w 2040 --h 2040 "./_maps/map_files/Cyberiad/Cyberiad.dmm"
 tools/nanomap_renderer/nanomap-renderer minimap --w 2040 --h 2040 "./_maps/map_files/Deltastation/DeltaStation2.dmm"
 tools/nanomap_renderer/nanomap-renderer minimap --w 2040 --h 2040 "./_maps/map_files/IceBoxStation/IceBoxStation.dmm"
 tools/nanomap_renderer/nanomap-renderer minimap --w 2040 --h 2040 "./_maps/map_files/MetaStation/MetaStation.dmm"
@@ -13,6 +14,8 @@ tools/nanomap_renderer/nanomap-renderer minimap --w 2040 --h 2040 "./_maps/map_f
 # Move and rename files so the game understands them
 cd "data/minimaps"
 mv "birdshot-1.png" "Birdshot Station_nanomap_z1.png"
+mv "Cyberiad-1.png" "Cyberiad_nanomap_z1.png"
+mv "Cyberiad-2.png" "Cyberiad_nanomap_z2.png"
 mv "DeltaStation2-1.png" "Delta Station_nanomap_z1.png"
 mv "IceBoxStation-1.png" "Ice Box Station_nanomap_z1.png"
 mv "IceBoxStation-2.png" "Ice Box Station_nanomap_z2.png"
@@ -31,6 +34,8 @@ mv "wawastation-2.png" "Wawastation_nanomap_z2.png"
 mv "Lavaland-1.png" "Lavaland_nanomap_z1.png"
 cd "../../"
 cp "data/minimaps/Birdshot Station_nanomap_z1.png" "icons/_nanomaps"
+cp "data/minimaps/Cyberiad_nanomap_z1.png" "icons/_nanomaps"
+cp "data/minimaps/Cyberiad_nanomap_z2.png" "icons/_nanomaps"
 cp "data/minimaps/Delta Station_nanomap_z1.png" "icons/_nanomaps"
 cp "data/minimaps/Ice Box Station_nanomap_z1.png" "icons/_nanomaps"
 cp "data/minimaps/Ice Box Station_nanomap_z2.png" "icons/_nanomaps"
