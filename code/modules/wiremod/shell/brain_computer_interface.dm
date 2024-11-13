@@ -119,13 +119,13 @@
 		if (resolved_owner)
 			charge_action.Grant(resolved_owner)
 		bci.actions += charge_action
-	else
-		if (!charge_action)
-			return
-		if (resolved_owner)
-			charge_action.Remove(resolved_owner)
-		bci.actions -= charge_action
-		QDEL_NULL(charge_action)
+		return
+	if (!charge_action || PERFORM_ALL_TESTS(organ_sanity))
+		return
+	if (resolved_owner)
+		charge_action.Remove(resolved_owner)
+	bci.actions -= charge_action
+	QDEL_NULL(charge_action)
 
 /obj/item/circuit_component/bci_core/register_shell(atom/movable/shell)
 	bci = shell
