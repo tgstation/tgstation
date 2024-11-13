@@ -50,10 +50,11 @@
 	src.stink_particles = stink_particles
 
 /datum/component/decomposition/Destroy()
-	. = ..()
+	remove_timer()
 	if (stink_particles)
 		var/atom/movable/movable_parent = parent
 		movable_parent.remove_shared_particles("[stink_particles]_[isitem(parent)]")
+	return ..()
 
 /datum/component/decomposition/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_GERM_EXPOSED, PROC_REF(start_timer))
@@ -83,10 +84,6 @@
 
 	var/stink_time = max(0, time_remaining - (original_time * 0.5))
 	stink_timerid = addtimer(CALLBACK(src, PROC_REF(stink_up)), stink_time, TIMER_STOPPABLE | TIMER_UNIQUE)
-
-/datum/component/decomposition/Destroy()
-	remove_timer()
-	return ..()
 
 /// Returns the time remaining in decomp, either from our potential timer or our own value, whichever is more useful
 /datum/component/decomposition/proc/get_time()
