@@ -50,15 +50,6 @@
 	// Brain size logic
 	transform = transform.Scale(brain_size)
 
-/obj/item/organ/brain/examine()
-	. = ..()
-	if (smooth_brain)
-		. += span_notice("All the pesky wrinkles are gone. Now it just needs a good drying...")
-	if(brain_size < 1)
-		. += span_notice("It is a bit on the smaller side...")
-	if(brain_size > 1)
-		. += span_notice("It is bigger than average...")
-
 /obj/item/organ/brain/mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
@@ -241,6 +232,8 @@
 	if(length(skillchips))
 		. += span_info("It has a skillchip embedded in it.")
 	. += brain_damage_examine()
+	if (smooth_brain)
+		. += span_notice("All the pesky wrinkles are gone. Now it just needs a good drying...")
 	if(brain_size < 1)
 		. += span_notice("It is a bit on the smaller side...")
 	if(brain_size > 1)
