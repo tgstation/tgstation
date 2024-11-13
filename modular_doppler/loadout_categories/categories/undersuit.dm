@@ -133,11 +133,11 @@
 	name = "Loincloth, Alt"
 	item_path = /obj/item/clothing/under/dress/skirt/loincloth/loincloth_alt
 
-/datum/loadout_item/undersuit/formal/pencil
+/datum/loadout_item/undersuit/formal
 	name = "Pencilskirt with Shirt"
 	item_path = /obj/item/clothing/under/suit/pencil
 
-/datum/loadout_item/undersuit/formal/pencil/noshirt
+/datum/loadout_item/undersuit/formal/pencil
 	name = "Pencilskirt"
 	item_path = /obj/item/clothing/under/suit/pencil/noshirt
 
