@@ -1,5 +1,5 @@
 /proc/ru_emote_name(emote_name)
-	return GLOB.ru_emote_names[emote_name] || emote_name
+	return GLOB.ru_emote_names[LOWER_TEXT(emote_name)] || emote_name
 
 /proc/ru_emote_message(emote_message)
 	return GLOB.ru_emote_messages[emote_message] || emote_message
