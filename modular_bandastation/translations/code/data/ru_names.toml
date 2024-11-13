@@ -1953,12 +1953,12 @@ prepositional = "суперконденсаторе"
 gender = "male"
 
 ["phasic scanning module"]
-nominative = "улучшенный сканирующий модуль"
-genitive = "улучшенного сканирующего модуля"
-dative = "улучшенному сканирующему модулю"
-accusative = "улучшенный сканирующий модуль"
-instrumental = "улучшенным сканирующим модулем"
-prepositional = "улучшенном сканирующем модуле"
+nominative = "фазовый сканирующий модуль"
+genitive = "фазового сканирующего модуля"
+dative = "фазовому сканирующему модулю"
+accusative = "фазовый сканирующий модуль"
+instrumental = "фазовым сканирующим модулем"
+prepositional = "фазовом сканирующем модуле"
 gender = "male"
 
 ["pico-servo"]
@@ -1999,13 +1999,13 @@ prepositional = "квадратичном конденсаторе"
 gender = "male"
 
 ["triphasic scanning module"]
-nominative = "грудь"
-genitive = "груди"
-dative = "груди"
-accusative = "грудь"
-instrumental = "грудью"
-prepositional = "груди"
-gender = "female"
+nominative = "трёхфазный сканирующий модуль"
+genitive = "трёхфазного сканирующего модуля"
+dative = "трёхфазному сканирующему модулю"
+accusative = "трёхфазный сканирующий модуль"
+instrumental = "трёхфазным сканирующим модулем"
+prepositional = "о трёхфазном сканирующем модуле"
+gender = "male"
 
 ["femto-servo"]
 nominative = "фемтосервопривод"
