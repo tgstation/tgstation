@@ -96,7 +96,6 @@
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
-	register_init_signals()
 	log_mob_tag("TAG: [tag] CREATED: [key_name(src)] \[[type]\]")
 
 /**
