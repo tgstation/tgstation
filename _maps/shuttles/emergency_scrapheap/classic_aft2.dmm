@@ -8,10 +8,6 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
-"b" = (
-/obj/structure/lattice,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "c" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -294,7 +290,7 @@ l
 U
 D
 T
-b
+l
 l
 "}
 (4,1,1) = {"
