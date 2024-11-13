@@ -55,3 +55,14 @@
 /obj/item/clothing/under/misc/gear_harness/Initialize(mapload)
 	. = ..()
 	allowed += GLOB.colonist_suit_allowed
+
+/obj/item/clothing/under/costume/bunnysuit
+	name = "bunny suit"
+	desc = "Makes the wearer more attractive; even and especially men."
+	icon_state = "bunnysuit"
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/under/miscellania.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/under/miscellania.dmi'
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	body_parts_covered = CHEST|GROIN
+	can_adjust = TRUE
+	alt_covers_chest = FALSE

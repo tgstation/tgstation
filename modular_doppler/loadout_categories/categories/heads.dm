@@ -100,4 +100,4 @@
 
 /datum/loadout_item/head/maid_headband
 	name = "Maid Headband"
-	item_path = /obj/item/clothing/head/costume/maidheadband
+	item_path = /obj/item/clothing/head/maid_headband

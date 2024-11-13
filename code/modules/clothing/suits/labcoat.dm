@@ -58,6 +58,7 @@
 	desc = "A dark blue jacket for paramedics with reflective stripes."
 	icon_state = "labcoat_paramedic"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON //DOPPLER EDIT - ADDITION - Makes this actually work for now.
 
 /obj/item/clothing/suit/toggle/labcoat/paramedic/Initialize(mapload)
 	. = ..()

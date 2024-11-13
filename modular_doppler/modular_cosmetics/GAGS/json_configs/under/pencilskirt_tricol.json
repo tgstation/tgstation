@@ -1,0 +1,27 @@
+{
+	"pencilskirt_checkers_shirt": [
+		{
+			"type": "icon_state",
+			"icon_state": "pencilskirt_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pencilskirt_checkers",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pencilskirt_belt",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pencilskirt_shirt",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}
