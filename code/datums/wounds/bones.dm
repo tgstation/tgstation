@@ -61,9 +61,10 @@
 /datum/wound/blunt/bone/set_victim(new_victim)
 
 	if (victim)
-		UnregisterSignal(victim, COMSIG_LIVING_UNARMED_ATTACK)
+		UnregisterSignal(victim, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_FIRED_GUN))
 	if (new_victim)
 		RegisterSignal(new_victim, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(attack_with_hurt_hand))
+		RegisterSignal(new_victim, COMSIG_MOB_FIRED_GUN, PROC_REF(firing_with_messed_up_hand))
 
 	return ..()
 
@@ -114,6 +115,8 @@
 /datum/wound/blunt/bone/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
 	SIGNAL_HANDLER
 
+	if(HAS_TRAIT(victim, TRAIT_ANALGESIA))
+		return NONE
 	if(victim.get_active_hand() != limb || !proximity || !victim.combat_mode || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
 		return NONE
 
@@ -122,16 +125,41 @@
 		// And you have a 70% or 50% chance to actually land the blow, respectively
 		if(prob(70 - 20 * (severity - 1)))
 			to_chat(victim, span_userdanger("The fracture in your [limb.plaintext_zone] shoots with pain as you strike [target]!"))
-			limb.receive_damage(brute=rand(1,5))
+			victim.apply_damage(rand(1, 5), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 		else
 			victim.visible_message(span_danger("[victim] weakly strikes [target] with [victim.p_their()] broken [limb.plaintext_zone], recoiling from pain!"), \
 			span_userdanger("You fail to strike [target] as the fracture in your [limb.plaintext_zone] lights up in unbearable pain!"), vision_distance=COMBAT_MESSAGE_RANGE)
 			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
 			victim.Stun(0.5 SECONDS)
-			limb.receive_damage(brute=rand(3,7))
+			victim.apply_damage(rand(3, 7), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	return NONE
+
+/// If we're a human who's firing a gun with a broken arm, we might hurt ourselves doing so
+/datum/wound/blunt/bone/proc/firing_with_messed_up_hand(datum/source, obj/item/gun/gun, atom/firing_at, params, zone, bonus_spread_values)
+	SIGNAL_HANDLER
+
+	if(HAS_TRAIT(victim, TRAIT_ANALGESIA))
+		return
+
+	switch(limb.body_zone)
+		if(BODY_ZONE_L_ARM)
+			if(!IS_LEFT(victim.get_held_index_of_item(gun)))
+				return
+
+		if(BODY_ZONE_R_ARM)
+			if(!IS_RIGHT(victim.get_held_index_of_item(gun)))
+				return
+
+		else
+			return
+
+	if(gun.recoil > 0 && severity >= WOUND_SEVERITY_SEVERE && prob(25 * (severity - 1)))
+		to_chat(victim, span_danger("The fracture in your [limb.plaintext_zone] shoots with pain as [gun] kicks back!"))
+		victim.apply_damage(rand(1, 5) * (severity - 1), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
+
+	bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (15 * severity * (limb.current_gauze?.splint_factor || 1))
 
 /datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE)
