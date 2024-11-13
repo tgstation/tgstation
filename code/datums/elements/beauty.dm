@@ -22,21 +22,22 @@
 
 	var/atom/atom = target
 	var/area/current_area = get_area(atom)
-	if(!beauty_counter[target] && ismovable(atom))
+	var/beauty_active = TRUE
+	if(ismovable(atom))
 		var/atom/movable/mov_target = atom
 		var/is_item = isitem(mov_target)
-		var/register_signals = (!is_item || isturf(mov_target.loc))
-		mov_target.become_area_sensitive(BEAUTY_ELEMENT_TRAIT)
-		if(is_item)
-			RegisterSignal(mov_target, COMSIG_MOVABLE_MOVED, PROC_REF(on_item_moved))
-		if(register_signals)
-			mov_target.become_area_sensitive(BEAUTY_ELEMENT_TRAIT)
-			RegisterSignal(mov_target, COMSIG_ENTER_AREA, PROC_REF(enter_area))
-			RegisterSignal(mov_target, COMSIG_EXIT_AREA, PROC_REF(exit_area))
+		beauty_active = (!is_item || isturf(mov_target.loc))
+		if(!beauty_counter[target])
+			if(is_item)
+				RegisterSignal(mov_target, COMSIG_MOVABLE_MOVED, PROC_REF(on_item_moved))
+			if(beauty_active)
+				mov_target.become_area_sensitive(BEAUTY_ELEMENT_TRAIT)
+				RegisterSignal(mov_target, COMSIG_ENTER_AREA, PROC_REF(enter_area))
+				RegisterSignal(mov_target, COMSIG_EXIT_AREA, PROC_REF(exit_area))
 
 	beauty_counter[atom]++
 
-	if(current_area && !current_area.outdoors)
+	if(current_area && !current_area.outdoors && beauty_active)
 		current_area.totalbeauty += beauty
 		current_area.update_beauty()
 

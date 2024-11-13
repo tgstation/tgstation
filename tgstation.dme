@@ -1044,7 +1044,6 @@
 #include "code\datums\components\amputating_limbs.dm"
 #include "code\datums\components\anti_magic.dm"
 #include "code\datums\components\appearance_on_aggro.dm"
-#include "code\datums\components\aquarium.dm"
 #include "code\datums\components\aquarium_content.dm"
 #include "code\datums\components\area_based_godmode.dm"
 #include "code\datums\components\area_sound_manager.dm"
