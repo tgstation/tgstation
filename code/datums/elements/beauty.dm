@@ -36,7 +36,7 @@
 				RegisterSignal(mov_target, COMSIG_ENTER_AREA, PROC_REF(enter_area))
 				RegisterSignal(mov_target, COMSIG_EXIT_AREA, PROC_REF(exit_area))
 
-	beauty_counter[atom]++
+	beauty_counter[target]++
 
 	if(current_area && !current_area.outdoors && beauty_active)
 		current_area.totalbeauty += beauty
