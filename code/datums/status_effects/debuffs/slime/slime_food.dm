@@ -4,8 +4,6 @@
 	alert_type = null
 	var/befriend_chance = 30
 	var/mob/living/carbon/human/feeder
-	/// Our feeder's color, cached in case they get deleted or change their runechat color
-	var/feeder_color
 
 /datum/status_effect/slime_food/on_creation(mob/living/new_owner, mob/living/carbon/human/feeder, befriend_chance = 100)
 	src.befriend_chance = befriend_chance
@@ -23,15 +21,10 @@
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_feeder_deleted))
 	RegisterSignal(owner, COMSIG_SLIME_DRAINED, PROC_REF(on_drained))
 	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-
-	feeder_color = "[feeder.chat_color]a0"
-	var/obj/effect/abstract/shared_particle_holder/shared_holder = owner.add_shared_particles(/particles/pollen, "slime_food_[feeder_color]")
-	shared_holder.particles.color = feeder_color
 	return ..()
 
 /datum/status_effect/slime_food/on_remove()
 	feeder = null
-	owner.remove_shared_particles("slime_food_[feeder_color]")
 
 ///Handles the source of the pheromones getting deleted, or the owner getting washed
 /datum/status_effect/slime_food/proc/on_feeder_deleted(datum/source)
