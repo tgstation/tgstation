@@ -89,6 +89,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas)
 GLOBAL_LIST_INIT(prototype_organs, typecacheof(list(
 	/obj/item/organ,
 	/obj/item/organ/wings,
+	/obj/item/organ/wings/functional,
+	/obj/item/organ/wings/functional/moth,
 	/obj/item/organ/cyberimp,
 	/obj/item/organ/cyberimp/brain,
 	/obj/item/organ/cyberimp/mouth,
