@@ -1,0 +1,4 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - qol: "mech fabricator output direction can now be changed with a drag pull"

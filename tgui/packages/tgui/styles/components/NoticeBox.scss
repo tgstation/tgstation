@@ -9,9 +9,9 @@
 @use '../functions.scss' as *;
 
 // NoticeBox
-$background-color: #bb9b68 !default;
+$background-color: hsl(36.9, 37.9%, 57.1%) !default;
 $color-stripes: rgba(0, 0, 0, 0.1) !default;
-$color-border: #272727 !default;
+$color-border: hsl(0, 0%, 15.3%) !default;
 $bg-map: colors.$bg-map !default;
 
 .NoticeBox {

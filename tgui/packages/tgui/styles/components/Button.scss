@@ -8,7 +8,7 @@
 @use '../functions.scss' as *;
 
 $color-default: colors.bg(colors.$primary) !default;
-$color-disabled: #999999 !default;
+$color-disabled: hsl(0, 0%, 60%) !default;
 $color-selected: colors.bg(colors.$green) !default;
 $color-caution: colors.bg(colors.$yellow) !default;
 $color-danger: colors.bg(colors.$red) !default;
