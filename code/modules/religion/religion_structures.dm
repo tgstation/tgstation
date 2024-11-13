@@ -109,7 +109,7 @@
 	new /obj/effect/decal/cleanable/ash(drop_location())
 	qdel(src)
 
-/obj/item/ritual_totem/can_be_pulled(user, grab_state, force)
+/obj/item/ritual_totem/can_be_pulled(user, force)
 	. = ..()
 	return FALSE //no
 

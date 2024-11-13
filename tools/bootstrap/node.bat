@@ -1,8 +1,16 @@
 @echo off
 set NODE_SKIP_PLATFORM_CHECK=1
-call powershell -NoLogo -ExecutionPolicy Bypass -File "%~dp0\node_.ps1" Download-Node
+
+:: Call pwsh if available
+set "powershellCmd=powershell"
+where pwsh >nul 2>nul
+if %errorlevel%==0 (
+    set "powershellCmd=pwsh"
+)
+
+call %powershellCmd% -NoLogo -ExecutionPolicy Bypass -File "%~dp0\node_.ps1" Download-Node
 for /f "tokens=* USEBACKQ" %%s in (`
-	call powershell -NoLogo -ExecutionPolicy Bypass -File "%~dp0\node_.ps1" Get-Path
+	call %powershellCmd% -NoLogo -ExecutionPolicy Bypass -File "%~dp0\node_.ps1" Get-Path
 `) do (
 	set "PATH=%%s;%PATH%"
 )

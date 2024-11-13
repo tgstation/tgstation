@@ -257,14 +257,14 @@
 		if(!include_subtypes)
 			break
 
-	//inform others about our reagents being removed
-	for(var/datum/reagent/removed_reagent as anything in removed_reagents)
-		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, removed_reagent, removed_reagents[removed_reagent])
-
 	//update the holder & handle reactions
 	update_total()
 	if(!safety)
 		handle_reactions()
+
+	//inform others about our reagents being removed
+	for(var/datum/reagent/removed_reagent as anything in removed_reagents)
+		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, removed_reagent, removed_reagents[removed_reagent])
 
 	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
@@ -779,7 +779,7 @@
  *
  * Arguments
  * - Atom/target: What mob/turf/object is being exposed to reagents? This is your reaction target.
- * - Methods: What reaction type is the reagent itself going to call on the reaction target? Types are TOUCH, INGEST, VAPOR, PATCH, and INJECT.
+ * - Methods: What reaction type is the reagent itself going to call on the reaction target? Types are TOUCH, INGEST, VAPOR, PATCH, INJECT and INHALE.
  * - Volume_modifier: What is the reagent volume multiplied by when exposed? Note that this is called on the volume of EVERY reagent in the base body, so factor in your Maximum_Volume if necessary!
  * - Show_message: Whether to display anything to mobs when they are exposed.
  * - list/datum/reagent/r_to_expose: list of reagents to expose. if null will expose the reagents present in this holder instead

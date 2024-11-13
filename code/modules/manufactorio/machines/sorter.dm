@@ -5,7 +5,7 @@
 	layer = BELOW_OPEN_DOOR_LAYER
 	density = FALSE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
-	circuit = /obj/item/circuitboard/machine/manusorter 
+	circuit = /obj/item/circuitboard/machine/manusorter
 	/// for mappers; filter path = list(direction, value), otherwise a list of initialized filters
 	var/list/sort_filters = list()
 	/// dir to push to if there is no criteria
@@ -65,7 +65,7 @@
 		return
 	switch(action)
 		if("del_filter")
-			var/datum/sortrouter_filter/filter = locate(params["ref"])
+			var/datum/sortrouter_filter/filter = locate(params["ref"]) in sort_filters
 			if(isnull(filter))
 				return
 			sort_filters -= filter
@@ -87,7 +87,7 @@
 			sort_filters += new target_type(src)
 			return TRUE
 		if("rotate")
-			var/datum/sortrouter_filter/filter = locate(params["ref"])
+			var/datum/sortrouter_filter/filter = locate(params["ref"]) in sort_filters
 			if(isnull(filter))
 				return
 			var/next_ind = GLOB.cardinals.Find(filter.dir_target) + 1
@@ -98,13 +98,13 @@
 			dir_if_not_met = GLOB.cardinals[WRAP(next_ind, 1, 5)]
 			return TRUE
 		if("edit")
-			var/datum/sortrouter_filter/filter = locate(params["ref"])
+			var/datum/sortrouter_filter/filter = locate(params["ref"]) in sort_filters
 			if(isnull(filter))
 				return
 			filter.edit(usr)
 			return TRUE
 		if("shift")
-			var/datum/sortrouter_filter/filter = locate(params["ref"])
+			var/datum/sortrouter_filter/filter = locate(params["ref"]) in sort_filters
 			if(isnull(filter))
 				return
 			var/next_ind = WRAP(sort_filters.Find(filter) + text2num(params["amount"]), 1, length(sort_filters)+1)
