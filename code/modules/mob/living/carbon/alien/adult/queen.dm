@@ -61,7 +61,7 @@
 	return ..()
 
 /mob/living/carbon/alien/adult/royal/queen/set_name()
-	if(get_alien_type(/mob/living/carbon/alien/adult/royal/queen, src))
+	if(get_alien_type(/mob/living/carbon/alien/adult/royal/queen, ignored = src))
 		name = "alien princess"
 	return ..()
 
