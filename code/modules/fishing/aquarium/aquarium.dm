@@ -57,38 +57,24 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/aquarium/attackby(obj/item/item, mob/living/user, params)
-	if(broken)
-		var/obj/item/stack/sheet/glass/glass = item
-		if(istype(glass))
-			if(glass.get_amount() < 2)
-				balloon_alert(user, "it needs two sheets!")
-				return
-			balloon_alert(user, "fixing the aquarium...")
-			if(do_after(user, 2 SECONDS, target = src))
-				glass.use(2)
-				broken = FALSE
-				atom_integrity = max_integrity
-				update_appearance()
-			return TRUE
-
-	if(istype(item, /obj/item/aquarium_upgrade))
-		var/obj/item/aquarium_upgrade/upgrade = item
-		if(upgrade.upgrade_from_type != type)
-			balloon_alert(user, "wrong kind of aquarium!")
-			return
-		balloon_alert(user, "upgrading...")
-		if(!do_after(user, 5 SECONDS, src))
-			return
-		var/obj/structure/aquarium/upgraded_aquarium = new upgrade.upgrade_to_type(loc)
-		for(var/atom/movable/moving in contents)
-			moving.forceMove(upgraded_aquarium)
-		balloon_alert(user, "upgraded")
-		qdel(upgrade)
-		qdel(src)
+/obj/structure/aquarium/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/sheet/glass))
 		return
-
-	return ..()
+	if(!broken)
+		balloon_alert(user, "aquarium not broken!")
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/stack/sheet/glass/glass = tool
+	if(glass.get_amount() < 2)
+		balloon_alert(user, "it needs two sheets!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "fixing the aquarium...")
+	if(!do_after(user, 2 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	glass.use(2)
+	broken = FALSE
+	atom_integrity = max_integrity
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/aquarium/atom_break(damage_flag)
 	. = ..()
@@ -131,13 +117,13 @@
 /obj/item/fish_tank
 	name = "fish tank"
 	desc = "A more portable sort of aquarium to store various fishes in, unless they're too big or there're too many of them."
-
 	icon = 'icons/obj/aquarium/tanks.dmi'
 	icon_state = "fish_tank_map"
 	base_icon_state = "fish_tank"
-
 	force = 5
-
+	throwforce = 5
+	throw_range = 3
+	w_class = WEIGHT_CLASS_BULKY
 	item_flags = SLOWS_WHILE_IN_HAND
 
 	custom_price = PAYCHECK_CREW * 9
@@ -154,6 +140,15 @@
 	///Tracks the sum of the weight of all fish in this tank
 	var/current_summed_weight = 0
 
+	var/slowdown_coeff = 1
+
+	///The minimum fluid temperature of this fish tank
+	var/min_fluid_temp = MIN_AQUARIUM_TEMP + 12
+	///The maximum fluid temperature of this fish tank
+	var/max_fluid_temp = MAX_AQUARIUM_TEMP - 32
+	///The reagent capacity of this fish tank
+	var/reagent_size = 4
+
 /obj/item/fish_tank/Initialize(mapload)
 	. = ..()
 	update_appearance()
@@ -164,9 +159,9 @@
 		min_py = 6,\
 		min_py = 24,\
 		default_beauty = 100,\
-		reagents_size = 4,\
-		min_fluid_temp = MIN_AQUARIUM_TEMP + 12,\
-		max_fluid_temp = MAX_AQUARIUM_TEMP - 32,\
+		reagents_size = src.reagent_size,\
+		min_fluid_temp = src.min_fluid_temp,\
+		max_fluid_temp = src.max_fluid_temp,\
 	)
 	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
 	RegisterSignal(src, COMSIG_AQUARIUM_FLUID_CHANGED, PROC_REF(on_aquarium_liquid_changed))
@@ -236,13 +231,14 @@
 		slowdown = 0
 		drag_slowdown = 0
 	else
-		slowdown = GET_FISH_SLOWDOWN(current_summed_weight)
+		slowdown = GET_FISH_SLOWDOWN(current_summed_weight) * slowdown_coeff
 		drag_slowdown = slowdown * 0.5
 	if(ismob(loc))
 		var/mob/mob = loc
 		mob.update_equipment_speed_mods()
 
-	force = 2 + (GET_FISH_WEIGHT_RANK(current_summed_weight) * 3)
+	force = min(2 + (GET_FISH_WEIGHT_RANK(current_summed_weight) * 3), 21)
+	throwforce = force
 
 ///The lawyer's own pet goldfish's fish tank. It used to be an aquarium, but now it can be held and carried around.
 /obj/item/fish_tank/lawyer

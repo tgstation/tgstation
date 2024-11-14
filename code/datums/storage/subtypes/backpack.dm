@@ -1,6 +1,7 @@
 /datum/storage/backpack
 	max_total_storage = 21
 	max_slots = 21
+	exception_hold = list(/obj/item/fish_tank)
 
 /datum/storage/backpack/santabag
 	max_total_storage = 60

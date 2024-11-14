@@ -434,11 +434,11 @@
  * Removes the component from parent, ends up with a null parent
  * Used as a helper proc by the component transfer proc, does not clean up the component like Destroy does
  */
-/datum/component/proc/ClearFromParent()
+/datum/component/proc/ClearFromParent(datum/new_parent)
 	if(!parent)
 		return
 	var/datum/old_parent = parent
-	PreTransfer()
+	PreTransfer(new_parent)
 	_RemoveFromParent()
 	parent = null
 	SEND_SIGNAL(old_parent, COMSIG_COMPONENT_REMOVING, src)
@@ -455,7 +455,7 @@
 	if(!target || target.parent == src)
 		return
 	if(target.parent)
-		target.ClearFromParent()
+		target.ClearFromParent(src)
 	target.parent = src
 	var/result = target.PostTransfer()
 	switch(result)

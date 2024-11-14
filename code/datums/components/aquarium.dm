@@ -7,6 +7,8 @@
  * and a few other common aquarium features.
  */
 /datum/component/aquarium
+	dupe_mode = COMPONENT_DUPE_UNIQUE
+	can_transfer = TRUE
 	/// list of fishes inside the parent object, sorted by type - does not include things with aquarium visuals that are not fish
 	var/list/tracked_fish_by_type
 
@@ -51,6 +53,9 @@
 		AQUARIUM_FLUID_AIR,
 	)
 
+	///The size of the reagents holder which will store fish feed.
+	var/reagents_size
+
 /datum/component/aquarium/Initialize(
 	min_px,
 	max_px,
@@ -66,8 +71,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	src.default_beauty = default_beauty
-	if(default_beauty)
-		update_aquarium_beauty(0)
+	src.reagents_size = reagents_size
 
 	aquarium_zone_min_px = min_px
 	aquarium_zone_max_px = max_px
@@ -77,6 +81,10 @@
 	src.min_fluid_temp = min_fluid_temp
 	src.max_fluid_temp = max_fluid_temp
 	fluid_temp = clamp(fluid_temp, min_fluid_temp, max_fluid_temp)
+
+/datum/component/aquarium/RegisterWithParent()
+	if(default_beauty)
+		update_aquarium_beauty(0)
 
 	RegisterSignals(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON), PROC_REF(on_entered))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
@@ -93,7 +101,10 @@
 
 	if(reagents_size > 0)
 		RegisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
-		movable.create_reagents(reagents_size, SEALED_CONTAINER)
+		if(!movable.reagents)
+			movable.create_reagents(reagents_size, SEALED_CONTAINER)
+		else if(movable.reagents.total_volume)
+			start_autofeed(movable.reagents)
 		RegisterSignal(movable, COMSIG_PLUNGER_ACT, PROC_REF(on_plunger_act))
 
 	RegisterSignal(movable, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
@@ -114,13 +125,56 @@
 
 	ADD_TRAIT(movable, TRAIT_IS_AQUARIUM, REF(src))
 
-/datum/component/aquarium/Destroy()
+/datum/component/aquarium/UnregisterFromParent()
 	var/atom/movable/movable = parent
+	UnregisterSignal(movable, list(
+		COMSIG_ATOM_ENTERED,
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON,
+		COMSIG_ATOM_EXITED,
+		COMSIG_AQUARIUM_GET_REPRODUCTION_CANDIDATES,
+		COMSIG_AQUARIUM_CHECK_EVOLUTION_CONDITIONS,
+		COMSIG_AQUARIUM_SET_VISUAL,
+		COMSIG_AQUARIUM_REMOVE_VISUAL,
+		COMSIG_PLUNGER_ACT,
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_CLICK_ALT,
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ITEM_ATTACK_SELF,
+		COMSIG_ATOM_ATTACK_ROBOT_SECONDARY,
+		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
+		COMSIG_ATOM_UI_INTERACT,
+	))
+	if(movable.reagents)
+		UnregisterSignal(movable, COMSIG_REAGENTS_NEW_REAGENT)
+		STOP_PROCESSING(SSobj, src)
 	beauty_by_content = null
 	tracked_fish_by_type = null
 	movable.remove_traits(list(TRAIT_IS_AQUARIUM, TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), REF(src))
 	REMOVE_KEEP_TOGETHER(movable, REF(src))
-	return ..()
+
+/datum/component/aquarium/PreTransfer(atom/movable/new_parent)
+	if(!istype(new_parent))
+		return
+	if(HAS_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN))
+		ADD_TRAIT(new_parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(src))
+	if(HAS_TRAIT_FROM(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src)))
+		ADD_TRAIT(new_parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(src))
+	var/atom/movable/movable = parent
+	for(var/atom/movable/moving as anything in movable.contents)
+		if(HAS_TRAIT(moving, TRAIT_AQUARIUM_CONTENT))
+			moving.forceMove(new_parent)
+	if(reagents_size)
+		if(!new_parent.reagents)
+			new_parent.create_reagents(reagents_size, SEALED_CONTAINER)
+		movable.reagents.trans_to(new_parent, movable.reagents.total_volume)
+
+/datum/component/aquarium/PostTransfer()
+	if(!ismovable(parent))
+		return COMPONENT_INCOMPATIBLE
+
+/datum/component/aquarium/InheritComponent(datum/component/aquarium/new_comp, i_am_original)
+	fluid_temp = clamp(new_comp.fluid_temp, min_fluid_temp, max_fluid_temp)
+	set_fluid_type(new_comp.fluid_type)
 
 /datum/component/aquarium/proc/on_click_alt(atom/movable/source, mob/living/user)
 	SIGNAL_HANDLER
@@ -449,10 +503,7 @@
 			. = TRUE
 		if("fluid")
 			if(params["fluid"] != fluid_type && (params["fluid"] in fluid_types))
-				fluid_type = params["fluid"]
-				SEND_SIGNAL(movable, COMSIG_AQUARIUM_FLUID_CHANGED, fluid_type)
-				for(var/obj/item/fish/fish as anything in get_fishes())
-					check_fluid_and_temperature(fish)
+				set_fluid_type(params["fluid"])
 			. = TRUE
 		if("allow_breeding")
 			if(HAS_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH))
@@ -476,6 +527,13 @@
 			if(!fish || !new_name || new_name == fish.name)
 				return
 			fish.AddComponent(/datum/component/rename, new_name, fish.desc)
+
+/datum/component/aquarium/proc/set_fluid_type(new_fluid_type)
+	var/atom/movable/movable = parent
+	fluid_type = new_fluid_type
+	SEND_SIGNAL(movable, COMSIG_AQUARIUM_FLUID_CHANGED, fluid_type)
+	for(var/obj/item/fish/fish as anything in get_fishes())
+		check_fluid_and_temperature(fish)
 
 /datum/component/aquarium/proc/admire(atom/movable/source, mob/living/user)
 	source.balloon_alert(user, "admiring aquarium...")

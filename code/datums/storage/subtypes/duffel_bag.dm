@@ -1,6 +1,7 @@
 /datum/storage/duffel
 	max_total_storage = 30
 	max_slots = 21
+	exception_hold = list(/obj/item/fish_tank)
 
 // Syndi bags get some FUN extras
 // You can fit any 2 bulky objects (assuming they're in the whitelist)
@@ -60,6 +61,9 @@
 		/obj/item/storage/bag/money,
 		// Heads!
 		/obj/item/bodypart/head,
+		// Fish
+		/obj/item/fish,
+		/obj/item/fish_tank,
 	)
 
 	// We keep the type list and the typecache list separate...
