@@ -1,0 +1,4 @@
+author: "GremlinSeeker"
+delete-after: True
+changes:
+  - bugfix: "Syndicate Biodome fixes"
