@@ -4,11 +4,11 @@
 	proctype = PROC_REF(reducebang)
 	var/reduce_amount = 1
 
-/datum/component/wearertargeting/earprotection/Initialize(_valid_slots, _reduce_amount = 1)
+/datum/component/wearertargeting/earprotection/Initialize(valid_slots, reduce_amount = 1)
 	. = ..()
-	valid_slots = _valid_slots
-	if(_reduce_amount)
-		reduce_amount = _reduce_amount
+	src.valid_slots = valid_slots
+	if(reduce_amount)
+		src.reduce_amount = reduce_amount
 
 /datum/component/wearertargeting/earprotection/proc/reducebang(datum/source, list/reflist)
 	reflist[1] -= reduce_amount

@@ -38,6 +38,7 @@
 	return TRUE
 
 /datum/status_effect/hallucination/proc/delete_self()
+	SIGNAL_HANDLER
 	qdel(src)
 
 /datum/status_effect/hallucination/on_remove()

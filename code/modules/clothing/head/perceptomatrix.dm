@@ -64,7 +64,7 @@
 /obj/item/clothing/head/helmet/perceptomatrix/Initialize(mapload)
 	. = ..()
 
-	update_icon_state()
+	update_appearance(UPDATE_ICON_STATE)
 	update_anomaly_state()
 
 /obj/item/clothing/head/helmet/perceptomatrix/equipped(mob/living/user, slot)
@@ -162,8 +162,6 @@
 	var/stagger_duration = 3 SECONDS
 	/// The amount of hallucination to apply
 	var/hallucination_duration = 25 SECONDS
-	/// Helmet the spell's bound to.
-	var/obj/item/clothing/head/helmet/perceptomatrix/linked_helmet
 	/// Spark system
 	var/datum/effect_system/spark_spread/quantum/spark_sys
 
