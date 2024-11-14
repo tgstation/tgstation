@@ -30,6 +30,13 @@
 "d" = (
 /turf/closed/wall,
 /area/station/maintenance/port/fore)
+"e" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/sofa/bench,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "f" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/chair/sofa/bench/left{
@@ -101,6 +108,13 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/commons/cryopods)
+"p" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/sofa/bench/right,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "r" = (
 /turf/closed/wall,
 /area/station/commons/cryopods)
@@ -168,6 +182,13 @@
 /obj/structure/sign/poster/timeclock_psa/directional/east,
 /turf/open/floor/wood/tile,
 /area/station/commons/cryopods)
+"z" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/sofa/bench/left,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "B" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -308,10 +329,10 @@
 /turf/closed/wall,
 /area/station/security/checkpoint/customs)
 "T" = (
-/obj/machinery/door/airlock/multi_tile/public/glass{
-	name = "Mini-Bar"
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	name = "Cryogenic Storage"
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/commons/cryopods)
 "U" = (
@@ -424,7 +445,7 @@ g
 i
 G
 F
-a
+p
 "}
 (9,1,1) = {"
 d
@@ -433,7 +454,7 @@ K
 m
 G
 I
-a
+e
 "}
 (10,1,1) = {"
 d
@@ -442,7 +463,7 @@ C
 D
 G
 l
-a
+e
 "}
 (11,1,1) = {"
 d
@@ -451,7 +472,7 @@ P
 s
 G
 j
-a
+z
 "}
 (12,1,1) = {"
 d
