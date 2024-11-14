@@ -66,6 +66,7 @@
 }
 
 .MaterialDock--active .MaterialDock__Dock {
+  animation: materialdock-open 0.125s ease-out;
   @keyframes materialdock-open {
     0% {
       opacity: 0;
@@ -75,8 +76,6 @@
       opacity: 1;
     }
   }
-
-  animation: materialdock-open 0.125s ease-out;
 }
 
 .MaterialDock__Button {

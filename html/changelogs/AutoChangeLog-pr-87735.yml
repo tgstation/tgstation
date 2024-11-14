@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "mortar pedestal now grinds & juices items that previously could not be processed"
-  - bugfix: "plumbing grinder won't destroy slime extracts after grinding"
-  - refactor: "grinding & juicing code has been refactored overall. Please report bugs on github"

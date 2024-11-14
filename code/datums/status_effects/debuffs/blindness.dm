@@ -5,7 +5,7 @@
 /// Nearsighted
 /datum/status_effect/grouped/nearsighted
 	id = "nearsighted"
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = null
 	// This is not "remove on fullheal" as in practice,
 	// fullheal should instead remove all the sources and in turn cure this
@@ -68,7 +68,7 @@
 /// Blindness
 /datum/status_effect/grouped/blindness
 	id = "blindness"
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/blind
 	var/static/list/update_signals = list(
 		SIGNAL_REMOVETRAIT(TRAIT_SIGHT_BYPASS),

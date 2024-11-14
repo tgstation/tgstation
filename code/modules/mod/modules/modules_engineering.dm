@@ -62,12 +62,12 @@
 	var/list/active_traits = list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NEGATES_GRAVITY)
 
 /obj/item/mod/module/magboot/on_activation()
-	mod.wearer.add_traits(active_traits, MOD_TRAIT)
+	mod.wearer.add_traits(active_traits, REF(src))
 	mod.slowdown += slowdown_active
 	mod.wearer.update_equipment_speed_mods()
 
 /obj/item/mod/module/magboot/on_deactivation(display_message = TRUE, deleting = FALSE)
-	mod.wearer.remove_traits(active_traits, MOD_TRAIT)
+	mod.wearer.remove_traits(active_traits, REF(src))
 	mod.slowdown -= slowdown_active
 	mod.wearer.update_equipment_speed_mods()
 
@@ -104,7 +104,7 @@
 
 /obj/item/mod/module/tether/get_configuration()
 	. = ..()
-	.["cut_tethers"] = add_ui_configuration("Cut Tethers", "pin", TRUE)
+	.["cut_tethers"] = add_ui_configuration("Cut Tethers", "button", "scissors")
 
 /obj/item/mod/module/tether/configure_edit(key, value)
 	if (key != "cut_tethers")
@@ -267,14 +267,14 @@
 
 /obj/item/mod/module/rad_protection/on_part_activation()
 	AddComponent(/datum/component/geiger_sound)
-	ADD_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, REF(src))
 	RegisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION, PROC_REF(on_pre_potential_irradiation))
 	for(var/obj/item/part in mod.get_parts(all = TRUE))
 		ADD_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
 
 /obj/item/mod/module/rad_protection/on_part_deactivation(deleting = FALSE)
 	qdel(GetComponent(/datum/component/geiger_sound))
-	REMOVE_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, REF(src))
 	UnregisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION)
 	for(var/obj/item/part in mod.get_parts(all = TRUE))
 		REMOVE_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
@@ -309,10 +309,10 @@
 	required_slots = list(ITEM_SLOT_GLOVES)
 
 /obj/item/mod/module/constructor/on_part_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, REF(src))
 
 /obj/item/mod/module/constructor/on_part_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, REF(src))
 
 /obj/item/mod/module/constructor/on_use()
 	rcd_scan(src, fade_time = 10 SECONDS)
@@ -332,10 +332,10 @@
 	required_slots = list(ITEM_SLOT_HEAD)
 
 /obj/item/mod/module/headprotector/on_part_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
 
 /obj/item/mod/module/headprotector/on_part_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
 
 ///Mister - Sprays water over an area.
 /obj/item/mod/module/mister

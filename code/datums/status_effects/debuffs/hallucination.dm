@@ -94,7 +94,7 @@
 /datum/status_effect/hallucination/sanity
 	id = "low sanity"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = -1 // This lasts "forever", only goes away with sanity gain
+	duration = STATUS_EFFECT_PERMANENT // This lasts "forever", only goes away with sanity gain
 
 /datum/status_effect/hallucination/sanity/on_health_scan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
 	return
