@@ -17,7 +17,7 @@
 
 /obj/item/storage/box/survival/Initialize(mapload)
 	. = ..()
-	if(crafted || !HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+	if(crafted) //DOPPLER EDIT CHANGE - ORIGINAL: if(crafted || !HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		return
 	atom_storage.max_slots += 2
 	atom_storage.max_total_storage += 4
@@ -45,6 +45,11 @@
 
 	if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)) > 1)
 		new /obj/item/climbing_hook/emergency(src)
+
+	//DOPPLER EDIT ADDITION
+	new /obj/item/oxygen_candle(src)
+	new /obj/item/grenade/chem_grenade/smart_metal_foam
+	//DOPPLER EDIT END
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
