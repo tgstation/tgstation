@@ -7,6 +7,8 @@
 	var/desc
 	/// A string with authors of this modpack.
 	var/author
+	/// A string with group of this modpack. Choose between "Features", "Perevody" and "Reverts"
+	var/group
 	/// A list of your modpack's dependencies. If you use obj from another modpack - put it here.
 	var/list/mod_depends = list()
 
@@ -33,6 +35,11 @@
 			return "Module [id] depends on [depend_id], please include it in your game."
 
 // Modpacks TGUI
+/datum/modpack/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/simple/modpacks),
+	)
+
 /datum/modpack/ui_state()
 	return GLOB.always_state
 
@@ -42,16 +49,26 @@
 		ui = new(user, src, "Modpacks")
 		ui.open()
 
-/datum/modpack/ui_data(mob/user)
-	var/list/data = list()
-	var/list/all_modpacks = list()
-	for(var/datum/modpack/package as anything in SSmodpacks.loaded_modpacks)
-		var/list/this_mod = list()
-		this_mod["id"] = package.id
-		this_mod["name"] = package.name
-		this_mod["desc"] = package.desc
-		this_mod["author"] = package.author
-		all_modpacks += list(this_mod)
-	data["modpacks"] = all_modpacks
-
-	return data
+/datum/modpack/ui_static_data(mob/user)
+	. = ..()
+	.["categories"] = list("Features", "Perevody", "Reverts")
+	.["features"] = list()
+	.["perevody"] = list()
+	.["reverts"] = list()
+	
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
+	for(var/datum/modpack/modpack as anything in SSmodpacks.loaded_modpacks)
+		var/list/modpack_data = list(
+			"name" = modpack.name,
+			"desc" = modpack.desc,
+			"author" = modpack.author,
+			"icon_class" = assets.icon_class_name("modpack-[modpack.name]"),
+			)
+		if (modpack.group == "Фичи" || modpack.group == "Features")
+			.["features"] += list(modpack_data)
+		else if (modpack.group == "Переводы" || modpack.group == "Perevody")
+			.["perevody"] += list(modpack_data)
+		else if (modpack.group == "Баланс" || modpack.group == "Reverts")
+			.["reverts"] += list(modpack_data)
+		else
+			CRASH("Modpack [modpack.name] has bad group name or queued for deletion.")
