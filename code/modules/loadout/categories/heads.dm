@@ -132,18 +132,6 @@
 	name = "Rose"
 	item_path = /obj/item/food/grown/rose
 
-/datum/loadout_item/head/nightcap_red
-	name = "Nightcap (Red)"
-	item_path = /obj/item/clothing/head/costume/nightcap/red
-
-/datum/loadout_item/head/nightcap_blue
-	name = "Nightcap (Blue)"
-	item_path = /obj/item/clothing/head/costume/nightcap/blue
-
-/datum/loadout_item/head/propeller
-	name = "Propeller Hat"
-	item_path = /obj/item/clothing/head/soft/propeller_hat/sad
-
 /datum/loadout_item/head/maidheadband
 	name = "Maid Headband"
 	item_path = /obj/item/clothing/head/costume/maidheadband

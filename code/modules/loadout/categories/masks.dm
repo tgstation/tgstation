@@ -36,14 +36,6 @@
 	name = "Balaclava"
 	item_path = /obj/item/clothing/mask/balaclava
 
-/datum/loadout_item/mask/gas_prop
-	name = "Gas Mask (Prop)"
-	item_path = /obj/item/clothing/mask/gas/prop
-
-/datum/loadout_item/mask/atmos_prop
-	name = "Atmospheric Gas Mask (prop)"
-	item_path = /obj/item/clothing/mask/gas/atmosprop
-
 /datum/loadout_item/mask/bandana
 	name = "Bandana (Colorable)"
 	item_path = /obj/item/clothing/mask/bandana

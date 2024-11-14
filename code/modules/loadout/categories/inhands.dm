@@ -31,11 +31,3 @@
 /datum/loadout_item/inhand/briefcase_secure
 	name = "Briefcase (Secure)"
 	item_path = /obj/item/storage/briefcase/secure
-
-/datum/loadout_item/inhand/gohei
-	name = "Gohei"
-	item_path = /obj/item/gohei
-
-/datum/loadout_item/inhand/skub
-	name = "Skub"
-	item_path = /obj/item/skub

@@ -66,7 +66,6 @@
 	name = "Psych Glasses"
 	item_path = /obj/item/clothing/glasses/psych
 
-
 /datum/loadout_item/glasses/monocle
 	name = "Monocle"
 	item_path = /obj/item/clothing/glasses/monocle

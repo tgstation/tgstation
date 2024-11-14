@@ -27,10 +27,6 @@
 	name = "Shoes (Laceup)"
 	item_path = /obj/item/clothing/shoes/laceup
 
-/datum/loadout_item/shoes/kindle_kicks
-	name = "Kindle Kicks"
-	item_path = /obj/item/clothing/shoes/kindle_kicks
-
 /datum/loadout_item/shoes/cowboy_brown
 	name = "Boots (Cowboy, Brown)"
 	item_path = /obj/item/clothing/shoes/cowboy/laced
@@ -62,8 +58,3 @@
 /datum/loadout_item/shoes/jackboots
 	name = "Shoes (Jack)" // :clueless:
 	item_path = /obj/item/clothing/shoes/jackbros
-
-/datum/loadout_item/shoes/roller
-	name = "Shoes (Skate)"
-	item_path = /obj/item/clothing/shoes/wheelys/rollerskates
-	additional_displayed_text = list("Cumbersome")
