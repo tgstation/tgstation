@@ -22,8 +22,9 @@
 	icon_state = "blacksandals"
 	inhand_icon_state = "blacksandals"
 
-/datum/armor/shoes_sandal
-	bio = 10
+/obj/item/clothing/shoes/sandal/alt/laced
+	desc = "A pair of shiny black sandals that have laces up to the shins, for some reason. Conveniently, they're so thin they're barely noticeable."
+	can_be_tied = TRUE
 
 /obj/item/clothing/shoes/sandal/magic
 	name = "magical sandals"

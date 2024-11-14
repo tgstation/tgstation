@@ -19,6 +19,10 @@
 	name = "Sandals (Laced)"
 	item_path = /obj/item/clothing/shoes/sandal/laced
 
+/datum/loadout_item/shoes/sandals_laced_black
+	name = "Sandals (Black, Laced)"
+	item_path = /obj/item/clothing/shoes/sandal/alt/laced
+
 /datum/loadout_item/shoes/sandals_cook_laced
 	name = "Sandals (Cook, Laced)"
 	item_path = /obj/item/clothing/shoes/cookflops/laced
