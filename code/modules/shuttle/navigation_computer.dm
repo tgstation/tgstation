@@ -323,13 +323,9 @@
 	var/list/image/placement_images = list()
 	var/list/image/placed_images = list()
 
-/mob/eye/camera/remote/shuttle_docker/Initialize(mapload, obj/machinery/computer/camera_advanced/origin)
-	src.origin = origin
-	return ..()
-
 /mob/eye/camera/remote/shuttle_docker/setLoc(turf/destination, force_update = FALSE)
 	. = ..()
-	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin_ref?.resolve()
 	console.checkLandingSpot()
 
 /mob/eye/camera/remote/shuttle_docker/update_remote_sight(mob/living/user)
@@ -348,7 +344,7 @@
 	if(QDELETED(owner) || !isliving(owner))
 		return
 	var/mob/eye/camera/remote/remote_eye = owner.remote_control
-	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin_ref.resolve()
 	origin.rotateLandingSpot()
 
 /datum/action/innate/shuttledocker_place
@@ -360,7 +356,7 @@
 	if(QDELETED(owner) || !isliving(owner))
 		return
 	var/mob/eye/camera/remote/remote_eye = owner.remote_control
-	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin_ref.resolve()
 	origin.placeLandingSpot(owner)
 
 /datum/action/innate/camera_jump/shuttle_docker
@@ -371,7 +367,7 @@
 	if(QDELETED(owner) || !isliving(owner))
 		return
 	var/mob/eye/camera/remote/remote_eye = owner.remote_control
-	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = remote_eye.origin
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = remote_eye.origin_ref.resolve()
 
 	playsound(console, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
 

@@ -7,11 +7,11 @@
 	icon = 'icons/mob/eyemob.dmi'
 	icon_state = "generic_camera"
 
-	invisibility = INVISIBILITY_MAXIMUM
+	invisibility = INVISIBILITY_OBSERVER
 	interaction_range = INFINITY
 	/// If TRUE, the eye will cover turfs hidden to the cameranet with static.
 	var/use_visibility = TRUE
-	/// List of [/datum/camerachunk]s seen by this camera.
+	/// List of [chunks][/datum/camerachunk] visible to this camera.
 	/// Please don't interface with this directly. Use the cameranet.
 	VAR_FINAL/list/visibleCameraChunks = list()
 	/// NxN Range of a single camera chunk.

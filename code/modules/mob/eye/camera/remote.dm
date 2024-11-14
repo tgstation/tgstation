@@ -3,15 +3,15 @@
  *
  */
 /mob/eye/camera/remote
-	/// The current user of this eye.
-	var/mob/living/user
-	/// The machine that created this eye.
-	var/obj/machinery/origin
+	/// Weakref to the current user of this eye. Must be a [living mob][/mob/living].
+	var/datum/weakref/user_ref
+	/// Weakref to the creator of this eye. Must be a [machine][/obj/machinery].
+	var/datum/weakref/origin_ref
 
 	/// If TRUE, the camera will show it's icon to the user.
 	var/visible_to_user = TRUE
 	/// If visible_to_user is TRUE, it will show this in the center of the screen.
-	var/image/user_image
+	VAR_PROTECTED/image/user_image
 
 	/// If TRUE, the eye will have acceleration when moving.
 	var/acceleration = TRUE
@@ -23,21 +23,50 @@
 	VAR_PROTECTED/sprint = 10
 	/// Amount of speed that is added to var/sprint.
 	VAR_PROTECTED/momentum = 0.5
-	/// The maximum sprint that this eye can reach
+	/// The maximum sprint that this eye can reach.
 	VAR_PROTECTED/max_sprint = 50
 
 
 /mob/eye/camera/remote/Initialize(mapload, obj/machinery/creator)
+	if(!creator)
+		return INITIALIZE_HINT_QDEL
 	. = ..()
+
+	origin_ref = WEAKREF(creator)
 	if(visible_to_user)
 		set_user_icon(icon, icon_state)
 
 /mob/eye/camera/remote/Destroy()
+	var/mob/living/user = user_ref?.resolve()
+	var/obj/machinery/origin = origin_ref?.resolve()
 	if(origin && user)
 		origin.remove_eye_control(user,src)
-	origin = null
-	. = ..()
-	user = null
+
+	assign_user(null)
+	origin_ref = null
+	return ..()
+
+/mob/eye/camera/remote/proc/assign_user(mob/living/new_user)
+	var/mob/living/old_user = user_ref?.resolve()
+	if(old_user)
+		old_user.remote_control = null
+		old_user.reset_perspective(null)
+		name = initial(name)
+
+		var/client/old_user_client = GetViewerClient()
+		if(old_user_client)
+			old_user_client.images -= user_image
+
+	user_ref = WEAKREF(new_user) //The user_ref can still be null!
+
+	if(new_user)
+		new_user.remote_control = src
+		new_user.reset_perspective(src)
+		name = "Camera Eye ([new_user.name])"
+
+		var/client/new_user_client = GetViewerClient()
+		if(new_user_client)
+			new_user_client.images += user_image
 
 /**
  * Sets the camera's user image to this icon and state.
@@ -46,17 +75,19 @@
 /mob/eye/camera/remote/proc/set_user_icon(icon/chosen_icon, icon_state)
 	SHOULD_CALL_PARENT(TRUE)
 
+	var/client/user_client = GetViewerClient()
+
 	if(!isnull(chosen_icon))
-		set_user_icon(null)
+		set_user_icon(null) //remove whatever the last icon was
 		if(!isicon(chosen_icon) || !(!isnull(icon_state) && istext(icon_state)))
 			CRASH("Tried to set [src]'s user_image with bad parameters")
 
 		user_image = image(chosen_icon, src, icon_state, FLY_LAYER)
-		if(user?.client)
-			user.client.images += user_image
+		if(user_client)
+			user_client.images += user_image
 	else
-		if(user?.client)
-			user.client.images -= user_image
+		if(user_client)
+			user_client.images -= user_image
 		QDEL_NULL(user_image)
 
 /mob/eye/camera/remote/update_remote_sight(mob/living/user)
@@ -65,20 +96,19 @@
 	return TRUE
 
 /mob/eye/camera/remote/GetViewerClient()
+	var/mob/living/user = user_ref?.resolve()
+
 	if(user)
 		return user.client
 	return null
 
 /mob/eye/camera/remote/setLoc(turf/destination, force_update = FALSE)
-	if(!user)
-		return
-
 	. = ..()
 
-	if(user_image && user.client)
-		user.client.images -= user_image
-		SET_PLANE(user_image, ABOVE_GAME_PLANE, destination) //incase we move a z-level 
-		user.client.images += user_image
+	var/client/user_client = GetViewerClient()
+
+	if(user_image && user_client)
+		SET_PLANE(user_image, ABOVE_GAME_PLANE, destination) //incase we move a z-level
 
 /mob/eye/camera/remote/relaymove(mob/living/user, direction)
 	var/initial = initial(sprint)

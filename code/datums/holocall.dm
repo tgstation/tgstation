@@ -3,8 +3,8 @@
 
 /mob/eye/camera/remote/holo/setLoc(turf/destination, force_update = FALSE)
 	// If we're moving outside the space of our projector, then just... don't
-	var/obj/machinery/holopad/H = origin
-	if(!H?.move_hologram(user, destination))
+	var/obj/machinery/holopad/H = origin_ref?.resolve()
+	if(!H?.move_hologram(user_ref?.resolve(), destination))
 		sprint = initial(sprint) // Reset sprint so it doesn't balloon in our calling proc
 		return
 	return ..()
@@ -158,14 +158,8 @@
 	hologram = answering_holopad.activate_holo(user)
 	hologram.HC = src
 
-	//eyeobj code is horrid, this is the best copypasta I could make
-	eye = new
-	eye.origin = answering_holopad
-	eye.user = user
-	eye.name = "Camera Eye ([user.name])"
-	user.remote_control = eye
-	user.reset_perspective(eye)
-	eye.setLoc(answering_holopad.loc)
+	eye = new(get_turf(answering_holopad), answering_holopad)
+	eye.assign_user(user)
 
 	hangup = new(eye, src)
 	hangup.Grant(user)

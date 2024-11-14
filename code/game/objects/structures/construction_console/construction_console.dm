@@ -62,7 +62,6 @@
 	if (!spawn_spot)
 		return FALSE
 	eyeobj = new /mob/eye/camera/remote/base_construction(spawn_spot, src)
-	eyeobj.origin = src
 	return TRUE
 
 /obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/W, mob/user, params)

@@ -85,8 +85,7 @@
 	if(eyeobj)
 		CRASH("Tried to make another eyeobj for some reason. Why?")
 
-	eyeobj = new(src)
-	eyeobj.origin = src
+	eyeobj = new(get_turf(src), src)
 	return TRUE
 
 /obj/machinery/computer/camera_advanced/proc/GrantActions(mob/living/user)
@@ -99,13 +98,11 @@
 /obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
 	if(isnull(user?.client))
 		return
-	GrantActions(user)
+
 	current_user = user
-	eyeobj.user = user
-	eyeobj.name = "Camera Eye ([user.name])"
-	user.remote_control = eyeobj
-	user.reset_perspective(eyeobj)
-	eyeobj.setLoc(eyeobj.loc)
+	eyeobj.assign_user(user)
+	GrantActions(user)
+
 	if(should_supress_view_changes)
 		user.client.view_size.supress()
 	begin_processing()
@@ -119,14 +116,11 @@
 	for(var/datum/camerachunk/camerachunks_gone as anything in eyeobj.visibleCameraChunks)
 		camerachunks_gone.remove(eyeobj)
 
-	user.reset_perspective(null)
-	if(eyeobj.user_image)
-		user.client.images -= eyeobj.user_image
+	eyeobj.assign_user(null)
+	current_user = null
+
 	user.client.view_size.unsupress()
 
-	eyeobj.user = null
-	user.remote_control = null
-	current_user = null
 	playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/on_set_is_operational(old_value)
@@ -213,7 +207,7 @@
 	if(!owner || !isliving(owner))
 		return
 	var/mob/eye/camera/remote/remote_eye = owner.remote_control
-	var/obj/machinery/computer/camera_advanced/console = remote_eye.origin
+	var/obj/machinery/computer/camera_advanced/console = remote_eye.origin_ref.resolve()
 	console.remove_eye_control(owner)
 
 /datum/action/innate/camera_jump
@@ -225,7 +219,7 @@
 	if(!owner || !isliving(owner))
 		return
 	var/mob/eye/camera/remote/remote_eye = owner.remote_control
-	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin
+	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin_ref.resolve()
 
 	var/list/L = list()
 
