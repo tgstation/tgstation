@@ -550,7 +550,7 @@
 		make_edible()
 
 	if(weight >= FISH_WEIGHT_SLOWDOWN && !HAS_TRAIT(src, TRAIT_SPEED_POTIONED))
-		slowdown = round(((weight/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT)-1.3, 0.1)
+		slowdown = GET_FISH_SLOWDOWN(weight)
 		drag_slowdown = round(slowdown * 0.5, 1)
 	else
 		slowdown = 0
@@ -593,14 +593,6 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, time, screentip_verb = "Cut")
 	return amount //checked by a unit test
 
-/**
- * Weight, unlike size, is a bit more exponential, but the world isn't perfect, so isn't my code.
- * Anyway, this returns a gross estimate of the "rank" of "category" for our fish weight, based on how
- * weight generaly scales up (250, 500, 1000, 2000, 4000 etc...)
- */
-/obj/item/fish/proc/get_weight_rank()
-	return max(round(1 + log(2, weight/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
-
 ///Reset weapon-related variables of this items and recalculates those values based on the fish weight and size.
 /obj/item/fish/proc/update_fish_force()
 	if(force >= 15 && hitsound == SFX_ALT_FISH_SLAP)
@@ -620,7 +612,7 @@
 	bare_wound_bonus = initial(bare_wound_bonus)
 	toolspeed = initial(toolspeed)
 
-	var/weight_rank = get_weight_rank()
+	var/weight_rank = GET_FISH_WEIGHT_RANK(weight)
 
 	throw_range -= weight_rank
 	get_force_rank()
@@ -852,7 +844,7 @@
 		new_size += CEILING((maximum_size - size) * base_mult / (w_class * FISH_SIZE_WEIGHT_GROWTH_MALUS) * hunger_mult, 1)
 		new_size = min(new_size, maximum_size)
 	if(weight < maximum_weight)
-		new_weight += CEILING((maximum_weight - weight) * base_mult / (get_weight_rank() * FISH_SIZE_WEIGHT_GROWTH_MALUS) * hunger_mult, 1)
+		new_weight += CEILING((maximum_weight - weight) * base_mult / (GET_FISH_WEIGHT_RANK(weight) * FISH_SIZE_WEIGHT_GROWTH_MALUS) * hunger_mult, 1)
 		new_weight = min(new_weight, maximum_weight)
 	if(new_size != size || new_weight != weight)
 		update_size_and_weight(new_size, new_weight)

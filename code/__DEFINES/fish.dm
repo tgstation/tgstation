@@ -150,6 +150,16 @@
 ///Used to calculate how many bites a fish can take and therefore the amount of reagents it has.
 #define FISH_WEIGHT_BITE_DIVISOR (FISH_GRIND_RESULTS_WEIGHT_DIVISOR * FISH_WEIGHT_GRIND_TO_BITE_MULT)
 
+///Set of operations that calculate the slowdown of fish based on weight
+#define GET_FISH_SLOWDOWN(weighty) round(((weighty/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT)-1.3, 0.1)
+
+/**
+ * Gets a "rank" for fish weight to determine the force of the fish (or fish tank)
+ * basically, a gross estimate based on how weight generaly scales up (250, 500, 1000, 2000, 4000 etc...)
+ * for most fish
+ */
+#define GET_FISH_WEIGHT_RANK(weighty) max(round(1 + log(2, weighty/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
+
 ///The breeding timeout for newly instantiated fish is multiplied by this.
 #define NEW_FISH_BREEDING_TIMEOUT_MULT 2
 ///The last feeding timestamp of newly instantiated fish is multiplied by this: ergo, they spawn 50% hungry.

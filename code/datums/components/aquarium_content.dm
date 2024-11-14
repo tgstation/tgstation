@@ -23,13 +23,12 @@
 	var/list/animation_update_signals
 
 /datum/component/aquarium_content/Initialize(animation_update_signals)
-	if(!ismovable(parent))
+	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.animation_update_signals = islist(animation_update_signals) ? animation_update_signals : list(animation_update_signals)
 
-	ADD_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, REF(src))
-	RegisterSignal(parent, COMSIG_TRY_INSERTING_IN_AQUARIUM, PROC_REF(is_ready_to_insert))
+	ADD_TRAIT(parent, TRAIT_AQUARIUM_CONTENT, REF(src))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(enter_aquarium))
 
 	//If component is added to something already in aquarium at the time initialize it properly.
@@ -42,7 +41,7 @@
 	if(movable.loc && HAS_TRAIT(movable.loc, TRAIT_IS_AQUARIUM))
 		remove_from_aquarium(movable.loc)
 	QDEL_NULL(vc_obj)
-	REMOVE_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, REF(src))
+	REMOVE_TRAIT(parent, TRAIT_AQUARIUM_CONTENT, REF(src))
 	return ..()
 
 /datum/component/aquarium_content/proc/enter_aquarium(datum/source, OldLoc, Dir, Forced)
@@ -50,16 +49,6 @@
 	var/atom/movable/movable_parent = parent
 	if(HAS_TRAIT(movable_parent.loc, TRAIT_IS_AQUARIUM))
 		on_inserted(movable_parent.loc)
-
-/datum/component/aquarium_content/proc/is_ready_to_insert(datum/source, atom/movable/aquarium)
-	SIGNAL_HANDLER
-	if(HAS_TRAIT(parent, TRAIT_UNIQUE_AQUARIUM_CONTENT))
-		for(var/atom/movable/content as anything in aquarium)
-			if(content == parent)
-				continue
-			if(content.type == parent.type)
-				return COMSIG_CANNOT_INSERT_IN_AQUARIUM
-	return COMSIG_CAN_INSERT_IN_AQUARIUM
 
 /datum/component/aquarium_content/proc/on_inserted(atom/movable/aquarium)
 	RegisterSignal(aquarium, COMSIG_ATOM_EXITED, PROC_REF(on_removed))
@@ -71,7 +60,7 @@
 
 	//If we don't have vc object yet build it
 	if(!vc_obj)
-		generate_base_vc()
+		generate_base_vc(aquarium)
 
 	//Set default position and layer
 	set_vc_base_position()
@@ -95,10 +84,10 @@
 	SEND_SIGNAL(movable, COMSIG_AQUARIUM_CONTENT_DO_ANIMATION, reset ? null : current_animation, movable.loc, vc_obj)
 
 /// Generates common visual object, propeties that don't depend on aquarium surface
-/datum/component/aquarium_content/proc/generate_base_vc()
+/datum/component/aquarium_content/proc/generate_base_vc(atom/movable/aquarium)
 	vc_obj = new
 	vc_obj.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_PLANE //plane so it shows properly in containers on inventory ui for handheld cases
-	SEND_SIGNAL(parent, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, vc_obj)
+	SEND_SIGNAL(parent, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, vc_obj, aquarium)
 
 /datum/component/aquarium_content/proc/set_vc_base_position()
 	var/atom/movable/movable = parent

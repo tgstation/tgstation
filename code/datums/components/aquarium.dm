@@ -140,22 +140,6 @@
 ///This proc handles feeding the aquarium and inserting aquarium content.
 /datum/component/aquarium/proc/on_item_interaction(atom/movable/source, mob/living/user, obj/item/item, modifiers)
 	SIGNAL_HANDLER
-	var/broken = source.get_integrity_percentage() <= source.integrity_failure
-	var/insert_attempt = SEND_SIGNAL(item, COMSIG_TRY_INSERTING_IN_AQUARIUM, source)
-	switch(insert_attempt)
-		if(COMSIG_CAN_INSERT_IN_AQUARIUM)
-			if(broken)
-				source.balloon_alert(user, "aquarium is broken!")
-				return ITEM_INTERACT_BLOCKING
-			if(!user.transferItemToLoc(item, source))
-				user.balloon_alert(user, "stuck to your hand!")
-				return ITEM_INTERACT_BLOCKING
-			source.balloon_alert(user, "added to aquarium")
-			source.update_appearance()
-			return ITEM_INTERACT_SUCCESS
-		if(COMSIG_CANNOT_INSERT_IN_AQUARIUM)
-			source.balloon_alert(user, "cannot add to aquarium!")
-			return ITEM_INTERACT_BLOCKING
 
 	if(istype(item, /obj/item/reagent_containers/cup/fish_feed))
 		if(source.reagents && HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
@@ -171,6 +155,22 @@
 			fish.feed(item.reagents)
 		source.balloon_alert(user, "fed the fish")
 		return ITEM_INTERACT_SUCCESS
+
+	if(!HAS_TRAIT(item, TRAIT_AQUARIUM_CONTENT))
+		return //proceed with normal interactions
+
+	var/broken = source.get_integrity_percentage() <= source.integrity_failure
+	if(!can_insert(source, item, user))
+		return ITEM_INTERACT_BLOCKING
+	if(broken)
+		source.balloon_alert(user, "aquarium is broken!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(item, source))
+		user.balloon_alert(user, "stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	source.balloon_alert(user, "added to aquarium")
+	source.update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 ///Called when the feed storage is no longer empty.
 /datum/component/aquarium/proc/start_autofeed(atom/movable/source, new_reagent, amount, reagtemp, data, no_react)
@@ -212,6 +212,23 @@
 	examine_list += span_notice("<b>Alt-click</b> to [panel_open ? "close" : "open"] the control and feed panel.")
 	if(panel_open && source.reagents.total_volume)
 		examine_list += span_notice("You can use a plunger to empty the feed storage.")
+
+///Check if an item can be inserted into the aquarium
+/datum/component/aquarium/proc/can_insert(atom/movable/source, obj/item/item, mob/living/user)
+	var/return_value = SEND_SIGNAL(src, COMSIG_AQUARIUM_CAN_INSERT, item, user)
+	if(return_value & COMSIG_CANNOT_INSERT_IN_AQUARIUM)
+		return FALSE
+	if(return_value & COMSIG_CAN_INSERT_IN_AQUARIUM)
+		return TRUE
+
+	if(HAS_TRAIT(item, TRAIT_UNIQUE_AQUARIUM_CONTENT))
+		for(var/atom/movable/content as anything in source)
+			if(content == item)
+				continue
+			if(content.type == item.type)
+				source.balloon_alert(user, "cannot add to aquarium!")
+				return FALSE
+	return TRUE
 
 ///Handles aquarium content insertion
 /datum/component/aquarium/proc/on_entered(atom/movable/source, atom/movable/entered)

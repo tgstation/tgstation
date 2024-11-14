@@ -2,8 +2,8 @@
 
 ///From /datum/component/aquarium/ui_act, when changing the fluid of the aquarium: (fluid_type)
 #define COMSIG_AQUARIUM_FLUID_CHANGED "aquarium_fluid_changed"
-///From component/aquarium/on_item_interaction: (atom/movable/aquarium)
-#define COMSIG_TRY_INSERTING_IN_AQUARIUM "item_try_inserting_in_aquarium"
+///From /datum/component/aquarium/can_insert: (obj/item/item)
+#define COMSIG_AQUARIUM_CAN_INSERT "aquarium_can_insert"
 	///The item will be inserted into the aquarium
 	#define COMSIG_CAN_INSERT_IN_AQUARIUM (1<<0)
 	///The item won't be inserted into the aquarium, but will early return attackby anyway.

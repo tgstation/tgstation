@@ -50743,7 +50743,8 @@
 "rqt" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/aquarium/lawyer,
+/obj/item/fish_tank/lawyer,
+/obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/station/service/lawoffice)
 "rqw" = (
