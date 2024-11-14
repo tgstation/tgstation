@@ -73,7 +73,7 @@
 		return ..()
 
 	coin_check.check_splitshot(firer, src)
-	Impact(coin_check)
+	impact(coin_check)
 
 /// Marksman Coin
 /obj/projectile/bullet/coin

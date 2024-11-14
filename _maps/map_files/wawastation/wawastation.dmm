@@ -5609,7 +5609,7 @@
 /area/station/security/lockers)
 "bYo" = (
 /obj/machinery/mecha_part_fabricator{
-	dir = 1
+	drop_direction = 1
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/poster/contraband/borg_fancy_1/directional/south,
@@ -31405,9 +31405,6 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
-"lbg" = (
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "lbl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -33250,7 +33247,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
-/area/station/cargo/storage)
+/area/station/maintenance/department/cargo)
 "lLC" = (
 /obj/structure/chair/stool/directional/east{
 	name = "Quartermaster"
@@ -39505,7 +39502,7 @@
 /area/station/maintenance/central/lesser)
 "oac" = (
 /obj/machinery/mecha_part_fabricator{
-	dir = 1
+	drop_direction = 1
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/digital_clock/directional/south,
@@ -49903,7 +49900,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
-/area/station/cargo/storage)
+/area/station/maintenance/department/cargo)
 "rFb" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -65613,7 +65610,7 @@
 /obj/item/instrument/musicalmoth,
 /obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/plating,
-/area/station/cargo/storage)
+/area/station/maintenance/department/cargo)
 "xeo" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/cable,
@@ -67762,7 +67759,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
-/area/station/cargo/storage)
+/area/station/maintenance/department/cargo)
 "xTs" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
@@ -148892,7 +148889,7 @@ vxX
 vxX
 vxX
 vxX
-sdc
+poi
 xeh
 jir
 sBb
@@ -149149,9 +149146,9 @@ vxX
 vxX
 vxX
 vxX
-sdc
+poi
 rEK
-sdc
+poi
 sdc
 sdc
 aHc
@@ -149406,8 +149403,8 @@ vxX
 vxX
 vxX
 vxX
-sdc
-lbg
+poi
+tdq
 xTb
 sdc
 oZQ
@@ -149663,9 +149660,9 @@ fYe
 fYe
 fYe
 fYe
-sdc
+poi
 lLr
-sdc
+poi
 sdc
 oZQ
 oZQ

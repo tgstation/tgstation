@@ -33,6 +33,8 @@
 #define COMSIG_FISH_RELEASED_INTO "fish_released_into"
 
 ///From /datum/fishing_challenge/New: (datum/fishing_challenge/challenge)
+#define COMSIG_ROD_BEGIN_FISHING "rod_begin_fishing"
+///From /datum/fishing_challenge/New: (datum/fishing_challenge/challenge)
 #define COMSIG_MOB_BEGIN_FISHING "mob_begin_fishing"
 ///From /datum/fishing_challenge/start_minigame_phase: (datum/fishing_challenge/challenge)
 #define COMSIG_MOB_BEGIN_FISHING_MINIGAME "mob_begin_fishing_minigame"
@@ -43,6 +45,8 @@
 #define COMSIG_FISHING_CHALLENGE_ROLL_REWARD "fishing_roll_reward"
 /// Adjusting the difficulty of a rishing challenge, often based on the reward path
 #define COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY "fishing_get_difficulty"
+/// From /datum/fishing_challenge/start_minigame_phase, called after the fish movement datum is spawned: (datum/fish_movement/mover)
+#define COMSIG_FISHING_CHALLENGE_MOVER_INITIALIZED "fishing_mover_initialized"
 /// Fishing challenge completed
 /// Sent to the fisherman when the reward is dispensed: (reward)
 #define COMSIG_FISH_SOURCE_REWARD_DISPENSED "fish_source_reward_dispensed"
@@ -62,8 +66,11 @@
 #define COMSIG_FISHING_ROD_CAUGHT_FISH "fishing_rod_caught_fish"
 /// From /obj/item/fishing_rod/proc/hook_item(): (reward, user)
 #define COMSIG_FISHING_ROD_HOOKED_ITEM "fishing_rod_hooked_item"
-/// From /datum/fish_source/proc/use_slot(), sent to the slotted item: (obj/item/fishing_rod/rod)
-#define COMSIG_FISHING_EQUIPMENT_SLOTTED "fishing_equipment_slotted"
+
+/// From /obj/item/fishing_rod/set_slot: (obj/item/fishing_rod/rod, slot)
+#define COMSIG_ITEM_FISHING_ROD_SLOTTED "item_fishing_rod_slotted"
+/// From /obj/item/fishing_rod/Exited: (obj/item/fishing_rod/rod, slot)
+#define COMSIG_ITEM_FISHING_ROD_UNSLOTTED "item_fishing_rod_unslotted"
 
 /// Sent when the challenge is to be interrupted: (reason)
 #define COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE "fishing_spot_interrupt_challenge"

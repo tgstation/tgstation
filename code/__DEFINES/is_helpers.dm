@@ -210,13 +210,13 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
-#define isovermind(A) (istype(A, /mob/camera/blob))
+#define isovermind(A) (istype(A, /mob/eye/blob))
 
-#define issentientdisease(A) (istype(A, /mob/camera/disease))
+#define issentientdisease(A) (istype(A, /mob/eye/disease))
 
-#define iscameramob(A) (istype(A, /mob/camera))
+#define iseyemob(A) (istype(A, /mob/eye))
 
-#define isaicamera(A) (istype(A, /mob/camera/ai_eye))
+#define isaicamera(A) (istype(A, /mob/eye/ai_eye))
 
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs

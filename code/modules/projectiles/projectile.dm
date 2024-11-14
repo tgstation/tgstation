@@ -68,6 +68,8 @@
 	var/projectile_piercing = NONE
 	/// number of times we've pierced something. Incremented BEFORE bullet_act and on_hit proc!
 	var/pierces = 0
+	/// how many times this projectile can pierce something before deleting
+	var/max_pierces = 0
 
 	/// If objects are below this layer, we pass through them
 	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
@@ -86,7 +88,7 @@
 	var/pixel_speed_multiplier = 1
 
 	/// The current angle of the projectile. Initially null, so if the arg is missing from [/fire()], we can calculate it from firer and target as fallback.
-	var/Angle
+	var/angle
 	var/original_angle = 0 //Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0 //amount (in degrees) of projectile spread
@@ -112,7 +114,7 @@
 	/// Can our ricochet autoaim hit our firer?
 	var/ricochet_shoots_firer = TRUE
 
-	///If the object being hit can pass ths damage on to something else, it should not do it for this bullet
+	///If the object being hit can pass the damage on to something else, it should not do it for this bullet
 	var/force_hit = FALSE
 
 	//Hitscan
@@ -283,16 +285,17 @@
 	// maybe we care what the projectile thinks! See about combining these via args some time when it's not 5AM
 	var/hit_limb_zone
 	if(isliving(target))
-		var/mob/living/L = target
-		hit_limb_zone = L.check_hit_limb_zone_name(def_zone)
+		var/mob/living/victim = target
+		hit_limb_zone = victim.check_hit_limb_zone_name(def_zone)
+
 	if(fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, hit_limb_zone, blocked)
-	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb_zone, blocked)
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, angle, hit_limb_zone, blocked)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, angle, hit_limb_zone, blocked)
 
 	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
 		return BULLET_ACT_BLOCK
-	var/turf/target_turf = get_turf(target)
 
+	var/turf/target_turf = get_turf(target)
 	var/hitx
 	var/hity
 	if(target == original)
@@ -303,10 +306,7 @@
 		hity = target.pixel_y + rand(-8, 8)
 
 	if(isturf(target) && hitsound_wall)
-		var/volume = clamp(vol_by_damage() + 20, 0, 100)
-		if(suppressed)
-			volume = 5
-		playsound(loc, hitsound_wall, volume, TRUE, -1)
+		playsound(src, hitsound_wall, clamp(vol_by_damage() + (suppressed ? 0 : 20), 0, 100), TRUE, -1)
 
 	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_turf) && prob(75))
 		var/turf/closed/wall/target_wall = target_turf
@@ -314,58 +314,20 @@
 			new impact_effect_type(target_wall, hitx, hity)
 
 		target_wall.add_dent(WALL_DENT_SHOT, hitx, hity)
-
 		return BULLET_ACT_HIT
 
-	if(!isliving(target))
+	if (hitsound)
+		playsound(src, hitsound, vol_by_damage(), TRUE, -1)
+
+	if (!isliving(target))
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_turf, hitx, hity)
-
 		return BULLET_ACT_HIT
 
+	if((blocked >= 100 || (damage && damage_type != BRUTE)) && impact_effect_type && !hitscan)
+		new impact_effect_type(target_turf, hitx, hity)
+
 	var/mob/living/living_target = target
-
-	if(blocked != 100) // not completely blocked
-		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(hit_limb_zone)
-		if (damage && damage_type == BRUTE)
-			if (living_target.blood_volume && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
-				var/splatter_dir = dir
-				if(starting)
-					splatter_dir = get_dir(starting, target_turf)
-				if(isalien(living_target))
-					new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_turf, splatter_dir)
-				else
-					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_turf, splatter_dir)
-				if(prob(33))
-					living_target.add_splatter_floor(target_turf)
-			else if (hit_bodypart?.biological_state & (BIO_METAL|BIO_WIRED))
-				var/random_damage_mult = RANDOM_DECIMAL(0.85, 1.15) // SOMETIMES you can get more or less sparks
-				var/damage_dealt = ((damage / (1 - (blocked / 100))) * random_damage_mult)
-
-				var/spark_amount = round((damage_dealt / PROJECTILE_DAMAGE_PER_ROBOTIC_SPARK))
-				if (spark_amount > 0)
-					do_sparks(spark_amount, FALSE, living_target)
-
-		else if(impact_effect_type && !hitscan)
-			new impact_effect_type(target_turf, hitx, hity)
-
-		var/organ_hit_text = ""
-		if(hit_limb_zone)
-			organ_hit_text = " in \the [living_target.parse_zone_with_bodypart(hit_limb_zone)]"
-		if(suppressed == SUPPRESSED_VERY)
-			playsound(loc, hitsound, 5, TRUE, -1)
-		else if(suppressed)
-			playsound(loc, hitsound, 5, TRUE, -1)
-			to_chat(living_target, span_userdanger("You're shot by \a [src][organ_hit_text]!"))
-		else
-			if(hitsound)
-				var/volume = vol_by_damage()
-				playsound(src, hitsound, volume, TRUE, -1)
-			living_target.visible_message(span_danger("[living_target] is hit by \a [src][organ_hit_text]!"), \
-					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
-			if(living_target.is_blind())
-				to_chat(living_target, span_userdanger("You feel something hit you[organ_hit_text]!"))
-
 	var/reagent_note
 	if(reagents?.reagent_list)
 		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
@@ -376,7 +338,6 @@
 
 	if(isvehicle(firer))
 		var/obj/vehicle/firing_vehicle = firer
-
 		var/list/logging_mobs = firing_vehicle.return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)
 		if(!LAZYLEN(logging_mobs))
 			logging_mobs = firing_vehicle.return_drivers()
@@ -384,17 +345,20 @@
 			for(var/mob/logged_mob as anything in logging_mobs)
 				log_combat(logged_mob, living_target, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
 		return BULLET_ACT_HIT
+
 	if(!do_not_log)
 		living_target.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
 	return BULLET_ACT_HIT
 
 /obj/projectile/proc/vol_by_damage()
-	if(src.damage)
-		return clamp((src.damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then CLAMP the value between 30 and 100
-	else
+	if (suppressed)
+		return 5
+	if(!damage)
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
+	return clamp(damage * 0.67, 30, 100)// Multiply projectile damage by 0.67, then CLAMP the value between 30 and 1
 
-/obj/projectile/proc/on_ricochet(atom/A)
+/obj/projectile/proc/on_ricochet(atom/target)
+	ricochets++
 	if(!ricochet_auto_aim_angle || !ricochet_auto_aim_range)
 		return
 
@@ -402,27 +366,28 @@
 	var/best_angle = ricochet_auto_aim_angle
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
 		best_angle += NICE_SHOT_RICOCHET_BONUS
-	for(var/mob/living/L in range(ricochet_auto_aim_range, src.loc))
-		if(L.stat == DEAD || !is_in_sight(src, L) || (!ricochet_shoots_firer && L == firer))
+	for(var/mob/living/potential_target in range(ricochet_auto_aim_range, loc))
+		if(potential_target.stat == DEAD || !is_in_sight(src, potential_target) || (!ricochet_shoots_firer && potential_target == firer))
 			continue
-		var/our_angle = abs(closer_angle_difference(Angle, get_angle(src.loc, L.loc)))
+		var/our_angle = abs(closer_angle_difference(angle, get_angle(loc, potential_target.loc)))
 		if(our_angle < best_angle)
 			best_angle = our_angle
-			unlucky_sob = L
+			unlucky_sob = potential_target
 
 	if(unlucky_sob)
 		set_angle(get_angle(src, unlucky_sob.loc))
+		original = unlucky_sob
 
 /obj/projectile/proc/store_hitscan_collision(datum/point/point_cache)
 	beam_segments[beam_index] = point_cache
 	beam_index = point_cache
 	beam_segments[beam_index] = null
 
-/obj/projectile/Bump(atom/A)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
-	if(!can_hit_target(A, A == original, TRUE, TRUE))
+/obj/projectile/Bump(atom/bumped_atom)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, bumped_atom)
+	if(!can_hit_target(bumped_atom, bumped_atom == original, TRUE, TRUE))
 		return
-	Impact(A)
+	impact(bumped_atom)
 
 /**
  * Called when the projectile hits something
@@ -435,89 +400,82 @@
  * Furthermore, this proc shouldn't check can_hit_target - this should only be called if can hit target is already checked.
  * Also, we select_target to find what to process_hit first.
  */
-/obj/projectile/proc/Impact(atom/A)
-	if(!trajectory)
-		qdel(src)
-		return FALSE
-	if(impacted[A.weak_reference]) // NEVER doublehit
-		return FALSE
-	var/datum/point/point_cache = trajectory.copy_to()
-	var/turf/T = get_turf(A)
-	if(ricochets < ricochets_max && check_ricochet_flag(A) && check_ricochet(A))
-		ricochets++
-		if(A.handle_ricochet(src))
-			on_ricochet(A)
-			impacted = list() // Shoot a x-ray laser at a pair of mirrors I dare you
-			ignore_source_check = TRUE // Firer is no longer immune
-			decayedRange = max(0, decayedRange - reflect_range_decrease)
-			ricochet_chance *= ricochet_decay_chance
-			damage *= ricochet_decay_damage
-			stamina *= ricochet_decay_damage
-			range = decayedRange
-			if(hitscan)
-				store_hitscan_collision(point_cache)
-			return TRUE
-
-	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
-	def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * distance), 5, 100)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
-
-	return process_hit(T, select_target(T, A, A), A) // SELECT TARGET FIRST!
-
-/**
- * The primary workhorse proc of projectile impacts.
- * This is a RECURSIVE call - process_hit is called on the first selected target, and then repeatedly called if the projectile still hasn't been deleted.
- *
- * Order of operations:
- * 1. Checks if we are deleted, or if we're somehow trying to hit a null, in which case, bail out
- * 2. Adds the thing we're hitting to impacted so we can make sure we don't doublehit
- * 3. Checks piercing - stores this.
- * Afterwards:
- * Hit and delete, hit without deleting and pass through, pass through without hitting, or delete without hitting depending on result
- * If we're going through without hitting, find something else to hit if possible and recurse, set unstoppable movement to true
- * If we're deleting without hitting, delete and return
- * Otherwise, send signal of COMSIG_PROJECTILE_PREHIT to target
- * Then, hit, deleting ourselves if necessary.
- * @params
- * T - Turf we're on/supposedly hitting
- * target - target we're hitting
- * bumped - target we originally bumped. it's here to ensure that if something blocks our projectile by means of Cross() failure, we hit it
- * even if it is not dense.
- * hit_something - only should be set by recursive calling by this proc - tracks if we hit something already
- *
- * Returns if we hit something.
- */
-/obj/projectile/proc/process_hit(turf/T, atom/target, atom/bumped, hit_something = FALSE)
-	// 1.
-	if(QDELETED(src) || !T || !target)
+/obj/projectile/proc/impact(atom/target)
+	if(impacted[target.weak_reference]) // never doublehit, otherwise someone may end up running into a projectile from the back
 		return
-	// 2.
-	impacted[WEAKREF(target)] = TRUE //hash lookup > in for performance in hit-checking
-	// 3.
-	var/mode = prehit_pierce(target)
-	if(mode == PROJECTILE_DELETE_WITHOUT_HITTING)
-		qdel(src)
-		return hit_something
-	else if(mode == PROJECTILE_PIERCE_PHASE)
+
+	if(ricochets < ricochets_max && check_ricochet_flag(target) && check_ricochet(target) && target.handle_ricochet(src))
+		on_ricochet(target)
+		impacted = list() // Shoot a x-ray laser at a pair of mirrors I dare you
+		ignore_source_check = TRUE // Firer is no longer immune
+		decayedRange = max(0, decayedRange - reflect_range_decrease)
+		ricochet_chance *= ricochet_decay_chance
+		damage *= ricochet_decay_damage
+		stamina *= ricochet_decay_damage
+		range = decayedRange
+		if(hitscan && trajectory)
+			store_hitscan_collision(trajectory.copy_to())
+		return
+
+	var/turf/target_turf = get_turf(target)
+	// Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
+	def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(target_turf, starting)), 5, 100))
+	process_hit_loop(select_target(target_turf, target))
+
+/*
+ * Main projectile hit loop code
+ * As long as there are valid targets on the hit target's tile, we will loop through all the ones that we have not hit
+ * (and thus invalidated) and try to hit them until either no targets remain or we've been deleted.
+ */
+/obj/projectile/proc/process_hit_loop(atom/target)
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/turf/target_turf = get_turf(target)
+	while (target && !QDELETED(src))
+		// Doublehitting can be an issue with slow projectiles or when the server is chugging
+		impacted[WEAKREF(target)] = TRUE
+		var/mode = prehit_pierce(target)
+		if(mode == PROJECTILE_DELETE_WITHOUT_HITTING)
+			qdel(src)
+			return
+
+		// If we've phasing through a target, first set ourselves as phasing and then try to locate a new one
+		if(mode == PROJECTILE_PIERCE_PHASE)
+			if(!(movement_type & PHASING))
+				temporary_unstoppable_movement = TRUE
+				movement_type |= PHASING
+			target = select_target(target_turf, target)
+			continue
+
+		if (SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, src) & PROJECTILE_INTERRUPT_HIT)
+			qdel(src)
+			return
+
+		if (SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, target) & PROJECTILE_INTERRUPT_HIT)
+			qdel(src)
+			return
+
+		if(mode == PROJECTILE_PIERCE_HIT)
+			pierces += 1
+
+		// Targets should handle their impact logic on our own and if they decide that we hit them, they call our on_hit
+		var/result = target.bullet_act(src, def_zone, mode == PROJECTILE_PIERCE_HIT)
+		if (result != BULLET_ACT_FORCE_PIERCE && max_pierces && pierces >= max_pierces)
+			qdel(src)
+			return
+
+		// If we're not piercing or phasing, delete ourselves
+		if (result != BULLET_ACT_FORCE_PIERCE && mode != PROJECTILE_PIERCE_HIT && mode != PROJECTILE_PIERCE_PHASE)
+			qdel(src)
+			return
+
+		// We've piercing though this one, go look for a new target
 		if(!(movement_type & PHASING))
 			temporary_unstoppable_movement = TRUE
 			movement_type |= PHASING
-		return process_hit(T, select_target(T, target, bumped), bumped, hit_something) // try to hit something else
-	// at this point we are going to hit the thing
-	// in which case send signal to it
-	if ((SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args, src) & PROJECTILE_INTERRUPT_HIT) || (SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, args) & PROJECTILE_INTERRUPT_HIT))
-		qdel(src)
-		return BULLET_ACT_BLOCK
-	if(mode == PROJECTILE_PIERCE_HIT)
-		++pierces
-	hit_something = TRUE
-	var/result = target.bullet_act(src, def_zone, mode == PROJECTILE_PIERCE_HIT)
-	if((result == BULLET_ACT_FORCE_PIERCE) || (mode == PROJECTILE_PIERCE_HIT))
-		if(!(movement_type & PHASING))
-			temporary_unstoppable_movement = TRUE
-			movement_type |= PHASING
-		return process_hit(T, select_target(T, target, bumped), bumped, TRUE)
-	qdel(src)
-	return hit_something
+
+		target = select_target(target_turf, target)
 
 /**
  * Selects a target to hit from a turf
@@ -539,7 +497,7 @@
  * 5. Turf
  * 6. Nothing
  */
-/obj/projectile/proc/select_target(turf/our_turf, atom/target, atom/bumped)
+/obj/projectile/proc/select_target(turf/our_turf, atom/bumped)
 	// 1. special bumped border object check
 	if((bumped?.flags_1 & ON_BORDER_1) && can_hit_target(bumped, original == bumped, TRUE, TRUE))
 		return bumped
@@ -554,9 +512,9 @@
 	if(length(considering))
 		return pick(considering)
 	// 4. objs and other dense things
-	for(var/i in our_turf)
-		if(can_hit_target(i, i == original, TRUE, i == bumped))
-			considering += i
+	for(var/atom/potential_target as anything in our_turf)
+		if(can_hit_target(potential_target, potential_target == original, TRUE, potential_target == bumped))
+			considering += potential_target
 	if(length(considering))
 		return pick(considering)
 	// 5. turf
@@ -581,9 +539,12 @@
 			living_target.block_projectile_effects()
 		return FALSE
 	if(!ignore_source_check && firer)
-		var/mob/M = firer
-		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
+		if(target == firer || (target == firer.loc && ismecha(firer.loc)) || (target in firer.buckled_mobs))
 			return FALSE
+		if(ismob(firer))
+			var/mob/firer_mob = firer
+			if (firer_mob.buckled == target)
+				return FALSE
 	if(ignored_factions?.len && ismob(target) && !direct_target)
 		var/mob/target_mob = target
 		if(faction_check(target_mob.faction, ignored_factions))
@@ -620,16 +581,16 @@
 
 /**
  * Scan if we should hit something and hit it if we need to
- * The difference between this and handling in Impact is
- * In this we strictly check if we need to Impact() something in specific
+ * The difference between this and handling in impact is
+ * In this we strictly check if we need to impact() something in specific
  * If we do, we do
- * We don't even check if it got hit already - Impact() does that
+ * We don't even check if it got hit already - impact() does that
  * In impact there's more code for selecting WHAT to hit
  * So this proc is more of checking if we should hit something at all BY having an atom cross us.
  */
-/obj/projectile/proc/scan_crossed_hit(atom/movable/A)
-	if(can_hit_target(A, direct_target = (A == original)))
-		Impact(A)
+/obj/projectile/proc/scan_crossed_hit(atom/movable/crossed_atom)
+	if(can_hit_target(crossed_atom, direct_target = (crossed_atom == original)))
+		impact(crossed_atom)
 
 /**
  * Scans if we should hit something on the turf we just moved to if we haven't already
@@ -643,21 +604,22 @@
 	// and hope projectiles get refactored again in the future to have a less stupid impact detection system
 	// that hopefully won't also involve a ton of overhead
 	if(can_hit_target(original, TRUE, FALSE))
-		Impact(original) // try to hit thing clicked on
+		impact(original) // try to hit thing clicked on
+		return
 	// else, try to hit mobs
-	else // because if we impacted original and pierced we'll already have select target'd and hit everything else we should be hitting
-		for(var/mob/M in loc) // so I guess we're STILL doing a for loop of mobs because living movement would otherwise have snowflake code for projectile CanPass
-			// so the snowflake vs performance is pretty arguable here
-			if(can_hit_target(M, M == original, TRUE))
-				Impact(M)
-				break
+	// because if we impacted original and pierced we'll already have select target'd and hit everything else we should be hitting
+	for(var/mob/potential_target in loc) // so I guess we're STILL doing a for loop of mobs because living movement would otherwise have snowflake code for projectile CanPass
+		// so the snowflake vs performance is pretty arguable here
+		if(can_hit_target(potential_target, potential_target == original, TRUE))
+			impact(potential_target)
+			break
 
 /**
  * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
  */
-/obj/projectile/proc/on_entered(datum/source, atom/movable/AM)
+/obj/projectile/proc/on_entered(datum/source, atom/movable/entered_atom)
 	SIGNAL_HANDLER
-	scan_crossed_hit(AM)
+	scan_crossed_hit(entered_atom)
 
 /**
  * Projectile can pass through
@@ -690,41 +652,41 @@
  * NOT meant to be a pure proc, since this replaces prehit() which was used to do things.
  * Return PROJECTILE_DELETE_WITHOUT_HITTING to delete projectile without hitting at all!
  */
-/obj/projectile/proc/prehit_pierce(atom/A)
-	if((projectile_phasing & A.pass_flags_self) && (phasing_ignore_direct_target || original != A))
+/obj/projectile/proc/prehit_pierce(atom/target)
+	if((projectile_phasing & target.pass_flags_self) && (phasing_ignore_direct_target || original != target))
 		return PROJECTILE_PIERCE_PHASE
-	if(projectile_piercing & A.pass_flags_self)
+	if(projectile_piercing & target.pass_flags_self)
 		return PROJECTILE_PIERCE_HIT
-	if(ismovable(A))
-		var/atom/movable/AM = A
-		if(AM.throwing)
+	if(ismovable(target))
+		var/atom/movable/movable_target = target
+		if(movable_target.throwing)
 			return (projectile_phasing & LETPASSTHROW) ? PROJECTILE_PIERCE_PHASE : ((projectile_piercing & LETPASSTHROW)? PROJECTILE_PIERCE_HIT : PROJECTILE_PIERCE_NONE)
 	return PROJECTILE_PIERCE_NONE
 
-/obj/projectile/proc/check_ricochet(atom/A)
-	var/chance = ricochet_chance * A.receive_ricochet_chance_mod
+/obj/projectile/proc/check_ricochet(atom/target)
+	var/chance = ricochet_chance * target.receive_ricochet_chance_mod
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
 		chance += NICE_SHOT_RICOCHET_BONUS
 	if(ricochets < min_ricochets || prob(chance))
 		return TRUE
 	return FALSE
 
-/obj/projectile/proc/check_ricochet_flag(atom/A)
-	if((armor_flag in list(ENERGY, LASER)) && (A.flags_ricochet & RICOCHET_SHINY))
+/obj/projectile/proc/check_ricochet_flag(atom/target)
+	if((armor_flag in list(ENERGY, LASER)) && (target.flags_ricochet & RICOCHET_SHINY))
 		return TRUE
 
-	if((armor_flag in list(BOMB, BULLET)) && (A.flags_ricochet & RICOCHET_HARD))
+	if((armor_flag in list(BOMB, BULLET)) && (target.flags_ricochet & RICOCHET_HARD))
 		return TRUE
 
 	return FALSE
 
 /obj/projectile/proc/return_predicted_turf_after_moves(moves, forced_angle) //I say predicted because there's no telling that the projectile won't change direction/location in flight.
-	if(!trajectory && isnull(forced_angle) && isnull(Angle))
+	if(!trajectory && isnull(forced_angle) && isnull(angle))
 		return FALSE
 	var/datum/point/vector/current = trajectory
 	if(!current)
 		var/turf/T = get_turf(src)
-		current = new(T.x, T.y, T.z, pixel_x, pixel_y, isnull(forced_angle)? Angle : forced_angle, SSprojectiles.global_pixel_speed)
+		current = new(T.x, T.y, T.z, pixel_x, pixel_y, isnull(forced_angle)? angle : forced_angle, SSprojectiles.global_pixel_speed)
 	var/datum/point/vector/v = current.return_vector_after_increments(moves * SSprojectiles.global_iterations_per_move)
 	return v.return_turf()
 
@@ -759,7 +721,7 @@
 	for(var/i in 1 to required_moves)
 		pixel_move(pixel_speed_multiplier, FALSE)
 
-/obj/projectile/proc/fire(angle, atom/direct_target)
+/obj/projectile/proc/fire(fire_angle, atom/direct_target)
 	LAZYINITLIST(impacted)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
@@ -767,18 +729,19 @@
 		RegisterSignal(firer, COMSIG_QDELETING, PROC_REF(firer_deleted))
 		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
 	if (original)
-		RegisterSignal(original, COMSIG_QDELETING, PROC_REF(original_deleted))
+		if (firer != original)
+			RegisterSignal(original, COMSIG_QDELETING, PROC_REF(original_deleted))
 	if(!log_override && firer && original && !do_not_log)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
-		process_hit(get_turf(direct_target), direct_target)
+		process_hit_loop(direct_target)
 		if(QDELETED(src))
 			return
 	var/turf/starting = get_turf(src)
-	if(isnum(angle))
-		set_angle(angle)
-	else if(isnull(Angle)) //Try to resolve through offsets if there's no angle set.
+	if(isnum(fire_angle))
+		set_angle(fire_angle)
+	else if(isnull(angle)) //Try to resolve through offsets if there's no angle set.
 		if(isnull(xo) || isnull(yo))
 			stack_trace("WARNING: Projectile [type] deleted due to being unable to resolve a target after angle was null!")
 			qdel(src)
@@ -786,15 +749,15 @@
 		var/turf/target = locate(clamp(starting + xo, 1, world.maxx), clamp(starting + yo, 1, world.maxy), starting.z)
 		set_angle(get_angle(src, target))
 	if(spread)
-		set_angle(Angle + (rand() - 0.5) * spread)
-	original_angle = Angle
+		set_angle(angle + (rand() - 0.5) * spread)
+	original_angle = angle
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE
-	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, SSprojectiles.global_pixel_speed)
+	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, angle, SSprojectiles.global_pixel_speed)
 	last_projectile_move = world.time
 	fired = TRUE
-	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = Angle)
+	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = angle)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
 	if(hitscan)
 		process_hitscan()
@@ -806,8 +769,8 @@
 
 /obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
 	if(!nondirectional_sprite)
-		transform = transform.TurnTo(Angle, new_angle)
-	Angle = new_angle
+		transform = transform.TurnTo(angle, new_angle)
+	angle = new_angle
 	if(trajectory)
 		trajectory.set_angle(new_angle)
 	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store))
@@ -819,6 +782,9 @@
 
 /obj/projectile/proc/firer_deleted(datum/source)
 	SIGNAL_HANDLER
+	// Shooting yourself point-blank
+	if (firer == original)
+		original = null
 	firer = null
 
 /obj/projectile/proc/original_deleted(datum/source)
@@ -828,8 +794,8 @@
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
 /obj/projectile/proc/set_angle_centered(new_angle)
 	if(!nondirectional_sprite)
-		transform = transform.TurnTo(Angle, new_angle)
-	Angle = new_angle
+		transform = transform.TurnTo(angle, new_angle)
+	angle = new_angle
 	if(trajectory)
 		trajectory.set_angle(new_angle)
 
@@ -842,8 +808,6 @@
 		point_cache.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Take the center of the hitscan collision tile
 		store_hitscan_collision(point_cache)
 	return TRUE
-
-
 
 /obj/projectile/forceMove(atom/target)
 	if(!isloc(target) || !isloc(loc) || !z)
@@ -865,12 +829,14 @@
 		after_z_change(old, target)
 
 /obj/projectile/proc/after_z_change(atom/olcloc, atom/newloc)
+	return
 
 /obj/projectile/proc/before_z_change(atom/oldloc, atom/newloc)
+	return
 
 /obj/projectile/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if(NAMEOF(src, Angle))
+		if(NAMEOF(src, angle))
 			set_angle(var_value)
 			return TRUE
 		else
@@ -890,7 +856,7 @@
 
 /obj/projectile/proc/process_hitscan()
 	var/safety = range * 10
-	record_hitscan_start(RETURN_POINT_VECTOR_INCREMENT(src, Angle, MUZZLE_EFFECT_PIXEL_INCREMENT, 1))
+	record_hitscan_start(RETURN_POINT_VECTOR_INCREMENT(src, angle, MUZZLE_EFFECT_PIXEL_INCREMENT, 1))
 	while(loc && !QDELETED(src))
 		if(paused)
 			stoplag(1)
@@ -917,23 +883,23 @@
 		if(QDELETED(src))
 			return
 		trajectory.increment(trajectory_multiplier)
-		var/turf/T = trajectory.return_turf()
-		if(!istype(T))
+		var/turf/cur_turf = trajectory.return_turf()
+		if(!istype(cur_turf))
 			// step back to the last valid turf before we Destroy
 			trajectory.increment(-trajectory_multiplier)
 			qdel(src)
 			return
-		if (T == loc)
+		if (cur_turf == loc)
 			continue
-		if (T.z == loc.z)
-			step_towards(src, T)
+		if (cur_turf.z == loc.z)
+			step_towards(src, cur_turf)
 			hitscan_last = loc
 			SEND_SIGNAL(src, COMSIG_PROJECTILE_PIXEL_STEP)
 			continue
 		var/old = loc
-		before_z_change(loc, T)
+		before_z_change(loc, cur_turf)
 		trajectory_ignore_forcemove = TRUE
-		forceMove(T)
+		forceMove(cur_turf)
 		trajectory_ignore_forcemove = FALSE
 		after_z_change(old, loc)
 		if(!hitscanning)
@@ -953,17 +919,17 @@
 /obj/projectile/proc/process_homing() //may need speeding up in the future performance wise.
 	if(!homing_target)
 		return FALSE
-	var/datum/point/PT = RETURN_PRECISE_POINT(homing_target)
-	PT.x += clamp(homing_offset_x, 1, world.maxx)
-	PT.y += clamp(homing_offset_y, 1, world.maxy)
-	var/angle = closer_angle_difference(Angle, angle_between_points(RETURN_PRECISE_POINT(src), PT))
-	set_angle(Angle + clamp(angle, -homing_turn_speed, homing_turn_speed))
+	var/datum/point/new_point = RETURN_PRECISE_POINT(homing_target)
+	new_point.x += clamp(homing_offset_x, 1, world.maxx)
+	new_point.y += clamp(homing_offset_y, 1, world.maxy)
+	var/new_angle = closer_angle_difference(angle, angle_between_points(RETURN_PRECISE_POINT(src), new_point))
+	set_angle(angle + clamp(new_angle, -homing_turn_speed, homing_turn_speed))
 
-/obj/projectile/proc/set_homing_target(atom/A)
-	if(!A || (!isturf(A) && !isturf(A.loc)))
+/obj/projectile/proc/set_homing_target(atom/target)
+	if(!target || (!isturf(target) && !isturf(target.loc)))
 		return FALSE
 	homing = TRUE
-	homing_target = A
+	homing_target = target
 	homing_offset_x = rand(homing_inaccuracy_min, homing_inaccuracy_max)
 	homing_offset_y = rand(homing_inaccuracy_min, homing_inaccuracy_max)
 	if(prob(50))
@@ -1097,12 +1063,12 @@
 		return
 	if(tracer_type)
 		var/tempref = REF(src)
-		for(var/datum/point/p in beam_segments)
-			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity, tempref)
+		for(var/datum/point/beam_point in beam_segments)
+			generate_tracer_between_points(beam_point, beam_segments[beam_point], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity, tempref)
 	if(muzzle_type && duration > 0)
-		var/datum/point/p = beam_segments[1]
+		var/datum/point/beam_point = beam_segments[1]
 		var/atom/movable/thing = new muzzle_type
-		p.move_atom_to_src(thing)
+		beam_point.move_atom_to_src(thing)
 		var/matrix/matrix = new
 		matrix.Turn(original_angle)
 		thing.transform = matrix
@@ -1110,11 +1076,11 @@
 		thing.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override? muzzle_flash_color_override : color)
 		QDEL_IN(thing, duration)
 	if(impacting && impact_type && duration > 0)
-		var/datum/point/p = beam_segments[beam_segments[beam_segments.len]]
+		var/datum/point/beam_point = beam_segments[beam_segments[beam_segments.len]]
 		var/atom/movable/thing = new impact_type
-		p.move_atom_to_src(thing)
+		beam_point.move_atom_to_src(thing)
 		var/matrix/matrix = new
-		matrix.Turn(Angle)
+		matrix.Turn(angle)
 		thing.transform = matrix
 		thing.color = color
 		thing.set_light(impact_light_range, impact_light_intensity, impact_light_color_override? impact_light_color_override : color)
@@ -1160,7 +1126,7 @@
 	firer = hit_atom
 	yo = new_y - current_tile.y
 	xo = new_x - current_tile.x
-	var/new_angle_s = Angle + rand(120,240)
+	var/new_angle_s = angle + rand(120,240)
 	while(new_angle_s > 180) // Translate to regular projectile degrees
 		new_angle_s -= 360
 	set_angle(new_angle_s)

@@ -86,10 +86,9 @@
 		return
 	parriers[user] = world.time + grace_period
 
-/datum/component/parriable_projectile/proc/before_hit(obj/projectile/source, list/bullet_args)
+/datum/component/parriable_projectile/proc/before_hit(obj/projectile/source, mob/living/user)
 	SIGNAL_HANDLER
 
-	var/mob/user = bullet_args[2]
 	if (!istype(user) || !parriers[user] || parried)
 		return
 	parriers -= user
@@ -101,8 +100,8 @@
 
 	parried = TRUE
 	if (source.firer != user)
-		if (abs(source.Angle - dir2angle(user)) < 15)
-			source.set_angle((source.Angle + 180) % 360 + rand(-3, 3))
+		if (abs(source.angle - dir2angle(user)) < 15)
+			source.set_angle((source.angle + 180) % 360 + rand(-3, 3))
 		else
 			source.set_angle(dir2angle(user) + rand(-3, 3))
 		user.visible_message(span_warning("[user] expertly parries [source] with [user.p_their()] bare hand!"), span_warning("You parry [source] with your hand!"))

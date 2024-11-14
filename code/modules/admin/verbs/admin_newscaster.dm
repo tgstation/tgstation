@@ -128,7 +128,7 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 		data["channelLocked"] = current_channel.locked
 		data["channelCensored"] = current_channel.censored
 
-	//We send all the information about all channels and all messages in existance.
+	//We send all the information about all channels and all messages in existence.
 	data["channels"] = channel_list
 	data["messages"] = message_list
 	data["wanted"] = wanted_info

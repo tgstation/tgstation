@@ -78,6 +78,26 @@ Simple datum which is instanced once per type and is used for every object of sa
 	/// The slowdown that is added to items.
 	var/added_slowdown = 0
 
+	/// Fish made of or infused with this material have their weight multiplied by this value.
+	var/fish_weight_modifier = 1
+
+	/// Additive bonus/malus to the fishing difficulty modifier of any rod made of this item. Negative is good, positive bad
+	var/fishing_difficulty_modifier = 0
+	/// Additive bonus/malus to the cast range of the fishing rod
+	var/fishing_cast_range = 0
+	/// The multiplier of how much experience is gained when using a fishing rod made of this material
+	var/fishing_experience_multiplier = 1
+	/// The multiplier to the completion gain of the fishing rod made of this material
+	var/fishing_completion_speed = 1
+	/// The multiplier of the bait/bobber speed of the fishing challenge for fishing rods made of this material
+	var/fishing_bait_speed_mult = 1
+	/// The multiplier of the deceleration/friction for fishing rods made of this material
+	var/fishing_deceleration_mult = 1
+	/// The multiplier of the bounciness of the bait/bobber upon hitting the edges of the minigame area
+	var/fishing_bounciness_mult = 1
+	/// The multiplier of negative velocity that pulls the bait/bobber of a fishing rod down when not holding the click
+	var/fishing_gravity_mult = 1
+
 /** Handles initializing the material.
  *
  * Arguments:
@@ -100,7 +120,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 ///This proc is called when the material becomes the one the object is composed of the most
 /datum/material/proc/on_main_applied(atom/source, mat_amount, multiplier)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(beauty_modifier >= 0.15 && HAS_TRAIT(source, TRAIT_FISHING_BAIT))
+		source.AddElement(/datum/element/shiny_bait)
 
 /datum/material/proc/setup_glow(turf/on)
 	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother
@@ -126,7 +148,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 ///This proc is called when the material is no longer the one the object is composed by the most
 /datum/material/proc/on_main_removed(atom/source, mat_amount, multiplier)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(beauty_modifier >= 0.15 && HAS_TRAIT(source, TRAIT_FISHING_BAIT))
+		source.RemoveElement(/datum/element/shiny_bait)
 
 /**
  * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
