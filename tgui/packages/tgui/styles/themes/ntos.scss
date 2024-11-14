@@ -6,7 +6,7 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-$nanotrasen: #384e68;
+$nanotrasen: hsl(213, 30%, 32%);
 
 @use '../colors.scss' with (
   $fg-map-keys: (),

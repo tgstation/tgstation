@@ -1,3 +1,4 @@
+@use 'sass:color';
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
@@ -21,7 +22,7 @@ $dropdown-z-index: 5;
 
 .MenuBar__hover {
   &:hover {
-    background-color: lighten($background-color, 30%);
+    background-color: color.adjust($background-color, $lightness: 30%);
     transition: background-color 0ms;
   }
 }

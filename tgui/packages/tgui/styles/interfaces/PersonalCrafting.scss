@@ -36,7 +36,7 @@
 
 .PersonalCraftingGridItem__content {
   position: relative;
-  color: #888;
+  color: hsl(0, 0%, 53.3%);
   padding: 0.5em 0.5em 2.5em 0.5em;
   min-height: 100%;
   pointer-events: none;
@@ -57,7 +57,7 @@
   right: 0;
   left: 0;
   padding: 0.5em;
-  color: #fff;
+  color: hsl(0, 0%, 100%);
   background-color: rgba(255, 0, 0, 0.1);
   text-align: center;
   visibility: hidden;
@@ -76,21 +76,21 @@
   overflow: hidden;
   font-weight: bold;
   margin-bottom: 0.5em;
-  color: #aaa;
+  color: hsl(0, 0%, 66.7%);
 }
 
 .PersonalCraftingGridItem--craftable .PersonalCraftingGridItem__name {
-  color: #fff;
+  color: hsl(0, 0%, 100%);
 }
 
 .PersonalCraftingGridItem__prereq {
-  color: #777;
+  color: hsl(0, 0%, 46.7%);
   overflow: hidden;
   white-space: nowrap;
 }
 
 .PersonalCraftingGridItem--craftable .PersonalCraftingGridItem__prereq {
-  color: #bbb;
+  color: hsl(0, 0%, 73.3%);
 }
 
 .PersonalCraftingGridItem__extra {

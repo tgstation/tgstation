@@ -1,0 +1,4 @@
+author: "larentoun"
+delete-after: True
+changes:
+  - bugfix: "Fixes a runtime when wingless creature flaps their wings"

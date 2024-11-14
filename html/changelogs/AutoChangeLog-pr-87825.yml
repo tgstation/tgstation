@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed fish not being able to reproduce with other fish of the same type without the crossbreeding trait."

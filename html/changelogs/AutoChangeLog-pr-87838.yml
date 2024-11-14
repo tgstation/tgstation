@@ -1,5 +1,0 @@
-author: "Neocloudy"
-delete-after: True
-changes:
-  - bugfix: "examine tags now use regex for checking if a tag has \"and\" in it"
-  - spellcheck: "the tooltip for the morbid examine tag doesn't try to use html anymore"

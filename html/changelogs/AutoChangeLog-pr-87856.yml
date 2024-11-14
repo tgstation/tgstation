@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "flatpacker accepts circuitboards with left click"
-  - bugfix: "rcd can deconstruct tables"
-  - bugfix: "you can open panels of destructive analyzers with screwdriver right click. Use right click or combat mode with items for default interactions"
-  - bugfix: "flatpacker & machines with local storage can be RPED'd again"
