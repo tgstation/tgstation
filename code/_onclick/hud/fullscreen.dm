@@ -162,27 +162,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
 	layer = LIGHTING_ABOVE_ALL + 1 //Infinity plus one (not actually)
 	blend_mode = BLEND_MULTIPLY
 
-/atom/movable/screen/fullscreen/high/Initialize(mapload)
+/atom/movable/screen/fullscreen/high/update_for_view(client_view)
+
+	animate(src, flags = ANIMATION_END_NOW) //Stop all animations.
 
 	. = ..()
 
-	alpha = 0
+	alpha = 1
+	animate(src, alpha = 255, time = 10 SECONDS, flags = ANIMATION_PARALLEL)
 
-	animate(
-		src,
-		alpha = 255,
-		time = 10 SECONDS
-	)
-
-	animate(
-		src,
-		color = color_matrix_rotate_hue(0),
-		loop = -1,
-		time = 2 SECONDS
-	)
-
+	animate(src, color = color_matrix_rotate_hue(0), loop = -1, time = 2 SECONDS)
 	var/step_precision = 18 //Larger is more precise rotations.
-	for(var/current_step in 1 to step_precision - 1) //We do the -1 here because 360 == 0 when it comes to angles.
+	for(var/current_step=1,current_step<=step_precision-1,current_step++) //We do the -1 here because 360 == 0 when it comes to angles.
 		animate(
 			color = color_matrix_rotate_hue(current_step * 360/step_precision),
 			time = 2 SECONDS,
