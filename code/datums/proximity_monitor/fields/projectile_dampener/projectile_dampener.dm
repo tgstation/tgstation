@@ -26,6 +26,71 @@
 	/// datum that holds the effects we apply on caught bullets
 	var/datum/dampener_projectile_effects/bullet_effects
 
+/datum/proximity_monitor/advanced/projectile_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, atom/projector, datum/dampener_projectile_effects/effects_typepath)
+	..()
+	RegisterSignal(projector, COMSIG_QDELETING, PROC_REF(on_projector_del))
+	var/atom/movable/movable_host = _host
+	my_movable = new(get_turf(_host))
+	my_movable.transform = my_movable.transform.Scale(current_range, current_range)
+	my_movable.set_glide_size(movable_host.glide_size)
+	bullet_effects = effects_typepath ? new effects_typepath() : new
+	draw_effect()
+
+/datum/proximity_monitor/advanced/projectile_dampener/on_moved(atom/movable/source, atom/old_loc)
+	. = ..()
+	my_movable.Move(source.loc, get_dir(my_movable.loc, source.loc), source.glide_size)
+
+/datum/proximity_monitor/advanced/projectile_dampener/on_z_change(datum/source)
+	recalculate_field(full_recalc = TRUE)
+
+/datum/proximity_monitor/advanced/projectile_dampener/field_edge_crossed(atom/movable/movable, turf/location, turf/old_location)
+	. = ..()
+	if(!isprojectile(movable))
+		return
+	determine_wobble(location)
+
+/datum/proximity_monitor/advanced/projectile_dampener/field_edge_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
+	. = ..()
+	if(!isprojectile(movable))
+		return
+	determine_wobble(old_location)
+
+/datum/proximity_monitor/advanced/projectile_dampener/field_turf_crossed(atom/movable/movable, turf/old_location, turf/new_location)
+	if(!isprojectile(movable) || HAS_TRAIT_FROM(movable, TRAIT_GOT_DAMPENED, REF(src)))
+		return
+	catch_bullet_effect(movable)
+
+/datum/proximity_monitor/advanced/projectile_dampener/field_turf_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
+	if(!isprojectile(movable) || get_dist(new_location, host) <= current_range)
+		return
+	release_bullet_effect(movable)
+
+/datum/proximity_monitor/advanced/projectile_dampener/proc/determine_wobble(turf/location)
+	var/coord_x = location.x - host.x
+	var/coord_y = location.y - host.y
+	var/obj/effect/overlay/vis/field/my_field = edgeturf_effects["[coord_x],[coord_y]"]
+	my_field?.set_wobbly(0.15 SECONDS)
+
+/datum/proximity_monitor/advanced/projectile_dampener/proc/projectile_overlay_updated(atom/source, list/overlays)
+	SIGNAL_HANDLER
+
+	if(!isnull(new_bullet_overlay) && HAS_TRAIT_FROM(source, TRAIT_GOT_DAMPENED, REF(src)))
+		overlays += new_bullet_overlay
+
+/datum/proximity_monitor/advanced/projectile_dampener/proc/catch_bullet_effect(obj/projectile/bullet)
+	ADD_TRAIT(bullet,TRAIT_GOT_DAMPENED, REF(src))
+	RegisterSignal(bullet, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(projectile_overlay_updated))
+	SEND_SIGNAL(src, COMSIG_DAMPENER_CAPTURE, bullet)
+	bullet_effects.apply_effects(bullet)
+	bullet.update_appearance()
+
+/datum/proximity_monitor/advanced/projectile_dampener/proc/release_bullet_effect(obj/projectile/bullet)
+	REMOVE_TRAIT(bullet, TRAIT_GOT_DAMPENED, REF(src))
+	SEND_SIGNAL(src, COMSIG_DAMPENER_RELEASE, bullet)
+	bullet_effects.remove_effects(bullet)
+	bullet.update_appearance()
+	UnregisterSignal(bullet, COMSIG_ATOM_UPDATE_OVERLAYS)
+
 /datum/proximity_monitor/advanced/projectile_dampener/proc/draw_effect()
 	var/max_pixel_offset = current_range * ICON_SIZE_ALL
 	var/top_right_corner = list(northeast_corner, max_pixel_offset, max_pixel_offset)
@@ -84,20 +149,6 @@
 	effect_to_add.set_wobbly(wobble_duration = ANIMATE_DAMPENER_TIME)
 	animate(effect_to_add, alpha = 255, time = ANIMATE_DAMPENER_TIME, flags = ANIMATION_PARALLEL)
 
-/datum/proximity_monitor/advanced/projectile_dampener/on_moved(atom/movable/source, atom/old_loc)
-	. = ..()
-	my_movable.Move(source.loc, get_dir(my_movable.loc, source.loc), source.glide_size)
-
-/datum/proximity_monitor/advanced/projectile_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, atom/projector, datum/dampener_projectile_effects/effects_typepath)
-	..()
-	RegisterSignal(projector, COMSIG_QDELETING, PROC_REF(on_projector_del))
-	var/atom/movable/movable_host = _host
-	my_movable = new(get_turf(_host))
-	my_movable.transform = my_movable.transform.Scale(current_range, current_range)
-	my_movable.set_glide_size(movable_host.glide_size)
-	bullet_effects = effects_typepath ? new effects_typepath() : new
-	draw_effect()
-
 /datum/proximity_monitor/advanced/projectile_dampener/Destroy()
 	for(var/coordinates in edgeturf_effects)
 		var/obj/effect/overlay/vis/field/effect_to_remove = edgeturf_effects[coordinates]
@@ -109,61 +160,9 @@
 	bullet_effects = null
 	return ..()
 
-/datum/proximity_monitor/advanced/projectile_dampener/on_z_change(datum/source)
-	recalculate_field(full_recalc = TRUE)
-
 /datum/proximity_monitor/advanced/projectile_dampener/proc/on_projector_del(datum/source)
 	SIGNAL_HANDLER
 	qdel(src)
-
-/datum/proximity_monitor/advanced/projectile_dampener/field_edge_crossed(atom/movable/movable, turf/location, turf/old_location)
-	. = ..()
-	if(!isprojectile(movable))
-		return
-	determine_wobble(location)
-
-/datum/proximity_monitor/advanced/projectile_dampener/field_edge_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
-	. = ..()
-	if(!isprojectile(movable))
-		return
-	determine_wobble(old_location)
-
-/datum/proximity_monitor/advanced/projectile_dampener/proc/determine_wobble(turf/location)
-	var/coord_x = location.x - host.x
-	var/coord_y = location.y - host.y
-	var/obj/effect/overlay/vis/field/my_field = edgeturf_effects["[coord_x],[coord_y]"]
-	my_field?.set_wobbly(0.15 SECONDS)
-
-/datum/proximity_monitor/advanced/projectile_dampener/field_turf_crossed(atom/movable/movable, turf/old_location, turf/new_location)
-	if(!isprojectile(movable) || HAS_TRAIT_FROM(movable, TRAIT_GOT_DAMPENED, REF(src)))
-		return
-	catch_bullet_effect(movable)
-
-/datum/proximity_monitor/advanced/projectile_dampener/field_turf_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
-	if(!isprojectile(movable) || get_dist(new_location, host) <= current_range)
-		return
-	release_bullet_effect(movable)
-
-
-/datum/proximity_monitor/advanced/projectile_dampener/proc/projectile_overlay_updated(atom/source, list/overlays)
-	SIGNAL_HANDLER
-
-	if(!isnull(new_bullet_overlay) && HAS_TRAIT_FROM(source, TRAIT_GOT_DAMPENED, REF(src)))
-		overlays += new_bullet_overlay
-
-/datum/proximity_monitor/advanced/projectile_dampener/proc/catch_bullet_effect(obj/projectile/bullet)
-	ADD_TRAIT(bullet,TRAIT_GOT_DAMPENED, REF(src))
-	RegisterSignal(bullet, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(projectile_overlay_updated))
-	SEND_SIGNAL(src, COMSIG_DAMPENER_CAPTURE, bullet)
-	bullet_effects.apply_effects(bullet)
-	bullet.update_appearance()
-
-/datum/proximity_monitor/advanced/projectile_dampener/proc/release_bullet_effect(obj/projectile/bullet)
-	REMOVE_TRAIT(bullet, TRAIT_GOT_DAMPENED, REF(src))
-	SEND_SIGNAL(src, COMSIG_DAMPENER_RELEASE, bullet)
-	bullet_effects.remove_effects(bullet)
-	bullet.update_appearance()
-	UnregisterSignal(bullet, COMSIG_ATOM_UPDATE_OVERLAYS)
 
 /datum/proximity_monitor/advanced/projectile_dampener/peaceborg
 
@@ -201,3 +200,7 @@
 	appearance_flags = PIXEL_SCALE|LONG_GLIDE
 	plane = ABOVE_GAME_PLANE
 
+#undef CHANGING_OFFSET
+#undef OVERLAY_DATA
+#undef STARTING_POSITION
+#undef ANIMATE_DAMPENER_TIME
