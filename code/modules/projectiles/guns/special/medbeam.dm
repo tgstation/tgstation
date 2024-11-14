@@ -83,14 +83,14 @@
 
 	last_check = world.time
 
-	if(!los_check(loc, current_target))
+	if(!los_check(loc, current_target, mid_check = CALLBACK(src, PROC_REF(mid_los_check))))
 		QDEL_NULL(current_beam)//this will give the target lost message
 		return
 
 	if(current_target)
 		on_beam_tick(current_target)
 
-/obj/item/gun/medbeam/mid_los_check(atom/movable/user, mob/target, pass_args = PASSTABLE|PASSGLASS|PASSGRILLE, turf/next_step, obj/dummy)
+/obj/item/gun/medbeam/proc/mid_los_check(atom/movable/user, mob/target, pass_args = PASSTABLE|PASSGLASS|PASSGRILLE, turf/next_step, obj/dummy)
 	for(var/obj/effect/ebeam/medical/B in next_step)// Don't cross the str-beams!
 		if(QDELETED(current_beam))
 			break //We shouldn't be processing anymore.
