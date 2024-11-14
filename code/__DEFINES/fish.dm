@@ -158,7 +158,7 @@
  * basically, a gross estimate based on how weight generaly scales up (250, 500, 1000, 2000, 4000 etc...)
  * for most fish
  */
-#define GET_FISH_WEIGHT_RANK(weighty) max(round(1 + log(2, weighty/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
+#define GET_FISH_WEIGHT_RANK(weighty) max(round(1 + log(2, max(weighty/FISH_WEIGHT_FORCE_DIVISOR, 1)), 1), 1)
 
 ///The breeding timeout for newly instantiated fish is multiplied by this.
 #define NEW_FISH_BREEDING_TIMEOUT_MULT 2

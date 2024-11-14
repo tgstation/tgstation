@@ -154,7 +154,7 @@
 	///Tracks the sum of the weight of all fish in this tank
 	var/current_summed_weight = 0
 
-/obj/item/fish_tank/Initialize()
+/obj/item/fish_tank/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	AddComponent(\

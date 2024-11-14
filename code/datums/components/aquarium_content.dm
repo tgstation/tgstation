@@ -81,7 +81,7 @@
 ///Sends a signal to the parent to get them to update the aquarium animation of the visual object
 /datum/component/aquarium_content/proc/generate_animation(reset = FALSE)
 	var/atom/movable/movable = parent
-	SEND_SIGNAL(movable, COMSIG_AQUARIUM_CONTENT_DO_ANIMATION, reset ? null : current_animation, movable.loc, vc_obj)
+	SEND_SIGNAL(movable, COMSIG_AQUARIUM_CONTENT_DO_ANIMATION, reset ? null : current_animation, vc_obj)
 
 /// Generates common visual object, propeties that don't depend on aquarium surface
 /datum/component/aquarium_content/proc/generate_base_vc(atom/movable/aquarium)
