@@ -2,12 +2,12 @@
 	name = "Anomaly: Bioscrambler"
 	typepath = /datum/round_event/anomaly/anomaly_bioscrambler
 
-	min_players = 10
-	max_occurrences = 5
+	min_players = 256
+	max_occurrences = 0
 	weight = 20
 	description = "This anomaly replaces the limbs of nearby people."
 	min_wizard_trigger_potency = 0
-	max_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 0
 
 /datum/round_event/anomaly/anomaly_bioscrambler
 	start_when = ANOMALY_START_MEDIUM_TIME
