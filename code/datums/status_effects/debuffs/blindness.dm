@@ -43,10 +43,10 @@
 		if (human_owner.get_eye_scars())
 			return TRUE
 	if(HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED))
-		return TRUE
+		return FALSE
 	if(HAS_TRAIT(owner, TRAIT_SIGHT_BYPASS))
-		return TRUE
-	return FALSE
+		return FALSE
+	return TRUE
 
 /// Updates our nearsightd overlay, either removing it if we have the trait or adding it if we don't
 /datum/status_effect/grouped/nearsighted/proc/update_nearsighted_overlay()
@@ -80,7 +80,6 @@
 /datum/status_effect/grouped/blindness/on_apply()
 	if(!CAN_BE_BLIND(owner))
 		return FALSE
-
 
 	RegisterSignals(owner, update_signals, PROC_REF(update_blindness))
 
