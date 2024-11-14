@@ -118,10 +118,10 @@
 	else
 		destination = user
 		throw_callback = CALLBACK(src, PROC_REF(clear_hitby_signal), movable_target)
-		RegisterSignal(movable_target, COMSIG_ATOM_PREHITBY, PROC_REF(catch_it_chucklenut))
+		RegisterSignal(movable_target, COMSIG_MOVABLE_PRE_IMPACT, PROC_REF(catch_it_chucklenut))
 
 	if(!movable_target.safe_throw_at(destination, source.cast_range, 2, callback = throw_callback, gentle = please_be_gentle))
-		UnregisterSignal(movable_target, COMSIG_ATOM_PREHITBY)
+		UnregisterSignal(movable_target, COMSIG_MOVABLE_PRE_IMPACT)
 	else
 		playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 
@@ -129,12 +129,13 @@
 	SIGNAL_HANDLER
 	var/mob/living/user = throwingdatum.initial_target.resolve()
 	if(QDELETED(user) || hit_atom != user)
-		return
-	if(user.try_catch_item(source, skip_throw_mode_check = TRUE, try_offhand = TRUE))
-		return COMSIG_HIT_PREVENTED
+		return NONE
+	if(!user.try_catch_item(source, skip_throw_mode_check = TRUE, try_offhand = TRUE))
+		return NONE
+	return COMPONENT_MOVABLE_IMPACT_NEVERMIND
 
 /obj/item/fishing_line/auto_reel/proc/clear_hitby_signal(obj/item/item)
-	UnregisterSignal(item, COMSIG_ATOM_PREHITBY)
+	UnregisterSignal(item, COMSIG_MOVABLE_PRE_IMPACT)
 
 // Hooks
 

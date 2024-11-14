@@ -401,3 +401,60 @@
   grungussuss:
   - qol: you can now mitigate motion sickness from screen shake by enabling "darken
       screen shake" in preferences
+2024-11-13:
+  00-Steven:
+  - bugfix: Fixed auto-reel fishing line item catching logic.
+  Absolucy:
+  - bugfix: You can no longer crush random unsuspecting people with vendors by ventcrawling
+      while cursed.
+  - qol: AFK players don't count as "watchers" for cursed stuff.
+  EmptyLullaby:
+  - bugfix: Goliath cloaks are no longer so hard on the calves that they force digitigrade
+      legs to disable.
+  Ghommie:
+  - bugfix: Fixed special DNA infusions from squids and pufferfish.
+  - bugfix: Fixed fish still being hungry when fed if in aquarium with the 'growth
+      and reproduction' option disabled.
+  - bugfix: Fixed bombing non-turfs fishing spots not spawning loot correctly.
+  - balance: Explosive bombing no longer spawns bottled messages/photos.
+  - bugfix: Fixed fish not being able to reproduce with other fish of the same type
+      without the crossbreeding trait.
+  Goat:
+  - map: The library's scanner on Birdshot is now close enough to connect to the computer
+      and was also given a book binder.
+  - qol: Curator console's inventory screen will now update when you change pages
+      or remove items.
+  - qol: You can now examine labelers to tell how many more labels it has.
+  Holoo-1:
+  - bugfix: fixed roundstart borgs not being synced to ai
+  Neocloudy:
+  - bugfix: examine tags now use regex for checking if a tag has "and" in it
+  - spellcheck: the tooltip for the morbid examine tag doesn't try to use html anymore
+  OrionTheFox:
+  - bugfix: (DeltaStation) Fixed unwired APCs in the Electronic Marketing Den, Abandoned
+      Garden, Security Maintenance, and Private Investigator's Office
+  Rhials:
+  - qol: Makes some minor updates to Runtimestation, including event spawn points
+      and a cargo bounty pad.
+  SmArtKar:
+  - bugfix: Xenobio console puts sucked up slimes into stasis so they no longer split
+      up inside
+  - bugfix: Fixed basic mob performance impact created by the factorio PR
+  - bugfix: Fixed hat stabilizer ignoring clothing worn_y_offset
+  SyncIt21:
+  - bugfix: flatpacker accepts circuitboards with left click
+  - bugfix: rcd can deconstruct tables
+  - bugfix: you can open panels of destructive analyzers with screwdriver right click.
+      Use right click or combat mode with items for default interactions
+  - bugfix: flatpacker & machines with local storage can be RPED'd again
+  harryob:
+  - bugfix: ghosts observing ghosts can no longer click on their screen alerts
+  - bugfix: certain tgui inputs no longer require 2 clicks to open
+  sqnztb:
+  - map: tramstation tool storage trash no longer routes to the barber shop
+  timothymtorres:
+  - bugfix: Fix holymelon armor not inheriting magic resistance
+  - bugfix: Fix broken link to issue manager guide in Github contributor guide
+  - bugfix: Fix missing screentips plasmaman helmets and MOD suit hat stabilizer helmets.
+  tmyqlfpir:
+  - bugfix: Airlock shells are properly assigned circuit cameras modules

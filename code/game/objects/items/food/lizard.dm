@@ -575,7 +575,7 @@
 		/datum/reagent/consumable/nutriment/protein = 10,
 	)
 	tastes = list("bread" = 1, "meat" = 1)
-	foodtypes = MEAT | NUTS | RAW | GORE
+	foodtypes = MEAT | NUTS | GORE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/flatbread/stinging

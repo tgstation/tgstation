@@ -77,13 +77,13 @@
 
 /obj/item/mod/module/quick_carry/on_part_activation()
 	. = ..()
-	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, quick_carry_trait, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, REF(src))
+	ADD_TRAIT(mod.wearer, quick_carry_trait, REF(src))
 
 /obj/item/mod/module/quick_carry/on_part_deactivation(deleting = FALSE)
 	. = ..()
-	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, quick_carry_trait, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, REF(src))
+	REMOVE_TRAIT(mod.wearer, quick_carry_trait, REF(src))
 
 /obj/item/mod/module/quick_carry/advanced
 	name = "MOD advanced quick carry module"
