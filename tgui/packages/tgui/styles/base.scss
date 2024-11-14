@@ -7,8 +7,8 @@
 @use 'sass:math';
 
 $color-fg: #ffffff !default;
-$color-bg: #252525 !default;
-$color-bg-section: rgba(0, 0, 0, 0.33) !default;
+$color-bg: #1e4c4c !default;
+$color-bg-section: #0e2525 !default;
 $color-bg-grad-spread: 2% !default;
 $color-bg-start: color.adjust(
   $color-bg,

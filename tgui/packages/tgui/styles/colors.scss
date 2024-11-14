@@ -8,27 +8,28 @@
 @use 'sass:meta';
 
 // Base colors
+
 $black: #000000 !default;
 $white: #ffffff !default;
-$red: #db2828 !default;
-$orange: #f2711c !default;
-$yellow: #fbd608 !default;
-$olive: #b5cc18 !default;
-$green: #20b142 !default;
-$teal: #00b5ad !default;
-$blue: #2185d0 !default;
-$violet: #6435c9 !default;
-$purple: #a333c8 !default;
-$pink: #e03997 !default;
-$brown: #a5673f !default;
-$grey: #767676 !default;
-$light-grey: #aaa !default;
+$red: #ff1205 !default;
+$orange: #ed9550 !default;
+$yellow: #eff792 !default;
+$olive: #8d9770 !default;
+$green: #83bc78 !default;
+$teal: #cef2ec !default;
+$blue: #a7b4f6 !default;
+$violet: #92839f !default;
+$purple: #bfa9da !default;
+$pink: #edc1d5 !default;
+$brown: #b59d7e !default;
+$grey: #8b8b8b !default;
+$light-grey: #c5c5c5 !default;
 
-$primary: #4972a1 !default;
-$good: #5baa27 !default;
-$average: #f08f11 !default;
-$bad: #db2828 !default;
-$label: #7e90a7 !default;
+$primary: #306f94 !default;
+$good: #7ce176 !default;
+$average: #eebe66 !default;
+$bad: #ed6762 !default;
+$label: #92e4ff !default;
 
 // Background and foreground color lightness ratios
 $bg-lightness: -15% !default;
