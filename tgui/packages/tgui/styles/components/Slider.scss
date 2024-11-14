@@ -6,8 +6,8 @@
 @use '../base.scss';
 
 $cursor-color: base.$color-fg !default;
-$popup-background-color: #000000 !default;
-$popup-text-color: #ffffff !default;
+$popup-background-color: hsl(0, 0%, 0%) !default;
+$popup-text-color: hsl(0, 0%, 100%) !default;
 
 .Slider {
   cursor: e-resize;

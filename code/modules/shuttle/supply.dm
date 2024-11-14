@@ -277,7 +277,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
 			for(var/turf/shuttle_turf as anything in zlevel_turfs)
 				for(var/atom/movable/exporting_atom in shuttle_turf)
-					if(iscameramob(exporting_atom))
+					if(iseyemob(exporting_atom))
 						continue
 					if(exporting_atom.anchored)
 						continue

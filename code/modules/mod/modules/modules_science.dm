@@ -14,10 +14,10 @@
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 
 /obj/item/mod/module/reagent_scanner/on_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, REF(src))
 
 /obj/item/mod/module/reagent_scanner/on_deactivation(display_message = TRUE, deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, REF(src))
 
 /obj/item/mod/module/reagent_scanner/advanced
 	name = "MOD advanced reagent scanner module"
@@ -31,12 +31,12 @@
 
 /obj/item/mod/module/reagent_scanner/advanced/on_activation()
 	. = ..()
-	ADD_TRAIT(mod.wearer, TRAIT_RESEARCH_SCANNER, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_RESEARCH_SCANNER, REF(src))
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, PROC_REF(sense_explosion))
 
 /obj/item/mod/module/reagent_scanner/advanced/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
-	REMOVE_TRAIT(mod.wearer, TRAIT_RESEARCH_SCANNER, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_RESEARCH_SCANNER, REF(src))
 	UnregisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION)
 
 /obj/item/mod/module/reagent_scanner/advanced/proc/sense_explosion(datum/source, turf/epicenter,

@@ -373,7 +373,7 @@
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
 	if(!AM || !src)
 		return FALSE
-	if(!(AM.can_be_pulled(src, state, force)))
+	if(!(AM.can_be_pulled(src, force)))
 		return FALSE
 	if(throwing || !(mobility_flags & MOBILITY_PULL))
 		return FALSE
@@ -1890,7 +1890,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 						"[C] leaps out of [src]'s way!")))
 	C.Paralyze(40)
 
-/mob/living/can_be_pulled()
+/mob/living/can_be_pulled(user, force)
 	return ..() && !(buckled?.buckle_prevents_pull)
 
 
@@ -1961,9 +1961,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	user.put_in_hands(holder)
 
 /mob/living/proc/set_name()
-	if(numba == 0)
-		numba = rand(1, 1000)
-	name = "[name] ([numba])"
+	if(identifier == 0)
+		identifier = rand(1, 999)
+	name = "[name] ([identifier])"
 	real_name = name
 
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)

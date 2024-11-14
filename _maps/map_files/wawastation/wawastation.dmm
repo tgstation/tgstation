@@ -5609,7 +5609,7 @@
 /area/station/security/lockers)
 "bYo" = (
 /obj/machinery/mecha_part_fabricator{
-	dir = 1
+	drop_direction = 1
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/poster/contraband/borg_fancy_1/directional/south,
@@ -39502,7 +39502,7 @@
 /area/station/maintenance/central/lesser)
 "oac" = (
 /obj/machinery/mecha_part_fabricator{
-	dir = 1
+	drop_direction = 1
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/digital_clock/directional/south,

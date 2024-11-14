@@ -273,3 +273,188 @@
   - spellcheck: the text for failing to succumb is now spanned
   zoomachina:
   - bugfix: e-cigarettes can't be emptied if the cap isn't open
+2024-11-09:
+  00-Steven:
+  - bugfix: NTNRC no longer endlessly duplicates messages with duplicate contents
+      upon switching channels.
+  - bugfix: The new message header you get when NTNRC runs in the background actually
+      works.
+  - bugfix: NtOS header actually updates if there are no program headers.
+  Fikou:
+  - bugfix: fixes borgs linking to ais in mechs cards and modsuits
+  Ghommie:
+  - bugfix: You can perform fish scanning experiments again.
+  - bugfix: You can actually release fish on water turfs after catching them.
+  - spellcheck: Fixed a typo in the name of material fishing rods.
+  Jacquerel:
+  - bugfix: Living Limbs no longer try to grab things that are under the floor.
+  - spellcheck: Living Limb feedback messages now don't redundantly specify that they
+      are flesh arms.
+  NoselessCanine:
+  - balance: Gas mask filters are now more effective, and their degradation is more
+      heavily influenced by what gasses they are filtering.
+  Rhials:
+  - bugfix: Goliath Tendril Hammer arm (from the gene brain) is now resistant to being
+      burned off by acid/fire.
+  SyncIt21:
+  - bugfix: MK honk shoes now consume bananium & can clown again
+  - code_imp: material container objects end their attack chain early
+  - bugfix: status & newscaster frame won't drop extra glass sheets upon deconstruction
+  necromanceranne:
+  - balance: Some mind altering effects of heretics (predominantly Path of the Moon
+      heretic abilities) are nullified using...a tinfoil hat. But awareness of the
+      mind altering psychotropic eldritch brain wizards has spread amongst the conspiracy
+      theorists. They could be anyone! Even YOU.
+  - balance: Some additional spells (mindswap, nightmare's terrorize) are also blocked.
+  thegrb93:
+  - bugfix: Fixes oil slimes making vegetable oil instead of corn oil
+  unit0016:
+  - code_imp: Mappers can now opt out of automatically linking their up/down station
+      traits.
+2024-11-10:
+  Ghommie:
+  - bugfix: Fixed fishing rod duping with poly belts and shapeshift spells.
+  - spellcheck: Fixed a small typo when examining fishing rods.
+  Majkl-J:
+  - bugfix: Cigarettes can be injected again and have the right amount of nicotine
+  OrionTheFox:
+  - image: redid most basic drinking glass sprites, and moved several drinks to use
+      the same color system as beakers. Please bug report any incorrect colored drinks
+      or juices!
+  Rhials:
+  - bugfix: Blob Overmind/Minion/Blobbernaut speech is now logged. Beware.
+  SmArtKar:
+  - bugfix: Fixed wings and jetpacks sometimes preventing you from opening doors
+  SyncIt21:
+  - bugfix: chem master validates selected container in UI so no more href exploits
+  Xander3359:
+  - bugfix: fix blade ascension not giving you the ring of blades
+  grungussuss:
+  - qol: security helmet straps can be loosened to show hair
+  - sound: only insulated,nitrile, enhanced retrieval, latex, boxing, improvised gripper
+      gloves have an equip sound
+  harryob:
+  - bugfix: dynamic rulesets can get candidates for their roles
+  - bugfix: the abductor console now correctly loads images of equipment
+  timothymtorres:
+  - admin: Admins can now add/remove TRAIT_EVIL from mobs.
+  tontyGH:
+  - server: mob/camera has been renamed to mob/eye, which may break downstreams
+  - bugfix: Teleporting while buckled to something now works as expected
+  - bugfix: You can buckle to anything if you share the same tile (cause at that point
+      it doesn't matter if there's a wall, right?)
+2024-11-11:
+  Dawnseer:
+  - spellcheck: changed throguh to through in a player facing description
+  Ghommie:
+  - bugfix: You can now use fish feed cans on aquariums while the control panel is
+      open.
+  - rscadd: Added fishing bluespace capsules to the game, which can be used to spawn
+      a variety of fishing spots, from freshwater to tiziran sea to hot springs, and
+      also lava and plasma if emagged.
+  - rscadd: 'Added two new fish: the zagoskian moonfish and the sacabambaspis. Moonfish
+      will now periodically lay moonfish eggs.'
+  - map: The 'crashed pod' lavaland ruin now has a hot spring, and the cursed hotspring
+      on icemoon now has a plastic chair and a fishing toolbox.
+  MTandi:
+  - qol: chem dispenser droplets in UI colored as their reagent
+  Majkl-J:
+  - bugfix: Losing malf no longer wipes nonmalf AI abilities
+  SmArtKar:
+  - refactor: Eye color effects are now controlled via a new overrides system, which
+      should prevent conflicts between different sources.
+  SyncIt21:
+  - bugfix: mortar pedestal now grinds & juices items that previously could not be
+      processed
+  - bugfix: plumbing grinder won't destroy slime extracts after grinding
+  - refactor: grinding & juicing code has been refactored overall. Please report bugs
+      on github
+  - code_imp: improves code for recycling circuits in component printer
+  - bugfix: Super matter sliver dusts fishing hooks & cannot be picked up by them
+  carlarctg:
+  - bugfix: fixed random dm modifiers & some life-like reagent reactions
+  carlarctg, Ghommie:
+  - bugfix: Fixes the randomizer fishing portal not working as intended. Fish from
+      it should now receive random traits.
+  - bugfix: Fish names are no longer partially shown in the aquarium UI if they contain
+      a space character.
+  grungussuss:
+  - sound: evidence bags have more sounds now
+  - sound: writing something now produces sound
+  harryob:
+  - bugfix: you can no longer send newscaster messages to channels you don't have
+      permissions for
+  necromanceranne:
+  - bugfix: Abstract nullrod types can no longer be burned or melted with acid.
+  - bugfix: Monk staff now properly does not block projectiles, and uses the correct
+      force before being wielded.
+2024-11-12:
+  Djiq:
+  - refactor: Refactors heretic tree coode
+  EnterTheJake:
+  - balance: The Uplink cost of the energy sword has been lowered from 8 to 6 TC.
+  Ghommie:
+  - bugfix: AI-controlled mobs can now cross open space if they won't fall.
+  Melbert:
+  - image: The animation for being dusted now takes into account your sprite, rather
+      than being a normal nude spaceman
+  grungussuss:
+  - qol: you can now mitigate motion sickness from screen shake by enabling "darken
+      screen shake" in preferences
+2024-11-13:
+  00-Steven:
+  - bugfix: Fixed auto-reel fishing line item catching logic.
+  Absolucy:
+  - bugfix: You can no longer crush random unsuspecting people with vendors by ventcrawling
+      while cursed.
+  - qol: AFK players don't count as "watchers" for cursed stuff.
+  EmptyLullaby:
+  - bugfix: Goliath cloaks are no longer so hard on the calves that they force digitigrade
+      legs to disable.
+  Ghommie:
+  - bugfix: Fixed special DNA infusions from squids and pufferfish.
+  - bugfix: Fixed fish still being hungry when fed if in aquarium with the 'growth
+      and reproduction' option disabled.
+  - bugfix: Fixed bombing non-turfs fishing spots not spawning loot correctly.
+  - balance: Explosive bombing no longer spawns bottled messages/photos.
+  - bugfix: Fixed fish not being able to reproduce with other fish of the same type
+      without the crossbreeding trait.
+  Goat:
+  - map: The library's scanner on Birdshot is now close enough to connect to the computer
+      and was also given a book binder.
+  - qol: Curator console's inventory screen will now update when you change pages
+      or remove items.
+  - qol: You can now examine labelers to tell how many more labels it has.
+  Holoo-1:
+  - bugfix: fixed roundstart borgs not being synced to ai
+  Neocloudy:
+  - bugfix: examine tags now use regex for checking if a tag has "and" in it
+  - spellcheck: the tooltip for the morbid examine tag doesn't try to use html anymore
+  OrionTheFox:
+  - bugfix: (DeltaStation) Fixed unwired APCs in the Electronic Marketing Den, Abandoned
+      Garden, Security Maintenance, and Private Investigator's Office
+  Rhials:
+  - qol: Makes some minor updates to Runtimestation, including event spawn points
+      and a cargo bounty pad.
+  SmArtKar:
+  - bugfix: Xenobio console puts sucked up slimes into stasis so they no longer split
+      up inside
+  - bugfix: Fixed basic mob performance impact created by the factorio PR
+  - bugfix: Fixed hat stabilizer ignoring clothing worn_y_offset
+  SyncIt21:
+  - bugfix: flatpacker accepts circuitboards with left click
+  - bugfix: rcd can deconstruct tables
+  - bugfix: you can open panels of destructive analyzers with screwdriver right click.
+      Use right click or combat mode with items for default interactions
+  - bugfix: flatpacker & machines with local storage can be RPED'd again
+  harryob:
+  - bugfix: ghosts observing ghosts can no longer click on their screen alerts
+  - bugfix: certain tgui inputs no longer require 2 clicks to open
+  sqnztb:
+  - map: tramstation tool storage trash no longer routes to the barber shop
+  timothymtorres:
+  - bugfix: Fix holymelon armor not inheriting magic resistance
+  - bugfix: Fix broken link to issue manager guide in Github contributor guide
+  - bugfix: Fix missing screentips plasmaman helmets and MOD suit hat stabilizer helmets.
+  tmyqlfpir:
+  - bugfix: Airlock shells are properly assigned circuit cameras modules
