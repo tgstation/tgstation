@@ -3,7 +3,7 @@
 	name = "vortex anomaly"
 	icon_state = "vortex"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
-	aSignal = /obj/item/assembly/signaler/anomaly/vortex
+	anomaly_core = /obj/item/assembly/signaler/anomaly/vortex
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()

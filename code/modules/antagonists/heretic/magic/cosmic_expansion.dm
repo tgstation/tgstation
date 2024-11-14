@@ -7,7 +7,7 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "cosmic_domain"
 
-	sound = 'sound/magic/cosmic_expansion.ogg'
+	sound = 'sound/effects/magic/cosmic_expansion.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 45 SECONDS
 
@@ -28,7 +28,7 @@
 /datum/action/cooldown/spell/conjure/cosmic_expansion/cast(mob/living/cast_on)
 	new expansion_effect(get_turf(cast_on))
 	for(var/mob/living/nearby_mob in range(star_mark_range, cast_on))
-		if(cast_on == nearby_mob)
+		if(cast_on == nearby_mob || cast_on.buckled == nearby_mob)
 			continue
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark, cast_on)
 	if (ascended)

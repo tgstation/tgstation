@@ -28,6 +28,9 @@
 	var/show_charge_as_alpha = FALSE
 	/// The item we use for recharging
 	var/recharge_path
+	/// Whether or not we lose a charge when hit by 0 damage items or projectiles
+	var/lose_charge_on_damageless = FALSE
+
 	/// The cooldown tracking when we were last hit
 	COOLDOWN_DECLARE(recently_hit_cd)
 	/// The cooldown tracking when we last replenished a charge
@@ -98,7 +101,7 @@
 	var/obj/item/item_parent = parent
 	COOLDOWN_START(src, charge_add_cd, charge_increment_delay)
 	adjust_charge(charge_recovery) // set the number of charges to current + recovery per increment, clamped from zero to max_charges
-	playsound(item_parent, 'sound/magic/charge.ogg', 50, TRUE)
+	playsound(item_parent, 'sound/effects/magic/charge.ogg', 50, TRUE)
 	if(current_charges == max_charges)
 		playsound(item_parent, 'sound/machines/ding.ogg', 50, TRUE)
 
@@ -111,7 +114,7 @@
 /datum/component/shielded/proc/on_equipped(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if((slot & ITEM_SLOT_HANDS) && !shield_inhand)
+	if(user.is_holding(parent) && !shield_inhand)
 		lost_wearer(source, user)
 		return
 	set_wearer(user)
@@ -155,6 +158,14 @@
 
 	COOLDOWN_START(src, recently_hit_cd, recharge_start_delay)
 
+	//No wearer? No block.
+	if(isnull(wearer))
+		return
+
+	//if our wearer isn't the owner of the block, don't block
+	if(owner != wearer)
+		return
+
 	if(current_charges <= 0)
 		return
 	. = COMPONENT_HIT_REACTION_BLOCK
@@ -163,6 +174,9 @@
 
 	if(lose_multiple_charges) // if the shield has health like damage we'll lose charges equal to the damage of the hit
 		charge_loss = damage
+
+	else if(!lose_charge_on_damageless && !damage)
+		charge_loss = 0
 
 	adjust_charge(-charge_loss)
 

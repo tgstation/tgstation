@@ -8,7 +8,7 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	power_channel = AREA_USAGE_ENVIRON
-	req_access = list(ACCESS_ATMOSPHERICS)
+	req_access = list(ACCESS_ENGINEERING)
 	max_integrity = 250
 	integrity_failure = 0.33
 	armor_type = /datum/armor/machinery_airalarm
@@ -99,13 +99,14 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	tlv_collection = list()
 	tlv_collection["pressure"] = new /datum/tlv/pressure
 	tlv_collection["temperature"] = new /datum/tlv/temperature
-	var/list/meta_info = GLOB.meta_gas_info // shorthand
-	for(var/gas_path in meta_info)
+
+	var/list/cached_gas_info = GLOB.meta_gas_info
+	for(var/datum/gas/gas_path as anything in cached_gas_info)
 		if(ispath(gas_path, /datum/gas/oxygen))
 			tlv_collection[gas_path] = new /datum/tlv/oxygen
 		else if(ispath(gas_path, /datum/gas/carbon_dioxide))
 			tlv_collection[gas_path] = new /datum/tlv/carbon_dioxide
-		else if(meta_info[gas_path][META_GAS_DANGER])
+		else if(cached_gas_info[gas_path][META_GAS_DANGER])
 			tlv_collection[gas_path] = new /datum/tlv/dangerous
 		else
 			tlv_collection[gas_path] = new /datum/tlv/no_checks
@@ -123,8 +124,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	))
 
 	GLOB.air_alarms += src
-	update_appearance()
 	find_and_hang_on_wall()
+	register_context()
+	check_enviroment()
 
 /obj/machinery/airalarm/process()
 	if(!COOLDOWN_FINISHED(src, warning_cooldown))
@@ -136,7 +138,12 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
 		my_area = null
-	QDEL_NULL(wires)
+	if(connected_sensor)
+		UnregisterSignal(connected_sensor, COMSIG_QDELETING)
+		UnregisterSignal(connected_sensor.loc, COMSIG_TURF_EXPOSE)
+		connected_sensor.connected_airalarm = null
+		connected_sensor = null
+
 	QDEL_NULL(alarm_manager)
 	GLOB.air_alarms -= src
 	return ..()
@@ -144,6 +151,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/proc/check_enviroment()
 	var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 	var/datum/gas_mixture/environment = our_turf.return_air()
+	if(isnull(environment))
+		return
 	check_danger(our_turf, environment, environment.temperature)
 
 /obj/machinery/airalarm/proc/get_enviroment()
@@ -199,10 +208,16 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		return .
 
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+
 		if(!allow_link_change)
 			balloon_alert(user, "linking disabled")
 			return ITEM_INTERACT_BLOCKING
-		connect_sensor(multi_tool.buffer)
+		if(connected_sensor || sensor.connected_airalarm)
+			balloon_alert(user, "sensor already connected!")
+			return ITEM_INTERACT_BLOCKING
+
+		connect_sensor(sensor)
 		balloon_alert(user, "connected sensor")
 		return ITEM_INTERACT_SUCCESS
 
@@ -340,15 +355,15 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	return data
 
-/obj/machinery/airalarm/ui_act(action, params)
+/obj/machinery/airalarm/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 
 	if(. || buildstage != AIR_ALARM_BUILD_COMPLETE)
 		return
-	if((locked && !HAS_SILICON_ACCESS(usr)) || (HAS_SILICON_ACCESS(usr) && aidisabled))
+	var/mob/user = ui.user
+	if((locked && !HAS_SILICON_ACCESS(user)) || (HAS_SILICON_ACCESS(user) && aidisabled))
 		return
 
-	var/mob/user = usr
 	var/area/area = connected_sensor ? get_area(connected_sensor) : get_area(src)
 
 	ASSERT(!isnull(area))
@@ -463,7 +478,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			var/threshold_type = params["threshold_type"]
 			var/value = params["value"]
 			tlv.set_value(threshold_type, value)
-			investigate_log("threshold value for [threshold]:[threshold_type] was set to [value] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("threshold value for [threshold]:[threshold_type] was set to [value] by [key_name(user)]", INVESTIGATE_ATMOS)
 
 			check_enviroment()
 
@@ -474,7 +489,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				return
 			var/threshold_type = params["threshold_type"]
 			tlv.reset_value(threshold_type)
-			investigate_log("threshold value for [threshold]:[threshold_type] was reset by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("threshold value for [threshold]:[threshold_type] was reset by [key_name(user)]", INVESTIGATE_ATMOS)
 
 			check_enviroment()
 
@@ -489,6 +504,10 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if ("disconnect_sensor")
 			if(allow_link_change)
 				disconnect_sensor()
+
+		if ("lock")
+			togglelock(user)
+			return TRUE
 
 	update_appearance()
 
@@ -549,6 +568,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
+	if(!environment)
+		return
+
 	var/old_danger = danger_level
 	danger_level = AIR_ALARM_ALERT_NONE
 
@@ -559,34 +581,40 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	danger_level = max(danger_level, tlv_collection["pressure"].check_value(pressure))
 	danger_level = max(danger_level, tlv_collection["temperature"].check_value(temp))
 	if(total_moles)
-		for(var/gas_path in environment.gases)
-			var/moles = environment.gases[gas_path][MOLES]
+		var/list/cached_gas_info = GLOB.meta_gas_info
+		for(var/datum/gas/gas_path as anything in cached_gas_info)
+			var/moles = environment.gases[gas_path] ? environment.gases[gas_path][MOLES] : 0
 			danger_level = max(danger_level, tlv_collection[gas_path].check_value(pressure * moles / total_moles))
 
 	if(danger_level)
 		alarm_manager.send_alarm(ALARM_ATMOS)
-		if(pressure <= WARNING_LOW_PRESSURE && temp <= BODYTEMP_COLD_WARNING_1+10)
+		var/is_high_pressure = tlv_collection["pressure"].hazard_max != TLV_VALUE_IGNORE && pressure >= tlv_collection["pressure"].hazard_max
+		var/is_high_temp = tlv_collection["temperature"].hazard_max != TLV_VALUE_IGNORE && temp >= tlv_collection["temperature"].hazard_max
+		var/is_low_pressure = tlv_collection["pressure"].hazard_min != TLV_VALUE_IGNORE && pressure <= tlv_collection["pressure"].hazard_min
+		var/is_low_temp = tlv_collection["temperature"].hazard_min != TLV_VALUE_IGNORE && temp <= tlv_collection["temperature"].hazard_min
+
+		if(is_low_pressure && is_low_temp)
 			warning_message = "Danger! Low pressure and temperature detected."
 			return
-		if(pressure <= WARNING_LOW_PRESSURE && temp >= BODYTEMP_HEAT_WARNING_1-27)
+		if(is_low_pressure && is_high_temp)
 			warning_message = "Danger! Low pressure and high temperature detected."
 			return
-		if(pressure >= WARNING_HIGH_PRESSURE && temp >= BODYTEMP_HEAT_WARNING_1-27)
+		if(is_high_pressure && is_high_temp)
 			warning_message = "Danger! High pressure and temperature detected."
 			return
-		if(pressure >= WARNING_HIGH_PRESSURE && temp <= BODYTEMP_COLD_WARNING_1+10)
+		if(is_high_pressure && is_low_temp)
 			warning_message = "Danger! High pressure and low temperature detected."
 			return
-		if(pressure <= WARNING_LOW_PRESSURE)
+		if(is_low_pressure)
 			warning_message = "Danger! Low pressure detected."
 			return
-		if(pressure >= WARNING_HIGH_PRESSURE)
+		if(is_high_pressure)
 			warning_message = "Danger! High pressure detected."
 			return
-		if(temp <= BODYTEMP_COLD_WARNING_1+10)
+		if(is_low_temp)
 			warning_message = "Danger! Low temperature detected."
 			return
-		if(temp >= BODYTEMP_HEAT_WARNING_1-27)
+		if(is_high_temp)
 			warning_message = "Danger! High temperature detected."
 			return
 		else
@@ -668,20 +696,31 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 	tlv_collection["temperature"] = new /datum/tlv/no_checks
 	tlv_collection["pressure"] = new /datum/tlv/no_checks
 
+	for(var/gas_path in GLOB.meta_gas_info)
+		tlv_collection[gas_path] = new /datum/tlv/no_checks
+
 ///Used for air alarm link helper, which connects air alarm to a sensor with corresponding chamber_id
 /obj/machinery/airalarm/proc/setup_chamber_link()
 	var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[GLOB.map_loaded_sensors[air_sensor_chamber_id]]
 	if(isnull(sensor))
 		log_mapping("[src] at [AREACOORD(src)] tried to connect to a sensor, but no sensor with chamber_id:[air_sensor_chamber_id] found!")
 		return
+	if(connected_sensor)
+		log_mapping("[src] at [AREACOORD(src)] tried to connect to more than one sensor!")
+		return
 	connect_sensor(sensor)
 
 ///Used to connect air alarm with a sensor
 /obj/machinery/airalarm/proc/connect_sensor(obj/machinery/air_sensor/sensor)
-	if(!isnull(connected_sensor))
-		UnregisterSignal(connected_sensor, COMSIG_QDELETING)
+	sensor.connected_airalarm = src
 	connected_sensor = sensor
+
 	RegisterSignal(connected_sensor, COMSIG_QDELETING, PROC_REF(disconnect_sensor))
+
+	// Transfer signal from air alarm to sensor
+	UnregisterSignal(loc, COMSIG_TURF_EXPOSE)
+	RegisterSignal(connected_sensor.loc, COMSIG_TURF_EXPOSE, PROC_REF(check_danger), override=TRUE)
+
 	my_area = get_area(connected_sensor)
 
 	check_enviroment()
@@ -692,6 +731,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 ///Used to reset the air alarm to default configuration after disconnecting from air sensor
 /obj/machinery/airalarm/proc/disconnect_sensor()
 	UnregisterSignal(connected_sensor, COMSIG_QDELETING)
+
+	// Transfer signal from sensor to air alarm
+	UnregisterSignal(connected_sensor.loc, COMSIG_TURF_EXPOSE)
+	RegisterSignal(loc, COMSIG_TURF_EXPOSE, PROC_REF(check_danger), override=TRUE)
+
+	connected_sensor.connected_airalarm = null
 	connected_sensor = null
 	my_area = get_area(src)
 

@@ -47,7 +47,7 @@
 
 /obj/item/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"
-	desc = "<span class='alert'>Keep out of reach of children.</span>"
+	desc = span_alert("Keep out of reach of children.")
 	illustration = "mousetrap"
 
 /obj/item/storage/box/mousetraps/PopulateContents()
@@ -92,13 +92,16 @@
 	atom_storage.max_slots = 10
 	atom_storage.set_holdable(/obj/item/match)
 
+/obj/item/storage/box/matches/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/match))
+		var/obj/item/match/match = tool
+		match.matchignite()
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
 /obj/item/storage/box/matches/PopulateContents()
 	for(var/i in 1 to 10)
 		new /obj/item/match(src)
-
-/obj/item/storage/box/matches/attackby(obj/item/match/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/match))
-		W.matchignite()
 
 /obj/item/storage/box/matches/update_icon_state()
 	. = ..()
@@ -204,27 +207,70 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/spray/chemsprayer/party(src)
 
+/obj/item/storage/box/balloons
+	name = "box of long balloons"
+	desc = "A completely randomized and wacky box of long balloons, harvested straight from balloon farms on the clown planet."
+	illustration = "balloon"
+
+/obj/item/storage/box/balloons/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 24
+	atom_storage.set_holdable(list(/obj/item/toy/balloon/long))
+	atom_storage.max_total_storage = 24
+	atom_storage.allow_quick_gather = FALSE
+
+/obj/item/storage/box/balloons/PopulateContents()
+	for(var/i in 1 to 24)
+		new /obj/item/toy/balloon/long(src)
+
 /obj/item/storage/box/stickers
-	name = "box of stickers"
-	desc = "A box full of random stickers. Do give to the clown."
+	name = "sticker pack"
+	desc = "A pack of removable stickers. Removable? What a rip off!<br>On the back, <b>DO NOT GIVE TO THE CLOWN!</b> is printed in large lettering."
+	icon = 'icons/obj/toys/stickers.dmi'
+	icon_state = "stickerpack"
+	illustration = null
+	w_class = WEIGHT_CLASS_TINY
+	var/static/list/pack_labels = list(
+		"smile",
+		"frown",
+		"heart",
+		"silentman",
+		"tider",
+		"star",
+	)
+
+/obj/item/storage/box/stickers/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 8
+	atom_storage.set_holdable(list(/obj/item/sticker))
+	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
+	if(isnull(illustration))
+		illustration = pick(pack_labels)
+		update_appearance()
 
 /obj/item/storage/box/stickers/proc/generate_non_contraband_stickers_list()
-	. = list()
+	var/list/allowed_stickers = list()
+
 	for(var/obj/item/sticker/sticker_type as anything in subtypesof(/obj/item/sticker))
-		if(!initial(sticker_type.contraband))
-			. += sticker_type
-	return .
+		if(!sticker_type::exclude_from_random)
+			allowed_stickers += sticker_type
+
+	return allowed_stickers
+
 /obj/item/storage/box/stickers/PopulateContents()
 	var/static/list/non_contraband
-	if(!non_contraband)
+
+	if(isnull(non_contraband))
 		non_contraband = generate_non_contraband_stickers_list()
-	for(var/i in 1 to rand(4,8))
+
+	for(var/i in 1 to rand(4, 8))
 		var/type = pick(non_contraband)
 		new type(src)
 
 /obj/item/storage/box/stickers/googly
-	name = "box of googly eye stickers"
+	name = "googly eye sticker pack"
 	desc = "Turn anything and everything into something vaguely alive!"
+	illustration = "googly-alt"
 
 /obj/item/storage/box/stickers/googly/PopulateContents()
 	for(var/i in 1 to 6)

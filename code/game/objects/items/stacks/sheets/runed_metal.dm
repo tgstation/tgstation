@@ -6,9 +6,8 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		result_type = /obj/structure/destructible/cult/pylon, \
 		req_amount = 4, \
 		time = 4 SECONDS, \
-		one_per_turf = TRUE, \
-		on_solid_ground = TRUE, \
-		desc = span_cultbold("Pylon: Heals and regenerates the blood of nearby blood cultists and constructs, and also \
+		crafting_flags = CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, \
+		desc = span_cult_bold("Pylon: Heals and regenerates the blood of nearby blood cultists and constructs, and also \
 			converts nearby floor tiles into engraved flooring, which allows blood cultists to scribe runes faster."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
@@ -18,9 +17,8 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		result_type = /obj/structure/destructible/cult/item_dispenser/altar, \
 		req_amount = 3, \
 		time = 4 SECONDS, \
-		one_per_turf = TRUE, \
-		on_solid_ground = TRUE, \
-		desc = span_cultbold("Altar: Can make Eldritch Whetstones, Construct Shells, and Flasks of Unholy Water."), \
+		crafting_flags = CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, \
+		desc = span_cult_bold("Altar: Can make Eldritch Whetstones, Construct Shells, and Flasks of Unholy Water."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
 	), \
@@ -29,9 +27,8 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		result_type = /obj/structure/destructible/cult/item_dispenser/archives, \
 		req_amount = 3, \
 		time = 4 SECONDS, \
-		one_per_turf = TRUE, \
-		on_solid_ground = TRUE, \
-		desc = span_cultbold("Archives: Can make Zealot's Blindfolds, Shuttle Curse Orbs, \
+		crafting_flags = CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, \
+		desc = span_cult_bold("Archives: Can make Zealot's Blindfolds, Shuttle Curse Orbs, \
 			and Veil Walker equipment. Emits Light."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
@@ -41,9 +38,8 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		result_type = /obj/structure/destructible/cult/item_dispenser/forge, \
 		req_amount = 3, \
 		time = 4 SECONDS, \
-		one_per_turf = TRUE, \
-		on_solid_ground = TRUE, \
-		desc = span_cultbold("Daemon Forge: Can make Nar'Sien Hardened Armor, Flagellant's Robes, \
+		crafting_flags = CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, \
+		desc = span_cult_bold("Daemon Forge: Can make Nar'Sien Hardened Armor, Flagellant's Robes, \
 			and Eldritch Longswords. Emits Light."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
@@ -52,9 +48,8 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		title = "runed door", \
 		result_type = /obj/machinery/door/airlock/cult, \
 		time = 5 SECONDS, \
-		one_per_turf = TRUE, \
-		on_solid_ground = TRUE, \
-		desc = span_cultbold("Runed Door: A weak door which stuns non-blood cultists who touch it."), \
+		crafting_flags = CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, \
+		desc = span_cult_bold("Runed Door: A weak door which stuns non-blood cultists who touch it."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
 	), \
@@ -62,9 +57,9 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		title = "runed girder", \
 		result_type = /obj/structure/girder/cult, \
 		time = 5 SECONDS, \
-		one_per_turf = TRUE, \
-		on_solid_ground = TRUE, \
-		desc = span_cultbold("Runed Girder: A weak girder that can be instantly destroyed by ritual daggers. Not a recommended usage of runed metal."), \
+		crafting_flags = CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, \
+		desc = span_cult_bold("Runed Girder: A weak girder that can be instantly destroyed by ritual daggers. \
+			Not a recommended usage of runed metal."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
 	), \

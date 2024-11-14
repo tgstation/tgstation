@@ -43,7 +43,7 @@ WALK_DELAY 4
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
-##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/basic/slime 0
 MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
 MULTIPLICATIVE_MOVESPEED /mob/living/basic 0
 
@@ -100,6 +100,11 @@ TRAITOR_SCALING_COEFF 6
 BROTHER_SCALING_COEFF 6
 CHANGELING_SCALING_COEFF 6
 
+## Global scaling for traitor progression.
+## Higher values will accelerate traitor progression, while lower values will decrease it.
+## Bypasses an upper limit of 1 MINUTE
+#TRAITOR_SCALING_MULTIPLIER 1
+
 ## Variables calculate how number of open security officer positions will scale to population.
 ## Used as (Officers = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
@@ -117,11 +122,13 @@ PROTECT_ROLES_FROM_ANTAGONIST
 ## Uncomment to prohibit assistants from becoming most antagonists.
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
 
-## If non-human species are barred from joining as a head of staff
-#ENFORCE_HUMAN_AUTHORITY
-
-## If non-human species are barred from joining as a head of staff, including jobs flagged as allowed for non-humans, ie. Quartermaster.
-#ENFORCE_HUMAN_AUTHORITY_ON_EVERYONE
+## How human authority should be distributed. Can be set to four options (Make sure that what you type is exact!):
+## "DISABLED"/Comment out/Put any invalid value: non-human races can be heads of staff and "human only" settings on jobs will be fully ignored.
+## "HUMAN_WHITELIST": all heads-of-staff jobs will be able to be played by non-humans, unless that job incorporates the "human only" flag (Which can be configured via a variable or the job config txt).
+## "NON_HUMAN_WHITELIST": non-humans will not be able to play as heads of staff, unless that job incorporates the "allow non-humans" flag (Which can be configured via a variable or the job config txt).
+## "ENFORCED": non-humans cannot be heads of staff, only humans can. the "allow non-humans" setting will be ignored.
+## Uncomment to enable a human authority mode of your choice.
+#HUMAN_AUTHORITY HUMAN_WHITELIST
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
@@ -140,13 +147,20 @@ ALLOW_RANDOM_EVENTS
 #FORBID_STATION_TRAITS
 
 ## Multiplier for earliest start time of dangerous events.
-## Set to 0 to make dangerous events avaliable from round start.
+## Set to 0 to make dangerous events available from round start.
 EVENTS_MIN_TIME_MUL 1
 
 ## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start.
-## Set to 0 to make dangerous events avaliable for all populations.
+## Set to 0 to make dangerous events available for all populations.
 EVENTS_MIN_PLAYERS_MUL 1
 
+## The lower bound, in deciseconds, for how soon another random event can be scheduled.
+## Defaults to 1500 deciseconds or 2.5 minutes
+EVENTS_FREQUENCY_LOWER 1500
+
+## The upper bound, in deciseconds, for how soon another random event can be scheduled.
+## Defaults to 4200 deciseconds or 7 minutes
+EVENTS_FREQUENCY_UPPER 4200
 
 ## AI ###
 
@@ -173,13 +187,17 @@ ALLOW_AI_MULTICAM
 ## 600 is one minute.
 GATEWAY_DELAY 18000
 
+## Overrides to gateway delay for specific away mission start points.
+GATEWAY_DELAYS_BY_ID AWAYSTART_BEACH 6000
+GATEWAY_DELAYS_BY_ID AWAYSTART_MUSEUM 9000
+
 ## The probability of the gateway mission being a config one
 CONFIG_GATEWAY_CHANCE 0
 
 ## ACCESS ###
 
 ## If the number of players ready at round starts exceeds this threshold, JOBS_HAVE_MINIMAL_ACCESS will automatically be enabled. Otherwise, it will be disabled.
-## This is useful for accomodating both low and high population rounds on the same server.
+## This is useful for accommodating both low and high population rounds on the same server.
 ## Comment this out or set to 0 to disable this automatic toggle.
 MINIMAL_ACCESS_THRESHOLD 20
 
@@ -192,7 +210,7 @@ MINIMAL_ACCESS_THRESHOLD 20
 ## Uncomment to give assistants maint access.
 #ASSISTANTS_HAVE_MAINT_ACCESS
 
-## Uncoment to give security maint access. Note that if you dectivate JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
+## Uncoment to give security maint access. Note that if you deactivate JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
 #SECURITY_HAS_MAINT_ACCESS
 
 ## Uncomment to give everyone maint access.
@@ -226,7 +244,7 @@ NEAR_DEATH_EXPERIENCE
 ## Set to 0/commented out for "off", silicons will just start with Asimov.
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
-## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
+## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specified in that file.
 ## Set to 4 for "specified", silicons will start with an existing lawset. (If no specified lawset is identified, the AI will spawn with asimov.)
 
 
@@ -265,6 +283,7 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS reporter
 #RANDOM_LAWS hulkamania
 #RANDOM_LAWS ten_commandments
+#RANDOM_LAWS yesman
 
 ## Bad idea laws. Probably shouldn't enable these
 #RANDOM_LAWS syndie
@@ -333,7 +352,7 @@ SILICON_MAX_LAW_AMOUNT 12
 
 ## Roundstart Races
 ##-------------------------------------------------------------------------------------------
-## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on. You'll need at least one.
+## Uncommenting races will allow them to be chosen at roundstart while join_with_muntant_race is on. You'll need at least one.
 
 ## See code/__DEFINES/DNA.dm for more options than the ones below.
 
@@ -352,43 +371,16 @@ ROUNDSTART_RACES plasmaman
 ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES abductor
-#ROUNDSTART_RACES synth
-
-## Including all the various golem subtypes that are better than humans in some ways, but worse in others
-#ROUNDSTART_RACES iron_golem
-#ROUNDSTART_RACES adamantine_golem
-#ROUNDSTART_RACES plasma_golem
-#ROUNDSTART_RACES diamond_golem
-#ROUNDSTART_RACES gold_golem
-#ROUNDSTART_RACES silver_golem
-#ROUNDSTART_RACES uranium_golem
-#ROUNDSTART_RACES plasteel_golem
-#ROUNDSTART_RACES titanium_golem
-#ROUNDSTART_RACES plastitanium_golem
-#ROUNDSTART_RACES alloy_golem
-#ROUNDSTART_RACES wood_golem
-#ROUNDSTART_RACES sand_golem
-#ROUNDSTART_RACES glass_golem
-#ROUNDSTART_RACES bluespace_golem
-#ROUNDSTART_RACES bananium_golem
-#ROUNDSTART_RACES runic_golem
-#ROUNDSTART_RACES cloth_golem
-#ROUNDSTART_RACES plastic_golem
-#ROUNDSTART_RACES bronze_golem
-#ROUNDSTART_RACES cardboard_golem
-#ROUNDSTART_RACES leather_golem
-#ROUNDSTART_RACES durathread_golem
-#ROUNDSTART_RACES bone_golem
-#ROUNDSTART_RACES snow_golem
-#ROUNDSTART_RACES metallic_hydrogen_golem
+#ROUNDSTART_RACES snail
 
 ## Races that are straight upgrades. If these are on expect powergamers to always pick them
 #ROUNDSTART_RACES skeleton
 #ROUNDSTART_RACES zombie
-#ROUNDSTART_RACES slime
 #ROUNDSTART_RACES pod
-#ROUNDSTART_RACES military_synth
-#ROUNDSTART_RACES agent
+
+## Races that are radical departures to what a species is, so while they technically can be roundstart - it's probably not wise
+#ROUNDSTART_RACES android
+#ROUNDSTART_RACES golem
 
 ##-------------------------------------------------------------------------------------------
 
@@ -473,7 +465,7 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 ## Uncomment to prevent late join players from spawning if the arrivals shuttle is depressurized
 #ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN
 
-## How many wirechewing rodents you want to spawn on exposed maintenane wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
+## How many wirechewing rodents you want to spawn on exposed maintenance wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
 
 MICE_ROUNDSTART 10
 
@@ -558,3 +550,8 @@ NEGATIVE_STATION_TRAITS 3 1
 # If set to 0, then players won't be able to select any positive quirks.
 # If commented-out or undefined, the maximum default is 6.
 MAX_POSITIVE_QUIRKS 6
+
+# A config that skews with the random spawners weights
+# If the value is lower than 1, it'll tend to even out the odds
+# If higher than 1, it'll lean toward common spawns even more.
+RANDOM_LOOT_WEIGHT_MODIFIER 1

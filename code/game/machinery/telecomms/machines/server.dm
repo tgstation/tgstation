@@ -61,7 +61,7 @@
 	if(!can_send)
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 #undef MAX_LOG_ENTRIES
 
@@ -100,9 +100,9 @@
 	autolinkers = list("supply")
 
 /obj/machinery/telecomms/server/presets/service
-	id = "Service Server"
-	freq_listening = list(FREQ_SERVICE)
-	autolinkers = list("service")
+	id = "Service & Entertainment Server"
+	freq_listening = list(FREQ_SERVICE, FREQ_ENTERTAINMENT)
+	autolinkers = list("service", "entertainment")
 
 /obj/machinery/telecomms/server/presets/common
 	id = "Common Server"

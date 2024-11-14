@@ -29,3 +29,7 @@
 /datum/round_event/communications_blackout/start()
 	for(var/obj/machinery/telecomms/T in GLOB.telecomms_list)
 		T.emp_act(EMP_HEAVY)
+	for(var/datum/transport_controller/linear/tram/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
+		if(!isnull(transport.home_controller))
+			var/obj/machinery/transport/tram_controller/tcomms/controller = transport.home_controller
+			controller.emp_act(EMP_HEAVY)

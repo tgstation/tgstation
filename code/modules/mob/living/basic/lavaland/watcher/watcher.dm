@@ -29,7 +29,7 @@
 	/// Icon state for our eye overlay
 	var/eye_glow = "ice_glow"
 	/// Sound to play when we shoot
-	var/shoot_sound = 'sound/weapons/pierce.ogg'
+	var/shoot_sound = 'sound/items/weapons/pierce.ogg'
 	/// Typepath of our gaze ability
 	var/gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze
 	// We attract and eat these things for some reason

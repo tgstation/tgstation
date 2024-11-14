@@ -1,5 +1,5 @@
-#define TESLA_DEFAULT_POWER 6.95304e8
-#define TESLA_MINI_POWER 3.47652e8
+#define TESLA_DEFAULT_ENERGY (695.304 MEGA JOULES)
+#define TESLA_MINI_ENERGY (347.652 MEGA JOULES) // Has a weird scaling thing so this is a lie for now (doesn't generate power anyways).
 //Zap constants, speeds up targeting
 #define BIKE (COIL + 1)
 #define COIL (ROD + 1)
@@ -24,8 +24,8 @@
 	light_range = 6
 	move_resist = INFINITY
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
-	pixel_x = -32
-	pixel_y = -32
+	pixel_x = -ICON_SIZE_X
+	pixel_y = -ICON_SIZE_Y
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | SHUTTLE_CRUSH_PROOF
 	flags_1 = SUPERMATTER_IGNORES_1
 
@@ -70,21 +70,21 @@
 
 		move(4 + orbiting_balls.len * 1.5)
 
-		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, TRUE, extrarange = 30)
+		playsound(src.loc, 'sound/effects/magic/lightningbolt.ogg', 100, TRUE, extrarange = 30)
 
 		pixel_x = 0
 		pixel_y = 0
 		shocked_things.Cut(1, shocked_things.len / 1.3)
 		var/list/shocking_info = list()
-		tesla_zap(source = src, zap_range = 3, power = TESLA_DEFAULT_POWER, shocked_targets = shocking_info)
+		tesla_zap(source = src, zap_range = 3, power = TESLA_DEFAULT_ENERGY, shocked_targets = shocking_info)
 
-		pixel_x = -32
-		pixel_y = -32
+		pixel_x = -ICON_SIZE_X
+		pixel_y = -ICON_SIZE_Y
 		for (var/ball in orbiting_balls)
 			var/range = rand(1, clamp(orbiting_balls.len, 2, 3))
 			var/list/temp_shock = list()
 			//We zap off the main ball instead of ourselves to make things looks proper
-			tesla_zap(source = src, zap_range = range, power = TESLA_MINI_POWER / 7 * range, shocked_targets = temp_shock)
+			tesla_zap(source = src, zap_range = range, power = TESLA_MINI_ENERGY / 7 * range, shocked_targets = temp_shock)
 			shocking_info += temp_shock
 		shocked_things += shocking_info
 
@@ -126,8 +126,8 @@
 		energy_to_lower = energy_to_raise - 20
 		energy_to_raise = energy_to_raise * 1.25
 
-		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, TRUE, extrarange = 30)
-		addtimer(CALLBACK(src, PROC_REF(new_mini_ball)), 100)
+		playsound(src.loc, 'sound/effects/magic/lightning_chargeup.ogg', 100, TRUE, extrarange = 30)
+		addtimer(CALLBACK(src, PROC_REF(new_mini_ball)), 10 SECONDS)
 	else if(energy < energy_to_lower && orbiting_balls.len)
 		energy_to_raise = energy_to_raise / 1.25
 		energy_to_lower = (energy_to_raise / 1.25) - 20
@@ -149,7 +149,7 @@
 	var/list/icon_dimensions = get_icon_dimensions(icon)
 
 	var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * pick(0.4, 0.5, 0.6, 0.7, 0.8)
-	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
+	orbitsize -= (orbitsize / ICON_SIZE_ALL) * (ICON_SIZE_ALL * 0.25)
 	miniball.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
 
 /obj/energy_ball/Bump(atom/A)
@@ -163,7 +163,7 @@
 		return
 	var/mob/living/carbon/jedi = user
 	to_chat(jedi, span_userdanger("That was a shockingly dumb idea."))
-	var/obj/item/organ/internal/brain/rip_u = locate(/obj/item/organ/internal/brain) in jedi.organs
+	var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in jedi.organs
 	jedi.ghostize(jedi)
 	if(rip_u)
 		qdel(rip_u)
@@ -187,8 +187,8 @@
 
 /obj/energy_ball/proc/dust_mobs(atom/A)
 	if(isliving(A))
-		var/mob/living/L = A
-		if(L.incorporeal_move || L.status_flags & GODMODE)
+		var/mob/living/living = A
+		if(living.incorporeal_move || HAS_TRAIT(living, TRAIT_GODMODE))
 			return
 	if(!iscarbon(A))
 		return
@@ -243,7 +243,7 @@
 	//This also means we have no need to track distance, as the doview() proc does it all for us.
 
 	//Darkness fucks oview up hard. I've tried dview() but it doesn't seem to work
-	//I hate existance
+	//I hate existence
 	for(var/atom/A as anything in typecache_filter_list(oview(zap_range+2, source), things_to_shock))
 		if(!(zap_flags & ZAP_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
 			continue
@@ -365,5 +365,5 @@
 #undef BLOB
 #undef STRUCTURE
 
-#undef TESLA_DEFAULT_POWER
-#undef TESLA_MINI_POWER
+#undef TESLA_DEFAULT_ENERGY
+#undef TESLA_MINI_ENERGY

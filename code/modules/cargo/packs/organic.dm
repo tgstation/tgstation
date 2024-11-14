@@ -101,8 +101,8 @@
 
 /datum/supply_pack/organic/randomized/chef/fruits
 	name = "Fruit Crate"
-	desc = "Rich of vitamins. Contains a lime, orange, watermelon, apple, \
-		berries and a lime."
+	desc = "Rich in vitamins. Contains a lime, orange, watermelon, apple, \
+		berries and a lemon."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/food/grown/citrus/lime,
 					/obj/item/food/grown/citrus/orange,
@@ -298,7 +298,7 @@
 	name = "Grilling Starter Kit"
 	desc = "Hey dad I'm Hungry. Hi Hungry I'm THE NEW GRILLING STARTER KIT \
 		ONLY 5000 BUX GET NOW! Contains a grill and fuel."
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 4
 	crate_type = /obj/structure/closet/crate
 	contains = list(
 		/obj/item/stack/sheet/mineral/coal/five,

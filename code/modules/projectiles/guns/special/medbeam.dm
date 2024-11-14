@@ -16,12 +16,7 @@
 
 	weapon_weight = WEAPON_MEDIUM
 
-/obj/item/gun/medbeam/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
 /obj/item/gun/medbeam/Destroy(mob/user)
-	STOP_PROCESSING(SSobj, src)
 	LoseTarget()
 	return ..()
 
@@ -41,6 +36,7 @@
 		QDEL_NULL(current_beam)
 		active = FALSE
 		on_beam_release(current_target)
+	STOP_PROCESSING(SSobj, src)
 	current_target = null
 
 /**
@@ -69,6 +65,7 @@
 	active = TRUE
 	current_beam = user.Beam(current_target, icon_state="medbeam", time = 10 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/medical)
 	RegisterSignal(current_beam, COMSIG_QDELETING, PROC_REF(beam_died))//this is a WAY better rangecheck than what was done before (process check)
+	START_PROCESSING(SSobj, src)
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 

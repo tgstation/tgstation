@@ -1,7 +1,4 @@
-import { BooleanLike } from 'common/react';
 import { Fragment } from 'react';
-
-import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -11,7 +8,10 @@ import {
   Section,
   Table,
   VirtualList,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 import {
   Scrubber,
@@ -386,7 +386,7 @@ const EditingModal = (props: EditingModalProps) => {
         ) : (
           <>
             <NumberInput
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_threshold', {
                   threshold: id,
                   threshold_type: type,

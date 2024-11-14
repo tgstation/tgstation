@@ -16,12 +16,17 @@
 	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
 		return
 	if(HAS_TRAIT(owner, TRAIT_RDS_SUPPRESSED))
+		owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 		return
+	if(!HAS_TRAIT(owner, TRAIT_RDS_SUPPRESSED))
+		owner.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 
 	owner.adjust_hallucinations_up_to(10 SECONDS * seconds_per_tick, 100 SECONDS)
 
 /datum/brain_trauma/mild/hallucinations/on_lose()
 	owner.remove_status_effect(/datum/status_effect/hallucination)
+	if(!QDELING(owner))
+		owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 	return ..()
 
 /datum/brain_trauma/mild/stuttering
@@ -118,7 +123,7 @@
 	return ..()
 
 /datum/brain_trauma/mild/healthy/on_life(seconds_per_tick, times_fired)
-	owner.adjustStaminaLoss(-2.5 * seconds_per_tick) //no pain, no fatigue
+	owner.adjustStaminaLoss(-6 * seconds_per_tick) //no pain, no fatigue
 
 /datum/brain_trauma/mild/healthy/on_lose()
 	owner.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
@@ -179,8 +184,8 @@
 			to_chat(owner, span_warning("[pick("You have a coughing fit!", "You can't stop coughing!")]"))
 			owner.Immobilize(20)
 			owner.emote("cough")
-			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/, emote), "cough"), 6)
-			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/, emote), "cough"), 12)
+			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/, emote), "cough"), 0.6 SECONDS)
+			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/, emote), "cough"), 1.2 SECONDS)
 		owner.emote("cough")
 	..()
 
@@ -212,7 +217,7 @@
 				word = copytext(word, 1, suffix_foundon)
 			word = html_decode(word)
 
-			if(lowertext(word) in common_words)
+			if(LOWER_TEXT(word) in common_words)
 				new_message += word + suffix
 			else
 				if(prob(30) && message_split.len > 2)
@@ -281,3 +286,41 @@
 /datum/brain_trauma/mild/color_blindness/on_lose(silent)
 	owner.remove_client_colour(/datum/client_colour/monochrome/colorblind)
 	return ..()
+
+/datum/brain_trauma/mild/possessive
+	name = "Possessive"
+	desc = "Patient is extremely possessive of their belongings."
+	scan_desc = "possessiveness"
+	gain_text = span_warning("You start to worry about your belongings.")
+	lose_text = span_notice("You worry less about your belongings.")
+
+/datum/brain_trauma/mild/possessive/on_lose(silent)
+	. = ..()
+	for(var/obj/item/thing in owner.held_items)
+		clear_trait(thing)
+
+/datum/brain_trauma/mild/possessive/on_life(seconds_per_tick, times_fired)
+	if(!SPT_PROB(5, seconds_per_tick))
+		return
+
+	var/obj/item/my_thing = pick(owner.held_items) // can pick null, that's fine
+	if(isnull(my_thing) || HAS_TRAIT(my_thing, TRAIT_NODROP) || (my_thing.item_flags & (HAND_ITEM|ABSTRACT)))
+		return
+
+	ADD_TRAIT(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)
+	RegisterSignals(my_thing, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED), PROC_REF(clear_trait))
+	to_chat(owner, span_warning("You feel a need to keep [my_thing] close..."))
+	addtimer(CALLBACK(src, PROC_REF(relax), my_thing), rand(30 SECONDS, 3 MINUTES), TIMER_DELETE_ME)
+
+/datum/brain_trauma/mild/possessive/proc/relax(obj/item/my_thing)
+	if(QDELETED(my_thing))
+		return
+	if(HAS_TRAIT_FROM_ONLY(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)) // in case something else adds nodrop, somehow?
+		to_chat(owner, span_notice("You feel more comfortable letting go of [my_thing]."))
+	clear_trait(my_thing)
+
+/datum/brain_trauma/mild/possessive/proc/clear_trait(obj/item/my_thing, ...)
+	SIGNAL_HANDLER
+
+	REMOVE_TRAIT(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)
+	UnregisterSignal(my_thing, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED))

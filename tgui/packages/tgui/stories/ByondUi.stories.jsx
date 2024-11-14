@@ -34,7 +34,7 @@ const Story = (props) => {
           <Button
             icon="chevron-right"
             onClick={() =>
-              setImmediate(() => {
+              setTimeout(() => {
                 try {
                   const result = new Function('return (' + code + ')')();
                   if (result && result.then) {

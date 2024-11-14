@@ -1,5 +1,5 @@
 /datum/asset/spritesheet/telecomms
-	name="tcomms"
+	name = "tcomms"
 
 /datum/asset/spritesheet/telecomms/create_spritesheets()
 	var/list/inserted_states = list() // No need to send entire `telecomms.dmi`.

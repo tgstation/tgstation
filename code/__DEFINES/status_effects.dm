@@ -7,6 +7,11 @@
 /// if it only allows one, and new instances just instead refresh the timer
 #define STATUS_EFFECT_REFRESH 3
 
+/// Use in status effect "duration" to make it last forever
+#define STATUS_EFFECT_PERMANENT -1
+/// Use in status effect "tick_interval" to prevent it from calling tick()
+#define STATUS_EFFECT_NO_TICK -1
+
 ///Processing flags - used to define the speed at which the status will work
 ///This is fast - 0.2s between ticks (I believe!)
 #define STATUS_EFFECT_FAST_PROCESS 0
@@ -24,14 +29,20 @@
 #define CURSE_GRASPING (1<<3)
 
 //Incapacitated status effect flags
-/// If the incapacitated status effect will ignore a mob in restraints (handcuffs)
-#define IGNORE_RESTRAINTS (1<<0)
-/// If the incapacitated status effect will ignore a mob in stasis (stasis beds)
-#define IGNORE_STASIS (1<<1)
-/// If the incapacitated status effect will ignore a mob being agressively grabbed
-#define IGNORE_GRAB (1<<2)
+/// If the mob is normal incapacitated. Should never need this, just avoids issues if we ever overexpand this
+#define TRADITIONAL_INCAPACITATED (1<<0)
+/// If the incapacitated status effect is being caused by restraints (handcuffs)
+#define INCAPABLE_RESTRAINTS (1<<1)
+/// If the incapacitated status effect is being caused by stasis (stasis beds)
+#define INCAPABLE_STASIS (1<<2)
+/// If the incapacitated status effect is being caused by being agressively grabbed
+#define INCAPABLE_GRAB (1<<3)
 
-/// Maxamounts of fire stacks a mob can get
+/// Checks to see if a mob would be incapacitated even while ignoring some types
+/// Does this by inverting the passed in flags and seeing if we're still incapacitated
+#define INCAPACITATED_IGNORING(mob, flags) (mob.incapacitated & ~(flags))
+
+/// Max amounts of fire stacks a mob can get
 #define MAX_FIRE_STACKS 20
 /// If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
 #define MOB_BIG_FIRE_STACK_THRESHOLD 3
@@ -43,6 +54,7 @@
 #define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
 #define STASIS_ADMIN "stasis_admin"
 #define STASIS_LEGION_EATEN "stasis_eaten"
+#define STASIS_SLIME_BZ "stasis_slime_bz"
 
 #define STASIS_NETPOD_EFFECT "stasis_netpod"
 
@@ -154,8 +166,8 @@
 #define set_drowsiness(duration) set_timed_status_effect(duration, /datum/status_effect/drowsiness)
 #define set_drowsiness_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/drowsiness, TRUE)
 
-#define adjust_pacifism(duration) adjust_timed_status_effect(/datum/status_effect/pacify, duration)
-#define set_pacifism(duration) set_timed_status_effect(/datum/status_effect/pacify, duration)
+#define adjust_pacifism(duration) adjust_timed_status_effect(duration, /datum/status_effect/pacify)
+#define set_pacifism(duration) set_timed_status_effect(duration, /datum/status_effect/pacify)
 
 #define adjust_eye_blur(duration) adjust_timed_status_effect(duration, /datum/status_effect/eye_blur)
 #define adjust_eye_blur_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/eye_blur, up_to)

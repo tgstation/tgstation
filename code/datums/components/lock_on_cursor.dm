@@ -38,7 +38,7 @@
 	lock_amount = 1,
 	list/target_typecache = list(),
 	list/immune = list(),
-	icon = 'icons/mob/silicon/cameramob.dmi',
+	icon = 'icons/mob/eyemob.dmi',
 	icon_state = "marker",
 	datum/callback/on_click_callback,
 	datum/callback/on_lock,

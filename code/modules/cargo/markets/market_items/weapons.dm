@@ -1,5 +1,6 @@
 /datum/market_item/weapon
 	category = "Weapons"
+	abstract_path = /datum/market_item/weapon
 
 /datum/market_item/weapon/bear_trap
 	name = "Bear Trap"
@@ -12,17 +13,26 @@
 	availability_prob = 40
 
 /datum/market_item/weapon/shotgun_dart
-	name = "Shotgun Dart"
+	name = "Box of XL Shotgun Darts"
 	desc = "These handy darts can be filled up with any chemical and be shot with a shotgun! \
 	Prank your friends by shooting them with laughter! \
 	Not recommended for comercial use."
-	item = /obj/item/ammo_casing/shotgun/dart
+	item = /obj/item/storage/box/large_dart
 
-	price_min = CARGO_CRATE_VALUE * 0.05
-	price_max = CARGO_CRATE_VALUE * 0.25
-	stock_min = 10
-	stock_max = 60
+	price_min = CARGO_CRATE_VALUE * 1.375
+	price_max = CARGO_CRATE_VALUE * 2.875
+	stock_max = 4
 	availability_prob = 40
+
+/datum/market_item/weapon/buckshot
+	name = "Box of Buckshot Shells"
+	desc = "It wasn't easy since buckshot has been made illegal all over this sector of space, but \
+	we managed to find a large cache of it... somewhere. A word of caution, the stuff may be a tad old."
+	stock_max = 3
+	availability_prob = 35
+	item = /obj/item/storage/box/lethalshot/old
+	price_min = CARGO_CRATE_VALUE * 3
+	price_max = CARGO_CRATE_VALUE * 4.5
 
 /datum/market_item/weapon/bone_spear
 	name = "Bone Spear"
@@ -66,7 +76,7 @@
 
 /datum/market_item/weapon/fisher
 	name = "SC/FISHER Saboteur Handgun"
-	desc = "A self-recharging, compact pistol that disrupts flashlights and security cameras, if only temporarily. Also usable in melee."
+	desc = "A self-recharging, compact pistol that disrupts lights, cameras, APCs, turrets and more, if only temporarily. Also usable in melee."
 	item = /obj/item/gun/energy/recharge/fisher
 
 	price_min = CARGO_CRATE_VALUE * 2
@@ -82,3 +92,12 @@
 	price_max = CARGO_CRATE_VALUE * 50
 	stock_max = 1
 	availability_prob = 15
+
+/datum/market_item/weapon/giant_wrench_parts
+	name = "Big Slappy parts"
+	desc = "Cheap illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
+	item = /obj/item/weaponcrafting/giant_wrench
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 5
+	stock_max = 1
+	availability_prob = 25

@@ -21,7 +21,7 @@
 	/// Type of bullet we use
 	var/casingtype = /obj/item/ammo_casing/c45
 	/// Sound to play when firing weapon
-	var/projectilesound = 'sound/weapons/gun/pistol/shot_alt.ogg'
+	var/projectilesound = 'sound/items/weapons/gun/pistol/shot_alt.ogg'
 	/// number of burst shots
 	var/burst_shots
 	/// Time between taking shots
@@ -42,7 +42,7 @@
 /mob/living/basic/trooper/nanotrasen/ranged/smg
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst
 	casingtype = /obj/item/ammo_casing/c46x30mm
-	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
+	projectilesound = 'sound/items/weapons/gun/smg/shot.ogg'
 	r_hand = /obj/item/gun/ballistic/automatic/wt550
 	burst_shots = 3
 	ranged_cooldown = 3 SECONDS
@@ -54,7 +54,7 @@
 	casingtype = /obj/item/ammo_casing/a223/weak
 	burst_shots = 4
 	ranged_cooldown = 3 SECONDS
-	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
+	projectilesound = 'sound/items/weapons/gun/smg/shot.ogg'
 	r_hand = /obj/item/gun/ballistic/automatic/ar
 	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier
@@ -64,11 +64,11 @@
 	desc = "Pray for your life, syndicate. Run while you can."
 	maxHealth = 150
 	health = 150
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	unsuitable_cold_damage = 0
 	casingtype = /obj/item/ammo_casing/energy/laser
 	burst_shots = 3
-	projectilesound = 'sound/weapons/laser.ogg'
+	projectilesound = 'sound/items/weapons/laser.ogg'
 	ranged_cooldown = 5 SECONDS
 	faction = list(ROLE_DEATHSQUAD)
 	loot = list(/obj/effect/gibspawner/human)

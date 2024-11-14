@@ -1,8 +1,13 @@
-import { BooleanLike } from 'common/react';
-import { multiline } from 'common/string';
+import {
+  BlockQuote,
+  Button,
+  Dimmer,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { Objective, ObjectivePrintout } from './common/Objectives';
 
@@ -66,7 +71,7 @@ const EmployerSection = (props) => {
       buttons={
         <Button
           icon="hammer"
-          tooltip={multiline`
+          tooltip={`
             This is a gameplay suggestion for bored traitors.
             You don't have to follow it, unless you want some
             ideas for how to spend the round.`}

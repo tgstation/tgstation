@@ -43,7 +43,7 @@
 	register_context()
 
 
-/obj/machinery/power/turbine/LateInitialize()
+/obj/machinery/power/turbine/post_machine_initialize()
 	. = ..()
 	activate_parts()
 
@@ -292,7 +292,7 @@
 	input_turf = null
 
 /**
- * transfer's gases from it's input turf to it's internal gas mix
+ * transfers gases from its input turf to its internal gas mix
  * Returns temperature of the gas mix absorbed only if some work was done
  */
 /obj/machinery/power/turbine/inlet_compressor/proc/compress_gases()
@@ -430,11 +430,11 @@
 	if(!all_parts_connected)
 		. += span_warning("The parts need to be linked via a [EXAMINE_HINT("multitool")]")
 
-/obj/machinery/power/turbine/core_rotor/cable_layer_change_checks(mob/living/user, obj/item/tool)
+/obj/machinery/power/turbine/core_rotor/cable_layer_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		balloon_alert(user, "open panel first!")
-		return FALSE
-	return TRUE
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/machinery/power/turbine/core_rotor/multitool_act(mob/living/user, obj/item/tool)
 	//allow cable layer changing
@@ -648,7 +648,7 @@
 			return PROCESS_KILL
 
 		radio.talk_into(src, "Warning, turbine at [get_area_name(src)] taking damage, current integrity at [integrity]%!", RADIO_CHANNEL_ENGINEERING)
-		playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+		playsound(src, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 
 	//================ROTOR WORKING============//
 	//The Rotor moves the gases that expands from 1000 L to 3000 L, they cool down and both temperature and pressure lowers

@@ -70,6 +70,12 @@
 	  * Filled with nulls on init, populated only on publication.
 	*/
 	var/list/published_papers
+	/**
+	  * Assoc list of nodes queued for automatic research when there are enough points available
+	  * research_queue_nodes[node_id] = user_enqueued
+	*/
+	var/list/research_queue_nodes = list()
+
 
 /datum/techweb/New()
 	SSresearch.techwebs += src
@@ -108,7 +114,7 @@
 /datum/techweb/proc/add_point_list(list/pointlist)
 	for(var/i in pointlist)
 		if((i in SSresearch.point_types) && pointlist[i] > 0)
-			research_points[i] += pointlist[i]
+			research_points[i] = FLOOR(research_points[i] + pointlist[i], 0.1)
 
 /datum/techweb/proc/add_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -119,7 +125,7 @@
 /datum/techweb/proc/remove_point_list(list/pointlist)
 	for(var/i in pointlist)
 		if((i in SSresearch.point_types) && pointlist[i] > 0)
-			research_points[i] = max(0, research_points[i] - pointlist[i])
+			research_points[i] = FLOOR(max(0, research_points[i] - pointlist[i]), 0.1)
 
 /datum/techweb/proc/remove_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -130,7 +136,7 @@
 /datum/techweb/proc/modify_point_list(list/pointlist)
 	for(var/i in pointlist)
 		if((i in SSresearch.point_types) && pointlist[i] != 0)
-			research_points[i] = max(0, research_points[i] + pointlist[i])
+			research_points[i] = FLOOR(max(0, research_points[i] + pointlist[i]), 0.1)
 
 /datum/techweb/proc/modify_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -311,11 +317,7 @@
 	var/points_rewarded
 	if(completed_experiment.points_reward)
 		add_point_list(completed_experiment.points_reward)
-		points_rewarded = ",[refund > 0 ? " and" : ""] rewarding "
-		var/list/english_list_keys = list()
-		for(var/points_type in completed_experiment.points_reward)
-			english_list_keys += "[completed_experiment.points_reward[points_type]] [points_type]"
-		points_rewarded += "[english_list(english_list_keys)] points"
+		points_rewarded = ",[refund > 0 ? " and" : ""] rewarding [completed_experiment.get_points_reward_text()]"
 		result_text += points_rewarded
 	result_text += "!"
 
@@ -325,10 +327,44 @@
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
 
-/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id)
-	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id)
+/datum/techweb/proc/enqueue_node(id, mob/user)
+	var/queue_first = FALSE
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/human_user = user
+		var/list/access = human_user.wear_id?.GetAccess()
+		if(ACCESS_RD in access)
+			queue_first = TRUE
 
-/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE)
+	if(id in research_queue_nodes)
+		if(queue_first)
+			research_queue_nodes.Remove(id) // Remove to be able to place first
+		else
+			return FALSE
+
+	for(var/node_id in research_queue_nodes)
+		if(research_queue_nodes[node_id] == user)
+			research_queue_nodes.Remove(node_id)
+
+	if (queue_first)
+		research_queue_nodes.Insert(1, id)
+	research_queue_nodes[id] = user
+
+	return TRUE
+
+/datum/techweb/proc/dequeue_node(id, mob/user)
+	if(!(id in research_queue_nodes))
+		return FALSE
+	if(research_queue_nodes[id] != user)
+		return FALSE
+
+	research_queue_nodes.Remove(id)
+
+	return TRUE
+
+/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id, atom/research_source)
+	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id, research_source)
+
+/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE, atom/research_source)
 	if(!istype(node))
 		return FALSE
 	update_node_status(node)
@@ -376,6 +412,10 @@
 	// Avoid logging the same 300+ lines at the beginning of every round
 	if (MC_RUNNING())
 		log_research(log_message)
+
+	// Dequeue
+	if(node.id in research_queue_nodes)
+		research_queue_nodes.Remove(node.id)
 
 	return TRUE
 

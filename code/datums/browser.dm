@@ -99,7 +99,7 @@
 /datum/browser/proc/open(use_onclose = TRUE)
 	if(isnull(window_id)) //null check because this can potentially nuke goonchat
 		WARNING("Browser [title] tried to open with a null ID")
-		to_chat(user, span_userdanger("The [title] browser you tried to open failed a sanity check! Please report this on github!"))
+		to_chat(user, span_userdanger("The [title] browser you tried to open failed a sanity check! Please report this on GitHub!"))
 		return
 	var/window_size = ""
 	if (width && height)
@@ -475,7 +475,3 @@
 			src.Topic(href, params2list(href), hsrc) // this will direct to the atom's
 			return // Topic() proc via client.Topic()
 
-	// no atomref specified (or not found)
-	// so just reset the user mob's machine var
-	if(src?.mob)
-		src.mob.unset_machine()

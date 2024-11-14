@@ -95,7 +95,7 @@
 
 /obj/machinery/transport/proc/clear_repair_signals()
 	UnregisterSignal(src, repair_signals)
-	QDEL_LAZYLIST(repair_signals)
+	LAZYNULL(repair_signals)
 
 /obj/machinery/transport/examine(mob/user)
 	. = ..()
@@ -125,11 +125,11 @@
 		machine.balloon_alert(user, "interrupted!")
 		return FALSE
 
-	playsound(src, 'sound/machines/synth_yes.ogg', 75, use_reverb = TRUE)
+	playsound(src, 'sound/machines/synth/synth_yes.ogg', 75, use_reverb = TRUE)
 	machine.balloon_alert(user, "success!")
 	UnregisterSignal(src, repair_signals)
-	QDEL_LAZYLIST(repair_signals)
-	QDEL_LAZYLIST(methods_to_fix)
+	LAZYNULL(repair_signals)
+	methods_to_fix = list()
 	malfunctioning = FALSE
 	set_machine_stat(machine_stat & ~EMAGGED)
 	set_is_operational(TRUE)

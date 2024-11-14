@@ -43,7 +43,7 @@
 	src.min_distance = min_distance
 
 	var/mob/P = parent
-	to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw mode, and clicking on your target with an empty hand."))
+	to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw mode, and ") + span_boldnotice("RIGHT-CLICKING on your target with an empty hand."))
 
 	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
 
@@ -71,10 +71,10 @@
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/clicked_atom, list/modifiers)
 	SIGNAL_HANDLER
 
-	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
+	if(!modifiers[RIGHT_CLICK] || modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
 		return
 
-	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
+	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated)
 		return
 
 	if(!clicked_atom || !(isturf(clicked_atom) || isturf(clicked_atom.loc)))
@@ -104,7 +104,7 @@
 
 	tackling = TRUE
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(checkObstacle))
-	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
+	playsound(user, 'sound/items/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
 	var/leap_word = isfelinid(user) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
 	if(can_see(user, clicked_atom, 7))
@@ -369,7 +369,7 @@
 
 	if(HAS_TRAIT(target, TRAIT_CLUMSY))
 		defense_mod -= 2
-	if(HAS_TRAIT(target, TRAIT_FAT)) // chonkers are harder to knock over
+	if(HAS_TRAIT(target, TRAIT_OFF_BALANCE_TACKLER)) // chonkers are harder to knock over
 		defense_mod += 1
 	if(HAS_TRAIT(target, TRAIT_GRABWEAKNESS))
 		defense_mod -= 2
@@ -399,11 +399,15 @@
 		if(HAS_TRAIT(tackle_target, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)) // riot armor and such
 			defense_mod += 5
 
-		var/obj/item/organ/external/tail/lizard/el_tail = tackle_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+		var/obj/item/organ/tail/lizard/el_tail = tackle_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 		if(HAS_TRAIT(tackle_target, TRAIT_TACKLING_TAILED_DEFENDER) && !el_tail)
 			defense_mod -= 1
 		if(el_tail && (el_tail.wag_flags & WAG_WAGGING)) // lizard tail wagging is robust and can swat away assailants!
 			defense_mod += 1
+
+		var/obj/item/organ/cyberimp/chest/spine/potential_spine = tackle_target.get_organ_slot(ORGAN_SLOT_SPINE)
+		if(istype(potential_spine))
+			defense_mod += potential_spine.strength_bonus
 
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
@@ -430,12 +434,16 @@
 		attack_mod += 2
 
 	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
-		var/obj/item/organ/external/wings/moth/sacker_moth_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+		var/obj/item/organ/wings/moth/sacker_moth_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(!sacker_moth_wing || sacker_moth_wing.burnt)
 			attack_mod -= 2
-	var/obj/item/organ/external/wings/sacker_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	var/obj/item/organ/wings/sacker_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(sacker_wing)
 		attack_mod += 2
+
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = sacker.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		attack_mod += potential_spine.strength_bonus
 
 	if(ishuman(sacker))
 		var/mob/living/carbon/human/human_sacker = sacker
@@ -500,6 +508,10 @@
 	if(HAS_TRAIT(user, TRAIT_HEAD_INJURY_BLOCKED))
 		oopsie_mod -= 6
 
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE) // Can't snap that spine if it's made of metal.
+	if(istype(potential_spine))
+		oopsie_mod -= potential_spine.strength_bonus
+
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!
 
@@ -521,7 +533,7 @@
 			else
 				user.adjustBruteLoss(40, updating_health=FALSE)
 			user.adjustStaminaLoss(30)
-			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
+			playsound(user, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
 			playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
 			user.emote("scream")
@@ -538,7 +550,7 @@
 				user.adjustBruteLoss(40, updating_health = FALSE)
 			user.adjustStaminaLoss(30)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
-			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
+			playsound(user, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
 			user.emote("gurgle")
 			shake_camera(user, 7, 7)
@@ -550,7 +562,7 @@
 			user.adjustBruteLoss(30)
 			user.Unconscious(10 SECONDS)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
-			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
+			user.playsound_local(get_turf(user), 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8)
 			shake_camera(user, 6, 6)
 			user.flash_act(1, TRUE, TRUE, length = 3.5)
 
@@ -561,7 +573,7 @@
 			user.adjust_confusion(15 SECONDS)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
-			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
+			user.playsound_local(get_turf(user), 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8)
 			user.Knockdown(4 SECONDS)
 			shake_camera(user, 5, 5)
 			user.flash_act(1, TRUE, TRUE, length = 2.5)
@@ -581,7 +593,7 @@
 			user.Knockdown(2 SECONDS)
 			shake_camera(user, 2, 2)
 
-	playsound(user, 'sound/weapons/smash.ogg', 70, TRUE)
+	playsound(user, 'sound/items/weapons/smash.ogg', 70, TRUE)
 
 
 /datum/component/tackler/proc/resetTackle()
@@ -591,16 +603,14 @@
 
 ///A special case for splatting for handling windows
 /datum/component/tackler/proc/splatWindow(mob/living/carbon/user, obj/structure/window/W)
-	playsound(user, 'sound/effects/Glasshit.ogg', 140, TRUE)
+	playsound(user, 'sound/effects/glass/Glasshit.ogg', 140, TRUE)
 
 	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
 		for(var/i in 1 to speed)
 			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
-			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=3, pain_chance=5)
-			shard.updateEmbedding()
+			shard.set_embed(/datum/embed_data/glass_candy)
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-			shard.embedding = null
-			shard.updateEmbedding()
+			shard.set_embed(initial(shard.embed_type))
 		W.atom_destruction()
 		user.adjustStaminaLoss(10 * speed)
 		user.Paralyze(3 SECONDS)
@@ -672,7 +682,7 @@
 
 	var/datum/thrownthing/tackle = tackle_ref?.resolve()
 
-	playsound(owner, 'sound/weapons/smash.ogg', 70, TRUE)
+	playsound(owner, 'sound/items/weapons/smash.ogg', 70, TRUE)
 	if(tackle)
 		tackle.finalize(hit=TRUE)
 	resetTackle()

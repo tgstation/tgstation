@@ -30,7 +30,6 @@
 	var/blending = FALSE //lets not take pictures while the previous is still processing!
 	var/see_ghosts = CAMERA_NO_GHOSTS //for the spoop of it
 	var/obj/item/disk/holodisk/disk
-	var/sound/custom_sound
 	var/silent = FALSE
 	var/picture_size_x = 2
 	var/picture_size_y = 2
@@ -45,7 +44,7 @@
 
 /obj/item/camera/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera), SHELL_CAPACITY_SMALL)
+	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera, new /obj/item/circuit_component/remotecam/polaroid), SHELL_CAPACITY_SMALL)
 
 /obj/item/camera/attack_self(mob/user)
 	if(!disk)
@@ -72,10 +71,9 @@
 	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	return TRUE
 
-/obj/item/camera/AltClick(mob/user)
-	if(!user.can_perform_action(src))
-		return
+/obj/item/camera/click_alt(mob/user)
 	adjust_zoom(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -108,7 +106,7 @@
 	. += "It has [pictures_left] photos left."
 
 //user can be atom or mob
-/obj/item/camera/proc/can_target(atom/target, mob/user, prox_flag)
+/obj/item/camera/proc/can_target(atom/target, mob/user)
 	if(!on || blending || !pictures_left)
 		return FALSE
 	var/turf/T = get_turf(target)
@@ -119,7 +117,7 @@
 			return FALSE
 		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
 			return FALSE
-		else if(!(get_turf(target) in get_hear(world.view, user)))
+		else if(!(get_turf(target) in get_hear(CONFIG_GET(string/default_view), user)))
 			return FALSE
 	else if(isliving(loc))
 		if(!(get_turf(target) in view(world.view, loc)))
@@ -129,24 +127,34 @@
 			return FALSE
 	return TRUE
 
-/obj/item/camera/afterattack(atom/target, mob/user, flag)
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/camera/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// Always skip on storage and tables
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
 
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/camera/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (disk)
-		if(ismob(target))
+		if(ismob(interacting_with))
 			if (disk.record)
 				QDEL_NULL(disk.record)
 
 			disk.record = new
-			var/mob/M = target
+			var/mob/M = interacting_with
 			disk.record.caller_name = M.name
 			disk.record.set_caller_image(M)
 		else
 			to_chat(user, span_warning("Invalid holodisk target."))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-	if(!can_target(target, user, flag))
-		return
+	if(!can_target(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
+	if(!photo_taken(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/camera/proc/photo_taken(atom/target, mob/user)
 
 	on = FALSE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), cooldown)
@@ -154,7 +162,7 @@
 	icon_state = state_off
 
 	INVOKE_ASYNC(src, PROC_REF(captureimage), target, user, picture_size_x - 1, picture_size_y - 1)
-
+	return TRUE
 
 /obj/item/camera/proc/cooldown()
 	UNTIL(!blending)
@@ -206,7 +214,7 @@
 			turfs += placeholder
 			for(var/mob/M in placeholder)
 				mobs += M
-			if(locate(/obj/item/areaeditor/blueprints) in placeholder)
+			if(locate(/obj/item/blueprints) in placeholder)
 				blueprints = TRUE
 
 	// do this before picture is taken so we can reveal revenants for the photo
@@ -218,8 +226,8 @@
 			dead_spotted += mob
 		desc += mob.get_photo_description(src)
 
-	var/psize_x = (size_x * 2 + 1) * world.icon_size
-	var/psize_y = (size_y * 2 + 1) * world.icon_size
+	var/psize_x = (size_x * 2 + 1) * ICON_SIZE_X
+	var/psize_y = (size_y * 2 + 1) * ICON_SIZE_Y
 	var/icon/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area, size_x, size_y, (size_x * 2 + 1), (size_y * 2 + 1))
 	qdel(clone_area)
 	get_icon.Blend("#000", ICON_UNDERLAY)
@@ -227,7 +235,7 @@
 		if(person.is_face_visible())
 			names += "[person.name]"
 
-	var/datum/picture/picture = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, names, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
+	var/datum/picture/picture = new("picture", desc.Join("<br>"), mobs_spotted, dead_spotted, names, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
 	after_picture(user, picture)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
 	blending = FALSE
@@ -243,6 +251,9 @@
 	if(print_picture_on_snap)
 		printpicture(user, picture)
 
+	if(!silent)
+		playsound(loc, SFX_POLAROID, 75, TRUE, -3)
+
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
 	pictures_left--
 	var/obj/item/photo/new_photo = new(get_turf(src), picture)
@@ -251,11 +262,11 @@
 			to_chat(user, span_notice("[pictures_left] photos left."))
 
 		if(can_customise)
-			var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
+			var/customise = user.is_holding(new_photo) && tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
 			if(customise == "Yes")
-				var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
-				var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
-				var/caption = tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
+				var/name1 = user.is_holding(new_photo) && tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
+				var/desc1 = user.is_holding(new_photo) && tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
+				var/caption = user.is_holding(new_photo) && tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
 				if(name1)
 					picture.picture_name = name1
 				if(desc1)

@@ -1,7 +1,7 @@
 /datum/status_effect/ghoul
 	id = "ghoul"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = /atom/movable/screen/alert/status_effect/ghoul
 	/// The new max health value set for the ghoul, if supplied
 	var/new_max_health
@@ -67,6 +67,7 @@
 	if(human_target.mind)
 		var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 		heretic_monster.set_owner(master_mind)
+		human_target.mind.remove_antag_datum(/datum/antagonist/cult)
 
 	return TRUE
 

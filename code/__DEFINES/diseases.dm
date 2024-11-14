@@ -1,4 +1,3 @@
-
 #define DISEASE_LIMIT 1
 #define VIRUS_SYMPTOM_LIMIT 6
 
@@ -82,28 +81,28 @@ DEFINE_BITFIELD(spread_flags, list(
 //// Adjust to make it faster or slower to cure once the virus has reached its peak.
 #define DISEASE_PEAKED_RECOVERY_MULTIPLIER 1.2
 /// Slowdown Recovery Bonus - set this to the maximum extra chance per tick you want people to get to recover from spaceacillin or other slowdown/virus resistance effects
-#define DISEASE_SLOWDOWN_RECOVERY_BONUS 1
-/// Slowdown Recovery Bonus Duration - set this to the maximum # of cycles you want things that cause slowdown/virus resistance to be able to add a bonus up to DISEASE_SLOWDOWN_RECOVERY_BONUS.______qdel_list_wrapper(list/L)
+#define DISEASE_SLOWDOWN_RECOVERY_BONUS 3
+/// Slowdown Recovery Bonus Duration - set this to the maximum # of cycles you want things that cause slowdown/virus resistance to be able to add a bonus up to DISEASE_SLOWDOWN_RECOVERY_BONUS.
 //// Scales down linearly over time.
-#define DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION 100
+#define DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION 200
 /// Negative Malnutrition Recovery Penalty
 //// Flat penalty to recovery chance if malnourished or starving
-#define DISEASE_MALNUTRITION_RECOVERY_PENALTY 1.5
+#define DISEASE_MALNUTRITION_RECOVERY_PENALTY 3
 /// Satiety Recovery Multiplier - added chance to recover based on positive satiety
 //// Multiplier of satiety/max_satiety if satiety is positive or zero. Increase to make satiety more valuable, decrease for less.
-#define DISEASE_SATIETY_RECOVERY_MULTIPLIER 1
+#define DISEASE_SATIETY_RECOVERY_MULTIPLIER 3
 /// Good Sleeping Recovery Bonus - additive benefits for various types of good sleep (blanket, bed, darkness, pillows.)
 //// Raise to make each factor add this much chance to recover.
-#define DISEASE_GOOD_SLEEPING_RECOVERY_BONUS 0.2
+#define DISEASE_GOOD_SLEEPING_RECOVERY_BONUS 0.6
 /// Sleeping Recovery Multiplier - multiplies ALL recovery chance effects by this amount.
 //// Set to 1 for no effect on recovery chances from sleeping.
-#define DISEASE_SLEEPING_RECOVERY_MULTIPLIER 2
+#define DISEASE_SLEEPING_RECOVERY_MULTIPLIER 6
 /// Final Cure Chance Multiplier - multiplies the disease's cure chance to get the probability of moving from stage 1 to a final cure.
 //// Must be greater than zero for diseases to self cure.
-#define DISEASE_FINAL_CURE_CHANCE_MULTIPLIER 3
+#define DISEASE_FINAL_CURE_CHANCE_MULTIPLIER 6
 /// Symptom Offset Duration - number of cycles over which sleeping/having spaceacillin or a slowdown effect can prevent symptoms appearing
 //// Set to maximum # of cycles you want to be able to offset symptoms. Scales down linearly over time.
-#define DISEASE_SYMPTOM_OFFSET_DURATION 100
+#define DISEASE_SYMPTOM_OFFSET_DURATION 200
 
 /// Symptom Frequency Modifier
 //// Raise to make symptoms fire less frequently, lower to make them fire more frequently. Keep at 0 or above.

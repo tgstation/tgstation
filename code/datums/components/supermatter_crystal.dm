@@ -71,7 +71,7 @@
 	SIGNAL_HANDLER
 	if(isliving(user))
 		var/mob/living/living_mob = user
-		if(living_mob.incorporeal_move || living_mob.status_flags & GODMODE)
+		if(living_mob.incorporeal_move || HAS_TRAIT(living_mob, TRAIT_GODMODE))
 			return
 	if(isalien(user))
 		dust_mob(source, user, cause = "alien attack")
@@ -80,7 +80,7 @@
 
 /datum/component/supermatter_crystal/proc/animal_hit(datum/source, mob/living/simple_animal/user, list/modifiers)
 	SIGNAL_HANDLER
-	if(user.incorporeal_move || user.status_flags & GODMODE)
+	if(user.incorporeal_move || HAS_TRAIT(user, TRAIT_GODMODE))
 		return
 	var/atom/atom_source = source
 	var/murder
@@ -101,7 +101,7 @@
 	SIGNAL_HANDLER
 	if(isliving(user))
 		var/mob/living/living_mob = user
-		if(living_mob.incorporeal_move || living_mob.status_flags & GODMODE)
+		if(living_mob.incorporeal_move || HAS_TRAIT(living_mob, TRAIT_GODMODE))
 			return
 	var/atom/atom_source = source
 	if(iscyborg(user) && atom_source.Adjacent(user))
@@ -115,7 +115,7 @@
 
 /datum/component/supermatter_crystal/proc/hand_hit(datum/source, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
-	if(user.incorporeal_move || user.status_flags & GODMODE)
+	if(user.incorporeal_move || HAS_TRAIT(user, TRAIT_GODMODE))
 		return
 	if(user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
 		dust_mob(source, user, cause = "hand")
@@ -130,7 +130,7 @@
 			)
 			return
 
-		var/obj/item/organ/internal/tongue/licking_tongue = user.get_organ_slot(ORGAN_SLOT_TONGUE)
+		var/obj/item/organ/tongue/licking_tongue = user.get_organ_slot(ORGAN_SLOT_TONGUE)
 		if(licking_tongue)
 			dust_mob(source, user,
 				span_danger("As [user] hesitantly leans in and licks [atom_source] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash!"),
@@ -161,8 +161,8 @@
 		return
 	if(is_type_in_typecache(item, sm_item_whitelist))
 		return FALSE
-	if(istype(item, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/cig = item
+	if(istype(item, /obj/item/cigarette))
+		var/obj/item/cigarette/cig = item
 		var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
 		if(clumsy)
 			var/which_hand = BODY_ZONE_L_ARM
@@ -202,7 +202,7 @@
 		return
 
 	if(atom_source.Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
-		if(user.incorporeal_move || user.status_flags & GODMODE)
+		if(user.incorporeal_move || HAS_TRAIT(user, TRAIT_GODMODE))
 			return
 		var/vis_msg = span_danger("[user] reaches out and touches [atom_source] with [item], inducing a resonance... [item] starts to glow briefly before the light continues up to [user]'s body. [user.p_They()] burst[user.p_s()] into flames before flashing into dust!")
 		var/mob_msg = span_userdanger("You reach out and touch [atom_source] with [item]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"")
@@ -219,7 +219,7 @@
 	SIGNAL_HANDLER
 	if(isliving(hit_object))
 		var/mob/living/hit_mob = hit_object
-		if(hit_mob.incorporeal_move || hit_mob.status_flags & GODMODE)
+		if(hit_mob.incorporeal_move || HAS_TRAIT(hit_mob, TRAIT_GODMODE))
 			return
 	var/atom/atom_source = source
 	var/obj/machinery/power/supermatter_crystal/our_supermatter = parent // Why is this a component?
@@ -272,7 +272,7 @@
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
 
 /datum/component/supermatter_crystal/proc/dust_mob(datum/source, mob/living/nom, vis_msg, mob_msg, cause)
-	if(nom.incorporeal_move || nom.status_flags & GODMODE) //try to keep supermatter sliver's + hemostat's dust conditions in sync with this too
+	if(nom.incorporeal_move || HAS_TRAIT(nom, TRAIT_GODMODE)) //try to keep supermatter sliver's + hemostat's dust conditions in sync with this too
 		return
 	var/atom/atom_source = source
 	if(!vis_msg)
@@ -288,15 +288,21 @@
 	consume(atom_source, nom)
 
 /datum/component/supermatter_crystal/proc/consume(atom/source, atom/movable/consumed_object)
+	if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
+		return
+	if(HAS_TRAIT(consumed_object, TRAIT_GODMODE))
+		return
+
 	var/atom/atom_source = source
+	SEND_SIGNAL(consumed_object, COMSIG_SUPERMATTER_CONSUMED, atom_source)
+
 	var/object_size = 0
 	var/matter_increase = 0
 	var/damage_increase = 0
+
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object
 		object_size = consumed_mob.mob_size + 2
-		if(consumed_mob.status_flags & GODMODE)
-			return
 		message_admins("[atom_source] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(atom_source)].")
 		atom_source.investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.investigate_log("has been dusted by [atom_source].", INVESTIGATE_DEATHS)
@@ -312,8 +318,6 @@
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
 			damage_increase += rand(-30, 30) // HONK
 		consume_returns(matter_increase, damage_increase)
-	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
-		return
 	else if(isobj(consumed_object))
 		if(!iseffect(consumed_object))
 			var/suspicion = ""

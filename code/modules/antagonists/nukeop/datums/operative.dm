@@ -8,6 +8,8 @@
 	show_to_ghosts = TRUE
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"
+	stinger_sound = 'sound/music/antag/ops.ogg'
+
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
 	/// If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
@@ -30,7 +32,7 @@
 	var/discount_limited_amount = 10
 
 /datum/antagonist/nukeop/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
+	play_stinger()
 	to_chat(owner, span_big("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
 	owner.announce_objectives()
 
@@ -46,7 +48,6 @@
 		var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 		if (uplink)
 			uplink.uplink_handler.add_telecrystals(extra_tc)
-
 	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
 	if(uplink)
 		var/datum/team/nuclear/nuke_team = get_team()
@@ -94,7 +95,7 @@
 	nuke_team = new_team
 
 /datum/antagonist/nukeop/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
+	new_owner.set_assigned_role(SSjob.get_job_type(/datum/job/nuclear_operative))
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has nuke op'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has nuke op'ed [key_name(new_owner)].")
@@ -114,8 +115,8 @@
 		var/icon/teammate = render_preview_outfit(preview_outfit_behind)
 		teammate.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
 
-		final_icon.Blend(teammate, ICON_UNDERLAY, -world.icon_size / 4, 0)
-		final_icon.Blend(teammate, ICON_UNDERLAY, world.icon_size / 4, 0)
+		final_icon.Blend(teammate, ICON_UNDERLAY, -ICON_SIZE_X / 4, 0)
+		final_icon.Blend(teammate, ICON_UNDERLAY, ICON_SIZE_X / 4, 0)
 
 	if (!isnull(nuke_icon_state))
 		var/icon/nuke = icon('icons/obj/machines/nuke.dmi', nuke_icon_state)

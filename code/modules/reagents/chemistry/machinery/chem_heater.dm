@@ -31,8 +31,12 @@
 		QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/chem_heater/on_deconstruction(disassembled)
-	beaker?.forceMove(drop_location())
+/obj/machinery/chem_heater/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
+		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
+		beaker = null
+		update_appearance()
 
 /obj/machinery/chem_heater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
@@ -58,7 +62,6 @@
 
 	return NONE
 
-
 /obj/machinery/chem_heater/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
@@ -80,28 +83,20 @@
 	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
 	return ..()
 
-/obj/machinery/chem_heater/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == beaker)
-		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
-		beaker = null
-		update_appearance()
-
 /obj/machinery/chem_heater/RefreshParts()
 	. = ..()
 	heater_coefficient = 0.1
 	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
 		heater_coefficient *= micro_laser.tier
 
+/obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers)
+	if(user.combat_mode || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+		return NONE
 
-/obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers, is_right_clicking)
-	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
-		return ..()
-
-	if(QDELETED(beaker))
+	if(!QDELETED(beaker))
 		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
 			var/obj/item/reagent_containers/injector = held_item
-			injector.afterattack(beaker, user, proximity_flag = TRUE)
+			injector.interact_with_atom(beaker, user, modifiers)
 			return ITEM_INTERACT_SUCCESS
 
 	if(is_reagent_container(held_item)  && held_item.is_open_container())
@@ -110,19 +105,28 @@
 		balloon_alert(user, "beaker added")
 		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
 	. = ITEM_INTERACT_BLOCKING
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_heater/screwdriver_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
 	. = ITEM_INTERACT_BLOCKING
 	if(default_deconstruction_screwdriver(user, "mixer0b", "[base_icon_state][beaker ? 1 : 0]b", tool))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_heater/crowbar_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
 	. = ITEM_INTERACT_BLOCKING
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
@@ -174,12 +178,13 @@
 	PRIVATE_PROC(TRUE)
 
 	//must be on and beaker must have something inside to heat
-	if(!on || (machine_stat & NOPOWER) || QDELETED(beaker) || !beaker.reagents.total_volume)
+	if(!on || !is_operational || QDELETED(beaker) || !beaker.reagents.total_volume)
 		return FALSE
 
 	//heat the beaker and use some power. we want to use only a small amount of power since this proc gets called frequently
-	beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
-	use_power(active_power_usage * seconds_per_tick * 0.3)
+	var/energy = (target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * beaker.reagents.heat_capacity()
+	beaker.reagents.adjust_thermal_energy(energy)
+	use_energy(active_power_usage + abs(ROUND_UP(energy) / 120))
 	return TRUE
 
 /obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions, seconds_per_tick)

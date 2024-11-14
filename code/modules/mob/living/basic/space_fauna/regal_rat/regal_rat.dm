@@ -27,7 +27,7 @@
 	melee_attack_cooldown = CLICK_CD_MELEE
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 
 	// Slightly brown red, for the eyes
 	lighting_cutoff_red = 22
@@ -49,12 +49,12 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = REGALRAT_INTERACTION)
+	AddElement(/datum/element/poster_tearer, interaction_key = REGALRAT_INTERACTION)
 	AddComponent(\
 		/datum/component/ghost_direct_control,\
 		poll_candidates = poll_ghosts,\
@@ -168,21 +168,22 @@
 	special_moniker = "You better not screw with [p_their()] [selected_kingdom]... How do you become a [selected_title] of that anyways?"
 
 /// Checks if we are able to attack this object, as well as send out the signal to see if we get any special regal rat interactions.
-/mob/living/basic/regal_rat/proc/pre_attack(mob/living/source, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/regal_rat/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(DOING_INTERACTION(src, REGALRAT_INTERACTION) || !allowed_to_attack(target))
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 	if(SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src) & COMPONENT_RAT_INTERACTED)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
-	if(isnull(mind))
-		return
+	if(isnull(mind) || !combat_mode)
+		return TRUE
 
-	if(!combat_mode)
-		INVOKE_ASYNC(src, PROC_REF(poison_target), target)
-		return COMPONENT_HOSTILE_NO_ATTACK
+	poison_target(target)
+	return TRUE
 
 /// Checks if we are allowed to attack this mob. Will return TRUE if we are potentially allowed to attack, but if we end up in a case where we should NOT attack, return FALSE.
 /mob/living/basic/regal_rat/proc/allowed_to_attack(atom/the_target)

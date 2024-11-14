@@ -18,16 +18,8 @@
 /// Does this light ignore inherent offsets? (Pixels, transforms, etc)
 #define LIGHT_IGNORE_OFFSET (1<<2)
 
-// Bay lighting engine shit, not in /code/modules/lighting because BYOND is being shit about it
-/// frequency, in 1/10ths of a second, of the lighting process
-#define LIGHTING_INTERVAL 5
-
 #define MINIMUM_USEFUL_LIGHT_RANGE 1.4
 
-/// type of falloff to use for lighting; 1 for circular, 2 for square
-#define LIGHTING_FALLOFF 1
-/// use lambertian shading for light sources
-#define LIGHTING_LAMBERTIAN 0
 /// light UNDER the floor. primarily used for starlight, shouldn't fuck with this
 #define LIGHTING_HEIGHT_SPACE -0.5
 /// light ON the floor
@@ -85,21 +77,21 @@
 #define _EMISSIVE_COLOR(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, val,val,val,0)
 /// The color matrix applied to all emissive overlays. Should be solely dependent on alpha and not have RGB overlap with [EM_BLOCK_COLOR].
 #define EMISSIVE_COLOR _EMISSIVE_COLOR(1)
-/// A globaly cached version of [EMISSIVE_COLOR] for quick access.
+/// A globally cached version of [EMISSIVE_COLOR] for quick access.
 GLOBAL_LIST_INIT(emissive_color, EMISSIVE_COLOR)
 
 #define _EM_BLOCK_COLOR(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,val, 0,0,0,0)
 /// The color matrix applied to all emissive blockers. Should be solely dependent on alpha and not have RGB overlap with [EMISSIVE_COLOR].
 #define EM_BLOCK_COLOR _EM_BLOCK_COLOR(1)
-/// A globaly cached version of [EM_BLOCK_COLOR] for quick access.
+/// A globally cached version of [EM_BLOCK_COLOR] for quick access.
 GLOBAL_LIST_INIT(em_block_color, EM_BLOCK_COLOR)
 
 /// A set of appearance flags applied to all emissive and emissive blocker overlays.
-/// KEEP_APART to prevent parent hooking, KEEP_TOGETHER for children, and we reset the color and alpha of our parent so nothing gets overriden
+/// KEEP_APART to prevent parent hooking, KEEP_TOGETHER for children, and we reset the color and alpha of our parent so nothing gets overridden
 #define EMISSIVE_APPEARANCE_FLAGS (KEEP_APART|KEEP_TOGETHER|RESET_COLOR|RESET_ALPHA)
-/// The color matrix used to mask out emissive blockers on the emissive plane. Alpha should default to zero, be solely dependent on the RGB value of [EMISSIVE_COLOR], and be independant of the RGB value of [EM_BLOCK_COLOR].
+/// The color matrix used to mask out emissive blockers on the emissive plane. Alpha should default to zero, be solely dependent on the RGB value of [EMISSIVE_COLOR], and be independent of the RGB value of [EM_BLOCK_COLOR].
 #define EM_MASK_MATRIX list(0,0,0,1/3, 0,0,0,1/3, 0,0,0,1/3, 0,0,0,0, 1,1,1,0)
-/// A globaly cached version of [EM_MASK_MATRIX] for quick access.
+/// A globally cached version of [EM_MASK_MATRIX] for quick access.
 GLOBAL_LIST_INIT(em_mask_matrix, EM_MASK_MATRIX)
 
 /// Parse the hexadecimal color into lumcounts of each perspective.

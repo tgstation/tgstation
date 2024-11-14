@@ -124,6 +124,8 @@
 	if(isnull(step))
 		return FALSE
 	var/obj/item/tool = user.get_active_held_item()
+	if(tool)
+		tool = tool.get_proxy_attacker_for(target, user)
 	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 		return TRUE
 	if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it

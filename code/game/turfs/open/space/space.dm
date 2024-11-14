@@ -48,6 +48,7 @@ GLOBAL_LIST_EMPTY(starlight)
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -143,7 +144,7 @@ GLOBAL_LIST_EMPTY(starlight)
 		return
 	if(istype(C, /obj/item/stack/rods))
 		build_with_rods(C, user)
-	else if(istype(C, /obj/item/stack/tile/iron))
+	else if(istype(C, /obj/item/stack/tile/iron) || istype(C, /obj/item/stack/tile/material) && C.has_material_type(/datum/material/iron))
 		build_with_floor_tiles(C, user)
 
 
@@ -242,8 +243,6 @@ GLOBAL_LIST_EMPTY(starlight)
 
 	return FALSE
 
-/turf/open/space/rust_heretic_act()
-	return FALSE
 
 /turf/open/space/attempt_lattice_replacement()
 	var/dest_x = destination_x
@@ -273,7 +272,6 @@ GLOBAL_LIST_EMPTY(starlight)
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/space/openspace/LateInitialize()
-	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 
 /turf/open/space/openspace/Destroy()

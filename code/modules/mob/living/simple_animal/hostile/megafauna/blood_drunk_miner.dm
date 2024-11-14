@@ -27,9 +27,8 @@ Difficulty: Medium
 	icon_living = "miner"
 	icon = 'icons/mob/simple/broadMobs.dmi'
 	health_doll_icon = "miner"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL
 	light_color = COLOR_LIGHT_GRAYISH_RED
-	movement_type = GROUND
 	speak_emote = list("roars")
 	speed = 3
 	move_to_delay = 3
@@ -77,7 +76,7 @@ Difficulty: Medium
 	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
 
-	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', 167 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
 	dash = null
@@ -123,7 +122,7 @@ Difficulty: Medium
 		new /obj/effect/temp_visual/dir_setting/miner_death(loc, dir)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Move(atom/newloc)
-	if(newloc && newloc.z == z && (islava(newloc) || ischasm(newloc))) //we're not stupid!
+	if(newloc && newloc.z == z && ischasm(newloc)) //we're not stupid!
 		return FALSE
 	return ..()
 

@@ -1,7 +1,4 @@
-import { createSearch, decodeHtmlEntities } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   Icon,
@@ -11,7 +8,10 @@ import {
   Stack,
   Table,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { createSearch, decodeHtmlEntities } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
@@ -51,6 +51,9 @@ export const CheckboxInput = (props) => {
 
     setSelections(newSelections);
   };
+  const selectionIndexes = selections.map(
+    (selected: string) => items.indexOf(selected) + 1,
+  );
 
   return (
     <Window title={title} width={425} height={300}>
@@ -103,7 +106,7 @@ export const CheckboxInput = (props) => {
           </Stack>
           <Stack.Item mt={0.7}>
             <Section>
-              <InputButtons input={selections} />
+              <InputButtons input={[selections, selectionIndexes]} />
             </Section>
           </Stack.Item>
         </Stack>

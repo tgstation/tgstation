@@ -125,7 +125,8 @@
 
 /obj/item/food/moonfish_eggs
 	name = "moonfish eggs"
-	desc = "The moonfish lays large, transparent white eggs which are prized in lizard cooking. Their flavour is similar to caviar, but generally is described as deeper and more complex."
+	gender = PLURAL
+	desc = "The moonfish lays large, translucent blue eggs which are prized in lizard cooking. Their flavour is similar to caviar, but generally is described as deeper and more complex."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "moonfish_eggs"
 	food_reagents = list(
@@ -136,6 +137,29 @@
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
+
+/obj/item/food/moonfish_eggs/Initialize(mapload)
+	. = ..()
+	//Moonfish can lay eggs (unaffected by breeding, so think of them as unfertilizard)
+	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(generate_aquarium_appearance))
+	RegisterSignal(src, AQUARIUM_CONTENT_RANDOMIZE_POSITION, PROC_REF(randomize_aquarium_position))
+	AddComponent(/datum/component/aquarium_content, beauty = 100)
+
+/obj/item/food/moonfish_eggs/proc/generate_aquarium_appearance(datum/source, obj/effect/aquarium/visual)
+	SIGNAL_HANDLER
+	visual.icon = icon
+	visual.icon_state = "moonfish_eggs_aquarium"
+	visual.layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
+
+/obj/item/food/moonfish_eggs/proc/randomize_aquarium_position(datum/source, obj/structure/aquarium/current_aquarium, obj/effect/aquarium/visual)
+	SIGNAL_HANDLER
+	var/list/aq_properties = current_aquarium.get_surface_properties()
+	var/sprite_width = 5
+	var/px_min = aq_properties[AQUARIUM_PROPERTIES_PX_MIN]
+	var/px_max = aq_properties[AQUARIUM_PROPERTIES_PX_MAX] - sprite_width
+
+	visual.pixel_x = rand(px_min,px_max)
+	visual.pixel_y = rand(-1, 1)
 
 /obj/item/food/moonfish_caviar
 	name = "moonfish caviar paste"
@@ -156,6 +180,7 @@
 	desc = "Another example of cultural crossover between lizards and humans, desert snail escargot is closer to the Roman dish cocleas than the contemporary French escargot. It's a common street food in the desert cities."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "lizard_escargot"
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 4,
@@ -188,6 +213,7 @@
 	desc = "One of the many human foods to make its way to the lizards was french fries, which are called poms-franzisks in Draconic. When topped with barbecued meat and sauce, they make a hearty meal."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "lizard_fries"
+	trash_type = /obj/item/plate
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 6,
@@ -549,7 +575,7 @@
 		/datum/reagent/consumable/nutriment/protein = 10,
 	)
 	tastes = list("bread" = 1, "meat" = 1)
-	foodtypes = MEAT | NUTS | RAW | GORE
+	foodtypes = MEAT | NUTS | GORE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/flatbread/stinging
@@ -887,7 +913,7 @@
 
 /obj/item/food/burger/rootrib
 	name = "rootrib"
-	desc = "An elusive rib shaped burger with limited availablity across the galaxy. Now meeting subhuman requirements."
+	desc = "An elusive rib shaped burger with limited availability across the galaxy. Now meeting subhuman requirements."
 	icon_state = "rootrib"
 	icon = 'icons/obj/food/lizard.dmi'
 	food_reagents = list(

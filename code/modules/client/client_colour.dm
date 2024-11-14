@@ -180,8 +180,14 @@
 /datum/client_colour/glass_colour/yellow
 	colour = "#ffff66"
 
+/datum/client_colour/glass_colour/lightyellow
+	colour = "#ffffaa"
+
 /datum/client_colour/glass_colour/red
 	colour = "#ffaaaa"
+
+/datum/client_colour/glass_colour/lightred
+	colour = "#ffcccc"
 
 /datum/client_colour/glass_colour/darkred
 	colour = "#bb5555"
@@ -195,8 +201,18 @@
 /datum/client_colour/glass_colour/purple
 	colour = "#ff99ff"
 
+/datum/client_colour/glass_colour/lightpurple
+	colour = "#ffccff"
+
 /datum/client_colour/glass_colour/gray
 	colour = "#cccccc"
+
+///A client colour that makes the screen look a bit more grungy, halloweenesque even.
+/datum/client_colour/halloween_helmet
+	colour = list(0.75,0.13,0.13,0, 0.13,0.7,0.13,0, 0.13,0.13,0.75,0, -0.06,-0.09,-0.08,1, 0,0,0,0)
+
+/datum/client_colour/flash_hood
+	colour = COLOR_MATRIX_POLAROID
 
 /datum/client_colour/glass_colour/nightmare
 	colour = list(255,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, -130,0,0,0) //every color is either red or black
@@ -228,7 +244,7 @@
 /datum/client_colour/bloodlust/New(mob/owner)
 	..()
 	if(owner)
-		addtimer(CALLBACK(src, PROC_REF(update_colour), list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT), 1)
+		addtimer(CALLBACK(src, PROC_REF(update_colour), list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT), 0.1 SECONDS)
 
 /datum/client_colour/rave
 	priority = PRIORITY_LOW

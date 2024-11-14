@@ -76,6 +76,13 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	var/static/list/edibles = list(
 		/obj/item/food/cracker,
 	)
+	///list of commands we follow
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/perform_trick_sequence,
+	)
 
 	/// Tracks the times when we send a phrase through either being pet or attack to ensure it's not abused to flood
 	COOLDOWN_DECLARE(forced_speech_cooldown)
@@ -91,16 +98,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	AddElement(/datum/element/strippable, GLOB.strippable_parrot_items)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/listen_and_repeat, desired_phrases = get_static_list_of_phrases(), blackboard_key = BB_PARROT_REPEAT_STRING)
-	AddComponent(\
-		/datum/component/tameable,\
-		food_types = edibles,\
-		tame_chance = 100,\
-		bonus_tame_chance = 0,\
-		after_tame = CALLBACK(src, PROC_REF(tamed)),\
-	)
-
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attacking))
-	RegisterSignal(src, COMSIG_MOB_CLICKON, PROC_REF(on_click))
+	AddComponent(/datum/component/tameable, food_types = edibles, tame_chance = 100, bonus_tame_chance = 0)
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	RegisterSignal(src, COMSIG_ATOM_ATTACKBY_SECONDARY, PROC_REF(on_attacked)) // this means we could have a peaceful interaction, like getting a cracker
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_injured)) // this means we got hurt and it's go time
 	RegisterSignal(src, COMSIG_ANIMAL_PET, PROC_REF(on_pet))
@@ -158,11 +157,6 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	. = ..()
 	. += "Held Item: [held_item]"
 
-/mob/living/basic/parrot/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
-	if(stat != DEAD) // parrots have evolved to let them fly in space because fucking uhhhhhhhhhh
-		return TRUE
-	return ..()
-
 /mob/living/basic/parrot/radio(message, list/message_mods = list(), list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
 	if(. != NONE)
@@ -190,12 +184,12 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	icon_state = HAS_TRAIT(src, TRAIT_PARROT_PERCHED) ? icon_sit : icon_living
 
 /// Proc that we just use to see if we're rightclicking something for perch behavior or dropping the item we currently ahve
-/mob/living/basic/parrot/proc/on_click(mob/living/basic/source, atom/target, params)
-	SIGNAL_HANDLER
-	if(!LAZYACCESS(params, RIGHT_CLICK) || !CanReach(target))
-		return
-	if(start_perching(target) && !isnull(held_item))
+/mob/living/basic/parrot/resolve_right_click_attack(atom/target, list/modifiers)
+	if(!start_perching(target))
+		return SECONDARY_ATTACK_CALL_NORMAL
+	if(!isnull(held_item))
 		drop_held_item(gently = TRUE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /// Proc that handles sending the signal and returning a valid phrase to say. Will not do anything if we don't have a stat or if we're cliented.
 /// Will return either a string or null.
@@ -279,16 +273,16 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /// Master proc which will determine the intent of OUR attacks on an object and summon the relevant procs accordingly.
 /// This is pretty much meant for players, AI will use the task-specific procs instead.
-/mob/living/basic/parrot/proc/pre_attacking(mob/living/basic/source, atom/target)
-	SIGNAL_HANDLER
-	if(stat != CONSCIOUS)
-		return
+/mob/living/basic/parrot/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(isitem(target) && steal_from_ground(target))
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 	if(iscarbon(target) && steal_from_mob(target))
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 /// Picks up an item from the ground and puts it in our claws. Returns TRUE if we picked it up, FALSE otherwise.
 /mob/living/basic/parrot/proc/steal_from_ground(obj/item/target)
@@ -445,7 +439,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	return returnable_list
 
-/mob/living/basic/parrot/proc/tamed()
+/mob/living/basic/parrot/tamed(mob/living/tamer, atom/food)
 	new /obj/effect/temp_visual/heart(drop_location())
 
 /mob/living/basic/parrot/proc/drop_item_on_signal(mob/living/user)

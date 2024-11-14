@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
 		return
 	podspawn(list(
 		"target" = get_turf(mind.current),
-		"style" = STYLE_BLUESPACE,
+		"style" = /datum/pod_style/advanced,
 		"spawn" = skill_item_path,
 		"delays" = list(POD_TRANSIT = 150, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	))

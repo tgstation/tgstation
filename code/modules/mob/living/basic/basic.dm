@@ -93,9 +93,9 @@
 	var/minimum_survivable_temperature = NPC_DEFAULT_MIN_TEMP
 	///Maximal body temperature without receiving damage
 	var/maximum_survivable_temperature = NPC_DEFAULT_MAX_TEMP
-	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the basic_body_temp_sensitive element.
+	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_cold_damage = 1
-	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the basic_body_temp_sensitive element.
+	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_heat_damage = 1
 
 /mob/living/basic/Initialize(mapload)
@@ -115,23 +115,38 @@
 	if(speak_emote)
 		speak_emote = string_list(speak_emote)
 
-	apply_atmos_requirements()
-	apply_temperature_requirements()
+	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
+	if(PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) && mapload && !SSair.initialized)
+		RegisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(on_ssair_init))
+		return
+	apply_atmos_requirements(mapload)
+	apply_temperature_requirements(mapload)
+	apply_target_randomisation()
+
+/mob/living/basic/proc/on_ssair_init(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	apply_atmos_requirements(TRUE)
+	apply_temperature_requirements(TRUE)
 
 /// Ensures this mob can take atmospheric damage if it's supposed to
-/mob/living/basic/proc/apply_atmos_requirements()
-	if(unsuitable_atmos_damage == 0)
+/mob/living/basic/proc/apply_atmos_requirements(mapload)
+	if(unsuitable_atmos_damage == 0 || isnull(habitable_atmos))
 		return
 	//String assoc list returns a cached list, so this is like a static list to pass into the element below.
 	habitable_atmos = string_assoc_list(habitable_atmos)
-	AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
+	AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage, mapload)
 
 /// Ensures this mob can take temperature damage if it's supposed to
-/mob/living/basic/proc/apply_temperature_requirements()
-	if(unsuitable_cold_damage == 0 && unsuitable_heat_damage == 0)
+/mob/living/basic/proc/apply_temperature_requirements(mapload)
+	if((unsuitable_cold_damage == 0 && unsuitable_heat_damage == 0) || (minimum_survivable_temperature <= 0 && maximum_survivable_temperature >= INFINITY))
 		return
-	AddElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+	AddElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage, mapload)
 
+/mob/living/basic/proc/apply_target_randomisation()
+	if (basic_mob_flags & PRECISE_ATTACK_ZONES)
+		return
+	AddElement(/datum/element/attack_zone_randomiser)
 
 /mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
@@ -201,14 +216,19 @@
 	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
-	face_atom(target)
-	if (!ignore_cooldown)
-		changeNext_move(melee_attack_cooldown)
-	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target, Adjacent(target), modifiers) & COMPONENT_HOSTILE_NO_ATTACK)
-		return FALSE //but more importantly return before attack_animal called
+	if(!early_melee_attack(target, modifiers, ignore_cooldown))
+		return FALSE
 	var/result = target.attack_basic_mob(src, modifiers)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
 	return result
+
+/mob/living/basic/proc/early_melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
+	face_atom(target)
+	if(!ignore_cooldown)
+		changeNext_move(melee_attack_cooldown)
+	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target, Adjacent(target), modifiers) & COMPONENT_HOSTILE_NO_ATTACK)
+		return FALSE //but more importantly return before attack_animal called
+	return TRUE
 
 /mob/living/basic/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	melee_attack(attack_target, modifiers)
@@ -219,7 +239,7 @@
 			RemoveElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
 			. = TRUE
 		if(NAMEOF(src, minimum_survivable_temperature), NAMEOF(src, maximum_survivable_temperature), NAMEOF(src, unsuitable_cold_damage), NAMEOF(src, unsuitable_heat_damage))
-			RemoveElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+			RemoveElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
 			. = TRUE
 
 	. = ..()
@@ -251,7 +271,7 @@
 		REMOVE_TRAIT(src, TRAIT_NO_GLIDE, SPEED_TRAIT)
 
 /mob/living/basic/relaymove(mob/living/user, direction)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 	return relaydrive(user, direction)
 
@@ -303,3 +323,9 @@
 
 /mob/living/basic/get_body_temp_cold_damage_limit()
 	return minimum_survivable_temperature
+
+/mob/living/basic/proc/hop_on_nearby_turf()
+	var/dir = pick(GLOB.cardinals)
+	Move(get_step(src, dir), dir)
+	animate(src, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
+	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)

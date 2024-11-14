@@ -66,11 +66,11 @@
 /obj/item/laser_pointer/infinite_range
 	name = "infinite laser pointer"
 	desc = "Used to shine in the eyes of Cyborgs who need a bit of a push, this works through camera consoles."
-	max_range = INFINITE
+	max_range = INFINITY
 
 /obj/item/laser_pointer/infinite_range/Initialize(mapload)
 	. = ..()
-	diode = new /obj/item/stock_parts/servo/femto
+	diode = new /obj/item/stock_parts/micro_laser/quadultra
 
 /obj/item/laser_pointer/screwdriver_act(mob/living/user, obj/item/tool)
 	if(diode)
@@ -80,14 +80,11 @@
 		diode = null
 		return TRUE
 
-/obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
+/obj/item/laser_pointer/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(isnull(crystal_lens))
-		return .
+		return ..()
 	if(tool_behaviour != TOOL_WIRECUTTER && tool_behaviour != TOOL_HEMOSTAT)
-		return .
+		return ..()
 	tool.play_tool_sound(src)
 	balloon_alert(user, "removed crystal lens")
 	crystal_lens.forceMove(drop_location())
@@ -102,7 +99,7 @@
 		var/obj/item/stock_parts/attack_diode = attack_item
 		if(crystal_lens && attack_diode.rating < 3) //only tier 3 and up are small enough to fit
 			to_chat(user, span_warning("You try to jam \the [attack_item.name] in place, but \the [crystal_lens.name] is in the way!"))
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 20)
+			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 20)
 			if(do_after(user, 2 SECONDS, src))
 				var/atom/atom_to_teleport = pick(user, attack_item)
 				if(atom_to_teleport == user)
@@ -116,7 +113,7 @@
 			return
 		if(!user.transferItemToLoc(attack_item, src))
 			return
-		playsound(src, 'sound/items/screwdriver.ogg', 30)
+		playsound(src, 'sound/items/tools/screwdriver.ogg', 30)
 		diode = attack_item
 		balloon_alert(user, "installed \the [diode.name]")
 		//we have a diode now, try starting a charge sequence in case the pointer was charging when we took out the diode
@@ -132,7 +129,7 @@
 		var/obj/item/stack/ore/bluespace_crystal/crystal_stack = attack_item
 		if(diode && diode.rating < 3) //only lasers of tier 3 and up can house a lens
 			to_chat(user, span_warning("You try to jam \the [crystal_stack.name] in front of the diode, but it's a bad fit!"))
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 20)
+			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 20)
 			if(do_after(user, 2 SECONDS, src))
 				var/atom/atom_to_teleport = pick(user, src)
 				if(atom_to_teleport == user)
@@ -151,7 +148,7 @@
 		if(!user.transferItemToLoc(single_crystal, src))
 			return
 		crystal_lens = single_crystal
-		playsound(src, 'sound/items/screwdriver2.ogg', 30)
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 30)
 		balloon_alert(user, "installed \the [crystal_lens.name]")
 		to_chat(user, span_notice("You install a [crystal_lens.name] in [src]. \
 			It can now be used to shine through obstacles at the cost of double the energy drain."))
@@ -185,13 +182,17 @@
 			. += "<i>\The [diode.name]'s size is much smaller compared to the previous generation lasers, \
 			and the wide margin between it and the focus lens could probably house <b>a crystal</b> of some sort.</i>"
 
-/obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-	laser_act(target, user, params)
+/obj/item/laser_pointer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	laser_act(interacting_with, user, modifiers)
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/laser_pointer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 ///Handles shining the clicked atom,
-/obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)
+/obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, list/modifiers)
 	if(isnull(diode))
 		to_chat(user, span_notice("You point [src] at [target], but nothing happens!"))
 		return
@@ -202,7 +203,7 @@
 		to_chat(user, span_warning("Your fingers can't press the button!"))
 		return
 
-	if(max_range != INFINITE)
+	if(max_range != INFINITY)
 		if(!IN_GIVEN_RANGE(target, user, max_range))
 			to_chat(user, span_warning("\The [target] is too far away!"))
 			return
@@ -234,9 +235,12 @@
 		else if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
 			//Intensity of the laser dot to pass to flash_act
 			var/severity = pick(0, 1, 2)
+			var/always_fail = FALSE
+			if(istype(target_humanoid.glasses, /obj/item/clothing/glasses/eyepatch) && prob(50))
+				always_fail = TRUE
 
 			//chance to actually hit the eyes depends on internal component
-			if(prob(effectchance * diode.rating) && target_humanoid.flash_act(severity))
+			if(prob(effectchance * diode.rating) && !always_fail && target_humanoid.flash_act(severity))
 				outmsg = span_notice("You blind [target_humanoid] by shining [src] in [target_humanoid.p_their()] eyes.")
 				log_combat(user, target_humanoid, "blinded with a laser pointer", src)
 			else
@@ -261,7 +265,7 @@
 	//cameras: chance to EMP the camera
 	else if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/target_camera = target
-		if(!target_camera.status && !target_camera.emped)
+		if(!target_camera.camera_enabled && !target_camera.emped)
 			outmsg = span_notice("You point [src] at [target_camera], but it seems to be disabled.")
 		else if(prob(effectchance * diode.rating))
 			target_camera.emp_act(EMP_HEAVY)
@@ -272,13 +276,13 @@
 
 	//catpeople: make any felinid near the target to face the target, chance for felinids to pounce at the light, stepping to the target
 	for(var/mob/living/carbon/human/target_felinid in view(1, targloc))
-		if(!isfelinid(target_felinid) || target_felinid.stat == DEAD || target_felinid.is_blind() || target_felinid.incapacitated())
+		if(!isfelinid(target_felinid) || target_felinid.stat == DEAD || target_felinid.is_blind() || target_felinid.incapacitated)
 			continue
 		if(target_felinid.body_position == STANDING_UP)
 			target_felinid.setDir(get_dir(target_felinid, targloc)) // kitty always looks at the light
 			if(prob(effectchance * diode.rating))
 				target_felinid.visible_message(span_warning("[target_felinid] makes a grab for the light!"), span_userdanger("LIGHT!"))
-				target_felinid.Move(targloc)
+				target_felinid.Move(targloc, get_dir(target_felinid, targloc))
 				log_combat(user, target_felinid, "moved with a laser pointer", src)
 			else
 				target_felinid.visible_message(span_notice("[target_felinid] looks briefly distracted by the light."), span_warning("You're briefly tempted by the shiny light..."))
@@ -289,7 +293,6 @@
 
 	//setup pointer blip
 	var/mutable_appearance/laser = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', pointer_icon_state)
-	var/list/modifiers = params2list(params)
 	if(modifiers)
 		if(LAZYACCESS(modifiers, ICON_X))
 			laser.pixel_x = (text2num(LAZYACCESS(modifiers, ICON_X)) - 16)

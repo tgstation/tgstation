@@ -19,11 +19,8 @@ have ways of interacting with a specific mob and control it.
 		BB_MONKEY_BEST_FORCE_FOUND = 0,
 		BB_MONKEY_ENEMIES = list(),
 		BB_MONKEY_BLACKLISTITEMS = list(),
-		BB_MONKEY_PICKUPTARGET = null,
 		BB_MONKEY_PICKPOCKETING = FALSE,
 		BB_MONKEY_DISPOSING = FALSE,
-		BB_MONKEY_TARGET_DISPOSAL = null,
-		BB_MONKEY_CURRENT_ATTACK_TARGET = null,
 		BB_MONKEY_GUN_NEURONS_ACTIVATED = FALSE,
 		BB_MONKEY_GUN_WORKED = TRUE,
 		BB_SONG_LINES = MONKEY_SONG,
@@ -45,7 +42,7 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/New(atom/new_pawn)
 	var/static/list/control_examine = list(
-		ORGAN_SLOT_EYES = span_monkey("eyes have a primal look in them."),
+		ORGAN_SLOT_EYES = span_monkey("%PRONOUN_They stare%PRONOUN_s around with wild, primal eyes."),
 	)
 	AddElement(/datum/element/ai_control_examine, control_examine)
 	return ..()
@@ -80,7 +77,7 @@ have ways of interacting with a specific mob and control it.
 		living_pawn.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(new_pawn, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	RegisterSignal(new_pawn, COMSIG_LIVING_START_PULL, PROC_REF(on_startpulling))
-	RegisterSignal(new_pawn, COMSIG_LIVING_TRY_SYRINGE, PROC_REF(on_try_syringe))
+	RegisterSignals(new_pawn, list(COMSIG_LIVING_TRY_SYRINGE_INJECT, COMSIG_LIVING_TRY_SYRINGE_WITHDRAW), PROC_REF(on_try_syringe))
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(on_attempt_cuff))
 	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, PROC_REF(update_movespeed))
 
@@ -92,7 +89,8 @@ have ways of interacting with a specific mob and control it.
 	UnregisterSignal(pawn, list(
 		COMSIG_ATOM_WAS_ATTACKED,
 		COMSIG_LIVING_START_PULL,
-		COMSIG_LIVING_TRY_SYRINGE,
+		COMSIG_LIVING_TRY_SYRINGE_INJECT,
+		COMSIG_LIVING_TRY_SYRINGE_WITHDRAW,
 		COMSIG_CARBON_CUFF_ATTEMPTED,
 		COMSIG_MOB_MOVESPEED_UPDATED,
 	))
@@ -103,18 +101,30 @@ have ways of interacting with a specific mob and control it.
 	. = ..()
 	set_trip_mode(mode = TRUE)
 
-/datum/ai_controller/monkey/able_to_run()
+/datum/ai_controller/monkey/on_stat_changed(mob/living/source, new_stat)
+	. = ..()
+	update_able_to_run()
+
+/datum/ai_controller/monkey/setup_able_to_run()
+	. = ..()
+	RegisterSignal(pawn, COMSIG_MOB_INCAPACITATE_CHANGED, PROC_REF(update_able_to_run))
+
+/datum/ai_controller/monkey/clear_able_to_run()
+	UnregisterSignal(pawn, list(COMSIG_MOB_INCAPACITATE_CHANGED, COMSIG_MOB_STATCHANGE))
+	return ..()
+
+/datum/ai_controller/monkey/get_able_to_run()
 	var/mob/living/living_pawn = pawn
 
-	if(living_pawn.incapacitated(IGNORE_RESTRAINTS | IGNORE_GRAB | IGNORE_STASIS) || living_pawn.stat > CONSCIOUS)
-		return FALSE
+	if(INCAPACITATED_IGNORING(living_pawn, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS|INCAPABLE_GRAB) || living_pawn.stat > CONSCIOUS)
+		return AI_UNABLE_TO_RUN
 	return ..()
 
 /datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
 	var/mob/living/carbon/regressed_monkey = pawn
 	var/brain = regressed_monkey.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(istype(brain, /obj/item/organ/internal/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
-		var/obj/item/organ/internal/brain/primate/monkeybrain = brain
+	if(istype(brain, /obj/item/organ/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
+		var/obj/item/organ/brain/primate/monkeybrain = brain
 		monkeybrain.tripping = mode
 
 ///re-used behavior pattern by monkeys for finding a weapon
@@ -133,7 +143,7 @@ have ways of interacting with a specific mob and control it.
 	for(var/obj/item/item in oview(2, living_pawn))
 		nearby_items += item
 
-	for(var/obj/item/item in living_pawn.held_items) // If we've got some garbage in out hands thats going to stop us from effectivly attacking, we should get rid of it.
+	for(var/obj/item/item in living_pawn.held_items) // If we've got some garbage in out hands that's going to stop us from effectively attacking, we should get rid of it.
 		if(item.force < 2)
 			living_pawn.dropItemToGround(item)
 
@@ -150,7 +160,7 @@ have ways of interacting with a specific mob and control it.
 	if(!weapon || (weapon in living_pawn.held_items))
 		return FALSE
 
-	if(weapon.force < 2) // our bite does 2 damage on avarage, no point in settling for anything less
+	if(weapon.force < 2) // our bite does 2 damage on average, no point in settling for anything less
 		return FALSE
 
 	set_blackboard_key(BB_MONKEY_PICKUPTARGET, weapon)

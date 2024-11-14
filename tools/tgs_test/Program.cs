@@ -1,6 +1,6 @@
 // Simple app meant to test tgstation's TGS integration given a fresh TGS install with the default account
 //
-// Args: Repository Owner/Name, TGS instance path, TGS API port, Pushed commit hash (For .tgs.yml access), GitHub Token, (OPTIONAL) PR Number 
+// Args: Repository Owner/Name, TGS instance path, TGS API port, Pushed commit hash (For .tgs.yml access), GitHub Token, (OPTIONAL) PR Number
 
 using System.Reflection;
 using System.Text;
@@ -197,8 +197,6 @@ try
 		{
 			Origin = new Uri($"http://github.com/{repoSlug}"),
 			UpdateSubmodules = true,
-			AccessUser = "Testing",
-			AccessToken = gitHubToken
 		},
 		default);
 

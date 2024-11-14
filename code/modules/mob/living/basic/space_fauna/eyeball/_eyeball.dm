@@ -24,13 +24,13 @@
 
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	faction = list(FACTION_SPOOKY)
 	speak_emote = list("telepathically cries")
 
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = T0C
 	maximum_survivable_temperature = T0C + 1500
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
@@ -58,9 +58,8 @@
 	grant_actions_by_list(innate_actions)
 
 	AddElement(/datum/element/simple_flying)
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(on_tame)))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 100)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	on_hit_overlay = mutable_appearance(icon, "[icon_state]_crying")
 
 /mob/living/basic/eyeball/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
@@ -94,23 +93,20 @@
 	cut_overlay(on_hit_overlay)
 
 
-/mob/living/basic/eyeball/proc/pre_attack(mob/living/eyeball, atom/target)
-	SIGNAL_HANDLER
-
+/mob/living/basic/eyeball/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(!ishuman(target))
-		return
-
+		return TRUE
 	var/mob/living/carbon/human_target = target
-	var/obj/item/organ/internal/eyes/eyes = human_target.get_organ_slot(ORGAN_SLOT_EYES)
-	if(!eyes)
-		return
-	if(eyes.damage < 10)
-		return
+	var/obj/item/organ/eyes/eyes = human_target.get_organ_slot(ORGAN_SLOT_EYES)
+	if(isnull(eyes) || eyes.damage < 10)
+		return TRUE
 	heal_eye_damage(human_target, eyes)
-	return COMPONENT_HOSTILE_NO_ATTACK
+	return FALSE
 
-
-/mob/living/basic/eyeball/proc/heal_eye_damage(mob/living/target, obj/item/organ/internal/eyes/eyes)
+/mob/living/basic/eyeball/proc/heal_eye_damage(mob/living/target, obj/item/organ/eyes/eyes)
 	if(!COOLDOWN_FINISHED(src, eye_healing))
 		return
 	to_chat(target, span_warning("[src] seems to be healing your [eyes.zone]!"))
@@ -119,7 +115,7 @@
 	befriend(target)
 	COOLDOWN_START(src, eye_healing, 15 SECONDS)
 
-/mob/living/basic/eyeball/proc/on_tame(mob/tamer)
+/mob/living/basic/eyeball/tamed(mob/living/tamer, atom/food)
 	spin(spintime = 2 SECONDS, speed = 1)
 	//become passive to the humens
 	faction |= tamer.faction

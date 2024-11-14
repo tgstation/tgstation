@@ -14,7 +14,7 @@
 /// Block movement to any non-floor location
 /datum/element/floor_loving/proc/attempting_move(atom/movable/parent, newloc)
 	SIGNAL_HANDLER
-	if (!isopenturf(newloc) || isspaceturf(newloc) || isopenspaceturf(newloc))
+	if (!isopenturf(newloc) || is_space_or_openspace(newloc))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	if (isliving(parent))
 		var/mob/living/living_parent = parent

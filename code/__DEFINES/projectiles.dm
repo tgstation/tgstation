@@ -14,8 +14,10 @@
 #define CALIBER_A7MM "a7mm"
 /// The caliber used by the [security auto-rifle][/obj/item/gun/ballistic/automatic/wt550].
 #define CALIBER_46X30MM "4.6x30mm"
-/// The caliber used by the Nanotrasen Saber SMG, PP-95 SMG and Type U3 Uzi. Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.
+/// The caliber used by the Nanotrasen Saber SMG and Type U3 Uzi. Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.
 #define CALIBER_9MM "9mm"
+/// The caliber used by smart SMG ammunition
+#define CALIBER_160SMART ".160 Smart"
 /// The caliber used as the default for ballistic guns. Only not overridden for the [surplus rifle][/obj/item/gun/ballistic/automatic/surplus].
 #define CALIBER_10MM "10mm"
 /// The caliber used by most revolver variants.
@@ -53,17 +55,17 @@
 /// The caliber used by the harpoon gun.
 #define CALIBER_HARPOON "harpoon"
 /// The caliber used by the rebar crossbow.
-#define CALIBER_REBAR "sharpened iron rod"
+#define CALIBER_REBAR "sharpened rod"
 /// The caliber used by the rebar crossbow when forced to hold 2 rods.
-#define CALIBER_REBAR_FORCED "sharpened iron rod"
+#define CALIBER_REBAR_FORCED "sharpened rod"
 /// The caliber used by the syndicate rebar crossbow.
-#define CALIBER_REBAR_SYNDIE "jagged iron rod"
-/// The caliber used by the syndicate rebar crossbow.
-#define CALIBER_REBAR_SYNDIE_NORMAL "sharpened iron rod"
+#define CALIBER_REBAR_SYNDIE "sharpened rod"
 /// The caliber used by the meat hook.
 #define CALIBER_HOOK "hook"
 /// The caliber used by the changeling tentacle mutation.
 #define CALIBER_TENTACLE "tentacle"
+/// The caliber used by pipeguns and pipe pistols
+#define CALIBER_JUNK "junk"
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2
@@ -82,8 +84,9 @@
 #define RETURN_POINT_VECTOR(ATOM, ANGLE, SPEED) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED))
 #define RETURN_POINT_VECTOR_INCREMENT(ATOM, ANGLE, SPEED, AMT) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED, AMT))
 
-/// The amount of energy that a standard energy weapon cell can hold
-#define STANDARD_CELL_CHARGE 1000
+///The self charging rate of energy guns that magically recharge themselves, in watts.
+#define STANDARD_ENERGY_GUN_SELF_CHARGE_RATE (0.05 * STANDARD_CELL_CHARGE)
+
 /// Macro to turn a number of laser shots into an energy cost, based on the above define
 /// e.g. LASER_SHOTS(12, STANDARD_CELL_CHARGE) means 12 shots
 #define LASER_SHOTS(X, MAX_CHARGE) (((100 * MAX_CHARGE) - ((100 * MAX_CHARGE) % X)) / (100 * X)) // I wish I could just use round, but it can't be used in datum members

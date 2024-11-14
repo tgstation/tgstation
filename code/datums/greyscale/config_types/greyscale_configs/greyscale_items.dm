@@ -122,7 +122,7 @@
 
 /datum/greyscale_config/tablet
 	name = "PDA"
-	icon_file = 'icons/obj/modular_pda.dmi'
+	icon_file = 'icons/obj/devices/modular_pda.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pda.json'
 
 /datum/greyscale_config/tablet/chaplain
@@ -229,6 +229,21 @@
 	icon_file = 'icons/obj/toys/plushes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plushie_carp.json'
 
+/datum/greyscale_config/pet_carrier
+	name = "Pet Carrier"
+	icon_file = 'icons/obj/pet_carrier.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pet_carrier.json'
+
+/datum/greyscale_config/pet_carrier_inhands_left
+	name = "Pet Carrier Left"
+	icon_file = 'icons/mob/inhands/items_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pet_carrier_inhands.json'
+
+/datum/greyscale_config/pet_carrier_inhands_right
+	name = "Pet Carrier Right"
+	icon_file = 'icons/mob/inhands/items_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pet_carrier_inhands.json'
+
 /datum/greyscale_config/plush_lizard
 	name = "Plushie Lizard"
 	icon_file = 'icons/obj/toys/plushes.dmi'
@@ -255,7 +270,7 @@
 
 /datum/greyscale_config/vape
 	name = "Vape"
-	icon_file = 'icons/obj/clothing/masks.dmi'
+	icon_file = 'icons/obj/cigarettes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/vape.json'
 
 /datum/greyscale_config/vape/worn
@@ -265,15 +280,15 @@
 
 /datum/greyscale_config/vape/open_low
 	name = "Open Vape Low"
-	json_config = 'code/datums/greyscale/json_configs/vape_open_low.json'
+	json_config = 'code/datums/greyscale/json_configs/vapeopen_low.json'
 
 /datum/greyscale_config/vape/open_med
 	name = "Open Vape Medium"
-	json_config = 'code/datums/greyscale/json_configs/vape_open_med.json'
+	json_config = 'code/datums/greyscale/json_configs/vapeopen_med.json'
 
 /datum/greyscale_config/vape/open_high
 	name = "Open Vape High"
-	json_config = 'code/datums/greyscale/json_configs/vape_open_high.json'
+	json_config = 'code/datums/greyscale/json_configs/vapeopen_high.json'
 
 //
 // TAPE

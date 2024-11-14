@@ -5,7 +5,6 @@
 	icon_deny = "med-deny"
 	panel_type = "panel11"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
-	req_access = list(ACCESS_MEDICAL)
 	products = list(
 		/obj/item/stack/medical/gauze = 8,
 		/obj/item/reagent_containers/syringe = 12,
@@ -17,6 +16,7 @@
 		/obj/item/stack/medical/ointment = 2,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/bone_gel = 4,
+		/obj/item/cane/crutch = 2,
 		/obj/item/cane/white = 2,
 		/obj/item/clothing/glasses/eyepatch/medical = 2,
 		/obj/item/storage/box/bandages = 2,
@@ -44,13 +44,11 @@
 	machine_name = "NanoMed Plus"
 	icon_state = "refill_medical"
 
-/obj/machinery/vending/medical/syndicate_access
+/obj/machinery/vending/medical/syndicate
 	name = "\improper SyndiMed Plus"
-	req_access = list(ACCESS_SYNDICATE)
 	initial_language_holder = /datum/language_holder/syndicate
 
 /obj/machinery/vending/medical/infested_frigate
-	req_access = list("theatre")
 	products = list(
 		/obj/item/stack/medical/gauze = 0,
 		/obj/item/reagent_containers/syringe = 7,
@@ -62,6 +60,7 @@
 		/obj/item/stack/medical/ointment = 0,
 		/obj/item/stack/medical/suture = 1,
 		/obj/item/stack/medical/bone_gel = 1,
+		/obj/item/cane/crutch = 2,
 		/obj/item/cane/white = 2,
 		/obj/item/clothing/glasses/eyepatch/medical = 2,
 	)
@@ -73,7 +72,6 @@
 	icon_deny = "drug-deny"
 	panel_type = "panel11"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
-	req_access = list(ACCESS_MEDICAL)
 	products = list(
 		/obj/item/reagent_containers/pill/patch/libital = 5,
 		/obj/item/reagent_containers/pill/patch/aiuri = 5,
@@ -81,6 +79,7 @@
 		/obj/item/reagent_containers/pill/insulin = 5,
 		/obj/item/reagent_containers/cup/bottle/multiver = 2,
 		/obj/item/reagent_containers/cup/bottle/syriniver = 2,
+		/obj/item/reagent_containers/cup/bottle/calomel = 2,
 		/obj/item/reagent_containers/cup/bottle/epinephrine = 3,
 		/obj/item/reagent_containers/cup/bottle/morphine = 4,
 		/obj/item/reagent_containers/cup/bottle/potass_iodide = 1,
@@ -90,17 +89,17 @@
 		/obj/item/reagent_containers/medigel/libital = 2,
 		/obj/item/reagent_containers/medigel/aiuri = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		)
+	)
 	contraband = list(
 		/obj/item/reagent_containers/pill/tox = 3,
 		/obj/item/reagent_containers/pill/morphine = 4,
 		/obj/item/reagent_containers/pill/multiver = 6,
-		)
+	)
 	premium = list(
 		/obj/item/reagent_containers/medigel/synthflesh = 2,
 		/obj/item/storage/pill_bottle/psicodine = 2,
 		/obj/item/storage/pill_bottle/sansufentanyl = 1,
-		)
+	)
 	default_price = 50
 	extra_price = 100
 	payment_department = ACCOUNT_MED

@@ -42,15 +42,15 @@
  * Can optionally be supplied with a range of priorities, IE only checking "washable" or above
  */
 /atom/proc/is_atom_colour(looking_for_color, min_priority_index = 1, max_priority_index = COLOUR_PRIORITY_AMOUNT)
-	// make sure uppertext hex strings don't mess with lowertext hex strings
-	looking_for_color = lowertext(looking_for_color)
+	// make sure uppertext hex strings don't mess with LOWER_TEXT hex strings
+	looking_for_color = LOWER_TEXT(looking_for_color)
 
 	if(!LAZYLEN(atom_colours))
 		// no atom colors list has been set up, just check the color var
-		return lowertext(color) == looking_for_color
+		return LOWER_TEXT(color) == looking_for_color
 
 	for(var/i in min_priority_index to max_priority_index)
-		if(lowertext(atom_colours[i]) == looking_for_color)
+		if(LOWER_TEXT(atom_colours[i]) == looking_for_color)
 			return TRUE
 
 	return FALSE

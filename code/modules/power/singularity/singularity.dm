@@ -28,7 +28,7 @@
 	var/maximum_stage = STAGE_SIX
 
 	///How strong are we?
-	var/energy = 100
+	var/energy = 50
 	///Do we lose energy over time?
 	var/dissipate = TRUE
 	/// How long should it take for us to dissipate in seconds?
@@ -43,6 +43,8 @@
 	var/move_self = TRUE
 	///If the singularity has eaten a supermatter shard and can go to stage six
 	var/consumed_supermatter = FALSE
+	/// Is the black hole collapsing into nothing
+	var/collapsing = FALSE
 	/// How long it's been since the singulo last acted, in seconds
 	var/time_since_act = 0
 	/// What the game tells ghosts when you make one
@@ -53,10 +55,10 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | SHUTTLE_CRUSH_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
-/obj/singularity/Initialize(mapload, starting_energy = 50)
+/obj/singularity/Initialize(mapload, starting_energy)
 	. = ..()
 
-	energy = starting_energy
+	energy = starting_energy || energy
 
 	START_PROCESSING(SSsinguloprocess, src)
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -64,11 +66,12 @@
 	var/datum/component/singularity/new_component = AddComponent(
 		singularity_component_type, \
 		consume_callback = CALLBACK(src, PROC_REF(consume)), \
+		roaming = (move_self && current_size >= STAGE_TWO), \
 	)
 
 	singularity_component = WEAKREF(new_component)
 
-	expand(current_size)
+	check_energy()
 
 	for (var/obj/machinery/power/singularity_beacon/singu_beacon as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/singularity_beacon))
 		if (singu_beacon.active)
@@ -291,24 +294,28 @@
 		qdel(src)
 		return FALSE
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
-		if(1 to 199)
+		if(STAGE_ONE_ENERGY_REQUIREMENT to STAGE_TWO_ENERGY_REQUIREMENT)
 			allowed_size = STAGE_ONE
-		if(200 to 499)
+		if(STAGE_TWO_ENERGY_REQUIREMENT to STAGE_THREE_ENERGY_REQUIREMENT)
 			allowed_size = STAGE_TWO
-		if(500 to 999)
+		if(STAGE_THREE_ENERGY_REQUIREMENT to STAGE_FOUR_ENERGY_REQUIREMENT)
 			allowed_size = STAGE_THREE
-		if(1000 to 1999)
+		if(STAGE_FOUR_ENERGY_REQUIREMENT to STAGE_FIVE_ENERGY_REQUIREMENT)
 			allowed_size = STAGE_FOUR
-		if(2000 to INFINITY)
-			if(energy >= 3000 && consumed_supermatter)
-				allowed_size = STAGE_SIX
-			else
-				allowed_size = STAGE_FIVE
+		if(STAGE_FIVE_ENERGY_REQUIREMENT to STAGE_SIX_ENERGY_REQUIREMENT)
+			allowed_size = STAGE_FIVE
+		if(STAGE_SIX_ENERGY_REQUIREMENT to INFINITY)
+			allowed_size = consumed_supermatter ? STAGE_SIX : STAGE_FIVE
+
 	if(current_size != allowed_size)
 		expand()
 	return TRUE
 
 /obj/singularity/proc/consume(atom/thing)
+	if(istype(thing, /obj/item/storage/backpack/holding) && !consumed_supermatter && !collapsing)
+		consume_boh(thing)
+		return
+
 	var/gain = thing.singularity_act(current_size, src)
 	energy += gain
 	if(istype(thing, /obj/machinery/power/supermatter_crystal) && !consumed_supermatter)
@@ -319,6 +326,25 @@
 	desc = "[initial(desc)] It glows fiercely with inner fire."
 	consumed_supermatter = TRUE
 	set_light(10)
+
+/obj/singularity/proc/consume_boh(obj/boh)
+	collapsing = TRUE
+	name = "unstable [initial(name)]"
+	desc = "[initial(desc)] It seems to be collapsing in on itself."
+	visible_message(
+		message = span_danger("As [src] consumes [boh], it begins to collapse in on itself!"),
+		blind_message = span_hear("You hear aggressive crackling!"),
+		vision_distance = 15,
+	)
+	playsound(loc, 'sound/effects/clockcult_gateway_disrupted.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = -1, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
+	addtimer(CALLBACK(src, PROC_REF(consume_boh_sfx)), 4 SECONDS)
+	animate(src, time = 4 SECONDS, transform = transform.Scale(0.25), flags = ANIMATION_PARALLEL, easing = ELASTIC_EASING)
+	animate(time = 0.5 SECONDS, alpha = 0)
+	QDEL_IN(src, 4.1 SECONDS)
+	qdel(boh)
+
+/obj/singularity/proc/consume_boh_sfx()
+	playsound(loc, 'sound/effects/supermatter.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = 0.5, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
 
 /obj/singularity/proc/check_cardinals_range(steps, retry_with_move = FALSE)
 	. = length(GLOB.cardinals) //Should be 4.
@@ -340,7 +366,7 @@
 			if(STAGE_ONE)
 				steps = 1
 			if(STAGE_TWO)
-				steps = 3//Yes this is right
+				steps = 2
 			if(STAGE_THREE)
 				steps = 3
 			if(STAGE_FOUR)
@@ -386,16 +412,8 @@
 /obj/singularity/proc/can_move(turf/considered_turf)
 	if(!considered_turf)
 		return FALSE
-	if((locate(/obj/machinery/field/containment) in considered_turf) || (locate(/obj/machinery/shieldwall) in considered_turf))
+	if (HAS_TRAIT(considered_turf, TRAIT_CONTAINMENT_FIELD))
 		return FALSE
-	else if(locate(/obj/machinery/field/generator) in considered_turf)
-		var/obj/machinery/field/generator/check_generator = locate(/obj/machinery/field/generator) in considered_turf
-		if(check_generator?.active)
-			return FALSE
-	else if(locate(/obj/machinery/power/shieldwallgen) in considered_turf)
-		var/obj/machinery/power/shieldwallgen/check_shield = locate(/obj/machinery/power/shieldwallgen) in considered_turf
-		if(check_shield?.active)
-			return FALSE
 	return TRUE
 
 /obj/singularity/proc/event()
@@ -479,6 +497,23 @@
 	. = ..()
 	deadchat_plays(mode = DEMOCRACY_MODE)
 
+/// Special singularity spawned by being sucked into a black hole during emagged orion trail.
+/obj/singularity/orion
+	move_self = FALSE
+
+/obj/singularity/orion/Initialize(mapload)
+	. = ..()
+	var/datum/component/singularity/singularity = singularity_component.resolve()
+	singularity?.grav_pull = 1
+
+/obj/singularity/orion/process(seconds_per_tick)
+	if(SPT_PROB(0.5, seconds_per_tick))
+		mezzer()
+
 /// Special singularity that spawns for shuttle events only
 /obj/singularity/shuttle_event
-	anchored = FALSE
+	anchored = FALSE // this is required to work with shuttle event otherwise singularity gets stuck and doesn't move
+
+/obj/singularity/shuttle_event/no_escape
+	energy = STAGE_SIX_ENERGY
+	consumed_supermatter = TRUE // so we can get to the final stage

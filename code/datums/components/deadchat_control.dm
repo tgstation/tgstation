@@ -61,7 +61,7 @@
 /datum/component/deadchat_control/proc/deadchat_react(mob/source, message)
 	SIGNAL_HANDLER
 
-	message = lowertext(message)
+	message = LOWER_TEXT(message)
 
 	if(!inputs[message])
 		return
@@ -162,7 +162,7 @@
  */
 /datum/component/deadchat_control/proc/waive_automute(mob/speaker, client/client, message, mute_type)
 	SIGNAL_HANDLER
-	if(mute_type == MUTE_DEADCHAT && inputs[lowertext(message)])
+	if(mute_type == MUTE_DEADCHAT && inputs[LOWER_TEXT(message)])
 		return WAIVE_AUTOMUTE_CHECK
 	return NONE
 

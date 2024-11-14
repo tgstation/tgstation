@@ -358,7 +358,7 @@ If you make a derivative work from this code, you must include this notification
 			attacker.setDir(turn(attacker.dir, 90))
 
 		attacker.forceMove(defender.loc)
-		addtimer(CALLBACK(src, PROC_REF(CheckStrikeTurf), attacker, T), 4)
+		addtimer(CALLBACK(src, PROC_REF(CheckStrikeTurf), attacker, T), 0.4 SECONDS)
 
 		defender.visible_message(span_danger("[attacker] headbutts [defender]!"), \
 						span_userdanger("You're headbutted by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
@@ -490,22 +490,7 @@ If you make a derivative work from this code, you must include this notification
 
 /obj/item/storage/belt/champion/wrestling
 	name = "Wrestling Belt"
-	var/datum/martial_art/wrestling/style
 
 /obj/item/storage/belt/champion/wrestling/Initialize(mapload)
 	. = ..()
-	style = new()
-	style.allow_temp_override = FALSE
-
-/obj/item/storage/belt/champion/wrestling/Destroy()
-	QDEL_NULL(style)
-	return ..()
-
-/obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
-	. = ..()
-	if(slot & ITEM_SLOT_BELT)
-		style.teach(user, TRUE)
-
-/obj/item/storage/belt/champion/wrestling/dropped(mob/user)
-	. = ..()
-	style.fully_remove(user)
+	AddComponent(/datum/component/martial_art_giver, /datum/martial_art/wrestling)

@@ -18,7 +18,7 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_KICK
 	melee_damage_lower = 1
 	melee_damage_upper = 2
@@ -28,20 +28,29 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/pig
 
+/datum/emote/pig
+	mob_type_allowed_typecache = /mob/living/basic/pig
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/pig/oink
+	key = "oink"
+	key_third_person = "oinks"
+	message = "oinks!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = SFX_PIG_OINK
 /mob/living/basic/pig/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "oinks!")
+	AddElement(/datum/element/pet_bonus, "oink")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	make_tameable()
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes
 /mob/living/basic/pig/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 25, bonus_tame_chance = 15)
 
-/mob/living/basic/pig/proc/tamed(mob/living/tamer)
-	can_buckle = TRUE
-	buckle_lying = 0
+/mob/living/basic/pig/tamed(mob/living/tamer, atom/food)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pig)
 	visible_message(span_notice("[src] snorts respectfully."))
 

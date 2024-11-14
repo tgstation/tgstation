@@ -9,7 +9,7 @@
 	var/atom/movable/moving = controller.pawn
 	var/min_dist = controller.blackboard[BB_CURRENT_MIN_MOVE_DISTANCE]
 	var/delay = controller.movement_delay
-	var/datum/move_loop/loop = SSmove_manager.move_to(moving, current_movement_target, min_dist, delay, flags = move_flags, subsystem = SSai_movement, extra_info = controller)
+	var/datum/move_loop/loop = GLOB.move_manager.move_to(moving, current_movement_target, min_dist, delay, flags = move_flags, subsystem = SSai_movement, extra_info = controller)
 	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
 

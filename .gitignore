@@ -180,6 +180,10 @@ Temporary Items
 /tools/MapAtmosFixer/MapAtmosFixer/bin/*
 /tools/CreditsTool/bin/*
 /tools/CreditsTool/obj/*
+/tools/Tgstation.DiscordDiscussions/.vs/*
+/tools/Tgstation.DiscordDiscussions/bin/*
+/tools/Tgstation.DiscordDiscussions/obj/*
+/tools/Tgstation.DiscordDiscussions/Properties/launchSettings.json
 
 #GitHub Atom
 .atom-build.json
@@ -214,7 +218,7 @@ Temporary Items
 # Built auxtools libraries and intermediate files
 aux*.dll
 libaux*.so
-aux*.pdb
+*.pdb
 
 # byond-tracy, we intentionally do not ship this and do not want to maintain it
 # https://github.com/mafemergency/byond-tracy/
@@ -241,3 +245,7 @@ define_sanity_output.txt
 # ezdb
 /db/
 /config/ezdb.txt
+
+# Running OpenDream locally
+tgstation.json
+rust_g64.dll

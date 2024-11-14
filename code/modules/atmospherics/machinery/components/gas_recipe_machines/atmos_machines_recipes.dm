@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	max_temp = 90
 	energy_release = -800000
 	requirements = list(/datum/gas/plasma = 800, /datum/gas/helium = 100, /datum/gas/bz = 50)
-	products = list(/obj/item/stock_parts/cell/crystal_cell = 1)
+	products = list(/obj/item/stock_parts/power_store/cell/crystal_cell = 1)
 
 /datum/gas_recipe/crystallizer/zaukerite
 	id = "zaukerite"

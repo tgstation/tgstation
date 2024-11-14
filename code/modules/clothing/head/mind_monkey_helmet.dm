@@ -10,6 +10,10 @@
 	var/mob/living/carbon/human/magnification = null ///if the helmet is on a valid target (just works like a normal helmet if not (cargo please stop))
 	var/polling = FALSE///if the helmet is currently polling for targets (special code for removal)
 	var/light_colors = 1 ///which icon state color this is (red, blue, yellow)
+	/// This chance is increased by 7 every time the helmet fails to get a host, to dissuade spam. starts negative to add 1 safe reuse
+	var/rage_chance = -7
+	/// Holds the steam effect at dangerous rage chance levels.
+	var/obj/effect/abstract/particle_holder/particle_effect
 
 /obj/item/clothing/head/helmet/monkey_sentience/Initialize(mapload)
 	. = ..()
@@ -18,12 +22,13 @@
 
 /obj/item/clothing/head/helmet/monkey_sentience/examine(mob/user)
 	. = ..()
-	. += span_boldwarning("---WARNING: REMOVAL OF HELMET ON SUBJECT MAY LEAD TO:---")
+	. += span_boldwarning("---WARNING: REMOVAL OF HELMET ON SUBJECT, OR REPEATED SENTIENCE GENERATION FAILURES MAY LEAD TO:---")
 	. += span_warning("BLOOD RAGE")
 	. += span_warning("BRAIN DEATH")
 	. += span_warning("PRIMAL GENE ACTIVATION")
 	. += span_warning("GENETIC MAKEUP MASS SUSCEPTIBILITY")
-	. += span_boldnotice("Ask your CMO if mind magnification is right for you.")
+	. += span_notice("Warranty voided if helmet is placed after more than ") + span_boldnotice("two") + span_notice(" mind magnification failures.")
+	. += span_boldnotice("Ask your CMO if mind magnification is right for you!")
 
 /obj/item/clothing/head/helmet/monkey_sentience/update_icon_state()
 	. = ..()
@@ -37,7 +42,7 @@
 		var/mob/living/something = user
 		to_chat(something, span_boldnotice("You feel a stabbing pain in the back of your head for a moment."))
 		something.apply_damage(5,BRUTE,BODY_ZONE_HEAD,FALSE,FALSE,FALSE) //notably: no damage resist (it's in your helmet), no damage spread (it's in your helmet)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		say("ERROR: Central Command has temporarily outlawed monkey sentience helmets in this sector. NEAREST LAWFUL SECTOR: 2.537 million light years away.")
@@ -55,9 +60,40 @@
 		UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 		magnification = null
 		visible_message(span_notice("[src] falls silent and drops on the floor. Maybe you should try again later?"))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		var/particle_path
+		switch(rage_chance)
+			if(-7 to 0)
+				user.visible_message(span_notice("[src] falls silent and drops on the floor. Try again later?"))
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
+				particle_path = null
+			if(7 to 13)
+				user.visible_message(span_notice("[src] sparkles momentarily, then falls silent and drops on the floor. Maybe you should try again later?"))
+				playsound(src, SFX_SPARKS, 30, TRUE)
+				do_sparks(2, FALSE, src)
+				particle_path = /particles/smoke/steam/mild
+			if(14 to 21)
+				user.visible_message(span_notice("[src] sparkles and shatters ominously, then falls silent and drops on the floor. Maybe you shouldn't try again later."))
+				do_sparks(4, FALSE, src)
+				playsound(src, SFX_SPARKS, 15, TRUE)
+				playsound(src, SFX_SHATTER, 30, TRUE)
+				particle_path = /particles/smoke/steam/bad
+			if(21 to INFINITY)
+				user.visible_message(span_notice("[src] buzzes and smokes heavily, then falls silent and drops on the floor. This is clearly a bad idea."))
+				do_sparks(6, FALSE, src)
+				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+				particle_path = /particles/smoke/steam
+		rage_chance += 7
+
+		QDEL_NULL(particle_effect)
+		if(particle_path)
+			particle_effect = new(src, particle_path)
+		QDEL_IN(particle_effect, 2 MINUTES)
+
+		if((rage_chance > 0) && prob(rage_chance)) // too much spam means agnry gorilla running at you
+			malfunction(user)
 		user.dropItemToGround(src)
 		return
+
 	magnification.key = chosen_one.key
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	to_chat(magnification, span_notice("You're a mind magnified monkey! Protect your helmet with your life- if you lose it, your sentience goes with it!"))
@@ -78,24 +114,27 @@
 			to_chat(magnification, span_userdanger("You feel your flicker of sentience ripped away from you, as everything becomes dim..."))
 			magnification.ghostize(FALSE)
 		if(prob(10))
-			switch(rand(1,4))
-				if(1) //blood rage
-					var/datum/ai_controller/monkey/monky_controller = magnification.ai_controller
-					monky_controller.set_trip_mode(mode = FALSE)
-					monky_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE)
-				if(2) //brain death
-					magnification.apply_damage(500,BRAIN,BODY_ZONE_HEAD,FALSE,FALSE,FALSE)
-				if(3) //primal gene (gorilla)
-					magnification.gorillize()
-				if(4) //genetic mass susceptibility (gib)
-					magnification.gib(DROP_ALL_REMAINS)
+			malfunction(magnification)
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
 	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message(span_warning("[src] fizzles and breaks apart!"))
 	magnification = null
 	new /obj/effect/decal/cleanable/ash(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
+
+/obj/item/clothing/head/helmet/monkey_sentience/proc/malfunction(mob/living/carbon/target)
+	switch(rand(1,4))
+		if(1) //blood rage
+			var/datum/ai_controller/monkey/monky_controller = target.ai_controller
+			monky_controller.set_trip_mode(mode = FALSE)
+			monky_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE)
+		if(2) //brain death
+			target.apply_damage(500,BRAIN,BODY_ZONE_HEAD,FALSE,FALSE,FALSE)
+		if(3) //primal gene (gorilla)
+			target.gorillize()
+		if(4) //genetic mass susceptibility (gib)
+			target.gib(DROP_ALL_REMAINS)
 
 /obj/item/clothing/head/helmet/monkey_sentience/dropped(mob/user)
 	. = ..()

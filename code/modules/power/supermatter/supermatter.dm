@@ -105,11 +105,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/external_power_immediate = 0
 
 	/// External damage that are added to the sm on next [/obj/machinery/power/supermatter_crystal/process_atmos] call.
-	/// SM will not take damage if it's health is lower than emergency point.
+	/// SM will not take damage if its health is lower than emergency point.
 	var/external_damage_immediate = 0
 
 	///The cutoff for a bolt jumping, grows with heat, lowers with higher mol count,
-	var/zap_cutoff = 1.2e6
+	var/zap_cutoff = 1.2 MEGA JOULES
 	///How much the bullets damage should be multiplied by when it is added to the internal variables
 	var/bullet_energy = SUPERMATTER_DEFAULT_BULLET_ENERGY
 	///How much hallucination should we produce per unit of power?
@@ -153,7 +153,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///Stores the time of when the last zap occurred
 	var/last_power_zap = 0
-	var/last_high_energy_zap = 0
+	///Stores the tick of the machines subsystem of when the last zap energy accumulation occurred. Gives a passage of time in the perspective of SSmachines.
+	var/last_energy_accumulation_perspective_machines = 0
+	///Same as [last_energy_accumulation_perspective_machines], but based around the high energy zaps found in handle_high_power().
+	var/last_high_energy_accumulation_perspective_machines = 0
+	/// Accumulated energy to be transferred from supermatter zaps.
+	var/list/zap_energy_accumulation = list()
 	///Do we show this crystal in the CIMS modular program
 	var/include_in_cims = TRUE
 
@@ -294,23 +299,25 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// PART 3: POWER PROCESSING
 	internal_energy_factors = calculate_internal_energy()
 	zap_factors = calculate_zap_transmission_rate()
-	if(internal_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
-		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
+	var/delta_time = (SSmachines.times_fired - last_energy_accumulation_perspective_machines) * SSmachines.wait / (1 SECONDS)
+	var/accumulated_energy = accumulate_energy(ZAP_ENERGY_ACCUMULATION_NORMAL, energy = internal_energy * zap_transmission_rate * delta_time)
+	if(accumulated_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
+		var/discharged_energy = discharge_energy(ZAP_ENERGY_ACCUMULATION_NORMAL)
+		playsound(src, 'sound/items/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
-		//Scale the strength of the zap with the world's time elapsed between zaps in seconds.
-		//Capped at 16 seconds to prevent a crazy burst of energy if atmos was halted for a long time.
-		var/delta_time = min((world.time - last_power_zap) * 0.1, 16)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
-			zap_str = internal_energy * zap_transmission_rate * delta_time,
+			zap_str = discharged_energy,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
-			zap_cutoff = 2.4e5 * delta_time,
+			zap_cutoff = 240 KILO JOULES,
 			power_level = internal_energy,
 			color = zap_color,
 		)
+
 		last_power_zap = world.time
+	last_energy_accumulation_perspective_machines = SSmachines.times_fired
 
 	// PART 4: DAMAGE PROCESSING
 	temp_limit_factors = calculate_temp_limit()
@@ -714,6 +721,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		activation_logged = TRUE // so we dont spam the log.
 	else if(!internal_energy)
 		last_power_zap = world.time
+		last_energy_accumulation_perspective_machines = SSmachines.times_fired
 	return additive_power
 
 /** Log when the supermatter is activated for the first time.
@@ -890,8 +898,35 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	delamination_strategy.on_select(src)
 	return TRUE
 
-/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 3.2e6, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1.2e6, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
+/**
+ * Accumulates energy for the zap_energy_accumulation key.
+ * Args:
+ * * key: The zap energy accumulation key to use.
+ * * energy: The amount of energy to accumulate.
+ * Returns: The accumulated energy for that key.
+ */
+/obj/machinery/power/supermatter_crystal/proc/accumulate_energy(key, energy)
+	. = (zap_energy_accumulation[key] ? zap_energy_accumulation[key] : 0) + energy
+	zap_energy_accumulation[key] = .
+
+/**
+ * Depletes a portion of the accumulated energy for the given key and returns it. Used for discharging energy from the supermatter.
+ * Args:
+ * * key: The zap energy accumulation key to use.
+ * * portion: The portion of the accumulated energy that gets discharged.
+ * Returns: The discharged energy for that key.
+ */
+/obj/machinery/power/supermatter_crystal/proc/discharge_energy(key, portion = ZAP_ENERGY_DISCHARGE_PORTION)
+	. = portion * zap_energy_accumulation[key]
+	zap_energy_accumulation[key] -= .
+
+/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 3.2 MEGA JOULES, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1.2 MEGA JOULES, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
 	if(QDELETED(zapstart))
+		return
+	if(zap_cutoff <= 0)
+		stack_trace("/obj/machinery/supermatter_zap() was called with a non-positive value")
+		return
+	if(zap_str <= 0) // Just in case something scales zap_str and zap_cutoff to 0.
 		return
 	. = zapstart.dir
 	//If the strength of the zap decays past the cutoff, we stop

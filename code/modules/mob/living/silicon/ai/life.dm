@@ -12,17 +12,14 @@
 	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 		view_core()
 
-	if(machine)
-		machine.check_eye(src)
-
 	// Handle power damage (oxy)
+	if (battery <= 0)
+		to_chat(src, span_warning("Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable."))
+		adjustOxyLoss(200)
+
 	if(aiRestorePowerRoutine)
 		// Lost power
-		if (!battery)
-			to_chat(src, span_warning("Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable."))
-			adjustOxyLoss(200)
-		else
-			battery--
+		battery--
 	else
 		// Gain Power
 		if (battery < 200)
@@ -31,7 +28,7 @@
 	if(!lacks_power())
 		var/area/home = get_area(src)
 		if(home.powered(AREA_USAGE_EQUIP))
-			home.use_power(500 * seconds_per_tick, AREA_USAGE_EQUIP)
+			home.apc?.terminal?.use_energy(500 WATTS * seconds_per_tick, channel = AREA_USAGE_EQUIP)
 
 		if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
 			ai_restore_power()
@@ -50,7 +47,7 @@
 			return !T || !A || ((!A.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/vehicle/sealed/mecha)))
 
 /mob/living/silicon/ai/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 
 	var/old_health = health
@@ -66,7 +63,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/silicon/ai/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD)
@@ -164,4 +161,4 @@
 	adjust_temp_blindness(2 SECONDS)
 	update_sight()
 	to_chat(src, span_alert("You've lost power!"))
-	addtimer(CALLBACK(src, PROC_REF(start_RestorePowerRoutine)), 20)
+	addtimer(CALLBACK(src, PROC_REF(start_RestorePowerRoutine)), 2 SECONDS)

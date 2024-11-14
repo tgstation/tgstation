@@ -15,7 +15,7 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	tool_behaviour = TOOL_MINING
 	toolspeed = 1
-	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
+	usesound = list('sound/effects/pickaxe/picaxe1.ogg', 'sound/effects/pickaxe/picaxe2.ogg', 'sound/effects/pickaxe/picaxe3.ogg')
 	attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 	attack_verb_simple = list("hit", "pierce", "slice", "attack")
 
@@ -67,8 +67,8 @@
 	inhand_icon_state = "handdrill"
 	slot_flags = ITEM_SLOT_BELT
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
-	usesound = 'sound/weapons/drill.ogg'
-	hitsound = 'sound/weapons/drill.ogg'
+	usesound = 'sound/items/weapons/drill.ogg'
+	hitsound = 'sound/items/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
 
 /obj/item/pickaxe/drill/cyborg
@@ -98,8 +98,8 @@
 	icon_state = "jackhammer"
 	inhand_icon_state = "jackhammer"
 	toolspeed = 0.1 //the epitome of powertools. extremely fast mining
-	usesound = 'sound/weapons/sonic_jackhammer.ogg'
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	usesound = 'sound/items/weapons/sonic_jackhammer.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts."
 
 /obj/item/pickaxe/improvised
@@ -143,6 +143,7 @@
 	effectiveness = 40, \
 	)
 	//it's sharp, so it works, but barely.
+	AddElement(/datum/element/gravedigger)
 
 /obj/item/shovel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins digging their own grave! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -161,6 +162,13 @@
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/shovel/spade/cyborg
+	name = "cyborg spade"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili_shovel"
+	toolspeed = 0.6
+	worn_icon_state = null
 
 /obj/item/shovel/serrated
 	name = "serrated bone shovel"
@@ -212,7 +220,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tool_behaviour = TOOL_WRENCH
 	toolspeed = 0.75
-	usesound = 'sound/items/ratchet.ogg'
+	usesound = 'sound/items/tools/ratchet.ogg'
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	wound_bonus = 10
@@ -223,6 +231,7 @@
 /obj/item/trench_tool/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/gravedigger)
 
 /obj/item/trench_tool/examine(mob/user)
 	. = ..()
@@ -257,15 +266,15 @@
 			tool_behaviour = TOOL_WRENCH
 			sharpness = NONE
 			toolspeed = 0.75
-			w_class = WEIGHT_CLASS_SMALL
-			usesound = 'sound/items/ratchet.ogg'
+			update_weight_class(WEIGHT_CLASS_SMALL)
+			usesound = 'sound/items/tools/ratchet.ogg'
 			attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 			attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 		if("Shovel")
 			tool_behaviour = TOOL_SHOVEL
 			sharpness = SHARP_EDGED
 			toolspeed = 0.25
-			w_class = WEIGHT_CLASS_NORMAL
+			update_weight_class(WEIGHT_CLASS_NORMAL)
 			usesound = 'sound/effects/shovel_dig.ogg'
 			attack_verb_continuous = list("slashes", "impales", "stabs", "slices")
 			attack_verb_simple = list("slash", "impale", "stab", "slice")
@@ -273,17 +282,17 @@
 			tool_behaviour = TOOL_MINING
 			sharpness = SHARP_POINTY
 			toolspeed = 0.5
-			w_class = WEIGHT_CLASS_NORMAL
-			usesound = 'sound/effects/picaxe1.ogg'
+			update_weight_class(WEIGHT_CLASS_NORMAL)
+			usesound = 'sound/effects/pickaxe/picaxe1.ogg'
 			attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 			attack_verb_simple = list("hit", "pierce", "slice", "attack")
-	playsound(src, 'sound/items/ratchet.ogg', 50, vary = TRUE)
+	playsound(src, 'sound/items/tools/ratchet.ogg', 50, vary = TRUE)
 	update_appearance(UPDATE_ICON)
 
 /obj/item/trench_tool/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -310,12 +319,11 @@
 	wound_bonus = -10
 	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
 	attack_verb_simple = list("bonk", "bludgeon", "pound")
-	drop_sound = 'sound/weapons/sonic_jackhammer.ogg'
-	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	block_sound = 'sound/weapons/sonic_jackhammer.ogg'
-	obj_flags = IMMUTABLE_SLOW
-	item_flags = SLOWS_WHILE_IN_HAND
+	drop_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
+	pickup_sound = 'sound/items/handling/tools/crowbar_pickup.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
+	block_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
+	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 3
 	attack_speed = 1.2 SECONDS
 	/// The factor at which the recoil becomes less.
@@ -354,7 +362,7 @@
 /obj/item/shovel/giant_wrench/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	usesound = (active ? 'sound/items/ratchet.ogg' : initial(usesound))
+	usesound = (active ? 'sound/items/tools/ratchet.ogg' : initial(usesound))
 	block_chance = (active ? 0 : initial(block_chance))
 	recoil_factor = (active ? 2 : initial(recoil_factor))
 	do_launch = (active ? FALSE : initial(do_launch))
@@ -362,7 +370,7 @@
 	armour_penetration = (active ? 30 : initial(armour_penetration))
 	if(user)
 		balloon_alert(user, "folded Big Slappy [active ? "open" : "closed"]")
-	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/ratchet.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shovel/giant_wrench/attack(mob/living/target_mob, mob/living/user)
@@ -373,7 +381,7 @@
 		var/atom/throw_target = get_edge_target_turf(target_mob, get_dir(user, get_step_away(target_mob, user)))
 		target_mob.throw_at(throw_target, 2, 2, user, gentle = TRUE)
 		target_mob.Knockdown(2 SECONDS)
-	var/body_zone = pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/body_zone = pick(GLOB.all_body_zones)
 	user.apply_damage(force / recoil_factor, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
 	to_chat(user, span_danger("The weight of the Big Slappy recoils!"))
 	log_combat(user, user, "recoiled Big Slappy into")

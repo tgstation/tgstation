@@ -10,7 +10,7 @@
 
 /datum/status_effect/agent_pinpointer
 	id = "agent_pinpointer"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = PINPOINTER_PING_TIME
 	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer
 	///The minimum range to start pointing towards your target.
@@ -43,7 +43,7 @@
 	if(here.z != there.z)
 		linked_alert.icon_state = "pinonnull"
 		return
-	if(get_dist_euclidian(here,there) <= minimum_range + rand(0, range_fuzz_factor))
+	if(get_dist_euclidean(here,there) <= minimum_range + rand(0, range_fuzz_factor))
 		linked_alert.icon_state = "pinondirect"
 		return
 	linked_alert.setDir(get_dir(here, there))

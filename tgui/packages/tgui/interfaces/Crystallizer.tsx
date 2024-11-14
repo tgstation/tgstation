@@ -1,7 +1,3 @@
-import { toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -9,7 +5,11 @@ import {
   NumberInput,
   ProgressBar,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { getGasColor } from '../constants';
 import { Window } from '../layouts';
 
@@ -81,12 +81,13 @@ const Controls = (props) => {
         <LabeledList.Item label="Gas Input">
           <NumberInput
             animated
+            step={0.1}
             value={gas_input}
             width="63px"
             unit="moles/s"
             minValue={0}
             maxValue={250}
-            onDrag={(e, value) =>
+            onDrag={(value) =>
               act('gas_input', {
                 gas_input: value,
               })

@@ -201,7 +201,7 @@
 			attacker,
 		)
 		to_chat(attacker, span_danger("You disarm [defender]!"))
-		playsound(defender, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+		playsound(defender, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		log_combat(attacker, defender, "disarmed (Krav Maga)", addition = "(disarmed of [stuff_in_hand])")
 	return MARTIAL_ATTACK_INVALID // normal shove
 
@@ -209,25 +209,10 @@
 
 /obj/item/clothing/gloves/krav_maga
 	clothing_traits = list(TRAIT_FAST_CUFFING)
-	var/datum/martial_art/krav_maga/style
 
 /obj/item/clothing/gloves/krav_maga/Initialize(mapload)
 	. = ..()
-	style = new()
-	style.allow_temp_override = FALSE
-
-/obj/item/clothing/gloves/krav_maga/Destroy()
-	QDEL_NULL(style)
-	return ..()
-
-/obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
-	. = ..()
-	if(slot & ITEM_SLOT_GLOVES)
-		style.teach(user, TRUE)
-
-/obj/item/clothing/gloves/krav_maga/dropped(mob/user)
-	. = ..()
-	style.fully_remove(user)
+	AddComponent(/datum/component/martial_art_giver, /datum/martial_art/krav_maga)
 
 /obj/item/clothing/gloves/krav_maga/sec//more obviously named, given to sec
 	name = "krav maga gloves"

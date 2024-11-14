@@ -12,6 +12,7 @@
 /obj/machinery/door/airlock/survival_pod/glass{
 	name = "Arrivals Shuttle Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "d" = (
@@ -183,6 +184,7 @@
 /area/shuttle/arrival)
 "Z" = (
 /obj/effect/spawner/structure/window/survival_pod,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 

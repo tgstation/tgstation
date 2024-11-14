@@ -65,11 +65,11 @@
 	return ..()
 
 /mob/living/carbon/alien/adult/royal/queen/create_internal_organs()
-	organs += new /obj/item/organ/internal/alien/plasmavessel/large/queen
-	organs += new /obj/item/organ/internal/alien/resinspinner
-	organs += new /obj/item/organ/internal/alien/acid
-	organs += new /obj/item/organ/internal/alien/neurotoxin
-	organs += new /obj/item/organ/internal/alien/eggsac
+	organs += new /obj/item/organ/alien/plasmavessel/large/queen
+	organs += new /obj/item/organ/alien/resinspinner
+	organs += new /obj/item/organ/alien/acid
+	organs += new /obj/item/organ/alien/neurotoxin
+	organs += new /obj/item/organ/alien/eggsac
 	return ..()
 
 //Queen verbs
@@ -168,10 +168,9 @@
 		span_noticealien("The queen has granted you a promotion to Praetorian!"),
 	)
 
-	var/mob/living/carbon/alien/adult/royal/praetorian/new_prae = new(to_promote.loc)
-	to_promote.mind.transfer_to(new_prae)
-
-	qdel(to_promote)
+	var/mob/living/carbon/alien/lucky_winner = to_promote
+	var/mob/living/carbon/alien/adult/royal/praetorian/new_prae = new(lucky_winner.loc)
+	lucky_winner.alien_evolve(new_prae)
 	qdel(src)
 	return TRUE
 

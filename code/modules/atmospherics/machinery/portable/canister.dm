@@ -35,7 +35,7 @@
 	///Is shielding turned on/off
 	var/shielding_powered = FALSE
 	///The powercell used to enable shielding
-	var/obj/item/stock_parts/cell/internal_cell
+	var/obj/item/stock_parts/power_store/internal_cell
 	///used while processing to update appearance only when its pressure state changes
 	var/current_pressure_state
 
@@ -52,7 +52,7 @@
 	. = ..()
 
 	if(mapload)
-		internal_cell = new /obj/item/stock_parts/cell/high(src)
+		internal_cell = new /obj/item/stock_parts/power_store/cell/high(src)
 
 	if(existing_mixture)
 		air_contents.copy_from(existing_mixture)
@@ -71,13 +71,12 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/volatile_gas_storage)
 	AddComponent(/datum/component/gas_leaker, leak_rate=0.01)
-	register_context()
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	. = ..()
 	if(!allowed(user))
 		to_chat(user, span_alert("Error - Unauthorized User."))
-		playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/compiler/compiler-failure.ogg', 50, TRUE)
 		return
 
 /obj/machinery/portable_atmospherics/canister/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -86,7 +85,7 @@
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove tank"
 	if(!held_item)
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(held_item, /obj/item/stock_parts/cell))
+	if(istype(held_item, /obj/item/stock_parts/power_store/cell))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert cell"
 	switch(held_item.tool_behaviour)
 		if(TOOL_SCREWDRIVER)
@@ -102,7 +101,10 @@
 
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
+	if(atom_integrity < max_integrity)
+		. += span_notice("Integrity compromised, repair hull with a welding tool.")
 	. += span_notice("A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(temp_limit, "K", 0)]</b>.")
+	. += span_notice("The hull is <b>welded</b> together and can be cut apart.")
 	if(internal_cell)
 		. += span_notice("The internal cell has [internal_cell.percent()]% of its total charge.")
 	else
@@ -365,8 +367,8 @@
 		internal_cell.forceMove(drop_location())
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/active_cell = item
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(!panel_open)
 			balloon_alert(user, "open hatch first!")
 			return TRUE
@@ -395,7 +397,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/portable_atmospherics/canister/welder_act_secondary(mob/living/user, obj/item/I)
-	if(!I.tool_start_check(user, amount=1))
+	if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return ITEM_INTERACT_BLOCKING
 
 	var/pressure = air_contents.return_pressure()
@@ -409,22 +411,6 @@
 		deconstruct(TRUE)
 
 	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return
-	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1))
-		return ITEM_INTERACT_SUCCESS
-
-	to_chat(user, span_notice("You begin repairing cracks in [src]..."))
-	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
-		atom_integrity = min(atom_integrity + 25, max_integrity)
-		if(atom_integrity >= max_integrity)
-			to_chat(user, span_notice("You've finished repairing [src]."))
-			return ITEM_INTERACT_SUCCESS
-		to_chat(user, span_notice("You repair some of the cracks in [src]..."))
-
-	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/portable_atmospherics/canister/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -475,18 +461,24 @@
 		user.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/process(seconds_per_tick)
+	if(!shielding_powered)
+		return
+
 	var/our_pressure = air_contents.return_pressure()
 	var/our_temperature = air_contents.return_temperature()
+	var/energy_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
+	var/energy_consumed = energy_factor * 250 * seconds_per_tick
 
-	if(shielding_powered)
-		var/power_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
-		var/power_consumed = power_factor * 250 * seconds_per_tick
-		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
-			use_power(power_consumed, AREA_USAGE_EQUIP)
-		else if(!internal_cell?.use(power_consumed * 0.025))
-			shielding_powered = FALSE
-			SSair.start_processing_machine(src)
-			investigate_log("shielding turned off due to power loss")
+	if(!energy_consumed)
+		return
+
+	if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
+		use_energy(energy_consumed, channel = AREA_USAGE_EQUIP)
+	else if(!internal_cell?.use(energy_consumed * 0.025))
+		shielding_powered = FALSE
+		SSair.start_processing_machine(src)
+		investigate_log("shielding turned off due to power loss")
+		update_appearance()
 
 ///return the icon_state component for the canister's indicator light based on its current pressure reading
 /obj/machinery/portable_atmospherics/canister/proc/get_pressure_state()
@@ -574,7 +566,7 @@
 		"cellCharge" = internal_cell ? internal_cell.percent() : 0
 	)
 
-/obj/machinery/portable_atmospherics/canister/ui_act(action, params)
+/obj/machinery/portable_atmospherics/canister/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -607,14 +599,14 @@
 				pressure = CAN_MAX_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "input")
-				pressure = tgui_input_number(usr, "New release pressure", "Canister Pressure", release_pressure, CAN_MAX_RELEASE_PRESSURE, CAN_MIN_RELEASE_PRESSURE)
+				pressure = tgui_input_number(usr, message = "New release pressure", title = "Canister Pressure", default = release_pressure, max_value = CAN_MAX_RELEASE_PRESSURE, min_value = CAN_MIN_RELEASE_PRESSURE, round_value = FALSE)
 				if(!isnull(pressure))
 					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				release_pressure = clamp(round(pressure), CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
+				release_pressure = clamp(pressure, CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 
 		if("valve")

@@ -201,7 +201,7 @@
 	if(inserted_disk.add_file(record_data))
 		playsound(src, 'sound/machines/ping.ogg', 25)
 	else
-		playsound(src, 'sound/machines/terminal_error.ogg', 25)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 25)
 
 /// Ejecting a tank. Also called on insertion to clear previous tanks.
 /obj/machinery/atmospherics/components/binary/tank_compressor/proc/eject_tank(mob/user)
@@ -275,7 +275,7 @@
 		ui = new(user, src, "TankCompressor")
 		ui.open()
 
-/obj/machinery/atmospherics/components/binary/tank_compressor/ui_act(action, list/params)
+/obj/machinery/atmospherics/components/binary/tank_compressor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -320,10 +320,6 @@
 	data["active"] = active
 	data["transferRate"] = transfer_rate
 	data["lastPressure"] = last_recorded_pressure
-
-	data["inputData"] = gas_mixture_parser(airs[2], "Input Port")
-	data["outputData"] = gas_mixture_parser(airs[1], "Ouput Port")
-	data["bufferData"] = gas_mixture_parser(leaked_gas_buffer, "Gas Buffer")
 
 	data["disk"] = inserted_disk?.name
 	data["storage"] = "[inserted_disk?.used_capacity] / [inserted_disk?.max_capacity] GQ"

@@ -7,7 +7,7 @@
 	desc = "Equipment for engineering exosuits. Lifts objects and loads them into cargo."
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
-	energy_drain = 10
+	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	tool_behaviour = TOOL_RETRACTOR
 	range = MECHA_MELEE
 	toolspeed = 0.8
@@ -18,7 +18,7 @@
 	///How much base damage this clamp does
 	var/clamp_damage = 20
 	///Audio for using the hydraulic clamp
-	var/clampsound = 'sound/mecha/hydraulic.ogg'
+	var/clampsound = 'sound/vehicles/mecha/hydraulic.ogg'
 	///Chassis but typed for the cargo_hold var
 	var/obj/vehicle/sealed/mecha/ripley/workmech
 
@@ -32,11 +32,21 @@
 	workmech = null
 	return ..()
 
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
+	return do_after_mecha(target, user, delay)
+
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/do_after_checks(atom/target)
+	// Gotta be close to the target
+	if(!loc.Adjacent(target))
+		return FALSE
+	return ..()
+
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/action(mob/living/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
 	if(!workmech.cargo_hold)
 		CRASH("Mech [chassis] has a clamp device, but no internal storage. This should be impossible.")
+
 	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		var/have_ammo
@@ -44,24 +54,21 @@
 			if(istype(box, /obj/item/mecha_ammo) && box.rounds)
 				have_ammo = TRUE
 				if(M.ammo_resupply(box, source, TRUE))
-					return
+					return ..()
 		if(have_ammo)
 			to_chat(source, "No further supplies can be provided to [M].")
 		else
 			to_chat(source, "No providable supplies found in cargo hold")
+		return
 
-	else if(isobj(target))
+	if(istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/machinery/door/airlock))
+		var/obj/machinery/door/target_door = target
+		playsound(chassis, clampsound, 50, FALSE, -6)
+		target_door.try_to_crowbar(src, source, TRUE)
+		return ..()
+
+	if(isobj(target))
 		var/obj/clamptarget = target
-		if(istype(clamptarget, /obj/machinery/door/firedoor))
-			var/obj/machinery/door/firedoor/targetfiredoor = clamptarget
-			playsound(chassis, clampsound, 50, FALSE, -6)
-			targetfiredoor.try_to_crowbar(src, source)
-			return
-		if(istype(clamptarget, /obj/machinery/door/airlock/))
-			var/obj/machinery/door/airlock/targetairlock = clamptarget
-			playsound(chassis, clampsound, 50, FALSE, -6)
-			targetairlock.try_to_crowbar(src, source, TRUE)
-			return
 		if(clamptarget.anchored)
 			to_chat(source, "[icon2html(src, source)][span_warning("[target] is firmly secured!")]")
 			return
@@ -72,65 +79,61 @@
 		chassis.visible_message(span_notice("[chassis] lifts [target] and starts to load it into cargo compartment."))
 		clamptarget.set_anchored(TRUE)
 		if(!do_after_cooldown(target, source))
-			clamptarget.set_anchored(initial(clamptarget.anchored))
+			clamptarget.set_anchored(FALSE)
 			return
-		clamptarget.forceMove(workmech.cargo_hold)
 		clamptarget.set_anchored(FALSE)
+		clamptarget.forceMove(workmech.cargo_hold)
 		if(!chassis.ore_box && istype(clamptarget, /obj/structure/ore_box))
 			chassis.ore_box = clamptarget
 		to_chat(source, "[icon2html(src, source)][span_notice("[target] successfully loaded.")]")
 		log_message("Loaded [clamptarget]. Cargo compartment capacity: [workmech.cargo_hold.cargo_capacity - workmech.cargo_hold.contents.len]", LOG_MECHA)
+		return ..()
 
-	else if(isliving(target))
-		var/mob/living/M = target
-		if(M.stat == DEAD)
-			return
+	if(!isliving(target))
+		return ..()
 
-		if(!source.combat_mode)
-			step_away(M,chassis)
-			if(killer_clamp)
-				target.visible_message(span_danger("[chassis] tosses [target] like a piece of paper!"), \
-					span_userdanger("[chassis] tosses you like a piece of paper!"))
-			else
-				to_chat(source, "[icon2html(src, source)][span_notice("You push [target] out of the way.")]")
-				chassis.visible_message(span_notice("[chassis] pushes [target] out of the way."), \
-				span_notice("[chassis] pushes you aside."))
-			return ..()
-		else if(LAZYACCESS(modifiers, RIGHT_CLICK) && iscarbon(M))//meme clamp here
-			if(!killer_clamp)
-				to_chat(source, span_notice("You longingly wish to tear [M]'s arms off."))
-				return
-			var/mob/living/carbon/C = target
-			var/torn_off = FALSE
-			var/obj/item/bodypart/affected = C.get_bodypart(BODY_ZONE_L_ARM)
-			if(affected != null)
-				affected.dismember(damtype)
-				torn_off = TRUE
-			affected = C.get_bodypart(BODY_ZONE_R_ARM)
-			if(affected != null)
-				affected.dismember(damtype)
-				torn_off = TRUE
-			if(!torn_off)
-				to_chat(source, span_notice("[M]'s arms are already torn off, you must find a challenger worthy of the kill clamp!"))
-				return
+	var/mob/living/victim = target
+	if(victim.stat == DEAD)
+		return
+
+	if(!source.combat_mode)
+		step_away(victim, chassis)
+		if(killer_clamp)
+			target.visible_message(span_danger("[chassis] tosses [target] like a piece of paper!"), \
+				span_userdanger("[chassis] tosses you like a piece of paper!"))
+		else
+			to_chat(source, "[icon2html(src, source)][span_notice("You push [target] out of the way.")]")
+			chassis.visible_message(span_notice("[chassis] pushes [target] out of the way."), \
+			span_notice("[chassis] pushes you aside."))
+		return ..()
+
+	if(iscarbon(victim) && killer_clamp)//meme clamp here
+		var/mob/living/carbon/carbon_victim = target
+		var/torn_off = FALSE
+		var/obj/item/bodypart/affected = carbon_victim.get_bodypart(BODY_ZONE_L_ARM)
+		if(affected != null)
+			affected.dismember(damtype)
+			torn_off = TRUE
+		affected = carbon_victim.get_bodypart(BODY_ZONE_R_ARM)
+		if(affected != null)
+			affected.dismember(damtype)
+			torn_off = TRUE
+		if(torn_off)
 			playsound(src, get_dismember_sound(), 80, TRUE)
-			target.visible_message(span_danger("[chassis] rips [target]'s arms off!"), \
+			carbon_victim.visible_message(span_danger("[chassis] rips [carbon_victim]'s arms off!"), \
 						span_userdanger("[chassis] rips your arms off!"))
-			log_combat(source, M, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
+			log_combat(source, carbon_victim, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
 			return ..()
 
-		M.take_overall_damage(clamp_damage)
-		if(!M) //get gibbed stoopid
-			return
-		M.adjustOxyLoss(round(clamp_damage/2))
-		M.updatehealth()
-		target.visible_message(span_danger("[chassis] squeezes [target]!"), \
-							span_userdanger("[chassis] squeezes you!"),\
-							span_hear("You hear something crack."))
-		log_combat(source, M, "attacked", "[name]", "(Combat mode: [source.combat_mode ? "On" : "Off"]) (DAMTYPE: [uppertext(damtype)])")
+	victim.take_overall_damage(clamp_damage)
+	if(isnull(victim)) //get gibbed stoopid
+		return ..()
+	victim.adjustOxyLoss(round(clamp_damage/2))
+	victim.visible_message(span_danger("[chassis] squeezes [victim]!"), \
+						span_userdanger("[chassis] squeezes you!"),\
+						span_hear("You hear something crack."))
+	log_combat(source, victim, "attacked", "[name]", "(Combat mode: [source.combat_mode ? "On" : "Off"]) (DAMTYPE: [uppertext(damtype)])")
 	return ..()
-
-
 
 //This is pretty much just for the death-ripley
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill
@@ -177,7 +180,7 @@
 
 
 /**
- * Handles attemted refills of the extinguisher.
+ * Handles attempted refills of the extinguisher.
  *
  * The mech can only refill an extinguisher that is in front of it.
  * Only water tank objects can be used.
@@ -316,7 +319,7 @@
 	if(!(mecha.mecha_flags & PANEL_OPEN)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
 		to_chat(user, span_warning("[mecha] panel must be open in order to allow this conversion kit."))
 		return FALSE
-	if(LAZYLEN(mecha.occupants)) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
+	if(LAZYLEN(mecha.occupants)) //We're actually making a new mech and swapping things over, it might get weird if players are involved
 		to_chat(user, span_warning("[mecha] must be unoccupied before this conversion kit can be applied."))
 		return FALSE
 	if(!mecha.cell) //Turns out things break if the cell is missing
@@ -367,7 +370,7 @@
 	if(HAS_TRAIT(markone, TRAIT_MECHA_CREATED_NORMALLY))
 		ADD_TRAIT(newmech, TRAIT_MECHA_CREATED_NORMALLY, newmech)
 	qdel(markone)
-	playsound(get_turf(newmech),'sound/items/ratchet.ogg',50,TRUE)
+	playsound(get_turf(newmech),'sound/items/tools/ratchet.ogg',50,TRUE)
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy
 	name = "Paddy Conversion Kit"

@@ -5,6 +5,8 @@
 	icon_state = "experiment-open"
 	density = FALSE
 	state_open = TRUE
+	interaction_flags_mouse_drop = NEED_DEXTERITY
+
 	var/points = 0
 	var/credits = 0
 	var/list/history
@@ -21,10 +23,8 @@
 		console = null
 	return ..()
 
-/obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
-		return
-	if(isabductor(target))
+/obj/machinery/abductor/experiment/mouse_drop_receive(mob/target, mob/user, params)
+	if(!ishuman(target) || isabductor(target))
 		return
 	close_machine(target)
 
@@ -86,7 +86,7 @@
 		data["occupant_status"] = mob_occupant.stat
 	return data
 
-/obj/machinery/abductor/experiment/ui_act(action, list/params)
+/obj/machinery/abductor/experiment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -137,7 +137,7 @@
 	if(occupant.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "Specimen deceased."
-	var/obj/item/organ/internal/heart/gland/GlandTest = locate() in occupant.organs
+	var/obj/item/organ/heart/gland/GlandTest = locate() in occupant.organs
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "No glands detected!"
@@ -158,7 +158,7 @@
 		user_abductor.team.abductees += occupant.mind
 		occupant.mind.add_antag_datum(/datum/antagonist/abductee)
 
-		for(var/obj/item/organ/internal/heart/gland/G in occupant.organs)
+		for(var/obj/item/organ/heart/gland/G in occupant.organs)
 			G.Start()
 			point_reward++
 		if(point_reward > 0)
@@ -169,7 +169,7 @@
 			credits += point_reward
 			return "Experiment successful! [point_reward] new data-points collected."
 		else
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+			playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 			return "Experiment failed! No replacement organ detected."
 	else
 		say("Brain activity nonexistent - disposing sample...")
@@ -190,7 +190,7 @@
 		H.forceMove(console.pad.teleport_target)
 		return
 	//Area not chosen / It's not safe area - teleport to arrivals
-	SSjob.SendToLateJoin(H, FALSE)
+	SSjob.send_to_late_join(H, FALSE)
 	return
 
 /obj/machinery/abductor/experiment/update_icon_state()

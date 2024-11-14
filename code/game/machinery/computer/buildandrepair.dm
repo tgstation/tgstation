@@ -11,18 +11,16 @@
 	AddComponent(/datum/component/simple_rotation)
 	register_context()
 
-/obj/structure/frame/computer/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/atom/drop_loc = drop_location()
-		if(state == FRAME_COMPUTER_STATE_GLASSED)
-			if(disassembled)
-				new /obj/item/stack/sheet/glass(drop_loc, 2)
-			else
-				new /obj/item/shard(drop_loc)
-				new /obj/item/shard(drop_loc)
-		if(state >= FRAME_COMPUTER_STATE_WIRED)
-			new /obj/item/stack/cable_coil(drop_loc, 5)
-
+/obj/structure/frame/computer/atom_deconstruct(disassembled = TRUE)
+	var/atom/drop_loc = drop_location()
+	if(state == FRAME_COMPUTER_STATE_GLASSED)
+		if(disassembled)
+			new /obj/item/stack/sheet/glass(drop_loc, 2)
+		else
+			new /obj/item/shard(drop_loc)
+			new /obj/item/shard(drop_loc)
+	if(state >= FRAME_COMPUTER_STATE_WIRED)
+		new /obj/item/stack/cable_coil(drop_loc, 5)
 	return ..()
 
 /obj/structure/frame/computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -78,10 +76,11 @@
 
 	switch(state)
 		if(FRAME_STATE_EMPTY)
-			. += span_notice("It can be [EXAMINE_HINT("wrenched")] [anchored ? "loose" : "in place"].")
+			. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose" : "in place"].")
 			if(anchored)
 				. += span_warning("It's missing a circuit board.")
-			. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
+			else
+				. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
 		if(FRAME_COMPUTER_STATE_BOARD_INSTALLED)
 			. += span_warning("An [circuit.name] is installed and should be [EXAMINE_HINT("screwed")] in place.")
 			. += span_notice("The circuit board can be [EXAMINE_HINT("pried")] out.")
@@ -147,7 +146,7 @@
 
 			return FALSE
 
-/obj/structure/frame/computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/obj/structure/frame/computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .

@@ -16,7 +16,7 @@
 	light_power = 0.75
 	light_color = LIGHT_COLOR_LAVA
 	light_on = FALSE
-	bullet_bounce_sound = 'sound/items/welder2.ogg'
+	bullet_bounce_sound = 'sound/items/tools/welder2.ogg'
 
 	footstep = FOOTSTEP_LAVA
 	barefootstep = FOOTSTEP_LAVA
@@ -40,15 +40,20 @@
 	var/mask_state = "lava-lightmask"
 	/// The type for the preset fishing spot of this type of turf.
 	var/fish_source_type = /datum/fish_source/lavaland
+	/// The color we use for our immersion overlay
+	var/immerse_overlay_color = "#a15e1b"
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
 	if(fish_source_type)
 		AddElement(/datum/element/lazy_fishing_spot, fish_source_type)
+	// You can release chrabs and lavaloops and likes in lava, or be an absolute scumbag and drop other fish there too.
+	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	refresh_light()
 	if(!smoothing_flags)
 		update_appearance()
-
+	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
 
 /turf/open/lava/Destroy()
 	for(var/mob/living/leaving_mob in contents)
@@ -167,19 +172,11 @@
 		return TRUE
 	return FALSE
 
-/turf/open/lava/rust_heretic_act()
-	return FALSE
-
 /turf/open/lava/singularity_act()
 	return
 
-/turf/open/lava/singularity_pull(S, current_size)
+/turf/open/lava/singularity_pull(atom/singularity, current_size)
 	return
-
-/turf/open/lava/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/floors.dmi'
-	underlay_appearance.icon_state = "basalt"
-	return TRUE
 
 /turf/open/lava/GetHeatCapacity()
 	. = 700000
@@ -199,14 +196,14 @@
 			return
 		if(R.use(1))
 			to_chat(user, span_notice("You construct a lattice."))
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 			new /obj/structure/lattice/lava(locate(x, y, z))
 		else
 			to_chat(user, span_warning("You need one rod to build a heatproof lattice."))
 		return
 	// Light a cigarette in the lava
-	if(istype(C, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/ciggie = C
+	if(istype(C, /obj/item/cigarette))
+		var/obj/item/cigarette/ciggie = C
 		if(ciggie.lit)
 			to_chat(user, span_warning("The [ciggie.name] is already lit!"))
 			return TRUE
@@ -249,7 +246,7 @@
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)
 	if(QDELETED(burn_target))
 		return LAVA_BE_IGNORING
-	if(burn_target.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) //you're flying over it.
+	if(burn_target.movement_type & MOVETYPES_NOT_TOUCHING_GROUND || !burn_target.has_gravity()) //you're flying over it.
 		return LAVA_BE_IGNORING
 
 	if(isobj(burn_target))
@@ -268,7 +265,7 @@
 	var/mob/living/burn_living = burn_target
 	var/atom/movable/burn_buckled = burn_living.buckled
 	if(burn_buckled)
-		if(burn_buckled.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
+		if(burn_buckled.movement_type & MOVETYPES_NOT_TOUCHING_GROUND || !burn_buckled.has_gravity())
 			return LAVA_BE_PROCESSING
 		if(isobj(burn_buckled))
 			var/obj/burn_buckled_obj = burn_buckled
@@ -337,6 +334,13 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_LAVA
 	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA
 	underfloor_accessibility = 2 //This avoids strangeness when routing pipes / wires along catwalks over lava
+	immerse_overlay_color = "#F98511"
+
+/// Smooth lava needs to take after basalt in order to blend better. If you make a /turf/open/lava/smooth subtype for an area NOT surrounded by basalt; you should override this proc.
+/turf/open/lava/smooth/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = /turf/open/misc/asteroid/basalt::icon
+	underlay_appearance.icon_state = /turf/open/misc/asteroid/basalt::icon_state
+	return TRUE
 
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -360,6 +364,7 @@
 	immunity_trait = TRAIT_SNOWSTORM_IMMUNE
 	immunity_resistance_flags = FREEZE_PROOF
 	lava_temperature = 100
+	immerse_overlay_color = "#CD4C9F"
 
 /turf/open/lava/plasma/examine(mob/user)
 	. = ..()

@@ -30,36 +30,6 @@
 	return ..()
 
 /**
- * Automatically fixes the target and smash network
- *
- * Fixes any bugs that are caused by late Generate() or exchanging clients
- */
-/datum/reality_smash_tracker/proc/rework_network()
-	SIGNAL_HANDLER
-
-	for(var/mind in tracked_heretics)
-		if(isnull(mind))
-			stack_trace("A null somehow landed in the [type] list of minds. How?")
-			tracked_heretics -= mind
-			continue
-
-		add_to_smashes(mind)
-
-/**
- * Allow [to_add] to see all tracked reality smashes.
- */
-/datum/reality_smash_tracker/proc/add_to_smashes(datum/mind/to_add)
-	for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
-		reality_smash.add_mind(to_add)
-
-/**
- * Stop [to_remove] from seeing any tracked reality smashes.
- */
-/datum/reality_smash_tracker/proc/remove_from_smashes(datum/mind/to_remove)
-	for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
-		reality_smash.remove_mind(to_remove)
-
-/**
  * Generates a set amount of reality smashes
  * based on the number of already existing smashes
  * and the number of minds we're tracking.
@@ -73,7 +43,7 @@
 	while((length(smashes) + num_drained) < how_many_can_we_make && location_sanity < 100)
 		var/turf/chosen_location = get_safe_random_station_turf()
 
-		// We don't want them close to each other - at least 1 tile of seperation
+		// We don't want them close to each other - at least 1 tile of separation
 		var/list/nearby_things = range(1, chosen_location)
 		var/obj/effect/heretic_influence/what_if_i_have_one = locate() in nearby_things
 		var/obj/effect/visible_heretic_influence/what_if_i_had_one_but_its_used = locate() in nearby_things
@@ -82,8 +52,6 @@
 			continue
 
 		new /obj/effect/heretic_influence(chosen_location)
-
-	rework_network()
 
 /**
  * Adds a mind to the list of people that can see the reality smashes
@@ -97,9 +65,6 @@
 	if(ishuman(heretic.current) && !is_centcom_level(heretic.current.z))
 		generate_new_influences()
 
-	add_to_smashes(heretic)
-
-
 /**
  * Removes a mind from the list of people that can see the reality smashes
  *
@@ -107,8 +72,6 @@
  */
 /datum/reality_smash_tracker/proc/remove_tracked_mind(datum/mind/heretic)
 	tracked_heretics -= heretic
-
-	remove_from_smashes(heretic)
 
 /obj/effect/visible_heretic_influence
 	name = "pierced reality"
@@ -151,7 +114,7 @@
 		their_poor_arm.dismember()
 		qdel(their_poor_arm)
 	else
-		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existance itself!"))
+		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existence itself!"))
 	return TRUE
 
 /obj/effect/visible_heretic_influence/attack_tk(mob/user)
@@ -201,41 +164,23 @@
 	var/being_drained = FALSE
 	/// The icon state applied to the image created for this influence.
 	var/real_icon_state = "reality_smash"
-	/// A list of all minds that can see us.
-	var/list/datum/mind/minds = list()
-	/// The image shown to heretics
-	var/image/heretic_image
-	/// We hold the turf we're on so we can remove and add the 'no prints' flag.
-	var/turf/on_turf
 
 /obj/effect/heretic_influence/Initialize(mapload)
 	. = ..()
 	GLOB.reality_smash_track.smashes += src
-	heretic_image = image(icon, src, real_icon_state, OBJ_LAYER)
 	generate_name()
-	on_turf = get_turf(src)
-	if(!istype(on_turf))
-		return
-	on_turf.interaction_flags_atom |= INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
-	RegisterSignal(on_turf, COMSIG_TURF_CHANGE, PROC_REF(replace_our_turf))
 
-/obj/effect/heretic_influence/proc/replace_our_turf(datum/source, path, new_baseturfs, flags, post_change_callbacks)
-	SIGNAL_HANDLER
-	post_change_callbacks += CALLBACK(src, PROC_REF(replace_our_turf_two))
-	on_turf = null //hard del ref?
+	var/image/heretic_image = image(icon, src, real_icon_state, OBJ_LAYER)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/has_antagonist/heretic, "reality_smash", heretic_image)
 
-/obj/effect/heretic_influence/proc/replace_our_turf_two(turf/new_turf)
-	new_turf.interaction_flags_atom |= INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
-	on_turf = new_turf
+	AddElement(/datum/element/block_turf_fingerprints)
+	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(verify_user_can_see)))
+
+/obj/effect/heretic_influence/proc/verify_user_can_see(mob/user)
+	return (user.mind in GLOB.reality_smash_track.tracked_heretics)
 
 /obj/effect/heretic_influence/Destroy()
 	GLOB.reality_smash_track.smashes -= src
-	for(var/datum/mind/heretic in minds)
-		remove_mind(heretic)
-
-	heretic_image = null
-	on_turf?.interaction_flags_atom &= ~INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
-	on_turf = null
 	return ..()
 
 /obj/effect/heretic_influence/attack_hand_secondary(mob/user, list/modifiers)
@@ -243,7 +188,7 @@
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	if(being_drained)
-		balloon_alert(user, "already being drained!")
+		loc.balloon_alert(user, "already being drained!")
 	else
 		INVOKE_ASYNC(src, PROC_REF(drain_influence), user, 1)
 
@@ -255,13 +200,16 @@
 		return
 
 	// Using a codex will give you two knowledge points for draining.
-	if(!being_drained && istype(weapon, /obj/item/codex_cicatrix))
-		var/obj/item/codex_cicatrix/codex = weapon
-		if(!codex.book_open)
-			codex.attack_self(user) // open booke
-		INVOKE_ASYNC(src, PROC_REF(drain_influence), user, 2)
+	if(drain_influence_with_codex(user, weapon))
 		return TRUE
 
+/obj/effect/heretic_influence/proc/drain_influence_with_codex(mob/user, obj/item/codex_cicatrix/codex)
+	if(!istype(codex) || being_drained)
+		return FALSE
+	if(!codex.book_open)
+		codex.attack_self(user) // open booke
+	INVOKE_ASYNC(src, PROC_REF(drain_influence), user, 2)
+	return TRUE
 
 /**
  * Begin to drain the influence, setting being_drained,
@@ -272,59 +220,45 @@
 /obj/effect/heretic_influence/proc/drain_influence(mob/living/user, knowledge_to_gain)
 
 	being_drained = TRUE
-	balloon_alert(user, "draining influence...")
+	loc.balloon_alert(user, "draining influence...")
 
-	if(!do_after(user, 10 SECONDS, src))
+	if(!do_after(user, 10 SECONDS, src, hidden = TRUE))
 		being_drained = FALSE
-		balloon_alert(user, "interrupted!")
+		loc.balloon_alert(user, "interrupted!")
 		return
 
 	// We don't need to set being_drained back since we delete after anyways
-	balloon_alert(user, "influence drained")
+	loc.balloon_alert(user, "influence drained")
 
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.knowledge_points += knowledge_to_gain
 
 	// Aaand now we delete it
 	after_drain(user)
 
-/*
+/**
  * Handle the effects of the drain.
  */
 /obj/effect/heretic_influence/proc/after_drain(mob/living/user)
 	if(user)
-		to_chat(user, span_hypnophrase(pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))))
+		to_chat(user, span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "drain_message")))
 		to_chat(user, span_warning("[src] begins to fade into reality!"))
 
 	var/obj/effect/visible_heretic_influence/illusion = new /obj/effect/visible_heretic_influence(drop_location())
-	illusion.name = "\improper" + pick(strings(HERETIC_INFLUENCE_FILE, "drained")) + " " + format_text(name)
+	illusion.name = "\improper" + pick_list(HERETIC_INFLUENCE_FILE, "drained") + " " + format_text(name)
 
 	GLOB.reality_smash_track.num_drained++
 	qdel(src)
 
-/*
- * Add a mind to the list of tracked minds,
- * making another person able to see us.
- */
-/obj/effect/heretic_influence/proc/add_mind(datum/mind/heretic)
-	minds |= heretic
-	heretic.current?.client?.images |= heretic_image
-
-/*
- * Remove a mind present in our list
- * from being able to see us.
- */
-/obj/effect/heretic_influence/proc/remove_mind(datum/mind/heretic)
-	if(!(heretic in minds))
-		CRASH("[type] - remove_mind called with a mind not present in the minds list!")
-
-	minds -= heretic
-	heretic.current?.client?.images -= heretic_image
-
-/*
+/**
  * Generates a random name for the influence.
  */
 /obj/effect/heretic_influence/proc/generate_name()
-	name = "\improper" + pick(strings(HERETIC_INFLUENCE_FILE, "prefix")) + " " + pick(strings(HERETIC_INFLUENCE_FILE, "postfix"))
+	name = "\improper" + pick_list(HERETIC_INFLUENCE_FILE, "prefix") + " " + pick_list(HERETIC_INFLUENCE_FILE, "postfix")
 
 #undef NUM_INFLUENCES_PER_HERETIC
+
+/// Hud used for heretics to see influences
+/datum/atom_hud/alternate_appearance/basic/has_antagonist/heretic
+	antag_datum_type = /datum/antagonist/heretic
+	add_ghost_version = TRUE

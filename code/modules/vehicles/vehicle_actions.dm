@@ -252,7 +252,7 @@
 	vehicle_entered_target.headlights_toggle = !vehicle_entered_target.headlights_toggle
 	vehicle_entered_target.set_light_on(vehicle_entered_target.headlights_toggle)
 	vehicle_entered_target.update_appearance()
-	playsound(owner, vehicle_entered_target.headlights_toggle ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
+	playsound(owner, vehicle_entered_target.headlights_toggle ? 'sound/items/weapons/magin.ogg' : 'sound/items/weapons/magout.ogg', 40, TRUE)
 
 /datum/action/vehicle/sealed/dump_kidnapped_mobs
 	name = "Dump Kidnapped Mobs"
@@ -353,7 +353,7 @@
 			rider.client.give_award(/datum/award/achievement/misc/tram_surfer, rider)
 		vehicle.grinding = TRUE
 		vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
-		addtimer(CALLBACK(vehicle, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard/, grind)), 2)
+		addtimer(CALLBACK(vehicle, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard/, grind)), 0.2 SECONDS)
 	else
 		vehicle.obj_flags &= ~BLOCK_Z_OUT_DOWN
 	rider.spin(spintime = 4, speed = 1)
@@ -444,7 +444,7 @@
 	name = "Buzz."
 	desc = "Negative!"
 	button_icon_state = "vim_buzz"
-	sound_path = 'sound/machines/buzz-sigh.ogg'
+	sound_path = 'sound/machines/buzz/buzz-sigh.ogg'
 	sound_message = "buzzes."
 
 /datum/action/vehicle/sealed/noise/buzz/Trigger(trigger_flags)

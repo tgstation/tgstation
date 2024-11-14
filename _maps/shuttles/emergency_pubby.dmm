@@ -276,9 +276,7 @@
 /area/shuttle/escape)
 "bd" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table,
 /obj/item/food/canned/beans{
 	pixel_x = 3;
@@ -395,15 +393,11 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bB" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bC" = (
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bD" = (
@@ -485,9 +479,7 @@
 /area/shuttle/escape)
 "jO" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/food/butterdog,
 /obj/item/food/cakeslice/apple,
 /obj/item/food/cakeslice/brioche,
@@ -548,9 +540,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "xt" = (
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Br" = (
@@ -599,9 +589,7 @@
 "ZM" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/vending/wallmed/directional/north{
 	use_power = 0
 	},

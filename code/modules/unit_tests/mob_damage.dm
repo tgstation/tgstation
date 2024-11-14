@@ -289,8 +289,8 @@
 /datum/unit_test/mob_damage/proc/test_godmode(mob/living/carbon/human/consistent/dummy)
 	// Heal up, so that errors from the previous tests we won't cause this one to fail
 	dummy.fully_heal(HEAL_DAMAGE)
-	// flip godmode bit to 1
-	dummy.status_flags ^= GODMODE
+	// add godmode
+	ADD_TRAIT(dummy, TRAIT_GODMODE, TRAIT_GENERIC)
 
 	// Apply 9 damage and then heal it
 	if(!test_apply_damage(dummy, amount = 9, expected = 0))
@@ -306,8 +306,8 @@
 	if(!test_apply_damage(dummy, amount = -11, forced = TRUE))
 		TEST_FAIL("ABOVE FAILURE: failed test_godmode! godmode did not respect forced = TRUE")
 
-	// flip godmode bit back to 0
-	dummy.status_flags ^= GODMODE
+	// remove godmode
+	REMOVE_TRAIT(dummy, TRAIT_GODMODE, TRAIT_GENERIC)
 
 /// Testing biotypes
 /datum/unit_test/mob_damage/proc/test_biotypes(mob/living/carbon/human/consistent/dummy)
@@ -580,3 +580,22 @@
 
 	if(!verify_damage(gusgus, 0, included_types = BRUTELOSS))
 		TEST_FAIL("heal_overall_damage did not apply its healing correctly on the mouse!")
+
+/// Tests that humans get the tox_vomit status effect when heavily poisoned
+/datum/unit_test/human_tox_damage
+
+/datum/unit_test/human_tox_damage/Run()
+	// Spawn a dummy, give it a bunch of tox damage. It should get the status effect.
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
+	dummy.setToxLoss(75)
+	var/datum/status_effect/tox_effect = dummy.has_status_effect(/datum/status_effect/tox_vomit)
+	TEST_ASSERT_NOTNULL(tox_effect, "Dummy didn't get tox_vomit status effect despite at [dummy.getToxLoss()] toxin damage (Method: SET)!")
+	// Clear the toxin damage away, and force a status effect tick: It should delete itself
+	dummy.setToxLoss(0)
+	tox_effect.tick(initial(tox_effect.tick_interval))
+	TEST_ASSERT(QDELETED(tox_effect), "Dummy still has tox_vomit status effect despite at [dummy.getToxLoss()] toxin damage (Method: SET)!")
+	// Test another method of gaining tox damage, use an entirely clean slate just to be sure
+	var/mob/living/carbon/human/dummy_two = allocate(/mob/living/carbon/human/consistent)
+	dummy_two.adjustToxLoss(75)
+	var/datum/status_effect/tox_effect_two = dummy_two.has_status_effect(/datum/status_effect/tox_vomit)
+	TEST_ASSERT_NOTNULL(tox_effect_two, "Dummy didn't get tox_vomit status effect at [dummy_two.getToxLoss()] toxin damage (METHOD: ADJUST)!")

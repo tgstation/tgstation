@@ -1,34 +1,31 @@
-/obj/structure/ore_container/gutlunch_trough
-	name = "gutlunch trough"
-	desc = "The gutlunches will eat out of it!"
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "gutlunch_trough"
+/obj/structure/ore_container/food_trough
 	density = TRUE
 	anchored = TRUE
 	///list of materials in the trough
 	var/list/list_of_materials = list()
+	///x offsets for materials to be placed
+	var/list/x_offsets = list()
+	///y offsets for materials to be placed
+	var/list/y_offsets = list()
 
-/obj/structure/ore_container/gutlunch_trough/Entered(atom/movable/mover)
+/obj/structure/ore_container/food_trough/Entered(atom/movable/mover)
 	if(!istype(mover, /obj/item/stack/ore))
 		return ..()
 	if(list_of_materials[mover.type])
 		return ..()
-	list_of_materials[mover.type] = list("pixel_x" = rand(-5, 8), "pixel_y" = rand(-2, -7))
+	list_of_materials[mover.type] = list("pixel_x" = rand(x_offsets[1], x_offsets[2]), "pixel_y" = rand(y_offsets[1], y_offsets[2]))
 	return ..()
 
-/obj/structure/ore_container/gutlunch_trough/Exited(atom/movable/mover)
+/obj/structure/ore_container/food_trough/Exited(atom/movable/mover)
 	if(!istype(mover, /obj/item/stack/ore) || !isnull(locate(mover.type) in contents))
 		return ..()
 	list_of_materials -= mover.type
 	return ..()
 
-/obj/structure/ore_container/gutlunch_trough/deconstruct(disassembled = TRUE)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
+/obj/structure/ore_container/food_trough/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 5)
-	qdel(src)
 
-/obj/structure/ore_container/gutlunch_trough/update_overlays()
+/obj/structure/ore_container/food_trough/update_overlays()
 	. = ..()
 	for(var/ore_entry in list_of_materials)
 		var/obj/item/ore_item = ore_entry
@@ -38,3 +35,11 @@
 		ore_icon.pixel_x = pixel_positions["pixel_x"]
 		ore_icon.pixel_y = pixel_positions["pixel_y"]
 		. += ore_icon
+
+/obj/structure/ore_container/food_trough/gutlunch_trough
+	name = "gutlunch trough"
+	desc = "The gutlunches will eat out of it!"
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "gutlunch_trough"
+	x_offsets = list(-5, 8)
+	y_offsets = list(-2, -7)

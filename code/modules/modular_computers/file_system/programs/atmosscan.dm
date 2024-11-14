@@ -27,7 +27,7 @@
 	on_analyze(source=source, target=get_turf(computer))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/// Keep this in sync with it's tool based counterpart [/obj/proc/analyzer_act] and [/atom/proc/tool_act]
+/// Keep this in sync with its tool based counterpart [/obj/proc/analyzer_act] and [/atom/proc/tool_act]
 /datum/computer_file/program/atmosscan/tap(atom/A, mob/living/user, params)
 	if(atmozphere_mode != ATMOZPHERE_SCAN_CLICK)
 		return FALSE
@@ -44,7 +44,7 @@
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
 	var/list/new_gasmix_data = list()
 	for(var/datum/gas_mixture/air as anything in airs)
-		var/mix_name = capitalize(lowertext(target.name))
+		var/mix_name = capitalize(LOWER_TEXT(target.name))
 		if(airs.len != 1) //not a unary gas mixture
 			mix_name += " - Node [airs.Find(air)]"
 		new_gasmix_data += list(gas_mixture_parser(air, mix_name))

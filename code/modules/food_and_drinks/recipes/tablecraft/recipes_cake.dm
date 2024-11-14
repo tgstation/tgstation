@@ -90,7 +90,7 @@
 /datum/crafting_recipe/food/braincake
 	name = "Brain cake"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/brain = 1,
 		/obj/item/food/cake/plain = 1
 	)
 	result = /obj/item/food/cake/brain
@@ -184,7 +184,6 @@
 
 /datum/crafting_recipe/food/clowncake
 	name = "clown cake"
-	always_available = FALSE
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
 		/obj/item/food/sundae = 2,
@@ -192,16 +191,17 @@
 	)
 	result = /obj/item/food/cake/clown_cake
 	category = CAT_CAKE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/food/vanillacake
 	name = "vanilla cake"
-	always_available = FALSE
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
 		/obj/item/food/grown/vanillapod = 2
 	)
 	result = /obj/item/food/cake/vanilla_cake
 	category = CAT_CAKE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/food/trumpetcake
 	name = "Spaceman's Cake"
@@ -218,8 +218,8 @@
 /datum/crafting_recipe/food/cak
 	name = "Living cat/cake hybrid"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/heart = 1,
 		/obj/item/food/cake/birthday = 1,
 		/obj/item/food/meat/slab = 3,
 		/datum/reagent/blood = 30,

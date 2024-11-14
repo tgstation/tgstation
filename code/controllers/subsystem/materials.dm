@@ -4,7 +4,6 @@ Materials are now instanced datums, with an associative list of them being kept 
 These materials call on_applied() on whatever item they are applied to, common effects are adding components, changing color and changing description. This allows us to differentiate items based on the material they are made out of.area
 
 */
-
 SUBSYSTEM_DEF(materials)
 	name = "Materials"
 	flags = SS_NO_FIRE | SS_NO_INIT
@@ -22,21 +21,21 @@ SUBSYSTEM_DEF(materials)
 	var/list/list/material_combos
 	///List of stackcrafting recipes for materials using base recipes
 	var/list/base_stack_recipes = list(
-		new /datum/stack_recipe("Chair", /obj/structure/chair/greyscale, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_FURNITURE),
-		new /datum/stack_recipe("Toilet", /obj/structure/toilet/greyscale, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_FURNITURE),
-		new /datum/stack_recipe("Sink Frame", /obj/structure/sinkframe, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_FURNITURE),
-		new /datum/stack_recipe("Material floor tile", /obj/item/stack/tile/material, 1, 4, 20, applies_mats = TRUE, check_density = FALSE, category = CAT_TILES),
-		new /datum/stack_recipe("Material airlock assembly", /obj/structure/door_assembly/door_assembly_material, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS),
+		new /datum/stack_recipe("Chair", /obj/structure/chair/greyscale, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_FURNITURE),
+		new /datum/stack_recipe("Toilet", /obj/structure/toilet/greyscale, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_FURNITURE),
+		new /datum/stack_recipe("Sink Frame", /obj/structure/sinkframe, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_FURNITURE),
+		new /datum/stack_recipe("Material floor tile", /obj/item/stack/tile/material, 1, 4, 20, crafting_flags = CRAFT_APPLIES_MATS, category = CAT_TILES),
+		new /datum/stack_recipe("Material airlock assembly", /obj/structure/door_assembly/door_assembly_material, 4, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_DOORS),
 	)
 	///List of stackcrafting recipes for materials using rigid recipes
 	var/list/rigid_stack_recipes = list(
-		new /datum/stack_recipe("Carving block", /obj/structure/carving_block, 5, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_STRUCTURE),
+		new /datum/stack_recipe("Carving block", /obj/structure/carving_block, 5, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_STRUCTURE),
 	)
 
 	///A list of dimensional themes used by the dimensional anomaly and other things, most of which require materials to function.
 	var/list/datum/dimension_theme/dimensional_themes
 
-///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropiate vars (See these variables for more info)
+///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropriate vars (See these variables for more info)
 /datum/controller/subsystem/materials/proc/InitializeMaterials()
 	materials = list()
 	materials_by_type = list()
@@ -54,7 +53,7 @@ SUBSYSTEM_DEF(materials)
 
 /** Creates and caches a material datum.
  *
- * Arugments:
+ * Arguments:
  * - [arguments][/list]: The arguments to use to create the material datum
  *   - The first element is the type of material to initialize.
  */
@@ -135,7 +134,7 @@ SUBSYSTEM_DEF(materials)
 			value = arguments[key]
 		if(!(istext(key) || isnum(key)))
 			key = REF(key)
-		key = "[key]" // Key is stringified so numbers dont break things
+		key = "[key]" // Key is stringified so numbers don't break things
 		if(!isnull(value))
 			if(!(istext(value) || isnum(value)))
 				value = REF(value)
@@ -150,7 +149,7 @@ SUBSYSTEM_DEF(materials)
 
 
 /// Returns a list to be used as an object's custom_materials. Lists will be cached and re-used based on the parameters.
-/datum/controller/subsystem/materials/proc/FindOrCreateMaterialCombo(list/materials_declaration, multiplier)
+/datum/controller/subsystem/materials/proc/FindOrCreateMaterialCombo(list/materials_declaration, multiplier = 1)
 	if(!LAZYLEN(materials_declaration))
 		return null // If we get a null we pass it right back, we don't want to generate stack traces just because something is clearing out its materials list.
 

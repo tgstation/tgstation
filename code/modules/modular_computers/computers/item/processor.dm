@@ -8,7 +8,7 @@
 	icon_state_unpowered = null
 	icon_state_menu = null
 	hardware_flag = NONE
-	internal_cell = /obj/item/stock_parts/cell/crap
+	internal_cell = /obj/item/stock_parts/power_store/cell/crap
 
 	///The modular computer MACHINE that hosts us.
 	var/obj/machinery/modular_computer/machinery_computer
@@ -44,10 +44,10 @@
 	machinery_computer = null
 	return ..()
 
-/obj/item/modular_computer/processor/use_power(amount = 0, check_programs = TRUE)
+/obj/item/modular_computer/processor/use_energy(amount = 0, check_programs = TRUE)
 	var/obj/machinery/machine_holder = physical
 	if(machine_holder.powered())
-		machine_holder.use_power(amount)
+		machine_holder.use_energy(amount)
 		return TRUE
 	return ..()
 

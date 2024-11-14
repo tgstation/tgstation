@@ -49,6 +49,8 @@
 	var/board_item_type = /obj/item/melee/skateboard
 	///Stamina drain multiplier
 	var/instability = 10
+	///If true, riding the skateboard with walk intent on will prevent crashing.
+	var/can_slow_down = TRUE
 
 /obj/vehicle/ridden/scooter/skateboard/Initialize(mapload)
 	. = ..()
@@ -87,9 +89,11 @@
 	. = ..()
 	if(!bumped_thing.density || !has_buckled_mobs() || world.time < next_crash)
 		return
+	var/mob/living/rider = buckled_mobs[1]
+	if(rider.move_intent == MOVE_INTENT_WALK && can_slow_down) //Going slow prevents you from crashing.
+		return
 
 	next_crash = world.time + 10
-	var/mob/living/rider = buckled_mobs[1]
 	rider.adjustStaminaLoss(instability*6)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
 	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || iscarbon(bumped_thing))
@@ -150,23 +154,22 @@
 			sparks.start() //the most radical way to start plasma fires
 	for(var/mob/living/carbon/victim in location)
 		if(victim.body_position == LYING_DOWN)
-			playsound(location, 'sound/items/trayhit2.ogg', 40)
+			playsound(location, 'sound/items/trayhit/trayhit2.ogg', 40)
 			victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = victim.get_random_valid_zone(even_weights = TRUE), wound_bonus = 20)
 			victim.Paralyze(1.5 SECONDS)
 			skater.adjustStaminaLoss(instability)
 			victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
-	addtimer(CALLBACK(src, PROC_REF(grind)), 1)
+	addtimer(CALLBACK(src, PROC_REF(grind)), 0.1 SECONDS)
 
-/obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/living/carbon/skater = usr
+/obj/vehicle/ridden/scooter/skateboard/mouse_drop_dragged(atom/over_object, mob/user)
+	var/mob/living/carbon/skater = user
 	if(!istype(skater))
 		return
 	if (over_object == skater)
 		pick_up_board(skater)
 
 /obj/vehicle/ridden/scooter/skateboard/proc/pick_up_board(mob/living/carbon/skater)
-	if (skater.incapacitated() || !Adjacent(skater))
+	if (skater.incapacitated || !Adjacent(skater))
 		return
 	if(has_buckled_mobs())
 		to_chat(skater, span_warning("You can't lift this up when somebody's on it."))
@@ -181,12 +184,41 @@
 	board_item_type = /obj/item/melee/skateboard/pro
 	instability = 6
 
-/obj/vehicle/ridden/scooter/skateboard/hoverboard/
+/obj/vehicle/ridden/scooter/skateboard/pro/make_ridable()
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/pro)
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard
 	name = "hoverboard"
 	desc = "A blast from the past, so retro!"
 	board_item_type = /obj/item/melee/skateboard/hoverboard
 	instability = 3
 	icon_state = "hoverboard_red"
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/make_ridable()
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/hover)
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS, mob/living/rider)
+	. = ..()
+	if(!.)
+		return
+	if(rider && (z_move_flags & ZMOVE_CAN_FLY_CHECKS) && direction == UP)
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(rider, span_warning("[src] [p_are()] not powerful enough to fly upwards."))
+		return FALSE
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded
+	name = "holy skateboard"
+	desc = "A board blessed by the gods with the power to grind for our sins. Has the initials 'J.C.' on the underside."
+	board_item_type = /obj/item/melee/skateboard/holyboard
+	instability = 3
+	icon_state = "hoverboard_holy"
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/make_ridable()
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/hover/holy)
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"
@@ -199,12 +231,13 @@
 	name = "improvised skateboard"
 	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
 	board_item_type = /obj/item/melee/skateboard/improvised
+	instability = 12
 
 //CONSTRUCTION
 /obj/item/scooter_frame
 	name = "scooter frame"
 	desc = "A metal frame for building a scooter. Looks like you'll need to add some iron to make wheels."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "scooter_frame"
 	w_class = WEIGHT_CLASS_NORMAL
 

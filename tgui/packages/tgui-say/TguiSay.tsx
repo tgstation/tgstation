@@ -1,4 +1,4 @@
-import { KEY } from 'common/keys';
+import { isEscape, KEY } from 'common/keys';
 import { BooleanLike } from 'common/react';
 import { Component, createRef, RefObject } from 'react';
 import { dragStartHandler } from 'tgui/drag';
@@ -162,7 +162,7 @@ export class TguiSay extends Component<{}, State> {
       ? prefix + currentValue
       : currentValue;
 
-    this.messages.forceSayMsg(grunt);
+    this.messages.forceSayMsg(grunt, this.channelIterator.current());
     this.reset();
   }
 
@@ -206,7 +206,8 @@ export class TguiSay extends Component<{}, State> {
     // Is it a valid prefix?
     const prefix = typed
       .slice(0, 3)
-      ?.toLowerCase() as keyof typeof RADIO_PREFIXES;
+      ?.toLowerCase()
+      ?.replace('.', ':') as keyof typeof RADIO_PREFIXES;
     if (!RADIO_PREFIXES[prefix] || prefix === this.currentPrefix) {
       return;
     }
@@ -245,9 +246,10 @@ export class TguiSay extends Component<{}, State> {
         this.handleIncrementChannel();
         break;
 
-      case KEY.Escape:
-        this.handleClose();
-        break;
+      default:
+        if (isEscape(event.key)) {
+          this.handleClose();
+        }
     }
   }
 
@@ -273,6 +275,7 @@ export class TguiSay extends Component<{}, State> {
   };
 
   reset() {
+    this.currentPrefix = null;
     this.setValue('');
     this.setSize();
     this.setState({

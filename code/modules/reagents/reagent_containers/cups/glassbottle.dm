@@ -4,18 +4,6 @@
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
-/// Initializes GLOB.alcohol_containers, only containers that actually have reagents are added to the list.
-/proc/init_alcohol_containers()
-	var/list/containers = subtypesof(/obj/item/reagent_containers/cup/glass/bottle)
-	for(var/typepath in containers)
-		containers -= typepath
-		var/obj/item/reagent_containers/cup/glass/bottle/instance = new typepath
-		if(!length(instance.list_reagents))
-			qdel(instance)
-			continue
-		containers[typepath] = instance
-	return containers
-
 /obj/item/reagent_containers/cup/glass/bottle
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
@@ -39,12 +27,93 @@
 	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
 	tool_behaviour = TOOL_ROLLINGPIN // Used to knock out the Chef.
 	toolspeed = 1.3 //it's a little awkward to use, but it's a cylinder alright.
+	/// A contained piece of paper, a photo, or space cash, that we can use as a message or gift to future spessmen.
+	var/obj/item/message_in_a_bottle
 
 /obj/item/reagent_containers/cup/glass/bottle/Initialize(mapload, vol)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-		slapcraft_recipes = list(/datum/crafting_recipe/molotov)\
-	)
+	var/static/list/recipes =  list(/datum/crafting_recipe/molotov)
+	AddElement(/datum/element/slapcrafting, recipes)
+	register_context()
+	register_item_context()
+
+/obj/item/reagent_containers/cup/glass/bottle/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(message_in_a_bottle)
+		return NONE
+	if(istype(held_item, /obj/item/paper) || istype(held_item, /obj/item/stack/spacecash) || istype(held_item, /obj/item/photo))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert message"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/obj/item/reagent_containers/cup/glass/bottle/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	if(message_in_a_bottle && HAS_TRAIT(target, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION))
+		context[SCREENTIP_CONTEXT_RMB] = "Toss message"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/obj/item/reagent_containers/cup/glass/bottle/Exited(atom/movable/gone, atom/newloc)
+	if(gone == message_in_a_bottle)
+		message_in_a_bottle = null
+		if(!QDELETED(src))
+			update_icon(UPDATE_OVERLAYS)
+	return ..()
+
+/obj/item/reagent_containers/cup/glass/bottle/CheckParts(list/parts_list)
+	. = ..()
+	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in contents
+	if(bottle.message_in_a_bottle)
+		message_in_a_bottle = bottle.message_in_a_bottle
+		bottle.message_in_a_bottle.forceMove(src)
+
+/obj/item/reagent_containers/cup/glass/bottle/examine(mob/user)
+	. = ..()
+	if(message_in_a_bottle)
+		. += span_info("there's \a [message_in_a_bottle] inside it. Break it to take it out, or find a beach or ocean and toss it with [EXAMINE_HINT("right-click")].")
+	else if(isGlass)
+		. += span_tinynoticeital("you could place a paper, photo or space cash inside it...")
+
+/obj/item/reagent_containers/cup/glass/bottle/update_overlays()
+	. = ..()
+	if(message_in_a_bottle)
+		var/overlay = add_message_overlay()
+		if(overlay)
+			. += overlay
+
+/obj/item/reagent_containers/cup/glass/bottle/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+	if(user.combat_mode || !HAS_TRAIT(target, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION))
+		return ..()
+	if(!user.temporarilyRemoveItemFromInventory(src))
+		balloon_alert(user, "it's stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] tosses [src] in [target]"), span_notice("You toss [src] in [target]"), span_notice("you hear a splash."))
+	SSpersistence.save_message_bottle(message_in_a_bottle, type)
+	playsound(target, 'sound/effects/bigsplash.ogg', 70)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/reagent_containers/cup/glass/bottle/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	if(!isGlass)
+		return NONE
+	if(!istype(item, /obj/item/paper) && !istype(item, /obj/item/stack/spacecash) && !istype(item, /obj/item/photo))
+		return NONE
+	if(message_in_a_bottle)
+		balloon_alert(user, "has a message already!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(item, src))
+		balloon_alert(user, "it's stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "message inserted")
+	message_in_a_bottle = item
+	update_icon(UPDATE_OVERLAYS)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/reagent_containers/cup/glass/bottle/proc/add_message_overlay()
+	if(istype(message_in_a_bottle, /obj/item/paper))
+		return "paper_in_bottle"
+	if(istype(message_in_a_bottle, /obj/item/photo))
+		return "photo_in_bottle"
+	if(istype(message_in_a_bottle, /obj/item/stack/spacecash))
+		return "cash_in_bottle"
 
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"
@@ -57,14 +126,16 @@
 	if(bartender_check(target) && ranged)
 		return
 	SplashReagents(target, ranged, override_spillable = TRUE)
-	var/obj/item/broken_bottle/B = new(drop_location())
+	var/obj/item/broken_bottle/broken = new(drop_location())
 	if(!ranged && thrower)
-		thrower.put_in_hands(B)
-	B.mimic_broken(src, target, break_top)
-	B.inhand_icon_state = broken_inhand_icon_state
+		thrower.put_in_hands(broken)
+	broken.mimic_broken(src, target, break_top)
+	broken.inhand_icon_state = broken_inhand_icon_state
+	if(message_in_a_bottle)
+		message_in_a_bottle.forceMove(drop_location())
 
 	qdel(src)
-	target.Bumped(B)
+	target.Bumped(broken)
 
 /obj/item/reagent_containers/cup/glass/bottle/try_splash(mob/living/user, atom/target)
 
@@ -144,7 +215,7 @@
 		return
 
 	var/amount_lost = intensity * 5
-	reagents.remove_any(amount_lost)
+	reagents.remove_all(amount_lost)
 
 	visible_message(span_warning("Some of [name]'s contents are let loose!"))
 	var/intensity_state = null
@@ -177,7 +248,7 @@
 	inhand_icon_state = "broken_beer"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("stabs", "slashes", "attacks")
 	attack_verb_simple = list("stab", "slash", "attack")
 	sharpness = SHARP_EDGED
@@ -317,6 +388,12 @@
 	icon_state = "rumbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rum = 100)
 
+/obj/item/reagent_containers/cup/glass/bottle/rum/aged
+	name = "Captain Pete's Vintage spiced rum"
+	desc = "Shiver me timbers, a vintage edition of Captain Pete's rum. It's pratically GRIFF in a bottle from over 50 years ago."
+	icon_state = "rumbottle_gold"
+	list_reagents = list(/datum/reagent/consumable/ethanol/rum/aged = 100)
+
 /obj/item/reagent_containers/cup/glass/bottle/maltliquor
 	name = "\improper Rabid Bear malt liquor"
 	desc = "A 40 full of malt liquor. Kicks stronger than, well, a rabid bear."
@@ -333,6 +410,9 @@
 	broken_inhand_icon_state = "broken_holyflask"
 	list_reagents = list(/datum/reagent/water/holywater = 100)
 	drink_type = NONE
+
+/obj/item/reagent_containers/cup/glass/bottle/holywater/add_message_overlay()
+	return //looks too weird...
 
 /obj/item/reagent_containers/cup/glass/bottle/holywater/hell
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
@@ -406,7 +486,7 @@
 	return "[year] [origin] [type]"
 
 /obj/item/reagent_containers/cup/glass/bottle/absinthe
-	name = "extra-strong absinthe"
+	name = "Extra-strong absinthe"
 	desc = "A strong alcoholic drink brewed and distributed by"
 	icon_state = "absinthebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 100)
@@ -496,7 +576,6 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/sake = 100)
 
 /obj/item/reagent_containers/cup/glass/bottle/sake/Initialize(mapload)
-	. = ..()
 	if(prob(10))
 		name = "Fluffy Tail Sake"
 		desc += " On the bottle is a picture of a kitsune with nine touchable tails."
@@ -505,6 +584,12 @@
 		name = "Inubashiri's Home Brew"
 		desc += " Awoo."
 		icon_state = "sakebottle_i"
+	return ..()
+
+/obj/item/reagent_containers/cup/glass/bottle/sake/add_message_overlay()
+	if(icon_state == "sakebottle_k") //doesn't fit the sprite
+		return
+	return ..()
 
 /obj/item/reagent_containers/cup/glass/bottle/fernet
 	name = "Fernet Bronca"
@@ -524,6 +609,9 @@
 	desc = "Still produced on the island of Curaçao, after all these years."
 	icon_state = "curacao_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/curacao = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/curacao/add_message_overlay()
+	return //doesn't fit the sprite
 
 /obj/item/reagent_containers/cup/glass/bottle/navy_rum
 	name = "Pride of the Union Navy-Strength Rum"
@@ -569,6 +657,9 @@
 	///Whether this bottle was a victim of a successful sabrage attempt
 	var/sabraged = FALSE
 
+/obj/item/reagent_containers/cup/glass/bottle/champagne/add_message_overlay()
+	return //doesn't stylistically fit the sprite
+
 /obj/item/reagent_containers/cup/glass/bottle/champagne/cursed
 	sabrage_success_percentile = 0 //force of the sharp item used to sabrage will not increase success chance
 
@@ -602,7 +693,7 @@
 		return
 
 	//The bonus to success chance that the user gets for being a command role
-	var/obj/item/organ/internal/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
 	var/command_bonus = (!isnull(liver) && HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM)) ? 20 : 0
 
 	//The bonus to success chance that the user gets for having a sabrage skillchip installed/otherwise having the trait through other means
@@ -678,7 +769,7 @@
 	name = "champagne cork"
 	icon = 'icons/obj/drinks/drink_effects.dmi'
 	icon_state = "champagne_cork"
-	hitsound = 'sound/weapons/genhit.ogg'
+	hitsound = 'sound/items/weapons/genhit.ogg'
 	damage = 10
 	sharpness = NONE
 	impact_effect_type = null
@@ -728,11 +819,17 @@
 	icon_state = "hoochbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/hooch = 100)
 
+/obj/item/reagent_containers/cup/glass/bottle/hooch/add_message_overlay()
+	return //doesn't fit the sprite
+
 /obj/item/reagent_containers/cup/glass/bottle/moonshine
 	name = "moonshine jug"
 	desc = "It is said that the ancient Applalacians used these stoneware jugs to capture lightning in a bottle."
 	icon_state = "moonshinebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/moonshine/add_message_overlay()
+	return //doesn't fit the sprite
 
 /obj/item/reagent_containers/cup/glass/bottle/mushi_kombucha
 	name = "Solzara Brewing Company Mushi Kombucha"
@@ -785,15 +882,15 @@
 	)
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/CheckParts(list/parts_list)
-	..()
-	var/obj/item/reagent_containers/cup/glass/bottle/B = locate() in contents
-	if(B)
-		icon_state = B.icon_state
-		B.reagents.copy_to(src, 100)
-		if(istype(B, /obj/item/reagent_containers/cup/glass/bottle/juice))
-			desc += " You're not sure if making this out of a carton was the brightest idea."
-			isGlass = FALSE
-	return
+	. = ..()
+	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in contents
+	if(!bottle)
+		return
+	icon_state = bottle.icon_state
+	bottle.reagents.copy_to(src, 100)
+	if(istype(bottle, /obj/item/reagent_containers/cup/glass/bottle/juice))
+		desc += " You're not sure if making this out of a carton was the brightest idea."
+		isGlass = FALSE
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = FALSE)
 	..(hit_atom, throwingdatum, do_splash = FALSE)
@@ -894,8 +991,9 @@
 	desc = "Fermented prison wine made from fruit, sugar, and despair. You probably shouldn't drink this around Security."
 	icon_state = "trashbag1" // pruno releases air as it ferments, we don't want to simulate this in atmos, but we can make it look like it did
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
-		to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
-		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
+		if(HAS_TRAIT(M, TRAIT_ANOSMIA))
+			to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
+		playsound(get_turf(src), 'sound/effects/bubbles/bubbles2.ogg', 25, TRUE)
 
 /**
  * Cartons

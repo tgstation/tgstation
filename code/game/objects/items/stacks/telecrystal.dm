@@ -11,7 +11,7 @@
 	merge_type = /obj/item/stack/telecrystal
 	novariants = FALSE
 
-/obj/item/stack/telecrystal/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/stack/telecrystal/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(interacting_with != user) //You can't go around smacking people with crystals to find out if they have an uplink or not.
 		return NONE
 

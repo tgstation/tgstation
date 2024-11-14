@@ -13,36 +13,19 @@
 // We also make SURE to fail loud, IE: if something stops the message from reaching the recipient, the sender HAS to know
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
-/// Allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
-/client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
-	set category = null
-	set name = "Admin PM Mob"
-	if(!holder)
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Context: Only administrators may use this command."),
-			confidential = TRUE)
-		return
-	if(!ismob(M))
-		to_chat(src,
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, "Admin PM Mob", mob/target in world)
+	if(!ismob(target))
+		to_chat(
+			src,
 			type = MESSAGE_TYPE_ADMINPM,
 			html = span_danger("Error: Admin-PM-Context: Target mob is not a mob, somehow."),
-			confidential = TRUE)
+			confidential = TRUE,
+		)
 		return
-	cmd_admin_pm(M.client, null)
+	user.cmd_admin_pm(target.client, null)
 	BLACKBOX_LOG_ADMIN_VERB("Admin PM Mob")
 
-/// Shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
-/client/proc/cmd_admin_pm_panel()
-	set category = "Admin"
-	set name = "Admin PM"
-	if(!holder)
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Panel: Only administrators may use this command."),
-			confidential = TRUE)
-		return
-
+ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM", ADMIN_CATEGORY_MAIN)
 	var/list/targets = list()
 	for(var/client/client in GLOB.clients)
 		var/nametag = ""
@@ -62,7 +45,7 @@
 	var/target = input(src,"To whom shall we send a message?", "Admin PM", null) as null|anything in sort_list(targets)
 	if (isnull(target))
 		return
-	cmd_admin_pm(targets[target], null)
+	user.cmd_admin_pm(targets[target], null)
 	BLACKBOX_LOG_ADMIN_VERB("Admin PM")
 
 /// Replys to some existing ahelp, reply to whom, which can be a client or ckey
@@ -120,7 +103,7 @@
 		if(length(recipient_interactions) == 1)
 			if(length(opening_interactions)) // Inform the admin that they aren't the first
 				var/printable_interators = english_list(opening_interactions)
-				SEND_SOUND(src, sound('sound/machines/buzz-sigh.ogg', volume=30))
+				SEND_SOUND(src, sound('sound/machines/buzz/buzz-sigh.ogg', volume=30))
 				message_prompt += "\n\n**This ticket is already being responded to by: [printable_interators]**"
 			// add the admin who is currently responding to the list of people responding
 			LAZYADD(recipient_ticket.opening_responders, src)
@@ -263,7 +246,7 @@
 			request = "[request] an Administrator."
 		else
 			request = "[request] [recipient_print_key]."
-		//get message text, limit it's length.and clean/escape html
+		//get message text, limit its length.and clean/escape html
 		msg = input(src,"Message:", request) as message|null
 		msg = trim(msg)
 
@@ -519,7 +502,7 @@
 
 	return TRUE
 
-/// Notifies all admins about the existance of an admin pm, then logs the pm
+/// Notifies all admins about the existence of an admin pm, then logs the pm
 /// message_target here can be either [EXTERNAL_PM_USER], indicating that this message is intended for some external chat channel
 /// or a /client, in which case we send in the standard form
 /// log_message is the raw message to send, it will be filtered and treated to ensure we do not break any text handling
@@ -629,7 +612,7 @@
 	// The ticket's id
 	var/ticket_id = ticket?.id
 
-	var/compliant_msg = trim(lowertext(message))
+	var/compliant_msg = trim(LOWER_TEXT(message))
 	var/tgs_tagged = "[sender](TGS/External)"
 	var/list/splits = splittext(compliant_msg, " ")
 	var/split_size = length(splits)

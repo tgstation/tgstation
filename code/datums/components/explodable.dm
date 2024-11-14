@@ -60,10 +60,11 @@
 		return
 	check_if_detonate(I)
 
-/datum/component/explodable/proc/explodable_impact(datum/source, atom/hit_atom, datum/thrownthing/throwingdatum)
+/datum/component/explodable/proc/explodable_impact(datum/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
 	SIGNAL_HANDLER
 
-	check_if_detonate(hit_atom)
+	if(!caught)
+		check_if_detonate(hit_atom)
 
 /datum/component/explodable/proc/explodable_bump(datum/source, atom/A)
 	SIGNAL_HANDLER
@@ -122,13 +123,7 @@
 	if(!istype(wearer))
 		return FALSE
 
-	// Maybe switch this over if we have a get_all_clothing or similar proc for carbon mobs.
-	// get_all_worn_items is a lie, they include pockets.
-	var/list/worn_items = list()
-	worn_items += list(wearer.head, wearer.wear_mask, wearer.gloves, wearer.shoes, wearer.glasses, wearer.ears)
-	if(ishuman(wearer))
-		var/mob/living/carbon/human/human_wearer = wearer
-		worn_items += list(human_wearer.wear_suit, human_wearer.w_uniform)
+	var/list/worn_items = wearer.get_equipped_items()
 
 	if(!(item in worn_items))
 		return FALSE

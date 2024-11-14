@@ -9,19 +9,20 @@
 	VAR_PROTECTED/mob/user
 
 	VAR_PRIVATE/atom/movable/screen/tutorial_instruction/instruction_screen
+	VAR_PRIVATE/atom/movable/screen/tutorial_skip/skip_button
 
 /datum/tutorial/New(mob/user)
 	src.user = user
 
-	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(destroy_self))
-	RegisterSignal(user.client, COMSIG_QDELETING, PROC_REF(destroy_self))
+	RegisterSignals(user, list(COMSIG_QDELETING, COMSIG_MOB_LOGOUT), PROC_REF(destroy_self))
 
 /datum/tutorial/Destroy(force)
 	user.client?.screen -= instruction_screen
+	user.client?.screen -= skip_button
 	QDEL_NULL(instruction_screen)
+	QDEL_NULL(skip_button)
 
 	user = null
-
 	return ..()
 
 /// Gets the [`/datum/tutorial_manager`] that owns this tutorial.
@@ -71,6 +72,7 @@
 
 	if (!isnull(instruction_screen))
 		animate(instruction_screen, time = INSTRUCTION_SCREEN_DELAY, alpha = 0, easing = SINE_EASING)
+		animate(skip_button, time = INSTRUCTION_SCREEN_DELAY, alpha = 0, easing = SINE_EASING)
 		delay += INSTRUCTION_SCREEN_DELAY
 
 	QDEL_IN(src, delay)
@@ -98,6 +100,10 @@
 /// If a message already exists, will fade it out and replace it.
 /datum/tutorial/proc/show_instruction(message)
 	PROTECTED_PROC(TRUE)
+	if(isnull(skip_button))
+		skip_button = new
+		user.client?.screen += skip_button
+		RegisterSignal(skip_button, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(dismiss))
 
 	if (isnull(instruction_screen))
 		instruction_screen = new(null, null, message, user.client)
@@ -129,11 +135,11 @@
 	var/list/origin_offsets = screen_loc_to_offset(initial_screen_loc, view)
 
 	// A little offset to the right
-	var/matrix/origin_transform = TRANSLATE_MATRIX(origin_offsets[1] - world.icon_size * 0.5, origin_offsets[2] - world.icon_size * 1.5)
+	var/matrix/origin_transform = TRANSLATE_MATRIX(origin_offsets[1] - ICON_SIZE_X * 0.5, origin_offsets[2] - ICON_SIZE_Y * 1.5)
 
 	var/list/target_offsets = screen_loc_to_offset(target_screen_loc, view)
 	// `- world.icon_Size * 0.5` to patch over a likely bug in screen_loc_to_offset with CENTER, needs more looking at
-	var/matrix/animate_to_transform = TRANSLATE_MATRIX(target_offsets[1] - world.icon_size * 1.5, target_offsets[2] - world.icon_size)
+	var/matrix/animate_to_transform = TRANSLATE_MATRIX(target_offsets[1] - ICON_SIZE_X * 1.5, target_offsets[2] - ICON_SIZE_Y)
 
 	preview.transform = origin_transform
 
@@ -242,7 +248,13 @@
 /// Dismisses the tutorial, not marking it as completed in the database.
 /// Call `/datum/tutorial/proc/dismiss()` instead.
 /datum/tutorial_manager/proc/dismiss(mob/user)
-	performing_ckeys -= user.ckey
+	// this can be null in some disconnect/mob logout cases so we use some fallbacks
+	var/user_ckey = user.ckey
+	if(!user_ckey && user.canon_client)
+		user_ckey = user.canon_client.ckey
+	if(!user_ckey && user.mind?.key)
+		user_ckey = ckey(user.mind.key)
+	performing_ckeys -= user_ckey
 
 /// Given a ckey, will mark them as being completed without affecting the database.
 /// Call `/datum/tutorial/proc/complete()` instead.

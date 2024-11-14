@@ -16,7 +16,7 @@
 
 /datum/reagent/impurity/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	var/need_mob_update
 
 	if(liver)//Though, lets be safe
@@ -104,6 +104,9 @@
 
 /datum/reagent/inverse/cryostylane/on_mob_add(mob/living/carbon/affected_mob, amount)
 	. = ..()
+	if(HAS_TRAIT(affected_mob, TRAIT_RESISTCOLD))
+		holder.remove_reagent(type, volume)
+		return
 	cube = new /obj/structure/ice_stasis(get_turf(affected_mob))
 	cube.color = COLOR_CYAN
 	cube.set_anchored(TRUE)

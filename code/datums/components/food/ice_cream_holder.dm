@@ -58,6 +58,7 @@
 
 	RegisterSignal(owner, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(on_item_attack_obj))
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	if(change_name)
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_NAME, PROC_REF(on_update_name))
 	if(!change_desc)
@@ -105,20 +106,27 @@
 		else
 			source.desc = replacetext(replacetext("[flavour.desc_prefix] [flavour.desc]", "$CONE_NAME", initial(source.name)), "$CUSTOM_NAME", key)
 	else /// Many flavours.
-		source.desc = "A delicious [initial(source.name)] filled with scoops of [english_list(scoops)] icecream. That's as many as [scoops_len] scoops!"
+		source.desc = "A delicious [initial(source.name)] filled with scoops of [english_list(scoops)] ice cream. That's as many as [scoops_len] scoops!"
+
+/datum/component/ice_cream_holder/proc/on_examine(atom/source, mob/mob, list/examine_list)
+	SIGNAL_HANDLER
+	if(length(scoops) < max_scoops)
+		examine_list += span_tinynoticeital("you could use a ice cream vat to fill it with yummy ice cream...")
 
 /datum/component/ice_cream_holder/proc/on_examine_more(atom/source, mob/mob, list/examine_list)
 	SIGNAL_HANDLER
 	var/scoops_len = length(scoops)
+	if(!scoops_len)
+		return
 	if(scoops_len == 1 || length(unique_list(scoops)) == 1) /// Only one flavour.
 		var/key = scoops[1]
 		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[LAZYACCESS(special_scoops, key) || key]
 		if(flavour?.desc) //I scream.
-			examine_list += "[source.p_Theyre()] filled with scoops of [flavour ? flavour.name : "broken, unhappy"] icecream."
+			examine_list += "[source.p_Theyre()] filled with scoops of [flavour ? flavour.name : "broken, unhappy"] ice cream."
 		else
 			examine_list += replacetext(replacetext("[source.p_Theyre()] [flavour.desc]", "$CONE_NAME", initial(source.name)), "$CUSTOM_NAME", key)
 	else /// Many flavours.
-		examine_list += "[source.p_Theyre()] filled with scoops of [english_list(scoops)] icecream. That's as many as [scoops_len] scoops!"
+		examine_list += "[source.p_Theyre()] filled with scoops of [english_list(scoops)] ice cream. That's as many as [scoops_len] scoops!"
 
 /datum/component/ice_cream_holder/proc/on_update_overlays(atom/source, list/new_overlays)
 	SIGNAL_HANDLER
@@ -330,14 +338,14 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 /datum/ice_cream_flavour/custom
 	name = ICE_CREAM_CUSTOM
 	color = COLOR_STARLIGHT //has its own mutable appearance overlay it will be overwritten with anyways.
-	desc = "filled with artisanal icecream. Made with real $CUSTOM_NAME. Ain't that something."
+	desc = "filled with artisanal ice cream. Made with real $CUSTOM_NAME. Ain't that something."
 	ingredients = list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice)
 	ingredients_text = "optional flavorings"
 	takes_custom_ingredients = TRUE
 
 /datum/ice_cream_flavour/custom/korta
 	name = ICE_CREAM_KORTA_CUSTOM
-	desc = "filled with artisanal lizard-friendly icecream. Made with real $CUSTOM_NAME. Ain't that something."
+	desc = "filled with artisanal lizard-friendly ice cream. Made with real $CUSTOM_NAME. Ain't that something."
 	ingredients = list(/datum/reagent/consumable/korta_milk, /datum/reagent/consumable/ice)
 	ingredients_text = "optional flavorings"
 
@@ -354,7 +362,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 /datum/ice_cream_flavour/bland
 	name = ICE_CREAM_BLAND
 	color = COLOR_ICECREAM_CUSTOM
-	desc = "filled with anemic, flavorless icecream. You wonder why this was ever scooped..."
+	desc = "filled with anemic, flavorless ice cream. You wonder why this was ever scooped..."
 	hidden = TRUE
 
 #undef SWEETENER_PER_SCOOP

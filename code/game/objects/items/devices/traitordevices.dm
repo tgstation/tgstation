@@ -76,7 +76,7 @@ effective or pretty fucking useless.
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 
-/obj/item/healthanalyzer/rad_laser/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/healthanalyzer/rad_laser/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!stealth || !irradiate)
 		. = ..()
 
@@ -138,7 +138,7 @@ effective or pretty fucking useless.
 	data["cooldown"] = DisplayTimeText(get_cooldown())
 	return data
 
-/obj/item/healthanalyzer/rad_laser/ui_act(action, params)
+/obj/item/healthanalyzer/rad_laser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -329,22 +329,65 @@ effective or pretty fucking useless.
 
 /obj/item/jammer
 	name = "radio jammer"
-	desc = "Device used to disrupt nearby radio communication."
+	desc = "Device used to disrupt nearby radio communication. Alternate function creates a powerful distruptor wave which disables all nearby listening devices."
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
 	var/range = 12
+	var/jam_cooldown_duration = 15 SECONDS
+	COOLDOWN_DECLARE(jam_cooldown)
 
-/obj/item/jammer/attack_self(mob/user)
-	to_chat(user,span_notice("You [active ? "deactivate" : "activate"] [src]."))
+/obj/item/jammer/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/atom/movable/screen/alert/give/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_LMB] = "Release distruptor wave"
+	context[SCREENTIP_CONTEXT_RMB] = "Toggle"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/jammer/attack_self(mob/user, modifiers)
+	. = ..()
+	if (!COOLDOWN_FINISHED(src, jam_cooldown))
+		user.balloon_alert(user, "on cooldown!")
+		return
+
+	user.balloon_alert(user, "distruptor wave released!")
+	to_chat(user, span_notice("You release a distruptor wave, disabling all nearby radio devices."))
+	for (var/atom/potential_owner in view(7, user))
+		disable_radios_on(potential_owner)
+	COOLDOWN_START(src, jam_cooldown, jam_cooldown_duration)
+
+/obj/item/jammer/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	to_chat(user, span_notice("You [active ? "deactivate" : "activate"] [src]."))
+	user.balloon_alert(user, "[active ? "deactivated" : "activated"] the jammer")
 	active = !active
 	if(active)
 		GLOB.active_jammers |= src
-
 	else
 		GLOB.active_jammers -= src
-
 	update_appearance()
+
+/obj/item/jammer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return
+
+	if (!(interacting_with in view(7, user)))
+		user.balloon_alert(user, "out of reach!")
+		return
+
+	interacting_with.balloon_alert(user, "radio distrupted!")
+	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [interacting_with]."))
+	disable_radios_on(interacting_with)
+
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/jammer/proc/disable_radios_on(atom/target)
+	for (var/obj/item/radio/radio in target.get_all_contents() + target)
+		radio.set_broadcasting(FALSE)
 
 /obj/item/jammer/Destroy()
 	GLOB.active_jammers -= src
@@ -361,29 +404,32 @@ effective or pretty fucking useless.
 	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 
-/obj/item/storage/toolbox/emergency/turret/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(!istype(attacking_item, /obj/item/wrench/combat))
-		return ..()
-
+/obj/item/storage/toolbox/emergency/turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/wrench/combat))
+		return NONE
 	if(!user.combat_mode)
-		return
-
-	if(!attacking_item.toolspeed)
-		return
-
+		return NONE
+	if(!tool.toolspeed)
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "constructing...")
-	if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
-		return
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 20))
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "constructed!")
-	user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
-		span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(
+		span_danger("[user] bashes [src] with [tool]!"),
+		span_danger("You bash [src] with [tool]!"),
+		null,
+		COMBAT_MESSAGE_RANGE,
+	)
 
-	playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
+	playsound(src, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
 	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src
 	forceMove(turret)
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list("[REF(user)]")

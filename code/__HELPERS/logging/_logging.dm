@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	SEND_TEXT(world.log, text)
 #endif
 
-#if defined(REFERENCE_DOING_IT_LIVE)
+#if defined(REFERENCE_TRACKING_LOG_APART)
 #define log_reftracker(msg) log_harddel("## REF SEARCH [msg]")
 
 /proc/log_harddel(text)

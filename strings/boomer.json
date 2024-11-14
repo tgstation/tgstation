@@ -1,53 +1,53 @@
 {
-    "boomer": [
-	"@pick(expense) isn't really that expensive.",
-	"@pick(kids) these days have it too easy!",
-	"Back in my day...",
-	"Do I look like I know what a @pick(file) is!?",
-	"How do I open a @pick(file) again?",
-	"It's simply a matter of showing up, looking the manager in the eye, giving him a firm handshake and telling him you want the job.",
-	"Listen here Jack, how do I open @pick(file)?",
-	"These damn @pick(kids) need to get a @pick(impossible) for once!",
-	"This generation can't take a joke.",
-	"Unlike you snowflakes, I'm not offended so easily.",
-	"When I was a kid I had to walk to school uphill both ways!",
-	"When I was your age...",
-	"Why are @pick(kids) these days so @pick(sad) all the time?",
-	"You'll never get anywhere in life without a degree."
-    ],
-
-	"expense": [
-	"A car",
-	"A house",
-	"College",
-	"Food",
-	"Healthcare"
+	"boomer": [
+		"@pick(expense) isn't really that expensive.",
+		"@pick(kids) these days have it too easy!",
+		"Back in my day...",
+		"Do I look like I know what a @pick(file) is!?",
+		"How do I open a @pick(file) again?",
+		"It's simply a matter of showing up, looking the manager in the eye, giving him a firm handshake and telling him you want the job.",
+		"Listen here Jack, how do I open @pick(file)?",
+		"These damn @pick(kids) need to get a @pick(impossible) for once!",
+		"This generation can't take a joke.",
+		"Unlike you snowflakes, I'm not offended so easily.",
+		"When I was a kid I had to walk to school uphill both ways!",
+		"When I was your age...",
+		"Why are @pick(kids) these days so @pick(sad) all the time?",
+		"You'll never get anywhere in life without a degree."
 	],
 
-    "kids": [
-	"kids",
-	"millennials",
-	"snowflakes"
-    ],
+	"expense": [
+		"A car",
+		"A house",
+		"College",
+		"Food",
+		"Healthcare"
+	],
 
-    "file": [
-	"DMI",
-	"JPEG",
-	"JSON",
-	"PDF"
-    ],
+	"kids": [
+		"kids",
+		"millennials",
+		"snowflakes"
+	],
 
-    "sad": [
-	"depressed",
-	"sad and depressed",
-	"sad"
-    ],
+	"file": [
+		"DMI",
+		"JPEG",
+		"JSON",
+		"PDF"
+	],
 
-    "impossible": [
-	"house",
-	"job and a house",
-	"job",
-	"life"
-    ]
+	"sad": [
+		"depressed",
+		"sad and depressed",
+		"sad"
+	],
+
+	"impossible": [
+		"house",
+		"job and a house",
+		"job",
+		"life"
+	]
 
 }

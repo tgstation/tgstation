@@ -5,6 +5,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	move_resist = INFINITY
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 	throwforce = 0
 
 /mob/dead/Initialize(mapload)
@@ -73,33 +74,38 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(tgui_alert(usr, "Jump to server [pick] ([addr])?", "Server Hop", list("Yes", "No")) != "Yes")
 		return
 
-	var/client/C = client
-	to_chat(C, span_notice("Sending you to [pick]."))
-	new /atom/movable/screen/splash(null, null, C)
+	var/client/hopper = client
+	to_chat(hopper, span_notice("Sending you to [pick]."))
+	var/atom/movable/screen/splash/fade_in = new(null, src, hopper, FALSE)
+	fade_in.Fade(FALSE)
 
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, SERVER_HOPPER_TRAIT)
 	sleep(2.9 SECONDS) //let the animation play
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, SERVER_HOPPER_TRAIT)
 
-	if(!C)
+	if(!hopper)
 		return
 
 	winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
 
-	C << link("[addr]")
+	hopper << link("[addr]")
 
 #undef SERVER_HOPPER_TRAIT
 
-/mob/dead/proc/update_z(new_z) // 1+ to register, null to unregister
-	if (registered_z != new_z)
-		if (registered_z)
-			SSmobs.dead_players_by_zlevel[registered_z] -= src
-		if (client)
-			if (new_z)
-				SSmobs.dead_players_by_zlevel[new_z] += src
-			registered_z = new_z
-		else
-			registered_z = null
+/**
+ * updates the Z level for dead players
+ * If they don't have a new z, we'll keep the old one, preventing bugs from ghosting and re-entering, among others
+ */
+/mob/dead/proc/update_z(new_z)
+	if(registered_z == new_z)
+		return
+	if(registered_z)
+		SSmobs.dead_players_by_zlevel[registered_z] -= src
+	if(isnull(client))
+		registered_z = null
+		return
+	registered_z = new_z
+	SSmobs.dead_players_by_zlevel[new_z] += src
 
 /mob/dead/Login()
 	. = ..()

@@ -76,7 +76,7 @@ export async function processTestMerges({ github, context }) {
 		const existingComment =
 			comments.repository.pullRequest.comments.nodes.find(
 				(comment) =>
-					comment.author.login === "github-actions" &&
+					comment.author?.login === "github-actions" &&
 					comment.body.startsWith(TEST_MERGE_COMMENT_HEADER)
 			);
 
@@ -87,19 +87,41 @@ export async function processTestMerges({ github, context }) {
 		}
 
 		if (existingComment === undefined) {
-			await github.rest.issues.createComment({
-				owner: context.repo.owner,
-				repo: context.repo.repo,
-				issue_number: prNumber,
-				body: newBody,
-			});
+			try {
+				await github.rest.issues.createComment({
+					owner: context.repo.owner,
+					repo: context.repo.repo,
+					issue_number: prNumber,
+					body: newBody,
+				});
+			} catch (error) {
+				if(error.status){
+					console.error(`Failed to create comment for #{prNumber}`)
+					console.error(error)
+					continue;
+				}
+				else{
+					throw error
+				}
+			}
 		} else {
-			await github.rest.issues.updateComment({
-				owner: context.repo.owner,
-				repo: context.repo.repo,
-				comment_id: existingComment.databaseId,
-				body: newBody,
-			});
+			try {
+				await github.rest.issues.updateComment({
+					owner: context.repo.owner,
+					repo: context.repo.repo,
+					comment_id: existingComment.databaseId,
+					body: newBody,
+				});
+			} catch (error) {
+				if(error.status){
+					console.error(`Failed to update comment for #{prNumber}`)
+					console.error(error)
+					continue;
+				}
+				else{
+					throw error
+				}
+			}
 		}
 	}
 }

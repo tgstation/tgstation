@@ -78,7 +78,7 @@
 /// Starts the movement process, persists while the holder is moving through pipes
 /obj/structure/disposalholder/proc/start_moving()
 	var/delay = world.tick_lag
-	var/datum/move_loop/our_loop = SSmove_manager.move_disposals(src, delay = delay, timeout = delay * count)
+	var/datum/move_loop/our_loop = GLOB.move_manager.move_disposals(src, delay = delay, timeout = delay * count)
 	if(our_loop)
 		RegisterSignal(our_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 		RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(try_expel))
@@ -135,7 +135,7 @@
 	if(src in escapee.do_afters)
 		return //already trying to escape
 	to_chat(escapee, span_warning("You push against the thin pipe walls..."))
-	playsound(loc, 'sound/machines/airlock_alien_prying.ogg', vol = 30, vary = FALSE, extrarange = 3) //yeah I know but at least it sounds like metal being bent.
+	playsound(loc, 'sound/machines/airlock/airlock_alien_prying.ogg', vol = 30, vary = FALSE, extrarange = 3) //yeah I know but at least it sounds like metal being bent.
 
 	if(!do_after(escapee, 20 SECONDS, get_turf(loc)))
 		return
@@ -172,7 +172,7 @@
 	for(var/obj/structure/disposalpipe/P in T)
 		if(fdir & P.dpdir) // find pipe direction mask that matches flipped dir
 			if(QDELING(P))
-				to_chat(world, "DEBUG -- [src] here, new pipe is being thanos'd")
+				CRASH("Pipe is being deleted while being used by a disposal holder at ([P.x], [P.y], [P.z]")
 			return P
 	// if no matching pipe, return null
 	return null
@@ -195,7 +195,7 @@
 
 // called when player tries to move while in a pipe
 /obj/structure/disposalholder/relaymove(mob/living/user, direction)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 	for(var/mob/M in range(5, get_turf(src)))
 		M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", MSG_AUDIBLE)

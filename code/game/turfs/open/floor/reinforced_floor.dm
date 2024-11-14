@@ -4,7 +4,7 @@
 	desc = "Extremely sturdy."
 	icon_state = "engine"
 	holodeck_compatible = TRUE
-	thermal_conductivity = 0.025
+	thermal_conductivity = 0.01
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 	footstep = FOOTSTEP_PLATING
@@ -13,6 +13,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 	rcd_proof = TRUE
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 
 
 /turf/open/floor/engine/examine(mob/user)
@@ -74,7 +75,7 @@
 
 	return TRUE
 
-/turf/open/floor/engine/singularity_pull(S, current_size)
+/turf/open/floor/engine/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		if(floor_tile)

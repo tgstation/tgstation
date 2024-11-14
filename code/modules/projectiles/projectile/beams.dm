@@ -4,8 +4,8 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 20
 	damage_type = BURN
-	hitsound = 'sound/weapons/sear.ogg'
-	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
+	hitsound = 'sound/items/weapons/sear.ogg'
+	hitsound_wall = 'sound/items/weapons/effects/searwall.ogg'
 	armor_flag = LASER
 	eyeblur = 4 SECONDS
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
@@ -38,16 +38,23 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 	damage = 0
 
+/obj/projectile/beam/laser/carbine/cybersun
+	name = "red plasma beam"
+	icon_state = "lava"
+	light_color = COLOR_DARK_RED
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
+	damage = 9
+	wound_bonus = -40
+	speed = 1.1
+
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
+	icon_state = "hellfire"
 	wound_bonus = 0
 	damage = 30
 	speed = 0.6 // higher power = faster, that's how light works right
-
-/obj/projectile/beam/laser/hellfire/Initialize(mapload)
-	. = ..()
-	transform *= 2
+	light_color = "#FF969D"
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
@@ -69,15 +76,15 @@
 	name = "low-power laser"
 	icon_state = "laser_musket"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
-	damage = 25
-	stamina = 40
+	damage = 28
+	stamina = 35
 	light_color = COLOR_STRONG_VIOLET
 	weak_against_armour = TRUE
 
 /obj/projectile/beam/laser/musket/prime
 	name = "mid-power laser"
-	damage = 30
-	stamina = 45
+	damage = 25
+	stamina = 20
 	weak_against_armour = FALSE
 
 /obj/projectile/beam/weak
@@ -128,7 +135,7 @@
 	damage = 30
 	damage_type = STAMINA
 	armor_flag = ENERGY
-	hitsound = 'sound/weapons/sear_disabler.ogg'
+	hitsound = 'sound/items/weapons/sear_disabler.ogg'
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/disabler
@@ -190,7 +197,7 @@
 	wound_bonus = -40
 	bare_wound_bonus = 70
 
-/obj/projectile/beam/emitter/singularity_pull()
+/obj/projectile/beam/emitter/singularity_pull(atom/singularity, current_size)
 	return //don't want the emitters to miss
 
 /obj/projectile/beam/emitter/hitscan
@@ -249,23 +256,6 @@
 /obj/projectile/beam/lasertag/bluetag/hitscan
 	hitscan = TRUE
 
-//a shrink ray that shrinks stuff, which grows back after a short while.
-/obj/projectile/beam/shrink
-	name = "shrink ray"
-	icon_state = "blue_laser"
-	hitsound = 'sound/weapons/shrink_hit.ogg'
-	damage = 0
-	damage_type = STAMINA
-	armor_flag = ENERGY
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
-	light_color = LIGHT_COLOR_BLUE
-	var/shrink_time = 90
-
-/obj/projectile/beam/shrink/on_hit(atom/target, blocked = 0, pierce_hit)
-	. = ..()
-	if(isopenturf(target) || isindestructiblewall(target))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
-		return
-	target.AddComponent(/datum/component/shrink, shrink_time)
-
-/obj/projectile/beam/shrink/is_hostile_projectile()
-	return TRUE
+/obj/projectile/magic/shrink/alien
+	antimagic_flags = NONE
+	shrink_time = 9 SECONDS

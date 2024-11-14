@@ -53,11 +53,10 @@
 
 /**
  * Standard mob ClickOn()
- * Handles exceptions: Buildmode, middle click, modified clicks, mech actions
  *
  * After that, mostly just check your state, check whether you're holding an item,
- * check whether you're adjacent to the target, then pass off the click to whoever
- * is receiving it.
+ * check whether you're adjacent to the target, then pass off the click to whoever is receiving it.
+ *
  * The most common are:
  * * [mob/proc/UnarmedAttack] (atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
  * * [atom/proc/attackby] (item,user) - used only when adjacent
@@ -94,7 +93,7 @@
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			alt_click_on_secondary(A)
+			AltClickSecondaryOn(A)
 		else
 			AltClickOn(A)
 		return
@@ -102,7 +101,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if(INCAPACITATED_IGNORING(src, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 		return
 
 	face_atom(A)
@@ -167,13 +166,7 @@
 			UnarmedAttack(A, TRUE, modifiers)
 	else
 		if(W)
-			if(LAZYACCESS(modifiers, RIGHT_CLICK))
-				var/after_attack_secondary_result = W.afterattack_secondary(A, src, FALSE, params)
-
-				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
-					W.afterattack(A, src, FALSE, params)
-			else
-				W.afterattack(A, src, FALSE, params)
+			A.base_ranged_item_interaction(src, W, modifiers)
 		else
 			if(LAZYACCESS(modifiers, RIGHT_CLICK))
 				ranged_secondary_attack(A, modifiers)
@@ -204,7 +197,7 @@
  * A backwards depth-limited breadth-first-search to see if the target is
  * logically "in" anything adjacent to us.
  */
-/atom/movable/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
+/atom/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
 	var/list/direct_access = DirectAccess()
 	var/depth = 1 + (view_only ? STORAGE_VIEW_DEPTH : INVENTORY_DEPTH)
 
@@ -232,9 +225,13 @@
 				next += target.loc
 
 		checking = next
+
+	if(SEND_SIGNAL(src, COMSIG_ATOM_CANREACH, ultimate_target) & COMPONENT_ALLOW_REACH)
+		return TRUE
+
 	return FALSE
 
-/atom/movable/proc/DirectAccess()
+/atom/proc/DirectAccess()
 	return list(src, loc)
 
 /mob/DirectAccess(atom/target)
@@ -341,111 +338,18 @@
 	return
 
 /atom/proc/ShiftClick(mob/user)
+	SEND_SIGNAL(src, COMSIG_SHIFT_CLICKED_ON, user)
 	var/flags = SEND_SIGNAL(user, COMSIG_CLICK_SHIFT, src)
 	if(flags & COMSIG_MOB_CANCEL_CLICKON)
 		return
 	if(user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
 		user.examinate(src)
 
-/**
- * Ctrl click
- * For most objects, pull
- */
-/mob/proc/CtrlClickOn(atom/A)
-	A.CtrlClick(src)
-	return
-
-/atom/proc/CtrlClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
-	SEND_SIGNAL(user, COMSIG_MOB_CTRL_CLICKED, src)
-
-	var/mob/living/ML = user
-	if(istype(ML))
-		ML.pulled(src)
-	if(!can_interact(user))
-		return FALSE
-
-/mob/living/CtrlClick(mob/living/user)
-	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())
-		return ..()
-
-	if(world.time < user.next_move)
-		return FALSE
-
-	if(user.grab(src))
-		user.changeNext_move(CLICK_CD_MELEE)
-		return TRUE
-
-	return ..()
-
-/mob/proc/CtrlMiddleClickOn(atom/A)
-	if(check_rights_for(client, R_ADMIN))
-		client.toggle_tag_datum(A)
-	else
-		A.CtrlClick(src)
-	return
-
-/**
- * Alt click
- * Unused except for AI
- */
-/mob/proc/AltClickOn(atom/A)
-	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
-	if(. & COMSIG_MOB_CANCEL_CLICKON)
-		return
-	A.AltClick(src)
-
-/atom/proc/AltClick(mob/user)
-	if(!user.can_interact_with(src))
-		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
-		return
-	var/turf/T = get_turf(src)
-	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T) && !HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
-		user.set_listed_turf(T)
-
-///The base proc of when something is right clicked on when alt is held - generally use alt_click_secondary instead
-/atom/proc/alt_click_on_secondary(atom/A)
-	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON_SECONDARY, A)
-	if(. & COMSIG_MOB_CANCEL_CLICKON)
-		return
-	A.alt_click_secondary(src)
-
-///The base proc of when something is right clicked on when alt is held
-/atom/proc/alt_click_secondary(mob/user)
-	if(!user.can_interact_with(src))
-		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT_SECONDARY, user) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
-		return
-	if(isobserver(user) && user.client && check_rights_for(user.client, R_DEBUG))
-		user.client.toggle_tag_datum(src)
-		return
-
-/// Use this instead of [/mob/proc/AltClickOn] where you only want turf content listing without additional atom alt-click interaction
-/atom/proc/AltClickNoInteract(mob/user, atom/A)
-	var/turf/T = get_turf(A)
-	if(T && user.TurfAdjacent(T))
-		user.set_listed_turf(T)
-
-/mob/proc/TurfAdjacent(turf/T)
-	return T.Adjacent(src)
-
-/**
- * Control+Shift click
- * Unused except for AI
- */
-/mob/proc/CtrlShiftClickOn(atom/A)
-	A.CtrlShiftClick(src)
-	return
+/mob/proc/TurfAdjacent(turf/tile)
+	return tile.Adjacent(src)
 
 /mob/proc/ShiftMiddleClickOn(atom/A)
 	src.pointed(A)
-	return
-
-/atom/proc/CtrlShiftClick(mob/user)
-	if(!can_interact(user))
-		return FALSE
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT, user)
 	return
 
 /*
@@ -496,15 +400,15 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
-#define MAX_SAFE_BYOND_ICON_SCALE_TILES (MAX_SAFE_BYOND_ICON_SCALE_PX / world.icon_size)
-#define MAX_SAFE_BYOND_ICON_SCALE_PX (33 * 32) //Not using world.icon_size on purpose.
+#define MAX_SAFE_BYOND_ICON_SCALE_TILES (MAX_SAFE_BYOND_ICON_SCALE_PX / ICON_SIZE_ALL)
+#define MAX_SAFE_BYOND_ICON_SCALE_PX (33 * 32) //Not using world.icon_size on purpose. //Ok well I trust you
 
 /atom/movable/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
 	var/icon/newicon = icon('icons/hud/screen_gen.dmi', "catcher")
 	var/ox = min(MAX_SAFE_BYOND_ICON_SCALE_TILES, view_size_x)
 	var/oy = min(MAX_SAFE_BYOND_ICON_SCALE_TILES, view_size_y)
-	var/px = view_size_x * world.icon_size
-	var/py = view_size_y * world.icon_size
+	var/px = view_size_x * ICON_SIZE_X
+	var/py = view_size_y * ICON_SIZE_Y
 	var/sx = min(MAX_SAFE_BYOND_ICON_SCALE_PX, px)
 	var/sy = min(MAX_SAFE_BYOND_ICON_SCALE_PX, py)
 	newicon.Scale(sx, sy)

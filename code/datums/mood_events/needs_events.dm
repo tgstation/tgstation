@@ -66,7 +66,7 @@
 	mood_change = -12
 
 /datum/mood_event/disgust/dirty_food
-	description = "It was too dirty to eat..."
+	description = "That was too dirty to eat..."
 	mood_change = -6
 	timeout = 4 MINUTES
 
@@ -75,6 +75,29 @@
 	description = "I have recently had a nice shower."
 	mood_change = 4
 	timeout = 5 MINUTES
+
+/datum/mood_event/shower_hater
+	description = "I hate being wet!"
+	mood_change = -2
+	timeout = 3 MINUTES
+
+/datum/mood_event/hot_spring
+	description = "It's so relaxing to bathe in steamy water..."
+	mood_change = 5
+
+/datum/mood_event/hot_spring_hater
+	description = "No, no, no, no, I don't want to take a bath!"
+	mood_change = -2
+
+/datum/mood_event/hot_spring_left
+	description = "That was an enjoyable bath."
+	mood_change = 4
+	timeout = 4 MINUTES
+
+/datum/mood_event/hot_spring_hater_left
+	description = "I hate baths! And I hate how cold it's once you step out of it!"
+	mood_change = -3
+	timeout = 2 MINUTES
 
 /datum/mood_event/fresh_laundry
 	description = "There's nothing like the feeling of a freshly laundered jumpsuit."

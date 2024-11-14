@@ -5,6 +5,8 @@
 	var/list/datum/lazy_template/deathmatch/maps = list()
 	/// All loadouts
 	var/list/datum/outfit/loadouts
+	/// All modifiers
+	var/list/datum/deathmatch_modifier/modifiers
 
 /datum/deathmatch_controller/New()
 	. = ..()
@@ -17,6 +19,7 @@
 		var/map_name = initial(template.name)
 		maps[map_name] = new template
 	loadouts = subtypesof(/datum/outfit/deathmatch_loadout)
+	modifiers = sortTim(init_subtypes_w_path_keys(/datum/deathmatch_modifier), GLOBAL_PROC_REF(cmp_deathmatch_mods), associative = TRUE)
 
 /datum/deathmatch_controller/proc/create_new_lobby(mob/host)
 	lobbies[host.ckey] = new /datum/deathmatch_lobby(host)
@@ -51,7 +54,7 @@
 		var/datum/deathmatch_lobby/lobby = lobbies[ckey]
 		if (user.ckey == ckey)
 			.["hosting"] = TRUE
-		if (user.ckey in lobby.observers+lobby.players)
+		if (user.ckey in (lobby.observers+lobby.players))
 			.["playing"] = ckey
 		.["lobbies"] += list(list(
 			name = ckey,
@@ -64,7 +67,7 @@
 /datum/deathmatch_controller/proc/find_lobby_by_user(ckey)
 	for(var/lobbykey in lobbies)
 		var/datum/deathmatch_lobby/lobby = lobbies[lobbykey]
-		if(ckey in lobby.players+lobby.observers)
+		if(ckey in (lobby.players+lobby.observers))
 			return lobby
 
 /datum/deathmatch_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -73,6 +76,9 @@
 		return
 	switch (action)
 		if ("host")
+			if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
+				tgui_alert(usr, "Deathmatch has been temporarily disabled by admins.")
+				return
 			if (lobbies[usr.ckey])
 				return
 			if(!SSticker.HasRoundStarted())
@@ -81,13 +87,16 @@
 			ui.close()
 			create_new_lobby(usr)
 		if ("join")
+			if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
+				tgui_alert(usr, "Deathmatch has been temporarily disabled by admins.")
+				return
 			if (!lobbies[params["id"]])
 				return
 			var/datum/deathmatch_lobby/playing_lobby = find_lobby_by_user(usr.ckey)
 			var/datum/deathmatch_lobby/chosen_lobby = lobbies[params["id"]]
 			if (!isnull(playing_lobby) && playing_lobby != chosen_lobby)
 				playing_lobby.leave(usr.ckey)
-			
+
 			if(isnull(playing_lobby))
 				log_game("[usr.ckey] joined deathmatch lobby [params["id"]] as a player.")
 				chosen_lobby.join(usr)

@@ -13,7 +13,7 @@
 
 	return 0.5 ** max(rating - 1, 0) // One sheet, half sheet, quarter sheet, eighth sheet.
 
-/obj/machinery/rnd/production/circuit_imprinter/flick_animation(mat_name)
+/obj/machinery/rnd/production/circuit_imprinter/flick_animation(datum/material/mat)
 	return //we presently have no animation
 
 /obj/machinery/rnd/production/circuit_imprinter/offstation

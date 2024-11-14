@@ -104,7 +104,7 @@
 /datum/crafting_recipe/food/energypizza
 	reqs = list(
 		/obj/item/food/flatdough = 1,
-		/obj/item/stock_parts/cell = 2,
+		/obj/item/stock_parts/power_store/cell = 2,
 	)
 	result = /obj/item/food/pizza/energy/raw
 	category = CAT_PIZZA

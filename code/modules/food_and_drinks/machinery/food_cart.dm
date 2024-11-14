@@ -8,7 +8,7 @@
 	anchored = FALSE
 	use_power = NO_POWER_USE
 	req_access = list(ACCESS_KITCHEN)
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
+	obj_flags = parent_type::obj_flags | NO_DEBRIS_AFTER_DECONSTRUCTION
 	var/unpacked = FALSE
 	var/obj/machinery/griddle/stand/cart_griddle
 	var/obj/machinery/smartfridge/food/cart_smartfridge
@@ -86,7 +86,7 @@
 		return
 	var/obj/item/card/id/id_card = user.get_idcard(hand_first = TRUE)
 	if(!check_access(id_card))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 	to_chat(user, span_notice("You attempt to [unpacked ? "pack up" :"unpack"] [src]..."))
 	if(!do_after(user, 5 SECONDS, src))

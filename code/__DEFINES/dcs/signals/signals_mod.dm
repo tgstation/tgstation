@@ -1,10 +1,16 @@
 //MODsuit signals
 /// Called when a module is selected to be the active one from on_select(obj/item/mod/module/module)
 #define COMSIG_MOD_MODULE_SELECTED "mod_module_selected"
-/// Called when a MOD deploys one or more of its parts.
+/// Called when a MOD user deploys one or more of its parts.
 #define COMSIG_MOD_DEPLOYED "mod_deployed"
-/// Called when a MOD retracts one or more of its parts.
+/// Called when a MOD user retracts one or more of its parts.
 #define COMSIG_MOD_RETRACTED "mod_retracted"
+/// Called when a MOD deploys a part. (mob/user, datum/mod_part/part)
+#define COMSIG_MOD_PART_DEPLOYED "mod_part_deployed"
+/// Called when a MOD retracts a part. (mob/user, datum/mod_part/part)
+#define COMSIG_MOD_PART_RETRACTED "mod_part_retracted"
+/// Called when a MOD seals/unseals a part. (datum/mod_part/part)
+#define COMSIG_MOD_PART_SEALED "mod_part_sealed"
 /// Called when a MOD is finished toggling itself.
 #define COMSIG_MOD_TOGGLED "mod_toggled"
 /// Called when a MOD activation is called from toggle_activate(mob/user)
@@ -35,3 +41,7 @@
 #define COMSIG_MOD_WEARER_SET "mod_wearer_set"
 /// Called when the MODsuit wearer is unset.
 #define COMSIG_MOD_WEARER_UNSET "mod_wearer_unset"
+/// Sent by the tether module when it triggers its snapping function
+#define COMSIG_MOD_TETHER_SNAP "mod_tether_snap"
+/// Called when a MOD module generats its worn overlay
+#define COMSIG_MODULE_GENERATE_WORN_OVERLAY "mod_module_generate_worn_overlay"

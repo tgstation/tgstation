@@ -31,7 +31,7 @@
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
 	RegisterSignal(target, COMSIG_ATOM_ON_Z_IMPACT, PROC_REF(on_z_impact))
 	if(shatters_as_weapon)
-		RegisterSignal(target, COMSIG_ITEM_POST_ATTACK_ATOM, PROC_REF(on_post_attack_atom))
+		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_post_attack_atom))
 
 /datum/element/can_shatter/Detach(datum/target)
 	. = ..()
@@ -45,9 +45,10 @@
 	shatter(source, impacted_turf)
 
 /// Tells the parent to shatter if we are thrown and impact something
-/datum/element/can_shatter/proc/on_throw_impact(datum/source, atom/hit_atom)
+/datum/element/can_shatter/proc/on_throw_impact(datum/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
 	SIGNAL_HANDLER
-
+	if(caught)
+		return
 	shatter(source, hit_atom)
 
 /// Handles the actual shattering part, throwing shards of whatever is defined on the component everywhere

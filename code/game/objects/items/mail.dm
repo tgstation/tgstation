@@ -85,8 +85,8 @@
 			pixel_y = stamp_offset_y + bonus_stamp_offset
 		)
 		stamp_image.appearance_flags |= RESET_COLOR
-		add_overlay(stamp_image)
 		bonus_stamp_offset -= 5
+		. += stamp_image
 
 	if(postmarked == TRUE)
 		var/image/postmark_image = image(
@@ -96,7 +96,7 @@
 			pixel_y = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
 		)
 		postmark_image.appearance_flags |= RESET_COLOR
-		add_overlay(postmark_image)
+		. += postmark_image
 
 /obj/item/mail/attackby(obj/item/W, mob/user, params)
 	// Destination tagging
@@ -107,7 +107,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = destination_tag.currTag
-			playsound(loc, 'sound/machines/twobeep_high.ogg', vol = 100, vary = TRUE)
+			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', vol = 100, vary = TRUE)
 
 /obj/item/mail/multitool_act(mob/living/user, obj/item/tool)
 	if(user.get_inactive_held_item() == src)
@@ -145,7 +145,7 @@
 			user.put_in_hands(stuff)
 		else
 			stuff.forceMove(drop_location())
-	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
+	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
 	qdel(src)
 	return TRUE
 
@@ -402,7 +402,7 @@
 
 /obj/item/mail/traitor/after_unwrap(mob/user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
-	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
+	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
 	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
 		if(user.put_in_hands(stuff) && armed)
 			var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
@@ -419,7 +419,7 @@
 		if(!do_after(user, 2 SECONDS, target = src))
 			return FALSE
 		balloon_alert(user, "disarmed")
-		playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
+		playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
 		armed = FALSE
 		return TRUE
 	else
@@ -430,7 +430,7 @@
 			return FALSE
 		if(prob(50))
 			balloon_alert(user, "disarmed something...?")
-			playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
+			playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
 			armed = FALSE
 			return TRUE
 		else
@@ -488,7 +488,7 @@
 
 /obj/item/storage/mail_counterfeit_device
 	name = "GLA-2 mail counterfeit device"
-	desc = "Device that actually able to counterfeit NT's mail. This device also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also it might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs."
+	desc = "A single-use device for spoofing official NT envelopes. Can hold one normal sized object, and can be programmed to arm its contents when opened."
 	w_class = WEIGHT_CLASS_NORMAL
 	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "mail_counterfeit_device"
@@ -501,7 +501,7 @@
 
 /obj/item/storage/mail_counterfeit_device/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<i>You notice the manufacture marking on the side of the device...</i>")
+	. += span_notice("<i>You notice the manufacturer information on the side of the device...</i>")
 	. += "\t[span_info("Guerilla Letter Assembler")]"
 	. += "\t[span_info("GLA Postal Service, right on schedule.")]"
 	return .
@@ -512,7 +512,7 @@
 		return FALSE
 	if(loc != user)
 		return FALSE
-	mail_type = lowertext(mail_type)
+	mail_type = LOWER_TEXT(mail_type)
 
 	var/mail_armed = tgui_alert(user, "Arm it?", "Mail Counterfeiting", list("Yes", "No")) == "Yes"
 	if(isnull(mail_armed))
@@ -548,10 +548,10 @@
 	shady_mail.made_by_cached_name = user.mind.name
 
 	if(index == 1)
-		var/mail_name = tgui_input_text(user, "Enter mail title, or leave it blank", "Mail Counterfeiting")
+		var/mail_name = tgui_input_text(user, "Enter mail title, or leave it blank", "Mail Counterfeiting", max_length = MAX_LABEL_LEN)
 		if(!(src in user.contents))
 			return FALSE
-		if(reject_bad_text(mail_name, ascii_only = FALSE))
+		if(reject_bad_text(mail_name, max_length = MAX_LABEL_LEN, ascii_only = FALSE))
 			shady_mail.name = mail_name
 		else
 			shady_mail.name = mail_type

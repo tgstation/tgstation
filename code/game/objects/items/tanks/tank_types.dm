@@ -7,12 +7,14 @@
  * Emergency Oxygen
  * Generic
  */
+/obj/item/tank/internals
+	interaction_flags_click = FORBID_TELEKINESIS_REACH|NEED_HANDS|ALLOW_RESTING
+
 
 /// Allows carbon to toggle internals via AltClick of the equipped tank.
-/obj/item/tank/internals/AltClick(mob/user)
-	..()
-	if((loc == user) && user.can_perform_action(src, FORBID_TELEKINESIS_REACH|NEED_HANDS))
-		toggle_internals(user)
+/obj/item/tank/internals/click_alt(mob/user)
+	toggle_internals(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/tank/internals/examine(mob/user)
 	. = ..()
@@ -74,6 +76,14 @@
 	. = ..()
 	. += span_notice("A warning is etched into [src]...")
 	. += span_warning("There is no process in the body that uses N2O, so patients will exhale the N2O... exposing you to it. Make sure to work in a well-ventilated space to avoid sleepy mishaps.")
+
+/obj/item/tank/internals/anesthetic/pure
+	desc = "A tank with pure N2O. There is a warning sticker crudely slapped onto the tank."
+	icon_state = "anesthetic_warning"
+
+/obj/item/tank/internals/anesthetic/pure/populate_gas()
+	air_contents.assert_gases(/datum/gas/nitrous_oxide)
+	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
 /*
  * Plasma

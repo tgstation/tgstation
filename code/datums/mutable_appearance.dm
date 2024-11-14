@@ -45,4 +45,7 @@
 	else if(!isnull(offset_spokesman) && !isatom(offset_spokesman))
 		stack_trace("Why did you pass in offset_spokesman as [offset_spokesman]? We need an atom to properly offset planes")
 
+	if(PERFORM_ALL_TESTS(focus_only/topdown_filtering))
+		check_topdown_validity(appearance)
+
 	return appearance

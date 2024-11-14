@@ -109,10 +109,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		// 20-29: Medbay
 		JOB_CHIEF_MEDICAL_OFFICER = 20,
 		JOB_CHEMIST = 21,
-		JOB_VIROLOGIST = 22,
-		JOB_MEDICAL_DOCTOR = 23,
-		JOB_PARAMEDIC = 24,
-		JOB_CORONER = 25,
+		JOB_MEDICAL_DOCTOR = 22,
+		JOB_PARAMEDIC = 23,
+		JOB_CORONER = 24,
 		// 30-39: Science
 		JOB_RESEARCH_DIRECTOR = 30,
 		JOB_SCIENTIST = 31,
@@ -183,7 +182,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		z = T.z
 	. = list(
 		"sensors" = update_data(z),
-		"link_allowed" = HAS_AI_ACCESS(user)
+		"link_allowed" = HAS_AI_ACCESS(user),
 	)
 
 /datum/crewmonitor/proc/update_data(z)
@@ -224,7 +223,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			continue
 
 		// Check if their uniform is in a compatible mode.
-		if((uniform.has_sensor <= NO_SENSORS) || !uniform.sensor_mode)
+		if((uniform.has_sensor == NO_SENSORS) || !uniform.sensor_mode)
 			stack_trace("Human without active suit sensors is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform.type])")
 			continue
 
@@ -245,6 +244,19 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			var/trim_assignment = id_card.get_trim_assignment()
 			if (jobs[trim_assignment] != null)
 				entry["ijob"] = jobs[trim_assignment]
+
+		// Broken sensors show garbage data
+		if (uniform.has_sensor == BROKEN_SENSORS)
+			entry["life_status"] = rand(0,1)
+			entry["area"] = pick_list (ION_FILE, "ionarea")
+			entry["oxydam"] = rand(0,175)
+			entry["toxdam"] = rand(0,175)
+			entry["burndam"] = rand(0,175)
+			entry["brutedam"] = rand(0,175)
+			entry["health"] = -50
+			entry["can_track"] = tracked_living_mob.can_track()
+			results[++results.len] = entry
+			continue
 
 		// Current status
 		if (sensor_mode >= SENSOR_LIVING)
@@ -275,7 +287,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 	return results
 
-/datum/crewmonitor/ui_act(action, params)
+/datum/crewmonitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

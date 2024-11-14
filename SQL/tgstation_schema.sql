@@ -216,6 +216,20 @@ CREATE TABLE `ipintel` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `ipintel_whitelist`
+--
+
+DROP TABLE IF EXISTS `ipintel_whitelist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ipintel_whitelist` (
+	`ckey` varchar(32) NOT NULL,
+	`admin_ckey` varchar(32) NOT NULL,
+	PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `legacy_population`
 --
 
@@ -575,6 +589,16 @@ CREATE TABLE `achievement_metadata` (
 	`achievement_name` VARCHAR(64) NULL DEFAULT NULL,
 	`achievement_description` VARCHAR(512) NULL DEFAULT NULL,
 	PRIMARY KEY (`achievement_key`)
+) ENGINE=InnoDB;
+
+-- Table structure for table 'x_progress'
+
+DROP TABLE IF EXISTS `fish_progress`;
+CREATE TABLE `fish_progress` (
+  `ckey` VARCHAR(32) NOT NULL,
+  `progress_entry` VARCHAR(32) NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ckey`,`progress_entry`)
 ) ENGINE=InnoDB;
 
 --

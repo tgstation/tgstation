@@ -268,7 +268,7 @@ const PetTricks = (props) => {
           <LabeledList.Item key={index} label={`Sequence ${index + 1}`}>
             <Dropdown
               width="50%"
-              displayText={sequences[index]}
+              selected={sequences[index]}
               options={possible_emotes}
               onSelected={(selected) => UpdateSequence(index, selected)}
             />
@@ -354,7 +354,7 @@ const Customization = (props) => {
         <Stack.Item width="50%">
           <Section title="Pet Hat">
             <Dropdown
-              displayText={selectedHat?.hat_name}
+              selected={selectedHat?.hat_name}
               options={hat_selections.map((selected_hat) => {
                 return selected_hat.hat_name;
               })}
@@ -369,7 +369,7 @@ const Customization = (props) => {
         <Stack.Item width="50%">
           <Section title="Pet Color">
             <Dropdown
-              displayText={selectedColor?.color_name}
+              selected={selectedColor?.color_name}
               options={possible_colors.map((possible_color) => {
                 return possible_color.color_name;
               })}

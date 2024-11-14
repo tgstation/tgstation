@@ -1,5 +1,4 @@
 import { map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 
 import { useBackend } from '../backend';
 import { Button, Section, Stack } from '../components';
@@ -25,13 +24,17 @@ type DestinationInfo = {
  * @returns The alphetically sorted list of destinations.
  */
 const sortDestinations = (locations: string[]): DestinationInfo[] => {
-  return flow([
-    map<string, DestinationInfo>((name, index) => ({
-      name: name.toUpperCase(),
-      sorting_id: index + 1,
-    })),
-    sortBy<DestinationInfo>((dest) => dest.name),
-  ])(locations);
+  return sortBy(
+    map(
+      locations,
+      (name, index) =>
+        ({
+          name: name.toUpperCase(),
+          sorting_id: index + 1,
+        }) as DestinationInfo,
+    ),
+    (dest) => dest.name,
+  );
 };
 
 export const DestinationTagger = (props) => {

@@ -6,19 +6,34 @@
 	base_icon_state = "dispenser"
 	amount = 10
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 	use_power = NO_POWER_USE
-	var/static/list/shortcuts = list(
-		"meth" = /datum/reagent/drug/methamphetamine
-	)
+
+	///The temperature of the added reagents
+	var/temperature = DEFAULT_REAGENT_TEMPERATURE
 	///The purity of the created reagent in % (purity uses 0-1 values)
 	var/purity = 100
+
+/obj/machinery/chem_dispenser/chem_synthesizer/Destroy()
+	QDEL_NULL(beaker)
+	return ..()
+
+/obj/machinery/chem_dispenser/chem_synthesizer/screwdriver_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/machinery/chem_dispenser/chem_synthesizer/crowbar_act(mob/living/user, obj/item/tool)
+	return NONE
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ChemDebugSynthesizer", name)
 		ui.open()
+
+
+/obj/machinery/chem_dispenser/chem_synthesizer/ui_data(mob/user)
+	. = ..()
+	.["purity"] = purity
+	.["temp"] = temperature
 
 /obj/machinery/chem_dispenser/chem_synthesizer/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
@@ -34,7 +49,7 @@
 			if(!input_reagent)
 				return FALSE
 
-			beaker.reagents.add_reagent(input_reagent, amount, added_purity = (purity / 100))
+			beaker.reagents.add_reagent(input_reagent, amount, reagtemp = temperature, added_purity = (purity / 100))
 			return TRUE
 
 		if("makecup")
@@ -56,6 +71,18 @@
 			amount = input
 			return TRUE
 
+		if("temp")
+			var/input = params["amount"]
+			if(isnull(input))
+				return FALSE
+
+			input = text2num(input)
+			if(isnull(input))
+				return FALSE
+
+			temperature = input
+			return TRUE
+
 		if("purity")
 			var/input = params["amount"]
 			if(isnull(input))
@@ -69,11 +96,3 @@
 			return TRUE
 
 	update_appearance()
-
-/obj/machinery/chem_dispenser/chem_synthesizer/Destroy()
-	QDEL_NULL(beaker)
-	return ..()
-
-/obj/machinery/chem_dispenser/chem_synthesizer/ui_data(mob/user)
-	. = ..()
-	.["purity"] = purity

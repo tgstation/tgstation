@@ -19,7 +19,7 @@
 /// We'll use another define to convert uses of the proc over. That'll be all
 // #define APPEARANCE_SUCCESS_TRACKING
 
-///Used to find the sources of harddels, quite laggy, don't be surpised if it freezes your client for a good while
+///Used to find the sources of harddels, quite laggy, don't be surprised if it freezes your client for a good while
 //#define REFERENCE_TRACKING
 #ifdef REFERENCE_TRACKING
 
@@ -34,6 +34,8 @@
 #define FIND_REF_NO_CHECK_TICK
 #endif //ifdef GC_FAILURE_HARD_LOOKUP
 
+// Log references in their own file, rather then in runtimes.log
+//#define REFERENCE_TRACKING_LOG_APART
 #endif //ifdef REFERENCE_TRACKING
 
 /*
@@ -60,12 +62,29 @@
 #define REFERENCE_TRACKING
 // actually look for refs
 #define GC_FAILURE_HARD_LOOKUP
+// Log references in their own file
+#define REFERENCE_TRACKING_LOG_APART
 #endif // REFERENCE_DOING_IT_LIVE
+
+/// Sets up the reftracker to be used locally, to hunt for hard deletions
+/// Errors are logged to [log_dir]/harddels.log
+//#define REFERENCE_TRACKING_STANDARD
+#ifdef REFERENCE_TRACKING_STANDARD
+// compile the backend
+#define REFERENCE_TRACKING
+// actually look for refs
+#define GC_FAILURE_HARD_LOOKUP
+// spend ALL our time searching, not just part of it
+#define FIND_REF_NO_CHECK_TICK
+// Log references in their own file
+#define REFERENCE_TRACKING_LOG_APART
+#endif // REFERENCE_TRACKING_STANDARD
 
 // If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
 // #define UNIT_TESTS
 
-// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so.
+// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so by default.
+// Even if it's not defined, you can pass "tracy" via -params in order to try to load it.
 // We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
 // #define USE_BYOND_TRACY
 
@@ -112,7 +131,7 @@
 #warn compiling in TESTING mode. testing() debug messages will be visible.
 #endif
 
-#ifdef CIBUILDING
+#if defined(CIBUILDING) && !defined(OPENDREAM)
 #define UNIT_TESTS
 #endif
 
@@ -137,10 +156,17 @@
 #define CBT
 #endif
 
-#if !defined(CBT) && !defined(SPACEMAN_DMM)
-#warn Building with Dream Maker is no longer supported and will result in errors.
-#warn In order to build, run BUILD.bat in the root directory.
-#warn Consider switching to VSCode editor instead, where you can press Ctrl+Shift+B to build.
+#if defined(OPENDREAM)
+	#if !defined(CIBUILDING)
+		#warn You are building with OpenDream. Remember to build TGUI manually.
+		#warn You can do this by running tgui-build.cmd from the bin directory.
+	#endif
+#else
+	#if !defined(CBT) && !defined(SPACEMAN_DMM)
+		#warn Building with Dream Maker is no longer supported and will result in errors.
+		#warn In order to build, run BUILD.cmd in the root directory.
+		#warn Consider switching to VSCode editor instead, where you can press Ctrl+Shift+B to build.
+	#endif
 #endif
 
 /// Runs the game in "map test mode"

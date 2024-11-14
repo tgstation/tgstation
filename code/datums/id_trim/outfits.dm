@@ -62,6 +62,7 @@
 	trim_state = "trim_bitavatar"
 	department_color = COLOR_BLACK
 	subdepartment_color = COLOR_GREEN
+	sechud_icon_state = SECHUD_BITAVATAR
 
 /// Trim for cyber police in the Virtual Domain.
 /datum/id_trim/cyber_police

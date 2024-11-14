@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/json_file = file("[GLOB.log_directory]/round_end_data.json")
 	// All but npcs sublists and ghost category contain only mobs with minds
 	var/list/file_data = list("escapees" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "abandoned" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "ghosts" = list(), "additional data" = list())
-	var/num_survivors = 0 //Count of non-brain non-camera mobs with mind that are alive
+	var/num_survivors = 0 //Count of non-brain non-eye mobs with mind that are alive
 	var/num_escapees = 0 //Above and on centcom z
 	var/num_shuttle_escapees = 0 //Above and on escape shuttle
 	var/list/area/shuttle_areas
@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		if(M.mind)
 			count_only = FALSE
 			mob_data["ckey"] = M.mind.key
-			if(M.stat != DEAD && !isbrain(M) && !iscameramob(M))
+			if(M.stat != DEAD && !isbrain(M) && !iseyemob(M))
 				num_survivors++
 				if(EMERGENCY_ESCAPED_OR_ENDGAMED && (M.onCentCom() || M.onSyndieBase()))
 					num_escapees++
@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 	if(human_mob.mind && (length(human_mob.mind.antag_datums) > 0))
 		for(var/datum/antagonist/antag_datums as anything in human_mob.mind.antag_datums)
-			if(!antag_datums.hardcore_random_bonus) //dont give bonusses to dumb stuff like revs or hypnos
+			if(!antag_datums.hardcore_random_bonus) //don't give bonuses to dumb stuff like revs or hypnos
 				continue
 			if(initial(antag_datums.can_assign_self_objectives) && !antag_datums.can_assign_self_objectives)
 				continue // You don't get a prize if you picked your own objective, you can't fail those
@@ -571,7 +571,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 /datum/controller/subsystem/ticker/proc/medal_report()
 	if(GLOB.commendations.len)
 		var/list/parts = list()
-		parts += "<span class='header'>Medal Commendations:</span>"
+		parts += span_header("Medal Commendations:")
 		for (var/com in GLOB.commendations)
 			parts += com
 		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
@@ -660,7 +660,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/datum/action/report/R = new
 	C.player_details.player_actions += R
 	R.Grant(C.mob)
-	to_chat(C,"<span class='infoplain'><a href='?src=[REF(R)];report=1'>Show roundend report again</a></span>")
+	to_chat(C,span_infoplain("<a href='?src=[REF(R)];report=1'>Show roundend report again</a>"))
 
 /datum/action/report
 	name = "Show roundend report"
@@ -722,86 +722,6 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		count++
 	return objective_parts.Join("<br>")
 
-/datum/controller/subsystem/ticker/proc/save_admin_data()
-	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>")
-		return
-	if(CONFIG_GET(flag/admin_legacy_system)) //we're already using legacy system so there's nothing to save
-		return
-	else if(load_admins(TRUE)) //returns true if there was a database failure and the backup was loaded from
-		return
-	sync_ranks_with_db()
-	var/list/sql_admins = list()
-	for(var/i in GLOB.protected_admins)
-		var/datum/admins/A = GLOB.protected_admins[i]
-		sql_admins += list(list("ckey" = A.target, "rank" = A.rank_names()))
-	SSdbcore.MassInsert(format_table_name("admin"), sql_admins, duplicate_key = TRUE)
-	var/datum/db_query/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
-	query_admin_rank_update.Execute()
-	qdel(query_admin_rank_update)
-
-	//json format backup file generation stored per server
-	var/json_file = file("data/admins_backup.json")
-	var/list/file_data = list(
-		"ranks" = list(),
-		"admins" = list(),
-		"connections" = list(),
-	)
-	for(var/datum/admin_rank/R in GLOB.admin_ranks)
-		file_data["ranks"]["[R.name]"] = list()
-		file_data["ranks"]["[R.name]"]["include rights"] = R.include_rights
-		file_data["ranks"]["[R.name]"]["exclude rights"] = R.exclude_rights
-		file_data["ranks"]["[R.name]"]["can edit rights"] = R.can_edit_rights
-
-	for(var/admin_ckey in GLOB.admin_datums + GLOB.deadmins)
-		var/datum/admins/admin = GLOB.admin_datums[admin_ckey]
-
-		if(!admin)
-			admin = GLOB.deadmins[admin_ckey]
-			if (!admin)
-				continue
-
-		file_data["admins"][admin_ckey] = admin.rank_names()
-
-		if (admin.owner)
-			file_data["connections"][admin_ckey] = list(
-				"cid" = admin.owner.computer_id,
-				"ip" = admin.owner.address,
-			)
-
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
-
-/datum/controller/subsystem/ticker/proc/update_everything_flag_in_db()
-	for(var/datum/admin_rank/R in GLOB.admin_ranks)
-		var/list/flags = list()
-		if(R.include_rights == R_EVERYTHING)
-			flags += "flags"
-		if(R.exclude_rights == R_EVERYTHING)
-			flags += "exclude_flags"
-		if(R.can_edit_rights == R_EVERYTHING)
-			flags += "can_edit_flags"
-		if(!flags.len)
-			continue
-		var/flags_to_check = flags.Join(" != [R_EVERYTHING] AND ") + " != [R_EVERYTHING]"
-		var/datum/db_query/query_check_everything_ranks = SSdbcore.NewQuery(
-			"SELECT flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] WHERE rank = :rank AND ([flags_to_check])",
-			list("rank" = R.name)
-		)
-		if(!query_check_everything_ranks.Execute())
-			qdel(query_check_everything_ranks)
-			return
-		if(query_check_everything_ranks.NextRow()) //no row is returned if the rank already has the correct flag value
-			var/flags_to_update = flags.Join(" = [R_EVERYTHING], ") + " = [R_EVERYTHING]"
-			var/datum/db_query/query_update_everything_ranks = SSdbcore.NewQuery(
-				"UPDATE [format_table_name("admin_ranks")] SET [flags_to_update] WHERE rank = :rank",
-				list("rank" = R.name)
-			)
-			if(!query_update_everything_ranks.Execute())
-				qdel(query_update_everything_ranks)
-				return
-			qdel(query_update_everything_ranks)
-		qdel(query_check_everything_ranks)
 
 /datum/controller/subsystem/ticker/proc/cheevo_report()
 	var/list/parts = list()

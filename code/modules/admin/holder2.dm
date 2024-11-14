@@ -232,7 +232,7 @@ GLOBAL_PROTECT(href_token)
 		return VALID_2FA_CONNECTION
 
 	if (!SSdbcore.Connect())
-		if (verify_backup_data(client) || (client.ckey in GLOB.protected_admins))
+		if (verify_admin_from_local_cache(client) || (client.ckey in GLOB.protected_admins))
 			return VALID_2FA_CONNECTION
 		else
 			return list(FALSE, null)
@@ -249,7 +249,8 @@ GLOBAL_PROTECT(href_token)
 	))
 
 	if (!query.Execute())
-		qdel(query)
+		if (verify_admin_from_local_cache(client) || (client.ckey in GLOB.protected_admins))
+			return VALID_2FA_CONNECTION
 		return list(FALSE, null)
 
 	var/is_valid = FALSE
@@ -319,25 +320,30 @@ GLOBAL_PROTECT(href_token)
 
 #undef ERROR_2FA_REQUEST_PERMISSIONS
 
-/datum/admins/proc/verify_backup_data(client/client)
-	var/backup_file = file2text("data/admins_backup.json")
+/// Returns true if the admin's cid/ip is verified in the local cache
+/datum/admins/proc/verify_admin_from_local_cache(client/client)
+	var/backup_filename = "data/admin_connections/[ckey(client?.ckey)].json"
+	if (!fexists(backup_filename))
+		return FALSE
+	var/backup_file = file2text(backup_filename)
 	if (isnull(backup_file))
-		log_world("Unable to locate admins backup file.")
+		log_world("Unable to load admin connection's last_connections.json backup file.")
 		return FALSE
 
-	var/list/backup_file_json = json_decode(backup_file)
-	var/connections = backup_file_json["connections"]
+	var/list/connections = json_decode(backup_file)
 
-	// This can happen for older admins_backup.json files
 	if (isnull(connections))
 		return FALSE
 
-	var/most_recent_valid_connection = connections[client?.ckey]
-	if (isnull(most_recent_valid_connection))
-		return FALSE
+	for (var/list/connection as anything in connections)
+		if (!islist(connection) || length(connection) < 2)
+			stack_trace("Invalid connection in admin connections backup file for `[client]`.")
+			continue
+		if (connection["cid"] == client?.computer_id && connection["ip"] == client?.address)
+			return TRUE
 
-	return most_recent_valid_connection["cid"] == client?.computer_id \
-		&& most_recent_valid_connection["ip"] == client?.address
+	return FALSE
+
 
 /datum/admins/proc/alert_2fa_necessary(client/client)
 	var/msg = " is trying to join, but needs to verify their ckey."
@@ -357,6 +363,46 @@ GLOBAL_PROTECT(href_token)
 			html = span_admin("[span_prefix("ADMIN 2FA:")] You have the ability to verify [key_name_admin(client)] by using the Permissions Panel."),
 			confidential = TRUE,
 		)
+
+/datum/admins/proc/backup_connections()
+	set waitfor = FALSE
+	if (!length(CONFIG_GET(string/admin_2fa_url)))
+		return
+	var/ckey = ckey(target)
+	if (!ckey)
+		CRASH("can't backup an admin datum assigned to a blank ckey")
+
+	if (!SSdbcore.Connect())
+		return
+
+	var/datum/db_query/query = SSdbcore.NewQuery({"
+		SELECT cid, INET_NTOA(ip) as ip FROM [format_table_name("admin_connections")]
+		WHERE
+			ckey = :ckey AND verification_time IS NOT NULL
+	"}, list(
+		"ckey" = ckey,
+	))
+
+	if (!query.Execute())
+		qdel(query)
+		return
+	var/list/admin_connections = list()
+	while (query.NextRow())
+		admin_connections += LIST_VALUE_WRAP_LISTS(list(
+			"cid" = query.item[1],
+			"ip" = query.item[2],
+		))
+
+	qdel(query)
+
+	if (length(admin_connections) < 1)
+		return
+
+
+	var/backup_file = "data/admin_connections/[ckey].json"
+	if (fexists(backup_file))
+		fdel(backup_file)
+	WRITE_FILE(file(backup_file), json_encode(admin_connections, JSON_PRETTY_PRINT))
 
 /// Get the rank name of the admin
 /datum/admins/proc/rank_names()

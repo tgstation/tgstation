@@ -7,11 +7,11 @@
 	stop_automated_movement = TRUE
 	wander = FALSE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = null
+	unsuitable_atmos_damage = 0
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
 	maxbodytemp = INFINITY
 	minbodytemp = 0
-	has_unlimited_silicon_privilege = TRUE
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 	pass_flags = PASSFLAPS
@@ -28,6 +28,7 @@
 	light_power = 0.6
 	del_on_death = TRUE
 	req_one_access = list(ACCESS_ROBOTICS)
+	interaction_flags_click = ALLOW_SILICON_REACH
 
 	///Cooldown between salutations for commissioned bots
 	COOLDOWN_DECLARE(next_salute_check)
@@ -93,11 +94,11 @@
 	var/turf/nearest_beacon_loc
 
 	///The type of data HUD the bot uses. Diagnostic by default.
-	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
-	var/datum/atom_hud/data/bot_path/path_hud
+	var/data_hud_type = DATA_HUD_DIAGNOSTIC
+	var/datum/atom_hud/data/bot_path/private/path_hud
 	var/path_image_icon = 'icons/mob/silicon/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
-	var/path_image_color = "#FFFFFF"
+	var/path_image_color = COLOR_WHITE
 	var/reset_access_timer_id
 	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
 
@@ -116,8 +117,8 @@
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		return paicard ? "<b>pAI Controlled</b>" : "<b>Autonomous</b>"
 	if(!(bot_mode_flags & BOT_MODE_ON))
-		return "<span class='bad'>Inactive</span>"
-	return "<span class='average'>[mode]</span>"
+		return span_bad("Inactive")
+	return span_average("[mode]")
 
 /**
  * Returns a status string about the bot's current status, if it's moving, manually controlled, or idle.
@@ -161,9 +162,10 @@
 
 /mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
+	add_traits(list(TRAIT_SILICON_ACCESS, TRAIT_REAGENT_SCANNER, TRAIT_UNOBSERVANT), INNATE_TRAIT)
 	GLOB.bots_list += src
 
-	path_hud = new /datum/atom_hud/data/bot_path()
+	path_hud = new /datum/atom_hud/data/bot_path/private()
 	for(var/hud in path_hud.hud_icons) // You get to see your own path
 		set_hud_image_active(hud, exclusive_hud = path_hud)
 
@@ -194,14 +196,13 @@
 		path_hud.add_atom_to_hud(src)
 		path_hud.show_to(src)
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
-		randomize_language_if_on_station()
-
 	if(mapload && is_station_level(z) && bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT && bot_mode_flags & BOT_MODE_ROUNDSTART_POSSESSION)
 		enable_possession(mapload = mapload)
 
 	pa_system = new(src, automated_announcements = automated_announcements)
 	pa_system.Grant(src)
+	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
+	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
 
 /mob/living/simple_animal/bot/Destroy()
 	GLOB.bots_list -= src
@@ -377,9 +378,9 @@
 
 	if(HAS_TRAIT(src, TRAIT_COMMISSIONED) && COOLDOWN_FINISHED(src, next_salute_check))
 		COOLDOWN_START(src, next_salute_check, BOT_COMMISSIONED_SALUTE_DELAY)
-		for(var/mob/living/simple_animal/bot/B in view(5, src))
-			if(!HAS_TRAIT(B, TRAIT_COMMISSIONED) && B.bot_mode_flags & BOT_MODE_ON)
-				visible_message("<b>[B]</b> performs an elaborate salute for [src]!")
+		for(var/mob/living/simple_animal/bot/nearby_bot in view(5, src))
+			if(!HAS_TRAIT(nearby_bot, TRAIT_COMMISSIONED) && nearby_bot.bot_mode_flags & BOT_MODE_ON)
+				manual_emote("performs an elaborate salute for [nearby_bot]!")
 				break
 
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
@@ -410,13 +411,9 @@
 		ui = new(user, src, "SimpleBot", name)
 		ui.open()
 
-/mob/living/simple_animal/bot/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
+/mob/living/simple_animal/bot/click_alt(mob/user)
 	unlock_with_id(user)
+	return CLICK_ACTION_SUCCESS
 
 /mob/living/simple_animal/bot/proc/unlock_with_id(mob/user)
 	if(bot_cover_flags & BOT_COVER_EMAGGED)
@@ -556,10 +553,9 @@
 		item_to_drop = drop_item
 		item_to_drop.forceMove(dropzone)
 
-	if(istype(item_to_drop, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/dropped_cell = item_to_drop
+	if(istype(item_to_drop, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/dropped_cell = item_to_drop
 		dropped_cell.charge = 0
-		dropped_cell.update_appearance()
 
 	else if(istype(item_to_drop, /obj/item/storage))
 		var/obj/item/storage/storage_to_drop = item_to_drop
@@ -759,7 +755,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/bot_patrol()
 	patrol_step()
-	addtimer(CALLBACK(src, PROC_REF(do_patrol)), 5)
+	addtimer(CALLBACK(src, PROC_REF(do_patrol)), 0.5 SECONDS)
 
 /mob/living/simple_animal/bot/proc/do_patrol()
 	if(mode == BOT_PATROL)
@@ -813,7 +809,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 		var/moved = bot_move(patrol_target)//step_towards(src, next) // attempt to move
 		if(!moved) //Couldn't proceed the next step of the path BOT_STEP_MAX_RETRIES times
-			addtimer(CALLBACK(src, PROC_REF(patrol_step_not_moved)), 2)
+			addtimer(CALLBACK(src, PROC_REF(patrol_step_not_moved)), 0.2 SECONDS)
 
 	else // no path, so calculate new one
 		mode = BOT_START_PATROL
@@ -944,7 +940,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 		var/moved = bot_move(summon_target, 3) // Move attempt
 		if(!moved)
-			addtimer(CALLBACK(src, PROC_REF(summon_step_not_moved)), 2)
+			addtimer(CALLBACK(src, PROC_REF(summon_step_not_moved)), 0.2 SECONDS)
 
 	else // no path, so calculate new one
 		calc_summon_path()
@@ -953,13 +949,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 	calc_summon_path()
 	tries = 0
 
-/mob/living/simple_animal/bot/Bump(atom/A) //Leave no door unopened!
-	. = ..()
-	if((istype(A, /obj/machinery/door/airlock) || istype(A, /obj/machinery/door/window)) && (!isnull(access_card)))
-		var/obj/machinery/door/D = A
-		if(D.check_access(access_card))
-			D.open()
-			frustration = 0
+/mob/living/simple_animal/bot/proc/attempt_access(mob/bot, obj/door_attempt)
+	SIGNAL_HANDLER
+
+	if(door_attempt.check_access(access_card))
+		frustration = 0
+		return ACCESS_ALLOWED
+	return ACCESS_DISALLOWED
 
 /mob/living/simple_animal/bot/ui_data(mob/user)
 	var/list/data = list()
@@ -980,13 +976,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 	return data
 
 // Actions received from TGUI
-/mob/living/simple_animal/bot/ui_act(action, params)
+/mob/living/simple_animal/bot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	var/mob/user = usr
+	var/mob/user = ui.user
 	if(!allowed(user))
-		to_chat(usr, span_warning("Access denied."))
+		to_chat(user, span_warning("Access denied."))
 		return
 
 	if(action == "lock")
@@ -1006,38 +1002,38 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if("airplane")
 			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
 		if("hack")
-			if(!HAS_SILICON_ACCESS(usr))
+			if(!HAS_SILICON_ACCESS(user))
 				return
 			if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 				bot_cover_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED|BOT_COVER_LOCKED)
-				to_chat(usr, span_warning("You overload [src]'s [hackables]."))
-				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
-				usr.log_message("disabled safety lock of [src]", LOG_GAME)
+				to_chat(user, span_warning("You overload [src]'s [hackables]."))
+				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
+				user.log_message("disabled safety lock of [src]", LOG_GAME)
 				bot_reset()
 				to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
 				to_chat(src, span_boldnotice(get_emagged_message()))
 				return
 			if(!(bot_cover_flags & BOT_COVER_HACKED))
-				to_chat(usr, span_boldannounce("You fail to repair [src]'s [hackables]."))
+				to_chat(user, span_boldannounce("You fail to repair [src]'s [hackables]."))
 				return
 			bot_cover_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
-			to_chat(usr, span_notice("You reset the [src]'s [hackables]."))
-			usr.log_message("re-enabled safety lock of [src]", LOG_GAME)
+			to_chat(user, span_notice("You reset the [src]'s [hackables]."))
+			user.log_message("re-enabled safety lock of [src]", LOG_GAME)
 			bot_reset()
 			to_chat(src, span_userdanger("Software restored to standard."))
 			to_chat(src, span_boldnotice(possessed_message))
 		if("eject_pai")
 			if(!paicard)
 				return
-			to_chat(usr, span_notice("You eject [paicard] from [initial(src.name)]."))
-			ejectpai(usr)
+			to_chat(user, span_notice("You eject [paicard] from [initial(src.name)]."))
+			ejectpai(user)
 		if("toggle_personality")
 			if (can_be_possessed)
-				disable_possession(usr)
+				disable_possession(user)
 			else
-				enable_possession(usr)
+				enable_possession(user)
 		if("rename")
-			rename(usr)
+			rename(user)
 
 /mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[isnull(base_icon_state) ? initial(icon_state) : base_icon_state][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
@@ -1151,7 +1147,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	path = newpath ? newpath : list()
 	if(!path_hud)
 		return
-	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
+	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC], GLOB.huds[DATA_HUD_BOT_PATH])
 	if(path_hud)
 		path_huds_watching_me += path_hud
 	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
@@ -1216,3 +1212,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/spawn_gibs(drop_bitflags = NONE)
 	new /obj/effect/gibspawner/robot(drop_location(), src)
+
+/mob/living/simple_animal/bot/get_hit_area_message(input_area)
+	// we just get hit, there's no complexity for hitting an arm (if it exists) or anything.
+	// we also need to return an empty string as otherwise it would falsely say that we get hit in the chest or something strange like that (bots don't have "chests")
+	return ""

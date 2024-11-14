@@ -5,7 +5,7 @@
 /mob/dead/observer/get_message_mods(message, list/mods)
 	var/key = message[1]
 	if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1 && !mods[RADIO_EXTENSION])
-		mods[RADIO_KEY] = lowertext(message[1 + length(key)])
+		mods[RADIO_KEY] = LOWER_TEXT(message[1 + length(key)])
 		mods[RADIO_EXTENSION] = GLOB.department_radio_keys[mods[RADIO_KEY]]
 	return message
 
@@ -44,9 +44,9 @@
 		message = trim_left(copytext_char(message, length(message_mods[RADIO_KEY]) + 2))
 		switch(message_mods[RADIO_EXTENSION])
 			if(MODE_ADMIN)
-				client.cmd_admin_say(message)
+				SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 			if(MODE_DEADMIN)
-				client.dsay(message)
+				SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 			if(MODE_PUPPET)
 				if(!mind.current.say(message))
 					to_chat(src, span_warning("Your linked body was unable to speak!"))

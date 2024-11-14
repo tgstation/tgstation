@@ -8,7 +8,7 @@
 		var/mob/living/silicon/player = src
 		designation = trim_left(player.designation + " " + player.job)
 
-	if(HAS_TRAIT(mind, DISPLAYS_JOB_IN_BINARY))
+	if(HAS_TRAIT(mind, TRAIT_DISPLAY_JOB_IN_BINARY))
 		designation = mind.assigned_role.title
 
 	if(isAI(src))
@@ -70,6 +70,9 @@
 			)
 
 /mob/living/silicon/binarycheck()
+	var/area/our_area = get_area(src)
+	if(our_area.area_flags & BINARY_JAMMING)
+		return FALSE
 	return TRUE
 
 /mob/living/silicon/radio(message, list/message_mods = list(), list/spans, language)
@@ -79,10 +82,10 @@
 	if(message_mods[MODE_HEADSET])
 		if(radio)
 			radio.talk_into(src, message, , spans, language, message_mods)
-		return REDUCE_RANGE
+		return NOPASS
 	else if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
 		if(radio)
 			radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
-			return ITALICS | REDUCE_RANGE
+			return NOPASS
 
 	return FALSE

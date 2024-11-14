@@ -221,7 +221,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/ctf_flag/LateInitialize()
-	. = ..()
 	ctf_game = GLOB.ctf_games[game_id] //Flags don't create ctf games by themselves since you can get ctf flags from christmas trees.
 
 /obj/item/ctf_flag/Destroy()
@@ -276,7 +275,7 @@
 	var/obj/item/ctf_flag/flag = item
 	if(flag.team != team)
 		to_chat(user, span_userdanger("Take \the [initial(flag.name)] to your team's controller!"))
-		user.playsound_local(get_turf(user), 'sound/machines/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
+		user.playsound_local(get_turf(user), 'sound/machines/buzz/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
 
 /obj/item/ctf_flag/dropped(mob/user)
 	..()
@@ -464,7 +463,12 @@
 
 /obj/structure/table/reinforced/ctf
 	resistance_flags = INDESTRUCTIBLE
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
+
+/obj/structure/table/reinforced/ctf/wrench_act_secondary(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/structure/table/reinforced/ctf/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return NONE
 
 #define CTF_LOADING_UNLOADED 0
 #define CTF_LOADING_LOADING 1

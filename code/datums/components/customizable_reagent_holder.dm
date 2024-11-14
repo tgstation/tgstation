@@ -206,7 +206,7 @@
 	if(isitem(atom_parent))
 		var/obj/item/item_parent = atom_parent
 		if(ingredient.w_class > item_parent.w_class)
-			item_parent.w_class = ingredient.w_class
+			item_parent.update_weight_class(ingredient.w_class)
 	atom_parent.name = "[custom_adjective()] [custom_type()] [initial(atom_parent.name)]"
 	SEND_SIGNAL(atom_parent, COMSIG_ATOM_CUSTOMIZED, ingredient)
 	SEND_SIGNAL(ingredient, COMSIG_ITEM_USED_AS_INGREDIENT, atom_parent)

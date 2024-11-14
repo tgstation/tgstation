@@ -68,7 +68,7 @@
 					neighbour.attempt_connect() //technically this would runtime if you made about 200~ buffers
 
 	add_overlay(icon_state + "_alert")
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, cut_overlay), icon_state + "_alert"), 20)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, cut_overlay), icon_state + "_alert"), 2 SECONDS)
 
 /obj/machinery/plumbing/buffer/attack_hand_secondary(mob/user, modifiers)
 	. = ..()

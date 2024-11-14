@@ -1,17 +1,6 @@
-/datum/admins/proc/access_news_network() //MARKER
-	set category = "Admin.Events"
-	set name = "Access Newscaster Network"
-	set desc = "Allows you to view, add and edit news feeds."
-
-	if (!istype(src, /datum/admins))
-		src = usr.client.holder
-	if (!istype(src, /datum/admins))
-		to_chat(usr, "Error: you are not an admin!", confidential = TRUE)
-		return
-
+ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows you to view, add, and edit news feeds.", ADMIN_CATEGORY_EVENTS)
 	var/datum/newspanel/new_newspanel = new
-
-	new_newspanel.ui_interact(usr)
+	new_newspanel.ui_interact(user.mob)
 
 /datum/newspanel
 	///What newscaster channel is currently being viewed by the player?
@@ -139,13 +128,13 @@
 		data["channelLocked"] = current_channel.locked
 		data["channelCensored"] = current_channel.censored
 
-	//We send all the information about all channels and all messages in existance.
+	//We send all the information about all channels and all messages in existence.
 	data["channels"] = channel_list
 	data["messages"] = message_list
 	data["wanted"] = wanted_info
 	return data
 
-/datum/newspanel/ui_act(action, params)
+/datum/newspanel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -245,14 +234,14 @@
 			return TRUE
 
 		if("setCriminalName")
-			var/temp_name = tgui_input_text(usr, "Write the Criminal's Name", "Warrent Alert Handler", "John Doe", MAX_NAME_LEN, multiline = FALSE)
+			var/temp_name = tgui_input_text(usr, "Write the Criminal's Name", "Warrent Alert Handler", "John Doe", max_length = MAX_NAME_LEN, multiline = FALSE)
 			if(!temp_name)
 				return TRUE
 			criminal_name = temp_name
 			return TRUE
 
 		if("setCrimeData")
-			var/temp_desc = tgui_input_text(usr, "Write the Criminal's Crimes", "Warrent Alert Handler", "Unknown", MAX_BROADCAST_LEN, multiline = TRUE)
+			var/temp_desc = tgui_input_text(usr, "Write the Criminal's Crimes", "Warrent Alert Handler", "Unknown", max_length = MAX_BROADCAST_LEN, multiline = TRUE)
 			if(!temp_desc)
 				return TRUE
 			crime_description = temp_desc
@@ -350,7 +339,7 @@
 		if(channel_name == potential_channel.channel_ID)
 			current_channel = potential_channel
 			break
-	var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", feed_channel_message, multiline = TRUE)
+	var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", feed_channel_message, max_length = MAX_BROADCAST_LEN, multiline = TRUE)
 	if(length(temp_message) <= 1)
 		return TRUE
 	if(temp_message)

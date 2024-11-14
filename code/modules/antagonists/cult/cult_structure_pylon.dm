@@ -5,8 +5,8 @@
 	icon_state = "pylon"
 	light_range = 1.5
 	light_color = COLOR_SOFT_RED
-	break_sound = 'sound/effects/glassbr2.ogg'
-	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
+	break_sound = 'sound/effects/glass/glassbr2.ogg'
+	break_message = span_warning("The blood-red crystal falls to the floor and shatters!")
 	/// Length of the cooldown in between tile corruptions. Doubled if no turfs are found.
 	var/corruption_cooldown_duration = 5 SECONDS
 	/// The cooldown for corruptions.
@@ -22,6 +22,7 @@
 		burn_heal = 0.4, \
 		blood_heal = 0.4, \
 		simple_heal = 1.2, \
+		wound_clotting = 0.1, \
 		requires_visibility = FALSE, \
 		limit_to_trait = TRAIT_HEALS_FROM_CULT_PYLONS, \
 		healing_color = COLOR_CULT_RED, \

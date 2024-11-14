@@ -23,6 +23,17 @@
 /area/station/engineering/atmos/upper
 	name = "Upper Atmospherics"
 
+/*outside atmos*/
+/area/station/engineering/atmos/space_catwalk
+	name = "\improper Atmospherics Space Catwalk"
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+
+	sound_environment = SOUND_AREA_SPACE
+	ambience_index = AMBIENCE_SPACE
+	ambient_buzz = null //Space is deafeningly quiet
+	min_ambience_cooldown = 195 SECONDS //length of ambispace.ogg
+	max_ambience_cooldown = 200 SECONDS
+
 /area/station/engineering/atmos/project
 	name = "\improper Atmospherics Project Room"
 	icon_state = "atmos_projectroom"
@@ -73,6 +84,11 @@
 /area/station/engineering/supermatter/room
 	name = "\improper Supermatter Engine Room"
 	icon_state = "engine_sm_room"
+	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
+/area/station/engineering/supermatter/room/upper
+	name = "\improper Upper Supermatter Engine Room"
+	icon_state = "engine_sm_room_upper"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
 /area/station/engineering/break_room

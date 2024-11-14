@@ -7,18 +7,20 @@
 	var/datum/ai_behavior/rift_behaviour
 	/// If true we finish planning after this
 	var/finish_planning = FALSE
+	/// Key to read for flee target
+	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 
 /datum/ai_planning_subtree/make_carp_rift/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if (!rift_behaviour)
 		CRASH("Forgot to specify rift behaviour for [src]")
 
-	if (!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+	if (!controller.blackboard_key_exists(target_key))
 		return
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_CARP_RIFT]
 	if (!using_action?.IsAvailable())
 		return
 
-	controller.queue_behavior(rift_behaviour, BB_CARP_RIFT, BB_BASIC_MOB_CURRENT_TARGET)
+	controller.queue_behavior(rift_behaviour, BB_CARP_RIFT, target_key)
 	if (finish_planning)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
@@ -31,9 +33,16 @@
 	finish_planning = TRUE
 
 /datum/ai_planning_subtree/make_carp_rift/panic_teleport/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/atom/movable/fleeing_from = controller.blackboard[target_key]
+	if(!QDELETED(fleeing_from) && controller.blackboard[BB_CARPS_FEAR_FISHERMAN] && HAS_TRAIT(fleeing_from, TRAIT_SCARY_FISHERMAN))
+		return ..()
 	if (controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
 		return
 	return ..()
+
+/datum/ai_planning_subtree/make_carp_rift/panic_teleport/flee_key
+	target_key = BB_BASIC_MOB_FLEE_TARGET
+
 
 /**
  * # Make carp rift (aggressive)
@@ -41,6 +50,12 @@
  */
 /datum/ai_planning_subtree/make_carp_rift/aggressive_teleport
 	rift_behaviour = /datum/ai_behavior/make_carp_rift/towards/aggressive
+
+/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/atom/movable/target = controller.blackboard[target_key]
+	if(!QDELETED(target) && controller.blackboard[BB_CARPS_FEAR_FISHERMAN] && HAS_TRAIT(target, TRAIT_SCARY_FISHERMAN))
+		return
+	return ..()
 
 /**
  * # Make carp rift
@@ -52,21 +67,19 @@
 	return controller.blackboard[ability_key] && controller.blackboard[target_key]
 
 /datum/ai_behavior/make_carp_rift/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
-	. = ..()
 	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = controller.blackboard[ability_key]
 	var/atom/target = controller.blackboard[target_key]
 
 	if (!validate_target(controller, target, ability))
-		finish_action(controller, FALSE, ability_key, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/turf/target_destination = find_target_turf(controller, target, ability)
 	if (!target_destination)
-		finish_action(controller, FALSE, ability_key, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/result = ability.InterceptClickOn(controller.pawn, null, target_destination)
-	finish_action(controller, result, ability_key, target_key)
+	if(ability.InterceptClickOn(controller.pawn, null, target_destination))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /// Return true if your target is valid for the action
 /datum/ai_behavior/make_carp_rift/proc/validate_target(datum/ai_controller/controller, atom/target, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability)
@@ -176,7 +189,7 @@
 
 /datum/ai_planning_subtree/shortcut_to_target_through_carp_rift/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if (QDELETED(target))
+	if (QDELETED(target) || (controller.blackboard[BB_CARPS_FEAR_FISHERMAN] && HAS_TRAIT(target, TRAIT_SCARY_FISHERMAN)))
 		return
 
 	var/distance_to_target = get_dist(controller.pawn, target)

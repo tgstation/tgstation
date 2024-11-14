@@ -49,7 +49,7 @@
 	if(!user.combat_mode || pushed_over || !isturf(loc))
 		return ..()
 	user.visible_message(span_warning("[user] pushes over [src]!"), span_danger("You push over [src]!"))
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	push_over()
 
 /obj/item/cardboard_cutout/equipped(mob/living/user, slot)
@@ -92,10 +92,8 @@
 	if((damage_flag == BULLET || damage_flag == MELEE) && (damage_type == BRUTE) && prob(damage_sustained))
 		push_over()
 
-/obj/item/cardboard_cutout/deconstruct(disassembled)
-	if(!(flags_1 & HOLOGRAM_1) || !(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/cardboard(loc, 1)
-	return ..()
+/obj/item/cardboard_cutout/atom_deconstruct(disassembled)
+	new /obj/item/stack/sheet/cardboard(loc, 1)
 
 /proc/get_cardboard_cutout_instance(datum/cardboard_cutout/cardboard_cutout)
 	ASSERT(ispath(cardboard_cutout), "[cardboard_cutout] is not a path of /datum/cardboard_cutout")
@@ -151,7 +149,7 @@
 /obj/item/cardboard_cutout/proc/check_menu(mob/living/user, obj/item/toy/crayon/crayon)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(pushed_over)
 		to_chat(user, span_warning("Right [src] first!"))
@@ -167,6 +165,12 @@
 
 /obj/item/cardboard_cutout/adaptive //Purchased by Syndicate agents, these cutouts are indistinguishable from normal cutouts but aren't discolored when their appearance is changed
 	deceptive = TRUE
+
+/obj/item/cardboard_cutout/nuclear_operative
+	starting_cutout = "Nuclear Operative"
+
+/obj/item/cardboard_cutout/xenomorph
+	starting_cutout = "Xenomorph"
 
 /datum/cardboard_cutout
 	/// Name of the cutout, used for radial selection and the global list.
@@ -319,7 +323,7 @@
 	outfit = /datum/outfit/ashwalker/spear
 
 /datum/cardboard_cutout/ash_walker/get_name()
-	return lizard_name(pick(MALE, FEMALE))
+	return generate_random_name_species_based(species_type = /datum/species/lizard)
 
 /datum/cardboard_cutout/death_squad
 	name = "Deathsquad Officer"
@@ -356,3 +360,34 @@
 	applied_name = "Private Security Officer"
 	applied_desc = "A cardboard cutout of a private security officer."
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasensoldier
+
+/datum/cardboard_cutout/heretic
+	name = "Heretic"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a Heretic."
+	outfit = /datum/outfit/heretic_hallucination
+
+/datum/cardboard_cutout/changeling
+	name = "Changeling"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a Changeling."
+	outfit = /datum/outfit/changeling
+
+/datum/cardboard_cutout/pirate
+	name = "Pirate"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a space pirate."
+	outfit = /datum/outfit/pirate/space/captain/cardboard
+
+/datum/cardboard_cutout/ninja
+	name = "Space Ninja"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a space ninja."
+	outfit = /datum/outfit/ninja
+
+/datum/cardboard_cutout/abductor
+	name = "Abductor Agent"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of an abductor agent."
+	species = /datum/species/abductor
+	outfit = /datum/outfit/abductor/agent/cardboard

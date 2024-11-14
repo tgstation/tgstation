@@ -1095,9 +1095,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cu" = (
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
+/obj/machinery/power/smes/ship,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -1274,9 +1272,7 @@
 /area/shuttle/abandoned/medbay)
 "cL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/medical{
-	req_access = null
-	},
+/obj/machinery/vending/medical,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron/white,

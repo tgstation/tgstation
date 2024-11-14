@@ -1,0 +1,28 @@
+{
+    "wellworn_shirt_pro_skub": [
+        {
+            "type": "icon_state",
+            "icon_state": "worn_out",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        },
+		{
+			"type": "icon_state",
+			"icon_state": "skub_overlay",
+			"blend_mode": "overlay"
+		}
+	],
+	"wellworn_shirt_anti_skub": [
+        {
+            "type": "icon_state",
+            "icon_state": "worn_out",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        },
+		{
+			"type": "icon_state",
+			"icon_state": "anti_skub_overlay",
+			"blend_mode": "overlay"
+		}
+    ]
+}

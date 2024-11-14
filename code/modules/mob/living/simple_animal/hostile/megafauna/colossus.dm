@@ -27,7 +27,7 @@
 	maxHealth = 2500
 	attack_verb_continuous = "judges"
 	attack_verb_simple = "judge"
-	attack_sound = 'sound/magic/clockwork/ratvar_attack.ogg'
+	attack_sound = 'sound/effects/magic/clockwork/ratvar_attack.ogg'
 	icon_state = "eva"
 	icon_living = "eva"
 	icon_dead = ""
@@ -54,7 +54,7 @@
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	death_message = "disintegrates, leaving a glowing core in its wake."
-	death_sound = 'sound/magic/demon_dies.ogg'
+	death_sound = 'sound/effects/magic/demon_dies.ogg'
 	summon_line = "Your trial begins now."
 	/// Spiral shots ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/spiral_shots
@@ -129,7 +129,7 @@
 		if(viewer.client)
 			flash_color(viewer.client, "#C80000", 1)
 			shake_camera(viewer, 4, 3)
-	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, TRUE)
+	playsound(src, 'sound/effects/magic/clockwork/narsie_attack.ogg', 200, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
@@ -187,6 +187,10 @@
 	pass_flags = PASSTABLE
 	plane = GAME_PLANE
 	var/explode_hit_objects = TRUE
+
+/obj/projectile/colossus/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
 
 /obj/projectile/colossus/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
 	if(isliving(target))
@@ -294,6 +298,7 @@
 		charge_animation()
 	COOLDOWN_START(src, cooldown_timer, cooldown_add)
 	playsound(user, activation_sound, 100, TRUE)
+	log_game("[src] activated by [key_name(user)] in [AREACOORD(src)]. The last fingerprints on the [src] was [fingerprintslast].")
 	return TRUE
 
 /obj/machinery/anomalous_crystal/proc/charge_animation()
@@ -301,7 +306,7 @@
 	active = TRUE
 	set_anchored(TRUE)
 	balloon_alert_to_viewers("charging...")
-	playsound(src, 'sound/magic/disable_tech.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/disable_tech.ogg', 50, TRUE)
 	sleep(use_time)
 	icon_state = initial(icon_state)
 	active = FALSE
@@ -317,9 +322,9 @@
 	ActivationReaction(null, ACTIVATE_BOMB)
 	return TRUE
 
-/obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
-	observer_desc = "This crystal strips and equips its targets as clowns."
-	possible_methods = list(ACTIVATE_MOB_BUMP, ACTIVATE_SPEECH)
+/obj/machinery/anomalous_crystal/honk //Revives the dead, but strips and equips them as a clown
+	observer_desc = "This crystal revives targets around it as clowns. Oh, that's horrible...."
+	activation_method = ACTIVATE_TOUCH
 	activation_sound = 'sound/items/bikehorn.ogg'
 	use_time = 3 SECONDS
 	/// List of REFs to mobs that have been turned into a clown
@@ -330,19 +335,30 @@
 	if(!.)
 		return FALSE
 
-	if(!ishuman(user))
-		return FALSE
-	if(!(user in viewers(src)))
-		return FALSE
-	var/clown_ref = REF(user)
-	if(clown_ref in clowned_mob_refs)
-		return FALSE
+	for(var/atom/thing as anything in range(1, src))
+		if(isturf(thing))
+			new /obj/effect/decal/cleanable/confetti(thing)
+			continue
 
-	var/mob/living/carbon/human/new_clown = user
-	for(var/obj/item/to_strip in new_clown.get_equipped_items())
-		new_clown.dropItemToGround(to_strip)
-	new_clown.dress_up_as_job(SSjob.GetJobType(/datum/job/clown))
-	clowned_mob_refs += clown_ref
+		if(!ishuman(thing))
+			continue
+
+		var/mob/living/carbon/human/new_clown = thing
+
+		if(new_clown.stat != DEAD)
+			continue
+
+		new_clown.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+
+		var/clown_ref = REF(new_clown)
+		if(clown_ref in clowned_mob_refs) //one clowning per person
+			continue
+
+		for(var/obj/item/to_strip in new_clown.get_equipped_items())
+			new_clown.dropItemToGround(to_strip)
+		new_clown.dress_up_as_job(SSjob.get_job_type(/datum/job/clown))
+		clowned_mob_refs += clown_ref
+
 	return TRUE
 
 /// Transforms the area to look like a new one
@@ -396,27 +412,34 @@
 /obj/machinery/anomalous_crystal/dark_reprise //Revives anyone nearby, but turns them into shadowpeople and renders them uncloneable, so the crystal is your only hope of getting up again if you go down.
 	observer_desc = "When activated, this crystal revives anyone nearby, but turns them into Shadowpeople and makes them unclonable, making the crystal their only hope of getting up again."
 	activation_method = ACTIVATE_TOUCH
-	activation_sound = 'sound/hallucinations/growl1.ogg'
+	activation_sound = 'sound/effects/hallucinations/growl1.ogg'
 	use_time = 3 SECONDS
 
 /obj/machinery/anomalous_crystal/dark_reprise/ActivationReaction(mob/user, method)
 	. = ..()
 	if(!.)
-		return
+		return FALSE
+
 	for(var/atom/thing as anything in range(1, src))
 		if(isturf(thing))
 			new /obj/effect/temp_visual/cult/sparks(thing)
 			continue
 
-		if(ishuman(thing))
-			var/mob/living/carbon/human/to_revive = thing
-			if(to_revive.stat != DEAD)
-				continue
-			to_revive.set_species(/datum/species/shadow, TRUE)
-			to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
-			//Free revives, but significantly limits your options for reviving except via the crystal
-			//except JK who cares about BADDNA anymore. this even heals suicides.
-			ADD_TRAIT(to_revive, TRAIT_BADDNA, MAGIC_TRAIT)
+		if(!ishuman(thing))
+			continue
+
+		var/mob/living/carbon/human/to_revive = thing
+
+		if(to_revive.stat != DEAD)
+			continue
+
+		to_revive.set_species(/datum/species/shadow, TRUE)
+		to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+		//Free revives, but significantly limits your options for reviving except via the crystal
+		//except JK who cares about BADDNA anymore. this even heals suicides.
+		ADD_TRAIT(to_revive, TRAIT_BADDNA, MAGIC_TRAIT)
+
+	return TRUE
 
 /obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans
 	observer_desc = "This crystal allows ghosts to turn into a fragile creature that can heal people."
@@ -504,8 +527,7 @@
 	. = ..()
 	if(isliving(arrived) && holder_animal)
 		var/mob/living/possessor = arrived
-		possessor.add_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM), STASIS_MUTE)
-		possessor.status_flags |= GODMODE
+		possessor.add_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM, TRAIT_GODMODE), STASIS_MUTE)
 		possessor.mind.transfer_to(holder_animal)
 		var/datum/action/exit_possession/escape = new(holder_animal)
 		escape.Grant(holder_animal)
@@ -513,15 +535,14 @@
 
 /obj/structure/closet/stasis/dump_contents(kill = TRUE)
 	for(var/mob/living/possessor in src)
-		possessor.remove_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM), STASIS_MUTE)
-		possessor.status_flags &= ~GODMODE
+		possessor.remove_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM, TRAIT_GODMODE), STASIS_MUTE)
 		if(kill || !isanimal_or_basicmob(loc))
 			possessor.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
 			possessor.death(FALSE)
 		if(holder_animal)
-			possessor.forceMove(get_turf(holder_animal))
 			holder_animal.mind.transfer_to(possessor)
 			possessor.mind.grab_ghost(force = TRUE)
+			possessor.forceMove(get_turf(holder_animal))
 			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			holder_animal.gib(DROP_ALL_REMAINS)
 			return ..()

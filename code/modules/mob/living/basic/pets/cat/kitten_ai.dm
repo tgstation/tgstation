@@ -3,10 +3,12 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_HUNGRY_MEOW = list("mrrp...", "mraw..."),
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_MAX_DISTANCE_TO_FOOD = 2,
 	)
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/beg_human,
@@ -30,16 +32,15 @@
 	action_cooldown = 5 SECONDS
 
 /datum/ai_behavior/beacon_for_food/perform(seconds_per_tick, datum/ai_controller/controller, target_key, meows_key)
-	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/mob/living/living_pawn = controller.pawn
 	var/list/meowing_list = controller.blackboard[meows_key]
 	if(length(meowing_list))
 		living_pawn.say(pick(meowing_list), forced = "ai_controller")
 	living_pawn._pointed(target)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/beacon_for_food/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()

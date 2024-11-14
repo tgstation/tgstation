@@ -20,6 +20,7 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 	max_integrity = 200
+	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///Is the machine moving? Setting this to FALSE will automatically call stop_moving()
 	var/moving = FALSE
 	///The distance the machine is allowed to roam from its starting point
@@ -78,7 +79,7 @@
  *
  * Will not respond if moving and emagged, so once you set it to go it can't be stopped!
  */
-/obj/structure/training_machine/ui_act(action, params)
+/obj/structure/training_machine/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -174,21 +175,19 @@
 		attached_item.throw_at(destination, 4, 1)
 	on_attached_delete()
 
-/obj/structure/training_machine/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
-		return
+/obj/structure/training_machine/click_alt(mob/user)
 	if(has_buckled_mobs())
 		user_unbuckle_mob(buckled_mobs[1], user)
-		return
+		return CLICK_ACTION_SUCCESS
 	if (!attached_item)
-		return
+		return NONE
 	if (obj_flags & EMAGGED)
 		to_chat(user, span_warning("The toolbox is somehow stuck on! It won't budge!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
 	playsound(src, SFX_RUSTLE, 50, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /**
  * Toggle the machine's movement
@@ -210,7 +209,7 @@
 	moving = FALSE
 	starting_turf = null
 	say(message)
-	playsound(src,'sound/machines/synth_no.ogg',50,FALSE)
+	playsound(src,'sound/machines/synth/synth_no.ogg',50,FALSE)
 	STOP_PROCESSING(SSfastprocess, src)
 
 /**
@@ -222,7 +221,7 @@
 	moving = TRUE
 	starting_turf = get_turf(src)
 	say("Beginning training simulation.")
-	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
+	playsound(src,'sound/machines/beep/triple_beep.ogg',50,FALSE)
 	START_PROCESSING(SSfastprocess, src)
 
 /**
@@ -286,7 +285,7 @@
 	do_attack_animation(target, null, attached_item)
 	if (obj_flags & EMAGGED)
 		target.apply_damage(attached_item.force, BRUTE, BODY_ZONE_CHEST, attacking_item = attached_item)
-	playsound(src, 'sound/weapons/smash.ogg', 15, TRUE)
+	playsound(src, 'sound/items/weapons/smash.ogg', 15, TRUE)
 	COOLDOWN_START(src, attack_cooldown, rand(MIN_ATTACK_DELAY, MAX_ATTACK_DELAY))
 
 /**
@@ -361,12 +360,17 @@
 	///Number of hits made since the Lap button (alt-click) was last pushed
 	var/lap_hits = 0
 
-/obj/item/training_toolbox/afterattack(atom/target, mob/living/user, proximity)
+/obj/item/training_toolbox/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
-	if (!proximity || target == user || !user.combat_mode)
-		return
-	if (check_hit(target))
-		user.changeNext_move(CLICK_CD_MELEE)
+	if(.)
+		return .
+	if(A == user || !user.combat_mode)
+		return .
+	if(!check_hit(A))
+		return .
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(A)
+	return TRUE
 
 /**
  * Check if we should increment the hit counter
@@ -386,9 +390,9 @@
 			return FALSE
 	total_hits++
 	lap_hits++
-	playsound(src,'sound/weapons/smash.ogg',50,FALSE)
+	playsound(src,'sound/items/weapons/smash.ogg',50,FALSE)
 	if (lap_hits % HITS_TO_KILL == 0)
-		playsound(src,'sound/machines/twobeep.ogg',25,FALSE)
+		playsound(src,'sound/machines/beep/twobeep.ogg',25,FALSE)
 	return TRUE
 
 /obj/item/training_toolbox/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -396,12 +400,10 @@
 	if (!.)
 		check_hit(hit_atom)
 
-/obj/item/training_toolbox/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/item/training_toolbox/click_alt(mob/user)
 	to_chat(user, span_notice("You push the 'Lap' button on the toolbox's display."))
 	lap_hits = initial(lap_hits)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/training_toolbox/examine(mob/user)
 	. = ..()

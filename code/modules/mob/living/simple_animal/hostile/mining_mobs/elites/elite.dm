@@ -7,7 +7,7 @@
 	name = "elite"
 	desc = "An elite monster, found in one of the strange tumors on lavaland."
 	icon = 'icons/mob/simple/lavaland/lavaland_elites.dmi'
-	faction = list(FACTION_BOSS)
+	faction = list(FACTION_MINING, FACTION_BOSS)
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	ranged = TRUE
@@ -124,7 +124,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	icon_state = "tumor"
 	pixel_x = -16
 	base_pixel_x = -16
-	light_color = COLOR_SOFT_RED
+	light_color = "#FA8282"
 	light_range = 3
 	anchored = TRUE
 	density = FALSE
@@ -169,7 +169,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			if(boosted)
 				mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
 				to_chat(mychild, "<b>Someone has activated your tumor.  You will be returned to fight shortly, get ready!</b>")
-			addtimer(CALLBACK(src, PROC_REF(return_elite)), 30)
+			addtimer(CALLBACK(src, PROC_REF(return_elite)), 3 SECONDS)
 			INVOKE_ASYNC(src, PROC_REF(arena_checks))
 		if(TUMOR_INACTIVE)
 			if(HAS_TRAIT(user, TRAIT_ELITE_CHALLENGER))
@@ -181,7 +181,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			visible_message(span_boldwarning("[src] begins to convulse.  Your instincts tell you to step back."))
 			make_activator(user)
 			if(!boosted)
-				addtimer(CALLBACK(src, PROC_REF(spawn_elite)), 30)
+				addtimer(CALLBACK(src, PROC_REF(spawn_elite)), 3 SECONDS)
 				return
 			visible_message(span_boldwarning("Something within [src] stirs..."))
 			var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, poll_time = 5 SECONDS, checked_target = src, ignore_category = POLL_IGNORE_LAVALAND_ELITE, alert_pic = src, role_name_text = "lavaland elite")
@@ -194,7 +194,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 					While the opponent might have an upper hand with  powerful mining equipment and tools, you have great power normally limited by AI mobs.\n\
 					If you want to win, you'll have to use your powers in creative ways to ensure the kill. It's suggested you try using them all as soon as possible.\n\
 					Should you win, you'll receive extra information regarding what to do after. Good luck!</b>")
-				addtimer(CALLBACK(src, PROC_REF(spawn_elite), elitemind), 100)
+				addtimer(CALLBACK(src, PROC_REF(spawn_elite), elitemind), 10 SECONDS)
 			else
 				visible_message(span_boldwarning("The stirring stops, and nothing emerges.  Perhaps try again later."))
 				activity = TUMOR_INACTIVE
@@ -270,19 +270,19 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		if(elitehere == mychild && activity == TUMOR_PASSIVE)
 			mychild.adjustHealth(-mychild.maxHealth * 0.025*seconds_per_tick)
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
-			H.color = "#FF0000"
+			H.color = COLOR_RED
 
-/obj/structure/elite_tumor/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
-	if(istype(attacking_item, /obj/item/organ/internal/monster_core/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
-		var/obj/item/organ/internal/monster_core/regenerative_core/core = attacking_item
+/obj/structure/elite_tumor/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
+	. = NONE
+	if(istype(attacking_item, /obj/item/organ/monster_core/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
+		var/obj/item/organ/monster_core/regenerative_core/core = attacking_item
 		visible_message(span_boldwarning("As [user] drops the core into [src], [src] appears to swell."))
 		icon_state = "advanced_tumor"
 		boosted = TRUE
 		set_light_range(6)
 		desc = "[desc]  This one seems to glow with a strong intensity."
 		qdel(core)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/elite_tumor/proc/arena_checks()
 	if(activity != TUMOR_ACTIVE || QDELETED(src))
@@ -291,7 +291,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	INVOKE_ASYNC(src, PROC_REF(arena_trap))  //Gets another arena trap queued up for when this one runs out.
 	INVOKE_ASYNC(src, PROC_REF(border_check))  //Checks to see if our fighters got out of the arena somehow.
 	if(!QDELETED(src))
-		addtimer(CALLBACK(src, PROC_REF(arena_checks)), 50)
+		addtimer(CALLBACK(src, PROC_REF(arena_checks)), 5 SECONDS)
 
 /obj/structure/elite_tumor/proc/fighters_check()
 	if(QDELETED(mychild) || mychild.stat == DEAD)
@@ -353,7 +353,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your tumor. Note, it's your only way to heal.\n\
 			Bear in mind, if anyone interacts with your tumor, you'll be resummoned here to carry out another fight. In such a case, you will regain your full max health.\n\
 			Also, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
-		to_chat(mychild, "<span class='big bold'>Note that you are a lavaland monster, and thus not allied to the station. You should not cooperate or act friendly with any station crew unless under extreme circumstances!</span>")
+		to_chat(mychild, span_boldbig("Note that you are a lavaland monster, and thus not allied to the station. You should not cooperate or act friendly with any station crew unless under extreme circumstances!"))
 
 /obj/item/tumor_shard
 	name = "tumor shard"
@@ -368,26 +368,26 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	throw_speed = 3
 	throw_range = 5
 
-/obj/item/tumor_shard/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite) && proximity_flag)
-		var/mob/living/simple_animal/hostile/asteroid/elite/E = target
-		if(E.stat != DEAD || E.sentience_type != SENTIENCE_BOSS || !E.key)
-			user.visible_message(span_notice("It appears [E] is unable to be revived right now.  Perhaps try again later."))
-			return
-		E.faction = list("[REF(user)]")
-		E.revive(HEAL_ALL)
-		user.visible_message(span_notice("[user] stabs [E] with [src], reviving it."))
-		E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
-		to_chat(E, "<span class='userdanger'>You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span>")
-		to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!</span>")
-		E.maxHealth = E.maxHealth * 0.4
-		E.health = E.maxHealth
-		E.desc = "[E.desc]  However, this one appears appears less wild in nature, and calmer around people."
-		E.sentience_type = SENTIENCE_ORGANIC
-		qdel(src)
-	else
-		to_chat(user, span_info("[src] only works on the corpse of a sentient lavaland elite."))
+/obj/item/tumor_shard/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /mob/living/simple_animal/hostile/asteroid/elite))
+		return NONE
+
+	var/mob/living/simple_animal/hostile/asteroid/elite/E = interacting_with
+	if(E.stat != DEAD || E.sentience_type != SENTIENCE_BOSS || !E.key)
+		user.visible_message(span_notice("It appears [E] is unable to be revived right now. Perhaps try again later."))
+		return ITEM_INTERACT_BLOCKING
+	E.faction = list("[REF(user)]")
+	E.revive(HEAL_ALL)
+	user.visible_message(span_notice("[user] stabs [E] with [src], reviving it."))
+	E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
+	to_chat(E, span_userdanger("You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk."))
+	to_chat(E, span_boldbig("Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!"))
+	E.maxHealth = E.maxHealth * 0.4
+	E.health = E.maxHealth
+	E.desc = "[E.desc] However, this one appears to be less wild in nature, and calmer around people."
+	E.sentience_type = SENTIENCE_ORGANIC
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/temp_visual/elite_tumor_wall
 	name = "magic wall"
@@ -402,18 +402,18 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	plane = GAME_PLANE
 	color = rgb(255,0,0)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
-	light_color = COLOR_SOFT_RED
+	light_color = "#FA8282"
 	var/datum/weakref/activator_ref
 	var/datum/weakref/ourelite_ref
 
 /obj/effect/temp_visual/elite_tumor_wall/Initialize(mapload, new_caster)
 	. = ..()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
 
 /obj/effect/temp_visual/elite_tumor_wall/Destroy()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 

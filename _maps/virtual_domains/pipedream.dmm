@@ -24,7 +24,7 @@
 /area/virtual_domain)
 "aK" = (
 /turf/open/space/basic,
-/area/virtual_domain)
+/area/space/virtual_domain)
 "aL" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
@@ -744,7 +744,7 @@
 "wl" = (
 /obj/item/shard,
 /turf/open/space/basic,
-/area/virtual_domain)
+/area/space/virtual_domain)
 "wm" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
@@ -831,7 +831,7 @@
 "xF" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/binary,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "xM" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
@@ -897,7 +897,7 @@
 "Av" = (
 /obj/item/stack/rods/two,
 /turf/open/space/basic,
-/area/virtual_domain)
+/area/space/virtual_domain)
 "Aw" = (
 /obj/structure/lattice/catwalk{
 	name = "industrial lift"
@@ -1528,9 +1528,13 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"RI" = (
+/obj/effect/smooths_with_walls,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
 "RJ" = (
 /turf/closed/indestructible/binary,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "RK" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/iron,
@@ -1921,7 +1925,7 @@ RJ
 RJ
 RJ
 RJ
-RJ
+RI
 RJ
 RJ
 RJ
@@ -2107,7 +2111,7 @@ yQ
 yQ
 yQ
 yQ
-RJ
+RI
 eg
 eg
 eg
@@ -2353,7 +2357,7 @@ yQ
 yQ
 yQ
 RJ
-RJ
+RI
 RJ
 RJ
 RJ
@@ -2443,8 +2447,8 @@ yQ
 yQ
 yQ
 yQ
-RJ
-RJ
+yQ
+yQ
 RJ
 eg
 eg
@@ -2493,7 +2497,7 @@ yQ
 yQ
 yQ
 yQ
-RJ
+yQ
 RJ
 RJ
 eg
@@ -2543,7 +2547,7 @@ yQ
 yQ
 yQ
 yQ
-RJ
+yQ
 RJ
 kU
 kU
@@ -3126,7 +3130,7 @@ eg
 eg
 rO
 rO
-RJ
+RI
 RJ
 rO
 rO
@@ -3170,7 +3174,7 @@ RJ
 RJ
 RJ
 RJ
-RJ
+RI
 RJ
 RJ
 RJ
@@ -3215,7 +3219,7 @@ Cv
 Nu
 eg
 RJ
-RJ
+yQ
 yQ
 yQ
 yQ
@@ -3652,7 +3656,7 @@ yQ
 yQ
 yQ
 yQ
-RJ
+yQ
 RJ
 RJ
 RJ

@@ -24,7 +24,6 @@
 	if(reusable)
 		if(!ispath(proj.shrapnel_type))
 			proj.shrapnel_type = shell.type
-			proj.updateEmbedding()
 		proj.AddElement(/datum/element/projectile_drop, shell.type)
 
 /datum/element/caseless/proc/on_fired_casing(obj/item/ammo_casing/shell, atom/target, mob/living/user, fired_from, randomspread, spread, zone_override, params, distro, obj/projectile/proj)

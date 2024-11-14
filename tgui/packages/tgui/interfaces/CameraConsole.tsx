@@ -1,10 +1,5 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { BooleanLike, classes } from 'common/react';
-import { createSearch } from 'common/string';
+import { filter, sort } from 'common/collections';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   ByondUi,
@@ -12,7 +7,11 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -68,15 +67,17 @@ const prevNextCamera = (
  * Filters cameras, applies search terms and sorts the alphabetically.
  */
 const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
-  const testSearch = createSearch(searchText, (camera: Camera) => camera.name);
+  let queriedCameras = filter(cameras, (camera: Camera) => !!camera.name);
+  if (searchText) {
+    const testSearch = createSearch(
+      searchText,
+      (camera: Camera) => camera.name,
+    );
+    queriedCameras = filter(queriedCameras, testSearch);
+  }
+  queriedCameras = sort(queriedCameras);
 
-  return flow([
-    filter((camera: Camera) => !!camera.name),
-    // Optional search term
-    searchText && filter(testSearch),
-    // Slightly expensive, but way better than sorting in BYOND
-    sortBy((camera: Camera) => camera),
-  ])(cameras);
+  return queriedCameras;
 };
 
 export const CameraConsole = (props) => {

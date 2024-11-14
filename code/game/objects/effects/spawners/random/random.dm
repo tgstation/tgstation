@@ -29,6 +29,8 @@
 	var/spawn_scatter_radius = 0
 	/// Whether the items should have a random pixel_x/y offset (maxium offset distance is ±16 pixels for x/y)
 	var/spawn_random_offset = FALSE
+	/// Whether items that cannot be spawned will be removed from the loot list. Keep it TRUE unless you've a good reason.
+	var/remove_if_cant_spawn = TRUE
 
 /obj/effect/spawner/random/Initialize(mapload)
 	. = ..()
@@ -52,13 +54,17 @@
 	if(loot_subtype_path)
 		loot += subtypesof(loot_subtype_path)
 
+	if(CONFIG_GET(number/random_loot_weight_modifier) != 1)
+		skew_loot_weights(loot, CONFIG_GET(number/random_loot_weight_modifier))
+
 	if(loot?.len)
 		var/loot_spawned = 0
 		var/pixel_divider = FLOOR(16 / spawn_loot_split_pixel_offsets, 1) // 16 pixels offsets is max that should be allowed in any direction
 		while((spawn_loot_count-loot_spawned) && loot.len)
 			var/lootspawn = pick_weight_recursive(loot)
 			if(!can_spawn(lootspawn))
-				loot.Remove(lootspawn)
+				if(remove_if_cant_spawn)
+					loot.Remove(lootspawn)
 				continue
 			if(!spawn_loot_double)
 				loot.Remove(lootspawn)
@@ -85,6 +91,22 @@
 						spawned_loot.pixel_y = spawn_loot_split_pixel_offsets * (loot_spawned % pixel_divider)
 			loot_spawned++
 
+///Levels out the weights of loot if lower than 1, or makes rarer spawns even more rare.
+/obj/effect/spawner/random/proc/skew_loot_weights(list/loot_list, exponent)
+	///This helps keeping the modified weights more or less correct, since pick_weight doesn't appreciate decimals.
+	var/precision = 1
+	if(exponent < 1)
+		precision = round((1 - exponent) * 10) + 1
+	for(var/loot_type in loot_list)
+		if(islist(loot_type))
+			skew_loot_weights(loot_type, exponent)
+		var/loot_weight = loot_list[loot_type]
+		if(loot_weight <= 1)
+			if(exponent < 1)
+				loot_list[loot_type] = precision
+			continue
+		loot_list[loot_type] = round(loot_weight ** exponent * precision, 1)
+
 /**
  *  Makes the actual item related to our spawner.
  *
@@ -94,17 +116,29 @@
 /obj/effect/spawner/random/proc/make_item(spawn_loc, type_path_to_make)
 	return new type_path_to_make(spawn_loc)
 
-///If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available
+///If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available that are in view and have an unblocked line to them.
 /obj/effect/spawner/random/proc/get_spawn_locations(radius)
 	var/list/scatter_locations = list()
 
-	if(radius >= 0)
-		for(var/turf/turf_in_view in view(radius, get_turf(src)))
-			if(isclosedturf(turf_in_view) || (isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view)))
-				continue
-			scatter_locations += turf_in_view
+	if(!radius)
+		return scatter_locations
+
+	for(var/turf/turf_in_view in view(radius, get_turf(src)))
+		if(isclosedturf(turf_in_view) || (isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view)))
+			continue
+		if(!has_unblocked_line(turf_in_view))
+			continue
+
+		scatter_locations += turf_in_view
 
 	return scatter_locations
+
+/obj/effect/spawner/random/proc/has_unblocked_line(destination)
+	for(var/turf/potential_blockage as anything in get_line(get_turf(src), destination))
+		if(!potential_blockage.is_blocked_turf(exclude_mobs = TRUE))
+			continue
+		return FALSE
+	return TRUE
 
 //finds the probabilities of items spawning from a loot spawner's loot pool
 /obj/item/loot_table_maker

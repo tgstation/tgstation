@@ -3,6 +3,7 @@
 	desc = "A circuit multitool. Used to mark entities which can then be uploaded to components by pressing the upload button on a port. \
 	Acts as a normal multitool otherwise. Use in hand to clear marked entity so that you can mark another entity."
 	icon_state = "multitool_circuit"
+	apc_scanner = FALSE // would conflict with mark clearing
 
 	/// The marked atom of this multitool
 	var/atom/marked_atom
@@ -44,7 +45,7 @@
 	RegisterSignal(marked_atom, COMSIG_QDELETING, PROC_REF(cleanup_marked_atom))
 	update_icon()
 	flick("multitool_circuit_flick", src)
-	playsound(src.loc, 'sound/misc/compiler-stage2.ogg', 30, TRUE)
+	playsound(src.loc, 'sound/machines/compiler/compiler-stage2.ogg', 30, TRUE)
 	return TRUE
 
 /// Allow users to mark items equipped by the target that are visible.
@@ -79,7 +80,7 @@
 		item_choice.image = item_appearance
 		selectable_targets[REF(item)] = item_choice
 
-	var/picked_ref = show_radial_menu(user, src, selectable_targets, uniqueid = TRUE, radius = 38, custom_check = CALLBACK(src, PROC_REF(check_menu), user, target), tooltips = TRUE)
+	var/picked_ref = show_radial_menu(user, src, selectable_targets, radius = 38, custom_check = CALLBACK(src, PROC_REF(check_menu), user, target), tooltips = TRUE)
 	if(!picked_ref)
 		return
 

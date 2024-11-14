@@ -11,14 +11,18 @@
 
 /obj/structure/aquarium
 	name = "aquarium"
-	desc = "A vivivarium in which aquatic fuana and flora are usually kept and displayed."
+	desc = "A vivarium in which aquatic fauna and flora are usually kept and displayed."
 	density = TRUE
-	anchored = TRUE
+	anchored = FALSE
 
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/tanks.dmi'
 	icon_state = "aquarium_map"
 
 	integrity_failure = 0.3
+
+	/// The icon state is used for mapping so mappers know what they're placing. This prefixes the real icon used in game.
+	/// For an example, "aquarium" gives the base sprite of "aquarium_base", the glass is "aquarium_glass_water", and so on.
+	var/icon_prefix = "aquarium"
 
 	var/fluid_type = AQUARIUM_FLUID_FRESHWATER
 	var/fluid_temp = DEFAULT_AQUARIUM_TEMP
@@ -31,23 +35,26 @@
 	var/last_feeding
 
 	/// Can fish reproduce in this quarium.
-	var/allow_breeding = FALSE
+	var/reproduction_and_growth = TRUE
 
 	//This is the area where fish can swim
 	var/aquarium_zone_min_px = 2
 	var/aquarium_zone_max_px = 31
 	var/aquarium_zone_min_py = 10
-	var/aquarium_zone_max_py = 24
+	var/aquarium_zone_max_py = 28
 
 	var/list/fluid_types = list(AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SULPHWATEVER, AQUARIUM_FLUID_AIR)
 
-	var/panel_open = TRUE
+	var/panel_open = FALSE
 
 	///Current layers in use by aquarium contents
 	var/list/used_layers = list()
 
 	/// /obj/item/fish in the aquarium, sorted by type - does not include things with aquarium visuals that are not fish
 	var/list/tracked_fish_by_type
+
+	/// Var used to keep track of the current beauty of the aquarium, which can be throughfully changed by aquarium content.
+	var/current_beauty = 150
 
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
@@ -57,7 +64,9 @@
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	create_reagents(6, SEALED_CONTAINER)
 	RegisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
-	AddComponent(/datum/component/plumbing/aquarium)
+	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
+	if(current_beauty)
+		AddElement(/datum/element/beauty, current_beauty)
 	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
 /obj/structure/aquarium/proc/track_if_fish(atom/source, atom/initialized)
@@ -138,20 +147,20 @@
 /obj/structure/aquarium/update_icon()
 	. = ..()
 	///"aquarium_map" is used for mapping, so mappers can tell what it's.
-	icon_state = "aquarium_base"
+	icon_state = icon_prefix + "_base"
 
 /obj/structure/aquarium/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += "panel"
+		. += icon_prefix + "_panel"
 
 	///The glass overlay
 	var/suffix = fluid_type == AQUARIUM_FLUID_AIR ? "air" : "water"
 	if(broken)
 		suffix += "_broken"
-		. += mutable_appearance(icon, "aquarium_glass_cracks", layer = layer + AQUARIUM_BORDERS_LAYER)
-	. += mutable_appearance(icon, "aquarium_glass_[suffix]", layer = layer + AQUARIUM_GLASS_LAYER)
-	. += mutable_appearance(icon, "aquarium_borders", layer = layer + AQUARIUM_BORDERS_LAYER)
+		. += mutable_appearance(icon, icon_prefix + "_glass_cracks", layer = layer + AQUARIUM_BORDERS_LAYER)
+	. += mutable_appearance(icon, icon_prefix + "_glass_[suffix]", layer = layer + AQUARIUM_GLASS_LAYER)
+	. += mutable_appearance(icon, icon_prefix + "_borders", layer = layer + AQUARIUM_BORDERS_LAYER)
 
 /obj/structure/aquarium/examine(mob/user)
 	. = ..()
@@ -159,10 +168,7 @@
 	if(panel_open && reagents.total_volume)
 		. += span_notice("You can use a plunger to empty the feed storage.")
 
-/obj/structure/aquarium/AltClick(mob/living/user)
-	. = ..()
-	if(!user.can_perform_action(src))
-		return
+/obj/structure/aquarium/click_alt(mob/living/user)
 	panel_open = !panel_open
 	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
 	if(panel_open)
@@ -170,6 +176,7 @@
 	else
 		reagents.flags &= ~(TRANSPARENT|REFILLABLE)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/aquarium/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -179,9 +186,9 @@
 /obj/structure/aquarium/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	if(!panel_open)
 		return
-	to_chat(user, span_notice("You start plunging [name]."))
+	user.balloon_alert_to_viewers("plunging...")
 	if(do_after(user, 3 SECONDS, target = src))
-		to_chat(user, span_notice("You finish plunging the [name]."))
+		user.balloon_alert_to_viewers("finished plunging")
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
 
@@ -190,9 +197,9 @@
 		var/obj/item/stack/sheet/glass/glass = item
 		if(istype(glass))
 			if(glass.get_amount() < 2)
-				to_chat(user, span_warning("You need two glass sheets to fix the case!"))
+				balloon_alert(user, "it needs two sheets!")
 				return
-			to_chat(user, span_notice("You start fixing [src]..."))
+			balloon_alert(user, "fixing the aquarium...")
 			if(do_after(user, 2 SECONDS, target = src))
 				glass.use(2)
 				broken = FALSE
@@ -200,20 +207,46 @@
 				update_appearance()
 			return TRUE
 	else
-		var/datum/component/aquarium_content/content_component = item.GetComponent(/datum/component/aquarium_content)
-		if(content_component && content_component.is_ready_to_insert(src) && user.transferItemToLoc(item, src))
-			update_appearance()
-			return TRUE
+		var/insert_attempt = SEND_SIGNAL(item, COMSIG_TRY_INSERTING_IN_AQUARIUM, src)
+		switch(insert_attempt)
+			if(COMSIG_CAN_INSERT_IN_AQUARIUM)
+				if(!user.transferItemToLoc(item, src))
+					user.balloon_alert(user, "stuck to your hand!")
+					return TRUE
+				balloon_alert(user, "added to aquarium")
+				update_appearance()
+				return TRUE
+			if(COMSIG_CANNOT_INSERT_IN_AQUARIUM)
+				balloon_alert(user, "cannot add to aquarium!")
+				return TRUE
 
-	if(istype(item, /obj/item/fish_feed) && !panel_open)
+	if(istype(item, /obj/item/reagent_containers/cup/fish_feed) && !panel_open)
 		if(!item.reagents.total_volume)
 			balloon_alert(user, "[item] is empty!")
 			return TRUE
 		var/list/fishes = get_fishes()
+		if(!length(fishes))
+			balloon_alert(user, "no fish to feed!")
+			return TRUE
 		for(var/obj/item/fish/fish as anything in fishes)
 			fish.feed(item.reagents)
 		balloon_alert(user, "fed the fish")
 		return TRUE
+	if(istype(item, /obj/item/aquarium_upgrade))
+		var/obj/item/aquarium_upgrade/upgrade = item
+		if(upgrade.upgrade_from_type != type)
+			balloon_alert(user, "wrong kind of aquarium!")
+			return
+		balloon_alert(user, "upgrading...")
+		if(!do_after(user, 5 SECONDS, src))
+			return
+		var/obj/structure/aquarium/upgraded_aquarium = new upgrade.upgrade_to_type(loc)
+		for(var/atom/movable/moving in contents)
+			moving.forceMove(upgraded_aquarium)
+		balloon_alert(user, "upgraded")
+		qdel(upgrade)
+		qdel(src)
+		return
 	return ..()
 
 /obj/structure/aquarium/proc/on_attacked(datum/source, mob/attacker, attack_flags)
@@ -223,65 +256,61 @@
 		SEND_SIGNAL(fish, COMSIG_FISH_STIRRED)
 
 /obj/structure/aquarium/interact(mob/user)
-	if(!broken && user.pulling && isliving(user.pulling))
-		var/mob/living/living_pulled = user.pulling
-		var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
-		if(content_component && content_component.is_ready_to_insert(src))
-			try_to_put_mob_in(user)
-	else if(panel_open)
-		. = ..() //call base ui_interact
+	if(panel_open)
+		return ..() //call base ui_interact
 	else
 		admire(user)
 
-/// Tries to put mob pulled by the user in the aquarium after a delay
-/obj/structure/aquarium/proc/try_to_put_mob_in(mob/user)
-	if(user.pulling && isliving(user.pulling))
-		var/mob/living/living_pulled = user.pulling
-		if(living_pulled.buckled || living_pulled.has_buckled_mobs())
-			to_chat(user, span_warning("[living_pulled] is attached to something!"))
-			return
-		user.visible_message(span_danger("[user] starts to put [living_pulled] into [src]!"))
-		if(do_after(user, 10 SECONDS, target = src))
-			if(QDELETED(living_pulled) || user.pulling != living_pulled || living_pulled.buckled || living_pulled.has_buckled_mobs())
-				return
-			var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
-			if(content_component || content_component.is_ready_to_insert(src))
-				return
-			user.visible_message(span_danger("[user] stuffs [living_pulled] into [src]!"))
-			living_pulled.forceMove(src)
-			update_appearance()
-
 ///Apply mood bonus depending on aquarium status
 /obj/structure/aquarium/proc/admire(mob/living/user)
-	to_chat(user,span_notice("You take a moment to watch [src]."))
-	if(do_after(user, 5 SECONDS, target = src))
-		var/alive_fish = 0
-		var/dead_fish = 0
-		var/list/tracked_fish = get_fishes()
-		for(var/obj/item/fish/fish in tracked_fish)
-			if(fish.status == FISH_ALIVE)
-				alive_fish++
-			else
-				dead_fish++
-		//Check if there are live fish - good mood
-		//All fish dead - bad mood.
-		//No fish - nothing.
-		if(alive_fish > 0)
-			user.add_mood_event("aquarium", /datum/mood_event/aquarium_positive)
-		else if(dead_fish > 0)
-			user.add_mood_event("aquarium", /datum/mood_event/aquarium_negative)
-		// Could maybe scale power of this mood with number/types of fish
+	user.balloon_alert(user, "admiring aquarium...")
+	if(!do_after(user, 5 SECONDS, target = src))
+		return
+	var/alive_fish = 0
+	var/dead_fish = 0
+	var/list/tracked_fish = get_fishes()
+	for(var/obj/item/fish/fish in tracked_fish)
+		if(fish.status == FISH_ALIVE)
+			alive_fish++
+		else
+			dead_fish++
+
+	var/morb = HAS_MIND_TRAIT(user, TRAIT_MORBID)
+	//Check if there are live fish - good mood
+	//All fish dead - bad mood.
+	//No fish - nothing.
+	if(alive_fish > 0)
+		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_bad : /datum/mood_event/aquarium_positive)
+	else if(dead_fish > 0)
+		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_good : /datum/mood_event/aquarium_negative)
+	// Could maybe scale power of this mood with number/types of fish
 
 /obj/structure/aquarium/ui_data(mob/user)
 	. = ..()
-	.["fluid_type"] = fluid_type
+	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
-	.["allow_breeding"] = allow_breeding
-	.["feeding_interval"] = feeding_interval / (1 MINUTES)
-	var/list/content_data = list()
-	for(var/atom/movable/fish in contents)
-		content_data += list(list("name"=fish.name,"ref"=ref(fish)))
-	.["contents"] = content_data
+	.["allowBreeding"] = reproduction_and_growth
+	.["fishData"] = list()
+	.["feedingInterval"] = feeding_interval / (1 MINUTES)
+	.["propData"] = list()
+	for(var/atom/movable/item in contents)
+		if(isfish(item))
+			var/obj/item/fish/fish = item
+			.["fishData"] += list(list(
+				"fish_ref" = REF(fish),
+				"fish_name" = uppertext(fish.name),
+				"fish_happiness" = fish.get_happiness_value(),
+				"fish_icon" = fish::icon,
+				"fish_icon_state" = fish::icon_state,
+				"fish_health" = fish.health,
+			))
+			continue
+		.["propData"] += list(list(
+			"prop_ref" = REF(item),
+			"prop_name" = item.name,
+			"prop_icon" = item::icon,
+			"prop_icon_state" = item::icon_state,
+		))
 
 /obj/structure/aquarium/ui_static_data(mob/user)
 	. = ..()
@@ -289,8 +318,9 @@
 	.["minTemperature"] = min_fluid_temp
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types
+	.["heartIcon"] = 'icons/effects/effects.dmi'
 
-/obj/structure/aquarium/ui_act(action, params)
+/obj/structure/aquarium/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -307,19 +337,24 @@
 				SEND_SIGNAL(src, COMSIG_AQUARIUM_FLUID_CHANGED, fluid_type)
 				. = TRUE
 		if("allow_breeding")
-			allow_breeding = !allow_breeding
+			reproduction_and_growth = !reproduction_and_growth
 			. = TRUE
 		if("feeding_interval")
 			feeding_interval = params["feeding_interval"] MINUTES
 			. = TRUE
-		if("remove")
-			var/atom/movable/inside = locate(params["ref"]) in contents
-			if(inside)
-				if(isitem(inside))
-					user.put_in_hands(inside)
-				else
-					inside.forceMove(get_turf(src))
-				to_chat(user,span_notice("You take out [inside] from [src]."))
+		if("pet_fish")
+			var/obj/item/fish/fish = locate(params["fish_reference"]) in contents
+			fish?.pet_fish(user)
+		if("remove_item")
+			var/atom/movable/item = locate(params["item_reference"]) in contents
+			item?.forceMove(drop_location())
+			to_chat(user, span_notice("You take out [item] from [src]."))
+		if("rename_fish")
+			var/new_name = sanitize_name(params["chosen_name"])
+			var/atom/movable/fish = locate(params["fish_reference"]) in contents
+			if(!fish || !new_name || new_name == fish.name)
+				return
+			fish.AddComponent(/datum/component/rename, new_name, fish.desc)
 
 /obj/structure/aquarium/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -341,7 +376,7 @@
 		possible_destinations_for_fish = get_adjacent_open_turfs(droploc)
 	else
 		possible_destinations_for_fish = list(droploc)
-	playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 	for(var/atom/movable/fish in contents)
 		fish.forceMove(pick(possible_destinations_for_fish))
 	if(fluid_type != AQUARIUM_FLUID_AIR)
@@ -356,6 +391,26 @@
 #undef AQUARIUM_GLASS_LAYER
 #undef AQUARIUM_BORDERS_LAYER
 #undef AQUARIUM_BELOW_GLASS_LAYER
+
+/obj/structure/aquarium/lawyer
+	anchored = TRUE
+
+/obj/structure/aquarium/lawyer/Initialize(mapload)
+	. = ..()
+
+	new /obj/item/aquarium_prop/sand(src)
+	new /obj/item/aquarium_prop/seaweed(src)
+
+	if(prob(85))
+		new /obj/item/fish/goldfish/gill(src)
+		reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
+	else
+		new /obj/item/fish/goldfish/three_eyes/gill(src)
+		reagents.add_reagent(/datum/reagent/toxin/mutagen, 2) //three eyes goldfish feed on mutagen.
+
+
+/obj/structure/aquarium/prefilled
+	anchored = TRUE
 
 /obj/structure/aquarium/prefilled/Initialize(mapload)
 	. = ..()

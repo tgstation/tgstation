@@ -1,4 +1,4 @@
-import { KEY } from 'common/keys';
+import { isEscape, KEY } from 'common/keys';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
@@ -44,7 +44,7 @@ export const NumberInputModal = (props) => {
           if (event.key === KEY.Enter) {
             act('submit', { entry: input });
           }
-          if (event.key === KEY.Escape) {
+          if (isEscape(event.key)) {
             act('cancel');
           }
         }}

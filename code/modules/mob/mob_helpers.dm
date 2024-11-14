@@ -116,6 +116,27 @@
 	return sanitize(.)
 
 /**
+ * For when you're only able to speak a limited amount of words
+ * phrase - the string to convert
+ * definitive_limit - the amount of words to limit the phrase to, optional
+*/
+/proc/stifled(phrase, definitive_limit = null)
+	phrase = html_decode(phrase)
+	var/num_words = 0
+	var/words = splittext(phrase, " ")
+	if(definitive_limit > 0) // in case someone passes a negative
+		num_words = min(definitive_limit, length(words))
+	else
+		num_words = min(rand(3, 5), length(words))
+	. = ""
+	for(var/i = 1, i <= num_words, i++)
+		if(num_words == i)
+			. += words[i] + "..."
+		else
+			. += words[i] + " ... "
+	return sanitize(.)
+
+/**
  * Turn text into complete gibberish!
  *
  * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.
@@ -146,19 +167,27 @@
 	var/client/C = M.client
 	var/oldx = C.pixel_x
 	var/oldy = C.pixel_y
-	var/max = strength*world.icon_size
-	var/min = -(strength*world.icon_size)
+	var/max_x = strength*ICON_SIZE_X
+	var/max_y = strength*ICON_SIZE_Y
+	var/min_x = -(strength*ICON_SIZE_X)
+	var/min_y = -(strength*ICON_SIZE_Y)
+
+	if(C.prefs?.read_preference(/datum/preference/toggle/screen_shake_darken))
+		var/type = /atom/movable/screen/fullscreen/flash/black
+
+		M.overlay_fullscreen("flash", type)
+		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 3 SECONDS), 3 SECONDS)
 
 	//How much time to allot for each pixel moved
-	var/time_scalar = (1 / world.icon_size) * TILES_PER_SECOND
+	var/time_scalar = (1 / ICON_SIZE_ALL) * TILES_PER_SECOND
 	var/last_x = oldx
 	var/last_y = oldy
 
 	var/time_spent = 0
 	while(time_spent < duration)
 		//Get a random pos in our box
-		var/x_pos = rand(min, max) + oldx
-		var/y_pos = rand(min, max) + oldy
+		var/x_pos = rand(min_x, max_x) + oldx
+		var/y_pos = rand(min_y, max_y) + oldy
 
 		//We take the smaller of our two distances so things still have the propencity to feel somewhat jerky
 		var/time = round(max(min(abs(last_x - x_pos), abs(last_y - y_pos)) * time_scalar, 1))
@@ -310,19 +339,6 @@
 		toast.name = header
 		toast.target_ref = WEAKREF(source)
 
-/// Heals a robotic limb on a mob
-/proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
-	var/obj/item/bodypart/affecting = human.get_bodypart(check_zone(user.zone_selected))
-	if(!affecting || IS_ORGANIC_LIMB(affecting))
-		to_chat(user, span_warning("[affecting] is already in good condition!"))
-		return FALSE
-	var/brute_damage = brute_heal > burn_heal //changes repair text based on how much brute/burn was supplied
-	if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-		if(affecting.heal_damage(brute_heal, burn_heal, required_bodytype = BODYTYPE_ROBOTIC))
-			human.update_damage_overlays()
-		user.visible_message(span_notice("[user] fixes some of the [brute_damage ? "dents on" : "burnt wires in"] [human]'s [affecting.name]."), \
-			span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"] [affecting.name]."))
-		return TRUE //successful heal
 
 
 ///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
@@ -337,12 +353,14 @@
 		return
 	return TRUE
 
-///Is the passed in mob an admin ghost WITH AI INTERACT enabled
+///Returns TRUE/FALSE on whether the mob is an Admin Ghost AI.
+///This requires this snowflake check because AI interact gives the access to the mob's client, rather
+///than the mob like everyone else, and we keep it that way so they can't accidentally give someone Admin AI access.
 /proc/isAdminGhostAI(mob/user)
 	if(!isAdminObserver(user))
-		return
-	if(!user.client.AI_Interact) // Do they have it enabled?
-		return
+		return FALSE
+	if(!HAS_TRAIT_FROM(user.client, TRAIT_AI_ACCESS, ADMIN_TRAIT)) // Do they have it enabled?
+		return FALSE
 	return TRUE
 
 /**
@@ -393,15 +411,6 @@
 	return !HAS_TRAIT(src, TRAIT_DEAF)
 
 /**
- * Examine text for traits shared by multiple types.
- *
- * I wish examine was less copypasted. (oranges say, be the change you want to see buddy)
- */
-/mob/proc/common_trait_examine()
-	if(HAS_TRAIT(src,TRAIT_HUSK))
-		. += span_warning("This body has been reduced to a grotesque husk.")
-
-/**
  * Get the list of keywords for policy config
  *
  * This gets the type, mind assigned roles and antag datums as a list, these are later used
@@ -420,7 +429,7 @@
 
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
-	return stat == DEAD || has_unlimited_silicon_privilege || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
+	return stat == DEAD || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
 
 ///Can this mob hold items
 /mob/proc/can_hold_items(obj/item/I)

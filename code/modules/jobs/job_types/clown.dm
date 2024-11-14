@@ -26,6 +26,7 @@
 	mail_goodies = list(
 		/obj/item/food/grown/banana = 100,
 		/obj/item/food/pie/cream = 50,
+		/obj/item/spess_knife = 20, // As a joke for clumsy clown from engineering department
 		/obj/item/clothing/shoes/clown_shoes/combat = 10,
 		/obj/item/reagent_containers/spray/waterflower/lube = 20, // lube
 		/obj/item/reagent_containers/spray/waterflower/superlube = 1 // Superlube, good lord.
@@ -57,6 +58,7 @@
 		/obj/item/reagent_containers/spray/waterflower = 1,
 		/obj/item/food/grown/banana = 1,
 		/obj/item/instrument/bikehorn = 1,
+		/obj/item/storage/box/balloons = 1,
 		)
 	belt = /obj/item/modular_computer/pda/clown
 	ears = /obj/item/radio/headset/headset_srv
@@ -72,6 +74,7 @@
 	box = /obj/item/storage/box/survival/hug
 	chameleon_extras = /obj/item/stamp/clown
 	implants = list(/obj/item/implant/sad_trombone)
+	skillchips = list(/obj/item/skillchip/job/clown)
 
 /datum/outfit/job/clown/mod
 	name = "Clown (MODsuit)"
@@ -80,7 +83,7 @@
 	back = /obj/item/mod/control/pre_equipped/cosmohonk
 	internals_slot = ITEM_SLOT_SUITSTORE
 
-/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visuals_only)
 	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BANANIUM_SHIPMENTS))
 		backpack_contents[/obj/item/stack/sheet/mineral/bananium/five] = 1
@@ -90,9 +93,9 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BANANIUM_SHIPMENTS))
 		. += /obj/item/stack/sheet/mineral/bananium/five
 
-/datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	..()
-	if(visualsOnly)
+	if(visuals_only)
 		return
 
 	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.

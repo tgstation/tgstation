@@ -110,7 +110,7 @@
 		return BULLET_ACT_HIT
 
 	var/turf/origin_turf = get_turf(target)
-	var/turf/destination_turf = find_safe_turf()
+	var/turf/destination_turf = find_safe_turf(extended_safety_checks = TRUE)
 
 	if(do_teleport(target, destination_turf, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin_turf, destination_turf))
@@ -192,7 +192,7 @@
 	icon_state = "arcane_barrage"
 	damage = 20
 	damage_type = BURN
-	hitsound = 'sound/weapons/barragespellhit.ogg'
+	hitsound = 'sound/items/weapons/barragespellhit.ogg'
 
 /obj/projectile/magic/locker
 	name = "locker bolt"
@@ -287,7 +287,7 @@
 /obj/projectile/magic/flying/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
-		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
+		var/atom/throw_target = get_edge_target_turf(target, angle2dir(angle))
 		target.throw_at(throw_target, 200, 4)
 
 /obj/projectile/magic/bounty
@@ -376,13 +376,9 @@
 		return
 	if(chosen_one)
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
-		var/oldkey = target.key
-		target.ghostize(FALSE)
+		var/mob/dead/observer/ghosted_target = target.ghostize(FALSE)
 		target.key = chosen_one.key
-		trauma.friend.key = oldkey
-		trauma.friend.reset_perspective(null)
-		trauma.friend.Show()
-		trauma.friend_initialized = TRUE
+		trauma.add_friend(ghosted_target)
 	else
 		to_chat(target, span_notice("Your mind has managed to go unnoticed in the spirit world."))
 		qdel(trauma)
@@ -522,7 +518,7 @@
 	trigger_range = 0
 	can_only_hit_target = TRUE
 	paralyze = 6 SECONDS
-	hitsound = 'sound/magic/mm_hit.ogg'
+	hitsound = 'sound/effects/magic/mm_hit.ogg'
 
 	trail = TRUE
 	trail_lifespan = 0.5 SECONDS
@@ -539,7 +535,7 @@
 	damage = 30
 	damage_type = BRUTE
 	knockdown = 50
-	hitsound = 'sound/weapons/punch3.ogg'
+	hitsound = 'sound/items/weapons/punch3.ogg'
 	trigger_range = 0
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	ignored_factions = list(FACTION_CULT)
@@ -550,7 +546,7 @@
 /obj/projectile/magic/aoe/juggernaut/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/turf/target_turf = get_turf(src)
-	playsound(target_turf, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
+	playsound(target_turf, 'sound/items/weapons/resonator_blast.ogg', 100, FALSE)
 	new /obj/effect/temp_visual/cult/sac(target_turf)
 	for(var/obj/adjacent_object in range(1, src))
 		if(!adjacent_object.density)
@@ -580,3 +576,31 @@
 	damage_type = BURN
 	damage = 2
 	antimagic_charge_cost = 0 // since the cards gets spammed like a shotgun
+
+//a shrink ray that shrinks stuff, which grows back after a short while.
+/obj/projectile/magic/shrink
+	name = "shrink ray"
+	icon_state = "blue_laser"
+	hitsound = 'sound/items/weapons/shrink_hit.ogg'
+	damage = 0
+	damage_type = STAMINA
+	armor_flag = ENERGY
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
+	light_color = LIGHT_COLOR_BLUE
+	var/shrink_time = -1
+
+/obj/projectile/magic/shrink/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(isopenturf(target) || isindestructiblewall(target))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
+		return
+	target.AddComponent(/datum/component/shrink, shrink_time)
+
+/obj/projectile/magic/shrink/is_hostile_projectile()
+	return TRUE
+
+/obj/projectile/magic/shrink/wand
+	shrink_time = 90 SECONDS
+
+/obj/projectile/magic/shrink/wand/on_hit(atom/target, blocked = 0, pierce_hit)
+	shrink_time = rand(60 SECONDS, 90 SECONDS)
+	return ..()

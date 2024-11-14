@@ -38,13 +38,13 @@
 	))
 
 /// Signal proc for [COMSIG_LIVING_HEALTHSCAN]. Show we're hallucinating to (advanced) scanners.
-/datum/status_effect/hallucination/proc/on_health_scan(datum/source, list/render_list, advanced, mob/user, mode)
+/datum/status_effect/hallucination/proc/on_health_scan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
 	SIGNAL_HANDLER
 
 	if(!advanced)
 		return
-
-	render_list += "<span class='info ml-1'>Subject is hallucinating.</span>\n"
+	render_list += conditional_tooltip("<span class='info ml-1'>Subject is hallucinating.</span>", "Supply antipsychotic medication, such as [/datum/reagent/medicine/haloperidol::name] or [/datum/reagent/medicine/synaptizine::name].", tochat)
+	render_list += "<br>"
 
 /// Signal proc for [COMSIG_CARBON_CHECKING_BODYPART],
 /// checking bodyparts while hallucinating can cause them to appear more damaged than they are
@@ -82,7 +82,10 @@
 /datum/status_effect/hallucination/sanity
 	id = "low sanity"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = -1 // This lasts "forever", only goes away with sanity gain
+	duration = STATUS_EFFECT_PERMANENT // This lasts "forever", only goes away with sanity gain
+
+/datum/status_effect/hallucination/sanity/on_health_scan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
+	return
 
 /datum/status_effect/hallucination/sanity/on_apply()
 	if(!owner.mob_mood)

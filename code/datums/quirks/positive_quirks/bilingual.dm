@@ -12,7 +12,7 @@
 	associated_typepath = /datum/quirk/bilingual
 	customization_options = list(/datum/preference/choiced/language)
 
-/datum/quirk/bilingual/add_unique(client/client_source)
+/datum/quirk/bilingual/add(client/client_source)
 	var/wanted_language = client_source?.prefs.read_preference(/datum/preference/choiced/language)
 	var/datum/language/language_type
 	if(wanted_language == "Random")

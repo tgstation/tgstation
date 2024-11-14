@@ -1,7 +1,7 @@
 /obj/machinery/computer/camera_advanced/abductor
 	name = "Human Observation Console"
 	var/team_number = 0
-	networks = list("ss13", "abductor")
+	networks = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ABDUCTOR)
 	var/obj/machinery/abductor/console/console
 	/// We can't create our actions until after LateInitialize
 	/// So we instead do it on the first call to GrantActions
@@ -23,7 +23,7 @@
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
 	..()
 	eyeobj.visible_icon = TRUE
-	eyeobj.icon = 'icons/mob/silicon/cameramob.dmi'
+	eyeobj.icon = 'icons/mob/eyemob.dmi'
 	eyeobj.icon_state = "abductor_camera"
 	eyeobj.SetInvisibility(INVISIBILITY_OBSERVER)
 
@@ -57,11 +57,15 @@
 		to_chat(owner, span_warning("You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!"))
 		return
 	var/mob/living/carbon/human/C = owner
-	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
+	var/mob/eye/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 
 	var/area/target_area = get_area(remote_eye)
-	if(target_area.area_flags & ABDUCTOR_PROOF)
+	if((target_area.area_flags & NOTELEPORT) && !istype(target_area, /area/centcom/abductor_ship))
+		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
+		return
+
+	if(istype(target_area, /area/station/ai_monitored))
 		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
@@ -97,11 +101,15 @@
 		to_chat(owner, span_warning("You can only teleport to one place at a time!"))
 		return
 	var/mob/living/carbon/human/C = owner
-	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
+	var/mob/eye/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 
 	var/area/target_area = get_area(remote_eye)
-	if(target_area.area_flags & ABDUCTOR_PROOF)
+	if((target_area.area_flags & NOTELEPORT) && !istype(target_area, /area/centcom/abductor_ship))
+		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
+		return
+
+	if(istype(target_area, /area/station/ai_monitored))
 		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
@@ -143,7 +151,7 @@
 		return
 
 	var/mob/living/carbon/human/C = owner
-	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
+	var/mob/eye/ai_eye/remote/remote_eye = C.remote_control
 
 	var/obj/machinery/abductor/console/console = target
 	console.SetDroppoint(remote_eye.loc,owner)

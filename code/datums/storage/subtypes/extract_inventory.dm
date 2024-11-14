@@ -5,8 +5,10 @@
 	attack_hand_interact = FALSE
 	quickdraw = FALSE
 	locked = STORAGE_FULLY_LOCKED
-	rustle_sound = FALSE
+	do_rustle = FALSE
 	silent = TRUE
+	// Snowflake so you can feed it
+	insert_on_attack = FALSE
 
 /datum/storage/extract_inventory/New(
 	atom/parent,

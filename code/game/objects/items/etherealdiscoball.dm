@@ -1,5 +1,5 @@
 /obj/item/etherealballdeployer
-	name = "Portable Ethereal Disco Ball"
+	name = "portable ethereal disco ball"
 	desc = "Press the button for a deployment of slightly-unethical PARTY!"
 	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "ethdisco"
@@ -11,7 +11,7 @@
 	qdel(src)
 
 /obj/structure/etherealball
-	name = "Ethereal Disco Ball"
+	name = "ethereal disco ball"
 	desc = "The ethics of this discoball are questionable."
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "ethdisco_head_0"
@@ -41,10 +41,10 @@
 		TurnOn()
 		to_chat(user, span_notice("You turn the disco ball on!"))
 
-/obj/structure/etherealball/AltClick(mob/living/carbon/human/user)
-	. = ..()
+/obj/structure/etherealball/click_alt(mob/living/carbon/human/user)
 	set_anchored(!anchored)
 	to_chat(user, span_notice("You [anchored ? null : "un"]lock the disco ball."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/etherealball/proc/TurnOn()
 	TurnedOn = TRUE //Same

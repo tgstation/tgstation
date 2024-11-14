@@ -31,8 +31,7 @@ GLOBAL_LIST_EMPTY(deliverybeacontags)
 /// List of all singularity components that exist
 GLOBAL_LIST_EMPTY_TYPED(singularities, /datum/component/singularity)
 
-/// list of all /datum/tech datums indexed by id.
-GLOBAL_LIST_EMPTY(tech_list)
+GLOBAL_LIST_EMPTY(item_to_design_list)
 /// list of all surgeries by name, associated with their path.
 GLOBAL_LIST_INIT(surgeries_list, init_surgeries())
 
@@ -81,6 +80,3 @@ GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas)
 
 /// List of area names of roundstart station mech rechargers, for the low charge/no charge mech screen alert tooltips.
 GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas)
-
-/// Associative list of alcoholic container typepath to instances, currently used by the alcoholic quirk
-GLOBAL_LIST_INIT(alcohol_containers, init_alcohol_containers())

@@ -25,7 +25,7 @@
 	///The message shown to nearby people upon mixing, if applicable
 	var/mix_message = "The solution begins to bubble."
 	///The sound played upon mixing, if applicable
-	var/mix_sound = 'sound/effects/bubbles.ogg'
+	var/mix_sound = 'sound/effects/bubbles/bubbles.ogg'
 
 	/// Set to TRUE if you want the recipe to only react when it's BELOW the required temp.
 	var/is_cold_recipe = FALSE
@@ -151,7 +151,7 @@
 				return
 
 /**
- * Occurs when a reation is overheated (i.e. past it's overheatTemp)
+ * Occurs when a reation is overheated (i.e. past its overheatTemp)
  * Will be called every tick in the reaction that it is overheated
  * If you want this to be a once only proc (i.e. the reaction is stopped after) set reaction.toDelete = TRUE
  * The above is useful if you're writing an explosion
@@ -248,7 +248,7 @@
 	for(var/atom/movable/X in orange(range, T))
 		if(X.anchored)
 			continue
-		if(iseffect(X) || iscameramob(X) || isdead(X))
+		if(iseffect(X) || iseyemob(X) || isdead(X))
 			continue
 		var/distance = get_dist(X, T)
 		var/moving_power = max(range - distance, 1)
@@ -261,10 +261,10 @@
 		else
 			if(setting_type)
 				if(step_away(X, T) && moving_power > 1) //Can happen twice at most. So this is fine.
-					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), X, T), 2)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), X, T), 0.2 SECONDS)
 			else
 				if(step_towards(X, T) && moving_power > 1)
-					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_towards), X, T), 2)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_towards), X, T), 0.2 SECONDS)
 
 //////////////////Generic explosions/failures////////////////////
 // It is HIGHLY, HIGHLY recomended that you consume all/a good volume of the reagents/products in an explosion - because it will just keep going forever until the reaction stops
@@ -281,7 +281,7 @@
  * * modifier - a flat additive numeric to the size of the explosion - set this if you want a minimum range
  * * strengthdiv - the divisional factor of the explosion, a larger number means a smaller range - This is the part that modifies an explosion's range with volume (i.e. it divides it by this number)
  */
-/datum/chemical_reaction/proc/default_explode(datum/reagents/holder, created_volume, modifier = 0, strengthdiv = 10)
+/datum/chemical_reaction/proc/default_explode(datum/reagents/holder, created_volume, modifier = 0, strengthdiv = 10, clear_mob_reagents)
 	var/power = modifier + round(created_volume/strengthdiv, 1)
 	if(power > 0)
 		var/turf/T = get_turf(holder.my_atom)
@@ -300,8 +300,29 @@
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(power , T, 0, 0)
 		e.start(holder.my_atom)
-	holder.clear_reagents()
-
+	if (ismob(holder.my_atom))
+		if(!clear_mob_reagents)
+			return
+		// Only clear reagents if they use a special explosive reaction to do it; it shouldn't apply
+		// to any explosion inside a person
+		holder.clear_reagents()
+		if(iscarbon(holder.my_atom))
+			var/mob/living/carbon/victim = holder.my_atom
+			var/vomit_flags = MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE
+			// The vomiting here is for effect, not meant to help with purging
+			victim.vomit(vomit_flags, distance = 5)
+		// Not quite the same if the reaction is in their stomach; they'll throw up
+		// from any explosion, but it'll only make them puke up everything in their
+		// stomach
+	else if (istype(holder.my_atom, /obj/item/organ/stomach))
+		var/obj/item/organ/stomach/indigestion = holder.my_atom
+		if(power < 1)
+			return
+		indigestion.owner?.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE, lost_nutrition = 150, distance = 5, purge_ratio = 1)
+		holder.clear_reagents()
+		return
+	else
+		holder.clear_reagents()
 /*
  *Creates a flash effect only - less expensive than explode()
  *
@@ -382,7 +403,7 @@
 	var/turf/this_turf = get_turf(holder.my_atom)
 	if(sound_and_text)
 		holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, sending a shockwave rippling through the air!")
-		playsound(this_turf, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE)
+		playsound(this_turf, 'sound/effects/chemistry/shockwave_explosion.ogg', 80, TRUE)
 	//Modified goonvortex
 	for(var/atom/movable/movey as anything in orange(range, this_turf))
 		if(!istype(movey, /atom/movable))
@@ -392,7 +413,7 @@
 			live.apply_damage(damage)//Since this can be called multiple times
 		if(movey.anchored)
 			continue
-		if(iseffect(movey) || iscameramob(movey) || isdead(movey))
+		if(iseffect(movey) || iseyemob(movey) || isdead(movey))
 			continue
 		if(implosion)
 			var/distance = get_dist(movey, this_turf)

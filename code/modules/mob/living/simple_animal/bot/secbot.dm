@@ -12,6 +12,7 @@
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
+	can_buckle_to = FALSE
 
 	req_one_access = list(ACCESS_SECURITY)
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
@@ -20,16 +21,16 @@
 	bot_mode_flags = ~BOT_MODE_CAN_BE_SAPIENT
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	hackables = "target identification systems"
-	path_image_color = "#FF0000"
+	path_image_color = COLOR_RED
 	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
 
 	automated_announcements = list(
-		BEEPSKY_VOICED_CRIMINAL_DETECTED = 'sound/voice/beepsky/criminal.ogg',
-		BEEPSKY_VOICED_FREEZE = 'sound/voice/beepsky/freeze.ogg',
-		BEEPSKY_VOICED_JUSTICE = 'sound/voice/beepsky/justice.ogg',
-		BEEPSKY_VOICED_YOUR_MOVE = 'sound/voice/beepsky/creep.ogg',
-		BEEPSKY_VOICED_I_AM_THE_LAW = 'sound/voice/beepsky/iamthelaw.ogg',
-		BEEPSKY_VOICED_SECURE_DAY = 'sound/voice/beepsky/secureday.ogg',
+		BEEPSKY_VOICED_CRIMINAL_DETECTED = 'sound/mobs/non-humanoids/beepsky/criminal.ogg',
+		BEEPSKY_VOICED_FREEZE = 'sound/mobs/non-humanoids/beepsky/freeze.ogg',
+		BEEPSKY_VOICED_JUSTICE = 'sound/mobs/non-humanoids/beepsky/justice.ogg',
+		BEEPSKY_VOICED_YOUR_MOVE = 'sound/mobs/non-humanoids/beepsky/creep.ogg',
+		BEEPSKY_VOICED_I_AM_THE_LAW = 'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg',
+		BEEPSKY_VOICED_SECURE_DAY = 'sound/mobs/non-humanoids/beepsky/secureday.ogg',
 	)
 
 	///Whether this secbot is considered 'commissioned' and given the trait on Initialize.
@@ -69,6 +70,7 @@
 	desc = "It's Commander Beep O'sky! Officially the superior officer of all bots on station, Beepsky remains as humble and dedicated to the law as the day he was first fabricated."
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
 	commissioned = TRUE
+
 
 /mob/living/simple_animal/bot/secbot/beepsky/officer
 	name = "Officer Beepsky"
@@ -119,7 +121,7 @@
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()
-	new /obj/item/stock_parts/cell/potato(Tsec)
+	new /obj/item/stock_parts/power_store/cell/potato(Tsec)
 	var/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/drinking_oil = new(Tsec)
 	drinking_oil.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
 	return ..()
@@ -161,14 +163,24 @@
 	target = null
 	oldtarget_name = null
 	set_anchored(FALSE)
-	SSmove_manager.stop_looping(src)
+	GLOB.move_manager.stop_looping(src)
 	last_found = world.time
+
+/mob/living/simple_animal/bot/secbot/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(!(security_mode_flags & SECBOT_SABOTEUR_AFFECTED))
+		security_mode_flags |= SECBOT_SABOTEUR_AFFECTED
+		addtimer(CALLBACK(src, PROC_REF(remove_saboteur_effect)), disrupt_duration)
+		return TRUE
+
+/mob/living/simple_animal/bot/secbot/proc/remove_saboteur_effect()
+	security_mode_flags &= ~SECBOT_SABOTEUR_AFFECTED
 
 /mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)//shocks only make him angry
 	if(base_speed < initial(base_speed) + 3)
 		base_speed += 3
-		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 60)
-		playsound(src, 'sound/machines/defib_zap.ogg', 50)
+		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 6 SECONDS)
+		playsound(src, 'sound/machines/defib/defib_zap.ogg', 50)
 		visible_message(span_warning("[src] shakes and speeds up!"))
 
 /mob/living/simple_animal/bot/secbot/Exited(atom/movable/gone, direction)
@@ -189,9 +201,10 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/simple_animal/bot/secbot/ui_act(action, params)
+/mob/living/simple_animal/bot/secbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
+	var/mob/user = ui.user
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
 		return
 
 	switch(action)
@@ -232,6 +245,8 @@
 		final |= JUDGE_RECORDCHECK
 	if(security_mode_flags & SECBOT_CHECK_WEAPONS)
 		final |= JUDGE_WEAPONCHECK
+	if(security_mode_flags & SECBOT_SABOTEUR_AFFECTED)
+		final |= JUDGE_CHILLOUT
 	return final
 
 /mob/living/simple_animal/bot/secbot/proc/special_retaliate_after_attack(mob/user) //allows special actions to take place after being attacked.
@@ -247,7 +262,7 @@
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			user.visible_message(span_notice("[user] taunts [src], daring [p_them()] to give chase!"), \
 				span_notice("You taunt [src], daring [p_them()] to chase you!"), span_hear("You hear someone shout a daring taunt!"), DEFAULT_MESSAGE_RANGE, user)
-			speak("Taunted by pacifist scumbag <b>[user]</b> in [get_area(src)].", radio_channel)
+			speak("Taunted by pacifist scumbag [RUNECHAT_BOLD("[user]")] in [get_area(src)].", radio_channel)
 
 			// Interrupt the attack chain. We've already handled this scenario for pacifists.
 			return
@@ -274,7 +289,7 @@
 
 	if(bot_type == HONK_BOT)
 		audible_message(span_danger("[src] gives out an evil laugh!"))
-		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
+		playsound(src, 'sound/mobs/non-humanoids/honkbot/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
 	else
 		audible_message(span_danger("[src] buzzes oddly!"))
 
@@ -319,7 +334,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/start_handcuffing(mob/living/carbon/current_target)
 	mode = BOT_ARREST
-	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+	playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
 	current_target.visible_message(span_danger("[src] is trying to put zipties on [current_target]!"),\
 						span_userdanger("[src] is trying to put zipties on you!"))
 	addtimer(CALLBACK(src, PROC_REF(handcuff_target), current_target), 6 SECONDS)
@@ -339,7 +354,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
 	var/judgement_criteria = judgement_criteria()
-	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/items/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 	var/threat = 5
@@ -359,7 +374,7 @@
 	log_combat(src, current_target, "stunned")
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)
 		var/area/location = get_area(src)
-		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag <b>[current_target]</b> in [location].", radio_channel)
+		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag [RUNECHAT_BOLD("[current_target]")] in [location].", radio_channel)
 	current_target.visible_message(span_danger("[src] stuns [current_target]!"),\
 							span_userdanger("[src] stuns you!"))
 
@@ -374,7 +389,7 @@
 	switch(mode)
 
 		if(BOT_IDLE) // idle
-			SSmove_manager.stop_looping(src)
+			GLOB.move_manager.stop_looping(src)
 			look_for_perp() // see if any criminals are in range
 			if((mode == BOT_IDLE) && bot_mode_flags & BOT_MODE_AUTOPATROL) // didn't start hunting during look_for_perp, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
@@ -382,7 +397,7 @@
 		if(BOT_HUNT) // hunting for perp
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 8)
-				SSmove_manager.stop_looping(src)
+				GLOB.move_manager.stop_looping(src)
 				back_to_idle()
 				return
 
@@ -400,7 +415,7 @@
 
 			// not next to perp
 			var/turf/olddist = get_dist(src, target)
-			SSmove_manager.move_to(src, target, 1, 4)
+			GLOB.move_manager.move_to(src, target, 1, 4)
 			if((get_dist(src, target)) >= (olddist))
 				frustration++
 			else
@@ -494,7 +509,11 @@
 /// React to detecting criminal scum by making some kind of noise
 /mob/living/simple_animal/bot/secbot/proc/threat_react(threatlevel)
 	speak("Level [threatlevel] infraction alert!")
-	playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+	playsound(src, pick(
+		'sound/mobs/non-humanoids/beepsky/criminal.ogg',
+		'sound/mobs/non-humanoids/beepsky/justice.ogg',
+		'sound/mobs/non-humanoids/beepsky/freeze.ogg',
+		), 50, FALSE)
 
 /mob/living/simple_animal/bot/secbot/explode()
 	var/atom/Tsec = drop_location()

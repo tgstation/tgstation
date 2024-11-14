@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_constant_data, /datum/quirk_constant_data, gene
 /datum/quirk_constant_data/New()
 	. = ..()
 
-	ASSERT(abstract_type != type && !isnull(associated_typepath), "associated_typepath null - please set it! occured on: [src.type]")
+	ASSERT(abstract_type != type && !isnull(associated_typepath), "associated_typepath null - please set it! occurred on: [src.type]")
 
 /// Returns a list of savefile_keys derived from the preference typepaths in [customization_options]. Used in quirks middleware to supply the preferences to render.
 /datum/quirk_constant_data/proc/get_customization_data()
@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_constant_data, /datum/quirk_constant_data, gene
 		var/datum/preference/pref_instance = GLOB.preference_entries[pref_type]
 		if (isnull(pref_instance))
 			stack_trace("get_customization_data was called before instantiation of [pref_type]!")
-			continue // just in case its a fluke and its only this one thats not instantiated, we'll check the other pref entries
+			continue // just in case its a fluke and its only this one that's not instantiated, we'll check the other pref entries
 
 		customization_data += pref_instance.savefile_key
 

@@ -39,8 +39,8 @@
 /obj/item/toy/waterballoon
 	name = "water balloon"
 	desc = "A translucent balloon. There's nothing in it."
-	icon = 'icons/obj/toys/toy.dmi'
-	icon_state = "waterballoon-e"
+	icon = 'icons/obj/toys/balloons.dmi'
+	icon_state = "balloon_red-e"
 	inhand_icon_state = "balloon-empty"
 
 /obj/item/toy/waterballoon/Initialize(mapload)
@@ -51,21 +51,21 @@
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/toy/waterballoon/afterattack(atom/A as mob|obj, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if (istype(A, /obj/structure/reagent_dispensers))
-		var/obj/structure/reagent_dispensers/RD = A
-		if(RD.reagents.total_volume <= 0)
-			to_chat(user, span_warning("[RD] is empty."))
-		else if(reagents.total_volume >= 10)
-			to_chat(user, span_warning("[src] is full."))
-		else
-			A.reagents.trans_to(src, 10, transferred_by = user)
-			to_chat(user, span_notice("You fill the balloon with the contents of [A]."))
-			desc = "A translucent balloon with some form of liquid sloshing around in it."
-			update_appearance()
+/obj/item/toy/waterballoon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!istype(interacting_with, /obj/structure/reagent_dispensers))
+		return NONE
+	var/obj/structure/reagent_dispensers/RD = interacting_with
+	if(RD.reagents.total_volume <= 0)
+		to_chat(user, span_warning("[RD] is empty."))
+	else if(reagents.total_volume >= 10)
+		to_chat(user, span_warning("[src] is full."))
+	else
+		interacting_with.reagents.trans_to(src, 10, transferred_by = user)
+		to_chat(user, span_notice("You fill the balloon with the contents of [interacting_with]."))
+		desc = "A translucent balloon with some form of liquid sloshing around in it."
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/cup))
@@ -107,15 +107,15 @@
 		icon_state = "waterballoon"
 		inhand_icon_state = "balloon"
 	else
-		icon_state = "waterballoon-e"
+		icon_state = "balloon_red-e"
 		inhand_icon_state = "balloon-empty"
 	return ..()
 
-#define BALLOON_COLORS list("red", "blue", "green", "yellow")
+#define BALLOON_COLORS list("red", "blue", "green", "yellow", "orange", "purple")
 
 /obj/item/toy/balloon
 	name = "balloon"
-	desc = "No birthday is complete without it."
+	desc = "No birthday is complete without it. Sealed with a mechanical bluespace wrap so it remains floating no matter what."
 	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon"
 	inhand_icon_state = "balloon"
@@ -127,6 +127,57 @@
 	throw_range = 7
 	force = 0
 	var/random_color = TRUE
+	/// the string describing the name of balloon's current colour.
+	var/current_color
+
+/obj/item/toy/balloon/long
+	name = "long balloon"
+	desc = "A perfect balloon to contort into goofy forms. Sealed with a mechanical bluespace wrap so it remains floating no matter what."
+	icon_state = "balloon_long"
+	inhand_icon_state = "balloon"
+	w_class = WEIGHT_CLASS_NORMAL
+	/// Combinations of balloon colours to make specific animals.
+	var/list/balloon_combos = list(
+		list("red", "blue") = /obj/item/toy/balloon_animal/guy,
+		list("red", "green") = /obj/item/toy/balloon_animal/nukie,
+		list("red", "yellow") = /obj/item/toy/balloon_animal/clown,
+		list("red", "orange") = /obj/item/toy/balloon_animal/cat,
+		list("red", "purple") = /obj/item/toy/balloon_animal/fly,
+		list("blue", "green") = /obj/item/toy/balloon_animal/podguy,
+		list("blue", "yellow") = /obj/item/toy/balloon_animal/ai,
+		list("blue", "orange") = /obj/item/toy/balloon_animal/dog,
+		list("blue", "purple") = /obj/item/toy/balloon_animal/xeno,
+		list("green", "yellow") = /obj/item/toy/balloon_animal/banana,
+		list("green", "orange") = /obj/item/toy/balloon_animal/lizard,
+		list("green", "purple") = /obj/item/toy/balloon_animal/slime,
+		list("yellow", "orange") = /obj/item/toy/balloon_animal/moth,
+		list("yellow", "purple") = /obj/item/toy/balloon_animal/ethereal,
+		list("orange", "purple") = /obj/item/toy/balloon_animal/plasmaman,
+	)
+
+
+/obj/item/toy/balloon/long/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(!istype(attacking_item, /obj/item/toy/balloon/long) || !HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
+		return ..()
+
+	var/obj/item/toy/balloon/long/hit_by = attacking_item
+	if(hit_by.current_color == current_color)
+		to_chat(user, span_warning("You must use balloons of different colours to do that!"))
+		return ..()
+	visible_message(
+		span_notice("[user.name] starts contorting up a balloon animal!"),
+		blind_message = span_hear("You hear balloons being contorted."),
+		vision_distance = 3,
+		ignored_mobs = user,
+	)
+	for(var/list/pair_of_colors in balloon_combos)
+		if((hit_by.current_color == pair_of_colors[1] && current_color == pair_of_colors[2]) || (current_color == pair_of_colors[1] && hit_by.current_color == pair_of_colors[2]))
+			var/path_to_spawn = balloon_combos[pair_of_colors]
+			user.put_in_hands(new path_to_spawn)
+			break
+	qdel(hit_by)
+	qdel(src)
+	return TRUE
 
 /obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_casing/foam_dart) && ismonkey(user))
@@ -141,31 +192,57 @@
 	else
 		return ..()
 
-/obj/item/toy/balloon/bullet_act(obj/projectile/P)
-	if((istype(P,/obj/projectile/bullet/p50) || istype(P,/obj/projectile/bullet/foam_dart)) && ismonkey(P.firer))
+/obj/item/toy/balloon/bullet_act(obj/projectile/proj)
+	if((istype(proj, /obj/projectile/bullet/p50) || istype(proj,/obj/projectile/bullet/foam_dart)) && ismonkey(proj.firer))
 		pop_balloon(monkey_pop = TRUE)
-	else
-		return ..()
+		return BULLET_ACT_HIT
+	return ..()
 
 /obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
-	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
+	playsound(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 50, vary = TRUE)
 	if(monkey_pop) // Monkeys make money from popping bloons
 		new /obj/item/coin/iron(get_turf(src))
 	qdel(src)
 
 /obj/item/toy/balloon/Initialize(mapload)
 	. = ..()
-	if(random_color)
-		var/chosen_balloon_color = pick(BALLOON_COLORS)
-		name = "[chosen_balloon_color] [name]"
-		icon_state = "[icon_state]_[chosen_balloon_color]"
-		inhand_icon_state = icon_state
+	AddElement(/datum/element/update_icon_updates_onmob)
+	if(!random_color)
+		return
+	current_color = pick(BALLOON_COLORS)
+	update_appearance()
+
+/obj/item/toy/balloon/update_name(updates)
+	. = ..()
+	name = "[current_color ? "[current_color] ":null][initial(name)]"
+
+/obj/item/toy/balloon/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, current_color))
+		update_appearance()
+
+/obj/item/toy/balloon/update_icon_state()
+	. = ..()
+	var/new_icon = "[initial(icon_state)][current_color ? "_[current_color]":null]"
+	inhand_icon_state = new_icon
+	icon_state = "[new_icon][isturf(loc) ? null : "_storage"]"
+
+/obj/item/toy/balloon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	update_appearance()
 
 /obj/item/toy/balloon/corgi
 	name = "corgi balloon"
-	desc = "A balloon with a corgi face on it. For the all year good boys."
+	desc = "A balloon in the shape of a corgi's head. For the all year good boys."
 	icon_state = "corgi"
 	inhand_icon_state = "corgi"
+	random_color = FALSE
+
+/obj/item/toy/balloon/heart
+	name = "heart balloon"
+	desc = "A balloon in the shape of a heart. How lovely"
+	icon_state = "heart"
+	inhand_icon_state = "heart"
 	random_color = FALSE
 
 /obj/item/toy/balloon/syndicate
@@ -201,6 +278,98 @@
 #undef BALLOON_COLORS
 
 /*
+* Balloon animals
+*/
+
+/obj/item/toy/balloon_animal
+	name = "balloon animal"
+	desc = "You shouldn't have this."
+	icon = 'icons/obj/toys/balloons.dmi'
+	inhand_icon_state = "balloon"
+	lefthand_file = 'icons/mob/inhands/items/balloons_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/balloons_righthand.dmi'
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_animal/guy
+	name = "balloon guy"
+	desc = "A balloon effigy of the everyday standard issue human guy. Wonder if he pays balloon taxes. He probably evades them."
+	icon_state = "balloon_guy"
+
+/obj/item/toy/balloon_animal/nukie
+	name = "balloon nukie"
+	desc = "A balloon effigy of syndicate's nuclear operative. Either made to appease them and pray for survival, or to poke fun at them."
+	icon_state = "balloon_nukie"
+
+/obj/item/toy/balloon_animal/clown
+	name = "balloon clown"
+	desc = "A balloon clown, smiling from ear to ear and beyond!"
+	icon_state = "balloon_clown"
+
+/obj/item/toy/balloon_animal/cat
+	name = "balloon cat"
+	desc = "Without the sharp claws, balloon cats are possibly cuter than their live counterparts, though not as relatable, warm and fuzzy."
+	icon_state = "balloon_cat"
+
+/obj/item/toy/balloon_animal/fly
+	name = "balloon fly"
+	desc = "A balloon effigy of a flyperson. Thankfully, it doesn't come with balloon vomit."
+	icon_state = "balloon_fly"
+
+/obj/item/toy/balloon_animal/podguy
+	name = "balloon podguy"
+	desc = "A balloon effigy of a podperson. Though, actual podpeople have heads and not stalks and leaves."
+	icon_state = "balloon_podguy"
+
+/obj/item/toy/balloon_animal/ai
+	name = "balloon ai core"
+	desc = "A somewhat unrealistic balloon effigy of the station's AI core. Actual AI propably wouldn't smile like this."
+	icon_state = "balloon_ai"
+
+/obj/item/toy/balloon_animal/dog
+	name = "balloon dog"
+	desc = "A balloon effigy of the best boy. It cannot truly compare, but it makes an effort."
+	icon_state = "balloon_dog"
+
+/obj/item/toy/balloon_animal/xeno
+	name = "balloon xeno"
+	desc = "A balloon effigy of a spooky xeno! Too squishy to scare anyone itself, though."
+	icon_state = "balloon_xeno"
+
+/obj/item/toy/balloon_animal/banana
+	name = "balloon banana"
+	desc = "A balloon banana. This one can't be slipped on. Good for psychological warfare, though."
+	icon_state = "balloon_banana"
+
+/obj/item/toy/balloon_animal/lizard
+	name = "balloon lizard"
+	desc = "A balloon effigy of a lizard. One of the first species to adapt to clown planet's culture. Perhaps because they are naturally laughable?"
+	icon_state = "balloon_lizard"
+
+/obj/item/toy/balloon_animal/slime
+	name = "balloon slime"
+	desc = "A balloon effigy of single specimen of the galaxy-wide slime scourge, of purple variety. Slimes tried to invade clown planet once. They got quickly washed out by water-spitting flowers, though."
+	icon_state = "balloon_slime"
+
+/obj/item/toy/balloon_animal/moth
+	name = "balloon moth"
+	desc = "A balloon effigy of a common member of moth flotillas. Very few of them ever decide to settle on the clown planet, but those who do have the best 'piece-of-cloth-dissapearing' acts."
+	icon_state = "balloon_moth"
+
+/obj/item/toy/balloon_animal/ethereal
+	name = "balloon ethereal"
+	desc = "A balloon effigy of an ethereal artisan. Clownery is one form of art, and as such, ethereals were both drawn to and readily accepted at clown planet. Don't mind the lighbulb head, it's art too."
+	icon_state = "balloon_ethereal"
+
+/obj/item/toy/balloon_animal/plasmaman
+	name = "balloon plasmaman"
+	desc = "A balloon effigy of a plasmaman. Among the rarest on the clown planet, only having appeared recently thanks to ready trade between clown planet and NT."
+	icon_state = "balloon_plasmaman"
+
+
+/*
 * Captain's Aid
 */
 #define CAPTAINSAID_MODE_OFF 1
@@ -229,7 +398,7 @@
 
 /obj/item/toy/captainsaid/attack_self(mob/living/user)
 	current_mode++
-	playsound(src, 'sound/items/screwdriver2.ogg', 50, vary = TRUE)
+	playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, vary = TRUE)
 	if (current_mode <= modes.len)
 		balloon_alert(user, "set to [current_mode]")
 	else
@@ -305,7 +474,7 @@
 	desc = "<i>\"Surviving the encounter with the \
 		horrible thing, I realized immediately what I \
 		had to do: sell marketable toys of it. \
-		\"</i><br>- Chief Engineer Miles O'Brien"
+		\"</i><br>- Chief Engineer Tenshin Nakamura"
 	icon = 'icons/obj/machines/engine/singularity.dmi'
 	icon_state = "dark_matter_s1"
 
@@ -355,23 +524,21 @@
 	else
 		return ..()
 
-/obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user, flag)
-	. = ..()
-	if (flag)
-		return
-	if (!ISADVANCEDTOOLUSER(user))
+/obj/item/toy/gun/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message(span_warning("*click*"), MSG_AUDIBLE)
-		playsound(src, 'sound/weapons/gun/revolver/dry_fire.ogg', 30, TRUE)
-		return
-	playsound(user, 'sound/weapons/gun/revolver/shot.ogg', 100, TRUE)
+		playsound(src, 'sound/items/weapons/gun/revolver/dry_fire.ogg', 30, TRUE)
+		return ITEM_INTERACT_SUCCESS
+	playsound(user, 'sound/items/weapons/gun/revolver/shot.ogg', 100, TRUE)
 	src.bullets--
-	user.visible_message(span_danger("[user] fires [src] at [target]!"), \
-		span_danger("You fire [src] at [target]!"), \
+	user.visible_message(span_danger("[user] fires [src] at [interacting_with]!"), \
+		span_danger("You fire [src] at [interacting_with]!"), \
 		span_hear("You hear a gunshot!"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -439,7 +606,7 @@
 	if(user)
 		balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
 
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
+	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 20, TRUE)
 	update_appearance(UPDATE_ICON)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -530,9 +697,9 @@
 	inhand_icon_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
-	hitsound = 'sound/weapons/smash.ogg'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
 	var/active = FALSE
@@ -555,7 +722,7 @@
 		update_appearance()
 		playsound(src, 'sound/effects/pope_entry.ogg', 100)
 		Rumble()
-		addtimer(CALLBACK(src, PROC_REF(stopRumble)), 600)
+		addtimer(CALLBACK(src, PROC_REF(stopRumble)), 60 SECONDS)
 	else
 		to_chat(user, span_warning("[src] is already active!"))
 
@@ -580,7 +747,7 @@
 	active = FALSE
 	update_appearance()
 	visible_message(span_warning("[src] slowly stops rattling and falls still, its latch snapping shut.")) //subtle difference
-	playsound(loc, 'sound/weapons/batonextend.ogg', 100, TRUE)
+	playsound(loc, 'sound/items/weapons/batonextend.ogg', 100, TRUE)
 	animate(src, transform = matrix())
 
 /*
@@ -623,7 +790,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices")
 	attack_verb_simple = list("attack", "slash", "stab", "slice")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 /*
  * Snap pops
@@ -796,7 +963,7 @@
 		cooldown = world.time + 600
 		user.audible_message(span_hear("You hear the click of a button."), self_message = span_notice("You activate [src], it plays a loud noise!"))
 		sleep(0.5 SECONDS)
-		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
+		playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg', 20, FALSE)
 		sleep(14 SECONDS)
 		user.visible_message(span_alert("[src] violently explodes!"))
 		explosion(src, light_impact_range = 1)
@@ -806,7 +973,7 @@
 		user.visible_message(span_warning("[user] presses a button on [src]."), span_notice("You activate [src], it plays a loud noise!"), span_hear("You hear the click of a button."))
 		sleep(0.5 SECONDS)
 		icon_state = "nuketoy"
-		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
+		playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg', 20, FALSE)
 		sleep(13.5 SECONDS)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
@@ -865,7 +1032,7 @@
 	if (cooldown < world.time)
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
 		user.visible_message(span_warning("[user] presses the big red button."), span_notice("You press the button, it plays a loud noise!"), span_hear("The button clicks loudly."))
-		playsound(src, 'sound/effects/explosionfar.ogg', 50, FALSE)
+		playsound(src, 'sound/effects/explosion/explosionfar.ogg', 50, FALSE)
 		for(var/mob/M in urange(10, src)) // Checks range
 			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
 				// Short delay to match up with the explosion sound
@@ -886,11 +1053,9 @@
 	throwforce = 20 //the same damage as a disabler shot
 	damtype = STAMINA //maybe someday we can add stuffing rocks (or perhaps ore?) into snowballs to make them deal brute damage
 
-/obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(user.dropItemToGround(src))
-		throw_at(target, throw_range, throw_speed)
+/obj/item/toy/snowball/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	user.throw_item(interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
@@ -902,7 +1067,7 @@
  */
 /obj/item/toy/beach_ball
 	name = "beach ball"
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "ball"
 	inhand_icon_state = "beachball"
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
@@ -939,7 +1104,7 @@
 	if (cooldown < world.time)
 		cooldown = world.time + 1800 //3 minutes
 		user.visible_message(span_warning("[user] rotates a cogwheel on [src]."), span_notice("You rotate a cogwheel on [src], it plays a loud noise!"), span_hear("You hear cogwheels turning."))
-		playsound(src, 'sound/magic/clockwork/ark_activation.ogg', 50, FALSE)
+		playsound(src, 'sound/effects/magic/clockwork/ark_activation.ogg', 50, FALSE)
 	else
 		to_chat(user, span_alert("The cogwheels are already turning!"))
 
@@ -969,7 +1134,6 @@
 	name = "xenomorph action figure"
 	desc = "MEGA presents the new Xenos Isolated action figure! Comes complete with realistic sounds! Pull back string to use."
 	w_class = WEIGHT_CLASS_SMALL
-	item_flags = XENOMORPH_HOLDABLE
 	var/cooldown = 0
 
 /obj/item/toy/toy_xeno/attack_self(mob/user)
@@ -979,7 +1143,7 @@
 		icon_state = "[initial(icon_state)]_used"
 		sleep(0.5 SECONDS)
 		audible_message(span_danger("[icon2html(src, viewers(src))] Hiss!"))
-		var/list/possible_sounds = list('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg')
+		var/list/possible_sounds = list('sound/mobs/non-humanoids/hiss/hiss1.ogg', 'sound/mobs/non-humanoids/hiss/hiss2.ogg', 'sound/mobs/non-humanoids/hiss/hiss3.ogg', 'sound/mobs/non-humanoids/hiss/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)
 		playsound(get_turf(src), chosen_sound, 50, TRUE)
 		addtimer(VARSET_CALLBACK(src, icon_state, "[initial(icon_state)]"), 4.5 SECONDS)
@@ -1042,11 +1206,16 @@
 	icon_state = "bartender"
 	toysay = "Where is Pun Pun?"
 
+/obj/item/toy/figure/bitrunner
+	name = "\improper Bitrunner action figure"
+	icon_state = "bitrunner"
+	toysay = "I'm in..."
+
 /obj/item/toy/figure/borg
 	name = "\improper Cyborg action figure"
 	icon_state = "borg"
 	toysay = "I. LIVE. AGAIN."
-	toysound = 'sound/voice/liveagain.ogg'
+	toysound = 'sound/mobs/non-humanoids/cyborg/liveagain.ogg'
 
 /obj/item/toy/figure/botanist
 	name = "\improper Botanist action figure"
@@ -1189,7 +1358,12 @@
 	name = "\improper Wizard action figure"
 	icon_state = "wizard"
 	toysay = "EI NATH!"
-	toysound = 'sound/magic/disintegrate.ogg'
+	toysound = 'sound/effects/magic/disintegrate.ogg'
+
+/obj/item/toy/figure/wizard/special
+	name = "\improper Wizard action figure special edition"
+	toysay = "CLANG!";
+	toysound = 'sound/effects/clang.ogg'
 
 /obj/item/toy/figure/rd
 	name = "\improper Research Director action figure"
@@ -1200,13 +1374,13 @@
 	name = "\improper Roboticist action figure"
 	icon_state = "roboticist"
 	toysay = "Big stompy mechs!"
-	toysound = 'sound/mecha/mechstep.ogg'
+	toysound = 'sound/vehicles/mecha/mechstep.ogg'
 
 /obj/item/toy/figure/scientist
 	name = "\improper Scientist action figure"
 	icon_state = "scientist"
 	toysay = "I call ordnance."
-	toysound = 'sound/effects/explosionfar.ogg'
+	toysound = 'sound/effects/explosion/explosionfar.ogg'
 
 /obj/item/toy/figure/syndie
 	name = "\improper Nuclear Operative action figure"
@@ -1219,10 +1393,6 @@
 	toysay = "I am the law!"
 	toysound = 'sound/runtime/complionator/dredd.ogg'
 
-/obj/item/toy/figure/virologist
-	name = "\improper Virologist action figure"
-	icon_state = "virologist"
-	toysay = "The cure is potassium!"
 
 /obj/item/toy/figure/warden
 	name = "\improper Warden action figure"
@@ -1239,8 +1409,8 @@
 
 //Add changing looks when i feel suicidal about making 20 inhands for these.
 /obj/item/toy/dummy/attack_self(mob/user)
-	var/new_name = tgui_input_text(usr, "What would you like to name the dummy?", "Doll Name", doll_name, MAX_NAME_LEN)
-	if(!new_name)
+	var/new_name = tgui_input_text(usr, "What would you like to name the dummy?", "Doll Name", doll_name, max_length = MAX_NAME_LEN)
+	if(!new_name || !user.is_holding(src))
 		return
 	doll_name = new_name
 	to_chat(user, span_notice("You name the dummy as \"[doll_name]\"."))
@@ -1256,7 +1426,7 @@
 /obj/item/toy/seashell
 	name = "seashell"
 	desc = "May you always have a shell in your pocket and sand in your shoes. Whatever that's supposed to mean."
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "shell1"
 	var/static/list/possible_colors = list("" = 2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
 
@@ -1295,7 +1465,7 @@
 /obj/item/toy/braintoy/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = (world.time + 10)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/effects/blobattack.ogg', 50, FALSE), 0.5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/effects/blob/blobattack.ogg', 50, FALSE), 0.5 SECONDS)
 
 /*
  * Eldritch Toys
@@ -1397,7 +1567,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 #define DISARM "disarm"
 #define GRAB "grab"
 #define HARM "harm"
-#define ICON_SPLIT world.icon_size/2
+#define ICON_SPLIT ICON_SIZE_ALL/2
 
 // These states do not have any associated processing.
 #define STATE_AWAITING_PLAYER_INPUT "awaiting_player_input"
@@ -1472,7 +1642,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 /obj/item/toy/intento/proc/boot()
 	say("Game starting!")
-	playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
 
 	state = STATE_STARTING
 	COOLDOWN_START(src, next_process, TIME_TO_BEGIN)
@@ -1551,7 +1721,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 			user.client.give_award(/datum/award/score/intento_score, user, award_score)
 
 	say("GAME OVER. Your score was [score]!")
-	playsound(src, 'sound/machines/synth_no.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/synth/synth_no.ogg', 50, FALSE)
 
 	if(user && loc == user && obj_flags & EMAGGED)
 		ADD_TRAIT(src, TRAIT_NODROP, type)
@@ -1645,6 +1815,6 @@ GLOBAL_LIST_EMPTY(intento_players)
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("smacks", "clubs", "wacks", "vendors")
-	attack_verb_simple = list("smack", "club", "wacks", "vendor")
+	attack_verb_simple = list("smack", "club", "wack", "vendor")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE

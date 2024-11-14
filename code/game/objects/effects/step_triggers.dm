@@ -31,7 +31,7 @@
 /obj/effect/step_trigger/singularity_act()
 	return
 
-/obj/effect/step_trigger/singularity_pull()
+/obj/effect/step_trigger/singularity_pull(atom/singularity, current_size)
 	return
 
 /* Sends a message to mob when triggered*/
@@ -70,7 +70,7 @@
 		ADD_TRAIT(AM, TRAIT_IMMOBILIZED, REF(src))
 
 	affecting[AM] = AM.dir
-	var/datum/move_loop/loop = SSmove_manager.move(AM, direction, speed, tiles ? tiles * speed : INFINITY)
+	var/datum/move_loop/loop = GLOB.move_manager.move(AM, direction, speed, tiles ? tiles * speed : INFINITY)
 	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
 	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(set_to_normal))
@@ -220,3 +220,9 @@
 
 	if(happens_once)
 		qdel(src)
+
+/obj/effect/step_trigger/sound_effect/lavaland_cult_altar
+	happens_once = 1
+	name = "a grave mistake";
+	sound = 'sound/effects/hallucinations/i_see_you1.ogg'
+	triggerer_only = 1

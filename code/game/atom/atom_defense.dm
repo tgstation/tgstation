@@ -94,28 +94,25 @@
 		CRASH("/atom/proc/run_atom_armor was called on [src] without being implemented as a type that uses integrity!")
 	if(damage_flag == MELEE && damage_amount < damage_deflection)
 		return 0
-	switch(damage_type)
-		if(BRUTE)
-		if(BURN)
-		else
-			return 0
+	if(damage_type != BRUTE && damage_type != BURN)
+		return 0
 	var/armor_protection = 0
 	if(damage_flag)
 		armor_protection = get_armor_rating(damage_flag)
 	if(armor_protection) //Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
 		armor_protection = clamp(PENETRATE_ARMOUR(armor_protection, armour_penetration), min(armor_protection, 0), 100)
-	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
+	return round(damage_amount * (100 - armor_protection) * 0.01, DAMAGE_PRECISION)
 
 ///the sound played when the atom is damaged.
 /atom/proc/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/weapons/smash.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/smash.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 ///Called to get the damage that hulks will deal to the atom.
 /atom/proc/hulk_damage()

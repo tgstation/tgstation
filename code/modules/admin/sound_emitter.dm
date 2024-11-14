@@ -30,7 +30,7 @@
 /obj/effect/sound_emitter/singularity_act()
 	return
 
-/obj/effect/sound_emitter/singularity_pull()
+/obj/effect/sound_emitter/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/sound_emitter/examine(mob/user)
@@ -51,10 +51,13 @@
 		return
 	edit_emitter(user)
 
-/obj/effect/sound_emitter/AltClick(mob/user)
-	if(check_rights_for(user.client, R_SOUND))
-		activate(user)
-		to_chat(user, span_notice("Sound emitter activated."), confidential = TRUE)
+/obj/effect/sound_emitter/click_alt(mob/user)
+	if(!check_rights_for(user.client, R_SOUND))
+		return CLICK_ACTION_BLOCKING
+
+	activate(user)
+	to_chat(user, span_notice("Sound emitter activated."), confidential = TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/effect/sound_emitter/proc/edit_emitter(mob/user)
 	var/dat = ""
@@ -78,7 +81,7 @@
 		return
 	var/mob/user = usr
 	if(href_list["edit_label"])
-		var/new_label = tgui_input_text(user, "Choose a new label", "Sound Emitter")
+		var/new_label = tgui_input_text(user, "Choose a new label", "Sound Emitter", max_length = MAX_NAME_LEN)
 		if(!new_label)
 			return
 		maptext = MAPTEXT(new_label)

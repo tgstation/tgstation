@@ -1,0 +1,4 @@
+help: "Please consider making/using a subtype instead of editing this var."
+/obj/machinery/atmospherics:
+  banned_variables:
+    piping_layer:

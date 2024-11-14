@@ -87,12 +87,9 @@
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "cL" = (
 /obj/effect/rune/apocalypse{
-	req_cultists = 999;
-	layer = 2
+	req_cultists = 999
 	},
-/obj/structure/destructible/cult/pants_altar{
-	layer = 3
-	},
+/obj/structure/destructible/cult/pants_altar,
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "cZ" = (
@@ -254,14 +251,14 @@
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "gU" = (
 /obj/structure/closet/secure_closet/freezer/empty,
-/obj/item/organ/internal/tongue/lizard,
+/obj/item/organ/tongue/lizard,
 /obj/item/food/meat/slab/human/mutant/lizard,
-/obj/item/organ/external/tail/lizard,
-/obj/item/organ/internal/heart,
-/obj/item/organ/internal/brain,
-/obj/item/organ/internal/liver,
-/obj/item/organ/internal/lungs,
-/obj/item/organ/internal/stomach,
+/obj/item/organ/tail/lizard,
+/obj/item/organ/heart,
+/obj/item/organ/brain,
+/obj/item/organ/liver,
+/obj/item/organ/lungs,
+/obj/item/organ/stomach,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "gX" = (
@@ -564,7 +561,7 @@
 /obj/item/clothing/shoes/cowboy,
 /obj/item/clothing/under/costume/dutch,
 /obj/item/clothing/suit/costume/poncho,
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/cigarette/cigar,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -1478,9 +1475,7 @@
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-110"
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune2"
-	},
+/obj/effect/decal/cleanable/crayon/rune2,
 /mob/living/basic/construct/proteon/hostile,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
@@ -1574,9 +1569,7 @@
 /area/template_noop)
 "LL" = (
 /mob/living/basic/construct/proteon/hostile,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "rune2"
-	},
+/obj/effect/decal/cleanable/crayon/rune2,
 /obj/effect/gibspawner/human,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)

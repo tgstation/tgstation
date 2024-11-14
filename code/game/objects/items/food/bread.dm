@@ -384,7 +384,7 @@
 	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, SWORDPLAY_TRAIT)
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	fake_swordplay = TRUE
 
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_sword_equipped))
@@ -418,7 +418,7 @@
 
 /// Deadly bread used by a mime
 /obj/item/food/baguette/combat
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	/// Force when wielded as a sword by a mime
 	var/active_force = 20

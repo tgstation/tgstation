@@ -17,5 +17,5 @@
 		"heavy", "stellar", "excellent", "triumphant", "babe", "four",
 		"tail", "trim", "tube", "wobble", "roll", "gnarly", "epic",
 	)
-
 	icon_state = "beach"
+	always_use_default_namelist = TRUE

@@ -71,7 +71,7 @@
 /datum/religion_sect/proc/can_sacrifice(obj/item/sacrifice, mob/living/chap)
 	. = TRUE
 	if(chap.mind.holy_role == HOLY_ROLE_DEACON)
-		to_chat(chap, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
+		to_chat(chap, span_warning("You are merely a deacon of [GLOB.deity], and therefore cannot perform rites."))
 		return
 	if(!is_type_in_typecache(sacrifice, desired_items_typecache))
 		return FALSE
@@ -146,7 +146,7 @@
 	do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
 	tgui_icon = "robot"
 	alignment = ALIGNMENT_NEUT
-	desired_items = list(/obj/item/stock_parts/cell = "with battery charge")
+	desired_items = list(/obj/item/stock_parts/power_store = "with battery charge")
 	rites_list = list(/datum/religion_rites/synthconversion, /datum/religion_rites/machine_blessing)
 	altar_icon_state = "convertaltar-blue"
 	max_favor = 2500
@@ -154,10 +154,10 @@
 /datum/religion_sect/mechanical/sect_bless(mob/living/target, mob/living/chap)
 	if(iscyborg(target))
 		var/mob/living/silicon/robot/R = target
-		var/charge_amt = 50
+		var/charge_amount = 0.05 * STANDARD_CELL_CHARGE
 		if(target.mind?.holy_role == HOLY_ROLE_HIGHPRIEST)
-			charge_amt *= 2
-		R.cell?.charge += charge_amt
+			charge_amount *= 2
+		R.cell?.charge += charge_amount
 		R.visible_message(span_notice("[chap] charges [R] with the power of [GLOB.deity]!"))
 		to_chat(R, span_boldnotice("You are charged by the power of [GLOB.deity]!"))
 		R.add_mood_event("blessing", /datum/mood_event/blessing)
@@ -169,9 +169,9 @@
 
 	//first we determine if we can charge them
 	var/did_we_charge = FALSE
-	var/obj/item/organ/internal/stomach/ethereal/eth_stomach = blessed.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/ethereal/eth_stomach = blessed.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(eth_stomach))
-		eth_stomach.adjust_charge(60)
+		eth_stomach.adjust_charge(0.06 * STANDARD_CELL_CHARGE)
 		did_we_charge = TRUE
 
 	//if we're not targeting a robot part we stop early
@@ -183,7 +183,7 @@
 			blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
 			to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
 			blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-			playsound(chap, 'sound/machines/synth_yes.ogg', 25, TRUE, -1)
+			playsound(chap, 'sound/machines/synth/synth_yes.ogg', 25, TRUE, -1)
 		return TRUE
 
 	//charge(?) and go
@@ -196,15 +196,15 @@
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
-/datum/religion_sect/mechanical/on_sacrifice(obj/item/stock_parts/cell/power_cell, mob/living/chap)
+/datum/religion_sect/mechanical/on_sacrifice(obj/item/stock_parts/power_store/cell/power_cell, mob/living/chap)
 	if(!istype(power_cell))
 		return
 
-	if(power_cell.charge < 300)
+	if(power_cell.charge() < 0.3 * STANDARD_CELL_CHARGE)
 		to_chat(chap, span_notice("[GLOB.deity] does not accept pity amounts of power."))
 		return
 
-	adjust_favor(round(power_cell.charge/300), chap)
+	adjust_favor(round(power_cell.charge() / (0.3 * STANDARD_CELL_CHARGE)), chap)
 	to_chat(chap, span_notice("You offer [power_cell]'s power to [GLOB.deity], pleasing them."))
 	qdel(power_cell)
 	return TRUE
@@ -238,7 +238,7 @@
 		to_chat(user, span_notice("The candle needs to be lit to be offered!"))
 		return
 	to_chat(user, span_notice("[GLOB.deity] is pleased with your sacrifice."))
-	adjust_favor(50, user) //it's not a lot but hey there's a pacifist favor option at least
+	adjust_favor(40, user) //it's not a lot but hey there's a pacifist favor option at least
 	qdel(offering)
 	return TRUE
 

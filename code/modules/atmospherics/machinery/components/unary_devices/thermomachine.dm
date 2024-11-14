@@ -144,12 +144,10 @@
 		. += span_notice("Heat capacity at <b>[heat_capacity] Joules per Kelvin</b>.")
 		. += span_notice("Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.")
 
-/obj/machinery/atmospherics/components/unary/thermomachine/AltClick(mob/living/user)
+/obj/machinery/atmospherics/components/unary/thermomachine/click_alt(mob/living/user)
 	if(panel_open)
 		balloon_alert(user, "close panel!")
-		return
-	if(!can_interact(user))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(target_temperature == T20C)
 		target_temperature = max_temperature
@@ -161,6 +159,7 @@
 	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
 	balloon_alert(user, "temperature reset to [target_temperature] K")
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /// Performs heat calculation for the freezer.
 /// We just equalize the gasmix with an object at temp = var/target_temperature and heat cap = var/heat_capacity
@@ -196,7 +195,7 @@
 	// This produces a nice curve that scales decently well for really hot stuff, and is nice to not fusion. It'll do
 	var/power_usage = idle_power_usage + (heat_amount * 0.05) ** (1.05 - (5e7 * 0.16 / max(heat_amount, 5e7)))
 
-	use_power(power_usage)
+	use_energy(power_usage)
 	update_parents()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
@@ -284,7 +283,7 @@
 	data["pressure"] = port.return_pressure()
 	return data
 
-/obj/machinery/atmospherics/components/unary/thermomachine/ui_act(action, params)
+/obj/machinery/atmospherics/components/unary/thermomachine/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -314,24 +313,37 @@
 
 	update_appearance()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/CtrlClick(mob/living/user)
+/obj/machinery/atmospherics/components/unary/thermomachine/click_ctrl(mob/user)
 	if(!anchored)
-		return ..()
+		return NONE
 	if(panel_open)
 		balloon_alert(user, "close panel!")
-		return
-	if(!can_interact(user))
-		return
+		return CLICK_ACTION_BLOCKING
+	if(!is_operational)
+		return CLICK_ACTION_BLOCKING
 
 	on = !on
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_layer()
 	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer1
+	piping_layer = 1
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer2
+	piping_layer = 2
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer4
+	piping_layer = 4
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer5
+	piping_layer = 5
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
 	on = TRUE
@@ -351,6 +363,18 @@
 	target_temperature = COLD_ROOM_TEMP
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/layer1
+	piping_layer = 1
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/layer2
+	piping_layer = 2
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/layer4
+	piping_layer = 4
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/layer5
+	piping_layer = 5
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
 	on = TRUE

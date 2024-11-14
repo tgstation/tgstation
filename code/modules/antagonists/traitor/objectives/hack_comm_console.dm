@@ -15,6 +15,8 @@
 	var/progression_objectives_minimum = 20 MINUTES
 
 /datum/traitor_objective/hack_comm_console/can_generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	if(length(possible_duplicates) > 0)
+		return FALSE
 	if(SStraitor.get_taken_count(/datum/traitor_objective/hack_comm_console) > 0)
 		return FALSE
 	if(handler.get_completion_progression(/datum/traitor_objective) < progression_objectives_minimum)

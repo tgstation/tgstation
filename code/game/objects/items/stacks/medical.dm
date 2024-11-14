@@ -35,7 +35,7 @@
 	/// Time it takes to assess injuries when looping healing
 	var/assessing_injury_delay = 1 SECONDS
 
-/obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 	if(!begin_heal_loop(interacting_with, user))
@@ -133,7 +133,7 @@
 		if(!try_heal_checks(patient, user, heal_brute, heal_burn))
 			return FALSE
 		if(patient.heal_bodypart_damage((heal_brute * patient.maxHealth/100)))
-			user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] on [patient].</span></span>", "<span class='infoplain'><span class='green'>You apply [src] on [patient].</span></span>")
+			user.visible_message(span_infoplain(span_green("[user] applies [src] on [patient].")), span_infoplain(span_green("You apply [src] on [patient].")))
 			return TRUE
 	patient.balloon_alert(user, "can't heal [patient]!")
 	return FALSE
@@ -182,8 +182,8 @@
 	if(!try_heal_checks(patient, user, brute, burn))
 		return FALSE
 	user.visible_message(
-		span_infoplain(span_green("[user] applies [src] on [patient]'s [parse_zone(affecting.body_zone)].")),
-		span_infoplain(span_green("You apply [src] on [patient]'s [parse_zone(affecting.body_zone)]."))
+		span_infoplain(span_green("[user] applies [src] on [patient]'s [affecting.plaintext_zone].")),
+		span_infoplain(span_green("You apply [src] on [patient]'s [affecting.plaintext_zone]."))
 	)
 	var/previous_damage = affecting.get_damage()
 	if(affecting.heal_damage(brute, burn))
@@ -279,7 +279,7 @@
 	if(!do_after(user, treatment_delay, target = patient))
 		return
 
-	user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] to [patient]'s [limb.plaintext_zone].</span></span>", "<span class='infoplain'><span class='green'>You bandage the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone].</span></span>")
+	user.visible_message(span_infoplain(span_green("[user] applies [src] to [patient]'s [limb.plaintext_zone].")), span_infoplain(span_green("You bandage the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone].")))
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
@@ -419,11 +419,11 @@
 		return
 	return ..()
 
-/obj/item/stack/medical/mesh/AltClick(mob/living/user)
+/obj/item/stack/medical/mesh/click_alt(mob/living/user)
 	if(!is_open)
 		balloon_alert(user, "open it first!")
-		return
-	return ..()
+		return CLICK_ACTION_BLOCKING
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/stack/medical/mesh/attack_hand(mob/user, list/modifiers)
 	if(!is_open && user.get_inactive_held_item() == src)
@@ -436,7 +436,7 @@
 		is_open = TRUE
 		balloon_alert(user, "opened")
 		update_appearance()
-		playsound(src, 'sound/items/poster_ripped.ogg', 20, TRUE)
+		playsound(src, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
 		return
 	return ..()
 

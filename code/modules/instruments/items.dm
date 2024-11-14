@@ -17,7 +17,7 @@
 /obj/item/instrument/Initialize(mapload)
 	. = ..()
 	song = new(src, allowed_instrument_ids, instrument_range)
-	allowed_instrument_ids = null //We don't need this clogging memory after it's used.
+	allowed_instrument_ids = null //We don't need this clogging memory after its used.
 
 /obj/item/instrument/Destroy()
 	QDEL_NULL(song)
@@ -27,27 +27,14 @@
 	if(!ismob(music_player))
 		return STOP_PLAYING
 	var/mob/user = music_player
-	if(user.incapacitated() || !((loc == user) || (isturf(loc) && Adjacent(user)))) // sorry, no more TK playing.
+	if(user.incapacitated || !((loc == user) || (isturf(loc) && Adjacent(user)))) // sorry, no more TK playing.
 		return STOP_PLAYING
 
 /obj/item/instrument/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/instrument/attack_self(mob/user)
-	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
-		return TRUE
-	interact(user)
-
-/obj/item/instrument/interact(mob/user)
-	ui_interact(user)
-
-/obj/item/instrument/ui_interact(mob/living/user)
-	if(!isliving(user) || user.stat != CONSCIOUS || (HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && !ispAI(user)))
-		return
-
-	user.set_machine(src)
+/obj/item/instrument/ui_interact(mob/user, datum/tgui/ui)
 	song.ui_interact(user)
 
 /obj/item/instrument/violin
@@ -72,7 +59,7 @@
 	inhand_icon_state = "banjo"
 	attack_verb_continuous = list("scruggs-styles", "hum-diggitys", "shin-digs", "clawhammers")
 	attack_verb_simple = list("scruggs-style", "hum-diggity", "shin-dig", "clawhammer")
-	hitsound = 'sound/weapons/banjoslap.ogg'
+	hitsound = 'sound/items/weapons/banjoslap.ogg'
 	allowed_instrument_ids = "banjo"
 
 /obj/item/instrument/guitar
@@ -82,7 +69,7 @@
 	inhand_icon_state = "guitar"
 	attack_verb_continuous = list("plays metal on", "serenades", "crashes", "smashes")
 	attack_verb_simple = list("play metal on", "serenade", "crash", "smash")
-	hitsound = 'sound/weapons/stringsmash.ogg'
+	hitsound = 'sound/items/weapons/stringsmash.ogg'
 	allowed_instrument_ids = list("guitar","csteelgt","cnylongt", "ccleangt", "cmutedgt")
 
 /obj/item/instrument/eguitar
@@ -93,7 +80,7 @@
 	force = 12
 	attack_verb_continuous = list("plays metal on", "shreds", "crashes", "smashes")
 	attack_verb_simple = list("play metal on", "shred", "crash", "smash")
-	hitsound = 'sound/weapons/stringsmash.ogg'
+	hitsound = 'sound/items/weapons/stringsmash.ogg'
 	allowed_instrument_ids = "eguitar"
 
 /obj/item/instrument/glockenspiel
@@ -125,14 +112,18 @@
 	force = 0
 	attack_verb_continuous = list("plays", "jazzes", "trumpets", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "trumpet", "mourn", "doot", "spook")
+	var/single_use = FALSE
 
 /obj/item/instrument/trumpet/spectral/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/spooky)
+	AddElement(/datum/element/spooky, too_spooky = !single_use, single_use = single_use)
 
-/obj/item/instrument/trumpet/spectral/attack(mob/living/carbon/C, mob/user)
-	playsound (src, 'sound/runtime/instruments/trombone/En4.mid', 100,1,-1)
-	..()
+/obj/item/instrument/trumpet/spectral/attack(mob/living/target_mob, mob/living/user, params)
+	playsound(src, 'sound/runtime/instruments/trombone/En4.mid', 1000, 1, -1)
+	return ..()
+
+/obj/item/instrument/trumpet/spectral/one_doot
+	single_use = TRUE
 
 /obj/item/instrument/saxophone
 	name = "saxophone"
@@ -149,14 +140,18 @@
 	force = 0
 	attack_verb_continuous = list("plays", "jazzes", "saxxes", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "sax", "mourn", "doot", "spook")
+	var/single_use = FALSE
 
 /obj/item/instrument/saxophone/spectral/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/spooky)
+	AddElement(/datum/element/spooky, too_spooky = !single_use, single_use = single_use)
 
-/obj/item/instrument/saxophone/spectral/attack(mob/living/carbon/C, mob/user)
-	playsound (src, 'sound/runtime/instruments/saxophone/En4.mid', 100,1,-1)
-	..()
+/obj/item/instrument/saxophone/spectral/attack(mob/living/target_mob, mob/living/user, params)
+	playsound(src, 'sound/runtime/instruments/trombone/En4.mid', 1000, 1, -1)
+	return ..()
+
+/obj/item/instrument/saxophone/spectral/one_doot
+	single_use = TRUE
 
 /obj/item/instrument/trombone
 	name = "trombone"
@@ -173,14 +168,18 @@
 	force = 0
 	attack_verb_continuous = list("plays", "jazzes", "trombones", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "trombone", "mourn", "doot", "spook")
+	var/single_use = FALSE
 
 /obj/item/instrument/trombone/spectral/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/spooky)
+	AddElement(/datum/element/spooky, too_spooky = !single_use, single_use = single_use)
 
-/obj/item/instrument/trombone/spectral/attack(mob/living/carbon/C, mob/user)
-	playsound (src, 'sound/runtime/instruments/trombone/Cn4.mid', 100,1,-1)
-	..()
+/obj/item/instrument/trombone/spectral/one_doot
+	single_use = TRUE
+
+/obj/item/instrument/trombone/spectral/attack(mob/living/target_mob, mob/living/user, params)
+	playsound(src, 'sound/runtime/instruments/trombone/Cn4.mid', 1000, 1, -1)
+	return ..()
 
 /obj/item/instrument/recorder
 	name = "recorder"
@@ -201,19 +200,24 @@
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/instrument)
 
+/obj/item/instrument/harmonica/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	if(!(slot & slot_flags))
+		return
+	RegisterSignal(user, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+/obj/item/instrument/harmonica/dropped(mob/user, silent = FALSE)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_SAY)
+
 /obj/item/instrument/harmonica/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
-	if(song.playing && ismob(loc))
-		to_chat(loc, span_warning("You stop playing the harmonica to talk..."))
-		song.playing = FALSE
-
-/obj/item/instrument/harmonica/equipped(mob/M, slot)
-	. = ..()
-	RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-
-/obj/item/instrument/harmonica/dropped(mob/M)
-	. = ..()
-	UnregisterSignal(M, COMSIG_MOB_SAY)
+	if(!song.playing)
+		return
+	if(!ismob(loc))
+		CRASH("[src] was still registered to listen in on [source] but was not found to be on their mob.")
+	to_chat(loc, span_warning("You stop playing the harmonica to talk..."))
+	song.playing = FALSE
 
 /datum/action/item_action/instrument
 	name = "Use Instrument"
@@ -251,6 +255,6 @@
 	attack_verb_simple = list("flutter", "flap")
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
-	hitsound = 'sound/voice/moth/scream_moth.ogg'
+	hitsound = 'sound/mobs/humanoids/moth/scream_moth.ogg'
 	custom_price = PAYCHECK_COMMAND * 2.37
 	custom_premium_price = PAYCHECK_COMMAND * 2.37

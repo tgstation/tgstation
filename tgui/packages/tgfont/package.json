@@ -6,6 +6,6 @@
     "tgfont:build": "node mkdist.cjs && fantasticon --config config.cjs"
   },
   "dependencies": {
-    "fantasticon": "^1.2.2"
+    "fantasticon": "^1.2.3"
   }
 }

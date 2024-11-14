@@ -39,7 +39,7 @@ LOG_GAME
 LOG_MANIFEST
 
 ## log mecha actions
-# LOG_MECHA
+LOG_MECHA
 
 ## log OOC channel
 LOG_OOC

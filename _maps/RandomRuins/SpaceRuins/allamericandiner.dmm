@@ -245,12 +245,7 @@
 /area/ruin/space/has_grav/allamericandiner)
 "nq" = (
 /obj/machinery/shower/directional/east,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
@@ -518,7 +513,7 @@
 "yE" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/power/terminal{
 	dir = 4
 	},
@@ -610,12 +605,7 @@
 /area/ruin/space/has_grav/allamericandiner)
 "CF" = (
 /obj/machinery/shower/directional/west,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)

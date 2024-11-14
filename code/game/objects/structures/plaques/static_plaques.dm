@@ -3,6 +3,12 @@
 /obj/structure/plaque/static_plaque
 	engraved = TRUE
 
+/obj/structure/plaque/static_plaque/Initialize(mapload)
+	. = ..()
+	if(isopenturf(loc) && !isProbablyWallMounted(src))
+		SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
+		layer = HIGH_TURF_LAYER
+
 /obj/structure/plaque/static_plaque/atmos
 	name = "\improper FEA Atmospherics Division plaque"
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
@@ -35,8 +41,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/plaque/static_plaque/tram/LateInitialize(mapload)
-	. = ..()
+/obj/structure/plaque/static_plaque/tram/LateInitialize()
 	link_tram()
 	set_tram_serial()
 
@@ -125,6 +130,10 @@
 // Tramstation: added Mar 11, 2021 (#56509)
 /obj/structure/plaque/static_plaque/golden/commission/tram
 	desc = "Spinward Sector Station SS-13\n'Tram' Class Outpost\nCommissioned 11/03/2561\n'Making Moves'"
+
+// Wawastation: added add date here
+/obj/structure/plaque/static_plaque/golden/commission/wawa
+	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 11/03/add here\n'Forever Vertical'"
 
 // North Star: added Apr 13, 2023 (#74371)
 /obj/structure/plaque/static_plaque/golden/commission/northstar

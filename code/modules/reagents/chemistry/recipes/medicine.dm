@@ -345,6 +345,7 @@
 
 /datum/chemical_reaction/medicine/medsuture
 	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/toxin/formaldehyde = 20, /datum/reagent/medicine/polypyr = 15) //This might be a bit much, reagent cost should be reviewed after implementation.
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
 
 /datum/chemical_reaction/medicine/medsuture/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -354,6 +355,7 @@
 
 /datum/chemical_reaction/medicine/medmesh
 	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/consumable/aloejuice = 20, /datum/reagent/space_cleaner/sterilizine = 10)
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
 
 /datum/chemical_reaction/medicine/medmesh/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -363,6 +365,7 @@
 
 /datum/chemical_reaction/medicine/poultice
 	required_reagents = list(/datum/reagent/toxin/bungotoxin = 20, /datum/reagent/cellulose = 20, /datum/reagent/consumable/aloejuice = 20)
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE | REACTION_TAG_BURN
 
 /datum/chemical_reaction/medicine/poultice/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)

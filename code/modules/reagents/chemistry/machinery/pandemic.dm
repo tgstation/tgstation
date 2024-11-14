@@ -12,10 +12,10 @@
 	circuit = /obj/item/circuitboard/computer/pandemic
 
 	/// Whether the pandemic is ready to make another culture/vaccine
-	var/wait
-	/// The currently selected symptom
+	var/wait = FALSE
+	///The currently selected symptom
 	var/datum/symptom/selected_symptom
-	/// The inserted beaker
+	///The inserted beaker
 	var/obj/item/reagent_containers/beaker
 
 /obj/machinery/computer/pandemic/Initialize(mapload)
@@ -78,18 +78,19 @@
 	if(gone == beaker)
 		beaker = null
 		update_appearance()
+		SStgui.update_uis(src)
 
 /obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, params)
-	//Advanced science! Percision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
+	//Advanced science! Precision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
 	if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
 		if(!beaker)
 			balloon_alert(user, "no beaker!")
 			return ..()
 		var/list/modifiers = params2list(params)
 		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
-			held_item.afterattack_secondary(beaker, user, Adjacent(user), params)
+			held_item.interact_with_atom_secondary(beaker, user)
 		else
-			held_item.afterattack(beaker, user, Adjacent(user), params)
+			held_item.interact_with_atom(beaker, user)
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -153,7 +154,7 @@
 	data["resistances"] = get_resistance_data(blood)
 	return data
 
-/obj/machinery/computer/pandemic/ui_act(action, params)
+/obj/machinery/computer/pandemic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -198,7 +199,7 @@
 	if(!istype(adv_disease) || !adv_disease.mutable)
 		to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
 		return FALSE
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	adv_disease = adv_disease.Copy()
 	var/list/data = list("viruses" = list(adv_disease))
 	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())
@@ -220,7 +221,7 @@
  * @returns {boolean} - Success or failure.
  */
 /obj/machinery/computer/pandemic/proc/create_vaccine_bottle(index)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	var/id = index
 	var/datum/disease/disease = SSdisease.archive_diseases[id]
 	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())

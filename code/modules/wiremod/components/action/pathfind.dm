@@ -24,7 +24,7 @@
 
 	// Cooldown to limit how frequently we can path to the same location.
 	var/same_path_cooldown = 5 SECONDS
-	var/different_path_cooldown = 30 SECONDS
+	var/different_path_cooldown = 5 SECONDS
 
 	var/max_range = 60
 

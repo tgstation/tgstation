@@ -15,25 +15,36 @@
 // On Windows, looks in the standard places for `rust_g.dll`.
 // On Linux, looks in `.`, `$LD_LIBRARY_PATH`, and `~/.byond/bin` for either of
 // `librust_g.so` (preferred) or `rust_g` (old).
+// On OpenDream, `rust_g64.dll` / `librust_g64.so` are used instead.
 
 /* This comment bypasses grep checks */ /var/__rust_g
 
+#ifndef OPENDREAM
+#define RUST_G_BASE	"rust_g"
+#else
+#define RUST_G_BASE	"rust_g64"
+#endif
+
 /proc/__detect_rust_g()
 	if (world.system_type == UNIX)
-		if (fexists("./librust_g.so"))
+		if (fexists("./lib[RUST_G_BASE].so"))
 			// No need for LD_LIBRARY_PATH badness.
-			return __rust_g = "./librust_g.so"
-		else if (fexists("./rust_g"))
+			return __rust_g = "./lib[RUST_G_BASE].so"
+#ifndef OPENDREAM
+		else if (fexists("./[RUST_G_BASE]"))
 			// Old dumb filename.
-			return __rust_g = "./rust_g"
-		else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/rust_g"))
+			return __rust_g = "./[RUST_G_BASE]"
+		else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/[RUST_G_BASE]"))
 			// Old dumb filename in `~/.byond/bin`.
-			return __rust_g = "rust_g"
+			return __rust_g = RUST_G_BASE
+#endif
 		else
 			// It's not in the current directory, so try others
-			return __rust_g = "librust_g.so"
+			return __rust_g = "lib[RUST_G_BASE].so"
 	else
-		return __rust_g = "rust_g"
+		return __rust_g = RUST_G_BASE
+
+#undef RUST_G_BASE
 
 #define RUST_G (__rust_g || __detect_rust_g())
 #endif
@@ -107,6 +118,23 @@
 #define rustg_cnoise_generate(percentage, smoothing_iterations, birth_limit, death_limit, width, height) \
 	RUSTG_CALL(RUST_G, "cnoise_generate")(percentage, smoothing_iterations, birth_limit, death_limit, width, height)
 
+/**
+ * This proc generates a grid of perlin-like noise
+ *
+ * Returns a single string that goes row by row, with values of 1 representing an turned on cell, and a value of 0 representing a turned off cell.
+ *
+ * Arguments:
+ * * seed: seed for the function
+ * * accuracy: how close this is to the original perlin noise, as accuracy approaches infinity, the noise becomes more and more perlin-like
+ * * stamp_size: Size of a singular stamp used by the algorithm, think of this as the same stuff as frequency in perlin noise
+ * * world_size: size of the returned grid.
+ * * lower_range: lower bound of values selected for. (inclusive)
+ * * upper_range: upper bound of values selected for. (exclusive)
+ */
+#define rustg_dbp_generate(seed, accuracy, stamp_size, world_size, lower_range, upper_range) \
+	RUSTG_CALL(RUST_G, "dbp_generate")(seed, accuracy, stamp_size, world_size, lower_range, upper_range)
+
+
 #define rustg_dmi_strip_metadata(fname) RUSTG_CALL(RUST_G, "dmi_strip_metadata")(fname)
 #define rustg_dmi_create_png(path, width, height, data) RUSTG_CALL(RUST_G, "dmi_create_png")(path, width, height, data)
 #define rustg_dmi_resize_png(path, width, height, resizetype) RUSTG_CALL(RUST_G, "dmi_resize_png")(path, width, height, resizetype)
@@ -158,6 +186,16 @@
 /proc/rustg_log_close_all() return RUSTG_CALL(RUST_G, "log_close_all")()
 
 #define rustg_noise_get_at_coordinates(seed, x, y) RUSTG_CALL(RUST_G, "noise_get_at_coordinates")(seed, x, y)
+
+/*
+ * Takes in a string and json_encode()"d lists to produce a sanitized string.
+ * This function operates on whitelists, there is currently no way to blacklist.
+ * Args:
+ * * text: the string to sanitize.
+ * * attribute_whitelist_json: a json_encode()'d list of HTML attributes to allow in the final string.
+ * * tag_whitelist_json: a json_encode()'d list of HTML tags to allow in the final string.
+ */
+#define rustg_sanitize_html(text, attribute_whitelist_json, tag_whitelist_json) RUSTG_CALL(RUST_G, "sanitize_html")(text, attribute_whitelist_json, tag_whitelist_json)
 
 #define rustg_sql_connect_pool(options) RUSTG_CALL(RUST_G, "sql_connect_pool")(options)
 #define rustg_sql_query_async(handle, query, params) RUSTG_CALL(RUST_G, "sql_query_async")(handle, query, params)

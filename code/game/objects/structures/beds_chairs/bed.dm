@@ -15,6 +15,7 @@
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90
+	buckle_dir = SOUTH
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 0.35
@@ -24,22 +25,27 @@
 	var/build_stack_amount = 2
 	/// Mobs standing on it are nudged up by this amount. Also used to align the person back when buckled to it after init.
 	var/elevation = 8
+	/// If this bed can be deconstructed using a wrench
+	var/can_deconstruct = TRUE
+	/// Directions in which the bed has its headrest on the left side.
+	var/left_headrest_dirs = NORTHEAST
 
 /obj/structure/bed/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/soft_landing)
 	if(elevation)
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
+	update_buckle_vars(dir)
 	register_context()
 
 /obj/structure/bed/examine(mob/user)
 	. = ..()
-	if(!(obj_flags & NO_DECONSTRUCTION))
+	if (can_deconstruct)
 		. += span_notice("It's held together by a couple of <b>bolts</b>.")
 
 /obj/structure/bed/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
-		if(held_item.tool_behaviour != TOOL_WRENCH || obj_flags & NO_DECONSTRUCTION)
+		if(held_item.tool_behaviour != TOOL_WRENCH)
 			return
 
 		context[SCREENTIP_CONTEXT_RMB] = "Dismantle"
@@ -49,19 +55,23 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/structure/bed/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(build_stack_type)
-			new build_stack_type(loc, build_stack_amount)
-	..()
+/obj/structure/bed/setDir(newdir)
+	. = ..()
+	update_buckle_vars(newdir)
+
+/obj/structure/bed/proc/update_buckle_vars(newdir)
+	buckle_lying = newdir & left_headrest_dirs ? 270 : 90
+
+/obj/structure/bed/atom_deconstruct(disassembled = TRUE)
+	if(build_stack_type)
+		new build_stack_type(loc, build_stack_amount)
 
 /obj/structure/bed/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /obj/structure/bed/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return TRUE
-
+	if (!can_deconstruct)
+		return NONE
 	..()
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)
@@ -75,6 +85,8 @@
 	icon_state = "med_down"
 	base_icon_state = "med"
 	anchored = FALSE
+	left_headrest_dirs = SOUTHWEST
+	buckle_lying = 270
 	resistance_flags = NONE
 	build_stack_type = /obj/item/stack/sheet/mineral/titanium
 	build_stack_amount = 1
@@ -116,17 +128,14 @@
 	if(!isnull(foldable_type))
 		. += span_notice("You can fold it up with a Right-click.")
 
-/obj/structure/bed/medical/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-
+/obj/structure/bed/medical/click_alt(mob/user)
 	if(has_buckled_mobs() && (user in buckled_mobs))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	anchored = !anchored
 	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/bed/medical/post_buckle_mob(mob/living/buckled)
 	. = ..()
@@ -227,13 +236,12 @@
 /obj/item/emergency_bed/attack_self(mob/user)
 	deploy_bed(user, user.loc)
 
-/obj/item/emergency_bed/afterattack(obj/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/emergency_bed/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isopenturf(interacting_with))
+		deploy_bed(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	if(isopenturf(target))
-		deploy_bed(user, target)
 
 /obj/item/emergency_bed/proc/deploy_bed(mob/user, atom/location)
 	var/obj/structure/bed/medical/emergency/deployed = new /obj/structure/bed/medical/emergency(location)
@@ -280,6 +288,11 @@
 /obj/structure/bed/dogbed/cayenne
 	desc = "Seems kind of... fishy."
 	name = "Cayenne's bed"
+	anchored = TRUE
+
+/obj/structure/bed/dogbed/misha
+	desc = "There is fur all over it, and some blood..."
+	name = "Misha's bed"
 	anchored = TRUE
 
 /obj/structure/bed/dogbed/lia

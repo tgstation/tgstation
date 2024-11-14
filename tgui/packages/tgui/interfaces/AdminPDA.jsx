@@ -1,5 +1,6 @@
+import { Box, Dropdown, Input, Section, TextArea } from 'tgui-core/components';
+
 import { useBackend, useLocalState } from '../backend';
-import { Box, Dropdown, Input, Section, TextArea } from '../components';
 import { Button } from '../components/Button';
 import { Window } from '../layouts';
 
@@ -33,7 +34,8 @@ const ReceiverChoice = (props) => {
         <Dropdown
           disabled={spam}
           selected={user}
-          displayText={user ? users[user].username : 'Pick a user...'}
+          displayText={users[user]?.username}
+          placeholder="Pick a user..."
           options={receivers
             .filter((rcvr) => showInvisible || !rcvr.invisible)
             .map((rcvr) => ({

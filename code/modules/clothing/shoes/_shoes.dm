@@ -4,6 +4,10 @@
 	lefthand_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
 	desc = "Comfortable-looking shoes."
+	pickup_sound = 'sound/items/handling/shoes/sneakers_pickup1.ogg'
+	drop_sound = 'sound/items/handling/shoes/sneakers_drop1.ogg'
+	equip_sound = 'sound/items/equip/sneakers_equip1.ogg'
+	sound_vary = TRUE
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 
 	body_parts_covered = FEET
@@ -12,6 +16,8 @@
 	armor_type = /datum/armor/clothing_shoes
 	slowdown = SHOES_SLOWDOWN
 	strip_delay = 1 SECONDS
+	article = "a pair of"
+
 	var/offset = 0
 	var/equipped_before_drop = FALSE
 	///Whether these shoes have laces that can be tied/untied
@@ -42,7 +48,7 @@
 		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))
 		for(var/i in 1 to 3)
 			sleep(0.3 SECONDS)
-			playsound(user, 'sound/weapons/genhit2.ogg', 50, TRUE)
+			playsound(user, 'sound/items/weapons/genhit2.ogg', 50, TRUE)
 		return BRUTELOSS
 
 /obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
@@ -86,7 +92,7 @@
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
 	equipped_before_drop = FALSE
 	user.pixel_y -= offset
-	worn_y_dimension = world.icon_size
+	worn_y_dimension = ICON_SIZE_Y
 
 /obj/item/clothing/shoes/dropped(mob/user)
 	var/atom/movable/screen/alert/our_alert = our_alert_ref?.resolve()
@@ -113,9 +119,10 @@
  * *
  * * state: SHOES_UNTIED, SHOES_TIED, or SHOES_KNOTTED, depending on what you want them to become
  * * user: used to check to see if we're the ones unknotting our own laces
+ * * force_lacing: boolean. if TRUE, ignores can_be_tied
  */
-/obj/item/clothing/shoes/proc/adjust_laces(state, mob/user)
-	if(!can_be_tied)
+/obj/item/clothing/shoes/proc/adjust_laces(state, mob/user, force_lacing = FALSE)
+	if(!can_be_tied && !force_lacing)
 		return
 
 	var/mob/living/carbon/human/our_guy
@@ -172,8 +179,7 @@
 				adjust_laces(SHOES_UNTIED, user)
 
 	else // if they're someone else's shoes, go knot-wards
-		var/mob/living/L = user
-		if(istype(L) && L.body_position == STANDING_UP)
+		if(istype(living_user) && living_user.body_position == STANDING_UP)
 			to_chat(user, span_warning("You must be on the floor to interact with [src]!"))
 			return
 		if(tied == SHOES_KNOTTED)
@@ -188,7 +194,7 @@
 		if(HAS_TRAIT(user, TRAIT_CLUMSY)) // based clowns trained their whole lives for this
 			mod_time *= 0.75
 
-		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy)))
+		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy), hidden = TRUE))
 			to_chat(user, span_notice("You [tied ? "untie" : "knot"] the laces on [loc]'s [src.name]."))
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_KNOTTED, user)
@@ -198,12 +204,12 @@
 			user.visible_message(span_danger("[our_guy] stamps on [user]'s hand, mid-shoelace [tied ? "knotting" : "untying"]!"), span_userdanger("Ow! [our_guy] stamps on your hand!"), list(our_guy))
 			to_chat(our_guy, span_userdanger("You stamp on [user]'s hand! What the- [user.p_they()] [user.p_were()] [tied ? "knotting" : "untying"] your shoelaces!"))
 			user.emote("scream")
-			if(istype(L))
-				var/obj/item/bodypart/ouchie = L.get_bodypart(pick(GLOB.arm_zones))
+			if(istype(living_user))
+				var/obj/item/bodypart/ouchie = living_user.get_bodypart(pick(GLOB.arm_zones))
 				if(ouchie)
 					ouchie.receive_damage(brute = 10)
-				L.adjustStaminaLoss(40)
-				L.Paralyze(10)
+				living_user.adjustStaminaLoss(40)
+				living_user.Paralyze(10)
 
 ///checking to make sure we're still on the person we're supposed to be, for lacing do_after's
 /obj/item/clothing/shoes/proc/still_shoed(mob/living/carbon/our_guy)

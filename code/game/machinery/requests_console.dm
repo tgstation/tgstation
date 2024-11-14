@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/obj/machinery/requests_console/ui_act(action, params)
+/obj/machinery/requests_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -200,7 +200,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				var/mob/living/L = usr
 				message = L.treat_message(message)["message"]
 
-			minor_announce(message, "[department] Announcement:", html_encode = FALSE, sound_override = 'sound/misc/announce_dig.ogg')
+			minor_announce(message, "[department] Announcement:", html_encode = FALSE, sound_override = 'sound/announcer/announcement/announce_dig.ogg')
 			GLOB.news_network.submit_article(message, department, "Station Announcements", null)
 			usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 			message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
@@ -213,10 +213,11 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			var/recipient = params["reply_recipient"]
 
 			var/reply_message = reject_bad_text(tgui_input_text(usr, "Write a quick reply to [recipient]", "Awaiting Input"), ascii_only = FALSE)
-
+			if(QDELETED(ui) || ui.status != UI_INTERACTIVE)
+				return
 			if(!reply_message)
 				has_mail_send_error = TRUE
-				playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 
 			send_message(recipient, reply_message, REQ_NORMAL_MESSAGE_PRIORITY, REPLY_REQUEST)
@@ -272,9 +273,9 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	if(!silent)
 		if(has_mail_send_error)
-			playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 		else
-			playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/beep/twobeep.ogg', 50, TRUE)
 
 	message_stamped_by = ""
 	message_verified_by = ""
@@ -349,7 +350,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/alert = new_message.get_alert()
 
 	if(!silent)
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 		say(alert)
 
 	if(new_message.radio_freq)

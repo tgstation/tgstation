@@ -4,12 +4,14 @@
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "quantum_keycard_gags"
 	greyscale_config = /datum/greyscale_config/quantum_keycard
-	greyscale_colors = "#FFFFFF"
+	greyscale_colors = COLOR_WHITE
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	/// The linked quantum pad
 	var/obj/machinery/quantumpad/qpad
 
 	/// where the pad is located and what color the card will become
@@ -40,13 +42,12 @@
 	else
 		. += span_notice("Insert [src] into an active quantum pad to link it.")
 
-/obj/item/quantum_keycard/AltClick(mob/living/user)
-	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY))
-		return
+/obj/item/quantum_keycard/click_alt(mob/living/user)
 	to_chat(user, span_notice("You start pressing [src]'s unlink button..."))
-	if(do_after(user, 40, target = src))
+	if(do_after(user, 4 SECONDS, target = src))
 		to_chat(user, span_notice("The keycard beeps twice and disconnects the quantum link."))
 		set_pad()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/quantum_keycard/proc/set_pad(obj/machinery/quantumpad/new_pad)
 	qpad = new_pad

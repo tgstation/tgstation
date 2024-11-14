@@ -17,6 +17,10 @@
 	icon_state = "headpike-bamboo"
 	speartype = /obj/item/spear/bamboospear
 
+/obj/structure/headpike/military //for military spears
+	icon_state = "headpike-military"
+	speartype = /obj/item/spear/military
+
 /obj/structure/headpike/Initialize(mapload)
 	. = ..()
 	if(mapload)
@@ -32,7 +36,7 @@
 	victim = locate() in parts_list
 	if(!victim) //likely a mapspawned one
 		victim = new(src)
-		victim.real_name = random_unique_name(prob(50))
+		victim.real_name = generate_random_name()
 	spear = locate(speartype) in parts_list
 	if(!spear)
 		spear = new speartype(src)
@@ -64,7 +68,7 @@
 	if(!QDELETED(src))
 		deconstruct(TRUE)
 
-/obj/structure/headpike/deconstruct(disassembled)
+/obj/structure/headpike/atom_deconstruct(disassembled)
 	var/obj/item/bodypart/head/our_head = victim
 	var/obj/item/spear/our_spear = spear
 	victim = null
@@ -73,7 +77,6 @@
 	if(!disassembled)
 		return ..()
 	our_spear?.forceMove(drop_location())
-	return ..()
 
 /obj/structure/headpike/attack_hand(mob/user, list/modifiers)
 	. = ..()

@@ -11,6 +11,7 @@
 #define MAGIC_TRAIT "magic"
 #define TRAUMA_TRAIT "trauma"
 #define FLIGHTPOTION_TRAIT "flightpotion"
+#define SLIME_POTION_TRAIT "slime_potion"
 /// Trait inherited by experimental surgeries
 #define EXPERIMENTAL_SURGERY_TRAIT "experimental_surgery"
 #define DISEASE_TRAIT "disease"
@@ -36,6 +37,8 @@
 
 #define VENDING_MACHINE_TRAIT "vending_machine"
 
+///A trait given by a held item
+#define HELD_ITEM_TRAIT "held-item-trait"
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 /// A trait given by any status effect
 #define STATUS_EFFECT_TRAIT "status-effect"
@@ -45,7 +48,8 @@
 
 /// Trait given by an Action datum
 #define ACTION_TRAIT "action"
-
+///A trait given by someone blocking.
+#define BLOCKING_TRAIT "blocking"
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"
 /// inherited from the mask
@@ -88,6 +92,8 @@
 #define MAFIA_TRAIT "mafia"
 /// Trait associated with ctf
 #define CTF_TRAIT "ctf"
+/// Trait associated with deathmatch
+#define DEATHMATCH_TRAIT "deathmatch"
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
 /// Trait given from playing pretend with baguettes
@@ -135,6 +141,7 @@
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
+#define BOXING_TRAIT "boxing"
 #define TIMESTOP_TRAIT "timestop"
 #define LIFECANDLE_TRAIT "lifecandle"
 #define VENTCRAWLING_TRAIT "ventcrawling"
@@ -187,6 +194,11 @@
 #define MOD_TRAIT "mod"
 /// Trait applied to tram passengers
 #define TRAM_PASSENGER_TRAIT "tram-passenger"
+/// Trait given by a fulton extraction pack
+#define FULTON_PACK_TRAIT "fulton-pack"
+
+/// Trait from mob/living/update_transform()
+#define UPDATE_TRANSFORM_TRAIT "update_transform"
 
 /// Trait granted by the berserker hood.
 #define BERSERK_TRAIT "berserk_trait"
@@ -220,8 +232,7 @@
 #define SPEED_TRAIT "speed_trait"
 /// Trait given to mobs that have been autopsied
 #define AUTOPSY_TRAIT "autopsy_trait"
-/// Trait given by [/datum/status_effect/blessing_of_insanity]
-#define MAD_WIZARD_TRAIT "mad_wizard_trait"
+#define EYE_SCARRING_TRAIT "eye_scarring_trait"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
@@ -262,7 +273,7 @@
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
-* granted/removed by [/obj/item/organ/internal/tongue]
+* granted/removed by [/obj/item/organ/tongue]
 * Used for ensuring that carbons without tongues cannot taste anything
 * so it is added in Initialize, and then removed when a tongue is inserted
 * and readded when a tongue is removed.
@@ -284,8 +295,18 @@
 
 /// Trait from an organ being inside a bodypart
 #define ORGAN_INSIDE_BODY_TRAIT "organ_inside_body"
-/// Trait when something was labelled by a pen.
-#define PEN_LABEL_TRAIT "pen_label"
 
 /// Trait when a drink was renamed by a shaker
 #define SHAKER_LABEL_TRAIT "shaker_trait"
+
+/// Trait given by a jetpack
+#define JETPACK_TRAIT "jetpack_trait"
+
+/// Trait added by style component
+#define STYLE_TRAIT "style"
+
+/// Trait added by a xenobio console
+#define XENOBIO_CONSOLE_TRAIT "xenobio_console_trait"
+
+/// Trait from an engraving
+#define ENGRAVED_TRAIT "engraved"

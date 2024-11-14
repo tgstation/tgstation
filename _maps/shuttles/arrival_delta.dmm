@@ -39,6 +39,7 @@
 /area/shuttle/arrival)
 "ah" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "ai" = (
@@ -156,6 +157,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/white,
 /area/shuttle/arrival)
 "ap" = (

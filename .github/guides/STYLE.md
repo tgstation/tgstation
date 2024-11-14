@@ -457,7 +457,7 @@ deal_damage(10) // Fine! The proc name makes it obvious `10` is the damage...at 
 deal_damage(10, FIRE) // Also fine! `FIRE` makes it obvious the second parameter is damage type.
 deal_damage(damage = 10) // Redundant, but not prohibited.
 
-use_power(30) // Fine! `30` is obviously something like watts.
+use_energy(30 JOULES) // Use energy in joules.
 turn_on(30) // Not fine!
 turn_on(power_usage = 30) // Fine!
 

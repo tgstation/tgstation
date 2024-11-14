@@ -19,28 +19,27 @@
 	/// Set to true if we finished drawing something, this spraycan is now useless
 	var/expended = FALSE
 
-/obj/item/traitor_spraycan/afterattack(atom/target, mob/user, proximity, params)
-	. = ..()
+/obj/item/traitor_spraycan/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!check_allowed_items(interacting_with) || !isliving(user))
+		return NONE
+
 	if (expended)
 		user.balloon_alert(user, "all out of paint...")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	if (drawing_rune)
 		user.balloon_alert(user, "already busy!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
-	. |= AFTERATTACK_PROCESSED_ITEM
+	if (isturf(interacting_with))
+		try_draw_new_rune(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
 
-	if (!proximity || !check_allowed_items(target) || !isliving(user))
-		return
+	if (istype(interacting_with, /obj/effect/decal/cleanable/traitor_rune))
+		try_complete_rune(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
 
-	if (isturf(target))
-		try_draw_new_rune(user, target)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	if (istype(target, /obj/effect/decal/cleanable/traitor_rune))
-		try_complete_rune(user, target)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /**
  * Attempt to draw a rune on [target_turf].
@@ -86,7 +85,7 @@
 	if(HAS_TRAIT(user, TRAIT_TAGGER))
 		wait_time *= 0.5
 
-	if(!do_after(user, wait_time, target))
+	if(!do_after(user, wait_time, target, hidden = TRUE))
 		user.balloon_alert(user, "interrupted!")
 		drawing_rune = FALSE
 		return FALSE
@@ -144,7 +143,7 @@
 	user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!"))
 	user.say("WITNESS ME!!", forced="spraycan suicide")
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
-	suicider.update_lips("spray_face", paint_color)
+	suicider.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
 	return OXYLOSS
 
 /obj/effect/decal/cleanable/traitor_rune
@@ -158,7 +157,8 @@
 	mergeable_decal = FALSE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clean_type = CLEAN_TYPE_HARD_DECAL
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	var/slip_time = 6 SECONDS
 	var/slip_flags = NO_SLIP_WHEN_WALKING
 

@@ -3,15 +3,15 @@
 	name = "the floor is lava"
 	desc = "The ground turns into surprisingly cool lava, lightly damaging anything on the floor."
 
-	telegraph_message = "<span class='warning'>You feel the ground beneath you getting hot. Waves of heat distort the air.</span>"
+	telegraph_message = span_warning("You feel the ground beneath you getting hot. Waves of heat distort the air.")
 	telegraph_duration = 150
 
-	weather_message = "<span class='userdanger'>The floor is lava! Get on top of something!</span>"
+	weather_message = span_userdanger("The floor is lava! Get on top of something!")
 	weather_duration_lower = 300
 	weather_duration_upper = 600
 	weather_overlay = "lava"
 
-	end_message = "<span class='danger'>The ground cools and returns to its usual form.</span>"
+	end_message = span_danger("The ground cools and returns to its usual form.")
 	end_duration = 0
 
 	area_type = /area

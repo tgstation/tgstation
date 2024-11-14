@@ -2,8 +2,8 @@
 /proc/get_angle(atom/movable/start, atom/movable/end)//For beams.
 	if(!start || !end)
 		return 0
-	var/dy =(32 * end.y + end.pixel_y) - (32 * start.y + start.pixel_y)
-	var/dx =(32 * end.x + end.pixel_x) - (32 * start.x + start.pixel_x)
+	var/dy =(ICON_SIZE_Y * end.y + end.pixel_y) - (ICON_SIZE_Y * start.y + start.pixel_y)
+	var/dx =(ICON_SIZE_X * end.x + end.pixel_x) - (ICON_SIZE_X * start.x + start.pixel_x)
 	return delta_to_angle(dx, dy)
 
 /// Calculate the angle produced by a pair of x and y deltas
@@ -18,8 +18,8 @@
 
 /// Angle between two arbitrary points and horizontal line same as [/proc/get_angle]
 /proc/get_angle_raw(start_x, start_y, start_pixel_x, start_pixel_y, end_x, end_y, end_pixel_x, end_pixel_y)
-	var/dy = (32 * end_y + end_pixel_y) - (32 * start_y + start_pixel_y)
-	var/dx = (32 * end_x + end_pixel_x) - (32 * start_x + start_pixel_x)
+	var/dy = (ICON_SIZE_Y * end_y + end_pixel_y) - (ICON_SIZE_Y * start_y + start_pixel_y)
+	var/dx = (ICON_SIZE_X * end_x + end_pixel_x) - (ICON_SIZE_X * start_x + start_pixel_x)
 	if(!dy)
 		return (dx >= 0) ? 90 : 270
 	. = arctan(dx/dy)
@@ -60,7 +60,7 @@
 	var/y_distance_sign = SIGN(y_distance)
 
 	var/x = abs_x_distance >> 1 //Counters for steps taken, setting to distance/2
-	var/y = abs_y_distance >> 1 //Bit-shifting makes me l33t.  It also makes get_line() unnessecarrily fast.
+	var/y = abs_y_distance >> 1 //Bit-shifting makes me l33t.  It also makes get_line() unnecessarily fast.
 
 	if(abs_x_distance >= abs_y_distance) //x distance is greater than y
 		for(var/distance_counter in 0 to (abs_x_distance - 1))//It'll take abs_x_distance steps to get there
@@ -86,7 +86,7 @@
 
 /**
  * Get a list of turfs in a perimeter given the `center_atom` and `radius`.
- * Automatically rounds down decimals and does not accept values less than positive 1 as they dont play well with it.
+ * Automatically rounds down decimals and does not accept values less than positive 1 as they don't play well with it.
  * Is efficient on large circles but ugly on small ones
  * Uses [Jesko`s method to the midpoint circle Algorithm](https://en.wikipedia.org/wiki/Midpoint_circle_algorithm).
  */
@@ -154,27 +154,46 @@
 	var/prefix = prefixes[prefix_index]
 	. = list(SI_COEFFICIENT = coefficient, SI_UNIT = " [prefix][unit]")
 
-///Format a power value in prefixed watts.
-/proc/display_power(powerused)
-	return siunit(powerused, "W", 3)
+/**Format a power value in prefixed watts.
+ * Converts from energy if convert is true.
+ * Args:
+ * - power: The value of power to format.
+ * - convert: Whether to convert this from joules.
+ * - datum/controller/subsystem/scheduler: used in the conversion
+ * Returns: The string containing the formatted power.
+ */
+/proc/display_power(power, convert = TRUE, datum/controller/subsystem/scheduler = SSmachines)
+	power = convert ? energy_to_power(power, scheduler) : power
+	return siunit(power, "W", 3)
 
-///Format an energy value in prefixed joules.
-/proc/display_joules(units)
+/**
+ * Format an energy value in prefixed joules.
+ * Arguments
+ *
+ * * units - the value t convert
+ */
+/proc/display_energy(units)
 	return siunit(units, "J", 3)
 
-/proc/joules_to_energy(joules)
-	return joules * (1 SECONDS) / SSmachines.wait
+/**
+ * Converts the joule to the watt, assuming SSmachines tick rate.
+ * Arguments
+ *
+ * * joules - the value in joules to convert
+ * * datum/controller/subsystem/scheduler - the subsystem whos wait time is used in the conversion
+ */
+/proc/energy_to_power(joules, datum/controller/subsystem/scheduler = SSmachines)
+	return joules * (1 SECONDS) / scheduler.wait
 
-/proc/energy_to_joules(energy_units)
-	return energy_units * SSmachines.wait / (1 SECONDS)
-
-///Format an energy value measured in Power Cell units.
-/proc/display_energy(units)
-	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
-	// excess power into watts when charging cells.
-	// With the current configuration of wait=20 and CELLRATE=0.002, this
-	// means that one unit is 1 kJ.
-	return display_joules(energy_to_joules(units) WATTS)
+/**
+ * Converts the watt to the joule, assuming SSmachines tick rate.
+ * * Arguments
+ *
+ * * joules - the value in joules to convert
+ * * datum/controller/subsystem/scheduler - the subsystem whos wait time is used in the conversion
+ */
+/proc/power_to_energy(watts, datum/controller/subsystem/scheduler = SSmachines)
+	return watts * scheduler.wait / (1 SECONDS)
 
 ///chances are 1:value. anyprob(1) will always return true
 /proc/anyprob(value)
@@ -222,3 +241,15 @@
 /// Useful for providing an additive modifier to a value that is used as a divisor, such as `/obj/projectile/var/speed`
 /proc/reciprocal_add(x, y)
 	return 1/((1/x)+y)
+
+/// Returns a text string containing N prefixed with a series of zeros with length equal to max_zeros minus log(10, N), rounded down.
+/proc/prefix_zeros_to_number(number, max_zeros)
+	var/zeros = ""
+	var/how_many_zeros = max_zeros - round(log(10, number))
+	for(var/zero in 1 to how_many_zeros)
+		zeros += "0"
+	return "[zeros][number]"
+
+/// 180s an angle
+/proc/reverse_angle(angle)
+	return (angle + 180) % 360

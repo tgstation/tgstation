@@ -106,7 +106,7 @@
 	action_comp.granted_to[REF(user)] = src
 	circuit_component = action_comp
 	name = action_comp.button_name.value
-	button_icon_state = "bci_[replacetextEx(lowertext(action_comp.icon_options.value), " ", "_")]"
+	button_icon_state = "bci_[replacetextEx(LOWER_TEXT(action_comp.icon_options.value), " ", "_")]"
 
 /datum/action/item_action/mod/pinnable/circuit/Destroy()
 	circuit_component.granted_to -= REF(pinner)
@@ -271,7 +271,7 @@
 	SIGNAL_HANDLER
 	var/string_list = list()
 	var/is_deployed = TRUE
-	for(var/obj/item/part as anything in attached_module.mod.mod_parts)
+	for(var/obj/item/part as anything in attached_module.mod.get_parts())
 		if(part.loc == attached_module.mod)
 			is_deployed = FALSE
 		else

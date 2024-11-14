@@ -381,14 +381,14 @@
 	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
 		to_chat(M, span_warning("You feel yourself slip into a regenerative coma..."))
 		active_coma = TRUE
-		addtimer(CALLBACK(src, PROC_REF(coma), M), 60)
+		addtimer(CALLBACK(src, PROC_REF(coma), M), 6 SECONDS)
 
 
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
 	if(QDELETED(M) || M.stat == DEAD)
 		return
 	M.fakedeath("regenerative_coma", !deathgasp)
-	addtimer(CALLBACK(src, PROC_REF(uncoma), M), 300)
+	addtimer(CALLBACK(src, PROC_REF(uncoma), M), 30 SECONDS)
 
 /datum/symptom/heal/coma/proc/uncoma(mob/living/M)
 	if(QDELETED(M) || !active_coma)

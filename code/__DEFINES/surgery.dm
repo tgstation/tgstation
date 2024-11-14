@@ -26,11 +26,24 @@
 #define ORGAN_HIDDEN (1<<9)
 /// Has the organ already been inserted inside someone
 #define ORGAN_VIRGIN (1<<10)
+/// ALWAYS show this when scanned by advanced scanners, even if it is totally healthy
+#define ORGAN_PROMINENT (1<<11)
+/// An organ that is ostensibly dangerous when inside a body
+#define ORGAN_HAZARDOUS (1<<12)
+/// This is an external organ, not an inner one. Used in several checks.
+#define ORGAN_EXTERNAL (1<<13)
+
+/// Scarring on the right eye
+#define RIGHT_EYE_SCAR (1<<0)
+/// Scarring on the left eye
+#define LEFT_EYE_SCAR (1<<1)
 
 /// Helper to figure out if a limb is organic
 #define IS_ORGANIC_LIMB(limb) (limb.bodytype & BODYTYPE_ORGANIC)
 /// Helper to figure out if a limb is robotic
 #define IS_ROBOTIC_LIMB(limb) (limb.bodytype & BODYTYPE_ROBOTIC)
+/// Helper to figure out if a limb is a peg limb
+#define IS_PEG_LIMB(limb) (limb.bodytype & BODYTYPE_PEG)
 
 // Flags for the bodypart_flags var on /obj/item/bodypart
 /// Bodypart cannot be dismembered or amputated

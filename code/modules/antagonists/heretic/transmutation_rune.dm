@@ -1,12 +1,14 @@
 /// The heretic's rune, which they use to complete transmutation rituals.
 /obj/effect/heretic_rune
 	name = "transmutation rune"
-	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid."
-	icon_state = ""
+	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid. This one looks pretty small."
+	icon = 'icons/obj/antags/cult/rune.dmi'
+	icon_state = "main1"
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
@@ -49,7 +51,7 @@
 /obj/effect/heretic_rune/proc/try_rituals(mob/living/user)
 	is_in_use = TRUE
 
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	var/list/rituals = heretic_datum.get_rituals()
 	if(!length(rituals))
 		loc.balloon_alert(user, "no rituals available!")
@@ -166,7 +168,7 @@
 	// This doesn't necessarily mean the ritual will succeed, but it's valid!
 	// Do the animations and associated feedback.
 	flick("[icon_state]_active", src)
-	playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
+	playsound(user, 'sound/effects/magic/castsummon.ogg', 75, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
 
 	// - We temporarily make all of our chosen atoms invisible, as some rituals may sleep,
 	// and we don't want people to be able to run off with ritual items.
@@ -221,8 +223,8 @@
 	pixel_x = -30
 	pixel_y = 18
 	pixel_z = -48
-	plane = GAME_PLANE
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	greyscale_config = /datum/greyscale_config/heretic_rune
 	/// We only set this state after setting the colour, otherwise the animation doesn't colour correctly
 	var/animation_state = "transmutation_rune_draw"

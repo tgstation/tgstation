@@ -34,7 +34,7 @@
 	///The flags of the pipe/component (PIPING_ALL_LAYER | PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE)
 	var/pipe_flags = NONE
 
-	///This only works on pipes, because they have 1000 subtypes wich need to be visible and invisible under tiles, so we track this here
+	///This only works on pipes, because they have 1000 subtypes which need to be visible and invisible under tiles, so we track this here
 	var/hide = TRUE
 
 	///The image of the pipe/device used for ventcrawling
@@ -81,7 +81,7 @@
 	fire = 100
 	acid = 70
 
-/obj/machinery/atmospherics/LateInitialize()
+/obj/machinery/atmospherics/post_machine_initialize()
 	. = ..()
 	update_name()
 
@@ -112,7 +112,7 @@
 		turf_loc.add_blueprints_preround(src)
 
 	if(hide)
-		RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
+		setup_hiding()
 
 	SSspatial_grid.add_grid_awareness(src, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	SSspatial_grid.add_grid_membership(src, turf_loc, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
@@ -133,9 +133,18 @@
 	return ..()
 
 /**
- * Handler for `COMSIG_OBJ_HIDE`, connects only if `hide` is set to `TRUE`. Calls `update_cap_visuals` on pipe and its connected nodes
+ * Sets up our pipe hiding logic, consolidated in one place so subtypes may override it.
+ * This lets subtypes implement their own hiding logic without needing to worry about conflicts with the parent hiding logic.
  */
-/obj/machinery/atmospherics/proc/on_hide(datum/source, underfloor_accessibility)
+/obj/machinery/atmospherics/proc/setup_hiding()
+	// Register pipe cap updating when hidden/unhidden
+	RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
+
+/**
+ * Signal handler. Updates both our pipe cap visuals and those of adjacent nodes.
+ * We update adjacent nodes as their pipe caps are based partially on our state, so they need updating as well.
+ */
+/obj/machinery/atmospherics/proc/on_hide(datum/source)
 	SHOULD_CALL_PARENT(TRUE)
 	SIGNAL_HANDLER
 
@@ -301,8 +310,8 @@
  * * given_layer - the piping_layer we are checking
  */
 /obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
-	//check if the target & src connect in the same direction
-	if(!((initialize_directions & get_dir(src, target)) && (target.initialize_directions & get_dir(target, src))))
+	//if target is not multiz then we have to check if the target & src connect in the same direction
+	if(!istype(target, /obj/machinery/atmospherics/pipe/multiz) && !((initialize_directions & get_dir(src, target)) && (target.initialize_directions & get_dir(target, src))))
 		return FALSE
 
 	//both target & src can't be connected either way
@@ -322,12 +331,15 @@
 	if(isnull(given_layer))
 		given_layer = piping_layer
 
-	// you cant place the machine on the same location as the target cause it blocks
+	// you can't place the machine on the same location as the target cause it blocks
 	if(target.loc == loc)
 		return FALSE
 
 	//if the target is not in the same piping layer & it does not have the all layer connection flag[which allows it to be connected regardless of layer] then we are out
-	if(target.piping_layer != given_layer && !(target.pipe_flags & PIPING_ALL_LAYER))
+	if(target.pipe_flags & PIPING_DISTRO_AND_WASTE_LAYERS)
+		if(ISODD(given_layer))
+			return FALSE
+	else if(target.piping_layer != given_layer && !(target.pipe_flags & PIPING_ALL_LAYER))
 		return FALSE
 
 	//if the target does not have the same color and it does not have all color connection flag[which allows it to be connected regardless of color] & one of the pipes is not gray[allowing for connection regardless] then we are out
@@ -466,7 +478,7 @@
  * Called by wrench_act() before deconstruct()
  * Arguments:
  * * mob_user - the mob doing the act
- * * pressures - it can be passed on from wrench_act(), it's the pressure difference between the enviroment pressure and the pipe internal pressure
+ * * pressures - it can be passed on from wrench_act(), it's the pressure difference between the environment pressure and the pipe internal pressure
  */
 /obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user, pressures = null)
 	if(!user)
@@ -548,7 +560,7 @@
 		L.ventcrawl_layer = piping_layer
 	return ..()
 
-/obj/machinery/atmospherics/singularity_pull(S, current_size)
+/obj/machinery/atmospherics/singularity_pull(atom/singularity, current_size)
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 	return ..()
@@ -557,7 +569,7 @@
 
 // Handles mob movement inside a pipenet
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
-	if(!direction) //cant go this way.
+	if(!direction) //can't go this way.
 		return
 	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
 		return
@@ -602,16 +614,11 @@
 	our_client.set_eye(target_move)
 	// Let's smooth out that movement with an animate yeah?
 	// If the new x is greater (move is left to right) we get a negative offset. vis versa
-	our_client.pixel_x = (x - target_move.x) * world.icon_size
-	our_client.pixel_y = (y - target_move.y) * world.icon_size
+	our_client.pixel_x = (x - target_move.x) * ICON_SIZE_X
+	our_client.pixel_y = (y - target_move.y) * ICON_SIZE_Y
 	animate(our_client, pixel_x = 0, pixel_y = 0, time = 0.05 SECONDS)
 	our_client.move_delay = world.time + 0.05 SECONDS
 
-/obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(vent_movement & VENTCRAWL_ALLOWED && istype(L))
-		L.handle_ventcrawl(src)
-		return
-	return ..()
 
 /**
  * Getter of a list of pipenets
@@ -643,15 +650,18 @@
 	if(!has_cap_visuals)
 		return
 
-	var/turf/our_turf = get_turf(src)
-	our_turf.vis_contents -= cap_overlay
+	cap_overlay?.moveToNullspace()
+
+	if(!HAS_TRAIT(src, TRAIT_UNDERFLOOR))
+		return
 
 	var/connections = NONE
 	for(var/obj/machinery/atmospherics/node in nodes)
 		if(HAS_TRAIT(node, TRAIT_UNDERFLOOR))
 			continue
 
-		if(isplatingturf(get_turf(node)))
+		var/turf/node_turf = get_turf(node)
+		if(node_turf.underfloor_accessibility > UNDERFLOOR_HIDDEN)
 			continue
 
 		var/connected_dir = get_dir(src, node)
@@ -660,8 +670,8 @@
 	if(connections == NONE)
 		return
 
-	var/bitfield = CARDINAL_TO_PIPECAPS(connections)
-	bitfield |= ((~connections) & ALL_CARDINALS)
+	var/bitfield = CARDINAL_TO_PIPECAPS(connections) | (~connections) & ALL_CARDINALS
+	var/turf/our_turf = get_turf(src)
 
 	if(isnull(cap_overlay))
 		cap_overlay = new
@@ -669,15 +679,16 @@
 	SET_PLANE_EXPLICIT(cap_overlay, initial(plane), our_turf)
 
 	cap_overlay.color = pipe_color
-	cap_overlay.layer = layer
+	cap_overlay.layer = initial(layer)
 	cap_overlay.icon_state = "[bitfield]_[piping_layer]"
 
-	our_turf.vis_contents += cap_overlay
+	cap_overlay.forceMove(our_turf)
 
 /obj/effect/overlay/cap_visual
-	appearance_flags = KEEP_APART
-	vis_flags = VIS_INHERIT_ID
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/obj/pipes_n_cables/!pipes_bitmask.dmi'
+	vis_flags = NONE
+	anchored = TRUE
 
 /**
  * Called by the RPD.dm pre_attack()

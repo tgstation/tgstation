@@ -158,7 +158,7 @@ const sortConnectionRefs = function (
   direction: ConnectionDirection,
   connectSources: AssocConnected,
 ) {
-  refs = sortBy((connection: ConnectionRef) => connection.sort_by)(refs);
+  refs = sortBy(refs, (connection: ConnectionRef) => connection.sort_by);
   refs.map((connection, index) => {
     let connectSource = connectSources[connection.ref];
     if (direction === ConnectionDirection.Outgoing) {
@@ -264,14 +264,15 @@ const positionPlanes = (connectSources: AssocConnected) => {
   // and get rid of the now unneeded parent refs
   const stack = depth_stack.map((layer) =>
     flow([
-      sortBy((plane: string) => plane_info[plane].plane),
-      sortBy((plane: string) => {
-        const read_from = plane_info[layer[plane]];
-        if (!read_from) {
-          return 0;
-        }
-        return read_from.plane;
-      }),
+      (planes) => sortBy(planes, (plane: string) => plane_info[plane].plane),
+      (planes) =>
+        sortBy(planes, (plane: string) => {
+          const read_from = plane_info[layer[plane]];
+          if (!read_from) {
+            return 0;
+          }
+          return read_from.plane;
+        }),
     ])(Object.keys(layer)),
   );
 
@@ -884,7 +885,6 @@ const GroupDropdown = (props) => {
         <Dropdown
           options={present_groups}
           selected={our_group}
-          displayText={our_group}
           onSelected={(value) =>
             act('set_group', {
               target_group: value,
@@ -932,7 +932,7 @@ const AddModal = (props) => {
   );
 
   const plane_list = Object.keys(plane_info).map((plane) => plane_info[plane]);
-  const planes = sortBy((plane: Plane) => -plane.plane)(plane_list);
+  const planes = sortBy(plane_list, (plane: Plane) => -plane.plane);
 
   const plane_options = planes.map((plane) => plane.name);
 

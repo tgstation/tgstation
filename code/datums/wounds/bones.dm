@@ -147,16 +147,28 @@
 			if(1 to 6)
 				victim.bleed(blood_bled, TRUE)
 			if(7 to 13)
-				victim.visible_message("<span class='smalldanger'>A thin stream of blood drips from [victim]'s mouth from the blow to [victim.p_their()] chest.</span>", span_danger("You cough up a bit of blood from the blow to your chest."), vision_distance=COMBAT_MESSAGE_RANGE)
+				victim.visible_message(
+					span_smalldanger("A thin stream of blood drips from [victim]'s mouth from the blow to [victim.p_their()] chest."),
+					span_danger("You cough up a bit of blood from the blow to your chest."),
+					vision_distance = COMBAT_MESSAGE_RANGE,
+				)
 				victim.bleed(blood_bled, TRUE)
 			if(14 to 19)
-				victim.visible_message("<span class='smalldanger'>Blood spews out of [victim]'s mouth from the blow to [victim.p_their()] chest!</span>", span_danger("You spit out a string of blood from the blow to your chest!"), vision_distance=COMBAT_MESSAGE_RANGE)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+				victim.visible_message(
+					span_smalldanger("Blood spews out of [victim]'s mouth from the blow to [victim.p_their()] chest!"),
+					span_danger("You spit out a string of blood from the blow to your chest!"),
+					vision_distance = COMBAT_MESSAGE_RANGE,
+				)
+				victim.create_splatter(victim.dir)
 				victim.bleed(blood_bled)
 			if(20 to INFINITY)
-				victim.visible_message(span_danger("Blood spurts out of [victim]'s mouth from the blow to [victim.p_their()] chest!"), span_danger("<b>You choke up on a spray of blood from the blow to your chest!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
+				victim.visible_message(
+					span_danger("Blood spurts out of [victim]'s mouth from the blow to [victim.p_their()] chest!"),
+					span_bolddanger("You choke up on a spray of blood from the blow to your chest!"),
+					vision_distance = COMBAT_MESSAGE_RANGE,
+				)
 				victim.bleed(blood_bled)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+				victim.create_splatter(victim.dir)
 				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 /datum/wound/blunt/bone/modify_desc_before_span(desc)
@@ -187,7 +199,9 @@
 /datum/wound/blunt/bone/moderate
 	name = "Joint Dislocation"
 	desc = "Patient's limb has been unset from socket, causing pain and reduced motor function."
-	treat_text = "Recommended application of bonesetter to affected limb, though manual relocation by applying an aggressive grab to the patient and helpfully interacting with afflicted limb may suffice."
+	treat_text = "Apply Bonesetter to the affected limb. \
+		Manual relocation by via an aggressive grab and a tight hug to the affected limb may also suffice."
+	treat_text_short = "Apply Bonesetter, or manually relocate the limb."
 	examine_desc = "is awkwardly janked out of place"
 	occur_text = "janks violently and becomes unseated"
 	severity = WOUND_SEVERITY_MODERATE
@@ -233,12 +247,14 @@
 		victim.visible_message(span_danger("[victim]'s dislocated [limb.plaintext_zone] pops back into place!"), span_userdanger("Your dislocated [limb.plaintext_zone] pops back into place! Ow!"))
 		remove_wound()
 
-/datum/wound/blunt/bone/moderate/try_handling(mob/living/carbon/human/user)
-	if(user.pulling != victim || user.zone_selected != limb.body_zone)
+/datum/wound/blunt/bone/moderate/try_handling(mob/living/user)
+	if(user.usable_hands <= 0 || user.pulling != victim)
+		return FALSE
+	if(!isnull(user.hud_used?.zone_select) && user.zone_selected != limb.body_zone)
 		return FALSE
 
 	if(user.grab_state == GRAB_PASSIVE)
-		to_chat(user, span_warning("You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [lowertext(name)]!"))
+		to_chat(user, span_warning("You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [LOWER_TEXT(name)]!"))
 		return TRUE
 
 	if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -320,7 +336,9 @@
 /datum/wound/blunt/bone/severe
 	name = "Hairline Fracture"
 	desc = "Patient's bone has suffered a crack in the foundation, causing serious pain and reduced limb functionality."
-	treat_text = "Recommended light surgical application of bone gel, though a sling of medical gauze will prevent worsening situation."
+	treat_text = "Repair surgically. In the event of an emergency, an application of bone gel over the affected area will fix over time. \
+		A splint or sling of medical gauze can also be used to prevent the fracture from worsening."
+	treat_text_short = "Repair surgically, or apply bone gel. A splint or gauze sling can also be used."
 	examine_desc = "appears grotesquely swollen, jagged bumps hinting at chips in the bone"
 	occur_text = "sprays chips of bone and develops a nasty looking bruise"
 
@@ -353,8 +371,11 @@
 /// Compound Fracture (Critical Blunt)
 /datum/wound/blunt/bone/critical
 	name = "Compound Fracture"
-	desc = "Patient's bones have suffered multiple gruesome fractures, causing significant pain and near uselessness of limb."
-	treat_text = "Immediate binding of affected limb, followed by surgical intervention ASAP."
+	desc = "Patient's bones have suffered multiple fractures, \
+		couped with a break in the skin, causing significant pain and near uselessness of limb."
+	treat_text = "Immediately bind the affected limb with gauze or a splint. Repair surgically. \
+		In the event of an emergency, bone gel and surgical tape can be applied to the affected area to fix over a long period of time."
+	treat_text_short = "Repair surgically, or apply bone gel and surgical tape. A splint or gauze sling should also be used."
 	examine_desc = "is thoroughly pulped and cracked, exposing shards of bone to open air"
 	occur_text = "cracks apart, exposing broken bones to open air"
 

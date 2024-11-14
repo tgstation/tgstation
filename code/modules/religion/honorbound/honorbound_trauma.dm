@@ -20,7 +20,8 @@
 	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, PROC_REF(staff_check))
 
 	//adds the relay_attackers element to the owner so whoever attacks him becomes guilty.
-	owner.AddElement(/datum/element/relay_attackers)
+	if(!HAS_TRAIT(owner, TRAIT_RELAYING_ATTACKER))
+		owner.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 	//signal that checks for dishonorable attacks
@@ -72,6 +73,8 @@
 		guilty(attacked_mob, "for blasphemous magicks!")
 	if(HAS_TRAIT(attacked_mob, TRAIT_CULT_HALO))
 		guilty(attacked_mob, "for blasphemous worship!")
+	if(HAS_TRAIT(attacked_mob, TRAIT_EVIL))
+		guilty(attacked_mob, "an almost fanatical commitment to EEEEVIL!")
 	if(attacked_mob.mind)
 		var/datum/mind/guilty_conscience = attacked_mob.mind
 		if(guilty_conscience.has_antag_datum(/datum/antagonist/abductor))

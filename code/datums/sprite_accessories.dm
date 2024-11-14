@@ -16,35 +16,6 @@
  *	conversion in savefile.dm
  */
 
-/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female, add_blank)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
-	if(!istype(L))
-		L = list()
-	if(!istype(male))
-		male = list()
-	if(!istype(female))
-		female = list()
-
-	for(var/path in subtypesof(prototype))
-		var/datum/sprite_accessory/D = new path()
-
-		if(D.icon_state)
-			L[D.name] = D
-		else
-			L += D.name
-
-		switch(D.gender)
-			if(MALE)
-				male += D.name
-			if(FEMALE)
-				female += D.name
-			else
-				male += D.name
-				female += D.name
-	if(add_blank)
-		L[SPRITE_ACCESSORY_NONE] = new /datum/sprite_accessory/blank
-
-	return L
-
 /datum/sprite_accessory
 	/// The icon file the accessory is located in.
 	var/icon
@@ -55,7 +26,7 @@
 	/// Determines if the accessory will be skipped or included in random hair generations.
 	var/gender = NEUTER
 	/// Something that can be worn by either gender, but looks different on each.
-	var/gender_specific
+	var/gender_specific = FALSE
 	/// Determines if the accessory will be skipped by color preferences.
 	var/use_static
 	/**
@@ -63,8 +34,6 @@
 	 * This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
 	 */
 	var/color_src = MUTANT_COLOR
-	/// Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
-	var/hasinner = FALSE
 	/// Is this part locked from roundstart selection? Used for parts that apply effects.
 	var/locked = FALSE
 	/// Should we center the sprite?
@@ -75,9 +44,12 @@
 	var/dimension_y = 32
 	/// Should this sprite block emissives?
 	var/em_block = FALSE
+	/// Determines if this is considered "sane" for the purpose of [/proc/randomize_human_normie]
+	/// Basically this is to blacklist the extremely wacky stuff from being picked in random human generation.
+	var/natural_spawn = TRUE
 
 /datum/sprite_accessory/blank
-	name = "None"
+	name = SPRITE_ACCESSORY_NONE
 	icon_state = "None"
 
 //////////////////////
@@ -103,11 +75,13 @@
 /datum/sprite_accessory/hair/afro_large
 	name = "Afro (Large)"
 	icon_state = "hair_bigafro"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/afro_huge
 	name = "Afro (Huge)"
 	icon_state = "hair_hugeafro"
 	y_offset = 6
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/allthefuzz
 	name = "All The Fuzz"
@@ -148,6 +122,7 @@
 /datum/sprite_accessory/hair/bedheadfloorlength
 	name = "Floorlength Bedhead"
 	icon_state = "hair_floorlength_bedhead"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/badlycut
 	name = "Shorter Long Bedhead"
@@ -388,6 +363,7 @@
 /datum/sprite_accessory/hair/bigflattop
 	name = "Flat Top (Big)"
 	icon_state = "hair_bigflattop"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/flow_hair
 	name = "Flow Hair"
@@ -448,6 +424,7 @@
 /datum/sprite_accessory/hair/joestar
 	name = "Joestar"
 	icon_state = "hair_joestar"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/keanu
 	name = "Keanu Hair"
@@ -504,22 +481,27 @@
 /datum/sprite_accessory/hair/mohawk
 	name = "Mohawk"
 	icon_state = "hair_d"
+	natural_spawn = FALSE // sorry little one
 
 /datum/sprite_accessory/hair/nitori
 	name = "Nitori"
 	icon_state = "hair_nitori"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/reversemohawk
 	name = "Mohawk (Reverse)"
 	icon_state = "hair_reversemohawk"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/shavedmohawk
 	name = "Mohawk (Shaved)"
 	icon_state = "hair_shavedmohawk"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/unshavenmohawk
 	name = "Mohawk (Unshaven)"
 	icon_state = "hair_unshaven_mohawk"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/mulder
 	name = "Mulder"
@@ -528,6 +510,7 @@
 /datum/sprite_accessory/hair/odango
 	name = "Odango"
 	icon_state = "hair_odango"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/ombre
 	name = "Ombre"
@@ -560,14 +543,17 @@
 /datum/sprite_accessory/hair/kagami
 	name = "Pigtails"
 	icon_state = "hair_kagami"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/pigtail
 	name = "Pigtails 2"
 	icon_state = "hair_pigtails"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/pigtail2
 	name = "Pigtails 3"
 	icon_state = "hair_pigtails2"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/hair/pixie
 	name = "Pixie Cut"
@@ -672,6 +658,10 @@
 /datum/sprite_accessory/hair/shortbangs
 	name = "Short Bangs"
 	icon_state = "hair_shortbangs"
+
+/datum/sprite_accessory/hair/shortbangs2
+	name = "Short Bangs 2"
+	icon_state = "hair_shortbangs2"
 
 /datum/sprite_accessory/hair/short
 	name = "Short Hair"
@@ -843,7 +833,7 @@
 	var/gradient_category = GRADIENT_APPLIES_TO_HAIR|GRADIENT_APPLIES_TO_FACIAL_HAIR
 
 /datum/sprite_accessory/gradient/none
-	name = "None"
+	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
 
 /datum/sprite_accessory/gradient/full
@@ -946,6 +936,7 @@
 /datum/sprite_accessory/facial_hair/brokenman
 	name = "Beard (Broken Man)"
 	icon_state = "facial_brokenman"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/facial_hair/chinstrap
 	name = "Beard (Chinstrap)"
@@ -990,6 +981,7 @@
 /datum/sprite_accessory/facial_hair/martialartist
 	name = "Beard (Martial Artist)"
 	icon_state = "facial_martialartist"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/facial_hair/chinlessbeard
 	name = "Beard (Chinless Beard)"
@@ -1729,36 +1721,66 @@
 // MutantParts Definitions //
 /////////////////////////////
 
-/datum/sprite_accessory/body_markings
-	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
+/datum/sprite_accessory/lizard_markings
+	icon = 'icons/mob/human/species/lizard/lizard_markings.dmi'
 
-/datum/sprite_accessory/body_markings/none
-	name = "None"
-	icon_state = "none"
-
-/datum/sprite_accessory/body_markings/dtiger
+/datum/sprite_accessory/lizard_markings/dtiger
 	name = "Dark Tiger Body"
 	icon_state = "dtiger"
-	gender_specific = 1
+	gender_specific = TRUE
 
-/datum/sprite_accessory/body_markings/ltiger
+/datum/sprite_accessory/lizard_markings/ltiger
 	name = "Light Tiger Body"
 	icon_state = "ltiger"
-	gender_specific = 1
+	gender_specific = TRUE
 
-/datum/sprite_accessory/body_markings/lbelly
+/datum/sprite_accessory/lizard_markings/lbelly
 	name = "Light Belly"
 	icon_state = "lbelly"
-	gender_specific = 1
+	gender_specific = TRUE
 
 /datum/sprite_accessory/tails
 	em_block = TRUE
 	/// Describes which tail spine sprites to use, if any.
 	var/spine_key = NONE
 
+///Used for fish-infused tails, which come in different flavors.
+/datum/sprite_accessory/tails/fish
+	icon = 'icons/mob/human/fish_features.dmi'
+	color_src = TRUE
+
+/datum/sprite_accessory/tails/fish/simple
+	name = "Simple"
+	icon_state = "simple"
+
+/datum/sprite_accessory/tails/fish/crescent
+	name = "Crescent"
+	icon_state = "crescent"
+
+/datum/sprite_accessory/tails/fish/long
+	name = "Long"
+	icon_state = "long"
+	center = TRUE
+	dimension_x = 38
+
+/datum/sprite_accessory/tails/fish/shark
+	name = "Shark"
+	icon_state = "shark"
+
+/datum/sprite_accessory/tails/fish/chonky
+	name = "Chonky"
+	icon_state = "chonky"
+	center = TRUE
+	dimension_x = 36
+
 /datum/sprite_accessory/tails/lizard
 	icon = 'icons/mob/human/species/lizard/lizard_tails.dmi'
 	spine_key = SPINE_KEY_LIZARD
+
+/datum/sprite_accessory/tails/lizard/none
+	name = SPRITE_ACCESSORY_NONE
+	icon_state = "none"
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/tails/lizard/smooth
 	name = "Smooth"
@@ -1781,19 +1803,24 @@
 	icon_state = "short"
 	spine_key = NONE
 
-/datum/sprite_accessory/tails/human/cat
+/datum/sprite_accessory/tails/felinid/cat
 	name = "Cat"
 	icon = 'icons/mob/human/cat_features.dmi'
 	icon_state = "default"
 	color_src = HAIR_COLOR
 
 /datum/sprite_accessory/tails/monkey
-	icon = 'icons/mob/human/species/monkey/monkey_tail.dmi'
-	color_src = FALSE
 
-/datum/sprite_accessory/tails/monkey/standard
+/datum/sprite_accessory/tails/monkey/none
+	name = SPRITE_ACCESSORY_NONE
+	icon_state = "none"
+	natural_spawn = FALSE
+
+/datum/sprite_accessory/tails/monkey/default
 	name = "Monkey"
-	icon_state = "monkey"
+	icon = 'icons/mob/human/species/monkey/monkey_tail.dmi'
+	icon_state = "default"
+	color_src = FALSE
 
 /datum/sprite_accessory/pod_hair
 	icon = 'icons/mob/human/species/podperson_hair.dmi'
@@ -1863,10 +1890,6 @@
 	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 	em_block = TRUE
 
-/datum/sprite_accessory/horns/none
-	name = "None"
-	icon_state = "none"
-
 /datum/sprite_accessory/horns/simple
 	name = "Simple"
 	icon_state = "simple"
@@ -1891,27 +1914,37 @@
 	icon = 'icons/mob/human/cat_features.dmi'
 	em_block = TRUE
 
-/datum/sprite_accessory/ears/none
-	name = "None"
-	icon_state = "none"
-
 /datum/sprite_accessory/ears/cat
 	name = "Cat"
 	icon_state = "cat"
-	hasinner = TRUE
 	color_src = HAIR_COLOR
+
+/datum/sprite_accessory/ears/cat/big
+	name = "Big"
+	icon_state = "big"
+
+/datum/sprite_accessory/ears/cat/miqo
+	name = "Coeurl"
+	icon_state = "miqo"
+
+/datum/sprite_accessory/ears/cat/fold
+	name = "Fold"
+	icon_state = "fold"
+
+/datum/sprite_accessory/ears/cat/lynx
+	name = "Lynx"
+	icon_state = "lynx"
+
+/datum/sprite_accessory/ears/cat/round
+	name = "Round"
+	icon_state = "round"
 
 /datum/sprite_accessory/ears/fox
 	icon = 'icons/mob/human/fox_features.dmi'
 	name = "Fox"
 	icon_state = "fox"
-	hasinner = TRUE
 	color_src = HAIR_COLOR
 	locked = TRUE
-
-/datum/sprite_accessory/wings/none
-	name = "None"
-	icon_state = "none"
 
 /datum/sprite_accessory/wings
 	icon = 'icons/mob/human/species/wings.dmi'
@@ -2056,10 +2089,6 @@
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 
-/datum/sprite_accessory/frills/none
-	name = "None"
-	icon_state = "none"
-
 /datum/sprite_accessory/frills/simple
 	name = "Simple"
 	icon_state = "simple"
@@ -2079,14 +2108,6 @@
 /datum/sprite_accessory/tail_spines
 	icon = 'icons/mob/human/species/lizard/lizard_spines.dmi'
 	em_block = TRUE
-
-/datum/sprite_accessory/spines/none
-	name = "None"
-	icon_state = "none"
-
-/datum/sprite_accessory/tail_spines/none
-	name = "None"
-	icon_state = "none"
 
 /datum/sprite_accessory/spines/short
 	name = "Short"
@@ -2127,16 +2148,6 @@
 /datum/sprite_accessory/tail_spines/aquatic
 	name = "Aquatic"
 	icon_state = "aqua"
-
-/datum/sprite_accessory/legs //legs are a special case, they aren't actually sprite_accessories but are updated with them.
-	icon = null //These datums exist for selecting legs on preference, and little else
-	em_block = TRUE
-
-/datum/sprite_accessory/legs/none
-	name = "Normal Legs"
-
-/datum/sprite_accessory/legs/digitigrade_lizard
-	name = DIGITIGRADE_LEGS
 
 /datum/sprite_accessory/caps
 	icon = 'icons/mob/human/species/mush_cap.dmi'
@@ -2347,10 +2358,6 @@
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
 	color_src = null
-
-/datum/sprite_accessory/moth_markings/none
-	name = "None"
-	icon_state = "none"
 
 /datum/sprite_accessory/moth_markings/reddish
 	name = "Reddish"

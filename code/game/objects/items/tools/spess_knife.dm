@@ -60,15 +60,15 @@
 		mistake_occured = TRUE
 
 	if(isnull(tool_behaviour))
-		w_class = WEIGHT_CLASS_TINY
+		update_weight_class(WEIGHT_CLASS_TINY)
 		balloon_alert(user, "folded")
 	else
-		w_class = WEIGHT_CLASS_SMALL
+		update_weight_class(WEIGHT_CLASS_SMALL)
 		balloon_alert(user, mistake_occured ? "oops! [tool_behaviour] out" : "[tool_behaviour] out")
 
 	update_tool_parameters()
 	update_appearance(UPDATE_ICON_STATE)
-	playsound(src, 'sound/weapons/empty.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/empty.ogg', 50, TRUE)
 
 /// Used to pick random tool behavior for the knife
 /obj/item/spess_knife/proc/pick_tool()

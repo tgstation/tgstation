@@ -163,7 +163,7 @@ export const combineReducers = (
  * @param {string} type The action type to use for created actions.
  * @param {any} prepare (optional) a method that takes any number of arguments
  * and returns { payload } or { payload, meta }. If this is given, the
- * resulting action creator will pass it's arguments to this method to
+ * resulting action creator will pass its arguments to this method to
  * calculate payload & meta.
  *
  * @public

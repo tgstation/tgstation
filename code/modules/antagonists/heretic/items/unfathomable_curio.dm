@@ -11,8 +11,8 @@
 	//Vars used for the shield component
 	var/heretic_shield_icon = "unfathomable_shield"
 	var/max_charges = 1
-	var/recharge_start_delay = 60 SECONDS
-	var/charge_increment_delay = 60 SECONDS
+	var/recharge_start_delay = 30 SECONDS
+	var/charge_increment_delay = 30 SECONDS
 	var/charge_recovery = 1
 
 /obj/item/storage/belt/unfathomable_curio/Initialize(mapload)
@@ -21,6 +21,7 @@
 	atom_storage.max_total_storage = 21
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_box/strilka310/lionhunter,
+		/obj/item/heretic_labyrinth_handbook,
 		/obj/item/bodypart, // Bodyparts are often used in rituals.
 		/obj/item/clothing/neck/eldritch_amulet,
 		/obj/item/clothing/neck/heretic_focus,
@@ -44,9 +45,29 @@
 	if(!(slot & slot_flags))
 		return
 
+	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(shield_reaction))
+
 	if(!IS_HERETIC(user))
 		to_chat(user, span_warning("The curio wraps around you, and you feel the beating of something dark inside it..."))
 
+/obj/item/storage/belt/unfathomable_curio/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
+
+// Here we make sure our curio is only able to block while worn on the belt slot
+/obj/item/storage/belt/unfathomable_curio/proc/shield_reaction(mob/living/carbon/human/owner,
+	atom/movable/hitby,
+	damage = 0,
+	attack_text = "the attack",
+	attack_type = MELEE_ATTACK,
+	armour_penetration = 0,
+	damage_type = BRUTE,
+)
+	SIGNAL_HANDLER
+
+	if(hit_reaction(owner, hitby, attack_text, 0, damage, attack_type) && (owner.belt == src))
+		return SUCCESSFUL_BLOCK
+	return NONE
 
 // Our on hit effect
 /obj/item/storage/belt/unfathomable_curio/proc/shield_damaged(mob/living/carbon/wearer, attack_text, new_current_charges)

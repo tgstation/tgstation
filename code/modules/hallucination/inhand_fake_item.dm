@@ -43,7 +43,7 @@
 	hallucinated_item.desc = initial(template_item_type.desc)
 	hallucinated_item.icon = initial(template_item_type.icon)
 	hallucinated_item.icon_state = initial(template_item_type.icon_state)
-	hallucinated_item.w_class = initial(template_item_type.w_class) // Not strictly necessary, but keen eyed people will notice
+	hallucinated_item.update_weight_class(initial(template_item_type.w_class)) // Not strictly necessary, but keen eyed people will notice
 
 	return hallucinated_item
 
@@ -72,7 +72,7 @@
 		var/obj/item/melee/energy/sword/saber/sabre_color = pick(subtypesof(/obj/item/melee/energy/sword/saber))
 		// Yes this can break if someone changes esword icon stuff
 		hallucinated_item.icon_state = "[hallucinated_item.icon_state]_on_[initial(sabre_color.sword_color_icon)]"
-		hallucinator.playsound_local(get_turf(hallucinator), 'sound/weapons/saberon.ogg', 35, TRUE)
+		hallucinator.playsound_local(get_turf(hallucinator), 'sound/items/weapons/saberon.ogg', 35, TRUE)
 
 	return hallucinated_item
 
@@ -109,7 +109,7 @@
 	if(prob(15))
 		// Yes this can break if someone changse grenade icon stuff
 		hallucinated_item.icon_state = "[hallucinated_item.icon_state]_active"
-		hallucinator.playsound_local(get_turf(hallucinator), 'sound/weapons/armbomb.ogg', 60, TRUE)
+		hallucinator.playsound_local(get_turf(hallucinator), 'sound/items/weapons/armbomb.ogg', 60, TRUE)
 		to_chat(hallucinator, span_warning("You prime [hallucinated_item]! 5 seconds!"))
 
 	return hallucinated_item

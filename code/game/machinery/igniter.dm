@@ -4,6 +4,7 @@
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "igniter0"
 	base_icon_state = "igniter"
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_igniter
@@ -113,12 +114,13 @@
 		on = FALSE
 	if(machine_stat & NOPOWER)
 		on = FALSE
+	if(!use_energy(active_power_usage, force = FALSE)) // Use energy to keep the turf hot. Doesn't necessarily use the correct amount of energy though (this should be changed).
+		on = FALSE
 	if(!on)
 		update_appearance()
 		return PROCESS_KILL
 
 	location.hotspot_expose(1000, 500, 1)
-	use_power(active_power_usage) //use power to keep the turf hot
 
 /obj/machinery/igniter/update_icon_state()
 	icon_state = "[base_icon_state][on]"
@@ -135,6 +137,7 @@
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "migniter"
 	result_path = /obj/machinery/sparker
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	pixel_shift = 26
 
 /obj/machinery/sparker
@@ -250,11 +253,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	if(!isturf(location) || !isopenturf(location))
 		return FALSE
 
+	if(!use_energy(active_power_usage, force = FALSE))
+		return FALSE
+
 	flick("[initial(icon_state)]-spark", src)
 	spark_system.start()
 	last_spark = world.time
 	location.hotspot_expose(1000, 2500, 1)
-	use_power(active_power_usage)
 
 	return TRUE
 

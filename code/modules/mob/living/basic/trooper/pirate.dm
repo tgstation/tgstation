@@ -23,7 +23,7 @@
 	armour_penetration = 35
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/blade1.ogg'
+	attack_sound = 'sound/items/weapons/blade1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/melee)
 	light_range = 2
@@ -55,9 +55,9 @@
 	r_hand = /obj/item/gun/energy/laser
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged
 	/// Type of bullet we use
-	var/casingtype = /obj/item/ammo_casing/energy/laser
+	var/projectiletype = /obj/projectile/beam/laser
 	/// Sound to play when firing weapon
-	var/projectilesound = 'sound/weapons/laser.ogg'
+	var/projectilesound = 'sound/items/weapons/laser.ogg'
 	/// number of burst shots
 	var/burst_shots = 2
 	/// Time between taking shots
@@ -67,7 +67,7 @@
 	. = ..()
 	AddComponent(\
 		/datum/component/ranged_attacks,\
-		casing_type = casingtype,\
+		projectile_type = projectiletype,\
 		projectile_sound = projectilesound,\
 		cooldown_time = ranged_cooldown,\
 		burst_shots = burst_shots,\

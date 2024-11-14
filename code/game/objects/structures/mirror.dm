@@ -88,7 +88,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	return display_radial_menu(user)
 
 /obj/structure/mirror/proc/display_radial_menu(mob/living/carbon/human/user)
-	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE)
+	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE, tooltips = TRUE)
 	if(!pick)
 		return TRUE //get out
 
@@ -118,7 +118,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			beard_dresser.set_facial_hairstyle("Shaved", update = TRUE)
 		return TRUE
 
-	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
 
 	if(isnull(new_style))
 		return TRUE
@@ -131,7 +131,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	beard_dresser.set_facial_hairstyle(new_style, update = TRUE)
 
 /obj/structure/mirror/proc/change_hair(mob/living/carbon/human/hairdresser)
-	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
+	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", SSaccessories.hairstyles_list)
 	if(isnull(new_style))
 		return TRUE
 	if(HAS_TRAIT(hairdresser, TRAIT_BALD))
@@ -260,7 +260,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/atom_break(damage_flag, mapload)
 	. = ..()
-	if(broken || (obj_flags & NO_DECONSTRUCTION))
+	if(broken)
 		return
 	icon_state = "mirror_broke"
 	if(!mapload)
@@ -269,13 +269,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE
 
-/obj/structure/mirror/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(!disassembled)
-			new /obj/item/shard(loc)
-		else
-			new /obj/item/wallframe/mirror(loc)
-	qdel(src)
+/obj/structure/mirror/atom_deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		new /obj/item/shard(loc)
+	else
+		new /obj/item/wallframe/mirror(loc)
 
 /obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
 	..()
@@ -333,7 +331,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	selectable_races = sort_list(selectable_races)
 
 /obj/structure/mirror/magic/change_beard(mob/living/carbon/human/beard_dresser) // magical mirrors do nothing but give you the damn beard
-	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
 	if(isnull(new_style))
 		return TRUE
 	beard_dresser.set_facial_hairstyle(new_style, update = TRUE)
@@ -348,14 +346,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	var/new_hair_color = input(user, "Choose your hair color", "Hair Color", user.hair_color) as color|null
 
 	if(new_hair_color)
-		user.set_haircolor(sanitize_hexcolor(new_hair_color), update = FALSE)
+		user.set_haircolor(sanitize_hexcolor(new_hair_color))
 		user.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
 	if(user.physique == MALE)
 		var/new_face_color = input(user, "Choose your facial hair color", "Hair Color", user.facial_hair_color) as color|null
 		if(new_face_color)
-			user.set_facial_haircolor(sanitize_hexcolor(new_face_color), update = FALSE)
+			user.set_facial_haircolor(sanitize_hexcolor(new_face_color))
 			user.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
-	user.update_body_parts()
 
 /obj/structure/mirror/magic/attack_hand(mob/living/carbon/human/user)
 	. = ..()
@@ -384,12 +381,36 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	desc = "Pride cometh before the..."
 	race_flags = MIRROR_PRIDE
 	mirror_options = PRIDE_MIRROR_OPTIONS
+	/// If the last user has altered anything about themselves
+	var/changed = FALSE
+
+/obj/structure/mirror/magic/pride/display_radial_menu(mob/living/carbon/human/user)
+	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE, tooltips = TRUE)
+	if(!pick)
+		return TRUE //get out
+
+	changed = TRUE
+	switch(pick)
+		if(CHANGE_HAIR)
+			change_hair(user)
+		if(CHANGE_BEARD)
+			change_beard(user)
+		if(CHANGE_RACE)
+			change_race(user)
+		if(CHANGE_SEX) // sex: yes
+			change_sex(user)
+		if(CHANGE_NAME)
+			change_name(user)
+		if(CHANGE_EYES)
+			change_eyes(user)
+
+	return display_radial_menu(user)
 
 /obj/structure/mirror/magic/pride/attack_hand(mob/living/carbon/human/user)
+	changed = FALSE
 	. = ..()
-	if(.)
-		return TRUE
-
+	if (!changed)
+		return
 	user.visible_message(
 		span_bolddanger("The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!"),
 		span_notice("Perfect. Much better! Now <i>nobody</i> will be able to resist yo-"),

@@ -158,7 +158,7 @@ export const DreamMaker = async (dmeFile, options = {}) => {
     const major = Number(version[1]);
     const minor = Number(version[2]);
     if(major < requiredMajorVersion || major == requiredMajorVersion && minor < requiredMinorVersion){
-      Juke.logger.error(`${requiredMajorVersion}.${requiredMinorVersion} DM version required`)
+      Juke.logger.error(`${requiredMajorVersion}.${requiredMinorVersion} or later DM version required. Version ${major}.${minor} found at: ${dmPath}`)
       throw new Juke.ExitCode(1);
     }
   }
@@ -166,13 +166,21 @@ export const DreamMaker = async (dmeFile, options = {}) => {
   await testDmVersion(dmPath);
   testOutputFile(`${dmeBaseName}.dmb`);
   testOutputFile(`${dmeBaseName}.rsc`);
+
   const runWithWarningChecks = async (dmPath, args) => {
     const execReturn = await Juke.exec(dmPath, args);
-    const ignoredWarningCodes = options.ignoreWarningCodes ?? [];
-    const reg = ignoredWarningCodes.length > 0 ? new RegExp(`\d+:warning: (?!(${ignoredWarningCodes.join('|')}))`) : /\d+:warning: /;
-    if (options.warningsAsErrors && execReturn.combined.match(reg)) {
-      Juke.logger.error(`Compile warnings treated as errors`);
-      throw new Juke.ExitCode(2);
+    if(options.warningsAsErrors){
+      const ignoredWarningCodes = options.ignoreWarningCodes ?? [];
+      if(ignoredWarningCodes.length > 0 ){
+        Juke.logger.info('Ignored warning codes:', ignoredWarningCodes.join(', '));
+      }
+      const base_regex = '\\d+:warning( \\([a-z_]*\\))?:'
+      const with_ignores = `\\d+:warning( \\([a-z_]*\\))?:(?!(${ignoredWarningCodes.map(x => `.*${x}.*$`).join('|')}))`
+      const reg = ignoredWarningCodes.length > 0 ? new RegExp(with_ignores, "m") : new RegExp(base_regex,"m")
+      if (options.warningsAsErrors && execReturn.combined.match(reg)) {
+        Juke.logger.error(`Compile warnings treated as errors`);
+        throw new Juke.ExitCode(2);
+      }
     }
     return execReturn;
   }
@@ -180,8 +188,8 @@ export const DreamMaker = async (dmeFile, options = {}) => {
   const { defines } = options;
   if (defines && defines.length > 0) {
     Juke.logger.info('Using defines:', defines.join(', '));
-
   }
+
   await runWithWarningChecks(dmPath, [...defines.map(def => `-D${def}`), dmeFile]);
 };
 

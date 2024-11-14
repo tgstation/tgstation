@@ -44,3 +44,15 @@
 
 /// Checks that the contents of the fish_counts list are also present in fish_table
 /datum/unit_test/focus_only/fish_sources_tables
+
+/// Checks that maploaded mobs with either the `atmos_requirements` or `body_temp_sensitive`
+/datum/unit_test/focus_only/atmos_and_temp_requirements
+
+/// Ensures only whitelisted planes can have TOPDOWN_LAYERing, and vis versa
+/datum/unit_test/focus_only/topdown_filtering
+
+/// Catches any invalid footstep types set for humans
+/datum/unit_test/focus_only/humanstep_validity
+
+/// Checks icon states generated at runtime are valid
+/datum/unit_test/focus_only/runtime_icon_states

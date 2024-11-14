@@ -87,6 +87,10 @@
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
+/obj/item/clothing/head/costume/lobsterhat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
+
 /obj/item/clothing/head/costume/drfreezehat
 	name = "doctor freeze's wig"
 	desc = "A cool wig for cool people."
@@ -115,14 +119,10 @@
 /obj/item/clothing/head/costume/cardborg/equipped(mob/living/user, slot)
 	..()
 	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
-		var/mob/living/carbon/human/H = user
-		if(istype(H.wear_suit, /obj/item/clothing/suit/costume/cardborg))
-			var/obj/item/clothing/suit/costume/cardborg/CB = H.wear_suit
-			CB.disguise(user, src)
-
-/obj/item/clothing/head/costume/cardborg/dropped(mob/living/user)
-	..()
-	user.remove_alt_appearance("standard_borg_disguise")
+		var/mob/living/carbon/human/human_user = user
+		if(istype(human_user.wear_suit, /obj/item/clothing/suit/costume/cardborg))
+			var/obj/item/clothing/suit/costume/cardborg/suit = human_user.wear_suit
+			suit.disguise(user, src)
 
 /obj/item/clothing/head/costume/bronze
 	name = "bronze hat"
@@ -156,10 +156,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi' //Grandfathered in from the wallframe for status displays.
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	clothing_flags = SNUG_FIT
-	flash_protect = FLASH_PROTECTION_SENSITIVE
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	var/has_fov = TRUE
 
 /datum/armor/costume_bronze
 	melee = 5
@@ -168,15 +166,6 @@
 	bomb = 10
 	fire = 20
 	acid = 20
-
-/obj/item/clothing/head/costume/tv_head/Initialize(mapload)
-	. = ..()
-	if(has_fov)
-		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
-
-/obj/item/clothing/head/costume/tv_head/fov_less
-	desc = "A mysterious headgear made from the hollowed out remains of a status display. How very retro-retro-futuristic of you. It's very easy to see out of this one."
-	has_fov = FALSE
 
 /obj/item/clothing/head/costume/irs
 	name = "internal revenue service cap"
@@ -210,3 +199,9 @@
 	It's only a replica, and probably wouldn't protect you from anything."
 	icon_state = "allies_helmet"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/costume/hairpin
+	name = "fancy hairpin"
+	desc = "A delicate hairpin normally paired with traditional clothing"
+	icon_state = "hairpin_fancy"
+	inhand_icon_state = "hairpin_fancy"

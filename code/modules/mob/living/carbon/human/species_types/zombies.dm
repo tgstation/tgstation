@@ -4,7 +4,7 @@
 	id = SPECIES_ZOMBIE
 	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/zombie
-	mutanttongue = /obj/item/organ/internal/tongue/zombie
+	mutanttongue = /obj/item/organ/tongue/zombie
 	inherent_traits = list(
 		// SHARED WITH ALL ZOMBIES
 		TRAIT_EASILY_WOUNDED,
@@ -14,6 +14,7 @@
 		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBREATH,
 		TRAIT_NODEATH,
+		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOHUNGER,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_ZOMBIFY,
@@ -31,7 +32,7 @@
 	mutantliver = null
 	mutantlungs = null
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | ERT_SPAWN
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 	bodytemp_normal = T0C // They have no natural body heat, the environment regulates body temp
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // Take damage at fire temp
 	bodytemp_cold_damage_limit = MINIMUM_TEMPERATURE_TO_MOVE // take damage below minimum movement temp
@@ -47,11 +48,11 @@
 
 	/// Spooky growls we sometimes play while alive
 	var/static/list/spooks = list(
-		'sound/hallucinations/growl1.ogg',
-		'sound/hallucinations/growl2.ogg',
-		'sound/hallucinations/growl3.ogg',
-		'sound/hallucinations/veryfar_noise.ogg',
-		'sound/hallucinations/wail.ogg',
+		'sound/effects/hallucinations/growl1.ogg',
+		'sound/effects/hallucinations/growl2.ogg',
+		'sound/effects/hallucinations/growl3.ogg',
+		'sound/effects/hallucinations/veryfar_noise.ogg',
+		'sound/effects/hallucinations/wail.ogg',
 	)
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
@@ -94,9 +95,9 @@
 	id = SPECIES_ZOMBIE_INFECTIOUS
 	examine_limb_id = SPECIES_ZOMBIE
 	damage_modifier = 20 // 120 damage to KO a zombie, which kills it
-	mutanteyes = /obj/item/organ/internal/eyes/zombie
-	mutantbrain = /obj/item/organ/internal/brain/zombie
-	mutanttongue = /obj/item/organ/internal/tongue/zombie
+	mutanteyes = /obj/item/organ/eyes/zombie
+	mutantbrain = /obj/item/organ/brain/zombie
+	mutanttongue = /obj/item/organ/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	inherent_traits = list(
@@ -107,6 +108,7 @@
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBREATH,
+		TRAIT_NOCRITDAMAGE,
 		TRAIT_NODEATH,
 		TRAIT_NOHUNGER,
 		TRAIT_NO_DNA_COPY,
@@ -137,7 +139,7 @@
 	// Deal with the source of this zombie corruption
 	// Infection organ needs to be handled separately from mutant_organs
 	// because it persists through species transitions
-	var/obj/item/organ/internal/zombie_infection/infection = new_zombie.get_organ_slot(ORGAN_SLOT_ZOMBIE)
+	var/obj/item/organ/zombie_infection/infection = new_zombie.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 	if(isnull(infection))
 		infection = new()
 		infection.Insert(new_zombie)

@@ -19,7 +19,7 @@
 	if (!what_to_change)
 		return
 	save_flag ^= options[what_to_change]
-	to_chat(builder, "<span class='notice'>[what_to_change] is now [save_flag & options[what_to_change] ? "ENABLED" : "DISABLED"].</span>")
+	to_chat(builder, span_notice("[what_to_change] is now [save_flag & options[what_to_change] ? "ENABLED" : "DISABLED"]."))
 
 /datum/buildmode_mode/map_export/show_help(client/builder)
 	to_chat(builder, span_purple(examine_block(

@@ -1,6 +1,6 @@
 # Hard Deletes
 
-> Garbage collection is pretty gothic when you think about it. 
+> Garbage collection is pretty gothic when you think about it.
 >
 >An object in code is like a ghost, clinging to its former life, and especially to the people it knew. It can only pass on and truly die when it has dealt with its unfinished business. And only when its been forgotten by everyone who ever knew it. If even one other object remembers it, it has a connection to the living world that lets it keep hanging on
 >
@@ -52,7 +52,7 @@ This of course means they can store that location in memory in another object's 
 
 /proc/someshit(mem_location)
     var/datum/some_obj = new()
-    some_obj.reference = mem_location 
+    some_obj.reference = mem_location
 ```
 
 But what happens when you get rid of the object we're passing around references to? If we just cleared it out from memory, everything that holds a reference to it would suddenly be pointing to nowhere, or worse, something totally different!
@@ -135,13 +135,13 @@ If that fails, search the object's typepath, and look and see if anything is hol
 BYOND currently doesn't have the capability to give us information about where a hard delete is. Fortunately we can search for most all of then ourselves.
 The procs to perform this search are hidden behind compile time defines, since they'd be way too risky to expose to admin button pressing
 
-If you're having issues solving a harddel and want to perform this check yourself, go to `_compile_options.dm` and uncomment `TESTING`, `REFERENCE_TRACKING`, and `GC_FAILURE_HARD_LOOKUP`
+If you're having issues solving a harddel and want to perform this check yourself, go to `_compile_options.dm` and uncomment `REFERENCE_TRACKING_STANDARD`.
 
-You can read more about what each of these do in that file, but the long and short of it is if something would hard delete our code will search for the reference (This will look like your game crashing, just hold out) and print information about anything it finds to the runtime log, which you can find inside the round folder inside `/data/logs/year/month/day`
+You can read more about what each of these do in that file, but the long and short of it is if something would hard delete our code will search for the reference (This will look like your game crashing, just hold out) and print information about anything it finds to [log_dir]/harddels.log, which you can find inside the round folder inside `/data/logs/year/month/day`
 
-It'll tell you what object is holding the ref if it's in an object, or what pattern of list transversal was required to find the ref if it's hiding in a list of some sort
+It'll tell you what object is holding the ref if it's in an object, or what pattern of list transversal was required to find the ref if it's hiding in a list of some sort, alongside the references remaining.
 
-## Techniques For Fixing Hard Deletes 
+## Techniques For Fixing Hard Deletes
 
 Once you've found the issue, it becomes a matter of making sure the ref is cleared as a part of Destroy(). I'm gonna walk you through a few patterns and discuss how you might go about fixing them
 
@@ -243,7 +243,7 @@ So then, we want to temporarily remember to clear a reference when it's deleted
 
 This is where I might lose you, but we're gonna use signals
 
-`qdel()`, the proc that sets off this whole deletion business, sends a signal called `COMSIG_PARENT_QDELETING`
+`qdel()`, the proc that sets off this whole deletion business, sends a signal called `COMSIG_QDELETING`
 
 We can listen for that signal, and if we hear it clear whatever reference we may have
 
@@ -255,10 +255,10 @@ Here's an example
 
 /somemob/proc/set_target(new_target)
     if(target)
-        UnregisterSignal(target, COMSIG_PARENT_QDELETING) //We need to make sure any old signals are cleared
+        UnregisterSignal(target, COMSIG_QDELETING) //We need to make sure any old signals are cleared
     target = new_target
     if(target)
-        RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(clear_target)) //Call clear_target if target is ever qdel()'d
+        RegisterSignal(target, COMSIG_QDELETING, PROC_REF(clear_target)) //Call clear_target if target is ever qdel()'d
 
 /somemob/proc/clear_target(datum/source)
     SIGNAL_HANDLER

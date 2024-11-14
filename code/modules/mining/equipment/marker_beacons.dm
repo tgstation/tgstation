@@ -39,11 +39,10 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 
 /obj/item/stack/marker_beacon/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Use in-hand to place a [singular_name].\n"+\
-	"Alt-click to select a color. Current color is [picked_color].</span>"
+	. += span_notice("Use in-hand to place a [singular_name].\nAlt-click to select a color. Current color is [picked_color].")
 
 /obj/item/stack/marker_beacon/update_icon_state()
-	icon_state = "[initial(icon_state)][lowertext(picked_color)]"
+	icon_state = "[initial(icon_state)][LOWER_TEXT(picked_color)]"
 	return ..()
 
 /obj/item/stack/marker_beacon/attack_self(mob/user)
@@ -59,16 +58,15 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		var/obj/structure/marker_beacon/M = new(user.loc, picked_color)
 		transfer_fingerprints_to(M)
 
-/obj/item/stack/marker_beacon/AltClick(mob/living/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/item/stack/marker_beacon/click_alt(mob/living/user)
 	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
 	if(isnull(input_color))
-		return
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+		return CLICK_ACTION_BLOCKING
+	if(!user.can_perform_action(src))
+		return CLICK_ACTION_BLOCKING
 	picked_color = input_color
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/marker_beacon
 	name = "marker beacon"
@@ -99,12 +97,10 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		picked_color = set_color
 	update_appearance()
 
-/obj/structure/marker_beacon/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/obj/item/stack/marker_beacon/M = new(loc)
-		M.picked_color = picked_color
-		M.update_appearance()
-	qdel(src)
+/obj/structure/marker_beacon/atom_deconstruct(disassembled = TRUE)
+	var/obj/item/stack/marker_beacon/beacon = new(loc)
+	beacon.picked_color = picked_color
+	beacon.update_appearance()
 
 /obj/structure/marker_beacon/examine(mob/user)
 	. = ..()
@@ -118,7 +114,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	set_light(light_range, light_power, GLOB.marker_beacon_colors[picked_color])
 
 /obj/structure/marker_beacon/update_icon_state()
-	icon_state = "[icon_prefix][lowertext(picked_color)]-on"
+	icon_state = "[icon_prefix][LOWER_TEXT(picked_color)]-on"
 	return ..()
 
 /obj/structure/marker_beacon/attack_hand(mob/living/user, list/modifiers)
@@ -151,22 +147,20 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		var/obj/effect/decal/cleanable/ash/A = new /obj/effect/decal/cleanable/ash(drop_location())
 		A.desc += "\nLooks like this used to be \a [src] some time ago."
 		visible_message(span_danger("[src] is disintegrated by [I]!"))
-		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		qdel(src)
 		return
 	return ..()
 
-/obj/structure/marker_beacon/AltClick(mob/living/user)
-	..()
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/structure/marker_beacon/click_alt(mob/living/user)
 	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
 	if(isnull(input_color))
-		return
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+		return CLICK_ACTION_BLOCKING
+	if(!user.can_perform_action(src))
+		return NONE
 	picked_color = input_color
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 
 /* Preset marker beacon types, for mapping */

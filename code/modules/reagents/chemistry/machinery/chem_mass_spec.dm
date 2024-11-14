@@ -147,9 +147,9 @@
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		cms_coefficient /= laser.tier
 
-/obj/machinery/chem_mass_spec/item_interaction(mob/living/user, obj/item/item, list/modifiers, is_right_clicking)
+/obj/machinery/chem_mass_spec/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if((item.item_flags & ABSTRACT) || (item.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return ..()
+		return NONE
 
 	if(is_reagent_container(item) && item.is_open_container())
 		if(processing_reagents)
@@ -160,13 +160,14 @@
 		if(!user.transferItemToLoc(beaker, src))
 			return ITEM_INTERACT_BLOCKING
 
+		var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 		replace_beaker(user, !is_right_clicking, beaker)
 		to_chat(user, span_notice("You add [beaker] to [is_right_clicking ? "output" : "input"] slot."))
 		update_appearance()
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/machinery/chem_mass_spec/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -213,13 +214,13 @@
 	var/result = 0
 	for(var/datum/reagent/reagent as anything in beaker1?.reagents.reagent_list)
 		var/datum/reagent/target = reagent
-		if(!istype(reagent, /datum/reagent/inverse) && (reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem))
+		if(reagent.inverse_chem && reagent.inverse_chem_val > reagent.purity)
 			target = GLOB.chemical_reagents_list[reagent.inverse_chem]
 
 		if(!result)
 			result = target.mass
 		else
-			result = smallest ? min(result, reagent.mass) : max(result, reagent.mass)
+			result = smallest ? min(result, target.mass) : max(result, target.mass)
 	return smallest ? FLOOR(result, 50) : CEILING(result, 50)
 
 /*
@@ -240,11 +241,11 @@
 		lower_mass_range = calculate_mass(smallest = TRUE)
 		upper_mass_range = calculate_mass(smallest = FALSE)
 		estimate_time()
-
 	else //replace output beaker
 		if(!QDELETED(beaker2))
 			try_put_in_hand(beaker2, user)
 		beaker2 = new_beaker
+		log.Cut()
 
 	update_appearance()
 
@@ -257,17 +258,21 @@
 		return
 
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
-		//we don't bother about impure chems
-		if(istype(reagent, /datum/reagent/inverse) || (reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem))
-			continue
+		var/datum/reagent/target = reagent
+		var/inverse = FALSE
+
+		//inverted chems are dealt with diffrently
+		if(reagent.inverse_chem && reagent.inverse_chem_val > reagent.purity)
+			target = GLOB.chemical_reagents_list[reagent.inverse_chem]
+			inverse = TRUE
 		//out of our selected range
-		if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
+		if(target.mass < lower_mass_range || target.mass > upper_mass_range)
 			continue
 		//already at max purity
-		if((initial(reagent.purity) - reagent.purity) <= 0)
+		if(!inverse && (initial(reagent.purity) - reagent.purity) <= 0)
 			continue
 		///Roughly 10 - 30s?
-		delay_time += (((reagent.mass * reagent.volume) + (reagent.mass * reagent.get_inverse_purity() * 0.1)) * 0.0035) + 10
+		delay_time += (((target.mass * reagent.volume) + (target.mass * reagent.get_inverse_purity() * 0.1)) * 0.0035) + 10
 
 	delay_time *= cms_coefficient
 
@@ -294,25 +299,19 @@
 		beaker1Data["maxVolume"] = beaker_1_reagents.maximum_volume
 		var/list/beakerContents = list()
 		for(var/datum/reagent/reagent as anything in beaker_1_reagents.reagent_list)
-			var/log = ""
+			var/log = "Ready"
 			var/datum/reagent/target = reagent
 			var/purity = target.purity
 			var/is_inverse = FALSE
 
-			if(istype(reagent, /datum/reagent/inverse))
-				log = "Too impure to use" //we don't bother about impure chems
-				is_inverse = TRUE
-			else if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
+			if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
 				purity = target.get_inverse_purity()
 				target = GLOB.chemical_reagents_list[reagent.inverse_chem]
-				log = "Too impure to use" //we don't bother about impure chems
 				is_inverse = TRUE
 			else
 				var/initial_purity = initial(reagent.purity)
 				if((initial_purity - reagent.purity) <= 0) //already at max purity
 					log = "Cannot purify above [round(initial_purity * 100)]%"
-				else
-					log = "Ready"
 
 			beakerContents += list(list(
 				"name" = target.name,
@@ -351,12 +350,8 @@
 
 /obj/machinery/chem_mass_spec/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
+	if(. || processing_reagents)
 		return
-
-	if(processing_reagents)
-		balloon_alert(ui.user, "still processing")
-		return ..()
 
 	switch(action)
 		if("activate")
@@ -433,32 +428,25 @@
 			replace_beaker(ui.user, FALSE)
 			return TRUE
 
-/obj/machinery/chem_mass_spec/AltClick(mob/living/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/machinery/chem_mass_spec/click_alt(mob/living/user)
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")
-		return ..()
+		return CLICK_ACTION_BLOCKING
 	replace_beaker(user, TRUE)
+	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/chem_mass_spec/alt_click_secondary(mob/living/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/machinery/chem_mass_spec/click_alt_secondary(mob/living/user)
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")
-		return ..()
+		return
 	replace_beaker(user, FALSE)
 
 /obj/machinery/chem_mass_spec/process(seconds_per_tick)
 	if(!processing_reagents)
 		return PROCESS_KILL
 
-	if(!is_operational || panel_open || !anchored || (machine_stat & (BROKEN | NOPOWER)))
+	if(!is_operational || panel_open || !anchored)
 		return
-
-	use_power(active_power_usage)
 
 	progress_time += seconds_per_tick
 	if(progress_time >= delay_time)
@@ -466,19 +454,31 @@
 		progress_time = 0
 
 		log.Cut()
+		var/datum/reagents/input_reagents = beaker1.reagents
+		var/datum/reagents/output_reagents = beaker2.reagents
 		for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
-			//we don't bother about impure chems
-			if(istype(reagent, /datum/reagent/inverse) || (reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem))
+			var/product_vol = reagent.volume
+
+			//purify inverted chems to their inverted purity
+			if(reagent.inverse_chem && reagent.inverse_chem_val > reagent.purity)
+				var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
+				if(inverse_reagent.mass < lower_mass_range || inverse_reagent.mass > upper_mass_range)
+					continue
+				input_reagents.remove_reagent(reagent.type, product_vol)
+				output_reagents.add_reagent(reagent.inverse_chem, product_vol, reagtemp = input_reagents.chem_temp, added_purity = reagent.get_inverse_purity(), added_ph = reagent.ph)
+				log[reagent.type] = "Purified to [reagent.get_inverse_purity() * 100]%"
 				continue
+
 			//out of our selected range
 			if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
 				continue
+
 			//already at max purity
 			var/delta_purity = initial(reagent.purity) - reagent.purity
 			if(delta_purity <= 0)
 				continue
+
 			//add the purified reagent. More impure reagents will yield smaller amounts
-			var/product_vol = reagent.volume
 			beaker1.reagents.remove_reagent(reagent.type, product_vol)
 			beaker2.reagents.add_reagent(reagent.type, product_vol * (1 - delta_purity), reagtemp = beaker1.reagents.chem_temp, added_purity = initial(reagent.purity), added_ph = reagent.ph)
 			log[reagent.type] = "Purified to [initial(reagent.purity) * 100]%"
@@ -489,3 +489,5 @@
 		estimate_time()
 		update_appearance()
 		return PROCESS_KILL
+
+	use_energy(active_power_usage * seconds_per_tick)

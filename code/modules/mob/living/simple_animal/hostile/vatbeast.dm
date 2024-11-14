@@ -11,7 +11,7 @@
 	gender = NEUTER
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	speak_emote = list("roars")
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = null
 	health = 250
 	maxHealth = 250
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, STAMINA = 0, OXY = 1)
@@ -22,7 +22,7 @@
 	lighting_cutoff_red = 10
 	lighting_cutoff_green = 25
 	lighting_cutoff_blue = 20
-	attack_sound = 'sound/weapons/punch3.ogg'
+	attack_sound = 'sound/items/weapons/punch3.ogg'
 	attack_verb_continuous = "slaps"
 	attack_verb_simple = "slap"
 
@@ -31,9 +31,9 @@
 	GRANT_ACTION(/datum/action/cooldown/tentacle_slap)
 
 	add_cell_sample()
-	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, PROC_REF(tamed)))
+	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0)
 
-/mob/living/simple_animal/hostile/vatbeast/proc/tamed(mob/living/tamer)
+/mob/living/simple_animal/hostile/vatbeast/tamed(mob/living/tamer, obj/item/food)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
 	faction = list(FACTION_NEUTRAL)
@@ -52,7 +52,6 @@
 	button_icon_state = "tentacle_slap"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
 	cooldown_time = 12 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = TRUE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 
@@ -108,7 +107,7 @@
 		span_warning("[owner] slaps [to_slap] with its tentacle!"),
 		span_notice("You slap [to_slap] with your tentacle."),
 	)
-	playsound(owner, 'sound/effects/assslap.ogg', 90)
+	playsound(owner, 'sound/effects/emotes/assslap.ogg', 90)
 	var/atom/throw_target = get_edge_target_turf(to_slap, owner.dir)
 	living_to_slap.throw_at(throw_target, 6, 4, owner)
 	living_to_slap.apply_damage(30, BRUTE)

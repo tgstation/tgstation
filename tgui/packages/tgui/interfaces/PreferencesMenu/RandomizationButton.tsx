@@ -1,6 +1,6 @@
 import { exhaustiveCheck } from 'common/exhaustive';
 
-import { Dropdown, Icon } from '../../components';
+import { Dropdown } from '../../components';
 import { RandomSetting } from './data';
 
 const options = [
@@ -48,12 +48,13 @@ export const RandomizationButton = (props: {
       color={color}
       {...dropdownProps}
       clipSelectedText={false}
-      displayText={<Icon name="dice-d20" mr="-0.25em" />}
+      icon="dice-d20"
       options={options}
       noChevron
       onSelected={setValue}
       menuWidth="120px"
       width={1.85}
+      selected="None"
     />
   );
 };

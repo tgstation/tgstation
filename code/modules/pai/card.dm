@@ -21,6 +21,13 @@
 	/// Prevents a crew member from hitting "request pAI" repeatedly
 	var/request_spam = FALSE
 
+/obj/item/pai_card/Initialize(mapload)
+	. = ..()
+
+	update_appearance()
+	SSpai.pai_card_list += src
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+
 /obj/item/pai_card/attackby(obj/item/used, mob/user, params)
 	if(pai && istype(used, /obj/item/encryptionkey))
 		if(!pai.encrypt_mod)
@@ -63,12 +70,10 @@
 	emotion_icon = initial(emotion_icon)
 	update_appearance()
 
-/obj/item/pai_card/Initialize(mapload)
+/obj/item/pai_card/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
-
-	update_appearance()
-	SSpai.pai_card_list += src
-	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+	if(pai)
+		return pai.on_saboteur(source, disrupt_duration)
 
 /obj/item/pai_card/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_They()] can't keep living without real human intimacy!"))
@@ -242,7 +247,7 @@
 		ignore_key = POLL_IGNORE_PAI,
 	)
 
-	addtimer(VARSET_CALLBACK(src, request_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
+	addtimer(VARSET_CALLBACK(src, request_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE|TIMER_DELETE_ME)
 	return TRUE
 
 /**

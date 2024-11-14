@@ -36,32 +36,39 @@
 	else
 		to_chat(user, span_warning("You can't use [src] while inside something!"))
 
-/obj/item/chameleon/afterattack(atom/target, mob/user , proximity)
-	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/chameleon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!can_copy(interacting_with) || SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
+	make_copy(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/chameleon/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!can_copy(interacting_with)) // RMB scan works on storage items, LMB scan does not
+		return NONE
+	make_copy(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/chameleon/proc/can_copy(atom/target)
 	if(!check_sprite(target))
-		return
+		return FALSE
 	if(active_dummy)//I now present you the blackli(f)st
-		return
+		return FALSE
 	if(isturf(target))
-		return
+		return FALSE
 	if(ismob(target))
-		return
+		return FALSE
 	if(istype(target, /obj/structure/falsewall))
-		return
+		return FALSE
 	if(target.alpha != 255)
-		return
+		return FALSE
 	if(target.invisibility != 0)
-		return
-	if(iseffect(target))
-		if(!(istype(target, /obj/effect/decal))) //be a footprint
-			return
-	make_copy(target, user)
+		return FALSE
+	if(iseffect(target) && !istype(target, /obj/effect/decal)) //be a footprint
+		return FALSE
+	return TRUE
 
 /obj/item/chameleon/proc/make_copy(atom/target, mob/user)
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)
+	playsound(get_turf(src), 'sound/items/weapons/flash.ogg', 100, TRUE, -6)
 	to_chat(user, span_notice("Scanned [target]."))
 	var/obj/temp = new /obj()
 	temp.appearance = target.appearance

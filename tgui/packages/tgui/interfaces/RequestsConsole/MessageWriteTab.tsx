@@ -1,4 +1,4 @@
-import { sortStrings } from 'common/collections';
+import { sort } from 'common/collections';
 import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../../backend';
@@ -22,9 +22,9 @@ export const MessageWriteTab = (props) => {
     information_consoles = [],
   } = data;
 
-  const sorted_assistance = sortStrings(assistance_consoles);
-  const sorted_supply = sortStrings(supply_consoles);
-  const sorted_information = sortStrings(information_consoles);
+  const sorted_assistance = sort(assistance_consoles);
+  const sorted_supply = sort(supply_consoles);
+  const sorted_information = sort(information_consoles);
 
   const resetMessage = () => {
     setMessageText('');
@@ -85,7 +85,7 @@ export const MessageWriteTab = (props) => {
             width="100%"
             options={sorted_assistance}
             selected={recipient}
-            displayText={recipient || 'Pick a Recipient'}
+            placeholder="Pick a Recipient"
             onSelected={(value) => setRecipient(value)}
           />
         )}
@@ -94,7 +94,7 @@ export const MessageWriteTab = (props) => {
             width="100%"
             options={sorted_supply}
             selected={recipient}
-            displayText={recipient || 'Pick a Recipient'}
+            placeholder="Pick a Recipient"
             onSelected={(value) => setRecipient(value)}
           />
         )}
@@ -103,7 +103,7 @@ export const MessageWriteTab = (props) => {
             width="100%"
             options={sorted_information}
             selected={recipient}
-            displayText={recipient || 'Pick a Recipient'}
+            placeholder="Pick a Recipient"
             onSelected={(value) => setRecipient(value)}
           />
         )}

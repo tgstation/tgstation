@@ -2,8 +2,8 @@
 	name = "choice beacon"
 	desc = "Hey, why are you viewing this?!! Please let CentCom know about this odd occurrence."
 	icon = 'icons/obj/devices/remote.dmi'
-	icon_state = "gangtool-blue"
-	inhand_icon_state = "radio"
+	icon_state = "generic_delivery"
+	inhand_icon_state = "generic_delivery"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	/// How many uses this item has before being deleted
@@ -30,7 +30,7 @@
 	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return TRUE
 
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, TRUE)
 	return FALSE
 
 /// Opens a menu and allows the mob to pick an option from the list
@@ -64,13 +64,17 @@
 /obj/item/choice_beacon/proc/spawn_option(obj/choice_path, mob/living/user)
 	podspawn(list(
 		"target" = get_turf(src),
-		"style" = STYLE_BLUESPACE,
+		"style" = /datum/pod_style/advanced,
 		"spawn" = choice_path,
 	))
 
 /obj/item/choice_beacon/music
 	name = "instrument delivery beacon"
 	desc = "Summon your tool of art."
+	icon_state = "sb_delivery"
+	inhand_icon_state = "sb_delivery"
+	company_source = "Sophronia Broadcasting"
+	company_message = span_bold("Please enjoy your Sophronia Broadcasting's 'Spinward Idol' Musical Instrument, exactly as shown in the hit show!")
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/choice_beacon/music/generate_display_names()
@@ -132,8 +136,10 @@
 	name = "augment beacon"
 	desc = "Summons augmentations. Can be used 3 times!"
 	uses = 3
+	icon_state = "self_delivery"
+	inhand_icon_state = "self_delivery"
 	company_source = "S.E.L.F."
-	company_message = span_bold("Request status: Recieved. Package status: Delivered. Notes: To assure optimal value, use supplied Interdyne-brand autosurgeons to change implantment status.")
+	company_message = span_bold("Request status: Received. Package status: Delivered. Notes: To assure optimal value, use supplied Interdyne-brand autosurgeons to change implantment status.")
 
 /obj/item/choice_beacon/augments/generate_display_names()
 	var/static/list/augment_list
@@ -141,12 +147,12 @@
 		augment_list = list()
 		// cyberimplants range from a nice bonus to fucking broken bullshit so no subtypesof
 		var/list/selectable_types = list(
-			/obj/item/organ/internal/cyberimp/brain/anti_drop,
-			/obj/item/organ/internal/cyberimp/arm/toolset,
-			/obj/item/organ/internal/cyberimp/arm/surgery,
-			/obj/item/organ/internal/cyberimp/chest/thrusters,
-			/obj/item/organ/internal/lungs/cybernetic/tier3,
-			/obj/item/organ/internal/liver/cybernetic/tier3,
+			/obj/item/organ/cyberimp/brain/anti_drop,
+			/obj/item/organ/cyberimp/arm/toolset,
+			/obj/item/organ/cyberimp/arm/surgery,
+			/obj/item/organ/cyberimp/chest/thrusters,
+			/obj/item/organ/lungs/cybernetic/tier3,
+			/obj/item/organ/liver/cybernetic/tier3,
 		)
 		for(var/obj/item/organ/organ as anything in selectable_types)
 			augment_list[initial(organ.name)] = organ
@@ -156,7 +162,7 @@
 // just drops the box at their feet, "quiet" and "sneaky"
 /obj/item/choice_beacon/augments/spawn_option(obj/choice_path, mob/living/user)
 	new choice_path(get_turf(user))
-	playsound(src, 'sound/weapons/emitter2.ogg', 50, extrarange = SILENCED_SOUND_EXTRARANGE)
+	playsound(src, 'sound/items/weapons/emitter2.ogg', 50, extrarange = SILENCED_SOUND_EXTRARANGE)
 
 /obj/item/choice_beacon/holy
 	name = "armaments beacon"
@@ -170,7 +176,7 @@
 	if(user.mind?.holy_role)
 		return ..()
 
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, TRUE)
 	return FALSE
 
 // Overrides generate options so that we can show a neat radial instead

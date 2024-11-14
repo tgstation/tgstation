@@ -15,11 +15,7 @@
 	/// The tram platform we're connected to and providing power
 	var/obj/effect/landmark/transport/nav_beacon/tram/platform/connected_platform
 
-/obj/machinery/transport/power_rectifier/Initialize(mapload)
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/transport/power_rectifier/LateInitialize(mapload)
+/obj/machinery/transport/power_rectifier/post_machine_initialize()
 	. = ..()
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(power_tram))
 	find_platform()

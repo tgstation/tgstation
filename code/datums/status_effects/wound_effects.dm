@@ -28,7 +28,7 @@
 /datum/status_effect/limp
 	id = "limp"
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/limp
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 	/// The left leg of the limping person
@@ -72,6 +72,9 @@
 
 	// less limping while we have determination still
 	var/determined_mod = owner.has_status_effect(/datum/status_effect/determined) ? 0.5 : 1
+
+	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING) & COMPONENT_CANCEL_LIMP)
+		return
 
 	if(next_leg == left)
 		if(prob(limp_chance_left * determined_mod))
@@ -120,19 +123,6 @@
 /////////////////////////
 //////// WOUNDS /////////
 /////////////////////////
-
-// wound alert
-/atom/movable/screen/alert/status_effect/wound
-	name = "Wounded"
-	desc = "Your body has sustained serious damage, click here to inspect yourself."
-
-/atom/movable/screen/alert/status_effect/wound/Click()
-	. = ..()
-	if(!.)
-		return
-
-	var/mob/living/carbon/carbon_owner = owner
-	carbon_owner.check_self_for_injuries()
 
 // wound status effect base
 /datum/status_effect/wound

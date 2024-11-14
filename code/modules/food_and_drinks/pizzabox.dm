@@ -228,7 +228,7 @@
 			return
 		else if(bomb)
 			balloon_alert(user, "already rigged!")
-	else if(istype(I, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(I))
 		if(!open)
 			if(!user.can_write(I))
 				return
@@ -237,6 +237,7 @@
 			if(!user.can_perform_action(src))
 				return
 			balloon_alert(user, "writing box tag...")
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			boxtag_set = TRUE
 			update_appearance()
 			return
@@ -387,7 +388,7 @@
 			var/list/pineapple_pizza_liker = pizza_types.Copy()
 			pineapple_pizza_liker -= /obj/item/food/pizza/pineapple
 			pizza_preferences[nommer.ckey] = pick_weight(pineapple_pizza_liker)
-		else if(nommer.mind?.assigned_role.title == /datum/job/botanist)
+		else if(istype(nommer.mind?.assigned_role, /datum/job/botanist))
 			pizza_preferences[nommer.ckey] = /obj/item/food/pizza/dank
 		else
 			pizza_preferences[nommer.ckey] = pick_weight(pizza_types)

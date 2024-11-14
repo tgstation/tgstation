@@ -19,13 +19,8 @@ GENERAL_PROTECT_DATUM(/datum/ticket_log_entry)
 GLOBAL_DATUM_INIT(player_ticket_history, /datum/ticket_history_holder, new)
 GLOBAL_PROTECT(player_ticket_history)
 
-/client/proc/player_ticket_history()
-	set name = "Player Ticket History"
-	set desc = "Allows you to view the ticket history of a player."
-	set category = "Admin"
-	if(!check_rights(R_ADMIN))
-		return
-	GLOB.player_ticket_history.ui_interact(mob)
+ADMIN_VERB(player_ticket_history, R_ADMIN, "Player Ticket History", "Allows you to view the ticket history of a player.", ADMIN_CATEGORY_MAIN)
+	GLOB.player_ticket_history.ui_interact(user.mob)
 
 /datum/ticket_history_holder
 	/// Assosciative list of ticket histories. ckey -> list/datum/ticket_history
@@ -34,7 +29,7 @@ GLOBAL_PROTECT(player_ticket_history)
 	var/list/user_selections = list()
 
 /datum/ticket_history_holder/proc/cache_history_for_ckey(ckey, entries = 5)
-	ckey = lowertext(ckey)
+	ckey = LOWER_TEXT(ckey)
 
 	if(!isnum(entries) || entries <= 0)
 		return

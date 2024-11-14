@@ -38,8 +38,8 @@
 	new /obj/item/stack/sticky_tape(src)
 
 /obj/item/storage/box/fakesyndiesuit
-	name = "boxed space suit and helmet"
-	desc = "A sleek, sturdy box used to hold replica spacesuits."
+	name = "boxed replica space suit and helmet"
+	desc = "A sleek, sturdy box used to hold toy spacesuits."
 	icon_state = "syndiebox"
 	illustration = "syndiesuit"
 
@@ -47,10 +47,14 @@
 	new /obj/item/clothing/head/syndicatefake(src)
 	new /obj/item/clothing/suit/syndicatefake(src)
 
-/obj/item/storage/box/syndie_kit/space_dragon/PopulateContents()
-	new /obj/item/dna_probe/carp_scanner(src)
-	new /obj/item/clothing/suit/hooded/carp_costume/spaceproof/old(src)
-	new /obj/item/clothing/mask/gas/carp(src)
+/obj/item/storage/box/syndie_kit/battle_royale
+	name = "rumble royale broadcast kit"
+	desc = "Contains everything you need to host the galaxy's greatest show; Rumble Royale."
+
+/obj/item/storage/box/syndie_kit/battle_royale/PopulateContents()
+	var/obj/item/royale_implanter/implanter = new(src)
+	var/obj/item/royale_remote/remote = new(src)
+	remote.link_implanter(implanter)
 
 /obj/item/storage/box/deputy
 	name = "box of deputy armbands"
@@ -125,6 +129,24 @@
 	new /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden(src)
 	new /obj/item/clothing/under/ethereal_tunic/trailwarden(src)
 	new /obj/item/storage/backpack/saddlepack(src)
+
+/obj/item/storage/box/hero/journalist
+	name = "Assassinated by CIA - 1984." // Literally
+	desc = "Many courageous individuals risked their lives to report on events the government sought to keep hidden from the public, ensuring that the truth remained buried and unheard. These garments are replicas of the clothing worn by one such 'journalist,' a silent sentinel in the fight for truth."
+
+/obj/item/storage/box/hero/journalist/PopulateContents()
+	new /obj/item/clothing/under/costume/buttondown/slacks(src)
+	new /obj/item/clothing/suit/toggle/suspenders(src)
+	new /obj/item/clothing/neck/tie/red(src)
+	new /obj/item/clothing/head/fedora/beige/press(src)
+	new /obj/item/clothing/accessory/press_badge(src)
+	new /obj/item/clothing/suit/hazardvest/press(src)
+	new /obj/item/radio/entertainment/microphone/physical(src)
+	new /obj/item/radio/entertainment/speakers/physical(src)
+	new /obj/item/clipboard(src)
+	new /obj/item/taperecorder(src)
+	new /obj/item/camera(src)
+	new /obj/item/wallframe/telescreen/entertainment(src)
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
@@ -211,3 +233,11 @@
 	new /obj/item/clothing/gloves/combat/floortile(src)
 	new /obj/item/clothing/shoes/jackboots/floortile(src)
 	new /obj/item/storage/backpack/floortile(src)
+
+/obj/item/storage/box/collar_bomb
+	name = "collar bomb box"
+	desc = "A small print on the back reads 'For research purposes only. Handle with care. In case of emergency, call the following number:'... the rest is scratched out with a marker..."
+
+/obj/item/storage/box/collar_bomb/PopulateContents()
+	var/obj/item/collar_bomb_button/button = new(src)
+	new /obj/item/clothing/neck/collar_bomb(src, button)

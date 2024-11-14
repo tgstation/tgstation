@@ -2,20 +2,16 @@
 	name = "\improper Mothman"
 	plural_form = "Mothmen"
 	id = SPECIES_MOTH
-	inherent_traits = list(
-		TRAIT_HAS_MARKINGS,
-		TRAIT_TACKLING_WINGED_ATTACKER,
-		TRAIT_ANTENNAE,
-	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
-	mutant_bodyparts = list("moth_markings" = "None")
-	external_organs = list(/obj/item/organ/external/wings/moth = "Plain", /obj/item/organ/external/antennae = "Plain")
+	body_markings = list(/datum/bodypart_overlay/simple/body_marking/moth = "None")
+	mutant_organs = list(/obj/item/organ/wings/moth = "Plain", /obj/item/organ/antennae = "Plain")
 	meat = /obj/item/food/meat/slab/human/mutant/moth
-	mutanttongue = /obj/item/organ/internal/tongue/moth
-	mutanteyes = /obj/item/organ/internal/eyes/moth
+	mutanttongue = /obj/item/organ/tongue/moth
+	mutanteyes = /obj/item/organ/eyes/moth
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
+	species_cookie = /obj/item/food/muffin/moffin
 	species_language_holder = /datum/language_holder/moth
-	death_sound = 'sound/voice/moth/moth_death.ogg'
+	death_sound = 'sound/mobs/humanoids/moth/moth_death.ogg'
 	payday_modifier = 1.0
 	family_heirlooms = list(/obj/item/flashlight/lantern/heirloom_moth)
 
@@ -27,23 +23,6 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/moth,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/moth,
 	)
-
-/datum/species/moth/regenerate_organs(mob/living/carbon/C, datum/species/old_species, replace_current= TRUE, list/excluded_zones, visual_only)
-	. = ..()
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		handle_mutant_bodyparts(H)
-
-/datum/species/moth/random_name(gender,unique,lastname)
-	if(unique)
-		return random_unique_moth_name()
-
-	var/randname = moth_name()
-
-	if(lastname)
-		randname += " [lastname]"
-
-	return randname
 
 /datum/species/moth/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
@@ -61,11 +40,63 @@
 
 /datum/species/moth/randomize_features()
 	var/list/features = ..()
-	features["moth_markings"] = pick(GLOB.moth_markings_list)
+	features["moth_markings"] = pick(SSaccessories.moth_markings_list)
 	return features
 
-/datum/species/moth/get_scream_sound(mob/living/carbon/human/human)
-	return 'sound/voice/moth/scream_moth.ogg'
+/datum/species/moth/get_scream_sound(mob/living/carbon/human/moth)
+	return 'sound/mobs/humanoids/moth/scream_moth.ogg'
+
+/datum/species/moth/get_cough_sound(mob/living/carbon/human/moth)
+	if(moth.physique == FEMALE)
+		return pick(
+			'sound/mobs/humanoids/human/cough/female_cough1.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough2.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough3.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough4.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough5.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough6.ogg',
+		)
+	return pick(
+		'sound/mobs/humanoids/human/cough/male_cough1.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough2.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough3.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough4.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough5.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough6.ogg',
+	)
+
+
+/datum/species/moth/get_cry_sound(mob/living/carbon/human/moth)
+	if(moth.physique == FEMALE)
+		return pick(
+			'sound/mobs/humanoids/human/cry/female_cry1.ogg',
+			'sound/mobs/humanoids/human/cry/female_cry2.ogg',
+		)
+	return pick(
+		'sound/mobs/humanoids/human/cry/male_cry1.ogg',
+		'sound/mobs/humanoids/human/cry/male_cry2.ogg',
+		'sound/mobs/humanoids/human/cry/male_cry3.ogg',
+	)
+
+
+/datum/species/moth/get_sneeze_sound(mob/living/carbon/human/moth)
+	if(moth.physique == FEMALE)
+		return 'sound/mobs/humanoids/human/sneeze/female_sneeze1.ogg'
+	return 'sound/mobs/humanoids/human/sneeze/male_sneeze1.ogg'
+
+
+/datum/species/moth/get_laugh_sound(mob/living/carbon/human/moth)
+	return 'sound/mobs/humanoids/moth/moth_laugh1.ogg'
+
+/datum/species/moth/get_sigh_sound(mob/living/carbon/human/moth)
+	if(moth.physique == FEMALE)
+		return SFX_FEMALE_SIGH
+	return SFX_MALE_SIGH
+
+/datum/species/moth/get_sniff_sound(mob/living/carbon/human/moth)
+	if(moth.physique == FEMALE)
+		return 'sound/mobs/humanoids/human/sniff/female_sniff.ogg'
+	return 'sound/mobs/humanoids/human/sniff/male_sniff.ogg'
 
 /datum/species/moth/get_physical_attributes()
 	return "Moths have large and fluffy wings, which help them navigate the station if gravity is offline by pushing the air around them. \

@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { KEY } from 'common/keys';
+import { isEscape, KEY } from 'common/keys';
 import { classes } from 'common/react';
 import { debounce } from 'common/timer';
 import { KeyboardEvent, SyntheticEvent, useEffect, useRef } from 'react';
@@ -59,6 +59,8 @@ type OptionalProps = Partial<{
   placeholder: string;
   /** Clears the input value on enter */
   selfClear: boolean;
+  /** Auto-updates the input value on props change */
+  updateOnPropsChange: boolean;
   /** The state variable of the input. */
   value: string | number;
 }>;
@@ -96,9 +98,11 @@ export function Input(props: Props) {
     placeholder,
     selfClear,
     value,
+    updateOnPropsChange,
     ...rest
   } = props;
 
+  // The ref to the input field
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleInput(event: SyntheticEvent<HTMLInputElement>) {
@@ -126,7 +130,7 @@ export function Input(props: Props) {
       return;
     }
 
-    if (event.key === KEY.Escape) {
+    if (isEscape(event.key)) {
       onEscape?.(event);
 
       event.currentTarget.value = toInputValue(value);
@@ -136,10 +140,14 @@ export function Input(props: Props) {
 
   /** Focuses the input on mount */
   useEffect(() => {
-    if (!autoFocus && !autoSelect) return;
-
     const input = inputRef.current;
     if (!input) return;
+
+    const newValue = toInputValue(value);
+
+    if (input.value !== newValue) input.value = newValue;
+
+    if (!autoFocus && !autoSelect) return;
 
     setTimeout(() => {
       input.focus();
@@ -150,16 +158,18 @@ export function Input(props: Props) {
     }, 1);
   }, []);
 
-  /** Updates the initial value on props change */
-  useEffect(() => {
-    const input = inputRef.current;
-    if (!input) return;
+  if (updateOnPropsChange) {
+    /** Updates the initial value on props change */
+    useEffect(() => {
+      const input = inputRef.current;
+      if (!input) return;
 
-    const newValue = toInputValue(value);
-    if (input.value === newValue) return;
+      const newValue = toInputValue(value);
+      if (input.value === newValue) return;
 
-    input.value = newValue;
-  }, [value]);
+      input.value = newValue;
+    }, [value]);
+  }
 
   return (
     <Box

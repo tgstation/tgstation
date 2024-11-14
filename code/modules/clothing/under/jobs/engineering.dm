@@ -31,6 +31,25 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck
+	name = "chief engineer's turtleneck"
+	desc = "A yellow turtleneck and white khakis, for a chief engineer with a superior sense of style."
+	icon_state = "ceturtle"
+	inhand_icon_state = "y_suit"
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+
+/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck/skirt
+	name = "chief engineer's turtleneck skirt"
+	desc = "A yellow turtleneck and white khaki skirt, for a chief engineer with a superior sense of style."
+	icon_state = "ceturtle_skirt"
+	inhand_icon_state = "y_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
 /obj/item/clothing/under/rank/engineering/atmospheric_technician
 	desc = "It's a jumpsuit worn by atmospheric technicians. Made from fire resistant materials."
 	name = "atmospheric technician's jumpsuit"

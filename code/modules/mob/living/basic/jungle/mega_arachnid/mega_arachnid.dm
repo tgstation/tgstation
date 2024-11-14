@@ -16,7 +16,7 @@
 	pixel_x = -16
 	base_pixel_x = -16
 
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	faction = list(FACTION_JUNGLE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
@@ -29,7 +29,7 @@
 	mob_size = MOB_SIZE_LARGE
 
 	speak_emote = list("chitters")
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	ai_controller = /datum/ai_controller/basic_controller/mega_arachnid
 	alpha = 40

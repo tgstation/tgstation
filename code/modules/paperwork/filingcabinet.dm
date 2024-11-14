@@ -37,12 +37,10 @@
 			if(I.w_class < WEIGHT_CLASS_NORMAL) //there probably shouldn't be anything placed ontop of filing cabinets in a map that isn't meant to go in them
 				I.forceMove(src)
 
-/obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 2)
-		for(var/obj/item/I in src)
-			I.forceMove(loc)
-	qdel(src)
+/obj/structure/filingcabinet/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(loc, 2)
+	for(var/obj/item/obj in src)
+		obj.forceMove(loc)
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, params)
 	var/list/modifiers = params2list(params)
@@ -58,7 +56,7 @@
 		icon_state = "[initial(icon_state)]-open"
 		sleep(0.5 SECONDS)
 		icon_state = initial(icon_state)
-	else if(!user.combat_mode)
+	else if(!user.combat_mode || (P.item_flags & NOBLUDGEON))
 		to_chat(user, span_warning("You can't put [P] in [src]!"))
 	else
 		return ..()
@@ -85,7 +83,7 @@
 
 	return data
 
-/obj/structure/filingcabinet/ui_act(action, params)
+/obj/structure/filingcabinet/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -97,7 +95,7 @@
 			if(istype(content) && in_range(src, usr))
 				usr.put_in_hands(content)
 				icon_state = "[initial(icon_state)]-open"
-				addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
+				addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 0.5 SECONDS)
 				return TRUE
 
 /obj/structure/filingcabinet/attack_tk(mob/user)
@@ -106,7 +104,7 @@
 	return ..()
 
 /obj/structure/filingcabinet/attack_self_tk(mob/user)
-	. = COMPONENT_CANCEL_ATTACK_CHAIN
+	. = ITEM_INTERACT_BLOCKING
 	if(contents.len)
 		if(prob(40 + contents.len * 5))
 			var/obj/item/I = pick(contents)
@@ -205,4 +203,3 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 		fillCurrent()
 		virgin = FALSE
 	return ..()
-

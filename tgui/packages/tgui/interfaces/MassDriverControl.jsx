@@ -72,9 +72,10 @@ export const MassDriverControl = (props) => {
                   <NumberInput
                     value={power}
                     width="40px"
+                    step={1}
                     minValue={0.25}
                     maxValue={16}
-                    onChange={(e, value) => {
+                    onChange={(value) => {
                       return act('set_power', {
                         power: value,
                       });

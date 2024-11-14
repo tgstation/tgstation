@@ -9,12 +9,13 @@
 	icon_state = "kinesis"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked/kinesis)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_kinesis"
 	overlay_state_active = "module_kinesis_on"
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
+	required_slots = list(ITEM_SLOT_GLOVES)
 	/// Range of the knesis grab.
 	var/grab_range = 5
 	/// Time between us hitting objects with kinesis.
@@ -59,36 +60,33 @@
 	if(!can_grab(target))
 		balloon_alert(mod.wearer, "can't grab!")
 		return
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	grab_atom(target)
 
 /obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	clear_grab(playsound = !deleting)
 
 /obj/item/mod/module/anomaly_locked/kinesis/process(seconds_per_tick)
-	if(!mod.wearer.client || mod.wearer.incapacitated(IGNORE_GRAB))
+	if(!mod.wearer.client || INCAPACITATED_IGNORING(mod.wearer, INCAPABLE_GRAB))
 		clear_grab()
 		return
 	if(!range_check(grabbed_atom))
 		balloon_alert(mod.wearer, "out of range!")
 		clear_grab()
 		return
-	drain_power(use_power_cost/10)
+	drain_power(use_energy_cost/10)
 	if(kinesis_catcher.mouse_params)
 		kinesis_catcher.calculate_params()
 	if(!kinesis_catcher.given_turf)
 		return
 	mod.wearer.setDir(get_dir(mod.wearer, grabbed_atom))
 	if(grabbed_atom.loc == kinesis_catcher.given_turf)
-		if(grabbed_atom.pixel_x == kinesis_catcher.given_x - world.icon_size/2 && grabbed_atom.pixel_y == kinesis_catcher.given_y - world.icon_size/2)
+		if(grabbed_atom.pixel_x == kinesis_catcher.given_x - ICON_SIZE_X/2 && grabbed_atom.pixel_y == kinesis_catcher.given_y - ICON_SIZE_Y/2)
 			return //spare us redrawing if we are standing still
-		animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - world.icon_size/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - world.icon_size/2)
+		animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - ICON_SIZE_X/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - ICON_SIZE_Y/2)
 		kinesis_beam.redrawing()
 		return
-	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - world.icon_size/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - world.icon_size/2)
+	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - ICON_SIZE_X/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - ICON_SIZE_Y/2)
 	kinesis_beam.redrawing()
 	var/turf/next_turf = get_step_towards(grabbed_atom, kinesis_catcher.given_turf)
 	if(grabbed_atom.Move(next_turf, get_dir(grabbed_atom, next_turf), 8))
@@ -102,13 +100,13 @@
 	var/pixel_y_change = 0
 	var/direction = get_dir(grabbed_atom, next_turf)
 	if(direction & NORTH)
-		pixel_y_change = world.icon_size/2
+		pixel_y_change = ICON_SIZE_Y/2
 	else if(direction & SOUTH)
-		pixel_y_change = -world.icon_size/2
+		pixel_y_change = -ICON_SIZE_Y/2
 	if(direction & EAST)
-		pixel_x_change = world.icon_size/2
+		pixel_x_change = ICON_SIZE_X/2
 	else if(direction & WEST)
-		pixel_x_change = -world.icon_size/2
+		pixel_x_change = -ICON_SIZE_X/2
 	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + pixel_x_change, pixel_y = grabbed_atom.base_pixel_y + pixel_y_change)
 	kinesis_beam.redrawing()
 	if(!isitem(grabbed_atom) || !COOLDOWN_FINISHED(src, hit_cooldown))
@@ -163,7 +161,7 @@
 		RegisterSignal(grabbed_atom, COMSIG_MOB_STATCHANGE, PROC_REF(on_statchange))
 	ADD_TRAIT(grabbed_atom, TRAIT_NO_FLOATING_ANIM, REF(src))
 	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_setanchored))
-	playsound(grabbed_atom, 'sound/effects/contractorbatonhit.ogg', 75, TRUE)
+	playsound(grabbed_atom, 'sound/items/weapons/contractor_baton/contractorbatonhit.ogg', 75, TRUE)
 	kinesis_icon = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", layer = grabbed_atom.layer - 0.1)
 	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	kinesis_icon.overlays += emissive_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", offset_spokesman = grabbed_atom)
@@ -171,7 +169,7 @@
 	kinesis_beam = mod.wearer.Beam(grabbed_atom, "kinesis")
 	kinesis_catcher = mod.wearer.overlay_fullscreen("kinesis", /atom/movable/screen/fullscreen/cursor_catcher/kinesis, 0)
 	kinesis_catcher.assign_to_mob(mod.wearer)
-	RegisterSignal(kinesis_catcher, COMSIG_CLICK, PROC_REF(on_catcher_click))
+	RegisterSignal(kinesis_catcher, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(on_catcher_click))
 	soundloop.start()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -182,6 +180,7 @@
 	if(playsound)
 		playsound(grabbed_atom, 'sound/effects/empulse.ogg', 75, TRUE)
 	STOP_PROCESSING(SSfastprocess, src)
+	UnregisterSignal(grabbed_atom, list(COMSIG_MOB_STATCHANGE, COMSIG_MOVABLE_SET_ANCHORED))
 	kinesis_catcher = null
 	mod.wearer.clear_fullscreen("kinesis")
 	grabbed_atom.cut_overlay(kinesis_icon)
@@ -224,7 +223,7 @@
 		clear_grab()
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/launch(atom/movable/launched_object)
-	playsound(launched_object, 'sound/magic/repulse.ogg', 100, TRUE)
+	playsound(launched_object, 'sound/effects/magic/repulse.ogg', 100, TRUE)
 	RegisterSignal(launched_object, COMSIG_MOVABLE_IMPACT, PROC_REF(launch_impact))
 	var/turf/target_turf = get_turf_in_angle(get_angle(mod.wearer, launched_object), get_turf(src), 10)
 	launched_object.throw_at(target_turf, range = grab_range, speed = launched_object.density ? 3 : 4, thrower = mod.wearer, spin = isitem(launched_object))
@@ -259,7 +258,7 @@
 	name = "MOD prototype kinesis module"
 	prebuilt = TRUE
 	complexity = 0
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	removable = FALSE
 	core_removable = FALSE
 
@@ -267,7 +266,7 @@
 	name = "MOD kinesis+ module"
 	desc = "A modular plug-in to the forearm, this module was recently redeveloped in secret. \
 		The bane of all ne'er-do-wells, the kinesis+ module is a powerful tool that allows the user \
-		to manipulate the world around them. Like it's older counterpart, it's capable of manipulating \
+		to manipulate the world around them. Like its older counterpart, it's capable of manipulating \
 		structures, machinery, vehicles, and, thanks to the fruitful efforts of its creators - living beings."
 	complexity = 0
 	prebuilt = TRUE
@@ -280,7 +279,7 @@
 		This one can force some of the grasped objects to phase through walls. Oh no."
 	complexity = 0
 	grab_range = INFINITY
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0
 	prebuilt = TRUE
 	stat_required = CONSCIOUS
 	/// Does our object phase through stuff?

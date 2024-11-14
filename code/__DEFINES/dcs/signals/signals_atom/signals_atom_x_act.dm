@@ -40,7 +40,7 @@
 #define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"
 ///from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
 #define COMSIG_ATOM_RCD_ACT "atom_rcd_act"
-///from base of atom/singularity_pull(): (/datum/component/singularity, current_size)
+///from base of atom/singularity_pull(): (/atom, current_size)
 #define COMSIG_ATOM_SING_PULL "atom_sing_pull"
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
@@ -56,6 +56,8 @@
 /// Args: (mob/living/user, obj/item/tool, list/modifiers)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
 #define COMSIG_ATOM_ITEM_INTERACTION_SECONDARY "atom_item_interaction_secondary"
+/// Sent from [atom/proc/item_interaction], to a mob clicking on an atom with an item
+#define COMSIG_USER_ITEM_INTERACTION "user_item_interaction"
 /// Sent from [atom/proc/item_interaction], to an item clicking on an atom
 /// Args: (mob/living/user, atom/interacting_with, list/modifiers)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
@@ -64,6 +66,8 @@
 /// Args: (mob/living/user, atom/interacting_with, list/modifiers)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
 #define COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY "item_interacting_with_atom_secondary"
+/// Sent from [atom/proc/item_interaction], when this atom is right-clicked on by a mob with a tool
+#define COMSIG_USER_ITEM_INTERACTION_SECONDARY "user_item_interaction_secondary"
 /// Sent from [atom/proc/item_interaction], when this atom is left-clicked on by a mob with a tool of a specific tool type
 /// Args: (mob/living/user, obj/item/tool, list/recipes)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
@@ -72,3 +76,19 @@
 /// Args: (mob/living/user, obj/item/tool)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
 #define COMSIG_ATOM_SECONDARY_TOOL_ACT(tooltype) "tool_secondary_act_[tooltype]"
+
+/// Sent from [atom/proc/ranged_item_interaction], when this atom is left-clicked on by a mob with an item while not adjacent
+#define COMSIG_ATOM_RANGED_ITEM_INTERACTION "atom_ranged_item_interaction"
+/// Sent from [atom/proc/ranged_item_interaction], when this atom is right-clicked on by a mob with an item while not adjacent
+#define COMSIG_ATOM_RANGED_ITEM_INTERACTION_SECONDARY "atom_ranged_item_interaction_secondary"
+/// Sent from [atom/proc/ranged_item_interaction], when a mob is using this item while left-clicking on by an atom while not adjacent
+#define COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM "ranged_item_interacting_with_atom"
+/// Sent from [atom/proc/ranged_item_interaction], when a mob is using this item while right-clicking on by an atom while not adjacent
+#define COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY "ranged_item_interacting_with_atom_secondary"
+
+/// Sent from [atom/proc/item_interaction], when this atom is used as a tool and an event occurs
+#define COMSIG_ITEM_TOOL_ACTED "tool_item_acted"
+
+/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
+#define COMSIG_ATOM_SABOTEUR_ACT "hit_by_saboteur"
+	#define COMSIG_SABOTEUR_SUCCESS 1

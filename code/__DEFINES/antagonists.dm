@@ -36,6 +36,9 @@
 ///How long pirates will wait for a response before attacking
 #define RESPONSE_MAX_TIME 2 MINUTES
 
+/// How long till a spessman should come back after being captured and sent to the holding facility (which some antags use)
+#define COME_BACK_FROM_CAPTURE_TIME 6 MINUTES
+
 //ERT Types
 #define ERT_BLUE "Blue"
 #define ERT_RED  "Red"
@@ -86,6 +89,14 @@
 #define PATH_LOCK "Lock Path"
 #define PATH_MOON "Moon Path"
 
+//Heretic knowledge tree defines
+#define HKT_NEXT "next"
+#define HKT_BAN "ban"
+#define HKT_DEPTH "depth"
+#define HKT_ROUTE "route"
+#define HKT_UI_BGR "ui_bgr"
+
+
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
 #define HERETIC_NO_LIVING_HEART 0
@@ -110,6 +121,7 @@
 #define CONSTRUCT_JUGGERNAUT "Juggernaut"
 #define CONSTRUCT_WRAITH "Wraith"
 #define CONSTRUCT_ARTIFICER "Artificer"
+#define CONSTRUCT_HARVESTER "Harvester"
 
 /// The Classic Wizard wizard loadout.
 #define WIZARD_LOADOUT_CLASSIC "loadout_classic"
@@ -161,7 +173,7 @@ GLOBAL_LIST_INIT(syndicate_employers, list(
 	"Waffle Corporation Terrorist",
 	"Waffle Corporation",
 ))
-///employers that are from nanotrasen
+///employers that are from Nanotrasen
 GLOBAL_LIST_INIT(nanotrasen_employers, list(
 	"Champions of Evil",
 	"Corporate Climber",
@@ -213,8 +225,40 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a traitor
 #define IS_TRAITOR(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/traitor))
 
+/**
+ * Cult checks
+ */
+
 /// Checks if the given mob is a blood cultist
-#define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
+#define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult) || HAS_TRAIT(mob, TRAIT_ACT_AS_CULTIST))
+
+/// Checks if the given mob is a blood cultist and is guaranteed to return the datum if possible - will cause issues with above trait
+#define GET_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
+
+/// Checks if the mob is a sentient or non-sentient cultist
+#define IS_CULTIST_OR_CULTIST_MOB(mob) ((IS_CULTIST(mob)) || (mob.faction.Find(FACTION_CULT)))
+
+/**
+ * Heretic checks
+ */
+
+/// Checks if the given mob is a heretic.
+#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic) || HAS_TRAIT(mob, TRAIT_ACT_AS_HERETIC))
+/// Checks if the given mob is a heretic and is guaranteed to return the datum if possible - will cause issues with above trait
+#define GET_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
+
+/// Check if the given mob is a heretic monster.
+#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+/// Check if the given mob is a  lunatic
+#define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
+/// Checks if the given mob is either a heretic, heretic monster or a lunatic.
+#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob) || IS_LUNATIC(mob))
+/// CHecks if the given mob is in the mansus realm
+#define IS_IN_MANSUS(mob) (istype(get_area(mob), /area/centcom/heretic_sacrifice))
+
+/**
+ * Etc.
+ */
 
 /// Checks if the given mob is a changeling
 #define IS_CHANGELING(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/changeling))
@@ -224,15 +268,6 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 //Tells whether or not someone is a space ninja
 #define IS_SPACE_NINJA(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/ninja))
-
-/// Checks if the given mob is a heretic.
-#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
-/// Check if the given mob is a heretic monster.
-#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
-/// Check if the given mob is a  lunatic
-#define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
-/// Checks if the given mob is either a heretic, heretic monster or a lunatic.
-#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob) || IS_LUNATIC(mob))
 
 /// Checks if the given mob is a wizard
 #define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))
@@ -245,6 +280,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 /// Checks if the given mob is a malf ai.
 #define IS_MALF_AI(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
+
+/// Checks if the given mob is a spy!
+#define IS_SPY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/spy))
 
 /// List of human antagonist types which don't spawn directly on the space station
 GLOBAL_LIST_INIT(human_invader_antagonists, list(
@@ -303,6 +341,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define UPLINK_SHARED_STOCK_KITS "uplink_shared_stock_kits"
 #define UPLINK_SHARED_STOCK_SURPLUS "uplink_shared_stock_surplus"
 
+/// Does this item provide illegal tech?
+#define SYNDIE_ILLEGAL_TECH (1 << 0)
+/// Does this item go off when scanned by a contraband scanner?
+#define SYNDIE_TRIPS_CONTRABAND (1 << 1)
+
 // Used for traitor objectives
 /// If the objective hasn't been taken yet
 #define OBJECTIVE_STATE_INACTIVE 1
@@ -354,6 +397,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define HUNTER_PACK_RUSSIAN "Russian Fugitive Hunters"
 #define HUNTER_PACK_BOUNTY "Bounty Fugitive Hunters"
 #define HUNTER_PACK_PSYKER "Psyker Fugitive Hunters"
+#define HUNTER_PACK_MI13 "MI13 Fugitive Hunters"
 
 /// Changeling abilities with DNA cost = this are innately given to all changelings
 #define CHANGELING_POWER_INNATE -1
@@ -392,3 +436,6 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define SPY_DIFFICULTY_MEDIUM "Medium"
 /// Very difficult to accomplish, almost guaranteed to require crew conflict
 #define SPY_DIFFICULTY_HARD "Hard"
+
+/// Camera net used by battle royale objective
+#define BATTLE_ROYALE_CAMERA_NET "battle_royale_camera_net"

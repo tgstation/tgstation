@@ -74,14 +74,15 @@
 	// Clear the logs
 	log = list()
 
-/obj/item/detective_scanner/pre_attack_secondary(atom/A, mob/user, params)
-	safe_scan(user, atom_to_scan = A)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/detective_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE // lets us put our scanner away without trying to scan the bag
+	safe_scan(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
-	. = ..()
-	safe_scan(user, atom_to_scan = A)
-	return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/detective_scanner/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	safe_scan(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * safe_scan - a wrapper proc for scan()
@@ -102,10 +103,14 @@
  * This should always return TRUE barring a runtime
  */
 /obj/item/detective_scanner/proc/scan(mob/user, atom/scanned_atom)
-	// Can remotely scan objects and mobs.
-	if((get_dist(scanned_atom, user) > range) || (!(scanned_atom in view(range, user)) && view_check) || (loc != user))
+	if(loc != user)
 		return TRUE
-
+	// Can scan items we hold and store
+	if(!(scanned_atom in user.get_all_contents()))
+		// Can remotely scan objects and mobs.
+		if((get_dist(scanned_atom, user) > range) || (!(scanned_atom in view(range, user)) && view_check))
+			return TRUE
+	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	scanner_busy = TRUE
 
 
@@ -218,20 +223,20 @@
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")
 
-/obj/item/detective_scanner/AltClick(mob/living/user)
-	// Best way for checking if a player can use while not incapacitated, etc
-	if(!user.can_perform_action(src))
-		return
+/obj/item/detective_scanner/click_alt(mob/living/user)
 	if(!LAZYLEN(log))
 		balloon_alert(user, "no logs!")
-		return
+		return CLICK_ACTION_BLOCKING
 	if(scanner_busy)
 		balloon_alert(user, "scanner busy!")
-		return
+		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "deleting logs...")
-	if(do_after(user, 3 SECONDS, target = src))
-		balloon_alert(user, "logs cleared")
-		log = list()
+	if(!do_after(user, 3 SECONDS, target = src))
+		return CLICK_ACTION_BLOCKING
+	balloon_alert(user, "logs cleared")
+	log = list()
+	return CLICK_ACTION_SUCCESS
+
 
 /obj/item/detective_scanner/examine(mob/user)
 	. = ..()
