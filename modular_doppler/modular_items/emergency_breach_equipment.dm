@@ -42,3 +42,20 @@
 	return ..()
 
 #undef OXY_CANDLE_RELEASE_TEMP
+
+/obj/item/grenade/chem_grenade/budget_smart_metal
+	name = "budget smart metal foam grenade"
+	desc = "Used for emergency sealing of hull breaches, while keeping areas accessible. This one came in a bulk pack a few years ago, and some of the ingredients have gone flat."
+	stage = GRENADE_READY
+
+/obj/item/grenade/chem_grenade/budget_smart_metal/Initialize(mapload)
+	. = ..()
+	var/obj/item/reagent_containers/cup/beaker/large/beaker_one = new(src)
+	var/obj/item/reagent_containers/cup/beaker/beaker_two = new(src)
+
+	beaker_one.reagents.add_reagent(/datum/reagent/aluminium, 50)
+	beaker_two.reagents.add_reagent(/datum/reagent/smart_foaming_agent, 15)
+	beaker_two.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 15)
+
+	beakers += beaker_one
+	beakers += beaker_two

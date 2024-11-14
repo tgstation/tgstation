@@ -48,7 +48,7 @@
 
 	//DOPPLER EDIT ADDITION
 	new /obj/item/oxygen_candle(src)
-	new /obj/item/grenade/chem_grenade/smart_metal_foam
+	new /obj/item/grenade/chem_grenade/budget_smart_metal(src)
 	//DOPPLER EDIT END
 
 /obj/item/storage/box/survival/radio/PopulateContents()
