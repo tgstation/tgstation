@@ -326,31 +326,9 @@
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
 	dampening_field = new(mod.wearer, field_radius, TRUE, src)
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, PROC_REF(dampen_projectile))
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(release_projectile))
 
 /obj/item/mod/module/projectile_dampener/on_deactivation(display_message, deleting = FALSE)
 	QDEL_NULL(dampening_field)
-
-/obj/item/mod/module/projectile_dampener/proc/dampen_projectile(datum/source, obj/projectile/projectile)
-	SIGNAL_HANDLER
-
-	projectile.damage *= damage_multiplier
-	projectile.stamina *= damage_multiplier
-	projectile.stun *= debuff_multiplier
-	projectile.knockdown *= debuff_multiplier
-	projectile.speed *= speed_multiplier
-	projectile.add_overlay(projectile_effect)
-
-/obj/item/mod/module/projectile_dampener/proc/release_projectile(datum/source, obj/projectile/projectile)
-	SIGNAL_HANDLER
-
-	projectile.damage /= damage_multiplier
-	projectile.speed /= speed_multiplier
-	projectile.stamina /= damage_multiplier
-	projectile.stun /= debuff_multiplier
-	projectile.knockdown /= debuff_multiplier
-	projectile.cut_overlay(projectile_effect)
 
 ///Active Sonar - Displays a hud circle on the turf of any living creatures in the given radius
 /obj/item/mod/module/active_sonar
