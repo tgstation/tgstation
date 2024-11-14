@@ -32,10 +32,6 @@
 	name = "Skull Bandana (Colorable)"
 	item_path = /obj/item/clothing/mask/bandana/skull
 
-/datum/loadout_item/mask/balaclava
-	name = "Balaclava"
-	item_path = /obj/item/clothing/mask/balaclava
-
 /datum/loadout_item/mask/bandana
 	name = "Bandana (Colorable)"
 	item_path = /obj/item/clothing/mask/bandana
