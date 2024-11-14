@@ -1,29 +1,22 @@
-/**
- * # The path of Lock.
- *
- * Goes as follows:
- *
- * A Steward's Secret
- * Grasp of Lock
- * Key Keeper’s Burden
- * > Sidepaths:
- *   Mindgate
- * Concierge's Rite
- * Mark Of Lock
- * Ritual of Knowledge
- * Burglar's Finesse
- * > Sidepaths:
- *   Opening Blast
- *   Unfathomable Curio
- * 	 Unsealed arts
- *
- * Opening Blade
- * Caretaker’s Last Refuge
- * > Sidepaths:
- * 	 Apetra Vulnera
- *
- * Unlock the Labyrinth
- */
+
+/datum/heretic_knowledge_tree_column/main/lock
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/moon_to_lock
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/lock_to_flesh
+
+	route = PATH_LOCK
+	ui_bgr = "node_lock"
+
+	start = /datum/heretic_knowledge/limited_amount/starting/base_knock
+	grasp = /datum/heretic_knowledge/lock_grasp
+	tier1 = /datum/heretic_knowledge/key_ring
+	mark = /datum/heretic_knowledge/mark/lock_mark
+	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/lock
+	unique_ability = /datum/heretic_knowledge/limited_amount/concierge_rite
+	tier2 = /datum/heretic_knowledge/spell/burglar_finesse
+	blade = /datum/heretic_knowledge/blade_upgrade/flesh/lock
+	tier3 =	/datum/heretic_knowledge/spell/caretaker_refuge
+	ascension = /datum/heretic_knowledge/ultimate/lock_final
+
 /datum/heretic_knowledge/limited_amount/starting/base_knock
 	name = "A Steward's Secret"
 	desc = "Opens up the Path of Lock to you. \
@@ -31,14 +24,12 @@
 		You can only create two at a time and they function as fast crowbars. \
 		In addition, they can fit into utility belts."
 	gain_text = "The Locked Labyrinth leads to freedom. But only the trapped Stewards know the correct path."
-	next_knowledge = list(/datum/heretic_knowledge/lock_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/crowbar = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/lock)
 	limit = 2
-	route = PATH_LOCK
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "key_blade"
 
@@ -48,10 +39,7 @@
 		DNA locks on mechs will be removed, and any pilot will be ejected. Works on consoles. \
 		Makes a distinctive knocking sound on use."
 	gain_text = "Nothing may remain closed from my touch."
-	next_knowledge = list(/datum/heretic_knowledge/key_ring)
 	cost = 1
-	route = PATH_LOCK
-	depth = 3
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_lock"
 
@@ -112,15 +100,10 @@
 		/obj/item/card/id = 1,
 	)
 	result_atoms = list(/obj/item/card/id/advanced/heretic)
-	next_knowledge = list(
-		/datum/heretic_knowledge/mark/lock_mark,
-		/datum/heretic_knowledge/spell/mind_gate,
-	)
 	cost = 1
-	route = PATH_LOCK
 	research_tree_icon_path = 'icons/obj/card.dmi'
 	research_tree_icon_state = "card_gold"
-	depth = 4
+
 
 /datum/heretic_knowledge/mark/lock_mark
 	name = "Mark of Lock"
@@ -128,13 +111,9 @@
 		Attack a marked person to bar them from all passages for the duration of the mark. \
 		This will make it so that they have no access whatsoever, even public access doors will reject them."
 	gain_text = "The Gatekeeper was a corrupt Steward. She hindered her fellows for her own twisted amusement."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/lock)
-	route = PATH_LOCK
 	mark_type = /datum/status_effect/eldritch/lock
 
 /datum/heretic_knowledge/knowledge_ritual/lock
-	next_knowledge = list(/datum/heretic_knowledge/limited_amount/concierge_rite)
-	route = PATH_LOCK
 
 /datum/heretic_knowledge/limited_amount/concierge_rite // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
 	name = "Concierge's Rite"
@@ -147,36 +126,23 @@
 		/obj/item/multitool = 1,
 	)
 	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
-	next_knowledge = list(/datum/heretic_knowledge/spell/burglar_finesse)
 	cost = 1
-	route = PATH_LOCK
 	research_tree_icon_path = 'icons/obj/service/library.dmi'
 	research_tree_icon_state = "heretichandbook"
-	depth = 7
 
 /datum/heretic_knowledge/spell/burglar_finesse
 	name = "Burglar's Finesse"
 	desc = "Grants you Burglar's Finesse, a single-target spell \
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/opening_blast,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/blade_upgrade/flesh/lock,
-		/datum/heretic_knowledge/unfathomable_curio,
-		/datum/heretic_knowledge/painting,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 1
-	route = PATH_LOCK
-	depth = 8
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock //basically a chance-based weeping avulsion version of the former
 	name = "Opening Blade"
 	desc = "Your blade has a chance to cause a weeping avulsion on attack."
 	gain_text = "The Pilgrim-Surgeon was not an Steward. Nonetheless, its blades and sutures proved a match for their keys."
-	next_knowledge = list(/datum/heretic_knowledge/spell/caretaker_refuge)
-	route = PATH_LOCK
 	wound_type = /datum/wound/slash/flesh/critical
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_lock"
@@ -192,14 +158,8 @@
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
-	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/lock_final,
-		/datum/heretic_knowledge/spell/apetra_vulnera,
-	)
-	route = PATH_LOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1
-	depth = 10
 
 /datum/heretic_knowledge/ultimate/lock_final
 	name = "Unlock the Labyrinth"
@@ -215,7 +175,6 @@
 		My foes were the Locks and my blades were the Key! \
 		The Labyrinth will be Locked no more, and freedom will be ours! WITNESS US!"
 	required_atoms = list(/mob/living/carbon/human = 3)
-	route = PATH_LOCK
 	ascension_achievement = /datum/award/achievement/misc/lock_ascension
 
 /datum/heretic_knowledge/ultimate/lock_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)

@@ -754,4 +754,14 @@
 				'sound/mobs/humanoids/human/sigh/female_sigh2.ogg',
 				'sound/mobs/humanoids/human/sigh/female_sigh3.ogg',
 			)
+		if(SFX_WRITING_PEN)
+			soundin = pick(
+				'sound/effects/writing_pen/writing_pen1.ogg',
+				'sound/effects/writing_pen/writing_pen2.ogg',
+				'sound/effects/writing_pen/writing_pen3.ogg',
+				'sound/effects/writing_pen/writing_pen4.ogg',
+				'sound/effects/writing_pen/writing_pen5.ogg',
+				'sound/effects/writing_pen/writing_pen6.ogg',
+				'sound/effects/writing_pen/writing_pen7.ogg',
+			)
 	return soundin

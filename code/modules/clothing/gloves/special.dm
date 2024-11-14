@@ -115,6 +115,7 @@
 	armor_type = /datum/armor/latex_gloves
 	clothing_traits = list(TRAIT_QUICK_CARRY)
 	resistance_flags = NONE
+	equip_sound = 'sound/items/equip/glove_equip.ogg'
 
 /datum/armor/latex_gloves
 	bio = 100

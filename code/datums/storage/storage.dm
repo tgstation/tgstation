@@ -47,6 +47,8 @@
 	var/rustle_vary = TRUE
 	/// Path for the item's rustle sound.
 	var/rustle_sound = SFX_RUSTLE
+	/// Path for the item's rustle sound when removing items.
+	var/remove_rustle_sound = null
 	/// The sound to play when we open/access the storage
 	var/open_sound
 	var/open_sound_vary = TRUE
@@ -563,7 +565,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		thing.forceMove(remove_to_loc)
 
 		if(do_rustle && !silent)
-			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+			if(remove_rustle_sound)
+				playsound(parent, remove_rustle_sound, 50, TRUE, -5)
+			else
+				playsound(parent, rustle_sound, 50, TRUE, -5)
 	else
 		thing.moveToNullspace()
 

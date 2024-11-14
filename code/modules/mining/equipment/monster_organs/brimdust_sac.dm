@@ -71,7 +71,7 @@
 	id = "brimdust_coating"
 	stacks = 0
 	max_stacks = 3
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	consumed_on_threshold = FALSE
 	alert_type = /atom/movable/screen/alert/status_effect/brimdust_coating
 	status_type = STATUS_EFFECT_REFRESH // Allows us to add one stack at a time by just applying the effect

@@ -82,7 +82,7 @@
 
 /datum/fish_source/icecat_hot_spring
 	fish_table = list(
-		/obj/item/fish/dwarf_moonfish = 5,
+		/obj/item/fish/moonfish/dwarf = 5,
 		/obj/item/fish/needlefish = 10,
 		/obj/item/fish/armorfish = 10,
 		/obj/item/fish/chasm_crab/ice = 5,

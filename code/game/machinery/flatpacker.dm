@@ -165,9 +165,8 @@
 		qdel(null_comp)
 	return costs
 
-/obj/machinery/flatpacker/item_interaction(mob/living/user, obj/item/attacking_item, params)
-	. = NONE
-	if(user.combat_mode || attacking_item.flags_1 & HOLOGRAM_1 || attacking_item.item_flags & ABSTRACT)
+/obj/machinery/flatpacker/base_item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
+	if(attacking_item.flags_1 & HOLOGRAM_1 || attacking_item.item_flags & ABSTRACT)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	if(istype(attacking_item, /obj/item/circuitboard/machine))
@@ -192,6 +191,8 @@
 
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
+
+	return ..()
 
 /obj/machinery/flatpacker/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
