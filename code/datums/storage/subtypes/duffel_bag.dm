@@ -3,6 +3,16 @@
 	max_slots = 21
 	exception_hold = list(/obj/item/fish_tank)
 
+/datum/storage/duffel/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
+	. = ..()
+	var/static/list/exception_cache = typecacheof(list(/obj/item/fish_tank))
+	exception_hold = exception_cache
+
 // Syndi bags get some FUN extras
 // You can fit any 2 bulky objects (assuming they're in the whitelist)
 // Should have traitorus stuff in here, not just useful big things
@@ -60,7 +70,7 @@
 		// Storage
 		/obj/item/storage/bag/money,
 		// Heads!
-		/obj/item/bodypart/head,
+		/obj/item/bodypart/head
 		// Fish
 		/obj/item/fish,
 		/obj/item/fish_tank,
