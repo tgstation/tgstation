@@ -52,8 +52,9 @@
 				new_part.setDir(WEST)
 				hub_parts += new_part
 			else
-				new_part = new/obj/structure/plasma_extraction_hub/part(spawned_turf)
+				new_part = new /obj/structure/plasma_extraction_hub/part(spawned_turf)
 		new_part.pipe_owner = src
+	pipe_owner = src //set ourselves as the pipe owner too.
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/interact(mob/user)
 	. = ..()
@@ -109,6 +110,10 @@
 
 #define AMOUNT_COMPLETED_PER_DOT 5
 
+/obj/effect/bar_hud_display/plasma_bar/examine(mob/user)
+	. = ..()
+	. += span_notice("It is currently showing [active_dots*AMOUNT_COMPLETED_PER_DOT]% filled of [display_title].")
+
 ///A variant of the hud display panel for life shards, this one is set up to display two columns.
 /obj/effect/bar_hud_display/plasma_bar
 	name = "concentrated plasma extracted"
@@ -120,9 +125,5 @@
 	dot_icon_state = "gem_purple"
 	dot_icon_state_empty = "gem_red_empty"
 	display_title = "extracted plasma"
-
-/obj/effect/bar_hud_display/plasma_bar/examine(mob/user)
-	. = ..()
-	. += span_notice("It is currently showing [active_dots*AMOUNT_COMPLETED_PER_DOT]% filled of [display_title].")
 
 #undef AMOUNT_COMPLETED_PER_DOT

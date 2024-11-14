@@ -49,7 +49,3 @@
 				gem_overlay.pixel_z = gem_row * individual_dot_offset_y + bar_offset_z
 				gem_overlay.pixel_w = (gem - 1) * individual_dot_offset_x + bar_offset_w
 				. += gem_overlay
-
-/obj/effect/bar_hud_display/examine(mob/user)
-	. = ..()
-	. += span_notice("It is currently showing [active_dots] out of [dot_slots] [display_title].")

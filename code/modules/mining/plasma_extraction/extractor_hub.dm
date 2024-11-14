@@ -2,9 +2,10 @@
 TODO LIST:
 - GIVE THE PLASMA EXTRACTION MACHINE ITS OWN SPRITE
 - GIVE PIPES THEIR OWN SPRITE, ESPECIALLY THE END (CURRENTLY A DISPOSAL BIN WTF!!)
-- GIVE REWARDS FOR COMPLETION - BASICALLY: https://hackmd.io/6ggJpRGMRs2g4sKxpIBeMA?view
+- GIVE REWARDS FOR COMPLETION - BASICALLY: https://hackmd.io/6ggJpRGMRs2g4sKxpIBeMA?view. CURRENTLY THINKING SOME SPECIAL CARGO IMPORT.
 - CHANGE HOW LONG IT TAKES TO MINE & ADD FAUNAS SPAWNING TO ATTACK IT.
 - MAKE IT EXIST IN-GAME SO IT IS SOMETHING PLAYERS CAN ACTUALLY DO
+- MAKE IT A SEPARATE MINING OBJECTIVE FOR THE STATION
 */
 
 
@@ -25,7 +26,7 @@ TODO LIST:
  * All parts that don't have a pipe, use this.
  */
 /obj/structure/plasma_extraction_hub/part
-	///The main pipe that owns us as part of our 3x3 machine.
+	///The main pipe that owns the whole 3x3 machine.
 	var/obj/structure/plasma_extraction_hub/part/pipe/main/pipe_owner
 
 /**
