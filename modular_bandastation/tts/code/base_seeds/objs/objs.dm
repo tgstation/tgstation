@@ -32,3 +32,6 @@
 
 /obj/machinery/scanner_gate/add_tts_component()
 	return
+
+/obj/machinery/announcement_system/add_tts_component()
+	return

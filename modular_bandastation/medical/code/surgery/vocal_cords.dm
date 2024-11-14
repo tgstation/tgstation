@@ -35,7 +35,7 @@
 		span_notice("[user] успешно настраивает голосовые связки [target]!"),
 		span_notice("[user] завершает операцию на голосовых связках [target]."),
 	)
-	target.change_tts_seed(user, TRUE)
+	target.change_tts_seed(user, TTS_OVERRIDE_GENDER)
 	return ..()
 
 /datum/surgery_step/tune_vocal_cords/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

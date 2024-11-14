@@ -33,7 +33,7 @@
 	SIGNAL_HANDLER
 	return tts_seed
 
-/datum/component/tts_component/proc/select_tts_seed(mob/chooser, silent_target = FALSE, override = FALSE, list/new_traits = null)
+/datum/component/tts_component/proc/select_tts_seed(mob/chooser, silent_target = FALSE, overrides, list/new_traits = null)
 	if(!chooser)
 		if(ismob(parent))
 			chooser = parent
@@ -58,16 +58,22 @@
 				INVOKE_ASYNC(SStts220, TYPE_PROC_REF(/datum/controller/subsystem/tts220, get_tts), null, chooser, tts_test_str, new_tts_seed, FALSE, get_effect())
 				return new_tts_seed
 
-	var/tts_seeds
-	var/list/tts_seeds_by_gender = SStts220.get_tts_by_gender(being_changed.gender)
-	tts_seeds_by_gender |= SStts220.get_tts_by_gender(NEUTER)
-	if(!length(tts_seeds_by_gender))
+	var/list/tts_seeds = list()
+	// Check gender restrictions
+	if(check_rights(R_ADMIN, FALSE, chooser) || overrides & TTS_OVERRIDE_GENDER || !ismob(being_changed))
+		tts_seeds |= SStts220.get_tts_by_gender(MALE)
+		tts_seeds |= SStts220.get_tts_by_gender(FEMALE)
+		tts_seeds |= SStts220.get_tts_by_gender(NEUTER)
+		tts_seeds |= SStts220.get_tts_by_gender(PLURAL)
+	else
+		tts_seeds |= SStts220.get_tts_by_gender(being_changed.gender)
+		tts_seeds |= SStts220.get_tts_by_gender(NEUTER)
+	// Check donation restrictions
+	if(!check_rights(R_ADMIN, FALSE, chooser) && !(overrides & TTS_OVERRIDE_TIER))
+		tts_seeds = tts_seeds && SStts220.get_available_seeds(being_changed) // && for lists means intersection
+	if(!length(tts_seeds))
 		to_chat(chooser, span_warning("Не удалось найти голоса для пола! Текущий голос - [tts_seed.name]"))
 		return null
-	if(check_rights(R_ADMIN, FALSE, chooser) || override || !ismob(being_changed))
-		tts_seeds = tts_seeds_by_gender
-	else
-		tts_seeds = tts_seeds_by_gender && SStts220.get_available_seeds(being_changed) // && for lists means intersection
 
 	var/new_tts_seed_key
 	new_tts_seed_key = tgui_input_list(chooser, "Выберите голос персонажа", "Преобразуем голос", tts_seeds, tts_seed.name)
@@ -87,9 +93,9 @@
 
 	return new_tts_seed
 
-/datum/component/tts_component/proc/tts_seed_change(atom/being_changed, mob/chooser, override = FALSE, list/new_traits = null)
+/datum/component/tts_component/proc/tts_seed_change(atom/being_changed, mob/chooser, overrides, list/new_traits = null)
 	set waitfor = FALSE
-	var/datum/tts_seed/new_tts_seed = select_tts_seed(chooser = chooser, override = override, new_traits = new_traits)
+	var/datum/tts_seed/new_tts_seed = select_tts_seed(chooser = chooser, overrides = overrides, new_traits = new_traits)
 	if(!new_tts_seed)
 		return null
 	tts_seed = new_tts_seed
@@ -156,8 +162,6 @@
 
 // Component usage
 
-/mob/living/silicon/verb/synth_change_voice()
-	set name = "Смена голоса"
-	set desc = "Express yourself!"
-	set category = "Silicon Commands"
-	change_tts_seed(src, new_traits = list(TTS_TRAIT_ROBOTIZE))
+/mob/living/silicon/Initialize(mapload)
+	. = ..()
+	GRANT_ACTION(/datum/action/innate/voice_change/genderless/robotic)
