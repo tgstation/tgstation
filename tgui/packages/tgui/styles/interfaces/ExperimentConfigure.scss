@@ -1,12 +1,12 @@
 .ExperimentTechwebServer__Web,
 .ExperimentConfigure__ExperimentPanel {
-  background: #000000;
-  border: 1px solid #40628a;
+  background: hsl(0, 0%, 0%);
+  border: 1px solid hsl(210, 33%, 41%);
   margin: 3px 0;
 }
 
 .ExperimentTechwebServer__WebHeader {
-  background: #40628a;
+  background: hsl(210, 33%, 41%);
   padding: 2px;
 }
 
@@ -81,5 +81,5 @@
   height: 100%;
   right: 0;
   top: 0;
-  color: rgba(255, 255, 255, 0.5);
+  color: hsla(0, 0%, 100%, 0.5);
 }

@@ -26,8 +26,8 @@
 }
 
 .BoardTab__Selected {
-  background-color: #edcf64;
-  border-bottom: 1px solid #edcf64;
+  background-color: hsl(45, 82%, 66%);
+  border-bottom: 1px solid hsl(45, 82%, 66%);
   transition: all 0.2s;
 }
 
@@ -37,21 +37,21 @@
   overflow: hidden;
 }
 .Evidence__Pin {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  background-color: #db2828;
+  box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.2);
+  background-color: hsl(0, 72%, 50%);
   border-radius: 20px;
   width: 15px;
   height: 15px;
 }
 
 .Evidence__Box {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.4);
   padding: 5px;
   color: black;
   min-width: 200px;
   max-width: 300px;
-  background-color: white;
-  border: 2px solid grey;
+  background-color: hsl(0, 0%, 100%);
+  border: 2px solid hsl(0, 0%, 50%);
   -ms-user-select: none;
   user-select: none;
   text-wrap: wrap;
@@ -59,7 +59,7 @@
 }
 
 .Evidence__Box__TextBox {
-  border-top: 1px solid #eaeaea;
+  border-top: 1px solid hsl(0, 0%, 92%);
   text-wrap: wrap;
   padding: 5px 0;
   margin-top: 5px;
@@ -74,7 +74,7 @@
 
 .Board__Content {
   position: relative;
-  background-color: #edcf64;
+  background-color: hsl(45, 82%, 66%);
   padding: 5px;
   overflow: hidden;
   height: 95%;
@@ -82,7 +82,7 @@
 
 .Evidence__Icon {
   margin-top: 5px;
-  border: 5px solid #e0e0e0;
+  border: 5px solid hsl(0, 0%, 88%);
   width: 100%;
 }
 

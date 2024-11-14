@@ -305,5 +305,8 @@
 /// Trait added by style component
 #define STYLE_TRAIT "style"
 
+/// Trait added by a xenobio console
+#define XENOBIO_CONSOLE_TRAIT "xenobio_console_trait"
+
 /// Trait from an engraving
 #define ENGRAVED_TRAIT "engraved"
