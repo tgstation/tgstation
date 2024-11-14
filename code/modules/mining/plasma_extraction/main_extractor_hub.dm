@@ -13,13 +13,17 @@
 	var/drilling = FALSE
 	///List of all parts connected to the extraction hub, not including ourselves.
 	var/list/obj/structure/plasma_extraction_hub/hub_parts = list()
+	///Looping sound of the plasma engine running, extracting plasma.
+	var/datum/looping_sound/plasma_engine/extracting_soundloop
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/Initialize(mapload)
 	. = ..()
 	setup_parts()
+	extracting_soundloop = new(src, FALSE)
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/Destroy()
 	QDEL_LIST(hub_parts)
+	QDEL_NULL(extracting_soundloop)
 	if(display_panel_ref)
 		QDEL_NULL(display_panel_ref)
 	return ..()
@@ -53,7 +57,10 @@
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/interact(mob/user)
 	. = ..()
-	var/ready_to_start = tgui_alert(user, "[drilling ? "Stop" : "Start"] collecting liquid plasma", (drilling ? "Really stop drilling?" : "Ready to go?"), list("Yes", "No"))
+	if(percentage_of_plasma_mined >= 100)
+		balloon_alert(user, "extraction completed")
+		return
+	var/ready_to_start = tgui_alert(user, "[drilling ? "Stop" : "Start"] collecting liquid plasma? Monsters may start to attack the pipes.", (drilling ? "Really stop drilling?" : "Ready to start?"), list("Yes", "No"))
 	if(ready_to_start != "Yes")
 		return
 	toggle_mining(user)
@@ -63,6 +70,7 @@
 		QDEL_NULL(display_panel_ref)
 		drilling = FALSE
 		STOP_PROCESSING(SSprocessing, src)
+		extracting_soundloop.stop()
 		for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
 			pipe_parts.stop_drilling()
 		return
@@ -74,18 +82,23 @@
 	display_panel_ref = new(locate(x + 2, y, z))
 	for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
 		pipe_parts.start_drilling()
+	extracting_soundloop.start(src)
 	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/process(seconds_per_tick)
-	if(HAS_TRAIT(src, TRAIT_FROZEN)) //halp
+	if(HAS_TRAIT(src, TRAIT_FROZEN) || percentage_of_plasma_mined >= 100) //halp
 		return
 	var/broken_hub = FALSE
 	for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
 		if(!pipe_parts.currently_functional)
 			broken_hub = TRUE
 			break
-	if(broken_hub || percentage_of_plasma_mined >= 100)
+	if(broken_hub)
+		if(extracting_soundloop.is_active())
+			extracting_soundloop.stop()
 		return
+	if(!extracting_soundloop.is_active())
+		extracting_soundloop.start(src)
 	percentage_of_plasma_mined += clamp(1, 0, 100) * seconds_per_tick
 	if(percentage_of_plasma_mined >= 100)
 		QDEL_NULL(display_panel_ref)
@@ -94,14 +107,22 @@
 	display_panel_ref.active_dots = round(percentage_of_plasma_mined / 5, 1)
 	display_panel_ref.update_appearance(UPDATE_OVERLAYS)
 
+#define AMOUNT_COMPLETED_PER_DOT 5
+
 ///A variant of the hud display panel for life shards, this one is set up to display two columns.
 /obj/effect/bar_hud_display/plasma_bar
 	name = "concentrated plasma extracted"
 
-	dot_slots = 20
+	dot_slots = 20 //Each dot represents 5% of completion.
 	bar_offset_w = 3
 	individual_dot_offset_x = -5
 	number_of_columns = 2
 	dot_icon_state = "gem_purple"
 	dot_icon_state_empty = "gem_red_empty"
 	display_title = "extracted plasma"
+
+/obj/effect/bar_hud_display/plasma_bar/examine(mob/user)
+	. = ..()
+	. += span_notice("It is currently showing [active_dots*AMOUNT_COMPLETED_PER_DOT]% filled of [display_title].")
+
+#undef AMOUNT_COMPLETED_PER_DOT

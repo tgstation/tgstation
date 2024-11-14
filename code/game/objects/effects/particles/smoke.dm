@@ -120,3 +120,10 @@
 	gravity = list(0.05, 0.28)
 	friction = 0.3
 	grow = 0.037
+
+/particles/smoke/plasma
+	lifespan = 1 SECONDS
+	spawning = 2
+	position = list(0, -13, 0)
+	velocity = list(0, 0.4, 0)
+	color = COLOR_STRONG_VIOLET

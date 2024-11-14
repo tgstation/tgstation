@@ -11,3 +11,15 @@
 /obj/structure/liquid_plasma_geyser/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Toxic Signal")
+	particles = new /particles/smoke/plasma()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/liquid_plasma_geyser/Destroy(force)
+	QDEL_NULL(particles)
+	return ..()
+
+/obj/structure/liquid_plasma_geyser/update_overlays()
+	. = ..()
+	var/mutable_appearance/plasma_overlay = mutable_appearance('icons/obj/mining_zones/terrain.dmi', "[icon_state]_soup")
+	plasma_overlay.color = COLOR_PLASMIUM_PURPLE
+	. += plasma_overlay

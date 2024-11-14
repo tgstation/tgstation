@@ -403,6 +403,10 @@ GLOBAL_LIST_EMPTY(tcgcard_health_bar_radial_choices)
 	dot_icon_state_empty = "gem_blue_empty"
 	display_title = "mana"
 
+/obj/effect/bar_hud_display/tcg_mana/examine(mob/user)
+	. = ..()
+	. += span_notice("It is currently showing [active_dots] out of [dot_slots] [display_title].")
+
 ///A variant of the hud display panel for life shards, this one is set up to display two columns.
 /obj/effect/bar_hud_display/tcg_health
 	name = "life shard panel"
@@ -416,3 +420,7 @@ GLOBAL_LIST_EMPTY(tcgcard_health_bar_radial_choices)
 	dot_icon_state = "gem_red"
 	dot_icon_state_empty = "gem_red_empty"
 	display_title = "life shards"
+
+/obj/effect/bar_hud_display/tcg_health/examine(mob/user)
+	. = ..()
+	. += span_notice("It is currently showing [active_dots] out of [dot_slots] [display_title].")

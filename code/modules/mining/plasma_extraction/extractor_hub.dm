@@ -1,12 +1,10 @@
 /*
 TODO LIST:
-- GIVE GEYSERS THEIR OWN SPRITE
 - GIVE THE PLASMA EXTRACTION MACHINE ITS OWN SPRITE
-- GIVE PIPES THEIR OWN SPRITE (MAYBE ??)
+- GIVE PIPES THEIR OWN SPRITE, ESPECIALLY THE END (CURRENTLY A DISPOSAL BIN WTF!!)
 - GIVE REWARDS FOR COMPLETION - BASICALLY: https://hackmd.io/6ggJpRGMRs2g4sKxpIBeMA?view
 - CHANGE HOW LONG IT TAKES TO MINE & ADD FAUNAS SPAWNING TO ATTACK IT.
 - MAKE IT EXIST IN-GAME SO IT IS SOMETHING PLAYERS CAN ACTUALLY DO
-- ADD A SOUND LOOP WHILE THE MAIN EXTRACTION HUB IS DRILLING
 */
 
 
@@ -59,8 +57,11 @@ TODO LIST:
  */
 /obj/structure/plasma_extraction_hub/part/pipe/proc/on_pipe_destroyed(obj/structure/liquid_plasma_extraction_pipe/broken_pipe)
 	var/position_in_list = connected_pipes.Find(broken_pipe)
-	var/obj/structure/liquid_plasma_extraction_pipe/previous_pipe = connected_pipes[position_in_list - 1]
-	previous_pipe.AddComponent(/datum/component/pipe_laying, src)
+	if(position_in_list <= 1) //the first pipe won't have a previous pipe, so it goes back to us.
+		AddComponent(/datum/component/pipe_laying, src)
+	else
+		var/obj/structure/liquid_plasma_extraction_pipe/previous_pipe = connected_pipes[position_in_list - 1]
+		previous_pipe.AddComponent(/datum/component/pipe_laying, src)
 	for(var/obj/structure/liquid_plasma_extraction_pipe/part_pipes as anything in connected_pipes)
 		var/list_item_in_list = connected_pipes.Find(part_pipes)
 		if(list_item_in_list > position_in_list)

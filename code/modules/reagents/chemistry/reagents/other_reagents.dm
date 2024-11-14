@@ -2695,7 +2695,7 @@
 /datum/reagent/plasma_oxide
 	name = "Hyper-Plasmium Oxide"
 	description = "Compound created deep in the cores of demon-class planets. Commonly found through deep geysers."
-	color = "#470750" // rgb: 255, 255, 255
+	color = COLOR_PLASMIUM_PURPLE // rgb: 255, 255, 255
 	taste_description = "hell"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
