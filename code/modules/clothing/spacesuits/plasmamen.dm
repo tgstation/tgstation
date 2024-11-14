@@ -140,8 +140,8 @@
 		set_light_on(FALSE)
 		helmet_on = FALSE
 	if(up)
-			playsound(src, SFX_VISOR_UP, 50, TRUE)
-			return
+		playsound(src, SFX_VISOR_UP, 50, TRUE)
+	else
 		playsound(src, SFX_VISOR_DOWN, 50, TRUE) //Visors don't just come from nothing
 	update_appearance()
 
