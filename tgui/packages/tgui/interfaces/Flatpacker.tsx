@@ -13,7 +13,6 @@ import { BooleanLike } from 'tgui-core/react';
 import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { TableCell } from '../components/Table';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialIcon } from './Fabrication/MaterialIcon';
@@ -181,11 +180,11 @@ const CostPreview = (props: CostPreviewProps) => {
                   />
                 </div>
               </Table.Cell>
-              <TableCell verticalAlign="middle">
+              <Table.Cell verticalAlign="middle">
                 <div style={{ width: '200px' }}>
                   {toTitleCase(material.name)}
                 </div>
-              </TableCell>
+              </Table.Cell>
               <Table.Cell verticalAlign="middle">
                 <div style={{ width: '200px' }}>
                   {(material.amount / SHEET_MATERIAL_AMOUNT).toFixed(2)}
