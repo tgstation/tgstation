@@ -245,3 +245,13 @@
 	name = "Plain"
 	icon_state = "plain"
 	body_zones = HEAD | CHEST | ARM_LEFT | ARM_RIGHT | HAND_LEFT | HAND_RIGHT | LEG_RIGHT | LEG_LEFT
+
+/datum/sprite_accessory/body_marking/secondary/upper
+	name = "Upper Limb"
+	icon_state = "upper"
+	body_zones = ARM_LEFT | ARM_RIGHT | LEG_RIGHT | LEG_LEFT
+
+/datum/sprite_accessory/body_marking/secondary/lower
+	name = "Lower Limb"
+	icon_state = "lower"
+	body_zones = ARM_LEFT | ARM_RIGHT | LEG_RIGHT | LEG_LEFT
