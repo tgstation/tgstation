@@ -725,6 +725,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Mobs won't slip on a wet turf while it has this trait
 #define TRAIT_TURF_IGNORE_SLIPPERY "turf_ignore_slippery"
 
+///failsafe for whether an item with the beauty element is influencing the beauty of the area of not.
+#define TRAIT_BEAUTY_APPLIED "beauty_applied"
+
 /// Mobs with this trait can't send the mining shuttle console when used outside the station itself
 #define TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION "forbid_mining_shuttle_console_outside_station"
 
