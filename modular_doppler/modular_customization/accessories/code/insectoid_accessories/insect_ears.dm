@@ -12,3 +12,15 @@
 /datum/sprite_accessory/ears_more/bug/default
 	name = "Royal"
 	icon_state = "royal"
+
+/datum/sprite_accessory/ears_more/bug/setaceous
+	name = "Setaceous Antenna"
+	icon_state = "setaceous"
+
+/datum/sprite_accessory/ears_more/bug/setaceousm
+	name = "Medium Setaceous Antenna"
+	icon_state = "setaceousm"
+
+/datum/sprite_accessory/ears_more/bug/geniculate
+	name = "Geniculate Antenna"
+	icon_state = "geniculate"

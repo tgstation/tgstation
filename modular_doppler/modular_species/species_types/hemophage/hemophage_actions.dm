@@ -26,7 +26,7 @@
 	if(!owner || !ishuman(owner) || !target)
 		return
 
-	var/obj/item/organ/internal/heart/hemophage/tumor = target
+	var/obj/item/organ/heart/hemophage/tumor = target
 	if(!tumor || !istype(tumor)) // This shouldn't happen, but you can never be too careful.
 		return
 

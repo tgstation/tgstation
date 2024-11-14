@@ -22,25 +22,25 @@
 
 /// Monkey tail
 //	now waggable!
-/obj/item/organ/external/tail/monkey
+/obj/item/organ/tail/monkey
 	name = "monkey tail"
 	wag_flags = WAG_ABLE
 
-/obj/item/organ/external/tail/monkey/Initialize(mapload)
+/obj/item/organ/tail/monkey/Initialize(mapload)
 	. = ..()
 	create_storage(storage_type = /datum/storage/tail)
 	AddComponent(/datum/component/accessable_storage/organ)
 
 /// Mouse tail
 //	Monkey and mouse tail get a (secret) additional inventory slot
-/obj/item/organ/external/tail/mouse
+/obj/item/organ/tail/mouse
 	name = "mouse tail"
 	preference = "feature_mouse_tail"
 	dna_block = null
 	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/mouse
 
-/obj/item/organ/external/tail/mouse/Initialize(mapload)
+/obj/item/organ/tail/mouse/Initialize(mapload)
 	. = ..()
 	create_storage(storage_type = /datum/storage/tail)
 	AddComponent(/datum/component/accessable_storage/organ)
@@ -53,7 +53,7 @@
 
 /// Dog tail
 //	Buffs people if they're closeby while you're wagging it!
-/obj/item/organ/external/tail/dog
+/obj/item/organ/tail/dog
 	preference = "feature_dog_tail"
 	dna_block = null
 	wag_flags = WAG_ABLE
@@ -68,17 +68,17 @@
 	return SSaccessories.tails_list_dog
 
 // Create the proximity monitor when we start wagging, thanks TG for this proc!
-/obj/item/organ/external/tail/dog/start_wag(mob/living/carbon/organ_owner, stop_after = INFINITY)
+/obj/item/organ/tail/dog/start_wag(mob/living/carbon/organ_owner, stop_after = INFINITY)
 	. = ..()
 	if(!mood_buff)
 		mood_buff = new(organ_owner, 3, TRUE)
 
-/obj/item/organ/external/tail/dog/stop_wag(mob/living/carbon/organ_owner)
+/obj/item/organ/tail/dog/stop_wag(mob/living/carbon/organ_owner)
 	. = ..()
 	if(mood_buff)
 		QDEL_NULL(mood_buff)
 
-/obj/item/organ/external/tail/dog/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
+/obj/item/organ/tail/dog/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(mood_buff)
 		QDEL_NULL(mood_buff)
@@ -93,7 +93,7 @@
 
 /// Fox tail
 //
-/obj/item/organ/external/tail/fox
+/obj/item/organ/tail/fox
 	preference = "feature_fox_tail"
 	dna_block = null
 	wag_flags = WAG_ABLE
@@ -107,7 +107,7 @@
 
 /// Bunny tail
 //
-/obj/item/organ/external/tail/bunny
+/obj/item/organ/tail/bunny
 	preference = "feature_bunny_tail"
 	dna_block = null
 	wag_flags = WAG_ABLE
@@ -121,7 +121,7 @@
 
 /// Bird tail
 //
-/obj/item/organ/external/tail/bird
+/obj/item/organ/tail/bird
 	preference = "feature_bird_tail"
 	dna_block = null
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/bird
@@ -134,7 +134,7 @@
 
 /// Bug tail
 //
-/obj/item/organ/external/tail/bug
+/obj/item/organ/tail/bug
 	preference = "feature_bug_tail"
 	dna_block = null
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/bug
@@ -147,7 +147,7 @@
 
 /// Deer tail
 //
-/obj/item/organ/external/tail/deer
+/obj/item/organ/tail/deer
 	preference = "feature_deer_tail"
 	dna_block = null
 	wag_flags = WAG_ABLE
@@ -161,38 +161,31 @@
 
 /// Fish tail
 //
-/obj/item/organ/external/tail/fish
+/obj/item/organ/tail/fish
 	preference = "feature_fish_tail"
-	dna_block = null
-	wag_flags = WAG_ABLE
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
+	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER, TRAIT_FLOPPING)
 
-/datum/bodypart_overlay/mutant/tail/fish
-	feature_key = "tail_other"
-
-/datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
-	return SSaccessories.tails_list_fish
-
-/// Synth tail
+/// Cybernetic tail
 //
-/obj/item/organ/external/tail/synthetic
+/obj/item/organ/tail/cybernetic
 	preference = "feature_synth_tail"
 	dna_block = null
 	organ_flags = ORGAN_ROBOTIC
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/synthetic
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cybernetic
 
-/datum/bodypart_overlay/mutant/tail/synthetic
+/datum/bodypart_overlay/mutant/tail/cybernetic
 	feature_key = "tail_other"
 
-/datum/bodypart_overlay/mutant/tail/synthetic/get_global_feature_list()
+/datum/bodypart_overlay/mutant/tail/cybernetic/get_global_feature_list()
 	return SSaccessories.tails_list_synth
 
 
 /// Humanoid tail
 //
-/obj/item/organ/external/tail/humanoid
+/obj/item/organ/tail/humanoid
 	preference = "feature_humanoid_tail"
 	dna_block = null
+	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/humanoid
 
 /datum/bodypart_overlay/mutant/tail/humanoid
@@ -200,3 +193,18 @@
 
 /datum/bodypart_overlay/mutant/tail/humanoid/get_global_feature_list()
 	return SSaccessories.tails_list_humanoid
+
+
+/// Alien tail
+//
+/obj/item/organ/tail/alien
+	preference = "feature_alien_tail"
+	dna_block = null
+	wag_flags = WAG_ABLE
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/alien
+
+/datum/bodypart_overlay/mutant/tail/alien
+	feature_key = "tail_other"
+
+/datum/bodypart_overlay/mutant/tail/alien/get_global_feature_list()
+	return SSaccessories.tails_list_alien

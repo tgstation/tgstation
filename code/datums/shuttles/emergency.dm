@@ -31,13 +31,13 @@
 		mobile.event_list.Cut()
 	if(use_all_events)
 		for(var/path in events)
-			mobile.event_list.Add(new path(mobile))
+			mobile.add_shuttle_event(path)
 			events -= path
 	else
 		for(var/i in 1 to event_amount)
 			var/path = pick_weight(events)
 			events -= path
-			mobile.event_list.Add(new path(mobile))
+			mobile.add_shuttle_event(path)
 
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"
@@ -476,6 +476,14 @@
 	moderately comfortable and large, but cramped."
 	credit_cost = CARGO_CRATE_VALUE * 14
 	occupancy_limit = "55"
+
+/datum/map_template/shuttle/emergency/nebula
+	suffix = "nebula"
+	name = "Nebula Station Emergency Shuttle"
+	description = "AAn excellent luxury shuttle for transporting a large number of passengers. \
+	It is richly equipped with bushes and free oxygen"
+	credit_cost = CARGO_CRATE_VALUE * 18
+	occupancy_limit = "80"
 
 /datum/map_template/shuttle/emergency/raven
 	suffix = "raven"

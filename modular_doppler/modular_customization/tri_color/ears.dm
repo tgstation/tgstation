@@ -1,5 +1,5 @@
 // Gotta add to the ears selector
-/datum/preference/choiced/ears/compile_constant_data()
+/datum/preference/choiced/felinid_ears/compile_constant_data()
 	var/list/data = ..()
 	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/ears_color::savefile_key
 	return data
@@ -60,6 +60,11 @@
 	return data
 
 /datum/preference/choiced/synthetic_ears/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/ears_color::savefile_key
+	return data
+
+/datum/preference/choiced/alien_ears/compile_constant_data()
 	var/list/data = ..()
 	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/ears_color::savefile_key
 	return data

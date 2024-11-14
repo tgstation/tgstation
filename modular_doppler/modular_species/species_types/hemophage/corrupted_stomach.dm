@@ -1,9 +1,9 @@
 /datum/component/organ_corruption/stomach
-	corruptable_organ_type = /obj/item/organ/internal/stomach
+	corruptable_organ_type = /obj/item/organ/stomach
 	corrupted_icon_state = "stomach"
 
 
-/datum/component/organ_corruption/stomach/corrupt_organ(obj/item/organ/internal/corruption_target)
+/datum/component/organ_corruption/stomach/corrupt_organ(obj/item/organ/corruption_target)
 	. = ..()
 
 	if(!.)
@@ -18,7 +18,7 @@
 	UnregisterSignal(parent, COMSIG_STOMACH_AFTER_EAT)
 
 
-/datum/component/organ_corruption/stomach/proc/on_stomach_after_eat(obj/item/organ/internal/stomach/tummy, atom/edible)
+/datum/component/organ_corruption/stomach/proc/on_stomach_after_eat(obj/item/organ/stomach/tummy, atom/edible)
 	SIGNAL_HANDLER
 
 	if(!istype(edible, /obj/item/food))
@@ -29,7 +29,7 @@
 	if(BLOODY & eaten.foodtypes) // They're good if it's BLOODY food, they're less good if it isn't.
 		return
 
-	var/obj/item/organ/internal/parent_organ = parent
+	var/obj/item/organ/parent_organ = parent
 
 	if(parent_organ.owner && HAS_TRAIT(parent_organ.owner, TRAIT_AGEUSIA)) // They don't taste anything, their body shouldn't react strongly to the taste of that stuff.
 		return

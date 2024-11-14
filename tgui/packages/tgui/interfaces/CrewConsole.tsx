@@ -126,6 +126,8 @@ type CrewSensor = {
   name: string;
   assignment: string | undefined;
   ijob: number;
+  charge: string | undefined; // DOPPLER ADDITION
+  is_robot: any; // DOPPLER ADDITION
   life_status: number;
   oxydam: number;
   toxdam: number;
@@ -229,6 +231,8 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
     name,
     assignment,
     ijob,
+    charge, // DOPPLER ADDITION
+    is_robot, // DOPPLER ADDITION
     life_status,
     oxydam,
     toxdam,
@@ -245,6 +249,12 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
         {assignment !== undefined ? ` (${assignment})` : ''}
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
+        {/* DOPPLER ADDITION START */}
+        {is_robot ? <Icon name="bolt" color="#FFE254" size={1} /> : ''}
+        {charge !== undefined ? ` ${charge}` : ''}
+      </Table.Cell>
+      <Table.Cell collapsing textAlign="center">
+        {/* DOPPLER ADDITION END */}
         {oxydam !== undefined ? (
           <Icon
             name={statToIcon(life_status)}

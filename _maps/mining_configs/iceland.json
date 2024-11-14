@@ -8,7 +8,6 @@
 	"planetary": 1,
 	"traits": [
 		{
-			"Up": true,
 			"Mining": true,
 			"No Parallax": true,
 			"Ice Ruins Underground": true,
@@ -18,8 +17,6 @@
 			"Linkage": null
 		},
 		{
-			"Up": true,
-			"Down": true,
 			"Mining": true,
 			"No Parallax": true,
 			"Ice Ruins Underground": true,
@@ -28,7 +25,6 @@
 			"Linkage": null
 		},
 		{
-			"Down": true,
 			"Mining": true,
 			"No Parallax": true,
 			"Weather_Snowstorm": true,

@@ -303,7 +303,7 @@
 	var/datum/status_effect/eldritch/mark_type
 
 /datum/heretic_knowledge/mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
+	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 
 /datum/heretic_knowledge/mark/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
@@ -327,6 +327,8 @@
 /datum/heretic_knowledge/mark/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
 
+	if(!isliving(target))
+		return
 	trigger_mark(source, target)
 
 /**
@@ -613,15 +615,15 @@
 /datum/heretic_knowledge/knowledge_ritual/New()
 	. = ..()
 	var/static/list/potential_organs = list(
-		/obj/item/organ/internal/appendix,
-		/obj/item/organ/external/tail,
-		/obj/item/organ/internal/eyes,
-		/obj/item/organ/internal/tongue,
-		/obj/item/organ/internal/ears,
-		/obj/item/organ/internal/heart,
-		/obj/item/organ/internal/liver,
-		/obj/item/organ/internal/stomach,
-		/obj/item/organ/internal/lungs,
+		/obj/item/organ/appendix,
+		/obj/item/organ/tail,
+		/obj/item/organ/eyes,
+		/obj/item/organ/tongue,
+		/obj/item/organ/ears,
+		/obj/item/organ/heart,
+		/obj/item/organ/liver,
+		/obj/item/organ/stomach,
+		/obj/item/organ/lungs,
 	)
 
 	var/static/list/potential_easy_items = list(

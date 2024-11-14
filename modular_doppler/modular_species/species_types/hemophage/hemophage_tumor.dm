@@ -15,7 +15,7 @@
 #define TRAIT_TUMOR "tumor"
 
 
-/obj/item/organ/internal/heart/hemophage
+/obj/item/organ/heart/hemophage
 	name = "pulsating tumor"
 	icon = 'modular_doppler/modular_species/species_types/hemophage/icons/hemophage_organs.dmi'
 	icon_state = "tumor-on"
@@ -29,7 +29,7 @@
 	/// hud element to display our blood level
 	var/atom/movable/screen/hemophage/blood/blood_tracker
 
-/obj/item/organ/internal/heart/hemophage/Insert(mob/living/carbon/tumorful, special, movement_flags)
+/obj/item/organ/heart/hemophage/Insert(mob/living/carbon/tumorful, special, movement_flags)
 	. = ..()
 	if(!. || !owner)
 		return
@@ -38,7 +38,7 @@
 	tumorful.AddElement(/datum/element/tumor_corruption)
 	RegisterSignal(tumorful, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
-/obj/item/organ/internal/heart/hemophage/Remove(mob/living/carbon/tumorless, special = FALSE, movement_flags)
+/obj/item/organ/heart/hemophage/Remove(mob/living/carbon/tumorless, special = FALSE, movement_flags)
 	. = ..()
 
 	SEND_SIGNAL(tumorless, COMSIG_PULSATING_TUMOR_REMOVED, tumorless)
@@ -63,7 +63,7 @@
 		hud_used.infodisplay -= blood_tracker
 		QDEL_NULL(blood_tracker)
 
-/obj/item/organ/internal/heart/hemophage/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/hemophage/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
 	// A Hemophage's tumor will be able to be operated on multiple times, so
@@ -100,7 +100,7 @@
 
 
 /// Simple helper proc that toggles the dormant state of the tumor, which also switches its appearance to reflect said change.
-/obj/item/organ/internal/heart/hemophage/proc/toggle_dormant_state()
+/obj/item/organ/heart/hemophage/proc/toggle_dormant_state()
 	is_dormant = !is_dormant
 	base_icon_state = is_dormant ? "[base_icon_state]-dormant" : initial(base_icon_state)
 
@@ -121,12 +121,12 @@
 
 
 /// Simple helper proc that returns whether or not the given hemophage is in a closet subtype (but not in any bodybag subtype).
-/obj/item/organ/internal/heart/hemophage/proc/in_closet(mob/living/carbon/human/hemophage)
+/obj/item/organ/heart/hemophage/proc/in_closet(mob/living/carbon/human/hemophage)
 	return istype(hemophage.loc, /obj/structure/closet) && !istype(hemophage.loc, /obj/structure/closet/body_bag)
 
 
 /// Simple helper proc that returns whether or not the given hemophage is in total darkness.
-/obj/item/organ/internal/heart/hemophage/proc/in_total_darkness(mob/living/carbon/human/hemophage)
+/obj/item/organ/heart/hemophage/proc/in_total_darkness(mob/living/carbon/human/hemophage)
 	var/turf/current_turf = get_turf(hemophage)
 	if(!istype(current_turf))
 		return FALSE
@@ -135,7 +135,7 @@
 
 
 /// Whether or not we should be applying the healing status effect for the owner.
-/obj/item/organ/internal/heart/hemophage/proc/can_heal_owner_damage()
+/obj/item/organ/heart/hemophage/proc/can_heal_owner_damage()
 	// We handle the least expensive checks first.
 	if(owner.health >= owner.maxHealth || is_dormant || owner.blood_volume <= MINIMUM_VOLUME_FOR_REGEN || (!in_closet(owner) && !in_total_darkness(owner)))
 		return FALSE
@@ -146,7 +146,7 @@
 /// Simple helper to toggle the hemophage's vulnerability (or lack thereof) based on the status of their tumor.
 /// This proc contains no check whatsoever, to avoid redundancy of null checks and such.
 /// That being said, it shouldn't be used by anything but the tumor, if you have to call it outside of that, you probably have gone wrong somewhere.
-/obj/item/organ/internal/heart/hemophage/proc/toggle_dormant_tumor_vulnerabilities(mob/living/carbon/human/hemophage)
+/obj/item/organ/heart/hemophage/proc/toggle_dormant_tumor_vulnerabilities(mob/living/carbon/human/hemophage)
 	var/datum/physiology/hemophage_physiology = hemophage.physiology
 	var/damage_multiplier = is_dormant ? DORMANT_DAMAGE_MULTIPLIER : 1 / DORMANT_DAMAGE_MULTIPLIER
 
@@ -156,7 +156,7 @@
 	hemophage_physiology.stamina_mod *= damage_multiplier / 2 // Doing half here so that they don't instantly hit stam-crit when hit like only once.
 
 
-/obj/item/organ/internal/heart/hemophage/proc/get_status_tab_item(mob/living/source, list/items)
+/obj/item/organ/heart/hemophage/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER
 	items += "Current blood level: [owner.blood_volume]/[BLOOD_VOLUME_MAXIMUM]"
 

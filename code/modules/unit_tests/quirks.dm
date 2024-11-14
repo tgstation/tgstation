@@ -50,6 +50,10 @@
 		/datum/species/skeleton = null, // Anyone with noblood should not get a blood bag
 		/datum/species/jelly = /obj/item/reagent_containers/blood/toxin,
 		/datum/species/human = /obj/item/reagent_containers/blood/o_minus,
+		// DOPPLER ADDITION START
+		/datum/species/android = /obj/item/reagent_containers/blood/robot,
+		/datum/species/insectoid = /obj/item/reagent_containers/blood/bug,
+		// DOPPLER ADDITION END
 	)
 
 /datum/unit_test/blood_deficiency_mail/Run()

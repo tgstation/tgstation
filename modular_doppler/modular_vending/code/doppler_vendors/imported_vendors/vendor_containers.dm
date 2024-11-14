@@ -36,7 +36,7 @@
 
 /obj/item/storage/box/foodpack/yangyu
 	name = "\improper Atatakai shokuji - Homestyle Noodles"
-	desc = "A well decorated red and white plastic package, covered in nearly incomprehensible yangyu text."
+	desc = "A well decorated red and white plastic package, covered in nearly incomprehensible konjin text."
 	icon_state = "foodpack_yangyu_big"
 	main_course = /obj/item/food/vendor_tray_meal/ramen
 	side_item = /obj/effect/spawner/random/vendor_meal_sides/yangyu

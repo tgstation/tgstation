@@ -27,7 +27,7 @@
 	name = "Disease Outbreak: Classic"
 	typepath = /datum/round_event/disease_outbreak
 	max_occurrences = 1
-	min_players = 10
+	min_players = 5
 	weight = 5
 	category = EVENT_CATEGORY_HEALTH
 	description = "A 'classic' virus will infect some members of the crew."
@@ -166,7 +166,7 @@
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
 	weight = 15
-	min_players = 35 // To avoid shafting lowpop
+	min_players = 20 // To avoid shafting lowpop
 	earliest_start = 15 MINUTES // give the chemist a chance
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2

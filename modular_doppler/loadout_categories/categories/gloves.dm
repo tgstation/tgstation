@@ -67,3 +67,19 @@
 /datum/loadout_item/gloves/latex
 	name = "Latex Gloves"
 	item_path = /obj/item/clothing/gloves/latex
+
+/datum/loadout_item/gloves/translationgloves
+	name = "Translation Gloves"
+	item_path = /obj/item/clothing/gloves/radio
+
+/datum/loadout_item/gloves/maid_arm_covers
+	name = "Maid Costume"
+	item_path = /obj/item/clothing/gloves/maid
+
+/datum/loadout_item/gloves/lalune_gloves
+	name = "Elbow Gloves"
+	item_path = /obj/item/clothing/gloves/lalune_long
+
+/datum/loadout_item/gloves/cloth_armwraps
+	name = "Cloth Armwraps"
+	item_path = /obj/item/clothing/gloves/bracer/wraps

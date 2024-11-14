@@ -238,4 +238,4 @@
 
 /datum/loadout_item/pocket_items/civil_defense
 	name = "Civil Defense Med-kit"
-	item_path = /obj/item/storage/medkit/civil_defense
+	item_path = /obj/item/storage/medkit/civil_defense/stocked

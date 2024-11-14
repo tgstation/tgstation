@@ -76,16 +76,15 @@
 /obj/item/fishing_lure/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_BAIT_ALLOW_FISHING_DUD, TRAIT_OMNI_BAIT, TRAIT_BAIT_UNCONSUMABLE), INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_FISHING_EQUIPMENT_SLOTTED, PROC_REF(lure_equipped))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
 
-/obj/item/fishing_lure/proc/lure_equipped(datum/source, obj/item/fishing_rod/rod)
+/obj/item/fishing_lure/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	rod.spin_frequency = spin_frequency
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_removed))
 
-/obj/item/fishing_lure/proc/on_removed(atom/movable/source, obj/item/fishing_rod/rod, dir, forced)
+/obj/item/fishing_lure/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 	rod.spin_frequency = null
 
 ///Called for every fish subtype by the fishing subsystem when initializing, to populate the list of fish that can be catched with this lure.
@@ -147,7 +146,7 @@
 	name = "plastic dropping"
 	desc = "A fishing lure to catch all sort of slimy, ratty, disgusting and/or junk-loving fish."
 	icon_state = "dropping"
-	spin_frequency = list(1.5 SECONDS, 2.5 SECONDS)
+	spin_frequency = list(1.5 SECONDS, 2.8 SECONDS)
 
 /obj/item/fishing_lure/dropping/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	var/list/sources = list(/datum/fish_source/toilet, /datum/fish_source/moisture_trap)
@@ -167,7 +166,7 @@
 	name = "\improper Indy spoon lure"
 	desc = "A lustrous piece of metal mimicking the scales of a fish. Good for catching small to medium freshwater omnivore fish."
 	icon_state = "spoon"
-	spin_frequency = list(1.25 SECONDS, 2.1 SECONDS)
+	spin_frequency = list(1.25 SECONDS, 2.25 SECONDS)
 
 /obj/item/fishing_lure/spoon/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	var/avg_size = initial(fish_type.average_size)
@@ -187,7 +186,7 @@
 	name = "\improper Silkbuzz artificial fly"
 	desc = "A fishing lure resembling a large wooly fly. Good for catching all sort of picky fish."
 	icon_state = "artificial_fly"
-	spin_frequency = list(1.1 SECONDS, 1.9 SECONDS)
+	spin_frequency = list(1.1 SECONDS, 2 SECONDS)
 
 /obj/item/fishing_lure/artificial_fly/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
@@ -199,16 +198,23 @@
 	name = "\improper LED fishing lure"
 	desc = "A heavy, waterproof and fish-looking LED stick, used to catch abyssal and demersal fish alike."
 	icon_state = "led"
-	spin_frequency = list(3 SECONDS, 3.75 SECONDS)
+	spin_frequency = list(3 SECONDS, 3.8 SECONDS)
 
 /obj/item/fishing_lure/led/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_BAIT_IGNORE_ENVIRONMENT, INNATE_TRAIT)
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/fishing_lure/led/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "led_emissive", src)
+
+/obj/item/fishing_lure/led/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	ADD_TRAIT(rod, TRAIT_ROD_IGNORE_ENVIRONMENT, type)
+
+/obj/item/fishing_lure/led/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	REMOVE_TRAIT(rod, TRAIT_ROD_IGNORE_ENVIRONMENT, type)
 
 /obj/item/fishing_lure/led/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
@@ -220,7 +226,15 @@
 	name = "\improper Maneki-Coin lure"
 	desc = "A faux-gold lure used to attract shiny-loving fish."
 	icon_state = "lucky_coin"
-	spin_frequency = list(1.5 SECONDS, 2.5 SECONDS)
+	spin_frequency = list(1.5 SECONDS, 2.7 SECONDS)
+
+/obj/item/fishing_lure/lucky_coin/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	ADD_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
+
+/obj/item/fishing_lure/lucky_coin/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	REMOVE_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
 
 /obj/item/fishing_lure/lucky_coin/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
@@ -244,7 +258,7 @@
 	name = "\improper Twister Worm lure"
 	desc = "A soft plastic lure with the body of a grub and a twisting tail. Good for panfish and other small omnivore fish."
 	icon_state = "grub"
-	spin_frequency = list(1 SECONDS, 2.5 SECONDS)
+	spin_frequency = list(1 SECONDS, 2.7 SECONDS)
 
 /obj/item/fishing_lure/grub/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	if(initial(fish_type.average_size) >= FISH_SIZE_SMALL_MAX)
@@ -258,7 +272,7 @@
 	name = "\improper Electric-Buzz lure"
 	desc = "A metallic, colored clanked attached to a series of cables that somehow attract shock-worthy fish."
 	icon_state = "buzzbait"
-	spin_frequency = list(0.8 SECONDS, 1.6 SECONDS)
+	spin_frequency = list(0.8 SECONDS, 1.7 SECONDS)
 
 /obj/item/fishing_lure/buzzbait/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]

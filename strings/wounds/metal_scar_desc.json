@@ -1,0 +1,67 @@
+{
+	"generic": ["general disfigurement"],
+
+	"dislocate": [
+		"some slight crookedness"
+	],
+
+	"bluntsevere": [
+		"an area of slightly crumpled metal",
+		"some misaligned plates"
+	],
+
+	"bluntcritical": [
+		"a malformed superstructure",
+		"some heavily beaten plating"
+	],
+
+	"slashmoderate": [
+		"a very thin line of solder",
+		"a few welded cuts"
+	],
+
+	"slashsevere": [
+		"a pair of soldered cracks",
+		"an line of freshly replaced metal",
+        "some deep welds on the metal"
+	],
+
+	"slashcritical": [
+		"a matrix of desperately soldered cracks",
+		"some gruesome welding lines",
+		"a series of deep and wide welded gashes"
+	],
+
+	"piercemoderate": [
+		"a dot of hardened solder",
+		"a dot of fresh metal"
+	],
+
+	"piercesevere": [
+		"a large wad of hardened solder",
+		"a few cracks originating from a small hole"
+	],
+
+	"piercecritical": [
+		"a large splot of hardened solder",
+		"a spiderweb of cracks crawling from a sealed hole"
+	],
+
+	"burnsevere": [
+		"some vaguely discolored metal",
+		"some burnt ridges",
+		"a few heat cracks"
+	],
+
+	"burncritical": [
+		"streaks of polychromatic metal",
+		"gruesomely heat-warped plating",
+		"huge melting marks"
+	],
+
+	"dismember": [
+		"has fresh metal around various joints",
+		"has some solder marks securing various joints",
+		"has clear re-seating marks"
+	]
+}

@@ -137,3 +137,16 @@
 	if(!istype(mover))
 		return
 	return isnull(mover.ckey) == reverse
+
+/obj/effect/invisible_wall // why didnt we have this already
+	name = "invisible wall"
+	desc = "You shall not pass"
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "blocker"
+	color = COLOR_BLUE_LIGHT
+	invisibility = INVISIBILITY_MAXIMUM
+	anchored = TRUE
+
+/obj/effect/invisible_wall/CanAllowThrough(mob/living/mover, border_dir)
+	..()
+	return FALSE // NO

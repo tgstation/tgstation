@@ -44,6 +44,8 @@
 	. += create_table_notices(list(
 		"name",
 		"job",
+		"charge", //DOPPLER EDIT ADDITION
+		"is_robot", //DOPPLER EDIT ADDITION
 		"life_status",
 		"suffocation",
 		"toxin",
@@ -64,6 +66,8 @@
 		var/list/entry = list()
 		entry["name"] = player_record["name"]
 		entry["job"] = player_record["assignment"]
+		entry["charge"] = player_record["charge"] // DOPPLER EDIT ADDITION
+		entry["is_robot"] = player_record["is_robot"] // DOPPLER EDIT ADDITION
 		entry["life_status"] = player_record["life_status"]
 		entry["suffocation"] = player_record["oxydam"]
 		entry["toxin"] = player_record["toxdam"]
@@ -244,6 +248,13 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			var/trim_assignment = id_card.get_trim_assignment()
 			if (jobs[trim_assignment] != null)
 				entry["ijob"] = jobs[trim_assignment]
+
+		// DOPPLER EDIT ADDITION START
+		if (isandroid(tracked_human))
+			var/datum/species/android/energy_holder = tracked_human.dna.species
+			entry["is_robot"] = TRUE
+			entry["charge"] = "[round((energy_holder.core_energy/1000000), 0.1)]MJ"
+		// DOPPLER EDIT ADDITION END
 
 		// Broken sensors show garbage data
 		if (uniform.has_sensor == BROKEN_SENSORS)

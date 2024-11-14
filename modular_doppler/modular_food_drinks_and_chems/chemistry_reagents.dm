@@ -70,8 +70,13 @@
 		to_chat(M, span_notice("[pick("I feel oddly calm.", "I feel relaxed.", "Mew?")]"))
 	..()
 
-/*
+
 #define DERMAGEN_SCAR_FIX_AMOUNT 10
+
+/datum/chemical_reaction/medicine/dermagen
+	results = list(/datum/reagent/medicine/dermagen = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 4, /datum/reagent/medicine/c2/synthflesh = 3, /datum/reagent/medicine/mine_salve = 3)
+	mix_message = "The slurry congeals into a thick cream."
 
 /datum/reagent/medicine/dermagen
 	name = "Dermagen"
@@ -97,7 +102,7 @@
 			qdel(i)
 
 #undef DERMAGEN_SCAR_FIX_AMOUNT
-*/
+
 
 /**
  * Check if this holder contains a reagent with a `chemical_flags_doppler` containing this flag.

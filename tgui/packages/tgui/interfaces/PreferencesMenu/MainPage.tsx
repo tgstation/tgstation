@@ -8,6 +8,7 @@ import {
   Autofocus,
   Box,
   Button,
+  Dropdown, // DOPPLER EDIT ADDITION
   Flex,
   Input,
   LabeledList,
@@ -34,7 +35,7 @@ import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 import { useRandomToggleState } from './useRandomToggleState';
 
 const CLOTHING_CELL_SIZE = 48;
-const CLOTHING_SIDEBAR_ROWS = 9;
+const CLOTHING_SIDEBAR_ROWS = 13.4; // DOPPLER EDIT CHANGE - ORIGINAL:  9
 
 const CLOTHING_SELECTION_CELL_SIZE = 48;
 const CLOTHING_SELECTION_WIDTH = 5.4;
@@ -578,13 +579,26 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                     />
                   </Stack.Item>
 
-                  <Stack.Item grow>
+                  <Stack.Item grow maxHeight="300px">
                     <CharacterPreview
                       height="100%"
                       id={data.character_preview_view}
                     />
                   </Stack.Item>
-
+                  {/* DOPPLER ADDITION START */}
+                  <Stack.Item position="relative">
+                    <Dropdown
+                      width="100%"
+                      selected={data.preview_selection}
+                      options={data.preview_options}
+                      onSelected={(value) =>
+                        act('update_preview', {
+                          updated_preview: value,
+                        })
+                      }
+                    />
+                  </Stack.Item>
+                  {/* DOPPLER ADDITION END */}
                   <Stack.Item position="relative">
                     <NameInput
                       name={data.character_preferences.names[data.name_to_use]}

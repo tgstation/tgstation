@@ -207,3 +207,25 @@
 		/datum/reagent/medicine/higadrite = 5,
 		/datum/reagent/medicine/silibinin = 5,
 	)
+
+// Medpen for robots that fixes toxin damage and purges synth chems but slows them down for a bit
+/obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner
+	name = "synthetic cleaner autoinjector"
+	desc = "A Deforest branded autoinjector, loaded with system cleaner for purging synthetics of reagents."
+	base_icon_state = "robor"
+	icon_state = "robor"
+	list_reagents = list(
+		/datum/reagent/medicine/system_cleaner = 15,
+		/datum/reagent/dinitrogen_plasmide = 5,
+	)
+
+// Medpen for robots that fixes brain damage but slows them down for a bit
+/obj/item/reagent_containers/hypospray/medipen/deforest/robot_liquid_solder
+	name = "synthetic smart-solder autoinjector"
+	desc = "A Deforest branded autoinjector, loaded with liquid solder to repair synthetic processor core damage."
+	base_icon_state = "robor_brain"
+	icon_state = "robor_brain"
+	list_reagents = list(
+		/datum/reagent/medicine/liquid_solder = 15,
+		/datum/reagent/dinitrogen_plasmide = 5,
+	)

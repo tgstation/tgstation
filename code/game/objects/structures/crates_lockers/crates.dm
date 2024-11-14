@@ -277,6 +277,10 @@
 	new /obj/item/reagent_containers/blood/o_plus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
 	new /obj/item/reagent_containers/blood/ethereal(src)
+	// DOPPLER ADDITION START
+	new /obj/item/reagent_containers/blood/robot(src)
+	new /obj/item/reagent_containers/blood/bug(src)
+	// DOPPLER ADDITION END
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)
 
@@ -301,22 +305,16 @@
 	base_icon_state = "food"
 
 /obj/structure/closet/crate/freezer/donk
-	name = "donk co. fridge"
-	desc = "A Donk Co. brand fridge, keeps your donkpcokets and foam ammunition fresh!"
+	name = "\improper Donk Co. fridge"
+	desc = "A Donk Co. brand fridge, keeps your donkpockets and foam ammunition fresh!"
 	icon_state = "donkcocrate"
 	base_icon_state = "donkcocrate"
 
-/obj/structure/closet/crate/freezer/interdyne
-	name = "interdyne freezer"
-	desc = "Interdyne Pharmauceutics branded freezer. Might or might not contain cold steel, or fresh organs."
-	icon_state = "interdynefreezer"
-	base_icon_state = "interdynefreezer"
-
-/obj/structure/closet/crate/freezer/blood/interdyne
-	name = "interdyne blood freezer"
-	desc = "Interdyne Pharmauceutics branded freezer. Only freshly harvested- I mean, freshly kept blood inside!"
-	icon_state = "interdynefreezer"
-	base_icon_state = "interdynefreezer"
+/obj/structure/closet/crate/self
+	name = "\improper S.E.L.F. crate"
+	desc = "A robust-looking crate with a seemingly decorative holographic display. The front of the crate proudly declares its allegiance to the notorious terrorist group 'S.E.L.F'."
+	icon_state = "selfcrate"
+	base_icon_state = "selfcrate"
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."

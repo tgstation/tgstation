@@ -17,20 +17,20 @@
 	if(!ishuman(target))
 		return
 
-	if(target.dna.features["moth_wings"])
+	if(target.dna.features["moth_wings"] && !(type in GLOB.species_blacklist_no_mutant))
 		if(target.dna.wing_type == NO_VARIATION)
 			return .
 		if((target.dna.features["moth_wings"] != /datum/sprite_accessory/moth_wings/none::name && target.dna.features["moth_wings"] != /datum/sprite_accessory/blank::name))
-			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/wings/moth)
+			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/wings/moth)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
-	if(target.dna.features["wings"])
+	if(target.dna.features["wings"] && !(type in GLOB.species_blacklist_no_mutant))
 		if(target.dna.features["wings"] != /datum/sprite_accessory/wings_more/none::name && target.dna.features["wings"] != /datum/sprite_accessory/blank::name)
-			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/wings/more)
+			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/wings/more)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
 
-	var/obj/item/organ/external/wings/old_part = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	var/obj/item/organ/wings/old_part = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(istype(old_part))
 		old_part.Remove(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 		old_part.moveToNullspace()
@@ -60,6 +60,13 @@
 		if("Moth Wings")
 			target.dna.features["wings"] = /datum/sprite_accessory/wings_more/none::name
 
+/datum/preference/choiced/wing_variation/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species in GLOB.species_blacklist_no_mutant)
+		return FALSE
+	return TRUE
+
 //	Wings
 /datum/preference/choiced/wings
 	savefile_key = "feature_wings"
@@ -71,6 +78,9 @@
 
 /datum/preference/choiced/wings/is_accessible(datum/preferences/preferences)
 	. = ..()
+	var/datum/species/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species.type in GLOB.species_blacklist_no_mutant)
+		return FALSE
 	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/wing_variation)
 	if(chosen_variation == "Wings")
 		return TRUE
@@ -95,6 +105,9 @@
 
 /datum/preference/choiced/moth_wings/is_accessible(datum/preferences/preferences)
 	. = ..()
+	var/datum/species/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species.type in GLOB.species_blacklist_no_mutant)
+		return FALSE
 	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/wing_variation)
 	if(chosen_variation == "Moth Wings")
 		return TRUE

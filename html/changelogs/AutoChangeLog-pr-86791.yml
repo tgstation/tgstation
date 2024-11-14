@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - rscadd: "You can now see people whispering, even if you cannot hear what they're saying, unless you are blind (obviously). The speaker wearing something that covers their mouth, being invisible, or being inside of something counteracts this."

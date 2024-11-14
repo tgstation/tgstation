@@ -24,15 +24,33 @@
 	if(!owner)
 		return
 
-	if (HAS_TRAIT(grant_to, TRAIT_MUTE))
-		RegisterSignal(grant_to, SIGNAL_REMOVETRAIT(TRAIT_MUTE), PROC_REF(on_unmuted))
+	// DOPPLER EDIT CHANGE START - speech only mute
+
+	RegisterSignals(grant_to, list(SIGNAL_REMOVETRAIT(TRAIT_MUTE), SIGNAL_REMOVETRAIT(TRAIT_SPEECH_ONLY_MUTE)), PROC_REF(on_unmuted))
+	RegisterSignals(grant_to, list(SIGNAL_ADDTRAIT(TRAIT_MUTE), SIGNAL_ADDTRAIT(TRAIT_SPEECH_ONLY_MUTE)), PROC_REF(on_muted))
+	
+	if(HAS_TRAIT(grant_to, TRAIT_MUTE) || HAS_TRAIT(grant_to, TRAIT_SPEECH_ONLY_MUTE))
 		// Convenience. Mute Carbons can only speak with sign language.
-		if (!active)
+		if(!active)
 			Activate()
 	else
-		RegisterSignal(grant_to, SIGNAL_ADDTRAIT(TRAIT_MUTE), PROC_REF(on_muted))
 		// Convenience. Only display action if the Carbon isn't mute.
 		show_action()
+
+	// DOPPLER EDIT CHANGE END - speech only mute
+	// DOPPLER EDIT CHANGE ORIGINAL START - speech only mute
+
+	//if (HAS_TRAIT(grant_to, TRAIT_MUTE))
+	//	RegisterSignal(grant_to, SIGNAL_REMOVETRAIT(TRAIT_MUTE), PROC_REF(on_unmuted))
+	//	// Convenience. Mute Carbons can only speak with sign language.
+	//	if (!active)
+	//		Activate()
+	//else
+	//	RegisterSignal(grant_to, SIGNAL_ADDTRAIT(TRAIT_MUTE), PROC_REF(on_muted))
+	//	// Convenience. Only display action if the Carbon isn't mute.
+	//	show_action()
+
+	// DOPPLER EDIT CHANGE ORIGINAL END - speech only mute
 
 /datum/action/innate/sign_language/Remove(mob/living/carbon/grant_to)
 	. = ..()
@@ -77,7 +95,7 @@
 /datum/action/innate/sign_language/proc/on_muted()
 	SIGNAL_HANDLER
 
-	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_MUTE), PROC_REF(on_unmuted))
+	//RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_MUTE), PROC_REF(on_unmuted)) // DOPPLER EDIT REMOVAL - speech only mute
 	hide_action()
 	// Enable sign language if the Carbon knows it and just gained TRAIT_MUTE
 	if (!HAS_TRAIT(owner, TRAIT_SIGN_LANG))
@@ -87,5 +105,11 @@
 /// Re-shows the action if the signing Carbon loses TRAIT_MUTE.
 /datum/action/innate/sign_language/proc/on_unmuted()
 	SIGNAL_HANDLER
+
+	// DOPPLER EDIT ADDITION START - speech only mute
+	// Return if we still have either mute applied
+	if(HAS_TRAIT(owner, TRAIT_MUTE) || HAS_TRAIT(owner, TRAIT_SPEECH_ONLY_MUTE))
+		return
+	// DOPPLER EDIT ADDITION END - speech only mute
 
 	show_action()

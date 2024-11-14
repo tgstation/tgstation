@@ -230,6 +230,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	//Get which verb is prefixed to the message before radio but after most modifications
 	message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
+	// DOPPLER EDIT ADDITION START: autopunctuation
+	//ensure EOL punctuation exists and that word-bounded 'i' are capitalized before we do anything else
+	message = autopunct_bare(message)
+	// DOPPLER EDIT ADDITION END
 
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && !saymode.handle_message(src, message, language))
@@ -262,6 +266,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		succumb(TRUE)
 		to_chat(src, compose_message(src, language, message, , spans, message_mods))
 
+	SEND_SIGNAL(src, COMSIG_MOB_POST_SAY, args, spans, message_mods) // DOPPLERBOOP ADDITION
 	return TRUE
 
 
@@ -316,7 +321,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(deaf_message)
 			deaf_type = MSG_VISUAL
 			message = deaf_message
-			return show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
+			show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
+			return FALSE
 
 
 	// we need to send this signal before compose_message() is used since other signals need to modify

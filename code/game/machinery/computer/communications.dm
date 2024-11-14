@@ -672,7 +672,7 @@
 /// Returns TRUE if the user can buy shuttles.
 /// If they cannot, returns FALSE or a string detailing why.
 /obj/machinery/computer/communications/proc/can_buy_shuttles(mob/user)
-	if (!SSmapping.config.allow_custom_shuttles)
+	if (!SSmapping.current_map.allow_custom_shuttles)
 		return FALSE
 	if (HAS_SILICON_ACCESS(user))
 		return FALSE
@@ -872,7 +872,8 @@
 
 		if(HACK_THREAT) // Force an unfavorable situation on the crew
 			priority_announce(
-				"Attention crew, the Nanotrasen Department of Intelligence has received intel suggesting increased enemy activity in your sector beyond that initially reported in today's threat advisory.",
+				//"Attention crew, the Nanotrasen Department of Intelligence has received intel suggesting increased enemy activity in your sector beyond that initially reported in today's threat advisory.", // ORIGINAL
+				"Attention crew, the Port Authority Department of Intelligence has received intel suggesting increased enemy activity in your sector beyond that initially reported in today's threat advisory.", // DOPPLER EDIT - NT -> PA
 				"[command_name()] High-Priority Update",
 			)
 

@@ -8,6 +8,11 @@
 
 	///The color this organ draws with. Updated by bodypart/inherit_color()
 	var/draw_color
+	///Override of the color of the organ, from dye sprays
+	var/dye_color
+	///Can this bodypart overlay be dyed?
+	var/dyable = FALSE
+
 	///Where does this organ inherit its color from?
 	var/color_source = ORGAN_COLOR_INHERIT
 	///Take on the dna/preference from whoever we're gonna be inserted in
@@ -85,7 +90,7 @@
 	return appearance
 
 /datum/bodypart_overlay/mutant/color_image(image/overlay, layer, obj/item/bodypart/limb)
-	overlay.color = sprite_datum.color_src ? draw_color : null
+	overlay.color = sprite_datum.color_src ? (dye_color || draw_color) : null
 
 /datum/bodypart_overlay/mutant/added_to_limb(obj/item/bodypart/limb)
 	inherit_color(limb)
@@ -105,7 +110,7 @@
 	. = list()
 	. += "[get_base_icon_state()]"
 	. += "[feature_key]"
-	. += "[draw_color]"
+	. += "[dye_color || draw_color]"
 	return .
 
 ///Return a dumb glob list for this specific feature (called from parse_sprite)
@@ -123,19 +128,25 @@
 
 	switch(color_source)
 		if(ORGAN_COLOR_OVERRIDE)
-			draw_color = override_color(bodypart_owner.draw_color)
+			draw_color = override_color(bodypart_owner)
 		if(ORGAN_COLOR_INHERIT)
 			draw_color = bodypart_owner.draw_color
 		if(ORGAN_COLOR_HAIR)
+			var/datum/species/species = bodypart_owner.owner?.dna?.species
+			var/fixed_color = species?.get_fixed_hair_color(bodypart_owner.owner)
 			if(!ishuman(bodypart_owner.owner))
+				draw_color = fixed_color
 				return
 			var/mob/living/carbon/human/human_owner = bodypart_owner.owner
 			var/obj/item/bodypart/head/my_head = human_owner.get_bodypart(BODY_ZONE_HEAD) //not always the same as bodypart_owner
 			//head hair color takes priority, owner hair color is a backup if we lack a head or something
-			if(my_head)
-				draw_color = my_head.hair_color
-			else
-				draw_color = human_owner.hair_color
+			if(!my_head)
+				draw_color = fixed_color || human_owner.hair_color
+				return
+			if(my_head.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR))
+				draw_color = my_head.fixed_hair_color || my_head.hair_color
+			else //inherit mutant color of the bodypart if the owner doesn't have hair.
+				draw_color = bodypart_owner.draw_color
 
 	return TRUE
 
@@ -157,3 +168,10 @@
 	else
 		CRASH("External organ [type] had fetch_sprite_datum called with a null accessory name!")
 
+///From dye sprays. Set the dye_color (draw_color override) of this organ to a new value.
+/datum/bodypart_overlay/mutant/proc/set_dye_color(new_color, obj/item/organ/organ)
+	dye_color = new_color
+	if(organ.owner)
+		organ.owner.update_body_parts()
+	else
+		organ.bodypart_owner?.update_icon_dropped()

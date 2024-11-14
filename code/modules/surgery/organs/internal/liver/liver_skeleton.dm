@@ -3,7 +3,7 @@
  * Gives the owner liverless metabolism, makes them vulnerable to bone hurting juice and
  * makes milk heal them through meme magic.
  **/
-/obj/item/organ/internal/liver/bone
+/obj/item/organ/liver/bone
 	name = "mass of bones"
 	desc = "You have no idea what this strange ball of bones does."
 	icon_state = "liver-bone"
@@ -13,7 +13,7 @@
 	///Var for burn healing via milk
 	var/milk_burn_healing = 2.5
 
-/obj/item/organ/internal/liver/bone/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
+/obj/item/organ/liver/bone/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
 	. = ..()
 	// parent returned COMSIG_MOB_STOP_REAGENT_CHECK or we are failing
 	if((. & COMSIG_MOB_STOP_REAGENT_CHECK) || (organ_flags & ORGAN_FAILING))

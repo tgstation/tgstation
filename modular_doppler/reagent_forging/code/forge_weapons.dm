@@ -3,7 +3,7 @@
 	lefthand_file = 'modular_doppler/reagent_forging/icons/mob/forge_weapon_l.dmi'
 	righthand_file = 'modular_doppler/reagent_forging/icons/mob/forge_weapon_r.dmi'
 	worn_icon = 'modular_doppler/reagent_forging/icons/mob/forge_weapon_worn.dmi'
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	obj_flags = UNIQUE_RENAME
 	obj_flags_doppler = ANVIL_REPAIR
 	toolspeed = 0.9 //Slightly better than avg. - A forged hammer or knife is probably better than a standard one
@@ -209,7 +209,7 @@
 	transparent = FALSE
 	max_integrity = 150 //over double that of a wooden one
 	w_class = WEIGHT_CLASS_NORMAL
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 	obj_flags_doppler = ANVIL_REPAIR
 	shield_break_sound = 'sound/effects/bang.ogg'
 	shield_break_leftover = /obj/item/forging/complete/plate

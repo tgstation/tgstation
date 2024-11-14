@@ -10,7 +10,7 @@
 	savefile_key = "spines_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	//relevant_external_organ = /obj/item/organ/external/spines
+	//relevant_external_organ = /obj/item/organ/spines
 
 /datum/preference/tri_color/spines_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),

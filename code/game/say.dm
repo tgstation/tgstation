@@ -105,9 +105,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
  * If FALSE, this check will always fail if the movable has a mind and is miming.
  * if TRUE, we will check if the movable can speak REGARDLESS of if they have an active mime vow.
  */
-/atom/movable/proc/can_speak(allow_mimes = FALSE)
+/atom/movable/proc/can_speak(allow_mimes = FALSE, emoting = FALSE) // DOPPLER EDIT CHANGE - speech only mute - ORIGINAL: /atom/movable/proc/can_speak(allow_mimes = FALSE)
 	SHOULD_BE_PURE(TRUE)
-	return !HAS_TRAIT(src, TRAIT_MUTE)
+	return !HAS_TRAIT(src, TRAIT_MUTE) && (emoting || !HAS_TRAIT(src, TRAIT_SPEECH_ONLY_MUTE)) // DOPPLER EDIT CHANGE - speech only mute - ORIGINAL: return !HAS_TRAIT(src, TRAIT_MUTE)
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
 	var/found_client = FALSE

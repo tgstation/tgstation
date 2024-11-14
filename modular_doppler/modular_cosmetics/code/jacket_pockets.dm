@@ -11,6 +11,7 @@
 /datum/storage/pockets/jacket
 	max_slots = 2
 	max_total_storage = 5
+	click_alt_open = FALSE
 
 /datum/storage/pockets/jacket/New(
 	atom/parent,

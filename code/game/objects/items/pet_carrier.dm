@@ -11,6 +11,10 @@
 	inhand_icon_state = "pet_carrier"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	greyscale_config = /datum/greyscale_config/pet_carrier
+	greyscale_config_inhand_left = /datum/greyscale_config/pet_carrier_inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/pet_carrier_inhands_right
+	greyscale_colors = COLOR_BLUE
 	force = 5
 	attack_verb_continuous = list("bashes", "carries")
 	attack_verb_simple = list("bash", "carry")
@@ -19,7 +23,6 @@
 	throw_range = 3
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	interaction_flags_mouse_drop = NEED_DEXTERITY
-
 	var/open = TRUE
 	var/locked = FALSE
 	var/list/occupants = list()
@@ -147,13 +150,8 @@
 	if(open)
 		icon_state = initial(icon_state)
 		return ..()
-	icon_state = "[base_icon_state]_[!occupants.len ? "closed" : "occupied"]"
+	icon_state = "[base_icon_state]_[!occupants.len ? "closed" : "occupied"]_[locked ? "locked" : "unlocked"]"
 	return ..()
-
-/obj/item/pet_carrier/update_overlays()
-	. = ..()
-	if(!open)
-		. += "[base_icon_state]_[locked ? "" : "un"]locked"
 
 /obj/item/pet_carrier/mouse_drop_dragged(atom/over_atom, mob/user, src_location, over_location, params)
 	if(isopenturf(over_atom) && open && occupants.len)
@@ -202,5 +200,9 @@
 	base_icon_state = "biopod"
 	icon_state = "biopod_open"
 	inhand_icon_state = "biopod"
+	greyscale_config = null
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
+	greyscale_colors = null
 
 #undef pet_carrier_full

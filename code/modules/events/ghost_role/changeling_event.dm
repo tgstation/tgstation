@@ -10,7 +10,7 @@
 	typepath = /datum/round_event/ghost_role/changeling
 	weight = 8
 	max_occurrences = 3
-	min_players = 20
+	min_players = 10
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "A meteor containing a changeling is summoned and thrown at the exterior of the station."

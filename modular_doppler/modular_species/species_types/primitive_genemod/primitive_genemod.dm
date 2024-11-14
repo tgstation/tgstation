@@ -1,27 +1,25 @@
 /mob/living/carbon/human/species/genemod/primitive
-	race = /datum/species/genemod/primitive
+	race = /datum/species/human/genemod/primitive
 
 /datum/language_holder/primitive_genemod
 	understood_languages = list(
 		/datum/language/primitive_genemod = list(LANGUAGE_ATOM),
-		/datum/language/uncommon = list(LANGUAGE_ATOM),
 	)
 	spoken_languages = list(
 		/datum/language/primitive_genemod = list(LANGUAGE_ATOM),
-		/datum/language/uncommon = list(LANGUAGE_ATOM),
 	)
 	selected_language = /datum/language/primitive_genemod
 
-/datum/species/genemod/primitive
+/datum/species/human/genemod/primitive
 	name = "Hearthkin"
 	id = SPECIES_GENEMOD_PRIMITIVE
 	preview_outfit = /datum/outfit/genemod_primitive_preview
 
-	mutantlungs = /obj/item/organ/internal/lungs/icebox_adapted
-	mutanteyes = /obj/item/organ/internal/eyes/low_light_adapted
+	mutantlungs = /obj/item/organ/lungs/icebox_adapted
+	mutanteyes = /obj/item/organ/eyes/low_light_adapted
 
 	species_language_holder = /datum/language_holder/primitive_genemod
-	// language_prefs_whitelist = list(/datum/language/primitive_genemod) //this needs a dedicated module for language
+	language_prefs_whitelist = list(/datum/language/primitive_genemod)
 
 	bodytemp_normal = 270 // If a normal human gets hugged by one it's gonna feel cold
 	bodytemp_heat_damage_limit = 283 // To them normal station atmos would be sweltering
@@ -40,7 +38,7 @@
 	neck = /obj/item/clothing/neck/scarf/primitive_genemod_scarf
 	back = /obj/item/forging/reagent_weapon/axe/fake_copper
 
-/datum/species/genemod/primitive/on_species_gain(mob/living/carbon/new_primitive, datum/species/old_species, pref_load)
+/datum/species/human/genemod/primitive/on_species_gain(mob/living/carbon/new_primitive, datum/species/old_species, pref_load)
 	. = ..()
 	var/mob/living/carbon/human/hearthkin = new_primitive
 	if(!istype(hearthkin))
@@ -53,14 +51,14 @@
 	mutation.mutadone_proof = TRUE
 	mutation.instability = 0
 
-/datum/species/genemod/primitive/on_species_loss(mob/living/carbon/former_primitive, datum/species/new_species, pref_load)
+/datum/species/human/genemod/primitive/on_species_loss(mob/living/carbon/former_primitive, datum/species/new_species, pref_load)
 	. = ..()
 	var/mob/living/carbon/human/hearthkin = former_primitive
 	if(!istype(hearthkin))
 		return
 	hearthkin.dna.remove_mutation(/datum/mutation/human/olfaction)
 
-/datum/species/genemod/primitive/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
+/datum/species/human/genemod/primitive/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
 	human_for_preview.dna.ear_type = CAT
 	human_for_preview.dna.features["ears"] = "Coeurl"
 	human_for_preview.dna.features["ears_color_1"] = "#e9eff5"
@@ -74,7 +72,7 @@
 	regenerate_organs(human_for_preview)
 	human_for_preview.update_body(is_creating = TRUE)
 
-/datum/species/genemod/primitive/get_species_description()
+/datum/species/human/genemod/primitive/get_species_description()
 	return list(
 		"Genetically modified humanoids believed to be descendants of a now centuries old colony \
 			ship from the pre-bluespace travel era. Still having at least some human traits, they \
@@ -82,7 +80,7 @@
 			the icemoon's many fauna."
 	)
 
-/datum/species/genemod/primitive/get_species_lore()
+/datum/species/human/genemod/primitive/get_species_lore()
 	return list(
 		"The Hearthkin are a culture of disparate Scandinavian groups all sharing a common origin \
 			as descendents from demihuman genemodders aboard the good ship Stjarndrakkr, or Star Dragon; \
@@ -125,7 +123,7 @@
 		"Physically, the Hearthkin always come in the form of demihumans; appearing similar to normal Earthlings, \
 			but with the tails, ears, and sometimes limbs of various arctic animals; wolves, bears, and felines to only name a few. \
 			They seem perfectly adapted to their lands of ice and mist, but find even the mild controlled temperatures of \
-			NanoTrasen stations to be swelteringly hot. Their view of 'station' genemodders is that of 'halflings': \
+			Port Authority stations to be swelteringly hot. Their view of 'station' genemodders is that of 'halflings': \
 			Ancestral bodies, but with the blood and spirit of the humans of Midgard, \
 			tending to look down on them even more than other aliens.",
 	)

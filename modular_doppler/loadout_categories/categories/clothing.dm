@@ -103,6 +103,10 @@
 	name = "Green Labcoat"
 	item_path = /obj/item/clothing/suit/toggle/labcoat/mad
 
+/datum/loadout_item/suit/lalune_labcoat
+	name = "Sleeveless Labcoat"
+	item_path = /obj/item/clothing/suit/toggle/labcoat/lalunevest
+
 /*
 *	PONCHOS
 */
@@ -275,6 +279,46 @@
 	name = "Recolorable Overalls"
 	item_path = /obj/item/clothing/suit/apron/overalls
 
+/datum/loadout_item/suit/wellwornshirt
+	name = "Well-worn Shirt"
+	item_path = /obj/item/clothing/suit/costume/wellworn_shirt
+
+/datum/loadout_item/suit/wellworn_graphicshirt
+	name = "Well-worn Graphic Shirt"
+	item_path = /obj/item/clothing/suit/costume/wellworn_shirt/graphic
+
+/datum/loadout_item/suit/ianshirt
+	name = "Well-worn Ian Shirt"
+	item_path = /obj/item/clothing/suit/costume/wellworn_shirt/graphic/ian
+
+/datum/loadout_item/suit/wornoutshirt
+	name = "Worn-out Shirt"
+	item_path = /obj/item/clothing/suit/costume/wellworn_shirt/wornout
+
+/datum/loadout_item/suit/wornout_graphicshirt
+	name = "Worn-out graphic Shirt"
+	item_path = /obj/item/clothing/suit/costume/wellworn_shirt/wornout/graphic
+
+/datum/loadout_item/suit/wornout_ianshirt
+	name = "Worn-out Ian Shirt"
+	item_path = /obj/item/clothing/suit/costume/wellworn_shirt/wornout/graphic/ian
+
+/datum/loadout_item/suit/messyshirt
+	name = "Messy Shirt"
+	item_path = /obj/item/clothing/suit/costume/wellworn_shirt/messy
+
+/datum/loadout_item/suit/messy_graphicshirt
+	name = "Messy Graphic Shirt"
+	item_path = /obj/item/clothing/suit/costume/wellworn_shirt/messy/graphic
+
+/datum/loadout_item/suit/messy_ianshirt
+	name = "Messy Ian Shirt"
+	item_path = /obj/item/clothing/suit/costume/wellworn_shirt/messy/graphic/ian
+
+/datum/loadout_item/suit/dagger_mantle
+	name = "'Dagger' Designer Mantle"
+	item_path = /obj/item/clothing/suit/dagger_mantle
+
 /*
 *	HAWAIIAN
 */
@@ -282,6 +326,14 @@
 /datum/loadout_item/suit/hawaiian_shirt
 	name = "Hawaiian Shirt"
 	item_path = /obj/item/clothing/suit/costume/hawaiian
+
+/*
+*   MAID OUT WITH THE FIT
+*/
+
+/datum/loadout_item/suit/maid_costume
+	name = "Maid Costume"
+	item_path = /obj/item/clothing/under/costume/maid
 
 /*
 *	MISC

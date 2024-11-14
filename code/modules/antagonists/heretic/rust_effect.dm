@@ -3,9 +3,9 @@
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "small_rune_1"
 	anchored = TRUE
-	layer = LOW_SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = LOWER_RUNE_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	plane = GAME_PLANE
 
 /obj/effect/glowing_rune/Initialize(mapload)
 	. = ..()

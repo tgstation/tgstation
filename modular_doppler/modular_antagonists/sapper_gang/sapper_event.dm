@@ -65,7 +65,9 @@
 /datum/round_event_control/sappers
 	name = "Space Sappers"
 	typepath = /datum/round_event/ghost_role/sappers
-	occurrences = 0
+	max_occurrences = 1
+	min_players = 15
+	earliest_start = 1 HOURS
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "A gang of outlaws are sapping the powernet with their credit-miners."

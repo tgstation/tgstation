@@ -109,7 +109,7 @@
 	if(!basic_pawn.Adjacent(snack))
 		return AI_BEHAVIOR_DELAY
 
-	basic_pawn.melee_attack(snack) // snack attack!
+	controller.ai_interact(target = snack)
 
 	if(QDELETED(snack)) // we ate it!
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

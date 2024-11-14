@@ -19,6 +19,8 @@
 	rack_sound = 'sound/items/weapons/gun/pistol/rack_small.ogg'
 	lock_back_sound = 'sound/items/weapons/gun/pistol/lock_small.ogg'
 	bolt_drop_sound = 'sound/items/weapons/gun/pistol/drop_small.ogg'
+	drop_sound = 'sound/items/handling/gun/ballistics/pistol/pistol_drop1.ogg'
+	pickup_sound = 'sound/items/handling/gun/ballistics/pistol/pistol_pickup1.ogg'
 	fire_sound_volume = 90
 	bolt_wording = "slide"
 	suppressor_x_offset = 10
