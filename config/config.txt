@@ -9,6 +9,7 @@ $include bandastation/bandastation_config.txt
 $include interviews.txt
 $include lua.txt
 $include auxtools.txt
+$include map_vote.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:

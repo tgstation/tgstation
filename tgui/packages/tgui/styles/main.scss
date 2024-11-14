@@ -4,7 +4,7 @@
  */
 
 @use 'sass:meta';
-@use './base.scss';
+@use 'base';
 
 // Core styles
 @include meta.load-css('./reset.scss');

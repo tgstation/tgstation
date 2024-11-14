@@ -760,8 +760,10 @@
 		berserk_value *= PROJECTILE_HIT_MULTIPLIER
 	berserk_charge = clamp(round(berserk_charge + berserk_value), 0, MAX_BERSERK_CHARGE)
 	if(berserk_charge >= MAX_BERSERK_CHARGE)
+		var/datum/action/item_action/berserk_mode/ragemode = locate() in actions
 		to_chat(owner, span_notice("Berserk mode is fully charged."))
 		balloon_alert(owner, "berserk charged")
+		ragemode?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /obj/item/clothing/head/hooded/berserker/IsReflect()
 	if(berserk_active)
@@ -769,6 +771,7 @@
 
 /// Starts berserk, reducing incoming brute by 50%, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
 /obj/item/clothing/head/hooded/berserker/proc/berserk_mode(mob/living/carbon/human/user)
+	var/datum/action/item_action/berserk_mode/ragemode = locate() in actions
 	to_chat(user, span_warning("You enter berserk mode."))
 	playsound(user, 'sound/effects/magic/staff_healing.ogg', 50)
 	user.add_movespeed_modifier(/datum/movespeed_modifier/berserk)
@@ -779,6 +782,7 @@
 	ADD_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
 	berserk_active = TRUE
 	START_PROCESSING(SSobj, src)
+	ragemode?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /// Ends berserk, reverting the changes from the proc [berserk_mode]
 /obj/item/clothing/head/hooded/berserker/proc/end_berserk(mob/living/carbon/human/user)
@@ -787,6 +791,8 @@
 	berserk_active = FALSE
 	if(QDELETED(user))
 		return
+	var/datum/action/item_action/berserk_mode/ragemode = locate() in actions
+	ragemode?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	to_chat(user, span_warning("You exit berserk mode."))
 	playsound(user, 'sound/effects/magic/summonitems_generic.ogg', 50)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/berserk)

@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed bombing non-turfs fishing spots not spawning loot correctly."
-  - balance: "Explosive bombing no longer spawns bottled messages/photos."
