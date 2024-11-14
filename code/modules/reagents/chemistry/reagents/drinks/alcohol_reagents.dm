@@ -109,7 +109,7 @@
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. Still popular today."
-	color = "#664300" // rgb: 102, 67, 0
+	color = "#D7BC31" // rgb: 215, 188, 49
 	nutriment_factor = 1
 	boozepwr = 25
 	taste_description = "mild carbonated malt"
@@ -1531,7 +1531,7 @@
 /datum/reagent/consumable/ethanol/eggnog
 	name = "Eggnog"
 	description = "For enjoying the most wonderful time of the year."
-	color = "#fcfdc6" // rgb: 252, 253, 198
+	color = "#ffe2ad" // rgb: 255, 226, 173
 	nutriment_factor = 2
 	boozepwr = 1
 	quality = DRINK_VERYGOOD
@@ -1541,7 +1541,7 @@
 /datum/reagent/consumable/ethanol/dreadnog
 	name = "Dreadnog"
 	description = "For suffering during a period of joy."
-	color = "#abb862" // rgb: 252, 253, 198
+	color = "#f7ffad" // rgb: 247, 255, 173
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	boozepwr = 1
 	quality = DRINK_REVOLTING
@@ -1573,7 +1573,7 @@
 /datum/reagent/consumable/ethanol/creme_de_menthe
 	name = "Creme de Menthe"
 	description = "A minty liqueur excellent for refreshing, cool drinks."
-	color = "#00cc00"
+	color = "#467446" //rgb: 70, 116, 70
 	boozepwr = 20
 	taste_description = "a minty, cool, and invigorating splash of cold streamwater"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1581,7 +1581,7 @@
 /datum/reagent/consumable/ethanol/creme_de_cacao
 	name = "Creme de Cacao"
 	description = "A chocolatey liqueur excellent for adding dessert notes to beverages and bribing sororities."
-	color = "#996633"
+	color = "#350900" // rgb: 53, 9, 0
 	boozepwr = 20
 	taste_description = "a slick and aromatic hint of chocolates swirling in a bite of alcohol"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

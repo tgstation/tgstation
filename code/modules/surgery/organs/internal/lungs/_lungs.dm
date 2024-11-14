@@ -21,7 +21,7 @@
 	var/failed = FALSE
 	var/operated = FALSE //whether we can still have our damages fixed through surgery
 
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/medicine/salbutamol = 5)
 
 	/// Our previous breath's partial pressures, in the form gas id -> partial pressure
 	var/list/last_partial_pressures = list()
