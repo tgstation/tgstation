@@ -61,7 +61,8 @@
 	return ..()
 
 /mob/living/carbon/alien/adult/royal/queen/set_name()
-	name = "alien princess"
+	if(get_alien_type(/mob/living/carbon/alien/adult/royal/queen, src))
+		name = "alien princess"
 	return ..()
 
 //Queen verbs
