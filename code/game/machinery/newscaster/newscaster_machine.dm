@@ -230,7 +230,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		data["channelLocked"] = current_channel.locked
 		data["channelCensored"] = current_channel.censored
 
-	//We send all the information about all messages in existance.
+	//We send all the information about all messages in existence.
 	data["messages"] = message_list
 	data["wanted"] = wanted_info
 

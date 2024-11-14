@@ -7,12 +7,12 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-  $primary: #397439,
+  $primary: hsl(120, 34%, 35%),
   $fg-map-keys: (),
   $bg-map-keys: ()
 );
 @use '../base.scss' with (
-  $color-bg: #550202,
+  $color-bg: hsl(0, 96%, 17%),
   $color-bg-grad-spread: 6%
 );
 
@@ -25,32 +25,32 @@
     '../components/Button.scss',
     $with: (
       'color-default': colors.$primary,
-      'color-disabled': #363636,
-      'color-selected': #9d0808,
-      'color-caution': #be6209,
-      'color-danger': #9a9d00
+      'color-disabled': hsl(0, 0%, 21%),
+      'color-selected': hsl(0, 91%, 31%),
+      'color-caution': hsl(28, 87%, 39%),
+      'color-danger': hsl(61, 100%, 30%)
     )
   );
   @include meta.load-css(
     '../components/Input.scss',
-    $with: ('border-color': #87ce87)
+    $with: ('border-color': hsl(120, 60%, 70%))
   );
   @include meta.load-css(
     '../components/NoticeBox.scss',
-    $with: ('background-color': #910101)
+    $with: ('background-color': hsl(0, 98%, 28%))
   );
   @include meta.load-css(
     '../components/NumberInput.scss',
-    $with: ('border-color': #87ce87)
+    $with: ('border-color': hsl(120, 60%, 70%))
   );
   @include meta.load-css(
     '../components/ProgressBar.scss',
-    $with: ('background-color': rgba(0, 0, 0, 0.5))
+    $with: ('background-color': hsla(0, 0%, 0%, 0.5))
   );
   @include meta.load-css('../components/Section.scss');
   @include meta.load-css(
     '../components/Tooltip.scss',
-    $with: ('background-color': #4a0202)
+    $with: ('background-color': hsl(0, 96%, 14%))
   );
 
   // Layouts
@@ -58,7 +58,7 @@
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': #910101)
+    $with: ('background-color': hsl(0, 98%, 28%))
   );
 
   .Layout__content {

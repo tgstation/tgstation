@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed fish still being hungry when fed if in aquarium with the 'growth and reproduction' option disabled."

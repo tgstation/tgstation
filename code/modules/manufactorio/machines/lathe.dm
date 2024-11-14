@@ -125,7 +125,7 @@
 		return
 
 	var/craft_time = (design.construction_time * design.lathe_time_factor) ** 0.8
-	flick_overlay_view(mutable_appearance(icon, "crafter_printing"), craft_time)
+	flick_overlay_view(mutable_appearance(icon, "lathe_printing"), craft_time)
 	print_sound.start()
 	add_load(power_cost)
 	busy = addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_needed), craft_time, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_DELETE_ME)

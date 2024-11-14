@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Xenobio console puts sucked up slimes into stasis so they no longer split up inside"
