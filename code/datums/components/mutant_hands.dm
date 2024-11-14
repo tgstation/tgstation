@@ -162,7 +162,7 @@
 
 	// We swap it intentionally here,
 	// so right icon is shown on the left (Because hands)
-	if(IS_LEFT(user.get_held_index_of_item(src)))
+	if(IS_LEFT_INDEX(user.get_held_index_of_item(src)))
 		icon_state = "[base_icon_state]_right"
 	else
 		icon_state = "[base_icon_state]_left"

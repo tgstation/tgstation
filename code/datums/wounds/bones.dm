@@ -123,7 +123,7 @@
 		// And you have a 70% or 50% chance to actually land the blow, respectively
 		if(HAS_TRAIT(victim, TRAIT_ANALGESIA) || prob(70 - 20 * (severity - 1)))
 			if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
-				to_chat(victim, span_userdanger("The fracture in your [limb.plaintext_zone] shoots with pain as you strike [target]!"))
+				to_chat(victim, span_danger("The fracture in your [limb.plaintext_zone] shoots with pain as you strike [target]!"))
 			victim.apply_damage(rand(1, 5), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 		else
 			victim.visible_message(span_danger("[victim] weakly strikes [target] with [victim.p_their()] broken [limb.plaintext_zone], recoiling from pain!"), \
@@ -141,20 +141,25 @@
 
 	switch(limb.body_zone)
 		if(BODY_ZONE_L_ARM)
-			if(!IS_LEFT(victim.get_held_index_of_item(gun)))
+			// Heavy guns use both hands so they will always get a penalty
+			// (Yes, this means having two broken arms will make heavy weapons SOOO much worse)
+			// Otherwise make sure THIS hand is firing THIS gun
+			if(gun.weapon_weight <= WEAPON_MEDIUM && !IS_LEFT_INDEX(victim.get_held_index_of_item(gun)))
 				return
 
 		if(BODY_ZONE_R_ARM)
-			if(!IS_RIGHT(victim.get_held_index_of_item(gun)))
+			// Ditto but for right arm
+			if(gun.weapon_weight <= WEAPON_MEDIUM && !IS_RIGHT_INDEX(victim.get_held_index_of_item(gun)))
 				return
 
 		else
+			// This is not arm wound, so we don't care
 			return
 
 	if(gun.recoil > 0 && severity >= WOUND_SEVERITY_SEVERE && prob(25 * (severity - 1)))
 		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
 			to_chat(victim, span_danger("The fracture in your [limb.plaintext_zone] explodes with pain as [gun] kicks back!"))
-		victim.apply_damage(rand(1, 5) * (severity - 1), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
+		victim.apply_damage(rand(1, 3) * (severity - 1) * gun.weapon_weight, BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 
 	if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
 		bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (15 * severity * (limb.current_gauze?.splint_factor || 1))

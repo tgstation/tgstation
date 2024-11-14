@@ -50,7 +50,7 @@
 
 	switch (stage)
 		if (STAGE_SHOULD_SWAP_HAND)
-			var/hand_name = IS_RIGHT(hand_to_watch) ? "right" : "left"
+			var/hand_name = IS_RIGHT_INDEX(hand_to_watch) ? "right" : "left"
 			show_instruction(keybinding_message(
 				/datum/keybinding/mob/swap_hands,
 				"Press '%KEY%' to use your [hand_name] hand",
