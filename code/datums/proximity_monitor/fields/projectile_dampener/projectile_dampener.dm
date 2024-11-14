@@ -68,12 +68,12 @@
 /datum/proximity_monitor/advanced/projectile_dampener/setup_field_turf(turf/target)
 	for(var/atom/possible_projectile in target)
 		if(isprojectile(possible_projectile))
-			catch_bullet_effect(movable)
+			catch_bullet_effect(possible_projectile)
 
 /datum/proximity_monitor/advanced/projectile_dampener/cleanup_field_turf(turf/target)
 	for(var/atom/possible_projectile in target)
 		if(isprojectile(possible_projectile) && HAS_TRAIT_FROM(possible_projectile, TRAIT_GOT_DAMPENED, REF(src)))
-			release_bullet_effect(movable)
+			release_bullet_effect(possible_projectile)
 
 /datum/proximity_monitor/advanced/projectile_dampener/proc/determine_wobble(turf/location)
 	var/coord_x = location.x - host.x
@@ -189,16 +189,16 @@
 /datum/proximity_monitor/advanced/projectile_dampener/peaceborg/setup_field_turf(turf/target)
 	for(var/atom/interesting_atom in target)
 		if(iscyborg(interesting_atom))
-			ADD_TRAIT(movable, TRAIT_GOT_DAMPENED, REF(src))
+			ADD_TRAIT(interesting_atom, TRAIT_GOT_DAMPENED, REF(src))
 		if(isprojectile(possible_projectile))
-			catch_bullet_effect(movable)
+			catch_bullet_effect(interesting_atom)
 
 /datum/proximity_monitor/advanced/projectile_dampener/peaceborg/cleanup_field_turf(turf/target)
 	for(var/atom/interesting_atom in target)
 		if(iscyborg(interesting_atom))
-			REMOVE_TRAIT(movable, TRAIT_GOT_DAMPENED, REF(src))
+			REMOVE_TRAIT(interesting_atom, TRAIT_GOT_DAMPENED, REF(src))
 		if(isprojectile(possible_projectile))
-			release_bullet_effect(movable)
+			release_bullet_effect(interesting_atom)
 
 /obj/effect/overlay/vis/field
 	appearance_flags = PIXEL_SCALE|LONG_GLIDE
