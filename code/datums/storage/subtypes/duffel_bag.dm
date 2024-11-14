@@ -1,7 +1,6 @@
 /datum/storage/duffel
 	max_total_storage = 30
 	max_slots = 21
-	exception_hold = list(/obj/item/fish_tank)
 
 /datum/storage/duffel/New(
 	atom/parent,
@@ -70,7 +69,7 @@
 		// Storage
 		/obj/item/storage/bag/money,
 		// Heads!
-		/obj/item/bodypart/head
+		/obj/item/bodypart/head,
 		// Fish
 		/obj/item/fish,
 		/obj/item/fish_tank,
