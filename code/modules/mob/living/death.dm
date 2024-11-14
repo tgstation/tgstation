@@ -98,7 +98,7 @@
 	ghostize()
 	QDEL_IN(src, DUST_ANIMATION_TIME) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 
-/// Animates turning into dust
+/// Animates turning into dust.
 /// Does not delete src afterwards, BUT it will become invisible (and grey), so ensure you handle that yourself
 /atom/movable/proc/dust_animation(atom/anim_loc = src.loc)
 	if(isnull(anim_loc)) // the effect breaks if we have a null loc
@@ -130,8 +130,19 @@
 
 #undef DUST_ANIMATION_TIME
 
+/**
+ * Spawns dust / ash or remains where the mob was
+ *
+ * just_ash: If TRUE, just ash will spawn where the mob was, as opposed to remains
+ */
 /mob/living/proc/spawn_dust(just_ash = FALSE)
-	new /obj/effect/decal/cleanable/ash(loc)
+	var/ash_type = /obj/effect/decal/cleanable/ash
+	if(mob_size >= MOB_SIZE_LARGE)
+		ash_type = /obj/effect/decal/cleanable/ash/large
+
+	var/obj/effect/decal/cleanable/ash/ash = new ash_type(loc)
+	ash.pixel_z = -5
+	ash.pixel_w = rand(-1, 1)
 
 /*
  * Called when the mob dies. Can also be called manually to kill a mob.
