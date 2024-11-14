@@ -178,7 +178,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
 /atom/movable/screen/fullscreen/high/proc/start_hue_rotation()
 	animate(src, color = color_matrix_rotate_hue(1), loop = -1, time = 2 SECONDS) //Start the loop.
 	var/step_precision = 18 //Larger is more precise rotations.
-	for(var/current_step=1,current_step<=step_precision-1,current_step++) //We do the -1 here because 360 == 0 when it comes to angles.
+	for(var/current_step in 1 to step_precision - 1) //We do the -1 here because 360 == 0 when it comes to angles.
 		animate(
 			color = color_matrix_rotate_hue(current_step * 360/step_precision),
 			time = 2 SECONDS,
