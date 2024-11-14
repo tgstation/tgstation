@@ -86,10 +86,9 @@
 		return
 	parriers[user] = world.time + grace_period
 
-/datum/component/parriable_projectile/proc/before_hit(obj/projectile/source, list/bullet_args)
+/datum/component/parriable_projectile/proc/before_hit(obj/projectile/source, mob/living/user)
 	SIGNAL_HANDLER
 
-	var/mob/user = bullet_args[2]
 	if (!istype(user) || !parriers[user] || parried)
 		return
 	parriers -= user
