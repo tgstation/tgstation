@@ -1,4 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - qol: "Chem dispenser UI droplets now have a shadow to not blend with the background"
