@@ -181,7 +181,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/item/bedsheet/purple,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
@@ -213,7 +213,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
 "aY" = (
@@ -239,7 +239,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/item/paper/crumpled/ruins/snowdin/dontdeadopeninside,
 /obj/item/bedsheet/green,
 /turf/open/floor/wood,
@@ -414,7 +414,7 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/snowdin/post/kitchen)
 "bM" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/freezer,
 /area/awaymission/snowdin/post/kitchen)
@@ -1092,7 +1092,7 @@
 "eh" = (
 /obj/structure/bed,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/item/bedsheet/red,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
@@ -1909,11 +1909,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/snowdin/post/messhall)
-"ht" = (
-/obj/structure/table,
-/obj/item/trash/waffles,
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/snowdin/post/messhall)
 "hu" = (
 /obj/structure/chair{
 	dir = 8
@@ -2073,12 +2068,12 @@
 /area/awaymission/snowdin/post/gateway)
 "hR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/gateway)
 "hS" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/effect/turf_decal/loading_area,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2086,7 +2081,7 @@
 /area/awaymission/snowdin/post/gateway)
 "hT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/gateway)
@@ -2302,7 +2297,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 5
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/gateway)
 "iB" = (
@@ -2310,7 +2305,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 10
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/machinery/holopad,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2318,7 +2313,7 @@
 /area/awaymission/snowdin/post/gateway)
 "iC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/gateway)
 "iD" = (
@@ -2579,14 +2574,14 @@
 /turf/open/floor/iron/white,
 /area/awaymission/snowdin/post/minipost)
 "ju" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/gateway)
 "jv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2650,7 +2645,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/iron,
@@ -3523,7 +3518,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/garage)
@@ -5245,7 +5240,7 @@
 	desc = "A console meant for calling and sending a transit ferry. It seems iced-over and non-functional.";
 	dir = 4;
 	icon_screen = null;
-	name = "Shuttle Transist Console"
+	name = "Shuttle Transit Console"
 	},
 /turf/open/floor/iron/dark/snowdin,
 /area/awaymission/snowdin/outside)
@@ -5830,7 +5825,7 @@
 	desc = "A console meant for calling and sending a transit ferry. It seems iced-over and non-functional.";
 	dir = 1;
 	icon_screen = null;
-	name = "Shuttle Transist Console"
+	name = "Shuttle Transit Console"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/snowdin/post/broken_shuttle)
@@ -7044,7 +7039,7 @@
 	},
 /area/awaymission/snowdin/cave)
 "Be" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
@@ -7500,7 +7495,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/snowdin,
 /obj/item/bedsheet/nanotrasen{
 	dir = 4
 	},
@@ -25007,7 +25002,7 @@ Kd
 ex
 fJ
 gA
-ht
+hq
 hW
 iH
 jz

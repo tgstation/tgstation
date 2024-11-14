@@ -41,8 +41,8 @@
 // Start of a breath chain, calls [carbon/proc/breathe()]
 /mob/living/carbon/handle_breathing(seconds_per_tick, times_fired)
 	var/next_breath = 4
-	var/obj/item/organ/internal/lungs/L = get_organ_slot(ORGAN_SLOT_LUNGS)
-	var/obj/item/organ/internal/heart/H = get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/lungs/L = get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/heart/H = get_organ_slot(ORGAN_SLOT_HEART)
 	if(L)
 		if(L.damage > L.high_threshold)
 			next_breath--
@@ -63,7 +63,7 @@
 
 // Second link in a breath chain, calls [carbon/proc/check_breath()]
 /mob/living/carbon/proc/breathe(seconds_per_tick, times_fired)
-	var/obj/item/organ/internal/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	var/is_on_internals = FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE, seconds_per_tick, times_fired) & COMSIG_CARBON_BLOCK_BREATH)
@@ -147,7 +147,7 @@
 /mob/living/carbon/proc/check_breath(datum/gas_mixture/breath)
 	. = TRUE
 
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		failed_last_breath = FALSE
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		return
@@ -169,7 +169,7 @@
 	/// Indicates if there are moles of gas in the breath.
 	var/has_moles = breath.total_moles() != 0
 
-	var/obj/item/organ/internal/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	// Indicates if lungs can breathe without gas.
 	var/can_breathe_vacuum = FALSE
 	if(lungs)
@@ -464,7 +464,7 @@
 	if(stat == DEAD)
 		if(reagents && (reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane))) // No organ decay if the body contains formaldehyde.
 			return
-		for(var/obj/item/organ/internal/organ in organs)
+		for(var/obj/item/organ/organ in organs)
 			// On-death is where organ decay is handled
 			if(organ?.owner) // organ + owner can be null due to reagent metabolization causing organ shuffling
 				organ.on_death(seconds_per_tick, times_fired)
@@ -477,7 +477,7 @@
 	for(var/slot in organs_slot)
 		// We don't use get_organ_slot here because we know we have the organ we want, since we're iterating the list containing em already
 		// This code is hot enough that it's just not worth the time
-		var/obj/item/organ/internal/organ = organs_slot[slot]
+		var/obj/item/organ/organ = organs_slot[slot]
 		if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
 			organ.on_life(seconds_per_tick, times_fired)
 
@@ -665,6 +665,8 @@
  * * capped (optional) default True used to cap step mode
  */
 /mob/living/carbon/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE, capped=TRUE)
+	if(HAS_TRAIT(src, TRAIT_HYPOTHERMIC) && amount > 0) //Prevent warming up
+		return
 	// apply insulation to the amount of change
 	if(use_insulation)
 		amount *= (1 - get_insulation_protection(bodytemperature + amount))
@@ -687,7 +689,7 @@
 /mob/living/carbon/get_fullness()
 	var/fullness = nutrition
 
-	var/obj/item/organ/internal/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!belly) //nothing to see here if we do not have a stomach
 		return fullness
 
@@ -705,7 +707,7 @@
 	. = ..()
 	if(.)
 		return
-	var/obj/item/organ/internal/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!belly)
 		return FALSE
 	return belly.reagents.has_reagent(reagent, amount, needs_metabolizing)
@@ -720,7 +722,7 @@
 	if(isnull(has_dna()))
 		return
 
-	var/obj/item/organ/internal/liver/liver = get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver)
 		return
 
@@ -734,7 +736,7 @@
 	adjustOrganLoss(pick(ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_EYES, ORGAN_SLOT_EARS), 0.5* seconds_per_tick)
 
 /mob/living/carbon/proc/undergoing_liver_failure()
-	var/obj/item/organ/internal/liver/liver = get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver?.organ_flags & ORGAN_FAILING)
 		return TRUE
 
@@ -754,7 +756,7 @@
 /mob/living/carbon/proc/can_heartattack()
 	if(!needs_heart())
 		return FALSE
-	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
 	if(!heart || IS_ROBOTIC_ORGAN(heart))
 		return FALSE
 	return TRUE
@@ -774,7 +776,7 @@
  * related situations (i.e not just cardiac arrest)
  */
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
-	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.is_beating())
 		return FALSE
 	else if(!needs_heart())
@@ -792,7 +794,7 @@
 	if(status && !can_heartattack())
 		return FALSE
 
-	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
 	if(!istype(heart))
 		return FALSE
 

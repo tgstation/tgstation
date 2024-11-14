@@ -400,7 +400,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 
 /obj/item/food/semki
 	name = "\improper Semki Sunflower Seeds"
-	desc = "A pack of roasted sunflower seeds. Beloved by space russians and babushka alike."
+	desc = "A pack of roasted sunflower seeds. Beloved by space Russians and babushka alike."
 	icon_state = "semki"
 	trash_type = /obj/item/trash/semki
 	food_reagents = list(

@@ -1,6 +1,6 @@
 // Banana
 /obj/item/seeds/banana
-	name = "pack of banana seeds"
+	name = "banana seed pack"
 	desc = "They're seeds that grow into banana trees. When grown, keep away from clown."
 	icon_state = "seed-banana"
 	species = "banana"
@@ -39,7 +39,7 @@
 
 ///Clowns will always like bananas.
 /obj/item/food/grown/banana/proc/check_liked(mob/living/carbon/human/consumer)
-	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if (!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
 		return FOOD_LIKED
 
@@ -91,7 +91,7 @@
 
 // Mimana - invisible sprites are totally a feature!
 /obj/item/seeds/banana/mime
-	name = "pack of mimana seeds"
+	name = "mimana seed pack"
 	desc = "They're seeds that grow into mimana trees. When grown, keep away from mime."
 	icon_state = "seed-mimana"
 	species = "mimana"
@@ -119,7 +119,7 @@
 
 // Bluespace Banana
 /obj/item/seeds/banana/bluespace
-	name = "pack of bluespace banana seeds"
+	name = "bluespace banana seed pack"
 	desc = "They're seeds that grow into bluespace banana trees. When grown, keep away from bluespace clown."
 	icon_state = "seed-banana-blue"
 	species = "bluespacebanana"

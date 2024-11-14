@@ -14,7 +14,6 @@
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)
 	if (stat != DEAD)
 		adjustBruteLoss(60)
-		updatehealth()
 		return TRUE
 	return FALSE
 
@@ -64,7 +63,7 @@
 	. = ..()
 	if(user.combat_mode)
 		return
-	if(stat != DEAD && !incapacitated() && (client || deployed_shell?.client))
+	if(stat != DEAD && !incapacitated && (client || deployed_shell?.client))
 		// alive and well AIs control their floor bolts
 		balloon_alert(user, "the AI's bolt motors resist.")
 		return ITEM_INTERACT_SUCCESS
@@ -153,3 +152,9 @@
 	var/atom/ai_structure = ai_mob_to_structure()
 	ai_structure.balloon_alert(user, "disconnected neural network")
 	return ITEM_INTERACT_SUCCESS
+
+/mob/living/silicon/ai/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
+	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
+		spark_system.start()
+		. = TRUE
+	return ..() || .

@@ -254,7 +254,7 @@
 		user.visible_message(span_warning("[user] begins prying open [src]."),\
 					span_noticealien("You begin digging your claws into [src] with all your might!"),\
 					span_warning("You hear groaning metal..."))
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 
 		var/time_to_open = 5 SECONDS
 		if(hasPower())

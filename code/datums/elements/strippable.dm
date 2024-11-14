@@ -43,15 +43,21 @@
 	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 		return
 
-	// Cyborgs buckle people by dragging them onto them, unless in combat mode.
+	// Snowflake for cyborgs buckling people by dragging them onto them, unless in combat mode.
 	if (iscyborg(user))
 		var/mob/living/silicon/robot/cyborg_user = user
 		if (!cyborg_user.combat_mode)
+			return
+	// Snowflake for xeno consumption code
+	if (isalienadult(user))
+		var/mob/living/carbon/alien/adult/alien = user
+		if (alien.grab_state == GRAB_AGGRESSIVE && alien.pulling == source)
 			return
 
 	if (!isnull(should_strip_proc_path) && !call(source, should_strip_proc_path)(user))
 		return
 
+	// Snowflake for mob scooping
 	if (isliving(source))
 		var/mob/living/mob = source
 		if (mob.can_be_held && (user.grab_state == GRAB_AGGRESSIVE) && (user.pulling == source))

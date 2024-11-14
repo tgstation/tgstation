@@ -112,3 +112,12 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/tank/internals/emergency_oxygen/engi(src) //in case anyone ever wants to do anything with spawning them, apart from crafting the box
+
+/obj/item/storage/box/stickers/chief_engineer
+	name = "CE approved sticker pack"
+	desc = "With one of these stickers, inform the crew that the contraption in the corridor is COMPLETELY SAFE!"
+	illustration = "label_ce"
+
+/obj/item/storage/box/stickers/chief_engineer/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/sticker/chief_engineer(src)

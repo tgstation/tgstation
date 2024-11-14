@@ -19,7 +19,7 @@
 /// We'll use another define to convert uses of the proc over. That'll be all
 // #define APPEARANCE_SUCCESS_TRACKING
 
-///Used to find the sources of harddels, quite laggy, don't be surpised if it freezes your client for a good while
+///Used to find the sources of harddels, quite laggy, don't be surprised if it freezes your client for a good while
 //#define REFERENCE_TRACKING
 #ifdef REFERENCE_TRACKING
 
@@ -83,7 +83,8 @@
 // If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
 // #define UNIT_TESTS
 
-// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so.
+// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so by default.
+// Even if it's not defined, you can pass "tracy" via -params in order to try to load it.
 // We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
 // #define USE_BYOND_TRACY
 

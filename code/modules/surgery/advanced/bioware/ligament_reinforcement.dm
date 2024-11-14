@@ -15,6 +15,22 @@
 
 	status_effect_gained = /datum/status_effect/bioware/ligaments/reinforced
 
+/datum/surgery/advanced/bioware/ligament_reinforcement/mechanic
+	name = "Anchor Point Reinforcement"
+	desc = "A surgical procedure which adds reinforced limb anchor points to the patient's chassis, preventing dismemberment. \
+		However, the nerve connections as a result are more easily interrupted, making it easier to disable limbs with damage."
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/apply_bioware/reinforce_ligaments,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
+	)
+
 /datum/surgery_step/apply_bioware/reinforce_ligaments
 	name = "reinforce ligaments (hand)"
 

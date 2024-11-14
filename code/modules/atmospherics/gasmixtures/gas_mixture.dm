@@ -451,16 +451,17 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//thermal energy of the system (self and sharer) is unchanged
 
 ///Compares sample to self to see if within acceptable ranges that group processing may be enabled
+///Takes the gas index to read from as a second arg (either MOLES or ARCHIVE)
 ///Returns: a string indicating what check failed, or "" if check passes
-/datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
+/datum/gas_mixture/proc/compare(datum/gas_mixture/sample, index)
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
 	var/list/cached_gases = gases
 	var/moles_sum = 0
 
 	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
 		// Yes this is actually fast. I too hate it here
-		var/gas_moles = cached_gases[id]?[MOLES] || 0
-		var/sample_moles = sample_gases[id]?[MOLES] || 0
+		var/gas_moles = cached_gases[id]?[index] || 0
+		var/sample_moles = sample_gases[id]?[index] || 0
 		// Brief explanation. We are much more likely to not pass this first check then pass the first and fail the second
 		// Because of this, double calculating the delta is FASTER then inserting it into a var
 		if(abs(gas_moles - sample_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
@@ -470,8 +471,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		moles_sum += gas_moles
 
 	if(moles_sum > MINIMUM_MOLES_DELTA_TO_MOVE) //Don't consider temp if there's not enough mols
-		if(abs(temperature - sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
-			return "temp"
+		if(index == ARCHIVE)
+			if(abs(temperature_archived - sample.temperature_archived) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
+				return "temp"
+		else
+			if(abs(temperature - sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
+				return "temp"
 
 	return ""
 
@@ -547,7 +552,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /**
  * Counts how much pressure will there be if we impart MOLAR_ACCURACY amounts of our gas to the output gasmix.
- * We do all of this without actually transferring it so dont worry about it changing the gasmix.
+ * We do all of this without actually transferring it so don't worry about it changing the gasmix.
  * Returns: Resulting pressure (number).
  * Args:
  * - output_air (gasmix).
@@ -562,10 +567,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
  * Args:
  * - output_air. The gas mix we want to pump to.
  * - target_pressure. The target pressure we want.
- * - ignore_temperature. Returns a cheaper form of gas calculation, useful if the temperature difference between the two gasmixes is low or nonexistant.
+ * - ignore_temperature. Returns a cheaper form of gas calculation, useful if the temperature difference between the two gasmixes is low or nonexistent.
  */
 /datum/gas_mixture/proc/gas_pressure_calculate(datum/gas_mixture/output_air, target_pressure, ignore_temperature = FALSE)
-	// So we dont need to iterate the gaslist multiple times.
+	// So we don't need to iterate the gaslist multiple times.
 	var/our_moles = total_moles()
 	var/output_moles = output_air.total_moles()
 	var/output_pressure = output_air.return_pressure()

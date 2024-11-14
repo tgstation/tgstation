@@ -70,7 +70,7 @@
 /area/ruin/powered/icemoon_phone_booth)
 "W" = (
 /obj/machinery/vending/cigarette{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/icemoon,

@@ -14,10 +14,11 @@ import {
 
 import { createSearch } from '../../common/string';
 import { useBackend } from '../backend';
-import { Input } from '../components';
+import { DmIcon, Input } from '../components';
 import { Window } from '../layouts';
 
 type VendingData = {
+  all_products_free: boolean;
   onstation: boolean;
   department: string;
   jobDiscount: number;
@@ -45,6 +46,8 @@ type ProductRecord = {
   max_amount: number;
   ref: string;
   category: string;
+  icon?: string;
+  icon_state?: string;
 };
 
 type CoinRecord = ProductRecord & {
@@ -216,7 +219,7 @@ const ProductDisplay = (props: {
   } = props;
   const {
     stock,
-    onstation,
+    all_products_free,
     user,
     displayed_currency_icon,
     displayed_currency_name,
@@ -229,7 +232,7 @@ const ProductDisplay = (props: {
       title="Products"
       buttons={
         <Stack>
-          {!!onstation && user && (
+          {!all_products_free && user && (
             <Stack.Item fontSize="16px" color="green">
               {(user && user.cash) || 0}
               {displayed_currency_name}{' '}
@@ -275,33 +278,35 @@ const ProductDisplay = (props: {
 const VendingRow = (props) => {
   const { data } = useBackend<VendingData>();
   const { custom, product, productStock } = props;
-  const { access, department, jobDiscount, onstation, user } = data;
-  const free = !onstation || product.price === 0;
+  const { access, department, jobDiscount, all_products_free, user } = data;
+  const free = all_products_free || product.price === 0;
   const discount = !product.premium && department === user?.department;
   const remaining = custom ? product.amount : productStock.amount;
   const redPrice = Math.round(product.price * jobDiscount);
   const disabled =
     remaining === 0 ||
-    (onstation && !user) ||
-    (onstation &&
+    (!all_products_free && !user) ||
+    (!all_products_free &&
       !access &&
       (discount ? redPrice : product.price) > user?.cash);
 
   return (
-    <Table.Row>
-      <Table.Cell collapsing>
+    <Table.Row height="32px">
+      <Table.Cell collapsing width="36px">
         <ProductImage product={product} />
       </Table.Cell>
-      <Table.Cell bold>{capitalizeAll(product.name)}</Table.Cell>
-      <Table.Cell>
+      <Table.Cell verticalAlign="middle" bold>
+        {capitalizeAll(product.name)}
+      </Table.Cell>
+      <Table.Cell verticalAlign="middle">
         {!!productStock?.colorable && (
           <ProductColorSelect disabled={disabled} product={product} />
         )}
       </Table.Cell>
-      <Table.Cell collapsing textAlign="right">
+      <Table.Cell collapsing textAlign="right" verticalAlign="middle">
         <ProductStock custom={custom} product={product} remaining={remaining} />
       </Table.Cell>
-      <Table.Cell collapsing textAlign="center">
+      <Table.Cell collapsing textAlign="center" verticalAlign="middle">
         <ProductButton
           custom={custom}
           disabled={disabled}
@@ -319,20 +324,30 @@ const VendingRow = (props) => {
 const ProductImage = (props) => {
   const { product } = props;
 
-  return product.img ? (
-    <img
-      src={`data:image/jpeg;base64,${product.img}`}
-      style={{
-        verticalAlign: 'middle',
-      }}
-    />
-  ) : (
-    <span
-      className={classes(['vending32x32', product.path])}
-      style={{
-        verticalAlign: 'middle',
-      }}
-    />
+  return (
+    <Box width="32px" height="32px">
+      {product.img ? (
+        <img
+          src={`data:image/jpeg;base64,${product.img}`}
+          style={{
+            verticalAlign: 'middle',
+          }}
+        />
+      ) : product.icon && product.icon_state ? (
+        <DmIcon
+          icon={product.icon}
+          icon_state={product.icon_state}
+          fallback={<Icon name="spinner" size={2} spin />}
+        />
+      ) : (
+        <span
+          className={classes(['vending32x32', product.path])}
+          style={{
+            verticalAlign: 'middle',
+          }}
+        />
+      )}
+    </Box>
   );
 };
 
@@ -347,6 +362,7 @@ const ProductColorSelect = (props) => {
     <Button
       icon="palette"
       tooltip="Change color"
+      width="24px"
       disabled={disabled}
       onClick={() => act('select_colors', { ref: product.ref })}
     />

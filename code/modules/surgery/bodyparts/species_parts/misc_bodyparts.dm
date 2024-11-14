@@ -96,7 +96,7 @@
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
-	wing_types = list(/obj/item/organ/external/wings/functional/slime)
+	wing_types = list(/obj/item/organ/wings/functional/slime)
 
 /obj/item/bodypart/chest/jelly/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_SLIME)
@@ -226,8 +226,8 @@
 	unarmed_attack_verbs = list("slash", "lash")
 	grappled_attack_verb = "lacerate"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	burn_modifier = 1.25
 
 /obj/item/bodypart/arm/right/pod
@@ -235,8 +235,8 @@
 	unarmed_attack_verbs = list("slash", "lash")
 	grappled_attack_verb = "lacerate"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slice.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slice.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	burn_modifier = 1.25
 
 /obj/item/bodypart/leg/left/pod
@@ -254,12 +254,14 @@
 	should_draw_greyscale = FALSE
 	head_flags = HEAD_EYESPRITES|HEAD_EYEHOLES|HEAD_DEBRAIN
 	teeth_count = 0
+	bodypart_traits = list(TRAIT_ANTENNAE)
 
 /obj/item/bodypart/chest/fly
 	limb_id = SPECIES_FLYPERSON
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
-	wing_types = list(/obj/item/organ/external/wings/functional/fly)
+	wing_types = list(/obj/item/organ/wings/functional/fly)
+	bodypart_traits = list(TRAIT_TACKLING_FRAIL_ATTACKER)
 
 /obj/item/bodypart/arm/left/fly
 	limb_id = SPECIES_FLYPERSON
@@ -335,7 +337,7 @@
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	bodypart_flags = BODYPART_UNHUSKABLE
-	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)
+	wing_types = list(/obj/item/organ/wings/functional/skeleton)
 
 /obj/item/bodypart/arm/left/skeleton
 	biological_state = (BIO_BONE|BIO_JOINTED)
@@ -500,7 +502,7 @@
 	limb_id = SPECIES_GOLEM
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING, TRAIT_BOULDER_BREAKER)
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
 	unarmed_effectiveness = 20
@@ -533,7 +535,7 @@
 	limb_id = SPECIES_GOLEM
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING, TRAIT_BOULDER_BREAKER)
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
 	unarmed_effectiveness = 20

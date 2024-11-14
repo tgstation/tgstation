@@ -17,7 +17,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("attacks", "impales", "pierces")
 	attack_verb_simple = list("attack", "impale", "pierce")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_pitchfork

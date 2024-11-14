@@ -1,5 +1,5 @@
 ///How many units of a reagent is needed to make a cone.
-#define CONE_REAGENET_NEEDED 1
+#define CONE_REAGENT_NEEDED 1
 
 ///The vat is set to dispense ice cream.
 #define VAT_MODE_ICECREAM "ice cream"
@@ -75,13 +75,15 @@
 
 	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(allow_reagent_scan))
 
-	create_reagents(300, NO_REACT|TRANSPARENT)
+	var/ice_cream_day = check_holidays(ICE_CREAM_DAY) //ice cream vats are more "robust" on this holiday
+
+	create_reagents(ice_cream_day ? 400 : 300, NO_REACT|TRANSPARENT)
 	reagents.chem_temp = T0C //So ice doesn't melt
 	register_context()
 
 	if(preinstall_reagents)
 		for(var/reagent in icecream_vat_reagents)
-			reagents.add_reagent(reagent, icecream_vat_reagents[reagent], reagtemp = T0C)
+			reagents.add_reagent(reagent, icecream_vat_reagents[reagent] * (ice_cream_day ? 2.5 : 1), reagtemp = T0C)
 
 /obj/machinery/icecream_vat/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -240,7 +242,7 @@
 ///Makes an ice cream cone of the make_type, using ingredients list as reagents used to make it. Puts in user's hand if possible.
 /obj/machinery/icecream_vat/proc/make_cone(mob/user, make_type, list/ingredients)
 	for(var/reagents_needed in ingredients)
-		if(!reagents.has_reagent(reagents_needed, CONE_REAGENET_NEEDED))
+		if(!reagents.has_reagent(reagents_needed, CONE_REAGENT_NEEDED))
 			balloon_alert(user, "not enough ingredients!")
 			return
 	var/cone_type = cone_prototypes[make_type].type
@@ -249,7 +251,7 @@
 	var/obj/item/food/icecream/cone = new cone_type(src)
 
 	for(var/reagents_used in ingredients)
-		reagents.remove_reagent(reagents_used, CONE_REAGENET_NEEDED)
+		reagents.remove_reagent(reagents_used, CONE_REAGENT_NEEDED)
 	balloon_alert_to_viewers("cooks up [cone.name]", "cooks up [cone.name]")
 	try_put_in_hand(cone, user)
 
@@ -260,14 +262,14 @@
 		CRASH("[user] was making ice cream of [selected_flavour] but had no flavor datum for it!")
 
 	for(var/reagents_needed in flavor.ingredients)
-		if(!reagents.has_reagent(reagents_needed, CONE_REAGENET_NEEDED))
+		if(!reagents.has_reagent(reagents_needed, CONE_REAGENT_NEEDED))
 			balloon_alert(user, "not enough ingredients!")
 			return
 
 	var/should_use_custom_ingredients = (flavor.takes_custom_ingredients && custom_ice_cream_beaker && custom_ice_cream_beaker.reagents.total_volume)
 	if(flavor.add_flavour(source, should_use_custom_ingredients ? custom_ice_cream_beaker.reagents : null))
 		for(var/reagents_used in flavor.ingredients)
-			reagents.remove_reagent(reagents_used, CONE_REAGENET_NEEDED)
+			reagents.remove_reagent(reagents_used, CONE_REAGENT_NEEDED)
 		balloon_alert_to_viewers("scoops [selected_flavour]", "scoops [selected_flavour]")
 
 	if(istype(cone))
@@ -295,4 +297,4 @@
 
 #undef VAT_MODE_ICECREAM
 #undef VAT_MODE_CONES
-#undef CONE_REAGENET_NEEDED
+#undef CONE_REAGENT_NEEDED

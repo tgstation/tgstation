@@ -82,7 +82,7 @@
 
 /datum/experiment/ordnance/explosive/hydrogenbomb
 	name = "Hydrogen Explosives"
-	description = "Combustion of Hydrogen and it's derivatives can be very powerful. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hydrogen or Tritium Fires are allowed."
+	description = "Combustion of Hydrogen and its derivatives can be very powerful. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hydrogen or Tritium Fires are allowed."
 	gain = list(15,40,60)
 	target_amount = list(50,75,150)
 	experiment_proper = TRUE
@@ -387,7 +387,7 @@
 			if (organ.type == target_species.get_mutant_organ_type_for_slot(organ.slot))
 				continue
 		else
-			if ((organ.type in target_species.mutant_organs) || (organ.type in target_species.external_organs))
+			if ((organ.type in target_species.mutant_organs))
 				continue
 		return TRUE
 	return FALSE
@@ -429,7 +429,7 @@
 	. = ..()
 	if (!.)
 		return
-	var/obj/item/organ/internal/brain/scanned_brain = check.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/scanned_brain = check.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if (isnull(scanned_brain))
 		experiment_handler.announce_message("Subject is brainless!")
 		return FALSE

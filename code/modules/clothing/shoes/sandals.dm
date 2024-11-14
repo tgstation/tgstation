@@ -16,6 +16,12 @@
 	desc = "A pair of wooden sandals that have laces up to the shins, for some reason. Conveniently, they're so thin they're barely noticeable."
 	can_be_tied = TRUE
 
+/obj/item/clothing/shoes/sandal/alt
+	desc = "A pair of shiny black wooden sandals."
+	name = "black sandals"
+	icon_state = "blacksandals"
+	inhand_icon_state = "blacksandals"
+
 /datum/armor/shoes_sandal
 	bio = 10
 

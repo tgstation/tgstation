@@ -41,6 +41,11 @@
 	stored.forceMove(get_turf(usr))
 	return
 
+/obj/item/borg/apparatus/get_proxy_attacker_for(atom/target, mob/user)
+	if(stored) // Use the stored item if available
+		return stored
+	return ..()
+
 /**
 * Attack_self will pass for the stored item.
 */
@@ -57,10 +62,6 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
-	if(stored)
-		stored.melee_attack_chain(user, atom, params)
-		return TRUE
-
 	if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
 		return ..() // Borgs should not be grabbing their own modules
 
@@ -132,7 +133,6 @@
 		else
 			. += "Nothing."
 
-		. += span_notice(" <i>Right-clicking</i> will splash the beaker on the ground.")
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored beaker. ")
 
 /obj/item/borg/apparatus/beaker/update_overlays()
@@ -150,15 +150,6 @@
 	else
 		arm.pixel_y = arm.pixel_y - 5
 	. += arm
-
-/// Secondary attack spills the content of the beaker.
-/obj/item/borg/apparatus/beaker/pre_attack_secondary(atom/target, mob/living/silicon/robot/user)
-	var/obj/item/reagent_containers/stored_beaker = stored
-	if(!stored_beaker)
-		return ..()
-	stored_beaker.SplashReagents(drop_location(user))
-	loc.visible_message(span_notice("[user] spills the contents of [stored_beaker] all over the ground."))
-	return ..()
 
 /obj/item/borg/apparatus/beaker/extra
 	name = "secondary beaker storage apparatus"
@@ -204,6 +195,7 @@
 		/obj/item/reagent_containers/condiment,
 		/obj/item/reagent_containers/cup/coffeepot,
 		/obj/item/reagent_containers/cup/bottle/syrup_bottle,
+		/obj/item/reagent_containers/cup/beaker,
 	)
 
 /obj/item/borg/apparatus/beaker/service2/add_glass()
@@ -329,7 +321,7 @@
 
 /obj/item/borg/apparatus/service
 	name = "service apparatus"
-	desc = "A special apparatus for carrying food, bowls, plates, oven trays, soup pots and paper."
+	desc = "A special apparatus for carrying food, seeds, grafts, bowls, plates, oven trays, soup pots and paper."
 	icon_state = "borg_service_apparatus"
 	storable = list(
 		/obj/item/food,
@@ -338,6 +330,9 @@
 		/obj/item/plate/oven_tray,
 		/obj/item/reagent_containers/cup/bowl,
 		/obj/item/reagent_containers/cup/soup_pot,
+		/obj/item/seeds,
+		/obj/item/graft,
+		/obj/item/fish,
 	)
 
 /obj/item/borg/apparatus/service/Initialize(mapload)

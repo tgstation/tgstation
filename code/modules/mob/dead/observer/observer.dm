@@ -36,7 +36,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/health_scan = FALSE //Are health scans currently enabled?
 	var/chem_scan = FALSE //Are chem scans currently enabled?
 	var/gas_scan = FALSE //Are gas scans currently enabled?
-	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	//These variables store hair data if the ghost originates from a species with head and/or facial hair.
@@ -62,6 +61,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	/// The POI we're orbiting (orbit menu)
 	var/orbiting_ref
+
+	var/static/list/observer_hud_traits = list(
+		TRAIT_SECURITY_HUD,
+		TRAIT_MEDICAL_HUD,
+		TRAIT_DIAGNOSTIC_HUD,
+		TRAIT_BOT_PATH_HUD
+	)
 
 /mob/dead/observer/Initialize(mapload)
 	set_invisibility(GLOB.observer_default_invisibility)
@@ -135,21 +141,18 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	add_to_dead_mob_list()
 
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
+		alt_hud.apply_to_new_mob(src)
 
 	. = ..()
 
 	grant_all_languages()
+	setup_hud_traits()
 	show_data_huds()
 	data_huds_on = 1
 
 	SSpoints_of_interest.make_point_of_interest(src)
 	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, ref(src))
-	ADD_TRAIT(src, TRAIT_SECURITY_HUD, ref(src))
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -260,20 +263,20 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = TRUE)
+/mob/proc/ghostize(can_reenter_corpse = TRUE, admin_ghost = FALSE)
 	if(!key)
 		return
 	if(key[1] == "@") // Skip aghosts.
 		return
 
-	if(HAS_TRAIT(src, TRAIT_CORPSELOCKED))
+	if(HAS_TRAIT(src, TRAIT_CORPSELOCKED) && !admin_ghost)
 		if(can_reenter_corpse) //If you can re-enter the corpse you can't leave when corpselocked
 			return
 		if(ishuman(usr)) //following code only applies to those capable of having an ethereal heart, ie humans
 			var/mob/living/carbon/human/crystal_fella = usr
 			var/our_heart = crystal_fella.get_organ_slot(ORGAN_SLOT_HEART)
-			if(istype(our_heart, /obj/item/organ/internal/heart/ethereal)) //so you got the heart?
-				var/obj/item/organ/internal/heart/ethereal/ethereal_heart = our_heart
+			if(istype(our_heart, /obj/item/organ/heart/ethereal)) //so you got the heart?
+				var/obj/item/organ/heart/ethereal/ethereal_heart = our_heart
 				ethereal_heart.stop_crystalization_process(crystal_fella) //stops the crystallization process
 
 	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
@@ -320,7 +323,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ghostize(FALSE) // FALSE parameter is so we can never re-enter our body. U ded.
 	return TRUE
 
-/mob/camera/verb/ghost()
+/mob/eye/verb/ghost()
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
@@ -480,7 +483,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/list/icon_dimensions = get_icon_dimensions(target.icon)
 	var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * 0.5
-	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
+	orbitsize -= (orbitsize/ICON_SIZE_ALL)*(ICON_SIZE_ALL*0.25)
 
 	var/rot_seg
 
@@ -506,6 +509,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	. = ..()
 	//restart our floating animation after orbit is done.
 	pixel_y = base_pixel_y
+	// if we were autoobserving, reset perspective
+	if (!isnull(client) && !isnull(client.eye))
+		reset_perspective(null)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
@@ -698,7 +704,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/mouse_drop_dragged(atom/over, mob/user)
-	if (isobserver(user) && user.client.holder && (isliving(over) || iscameramob(over)))
+	if (isobserver(user) && user.client.holder && (isliving(over) || iseyemob(over)))
 		user.client.holder.cmd_ghost_drag(src, over)
 
 /mob/dead/observer/Topic(href, href_list)
@@ -757,14 +763,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return
 
 /mob/dead/observer/proc/show_data_huds()
-	for(var/hudtype in datahuds)
-		var/datum/atom_hud/data_hud = GLOB.huds[hudtype]
-		data_hud.show_to(src)
+	add_traits(observer_hud_traits, REF(src))
 
 /mob/dead/observer/proc/remove_data_huds()
-	for(var/hudtype in datahuds)
-		var/datum/atom_hud/data_hud = GLOB.huds[hudtype]
-		data_hud.hide_from(src)
+	remove_traits(observer_hud_traits, REF(src))
 
 /mob/dead/observer/verb/toggle_data_huds()
 	set name = "Toggle Sec/Med/Diag HUD"
@@ -1059,31 +1061,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/tray_view()
 	set category = "Ghost"
-	set name = "T-ray view"
-	set desc = "Toggles a view of sub-floor objects"
+	set name = "T-ray scan"
+	set desc = "Perfom a scan to view sub-floor objects"
 
-	var/static/t_ray_view = FALSE
-	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder && !t_ray_view)
+	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice("That verb is currently globally disabled."))
 		return
-	t_ray_view = !t_ray_view
 
-	var/list/t_ray_images = list()
-	var/static/list/stored_t_ray_images = list()
-	for(var/obj/O in orange(client.view, src) )
-		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-			var/image/I = new(loc = get_turf(O))
-			var/mutable_appearance/MA = new(O)
-			MA.alpha = 128
-			MA.dir = O.dir
-			I.appearance = MA
-			t_ray_images += I
-	stored_t_ray_images += t_ray_images
-	if(length(t_ray_images))
-		if(t_ray_view)
-			client.images += t_ray_images
-		else
-			client.images -= stored_t_ray_images
+	t_ray_scan(src)
 
 /mob/dead/observer/default_lighting_cutoff()
 	var/datum/preferences/prefs = client?.prefs

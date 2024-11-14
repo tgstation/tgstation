@@ -64,7 +64,7 @@
 		installed_upgrade = null
 		update_appearance()
 	else if(trash_bag && (!is_key(I) || is_key(inserted_key))) // don't put a key in the trash when we need it
-		trash_bag.attackby(I, user)
+		trash_bag.atom_storage.attempt_insert(I, user)
 	else
 		return ..()
 

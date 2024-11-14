@@ -76,12 +76,6 @@
 	floor_tile = /obj/item/stack/tile/catwalk_tile/iron_dark
 	catwalk_type = "darkiron"
 
-/turf/open/floor/catwalk_floor/flat_white
-	name = "white large plated catwalk floor"
-	icon_state = "flatwhite_above"
-	floor_tile = /obj/item/stack/tile/catwalk_tile/flat_white
-	catwalk_type = "flatwhite"
-
 /turf/open/floor/catwalk_floor/titanium
 	name = "titanium plated catwalk floor"
 	icon_state = "titanium_above"
@@ -110,9 +104,6 @@
 
 /turf/open/floor/catwalk_floor/iron_dark/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
-
-/turf/open/floor/catwalk_floor/flat_white/airless
-	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/catwalk_floor/titanium/Airless
 	initial_gas_mix = AIRLESS_ATMOS

@@ -5,7 +5,7 @@
 /datum/action/innate/construction
 	button_icon = 'icons/mob/actions/actions_construction.dmi'
 	///Console's eye mob
-	var/mob/camera/ai_eye/remote/base_construction/remote_eye
+	var/mob/eye/ai_eye/remote/base_construction/remote_eye
 	///Console itself
 	var/obj/machinery/computer/camera_advanced/base_construction/base_console
 	///Is this used to build only on the station z level?
@@ -91,7 +91,7 @@
 	if(place_turf.density)
 		to_chat(owner, span_warning("[structure_name] may only be placed on a floor."))
 		return
-	//Can't place two dense objects inside eachother
+	//Can't place two dense objects inside each other
 	if(initial(structure_path.density) && place_turf.is_blocked_turf())
 		to_chat(owner, span_warning("Location is obstructed by something. Please clear the location and try again."))
 		return
@@ -120,7 +120,7 @@
 	button_icon_state = "build_turret"
 	structure_name = "turrets"
 	structure_path = /obj/machinery/porta_turret/aux_base
-	place_sound = 'sound/items/drill_use.ogg'
+	place_sound = 'sound/items/tools/drill_use.ogg'
 
 /datum/action/innate/construction/place_structure/turret/after_place(obj/placed_structure, remaining)
 	var/obj/machinery/computer/auxiliary_base/turret_controller = locate() in get_area(placed_structure)

@@ -581,7 +581,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/abandoned/cargo)
 "CC" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/unlocked,

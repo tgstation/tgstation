@@ -29,20 +29,20 @@
 
 /mob/living/basic/bot/firebot/generate_speak_list()
 	var/static/list/idle_lines = list(
-		FIREBOT_VOICED_NO_FIRES = 'sound/voice/firebot/nofires.ogg',
-		FIREBOT_VOICED_ONLY_YOU = 'sound/voice/firebot/onlyyou.ogg',
-		FIREBOT_VOICED_TEMPERATURE_NOMINAL = 'sound/voice/firebot/tempnominal.ogg',
-		FIREBOT_VOICED_KEEP_COOL = 'sound/voice/firebot/keepitcool.ogg',
+		FIREBOT_VOICED_NO_FIRES = 'sound/mobs/non-humanoids/firebot/nofires.ogg',
+		FIREBOT_VOICED_ONLY_YOU = 'sound/mobs/non-humanoids/firebot/onlyyou.ogg',
+		FIREBOT_VOICED_TEMPERATURE_NOMINAL = 'sound/mobs/non-humanoids/firebot/tempnominal.ogg',
+		FIREBOT_VOICED_KEEP_COOL = 'sound/mobs/non-humanoids/firebot/keepitcool.ogg',
 	)
 	var/static/list/fire_detected_lines = list(
-		FIREBOT_VOICED_FIRE_DETECTED = 'sound/voice/firebot/detected.ogg',
-		FIREBOT_VOICED_STOP_DROP = 'sound/voice/firebot/stopdropnroll.ogg',
-		FIREBOT_VOICED_EXTINGUISHING = 'sound/voice/firebot/extinguishing.ogg',
+		FIREBOT_VOICED_FIRE_DETECTED = 'sound/mobs/non-humanoids/firebot/detected.ogg',
+		FIREBOT_VOICED_STOP_DROP = 'sound/mobs/non-humanoids/firebot/stopdropnroll.ogg',
+		FIREBOT_VOICED_EXTINGUISHING = 'sound/mobs/non-humanoids/firebot/extinguishing.ogg',
 	)
 	var/static/list/emagged_lines = list(
-		FIREBOT_VOICED_CANDLE_TIP = 'sound/voice/firebot/candle_tip.ogg',
-		FIREBOT_VOICED_ELECTRIC_FIRE = 'sound/voice/firebot/electric_fire_tip.ogg',
-		FIREBOT_VOICED_FUEL_TIP = 'sound/voice/firebot/gasoline_tip.ogg'
+		FIREBOT_VOICED_CANDLE_TIP = 'sound/mobs/non-humanoids/firebot/candle_tip.ogg',
+		FIREBOT_VOICED_ELECTRIC_FIRE = 'sound/mobs/non-humanoids/firebot/electric_fire_tip.ogg',
+		FIREBOT_VOICED_FUEL_TIP = 'sound/mobs/non-humanoids/firebot/gasoline_tip.ogg'
 	)
 	ai_controller.set_blackboard_key(BB_FIREBOT_EMAGGED_LINES, emagged_lines)
 	ai_controller.set_blackboard_key(BB_FIREBOT_IDLE_LINES, idle_lines)
@@ -74,15 +74,15 @@
 	internal_ext.refill()
 
 /mob/living/basic/bot/firebot/melee_attack(atom/attacked_atom, list/modifiers, ignore_cooldown = FALSE)
-	use_extinguisher(attacked_atom)
+	use_extinguisher(attacked_atom, modifiers)
 
 /mob/living/basic/bot/firebot/RangedAttack(atom/attacked_atom, list/modifiers)
-	use_extinguisher(attacked_atom)
+	use_extinguisher(attacked_atom, modifiers)
 
-/mob/living/basic/bot/firebot/proc/use_extinguisher(atom/attacked_atom)
+/mob/living/basic/bot/firebot/proc/use_extinguisher(atom/attacked_atom, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
-	spray_water(attacked_atom)
+	spray_water(attacked_atom, modifiers)
 
 /mob/living/basic/bot/firebot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
@@ -112,9 +112,10 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/basic/bot/firebot/ui_act(action, params)
+/mob/living/basic/bot/firebot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_access_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
+	var/mob/user = ui.user
+	if(. || (bot_access_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
 		return
 
 	switch(action)
@@ -137,12 +138,12 @@
 	foam.start()
 	COOLDOWN_START(src, foam_cooldown, FOAM_INTERVAL)
 
-/mob/living/basic/bot/firebot/proc/spray_water(atom/attacked_atom)
+/mob/living/basic/bot/firebot/proc/spray_water(atom/attacked_atom, list/modifiers)
 	if(firebot_mode_flags & FIREBOT_STATIONARY_MODE)
 		flick("firebots_use", src)
 	else
 		flick("firebot1_use", src)
-	internal_ext?.melee_attack_chain(src, attacked_atom)
+	internal_ext?.interact_with_atom(attacked_atom, src, modifiers)
 
 /mob/living/basic/bot/firebot/update_icon_state()
 	. = ..()

@@ -22,11 +22,6 @@
 	//Used for upgrading this into R-Plating
 	var/upgradable = TRUE
 
-	/// If true, will allow tiles to replace us if the tile [wants to] [/obj/item/stack/tile/var/replace_plating].
-	/// And if our baseturfs are compatible.
-	/// See [/obj/item/stack/tile/proc/place_tile].
-	var/allow_replacement = TRUE
-
 /turf/open/floor/plating/broken_states()
 	return list("damaged1", "damaged2", "damaged4")
 
@@ -148,10 +143,10 @@
 			if(L)
 				qdel(L)
 			to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
-			playsound(src, 'sound/weapons/Genhit.ogg', 50, TRUE)
+			playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
 			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	else
-		playsound(src, 'sound/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
+		playsound(src, 'sound/items/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		if(prob(I.force * 20 - 25))
@@ -193,7 +188,6 @@
 	heat_capacity = INFINITY
 
 	baseturfs = /turf/open/floor/plating
-	allow_replacement = FALSE
 	rcd_proof = TRUE
 	upgradable = FALSE
 	rust_resistance = RUST_RESISTANCE_REINFORCED

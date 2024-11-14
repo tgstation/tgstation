@@ -13,14 +13,14 @@
 #define OXY "oxygen"
 /// Exhaustion and nonlethal damage.
 #define STAMINA "stamina"
-/// Brain damage. Should probably be decomissioned and replaced with proper organ damage.
+/// Brain damage. Should probably be decommissioned and replaced with proper organ damage.
 #define BRAIN "brain"
 
 //Damage flag defines //
 
 /// Involves corrosive substances.
 #define ACID "acid"
-/// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
+/// Involved in checking whether a disease can infect or spread. Also involved in xeno neurotoxin.
 #define BIO "bio"
 /// Involves a shockwave, usually from an explosion.
 #define BOMB "bomb"
@@ -36,7 +36,7 @@
 #define LASER "laser"
 /// Involves a melee attack or a thrown object.
 #define MELEE "melee"
-/// Involved in checking the likelyhood of applying a wound to a mob.
+/// Involved in checking the likelihood of applying a wound to a mob.
 #define WOUND "wound"
 
 #define ARMOR_ALL "all_damage_types"
@@ -76,15 +76,12 @@
 #define CANUNCONSCIOUS (1<<2)
 /// If set, this mob can be grabbed or pushed when bumped into
 #define CANPUSH (1<<3)
-/// Mob godmode. Prevents most statuses and damage from being taken, but is more often than not a crapshoot. Use with caution.
-#define GODMODE (1<<4)
 
 DEFINE_BITFIELD(status_flags, list(
 	"CAN STUN" = CANSTUN,
 	"CAN KNOCKDOWN" = CANKNOCKDOWN,
 	"CAN UNCONSCIOUS" = CANUNCONSCIOUS,
 	"CAN PUSH" = CANPUSH,
-	"GOD MODE" = GODMODE,
 ))
 
 //Health Defines
@@ -242,8 +239,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// ex_act() with EXPLODE_DEVASTATE severity will gib mobs with less than this much bomb armor
 #define EXPLODE_GIB_THRESHOLD 50
 
-#define EMP_HEAVY 1
 #define EMP_LIGHT 2
+#define EMP_HEAVY 1
 
 #define GRENADE_CLUMSY_FUMBLE 1
 #define GRENADE_NONCLUMSY_FUMBLE 2

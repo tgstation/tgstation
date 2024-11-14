@@ -214,8 +214,9 @@
 		N.nukeop_outfit = null
 		add_antag_datum(N,converter.nuke_team)
 
-
 	enslaved_to = WEAKREF(creator)
+
+	SEND_SIGNAL(current, COMSIG_MOB_ENSLAVED_TO, creator)
 
 	current.faction |= creator.faction
 	creator.faction |= "[REF(current)]"
@@ -285,7 +286,7 @@
 /datum/mind/proc/make_wizard()
 	if(has_antag_datum(/datum/antagonist/wizard))
 		return
-	set_assigned_role(SSjob.GetJobType(/datum/job/space_wizard))
+	set_assigned_role(SSjob.get_job_type(/datum/job/space_wizard))
 	special_role = ROLE_WIZARD
 	add_antag_datum(/datum/antagonist/wizard)
 

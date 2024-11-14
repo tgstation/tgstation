@@ -194,7 +194,7 @@
 
 /datum/uplink_item/weapon_kits/medium_cost/revolvercase
 	name = "Syndicate Revolver Case (Moderate)"
-	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum. \
+	desc = "Waffle Corp's modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum. \
 		A classic operative weapon, brought to the modern era. Comes with 3 additional speedloaders of .357."
 	item = /obj/item/storage/toolbox/guncase/revolver
 
@@ -373,19 +373,21 @@
 //Meme weapons: Literally just weapons used as a joke, shouldn't be particularly expensive.
 
 /datum/uplink_item/weapon_kits/surplus_smg
-	name = "Surplus SMG Case (Flukie)"
-	desc = "A horribly outdated automatic weapon. Why would you want to use this? Comes with...rations."
-	item = /obj/item/gun/ballistic/automatic/plastikov
+	name = "Surplus Smart-SMG (Flukie)"
+	desc = "An outdated smart-SMG with limited stopping power, however it's bullets will gradually track towards whatever \
+		the gun was shot at. This does require you to actually aim at the person you are shooting at before firing, but \
+		surely a highly trained operative such as yourself can manage that."
+	item = /obj/item/gun/ballistic/automatic/smartgun
 	cost = 2
 	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/ammo_nuclear/surplus_smg
-	name = "Surplus SMG Magazine (Surplus)"
-	desc = "A cylindrical magazine designed for the PP-95 SMG."
-	item = /obj/item/ammo_box/magazine/plastikov9mm
+	name = "Surplus Smart-SMG Magazine (Smartgun)"
+	desc = "A large box magazine made for use in the Abielle smart-SMG."
+	item = /obj/item/ammo_box/magazine/smartgun
 	cost = 1
 	purchasable_from = UPLINK_SERIOUS_OPS
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 // Explosives and Grenades
 // ~~ Grenades ~~
@@ -394,6 +396,7 @@
 	cost = 15
 	surplus = 35
 	purchasable_from = UPLINK_ALL_SYNDIE_OPS
+
 /datum/uplink_item/explosives/grenades/buzzkill
 	name = "Buzzkill Grenade Box"
 	desc = "A box with three grenades that release a swarm of angry bees upon activation. These bees indiscriminately attack friend or foe \

@@ -946,9 +946,7 @@
 	},
 /area/shuttle/pirate)
 "Cf" = (
-/obj/machinery/vending/autodrobe{
-	onstation = 0
-	},
+/obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/siding/dark_green{
 	dir = 6
 	},
@@ -1642,9 +1640,7 @@
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "QT" = (
-/obj/machinery/vending/boozeomat/all_access{
-	onstation = 0
-	},
+/obj/machinery/vending/boozeomat,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pirate)
 "QV" = (

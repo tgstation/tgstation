@@ -29,7 +29,7 @@
 		open_machine()
 		return
 
-	mob_occupant.playsound_local(src, 'sound/magic/blink.ogg', 25, TRUE)
+	mob_occupant.playsound_local(src, 'sound/effects/magic/blink.ogg', 25, TRUE)
 	mob_occupant.set_static_vision(2 SECONDS)
 	mob_occupant.set_temp_blindness(1 SECONDS)
 	mob_occupant.Paralyze(2 SECONDS)
@@ -74,6 +74,11 @@
 	var/datum/lazy_template/virtual_domain/generated_domain = server.generated_domain
 	if(isnull(generated_domain) || !server.is_ready)
 		balloon_alert(neo, "nothing loaded!")
+		return
+
+	balloon_alert(neo, "establishing connection...")
+	if(!do_after(neo, 2 SECONDS, src))
+		open_machine()
 		return
 
 	var/mob/living/carbon/current_avatar = avatar_ref?.resolve()
@@ -130,9 +135,6 @@
 
 /// Checks for cases to eject/fail connecting an avatar
 /obj/machinery/netpod/proc/validate_entry(mob/living/neo, mob/living/avatar)
-	if(!do_after(neo, 2 SECONDS, src))
-		return FALSE
-
 	// Very invalid
 	if(QDELETED(neo) || QDELETED(avatar) || QDELETED(src) || !is_operational)
 		return FALSE

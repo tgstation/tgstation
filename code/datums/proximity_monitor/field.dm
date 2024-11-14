@@ -40,7 +40,7 @@
 	var/list/old_edge_turfs = edge_turfs
 	field_turfs = new_turfs[FIELD_TURFS_KEY]
 	edge_turfs = new_turfs[EDGE_TURFS_KEY]
-	if(!full_recalc)
+	if(full_recalc)
 		field_turfs = list()
 		edge_turfs = list()
 
@@ -62,12 +62,11 @@
 	for(var/turf/new_turf as anything in field_turfs - old_field_turfs)
 		if(QDELETED(src))
 			return
-		field_turfs += new_turf
 		setup_field_turf(new_turf)
+
 	for(var/turf/new_turf as anything in edge_turfs - old_edge_turfs)
 		if(QDELETED(src))
 			return
-		edge_turfs += new_turf
 		setup_edge_turf(new_turf)
 
 /datum/proximity_monitor/advanced/on_initialized(turf/location, atom/created, init_flags)

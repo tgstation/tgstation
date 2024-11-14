@@ -1061,7 +1061,7 @@
 	},
 /area/shuttle/sbc_starfury)
 "ea" = (
-/obj/machinery/vending/medical/syndicate_access/cybersun,
+/obj/machinery/vending/medical/syndicate/cybersun,
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "ec" = (
@@ -1723,7 +1723,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "gH" = (
-/obj/machinery/vending/boozeomat/syndicate_access,
+/obj/machinery/vending/boozeomat/syndicate,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
@@ -2364,11 +2364,11 @@
 /obj/structure/rack{
 	dir = 8
 	},
-/obj/item/gun/ballistic/revolver/syndicate{
+/obj/item/gun/ballistic/revolver/badass{
 	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/item/gun/ballistic/revolver/syndicate{
+/obj/item/gun/ballistic/revolver/badass{
 	pixel_x = -1;
 	pixel_y = 2
 	},

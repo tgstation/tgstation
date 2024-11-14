@@ -51,6 +51,9 @@
 /proc/_get_step(Ref, Dir)
 	return get_step(Ref, Dir)
 
+/proc/_hascall(object, procname)
+	return hascall(object, procname)
+
 /proc/_hearers(Depth = world.view, Center = usr)
 	return hearers(Depth, Center)
 
@@ -113,6 +116,9 @@
 
 /proc/_text2num(T)
 	return text2num(T)
+
+/proc/_trimtext(Text)
+	return trimtext(Text)
 
 /proc/_ohearers(Dist, Center = usr)
 	return ohearers(Dist, Center)

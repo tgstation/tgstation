@@ -2,7 +2,7 @@
 	name = "Flesh to Stone"
 	desc = "This spell charges your hand with the power to turn victims into inert statues for a long period of time."
 	button_icon_state = "statue"
-	sound = 'sound/magic/fleshtostone.ogg'
+	sound = 'sound/effects/magic/fleshtostone.ogg'
 
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 1 MINUTES

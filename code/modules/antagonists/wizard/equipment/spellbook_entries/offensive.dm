@@ -39,6 +39,13 @@
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 	cost = 1
 
+/datum/spellbook_entry/tie_shoes
+	name = "Tie Shoes"
+	desc = "This unassuming spell first unties, then knots the target's shoes. While weak at first glance, each upgrade quietens the spell, allowing it to untie laceless footwear and even summon shoes to knot!"
+	spell_type = /datum/action/cooldown/spell/pointed/untie_shoes
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
+	cost = 1
+
 /datum/spellbook_entry/mutate
 	name = "Mutate"
 	desc = "Causes you to turn into a hulk and gain laser vision for a short while."
@@ -70,7 +77,7 @@
 	spell_type = /datum/action/cooldown/spell/conjure_item/infinite_guns/gun
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 	cost = 3
-	no_coexistance_typecache = list(/datum/action/cooldown/spell/conjure_item/infinite_guns/arcane_barrage)
+	no_coexistence_typecache = list(/datum/action/cooldown/spell/conjure_item/infinite_guns/arcane_barrage)
 
 /datum/spellbook_entry/arcane_barrage
 	name = "Arcane Barrage"
@@ -78,7 +85,7 @@
 	spell_type = /datum/action/cooldown/spell/conjure_item/infinite_guns/arcane_barrage
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 	cost = 3
-	no_coexistance_typecache = list(/datum/action/cooldown/spell/conjure_item/infinite_guns/gun)
+	no_coexistence_typecache = list(/datum/action/cooldown/spell/conjure_item/infinite_guns/gun)
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
@@ -92,7 +99,7 @@
 		draining from you over time. You can replenish it from your victims, specifically their necks."
 	spell_type =  /datum/action/cooldown/spell/splattercasting
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
-	no_coexistance_typecache = list(/datum/action/cooldown/spell/lichdom)
+	no_coexistence_typecache = list(/datum/action/cooldown/spell/lichdom)
 
 /datum/spellbook_entry/sanguine_strike
 	name = "Exsanguinating Strike"

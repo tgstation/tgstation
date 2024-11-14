@@ -7,6 +7,7 @@
 	should_draw_greyscale = FALSE
 	head_flags = HEAD_LIPS|HEAD_EYESPRITES|HEAD_EYEHOLES|HEAD_DEBRAIN //what the fuck, moths have lips?
 	teeth_count = 0
+	bodypart_traits = list(TRAIT_ANTENNAE)
 
 /obj/item/bodypart/chest/moth
 	icon = 'icons/mob/human/species/moth/bodyparts.dmi'
@@ -15,7 +16,8 @@
 	limb_id = SPECIES_MOTH
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
-	wing_types = list(/obj/item/organ/external/wings/functional/moth/megamoth, /obj/item/organ/external/wings/functional/moth/mothra)
+	wing_types = list(/obj/item/organ/wings/functional/moth/megamoth, /obj/item/organ/wings/functional/moth/mothra)
+	bodypart_traits = list(TRAIT_TACKLING_WINGED_ATTACKER)
 
 /obj/item/bodypart/chest/moth/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_FUZZY)
@@ -29,8 +31,8 @@
 	unarmed_attack_verbs = list("slash")
 	grappled_attack_verb = "lacerate"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slash.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 
 /obj/item/bodypart/arm/right/moth
 	icon = 'icons/mob/human/species/moth/bodyparts.dmi'
@@ -41,8 +43,8 @@
 	unarmed_attack_verbs = list("slash")
 	grappled_attack_verb = "lacerate"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	unarmed_attack_sound = 'sound/weapons/slash.ogg'
-	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 
 /obj/item/bodypart/leg/left/moth
 	icon = 'icons/mob/human/species/moth/bodyparts.dmi'

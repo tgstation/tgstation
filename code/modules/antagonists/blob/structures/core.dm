@@ -24,7 +24,7 @@
 	GLOB.blob_cores += src
 	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
-	update_appearance() //so it atleast appears
+	update_appearance() //so it at least appears
 	if(!placed && !overmind)
 		return INITIALIZE_HINT_QDEL
 	if(overmind)

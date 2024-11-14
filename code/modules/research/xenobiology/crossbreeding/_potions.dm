@@ -170,6 +170,7 @@ Slimecrossing Potions
 	if (isclothing(clothing))
 		var/obj/item/clothing/clothing_real = clothing
 		clothing_real.clothing_flags |= LAVAPROTECT
+		clothing_real.resistance_flags |= FIRE_PROOF
 	uses--
 	if(uses <= 0)
 		qdel(src)

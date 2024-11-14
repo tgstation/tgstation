@@ -3,6 +3,11 @@
 	icon_file = 'icons/obj/doors/airlocks/material/material.dmi'
 	json_config = 'code/datums/greyscale/json_configs/material_airlock.json'
 
+/datum/greyscale_config/big_manipulator
+	name = "Big Manipulator"
+	icon_file = 'icons/obj/machines/big_manipulator_parts/big_manipulator_core.dmi'
+	json_config = 'code/datums/greyscale/json_configs/big_manipulator.json'
+
 //
 // BENCHES
 //

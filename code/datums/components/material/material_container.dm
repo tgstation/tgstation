@@ -52,7 +52,8 @@
 		else
 			allowed_item_typecache = typecacheof(allowed_items)
 
-	for(var/mat in init_mats) //Make the assoc list material reference -> amount
+	//Make the assoc list material reference -> amount
+	for(var/mat in init_mats)
 		var/mat_ref = GET_MATERIAL_REF(mat)
 		if(isnull(mat_ref))
 			continue
@@ -66,17 +67,6 @@
 		for(var/signal in container_signals)
 			parent.RegisterSignal(src, signal, container_signals[signal])
 
-	//drop sheets when the object is deconstructed but not deleted
-	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(drop_sheets))
-
-	if(_mat_container_flags & MATCONTAINER_NO_INSERT)
-		return
-
-	var/atom/atom_target = parent
-	atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
-
-	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
-
 /datum/component/material_container/Destroy(force)
 	materials = null
 	allowed_materials = null
@@ -85,10 +75,35 @@
 /datum/component/material_container/RegisterWithParent()
 	. = ..()
 
+	var/atom/atom_target = parent
+
+	//can we insert into this container
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+		//to insert stuff into the container
+		RegisterSignal(atom_target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+
+		//screen tips for inserting items
+		atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+		RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+
+	//to see available materials
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
-		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+		RegisterSignal(atom_target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+	//drop sheets when the object is deconstructed but not deleted
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(drop_sheets))
+
+/datum/component/material_container/UnregisterFromParent()
+	var/list/signals = list()
+
+	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
+		signals += COMSIG_ATOM_ITEM_INTERACTION
+		signals +=  COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM
+	if(mat_container_flags & MATCONTAINER_EXAMINE)
+		signals +=  COMSIG_ATOM_EXAMINE
+	signals += COMSIG_OBJ_DECONSTRUCT
+
+	UnregisterSignal(parent, signals)
 
 /datum/component/material_container/proc/drop_sheets()
 	SIGNAL_HANDLER
@@ -114,9 +129,9 @@
 			UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 		if(old_flags & MATCONTAINER_NO_INSERT && !(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
 		else if(!(old_flags & MATCONTAINER_NO_INSERT) && mat_container_flags & MATCONTAINER_NO_INSERT)
-			UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
+			UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
 
 /**
  * 3 Types of Procs
@@ -124,10 +139,10 @@
  * Material Validation : Checks how much materials are available, Extracts materials from items if the container can hold them
  * Material Removal    : Removes material from the container
  *
- * Each Proc furthur belongs to a specific category
+ * Each Proc further belongs to a specific category
  * LOW LEVEL:  Procs that are used internally & should not be used anywhere else unless you know what your doing
  * MID LEVEL:  Procs that can be used by machines(like recycler, stacking machines) to bypass majority of checks
- * HIGH LEVEL: Procs that can be used by anyone publically and guarentees safty checks & limits
+ * HIGH LEVEL: Procs that can be used by anyone publicly and guarantees safety checks & limits
  */
 
 //================================Material Insertion procs==============================
@@ -236,7 +251,7 @@
 	//do the insert
 	var/last_inserted_id = insert_item_materials(target, multiplier, context)
 	if(!isnull(last_inserted_id))
-		if(delete_item || target != weapon) //we could have split the stack ourself
+		if(delete_item || target != weapon) //we could have split the stack ourselves
 			qdel(target) //item gone
 		return material_amount
 	else if(!isnull(item_stack) && item_stack != target) //insertion failed, merge the split stack back into the original
@@ -250,7 +265,7 @@
 
 //===================================HIGH LEVEL===================================================
 /**
- * inserts an item from the players hand into the container. Loops through all the contents inside reccursively
+ * inserts an item from the players hand into the container. Loops through all the contents inside recursively
  * Does all explicit checking for mat flags & callbacks to check if insertion is valid
  * This proc is what you should be using for almost all cases
  *
@@ -455,9 +470,9 @@
 					if(MATERIAL_INSERT_ITEM_SUCCESS) //no problems full item was consumed
 						if(chat_data["stack"])
 							var/sheets = min(count, amount) //minimum between sheets inserted vs sheets consumed(values differ for alloys)
-							to_chat(user, span_notice("[sheets > 1 ? sheets : ""] [item_name][sheets > 1 ? "s were" : " was"] added to [parent]."))
+							to_chat(user, span_notice("[sheets > 1 ? "[sheets] " : ""][item_name][sheets > 1 ? "s were" : " was"] added to [parent]."))
 						else
-							to_chat(user, span_notice("[count > 1 ? count : ""] [item_name][count > 1 ? "s" : ""], worth [amount] sheets, [count > 1 ? "were" : "was"] added to [parent]."))
+							to_chat(user, span_notice("[count > 1 ? "[count] " : ""][item_name][count > 1 ? "s" : ""], worth [amount] sheets, [count > 1 ? "were" : "was"] added to [parent]."))
 					if(MATERIAL_INSERT_ITEM_NO_SPACE) //no space
 						to_chat(user, span_warning("[parent] has no space to accept [item_name]!"))
 					if(MATERIAL_INSERT_ITEM_NO_MATS) //no materials inside these items
@@ -471,7 +486,7 @@
 			qdel(deleting)
 
 /// Proc that allows players to fill the parent with mats
-/datum/component/material_container/proc/on_attackby(datum/source, obj/item/weapon, mob/living/user)
+/datum/component/material_container/proc/on_item_insert(datum/source, mob/living/user, obj/item/weapon, list/modifiers)
 	SIGNAL_HANDLER
 
 	//Allows you to attack the machine with iron sheets for e.g.
@@ -480,7 +495,7 @@
 
 	user_insert(weapon, user)
 
-	return COMPONENT_NO_AFTERATTACK
+	return ITEM_INTERACT_SUCCESS
 //===============================================================================================
 
 
@@ -584,7 +599,7 @@
 	for(var/x in mats) //Loop through all required materials
 		var/wanted = OPTIMAL_COST(mats[x] * coefficient) * multiplier
 		if(!has_enough_of_material(x, wanted))//Not a category, so just check the normal way
-			testing("didnt have: [x] wanted: [wanted]")
+			testing("didn't have: [x] wanted: [wanted]")
 			return FALSE
 
 	return TRUE
@@ -605,7 +620,7 @@
 	//round amount
 	amt = OPTIMAL_COST(amt)
 
-	//get ref if nessassary
+	//get ref if necessary
 	if(!istype(mat))
 		mat = GET_MATERIAL_REF(mat)
 
@@ -725,7 +740,7 @@
 			"name" = material.name,
 			"ref" = REF(material),
 			"amount" = amount,
-			"color" = material.greyscale_colors
+			"color" = material.greyscale_color || material.color
 		))
 
 	return data

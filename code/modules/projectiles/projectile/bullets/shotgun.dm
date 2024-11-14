@@ -79,6 +79,15 @@
 	bare_wound_bonus = 5
 	wound_falloff_tile = -2.5 // low damage + additional dropoff will already curb wounding potential anything past point blank
 
+/**
+ * A slightly weaker version of the buckshot, available from the blackmarket.
+ * The casings they're in have a very small chance to misfire and will gradually damage the firearm, making it weaker.
+ */
+/obj/projectile/bullet/pellet/shotgun_buckshot/old
+	damage_falloff_tile = -0.47
+	wound_bonus = -100
+	bare_wound_bonus = -100
+
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubber shot pellet"
 	damage = 3
@@ -108,6 +117,19 @@
 	stamina = 6
 	embed_type = null
 
+/obj/projectile/bullet/pellet/flechette
+	name = "flechette"
+	icon_state = "flechette"
+	damage = 6
+	wound_bonus = -25
+	bare_wound_bonus = 50
+	wound_falloff_tile = -10
+	speed = 0.8
+	ricochet_decay_chance = 0.6
+	ricochet_decay_damage = 0.3
+	demolition_mod = 10
+	weak_against_armour = TRUE
+
 // Mech Scattershot
 
 /obj/projectile/bullet/scattershot
@@ -119,6 +141,6 @@
 /obj/projectile/bullet/shotgun_breaching
 	name = "12g breaching round"
 	desc = "A breaching round designed to destroy airlocks and windows with only a few shots. Ineffective against other targets."
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	damage = 5 //does shit damage to everything except doors and windows
 	demolition_mod = 200 //one shot to break a window or grille, or two shots to breach an airlock door

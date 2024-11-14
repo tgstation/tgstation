@@ -11,6 +11,8 @@
 		obscured |= ITEM_SLOT_NECK
 	if(hidden_slots & HIDEMASK)
 		obscured |= ITEM_SLOT_MASK
+	if(hidden_slots & HIDEBELT)
+		obscured |= ITEM_SLOT_BELT
 	if(hidden_slots & HIDEEYES)
 		obscured |= ITEM_SLOT_EYES
 	if(hidden_slots & HIDEEARS)
@@ -178,6 +180,7 @@
 	//in a slot (handled further down inheritance chain, probably living/carbon/human/equip_to_slot
 	if(!not_handled)
 		has_equipped(equipping, slot, initial)
+		hud_used?.update_locked_slots()
 
 	return not_handled
 
@@ -235,6 +238,7 @@
 
 	update_equipment_speed_mods()
 	update_obscured_slots(I.flags_inv)
+	hud_used?.update_locked_slots()
 
 /// Returns TRUE if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
@@ -437,6 +441,7 @@
 	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
 		return
 
+	balloon_alert_to_viewers("offers something")
 	visible_message(span_notice("[src] is offering [offered ? "[offered] " : ""][offered_item]."), \
 					span_notice("You offer [offered ? "[offered] " : ""][offered_item]."), null, 2)
 

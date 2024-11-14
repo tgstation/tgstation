@@ -8,3 +8,12 @@
 	#define COMSIG_BORG_HUG_HANDLED 1
 ///called from /mob/living/silicon/attack_hand proc
 #define COMSIG_MOB_PAT_BORG "mob_pat_borg"
+///called when someone is inquiring about an AI's linked core
+#define COMSIG_SILICON_AI_CORE_STATUS "AI_core_status"
+	#define	COMPONENT_CORE_ALL_GOOD (1<<0)
+	#define	COMPONENT_CORE_DISCONNECTED (1<<1)
+///called when an AI (malf or perhaps combat upgraded or some other circumstance that has them inhabit
+///an APC) enters an APC
+#define COMSIG_SILICON_AI_OCCUPY_APC "AI_occupy_apc"
+///called when an AI vacates an APC
+#define COMSIG_SILICON_AI_VACATE_APC "AI_vacate_apc"

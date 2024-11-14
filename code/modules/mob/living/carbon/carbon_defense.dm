@@ -4,7 +4,7 @@
 	. = ..()
 	if(is_blind() && !is_blind_from(list(UNCONSCIOUS_TRAIT, HYPNOCHAIR_TRAIT)))
 		return INFINITY //For all my homies that can not see in the world
-	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		. += eyes.flash_protect
 	else
@@ -20,7 +20,7 @@
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_DEAF))
 		return INFINITY //For all my homies that can not hear in the world
-	var/obj/item/organ/internal/ears/E = get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/ears/E = get_organ_slot(ORGAN_SLOT_EARS)
 	if(!E)
 		return INFINITY
 	else
@@ -45,7 +45,7 @@
 	return null
 
 /mob/living/carbon/is_pepper_proof(check_flags = ALL)
-	var/obj/item/organ/internal/eyes/eyes = get_organ_by_type(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/eyes/eyes = get_organ_by_type(/obj/item/organ/eyes)
 	if(eyes && eyes.pepperspray_protect)
 		return eyes
 	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & PEPPERPROOF))
@@ -283,7 +283,7 @@
 	else
 		Knockdown(stun_duration)
 
-/mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
+/mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper, force_friendly)
 	if(on_fire)
 		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
@@ -312,7 +312,7 @@
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(helper, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
 
-	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.get_organ_by_type(/obj/item/organ/external/tail)))
+	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.get_organ_by_type(/obj/item/organ/tail)))
 		helper.visible_message(span_notice("[helper] pulls on [src]'s tail!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 		to_chat(helper, span_notice("You pull on [src]'s tail!"))
@@ -374,7 +374,7 @@
 		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			to_chat(helper, span_warning("It feels like [src] is freezing as you hug [p_them()]."))
 
-		if(HAS_TRAIT(helper, TRAIT_FRIENDLY))
+		if(HAS_TRAIT(helper, TRAIT_FRIENDLY) || force_friendly)
 			if (helper.mob_mood.sanity >= SANITY_GREAT)
 				new /obj/effect/temp_visual/heart(loc)
 				add_mood_event("friendly_hug", /datum/mood_event/besthug, helper)
@@ -392,10 +392,13 @@
 	if(body_position != STANDING_UP && !resting && !buckled && !HAS_TRAIT(src, TRAIT_FLOORED))
 		get_up(TRUE)
 
-	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 	// Shake animation
-	if (incapacitated())
+	if (incapacitated)
+		shake_up_animation()
+
+/mob/proc/shake_up_animation()
 		var/direction = prob(50) ? -1 : 1
 		animate(src, pixel_x = pixel_x + SHAKE_ANIMATION_OFFSET * direction, time = 1, easing = QUAD_EASING | EASE_OUT, flags = ANIMATION_PARALLEL)
 		animate(pixel_x = pixel_x - (SHAKE_ANIMATION_OFFSET * 2 * direction), time = 1)
@@ -424,7 +427,7 @@
 
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
-	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes) //can't flash what can't see!
 		return
 
@@ -475,7 +478,7 @@
 	SEND_SIGNAL(src, COMSIG_CARBON_SOUNDBANG, reflist)
 	intensity = reflist[1]
 	var/ear_safety = get_ear_protection()
-	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	var/effect_amount = intensity - ear_safety
 	if(effect_amount > 0)
 		if(stun_pwr)
@@ -496,7 +499,7 @@
 					ears.set_organ_damage(ears.maxHealth)
 			else if(ears.damage >= 5)
 				to_chat(src, span_warning("Your ears start to ring!"))
-			SEND_SOUND(src, sound('sound/weapons/flash_ring.ogg',0,1,0,250))
+			SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))
 		return effect_amount //how soundbanged we are
 
 
@@ -517,7 +520,7 @@
 
 /mob/living/carbon/can_hear()
 	. = FALSE
-	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	if(ears && !HAS_TRAIT(src, TRAIT_DEAF))
 		. = TRUE
 	if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
@@ -545,10 +548,10 @@
 */
 /mob/living/carbon/proc/check_passout()
 	var/mob_oxyloss = getOxyLoss()
-	if(mob_oxyloss >= 50)
+	if(mob_oxyloss >= OXYLOSS_PASSOUT_THRESHOLD)
 		if(!HAS_TRAIT_FROM(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT))
 			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
-	else if(mob_oxyloss < 50)
+	else if(mob_oxyloss < OXYLOSS_PASSOUT_THRESHOLD)
 		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 
 /mob/living/carbon/get_organic_health()
@@ -642,11 +645,17 @@
 	var/bleed_rate = grasped_part.get_modified_bleed_rate()
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
 	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name][bleeding_text]."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
-	playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	playsound(get_turf(src), 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	return TRUE
 
 /// Randomise a body part and organ of this mob
 /mob/living/carbon/proc/bioscramble(scramble_source)
+	if(!(mob_biotypes & MOB_ORGANIC))
+		return FALSE
+
+	if (HAS_TRAIT(src, TRAIT_GENELESS))
+		return FALSE
+
 	if (run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [scramble_source]!") >= 100)
 		return FALSE
 
@@ -686,7 +695,7 @@
 		body_parts -= part
 	GLOB.bioscrambler_valid_parts = body_parts
 
-	var/list/organs = subtypesof(/obj/item/organ/internal) + subtypesof(/obj/item/organ/external)
+	var/list/organs = subtypesof(/obj/item/organ) + subtypesof(/obj/item/organ)
 	for(var/obj/item/organ/organ_type as anything in organs)
 		if(!is_type_in_typecache(organ_type, GLOB.bioscrambler_organs_blacklist) && !(initial(organ_type.organ_flags) & ORGAN_ROBOTIC))
 			continue

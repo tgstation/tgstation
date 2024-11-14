@@ -1,14 +1,14 @@
 //open shell
 /datum/surgery_step/mechanic_open
-	name = "unscrew shell (screwdriver)"
+	name = "unscrew shell (screwdriver or scalpel)"
 	implements = list(
 		TOOL_SCREWDRIVER = 100,
 		TOOL_SCALPEL = 75, // med borgs could try to unscrew shell with scalpel
 		/obj/item/knife = 50,
 		/obj/item = 10) // 10% success with any sharp item.
 	time = 24
-	preop_sound = 'sound/items/screwdriver.ogg'
-	success_sound = 'sound/items/screwdriver2.ogg'
+	preop_sound = 'sound/items/tools/screwdriver.ogg'
+	success_sound = 'sound/items/tools/screwdriver2.ogg'
 
 /datum/surgery_step/mechanic_open/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -30,15 +30,15 @@
 
 //close shell
 /datum/surgery_step/mechanic_close
-	name = "screw shell (screwdriver)"
+	name = "screw shell (screwdriver or scalpel)"
 	implements = list(
 		TOOL_SCREWDRIVER = 100,
 		TOOL_SCALPEL = 75,
 		/obj/item/knife = 50,
 		/obj/item = 10) // 10% success with any sharp item.
 	time = 24
-	preop_sound = 'sound/items/screwdriver.ogg'
-	success_sound = 'sound/items/screwdriver2.ogg'
+	preop_sound = 'sound/items/tools/screwdriver.ogg'
+	success_sound = 'sound/items/tools/screwdriver2.ogg'
 
 /datum/surgery_step/mechanic_close/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -60,10 +60,10 @@
 
 //prepare electronics
 /datum/surgery_step/prepare_electronics
-	name = "prepare electronics (multitool)"
+	name = "prepare electronics (multitool or hemostat)"
 	implements = list(
 		TOOL_MULTITOOL = 100,
-		TOOL_HEMOSTAT = 10) // try to reboot internal controllers via short circuit with some conductor
+		TOOL_HEMOSTAT = 75)
 	time = 24
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
@@ -80,12 +80,12 @@
 
 //unwrench
 /datum/surgery_step/mechanic_unwrench
-	name = "unwrench bolts (wrench)"
+	name = "unwrench bolts (wrench or retractor)"
 	implements = list(
 		TOOL_WRENCH = 100,
-		TOOL_RETRACTOR = 10)
+		TOOL_RETRACTOR = 75)
 	time = 24
-	preop_sound = 'sound/items/ratchet.ogg'
+	preop_sound = 'sound/items/tools/ratchet.ogg'
 
 /datum/surgery_step/mechanic_unwrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -105,12 +105,12 @@
 
 //wrench
 /datum/surgery_step/mechanic_wrench
-	name = "wrench bolts (wrench)"
+	name = "wrench bolts (wrench or retractor)"
 	implements = list(
 		TOOL_WRENCH = 100,
-		TOOL_RETRACTOR = 10)
+		TOOL_RETRACTOR = 75)
 	time = 24
-	preop_sound = 'sound/items/ratchet.ogg'
+	preop_sound = 'sound/items/tools/ratchet.ogg'
 
 /datum/surgery_step/mechanic_wrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -133,8 +133,8 @@
 	name = "open the hatch (hand)"
 	accept_hand = TRUE
 	time = 10
-	preop_sound = 'sound/items/ratchet.ogg'
-	preop_sound = 'sound/machines/doorclick.ogg'
+	preop_sound = 'sound/items/tools/ratchet.ogg'
+	preop_sound = 'sound/machines/airlock/doorclick.ogg'
 
 /datum/surgery_step/open_hatch/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

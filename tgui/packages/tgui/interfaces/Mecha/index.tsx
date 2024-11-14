@@ -165,8 +165,8 @@ const PowerBar = (props) => {
           ? 'Power cell missing'
           : power_level === 1e31
             ? 'Infinite'
-            : `${formatSiUnit(power_level * 1000, 0, 'J')} of ${formatSiUnit(
-                power_max * 1000,
+            : `${formatSiUnit(power_level, 0, 'J')} of ${formatSiUnit(
+                power_max,
                 0,
                 'J',
               )}`}

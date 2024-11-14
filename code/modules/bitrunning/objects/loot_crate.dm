@@ -37,7 +37,7 @@
 	rewards_multiplier = 1,
 	)
 	. = ..()
-	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
 
 	if(isnull(completed_domain))
 		return

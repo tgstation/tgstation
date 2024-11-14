@@ -130,3 +130,57 @@ help: Pugs haven't existed on Sol since 2450.
 /mob/dog/pug:
   banned: true
 ```
+
+### `when` - Conditional Rules
+
+Sometimes it may be necessary for a rule to be given conditions which have to be met before it needs to be applied. All children of the when node must be satisfied for the rule to execute.
+
+If we wanted to create a rule which disallows the placement of access helpers when an airlock's access has been manually set via a variable edit, then we could make the following rule:
+
+```yml
+/obj/machinery/door/airlock:
+	when:
+	- req_access_txt is set
+	banned_neighbors:
+	- /obj/effect/mapping_helper/airlock/access
+```
+
+The following conditions are valid:
+- **{var_name} is set**: The variable named *var_name* has been modified.
+- **{var_name} is not set**: The variable named *var_name* has not been modified.
+- **{var_name} is '{value}'**: The variable named *var_name* has a specific value.
+- **{var_name} is not '{value}'**: The variable named *var_name* does not have a specific value.
+- **{var_name} like '{regex}'**: The variable named *var_name* matches the provided regex.
+
+#### `any`
+
+The any node may be added as a child to the when node to specify that it will be satisfied if any of its child conditions are met.
+
+```yml
+/mob/dog:
+	# Rule only applies when the dog is any of the following breeds
+	when:
+	- any:
+		- breed is 'labrador'
+		- breed is 'pug'
+		- breed is 'corgi'
+	# These breeds of dogs must have a dogbed
+	required_neighbors:
+	- /obj/dogbed
+```
+
+#### `all`
+
+The all node may be added as a child to the when node to specify that it will be satisfied only when all of its child conditions are met. Note that the `all` node only makes sense to use when the parent node is an `any` node, as the default behaviour of `when` is to require all conditions to be met.
+
+```yml
+/mob/dog:
+	# Rule only applies if the dog breed is capitalised and has an owner
+	when:
+	- all:
+		- breed like '[A-Z][a-z]*'
+		- owner is set
+	# These dogs must have a dogbed for their owner
+	required_neighbors:
+	- /obj/dogbed
+```

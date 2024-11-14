@@ -1,7 +1,7 @@
 /// A spell type that adds mutations to the caster temporarily.
 /datum/action/cooldown/spell/apply_mutations
 	button_icon_state = "mutate"
-	sound = 'sound/magic/mutate.ogg'
+	sound = 'sound/effects/magic/mutate.ogg'
 
 	school = SCHOOL_TRANSMUTATION
 

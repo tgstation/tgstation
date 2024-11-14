@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	if (sm.is_main_engine)
 		SSpersistence.delam_highscore = SSpersistence.rounds_since_engine_exploded
 		SSpersistence.rounds_since_engine_exploded = ROUNDCOUNT_ENGINE_JUST_EXPLODED
-		for (var/obj/machinery/incident_display/sign as anything in GLOB.map_delamination_counters)
+		for (var/obj/machinery/incident_display/sign as anything in GLOB.map_incident_displays)
 			sign.update_delam_count(ROUNDCOUNT_ENGINE_JUST_EXPLODED)
 	qdel(sm)
 
@@ -50,18 +50,18 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
 		else
 			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
-		playsound(sm, 'sound/machines/terminal_alert.ogg', 75)
+		playsound(sm, 'sound/machines/terminal/terminal_alert.ogg', 75)
 		return FALSE
 
 	switch(sm.get_status())
 		if(SUPERMATTER_DELAMINATING)
-			playsound(sm, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
+			playsound(sm, 'sound/announcer/alarm/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
 		if(SUPERMATTER_EMERGENCY)
-			playsound(sm, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			playsound(sm, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(SUPERMATTER_DANGER)
-			playsound(sm, 'sound/machines/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			playsound(sm, 'sound/machines/engine_alert/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(SUPERMATTER_WARNING)
-			playsound(sm, 'sound/machines/terminal_alert.ogg', 75)
+			playsound(sm, 'sound/machines/terminal/terminal_alert.ogg', 75)
 
 	if(sm.damage >= sm.emergency_point) // In emergency
 		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT! Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
@@ -75,12 +75,12 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_ALARM)
 	return TRUE
 
-/// Called when a supermatter switches it's strategy from another one to us.
+/// Called when a supermatter switches its strategy from another one to us.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam/proc/on_select(obj/machinery/power/supermatter_crystal/sm)
 	return
 
-/// Called when a supermatter switches it's strategy from us to something else.
+/// Called when a supermatter switches its strategy from us to something else.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam/proc/on_deselect(obj/machinery/power/supermatter_crystal/sm)
 	return

@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(overlays)
 /// Don't have access to that type tho, so this is the best you're gonna get
 /proc/overlays2text(list/overlays)
 	var/list/unique_overlays = list()
-	// As anything because we're basically doing type coerrsion, rather then actually filtering for mutable apperances
+	// As anything because we're basically doing type coercion, rather then actually filtering for mutable appearances
 	for(var/mutable_appearance/overlay as anything in overlays)
 		var/key = "[overlay.icon]-[overlay.icon_state]-[overlay.dir]"
 		unique_overlays[key] += 1

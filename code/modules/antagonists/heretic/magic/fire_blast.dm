@@ -7,12 +7,12 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "flames"
-	sound = 'sound/magic/fireball.ogg'
+	sound = 'sound/effects/magic/fireball.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 45 SECONDS
 
-	invocation = "Eld'fjall!"
+	invocation = "V'LC'N!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 	channel_time = 5 SECONDS

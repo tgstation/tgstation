@@ -64,7 +64,7 @@
 	max_integrity = 5 //one tap
 
 /obj/structure/fluff/balloon_nuke/atom_destruction()
-	playsound(loc, 'sound/effects/cartoon_pop.ogg', 75, vary = TRUE)
+	playsound(loc, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 75, vary = TRUE)
 	..()
 
 /obj/structure/fluff/fake_camera
@@ -159,7 +159,7 @@
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 
 /obj/machinery/vending/hotdog/museum
-	onstation_override = TRUE
+	all_products_free = TRUE
 
 /obj/machinery/vending/hotdog/museum/screwdriver_act(mob/living/user, obj/item/attack_item)
 	return NONE
@@ -199,6 +199,6 @@
 	var/obj/structure/toilet/destination = pick(partners)
 	forceMove(destination)
 	destination.w_items += w_class
-	destination.contents += src
+	LAZYADD(destination.cistern_items, src)
 
 #undef CAFE_KEYCARD_TOILETS

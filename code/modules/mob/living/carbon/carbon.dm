@@ -1,16 +1,20 @@
 /mob/living/carbon/Initialize(mapload)
 	. = ..()
 	create_carbon_reagents()
-	update_body_parts() //to update the carbon's new bodyparts appearance
+	update_body(is_creating = TRUE) //to update the carbon's new bodyparts appearance
+	living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
+
 	register_context()
 
 	GLOB.carbon_list += src
 	ADD_TRAIT(src, TRAIT_CAN_HOLD_ITEMS, INNATE_TRAIT) // Carbons are assumed to be innately capable of having arms, we check their arms count instead
-	breathing_loop = new(src)
+	breathing_loop = new(src, _direct = TRUE)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. = ..()
+
+	living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS
 
 	QDEL_LIST(hand_bodyparts)
 	QDEL_LIST(organs)
@@ -99,7 +103,7 @@
 		log_combat(src, victim, "crashed into")
 
 	if(oof_noise)
-		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
+		playsound(src,'sound/items/weapons/punch1.ogg',50,TRUE)
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
@@ -153,7 +157,7 @@
 				if(grab_state >= GRAB_NECK)
 					neckgrab_throw = TRUE
 				stop_pulling()
-				if(HAS_TRAIT(src, TRAIT_PACIFISM))
+				if(HAS_TRAIT(src, TRAIT_PACIFISM) || HAS_TRAIT(src, TRAIT_NO_THROWING))
 					to_chat(src, span_notice("You gently let go of [throwable_mob]."))
 					return FALSE
 	else
@@ -166,6 +170,13 @@
 		if(start_T && end_T)
 			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 	var/power_throw = 0
+	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
+
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		power_throw += potential_spine.added_throw_speed
+		extra_throw_range += potential_spine.added_throw_range
+
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		power_throw++
 	if(HAS_TRAIT(src, TRAIT_DWARF))
@@ -174,19 +185,21 @@
 		power_throw++
 	if(neckgrab_throw)
 		power_throw++
+	if(HAS_TRAIT(src, TRAIT_TOSS_GUN_HARD) && isgun(thrown_thing))
+		power_throw++
 	if(isitem(thrown_thing))
 		var/obj/item/thrown_item = thrown_thing
 		frequency_number = 1-(thrown_item.w_class-3)/8 //At normal weight, the frequency is at 1. For tiny, it is 1.25. For huge, it is 0.75.
 		if(thrown_item.throw_verb)
 			verb_text = thrown_item.throw_verb
 	do_attack_animation(target, no_effect = 1)
-	var/sound/throwsound = 'sound/weapons/throw.ogg'
+	var/sound/throwsound = 'sound/items/weapons/throw.ogg'
 	var/power_throw_text = "."
 	if(power_throw > 0) //If we have anything that boosts our throw power like hulk, we use the rougher heavier variant.
-		throwsound = 'sound/weapons/throwhard.ogg'
+		throwsound = 'sound/items/weapons/throwhard.ogg'
 		power_throw_text = " really hard!"
 	if(power_throw < 0) //if we have anything that weakens our throw power like dward, we use a slower variant.
-		throwsound = 'sound/weapons/throwsoft.ogg'
+		throwsound = 'sound/items/weapons/throwsoft.ogg'
 		power_throw_text = " flimsily."
 	frequency_number = frequency_number + (rand(-5,5)/100); //Adds a bit of randomness in the frequency to not sound exactly the same.
 	//The volume of the sound takes the minimum between the distance thrown or the max range an item, but no more than 50. Short throws are quieter. A fast throwing speed also makes the noise sharper.
@@ -194,8 +207,13 @@
 	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw_text]"), \
 					span_danger("You [verb_text] [thrown_thing][power_throw_text]"))
 	log_message("has thrown [thrown_thing] [power_throw_text]", LOG_ATTACK)
-	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
-	newtonian_move(get_dir(target, src))
+
+	var/drift_force = max(0.5 NEWTONS, 1 NEWTONS + power_throw)
+	if (isitem(thrown_thing))
+		var/obj/item/thrown_item = thrown_thing
+		drift_force *= WEIGHT_TO_NEWTONS(thrown_item.w_class)
+
+	newtonian_move(get_angle(target, src), drift_force = drift_force)
 	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
 
 /mob/living/carbon/proc/canBeHandcuffed()
@@ -228,7 +246,7 @@
 
 /mob/living/carbon/on_fall()
 	. = ..()
-	loc.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing
+	loc?.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing
 
 /mob/living/carbon/resist_buckle()
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED))
@@ -543,7 +561,7 @@
 
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/total_burn = 0
 	var/total_brute = 0
@@ -580,7 +598,7 @@
 	lighting_cutoff = initial(lighting_cutoff)
 	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
 
-	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		set_invis_see(eyes.see_invisible)
 		new_sight |= eyes.sight_flags
@@ -636,7 +654,7 @@
 	for(var/obj/item/clothing/worn_item in get_equipped_items())
 		tint += worn_item.tint
 
-	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		tint += eyes.tint
 
@@ -828,7 +846,7 @@
 
 
 /mob/living/carbon/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
@@ -937,7 +955,7 @@
 	return ..()
 
 /mob/living/carbon/can_be_revived()
-	if(!get_organ_by_type(/obj/item/organ/internal/brain) && (!IS_CHANGELING(src)) || HAS_TRAIT(src, TRAIT_HUSK))
+	if(!get_organ_by_type(/obj/item/organ/brain) && (!IS_CHANGELING(src)) || HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
 	return ..()
 
@@ -956,7 +974,7 @@
 
 	// Only check for a heart if they actually need a heart. Who would've thunk
 	if (needs_heart())
-		var/obj/item/organ/internal/heart = get_organ_by_type(/obj/item/organ/internal/heart)
+		var/obj/item/organ/heart = get_organ_by_type(/obj/item/organ/heart)
 
 		if (!heart)
 			return DEFIB_FAIL_NO_HEART
@@ -964,7 +982,7 @@
 		if (heart.organ_flags & ORGAN_FAILING)
 			return DEFIB_FAIL_FAILING_HEART
 
-	var/obj/item/organ/internal/brain/current_brain = get_organ_by_type(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/current_brain = get_organ_by_type(/obj/item/organ/brain)
 
 	if (QDELETED(current_brain))
 		return DEFIB_FAIL_NO_BRAIN
@@ -1075,7 +1093,7 @@
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bodypart, update = TRUE, multiplicative_slowdown = final_modification)
 
 /mob/living/carbon/proc/create_internal_organs()
-	for(var/obj/item/organ/internal/internal_organ in organs)
+	for(var/obj/item/organ/internal_organ in organs)
 		internal_organ.Insert(src)
 
 /proc/cmp_organ_slot_asc(slot_a, slot_b)
@@ -1199,7 +1217,7 @@
 	return bodyparts.len > 2 && ..()
 
 /mob/living/carbon/proc/hypnosis_vulnerable()
-	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
+	if(HAS_MIND_TRAIT(src, TRAIT_UNCONVERTABLE))
 		return FALSE
 	if(has_status_effect(/datum/status_effect/hallucination) || has_status_effect(/datum/status_effect/drugginess))
 		return TRUE
@@ -1328,7 +1346,7 @@
 /mob/living/carbon/proc/adjust_skillchip_complexity_modifier(delta)
 	skillchip_complexity_modifier += delta
 
-	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 
 	if(!brain)
 		return
@@ -1443,7 +1461,7 @@
 /// Accepts an optional timeout after which we remove the tail wagging
 /// Returns true if successful, false otherwise
 /mob/living/carbon/proc/wag_tail(timeout = INFINITY)
-	var/obj/item/organ/external/tail/wagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	var/obj/item/organ/tail/wagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(!wagged)
 		return FALSE
 	return wagged.start_wag(src, timeout)
@@ -1451,7 +1469,7 @@
 /// Helper to cleanly stop all tail wagging
 /// Returns true if successful, false otherwise
 /mob/living/carbon/proc/unwag_tail() // can't unwag a tail
-	var/obj/item/organ/external/tail/unwagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	var/obj/item/organ/tail/unwagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(!unwagged)
 		return FALSE
 	return unwagged.stop_wag(src)

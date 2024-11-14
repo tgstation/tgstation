@@ -9,6 +9,7 @@
 	desc = "An ore vent, brimming with underground ore. Scan with an advanced mining scanner to start extracting ore from it."
 	icon = 'icons/obj/mining_zones/terrain.dmi'
 	icon_state = "ore_vent"
+	base_icon_state = "ore_vent"
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //This thing will take a beating.
 	anchored = TRUE
@@ -39,6 +40,7 @@
 		MEDIUM_VENT_TYPE = 5,
 		SMALL_VENT_TYPE = 7,
 	)
+	var/wave_timer = WAVE_DURATION_SMALL
 
 	/// What string do we use to warn the player about the excavation event?
 	var/excavation_warning = "Are you ready to excavate this ore vent?"
@@ -90,7 +92,7 @@
 
 /obj/structure/ore_vent/Destroy()
 	SSore_generation.possible_vents -= src
-	node = null
+	reset_drone(success = FALSE)
 	if(tapped)
 		SSore_generation.processed_vents -= src
 	return ..()
@@ -120,7 +122,7 @@
 	for(var/i in 1 to 3)
 		if(do_after(user, boulder_size * 1 SECONDS, src))
 			user.apply_damage(20, STAMINA)
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	produce_boulder(TRUE)
 	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
 
@@ -159,7 +161,7 @@
  * This proc is called when the ore vent is initialized, in order to determine what minerals boulders it spawns can contain.
  * The materials available are determined by SSore_generation.ore_vent_minerals, which is a list of all minerals that can be contained in ore vents for a given cave generation.
  * As a result, minerals use a weighted list as seen by ore_vent_minerals_lavaland, which is then copied to ore_vent_minerals.
- * Once a material is picked from the weighted list, it's removed from ore_vent_minerals, so that it can't be picked again and provided it's own internal weight used when assigning minerals to boulders spawned by this vent.
+ * Once a material is picked from the weighted list, it's removed from ore_vent_minerals, so that it can't be picked again and provided its own internal weight used when assigning minerals to boulders spawned by this vent.
  * May also be called after the fact, as seen in SSore_generation's initialize, to add more minerals to an existing vent.
  *
  * The above applies only when spawning in at mapload, otherwise we pick randomly from ore_vent_minerals_lavaland.
@@ -219,6 +221,9 @@
 		node.arrive(src)
 		RegisterSignal(node, COMSIG_QDELETING, PROC_REF(handle_wave_conclusion))
 		RegisterSignal(node, COMSIG_MOVABLE_MOVED, PROC_REF(handle_wave_conclusion))
+		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.25)
+		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.5)
+		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.75)
 	particles = new /particles/smoke/ash()
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
 		for(var/turf/closed/mineral/rock in oview(i))
@@ -247,11 +252,6 @@
 		spawn_distance = 4, \
 		spawn_distance_exclude = 3, \
 	)
-	var/wave_timer = 60 SECONDS
-	if(boulder_size == BOULDER_SIZE_MEDIUM)
-		wave_timer = 90 SECONDS
-	else if(boulder_size == BOULDER_SIZE_LARGE)
-		wave_timer = 150 SECONDS
 	COOLDOWN_START(src, wave_cooldown, wave_timer)
 	addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
 	icon_state = icon_state_tapped
@@ -264,38 +264,51 @@
  * If the node drone is dead, the ore vent is not tapped and the wave defense can be reattempted.
  *
  * Also gives xp and mining points to all nearby miners in equal measure.
+ * Arguments:
+ * - force: Set to true if you want to just skip all checks and make the vent start producing boulders.
  */
-/obj/structure/ore_vent/proc/handle_wave_conclusion()
+/obj/structure/ore_vent/proc/handle_wave_conclusion(datum/source, force = FALSE)
 	SIGNAL_HANDLER
 
 	SEND_SIGNAL(src, COMSIG_VENT_WAVE_CONCLUDED)
 	COOLDOWN_RESET(src, wave_cooldown)
 	particles = null
 
-	if(!QDELETED(node))
-		if(get_turf(node) != get_turf(src))
-			visible_message(span_danger("The [node] detaches from the [src], and the vent closes back up!"))
-			icon_state = initial(icon_state)
-			update_appearance(UPDATE_ICON_STATE)
-			UnregisterSignal(node, COMSIG_MOVABLE_MOVED)
-			node.pre_escape(success = FALSE)
-			node = null
-			return //Start over!
+	if(force)
+		initiate_wave_win()
+		return
 
-		tapped = TRUE //The Node Drone has survived the wave defense, and the ore vent is tapped.
-		SSore_generation.processed_vents += src
-		log_game("Ore vent [key_name_and_tag(src)] was tapped")
-		SSblackbox.record_feedback("tally", "ore_vent_completed", 1, type)
-		balloon_alert_to_viewers("vent tapped!")
-		icon_state = icon_state_tapped
-		update_appearance(UPDATE_ICON_STATE)
-		qdel(GetComponent(/datum/component/gps))
-	else
-		visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, and the vent closes back up."))
-		icon_state = initial(icon_state)
-		update_appearance(UPDATE_ICON_STATE)
-		node = null
-		return //Bad end, try again.
+	if(QDELETED(node))
+		initiate_wave_loss(loss_message = "\the [src] creaks and groans as the mining attempt fails, and the vent closes back up.")
+		return
+
+	if(get_turf(node) != get_turf(src))
+		initiate_wave_loss(loss_message = "The [node] detaches from the [src], and the vent closes back up!")
+		return //Start over!
+
+	initiate_wave_win()
+
+/**
+ * Handles reseting our ore vent to its original state so we can start over
+ */
+/obj/structure/ore_vent/proc/initiate_wave_loss(loss_message)
+	visible_message(span_danger(loss_message))
+	icon_state = base_icon_state
+	update_appearance(UPDATE_ICON_STATE)
+	reset_drone(success = FALSE)
+
+/**
+ * Handles winning the event, gives everyone a payout and start boulder production
+ */
+/obj/structure/ore_vent/proc/initiate_wave_win()
+	tapped = TRUE //The Node Drone has survived the wave defense, and the ore vent is tapped.
+	SSore_generation.processed_vents += src
+	log_game("Ore vent [key_name_and_tag(src)] was tapped")
+	SSblackbox.record_feedback("tally", "ore_vent_completed", 1, type)
+	balloon_alert_to_viewers("vent tapped!")
+	icon_state = icon_state_tapped
+	update_appearance(UPDATE_ICON_STATE)
+	qdel(GetComponent(/datum/component/gps))
 
 	for(var/mob/living/miner in range(7, src)) //Give the miners who are near the vent points and xp.
 		var/obj/item/card/id/user_id_card = miner.get_idcard(TRUE)
@@ -307,9 +320,17 @@
 		if(user_id_card.registered_account)
 			user_id_card.registered_account.mining_points += point_reward_val
 			user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
-	node.pre_escape() //Visually show the drone is done and flies away.
-	node = null
+	reset_drone(success = TRUE)
 	add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER))
+
+/**
+ * Sends our node back to base and cleans up after the reference
+ */
+/obj/structure/ore_vent/proc/reset_drone(success)
+	if(!QDELETED(node))
+		node.pre_escape(success = success)
+		UnregisterSignal(node, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
+	node = null
 
 /**
  * Called when the ore vent is tapped by a scanning device.
@@ -426,7 +447,7 @@
 
 /**
  * When the ore vent cannot spawn a mob due to being blocked from all sides, we cause some MILD, MILD explosions.
- * Explosion matches a gibtonite light explosion, as a way to clear neartby solid structures, with a high likelyhood of breaking the NODE drone.
+ * Explosion matches a gibtonite light explosion, as a way to clear nearby solid structures, with a high likelihood of breaking the NODE drone.
  */
 /obj/structure/ore_vent/proc/anti_cheese()
 	explosion(src, heavy_impact_range = 1, light_impact_range = 3, flame_range = 0, flash_range = 0, adminlog = FALSE)
@@ -474,18 +495,22 @@
 	switch(string_boulder_size)
 		if(LARGE_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_LARGE
+			wave_timer = WAVE_DURATION_LARGE
 			if(mapload)
 				GLOB.ore_vent_sizes["large"] += 1
 		if(MEDIUM_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_MEDIUM
+			wave_timer = WAVE_DURATION_MEDIUM
 			if(mapload)
 				GLOB.ore_vent_sizes["medium"] += 1
 		if(SMALL_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_SMALL
+			wave_timer = WAVE_DURATION_SMALL
 			if(mapload)
 				GLOB.ore_vent_sizes["small"] += 1
 		else
 			boulder_size = BOULDER_SIZE_SMALL //Might as well set a default value
+			wave_timer = WAVE_DURATION_SMALL
 			name = initial(name)
 
 

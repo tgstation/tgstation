@@ -51,7 +51,7 @@
 		worn_icon_state = "[initial(worn_icon_state)]-on"
 	else
 		worn_icon_state = "[initial(worn_icon_state)]"
-	playsound(src, 'sound/weapons/tap.ogg', 10, TRUE)
+	playsound(src, 'sound/items/weapons/tap.ogg', 10, TRUE)
 	update_appearance()
 
 /obj/item/clothing/shoes/wheelys/Destroy()

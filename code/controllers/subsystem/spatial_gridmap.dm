@@ -412,7 +412,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	return intersecting_cell
 
 /**
- * find the spatial map cell that target used to belong to, then remove the target (and sometimes it's important_recusive_contents) from it.
+ * find the spatial map cell that target used to belong to, then remove the target (and sometimes its important_recusive_contents) from it.
  * make sure to provide the turf old_target used to be "in"
  *
  * * old_target - the thing we want to remove from the spatial grid cell

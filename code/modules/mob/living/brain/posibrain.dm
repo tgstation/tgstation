@@ -11,17 +11,17 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	braintype = "Android"
 
 	///Message sent to the user when polling ghosts
-	var/begin_activation_message = "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
+	var/begin_activation_message = span_notice("You carefully locate the manual activation switch and start the positronic brain's boot process.")
 	///Message sent as a visible message on success
-	var/success_message = "<span class='notice'>The positronic brain pings, and its lights start flashing. Success!</span>"
+	var/success_message = span_notice("The positronic brain pings, and its lights start flashing. Success!")
 	///Message sent as a visible message on failure
-	var/fail_message = "<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>"
+	var/fail_message = span_notice("The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
 	///Visible message sent when a player possesses the brain
-	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
+	var/new_mob_message = span_notice("The positronic brain chimes quietly.")
 	///Examine message when the posibrain has no mob
-	var/dead_message = "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>"
+	var/dead_message = span_deadsay("It appears to be completely inactive. The reset light is blinking.")
 	///Examine message when the posibrain cannot poll ghosts due to cooldown
-	var/recharge_message = "<span class='warning'>The positronic brain isn't ready to activate again yet! Give it some time to recharge.</span>"
+	var/recharge_message = span_warning("The positronic brain isn't ready to activate again yet! Give it some time to recharge.")
 
 	///Can be set to tell ghosts what the brain will be used for
 	var/ask_role = ""
@@ -76,7 +76,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	addtimer(CALLBACK(src, PROC_REF(check_success)), ask_delay)
 
 /obj/item/mmi/posibrain/click_alt(mob/living/user)
-	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, MAX_NAME_LEN)
+	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, max_length = MAX_NAME_LEN)
 	if(isnull(input_seed))
 		return CLICK_ACTION_BLOCKING
 	if(!user.can_perform_action(src))
@@ -137,7 +137,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	brainmob.timeofdeath = transferred_user.timeofdeath
 	brainmob.set_stat(CONSCIOUS)
 	if(brainmob.mind)
-		brainmob.mind.set_assigned_role(SSjob.GetJobType(posibrain_job_path))
+		brainmob.mind.set_assigned_role(SSjob.get_job_type(posibrain_job_path))
 	if(transferred_user.mind)
 		transferred_user.mind.transfer_to(brainmob)
 
@@ -160,7 +160,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/policy = get_policy(ROLE_POSIBRAIN)
 	if(policy)
 		to_chat(brainmob, policy)
-	brainmob.mind.set_assigned_role(SSjob.GetJobType(posibrain_job_path))
+	brainmob.mind.set_assigned_role(SSjob.get_job_type(posibrain_job_path))
 	brainmob.set_stat(CONSCIOUS)
 
 	visible_message(new_mob_message)

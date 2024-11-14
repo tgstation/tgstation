@@ -80,8 +80,8 @@
 	var/base_idle_power_usage = 1 WATTS
 
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console & Tablet)
-	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
-	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
+	// must have its own DMI file. Icon states must be called exactly the same in all files, but may look differently
+	// If you create a program which is limited to Laptops and Consoles you don't have to add its icon_state overlay for Tablets too, for example.
 
 	///If set, what the icon_state will be if the computer is unpowered.
 	var/icon_state_unpowered
@@ -139,7 +139,6 @@
 	UpdateDisplay()
 	if(has_light)
 		add_item_action(/datum/action/item_action/toggle_computer_light)
-		RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	if(inserted_disk)
 		inserted_disk = new inserted_disk(src)
 	if(internal_cell)
@@ -197,7 +196,7 @@
 /obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
 	if(active_program?.tap(A, user, params))
 		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
+		playsound(loc, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
 		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
@@ -251,7 +250,7 @@
 /obj/item/modular_computer/get_id_examine_strings(mob/user)
 	. = ..()
 	if(computer_id_slot)
-		. += "\The [src] is displaying [computer_id_slot]."
+		. += "[src] is displaying [computer_id_slot]:"
 		. += computer_id_slot.get_id_examine_strings(user)
 
 /obj/item/modular_computer/proc/print_text(text_to_print, paper_title = "")
@@ -289,7 +288,7 @@
 		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 		balloon_alert(user, "inserted ID")
 
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
@@ -323,7 +322,7 @@
 
 	if(!silent && !isnull(user))
 		to_chat(user, span_notice("You remove the card from the card slot."))
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		balloon_alert(user, "removed ID")
 
 	if(ishuman(loc))
@@ -550,23 +549,29 @@
  * The program calling this proc.
  * The message that the program wishes to display.
  */
-/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
+/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
 	playsound(src, sound, 50, TRUE)
 	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
-/obj/item/modular_computer/proc/ring(ringtone) // bring bring
+/obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
 	if(!use_energy())
 		return
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
+		playsound(src, pick(
+			'sound/machines/beep/twobeep_voice1.ogg',
+			'sound/machines/beep/twobeep_voice2.ogg',
+			), 50, TRUE)
 	else
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-	audible_message("*[ringtone]*")
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
+	ringtone = "*[ringtone]*"
+	audible_message(ringtone)
+	for(var/mob/living/alertee in balloon_alertees)
+		alertee.balloon_alert(alertee, ringtone)
 
 /obj/item/modular_computer/proc/send_sound()
-	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
@@ -605,14 +610,14 @@
 		if(NTNET_ETHERNET_SIGNAL)
 			data["PC_ntneticon"] = "sig_lan.gif"
 
+	var/list/program_headers = list()
 	if(length(idle_threads))
-		var/list/program_headers = list()
 		for(var/datum/computer_file/program/idle_programs as anything in idle_threads)
 			if(!idle_programs.ui_header)
 				continue
 			program_headers.Add(list(list("icon" = idle_programs.ui_header)))
 
-		data["PC_programheaders"] = program_headers
+	data["PC_programheaders"] = program_headers
 
 	data["PC_stationtime"] = station_time_timestamp()
 	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD")], [CURRENT_STATION_YEAR]"
@@ -727,6 +732,8 @@
 	UpdateDisplay()
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
+	if(!issilicon(user))
+		playsound(src, SFX_KEYBOARD_CLICKS, 10, TRUE, FALSE)
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
 		toggle_flashlight(user)
 		return
@@ -751,20 +758,16 @@
 	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
 	return TRUE
 
-/**
- * Disables the computer's flashlight/LED light, if it has one, for a given disrupt_duration.
- *
- * Called when sent COMSIG_HIT_BY_SABOTEUR.
- */
-/obj/item/modular_computer/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+//Disables the computer's flashlight/LED light, if it has one, for a given disrupt_duration.
+/obj/item/modular_computer/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(!has_light)
 		return
 	set_light_on(FALSE)
 	update_appearance()
 	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
 	COOLDOWN_START(src, disabled_time, disrupt_duration)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /**
  * Sets the computer's light color, if it has a light.

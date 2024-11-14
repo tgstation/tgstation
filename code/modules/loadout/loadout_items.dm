@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	if(can_be_greyscale == DONT_GREYSCALE)
 		can_be_greyscale = FALSE
-	else if(item_path::flags_1 & IS_PLAYER_COLORABLE_1)
+	else if((item_path::flags_1 & IS_PLAYER_COLORABLE_1) && item_path::greyscale_config && item_path::greyscale_colors)
 		can_be_greyscale = TRUE
 
 	if(isnull(name))

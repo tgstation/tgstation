@@ -313,13 +313,13 @@
 /datum/config_entry/string/banappeals
 
 /datum/config_entry/string/wikiurl
-	default = "http://www.tgstation13.org/wiki"
+	default = "http://tgstation13.org/wiki"
 
 /datum/config_entry/string/forumurl
 	default = "http://tgstation13.org/phpBB/index.php"
 
 /datum/config_entry/string/rulesurl
-	default = "http://www.tgstation13.org/wiki/Rules"
+	default = "http://tgstation13.org/wiki/Rules"
 
 /datum/config_entry/string/githuburl
 	default = "https://www.github.com/tgstation/tgstation"
@@ -738,3 +738,27 @@
 /datum/config_entry/number/upload_limit_admin
 	default = 5242880
 	min_val = 0
+
+/// The minimum number of tallies a map vote entry can have.
+/datum/config_entry/number/map_vote_minimum_tallies
+	default = 1
+	min_val = 0
+	max_val = 50
+
+/// The flat amount all maps get by default
+/datum/config_entry/number/map_vote_flat_bonus
+	default = 5
+	min_val = 0
+	max_val = INFINITY
+
+/// The maximum number of tallies a map vote entry can have.
+/datum/config_entry/number/map_vote_maximum_tallies
+	default = 200
+	min_val = 0
+	max_val = INFINITY
+
+/// The number of tallies that are carried over between rounds.
+/datum/config_entry/number/map_vote_tally_carryover_percentage
+	default = 100
+	min_val = 0
+	max_val = 100

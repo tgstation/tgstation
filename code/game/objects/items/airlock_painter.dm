@@ -73,7 +73,7 @@
 		return TRUE
 
 /obj/item/airlock_painter/suicide_act(mob/living/user)
-	var/obj/item/organ/internal/lungs/L = user.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/L = user.get_organ_slot(ORGAN_SLOT_LUNGS)
 
 	if(can_use(user) && L)
 		user.visible_message(span_suicide("[user] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -229,7 +229,7 @@
  * Actually add current decal to the floor.
  *
  * Responsible for actually adding the element to the turf for maximum flexibility.area
- * Can be overriden for different decal behaviors.
+ * Can be overridden for different decal behaviors.
  * Arguments:
  * * target - The turf being painted to
 */
@@ -298,7 +298,7 @@
 	.["current_dir"] = stored_dir
 	.["current_custom_color"] = stored_custom_color
 
-/obj/item/airlock_painter/decal/ui_act(action, list/params)
+/obj/item/airlock_painter/decal/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

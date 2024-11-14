@@ -45,8 +45,6 @@
 	var/datum/click_intercept = null
 	///Time when the click was intercepted
 	var/click_intercept_time = 0
-	///Used for admin AI interaction
-	var/AI_Interact = FALSE
 
 	///Used to cache this client's bans to save on DB queries
 	var/ban_cache = null
@@ -271,3 +269,7 @@
 
 	///Which ambient sound this client is currently being provided.
 	var/current_ambient_sound
+
+	/// Does this client's mob need to rebuild its plane masters after login?
+	/// This is currently only used so a client can switch between 515 and 516 without breaking their rendering.
+	var/rebuild_plane_masters = FALSE

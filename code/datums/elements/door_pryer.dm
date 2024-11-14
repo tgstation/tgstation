@@ -35,11 +35,12 @@
 		attacker.balloon_alert(attacker, "busy!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if (airlock_target.locked || airlock_target.welded || airlock_target.seal)
-		if (!attacker.combat_mode)
-			airlock_target.balloon_alert(attacker, "it's sealed!")
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+	if (attacker.combat_mode)
 		return // Attack the door
+
+	if (airlock_target.locked || airlock_target.welded || airlock_target.seal)
+		airlock_target.balloon_alert(attacker, "it's sealed!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	INVOKE_ASYNC(src, PROC_REF(open_door), attacker, airlock_target)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -59,7 +60,7 @@
 		message = span_warning("[attacker] starts forcing the [airlock_target] open!"),
 		blind_message = span_hear("You hear a metal screeching sound."),
 	)
-	playsound(airlock_target, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+	playsound(airlock_target, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 	airlock_target.balloon_alert(attacker, "prying...")
 	if(!do_after(attacker, pry_time, airlock_target))
 		airlock_target.balloon_alert(attacker, "interrupted!")

@@ -6,7 +6,7 @@
 	antag_moodlet = /datum/mood_event/revolution
 	antag_hud_name = "rev"
 	suicide_cry = "VIVA LA REVOLUTION!!"
-	stinger_sound = 'sound/ambience/antag/revolutionary_tide.ogg'
+	stinger_sound = 'sound/music/antag/revolutionary_tide.ogg'
 	var/datum/team/revolution/rev_team
 
 	/// When this antagonist is being de-antagged, this is the source. Can be a mob (for mindshield/blunt force trauma) or a #define string.
@@ -15,9 +15,7 @@
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
 	if(new_owner.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 		return FALSE
-	if(new_owner.unconvertable)
-		return FALSE
-	if(new_owner.current && HAS_TRAIT(new_owner.current, TRAIT_MINDSHIELD))
+	if(new_owner.current && HAS_MIND_TRAIT(new_owner.current, TRAIT_UNCONVERTABLE))
 		return FALSE
 	return ..()
 
@@ -188,7 +186,7 @@
 /datum/antagonist/rev/head/on_removal()
 	if(give_hud)
 		var/mob/living/carbon/C = owner.current
-		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = C.get_organ_slot(ORGAN_SLOT_HUD)
+		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = C.get_organ_slot(ORGAN_SLOT_HUD)
 		if(S)
 			S.Remove(C)
 	return ..()
@@ -316,7 +314,7 @@
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!"), null, null, null, owner.current)
 		to_chat(owner, "<span class='deconversion_message bold'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you....</span>")
 	else if(issilicon(owner.current))
-		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it."), null, null, null, owner.current)
+		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initializing it."), null, null, null, owner.current)
 		to_chat(owner, span_userdanger("The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you."))
 
 /datum/antagonist/rev/head/farewell()
@@ -329,7 +327,7 @@
 		else
 			to_chat(owner, "<span class='deconversion_message bold'>The sweet release of death. You are no longer a Head Revolutionary.</span>")
 	else if(issilicon(owner.current))
-		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, suppressing the disloyal personality traits from the MMI before initalizing it."), null, null, null, owner.current)
+		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, suppressing the disloyal personality traits from the MMI before initializing it."), null, null, null, owner.current)
 		to_chat(owner, span_userdanger("The frame's firmware detects and suppresses your unwanted personality traits! You feel more content with the leadership around these parts."))
 
 /// Handles rev removal via IC methods such as borging, mindshielding, blunt force trauma to the head or revs losing.
@@ -338,6 +336,9 @@
 	if(deconverter == DECONVERTER_BORGED)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	owner.special_role = null
+	if(iscarbon(owner.current) && deconverter)
+		var/mob/living/carbon/formerrev = owner.current
+		formerrev.Unconscious(10 SECONDS)
 	deconversion_source = deconverter
 	owner.remove_antag_datum(type)
 
@@ -364,7 +365,7 @@
 			to_chat(carbon_owner, "The Syndicate were unfortunately unable to get you a flash.")
 
 	if(give_hud)
-		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/hud = new()
+		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/hud = new()
 		hud.Insert(carbon_owner)
 		if(carbon_owner.get_quirk(/datum/quirk/body_purist))
 			to_chat(carbon_owner, "Being a body purist, you would never accept cybernetic implants. Upon hearing this, your employers signed you up for a special program, which... for \
@@ -433,7 +434,7 @@
 			var/list/datum/mind/promotable = list()
 			var/list/datum/mind/monkey_promotable = list()
 			for(var/datum/mind/khrushchev in non_heads)
-				if(khrushchev.current && !khrushchev.current.incapacitated() && !HAS_TRAIT(khrushchev.current, TRAIT_RESTRAINED) && khrushchev.current.client)
+				if(khrushchev.current && !khrushchev.current.incapacitated && !HAS_TRAIT(khrushchev.current, TRAIT_RESTRAINED) && khrushchev.current.client)
 					if((ROLE_REV_HEAD in khrushchev.current.client.prefs.be_special) || (ROLE_PROVOCATEUR in khrushchev.current.client.prefs.be_special))
 						if(!ismonkey(khrushchev.current))
 							promotable += khrushchev
@@ -586,19 +587,19 @@
 
 	if(headrevs.len)
 		var/list/headrev_part = list()
-		headrev_part += "<span class='header'>The head revolutionaries were:</span>"
+		headrev_part += span_header("The head revolutionaries were:")
 		headrev_part += printplayerlist(headrevs, !check_rev_victory())
 		result += headrev_part.Join("<br>")
 
 	if(revs.len)
 		var/list/rev_part = list()
-		rev_part += "<span class='header'>The revolutionaries were:</span>"
+		rev_part += span_header("The revolutionaries were:")
 		rev_part += printplayerlist(revs, !check_rev_victory())
 		result += rev_part.Join("<br>")
 
 	var/list/heads = SSjob.get_all_heads()
 	if(heads.len)
-		var/head_text = "<span class='header'>The heads of staff were:</span>"
+		var/head_text = span_header("The heads of staff were:")
 		head_text += "<ul class='playerlist'>"
 		for(var/datum/mind/head in heads)
 			var/target = (head in targets)

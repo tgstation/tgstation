@@ -2,7 +2,7 @@
 	category = "Miscellaneous"
 	abstract_path = /datum/market_item/misc
 
-/datum/market_item/misc/Clear_PDA
+/datum/market_item/misc/clear_pda
 	name = "Clear PDA"
 	desc = "Show off your style with this limited edition clear PDA!."
 	item = /obj/item/modular_computer/pda/clear
@@ -12,7 +12,7 @@
 	stock_max = 2
 	availability_prob = 50
 
-/datum/market_item/misc/jade_Lantern
+/datum/market_item/misc/jade_lantern
 	name = "Jade Lantern"
 	desc = "Found in a box labeled 'Danger: Radioactive'. Probably safe."
 	item = /obj/item/flashlight/lantern/jade
@@ -90,7 +90,7 @@
 
 /datum/market_item/misc/smugglers_satchel
 	name = "Smuggler's Satchel"
-	desc = "This easily hidden satchel can become a versatile tool to anybody with the desire to keep certain items out of sight and out of mind."
+	desc = "This easily hidden satchel can become a versatile tool to anybody with the desire to keep certain items out of sight and out of mind. Its contents cannot be detected by contraband scanners."
 	item = /obj/item/storage/backpack/satchel/flat/empty
 
 	price_min = CARGO_CRATE_VALUE * 3.75
@@ -125,6 +125,17 @@
 	stock_max = 1
 	availability_prob = 15
 
+/datum/market_item/misc/fishing_capsule
+	name = "Fishing Spot Capsule"
+	//IUU stands for Illegal Unreported and Unregulated fishing. Ironic.
+	desc = "A repurposed mining capsule connected to a selection of exclusive fishing spots. Approved by the Intergalactic IUU Fishing Association."
+	price_min = CARGO_CRATE_VALUE * 1.125
+	price_max = CARGO_CRATE_VALUE * 2.125
+	item = /obj/item/survivalcapsule/fishing
+	stock_min = 1
+	stock_max = 4
+	availability_prob = 80
+
 /datum/market_item/misc/fish
 	name = "Fish"
 	desc = "Fish! Fresh fish! Fish you can cut, grind and even keep in aquarium if you want to! Get some before the next fight at my village breaks out!"
@@ -134,12 +145,3 @@
 	stock_min = 3
 	stock_max = 8
 	availability_prob = 90
-
-/datum/market_item/misc/giant_wrench_parts
-	name = "Big Slappy parts"
-	desc = "Cheap illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
-	item = /obj/item/weaponcrafting/giant_wrench
-	price_min = CARGO_CRATE_VALUE * 2
-	price_max = CARGO_CRATE_VALUE * 5
-	stock_max = 1
-	availability_prob = 25

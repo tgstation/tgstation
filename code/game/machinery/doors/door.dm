@@ -34,6 +34,8 @@
 	/// A filler object used to fill the space of multi-tile airlocks
 	var/obj/structure/fluff/airlock_filler/filler
 	var/welded = FALSE
+	///Whether this door has a panel or not; FALSE also stops the examine blurb about the panel from showing up
+	var/has_access_panel = TRUE
 	/// For rglass-windowed airlocks and firedoors
 	var/heat_proof = FALSE
 	/// Emergency access override
@@ -102,6 +104,8 @@
 	else
 		flags_1 &= ~PREVENT_CLICK_UNDER_1
 
+	if(glass)
+		passwindow_on(src, INNATE_TRAIT)
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
 	update_explosive_block()
@@ -120,7 +124,8 @@
 			. += span_notice("Due to a security threat, its access requirements have been lifted!")
 		else
 			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
-	. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
+	if(has_access_panel)
+		. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
 
 /obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -208,7 +213,7 @@
 	if(!red_alert_access)
 		return
 	audible_message(span_notice("[src] whirr[p_s()] as [p_they()] automatically lift[p_s()] access requirements!"))
-	playsound(src, 'sound/machines/boltsup.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/airlock/boltsup.ogg', 50, TRUE)
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
 	return FALSE
@@ -332,7 +337,7 @@
 	return
 
 
-/obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user)
+/obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user, forced = FALSE)
 	return
 
 /// Called when the user right-clicks on the door with a crowbar.
@@ -369,6 +374,12 @@
 		return TRUE
 	return ..()
 
+/obj/machinery/door/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	// allows you to crowbar doors while in combat mode
+	if(user.combat_mode && tool.tool_behaviour == TOOL_CROWBAR)
+		return crowbar_act_secondary(user, tool)
+	return ..()
+
 /obj/machinery/door/welder_act_secondary(mob/living/user, obj/item/tool)
 	try_to_weld_secondary(tool, user)
 	return ITEM_INTERACT_SUCCESS
@@ -391,13 +402,13 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(glass)
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+				playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
 			else if(damage_amount)
-				playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE)
+				playsound(loc, 'sound/items/weapons/smash.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/door/emp_act(severity)
 	. = ..()
@@ -463,6 +474,7 @@
 /obj/machinery/door/proc/run_animation(animation)
 	set_animation(animation)
 	addtimer(CALLBACK(src, PROC_REF(set_animation), null), animation_length(animation), TIMER_UNIQUE|TIMER_OVERRIDE)
+	animation_effects(animation)
 
 // React to our animation changing
 /obj/machinery/door/proc/set_animation(animation)
@@ -601,6 +613,10 @@
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
+
+/obj/machinery/door/morgue/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
 /obj/machinery/door/get_dumping_location()
 	return null

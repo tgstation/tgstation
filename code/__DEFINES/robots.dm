@@ -29,9 +29,6 @@
 
 // Cyborg defines
 
-/// If an item does this or more throwing damage it will slow a borg down on hit
-#define CYBORG_THROW_SLOWDOWN_THRESHOLD 10
-
 /// Special value to reset cyborg's lamp_cooldown
 #define BORG_LAMP_CD_RESET -1
 /// How many watts per lamp power is consumed while the lamp is on.
@@ -176,17 +173,17 @@ DEFINE_BITFIELD(bot_cover_flags, list(
 /// Medibots - Healing people
 #define BOT_HEALING "Healing"
 /// MULEbot - Moving to deliver
-#define BOT_DELIVER "Navigating to Delivery Location"
+#define BOT_DELIVER "Delivering"
 /// MULEbot - Returning to home
-#define BOT_GO_HOME "Proceeding to work site"
+#define BOT_GO_HOME "Returning"
 /// MULEbot - Blocked
-#define BOT_BLOCKED "No Route"
+#define BOT_BLOCKED "Blocked"
 /// MULEbot - Computing navigation
-#define BOT_NAV "Unable to reach destination"
+#define BOT_NAV "Unreachable"
 /// MULEbot - Waiting for nav computation
-#define BOT_WAIT_FOR_NAV "Calculating navigation path"
+#define BOT_WAIT_FOR_NAV "Calculating"
 /// MULEbot - No destination beacon found (or no route)
-#define BOT_NO_ROUTE "Navigating to Home"
+#define BOT_NO_ROUTE "Returning Home"
 
 //Secbot and ED209 judgement criteria bitflag values
 #define JUDGE_EMAGGED (1<<0)
@@ -257,7 +254,18 @@ DEFINE_BITFIELD(firebot_mode_flags, list(
 	"FIREBOT_EXTINGUISH_FLAMES" = FIREBOT_EXTINGUISH_FLAMES,
 ))
 
+///auto return to home after delivery
+#define MULEBOT_RETURN_MODE (1<<0)
+///autopickups at beacons
+#define MULEBOT_AUTO_PICKUP_MODE (1<<1)
+///announce every delivery we make
+#define MULEBOT_REPORT_DELIVERY_MODE (1<<2)
 
+DEFINE_BITFIELD(mulebot_delivery_flags, list(
+	"MULEBOT_RETURN_MODE" = MULEBOT_RETURN_MODE,
+	"MULEBOT_AUTO_PICKUP_MODE" = MULEBOT_AUTO_PICKUP_MODE,
+	"MULEBOT_REPORT_DELIVERY_MODE" = MULEBOT_REPORT_DELIVERY_MODE,
+))
 
 //cleanBOT defines on what to clean
 #define CLEANBOT_CLEAN_BLOOD (1<<0)

@@ -1,21 +1,25 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain/fullbright)
 "b" = (
 /obj/item/pizzabox/bomb/armed,
 /obj/structure/rack,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "c" = (
 /obj/structure/sign/warning/directional/west,
 /turf/open/chasm,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "e" = (
 /obj/effect/mob_spawn/corpse/human/cyber_police,
 /obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
+"f" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/indestructible/dark,
+/area/virtual_domain/protected_space)
 "h" = (
 /obj/structure/rack,
 /turf/open/indestructible/dark,
@@ -23,7 +27,7 @@
 "i" = (
 /obj/structure/sign/warning/directional/east,
 /turf/open/chasm,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "o" = (
 /turf/template_noop,
 /area/template_noop)
@@ -39,7 +43,7 @@
 	pixel_y = 1
 	},
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "r" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
@@ -51,25 +55,22 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/abductor,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "A" = (
 /obj/effect/spawner/random/trash/caution_sign,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "B" = (
 /obj/machinery/door/airlock/abductor,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "D" = (
 /turf/open/indestructible/dark,
 /area/virtual_domain/protected_space)
 "F" = (
 /obj/structure/mystery_box/guns,
 /turf/open/indestructible/dark,
-/area/virtual_domain/protected_space)
-"I" = (
-/turf/closed/indestructible/binary,
 /area/virtual_domain/protected_space)
 "J" = (
 /obj/machinery/door/airlock/abductor,
@@ -78,11 +79,11 @@
 "K" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain/fullbright)
 "M" = (
 /obj/effect/mob_spawn/corpse/human/zombie,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "O" = (
 /obj/modular_map_root/safehouse{
 	key = "bathroom"
@@ -91,34 +92,34 @@
 /area/virtual_domain/safehouse)
 "Q" = (
 /turf/open/chasm,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "R" = (
 /obj/effect/mine/explosive/light,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "T" = (
 /obj/machinery/door/airlock/abductor,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "U" = (
 /obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "V" = (
 /obj/structure/sign/warning/directional/east,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "W" = (
 /obj/effect/mob_spawn/corpse/human/cyber_police,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "X" = (
 /mob/living/simple_animal/hostile/zombie,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Y" = (
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 
 (1,1,1) = {"
 o
@@ -540,10 +541,10 @@ Y
 Y
 a
 Y
-I
-I
-I
-I
+a
+a
+a
+a
 a
 a
 a
@@ -567,10 +568,10 @@ Y
 Y
 Y
 Y
-I
+a
 h
 D
-D
+f
 t
 t
 t
@@ -594,7 +595,7 @@ X
 Y
 Y
 Y
-I
+a
 F
 D
 D
@@ -621,7 +622,7 @@ a
 Y
 Y
 Y
-I
+a
 D
 D
 D
@@ -675,7 +676,7 @@ Y
 R
 Y
 Y
-I
+a
 D
 D
 D
@@ -702,7 +703,7 @@ Y
 Y
 Y
 Y
-I
+a
 F
 D
 D
@@ -729,7 +730,7 @@ a
 a
 Y
 Y
-I
+a
 h
 D
 D
@@ -756,10 +757,10 @@ a
 a
 a
 Y
-I
-I
-I
-I
+a
+a
+a
+a
 a
 a
 a

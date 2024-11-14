@@ -27,7 +27,7 @@
 	obj_damage = 0
 	melee_damage_lower = 0
 	melee_damage_upper = 0
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	melee_attack_cooldown = 2.5 SECONDS
 	attack_verb_continuous = "chomps"

@@ -838,7 +838,7 @@
 	id = "captain_privacy";
 	name = "Privacy Shutters"
 	},
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/hand_tele,
@@ -1564,6 +1564,26 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/wood/large,
 /area/station/service/library/artgallery)
+"atP" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "brig-entrance-aft"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig Aft Entrance"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "briglockdown";
+	name = "Brig Lockdown"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/obj/machinery/scanner_gate/preset_guns,
+/turf/open/floor/iron/dark,
+/area/station/security/brig)
 "atT" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/bush/flowers_br/style_random,
@@ -3310,10 +3330,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "aSq" = (
@@ -6103,6 +6122,7 @@
 /area/station/maintenance/floor1/starboard/fore)
 "bxk" = (
 /obj/structure/rack,
+/obj/item/toy/crayon/spraycan/roboticist,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics/lab)
 "bxl" = (
@@ -10201,17 +10221,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor1/fore)
-"cBl" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Brig Fore Entrance"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/iron/dark,
-/area/station/security/checkpoint)
 "cBq" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
@@ -11234,10 +11243,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 5
 	},
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "cPR" = (
@@ -13509,6 +13517,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
+"dvB" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/smartfridge/drying,
+/turf/open/floor/iron/kitchen,
+/area/station/service/kitchen)
 "dvC" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Garden"
@@ -14978,6 +14991,18 @@
 "dPH" = (
 /turf/closed/wall/r_wall,
 /area/station/security/brig)
+"dPS" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Brig Fore Entrance"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/machinery/scanner_gate/preset_guns,
+/turf/open/floor/iron/dark,
+/area/station/security/checkpoint)
 "dPT" = (
 /obj/machinery/light/small/red/directional/east,
 /obj/effect/spawner/random/trash/mess,
@@ -16157,7 +16182,7 @@
 	dir = 8
 	},
 /obj/machinery/mecha_part_fabricator{
-	dir = 4
+	drop_direction = 4
 	},
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white/smooth_large,
@@ -18330,6 +18355,18 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor3/fore)
+"eJy" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/station/security/prison/garden)
 "eJF" = (
 /obj/machinery/airalarm/directional/south,
 /obj/item/kirbyplants/random,
@@ -20870,6 +20907,24 @@
 	name = "boxing ring"
 	},
 /area/station/commons/fitness)
+"fvA" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "brig-entrance-aft"
+	},
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig Aft Entrance"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "briglockdown";
+	name = "Brig Lockdown"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/obj/machinery/scanner_gate/preset_guns,
+/turf/open/floor/iron/dark,
+/area/station/security/brig)
 "fvD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -29585,7 +29640,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hop)
@@ -29778,23 +29833,6 @@
 	dir = 1
 	},
 /area/station/hallway/floor4/fore)
-"hLN" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrance-aft"
-	},
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "outerbrig";
-	name = "Brig Aft Entrance"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/preopen{
-	id = "briglockdown";
-	name = "Brig Lockdown"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
-/turf/open/floor/iron/dark,
-/area/station/security/brig)
 "hLP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30216,7 +30254,7 @@
 	name = "Privacy Shutters Control";
 	pixel_y = 6
 	},
-/obj/machinery/keycard_auth/directional/west{
+/obj/machinery/keycard_auth/wall_mounted/directional/west{
 	pixel_y = -8
 	},
 /turf/open/floor/wood,
@@ -34405,6 +34443,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "iWW" = (
@@ -35046,25 +35085,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
-"jfr" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrance-aft"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "outerbrig";
-	name = "Brig Aft Entrance"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "briglockdown";
-	name = "Brig Lockdown"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
-/turf/open/floor/iron/dark,
-/area/station/security/brig)
 "jfs" = (
 /obj/docking_port/stationary/laborcamp_home/kilo{
 	dir = 2
@@ -41564,7 +41584,7 @@
 	dir = 4
 	},
 /obj/machinery/mecha_part_fabricator{
-	dir = 8
+	drop_direction = 8
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white/smooth_large,
@@ -42269,11 +42289,11 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "kWD" = (
-/obj/machinery/keycard_auth/directional/north{
+/obj/machinery/keycard_auth/wall_mounted/directional/north{
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/incident_display/delam/directional/north,
+/obj/machinery/incident_display/bridge/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "kWJ" = (
@@ -43681,10 +43701,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "loa" = (
@@ -45069,7 +45088,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 8
 	},
-/obj/machinery/keycard_auth/directional/east{
+/obj/machinery/keycard_auth/wall_mounted/directional/east{
 	pixel_x = 25;
 	pixel_y = 16
 	},
@@ -51253,10 +51272,9 @@
 	desc = "This is in our water? Gross!";
 	name = "algae mass"
 	},
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "nhV" = (
@@ -52427,6 +52445,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron,
 /area/station/science/cytology)
 "nxm" = (
@@ -52866,7 +52885,7 @@
 /area/station/hallway/secondary/exit)
 "nDj" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "nDk" = (
@@ -53936,6 +53955,21 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
+"nQY" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Brig Fore Entrance"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/scanner_gate/preset_guns,
+/turf/open/floor/iron/dark,
+/area/station/security/checkpoint)
 "nQZ" = (
 /obj/effect/turf_decal/trimline/yellow/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -54084,7 +54118,9 @@
 /area/station/maintenance/floor1/starboard)
 "nSz" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/kitchen/directional/south,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -55310,20 +55346,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/lounge)
-"ojB" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Brig Fore Entrance"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/dark,
-/area/station/security/checkpoint)
 "ojM" = (
 /obj/structure/chair/comfy{
 	dir = 4
@@ -55497,7 +55519,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/port/fore)
 "omh" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/captain/private)
 "omj" = (
@@ -58519,11 +58541,6 @@
 	dir = 4
 	},
 /area/station/science/robotics/lab)
-"pbr" = (
-/obj/machinery/light/directional/east,
-/obj/machinery/deepfryer,
-/turf/open/floor/iron/kitchen,
-/area/station/service/kitchen)
 "pbt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -59387,6 +59404,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard/aft)
+"ppf" = (
+/obj/effect/turf_decal/weather/sand/light,
+/turf/closed/wall/r_wall,
+/area/station/security/execution/education)
 "ppi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -63314,7 +63335,7 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/north,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "qoJ" = (
@@ -64259,15 +64280,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "qzQ" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 8
-	},
-/obj/item/reagent_containers/cup/watering_can,
-/obj/effect/turf_decal/tile/dark_blue,
 /obj/machinery/newscaster/directional/north,
-/turf/open/floor/iron/dark/side{
-	dir = 9
-	},
+/obj/structure/water_source/puddle,
+/turf/open/misc/dirt/jungle,
 /area/station/security/prison/garden)
 "qzX" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -64973,7 +64988,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/keycard_auth/directional/south{
+/obj/machinery/keycard_auth/wall_mounted/directional/south{
 	pixel_x = 6
 	},
 /obj/effect/landmark/start/chief_engineer,
@@ -67701,7 +67716,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard/fore)
 "rtH" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
@@ -68260,6 +68275,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/item/reagent_containers/cup/watering_can,
 /turf/open/floor/iron/dark/corner{
 	dir = 4
 	},
@@ -75262,7 +75278,7 @@
 /obj/machinery/computer/security/qm{
 	dir = 8
 	},
-/obj/machinery/keycard_auth/directional/north,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
 "tun" = (
@@ -86448,6 +86464,7 @@
 /area/station/security/brig)
 "wms" = (
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/fishing_portal_generator,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "wmt" = (
@@ -86645,10 +86662,9 @@
 /area/station/maintenance/department/engine/atmos)
 "wor" = (
 /obj/machinery/light/red/dim/directional/south,
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "wot" = (
@@ -90788,7 +90804,7 @@
 	},
 /obj/machinery/shower/directional/south,
 /obj/structure/fluff/shower_drain,
-/turf/open/floor/catwalk_floor/flat_white,
+/turf/open/floor/catwalk_floor/iron_white,
 /area/station/medical/treatment_center)
 "xrh" = (
 /obj/effect/turf_decal/tile/blue{
@@ -91844,7 +91860,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/cargo/sorting)
 "xEv" = (
-/obj/machinery/keycard_auth/directional/north{
+/obj/machinery/keycard_auth/wall_mounted/directional/north{
 	pixel_x = 9
 	},
 /obj/machinery/button/door/directional/north{
@@ -251970,7 +251986,7 @@ vhd
 fAz
 gyr
 gyr
-pbr
+dvB
 sFt
 sxt
 sal
@@ -318006,7 +318022,7 @@ gYS
 gir
 tnj
 tEv
-cBl
+dPS
 xFp
 dGF
 kHR
@@ -318263,7 +318279,7 @@ aBV
 kyj
 dfm
 xnY
-ojB
+nQY
 xyw
 xyw
 tnR
@@ -322375,7 +322391,7 @@ txa
 mlH
 vOE
 nYZ
-jfr
+atP
 hxz
 vES
 uyX
@@ -322889,7 +322905,7 @@ cmM
 bVy
 tnV
 daD
-hLN
+fvA
 kkK
 fDA
 emk
@@ -329833,7 +329849,7 @@ oyh
 oyh
 oyh
 fkA
-fkA
+ppf
 wmD
 fkA
 kUZ
@@ -331377,7 +331393,7 @@ oyh
 wMF
 wMF
 qzQ
-pfL
+eJy
 pfL
 pfL
 yfr

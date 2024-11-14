@@ -184,7 +184,7 @@
 	return ..()
 
 /datum/component/mind_linker/active_linking/link_mob(mob/living/to_link)
-	if(HAS_TRAIT(to_link, TRAIT_MINDSHIELD)) // Mindshield implant - no dice
+	if(HAS_MIND_TRAIT(to_link, TRAIT_UNCONVERTABLE)) // Protected mind, so they can't be added to the mindlink
 		return FALSE
 	if(to_link.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 		return FALSE
@@ -242,7 +242,7 @@
 	var/datum/component/mind_linker/linker = target
 	var/mob/living/linker_parent = linker.parent
 
-	var/message = tgui_input_text(owner, "Enter a message to transmit.", "[linker.network_name] Telepathy")
+	var/message = tgui_input_text(owner, "Enter a message to transmit.", "[linker.network_name] Telepathy", max_length = MAX_MESSAGE_LEN)
 	if(!message || QDELETED(src) || QDELETED(owner) || owner.stat == DEAD)
 		return
 

@@ -57,7 +57,7 @@
 	var/damage = weapon.throwforce
 	if(harmful)
 		victim.throw_alert(ALERT_EMBEDDED_OBJECT, /atom/movable/screen/alert/embeddedobject)
-		playsound(victim,'sound/weapons/bladeslice.ogg', 40)
+		playsound(victim,'sound/items/weapons/bladeslice.ogg', 40)
 		if (limb.can_bleed())
 			weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
 		damage += weapon.w_class * embed_data.impact_pain_mult
@@ -85,9 +85,10 @@
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_REMOVAL, PROC_REF(safeRemove))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(checkTweeze))
 	RegisterSignal(parent, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
+	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(on_ex_act))
 
 /datum/component/embedded/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_ATOM_ATTACKBY, COMSIG_MAGIC_RECALL))
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_ATOM_ATTACKBY, COMSIG_MAGIC_RECALL, COMSIG_ATOM_EX_ACT))
 
 /datum/component/embedded/process(seconds_per_tick)
 	var/mob/living/carbon/victim = parent
@@ -120,6 +121,19 @@
 
 	if(prob(fall_chance_current))
 		fallOut()
+
+/datum/component/embedded/proc/on_ex_act(atom/source, severity)
+	SIGNAL_HANDLER
+	// In the process of parent's ex_act
+	if (QDELETED(weapon))
+		return
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += weapon
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += weapon
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += weapon
 
 ////////////////////////////////////////
 ////////////BEHAVIOR PROCS//////////////

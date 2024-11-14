@@ -5,19 +5,17 @@
 	id = SPECIES_LIZARD
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
-		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
-	mutant_bodyparts = list("legs" = "Normal Legs")
 	body_markings = list(/datum/bodypart_overlay/simple/body_marking/lizard = "None")
-	external_organs = list(
-		/obj/item/organ/external/horns = "None",
-		/obj/item/organ/external/frills = "None",
-		/obj/item/organ/external/snout = "Round",
-		/obj/item/organ/external/spines = "None",
-		/obj/item/organ/external/tail/lizard = "Smooth",
+	mutant_organs = list(
+		/obj/item/organ/horns = "None",
+		/obj/item/organ/frills = "None",
+		/obj/item/organ/snout = "Round",
+		/obj/item/organ/spines = "None",
+		/obj/item/organ/tail/lizard = "Smooth",
 	)
-	mutanttongue = /obj/item/organ/internal/tongue/lizard
+	mutanttongue = /obj/item/organ/tongue/lizard
 	coldmod = 1.5
 	heatmod = 0.67
 	payday_modifier = 1.0
@@ -27,7 +25,7 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
 	inert_mutation = /datum/mutation/human/firebreath
-	death_sound = 'sound/voice/lizard/deathsound.ogg'
+	death_sound = 'sound/mobs/humanoids/lizard/deathsound.ogg'
 	species_language_holder = /datum/language_holder/lizard
 	digitigrade_customization = DIGITIGRADE_OPTIONAL
 
@@ -55,51 +53,66 @@
 
 /datum/species/lizard/get_scream_sound(mob/living/carbon/human/lizard)
 	return pick(
-		'sound/voice/lizard/lizard_scream_1.ogg',
-		'sound/voice/lizard/lizard_scream_2.ogg',
-		'sound/voice/lizard/lizard_scream_3.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_1.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_2.ogg',
+		'sound/mobs/humanoids/lizard/lizard_scream_3.ogg',
 	)
 
 /datum/species/lizard/get_cough_sound(mob/living/carbon/human/lizard)
 	if(lizard.physique == FEMALE)
 		return pick(
-			'sound/voice/human/female_cough1.ogg',
-			'sound/voice/human/female_cough2.ogg',
-			'sound/voice/human/female_cough3.ogg',
-			'sound/voice/human/female_cough4.ogg',
-			'sound/voice/human/female_cough5.ogg',
-			'sound/voice/human/female_cough6.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough1.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough2.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough3.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough4.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough5.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough6.ogg',
 		)
 	return pick(
-		'sound/voice/human/male_cough1.ogg',
-		'sound/voice/human/male_cough2.ogg',
-		'sound/voice/human/male_cough3.ogg',
-		'sound/voice/human/male_cough4.ogg',
-		'sound/voice/human/male_cough5.ogg',
-		'sound/voice/human/male_cough6.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough1.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough2.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough3.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough4.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough5.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough6.ogg',
 	)
 
 
 /datum/species/lizard/get_cry_sound(mob/living/carbon/human/lizard)
 	if(lizard.physique == FEMALE)
 		return pick(
-			'sound/voice/human/female_cry1.ogg',
-			'sound/voice/human/female_cry2.ogg',
+			'sound/mobs/humanoids/human/cry/female_cry1.ogg',
+			'sound/mobs/humanoids/human/cry/female_cry2.ogg',
 		)
 	return pick(
-		'sound/voice/human/male_cry1.ogg',
-		'sound/voice/human/male_cry2.ogg',
-		'sound/voice/human/male_cry3.ogg',
+		'sound/mobs/humanoids/human/cry/male_cry1.ogg',
+		'sound/mobs/humanoids/human/cry/male_cry2.ogg',
+		'sound/mobs/humanoids/human/cry/male_cry3.ogg',
 	)
 
 
 /datum/species/lizard/get_sneeze_sound(mob/living/carbon/human/lizard)
 	if(lizard.physique == FEMALE)
-		return 'sound/voice/human/female_sneeze1.ogg'
-	return 'sound/voice/human/male_sneeze1.ogg'
+		return 'sound/mobs/humanoids/human/sneeze/female_sneeze1.ogg'
+	return 'sound/mobs/humanoids/human/sneeze/male_sneeze1.ogg'
 
 /datum/species/lizard/get_laugh_sound(mob/living/carbon/human/lizard)
-	return 'sound/voice/lizard/lizard_laugh1.ogg'
+	return 'sound/mobs/humanoids/lizard/lizard_laugh1.ogg'
+
+/datum/species/lizard/get_sigh_sound(mob/living/carbon/human/lizard)
+	if(lizard.physique == FEMALE)
+		return SFX_FEMALE_SIGH
+	return SFX_MALE_SIGH
+
+/datum/species/lizard/get_sniff_sound(mob/living/carbon/human/lizard)
+	if(lizard.physique == FEMALE)
+		return 'sound/mobs/humanoids/human/sniff/female_sniff.ogg'
+	return 'sound/mobs/humanoids/human/sniff/male_sniff.ogg'
+
+/datum/species/lizard/get_snore_sound(mob/living/carbon/human/lizard)
+	if(lizard.physique == FEMALE)
+		return SFX_SNORE_FEMALE
+	return SFX_SNORE_MALE
 
 /datum/species/lizard/get_physical_attributes()
 	return "Lizardpeople can withstand slightly higher temperatures than most species, but they are very vulnerable to the cold \
@@ -152,8 +165,8 @@ Lizard subspecies: ASHWALKERS
 	name = "Ash Walker"
 	id = SPECIES_LIZARD_ASH
 	examine_limb_id = SPECIES_LIZARD
-	mutantlungs = /obj/item/organ/internal/lungs/lavaland
-	mutantbrain = /obj/item/organ/internal/brain/primitive
+	mutantlungs = /obj/item/organ/lungs/lavaland
+	mutantbrain = /obj/item/organ/brain/primitive
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_VIRUSIMMUNE,
@@ -194,15 +207,11 @@ Lizard subspecies: SILVER SCALED
 	mutantlungs = null
 	damage_modifier = 10 //very light silvery scales soften blows
 	species_language_holder = /datum/language_holder/lizard/silver
-	mutanttongue = /obj/item/organ/internal/tongue/lizard/silver
-	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
+	mutanttongue = /obj/item/organ/tongue/lizard/silver
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
 	examine_limb_id = SPECIES_LIZARD
 	///stored mutcolor for when we turn back off of a silverscale.
 	var/old_mutcolor
-	///stored eye color for when we turn back off of a silverscale.
-	var/old_eye_color_left
-	///See above
-	var/old_eye_color_right
 
 /datum/species/lizard/silverscale/get_physical_attributes()
 	return "Silver Scales are to lizardpeople what angels are to humans. \
@@ -211,17 +220,13 @@ Lizard subspecies: SILVER SCALED
 
 /datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/human/new_silverscale, datum/species/old_species, pref_load)
 	old_mutcolor = new_silverscale.dna.features["mcolor"]
-	old_eye_color_left = new_silverscale.eye_color_left
-	old_eye_color_right = new_silverscale.eye_color_right
 	new_silverscale.dna.features["mcolor"] = "#eeeeee"
-	new_silverscale.eye_color_left = "#0000a0"
-	new_silverscale.eye_color_right = "#0000a0"
+	new_silverscale.add_eye_color("#0000a0", EYE_COLOR_SPECIES_PRIORITY)
 	. = ..()
 	new_silverscale.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff63", "size" = 2))
 
 /datum/species/lizard/silverscale/on_species_loss(mob/living/carbon/human/was_silverscale, datum/species/new_species, pref_load)
 	was_silverscale.dna.features["mcolor"] = old_mutcolor
-	was_silverscale.eye_color_left = old_eye_color_left
-	was_silverscale.eye_color_right = old_eye_color_right
+	was_silverscale.remove_eye_color(EYE_COLOR_SPECIES_PRIORITY)
 	was_silverscale.remove_filter("silver_glint")
 	return ..()

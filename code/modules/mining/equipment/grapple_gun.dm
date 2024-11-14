@@ -41,8 +41,8 @@
 	if(target == user || !hooked)
 		return NONE
 
-	if(!lavaland_equipment_pressure_check(get_turf(user)))
-		user.balloon_alert(user, "gun mechanism wont work here!")
+	if(!lavaland_equipment_pressure_check(get_turf(user)) && !(obj_flags & EMAGGED))
+		user.balloon_alert(user, "gun mechanism won't work here!")
 		return ITEM_INTERACT_BLOCKING
 	if(get_dist(user, target) > 9)
 		user.balloon_alert(user, "too far away!")
@@ -64,7 +64,7 @@
 	if(user.CanReach(attacked_atom))
 		return ITEM_INTERACT_BLOCKING
 
-	var/atom/bullet = fire_projectile(/obj/projectile/grapple_hook, attacked_atom, 'sound/weapons/zipline_fire.ogg')
+	var/atom/bullet = fire_projectile(/obj/projectile/grapple_hook, attacked_atom, 'sound/items/weapons/zipline_fire.ogg')
 	zipline = user.Beam(bullet, icon_state = "zipline_hook", maxdistance = 9, layer = BELOW_MOB_LAYER)
 	hooked = FALSE
 	RegisterSignal(bullet, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_grapple_hit))
@@ -72,6 +72,14 @@
 	zipliner = WEAKREF(user)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/grapple_gun/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return FALSE
+	balloon_alert(user, "pressure settings overloaded")
+	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/item/grapple_gun/proc/on_grapple_hit(datum/source, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER
@@ -173,6 +181,6 @@
 	range = 9
 	speed = 0.1
 	can_hit_turfs = TRUE
-	hitsound = 'sound/weapons/zipline_hit.ogg'
+	hitsound = 'sound/items/weapons/zipline_hit.ogg'
 
 #undef DAMAGE_ON_IMPACT

@@ -54,8 +54,6 @@
 	. = ..()
 	.["mode"] = add_ui_configuration("Scan Mode", "list", mode, modes)
 
-	return .
-
 /obj/item/mod/module/health_analyzer/configure_edit(key, value)
 	switch(key)
 		if("mode")
@@ -77,15 +75,15 @@
 	required_slots = list(ITEM_SLOT_GLOVES)
 	var/quick_carry_trait = TRAIT_QUICK_CARRY
 
-/obj/item/mod/module/quick_carry/on_suit_activation()
+/obj/item/mod/module/quick_carry/on_part_activation()
 	. = ..()
-	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, quick_carry_trait, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, REF(src))
+	ADD_TRAIT(mod.wearer, quick_carry_trait, REF(src))
 
-/obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/quick_carry/on_part_deactivation(deleting = FALSE)
 	. = ..()
-	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, quick_carry_trait, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, REF(src))
+	REMOVE_TRAIT(mod.wearer, quick_carry_trait, REF(src))
 
 /obj/item/mod/module/quick_carry/advanced
 	name = "MOD advanced quick carry module"
@@ -118,6 +116,12 @@
 	possible_transfer_amounts = list(5, 10, 15, 20, 30)
 	volume = 30
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
+
+/obj/item/reagent_containers/syringe/mod/update_reagent_overlay()
+	if(reagents?.total_volume)
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/medical/reagent_fillings.dmi', "mod[get_rounded_vol()]")
+		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling_overlay
 
 ///Organizer - Lets you shoot organs, immediately replacing them if the target has the organ manipulation surgery.
 /obj/item/mod/module/organizer
@@ -154,7 +158,7 @@
 		organ_list += organ
 		organ.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [organ]")
-		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
 		drain_power(use_energy_cost)
 		return
 	if(!length(organ_list))
@@ -163,15 +167,15 @@
 	var/obj/projectile/organ/projectile = new /obj/projectile/organ(mod.wearer.loc, fired_organ)
 	projectile.preparePixelProjectile(target, mod.wearer)
 	projectile.firer = mod.wearer
-	playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+	playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
 	INVOKE_ASYNC(projectile, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 
 /obj/projectile/organ
 	name = "organ"
 	damage = 0
-	hitsound = 'sound/effects/attackblob.ogg'
-	hitsound_wall = 'sound/effects/attackblob.ogg'
+	hitsound = 'sound/effects/blob/attackblob.ogg'
+	hitsound_wall = 'sound/effects/blob/attackblob.ogg'
 	/// A reference to the organ we "are".
 	var/obj/item/organ/organ
 
@@ -189,7 +193,7 @@
 
 /obj/projectile/organ/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(!ishuman(target))
+	if(!isliving(target))
 		organ.forceMove(drop_location())
 		organ = null
 		return
@@ -206,16 +210,20 @@
 				continue
 			succeed = TRUE
 			break
-	if(succeed)
-		var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
-		for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
-			if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
-				continue
-			organ_evacced.Remove(target)
-			organ_evacced.forceMove(get_turf(target))
-		organ.Insert(target)
-	else
+
+	if(!succeed)
 		organ.forceMove(drop_location())
+		organ = null
+		return
+
+	var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
+	for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
+		if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
+			continue
+		organ_evacced.Remove(target, special = TRUE)
+		organ_evacced.forceMove(get_turf(target))
+
+	organ.Insert(target)
 	organ = null
 
 ///Patrient Transport - Generates hardlight bags you can put people in.
@@ -328,7 +336,7 @@
 		balloon_alert(mod.wearer, "already ripped!")
 		return
 	balloon_alert(mod.wearer, "ripping clothing...")
-	playsound(src, 'sound/items/zip.ogg', 25, TRUE, frequency = -1)
+	playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE, frequency = -1)
 	if(!do_after(mod.wearer, 1.5 SECONDS, target = carbon_target))
 		balloon_alert(mod.wearer, "interrupted!")
 		return
@@ -359,10 +367,10 @@
 		clothing.body_parts_covered |= ripped_clothing[clothing]
 		ripped_clothing -= clothing
 	if(zipped)
-		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+		playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE)
 		balloon_alert(mod.wearer, "clothing mended")
 
-/obj/item/mod/module/thread_ripper/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/thread_ripper/on_part_deactivation(deleting = FALSE)
 	if(!length(ripped_clothing))
 		return
 	for(var/obj/item/clothing as anything in ripped_clothing)
@@ -372,7 +380,7 @@
 		clothing.body_parts_covered |= ripped_clothing[clothing]
 	ripped_clothing = list()
 	if(!deleting)
-		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+		playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE)
 
 ///Surgical Processor - Lets you do advanced surgeries portably.
 /obj/item/mod/module/surgical_processor
@@ -400,12 +408,40 @@
 		/datum/surgery/advanced/pacify,
 		/datum/surgery/healing/combo/upgraded/femto,
 		/datum/surgery/advanced/brainwashing,
+		/datum/surgery/advanced/brainwashing/mechanic,
 		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery/advanced/bioware/nerve_splicing/mechanic,
 		/datum/surgery/advanced/bioware/nerve_grounding,
+		/datum/surgery/advanced/bioware/nerve_grounding/mechanic,
 		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/vein_threading/mechanic,
 		/datum/surgery/advanced/bioware/muscled_veins,
+		/datum/surgery/advanced/bioware/muscled_veins/mechanic,
 		/datum/surgery/advanced/bioware/ligament_hook,
+		/datum/surgery/advanced/bioware/ligament_hook/mechanic,
 		/datum/surgery/advanced/bioware/ligament_reinforcement,
+		/datum/surgery/advanced/bioware/ligament_reinforcement/mechanic,
 		/datum/surgery/advanced/bioware/cortex_imprint,
+		/datum/surgery/advanced/bioware/cortex_imprint/mechanic,
 		/datum/surgery/advanced/bioware/cortex_folding,
+		/datum/surgery/advanced/bioware/cortex_folding/mechanic,
+	)
+
+/obj/item/mod/module/surgical_processor/emergency
+	desc = "A module using an onboard surgical computer which can be connected to other computers to download and \
+		perform advanced surgeries on the go. This one came pre-loaded with some emergency surgeries."
+	device = /obj/item/surgical_processor/mod/emergency
+
+/obj/item/surgical_processor/mod/emergency
+	loaded_surgeries = list(
+		/datum/surgery/healing/combo/upgraded/femto,
+		/datum/surgery/blood_filter,
+		/datum/surgery/brain_surgery,
+		/datum/surgery/coronary_bypass,
+		/datum/surgery/ear_surgery,
+		/datum/surgery/eye_surgery,
+		/datum/surgery/hepatectomy,
+		/datum/surgery/revival,
+		/datum/surgery/stomach_pump,
+		/datum/surgery/advanced/wing_reconstruction,
 	)

@@ -2,12 +2,11 @@ import { classes } from 'common/react';
 
 import { useBackend } from '../../backend';
 import { Box, Button, Section } from '../../components';
-import { STYLES } from './constants';
 import { PodLauncherData } from './types';
 
 export function StylePage(props) {
   const { act, data } = useBackend<PodLauncherData>();
-  const { effectName, styleChoice } = data;
+  const { effectName, styleChoice, podStyles } = data;
 
   return (
     <Section
@@ -19,7 +18,7 @@ export function StylePage(props) {
           selected={effectName}
           tooltip={`
             Edit pod's
-            name/desc.`}
+            .id/desc.`}
           tooltipPosition="bottom-start"
         >
           Name
@@ -29,19 +28,19 @@ export function StylePage(props) {
       scrollable
       title="Style"
     >
-      {STYLES.map((page, i) => (
+      {podStyles.map((page, i) => (
         <Button
           height="45px"
-          key={i}
-          onClick={() => act('setStyle', { style: i })}
-          selected={styleChoice - 1 === i}
+          key={page.id}
+          onClick={() => act('setStyle', { style: page.id })}
+          selected={styleChoice === page.id}
           style={{
             verticalAlign: 'middle',
             marginRight: '5px',
             borderRadius: '20px',
           }}
           tooltipPosition={
-            i >= STYLES.length - 2
+            i >= podStyles.length - 2
               ? i % 2 === 1
                 ? 'top-start'
                 : 'top-end'
@@ -53,7 +52,7 @@ export function StylePage(props) {
           width="45px"
         >
           <Box
-            className={classes(['supplypods64x64', 'pod_asset' + (i + 1)])}
+            className={classes(['supplypods64x64', 'pod_asset' + page.id])}
             style={{
               pointerEvents: 'none',
               transform: 'rotate(45deg) translate(-25%,-10%)',

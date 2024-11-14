@@ -54,7 +54,7 @@
 /obj/item/clothing/head/utility/chefhat/proc/on_mouse_emote(mob/living/source, key, emote_message, type_override)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/wearer = loc
-	if(!wearer || wearer.incapacitated(IGNORE_RESTRAINTS))
+	if(!wearer || INCAPACITATED_IGNORING(wearer, INCAPABLE_RESTRAINTS))
 		return
 	if (!prob(mouse_control_probability))
 		return COMPONENT_CANT_EMOTE
@@ -68,7 +68,7 @@
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Didn't roll well enough or on cooldown
 
 	var/mob/living/carbon/wearer = loc
-	if(!wearer || wearer.incapacitated(IGNORE_RESTRAINTS))
+	if(!wearer || INCAPACITATED_IGNORING(wearer, INCAPABLE_RESTRAINTS))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Not worn or can't move
 
 	var/move_direction = get_dir(wearer, moved_to)
@@ -624,6 +624,10 @@
 	flags_inv = HIDEHAIR //Cover your head doctor!
 	w_class = WEIGHT_CLASS_SMALL //surgery cap can be easily crumpled
 
+/obj/item/clothing/head/utility/surgerycap/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
+
 /obj/item/clothing/head/utility/surgerycap/attack_self(mob/user)
 	. = ..()
 	if(.)
@@ -666,6 +670,10 @@
 	icon_state = "headmirror"
 	body_parts_covered = NONE
 
+/obj/item/clothing/head/utility/head_mirror/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
+
 /obj/item/clothing/head/utility/head_mirror/examine(mob/user)
 	. = ..()
 	. += span_notice("In a properly lit room, you can use this to examine people's eyes, ears, and mouth <i>closer</i>.")
@@ -699,7 +707,7 @@
 	if(human_examined.is_mouth_covered())
 		final_message += "\tYou can't see [examining.p_their()] mouth."
 	else
-		var/obj/item/organ/internal/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
+		var/obj/item/organ/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
 		var/pill_count = 0
 		for(var/datum/action/item_action/activate_pill/pill in human_examined.actions)
 			pill_count++
@@ -716,7 +724,7 @@
 	if(human_examined.is_ears_covered())
 		final_message += "\tYou can't see [examining.p_their()] ears."
 	else
-		var/obj/item/organ/internal/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
 		if(has_ears)
 			if(has_ears.deaf)
 				final_message += "\tDamaged eardrums in [examining.p_their()] ear canals."
@@ -728,7 +736,7 @@
 	if(human_examined.is_eyes_covered())
 		final_message += "\tYou can't see [examining.p_their()] eyes."
 	else
-		var/obj/item/organ/internal/eyes/has_eyes = human_examined.get_organ_slot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/eyes/has_eyes = human_examined.get_organ_slot(ORGAN_SLOT_EYES)
 		if(has_eyes)
 			final_message += "\tA pair of [has_eyes.damage ? "" : "healthy "][has_eyes.name]."
 		else

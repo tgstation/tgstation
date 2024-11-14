@@ -65,7 +65,7 @@
 		area_names += key
 	return area_names
 
-/obj/item/sparring_contract/ui_act(action, list/params)
+/obj/item/sparring_contract/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -84,7 +84,7 @@
 		if(!isnull(resolved))
 			resolved_opponents += resolved
 
-	if(user in resolved_opponents && params["stakes"] == STAKES_HOLY_MATCH)
+	if((user in resolved_opponents) && params["stakes"] == STAKES_HOLY_MATCH)
 		to_chat(user, span_warning("This contract refuses to be signed up for a holy match by a previous holy match loser. Pick a different stake!"))
 
 	//any updating of the terms should update the UI to display new terms

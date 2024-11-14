@@ -6,13 +6,13 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "uncuff"
-	sound = 'sound/magic/swap.ogg'
+	sound = 'sound/effects/magic/swap.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 5 MINUTES
 
-	invocation = "Kher' Sekh-em waaef'k!"
-	invocation_type = INVOCATION_SHOUT
+	invocation = "F'K 'FF."
+	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
 	aoe_radius = 3

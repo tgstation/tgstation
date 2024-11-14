@@ -62,7 +62,7 @@
 /obj/machinery/computer/order_console/bitrunning/retrieve_points(obj/item/card/id/id_card)
 	return round(id_card.registered_account.bitrunning_points)
 
-/obj/machinery/computer/order_console/bitrunning/ui_act(action, params)
+/obj/machinery/computer/order_console/bitrunning/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(!.)
 		flick("vendor_off", src)

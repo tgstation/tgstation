@@ -11,6 +11,12 @@
 	clothing_flags = SNUG_FIT | CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	///How much this hat affects fishing difficulty
+	var/fishing_modifier = -6
+
+/obj/item/clothing/head/wizard/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier) //A wizard always practices his casting (ba dum tsh)
 
 /datum/armor/head_wizard
 	melee = 30
@@ -48,6 +54,18 @@
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	fishing_modifier = -2
+
+/obj/item/clothing/head/wizard/chanterelle
+	name = "chanterelle hat"
+	desc = "An oversized chanterelle with hollow out space to fit a head in. Kinda looks like wizard's hat."
+	icon_state = "chanterelle"
+	inhand_icon_state = "chanterellehat"
+	armor_type = /datum/armor/none
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/head/wizard/chanterelle/fr
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
@@ -103,6 +121,12 @@
 	equip_delay_other = 50
 	clothing_flags = CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	///How much this robe affects fishing difficulty
+	var/fishing_modifier = -7
+
+/obj/item/clothing/suit/wizrobe/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier) //A wizard always practices his casting (ba dum tsh)
 
 /datum/armor/suit_wizrobe
 	melee = 30
@@ -170,17 +194,20 @@
 	inhand_icon_state = "wizrobe"
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
+	fishing_modifier = -3
 
 /obj/item/clothing/head/wizard/marisa/fake
 	name = "witch hat"
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
+	fishing_modifier = -2
 
 /obj/item/clothing/head/wizard/tape/fake
 	name = "tape hat"
 	desc = "A hat designed exclusively from duct tape. You can barely see."
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
+	fishing_modifier = -2
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
 	name = "witch robe"
@@ -189,12 +216,14 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
+	fishing_modifier = -3
 
 /obj/item/clothing/suit/wizrobe/tape/fake
 	name = "tape robe"
 	desc = "An outfit designed exclusively from duct tape. It was hard to put on."
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
+	fishing_modifier = -3
 
 /obj/item/clothing/suit/wizrobe/paper
 	name = "papier-mache robe" // no non-latin characters!
@@ -203,6 +232,50 @@
 	inhand_icon_state = null
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
+
+
+/obj/item/clothing/suit/wizrobe/durathread
+	name = "durathread robe"
+	desc = "A rather dull durathread robe; not quite as protective as a proper piece of armour, but much stylish."
+	icon_state = "durathread-fake"
+	inhand_icon_state = null
+	armor_type = /datum/armor/robe_durathread
+	allowed = /obj/item/clothing/suit/apron::allowed
+	fishing_modifier = -6
+
+/datum/armor/robe_durathread
+	melee = 15
+	bullet = 5
+	laser = 25
+	energy = 30
+	bomb = 10
+	fire = 30
+	acid = 40
+
+/obj/item/clothing/suit/wizrobe/durathread/fire
+	name = "pyromancer robe"
+	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	icon_state = "durathread-fire"
+
+/obj/item/clothing/suit/wizrobe/durathread/ice
+	name = "pyromancer robe"
+	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	icon_state = "durathread-ice"
+
+/obj/item/clothing/suit/wizrobe/durathread/electric
+	name = "electromancer robe"
+	desc = "Doesn't actually conduit or isolate from electricity. Though it does have some durability on account of being made from durathread."
+	icon_state = "durathread-electric"
+
+/obj/item/clothing/suit/wizrobe/durathread/earth
+	name = "geomancer robe"
+	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	icon_state = "durathread-earth"
+
+/obj/item/clothing/suit/wizrobe/durathread/necro
+	name = "necromancer robe"
+	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	icon_state = "durathread-necro"
 
 
 /obj/item/clothing/suit/wizrobe/paper/ui_action_click(mob/user, action)
@@ -219,7 +292,7 @@
 		return
 
 	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
-	playsound(loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
+	playsound(loc, 'sound/effects/magic/summon_magic.ogg', 50, TRUE, TRUE)
 	var/mob/living/M = new /mob/living/basic/stickman/lesser(get_turf(usr))
 	M.faction += list("[REF(usr)]")
 	robe_charge = FALSE

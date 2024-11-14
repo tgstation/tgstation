@@ -91,6 +91,14 @@
 	painting_metadata.height = height
 	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
+/obj/item/canvas/Destroy()
+	last_patron = null
+	if(istype(loc,/obj/structure/sign/painting))
+		var/obj/structure/sign/painting/frame = loc
+		frame.remove_art_element(painting_metadata.credit_value)
+	painting_metadata = null
+	return ..()
+
 /obj/item/canvas/proc/reset_grid()
 	grid = new/list(width,height)
 	for(var/x in 1 to width)
@@ -102,6 +110,8 @@
 	ui_interact(user)
 
 /obj/item/canvas/ui_state(mob/user)
+	if(isobserver(user))
+		return GLOB.observer_state
 	if(finalized)
 		return GLOB.physical_obscured_state
 	else
@@ -149,11 +159,14 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/canvas/ui_act(action, params)
+/obj/item/canvas/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	var/mob/user = usr
+	///this is here to allow observers to zoom in and out but not do anything else.
+	if(action != "zoom_in" && action != "zoom_out" && isobserver(user))
+		return
 	switch(action)
 		if("paint")
 			if(finalized)
@@ -286,10 +299,16 @@
 					curator.adjust_money(curator_cut, "Painting: Patronage cut")
 					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] cr.")
 
+	if(istype(loc, /obj/structure/sign/painting))
+		var/obj/structure/sign/painting/frame = loc
+		frame.remove_art_element(painting_metadata.credit_value)
+		frame.add_art_element(offer_amount)
+
 	painting_metadata.patron_ckey = user.ckey
 	painting_metadata.patron_name = user.real_name
 	painting_metadata.credit_value = offer_amount
 	last_patron = WEAKREF(user.mind)
+
 	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now an official patron of this painting."))
 	var/list/possible_frames = SSpersistent_paintings.get_available_frames(offer_amount)
 	if(possible_frames.len <= 1) // Not much room for choices here.
@@ -398,7 +417,7 @@
 /obj/item/canvas/proc/try_rename(mob/user)
 	if(painting_metadata.loaded_from_json) // No renaming old paintings
 		return TRUE
-	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece", null, MAX_NAME_LEN)
+	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece", max_length = MAX_NAME_LEN)
 	new_name = reject_bad_name(new_name, allow_numbers = TRUE, ascii_only = FALSE, strict = TRUE, cap_after_symbols = FALSE)
 	if(isnull(new_name))
 		return FALSE
@@ -526,6 +545,8 @@
 		/obj/item/canvas/twentythree_twentythree,
 		/obj/item/canvas/twentyfour_twentyfour,
 	)
+	/// the type of wallframe it 'disassembles' into
+	var/wallframe_type = /obj/item/wallframe/painting
 
 /obj/structure/sign/painting/Initialize(mapload, dir, building)
 	. = ..()
@@ -545,6 +566,16 @@
 			SStgui.update_uis(src)
 	else
 		return ..()
+
+/obj/structure/sign/painting/knock_down(mob/living/user)
+	var/turf/drop_turf
+	if(user)
+		drop_turf = get_turf(user)
+	else
+		drop_turf = drop_location()
+	current_canvas?.forceMove(drop_turf)
+	var/obj/item/wallframe/frame = new wallframe_type(drop_turf)
+	frame.update_integrity(get_integrity()) //Transfer how damaged it is.
 
 /obj/structure/sign/painting/examine(mob/user)
 	. = ..()
@@ -566,6 +597,8 @@
 /obj/structure/sign/painting/Exited(atom/movable/movable, atom/newloc)
 	. = ..()
 	if(movable == current_canvas)
+		if(!QDELETED(current_canvas))
+			remove_art_element(current_canvas.painting_metadata.credit_value)
 		current_canvas = null
 		update_appearance()
 
@@ -585,6 +618,7 @@
 		if(!current_canvas.finalized)
 			current_canvas.finalize(user)
 		to_chat(user,span_notice("You frame [current_canvas]."))
+		add_art_element()
 		update_appearance()
 		return TRUE
 	return FALSE
@@ -654,9 +688,30 @@
 	new_canvas.finalized = TRUE
 	new_canvas.name = "painting - [painting.title]"
 	current_canvas = new_canvas
+	add_art_element()
 	current_canvas.update_appearance()
 	update_appearance()
 	return TRUE
+
+/obj/structure/sign/painting/proc/add_art_element()
+	var/artistic_value = get_art_value(current_canvas.painting_metadata.credit_value)
+	if(artistic_value)
+		AddElement(/datum/element/art, artistic_value)
+
+/obj/structure/sign/painting/proc/remove_art_element(patronage)
+	var/artistic_value = get_art_value(patronage)
+	if(artistic_value)
+		RemoveElement(/datum/element/art, artistic_value)
+
+/obj/structure/sign/painting/proc/get_art_value(patronage)
+	switch(patronage)
+		if(PATRONAGE_SUPERB_FRAME to INFINITY)
+			return GREAT_ART
+		if(PATRONAGE_EXCELLENT_FRAME to PATRONAGE_SUPERB_FRAME)
+			return GOOD_ART
+		if(PATRONAGE_NICE_FRAME to PATRONAGE_EXCELLENT_FRAME)
+			return OK_ART
+	return 0
 
 /obj/structure/sign/painting/proc/save_persistent()
 	if(!persistence_id || !current_canvas || current_canvas.no_save || current_canvas.painting_metadata.loaded_from_json)
@@ -725,6 +780,7 @@
 		/obj/item/canvas/thirtysix_twentyfour,
 		/obj/item/canvas/fortyfive_twentyseven,
 	)
+	wallframe_type = /obj/item/wallframe/painting/large
 
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()

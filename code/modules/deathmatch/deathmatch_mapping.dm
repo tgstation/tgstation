@@ -11,9 +11,6 @@
 /obj/effect/landmark/deathmatch_player_spawn
 	name = "Deathmatch Player Spawner"
 
-/area/deathmatch/teleport //Prevent access to cross-z teleportation in the map itself (no wands of safety/teleportation scrolls). Cordons should prevent same-z teleportations outside of the arena.
-	area_flags = /area/deathmatch::area_flags & ~NOTELEPORT
-
 // for the illusion of a moving train
 /turf/open/chasm/true/no_smooth/fake_motion_sand
 	name = "air"
@@ -25,3 +22,13 @@
 /turf/open/chasm/true/no_smooth/fake_motion_sand/fast
 	icon_state = "sandmovingfast"
 	base_icon_state = "sandmovingfast"
+
+// fakeout
+
+/turf/open/chasm/true/fakeout
+	name = /turf/open/floor/wood::name
+	// desc kept the same
+	icon_state = /turf/open/floor/wood::icon_state
+	base_icon_state = /turf/open/floor/wood::base_icon_state
+	icon = /turf/open/floor/wood::icon
+	smoothing_flags = NONE

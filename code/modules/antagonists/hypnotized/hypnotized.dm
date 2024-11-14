@@ -1,7 +1,7 @@
 /// Antag datum associated with the hypnosis brain trauma, used for displaying objectives and antag hud
 /datum/antagonist/hypnotized
 	name = "\improper Hypnotized Victim"
-	stinger_sound = 'sound/ambience/antag/hypnotized.ogg'
+	stinger_sound = 'sound/music/antag/hypnotized.ogg'
 	job_rank = ROLE_HYPNOTIZED
 	roundend_category = "hypnotized victims"
 	antag_hud_name = "brainwashed"

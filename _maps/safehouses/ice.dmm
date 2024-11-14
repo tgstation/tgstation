@@ -60,7 +60,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "p" = (
 /obj/structure/railing,
@@ -69,7 +69,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "u" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -148,7 +148,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/smartfridge/drying_rack,
+/obj/machinery/smartfridge/drying/rack,
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
 "O" = (

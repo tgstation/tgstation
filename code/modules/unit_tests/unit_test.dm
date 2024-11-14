@@ -112,6 +112,16 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	allocated += instance
 	return instance
 
+/// Resets the air of our testing room to its default
+/datum/unit_test/proc/restore_atmos()
+	var/area/working_area = run_loc_floor_bottom_left.loc
+	var/list/turf/to_restore = working_area.get_turfs_from_all_zlevels()
+	for(var/turf/open/restore in to_restore)
+		var/datum/gas_mixture/GM = SSair.parse_gas_string(restore.initial_gas_mix, /datum/gas_mixture/turf)
+		restore.copy_air(GM)
+		restore.temperature = initial(restore.temperature)
+		restore.air_update_turf(update = FALSE, remove = FALSE)
+
 /datum/unit_test/proc/test_screenshot(name, icon/icon)
 	if (!istype(icon))
 		TEST_FAIL("[icon] is not an icon.")
@@ -148,7 +158,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 /// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 /datum/unit_test/proc/log_for_test(text, priority, file, line)
-	var/map_name = SSmapping.config.map_name
+	var/map_name = SSmapping.current_map.map_name
 
 	// Need to escape the text to properly support newlines.
 	var/annotation_text = replacetext(text, "%", "%25")
@@ -167,18 +177,19 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	GLOB.current_test = test
 	var/duration = REALTIMEOFDAY
-	var/skip_test = (test_path in SSmapping.config.skipped_tests)
+	var/skip_test = (test_path in SSmapping.current_map.skipped_tests)
 	var/test_output_desc = "[test_path]"
 	var/message = ""
 
 	log_world("::group::[test_path]")
 
 	if(skip_test)
-		log_world("[TEST_OUTPUT_YELLOW("SKIPPED")] Skipped run on map [SSmapping.config.map_name].")
+		log_world("[TEST_OUTPUT_YELLOW("SKIPPED")] Skipped run on map [SSmapping.current_map.map_name].")
 
 	else
 
 		test.Run()
+		test.restore_atmos()
 
 		duration = REALTIMEOFDAY - duration
 		GLOB.current_test = null
@@ -242,9 +253,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/merge_conflict_marker,
 		//briefcase launchpads erroring
 		/obj/machinery/launchpad/briefcase,
-		//Both are abstract types meant to scream bloody murder if spawned in raw
-		/obj/item/organ/external,
-		/obj/item/organ/external/wings,
+		//Wings abstract path
+		/obj/item/organ/wings,
 		//Not meant to spawn without the machine wand
 		/obj/effect/bug_moving,
 	)
@@ -275,13 +285,13 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
 	returnable_list += typesof(/obj/effect/baseturf_helper)
 	//No tauma to pass in
-	returnable_list += typesof(/mob/camera/imaginary_friend)
+	returnable_list += typesof(/mob/eye/imaginary_friend)
 	//No heart to give
 	returnable_list += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
-	returnable_list += typesof(/mob/camera/ai_eye/remote/base_construction)
+	returnable_list += typesof(/mob/eye/ai_eye/remote/base_construction)
 	//See above
-	returnable_list += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
+	returnable_list += typesof(/mob/eye/ai_eye/remote/shuttle_docker)
 	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
 	returnable_list += typesof(/obj/effect/anomaly/grav/high)
 	//See above

@@ -31,7 +31,7 @@
 #define REVS_LOSE 18
 /// The wizard was killed by the crew
 #define WIZARD_KILLED 19
-/// The station was destroyed by it's own self-destruct nuclear device
+/// The station was destroyed by its own self-destruct nuclear device
 #define STATION_NUKED 20
 /// The station was destroyed by the supermatter cascade
 #define SUPERMATTER_CASCADE 21

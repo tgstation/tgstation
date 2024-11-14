@@ -16,6 +16,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	w_class = WEIGHT_CLASS_TINY
 
 	/// The name that appears on the shell.
 	var/display_name = ""
@@ -500,8 +501,13 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return
 			component.disconnect()
 			remove_component(component)
+
+			var/mob/user = ui.user
 			if(component.loc == src)
-				usr.put_in_hands(component)
+				user.put_in_hands(component)
+			var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
+			if (!isnull(printer))
+				printer.base_item_interaction(user, component)
 			. = TRUE
 		if("set_component_coordinates")
 			var/component_id = text2num(params["component_id"])

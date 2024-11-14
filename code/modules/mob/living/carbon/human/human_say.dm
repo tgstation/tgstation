@@ -22,7 +22,7 @@
 	return ..()
 
 /mob/living/carbon/human/get_default_say_verb()
-	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(isnull(tongue))
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
 			return "signs"
@@ -73,7 +73,7 @@
 	var/area/our_area = get_area(src)
 	if(our_area.area_flags & BINARY_JAMMING)
 		return FALSE
-	return dongle.translate_binary
+	return (dongle.special_channels & RADIO_SPECIAL_BINARY)
 
 /mob/living/carbon/human/radio(message, list/message_mods = list(), list/spans, language) //Poly has a copy of this, lazy bastard
 	. = ..()

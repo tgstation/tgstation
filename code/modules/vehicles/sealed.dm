@@ -92,8 +92,10 @@
 	if(!istype(M))
 		return FALSE
 	remove_occupant(M)
-	if(!isAI(M))//This is the ONE mob we dont want to be moved to the vehicle that should be handeled when used
+	if(!isAI(M))//This is the ONE mob we don't want to be moved to the vehicle that should be handled when used
 		M.forceMove(exit_location(M))
+	else
+		return TRUE
 	if(randomstep)
 		var/turf/target_turf = get_step(exit_location(M), pick(GLOB.cardinals))
 		M.throw_at(target_turf, 5, 10)
@@ -169,4 +171,5 @@
 /obj/vehicle/sealed/proc/on_entered_supermatter(atom/movable/vehicle, atom/movable/supermatter)
 	SIGNAL_HANDLER
 	for (var/mob/passenger as anything in occupants)
-		passenger.Bump(supermatter)
+		if(!isAI(passenger))
+			passenger.Bump(supermatter)

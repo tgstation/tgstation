@@ -232,7 +232,7 @@
 	projectile.ricochets_max += 2
 	projectile.min_ricochets += 2
 	projectile.ricochet_incidence_leeway = 0
-	ADD_TRAIT(projectile, TRAIT_ALWAYS_HIT_ZONE, DEATHMATCH_TRAIT)
+	projectile.accuracy_falloff = 0
 
 /datum/deathmatch_modifier/stormtrooper
 	name = "Stormtrooper Aim"
@@ -519,7 +519,7 @@
 			modifiers_pool -= modpath
 
 	///Pick global modifiers at random.
-	for(var/iteration in rand(3, 5))
+	for(var/iteration in 1 to rand(3, 5))
 		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[pick_n_take(modifiers_pool)]
 		modifier.on_select(lobby)
 		modifier.on_start_game(lobby)

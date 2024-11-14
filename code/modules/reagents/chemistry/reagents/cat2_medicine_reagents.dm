@@ -158,7 +158,7 @@
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/c2/probital/on_transfer(atom/A, methods=INGEST, trans_volume)
-	if(!(methods & INGEST) || (!iscarbon(A) && !istype(A, /obj/item/organ/internal/stomach)) )
+	if(!(methods & INGEST) || (!iscarbon(A) && !istype(A, /obj/item/organ/stomach)) )
 		return
 
 	A.reagents.remove_reagent(/datum/reagent/medicine/c2/probital, trans_volume * 0.05)
@@ -388,16 +388,13 @@
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustToxLoss(-0.5 * min(medibonus, 3 * normalise_creation_purity()) * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype) //not great at healing but if you have nothing else it will work
 	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags) //kills at 40u
-	for(var/r2 in affected_mob.reagents.reagent_list)
-		var/datum/reagent/the_reagent2 = r2
-		if(the_reagent2 == src)
-			continue
-		var/amount2purge = 3
-		if(holder.has_reagent(/datum/reagent/toxin/anacea))
-			amount2purge = 0
-		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) | (1 + pure multiver) will make it not purge medicines
-			continue
-		affected_mob.reagents.remove_reagent(the_reagent2.type, amount2purge * REM * seconds_per_tick)
+	if(!holder.has_reagent(/datum/reagent/toxin/anacea))
+		for(var/datum/reagent/second_reagent as anything in affected_mob.reagents.reagent_list)
+			if(second_reagent == src)
+				continue
+			if(medibonus >= 3 && istype(second_reagent, /datum/reagent/medicine)) //3 unique meds (2+multiver) | (1 + pure multiver) will make it not purge medicines
+				continue
+			affected_mob.reagents.remove_reagent(second_reagent.type, 3 * second_reagent.purge_multiplier * REM * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -424,7 +421,7 @@
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.4) //prevents cheesing with ultralow doses.
 		C.adjustToxLoss((-3 * min(2, trans_volume) * REM) * normalise_creation_purity(), required_biotype = affected_biotype) //This is to promote iv pole use for that chemotherapy feel.
-	var/obj/item/organ/internal/liver/L = C.organs_slot[ORGAN_SLOT_LIVER]
+	var/obj/item/organ/liver/L = C.organs_slot[ORGAN_SLOT_LIVER]
 	if(!L || L.organ_flags & ORGAN_FAILING)
 		return
 	conversion_amount = (trans_volume * (min(100 -C.get_organ_loss(ORGAN_SLOT_LIVER), 80) / 100)*normalise_creation_purity()) //the more damaged the liver the worse we metabolize.
@@ -468,10 +465,10 @@
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	need_mob_update += affected_mob.adjustToxLoss(-1.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype)
-	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
-		if(issyrinormusc(R))
+	for(var/datum/reagent/reagent as anything in affected_mob.reagents.reagent_list)
+		if(issyrinormusc(reagent))
 			continue
-		affected_mob.reagents.remove_reagent(R.type, 0.2 * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(reagent.type, 0.2 * reagent.purge_multiplier * REM * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -529,14 +526,14 @@
 	carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
 	if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN) && carbies.getFireLoss() < UNHUSK_DAMAGE_THRESHOLD && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= SYNTHFLESH_UNHUSK_AMOUNT))
 		carbies.cure_husk(BURN)
-		carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
+		carbies.visible_message(span_nicegreen("A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!")) //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 
 /******ORGAN HEALING******/
 /*Suffix: -rite*/
 /*
 *How this medicine works:
 *Penthrite if you are not in crit only stabilizes your heart.
-*As soon as you pass crit threshold it's special effects kick in. Penthrite forces your heart to beat preventing you from entering
+*As soon as you pass crit threshold its special effects kick in. Penthrite forces your heart to beat preventing you from entering
 *soft and hard crit, but there is a catch. During this you will be healed and you will sustain
 *heart damage that will not imapct you as long as penthrite is in your system.
 *If you reach the threshold of -60 HP penthrite stops working and you get a heart attack, penthrite is flushed from your system in that very moment,

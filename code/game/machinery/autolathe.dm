@@ -53,7 +53,6 @@
 /obj/machinery/autolathe/Destroy()
 	QDEL_NULL(print_sound)
 	materials = null
-	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/autolathe/examine(mob/user)
@@ -101,7 +100,7 @@
 /obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
 
-	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
+	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benefit from it
 	if(directly_use_energy(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.4 * initial(active_power_usage))))
 		flick_overlay_view(mutable_appearance('icons/obj/machines/lathes.dmi', "autolathe_mat"), 1 SECONDS)
 
@@ -113,7 +112,7 @@
 				highest_mat = present_mat
 				highest_mat_ref = mat
 
-		flick_overlay_view(material_insertion_animation(highest_mat_ref.greyscale_colors), 1 SECONDS)
+		flick_overlay_view(material_insertion_animation(highest_mat_ref), 1 SECONDS)
 
 /obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
@@ -256,7 +255,7 @@
 		if(istext(material)) // category
 			var/list/choices = list()
 			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
-				if(materials.get_material_amount(valid_candidate) < amount_needed)
+				if(materials.get_material_amount(valid_candidate) < (amount_needed + materials_needed[material]))
 					continue
 				choices[valid_candidate.name] = valid_candidate
 			if(!length(choices))
@@ -275,7 +274,7 @@
 		if(isnull(material))
 			stack_trace("got passed an invalid material id: [material]")
 			return
-		materials_needed[material] = amount_needed
+		materials_needed[material] += amount_needed
 
 	//checks for available materials
 	var/material_cost_coefficient = ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency

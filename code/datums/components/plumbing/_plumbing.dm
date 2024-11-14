@@ -302,7 +302,7 @@
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
 
-///Give the direction of a pipe, and it'll return wich direction it originally was when it's object pointed SOUTH
+///Give the direction of a pipe, and it'll return wich direction it originally was when its object pointed SOUTH
 /datum/component/plumbing/proc/get_original_direction(dir)
 	var/atom/movable/parent_movable = parent
 	return turn(dir, dir2angle(parent_movable.dir) - 180)
@@ -343,7 +343,7 @@
 	parent_movable.update_appearance()
 
 	if(changer)
-		playsound(changer, 'sound/items/ratchet.ogg', 10, TRUE) //sound
+		playsound(changer, 'sound/items/tools/ratchet.ogg', 10, TRUE) //sound
 
 	//quickly disconnect and reconnect the network.
 	if(active)

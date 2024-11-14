@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/machinery/defibrillator_mount,
 	/obj/machinery/firealarm,
 	/obj/machinery/flasher,
-	/obj/machinery/keycard_auth,
+	/obj/machinery/keycard_auth/wall_mounted,
 	/obj/machinery/light_switch,
 	/obj/machinery/newscaster,
 	/obj/machinery/power/apc,

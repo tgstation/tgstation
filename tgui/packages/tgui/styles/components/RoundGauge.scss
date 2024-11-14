@@ -8,7 +8,7 @@
 @use '../functions.scss' as *;
 
 $fg-map: colors.$fg-map !default;
-$ring-color: #6a96c9 !default;
+$ring-color: hsl(212.2, 46.8%, 60.2%) !default;
 
 .RoundGauge {
   font-size: 1rem;

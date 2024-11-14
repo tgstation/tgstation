@@ -54,9 +54,6 @@
 	name = "Red Glasses"
 	item_path = /obj/item/clothing/glasses/red
 
-/datum/loadout_item/glasses/eyepatch
-	name = "Eyepatch"
-	item_path = /obj/item/clothing/glasses/eyepatch
 
 /datum/loadout_item/glasses/geist_gazers
 	name = "Geist Gazers"
@@ -69,3 +66,11 @@
 /datum/loadout_item/glasses/monocle
 	name = "Monocle"
 	item_path = /obj/item/clothing/glasses/monocle
+
+/datum/loadout_item/glasses/eyepatch
+	name = "Eyepatch"
+	item_path = /obj/item/clothing/glasses/eyepatch
+
+/datum/loadout_item/glasses/eyepatch/medical
+	name = "Medical Eyepatch"
+	item_path = /obj/item/clothing/glasses/eyepatch/medical

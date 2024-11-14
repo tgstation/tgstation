@@ -1,4 +1,4 @@
-/obj/item/organ/internal/heart/gland/mindshock
+/obj/item/organ/heart/gland/mindshock
 	abductor_hint = "neural crosstalk uninhibitor. The abductee emits a disrupting psychic wave every so often. This will either stun, cause hallucinations or deal random brain damage to people nearby."
 	cooldown_low = 40 SECONDS
 	cooldown_high = 70 SECONDS
@@ -8,14 +8,14 @@
 	mind_control_duration = 120 SECONDS
 	var/list/mob/living/carbon/human/broadcasted_mobs = list()
 
-/obj/item/organ/internal/heart/gland/mindshock/activate()
+/obj/item/organ/heart/gland/mindshock/activate()
 	to_chat(owner, span_notice("You get a headache."))
 
 	var/turf/owner_turf = get_turf(owner)
 	for(var/mob/living/carbon/target in orange(4,owner_turf))
 		if(target == owner)
 			continue
-		if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
+		if(HAS_MIND_TRAIT(target, TRAIT_MINDSHIELD))
 			to_chat(target, span_notice("You hear a faint hum fill your ears, which quickly dies down."))
 			continue
 
@@ -30,7 +30,7 @@
 			if(3)
 				target.adjust_hallucinations(120 SECONDS)
 
-/obj/item/organ/internal/heart/gland/mindshock/mind_control(command, mob/living/user)
+/obj/item/organ/heart/gland/mindshock/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
 		return FALSE
 	mind_control_uses--
@@ -41,7 +41,7 @@
 		if(target_human.stat)
 			continue
 
-		if(HAS_TRAIT(target_human, TRAIT_MINDSHIELD))
+		if(HAS_MIND_TRAIT(target_human, TRAIT_UNCONVERTABLE))
 			to_chat(target_human, span_notice("You hear a low drone as something foreign attempts to enter your mind, but the noise fades after a few moments."))
 			continue
 
@@ -62,7 +62,7 @@
 	update_gland_hud()
 	return TRUE
 
-/obj/item/organ/internal/heart/gland/mindshock/clear_mind_control()
+/obj/item/organ/heart/gland/mindshock/clear_mind_control()
 	if(!active_mind_control || !LAZYLEN(broadcasted_mobs))
 		return FALSE
 	for(var/target_mob in broadcasted_mobs)

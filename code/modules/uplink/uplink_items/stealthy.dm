@@ -4,6 +4,7 @@
 
 /datum/uplink_item/stealthy_weapons
 	category = /datum/uplink_category/stealthy
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH
 
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
@@ -27,6 +28,12 @@
 	desc = "A dagger made of energy that looks and functions as a pen when off."
 	item = /obj/item/pen/edagger
 	cost = 2
+
+/datum/uplink_item/stealthy_weapons/slipstick
+	name = "Syndie Lipstick"
+	desc = "Stylish way to kiss to death, isn't it syndiekisser?"
+	item = /obj/item/lipstick/syndie
+	cost = 6
 
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"

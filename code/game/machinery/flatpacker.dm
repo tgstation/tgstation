@@ -112,7 +112,7 @@
 /obj/machinery/flatpacker/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
 
-	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
+	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benefit from it
 	if(directly_use_energy(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.4 * initial(active_power_usage))))
 		flick_overlay_view(mutable_appearance('icons/obj/machines/lathes.dmi', "flatpacker_bar"), 1 SECONDS)
 
@@ -124,7 +124,7 @@
 				highest_mat = present_mat
 				highest_mat_ref = mat
 
-		flick_overlay_view(material_insertion_animation(highest_mat_ref.greyscale_colors), 1 SECONDS)
+		flick_overlay_view(material_insertion_animation(highest_mat_ref), 1 SECONDS)
 
 /**
  * Attempts to find the total material cost of a typepath (including our creation efficiency), modifying a list
@@ -165,9 +165,8 @@
 		qdel(null_comp)
 	return costs
 
-/obj/machinery/flatpacker/item_interaction(mob/living/user, obj/item/attacking_item, params)
-	. = NONE
-	if(user.combat_mode || attacking_item.flags_1 & HOLOGRAM_1 || attacking_item.item_flags & ABSTRACT)
+/obj/machinery/flatpacker/base_item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
+	if(attacking_item.flags_1 & HOLOGRAM_1 || attacking_item.item_flags & ABSTRACT)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	if(istype(attacking_item, /obj/item/circuitboard/machine))
@@ -192,6 +191,8 @@
 
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
+
+	return ..()
 
 /obj/machinery/flatpacker/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -268,7 +269,7 @@
 			if(!materials.has_materials(needed_mats, creation_efficiency))
 				say("Not enough materials to begin production.")
 				return
-			playsound(src, 'sound/items/rped.ogg', 50, TRUE)
+			playsound(src, 'sound/items/tools/rped.ogg', 50, TRUE)
 
 			busy = TRUE
 			flick_overlay_view(mutable_appearance('icons/obj/machines/lathes.dmi', "flatpacker_bar"), flatpack_time)
@@ -292,7 +293,7 @@
 			if(isnull(amount))
 				return
 
-			//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
+			//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benefit from it
 			if(!directly_use_energy(ROUND_UP((amount / MAX_STACK_SIZE) * 0.4 * initial(active_power_usage))))
 				say("No power to dispense sheets")
 				return
@@ -401,7 +402,7 @@
 	new /obj/effect/temp_visual/mook_dust(loc)
 	var/obj/machinery/new_machine = new board.build_path(loc)
 	loc.visible_message(span_warning("[src] deploys!"))
-	playsound(src, 'sound/machines/terminal_eject.ogg', 70, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 70, TRUE)
 	new_machine.on_construction(user)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

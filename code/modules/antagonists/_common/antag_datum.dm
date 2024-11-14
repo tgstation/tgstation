@@ -63,6 +63,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hardcore_random_bonus = FALSE
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
+	/// Whether this antag datum blocks rolling new antag datums
+	var/block_midrounds = TRUE
 
 	//ANTAG UI
 
@@ -128,7 +130,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		ui = new(user, src, ui_name, name)
 		ui.open()
 
-/datum/antagonist/ui_act(action, params)
+/datum/antagonist/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -271,6 +273,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(count_against_dynamic_roll_chance && owner.current.stat != DEAD && owner.current.client)
 		owner.current.add_to_current_living_antags()
 
+	for (var/datum/atom_hud/alternate_appearance/basic/antag_hud as anything in GLOB.active_alternate_appearances)
+		antag_hud.apply_to_new_mob(owner.current)
+
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
 
 /**
@@ -328,13 +333,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(team)
 		team.remove_member(owner)
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
-
-	// Remove HUDs that they should no longer see
-	var/mob/living/current = owner.current
-	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
-		if (!antag_hud.mobShouldSee(current))
-			antag_hud.hide_from(current)
-
+	if(owner.current)
+		SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAGONIST_REMOVED, src)
 	qdel(src)
 
 /**
@@ -417,7 +417,7 @@ GLOBAL_LIST_EMPTY(antagonists)
  * Appears at start of roundend_catagory section.
  */
 /datum/antagonist/proc/roundend_report_header()
-	return "<span class='header'>The [roundend_category] were:</span><br>"
+	return span_header("The [roundend_category] were:<br>")
 
 /**
  * Proc that sends string data for the round-end report.
@@ -470,7 +470,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// result of `get_preview_icon` is expected to be the completed version.
 /datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
 	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
-	dummy.equipOutfit(outfit, visualsOnly = TRUE)
+	dummy.equipOutfit(outfit, visuals_only = TRUE)
 	dummy.wear_suit?.update_greyscale()
 	var/icon = getFlatIcon(dummy)
 
@@ -530,8 +530,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	// Add HUDs that they couldn't see before
 	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
-		if (antag_hud.mobShouldSee(owner.current))
-			antag_hud.show_to(owner.current)
+		antag_hud.apply_to_new_mob(owner.current)
 
 /// Takes a location, returns an image drawing "on" it that matches this antag datum's hud icon
 /datum/antagonist/proc/hud_image_on(mob/hud_loc)

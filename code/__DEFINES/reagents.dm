@@ -25,7 +25,7 @@
 // Reagent exposure methods.
 /// Used for splashing.
 #define TOUCH (1<<0)
-/// Used for ingesting the reagents. Food, drinks, inhaling smoke.
+/// Used for ingesting the reagents. Food and drinks.
 #define INGEST (1<<1)
 /// Used by foams, sprays, and blob attacks.
 #define VAPOR (1<<2)
@@ -35,6 +35,8 @@
 #define INJECT (1<<4)
 /// Exclusive to just plumbing. if set we use the round robin technique else we use proportional
 #define LINEAR (1<<5)
+/// Used by smoke or inhaling from a source. Smoke and cigarettes.
+#define INHALE (1<<6)
 
 /// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
 #define UPDATE_MOB_HEALTH 1
@@ -76,6 +78,10 @@
 #define CHEMICAL_MAXIMUM_TEMPERATURE 99999
 ///The default purity of all non reacted reagents
 #define REAGENT_STANDARD_PURITY 0.75
+/// Starting purity of consumable reagents
+#define CONSUMABLE_STANDARD_PURITY 0.5 // 50% pure by default. Below - synthetic food. Above - natural food.
+/// Starting purity of reagents made in biogenerator
+#define BIOGEN_REAGENT_PURITY 0.3
 /// the default temperature at which chemicals are added to reagent holders at
 #define DEFAULT_REAGENT_TEMPERATURE 300
 
@@ -123,7 +129,7 @@
 #define REACTION_COMPETITIVE (1<<5)
 ///Used to force pH changes to be constant regardless of volume
 #define REACTION_PH_VOL_CONSTANT (1<<6)
-///If a reaction will generate it's impure/inverse reagents in the middle of a reaction, as apposed to being determined on ingestion/on reaction completion
+///If a reaction will generate its impure/inverse reagents in the middle of a reaction, as apposed to being determined on ingestion/on reaction completion
 #define REACTION_REAL_TIME_SPLIT (1<<7)
 
 ///Used for overheat_temp - This sets the overheat so high it effectively has no overheat temperature.
@@ -157,7 +163,7 @@
 #define REACTION_TAG_HEALING (1<<4)
 /// This reagent primarily damages
 #define REACTION_TAG_DAMAGING (1<<5)
-/// This reagent explodes as a part of it's intended effect (i.e. not overheated/impure)
+/// This reagent explodes as a part of its intended effect (i.e. not overheated/impure)
 #define REACTION_TAG_EXPLOSIVE (1<<6)
 /// This reagent does things that are unique and special
 #define REACTION_TAG_OTHER (1<<7)

@@ -222,7 +222,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 		. = ckey(admin_key)
 	if(!.)
 		return FALSE
-	if(!admin_ckey && (. in GLOB.admin_datums+GLOB.deadmins))
+	if(!admin_ckey && (. in (GLOB.admin_datums+GLOB.deadmins)))
 		to_chat(usr, span_danger("[admin_key] is already an admin."), confidential = TRUE)
 		return FALSE
 	if(use_db)

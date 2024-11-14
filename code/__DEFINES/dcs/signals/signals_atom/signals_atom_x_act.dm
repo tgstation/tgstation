@@ -40,7 +40,7 @@
 #define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"
 ///from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
 #define COMSIG_ATOM_RCD_ACT "atom_rcd_act"
-///from base of atom/singularity_pull(): (/datum/component/singularity, current_size)
+///from base of atom/singularity_pull(): (/atom, current_size)
 #define COMSIG_ATOM_SING_PULL "atom_sing_pull"
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
@@ -89,7 +89,6 @@
 /// Sent from [atom/proc/item_interaction], when this atom is used as a tool and an event occurs
 #define COMSIG_ITEM_TOOL_ACTED "tool_item_acted"
 
-/// This is sent via item interaction (IE, item clicking on atom) right before the item's inserted into the atom's storage
-/// Args: (obj/item/inserting, mob/living/user)
-#define COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT "atom_storage_item_interact_insert"
-	#define BLOCK_STORAGE_INSERT (1<<0)
+/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
+#define COMSIG_ATOM_SABOTEUR_ACT "hit_by_saboteur"
+	#define COMSIG_SABOTEUR_SUCCESS 1

@@ -11,6 +11,12 @@
 ///The AI is currently in idle mode.
 #define AI_STATUS_IDLE "ai_idle"
 
+//Flags returned by get_able_to_run()
+///pauses AI processing
+#define AI_UNABLE_TO_RUN (1<<1)
+///bypass canceling our actions on set_ai_status()
+#define AI_PREVENT_CANCEL_ACTIONS (1<<2)
+
 ///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
 #define AI_MAX_PATH_LENGTH 30 // 30 is possibly overkill since by default we lose interest after 14 tiles of distance, but this gives wiggle room for weaving around obstacles
 #define AI_BOT_PATH_LENGTH 75
@@ -68,7 +74,7 @@
 ///macro for whether it's appropriate to resist right now, used by resist subtree
 #define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && source.pulledby.grab_state > GRAB_PASSIVE))
 ///macro for whether the pawn can act, used generally to prevent some horrifying ai disasters
-#define IS_DEAD_OR_INCAP(source) (source.incapacitated() || source.stat)
+#define IS_DEAD_OR_INCAP(source) (source.incapacitated || source.stat)
 
 GLOBAL_LIST_INIT(all_radial_directions, list(
 	"NORTH" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),

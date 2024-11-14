@@ -136,7 +136,7 @@
 	cracked = FALSE
 	has_been_sealed = TRUE
 	contents_hidden = TRUE
-	playsound(get_turf(user), 'sound/items/duct_tape_snap.ogg', 60)
+	playsound(get_turf(user), 'sound/items/duct_tape/duct_tape_snap.ogg', 60)
 	icon_state = "[sealed_icon]"
 	update_appearance()
 

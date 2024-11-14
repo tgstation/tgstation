@@ -103,7 +103,7 @@
 		var/loot_weight = loot_list[loot_type]
 		if(loot_weight <= 1)
 			if(exponent < 1)
-				loot_list[loot_type] *= precision
+				loot_list[loot_type] = precision
 			continue
 		loot_list[loot_type] = round(loot_weight ** exponent * precision, 1)
 

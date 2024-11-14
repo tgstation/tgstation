@@ -1,3 +1,5 @@
+GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
+
 /*
  * Fireaxe
  */
@@ -17,7 +19,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("attack", "chop", "cleave", "tear", "lacerate", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	armor_type = /datum/armor/item_fireaxe
 	resistance_flags = FIRE_PROOF
@@ -34,6 +36,9 @@
 
 /obj/item/fireaxe/Initialize(mapload)
 	. = ..()
+	if(!GLOB.bridge_axe && istype(get_area(src), /area/station/command))
+		GLOB.bridge_axe = src
+
 	AddComponent(/datum/component/butchering, \
 		speed = 10 SECONDS, \
 		effectiveness = 80, \
@@ -42,6 +47,11 @@
 	)
 	//axes are not known for being precision butchering tools
 	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1")
+
+/obj/item/fireaxe/Destroy()
+	if(GLOB.bridge_axe == src)
+		GLOB.bridge_axe = null
+	return ..()
 
 /obj/item/fireaxe/update_icon_state()
 	icon_state = "[base_icon_state]0"
@@ -77,13 +87,13 @@
 	icon_state = "metalh2_axe0"
 	base_icon_state = "metalh2_axe"
 	name = "metallic hydrogen axe"
-	desc = "A lightweight crowbar with an extreme sharp fire axe head attached. It trades it's hefty as a weapon by making it easier to carry around when holstered to suits without having to sacrifice your backpack."
+	desc = "A lightweight crowbar with an extreme sharp fire axe head attached. It trades its heft as a weapon by making it easier to carry around when holstered to suits without having to sacrifice your backpack."
 	force_unwielded = 5
 	force_wielded = 15
 	demolition_mod = 2
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
-	usesound = 'sound/items/crowbar.ogg'
+	usesound = 'sound/items/tools/crowbar.ogg'
 
 //boarding axe
 /obj/item/fireaxe/boardingaxe

@@ -42,7 +42,7 @@
 	attached_wire_ref = WEAKREF(locate(/obj/structure/cable) in T)
 	if(attached_wire_ref)
 		return
-	var/area/A = get_area(computer) //if the computer isn't directly connected to a wire, attempt to find the APC powering it to pull it's powernet instead
+	var/area/A = get_area(computer) //if the computer isn't directly connected to a wire, attempt to find the APC powering it to pull its powernet instead
 	if(!A)
 		return
 	var/obj/machinery/power/apc/local_apc = A.apc

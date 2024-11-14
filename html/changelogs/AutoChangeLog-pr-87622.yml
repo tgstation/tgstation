@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - bugfix: "vampires are a human subtype & have stomachs/lungs"

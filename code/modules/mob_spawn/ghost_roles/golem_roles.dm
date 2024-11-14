@@ -78,7 +78,7 @@
 	if(!ishuman(new_spawn))
 		return
 	var/mob/living/carbon/human/new_golem = new_spawn
-	var/obj/item/organ/internal/vocal_cords/adamantine/free_golem_radio = new()
+	var/obj/item/organ/vocal_cords/adamantine/free_golem_radio = new()
 	free_golem_radio.Insert(new_golem)
 
 // Subtype which follows orders

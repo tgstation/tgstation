@@ -247,7 +247,7 @@
 	armour_penetration = 20
 	attack_verb_continuous = "steals the girlfriend of"
 	attack_verb_simple = "steal the girlfriend of"
-	attack_sound = 'sound/items/airhorn2.ogg'
+	attack_sound = 'sound/items/airhorn/airhorn2.ogg'
 	loot = list(
 		/obj/effect/gibspawner/human,
 		/obj/effect/spawner/foam_starter/small,
@@ -478,7 +478,6 @@
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "regurgitate"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = TRUE
 
 /datum/action/cooldown/regurgitate/set_click_ability(mob/on_who)
@@ -584,7 +583,7 @@
 	var/peels_to_spawn = min(peel_amount, reachable_turfs.len)
 	for(var/i in 1 to peels_to_spawn)
 		new banana_type(pick_n_take(reachable_turfs))
-	playsound(owner, 'sound/creatures/clown/clownana_rustle.ogg', 60)
+	playsound(owner, 'sound/mobs/non-humanoids/clown/clownana_rustle.ogg', 60)
 	animate(owner, time = 1, pixel_x = 6, easing = CUBIC_EASING | EASE_OUT)
 	animate(time = 2, pixel_x = -8, easing = CUBIC_EASING)
 	animate(time = 1, pixel_x = 0, easing = CUBIC_EASING | EASE_IN)
@@ -615,7 +614,7 @@
 	if(!do_after(owner, 1 SECONDS))
 		activating = FALSE
 		return
-	playsound(owner, 'sound/creatures/clown/hehe.ogg', 100)
+	playsound(owner, 'sound/mobs/non-humanoids/clown/hehe.ogg', 100)
 	if(!do_after(owner, 1 SECONDS))
 		activating = FALSE
 		return
@@ -626,5 +625,5 @@
 	. = ..()
 	new /obj/item/food/grown/banana/bunch(get_step(owner.loc, owner.dir))
 	playsound(owner, 'sound/items/bikehorn.ogg', 60)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), owner, 'sound/creatures/clown/hohoho.ogg', 100, 1), 1 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), owner, 'sound/mobs/non-humanoids/clown/hohoho.ogg', 100, 1), 1 SECONDS)
 	StartCooldown()

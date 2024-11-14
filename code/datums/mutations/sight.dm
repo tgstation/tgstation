@@ -110,7 +110,7 @@
 ///X-ray Vision lets you see through walls.
 /datum/mutation/human/xray
 	name = "X Ray Vision"
-	desc = "A strange genome that allows the user to see between the spaces of walls." //actual x-ray would mean you'd constantly be blasting rads, wich might be fun for later //hmb
+	desc = "A strange genome that allows the user to see between the spaces of walls." //actual x-ray would mean you'd constantly be blasting rads, which might be fun for later //hmb
 	text_gain_indication = span_notice("The walls suddenly disappear!")
 	instability = POSITIVE_INSTABILITY_MAJOR
 	locked = TRUE
@@ -167,13 +167,13 @@
 		return
 	to_chat(source, span_warning("You shoot with your laser eyes!"))
 	source.changeNext_move(CLICK_CD_RANGE)
-	source.newtonian_move(get_dir(target, source))
+	source.newtonian_move(get_angle(source, target))
 	var/obj/projectile/beam/laser/laser_eyes/LE = new(source.loc)
 	LE.firer = source
 	LE.def_zone = ran_zone(source.zone_selected)
 	LE.preparePixelProjectile(target, source, modifiers)
 	INVOKE_ASYNC(LE, TYPE_PROC_REF(/obj/projectile, fire))
-	playsound(source, 'sound/weapons/taser2.ogg', 75, TRUE)
+	playsound(source, 'sound/items/weapons/taser2.ogg', 75, TRUE)
 
 ///Projectile type used by laser eyes
 /obj/projectile/beam/laser/laser_eyes

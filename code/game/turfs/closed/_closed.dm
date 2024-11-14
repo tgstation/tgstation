@@ -15,3 +15,6 @@
 
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
+
+/turf/closed/examine_descriptor(mob/user)
+	return "wall"

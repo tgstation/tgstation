@@ -115,7 +115,7 @@
 /area/shuttle/escape/brig)
 "gW" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "hd" = (

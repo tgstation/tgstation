@@ -76,7 +76,7 @@
 	. = ..()
 	if(!allowed(user))
 		to_chat(user, span_alert("Error - Unauthorized User."))
-		playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/compiler/compiler-failure.ogg', 50, TRUE)
 		return
 
 /obj/machinery/portable_atmospherics/canister/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -397,7 +397,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/portable_atmospherics/canister/welder_act_secondary(mob/living/user, obj/item/I)
-	if(!I.tool_start_check(user, amount=1))
+	if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return ITEM_INTERACT_BLOCKING
 
 	var/pressure = air_contents.return_pressure()
@@ -566,7 +566,7 @@
 		"cellCharge" = internal_cell ? internal_cell.percent() : 0
 	)
 
-/obj/machinery/portable_atmospherics/canister/ui_act(action, params)
+/obj/machinery/portable_atmospherics/canister/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -599,14 +599,14 @@
 				pressure = CAN_MAX_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "input")
-				pressure = tgui_input_number(usr, "New release pressure", "Canister Pressure", release_pressure, CAN_MAX_RELEASE_PRESSURE, CAN_MIN_RELEASE_PRESSURE)
+				pressure = tgui_input_number(usr, message = "New release pressure", title = "Canister Pressure", default = release_pressure, max_value = CAN_MAX_RELEASE_PRESSURE, min_value = CAN_MIN_RELEASE_PRESSURE, round_value = FALSE)
 				if(!isnull(pressure))
 					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				release_pressure = clamp(round(pressure), CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
+				release_pressure = clamp(pressure, CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 
 		if("valve")

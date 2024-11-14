@@ -67,7 +67,9 @@ SUBSYSTEM_DEF(dynamic)
 	var/list/executed_rules = list()
 	/// If TRUE, the next player to latejoin will guarantee roll for a random latejoin antag
 	/// (this does not guarantee they get said antag roll, depending on preferences and circumstances)
-	var/forced_injection = FALSE
+	var/late_forced_injection = FALSE
+	/// If TRUE, a midround ruleset will be rolled
+	var/mid_forced_injection = FALSE
 	/// Forced ruleset to be executed for the next latejoin.
 	var/datum/dynamic_ruleset/latejoin/forced_latejoin_rule = null
 	/// How many percent of the rounds are more peaceful.
@@ -140,10 +142,10 @@ SUBSYSTEM_DEF(dynamic)
 	/// The maximum amount of time for antag random events to be hijacked.
 	var/random_event_hijack_maximum = 18 MINUTES
 
-	/// What is the lower bound of when the roundstart annoucement is sent out?
+	/// What is the lower bound of when the roundstart announcement is sent out?
 	var/waittime_l = 600
 
-	/// What is the higher bound of when the roundstart annoucement is sent out?
+	/// What is the higher bound of when the roundstart announcement is sent out?
 	var/waittime_h = 1800
 
 	/// A number between 0 and 100. The maximum amount of threat allowed to generate.
@@ -258,10 +260,10 @@ SUBSYSTEM_DEF(dynamic)
 			spend_midround_budget(-threatadd, threat_log, "[worldtime2text()]: decreased by [key_name(usr)]")
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
-		forced_injection = TRUE
+		late_forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a latejoin injection.")
 	else if (href_list["injectmid"])
-		forced_injection = TRUE
+		mid_forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a midround injection.")
 		try_midround_roll()
 	else if (href_list["threatlog"])
@@ -526,7 +528,7 @@ SUBSYSTEM_DEF(dynamic)
 	//To new_player and such, and we want the datums to just free when the roundstart work is done
 	var/list/roundstart_rules = init_rulesets(/datum/dynamic_ruleset/roundstart)
 
-	SSjob.DivideOccupations(pure = TRUE, allow_all = TRUE)
+	SSjob.divide_occupations(pure = TRUE, allow_all = TRUE)
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && player.check_preferences())
@@ -541,7 +543,7 @@ SUBSYSTEM_DEF(dynamic)
 			else
 				roundstart_pop_ready++
 				candidates.Add(player)
-	SSjob.ResetOccupations()
+	SSjob.reset_occupations()
 	log_dynamic("Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if (candidates.len <= 0)
 		log_dynamic("[candidates.len] candidates.")
@@ -873,14 +875,14 @@ SUBSYSTEM_DEF(dynamic)
 		forced_latejoin_rule = null
 		return
 
-	if(!forced_injection)
+	if(!late_forced_injection)
 		if(latejoin_injection_cooldown >= world.time)
 			return
 		if(!prob(latejoin_roll_chance))
 			return
 
-	var/was_forced = forced_injection
-	forced_injection = FALSE
+	var/was_forced = late_forced_injection
+	late_forced_injection = FALSE
 	var/list/possible_latejoin_rules = list()
 	for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
 		if(!rule.weight)
@@ -999,7 +1001,7 @@ SUBSYSTEM_DEF(dynamic)
 #define MAXIMUM_DYN_DISTANCE 5
 
 /**
- * Returns the comulative distribution of threat centre and width, and a random location of -0.5 to 0.5
+ * Returns the comulative distribution of threat centre and width, and a random location of -5 to 5
  * plus or minus the otherwise unattainable lower and upper percentiles. All multiplied by the maximum
  * threat and then rounded to the nearest interval.
  * rand() calls without arguments returns a value between 0 and 1, allowing for smaller intervals.
@@ -1018,7 +1020,7 @@ SUBSYSTEM_DEF(dynamic)
 	var/list/reopened_jobs = list()
 
 	for(var/mob/living/quitter in GLOB.suicided_mob_list)
-		var/datum/job/job = SSjob.GetJob(quitter.job)
+		var/datum/job/job = SSjob.get_job(quitter.job)
 		if(!job || !(job.job_flags & JOB_REOPEN_ON_ROUNDSTART_LOSS))
 			continue
 		if(!include_command && job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)

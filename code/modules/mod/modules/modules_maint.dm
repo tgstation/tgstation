@@ -11,30 +11,52 @@
 	complexity = 3 // it is inside every part of your suit, so
 	incompatible_modules = list(/obj/item/mod/module/springlock)
 	var/set_off = FALSE
+	var/static/list/gas_connections = list(
+		COMSIG_TURF_EXPOSE = PROC_REF(on_wearer_exposed_gas),
+	)
+	var/step_change = 0.5
 
 /obj/item/mod/module/springlock/on_install()
-	mod.activation_step_time *= 0.5
+	mod.activation_step_time *= step_change
 
 /obj/item/mod/module/springlock/on_uninstall(deleting = FALSE)
-	mod.activation_step_time *= 2
+	mod.activation_step_time /= step_change
 
-/obj/item/mod/module/springlock/on_suit_activation()
+/obj/item/mod/module/springlock/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_wearer_exposed))
+	AddComponent(/datum/component/connect_loc_behalf, mod.wearer, gas_connections)
 
-/obj/item/mod/module/springlock/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/springlock/on_part_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
-///Signal fired when wearer is exposed to reagents
-/obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message)
-	SIGNAL_HANDLER
-
-	if(!(methods & (VAPOR|PATCH|TOUCH)) || set_off || mod.wearer.stat == DEAD)
-		return //remove non-touch reagent exposure
+///Registers the signal COMSIG_MOD_ACTIVATE and calls the proc snap_shut() after a timer
+/obj/item/mod/module/springlock/proc/snap_signal()
+	if(set_off || mod.wearer.stat == DEAD)
+		return
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
 	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(snap_shut)), rand(3 SECONDS, 5 SECONDS))
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_spring_block))
 	set_off = TRUE
+
+///Calls snap_signal() when exposed to a reagent via VAPOR, PATCH or TOUCH
+/obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message)
+	SIGNAL_HANDLER
+
+	if(!(methods & (VAPOR|PATCH|TOUCH)))
+		return //remove non-touch reagent exposure
+	snap_signal()
+
+///Calls snap_signal() when exposed to water vapor
+/obj/item/mod/module/springlock/proc/on_wearer_exposed_gas()
+	SIGNAL_HANDLER
+
+	var/turf/wearer_turf = get_turf(src)
+	var/datum/gas_mixture/air = wearer_turf.return_air()
+	if(!(air.gases[/datum/gas/water_vapor] && (air.gases[/datum/gas/water_vapor][MOLES]) >= 5))
+		return //return if there aren't more than 5 Moles of Water Vapor in the air
+	snap_signal()
 
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
@@ -107,7 +129,7 @@
 	QDEL_NULL(music_player)
 	if(deleting)
 		return
-	SEND_SOUND(mod.wearer, sound('sound/machines/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
+	SEND_SOUND(mod.wearer, sound('sound/machines/terminal/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
 
 /obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
 	. = ..()
@@ -261,7 +283,6 @@
 	complexity = 2
 	active_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/magboot, /obj/item/mod/module/anomaly_locked/antigrav)
-	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_atrocinator"
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// How many steps the user has taken since turning the suit on, used for footsteps.
@@ -270,12 +291,12 @@
 	var/you_fucked_up = FALSE
 
 /obj/item/mod/module/atrocinator/on_activation()
-	playsound(src, 'sound/effects/curseattack.ogg', 50)
+	playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
-	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
-	passtable_on(mod.wearer, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
+	passtable_on(mod.wearer, REF(src))
 	check_upstairs() //todo at some point flip your screen around
 
 /obj/item/mod/module/atrocinator/deactivate(display_message = TRUE, deleting = FALSE)
@@ -286,13 +307,13 @@
 
 /obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!deleting)
-		playsound(src, 'sound/effects/curseattack.ogg', 50)
+		playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
 	step_count = 0
-	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
-	passtable_off(mod.wearer, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
+	passtable_off(mod.wearer, REF(src))
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
 	if(istype(current_turf))
 		current_turf.zFall(mod.wearer, falling_from_move = TRUE)

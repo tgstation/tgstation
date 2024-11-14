@@ -12,7 +12,7 @@
 	item = /obj/item/soap/syndie
 	cost = 1
 	surplus = 50
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Duffel Bag"
@@ -111,7 +111,7 @@
 	item = /obj/item/disk/nuclear/fake
 	cost = 1
 	surplus = 1
-	illegal_tech = FALSE
+	uplink_item_flags = NONE
 
 /datum/uplink_item/device_tools/frame
 	name = "F.R.A.M.E. disk"
@@ -163,7 +163,7 @@
 			multitool and combat gloves that are resistant to shocks and heat."
 	item = /obj/item/storage/toolbox/syndicate
 	cost = 1
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
@@ -242,9 +242,9 @@
 			active gravitational singularities or tesla balls towards it. This will not work when the engine is still \
 			in containment. Because of its size, it cannot be carried. Ordering this \
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
-	progression_minimum = 30 MINUTES
+	progression_minimum = 20 MINUTES
 	item = /obj/item/sbeacondrop
-	cost = 10
+	cost = 4
 	surplus = 0 // not while there isnt one on any station
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 

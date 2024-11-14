@@ -1,6 +1,6 @@
 // Grass
 /obj/item/seeds/grass
-	name = "pack of grass seeds"
+	name = "grass seed pack"
 	desc = "These seeds grow into grass. Yummy!"
 	icon_state = "seed-grass"
 	species = "grass"
@@ -42,7 +42,7 @@
 
 //Fairygrass
 /obj/item/seeds/grass/fairy
-	name = "pack of fairygrass seeds"
+	name = "fairygrass seed pack"
 	desc = "These seeds grow into a more mystical grass."
 	icon_state = "seed-fairygrass"
 	species = "fairygrass"
@@ -65,7 +65,7 @@
 
 // Carpet
 /obj/item/seeds/grass/carpet
-	name = "pack of carpet seeds"
+	name = "carpet seed pack"
 	desc = "These seeds grow into stylish carpet samples."
 	icon_state = "seed-carpet"
 	species = "carpet"

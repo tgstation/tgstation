@@ -20,7 +20,7 @@
 	help_text,
 	)
 
-	if(!isliving(parent) || !isliving(old_body) || !server.is_operational || !pod.is_operational)
+	if(!isliving(parent) || !isliving(old_body) || !old_mind || !server.is_operational || !pod.is_operational)
 		return COMPONENT_INCOMPATIBLE
 
 	var/mob/living/avatar = parent
@@ -64,9 +64,14 @@
 	var/alias = our_client?.prefs?.read_preference(/datum/preference/name/hacker_alias) || pick(GLOB.hacker_aliases)
 
 	if(alias && avatar.real_name != alias)
-		avatar.fully_replace_character_name(avatar.real_name, alias)
+		avatar.fully_replace_character_name(newname = alias)
 
-	avatar.playsound_local(avatar, 'sound/magic/blink.ogg', 25, TRUE)
+	update_avatar_id()
+
+	for(var/skill_type in old_mind.known_skills)
+		avatar.mind.set_experience(skill_type, old_mind.get_skill_exp(skill_type), silent = TRUE)
+
+	avatar.playsound_local(avatar, 'sound/effects/magic/blink.ogg', 25, TRUE)
 	avatar.set_static_vision(2 SECONDS)
 	avatar.set_temp_blindness(1 SECONDS) // I'm in
 
@@ -92,7 +97,7 @@
 	 */
 	RegisterSignals(parent, list(COMSIG_BITRUNNER_ALERT_SEVER, COMSIG_BITRUNNER_CACHE_SEVER, COMSIG_BITRUNNER_LADDER_SEVER), PROC_REF(on_safe_disconnect))
 	RegisterSignal(parent, COMSIG_LIVING_PILL_CONSUMED, PROC_REF(disconnect_if_red_pill))
-	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection))
+	RegisterSignals(parent, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_sever_connection))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
 
 
@@ -106,6 +111,20 @@
 		COMSIG_LIVING_PILL_CONSUMED,
 		COMSIG_MOB_APPLY_DAMAGE,
 	))
+
+
+/// Updates our avatar's ID to match our avatar's name.
+/datum/component/avatar_connection/proc/update_avatar_id()
+	var/mob/living/avatar = parent
+	var/obj/item/card/id/our_id = locate() in avatar.get_all_contents()
+	if(isnull(our_id))
+		return
+
+	our_id.registered_name = avatar.real_name
+	our_id.update_label()
+	our_id.update_icon()
+	if(our_id.registered_account)
+		our_id.registered_account.account_holder = avatar.real_name
 
 
 /// Disconnects the avatar and returns the mind to the old_body.
@@ -131,7 +150,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.playsound_local(avatar, 'sound/machines/terminal_success.ogg', 50, vary = TRUE)
+	avatar.playsound_local(avatar, 'sound/machines/terminal/terminal_success.ogg', 50, vary = TRUE)
 	avatar.throw_alert(
 		ALERT_BITRUNNER_COMPLETED,
 		/atom/movable/screen/alert/bitrunning/qserver_domain_complete,
@@ -176,7 +195,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, vary = TRUE)
+	avatar.playsound_local(avatar, 'sound/machines/terminal/terminal_alert.ogg', 50, vary = TRUE)
 	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_CROWBAR,
 		/atom/movable/screen/alert/bitrunning,
@@ -226,7 +245,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, vary = TRUE)
+	avatar.playsound_local(avatar, 'sound/machines/terminal/terminal_alert.ogg', 50, vary = TRUE)
 	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_SHUTDOWN,
 		/atom/movable/screen/alert/bitrunning,
@@ -241,7 +260,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, vary = TRUE)
+	avatar.playsound_local(avatar, 'sound/machines/terminal/terminal_alert.ogg', 50, vary = TRUE)
 	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_BREACH,
 		/atom/movable/screen/alert/bitrunning,
@@ -280,6 +299,10 @@
 
 	if(isnull(old_mind) || isnull(old_body))
 		return
+
+	for(var/skill_type in avatar.mind.known_skills)
+		old_mind.set_experience(skill_type, avatar.mind.get_skill_exp(skill_type), silent = TRUE)
+		avatar.mind.set_experience(skill_type, 0, silent = TRUE)
 
 	ghost.mind = old_mind
 	if(old_body.stat != DEAD)

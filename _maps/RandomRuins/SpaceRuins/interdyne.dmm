@@ -140,7 +140,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "fS" = (
-/obj/machinery/vending/medical/syndicate_access,
+/obj/machinery/vending/medical/syndicate,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "ga" = (

@@ -97,8 +97,8 @@
 	RegisterSignal(parent, COMSIG_ITEM_UI_ACTION_CLICK, PROC_REF(on_action_click))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_SABOTEUR_ACT, PROC_REF(on_hit_by_saboteur))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_deleted))
-	RegisterSignal(parent, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /datum/component/seclite_attachable/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -110,6 +110,7 @@
 		COMSIG_ITEM_UI_ACTION_CLICK,
 		COMSIG_ATOM_ATTACKBY,
 		COMSIG_ATOM_EXAMINE,
+		COMSIG_ATOM_SABOTEUR_ACT,
 		COMSIG_QDELETING,
 	))
 
@@ -296,8 +297,8 @@
 		// but that's the downside of using icon states over overlays.
 		source.icon_state = base_state
 
-/// Signal proc for [COMSIG_HIT_BY_SABOTEUR] that turns the light off for a few seconds.
-/datum/component/seclite_attachable/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+//turns the light off for a few seconds.
+/datum/component/seclite_attachable/proc/on_hit_by_saboteur(datum/source, disrupt_duration)
 	. = light.on_saboteur(source, disrupt_duration)
 	update_light()
+	return .
