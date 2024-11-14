@@ -346,7 +346,7 @@
 "ry" = (
 /obj/machinery/mecha_part_fabricator/maint{
 	name = "forgotten exosuit fabricator";
-	dir = 8
+	drop_direction = 8
 	},
 /obj/machinery/conveyor{
 	dir = 8;

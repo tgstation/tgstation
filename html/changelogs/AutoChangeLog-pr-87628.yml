@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - code_imp: "Cleaned up projectile and projectile-adjacent code."
-  - bugfix: "Fixed a couple of projectile runtimes and visuals/sound-related issues"

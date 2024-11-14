@@ -5,10 +5,12 @@
 #define COMSIG_MOD_DEPLOYED "mod_deployed"
 /// Called when a MOD user retracts one or more of its parts.
 #define COMSIG_MOD_RETRACTED "mod_retracted"
-/// Called when a MOD deploys a part.
+/// Called when a MOD deploys a part. (mob/user, datum/mod_part/part)
 #define COMSIG_MOD_PART_DEPLOYED "mod_part_deployed"
-/// Called when a MOD retracts a part.
+/// Called when a MOD retracts a part. (mob/user, datum/mod_part/part)
 #define COMSIG_MOD_PART_RETRACTED "mod_part_retracted"
+/// Called when a MOD seals/unseals a part. (datum/mod_part/part)
+#define COMSIG_MOD_PART_SEALED "mod_part_sealed"
 /// Called when a MOD is finished toggling itself.
 #define COMSIG_MOD_TOGGLED "mod_toggled"
 /// Called when a MOD activation is called from toggle_activate(mob/user)

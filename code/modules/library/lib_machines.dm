@@ -441,10 +441,12 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			var/id = params["book_id"]
 			inventory -= id
 			inventory_update()
+			update_static_data_for_all_viewers()
 			return TRUE
 		if("switch_inventory_page")
 			inventory_page = sanitize_page_input(params["page"], inventory_page, inventory_page_count)
 			inventory_update()
+			update_static_data_for_all_viewers()
 			return TRUE
 		if("checkout")
 			var/list/available = list()

@@ -164,6 +164,13 @@
 	 */
 	var/bites_amount = 0
 
+	/**
+	 * An identifier for this fish used to track progress for fish caught between rounds in
+	 * a way that's resilient to repathing (and removing paths). Only catchable fish need it.
+	 * Once set, the value shouldn't be changed, so don't make typos.
+	 */
+	var/fish_id
+
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	base_icon_state = icon_state
@@ -205,7 +212,7 @@
 	if(src == held_item)
 		context[SCREENTIP_CONTEXT_LMB] = "Pet"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(held_item, /obj/item/fish_feed))
+	if(istype(held_item, /obj/item/reagent_containers/cup/fish_feed))
 		context[SCREENTIP_CONTEXT_LMB] = "Feed"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(istype(held_item, /obj/item/fish_analyzer))
@@ -220,7 +227,7 @@
 		balloon_alert(user, "it's stuck to your hand!")
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "releasing fish...")
-	if(!do_after(src, 3 SECONDS, interacting_with))
+	if(!do_after(user, 3 SECONDS, interacting_with))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "fish released")
 	var/goodbye_text = "Bye bye [name]."
@@ -412,7 +419,7 @@
 	return ..()
 
 /obj/item/fish/attackby(obj/item/item, mob/living/user, params)
-	if(!istype(item, /obj/item/fish_feed))
+	if(!istype(item, /obj/item/reagent_containers/cup/fish_feed))
 		return ..()
 	if(!item.reagents.total_volume)
 		balloon_alert(user, "[item.name] is empty!")
@@ -824,9 +831,11 @@
 	if(isaquarium(loc))
 		var/obj/structure/aquarium/aquarium = loc
 		if(!aquarium.reproduction_and_growth)
+			last_feeding = world.time
 			return
 	var/hunger = get_hunger()
 	if(hunger < 0.05) //don't bother growing for very small amounts.
+		last_feeding = world.time
 		return
 	last_feeding = world.time
 	var/new_size = size
@@ -1147,7 +1156,7 @@
 		var/list/available_fishes = list()
 		var/types_to_mate_with = aquarium.tracked_fish_by_type
 		if(!HAS_TRAIT(src, TRAIT_FISH_CROSSBREEDER))
-			var/list/types_to_check = list(src)
+			var/list/types_to_check = list(type)
 			if(compatible_types)
 				types_to_check |= compatible_types
 			types_to_mate_with = types_to_mate_with & types_to_check
@@ -1334,13 +1343,34 @@
 		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN)
 	tesla_zap(source = get_turf(src), zap_range = fish_zap_range, power = fish_zap_power, cutoff = 1 MEGA JOULES, zap_flags = fish_zap_flags)
 
+///The multiplier of the factor of size and weight of the fish, used to determinate the raw price before exponentation
+#define FISH_PRICE_MULTIPLIER 0.01
+///This makes each additional unit of fish weight and size yields diminishing marginal returns.
+#define FISH_PRICE_CURVE_EXPONENT 0.85
+/**
+ * past this threshold, the price of fish will plateu even faster.
+ * This stops particularly huge fish from being an overly efficient way to make money
+ * that bypasses price elasticity by selling fewer units.
+ */
+#define FISH_PRICE_SOFT_CAP_THRESHOLD 6000
+///The second exponent used for soft-capping the fish price.
+#define FISH_PRICE_SOFT_CAP_EXPONENT 0.86
+
 ///Returns the price of this fish, for the fish export.
-/obj/item/fish/proc/get_export_price(price, percent)
-	var/size_weight_exponentation = (size * weight * 0.01)^0.85
-	var/calculated_price = price + size_weight_exponentation * percent
+/obj/item/fish/proc/get_export_price(price, elasticity_percent)
+	var/size_weight_exponentation = (size * weight * FISH_PRICE_MULTIPLIER)^FISH_PRICE_CURVE_EXPONENT
+	var/raw_price = price + size_weight_exponentation
+	if(raw_price >= FISH_PRICE_SOFT_CAP_THRESHOLD + 1)
+		var/soft_cap = (raw_price - FISH_PRICE_SOFT_CAP_THRESHOLD)^FISH_PRICE_SOFT_CAP_EXPONENT
+		raw_price = FISH_PRICE_SOFT_CAP_THRESHOLD + soft_cap
 	if(HAS_TRAIT(src, TRAIT_FISH_FROM_CASE)) //Avoid printing money by simply ordering fish and sending it back.
-		calculated_price *= 0.05
-	return round(calculated_price)
+		raw_price *= 0.05
+	return raw_price * elasticity_percent
+
+#undef FISH_PRICE_MULTIPLIER
+#undef FISH_PRICE_CURVE_EXPONENT
+#undef FISH_PRICE_SOFT_CAP_THRESHOLD
+#undef FISH_PRICE_SOFT_CAP_EXPONENT
 
 /obj/item/fish/proc/get_happiness_value()
 	var/happiness_value = 0
