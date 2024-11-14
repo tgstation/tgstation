@@ -7,7 +7,7 @@
 	var/desc
 	/// A string with authors of this modpack.
 	var/author
-	/// A string with group of this modpack. Choose between "Features", "Perevody" and "Reverts"
+	/// A string with group of this modpack. Choose between "Features", "Translations" and "Reverts"
 	var/group
 	/// A list of your modpack's dependencies. If you use obj from another modpack - put it here.
 	var/list/mod_depends = list()
@@ -51,9 +51,9 @@
 
 /datum/modpack/ui_static_data(mob/user)
 	. = ..()
-	.["categories"] = list("Features", "Perevody", "Reverts")
+	.["categories"] = list("Features", "Translations", "Reverts")
 	.["features"] = list()
-	.["perevody"] = list()
+	.["translations"] = list()
 	.["reverts"] = list()
 	
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
@@ -66,8 +66,8 @@
 			)
 		if (modpack.group == "Фичи" || modpack.group == "Features")
 			.["features"] += list(modpack_data)
-		else if (modpack.group == "Переводы" || modpack.group == "Perevody")
-			.["perevody"] += list(modpack_data)
+		else if (modpack.group == "Переводы" || modpack.group == "Translations")
+			.["translations"] += list(modpack_data)
 		else if (modpack.group == "Баланс" || modpack.group == "Reverts")
 			.["reverts"] += list(modpack_data)
 		else
