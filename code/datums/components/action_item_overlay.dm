@@ -74,6 +74,7 @@
 	muse_appearance.layer = FLOAT_LAYER
 	muse_appearance.pixel_x = 0
 	muse_appearance.pixel_y = 0
+	muse_appearance.clear_filters()
 
 	current_button.add_overlay(muse_appearance)
 	item_appearance = muse_appearance
