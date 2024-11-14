@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "A bitrunner avatar spawning with the exact same name as a name currently on the records no longer updates that record to match when the hacker alias gets applied."
+  - qol: "Net avatar ID cards use the net avatar's name instead of being generic."
