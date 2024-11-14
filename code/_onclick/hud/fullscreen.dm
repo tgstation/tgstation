@@ -162,7 +162,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
 	layer = LIGHTING_ABOVE_ALL + 1 //Infinity plus one (not actually)
 	blend_mode = BLEND_MULTIPLY
 
-/atom/movable/screen/fullscreen/high/New(...)
+/atom/movable/screen/fullscreen/high/Initialize(mapload)
 
 	. = ..()
 
