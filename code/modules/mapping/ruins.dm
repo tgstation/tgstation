@@ -111,7 +111,7 @@
 		if(R.cost > budget || R.mineral_cost > mineral_budget) //Why would you do that
 			continue
 		if(R.always_place)
-			forced_ruins[R] = -1
+			forced_ruins[R] = -R.placement_weight //how many times we have to spawn it
 		if(R.unpickable)
 			continue
 		ruins_available[R] = R.placement_weight
@@ -164,7 +164,9 @@
 		//That's done remove from priority even if it failed
 		if(forced)
 			//TODO : handle forced ruins with multiple variants
-			forced_ruins -= current_pick
+			forced_ruins[current_pick]++
+			if(forced_ruins[current_pick] >= 0)
+				forced_ruins -= current_pick
 			forced = FALSE
 
 		if(failed_to_place)

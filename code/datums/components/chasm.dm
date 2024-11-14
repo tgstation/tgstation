@@ -33,6 +33,7 @@
 		/obj/structure/lattice,
 		/obj/structure/stone_tile,
 		/obj/structure/ore_vent,
+		/obj/structure/liquid_plasma_geyser,
 	))
 
 /datum/component/chasm/Initialize(turf/target, mapload)

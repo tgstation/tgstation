@@ -10,13 +10,13 @@
 	var/unpickable = FALSE
 	///Will skip the whole weighting process and just plop this down, ideally you want the ruins of this kind to have no cost.
 	var/always_place = FALSE
-	///How often should this ruin appear
+	///How often should this ruin appear. If 'always_place' is set to TRUE, this is how many times it will be forced to spawn in.
 	var/placement_weight = 1
 	///Cost in ruin budget placement system
 	var/cost = 0
 	/// Cost in the ruin budget placement system associated with mineral spawning. We use a different budget for mineral sources like ore vents. For practical use see seedRuins
 	var/mineral_cost = 0
-	/// If TRUE, this ruin can be placed multiple times in the same map
+	/// If TRUE, ruins with the same ID as this one can't be spawned in on the same map, including itself.
 	var/allow_duplicates = TRUE
 	///These ruin types will be spawned along with it (where dependent on the flag) eg list(/datum/map_template/ruin/space/teleporter_space = SPACERUIN_Z)
 	var/list/always_spawn_with = null

@@ -141,6 +141,15 @@
 	always_place = TRUE
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/lavaland/geyser
+	name = "Plasma Geyser"
+	id = "geyser"
+	description = "A special geyser spitting toxic fumes used in liquid plasma extraction."
+	suffix = "lavaland_surface_geyser.dmm"
+	always_place = TRUE
+	placement_weight = 3
+	allow_duplicates = FALSE //only 3 per map, all that's needed.
+
 /datum/map_template/ruin/lavaland/blood_drunk_miner
 	name = "Lava-Ruin Blood-Drunk Miner"
 	id = "blooddrunk"
