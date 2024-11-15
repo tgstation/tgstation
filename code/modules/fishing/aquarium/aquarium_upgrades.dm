@@ -18,7 +18,7 @@
 		interacting_with.balloon_alert(user, "wrong kind of aquarium!")
 		return ITEM_INTERACT_BLOCKING
 	interacting_with.balloon_alert(user, "upgrading...")
-	if(!do_after(user, 5 SECONDS, interacting_with))
+	if(!PERFORM_ALL_TESTS(aquarium_upgrade) && !do_after(user, 5 SECONDS, interacting_with))
 		return ITEM_INTERACT_BLOCKING
 	var/atom/movable/upgraded_aquarium = new upgrade_to_type(interacting_with.drop_location())
 	//This should transfer all the fish, reagents and settings from the aquarium component

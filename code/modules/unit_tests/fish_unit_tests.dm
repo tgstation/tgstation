@@ -486,5 +486,36 @@
 	for(var/obj/item/fish/fish as anything in box)
 		fish.randomize_size_and_weight()
 
+/datum/unit_test/aquarium_upgrade
+
+/datum/unit_test/aquarium_upgrade/Run()
+	var/mob/living/carbon/dummy/user = allocate(__IMPLIED_TYPE__)
+	var/obj/item/aquarium_upgrade/bioelec_gen/upgrade = allocate(__IMPLIED_TYPE__)
+	var/obj/structure/aquarium/aquarium = allocate(upgrade::upgrade_from_type)
+
+	var/datum/component/aquarium/comp = aquarium.GetComponent(__IMPLIED_TYPE__)
+	TEST_ASSERT(comp, "[aquarium.type] doesn't have an aquarium component")
+	comp.set_fluid_type(AQUARIUM_FLUID_AIR)
+	comp.fluid_temp = MAX_AQUARIUM_TEMP
+	movable.add_traits(list(TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), REF(comp))
+
+	var/type_to_check = upgrade::upgrade_to_type
+	var/turf/aquarium_loc = aquarium.loc
+	user.put_in_hands(upgrade)
+	upgrade.melee_attack_chain(user, aquarium)
+	TEST_ASSERT(QDELETED(aquarium), "Old [aquarium.type] was not deleted after upgrade")
+
+	var/obj/structure/aquarium/upgraded_aquarium = locate(type_to_check) in aquarium_loc)
+	TEST_ASSERT(upgraded_aquarium, "New [aquarium.type] was not spawned after upgrade")
+	comp = upgraded_aquarium.GetComponent(__IMPLIED_TYPE__)
+	TEST_ASSERT(comp, "New [aquarium.type] doesn't have an aquarium component")
+
+	TEST_ASSERT_EQUAL(comp.fluid_type, AQUARIUM_FLUID_AIR, "Inherited aquarium fluid type should be [AQUARIUM_FLUID_AIR]")
+	TEST_ASSERT_EQUAL(comp.fluid_temp, MAX_AQUARIUM_TEMP, "Inherited aquarium fluid temperature should be [MAX_AQUARIUM_TEMP]")
+	TEST_ASSERT(HAS_TRAIT(upgraded_aquarium, TRAIT_AQUARIUM_PANEL_OPEN), "The new aquarium should have its panel open")
+	TEST_ASSERT(HAS_TRAIT(upgraded_aquarium, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), "The 'growth and reproduction' setting for this aquarium should be disabled")
+
+	TEST_ASSERT(QDELETED(upgrade), "Aquarium upgrade ws not deleted afterward")
+
 #undef FISH_REAGENT_AMOUNT
 #undef TRAIT_FISH_TESTING

@@ -158,7 +158,7 @@
 	if(HAS_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN))
 		ADD_TRAIT(new_parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(src))
 	if(HAS_TRAIT_FROM(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src)))
-		ADD_TRAIT(new_parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(src))
+		ADD_TRAIT(new_parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src))
 	var/atom/movable/movable = parent
 	for(var/atom/movable/moving as anything in movable.contents)
 		if(HAS_TRAIT(moving, TRAIT_AQUARIUM_CONTENT))
@@ -175,6 +175,12 @@
 /datum/component/aquarium/InheritComponent(datum/component/aquarium/new_comp, i_am_original)
 	fluid_temp = clamp(new_comp.fluid_temp, min_fluid_temp, max_fluid_temp)
 	set_fluid_type(new_comp.fluid_type)
+	if(HAS_TRAIT_FROM(parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(new_comp)))
+		REMOVE_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(new_comp))
+		ADD_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(src))
+	if(HAS_TRAIT_FROM(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(new_comp)))
+		REMOVE_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(new_comp))
+		ADD_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src))
 
 /datum/component/aquarium/proc/on_click_alt(atom/movable/source, mob/living/user)
 	SIGNAL_HANDLER
