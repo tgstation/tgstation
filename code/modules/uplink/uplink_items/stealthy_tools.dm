@@ -81,7 +81,7 @@
 
 /datum/uplink_item/stealthy_tools/jammer
 	name = "Radio Jammer"
-	desc = "This device will disrupt any nearby outgoing radio communication when activated. Does not affect binary chat."
+	desc = "This device will disrupt any nearby outgoing radio, beacon, teleporter, gps, and suit sensor communication when activated. Does not affect binary chat."
 	item = /obj/item/jammer
 	cost = 5
 

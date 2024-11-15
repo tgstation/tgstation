@@ -329,7 +329,7 @@ effective or pretty fucking useless.
 
 /obj/item/jammer
 	name = "radio jammer"
-	desc = "Device used to disrupt nearby radio communication. Alternate function creates a powerful distruptor wave which disables all nearby listening devices."
+	desc = "Device used to disrupt nearby radio, beacon, teleporter, gps, and suit sensor communication. Alternate function creates a powerful distruptor wave which disables all nearby listening devices."
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
@@ -357,6 +357,9 @@ effective or pretty fucking useless.
 	for (var/atom/potential_owner in view(7, user))
 		disable_radios_on(potential_owner)
 		disable_suit_sensors(potential_owner)
+		disable_gps_trackers(potential_owner)
+		disable_beacon_trackers(potential_owner)
+
 	COOLDOWN_START(src, jam_cooldown, jam_cooldown_duration)
 
 /obj/item/jammer/attack_self_secondary(mob/user, modifiers)
@@ -384,12 +387,25 @@ effective or pretty fucking useless.
 	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [interacting_with]."))
 	disable_radios_on(interacting_with)
 	disable_suit_sensors(interacting_with)
+	disable_gps_trackers(interacting_with)
+	disable_beacon_trackers(interacting_with)
 
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/jammer/proc/disable_radios_on(atom/target)
 	for(var/obj/item/radio/radio in target.get_all_contents() + target)
 		radio.set_broadcasting(FALSE)
+
+/obj/item/jammer/proc/disable_gps_trackers(atom/target)
+	for(var/obj/item/gps/gps in target.get_all_contents() + target)
+		var/datum/component/gps/item/gps_component = gps.GetComponent(/datum/component/gps/item)
+		if(gps_component.tracking)
+			gps.cut_overlay("working")
+			gps_component.tracking = FALSE
+
+/obj/item/jammer/proc/disable_beacon_trackers(atom/target)
+	for(var/obj/item/beacon/beacon in target.get_all_contents() + target)
+		beacon.turn_off()
 
 /obj/item/jammer/proc/disable_suit_sensors(atom/target)
 	for(var/obj/item/clothing/under/uniform in target.get_all_contents() + target)
