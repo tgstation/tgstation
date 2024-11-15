@@ -44,7 +44,8 @@
 		// Check every teleport beacon.
 		var/list/tele_beacons = list()
 		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
-
+			if(is_within_radio_jammer_range(W))
+				continue
 			// Get the tracking beacon's turf location.
 			var/turf/tr = get_turf(W)
 
@@ -279,7 +280,7 @@
 /obj/item/hand_tele/proc/can_teleport_notifies(mob/user)
 	var/turf/current_location = get_turf(user)
 	var/area/current_area = current_location.loc
-	if (!current_location || (current_area.area_flags & NOTELEPORT) || is_away_level(current_location.z) || !isturf(user.loc))
+	if (!current_location || (current_area.area_flags & NOTELEPORT) || is_away_level(current_location.z) || !isturf(user.loc) || is_within_radio_jammer_range(src))
 		to_chat(user, span_notice("[src] is malfunctioning."))
 		return FALSE
 

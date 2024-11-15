@@ -31,6 +31,9 @@
 	var/list/destinations = list()
 
 	for(var/obj/item/beacon/B in GLOB.teleportbeacons)
+		if(is_within_radio_jammer_range(B))
+			return
+
 		var/turf/T = get_turf(B)
 		if(is_station_level(T.z))
 			destinations += B

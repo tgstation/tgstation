@@ -39,6 +39,9 @@
 		return
 	if (target.weak_reference != target_ref)
 		return
+	if(is_within_radio_jammer_range(target_ref))
+		return
+
 	turn_off()
 	set_teleport_target(null)
 
@@ -231,6 +234,8 @@
 	var/turf/T = get_turf(AM)
 	if(!T)
 		return FALSE
+	if(is_within_radio_jammer_range(AM))
+		return
 	if(is_centcom_level(T.z) || is_away_level(T.z))
 		return FALSE
 	var/area/A = get_area(T)

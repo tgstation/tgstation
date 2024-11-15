@@ -29,13 +29,18 @@
 	return NONE
 
 /obj/item/beacon/proc/turn_off()
+	enabled = FALSE
 	icon_state = "beacon-off"
 	GLOB.teleportbeacons -= src
 	SEND_SIGNAL(src, COMSIG_BEACON_DISABLED)
 
 /obj/item/beacon/attack_self(mob/user)
+	if(is_within_radio_jammer_range(src))
+		balloon_alert(user, "beacon not responding!")
+		return
+
 	enabled = !enabled
-	if (enabled)
+	if(enabled)
 		icon_state = "beacon"
 		GLOB.teleportbeacons += src
 	else

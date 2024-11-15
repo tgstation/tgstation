@@ -35,6 +35,8 @@
 		var/turf/turf = get_turf(beacon)
 		if(!turf)
 			continue
+		if(is_within_radio_jammer_range(beacon))
+			return
 		if(is_centcom_level(turf.z) || is_away_level(turf.z))
 			continue
 		var/area/area = get_area(turf)
