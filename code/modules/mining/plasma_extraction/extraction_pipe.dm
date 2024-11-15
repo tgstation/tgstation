@@ -24,6 +24,7 @@
 /obj/structure/liquid_plasma_extraction_pipe/Destroy()
 	if(connected_hub)
 		connected_hub.on_pipe_destroyed(src)
+		connected_hub.connected_pipes -= part_pipes
 		connected_hub = null
 	return ..()
 
@@ -86,7 +87,6 @@
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
-//this is called by basic animals, but not simple. Too bad, if you want to fix this then start making more basic mobs!
 /obj/structure/liquid_plasma_extraction_pipe/attack_animal(mob/user, list/modifiers)
 	. = ..()
 	if(!.)
@@ -102,13 +102,14 @@
 
 /obj/structure/liquid_plasma_extraction_pipe/Move(atom/newloc, direct, glide_size_override, update_dir)
 	. = ..()
-	//you shouldn't be moving, now die.
+	//you shouldn't be moving, kill it.
+	//This will automatically destroy all pipes after it, and let the previous one lay pipes down again.
 	qdel(src)
 
 /**
  * Ending pipe
- * This one starts off freely built (so no need to wrench in) and has a different sprite.
- * This basically has no functionality and only exists to tell pipes that they've successfully connected to a pipe.
+ * This one starts off freely anchored (so no need to wrench it in) and has a different sprite.
+ * This basically has no functionality and only exists to tell pipes that they've successfully connected to a geyser.
  */
 /obj/structure/liquid_plasma_ending
 	name = "liquid plasma extractor"

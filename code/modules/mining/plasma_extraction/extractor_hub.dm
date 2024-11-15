@@ -52,9 +52,10 @@ TODO LIST:
 	QDEL_LIST(connected_pipes)
 
 /**
- * Called when a pipe with a reference to us is destroyed,
- * we'll give the pipe right before it the ability to lay pipes again,
+ * Called when a pipe connected to us is destroyed,
+ * we'll give the pipe right before it the ability to lay pipes again (or src if there's no more pipes),
  * then destroy every single pipe made after it, and make sure they are out of our list, too.
+ * If we're currently drilling, we'll stop all functions.
  */
 /obj/structure/plasma_extraction_hub/part/pipe/proc/on_pipe_destroyed(obj/structure/liquid_plasma_extraction_pipe/broken_pipe)
 	var/position_in_list = connected_pipes.Find(broken_pipe)
@@ -66,6 +67,7 @@ TODO LIST:
 	for(var/obj/structure/liquid_plasma_extraction_pipe/part_pipes as anything in connected_pipes)
 		var/list_item_in_list = connected_pipes.Find(part_pipes)
 		if(list_item_in_list > position_in_list)
+			//we null them before destroying so they don't re-call this proc in their own destroys.
 			part_pipes.connected_hub = null
 			connected_pipes -= part_pipes
 			qdel(part_pipes)
@@ -74,6 +76,7 @@ TODO LIST:
 	if(currently_functional)
 		stop_drilling() //one of our pipes got destroyed, bitch!! god motherfuckin damn!
 
+///Checks if the machine is able to start drilling, and starts if we can.
 /obj/structure/plasma_extraction_hub/part/pipe/proc/start_drilling()
 	if(!check_parts())
 		return FALSE
@@ -82,13 +85,15 @@ TODO LIST:
 		part_pipes.update_appearance(UPDATE_ICON)
 	currently_functional = TRUE
 
+///Stops all drilling activities.
 /obj/structure/plasma_extraction_hub/part/pipe/proc/stop_drilling()
 	for(var/obj/structure/liquid_plasma_extraction_pipe/part_pipes as anything in connected_pipes)
 		part_pipes.pipe_status = PIPE_STATUS_OFF
 		part_pipes.update_appearance(UPDATE_ICON)
 	currently_functional = FALSE
 
-///Returns whether the pipe is able to drill. If it can't, and it currently is drilling, we'll stop.
+///Returns whether the pipe is able to drill. If it can't, and it currently is drilling,
+///we'll call stop_drilling which shuts it all off and updates the pipes' icons/overlays.
 /obj/structure/plasma_extraction_hub/part/pipe/proc/check_parts()
 	if(!length(connected_pipes))
 		return FALSE

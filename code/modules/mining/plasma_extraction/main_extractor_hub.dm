@@ -1,7 +1,7 @@
 /**
  * The 'Main' extractor hub, that owns all the rest.
  * Also known as the 'bottom middle piece', which also works as a pipe in itself.
- * This was split into its own file just cause the readability sucked.
+ * This holds important stuff such as the bar hud, soundloop, and the whole 3x3 machine together.
  */
 /obj/structure/plasma_extraction_hub/part/pipe/main
 	///Reference to the plasma hud bar to show how much concentrated plasma has been collected.
@@ -28,8 +28,7 @@
 		QDEL_NULL(display_panel_ref)
 	return ..()
 
-///Copied over from Gravity Generator, this sets up the parts of the plasma extraction hub, and its
-///3 pipe starting points.
+///Copied from gravity gen, this sets up the parts of the plasma extraction hub, and its starting points.
 /obj/structure/plasma_extraction_hub/part/pipe/main/proc/setup_parts()
 	var/turf/our_turf = get_turf(src)
 	// 9x9 block obtained from the bottom middle of the block
@@ -54,18 +53,24 @@
 			else
 				new_part = new /obj/structure/plasma_extraction_hub/part(spawned_turf)
 		new_part.pipe_owner = src
-	pipe_owner = src //set ourselves as the pipe owner too.
+	pipe_owner = src //set ourselves as the pipe owner too, in case we check for `pipe_owner` on any part which could be us.
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/interact(mob/user)
 	. = ..()
 	if(percentage_of_plasma_mined >= 100)
 		balloon_alert(user, "extraction completed")
 		return
-	var/ready_to_start = tgui_alert(user, "[drilling ? "Stop" : "Start"] collecting liquid plasma? Monsters may start to attack the pipes.", (drilling ? "Really stop drilling?" : "Ready to start?"), list("Yes", "No"))
+	var/ready_to_start = tgui_alert(user, "[drilling ? "Stop" : "Start"] collecting liquid plasma?", (drilling ? "Really stop drilling?" : "Ready to start?"), list("Yes", "No"))
 	if(ready_to_start != "Yes")
 		return
 	toggle_mining(user)
 
+/**
+ * Toggles the drilling process on/off.
+ * Handles things like removing the hud display, stopping the soundloop, and stopping the drilling process.
+ * Doesn't allow drilling if the pipes are incomplete.
+ * Lastly handles starting/stopping processing.
+ */
 /obj/structure/plasma_extraction_hub/part/pipe/main/proc/toggle_mining(mob/user)
 	if(drilling)
 		QDEL_NULL(display_panel_ref)
@@ -87,7 +92,7 @@
 	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/process(seconds_per_tick)
-	if(HAS_TRAIT(src, TRAIT_FROZEN) || percentage_of_plasma_mined >= 100) //halp
+	if(HAS_TRAIT(src, TRAIT_FROZEN) || percentage_of_plasma_mined >= 100)
 		return
 	var/broken_hub = FALSE
 	for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
@@ -108,6 +113,7 @@
 	display_panel_ref.active_dots = round(percentage_of_plasma_mined / 5, 1)
 	display_panel_ref.update_appearance(UPDATE_OVERLAYS)
 
+///Amount in % that each dot represents of the total.
 #define AMOUNT_COMPLETED_PER_DOT 5
 
 /obj/effect/bar_hud_display/plasma_bar/examine(mob/user)
