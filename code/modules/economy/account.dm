@@ -45,7 +45,7 @@
 	add_to_accounts = player_account
 	setup_unique_account_id()
 	update_account_job_lists(job)
-	pay_token = uppertext("[copytext(newname, 1, 2)][copytext(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]")
+	pay_token = uppertext("[copytext_char(newname, 1, 2)][copytext_char(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]") // BANDASTATION EDIT - _char
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
