@@ -95,6 +95,11 @@ GLOBAL_LIST_EMPTY(GPS_list)
 /datum/component/gps/item/proc/toggletracking(mob/user)
 	if(!user.can_perform_action(parent))
 		return //user not valid to use gps
+
+	if(is_within_radio_jammer_range(parent))
+		to_chat(user, span_notice("ERROR: Network unavailable, please try again later."))
+		return
+
 	if(emped)
 		to_chat(user, span_warning("It's busted!"))
 		return
@@ -112,6 +117,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	if(emped)
 		to_chat(user, span_hear("[parent] fizzles weakly."))
 		return
+	if(is_within_radio_jammer_range(parent))
+		to_chat(user, span_notice("ERROR: Network unavailable, please try again later."))
+		return
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Gps")
@@ -127,7 +136,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	data["tag"] = gpstag
 	data["updating"] = updating
 	data["globalmode"] = global_mode
-	if(!tracking || emped) //Do not bother scanning if the GPS is off or EMPed
+	//Do not bother scanning if the GPS is off, EMPed, or jammed
+	if(!tracking || emped || is_within_radio_jammer_range(parent))
 		return data
 
 	var/turf/curr = get_turf(parent)
@@ -138,7 +148,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	data["signals"] = list()
 
 	for(var/datum/component/gps/gps as anything in GLOB.GPS_list)
-		if(gps == src || gps.emped || !gps.tracking)
+		if(gps == src || gps.emped || !gps.tracking || is_within_radio_jammer_range(gps.parent))
 			continue
 		var/turf/pos = get_turf(gps.parent)
 		if(!pos || (!global_mode && pos.z != curr.z))
@@ -161,6 +171,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 /datum/component/gps/item/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
+		return
+	if(is_within_radio_jammer_range(parent))
 		return
 
 	switch(action)
