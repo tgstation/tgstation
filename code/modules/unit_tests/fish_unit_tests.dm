@@ -489,7 +489,7 @@
 /datum/unit_test/aquarium_upgrade
 
 /datum/unit_test/aquarium_upgrade/Run()
-	var/mob/living/carbon/dummy/user = allocate(__IMPLIED_TYPE__)
+	var/mob/living/carbon/human/dummy/user = allocate(__IMPLIED_TYPE__)
 	var/obj/item/aquarium_upgrade/bioelec_gen/upgrade = allocate(__IMPLIED_TYPE__)
 	var/obj/structure/aquarium/aquarium = allocate(upgrade::upgrade_from_type)
 
