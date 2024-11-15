@@ -497,7 +497,7 @@
 	TEST_ASSERT(comp, "[aquarium.type] doesn't have an aquarium component")
 	comp.set_fluid_type(AQUARIUM_FLUID_AIR)
 	comp.fluid_temp = MAX_AQUARIUM_TEMP
-	aquarium.add_traits(list(TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), REF(comp))
+	aquarium.add_traits(list(TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), AQUARIUM_TRAIT)
 
 	var/type_to_check = upgrade::upgrade_to_type
 	var/turf/aquarium_loc = aquarium.loc
@@ -506,9 +506,9 @@
 	TEST_ASSERT(QDELETED(aquarium), "Old [aquarium.type] was not deleted after upgrade")
 
 	var/obj/structure/aquarium/upgraded_aquarium = locate(type_to_check) in aquarium_loc
-	TEST_ASSERT(upgraded_aquarium, "New [aquarium.type] was not spawned after upgrade")
-	comp = upgraded_aquarium.GetComponent(__IMPLIED_TYPE__)
-	TEST_ASSERT(comp, "New [aquarium.type] doesn't have an aquarium component")
+	TEST_ASSERT(upgraded_aquarium, "New [upgraded_aquarium.type] was not spawned after upgrade")
+	comp = upgraded_aquarium.GetComponent(/datum/component/aquarium)
+	TEST_ASSERT(comp, "New [upgraded_aquarium.type] doesn't have an aquarium component")
 
 	TEST_ASSERT_EQUAL(comp.fluid_type, AQUARIUM_FLUID_AIR, "Inherited aquarium fluid type should be [AQUARIUM_FLUID_AIR]")
 	TEST_ASSERT_EQUAL(comp.fluid_temp, MAX_AQUARIUM_TEMP, "Inherited aquarium fluid temperature should be [MAX_AQUARIUM_TEMP]")

@@ -97,7 +97,7 @@
 
 	var/atom/movable/movable = parent
 
-	ADD_KEEP_TOGETHER(movable, REF(src)) //render the fish on the same layer of the aquarium.
+	ADD_KEEP_TOGETHER(movable, AQUARIUM_TRAIT) //render the fish on the same layer of the aquarium.
 
 	if(reagents_size > 0)
 		RegisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
@@ -123,7 +123,7 @@
 		if(content.flags_1 & INITIALIZED_1)
 			on_entered(movable, content)
 
-	ADD_TRAIT(movable, TRAIT_IS_AQUARIUM, REF(src))
+	ADD_TRAIT(movable, TRAIT_IS_AQUARIUM, AQUARIUM_TRAIT)
 
 /datum/component/aquarium/UnregisterFromParent()
 	var/atom/movable/movable = parent
@@ -149,16 +149,16 @@
 		STOP_PROCESSING(SSobj, src)
 	beauty_by_content = null
 	tracked_fish_by_type = null
-	movable.remove_traits(list(TRAIT_IS_AQUARIUM, TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), REF(src))
-	REMOVE_KEEP_TOGETHER(movable, REF(src))
+	movable.remove_traits(list(TRAIT_IS_AQUARIUM, TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), AQUARIUM_TRAIT)
+	REMOVE_KEEP_TOGETHER(movable, AQUARIUM_TRAIT)
 
 /datum/component/aquarium/PreTransfer(atom/movable/new_parent)
 	if(!istype(new_parent))
 		return
 	if(HAS_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN))
-		ADD_TRAIT(new_parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(src))
-	if(HAS_TRAIT_FROM(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src)))
-		ADD_TRAIT(new_parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src))
+		ADD_TRAIT(new_parent, TRAIT_AQUARIUM_PANEL_OPEN, AQUARIUM_TRAIT)
+	if(HAS_TRAIT_FROM(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
+		ADD_TRAIT(new_parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	var/atom/movable/movable = parent
 	for(var/atom/movable/moving as anything in movable.contents)
 		if(HAS_TRAIT(moving, TRAIT_AQUARIUM_CONTENT))
@@ -175,22 +175,16 @@
 /datum/component/aquarium/InheritComponent(datum/component/aquarium/new_comp, i_am_original)
 	fluid_temp = clamp(new_comp.fluid_temp, min_fluid_temp, max_fluid_temp)
 	set_fluid_type(new_comp.fluid_type)
-	if(HAS_TRAIT_FROM(parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(new_comp)))
-		REMOVE_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(new_comp))
-		ADD_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(src))
-	if(HAS_TRAIT_FROM(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(new_comp)))
-		REMOVE_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(new_comp))
-		ADD_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src))
 
 /datum/component/aquarium/proc/on_click_alt(atom/movable/source, mob/living/user)
 	SIGNAL_HANDLER
 	var/closing = HAS_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN)
 	if(closing)
-		REMOVE_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(src))
+		REMOVE_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, AQUARIUM_TRAIT)
 		source.reagents.flags &= ~(TRANSPARENT|REFILLABLE)
 		SStgui.close_uis(src)
 	else
-		ADD_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, REF(src))
+		ADD_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, AQUARIUM_TRAIT)
 		source.reagents.flags |= TRANSPARENT|REFILLABLE
 
 	source.balloon_alert(user, "panel [closing ? "closed" : "open"]")
@@ -462,7 +456,7 @@
 	. = ..()
 	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
-	.["allowBreeding"] = HAS_TRAIT_FROM(source, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src))
+	.["allowBreeding"] = HAS_TRAIT_FROM(source, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	.["fishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
 	.["propData"] = list()
@@ -513,9 +507,9 @@
 			. = TRUE
 		if("allow_breeding")
 			if(HAS_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH))
-				REMOVE_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src))
+				REMOVE_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 			else
-				ADD_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, REF(src))
+				ADD_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 			. = TRUE
 		if("feeding_interval")
 			feeding_interval = params["feeding_interval"] MINUTES
