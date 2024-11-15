@@ -497,7 +497,7 @@
 	TEST_ASSERT(comp, "[aquarium.type] doesn't have an aquarium component")
 	comp.set_fluid_type(AQUARIUM_FLUID_AIR)
 	comp.fluid_temp = MAX_AQUARIUM_TEMP
-	movable.add_traits(list(TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), REF(comp))
+	aquarium.add_traits(list(TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), REF(comp))
 
 	var/type_to_check = upgrade::upgrade_to_type
 	var/turf/aquarium_loc = aquarium.loc
