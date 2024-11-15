@@ -2,6 +2,8 @@
 #define MINING_POINTS_AWARD 2500
 ///Amount in % that each dot represents of the total.
 #define AMOUNT_COMPLETED_PER_DOT 5
+///Time you have to wait before you can turn the machine on/off to prevent cheesing.
+#define TIME_BETWEEN_TOGGLES (10 SECONDS)
 
 /**
  * The 'Main' extractor hub, that owns all the rest.
@@ -9,6 +11,8 @@
  * This holds important stuff such as the bar hud, soundloop, and the whole 3x3 machine together.
  */
 /obj/structure/plasma_extraction_hub/part/pipe/main
+	icon_state = "extractor-8"//mapping icon
+	sprite_number = 8
 	///A number representing the percentage of plasma that has been mined.
 	var/percentage_of_plasma_mined
 	///Boolean on whether we're trying to drill, regardless of whether we can or not.
@@ -17,13 +21,16 @@
 	///Reference to the plasma hud bar to show how much concentrated plasma has been collected.
 	var/obj/effect/bar_hud_display/plasma_bar/display_panel_ref
 	///List of pipe parts connected to the extraction hub, not including ourselves.
-	var/list/obj/structure/plasma_extraction_hub/part/pipe/hub_parts = list()
+	var/list/obj/structure/plasma_extraction_hub/part/hub_parts = list()
 	///Looping sound of the plasma engine running, extracting plasma.
 	var/datum/looping_sound/plasma_engine/extracting_soundloop
+	///Cooldown between toggling the drilling process on/off.
+	COOLDOWN_DECLARE(toggle_cooldown)
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/Initialize(mapload)
 	. = ..()
 	setup_parts()
+	update_appearance(UPDATE_ICON)
 	extracting_soundloop = new(src, FALSE)
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/Destroy()
@@ -32,6 +39,19 @@
 	if(display_panel_ref)
 		QDEL_NULL(display_panel_ref)
 	return ..()
+
+/obj/structure/plasma_extraction_hub/part/pipe/main/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Turn [drilling ? "off" : "on"]"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/structure/plasma_extraction_hub/part/pipe/main/update_overlays()
+	. = ..()
+	if(drilling)
+		. += mutable_appearance(icon, "extractor-on")
+	else
+		. += mutable_appearance(icon, "extractor-off")
 
 ///Copied from gravity gen, this sets up the parts of the plasma extraction hub, and its starting points.
 /obj/structure/plasma_extraction_hub/part/pipe/main/proc/setup_parts()
@@ -49,15 +69,16 @@
 			if(4)
 				new_part = new /obj/structure/plasma_extraction_hub/part/pipe(spawned_turf)
 				new_part.setDir(EAST)
-				hub_parts += new_part
 			//west
 			if(6)
 				new_part = new /obj/structure/plasma_extraction_hub/part/pipe(spawned_turf)
 				new_part.setDir(WEST)
-				hub_parts += new_part
 			else
 				new_part = new /obj/structure/plasma_extraction_hub/part(spawned_turf)
+		new_part.sprite_number = count
+		hub_parts += new_part
 		new_part.pipe_owner = src
+		new_part.update_appearance(UPDATE_ICON_STATE)
 	pipe_owner = src //set ourselves as the pipe owner too, in case we check for `pipe_owner` on any part which could be us.
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/interact(mob/user)
@@ -91,30 +112,37 @@
  * Lastly handles starting/stopping processing.
  */
 /obj/structure/plasma_extraction_hub/part/pipe/main/proc/toggle_mining(mob/user)
+	if(!COOLDOWN_FINISHED(src, toggle_cooldown))
+		balloon_alert(user, "on cooldown!")
+		return
 	if(drilling)
 		QDEL_NULL(display_panel_ref)
 		drilling = FALSE
 		STOP_PROCESSING(SSprocessing, src)
 		extracting_soundloop.stop()
-		for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
+		for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts in hub_parts + src)
 			pipe_parts.stop_drilling()
+		update_appearance(UPDATE_OVERLAYS)
+		COOLDOWN_START(src, toggle_cooldown, TIME_BETWEEN_TOGGLES)
 		return
-	for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
+	for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts in hub_parts + src)
 		if(!pipe_parts.check_parts())
 			balloon_alert(user, "cant start, pipes incomplete!")
 			return
 	drilling = TRUE
 	display_panel_ref = new(locate(x + 2, y, z))
-	for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
+	for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts in hub_parts + src)
 		pipe_parts.start_drilling()
 	extracting_soundloop.start(src)
 	START_PROCESSING(SSprocessing, src)
+	update_appearance(UPDATE_OVERLAYS)
+	COOLDOWN_START(src, toggle_cooldown, TIME_BETWEEN_TOGGLES)
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/process(seconds_per_tick)
 	if(HAS_TRAIT(src, TRAIT_FROZEN) || percentage_of_plasma_mined >= 100)
 		return
 	var/broken_hub = FALSE
-	for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
+	for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts in hub_parts + src)
 		if(!pipe_parts.currently_functional)
 			broken_hub = TRUE
 			break
@@ -126,7 +154,7 @@
 		extracting_soundloop.start(src)
 	percentage_of_plasma_mined += clamp(1, 0, 100) * seconds_per_tick
 	if(percentage_of_plasma_mined >= 100)
-		for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
+		for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts in hub_parts + src)
 			pipe_parts.on_completion()
 		return
 	//this only has 20 dots so 1 dot = 5%
@@ -151,3 +179,4 @@
 
 #undef MINING_POINTS_AWARD
 #undef AMOUNT_COMPLETED_PER_DOT
+#undef TIME_BETWEEN_TOGGLES

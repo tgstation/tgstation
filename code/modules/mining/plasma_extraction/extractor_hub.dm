@@ -12,11 +12,18 @@ TODO LIST:
 /obj/structure/plasma_extraction_hub
 	name = "plasma extraction hub"
 	desc = "The hub to a connection of pipes. If there aren't any, then get building!"
-	icon = 'icons/obj/machines/mining_machines.dmi'
-	icon_state = "ore_redemption"
+	icon = 'icons/obj/machines/mining_machines.dmi' //icon state is set on main part's initialize
+	base_icon_state = "extractor"
 	anchored = TRUE
 	density = TRUE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | INDESTRUCTIBLE
+
+	///The number set during the part setup, used in deciding which icon state this part should be using.
+	var/sprite_number
+
+/obj/structure/plasma_extraction_hub/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]-[sprite_number]"
 
 /**
  * Base plasma extraction machine part
@@ -31,7 +38,7 @@ TODO LIST:
  * There's 3 of these on each plasma extraction machine, one of which (the 'main' one) is the owner of the rest.
  */
 /obj/structure/plasma_extraction_hub/part/pipe
-	name = "starting pipe location"
+	desc = "The start of a pipeline, use a pipe dispenser to construct one."
 	///List of all pipes connected to this extraction part.
 	var/list/obj/structure/liquid_plasma_extraction_pipe/connected_pipes = list()
 	///Reference to the 'ending' pipe, the last one to be built. This has to exist for t he machien to work.
@@ -48,13 +55,21 @@ TODO LIST:
 
 /obj/structure/plasma_extraction_hub/part/pipe/Initialize(mapload)
 	. = ..()
+	register_context()
 	AddComponent(/datum/component/pipe_laying, src)
 	RegisterSignal(src, COMSIG_SPAWNER_SPAWNED, PROC_REF(log_mob_spawned))
 
 /obj/structure/plasma_extraction_hub/part/pipe/Destroy()
 	. = ..()
-	last_pipe = null
+	if(last_pipe)
+		QDEL_NULL(last_pipe)
 	QDEL_LIST(connected_pipes)
+
+/obj/structure/plasma_extraction_hub/part/pipe/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(istype(held_item, /obj/item/pipe_dispenser) && !length(connected_pipes))
+		context[SCREENTIP_CONTEXT_LMB] = "Place pipes"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Called when a pipe connected to us is destroyed,
@@ -76,6 +91,8 @@ TODO LIST:
 			part_pipes.connected_hub = null
 			connected_pipes -= part_pipes
 			qdel(part_pipes)
+	if(last_pipe)
+		QDEL_NULL(last_pipe)
 
 	connected_pipes -= broken_pipe
 	if(currently_functional)

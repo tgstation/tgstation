@@ -155,6 +155,13 @@
 				part_hub.last_pipe = new_segment
 				should_delete_ourselves = TRUE
 				last_placed_pipe = null
+				var/turf/previous_segment
+				if(spot_in_list == 1) //in case you're only building one pipe
+					previous_segment = get_turf(parent)
+				else
+					previous_segment = pipe_locations[spot_in_list - 1]
+				var/direction_to_place = REVERSE_DIR(get_dir(previous_segment, next_location))
+				new_segment.setDir(direction_to_place)
 			else
 				new_segment = new /obj/structure/liquid_plasma_extraction_pipe(next_location, part_hub)
 				var/direction_to_place
