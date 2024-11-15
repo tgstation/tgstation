@@ -354,11 +354,12 @@ effective or pretty fucking useless.
 
 	user.balloon_alert(user, "distruptor wave released!")
 	to_chat(user, span_notice("You release a distruptor wave, disabling all nearby radio devices."))
-	for (var/atom/potential_owner in view(7, user))
-		disable_radios_on(potential_owner)
-		disable_suit_sensors(potential_owner)
-		disable_gps_trackers(potential_owner)
-		disable_beacon_trackers(potential_owner)
+	for(var/atom/potential_owner in view(7, user))
+		for(var/atom/target in potential_owner.get_all_contents() + potential_owner)
+			disable_radios_on(target)
+			disable_suit_sensors(target)
+			disable_gps_trackers(target)
+			disable_beacon_trackers(target)
 
 	COOLDOWN_START(src, jam_cooldown, jam_cooldown_duration)
 
@@ -385,35 +386,45 @@ effective or pretty fucking useless.
 
 	interacting_with.balloon_alert(user, "radio distrupted!")
 	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [interacting_with]."))
-	disable_radios_on(interacting_with)
-	disable_suit_sensors(interacting_with)
-	disable_gps_trackers(interacting_with)
-	disable_beacon_trackers(interacting_with)
+
+	for(var/atom/target in interacting_with.get_all_contents() + interacting_with)
+		disable_radios_on(target)
+		disable_suit_sensors(target)
+		disable_gps_trackers(target)
+		disable_beacon_trackers(target)
 
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/jammer/proc/disable_radios_on(atom/target)
-	for(var/obj/item/radio/radio in target.get_all_contents() + target)
-		radio.set_broadcasting(FALSE)
+/obj/item/jammer/proc/disable_radios_on(obj/item/radio/radio)
+	if(!istype(radio, /obj/item/radio))
+		return
 
-/obj/item/jammer/proc/disable_gps_trackers(atom/target)
-	for(var/obj/item/gps/gps in target.get_all_contents() + target)
-		var/datum/component/gps/item/gps_component = gps.GetComponent(/datum/component/gps/item)
-		if(gps_component.tracking)
-			gps.cut_overlay("working")
-			gps_component.tracking = FALSE
+	radio.set_broadcasting(FALSE)
 
-/obj/item/jammer/proc/disable_beacon_trackers(atom/target)
-	for(var/obj/item/beacon/beacon in target.get_all_contents() + target)
-		beacon.turn_off()
+/obj/item/jammer/proc/disable_gps_trackers(obj/item/gps/gps)
+	if(!istype(gps, /obj/item/gps))
+		return
 
-/obj/item/jammer/proc/disable_suit_sensors(atom/target)
-	for(var/obj/item/clothing/under/uniform in target.get_all_contents() + target)
-		if((uniform.has_sensor == NO_SENSORS) || !uniform.sensor_mode)
-			continue
+	var/datum/component/gps/item/gps_component = gps.GetComponent(/datum/component/gps/item)
+	if(gps_component.tracking)
+		gps.cut_overlay("working")
+		gps_component.tracking = FALSE
 
-		uniform.sensor_mode = SENSOR_OFF
-		uniform.update_wearer_status()
+/obj/item/jammer/proc/disable_beacon_trackers(obj/item/beacon/beacon)
+	if(!istype(beacon, /obj/item/beacon))
+		return
+
+	beacon.turn_off()
+
+/obj/item/jammer/proc/disable_suit_sensors(obj/item/clothing/under/uniform)
+	if(!istype(uniform, /obj/item/clothing/under))
+		return
+
+	if((uniform.has_sensor == NO_SENSORS) || !uniform.sensor_mode)
+		return
+
+	uniform.sensor_mode = SENSOR_OFF
+	uniform.update_wearer_status()
 
 /obj/item/jammer/Destroy()
 	GLOB.active_jammers -= src
