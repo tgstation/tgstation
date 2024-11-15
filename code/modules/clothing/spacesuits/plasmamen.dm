@@ -139,10 +139,7 @@
 		to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
 		set_light_on(FALSE)
 		helmet_on = FALSE
-	if(up)
-		playsound(src, SFX_VISOR_UP, 50, TRUE)
-	else
-		playsound(src, SFX_VISOR_DOWN, 50, TRUE) //Visors don't just come from nothing
+	playsound(src, up ? SFX_VISOR_UP : SFX_VISOR_DOWN, 50, TRUE)
 	update_appearance()
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_icon_state()

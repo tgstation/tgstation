@@ -237,10 +237,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		if(up)
-			playsound(src, SFX_VISOR_UP, 50, TRUE)
-		else
-			playsound(src, SFX_VISOR_DOWN, 50, TRUE)
+		playsound(src, up ? SFX_VISOR_UP : SFX_VISOR_DOWN, 50, TRUE)
 	if(!fishing_modifier)
 		return
 	if(up)
