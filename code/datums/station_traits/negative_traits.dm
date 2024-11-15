@@ -624,7 +624,7 @@
 			/area/station/medical/virology,
 			"NT Virology Department",
 			force = TRUE,
-			force_pod_type = /obj/structure/closet/supplypod/centcompod,
+			force_pod_type = /obj/structure/closet/supplypod/teleporter, // BANDASTATION EDIT - Original: force_pod_type = /obj/structure/closet/supplypod/centcompod,
 		)
 
 	//Disables radstorms, they don't really make sense since we already have the nebula causing storms

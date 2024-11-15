@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(market)
 			if(SHIPPING_METHOD_SUPPLYPOD)
 				var/obj/structure/closet/supplypod/spawned_pod = podspawn(list(
 					"target" = get_turf(purchase.uplink),
-					"path" = /obj/structure/closet/supplypod/back_to_station,
+					"path" = /obj/structure/closet/supplypod/teleporter, // BANDASTATION EDIT - Original: "path" = /obj/structure/closet/supplypod/back_to_station,
 				))
 				purchase.entry.spawn_item(spawned_pod, purchase)
 

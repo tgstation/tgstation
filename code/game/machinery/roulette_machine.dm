@@ -453,7 +453,7 @@
 /obj/item/roulette_wheel_beacon/proc/launch_payload()
 	podspawn(list(
 		"target" = drop_location(),
-		"path" = /obj/structure/closet/supplypod/centcompod,
+		"path" = /obj/structure/closet/supplypod/teleporter, // BANDASTATION EDIT - Original: "path" = /obj/structure/closet/supplypod/centcompod,
 		"spawn" = /obj/machinery/roulette
 	))
 
