@@ -15,31 +15,83 @@
 	if(!chassis)
 		return PROCESS_KILL
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper
-	name = "mounted sleeper"
-	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents from a equipped exosuit syringe gun."
-	icon_state = "mecha_sleeper"
-	energy_drain = 20
-	range = MECHA_MELEE
-	equip_cooldown = 20
-	/// ref to the patient loaded in the sleeper
-	var/mob/living/carbon/patient
-	/// amount of chems to inject into patient from other hands syringe gun
-	var/inject_amount = 10
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/Destroy()
-	for(var/atom/movable/content as anything in src)
-		content.forceMove(get_turf(src))
-	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/medical/proc/get_reagent_data(list/datum/reagent/reagent_list)
+/obj/item/mecha_parts/mecha_equipment/proc/get_reagent_data(list/datum/reagent/reagent_list)
 	var/list/contained_reagents = list()
 	if(length(reagent_list))
 		for(var/datum/reagent/reagent as anything in reagent_list)
 			contained_reagents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
 	return contained_reagents
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/get_snowflake_data()
+//---- Mecha sleeper, medical subtype has the chemical functionality
+/obj/item/mecha_parts/mecha_equipment/sleeper
+	name = "mounted sleeper"
+	desc = "A mounted sleeper that stabilizes patients."
+	icon_state = "mecha_sleeper_miner"
+	energy_drain = 20
+	range = MECHA_MELEE
+	equip_cooldown = 20
+	/// ref to the patient loaded in the sleeper
+	var/mob/living/carbon/patient
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/Destroy()
+	for(var/atom/movable/content as anything in src)
+		content.forceMove(get_turf(src))
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/container_resist_act(mob/living/user)
+	go_out()
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/action(mob/source, atom/atomtarget, list/modifiers)
+	if(!action_checks(atomtarget))
+		return
+	if(!iscarbon(atomtarget))
+		return
+	var/mob/living/carbon/target = atomtarget
+	if(!patient_insertion_check(target, source))
+		return
+	to_chat(source, "[icon2html(src, source)][span_notice("You start putting [target] into [src]...")]")
+	chassis.visible_message(span_warning("[chassis] starts putting [target] into \the [src]."))
+	if(!do_after(source, equip_cooldown, target, extra_checks=CALLBACK(src, PROC_REF(patient_insertion_check), target, source)))
+		return
+	if(!chassis || !(get_dir(chassis, target) & chassis.dir))
+		return
+	target.forceMove(src)
+	patient = target
+	START_PROCESSING(SSobj, src)
+	to_chat(source, "[icon2html(src, source)][span_notice("[target] successfully loaded into [src]. Life support functions engaged.")]")
+	chassis.visible_message(span_warning("[chassis] loads [target] into [src]."))
+	log_message("[target] loaded. Life support functions engaged.", LOG_MECHA)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/patient_insertion_check(mob/living/carbon/target, mob/user)
+	if(!isnull(target.buckled))
+		to_chat(user, "[icon2html(src, user)][span_warning("[target] will not fit into the sleeper because [target.p_theyre()] buckled to [target.buckled]!")]")
+		return FALSE
+	if(target.has_buckled_mobs())
+		to_chat(user, "[icon2html(src, user)][span_warning("[target] will not fit into the sleeper because of the creatures attached to it!")]")
+		return FALSE
+	if(patient)
+		to_chat(user, "[icon2html(src, user)][span_warning("The sleeper is already occupied!")]")
+		return FALSE
+	return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/go_out()
+	if(!patient)
+		return
+	patient.forceMove(get_turf(src))
+	to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("[patient] ejected. Life support functions disabled.")]")
+	log_message("[patient] ejected. Life support functions disabled.", LOG_MECHA)
+	STOP_PROCESSING(SSobj, src)
+	patient = null
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/detach()
+	if(patient)
+		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Unable to detach [src] - equipment occupied!")]")
+		return
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/get_snowflake_data()
 	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_SLEEPER)
 	if(isnull(patient))
 		return data
@@ -67,97 +119,19 @@
 		"toxin_loss" = patient.getToxLoss(),
 		"oxygen_loss" = patient.getOxyLoss(),
 	)
+	data["contained_reagents"] = get_reagent_data(patient.reagents.reagent_list)
 	data["has_brain_damage"] = patient.get_organ_loss(ORGAN_SLOT_BRAIN) != 0
 	data["has_traumas"] = length(patient.get_traumas()) != 0
-	data["contained_reagents"] = get_reagent_data(patient.reagents.reagent_list)
 
-	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
-	if(shooter)
-		data["injectible_reagents"] = get_reagent_data(shooter.reagents.reagent_list)
 	return data
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/handle_ui_act(action, list/params)
-	switch(action)
-		if("eject")
-			go_out()
-			return TRUE
-	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate() in chassis
-	if(shooter)
-		for(var/datum/reagent/medication in shooter.reagents.reagent_list)
-			if(action == ("inject_reagent_" + medication.name))
-				inject_reagent(medication, shooter)
-				break // or maybe return TRUE? i'm not certain
-
+/obj/item/mecha_parts/mecha_equipment/sleeper/handle_ui_act(action, list/params)
+	if(action == "eject")
+		go_out()
+		return TRUE
 	return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/action(mob/source, atom/atomtarget, list/modifiers)
-	if(!action_checks(atomtarget))
-		return
-	if(!iscarbon(atomtarget))
-		return
-	var/mob/living/carbon/target = atomtarget
-	if(!patient_insertion_check(target, source))
-		return
-	to_chat(source, "[icon2html(src, source)][span_notice("You start putting [target] into [src]...")]")
-	chassis.visible_message(span_warning("[chassis] starts putting [target] into \the [src]."))
-	if(!do_after(source, equip_cooldown, target, extra_checks=CALLBACK(src, PROC_REF(patient_insertion_check), target, source)))
-		return
-	if(!chassis || !(get_dir(chassis, target) & chassis.dir))
-		return
-	target.forceMove(src)
-	patient = target
-	START_PROCESSING(SSobj, src)
-	to_chat(source, "[icon2html(src, source)][span_notice("[target] successfully loaded into [src]. Life support functions engaged.")]")
-	chassis.visible_message(span_warning("[chassis] loads [target] into [src]."))
-	log_message("[target] loaded. Life support functions engaged.", LOG_MECHA)
-	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/patient_insertion_check(mob/living/carbon/target, mob/user)
-	if(!isnull(target.buckled))
-		to_chat(user, "[icon2html(src, user)][span_warning("[target] will not fit into the sleeper because [target.p_theyre()] buckled to [target.buckled]!")]")
-		return FALSE
-	if(target.has_buckled_mobs())
-		to_chat(user, "[icon2html(src, user)][span_warning("[target] will not fit into the sleeper because of the creatures attached to it!")]")
-		return FALSE
-	if(patient)
-		to_chat(user, "[icon2html(src, user)][span_warning("The sleeper is already occupied!")]")
-		return FALSE
-	return TRUE
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/go_out()
-	if(!patient)
-		return
-	patient.forceMove(get_turf(src))
-	to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("[patient] ejected. Life support functions disabled.")]")
-	log_message("[patient] ejected. Life support functions disabled.", LOG_MECHA)
-	STOP_PROCESSING(SSobj, src)
-	patient = null
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/detach()
-	if(patient)
-		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Unable to detach [src] - equipment occupied!")]")
-		return
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R, obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
-	if(!R || !patient || !SG || !(SG in chassis.flat_equipment))
-		return
-	var/to_inject = min(R.volume, inject_amount)
-	if(to_inject && patient.reagents.get_reagent_amount(R.type) + to_inject <= inject_amount*2)
-		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Injecting [patient] with [to_inject] units of [R.name].")]")
-		log_message("Injecting [patient] with [to_inject] units of [R.name].", LOG_MECHA)
-		for(var/driver in chassis.return_drivers())
-			log_combat(driver, patient, "injected", "[name] ([R] - [to_inject] units)")
-		SG.reagents.trans_to(patient, to_inject, target_id = R.type)
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/container_resist_act(mob/living/user)
-	go_out()
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/process(seconds_per_tick)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/sleeper/process(seconds_per_tick)
 	if(!chassis.has_charge(energy_drain))
 		log_message("Deactivated.", LOG_MECHA)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("[src] deactivated - no power.")]")
@@ -171,17 +145,59 @@
 		log_message("[patient] no longer detected - Life support functions disabled.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		patient = null
-	if(ex_patient.health > 0)
-		ex_patient.adjustOxyLoss(-0.5 * seconds_per_tick)
+	ex_patient.adjustOxyLoss(-2 * seconds_per_tick)
 	ex_patient.AdjustStun(-40 * seconds_per_tick)
 	ex_patient.AdjustKnockdown(-40 * seconds_per_tick)
 	ex_patient.AdjustParalyzed(-40 * seconds_per_tick)
 	ex_patient.AdjustImmobilized(-40 * seconds_per_tick)
 	ex_patient.AdjustUnconscious(-40 * seconds_per_tick)
-	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5)
+	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5 \
+	&& ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/c2/penthrite) <= 0 \
+	&& ex_patient.stat >= SOFT_CRIT)
 		ex_patient.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
+	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/toxin/formaldehyde) <= 0 && ex_patient.stat == DEAD)
+		ex_patient.reagents.add_reagent(/datum/reagent/toxin/formaldehyde, 3)
 	chassis.use_energy(energy_drain)
 
+//Medical subtype with the chems
+/obj/item/mecha_parts/mecha_equipment/sleeper/medical
+	name = "mounted sleeper"
+	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents from a equipped exosuit syringe gun."
+	icon_state = "mecha_sleeper"
+	mech_flags = EXOSUIT_MODULE_MEDICAL
+	/// amount of chems to inject into patient from other hands syringe gun
+	var/inject_amount = 10
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/medical/get_snowflake_data()
+	var/list/data = ..()
+	if(isnull(patient))
+		return data
+	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
+	if(shooter)
+		data["injectible_reagents"] = get_reagent_data(shooter.reagents.reagent_list)
+	return data
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/medical/handle_ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return TRUE
+	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate() in chassis
+	if(shooter)
+		for(var/datum/reagent/medication in shooter.reagents.reagent_list)
+			if(action == ("inject_reagent_" + medication.name))
+				inject_reagent(medication, shooter)
+				break // or maybe return TRUE? i'm not certain
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/medical/proc/inject_reagent(datum/reagent/R, obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
+	if(!R || !patient || !SG || !(SG in chassis.flat_equipment))
+		return
+	var/to_inject = min(R.volume, inject_amount)
+	if(to_inject && patient.reagents.get_reagent_amount(R.type) + to_inject <= inject_amount*2)
+		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Injecting [patient] with [to_inject] units of [R.name].")]")
+		log_message("Injecting [patient] with [to_inject] units of [R.name].", LOG_MECHA)
+		for(var/driver in chassis.return_drivers())
+			log_combat(driver, patient, "injected", "[name] ([R] - [to_inject] units)")
+		SG.reagents.trans_to(patient, to_inject, target_id = R.type)
 
 ///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
 
