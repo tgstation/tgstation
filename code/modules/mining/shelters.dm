@@ -13,7 +13,7 @@
 	. = ..()
 	blacklisted_turfs = typecacheof(/turf/closed)
 	whitelisted_turfs = list()
-	banned_areas = typecacheof(/area/shuttle)
+	banned_areas = typecacheof(/area/shuttle, /area/station/holodeck)
 	banned_objects = list()
 
 /datum/map_template/shelter/proc/check_deploy(turf/deploy_location)
