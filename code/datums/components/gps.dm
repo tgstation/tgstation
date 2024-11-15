@@ -119,6 +119,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		return
 	if(is_within_radio_jammer_range(parent))
 		to_chat(user, span_notice("ERROR: Network unavailable, please try again later."))
+		if(ui)
+			ui.close()
 		return
 
 	ui = SStgui.try_update_ui(user, src, ui)
