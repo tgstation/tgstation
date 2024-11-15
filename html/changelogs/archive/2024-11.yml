@@ -401,3 +401,98 @@
   grungussuss:
   - qol: you can now mitigate motion sickness from screen shake by enabling "darken
       screen shake" in preferences
+2024-11-13:
+  00-Steven:
+  - bugfix: Fixed auto-reel fishing line item catching logic.
+  Absolucy:
+  - bugfix: You can no longer crush random unsuspecting people with vendors by ventcrawling
+      while cursed.
+  - qol: AFK players don't count as "watchers" for cursed stuff.
+  EmptyLullaby:
+  - bugfix: Goliath cloaks are no longer so hard on the calves that they force digitigrade
+      legs to disable.
+  Ghommie:
+  - bugfix: Fixed special DNA infusions from squids and pufferfish.
+  - bugfix: Fixed fish still being hungry when fed if in aquarium with the 'growth
+      and reproduction' option disabled.
+  - bugfix: Fixed bombing non-turfs fishing spots not spawning loot correctly.
+  - balance: Explosive bombing no longer spawns bottled messages/photos.
+  - bugfix: Fixed fish not being able to reproduce with other fish of the same type
+      without the crossbreeding trait.
+  Goat:
+  - map: The library's scanner on Birdshot is now close enough to connect to the computer
+      and was also given a book binder.
+  - qol: Curator console's inventory screen will now update when you change pages
+      or remove items.
+  - qol: You can now examine labelers to tell how many more labels it has.
+  Holoo-1:
+  - bugfix: fixed roundstart borgs not being synced to ai
+  Neocloudy:
+  - bugfix: examine tags now use regex for checking if a tag has "and" in it
+  - spellcheck: the tooltip for the morbid examine tag doesn't try to use html anymore
+  OrionTheFox:
+  - bugfix: (DeltaStation) Fixed unwired APCs in the Electronic Marketing Den, Abandoned
+      Garden, Security Maintenance, and Private Investigator's Office
+  Rhials:
+  - qol: Makes some minor updates to Runtimestation, including event spawn points
+      and a cargo bounty pad.
+  SmArtKar:
+  - bugfix: Xenobio console puts sucked up slimes into stasis so they no longer split
+      up inside
+  - bugfix: Fixed basic mob performance impact created by the factorio PR
+  - bugfix: Fixed hat stabilizer ignoring clothing worn_y_offset
+  SyncIt21:
+  - bugfix: flatpacker accepts circuitboards with left click
+  - bugfix: rcd can deconstruct tables
+  - bugfix: you can open panels of destructive analyzers with screwdriver right click.
+      Use right click or combat mode with items for default interactions
+  - bugfix: flatpacker & machines with local storage can be RPED'd again
+  harryob:
+  - bugfix: ghosts observing ghosts can no longer click on their screen alerts
+  - bugfix: certain tgui inputs no longer require 2 clicks to open
+  sqnztb:
+  - map: tramstation tool storage trash no longer routes to the barber shop
+  timothymtorres:
+  - bugfix: Fix holymelon armor not inheriting magic resistance
+  - bugfix: Fix broken link to issue manager guide in Github contributor guide
+  - bugfix: Fix missing screentips plasmaman helmets and MOD suit hat stabilizer helmets.
+  tmyqlfpir:
+  - bugfix: Airlock shells are properly assigned circuit cameras modules
+2024-11-14:
+  00-Steven:
+  - bugfix: A bitrunner avatar spawning with the exact same name as a name currently
+      on the records no longer updates that record to match when the hacker alias
+      gets applied.
+  - qol: Net avatar ID cards use the net avatar's name instead of being generic.
+  Fikou:
+  - bugfix: a modsuit being deleted will delete its parts correctly
+  - bugfix: a modsuit needs its boots out to be moved by an AI
+  - qol: you can extend or retract a modsuits parts from the ui panel
+  - qol: modsuit cores have colorcoded charge bars in the ui panel
+  - qol: weapon recall module makes you pick up the weapon if its on your tile
+  - code_imp: tether module has its own button for cutting tethers instead of stealing
+      it from pins
+  - bugfix: armor booster doesnt protect from head injury without the helmet on
+  LT3:
+  - bugfix: Server config will now read the map vote configuration file
+  MTandi:
+  - qol: Chem dispenser UI droplets now have a shadow to not blend with the background
+  Majkl-J:
+  - qol: mech fabricator output direction can now be changed with a drag pull
+  Rhials:
+  - qol: Crayon bounties are less demanding, and require less crayons for payout.
+  SmArtKar:
+  - bugfix: Fixed ayylmao's brain examine lines
+  - bugfix: Fixed stingbangs using wrong sprites
+  - bugfix: Fixed detective action palette being invisible
+  SyncIt21:
+  - bugfix: holosign creators interact with storage items correctly
+  grungussuss:
+  - sound: party popper no longer makes reagent sloshing sounds
+  - sound: shoes pickup volume is louder now
+  mc-oofert:
+  - bugfix: meatlovers flatbread no longer tastes raw
+  timothymtorres:
+  - bugfix: Fix using chairs in holodeck to create infinite metal
+  xPokee, waterpig:
+  - code_imp: cleaned up beserk.dm
