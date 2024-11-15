@@ -421,6 +421,9 @@
 	if(get_dist(toggler, src) > 1)
 		balloon_alert(toggler, "too far!")
 		return FALSE
+	if(is_within_radio_jammer_range(src))
+		balloon_alert(toggler, "sensor not responding!")
+		return FALSE
 
 	switch(has_sensor)
 		if(LOCKED_SENSORS)
