@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes:
+  - bugfix: "Firelocks opened by a mech will correctly close when the mech moves out of range."

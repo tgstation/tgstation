@@ -188,7 +188,7 @@ const CostPreview = (props: CostPreviewProps) => {
               </TableCell>
               <Table.Cell verticalAlign="middle">
                 <div style={{ width: '200px' }}>
-                  {(material.amount / SHEET_MATERIAL_AMOUNT).toFixed(2)}
+                  x{(material.amount / SHEET_MATERIAL_AMOUNT).toFixed(2)}
                 </div>
               </Table.Cell>
             </Table.Row>

@@ -935,10 +935,13 @@
 	var/carrydelay = 5 SECONDS //if you have latex you are faster at grabbing
 	var/skills_space
 	var/fitness_level = mind?.get_skill_level(/datum/skill/athletics) - 1
+	var/experience_reward = 5
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
 		carrydelay -= 2 SECONDS
+		experience_reward *= 3
 	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
 		carrydelay -= 1 SECONDS
+		experience_reward *= 2
 
 	// can remove up to 2 seconds at legendary
 	carrydelay -= fitness_level * (1/3) SECONDS
@@ -946,6 +949,7 @@
 	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		carrydelay *= potential_spine.athletics_boost_multiplier
+		experience_reward += experience_reward * potential_spine.athletics_boost_multiplier
 
 	if(carrydelay <= 3 SECONDS)
 		skills_space = " very quickly"
@@ -962,6 +966,8 @@
 	if(!can_be_firemanned(target) || INCAPACITATED_IGNORING(src, INCAPABLE_GRAB) || target.buckled)
 		visible_message(span_warning("[src] fails to fireman carry [target]!"))
 		return
+
+	mind?.adjust_experience(/datum/skill/athletics, experience_reward) //Get a bit fitter every time we fireman carry successfully. Deadlift your friends for gains!
 
 	return buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
 
@@ -1022,6 +1028,52 @@
 
 	if(mind.assigned_role.title in SSjob.name_occupations)
 		.[mind.assigned_role.title] = minutes
+
+/mob/living/carbon/human/proc/add_eye_color_left(color, color_priority, update_body = TRUE)
+	LAZYSET(eye_color_left_overrides, "[color_priority]", color)
+	if (update_body)
+		update_body()
+
+/mob/living/carbon/human/proc/add_eye_color_right(color, color_priority, update_body = TRUE)
+	LAZYSET(eye_color_right_overrides, "[color_priority]", color)
+	if (update_body)
+		update_body()
+
+/mob/living/carbon/human/proc/add_eye_color(color, color_priority, update_body = TRUE)
+	add_eye_color_left(color, color_priority, update_body = FALSE)
+	add_eye_color_right(color, color_priority, update_body = update_body)
+
+/mob/living/carbon/human/proc/remove_eye_color(color_priority, update_body = TRUE)
+	LAZYREMOVE(eye_color_left_overrides, "[color_priority]")
+	LAZYREMOVE(eye_color_right_overrides, "[color_priority]")
+	if (update_body)
+		update_body()
+
+/mob/living/carbon/human/proc/get_right_eye_color()
+	if (!LAZYLEN(eye_color_right_overrides))
+		return eye_color_right
+
+	var/eye_color = eye_color_right
+	var/priority
+	for (var/override_priority in eye_color_right_overrides)
+		var/new_priority = text2num(override_priority)
+		if (new_priority > priority)
+			priority = new_priority
+			eye_color = eye_color_right_overrides[override_priority]
+	return eye_color
+
+/mob/living/carbon/human/proc/get_left_eye_color()
+	if (!LAZYLEN(eye_color_left_overrides))
+		return eye_color_left
+
+	var/eye_color = eye_color_left
+	var/priority
+	for (var/override_priority in eye_color_left_overrides)
+		var/new_priority = text2num(override_priority)
+		if (new_priority > priority)
+			priority = new_priority
+			eye_color = eye_color_left_overrides[override_priority]
+	return eye_color
 
 /mob/living/carbon/human/monkeybrain
 	ai_controller = /datum/ai_controller/monkey
@@ -1140,7 +1192,7 @@
 	race = /datum/species/snail
 
 /mob/living/carbon/human/species/vampire
-	race = /datum/species/vampire
+	race = /datum/species/human/vampire
 
 /mob/living/carbon/human/species/zombie
 	race = /datum/species/zombie

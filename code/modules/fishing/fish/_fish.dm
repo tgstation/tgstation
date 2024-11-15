@@ -212,7 +212,7 @@
 	if(src == held_item)
 		context[SCREENTIP_CONTEXT_LMB] = "Pet"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(held_item, /obj/item/fish_feed))
+	if(istype(held_item, /obj/item/reagent_containers/cup/fish_feed))
 		context[SCREENTIP_CONTEXT_LMB] = "Feed"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(istype(held_item, /obj/item/fish_analyzer))
@@ -227,7 +227,7 @@
 		balloon_alert(user, "it's stuck to your hand!")
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "releasing fish...")
-	if(!do_after(src, 3 SECONDS, interacting_with))
+	if(!do_after(user, 3 SECONDS, interacting_with))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "fish released")
 	var/goodbye_text = "Bye bye [name]."
@@ -419,7 +419,7 @@
 	return ..()
 
 /obj/item/fish/attackby(obj/item/item, mob/living/user, params)
-	if(!istype(item, /obj/item/fish_feed))
+	if(!istype(item, /obj/item/reagent_containers/cup/fish_feed))
 		return ..()
 	if(!item.reagents.total_volume)
 		balloon_alert(user, "[item.name] is empty!")
@@ -831,9 +831,11 @@
 	if(isaquarium(loc))
 		var/obj/structure/aquarium/aquarium = loc
 		if(!aquarium.reproduction_and_growth)
+			last_feeding = world.time
 			return
 	var/hunger = get_hunger()
 	if(hunger < 0.05) //don't bother growing for very small amounts.
+		last_feeding = world.time
 		return
 	last_feeding = world.time
 	var/new_size = size
@@ -1154,7 +1156,7 @@
 		var/list/available_fishes = list()
 		var/types_to_mate_with = aquarium.tracked_fish_by_type
 		if(!HAS_TRAIT(src, TRAIT_FISH_CROSSBREEDER))
-			var/list/types_to_check = list(src)
+			var/list/types_to_check = list(type)
 			if(compatible_types)
 				types_to_check |= compatible_types
 			types_to_mate_with = types_to_mate_with & types_to_check
