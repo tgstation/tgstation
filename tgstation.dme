@@ -6048,7 +6048,7 @@
 #include "code\modules\spells\spell_types\touch\smite.dm"
 #include "code\modules\station_goals\bsa.dm"
 #include "code\modules\station_goals\dna_vault.dm"
-#include "code\modules\station_goals\generate_goals.dm"
+#include "code\modules\station_goals\extract_plasma.dm"
 #include "code\modules\station_goals\meteor_shield.dm"
 #include "code\modules\station_goals\station_goal.dm"
 #include "code\modules\station_goals\vault_mutation.dm"

@@ -24,3 +24,8 @@
 
 /// The amount of time until the station charter can no longer be used to rename the station
 #define STATION_RENAME_TIME_LIMIT 5 MINUTES
+
+///The station goal should be done on the 'station' level.
+#define STATION_GOAL "station"
+///The station goal should be done on the 'mining' level.
+#define MINING_GOAL "mining"

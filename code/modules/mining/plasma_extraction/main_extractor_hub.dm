@@ -81,6 +81,8 @@
 	if(SSeconomy.bank_accounts_by_job[/datum/job/shaft_miner])
 		for(var/datum/bank_account/miners as anything in SSeconomy.bank_accounts_by_job[/datum/job/shaft_miner])
 			miners.mining_points += AMOUNT_COMPLETED_PER_DOT
+	var/datum/station_goal/extract_plasma/goal = SSstation.get_station_goal(/datum/station_goal/extract_plasma)
+	goal.completed = TRUE
 
 /**
  * Toggles the drilling process on/off.
@@ -131,6 +133,10 @@
 	display_panel_ref.active_dots = round(percentage_of_plasma_mined / 5, 1)
 	display_panel_ref.update_appearance(UPDATE_OVERLAYS)
 
+/obj/effect/bar_hud_display/plasma_bar/examine(mob/user)
+	. = ..()
+	. += span_notice("It is currently showing [active_dots*AMOUNT_COMPLETED_PER_DOT]% filled of [display_title].")
+
 ///A variant of the hud display panel for life shards, this one is set up to display two columns.
 /obj/effect/bar_hud_display/plasma_bar
 	name = "concentrated plasma extracted"
@@ -142,10 +148,6 @@
 	dot_icon_state = "gem_purple"
 	dot_icon_state_empty = "gem_red_empty"
 	display_title = "extracted plasma"
-
-/obj/effect/bar_hud_display/plasma_bar/examine(mob/user)
-	. = ..()
-	. += span_notice("It is currently showing [active_dots*AMOUNT_COMPLETED_PER_DOT]% filled of [display_title].")
 
 #undef MINING_POINTS_AWARD
 #undef AMOUNT_COMPLETED_PER_DOT
