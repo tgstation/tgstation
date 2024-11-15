@@ -24,7 +24,7 @@
 /obj/structure/liquid_plasma_extraction_pipe/Destroy()
 	if(connected_hub)
 		connected_hub.on_pipe_destroyed(src)
-		connected_hub.connected_pipes -= part_pipes
+		connected_hub.connected_pipes -= src
 		connected_hub = null
 	return ..()
 
@@ -68,13 +68,11 @@
 	repair_damage(max_integrity) //repair all damage.
 	balloon_alert(user, "repaired")
 	pipe_state = PIPE_STATE_FINE
-	var/obj/structure/plasma_extraction_hub/part/pipe/main/main_connected_hub = connected_hub
-	if(istype(main_connected_hub) && main_connected_hub.drilling)
-		main_connected_hub.start_drilling()
-	else if(connected_hub.pipe_owner.drilling)
-		connected_hub.start_drilling()
-	else
-		update_appearance(UPDATE_ICON)
+	var/obj/structure/plasma_extraction_hub/part/pipe/main_connected_hub = connected_hub
+	if(connected_hub.pipe_owner.drilling)
+		if(connected_hub.start_drilling())
+			return ITEM_INTERACT_SUCCESS
+	update_appearance(UPDATE_ICON) //ensure icons are updated even if drilling doesn't start.
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/liquid_plasma_extraction_pipe/crowbar_act(mob/living/user, obj/item/tool)

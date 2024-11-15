@@ -11,8 +11,8 @@
 	///Boolean on whether we're trying to drill, regardless of whether we can or not.
 	///This is used to tell recently repaired pipes that they should get back to working.
 	var/drilling = FALSE
-	///List of all parts connected to the extraction hub, not including ourselves.
-	var/list/obj/structure/plasma_extraction_hub/hub_parts = list()
+	///List of pipe parts connected to the extraction hub, not including ourselves.
+	var/list/obj/structure/plasma_extraction_hub/part/pipe/hub_parts = list()
 	///Looping sound of the plasma engine running, extracting plasma.
 	var/datum/looping_sound/plasma_engine/extracting_soundloop
 
@@ -107,11 +107,17 @@
 		extracting_soundloop.start(src)
 	percentage_of_plasma_mined += clamp(1, 0, 100) * seconds_per_tick
 	if(percentage_of_plasma_mined >= 100)
-		QDEL_NULL(display_panel_ref)
+		for(var/obj/structure/plasma_extraction_hub/part/pipe/pipe_parts as anything in hub_parts + src)
+			pipe_parts.on_completion()
 		return
 	//this only has 20 dots so 1 dot = 5%
 	display_panel_ref.active_dots = round(percentage_of_plasma_mined / 5, 1)
 	display_panel_ref.update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/plasma_extraction_hub/part/pipe/main/on_completion()
+	. = ..()
+	STOP_PROCESSING(SSprocessing, src)
+	QDEL_NULL(display_panel_ref)
 
 ///Amount in % that each dot represents of the total.
 #define AMOUNT_COMPLETED_PER_DOT 5

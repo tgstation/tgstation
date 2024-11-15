@@ -8,7 +8,6 @@ TODO LIST:
 - MAKE IT A SEPARATE MINING OBJECTIVE FOR THE STATION
 */
 
-
 /**
  * Base plasma extraction machine
  */
@@ -31,7 +30,7 @@ TODO LIST:
 
 /**
  * Plasma extraction machine pipe
- * There's 3 of these on each plasma extraction machine, one of which is the owner of the rest.
+ * There's 3 of these on each plasma extraction machine, one of which (the 'main' one) is the owner of the rest.
  */
 /obj/structure/plasma_extraction_hub/part/pipe
 	name = "starting pipe location"
@@ -41,10 +40,18 @@ TODO LIST:
 	var/obj/structure/liquid_plasma_ending/last_pipe
 	///Boolean on whether the extraction hub is currently functioning.
 	var/currently_functional = FALSE
+	///Static list of mobs that are spawned by the spawner component. Taken from ore vents.
+	var/static/list/defending_mobs = list(
+		/mob/living/basic/mining/goliath,
+		/mob/living/basic/mining/legion/spawner_made,
+		/mob/living/basic/mining/watcher,
+		/mob/living/basic/mining/lobstrosity/lava,
+	)
 
 /obj/structure/plasma_extraction_hub/part/pipe/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/pipe_laying, src)
+	RegisterSignal(src, COMSIG_SPAWNER_SPAWNED, PROC_REF(log_mob_spawned))
 
 /obj/structure/plasma_extraction_hub/part/pipe/Destroy()
 	. = ..()
@@ -83,6 +90,21 @@ TODO LIST:
 	for(var/obj/structure/liquid_plasma_extraction_pipe/part_pipes as anything in connected_pipes)
 		part_pipes.pipe_status = PIPE_STATUS_ON
 		part_pipes.update_appearance(UPDATE_ICON)
+	var/obj/structure/liquid_plasma_extraction_pipe/random_pipe = pick(connected_pipes)
+	//one pipe on each side is spitting enemies, so we're putting randomness into spawn times.
+	var/time_between_spawns = rand(15 SECONDS, 30 SECONDS)
+	var/time_until_first_spawn = rand(10 SECONDS, 20 SECONDS)
+	random_pipe.AddComponent(/datum/component/spawner, \
+		spawn_types = defending_mobs, \
+		spawn_time = time_between_spawns, \
+		max_spawned = 2, \
+		max_spawn_per_attempt = 1, \
+		spawn_text = "emerges to assault", \
+		spawn_distance = 4, \
+		spawn_distance_exclude = 3, \
+		initial_spawn_delay = time_until_first_spawn, \
+		delete_on_conclusion = TRUE, \
+	)
 	currently_functional = TRUE
 
 ///Stops all drilling activities.
@@ -90,6 +112,7 @@ TODO LIST:
 	for(var/obj/structure/liquid_plasma_extraction_pipe/part_pipes as anything in connected_pipes)
 		part_pipes.pipe_status = PIPE_STATUS_OFF
 		part_pipes.update_appearance(UPDATE_ICON)
+		SEND_SIGNAL(part_pipes, COMSIG_VENT_WAVE_CONCLUDED) //shuts off all spawners.
 	currently_functional = FALSE
 
 ///Returns whether the pipe is able to drill. If it can't, and it currently is drilling,
@@ -107,3 +130,32 @@ TODO LIST:
 			return FALSE
 
 	return TRUE
+
+/**
+ * Called when the machine has been completed, getting 100% plasma extraction.
+ * This handles shutting off all spawners, as the machine will now infinitely run, we don't want constant
+ * hoards of enemies coming from this.
+ */
+/obj/structure/plasma_extraction_hub/part/pipe/proc/on_completion()
+	SHOULD_CALL_PARENT(TRUE)
+	for(var/obj/structure/liquid_plasma_extraction_pipe/part_pipes as anything in connected_pipes)
+		SEND_SIGNAL(part_pipes, COMSIG_VENT_WAVE_CONCLUDED) //shuts off all spawners.
+
+/**
+ * Handle logging for mobs spawned
+ * Copied from ore vents so logs are consistent.
+ */
+/obj/structure/plasma_extraction_hub/part/pipe/proc/log_mob_spawned(datum/source, mob/living/created)
+	SIGNAL_HANDLER
+	log_game("Plasma extraction machine [key_name_and_tag(src)] spawned the following mob: [key_name_and_tag(created)]")
+	SSblackbox.record_feedback("tally", "ore_vent_mobs_spawned", 1, created.type)
+	RegisterSignal(created, COMSIG_LIVING_DEATH, PROC_REF(log_mob_killed))
+
+/**
+ * Handle logging for mobs killed
+ * Copied from ore vents so logs are consistent.
+ */
+/obj/structure/plasma_extraction_hub/part/pipe/proc/log_mob_killed(datum/source, mob/living/killed)
+	SIGNAL_HANDLER
+	log_game("Plasma extraction machine mob [key_name_and_tag(killed)] was killed")
+	SSblackbox.record_feedback("tally", "ore_vent_mobs_killed", 1, killed.type)
