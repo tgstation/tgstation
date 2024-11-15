@@ -1,16 +1,21 @@
+///How many mining points every single miner gets as an award for completing the objective.
+#define MINING_POINTS_AWARD 2500
+///Amount in % that each dot represents of the total.
+#define AMOUNT_COMPLETED_PER_DOT 5
+
 /**
  * The 'Main' extractor hub, that owns all the rest.
  * Also known as the 'bottom middle piece', which also works as a pipe in itself.
  * This holds important stuff such as the bar hud, soundloop, and the whole 3x3 machine together.
  */
 /obj/structure/plasma_extraction_hub/part/pipe/main
-	///Reference to the plasma hud bar to show how much concentrated plasma has been collected.
-	var/obj/effect/bar_hud_display/plasma_bar/display_panel_ref
 	///A number representing the percentage of plasma that has been mined.
 	var/percentage_of_plasma_mined
 	///Boolean on whether we're trying to drill, regardless of whether we can or not.
 	///This is used to tell recently repaired pipes that they should get back to working.
 	var/drilling = FALSE
+	///Reference to the plasma hud bar to show how much concentrated plasma has been collected.
+	var/obj/effect/bar_hud_display/plasma_bar/display_panel_ref
 	///List of pipe parts connected to the extraction hub, not including ourselves.
 	var/list/obj/structure/plasma_extraction_hub/part/pipe/hub_parts = list()
 	///Looping sound of the plasma engine running, extracting plasma.
@@ -65,6 +70,18 @@
 		return
 	toggle_mining(user)
 
+/obj/structure/plasma_extraction_hub/part/pipe/main/on_completion()
+	. = ..()
+	STOP_PROCESSING(SSprocessing, src)
+	QDEL_NULL(display_panel_ref)
+	//unlocks plasma canisters purchasable from Cargo.
+	var/datum/supply_pack/pack = SSshuttle.supply_packs["/datum/supply_pack/materials/gas_canisters/plasma"] //canister IDs are stored as strings
+	pack.hidden = FALSE
+	//give miners their points.
+	if(SSeconomy.bank_accounts_by_job[/datum/job/shaft_miner])
+		for(var/datum/bank_account/miners as anything in SSeconomy.bank_accounts_by_job[/datum/job/shaft_miner])
+			miners.mining_points += AMOUNT_COMPLETED_PER_DOT
+
 /**
  * Toggles the drilling process on/off.
  * Handles things like removing the hud display, stopping the soundloop, and stopping the drilling process.
@@ -114,18 +131,6 @@
 	display_panel_ref.active_dots = round(percentage_of_plasma_mined / 5, 1)
 	display_panel_ref.update_appearance(UPDATE_OVERLAYS)
 
-/obj/structure/plasma_extraction_hub/part/pipe/main/on_completion()
-	. = ..()
-	STOP_PROCESSING(SSprocessing, src)
-	QDEL_NULL(display_panel_ref)
-
-///Amount in % that each dot represents of the total.
-#define AMOUNT_COMPLETED_PER_DOT 5
-
-/obj/effect/bar_hud_display/plasma_bar/examine(mob/user)
-	. = ..()
-	. += span_notice("It is currently showing [active_dots*AMOUNT_COMPLETED_PER_DOT]% filled of [display_title].")
-
 ///A variant of the hud display panel for life shards, this one is set up to display two columns.
 /obj/effect/bar_hud_display/plasma_bar
 	name = "concentrated plasma extracted"
@@ -138,4 +143,9 @@
 	dot_icon_state_empty = "gem_red_empty"
 	display_title = "extracted plasma"
 
+/obj/effect/bar_hud_display/plasma_bar/examine(mob/user)
+	. = ..()
+	. += span_notice("It is currently showing [active_dots*AMOUNT_COMPLETED_PER_DOT]% filled of [display_title].")
+
+#undef MINING_POINTS_AWARD
 #undef AMOUNT_COMPLETED_PER_DOT

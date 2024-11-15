@@ -86,16 +86,16 @@
 	for(var/gasType in GLOB.meta_gas_info)
 		var/datum/gas/gas = gasType
 		var/name = initial(gas.name)
-		if(!initial(gas.purchaseable))
-			continue
 		var/datum/supply_pack/materials/pack = new
+		if(!initial(gas.purchaseable))
+			pack.hidden = TRUE
 		pack.name = "[name] Canister"
 		pack.desc = "Contains a canister of [name]."
 		if(initial(gas.dangerous))
 			pack.access = ACCESS_ATMOSPHERICS
 			pack.access_view = ACCESS_ATMOSPHERICS
 		pack.crate_name = "[name] canister crate"
-		pack.id = "[type]([name])"
+		pack.id = "[type]/[initial(gas.id)]"
 
 		pack.cost = cost + moleCount * initial(gas.base_value) * 1.6
 		pack.cost = CEILING(pack.cost, 10)

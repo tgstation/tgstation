@@ -68,7 +68,6 @@
 	repair_damage(max_integrity) //repair all damage.
 	balloon_alert(user, "repaired")
 	pipe_state = PIPE_STATE_FINE
-	var/obj/structure/plasma_extraction_hub/part/pipe/main_connected_hub = connected_hub
 	if(connected_hub.pipe_owner.drilling)
 		if(connected_hub.start_drilling())
 			return ITEM_INTERACT_SUCCESS
