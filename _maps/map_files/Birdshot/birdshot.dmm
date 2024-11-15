@@ -35500,11 +35500,6 @@
 	},
 /turf/open/floor/grass,
 /area/station/service/chapel)
-"mab" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "mac" = (
 /obj/structure/hedge,
 /obj/item/radio/intercom/directional/south,
@@ -100938,7 +100933,7 @@ aJq
 aJq
 gcs
 blb
-mab
+blb
 blb
 blb
 blb
