@@ -126,6 +126,6 @@
 	var/bodyshape = BODYSHAPE_HUMANOID
 
 	/// The amount of burn damage needed to be done for this mob to be husked
-	var/husk_threshold = HUSK_THRESHOLD_DEAD_HUMAN
+	var/husk_thresold = get_bodypart(BODY_ZONE_CHEST).max_damage * -1
 
 	COOLDOWN_DECLARE(bleeding_message_cd)

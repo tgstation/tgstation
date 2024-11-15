@@ -10,7 +10,6 @@
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/food/meat/slab/xeno
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	husk_threshold = HUSK_THRESHOLD_DEAD_XENO
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
