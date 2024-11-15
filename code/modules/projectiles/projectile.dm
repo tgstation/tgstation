@@ -895,8 +895,8 @@
 	last_projectile_move = world.time
 	while (pixels_to_move > 0 && isturf(loc) && !QDELETED(src) && !deletion_queued)
 		// Because pixel_x/y represents offset and not actual visual position of the projectile, we add 16 pixels to each and cut the excess because projectiles are not meant to be highly offset by default
-		var/pixel_x_actual = abs(pixel_x) == ICON_SIZE_X / 2 ? pixel_x : (pixel_x + ICON_SIZE_X / 2) % ICON_SIZE_X
-		var/pixel_y_actual = abs(pixel_y) == ICON_SIZE_Y / 2 ? pixel_y : (pixel_y + ICON_SIZE_Y / 2) % ICON_SIZE_Y
+		var/pixel_x_actual = abs(pixel_x) == ICON_SIZE_X * 0.5 ? pixel_x : (pixel_x + ICON_SIZE_X * 0.5) % ICON_SIZE_X
+		var/pixel_y_actual = abs(pixel_y) == ICON_SIZE_Y * 0.5 ? pixel_y : (pixel_y + ICON_SIZE_Y * 0.5) % ICON_SIZE_Y
 		// What distances do we need to move to hit the horizontal/vertical turf border
 		var/x_to_border
 		var/y_to_border
@@ -1156,21 +1156,21 @@
 	original = target
 
 	// Trim off excess pixel_x/y by converting them into turf offset
-	if (abs(pixel_x) > ICON_SIZE_X / 2)
-		for (var/i = 1 to floor(abs(pixel_x) + ICON_SIZE_X / 2) / ICON_SIZE_X)
+	if (abs(pixel_x) > ICON_SIZE_X * 0.5)
+		for (var/i in 1 to floor(abs(pixel_x) + ICON_SIZE_X * 0.5) / ICON_SIZE_X)
 			var/turf/new_loc = get_step(source_loc, pixel_x > 0 ? EAST : WEST)
 			if (!istype(new_loc))
 				break
 			source_loc = new_loc
-		pixel_x = pixel_x % (ICON_SIZE_X / 2)
+		pixel_x = pixel_x % (ICON_SIZE_X * 0.5)
 
-	if (abs(pixel_y) > ICON_SIZE_Y / 2)
-		for (var/i = 1 to floor(abs(pixel_y) + ICON_SIZE_Y / 2) / ICON_SIZE_Y)
+	if (abs(pixel_y) > ICON_SIZE_Y * 0.5)
+		for (var/i in 1 to floor(abs(pixel_y) + ICON_SIZE_Y * 0.5) / ICON_SIZE_Y)
 			var/turf/new_loc = get_step(source_loc, pixel_y > 0 ? NORTH : SOUTH)
 			if (!istype(new_loc))
 				break
 			source_loc = new_loc
-		pixel_y = pixel_y % (ICON_SIZE_X / 2)
+		pixel_y = pixel_y % (ICON_SIZE_X * 0.5)
 
 	if(length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)
@@ -1200,14 +1200,14 @@
  */
 /proc/calculate_projectile_angle_and_pixel_offsets(atom/source, atom/target, modifiers)
 	var/angle = 0
-	var/p_x = LAZYACCESS(modifiers, ICON_X) ? text2num(LAZYACCESS(modifiers, ICON_X)) : ICON_SIZE_X / 2 // ICON_(X|Y) are measured from the bottom left corner of the icon.
-	var/p_y = LAZYACCESS(modifiers, ICON_Y) ? text2num(LAZYACCESS(modifiers, ICON_Y)) : ICON_SIZE_Y / 2 // This centers the target if modifiers aren't passed.
+	var/p_x = LAZYACCESS(modifiers, ICON_X) ? text2num(LAZYACCESS(modifiers, ICON_X)) : ICON_SIZE_X * 0.5 // ICON_(X|Y) are measured from the bottom left corner of the icon.
+	var/p_y = LAZYACCESS(modifiers, ICON_Y) ? text2num(LAZYACCESS(modifiers, ICON_Y)) : ICON_SIZE_Y * 0.5 // This centers the target if modifiers aren't passed.
 
 	if(target)
 		var/turf/source_loc = get_turf(source)
 		var/turf/target_loc = get_turf(target)
-		var/dx = ((target_loc.x - source_loc.x) * ICON_SIZE_X) + (target.pixel_x - source.pixel_x) + (p_x - (ICON_SIZE_X / 2))
-		var/dy = ((target_loc.y - source_loc.y) * ICON_SIZE_Y) + (target.pixel_y - source.pixel_y) + (p_y - (ICON_SIZE_Y / 2))
+		var/dx = ((target_loc.x - source_loc.x) * ICON_SIZE_X) + (target.pixel_x - source.pixel_x) + (p_x - (ICON_SIZE_X * 0.5))
+		var/dy = ((target_loc.y - source_loc.y) * ICON_SIZE_Y) + (target.pixel_y - source.pixel_y) + (p_y - (ICON_SIZE_Y * 0.5))
 
 		angle = ATAN2(dy, dx)
 		return list(angle, p_x, p_y)
@@ -1232,8 +1232,8 @@
 	//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
 	var/list/screenview = view_to_pixels(user.client.view)
 
-	var/ox = round(screenview[1] / 2) - user.client.pixel_x //"origin" x
-	var/oy = round(screenview[2] / 2) - user.client.pixel_y //"origin" y
+	var/ox = round(screenview[1] * 0.5) - user.client.pixel_x //"origin" x
+	var/oy = round(screenview[2] * 0.5) - user.client.pixel_y //"origin" y
 	angle = ATAN2(tx - oy, ty - ox)
 	return list(angle, p_x, p_y)
 

@@ -82,7 +82,7 @@
 		return
 	if(!proj.damage || proj.damage_type != BRUTE)
 		return
-	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
+	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(loc)
 	crushed_can.icon_state = icon_state
 	var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
 	crushed_can.throw_at(throw_target, rand(1,2), 7)
@@ -138,7 +138,7 @@
 
 	burst_soda(hit_atom, hide_message = TRUE)
 	visible_message(span_danger("[src]'s impact with [hit_atom] causes it to rupture, spilling everywhere!"))
-	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
+	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(loc)
 	crushed_can.icon_state = icon_state
 	moveToNullspace()
 	QDEL_IN(src, 1 SECONDS) // give it a second so it can still be logged for the throw impact
