@@ -505,7 +505,7 @@
 	upgrade.melee_attack_chain(user, aquarium)
 	TEST_ASSERT(QDELETED(aquarium), "Old [aquarium.type] was not deleted after upgrade")
 
-	var/obj/structure/aquarium/upgraded_aquarium = locate(type_to_check) in aquarium_loc)
+	var/obj/structure/aquarium/upgraded_aquarium = locate(type_to_check) in aquarium_loc
 	TEST_ASSERT(upgraded_aquarium, "New [aquarium.type] was not spawned after upgrade")
 	comp = upgraded_aquarium.GetComponent(__IMPLIED_TYPE__)
 	TEST_ASSERT(comp, "New [aquarium.type] doesn't have an aquarium component")
