@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "Added dehydrator to birdshot kitchen. Surgery theatre now has a surgery tray and surplus prosthetics. An unwired hallway APC is now wired. 1st SM filter is now set to Nitrogen. Chemistry closet in pharmacy now contains extra chemicals to compensate for not having a chemical storage. Atmos air for distro mixer now mixes correctly"

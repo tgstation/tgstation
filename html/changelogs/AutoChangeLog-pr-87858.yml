@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - image: "Speeds up some frames of the dust animation slightly"
-  - image: "Dust/remains spawned after being dusted are now aligned towards the bottom of the tile"
-  - image: "Bigger mobs now produce bigger piles of ash"
-  - image: "Plasmamen now dust into plasma bones"

@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "Fixes SSWardrobe stealing a camera from the camera app when on a dummy, causing a harddel"

@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - refactor: "The ORM, \"ore container\", and order console UIs (produce, mining, bitrunner vendors) now load icons in a more efficient manner."
