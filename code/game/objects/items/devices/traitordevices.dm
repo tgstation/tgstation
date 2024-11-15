@@ -332,7 +332,6 @@ effective or pretty fucking useless.
 	desc = "Device used to disrupt nearby radio, beacon, teleporter, gps, and suit sensor communication. Alternate function creates a powerful distruptor wave which disables all nearby listening devices."
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	var/active = FALSE
 	var/range = 12
 	var/jam_cooldown_duration = 15 SECONDS

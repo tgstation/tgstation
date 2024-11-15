@@ -84,6 +84,7 @@
 	desc = "This device will disrupt any nearby outgoing radio, beacon, teleporter, gps, and suit sensor communication when activated. Does not affect binary chat."
 	item = /obj/item/jammer
 	cost = 5
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
