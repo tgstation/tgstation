@@ -356,6 +356,7 @@ effective or pretty fucking useless.
 	to_chat(user, span_notice("You release a distruptor wave, disabling all nearby radio devices."))
 	for (var/atom/potential_owner in view(7, user))
 		disable_radios_on(potential_owner)
+		disable_suit_sensors(potential_owner)
 	COOLDOWN_START(src, jam_cooldown, jam_cooldown_duration)
 
 /obj/item/jammer/attack_self_secondary(mob/user, modifiers)
@@ -382,12 +383,21 @@ effective or pretty fucking useless.
 	interacting_with.balloon_alert(user, "radio distrupted!")
 	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [interacting_with]."))
 	disable_radios_on(interacting_with)
+	disable_suit_sensors(interacting_with)
 
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/jammer/proc/disable_radios_on(atom/target)
-	for (var/obj/item/radio/radio in target.get_all_contents() + target)
+	for(var/obj/item/radio/radio in target.get_all_contents() + target)
 		radio.set_broadcasting(FALSE)
+
+/obj/item/jammer/proc/disable_suit_sensors(atom/target)
+	for(var/obj/item/clothing/under/uniform in target.get_all_contents() + target)
+		if((uniform.has_sensor == NO_SENSORS) || !uniform.sensor_mode)
+			continue
+
+		uniform.sensor_mode = SENSOR_OFF
+		uniform.update_wearer_status()
 
 /obj/item/jammer/Destroy()
 	GLOB.active_jammers -= src
