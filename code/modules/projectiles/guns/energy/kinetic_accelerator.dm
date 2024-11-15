@@ -225,7 +225,7 @@
 	update_appearance()
 
 /obj/projectile/kinetic/on_range()
-	strike_thing()
+	strike_thing(loc)
 	..()
 
 /obj/projectile/kinetic/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -263,6 +263,18 @@
 	if(ishostile(target))
 		damage *= 1.5
 	return ..()
+
+/obj/projectile/kinetic/mech/strike_thing(atom/target)
+	. = ..()
+	new /obj/effect/temp_visual/explosion/fast(target)
+	for(var/T in RANGE_TURFS(1, target) - target)
+		if(ismineralturf(T))
+			var/turf/closed/mineral/M = T
+			M.gets_drilled(firer, TRUE)
+	for(var/mob/living/L in range(1, target) - firer - target)
+		var/armor = L.run_armor_check(def_zone, armor_flag, "", "", armour_penetration)
+		L.apply_damage(damage, damage_type, def_zone, armor)
+		to_chat(L, span_userdanger("You're struck by a [name]!"))
 
 //Modkits
 /obj/item/borg/upgrade/modkit
