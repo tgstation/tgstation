@@ -62,7 +62,7 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/unpowered)
 "l" = (
-/turf/open/water/lavaland_atmos,
+/turf/open/water/hot_spring,
 /area/lavaland/surface)
 "m" = (
 /obj/machinery/door/airlock/survival_pod/glass,
