@@ -125,4 +125,7 @@
 	/// A bitfield of "bodyshapes", updated by /obj/item/bodypart/proc/synchronize_bodyshapes()
 	var/bodyshape = BODYSHAPE_HUMANOID
 
+	/// The amount of burn damage needed to be done for this mob to be husked
+	var/husk_threshold = HUSK_THRESHOLD_DEAD_HUMAN
+
 	COOLDOWN_DECLARE(bleeding_message_cd)
