@@ -258,23 +258,19 @@
 //mecha_kineticgun version of the projectile
 /obj/projectile/kinetic/mech
 	range = 5
-
-/obj/projectile/kinetic/mech/on_hit(atom/target, blocked, pierce_hit)
-	if(ishostile(target))
-		damage *= 1.5
-	return ..()
+	damage = 80
 
 /obj/projectile/kinetic/mech/strike_thing(atom/target)
 	. = ..()
 	new /obj/effect/temp_visual/explosion/fast(target)
-	for(var/T in RANGE_TURFS(1, target) - target)
-		if(ismineralturf(T))
-			var/turf/closed/mineral/M = T
-			M.gets_drilled(firer, TRUE)
-	for(var/mob/living/L in range(1, target) - firer - target)
-		var/armor = L.run_armor_check(def_zone, armor_flag, "", "", armour_penetration)
-		L.apply_damage(damage, damage_type, def_zone, armor)
-		to_chat(L, span_userdanger("You're struck by a [name]!"))
+	for(var/turf in RANGE_TURFS(1, target) - target)
+		if(ismineralturf(turf))
+			var/turf/closed/mineral/mineral_turf = turf
+			mineral_turf.gets_drilled(firer, TRUE)
+	for(var/mob/living/living_mob in range(1, target) - firer - target)
+		var/armor = living_mob.run_armor_check(def_zone, armor_flag, armour_penetration = armour_penetration)
+		living_mob.apply_damage(damage, damage_type, def_zone, armor)
+		to_chat(living_mob, span_userdanger("You're struck by a [name]!"))
 
 //Modkits
 /obj/item/borg/upgrade/modkit
