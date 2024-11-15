@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed scanner gates saying both bypass and detection lines when malfunctioning"
