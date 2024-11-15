@@ -22,9 +22,9 @@
 	var/hitsound_wall
 
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	/// Zone at which the projectile was aimed at
+	/// Zone at which the projectile is aimed at
 	var/def_zone = ""
-	/// Atom which shot the projectile
+	/// Atom who shot the projectile (Not the gun, the guy who shot the gun)
 	var/atom/movable/firer = null
 	/// The thing that the projectile was fired from (gun, turret, spell)
 	var/datum/fired_from = null
@@ -34,9 +34,9 @@
 	/// Original clicked target
 	var/atom/original = null
 	/// Initial target x coordinate offset of the projectile
-	var/xo = null
+	VAR_FINAL/xo = null
 	/// Initial target y coordinate offset of the projectile
-	var/yo = null
+	VAR_FINAL/yo = null
 	/// Projectile's starting turf
 	var/turf/starting = null
 	/// pixel_x where the player clicked. Default is the center.
@@ -57,11 +57,11 @@
 	/// If the projectile is suspended mid-air
 	var/paused = FALSE
 	/// Last time the projectile moved, used for lag compensation if SSprojectiles starts chugging
-	var/last_projectile_move = 0
+	VAR_PRIVATE/last_projectile_move = 0
 	/// Last time the projectile was processed, also used for lag compensation
-	var/last_process = 0
+	VAR_PRIVATE/last_process = 0
 	/// How many pixels we missed last tick due to lag or speed cap
-	var/overrun = 0
+	VAR_PRIVATE/overrun = 0
 	/// Projectile's movement vector - this caches sine/cosine of our angle to cut down on trig calculations
 	var/datum/vector/movement_vector
 	/// We already impacted these things, do not impact them again. Used to make sure we can pierce things we want to pierce. Lazylist, typecache style (object = TRUE) for performance.
@@ -284,6 +284,7 @@
 		QDEL_NULL(last_point)
 	return ..()
 
+/// Called every time a projectile passes one tile worth of movement
 /obj/projectile/proc/reduce_range()
 	range--
 	pixels_moved_last_tile -= ICON_SIZE_ALL
@@ -310,7 +311,8 @@
 			return
 		deletion_queued = PROJECTILE_RANGE_DELETE
 
-/obj/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
+/// Called next tick after the projectile reaches its maximum range so the animation has time to fully play out
+/obj/projectile/proc/on_range()
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE_OUT)
 	qdel(src)
 
@@ -956,8 +958,6 @@
 				delete_distance = distance_to_move - (pixels_moved_last_tile - ICON_SIZE_ALL)
 
 		if (deletion_queued)
-			//pixel_x -= x_shift * ICON_SIZE_X
-			//pixel_y -= y_shift * ICON_SIZE_Y
 			// Similarly to normal animate code, but use lowered deletion distance instead.
 			var/delete_x = pixel_x + movement_vector.pixel_x * delete_distance - (loc == new_turf) ? x_shift * ICON_SIZE_X : 0
 			var/delete_y = pixel_y + movement_vector.pixel_y * delete_distance - (loc == new_turf) ? y_shift * ICON_SIZE_Y : 0
@@ -1003,7 +1003,7 @@
 /// Called every time projectile animates its movement, in case child wants to have custom animations.
 /// Returning TRUE cancels normal animation
 /obj/projectile/proc/move_animate(animate_x, animate_y, animate_time = world.tick_lag, deleting = FALSE)
-	return
+	return FALSE
 
 /// Called every projectile loop for homing or alternatively, custom trajectory changes.
 /obj/projectile/proc/process_homing()
