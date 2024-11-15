@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Fixed visual glitches when inserting items from an slot other than the hands into evidence bags & other storages that have quick gather mode enabled"

@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Many years later, projectiles finally can pass through portals - this time without crashing the server."

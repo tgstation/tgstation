@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed tenacity effect printing its messages when it shouldn't be, and not removing its' effects when it should've."
