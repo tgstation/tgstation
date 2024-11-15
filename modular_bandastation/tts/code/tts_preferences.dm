@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(human_to_tts)
+
 /datum/preferences/ui_static_data(mob/user)
 	var/list/data = ..()
 	data["tts_enabled"] = CONFIG_GET(flag/tts_enabled)
@@ -52,8 +54,11 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 
 /datum/preference/text/tts_seed/apply_to_human(mob/living/carbon/human/target, value)
-	target.AddComponent(/datum/component/tts_component, SStts220.tts_seeds[value])
-	target.dna.tts_seed_dna = SStts220.tts_seeds[value]
+	var/seed_name = value
+	if(!value)
+		seed_name = SStts220.get_random_seed(target)
+	target.AddComponent(/datum/component/tts_component, SStts220.tts_seeds[seed_name])
+	target.dna.tts_seed_dna = SStts220.tts_seeds[seed_name]
 
 /datum/preference/numeric/sound_tts_volume_radio
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -65,3 +70,7 @@
 
 /datum/preference/numeric/sound_tts_volume_radio/create_default_value()
 	return maximum
+
+/datum/preferences/apply_prefs_to(mob/living/carbon/human/character, icon_updates)
+	. = ..()
+	GLOB.human_to_tts["[character.real_name]"] = character.dna.tts_seed_dna

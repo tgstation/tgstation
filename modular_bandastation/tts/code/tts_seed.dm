@@ -20,8 +20,6 @@
 	add_tts_component()
 
 /atom/proc/cast_tts(mob/listener, message, atom/location, is_local = TRUE, effect = null, traits = TTS_TRAIT_RATE_FASTER, preSFX, postSFX)
-	if(SEND_SIGNAL(src, COMSIG_ATOM_PRE_TTS_CAST, listener, message, location, is_local, effect, traits, preSFX, postSFX) & COMPONENT_TTS_INTERRUPT)
-		return
 	SEND_SIGNAL(src, COMSIG_ATOM_TTS_CAST, listener, message, location, is_local, effect, traits, preSFX, postSFX)
 
 // TODO: Do it better?
