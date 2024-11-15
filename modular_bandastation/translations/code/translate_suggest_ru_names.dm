@@ -200,6 +200,7 @@ ADMIN_VERB(ru_names_review_panel, R_ADMIN, "Ru Names Review", "Shows player-sugg
 
 /mob/verb/suggest_ru_name(atom/A as mob|obj|turf in view())
 	set name = "Предложить перевод"
+	set category = "Special"
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(_suggested_ru_name), A))
 
