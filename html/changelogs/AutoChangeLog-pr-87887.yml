@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Admin-deleting a mob now ghostizes it beforehand, preventing a runtime error."

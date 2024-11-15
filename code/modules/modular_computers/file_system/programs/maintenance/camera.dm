@@ -11,11 +11,17 @@
 	circuit_comp_type = /obj/item/circuit_component/mod_program/camera
 
 	/// Camera built-into the tablet.
-	var/obj/item/camera/internal_camera
+	var/obj/item/camera/app/internal_camera
 	/// Latest picture taken by the app.
 	var/datum/picture/internal_picture
 	/// How many pictures were taken already, used for the camera's TGUI photo display
 	var/picture_number = 1
+
+// Special type of camera for this exact usecase to prevent harddels
+/obj/item/camera/app
+	name = "internal camera"
+	desc = "Specialized internal camera protected from the hellish depths of SSWardrobe. \
+	Yell at coders if you somehow manage to see this"
 
 /datum/computer_file/program/maintenance/camera/on_install()
 	. = ..()

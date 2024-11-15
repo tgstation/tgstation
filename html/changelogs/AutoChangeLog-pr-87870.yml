@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "silo connection on some machines won't time out when changing FPS settings"
-  - code_imp: "improved attack chain code for silo connection"
