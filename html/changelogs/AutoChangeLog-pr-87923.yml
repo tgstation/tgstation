@@ -1,0 +1,4 @@
+author: "Hardly"
+delete-after: True
+changes:
+  - bugfix: "Fixes watchers not attacking their targets in melee range"
