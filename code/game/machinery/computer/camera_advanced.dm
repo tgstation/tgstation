@@ -132,8 +132,6 @@
 		remove_eye_control(current_user)
 	end_processing()
 
-	QDEL_NULL(eyeobj)
-
 /obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
 	return can_interact(user)
 
@@ -188,7 +186,7 @@
 
 	if(camera_location)
 		give_eye_control(L)
-		eyeobj.setLoc(camera_location)
+		eyeobj.setLoc(camera_location, TRUE)
 	else
 		unset_machine()
 

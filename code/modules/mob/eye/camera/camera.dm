@@ -1,5 +1,5 @@
 /**
- * An invisible (no icon) mob used to look around the cameranet. \
+ * Eye mob used to look around a [camera network][/datum/cameranet]. \
  * As it moves, it makes requests to the network to update what the user can and cannot see.
  */
 /mob/eye/camera
@@ -11,8 +11,8 @@
 	interaction_range = INFINITY
 	/// If TRUE, the eye will cover turfs hidden to the cameranet with static.
 	var/use_visibility = TRUE
-	/// List of [chunks][/datum/camerachunk] visible to this camera.
-	/// Please don't interface with this directly. Use the cameranet.
+	/// List of [camera chunks][/datum/camerachunk] visible to this camera.
+	/// Please don't interface with this directly. Use the [cameranet][/datum/cameranet].
 	VAR_FINAL/list/datum/camerachunk/visibleCameraChunks = list()
 	/// NxN Range of a single camera chunk.
 	var/static_visibility_range = 16
@@ -20,7 +20,6 @@
 /mob/eye/camera/Initialize(mapload)
 	. = ..()
 	GLOB.camera_eyes += src
-	setLoc(loc, TRUE)
 
 /mob/eye/camera/Destroy()
 	for(var/V in visibleCameraChunks)
@@ -32,7 +31,7 @@
 /**
  * Getter proc for getting the current user's client.
  *
- * The base version of this proc returns null. \
+ * The base version of this proc returns null.
  * Subtypes are expected to overload this proc and make it return something meaningful.
  */
 /mob/eye/camera/proc/GetViewerClient()

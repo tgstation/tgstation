@@ -1,6 +1,6 @@
 /**
  * A camera controlled by a machine-operating user, like advanced cameras.
- *
+ * Handles assigning/unassigning it's users, as well as applying sight effects.
  */
 /mob/eye/camera/remote
 	/// Weakref to the current user of this eye. Must be a [living mob][/mob/living].
@@ -8,10 +8,12 @@
 	/// Weakref to the creator of this eye. Must be a [machine][/obj/machinery].
 	var/datum/weakref/origin_ref
 
-	/// If TRUE, the camera will show it's icon to the user.
+	/// TRUE if this camera should show itself to the user.
 	var/visible_to_user = FALSE
 	/// If visible_to_user is TRUE, it will show this in the center of the screen.
 	VAR_PROTECTED/image/user_image
+
+	/* The below code could be shared by AI eyes... */
 
 	/// If TRUE, the eye will have acceleration when moving.
 	var/acceleration = TRUE
@@ -29,7 +31,9 @@
 
 /mob/eye/camera/remote/Initialize(mapload, obj/machinery/creator)
 	if(!creator)
+		stack_trace("Attempted to create /mob/eye/camera/remote without an origin machine.")
 		return INITIALIZE_HINT_QDEL
+
 	. = ..()
 
 	origin_ref = WEAKREF(creator)
@@ -51,10 +55,10 @@
 	if(old_user)
 		old_user.remote_control = null
 		old_user.reset_perspective(null)
-		name = initial(name)
+		name = initial(src.name)
 
 		var/client/old_user_client = GetViewerClient()
-		if(old_user_client && !isnull(user_image))
+		if(user_image && old_user_client)
 			old_user_client.images -= user_image
 
 	user_ref = WEAKREF(new_user) //The user_ref can still be null!
@@ -65,7 +69,7 @@
 		name = "Camera Eye ([new_user.name])"
 
 		var/client/new_user_client = GetViewerClient()
-		if(new_user_client && !isnull(user_image))
+		if(user_image && new_user_client)
 			new_user_client.images += user_image
 
 /**
@@ -106,12 +110,11 @@
 	. = ..()
 
 	var/client/user_client = GetViewerClient()
-
 	if(user_image && user_client)
 		SET_PLANE(user_image, ABOVE_GAME_PLANE, destination) //incase we move a z-level
 
 /mob/eye/camera/remote/relaymove(mob/living/user, direction)
-	var/initial = initial(sprint)
+	var/initial = initial(src.sprint)
 
 	if(last_moved < world.timeofday) // It's been too long since we last moved, reset sprint
 		sprint = initial

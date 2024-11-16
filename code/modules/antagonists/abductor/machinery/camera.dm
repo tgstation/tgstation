@@ -22,8 +22,11 @@
 
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
 	. = ..()
-	eyeobj.set_user_icon('icons/mob/eyemob.dmi', "abductor_camera")
-	eyeobj.SetInvisibility(INVISIBILITY_OBSERVER)
+	//For observers
+	eyeobj.icon = 'icons/mob/eyemob.dmi'
+	eyeobj.icon_state = "abductor_camera"
+	//For the user
+	eyeobj.set_user_icon(eyeobj.icon, eyeobj.icon_state)
 
 /obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
 	if(!abduct_created)

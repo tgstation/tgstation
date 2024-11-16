@@ -89,8 +89,6 @@
 	active_hud_list[AI_DETECT_HUD] = new_images
 	hud.add_atom_to_hud(src)
 
-// Use this when setting the aiEye's location.
-// It will also stream the chunk that the new loc is in.
 /mob/eye/camera/ai/setLoc(destination, force_update = FALSE)
 	if(!ai)
 		return
@@ -197,9 +195,8 @@
 	eyeobj = new /mob/eye/camera/ai()
 	all_eyes += eyeobj
 	eyeobj.ai = src
-	eyeobj.setLoc(loc)
 	eyeobj.name = "[name] (AI Eye)"
-	eyeobj.real_name = eyeobj.name
+	eyeobj.setLoc(loc, TRUE)
 	set_eyeobj_visible(TRUE)
 
 /mob/living/silicon/ai/proc/set_eyeobj_visible(state = TRUE)
