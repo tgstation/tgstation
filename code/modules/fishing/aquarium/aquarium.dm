@@ -24,10 +24,10 @@
 
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
-	update_appearance()
 	AddComponent(/datum/component/aquarium, aquarium_zone_min_px, aquarium_zone_max_px, aquarium_zone_min_py, aquarium_zone_max_py, default_beauty)
 	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
 	RegisterSignal(src, COMSIG_AQUARIUM_FLUID_CHANGED, PROC_REF(on_aquarium_liquid_changed))
+	update_appearance()
 
 /obj/structure/aquarium/update_icon()
 	. = ..()
