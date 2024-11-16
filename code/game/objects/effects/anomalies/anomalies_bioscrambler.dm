@@ -79,6 +79,10 @@
 /obj/effect/anomaly/bioscrambler/docile/update_target()
 	return
 
+/obj/effect/anomaly/bioscrambler/detonate()
+	COOLDOWN_RESET(src, pulse_cooldown)
+	anomalyEffect()
+
 /// Visual effect spawned when the bioscrambler scrambles your bio
 /obj/effect/temp_visual/circle_wave
 	icon = 'icons/effects/64x64.dmi'

@@ -11,10 +11,15 @@
 	var/obj/item/assembly/signaler/anomaly/anomaly_core = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
+	/// How long till we seppuku? Blocked by immortal
 	var/lifespan = ANOMALY_COUNTDOWN_TIMER
+	/// Call warn_end_of_life when this much time is left
+	var/warn_at = 10 SECONDS
 	var/death_time
 
+	/// Color of the countdown effect
 	var/countdown_colour
+	/// Reference to the countdown effect
 	var/obj/effect/countdown/anomaly/countdown
 
 	/// Do we drop a core when we're neutralized?
@@ -53,6 +58,7 @@
 	if(immortal)
 		return
 	countdown.start()
+	addtimer(CALLBACK(src, PROC_REF(warn_end_of_life)), lifespan - warn_at)
 
 /obj/effect/anomaly/vv_edit_var(vname, vval)
 	. = ..()
@@ -129,7 +135,6 @@
 	to_chat(user, span_notice("Analyzing... [src]'s unstable field is not fluctuating along a stable frequency."))
 	return ITEM_INTERACT_BLOCKING
 
-
 ///Stabilize an anomaly, letting it stay around forever or untill destabilizes by a player. An anomaly without a core can't be signalled, but can be destabilized
 /obj/effect/anomaly/proc/stabilize(anchor = FALSE, has_core = TRUE)
 	immortal = TRUE
@@ -139,3 +144,7 @@
 		QDEL_NULL(anomaly_core)
 	if (anchor)
 		move_chance = 0
+
+/obj/effect/anomaly/proc/warn_end_of_life()
+	animate(src, time = warn_at, transform = matrix().Scale(3, 3), flags = ANIMATION_PARALLEL)
+	return
