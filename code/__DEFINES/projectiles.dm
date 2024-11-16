@@ -94,7 +94,7 @@
 /// Queued for impact deletion (simple qdel)
 #define PROJECTILE_IMPACT_DELETE "impact_delete"
 /// Queued for range deletion (on_range call)
-#define PROJECTILE_RANGE_DELETE "range_sdelete"
+#define PROJECTILE_RANGE_DELETE "range_delete"
 
 /// Projectile either hasn't impacted anything, or pierced through the target
 #define PROJECTILE_IMPACT_PASSED "impact_passed"

@@ -351,11 +351,11 @@
 
 	var/turf/target_turf = get_turf(target)
 	if(target == original)
-		impact_x = target.pixel_x + p_x - 16
-		impact_y = target.pixel_y + p_y - 16
+		impact_x = target.pixel_x + p_x - ICON_SIZE_X * 0.5
+		impact_y = target.pixel_y + p_y - ICON_SIZE_Y * 0.5
 	else
-		impact_x = entry_x + movement_vector?.pixel_x * rand(0, 16)
-		impact_y = entry_y + movement_vector?.pixel_y * rand(0, 16)
+		impact_x = entry_x + movement_vector?.pixel_x * rand(0, ICON_SIZE_X * 0.5)
+		impact_y = entry_y + movement_vector?.pixel_y * rand(0, ICON_SIZE_Y * 0.5)
 
 	if(isturf(target) && hitsound_wall)
 		playsound(src, hitsound_wall, clamp(vol_by_damage() + (suppressed ? 0 : 20), 0, 100), TRUE, -1)
@@ -897,8 +897,8 @@
 	last_projectile_move = world.time
 	while (pixels_to_move > 0 && isturf(loc) && !QDELETED(src) && !deletion_queued)
 		// Because pixel_x/y represents offset and not actual visual position of the projectile, we add 16 pixels to each and cut the excess because projectiles are not meant to be highly offset by default
-		var/pixel_x_actual = abs(pixel_x) == ICON_SIZE_X * 0.5 ? pixel_x : (pixel_x + ICON_SIZE_X * 0.5) % ICON_SIZE_X
-		var/pixel_y_actual = abs(pixel_y) == ICON_SIZE_Y * 0.5 ? pixel_y : (pixel_y + ICON_SIZE_Y * 0.5) % ICON_SIZE_Y
+		var/pixel_x_actual = abs(pixel_x) == ICON_SIZE_X * 0.5 ? pixel_x + ICON_SIZE_X * 0.5 : (pixel_x + ICON_SIZE_X * 0.5) % ICON_SIZE_X
+		var/pixel_y_actual = abs(pixel_y) == ICON_SIZE_Y * 0.5 ? pixel_y + ICON_SIZE_Y * 0.5 : (pixel_y + ICON_SIZE_Y * 0.5) % ICON_SIZE_Y
 		// What distances do we need to move to hit the horizontal/vertical turf border
 		var/x_to_border
 		var/y_to_border
@@ -925,9 +925,10 @@
 		var/x_shift = SIGN(movement_vector.pixel_x) * (!isnull(x_to_border) && distance_to_move >= x_to_border)
 		var/y_shift = SIGN(movement_vector.pixel_y) * (!isnull(y_to_border) && distance_to_move >= y_to_border)
 		var/turf/new_turf = locate(x + x_shift, y + y_shift, z)
-		// Calculate where in the turf we will be when we cross the edge, for impact VFX
-		entry_x = pixel_x + distance_to_move * movement_vector.pixel_x - ICON_SIZE_X * x_shift
-		entry_y = pixel_y + distance_to_move * movement_vector.pixel_y - ICON_SIZE_Y * y_shift
+		// Calculate where in the turf we will be when we cross the edge.
+		// This is a projectile variable because its also used in hit VFX
+		entry_x = pixel_x + movement_vector.pixel_x * distance_to_move - x_shift * ICON_SIZE_X
+		entry_y = pixel_y + movement_vector.pixel_y * distance_to_move - y_shift * ICON_SIZE_Y
 		var/delete_distance
 
 		if (x_shift || y_shift)
@@ -971,17 +972,14 @@
 
 		pixels_to_move -= distance_to_move
 		// animate() instantly changes pixel_x/y values and just interpolates them client-side so next loop processes properly
-		var/actual_x = pixel_x + movement_vector.pixel_x * distance_to_move - x_shift * ICON_SIZE_X
-		var/actual_y = pixel_y + movement_vector.pixel_y * distance_to_move - y_shift * ICON_SIZE_Y
-
 		if (hitscan)
-			pixel_x = actual_x
-			pixel_y = actual_y
+			pixel_x = entry_x
+			pixel_y = entry_y
 		else
 			pixel_x -= x_shift * ICON_SIZE_X
 			pixel_y -= y_shift * ICON_SIZE_Y
-			if (!move_animate(actual_x, actual_y))
-				animate(src, pixel_x = actual_x, pixel_y = actual_y, time = world.tick_lag, flags = ANIMATION_PARALLEL)
+			if (!move_animate(entry_x, entry_y))
+				animate(src, pixel_x = entry_x, pixel_y = entry_y, time = world.tick_lag, flags = ANIMATION_PARALLEL)
 
 		// Homing caps our movement speed per loop while leaving per tick speed intact, so we can just call process_homing every loop here
 		if (homing)
