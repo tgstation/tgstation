@@ -1,5 +1,5 @@
 ///How many mining points every single miner gets as an award for completing the objective.
-#define MINING_POINTS_AWARD 2500
+#define OBJECTIVE_MINING_POINTS_AWARD 2500
 ///Amount in % that each dot represents of the total.
 #define AMOUNT_COMPLETED_PER_DOT 5
 ///Time you have to wait before you can turn the machine on/off to prevent cheesing.
@@ -104,7 +104,8 @@
 	//give miners their points.
 	if(SSeconomy.bank_accounts_by_job[/datum/job/shaft_miner])
 		for(var/datum/bank_account/miners as anything in SSeconomy.bank_accounts_by_job[/datum/job/shaft_miner])
-			miners.mining_points += AMOUNT_COMPLETED_PER_DOT
+			miners.mining_points += OBJECTIVE_MINING_POINTS_AWARD
+			miners.bank_card_talk("You've been awarded [OBJECTIVE_MINING_POINTS_AWARD] mining points for the completion of the plasma extraction objective.")
 	var/datum/station_goal/extract_plasma/goal = SSstation.get_station_goal(/datum/station_goal/extract_plasma)
 	goal.completed = TRUE
 
@@ -180,6 +181,6 @@
 	dot_icon_state_empty = "gem_red_empty"
 	display_title = "extracted plasma"
 
-#undef MINING_POINTS_AWARD
+#undef OBJECTIVE_MINING_POINTS_AWARD
 #undef AMOUNT_COMPLETED_PER_DOT
 #undef TIME_BETWEEN_TOGGLES
