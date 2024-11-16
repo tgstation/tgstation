@@ -86,6 +86,9 @@
 	if(percentage_of_plasma_mined >= 100)
 		balloon_alert(user, "extraction completed")
 		return
+	if(!COOLDOWN_FINISHED(src, toggle_cooldown))
+		balloon_alert(user, "on cooldown!")
+		return
 	var/ready_to_start = tgui_alert(user, "[drilling ? "Stop" : "Start"] collecting liquid plasma?", (drilling ? "Really stop drilling?" : "Ready to start?"), list("Yes", "No"))
 	if(ready_to_start != "Yes")
 		return
