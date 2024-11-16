@@ -235,6 +235,8 @@
 	/// In order to preserve animations, projectiles are only deleted the tick *after* they impact something.
 	/// Same is applied to reaching the range limit
 	var/deletion_queued = NONE
+	/// Informs the projectile that it's trajectory has been changed mid-process after a penetrating impact, so it recalculates some of its math
+	var/trajectory_changed = FALSE
 
 	/// If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
@@ -805,22 +807,26 @@
 	if(!nondirectional_sprite)
 		transform = transform.TurnTo(angle, new_angle)
 	angle = new_angle
+	trajectory_changed = TRUE
 	if(movement_vector)
 		movement_vector.set_angle(new_angle)
 	if(fired && hitscan && isturf(loc))
 		create_hitscan_point()
 
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
-/obj/projectile/proc/set_angle_centered(new_angle, center_turf)
+/obj/projectile/proc/set_angle_centered(new_angle)
 	if (angle == new_angle)
 		return
 	if(!nondirectional_sprite)
 		transform = transform.TurnTo(angle, new_angle)
 	angle = new_angle
+	entry_x = 0
+	entry_y = 0
+	trajectory_changed = TRUE
 	if(movement_vector)
 		movement_vector.set_angle(new_angle)
 	if(fired && hitscan && isturf(loc))
-		create_hitscan_point(tile_center = center_turf)
+		create_hitscan_point(tile_center = TRUE)
 
 /obj/projectile/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, angle))
@@ -885,6 +891,7 @@
  * Main projectile movement cycle.
  * Normal behavior moves projectiles in a straight line through tiles, but it gets trickier with homing.
  * Every pixels_per_decisecond we will stop and call process_homing(), which while a bit rough, does not have a significant performance impact
+ * This proc is needs to be very performant, so do not add overridable logic that can be handled in homing or animations to here.
  *
  * pixels_to_move determines how many pixels the projectile should move
  * hitscan prevents animation logic from running
@@ -924,11 +931,12 @@
 		// Figure out if we move to the next turf and if so, what its positioning relatively to us is
 		var/x_shift = SIGN(movement_vector.pixel_x) * (!isnull(x_to_border) && distance_to_move >= x_to_border)
 		var/y_shift = SIGN(movement_vector.pixel_y) * (!isnull(y_to_border) && distance_to_move >= y_to_border)
-		var/turf/new_turf = locate(x + x_shift, y + y_shift, z)
+		var/turf/new_turf = (x_shift || y_shift) ? locate(x + x_shift, y + y_shift, z) : loc
 		// Calculate where in the turf we will be when we cross the edge.
 		// This is a projectile variable because its also used in hit VFX
 		entry_x = pixel_x + movement_vector.pixel_x * distance_to_move - x_shift * ICON_SIZE_X
 		entry_y = pixel_y + movement_vector.pixel_y * distance_to_move - y_shift * ICON_SIZE_Y
+		trajectory_changed = FALSE
 		var/delete_distance
 
 		if (x_shift || y_shift)
@@ -1038,8 +1046,8 @@
 	beam_points[last_point] = null
 
 /// Creates a new keypoint in which the tracer will split
-/obj/projectile/proc/create_hitscan_point(tile_center = null, broken_segment = FALSE)
-	var/datum/point/new_point = RETURN_PRECISE_POINT(tile_center || src)
+/obj/projectile/proc/create_hitscan_point(tile_center = FALSE, broken_segment = FALSE)
+	var/datum/point/new_point = RETURN_PRECISE_POINT(loc || src)
 	if (!broken_segment)
 		beam_points[last_point] = new_point
 	beam_points[new_point] = null

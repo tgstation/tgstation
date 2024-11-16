@@ -196,7 +196,7 @@
 	if(abs(incidence) > 90 && abs(incidence) < 270)
 		return FALSE
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
-	proj.set_angle_centered(new_angle, loc)
+	proj.set_angle_centered(new_angle)
 	return ..()
 
 //DOUBLE
@@ -221,7 +221,7 @@
 	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (proj.angle + 180))
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
 	proj.forceMove(loc)
-	proj.set_angle_centered(new_angle, loc)
+	proj.set_angle_centered(new_angle)
 	return ..()
 
 //BOX
