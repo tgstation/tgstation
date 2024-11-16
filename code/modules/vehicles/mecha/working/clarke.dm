@@ -35,7 +35,7 @@
 	pivot_step = TRUE
 
 /datum/armor/mecha_clarke
-	melee = 50
+	melee = 40
 	bullet = 10
 	laser = 20
 	energy = 10
