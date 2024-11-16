@@ -1,9 +1,3 @@
-/*
-TODO LIST:
-- GIVE PIPES THEIR OWN SPRITE
-- MAKE IT EXIST IN-GAME SO IT IS SOMETHING PLAYERS CAN ACTUALLY DO
-*/
-
 /**
  * Base plasma extraction machine
  */
