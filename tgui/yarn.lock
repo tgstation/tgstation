@@ -18760,6 +18760,7 @@ __metadata:
     tgui: "workspace:*"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
+    tgui-styles: "npm:^0.0.8"
   languageName: unknown
   linkType: soft
 
@@ -18785,6 +18786,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
     tgui-polyfill: "workspace:*"
+    tgui-styles: "npm:^0.0.8"
   languageName: unknown
   linkType: soft
 
