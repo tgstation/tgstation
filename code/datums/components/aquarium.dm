@@ -168,8 +168,8 @@
 			new_parent.create_reagents(reagents_size, SEALED_CONTAINER)
 		movable.reagents.trans_to(new_parent, movable.reagents.total_volume)
 
-/datum/component/aquarium/PostTransfer()
-	if(!ismovable(parent))
+/datum/component/aquarium/PostTransfer(datum/new_parent)
+	if(!ismovable(new_parent))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/aquarium/InheritComponent(datum/component/aquarium/new_comp, i_am_original)

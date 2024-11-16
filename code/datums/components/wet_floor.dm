@@ -166,7 +166,7 @@
 	//Slippery components don't transfer due to callbacks
 	qdel(O.GetComponent(/datum/component/slippery))
 
-/datum/component/wet_floor/PostTransfer()
+/datum/component/wet_floor/PostTransfer(datum/new_parent)
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/turf/T = parent

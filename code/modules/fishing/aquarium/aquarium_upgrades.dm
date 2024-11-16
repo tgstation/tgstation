@@ -22,7 +22,7 @@
 		return ITEM_INTERACT_BLOCKING
 	var/atom/movable/upgraded_aquarium = new upgrade_to_type(interacting_with.drop_location())
 	//This should transfer all the fish, reagents and settings from the aquarium component
-	//interacting_with.TransferComponents(upgraded_aquarium)
+	interacting_with.TransferComponents(upgraded_aquarium)
 	upgraded_aquarium.balloon_alert(user, "upgraded")
 	qdel(src)
 	qdel(interacting_with)

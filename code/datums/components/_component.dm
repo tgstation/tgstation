@@ -17,15 +17,6 @@
 	  */
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 
-	/**
-	  * The type to check for duplication
-	  *
-	  * `null` means exact match on `type` (default)
-	  *
-	  * Any other type means that and all subtypes
-	  */
-	var/dupe_type
-
 	/// The datum this components belongs to
 	var/datum/parent
 
@@ -339,10 +330,7 @@
 
 	raw_args[1] = src
 	if(dupe_mode != COMPONENT_DUPE_ALLOWED && dupe_mode != COMPONENT_DUPE_SELECTIVE && dupe_mode != COMPONENT_DUPE_SOURCES)
-		if(!dupe_type)
-			old_component = GetExactComponent(component_type)
-		else
-			old_component = GetComponent(dupe_type)
+		old_component = GetComponent(component_type)
 
 		if(old_component)
 			switch(dupe_mode)
@@ -456,17 +444,15 @@
 		return
 	if(target.parent)
 		target.ClearFromParent(src)
-	target.parent = src
-	var/result = target.PostTransfer()
+	var/result = target.PostTransfer(src)
 	switch(result)
 		if(COMPONENT_INCOMPATIBLE)
 			var/c_type = target.type
 			qdel(target)
 			CRASH("Incompatible [c_type] transfer attempt to a [type]!")
 
+	target._JoinParent(src)
 	AddComponent(target)
-	if(!QDELETED(target))
-		target._JoinParent()
 
 /**
  * Transfer all components to target
