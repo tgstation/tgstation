@@ -1,4 +1,0 @@
-author: "Dawnseer"
-delete-after: True
-changes:
-  - bugfix: "removes the gas mask check for if the gas mask mouth is covered. Now it only checks for filters and other cigs"

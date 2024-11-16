@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - bugfix: "Nooartrium heart damage can no longer be bypassed with non-organic hearts"

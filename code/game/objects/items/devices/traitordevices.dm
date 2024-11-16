@@ -341,7 +341,7 @@ effective or pretty fucking useless.
 	. = ..()
 	register_context()
 
-/atom/movable/screen/alert/give/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+/obj/item/jammer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	context[SCREENTIP_CONTEXT_LMB] = "Release distruptor wave"
 	context[SCREENTIP_CONTEXT_RMB] = "Toggle"
 	return CONTEXTUAL_SCREENTIP_SET

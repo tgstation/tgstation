@@ -1,0 +1,4 @@
+author: "JagOfTroy"
+delete-after: True
+changes:
+  - bugfix: "Fixed Automatic Announcement System bug with the Research Node Announcement message not updating properly. It will now properly save and announce whatever input the user desires!\n:cl:"

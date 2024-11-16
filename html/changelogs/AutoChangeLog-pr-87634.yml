@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "you now snip cuffs with right click to prevent accidental cuts"

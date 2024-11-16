@@ -1,4 +1,0 @@
-author: "xPokee"
-delete-after: True
-changes:
-  - bugfix: "fixed brains turning invisible after being washed"
