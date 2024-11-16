@@ -50,9 +50,9 @@
 /obj/structure/plasma_extraction_hub/part/pipe/main/update_overlays()
 	. = ..()
 	if(drilling)
-		. += mutable_appearance(icon, "extractor-on")
+		. += "extractor-on"
 	else
-		. += mutable_appearance(icon, "extractor-off")
+		. += "extractor-off"
 
 ///Copied from gravity gen, this sets up the parts of the plasma extraction hub, and its starting points.
 /obj/structure/plasma_extraction_hub/part/pipe/main/proc/setup_parts()

@@ -1224,7 +1224,7 @@
 		if(delay >= MIN_TOOL_OPERATING_DELAY)
 			play_tool_operating_sound(target, volume)
 
-		if(!do_after(user, delay, target=target, extra_checks=tool_check))
+		if(!do_after(user, delay, target=target, extra_checks=tool_check, interaction_key = interaction_key))
 			return
 	else
 		// Invoke the extra checks once, just in case.

@@ -25,6 +25,10 @@
 	///The main pipe that owns the whole 3x3 machine.
 	var/obj/structure/plasma_extraction_hub/part/pipe/main/pipe_owner
 
+/obj/structure/plasma_extraction_hub/part/Destroy(force)
+	pipe_owner = null
+	return ..()
+
 /**
  * Plasma extraction machine pipe
  * There's 3 of these on each plasma extraction machine, one of which (the 'main' one) is the owner of the rest.

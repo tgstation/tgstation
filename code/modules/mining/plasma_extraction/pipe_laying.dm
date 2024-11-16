@@ -114,8 +114,9 @@
  * ready to use again later (if possible).
  */
 /datum/component/pipe_laying/proc/clear_click_catch()
-	if(!lockon_component)
-		return
+	if(lockon_component)
+		QDEL_NULL(lockon_component)
+	building_pipes = FALSE
 	for(var/turf/turfs_with_overlay as anything in turfs_hovering)
 		turfs_with_overlay.cut_overlay(pipe_overlay_appearance)
 	turfs_hovering.Cut()
@@ -124,7 +125,6 @@
 	pipe_placer.clear_fullscreen("pipe_extractor")
 	pipe_placer = null
 	playsound(parent, 'sound/effects/empulse.ogg', 75, TRUE)
-	QDEL_NULL(lockon_component)
 
 ///Called when the user clicks on something, which we just redirect to build pipes.
 /datum/component/pipe_laying/proc/on_catcher_click(turf/location, control, params, user)
@@ -159,7 +159,7 @@
 	if(length(pipe_locations))
 		for(var/turf/next_location as anything in pipe_locations)
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
-			if(!do_after(pipe_placer, 2 SECONDS, next_location, extra_checks = CALLBACK(src, PROC_REF(holding_pipe_check))))
+			if(!do_after(pipe_placer, 1.5 SECONDS, next_location, extra_checks = CALLBACK(src, PROC_REF(holding_pipe_check))))
 				break
 			playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
 			var/obj/structure/new_segment
@@ -178,7 +178,6 @@
 				var/direction_to_place = REVERSE_DIR(get_dir(previous_segment, next_location))
 				new_segment.setDir(direction_to_place)
 			else
-				new_segment = new /obj/structure/liquid_plasma_extraction_pipe(next_location, part_hub)
 				var/direction_to_place
 				if(spot_in_list == length(pipe_locations)) //last one copies the last one as it's trailing
 					var/turf/previous_segment
@@ -201,8 +200,14 @@
 					direction_to_place = next_direction
 					if(ISDIAGONALDIR(next_direction) && (NSCOMPONENT(previous_direction)))
 						direction_to_place = REVERSE_DIR(direction_to_place)
-				last_placed_pipe = new_segment
 				should_delete_ourselves = TRUE
+				var/obj/structure/liquid_plasma_extraction_pipe/pipe_sharing_tile = locate() in next_location
+				//prevents you from having 2 pipes going the same way.
+				if(pipe_sharing_tile && (pipe_sharing_tile.dir == direction_to_place || pipe_sharing_tile.dir == REVERSE_DIR(direction_to_place)))
+					pipe_sharing_tile.balloon_alert(user, "conflicting pipe!")
+					break
+				new_segment = new /obj/structure/liquid_plasma_extraction_pipe(next_location, part_hub)
+				last_placed_pipe = new_segment
 				new_segment.setDir(direction_to_place)
 				part_hub.connected_pipes += new_segment
 			if(start_one_tile_ahead && spot_in_list == 1)
@@ -224,7 +229,6 @@
 			if(last_spot)
 				break
 
-	building_pipes = FALSE
 	pipe_locations = null
 	clear_click_catch()
 

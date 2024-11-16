@@ -71,7 +71,7 @@
 			. += "[base_icon_state]_green"
 
 /obj/structure/liquid_plasma_extraction_pipe/wrench_act(mob/living/user, obj/item/tool)
-	if(!tool.use_tool(src, user, 2 SECONDS, volume = 40, interaction_key = DOAFTER_SOURCE_PIPE_CONSTRUCTION))
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 40))
 		return ITEM_INTERACT_BLOCKING
 	switch(pipe_state)
 		if(PIPE_STATE_FINE)
@@ -98,7 +98,7 @@
 			return ITEM_INTERACT_BLOCKING
 	if(!tool.tool_start_check(user, amount = 1))
 		return ITEM_INTERACT_BLOCKING
-	if(!tool.use_tool(src, user, 2 SECONDS, volume = 40, interaction_key = DOAFTER_SOURCE_PIPE_CONSTRUCTION))
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 40))
 		return ITEM_INTERACT_BLOCKING
 	switch(pipe_state)
 		if(PIPE_STATE_DAMAGED)
