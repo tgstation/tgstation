@@ -1127,7 +1127,7 @@
 	id = "perceptomatrix"
 	desc = "This helm harnesses hallucinative energies to shield its owner from perceptual anomalies. It requires a Hallucination Anomaly Core in order to function."
 	build_type = PROTOLATHE | AWAY_LATHE
-	build_path = /obj/item/polymorph_belt
+	build_path = /obj/item/clothing/head/helmet/perceptomatrix
 	materials = list(
 		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2,
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 1,
