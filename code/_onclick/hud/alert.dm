@@ -121,7 +121,7 @@
 /atom/movable/screen/alert/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	if(clickable_glow)
-		add_filter("clickglow", 2, list("type" = "outline", "color" = COLOR_GOLD, "size" = 1))
+		add_filter("clickglow", 2, outline_filter(color = COLOR_GOLD, size = 1))
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
 	. = ..()
