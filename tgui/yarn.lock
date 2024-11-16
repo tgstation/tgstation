@@ -18788,6 +18788,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"tgui-styles@npm:^0.0.8":
+  version: 0.0.8
+  resolution: "tgui-styles@npm:0.0.8"
+  checksum: 10c0/30f9621aeb275e84516c2d4bac8953366bddfe15a0aefd6541fce60c3c6c02fd4d1fa8bf6b4b972b4a4843064e494304ae8a01f65b887be8e378c69b5a570e23
+  languageName: node
+  linkType: hard
+
 "tgui-workspace@workspace:.":
   version: 0.0.0-use.local
   resolution: "tgui-workspace@workspace:."
@@ -18848,6 +18855,7 @@ __metadata:
     tgui-core: "npm:^1.2.0"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
+    tgui-styles: "npm:^0.0.8"
   languageName: unknown
   linkType: soft
 
