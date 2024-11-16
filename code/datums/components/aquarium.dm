@@ -117,7 +117,7 @@
 	else
 		RegisterSignal(movable, COMSIG_ATOM_UI_INTERACT, PROC_REF(interact))
 
-	AddElement(/datum/element/relay_attackers)
+	movable.AddElement(/datum/element/relay_attackers)
 
 	for(var/atom/movable/content as anything in movable.contents)
 		if(content.flags_1 & INITIALIZED_1)
