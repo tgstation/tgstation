@@ -20,7 +20,6 @@
 	interaction_flags_click = NEED_DEXTERITY
 	throw_range = 1
 	throw_speed = 1
-	COOLDOWN_DECLARE(scanning_person) //Cooldown for scanning a carbon
 	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
 	var/list/time_list = list(5 SECONDS, 1 SECONDS, 0.1 SECONDS)
 	///Which print time mode we're on.
@@ -108,17 +107,8 @@
 		balloon_alert(user, "check cell!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(iscarbon(interacting_with)) //Prevents insta scanning people
-		if(!COOLDOWN_FINISHED(src, scanning_person))
-			return ITEM_INTERACT_BLOCKING
-
-		visible_message(span_warning("[user] starts scanning [interacting_with] with [src]"))
-		to_chat(interacting_with, span_userdanger("[user] is trying to scan you for contraband!"))
-		balloon_alert_to_viewers("scanning...")
-		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
-		COOLDOWN_START(src, scanning_person, 4 SECONDS)
-		if(!do_after(user, 4 SECONDS, interacting_with))
-			return ITEM_INTERACT_BLOCKING
+	if(iscarbon(interacting_with)) // Prevents scanning people
+		return
 
 	if(contraband_scan(interacting_with, user))
 		playsound(src, 'sound/machines/uplink/uplinkerror.ogg', 40)
