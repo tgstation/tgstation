@@ -152,7 +152,7 @@
 		chat_color_name_to_use = target.get_visible_name(add_id_name = FALSE) // use face name for nonverbal messages
 	// Bandastation Edit Start
 	else if (extra_classes.Find("looc"))
-		LAZYADD(prefixes, "<span style='font-size: 6px; color: #6699cc;'><b>\[LOOC\]</b></span>")
+		LAZYADD(prefixes, "<span style='font-size: 6px; color: #6699cc;'><b>\[LOOC\]</b></span> ")
 	// Bandastation Edit End
 
 	if(isnull(chat_color_name_to_use))
