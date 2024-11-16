@@ -1,0 +1,248 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table/wood,
+/obj/item/radio/intercom/directional/south,
+/obj/machinery/fax{
+	name = "Detective's Fax Machine";
+	fax_name = "Detective's Office"
+	},
+/turf/open/floor/iron/grimy,
+/area/space)
+"b" = (
+/obj/effect/landmark/event_spawn,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/grimy,
+/area/space)
+"c" = (
+/obj/structure/sign/calendar/directional/east,
+/obj/structure/table/wood,
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/taperecorder,
+/turf/open/floor/carpet,
+/area/space)
+"d" = (
+/obj/machinery/firealarm/directional/west{
+	pixel_y = -3
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_x = -23;
+	pixel_y = 8
+	},
+/obj/structure/secure_safe/directional/south,
+/obj/machinery/photocopier,
+/turf/open/floor/iron/grimy,
+/area/space)
+"e" = (
+/obj/structure/table/wood,
+/obj/item/lighter,
+/turf/open/floor/carpet,
+/area/space)
+"f" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/grimy,
+/area/space)
+"j" = (
+/turf/closed/wall,
+/area/space)
+"k" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/grimy,
+/area/space)
+"s" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/obj/effect/landmark/start/detective,
+/turf/open/floor/carpet,
+/area/space)
+"t" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/carpet,
+/area/space)
+"u" = (
+/obj/machinery/vending/wardrobe/det_wardrobe,
+/obj/structure/sign/poster/official/dick_gum/directional/south,
+/turf/open/floor/iron/grimy,
+/area/space)
+"v" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/grimy,
+/area/space)
+"x" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/grimy,
+/area/space)
+"z" = (
+/obj/structure/closet/secure_closet/detective,
+/obj/item/camera/detective,
+/obj/item/hand_labeler{
+	pixel_x = 5
+	},
+/obj/item/storage/box/evidence,
+/turf/open/floor/iron/grimy,
+/area/space)
+"C" = (
+/obj/effect/landmark/navigate_destination/det,
+/turf/open/floor/iron/grimy,
+/area/space)
+"E" = (
+/obj/machinery/newscaster/directional/east,
+/obj/machinery/computer/records/medical{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/space)
+"I" = (
+/obj/structure/cable,
+/obj/structure/chair/stool{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/space)
+"J" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/grimy,
+/area/space)
+"M" = (
+/obj/structure/filingcabinet,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/requests_console/directional/north{
+	department = "Detective's Office";
+	name = "Detective's Requests Console"
+	},
+/turf/open/floor/iron/grimy,
+/area/space)
+"N" = (
+/obj/structure/sign/clock/directional/north,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/iron/grimy,
+/area/space)
+"P" = (
+/obj/structure/table/wood,
+/obj/item/camera/detective{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/taperecorder{
+	pixel_x = -10;
+	pixel_y = 2
+	},
+/obj/item/camera_film{
+	pixel_y = 7
+	},
+/obj/item/camera_film{
+	pixel_y = 7
+	},
+/obj/structure/detectiveboard/directional/north,
+/turf/open/floor/iron/grimy,
+/area/space)
+"R" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/security/wooden_tv,
+/obj/structure/extinguisher_cabinet/directional/south{
+	pixel_x = -6
+	},
+/obj/machinery/button/door/directional/south{
+	name = "Privacy Shutters";
+	pixel_x = 6;
+	id = "kanyewest"
+	},
+/turf/open/floor/carpet,
+/area/space)
+"U" = (
+/obj/machinery/computer/records/security{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/space)
+"V" = (
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/carpet,
+/area/space)
+"X" = (
+/obj/machinery/camera{
+	dir = 9;
+	network = list("ss13","Security");
+	c_tag = "Security - Detective's Office"
+	},
+/obj/structure/cable,
+/obj/machinery/light/warm/directional/north,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/grimy,
+/area/space)
+"Y" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/space)
+"Z" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/carpet,
+/area/space)
+
+(1,1,1) = {"
+N
+J
+f
+d
+"}
+(2,1,1) = {"
+P
+C
+b
+a
+"}
+(3,1,1) = {"
+M
+x
+k
+u
+"}
+(4,1,1) = {"
+X
+I
+v
+Y
+"}
+(5,1,1) = {"
+Z
+e
+t
+z
+"}
+(6,1,1) = {"
+V
+s
+R
+j
+"}
+(7,1,1) = {"
+U
+E
+c
+j
+"}
+(8,1,1) = {"
+j
+j
+j
+j
+"}
