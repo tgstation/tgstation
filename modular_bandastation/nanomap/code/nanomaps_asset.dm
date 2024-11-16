@@ -3,11 +3,15 @@
 	// They are relatively big
 	assets = list(
 		"Birdshot Station_nanomap_z1.png" = 'icons/_nanomaps/Birdshot Station_nanomap_z1.png',
+		"Cyberiad_nanomap_z1.png" = 'icons/_nanomaps/Cyberiad_nanomap_z1.png',
+		"Cyberiad_nanomap_z2.png" = 'icons/_nanomaps/Cyberiad_nanomap_z2.png',
 		"Delta Station_nanomap_z1.png" = 'icons/_nanomaps/Delta Station_nanomap_z1.png',
 		"Ice Box Station_nanomap_z1.png" = 'icons/_nanomaps/Ice Box Station_nanomap_z1.png',
 		"Ice Box Station_nanomap_z2.png" = 'icons/_nanomaps/Ice Box Station_nanomap_z2.png',
 		"Ice Box Station_nanomap_z3.png" = 'icons/_nanomaps/Ice Box Station_nanomap_z3.png',
 		"MetaStation_nanomap_z1.png" = 'icons/_nanomaps/MetaStation_nanomap_z1.png',
+		"NebulaStation_nanomap_z1.png" = 'icons/_nanomaps/NebulaStation_nanomap_z1.png',
+		"NebulaStation_nanomap_z2.png" = 'icons/_nanomaps/NebulaStation_nanomap_z2.png',
 		"NorthStar_nanomap_z1.png" = 'icons/_nanomaps/NorthStar_nanomap_z1.png',
 		"NorthStar_nanomap_z2.png" = 'icons/_nanomaps/NorthStar_nanomap_z2.png',
 		"NorthStar_nanomap_z3.png" = 'icons/_nanomaps/NorthStar_nanomap_z3.png',

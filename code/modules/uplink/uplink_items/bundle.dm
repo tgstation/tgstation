@@ -124,7 +124,7 @@
 
 	podspawn(list(
 		"target" = get_turf(user),
-		"style" = /datum/pod_style/syndicate,
+		"path" = /obj/structure/closet/supplypod/teleporter/syndicate, // BANDASTATION EDIT - Original: "style" = /datum/pod_style/syndicate,
 		"spawn" = surplus_crate,
 	))
 	return source //For log icon

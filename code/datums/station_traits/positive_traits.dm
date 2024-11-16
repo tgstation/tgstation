@@ -31,7 +31,7 @@
 	var/area/bar_area = pick(GLOB.bar_areas)
 	podspawn(list(
 		"target" = pick(bar_area.contents),
-		"path" = /obj/structure/closet/supplypod/centcompod,
+		"path" = /obj/structure/closet/supplypod/teleporter, // BANDASTATION EDIT - Original: "path" = /obj/structure/closet/supplypod/centcompod,
 		"spawn" = list(
 			pizza_type_to_spawn,
 			/obj/item/reagent_containers/cup/glass/bottle/beer = 6

@@ -19,26 +19,50 @@ export const RuNamesSuggestPanel = (props) => {
       <Section title={'Оригинал: ' + visible_name}>
         <LabeledList>
           <LabeledList.Item label="Именительный (Кто? Что?)">
-            <Input width="100%" onChange={(e, value) => setNominative(value)} />
+            <Input
+              width="100%"
+              value={nominative}
+              placeholder="Клоун/Ассистуха..."
+              onChange={(e, value) => setNominative(value)}
+            />
           </LabeledList.Item>
           <LabeledList.Item label="Родительный (Кого? Чего?)">
-            <Input width="100%" onChange={(e, value) => setGenitive(value)} />
+            <Input
+              width="100%"
+              value={genitive}
+              placeholder="Клоуна/Ассистухи..."
+              onChange={(e, value) => setGenitive(value)}
+            />
           </LabeledList.Item>
           <LabeledList.Item label="Дательный (Кому? Чему?)">
-            <Input width="100%" onChange={(e, value) => setDative(value)} />
+            <Input
+              width="100%"
+              value={dative}
+              placeholder="Клоуну/Ассистухе..."
+              onChange={(e, value) => setDative(value)}
+            />
           </LabeledList.Item>
           <LabeledList.Item label="Винительный (Кого? Что?)">
-            <Input width="100%" onChange={(e, value) => setAccusative(value)} />
+            <Input
+              width="100%"
+              value={accusative}
+              placeholder="Клоуна/Ассистуху..."
+              onChange={(e, value) => setAccusative(value)}
+            />
           </LabeledList.Item>
           <LabeledList.Item label="Творительный (Кем? Чем?)">
             <Input
               width="100%"
+              value={instrumental}
+              placeholder="Клоуном/Ассистухой..."
               onChange={(e, value) => setInstrumental(value)}
             />
           </LabeledList.Item>
           <LabeledList.Item label="Предложный (О/В ком/чём?)">
             <Input
               width="100%"
+              value={prepositional}
+              placeholder="Клоуне/Ассистухе..."
               onChange={(e, value) => setPrepositional(value)}
             />
           </LabeledList.Item>

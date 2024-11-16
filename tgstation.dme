@@ -286,6 +286,7 @@
 #include "code\__DEFINES\atmospherics\atmos_mapping_helpers.dm"
 #include "code\__DEFINES\atmospherics\atmos_mob_interaction.dm"
 #include "code\__DEFINES\atmospherics\atmos_piping.dm"
+#include "code\__DEFINES\bandastation\defines.dm"
 #include "code\__DEFINES\bandastation\pronouns.dm"
 #include "code\__DEFINES\bandastation\ru_jobs.dm"
 #include "code\__DEFINES\construction\actions.dm"

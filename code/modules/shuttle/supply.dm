@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	podspawn(list(
 		"target" = get_turf(home),
-		"path" = /obj/structure/closet/supplypod/centcompod,
+		"path" = /obj/structure/closet/supplypod/teleporter, // BANDASTATION EDIT - Original: "path" = /obj/structure/closet/supplypod/centcompod,
 		"spawn" = stuff_to_send_home,
 	))
 

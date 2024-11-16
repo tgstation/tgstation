@@ -295,7 +295,7 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 	if (!isnull(winner))
 		podspawn(list(
 			"target" = get_turf(winner),
-			"style" = /datum/pod_style/syndicate,
+			"path" = /obj/structure/closet/supplypod/teleporter/syndicate, // BANDASTATION EDIT - Original: "style" = /datum/pod_style/syndicate,
 			"spawn" = /obj/item/food/roast_dinner,
 		))
 

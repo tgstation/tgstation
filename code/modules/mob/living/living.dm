@@ -1963,7 +1963,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/set_name()
 	if(identifier == 0)
 		identifier = rand(1, 999)
-	ru_names_rename(RU_NAMES_LIST("[name] ([identifier])", "[declent_ru(NOMINATIVE)] ([identifier])", "[declent_ru(GENITIVE)] ([identifier])", "[declent_ru(DATIVE)] ([identifier])", "[declent_ru(ACCUSATIVE)] ([identifier])", "[declent_ru(INSTRUMENTAL)] ([identifier])", "[declent_ru(PREPOSITIONAL)] ([identifier])"))
+	ru_names_rename(ru_names_toml(name, suffix = " ([identifier])", override_base = "[name] ([identifier])"))
 	name = "[name] ([identifier])"
 	real_name = declent_ru(NOMINATIVE)
 

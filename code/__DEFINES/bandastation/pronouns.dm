@@ -13,6 +13,3 @@
 #define INSTRUMENTAL "творительный"
 /// Предложный: Прохладная история о ком? О клоуне и об ассистухе.
 #define PREPOSITIONAL "предложный"
-
-/// Макрос для упрощения создания листа падежей для объекта
-#define RU_NAMES_LIST(base, nominative, genitive, dative, accusative, instrumental, prepositional) (list("base" = base, NOMINATIVE = nominative, GENITIVE = genitive, DATIVE = dative, ACCUSATIVE = accusative, INSTRUMENTAL = instrumental, PREPOSITIONAL = prepositional))

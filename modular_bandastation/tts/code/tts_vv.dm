@@ -3,7 +3,7 @@
 	if(!.)
 		return
 	if(href_list[VV_HK_SELECT_TTS_VOICE] && check_rights(R_VAREDIT))
-		change_tts_seed(usr, TRUE, TRUE)
+		change_tts_seed(usr, TTS_OVERRIDE_GENDER | TTS_OVERRIDE_TIER)
 
 /atom/movable/vv_get_dropdown()
 	. = ..()

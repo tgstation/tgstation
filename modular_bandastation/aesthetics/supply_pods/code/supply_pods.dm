@@ -29,3 +29,8 @@
 		pod.pixel_z = 0
 		pod.transform = matrix()
 	. = ..()
+
+/obj/structure/closet/supplypod/teleporter/syndicate/setStyle(chosenStyle)
+	. = ..()
+	icon = 'icons/obj/anomaly.dmi'
+	icon_state = "portal1"

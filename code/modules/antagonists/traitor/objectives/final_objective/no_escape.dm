@@ -38,7 +38,7 @@
 			sent_beacon = TRUE
 			podspawn(list(
 				"target" = get_turf(user),
-				"style" = /datum/pod_style/syndicate,
+				"path" = /obj/structure/closet/supplypod/teleporter/syndicate, // BANDASTATION EDIT - Original: "style" = /datum/pod_style/syndicate,
 				"spawn" = list(
 					/obj/item/sbeacondrop/no_escape,
 					/obj/item/inducer/syndicate,
