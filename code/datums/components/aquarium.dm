@@ -175,6 +175,10 @@
 /datum/component/aquarium/InheritComponent(datum/component/aquarium/new_comp, i_am_original)
 	fluid_temp = clamp(new_comp.fluid_temp, min_fluid_temp, max_fluid_temp)
 	set_fluid_type(new_comp.fluid_type)
+	feeding_interval = new_comp.feeding_interval
+	last_feeding = new_comp.last_feeding
+	var/atom/movable/movable = parent
+	movable.update_appearance()
 
 /datum/component/aquarium/proc/on_click_alt(atom/movable/source, mob/living/user)
 	SIGNAL_HANDLER
