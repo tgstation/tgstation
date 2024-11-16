@@ -35,51 +35,40 @@ type Modpack = {
 
 export const Modpacks = (props) => {
   const { data } = useBackend<Data>();
-  const { categories, features, translations, reverts } = data;
+  const { categories } = data;
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   return (
     <Window title="Список модификаций" width={480} height={580}>
-      <NoticeBox>
-        В данный момент идёт наполнение меню модпаков, в игре модицикаций больше
-        чем вы можете тут видеть.
-      </NoticeBox>
-      <Window.Content scrollable>
+      <Window.Content>
+        <NoticeBox>
+          В данный момент идёт наполнение меню модпаков, в игре модицикаций
+          больше чем вы можете тут видеть.
+        </NoticeBox>
         <Tabs>
-          {features.length === 0 ? (
-            <NoticeBox>Этот сервер не использует какие-либо прикольные Фичи</NoticeBox>
-          ) : (
-            <Tabs.Tab
-              selected={selectedCategory === 'Features'}
-              onClick={() => setSelectedCategory('Features')}
-            >
-              Фичи и Приколы
-            </Tabs.Tab>
-          )}
-          {translations.length === 0 ? (
-            <NoticeBox>Этот сервер не использует какие-либо переводы на Русский</NoticeBox>
-          ) : (
-            <Tabs.Tab
-              selected={selectedCategory === 'Translations'}
-              onClick={() => setSelectedCategory('Translations')}
-            >
-              Переводы на Русский
-            </Tabs.Tab>
-          )}
-          {reverts.length === 0 ? (
-            <NoticeBox>Этот сервер не использует какие-либо модификации баланса или ревертов</NoticeBox>
-          ) : (
-            <Tabs.Tab
-              selected={selectedCategory === 'Reverts'}
-              onClick={() => setSelectedCategory('Reverts')}
-            >
-              Балансы и Реверты
-            </Tabs.Tab>
-          )}
+          <Tabs.Tab
+            selected={selectedCategory === 'Features'}
+            onClick={() => setSelectedCategory('Features')}
+          >
+            Фичи и Приколы
+          </Tabs.Tab>
+          <Tabs.Tab
+            selected={selectedCategory === 'Translations'}
+            onClick={() => setSelectedCategory('Translations')}
+          >
+            Переводы на Русский
+          </Tabs.Tab>
+          <Tabs.Tab
+            selected={selectedCategory === 'Reverts'}
+            onClick={() => setSelectedCategory('Reverts')}
+          >
+            Балансы и Реверты
+          </Tabs.Tab>
         </Tabs>
-        {(selectedCategory === 'Features' && <FeaturesTable />) ||
-          (selectedCategory === 'Translations' && <PerevodyTable />) ||
+        {
+          (selectedCategory === 'Features' && <FeaturesTable />) ||
+          (selectedCategory === 'Translations' && <TranslationsTable />) ||
           (selectedCategory === 'Reverts' && <RevertsTable />)
-          )}
+        }
       </Window.Content>
     </Window>
   );
@@ -93,14 +82,22 @@ const FeaturesTable = () => {
 
   const searchBar = (
     <Input
-      placeholder="Искать модпак..."
+      placeholder="Искать модпак-фичу..."
       fluid
       onInput={(e, value) => setSearchText(value)}
     />
   );
 
+  if (features.length === 0) {
+    return (
+      <NoticeBox>
+        Этот сервер не использует какие-либо прикольные Фичи
+      </NoticeBox>
+    );
+  }
+
   return (
-    <>
+    <Stack fill vertical>
       <Stack.Item>
         <Section fill>{searchBar}</Section>
       </Stack.Item>
@@ -140,24 +137,32 @@ const FeaturesTable = () => {
                     key={feature.name}
                     title={<span class="color-white">{feature.name}</span>}
                   >
-                    <Box
-                      key={feature.id}
-                      style={{
-                        borderBottom: '1px solid #888',
-                        paddingBottom: '10px',
-                        fontSize: '14px',
-                        textAlign: 'center',
-                      }}
-                    >
-                      <ModpackItem key={feature.id} feature={feature} />
-                    </Box>
+                    <Table.Row key={feature.name}>
+                      <Table.Cell collapsing>
+                        <Box m={1} className={feature.icon_class} />
+                      </Table.Cell>
+                      <Table.Cell verticalAlign="top">
+                        <Box
+                          key={feature.id}
+                          style={{
+                            borderBottom: '1px solid #888',
+                            paddingBottom: '10px',
+                            fontSize: '14px',
+                            textAlign: 'center',
+                          }}
+                        >
+                          <LabeledList.Item label="Описание">{feature.desc}</LabeledList.Item>
+                          <LabeledList.Item label="Автор">{feature.author}</LabeledList.Item>
+                        </Box>
+                      </Table.Cell>
+                    </Table.Row>
                   </Collapsible>
                 ))}
             </Stack.Item>
           </Stack>
         </Section>
       </Stack.Item>
-    </>
+    </Stack>
   );
 };
 
@@ -169,14 +174,22 @@ const TranslationsTable = () => {
 
   const searchBar = (
     <Input
-      placeholder="Искать модпак..."
+      placeholder="Искать модпак-перевод..."
       fluid
       onInput={(e, value) => setSearchText(value)}
     />
   );
 
+  if (translations.length === 0) {
+    return (
+      <NoticeBox>
+        Этот сервер не использует какие-либо переводы на Русский
+      </NoticeBox>
+    );
+  }
+
   return (
-    <>
+    <Stack fill vertical>
       <Stack.Item>
         <Section fill>{searchBar}</Section>
       </Stack.Item>
@@ -216,24 +229,32 @@ const TranslationsTable = () => {
                     key={translate.name}
                     title={<span class="color-white">{translate.name}</span>}
                   >
-                    <Box
-                      key={translate.id}
-                      style={{
-                        borderBottom: '1px solid #888',
-                        paddingBottom: '10px',
-                        fontSize: '14px',
-                        textAlign: 'center',
-                      }}
-                    >
-                      <ModpackItem key={translate.id} translate={translate} />
-                    </Box>
+                    <Table.Row key={translate.name}>
+                      <Table.Cell collapsing>
+                        <Box m={1} className={translate.icon_class} />
+                      </Table.Cell>
+                      <Table.Cell verticalAlign="top">
+                        <Box
+                          key={translate.id}
+                          style={{
+                            borderBottom: '1px solid #888',
+                            paddingBottom: '10px',
+                            fontSize: '14px',
+                            textAlign: 'center',
+                          }}
+                        >
+                          <LabeledList.Item label="Описание">{translate.desc}</LabeledList.Item>
+                          <LabeledList.Item label="Автор">{translate.author}</LabeledList.Item>
+                        </Box>
+                      </Table.Cell>
+                    </Table.Row>
                   </Collapsible>
                 ))}
             </Stack.Item>
           </Stack>
         </Section>
       </Stack.Item>
-    </>
+    </Stack>
   );
 };
 
@@ -245,14 +266,22 @@ const RevertsTable = () => {
 
   const searchBar = (
     <Input
-      placeholder="Искать модпак..."
+      placeholder="Искать модпак-скилл ишуя ТГ к*дера..."
       fluid
       onInput={(e, value) => setSearchText(value)}
     />
   );
 
+  if (reverts.length === 0) {
+    return (
+      <NoticeBox>
+        Этот сервер не использует какие-либо модификации баланса или ревертов
+      </NoticeBox>
+    );
+  }
+
   return (
-    <>
+    <Stack fill vertical>
       <Stack.Item>
         <Section fill>{searchBar}</Section>
       </Stack.Item>
@@ -264,7 +293,7 @@ const RevertsTable = () => {
             searchText.length > 0 ? (
               <span>Результаты поиска "{searchText}":</span>
             ) : (
-              <span>Суммарно модификации &mdash; {features.length}</span>
+              <span>Суммарно модификации &mdash; {reverts.length}</span>
             )
           }
         >
@@ -292,30 +321,31 @@ const RevertsTable = () => {
                     key={revert.name}
                     title={<span class="color-white">{revert.name}</span>}
                   >
-                    <Box
-                      key={revert.id}
-                      style={{
-                        borderBottom: '1px solid #888',
-                        paddingBottom: '10px',
-                        fontSize: '14px',
-                        textAlign: 'center',
-                      }}
-                    >
-                      <ModpackItem key={revert.id} revert={revert} />
-                    </Box>
+                    <Table.Row key={revert.name}>
+                      <Table.Cell collapsing>
+                        <Box m={1} className={revert.icon_class} />
+                      </Table.Cell>
+                      <Table.Cell verticalAlign="top">
+                        <Box
+                          key={revert.id}
+                          style={{
+                            borderBottom: '1px solid #888',
+                            paddingBottom: '10px',
+                            fontSize: '14px',
+                            textAlign: 'center',
+                          }}
+                        >
+                          <LabeledList.Item label="Описание">{revert.desc}</LabeledList.Item>
+                          <LabeledList.Item label="Автор">{revert.author}</LabeledList.Item>
+                        </Box>
+                      </Table.Cell>
+                    </Table.Row>
                   </Collapsible>
                 ))}
             </Stack.Item>
           </Stack>
         </Section>
       </Stack.Item>
-    </>
+    </Stack>
   );
 };
-
-const ModpackItem = ({ modpack }) => (
-  <>
-    <LabeledList.Item label="Описание">{modpack.desc}</LabeledList.Item>
-    <LabeledList.Item label="Автор">{modpack.author}</LabeledList.Item>
-  </>
-);

@@ -1,6 +1,8 @@
 /datum/modpack
 	/// A string unique ID for the modpack. Used for self-cheсks, must be same as modpack name in code. /datum/modpack/ru_crayons -> "id = ru_crayons"
 	var/id
+	/// An icon for modpack preview,
+	var/icon = 'modular_meta/mods_icon_placeholder.dmi'
 	/// A string name for the modpack. Used for looking up other modpacks in init.
 	var/name
 	/// A string desc for the modpack. Can be used for modpack verb list as description.
@@ -62,8 +64,9 @@
 			"name" = modpack.name,
 			"desc" = modpack.desc,
 			"author" = modpack.author,
-			"icon_class" = assets.icon_class_name("modpack-[modpack.name]"),
+			"icon_class" = assets.icon_class_name("modpack-[modpack.id]"),
 			)
+
 		if (modpack.group == "Фичи" || modpack.group == "Features")
 			.["features"] += list(modpack_data)
 		else if (modpack.group == "Переводы" || modpack.group == "Translations")
