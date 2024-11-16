@@ -94,7 +94,7 @@
 				return ITEM_INTERACT_BLOCKING
 			balloon_alert(user, "deconstructing...")
 		if(PIPE_STATE_FINE)
-			balloon_alert(user, "not damaged")
+			balloon_alert(user, "not damaged!")
 			return ITEM_INTERACT_BLOCKING
 	if(!tool.tool_start_check(user, amount = 1))
 		return ITEM_INTERACT_BLOCKING
