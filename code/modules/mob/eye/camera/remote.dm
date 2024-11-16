@@ -31,7 +31,6 @@
 
 /mob/eye/camera/remote/Initialize(mapload, obj/machinery/creator)
 	if(!creator)
-		stack_trace("Attempted to create /mob/eye/camera/remote without an origin machine.")
 		return INITIALIZE_HINT_QDEL
 
 	. = ..()

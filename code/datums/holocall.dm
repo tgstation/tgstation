@@ -7,9 +7,10 @@
 	return ..()
 
 /obj/machinery/holopad/remove_eye_control(mob/living/user)
-	if(user.client)
-		user.reset_perspective(null)
-	user.remote_control = null
+	var/mob/eye/camera/remote/eye = user.remote_control
+	if(!istype(eye))
+		CRASH("Attempted to remove eye control from non-camera eye. Something has gone horribly wrong.")
+	eye.assign_user(null)
 
 //this datum manages its own references
 
