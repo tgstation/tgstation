@@ -1,6 +1,3 @@
-/mob/eye/camera/remote/holo
-	visible_to_user = FALSE
-
 /mob/eye/camera/remote/holo/setLoc(turf/destination, force_update = FALSE)
 	// If we're moving outside the space of our projector, then just... don't
 	var/obj/machinery/holopad/H = origin_ref?.resolve()

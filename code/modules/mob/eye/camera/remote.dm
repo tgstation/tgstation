@@ -9,7 +9,7 @@
 	var/datum/weakref/origin_ref
 
 	/// If TRUE, the camera will show it's icon to the user.
-	var/visible_to_user = TRUE
+	var/visible_to_user = FALSE
 	/// If visible_to_user is TRUE, it will show this in the center of the screen.
 	VAR_PROTECTED/image/user_image
 
@@ -54,7 +54,7 @@
 		name = initial(name)
 
 		var/client/old_user_client = GetViewerClient()
-		if(old_user_client)
+		if(old_user_client && !isnull(user_image))
 			old_user_client.images -= user_image
 
 	user_ref = WEAKREF(new_user) //The user_ref can still be null!
@@ -65,7 +65,7 @@
 		name = "Camera Eye ([new_user.name])"
 
 		var/client/new_user_client = GetViewerClient()
-		if(new_user_client)
+		if(new_user_client && !isnull(user_image))
 			new_user_client.images += user_image
 
 /**
