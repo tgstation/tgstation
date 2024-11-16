@@ -562,3 +562,16 @@
       reduce the timer to 20 minutes before it can be purchased.
   xPokee:
   - bugfix: fixed brains turning invisible after being washed
+2024-11-16:
+  Hardly:
+  - bugfix: Fixes watchers not attacking their targets in melee range
+  TheRealSpriteMan1337:
+  - spellcheck: Fixed some of the typos in computers' build & repair tips, adjusted
+      wording
+  Xander3359:
+  - bugfix: fix furious steel and blade ascension being jank
+  carlarctg:
+  - rscadd: Adds the Perceptomatrix Helm, a hallucination anomaly core item
+  zxaber:
+  - bugfix: Firelocks opened by a mech will correctly close when the mech moves out
+      of range.

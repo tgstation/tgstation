@@ -13,6 +13,9 @@
 	speed = 3
 	maxHealth = 160
 	health = 160
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = "buffets"
 	attack_verb_simple = "buffet"
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing

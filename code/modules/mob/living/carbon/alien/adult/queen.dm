@@ -44,20 +44,6 @@
 	alien_speed = 2
 
 /mob/living/carbon/alien/adult/royal/queen/Initialize(mapload)
-	//there should only be one queen
-	for(var/mob/living/carbon/alien/adult/royal/queen/Q in GLOB.carbon_list)
-		if(Q == src)
-			continue
-		if(Q.stat == DEAD)
-			continue
-		if(Q.client)
-			var/number = rand(1, 999) // BANDASTATION EDIT
-			ru_names_rename(ru_names_toml("alien princess", suffix = " ([number])", override_base = "alien princess ([number])"))
-			name = "alien princess ([number])" //if this is too cutesy feel free to change it/remove it.
-			break
-
-	real_name = declent_ru(NOMINATIVE)
-
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/alien/promote,
 		/datum/action/cooldown/spell/aoe/repulse/xeno,
@@ -72,6 +58,12 @@
 	organs += new /obj/item/organ/alien/acid
 	organs += new /obj/item/organ/alien/neurotoxin
 	organs += new /obj/item/organ/alien/eggsac
+	return ..()
+
+/mob/living/carbon/alien/adult/royal/queen/set_name()
+	if(get_alien_type(/mob/living/carbon/alien/adult/royal/queen, ignored = src))
+		name = "alien princess"
+		ru_names_rename(ru_names_toml(name))
 	return ..()
 
 //Queen verbs
