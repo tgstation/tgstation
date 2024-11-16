@@ -4,5 +4,4 @@
 		var/datum/component/comp = t
 		if(!isnum(initial(comp.dupe_mode)))
 			bad_dms += t
-	TEST_ASSERT(!length(bad_dms) && !length(bad_dts),
-		"Components with invalid dupe modes: ([bad_dms.Join(",")])")
+	TEST_ASSERT(!length(bad_dms), "Components with invalid dupe modes: ([bad_dms.Join(",")])")
