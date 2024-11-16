@@ -4,6 +4,8 @@
  */
 /obj/structure/liquid_plasma_geyser
 	name = "concentrated liquid plasma geyser"
+	desc = "A small yet very deep geyser of concentrated liquid plasma. Very toxic fumes spitting out, \
+		you should make sure you've got the proper gear to handle this."
 	icon = 'icons/obj/mining_zones/terrain.dmi'
 	icon_state = "geyser"
 	anchored = TRUE

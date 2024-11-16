@@ -1,6 +1,6 @@
 /obj/structure/liquid_plasma_extraction_pipe
 	name = "liquid plasma extraction pipe"
-	desc = "Get that mork- liquid plasma, and return back to the base."
+	desc = "A strong pipe used to pump liquid plasma from a geyser to the extraction hub."
 	icon = 'icons/obj/pipes_n_cables/plasma_extractor.dmi'
 	icon_state = "pipe_unbuilt"
 	base_icon_state = "pipe"
