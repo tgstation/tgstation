@@ -29,6 +29,7 @@
 
 /obj/structure/plasma_extraction_hub/part/pipe/main/Initialize(mapload)
 	. = ..()
+	register_context()
 	setup_parts()
 	update_appearance(UPDATE_ICON)
 	extracting_soundloop = new(src, FALSE)

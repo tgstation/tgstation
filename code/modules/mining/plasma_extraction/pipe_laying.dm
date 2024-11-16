@@ -36,10 +36,13 @@
 /datum/component/pipe_laying/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	var/atom/atom_target = parent
+	atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_adding_context))
 
 /datum/component/pipe_laying/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
+	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 	if(pipe_placing)
 		UnregisterSignal(pipe_placing, COMSIG_MOVABLE_MOVED)
 
@@ -64,6 +67,18 @@
 		on_lock = CALLBACK(src, PROC_REF(on_lockon_component)), \
 	)
 	return COMPONENT_NO_AFTERATTACK
+
+/**
+ * on_adding_context
+ *
+ * Adds the context if they're holding a pipe dispenser to place pipes down.
+ */
+/datum/component/pipe_laying/proc/on_adding_context(atom/source, list/context, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+
+	if(istype(held_item, /obj/item/pipe_dispenser))
+		context[SCREENTIP_CONTEXT_LMB] = "Place pipes"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Called when the lock on component sets their target to what the cursor is hovering over.

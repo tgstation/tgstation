@@ -47,7 +47,6 @@
 
 /obj/structure/plasma_extraction_hub/part/pipe/Initialize(mapload)
 	. = ..()
-	register_context()
 	AddComponent(/datum/component/pipe_laying, src)
 	RegisterSignal(src, COMSIG_SPAWNER_SPAWNED, PROC_REF(log_mob_spawned))
 
@@ -56,12 +55,6 @@
 	if(last_pipe)
 		QDEL_NULL(last_pipe)
 	QDEL_LIST(connected_pipes)
-
-/obj/structure/plasma_extraction_hub/part/pipe/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	if(istype(held_item, /obj/item/pipe_dispenser) && !length(connected_pipes))
-		context[SCREENTIP_CONTEXT_LMB] = "Place pipes"
-		return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Called when a pipe connected to us is destroyed,
