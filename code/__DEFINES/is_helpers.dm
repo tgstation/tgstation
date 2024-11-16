@@ -203,7 +203,6 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isspider(A) (istype(A, /mob/living/basic/spider))
 
 //Eye mobs
-
 #define iseyemob(A) (istype(A, /mob/eye))
 
 #define isovermind(A) (istype(A, /mob/eye/blob))
@@ -214,10 +213,10 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isremotecamera(A) (istype(A, /mob/eye/camera/remote))
 
-//Misc mobs
-#define isobserver(A) (istype(A, /mob/dead/observer))
-
+//Dead mobs
 #define isdead(A) (istype(A, /mob/dead))
+
+#define isobserver(A) (istype(A, /mob/dead/observer))
 
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
