@@ -20217,7 +20217,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -34053,7 +34052,6 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "mhM" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/structure/desk_bell{
@@ -47643,6 +47641,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "qTz" = (
@@ -65418,6 +65417,9 @@
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "wXF" = (
