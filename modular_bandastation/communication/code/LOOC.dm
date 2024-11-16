@@ -20,10 +20,9 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 	. = ..()
 
 /datum/tgui_say/delegate_speech(entry, channel)
-	switch(channel)
-		if(LOOC_CHANNEL)
-			client.looc(entry)
-			return TRUE
+	if(channel == LOOC_CHANNEL)
+		client.looc(entry)
+		return TRUE
 	. = ..()
 
 #define LOOC_RANGE 7
@@ -96,6 +95,10 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 	for(var/mob/hearing in heard)
 		if(!hearing.client)
 			continue
+
+		if(hearing.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) && isliving(mob))
+			hearing.create_chat_message(speaker = mob, raw_message = msg, spans = list("looc"))
+
 		var/client/hearing_client = hearing.client
 		if (hearing_client.holder)
 			admin_seen[hearing_client] = TRUE
@@ -104,14 +107,14 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 		if (isobserver(hearing))
 			continue //Also handled later.
 
-		to_chat(hearing_client, span_looc(span_prefix("LOOC[wall_pierce ? " (WALL PIERCE)" : ""]:</span> <EM>[src.mob.name]:</EM> <span class='message'>[msg]")))
+		to_chat(hearing_client, span_looc(span_prefix("LOOC[wall_pierce ? " (WALL PIERCE)" : ""]:</span> <EM>[mob.name]:</EM> <span class='message'>[msg]")))
 
 	for(var/cli in GLOB.admins)
 		var/client/cli_client = cli
 		if (admin_seen[cli_client])
-			to_chat(cli_client, span_looc("[ADMIN_FLW(usr)] <span class='prefix'>LOOC[wall_pierce ? " (WALL PIERCE)" : ""]:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span>"))
+			to_chat(cli_client, span_looc("[ADMIN_FLW(usr)] <span class='prefix'>LOOC[wall_pierce ? " (WALL PIERCE)" : ""]:</span> <EM>[key]/[mob.name]:</EM> <span class='message'>[msg]</span>"))
 		else if (cli_client.prefs.read_preference(/datum/preference/toggle/see_looc))
-			to_chat(cli_client, span_looc("[ADMIN_FLW(usr)] <span class='prefix'>(R)LOOC[wall_pierce ? " (WALL PIERCE)" : ""]:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span>"))
+			to_chat(cli_client, span_looc("[ADMIN_FLW(usr)] <span class='prefix'>(R)LOOC[wall_pierce ? " (WALL PIERCE)" : ""]:</span> <EM>[key]/[mob.name]:</EM> <span class='message'>[msg]</span>"))
 
 #undef LOOC_RANGE
 
