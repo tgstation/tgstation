@@ -11880,7 +11880,6 @@
 "cYA" = (
 /obj/docking_port/stationary{
 	name = "Aux Base Zone";
-	dir = 2;
 	width = 9;
 	height = 9;
 	shuttle_id = "aux_base_zone";

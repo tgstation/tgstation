@@ -30052,8 +30052,7 @@
 	pixel_x = -1
 	},
 /obj/item/paper/crumpled{
-	pixel_x = 5;
-	pixel_y = 0
+	pixel_x = 5
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
@@ -39672,8 +39671,7 @@
 	pixel_y = 8
 	},
 /obj/item/stamp{
-	pixel_x = -7;
-	pixel_y = 0
+	pixel_x = -7
 	},
 /obj/item/radio{
 	pixel_x = 9;
@@ -45217,8 +45215,7 @@
 "pBo" = (
 /obj/structure/table/wood,
 /obj/item/folder/white{
-	pixel_x = -3;
-	pixel_y = 0
+	pixel_x = -3
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -48345,8 +48342,7 @@
 	pixel_y = 8
 	},
 /obj/effect/spawner/random/food_or_drink/donuts{
-	pixel_x = 8;
-	pixel_y = 0
+	pixel_x = 8
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
@@ -54883,8 +54879,7 @@
 	pixel_y = 11
 	},
 /obj/item/pen{
-	pixel_x = -9;
-	pixel_y = 0
+	pixel_x = -9
 	},
 /obj/effect/turf_decal/tile/brown/opposingcorners{
 	dir = 1
@@ -57985,7 +57980,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/status_display/supply{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/structure/cable,
@@ -59524,7 +59518,6 @@
 "uij" = (
 /obj/docking_port/stationary{
 	dheight = 4;
-	dir = 4;
 	dwidth = 4;
 	height = 9;
 	name = "Aux Base Zone";
@@ -61881,7 +61874,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/calendar{
-	pixel_x = 0;
 	pixel_y = -26
 	},
 /obj/machinery/light/small/directional/south,

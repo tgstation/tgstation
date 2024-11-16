@@ -69132,7 +69132,6 @@
 "rno" = (
 /obj/docking_port/stationary{
 	dheight = 4;
-	dir = 4;
 	dwidth = 4;
 	height = 9;
 	name = "Aux Base Zone";

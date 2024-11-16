@@ -1,4 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Auxiliary Base";
+	network = list("auxbase")
+	},
+/obj/structure/mining_shuttle_beacon,
+/obj/machinery/computer/auxiliary_base/directional/south,
+/turf/open/floor/plating,
+/area/shuttle/auxiliary_base)
 "b" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -49,15 +58,12 @@
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "B" = (
-/obj/machinery/computer/auxiliary_base/directional/north,
+/obj/structure/plasma_extraction_hub/part/pipe/main,
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "P" = (
-/obj/docking_port/mobile/auxiliary_base{
-	dir = 2
-	},
-/obj/machinery/bluespace_beacon,
-/turf/closed/wall,
+/obj/docking_port/mobile/auxiliary_base,
+/turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "U" = (
 /obj/structure/closet/secure_closet/miner/unlocked,
@@ -71,12 +77,8 @@
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "X" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Auxiliary Base";
-	network = list("auxbase")
-	},
-/obj/structure/mining_shuttle_beacon,
-/turf/open/floor/plating,
+/obj/machinery/bluespace_beacon,
+/turf/closed/wall,
 /area/shuttle/auxiliary_base)
 
 (1,1,1) = {"
@@ -116,8 +118,8 @@ x
 v
 k
 k
-k
 W
+k
 k
 k
 k
@@ -126,11 +128,11 @@ x
 (5,1,1) = {"
 v
 k
-k
+a
 X
 P
-B
 k
+B
 k
 x
 "}
@@ -138,8 +140,8 @@ x
 v
 k
 k
-k
 z
+k
 k
 k
 k
