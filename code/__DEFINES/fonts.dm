@@ -13,7 +13,7 @@
 #define SIGNATURE_FONT "Segoe Script"
 
 /// Emoji icon set
-#define EMOJI_SET 'icons/ui/chat/emoji.dmi'
+#define EMOJI_SET 'modular_bandastation/emojis220/icons/emoji220.dmi'	// BANDASTATION EDIT: Original - #define EMOJI_SET 'icons/ui/chat/emoji.dmi'
 
 // Font metrics bitfield
 /// Include leading A width and trailing C width in GetWidth() or in DrawText()
