@@ -451,7 +451,7 @@
 			CRASH("Incompatible [c_type] transfer attempt to a [type]!")
 
 	target.parent = src
-	target._JoinParent(src)
+	target._JoinParent()
 	AddComponent(target)
 
 /**
