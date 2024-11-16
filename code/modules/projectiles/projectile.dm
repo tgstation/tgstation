@@ -51,6 +51,8 @@
 	var/impact_x
 	/// Y coordinate at which the projectile visually impacted the target
 	var/impact_y
+	/// Turf of the last atom we've impacted
+	VAR_FINAL/turf/last_impact_turf = null
 
 	/// If the projectile was fired already
 	var/fired = FALSE
@@ -235,8 +237,6 @@
 	/// In order to preserve animations, projectiles are only deleted the tick *after* they impact something.
 	/// Same is applied to reaching the range limit
 	var/deletion_queued = NONE
-	/// Informs the projectile that it's trajectory has been changed mid-process after a penetrating impact, so it recalculates some of its math
-	var/trajectory_changed = FALSE
 
 	/// If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
@@ -479,10 +479,10 @@
 		range = maximum_range
 		return
 
-	var/turf/target_turf = get_turf(target)
+	last_impact_turf = get_turf(target)
 	// Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
-	def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(target_turf, starting)), 5, 100))
-	var/impact_result = process_hit_loop(select_target(target_turf, target))
+	def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(last_impact_turf, starting)), 5, 100))
+	var/impact_result = process_hit_loop(select_target(last_impact_turf, target))
 	if (impact_result == PROJECTILE_IMPACT_PASSED)
 		return
 	if (hitscan)
@@ -807,22 +807,22 @@
 	if(!nondirectional_sprite)
 		transform = transform.TurnTo(angle, new_angle)
 	angle = new_angle
-	trajectory_changed = TRUE
 	if(movement_vector)
 		movement_vector.set_angle(new_angle)
 	if(fired && hitscan && isturf(loc))
 		create_hitscan_point()
 
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
-/obj/projectile/proc/set_angle_centered(new_angle)
+/obj/projectile/proc/set_angle_centered(center_turf, new_angle)
 	if (angle == new_angle)
 		return
 	if(!nondirectional_sprite)
 		transform = transform.TurnTo(angle, new_angle)
-	angle = new_angle
+	free_hitscan_forceMove = TRUE
+	forceMove(center_turf)
 	entry_x = 0
 	entry_y = 0
-	trajectory_changed = TRUE
+	angle = new_angle
 	if(movement_vector)
 		movement_vector.set_angle(new_angle)
 	if(fired && hitscan && isturf(loc))
@@ -891,7 +891,7 @@
  * Main projectile movement cycle.
  * Normal behavior moves projectiles in a straight line through tiles, but it gets trickier with homing.
  * Every pixels_per_decisecond we will stop and call process_homing(), which while a bit rough, does not have a significant performance impact
- * This proc is needs to be very performant, so do not add overridable logic that can be handled in homing or animations to here.
+ * This proc needs to be very performant, so do not add overridable logic that can be handled in homing or animations here.
  *
  * pixels_to_move determines how many pixels the projectile should move
  * hitscan prevents animation logic from running
@@ -936,7 +936,6 @@
 		// This is a projectile variable because its also used in hit VFX
 		entry_x = pixel_x + movement_vector.pixel_x * distance_to_move - x_shift * ICON_SIZE_X
 		entry_y = pixel_y + movement_vector.pixel_y * distance_to_move - y_shift * ICON_SIZE_Y
-		trajectory_changed = FALSE
 		var/delete_distance
 
 		if (x_shift || y_shift)
@@ -1046,8 +1045,9 @@
 	beam_points[last_point] = null
 
 /// Creates a new keypoint in which the tracer will split
-/obj/projectile/proc/create_hitscan_point(tile_center = FALSE, broken_segment = FALSE)
-	var/datum/point/new_point = RETURN_PRECISE_POINT(loc || src)
+/obj/projectile/proc/create_hitscan_point(impact = FALSE, tile_center = FALSE, broken_segment = FALSE)
+	var/atom/handle_atom = last_impact_turf || src
+	var/datum/point/new_point = impact ? new /datum/point(handle_atom.x, handle_atom.y, handle_atom.z, impact_x, impact_y) : RETURN_PRECISE_POINT(tile_center ? loc : src)
 	if (!broken_segment)
 		beam_points[last_point] = new_point
 	beam_points[new_point] = null
@@ -1071,7 +1071,7 @@
 		return
 
 	if (impact)
-		create_hitscan_point()
+		create_hitscan_point(impact = TRUE)
 
 	if (tracer_type)
 		for (var/beam_point in beam_points)
