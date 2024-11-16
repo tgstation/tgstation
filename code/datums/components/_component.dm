@@ -208,7 +208,7 @@
  *
  * Use this to do any special cleanup you might need to do before being deregged from an object
  */
-/datum/component/proc/PreTransfer()
+/datum/component/proc/PreTransfer(datum/new_parent)
 	return
 
 /**
@@ -450,9 +450,10 @@
 			qdel(target)
 			CRASH("Incompatible [c_type] transfer attempt to a [type]!")
 
-	target.parent = src
-	target._JoinParent()
 	AddComponent(target)
+	if(!QDELETED(target))
+		target.parent = src
+		target._JoinParent()
 
 /**
  * Transfer all components to target

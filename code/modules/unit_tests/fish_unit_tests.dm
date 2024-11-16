@@ -515,7 +515,7 @@
 	TEST_ASSERT(HAS_TRAIT(upgraded_aquarium, TRAIT_AQUARIUM_PANEL_OPEN), "The new aquarium should have its panel open")
 	TEST_ASSERT(HAS_TRAIT(upgraded_aquarium, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), "The 'growth and reproduction' setting for this aquarium should be disabled")
 
-	TEST_ASSERT(QDELETED(upgrade), "Aquarium upgrade ws not deleted afterward")
+	TEST_ASSERT(QDELETED(upgrade), "Aquarium upgrade wasn't deleted afterward")
 
 #undef FISH_REAGENT_AMOUNT
 #undef TRAIT_FISH_TESTING
