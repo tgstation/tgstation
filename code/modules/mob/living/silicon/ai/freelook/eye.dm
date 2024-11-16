@@ -16,24 +16,17 @@
 	. = ..()
 	update_ai_detect_hud()
 
-/mob/eye/camera/ai/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	. = ..()
-	if(same_z_layer)
-		return
-	update_ai_detect_hud()
-
-/mob/eye/camera/ai/examine(mob/user) //Displays a silicon's laws to ghosts
-	. = ..()
-	if(istype(ai) && ai.laws && isobserver(user))
-		. += "<b>[ai] has the following laws:</b>"
-		for(var/law in ai.laws.get_law_list(include_zeroth = TRUE))
-			. += law
-
-/mob/eye/camera/ai/update_visibility()
+/mob/eye/camera/ai/Destroy()
 	if(ai)
-		ai.camera_visibility(src)
-	else
-		..()
+		ai.all_eyes -= src
+		ai = null
+	if(ai_detector_visible)
+		var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
+		hud.remove_atom_from_hud(src)
+		var/list/L = hud_list[AI_DETECT_HUD]
+		QDEL_LIST(L)
+	return ..()
+
 /**
  * Returns a list of turfs visible to the client's viewsize. \
  * Note that this will return an empty list if the camera's loc is not a turf.
@@ -111,21 +104,31 @@
 	if(ai.master_multicam)
 		ai.master_multicam.refresh_view()
 
+/mob/eye/camera/ai/update_visibility()
+	if(ai)
+		ai.camera_visibility(src)
+	else
+		..()
+
 /mob/eye/camera/ai/GetViewerClient()
 	if(ai)
 		return ai.client
 	return null
 
-/mob/eye/camera/ai/Destroy()
-	if(ai)
-		ai.all_eyes -= src
-		ai = null
-	if(ai_detector_visible)
-		var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
-		hud.remove_atom_from_hud(src)
-		var/list/L = hud_list[AI_DETECT_HUD]
-		QDEL_LIST(L)
-	return ..()
+/mob/eye/camera/ai/examine(mob/user) //Displays a silicon's laws to ghosts
+	. = ..()
+	if(istype(ai) && ai.laws && isobserver(user))
+		. += "<b>[ai] has the following laws:</b>"
+		for(var/law in ai.laws.get_law_list(include_zeroth = TRUE))
+			. += law
+
+/mob/eye/camera/ai/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	update_ai_detect_hud()
+
+/*----------------------------------------------------*/
 
 /atom/proc/move_camera_by_click()
 	if(!isAI(usr))
@@ -166,7 +169,6 @@
 		sprint = initial(sprint)
 
 	ai_tracking_tool.reset_tracking()
-
 #undef SPRINT_PER_STEP
 #undef MAX_SPRINT
 #undef SPRINT_PER_TICK

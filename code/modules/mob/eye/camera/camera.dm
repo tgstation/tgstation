@@ -13,7 +13,7 @@
 	var/use_visibility = TRUE
 	/// List of [camera chunks][/datum/camerachunk] visible to this camera.
 	/// Please don't interface with this directly. Use the [cameranet][/datum/cameranet].
-	VAR_FINAL/list/datum/camerachunk/visibleCameraChunks = list()
+	var/final/list/datum/camerachunk/visibleCameraChunks = list()
 	/// NxN Range of a single camera chunk.
 	var/static_visibility_range = 16
 
@@ -41,7 +41,7 @@
 	return null
 
 /**
- * Use this instead of when setting the camera eye's location. \
+ * Use this when setting the camera eye's location directly. \
  * It will also attempt to update visible chunks.
  */
 /mob/eye/camera/proc/setLoc(destination, force_update = FALSE)
