@@ -1122,7 +1122,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/polymorph_belt
+/datum/design/perceptomatrix
 	name = "Perceptomatrix Helm"
 	id = "perceptomatrix"
 	desc = "This helm harnesses hallucinative energies to shield its owner from perceptual anomalies. It requires a Hallucination Anomaly Core in order to function."
