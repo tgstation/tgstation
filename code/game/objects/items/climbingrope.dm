@@ -36,7 +36,7 @@
 	interacting_with = get_turf(interacting_with)
 	if(interacting_with.z == user.z)
 		return NONE
-	if(!istype(interacting_with))
+	if(!istype(interacting_with) || !isturf(user.loc)) //better safe than sorry
 		return ITEM_INTERACT_BLOCKING
 
 	var/turf/user_turf = get_turf(user)
