@@ -48,7 +48,7 @@
 		qdel(src, TRUE, TRUE)
 		return
 
-	_JoinParent(parent)
+	_JoinParent()
 
 /**
  * Called during component creation with the same arguments as in new excluding parent.
@@ -450,6 +450,7 @@
 			qdel(target)
 			CRASH("Incompatible [c_type] transfer attempt to a [type]!")
 
+	target.parent = src
 	target._JoinParent(src)
 	AddComponent(target)
 
