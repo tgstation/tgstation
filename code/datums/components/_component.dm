@@ -319,7 +319,6 @@
 		CRASH("[component_type] attempted instantiation!")
 
 	var/dupe_mode = initial(component_type.dupe_mode)
-	var/dupe_type = initial(component_type.dupe_type)
 	var/uses_sources = (dupe_mode == COMPONENT_DUPE_SOURCES)
 	if(uses_sources && !source)
 		CRASH("Attempted to add a sourced component of type '[component_type]' to '[type]' without a source!")
