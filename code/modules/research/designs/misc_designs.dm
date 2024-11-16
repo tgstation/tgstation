@@ -1121,3 +1121,21 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/polymorph_belt
+	name = "Perceptomatrix Helm"
+	id = "perceptomatrix"
+	desc = "This helm harnesses hallucinative energies to shield its owner from perceptual anomalies. It requires a Hallucination Anomaly Core in order to function."
+	build_type = PROTOLATHE | AWAY_LATHE
+	build_path = /obj/item/polymorph_belt
+	materials = list(
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT,
+	)
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
