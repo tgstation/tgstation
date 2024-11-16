@@ -1176,7 +1176,7 @@
 
 /obj/item/toy/figure/Initialize(mapload)
 	. = ..()
-	desc = "A \"Space Life\" brand [src]."
+	desc = "A \"Space Life\" brand [src]. The base has three golden stars on it."
 	AddElement(/datum/element/toy_talk)
 
 /obj/item/toy/figure/attack_self(mob/user as mob)
@@ -1252,14 +1252,14 @@
 	icon_state = "chemist"
 	toysay = "Get your pills!"
 
-/obj/item/toy/figure/clown
-	name = "\improper Clown action figure"
+/obj/item/toy/figure/rare/clown
+	name = "\improper rare Clown action figure"
 	icon_state = "clown"
 	toysay = "Honk!"
 	toysound = 'sound/items/bikehorn.ogg'
 
-/obj/item/toy/figure/ian
-	name = "\improper Ian action figure"
+/obj/item/toy/figure/rare/ian
+	name = "\improper rare Ian action figure"
 	icon_state = "ian"
 	toysay = "Arf!"
 

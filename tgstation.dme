@@ -6300,6 +6300,7 @@
 #include "code\modules\vending\engineering.dm"
 #include "code\modules\vending\engivend.dm"
 #include "code\modules\vending\games.dm"
+#include "code\modules\vending\gacha.dm"
 #include "code\modules\vending\hotdog.dm"
 #include "code\modules\vending\liberation.dm"
 #include "code\modules\vending\liberation_toy.dm"

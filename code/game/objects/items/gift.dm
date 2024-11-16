@@ -121,3 +121,24 @@
 
 	var/gift_type = pick(possible_gifts)
 	return gift_type
+
+/obj/item/gift/capsule
+	name = "gachapon capsule"
+	desc = "A capsule from a vending machine. It could contain theoretically anything!"
+
+/obj/item/gift/capsule/get_gift_type()
+	var/static/list/obj/item/possible_gifts = null
+
+	if(isnull(possible_gifts))
+		possible_gifts = list(/obj/item/card/emag)
+
+	var/gacha_odds = rand(1,40)
+
+	switch(gacha_odds)
+		if(0 to 19)
+			possible_gifts = subtypesof(/obj/item/toy/figure)
+		if(20 to 40)
+			possible_gifts = subtypesof(/obj/item/toy)
+
+	var/gift_type = pick(possible_gifts)
+	return gift_type
