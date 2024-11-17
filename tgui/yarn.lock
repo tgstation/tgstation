@@ -18760,7 +18760,7 @@ __metadata:
     tgui: "workspace:*"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
-    tgui-styles: "npm:^0.0.8"
+    tgui-styles: "npm:^0.0.10"
   languageName: unknown
   linkType: soft
 
@@ -18786,14 +18786,14 @@ __metadata:
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
     tgui-polyfill: "workspace:*"
-    tgui-styles: "npm:^0.0.8"
+    tgui-styles: "npm:^0.0.10"
   languageName: unknown
   linkType: soft
 
-"tgui-styles@npm:^0.0.8":
-  version: 0.0.8
-  resolution: "tgui-styles@npm:0.0.8"
-  checksum: 10c0/30f9621aeb275e84516c2d4bac8953366bddfe15a0aefd6541fce60c3c6c02fd4d1fa8bf6b4b972b4a4843064e494304ae8a01f65b887be8e378c69b5a570e23
+"tgui-styles@npm:^0.0.10":
+  version: 0.0.10
+  resolution: "tgui-styles@npm:0.0.10"
+  checksum: 10c0/90d3c9d891680289e79fd1f44dcf15a0cc956345e0337b2f89a64ceb1c5192da217dd8ac64566731471684b6bb6d3b4fc92ff6a072f9d8138e71d423c94821a6
   languageName: node
   linkType: hard
 
@@ -18857,7 +18857,7 @@ __metadata:
     tgui-core: "npm:^1.2.0"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
-    tgui-styles: "npm:^0.0.8"
+    tgui-styles: "npm:^0.0.10"
   languageName: unknown
   linkType: soft
 

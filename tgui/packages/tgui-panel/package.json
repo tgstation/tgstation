@@ -12,6 +12,6 @@
     "tgui": "workspace:*",
     "tgui-dev-server": "workspace:*",
     "tgui-polyfill": "workspace:*",
-    "tgui-styles": "^0.0.8"
+    "tgui-styles": "^0.0.10"
   }
 }

@@ -21,6 +21,6 @@
     "tgui-core": "^1.2.0",
     "tgui-dev-server": "workspace:*",
     "tgui-polyfill": "workspace:*",
-    "tgui-styles": "^0.0.8"
+    "tgui-styles": "^0.0.10"
   }
 }
