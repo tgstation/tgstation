@@ -87,7 +87,7 @@
 /// Different from get_answer().
 /obj/item/toy/eightball/proc/pick_from_answer_list()
 	//! This is for grabbing an answer from the answer matrix.
-	return pick(possible_answers[ //
+	return pick(possible_answers[
 		pick(possible_answers)
 		])
 
