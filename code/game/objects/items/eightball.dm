@@ -15,26 +15,33 @@
 	var/cooldown_time = 10 SECONDS
 
 	var/static/list/possible_answers = list(
-		"It is certain",
-		"It is decidedly so",
-		"Without a doubt",
-		"Yes definitely",
-		"You may rely on it",
-		"As I see it, yes",
-		"Most likely",
-		"Outlook good",
-		"Yes",
-		"Signs point to yes",
-		"Reply hazy try again",
-		"Ask again later",
-		"Better not tell you now",
-		"Cannot predict now",
-		"Concentrate and ask again",
-		"Don't count on it",
-		"My reply is no",
-		"My sources say no",
-		"Outlook not so good",
-		"Very doubtful")
+		"Yes" = list(
+			"It is certain",
+			"It is decidedly so",
+			"Without a doubt",
+			"Yes definitely",
+			"You may rely on it",
+			"As I see it, yes",
+			"Most likely",
+			"Outlook good",
+			"Yes",
+			"Signs point to yes",
+		),
+		"Maybe" = list(
+			"Reply hazy try again",
+			"Ask again later",
+			"Better not tell you now",
+			"Cannot predict now",
+			"Concentrate and ask again",
+		),
+		"No" = list(
+			"Don't count on it",
+			"My reply is no",
+			"My sources say no",
+			"Outlook not so good",
+			"Very doubtful"
+		),
+	)
 
 /obj/item/toy/eightball/Initialize(mapload)
 	. = ..()
@@ -77,8 +84,15 @@
 /obj/item/toy/eightball/proc/start_shaking(mob/user)
 	return TRUE
 
+/// Different from get_answer().
+/obj/item/toy/eightball/proc/pick_from_answer_list()
+	//! This is for grabbing an answer from the answer matrix.
+	return pick(possible_answers[ //
+		pick(possible_answers)
+		])
+
 /obj/item/toy/eightball/proc/get_answer()
-	return pick(possible_answers)
+	return pick_from_answer_list()
 
 // A broken magic eightball, it only says "YOU SUCK" over and over again.
 
@@ -89,7 +103,7 @@
 
 /obj/item/toy/eightball/broken/Initialize(mapload)
 	. = ..()
-	fixed_answer = pick(possible_answers)
+	fixed_answer = pick_from_answer_list()
 
 /obj/item/toy/eightball/broken/get_answer()
 	return fixed_answer
@@ -104,38 +118,10 @@
 	//these kind of store the same thing but one is easier to work with.
 	var/list/votes = list()
 	var/list/voted = list()
-	var/static/list/haunted_answers = list(
-		"yes" = list(
-			"It is certain",
-			"It is decidedly so",
-			"Without a doubt",
-			"Yes definitely",
-			"You may rely on it",
-			"As I see it, yes",
-			"Most likely",
-			"Outlook good",
-			"Yes",
-			"Signs point to yes"
-		),
-		"maybe" = list(
-			"Reply hazy try again",
-			"Ask again later",
-			"Better not tell you now",
-			"Cannot predict now",
-			"Concentrate and ask again"
-		),
-		"no" = list(
-			"Don't count on it",
-			"My reply is no",
-			"My sources say no",
-			"Outlook not so good",
-			"Very doubtful"
-		)
-	)
 
 /obj/item/toy/eightball/haunted/Initialize(mapload)
 	. = ..()
-	for (var/answer in haunted_answers)
+	for (var/answer in possible_answers)
 		votes[answer] = 0
 	SSpoints_of_interest.make_point_of_interest(src)
 
@@ -186,7 +172,7 @@
 
 	voted.Cut()
 
-	var/list/top_options = haunted_answers[top_vote]
+	var/list/top_options = possible_answers[top_vote]
 	return pick(top_options)
 
 // Only ghosts can interact because only ghosts can open the ui
@@ -210,7 +196,7 @@
 	data["question"] = selected_message
 
 	data["answers"] = list()
-	for(var/vote in haunted_answers)
+	for(var/vote in possible_answers)
 		var/list/answer_data = list()
 		answer_data["answer"] = vote
 		answer_data["amount"] = votes[vote]
@@ -229,7 +215,7 @@
 	switch(action)
 		if("vote")
 			var/selected_answer = params["answer"]
-			if(!(selected_answer in haunted_answers))
+			if(!(selected_answer in possible_answers))
 				return
 			var/oldvote = voted[user.ckey]
 			if(oldvote)

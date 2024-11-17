@@ -2,7 +2,7 @@ import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 
 import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Section, Stack } from '../components';
+import { Box, Button, NoticeBox, Section, Stack, Flex, Divider } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -19,14 +19,22 @@ type Answer = {
 
 export function EightBallVote(props) {
   const { data } = useBackend<Data>();
-  const { shaking } = data;
+  const { shaking, question } = data;
 
+  const idealHeight = shaking && 265 || 70;
   return (
-    <Window width={400} height={600}>
-      <Window.Content>
-        {(shaking && (
-          <NoticeBox>No question is currently being asked.</NoticeBox>
-        )) || <EightBallVoteQuestion />}
+    <Window width={300} height={idealHeight}>
+      <Window.Content pb={"2.5em"}>
+        {(!shaking
+          &&
+            <NoticeBox danger textAlign={"center"}>No question is currently being asked.</NoticeBox>
+          ||
+            <>
+              <NoticeBox success textAlign={"center"}>A question is currently being asked!</NoticeBox>
+              <EightBallVoteQuestion />
+            </>
+        )}
+
       </Window.Content>
     </Window>
   );
@@ -34,38 +42,44 @@ export function EightBallVote(props) {
 
 function EightBallVoteQuestion(props) {
   const { act, data } = useBackend<Data>();
-  const { question, answers = [] } = data;
+  const { shaking, question, answers = [] } = data;
 
   return (
-    <Section>
-      <Box bold textAlign="center" fontSize="16px" m={1}>
-        &quot;{question}&quot;
-      </Box>
-      <Stack>
-        {answers.map((answer) => (
-          <Stack.Item grow key={answer.answer}>
-            <Button
-              fluid
-              bold
-              selected={answer.selected}
-              fontSize="16px"
-              lineHeight="24px"
-              textAlign="center"
-              mb={1}
-              onClick={() =>
-                act('vote', {
-                  answer: answer.answer,
-                })
-              }
-            >
-              {toTitleCase(answer.answer)}
-            </Button>
-            <Box bold textAlign="center" fontSize="30px">
-              {answer.amount}
-            </Box>
-          </Stack.Item>
-        ))}
-      </Stack>
+    <Section height={"100%"}>
+        <Flex bold align={"start"} textAlign="center" fontSize="16px" m={1}>
+          <Flex.Item>&quot;</Flex.Item>
+          <Flex.Item grow>{question}</Flex.Item>
+          <Flex.Item>&quot;</Flex.Item>
+        </Flex>
+
+        <Divider />
+
+        <Stack>
+          {answers.map((answer) => (
+            <Stack.Item grow key={answer.answer}>
+              <Button
+                fluid
+                bold
+                disabled={!shaking}
+                selected={answer.selected === answer.answer}
+                fontSize="16px"
+                lineHeight="24px"
+                textAlign="center"
+                mb={1}
+                onClick={() =>
+                  act('vote', {
+                    answer: answer.answer,
+                  })
+                }
+              >
+                {toTitleCase(answer.answer)}
+              </Button>
+              <Box bold textAlign="center" fontSize="30px">
+                {answer.amount}
+              </Box>
+            </Stack.Item>
+          ))}
+        </Stack>
     </Section>
   );
 }
