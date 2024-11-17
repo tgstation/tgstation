@@ -152,6 +152,9 @@
 	/// Do we want to hook into on_enter_area and on_exit_area?
 	/// Disables some optimizations
 	var/always_area_sensitive = FALSE
+	/// What was our power state the last time we updated its appearance?
+	/// TRUE for on, FALSE for off, -1 for never checked
+	var/appearance_power_state = -1
 
 /datum/armor/obj_machinery
 	melee = 25

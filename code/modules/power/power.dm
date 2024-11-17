@@ -289,8 +289,13 @@
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
 			. = TRUE
 
-	if(!(machine_stat & NOPOWER))
+	if(appearance_power_state != (machine_stat & NOPOWER))
 		update_appearance()
+
+// Saves like 300ms of init by not duping calls in the above proc
+/obj/machinery/update_appearance(updates)
+	. = ..()
+	appearance_power_state = machine_stat & NOPOWER
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
