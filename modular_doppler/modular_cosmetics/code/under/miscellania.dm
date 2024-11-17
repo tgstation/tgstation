@@ -34,6 +34,8 @@
 	desc = "De riguer for techno classicists, these extreme wide leg pants come back into style every \
 		now and then. This pair has generous onboard storage."
 	icon_state = "big_pants"
+	supported_bodyshapes = null
+	bodyshape_icon_files = null
 	greyscale_config = /datum/greyscale_config/big_pants
 	greyscale_config_worn = /datum/greyscale_config/big_pants/worn
 	greyscale_colors = "#874f16"
