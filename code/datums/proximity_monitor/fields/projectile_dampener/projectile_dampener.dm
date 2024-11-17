@@ -7,15 +7,16 @@
 //Only use square radius for this!
 /datum/proximity_monitor/advanced/projectile_dampener
 	edge_is_a_field = TRUE
-
-	var/static/image/edgeturf_south = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south")
-	var/static/image/edgeturf_north = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north")
-	var/static/image/edgeturf_west = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_west")
-	var/static/image/edgeturf_east = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_east")
-	var/static/image/northwest_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northwest")
-	var/static/image/southwest_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southwest")
-	var/static/image/northeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast")
-	var/static/image/southeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast")
+	var/static/list/effect_direction_images = list(
+		"[SOUTH]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south"),
+		"[NORTH]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north"),
+		"[WEST]" =  image('icons/effects/fields.dmi', icon_state = "projectile_dampen_west"),
+		"[EAST]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_east"),
+		"[NORTHWEST]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northwest"),
+		"[SOUTHWEST]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southwest"),
+		"[NORTHEAST]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast"),
+		"[SOUTHEAST]" = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast"),
+	)
 	var/static/image/generic_edge = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_generic")
 	///overlay we apply to caught bullets
 	var/static/image/new_bullet_overlay= image('icons/effects/fields.dmi', "projectile_dampen_effect")
@@ -75,6 +76,7 @@
 		if(isprojectile(possible_projectile) && HAS_TRAIT_FROM(possible_projectile, TRAIT_GOT_DAMPENED, REF(src)))
 			release_bullet_effect(possible_projectile)
 
+///proc that applies the wobbly effect on point of bullet entry
 /datum/proximity_monitor/advanced/projectile_dampener/proc/determine_wobble(turf/location)
 	var/coord_x = location.x - host.x
 	var/coord_y = location.y - host.y
@@ -87,6 +89,7 @@
 	if(!isnull(new_bullet_overlay) && HAS_TRAIT_FROM(source, TRAIT_GOT_DAMPENED, REF(src)))
 		overlays += new_bullet_overlay
 
+///a bullet has entered our field, apply the dampening effects to it
 /datum/proximity_monitor/advanced/projectile_dampener/proc/catch_bullet_effect(obj/projectile/bullet)
 	ADD_TRAIT(bullet,TRAIT_GOT_DAMPENED, REF(src))
 	RegisterSignal(bullet, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(projectile_overlay_updated))
@@ -94,6 +97,7 @@
 	bullet_effects.apply_effects(bullet)
 	bullet.update_appearance()
 
+///removing the effects after it has exited our field
 /datum/proximity_monitor/advanced/projectile_dampener/proc/release_bullet_effect(obj/projectile/bullet)
 	REMOVE_TRAIT(bullet, TRAIT_GOT_DAMPENED, REF(src))
 	SEND_SIGNAL(src, COMSIG_DAMPENER_RELEASE, bullet)
@@ -101,26 +105,39 @@
 	bullet.update_appearance()
 	UnregisterSignal(bullet, COMSIG_ATOM_UPDATE_OVERLAYS)
 
+///rendering all the field visuals. first we render the corners, then we connect them
 /datum/proximity_monitor/advanced/projectile_dampener/proc/draw_effect()
 	var/max_pixel_offset = current_range * ICON_SIZE_ALL
-	var/top_right_corner = list(northeast_corner, max_pixel_offset, max_pixel_offset)
-	var/top_left_corner = list(northwest_corner, -max_pixel_offset, max_pixel_offset)
-	var/bottom_left_corner = list(southwest_corner, -max_pixel_offset, -max_pixel_offset)
-	var/bottom_right_corner = list(southeast_corner, max_pixel_offset, -max_pixel_offset)
+	var/top_right_corner = list(effect_direction_images["[NORTHEAST]"], max_pixel_offset, max_pixel_offset)
+	var/top_left_corner = list(effect_direction_images["[NORTHWEST]"], -max_pixel_offset, max_pixel_offset)
+	var/bottom_left_corner = list(effect_direction_images["[SOUTHWEST]"], -max_pixel_offset, -max_pixel_offset)
+	var/bottom_right_corner = list(effect_direction_images["[SOUTHEAST]"], max_pixel_offset, -max_pixel_offset)
 
 	var/list/corners = list(top_right_corner, top_left_corner, bottom_left_corner, bottom_right_corner)
 	for(var/corner in corners)
 		draw_corner(corner)
 
 	var/list/corners_to_connect = list(
-		list(OVERLAY_DATA = edgeturf_north, CHANGING_OFFSET = "x_offset", STARTING_POSITION = max_pixel_offset),
-		list(OVERLAY_DATA = edgeturf_south, CHANGING_OFFSET = "x_offset", STARTING_POSITION = -max_pixel_offset),
-		list(OVERLAY_DATA = edgeturf_west, CHANGING_OFFSET = "y_offset", STARTING_POSITION = -max_pixel_offset),
-		list(OVERLAY_DATA = edgeturf_east, CHANGING_OFFSET = "y_offset", STARTING_POSITION = max_pixel_offset),
+		list(OVERLAY_DATA = effect_direction_images["[NORTH]"], CHANGING_OFFSET = "x_offset", STARTING_POSITION = max_pixel_offset),
+		list(OVERLAY_DATA = effect_direction_images["[SOUTH]"], CHANGING_OFFSET = "x_offset", STARTING_POSITION = -max_pixel_offset),
+		list(OVERLAY_DATA = effect_direction_images["[WEST]"], CHANGING_OFFSET = "y_offset", STARTING_POSITION = -max_pixel_offset),
+		list(OVERLAY_DATA = effect_direction_images["[EAST]"], CHANGING_OFFSET = "y_offset", STARTING_POSITION = max_pixel_offset),
 	)
 	for(var/direction in corners_to_connect)
 		draw_edge(direction, max_pixel_offset)
 
+///rendering the corners
+/datum/proximity_monitor/advanced/projectile_dampener/proc/draw_corner(list/corner_data)
+	var/obj/effect/overlay/vis/field/corner_effect = new()
+	var/image/image_overlay = corner_data[1]
+	corner_effect.icon = image_overlay.icon
+	corner_effect.icon_state = image_overlay.icon_state
+	corner_effect.alpha = 0
+	corner_effect.pixel_x = corner_data[2]
+	corner_effect.pixel_y = corner_data[3]
+	add_effect_to_host(corner_effect)
+
+///connecting the corners to one another
 /datum/proximity_monitor/advanced/projectile_dampener/proc/draw_edge(list/edge_data, target_offset)
 	var/starting_offset = edge_data[STARTING_POSITION]
 	var/current_offset = (-1 * target_offset) + ICON_SIZE_ALL
@@ -140,16 +157,7 @@
 		add_effect_to_host(edge_effect)
 		current_offset += ICON_SIZE_ALL
 
-/datum/proximity_monitor/advanced/projectile_dampener/proc/draw_corner(list/corner_data)
-	var/obj/effect/overlay/vis/field/corner_effect = new()
-	var/image/image_overlay = corner_data[1]
-	corner_effect.icon = image_overlay.icon
-	corner_effect.icon_state = image_overlay.icon_state
-	corner_effect.alpha = 0
-	corner_effect.pixel_x = corner_data[2]
-	corner_effect.pixel_y = corner_data[3]
-	add_effect_to_host(corner_effect)
-
+///handles adding the visual effect's data
 /datum/proximity_monitor/advanced/projectile_dampener/proc/add_effect_to_host(obj/effect/overlay/vis/field/effect_to_add)
 	my_movable.vis_contents += effect_to_add
 	var/coordinate_x = effect_to_add.pixel_x / ICON_SIZE_ALL
