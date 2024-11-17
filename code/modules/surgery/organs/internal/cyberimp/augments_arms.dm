@@ -289,7 +289,7 @@
 		/obj/item/stamp/denied,
 		/obj/item/taperecorder,
 		/obj/item/lighter,
-        /obj/item/laser_pointer
+        /obj/item/laser_pointer,
 		/obj/item/clipboard,
 	)
 
