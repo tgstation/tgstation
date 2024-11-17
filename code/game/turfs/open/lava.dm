@@ -22,6 +22,7 @@
 	barefootstep = FOOTSTEP_LAVA
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 	/// How much fire damage we deal to living mobs stepping on us
 	var/lava_damage = 20
 	/// How many firestacks we add to living mobs stepping on us
@@ -42,7 +43,8 @@
 	var/fish_source_type = /datum/fish_source/lavaland
 	/// The color we use for our immersion overlay
 	var/immerse_overlay_color = "#a15e1b"
-	rust_resistance = RUST_RESISTANCE_ABSOLUTE
+	/// Whether the immerse element has been added yet or not
+	var/immerse_added = FALSE
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
@@ -53,13 +55,37 @@
 	refresh_light()
 	if(!smoothing_flags)
 		update_appearance()
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
+	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_inited))
 
 /turf/open/lava/Destroy()
+	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
 	for(var/mob/living/leaving_mob in contents)
 		leaving_mob.RemoveElement(/datum/element/perma_fire_overlay)
 		REMOVE_TRAIT(leaving_mob, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 	return ..()
+
+///We lazily add the immerse element when something is spawned or crosses this turf and not before.
+/turf/open/lava/proc/on_atom_inited(datum/source, atom/movable/movable)
+	SIGNAL_HANDLER
+	if(burn_stuff(arrived))
+		START_PROCESSING(SSobj, src)
+	if(immerse_added || is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
+		return
+	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
+	immerse_added = TRUE
+
+/**
+ * turf/Initialize() calls Entered on its contents too, however
+ * we need to wait for movables that still need to be initialized
+ * before we add the immerse element.
+ */
+/turf/open/lava/Entered(atom/movable/entered)
+	. = ..()
+	if(!immerse_added && !is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
+		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
+		immerse_added = TRUE
+	if(burn_stuff(arrived))
+		START_PROCESSING(SSobj, src)
 
 /turf/open/lava/update_overlays()
 	. = ..()
@@ -138,14 +164,6 @@
 
 /turf/open/lava/MakeDry(wet_setting = TURF_WET_WATER)
 	return
-
-/turf/open/lava/airless
-	initial_gas_mix = AIRLESS_ATMOS
-
-/turf/open/lava/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(burn_stuff(arrived))
-		START_PROCESSING(SSobj, src)
 
 /turf/open/lava/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -321,6 +339,9 @@
 
 /turf/open/lava/can_cross_safely(atom/movable/crossing)
 	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED) || HAS_TRAIT(crossing, immunity_trait ) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
+
+/turf/open/lava/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/lava/smooth
 	name = "lava"
