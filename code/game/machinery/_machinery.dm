@@ -142,6 +142,8 @@
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	///The department we are paying to use this machine
 	var/payment_department = ACCOUNT_ENG
+	///Used in NAP violation, pay fine
+	var/fair_market_price = 5
 
 	///Is this machine currently in the atmos machinery queue?
 	var/atmos_processing = FALSE
@@ -674,6 +676,34 @@
 			return FALSE
 
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
+
+/obj/machinery/proc/check_nap_violations()
+	if(!SSeconomy.full_ancap)
+		return TRUE
+	if(!occupant || state_open)
+		return TRUE
+	var/mob/living/occupant_mob = occupant
+	var/obj/item/card/id/occupant_id = occupant_mob.get_idcard(TRUE)
+	if(!occupant_id)
+		say("Customer NAP Violation: No ID card found.")
+		nap_violation(occupant_mob)
+		return FALSE
+	var/datum/bank_account/insurance = occupant_id.registered_account
+	if(!insurance)
+		say("Customer NAP Violation: No bank account found.")
+		nap_violation(occupant_mob)
+		return FALSE
+	if(!insurance.adjust_money(-fair_market_price))
+		say("Customer NAP Violation: Unable to pay.")
+		nap_violation(occupant_mob)
+		return FALSE
+	var/datum/bank_account/department_account = SSeconomy.get_dep_account(payment_department)
+	if(department_account)
+		department_account.adjust_money(fair_market_price)
+	return TRUE
+
+/obj/machinery/proc/nap_violation(mob/violator)
+	return
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
