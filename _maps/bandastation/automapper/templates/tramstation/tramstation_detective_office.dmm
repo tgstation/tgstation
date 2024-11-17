@@ -7,14 +7,7 @@
 	fax_name = "Detective's Office"
 	},
 /turf/open/floor/iron/grimy,
-/area/space)
-"b" = (
-/obj/effect/landmark/event_spawn,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "c" = (
 /obj/structure/sign/calendar/directional/east,
 /obj/structure/table/wood,
@@ -22,70 +15,65 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/taperecorder,
+/obj/item/pen,
 /turf/open/floor/carpet,
-/area/space)
+/area/station/security/detectives_office)
 "d" = (
 /obj/machinery/firealarm/directional/west{
 	pixel_y = -3
 	},
 /obj/machinery/light_switch/directional/west{
-	pixel_x = -23;
+	pixel_x = -27;
 	pixel_y = 8
 	},
 /obj/structure/secure_safe/directional/south,
 /obj/machinery/photocopier,
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "e" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
 /turf/open/floor/carpet,
-/area/space)
+/area/station/security/detectives_office)
 "f" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "j" = (
 /turf/closed/wall,
-/area/space)
+/area/station/security/detectives_office)
 "k" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "s" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
 	},
 /obj/effect/landmark/start/detective,
 /turf/open/floor/carpet,
-/area/space)
+/area/station/security/detectives_office)
 "t" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
 /turf/open/floor/carpet,
-/area/space)
+/area/station/security/detectives_office)
 "u" = (
 /obj/machinery/vending/wardrobe/det_wardrobe,
 /obj/structure/sign/poster/official/dick_gum/directional/south,
 /turf/open/floor/iron/grimy,
-/area/space)
-"v" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "x" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "z" = (
 /obj/structure/closet/secure_closet/detective,
 /obj/item/camera/detective,
@@ -94,45 +82,46 @@
 	},
 /obj/item/storage/box/evidence,
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "C" = (
 /obj/effect/landmark/navigate_destination/det,
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "E" = (
 /obj/machinery/newscaster/directional/east,
 /obj/machinery/computer/records/medical{
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/space)
+/area/station/security/detectives_office)
 "I" = (
 /obj/structure/cable,
 /obj/structure/chair/stool{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "J" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "M" = (
 /obj/structure/filingcabinet,
-/obj/effect/mapping_helpers/requests_console/announcement,
-/obj/effect/mapping_helpers/requests_console/assistance,
-/obj/machinery/requests_console/directional/north{
-	department = "Detective's Office";
-	name = "Detective's Requests Console"
+/obj/structure/filingcabinet,
+/obj/machinery/camera{
+	dir = 9;
+	network = list("ss13","Security");
+	c_tag = "Security - Detective's Office"
 	},
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "N" = (
 /obj/structure/sign/clock/directional/north,
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "P" = (
 /obj/structure/table/wood,
 /obj/item/camera/detective{
@@ -149,54 +138,52 @@
 /obj/item/camera_film{
 	pixel_y = 7
 	},
-/obj/structure/detectiveboard/directional/north,
+/obj/machinery/requests_console/directional/north{
+	department = "Detective's Office";
+	name = "Detective's Requests Console"
+	},
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/announcement,
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "R" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/security/wooden_tv,
-/obj/structure/extinguisher_cabinet/directional/south{
-	pixel_x = -6
-	},
 /obj/machinery/button/door/directional/south{
 	name = "Privacy Shutters";
-	pixel_x = 6;
 	id = "kanyewest"
 	},
 /turf/open/floor/carpet,
-/area/space)
+/area/station/security/detectives_office)
 "U" = (
 /obj/machinery/computer/records/security{
 	dir = 8
 	},
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
-/area/space)
+/area/station/security/detectives_office)
 "V" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/carpet,
-/area/space)
+/area/station/security/detectives_office)
 "X" = (
-/obj/machinery/camera{
-	dir = 9;
-	network = list("ss13","Security");
-	c_tag = "Security - Detective's Office"
-	},
 /obj/structure/cable,
 /obj/machinery/light/warm/directional/north,
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "Y" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/grimy,
-/area/space)
+/area/station/security/detectives_office)
 "Z" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/carpet,
-/area/space)
+/area/station/security/detectives_office)
 
 (1,1,1) = {"
 N
@@ -207,7 +194,7 @@ d
 (2,1,1) = {"
 P
 C
-b
+k
 a
 "}
 (3,1,1) = {"
@@ -219,7 +206,7 @@ u
 (4,1,1) = {"
 X
 I
-v
+k
 Y
 "}
 (5,1,1) = {"
