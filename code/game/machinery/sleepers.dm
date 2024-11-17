@@ -10,9 +10,6 @@
 	interaction_flags_mouse_drop = NEED_DEXTERITY
 	circuit = /obj/item/circuitboard/machine/sleeper
 
-	payment_department = ACCOUNT_MED
-	fair_market_price = 5
-
 	///How much chems is allowed to be in a patient at once, before we force them to wait for the reagent to process.
 	var/efficiency = 1
 	///The minimum damage required to use any chem other than Epinephrine.
@@ -178,10 +175,6 @@
 /obj/machinery/sleeper/process()
 	use_energy(idle_power_usage)
 
-/obj/machinery/sleeper/nap_violation(mob/violator)
-	. = ..()
-	open_machine()
-
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
 	data["occupied"] = !!occupant
@@ -243,7 +236,6 @@
 		return
 
 	var/mob/living/mob_occupant = occupant
-	check_nap_violations()
 	switch(action)
 		if("door")
 			if(state_open)

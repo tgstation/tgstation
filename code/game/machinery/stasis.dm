@@ -11,9 +11,8 @@
 	buckle_lying = 90
 	buckle_dir = SOUTH
 	circuit = /obj/item/circuitboard/machine/stasis
-	fair_market_price = 10
-	payment_department = ACCOUNT_MED
 	interaction_flags_click = ALLOW_SILICON_REACH
+
 	var/stasis_enabled = TRUE
 	var/last_stasis_sound = FALSE
 	var/stasis_can_toggle = 0
@@ -133,7 +132,7 @@
 	if(!can_be_occupant(L))
 		return
 	set_occupant(L)
-	if(stasis_running() && check_nap_violations())
+	if(stasis_running())
 		chill_out(L)
 	update_appearance()
 
@@ -144,7 +143,7 @@
 	update_appearance()
 
 /obj/machinery/stasis/process()
-	if(!(occupant && isliving(occupant) && check_nap_violations()))
+	if(!(occupant && isliving(occupant)))
 		update_use_power(IDLE_POWER_USE)
 		return
 	var/mob/living/L_occupant = occupant
