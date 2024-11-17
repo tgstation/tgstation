@@ -303,7 +303,7 @@
 		if(istype(/obj/item/stamp/chameleon, potential_tool))
 			return FALSE
 
-	balloon_alert(user, "Experimental stamp unlocked")
+	balloon_alert(user, "experimental stamp unlocked")
 	items_list += WEAKREF(new /obj/item/stamp/chameleon(src))
 	return TRUE
 
