@@ -264,7 +264,6 @@
 	. = ..()
 	new /obj/effect/temp_visual/explosion/fast(target)
 	for(var/turf/closed/mineral/mineral_turf in RANGE_TURFS(1, target) - target)
-		var/turf/closed/mineral/mineral_turf = turf
 		mineral_turf.gets_drilled(firer, TRUE)
 	for(var/mob/living/living_mob in range(1, target) - firer - target)
 		var/armor = living_mob.run_armor_check(def_zone, armor_flag, armour_penetration = armour_penetration)
