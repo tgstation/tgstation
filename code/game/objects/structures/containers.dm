@@ -140,11 +140,6 @@
 	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Donk Co. and so could be carrying just about anything- although it's probably just Donk Pockets."
 	icon_state = "donk_co"
 
-/obj/structure/shipping_container/edo_ka
-	name = "\improper Edo-Ka shipping container"
-	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Cybersun's medical subdivision Edo-Ka, and is probably carrying medical cybernetics or somesuch."
-	icon_state = "edo_ka"
-
 /obj/structure/shipping_container/exagon
 	name = "\improper Exagon-Ichikawa shipping container"
 	desc = "A standard-measure shipping container for bulk transport of common metals and minerals. This one is from Exagon-Ichikawa, Cybersun Industries' mining and refining subdivision."
@@ -174,6 +169,11 @@
 	name = "\improper Interdyne shipping container"
 	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Interdyne, a private pharmaceutical company. Probably carrying medical or research supplies, probably."
 	icon_state = "interdyne"
+
+/obj/structure/shipping_container/oms
+	name = "\improper OMS shipping container"
+	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Cybersun's medical subdivision OMS (Osaka Medical Systems), and is probably carrying medical cybernetics or somesuch."
+	icon_state = "oms"
 
 /obj/structure/shipping_container/tiger_coop
 	name = "suspicious shipping container"
