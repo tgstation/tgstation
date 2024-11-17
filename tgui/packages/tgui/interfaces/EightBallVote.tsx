@@ -1,8 +1,8 @@
-import { BooleanLike } from 'common/react';
-import { toTitleCase } from 'common/string';
+import { Box, Button, NoticeBox, Section, Stack, Flex, Divider } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Section, Stack, Flex, Divider } from '../components';
 import { Window } from '../layouts';
 
 type Data = {

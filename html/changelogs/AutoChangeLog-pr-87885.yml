@@ -1,4 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "fixes seedling ai getting stuck when trying to refill water from emptied water tanks"
