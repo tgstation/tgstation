@@ -41,6 +41,7 @@
 
 	var/list/exclusions = list()
 	exclusions += BODY_ZONE_CHEST
+	exclusions += BODY_ZONE_HEAD
 	// if we ever decide to move android's brains into their chest, add this below
 	/*if (!isandroid(cast_on))
 		exclusions += BODY_ZONE_HEAD
