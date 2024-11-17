@@ -97,12 +97,14 @@
 		return data
 	var/patient_state
 	switch(patient.stat)
-		if(0)
+		if(CONSCIOUS)
 			patient_state = "Conscious"
-		if(1)
+		if(UNCONSCIOUS)
 			patient_state = "Unconscious"
-		if(2)
-			patient_state = "*dead*"
+		if(DEAD)
+			patient_state = "*Dead*"
+		if(SOFT_CRIT, HARD_CRIT)
+			patient_state = "Critical"
 		else
 			patient_state = "Unknown"
 	var/core_temp = ""
@@ -183,7 +185,7 @@
 		return TRUE
 	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate() in chassis
 	if(shooter)
-		for(var/datum/reagent/medication in shooter.reagents.reagent_list)
+		for(var/datum/reagent/medication as anything in shooter.reagents.reagent_list)
 			if(action == ("inject_reagent_" + medication.name))
 				inject_reagent(medication, shooter)
 				break // or maybe return TRUE? i'm not certain
