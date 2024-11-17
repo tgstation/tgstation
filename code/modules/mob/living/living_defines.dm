@@ -39,7 +39,7 @@
 	var/move_intent = MOVE_INTENT_RUN
 
 	/// Rate at which fire stacks should decay from this mob
-	var/fire_stack_decay_rate = -0.05
+	var/fire_stack_decay_rate = -0.15
 
 	/// when the mob goes from "normal" to crit
 	var/crit_threshold = HEALTH_THRESHOLD_CRIT
