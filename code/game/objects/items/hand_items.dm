@@ -557,6 +557,7 @@
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
 	if(firer && !silent_blown)
+		ru_names_rename(ru_names_toml(name, prefix = "воздушный ", suffix = " от [firer.declent_ru(GENITIVE)]", override_base = "[name] blown by [firer]"))
 		name = "[name] blown by [firer]"
 
 	return ..()

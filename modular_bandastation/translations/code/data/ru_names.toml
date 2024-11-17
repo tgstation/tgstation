@@ -1181,6 +1181,52 @@ instrumental = "бейсбольной битой"
 prepositional = "бейсбольной бите"
 gender = "female"
 
+# MARK: Projectiles
+["kiss"]
+nominative = "поцелуй"
+genitive = "поцелуя"
+dative = "поцелую"
+accusative = "поцелуй"
+instrumental = "поцелуем"
+prepositional = "поцелуе"
+gender = "male"
+
+["kiss of death"]
+nominative = "поцелуй смерти"
+genitive = "поцелуя смерти"
+dative = "поцелую смерти"
+accusative = "поцелуй смерти"
+instrumental = "поцелуем смерти"
+prepositional = "поцелуе смерти"
+gender = "male"
+
+["syndie kiss"]
+nominative = "поцелуй синди"
+genitive = "поцелуя синди"
+dative = "поцелую синди"
+accusative = "поцелуй синди"
+instrumental = "поцелуем синди"
+prepositional = "поцелуе синди"
+gender = "male"
+
+["french kiss (is that a hint of garlic?)"]
+nominative = "французский поцелуй (с привкусом чеснока?)"
+genitive = "французского поцелуя (с привкусом чеснока?)"
+dative = "французскому поцелую (с привкусом чеснока?)"
+accusative = "французский поцелуй (с привкусом чеснока?)"
+instrumental = "французским поцелуем (с привкусом чеснока?)"
+prepositional = "французском поцелуе (с привкусом чеснока?)"
+gender = "male"
+
+["chef's kiss"]
+nominative = "поцелуй повара"
+genitive = "поцелуя повара"
+dative = "поцелую повара"
+accusative = "поцелуй повара"
+instrumental = "поцелуем повара"
+prepositional = "поцелуе повара"
+gender = "male"
+
 # MARK: Security
 ["handcuffs"]
 nominative = "наручники"
