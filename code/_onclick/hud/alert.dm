@@ -487,19 +487,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		"All Good Things Must End"
 	)
 
-/atom/movable/screen/alert/succumb/Initialize(mapload, datum/hud/hud_owner)
-	. = ..()
-	register_context()
-
-/atom/movable/screen/alert/succumb/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	context[SCREENTIP_CONTEXT_LMB] = "Succumb With Last Words"
-	context[SCREENTIP_CONTEXT_RMB] = "Succumb Silently"
-	return CONTEXTUAL_SCREENTIP_SET
-
-#define FASTSUCCUMB_YES "Yes"
-#define FASTSUCCUMB_WAIT "Wait, I have last words!"
-#define FASTSUCCUMB_NO "No"
-
 /atom/movable/screen/alert/succumb/Click(location, control, params)
 	. = ..()
 	if(!.)
@@ -510,17 +497,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	var/title = pick(death_titles)
 
-	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
-		//Succumbing without a message
-		var/choice = tgui_alert(living_owner, "Are you sure you want to succumb?", title, list(FASTSUCCUMB_YES, FASTSUCCUMB_WAIT, FASTSUCCUMB_NO))
-		switch(choice)
-			if(FASTSUCCUMB_NO, null)
-				return
-			if(FASTSUCCUMB_YES)
-				living_owner.succumb()
-				return
-			//if(FASTSUCCUMB_WAIT), we continue to last words
-
 	//Succumbing with a message
 	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", title, max_length = CHAT_MESSAGE_MAX_LENGTH, encode = FALSE) // saycode already handles sanitization
 	if(isnull(last_whisper))
@@ -529,9 +505,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		living_owner.say("#[last_whisper]")
 	living_owner.succumb(whispered = length(last_whisper) > 0)
 
-#undef FASTSUCCUMB_NO
-#undef FASTSUCCUMB_WAIT
-#undef FASTSUCCUMB_YES
 //ALIENS
 
 /atom/movable/screen/alert/alien_plas
