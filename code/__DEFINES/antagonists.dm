@@ -276,6 +276,12 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a spy!
 #define IS_SPY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/spy))
 
+/// Checks if the given mob is a voidwalker.
+#define IS_VOIDWALKER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/voidwalker))
+
+/// Checks if the given mob is a void blessed.
+#define IS_VOID_BLESSED(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/void_blessed))
+
 /// List of human antagonist types which don't spawn directly on the space station
 GLOBAL_LIST_INIT(human_invader_antagonists, list(
 	/datum/antagonist/abductor,

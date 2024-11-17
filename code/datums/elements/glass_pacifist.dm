@@ -9,6 +9,10 @@
 
 	RegisterSignal(target, COMSIG_LIVING_ATTACK_ATOM, PROC_REF(check_if_glass))
 
+/datum/element/glass_pacifist/Detach(datum/target)
+	UnregisterSignal(target, COMSIG_LIVING_ATTACK_ATOM)
+	return ..()
+
 /datum/element/glass_pacifist/proc/check_if_glass(mob/living/owner, atom/hit)
 	SIGNAL_HANDLER
 

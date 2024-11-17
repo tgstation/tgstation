@@ -9,6 +9,10 @@
 
 	RegisterSignal(target, COMSIG_LIVING_TRY_PULL, PROC_REF(try_pull))
 
+/datum/element/only_pull_living/Detach(datum/target)
+	UnregisterSignal(target, COMSIG_LIVING_TRY_PULL)
+	return ..()
+
 /datum/element/only_pull_living/proc/try_pull(mob/living/owner, atom/movable/pulled)
 	SIGNAL_HANDLER
 

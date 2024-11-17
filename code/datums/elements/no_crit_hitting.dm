@@ -9,6 +9,10 @@
 
 	RegisterSignals(target, list(COMSIG_MOB_ITEM_ATTACK), PROC_REF(check_attack))
 
+/datum/element/no_crit_hitting/Detach(datum/target)
+	UnregisterSignal(target, COMSIG_MOB_ITEM_ATTACK)
+	return ..()
+
 /datum/element/no_crit_hitting/proc/check_attack(mob/living/attacker, atom/attacked)
 	SIGNAL_HANDLER
 

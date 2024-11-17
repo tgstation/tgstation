@@ -63,7 +63,53 @@
 
 		var/obj/wisp = new /obj/effect/wisp_mobile (get_turf(pick(GLOB.voidwalker_void)))
 		victim.forceMove(wisp)
-		succesfully_kidnapped()
+		succesfully_kidnapped(victim)
 
 /datum/component/space_kidnap/proc/succesfully_kidnapped(mob/living/carbon/human/kidnappee)
 	SEND_SIGNAL(parent, COMSIG_VOIDWALKER_SUCCESFUL_KIDNAP, kidnappee)
+
+/datum/component/space_kidnap/junior
+	var/datum/antagonist/void_blessed/void_blessed_datum
+	var/datum/weakref/remember_target
+
+/datum/component/space_kidnap/junior/Initialize(...)
+	. = ..()
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
+	var/mob/living/living_perent = parent
+	void_blessed_datum = locate() in living_perent.mind?.antag_datums
+	if(isnull(void_blessed_datum))
+		return COMPONENT_INCOMPATIBLE
+
+/datum/component/space_kidnap/junior/try_kidnap(mob/living/parent, atom/target)
+	if(!isliving(target))
+		return
+	if(!is_target(target))
+		target.balloon_alert(parent, "wrong target!")
+		return
+
+	return ..()
+
+/datum/component/space_kidnap/junior/proc/is_target(mob/living/target_or_not)
+	if(!isnull(remember_target))
+		var/mob/weak_target = remember_target.resolve()
+		if(weak_target == target_or_not)
+			return TRUE
+		remember_target = null
+	for(var/datum/objective/void_blessed_kidnap_objective/objective_to_kill in void_blessed_datum.objectives)
+		if(objective_to_kill.my_target == target_or_not)
+			remember_target = WEAKREF(target_or_not)
+			return TRUE
+	return FALSE
+
+/datum/component/space_kidnap/junior/succesfully_kidnapped(mob/living/carbon/human/kidnappee)
+	. = ..()
+	if(kidnappee.has_status_effect(/datum/status_effect/void_symbol_mark))
+		kidnappee.remove_status_effect(/datum/status_effect/void_symbol_mark)
+	if(isnull(remember_target))
+		return
+	var/mob/weak_target = remember_target.resolve()
+	for(var/datum/objective/void_blessed_kidnap_objective/objective_to_kill in void_blessed_datum.objectives)
+		if(weak_target == objective_to_kill.my_target)
+			objective_to_kill.kidnapped = TRUE
+	remember_target = null

@@ -41,7 +41,7 @@
 	organ_owner.AddElement(/datum/element/glass_pacifist)
 	organ_owner.AddElement(/datum/element/no_crit_hitting)
 
-	organ_owner.apply_status_effect(regen)
+	regen = organ_owner.apply_status_effect(regen)
 
 	unsettle = new unsettle(organ_owner)
 	unsettle.Grant(organ_owner)

@@ -20,10 +20,21 @@
 	wound_bonus = -30
 	bare_wound_bonus = 20
 
+	var/base_force = 25
+	var/base_block = 0
+
 	/// Damage we loss per hit
 	var/damage_loss_per_hit = 0.5
+	/// Block chance increase per hit
+	var/block_chance_increase_per_hit = 0
 	/// The minimal damage we can reach
 	var/damage_minimum = 15
+	/// The max block chance we can reach
+	var/block_chance_max = 80
+	/// How much damage we heal from an inflicted attack(in percentage).
+	var/vampirism = 0
+	/// If > 0 mutes the target on silence_time seconds(max 20 seconds).
+	var/silence_time = 0
 
 /obj/item/void_eater/Initialize(mapload)
 	. = ..()
@@ -43,7 +54,8 @@
 /obj/item/void_eater/examine(mob/user)
 	. = ..()
 	. += span_notice("The [name] weakens each hit, recharge it by kidnapping someone!")
-	. += span_notice("Sharpness: [round(force)]/[initial(force)]")
+	. += span_notice("Sharpness: [round(force)]/[base_force]. [damage_loss_per_hit] damage losses per hit.")
+	. += span_notice("Defence: [block_chance]/[block_chance_max]. [block_chance_increase_per_hit] block chance increases per hit.")
 
 /obj/item/void_eater/attack(mob/living/target_mob, mob/living/user, params)
 	if(!ishuman(target_mob))
@@ -83,6 +95,15 @@
 
 	force = max(force - damage_loss_per_hit, damage_minimum)
 
+	if(!isnull(block_chance_increase_per_hit))
+		block_chance = min(block_chance + block_chance_increase_per_hit, block_chance_max)
+
+	if(!isnull(vampirism))
+		user.heal_ordered_damage(-force*(vampirism/100), list(BRUTE, BURN, OXY, STAMINA, TOX, BRAIN))
+
+	if(!isnull(silence_time))
+		hewmon.adjust_silence_up_to(silence_time SECONDS, 20 SECONDS)
+
 	if(prob(5))
 		new /obj/effect/spawner/random/glass_debris (get_turf(user))
 	return ..()
@@ -91,7 +112,8 @@
 /obj/item/void_eater/proc/refresh(mob/living/carbon/human/voidwalker)
 	SIGNAL_HANDLER
 
-	force = initial(force)
+	force = base_force
+	block_chance = base_block
 
 	color = "#000000"
 	animate(src, color = null, time = 1 SECONDS)//do a color flashy woosh
