@@ -138,7 +138,7 @@
 	var/subsystem_type = /datum/controller/subsystem/machines
 	///Circuit to be created and inserted when the machinery is created
 	var/obj/item/circuitboard/circuit
-	//See code/DEFINES/interaction_flags.dm
+	///See code/DEFINES/interaction_flags.dm
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	///The department we are paying to use this machine
 	var/payment_department = ACCOUNT_ENG
@@ -146,15 +146,15 @@
 	var/fair_market_price = 5
 	///Is this machine currently in the atmos machinery queue?
 	var/atmos_processing = FALSE
-	/// world.time of last use by [/mob/living]
+	///world.time of last use by [/mob/living]
 	var/last_used_time = 0
-	/// Mobtype of last user. Typecast to [/mob/living] for initial() usage
+	///Mobtype of last user. Typecast to [/mob/living] for initial() usage
 	var/mob/living/last_user_mobtype
-	/// Do we want to hook into on_enter_area and on_exit_area?
-	/// Disables some optimizations
+	///Do we want to hook into on_enter_area and on_exit_area?
+	///Disables some optimizations
 	var/always_area_sensitive = FALSE
-	/// What was our power state the last time we updated its appearance?
-	/// TRUE for on, FALSE for off, -1 for never checked
+	///What was our power state the last time we updated its appearance?
+	///TRUE for on, FALSE for off, -1 for never checked
 	var/appearance_power_state = -1
 
 /datum/armor/obj_machinery
