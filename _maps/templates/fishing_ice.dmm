@@ -1,0 +1,68 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/open/misc/ice/icemoon/no_planet_atmos/holed,
+/area/template_noop)
+"d" = (
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"i" = (
+/obj/effect/turf_decal/siding/dark_blue/corner,
+/turf/template_noop,
+/area/template_noop)
+"o" = (
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"q" = (
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/item/clothing/suit/caution,
+/turf/template_noop,
+/area/template_noop)
+"E" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"R" = (
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"X" = (
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+i
+E
+d
+"}
+(2,1,1) = {"
+q
+b
+a
+"}
+(3,1,1) = {"
+o
+R
+X
+"}

@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed fishing rod duping with poly belts and shapeshift spells."
-  - spellcheck: "Fixed a small typo when examining fishing rods."

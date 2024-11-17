@@ -35,8 +35,6 @@
 	. = ..()
 	shield = new /obj/durand_shield(loc, src, plane, layer, dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, PROC_REF(relay))
-	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, PROC_REF(prehit))
-
 
 /obj/vehicle/sealed/mecha/durand/Destroy()
 	if(shield)
@@ -84,10 +82,12 @@
 	shield.setDir(dir)
 
 //Redirects projectiles to the shield if defense_check decides they should be blocked and returns true.
-/obj/vehicle/sealed/mecha/durand/proc/prehit(obj/projectile/source, list/signal_args)
-	SIGNAL_HANDLER
+/obj/vehicle/sealed/mecha/durand/bullet_act(obj/projectile/source, def_zone, mode)
 	if(defense_check(source.loc) && shield)
-		signal_args[2] = shield
+		return shield.bullet_act(source, def_zone, mode)
+	return ..()
+
+
 
 /**Checks if defense mode is enabled, and if the attacker is standing in an area covered by the shield.
 Expects a turf. Returns true if the attack should be blocked, false if not.*/

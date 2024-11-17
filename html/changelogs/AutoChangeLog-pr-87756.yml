@@ -1,4 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes:
-  - image: "redid most basic drinking glass sprites, and moved several drinks to use the same color system as beakers. Please bug report any incorrect colored drinks or juices!"

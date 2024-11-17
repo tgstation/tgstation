@@ -1,5 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - bugfix: "Teleporting while buckled to something now works as expected"
-  - bugfix: "You can buckle to anything if you share the same tile (cause at that point it doesn't matter if there's a wall, right?)"

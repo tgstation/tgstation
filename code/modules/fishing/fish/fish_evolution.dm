@@ -169,3 +169,28 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	if(source.size >= (/obj/item/fish/fryish/fritterish::average_size * 1.5) && source.size >= (/obj/item/fish/fryish/fritterish::average_weight * 1.5))
 		return ..()
 	return FALSE
+
+/datum/fish_evolution/moonfish
+	probability = 200 //guaranteed if the conditions are met
+	new_fish_type = /obj/item/fish/moonfish
+	conditions_note = "Requires the dwarf moonfish to be big enough."
+
+/datum/fish_evolution/moonfish/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
+	if(source.size < (/obj/item/fish/moonfish/dwarf::average_size * 1.5) && source.size < (/obj/item/fish/moonfish/dwarf::average_weight * 1.5))
+		return ..()
+	if(mate && (mate.size < (/obj/item/fish/moonfish::average_size * 1.3) && mate.size < (/obj/item/fish/moonfish::average_weight * 1.3)))
+		return FALSE
+	return FALSE
+
+/datum/fish_evolution/dwarf_moonfish
+	probability = 200 //guaranteed if the conditions are met
+	new_fish_type = /obj/item/fish/moonfish/dwarf
+	conditions_note = "Requires the moonfish to be small enough."
+
+/datum/fish_evolution/dwarf_moonfish/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
+	if(source.size > (/obj/item/fish/moonfish::average_size * 0.66) && source.size > (/obj/item/fish/moonfish::average_weight * 0.66))
+		return FALSE
+	if(mate && (mate.size > (/obj/item/fish/moonfish::average_size * 0.7) && mate.size > (/obj/item/fish/moonfish::average_weight * 0.7)))
+		return FALSE
+	return ..()
+
