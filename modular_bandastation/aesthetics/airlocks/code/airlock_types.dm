@@ -1,6 +1,34 @@
-// Station airlocks
+// MARK: Station airlocks
 /obj/machinery/door/airlock/command
 	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/heads/command.dmi'
+
+/obj/machinery/door/airlock/command/cap
+	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/heads/cap.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_cap
+
+/obj/machinery/door/airlock/command/ce
+	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/heads/ce.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_ce
+
+/obj/machinery/door/airlock/command/cmo
+	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/heads/cmo.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_cmo
+
+/obj/machinery/door/airlock/command/hop
+	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/heads/hop.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_hop
+
+/obj/machinery/door/airlock/command/hos
+	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/heads/hos.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_hos
+
+/obj/machinery/door/airlock/command/qm
+	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/heads/qm.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_qm
+
+/obj/machinery/door/airlock/command/rd
+	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/heads/rd.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_rd
 
 /obj/machinery/door/airlock/security
 	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/security.dmi'
@@ -39,6 +67,18 @@
 	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/botany.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_hydro
 
+/obj/machinery/door/airlock/eva
+	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/eva.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_eva
+
+/obj/machinery/door/airlock/psych
+	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/psych.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_psych
+
+/obj/machinery/door/airlock/lawyer
+	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/corporate.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_lawyer
+
 /obj/machinery/door/airlock/service
 	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/service.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_service
@@ -52,7 +92,7 @@
 	overlays_file = 'modular_bandastation/aesthetics/airlocks/icons/centcom/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_grunge
 
-// Station airlocks glass
+// MARK: Glass station airlocks
 /obj/machinery/door/airlock/command/cap/glass
 	opacity = 0
 	glass = TRUE
@@ -108,7 +148,7 @@
 	opacity = 0
 	glass = TRUE
 
-// Mineral airlocks
+// MARK: Other airlocks
 /obj/machinery/door/airlock/gold
 	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/gold.dmi'
 

@@ -1,3 +1,4 @@
+// MARK: Windows
 /obj/structure/window
 	layer = ABOVE_WINDOW_LAYER
 	/// Used to define what file the edging sprite is contained within
@@ -59,21 +60,25 @@
 /obj/structure/window/reinforced/shuttle
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE + SMOOTH_GROUP_TITANIUM_WALLS
 
-// Spawners
-/* Доделать если всё таки соберёмся маппить...
+// MARK: Spawners
 /obj/effect/spawner/structure/window
 	icon = 'modular_bandastation/aesthetics/windows/icons/spawners.dmi'
-	icon_state = "window_spawner"
 
-/obj/effect/spawner/structure/window/reinforced
-	icon_state = "r_window_spawner"
+// Override to original
+/obj/effect/spawner/structure/window/bronze
+	icon = 'icons/obj/structures_spawners.dmi'
 
-/obj/effect/spawner/structure/window/reinforced/tinted
-	icon_state = "t_window_spawner"
+/obj/effect/spawner/structure/window/hollow
+	icon = 'icons/obj/structures_spawners.dmi'
 
-/obj/effect/spawner/structure/window/plasma
-	icon_state = "p_window_spawner"
+/obj/effect/spawner/structure/window/ice
+	icon = 'icons/obj/structures_spawners.dmi'
 
-/obj/effect/spawner/structure/window/reinforced/plasma
-	icon_state = "rp_window_spawner"
-*/
+/obj/effect/spawner/structure/window/survival_pod
+	icon = 'icons/obj/structures_spawners.dmi'
+
+/obj/effect/spawner/structure/window/reinforced/shuttle
+	icon = 'icons/obj/structures_spawners.dmi'
+
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium
+	icon = 'icons/obj/structures_spawners.dmi'
