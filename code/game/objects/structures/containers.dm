@@ -153,10 +153,6 @@
 	desc = "A standard-measure shipping container for bulk transport of precious metals and minerals. This one is from Exagon-Ichikawa, Cybersun Industries' mining and refining subdivision."
 	icon_state = "exagon_precious"
 
-/obj/structure/shipping_container/exagon/fuel
-	desc = "A standard-measure shipping container for bulk transport of fuel resources. This one is from Exagon-Ichikawa, Cybersun Industries' mining and refining subdivision."
-	icon_state = "exagon_fuel"
-
 /obj/structure/shipping_container/gorlex
 	name = "\improper Gorlex Securities shipping container"
 	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Gorlex Securities, and is probably carrying their primary export: war crimes."
