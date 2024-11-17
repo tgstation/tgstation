@@ -22,6 +22,12 @@
 	var/id = 1
 	/// The sound that plays when the door opens/closes
 	var/animation_sound = 'sound/machines/blastdoor.ogg'
+	var/show_nav_computer_icon = TRUE
+
+/obj/machinery/door/poddoor/Initialize(mapload)
+	. = ..()
+	if(show_nav_computer_icon)
+		AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "airlock", TRUE)
 
 /datum/armor/door_poddoor
 	melee = 50

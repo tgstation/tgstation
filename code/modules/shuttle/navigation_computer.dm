@@ -34,7 +34,7 @@
 	. = ..()
 	actions += new /datum/action/innate/shuttledocker_rotate(src)
 	actions += new /datum/action/innate/shuttledocker_place(src)
-
+	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "computer", FALSE)
 	set_init_ports()
 
 	if(connect_to_shuttle(mapload, SSshuttle.get_containing_shuttle(src)))
@@ -124,6 +124,7 @@
 				SET_PLANE(I, ABOVE_GAME_PLANE, shuttle_turf)
 				I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 				the_eye.placement_images[I] = list(x_off, y_off)
+	gatherNavComputerIcons()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
 	..()
@@ -132,6 +133,7 @@
 		var/list/to_add = list()
 		to_add += the_eye.placement_images
 		to_add += the_eye.placed_images
+		to_add += the_eye.extra_images
 		if(!see_hidden)
 			to_add += SSshuttle.hidden_shuttle_turf_images
 
@@ -145,11 +147,54 @@
 		var/list/to_remove = list()
 		to_remove += the_eye.placement_images
 		to_remove += the_eye.placed_images
+		to_remove += the_eye.extra_images
 		if(!see_hidden)
 			to_remove += SSshuttle.hidden_shuttle_turf_images
 
 		user.client.images -= to_remove
 		user.client.view_size.resetToDefault()
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/shuttle_turf_from_coords(list/coords)
+	var/mob/eye/ai_eye/remote/shuttle_docker/the_eye = eyeobj
+	var/shuttleDir = shuttle_port.dir
+	var/curDir = the_eye.dir
+	var/list/adjustedCoords = coords.Copy()
+
+	// Rotate coords so  they match the current shuttle docking port's dir
+	if(turn(curDir, -90) == shuttleDir)
+		adjustedCoords[1] = coords[2] + y_offset
+		adjustedCoords[2] = -(coords[1] + x_offset)
+	else if(turn(curDir, 90) == shuttleDir)
+		adjustedCoords[1] = -(coords[2] + y_offset)
+		adjustedCoords[2] = coords[1] + x_offset
+	else if(turn(curDir, 180) == shuttleDir)
+		adjustedCoords[1] = -(coords[1] + x_offset)
+		adjustedCoords[2] = -(coords[2] + y_offset)
+	else
+		adjustedCoords[1] = coords[1] + x_offset
+		adjustedCoords[2] = coords[2] + y_offset
+
+	return locate(shuttle_port.x + adjustedCoords[1], shuttle_port.y + adjustedCoords[2], shuttle_port.z)
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/gatherNavComputerIcons()
+	var/mob/eye/ai_eye/remote/shuttle_docker/the_eye = eyeobj
+	var/list/placement_image_cache = the_eye.placement_images
+	var/list/extra_image_cache = the_eye.extra_images
+	for(var/i in 1 to placement_image_cache.len)
+		var/image/placement_image = placement_image_cache[i]
+		var/list/coords = placement_image_cache[placement_image]
+		var/turf/shuttle_turf = shuttle_turf_from_coords(coords)
+		var/list/images_to_add = list()
+		for(var/atom/A in shuttle_turf)
+			SEND_SIGNAL(A, COMSIG_SHUTTLE_NAV_COMPUTER_IMAGE_REQUESTED, images_to_add)
+		for(var/i2 in 1 to images_to_add.len)
+			var/image/extra_image = images_to_add[i2]
+			extra_image.dir = turn(extra_image.dir, dir2angle(the_eye.dir) - dir2angle(shuttle_port.dir))
+			extra_image.loc = locate(the_eye.x + coords[1], the_eye.y + coords[2], the_eye.z)
+			extra_image.layer = ABOVE_NORMAL_TURF_LAYER
+			SET_PLANE(extra_image, ABOVE_GAME_PLANE, the_eye)
+			extra_image.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+			extra_image_cache[extra_image] = coords.Copy()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/placeLandingSpot()
 	if(designating_target_loc || !current_user)
@@ -224,7 +269,7 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/rotateLandingSpot()
 	var/mob/eye/ai_eye/remote/shuttle_docker/the_eye = eyeobj
-	var/list/image_cache = the_eye.placement_images
+	var/list/image_cache = the_eye.placement_images + the_eye.extra_images
 	the_eye.setDir(turn(the_eye.dir, -90))
 	for(var/i in 1 to image_cache.len)
 		var/image/pic = image_cache[i]
@@ -233,6 +278,7 @@
 		coords[1] = coords[2]
 		coords[2] = -Tmp
 		pic.loc = locate(the_eye.x + coords[1], the_eye.y + coords[2], the_eye.z)
+		pic.dir = turn(pic.dir, -90)
 	var/Tmp = x_offset
 	x_offset = y_offset
 	y_offset = -Tmp
@@ -265,6 +311,12 @@
 			else
 				I.icon_state = "red"
 				. = SHUTTLE_DOCKER_BLOCKED
+	var/list/extra_image_cache = the_eye.extra_images
+	for(var/i in 1 to extra_image_cache.len)
+		var/image/I = extra_image_cache[i]
+		var/list/coords = extra_image_cache[I]
+		var/turf/T = locate(eyeturf.x + coords[1], eyeturf.y + coords[2], eyeturf.z)
+		I.loc = T
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingTurf(turf/T, list/overlappers)
 	// Too close to the map edge is never allowed
@@ -321,6 +373,7 @@
 	use_static = FALSE
 	var/list/image/placement_images = list()
 	var/list/image/placed_images = list()
+	var/list/image/extra_images = list()
 
 /mob/eye/ai_eye/remote/shuttle_docker/Initialize(mapload, obj/machinery/computer/camera_advanced/origin)
 	src.origin = origin

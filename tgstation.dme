@@ -1527,6 +1527,7 @@
 #include "code\datums\elements\movement_turf_changer.dm"
 #include "code\datums\elements\movetype_handler.dm"
 #include "code\datums\elements\muffles_speech.dm"
+#include "code\datums\elements\nav_computer_icon.dm"
 #include "code\datums\elements\nerfed_pulling.dm"
 #include "code\datums\elements\no_crit_hitting.dm"
 #include "code\datums\elements\noisy_movement.dm"
