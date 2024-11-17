@@ -676,7 +676,14 @@
 
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
 
+/**
+ * Checks for NAP non aggression principle, an anarcho capitalist event triggered by admins
+ * where using machines cost money
+ */
 /obj/machinery/proc/check_nap_violations()
+	PROTECTED_PROC(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if(!SSeconomy.full_ancap)
 		return TRUE
 	if(!occupant || state_open)
@@ -701,7 +708,15 @@
 		department_account.adjust_money(fair_market_price)
 	return TRUE
 
+/**
+ * Actions to take in case of NAP violation
+ * Arguments
+ *
+ * * mob/violator - the mob who violated the NAP aggrement
+ */
 /obj/machinery/proc/nap_violation(mob/violator)
+	PROTECTED_PROC(TRUE)
+
 	return
 
 ////////////////////////////////////////////////////////////////////////////////////////////
