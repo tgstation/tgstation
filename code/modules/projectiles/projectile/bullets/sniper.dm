@@ -87,7 +87,7 @@
 	name = ".50 BMG aggression dissuasion round"
 	icon_state = "gaussstrong"
 	damage = 25
-	speed = 0.33
+	speed = 3
 	range = 16
 
 /obj/projectile/bullet/p50/marksman
