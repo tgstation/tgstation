@@ -58054,9 +58054,6 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "uyP" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/table,
 /obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/east,
