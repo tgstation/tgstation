@@ -95,21 +95,21 @@
 	if(!isnull(tile_z))
 		z = tile_z
 	if(!isnull(p_x))
-		var/x_offset = SIGN(p_x) * FLOOR(abs(p_x) / ICON_SIZE_X, 1)
+		var/x_offset = SIGNED_FLOOR_DIVISION(p_x, ICON_SIZE_X)
 		x += x_offset
 		pixel_x = p_x - x_offset * ICON_SIZE_X
 	if(!isnull(p_y))
-		var/y_offset = SIGN(p_y) * FLOOR(abs(p_y) / ICON_SIZE_Y, 1)
+		var/y_offset = SIGNED_FLOOR_DIVISION(p_y, ICON_SIZE_Y)
 		y += y_offset
 		pixel_y = p_y - y_offset * ICON_SIZE_Y
 
 /datum/point/proc/increment(p_x, p_y)
 	pixel_x += p_x
 	pixel_y += p_y
-	var/x_offset = SIGN(p_x) * FLOOR(abs(p_x) / ICON_SIZE_X, 1)
+	var/x_offset = SIGNED_FLOOR_DIVISION(p_x, ICON_SIZE_X)
 	x += x_offset
 	pixel_x = p_x - x_offset * ICON_SIZE_X
-	var/y_offset = SIGN(p_y) * FLOOR(abs(p_y) / ICON_SIZE_Y, 1)
+	var/y_offset = SIGNED_FLOOR_DIVISION(p_y, ICON_SIZE_Y)
 	y += y_offset
 	pixel_y = p_y - y_offset * ICON_SIZE_Y
 
@@ -123,10 +123,10 @@
 	AM.pixel_y = pixel_y
 
 /datum/point/proc/return_turf()
-	return locate(x + SIGN(pixel_x) * FLOOR(abs(pixel_x) / ICON_SIZE_X, 1), y + SIGN(pixel_y) * FLOOR(abs(pixel_y) / ICON_SIZE_X, 1), z)
+	return locate(x + SIGNED_FLOOR_DIVISION(pixel_x, ICON_SIZE_X), y + SIGNED_FLOOR_DIVISION(pixel_y, ICON_SIZE_Y), z)
 
 /datum/point/proc/return_coordinates() //[turf_x, turf_y, z]
-	return list(x + SIGN(pixel_x) * FLOOR(abs(pixel_x) / ICON_SIZE_X, 1), y + SIGN(pixel_y) * FLOOR(abs(pixel_y) / ICON_SIZE_X, 1), z)
+	return list(x + SIGNED_FLOOR_DIVISION(pixel_x, ICON_SIZE_X), y + SIGNED_FLOOR_DIVISION(pixel_y, ICON_SIZE_Y), z)
 
 /datum/point/proc/return_position()
 	return new /datum/position(src)
