@@ -13,7 +13,7 @@
 		/obj/item/toy/beach_ball = 2,
 		/obj/item/clothing/shoes/sandal = 1,
 		/obj/item/clothing/glasses/sunglasses = 1,
-		/obj/item/gun/energy/laser/chameleon/ballistic = 1,
+		/obj/item/gun/energy/laser/chameleon/ballistic_only = 1,
 		/obj/item/bitrunning_disk/item/mini_uzi = 1,
 	)
 

@@ -56,36 +56,43 @@
 	inhand_x_dimension = gun_to_set.inhand_x_dimension
 	inhand_y_dimension = gun_to_set.inhand_y_dimension
 
+	// We dupe this casing and then delete it at the end, to grab the projectile.
+	var/obj/item/ammo_casing/casing_to_dupe
+
 	if(istype(gun_to_set, /obj/item/gun/ballistic))
 		var/obj/item/gun/ballistic/ball_gun = gun_to_set
+		// We also need to copy the starting magazine for ballistics.
 		var/obj/item/ammo_box/ball_ammo = new ball_gun.spawn_magazine_type(gun_to_set)
-		qdel(ball_gun)
 
 		if(!istype(ball_ammo) || !ball_ammo.ammo_type)
 			qdel(ball_ammo)
 			return FALSE
 
-		var/obj/item/ammo_casing/ball_cartridge = new ball_ammo.ammo_type(gun_to_set)
-		set_chameleon_ammo(ball_cartridge)
+		casing_to_dupe = new ball_ammo.ammo_type(gun_to_set)
+		set_chameleon_ammo(casing_to_dupe)
+		qdel(ball_ammo)
 
 	else if(istype(gun_to_set, /obj/item/gun/magic))
 		var/obj/item/gun/magic/magic_gun = gun_to_set
-		var/obj/item/ammo_casing/magic_cartridge = new magic_gun.ammo_type(gun_to_set)
-		set_chameleon_ammo(magic_cartridge)
+		casing_to_dupe = new magic_gun.ammo_type(gun_to_set)
+		set_chameleon_ammo(casing_to_dupe)
 
 	else if(istype(gun_to_set, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = gun_to_set
+		// If the energy gun has multiple ammo types, we copy the first. If not, it'll just take the default ammo casing below.
 		if(islist(energy_gun.ammo_type) && energy_gun.ammo_type.len)
-			var/obj/item/ammo_casing/energy_cartridge = energy_gun.ammo_type[1]
-			set_chameleon_ammo(energy_cartridge)
+			casing_to_dupe = energy_gun.ammo_type[1]
+			set_chameleon_ammo(casing_to_dupe)
 
 	else if(istype(gun_to_set, /obj/item/gun/syringe))
-		var/obj/item/ammo_casing/syringe_cartridge = new /obj/item/ammo_casing/syringegun(src)
-		set_chameleon_ammo(syringe_cartridge)
+		casing_to_dupe = new /obj/item/ammo_casing/syringegun(src)
+		set_chameleon_ammo(casing_to_dupe)
 
 	else
-		var/obj/item/ammo_casing/default_cartridge = new /obj/item/ammo_casing(src)
-		set_chameleon_ammo(default_cartridge)
+		casing_to_dupe = new /obj/item/ammo_casing(src)
+		set_chameleon_ammo(casing_to_dupe)
+
+	qdel(casing_to_dupe)
 
 /**
  * Description: Sets the ammo type our gun should have.
@@ -158,10 +165,10 @@
 	set_chameleon_gun(new_gun)
 	qdel(new_gun)
 
-/obj/item/gun/energy/laser/chameleon/ballistic
+/obj/item/gun/energy/laser/chameleon/ballistic_only
 	actions_types = list(/datum/action/item_action/chameleon/change/gun/ballistic)
 	default_look = /obj/item/gun/ballistic/automatic/mini_uzi
 
-/obj/item/gun/energy/laser/chameleon/ballistic/Initialize(mapload)
+/obj/item/gun/energy/laser/chameleon/ballistic_only/Initialize(mapload)
 	. = ..()
 	set_chameleon_disguise(default_look)
