@@ -199,7 +199,7 @@
 		var/list/answer_data = list()
 		answer_data["answer"] = vote
 		answer_data["amount"] = votes[vote]
-		answer_data["selected"] = voted[user.ckey]
+		answer_data["selected"] = (voted[user.ckey] == vote)
 
 		data["answers"] += list(answer_data)
 	return data

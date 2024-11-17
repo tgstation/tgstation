@@ -1,4 +1,4 @@
-import { Box, Button, NoticeBox, Section, Stack, Flex, Divider } from 'tgui-core/components';
+import { Box, Button, Divider, Flex, NoticeBox, Section, Stack } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 import { toTitleCase } from 'tgui-core/string';
 
@@ -19,7 +19,7 @@ type Answer = {
 
 export function EightBallVote(props) {
   const { data } = useBackend<Data>();
-  const { shaking, question } = data;
+  const { shaking } = data;
 
   const idealHeight = shaking && 265 || 70;
   return (
@@ -61,7 +61,7 @@ function EightBallVoteQuestion(props) {
                 fluid
                 bold
                 disabled={!shaking}
-                selected={answer.selected === answer.answer}
+                selected={answer.selected}
                 fontSize="16px"
                 lineHeight="24px"
                 textAlign="center"
