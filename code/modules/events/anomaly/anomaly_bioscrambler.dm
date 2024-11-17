@@ -2,11 +2,11 @@
 	name = "Anomaly: Bioscrambler"
 	typepath = /datum/round_event/anomaly/anomaly_bioscrambler
 
-	min_players = 256
-	max_occurrences = 0
+	min_players = 256 // DOPPLER EDIT: functionally disable bioscramblers
+	max_occurrences = 0 // DOPPLER EDIT: functionally disable bioscramblers
 	weight = 20
 	description = "This anomaly replaces the limbs of nearby people."
-	min_wizard_trigger_potency = 0
+	min_wizard_trigger_potency = 0 // DOPPLER EDIT: functionally disable bioscramblers
 	max_wizard_trigger_potency = 0
 
 /datum/round_event/anomaly/anomaly_bioscrambler
