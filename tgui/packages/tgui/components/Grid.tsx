@@ -4,14 +4,15 @@
  * @license MIT
  */
 
-import { PropsWithChildren } from 'react';
+import { ComponentProps } from 'react';
+import { Box, Table } from 'tgui-core/components';
 
 import { logger } from '../logging';
-import { BoxProps } from './Box';
-import { Table } from './Table';
+
+type BoxProps = ComponentProps<typeof Box>;
 
 /** @deprecated Do not use. Use stack instead. */
-export function Grid(props: PropsWithChildren<BoxProps>) {
+export function Grid(props: BoxProps) {
   const { children, ...rest } = props;
   logger.error('Grid component is deprecated. Use a Stack instead.');
   return (

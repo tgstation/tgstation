@@ -4,11 +4,18 @@
  * @license MIT
  */
 
-import { forwardRef, ReactNode, RefObject, useEffect } from 'react';
+import {
+  ComponentProps,
+  forwardRef,
+  ReactNode,
+  RefObject,
+  useEffect,
+} from 'react';
+import { Box } from 'tgui-core/components';
 import { canRender, classes } from 'tgui-core/react';
 
 import { addScrollableNode, removeScrollableNode } from '../events';
-import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
+import { computeBoxClassName, computeBoxProps } from './Box';
 
 type Props = Partial<{
   /** Buttons to render aside the section title. */
@@ -28,7 +35,7 @@ type Props = Partial<{
   /** @member Callback function for the `scroll` event */
   onScroll: ((this: GlobalEventHandlers, ev: Event) => any) | null;
 }> &
-  BoxProps;
+  ComponentProps<typeof Box>;
 
 /**
  * ## Section

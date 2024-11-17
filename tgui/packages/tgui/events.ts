@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { EventEmitter } from 'common/events';
+import { EventEmitter } from 'tgui-core/events';
 import {
   KEY_ALT,
   KEY_CTRL,

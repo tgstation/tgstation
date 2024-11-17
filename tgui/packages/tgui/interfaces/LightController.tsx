@@ -200,7 +200,7 @@ const LightControl = (props: LightControlProps) => {
             color="olive"
             minValue={-1}
             maxValue={5}
-            format={(value) => round(value, 2)}
+            format={(value) => round(value, 2).toString()}
             onChange={(e, value) =>
               act('set_power', {
                 value: value,

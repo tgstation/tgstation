@@ -1,5 +1,4 @@
 import { storage } from 'common/storage';
-import { createUuid } from 'common/uuid';
 import { useEffect, useState } from 'react';
 import {
   Button,
@@ -9,6 +8,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { createUuid } from 'tgui-core/uuid';
 
 import { useBackend } from '../../backend';
 import { POD_GREY } from './constants';
@@ -155,7 +155,7 @@ export function PresetsPage(props) {
                   borderStyle: 'solid',
                   borderColor: `hsl(${preset.hue}, 80%, 80%)`,
                 }
-              : ''
+              : {}
           }
           width="100%"
         >

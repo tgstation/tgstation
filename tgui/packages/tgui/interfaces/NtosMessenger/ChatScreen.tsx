@@ -6,13 +6,13 @@ import {
   Image,
   Input,
   Modal,
-  Section,
   Stack,
   Tooltip,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
+import { Section } from '../../components';
 import { NtMessage, NtMessenger, NtPicture } from './types';
 
 type ChatScreenProps = {
