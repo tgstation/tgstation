@@ -63,19 +63,6 @@
 	. = ..()
 	diode = new /obj/item/stock_parts/micro_laser/ultra
 
-//This laser pointer is from the paperwork implant when emagged
-/obj/item/laser_pointer/emagged_implant
-	name = "experimental laser pointer"
-	desc = "This laser pointer was designed keep the boardroom a captive audience during presentations. It was found to be too powerful, blinding several boardroom members, and was locked away with a firmware update"
-	effectchance = 60
-	energy = 20
-	max_energy = 20
-	max_range = 14
-
-/obj/item/laser_pointer/emagged_implant/Initialize(mapload)
-	. = ..()
-	diode = new /obj/item/stock_parts/micro_laser/quadultra
-
 /obj/item/laser_pointer/infinite_range
 	name = "infinite laser pointer"
 	desc = "Used to shine in the eyes of Cyborgs who need a bit of a push, this works through camera consoles."
