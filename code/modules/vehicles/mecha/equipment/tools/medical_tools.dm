@@ -185,7 +185,7 @@
 		return TRUE
 	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate() in chassis
 	if(shooter)
-		for(var/datum/reagent/medication in shooter.reagents.reagent_list)
+		for(var/datum/reagent/medication as anything in shooter.reagents.reagent_list)
 			if(action == ("inject_reagent_" + medication.name))
 				inject_reagent(medication, shooter)
 				break // or maybe return TRUE? i'm not certain
