@@ -28,6 +28,8 @@
 /area/ruin/powered/pride
 
 /area/ruin/powered/seedvault
+	name = "Seed Vault"
+	area_flags = UNIQUE_AREA | NOTELEPORT
 
 /area/ruin/unpowered/elephant_graveyard
 	name = "\improper Elephant Graveyard"

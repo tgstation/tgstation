@@ -366,6 +366,9 @@
 		/obj/item/stack/ore/uranium = 35,
 	)
 
+/turf/closed/mineral/random/high_chance/station_air
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+
 /turf/closed/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 6
