@@ -33,11 +33,11 @@ export function EightBallVote(props) {
   return (
     <Window width={300} height={idealHeight}>
       <Window.Content pb={'2.5em'}>
-        {(!shaking && (
+        {!shaking ? (
           <NoticeBox danger textAlign={'center'}>
             No question is currently being asked.
           </NoticeBox>
-        )) || (
+        ) : (
           <>
             <NoticeBox success textAlign={'center'}>
               A question is currently being asked!
