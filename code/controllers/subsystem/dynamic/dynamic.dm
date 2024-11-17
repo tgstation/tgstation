@@ -473,7 +473,7 @@ SUBSYSTEM_DEF(dynamic)
 	round_start_budget = lorentz_to_amount(roundstart_split_curve_centre, roundstart_split_curve_width, threat_level, 0.1)
 	// BANDASTATION EDIT START - Threat management
 	var/min_threat_to_roundstart_percent = CONFIG_GET(number/min_threat_to_roundstart_percent)
-	var/max_threat_to_roundstart_percent = CONFIG_GET(number/min_threat_to_roundstart_percent)
+	var/max_threat_to_roundstart_percent = CONFIG_GET(number/max_threat_to_roundstart_percent)
 	if(min_threat_to_roundstart_percent && max_threat_to_roundstart_percent && min_threat_to_roundstart_percent < max_threat_to_roundstart_percent)
 		var/previous_round_start_budget = round_start_budget
 		round_start_budget = clamp(previous_round_start_budget, min_threat_to_roundstart_percent / 100 * threat_level, max_threat_to_roundstart_percent / 100 * threat_level)
