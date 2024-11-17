@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { shallowDiffers } from 'common/react';
+import { shallowDiffers } from 'tgui-core/react';
 import { debounce } from 'common/timer';
 import { Component, createRef } from 'react';
 

@@ -2,13 +2,13 @@
  * @license MIT
  */
 
-import { clamp } from 'common/math';
-import { classes } from 'common/react';
 import { marked } from 'marked';
 import { Component, createRef, RefObject } from 'react';
+import { Box, Button, Flex, Section, TextArea } from 'tgui-core/components';
+import { clamp } from 'tgui-core/math';
+import { classes } from 'tgui-core/react';
 
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 

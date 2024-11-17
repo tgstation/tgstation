@@ -1,9 +1,6 @@
 import { range, sortBy } from 'common/collections';
 import { isEscape, KEY } from 'common/keys';
 import { Component } from 'react';
-
-import { resolveAsset } from '../../assets';
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -11,7 +8,10 @@ import {
   Stack,
   Tooltip,
   TrackOutsideClicks,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { resolveAsset } from '../../assets';
+import { useBackend } from '../../backend';
 import { KeyEvent } from '../../events';
 import { fetchRetry } from '../../http';
 import { PreferencesMenuData } from './data';

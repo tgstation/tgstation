@@ -6,7 +6,6 @@
 
 import { Placement } from '@popperjs/core';
 import { isEscape, KEY } from 'common/keys';
-import { BooleanLike, classes } from 'common/react';
 import {
   ChangeEvent,
   createRef,
@@ -16,6 +15,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { BooleanLike, classes } from 'tgui-core/react';
 
 import { Box, BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';

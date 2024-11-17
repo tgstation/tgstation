@@ -16,7 +16,7 @@ import {
   Section,
   Tabs,
   VirtualList,
-} from '../components';
+} from 'tgui-core/components';
 import { NtosWindow, Window } from '../layouts';
 import { Experiment } from './ExperimentConfigure';
 

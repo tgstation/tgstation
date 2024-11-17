@@ -5,9 +5,16 @@
  */
 import { createSearch, decodeHtmlEntities } from 'common/string';
 import { useState } from 'react';
+import {
+  Button,
+  Input,
+  Popper,
+  Section,
+  Stack,
+  Table,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Button, Input, Popper, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
 
 type Data = {

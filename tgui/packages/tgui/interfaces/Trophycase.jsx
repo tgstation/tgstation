@@ -9,7 +9,7 @@ import {
   Image,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const Trophycase = (props) => {

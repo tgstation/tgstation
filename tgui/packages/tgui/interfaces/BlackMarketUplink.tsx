@@ -8,9 +8,9 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
-import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
 type Data = {

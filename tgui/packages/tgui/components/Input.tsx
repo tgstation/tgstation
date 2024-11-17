@@ -5,9 +5,9 @@
  */
 
 import { isEscape, KEY } from 'common/keys';
-import { classes } from 'common/react';
 import { debounce } from 'common/timer';
 import { KeyboardEvent, SyntheticEvent, useEffect, useRef } from 'react';
+import { classes } from 'tgui-core/react';
 
 import { Box, BoxProps } from './Box';
 

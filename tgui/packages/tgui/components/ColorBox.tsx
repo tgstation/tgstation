@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { classes } from 'common/react';
 import { ReactNode } from 'react';
+import { classes } from 'tgui-core/react';
 
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 

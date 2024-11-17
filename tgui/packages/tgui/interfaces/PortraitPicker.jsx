@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Button, Flex, Input, NoticeBox, Section } from '../components';
+import { Button, Flex, Input, NoticeBox, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const PortraitPicker = (props) => {

@@ -1,5 +1,6 @@
+import { Stack, Tabs } from 'tgui-core/components';
+
 import { useBackend, useSharedState } from '../../backend';
-import { Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { CargoCart } from './CargoCart';
 import { CargoCatalog } from './CargoCatalog';

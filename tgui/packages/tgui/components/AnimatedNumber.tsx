@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { clamp, toFixed } from 'common/math';
 import { Component, createRef } from 'react';
+import { clamp, toFixed } from 'tgui-core/math';
 
 const isSafeNumber = (value: number) => {
   // prettier-ignore

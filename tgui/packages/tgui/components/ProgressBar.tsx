@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { clamp01, keyOfMatchingRange, scale, toFixed } from 'common/math';
-import { classes } from 'common/react';
 import { PropsWithChildren } from 'react';
+import { clamp01, keyOfMatchingRange, scale, toFixed } from 'tgui-core/math';
+import { classes } from 'tgui-core/react';
 
 import { CSS_COLORS } from '../constants';
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';

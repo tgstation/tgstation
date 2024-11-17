@@ -8,8 +8,8 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
-import { classes } from '../../common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 

@@ -7,11 +7,11 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
 import { BooleanLike } from 'tgui-core/react';
 import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
 type Material = {

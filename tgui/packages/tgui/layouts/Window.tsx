@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { classes } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import {
   PropsWithChildren,
@@ -13,10 +12,11 @@ import {
   useLayoutEffect,
   useState,
 } from 'react';
+import { Icon } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
 import { backendSuspendStart, useBackend } from '../backend';
 import { globalStore } from '../backend';
-import { Icon } from '../components';
 import { BoxProps } from '../components/Box';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { useDebug } from '../debug';

@@ -8,9 +8,9 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
+import { round } from 'tgui-core/math';
+import { BooleanLike, classes } from 'tgui-core/react';
 
-import { round } from '../../common/math';
-import { BooleanLike, classes } from '../../common/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

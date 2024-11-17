@@ -2,7 +2,7 @@ import { Component } from 'react';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
-import { Box, Button, InfinitePlane, Input, Stack } from '../../components';
+import { Box, Button, InfinitePlane, Input, Stack } from 'tgui-core/components';
 import { Window } from '../../layouts';
 import { Connections } from '../common/Connections';
 import { CircuitInfo } from './CircuitInfo';

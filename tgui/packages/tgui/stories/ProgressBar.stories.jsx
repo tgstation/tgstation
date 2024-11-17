@@ -12,7 +12,7 @@ import {
   LabeledList,
   ProgressBar,
   Section,
-} from '../components';
+} from 'tgui-core/components';
 
 export const meta = {
   title: 'ProgressBar',

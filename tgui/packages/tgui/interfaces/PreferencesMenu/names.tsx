@@ -1,6 +1,5 @@
 import { binaryInsertWith, sortBy } from 'common/collections';
 import { useState } from 'react';
-
 import {
   Box,
   Button,
@@ -12,7 +11,8 @@ import {
   Section,
   Stack,
   TrackOutsideClicks,
-} from '../../components';
+} from 'tgui-core/components';
+
 import { Name } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 

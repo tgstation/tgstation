@@ -7,7 +7,7 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
 const getMuleByRef = (mules, ref) => {

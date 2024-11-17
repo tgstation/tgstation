@@ -1,6 +1,4 @@
 import { isEscape, KEY } from 'common/keys';
-import { clamp } from 'common/math';
-import { BooleanLike, classes } from 'common/react';
 import {
   Component,
   createRef,
@@ -9,6 +7,8 @@ import {
   MouseEventHandler,
   RefObject,
 } from 'react';
+import { clamp } from 'tgui-core/math';
+import { BooleanLike, classes } from 'tgui-core/react';
 
 import { AnimatedNumber } from './AnimatedNumber';
 import { Box } from './Box';

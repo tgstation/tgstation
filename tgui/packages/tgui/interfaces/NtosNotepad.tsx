@@ -5,9 +5,9 @@
  */
 
 import { Component, createRef, RefObject, useState } from 'react';
+import { Box, Divider, MenuBar, Section, TextArea } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Divider, MenuBar, Section, TextArea } from '../components';
 import { Dialog, UnsavedChangesDialog } from '../components/Dialog';
 import { NtosWindow } from '../layouts';
 import { NTOSData } from '../layouts/NtosWindow';

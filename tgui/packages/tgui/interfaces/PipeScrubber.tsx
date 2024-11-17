@@ -1,7 +1,3 @@
-import { toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -10,9 +6,13 @@ import {
   RoundGauge,
   Section,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
+import { toFixed } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { getGasLabel } from '../constants';
-import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
 type Data = {

@@ -1,8 +1,4 @@
-import { BooleanLike } from 'common/react';
 import { Component, Fragment } from 'react';
-
-import { resolveAsset } from '../../assets';
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -12,7 +8,11 @@ import {
   Stack,
   Tabs,
   Tooltip,
-} from '../../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { resolveAsset } from '../../assets';
+import { useBackend } from '../../backend';
 import { fetchRetry } from '../../http';
 import { Window } from '../../layouts';
 import {

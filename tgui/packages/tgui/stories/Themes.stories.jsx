@@ -5,7 +5,7 @@
  */
 
 import { useLocalState } from '../backend';
-import { Input, LabeledList, Section } from '../components';
+import { Input, LabeledList, Section } from 'tgui-core/components';
 
 export const meta = {
   title: 'Themes',

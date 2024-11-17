@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
 import { useBackend } from 'tgui/backend';
 import { Button, Collapsible, Flex, Section, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
+import { BooleanLike } from 'tgui-core/react';
 
 import { HypertorusSecondaryControls, HypertorusWasteRemove } from './Controls';
 import { HypertorusGases } from './Gases';

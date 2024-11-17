@@ -15,9 +15,9 @@ import {
   Stack,
   StackDivider,
   Tabs,
-} from '../components';
-import { formatEnergy } from '../format';
-import { formatPower } from '../format';
+} from 'tgui-core/components';
+import { formatEnergy } from 'tgui-core/format';
+import { formatPower } from 'tgui-core/format';
 import { NtosWindow } from '../layouts';
 
 export const NtosRobotact = (props) => {

@@ -1,6 +1,3 @@
-import { classes } from 'common/react';
-
-import { useBackend } from '../../backend';
 import {
   BlockQuote,
   Box,
@@ -10,7 +7,10 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../../components';
+} from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+
+import { useBackend } from '../../backend';
 import { CharacterPreview } from '../common/CharacterPreview';
 import {
   createSetPreference,

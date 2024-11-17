@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-import { formatTime } from '../format';
+import { formatTime } from 'tgui-core/format';
 
 // AnimatedNumber Copypaste
 const isSafeNumber = (value) => {

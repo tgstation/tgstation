@@ -1,6 +1,6 @@
 import { useContext } from 'react';
+import { Collapsible, Flex, Tooltip } from 'tgui-core/components';
 
-import { Collapsible, Flex, Tooltip } from '../../components';
 import { OrbitContext } from '.';
 import { VIEWMODE } from './constants';
 import {

@@ -1,6 +1,7 @@
+import { Box, Button } from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
+
 import { useBackend } from '../../backend';
-import { Box, Button } from '../../components';
-import { formatMoney } from '../../format';
 import { CargoData } from './types';
 
 export function CargoCartButtons(props) {

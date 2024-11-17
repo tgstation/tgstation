@@ -14,8 +14,8 @@ import {
   Stack,
   Table,
   Tabs,
-} from '../components';
-import { formatSiUnit } from '../format';
+} from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
 import { Window } from '../layouts';
 
 export const OreRedemptionMachine = (props) => {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Button, Flex, Icon, Section } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
-import { BooleanLike } from '../../common/react';
 import { capitalizeFirst } from '../../common/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

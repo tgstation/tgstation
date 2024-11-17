@@ -1,5 +1,4 @@
 import { sortBy } from 'common/collections';
-import { BooleanLike } from 'common/react';
 import {
   ComponentType,
   createElement,
@@ -7,6 +6,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { BooleanLike } from 'tgui-core/react';
 
 import { sendAct, useBackend } from '../../../../backend';
 import {

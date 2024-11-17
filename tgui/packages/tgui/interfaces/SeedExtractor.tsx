@@ -1,9 +1,6 @@
 import { sortBy } from 'common/collections';
-import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -14,7 +11,10 @@ import {
   Section,
   Table,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type TraitData = {

@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Section } from '../components';
+import { Box, Section } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 import { sanitizeText } from '../sanitize';
 

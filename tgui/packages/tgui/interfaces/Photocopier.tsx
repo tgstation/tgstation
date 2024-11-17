@@ -1,8 +1,5 @@
 import { createSearch } from 'common/string';
 import { useState } from 'react';
-
-import { BooleanLike } from '../../common/react';
-import { useBackend } from '../backend';
 import {
   Button,
   Input,
@@ -11,7 +8,10 @@ import {
   Section,
   Slider,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {

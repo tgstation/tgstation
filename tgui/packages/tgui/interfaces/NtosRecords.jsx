@@ -2,7 +2,7 @@ import { createSearch } from 'common/string';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
-import { Box, Icon, Input, Section } from '../components';
+import { Box, Icon, Input, Section } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
 export const NtosRecords = (props) => {

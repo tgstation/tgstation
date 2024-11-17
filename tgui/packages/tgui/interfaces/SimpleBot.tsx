@@ -1,4 +1,3 @@
-import { BooleanLike } from 'common/react';
 import { capitalizeAll } from 'common/string';
 import { useBackend } from 'tgui/backend';
 import {
@@ -12,6 +11,7 @@ import {
   Tooltip,
 } from 'tgui/components';
 import { Window } from 'tgui/layouts';
+import { BooleanLike } from 'tgui-core/react';
 
 type Data = {
   can_hack: BooleanLike;

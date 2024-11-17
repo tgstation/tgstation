@@ -6,7 +6,7 @@
 
 import { useState } from 'react';
 
-import { Button, Section, Tabs } from '../components';
+import { Button, Section, Tabs } from 'tgui-core/components';
 
 export const meta = {
   title: 'Tabs',

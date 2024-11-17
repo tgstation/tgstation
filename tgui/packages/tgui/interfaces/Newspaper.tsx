@@ -1,6 +1,7 @@
-import { BooleanLike } from '../../common/react';
+import { Box, Button, Divider, Image, Section } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Image, Section } from '../components';
 import { Window } from '../layouts';
 import { processedText } from '../process';
 

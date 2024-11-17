@@ -1,9 +1,9 @@
 import { sortBy } from 'common/collections';
-import { classes } from 'common/react';
 import { useState } from 'react';
+import { AnimatedNumber, Button, Flex } from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
+import { classes } from 'tgui-core/react';
 
-import { AnimatedNumber, Button, Flex } from '../../components';
-import { formatSiUnit } from '../../format';
 import { MaterialIcon } from './MaterialIcon';
 import { Material } from './Types';
 

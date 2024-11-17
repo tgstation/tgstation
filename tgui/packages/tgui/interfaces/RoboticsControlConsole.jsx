@@ -6,7 +6,7 @@ import {
   NoticeBox,
   Section,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const RoboticsControlConsole = (props) => {

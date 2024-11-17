@@ -1,8 +1,8 @@
-import { BooleanLike } from 'common/react';
 import { ReactNode } from 'react';
+import { Button, Stack } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
-import { Button, Stack } from '../../components';
 
 export type Objective = {
   // The title of the objective, not actually displayed so optional

@@ -8,7 +8,7 @@ import {
   LabeledList,
   Modal,
   Section,
-} from '../components';
+} from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const ShuttleConsole = (props) => {

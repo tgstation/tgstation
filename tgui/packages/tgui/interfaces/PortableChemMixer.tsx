@@ -1,7 +1,7 @@
 import { sortBy } from 'common/collections';
+import { Box, Button, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
 import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 

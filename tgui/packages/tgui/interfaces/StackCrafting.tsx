@@ -1,8 +1,5 @@
-import { clamp } from 'common/math';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -11,7 +8,10 @@ import {
   NoticeBox,
   Section,
   Table,
-} from '../components';
+} from 'tgui-core/components';
+import { clamp } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Recipe = {

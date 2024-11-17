@@ -10,11 +10,11 @@ import {
   Section,
   Tooltip,
 } from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
 import { toFixed } from 'tgui-core/math';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
 const formatPressure = (value: number) => {

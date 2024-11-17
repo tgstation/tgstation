@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { keyOfMatchingRange, scale } from 'common/math';
-import { BooleanLike, classes } from 'common/react';
+import { keyOfMatchingRange, scale } from 'tgui-core/math';
+import { BooleanLike, classes } from 'tgui-core/react';
 
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 import { DraggableControl } from './DraggableControl';

@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { classes } from 'common/react';
 import { RefObject } from 'react';
+import { classes } from 'tgui-core/react';
 
 import {
   computeFlexClassName,
