@@ -144,7 +144,6 @@
 	var/payment_department = ACCOUNT_ENG
 	///Used in NAP violation, pay fine
 	var/fair_market_price = 5
-
 	///Is this machine currently in the atmos machinery queue?
 	var/atmos_processing = FALSE
 	/// world.time of last use by [/mob/living]
