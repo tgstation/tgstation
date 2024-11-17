@@ -98,8 +98,6 @@
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>\n"+\
 	"<span class='notice'>Prefix your message with :b to speak in Drone Chat.</span>\n"
-	/// blacklisted drone areas, recursive/includes descendants
-	var/list/drone_area_blacklist_recursive = list(/area/station/engineering/supermatter)
 	/// blacklisted drone machines, direct
 	var/list/drone_machinery_blacklist_flat
 	/// blacklisted drone machines, recursive/includes descendants
