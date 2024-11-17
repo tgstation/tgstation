@@ -133,6 +133,7 @@
 
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		var/prefixes = get_material_prefixes(materials)
+		ru_names_rename(ru_names_toml(name, suffix = " из [prefixes]", override_base = "[prefixes] [name]"))
 		name = "[prefixes] [name]"
 
 /**
@@ -183,7 +184,7 @@
 /atom/proc/get_material_prefixes(list/materials)
 	var/list/mat_names = list()
 	for(var/datum/material/material as anything in materials)
-		mat_names |= material.name
+		mat_names |= material.declent_ru(GENITIVE) // BANDASTATION EDIT - Material atoms
 	return mat_names.Join("-")
 
 ///Returns a string like "plasma, paper and glass" from a list of materials

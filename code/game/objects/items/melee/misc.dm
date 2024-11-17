@@ -540,7 +540,7 @@
 
 /obj/item/melee/cleric_mace/get_material_prefixes(list/materials)
 	var/datum/material/material = materials[1]
-	return material.name //It only inherits the name of the main material it's made of. The secondary is in the description.
+	return material.declent_ru(GENITIVE) //It only inherits the name of the main material it's made of. The secondary is in the description. // BANDASTATION EDIT - Material atoms
 
 /obj/item/melee/cleric_mace/finalize_material_effects(list/materials)
 	. = ..()
