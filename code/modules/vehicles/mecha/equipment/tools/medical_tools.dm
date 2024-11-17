@@ -188,16 +188,16 @@
 				inject_reagent(medication, shooter)
 				break // or maybe return TRUE? i'm not certain
 
-/obj/item/mecha_parts/mecha_equipment/sleeper/medical/proc/inject_reagent(datum/reagent/R, obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
-	if(!R || !patient || !SG || !(SG in chassis.flat_equipment))
+/obj/item/mecha_parts/mecha_equipment/sleeper/medical/proc/inject_reagent(datum/reagent/reagent_to_inject, obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
+	if(!reagent_to_inject || !patient || !SG || !(SG in chassis.flat_equipment))
 		return
-	var/to_inject = min(R.volume, inject_amount)
-	if(to_inject && patient.reagents.get_reagent_amount(R.type) + to_inject <= inject_amount*2)
-		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Injecting [patient] with [to_inject] units of [R.name].")]")
-		log_message("Injecting [patient] with [to_inject] units of [R.name].", LOG_MECHA)
+	var/to_inject = min(reagent_to_inject.volume, inject_amount)
+	if(to_inject && patient.reagents.get_reagent_amount(reagent_to_inject.type) + to_inject <= inject_amount*2)
+		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Injecting [patient] with [to_inject] units of [reagent_to_inject.name].")]")
+		log_message("Injecting [patient] with [to_inject] units of [reagent_to_inject.name].", LOG_MECHA)
 		for(var/driver in chassis.return_drivers())
-			log_combat(driver, patient, "injected", "[name] ([R] - [to_inject] units)")
-		SG.reagents.trans_to(patient, to_inject, target_id = R.type)
+			log_combat(driver, patient, "injected", "[name] ([reagent_to_inject] - [to_inject] units)")
+		SG.reagents.trans_to(patient, to_inject, target_id = reagent_to_inject.type)
 
 ///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
 

@@ -36,14 +36,15 @@
 	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
 
 /obj/item/mecha_parts/mecha_equipment/drill/handle_ui_act(action, list/params)
-	if(action == "toggle")
-		if(active)
-			RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, PROC_REF(on_mech_click))
-			log_message("Activated.", LOG_MECHA)
-		else
-			UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
-			log_message("Deactivated.", LOG_MECHA)
-		return TRUE
+	if(action != "toggle")
+		return
+	if(active)
+		RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, PROC_REF(on_mech_click))
+		log_message("Activated.", LOG_MECHA)
+	else
+		UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
+		log_message("Deactivated.", LOG_MECHA)
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/drill/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
