@@ -104,7 +104,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if(isliving(mob_poi))
 			serialized += get_living_data(mob_poi)
 
-		var/list/antag_data = get_antag_data(mob_poi.mind)
+		var/list/antag_data = get_antag_data(mob_poi.mind, user?.client?.holder) // BANDASTATION EDIT - Original: var/list/antag_data = get_antag_data(mob_poi.mind)
 		if(length(antag_data))
 			serialized += antag_data
 			antagonists += list(serialized)
@@ -151,11 +151,11 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 
 /// Helper function to get threat type, group, overrides for job and icon
-/datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind) as /list
+/datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind, is_admin) as /list // BANDASTATION EDIT - Original: /datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind)
 	var/list/serialized = list()
 
 	for(var/datum/antagonist/antag as anything in poi_mind.antag_datums)
-		if(!antag.show_to_ghosts)
+		if(!antag.show_to_ghosts && !is_admin) // BANDASTATION EDIT - Original: if(!antag.show_to_ghosts)
 			continue
 
 		serialized["antag"] = antag.name
