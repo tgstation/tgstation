@@ -102,7 +102,7 @@
 	initial_language_holder = /datum/language_holder/speaking_machine
 	armor_type = /datum/armor/obj_machinery
 
-	///NO_POWER,BROKEN,MAINT
+	///can be NO_POWER, BROKEN or MAINT
 	var/machine_stat = NONE
 	/**
 	 * NO_POWER_USE = dont use power
