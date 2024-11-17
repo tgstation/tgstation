@@ -105,9 +105,9 @@
 	///NO_POWER,BROKEN,MAINT
 	var/machine_stat = NONE
 	/**
-	 * 0 = dont use power
-	 * 1 = use idle_power_usage
-	 * 2 = use active_power_usage
+	 * NO_POWER_USE = dont use power
+	 * IDLE_POWER_USE = use idle_power_usage
+	 * ACTIVE_POWER_USE = use active_power_usage
 	*/
 	var/use_power = IDLE_POWER_USE
 	///the amount of static power load this machine adds to its area's power_usage list when use_power = IDLE_POWER_USE
