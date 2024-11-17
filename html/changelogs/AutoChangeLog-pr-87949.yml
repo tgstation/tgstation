@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - bugfix: "Reverts change that altered pyrokinesis recipe to require firebreath instead of fiery sweat"
