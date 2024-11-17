@@ -16,7 +16,7 @@
 	for(var/mob/living/carbon/viewer in viewers(parent))
 		if(viewer.is_blind() || viewer.get_eye_protection() >= damage_per_second)
 			continue
-		var/obj/item/organ/internal/eyes/burning_orbs = locate() in viewer.organs
+		var/obj/item/organ/eyes/burning_orbs = locate() in viewer.organs
 		if(!burning_orbs)
 			continue
 		burning_orbs.apply_organ_damage(damage_per_second * seconds_per_tick)

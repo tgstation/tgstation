@@ -368,16 +368,18 @@ All the important duct code:
 			stack.merge(src)
 		return ITEM_INTERACT_SUCCESS
 
-	check_attach_turf(interacting_with)
-	return ITEM_INTERACT_SUCCESS
-
+	if(isopenturf(interacting_with))
+		return check_attach_turf(interacting_with) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/item/stack/ducts/proc/check_attach_turf(atom/target)
 	if(isopenturf(target) && use(1))
 		var/turf/open/open_turf = target
 		var/is_omni = duct_color == DUCT_COLOR_OMNI
 		new /obj/machinery/duct(open_turf, FALSE, GLOB.pipe_paint_colors[duct_color], GLOB.plumbing_layers[duct_layer], null, is_omni)
-		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+		playsound(open_turf, 'sound/machines/click.ogg', 50, TRUE)
+		return TRUE
+	return FALSE
 
 /obj/item/stack/ducts/fifty
 	amount = 50

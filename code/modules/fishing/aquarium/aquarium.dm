@@ -220,11 +220,14 @@
 				balloon_alert(user, "cannot add to aquarium!")
 				return TRUE
 
-	if(istype(item, /obj/item/fish_feed) && !panel_open)
+	if(istype(item, /obj/item/reagent_containers/cup/fish_feed) && !panel_open)
 		if(!item.reagents.total_volume)
 			balloon_alert(user, "[item] is empty!")
 			return TRUE
 		var/list/fishes = get_fishes()
+		if(!length(fishes))
+			balloon_alert(user, "no fish to feed!")
+			return TRUE
 		for(var/obj/item/fish/fish as anything in fishes)
 			fish.feed(item.reagents)
 		balloon_alert(user, "fed the fish")
@@ -253,33 +256,10 @@
 		SEND_SIGNAL(fish, COMSIG_FISH_STIRRED)
 
 /obj/structure/aquarium/interact(mob/user)
-	if(!broken && user.pulling && isliving(user.pulling))
-		var/mob/living/living_pulled = user.pulling
-		var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
-		if(content_component && content_component.is_ready_to_insert(src))
-			try_to_put_mob_in(user)
-	else if(panel_open)
-		. = ..() //call base ui_interact
+	if(panel_open)
+		return ..() //call base ui_interact
 	else
 		admire(user)
-
-/// Tries to put mob pulled by the user in the aquarium after a delay
-/obj/structure/aquarium/proc/try_to_put_mob_in(mob/user)
-	if(user.pulling && isliving(user.pulling))
-		var/mob/living/living_pulled = user.pulling
-		if(living_pulled.buckled || living_pulled.has_buckled_mobs())
-			to_chat(user, span_warning("[living_pulled] is attached to something!"))
-			return
-		user.visible_message(span_danger("[user] starts to put [living_pulled] into [src]!"))
-		if(do_after(user, 10 SECONDS, target = src))
-			if(QDELETED(living_pulled) || user.pulling != living_pulled || living_pulled.buckled || living_pulled.has_buckled_mobs())
-				return
-			var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
-			if(content_component || content_component.is_ready_to_insert(src))
-				return
-			user.visible_message(span_danger("[user] stuffs [living_pulled] into [src]!"))
-			living_pulled.forceMove(src)
-			update_appearance()
 
 ///Apply mood bonus depending on aquarium status
 /obj/structure/aquarium/proc/admire(mob/living/user)
@@ -318,7 +298,7 @@
 			var/obj/item/fish/fish = item
 			.["fishData"] += list(list(
 				"fish_ref" = REF(fish),
-				"fish_name" = fish.name,
+				"fish_name" = uppertext(fish.name),
 				"fish_happiness" = fish.get_happiness_value(),
 				"fish_icon" = fish::icon,
 				"fish_icon_state" = fish::icon_state,
@@ -356,7 +336,7 @@
 				fluid_type = params["fluid"]
 				SEND_SIGNAL(src, COMSIG_AQUARIUM_FLUID_CHANGED, fluid_type)
 				. = TRUE
-		if("reproduction_and_growth")
+		if("allow_breeding")
 			reproduction_and_growth = !reproduction_and_growth
 			. = TRUE
 		if("feeding_interval")
@@ -371,10 +351,10 @@
 			to_chat(user, span_notice("You take out [item] from [src]."))
 		if("rename_fish")
 			var/new_name = sanitize_name(params["chosen_name"])
-			if(!new_name)
-				return
 			var/atom/movable/fish = locate(params["fish_reference"]) in contents
-			fish.name = new_name
+			if(!fish || !new_name || new_name == fish.name)
+				return
+			fish.AddComponent(/datum/component/rename, new_name, fish.desc)
 
 /obj/structure/aquarium/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

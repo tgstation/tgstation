@@ -52,7 +52,7 @@
 		. += "Use in-hand to wear as a mask!"
 		return
 	else
-		. += "Use in-hand to tie it up to wear as a hat!"
+		. += "Use in-hand to wear as a hat!"
 
 /obj/item/clothing/mask/kitsune/attack_self(mob/user)
 	adjust_visor(user)

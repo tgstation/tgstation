@@ -14,6 +14,7 @@
 	attack_verb_continuous = list("whacks", "flails", "bludgeons")
 	attack_verb_simple = list("whack", "flail", "bludgeon")
 	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_SMALL
 	///how many times can we climb with this rope
 	var/uses = 5
 	///climb time
@@ -58,7 +59,7 @@
 	// Misc bonuses to the climb speed.
 	var/misc_multiplier = 1
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		misc_multiplier *= potential_spine.athletics_boost_multiplier
 
@@ -67,6 +68,7 @@
 	if(do_after(user, final_climb_time, target))
 		user.forceMove(target)
 		uses--
+		user.mind?.adjust_experience(/datum/skill/athletics, 50) //get some experience for our trouble, especially since this costs us a climbing rope use
 
 	if(uses <= 0)
 		user.visible_message(span_warning("[src] snaps and tears apart!"))
@@ -97,7 +99,6 @@
 	desc = "An emergency climbing hook to scale up holes. The rope is EXTREMELY cheap and may not withstand extended use."
 	uses = 2
 	climb_time = 4 SECONDS
-	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/climbing_hook/syndicate
 	name = "suspicious climbing hook"

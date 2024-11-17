@@ -25,8 +25,8 @@ GLOBAL_LIST_INIT(part_choice_transhuman, list(
 	"Right Arm" = /obj/item/bodypart/arm/right/robot,
 	"Left Leg" = /obj/item/bodypart/leg/left/robot,
 	"Right Leg" = /obj/item/bodypart/leg/right/robot,
-	"Robotic Voice Box" = /obj/item/organ/internal/tongue/robot,
-	"Flashlights for Eyes" = /obj/item/organ/internal/eyes/robotic/flashlight,
+	"Robotic Voice Box" = /obj/item/organ/tongue/robot,
+	"Flashlights for Eyes" = /obj/item/organ/eyes/robotic/flashlight,
 ))
 
 ///Hemiplegic Quirk
@@ -97,4 +97,28 @@ GLOBAL_LIST_INIT(organ_choice, list(
 GLOBAL_LIST_INIT(paraplegic_choice, list(
 	"Default" = FALSE,
 	"Amputee" = TRUE,
+))
+
+///Scarred Eye Quirk
+GLOBAL_LIST_INIT(scarred_eye_choice, list(
+	"Random",
+	"Left Eye",
+	"Right Eye",
+	"Double",
+))
+
+///chipped Quirk
+GLOBAL_LIST_INIT(quirk_chipped_choice, list(
+	"Basketsoft 3000" = /obj/item/skillchip/basketweaving,
+	"WINE" = /obj/item/skillchip/wine_taster,
+	"Hedge 3" = /obj/item/skillchip/bonsai,
+	"Skillchip adapter" = /obj/item/skillchip/useless_adapter,
+	"N16H7M4R3" = /obj/item/skillchip/light_remover,
+	"3NTR41LS" = /obj/item/skillchip/entrails_reader,
+	"GENUINE ID Appraisal Now!" = /obj/item/skillchip/appraiser,
+	"Le S48R4G3" = /obj/item/skillchip/sabrage,
+	"Integrated Intuitive Thinking and Judging" = /obj/item/skillchip/intj,
+	"\"Space Station 13: The Musical\"" = /obj/item/skillchip/musical,
+	"Mast-Angl-Er" = /obj/item/skillchip/master_angler,
+	"Kommand" = /obj/item/skillchip/big_pointer,
 ))

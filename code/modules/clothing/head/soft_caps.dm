@@ -136,6 +136,7 @@
 	armor_type = /datum/armor/cosmetic_sec
 	strip_delay = 60
 	dog_fashion = null
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/soft/veteran
 	name = "veteran cap"
@@ -145,6 +146,7 @@
 	armor_type = /datum/armor/cosmetic_sec
 	strip_delay = 60
 	dog_fashion = null
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"
@@ -152,6 +154,7 @@
 	icon_state = "paramedicsoft"
 	soft_type = "paramedic"
 	dog_fashion = null
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/soft/fishing_hat
 	name = "legendary fishing hat"
@@ -170,12 +173,13 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	dog_fashion = null
 	clothing_traits = list(TRAIT_SCARY_FISHERMAN) //Fish, carps, lobstrosities and frogs fear me.
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean")) //you asked for this.
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
 
 #define PROPHAT_MOOD "prophat"
 

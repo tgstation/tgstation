@@ -1407,7 +1407,7 @@
 
 /obj/item/circuitboard/machine/fishing_portal_generator/emagged
 	name = "Emagged Fishing Portal Generator"
-	build_path = /obj/machinery/fishing_portal_generator
+	build_path = /obj/machinery/fishing_portal_generator/emagged
 
 //Supply
 /obj/item/circuitboard/machine/ore_redemption
@@ -1751,7 +1751,7 @@
 	build_path = /obj/machinery/power/manufacturing/lathe
 	req_components = list(
 		/obj/item/stack/sheet/iron = 5,
-		/datum/stock_part/servo = 1,
+		/datum/stock_part/matter_bin = 1,
 	)
 
 /obj/item/circuitboard/machine/manucrusher

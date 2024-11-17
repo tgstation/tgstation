@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes:
-  - bugfix: "Fixes a bug where the game would assign multiple players to single-slot command roles."

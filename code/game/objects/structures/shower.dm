@@ -250,7 +250,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	if(locate_new_shower && isturf(exiter.loc))
 		return
 	var/mob/living/take_his_status_effect = exiter
-	take_his_status_effect.remove_status_effect(/datum/status_effect/shower_regen)
+	take_his_status_effect.remove_status_effect(/datum/status_effect/washing_regen)
 
 /obj/machinery/shower/proc/wash_atom(atom/target)
 	target.wash(CLEAN_RAD | CLEAN_WASH)
@@ -259,8 +259,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		return
 	var/mob/living/living_target = target
 	check_heat(living_target)
-	living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
-	living_target.apply_status_effect(/datum/status_effect/shower_regen)
+	living_target.apply_status_effect(/datum/status_effect/washing_regen)
+	if(!HAS_TRAIT(target, TRAIT_WATER_HATER) || HAS_TRAIT(target, TRAIT_WATER_ADAPTATION))
+		living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
+	else
+		living_target.add_mood_event("shower", /datum/mood_event/shower_hater)
 
 /**
  * Toggle whether shower is actually on and outputting water.
@@ -291,7 +294,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
-
+		for(var/mob/living/showerer in loc)
+			showerer.remove_status_effect(/datum/status_effect/washing_regen)
 	return TRUE
 
 /obj/machinery/shower/process(seconds_per_tick)
@@ -333,18 +337,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
 
-/obj/machinery/shower/proc/check_heat(mob/living/L)
-	var/mob/living/carbon/C = L
+/obj/machinery/shower/proc/check_heat(mob/living/living)
 
 	if(current_temperature == SHOWER_FREEZING)
-		if(iscarbon(L))
-			C.adjust_bodytemperature(-80, 80)
-		to_chat(L, span_warning("[src] is freezing!"))
+		living.adjust_bodytemperature(-80, 80)
+		to_chat(living, span_warning("[src] is freezing!"))
 	else if(current_temperature == SHOWER_BOILING)
-		if(iscarbon(L))
-			C.adjust_bodytemperature(35, 0, 500)
-		L.adjustFireLoss(5)
-		to_chat(L, span_danger("[src] is searing!"))
+		living.adjust_bodytemperature(35, 0, 500)
+		living.adjustFireLoss(5)
+		to_chat(living, span_danger("[src] is searing!"))
 
 
 /obj/structure/showerframe

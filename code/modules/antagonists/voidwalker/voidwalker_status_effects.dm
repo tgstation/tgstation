@@ -11,7 +11,7 @@
 /// Regenerate in space
 /datum/status_effect/space_regeneration
 	id = "space_regeneration"
-	duration = INFINITE
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	// How much do we heal per tick?
 	var/healing = 1.5
@@ -32,7 +32,7 @@
 
 /datum/status_effect/planet_allergy
 	id = "planet_allergy"
-	duration = INFINITE
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = /atom/movable/screen/alert/status_effect/veryhighgravity
 
 /datum/status_effect/planet_allergy/tick()
