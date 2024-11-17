@@ -574,7 +574,7 @@
 	update_stamina()
 
 	/// The amount of burn damage needed to be done for this mob to be husked
-	var/husk_thresold = get_bodypart(BODY_ZONE_CHEST).max_damage * -1
+	var/husk_threshold = get_bodypart(BODY_ZONE_CHEST).max_damage * -1
 
 	if(((maxHealth - total_burn) < husk_threshold) && stat == DEAD )
 		become_husk(BURN)
