@@ -1,4 +1,4 @@
-import { toTitleCase } from 'common/string';
+import { toTitleCase } from 'tgui-core/string';
 import { useMemo, useState } from 'react';
 import {
   Box,

@@ -1,6 +1,6 @@
-import { isEscape } from 'common/keys';
 import { useState } from 'react';
 import { Button, Input, Section, Stack } from 'tgui-core/components';
+import { isEscape } from 'tgui-core/keys';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';

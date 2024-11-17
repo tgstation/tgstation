@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { isEscape, KEY } from 'common/keys';
-import { debounce } from 'common/timer';
+import { isEscape, KEY } from 'tgui-core/keys';
+import { debounce } from 'tgui-core/timer';
 import { KeyboardEvent, SyntheticEvent, useEffect, useRef } from 'react';
 import { classes } from 'tgui-core/react';
 

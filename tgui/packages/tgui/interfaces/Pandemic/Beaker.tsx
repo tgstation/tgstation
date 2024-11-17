@@ -1,4 +1,4 @@
-import { capitalizeFirst } from 'common/string';
+import { capitalizeFirst } from 'tgui-core/string';
 import { useBackend } from 'tgui/backend';
 import {
   Button,

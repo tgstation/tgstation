@@ -1,4 +1,4 @@
-import { createSearch, toTitleCase } from 'common/string';
+import { createSearch, toTitleCase } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Button,

@@ -1,7 +1,5 @@
 import { map, sortBy } from 'common/collections';
 import { useState } from 'react';
-
-import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -17,6 +15,8 @@ import {
   Tabs,
   VirtualList,
 } from 'tgui-core/components';
+
+import { useBackend, useLocalState } from '../backend';
 import { NtosWindow, Window } from '../layouts';
 import { Experiment } from './ExperimentConfigure';
 

@@ -1,4 +1,4 @@
-import { capitalizeFirst, decodeHtmlEntities } from 'common/string';
+import { capitalizeFirst, decodeHtmlEntities } from 'tgui-core/string';
 import { useBackend } from 'tgui/backend';
 import {
   Box,

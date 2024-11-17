@@ -3,7 +3,7 @@
  * @copyright 2021 bobbahbrown (https://github.com/bobbahbrown)
  * @license MIT
  */
-import { createSearch, decodeHtmlEntities } from 'common/string';
+import { createSearch, decodeHtmlEntities } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Button,

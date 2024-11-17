@@ -1,4 +1,4 @@
-import { decodeHtmlEntities } from 'common/string';
+import { decodeHtmlEntities } from 'tgui-core/string';
 import { useState } from 'react';
 import { Box, Button, LabeledList, Section, Table } from 'tgui-core/components';
 

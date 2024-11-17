@@ -11,7 +11,7 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../../../components';
+} from 'tgui-core/components';
 import { CharacterPreview } from '../../common/CharacterPreview';
 import { ServerData } from '../data';
 import { ServerPreferencesFetcher } from '../ServerPreferencesFetcher';

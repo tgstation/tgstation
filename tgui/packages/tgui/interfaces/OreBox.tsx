@@ -1,4 +1,4 @@
-import { toTitleCase } from 'common/string';
+import { toTitleCase } from 'tgui-core/string';
 import { Box, Button, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';

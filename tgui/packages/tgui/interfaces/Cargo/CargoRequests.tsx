@@ -1,6 +1,6 @@
-import { decodeHtmlEntities } from 'common/string';
 import { Button, NoticeBox, Section, Table } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
+import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { CargoData } from './types';

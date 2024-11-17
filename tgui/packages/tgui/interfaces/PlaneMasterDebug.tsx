@@ -1,5 +1,5 @@
 import { sortBy } from 'common/collections';
-import { flow } from 'common/fp';
+import { flow } from 'tgui-core/fp';
 import { Component, createRef, RefObject } from 'react';
 import {
   Box,

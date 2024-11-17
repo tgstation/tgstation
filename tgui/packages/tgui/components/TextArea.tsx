@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { isEscape, KEY } from 'common/keys';
+import { isEscape, KEY } from 'tgui-core/keys';
 import {
   forwardRef,
   ReactElement,

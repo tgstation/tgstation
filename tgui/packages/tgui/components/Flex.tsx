@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import { CSSProperties } from 'react';
 import { classes } from 'tgui-core/react';
 
 import { BoxProps, computeBoxClassName, computeBoxProps, unit } from './Box';
@@ -14,7 +15,7 @@ export type FlexProps = Partial<{
   inline: boolean;
   justify: string;
   scrollable: boolean;
-  style: Partial<HTMLDivElement['style']>;
+  style: CSSProperties;
   wrap: string | boolean;
 }> &
   BoxProps;

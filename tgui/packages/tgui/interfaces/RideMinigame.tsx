@@ -1,4 +1,4 @@
-import { randomPick } from 'common/random';
+import { randomPick } from 'tgui-core/random';
 import { useEffect, useState } from 'react';
 import {
   Button,

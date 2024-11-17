@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Autofocus, Button, Input, Section, Stack } from 'tgui-core/components';
-
 import {
   KEY_A,
   KEY_DOWN,
@@ -8,7 +7,8 @@ import {
   KEY_ESCAPE,
   KEY_UP,
   KEY_Z,
-} from '../../../common/keycodes';
+} from 'tgui-core/keycodes';
+
 import { useBackend } from '../../backend';
 import { InputButtons } from '../common/InputButtons';
 

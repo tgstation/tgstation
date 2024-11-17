@@ -1,5 +1,6 @@
-import { useBackend } from '../backend';
 import { Box, Button, Icon, Image, Section, Stack } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const OutfitEditor = (props) => {

@@ -9,11 +9,11 @@ import {
   Tabs,
   Tooltip,
 } from 'tgui-core/components';
+import { fetchRetry } from 'tgui-core/http';
 import { BooleanLike } from 'tgui-core/react';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
-import { fetchRetry } from '../../http';
 import { Window } from '../../layouts';
 import {
   calculateDangerLevel,

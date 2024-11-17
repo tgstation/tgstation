@@ -1,4 +1,4 @@
-import { decodeHtmlEntities } from 'common/string';
+import { decodeHtmlEntities } from 'tgui-core/string';
 import {
   BlockQuote,
   Box,

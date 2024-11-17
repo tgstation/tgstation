@@ -1,4 +1,4 @@
-import { capitalizeAll, capitalizeFirst } from 'common/string';
+import { capitalizeAll, capitalizeFirst } from 'tgui-core/string';
 import { Tooltip } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 

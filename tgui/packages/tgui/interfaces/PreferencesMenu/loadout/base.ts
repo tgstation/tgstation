@@ -1,4 +1,5 @@
-import { BooleanLike } from '../../../../common/react';
+import { BooleanLike } from 'tgui-core/react';
+
 import { PreferencesMenuData } from '../data';
 import { LoadoutButton } from './ModifyPanel';
 

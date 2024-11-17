@@ -1,5 +1,4 @@
 import { Component } from 'react';
-
 import { formatTime } from 'tgui-core/format';
 
 // AnimatedNumber Copypaste

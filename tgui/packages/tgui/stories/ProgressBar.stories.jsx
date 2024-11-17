@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -13,6 +12,8 @@ import {
   ProgressBar,
   Section,
 } from 'tgui-core/components';
+
+import { useLocalState } from '../backend';
 
 export const meta = {
   title: 'ProgressBar',

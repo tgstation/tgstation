@@ -1,4 +1,4 @@
-import { capitalize, createSearch } from 'common/string';
+import { capitalize, createSearch } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Box,

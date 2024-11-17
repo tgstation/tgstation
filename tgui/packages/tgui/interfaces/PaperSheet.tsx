@@ -4,11 +4,12 @@
 
 import { marked } from 'marked';
 import { Component, createRef, RefObject } from 'react';
-import { Box, Button, Flex, Section, TextArea } from 'tgui-core/components';
+import { Box, Button, Flex, TextArea } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 import { classes } from 'tgui-core/react';
 
 import { useBackend, useLocalState } from '../backend';
+import { Section } from '../components'; // TODO: Fix refs with tgui-core
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 

@@ -1,5 +1,3 @@
-import { createSearch } from '../../../../common/string';
-import { useBackend } from '../../../backend';
 import {
   Box,
   Button,
@@ -7,7 +5,10 @@ import {
   Flex,
   Icon,
   NoticeBox,
-} from '../../../components';
+} from 'tgui-core/components';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../../../backend';
 import { LoadoutCategory, LoadoutItem, LoadoutManagerData } from './base';
 
 export const ItemIcon = (props: { item: LoadoutItem; scale?: number }) => {

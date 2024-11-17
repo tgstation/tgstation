@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { flow } from 'common/fp';
+import { flow } from 'tgui-core/fp';
 import {
   applyMiddleware,
   combineReducers,

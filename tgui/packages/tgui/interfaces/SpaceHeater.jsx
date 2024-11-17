@@ -1,6 +1,4 @@
-import { capitalize } from 'common/string';
-
-import { useBackend } from '../backend';
+import { capitalize } from 'tgui-core/string';
 import {
   Box,
   Button,
@@ -9,6 +7,8 @@ import {
   ProgressBar,
   Section,
 } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const SpaceHeater = (props) => {

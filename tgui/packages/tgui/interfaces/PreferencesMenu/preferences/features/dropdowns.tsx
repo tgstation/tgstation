@@ -1,4 +1,4 @@
-import { capitalizeFirst } from 'common/string';
+import { capitalizeFirst } from 'tgui-core/string';
 import { ReactNode } from 'react';
 import { classes } from 'tgui-core/react';
 

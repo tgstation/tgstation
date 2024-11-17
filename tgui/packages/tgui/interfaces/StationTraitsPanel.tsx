@@ -1,5 +1,5 @@
 import { filter, map } from 'common/collections';
-import { exhaustiveCheck } from 'common/exhaustive';
+import { exhaustiveCheck } from 'tgui-core/exhaustive';
 import { useState } from 'react';
 import {
   Box,

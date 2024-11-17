@@ -1,4 +1,4 @@
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { useState } from 'react';
 import { Button, Image, Input, Section, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';

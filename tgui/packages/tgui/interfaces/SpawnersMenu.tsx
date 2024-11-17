@@ -1,4 +1,4 @@
-import { capitalizeAll } from 'common/string';
+import { capitalizeAll } from 'tgui-core/string';
 import { useBackend } from 'tgui/backend';
 import { Button, LabeledList, Section, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';

@@ -4,8 +4,9 @@
  * @license MIT
  */
 
-import { useLocalState } from '../backend';
 import { Input, LabeledList, Section } from 'tgui-core/components';
+
+import { useLocalState } from '../backend';
 
 export const meta = {
   title: 'Themes',

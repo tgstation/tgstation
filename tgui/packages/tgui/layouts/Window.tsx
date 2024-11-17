@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { decodeHtmlEntities, toTitleCase } from 'common/string';
+import { decodeHtmlEntities, toTitleCase } from 'tgui-core/string';
 import {
   PropsWithChildren,
   ReactNode,

@@ -1,4 +1,3 @@
-import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -9,6 +8,8 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
+
+import { useBackend, useSharedState } from '../backend';
 import { NtosWindow } from '../layouts';
 
 export const NtosCyborgRemoteMonitor = (props) => {

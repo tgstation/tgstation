@@ -1,4 +1,4 @@
-import { capitalizeAll } from 'common/string';
+import { capitalizeAll } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Box,
@@ -13,7 +13,7 @@ import {
 import { DmIcon, Input } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { createSearch } from '../../common/string';
+import { createSearch } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

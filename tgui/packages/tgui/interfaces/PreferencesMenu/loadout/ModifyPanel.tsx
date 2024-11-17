@@ -9,7 +9,7 @@ import {
   LabeledList,
   Section,
   Stack,
-} from '../../../components';
+} from 'tgui-core/components';
 import { FAIcon, LoadoutItem, LoadoutManagerData, ReskinOption } from './base';
 import { ItemIcon } from './ItemDisplay';
 

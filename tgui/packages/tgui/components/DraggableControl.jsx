@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { clamp } from 'tgui-core/math';
 import { Component, createRef } from 'react';
+import { clamp } from 'tgui-core/math';
 
 import { AnimatedNumber } from './AnimatedNumber';
 

@@ -1,4 +1,4 @@
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { Flex } from 'tgui-core/components';
 
 import { LootBox } from './LootBox';

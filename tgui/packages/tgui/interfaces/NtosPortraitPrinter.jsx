@@ -1,7 +1,4 @@
 import { useState } from 'react';
-
-import { resolveAsset } from '../assets';
-import { useBackend } from '../backend';
 import {
   Button,
   Image,
@@ -10,6 +7,9 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+
+import { resolveAsset } from '../assets';
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 export const NtosPortraitPrinter = (props) => {

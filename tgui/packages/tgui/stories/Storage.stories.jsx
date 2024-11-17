@@ -5,7 +5,6 @@
  */
 
 import { storage } from 'common/storage';
-
 import { Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
 

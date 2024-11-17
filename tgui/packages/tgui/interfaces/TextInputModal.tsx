@@ -1,4 +1,4 @@
-import { isEscape, KEY } from 'common/keys';
+import { isEscape, KEY } from 'tgui-core/keys';
 import { KeyboardEvent, useState } from 'react';
 import { Box, Section, Stack, TextArea } from 'tgui-core/components';
 

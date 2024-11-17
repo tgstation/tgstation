@@ -1,7 +1,7 @@
-import { classes } from 'tgui-core/react';
 import { Component, createRef } from 'react';
-
 import { Box, Stack } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+
 import { noop } from './constants';
 import { DisplayName } from './DisplayName';
 

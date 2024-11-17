@@ -1,7 +1,7 @@
-import { KEY_ENTER, KEY_ESCAPE } from 'common/keycodes';
+import { KEY_ENTER, KEY_ESCAPE } from 'tgui-core/keycodes';
+import { Component, createRef } from 'react';
 import { clamp } from 'tgui-core/math';
 import { classes } from 'tgui-core/react';
-import { Component, createRef } from 'react';
 
 import { Box } from './Box';
 

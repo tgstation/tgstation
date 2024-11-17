@@ -1,8 +1,8 @@
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { useState } from 'react';
+import { Box, Icon, Input, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Icon, Input, Section } from 'tgui-core/components';
 import { NtosWindow } from '../layouts';
 
 export const NtosRecords = (props) => {

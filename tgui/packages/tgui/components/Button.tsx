@@ -5,7 +5,7 @@
  */
 
 import { Placement } from '@popperjs/core';
-import { isEscape, KEY } from 'common/keys';
+import { isEscape, KEY } from 'tgui-core/keys';
 import {
   ChangeEvent,
   createRef,

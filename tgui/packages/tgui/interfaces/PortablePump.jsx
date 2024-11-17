@@ -1,10 +1,11 @@
-import { useBackend } from '../backend';
 import {
   Button,
   LabeledList,
   NumberInput,
   Section,
 } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { PortableBasicInfo } from './common/PortableAtmos';
 

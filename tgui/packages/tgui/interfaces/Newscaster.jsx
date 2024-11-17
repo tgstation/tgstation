@@ -5,10 +5,8 @@
  * @license MIT
  */
 
-import { decodeHtmlEntities } from 'common/string';
+import { decodeHtmlEntities } from 'tgui-core/string';
 import { useState } from 'react';
-
-import { useBackend, useSharedState } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -22,6 +20,8 @@ import {
   Tabs,
   TextArea,
 } from 'tgui-core/components';
+
+import { useBackend, useSharedState } from '../backend';
 import { processedText } from '../process';
 import { BountyBoardContent } from './BountyBoard';
 import { UserDetails } from './Vending';

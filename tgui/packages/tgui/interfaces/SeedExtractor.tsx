@@ -1,5 +1,4 @@
 import { sortBy } from 'common/collections';
-import { createSearch } from 'common/string';
 import { useState } from 'react';
 import {
   Box,
@@ -13,6 +12,7 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

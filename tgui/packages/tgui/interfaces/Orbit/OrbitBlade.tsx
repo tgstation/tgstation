@@ -1,4 +1,4 @@
-import { capitalizeFirst, toTitleCase } from 'common/string';
+import { capitalizeFirst, toTitleCase } from 'tgui-core/string';
 import { useContext } from 'react';
 import {
   Button,

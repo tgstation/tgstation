@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { shallowDiffers } from 'tgui-core/react';
-import { debounce } from 'common/timer';
+import { debounce } from 'tgui-core/timer';
 import { Component, createRef } from 'react';
+import { shallowDiffers } from 'tgui-core/react';
 
 import { createLogger } from '../logging';
 import { computeBoxProps } from './Box';

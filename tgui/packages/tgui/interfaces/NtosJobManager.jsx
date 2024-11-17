@@ -1,4 +1,3 @@
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -7,6 +6,8 @@ import {
   Section,
   Table,
 } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 export const NtosJobManager = (props) => {

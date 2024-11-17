@@ -1,5 +1,5 @@
 import { filter, sortBy } from 'common/collections';
-import { createSearch } from 'common/string';
+import { createSearch } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Box,

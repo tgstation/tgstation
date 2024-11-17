@@ -1,4 +1,5 @@
 import { range } from 'common/collections';
+import { CSSProperties } from 'react';
 import { Box, Button, Icon, Image, Stack } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
@@ -313,7 +314,7 @@ export const StripMenu = (props) => {
                           const alternateAction =
                             ALTERNATE_ACTIONS[alternateKey];
 
-                          const alternateActionStyle = {
+                          const alternateActionStyle: CSSProperties = {
                             background: 'rgba(0, 0, 0, 0.6)',
                             position: 'absolute',
                             overflow: 'hidden',
