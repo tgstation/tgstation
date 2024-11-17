@@ -63,7 +63,7 @@
 	alert_type = null
 	/// Our voidwalker and his friends in blessed_peoples.
 	var/datum/mind/voidwalker_mind
-Ы
+
 /datum/status_effect/void_symbol_mark/on_remove()
 	. = ..()
 	if(isnull(voidwalker_mind))
