@@ -278,6 +278,7 @@
 /obj/item/organ/cyberimp/arm/toolset/l
 	zone = BODY_ZONE_L_ARM
 
+//The order of the item list for this implant is not alphabetized due to it actually affecting how it shows up playerside when opening the implant
 /obj/item/organ/cyberimp/arm/paperwork
 	name = "integrated paperwork implant"
 	desc = "A highly sought out implant among heads of personnel, and other high up command staff in Nanotrasen. This implant allows the user to always have the tools necesarry for paperwork handy"
@@ -285,12 +286,12 @@
 	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(
 		/obj/item/pen/fountain,
-		/obj/item/stamp,
-		/obj/item/stamp/denied,
+		/obj/item/clipboard,
 		/obj/item/taperecorder,
 		/obj/item/lighter,
-        /obj/item/laser_pointer,
-		/obj/item/clipboard,
+		/obj/item/laser_pointer,
+		/obj/item/stamp,
+		/obj/item/stamp/denied,
 	)
 
 /obj/item/organ/cyberimp/arm/paperwork/l
