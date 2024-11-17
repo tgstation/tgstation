@@ -324,10 +324,10 @@
 	/// How quickly it delivers heat to the reagents. In watts per joule of the thermal energy difference of the reagent from the temperature difference of the current and target temperatures.
 	var/beaker_conduction_power = 0.1
 	/// The subsystem we're being processed by.
-	var/datum/controller/subsystem/processing/our_subsystem = null
+	var/datum/controller/subsystem/processing/our_subsystem
 
 /obj/machinery/space_heater/improvised_chem_heater/Initialize(mapload)
-	our_subsystem = locate(/datum/controller/subsystem/machines) in Master.subsystems
+	our_subsystem = locate(subsystem_type) in Master.subsystems
 	. = ..()
 
 /obj/machinery/space_heater/improvised_chem_heater/Destroy()
