@@ -206,17 +206,18 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	SIGNAL_HANDLER
 	update_parallax_pref() // If your eye changes z level, so should your parallax prefs
 	var/turf/eye_turf = get_turf(eye)
-	SEND_SIGNAL(src, COMSIG_HUD_Z_CHANGED, eye_turf.z)
-	var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
-	if(current_plane_offset == new_offset)
-		return
-	var/old_offset = current_plane_offset
-	current_plane_offset = new_offset
+	if(eye_turf)
+		SEND_SIGNAL(src, COMSIG_HUD_Z_CHANGED, eye_turf.z)
+		var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
+		if(current_plane_offset == new_offset)
+			return
+		var/old_offset = current_plane_offset
+		current_plane_offset = new_offset
 
-	SEND_SIGNAL(src, COMSIG_HUD_OFFSET_CHANGED, old_offset, new_offset)
-	for(var/group_key as anything in master_groups)
-		var/datum/plane_master_group/group = master_groups[group_key]
-		group.build_planes_offset(src, new_offset)
+		SEND_SIGNAL(src, COMSIG_HUD_OFFSET_CHANGED, old_offset, new_offset)
+		for(var/group_key as anything in master_groups)
+			var/datum/plane_master_group/group = master_groups[group_key]
+			group.build_planes_offset(src, new_offset)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
