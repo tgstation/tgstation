@@ -645,7 +645,7 @@
 #define FA_ICON_DIRECTIONS "fa-directions"
 #define FA_ICON_DISCORD "fa-discord"
 #define FA_ICON_DISCOURSE "fa-discourse"
-#define FA_ICON_DISEASE "fa-disease"
+#define FA_ICON_ERADICATE "fa-person-dots-from-line"
 #define FA_ICON_DISPLAY "fa-display"
 #define FA_ICON_DIVIDE "fa-divide"
 #define FA_ICON_DIZZY "fa-dizzy"
