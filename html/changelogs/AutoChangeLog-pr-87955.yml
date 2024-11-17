@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - map: "Removes extra privacy shutters in the HoS' office on NebulaStation"

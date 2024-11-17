@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - balance: "makes reputation locked gear instead be very very expensive and get cheaper as you get to that rep"
