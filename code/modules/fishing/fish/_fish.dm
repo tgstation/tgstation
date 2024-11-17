@@ -237,7 +237,7 @@
 		span_notice("You release [src] into [interacting_with]. [goodbye_text]"), \
 		span_notice("You hear a splash."))
 	playsound(interacting_with, 'sound/effects/splash.ogg', 50)
-	SEND_SIGNAL(interacting_with, COMSIG_FISH_RELEASED_INTO, src)
+	SEND_SIGNAL(interacting_with, COMSIG_FISH_RELEASED_INTO, src, user)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 

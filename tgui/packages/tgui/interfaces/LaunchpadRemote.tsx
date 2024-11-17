@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
+import { NoticeBox } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { NoticeBox } from '../components';
 import { Window } from '../layouts';
 import { LaunchpadControl } from './LaunchpadConsole';
 

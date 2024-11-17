@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - map: "Fix missing CE Office Shutter Buttons on Icebox. Also removes a duplicate keycard auth device."
