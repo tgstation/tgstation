@@ -18,6 +18,7 @@
 		if(main.mapping_id != mapping_id)
 			continue
 		register_machine(main)
+		break
 
 /obj/machinery/computer/turbine_computer/multitool_act(mob/living/user, obj/item/tool)
 	var/obj/item/multitool/multitool = tool
