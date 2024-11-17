@@ -727,9 +727,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/end,
-/turf/open/indestructible/dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "Sr" = (
 /obj/effect/decal/cleanable/dirt/dust,
