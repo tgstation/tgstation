@@ -67,7 +67,7 @@
 ///We lazily add the immerse element when something is spawned or crosses this turf and not before.
 /turf/open/lava/proc/on_atom_inited(datum/source, atom/movable/movable)
 	SIGNAL_HANDLER
-	if(burn_stuff(arrived))
+	if(burn_stuff(movable))
 		START_PROCESSING(SSobj, src)
 	if(immerse_added || is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
 		return
@@ -79,9 +79,9 @@
  * we need to wait for movables that still need to be initialized
  * before we add the immerse element.
  */
-/turf/open/lava/Entered(atom/movable/entered)
+/turf/open/lava/Entered(atom/movable/arrived)
 	. = ..()
-	if(!immerse_added && !is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
+	if(!immerse_added && !is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
 		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
 		immerse_added = TRUE
 	if(burn_stuff(arrived))

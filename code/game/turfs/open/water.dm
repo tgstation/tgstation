@@ -56,9 +56,9 @@
  * we need to wait for movables that still need to be initialized
  * before we add the immerse element.
  */
-/turf/open/water/Entered(atom/movable/entered)
+/turf/open/water/Entered(atom/movable/arrived)
 	. = ..()
-	if(!immerse_added && !is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
+	if(!immerse_added && !is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
 		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
 		immerse_added = TRUE
 
