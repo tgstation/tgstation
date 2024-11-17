@@ -327,7 +327,7 @@
 "uC" = (
 /obj/machinery/button/elevator/directional/west{
 	device_type = null;
-	id = dontdothat
+	id = "dontdothatplease"
 	},
 /obj/effect/mapping_helpers/broken_machine,
 /turf/open/floor/vault,
