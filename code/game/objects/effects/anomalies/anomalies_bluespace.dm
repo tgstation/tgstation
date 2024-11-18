@@ -115,4 +115,6 @@
 	living.apply_status_effect(/datum/status_effect/teleport_madness)
 
 /obj/effect/temp_visual/circle_wave/bluespace
-	color = COLOR_BLUE
+	color = COLOR_BLUE_LIGHT
+	duration = 1 SECONDS
+	amount_to_scale = 5

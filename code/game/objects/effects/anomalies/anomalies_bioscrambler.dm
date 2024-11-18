@@ -5,6 +5,8 @@
 	anomaly_core = /obj/item/assembly/signaler/anomaly/bioscrambler
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	layer = ABOVE_MOB_LAYER
+	lifespan = ANOMALY_COUNTDOWN_TIMER * 2
+
 	/// Who are we moving towards?
 	var/datum/weakref/pursuit_target
 	/// Cooldown for every anomaly pulse
