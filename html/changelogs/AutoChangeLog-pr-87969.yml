@@ -1,0 +1,7 @@
+author: "tontyGH"
+delete-after: True
+changes:
+  - bugfix: "Haunted 8-balls are now usable again (FINALLY)"
+  - bugfix: "Haunted 8-ball UI now correctly displays your selected answer"
+  - qol: "Made the haunted 8-ball UI look a pinch better. Just a smidge."
+  - code_imp: "Haunted 8-balls no longer use a duplicate answer list"
