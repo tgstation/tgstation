@@ -71,12 +71,6 @@
 /obj/machinery/smartfridge,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
-"do" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/rubble,
-/obj/machinery/light/small/broken/directional/north,
-/turf/open/floor/plating/lavaland_atmos,
-/area/ruin/powered/seedvault)
 "dX" = (
 /obj/machinery/chem_dispenser/mutagensaltpeter,
 /obj/effect/turf_decal/trimline/green/line{
@@ -483,6 +477,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
+"Bh" = (
+/obj/structure/frame/machine/secured,
+/obj/item/light/tube/broken,
+/turf/open/floor/holofloor/grass,
+/area/ruin/powered/seedvault)
 "Bp" = (
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
@@ -493,7 +492,7 @@
 "BU" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/rubble,
-/obj/structure/door_assembly/door_assembly_vault,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/powered/seedvault)
 "Cc" = (
@@ -535,12 +534,6 @@
 /area/ruin/powered/seedvault)
 "FO" = (
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered/seedvault)
-"Ge" = (
-/obj/structure/frame/machine/secured,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/item/light/tube/broken,
-/turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "GB" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
@@ -827,6 +820,14 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/holofloor/grass,
 /area/ruin/powered/seedvault)
+"YE" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/door/airlock/vault,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "lavaseedvault"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/powered/seedvault)
 "YS" = (
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/plating/elevatorshaft,
@@ -845,7 +846,7 @@ Sb
 Sb
 Sb
 kM
-do
+EW
 hv
 kM
 Sb
@@ -877,7 +878,7 @@ Sb
 Sb
 Sb
 kM
-BU
+EW
 EW
 kM
 Sb
@@ -908,10 +909,10 @@ Sb
 Sb
 Sb
 Sb
-EW
-EW
-EW
-EW
+kM
+YE
+YE
+kM
 Sb
 Sb
 Sb
@@ -940,10 +941,10 @@ Sb
 Sb
 Sb
 Sb
-EW
+kM
 BU
 BU
-EW
+kM
 Sb
 Sb
 Sb
@@ -951,7 +952,7 @@ Sb
 Sb
 kM
 kM
-Rc
+kM
 kM
 kM
 Sb
@@ -973,8 +974,8 @@ Sb
 Sb
 Sb
 kM
-EW
-EW
+YE
+YE
 kM
 Sb
 Sb
@@ -983,7 +984,7 @@ Sb
 kM
 kM
 yS
-Ge
+Rc
 jr
 kM
 kM
@@ -1015,7 +1016,7 @@ kM
 kM
 vp
 sm
-yh
+Bh
 ei
 vp
 UD
@@ -1227,7 +1228,7 @@ Sb
 Sb
 Sb
 Sb
-EW
+kM
 EW
 EW
 mz
@@ -1259,7 +1260,7 @@ Sb
 Sb
 Sb
 Sb
-EW
+kM
 EW
 EW
 mz
@@ -1291,7 +1292,7 @@ Sb
 Sb
 Sb
 Sb
-EW
+kM
 EW
 mz
 mz
@@ -1323,7 +1324,7 @@ Sb
 Sb
 Sb
 Sb
-EW
+kM
 xw
 mz
 Sr
