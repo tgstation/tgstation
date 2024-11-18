@@ -64,7 +64,9 @@
 	var/alias = our_client?.prefs?.read_preference(/datum/preference/name/hacker_alias) || pick(GLOB.hacker_aliases)
 
 	if(alias && avatar.real_name != alias)
-		avatar.fully_replace_character_name(avatar.real_name, alias)
+		avatar.fully_replace_character_name(newname = alias)
+
+	update_avatar_id()
 
 	for(var/skill_type in old_mind.known_skills)
 		avatar.mind.set_experience(skill_type, old_mind.get_skill_exp(skill_type), silent = TRUE)
@@ -109,6 +111,20 @@
 		COMSIG_LIVING_PILL_CONSUMED,
 		COMSIG_MOB_APPLY_DAMAGE,
 	))
+
+
+/// Updates our avatar's ID to match our avatar's name.
+/datum/component/avatar_connection/proc/update_avatar_id()
+	var/mob/living/avatar = parent
+	var/obj/item/card/id/our_id = locate() in avatar.get_all_contents()
+	if(isnull(our_id))
+		return
+
+	our_id.registered_name = avatar.real_name
+	our_id.update_label()
+	our_id.update_icon()
+	if(our_id.registered_account)
+		our_id.registered_account.account_holder = avatar.real_name
 
 
 /// Disconnects the avatar and returns the mind to the old_body.

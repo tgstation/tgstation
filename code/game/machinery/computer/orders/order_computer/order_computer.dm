@@ -120,7 +120,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"cat" = item.category_index,
 			"ref" = REF(item),
 			"cost" = round(item.cost_per_order * cargo_cost_multiplier),
-			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(item.item_path.icon), icon_state = initial(item.item_path.icon_state)), no_anim=TRUE))
+			"icon" = item.item_path::icon,
+			"icon_state" = item.item_path::icon_state,
 		))
 	return data
 

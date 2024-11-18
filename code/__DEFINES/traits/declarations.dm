@@ -391,6 +391,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DETECT_STORM "detect_storm"
 #define TRAIT_PRIMITIVE "primitive"
 #define TRAIT_GUNFLIP "gunflip"
+/// eignore blindness or blurriness or nearsightedness
+#define TRAIT_SIGHT_BYPASS "perfect_sight"
+/// ignore traumas that make you 'hallucinate' something
+#define TRAIT_PERCEPTUAL_TRAUMA_BYPASS "trauma_bypass"
+/// mob is immune to hallucinations
+#define TRAIT_HALLUCINATION_IMMUNE "hallucination_immune"
 /// Increases chance of getting special traumas, makes them harder to cure
 #define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
 #define TRAIT_SPACEWALK "spacewalk"

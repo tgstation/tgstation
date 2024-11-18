@@ -448,11 +448,11 @@
 			target = select_target(target_turf, target)
 			continue
 
-		if (SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args, src) & PROJECTILE_INTERRUPT_HIT)
+		if (SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, src) & PROJECTILE_INTERRUPT_HIT)
 			qdel(src)
 			return
 
-		if (SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, args) & PROJECTILE_INTERRUPT_HIT)
+		if (SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, target) & PROJECTILE_INTERRUPT_HIT)
 			qdel(src)
 			return
 

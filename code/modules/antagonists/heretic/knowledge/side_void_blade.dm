@@ -1,5 +1,17 @@
 // Sidepaths for knowledge between Void and Blade.
 
+/datum/heretic_knowledge_tree_column/void_to_blade
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/main/void
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/main/blade
+
+	route = PATH_SIDE
+
+	tier1 = /datum/heretic_knowledge/limited_amount/risen_corpse
+	tier2 = /datum/heretic_knowledge/rune_carver
+	tier3 = /datum/heretic_knowledge/summon/maid_in_mirror
+
+
+
 /// The max health given to Shattered Risen
 #define RISEN_MAX_HEALTH 125
 
@@ -12,20 +24,17 @@
 	gain_text = "I witnessed a cold, rending force drag this corpse back to near-life. \
 		When it moves, it crunches like broken glass. Its hands are no longer recognizable as human - \
 		each clenched fist contains a brutal nest of sharp bone-shards instead."
-	next_knowledge = list(
-		/datum/heretic_knowledge/cold_snap,
-		/datum/heretic_knowledge/blade_dance,
-	)
+
 	required_atoms = list(
 		/obj/item/clothing/suit = 1,
 		/obj/item/clothing/gloves/latex = 1,
 	)
 	limit = 1
 	cost = 1
-	route = PATH_SIDE
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_shattered"
-	depth = 4
+
 
 /datum/heretic_knowledge/limited_amount/risen_corpse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -130,10 +139,7 @@
 		Also makes for a handy throwing weapon."
 	gain_text = "Etched, carved... eternal. There is power hidden in everything. I can unveil it! \
 		I can carve the monolith to reveal the chains!"
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/void_phase,
-		/datum/heretic_knowledge/duel_stance,
-	)
+
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/shard = 1,
@@ -141,8 +147,8 @@
 	)
 	result_atoms = list(/obj/item/melee/rune_carver)
 	cost = 1
-	route = PATH_SIDE
-	depth = 8
+
+
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "rune_carver"
 
@@ -154,10 +160,7 @@
 		However, they are weak to mortal gaze and take damage by being examined."
 	gain_text = "Within each reflection, lies a gateway into an unimaginable world of colors never seen and \
 		people never met. The ascent is glass, and the walls are knives. Each step is blood, if you do not have a guide."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/void_pull,
-		/datum/heretic_knowledge/spell/furious_steel,
-	)
+
 	required_atoms = list(
 		/obj/item/stack/sheet/mineral/titanium = 5,
 		/obj/item/clothing/suit/armor = 1,
@@ -165,7 +168,7 @@
 		/obj/item/organ/lungs = 1,
 	)
 	cost = 1
-	route = PATH_SIDE
+
 	mob_to_summon = /mob/living/basic/heretic_summon/maid_in_the_mirror
 	poll_ignore_define = POLL_IGNORE_MAID_IN_MIRROR
-	depth = 10
+
