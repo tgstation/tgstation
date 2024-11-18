@@ -742,32 +742,32 @@
 
 /obj/projectile/proc/fire(fire_angle, atom/direct_target)
 	LAZYINITLIST(impacted)
-	if(fired_from)
+	if (fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
-	if(firer)
+	if (firer)
 		RegisterSignal(firer, COMSIG_QDELETING, PROC_REF(firer_deleted))
 		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
 	if (original)
 		if (firer != original)
 			RegisterSignal(original, COMSIG_QDELETING, PROC_REF(original_deleted))
-	if(!log_override && firer && original && !do_not_log)
+	if (!log_override && firer && original && !do_not_log)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
-	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
+	if (direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
 		impact(direct_target)
-		if(QDELETED(src))
+		if (QDELETED(src))
 			return
 	var/turf/starting = get_turf(src)
-	if(isnum(fire_angle))
+	if (isnum(fire_angle))
 		set_angle(fire_angle)
-	else if(isnull(angle)) //Try to resolve through offsets if there's no angle set.
-		if(isnull(xo) || isnull(yo))
+	else if (isnull(angle)) //Try to resolve through offsets if there's no angle set.
+		if (isnull(xo) || isnull(yo))
 			stack_trace("WARNING: Projectile [type] deleted due to being unable to resolve a target after angle was null!")
 			qdel(src)
 			return
 		var/turf/target = locate(clamp(starting + xo, 1, world.maxx), clamp(starting + yo, 1, world.maxy), starting.z)
 		set_angle(get_angle(src, target))
-	if(spread)
+	if (spread)
 		set_angle(angle + (rand() - 0.5) * spread)
 	original_angle = angle
 	movement_vector = new(speed, angle)
@@ -779,13 +779,12 @@
 	fired = TRUE
 	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = angle)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
-	if(hitscan)
+	if (hitscan && !deletion_queued)
 		record_hitscan_start()
-		if (!deletion_queued)
-			process_hitscan()
+		process_hitscan()
 		if (QDELETED(src))
 			return
-	if(!(datum_flags & DF_ISPROCESSING))
+	if (!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
 	// move it now to avoid potentially hitting yourself with firer-hitting projectiles
 	if (!deletion_queued && !hitscan)
