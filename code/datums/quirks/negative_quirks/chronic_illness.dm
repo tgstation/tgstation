@@ -3,8 +3,8 @@
 	desc = "You have an anomalous chronic illness that requires constant medication to keep under control, or else causes timestream correction."
 	icon = FA_ICON_ERADICATE
 	value = -12
-	gain_text = span_danger("You feel a bit unwanted in this timeline.")
-	lose_text = span_notice("You feel a bit needed by someone.")
+	gain_text = span_danger("You feel like you are fading away...")
+	lose_text = span_notice("You suddenly feel more substantial.")
 	medical_record_text = "Patient has an anomalous chronic illness that requires constant medication to keep under control."
 	hardcore_value = 12
 	mail_goodies = list(/obj/item/storage/pill_bottle/sansufentanyl)
