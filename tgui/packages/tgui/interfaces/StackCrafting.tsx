@@ -1,4 +1,3 @@
-import { createSearch } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Box,
@@ -10,6 +9,7 @@ import {
   Table,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
+import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

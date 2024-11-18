@@ -5,7 +5,6 @@
  * @license MIT
  */
 
-import { decodeHtmlEntities } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   BlockQuote,
@@ -20,6 +19,7 @@ import {
   Tabs,
   TextArea,
 } from 'tgui-core/components';
+import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend, useSharedState } from '../backend';
 import { processedText } from '../process';

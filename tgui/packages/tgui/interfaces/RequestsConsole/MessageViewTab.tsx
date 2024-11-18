@@ -1,4 +1,3 @@
-import { decodeHtmlEntities } from 'tgui-core/string';
 import {
   BlockQuote,
   Button,
@@ -7,6 +6,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import {

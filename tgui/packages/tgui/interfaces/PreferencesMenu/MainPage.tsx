@@ -1,5 +1,4 @@
 import { filter, map, sortBy } from 'common/collections';
-import { createSearch } from 'tgui-core/string';
 import { ReactNode, useState } from 'react';
 import {
   Autofocus,
@@ -12,6 +11,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
 
 import { sendAct, useBackend } from '../../backend';
 import { CharacterPreview } from '../common/CharacterPreview';

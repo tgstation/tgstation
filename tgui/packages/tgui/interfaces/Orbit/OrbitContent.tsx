@@ -1,4 +1,3 @@
-import { toTitleCase } from 'tgui-core/string';
 import {
   NoticeBox,
   Section,
@@ -6,6 +5,7 @@ import {
   Table,
   Tooltip,
 } from 'tgui-core/components';
+import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { ANTAG2COLOR } from './constants';

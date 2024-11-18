@@ -1,4 +1,3 @@
-import { toTitleCase } from 'tgui-core/string';
 import {
   Box,
   Button,
@@ -10,6 +9,7 @@ import {
   Table,
 } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
+import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

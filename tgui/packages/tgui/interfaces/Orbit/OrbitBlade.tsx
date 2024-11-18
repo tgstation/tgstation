@@ -1,4 +1,3 @@
-import { capitalizeFirst, toTitleCase } from 'tgui-core/string';
 import { useContext } from 'react';
 import {
   Button,
@@ -8,6 +7,7 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
+import { capitalizeFirst, toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { OrbitContext } from '.';

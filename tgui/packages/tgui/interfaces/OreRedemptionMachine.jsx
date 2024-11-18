@@ -1,4 +1,3 @@
-import { createSearch, toTitleCase } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   BlockQuote,
@@ -14,6 +13,7 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
+import { createSearch, toTitleCase } from 'tgui-core/string';
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';

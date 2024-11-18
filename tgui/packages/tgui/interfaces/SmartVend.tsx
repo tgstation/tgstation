@@ -1,4 +1,3 @@
-import { createSearch } from 'tgui-core/string';
 import { useState } from 'react';
 import { DmIcon, Icon } from 'tgui-core/components';
 import {
@@ -11,6 +10,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

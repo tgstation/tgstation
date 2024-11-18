@@ -1,4 +1,3 @@
-import { createSearch, toTitleCase } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Button,
@@ -9,6 +8,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { createSearch, toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

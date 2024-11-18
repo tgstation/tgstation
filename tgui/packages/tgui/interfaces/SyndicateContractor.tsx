@@ -12,8 +12,8 @@ import {
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { FakeTerminal } from '../components/FakeTerminal';
 import { NtosWindow } from '../layouts';
+import { FakeTerminal } from './common/FakeTerminal';
 
 enum CONTRACT {
   Inactive = 1,

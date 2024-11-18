@@ -1,4 +1,3 @@
-import { capitalize, createSearch } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Box,
@@ -14,6 +13,7 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
+import { capitalize, createSearch } from 'tgui-core/string';
 
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';

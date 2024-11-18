@@ -1,4 +1,3 @@
-import { capitalizeAll } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Box,
@@ -12,8 +11,9 @@ import {
 } from 'tgui-core/components';
 import { DmIcon, Input } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
-
+import { capitalizeAll } from 'tgui-core/string';
 import { createSearch } from 'tgui-core/string';
+
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

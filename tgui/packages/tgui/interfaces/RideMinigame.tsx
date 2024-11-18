@@ -1,4 +1,3 @@
-import { randomPick } from 'tgui-core/random';
 import { useEffect, useState } from 'react';
 import {
   Button,
@@ -7,6 +6,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { randomPick } from 'tgui-core/random';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

@@ -1,4 +1,3 @@
-import { toTitleCase } from 'tgui-core/string';
 import { useMemo, useState } from 'react';
 import {
   Box,
@@ -10,6 +9,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
+import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

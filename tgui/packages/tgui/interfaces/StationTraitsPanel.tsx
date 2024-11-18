@@ -1,5 +1,4 @@
 import { filter, map } from 'common/collections';
-import { exhaustiveCheck } from 'tgui-core/exhaustive';
 import { useState } from 'react';
 import {
   Box,
@@ -9,6 +8,7 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
+import { exhaustiveCheck } from 'tgui-core/exhaustive';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';

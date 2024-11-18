@@ -1,4 +1,3 @@
-import { isEscape, KEY } from 'tgui-core/keys';
 import { useState } from 'react';
 import {
   Box,
@@ -7,6 +6,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { isEscape, KEY } from 'tgui-core/keys';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

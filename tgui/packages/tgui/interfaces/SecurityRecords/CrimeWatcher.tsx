@@ -15,7 +15,7 @@ import {
   Tabs,
   TextArea,
   Tooltip,
-} from 'tgui/components';
+} from 'tgui-core/components';
 
 import { getSecurityRecord } from './helpers';
 import { Crime, SECURETAB, SecurityRecordsData } from './types';

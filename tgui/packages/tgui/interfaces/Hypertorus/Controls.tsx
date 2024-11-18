@@ -9,7 +9,7 @@ import {
   NumberInput,
   Section,
   Tooltip,
-} from 'tgui/components';
+} from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { HypertorusFilter } from '.';

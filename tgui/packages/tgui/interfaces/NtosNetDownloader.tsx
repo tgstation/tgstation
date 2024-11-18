@@ -1,5 +1,4 @@
 import { filter, sortBy } from 'common/collections';
-import { createSearch } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Box,
@@ -15,6 +14,7 @@ import {
 } from 'tgui-core/components';
 import { scale, toFixed } from 'tgui-core/math';
 import { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';

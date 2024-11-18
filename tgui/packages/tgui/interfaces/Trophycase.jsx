@@ -1,4 +1,3 @@
-import { decodeHtmlEntities } from 'tgui-core/string';
 import {
   Box,
   Button,
@@ -8,6 +7,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

@@ -1,4 +1,3 @@
-import { useBackend } from '../../../backend';
 import {
   Box,
   Button,
@@ -10,6 +9,8 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+
+import { useBackend } from '../../../backend';
 import { FAIcon, LoadoutItem, LoadoutManagerData, ReskinOption } from './base';
 import { ItemIcon } from './ItemDisplay';
 

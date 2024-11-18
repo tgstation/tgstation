@@ -5,12 +5,12 @@ import {
   ProgressBar,
   Section,
   Stack,
+  Table,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Table } from '../components/Table';
 import { getGasColor } from '../constants';
 import { Window } from '../layouts';
 

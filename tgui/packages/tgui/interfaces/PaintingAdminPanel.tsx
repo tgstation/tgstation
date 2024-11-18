@@ -1,6 +1,6 @@
-import { decodeHtmlEntities } from 'tgui-core/string';
 import { useState } from 'react';
 import { Box, Button, LabeledList, Section, Table } from 'tgui-core/components';
+import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';

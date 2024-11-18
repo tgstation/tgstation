@@ -1,5 +1,5 @@
-import { capitalizeFirst } from 'tgui-core/string';
 import { Button, Flex, Icon, Stack } from 'tgui-core/components';
+import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { getDisplayColor, getDisplayName } from './helpers';

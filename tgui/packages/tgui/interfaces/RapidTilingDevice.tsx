@@ -1,7 +1,7 @@
-import { capitalizeAll } from 'tgui-core/string';
 import { useState } from 'react';
 import { Box, Button, Section, Stack, Tabs } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
+import { capitalizeAll } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

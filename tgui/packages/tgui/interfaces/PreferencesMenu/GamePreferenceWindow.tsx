@@ -1,6 +1,6 @@
-import { exhaustiveCheck } from 'tgui-core/exhaustive';
 import { useState } from 'react';
 import { Stack } from 'tgui-core/components';
+import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';

@@ -3,7 +3,6 @@
  * @copyright 2021 bobbahbrown (https://github.com/bobbahbrown)
  * @license MIT
  */
-import { createSearch, decodeHtmlEntities } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Button,
@@ -13,6 +12,7 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
+import { createSearch, decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

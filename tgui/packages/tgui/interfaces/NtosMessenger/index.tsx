@@ -1,5 +1,4 @@
 import { sortBy } from 'common/collections';
-import { createSearch } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Box,
@@ -14,6 +13,7 @@ import {
   TextArea,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { NtosWindow } from '../../layouts';

@@ -1,5 +1,4 @@
 import { sortBy } from 'common/collections';
-import { flow } from 'tgui-core/fp';
 import { Component, createRef, RefObject } from 'react';
 import {
   Box,
@@ -13,6 +12,7 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
+import { flow } from 'tgui-core/fp';
 import { classes, shallowDiffers } from 'tgui-core/react';
 
 import { resolveAsset } from '../assets';

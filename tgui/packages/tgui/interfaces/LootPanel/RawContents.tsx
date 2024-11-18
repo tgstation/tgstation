@@ -1,5 +1,5 @@
-import { createSearch } from 'tgui-core/string';
 import { Flex } from 'tgui-core/components';
+import { createSearch } from 'tgui-core/string';
 
 import { LootBox } from './LootBox';
 import { SearchItem } from './types';
