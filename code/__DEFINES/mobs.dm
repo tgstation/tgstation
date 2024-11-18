@@ -401,6 +401,9 @@
 #define SHOCK_DELAY_STUN (1 << 7)
 /// Makes the paralyze into a knockdown
 #define SHOCK_KNOCKDOWN (1 << 8)
+///Makes it so that the shock doesn't take suits into account.
+#define SHOCK_NOSUIT (1 << 0)
+
 
 #define INCORPOREAL_MOVE_BASIC 1 /// normal movement, see: [/mob/living/var/incorporeal_move]
 #define INCORPOREAL_MOVE_SHADOW 2 /// leaves a trail of shadows
