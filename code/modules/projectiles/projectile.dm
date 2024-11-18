@@ -494,10 +494,12 @@
  * Main projectile hit loop code
  * As long as there are valid targets on the hit target's tile, we will loop through all the ones that we have not hit
  * (and thus invalidated) and try to hit them until either no targets remain or we've been deleted.
+ * Should *never* be called directly, as impact() is the proc queueing projectiles for deletion
+ * If you need to call this directly, you should reconsider the choices that led you to this point
  */
 /obj/projectile/proc/process_hit_loop(atom/target)
 	SHOULD_NOT_SLEEP(TRUE)
-	SHOULD_NOT_OVERRIDE(TRUE)
+	PRIVATE_PROC(TRUE)
 
 	// Don't impact anything if we've been queued for deletion
 	if (deletion_queued)
@@ -752,8 +754,8 @@
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
-		process_hit_loop(direct_target)
-		if(QDELETED(src) || deletion_queued)
+		impact(direct_target)
+		if(QDELETED(src))
 			return
 	var/turf/starting = get_turf(src)
 	if(isnum(fire_angle))
@@ -779,13 +781,14 @@
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
 	if(hitscan)
 		record_hitscan_start()
-		process_hitscan()
+		if (!deletion_queued)
+			process_hitscan()
 		if (QDELETED(src))
 			return
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
 	// move it now to avoid potentially hitting yourself with firer-hitting projectiles
-	if (!hitscan)
+	if (!deletion_queued && !hitscan)
 		process_movement(max(FLOOR(speed, 1), 1), tile_limit = TRUE)
 
 /// Makes projectile home onto the passed target with minor inaccuracy

@@ -285,7 +285,7 @@
 	pellets += pellet
 	pellet.fire()
 	if(landmine_victim)
-		pellet.process_hit_loop(target)
+		pellet.impact(target)
 
 ///All of our pellets are accounted for, time to go target by target and tell them how many things they got hit by.
 /datum/component/pellet_cloud/proc/finalize()
