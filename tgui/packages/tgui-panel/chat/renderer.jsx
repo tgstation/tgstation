@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { EventEmitter } from 'common/events';
 import { createRoot } from 'react-dom/client';
 import { createLogger } from 'tgui/logging';
 import { Tooltip } from 'tgui-core/components';
+import { EventEmitter } from 'tgui-core/events';
 import { classes } from 'tgui-core/react';
 
 import {

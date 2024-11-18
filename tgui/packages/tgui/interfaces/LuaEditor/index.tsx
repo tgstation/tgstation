@@ -20,9 +20,9 @@ import {
   Tabs,
   TextArea,
 } from 'tgui-core/components';
+import { Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Section } from '../../components';
 import { Window } from '../../layouts';
 import { CallModal } from './CallModal';
 import { ChunkViewModal } from './ChunkViewModal';
@@ -311,7 +311,7 @@ export const LuaEditor = () => {
                   <Stack.Item grow>
                     <Section
                       title={<Box height="1rem" width="1rem" />}
-                      ref={sectionRef}
+                      ref={sectionRef} // TODO: Refs with tgui-core
                       fill
                       scrollable
                       scrollableHorizontal
