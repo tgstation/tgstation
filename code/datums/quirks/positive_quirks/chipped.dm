@@ -55,11 +55,13 @@
 	var/mob/living/carbon/quirk_holder_carbon = quirk_holder
 	if(QDELING(source) || brain_removed == quirk_holder_carbon.get_organ_slot(ORGAN_SLOT_BRAIN))
 		quirk_holder.remove_status_effect(itchy_effect)
+		itchy_effect = null
 
 /datum/quirk/chipped/remove()
 	QDEL_NULL(installed_chip)
 	if(itchy_effect)
 		quirk_holder.remove_status_effect(itchy_effect)
+		itchy_effect = null
 	return ..()
 
 /datum/status_effect/itchy_skillchip_quirk
