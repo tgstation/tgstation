@@ -1,0 +1,5 @@
+author: "fevryk"
+delete-after: True
+changes:
+  - rscadd: "Added new weapon carpenter hammer to black market uplink"
+  - rscadd: "Added killsound feature"
