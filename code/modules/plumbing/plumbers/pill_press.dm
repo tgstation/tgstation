@@ -161,8 +161,7 @@
 				if(container_found)
 					break
 				for(var/list/package_item as anything in category["products"])
-					var/printable = package_item["ref"]
-					if(printable == container)
+					if(container == package_item["ref"])
 						container_found = TRUE
 						break
 			if(!container_found)
