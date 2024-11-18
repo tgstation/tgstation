@@ -237,7 +237,7 @@
 		span_notice("You release [src] into [interacting_with]. [goodbye_text]"), \
 		span_notice("You hear a splash."))
 	playsound(interacting_with, 'sound/effects/splash.ogg', 50)
-	SEND_SIGNAL(interacting_with, COMSIG_FISH_RELEASED_INTO, src)
+	SEND_SIGNAL(interacting_with, COMSIG_FISH_RELEASED_INTO, src, user)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -831,9 +831,11 @@
 	if(isaquarium(loc))
 		var/obj/structure/aquarium/aquarium = loc
 		if(!aquarium.reproduction_and_growth)
+			last_feeding = world.time
 			return
 	var/hunger = get_hunger()
 	if(hunger < 0.05) //don't bother growing for very small amounts.
+		last_feeding = world.time
 		return
 	last_feeding = world.time
 	var/new_size = size
@@ -1154,7 +1156,7 @@
 		var/list/available_fishes = list()
 		var/types_to_mate_with = aquarium.tracked_fish_by_type
 		if(!HAS_TRAIT(src, TRAIT_FISH_CROSSBREEDER))
-			var/list/types_to_check = list(src)
+			var/list/types_to_check = list(type)
 			if(compatible_types)
 				types_to_check |= compatible_types
 			types_to_mate_with = types_to_mate_with & types_to_check

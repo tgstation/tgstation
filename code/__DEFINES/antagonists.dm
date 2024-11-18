@@ -89,6 +89,14 @@
 #define PATH_LOCK "Lock Path"
 #define PATH_MOON "Moon Path"
 
+//Heretic knowledge tree defines
+#define HKT_NEXT "next"
+#define HKT_BAN "ban"
+#define HKT_DEPTH "depth"
+#define HKT_ROUTE "route"
+#define HKT_UI_BGR "ui_bgr"
+
+
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
 #define HERETIC_NO_LIVING_HEART 0

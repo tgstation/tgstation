@@ -34,6 +34,13 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
+/proc/ui_perk_position(perk_count)
+	var/y_off = perk_count < 1 ? 0 : perk_count/2
+	return "WEST+0.5:12,NORTH-2-[y_off]:20"
+
+// Middle
+#define around_player "CENTER-1,CENTER-1"
+
 //Lower left, persistent menu
 #define ui_inventory "WEST:6,SOUTH:5"
 

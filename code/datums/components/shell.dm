@@ -376,7 +376,7 @@
 	return COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT
 
 /**
- * Determines if a user is authorized to see the existance of this shell. Returns false if they are not
+ * Determines if a user is authorized to see the existence of this shell. Returns false if they are not
  *
  * Arguments:
  * * user - The user to check if they are authorized
