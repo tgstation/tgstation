@@ -73,7 +73,7 @@
 	. = ..()
 	if(!new_viewer || hud_users_all_z_levels.len != 1)
 		return
-	for(var/mob/camera/ai_eye/eye as anything in GLOB.aiEyes)
+	for(var/mob/eye/ai_eye/eye as anything in GLOB.aiEyes)
 		eye.update_ai_detect_hud()
 
 /datum/atom_hud/data/malf_apc

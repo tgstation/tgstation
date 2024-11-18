@@ -125,6 +125,17 @@
 	stock_max = 1
 	availability_prob = 15
 
+/datum/market_item/misc/fishing_capsule
+	name = "Fishing Spot Capsule"
+	//IUU stands for Illegal Unreported and Unregulated fishing. Ironic.
+	desc = "A repurposed mining capsule connected to a selection of exclusive fishing spots. Approved by the Intergalactic IUU Fishing Association."
+	price_min = CARGO_CRATE_VALUE * 1.125
+	price_max = CARGO_CRATE_VALUE * 2.125
+	item = /obj/item/survivalcapsule/fishing
+	stock_min = 1
+	stock_max = 4
+	availability_prob = 80
+
 /datum/market_item/misc/fish
 	name = "Fish"
 	desc = "Fish! Fresh fish! Fish you can cut, grind and even keep in aquarium if you want to! Get some before the next fight at my village breaks out!"
@@ -134,12 +145,3 @@
 	stock_min = 3
 	stock_max = 8
 	availability_prob = 90
-
-/datum/market_item/misc/giant_wrench_parts
-	name = "Big Slappy parts"
-	desc = "Cheap illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
-	item = /obj/item/weaponcrafting/giant_wrench
-	price_min = CARGO_CRATE_VALUE * 2
-	price_max = CARGO_CRATE_VALUE * 5
-	stock_max = 1
-	availability_prob = 25
