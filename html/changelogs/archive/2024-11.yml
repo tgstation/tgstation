@@ -575,3 +575,23 @@
   zxaber:
   - bugfix: Firelocks opened by a mech will correctly close when the mech moves out
       of range.
+2024-11-17:
+  Fikou:
+  - bugfix: xeno princesses no longer lose their unique identifier
+  JagOfTroy:
+  - bugfix: 'Fixed Automatic Announcement System bug with the Research Node Announcement
+      message not updating properly. It will now properly save and announce whatever
+      input the user desires!
+
+      :cl:'
+  SmArtKar:
+  - rscdel: Removed N-Spect scanner's and scanner gate's ability to scan people for
+      contraband.
+  - bugfix: Fixed cats not begging people for food
+  - bugfix: Fixed a mixup in ripley plate sprites
+  - bugfix: Fixed tethers being able to move immovable objects (and delete gravgens)
+  - bugfix: Fixed a missing arg in fish release code causing runtimes
+  carlarctg:
+  - bugfix: '[no gbp] renmoves bartender skillchip from chipped quirk'
+  timothymtorres:
+  - bugfix: Fix radio jammer screentips

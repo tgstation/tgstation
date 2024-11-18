@@ -1,0 +1,5 @@
+author: "Xackii"
+delete-after: True
+changes:
+  - qol: "heretic living heart now points to the target with an arrow."
+  - bugfix: "pinpointer no longer breaks if scanned target disappears from our reality."
