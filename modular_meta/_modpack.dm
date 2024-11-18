@@ -65,6 +65,7 @@
 			"desc" = modpack.desc,
 			"author" = modpack.author,
 			"icon_class" = assets.icon_class_name("modpack-[modpack.id]"),
+			"id" = modpack.id,
 			)
 
 		if (modpack.group == "Фичи" || modpack.group == "Features")
