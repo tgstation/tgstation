@@ -58,7 +58,7 @@
 	.["translations"] = list()
 	.["reverts"] = list()
 	
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/modpacks)
 	for(var/datum/modpack/modpack as anything in SSmodpacks.loaded_modpacks)
 		var/list/modpack_data = list(
 			"name" = modpack.name,
