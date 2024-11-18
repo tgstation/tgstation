@@ -29,10 +29,6 @@
 	if(!referenced_bodypart)
 		return ..()
 	referenced_bodypart.remove_bodypart_overlay(src)
-	if(referenced_bodypart.owner) //Keep in mind that the bodypart could have been severed from the owner by now
-		referenced_bodypart.owner.update_body_parts()
-	else
-		referenced_bodypart.update_icon_dropped()
 	return ..()
 
 /**
@@ -49,7 +45,6 @@
 	if(!bodypart)
 		return null
 	bodypart.add_bodypart_overlay(overlay)
-	src.update_body_parts()
 	return overlay
 
 /datum/bodypart_overlay/simple/emote/blush

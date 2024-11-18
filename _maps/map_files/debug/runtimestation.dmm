@@ -216,6 +216,10 @@
 /obj/machinery/announcement_system,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
+"bs" = (
+/obj/effect/landmark/carpspawn,
+/turf/open/space/basic,
+/area/space)
 "bu" = (
 /turf/closed/wall/r_wall,
 /area/station/command/bridge)
@@ -443,10 +447,20 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"dd" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
 "de" = (
 /obj/machinery/gulag_teleporter,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"df" = (
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "dh" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/entry)
@@ -2278,6 +2292,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"Pe" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/station/construction)
 "Pk" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2361,6 +2379,9 @@
 /area/station/cargo/bitrunning/den)
 "Rb" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	id = "light_control"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "Re" = (
@@ -2373,6 +2394,12 @@
 /obj/machinery/byteforge,
 /turf/open/floor/circuit/green,
 /area/station/cargo/bitrunning/den)
+"Rq" = (
+/obj/machinery/piratepad/civilian{
+	cooldown_reduction = 99999
+	},
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "Ru" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -2483,6 +2510,13 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
+"TY" = (
+/obj/machinery/button/door/directional/south{
+	id = "light_control";
+	name = "Light Control"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/aft)
 "Ue" = (
 /turf/closed/wall/r_wall,
 /area/station/cargo/bitrunning/den)
@@ -2592,13 +2626,13 @@
 /area/station/hallway/primary/central)
 "XN" = (
 /obj/structure/table,
-/obj/item/organ/internal/cyberimp/bci{
+/obj/item/organ/cyberimp/bci{
 	pixel_y = 5
 	},
-/obj/item/organ/internal/cyberimp/bci{
+/obj/item/organ/cyberimp/bci{
 	pixel_y = 5
 	},
-/obj/item/organ/internal/cyberimp/bci{
+/obj/item/organ/cyberimp/bci{
 	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
@@ -6512,7 +6546,7 @@ dn
 dn
 dn
 dn
-dn
+Pe
 dn
 dn
 dn
@@ -6704,7 +6738,7 @@ dn
 dn
 dL
 cN
-Tt
+dd
 bL
 fg
 aa
@@ -6985,7 +7019,7 @@ Rb
 fg
 aa
 aa
-aa
+bs
 aa
 aa
 aa
@@ -7256,7 +7290,7 @@ dl
 dp
 dE
 cS
-Tt
+TY
 bL
 aa
 aa
@@ -8531,8 +8565,8 @@ XA
 vB
 es
 by
-eu
-eu
+df
+Rq
 qx
 eP
 fY

@@ -17,6 +17,7 @@
 	var/mouse_control_probability = 20
 	/// Allowed time between movements
 	COOLDOWN_DECLARE(move_cooldown)
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /// Admin variant of the chef hat where every mouse pilot input will always be transferred to the wearer
 /obj/item/clothing/head/utility/chefhat/i_am_assuming_direct_control
@@ -103,6 +104,7 @@
 	armor_type = /datum/armor/hats_caphat
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/captain
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 //Captain: This is no longer space-worthy
 /datum/armor/hats_caphat
@@ -120,6 +122,7 @@
 	desc = "Worn only by Captains with an abundance of class."
 	icon_state = "capcap"
 	dog_fashion = null
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/caphat/beret
 	name = "captain's beret"
@@ -128,6 +131,7 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#0070B7#FFCE5B"
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 //Head of Personnel
 /obj/item/clothing/head/hats/hopcap
@@ -136,6 +140,7 @@
 	desc = "The symbol of true bureaucratic micromanagement."
 	armor_type = /datum/armor/hats_hopcap
 	dog_fashion = /datum/dog_fashion/head/hop
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 //Chaplain
 /datum/armor/hats_hopcap
@@ -181,6 +186,7 @@
 	var/flask_path = /obj/item/reagent_containers/cup/glass/flask/det
 	/// Cooldown for retrieving precious candy corn with rmb
 	COOLDOWN_DECLARE(candy_cooldown)
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 
 /datum/armor/fedora_det_hat
@@ -254,6 +260,7 @@
 	var/max_items = 4
 	///items above this weight cannot be put in the hat
 	var/max_weight = WEIGHT_CLASS_NORMAL
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/fedora/inspector_hat/Initialize(mapload)
 	. = ..()
@@ -392,6 +399,7 @@
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 //Security
 /obj/item/clothing/head/hats/hos
@@ -399,6 +407,7 @@
 	desc = "Please contact the Nanotrasen Costuming Department if found."
 	armor_type = /datum/armor/hats_hos
 	strip_delay = 8 SECONDS
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/hats/hos/cap
 	name = "head of security cap"
@@ -464,6 +473,7 @@
 	armor_type = /datum/armor/hats_warden
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /datum/armor/hats_warden
 	melee = 40
@@ -616,6 +626,7 @@
 	name = "chief medical officer beret"
 	desc = "A beret in a distinct surgical turquoise!"
 	greyscale_colors = "#5EB8B8"
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/utility/surgerycap
 	name = "blue surgery cap"
@@ -626,7 +637,7 @@
 
 /obj/item/clothing/head/utility/surgerycap/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2) //FISH DOCTOR?!
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/head/utility/surgerycap/attack_self(mob/user)
 	. = ..()
@@ -672,7 +683,7 @@
 
 /obj/item/clothing/head/utility/head_mirror/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2) //FISH DOCTOR?!
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/head/utility/head_mirror/examine(mob/user)
 	. = ..()
@@ -707,7 +718,7 @@
 	if(human_examined.is_mouth_covered())
 		final_message += "\tYou can't see [examining.p_their()] mouth."
 	else
-		var/obj/item/organ/internal/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
+		var/obj/item/organ/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
 		var/pill_count = 0
 		for(var/datum/action/item_action/activate_pill/pill in human_examined.actions)
 			pill_count++
@@ -724,7 +735,7 @@
 	if(human_examined.is_ears_covered())
 		final_message += "\tYou can't see [examining.p_their()] ears."
 	else
-		var/obj/item/organ/internal/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
 		if(has_ears)
 			if(has_ears.deaf)
 				final_message += "\tDamaged eardrums in [examining.p_their()] ear canals."
@@ -736,7 +747,7 @@
 	if(human_examined.is_eyes_covered())
 		final_message += "\tYou can't see [examining.p_their()] eyes."
 	else
-		var/obj/item/organ/internal/eyes/has_eyes = human_examined.get_organ_slot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/eyes/has_eyes = human_examined.get_organ_slot(ORGAN_SLOT_EYES)
 		if(has_eyes)
 			final_message += "\tA pair of [has_eyes.damage ? "" : "healthy "][has_eyes.name]."
 		else

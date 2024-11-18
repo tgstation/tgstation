@@ -28,8 +28,6 @@
 	inv2 = new /atom/movable/screen/robot/module2()
 	inv3 = new /atom/movable/screen/robot/module3()
 
-	ident = rand(1, 999)
-
 	previous_health = health
 
 	if(ispath(cell))
@@ -66,7 +64,7 @@
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
 			mmi = new (src)
-			mmi.brain = new /obj/item/organ/internal/brain(mmi)
+			mmi.brain = new /obj/item/organ/brain(mmi)
 			mmi.brain.organ_flags |= ORGAN_FROZEN
 			mmi.brain.name = "[real_name]'s brain"
 			mmi.name = "[initial(mmi.name)]: [real_name]"
@@ -184,6 +182,9 @@
 
 	model.transform_to(model_list[input_model])
 
+/mob/living/silicon/robot/set_name() //we have our name-making proc to call after we make our mmi, just set identifier here
+	if(identifier == 0)
+		identifier = rand(1, 999)
 
 /// Used to setup the a basic and (somewhat) unique name for the robot.
 /mob/living/silicon/robot/proc/setup_default_name()
@@ -219,7 +220,7 @@
 
 
 /mob/living/silicon/robot/proc/get_standard_name()
-	return "[(designation ? "[designation] " : "")][mmi.braintype]-[ident]"
+	return "[(designation ? "[designation] " : "")][mmi.braintype]-[identifier]"
 
 /mob/living/silicon/robot/proc/ionpulse()
 	if(!ionpulse_on)
@@ -342,9 +343,12 @@
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer || QDELING(src))
 		return ..()
-	cut_overlay(eye_lights)
-	SET_PLANE_EXPLICIT(eye_lights, PLANE_TO_TRUE(eye_lights.plane), src)
-	add_overlay(eye_lights)
+
+	if(eye_lights)
+		cut_overlay(eye_lights)
+		SET_PLANE_EXPLICIT(eye_lights, PLANE_TO_TRUE(eye_lights.plane), src)
+		add_overlay(eye_lights)
+
 	return ..()
 
 /mob/living/silicon/robot/proc/self_destruct(mob/usr)
@@ -839,7 +843,7 @@
 
 	shell = TRUE
 	braintype = "AI Shell"
-	name = "Empty AI Shell-[ident]"
+	name = "Empty AI Shell-[identifier]"
 	real_name = name
 	GLOB.available_ai_shells |= src
 	if(!QDELETED(builtInCamera))
@@ -858,7 +862,7 @@
 		qdel(boris)
 	shell = FALSE
 	GLOB.available_ai_shells -= src
-	name = "Unformatted Cyborg-[ident]"
+	name = "Unformatted Cyborg-[identifier]"
 	real_name = name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
@@ -871,7 +875,7 @@
  * * AI - AI unit that initiated the deployment into the AI shell
  */
 /mob/living/silicon/robot/proc/deploy_init(mob/living/silicon/ai/AI)
-	real_name = "[AI.real_name] [designation] Shell-[ident]"
+	real_name = "[AI.real_name] [designation] Shell-[identifier]"
 	name = real_name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name //update the camera name too

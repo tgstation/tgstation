@@ -8,7 +8,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 	/// How many times you can use the autosurgeon before it becomes useless
-	var/uses = INFINITE
+	var/uses = INFINITY
 	/// What organ will the autosurgeon sub-type will start with. ie, CMO autosurgeon start with a medi-hud.
 	var/starting_organ
 	/// The organ currently loaded in the autosurgeon, ready to be implanted.
@@ -40,7 +40,7 @@
 			to_chat(user, span_alert("[src] already has an implant stored."))
 			return
 
-		if(uses == 0)
+		if(uses <= 0)
 			to_chat(user, span_alert("[src] is used up and cannot be loaded with more implants."))
 			return
 
@@ -69,7 +69,7 @@
 		to_chat(user, span_alert("[src] currently has no implant stored."))
 		return
 
-	if(!uses)
+	if(uses <= 0)
 		to_chat(user, span_alert("[src] has already been used. The tools are dull and won't reactivate."))
 		return
 
@@ -96,9 +96,8 @@
 	playsound(target.loc, 'sound/items/weapons/circsawhit.ogg', 50, vary = TRUE)
 	update_appearance()
 
-	if(uses)
-		uses--
-	if(uses == 0)
+	uses--
+	if(uses <= 0)
 		desc = "[initial(desc)] Looks like it's been used up."
 
 /obj/item/autosurgeon/attack_self(mob/user)//when the object it used...
@@ -129,9 +128,8 @@
 			stored_organ = null
 
 		screwtool.play_tool_sound(src)
-		if (uses)
-			uses--
-		if(!uses)
+		uses--
+		if(uses <= 0)
 			desc = "[initial(desc)] Looks like it's been used up."
 		update_appearance(UPDATE_ICON)
 	return TRUE
@@ -140,7 +138,7 @@
 	name = "autosurgeon"
 	desc = "A single use autosurgeon that contains a medical heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
-	starting_organ = /obj/item/organ/internal/cyberimp/eyes/hud/medical
+	starting_organ = /obj/item/organ/cyberimp/eyes/hud/medical
 
 
 /obj/item/autosurgeon/syndicate
@@ -156,28 +154,28 @@
 /obj/item/autosurgeon/syndicate/laser_arm
 	desc = "A single use autosurgeon that contains a combat arms-up laser augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/gun/laser
+	starting_organ = /obj/item/organ/cyberimp/arm/gun/laser
 
 /obj/item/autosurgeon/syndicate/thermal_eyes
-	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals
+	starting_organ = /obj/item/organ/eyes/robotic/thermals
 
 /obj/item/autosurgeon/syndicate/thermal_eyes/single_use
 	uses = 1
 
 /obj/item/autosurgeon/syndicate/xray_eyes
-	starting_organ = /obj/item/organ/internal/eyes/robotic/xray
+	starting_organ = /obj/item/organ/eyes/robotic/xray
 
 /obj/item/autosurgeon/syndicate/xray_eyes/single_use
 	uses = 1
 
 /obj/item/autosurgeon/syndicate/anti_stun
-	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_stun
+	starting_organ = /obj/item/organ/cyberimp/brain/anti_stun
 
 /obj/item/autosurgeon/syndicate/anti_stun/single_use
 	uses = 1
 
 /obj/item/autosurgeon/syndicate/reviver
-	starting_organ = /obj/item/organ/internal/cyberimp/chest/reviver
+	starting_organ = /obj/item/organ/cyberimp/chest/reviver
 
 /obj/item/autosurgeon/syndicate/reviver/single_use
 	uses = 1
@@ -185,14 +183,14 @@
 /obj/item/autosurgeon/syndicate/commsagent
 	desc = "A device that automatically - painfully - inserts an implant. It seems someone's specially \
 	modified this one to only insert... tongues. Horrifying."
-	starting_organ = /obj/item/organ/internal/tongue
+	starting_organ = /obj/item/organ/tongue
 
 /obj/item/autosurgeon/syndicate/commsagent/Initialize(mapload)
 	. = ..()
-	organ_whitelist += /obj/item/organ/internal/tongue
+	organ_whitelist += /obj/item/organ/tongue
 
 /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/surgery/emagged
+	starting_organ = /obj/item/organ/cyberimp/arm/surgery/emagged
 
 /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset/single_use
 	uses = 1
@@ -200,4 +198,4 @@
 /obj/item/autosurgeon/syndicate/contraband_sechud
 	desc = "Contains a contraband SecHUD implant, undetectable by health scanners."
 	uses = 1
-	starting_organ = /obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate
+	starting_organ = /obj/item/organ/cyberimp/eyes/hud/security/syndicate

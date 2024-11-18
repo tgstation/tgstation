@@ -252,7 +252,7 @@
 		printpicture(user, picture)
 
 	if(!silent)
-		playsound(loc, pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg'), 75, TRUE, -3)
+		playsound(loc, SFX_POLAROID, 75, TRUE, -3)
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
 	pictures_left--

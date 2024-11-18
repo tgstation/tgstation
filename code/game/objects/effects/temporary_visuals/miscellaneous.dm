@@ -299,14 +299,6 @@
 /obj/effect/temp_visual/gib_animation/animal
 	icon = 'icons/mob/simple/animal.dmi'
 
-/obj/effect/temp_visual/dust_animation
-	icon = 'icons/mob/simple/mob.dmi'
-	duration = 15
-
-/obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
-	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
-	. = ..()
-
 /obj/effect/temp_visual/mummy_animation
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "mummy_revive"
@@ -402,7 +394,12 @@
 	duration = 6
 
 /obj/effect/temp_visual/impact_effect/neurotoxin
-	icon_state = "impact_neurotoxin"
+	icon_state = "impact_spit"
+	color = "#5BDD04"
+
+/obj/effect/temp_visual/impact_effect/ink_spit
+	icon_state = "impact_spit"
+	color = COLOR_NEARLY_ALL_BLACK
 
 /obj/effect/temp_visual/heart
 	name = "heart"

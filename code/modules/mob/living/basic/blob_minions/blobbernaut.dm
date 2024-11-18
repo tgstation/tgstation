@@ -92,7 +92,7 @@
 	to_chat(src, span_infoplain("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]"))
 
 /// Set our attack damage based on blob's properties
-/mob/living/basic/blob_minion/blobbernaut/minion/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
+/mob/living/basic/blob_minion/blobbernaut/minion/on_strain_updated(mob/eye/blob/overmind, datum/blobstrain/new_strain)
 	if (isnull(overmind))
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)

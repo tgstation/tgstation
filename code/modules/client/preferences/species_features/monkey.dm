@@ -2,7 +2,7 @@
 	savefile_key = "feature_monkey_tail"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_external_organ = /obj/item/organ/external/tail/monkey
+	relevant_external_organ = /obj/item/organ/tail/monkey
 	can_randomize = FALSE
 
 /datum/preference/choiced/monkey_tail/init_possible_values()

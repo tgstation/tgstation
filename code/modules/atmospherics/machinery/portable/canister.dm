@@ -599,14 +599,14 @@
 				pressure = CAN_MAX_RELEASE_PRESSURE
 				. = TRUE
 			else if(pressure == "input")
-				pressure = tgui_input_number(usr, "New release pressure", "Canister Pressure", release_pressure, CAN_MAX_RELEASE_PRESSURE, CAN_MIN_RELEASE_PRESSURE)
+				pressure = tgui_input_number(usr, message = "New release pressure", title = "Canister Pressure", default = release_pressure, max_value = CAN_MAX_RELEASE_PRESSURE, min_value = CAN_MIN_RELEASE_PRESSURE, round_value = FALSE)
 				if(!isnull(pressure))
 					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				release_pressure = clamp(round(pressure), CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
+				release_pressure = clamp(pressure, CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 
 		if("valve")

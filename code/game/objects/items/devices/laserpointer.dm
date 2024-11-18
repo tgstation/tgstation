@@ -66,7 +66,7 @@
 /obj/item/laser_pointer/infinite_range
 	name = "infinite laser pointer"
 	desc = "Used to shine in the eyes of Cyborgs who need a bit of a push, this works through camera consoles."
-	max_range = INFINITE
+	max_range = INFINITY
 
 /obj/item/laser_pointer/infinite_range/Initialize(mapload)
 	. = ..()
@@ -203,7 +203,7 @@
 		to_chat(user, span_warning("Your fingers can't press the button!"))
 		return
 
-	if(max_range != INFINITE)
+	if(max_range != INFINITY)
 		if(!IN_GIVEN_RANGE(target, user, max_range))
 			to_chat(user, span_warning("\The [target] is too far away!"))
 			return

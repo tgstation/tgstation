@@ -7,7 +7,7 @@
 	density = TRUE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 	interaction_flags_mouse_drop = NEED_DEXTERITY
-	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/internal/brain)
+	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
 	circuit = /obj/item/circuitboard/machine/dnascanner
 
 	var/locked = FALSE

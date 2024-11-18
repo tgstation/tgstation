@@ -241,7 +241,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	contraband = list(
 		/obj/item/clothing/under/costume/mech_suit = 2,
 		/obj/item/clothing/suit/hooded/techpriest = 2,
-		/obj/item/organ/internal/tongue/robot = 2,
+		/obj/item/organ/tongue/robot = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
 	extra_price = PAYCHECK_COMMAND * 1.2
@@ -523,7 +523,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/shoes/laceup = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/storage/box/evidence = 2,
-		/obj/item/fish_feed = 1,
+		/obj/item/reagent_containers/cup/fish_feed = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 	payment_department = ACCOUNT_SRV

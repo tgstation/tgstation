@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "tools from the drone toolbox cannot be forcefully removed in certain situations e.g. when using the drone gas analyser to upgrade the camera assembly"

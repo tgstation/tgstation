@@ -259,7 +259,7 @@
 	name = "Can of Fish Food Single-Pack"
 	desc = "For keeping your little friends fed and alive."
 	cost = PAYCHECK_CREW
-	contains = list(/obj/item/fish_feed)
+	contains = list(/obj/item/reagent_containers/cup/fish_feed)
 
 /datum/supply_pack/goody/naturalbait
 	name = "Freshness Jars full of Natural Bait Single-Pack"

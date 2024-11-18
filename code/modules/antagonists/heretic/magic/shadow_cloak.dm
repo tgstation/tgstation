@@ -126,7 +126,7 @@
 /datum/status_effect/shadow_cloak
 	id = "shadow_cloak"
 	alert_type = null
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	/// How much damage we've been hit with
 	var/damage_sustained = 0
 	/// How much damage we can be hit with before it starts rolling reveal chances
