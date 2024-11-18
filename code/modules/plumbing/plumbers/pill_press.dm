@@ -151,30 +151,28 @@
 			return TRUE
 
 		if("change_product")
-			var/obj/item/reagent_containers/container = locate(params["ref"])
+			var/container = params["ref"]
+			if(!container)
+				return FALSE
 
 			//is a valid option
-			var/static/list/types = list(
-				CAT_PILLS = GLOB.reagent_containers[CAT_PILLS],
-				CAT_PATCHES = GLOB.reagent_containers[CAT_PATCHES],
-				"Bottles" = list(/obj/item/reagent_containers/cup/bottle),
-			)
 			var/container_found = FALSE
-			for(var/category in types)
+			for(var/list/category as anything in packaging_types)
 				if(container_found)
 					break
-				for(var/obj/item/reagent_containers/printable as anything in types[category])
+				for(var/list/package_item as anything in category["products"])
+					var/printable = package_item["ref"]
 					if(printable == container)
 						container_found = TRUE
 						break
 			if(!container_found)
-				return null
-			packaging_type = container
+				return FALSE
 
-			//decode category
-			if(ispath(container, /obj/item/reagent_containers/pill/patch))
+			//decode container & its category
+			packaging_type = locate(container)
+			if(ispath(packaging_type, /obj/item/reagent_containers/pill/patch))
 				packaging_category = CAT_PATCHES
-			else if(ispath(container, /obj/item/reagent_containers/pill))
+			else if(ispath(packaging_type, /obj/item/reagent_containers/pill))
 				packaging_category = CAT_PILLS
 			else
 				packaging_category = "Bottles"
