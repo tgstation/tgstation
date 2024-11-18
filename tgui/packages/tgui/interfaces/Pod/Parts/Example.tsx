@@ -1,5 +1,5 @@
-import { useBackend } from '../../../backend';
-import { Box } from '../../../components';
+import { useBackend } from 'tgui/backend';
+import { Box } from 'tgui-core/components';
 type Data = {
   funnydata: string;
   ref: string;

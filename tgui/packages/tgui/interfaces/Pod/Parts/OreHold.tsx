@@ -1,5 +1,5 @@
-import { useBackend } from '../../../backend';
-import { Button, LabeledList, NoticeBox, Section } from '../../../components';
+import { useBackend } from 'tgui/backend';
+import { Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 
 type Ore = {
   name: string;

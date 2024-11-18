@@ -1,7 +1,6 @@
 import { classes } from 'common/react';
-
-import { useBackend } from '../../../backend';
-import { Box, Button, Stack } from '../../../components';
+import { useBackend } from 'tgui/backend';
+import { Box, Button, Stack } from 'tgui-core/components';
 type Data = {
   entered_pin: string;
   lockstate: string;

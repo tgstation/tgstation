@@ -1,5 +1,5 @@
-import { useBackend } from '../../../backend';
-import { Box, Button, NoticeBox, Section } from '../../../components';
+import { useBackend } from 'tgui/backend';
+import { Box, Button, NoticeBox, Section } from 'tgui-core/components';
 type Data = {
   storedName: string;
   ref: string;

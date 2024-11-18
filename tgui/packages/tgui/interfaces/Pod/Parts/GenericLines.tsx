@@ -1,4 +1,4 @@
-import { LabeledList } from '../../../components';
+import { LabeledList } from 'tgui-core/components';
 type Data = {
   lines: string[];
   ref: string;

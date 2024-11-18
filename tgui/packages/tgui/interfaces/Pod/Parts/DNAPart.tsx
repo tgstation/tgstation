@@ -1,5 +1,5 @@
-import { useBackend } from '../../../backend';
-import { Box, Button, Icon, Stack } from '../../../components';
+import { useBackend } from 'tgui/backend';
+import { Box, Button, Icon, Stack } from 'tgui-core/components';
 type Data = {
   dnaSet: string;
   ref: string;
