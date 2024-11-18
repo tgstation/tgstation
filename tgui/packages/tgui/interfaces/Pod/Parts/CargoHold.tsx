@@ -1,17 +1,17 @@
 import { useBackend } from 'tgui/backend';
 import { Box, Button, NoticeBox, Section } from 'tgui-core/components';
-type Data = {
+type Props = {
   storedName: string;
   ref: string;
 };
 
-export default function CargoHold(props: { ourData: Data }): JSX.Element {
+export default function CargoHold(props: { ourProps: Props }): JSX.Element {
   const { act } = useBackend();
-  const { ourData } = props;
+  const { ourProps } = props;
   return (
     <Box>
       <Section title="Loaded">
-        {!ourData.storedName ? (
+        {!ourProps.storedName ? (
           <NoticeBox info>
             Nothing loaded. Drag something onto the pod.
           </NoticeBox>
@@ -22,14 +22,14 @@ export default function CargoHold(props: { ourData: Data }): JSX.Element {
             icon="eject"
             onClick={() =>
               act('eject', {
-                partRef: ourData.ref,
+                partRef: ourProps.ref,
               })
             }
             style={{
               textTransform: 'capitalize',
             }}
           >
-            {ourData.storedName}
+            {ourProps.storedName}
           </Button>
         )}
       </Section>

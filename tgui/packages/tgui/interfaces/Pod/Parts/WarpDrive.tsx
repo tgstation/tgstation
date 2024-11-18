@@ -4,7 +4,7 @@ import { Box, Button, Dropdown, Stack } from 'tgui-core/components';
 
 import { DropdownEntry } from '../../../components/Dropdown';
 
-type Data = {
+type Props = {
   mayWarp: BooleanLike;
   warpPercentage: number;
   beacons: DropdownEntry[];
@@ -12,9 +12,9 @@ type Data = {
   ref: string;
 };
 
-export default function WarpDrive(props: { ourData: Data }): JSX.Element {
+export default function WarpDrive(props: { ourProps: Props }): JSX.Element {
   const { act } = useBackend();
-  const { ourData } = props;
+  const { ourProps } = props;
   return (
     <Stack>
       <Stack.Item width="60%">
@@ -22,11 +22,11 @@ export default function WarpDrive(props: { ourData: Data }): JSX.Element {
           <Stack.Item>
             <Dropdown
               width="100%"
-              options={ourData.beacons}
-              selected={ourData.selectedBeacon}
+              options={ourProps.beacons}
+              selected={ourProps.selectedBeacon}
               onSelected={(value) =>
                 act('set_warp_target', {
-                  partRef: ourData.ref,
+                  partRef: ourProps.ref,
                   target: value,
                 })
               }
@@ -34,13 +34,13 @@ export default function WarpDrive(props: { ourData: Data }): JSX.Element {
           </Stack.Item>
           <Stack.Divider />
           <Stack.Item>
-            <Box color={ourData.mayWarp ? 'green' : 'red'}>
-              {ourData.mayWarp
+            <Box color={ourProps.mayWarp ? 'green' : 'red'}>
+              {ourProps.mayWarp
                 ? 'You may warp and it will consume ' +
-                  ourData.warpPercentage +
+                  ourProps.warpPercentage +
                   '% charge.'
                 : 'Cant warp right now. Select a beacon and make sure you are not moving and have atleast ' +
-                  ourData.warpPercentage +
+                  ourProps.warpPercentage +
                   '% charge.'}
             </Box>
           </Stack.Item>
@@ -52,9 +52,9 @@ export default function WarpDrive(props: { ourData: Data }): JSX.Element {
           circular
           height={8}
           width={8}
-          onClick={() => act('warp', { partRef: ourData.ref })}
-          disabled={!ourData.mayWarp}
-          color={ourData.mayWarp ? 'red' : 'grey'}
+          onClick={() => act('warp', { partRef: ourProps.ref })}
+          disabled={!ourProps.mayWarp}
+          color={ourProps.mayWarp ? 'red' : 'grey'}
         >
           <Box fontSize="24px" mt={6} ml={1}>
             WARP

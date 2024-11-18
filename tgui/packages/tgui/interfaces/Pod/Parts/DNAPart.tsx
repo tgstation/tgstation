@@ -1,13 +1,13 @@
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, Stack } from 'tgui-core/components';
-type Data = {
+type Props = {
   dnaSet: string;
   ref: string;
 };
 
-export default function DNAPart(props: { ourData: Data }): JSX.Element {
+export default function DNAPart(props: { ourProps: Props }): JSX.Element {
   const { act } = useBackend();
-  const { ourData } = props;
+  const { ourProps } = props;
   return (
     <Stack vertical>
       <Stack.Item>
@@ -17,7 +17,7 @@ export default function DNAPart(props: { ourData: Data }): JSX.Element {
           mb={1}
           className="NuclearBomb__displayBox"
         >
-          {ourData.dnaSet}
+          {ourProps.dnaSet}
         </Box>
       </Stack.Item>
       <Stack.Item>
@@ -25,7 +25,7 @@ export default function DNAPart(props: { ourData: Data }): JSX.Element {
           ml="25%"
           height="48px"
           width="128px"
-          onClick={() => act('setprint', { partRef: ourData.ref })}
+          onClick={() => act('setprint', { partRef: ourProps.ref })}
         >
           <Icon name="fingerprint" size={3} mt="0.5rem" ml="2.8rem" />
         </Button>

@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Stack } from 'tgui-core/components';
-type Data = {
+type Props = {
   entered_pin: string;
   lockstate: string;
   ref: string;
@@ -13,9 +13,9 @@ const KEYPAD = [
   ['3', '6', '9', 'E'],
 ] as const;
 
-export default function PINPart(props: { ourData: Data }): JSX.Element {
+export default function PINPart(props: { ourProps: Props }): JSX.Element {
   const { act } = useBackend();
-  const { ourData } = props;
+  const { ourProps } = props;
   return (
     <Box>
       <Stack>
@@ -39,7 +39,7 @@ export default function PINPart(props: { ourData: Data }): JSX.Element {
                       key !== '1' && 'NuclearBomb__Button--' + key,
                     ])}
                     onClick={() =>
-                      act('keypad', { partRef: ourData.ref, digit: key })
+                      act('keypad', { partRef: ourProps.ref, digit: key })
                     }
                   >
                     {key}
@@ -52,7 +52,7 @@ export default function PINPart(props: { ourData: Data }): JSX.Element {
         <Stack.Divider />
         <Stack.Item>
           <Box textAlign="center" mb={1} className="NuclearBomb__displayBox">
-            {ourData.entered_pin}
+            {ourProps.entered_pin}
           </Box>
           <Box
             mb={1}
@@ -61,7 +61,7 @@ export default function PINPart(props: { ourData: Data }): JSX.Element {
             textAlign="center"
             className="NuclearBomb__displayBox"
           >
-            {ourData.lockstate}
+            {ourProps.lockstate}
           </Box>
           <Box fontSize="10px">
             If not set, enter one to set it. If set, enter again to remove PIN.

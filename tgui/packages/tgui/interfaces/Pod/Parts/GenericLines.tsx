@@ -1,15 +1,15 @@
 import { LabeledList } from 'tgui-core/components';
-type Data = {
+type Props = {
   lines: string[];
   ref: string;
 };
-export default function GenericLines(props: { ourData: Data }): JSX.Element {
-  const { ourData } = props;
+export default function GenericLines(props: { ourProps: Props }): JSX.Element {
+  const { ourProps } = props;
   return (
     <LabeledList>
-      {Object.keys(ourData.lines).map((value, index) => (
+      {Object.keys(ourProps.lines).map((value, index) => (
         <LabeledList.Item key={value} label={value}>
-          {ourData.lines[value]}
+          {ourProps.lines[value]}
         </LabeledList.Item>
       ))}
     </LabeledList>
