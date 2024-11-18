@@ -31,6 +31,7 @@ type Modpack = {
   desc: string;
   author: string;
   icon_class: string;
+  id: string;
 };
 
 export const Modpacks = (props) => {
@@ -135,7 +136,7 @@ const FeaturesTable = () => {
                   <Collapsible
                     color="transparent"
                     key={feature.name}
-                    title={<span class="color-white">{feature.name}</span>}
+                    title={<span className="color-white">{feature.name}</span>}
                   >
                     <Table.Row key={feature.name}>
                       <Table.Cell collapsing>
@@ -227,7 +228,7 @@ const TranslationsTable = () => {
                   <Collapsible
                     color="transparent"
                     key={translate.name}
-                    title={<span class="color-white">{translate.name}</span>}
+                    title={<span className="color-white">{translate.name}</span>}
                   >
                     <Table.Row key={translate.name}>
                       <Table.Cell collapsing>
@@ -319,7 +320,7 @@ const RevertsTable = () => {
                   <Collapsible
                     color="transparent"
                     key={revert.name}
-                    title={<span class="color-white">{revert.name}</span>}
+                    title={<span className="color-white">{revert.name}</span>}
                   >
                     <Table.Row key={revert.name}>
                       <Table.Cell collapsing>
