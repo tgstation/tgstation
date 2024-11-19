@@ -148,7 +148,7 @@
 				owner.visible_message(span_warning("[owner] extends a proboscis!"), span_notice("We extend a proboscis."))
 			if(3)
 				absorbing_loop = new(src, start_immediately = TRUE)
-				absorbing_loop.start
+				absorbing_loop.start()
 				owner.visible_message(span_danger("[owner] stabs [target] with the proboscis!"), span_notice("We stab [target] with the proboscis."))
 				to_chat(target, span_userdanger("You feel a sharp stabbing pain!"))
 				target.take_overall_damage(40)
