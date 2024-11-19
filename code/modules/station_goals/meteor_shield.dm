@@ -111,7 +111,7 @@
 
 /obj/machinery/satellite/meteor_shield/toggle(user)
 	if(user)
-		src.balloon_alert(user, "you're looking for the [active ? "off" : "on"] button on the [src]")
+		balloon_alert(user, "looking for [active ? "off" : "on"] button")
 	if(user && !do_after(user, 2 SECONDS, src, IGNORE_HELD_ITEM))
 		return FALSE;
 	if(!..(user))
