@@ -47,7 +47,7 @@
 	return BRUTELOSS
 
 /obj/item/healthanalyzer/attack_self(mob/user)
-	if(!user.can_read(src) || user.is_blind())
+	if(!user.can_read(src)) //DOPPLER EDIT: Blind People Can Analyze Again
 		return
 
 	scanmode = (scanmode + 1) % SCANMODE_COUNT
@@ -80,7 +80,7 @@
 		floor_text += "<span class='alert ml-1'>Subject lacks a brain.</span><br>"
 		floor_text += "<span class='info ml-1'>Body temperature: [scan_turf?.return_air()?.return_temperature() || "???"]</span><br>"
 
-		if(user.can_read(src) && !user.is_blind())
+		if(!user.can_read(src)) //DOPPLER EDIT: Blind People Can Analyze Again
 			to_chat(user, examine_block(floor_text))
 		last_scan_text = floor_text
 		return
@@ -93,7 +93,7 @@
 	balloon_alert(user, "analyzing vitals")
 	playsound(user.loc, 'sound/items/healthanalyzer.ogg', 50)
 
-	var/readability_check = user.can_read(src) && !user.is_blind()
+	var/readability_check = user.can_read(src) //DOPPLER EDIT - Blind People Can Analyze Again
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
 			last_scan_text = healthscan(user, M, mode, advanced, tochat = readability_check)
@@ -106,7 +106,7 @@
 /obj/item/healthanalyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
-	if(user.can_read(src) && !user.is_blind())
+	if(user.can_read(src)) //DOPPLER EDIT - Blind People can Analyze Again
 		chemscan(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
 
@@ -626,7 +626,7 @@
 /obj/item/healthanalyzer/simple/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
-	if(!user.can_read(src) || user.is_blind())
+	if(!user.can_read(src)) //DOPPLER EDIT - Blind People Can Analyze Again
 		return ITEM_INTERACT_BLOCKING
 
 	add_fingerprint(user)
