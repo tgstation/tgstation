@@ -13,23 +13,24 @@ GLOBAL_LIST_EMPTY(ru_names)
 
 /proc/ru_names_toml(name, prefix, suffix, override_base)
 	. = list()
+	var/formatted_name = format_text(name)
 	if(!length(GLOB.ru_names))
 		var/toml_path = "[PATH_TO_TRANSLATE_DATA]/ru_names.toml"
 		if(!fexists(file(toml_path)))
 			GLOB.ru_names = list("ERROR" = "File not found!")
 			return .
 		GLOB.ru_names = rustg_read_toml_file("[PATH_TO_TRANSLATE_DATA]/ru_names.toml")
-	if(GLOB.ru_names[name])
+	if(GLOB.ru_names[formatted_name])
 		var/base = override_base || "[prefix][name][suffix]"
 		. = ru_names_list(
 			base,
-			"[prefix][GLOB.ru_names[name]["nominative"]][suffix]",
-			"[prefix][GLOB.ru_names[name]["genitive"]][suffix]",
-			"[prefix][GLOB.ru_names[name]["dative"]][suffix]",
-			"[prefix][GLOB.ru_names[name]["accusative"]][suffix]",
-			"[prefix][GLOB.ru_names[name]["instrumental"]][suffix]",
-			"[prefix][GLOB.ru_names[name]["prepositional"]][suffix]",
-			gender = "[GLOB.ru_names[name]["gender"]]",)
+			"[prefix][GLOB.ru_names[formatted_name]["nominative"] || name][suffix]",
+			"[prefix][GLOB.ru_names[formatted_name]["genitive"] || name][suffix]",
+			"[prefix][GLOB.ru_names[formatted_name]["dative"] || name][suffix]",
+			"[prefix][GLOB.ru_names[formatted_name]["accusative"] || name][suffix]",
+			"[prefix][GLOB.ru_names[formatted_name]["instrumental"] || name][suffix]",
+			"[prefix][GLOB.ru_names[formatted_name]["prepositional"] || name][suffix]",
+			gender = "[GLOB.ru_names[formatted_name]["gender"] || null]",)
 
 /atom/Initialize(mapload, ...)
 	. = ..()

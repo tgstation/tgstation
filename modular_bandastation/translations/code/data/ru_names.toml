@@ -929,6 +929,15 @@ instrumental = "лазерным карабином"
 prepositional = "лазерном карабине"
 gender = "male"
 
+["practice laser gun"]
+nominative = "учебный лазерный карабин"
+genitive = "учебного лазерного карабина"
+dative = "учебному лазерному карабину"
+accusative = "учебный лазерный карабин"
+instrumental = "учебным лазерным карабином"
+prepositional = "учебном лазерном карабине"
+gender = "male"
+
 ["laser carbine"]
 nominative = "автоматический лазерный карабин"
 genitive = "автоматического лазерного карабина"
@@ -936,6 +945,15 @@ dative = "автоматическому лазерному карабину"
 accusative = "автоматический лазерный карабин"
 instrumental = "автоматическим лазерным карабином"
 prepositional = "автоматическом лазерном карабине"
+gender = "male"
+
+["practice laser carbine"]
+nominative = "учебный автоматический лазерный карабин"
+genitive = "учебного автоматического лазерного карабина"
+dative = "учебному автоматическому лазерному карабину"
+accusative = "учебный автоматический лазерный карабин"
+instrumental = "учебным автоматическим лазерным карабином"
+prepositional = "учебном автоматическом лазерном карабине"
 gender = "male"
 
 ["miniature energy gun"]
@@ -1062,6 +1080,15 @@ dative = "боевому дробовику"
 accusative = "боевой дробовик"
 instrumental = "боевым дробовиком"
 prepositional = "боевом дробовике"
+gender = "male"
+
+["compact shotgun"]
+nominative = "компактный дробовик"
+genitive = "компактного дробовика"
+dative = "компактному дробовику"
+accusative = "компактный дробовик"
+instrumental = "компактным дробовиком"
+prepositional = "компактном дробовике"
 gender = "male"
 
 ["stun baton"]
@@ -1263,6 +1290,93 @@ accusative = "коробку пончиков"
 instrumental = "коробкой пончиков"
 prepositional = "коробке пончиков"
 gender = "female"
+
+["zipties"]
+["flash"]
+["donut"]
+["evidence bag box"]
+["seclite"]
+["energy bola"]
+["enhanced retrieval gloves"]
+["security holobarrier projector"]
+["security webbing"]
+["antag token"]
+["blue helmet"]
+["security gloves"]
+["large armor vest"]
+["stingbang"]
+["anti-tider-2500 supression backpack"]
+["energy shoulder holsters"]
+["security officer's locker"]
+["armor vest"]
+["security radio headset"]
+["security bowman headset"]
+["security HUDSunglasses"]
+["security belt"]
+["security beret"]
+["security cap"]
+["striped security bandana"]
+["security uniform"]
+["security skirt"]
+["grey security jumpsuit"]
+["slacks"]
+["blue shirt and tie"]
+["security jacket"]
+["security winter jacket"]
+["jackboots"]
+["security backpack"]
+["security satchel"]
+["security duffel bag"]
+["security messenger bag"]
+["security officer's formal uniform"]
+["security officer's jacket"]
+["recharger"]
+["training bomb"]
+["sunglasses"]
+["earmuffs"]
+["box of spare zipties"]
+["box of flashbangs (WARNING)"]
+["security gas mask"]
+
+# Warden
+["warden's garment bag"]
+["krav maga gloves"]
+["warden's jacket"]
+["warden's police hat"]
+["warden's campaign hat"]
+["warden's beret"]
+["warden's armored jacket"]
+["warden's formal uniform"]
+["warden's suitskirt"]
+
+# HoS
+["head of security's locker"]
+["pinpointer"]
+["head of security data disk"]
+["the head of security's headset"]
+["the head of security's bowman headset"]
+["head of security's garment bag"]
+["security medal box"]
+["security megaphone"]
+["lockbox of mindshield implants"]
+["telescopic shield"]
+["photo album (Head of Security)"]
+["head of security cap"]
+["SWAT mask"]
+["head of security's cloak"]
+["armored greatcoat"]
+["Head of Security's parade jacket"]
+["head of security's winter trenchcoat"]
+["security overcoat"]
+["eyepatch HUD"]
+["giga HUD gar glasses"]
+["head of security's beret"]
+["gorilla gloves"]
+["head of security's parade uniform"]
+["head of security's grey jumpsuit"]
+["head of security's turtleneck skirt"]
+["head of security's turtleneck"]
+["head of security's skirt"]
 
 # MARK: Kitchen
 
