@@ -20,9 +20,8 @@
 	LAZYADD(GLOB.religious_sect.active_rites, src)
 
 /datum/religion_rites/Destroy()
-	if(!GLOB?.religious_sect)
-		return
-	LAZYREMOVE(GLOB.religious_sect.active_rites, src)
+	if(GLOB?.religious_sect)
+		LAZYREMOVE(GLOB.religious_sect.active_rites, src)
 	return ..()
 
 /datum/religion_rites/proc/can_afford(mob/living/user)

@@ -12,7 +12,7 @@
 	var/require_model = FALSE
 	var/list/model_type = null
 	/// Bitflags listing model compatibility. Used in the exosuit fabricator for creating sub-categories.
-	var/list/model_flags = NONE
+	var/model_flags = NONE
 
 	/// List of items to add with the module, if any
 	var/list/items_to_add

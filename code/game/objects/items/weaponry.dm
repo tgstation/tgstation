@@ -64,7 +64,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/balloon_mallet/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
-		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
+		. += "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
 
 /obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
 	playsound(loc, 'sound/mobs/non-humanoids/clown/hehe.ogg', 20)
