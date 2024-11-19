@@ -58,13 +58,14 @@
 	.["translations"] = list()
 	.["reverts"] = list()
 	
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/modpacks)
 	for(var/datum/modpack/modpack as anything in SSmodpacks.loaded_modpacks)
 		var/list/modpack_data = list(
 			"name" = modpack.name,
 			"desc" = modpack.desc,
 			"author" = modpack.author,
 			"icon_class" = assets.icon_class_name("modpack-[modpack.id]"),
+			"id" = modpack.id,
 			)
 
 		if (modpack.group == "Фичи" || modpack.group == "Features")
