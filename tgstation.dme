@@ -1227,6 +1227,7 @@
 #include "code\datums\components\shrink.dm"
 #include "code\datums\components\shuttle_cling.dm"
 #include "code\datums\components\shy.dm"
+#include "code\datums\components\shy_in_room.dm"
 #include "code\datums\components\sign_language.dm"
 #include "code\datums\components\simple_access.dm"
 #include "code\datums\components\simple_bodycam.dm"

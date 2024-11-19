@@ -98,6 +98,8 @@
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>\n"+\
 	"<span class='notice'>Prefix your message with :b to speak in Drone Chat.</span>\n"
+	/// blacklisted drone areas, direct
+	var/list/drone_area_blacklist_flat = list(/area/station/engineering/atmos, /area/station/engineering/atmospherics_engine)
 	/// blacklisted drone areas, recursive/includes descendants
 	var/list/drone_area_blacklist_recursive = list(/area/station/engineering/supermatter)
 	/// blacklisted drone machines, direct
@@ -352,6 +354,7 @@
 	shy_update()
 
 /mob/living/basic/drone/proc/shy_update()
+	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
 	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
 
 	var/list/drone_bad_machinery = make_associative(drone_machinery_blacklist_flat) + typecacheof(drone_machinery_blacklist_recursive)
@@ -363,7 +366,8 @@
 		REMOVE_TRAIT(src, TRAIT_CAN_STRIP, DRONE_SHY_TRAIT) // To shy to touch someone elses hat
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		LoadComponent(/datum/component/shy, mob_whitelist=not_shy_of, shy_range=3, message="Your laws prevent this action near %TARGET.", keyless_shy=FALSE, clientless_shy=TRUE, dead_shy=FALSE, dead_shy_immediate=TRUE, machine_whitelist=shy_machine_whitelist)
-		LoadComponent(/datum/component/technoshy, 20 SECONDS, "%TARGET was touched by a being recently, using it could break your laws.")
+		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
+		LoadComponent(/datum/component/technoshy, 1 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
 		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, PROC_REF(blacklist_on_try_use_machine))
 		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, PROC_REF(blacklist_on_try_wires_interact))
@@ -371,6 +375,7 @@
 		ADD_TRAIT(src, TRAIT_CAN_STRIP, DRONE_SHY_TRAIT) // ...I wonder if I can ware pants like a hat
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		qdel(GetComponent(/datum/component/shy))
+		qdel(GetComponent(/datum/component/shy_in_room))
 		qdel(GetComponent(/datum/component/technoshy))
 		qdel(GetComponent(/datum/component/itempicky))
 		UnregisterSignal(src, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
