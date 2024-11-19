@@ -22,7 +22,7 @@
 		return
 	if(activating)
 		balloon_alert(user, "currently [active ? "unsealing" : "sealing"]!")
-		if(TIMER_COOLDOWN_FINISHED(user, type))
+		if(TIMER_COOLDOWN_FINISHED(src, type))
 			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
@@ -50,7 +50,7 @@
 /obj/item/mod/control/proc/quick_deploy(mob/user)
 	if(activating)
 		balloon_alert(user, "currently [active ? "unsealing" : "sealing"]!")
-		if(TIMER_COOLDOWN_FINISHED(user, type))
+		if(TIMER_COOLDOWN_FINISHED(src, type))
 			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
@@ -80,7 +80,7 @@
 /obj/item/mod/control/proc/deploy(mob/user, obj/item/part, instant = FALSE)
 	var/datum/mod_part/part_datum = get_part_datum(part)
 	if(!wearer)
-		if(TIMER_COOLDOWN_FINISHED(user, type))
+		if(TIMER_COOLDOWN_FINISHED(src, type))
 			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE // pAI is trying to deploy it from your hands
@@ -88,7 +88,7 @@
 		if(!user)
 			return FALSE
 		balloon_alert(user, "already deployed!")
-		if(TIMER_COOLDOWN_FINISHED(user, type))
+		if(TIMER_COOLDOWN_FINISHED(src, type))
 			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	if(part_datum.can_overslot)
@@ -123,7 +123,7 @@
 		if(!user)
 			return FALSE
 		balloon_alert(user, "bodypart clothed!")
-		if(TIMER_COOLDOWN_FINISHED(user, type))
+		if(TIMER_COOLDOWN_FINISHED(src, type))
 			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	return FALSE
@@ -135,7 +135,7 @@
 		if(!user)
 			return FALSE
 		balloon_alert(user, "already retracted!")
-		if(TIMER_COOLDOWN_FINISHED(user, type))
+		if(TIMER_COOLDOWN_FINISHED(src, type))
 			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
@@ -144,9 +144,9 @@
 			seal_part(part, is_sealed = FALSE)
 		else if(!delayed_seal_part(part))
 			balloon_alert(user, "can't unseal!")
-			if(TIMER_COOLDOWN_FINISHED(user, type))
-			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+			if(TIMER_COOLDOWN_FINISHED(src, type))
+				TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 	REMOVE_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 	wearer.transferItemToLoc(part, src, force = TRUE)
@@ -169,39 +169,39 @@
 	if(!wearer)
 		if(!force_deactivate)
 			balloon_alert(user, "not equipped!")
-			if(TIMER_COOLDOWN_FINISHED(user, type))
-			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+			if(TIMER_COOLDOWN_FINISHED(src, type))
+				TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(!force_deactivate && (SEND_SIGNAL(src, COMSIG_MOD_ACTIVATE, user) & MOD_CANCEL_ACTIVATE))
-		if(TIMER_COOLDOWN_FINISHED(user, type))
+		if(TIMER_COOLDOWN_FINISHED(src, type))
 			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(locked && !active && !allowed(user) && !force_deactivate)
 		balloon_alert(user, "access insufficient!")
-		if(TIMER_COOLDOWN_FINISHED(user, type))
+		if(TIMER_COOLDOWN_FINISHED(src, type))
 			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(!get_charge() && !force_deactivate)
 		balloon_alert(user, "no power source!")
-		if(TIMER_COOLDOWN_FINISHED(user, type))
+		if(TIMER_COOLDOWN_FINISHED(src, type))
 			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(open && !force_deactivate)
 		balloon_alert(user, "panel open!")
-		if(TIMER_COOLDOWN_FINISHED(user, type))
+		if(TIMER_COOLDOWN_FINISHED(src, type))
 			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(activating)
 		if(!force_deactivate)
 			balloon_alert(user, "already [active ? "shutting down" : "starting up"]!")
-			if(TIMER_COOLDOWN_FINISHED(user, type))
-			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+			if(TIMER_COOLDOWN_FINISHED(src, type))
+				TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	for(var/obj/item/mod/module/module as anything in modules)
 		if(!module.active || (module.allow_flags & MODULE_ALLOW_INACTIVE))
@@ -232,9 +232,9 @@
 			if(original_active_status)
 				control_activation(is_on = TRUE)
 			to_chat(wearer, span_notice("Critical error in sealing systems. Reverting process."))
-			if(TIMER_COOLDOWN_FINISHED(user, type))
-			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+			if(TIMER_COOLDOWN_FINISHED(src, type))
+				TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return
 		sealed_parts += part
 
@@ -248,9 +248,9 @@
 			for(var/obj/item/sealed_part as anything in sealed_parts)
 				seal_part(sealed_part, is_sealed = !get_part_datum(sealed_part).sealed)
 			to_chat(wearer, span_notice("Critical error in sealing systems. Reverting process."))
-			if(TIMER_COOLDOWN_FINISHED(user, type))
-			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+			if(TIMER_COOLDOWN_FINISHED(src, type))
+				TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return
 
 	to_chat(wearer, span_notice("Systems [active ? "started up. Parts sealed. Welcome" : "shut down. Parts unsealed. Goodbye"], [wearer]."))
