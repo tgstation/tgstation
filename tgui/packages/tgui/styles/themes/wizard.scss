@@ -23,7 +23,7 @@
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    'pkg:tgui-styles/components/Button',
     $with: (
       'color-default': colors.$primary,
       'color-disabled': hsl(204, 97%, 21%),
@@ -33,24 +33,24 @@
     )
   );
   @include meta.load-css(
-    '../components/Input.scss',
+    'pkg:tgui-styles/components/Input',
     $with: ('border-color': hsl(227, 25%, 34%))
   );
   @include meta.load-css(
-    '../components/NoticeBox.scss',
+    'pkg:tgui-styles/components/NoticeBox',
     $with: ('background-color': hsl(340, 58%, 41%))
   );
   @include meta.load-css(
-    '../components/NumberInput.scss',
+    'pkg:tgui-styles/components/NumberInput',
     $with: ('border-color': hsl(227, 25%, 34%))
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
+    'pkg:tgui-styles/components/ProgressBar',
     $with: ('background-color': hsla(0, 0%, 0%, 0.5))
   );
-  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('pkg:tgui-styles/components/Section');
   @include meta.load-css(
-    '../components/Tooltip.scss',
+    'pkg:tgui-styles/components/Tooltip',
     $with: ('background-color': hsl(134, 61%, 42%))
   );
 
