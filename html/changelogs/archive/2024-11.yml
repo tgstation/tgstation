@@ -662,3 +662,19 @@
   timothymtorres:
   - map: Fix missing CE Office Shutter Buttons on Icebox. Also removes a duplicate
       keycard auth device.
+2024-11-19:
+  Fikou:
+  - bugfix: Fixed chaplain divine archer outfit rolled down sprite
+  Jackal-boop:
+  - balance: syndicate GMO researchers have increased the effectiveness of their 'hot
+      potato'
+  carlarctg:
+  - qol: Improved fish lure descriptions to be easier to grok
+  fevryk:
+  - rscadd: Added new weapon carpenter hammer to black market uplink
+  - rscadd: Added killsound feature
+  tontyGH:
+  - bugfix: Haunted 8-balls are now usable again (FINALLY)
+  - bugfix: Haunted 8-ball UI now correctly displays your selected answer
+  - qol: Made the haunted 8-ball UI look a pinch better. Just a smidge.
+  - code_imp: Haunted 8-balls no longer use a duplicate answer list

@@ -59,13 +59,13 @@
 
 			if(offeredmob.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (offeredmob.ckey || offeredmob.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
 				visible_message(span_warning("Serrated tendrils carefully pull [offeredmob] to [src], absorbing the body and creating it anew."))
-				var/datum/mind/deadmind
+				var/mob/deadmob
 				if(offeredmob.ckey)
-					deadmind = offeredmob
+					deadmob = offeredmob
 				else
-					deadmind = offeredmob.get_ghost(FALSE, TRUE)
-				to_chat(deadmind, "Your body has been returned to the nest. You are being remade anew, and will awaken shortly. </br><b>Your memories will remain intact in your new body, as your soul is being salvaged</b>")
-				SEND_SOUND(deadmind, sound('sound/effects/magic/enter_blood.ogg',volume=100))
+					deadmob = offeredmob.get_ghost(FALSE, TRUE)
+				to_chat(deadmob, "Your body has been returned to the nest. You are being remade anew, and will awaken shortly. </br><b>Your memories will remain intact in your new body, as your soul is being salvaged</b>")
+				SEND_SOUND(deadmob, sound('sound/effects/magic/enter_blood.ogg',volume=100))
 				addtimer(CALLBACK(src, PROC_REF(remake_walker), offeredmob), 20 SECONDS)
 				offeredmob.forceMove(src)
 				return

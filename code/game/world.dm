@@ -73,7 +73,8 @@ GLOBAL_PROTECT(tracy_init_reason)
 /world/proc/Genesis(tracy_initialized = FALSE)
 	RETURN_TYPE(/datum/controller/master)
 
-	GLOB.tracy_initialized = FALSE
+	if(!tracy_initialized)
+		GLOB.tracy_initialized = FALSE
 #ifndef OPENDREAM
 	if(!tracy_initialized)
 #ifdef USE_BYOND_TRACY
