@@ -43,10 +43,7 @@ ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only yo
 	message_admins("[key_name_admin(user)] played a local sound [sound]")
 	var/volume = tgui_input_number(user, "What volume would you like the sound to play at?", max_value = 100)
 	var/sound/admin_sound = sound(sound)
-	if(volume)
-		admin_sound.volume = volume
-	else
-		admin_sound.volume = 50
+	admin_sound.volume = volume || 50
 	playsound(get_turf(user.mob), sound, FALSE, FALSE)
 	BLACKBOX_LOG_ADMIN_VERB("Play Local Sound")
 
