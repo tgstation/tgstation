@@ -278,6 +278,35 @@
 /obj/item/organ/cyberimp/arm/toolset/l
 	zone = BODY_ZONE_L_ARM
 
+//The order of the item list for this implant is not alphabetized due to it actually affecting how it shows up playerside when opening the implant
+/obj/item/organ/cyberimp/arm/paperwork
+	name = "integrated paperwork implant"
+	desc = "A highly sought out implant among heads of personnel, and other high up command staff in Nanotrasen. This implant allows the user to always have the tools necesarry for paperwork handy"
+	icon_state = "toolkit_engineering"
+	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
+	items_to_create = list(
+		/obj/item/pen/fountain,
+		/obj/item/clipboard,
+		/obj/item/taperecorder,
+		/obj/item/lighter,
+		/obj/item/laser_pointer,
+		/obj/item/stamp,
+		/obj/item/stamp/denied,
+	)
+
+/obj/item/organ/cyberimp/arm/paperwork/l
+	zone = BODY_ZONE_L_ARM
+
+/obj/item/organ/cyberimp/arm/paperwork/emag_act(mob/user, obj/item/card/emag/emag_card)
+	for(var/datum/weakref/created_item in items_list)
+		var/obj/potential_tool = created_item.resolve()
+		if(istype(/obj/item/stamp/chameleon, potential_tool))
+			return FALSE
+
+	balloon_alert(user, "experimental stamp unlocked")
+	items_list += WEAKREF(new /obj/item/stamp/chameleon(src))
+	return TRUE
+
 /obj/item/organ/cyberimp/arm/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_knife = created_item.resolve()

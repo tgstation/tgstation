@@ -63,7 +63,7 @@
 
 /obj/item/fishing_lure
 	name = "artificial minnow"
-	desc = "A fishing lure meant to attract smaller omnivore fish."
+	desc = "A fishing lure that may attract small fish. Too tiny, too large, or too picky prey won't be interested in it, though."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "minnow"
 	w_class = WEIGHT_CLASS_SMALL
@@ -129,8 +129,8 @@
 	return multiplier
 
 /obj/item/fishing_lure/plug
-	name = "big plug lure"
-	desc = "A fishing lure used to catch larger omnivore fish."
+	name = "artificial plug lure"
+	desc = "A bigger fishing lure that may attract larger fish. Tiny or picky prey will remain uninterested."
 	icon_state = "plug"
 
 /obj/item/fishing_lure/plug/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
@@ -164,7 +164,7 @@
 
 /obj/item/fishing_lure/spoon
 	name = "\improper Indy spoon lure"
-	desc = "A lustrous piece of metal mimicking the scales of a fish. Good for catching small to medium freshwater omnivore fish."
+	desc = "A lustrous piece of metal mimicking the scales of a fish. It specializes in catching small-to-medium-sized fish that live in freshwater."
 	icon_state = "spoon"
 	spin_frequency = list(1.25 SECONDS, 2.25 SECONDS)
 
@@ -184,7 +184,7 @@
 
 /obj/item/fishing_lure/artificial_fly
 	name = "\improper Silkbuzz artificial fly"
-	desc = "A fishing lure resembling a large wooly fly. Good for catching all sort of picky fish."
+	desc = "A fishing lure resembling a large wooly fly. Unlike most other lures, it's fancy enough to catch the interest of picky fish, but only those."
 	icon_state = "artificial_fly"
 	spin_frequency = list(1.1 SECONDS, 2 SECONDS)
 
@@ -196,7 +196,7 @@
 
 /obj/item/fishing_lure/led
 	name = "\improper LED fishing lure"
-	desc = "A heavy, waterproof and fish-looking LED stick, used to catch abyssal and demersal fish alike."
+	desc = "A heavy, waterproof and fish-looking LED stick, specialized to catch only nocturnal and deep-dwelling fish."
 	icon_state = "led"
 	spin_frequency = list(3 SECONDS, 3.8 SECONDS)
 
@@ -224,7 +224,7 @@
 
 /obj/item/fishing_lure/lucky_coin
 	name = "\improper Maneki-Coin lure"
-	desc = "A faux-gold lure used to attract shiny-loving fish."
+	desc = "A faux-gold lure. Catches the attention of fishies that love shinies. Not nearly tasty-looking enough for anything else."
 	icon_state = "lucky_coin"
 	spin_frequency = list(1.5 SECONDS, 2.7 SECONDS)
 
@@ -244,7 +244,7 @@
 
 /obj/item/fishing_lure/algae
 	name = "plastic algae lure"
-	desc = "A soft clump of fake algae used to attract herbivore water critters."
+	desc = "A soft clump of fake algae. Herbivores love it. Nothing else does, not even omnivores."
 	icon_state = "algae"
 	spin_frequency = list(3 SECONDS, 5 SECONDS)
 
@@ -256,7 +256,7 @@
 
 /obj/item/fishing_lure/grub
 	name = "\improper Twister Worm lure"
-	desc = "A soft plastic lure with the body of a grub and a twisting tail. Good for panfish and other small omnivore fish."
+	desc = "A soft plastic lure with the body of a grub and a twisting tail. Specialized for catching small fish, as long as they aren't herbivores, picky, or picky herbivores."
 	icon_state = "grub"
 	spin_frequency = list(1 SECONDS, 2.7 SECONDS)
 
@@ -270,7 +270,7 @@
 
 /obj/item/fishing_lure/buzzbait
 	name = "\improper Electric-Buzz lure"
-	desc = "A metallic, colored clanked attached to a series of cables that somehow attract shock-worthy fish."
+	desc = "A metallic, colored clanker attached to a series of cables that somehow attract shock-worthy fish."
 	icon_state = "buzzbait"
 	spin_frequency = list(0.8 SECONDS, 1.7 SECONDS)
 
@@ -282,7 +282,7 @@
 
 /obj/item/fishing_lure/spinnerbait
 	name = "spinnerbait lure"
-	desc = "A versatile lure, good for catching all sort of predatory freshwater fish."
+	desc = "A spinny, vulnerable lure, great for attracting freshwater predators, though omnivores won't be interested in it."
 	icon_state = "spinnerbait"
 	spin_frequency = list(2 SECONDS, 4 SECONDS)
 
@@ -299,7 +299,7 @@
 
 /obj/item/fishing_lure/daisy_chain
 	name = "daisy chain lure"
-	desc = "A lure resembling a small school of fish, good for catching several saltwater predators."
+	desc = "A lure resembling a small school of fish. Saltwater predators love it, but not much else will."
 	icon_state = "daisy_chain"
 	spin_frequency = list(2 SECONDS, 4 SECONDS)
 
