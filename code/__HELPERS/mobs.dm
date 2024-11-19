@@ -489,7 +489,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		. += borg
 
 //Returns a list of AI's
-/proc/active_ais(check_mind=FALSE, z = null, skip_syndicate, only_syndicate)
+/proc/active_ais(check_mind = FALSE, z = null, skip_syndicate = FALSE, only_syndicate = FALSE)
 	. = list()
 	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
 		if(ai.stat == DEAD)
@@ -501,10 +501,9 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			continue
 		if(only_syndicate && !syndie_ai)
 			continue
-		if(check_mind)
-			if(!ai.mind)
-				continue
-		if(z && !(z == ai.z) && (!is_station_level(z) || !is_station_level(ai.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
+		if(check_mind && !ai.mind)
+			continue
+		if(!isnull(z) && z != ai.z && (!is_station_level(z) || !is_station_level(ai.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
 			continue
 		. += ai
 
@@ -562,7 +561,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/list/sortmob = sort_names(GLOB.mob_list)
 	for(var/mob/living/silicon/ai/mob_to_sort in sortmob)
 		moblist += mob_to_sort
-	for(var/mob/camera/mob_to_sort in sortmob)
+	for(var/mob/eye/mob_to_sort in sortmob)
 		moblist += mob_to_sort
 	for(var/mob/living/silicon/pai/mob_to_sort in sortmob)
 		moblist += mob_to_sort
@@ -720,7 +719,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		mob_occupant = occupant
 
 	else if(isorgan(occupant))
-		var/obj/item/organ/internal/brain/brain = occupant
+		var/obj/item/organ/brain/brain = occupant
 		mob_occupant = brain.brainmob
 
 	return mob_occupant

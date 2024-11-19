@@ -71,6 +71,8 @@
 		RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(delete_self))
 
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, PROC_REF(on_buckle))
+	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, PROC_REF(on_unbuckle))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 
 	ADD_TRAIT(parent_as_movable, TRAIT_ELECTRIFIED_BUCKLE, INNATE_TRAIT)
 
@@ -104,7 +106,7 @@
 
 	if(parent)
 		REMOVE_TRAIT(parent_as_movable, TRAIT_ELECTRIFIED_BUCKLE, INNATE_TRAIT)
-		UnregisterSignal(parent, list(COMSIG_MOVABLE_BUCKLE, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER)))
+		UnregisterSignal(parent, list(COMSIG_MOVABLE_BUCKLE, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER)))
 		if(requested_signal_parent_emits)
 			UnregisterSignal(parent, requested_signal_parent_emits)
 
@@ -128,15 +130,32 @@
 		required_object.Move(parent_as_movable.loc)
 	qdel(src)
 
-/datum/component/electrified_buckle/proc/on_buckle(datum/source, mob/living/mob_to_buckle, _force)
+/datum/component/electrified_buckle/proc/on_buckle(atom/source, mob/living/mob_to_buckle, _force)
 	SIGNAL_HANDLER
 	if(!istype(mob_to_buckle))
 		return FALSE
 
+	if (requested_overlays)
+		source.update_appearance()
 	COOLDOWN_START(src, electric_buckle_cooldown, shock_loop_time)
 	if(!(usage_flags & SHOCK_REQUIREMENT_ON_SIGNAL_RECEIVED) && shock_on_loop)
 		START_PROCESSING(SSprocessing, src)
 	return TRUE
+
+/datum/component/electrified_buckle/proc/on_unbuckle(atom/source, mob/living/unbuckled_mob, _force)
+	SIGNAL_HANDLER
+	if(!istype(unbuckled_mob))
+		return FALSE
+
+	if (requested_overlays)
+		source.update_appearance()
+
+/datum/component/electrified_buckle/proc/on_update_overlays(atom/movable/source, list/overlays)
+	SIGNAL_HANDLER
+	var/overlay_layer = length(source.buckled_mobs) ? ABOVE_MOB_LAYER : OBJ_LAYER
+	for (var/image/overlay_image in requested_overlays)
+		overlay_image.layer = overlay_layer
+		overlays += overlay_image
 
 ///where the guinea pig is actually shocked if possible
 /datum/component/electrified_buckle/process(seconds_per_tick)

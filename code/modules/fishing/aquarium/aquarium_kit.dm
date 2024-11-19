@@ -1,15 +1,18 @@
 ///Fish feed can
-/obj/item/fish_feed
+/obj/item/reagent_containers/cup/fish_feed
 	name = "fish feed can"
 	desc = "A refillable can that dispenses nutritious fish feed."
 	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "fish_feed"
 	w_class = WEIGHT_CLASS_TINY
-
-/obj/item/fish_feed/Initialize(mapload)
-	. = ..()
-	create_reagents(5, OPENCONTAINER)
-	reagents.add_reagent(/datum/reagent/consumable/nutriment, 2.5) //Default fish diet
+	spillable = FALSE
+	volume = 5
+	amount_per_transfer_from_this = 2.5
+	has_variable_transfer_amount = FALSE
+	reagent_flags = OPENCONTAINER
+	reagent_container_liquid_sound = null
+	list_reagents = list(/obj/item/fish::food = 2.5) //Default fish diet
+	gulp_size = 1
 
 /**
  * Stasis fish case container for moving fish between aquariums safely.
@@ -58,13 +61,24 @@
 	name = "ominous fish case"
 
 /obj/item/storage/fish_case/syndicate/get_fish_type()
-	return pick(/obj/item/fish/donkfish, /obj/item/fish/emulsijack, /obj/item/fish/jumpercable, /obj/item/fish/chainsawfish)
+	var/datum/fish_source/portal/syndicate = GLOB.preset_fish_sources[/datum/fish_source/portal/syndicate]
+	var/list/picks = syndicate.fish_table.Copy()
+	for(var/fish in picks)
+		if(!ispath(fish, /obj/item/fish))
+			picks -= fish
+	return pick(picks)
 
 /obj/item/storage/fish_case/tiziran
 	name = "imported fish case"
 
 /obj/item/storage/fish_case/tiziran/get_fish_type()
-	return pick(/obj/item/fish/dwarf_moonfish, /obj/item/fish/gunner_jellyfish, /obj/item/fish/needlefish, /obj/item/fish/armorfish)
+	return pick_weight(list(
+		/obj/item/fish/moonfish/dwarf = 2,
+		/obj/item/fish/gunner_jellyfish = 2,
+		/obj/item/fish/needlefish = 2,
+		/obj/item/fish/armorfish = 2,
+		/obj/item/fish/moonfish = 1,
+	))
 
 ///Subtype bought from the blackmarket at a gratuitously cheap price. The catch? The fish inside it is dead.
 /obj/item/storage/fish_case/blackmarket
@@ -73,16 +87,19 @@
 
 /obj/item/storage/fish_case/blackmarket/get_fish_type()
 	var/static/list/weighted_list = list(
-		/obj/item/fish/boned = 1,
-		/obj/item/fish/clownfish/lube = 3,
-		/obj/item/fish/emulsijack = 1,
-		/obj/item/fish/jumpercable = 1,
-		/obj/item/fish/sludgefish/purple = 1,
-		/obj/item/fish/pufferfish = 3,
+		/obj/item/fish/clownfish/lube = 2,
+		/obj/item/fish/pufferfish = 2,
+		/obj/item/fish/emulsijack = 2,
+		/obj/item/fish/sludgefish/purple = 2,
 		/obj/item/fish/slimefish = 2,
 		/obj/item/fish/ratfish = 2,
-		/obj/item/fish/chasm_crab/ice = 2,
-		/obj/item/fish/chasm_crab = 2,
+		/obj/item/fish/zipzap = 2,
+		/obj/item/fish/jumpercable = 2,
+		/obj/item/fish/chasm_crab/ice = 1,
+		/obj/item/fish/chasm_crab = 1,
+		/obj/item/fish/boned = 1,
+		/obj/item/fish/pike = 1,
+		/obj/item/fish/swordfish = 1,
 	)
 	return pick_weight(weighted_list)
 

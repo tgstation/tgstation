@@ -5,6 +5,7 @@
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/frenchberet/Initialize(mapload)
 	. = ..()

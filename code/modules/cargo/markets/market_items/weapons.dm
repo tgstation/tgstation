@@ -64,6 +64,16 @@
 	stock_max = 3
 	availability_prob = 45
 
+/datum/market_item/weapon/carpenter_hammer
+	name = "Carpenter hammer"
+	desc = "When you really want to look like a psycho..."
+	item = /obj/item/carpenter_hammer
+
+	price_min = CARGO_CRATE_VALUE * 1
+	price_max = CARGO_CRATE_VALUE * 1.25
+	stock_max = 2
+	availability_prob = 65
+
 /datum/market_item/weapon/emp_grenade
 	name = "EMP Grenade"
 	desc = "Use this grenade for SHOCKING results!"
@@ -92,3 +102,12 @@
 	price_max = CARGO_CRATE_VALUE * 50
 	stock_max = 1
 	availability_prob = 15
+
+/datum/market_item/weapon/giant_wrench_parts
+	name = "Big Slappy parts"
+	desc = "Cheap illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
+	item = /obj/item/weaponcrafting/giant_wrench
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 5
+	stock_max = 1
+	availability_prob = 25

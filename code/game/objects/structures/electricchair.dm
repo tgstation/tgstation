@@ -9,7 +9,7 @@
 /obj/structure/chair/e_chair/Initialize(mapload)
 	. = ..()
 	var/obj/item/assembly/shock_kit/stored_kit = new(contents)
-	var/image/export_to_component = image('icons/obj/chairs.dmi', loc, "echair_over")
+	var/image/export_to_component = image('icons/obj/chairs.dmi', loc, "echair_over", OBJ_LAYER)
 	AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), stored_kit, list(export_to_component))
 
 /obj/structure/chair/e_chair/attackby(obj/item/W, mob/user, params)

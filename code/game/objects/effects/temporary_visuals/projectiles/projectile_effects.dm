@@ -7,7 +7,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = LONG_GLIDE
 
-/obj/effect/projectile/singularity_pull()
+/obj/effect/projectile/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/projectile/singularity_act()

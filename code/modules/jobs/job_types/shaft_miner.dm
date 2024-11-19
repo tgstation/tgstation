@@ -98,9 +98,9 @@
 	r_pocket = /obj/item/extinguisher/mini
 	belt = /obj/item/storage/belt/mining/healing
 
-/datum/outfit/job/miner/equipped/combat/post_equip(mob/living/carbon/human/miner, visualsOnly = FALSE)
+/datum/outfit/job/miner/equipped/combat/post_equip(mob/living/carbon/human/miner, visuals_only = FALSE)
 	. = ..()
-	if(visualsOnly)
+	if(visuals_only)
 		return
 	var/list/miner_contents = miner.get_all_contents()
 	var/obj/item/clothing/suit/hooded/explorer/explorer_suit = locate() in miner_contents

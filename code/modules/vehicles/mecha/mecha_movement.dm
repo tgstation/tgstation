@@ -139,16 +139,14 @@
 	// if we're not strafing or if we are forced to rotate or if we are holding down the key
 	if(dir != direction && (!strafe || forcerotate || keyheld))
 		setDir(direction)
+		if(!(mecha_flags & QUIET_TURNS))
+			playsound(src, turnsound, 40, TRUE)
 		if(keyheld || !pivot_step) //If we pivot step, we don't return here so we don't just come to a stop
 			return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 	//Otherwise just walk normally
 	. = try_step_multiz(direction)
-
-	//dir and olddir are the current direction of the sprite and the old direction of the sprite respectively
-	if (dir != olddir && !(mecha_flags & QUIET_TURNS))
-		playsound(src, turnsound, 40, TRUE)
 
 	if(phasing)
 		use_energy(phasing_energy_drain)

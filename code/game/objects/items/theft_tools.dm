@@ -158,10 +158,22 @@
 	pulseicon = "supermatter_sliver_pulse"
 	layer = ABOVE_MOB_LAYER
 
+/obj/item/nuke_core/supermatter_sliver/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FISHING_ROD_CAST, PROC_REF(on_hook))
+
+/obj/item/nuke_core/supermatter_sliver/proc/on_hook(obj/item/nuke_core/supermatter_sliver/source, obj/item/fishing_rod/rod, mob/user)
+	SIGNAL_HANDLER
+
+	//hook gets dusted but the rod remains intact
+	attackby(rod.hook, user)
+
+	return FISHING_ROD_CAST_HANDLED
+
 /obj/item/nuke_core/supermatter_sliver/attack_tk(mob/user) // no TK dusting memes
 	return
 
-/obj/item/nuke_core/supermatter_sliver/can_be_pulled(user) // no drag memes
+/obj/item/nuke_core/supermatter_sliver/can_be_pulled(user, force) // no drag memes
 	return FALSE
 
 /obj/item/nuke_core/supermatter_sliver/attackby(obj/item/W, mob/living/user, params)

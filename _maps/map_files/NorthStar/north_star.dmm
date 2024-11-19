@@ -3330,10 +3330,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "aSq" = (
@@ -6123,6 +6122,7 @@
 /area/station/maintenance/floor1/starboard/fore)
 "bxk" = (
 /obj/structure/rack,
+/obj/item/toy/crayon/spraycan/roboticist,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics/lab)
 "bxl" = (
@@ -11243,10 +11243,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 5
 	},
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "cPR" = (
@@ -16183,7 +16182,7 @@
 	dir = 8
 	},
 /obj/machinery/mecha_part_fabricator{
-	dir = 4
+	drop_direction = 4
 	},
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white/smooth_large,
@@ -41585,7 +41584,7 @@
 	dir = 4
 	},
 /obj/machinery/mecha_part_fabricator{
-	dir = 8
+	drop_direction = 8
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white/smooth_large,
@@ -43702,10 +43701,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "loa" = (
@@ -51274,10 +51272,9 @@
 	desc = "This is in our water? Gross!";
 	name = "algae mass"
 	},
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "nhV" = (
@@ -86665,10 +86662,9 @@
 /area/station/maintenance/department/engine/atmos)
 "wor" = (
 /obj/machinery/light/red/dim/directional/south,
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "wot" = (

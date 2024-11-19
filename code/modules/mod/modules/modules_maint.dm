@@ -14,18 +14,19 @@
 	var/static/list/gas_connections = list(
 		COMSIG_TURF_EXPOSE = PROC_REF(on_wearer_exposed_gas),
 	)
+	var/step_change = 0.5
 
 /obj/item/mod/module/springlock/on_install()
-	mod.activation_step_time *= 0.5
+	mod.activation_step_time *= step_change
 
 /obj/item/mod/module/springlock/on_uninstall(deleting = FALSE)
-	mod.activation_step_time *= 2
+	mod.activation_step_time /= step_change
 
-/obj/item/mod/module/springlock/on_suit_activation()
+/obj/item/mod/module/springlock/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_wearer_exposed))
 	AddComponent(/datum/component/connect_loc_behalf, mod.wearer, gas_connections)
 
-/obj/item/mod/module/springlock/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/springlock/on_part_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
@@ -282,7 +283,6 @@
 	complexity = 2
 	active_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/magboot, /obj/item/mod/module/anomaly_locked/antigrav)
-	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_atrocinator"
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// How many steps the user has taken since turning the suit on, used for footsteps.
@@ -295,8 +295,8 @@
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
-	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
-	passtable_on(mod.wearer, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
+	passtable_on(mod.wearer, REF(src))
 	check_upstairs() //todo at some point flip your screen around
 
 /obj/item/mod/module/atrocinator/deactivate(display_message = TRUE, deleting = FALSE)
@@ -312,8 +312,8 @@
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
 	step_count = 0
-	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
-	passtable_off(mod.wearer, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
+	passtable_off(mod.wearer, REF(src))
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
 	if(istype(current_turf))
 		current_turf.zFall(mod.wearer, falling_from_move = TRUE)

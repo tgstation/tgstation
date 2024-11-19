@@ -297,12 +297,12 @@
 
 //Charge levels for Ethereals, in joules.
 #define ETHEREAL_CHARGE_NONE 0
-#define ETHEREAL_CHARGE_LOWPOWER (0.4 * STANDARD_CELL_CHARGE)
-#define ETHEREAL_CHARGE_NORMAL (1 * STANDARD_CELL_CHARGE)
-#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 * STANDARD_CELL_CHARGE)
-#define ETHEREAL_CHARGE_FULL (2 * STANDARD_CELL_CHARGE)
-#define ETHEREAL_CHARGE_OVERLOAD (2.5 * STANDARD_CELL_CHARGE)
-#define ETHEREAL_CHARGE_DANGEROUS (3 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_LOWPOWER (0.4 * STANDARD_BATTERY_CHARGE)
+#define ETHEREAL_CHARGE_NORMAL (1 * STANDARD_BATTERY_CHARGE)
+#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 * STANDARD_BATTERY_CHARGE)
+#define ETHEREAL_CHARGE_FULL (2 * STANDARD_BATTERY_CHARGE)
+#define ETHEREAL_CHARGE_OVERLOAD (2.5 * STANDARD_BATTERY_CHARGE)
+#define ETHEREAL_CHARGE_DANGEROUS (3 * STANDARD_BATTERY_CHARGE)
 
 
 #define CRYSTALIZE_COOLDOWN_LENGTH (120 SECONDS)
@@ -512,6 +512,7 @@
 // Ex: (You turn into a "monkey", You turn into a "xenomorph")
 #define WABBAJACK_MONKEY "monkey"
 #define WABBAJACK_ROBOT "robot"
+#define WABBAJACK_CLOWN "clown"
 #define WABBAJACK_SLIME "slime"
 #define WABBAJACK_XENO "xenomorph"
 #define WABBAJACK_HUMAN "humanoid"
@@ -646,6 +647,10 @@
 // /datum/sprite_accessory/gradient defines
 #define GRADIENT_APPLIES_TO_HAIR (1<<0)
 #define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
+
+// Hair masks
+#define HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM "hide_above_45deg_medium"
+#define HAIR_MASK_HIDE_ABOVE_45_DEG_LOW "hide_above_45deg_low"
 
 // Height defines
 // - They are numbers so you can compare height values (x height < y height)

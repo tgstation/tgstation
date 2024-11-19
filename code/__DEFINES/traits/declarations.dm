@@ -391,6 +391,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DETECT_STORM "detect_storm"
 #define TRAIT_PRIMITIVE "primitive"
 #define TRAIT_GUNFLIP "gunflip"
+/// eignore blindness or blurriness or nearsightedness
+#define TRAIT_SIGHT_BYPASS "perfect_sight"
+/// ignore traumas that make you 'hallucinate' something
+#define TRAIT_PERCEPTUAL_TRAUMA_BYPASS "trauma_bypass"
+/// mob is immune to hallucinations
+#define TRAIT_HALLUCINATION_IMMUNE "hallucination_immune"
 /// Increases chance of getting special traumas, makes them harder to cure
 #define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
 #define TRAIT_SPACEWALK "spacewalk"
@@ -501,6 +507,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_USER_SCOPED "user_scoped"
 /// Mob is unable to feel pain
 #define TRAIT_ANALGESIA "analgesia"
+/// Mob has a scar on their left/right eye
+#define TRAIT_RIGHT_EYE_SCAR "right_eye_scar"
+#define TRAIT_LEFT_EYE_SCAR "left_eye_scar"
 
 /// Trait added when a revenant is visible.
 #define TRAIT_REVENANT_REVEALED "revenant_revealed"
@@ -616,7 +625,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // example. Through years of training/abuse, their livers have taken
 // a liking to those substances. Steal a sec officer's liver, eat donuts good.
 
-// These traits are applied to /obj/item/organ/internal/liver
+// These traits are applied to /obj/item/organ/liver
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law_enforcement_metabolism"
 #define TRAIT_CULINARY_METABOLISM "culinary_metabolism"
 #define TRAIT_COMEDY_METABOLISM "comedy_metabolism"
@@ -701,6 +710,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DISABLED_BY_WOUND "disabled-by-wound"
 /// This movable atom has the explosive block element
 #define TRAIT_BLOCKING_EXPLOSIVES "blocking_explosives"
+/// This object has been slathered with a speed potion
+#define TRAIT_SPEED_POTIONED "speed_potioned"
 
 ///This mob is currently blocking a projectile.
 #define TRAIT_BLOCKING_PROJECTILES "blocking_projectiles"
@@ -782,6 +793,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNCATCHABLE "uncatchable"
 /// You won't catch duds while fishing with this rod.
 #define TRAIT_ROD_REMOVE_FISHING_DUD "rod_remove_fishing_dud"
+/// This rod ignores environmental conditions for fishing (like low light for nocturnal fish)
+#define TRAIT_ROD_IGNORE_ENVIRONMENT "rod_ignore_environment"
+/// This rod attracts fish with the shiny lover fish trait
+#define TRAIT_ROD_ATTRACT_SHINY_LOVERS "rod_attract_shiny_lovers"
+/// This rod can be used to fish on lava
+#define TRAIT_ROD_LAVA_USABLE "rod_lava_usable"
 /// Stuff that can go inside fish cases
 #define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile"
 /// If the item can be used as a bit.
@@ -796,8 +813,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_OMNI_BAIT "omni_bait"
 /// The bait won't be consumed when used
 #define TRAIT_BAIT_UNCONSUMABLE "bait_unconsumable"
-/// This bait ignores environmental conditions for fishing (like low light for nocturnal fish)
-#define TRAIT_BAIT_IGNORE_ENVIRONMENT "bait_ignore_environment"
 /**
  * This bait won't apply TRAIT_ROD_REMOVE_FISHING_DUD to the rod it's attached on,
  * instead, it'll allow the fishing dud to be there unless there's at least one fish that likes the bait
@@ -972,6 +987,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to a mob with a ckey currently in a temporary body, allowing people to know someone will re-enter the round later.
 #define TRAIT_MIND_TEMPORARILY_GONE "temporarily_gone"
 
+/// Mobs with this trait will show up as soulless if their brain is missing even if their ghost can reenter the corpse
+#define TRAIT_FAKE_SOULLESS "fake_soulless"
+
 /// Similar trait given to temporary bodies inhabited by players
 #define TRAIT_TEMPORARY_BODY "temporary_body"
 
@@ -1015,6 +1033,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_SHOULD_TWOHANDED "fish_should_twohanded"
 ///This fish won't be killed when cooked.
 #define TRAIT_FISH_SURVIVE_COOKING "fish_survive_cooking"
+///This fish is healed by milk and hurt by bone hurting juice
+#define TRAIT_FISH_MADE_OF_BONE "fish_made_of_bone"
 /**
  * This fish has been fed teslium without the electrogenesis having trait.
  * Gives the electrogenesis, but at halved output, and it hurts the fish over time.
@@ -1329,6 +1349,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait which silences all chemical reactions in its container
 #define TRAIT_SILENT_REACTIONS "silent_reactions"
 
+///Trait given to mobs that can dig
+#define TRAIT_MOB_CAN_DIG "mob_can_dig"
+
 /**
  *
  * This trait is used in some interactions very high in the interaction chain to allow
@@ -1344,5 +1367,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///A "fake" effect that should not be subject to normal effect removal methods (like the effect remover component)
 #define TRAIT_ILLUSORY_EFFECT "illusory_effect"
+/// Gives a little examine to their body that they can be revived with a soul
+#define TRAIT_GHOSTROLE_ON_REVIVE "ghostrole_on_revive"
 
 // END TRAIT DEFINES

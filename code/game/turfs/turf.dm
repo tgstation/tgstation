@@ -270,7 +270,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * * type_list - are we checking for types of atoms to ignore and not physical atoms
  */
 /turf/proc/is_blocked_turf(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms, type_list = FALSE)
-	if((!isnull(source_atom) && !CanPass(source_atom, get_dir(src, source_atom))) || density)
+	if(density)
 		return TRUE
 
 	for(var/atom/movable/movable_content as anything in contents)
@@ -668,7 +668,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	clear_reagents_to_vomit_pool(vomiter, throw_up, purge_ratio)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
-	var/obj/item/organ/internal/stomach/belly = M.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/belly = M.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!belly?.reagents.total_volume)
 		return
 	var/chemicals_lost = belly.reagents.total_volume * purge_ratio
