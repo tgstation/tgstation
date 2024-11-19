@@ -246,7 +246,6 @@
 /obj/machinery/mining_weather_monitor/directional/north,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/colony_fabricator,
-/turf/open/floor/iron/dark/smooth_edge,
 /area/mine/production)
 "bX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3350,7 +3349,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/colony_fabricator,
-/turf/open/floor/iron/dark/smooth_edge,
 /area/mine/production)
 "wu" = (
 /obj/machinery/hydroponics/constructable,
