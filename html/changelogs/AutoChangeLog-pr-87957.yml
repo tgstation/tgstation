@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "You may no longer use a climbing hook to phase through catwalks and such. On the other hand, improved climbing hook aim and you may climb onto lattices or catwalks"
