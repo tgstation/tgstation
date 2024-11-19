@@ -60,6 +60,7 @@
 		span_notice("[src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
 	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	to_chat(world, "part deployed/retracted in quick_deploy")
 	for(var/obj/item/part as anything in get_parts())
 		if(deploy && part.loc == src)
 			if(!deploy(null, part))
@@ -98,6 +99,7 @@
 				span_notice("[part] deploy[part.p_s()] with a mechanical hiss."),
 				span_hear("You hear a mechanical hiss."))
 			playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			to_chat(world, "part deployed/retracted in deploy")
 		if(!active || part_datum.sealed)
 			return TRUE
 		if(instant)
@@ -148,6 +150,7 @@
 		span_notice("[part] retract[part.p_s()] back into [src] with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
 	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	to_chat(world, "part deployed/retracted in retract")
 	return TRUE
 
 /// Starts the activation sequence, where parts of the suit activate one by one until the whole suit is on.
@@ -236,6 +239,7 @@
 	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
 		to_chat(wearer, span_notice("[part] [!part_datum.sealed ? part_datum.sealed_message : part_datum.unsealed_message]."))
 		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		to_chat(world, "part deployed/retracted in delayed_seal_part")
 		seal_part(part, is_sealed = !part_datum.sealed)
 		return TRUE
 
