@@ -115,8 +115,8 @@
 		return
 
 	if(!is_weak)
-		var/appendage_zone = feeder.held_items.Find(source)
-		appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : (appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+		var/appendage_zone = feeder.get_held_index_of_item(source)
+		appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : (IS_RIGHT_INDEX(appendage_zone) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
 		try_infect(feeder, appendage_zone)
 
 	for(var/datum/disease/disease as anything in diseases)
