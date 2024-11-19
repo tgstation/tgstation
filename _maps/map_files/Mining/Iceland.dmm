@@ -4967,7 +4967,7 @@
 /obj/machinery/button/door{
 	id = 12;
 	name = "Ventilation Shutters";
-	req_one_access = ACCESS_AUX_BASE
+	req_one_access = null
 	},
 /turf/closed/wall/prefab_plastic,
 /area/mine/maintenance/service)
