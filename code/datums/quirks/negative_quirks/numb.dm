@@ -10,6 +10,8 @@
 
 /datum/quirk/numb/add(client/client_source)
 	quirk_holder.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+	quirk_holder.add_traits(list(TRAIT_ANALGESIA))
 
 /datum/quirk/numb/remove(client/client_source)
 	quirk_holder.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+	quirk_holder.remove_traits(list(TRAIT_ANALGESIA))
