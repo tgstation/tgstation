@@ -7,6 +7,7 @@
 	req_human = TRUE
 	///if we're currently absorbing, used for sanity
 	var/is_absorbing = FALSE
+	var/absorbing_loop = /datum/looping_sound/changeling_absorb
 
 /datum/action/changeling/absorb_dna/can_sting(mob/living/carbon/owner)
 	if(!..())
