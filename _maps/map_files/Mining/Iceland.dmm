@@ -2855,7 +2855,7 @@
 "tg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/colony_prefab{
-	req_access = ACCESS_AUX_BASE
+	req_access = null
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
@@ -3111,7 +3111,7 @@
 /area/mine/medical)
 "vc" = (
 /obj/machinery/door/airlock/colony_prefab{
-	req_access = ACCESS_AUX_BASE
+	req_access = null
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
@@ -3525,7 +3525,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/colony_prefab{
-	req_access = ACCESS_AUX_BASE
+	req_access = null
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
@@ -4984,7 +4984,7 @@
 /obj/machinery/button/door{
 	id = 12;
 	name = "Ventilation Shutters";
-	req_one_access = ACCESS_AUX_BASE
+	req_one_access = null
 	},
 /turf/closed/wall/prefab_plastic,
 /area/mine/maintenance/service)
@@ -6956,7 +6956,7 @@
 /area/mine/laborcamp/security)
 "TV" = (
 /obj/machinery/door/airlock/colony_prefab{
-	req_access = ACCESS_AUX_BASE
+	req_access = null
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /turf/open/floor/plating,
