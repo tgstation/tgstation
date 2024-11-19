@@ -49,7 +49,6 @@
 	if(activating)
 		balloon_alert(user, "currently [active ? "unsealing" : "sealing"]!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		to_chat(world, "buzz sound triggered in quick_deploy")
 		return FALSE
 	var/deploy = FALSE
 	for(var/obj/item/part as anything in get_parts())
@@ -79,14 +78,12 @@
 	var/datum/mod_part/part_datum = get_part_datum(part)
 	if(!wearer)
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		to_chat(world, "buzz sound triggered in deploy")
 		return FALSE // pAI is trying to deploy it from your hands
 	if(part.loc != src)
 		if(!user)
 			return FALSE
 		balloon_alert(user, "already deployed!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		to_chat(world, "buzz sound triggered in deploy 2")
 	if(part_datum.can_overslot)
 		var/obj/item/overslot = wearer.get_item_by_slot(part.slot_flags)
 		if(overslot)
@@ -121,7 +118,6 @@
 			return FALSE
 		balloon_alert(user, "bodypart clothed!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		to_chat(world, "buzz sound triggered in quick_deploy 3")
 	return FALSE
 
 /// Retract a part of the suit from the user.
@@ -132,7 +128,6 @@
 			return FALSE
 		balloon_alert(user, "already retracted!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		to_chat(world, "buzz sound triggered in retract")
 		return FALSE
 	if(active && part_datum.sealed)
 		if(instant)
@@ -140,7 +135,6 @@
 		else if(!delayed_seal_part(part))
 			balloon_alert(user, "can't unseal!")
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			to_chat(world, "buzz sound triggered in retract 2")
 			return FALSE
 	REMOVE_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 	wearer.transferItemToLoc(part, src, force = TRUE)
@@ -165,32 +159,26 @@
 		if(!force_deactivate)
 			balloon_alert(user, "not equipped!")
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			to_chat(world, "buzz sound triggered in toggle_activate")
 		return FALSE
 	if(!force_deactivate && (SEND_SIGNAL(src, COMSIG_MOD_ACTIVATE, user) & MOD_CANCEL_ACTIVATE))
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		to_chat(world, "buzz sound triggered in toggle_activate 2")
 		return FALSE
 	if(locked && !active && !allowed(user) && !force_deactivate)
 		balloon_alert(user, "access insufficient!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		to_chat(world, "buzz sound triggered in toggle_activate 3")
 		return FALSE
 	if(!get_charge() && !force_deactivate)
 		balloon_alert(user, "no power source!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		to_chat(world, "buzz sound triggered in toggle_activate 4")
 		return FALSE
 	if(open && !force_deactivate)
 		balloon_alert(user, "panel open!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		to_chat(world, "buzz sound triggered in toggle_activate 5")
 		return FALSE
 	if(activating)
 		if(!force_deactivate)
 			balloon_alert(user, "already [active ? "shutting down" : "starting up"]!")
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			to_chat(world, "buzz sound triggered in toggle_activate 6")
 		return FALSE
 	for(var/obj/item/mod/module/module as anything in modules)
 		if(!module.active || (module.allow_flags & MODULE_ALLOW_INACTIVE))
@@ -222,7 +210,6 @@
 				control_activation(is_on = TRUE)
 			to_chat(wearer, span_notice("Critical error in sealing systems. Reverting process."))
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			to_chat(world, "buzz sound triggered in toggle_activate 7")
 			return
 		sealed_parts += part
 
@@ -237,7 +224,6 @@
 				seal_part(sealed_part, is_sealed = !get_part_datum(sealed_part).sealed)
 			to_chat(wearer, span_notice("Critical error in sealing systems. Reverting process."))
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			to_chat(world, "buzz sound triggered in toggle_activate 8")
 			return
 
 	to_chat(wearer, span_notice("Systems [active ? "started up. Parts sealed. Welcome" : "shut down. Parts unsealed. Goodbye"], [wearer]."))
