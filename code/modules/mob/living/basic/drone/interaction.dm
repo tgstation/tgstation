@@ -165,6 +165,13 @@
 		REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 		speed = 1 //gotta go slow
 		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on destroying the station!")
+
+		notify_ghosts(
+		"[src] became a hacked drone hellbent on destroying the station!",
+		source = src,
+		header = "Hacked Drone!",
+	)
+
 	else
 		if(!hacked || !can_unhack)
 			return
