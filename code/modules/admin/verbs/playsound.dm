@@ -3,41 +3,6 @@
 #define SHELLEO_STDOUT 2
 #define SHELLEO_STDERR 3
 
-ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connected players.", ADMIN_CATEGORY_FUN, sound as sound)
-	var/freq = 1
-	var/vol = tgui_input_number(user, "What volume would you like the sound to play at?", max_value = 100)
-	if(!vol)
-		return
-	vol = clamp(vol, 1, 100)
-
-	var/sound/admin_sound = new
-	admin_sound.file = sound
-	admin_sound.priority = 250
-	admin_sound.channel = CHANNEL_ADMIN
-	admin_sound.frequency = freq
-	admin_sound.wait = 1
-	admin_sound.repeat = FALSE
-	admin_sound.status = SOUND_STREAM
-	admin_sound.volume = vol
-
-	var/res = tgui_alert(user, "Show the title of this song to the players?",, list("Yes","No", "Cancel"))
-	switch(res)
-		if("Yes")
-			to_chat(world, span_boldannounce("An admin played: [sound]"), confidential = TRUE)
-		if("Cancel")
-			return
-
-	log_admin("[key_name(user)] played sound [sound]")
-	message_admins("[key_name_admin(user)] played sound [sound]")
-
-	for(var/mob/M in GLOB.player_list)
-		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_midi))
-			admin_sound.volume = vol * M.client.admin_music_volume
-			SEND_SOUND(M, admin_sound)
-			admin_sound.volume = vol
-
-	BLACKBOX_LOG_ADMIN_VERB("Play Global Sound")
-
 ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN, sound as sound)
 	log_admin("[key_name(user)] played a local sound [sound]")
 	message_admins("[key_name_admin(user)] played a local sound [sound]")
