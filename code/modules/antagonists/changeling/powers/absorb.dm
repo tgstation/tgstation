@@ -7,7 +7,7 @@
 	req_human = TRUE
 	///if we're currently absorbing, used for sanity
 	var/is_absorbing = FALSE
-	var/absorbing_loop = /datum/looping_sound/changeling_absorb
+	var/datum/looping_sound/changeling_absorb/absorbing_loop
 
 /datum/action/changeling/absorb_dna/can_sting(mob/living/carbon/owner)
 	if(!..())
@@ -147,6 +147,8 @@
 			if(2)
 				owner.visible_message(span_warning("[owner] extends a proboscis!"), span_notice("We extend a proboscis."))
 			if(3)
+				absorbing_loop = new(src, start_immediately = TRUE)
+				absorbing_loop.start
 				owner.visible_message(span_danger("[owner] stabs [target] with the proboscis!"), span_notice("We stab [target] with the proboscis."))
 				to_chat(target, span_userdanger("You feel a sharp stabbing pain!"))
 				target.take_overall_damage(40)
@@ -154,6 +156,7 @@
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "[absorbing_iteration]"))
 		if(!do_after(owner, 15 SECONDS, target, hidden = TRUE))
 			owner.balloon_alert(owner, "interrupted!")
+			qdel(absorbing_loop)
 			is_absorbing = FALSE
 			return FALSE
 	return TRUE

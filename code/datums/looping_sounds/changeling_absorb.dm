@@ -7,8 +7,6 @@
 		'sound/effects/changeling_absorb/changeling_absorb5.ogg' = 1,
 		'sound/effects/changeling_absorb/changeling_absorb6.ogg' = 1,
 		'sound/effects/changeling_absorb/changeling_absorb7.ogg' = 1,
-		'sound/effects/changeling_absorb/changeling_absorb8.ogg' = 1,
 		)
 	volume = 80
-	in_order = TRUE
 	ignore_walls = FALSE
