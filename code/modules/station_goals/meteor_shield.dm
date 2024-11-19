@@ -113,7 +113,7 @@
 	if(user)
 		balloon_alert(user, "looking for [active ? "off" : "on"] button")
 	if(user && !do_after(user, 2 SECONDS, src, IGNORE_HELD_ITEM))
-		return FALSE;
+		return FALSE
 	if(!..(user))
 		return FALSE
 	if(obj_flags & EMAGGED)
