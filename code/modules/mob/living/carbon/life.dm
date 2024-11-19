@@ -126,7 +126,7 @@
 	var/should_be_on =  canon_client?.prefs?.read_preference(/datum/preference/toggle/sound_breathing)
 	if(should_be_on && !breathing_loop.timer_id && canon_client.mob.can_hear())
 		breathing_loop.start()
-	else if(!should_be_on && breathing_loop.timer_id)
+	else if((!should_be_on && breathing_loop.timer_id) || !canon_client.mob.can_hear())
 		breathing_loop.stop()
 
 /mob/living/carbon/proc/has_smoke_protection()
