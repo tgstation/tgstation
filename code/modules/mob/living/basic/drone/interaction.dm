@@ -23,6 +23,10 @@
 			else
 				to_chat(drone, span_warning("You need to remain still to cannibalize [src]!"))
 
+/mob/living/basic/drone/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	update_drone_hack(TRUE)
+
 /mob/living/basic/drone/attack_drone_secondary(mob/living/basic/drone/drone)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
