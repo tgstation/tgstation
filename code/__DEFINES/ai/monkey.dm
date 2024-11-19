@@ -2,7 +2,6 @@
 
 #define BB_MONKEY_AGGRESSIVE "BB_monkey_aggressive"
 #define BB_MONKEY_GUN_NEURONS_ACTIVATED "BB_monkey_gun_aware"
-#define BB_MONKEY_GUN_WORKED "BB_monkey_gun_worked"
 #define BB_MONKEY_BEST_FORCE_FOUND "BB_monkey_bestforcefound"
 #define BB_MONKEY_ENEMIES "BB_monkey_enemies"
 #define BB_MONKEY_BLACKLISTITEMS "BB_monkey_blacklistitems"
