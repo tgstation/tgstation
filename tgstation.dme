@@ -1659,6 +1659,7 @@
 #include "code\datums\looping_sounds\acid.dm"
 #include "code\datums\looping_sounds\breathing.dm"
 #include "code\datums\looping_sounds\burning.dm"
+#include "code\datums\looping_sounds\changeling_absorb.dm"
 #include "code\datums\looping_sounds\choking.dm"
 #include "code\datums\looping_sounds\cyborg.dm"
 #include "code\datums\looping_sounds\item_sounds.dm"
