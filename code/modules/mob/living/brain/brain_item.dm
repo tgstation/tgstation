@@ -449,6 +449,14 @@
 	can_smoothen_out = FALSE
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
 
+// This fixes an edge case from species/regenerate_organs that would transfer the brain trauma before organ/on_mob_remove can remove it
+// Prevents wizards from using the magic mirror to gain bluespace_prophet trauma and then switching to another race
+/obj/item/organ/brain/lustrous/before_organ_replacement(obj/item/organ/replacement)
+	if(owner)
+		owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+		owner.RemoveElement(/datum/element/tenacious)
+	. = ..()
+
 /obj/item/organ/brain/lustrous/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	organ_owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
