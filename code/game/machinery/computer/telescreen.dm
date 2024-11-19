@@ -45,6 +45,10 @@
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
+/obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/machinery/computer/security/telescreen/entertainment/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle mute button"
 	return CONTEXTUAL_SCREENTIP_SET
