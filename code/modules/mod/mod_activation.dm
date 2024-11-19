@@ -22,7 +22,9 @@
 		return
 	if(activating)
 		balloon_alert(user, "currently [active ? "unsealing" : "sealing"]!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	var/parts_to_check = parts - part
 	if(part.loc == src)
@@ -48,7 +50,9 @@
 /obj/item/mod/control/proc/quick_deploy(mob/user)
 	if(activating)
 		balloon_alert(user, "currently [active ? "unsealing" : "sealing"]!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	var/deploy = FALSE
 	for(var/obj/item/part as anything in get_parts())
@@ -76,13 +80,17 @@
 /obj/item/mod/control/proc/deploy(mob/user, obj/item/part, instant = FALSE)
 	var/datum/mod_part/part_datum = get_part_datum(part)
 	if(!wearer)
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE // pAI is trying to deploy it from your hands
 	if(part.loc != src)
 		if(!user)
 			return FALSE
 		balloon_alert(user, "already deployed!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	if(part_datum.can_overslot)
 		var/obj/item/overslot = wearer.get_item_by_slot(part.slot_flags)
 		if(overslot)
@@ -115,7 +123,9 @@
 		if(!user)
 			return FALSE
 		balloon_alert(user, "bodypart clothed!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	return FALSE
 
 /// Retract a part of the suit from the user.
@@ -125,13 +135,17 @@
 		if(!user)
 			return FALSE
 		balloon_alert(user, "already retracted!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(active && part_datum.sealed)
 		if(instant)
 			seal_part(part, is_sealed = FALSE)
 		else if(!delayed_seal_part(part))
 			balloon_alert(user, "can't unseal!")
+			if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 	REMOVE_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
@@ -155,26 +169,38 @@
 	if(!wearer)
 		if(!force_deactivate)
 			balloon_alert(user, "not equipped!")
+			if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(!force_deactivate && (SEND_SIGNAL(src, COMSIG_MOD_ACTIVATE, user) & MOD_CANCEL_ACTIVATE))
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(locked && !active && !allowed(user) && !force_deactivate)
 		balloon_alert(user, "access insufficient!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(!get_charge() && !force_deactivate)
 		balloon_alert(user, "no power source!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(open && !force_deactivate)
 		balloon_alert(user, "panel open!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(activating)
 		if(!force_deactivate)
 			balloon_alert(user, "already [active ? "shutting down" : "starting up"]!")
+			if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	for(var/obj/item/mod/module/module as anything in modules)
@@ -206,6 +232,8 @@
 			if(original_active_status)
 				control_activation(is_on = TRUE)
 			to_chat(wearer, span_notice("Critical error in sealing systems. Reverting process."))
+			if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return
 		sealed_parts += part
@@ -220,6 +248,8 @@
 			for(var/obj/item/sealed_part as anything in sealed_parts)
 				seal_part(sealed_part, is_sealed = !get_part_datum(sealed_part).sealed)
 			to_chat(wearer, span_notice("Critical error in sealing systems. Reverting process."))
+			if(TIMER_COOLDOWN_FINISHED(user, type))
+			TIMER_COOLDOWN_START(user, type, 0.5 SECONDS)
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return
 
