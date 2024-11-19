@@ -1,0 +1,5 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - server: "drone area restrictions are now config"
+  - balance: "drones now take less time to become \"un-shy\" of something after it's been touched."

@@ -1,0 +1,4 @@
+author: "Jewelry-x"
+delete-after: True
+changes:
+  - bugfix: "changeling memories of victims no longer include `<B>` and `<br>`"
