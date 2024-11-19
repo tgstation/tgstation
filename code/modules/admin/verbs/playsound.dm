@@ -38,7 +38,7 @@ ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connec
 
 	BLACKBOX_LOG_ADMIN_VERB("Play Global Sound")
 
-ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN, sound as sound, volume as num)
+ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN, sound as sound)
 	log_admin("[key_name(user)] played a local sound [sound]")
 	message_admins("[key_name_admin(user)] played a local sound [sound]")
 	var/volume = tgui_input_number(user, "What volume would you like the sound to play at?", max_value = 100)
