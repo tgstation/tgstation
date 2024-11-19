@@ -1316,9 +1316,6 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/quarters)
-"ix" = (
-/obj/structure/window/fulltile/colony_fabricator,
-/area/mine/production)
 "iB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2141,9 +2138,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/colony/white/bolts,
 /area/mine/lounge)
-"oe" = (
-/obj/structure/window/fulltile/colony_fabricator,
-/area/mine/eva)
 "og" = (
 /obj/machinery/door/poddoor/shutters/colony_fabricator{
 	id = 12
@@ -178267,7 +178261,7 @@ gW
 Xj
 QT
 NG
-oe
+dK
 No
 Hp
 Kc
@@ -178524,7 +178518,7 @@ TD
 Vw
 wl
 Ti
-oe
+dK
 lg
 se
 Yg
@@ -178774,7 +178768,7 @@ eb
 eb
 aK
 aK
-ix
+Le
 QI
 zJ
 oi
@@ -179031,7 +179025,7 @@ eb
 eb
 aK
 aK
-ix
+Le
 rH
 rH
 fV
