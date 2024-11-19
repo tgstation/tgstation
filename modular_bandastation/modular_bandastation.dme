@@ -36,4 +36,5 @@
 #include "preferences/_preferences.dme"
 #include "jukebox/_jukebox.dme"
 #include "objects/_objects.dme"
+#include "orderables/_orderables.dme"
 #include "overrides/_overrides.dme"
