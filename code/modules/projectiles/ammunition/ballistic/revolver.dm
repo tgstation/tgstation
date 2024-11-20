@@ -75,7 +75,9 @@
 	caliber = CALIBER_PEA
 	icon_state = "pea"
 	projectile_type = /obj/projectile/bullet/pea
+	/// Damage we achieve at 100 potency
 	var/max_damage = 15
+	/// Damage set by the plant
 	var/damage = 15 //max potency, is set
 
 /obj/item/ammo_casing/pea/Initialize(mapload)
