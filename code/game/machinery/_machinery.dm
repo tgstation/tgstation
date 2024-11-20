@@ -102,13 +102,9 @@
 	initial_language_holder = /datum/language_holder/speaking_machine
 	armor_type = /datum/armor/obj_machinery
 
-	///can be NO_POWER, BROKEN or MAINT
+	///see code/__DEFINES/stat.dm
 	var/machine_stat = NONE
-	/**
-	 * NO_POWER_USE = dont use power
-	 * IDLE_POWER_USE = use idle_power_usage
-	 * ACTIVE_POWER_USE = use active_power_usage
-	*/
+	///see code/__DEFINES/machines.dm
 	var/use_power = IDLE_POWER_USE
 	///the amount of static power load this machine adds to its area's power_usage list when use_power = IDLE_POWER_USE
 	var/idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
