@@ -42,16 +42,19 @@ GLOBAL_LIST_EMPTY(shared_particles)
 		vis_contents += GLOB.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX][1]
 		return GLOB.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX][1]
 
-	if (length(GLOB.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX]) < pool_size)
+	var/list/type_holders = GLOB.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX]
+	for (var/obj/effect/abstract/shared_particle_holder/particle_holder as anything in type_holders)
+		if (particle_holder in vis_contents)
+			return particle_holder
+
+	if (length(type_holders) < pool_size)
 		var/obj/effect/abstract/shared_particle_holder/new_holder = new(null, particle_type, particle_flags)
-		GLOB.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX] += new_holder
+		type_holders += new_holder
 		vis_contents += new_holder
 		GLOB.shared_particles[particle_key][SHARED_PARTICLE_USER_NUM_INDEX] += 1
 		return new_holder
 
-	var/obj/effect/abstract/shared_particle_holder/particle_holder = pick(GLOB.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX])
-	if (particle_holder in vis_contents)
-		return particle_holder
+	var/obj/effect/abstract/shared_particle_holder/particle_holder = pick(type_holders)
 	vis_contents += particle_holder
 	GLOB.shared_particles[particle_key][SHARED_PARTICLE_USER_NUM_INDEX] += 1
 	return particle_holder

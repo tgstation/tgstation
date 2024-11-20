@@ -52,6 +52,7 @@
 /obj/machinery/coffeemaker/Destroy()
 	QDEL_NULL(coffeepot)
 	QDEL_NULL(cartridge)
+	remove_shared_particles(/particles/smoke)
 	return ..()
 
 /obj/machinery/coffeemaker/Exited(atom/movable/gone, direction)
@@ -391,10 +392,8 @@
 
 ///Updates the smoke state to something else, setting particles if relevant
 /obj/machinery/coffeemaker/proc/toggle_steam()
-	QDEL_NULL(particles)
-	if(brewing)
-		particles = new /particles/smoke/steam/mild()
-		particles.position = list(-6, 0, 0)
+	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/steam/mild, "smoke_coffeemaker")
+	smoke_particles.particles.position = list(-6, 0, 0)
 
 /obj/machinery/coffeemaker/proc/operate_for(time, silent = FALSE)
 	brewing = TRUE
@@ -705,10 +704,8 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/coffeemaker/impressa/toggle_steam()
-	QDEL_NULL(particles)
-	if(brewing)
-		particles = new /particles/smoke/steam/mild()
-		particles.position = list(-2, 1, 0)
+	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/steam/mild, "smoke_impressa")
+	smoke_particles.particles.position = list(-2, 1, 0)
 
 /obj/machinery/coffeemaker/impressa/brew()
 	power_change()
