@@ -15,10 +15,6 @@
 	suffix = "delta"
 	name = "labour shuttle (Delta)"
 
-/datum/map_template/shuttle/labour/kilo
-	suffix = "kilo"
-	name = "labour shuttle (Kilo)"
-
 /datum/map_template/shuttle/labour/nebula
 	suffix = "nebula"
 	name = "labour shuttle (Nebula)"
@@ -35,10 +31,6 @@
 /datum/map_template/shuttle/mining/delta
 	suffix = "delta"
 	name = "mining shuttle (Delta)"
-
-/datum/map_template/shuttle/mining/kilo
-	suffix = "kilo"
-	name = "mining shuttle (Kilo)"
 
 /datum/map_template/shuttle/mining/large
 	suffix = "large"
@@ -60,10 +52,6 @@
 /datum/map_template/shuttle/mining_common/meta
 	suffix = "meta"
 	name = "lavaland shuttle (Meta)"
-
-/datum/map_template/shuttle/mining_common/kilo
-	suffix = "kilo"
-	name = "lavaland shuttle (Kilo)"
 
 /datum/map_template/shuttle/mining_common/northstar
 	suffix = "northstar"
