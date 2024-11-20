@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Crate Chaos's encrypted cache is now randomly placed again."
