@@ -58,9 +58,10 @@
  */
 /turf/open/water/Entered(atom/movable/arrived)
 	. = ..()
-	if(!immerse_added && !is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
-		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
-		immerse_added = TRUE
+	if(immerse_added || is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
+		return
+	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
+	immerse_added = TRUE
 
 /turf/open/water/jungle
 
