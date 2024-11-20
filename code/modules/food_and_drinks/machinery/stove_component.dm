@@ -263,7 +263,7 @@
 	if (old_type)
 		obj_parent.remove_shared_particles("[old_type]_stove_[container_x]")
 
-	if(!on || !container?.reagents.total_volume )
+	if(!on || !container?.reagents.total_volume)
 		soup_sound?.stop()
 		if (!isnull(particle_type))
 			obj_parent.remove_shared_particles("[particle_type]_stove_[container_x]")
