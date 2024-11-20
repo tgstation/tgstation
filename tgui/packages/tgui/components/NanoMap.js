@@ -1,10 +1,18 @@
+import '../styles/interfaces/NanoMap.scss';
+
 import { Component } from 'react';
+import {
+  Button,
+  Icon,
+  LabeledList,
+  Section,
+  Slider,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Tooltip } from '.';
-import { LabeledList } from './LabeledList';
-import { Slider } from './Slider';
 
 const pauseEvent = (e) => {
   if (e.stopPropagation) {
@@ -23,8 +31,8 @@ export class NanoMap extends Component {
     super(props);
 
     this.state = {
-      offsetX: -48,
-      offsetY: 96,
+      offsetX: -32,
+      offsetY: 64,
       transform: 'none',
       dragging: false,
       originX: null,
@@ -79,7 +87,7 @@ export class NanoMap extends Component {
         const newZoom = Math.min(Math.max(value, 1), 8);
         let zoomDiff = (newZoom - state.zoom) * 1.5;
         state.zoom = newZoom;
-        state.offsetX = state.offsetX - 262 * zoomDiff;
+        state.offsetX = state.offsetX - 256 * zoomDiff;
         state.offsetY = state.offsetY - 256 * zoomDiff;
         if (props.onZoom) {
           props.onZoom(state.zoom);
@@ -102,7 +110,7 @@ export class NanoMap extends Component {
       'margin-top': offsetY + 'px',
       'margin-left': offsetX + 'px',
       overflow: 'hidden',
-      position: 'relative',
+      position: 'absolute',
       'background-size': 'cover',
       'background-repeat': 'no-repeat',
       'text-align': 'center',
@@ -120,14 +128,24 @@ export class NanoMap extends Component {
     };
 
     return (
-      <Box className="NanoMap__container">
-        <Box style={newStyle} onMouseDown={this.handleDragStart}>
+      <Stack fill vertical className="NanoMap__container">
+        <Stack.Item className="NanoMap__toolbar">
+          <Section>
+            <Stack>
+              <Stack.Item>
+                <NanoMapZoomer zoom={zoom} onZoom={this.handleZoom} />
+              </Stack.Item>
+              <Stack.Item>
+                <NanoMapZSelector />
+              </Stack.Item>
+            </Stack>
+          </Section>
+        </Stack.Item>
+        <Stack.Item style={newStyle} onMouseDown={this.handleDragStart}>
           <img src={resolveAsset(mapUrl)} style={mapStyle} />
-          <Box>{children}</Box>
-        </Box>
-        <NanoMapZoomer zoom={zoom} onZoom={this.handleZoom} />
-        <NanoMapZSelector />
-      </Box>
+          <div>{children}</div>
+        </Stack.Item>
+      </Stack>
     );
   }
 }
@@ -139,7 +157,7 @@ const NanoMapMarker = (props, context) => {
   return (
     <div>
       <Tooltip content={tooltip}>
-        <Box
+        <div
           position="absolute"
           className="NanoMap__marker"
           lineHeight="0"
@@ -147,7 +165,7 @@ const NanoMapMarker = (props, context) => {
           left={rx + 'px'}
         >
           <Icon name={icon} color={color} fontSize="6px" />
-        </Box>
+        </div>
       </Tooltip>
     </div>
   );
@@ -157,20 +175,20 @@ NanoMap.Marker = NanoMapMarker;
 
 const NanoMapZoomer = (props, context) => {
   return (
-    <Box className="NanoMap__zoomer">
-      <LabeledList>
-        <LabeledList.Item label="Zoom">
-          <Slider
-            minValue={1}
-            maxValue={8}
-            stepPixelSize={10}
-            format={(v) => v + 'x'}
-            value={props.zoom}
-            onDrag={(e, v) => props.onZoom(e, v)}
-          />
-        </LabeledList.Item>
-      </LabeledList>
-    </Box>
+    <LabeledList>
+      <LabeledList.Item label="Zoom">
+        <Slider
+          width="100%"
+          minValue={1}
+          maxValue={8}
+          step={1}
+          stepPixelSize={12.5}
+          format={(v) => v + 'x'}
+          value={props.zoom}
+          onDrag={(e, v) => props.onZoom(e, v)}
+        />
+      </LabeledList.Item>
+    </LabeledList>
   );
 };
 
@@ -223,21 +241,25 @@ NanoMap.NanoButton = NanoButton;
 const NanoMapZSelector = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Box className="NanoMap__zchooser">
-      <Box>
+    <Stack>
+      <Stack.Item>
         <Button
-          icon={'chevron-up'}
-          tooltip={'Уровнем выше'}
-          onClick={() => act('switch_z_level', { z_dir: 1 })}
-        />
-      </Box>
-      <Box>
-        <Button
+          pr={0.5}
           icon={'chevron-down'}
           tooltip={'Уровнем ниже'}
+          tooltipPosition={'bottom-end'}
           onClick={() => act('switch_z_level', { z_dir: -1 })}
         />
-      </Box>
-    </Box>
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          pr={0.5}
+          icon={'chevron-up'}
+          tooltip={'Уровнем выше'}
+          tooltipPosition={'bottom-end'}
+          onClick={() => act('switch_z_level', { z_dir: 1 })}
+        />
+      </Stack.Item>
+    </Stack>
   );
 };

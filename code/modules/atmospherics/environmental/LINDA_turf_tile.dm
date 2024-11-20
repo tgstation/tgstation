@@ -37,7 +37,7 @@
 	///Are we active?
 	var/excited = FALSE
 	///Our gas mix
-	var/datum/gas_mixture/turf/air
+	var/datum/gas_mixture/air
 
 	///If there is an active hotspot on us store a reference to it here
 	var/obj/effect/hotspot/active_hotspot

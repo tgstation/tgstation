@@ -101,7 +101,7 @@
  */
 /datum/action/cooldown/spell/pointed/projectile
 	/// What projectile we create when we shoot our spell.
-	var/obj/projectile/magic/projectile_type = /obj/projectile/magic/teleport
+	var/obj/projectile/projectile_type = /obj/projectile/magic/teleport
 	/// How many projectiles we can fire per cast. Not all at once, per click, kinda like charges
 	var/projectile_amount = 1
 	/// How many projectiles we have yet to fire, based on projectile_amount

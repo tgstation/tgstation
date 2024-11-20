@@ -1,21 +1,17 @@
 import { filter, sort } from 'common/collections';
 import { useState } from 'react';
 import {
-  Box,
   Button,
   ByondUi,
-  Icon,
   Input,
   NoticeBox,
   Section,
   Stack,
-  Tabs,
 } from 'tgui-core/components';
 import { BooleanLike, classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { NanoMap } from '../components/NanoMap'; // BANDASTATION EDIT START - Nanomap
 import { Window } from '../layouts';
 
 type Data = {
@@ -24,21 +20,11 @@ type Data = {
   can_spy: BooleanLike;
   mapRef: string;
   network: string[];
-  // BANDASTATION EDIT START - Nanomap
-  mapUrl: string;
-  selected_z_level: number;
-  // BANDASTATION EDIT END - Nanomap
 };
 
 type Camera = {
   name: string;
   ref: string;
-  // BANDASTATION EDIT START - Nanomap
-  x: number;
-  y: number;
-  z: number;
-  status: BooleanLike;
-  // BANDASTATION EDIT END - Nanomap
 };
 
 /**
@@ -94,93 +80,15 @@ const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
   return queriedCameras;
 };
 
-// BANDASTATION EDIT START - Nanomap
 export const CameraConsole = (props) => {
-  const [tabIndex, setTabIndex] = useState(0);
-  const decideTab = (index) => {
-    switch (index) {
-      case 0:
-        return <CameraConsoleMapContent />;
-      case 1:
-        return <CameraContent />;
-      default:
-        return "WE SHOULDN'T BE HERE!";
-    }
-  };
   return (
-    <Window width={1170} height={755}>
+    <Window width={850} height={708}>
       <Window.Content>
-        <Stack>
-          <Box fillPositionedParent>
-            <Stack.Item
-              width={tabIndex === 1 ? '222px' : '475px'}
-              textAlign="center"
-            >
-              <Tabs
-                fluid
-                ml={tabIndex === 1 ? 1 : 0}
-                mt={tabIndex === 1 ? 1 : 0}
-              >
-                <Tabs.Tab
-                  key="Map"
-                  selected={tabIndex === 0}
-                  onClick={() => setTabIndex(0)}
-                >
-                  <Icon name="map-marked-alt" /> Карта
-                </Tabs.Tab>
-                <Tabs.Tab
-                  key="List"
-                  selected={tabIndex === 1}
-                  onClick={() => setTabIndex(1)}
-                >
-                  <Icon name="table" /> Список
-                </Tabs.Tab>
-              </Tabs>
-            </Stack.Item>
-            {decideTab(tabIndex)}
-          </Box>
-        </Stack>
+        <CameraContent />
       </Window.Content>
     </Window>
   );
 };
-
-export const CameraConsoleMapContent = (props) => {
-  const { act, data } = useBackend<Data>();
-  const cameras = selectCameras(data.cameras, '');
-  const [zoom, setZoom] = useState(1);
-  const { activeCamera, mapUrl, selected_z_level } = data;
-  return (
-    <Stack fill>
-      <Stack.Item height="100%" width="475px">
-        <NanoMap onZoom={(v) => setZoom(v)} mapUrl={mapUrl}>
-          {cameras
-            .filter((cam) => cam.z === Number(selected_z_level))
-            .map((cm) => (
-              <NanoMap.NanoButton
-                props={props}
-                activeCamera={activeCamera}
-                key={cm.ref}
-                x={cm.x}
-                y={cm.y}
-                zoom={zoom}
-                icon={null}
-                tooltip={cm.name}
-                name={cm.name}
-                color={'blue'}
-                status={cm.status}
-                cam_ref={cm.ref}
-              />
-            ))}
-        </NanoMap>
-      </Stack.Item>
-      <Stack.Item className="CameraConsole__right_map">
-        <CameraControls searchText={''} />
-      </Stack.Item>
-    </Stack>
-  );
-};
-// BANDASTATION EDIT END - Nanomap
 
 export const CameraContent = (props) => {
   const [searchText, setSearchText] = useState('');
