@@ -1,7 +1,4 @@
-import { BooleanLike } from 'common/react';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -18,7 +15,10 @@ import {
   Section,
   Stack,
   Table,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 

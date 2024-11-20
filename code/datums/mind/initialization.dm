@@ -11,7 +11,9 @@
 	mind.set_current(src)
 	// There's nowhere else to set this up, mind code makes me depressed
 	mind.antag_hud = add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/antagonist_hud, "combo_hud", mind)
+	RegisterSignal(src, COMSIG_ADMIN_DELETING, PROC_REF(ghost_before_admin_delete), override = TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_MIND_INITIALIZED, mind)
+
 
 /mob/living/carbon/mind_initialize()
 	..()
@@ -35,3 +37,8 @@
 	. = ..()
 	mind.set_assigned_role(SSjob.get_job_type(/datum/job/personal_ai))
 	mind.special_role = ""
+
+/// Signal proc for [COMSIG_ADMIN_DELETING], to ghostize a mob beforehand if an admin is manually deleting it.
+/mob/proc/ghost_before_admin_delete(datum/source)
+	SIGNAL_HANDLER
+	ghostize(can_reenter_corpse = FALSE)

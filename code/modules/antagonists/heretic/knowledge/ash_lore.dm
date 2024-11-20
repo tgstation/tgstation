@@ -63,7 +63,7 @@
 	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality and traverse a short distance, passing though any walls."
 	gain_text = "He knew how to walk between the planes."
 
-	spell_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
+	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	cost = 1
 
 
@@ -99,7 +99,7 @@
 		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
 		the beam will continue to another target."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
-	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
+	action_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 1
 	research_tree_icon_frame = 7
 
@@ -145,7 +145,7 @@
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
-	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
+	action_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
 	research_tree_icon_frame = 5
 

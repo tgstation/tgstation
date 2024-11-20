@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "plumbing pill press advertises the correct maximum volume of your selected product instead of always 50u on the UI"
+  - code_imp: "plumbing pill press validates selected container to prevent href exploits"
+  - code_imp: "plumbing pill press validates input volume to see if it's a number"

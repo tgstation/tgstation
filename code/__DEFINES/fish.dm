@@ -101,10 +101,19 @@
 #define AQUARIUM_ANIMATION_FISH_SWIM "fish"
 #define AQUARIUM_ANIMATION_FISH_DEAD "dead"
 
-#define AQUARIUM_PROPERTIES_PX_MIN "px_min"
-#define AQUARIUM_PROPERTIES_PX_MAX "px_max"
-#define AQUARIUM_PROPERTIES_PY_MIN "py_min"
-#define AQUARIUM_PROPERTIES_PY_MAX "py_max"
+//standard layer defines for aquariums
+
+///The distance that should separate each layer of the aquarium
+#define AQUARIUM_LAYER_STEP 0.01
+/// Aquarium content layer offsets
+#define AQUARIUM_MIN_OFFSET 0.02
+#define AQUARIUM_MAX_OFFSET 1
+/// The layer of the glass overlay
+#define AQUARIUM_GLASS_LAYER 0.02
+/// The layer of the aquarium pane borders
+#define AQUARIUM_BORDERS_LAYER AQUARIUM_MAX_OFFSET + AQUARIUM_LAYER_STEP
+/// Layer for stuff rendered below the glass overlay
+#define AQUARIUM_BELOW_GLASS_LAYER 0.01
 
 #define AQUARIUM_LAYER_MODE_BOTTOM "bottom"
 #define AQUARIUM_LAYER_MODE_TOP "top"
@@ -144,6 +153,16 @@
 ///Used to calculate how many bites a fish can take and therefore the amount of reagents it has.
 #define FISH_WEIGHT_BITE_DIVISOR (FISH_GRIND_RESULTS_WEIGHT_DIVISOR * FISH_WEIGHT_GRIND_TO_BITE_MULT)
 
+///Set of operations that calculate the slowdown of fish based on weight
+#define GET_FISH_SLOWDOWN(weighty) round(((weighty/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT)-1.3, 0.1)
+
+/**
+ * Gets a "rank" for fish weight to determine the force of the fish (or fish tank)
+ * basically, a gross estimate based on how weight generaly scales up (250, 500, 1000, 2000, 4000 etc...)
+ * for most fish
+ */
+#define GET_FISH_WEIGHT_RANK(weighty) max(round(1 + log(2, max(weighty/FISH_WEIGHT_FORCE_DIVISOR, 1)), 1), 1)
+
 ///The breeding timeout for newly instantiated fish is multiplied by this.
 #define NEW_FISH_BREEDING_TIMEOUT_MULT 2
 ///The last feeding timestamp of newly instantiated fish is multiplied by this: ergo, they spawn 50% hungry.
@@ -161,6 +180,12 @@
 #define FISH_FLAG_EXPERIMENT_SCANNABLE (1<<3)
 ///It lets us know that fish/update_size_and_weight() is currently running.
 #define FISH_FLAG_UPDATING_SIZE_AND_WEIGHT (1<<4)
+///Flag added when the population of this fish type exceeeds the stable population inside the aquarium
+#define FISH_FLAG_OVERPOPULATED (1<<5)
+///Flag added when in an aquarium which temperature is within its safe limits
+#define FISH_FLAG_SAFE_TEMPERATURE (1<<6)
+///Flag added when in an aquarium with the right fluid type.
+#define FISH_FLAG_SAFE_FLUID (1<<7)
 
 
 #define MIN_AQUARIUM_TEMP T0C
