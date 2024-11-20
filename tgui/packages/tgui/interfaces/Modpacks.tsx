@@ -102,11 +102,9 @@ const FeaturesTable = () => {
           fill
           scrollable
           title={
-            searchText.length > 0 ? (
-              `Результаты поиска "${searchText}"`
-            ) : (
-              `Суммарно модификаций &mdash; "${features.length}"`
-            )
+            searchText.length > 0
+              ? `Результаты поиска "${searchText}"`
+              : `Суммарно модификаций &mdash; "${features.length}"`
           }
         >
           <Stack fill vertical>
@@ -198,11 +196,9 @@ const TranslationsTable = () => {
           fill
           scrollable
           title={
-            searchText.length > 0 ? (
-              `Результаты поиска "${searchText}":`
-            ) : (
-              `Суммарно модификаций &mdash; "${translations.length}"`
-            )
+            searchText.length > 0
+              ? `Результаты поиска "${searchText}":`
+              : `Суммарно модификаций &mdash; "${translations.length}"`
           }
         >
           <Stack fill vertical>
@@ -296,11 +292,9 @@ const RevertsTable = () => {
           fill
           scrollable
           title={
-            searchText.length > 0 ? (
-              `Результаты поиска "${searchText}":`
-            ) : (
-              `Суммарно модификаций &mdash; "${reverts.length}"`
-            )
+            searchText.length > 0
+              ? `Результаты поиска "${searchText}":`
+              : `Суммарно модификаций &mdash; "${reverts.length}"`
           }
         >
           <Stack fill vertical>
