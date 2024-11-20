@@ -1204,7 +1204,7 @@
 	//Our effective grab state. GRAB_PASSIVE is equal to 0, so if we have no other altering factors to our grab state, we can break free immediately on resist.
 	var/effective_grab_state = pulledby.grab_state
 	//The amount of damage inflicted on a failed resist attempt.
-	var/damage_on_resist_fail = rand(15,20)
+	var/damage_on_resist_fail = rand(7, 13)
 
 	if(body_position == LYING_DOWN) //If prone, treat the grab state as one higher
 		effective_grab_state++
