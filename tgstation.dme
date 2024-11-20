@@ -4696,7 +4696,6 @@
 #include "code\modules\mapfluff\ruins\spaceruin_code\the_Outlet.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\TheDerelict.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\waystation.dm"
-#include "code\modules\mapfluff\ruins\spaceruin_code\whiteship.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\whiteshipruin_box.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\oldstation\oldstation_cytology.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\oldstation\oldstation_fluff.dm"
