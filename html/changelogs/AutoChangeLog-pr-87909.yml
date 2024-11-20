@@ -1,4 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes:
-  - code_imp: "The Greytide event will now play bolt audio and update the icon when toggling door bolts."

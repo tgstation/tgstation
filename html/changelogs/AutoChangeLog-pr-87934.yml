@@ -1,6 +1,0 @@
-author: "aaaa1023"
-delete-after: True
-changes:
-  - bugfix: "Birdshot Atmospherics now has an Air alarm"
-  - bugfix: "Birdshot Atmospherics pumping room APC is now connected to the main grid"
-  - bugfix: "Birdshot Port Primary Hallway APC is now connected to the main grid"

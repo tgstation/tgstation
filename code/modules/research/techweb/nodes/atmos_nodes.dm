@@ -63,7 +63,7 @@
 		"plasmacutter",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
-	required_experiments = list(/datum/experiment/ordnance/gaseous/plasma)
+	discount_experiments = list(/datum/experiment/ordnance/gaseous/plasma = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/fusion

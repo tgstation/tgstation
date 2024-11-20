@@ -17,7 +17,6 @@
 	var/mouse_control_probability = 20
 	/// Allowed time between movements
 	COOLDOWN_DECLARE(move_cooldown)
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /// Admin variant of the chef hat where every mouse pilot input will always be transferred to the wearer
 /obj/item/clothing/head/utility/chefhat/i_am_assuming_direct_control
@@ -104,7 +103,6 @@
 	armor_type = /datum/armor/hats_caphat
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/captain
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 //Captain: This is no longer space-worthy
 /datum/armor/hats_caphat
@@ -122,7 +120,6 @@
 	desc = "Worn only by Captains with an abundance of class."
 	icon_state = "capcap"
 	dog_fashion = null
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/caphat/beret
 	name = "captain's beret"
@@ -131,7 +128,6 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#0070B7#FFCE5B"
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 //Head of Personnel
 /obj/item/clothing/head/hats/hopcap
@@ -140,7 +136,6 @@
 	desc = "The symbol of true bureaucratic micromanagement."
 	armor_type = /datum/armor/hats_hopcap
 	dog_fashion = /datum/dog_fashion/head/hop
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 //Chaplain
 /datum/armor/hats_hopcap
@@ -186,7 +181,6 @@
 	var/flask_path = /obj/item/reagent_containers/cup/glass/flask/det
 	/// Cooldown for retrieving precious candy corn with rmb
 	COOLDOWN_DECLARE(candy_cooldown)
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 
 /datum/armor/fedora_det_hat
@@ -260,7 +254,6 @@
 	var/max_items = 4
 	///items above this weight cannot be put in the hat
 	var/max_weight = WEIGHT_CLASS_NORMAL
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/fedora/inspector_hat/Initialize(mapload)
 	. = ..()
@@ -399,7 +392,6 @@
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
 	flags_1 = IS_PLAYER_COLORABLE_1
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 //Security
 /obj/item/clothing/head/hats/hos
@@ -407,7 +399,6 @@
 	desc = "Please contact the Nanotrasen Costuming Department if found."
 	armor_type = /datum/armor/hats_hos
 	strip_delay = 8 SECONDS
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/hats/hos/cap
 	name = "head of security cap"
@@ -473,7 +464,6 @@
 	armor_type = /datum/armor/hats_warden
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /datum/armor/hats_warden
 	melee = 40
@@ -626,7 +616,6 @@
 	name = "chief medical officer beret"
 	desc = "A beret in a distinct surgical turquoise!"
 	greyscale_colors = "#5EB8B8"
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/utility/surgerycap
 	name = "blue surgery cap"

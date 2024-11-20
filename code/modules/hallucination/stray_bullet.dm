@@ -101,7 +101,6 @@
 			spawn_hit(target, TRUE)
 
 	qdel(src)
-	return TRUE
 
 /// Called when a mob is hit by the fake projectile
 /obj/projectile/hallucination/proc/on_mob_hit(mob/living/hit_mob)

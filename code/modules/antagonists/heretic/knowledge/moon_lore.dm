@@ -32,7 +32,7 @@
 	research_tree_icon_state = "moon_blade"
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	add_traits(user ,TRAIT_EMPATH, REF(src))
+	ADD_TRAIT(user, TRAIT_EMPATH, REF(src))
 
 /datum/heretic_knowledge/moon_grasp
 	name = "Grasp of Lunacy"
@@ -70,7 +70,7 @@
 		duration based on their sanity."
 	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
 
-	spell_to_add = /datum/action/cooldown/spell/pointed/moon_smile
+	action_to_add = /datum/action/cooldown/spell/pointed/moon_smile
 	cost = 1
 
 /datum/heretic_knowledge/mark/moon_mark
@@ -89,7 +89,7 @@
 	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
 		when hitting someone they are forced to join the parade and suffer hallucinations."
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
-	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
+	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
 
 /datum/heretic_knowledge/moon_amulet
@@ -144,7 +144,7 @@
 	gain_text = "I grabbed his hand and we rose, those who saw the truth rose with us. \
 		The ringleader pointed up and the dim light of truth illuminated us further."
 
-	spell_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
+	action_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 1
 
 
