@@ -9125,6 +9125,18 @@
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/storage)
+"cww" = (
+/obj/item/clothing/glasses/meson,
+/obj/item/storage/bag/ore,
+/obj/item/pickaxe,
+/obj/item/mining_scanner,
+/obj/item/flashlight,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/gps/mining,
+/obj/structure/rack,
+/obj/structure/sign/poster/official/safety_internals/directional/south,
+/turf/open/floor/iron/textured_large,
+/area/station/commons/storage/mining)
 "cwH" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -9237,6 +9249,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"cys" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/poster/ripped/directional/north,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "cyA" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/unres{
@@ -18329,6 +18349,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"ffH" = (
+/obj/structure/closet/toolcloset,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/iron,
+/area/station/construction)
 "ffQ" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
@@ -40626,6 +40652,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/brown,
 /obj/machinery/camera/autoname/directional/west,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/mining)
 "lCV" = (
@@ -47425,7 +47452,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/west,
-/obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -49553,6 +49580,13 @@
 /obj/structure/sign/departments/medbay/alt/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"ohh" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/engineering/storage/tech)
 "ohp" = (
 /turf/open/floor/glass,
 /area/station/maintenance/department/medical/central)
@@ -55615,6 +55649,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
+"pMR" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/engineering/storage/tech)
 "pMY" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -56011,6 +56052,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
+"pTq" = (
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/floor/plating,
+/area/station/construction)
 "pTy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -58169,7 +58214,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
-/obj/structure/sign/poster/official/safety_internals/directional/east,
+/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -61891,10 +61936,6 @@
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/station/service/kitchen/coldroom)
-"rBI" = (
-/obj/structure/sign/poster/random/directional/north,
-/turf/open/floor/iron,
-/area/station/construction)
 "rBJ" = (
 /obj/item/clothing/under/misc/burial,
 /obj/item/clothing/under/misc/burial,
@@ -179204,7 +179245,7 @@ vcj
 iur
 sIO
 wDG
-vcj
+pMR
 dOq
 gLU
 wVz
@@ -179718,7 +179759,7 @@ vcj
 acC
 cgI
 roK
-vcj
+ohh
 vlZ
 gCh
 alW
@@ -240900,7 +240941,7 @@ ylU
 oSO
 pXG
 pRj
-hdj
+cys
 daS
 daS
 kLB
@@ -242191,7 +242232,7 @@ gdP
 pRj
 pRj
 gmL
-uFh
+pTq
 uFh
 vym
 vym
@@ -243475,9 +243516,9 @@ cMS
 ecJ
 cEi
 tXY
-tXY
+cww
 kta
-rBI
+bbo
 vja
 kaK
 bbo
@@ -243991,7 +244032,7 @@ cxg
 pfD
 tXY
 kta
-khu
+ffH
 bbo
 qQz
 erA
