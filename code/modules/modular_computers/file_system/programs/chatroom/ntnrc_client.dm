@@ -160,6 +160,11 @@
 		if("PRG_setpassword")
 			if(!authed)
 				return
+			// DOPPLER EDIT ADDITION START - NTNRC_FOR_ALL
+			if(channel.strong) // Block setting passwords on important channels
+				computer.visible_message(span_warning("Warning. May not set a password on common channels."))
+				return
+			// DOPPLER EDIT ADDITION END - NTNRC_FOR_ALL
 			var/new_password = sanitize(params["new_password"])
 			if(!authed)
 				return
