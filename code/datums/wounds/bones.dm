@@ -61,9 +61,10 @@
 /datum/wound/blunt/bone/set_victim(new_victim)
 
 	if (victim)
-		UnregisterSignal(victim, COMSIG_LIVING_UNARMED_ATTACK)
+		UnregisterSignal(victim, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_FIRED_GUN))
 	if (new_victim)
 		RegisterSignal(new_victim, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(attack_with_hurt_hand))
+		RegisterSignal(new_victim, COMSIG_MOB_FIRED_GUN, PROC_REF(firing_with_messed_up_hand))
 
 	return ..()
 
@@ -120,18 +121,48 @@
 	// With a severe or critical wound, you have a 15% or 30% chance to proc pain on hit
 	if(prob((severity - 1) * 15))
 		// And you have a 70% or 50% chance to actually land the blow, respectively
-		if(prob(70 - 20 * (severity - 1)))
-			to_chat(victim, span_userdanger("The fracture in your [limb.plaintext_zone] shoots with pain as you strike [target]!"))
-			limb.receive_damage(brute=rand(1,5))
+		if(HAS_TRAIT(victim, TRAIT_ANALGESIA) || prob(70 - 20 * (severity - 1)))
+			if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+				to_chat(victim, span_danger("The fracture in your [limb.plaintext_zone] shoots with pain as you strike [target]!"))
+			victim.apply_damage(rand(1, 5), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 		else
 			victim.visible_message(span_danger("[victim] weakly strikes [target] with [victim.p_their()] broken [limb.plaintext_zone], recoiling from pain!"), \
 			span_userdanger("You fail to strike [target] as the fracture in your [limb.plaintext_zone] lights up in unbearable pain!"), vision_distance=COMBAT_MESSAGE_RANGE)
 			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
 			victim.Stun(0.5 SECONDS)
-			limb.receive_damage(brute=rand(3,7))
+			victim.apply_damage(rand(3, 7), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	return NONE
+
+/// If we're a human who's firing a gun with a broken arm, we might hurt ourselves doing so
+/datum/wound/blunt/bone/proc/firing_with_messed_up_hand(datum/source, obj/item/gun/gun, atom/firing_at, params, zone, bonus_spread_values)
+	SIGNAL_HANDLER
+
+	switch(limb.body_zone)
+		if(BODY_ZONE_L_ARM)
+			// Heavy guns use both hands so they will always get a penalty
+			// (Yes, this means having two broken arms will make heavy weapons SOOO much worse)
+			// Otherwise make sure THIS hand is firing THIS gun
+			if(gun.weapon_weight <= WEAPON_MEDIUM && !IS_LEFT_INDEX(victim.get_held_index_of_item(gun)))
+				return
+
+		if(BODY_ZONE_R_ARM)
+			// Ditto but for right arm
+			if(gun.weapon_weight <= WEAPON_MEDIUM && !IS_RIGHT_INDEX(victim.get_held_index_of_item(gun)))
+				return
+
+		else
+			// This is not arm wound, so we don't care
+			return
+
+	if(gun.recoil > 0 && severity >= WOUND_SEVERITY_SEVERE && prob(25 * (severity - 1)))
+		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+			to_chat(victim, span_danger("The fracture in your [limb.plaintext_zone] explodes with pain as [gun] kicks back!"))
+		victim.apply_damage(rand(1, 3) * (severity - 1) * gun.weapon_weight, BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
+
+	if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+		bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (15 * severity * (limb.current_gauze?.splint_factor || 1))
 
 /datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE)

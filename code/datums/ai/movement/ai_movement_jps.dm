@@ -16,6 +16,7 @@
 		current_movement_target,
 		delay,
 		repath_delay = 0.5 SECONDS,
+		simulated_only = !HAS_TRAIT(controller.pawn, TRAIT_SPACEWALK),
 		max_path_length = maximum_length,
 		minimum_distance = controller.get_minimum_distance(),
 		access = controller.get_access(),

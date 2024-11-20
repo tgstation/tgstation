@@ -12,7 +12,7 @@
 	var/require_model = FALSE
 	var/list/model_type = null
 	/// Bitflags listing model compatibility. Used in the exosuit fabricator for creating sub-categories.
-	var/list/model_flags = NONE
+	var/model_flags = NONE
 
 	/// List of items to add with the module, if any
 	var/list/items_to_add
@@ -664,6 +664,9 @@
 
 /obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
 	return NONE
+
+/obj/item/inducer/cyborg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_FAILURE
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"

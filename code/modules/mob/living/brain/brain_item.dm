@@ -449,6 +449,14 @@
 	can_smoothen_out = FALSE
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
 
+// This fixes an edge case from species/regenerate_organs that would transfer the brain trauma before organ/on_mob_remove can remove it
+// Prevents wizards from using the magic mirror to gain bluespace_prophet trauma and then switching to another race
+/obj/item/organ/brain/lustrous/before_organ_replacement(obj/item/organ/replacement)
+	if(owner)
+		owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+		owner.RemoveElement(/datum/element/tenacious)
+	. = ..()
+
 /obj/item/organ/brain/lustrous/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	organ_owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
@@ -618,7 +626,7 @@
 /obj/item/organ/brain/proc/get_attacking_limb(mob/living/carbon/human/target)
 	var/obj/item/bodypart/arm/active_hand = owner.get_active_hand()
 	if(target.body_position == LYING_DOWN && owner.usable_legs)
-		var/obj/item/bodypart/found_bodypart = owner.get_bodypart((active_hand.held_index % 2) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
+		var/obj/item/bodypart/found_bodypart = owner.get_bodypart(IS_LEFT_INDEX(active_hand.held_index) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
 		return found_bodypart || active_hand
 	return active_hand
 

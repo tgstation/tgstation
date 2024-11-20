@@ -61,8 +61,9 @@
 /obj/item/inducer/examine(mob/living/user)
 	. = ..()
 
-	if(!QDELETED(powerdevice))
-		. += span_notice("Its display shows: [display_energy(powerdevice.charge)].")
+	var/obj/item/stock_parts/power_store/our_cell = get_cell(src, user)
+	if(!QDELETED(our_cell))
+		. += span_notice("Its display shows: [display_energy(our_cell.charge)].")
 		if(opened)
 			. += span_notice("The cell can be removed with an empty hand.")
 			. += span_notice("Plasma sheets can be used to recharge the cell.")
@@ -146,11 +147,13 @@
 		to_chat(user, span_warning("You don't have the dexterity to use [src]!"))
 		return ITEM_INTERACT_FAILURE
 
-	if(QDELETED(powerdevice))
+	var/obj/item/stock_parts/power_store/our_cell = get_cell(src, user)
+
+	if(QDELETED(our_cell))
 		balloon_alert(user, "no cell installed!")
 		return ITEM_INTERACT_FAILURE
 
-	if(!powerdevice.charge)
+	if(!our_cell.charge)
 		balloon_alert(user, "no charge!")
 		return ITEM_INTERACT_FAILURE
 
@@ -173,13 +176,13 @@
 			break
 
 		//transfer of charge
-		var/transferred = min(powerdevice.charge, target_cell.used_charge(), (target_cell.rating_base * target_cell.rating * power_transfer_multiplier))
+		var/transferred = min(our_cell.charge, target_cell.used_charge(), (target_cell.rating_base * target_cell.rating * power_transfer_multiplier))
 		if(!transferred)
 			break
-		powerdevice.use(target_cell.give(transferred))
+		our_cell.use(target_cell.give(transferred))
 
 		//update all appearances
-		powerdevice.update_appearance()
+		our_cell.update_appearance()
 		target_cell.update_appearance()
 		interacting_with.update_appearance()
 

@@ -185,7 +185,7 @@
 		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack. \
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
-	spell_to_add = /datum/action/cooldown/spell/realignment
+	action_to_add = /datum/action/cooldown/spell/realignment
 	cost = 1
 
 
@@ -364,7 +364,7 @@
 		at a target, dealing damage and causing bleeding."
 	gain_text = "Without thinking, I took the knife of a fallen soldier and threw with all my might. My aim was true! \
 		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
-	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
+	action_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
 
 /datum/heretic_knowledge/ultimate/blade_final

@@ -505,7 +505,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/i = 1
 	for(var/atom/movable/screen/swap_hand/SH in static_inventory)
-		SH.screen_loc = ui_swaphand_position(mymob,!(i % 2) ? 2: 1)
+		SH.screen_loc = ui_swaphand_position(mymob, IS_RIGHT_INDEX(i) ? RIGHT_HANDS : LEFT_HANDS)
 		i++
 	for(var/atom/movable/screen/human/equip/E in static_inventory)
 		E.screen_loc = ui_equip_position(mymob)

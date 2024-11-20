@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(pathfinder)
 
 	// Otherwise we're gonna make a new one, and turn it into a path for the callbacks passed into us
 	var/list/datum/callback/pass_in = list()
-	pass_in += CALLBACK(GLOBAL_PROC, /proc/path_map_passalong, on_finish, get_turf(caller), mintargetdist, skip_first)
+	pass_in += CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(path_map_passalong), on_finish, get_turf(caller), mintargetdist, skip_first)
 	// And to allow subsequent calls to reuse the same map, we'll put a placeholder in the cache, and fill it up when the pathing finishes
 	var/datum/path_map/empty = new()
 	empty.pass_info = new(caller, access)
