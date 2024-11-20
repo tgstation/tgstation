@@ -101,12 +101,13 @@
 	. += span_notice("You can <b>right click</b> a pipe to set the RPD to its color and layer.")
 
 /obj/item/pipe_dispenser/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
-	. = ..()
+	. = NONE
+
 	if(istype(target, /obj/machinery/atmospherics))
 		var/obj/machinery/atmospherics/atmos_target = target
 		if(atmos_target.pipe_color && atmos_target.piping_layer)
 			context[SCREENTIP_CONTEXT_RMB] = "Copy piping color and layer"
-	return CONTEXTUAL_SCREENTIP_SET
+			return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
