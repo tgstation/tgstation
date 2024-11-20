@@ -58,7 +58,7 @@
 
 /obj/machinery/plumbing/pill_press/Destroy(force)
 	QDEL_LAZYLIST(stored_products)
-	. = ..()
+	return ..()
 
 /obj/machinery/plumbing/pill_press/examine(mob/user)
 	. = ..()
