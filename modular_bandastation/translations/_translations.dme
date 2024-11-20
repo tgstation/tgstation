@@ -14,5 +14,6 @@
 #include "code/translate_verbs.dm"
 #include "code/ru_names/ru_name_base.dm"
 #include "code/ru_names/ru_name_materials.dm"
+#include "code/ru_names/ru_name_orderables.dm"
 
 #include "code/~undefs.dm"
