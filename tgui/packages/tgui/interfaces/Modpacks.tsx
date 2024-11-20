@@ -4,10 +4,7 @@ import { useState } from 'react';
 import {
   Box,
   Collapsible,
-  Icon,
-  Image,
   Input,
-  Flex,
   LabeledList,
   NoticeBox,
   Section,
@@ -65,11 +62,9 @@ export const Modpacks = (props) => {
             Балансы и Реверты
           </Tabs.Tab>
         </Tabs>
-        {
-          (selectedCategory === 'Features' && <FeaturesTable />) ||
+        {(selectedCategory === 'Features' && <FeaturesTable />) ||
           (selectedCategory === 'Translations' && <TranslationsTable />) ||
-          (selectedCategory === 'Reverts' && <RevertsTable />)
-        }
+          (selectedCategory === 'Reverts' && <RevertsTable />)}
       </Window.Content>
     </Window>
   );
@@ -152,8 +147,12 @@ const FeaturesTable = () => {
                             textAlign: 'center',
                           }}
                         >
-                          <LabeledList.Item label="Описание">{feature.desc}</LabeledList.Item>
-                          <LabeledList.Item label="Автор">{feature.author}</LabeledList.Item>
+                          <LabeledList.Item label="Описание">
+                            {feature.desc}
+                          </LabeledList.Item>
+                          <LabeledList.Item label="Автор">
+                            {feature.author}
+                          </LabeledList.Item>
                         </Box>
                       </Table.Cell>
                     </Table.Row>
@@ -228,7 +227,9 @@ const TranslationsTable = () => {
                   <Collapsible
                     color="transparent"
                     key={translate.name}
-                    title={<span className="color-white">{translate.name}</span>}
+                    title={
+                      <span className="color-white">{translate.name}</span>
+                    }
                   >
                     <Table.Row key={translate.name}>
                       <Table.Cell collapsing>
@@ -244,8 +245,12 @@ const TranslationsTable = () => {
                             textAlign: 'center',
                           }}
                         >
-                          <LabeledList.Item label="Описание">{translate.desc}</LabeledList.Item>
-                          <LabeledList.Item label="Автор">{translate.author}</LabeledList.Item>
+                          <LabeledList.Item label="Описание">
+                            {translate.desc}
+                          </LabeledList.Item>
+                          <LabeledList.Item label="Автор">
+                            {translate.author}
+                          </LabeledList.Item>
                         </Box>
                       </Table.Cell>
                     </Table.Row>
@@ -336,8 +341,12 @@ const RevertsTable = () => {
                             textAlign: 'center',
                           }}
                         >
-                          <LabeledList.Item label="Описание">{revert.desc}</LabeledList.Item>
-                          <LabeledList.Item label="Автор">{revert.author}</LabeledList.Item>
+                          <LabeledList.Item label="Описание">
+                            {revert.desc}
+                          </LabeledList.Item>
+                          <LabeledList.Item label="Автор">
+                            {revert.author}
+                          </LabeledList.Item>
                         </Box>
                       </Table.Cell>
                     </Table.Row>
