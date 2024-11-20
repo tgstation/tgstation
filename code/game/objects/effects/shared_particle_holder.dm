@@ -49,12 +49,12 @@ GLOBAL_LIST_EMPTY(shared_particles)
 		GLOB.shared_particles[particle_key][SHARED_PARTICLE_USER_NUM_INDEX] += 1
 		return new_holder
 
-	for (var/obj/effect/abstract/shared_particle_holder/particle_holder as anything in GLOB.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX])
-		if (particle_holder in vis_contents)
-			return particle_holder
-		vis_contents += particle_holder
-		GLOB.shared_particles[particle_key][SHARED_PARTICLE_USER_NUM_INDEX] += 1
+	var/obj/effect/abstract/shared_particle_holder/particle_holder = pick(GLOB.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX])
+	if (particle_holder in vis_contents)
 		return particle_holder
+	vis_contents += particle_holder
+	GLOB.shared_particles[particle_key][SHARED_PARTICLE_USER_NUM_INDEX] += 1
+	return particle_holder
 
 /* Removes shared particles from object's vis_contents and disposes of it if nothing uses that type/key of particle
  * particle_key can be either a type (if no custom_key was passed) or said custom_key

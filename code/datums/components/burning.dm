@@ -30,11 +30,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if (fire_particles)
 		if(ismovable(parent))
 			var/atom/movable/movable_parent = parent
+			// burning particles look pretty bad when they stack on mobs, so that behavior is not wanted for items
 			movable_parent.add_shared_particles(fire_particles, "[fire_particles]_[isitem(parent)]", isitem(parent) ? NONE : PARTICLE_ATTACH_MOB)
 			particle_type = fire_particles
 		else
-			// burning particles look pretty bad when they stack on mobs, so that behavior is not wanted for items
-			particle_effect = new(atom_parent, fire_particles, isitem(atom_parent) ? NONE : PARTICLE_ATTACH_MOB)
+			particle_effect = new(atom_parent, fire_particles)
 	START_PROCESSING(SSburning, src)
 
 /datum/component/burning/Destroy(force)
