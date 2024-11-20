@@ -101,5 +101,5 @@
 	if(!buckled_mobs || prob(40))
 		return ..()
 	for(var/mob/rider as anything in buckled_mobs)
-		rider.bullet_act(P)
-	return TRUE
+		return rider.bullet_act(P)
+	return ..()

@@ -10,7 +10,7 @@
 	inhand_icon_state = "gun"
 	item_flags = NOBLUDGEON
 	///overlay when the hook is retracted
-	var/static/mutable_appearance/hook_overlay = new(icon = 'icons/obj/mining.dmi', icon_state = "grapple_gun_hooked")
+	var/static/mutable_appearance/hook_overlay = mutable_appearance(icon = 'icons/obj/mining.dmi', icon_state = "grapple_gun_hooked")
 	///is the hook retracted
 	var/hooked = TRUE
 	///addtimer id for launching the user
