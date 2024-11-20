@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "mobs can no longer hear their own breathing while deaf"
