@@ -7,7 +7,9 @@ import {
   NoticeBox,
   Section,
   Stack,
+  Tabs,
 } from 'tgui-core/components';
+import { NanoMap } from '../components/NanoMap';
 import { BooleanLike, classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
@@ -20,11 +22,17 @@ type Data = {
   can_spy: BooleanLike;
   mapRef: string;
   network: string[];
+  mapUrl: string;
+  selected_z_level: number;
 };
 
 type Camera = {
   name: string;
   ref: string;
+  x: number;
+  y: number;
+  z: number;
+  status: BooleanLike;
 };
 
 /**
@@ -80,9 +88,9 @@ const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
   return queriedCameras;
 };
 
-export const CameraConsole = (props) => {
+export const CameraConsole220 = (props) => {
   return (
-    <Window width={850} height={708}>
+    <Window width={1170} height={775}>
       <Window.Content>
         <CameraContent />
       </Window.Content>
@@ -92,20 +100,60 @@ export const CameraConsole = (props) => {
 
 export const CameraContent = (props) => {
   const [searchText, setSearchText] = useState('');
+  const [tab, setTab] = useState('Map');
+  const decideTab = (tab) => {
+    switch (tab) {
+      case 'List':
+        return (
+          <CameraListSelector
+            searchText={searchText}
+            setSearchText={setSearchText}
+          />
+        );
+      case 'Map':
+        return <CameraMapSelector />;
+      default:
+        return "WE SHOULDN'T BE HERE!";
+    }
+  };
 
   return (
     <Stack fill>
       <Stack.Item grow>
-        <CameraSelector searchText={searchText} setSearchText={setSearchText} />
+        <Stack fill vertical>
+          <Stack.Item textAlign="center">
+            <Tabs fluid>
+              <Tabs.Tab
+                key="Map"
+                icon="map-marked-alt"
+                selected={tab === 'Map'}
+                onClick={() => setTab('Map')}
+              >
+                Карта
+              </Tabs.Tab>
+              <Tabs.Tab
+                key="List"
+                icon="table"
+                selected={tab === 'List'}
+                onClick={() => setTab('List')}
+              >
+                Список
+              </Tabs.Tab>
+            </Tabs>
+          </Stack.Item>
+          <Stack.Item grow={3} mt={tab === 'Map' && 0}>
+            {decideTab(tab)}
+          </Stack.Item>
+        </Stack>
       </Stack.Item>
-      <Stack.Item grow={3}>
-        <CameraControls searchText={searchText} />
+      <Stack.Item grow={tab === 'Map' ? 1.5 : 3} ml={tab === 'Map' && 0}>
+        <CameraControls searchText={searchText} selectedTab={tab} />
       </Stack.Item>
     </Stack>
   );
 };
 
-const CameraSelector = (props) => {
+const CameraListSelector = (props) => {
   const { act, data } = useBackend<Data>();
   const { searchText, setSearchText } = props;
   const { activeCamera } = data;
@@ -156,10 +204,44 @@ const CameraSelector = (props) => {
   );
 };
 
-const CameraControls = (props: { searchText: string }) => {
+export const CameraMapSelector = (props) => {
+  const { act, data } = useBackend<Data>();
+  const cameras = selectCameras(data.cameras, '');
+  const [zoom, setZoom] = useState(1);
+  const { activeCamera, mapUrl, selected_z_level } = data;
+
+  return (
+    <Stack fill>
+      <Stack.Item style={{ overflow: 'hidden' }}>
+        <NanoMap onZoom={(v) => setZoom(v)} mapUrl={mapUrl}>
+          {cameras
+            .filter((cam) => cam.z === Number(selected_z_level))
+            .map((cm) => (
+              <NanoMap.NanoButton
+                props={props}
+                activeCamera={activeCamera}
+                key={cm.ref}
+                x={cm.x}
+                y={cm.y}
+                zoom={zoom}
+                icon={null}
+                tooltip={cm.name}
+                name={cm.name}
+                color={'blue'}
+                status={cm.status}
+                cam_ref={cm.ref}
+              />
+            ))}
+        </NanoMap>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const CameraControls = (props: { searchText: string; selectedTab: string }) => {
   const { act, data } = useBackend<Data>();
   const { activeCamera, can_spy, mapRef } = data;
-  const { searchText } = props;
+  const { searchText, selectedTab } = props;
 
   const cameras = selectCameras(data.cameras, searchText);
 
@@ -177,7 +259,6 @@ const CameraControls = (props: { searchText: string }) => {
                 <NoticeBox danger>No input signal</NoticeBox>
               )}
             </Stack.Item>
-
             <Stack.Item>
               {!!can_spy && (
                 <Button
@@ -187,7 +268,6 @@ const CameraControls = (props: { searchText: string }) => {
                 />
               )}
             </Stack.Item>
-
             <Stack.Item>
               <Button
                 icon="chevron-left"
@@ -199,7 +279,6 @@ const CameraControls = (props: { searchText: string }) => {
                 }
               />
             </Stack.Item>
-
             <Stack.Item>
               <Button
                 icon="chevron-right"
@@ -216,7 +295,9 @@ const CameraControls = (props: { searchText: string }) => {
         <Stack.Item grow>
           <ByondUi
             height="100%"
-            width="100%"
+            // Это пиздец, но если этот ебейших масштабов костыль не сделать,
+            // то ByondUI не обновит свой размер после изменения grow в CameraContent
+            width={selectedTab === 'Map' ? '100%' : '99.999%'}
             params={{
               id: mapRef,
               type: 'map',

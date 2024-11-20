@@ -73,7 +73,7 @@
 		cam_screen.display_to(user)
 		user.client.register_map_obj(cam_background)
 		// Open UI
-		ui = new(user, src, "CameraConsole", name)
+		ui = new(user, src, "CameraConsole220", name) // BANDASTATION EDIT: UI changed from CameraConsole to CameraConsole220
 		ui.open()
 
 /obj/machinery/computer/security/ui_status(mob/user, datum/ui_state/state)
