@@ -133,7 +133,7 @@
 	playsound(get_turf(user), RPD_USE_SOUND, 50, TRUE)
 	return BRUTELOSS
 
-///Pipe layers that contain the current selected direction
+///Returns pipe layers that contain the current selected direction
 /obj/item/pipe_dispenser/proc/get_active_pipe_layers()
 	PRIVATE_PROC(TRUE)
 	RETURN_TYPE(/list)
