@@ -157,6 +157,13 @@
 /// Basically any layer below this (numerically) is "on" a floor for the purposes of washing
 #define FLOOR_CLEAN_LAYER (20 + TOPDOWN_LAYER)
 
+//Placeholders in case the game plane and possibly other things between it and the floor plane are ever made into topdown planes
+
+///Below this level, objects with topdown layers are rendered as if underwater by the immerse element
+#define TOPDOWN_WATER_LEVEL_LAYER 100 + TOPDOWN_LAYER
+///Above this level, objects with topdown layers are unaffected by the immerse element
+#define TOPDOWN_ABOVE_WATER_LAYER 200 + TOPDOWN_LAYER
+
 //WALL_PLANE layers
 #define BELOW_CLOSED_TURF_LAYER 2.053
 #define CLOSED_TURF_LAYER 2.058
