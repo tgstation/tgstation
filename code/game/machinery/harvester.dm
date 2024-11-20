@@ -179,7 +179,7 @@
 	obj_flags |= EMAGGED
 	allow_living = TRUE
 	allow_clothing = TRUE
-	balloon_alert(!user, "lifesign scanners overloaded")
+	balloon_alert(user, "lifesign scanners overloaded")
 	return TRUE
 
 /obj/machinery/harvester/container_resist_act(mob/living/user)

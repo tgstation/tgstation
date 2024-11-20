@@ -27,6 +27,7 @@
 	fish_count_regen = list(
 		/obj/item/fish/clownfish/lube = 3 MINUTES,
 		/obj/item/fish/swordfish = 5 MINUTES,
+		/obj/structure/mystery_box/fishing = 32 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
@@ -358,7 +359,9 @@
 	fish_counts = list(
 		/obj/structure/closet/crate/necropolis/tendril = 1
 	)
-
+	fish_count_regen = list(
+		/obj/structure/closet/crate/necropolis/tendril = 27 MINUTES,
+	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
@@ -385,6 +388,10 @@
 	fish_counts = list(
 		/obj/item/stack/sheet/mineral/adamantine = 3,
 		/obj/item/stack/sheet/mineral/runite = 2,
+	)
+	fish_count_regen = list(
+		/obj/item/stack/sheet/mineral/adamantine = 8 MINUTES,
+		/obj/item/stack/sheet/mineral/runite = 10 MINUTES,
 	)
 	overlay_state = "portal_plasma"
 
@@ -614,6 +621,9 @@
 	fish_counts = list(
 		/mob/living/basic/carp/mega = 2,
 	)
+	fish_count_regen = list(
+		/mob/living/basic/carp/mega = 9 MINUTES,
+	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 18
 
 /datum/fish_source/deepfryer
@@ -635,6 +645,7 @@
 	fish_count_regen = list(
 		/obj/item/fish/fryish = 2 MINUTES,
 		/obj/item/fish/fryish/fritterish = 6 MINUTES,
+		/obj/item/fish/fryish/nessie = 22 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 13
 

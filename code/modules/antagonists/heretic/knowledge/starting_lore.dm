@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	desc = "Starts your journey into the Mansus. \
 		Grants you the Mansus Grasp, a powerful and upgradable \
 		disabling spell that can be cast regardless of having a focus."
-	spell_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
+	action_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
 	cost = 0
 	is_starting_knowledge = TRUE
 
@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	name = "Cloak of Shadow"
 	desc = "Grants you the spell Cloak of Shadow. This spell will completely conceal your identity in a purple smoke \
 		for three minutes, assisting you in keeping secrecy. Requires a focus to cast."
-	spell_to_add = /datum/action/cooldown/spell/shadow_cloak
+	action_to_add = /datum/action/cooldown/spell/shadow_cloak
 	cost = 0
 	is_starting_knowledge = TRUE
 

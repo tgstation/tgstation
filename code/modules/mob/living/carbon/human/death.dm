@@ -10,11 +10,17 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	else
 		new /obj/effect/gibspawner/human/bodypartless(drop_location(), src, get_static_viruses())
 
-/mob/living/carbon/human/spawn_dust(just_ash = FALSE)
+/mob/living/carbon/human/spawn_dust(just_ash)
 	if(just_ash)
-		new /obj/effect/decal/cleanable/ash(loc)
-	else
-		new /obj/effect/decal/remains/human(loc)
+		return ..()
+
+	var/bone_type = /obj/effect/decal/remains/human
+	if(isplasmaman(src))
+		bone_type = /obj/effect/decal/remains/plasma
+
+	var/obj/effect/decal/remains/human/bones = new bone_type(loc)
+	bones.pixel_z = -6
+	bones.pixel_w = rand(-1, 1)
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)

@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Firestacks, burning/acid/decaying effects and (brought back after being temporarily removed) slimed status effects now use a new \"shared\" particles system, which should considerably improve client performance when encountering a lot of burning/slimed entities."

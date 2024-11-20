@@ -12,8 +12,8 @@
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "reel_blue"
 	w_class = WEIGHT_CLASS_SMALL
-	///A list of traits that this fishing line has, checked by fish traits and the minigame.
-	var/list/fishing_line_traits
+	///A bitfield of traits that this fishing line has, checked by fish traits and the minigame.
+	var/fishing_line_traits
 	/// Color of the fishing line
 	var/line_color = COLOR_GRAY
 	///The description given to the autowiki
@@ -146,11 +146,11 @@
 	icon_state = "hook"
 	w_class = WEIGHT_CLASS_TINY
 
-	/// A list of traits that this fishing hook has, checked by fish traits and the minigame
-	var/list/fishing_hook_traits
+	/// A bitfield of traits that this fishing hook has, checked by fish traits and the minigame
+	var/fishing_hook_traits
 	/// icon state added to main rod icon when this hook is equipped
 	var/rod_overlay_icon_state = "hook_overlay"
-	/// What subtype of `/obj/item/chasm_detritus` do we fish out of chasms? Defaults to `/obj/item/chasm_detritus`.
+	/// What subtype of `/datum/chasm_detritus` do we fish out of chasms? Defaults to `/datum/chasm_detritus`.
 	var/chasm_detritus_type = /datum/chasm_detritus
 	///The description given to the autowiki
 	var/wiki_desc = "A generic fishing hook. <b>You won't be able to fish without one.</b>"
