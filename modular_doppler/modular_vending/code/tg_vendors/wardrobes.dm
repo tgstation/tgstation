@@ -8,6 +8,16 @@
 		/obj/item/clothing/suit/jacket/doppler/departmental_jacket/med = 2,
 	)
 
+/obj/machinery/vending/wardrobe/jani_wardrobe
+	products_doppler = list(
+		/obj/item/clothing/head/hats/janitor_doppler = 3,
+		/obj/item/clothing/shoes/galoshes/doppler = 2,
+		/obj/item/clothing/gloves/botanic_leather/janitor = 3,
+		/obj/item/clothing/suit/apron/janitor_cloak = 3,
+		/obj/item/clothing/under/rank/civilian/janitor/doppler = 3,
+		/obj/item/clothing/under/rank/civilian/janitor/doppler_ct = 3,
+	)
+
 /obj/machinery/vending/wardrobe/engi_wardrobe
 	products_doppler = list(
 		/obj/item/clothing/under/misc/doppler_uniform/engineering = 5,

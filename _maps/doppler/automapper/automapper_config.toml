@@ -104,3 +104,12 @@ directory = "_maps/doppler/automapper/templates/wawastation/"
 required_map = "wawastation.dmm"
 coordinates = [83, 92, 1]
 trait_name = "Station"
+
+# NEBULASTATION MAP EDITS
+# Nebulastation Cryo
+[templates.nebulastation_cryo]
+map_files = ["nebulastation_cryo.dmm"]
+directory = "_maps/doppler/automapper/templates/nebulastation/"
+required_map = "NebulaStation.dmm"
+coordinates = [117, 137, 2]
+trait_name = "Station"

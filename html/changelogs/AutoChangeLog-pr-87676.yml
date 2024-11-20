@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "MK honk shoes now consume bananium & can clown again"
-  - code_imp: "material container objects end their attack chain early"

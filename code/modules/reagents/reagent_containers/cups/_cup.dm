@@ -507,11 +507,17 @@
 	if(grinded)
 		to_chat(user, span_warning("There is something inside already!"))
 		return
-	if(I.juice_typepath || I.grind_results)
+	if(!I.blend_requirements(src))
+		to_chat(user, span_warning("Cannot grind this!"))
+		return
+	if(length(I.grind_results) || I.reagents?.total_volume)
 		I.forceMove(src)
 		grinded = I
-		return
-	to_chat(user, span_warning("You can't grind this!"))
+
+/obj/item/reagent_containers/cup/mortar/blended(obj/item/blended_item, grinded)
+	src.grinded = null
+
+	return ..()
 
 /obj/item/reagent_containers/cup/mortar/proc/grind_item(obj/item/item, mob/living/carbon/human/user)
 	if(item.flags_1 & HOLOGRAM_1)
@@ -521,13 +527,12 @@
 
 	if(!item.grind(reagents, user))
 		if(isstack(item))
-			to_chat(usr, span_notice("[src] attempts to grind as many pieces of [item] as possible."))
+			to_chat(user, span_notice("[src] attempts to grind as many pieces of [item] as possible."))
 		else
 			to_chat(user, span_danger("You fail to grind [item]."))
 		return
+
 	to_chat(user, span_notice("You grind [item] into a nice powder."))
-	grinded = null
-	QDEL_NULL(item)
 
 /obj/item/reagent_containers/cup/mortar/proc/juice_item(obj/item/item, mob/living/carbon/human/user)
 	if(item.flags_1 & HOLOGRAM_1)
@@ -538,9 +543,8 @@
 	if(!item.juice(reagents, user))
 		to_chat(user, span_notice("You fail to juice [item]."))
 		return
+
 	to_chat(user, span_notice("You juice [item] into a fine liquid."))
-	grinded = null
-	QDEL_NULL(item)
 
 //Coffeepots: for reference, a standard cup is 30u, to allow 20u for sugar/sweetener/milk/creamer
 /obj/item/reagent_containers/cup/coffeepot

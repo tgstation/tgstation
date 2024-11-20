@@ -37,6 +37,8 @@
 #define TRAIT_PERMITTED_CYBERNETIC "permitted_cybernetic"
 /// No step on glass
 #define TRAIT_HARD_SOLES "hard_soles"
+/// Can detach cybernetic limbs voluntarily
+#define TRAIT_ROBOTIC_LIMBATTACHMENT "robotic_limbattachment"
 
 ////
 // Jobs

@@ -1732,10 +1732,10 @@
 	pixel_y = 5;
 	pixel_x = 3
 	},
-/obj/item/fish/dwarf_moonfish{
+/obj/item/fish/moonfish/dwarf{
 	pixel_x = -5
 	},
-/obj/item/fish/dwarf_moonfish{
+/obj/item/fish/moonfish/dwarf{
 	pixel_x = -2;
 	pixel_y = 8
 	},

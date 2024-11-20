@@ -837,6 +837,59 @@
 	icon_state = "synth_lizard_r_leg"
 	limb_id = "synth_lizard"
 
+///
+// Human-Like
+///
+/obj/item/bodypart/head/robot/android/human_like
+	is_dimorphic = TRUE
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "human_like_head_f"
+	limb_id = "human_like"
+
+/obj/item/bodypart/chest/robot/android/human_like
+	is_dimorphic = TRUE
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "human_like_chest_f"
+	limb_id = "human_like"
+
+/obj/item/bodypart/arm/right/robot/android/human_like
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "human_like_r_arm"
+	limb_id = "human_like"
+
+/obj/item/bodypart/arm/left/robot/android/human_like
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "human_like_l_arm"
+	limb_id = "human_like"
+
+/obj/item/bodypart/leg/right/robot/android/human_like
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "human_like_r_leg"
+	limb_id = "human_like"
+
+/obj/item/bodypart/leg/left/robot/android/human_like
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "human_like_r_leg"
+	limb_id = "human_like"
+
 #undef HEAD_MONITOR_FACE
 #undef ANDROID_BODYPARTS_DMI
 

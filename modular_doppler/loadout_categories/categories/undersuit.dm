@@ -179,7 +179,7 @@
 
 /datum/loadout_item/undersuit/formal/cowl_neck
 	name = "Cowl Neck Shirt & Trousers"
-	item_path = /obj/item/clothing/under/collared_shirt
+	item_path = /obj/item/clothing/under/cowl_neck_shirt
 
 /datum/loadout_item/undersuit/formal/collared_shirt
 	name = "Collared Shirt & Trousers"

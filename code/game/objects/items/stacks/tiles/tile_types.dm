@@ -336,6 +336,9 @@
 /obj/item/stack/tile/carpet/fifty
 	amount = 50
 
+/obj/item/stack/tile/iron/fifty
+	amount = 50
+
 /obj/item/stack/tile/carpet/black/fifty
 	amount = 50
 

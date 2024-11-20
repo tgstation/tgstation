@@ -110,7 +110,7 @@
 	who.balloon_alert(who, "can't strip a fused MODsuit!")
 	return ..()
 
-/obj/item/mod/control/pre_equipped/entombed/retract(mob/user, obj/item/part)
+/obj/item/mod/control/pre_equipped/entombed/retract(mob/user, obj/item/part, instant = FALSE)
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/datum/quirk/equipping/entombed/tomb_quirk = human_user.get_quirk(/datum/quirk/equipping/entombed)
