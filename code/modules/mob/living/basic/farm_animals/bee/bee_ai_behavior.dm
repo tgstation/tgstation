@@ -8,7 +8,7 @@
 	callback.Invoke()
 
 /datum/ai_behavior/find_hunt_target/pollinate
-	action_cooldown = 15 SECONDS
+	action_cooldown = 10 SECONDS
 
 /datum/ai_behavior/find_hunt_target/pollinate/valid_dinner(mob/living/source, obj/machinery/hydroponics/dinner, radius)
 	if(!dinner.can_bee_pollinate())
