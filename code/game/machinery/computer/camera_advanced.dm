@@ -152,9 +152,8 @@
 		to_chat(user, span_warning("The console is already in use!"))
 		return
 
-	var/mob/living/L = user
 	if(eyeobj)
-		give_eye_control(L)
+		give_eye_control(user)
 		eyeobj.setLoc(eyeobj.loc)
 		return
 	/* We're attempting to initialize the eye past this point */
@@ -185,7 +184,7 @@
 					break
 
 	if(camera_location)
-		give_eye_control(L)
+		give_eye_control(user)
 		eyeobj.setLoc(camera_location, TRUE)
 	else
 		unset_machine()

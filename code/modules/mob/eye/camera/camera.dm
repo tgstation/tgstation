@@ -22,9 +22,8 @@
 	GLOB.camera_eyes += src
 
 /mob/eye/camera/Destroy()
-	for(var/V in visibleCameraChunks)
-		var/datum/camerachunk/c = V
-		c.remove(src)
+	for(var/datum/camerachunk/chunk in visibleCameraChunks)
+		chunk.remove(src)
 	GLOB.camera_eyes -= src
 	return ..()
 
