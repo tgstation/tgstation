@@ -89,6 +89,10 @@
 	name = "Jeans"
 	item_path = /obj/item/clothing/under/pants/jeans
 
+/datum/loadout_item/undersuit/pants/moto
+	name = "Moto Pants"
+	item_path = /obj/item/clothing/under/moto_leggings
+
 /datum/loadout_item/undersuit/pants/jeans/shorts
 	name = "Jean Shorts"
 	item_path = /obj/item/clothing/under/shorts/jeanshorts
@@ -172,6 +176,14 @@
 /datum/loadout_item/undersuit/formal/pencil/green
 	name = "Green Pencilskirt"
 	item_path = /obj/item/clothing/under/suit/pencil/green
+
+/datum/loadout_item/undersuit/formal/cowl_neck
+	name = "Cowl Neck Shirt & Trousers"
+	item_path = /obj/item/clothing/under/collared_shirt
+
+/datum/loadout_item/undersuit/formal/collared_shirt
+	name = "Collared Shirt & Trousers"
+	item_path = /obj/item/clothing/under/collared_shirt
 
 /*
 *	BUTTONDOWNS
