@@ -1,5 +1,0 @@
-author: "larentoun"
-delete-after: True
-changes:
-  - bugfix: "Mafia: Psych's reveal ability now correctly has a single use"
-  - bugfix: "Mafia: Fugitive's vest ability now correctly should have two uses"
