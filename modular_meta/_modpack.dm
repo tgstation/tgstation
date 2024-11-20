@@ -64,9 +64,12 @@
 			"name" = modpack.name,
 			"desc" = modpack.desc,
 			"author" = modpack.author,
-			"icon_class" = assets.icon_class_name("modpack-[modpack.id]"),
 			"id" = modpack.id,
 			)
+		if(modpack.icon != "modular_meta/mods_icon_placeholder.dmi")
+			modpack_data += list ("icon_class" = assets.icon_class_name("modpack-[modpack.id]"))
+		else
+			modpack_data += list ("icon_class" = assets.icon_class_name("modpack-default"))
 
 		if (modpack.group == "Фичи" || modpack.group == "Features")
 			.["features"] += list(modpack_data)

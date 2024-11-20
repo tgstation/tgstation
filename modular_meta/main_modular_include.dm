@@ -16,7 +16,7 @@
 #endif
 
 /// PEREVODY
-#if RU_CRAYONS 
+#if RU_CRAYONS
 	#include "perevody\ru_crayons\includes.dm"
 #endif
 #if RU_VENDORS
@@ -24,3 +24,4 @@
 #endif
 
 /// REVERTS
+#include "reverts\revert_glasses_protect_welding\includes.dm"

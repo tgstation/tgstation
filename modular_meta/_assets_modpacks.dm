@@ -4,8 +4,8 @@
 	name = "modpacks"
 
 /datum/asset/spritesheet/simple/modpacks/create_spritesheets()
-	InsertAll("modpack", MODPACKS_SET)
-	// catch all modpack's previews which are pulling icons from another file
+	InsertAll("modpack", MODPACKS_SET) // default image
+	// catch all modpack's previews
 	for(var/datum/modpack/this_modpack as anything in subtypesof(/datum/modpack))
 		var/icon = initial(this_modpack.icon)
 		if (icon != MODPACKS_SET)
