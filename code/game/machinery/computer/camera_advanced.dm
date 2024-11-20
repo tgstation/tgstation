@@ -169,7 +169,7 @@
 
 	if(!eyeobj.use_visibility)
 		if(consider_zlock && !(myturf.z in z_lock))
-			camera_location = locate(round(world.maxx/2), round(world.maxy/2), z_lock[1])
+			camera_location = locate(round(world.maxx * 0.5), round(world.maxy * 0.5), z_lock[1])
 		else
 			camera_location = myturf
 	else
