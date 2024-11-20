@@ -146,7 +146,7 @@
 			holding_weapon = TRUE
 			break
 
-	var/attack_results = monkey_attack(controller, target, seconds_per_tick, holding_weapon && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick))
+	var/attack_results = monkey_attack(controller, target, seconds_per_tick, holding_weapon && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick), holding_weapon)
 
 	if(!attack_results || controller.blackboard[BB_MONKEY_AGGRESSIVE])
 		return AI_BEHAVIOR_DELAY
@@ -175,7 +175,7 @@
 	controller.clear_blackboard_key(target_key)
 
 /// attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
-/datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, seconds_per_tick, disarm)
+/datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, seconds_per_tick, disarm, holding_weapon)
 	var/mob/living/living_pawn = controller.pawn
 
 	if(living_pawn.next_move > world.time)
@@ -196,12 +196,14 @@
 
 	if(isnull(potential_weapon))
 		controller.ai_interact(target = target, modifiers = disarm ? list(RIGHT_CLICK = TRUE) : null, combat_mode = TRUE)
+		if(!isnull(holding_weapon))
+			controller.remove_thing_from_blackboard_key(BB_MONKEY_BLACKLISTITEMS, holding_weapon) //lets try to pickpocket it again!
 		return TRUE
 
 	if(potential_weapon != living_pawn.get_active_held_item())
 		living_pawn.swap_hand(living_pawn.get_inactive_hand_index())
-		controller.ai_interact(target = target, combat_mode = TRUE)
-		return TRUE
+	controller.ai_interact(target = target, combat_mode = TRUE)
+	return TRUE
 
 /datum/ai_behavior/disposal_mob
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration
