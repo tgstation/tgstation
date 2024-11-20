@@ -103,7 +103,11 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 		return
 	if(HAS_TRAIT(movable, TRAIT_IMMERSED) || HAS_TRAIT(movable, TRAIT_WALLMOUNTED))
 		return
-	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE, source)))
+	if(!ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE, source)))
+		return
+	var/layer_to_check = IS_TOPDOWN_PLANE(source.plane) ? TOPDOWN_ABOVE_WATER_LAYER : ABOVE_ALL_MOB_LAYER
+	//First, floor plane objects use TOPDOWN_LAYER, second this check shouldn't apply to them anyway.
+	if(movable.layer >= layer_to_check)
 		return
 	if(is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
 		return
@@ -137,7 +141,9 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	var/width = icon_dimensions["width"] || ICON_SIZE_X
 	var/height = icon_dimensions["height"] || ICON_SIZE_Y
 
-	var/is_below_water = movable.layer < WATER_LEVEL_LAYER ? "underwater-" : ""
+	///This determines if the overlay should cover the entire surface of the object or not
+	var/layer_to_check = IS_TOPDOWN_PLANE(movable.plane) ? TOPDOWN_WATER_LEVEL_LAYER : WATER_LEVEL_LAYER
+	var/is_below_water = (movable.layer < layer_to_check) ? "underwater-" : ""
 
 	var/atom/movable/immerse_overlay/vis_overlay = generated_visual_overlays["[is_below_water][width]x[height]"]
 
