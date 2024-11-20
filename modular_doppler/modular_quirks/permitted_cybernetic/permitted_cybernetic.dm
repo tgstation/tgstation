@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(possible_quirk_implants, list(
 	"Sanitation Toolset" = /obj/item/organ/cyberimp/arm/janitor,
 	"Razorclaw Arm" = /obj/item/organ/cyberimp/arm/razor_claws,
 	"Excavator Arm" = /obj/item/organ/cyberimp/arm/mining_drill,
-	"Nutriment Pump PLUS Implant" = /obj/item/organ/cyberimp/chest/nutriment/plus,
+	"Nutriment Pump Implant" = /obj/item/organ/cyberimp/chest/nutriment,
 ))
 
 /datum/quirk/permitted_cybernetic
