@@ -152,3 +152,39 @@
 	ricochet_auto_aim_range = 6
 	ricochet_incidence_leeway = 80
 	ricochet_decay_chance = 1
+
+//gatfruit
+/obj/projectile/bullet/pea
+	name = "pea bullet"
+	damage = 15
+	weak_against_armour = TRUE
+	ricochets_max = 3
+	ricochet_chance = 100
+	icon_state = "pea"
+
+/obj/projectile/bullet/pea/Initialize(mapload)
+	. = ..()
+	create_reagents(100, NO_REACT) //same as the fruit itself, wont ever hit that much though i believe
+
+/obj/projectile/bullet/pea/on_hit(mob/living/carbon/target, blocked = 0, pierce_hit)
+	to_chat(world, reagents.total_volume)
+	if(istype(target))
+		if(blocked != 100) // not completely blocked
+			if(target.can_inject(target_zone = def_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+				..()
+				reagents.trans_to(target, reagents.total_volume, methods = INJECT)
+				return BULLET_ACT_HIT
+			else
+				blocked = 100
+				target.visible_message(span_danger("\The [src] is deflected!"), \
+									   span_userdanger("You are protected against \the [src]!"))
+
+	. = ..(target, blocked)
+	if(reagents & NO_REACT) //first imapct
+		reagents.flags &= ~(NO_REACT)
+		reagents.handle_reactions()
+
+/obj/projectile/bullet/pea/on_hit(mob/living/target, blocked = 0, pierce_hit)
+	if(iszombie(target)) // https://www.youtube.com/watch?v=ssZoq1eUK-s
+		target.adjustBruteLoss(15)
+	return ..()

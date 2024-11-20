@@ -67,3 +67,33 @@
 	name = ".38 Iceblox bullet casing"
 	desc = "A .38 Iceblox bullet casing."
 	projectile_type = /obj/projectile/bullet/c38/iceblox
+
+//gatfruit
+/obj/item/ammo_casing/pea
+	name = "pea bullet casing"
+	desc = "A bizarre pea bullet."
+	caliber = CALIBER_PEA
+	icon_state = "pea"
+	projectile_type = /obj/projectile/bullet/pea
+	var/max_damage = 15
+	var/damage = 15 //max potency, is set
+
+/obj/item/ammo_casing/pea/Initialize(mapload)
+	. = ..()
+	create_reagents(60, SEALED_CONTAINER)
+
+/obj/item/ammo_casing/pea/ready_proj(atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
+	. = ..()
+	if(isnull(loaded_projectile))
+		return
+	loaded_projectile.damage = damage
+
+/obj/item/ammo_casing/pea/attack_self(mob/user)
+	. = ..()
+	if(isnull(loaded_projectile))
+		return
+	var/obj/item/food/grown/peas/peas = new(user.drop_location())
+	user.put_in_hands(peas)
+	to_chat(user, span_notice("You seperate the pea from the case."))
+	loaded_projectile = null
+	update_appearance()

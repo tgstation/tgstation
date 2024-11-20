@@ -1435,3 +1435,8 @@
 	SIGNAL_HANDLER
 	if(current_cycle > 28 && !HAS_TRAIT(source, TRAIT_TETRODOTOXIN_HEALING))
 		return COMSIG_CARBON_BLOCK_BREATH
+
+/datum/reagent/toxin/gatfruit
+	name = "Phytotoxin"
+	description = "A poison produced by the rare and elusive gatfruit plant."
+	liver_damage_multiplier = 0
