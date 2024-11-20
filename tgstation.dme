@@ -7021,6 +7021,7 @@
 #include "modular_doppler\modular_quirks\breather\nitrogen_breather\nitrogen_breather.dm"
 #include "modular_doppler\modular_quirks\breather\nitrogen_breather\nitrogen_tanks.dm"
 #include "modular_doppler\modular_quirks\breather\water_breather\water_breather.dm"
+#include "modular_doppler\modular_quirks\cybernetic_limb_mounts\cybernetic_limb_mounts.dm"
 #include "modular_doppler\modular_quirks\entombed\code\entombed.dm"
 #include "modular_doppler\modular_quirks\entombed\code\entombed_alt_actions.dm"
 #include "modular_doppler\modular_quirks\entombed\code\entombed_mod.dm"

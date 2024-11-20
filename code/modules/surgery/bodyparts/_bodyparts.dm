@@ -372,9 +372,12 @@
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
-		if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT) || HAS_TRAIT(src, TRAIT_EASY_ATTACH) || HAS_TRAIT(victim, TRAIT_GOLEM_LIMBATTACHMENT)) // DOPPLER EDIT CHANGE - ORIGINAL: if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT) || HAS_TRAIT(src, TRAIT_EASY_ATTACH))
-			// DOPPLER EDIT ADDITION START - golems lol
+		if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT) || HAS_TRAIT(src, TRAIT_EASY_ATTACH) || HAS_TRAIT(victim, TRAIT_GOLEM_LIMBATTACHMENT) || HAS_TRAIT(victim, TRAIT_ROBOTIC_LIMBATTACHMENT)) // DOPPLER EDIT CHANGE - ORIGINAL: if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT) || HAS_TRAIT(src, TRAIT_EASY_ATTACH))
+			// DOPPLER EDIT ADDITION START - golems lol && cybernetic limb mount quirk
 			if(HAS_TRAIT(victim, TRAIT_GOLEM_LIMBATTACHMENT) && !(bodytype & BODYTYPE_GOLEM)) //if we're trying to attach something that isn't a fuggin rock, end out
+				return
+			if (!(HAS_TRAIT(src, TRAIT_EASY_ATTACH)) && !HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT) && HAS_TRAIT(victim, TRAIT_ROBOTIC_LIMBATTACHMENT) && !(bodytype & BODYTYPE_ROBOTIC)) //if we're trying to attach something that's not robotic, end out - but ONLY if we have this quirk
+				to_chat(user, span_warning("[human_victim]'s body rejects [src]! It can only accept robotic limbs."))
 				return
 			// DOPPLER EDIT ADDITION END
 			if(!human_victim.get_bodypart(body_zone))
