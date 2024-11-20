@@ -662,3 +662,55 @@
   timothymtorres:
   - map: Fix missing CE Office Shutter Buttons on Icebox. Also removes a duplicate
       keycard auth device.
+2024-11-19:
+  Fikou:
+  - bugfix: Fixed chaplain divine archer outfit rolled down sprite
+  Jackal-boop:
+  - balance: syndicate GMO researchers have increased the effectiveness of their 'hot
+      potato'
+  carlarctg:
+  - qol: Improved fish lure descriptions to be easier to grok
+  fevryk:
+  - rscadd: Added new weapon carpenter hammer to black market uplink
+  - rscadd: Added killsound feature
+  tontyGH:
+  - bugfix: Haunted 8-balls are now usable again (FINALLY)
+  - bugfix: Haunted 8-ball UI now correctly displays your selected answer
+  - qol: Made the haunted 8-ball UI look a pinch better. Just a smidge.
+  - code_imp: Haunted 8-balls no longer use a duplicate answer list
+2024-11-20:
+  Ben10Omintrix:
+  - refactor: floorbots have been refactored, please report any bugs
+  - rscadd: adds repairbots to the game!
+  Dawnseer:
+  - rscadd: Unleashed a great evil upon hoplines, in the form of a paperwork implant.
+  Dmeto:
+  - map: 'removes a unused disposal pipe from Cargo, fixes mining dock intercom.
+
+      map:adds access helper to disposals south airlock.'
+  EnterTheJake:
+  - bugfix: FIxes insulated modsuits not granting full insulation.
+  Gaxeer:
+  - bugfix: AI controlled monkeys can again activate items in active hand
+  Hatterhat:
+  - bugfix: Crate Chaos's encrypted cache is now randomly placed again.
+  Jewelry-x:
+  - bugfix: changeling memories of victims no longer include `<B>` and `<br>`
+  Melbert:
+  - balance: Having a broken arm affects your accuracy with ranged weapons fired with
+      that arm. Utilizing a painkiller will nullify this effect, however.
+  - balance: Painkillers will prevent your punches from being cancelled due to having
+      a broken arm. You'll still take damage, though.
+  - balance: Being drunk now affects your accuracy with ranged weapon. The bartender
+      is immune to this effect via their skillchip.
+  - code_imp: A lot of code involving left and right hand handling has been cleaned
+      up, easier to read. Report any oddities, like left and rights being flipped
+  grungussuss:
+  - bugfix: mobs can no longer hear their own breathing while deaf
+  - bugfix: a bug regarding orderable items has been fixed
+  - server: drone area restrictions are now config
+  - balance: drones now take less time to become "un-shy" of something after it's
+      been touched.
+  larentoun:
+  - bugfix: 'Mafia: Psych''s reveal ability now correctly has a single use'
+  - bugfix: 'Mafia: Fugitive''s vest ability now correctly should have two uses'

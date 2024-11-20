@@ -214,7 +214,7 @@
 		This spell also allows you to heal your minions and summons, or restore failing organs to acceptable status."
 	gain_text = "But they were not out of my reach for long. With every step, the screams grew, until at last \
 		I learned that they could be silenced."
-	spell_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
+	action_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
 	cost = 1
 
 /datum/heretic_knowledge/summon/raw_prophet
