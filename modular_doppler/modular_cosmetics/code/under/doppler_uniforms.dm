@@ -201,3 +201,27 @@
 	else
 		new /obj/item/clothing/under/misc/doppler_uniform/standard/suit/overalls/colored(loc)
 	return INITIALIZE_HINT_QDEL
+
+// Doppla janitor uniforms
+
+/obj/item/clothing/under/rank/civilian/janitor/doppler
+	name = "janitor uniform"
+	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
+	icon = 'modular_doppler/modular_cosmetics/icons/mob/under/janitor_my_beloved.dmi'
+	icon_state = "janitor_doppler"
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/obj/under/janitor_my_beloved.dmi'
+	inhand_icon_state = "janitor"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/civilian/janitor/doppler_ct
+	name = "janitor crop top"
+	desc = "It's the unofficial uniform of the station's janitor. It has minor protection from biohazards."
+	icon = 'modular_doppler/modular_cosmetics/icons/mob/under/janitor_my_beloved.dmi'
+	icon_state = "janitor_doppler_ct"
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/obj/under/janitor_my_beloved.dmi'
+	inhand_icon_state = "janitor"
+	body_parts_covered = CHEST|GROIN
+	can_adjust = TRUE
+	alt_covers_chest = TRUE

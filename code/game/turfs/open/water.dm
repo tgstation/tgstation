@@ -167,3 +167,6 @@
 		living.add_mood_event("hot_spring", /datum/mood_event/hot_spring_left)
 	else
 		living.add_mood_event("hot_spring", /datum/mood_event/hot_spring_hater_left)
+
+/turf/open/water/hot_spring/lavaland_atmos
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

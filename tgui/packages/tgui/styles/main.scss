@@ -4,7 +4,8 @@
  */
 
 @use 'sass:meta';
-@use './base.scss';
+@use 'base';
+@use 'pkg:tgui-styles';
 
 // Core styles
 @include meta.load-css('./reset.scss');
@@ -18,34 +19,6 @@
 @include meta.load-css('./atomic/links.scss');
 @include meta.load-css('./atomic/outline.scss');
 @include meta.load-css('./atomic/text.scss');
-
-// Components
-@include meta.load-css('./components/BlockQuote.scss');
-@include meta.load-css('./components/Button.scss');
-@include meta.load-css('./components/ColorBox.scss');
-@include meta.load-css('./components/Dialog.scss');
-@include meta.load-css('./components/Dimmer.scss');
-@include meta.load-css('./components/Divider.scss');
-@include meta.load-css('./components/Dropdown.scss');
-@include meta.load-css('./components/Flex.scss');
-@include meta.load-css('./components/Icon.scss');
-@include meta.load-css('./components/Input.scss');
-@include meta.load-css('./components/Knob.scss');
-@include meta.load-css('./components/LabeledList.scss');
-@include meta.load-css('./components/MenuBar.scss');
-@include meta.load-css('./components/Modal.scss');
-@include meta.load-css('./components/NoticeBox.scss');
-@include meta.load-css('./components/NumberInput.scss');
-@include meta.load-css('./components/ProgressBar.scss');
-@include meta.load-css('./components/RoundGauge.scss');
-@include meta.load-css('./components/SearchItem.scss');
-@include meta.load-css('./components/Section.scss');
-@include meta.load-css('./components/Slider.scss');
-@include meta.load-css('./components/Stack.scss');
-@include meta.load-css('./components/Table.scss');
-@include meta.load-css('./components/Tabs.scss');
-@include meta.load-css('./components/TextArea.scss');
-@include meta.load-css('./components/Tooltip.scss');
 
 // Interfaces
 @include meta.load-css('./interfaces/AlertModal.scss');
@@ -62,6 +35,7 @@
 @include meta.load-css('./interfaces/LibraryAdmin.scss');
 @include meta.load-css('./interfaces/LibraryComputer.scss');
 @include meta.load-css('./interfaces/ListInput.scss');
+@include meta.load-css('./interfaces/LootPanel.scss');
 @include meta.load-css('./interfaces/Mecha.scss');
 @include meta.load-css('./interfaces/NtosMessenger.scss');
 @include meta.load-css('./interfaces/NtosNotepad.scss');

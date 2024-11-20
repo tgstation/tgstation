@@ -7,9 +7,6 @@
 	QDEL_NULL(mmi)
 	return ..()
 
-/mob/living/silicon/robot/spawn_dust()
-	new /obj/effect/decal/remains/robot(loc)
-
 /mob/living/silicon/robot/death(gibbed)
 	if(stat == DEAD)
 		return

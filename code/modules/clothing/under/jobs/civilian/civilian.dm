@@ -108,24 +108,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
-/obj/item/clothing/under/rank/civilian/janitor/doppler
-	name = "janitor uniform"
-	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
-	icon_state = "janitor_doppler"
-	inhand_icon_state = "janitor"
-	body_parts_covered = CHEST|GROIN
-	can_adjust = TRUE
-	alt_covers_chest = TRUE
-
-/obj/item/clothing/under/rank/civilian/janitor/doppler_ct
-	name = "janitor crop top"
-	desc = "It's the unofficial uniform of the station's janitor. It has minor protection from biohazards."
-	icon_state = "janitor_doppler_ct"
-	inhand_icon_state = "janitor"
-	body_parts_covered = CHEST|GROIN
-	can_adjust = TRUE
-	alt_covers_chest = TRUE
-
 /obj/item/clothing/under/rank/civilian/lawyer
 	name = "Lawyer suit"
 	desc = "Slick threads."

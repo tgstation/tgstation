@@ -22,7 +22,7 @@
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = TRUE
 
-	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
+	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|princess|queen)( \\(\\d+\\))?")
 	var/static/list/xeno_allowed_items = typecacheof(list(
 		/obj/item/clothing/mask/facehugger,
 		/obj/item/toy/basketball, // playing ball against a xeno is rigged since they cannot be disarmed, their game is out of this world
