@@ -281,28 +281,28 @@
 // MARK: Human pronouns
 //////////////////////////////
 // Humans need special handling, because they can have their gender hidden
-/mob/living/carbon/human/ru_p_they(temp_gender)
+/mob/living/carbon/human/ru_p_they(capitalized, temp_gender)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
-/mob/living/carbon/human/ru_p_them(temp_gender)
+/mob/living/carbon/human/ru_p_them(capitalized, temp_gender)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
-/mob/living/carbon/human/ru_p_themselves(temp_gender)
+/mob/living/carbon/human/ru_p_themselves(capitalized, temp_gender)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
-/mob/living/carbon/human/ru_p_theirs(temp_gender)
+/mob/living/carbon/human/ru_p_theirs(capitalized, temp_gender)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
