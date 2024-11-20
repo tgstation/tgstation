@@ -355,8 +355,6 @@
 
 //Returns a string with reserved characters and spaces before the first word and after the last word removed.
 /proc/trim(text, max_length)
-	if(istext(text) && !text)
-		return "" //temporary byond fix
 	if(max_length)
 		text = copytext_char(text, 1, max_length)
 	return trimtext(text) || "" //users expect atleast an empty string
