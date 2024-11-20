@@ -1201,16 +1201,42 @@
 
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
-	//If we're in an aggressive grab or higher, we're lying down, we're vulnerable to grabs, or we're staggered and we have some amount of stamina loss, we must resist
-	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || get_timed_status_effect_duration(/datum/status_effect/staggered) && (getFireLoss()*0.5 + getBruteLoss()*0.5) >= 40)
-		var/altered_grab_state = pulledby.grab_state
-		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || get_timed_status_effect_duration(/datum/status_effect/staggered)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
-			altered_grab_state++
-		if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE))
-			altered_grab_state--
+
+	//Our effective grab state. GRAB_PASSIVE is equal to 0, so if we have no other altering factors to our grab state, we can break free immediately on resist.
+	var/effective_grab_state = pulledby.grab_state
+	//The amount of damage inflicted on a failed resist attempt.
+	var/damage_on_resist_fail = rand(7, 13)
+
+	if(body_position == LYING_DOWN) //If prone, treat the grab state as one higher
+		effective_grab_state++
+
+	if(HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) //If we have grab weakness from some source, treat the grab state as one higher
+		effective_grab_state++
+
+	if(get_timed_status_effect_duration(/datum/status_effect/staggered) && (getFireLoss() + getBruteLoss()) >= 40) //If we are staggered, and we have at least 40 damage, treat the grab state as one higher.
+		effective_grab_state++
+
+	if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE)) //If we have grab resistance from some source, treat the grab state as one lower.
+		effective_grab_state--
+
+	//If our puller is a human, and they have an active hand they're grabbing with (please don't ask how people grab without hands), then apply their unarmed values to the grab values
+	if(pulledby && ishuman(pulledby))
+		var/mob/living/carbon/human/human_puller = pulledby
+		var/obj/item/bodypart/grabbing_bodypart = human_puller.get_active_hand()
+		if(grabbing_bodypart)
+			damage_on_resist_fail += rand(grabbing_bodypart.unarmed_damage_low, grabbing_bodypart.unarmed_damage_high)
+
+		//If our puller is a drunken brawler, they add more damage based on their own damage taken so long as they're drunk and treat the grab state as one higher
+		var/puller_drunkenness = human_puller.get_drunk_amount()
+		if(puller_drunkenness && HAS_TRAIT(human_puller, TRAIT_DRUNKEN_BRAWLER))
+			damage_on_resist_fail += clamp((human_puller.getFireLoss() + human_puller.getBruteLoss()) / 10, 3, 20)
+			effective_grab_state ++
+
+	//We only resist our grab state if we are currently in a grab equal to or greater than GRAB_AGGRESSIVE (1). Otherwise, break out immediately!
+	if(effective_grab_state >= GRAB_AGGRESSIVE)
 		// see defines/combat.dm, this should be baseline 60%
 		// Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
-		var/resist_chance = altered_grab_state ? (BASE_GRAB_RESIST_CHANCE / altered_grab_state) : 100
+		var/resist_chance = clamp(BASE_GRAB_RESIST_CHANCE / effective_grab_state, 0, 100)
 		if(prob(resist_chance))
 			visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
 							span_danger("You break free of [pulledby]'s grip!"), null, null, pulledby)
@@ -1219,7 +1245,7 @@
 			pulledby.stop_pulling()
 			return FALSE
 		else
-			adjustStaminaLoss(rand(15,20))//failure to escape still imparts a pretty serious penalty
+			adjustStaminaLoss(damage_on_resist_fail) //Do some stamina damage if we fail to resist
 			visible_message(span_danger("[src] struggles as they fail to break free of [pulledby]'s grip!"), \
 							span_warning("You struggle as you fail to break free of [pulledby]'s grip!"), null, null, pulledby)
 			to_chat(pulledby, span_danger("[src] struggles as they fail to break free of your grip!"))
