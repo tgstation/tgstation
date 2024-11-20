@@ -150,7 +150,6 @@
 	var/height = icon_dimensions["height"] || ICON_SIZE_Y
 
 	///This determines if the overlay should cover the entire surface of the object or not
-	var/turf/mov_turf = movable.loc
 	var/layer_to_check = IS_TOPDOWN_PLANE(movable.plane) ? TOPDOWN_WATER_LEVEL_LAYER : WATER_LEVEL_LAYER
 	var/is_below_water = (movable.layer < layer_to_check) ? "underwater-" : ""
 
