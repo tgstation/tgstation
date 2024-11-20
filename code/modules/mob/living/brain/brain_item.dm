@@ -50,15 +50,6 @@
 	// Brain size logic
 	transform = transform.Scale(brain_size)
 
-/obj/item/organ/brain/examine()
-	. = ..()
-	if (smooth_brain)
-		. += span_notice("All the pesky wrinkles are gone. Now it just needs a good drying...")
-	if(brain_size < 1)
-		. += span_notice("It is a bit on the smaller side...")
-	if(brain_size > 1)
-		. += span_notice("It is bigger than average...")
-
 /obj/item/organ/brain/mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
@@ -140,7 +131,7 @@
 		organ_owner.clear_mood_event("brain_damage")
 
 /obj/item/organ/brain/update_icon_state()
-	icon_state = "[initial(icon_state)][smooth_brain ? "-smooth_brain" : ""]"
+	icon_state = "[initial(icon_state)][smooth_brain ? "-smooth" : ""]"
 	return ..()
 
 /obj/item/organ/brain/proc/transfer_identity(mob/living/L)
@@ -241,6 +232,8 @@
 	if(length(skillchips))
 		. += span_info("It has a skillchip embedded in it.")
 	. += brain_damage_examine()
+	if (smooth_brain)
+		. += span_notice("All the pesky wrinkles are gone. Now it just needs a good drying...")
 	if(brain_size < 1)
 		. += span_notice("It is a bit on the smaller side...")
 	if(brain_size > 1)
@@ -625,7 +618,7 @@
 /obj/item/organ/brain/proc/get_attacking_limb(mob/living/carbon/human/target)
 	var/obj/item/bodypart/arm/active_hand = owner.get_active_hand()
 	if(target.body_position == LYING_DOWN && owner.usable_legs)
-		var/obj/item/bodypart/found_bodypart = owner.get_bodypart((active_hand.held_index % 2) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
+		var/obj/item/bodypart/found_bodypart = owner.get_bodypart(IS_LEFT_INDEX(active_hand.held_index) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
 		return found_bodypart || active_hand
 	return active_hand
 

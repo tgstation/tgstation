@@ -8,6 +8,13 @@
 
 GLOBAL_VAR(restart_counter)
 GLOBAL_VAR(tracy_log)
+GLOBAL_PROTECT(tracy_log)
+GLOBAL_VAR(tracy_initialized)
+GLOBAL_PROTECT(tracy_initialized)
+GLOBAL_VAR(tracy_init_error)
+GLOBAL_PROTECT(tracy_init_error)
+GLOBAL_VAR(tracy_init_reason)
+GLOBAL_PROTECT(tracy_init_reason)
 
 /**
  * WORLD INITIALIZATION
@@ -66,15 +73,30 @@ GLOBAL_VAR(tracy_log)
 /world/proc/Genesis(tracy_initialized = FALSE)
 	RETURN_TYPE(/datum/controller/master)
 
+	if(!tracy_initialized)
+		GLOB.tracy_initialized = FALSE
+#ifndef OPENDREAM
+	if(!tracy_initialized)
 #ifdef USE_BYOND_TRACY
 #warn USE_BYOND_TRACY is enabled
-	if(!tracy_initialized)
+		var/should_init_tracy = TRUE
+		GLOB.tracy_init_reason = "USE_BYOND_TRACY defined"
 #else
-	if(!tracy_initialized && (USE_TRACY_PARAMETER in params))
+		var/should_init_tracy = FALSE
+		if(USE_TRACY_PARAMETER in params)
+			should_init_tracy = TRUE
+			GLOB.tracy_init_reason = "world.params"
+		if(fexists(TRACY_ENABLE_PATH))
+			GLOB.tracy_init_reason ||= "enabled for round"
+			SEND_TEXT(world.log, "[TRACY_ENABLE_PATH] exists, initializing byond-tracy!")
+			should_init_tracy = TRUE
+			fdel(TRACY_ENABLE_PATH)
 #endif
-		GLOB.tracy_log = init_byond_tracy()
-		Genesis(tracy_initialized = TRUE)
-		return
+		if(should_init_tracy)
+			init_byond_tracy()
+			Genesis(tracy_initialized = TRUE)
+			return
+#endif
 
 	Profile(PROFILE_RESTART)
 	Profile(PROFILE_RESTART, type = "sendmaps")
@@ -331,6 +353,7 @@ GLOBAL_VAR(tracy_log)
 		if(do_hard_reboot)
 			log_world("World hard rebooted at [time_stamp()]")
 			shutdown_logging() // See comment below.
+			shutdown_byond_tracy()
 			auxcleanup()
 			TgsEndProcess()
 			return ..()
@@ -338,6 +361,7 @@ GLOBAL_VAR(tracy_log)
 	log_world("World rebooted at [time_stamp()]")
 
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
+	shutdown_byond_tracy()
 	auxcleanup()
 
 	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
@@ -351,6 +375,7 @@ GLOBAL_VAR(tracy_log)
 		call_ext(debug_server, "auxtools_shutdown")()
 
 /world/Del()
+	shutdown_byond_tracy()
 	auxcleanup()
 	. = ..()
 
@@ -483,21 +508,31 @@ GLOBAL_VAR(tracy_log)
 	DREAMLUAU_SET_EXECUTION_LIMIT_MILLIS(tick_lag * 100)
 
 /world/proc/init_byond_tracy()
-	var/library
+	if(!fexists(TRACY_DLL_PATH))
+		SEND_TEXT(world.log, "Error initializing byond-tracy: [TRACY_DLL_PATH] not found!")
+		CRASH("Error initializing byond-tracy: [TRACY_DLL_PATH] not found!")
 
-	switch (system_type)
-		if (MS_WINDOWS)
-			library = "prof.dll"
-		if (UNIX)
-			library = "libprof.so"
-		else
-			CRASH("Unsupported platform: [system_type]")
-
-	var/init_result = call_ext(library, "init")("block")
+	var/init_result = call_ext(TRACY_DLL_PATH, "init")("block")
 	if(length(init_result) != 0 && init_result[1] == ".") // if first character is ., then it returned the output filename
-		return init_result
+		SEND_TEXT(world.log, "byond-tracy initialized (logfile: [init_result])")
+		GLOB.tracy_initialized = TRUE
+		return GLOB.tracy_log = init_result
+	else if(init_result == "already initialized") // not gonna question it.
+		GLOB.tracy_initialized = TRUE
+		SEND_TEXT(world.log, "byond-tracy already initialized ([GLOB.tracy_log ? "logfile: [GLOB.tracy_log]" : "no logfile"])")
 	else if(init_result != "0")
+		GLOB.tracy_init_error = init_result
+		SEND_TEXT(world.log, "Error initializing byond-tracy: [init_result]")
 		CRASH("Error initializing byond-tracy: [init_result]")
+	else
+		GLOB.tracy_initialized = TRUE
+		SEND_TEXT(world.log, "byond-tracy initialized (no logfile)")
+
+/world/proc/shutdown_byond_tracy()
+	if(GLOB.tracy_initialized)
+		SEND_TEXT(world.log, "Shutting down byond-tracy")
+		GLOB.tracy_initialized = FALSE
+		call_ext(TRACY_DLL_PATH, "destroy")()
 
 /world/proc/init_debugger()
 	var/dll = GetConfig("env", "AUXTOOLS_DEBUG_DLL")

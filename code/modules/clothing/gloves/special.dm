@@ -273,9 +273,3 @@
 		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 		user.apply_damage(damage, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
 		playsound(src,'sound/items/weapons/bite.ogg', damage * 2, TRUE)
-
-/obj/item/clothing/gloves/botanic_leather/janitor
-	name = "janitor gloves"
-	desc = "These rubber gloves protect against thorns, barbs, prickles, glass shards and any other threats that might be found in the station's trash.  They're also quite warm."
-	icon_state = "janitor_doppler"
-	inhand_icon_state = null

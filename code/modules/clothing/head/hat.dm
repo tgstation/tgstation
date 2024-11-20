@@ -352,9 +352,3 @@
 	icon_state = "paper"
 	worn_icon_state = "paper"
 	dog_fashion = /datum/dog_fashion/head
-
-/obj/item/clothing/head/hats/janitor_doppler
-	name = "janitor cap"
-	desc = "A regal purple cap to keep your head clean as you clean the filthy."
-	icon_state = "janitor_doppler"
-	inhand_icon_state = "greyscale_softcap"

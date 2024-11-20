@@ -130,29 +130,35 @@
 		linked = null
 	return ..()
 
-/obj/effect/portal/attack_ghost(mob/dead/observer/O)
-	if(!teleport(O, TRUE))
+/obj/effect/portal/attack_ghost(mob/dead/observer/ghost)
+	if(!teleport(ghost, force = TRUE))
 		return ..()
+	return BULLET_ACT_FORCE_PIERCE
 
-/obj/effect/portal/proc/teleport(atom/movable/M, force = FALSE)
-	if(!force && (!istype(M) || iseffect(M) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M)))) //Things that shouldn't teleport.
+/obj/effect/portal/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit)
+	if (!teleport(hitting_projectile, force = TRUE))
+		return ..()
+	return BULLET_ACT_FORCE_PIERCE
+
+/obj/effect/portal/proc/teleport(atom/movable/moving, force = FALSE)
+	if(!force && (!istype(moving) || iseffect(moving) || (ismecha(moving) && !mech_sized) || (!isobj(moving) && !ismob(moving)))) //Things that shouldn't teleport.
 		return
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
 		return FALSE
-	if(!force && (!ismecha(M) && !isprojectile(M) && M.anchored && !allow_anchored))
+	if(!force && (!ismecha(moving) && !isprojectile(moving) && moving.anchored && !allow_anchored))
 		return
 	var/no_effect = FALSE
 	if(last_effect == world.time || sparkless)
 		no_effect = TRUE
 	else
 		last_effect = world.time
-	var/turf/start_turf = get_turf(M)
-	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = force_teleport))
-		if(isprojectile(M))
-			var/obj/projectile/P = M
+	var/turf/start_turf = get_turf(moving)
+	if(do_teleport(moving, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = force_teleport))
+		if(isprojectile(moving))
+			var/obj/projectile/P = moving
 			P.ignore_source_check = TRUE
-		new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
+		new /obj/effect/temp_visual/portal_animation(start_turf, src, moving)
 		playsound(start_turf, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(real_target, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return TRUE
@@ -189,7 +195,7 @@
 			linked = P
 			break
 
-/obj/effect/portal/permanent/teleport(atom/movable/M, force = FALSE)
+/obj/effect/portal/permanent/teleport(atom/movable/moving, force = FALSE)
 	set_linked() // update portal links
 	. = ..()
 
@@ -213,9 +219,9 @@
 	name = "one-use portal"
 	desc = "This is probably the worst decision you'll ever make in your life."
 
-/obj/effect/portal/permanent/one_way/one_use/teleport(atom/movable/M, force = FALSE)
+/obj/effect/portal/permanent/one_way/one_use/teleport(atom/movable/moving, force = FALSE)
 	. = ..()
-	if (. && !isdead(M))
+	if (. && !isdead(moving))
 		expire()
 
 /**
