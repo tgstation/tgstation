@@ -91,7 +91,7 @@
 
 /datum/loadout_item/undersuit/pants/moto
 	name = "Moto Pants"
-	item_path = /obj/item/clothing/under/moto_leggings
+	item_path = /obj/item/clothing/under/pants/moto_leggings
 
 /datum/loadout_item/undersuit/pants/jeans/shorts
 	name = "Jean Shorts"
