@@ -2262,6 +2262,7 @@
 #include "code\game\objects\effects\poster_motivational.dm"
 #include "code\game\objects\effects\powerup.dm"
 #include "code\game\objects\effects\rcd.dm"
+#include "code\game\objects\effects\shared_particle_holder.dm"
 #include "code\game\objects\effects\spiderwebs.dm"
 #include "code\game\objects\effects\step_triggers.dm"
 #include "code\game\objects\effects\wanted_poster.dm"
