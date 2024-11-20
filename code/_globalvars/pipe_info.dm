@@ -11,6 +11,14 @@
 	/// Is this pipe layer indenpendent
 	var/all_layers
 
+/datum/pipe_info/pipe/New(label, obj/machinery/atmospherics/path, use_five_layers)
+	name = label
+	id = path
+	all_layers = use_five_layers
+	icon_state = initial(path.pipe_state)
+	var/obj/item/pipe/c = initial(path.construction_type)
+	dirtype = initial(c.RPD_type)
+
 /**
  * Get preview image of an pipe
  * Arguments
@@ -60,14 +68,6 @@
 		))
 
 	return rows
-
-/datum/pipe_info/pipe/New(label, obj/machinery/atmospherics/path, use_five_layers)
-	name = label
-	id = path
-	all_layers = use_five_layers
-	icon_state = initial(path.pipe_state)
-	var/obj/item/pipe/c = initial(path.construction_type)
-	dirtype = initial(c.RPD_type)
 
 //==============================================================================================
 
