@@ -140,7 +140,7 @@
 	data["patient"]["oxyLoss"] = patient.getOxyLoss()
 	if(patient.surgeries.len)
 		for(var/datum/surgery/procedure in patient.surgeries)
-			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
+			var/datum/surgery_step/surgery_step = GLOB.surgery_steps[procedure.steps[procedure.status]]
 			var/chems_needed = surgery_step.get_chem_list()
 			var/alternative_step
 			var/alt_chems_needed = ""

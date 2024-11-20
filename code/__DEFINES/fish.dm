@@ -2,6 +2,8 @@
 #define FISHING_DUD "dud"
 ///Used in the the hydro tray fishing spot to define a random seed reward
 #define FISHING_RANDOM_SEED "Random seed"
+///Used in the surgery fishing spot to define a random organ reward
+#define FISHING_RANDOM_ORGAN "Random organ"
 
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
@@ -94,6 +96,7 @@
 #define FISH_ICON_WEAPON "weapon"
 #define FISH_ICON_CRITTER "critter"
 #define FISH_ICON_SEED "seed"
+#define FISH_ICON_ORGAN "organ"
 
 #define AQUARIUM_ANIMATION_FISH_SWIM "fish"
 #define AQUARIUM_ANIMATION_FISH_DEAD "dead"
