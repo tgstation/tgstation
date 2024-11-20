@@ -2,12 +2,12 @@ import '../styles/interfaces/NanoMap.scss';
 
 import { Component } from 'react';
 import {
-  LabeledList,
-  Slider,
-  Stack,
-  Section,
   Button,
   Icon,
+  LabeledList,
+  Section,
+  Slider,
+  Stack,
   Tooltip,
 } from 'tgui-core/components';
 

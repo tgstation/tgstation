@@ -9,11 +9,11 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
-import { NanoMap } from '../components/NanoMap';
 import { BooleanLike, classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
+import { NanoMap } from '../components/NanoMap';
 import { Window } from '../layouts';
 
 type Data = {
