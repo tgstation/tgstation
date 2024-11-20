@@ -1,4 +1,4 @@
-## Module ID: RU_VENDORS
+## Module ID: REVERT_GLASSES_PROTECT_WELDING
 
 ### Defines:
 

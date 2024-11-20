@@ -104,7 +104,7 @@ const FeaturesTable = () => {
           title={
             searchText.length > 0
               ? `Результаты поиска "${searchText}"`
-              : `Суммарно модификаций &mdash; "${features.length}"`
+              : `Суммарно модификаций — ${features.length}`
           }
         >
           <Stack fill vertical>
@@ -198,7 +198,7 @@ const TranslationsTable = () => {
           title={
             searchText.length > 0
               ? `Результаты поиска "${searchText}":`
-              : `Суммарно модификаций &mdash; "${translations.length}"`
+              : `Суммарно модификаций — ${translations.length}`
           }
         >
           <Stack fill vertical>
@@ -294,7 +294,7 @@ const RevertsTable = () => {
           title={
             searchText.length > 0
               ? `Результаты поиска "${searchText}":`
-              : `Суммарно модификаций &mdash; "${reverts.length}"`
+              : `Суммарно модификаций — ${reverts.length}`
           }
         >
           <Stack fill vertical>
