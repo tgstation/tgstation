@@ -167,7 +167,6 @@
 	create_reagents(100, NO_REACT) //same as the fruit itself, wont ever hit that much though i believe
 
 /obj/projectile/bullet/pea/on_hit(mob/living/carbon/target, blocked = 0, pierce_hit)
-	to_chat(world, reagents.total_volume)
 	if(istype(target))
 		if(blocked != 100) // not completely blocked
 			if(target.can_inject(target_zone = def_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
