@@ -1,6 +1,6 @@
 /datum/disease/weightlessness
 	name = "Localized Weightloss Malfunction"
-	max_stages = 3
+	max_stages = 4
 	spread_text = "On Contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	cure_text = "Liquid dark matter"
@@ -27,17 +27,17 @@
 		if(2)
 			if(SPT_PROB(3, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel yourself lift off the ground."))
-				affected_mob.reagents.add_reagent(/datum/reagent/gravitum , 1)
+				affected_mob.reagents.add_reagent(/datum/reagent/gravitum, 1)
 
 		if(4)
-			if(SPT_PROB(3, seconds_per_tick))
+			if(SPT_PROB(3, seconds_per_tick) && !(affected_mob.has_quirk(/datum/quirk/spacer_born)))
 				to_chat(affected_mob, span_danger("You feel sick as the world starts moving around you."))
 				affected_mob.adjust_confusion(3 SECONDS)
-			if(SPT_PROB(8, seconds_per_tick))
+			if(SPT_PROB(8, seconds_per_tick) && !(HAS_TRAIT_FROM(affected_mob, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)))
 				to_chat(affected_mob, span_danger("You suddenly lift off the ground."))
 				affected_mob.reagents.add_reagent(/datum/reagent/gravitum, 5)
 
-/datum/disease/weightlessness/Destroy()
+/datum/disease/weightlessness/cure(add_resistance)
 	. = ..()
 	affected_mob.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 95, purge_ratio = 0.4)
 	to_chat(affected_mob, span_danger("You fall to the floor as your body stops rejecting gravity."))
