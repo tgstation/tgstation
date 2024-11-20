@@ -33,7 +33,7 @@
 	/// The "virtual" radio inside of the the physical camera, a la microphone
 	var/obj/item/radio/entertainment/microphone/internal_radio
 
-/obj/item/broadcast_cameraInitialize(mapload)
+/obj/item/broadcast_camera/Initialize(mapload)
 	. = ..()
 
 	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
