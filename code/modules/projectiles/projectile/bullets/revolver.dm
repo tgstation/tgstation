@@ -167,23 +167,17 @@
 	create_reagents(100, NO_REACT) //same as the fruit itself, wont ever hit that much though i believe
 
 /obj/projectile/bullet/pea/on_hit(mob/living/carbon/target, blocked = 0, pierce_hit)
-	if(istype(target))
-		if(blocked != 100) // not completely blocked
-			if(target.can_inject(target_zone = def_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
-				..()
-				reagents.trans_to(target, reagents.total_volume, methods = INJECT)
-				return BULLET_ACT_HIT
-			else
-				blocked = 100
-				target.visible_message(span_danger("\The [src] is deflected!"), \
-									   span_userdanger("You are protected against \the [src]!"))
-
-	. = ..(target, blocked)
-	if(reagents & NO_REACT) //first imapct
+	if(istype(target) && blocked != 100)
+		if(iszombie(target)) // https://www.youtube.com/watch?v=ssZoq1eUK-s
+			target.adjustBruteLoss(15)
+		if(target.can_inject(target_zone = def_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+			..()
+			reagents.trans_to(target, reagents.total_volume, methods = INJECT)
+			return BULLET_ACT_HIT
+		blocked = 100
+		target.visible_message(span_danger("\The [src] is deflected!"), span_userdanger("You are protected against \the [src]!"))
+	. = ..()
+	if(reagents & NO_REACT) //first impact on a noncarbon
 		reagents.flags &= ~(NO_REACT)
 		reagents.handle_reactions()
 
-/obj/projectile/bullet/pea/on_hit(mob/living/target, blocked = 0, pierce_hit)
-	if(iszombie(target)) // https://www.youtube.com/watch?v=ssZoq1eUK-s
-		target.adjustBruteLoss(15)
-	return ..()
