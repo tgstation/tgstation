@@ -245,7 +245,7 @@
 	//is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
 	var/donk_ai_slave = FALSE
 	// machine that the trap inhabits
-	var/obj/structure/host_machine
+	var/obj/machinery/host_machine
 	// turf that the trap is on
 	var/turf/my_turf
 	//how long until trap zaps everything, after it detects something

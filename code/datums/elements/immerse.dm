@@ -1,3 +1,10 @@
+/// A list of movables that shouldn't be affected by the element, either because it'd look bad or barely perceptible
+GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
+	/obj/effect,
+	/mob/dead,
+	/obj/projectile,
+)))
+
 /**
  * A visual element that makes movables entering the attached turfs look immersed into that turf.
  *
@@ -9,11 +16,6 @@
 	///An association list of turfs that have this element attached and their affected contents.
 	var/list/attached_turfs_and_movables = list()
 
-	/**
-	 * A list of movables that shouldn't be affected by the element, either because it'd look bad
-	 * or barely perceptible.
-	 */
-	var/static/list/movables_to_ignore
 	///A list of icons generated from a target and a mask, later used as appearances for the overlays.
 	var/static/list/generated_immerse_icons = list()
 	///A list of instances of /atom/movable/immerse_overlay then used as visual overlays for the immersed movables.
@@ -31,16 +33,6 @@
 	. = ..()
 	if(!isturf(target) || !icon || !icon_state || !mask_icon)
 		return ELEMENT_INCOMPATIBLE
-
-	if(isnull(movables_to_ignore))
-		movables_to_ignore = typecacheof(list(
-			/obj/effect,
-			/mob/dead,
-			/obj/projectile,
-		))
-
-		movables_to_ignore += GLOB.WALLITEMS_INTERIOR
-		movables_to_ignore += GLOB.WALLITEMS_EXTERIOR
 
 	src.icon = icon
 	src.icon_state = icon_state
@@ -109,11 +101,11 @@
 	SIGNAL_HANDLER
 	if(QDELETED(movable))
 		return
-	if(HAS_TRAIT(movable, TRAIT_IMMERSED))
+	if(HAS_TRAIT(movable, TRAIT_IMMERSED) || HAS_TRAIT(movable, TRAIT_WALLMOUNTED))
 		return
 	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE, source)))
 		return
-	if(is_type_in_typecache(movable, movables_to_ignore))
+	if(is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
 		return
 
 	var/atom/movable/buckled

@@ -34,7 +34,7 @@
 	var/category = "Misc"
 	/// The list of experiments required to research the node
 	var/list/required_experiments = list()
-	/// If completed, these experiments give a specific point amount discount to the node.area
+	/// If completed, these experiments give a specific point amount discount to the node.
 	var/list/discount_experiments = list()
 	/// When this node is completed, allows these experiments to be performed.
 	var/list/experiments_to_unlock = list()

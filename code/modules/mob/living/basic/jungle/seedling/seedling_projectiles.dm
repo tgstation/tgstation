@@ -17,7 +17,7 @@
 
 	var/mob/living/living_target = target
 	if(FACTION_JUNGLE in living_target.faction)
-		return
+		return BULLET_ACT_BLOCK
 
 	return ..()
 

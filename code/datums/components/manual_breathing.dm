@@ -71,7 +71,7 @@
 /datum/component/manual_breathing/proc/check_added_organ(mob/who_cares, obj/item/organ/O)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/eyes/new_lungs = O
+	var/obj/item/organ/lungs/new_lungs = O
 
 	if(istype(new_lungs,/obj/item/organ/lungs))
 		L = new_lungs

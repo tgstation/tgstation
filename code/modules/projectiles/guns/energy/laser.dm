@@ -154,7 +154,7 @@
 /obj/projectile/beam/laser/accelerator/reduce_range()
 	..()
 	damage += 7
-	transform = 0
+	transform = matrix()
 	transform *= min(1 + (maximum_range - range) * size_per_tile, max_scale)
 
 ///X-ray gun

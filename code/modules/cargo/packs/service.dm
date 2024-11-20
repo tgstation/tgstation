@@ -237,12 +237,16 @@
 
 /datum/supply_pack/service/randomized/ready_donk
 	name = "Ready-Donk Variety Crate"
-	desc = "Featuring a line up of Donk Co.'s most popular pastry! Contains \
+	desc = "Featuring a line up of Donk Co.'s fan-favourite microwave meal! Contains \
 		a random assortment of Ready Donk products."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/food/ready_donk,
 					/obj/item/food/ready_donk/mac_n_cheese,
 					/obj/item/food/ready_donk/donkhiladas,
+					/obj/item/food/ready_donk/nachos_grandes,
+					/obj/item/food/ready_donk/donkrange_chicken,
+					/obj/item/food/ready_donk/salisbury_steak,
+					/obj/item/food/ready_donk/country_chicken,
 				)
 	crate_name = "\improper Ready-Donk crate"
 	crate_type = /obj/structure/closet/crate/freezer/donk
