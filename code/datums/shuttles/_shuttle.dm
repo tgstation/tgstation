@@ -26,6 +26,10 @@
 	var/emag_only = FALSE
 	/// If set, overrides default movement_force on shuttle
 	var/list/movement_force
+	/// Does the shuttle have modular parts? If true, loading will be briefly delayed to allow modular segments to load in.
+	var/modular = FALSE
+
+	var/list/turfs = list()
 
 	var/port_x_offset
 	var/port_y_offset
@@ -54,11 +58,24 @@
 
 /datum/map_template/shuttle/load(turf/T, centered, register=TRUE)
 	. = ..()
-	sleep(1 SECONDS) // Ugly temporary hack fix to make sure modular shuttles have time to assemble themselves before being moved.
-	if(!.)
-		return
-	var/list/turfs = block( locate(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ]),
+
+	turfs = block( locate(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ]),
 							locate(.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ]))
+
+	if(modular)
+		while(TRUE)
+			var/found = FALSE
+			for(var/turf/current_turf in turfs)
+				if(is_type_on_turf(current_turf, /obj/modular_map_root))
+					found = TRUE
+			if(found)
+				sleep(5 DECISECONDS)
+			else
+				break
+
+	dispatch(register)
+
+/datum/map_template/shuttle/proc/dispatch(register=TRUE)
 	for(var/i in 1 to turfs.len)
 		var/turf/place = turfs[i]
 		if(isspaceturf(place)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.

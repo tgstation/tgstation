@@ -281,6 +281,7 @@
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 	occupancy_limit = "30"
 	prerequisites = "This shuttle is only offered for purchase when the station is low on funds."
+	modular = TRUE
 
 /datum/map_template/shuttle/emergency/scrapheap/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_SCRAPHEAP]
