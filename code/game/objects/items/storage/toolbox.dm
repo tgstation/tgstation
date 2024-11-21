@@ -19,7 +19,7 @@
 	hitsound = 'sound/items/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5
@@ -273,9 +273,9 @@
 	new /obj/item/gun_maintenance_supplies(src)
 	new /obj/item/gun_maintenance_supplies(src)
 
-//floorbot assembly
+//repairbot assembly
 /obj/item/storage/toolbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/stack/tile/iron))
+	if(!istype(tool, /obj/item/assembly/prox_sensor))
 		return ..()
 	var/static/list/allowed_toolbox = list(
 		/obj/item/storage/toolbox/artistic,
@@ -290,26 +290,22 @@
 	if(contents.len >= 1)
 		balloon_alert(user, "not empty!")
 		return ITEM_INTERACT_BLOCKING
-	if(tool.use(10))
-		var/obj/item/bot_assembly/floorbot/B = new
-		B.toolbox = type
-		switch(B.toolbox)
-			if(/obj/item/storage/toolbox)
-				B.toolbox_color = "r"
-			if(/obj/item/storage/toolbox/emergency)
-				B.toolbox_color = "r"
-			if(/obj/item/storage/toolbox/electrical)
-				B.toolbox_color = "y"
-			if(/obj/item/storage/toolbox/artistic)
-				B.toolbox_color = "g"
-			if(/obj/item/storage/toolbox/syndicate)
-				B.toolbox_color = "s"
-		user.put_in_hands(B)
-		B.update_appearance()
-		B.balloon_alert(user, "tiles added")
-		qdel(src)
-		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "needs 10 tiles!")
+	var/static/list/toolbox_colors = list(
+		/obj/item/storage/toolbox = "#445eb3",
+		/obj/item/storage/toolbox/emergency = "#445eb3",
+		/obj/item/storage/toolbox/electrical = "#b77931",
+		/obj/item/storage/toolbox/artistic = "#378752",
+		/obj/item/storage/toolbox/syndicate = "#3d3d3d",
+	)
+	var/obj/item/bot_assembly/repairbot/repair = new
+	repair.toolbox = type
+	var/new_color = toolbox_colors[type] || "#445eb3"
+	repair.set_color(new_color)
+	user.put_in_hands(repair)
+	repair.update_appearance()
+	repair.balloon_alert(user, "sensor added!")
+	qdel(tool)
+	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/toolbox/haunted
@@ -381,7 +377,7 @@
 
 /obj/item/storage/toolbox/guncase/revolver
 	name = "revolver gun case"
-	weapon_to_spawn = /obj/item/gun/ballistic/revolver/syndicate/nuclear
+	weapon_to_spawn = /obj/item/gun/ballistic/revolver/badass/nuclear
 	extra_to_spawn = /obj/item/ammo_box/a357
 
 /obj/item/storage/toolbox/guncase/sword_and_board

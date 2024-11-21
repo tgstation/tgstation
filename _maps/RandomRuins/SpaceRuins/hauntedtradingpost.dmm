@@ -77,8 +77,8 @@
 "ba" = (
 /obj/structure/grille,
 /obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "bd" = (
 /obj/structure/table/wood,
 /obj/structure/cable/layer1,
@@ -483,7 +483,7 @@
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice/catwalk,
 /obj/structure/cable/layer1,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "dD" = (
 /turf/open/floor/wood,
@@ -666,7 +666,7 @@
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice/catwalk,
 /obj/structure/cable/layer1,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "fW" = (
 /obj/structure/rack,
@@ -816,7 +816,8 @@
 	bot_cover_flags = 4;
 	baton_type = /obj/item/melee/baton/security/cattleprod;
 	name = "\improper Syndicate Securitron";
-	desc = "A little security robot, reprogrammed by the syndicate. He looks downright surly."
+	desc = "A little security robot, reprogrammed by the syndicate. He looks downright surly.";
+	security_mode_flags = 11
 	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
@@ -1239,8 +1240,8 @@
 "kr" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "kx" = (
 /mob/living/basic/bot/dedbot{
 	bot_mode_flags = 29
@@ -1809,7 +1810,7 @@
 /obj/effect/spawner/structure/electrified_grille{
 	spawn_list = list(/obj/structure/grille,/obj/structure/cable/layer1)
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "pN" = (
 /obj/structure/cable/layer1,
@@ -1939,8 +1940,8 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "qR" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "qY" = (
 /obj/item/tank/jetpack/oxygen/security{
 	name = "red jetpack (oxygen)"
@@ -2355,14 +2356,13 @@
 "tW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "tZ" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/cable/layer1,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "uj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -2419,7 +2419,7 @@
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice/catwalk,
 /obj/structure/cable/layer1,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "ve" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -2883,8 +2883,8 @@
 "yS" = (
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "yU" = (
 /obj/item/rack_parts{
 	pixel_y = 8;
@@ -3051,7 +3051,7 @@
 /obj/effect/spawner/structure/electrified_grille{
 	spawn_list = list(/obj/structure/grille,/obj/structure/cable/layer1)
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "Au" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -3143,8 +3143,8 @@
 "Bi" = (
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "Bj" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/medical/minor_healing,
@@ -3249,7 +3249,7 @@
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice/catwalk,
 /obj/structure/cable/layer1,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "CF" = (
 /obj/structure/sink/directional/south,
@@ -3465,7 +3465,7 @@
 /obj/effect/spawner/structure/electrified_grille{
 	spawn_list = list(/obj/structure/grille,/obj/structure/cable/layer1)
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "EK" = (
 /obj/item/coin/plastic{
@@ -3585,7 +3585,7 @@
 /obj/effect/spawner/random/trash/crushed_can,
 /obj/structure/cable/layer1,
 /obj/effect/spawner/random/trash/food_packaging,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "FI" = (
 /mob/living/basic/mouse/rat,
@@ -4563,6 +4563,7 @@
 	desc = "It's labelled STAFFROOM - EMPLOYEES ONLY"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Nt" = (
@@ -4611,8 +4612,8 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "NS" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "NY" = (
 /obj/structure/cable/layer1,
 /obj/machinery/vending/coffee{
@@ -4637,8 +4638,18 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "Of" = (
 /obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/fuel_pool,
 /obj/structure/reagent_dispensers/fueltank,
+/obj/structure/closet/crate/cardboard{
+	desc = "A fine example of the ubiquitous cardboard box. Handy if you want to store things. This box is labelled 'OUTLET 6013 - DECO' and has the Donk Co. logo stamped on it."
+	},
+/obj/effect/spawner/random/maintenance/no_decals/two,
+/obj/item/toy/snappop{
+	pixel_x = 5
+	},
+/obj/item/assembly/prox_sensor{
+	pixel_y = -3;
+	pixel_x = -6
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Oh" = (
@@ -5031,8 +5042,8 @@
 	shuttle_id = "whiteship_home";
 	width = 35
 	},
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "RI" = (
 /obj/structure/chair/sofa/left/brown{
 	dir = 1
@@ -5288,18 +5299,8 @@
 "TR" = (
 /obj/structure/sign/poster/ripped/directional/south,
 /obj/structure/cable/layer1,
-/obj/structure/closet/crate/cardboard{
-	desc = "A fine example of the ubiquitous cardboard box. Handy if you want to store things. This box is labelled 'OUTLET 6013 - DECO' and has the Donk Co. logo stamped on it."
-	},
-/obj/effect/spawner/random/maintenance/no_decals/two,
-/obj/item/toy/snappop{
-	pixel_x = 5
-	},
-/obj/item/assembly/prox_sensor{
-	pixel_y = -3;
-	pixel_x = -6
-	},
 /obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "TT" = (
@@ -5308,8 +5309,8 @@
 	dir = 4;
 	name = "external vent"
 	},
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "TU" = (
 /obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -5468,11 +5469,9 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
 "Vl" = (
 /obj/structure/table/wood,
-/obj/item/toy/figure/wizard{
+/obj/item/toy/figure/wizard/special{
 	pixel_y = 9;
-	pixel_x = -4;
-	toysay = "CLANG!";
-	toysound = 'sound/effects/clang.ogg'
+	pixel_x = -4
 	},
 /obj/item/toy/figure/warden{
 	name = "\improper Knight action figure";
@@ -5550,7 +5549,6 @@
 /obj/structure/cable/layer1,
 /obj/structure/rack,
 /obj/item/gun/ballistic/automatic/pistol/toy,
-/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Wa" = (
@@ -5576,7 +5574,7 @@
 /obj/effect/spawner/structure/electrified_grille{
 	spawn_list = list(/obj/structure/grille,/obj/structure/cable/layer1)
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "Wg" = (
 /obj/structure/rack,
@@ -6021,8 +6019,8 @@
 "Zu" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ZI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4

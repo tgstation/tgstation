@@ -30,9 +30,6 @@
 	var/pointer_color
 
 /datum/id_trim/proc/find_job()
-	for (var/datum/job/job as anything in SSjob.all_occupations)
-		if (job.title == assignment)
-			return job
 	return null
 
 /// Returns the SecHUD job icon state for whatever this object's ID card is, if it has one.

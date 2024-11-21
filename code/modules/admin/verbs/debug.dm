@@ -583,8 +583,8 @@ ADMIN_VERB(jump_to_ruin, R_DEBUG, "Jump to Ruin", "Displays a list of all placed
 		return
 	var/datum/map_template/ruin/template = landmark.ruin_template
 	user.mob.forceMove(get_turf(landmark))
-	to_chat(user, span_name("[template.name]"), confidential = TRUE)
-	to_chat(user, "<span class='italics'>[template.description]</span>", confidential = TRUE)
+	to_chat(user, span_name(template.name), confidential = TRUE)
+	to_chat(user, span_italics(template.description), confidential = TRUE)
 
 ADMIN_VERB_VISIBILITY(place_ruin, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a specific ruin.", ADMIN_CATEGORY_MAPPING)
@@ -625,7 +625,7 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 		log_admin("[key_name(user)] randomly spawned ruin [ruinname] at [COORD(landmark)].")
 		user.mob.forceMove(get_turf(landmark))
 		to_chat(user, span_name("[template.name]"), confidential = TRUE)
-		to_chat(user, "<span class='italics'>[template.description]</span>", confidential = TRUE)
+		to_chat(user, span_italics("[template.description]"), confidential = TRUE)
 	else
 		to_chat(user, span_warning("Failed to place [template.name]."), confidential = TRUE)
 
@@ -852,3 +852,42 @@ ADMIN_VERB(check_missing_sprites, R_DEBUG, "Debug Worn Item Sprites", "We're can
 				actual_file_name = 'icons/mob/clothing/belt_mirror.dmi'
 				if(!(sprite.icon_state in icon_states(actual_file_name)))
 					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Suit Storage slot."), confidential = TRUE)
+
+#ifndef OPENDREAM
+ADMIN_VERB(start_tracy, R_DEBUG, "Run Tracy Now", "Start running the byond-tracy profiler immediately", ADMIN_CATEGORY_DEBUG)
+	if(GLOB.tracy_initialized)
+		to_chat(user, span_warning("byond-tracy is already running!"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+		return
+	else if(GLOB.tracy_init_error)
+		to_chat(user, span_danger("byond-tracy failed to initialize during an earlier attempt: [GLOB.tracy_init_error]"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+		return
+	message_admins(span_adminnotice("[key_name_admin(user)] is trying to start the byond-tracy profiler."))
+	log_admin("[key_name(user)] is trying to start the byond-tracy profiler.")
+	GLOB.tracy_initialized = FALSE
+	GLOB.tracy_init_reason = "[user.ckey]"
+	world.init_byond_tracy()
+	if(GLOB.tracy_init_error)
+		to_chat(user, span_danger("byond-tracy failed to initialize: [GLOB.tracy_init_error]"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+		message_admins(span_adminnotice("[key_name_admin(user)] tried to start the byond-tracy profiler, but it failed to initialize ([GLOB.tracy_init_error])"))
+		log_admin("[key_name(user)] tried to start the byond-tracy profiler, but it failed to initialize ([GLOB.tracy_init_error])")
+		return
+	to_chat(user, span_notice("byond-tracy successfully started!"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+	message_admins(span_adminnotice("[key_name_admin(user)] started the byond-tracy profiler."))
+	log_admin("[key_name(user)] started the byond-tracy profiler.")
+	if(GLOB.tracy_log)
+		rustg_file_write("[GLOB.tracy_log]", "[GLOB.log_directory]/tracy.loc")
+
+ADMIN_VERB_CUSTOM_EXIST_CHECK(start_tracy)
+	return CONFIG_GET(flag/allow_tracy_start) && fexists(TRACY_DLL_PATH)
+
+ADMIN_VERB(queue_tracy, R_DEBUG, "Toggle Tracy Next Round", "Toggle running the byond-tracy profiler next round", ADMIN_CATEGORY_DEBUG)
+	if(fexists(TRACY_ENABLE_PATH))
+		fdel(TRACY_ENABLE_PATH)
+	else
+		rustg_file_write("[user.ckey]", TRACY_ENABLE_PATH)
+	message_admins(span_adminnotice("[key_name_admin(user)] [fexists(TRACY_ENABLE_PATH) ? "enabled" : "disabled"] the byond-tracy profiler for next round."))
+	log_admin("[key_name(user)] [fexists(TRACY_ENABLE_PATH) ? "enabled" : "disabled"] the byond-tracy profiler for next round.")
+
+ADMIN_VERB_CUSTOM_EXIST_CHECK(queue_tracy)
+	return CONFIG_GET(flag/allow_tracy_queue) && fexists(TRACY_DLL_PATH)
+#endif

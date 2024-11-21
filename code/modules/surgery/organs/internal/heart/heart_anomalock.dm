@@ -3,7 +3,7 @@
  */
 #define DOAFTER_IMPLANTING_HEART "implanting"
 
-/obj/item/organ/internal/heart/cybernetic/anomalock
+/obj/item/organ/heart/cybernetic/anomalock
 	name = "voltaic combat cyberheart"
 	desc = "A cutting-edge cyberheart, originally designed for Nanotrasen killsquad usage but later declassified for normal research. Voltaic technology allows the heart to keep the body upright in dire circumstances, alongside redirecting anomalous flux energy to fully shield the user from shocks and electro-magnetic pulses. Requires a refined Flux core as a power source."
 	icon_state = "anomalock_heart"
@@ -28,7 +28,11 @@
 	///If the core is removable once socketed.
 	var/core_removable = TRUE
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/heart/cybernetic/anomalock/Destroy()
+	QDEL_NULL(core)
+	return ..()
+
+/obj/item/organ/heart/cybernetic/anomalock/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if(!core)
 		return
@@ -39,7 +43,7 @@
 	RegisterSignal(organ_owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(activate_survival))
 	RegisterSignal(organ_owner, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/heart/cybernetic/anomalock/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if(!core)
 		return
@@ -49,7 +53,7 @@
 	tesla_zap(source = organ_owner, zap_range = 20, power = 2.5e5, cutoff = 1e3)
 	qdel(src)
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/organ/heart/cybernetic/anomalock/attack(mob/living/target_mob, mob/living/user, params)
 	if(target_mob != user || !istype(target_mob) || !core)
 		return ..()
 
@@ -66,11 +70,11 @@
 	user.emote("scream")
 	return TRUE
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/proc/on_emp_act(severity)
+/obj/item/organ/heart/cybernetic/anomalock/proc/on_emp_act(severity)
 	SIGNAL_HANDLER
 	add_lightning_overlay(10 SECONDS)
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/proc/add_lightning_overlay(time_to_last = 10 SECONDS)
+/obj/item/organ/heart/cybernetic/anomalock/proc/add_lightning_overlay(time_to_last = 10 SECONDS)
 	if(lightning_overlay)
 		lightning_timer = addtimer(CALLBACK(src, PROC_REF(clear_lightning_overlay)), time_to_last, (TIMER_UNIQUE|TIMER_OVERRIDE))
 		return
@@ -78,11 +82,11 @@
 	owner.add_overlay(lightning_overlay)
 	lightning_timer = addtimer(CALLBACK(src, PROC_REF(clear_lightning_overlay)), time_to_last, (TIMER_UNIQUE|TIMER_OVERRIDE))
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/proc/clear_lightning_overlay()
+/obj/item/organ/heart/cybernetic/anomalock/proc/clear_lightning_overlay()
 	owner.cut_overlay(lightning_overlay)
 	lightning_overlay = null
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/attack_self(mob/user, modifiers)
+/obj/item/organ/heart/cybernetic/anomalock/attack_self(mob/user, modifiers)
 	. = ..()
 	if(.)
 		return
@@ -90,7 +94,7 @@
 	if(core)
 		return attack(user, user, modifiers)
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/cybernetic/anomalock/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(owner.blood_volume <= BLOOD_VOLUME_NORMAL)
 		owner.blood_volume += 5 * seconds_per_tick
@@ -98,7 +102,7 @@
 		activate_survival(owner)
 
 ///Does a few things to try to help you live whatever you may be going through
-/obj/item/organ/internal/heart/cybernetic/anomalock/proc/activate_survival(mob/living/carbon/organ_owner)
+/obj/item/organ/heart/cybernetic/anomalock/proc/activate_survival(mob/living/carbon/organ_owner)
 	if(!COOLDOWN_FINISHED(src, survival_cooldown))
 		return
 
@@ -108,15 +112,15 @@
 	addtimer(CALLBACK(src, PROC_REF(notify_cooldown), organ_owner), COOLDOWN_TIMELEFT(src, survival_cooldown))
 
 ///Alerts our owner that the organ is ready to do its thing again
-/obj/item/organ/internal/heart/cybernetic/anomalock/proc/notify_cooldown(mob/living/carbon/organ_owner)
+/obj/item/organ/heart/cybernetic/anomalock/proc/notify_cooldown(mob/living/carbon/organ_owner)
 	balloon_alert(organ_owner, "your heart strenghtens")
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
 
 ///Returns the mob we are implanted in so that the electricity effect doesn't runtime
-/obj/item/organ/internal/heart/cybernetic/anomalock/proc/get_held_mob()
+/obj/item/organ/heart/cybernetic/anomalock/proc/get_held_mob()
 	return owner
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/item/organ/heart/cybernetic/anomalock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, required_anomaly))
 		return NONE
 	if(core)
@@ -131,7 +135,7 @@
 	update_icon_state()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/item/organ/heart/cybernetic/anomalock/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!core)
 		balloon_alert(user, "no core!")
@@ -151,11 +155,11 @@
 	remove_organ_trait(TRAIT_SHOCKIMMUNE)
 	update_icon_state()
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/update_icon_state()
+/obj/item/organ/heart/cybernetic/anomalock/update_icon_state()
 	. = ..()
 	icon_state = initial(icon_state) + (core ? "-core" : "")
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/prebuilt/Initialize(mapload)
+/obj/item/organ/heart/cybernetic/anomalock/prebuilt/Initialize(mapload)
 	. = ..()
 	core = new /obj/item/assembly/signaler/anomaly/flux(src)
 	update_icon_state()

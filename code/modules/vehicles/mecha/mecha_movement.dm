@@ -29,6 +29,11 @@
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	if(mecha_flags & QUIET_STEPS)
 		return
+
+	// if we are on the second step of the diagonal movement, don't play step sound
+	if(src.moving_diagonally == SECOND_DIAG_STEP)
+		return
+
 	playsound(src, stepsound, 40, TRUE)
 
 // Do whatever you do to mobs to these fuckers too
@@ -42,7 +47,7 @@
 		if(!istype(backup) || !movement_dir || backup.anchored || continuous_move) //get_spacemove_backup() already checks if a returned turf is solid, so we can just go
 			return TRUE
 		last_pushoff = world.time
-		if(backup.newtonian_move(REVERSE_DIR(movement_dir), instant = TRUE))
+		if(backup.newtonian_move(dir2angle(REVERSE_DIR(movement_dir)), instant = TRUE))
 			backup.last_pushoff = world.time
 			step_silent = TRUE
 			if(return_drivers())
@@ -131,16 +136,18 @@
 				break
 
 	//if we're not facing the way we're going rotate us
+	// if we're not strafing or if we are forced to rotate or if we are holding down the key
 	if(dir != direction && (!strafe || forcerotate || keyheld))
-		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
-			playsound(src,turnsound,40,TRUE)
 		setDir(direction)
+		if(!(mecha_flags & QUIET_TURNS))
+			playsound(src, turnsound, 40, TRUE)
 		if(keyheld || !pivot_step) //If we pivot step, we don't return here so we don't just come to a stop
 			return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 	//Otherwise just walk normally
 	. = try_step_multiz(direction)
+
 	if(phasing)
 		use_energy(phasing_energy_drain)
 	if(strafe)

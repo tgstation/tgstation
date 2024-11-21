@@ -58,6 +58,13 @@
 	syringe.melee_attack_chain(human, human)
 	TEST_ASSERT_EQUAL(human.health, 80, "Human health did not update after injection from syringe")
 
+	// INHALE
+	TEST_ASSERT_NULL(human.has_status_effect(/datum/status_effect/hallucination), "Human is drowsy at the start of testing")
+	drink.reagents.clear_reagents()
+	drink.reagents.add_reagent(/datum/reagent/nitrous_oxide, 10)
+	drink.reagents.trans_to(human, 10, methods = INHALE)
+	TEST_ASSERT_NOTNULL(human.has_status_effect(/datum/status_effect/hallucination), "Human is not drowsy after exposure to vapors")
+
 /datum/unit_test/reagent_mob_expose/Destroy()
 	SSmobs.ignite()
 	return ..()

@@ -178,7 +178,7 @@
 /obj/item/abductor/mind_device/proc/mind_control(atom/target, mob/living/user)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		var/obj/item/organ/internal/heart/gland/target_gland = carbon_target.get_organ_slot("heart")
+		var/obj/item/organ/heart/gland/target_gland = carbon_target.get_organ_slot("heart")
 		if(!istype(target_gland))
 			to_chat(user, span_warning("Your target does not have an experimental gland!"))
 			return
@@ -226,7 +226,7 @@
 			return
 
 		living_target.balloon_alert(living_target, "you hear a voice")
-		to_chat(living_target, span_hear("You hear a voice in your head saying: </span><span class='abductor'>[message]"))
+		to_chat(living_target, span_hear("You hear a voice in your head saying: [span_abductor(message)]"))
 		to_chat(user, span_notice("You send the message to your target."))
 		log_directed_talk(user, living_target, message, LOG_SAY, "abductor whisper")
 
@@ -235,7 +235,7 @@
 	name = "alien firing pin"
 	icon_state = "firing_pin_ayy"
 	desc = "This firing pin is slimy and warm; you can swear you feel it constantly trying to mentally probe you."
-	fail_message = "<span class='abductor'>Firing error, please contact Command.</span>"
+	fail_message = span_abductor("Firing error, please contact Command.")
 
 /obj/item/firing_pin/abductor/pin_auth(mob/living/user)
 	. = isabductor(user)
@@ -448,7 +448,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		species = span_notice("[human_victim.dna.species.name]")
 		if(IS_CHANGELING(human_victim))
 			species = span_warning("Changeling lifeform")
-		var/obj/item/organ/internal/heart/gland/temp = locate() in human_victim.organs
+		var/obj/item/organ/heart/gland/temp = locate() in human_victim.organs
 		if(temp)
 			helptext = span_warning("Experimental gland detected!")
 		else
@@ -594,6 +594,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "alienhelmet"
 	inhand_icon_state = null
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 
 /obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
 	. = ..()

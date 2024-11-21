@@ -1,8 +1,4 @@
-import { createSearch } from 'common/string';
 import { useState } from 'react';
-import { BooleanLike } from 'tgui-core/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -13,7 +9,11 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type FishData = {
@@ -216,7 +216,7 @@ const FishItem = (props) => {
                 Hunger:{' '}
                 <ProgressBar
                   width="95%"
-                  value={fish.fish_hunger / 100}
+                  value={fish.fish_hunger}
                   ranges={{
                     good: [0.9, Infinity],
                     average: [0.5, 0.9],

@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - image: "Cleans up some redundant pixels on the bowman sprites."

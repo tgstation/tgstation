@@ -5,7 +5,7 @@
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl
 	name = "Blood Crawl"
-	desc = "Allows you to phase in and out of existance via pools of blood."
+	desc = "Allows you to phase in and out of existence via pools of blood."
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 
@@ -158,7 +158,7 @@
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon
 	name = "Voracious Blood Crawl"
-	desc = "Allows you to phase in and out of existance via pools of blood. If you are dragging someone in critical or dead, \
+	desc = "Allows you to phase in and out of existence via pools of blood. If you are dragging someone in critical or dead, \
 		they will be consumed by you, fully healing you."
 	/// The sound played when someone's consumed.
 	var/consume_sound = 'sound/effects/magic/demon_consume.ogg'
@@ -285,7 +285,7 @@
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny
 	name = "Friendly Blood Crawl"
-	desc = "Allows you to phase in and out of existance via pools of blood. If you are dragging someone in critical or dead - I mean, \
+	desc = "Allows you to phase in and out of existence via pools of blood. If you are dragging someone in critical or dead - I mean, \
 		sleeping, when entering a blood pool, they will be invited to a party and fully heal you!"
 	consume_sound = 'sound/misc/scary_horn.ogg'
 
@@ -332,7 +332,7 @@
 		// Heals them back to state one
 		if(!friend.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE))
 			continue
-		playsound(release_turf, consumed_mobs, 50, TRUE, -1)
+		friend.playsound_local(release_turf, 'sound/effects/magic/exit_blood.ogg', 50, TRUE, -1)
 		to_chat(friend, span_clown("You leave [source]'s warm embrace, and feel ready to take on the world."))
 
 

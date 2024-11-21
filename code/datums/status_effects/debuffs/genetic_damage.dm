@@ -5,7 +5,7 @@
 	id = "genetic_damage"
 	alert_type = null
 	status_type = STATUS_EFFECT_REFRESH // New effects will add to total_damage
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 2 SECONDS
 	on_remove_on_mob_delete = TRUE // Need to unregister from owner, be_replaced() would cause runtimes
 	remove_on_fullheal = TRUE
@@ -46,15 +46,20 @@
 		qdel(src)
 		return
 
-/datum/status_effect/genetic_damage/proc/on_healthscan(datum/source, list/render_list, advanced)
+/datum/status_effect/genetic_damage/proc/on_healthscan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
 	SIGNAL_HANDLER
 
+	var/message = ""
 	if(advanced)
-		render_list += "<span class='alert ml-1'>Genetic damage: [round(total_damage / minimum_before_tox_damage * 100, 0.1)]%</span>\n"
+		message = "Genetic damage: [round(total_damage / minimum_before_tox_damage * 100, 0.1)]%"
 	else if(total_damage >= minimum_before_tox_damage)
-		render_list += "<span class='alert ml-1'>Severe genetic damage detected.</span>\n"
+		message = "Severe genetic damage detected."
 	else
-		render_list += "<span class='alert ml-1'>Minor genetic damage detected.</span>\n"
+		message = "Minor genetic damage detected."
+
+	if(message)
+		render_list += conditional_tooltip("<span class='alert ml-1'>[message]</span>", "Irreparable under normal circumstances - will decay over time.", tochat)
+		render_list += "<br>"
 
 #undef GORILLA_MUTATION_CHANCE_PER_SECOND
 #undef GORILLA_MUTATION_MINIMUM_DAMAGE

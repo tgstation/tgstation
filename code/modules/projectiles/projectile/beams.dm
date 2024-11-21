@@ -76,15 +76,15 @@
 	name = "low-power laser"
 	icon_state = "laser_musket"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
-	damage = 25
-	stamina = 40
+	damage = 28
+	stamina = 35
 	light_color = COLOR_STRONG_VIOLET
 	weak_against_armour = TRUE
 
 /obj/projectile/beam/laser/musket/prime
 	name = "mid-power laser"
-	damage = 30
-	stamina = 45
+	damage = 25
+	stamina = 20
 	weak_against_armour = FALSE
 
 /obj/projectile/beam/weak
@@ -197,7 +197,7 @@
 	wound_bonus = -40
 	bare_wound_bonus = 70
 
-/obj/projectile/beam/emitter/singularity_pull()
+/obj/projectile/beam/emitter/singularity_pull(atom/singularity, current_size)
 	return //don't want the emitters to miss
 
 /obj/projectile/beam/emitter/hitscan

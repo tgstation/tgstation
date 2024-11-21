@@ -48,7 +48,7 @@
 	. = ..()
 	icon_state = active ? icon_state_on : initial(icon_state)
 
-/obj/machinery/power/emitter/energycannon/magical/process()
+/obj/machinery/power/emitter/energycannon/magical/process_early(seconds_per_tick)
 	. = ..()
 	if(active_tables.len >= tables_required)
 		if(!active)

@@ -29,7 +29,8 @@
 /datum/wound/cranial_fissure
 	name = "Cranial Fissure"
 	desc = "Patient's crown is agape, revealing severe damage to the skull."
-	treat_text = "Immediate surgical reconstruction of the skull."
+	treat_text = "Surgical reconstruction of the skull is necessary."
+	treat_text_short = "Surgical reconstruction required."
 	examine_desc = "is split open"
 	occur_text = "is split into two separated chunks"
 
@@ -65,7 +66,7 @@
 	if (source.stat == DEAD)
 		return
 
-	var/obj/item/organ/internal/brain/brain = source.get_organ_by_type(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/brain = source.get_organ_by_type(/obj/item/organ/brain)
 	if (isnull(brain))
 		return
 
@@ -90,7 +91,7 @@
 	if (victim.body_position != LYING_DOWN)
 		return FALSE
 
-	var/obj/item/organ/internal/eyes/eyes = victim.get_organ_by_type(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/eyes/eyes = victim.get_organ_by_type(/obj/item/organ/eyes)
 	if (isnull(eyes))
 		victim.balloon_alert(user, "no eyes to take!")
 		return TRUE
@@ -130,9 +131,9 @@
 
 	return TRUE
 
-/datum/wound/cranial_fissure/proc/still_has_eyes(obj/item/organ/internal/eyes/eyes)
+/datum/wound/cranial_fissure/proc/still_has_eyes(obj/item/organ/eyes/eyes)
 	PRIVATE_PROC(TRUE)
 
-	return victim?.get_organ_by_type(/obj/item/organ/internal/eyes) == eyes
+	return victim?.get_organ_by_type(/obj/item/organ/eyes) == eyes
 
 #undef CRANIAL_FISSURE_FILTER_DISPLACEMENT

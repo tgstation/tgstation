@@ -17,16 +17,18 @@
 		/datum/ai_planning_subtree/manage_unreachable_list,
 	)
 	max_target_distance = AI_BOT_PATH_LENGTH
+	can_idle = FALSE
+	///minimum distance we need to be from our target in path calculations
+	var/minimum_distance = 0
 	///keys to be reset when the bot is reseted
 	var/list/reset_keys = list(
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
 	)
-	can_idle = FALSE
 
 /datum/targeting_strategy/basic/bot/can_attack(mob/living/living_mob, atom/the_target, vision_range)
-	var/datum/ai_controller/my_controller = living_mob.ai_controller
+	var/datum/ai_controller/basic_controller/bot/my_controller = living_mob.ai_controller
 	if(isnull(my_controller))
 		return FALSE
 	if(!ishuman(the_target) || LAZYACCESS(my_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], the_target))
@@ -36,7 +38,7 @@
 		return FALSE
 	if(get_turf(living_mob) == get_turf(living_target))
 		return ..()
-	var/list/path = get_path_to(living_mob, living_target, max_distance = 10, access = my_controller.get_access())
+	var/list/path = get_path_to(living_mob, living_target, mintargetdist = my_controller.minimum_distance, max_distance = 10, access = my_controller.get_access())
 	if(!length(path) || QDELETED(living_mob))
 		my_controller?.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, living_target, TRUE)
 		return FALSE
@@ -72,7 +74,7 @@
 /datum/ai_controller/basic_controller/bot/get_able_to_run()
 	var/mob/living/basic/bot/bot_pawn = pawn
 	if(!(bot_pawn.bot_mode_flags & BOT_MODE_ON))
-		return FALSE
+		return AI_UNABLE_TO_RUN
 	return ..()
 
 /datum/ai_controller/basic_controller/bot/get_access()
@@ -101,7 +103,7 @@
 		return TRUE
 	if(get_turf(pawn) == get_turf(target))
 		return TRUE
-	var/list/path = get_path_to(pawn, target, max_distance = distance, access = get_access())
+	var/list/path = get_path_to(pawn, target, simulated_only = !HAS_TRAIT(pawn, TRAIT_SPACEWALK), mintargetdist = minimum_distance, max_distance = distance, access = get_access())
 	if(!length(path))
 		return FALSE
 	return TRUE
@@ -265,14 +267,15 @@
 	action_cooldown = 2 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE)
+/datum/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE, turf_search = FALSE)
 	if(!istype(controller))
 		stack_trace("attempted to give [controller.pawn] the bot search behavior!")
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/mob/living/living_pawn = controller.pawn
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	for(var/atom/potential_target as anything in oview(radius, controller.pawn))
+	var/list/objects_to_search = turf_search ? spiral_range_turfs(radius, controller.pawn) : oview(radius, controller.pawn) //use range turfs instead of oview when we can for performance
+	for(var/atom/potential_target as anything in objects_to_search)
 		if(QDELETED(living_pawn))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 		if(!is_type_in_typecache(potential_target, looking_for))
@@ -301,3 +304,37 @@
 
 	announcement.announce(pick(list_to_pick_from))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+///behavior to interact with atoms
+/datum/ai_behavior/bot_interact
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
+	///should we remove the target afterwards?
+	var/clear_target = TRUE
+
+/datum/ai_behavior/bot_interact/setup(datum/ai_controller/controller, target_key)
+	. = ..()
+	var/turf/target = controller.blackboard[target_key]
+	if(isnull(target))
+		return FALSE
+	set_movement_target(controller, target)
+
+/datum/ai_behavior/bot_interact/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+	var/mob/living/basic/living_pawn = controller.pawn
+	var/atom/target = controller.blackboard[target_key]
+
+	if(QDELETED(target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	living_pawn.UnarmedAttack(target, proximity_flag = TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/datum/ai_behavior/bot_interact/finish_action(datum/ai_controller/controller, succeeded, target_key)
+	. = ..()
+	var/atom/target = controller.blackboard[target_key]
+	if(clear_target)
+		controller.clear_blackboard_key(target_key)
+	if(!succeeded && !isnull(target))
+		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
+
+/datum/ai_behavior/bot_interact/keep_target
+	clear_target = FALSE

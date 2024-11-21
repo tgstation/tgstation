@@ -24,8 +24,8 @@
 		TRAIT_NEVER_WOUNDED,
 	)
 
-	mutantheart = /obj/item/organ/internal/heart/nightmare
-	mutantbrain = /obj/item/organ/internal/brain/shadow/nightmare
+	mutantheart = /obj/item/organ/heart/nightmare
+	mutantbrain = /obj/item/organ/brain/shadow/nightmare
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/shadow/nightmare,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/shadow/nightmare,

@@ -10,11 +10,11 @@
 
 	var/icon/pandora = icon('icons/mob/simple/lavaland/lavaland_elites.dmi', "pandora")
 	pandora.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
-	final_icon.Blend(pandora, ICON_UNDERLAY, -world.icon_size / 4, 0)
+	final_icon.Blend(pandora, ICON_UNDERLAY, -ICON_SIZE_X / 4, 0)
 
 	var/icon/rat = icon('icons/mob/simple/animal.dmi', "regalrat")
 	rat.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
-	final_icon.Blend(rat, ICON_UNDERLAY, world.icon_size / 4, 0)
+	final_icon.Blend(rat, ICON_UNDERLAY, ICON_SIZE_X / 4, 0)
 
 	final_icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 	return final_icon

@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Fixed cat ears not layering properly."
-  - bugfix: "Husked bodies show their blood with the right colours in photographs."

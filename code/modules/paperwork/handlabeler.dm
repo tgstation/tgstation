@@ -116,6 +116,13 @@
 	labels_left = initial(labels_left) //Yes, it's capped at its initial value
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/hand_labeler/examine()
+	. = ..()
+	if(labels_left > 0)
+		. += span_notice("It looks like it could label [labels_left] more thing\s.")
+	else
+		. += span_notice("It's out of labels.")
+
 /obj/item/hand_labeler/borg
 	name = "cyborg-hand labeler"
 
@@ -211,7 +218,7 @@
 
 	return ..()
 
-/obj/item/label/proc/stick_to_atom(atom/applying_to, stick_px = world.icon_size / 2, stick_py = world.icon_size / 2)
+/obj/item/label/proc/stick_to_atom(atom/applying_to, stick_px = ICON_SIZE_X / 2, stick_py = ICON_SIZE_Y / 2)
 	applying_to.AddComponent( \
 		/datum/component/sticker, \
 		stickering_atom = src, \

@@ -571,7 +571,7 @@
 
 /datum/chemical_reaction/corgium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i in rand(1, created_volume) to created_volume) // More lulz.
+	for(var/i in 1 to rand(1, created_volume)) // More lulz.
 		new /mob/living/basic/pet/dog/corgi(location)
 	..()
 
@@ -585,7 +585,7 @@
 /datum/chemical_reaction/monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/water = 1)
 	reaction_flags = REACTION_INSTANT
-	mix_message = "<span class='danger'>Expands into a brown mass before shaping itself into a monkey!.</span>"
+	mix_message = span_danger("Expands into a brown mass before shaping itself into a monkey!.")
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/mob/living/carbon/M = holder.my_atom
@@ -627,7 +627,7 @@
 
 /datum/chemical_reaction/butterflium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i in rand(1, created_volume) to created_volume)
+	for(var/i in 1 to rand(1, created_volume))
 		new /mob/living/basic/butterfly(location)
 	..()
 //scream powder
@@ -976,7 +976,7 @@
 
 /datum/chemical_reaction/ant_slurry/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i in rand(1, created_volume) to created_volume)
+	for(var/i in 1 to rand(1, created_volume))
 		new /mob/living/basic/ant(location)
 	..()
 

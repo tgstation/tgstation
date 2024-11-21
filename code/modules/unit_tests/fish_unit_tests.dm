@@ -128,7 +128,6 @@
 	description = "It smells fishy."
 
 /obj/structure/aquarium/traits
-	reproduction_and_growth = TRUE
 	var/obj/item/fish/testdummy/crossbreeder/crossbreeder
 	var/obj/item/fish/testdummy/cloner/cloner
 	var/obj/item/fish/testdummy/sterile/sterile
@@ -155,7 +154,6 @@
 	fish_traits = list(/datum/fish_trait/no_mating)
 
 /obj/structure/aquarium/evolution
-	reproduction_and_growth = TRUE
 	var/obj/item/fish/testdummy/evolve/evolve
 	var/obj/item/fish/testdummy/evolve_two/evolve_two
 
@@ -195,7 +193,7 @@
 ///During the fish_growth unit test, we spawn a fish outside of the aquarium and check that this actually stops it from growing
 /datum/fish_evolution/dummy/two/growth_checks(obj/item/fish/source, seconds_per_tick, growth)
 	. = ..()
-	if(!isaquarium(source.loc))
+	if(!source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		return COMPONENT_DONT_GROW
 
 ///A test that checks that fishing portals can be linked and function as expected
@@ -353,14 +351,13 @@
 	TEST_ASSERT(dummy_boogaloo, "The new fish type cannot be found inside the aquarium")
 
 /obj/structure/aquarium/crab
-	reproduction_and_growth = TRUE //needed for growing up
 	///Our test subject
 	var/obj/item/fish/chasm_crab/instant_growth/crabbie
 
 /obj/structure/aquarium/crab/Initialize(mapload)
 	. = ..()
 	crabbie = new(src)
-	crabbie.name = "Crabbie"
+	crabbie.AddComponent(/datum/component/rename, "Crabbie", crabbie.desc)
 	crabbie.last_feeding = world.time
 	crabbie.AddComponent(/datum/component/fish_growth, crabbie.lob_type, 1 SECONDS)
 
@@ -421,8 +418,10 @@
 /datum/fish_source/unit_test_profound_fisher
 	fish_table = list(/obj/item/fish/testdummy = 1)
 	fish_counts = list(/obj/item/fish/testdummy = 2)
+	fish_source_flags = parent_type::fish_source_flags | FISH_SOURCE_FLAG_SKIP_CATCHABLES
 
 /datum/fish_source/unit_test_all_fish
+	fish_source_flags = parent_type::fish_source_flags | FISH_SOURCE_FLAG_SKIP_CATCHABLES
 
 /datum/fish_source/unit_test_all_fish/New()
 	for(var/fish_type as anything in subtypesof(/obj/item/fish))
@@ -455,7 +454,7 @@
 
 	TEST_ASSERT_EQUAL(fish.status, FISH_DEAD, "The fish is not dead, despite having sustained enough damage that it should. health: [fish.health]")
 
-	var/obj/item/organ/internal/stomach/belly = gourmet.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/belly = gourmet.get_organ_slot(ORGAN_SLOT_STOMACH)
 	belly.reagents.clear_reagents()
 
 	fish.set_status(FISH_ALIVE)
@@ -486,6 +485,37 @@
 	var/obj/item/storage/box/fish_debug/box = allocate(/obj/item/storage/box/fish_debug)
 	for(var/obj/item/fish/fish as anything in box)
 		fish.randomize_size_and_weight()
+
+/datum/unit_test/aquarium_upgrade
+
+/datum/unit_test/aquarium_upgrade/Run()
+	var/mob/living/carbon/human/dummy/user = allocate(__IMPLIED_TYPE__)
+	var/obj/item/aquarium_upgrade/bioelec_gen/upgrade = allocate(__IMPLIED_TYPE__)
+	var/obj/structure/aquarium/aquarium = allocate(upgrade::upgrade_from_type)
+
+	var/datum/component/aquarium/comp = aquarium.GetComponent(__IMPLIED_TYPE__)
+	TEST_ASSERT(comp, "[aquarium.type] doesn't have an aquarium component")
+	comp.set_fluid_type(AQUARIUM_FLUID_AIR)
+	comp.fluid_temp = MAX_AQUARIUM_TEMP
+	aquarium.add_traits(list(TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), AQUARIUM_TRAIT)
+
+	var/type_to_check = upgrade::upgrade_to_type
+	var/turf/aquarium_loc = aquarium.loc
+	user.put_in_hands(upgrade)
+	upgrade.melee_attack_chain(user, aquarium)
+	TEST_ASSERT(QDELETED(aquarium), "Old [aquarium.type] was not deleted after upgrade")
+
+	var/obj/structure/aquarium/upgraded_aquarium = locate(type_to_check) in aquarium_loc
+	TEST_ASSERT(upgraded_aquarium, "New [upgraded_aquarium.type] was not spawned after upgrade")
+	comp = upgraded_aquarium.GetComponent(/datum/component/aquarium)
+	TEST_ASSERT(comp, "New [upgraded_aquarium.type] doesn't have an aquarium component")
+
+	TEST_ASSERT_EQUAL(comp.fluid_type, AQUARIUM_FLUID_AIR, "Inherited aquarium fluid type should be [AQUARIUM_FLUID_AIR]")
+	TEST_ASSERT_EQUAL(comp.fluid_temp, MAX_AQUARIUM_TEMP, "Inherited aquarium fluid temperature should be [MAX_AQUARIUM_TEMP]")
+	TEST_ASSERT(HAS_TRAIT(upgraded_aquarium, TRAIT_AQUARIUM_PANEL_OPEN), "The new aquarium should have its panel open")
+	TEST_ASSERT(HAS_TRAIT(upgraded_aquarium, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), "The 'growth and reproduction' setting for this aquarium should be disabled")
+
+	TEST_ASSERT(QDELETED(upgrade), "Aquarium upgrade wasn't deleted afterward")
 
 #undef FISH_REAGENT_AMOUNT
 #undef TRAIT_FISH_TESTING

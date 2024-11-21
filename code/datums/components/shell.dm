@@ -173,7 +173,7 @@
 
 	if(istype(item, /obj/item/inducer))
 		var/obj/item/inducer/inducer = item
-		INVOKE_ASYNC(inducer, TYPE_PROC_REF(/obj/item, attack_atom), attached_circuit || parent, attacker, list())
+		INVOKE_ASYNC(inducer, TYPE_PROC_REF(/obj/item, interact_with_atom), attached_circuit || parent, attacker, list())
 		return COMPONENT_NO_AFTERATTACK
 
 	if(attached_circuit)
@@ -346,7 +346,11 @@
 	))
 	if(attached_circuit.loc == parent || (!QDELETED(attached_circuit) && attached_circuit.loc == null))
 		var/atom/parent_atom = parent
-		attached_circuit.forceMove(parent_atom.drop_location())
+		var/drop_location = parent_atom.drop_location()
+		if(drop_location)
+			attached_circuit.forceMove(drop_location)
+		else
+			attached_circuit.moveToNullspace()
 
 	for(var/obj/item/circuit_component/to_remove as anything in unremovable_circuit_components)
 		attached_circuit.remove_component(to_remove)
@@ -376,7 +380,7 @@
 	return COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT
 
 /**
- * Determines if a user is authorized to see the existance of this shell. Returns false if they are not
+ * Determines if a user is authorized to see the existence of this shell. Returns false if they are not
  *
  * Arguments:
  * * user - The user to check if they are authorized

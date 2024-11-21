@@ -64,7 +64,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/balloon_mallet/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
-		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
+		. += "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
 
 /obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
 	playsound(loc, 'sound/mobs/non-humanoids/clown/hehe.ogg', 20)
@@ -432,6 +432,42 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	pain_mult = 0
 	jostle_pain_mult = 0
 
+/obj/item/carpenter_hammer
+	name = "carpenter hammer"
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "carpenter_hammer"
+	inhand_icon_state = "carpenter_hammer"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	desc = "Uncanny looking hammer."
+	force = 20
+	throwforce = 20
+	throw_range = 4
+	w_class = WEIGHT_CLASS_NORMAL
+	wound_bonus = 20
+	demolition_mod = 1.25
+
+/obj/item/carpenter_hammer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/item_killsound, \
+	allowed_mobs = list(/mob/living/carbon/human), \
+	killsound = 'sound/items/weapons/hammer_death_scream.ogg', \
+	replace_default_death_sound = TRUE, \
+	)
+
+/obj/item/carpenter_hammer/examine(mob/user)
+	. = ..()
+	. += ""
+	. += "Real World Tip:"
+	. += pick(
+		"Every building, from hospitals to homes, has a room that serves as the heart of the building \
+		and carries blood and nutrients to its extremities. Try to find the heart of your home!",
+		"All the food you've tried is rotten. You've never eaten fresh food.",
+		"Viruses do not exist. Illness is simply your body punishing you for what you have done wrong.",
+		"Space stations must have at least 50 mammalian teeth embedded in the north walls for structural safety reasons.",
+		"Queen dragonfly sleeps and smiles.",
+	)
+
 /obj/item/switchblade
 	name = "switchblade"
 	icon = 'icons/obj/weapons/sword.dmi'
@@ -514,7 +550,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return OXYLOSS
 
 /obj/item/bambostaff
-	name = "Bamboo Staff"
+	name = "bamboo staff"
 	desc = "A long bamboo-made staff with steel-capped ends. It is rumoured that initiates of Spider Clan train with such before getting to learn how to use a katana."
 	force = 10
 	block_chance = 45
@@ -534,6 +570,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/bambostaff/Initialize(mapload)
 	. = ..()
+	// there are too many puns to choose from. ('Bo' is the 'real' name for this kind of weapon.)
+	name = pick("bamboo staff", "bambo staff", "bam-Bo staff", "bam boo staff", "bam-boo staff", "bam Bo", "bambo", "bam-Bo", "bamboo-Bo")
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
 		force_wielded = 14, \
@@ -1169,7 +1207,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(attack_type == PROJECTILE_ATTACK)
 		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
 			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-			playsound(src, pick('sound/items/weapons/bulletflyby.ogg', 'sound/items/weapons/bulletflyby2.ogg', 'sound/items/weapons/bulletflyby3.ogg'), 75, TRUE)
+			playsound(src, SFX_BULLET_MISS, 75, TRUE)
 			return TRUE
 		return FALSE
 	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
@@ -1200,8 +1238,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.do_attack_animation(target, "nothing")
 	var/list/modifiers = params2list(params)
 	var/damage_mod = 1
-	var/x_slashed = text2num(modifiers[ICON_X]) || world.icon_size/2 //in case we arent called by a client
-	var/y_slashed = text2num(modifiers[ICON_Y]) || world.icon_size/2 //in case we arent called by a client
+	var/x_slashed = text2num(modifiers[ICON_X]) || ICON_SIZE_X/2 //in case we arent called by a client
+	var/y_slashed = text2num(modifiers[ICON_Y]) || ICON_SIZE_Y/2 //in case we arent called by a client
 	new /obj/effect/temp_visual/slash(get_turf(target), target, x_slashed, y_slashed, slash_color)
 	if(target == previous_target?.resolve()) //if the same target, we calculate a damage multiplier if you swing your mouse around
 		var/x_mod = previous_x - x_slashed
@@ -1249,7 +1287,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/matrix/new_transform = matrix()
 	new_transform.Turn(rand(1, 360)) // Random slash angle
 	var/datum/decompose_matrix/decomp = target.transform.decompose()
-	new_transform.Translate((x_slashed - world.icon_size/2) * decomp.scale_x, (y_slashed - world.icon_size/2) * decomp.scale_y) // Move to where we clicked
+	new_transform.Translate((x_slashed - ICON_SIZE_X/2) * decomp.scale_x, (y_slashed - ICON_SIZE_Y/2) * decomp.scale_y) // Move to where we clicked
 	//Follow target's transform while ignoring scaling
 	new_transform.Turn(decomp.rotation)
 	new_transform.Translate(decomp.shift_x, decomp.shift_y)
