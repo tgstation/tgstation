@@ -214,7 +214,7 @@
 		source.balloon_alert(user, "fed the fish")
 		return ITEM_INTERACT_SUCCESS
 
-	if(!HAS_TRAIT(item, TRAIT_AQUARIUM_CONTENT))
+	if(!HAS_TRAIT(item, TRAIT_AQUARIUM_CONTENT) || (!isitem(parent) && user.combat_mode))
 		return //proceed with normal interactions
 
 	var/broken = source.get_integrity_percentage() <= source.integrity_failure
@@ -238,6 +238,10 @@
 
 ///Feed the fish at defined intervals until the feed storage is empty.
 /datum/component/aquarium/process(seconds_per_tick)
+	//safe mode, no need to feed the fishes
+	if(HAS_TRAIT_FROM(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
+		last_feeding += seconds_per_tick SECONDS
+		return
 	var/atom/movable/movable = parent
 	if(!movable.reagents?.total_volume)
 		if(movable.reagents)
@@ -460,7 +464,7 @@
 	. = ..()
 	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
-	.["allowBreeding"] = HAS_TRAIT_FROM(source, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
+	.["safe_mode"] = !HAS_TRAIT_FROM(source, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	.["fishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
 	.["propData"] = list()
@@ -509,8 +513,8 @@
 			if(params["fluid"] != fluid_type && (params["fluid"] in fluid_types))
 				set_fluid_type(params["fluid"])
 			. = TRUE
-		if("allow_breeding")
-			if(HAS_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH))
+		if("safe_mode")
+			if(HAS_TRAIT_FROM(source, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
 				REMOVE_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 			else
 				ADD_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)

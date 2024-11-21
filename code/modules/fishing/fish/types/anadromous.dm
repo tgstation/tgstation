@@ -55,7 +55,7 @@
 	fishing_difficulty_modifier = 10
 	required_temperature_min = MIN_AQUARIUM_TEMP+12
 	required_temperature_max = MIN_AQUARIUM_TEMP+27
-	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/territorial)
 	evolution_types = list(/datum/fish_evolution/armored_pike)
 	compatible_types = list(/obj/item/fish/pike/armored)
 	favorite_bait = list(
