@@ -49,11 +49,13 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	var/reward_path = FISHING_DUD
 	/// Minigame difficulty
 	var/difficulty = FISHING_DEFAULT_DIFFICULTY
-	// Current phase
+	/// Current phase
 	var/phase = WAIT_PHASE
-	// Timer for the next phase
+	/// Timer for the next phase
 	var/next_phase_timer
-	// The last time we clicked during the baiting phase
+	/// The lower and upper bounds of the waiting phase timer
+	var/list/wait_time_range = list(3 SECONDS, 25 SECONDS)
+	/// The last time we clicked during the baiting phase
 	var/last_baiting_click
 	/// Fishing mob
 	var/mob/user
@@ -126,6 +128,10 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	RegisterSignal(fish_source, COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE, PROC_REF(interrupt_challenge))
 	fish_source.RegisterSignal(user, COMSIG_MOB_COMPLETE_FISHING, TYPE_PROC_REF(/datum/fish_source, on_challenge_completed))
 	background = comp.fish_source.background
+	if(comp.fish_source.wait_time_range)
+		wait_time_range = comp.fish_source.wait_time_range
+	if(float.spin_frequency) //Using a fishing lure narrows the range a bit, for better or worse.
+		wait_time_range = list(wait_time_range[1] + 8 SECONDS, wait_time_range[2] - 8 SECONDS)
 	SEND_SIGNAL(user, COMSIG_MOB_BEGIN_FISHING, src)
 	SEND_SIGNAL(rod, COMSIG_ROD_BEGIN_FISHING, src)
 	GLOB.fishing_challenges_by_user[user] = src
@@ -209,7 +215,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 /datum/fishing_challenge/proc/start(mob/living/user)
 	/// Create fishing line visuals
 	if(!used_rod.internal)
-		fishing_line = used_rod.create_fishing_line(float, user, target_py = 5)
+		fishing_line = used_rod.create_fishing_line(float, user, target_py = float.pixel_y + 4)
 		if(isnull(fishing_line)) //couldn't create a fishing line, probably because we don't have a good line of sight.
 			qdel(src)
 			return
@@ -369,7 +375,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	if(penalty)
 		wait_time = min(timeleft(next_phase_timer) + rand(3 SECONDS, 5 SECONDS), 30 SECONDS)
 	else
-		wait_time = float.spin_frequency ? rand(11 SECONDS, 17 SECONDS) : rand(3 SECONDS, 25 SECONDS)
+		wait_time = rand(wait_time_range[1], wait_time_range[2])
 		if(special_effects & FISHING_MINIGAME_AUTOREEL && wait_time >= 15 SECONDS)
 			wait_time = max(wait_time - 7.5 SECONDS, 15 SECONDS)
 	deltimer(next_phase_timer)
@@ -423,6 +429,8 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 				send_alert("seed!!!")
 			if(FISH_ICON_BOTTLE)
 				send_alert("bottle!!!")
+			if(FISH_ICON_ORGAN)
+				send_alert("organ!!!")
 	else
 		send_alert("!!!")
 	animate(float, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)

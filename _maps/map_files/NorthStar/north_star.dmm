@@ -65672,7 +65672,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "qSD" = (
-/obj/structure/aquarium/lawyer,
+/obj/item/fish_tank/lawyer,
+/obj/structure/table/wood,
 /turf/open/floor/wood/parquet,
 /area/station/service/lawoffice)
 "qSJ" = (

@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - admin: "admins can now control the volume that some admin triggered sounds are played at"

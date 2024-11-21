@@ -28,8 +28,8 @@ If an issue reports a runtime, it must have the actual runtime call stack provid
  -   usr.loc: the floor (150,25,4) (/turf/open/floor/circuit)
  -   call stack:
  - Camera Net (/datum/cameranet): visibility(/list (/list), null, /list (/list), 1)
- - AI (/mob/living/silicon/ai): camera visibility(Inactive AI Eye (/mob/eye/ai_eye))
- - Inactive AI Eye (/mob/eye/ai_eye): setLoc(the floor (150,25,4) (/turf/open/floor/circuit), 0)
+ - AI (/mob/living/silicon/ai): camera visibility(Inactive AI Eye (/mob/eye/camera/ai))
+ - Inactive AI Eye (/mob/eye/camera/ai): setLoc(the floor (150,25,4) (/turf/open/floor/circuit), 0)
  - AI (/mob/living/silicon/ai): create eye()
  - AI (/mob/living/silicon/ai): Initialize(0, null, TagGamerGame2 (/mob/dead/new_player))
  - Atoms (/datum/controller/subsystem/atoms): InitAtom(AI (/mob/living/silicon/ai), 0, /list (/list))
