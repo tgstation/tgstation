@@ -714,3 +714,53 @@
   larentoun:
   - bugfix: 'Mafia: Psych''s reveal ability now correctly has a single use'
   - bugfix: 'Mafia: Fugitive''s vest ability now correctly should have two uses'
+2024-11-21:
+  Ghommie:
+  - refactor: refactored aquariums heavily. Please report any fishy bug.
+  - rscadd: Added portable/handheld fish tanks to the game. They can be crafted with
+      an aquarium kit and 5 sheets of plastic. While portable, they cannot store fish
+      that are too big or if there're too many already. This restriction can be removed
+      by using the new "bluespace fish tank kit" techweb item.
+  - map: Replaced the lawyer's stationary pet aquarium with a fish tank, so you can
+      carry McGill around.
+  - balance: Reduced the iron cost of stationary aquariums a little.
+  - bugfix: Fixed a couple nits with the water visuals not appearing on objects with
+      a very low layer (rendered just above the floor), as well as atmos pipes looking
+      a bit funky on untiled turfs beside catwalks and platings when beside connected,
+      under-floored pipes.
+  SmArtKar:
+  - refactor: Firestacks, burning/acid/decaying effects and (brought back after being
+      temporarily removed) slimed status effects now use a new "shared" particles
+      system, which should considerably improve client performance when encountering
+      a lot of burning/slimed entities.
+  - bugfix: Berets no longer make you go bald above your earline.
+  SyncIt21:
+  - bugfix: plumbing pill press advertises the correct maximum volume of your selected
+      product instead of always 50u on the UI
+  - code_imp: plumbing pill press validates selected container to prevent href exploits
+  - code_imp: plumbing pill press validates input volume to see if it's a number
+  grungussuss:
+  - sound: the glove pickup sound will no longer play for modsuits undeploying
+  mc-oofert:
+  - qol: alerts that do stuff when clicked glow gold
+  necromanceranne:
+  - balance: 'After months of rigorous training montages, handwork and dedication.
+      Nanotrasen can proudly say that their staff is now more capable of performing
+      various judo techniques to disable and incapacitate any would-be troublemakers.
+      They have proclaimed the Spinward ''safer than ever''. Unfortunately for Nanotrasen
+      and the Spinward as a whole,, most of these same techniques have been incorporated
+      into the Tunnel Arts through the use of Khan spies. (See: Extremely bored assistants
+      who are getting tired of suplexing the clown). Is this the end for the Spinward
+      Sector? Will anyone be able to stop Maint Khan''s advance?'
+  - balance: Being grabbed can be harder to break out of depending on how vulnerable
+      you are; being prone, staggered and wounded, or just being a pushover (the quirk)
+      makes it easier to keep hold of you. Particularly if more than one of these
+      is true. Though if you're a fishman, you probably can't get grabbed at all.
+  - balance: Your arm power now contributes to the stamina damage someone is dealt
+      when they attempt and fail to break out of your grab.
+  - balance: Bartenders while drunk are great at grappling.
+  - bugfix: The values used for determining at what point you must resist if you have
+      taken damage and are staggered are now correctly set to 40, not incorrectly
+      to 80.
+  timothymtorres, MrMelbert:
+  - bugfix: Fix lustrous brain trauma not removing during polymorph

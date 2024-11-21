@@ -1,4 +1,0 @@
-author: "timothymtorres, MrMelbert"
-delete-after: True
-changes:
-  - bugfix: "Fix lustrous brain trauma not removing during polymorph"

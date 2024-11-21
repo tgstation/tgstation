@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - sound: "the glove pickup sound will no longer play for modsuits undeploying"

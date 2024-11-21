@@ -1,7 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - refactor: "refactored aquariums heavily. Please report any fishy bug."
-  - rscadd: "Added portable/handheld fish tanks to the game. They can be crafted with an aquarium kit and 5 sheets of plastic. While portable, they cannot store fish that are too big or if there're too many already. This restriction can be removed by using the new \"bluespace fish tank kit\" techweb item."
-  - map: "Replaced the lawyer's stationary pet aquarium with a fish tank, so you can carry McGill around."
-  - balance: "Reduced the iron cost of stationary aquariums a little."
