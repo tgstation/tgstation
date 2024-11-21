@@ -968,14 +968,17 @@
 				delete_distance = distance_to_move - (pixels_moved_last_tile - ICON_SIZE_ALL)
 
 		if (deletion_queued)
+			if (loc == new_turf)
+				pixel_x -= x_shift * ICON_SIZE_X
+				pixel_y -= y_shift * ICON_SIZE_Y
 			// Similarly to normal animate code, but use lowered deletion distance instead.
-			var/delete_x = pixel_x + movement_vector.pixel_x * delete_distance - (loc == new_turf) ? x_shift * ICON_SIZE_X : 0
-			var/delete_y = pixel_y + movement_vector.pixel_y * delete_distance - (loc == new_turf) ? y_shift * ICON_SIZE_Y : 0
+			var/delete_x = pixel_x + movement_vector.pixel_x * delete_distance
+			var/delete_y = pixel_y + movement_vector.pixel_y * delete_distance
 			// In order to keep a consistent speed, calculate at what point between ticks we get deleted
 			var/animate_time = world.tick_lag * (total_move_distance - pixels_to_move + delete_distance) / total_move_distance
-			// We can use animation chains to visually disappear between ticks. Using ANIMATION_END_NOW because homing doesn't matter anymore
+			// We can use animation chains to visually disappear between ticks.
 			if (!move_animate(delete_x, delete_y, animate_time, deleting = TRUE))
-				animate(src, pixel_x = delete_x, pixel_y = delete_y, time = animate_time, flags = ANIMATION_END_NOW)
+				animate(src, pixel_x = delete_x, pixel_y = delete_y, time = animate_time, flags = ANIMATION_PARALLEL)
 				animate(alpha = 0, time = 0)
 			return
 
