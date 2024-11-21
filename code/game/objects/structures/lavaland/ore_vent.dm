@@ -224,7 +224,7 @@
 		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.25)
 		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.5)
 		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.75)
-	particles = new /particles/smoke/ash()
+	add_shared_particles(/particles/smoke/ash)
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
 		for(var/turf/closed/mineral/rock in oview(i))
 			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
@@ -272,7 +272,7 @@
 
 	SEND_SIGNAL(src, COMSIG_VENT_WAVE_CONCLUDED)
 	COOLDOWN_RESET(src, wave_cooldown)
-	particles = null
+	remove_shared_particles(/particles/smoke/ash)
 
 	if(force)
 		initiate_wave_win()

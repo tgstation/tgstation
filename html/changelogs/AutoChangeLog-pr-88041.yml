@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Monkeys no longer ignore basic rules such as \"you can't escape a passive grab if you're cuffed or in crit\""
