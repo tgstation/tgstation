@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Ensures that we always load the last used save, QOL
 	var/default_slot = 1
 	/// The maximum number of slots we're allowed to contain
-	var/max_save_slots = 15 // DOPPLER EDIT: moar slots
+	var/max_save_slots = 30 // DOPPLER EDIT: moar slots
 
 	/// Bitflags for communications that are muted
 	var/muted = NONE
