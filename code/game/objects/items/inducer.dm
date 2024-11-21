@@ -100,8 +100,6 @@
 
 /obj/item/inducer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
-	if(HAS_TRAIT(tool, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
-		return
 
 	if(user.combat_mode || !istype(tool) || tool.flags_1 & HOLOGRAM_1 || tool.item_flags & ABSTRACT)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
@@ -135,6 +133,10 @@
 
 /obj/item/inducer/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
 	. = NONE
+
+	if(HAS_TRAIT(tool, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return
+
 	if(user.combat_mode || !istype(interacting_with) || interacting_with.flags_1 & HOLOGRAM_1)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
