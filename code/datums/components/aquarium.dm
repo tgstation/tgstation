@@ -119,6 +119,10 @@
 
 	movable.AddElement(/datum/element/relay_attackers)
 
+
+	movable.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+	RegisterSignal(movable, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+
 	for(var/atom/movable/content as anything in movable.contents)
 		if(content.flags_1 & INITIALIZED_1)
 			on_entered(movable, content)
@@ -143,6 +147,7 @@
 		COMSIG_ATOM_ATTACK_ROBOT_SECONDARY,
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
 		COMSIG_ATOM_UI_INTERACT,
+		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 	))
 	if(movable.reagents)
 		UnregisterSignal(movable, COMSIG_REAGENTS_NEW_REAGENT)
@@ -257,6 +262,7 @@
 /datum/component/aquarium/proc/on_plunger_act(atom/movable/source, obj/item/plunger/plunger, mob/living/user, reinforced)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
+		user.balloon_alert("open panel first!")
 		return
 	INVOKE_ASYNC(src, PROC_REF(do_plunging), source, user)
 	return COMPONENT_NO_AFTERATTACK
@@ -563,6 +569,27 @@
 		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_bad : /datum/mood_event/aquarium_positive)
 	else if(dead_fish > 0)
 		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_good : /datum/mood_event/aquarium_negative)
+
+/datum/component/aquarium/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+	var/open_panel = HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN)
+	if(!held_item)
+		var/isitem = isitem(source)
+		if(!isitem || open_panel)
+			context[SCREENTIP_CONTEXT_LMB] = open_panel ? "Adjust settings" : "Admire"
+		if(isitem)
+			context[SCREENTIP_CONTEXT_RMB] = "Admire"
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "[open_panel ? "Open" : "Close"] settings panel"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/plunger))
+		context[SCREENTIP_CONTEXT_LMB] = "Empty feed storage"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(istype(held_item, /obj/item/reagent_containers/cup/fish_feed) && (!source.reagents || !open_panel))
+		context[SCREENTIP_CONTEXT_LMB] = "Feed fishes"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(HAS_TRAIT(held_item, TRAIT_AQUARIUM_CONTENT))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert in aquarium"
+		return CONTEXTUAL_SCREENTIP_SET
 
 #undef MIN_AQUARIUM_BEAUTY
 #undef MAX_AQUARIUM_BEAUTY
