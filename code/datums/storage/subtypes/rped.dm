@@ -6,7 +6,6 @@
 #define MAX_STACK_PICKUP 30
 
 /datum/storage/rped
-	allow_quick_empty = TRUE
 	allow_quick_gather = TRUE
 	max_slots = 50
 	max_total_storage = 100
@@ -35,7 +34,7 @@
 /datum/storage/rped/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = FALSE)
 	. = ..()
 	if(!.)
-		return .
+		return
 
 	//we check how much of glass,plasteel & cable the user can insert
 	if(isstack(to_insert))
@@ -53,8 +52,9 @@
 				//if yes count total bluespace stuff is the RPED and then compare the total amount to the value the user is trying to insert
 				if(is_type_in_list(stack_content, allowed_bluespace_types))
 					present_amount += stack_content.amount
+
 			//count other normal stack stuff
-			else if(istype(to_insert,stack_content.type))
+			else if(the_stack.merge_type == stack_content.merge_type)
 				present_amount = stack_content.amount
 				break
 
@@ -63,7 +63,7 @@
 			return FALSE
 
 		//we want the user to insert the exact stack amount which is available so we dont have to bother subtracting & leaving left overs for the user
-		var/available = MAX_STACK_PICKUP-present_amount
+		var/available = MAX_STACK_PICKUP - present_amount
 		if(available - the_stack.amount < 0)
 			return FALSE
 
@@ -74,40 +74,27 @@
 	else if(!to_insert.get_part_rating())
 		return FALSE
 
-	return .
-
 /datum/storage/rped/mass_empty(datum/source, mob/user)
-	if(!allow_quick_empty)
-		return
-
-	remove_lowest_tier(user.drop_location())
-
-/**
- * Searches through everything currently in storage, calculates the lowest tier of parts inside of it,
- * and then dumps out every part that has the equal tier of parts. Likely a worse implementation of remove_all.
- *
- * Arguments
- * * atom/dump_loc - where we're placing the item
- */
-/datum/storage/rped/proc/remove_lowest_tier(atom/dump_loc = parent.drop_location())
 	var/list/obj/item/parts_list = list()
-	var/current_lowest_tier = INFINITY
-
 	for(var/obj/item/thing in real_location)
 		parts_list += thing
+	if(!parts_list.len)
+		return
 
-	if(parts_list.len > 0)
-		parts_list = reverse_range(sortTim(parts_list, GLOBAL_PROC_REF(cmp_rped_sort)))
-		current_lowest_tier = parts_list[1].get_part_rating()
-		if(ismob(parent.loc))
-			parent.balloon_alert(parent.loc, "dropping lowest rated parts...")
-		for(var/obj/item/part in parts_list)
-			if(part.get_part_rating() != current_lowest_tier)
-				break
-			if(!attempt_remove(part, dump_loc, silent = TRUE))
-				continue
-			part.pixel_x = part.base_pixel_x + rand(-8, 8)
-			part.pixel_y = part.base_pixel_y + rand(-8, 8)
+	var/current_lowest_tier = INFINITY
+	parts_list = reverse_range(sortTim(parts_list, GLOBAL_PROC_REF(cmp_rped_sort)))
+	current_lowest_tier = parts_list[1].get_part_rating()
+	if(ismob(parent.loc))
+		parent.balloon_alert(parent.loc, "dropping lowest rated parts...")
+
+	var/dump_loc = user.drop_location()
+	for(var/obj/item/part in parts_list)
+		if(part.get_part_rating() != current_lowest_tier)
+			break
+		if(!attempt_remove(part, dump_loc, silent = TRUE))
+			continue
+		part.pixel_x = part.base_pixel_x + rand(-8, 8)
+		part.pixel_y = part.base_pixel_y + rand(-8, 8)
 
 ///bluespace variant
 /datum/storage/rped/bluespace
