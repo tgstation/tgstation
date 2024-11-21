@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed a couple nits with the water visuals not appearing on objects with a very low layer (rendered just above the floor), as well as atmos pipes looking a bit funky on untiled turfs beside catwalks and platings when beside connected, under-floored pipes."
