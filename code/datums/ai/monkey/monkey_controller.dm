@@ -33,7 +33,7 @@ have ways of interacting with a specific mob and control it.
 /datum/targeting_strategy/basic/monkey/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	if(controller.blackboard[BB_MONKEY_ENEMIES][the_target])
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/ai_controller/monkey/process(seconds_per_tick)
 
