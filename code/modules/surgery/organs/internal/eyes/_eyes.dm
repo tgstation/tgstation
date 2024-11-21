@@ -109,9 +109,13 @@
 	SIGNAL_HANDLER
 
 	// Once-a-dozen-rounds level of rare
-	var/blocked = source.check_projectile_armor(def_zone, proj, is_silent = TRUE)
-	if (def_zone != BODY_ZONE_HEAD || !prob(proj.damage * (100 - blocked) * 0.001) || !(proj.damage_type == BRUTE || proj.damage_type == BURN))
+	if (def_zone != BODY_ZONE_HEAD || !prob(proj.damage * 0.1) || !(proj.damage_type == BRUTE || proj.damage_type == BURN))
 		return
+
+	var/blocked = source.check_projectile_armor(def_zone, proj, is_silent = TRUE)
+	if (blocked)
+		if (!proj.armour_penetration || prob(blocked - proj.armour_penetration))
+			return
 
 	var/valid_sides = list()
 	if (!(scarring & RIGHT_EYE_SCAR))
