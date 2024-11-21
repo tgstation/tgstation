@@ -1,0 +1,6 @@
+author: "KikoWen0"
+delete-after: True
+changes:
+  - map: "Nebula Arrivals stairs are now easier to navigate"
+  - map: "Fixed unconnected wire in dormitories on Nebula"
+  - map: "Fixed engineers having free pass to cargo department on Nebula"
