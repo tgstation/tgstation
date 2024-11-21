@@ -1,0 +1,4 @@
+author: "Dawnseer"
+delete-after: True
+changes:
+  - bugfix: "Turns Cap (White) into a white cap in loadout"
