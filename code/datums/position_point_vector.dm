@@ -104,14 +104,12 @@
 		pixel_y = p_y - y_offset * ICON_SIZE_Y
 
 /datum/point/proc/increment(p_x, p_y)
-	pixel_x += p_x
-	pixel_y += p_y
 	var/x_offset = SIGNED_FLOOR_DIVISION(p_x, ICON_SIZE_X)
 	x += x_offset
-	pixel_x = p_x - x_offset * ICON_SIZE_X
+	pixel_x += p_x - x_offset * ICON_SIZE_X
 	var/y_offset = SIGNED_FLOOR_DIVISION(p_y, ICON_SIZE_Y)
 	y += y_offset
-	pixel_y = p_y - y_offset * ICON_SIZE_Y
+	pixel_y += p_y - y_offset * ICON_SIZE_Y
 
 /datum/point/proc/debug_out()
 	var/turf/T = return_turf()
