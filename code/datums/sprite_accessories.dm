@@ -2430,3 +2430,4 @@
 /datum/sprite_accessory/moth_markings/dipped
 	name = "Dipped"
 	icon_state = "dipped"
+	
