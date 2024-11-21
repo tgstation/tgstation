@@ -278,7 +278,7 @@
 /obj/item/pipe_dispenser/interact_with_atom(atom/attack_target, mob/living/user, list/modifiers)
 	. = NONE
 
-	if(!ISADVANCEDTOOLUSER(user) || istype(attack_target, /turf/open/space/transit))
+	if(!ISADVANCEDTOOLUSER(user) || HAS_TRAIT(attack_target, TRAIT_COMBAT_MODE_SKIP_INTERACTION) || istype(attack_target, /turf/open/space/transit))
 		return
 
 	if(istype(attack_target, /obj/item/rpd_upgrade))
