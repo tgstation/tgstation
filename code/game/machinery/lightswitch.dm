@@ -32,6 +32,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(!area)
 		area = get_area(src)
 	if(autoname)
+		ru_names_rename(ru_names_toml(src::name, suffix = " ([area.name])", override_base = "light switch ([area.name])"))
 		name = "light switch ([area.name])"
 	find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), TRUE))
 	register_context()
