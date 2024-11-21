@@ -584,7 +584,7 @@
 	if(istype(held_item, /obj/item/plunger))
 		context[SCREENTIP_CONTEXT_LMB] = "Empty feed storage"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(istype(held_item, /obj/item/reagent_containers/cup/fish_feed) && (!source.reagents || !open_panel))
+	if(istype(held_item, /obj/item/reagent_containers/cup/fish_feed) && (!source.reagents || !open_panel))
 		context[SCREENTIP_CONTEXT_LMB] = "Feed fishes"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(HAS_TRAIT(held_item, TRAIT_AQUARIUM_CONTENT))
