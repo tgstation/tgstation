@@ -262,7 +262,7 @@
 /datum/component/aquarium/proc/on_plunger_act(atom/movable/source, obj/item/plunger/plunger, mob/living/user, reinforced)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
-		user.balloon_alert("open panel first!")
+		source.balloon_alert(user, "open panel first!")
 		return
 	INVOKE_ASYNC(src, PROC_REF(do_plunging), source, user)
 	return COMPONENT_NO_AFTERATTACK
