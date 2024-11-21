@@ -37,7 +37,6 @@
 
 	// Overlays
 	RegisterSignals(source, list(COMSIG_MODULE_GENERATE_WORN_OVERLAY, COMSIG_ITEM_GET_WORN_OVERLAYS), PROC_REF(get_worn_overlays))
-	RegisterSignal(source, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_qdel))
 
