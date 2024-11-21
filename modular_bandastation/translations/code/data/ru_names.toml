@@ -3343,6 +3343,145 @@ nominative = "анализатор растений"
 prepositional = "анализаторе растений"
 gender = "male"
 
+# MARK: Plants
+["banana"]
+nominative = "банан"
+genitive = "банана"
+dative = "банану"
+accusative = "банан"
+instrumental = "бананом"
+prepositional = "банане"
+gender = "male"
+
+# MARK: Cargo
+["crate"]
+nominative = "ящик"
+genitive = "ящика"
+dative = "ящику"
+accusative = "ящик"
+instrumental = "ящиком"
+prepositional = "ящике"
+gender = "male"
+
+# MARK: Engineering
+
+["insulated gloves"]
+nominative = "изоляционные перчатки"
+genitive = "изоляционных перчаток"
+dative = "изоляционным перчаткам"
+accusative = "изоляционные перчатки"
+instrumental = "изоляционными перчатками"
+prepositional = "изоляционных перчатках"
+gender = "plural"
+
+[wirebrush]
+nominative = "проволочная щётка"
+genitive = "проволочной щётки"
+dative = "проволочной щётке"
+accusative = "проволочную щётку"
+instrumental = "проволочной щёткой"
+prepositional = "проволочной щётке"
+gender = "female"
+
+["oxygen tank"]
+nominative = "кислородный баллон"
+genitive = "кислородного баллона"
+dative = "кислородному баллону"
+accusative = "кислородный баллон"
+instrumental = "кислородным баллоном"
+prepositional = "кислородном баллоне"
+gender = "male"
+
+["emergency oxygen tank"]
+nominative = "экстренный кислородный баллон"
+genitive = "экстренного кислородного баллона"
+dative = "экстренному кислородному баллону"
+accusative = "экстренный кислородный баллон"
+instrumental = "экстренным кислородным баллоном"
+prepositional = "экстренном кислородном баллоне"
+gender = "male"
+
+["extended-capacity emergency oxygen tank"]
+nominative = "увеличенный экстренный кислородный баллон"
+genitive = "увеличенного экстренного кислородного баллона"
+dative = "увеличенному экстренному кислородному баллону"
+accusative = "увеличенный экстренный кислородный баллон"
+instrumental = "увеличенным экстренным кислородным баллоном"
+prepositional = "увеличенном экстренном кислородном баллоне"
+gender = "male"
+
+["double emergency oxygen tank"]
+nominative = "удвоенный экстренный кислородный баллон"
+genitive = "удвоенного экстренного кислородного баллона"
+dative = "удвоенному экстренному кислородному баллону"
+accusative = "удвоенный экстренный кислородный баллон"
+instrumental = "удвоенным экстренным кислородным баллоном"
+prepositional = "удвоенном экстренном кислородном баллоне"
+gender = "male"
+
+["funny emergency oxygen tank"]
+nominative = "смешной экстренный кислородный баллон"
+genitive = "смешного экстренного кислородного баллона"
+dative = "смешному экстренному кислородному баллону"
+accusative = "смешной экстренный кислородный баллон"
+instrumental = "смешным экстренным кислородным баллоном"
+prepositional = "смешном экстренном кислородном баллоне"
+gender = "male"
+
+["AI display"]
+nominative = "дисплей ИИ"
+genitive = "дисплея ИИ"
+dative = "дисплею ИИ"
+accusative = "дисплей ИИ"
+instrumental = "дисплеем ИИ"
+prepositional = "дисплее ИИ"
+gender = "male"
+
+["mannequin"]
+nominative = "манекен"
+genitive = "манекена"
+dative = "манекену"
+accusative = "манекен"
+instrumental = "манекеном"
+prepositional = "манекене"
+gender = "male"
+
+["air alarm"]
+nominative = "воздушная сигнализация"
+genitive = "воздушной сигнализации"
+dative = "воздушной сигнализации"
+accusative = "воздушную сигнализацию"
+instrumental = "воздушной сигнализацией"
+prepositional = "воздушной сигнализации"
+gender = "female"
+
+["area power controller"]
+nominative = "локальный контроллер питания"
+genitive = "локального контроллера питания"
+dative = "локальному контроллеру питания"
+accusative = "локальный контроллер питания"
+instrumental = "локальным контроллером питания"
+prepositional = "локальном контроллере питания"
+gender = "male"
+
+["fire alarm"]
+nominative = "пожарная сигнализация"
+genitive = "пожарной сигнализации"
+dative = "пожарной сигнализации"
+accusative = "пожарную сигнализацию"
+instrumental = "пожарной сигнализацией"
+prepositional = "пожарной сигнализации"
+gender = "female"
+
+["light switch"]
+nominative = "переключатель света"
+genitive = "переключателя света"
+dative = "переключателю света"
+accusative = "переключатель света"
+instrumental = "переключателем света"
+prepositional = "переключателе света"
+gender = "male"
+
 # MARK: Tools
 # Fire Extinguisher
 ["fire extinguisher"]
@@ -3664,125 +3803,6 @@ dative = "швейцарскому ножу"
 accusative = "швейцарский нож"
 instrumental = "швейцарским ножом"
 prepositional = "швейцарском ноже"
-gender = "male"
-
-# MARK: Engineering
-
-["insulated gloves"]
-nominative = "изоляционные перчатки"
-genitive = "изоляционных перчаток"
-dative = "изоляционным перчаткам"
-accusative = "изоляционные перчатки"
-instrumental = "изоляционными перчатками"
-prepositional = "изоляционных перчатках"
-gender = "plural"
-
-[wirebrush]
-nominative = "проволочная щётка"
-genitive = "проволочной щётки"
-dative = "проволочной щётке"
-accusative = "проволочную щётку"
-instrumental = "проволочной щёткой"
-prepositional = "проволочной щётке"
-gender = "female"
-
-["oxygen tank"]
-nominative = "кислородный баллон"
-genitive = "кислородного баллона"
-dative = "кислородному баллону"
-accusative = "кислородный баллон"
-instrumental = "кислородным баллоном"
-prepositional = "кислородном баллоне"
-gender = "male"
-
-["emergency oxygen tank"]
-nominative = "экстренный кислородный баллон"
-genitive = "экстренного кислородного баллона"
-dative = "экстренному кислородному баллону"
-accusative = "экстренный кислородный баллон"
-instrumental = "экстренным кислородным баллоном"
-prepositional = "экстренном кислородном баллоне"
-gender = "male"
-
-["extended-capacity emergency oxygen tank"]
-nominative = "увеличенный экстренный кислородный баллон"
-genitive = "увеличенного экстренного кислородного баллона"
-dative = "увеличенному экстренному кислородному баллону"
-accusative = "увеличенный экстренный кислородный баллон"
-instrumental = "увеличенным экстренным кислородным баллоном"
-prepositional = "увеличенном экстренном кислородном баллоне"
-gender = "male"
-
-["double emergency oxygen tank"]
-nominative = "удвоенный экстренный кислородный баллон"
-genitive = "удвоенного экстренного кислородного баллона"
-dative = "удвоенному экстренному кислородному баллону"
-accusative = "удвоенный экстренный кислородный баллон"
-instrumental = "удвоенным экстренным кислородным баллоном"
-prepositional = "удвоенном экстренном кислородном баллоне"
-gender = "male"
-
-["funny emergency oxygen tank"]
-nominative = "смешной экстренный кислородный баллон"
-genitive = "смешного экстренного кислородного баллона"
-dative = "смешному экстренному кислородному баллону"
-accusative = "смешной экстренный кислородный баллон"
-instrumental = "смешным экстренным кислородным баллоном"
-prepositional = "смешном экстренном кислородном баллоне"
-gender = "male"
-
-["AI display"]
-nominative = "дисплей ИИ"
-genitive = "дисплея ИИ"
-dative = "дисплею ИИ"
-accusative = "дисплей ИИ"
-instrumental = "дисплеем ИИ"
-prepositional = "дисплее ИИ"
-gender = "male"
-
-["mannequin"]
-nominative = "манекен"
-genitive = "манекена"
-dative = "манекену"
-accusative = "манекен"
-instrumental = "манекеном"
-prepositional = "манекене"
-gender = "male"
-
-["air alarm"]
-nominative = "воздушная сигнализация"
-genitive = "воздушной сигнализации"
-dative = "воздушной сигнализации"
-accusative = "воздушную сигнализацию"
-instrumental = "воздушной сигнализацией"
-prepositional = "воздушной сигнализации"
-gender = "female"
-
-["area power controller"]
-nominative = "локальный контроллер питания"
-genitive = "локального контроллера питания"
-dative = "локальному контроллеру питания"
-accusative = "локальный контроллер питания"
-instrumental = "локальным контроллером питания"
-prepositional = "локальном контроллере питания"
-gender = "male"
-
-["fire alarm"]
-nominative = "пожарная сигнализация"
-genitive = "пожарной сигнализации"
-dative = "пожарной сигнализации"
-accusative = "пожарную сигнализацию"
-instrumental = "пожарной сигнализацией"
-prepositional = "пожарной сигнализации"
-gender = "female"
-
-["light switch"]
-nominative = "переключатель света"
-genitive = "переключателя света"
-dative = "переключателю света"
-accusative = "переключатель света"
-instrumental = "переключателем света"
-prepositional = "переключателе света"
 gender = "male"
 
 # MARK: Turfs
