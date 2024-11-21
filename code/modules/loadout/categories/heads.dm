@@ -66,7 +66,7 @@
 
 /datum/loadout_item/head/white_cap
 	name = "Cap (White)"
-	item_path = /obj/item/clothing/head/soft
+	item_path = /obj/item/clothing/head/soft/mime
 
 /datum/loadout_item/head/yellow_cap
 	name = "Cap (Yellow)"
@@ -147,7 +147,7 @@
 /datum/loadout_item/head/geranium
 	name = "Geranium"
 	item_path = /obj/item/food/grown/poppy/geranium
-	
+
 /datum/loadout_item/head/harebell
 	name = "Harebell"
 	item_path = /obj/item/food/grown/harebell
