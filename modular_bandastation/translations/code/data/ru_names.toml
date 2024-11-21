@@ -130,14 +130,6 @@ instrumental = "молотком-гвоздодером"
 nominative = "молоток-гвоздодер"
 prepositional = "молотке-гвоздодере"
 
-["cleaner grenade"]
-accusative = "чистящую гранату"
-dative = "чистящей гранате"
-genitive = "чистящей гранаты"
-instrumental = "чистящей гранатой"
-nominative = "чистящая граната"
-prepositional = "чистящей гранате"
-
 ["command intercom"]
 accusative = "интерком командования"
 dative = "интеркому командования"
@@ -193,22 +185,6 @@ genitive = "удочки"
 instrumental = "удочкой"
 nominative = "удочка"
 prepositional = "удочке"
-
-[floor]
-accusative = "плитку"
-dative = "плитке"
-genitive = "плитку"
-instrumental = "плиткой"
-nominative = "плитка"
-prepositional = "плитке"
-
-[helmet]
-accusative = "шлем"
-dative = "шлему"
-genitive = "шлема"
-instrumental = "шлемом"
-nominative = "шлем"
-prepositional = "шлеме"
 
 ["intercom frame"]
 accusative = "каркас интеркома"
@@ -346,14 +322,6 @@ instrumental = "укреплённым столом"
 nominative = "укреплённый стол"
 prepositional = "укреплённом столе"
 
-["reinforced wall"]
-accusative = "усиленную стену"
-dative = "усиленной стене"
-genitive = "усиленной стены"
-instrumental = "усиленной стеной"
-nominative = "усиленная стена"
-prepositional = "усиленной стене"
-
 [shower]
 accusative = "душ"
 dative = "душу"
@@ -393,14 +361,6 @@ genitive = "широкополосного интеркома синдиката
 instrumental = "широкополосным интеркомом синдиката"
 nominative = "широкополосный интерком синдиката"
 prepositional = "широкополосном интеркоме синдиката"
-
-[wall]
-accusative = "стену"
-dative = "стене"
-genitive = "стены"
-instrumental = "стеной"
-nominative = "стена"
-prepositional = "стене"
 
 ["briefcase"]
 nominative = "портфель"
@@ -1282,6 +1242,33 @@ instrumental = "светошумовой гранатой"
 prepositional = "светошумовой гранате"
 gender = "female"
 
+["box of flashbangs (WARNING)"]
+nominative = "коробка с светошумовыми гранатами (ОСТОРОЖНО)"
+genitive = "коробки с светошумовыми гранатами (ОСТОРОЖНО)"
+dative = "коробке с светошумовыми гранатами (ОСТОРОЖНО)"
+accusative = "коробку с светошумовыми гранатами (ОСТОРОЖНО)"
+instrumental = "коробкой с светошумовыми гранатами (ОСТОРОЖНО)"
+prepositional = "коробке с светошумовыми гранатами (ОСТОРОЖНО)"
+gender = "female"
+
+["teargas grenade"]
+nominative = "слезоточивая граната"
+genitive = "слезоточивой гранаты"
+dative = "слезоточивой гранате"
+accusative = "слезоточивую гранату"
+instrumental = "слезоточивой гранатой"
+prepositional = "слезоточивой гранате"
+gender = "female"
+
+["box of tear gas grenades (WARNING)"]
+nominative = "коробка с слезоточивыми гранатами"
+genitive = "коробки с слезоточивыми гранатами"
+dative = "коробке с слезоточивыми гранатами"
+accusative = "коробку с слезоточивыми гранатами"
+instrumental = "коробкой с слезоточивыми гранатами"
+prepositional = "коробке с слезоточивыми гранатами"
+gender = "female"
+
 ["donut box"]
 nominative = "коробка пончиков"
 genitive = "коробки пончиков"
@@ -1292,91 +1279,972 @@ prepositional = "коробке пончиков"
 gender = "female"
 
 ["zipties"]
-["flash"]
-["donut"]
-["evidence bag box"]
-["seclite"]
-["energy bola"]
-["enhanced retrieval gloves"]
-["security holobarrier projector"]
-["security webbing"]
-["antag token"]
-["blue helmet"]
-["security gloves"]
-["large armor vest"]
-["stingbang"]
-["anti-tider-2500 supression backpack"]
-["energy shoulder holsters"]
-["security officer's locker"]
-["armor vest"]
-["security radio headset"]
-["security bowman headset"]
-["security HUDSunglasses"]
-["security belt"]
-["security beret"]
-["security cap"]
-["striped security bandana"]
-["security uniform"]
-["security skirt"]
-["grey security jumpsuit"]
-["slacks"]
-["blue shirt and tie"]
-["security jacket"]
-["security winter jacket"]
-["jackboots"]
-["security backpack"]
-["security satchel"]
-["security duffel bag"]
-["security messenger bag"]
-["security officer's formal uniform"]
-["security officer's jacket"]
-["recharger"]
-["training bomb"]
-["sunglasses"]
-["earmuffs"]
+nominative = "стяжки"
+genitive = "стяжек"
+dative = "стяжкам"
+accusative = "стяжки"
+instrumental = "стяжками"
+prepositional = "стяжках"
+gender = "plural"
+
 ["box of spare zipties"]
-["box of flashbangs (WARNING)"]
+nominative = "коробка с запасными стяжками"
+genitive = "коробки с запасными стяжками"
+dative = "коробке с запасными стяжками"
+accusative = "коробку с запасными стяжками"
+instrumental = "коробкой с запасными стяжками"
+prepositional = "коробке с запасными стяжками"
+gender = "female"
+
+["flash"]
+nominative = "вспышка"
+genitive = "вспышки"
+dative = "вспышке"
+accusative = "вспышку"
+instrumental = "вспышкой"
+prepositional = "вспышке"
+gender = "female"
+
+["portable flasher"]
+nominative = "переносная вспышка"
+genitive = "переносной вспышки"
+dative = "переносной вспышке"
+accusative = "переносную вспышку"
+instrumental = "переносной вспышкой"
+prepositional = "переносной вспышке"
+gender = "female"
+
+["security barrier"]
+nominative = "барьер охраны"
+genitive = "барьера охраны"
+dative = "барьеру охраны"
+accusative = "барьер охраны"
+instrumental = "барьером охраны"
+prepositional = "барьере охраны"
+gender = "male"
+
+["training bomb"]
+nominative = "тренировочная бомба"
+genitive = "тренировочной бомбы"
+dative = "тренировочной бомбе"
+accusative = "тренировочную бомбу"
+instrumental = "тренировочной бомбой"
+prepositional = "тренировочной бомбе"
+gender = "female"
+
+["straight jacket"]
+nominative = "смирительная рубашка"
+genitive = "смирительной рубашки"
+dative = "смирительной рубашке"
+accusative = "смирительную рубашку"
+instrumental = "смирительной рубашкой"
+prepositional = "смирительной рубашке"
+gender = "female"
+
+["donut"]
+nominative = "пончик"
+genitive = "пончика"
+dative = "пончику"
+accusative = "пончик"
+instrumental = "пончиком"
+prepositional = "пончике"
+gender = "male"
+
+["evidence bag"]
+nominative = "пакет для улик"
+genitive = "пакета для улик"
+dative = "пакету для улик"
+accusative = "пакет для улик"
+instrumental = "пакетом для улик"
+prepositional = "пакете для улик"
+gender = "male"
+
+["evidence bag box"]
+nominative = "коробка с пакетами для улик"
+genitive = "коробки с пакетами для улик"
+dative = "коробке с пакетами для улик"
+accusative = "коробку с пакетами для улик"
+instrumental = "коробкой с пакетами для улик"
+prepositional = "коробке с пакетами для улик"
+gender = "female"
+
+["seclite"]
+nominative = "фонарь охраны"
+genitive = "фонаря охраны"
+dative = "фонарю охраны"
+accusative = "фонарь охраны"
+instrumental = "фонарем охраны"
+prepositional = "фонаре охраны"
+gender = "male"
+
+["energy bola"]
+nominative = "энергетическая бола"
+genitive = "энергетической болы"
+dative = "энергетической боле"
+accusative = "энергетическую болу"
+instrumental = "энергетической болой"
+prepositional = "энергетической боле"
+gender = "female"
+
+["enhanced retrieval gloves"]
+
+["security holobarrier projector"]
+nominative = "голопроектор охраны"
+genitive = "голопроектора охраны"
+dative = "голопроектору охраны"
+accusative = "голопроектор охраны"
+instrumental = "голопроектором охраны"
+prepositional = "голопроекторе охраны"
+gender = "male"
+
+["security webbing"]
+nominative = "разгрузка охраны"
+genitive = "разгрузки охраны"
+dative = "разгрузке охраны"
+accusative = "разгрузку охраны"
+instrumental = "разгрузкой охраны"
+prepositional = "разгрузке охраны"
+gender = "female"
+
+["antag token"]
+nominative = "жетон антагониста"
+genitive = "жетона антагониста"
+dative = "жетону антагониста"
+accusative = "жетон антагониста"
+instrumental = "жетоном антагониста"
+prepositional = "жетоне антагониста"
+gender = "male"
+
+["blue helmet"]
+nominative = "синий шлем"
+genitive = "синего шлема"
+dative = "синему шлему"
+accusative = "синий шлем"
+instrumental = "синим шлемом"
+prepositional = "синем шлеме"
+gender = "male"
+
+["security gloves"]
+nominative = "перчатки охраны"
+genitive = "перчаток охраны"
+dative = "перчаткам охраны"
+accusative = "перчатки охраны"
+instrumental = "перчатками охраны"
+prepositional = "перчатках охраны"
+gender = "plural"
+
+["stingbang"]
+nominative = "травматическая граната"
+genitive = "травматической гранаты"
+dative = "травматической гранате"
+accusative = "травматическую гранату"
+instrumental = "травматической гранатой"
+prepositional = "травматической гранате"
+gender = "female"
+
+["anti-tider-2500 supression backpack"]
+nominative = "рюкзак подавитель-набегов-2500"
+genitive = "рюкзака подавителя-набегов-2500"
+dative = "рюкзаку подавителю-набегов-2500"
+accusative = "рюкзак подавитель-набегов-2500"
+instrumental = "рюкзаком подавителем-набегов-2500"
+prepositional = "рюкзаке подавителе-набегов-2500"
+gender = "male"
+
+["shoulder holster"]
+nominative = "наплечная кобура"
+genitive = "наплечной кобуры"
+dative = "наплечной кобуре"
+accusative = "наплечную кобуру"
+instrumental = "наплечной кобурой"
+prepositional = "наплечной кобуре"
+gender = "female"
+
+["energy shoulder holsters"]
+nominative = "энергетическая наплечная кобура"
+genitive = "энергетической наплечной кобуры"
+dative = "энергетической наплечной кобуре"
+accusative = "энергетическую наплечную кобуру"
+instrumental = "энергетической наплечной кобурой"
+prepositional = "энергетической наплечной кобуре"
+gender = "female"
+
+["security officer's locker"]
+nominative = "шкафчик офицера охраны"
+genitive = "шкафчика офицера охраны"
+dative = "шкафчику офицера охраны"
+accusative = "шкафчик офицера охраны"
+instrumental = "шкафчиком офицера охраны"
+prepositional = "шкафчике офицера охраны"
+gender = "male"
+
+["security radio headset"]
+nominative = "гарнитура охраны"
+genitive = "гарнитуры охраны"
+dative = "гарнитуре охраны"
+accusative = "гарнитуру охраны"
+instrumental = "гарнитурой охраны"
+prepositional = "гарнитуре охраны"
+gender = "female"
+
+["security bowman headset"]
+nominative = "гарнитура bowman охраны"
+genitive = "гарнитуры bowman охраны"
+dative = "гарнитуре bowman охраны"
+accusative = "гарнитуру bowman охраны"
+instrumental = "гарнитурой bowman охраны"
+prepositional = "гарнитуре bowman охраны"
+gender = "female"
+
+["security HUDSunglasses"]
+nominative = "солнцезащитные HUD очки охраны"
+genitive = "солнцезащитных HUD очков охраны"
+dative = "солнцезащитным HUD очкам охраны"
+accusative = "солнцезащитные HUD очки охраны"
+instrumental = "солнцезащитными HUD очками охраны"
+prepositional = "солнцезащитных HUD очках охраны"
+gender = "plural"
+
+["security belt"]
+nominative = "пояс охраны"
+genitive = "пояса охраны"
+dative = "поясу охраны"
+accusative = "пояс охраны"
+instrumental = "поясом охраны"
+prepositional = "поясе охраны"
+gender = "male"
+
+["security beret"]
+nominative = "берет охраны"
+genitive = "берета охраны"
+dative = "берету охраны"
+accusative = "берет охраны"
+instrumental = "беретом охраны"
+prepositional = "берете охраны"
+gender = "male"
+
+["security cap"]
+nominative = "кепка охраны"
+genitive = "кепки охраны"
+dative = "кепке охраны"
+accusative = "кепку охраны"
+instrumental = "кепкой охраны"
+prepositional = "кепке охраны"
+gender = "female"
+
+["striped security bandana"]
+nominative = "полосатая бандана охраны"
+genitive = "полосатой банданы охраны"
+dative = "полосатой бандане охраны"
+accusative = "полосатую бандану охраны"
+instrumental = "полосатой банданой охраны"
+prepositional = "полосатой бандане охраны"
+gender = "female"
+
+["security uniform"]
+nominative = "комбинезон охраны"
+genitive = "комбинезона охраны"
+dative = "комбинезону охраны"
+accusative = "комбинезон охраны"
+instrumental = "комбинезоном охраны"
+prepositional = "комбинезоне охраны"
+gender = "male"
+
+["security skirt"]
+nominative = "комбинезон с юбкой охраны"
+genitive = "комбинезона с юбкой охраны"
+dative = "комбинезону с юбкой охраны"
+accusative = "комбинезон с юбкой охраны"
+instrumental = "комбинезоном с юбкой охраны"
+prepositional = "комбинезоне с юбкой охраны"
+gender = "male"
+
+["grey security jumpsuit"]
+nominative = "серый комбинезон охраны"
+genitive = "серого комбинезона охраны"
+dative = "серому комбинезону охраны"
+accusative = "серый комбинезон охраны"
+instrumental = "серым комбинезоном охраны"
+prepositional = "сером комбинезоне охраны"
+gender = "male"
+
+["slacks"]
+nominative = "широкие брюки"
+genitive = "широких брюк"
+dative = "широким брюкам"
+accusative = "широкие брюки"
+instrumental = "широкими брюками"
+prepositional = "широких брюках"
+gender = "plural"
+
+["blue shirt and tie"]
+nominative = "синяя рубашка с галстуком"
+genitive = "синей рубашки с галстуком"
+dative = "синей рубашке с галстуком"
+accusative = "синюю рубашку с галстуком"
+instrumental = "синей рубашкой с галстуком"
+prepositional = "синей рубашке с галстуком"
+gender = "female"
+
+["security jacket"]
+nominative = "куртка охраны"
+genitive = "куртки охраны"
+dative = "куртке охраны"
+accusative = "куртку охраны"
+instrumental = "курткой охраны"
+prepositional = "куртке охраны"
+gender = "female"
+
+["security winter jacket"]
+nominative = "зимняя куртка охраны"
+genitive = "зимней куртки охраны"
+dative = "зимней куртке охраны"
+accusative = "зимнюю куртку охраны"
+instrumental = "зимней курткой охраны"
+prepositional = "зимней куртке охраны"
+gender = "female"
+
+["jackboots"]
+nominative = "берцы"
+genitive = "берцев"
+dative = "берцам"
+accusative = "берцы"
+instrumental = "берцами"
+prepositional = "берцах"
+gender = "plural"
+
+["security backpack"]
+nominative = "рюкзак охраны"
+genitive = "рюкзака охраны"
+dative = "рюкзаку охраны"
+accusative = "рюкзак охраны"
+instrumental = "рюкзаком охраны"
+prepositional = "рюкзаке охраны"
+gender = "male"
+
+["security satchel"]
+nominative = "ранец охраны"
+genitive = "ранца охраны"
+dative = "ранцу охраны"
+accusative = "ранец охраны"
+instrumental = "ранцем охраны"
+prepositional = "ранце охраны"
+gender = "male"
+
+["security duffel bag"]
+nominative = "вещевой мешок охраны"
+genitive = "вещевого мешка охраны"
+dative = "вещевому мешку охраны"
+accusative = "вещевой мешок охраны"
+instrumental = "вещевым мешком охраны"
+prepositional = "вещевом мешке охраны"
+gender = "male"
+
+["security messenger bag"]
+nominative = "сумка посыльного охраны"
+genitive = "сумки посыльного охраны"
+dative = "сумке посыльного охраны"
+accusative = "сумку посыльного охраны"
+instrumental = "сумкой посыльного охраны"
+prepositional = "сумке посыльного охраны"
+gender = "female"
+
+["security officer's formal uniform"]
+nominative = "формальная униформа офицера охраны"
+genitive = "формальной униформы офицера охраны"
+dative = "формальной униформе офицера охраны"
+accusative = "формальную униформу офицера охраны"
+instrumental = "формальной униформой офицера охраны"
+prepositional = "формальной униформе офицера охраны"
+gender = "female"
+
+["security officer's jacket"]
+nominative = "куртка офицера охраны"
+genitive = "куртки офицера охраны"
+dative = "куртке офицера охраны"
+accusative = "куртку офицера охраны"
+instrumental = "курткой офицера охраны"
+prepositional = "куртке офицера охраны"
+gender = "female"
+
+["recharger"]
+nominative = "зарядник"
+genitive = "зарядника"
+dative = "заряднику"
+accusative = "зарядник"
+instrumental = "зарядником"
+prepositional = "заряднике"
+gender = "male"
+
+["sunglasses"]
+nominative = "солнцезащитные очки"
+genitive = "солнцезащитных очков"
+dative = "солнцезащитным очкам"
+accusative = "солнцезащитные очки"
+instrumental = "солнцезащитными очками"
+prepositional = "солнцезащитных очках"
+gender = "plural"
+
+["earmuffs"]
+nominative = "противошумный наушник"
+genitive = "противошумного наушника"
+dative = "противошумному наушнику"
+accusative = "противошумный наушник"
+instrumental = "противошумным наушником"
+prepositional = "противошумном наушнике"
+gender = "male"
+
 ["security gas mask"]
+nominative = "противогаз охраны"
+genitive = "противогаза охраны"
+dative = "противогазу охраны"
+accusative = "противогаз охраны"
+instrumental = "противогазом охраны"
+prepositional = "противогазе охраны"
+gender = "male"
+
+[helmet]
+nominative = "шлем"
+genitive = "шлема"
+dative = "шлему"
+accusative = "шлем"
+instrumental = "шлемом"
+prepositional = "шлеме"
+gender = "male"
+
+["armor vest"]
+nominative = "бронежилет"
+genitive = "бронежилета"
+dative = "бронежилету"
+accusative = "бронежилет"
+instrumental = "бронежилетом"
+prepositional = "бронежилете"
+gender = "male"
+
+["large armor vest"]
+nominative = "большой бронежилет"
+genitive = "большого бронежилета"
+dative = "большому бронежилету"
+accusative = "большой бронежилет"
+instrumental = "большим бронежилетом"
+prepositional = "большом бронежилете"
+gender = "male"
+
+["bulletproof armor"]
+nominative = "пуленепробиваемый бронежилет"
+genitive = "пуленепробиваемого бронежилета"
+dative = "пуленепробиваемому бронежилету"
+accusative = "пуленепробиваемый бронежилет"
+instrumental = "пуленепробиваемым бронежилетом"
+prepositional = "пуленепробиваемом бронежилете"
+gender = "male"
+
+["bulletproof helmet"]
+nominative = "пуленепробиваемый шлем"
+genitive = "пуленепробиваемого шлема"
+dative = "пуленепробиваемому шлему"
+accusative = "пуленепробиваемый шлем"
+instrumental = "пуленепробиваемым шлемом"
+prepositional = "пуленепробиваемом шлеме"
+gender = "male"
+
+["riot suit"]
+nominative = "броня для подавления беспорядков"
+genitive = "брони для подавления беспорядков"
+dative = "броне для подавления беспорядков"
+accusative = "брони для подавления беспорядков"
+instrumental = "броней для подавления беспорядков"
+prepositional = "броне для подавления беспорядков"
+gender = "female"
+
+["riot helmet"]
+nominative = "шлем для подавления беспорядков"
+genitive = "шлема для подавления беспорядков"
+dative = "шлему для подавления беспорядков"
+accusative = "шлем для подавления беспорядков"
+instrumental = "шлемом для подавления беспорядков"
+prepositional = "шлеме для подавления беспорядков"
+gender = "male"
+
+["MK.I SWAT Suit"]
+nominative = "броня MK.I SWAT"
+genitive = "брони MK.I SWAT"
+dative = "броне MK.I SWAT"
+accusative = "броню MK.I SWAT"
+instrumental = "броней MK.I SWAT"
+prepositional = "броне MK.I SWAT"
+gender = "female"
+
+["SWAT Helmet"]
+nominative = "шлем SWAT"
+genitive = "шлема SWAT"
+dative = "шлему SWAT"
+accusative = "шлем SWAT"
+instrumental = "шлемом SWAT"
+prepositional = "шлеме SWAT"
+gender = "male"
+
+["SWAT mask"]
+nominative = "маска SWAT"
+genitive = "маски SWAT"
+dative = "маске SWAT"
+accusative = "маску SWAT"
+instrumental = "маской SWAT"
+prepositional = "маске SWAT"
+gender = "female"
+
+["riot shield"]
+nominative = "щит для подавления беспорядков"
+genitive = "щита для подавления беспорядков"
+dative = "щиту для подавления беспорядков"
+accusative = "щит для подавления беспорядков"
+instrumental = "щитом для подавления беспорядков"
+prepositional = "щите для подавления беспорядков"
+gender = "male"
+
+["telescopic shield"]
+nominative = "телескопический щит"
+genitive = "телескопического щита"
+dative = "телескопическому щиту"
+accusative = "телескопический щит"
+instrumental = "телескопическим щитом"
+prepositional = "телескопическом щите"
+gender = "male"
 
 # Warden
 ["warden's garment bag"]
+nominative = "сумка-чехол смотрителя"
+genitive = "сумки-чехла смотрителя"
+dative = "сумке-чехлу смотрителя"
+accusative = "сумку-чехол смотрителя"
+instrumental = "сумкой-чехлом смотрителя"
+prepositional = "сумке-чехле смотрителя"
+gender = "female"
+
 ["krav maga gloves"]
+nominative = "перчатки крав мага"
+genitive = "перчаток крав мага"
+dative = "перчаткам крав мага"
+accusative = "перчатки крав мага"
+instrumental = "перчатками крав мага"
+prepositional = "перчатках крав мага"
+gender = "plural"
+
 ["warden's jacket"]
+nominative = "куртка смотрителя"
+genitive = "куртки смотрителя"
+dative = "куртке смотрителя"
+accusative = "куртку смотрителя"
+instrumental = "курткой смотрителя"
+prepositional = "куртке смотрителя"
+gender = "female"
+
 ["warden's police hat"]
+nominative = "полицейская шляпа смотрителя"
+genitive = "полицейской шляпы смотрителя"
+dative = "полицейской шляпе смотрителя"
+accusative = "полицейскую шляпу смотрителя"
+instrumental = "полицейской шляпой смотрителя"
+prepositional = "полицейской шляпе смотрителя"
+gender = "female"
+
 ["warden's campaign hat"]
+nominative = "форменная полевая шляпа смотрителя"
+genitive = "форменной поляовой шляпы смотрителя"
+dative = "форменной полевая шляпе смотрителя"
+accusative = "форменную полевую шляпу смотрителя"
+instrumental = "форменной полевой шляпой смотрителя"
+prepositional = "форменной полевой шляпе смотрителя"
+gender = "female"
+
 ["warden's beret"]
+nominative = "берет смотрителя"
+genitive = "берета смотрителя"
+dative = "берету смотрителя"
+accusative = "берет смотрителя"
+instrumental = "беретом смотрителя"
+prepositional = "берете смотрителя"
+gender = "male"
+
 ["warden's armored jacket"]
+nominative = "бронированная куртка смотрителя"
+genitive = "бронированной куртки смотрителя"
+dative = "бронированной куртке смотрителя"
+accusative = "бронированную куртку смотрителя"
+instrumental = "бронированной курткой смотрителя"
+prepositional = "бронированной куртке смотрителя"
+gender = "female"
+
 ["warden's formal uniform"]
+nominative = "формальная униформа смотрителя"
+genitive = "формальной униформы смотрителя"
+dative = "формальной униформе смотрителя"
+accusative = "формальную униформу смотрителя"
+instrumental = "формальной униформой смотрителя"
+prepositional = "формальной униформе смотрителя"
+gender = "female"
+
 ["warden's suitskirt"]
+nominative = "комбинезон с юбкой смотрителя"
+genitive = "комбинезона с юбкой смотрителя"
+dative = "комбинезону с юбкой смотрителя"
+accusative = "комбинезон с юбкой смотрителя"
+instrumental = "комбинезоном с юбкой смотрителя"
+prepositional = "комбинезоне с юбкой смотрителя"
+gender = "male"
 
 # HoS
 ["head of security's locker"]
-["pinpointer"]
+nominative = "шкафчик главы службы безопасности"
+genitive = "шкафчика главы службы безопасности"
+dative = "шкафчику главы службы безопасности"
+accusative = "шкафчик главы службы безопасности"
+instrumental = "шкафчиком главы службы безопасности"
+prepositional = "шкафчике главы службы безопасности"
+gender = "male"
+
 ["head of security data disk"]
+nominative = "диск с данными главы службы безопасности"
+genitive = "диска с данными главы службы безопасности"
+dative = "диску с данными главы службы безопасности"
+accusative = "диск с данными главы службы безопасности"
+instrumental = "диском с данными главы службы безопасности"
+prepositional = "диске с данными главы службы безопасности"
+gender = "male"
+
 ["the head of security's headset"]
+nominative = "гарнитура главы службы безопасности"
+genitive = "гарнитуры главы службы безопасности"
+dative = "гарнитуре главы службы безопасности"
+accusative = "гарнитуру главы службы безопасности"
+instrumental = "гарнитурой главы службы безопасности"
+prepositional = "гарнитуре главы службы безопасности"
+gender = "female"
+
 ["the head of security's bowman headset"]
+nominative = "гарнитура bowman главы службы безопасности"
+genitive = "гарнитуры bowman главы службы безопасности"
+dative = "гарнитуре bowman главы службы безопасности"
+accusative = "гарнитуру bowman главы службы безопасности"
+instrumental = "гарнитурой bowman главы службы безопасности"
+prepositional = "гарнитуре bowman главы службы безопасности"
+gender = "female"
+
 ["head of security's garment bag"]
+nominative = "сумка-чехол главы службы безопасности"
+genitive = "сумки-чехла главы службы безопасности"
+dative = "сумке-чехлу главы службы безопасности"
+accusative = "сумку-чехол главы службы безопасности"
+instrumental = "сумкой-чехлом главы службы безопасности"
+prepositional = "сумке-чехле главы службы безопасности"
+gender = "female"
+
 ["security medal box"]
+nominative = "коробка с медалями охраны"
+genitive = "коробки с медалями охраны"
+dative = "коробке с медалями охраны"
+accusative = "коробку с медалями охраны"
+instrumental = "коробкой с медалями охраны"
+prepositional = "коробке с медалями охраны"
+gender = "female"
+
 ["security megaphone"]
+nominative = "громкоговоритель охраны"
+genitive = "громкоговорителя охраны"
+dative = "громкоговорителю охраны"
+accusative = "громкоговоритель охраны"
+instrumental = "громкоговорителем охраны"
+prepositional = "громкоговорителе охраны"
+gender = "male"
+
 ["lockbox of mindshield implants"]
-["telescopic shield"]
+nominative = "кейс с имплантами защиты разума"
+genitive = "кейса с имплантами защиты разума"
+dative = "кейс с имплантами защиты разума"
+accusative = "кейс с имплантами защиты разума"
+instrumental = "кейсом с имплантами защиты разума"
+prepositional = "кейсе с имплантами защиты разума"
+gender = "male"
+
 ["photo album (Head of Security)"]
+nominative = "фото-альбом (глава службы безопасности)"
+genitive = "фото-альбома (глава службы безопасности)"
+dative = "фото-альбому (глава службы безопасности)"
+accusative = "фото-альбом (глава службы безопасности)"
+instrumental = "фото-альбомом (глава службы безопасности)"
+prepositional = "фото-альбоме (глава службы безопасности)"
+gender = "male"
+
 ["head of security cap"]
-["SWAT mask"]
+nominative = "кепка главы службы безопасности"
+genitive = "кепки главы службы безопасности"
+dative = "кепке главы службы безопасности"
+accusative = "кепку главы службы безопасности"
+instrumental = "кепкой главы службы безопасности"
+prepositional = "кепке главы службы безопасности"
+gender = "female"
+
 ["head of security's cloak"]
+nominative = "плащ главы службы безопасности"
+genitive = "плаща главы службы безопасности"
+dative = "плащу главы службы безопасности"
+accusative = "плащ главы службы безопасности"
+instrumental = "плащом главы службы безопасности"
+prepositional = "плаще главы службы безопасности"
+gender = "male"
+
 ["armored greatcoat"]
+nominative = "бронированная шанель"
+genitive = "бронированной шанели"
+dative = "бронированной шанели"
+accusative = "бронированную шанель"
+instrumental = "бронированной шанелью"
+prepositional = "бронированной шанели"
+gender = "female"
+
 ["Head of Security's parade jacket"]
+nominative = "парадная куртка главы службы безопасности"
+genitive = "парадной куртки главы службы безопасности"
+dative = "парадной куртке главы службы безопасности"
+accusative = "парадную куртку главы службы безопасности"
+instrumental = "парадной курткой главы службы безопасности"
+prepositional = "парадной куртке главы службы безопасности"
+gender = "female"
+
 ["head of security's winter trenchcoat"]
+nominative = "зимний тренч главы службы безопасности"
+genitive = "зимнего тренча главы службы безопасности"
+dative = "зимнему тренчу главы службы безопасности"
+accusative = "зимний тренч главы службы безопасности"
+instrumental = "зимним тренчем главы службы безопасности"
+prepositional = "зимнем тренче главы службы безопасности"
+gender = "male"
+
 ["security overcoat"]
+nominative = "пальто охраны"
+genitive = "пальто охраны"
+dative = "пальто охраны"
+accusative = "пальто охраны"
+instrumental = "пальто охраны"
+prepositional = "пальто охраны"
+gender = "neuter"
+
 ["eyepatch HUD"]
+nominative = "повязка с HUD"
+genitive = "повязки с HUD"
+dative = "повязке с HUD"
+accusative = "повязку с HUD"
+instrumental = "повязкой с HUD"
+prepositional = "повязке с HUD"
+gender = "female"
+
 ["giga HUD gar glasses"]
+nominative = "гига-гар HUD очки"
+genitive = "гига-гар HUD очков"
+dative = "гига-гар HUD очкам"
+accusative = "гига-гар HUD очки"
+instrumental = "гига-гар HUD очками"
+prepositional = "гига-гар HUD очках"
+gender = "plural"
+
 ["head of security's beret"]
+nominative = "берет главы службы безопасности"
+genitive = "берета главы службы безопасности"
+dative = "берету главы службы безопасности"
+accusative = "берет главы службы безопасности"
+instrumental = "беретом главы службы безопасности"
+prepositional = "берете главы службы безопасности"
+gender = "male"
+
 ["gorilla gloves"]
+nominative = "перчатки gorilla"
+genitive = "перчаток gorilla"
+dative = "перчаткам gorilla"
+accusative = "перчатки gorilla"
+instrumental = "перчатками gorilla"
+prepositional = "перчатках gorilla"
+gender = "plural"
+
 ["head of security's parade uniform"]
+nominative = "парадная униформа главы службы безопасности"
+genitive = "парадной униформы главы службы безопасности"
+dative = "парадной униформе главы службы безопасности"
+accusative = "парадную униформу главы службы безопасности"
+instrumental = "парадной униформой главы службы безопасности"
+prepositional = "парадной униформе главы службы безопасности"
+gender = "female"
+
 ["head of security's grey jumpsuit"]
+nominative = "серый комбинезон главы службы безопасности"
+genitive = "серого комбинезона главы службы безопасности"
+dative = "серому комбинезону главы службы безопасности"
+accusative = "серый комбинезон главы службы безопасности"
+instrumental = "серым комбинезоном главы службы безопасности"
+prepositional = "сером комбинезоне главы службы безопасности"
+gender = "male"
+
 ["head of security's turtleneck skirt"]
+nominative = "водолазка с юбкой главы службы безопасности"
+genitive = "водолазки с юбкой главы службы безопасности"
+dative = "водолазке с юбкой главы службы безопасности"
+accusative = "водолазку с юбкой главы службы безопасности"
+instrumental = "водолазкой с юбкой главы службы безопасности"
+prepositional = "водолазке с юбкой главы службы безопасности"
+gender = "female"
+
 ["head of security's turtleneck"]
+nominative = "водолазка главы службы безопасности"
+genitive = "водолазки главы службы безопасности"
+dative = "водолазке главы службы безопасности"
+accusative = "водолазку главы службы безопасности"
+instrumental = "водолазкой главы службы безопасности"
+prepositional = "водолазке главы службы безопасности"
+gender = "female"
+
 ["head of security's skirt"]
+nominative = "комбинезон с юбкой главы службы безопасности"
+genitive = "комбинезона с юбкой главы службы безопасности"
+dative = "комбинезону с юбкой главы службы безопасности"
+accusative = "комбинезон с юбкой главы службы безопасности"
+instrumental = "комбинезоном с юбкой главы службы безопасности"
+prepositional = "комбинезоне с юбкой главы службы безопасности"
+gender = "male"
+
+# Other
+["assault belt"]
+nominative = "штурмовой пояс"
+genitive = "штурмового пояса"
+dative = "штурмовому поясу"
+accusative = "штурмовой пояс"
+instrumental = "штурмовым поясом"
+prepositional = "штурмовом поясе"
+gender = "male"
+
+["block gloves"]
+nominative = "чёрные перчатки"
+genitive = "чёрных перчаток"
+dative = "чёрным перчаткам"
+accusative = "чёрные перчатки"
+instrumental = "чёрными перчатками"
+prepositional = "чёрных перчатках"
+gender = "plural"
+
+["lethal injection syringe"]
+nominative = "шприц со смертельной инъекцией"
+genitive = "шприца со смертельной инъекцией"
+dative = "шприцу со смертельной инъекцией"
+accusative = "шприц со смертельной инъекцией"
+instrumental = "шприцом со смертельной инъекцией"
+prepositional = "шприце со смертельной инъекцией"
+gender = "male"
+
+["lethal injections locker"]
+nominative = "шкафчик со смертельными инъекциями"
+genitive = "шкафчика со смертельными инъекциями"
+dative = "шкафчику со смертельными инъекциями"
+accusative = "шкафчик со смертельными инъекциями"
+instrumental = "шкафчиком со смертельными инъекциями"
+prepositional = "шкафчике со смертельными инъекциями"
+gender = "male"
+
+["tracking implant"]
+nominative = "имплант слежения"
+genitive = "импланта слежения"
+dative = "импланту слежения"
+accusative = "имплант слежения"
+instrumental = "имплантом слежения"
+prepositional = "импланте слежения"
+gender = "male"
+
+["chem implant"]
+nominative = "химический имплант"
+genitive = "химического импланта"
+dative = "химическому импланту"
+accusative = "химический имплант"
+instrumental = "химическим имплантом"
+prepositional = "химическом импланте"
+gender = "male"
+
+["mindshield implant"]
+nominative = "имплант защиты разума"
+genitive = "импланта защиты разума"
+dative = "импланту защиты разума"
+accusative = "имплант защиты разума"
+instrumental = "имплантом защиты разума"
+prepositional = "импланте защиты разума"
+gender = "male"
+
+["pinpointer"]
+nominative = "целеуказатель"
+genitive = "целеуказателя"
+dative = "целеуказателю"
+accusative = "целеуказатель"
+instrumental = "целеуказателем"
+prepositional = "целеуказателе"
+gender = "male"
+
+["crew pinpointer"]
+nominative = "целеуказатель на экипаж"
+genitive = "целеуказателя на экипаж"
+dative = "целеуказателю на экипаж"
+accusative = "целеуказатель на экипаж"
+instrumental = "целеуказателем на экипаж"
+prepositional = "целеуказателе на экипаж"
+gender = "male"
+
+["medical cyborg crew pinpointer"]
+nominative = "целеуказатель на экипаж медицинского киборга"
+genitive = "целеуказателя на экипаж медицинского киборга"
+dative = "целеуказателю на экипаж медицинского киборга"
+accusative = "целеуказатель на экипаж медицинского киборга"
+instrumental = "целеуказателем на экипаж медицинского киборга"
+prepositional = "целеуказателе на экипаж медицинского киборга"
+gender = "male"
+
+["syndicate pinpointer"]
+nominative = "целеуказатель синдиката"
+genitive = "целеуказателя синдиката"
+dative = "целеуказателю синдиката"
+accusative = "целеуказатель синдиката"
+instrumental = "целеуказателем синдиката"
+prepositional = "целеуказателе синдиката"
+gender = "male"
+
+["cyborg syndicate pinpointer"]
+nominative = "целеуказатель синдиката киборга"
+genitive = "целеуказателя синдиката киборга"
+dative = "целеуказателю синдиката киборга"
+accusative = "целеуказатель синдиката киборга"
+instrumental = "целеуказателем синдиката киборга"
+prepositional = "целеуказателе синдиката киборга"
+gender = "male"
+
+["contractor pinpointer"]
+nominative = "целеуказатель контрактника"
+genitive = "целеуказателя контрактника"
+dative = "целеуказателю контрактника"
+accusative = "целеуказатель контрактника"
+instrumental = "целеуказателем контрактника"
+prepositional = "целеуказателе контрактника"
+gender = "male"
+
+["pair pinpointer"]
+nominative = "парный целеуказатель"
+genitive = "парного целеуказателя"
+dative = "парному целеуказателю"
+accusative = "парный целеуказатель"
+instrumental = "парным целеуказателем"
+prepositional = "парном целеуказателе"
+gender = "male"
+
+["bounty shuttle pinpointer"]
+nominative = "целеуказатель шаттла охотников"
+genitive = "целеуказателя шаттла охотников"
+dative = "целеуказателю шаттла охотников"
+accusative = "целеуказатель шаттла охотников"
+instrumental = "целеуказателем шаттла охотников"
+prepositional = "целеуказателе шаттла охотников"
+gender = "male"
 
 # MARK: Kitchen
 
@@ -2231,6 +3099,34 @@ instrumental = "манекеном"
 prepositional = "манекене"
 gender = "male"
 
+# MARK: Turfs
+[floor]
+nominative = "плитка"
+genitive = "плитки"
+dative = "плитке"
+accusative = "плитку"
+instrumental = "плиткой"
+prepositional = "плитке"
+gender = "female"
+
+[wall]
+nominative = "стена"
+genitive = "стены"
+dative = "стене"
+accusative = "стену"
+instrumental = "стеной"
+prepositional = "стене"
+gender = "female"
+
+["reinforced wall"]
+nominative = "усиленная стена"
+genitive = "усиленной стены"
+dative = "усиленной стене"
+accusative = "усиленную стену"
+instrumental = "усиленной стеной"
+prepositional = "усиленной стене"
+gender = "female"
+
 # MARK: Burocracy and Art
 ["folder"]
 nominative = "папка"
@@ -2277,6 +3173,15 @@ accusative = "галоши"
 instrumental = "галошами"
 prepositional = "галошах"
 gender = "plural"
+
+["cleaner grenade"]
+nominative = "чистящая граната"
+genitive = "чистящей гранаты"
+dative = "чистящей гранате"
+accusative = "чистящую гранату"
+instrumental = "чистящей гранатой"
+prepositional = "чистящей гранате"
+gender = "female"
 
 # MARK: Stock parts
 # Tier 1
