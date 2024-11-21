@@ -680,7 +680,7 @@
 	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) * 0.01 : 0
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
 	for(var/datum/reagent/reagent in reagents)
-		var/reac_volume = reagents[reagnet]
+		var/reac_volume = reagents[reagent]
 		. |= reagent.expose_mob(src, methods, reac_volume, show_message, touch_protection)
 
 /// Simplified ricochet angle calculation for mobs (also the base version doesn't work on mobs)
