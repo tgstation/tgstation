@@ -72,7 +72,8 @@
 		var/obj/item/gun/energy/energy_gun = gun_to_set
 		// Even if the energy gun has multiple ammo types, we copy the first. Energy guns always (should) have a list in ammo_type.
 		if(islist(energy_gun.ammo_type) && energy_gun.ammo_type.len)
-			casing_to_dupe = energy_gun.ammo_type[1]
+			var/obj/item/first_casing = energy_gun.ammo_type[1]
+			casing_to_dupe = new first_casing.type
 
 	else if(istype(gun_to_set, /obj/item/gun/syringe))
 		casing_to_dupe = new /obj/item/ammo_casing/syringegun(src)
