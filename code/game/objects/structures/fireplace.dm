@@ -166,7 +166,7 @@
 	fuel_added = 0
 	update_appearance()
 	adjust_light()
-	particles = new /particles/smoke/burning()
+	add_shared_particles(/particles/smoke/burning)
 
 	switch(dir)
 		if(SOUTH)
@@ -185,7 +185,7 @@
 	update_appearance()
 	adjust_light()
 	desc = initial(desc)
-	QDEL_NULL(particles)
+	remove_shared_particles(/particles/smoke/burning)
 
 #undef LOG_BURN_TIMER
 #undef PAPER_BURN_TIMER
