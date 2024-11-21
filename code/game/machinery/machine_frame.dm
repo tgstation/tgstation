@@ -259,8 +259,7 @@
 
 	if(play_sound && !no_sound)
 		replacer.play_rped_sound()
-		if(replacer.works_from_distance)
-			user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+
 	return TRUE
 
 /obj/structure/frame/machine/can_be_unfasten_wrench(mob/user, silent)

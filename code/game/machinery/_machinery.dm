@@ -990,21 +990,16 @@
 	return TRUE
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer_tool)
-	if(!istype(replacer_tool))
+	if(!istype(replacer_tool) || !component_parts)
 		return FALSE
 
-	var/shouldplaysound = FALSE
-	if(!component_parts)
-		return FALSE
-
-	if(!panel_open && !replacer_tool.works_from_distance)
+	var/works_from_distance = istype(replacer_tool, /obj/item/storage/part_replacer/bluespace)
+	if(!panel_open && !works_from_distance)
 		to_chat(user, display_parts(user))
-		if(shouldplaysound)
-			replacer_tool.play_rped_sound()
 		return FALSE
 
 	var/obj/item/circuitboard/machine/machine_board = locate(/obj/item/circuitboard/machine) in component_parts
-	if(replacer_tool.works_from_distance)
+	if(works_from_distance)
 		to_chat(user, display_parts(user))
 	if(!machine_board)
 		return FALSE
@@ -1015,6 +1010,7 @@
 	 * completly ignoring the tier 4 component inside
 	 * we also ignore stack components inside the RPED cause we dont exchange that
 	 */
+	var/shouldplaysound = FALSE
 	var/list/part_list = replacer_tool.get_sorted_parts(ignore_stacks = TRUE)
 	if(!part_list.len)
 		return FALSE
@@ -1045,7 +1041,7 @@
 			if(!istype(secondary_part, required_type))
 				continue
 			// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
-			if(istype(secondary_part, /obj/item/stock_parts/power_store/cell) && replacer_tool.works_from_distance)
+			if(istype(secondary_part, /obj/item/stock_parts/power_store/cell) && works_from_distance)
 				var/obj/item/stock_parts/power_store/cell/checked_cell = secondary_part
 				// If it's rigged or corrupted, max the charge. Then explode it.
 				if(checked_cell.rigged || checked_cell.corrupted)

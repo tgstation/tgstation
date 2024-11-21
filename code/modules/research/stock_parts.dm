@@ -1,6 +1,10 @@
 /*Power cells are in code\modules\power\cell.dm
 
 If you create T5+ please take a pass at mech_fabricator.dm. The parts being good enough allows it to go into minus values and create materials out of thin air when printing stuff.*/
+
+///Sound rped makes when used
+#define USE_SOUND 'sound/items/tools/rped.ogg'
+
 /obj/item/storage/part_replacer
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
@@ -10,51 +14,49 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
-	var/works_from_distance = FALSE
-	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/tools/rped.ogg'
-	var/alt_sound = null
+	storage_type = /datum/storage/rped
 
-/obj/item/storage/part_replacer/Initialize(mapload)
-	. = ..()
-	create_storage(storage_type = /datum/storage/rped)
+/obj/item/storage/part_replacer/interact_with_atom(obj/attacked_object, mob/living/user, list/modifiers)
+	. = NONE
 
-/obj/item/storage/part_replacer/proc/part_replace_action(obj/attacked_object, mob/living/user)
+	if(user.combat_mode || !istype(attacked_object) || HAS_TRAIT(attacked_object, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	//its very important to NOT block so frames can still interact with it
 	if(!ismachinery(attacked_object) || istype(attacked_object, /obj/machinery/computer))
-		return FALSE
+		return NONE
 
 	var/obj/machinery/attacked_machinery = attacked_object
 	if(!LAZYLEN(attacked_machinery.component_parts))
-		return FALSE
+		return ITEM_INTERACT_FAILURE
 
-	if(attacked_machinery.exchange_parts(user, src) && works_from_distance)
-		user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-	return TRUE
+	return attacked_machinery.exchange_parts(user, src) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
 
-/obj/item/storage/part_replacer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(part_replace_action(interacting_with, user))
-		return ITEM_INTERACT_SUCCESS
-	return NONE
-
-/obj/item/storage/part_replacer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!works_from_distance)
-		return NONE
-	if(part_replace_action(interacting_with, user))
-		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-		return ITEM_INTERACT_SUCCESS
-	if(istype(interacting_with, /obj/structure/frame))
-		// Cursed snowflake but we need to handle frame ranged interaction here
-		// Likely no longer necessary with the new framework, revisit later
-		interacting_with.item_interaction(user, src)
-		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-		return ITEM_INTERACT_SUCCESS
-	return NONE
-
+///Plays the sound for RPED exhanging or installing parts.
 /obj/item/storage/part_replacer/proc/play_rped_sound()
-	//Plays the sound for RPED exhanging or installing parts.
-	if(alt_sound && prob(1))
-		playsound(src, alt_sound, 40, TRUE)
-	else
-		playsound(src, pshoom_or_beepboopblorpzingshadashwoosh, 40, TRUE)
+	playsound(src, USE_SOUND, 40, TRUE)
+
+
+/**
+ * Gets parts sorted in order of their tier
+ * Arguments
+ *
+ * * ignore_stacks - should the final list contain stacks
+ */
+/obj/item/storage/part_replacer/proc/get_sorted_parts(ignore_stacks = FALSE)
+	RETURN_TYPE(/list/obj/item)
+
+	var/list/obj/item/part_list = list()
+	//Assemble a list of current parts, then sort them by their rating!
+	for(var/obj/item/component_part in contents)
+		//No need to put circuit boards in this list or stacks when exchanging parts
+		if(istype(component_part, /obj/item/circuitboard) || (ignore_stacks && istype(component_part, /obj/item/stack)))
+			continue
+		part_list += component_part
+		//Sort the parts. This ensures that higher tier items are applied first.
+	sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
+
+	return part_list
 
 /obj/item/storage/part_replacer/bluespace
 	name = "bluespace rapid part exchange device"
@@ -62,19 +64,27 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "BS_RPED"
 	inhand_icon_state = "BS_RPED"
 	w_class = WEIGHT_CLASS_NORMAL
-	works_from_distance = TRUE
-	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/pshoom/pshoom.ogg'
-	alt_sound = 'sound/items/pshoom/pshoom_2.ogg'
+	storage_type = /datum/storage/rped/bluespace
 
 /obj/item/storage/part_replacer/bluespace/Initialize(mapload)
 	. = ..()
 
-	atom_storage.max_slots = 400
-	atom_storage.max_total_storage = 800
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
-
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(on_part_entered))
 	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_part_exited))
+
+/obj/item/storage/part_replacer/bluespace/interact_with_atom(obj/attacked_object, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+
+/obj/item/storage/part_replacer/bluespace/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/storage/part_replacer/bluespace/play_rped_sound()
+	if(prob(1))
+		playsound(src, USE_SOUND, 40, TRUE)
+	else
+		playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, TRUE)
 
 /**
  * Signal handler for when a part has been inserted into the BRPED.
@@ -127,6 +137,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	if(removed_component.reagents)
 		UnregisterSignal(removed_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT)
 
+#undef USE_SOUND
 
 /obj/item/storage/part_replacer/bluespace/tier1
 
@@ -189,24 +200,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	inhand_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-
-/obj/item/storage/part_replacer/cyborg/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 400
-	atom_storage.max_total_storage = 800
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
-
-/obj/item/storage/part_replacer/proc/get_sorted_parts(ignore_stacks = FALSE)
-	var/list/part_list = list()
-	//Assemble a list of current parts, then sort them by their rating!
-	for(var/obj/item/component_part in contents)
-		//No need to put circuit boards in this list or stacks when exchanging parts
-		if(istype(component_part, /obj/item/circuitboard) || (ignore_stacks && istype(component_part, /obj/item/stack)))
-			continue
-		part_list += component_part
-		//Sort the parts. This ensures that higher tier items are applied first.
-	sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
-	return part_list
+	storage_type = /datum/storage/rped/bluespace
 
 /proc/cmp_rped_sort(obj/item/first_item, obj/item/second_item)
 	/**

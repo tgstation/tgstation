@@ -109,4 +109,10 @@
 			part.pixel_x = part.base_pixel_x + rand(-8, 8)
 			part.pixel_y = part.base_pixel_y + rand(-8, 8)
 
+///bluespace variant
+/datum/storage/rped/bluespace
+	max_slots = 400
+	max_total_storage = 800
+	max_specific_storage = WEIGHT_CLASS_GIGANTIC
+
 #undef MAX_STACK_PICKUP
