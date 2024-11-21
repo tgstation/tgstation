@@ -262,7 +262,7 @@
 
 	animate_start = rough_time
 	animate_lifespan = lifespan
-	
+
 	// View the message
 	LAZYADDASSOCLIST(owned_by.seen_messages, message_loc, src)
 	owned_by.images |= message
