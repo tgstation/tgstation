@@ -147,12 +147,9 @@
 		if (findtext("[value]", filter, -end_len))
 			if (endtype)
 				var/list/split_filter = splittext("[value]", filter)
-				if (!findtext(split_filter[length(split_filter)], "/"))
-					matches[key] = value
+				if (findtext(split_filter[length(split_filter)], "/"))
 					continue
-			else
-				matches[key] = value
-				continue
+			matches[key] = value
 
 	return matches
 
