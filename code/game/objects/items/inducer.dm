@@ -134,7 +134,7 @@
 /obj/item/inducer/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
 	. = NONE
 
-	if(HAS_TRAIT(tool, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
 		return
 
 	if(user.combat_mode || !istype(interacting_with) || interacting_with.flags_1 & HOLOGRAM_1)
