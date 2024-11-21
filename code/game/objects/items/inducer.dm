@@ -101,6 +101,9 @@
 /obj/item/inducer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
 
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return
+
 	if(user.combat_mode || !istype(tool) || tool.flags_1 & HOLOGRAM_1 || tool.item_flags & ABSTRACT)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
@@ -120,7 +123,7 @@
 		powerdevice = tool
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/stack/sheet/mineral/plasma) && !QDELETED(powerdevice))
+	else if(istype(tool, /obj/item/stack/sheet/mineral/plasma) && !QDELETED(powerdevice))
 		if(!powerdevice.used_charge())
 			balloon_alert(user, "fully charged!")
 			return ITEM_INTERACT_FAILURE
