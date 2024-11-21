@@ -113,7 +113,7 @@
 		return
 
 	var/blocked = source.check_projectile_armor(def_zone, proj, is_silent = TRUE)
-	if (blocked)
+	if (blocked && source.is_eyes_covered())
 		if (!proj.armour_penetration || prob(blocked - proj.armour_penetration))
 			return
 
