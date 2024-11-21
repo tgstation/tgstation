@@ -12,10 +12,8 @@
 	var/use_worn_icon = TRUE
 	/// Pixel_y offset for the hat
 	var/pixel_y_offset
-	/// The hat overlay to add & delete
-	var/mutable_appearance/icon_overlay
 
-/datum/component/hat_stabilizer/Initialize(use_worn_icon = TRUE, pixel_y_offset = 0, loose_hat = FALSE)
+/datum/component/hat_stabilizer/Initialize(use_worn_icon = FALSE, pixel_y_offset = 0, loose_hat = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -39,16 +37,15 @@
 
 	// Overlays
 	RegisterSignals(source, list(COMSIG_MODULE_GENERATE_WORN_OVERLAY, COMSIG_ITEM_GET_WORN_OVERLAYS), PROC_REF(get_worn_overlays))
+	RegisterSignal(source, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_qdel))
 
 // Inherit the new values passed to the component
 /datum/component/hat_stabilizer/InheritComponent(datum/component/hat_stabilizer/new_comp, original, use_worn_icon, pixel_y_offset, loose_hat)
-
 	if(!original)
 		return
 
-	//add_overlay
 	if(!isnull(use_worn_icon))
 		src.use_worn_icon = use_worn_icon
 	if(!isnull(use_worn_icon))
@@ -84,6 +81,8 @@
 
 /datum/component/hat_stabilizer/proc/throw_hat(mob/hatless)
 	SIGNAL_HANDLER
+	if(!loose_hat)
+		return
 	var/obj/item/hat = remove_hat()
 	if(!hat)
 		return
@@ -92,6 +91,8 @@
 
 /datum/component/hat_stabilizer/proc/drop_hat(mob/hatless)
 	SIGNAL_HANDLER
+	if(!loose_hat)
+		return
 	remove_hat()
 
 /datum/component/hat_stabilizer/proc/on_examine(datum/source, mob/user, list/base_examine)
@@ -111,17 +112,10 @@
 		if(loose_hat)
 			var/matrix/tilt_trix = matrix(worn_overlay.transform)
 			var/angle = rand(2, 6)
-			tilt_trix.Turn(prob(50) ? angle : (angle * -1))
+			tilt_trix.Turn(angle * pick(1, -1))
 			worn_overlay.transform = tilt_trix
 		worn_overlay.pixel_y = pixel_y_offset + attached_hat.worn_y_offset
 		overlays += worn_overlay
-
-/datum/component/hat_stabilizer/proc/on_update_overlays(atom/movable/source, list/overlays)
-	SIGNAL_HANDLER
-
-	icon_overlay = use_worn_icon ? attached_hat.build_worn_icon(default_layer = ABOVE_OBJ_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi') : mutable_appearance(attached_hat, layer = ABOVE_OBJ_LAYER)
-	icon_overlay.pixel_y = pixel_y_offset
-	overlays += icon_overlay
 
 /datum/component/hat_stabilizer/proc/on_qdel(atom/movable/source)
 	SIGNAL_HANDLER
@@ -217,7 +211,6 @@
 	apparel.flags_cover = former_flags
 	apparel.visor_flags_cover = former_visor_flags
 	apparel.update_appearance()
-	apparel.update_icon()
 	attached_hat = null
 	if (ismob(apparel.loc))
 		var/mob/wearer = apparel.loc
