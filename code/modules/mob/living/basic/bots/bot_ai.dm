@@ -274,7 +274,7 @@
 
 	var/mob/living/living_pawn = controller.pawn
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	var/list/objects_to_search = turf_search ? spiral_range_turfs(radius, controller.pawn) : oview(radius, controller.pawn) //use range turfs instead of oview when we can for performance
+	var/list/objects_to_search = turf_search ? RANGE_TURFS(radius, controller.pawn) : oview(radius, controller.pawn) //use range turfs instead of oview when we can for performance
 	for(var/atom/potential_target as anything in objects_to_search)
 		if(QDELETED(living_pawn))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -283,6 +283,8 @@
 		if(LAZYACCESS(ignore_list, potential_target))
 			continue
 		if(!valid_target(controller, potential_target))
+			continue
+		if(!can_see(controller.pawn, potential_target, radius))
 			continue
 		if(controller.set_if_can_reach(target_key, potential_target, distance = pathing_distance, bypass_add_to_blacklist = bypass_add_blacklist))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

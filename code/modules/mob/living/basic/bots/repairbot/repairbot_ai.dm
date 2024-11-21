@@ -82,6 +82,7 @@
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/bot_search/valid_robot
+	action_cooldown = 10 SECONDS
 
 /datum/ai_behavior/bot_search/valid_robot/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	return (!HAS_TRAIT(my_target, TRAIT_MOB_TIPPED)) && can_see(controller.pawn, my_target)
@@ -113,6 +114,7 @@
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/bot_search/deconstructable
+	action_cooldown = 5 SECONDS
 
 /datum/ai_behavior/bot_search/deconstructable/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	return (!(my_target.resistance_flags & INDESTRUCTIBLE) && !isgroundlessturf(my_target))
@@ -179,6 +181,7 @@
 	controller.queue_behavior(search_behavior, floor_key, type_of_turf, 5, 10, FALSE, TRUE)
 
 /datum/ai_behavior/bot_search/valid_plateless_turf
+	action_cooldown = 5 SECONDS
 
 /datum/ai_behavior/bot_search/valid_plateless_turf/valid_target(datum/ai_controller/basic_controller/bot/controller, turf/open/my_target)
 	var/static/list/blacklist_objects = typecacheof(list(
@@ -299,6 +302,9 @@
 	var/static/list/searchable_girder = typecacheof(list(/obj/structure/girder))
 	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_girder, BB_GIRDER_TO_WALL_TARGET, searchable_girder)
 
+/datum/ai_behavior/bot_search/valid_girder
+	action_cooldown = 5 SECONDS
+
 /datum/ai_behavior/bot_search/valid_girder/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
 	return isfloorturf(my_target.loc)
 
@@ -313,6 +319,7 @@
 	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_window_fix, BB_WELDER_TARGET, searchable_objects)
 
 /datum/ai_behavior/bot_search/valid_window_fix
+	action_cooldown = 5 SECONDS
 
 /datum/ai_behavior/bot_search/valid_window_fix/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
 	return (my_target.get_integrity() < my_target.max_integrity || !my_target.anchored)
