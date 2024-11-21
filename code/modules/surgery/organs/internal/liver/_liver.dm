@@ -60,14 +60,15 @@
 	qdel(GetComponent(/datum/component/squeak))
 
 /// Registers COMSIG_SPECIES_HANDLE_CHEMICAL from owner
-/obj/item/organ/liver/on_mob_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/liver/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL, PROC_REF(handle_chemical))
+	RegisterSignal(organ_owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_owner_examine))
 
 /// Unregisters COMSIG_SPECIES_HANDLE_CHEMICAL from owner
-/obj/item/organ/liver/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/liver/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	UnregisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL)
+	UnregisterSignal(organ_owner, list(COMSIG_SPECIES_HANDLE_CHEMICAL, COMSIG_ATOM_EXAMINE))
 
 /**
  * This proc can be overriden by liver subtypes so they can handle certain chemicals in special ways.
@@ -188,7 +189,7 @@
 			if(SPT_PROB(3, seconds_per_tick))
 				owner.emote("drool")
 
-/obj/item/organ/liver/on_owner_examine(datum/source, mob/user, list/examine_list)
+/obj/item/organ/liver/proc/on_owner_examine(datum/source, mob/user, list/examine_list)
 	if(!ishuman(owner) || !(organ_flags & ORGAN_FAILING))
 		return
 

@@ -9,11 +9,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	name = "sinister shard"
 	desc = "This shard seems to be directly linked to some sinister entity. It might be your god! It also gives you a really horrible rash when you hold onto it for too long."
 	items_to_create = list(/obj/item/vorpalscythe)
-
-/obj/item/organ/cyberimp/arm/shard/scythe/mob_insert(mob/living/carbon/receiver, special, movement_flags)
-	. = ..()
-	if(receiver.mind)
-		ADD_TRAIT(receiver.mind, TRAIT_MORBID, ORGAN_TRAIT)
+	organ_traits = list(TRAIT_MORBID)
 
 /obj/item/organ/cyberimp/arm/shard/scythe/Retract()
 	var/obj/item/vorpalscythe/scythe = active_item

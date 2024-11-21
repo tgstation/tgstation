@@ -15,5 +15,10 @@
 /mob/living/carbon/alien/larva/gib_animation()
 	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-l")
 
-/mob/living/carbon/alien/larva/spawn_dust()
-	new /obj/effect/decal/remains/xeno(loc)
+/mob/living/carbon/alien/larva/spawn_dust(just_ash)
+	if(just_ash)
+		return ..()
+
+	var/obj/effect/decal/remains/xeno/bones = new(loc)
+	bones.pixel_z = -6
+	bones.pixel_w = rand(-1, 1)

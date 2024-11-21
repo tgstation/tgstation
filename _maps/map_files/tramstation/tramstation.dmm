@@ -18865,7 +18865,8 @@
 /area/station/commons/vacant_room)
 "fEZ" = (
 /obj/structure/noticeboard/directional/north,
-/obj/structure/aquarium/lawyer,
+/obj/item/fish_tank/lawyer,
+/obj/structure/table/wood,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/wood,
@@ -44433,7 +44434,7 @@
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "oKZ" = (
-/mob/living/simple_animal/bot/floorbot,
+/mob/living/basic/bot/repairbot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -58646,7 +58647,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "tIi" = (
-/mob/living/simple_animal/bot/floorbot,
+/mob/living/basic/bot/repairbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "tIk" = (
