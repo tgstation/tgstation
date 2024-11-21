@@ -573,20 +573,48 @@ There are several things that need to be remembered:
 
 	return icon(female_clothing_icon)
 
-// These coordonates point to roughly somewhere in the middle of the left leg
-// Used in approximating what color the pants of clothing should be
+/// Modifies a sprite to conform to digitigrade body shapes
+/proc/wear_digi_version(icon/base_icon, obj/item/item, key, greyscale_colors)
+	ASSERT(istype(item), "wear_digi_version: no item passed")
+	ASSERT(istext(key), "wear_digi_version: no key passed")
+	if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
+		greyscale_colors = item.get_general_color(base_icon)
+
+	var/index = "[key]-[item.type]-[greyscale_colors]"
+	var/static/list/digitigrade_clothing_cache = list()
+	var/icon/resulting_icon = digitigrade_clothing_cache[index]
+	if(!resulting_icon)
+		resulting_icon = item.generate_digitigrate_icons(base_icon, greyscale_colors)
+		if(!resulting_icon)
+			stack_trace("[item.type] is set to generate a masked digitigrade icon, but generate_digitigrate_icons was not implemented (or error'd).")
+			return base_icon
+		digitigrade_clothing_cache[index] = fcopy_rsc(resulting_icon)
+
+	return icon(resulting_icon)
+
+// These coordinates point to the middle of the left leg
 #define LEG_SAMPLE_X_LOWER 13
 #define LEG_SAMPLE_X_UPPER 14
-
 #define LEG_SAMPLE_Y_LOWER 8
 #define LEG_SAMPLE_Y_UPPER 9
+// Points to the tip of the left foot
+#define BOOT_SAMPLE_X 11
+#define BOOT_SAMPLE_Y 2
 
-/// Modifies a sprite to conform to digitigrade body shapes
-/proc/wear_digi_version(icon/base_icon, key, greyscale_config = /datum/greyscale_config/jumpsuit/worn_digi, greyscale_colors)
-	ASSERT(key, "wear_digi_version: no key passed")
-	ASSERT(ispath(greyscale_config, /datum/greyscale_config), "wear_digi_version: greyscale_config is not a valid path (got: [greyscale_config])")
-	// items with greyscale colors containing multiple colors are invalid
-	if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
+/**
+ * Get what color the item is on "average"
+ * Can be used to approximate what color this item is/should be
+ *
+ * Arguments:
+ * * base_icon: The icon to get the color from
+ */
+/obj/item/proc/get_general_color(icon/base_icon)
+	if(greyscale_colors && length(SSgreyscale.ParseColorString(greyscale_colors)) == 1)
+		return greyscale_colors
+	return color
+
+/obj/item/clothing/get_general_color(icon/base_icon)
+	if(slot_flags & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING))
 		var/pant_color
 		// approximates the color of the pants by sampling a few pixels in the middle of the left leg
 		for(var/x in LEG_SAMPLE_X_LOWER to LEG_SAMPLE_X_UPPER)
@@ -594,36 +622,51 @@ There are several things that need to be remembered:
 				var/xy_color = base_icon.GetPixel(x, y)
 				pant_color = pant_color ? BlendRGB(pant_color, xy_color, 0.5) : xy_color
 
-		greyscale_colors = pant_color || "#1d1d1d" // black pants always look good
+		return pant_color || "#1d1d1d" // black pants always look good
 
-	var/index = "[key]-[greyscale_config]-[greyscale_colors]"
-	var/static/list/digitigrade_clothing_icons = list()
-	var/icon/digitigrade_clothing_icon = digitigrade_clothing_icons[index]
-	if(!digitigrade_clothing_icon)
-		var/static/icon/torso_mask
-		if(!torso_mask)
-			torso_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', "digi_torso_mask")
+	if(slot_flags & ITEM_SLOT_FEET)
+		// just grabs the color of the middle of the left foot
+		return base_icon.GetPixel(BOOT_SAMPLE_X, BOOT_SAMPLE_Y) || "#1d1d1d"
+
+	return ..()
+
+#undef LEG_SAMPLE_X_LOWER
+#undef LEG_SAMPLE_X_UPPER
+#undef LEG_SAMPLE_Y_LOWER
+#undef LEG_SAMPLE_Y_UPPER
+
+/**
+ * Generates a digitigrade version of this item's worn icon
+ *
+ * Arguments:
+ * * base_icon: The original icon to generate the digitigrade icon from, for more advanced icon manipulation
+ * * greyscale_colors: The greyscale colors to use for the digitigrade icon
+ *
+ * Returns an icon that is the digitigrade version of the item's worn icon
+ * Returns null if the item has no support for digitigrade variations via this method
+ */
+/obj/item/proc/generate_digitigrate_icons(icon/base_icon, greyscale_colors)
+	return null
+
+/obj/item/clothing/generate_digitigrate_icons(icon/base_icon, greyscale_colors)
+	if(slot_flags & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING))
 		var/static/icon/leg_mask
 		if(!leg_mask)
 			leg_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', "digi_leg_mask")
 
-		base_icon.Blend(leg_mask, ICON_SUBTRACT) // cuts the legs off
+		// cuts the legs off
+		base_icon.Blend(leg_mask, ICON_SUBTRACT)
+		// generates new legs
+		var/icon/leg_icon = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/jumpsuit/worn_digi, greyscale_colors), ((slot_flags & ITEM_SLOT_OCLOTHING) ? "oversuit_worn" : "jumpsuit_worn"))
+		// stables the new legs on
+		base_icon.Blend(leg_icon, ICON_OVERLAY)
 
-		var/icon/leg_icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
-		leg_icon.Blend(torso_mask, ICON_SUBTRACT) // cuts the torso off
+		return base_icon
 
-		base_icon.Blend(leg_icon, ICON_OVERLAY) // puts the new legs on
+	if(slot_flags & ITEM_SLOT_FEET)
+		return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/boot_digi, greyscale_colors), "boots_worn")
 
-		digitigrade_clothing_icon = fcopy_rsc(base_icon)
-		digitigrade_clothing_icons[index] = digitigrade_clothing_icon
-
-	return icon(digitigrade_clothing_icon)
-
-#undef LEG_SAMPLE_X_LOWER
-#undef LEG_SAMPLE_X_UPPER
-
-#undef LEG_SAMPLE_Y_LOWER
-#undef LEG_SAMPLE_Y_UPPER
+	return null
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
 	var/list/out = new
@@ -774,9 +817,9 @@ generate/load female uniform sprites matching all previously decided variables
 	if(!isinhands && is_digi && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		building_icon = wear_digi_version(
 			base_icon = building_icon || icon(file2use, t_state),
+			item = src,
 			key = "[t_state]-[file2use]-[female_uniform]",
-			greyscale_config = digitigrade_greyscale_config_worn || greyscale_config_worn,
-			greyscale_colors = digitigrade_greyscale_colors || greyscale_colors || color,
+			greyscale_colors = greyscale_colors,
 		)
 	if(building_icon)
 		standing = mutable_appearance(building_icon, layer = -layer2use)
