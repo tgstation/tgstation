@@ -1440,3 +1440,4 @@
 	name = "Phytotoxin"
 	description = "A poison produced by the rare and elusive gatfruit plant."
 	liver_damage_multiplier = 0
+	toxpwr = 1
