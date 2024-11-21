@@ -613,7 +613,7 @@
 /obj/item/mod/module/stealth/wraith/unstealth(datum/source)
 	. = ..()
 	if(mod.active)
-		addtimer(CALLBACK(src, PROC_REF(start_stealth)), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(start_stealth)), 15 SECONDS)
 
 /obj/item/mod/module/stealth/wraith/examine_more(mob/user)
 	. = ..()

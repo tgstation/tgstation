@@ -85,4 +85,4 @@
 	name = "MODsuit wraith cloaking module"
 	desc = "A MODsuit module that grants to the user Optical camouflage and the ability to overload light sources to recharge suit power."
 	item = /obj/item/mod/module/stealth/wraith
-	cost = 3
+	cost = 4
