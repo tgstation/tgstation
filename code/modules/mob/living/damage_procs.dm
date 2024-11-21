@@ -454,12 +454,12 @@
 
 /mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!can_adjust_stamina_loss(amount, forced, required_biotype))
-		return FALSE
+		return 0
 	var/old_amount = staminaloss
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
 	var/delta = old_amount - staminaloss
 	if(amount <= DAMAGE_PRECISION) // no change, no need to update
-		return FALSE
+		return 0
 	if(delta <= 0)
 		// need to check for stamcrit AFTER canadjust but BEFORE early return here
 		received_stamina_damage(staminaloss, -1 * delta)
