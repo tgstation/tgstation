@@ -80,9 +80,9 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /obj/item/storage/part_replacer/bluespace/play_rped_sound()
 	if(prob(1))
-		playsound(src, USE_SOUND, 40, TRUE)
-	else
 		playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, TRUE)
+		return
+	playsound(src, USE_SOUND, 40, TRUE)
 
 /**
  * Signal handler for when a part has been inserted into the BRPED.
