@@ -17,8 +17,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	storage_type = /datum/storage/rped
 
 /obj/item/storage/part_replacer/interact_with_atom(obj/attacked_object, mob/living/user, list/modifiers)
-	. = NONE
-
 	if(user.combat_mode || !istype(attacked_object) || HAS_TRAIT(attacked_object, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
