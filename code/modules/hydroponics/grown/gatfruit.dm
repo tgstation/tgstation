@@ -30,6 +30,10 @@
 	tastes = list("gunpowder" = 1)
 	wine_power = 90 //It burns going down, too.
 
+/obj/item/food/grown/shell/gatfruit/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	reagents.flags &= ~INJECTABLE //id rather not have this be filled with initropidril without effort
+
 /obj/item/food/grown/shell/gatfruit/generate_trash(atom/location)
 	//if you set this to anything but the revolver i will find you... and... downvote your pr...
 	var/obj/item/gun/ballistic/revolver/peashooter/gun = new trash_type(location || drop_location())
