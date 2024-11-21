@@ -163,7 +163,7 @@
 		return
 	var/mob/living/carbon/jedi = user
 	to_chat(jedi, span_userdanger("That was a shockingly dumb idea."))
-	var/obj/item/organ/internal/brain/rip_u = locate(/obj/item/organ/internal/brain) in jedi.organs
+	var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in jedi.organs
 	jedi.ghostize(jedi)
 	if(rip_u)
 		qdel(rip_u)
@@ -243,7 +243,7 @@
 	//This also means we have no need to track distance, as the doview() proc does it all for us.
 
 	//Darkness fucks oview up hard. I've tried dview() but it doesn't seem to work
-	//I hate existance
+	//I hate existence
 	for(var/atom/A as anything in typecache_filter_list(oview(zap_range+2, source), things_to_shock))
 		if(!(zap_flags & ZAP_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
 			continue

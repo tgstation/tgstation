@@ -25,29 +25,44 @@
 	mod.update_charge_alert()
 	mod = null
 
+/// Returns the item responsible for charging the suit, like a power cell, an ethereal's stomach, the core itself, etc.
 /obj/item/mod/core/proc/charge_source()
 	return
 
+/// Returns the amount of charge in the core.
 /obj/item/mod/core/proc/charge_amount()
 	return 0
 
+/// Returns the max amount of charge stored in the core.
 /obj/item/mod/core/proc/max_charge_amount()
 	return 1
 
+/// Adds a set amount of charge to the core.
 /obj/item/mod/core/proc/add_charge(amount)
 	return FALSE
 
+/// Subtracts a set amount of charge from the core.
 /obj/item/mod/core/proc/subtract_charge(amount)
 	return FALSE
 
+/// Checks if there's enough charge in the core to use an amount of energy.
 /obj/item/mod/core/proc/check_charge(amount)
 	return FALSE
 
-/**
- * Gets what icon state to display on the HUD for the charge level of this core
- */
+/// Returns what icon state to display on the HUD for the charge level of this core
 /obj/item/mod/core/proc/get_charge_icon_state()
 	return "0"
+
+/// Gets what the UI should use for the charge bar color.
+/obj/item/mod/core/proc/get_chargebar_color()
+	return "bad"
+
+/// Gets what the UI should use for the charge bar text.
+/obj/item/mod/core/proc/get_chargebar_string()
+	var/charge_amount = charge_amount()
+	var/max_charge_amount = max_charge_amount()
+	return "[display_energy(charge_amount)] of [display_energy(max_charge_amount())] \
+		([round((100 * charge_amount) / max_charge_amount, 1)]%)"
 
 /obj/item/mod/core/infinite
 	name = "MOD infinite core"
@@ -75,6 +90,12 @@
 
 /obj/item/mod/core/infinite/get_charge_icon_state()
 	return "high"
+
+/obj/item/mod/core/infinite/get_chargebar_color()
+	return "teal"
+
+/obj/item/mod/core/infinite/get_chargebar_string()
+	return "Infinite"
 
 /obj/item/mod/core/standard
 	name = "MOD standard core"
@@ -163,6 +184,22 @@
 
 	return "empty"
 
+/obj/item/mod/core/standard/get_chargebar_color()
+	if(isnull(charge_source()))
+		return "transparent"
+	switch(round(charge_amount() / max_charge_amount(), 0.01))
+		if(-INFINITY to 0.33)
+			return "bad"
+		if(0.33 to 0.66)
+			return "average"
+		if(0.66 to INFINITY)
+			return "good"
+
+/obj/item/mod/core/standard/get_chargebar_string()
+	if(isnull(charge_source()))
+		return "Power Cell Missing"
+	return ..()
+
 /obj/item/mod/core/standard/proc/install_cell(new_cell)
 	cell = new_cell
 	cell.forceMove(src)
@@ -222,11 +259,11 @@
 	if(!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		return FALSE
 	if(!mod.open)
-		mod.balloon_alert(user, "open the cover first!")
+		mod.balloon_alert(user, "cover closed!")
 		playsound(mod, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(cell)
-		mod.balloon_alert(user, "cell already installed!")
+		mod.balloon_alert(user, "already has cell!")
 		playsound(mod, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	install_cell(attacking_item)
@@ -260,41 +297,62 @@
 	name = "MOD ethereal core"
 	icon_state = "mod-core-ethereal"
 	desc = "A reverse engineered core of a Modular Outerwear Device. Using natural liquid electricity from Ethereals, \
-		preventing the need to use external sources to convert electric charge."
+		preventing the need to use external sources to convert electric charge. As the suits are naturally charged by \
+		liquid electricity, this core makes it much more efficient, running all soft, hard, and wetware with several \
+		times less energy usage."
 	/// A modifier to all charge we use, ethereals don't need to spend as much energy as normal suits.
 	var/charge_modifier = 0.1
 
 /obj/item/mod/core/ethereal/charge_source()
-	var/obj/item/organ/internal/stomach/ethereal/ethereal_stomach = mod.wearer.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/ethereal/ethereal_stomach = mod.wearer.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!istype(ethereal_stomach))
 		return
 	return ethereal_stomach
 
 /obj/item/mod/core/ethereal/charge_amount()
-	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
+	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
 	return charge_source?.cell.charge() || ETHEREAL_CHARGE_NONE
 
 /obj/item/mod/core/ethereal/max_charge_amount()
 	return ETHEREAL_CHARGE_FULL
 
 /obj/item/mod/core/ethereal/add_charge(amount)
-	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
-	if(!charge_source)
+	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
+	if(isnull(charge_source))
 		return FALSE
-	charge_source.adjust_charge(amount*charge_modifier)
+	charge_source.adjust_charge(amount * charge_modifier)
 	return TRUE
 
 /obj/item/mod/core/ethereal/subtract_charge(amount)
-	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
-	if(!charge_source)
+	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
+	if(isnull(charge_source))
 		return FALSE
-	return -charge_source.adjust_charge(-amount*charge_modifier)
+	return -charge_source.adjust_charge(-amount * charge_modifier)
 
 /obj/item/mod/core/ethereal/check_charge(amount)
-	return charge_amount() >= amount*charge_modifier
+	return charge_amount() >= amount * charge_modifier
 
 /obj/item/mod/core/ethereal/get_charge_icon_state()
-	return charge_source() ? "0" : "missing"
+	return isnull(charge_source()) ? "missing" : "0"
+
+/obj/item/mod/core/ethereal/get_chargebar_color()
+	if(isnull(charge_source()))
+		return "transparent"
+	switch(charge_amount())
+		if(-INFINITY to ETHEREAL_CHARGE_LOWPOWER)
+			return "bad"
+		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
+			return "average"
+		if(ETHEREAL_CHARGE_NORMAL to ETHEREAL_CHARGE_FULL)
+			return "good"
+		if(ETHEREAL_CHARGE_FULL to INFINITY)
+			return "teal"
+
+/obj/item/mod/core/ethereal/get_chargebar_string()
+	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
+	if(isnull(charge_source()) || isnull(charge_source.cell))
+		return "Biological Battery Missing"
+	return ..()
 
 #define PLASMA_CORE_ORE_CHARGE (1.5 * STANDARD_CELL_CHARGE)
 #define PLASMA_CORE_SHEET_CHARGE (2 * STANDARD_CELL_CHARGE)
@@ -354,6 +412,13 @@
 			return "very_low"
 
 	return "empty"
+
+/obj/item/mod/core/plasma/get_chargebar_color()
+	switch(round(charge_amount() / max_charge_amount(), 0.01))
+		if(-INFINITY to 0.33)
+			return "bad"
+		if(0.33 to INFINITY)
+			return "purple"
 
 /obj/item/mod/core/plasma/proc/on_mod_interaction(datum/source, mob/living/user, obj/item/thing)
 	SIGNAL_HANDLER

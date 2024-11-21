@@ -432,6 +432,42 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	pain_mult = 0
 	jostle_pain_mult = 0
 
+/obj/item/carpenter_hammer
+	name = "carpenter hammer"
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "carpenter_hammer"
+	inhand_icon_state = "carpenter_hammer"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	desc = "Uncanny looking hammer."
+	force = 20
+	throwforce = 20
+	throw_range = 4
+	w_class = WEIGHT_CLASS_NORMAL
+	wound_bonus = 20
+	demolition_mod = 1.25
+
+/obj/item/carpenter_hammer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/item_killsound, \
+	allowed_mobs = list(/mob/living/carbon/human), \
+	killsound = 'sound/items/weapons/hammer_death_scream.ogg', \
+	replace_default_death_sound = TRUE, \
+	)
+
+/obj/item/carpenter_hammer/examine(mob/user)
+	. = ..()
+	. += ""
+	. += "Real World Tip:"
+	. += pick(
+		"Every building, from hospitals to homes, has a room that serves as the heart of the building \
+		and carries blood and nutrients to its extremities. Try to find the heart of your home!",
+		"All the food you've tried is rotten. You've never eaten fresh food.",
+		"Viruses do not exist. Illness is simply your body punishing you for what you have done wrong.",
+		"Space stations must have at least 50 mammalian teeth embedded in the north walls for structural safety reasons.",
+		"Queen dragonfly sleeps and smiles.",
+	)
+
 /obj/item/switchblade
 	name = "switchblade"
 	icon = 'icons/obj/weapons/sword.dmi'
@@ -514,7 +550,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return OXYLOSS
 
 /obj/item/bambostaff
-	name = "Bamboo Staff"
+	name = "bamboo staff"
 	desc = "A long bamboo-made staff with steel-capped ends. It is rumoured that initiates of Spider Clan train with such before getting to learn how to use a katana."
 	force = 10
 	block_chance = 45
@@ -534,6 +570,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/bambostaff/Initialize(mapload)
 	. = ..()
+	// there are too many puns to choose from. ('Bo' is the 'real' name for this kind of weapon.)
+	name = pick("bamboo staff", "bambo staff", "bam-Bo staff", "bam boo staff", "bam-boo staff", "bam Bo", "bambo", "bam-Bo", "bamboo-Bo")
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
 		force_wielded = 14, \
@@ -1169,7 +1207,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(attack_type == PROJECTILE_ATTACK)
 		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
 			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-			playsound(src, pick('sound/items/weapons/bulletflyby.ogg', 'sound/items/weapons/bulletflyby2.ogg', 'sound/items/weapons/bulletflyby3.ogg'), 75, TRUE)
+			playsound(src, SFX_BULLET_MISS, 75, TRUE)
 			return TRUE
 		return FALSE
 	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))

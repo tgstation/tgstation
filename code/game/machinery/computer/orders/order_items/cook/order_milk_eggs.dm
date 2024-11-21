@@ -110,6 +110,16 @@
 	item_path = /obj/item/food/ready_donk/donkrange_chicken
 	cost_per_order = 40
 
+/datum/orderable_item/milk_eggs/ready_donk_salisbury
+	name = "Ready-Donk Meal: Donkriginals Salisbury Steak"
+	item_path = /obj/item/food/ready_donk/salisbury_steak
+	cost_per_order = 40
+
+/datum/orderable_item/milk_eggs/ready_donk_chicken
+	name = "Ready-Donk Meal: Donkriginals Country-Fried Chicken"
+	item_path = /obj/item/food/ready_donk/country_chicken
+	cost_per_order = 40
+
 /datum/orderable_item/milk_eggs/tiziran_goods
 	name = "Tiziran Farm-Fresh Pack"
 	item_path = /obj/item/storage/box/tiziran_goods

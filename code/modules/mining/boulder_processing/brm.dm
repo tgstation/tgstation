@@ -240,6 +240,8 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!anchored)
 		balloon_alert(user, "unanchored!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

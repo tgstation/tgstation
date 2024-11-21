@@ -10,7 +10,7 @@
 
 /datum/status_effect/agent_pinpointer
 	id = "agent_pinpointer"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = PINPOINTER_PING_TIME
 	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer
 	///The minimum range to start pointing towards your target.
@@ -40,6 +40,9 @@
 	var/turf/here = get_turf(owner)
 	var/turf/there = get_turf(scan_target)
 
+	if(isnull(there))
+		scan_target = null
+		return
 	if(here.z != there.z)
 		linked_alert.icon_state = "pinonnull"
 		return

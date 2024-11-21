@@ -142,6 +142,9 @@
 /// DB ID for the amount of achievements unlocked by the player.
 #define ACHIEVEMENTS_SCORE "Achievements Score"
 
+///DB ID for all the different kinds of fish that you've caught so far.
+#define FISH_SCORE "Fish Score"
+
 // Tourist related achievements and scores
 
 //centcom grades (achievement)

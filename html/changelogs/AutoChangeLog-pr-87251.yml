@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Hotswapping tanks in pumps and scrubbers now properly plays both sounds instead of runtiming"
