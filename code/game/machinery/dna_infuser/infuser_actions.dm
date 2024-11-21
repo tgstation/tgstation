@@ -41,6 +41,8 @@
 	if(!LAZYACCESS(params2list(params), RIGHT_CLICK))
 		return
 	. = ..()
+	if(!.)
+		return
 
 	var/modifiers = params2list(params)
 	caller.visible_message(
