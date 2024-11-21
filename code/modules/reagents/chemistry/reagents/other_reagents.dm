@@ -68,7 +68,7 @@
 			exposed_carbon.reagents.remove_reagent(type, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
 
 		// covers them and their worn equipment in blood
-		if(methods & (TOUCH|VAPOR) && reac_volume > 3)
+		if((methods & (TOUCH|VAPOR)) && reac_volume > 3)
 			if(data["blood_DNA"] && data["blood_type"])
 				exposed_carbon.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 			else
