@@ -598,4 +598,4 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	unlock_content = !!byond_member
 	if(unlock_content)
-		max_save_slots = 30 // DOPPLER EDIT: moar slots
+		max_save_slots = 45 // DOPPLER EDIT: moar slots
