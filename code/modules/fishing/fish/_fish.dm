@@ -442,7 +442,7 @@
 			. += span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
 		else
 			var/list/warnings = list()
-			if(is_starving())
+			if(get_starvation_mult())
 				warnings += "starving"
 			if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
 				warnings += "drowning"
@@ -777,7 +777,7 @@
 
 ///Returns the value for hunger ranging from 0 to the cap (by default 1)
 /obj/item/fish/proc/get_hunger(cap = 1)
-	. = clamp((world.time - last_feeding) / feeding_frequency, 0,
+	. = clamp((world.time - last_feeding) / feeding_frequency, 0, cap)
 	if(HAS_TRAIT(src, TRAIT_FISH_NO_HUNGER))
 		return min(., 0.2)
 
@@ -1336,7 +1336,7 @@
 		flop_animation()
 
 /obj/item/fish/proc/try_electrogenesis()
-	if(status == FISH_DEAD || is_starving())
+	if(status == FISH_DEAD || get_starvation_mult())
 		return
 	COOLDOWN_START(src, electrogenesis_cooldown, ELECTROGENESIS_DURATION + ELECTROGENESIS_VARIANCE)
 	var/fish_zap_range = 1

@@ -520,7 +520,7 @@
 				set_fluid_type(params["fluid"])
 			. = TRUE
 		if("safe_mode")
-			if(HAS_TRAIT_FROM(source, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
+			if(HAS_TRAIT_FROM(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
 				REMOVE_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 			else
 				ADD_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
@@ -570,7 +570,7 @@
 	else if(dead_fish > 0)
 		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_good : /datum/mood_event/aquarium_negative)
 
-/datum/component/aquarium/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
+/datum/component/aquarium/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 	var/open_panel = HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN)
 	if(!held_item)
