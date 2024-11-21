@@ -71,7 +71,7 @@
 		return
 
 	var/mob/living/bee_pawn = controller.pawn
-	var/action_prob =  (bee_pawn.contents == current_home) ? exit_chance : flyback_chance
+	var/action_prob =  (bee_pawn.loc == current_home) ? exit_chance : flyback_chance
 
 	if(!SPT_PROB(action_prob, seconds_per_tick))
 		return
