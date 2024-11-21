@@ -16,7 +16,6 @@
 
 /obj/item/gun/energy/laser/chameleon/Initialize(mapload)
 	. = ..()
-	//recharge_newshot()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
 	// Init order shenanigans dictate we have to do this last so we can't just use `active_type`
 	var/datum/action/item_action/chameleon/change/gun/gun_action = locate() in actions
@@ -62,36 +61,26 @@
 	if(istype(gun_to_set, /obj/item/gun/ballistic))
 		var/obj/item/gun/ballistic/ball_gun = gun_to_set
 		// We also need to copy the starting magazine for ballistics.
-		var/obj/item/ammo_box/ball_ammo = new ball_gun.spawn_magazine_type(gun_to_set)
-
-		if(!istype(ball_ammo) || !ball_ammo.ammo_type)
-			qdel(ball_ammo)
-			return FALSE
-
-		casing_to_dupe = new ball_ammo.ammo_type(gun_to_set)
-		set_chameleon_ammo(casing_to_dupe)
-		qdel(ball_ammo)
+		casing_to_dupe = initial(ball_gun.spawn_magazine_type.ammo_type)
+		casing_to_dupe = new casing_to_dupe
 
 	else if(istype(gun_to_set, /obj/item/gun/magic))
 		var/obj/item/gun/magic/magic_gun = gun_to_set
-		casing_to_dupe = new magic_gun.ammo_type(gun_to_set)
-		set_chameleon_ammo(casing_to_dupe)
+		casing_to_dupe = new magic_gun.ammo_type(src)
 
 	else if(istype(gun_to_set, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = gun_to_set
-		// If the energy gun has multiple ammo types, we copy the first. If not, it'll just take the default ammo casing below.
+		// Even if the energy gun has multiple ammo types, we copy the first. Energy guns always (should) have a list in ammo_type.
 		if(islist(energy_gun.ammo_type) && energy_gun.ammo_type.len)
 			casing_to_dupe = energy_gun.ammo_type[1]
-			set_chameleon_ammo(casing_to_dupe)
 
 	else if(istype(gun_to_set, /obj/item/gun/syringe))
 		casing_to_dupe = new /obj/item/ammo_casing/syringegun(src)
-		set_chameleon_ammo(casing_to_dupe)
 
 	else
 		casing_to_dupe = new /obj/item/ammo_casing(src)
-		set_chameleon_ammo(casing_to_dupe)
 
+	set_chameleon_ammo(casing_to_dupe)
 	qdel(casing_to_dupe)
 
 /**
