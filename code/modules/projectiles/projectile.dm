@@ -237,6 +237,8 @@
 	/// In order to preserve animations, projectiles are only deleted the tick *after* they impact something.
 	/// Same is applied to reaching the range limit
 	var/deletion_queued = NONE
+	/// How many ticks should we wait in queued deletion mode before qdeleting? Sometimes increased in animations
+	var/ticks_to_deletion = 1
 
 	/// If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
@@ -850,7 +852,8 @@
 
 	// If last tick the projectile impacted something or reached its range, don't process it
 	if (deletion_queued == PROJECTILE_IMPACT_DELETE)
-		qdel(src)
+		if (!--ticks_to_deletion)
+			qdel(src)
 		return
 
 	if (deletion_queued == PROJECTILE_RANGE_DELETE)
@@ -957,7 +960,7 @@
 			if (deletion_queued)
 				// distance_to_move is how much we have to step to get to the next turf, hypotenuse is how much we need
 				// to move in the next turf to get from entry to impact position
-				delete_distance = clamp(distance_to_move + sqrt((impact_x - entry_x) ** 2 + (impact_y - entry_y) ** 2), 0, pixels_to_move)
+				delete_distance = distance_to_move + sqrt((impact_x - entry_x) ** 2 + (impact_y - entry_y) ** 2)
 
 		// We cannot move more than one turf worth of distance per loop, so this is a safe solution
 		pixels_moved_last_tile += distance_to_move
@@ -972,7 +975,7 @@
 		if (deletion_queued)
 			// We moved to the next turf first, then impacted something
 			// This means that we need to offset our visual position back to the previous turf, then figure out
-			// how much we moved on the next turf (or we didn't move at all in which case we both shifts are 0 anywways)
+			// how much we moved on the next turf (or we didn't move at all in which case we both shifts are 0 anyways)
 			if (loc == new_turf)
 				pixel_x -= x_shift * ICON_SIZE_X
 				pixel_y -= y_shift * ICON_SIZE_Y
@@ -982,6 +985,10 @@
 			var/delete_y = pixel_y + movement_vector.pixel_y * delete_distance
 			// In order to keep a consistent speed, calculate at what point between ticks we get deleted
 			var/animate_time = world.tick_lag * delete_distance / total_move_distance
+			// Sometimes we need to move *just a bit* more than we can afford this tick - in this case, delete a tick after
+			// so we don't disappear before impact. This shouldn't be more than 1, ever.
+			if (delete_distance > pixels_to_move)
+				ticks_to_deletion += 1
 			// We can use animation chains to visually disappear between ticks.
 			if (!move_animate(delete_x, delete_y, animate_time, deleting = TRUE))
 				animate(src, pixel_x = delete_x, pixel_y = delete_y, time = animate_time, flags = ANIMATION_PARALLEL | ANIMATION_CONTINUE)
