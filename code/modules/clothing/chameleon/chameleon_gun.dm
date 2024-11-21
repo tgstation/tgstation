@@ -62,7 +62,7 @@
 		var/obj/item/gun/ballistic/ball_gun = gun_to_set
 		// We also need to copy the starting magazine for ballistics.
 		casing_to_dupe = initial(ball_gun.spawn_magazine_type.ammo_type)
-		casing_to_dupe = new casing_to_dupe
+		casing_to_dupe = new casing_to_dupe(src)
 
 	else if(istype(gun_to_set, /obj/item/gun/magic))
 		var/obj/item/gun/magic/magic_gun = gun_to_set
