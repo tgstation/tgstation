@@ -15,5 +15,6 @@
 #include "code/ru_names/ru_name_base.dm"
 #include "code/ru_names/ru_name_materials.dm"
 #include "code/ru_names/ru_name_orderables.dm"
+#include "code/ru_names/ru_name_reagents.dm"
 
 #include "code/~undefs.dm"
