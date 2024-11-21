@@ -309,3 +309,6 @@
 
 /// Trait from an engraving
 #define ENGRAVED_TRAIT "engraved"
+
+/// From the aquarium component
+#define AQUARIUM_TRAIT "aquarium"

@@ -731,6 +731,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Mobs won't slip on a wet turf while it has this trait
 #define TRAIT_TURF_IGNORE_SLIPPERY "turf_ignore_slippery"
 
+///failsafe for whether an item with the beauty element is influencing the beauty of the area of not.
+#define TRAIT_BEAUTY_APPLIED "beauty_applied"
+
 /// Mobs with this trait can't send the mining shuttle console when used outside the station itself
 #define TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION "forbid_mining_shuttle_console_outside_station"
 
@@ -799,8 +802,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ROD_ATTRACT_SHINY_LOVERS "rod_attract_shiny_lovers"
 /// This rod can be used to fish on lava
 #define TRAIT_ROD_LAVA_USABLE "rod_lava_usable"
-/// Stuff that can go inside fish cases
-#define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile"
+/// Stuff that can go inside fish cases and aquariums
+#define TRAIT_AQUARIUM_CONTENT "aquarium_content"
 /// If the item can be used as a bit.
 #define TRAIT_FISHING_BAIT "fishing_bait"
 /// This bait will kill any fish that doesn't have it on its favorite_bait list
@@ -818,6 +821,19 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  * instead, it'll allow the fishing dud to be there unless there's at least one fish that likes the bait
  */
 #define TRAIT_BAIT_ALLOW_FISHING_DUD "bait_dont_affect_fishing_dud"
+/**
+ * This location has the aquarium component. Not much different than a GetComponent()
+ * disguised as an 'is_x' macro, but I don't have to hide anything here.
+ * I just don't want a confusing 'is_aquarium(A)' macro which people think it's interchangable with
+ * an 'istype(A, /obj/structure/aquarium)' when it's the component what truly matters.
+ */
+#define TRAIT_IS_AQUARIUM "is_aquarium"
+/// A location (probably aquarium) that amplifies the zaps of electricity-generating fish.
+#define TRAIT_BIOELECTRIC_GENERATOR "bioelectric_generator"
+/// A location (likely aquarium) that doesn't allow fish to growth and reproduce
+#define TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH "stop_fish_reproduction_and_growth"
+/// This is an aquarium with an open panel
+#define TRAIT_AQUARIUM_PANEL_OPEN "aquarium_panel_open"
 /// Plants that were mutated as a result of passive instability, not a mutation threshold.
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"
 /// If you hit an APC with exposed internals with this item it will try to shock you

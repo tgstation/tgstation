@@ -1,8 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "After months of rigorous training montages, handwork and dedication. Nanotrasen can proudly say that their staff is now more capable of performing various judo techniques to disable and incapacitate any would-be troublemakers. They have proclaimed the Spinward 'safer than ever'. Unfortunately for Nanotrasen and the Spinward as a whole,, most of these same techniques have been incorporated into the Tunnel Arts through the use of Khan spies. (See: Extremely bored assistants who are getting tired of suplexing the clown). Is this the end for the Spinward Sector? Will anyone be able to stop Maint Khan's advance?"
-  - balance: "Being grabbed can be harder to break out of depending on how vulnerable you are; being prone, staggered and wounded, or just being a pushover (the quirk) makes it easier to keep hold of you. Particularly if more than one of these is true. Though if you're a fishman, you probably can't get grabbed at all."
-  - balance: "Your arm power now contributes to the stamina damage someone is dealt when they attempt and fail to break out of your grab."
-  - balance: "Bartenders while drunk are great at grappling."
-  - bugfix: "The values used for determining at what point you must resist if you have taken damage and are staggered are now correctly set to 40, not incorrectly to 80."

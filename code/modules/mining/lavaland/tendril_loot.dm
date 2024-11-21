@@ -817,7 +817,11 @@
 
 /obj/item/drake_remains/Initialize(mapload)
 	. = ..()
-	particles = new /particles/bonfire()
+	add_shared_particles(/particles/bonfire)
+
+/obj/item/drake_remains/Destroy(force)
+	remove_shared_particles(/particles/bonfire)
+	return ..()
 
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"

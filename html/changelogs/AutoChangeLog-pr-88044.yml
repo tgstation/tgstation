@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Correctly applies resistance and EMP proofing to the broadcasting camera so that it doesn't cause weird things to happen."
