@@ -159,7 +159,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 
-/datum/reagent/consumable/nutriment/fat/expose_obj(obj/exposed_obj, reac_volume, methos=TOUCH, show_message=TRUE)
+/datum/reagent/consumable/nutriment/fat/expose_obj(obj/exposed_obj, reac_volume, methods==TOUCH, show_message=TRUE)
 	. = ..()
 	if(!holder || (holder.chem_temp <= fry_temperature))
 		return
