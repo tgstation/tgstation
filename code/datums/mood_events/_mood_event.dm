@@ -22,10 +22,10 @@
 	/// List of required jobs for this mood event
 	var/list/required_job = list()
 
-/datum/mood_event/New(mob/living/M, ...)
-	owner = M
+/datum/mood_event/New(mob/living/emotional_mob, ...)
+	owner = emotional_mob
 	var/list/params = args.Copy(2)
-	if ((length(required_job) > 0) && M.mind && !(M.mind.assigned_role.type in required_job))
+	if ((length(required_job) > 0) && owner.mind && !(owner.mind.assigned_role.type in required_job))
 		qdel(src)
 		return
 	add_effects(arglist(params))
