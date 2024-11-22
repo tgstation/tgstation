@@ -804,19 +804,19 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	RegisterSignal(src, COMSIG_NPC_FISHING, PROC_REF(on_npc_fishing))
 	RegisterSignal(src, COMSIG_FISH_RELEASED_INTO, PROC_REF(on_fish_release_into))
 	RegisterSignal(src, COMSIG_TURF_CHANGE, PROC_REF(remove_lazy_fishing))
-	ADD_TRAIT(src, TRAIT_FISHING_SPOT, REF(src))
+	ADD_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
 	fish_source = fish_source_path
 
 /turf/proc/remove_lazy_fishing()
 	SIGNAL_HANDLER
-	UnregisterSignal(list(
+	UnregisterSignal(src, list(
 		COMSIG_PRE_FISHING,
 		COMSIG_NPC_FISHING,
 		COMSIG_FISH_RELEASED_INTO,
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
 		COMSIG_TURF_CHANGE,
 	))
-	REMOVE_TRAIT(src, TRAIT_FISHING_SPOT, REF(src))
+	REMOVE_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
 	fish_source = null
 
 /turf/proc/add_fishing_spot_comp(datum/source)

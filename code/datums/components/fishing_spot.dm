@@ -35,12 +35,6 @@
 		return FISHING_ROD_CAST_HANDLED
 	return NONE
 
-/datum/component/fishing_spot/proc/handle_attackby(datum/source, obj/item/item, mob/user, params)
-	SIGNAL_HANDLER
-	if(try_start_fishing(item,user))
-		return COMPONENT_NO_AFTERATTACK
-	return NONE
-
 ///If the fish source has fishes that are shown in the
 /datum/component/fishing_spot/proc/on_examined(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
