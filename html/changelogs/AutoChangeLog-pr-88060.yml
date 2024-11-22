@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - rscdel: "removed quiet succumb which is pointless now that the bug got fixed"

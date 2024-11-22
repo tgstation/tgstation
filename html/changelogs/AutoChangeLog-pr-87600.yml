@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscdel: "Replaces UZI domain reward with ballistic chameleon gun"
-  - rscadd: "Also added a separate possible reward for an uzi bitrunning disk."
