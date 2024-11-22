@@ -60,6 +60,7 @@
 	if(target.mind && owner.mind)//if the victim and owner have minds
 		absorb_memories(target)
 
+	qdel(absorbing_loop)
 	is_absorbing = FALSE
 
 	changeling.adjust_chemicals(10)
@@ -141,14 +142,17 @@
 
 /datum/action/changeling/absorb_dna/proc/attempt_absorb(mob/living/carbon/human/target)
 	for(var/absorbing_iteration in 1 to 3)
+		var/soundloop_playing = FALSE
 		switch(absorbing_iteration)
 			if(1)
 				to_chat(owner, span_notice("This creature is compatible. We must hold still..."))
 			if(2)
 				owner.visible_message(span_warning("[owner] extends a proboscis!"), span_notice("We extend a proboscis."))
 			if(3)
-				absorbing_loop = new(src, start_immediately = TRUE)
-				absorbing_loop.start()
+				if(!soundloop_playing)
+					absorbing_loop = new(owner, start_immediately = TRUE)
+					soundloop_playing = TRUE
+				to_chat(world, "debug message")
 				owner.visible_message(span_danger("[owner] stabs [target] with the proboscis!"), span_notice("We stab [target] with the proboscis."))
 				to_chat(target, span_userdanger("You feel a sharp stabbing pain!"))
 				target.take_overall_damage(40)
@@ -157,6 +161,7 @@
 		if(!do_after(owner, 15 SECONDS, target, hidden = TRUE))
 			owner.balloon_alert(owner, "interrupted!")
 			qdel(absorbing_loop)
+			soundloop_playing = FALSE
 			is_absorbing = FALSE
 			return FALSE
 	return TRUE
