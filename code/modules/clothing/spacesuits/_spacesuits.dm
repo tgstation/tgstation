@@ -35,7 +35,7 @@
 /obj/item/clothing/head/helmet/space/Initialize(mapload)
 	. = ..()
 	if(fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 
 /datum/armor/helmet_space
 	bio = 100
@@ -95,7 +95,7 @@
 		cell = new cell(src)
 
 	if(fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 
 /obj/item/clothing/suit/space/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
 	. = ..()

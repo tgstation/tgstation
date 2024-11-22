@@ -42,7 +42,7 @@
 
 /obj/item/clothing/under/dress/wedding_dress/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
+	AddElement(/datum/element/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
 
 /obj/item/clothing/under/dress/eveninggown
 	name = "evening gown"
@@ -56,7 +56,7 @@
 
 /obj/item/clothing/under/dress/eveninggown/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
+	AddElement(/datum/element/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
 
 /obj/item/clothing/under/dress/skirt
 	name = "cardigan skirt"

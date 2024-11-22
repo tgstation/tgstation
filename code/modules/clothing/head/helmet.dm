@@ -237,7 +237,7 @@
 
 /obj/item/clothing/head/helmet/toggleable/riot/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 2)
+	AddElement(/datum/element/adjust_fishing_difficulty, 2)
 
 /datum/armor/toggleable_riot
 	melee = 50
@@ -330,7 +330,7 @@
 
 /obj/item/clothing/head/helmet/swat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
+	AddElement(/datum/element/adjust_fishing_difficulty, 3)
 
 /datum/armor/helmet_swat
 	melee = 40
@@ -477,7 +477,7 @@
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
+	AddElement(/datum/element/adjust_fishing_difficulty, 3)
 
 /datum/armor/helmet_knight
 	melee = 50

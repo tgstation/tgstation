@@ -519,7 +519,7 @@
 	. = ..()
 	atom_storage.max_slots = 1
 	atom_storage.set_holdable(/obj/item/clothing/mask/luchador)
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+	AddElement(/datum/element/adjust_fishing_difficulty, -2)
 
 /obj/item/storage/belt/military
 	name = "chest rig"

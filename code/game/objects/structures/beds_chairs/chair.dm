@@ -26,7 +26,7 @@
 		fishing_modifier -= 8
 	MakeRotate()
 	if(can_buckle && fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 
 /obj/structure/chair/examine(mob/user)
 	. = ..()

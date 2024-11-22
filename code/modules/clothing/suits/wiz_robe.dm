@@ -16,7 +16,7 @@
 
 /obj/item/clothing/head/wizard/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier) //A wizard always practices his casting (ba dum tsh)
+	AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier) //A wizard always practices his casting (ba dum tsh)
 
 /datum/armor/head_wizard
 	melee = 30
@@ -126,7 +126,7 @@
 
 /obj/item/clothing/suit/wizrobe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier) //A wizard always practices his casting (ba dum tsh)
+	AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier) //A wizard always practices his casting (ba dum tsh)
 
 /datum/armor/suit_wizrobe
 	melee = 30

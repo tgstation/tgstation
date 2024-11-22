@@ -16,7 +16,7 @@
 	. = ..()
 	if(flags_inv & HIDEFACE)
 		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
-	AddComponent(/datum/component/adjust_fishing_difficulty, 6)
+	AddElement(/datum/element/adjust_fishing_difficulty, 6)
 
 /datum/armor/head_bio_hood
 	bio = 100
@@ -43,7 +43,7 @@
 
 /obj/item/clothing/suit/bio_suit/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 6)
+	AddElement(/datum/element/adjust_fishing_difficulty, 6)
 
 //Standard biosuit, orange stripe
 /datum/armor/suit_bio_suit
