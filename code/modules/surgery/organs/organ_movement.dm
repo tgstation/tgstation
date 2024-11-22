@@ -158,8 +158,8 @@
 			organ_owner.organs_slot.Remove(slot)
 		organ_owner.organs -= src
 
-	on_mob_remove(organ_owner, special, movement_flags)
 	owner = null
+	on_mob_remove(organ_owner, special, movement_flags)
 	return TRUE
 
 /// Called after the organ is removed from a mob.
