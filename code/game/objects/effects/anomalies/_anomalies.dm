@@ -13,8 +13,6 @@
 
 	/// How long till we seppuku? Blocked by immortal
 	var/lifespan = ANOMALY_COUNTDOWN_TIMER
-	/// Call warn_end_of_life when this much time is left
-	var/warn_at = 10 SECONDS
 	var/death_time
 
 	/// Color of the countdown effect
@@ -58,7 +56,6 @@
 	if(immortal)
 		return
 	countdown.start()
-	addtimer(CALLBACK(src, PROC_REF(warn_end_of_life)), lifespan - warn_at)
 
 /obj/effect/anomaly/vv_edit_var(vname, vval)
 	. = ..()
@@ -144,7 +141,3 @@
 		QDEL_NULL(anomaly_core)
 	if (anchor)
 		move_chance = 0
-
-/obj/effect/anomaly/proc/warn_end_of_life()
-	animate(src, time = warn_at, transform = matrix().Scale(3, 3), flags = ANIMATION_PARALLEL)
-	return
