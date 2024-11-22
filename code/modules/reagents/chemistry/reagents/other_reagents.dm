@@ -139,18 +139,20 @@
 	if(reac_volume < 3)
 		return
 
-	if(methods & (VAPOR|TOUCH))
-		if(LAZYLEN(data["viruses"]))
-			var/list/viruses_to_add = list()
-			for(var/datum/disease/virus in data["viruses"])
-				if(virus.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
-					viruses_to_add += virus
-			if(length(viruses_to_add))
-				exposed_obj.AddComponent(/datum/component/infective, viruses_to_add)
-		if(data["blood_DNA"] && data["blood_type"])
-			exposed_obj.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
-		else
-			exposed_obj.add_blood_DNA(list("Non-human DNA" = random_blood_type()))
+	if(!(methods & (VAPOR|TOUCH)))
+		return
+
+	if(LAZYLEN(data["viruses"]))
+		var/list/viruses_to_add = list()
+		for(var/datum/disease/virus in data["viruses"])
+			if(virus.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+				viruses_to_add += virus
+		if(length(viruses_to_add))
+			exposed_obj.AddComponent(/datum/component/infective, viruses_to_add)
+	if(data["blood_DNA"] && data["blood_type"])
+		exposed_obj.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+	else
+		exposed_obj.add_blood_DNA(list("Non-human DNA" = random_blood_type()))
 
 /datum/reagent/blood/get_taste_description(mob/living/taster)
 	if(isnull(taster))
