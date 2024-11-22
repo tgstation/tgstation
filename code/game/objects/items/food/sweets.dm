@@ -211,7 +211,7 @@
 
 /obj/item/food/bubblegum/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/chewable, metabolization_amount=0.0001)
+	AddElement(/datum/element/chewable)
 
 /obj/item/food/bubblegum/nicotine
 	name = "nicotine gum"
