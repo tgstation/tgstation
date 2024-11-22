@@ -81,6 +81,7 @@
 			LAZYREMOVEASSOC(owned_by.seen_messages, message_loc, src)
 		owned_by.images.Remove(message)
 
+	SSrunechat.message_queue -= src
 	owned_by = null
 	message_loc = null
 	message = null
@@ -189,7 +190,7 @@
 		return finish_image_generation(mheight, target, owner, complete_text, lifespan)
 
 	var/datum/callback/our_callback = CALLBACK(src, PROC_REF(finish_image_generation), mheight, target, owner, complete_text, lifespan)
-	SSrunechat.message_queue += our_callback
+	SSrunechat.message_queue[src] = our_callback
 	return
 
 ///finishes the image generation after the MeasureText() call in generate_image().
