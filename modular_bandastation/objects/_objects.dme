@@ -3,6 +3,7 @@
 #include "code/hampters.dm"
 #include "code/material_pouch.dm"
 #include "code/papershredder.dm"
+#include "code/platform.dm"
 #include "code/wallets.dm"
 
 #include "code/clothing/head/hat.dm"

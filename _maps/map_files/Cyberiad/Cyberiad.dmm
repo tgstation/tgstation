@@ -2460,6 +2460,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/corner{
 	dir = 8
 	},
+/obj/structure/platform{
+	dir = 1
+	},
 /turf/open/floor/iron/half,
 /area/station/commons/dorms)
 "aHB" = (
@@ -13038,6 +13041,12 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"drz" = (
+/obj/structure/platform/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
 "drA" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/glass{
@@ -20364,6 +20373,9 @@
 /obj/machinery/light/directional/north,
 /obj/structure/chair/pew/left{
 	dir = 8
+	},
+/obj/structure/platform{
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
@@ -32288,6 +32300,9 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 4
 	},
+/obj/structure/platform/corner{
+	dir = 8
+	},
 /turf/open/floor/iron/half{
 	dir = 8
 	},
@@ -43838,6 +43853,12 @@
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/fore)
+"lEr" = (
+/obj/structure/platform{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
 "lEt" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -45349,6 +45370,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
+"lYh" = (
+/obj/structure/chair/pew/right{
+	dir = 8
+	},
+/obj/structure/platform{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
 "lYr" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -47075,6 +47105,9 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/structure/platform{
 	dir = 8
 	},
 /turf/open/floor/iron/half{
@@ -55747,6 +55780,9 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 4
 	},
+/obj/structure/platform{
+	dir = 4
+	},
 /turf/open/floor/iron/half{
 	dir = 8
 	},
@@ -63457,6 +63493,9 @@
 "qSY" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/dark/half{
+	dir = 8
+	},
+/obj/structure/platform{
 	dir = 8
 	},
 /turf/open/floor/iron/half{
@@ -71885,6 +71924,9 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 4
 	},
+/obj/structure/platform{
+	dir = 4
+	},
 /turf/open/floor/iron/half{
 	dir = 8
 	},
@@ -78145,6 +78187,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 8
+	},
+/obj/structure/platform/corner{
+	dir = 4
 	},
 /turf/open/floor/iron/half{
 	dir = 8
@@ -87793,6 +87838,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/platform{
+	dir = 1
+	},
 /turf/open/floor/iron/half,
 /area/station/commons/dorms)
 "xye" = (
@@ -183191,8 +183239,8 @@ vHm
 rmt
 acI
 frm
-ndP
-nEb
+lYh
+drz
 swp
 nEb
 ciD
@@ -183449,7 +183497,7 @@ qnT
 wpn
 tED
 xIr
-nEb
+lEr
 swp
 nEb
 nEb
