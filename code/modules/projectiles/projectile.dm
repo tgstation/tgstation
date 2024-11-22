@@ -355,11 +355,11 @@
 
 	var/turf/target_turf = get_turf(target)
 	if(target == original)
-		impact_x = target.pixel_x + p_x - ICON_SIZE_X * 0.5
-		impact_y = target.pixel_y + p_y - ICON_SIZE_Y * 0.5
+		impact_x = target.pixel_x + p_x - ICON_SIZE_X / 2
+		impact_y = target.pixel_y + p_y - ICON_SIZE_Y / 2
 	else
-		impact_x = entry_x + movement_vector?.pixel_x * rand(0, ICON_SIZE_X * 0.5)
-		impact_y = entry_y + movement_vector?.pixel_y * rand(0, ICON_SIZE_Y * 0.5)
+		impact_x = entry_x + movement_vector?.pixel_x * rand(0, ICON_SIZE_X / 2)
+		impact_y = entry_y + movement_vector?.pixel_y * rand(0, ICON_SIZE_Y / 2)
 
 	if(isturf(target) && hitsound_wall)
 		playsound(src, hitsound_wall, clamp(vol_by_damage() + (suppressed ? 0 : 20), 0, 100), TRUE, -1)
@@ -910,21 +910,35 @@
 	last_projectile_move = world.time
 	while (pixels_to_move > 0 && isturf(loc) && !QDELETED(src) && !deletion_queued)
 		// Because pixel_x/y represents offset and not actual visual position of the projectile, we add 16 pixels to each and cut the excess because projectiles are not meant to be highly offset by default
-		var/pixel_x_actual = abs(pixel_x) == ICON_SIZE_X * 0.5 ? pixel_x + ICON_SIZE_X * 0.5 : (pixel_x + ICON_SIZE_X * 0.5) % ICON_SIZE_X
-		var/pixel_y_actual = abs(pixel_y) == ICON_SIZE_Y * 0.5 ? pixel_y + ICON_SIZE_Y * 0.5 : (pixel_y + ICON_SIZE_Y * 0.5) % ICON_SIZE_Y
+		var/pixel_x_actual = pixel_x + ICON_SIZE_X / 2
+		if(pixel_x_actual > ICON_SIZE_X)
+			pixel_x_actual = pixel_x_actual % ICON_SIZE_X
+
+		var/pixel_y_actual = pixel_y + ICON_SIZE_Y / 2
+		if(pixel_y_actual > ICON_SIZE_Y)
+			pixel_y_actual = pixel_y_actual % ICON_SIZE_Y
+
+		var/distance_to_border = INFINITY
 		// What distances do we need to move to hit the horizontal/vertical turf border
-		var/x_to_border
-		var/y_to_border
+		var/x_to_border = INFINITY
+		var/y_to_border = INFINITY
 		// If we're moving strictly up/down/left/right then one of these can be 0 and produce div by zero
 		if (movement_vector.pixel_x)
-			x_to_border = movement_vector.pixel_x > 0 ? (ICON_SIZE_X - pixel_x_actual) / movement_vector.pixel_x : pixel_x_actual / -movement_vector.pixel_x
-		if (movement_vector.pixel_y)
-			y_to_border = movement_vector.pixel_y > 0 ? (ICON_SIZE_Y - pixel_y_actual) / movement_vector.pixel_y : pixel_y_actual / -movement_vector.pixel_y
+			var/x_border_dist = -pixel_x_actual
+			if (movement_vector.pixel_x > 0)
+				x_border_dist = ICON_SIZE_X - pixel_x_actual
+			x_to_border = x_border_dist / movement_vector.pixel_x
+			distance_to_border = x_to_border
 
-		// Figure out how much we need to travel to hit the border
-		var/distance_to_border = !isnull(x_to_border) ? (!isnull(y_to_border) ? min(x_to_border, y_to_border) : x_to_border) : (!isnull(y_to_border) ? y_to_border : -1)
+		if (movement_vector.pixel_y)
+			var/y_border_dist = -pixel_y_actual
+			if (movement_vector.pixel_y > 0)
+				y_border_dist = ICON_SIZE_Y - pixel_y_actual
+			y_to_border = y_border_dist / movement_vector.pixel_y
+			distance_to_border = min(distance_to_border, y_to_border)
+
 		// Something went extremely wrong
-		if (distance_to_border < 0)
+		if (distance_to_border == INFINITY)
 			stack_trace("WARNING: Projectile had an empty movement vector and tried to process")
 			qdel(src)
 			return
@@ -935,16 +949,17 @@
 			distance_to_move = SSprojectiles.pixels_per_decisecond
 
 		// Figure out if we move to the next turf and if so, what its positioning relatively to us is
-		var/x_shift = SIGN(movement_vector.pixel_x) * (!isnull(x_to_border) && distance_to_move >= x_to_border)
-		var/y_shift = SIGN(movement_vector.pixel_y) * (!isnull(y_to_border) && distance_to_move >= y_to_border)
-		var/turf/new_turf = (x_shift || y_shift) ? locate(x + x_shift, y + y_shift, z) : loc
+		var/x_shift = distance_to_move >= x_to_border ? SIGN(movement_vector.pixel_x) : 0
+		var/y_shift = distance_to_move >= y_to_border ? SIGN(movement_vector.pixel_y) : 0
+		var/moving_turfs = x_shift || y_shift
 		// Calculate where in the turf we will be when we cross the edge.
 		// This is a projectile variable because its also used in hit VFX
 		entry_x = pixel_x + movement_vector.pixel_x * distance_to_move - x_shift * ICON_SIZE_X
 		entry_y = pixel_y + movement_vector.pixel_y * distance_to_move - y_shift * ICON_SIZE_Y
 		var/delete_distance = 0
 
-		if (x_shift || y_shift)
+		if (moving_turfs)
+			var/turf/new_turf = locate(x + x_shift, y + y_shift, z)
 			// We've hit an invalid turf, end of a z level or smth went wrong
 			if (!istype(new_turf))
 				qdel(src)
@@ -956,6 +971,8 @@
 			// We hit something and got deleted, stop the loop
 			if (QDELETED(src))
 				return
+			if (loc != new_turf)
+				moving_turfs = FALSE
 			// If we've impacted something, we need to animate our movement until the actual hit
 			// Otherwise the projectile visually disappears slightly before the actual impact
 			if (deletion_queued)
@@ -977,7 +994,7 @@
 			// We moved to the next turf first, then impacted something
 			// This means that we need to offset our visual position back to the previous turf, then figure out
 			// how much we moved on the next turf (or we didn't move at all in which case we both shifts are 0 anyways)
-			if (loc == new_turf)
+			if (moving_turfs)
 				pixel_x -= x_shift * ICON_SIZE_X
 				pixel_y -= y_shift * ICON_SIZE_Y
 
@@ -1022,7 +1039,7 @@
 			overrun += pixels_to_move
 			return
 
-		if (tile_limit && (x_shift || y_shift))
+		if (tile_limit && moving_turfs)
 			return
 
 /// Called every time projectile animates its movement, in case child wants to have custom animations.
@@ -1067,20 +1084,22 @@
 /// Creates a new keypoint in which the tracer will split
 /obj/projectile/proc/create_hitscan_point(impact = FALSE, tile_center = FALSE, broken_segment = FALSE)
 	var/atom/handle_atom = last_impact_turf || src
-	var/datum/point/new_point = impact ? new /datum/point(handle_atom.x, handle_atom.y, handle_atom.z, impact_x, impact_y) : RETURN_PRECISE_POINT(tile_center ? loc : src)
+	var/atom/used_point = tile_center ? loc : src
+	var/datum/point/new_point = impact ? new /datum/point(handle_atom.x, handle_atom.y, handle_atom.z, impact_x, impact_y) : RETURN_PRECISE_POINT(used_point)
 	if (!broken_segment)
 		beam_points[last_point] = new_point
 	beam_points[new_point] = null
 	last_point = new_point
 
 /obj/projectile/forceMove(atom/target)
-	if (hitscan && !isnull(beam_points))
-		create_hitscan_point()
+	if (!hitscan || isnull(beam_points))
+		return ..()
+	create_hitscan_point()
 	. = ..()
 	if(!isturf(loc) || !isturf(target) || !z || QDELETED(src) || deletion_queued)
-		return .
-	if (!hitscan || isnull(movement_vector) || isnull(beam_points) || free_hitscan_forceMove)
-		return .
+		return
+	if (isnull(movement_vector) || free_hitscan_forceMove)
+		return
 	// Create firing VFX and start a new chain because we most likely got teleported
 	generate_hitscan_tracers(impact = FALSE)
 	original_angle = angle
@@ -1125,7 +1144,14 @@
 	var/datum/point/end_point = beam_points[start_point]
 	var/datum/point/midpoint = point_midpoint_points(start_point, end_point)
 	var/obj/effect/projectile/tracer/tracer_effect = new tracer_type(midpoint.return_turf())
-	tracer_effect.apply_vars(angle_between_points(start_point, end_point), midpoint.pixel_x, midpoint.pixel_y, color, pixel_length_between_points(start_point, end_point) / ICON_SIZE_ALL)
+	tracer_effect.apply_vars(
+		angle_override = angle_between_points(start_point, end_point),
+		p_x = midpoint.pixel_x,
+		p_y = midpoint.pixel_y,
+		color_override = color,
+		scaling = pixel_length_between_points(start_point, end_point) / ICON_SIZE_ALL
+	)
+
 	QDEL_IN(tracer_effect, PROJECTILE_TRACER_DURATION)
 
 	if (!hitscan_light_range || !hitscan_light_intensity)
@@ -1182,21 +1208,21 @@
 	original = target
 
 	// Trim off excess pixel_x/y by converting them into turf offset
-	if (abs(pixel_x) > ICON_SIZE_X * 0.5)
-		for (var/i in 1 to floor(abs(pixel_x) + ICON_SIZE_X * 0.5) / ICON_SIZE_X)
+	if (abs(pixel_x) > ICON_SIZE_X / 2)
+		for (var/i in 1 to floor(abs(pixel_x) + ICON_SIZE_X / 2) / ICON_SIZE_X)
 			var/turf/new_loc = get_step(source_loc, pixel_x > 0 ? EAST : WEST)
 			if (!istype(new_loc))
 				break
 			source_loc = new_loc
-		pixel_x = pixel_x % (ICON_SIZE_X * 0.5)
+		pixel_x = pixel_x % (ICON_SIZE_X / 2)
 
-	if (abs(pixel_y) > ICON_SIZE_Y * 0.5)
-		for (var/i in 1 to floor(abs(pixel_y) + ICON_SIZE_Y * 0.5) / ICON_SIZE_Y)
+	if (abs(pixel_y) > ICON_SIZE_Y / 2)
+		for (var/i in 1 to floor(abs(pixel_y) + ICON_SIZE_Y / 2) / ICON_SIZE_Y)
 			var/turf/new_loc = get_step(source_loc, pixel_y > 0 ? NORTH : SOUTH)
 			if (!istype(new_loc))
 				break
 			source_loc = new_loc
-		pixel_y = pixel_y % (ICON_SIZE_X * 0.5)
+		pixel_y = pixel_y % (ICON_SIZE_X / 2)
 
 	if(length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)
@@ -1226,14 +1252,14 @@
  */
 /proc/calculate_projectile_angle_and_pixel_offsets(atom/source, atom/target, modifiers)
 	var/angle = 0
-	var/p_x = LAZYACCESS(modifiers, ICON_X) ? text2num(LAZYACCESS(modifiers, ICON_X)) : ICON_SIZE_X * 0.5 // ICON_(X|Y) are measured from the bottom left corner of the icon.
-	var/p_y = LAZYACCESS(modifiers, ICON_Y) ? text2num(LAZYACCESS(modifiers, ICON_Y)) : ICON_SIZE_Y * 0.5 // This centers the target if modifiers aren't passed.
+	var/p_x = LAZYACCESS(modifiers, ICON_X) ? text2num(LAZYACCESS(modifiers, ICON_X)) : ICON_SIZE_X / 2 // ICON_(X|Y) are measured from the bottom left corner of the icon.
+	var/p_y = LAZYACCESS(modifiers, ICON_Y) ? text2num(LAZYACCESS(modifiers, ICON_Y)) : ICON_SIZE_Y / 2 // This centers the target if modifiers aren't passed.
 
 	if(target)
 		var/turf/source_loc = get_turf(source)
 		var/turf/target_loc = get_turf(target)
-		var/dx = ((target_loc.x - source_loc.x) * ICON_SIZE_X) + (target.pixel_x - source.pixel_x) + (p_x - (ICON_SIZE_X * 0.5))
-		var/dy = ((target_loc.y - source_loc.y) * ICON_SIZE_Y) + (target.pixel_y - source.pixel_y) + (p_y - (ICON_SIZE_Y * 0.5))
+		var/dx = ((target_loc.x - source_loc.x) * ICON_SIZE_X) + (target.pixel_x - source.pixel_x) + (p_x - (ICON_SIZE_X / 2))
+		var/dy = ((target_loc.y - source_loc.y) * ICON_SIZE_Y) + (target.pixel_y - source.pixel_y) + (p_y - (ICON_SIZE_Y / 2))
 
 		angle = ATAN2(dy, dx)
 		return list(angle, p_x, p_y)
