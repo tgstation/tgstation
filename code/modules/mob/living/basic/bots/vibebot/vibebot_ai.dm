@@ -7,7 +7,6 @@
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/respond_to_summon,
-		/datum/ai_planning_subtree/manage_unreachable_list,
 		/datum/ai_planning_subtree/find_party_friends,
 		/datum/ai_planning_subtree/find_patrol_beacon,
 	)
@@ -69,9 +68,9 @@
 		return FALSE
 	set_movement_target(controller, target)
 
-/datum/ai_behavior/targeted_mob_ability/and_clear_target/vibebot_party/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
+/datum/ai_behavior/targeted_mob_ability/and_clear_target/vibebot_party/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, ability_key, target_key)
 	var/atom/target = controller.blackboard[target_key]
-	controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
+	controller.add_to_blacklist(target)
 	if(succeeded)
 		var/mob/living/living_pawn = controller.pawn
 		living_pawn.manual_emote("celebrates with [target]!")

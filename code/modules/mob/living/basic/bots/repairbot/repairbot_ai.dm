@@ -3,7 +3,6 @@
 /datum/ai_controller/basic_controller/bot/repairbot
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/repairbot_speech,
-		/datum/ai_planning_subtree/manage_unreachable_list,
 		/datum/ai_planning_subtree/mug_robot,
 		/datum/ai_planning_subtree/refill_materials,
 		/datum/ai_planning_subtree/repairbot_deconstruction,
@@ -259,11 +258,7 @@
 
 /datum/ai_behavior/targeted_mob_ability/build_girder/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
-	var/atom/target = controller.blackboard[target_key]
 	controller.clear_blackboard_key(target_key)
-	if(!succeeded && !isnull(target))
-		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
-
 
 ///subtree to place glass on windows
 /datum/ai_planning_subtree/replace_window

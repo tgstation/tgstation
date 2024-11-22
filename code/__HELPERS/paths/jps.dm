@@ -194,7 +194,7 @@
 		if(!CAN_STEP(lag_turf, current_turf, simulated_only, pass_info, avoid))
 			return
 
-		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist) && !diagonally_blocked(current_turf, end)))
+		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist)))
 			var/datum/jps_node/final_node = new(current_turf, parent_node, steps_taken)
 			found_turfs[current_turf] = TRUE
 			if(parent_node) // if this is a direct lateral scan we can wrap up, if it's a subscan from a diag, we need to let the diag make their node first, then finish
@@ -256,7 +256,7 @@
 		if(!CAN_STEP(lag_turf, current_turf, simulated_only, pass_info, avoid))
 			return
 
-		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist) && !diagonally_blocked(current_turf, end)))
+		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist)))
 			var/datum/jps_node/final_node = new(current_turf, parent_node, steps_taken)
 			found_turfs[current_turf] = TRUE
 			unwind_path(final_node)
