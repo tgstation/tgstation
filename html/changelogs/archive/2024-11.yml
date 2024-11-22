@@ -764,3 +764,63 @@
       to 80.
   timothymtorres, MrMelbert:
   - bugfix: Fix lustrous brain trauma not removing during polymorph
+2024-11-22:
+  Acantharctia:
+  - balance: Numb quirk now stops you from screaming and seeing the damage overlay
+      when damaged. Better keep a close eye on your health.
+  Ben10Omintrix:
+  - bugfix: fixes monkey AI not being able to attack
+  Dawnseer:
+  - bugfix: Turns Cap (White) into a white cap in loadout
+  KikoWen0:
+  - map: Nebula Arrivals stairs are now easier to navigate
+  - map: Fixed unconnected wire in dormitories on Nebula
+  - map: Fixed engineers having free pass to cargo department on Nebula
+  Melbert:
+  - bugfix: Monkeys no longer ignore basic rules such as "you can't escape a passive
+      grab if you're cuffed or in crit"
+  - bugfix: Fixes some atmos and record related log messages
+  SmArtKar:
+  - bugfix: Reconnected Wawa's sci to atmos distro
+  - bugfix: Fixed incorrect coverage descriptions
+  - refactor: Converted most common particle sources to use our new pooling system.
+  - bugfix: Fixed all hoverboards having holyboard space slowdown effect
+  - bugfix: Fixed limping status effect harddels
+  SyncIt21:
+  - bugfix: Labour stacker machine gives points for sheets again
+  carlarctg:
+  - rscdel: Replaces UZI domain reward with ballistic chameleon gun
+  - rscadd: Also added a separate possible reward for an uzi bitrunning disk.
+  grungussuss:
+  - sound: the "curse you" sfx has been replaced
+  - admin: admins can now control the volume that some admin triggered sounds are
+      played at
+  jlsnow301:
+  - bugfix: TGUI panel light mode should no longer be gross gray
+  mc-oofert:
+  - rscdel: removed quiet succumb which is pointless now that the bug got fixed
+  necromanceranne:
+  - image: Cleans up some redundant pixels on the bowman sprites.
+  - image: Kitchen and eating utensils now have suit storage sprites.
+  - code_imp: The cost for Core Equipment for nuclear operatives will always be equal
+      to the cost of the contained items if purchased directly from the uplink.
+  - bugfix: Improves the descriptions for some uplink entries.
+  - bugfix: Correctly applies resistance and EMP proofing to the broadcasting camera
+      so that it doesn't cause weird things to happen.
+  tontyGH:
+  - code_imp: made /proc/getviewsize() pure
+  - refactor: mob/eye/ai_eye has been restructured, now inheriting from a generic
+      mob/eye/camera type
+  - refactor: advanced cameras and their subtypes are now mob/eye/camera/remote subtypes
+  - code_imp: the cameranet no longer expects the user to be an AI eye
+  - code_imp: remote camera eyes have had their initialization streamlined
+  - code_imp: remote cameras handle assigning and unassigning users by themselves
+      now
+  - code_imp: remote cameras now use weakrefs instead of hard referencing owners and
+      origins
+  - code_imp: also the sentient disease is_define was removed (we don't have those
+      anymore)
+  - bugfix: AI eyes no longer assign real names to themselves, fixing their orbit
+      name
+  wallem:
+  - image: Updates slot machine sprites

@@ -4799,6 +4799,8 @@
 #include "code\modules\mob\dead\observer\observer_say.dm"
 #include "code\modules\mob\dead\observer\orbit.dm"
 #include "code\modules\mob\eye\eye.dm"
+#include "code\modules\mob\eye\camera\camera.dm"
+#include "code\modules\mob\eye\camera\remote.dm"
 #include "code\modules\mob\living\blood.dm"
 #include "code\modules\mob\living\damage_procs.dm"
 #include "code\modules\mob\living\death.dm"
