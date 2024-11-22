@@ -141,6 +141,10 @@
 			adjusted = DIGITIGRADE_STYLE
 			update_appearance()
 
+/obj/item/clothing/under/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "jumpsuit_worn")
+	return replace_icon_legs(base_icon, legs)
+
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
 	if((slot & ITEM_SLOT_ICLOTHING) && freshly_laundered)

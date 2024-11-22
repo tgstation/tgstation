@@ -13,6 +13,13 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	interaction_flags_mouse_drop = NEED_HANDS
 
+/obj/item/clothing/shoes/sneakers/get_general_color(icon/base_icon)
+	var/colors = SSgreyscale.ParseColorString(greyscale_colors)
+	return colors ? colors[1] : ..()
+
+/obj/item/clothing/shoes/sneakers/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "sneakers_worn")
+
 /obj/item/clothing/shoes/sneakers/random/Initialize(mapload)
 	. = ..()
 	greyscale_colors = "#" + random_color() + "#" + random_color()
