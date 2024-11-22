@@ -584,22 +584,36 @@ There are several things that need to be remembered:
 	var/static/list/digitigrade_clothing_cache = list()
 	var/icon/resulting_icon = digitigrade_clothing_cache[index]
 	if(!resulting_icon)
-		resulting_icon = item.generate_digitigrate_icons(base_icon, greyscale_colors)
-		if(!resulting_icon)
-			stack_trace("[item.type] is set to generate a masked digitigrade icon, but generate_digitigrate_icons was not implemented (or error'd).")
+		var/digi_icon_state
+		if(istype(item, /obj/item/clothing/under))
+			digi_icon_state = "jumpsuit_worn"
+		else if(istype(item, /obj/item/clothing/suit))
+			digi_icon_state = "oversuit_worn"
+		else if(istype(item, /obj/item/clothing/shoes/sneakers))
+			digi_icon_state = "sneakers_worn"
+		else if(istype(item, /obj/item/clothing/shoes))
+			digi_icon_state = "boots_worn"
+
+		if(!digi_icon_state)
+			stack_trace("wear_digi_version: item type [item.type] does not have a digitigrade icon state")
 			return base_icon
+
+		resulting_icon = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), digi_icon_state)
+
+		if(item.body_parts_covered & LEGS)
+			var/static/icon/leg_mask
+			if(!leg_mask)
+				leg_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', "digi_leg_mask")
+
+			// cuts the legs off
+			base_icon.Blend(leg_mask, ICON_SUBTRACT)
+			// staples the new legs on
+			base_icon.Blend(resulting_icon, ICON_OVERLAY)
+			resulting_icon = base_icon
+
 		digitigrade_clothing_cache[index] = fcopy_rsc(resulting_icon)
 
 	return icon(resulting_icon)
-
-// These coordinates point to the middle of the left leg
-#define LEG_SAMPLE_X_LOWER 13
-#define LEG_SAMPLE_X_UPPER 14
-#define LEG_SAMPLE_Y_LOWER 8
-#define LEG_SAMPLE_Y_UPPER 9
-// Points to the tip of the left foot
-#define BOOT_SAMPLE_X 11
-#define BOOT_SAMPLE_Y 2
 
 /**
  * Get what color the item is on "average"
@@ -613,8 +627,14 @@ There are several things that need to be remembered:
 		return greyscale_colors
 	return color
 
+// These coordinates point to the middle of the left leg
+#define LEG_SAMPLE_X_LOWER 13
+#define LEG_SAMPLE_X_UPPER 14
+#define LEG_SAMPLE_Y_LOWER 8
+#define LEG_SAMPLE_Y_UPPER 9
+
 /obj/item/clothing/get_general_color(icon/base_icon)
-	if(slot_flags & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING))
+	if(body_parts_covered & LEGS)
 		var/pant_color
 		// approximates the color of the pants by sampling a few pixels in the middle of the left leg
 		for(var/x in LEG_SAMPLE_X_LOWER to LEG_SAMPLE_X_UPPER)
@@ -624,10 +644,6 @@ There are several things that need to be remembered:
 
 		return pant_color || "#1d1d1d" // black pants always look good
 
-	if(slot_flags & ITEM_SLOT_FEET)
-		// just grabs the color of the middle of the left foot
-		return base_icon.GetPixel(BOOT_SAMPLE_X, BOOT_SAMPLE_Y) || "#1d1d1d"
-
 	return ..()
 
 #undef LEG_SAMPLE_X_LOWER
@@ -635,38 +651,20 @@ There are several things that need to be remembered:
 #undef LEG_SAMPLE_Y_LOWER
 #undef LEG_SAMPLE_Y_UPPER
 
-/**
- * Generates a digitigrade version of this item's worn icon
- *
- * Arguments:
- * * base_icon: The original icon to generate the digitigrade icon from, for more advanced icon manipulation
- * * greyscale_colors: The greyscale colors to use for the digitigrade icon
- *
- * Returns an icon that is the digitigrade version of the item's worn icon
- * Returns null if the item has no support for digitigrade variations via this method
- */
-/obj/item/proc/generate_digitigrate_icons(icon/base_icon, greyscale_colors)
-	return null
+// Points to the tip of the left foot
+#define SHOE_SAMPLE_X 11
+#define SHOE_SAMPLE_Y 2
 
-/obj/item/clothing/generate_digitigrate_icons(icon/base_icon, greyscale_colors)
-	if(slot_flags & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING))
-		var/static/icon/leg_mask
-		if(!leg_mask)
-			leg_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', "digi_leg_mask")
+/obj/item/clothing/shoes/get_general_color(icon/base_icon)
+	// just grabs the color of the middle of the left foot
+	return base_icon.GetPixel(SHOE_SAMPLE_X, SHOE_SAMPLE_Y) || "#1d1d1d"
 
-		// cuts the legs off
-		base_icon.Blend(leg_mask, ICON_SUBTRACT)
-		// generates new legs
-		var/icon/leg_icon = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/jumpsuit/worn_digi, greyscale_colors), ((slot_flags & ITEM_SLOT_OCLOTHING) ? "oversuit_worn" : "jumpsuit_worn"))
-		// stables the new legs on
-		base_icon.Blend(leg_icon, ICON_OVERLAY)
+#undef SHOE_SAMPLE_X
+#undef SHOE_SAMPLE_Y
 
-		return base_icon
-
-	if(slot_flags & ITEM_SLOT_FEET)
-		return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/boot_digi, greyscale_colors), "boots_worn")
-
-	return null
+/obj/item/clothing/shoes/sneakers/get_general_color(icon/base_icon)
+	var/colors = SSgreyscale.ParseColorString(greyscale_colors)
+	return colors ? colors[1] : ..()
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
 	var/list/out = new

@@ -9,6 +9,7 @@
 	greyscale_config_worn = /datum/greyscale_config/sneakers/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	flags_1 = IS_PLAYER_COLORABLE_1
 	interaction_flags_mouse_drop = NEED_HANDS
 

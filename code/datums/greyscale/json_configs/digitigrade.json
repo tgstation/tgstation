@@ -15,6 +15,19 @@
 			"color_ids": [ 1 ]
 		}
 	],
+	"sneakers_worn": [
+		{
+			"type": "icon_state",
+			"icon_state": "shoes_colored",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "shoes_uncolored",
+			"blend_mode": "overlay"
+		}
+	],
 	"boots_worn": [
 		{
 			"type": "icon_state",
