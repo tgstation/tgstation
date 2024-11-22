@@ -102,16 +102,19 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type), src)
 	stage = STARTUP_STAGE
 	var/list/affectareas = list()
-	for(var/V in get_areas(area_type))
-		affectareas += V
-	for(var/V in protected_areas)
-		affectareas -= get_areas(V)
-	for(var/V in affectareas)
-		var/area/A = V
-		if(protect_indoors && !A.outdoors)
+	for(var/area/selected_area as anything in get_areas(area_type))
+		affectareas += selected_area
+	for(var/area/protected_area as anything in protected_areas)
+		affectareas -= get_areas(protected_area)
+	for(var/area/affected_area as anything in affectareas)
+		if(protect_indoors && !affected_area.outdoors)
 			continue
-		if(A.z in impacted_z_levels)
-			impacted_areas |= A
+
+		for(var/z as anything in impacted_z_levels)
+			if(length(affected_area.turfs_by_zlevel) >= z && length(affected_area.turfs_by_zlevel[z]))
+				impacted_areas |= affected_area
+				continue
+
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	SSweather.processing |= src
 	update_areas()
