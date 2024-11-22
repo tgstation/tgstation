@@ -29,6 +29,8 @@
 	/// The amount of creamer packets left
 	var/creamer_packs = 10
 	var/max_creamer_packs = 10
+	/// What index are we using for our smoke particles
+	var/smoke_type = "smoke_coffeemaker"
 
 	var/static/radial_examine = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine")
 	var/static/radial_brew = image(icon = 'icons/hud/radial_coffee.dmi', icon_state = "radial_brew")
@@ -52,7 +54,7 @@
 /obj/machinery/coffeemaker/Destroy()
 	QDEL_NULL(coffeepot)
 	QDEL_NULL(cartridge)
-	remove_shared_particles(/particles/smoke)
+	remove_shared_particles(smoke_type)
 	return ..()
 
 /obj/machinery/coffeemaker/Exited(atom/movable/gone, direction)
@@ -392,7 +394,7 @@
 
 ///Updates the smoke state to something else, setting particles if relevant
 /obj/machinery/coffeemaker/proc/toggle_steam()
-	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/steam/mild, "smoke_coffeemaker")
+	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/steam/mild, smoke_type)
 	smoke_particles.particles.position = list(-6, 0, 0)
 
 /obj/machinery/coffeemaker/proc/operate_for(time, silent = FALSE)
@@ -504,6 +506,7 @@
 	brew_time = 15 SECONDS //industrial grade, its faster than the regular one
 	density = TRUE
 	pass_flags = PASSTABLE
+	smoke_type = "smoke_impressa"
 	/// Current amount of coffee beans stored
 	var/coffee_amount = 0
 	/// List of coffee bean objects are stored
@@ -704,7 +707,7 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/coffeemaker/impressa/toggle_steam()
-	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/steam/mild, "smoke_impressa")
+	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/steam/mild, smoke_type)
 	smoke_particles.particles.position = list(-2, 1, 0)
 
 /obj/machinery/coffeemaker/impressa/brew()
