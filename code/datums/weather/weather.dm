@@ -110,7 +110,7 @@
 		if(protect_indoors && !affected_area.outdoors)
 			continue
 
-		for(var/z as anything in impacted_z_levels)
+		for(var/z in impacted_z_levels)
 			if(length(affected_area.turfs_by_zlevel) >= z && length(affected_area.turfs_by_zlevel[z]))
 				impacted_areas |= affected_area
 				continue
