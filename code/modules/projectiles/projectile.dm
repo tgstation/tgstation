@@ -852,7 +852,8 @@
 
 	// If last tick the projectile impacted something or reached its range, don't process it
 	if (deletion_queued == PROJECTILE_IMPACT_DELETE)
-		if (!--ticks_to_deletion)
+		ticks_to_deletion -= 1
+		if (!ticks_to_deletion)
 			qdel(src)
 		return
 
@@ -871,7 +872,7 @@
 
 	// Calculates how many pixels should be moved this tick, including overrun debt from the previous tick
 	var/elapsed_time = world.time - last_projectile_move
-	var/pixels_to_move = speed > 0 ? elapsed_time * SSprojectiles.pixels_per_decisecond * speed + overrun : SSprojectiles.max_pixels_per_tick
+	var/pixels_to_move = elapsed_time * SSprojectiles.pixels_per_decisecond * speed + overrun
 	overrun = 0
 
 	if (pixels_to_move > SSprojectiles.max_pixels_per_tick)
@@ -941,7 +942,7 @@
 		// This is a projectile variable because its also used in hit VFX
 		entry_x = pixel_x + movement_vector.pixel_x * distance_to_move - x_shift * ICON_SIZE_X
 		entry_y = pixel_y + movement_vector.pixel_y * distance_to_move - y_shift * ICON_SIZE_Y
-		var/delete_distance
+		var/delete_distance = 0
 
 		if (x_shift || y_shift)
 			// We've hit an invalid turf, end of a z level or smth went wrong
@@ -1016,7 +1017,7 @@
 			return
 
 		// Prevents long-range high-speed projectiles from ruining the server performance by moving 100 tiles per tick when subsystem is set to a high cap
-		if (CHECK_TICK)
+		if (TICK_CHECK)
 			// If we ran out of time, add whatever distance we're yet to pass to overrun debt to be processed next tick and break the loop
 			overrun += pixels_to_move
 			return
@@ -1047,7 +1048,7 @@
 
 	while (isturf(loc) && !QDELETED(src))
 		process_movement(ICON_SIZE_ALL, hitscan = TRUE)
-		if (CHECK_TICK || paused || QDELETED(src))
+		if (TICK_CHECK || paused || QDELETED(src))
 			return
 
 /// Creates (or wipes clean) list of tracer keypoints and creates a first point.
@@ -1157,7 +1158,7 @@
  */
 /obj/projectile/proc/aim_projectile(atom/target, atom/source, list/modifiers = null, deviation = 0)
 	if(!(isnull(modifiers) || islist(modifiers)))
-		stack_trace("WARNING: Projectile [type] fired with non-list modifiers, likely was passed click params.")
+		stack_trace("WARNING: Projectile [type] fired with non-list modifiers, likely was passed click params. Modifiers were the following: [modifiers]")
 		modifiers = null
 
 	var/turf/source_loc = get_turf(source)
