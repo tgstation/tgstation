@@ -42,6 +42,7 @@
 	SSaugury.register_doom(src, threat)
 	SpinAnimation()
 	chase_target(target)
+	QDEL_IN(lifetime)
 
 /obj/effect/meteor/Destroy()
 	GLOB.meteor_list -= src
