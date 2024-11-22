@@ -195,7 +195,12 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(OnGrill))
 	if(stink_particles)
-		particles = new stink_particles
+		add_shared_particles(stink_particles)
+
+/obj/item/food/badrecipe/Destroy(force)
+	if (stink_particles)
+		remove_shared_particles(stink_particles)
+	return ..()
 
 // We override the parent procs here to prevent burned messes from cooking into burned messes.
 /obj/item/food/badrecipe/make_grillable()
