@@ -663,10 +663,6 @@
     name = "Firestarter"
     icon_state = "hair_firestarter"
 
-/datum/sprite_accessory/hair/modular/miku
-    name = "Miku"
-    icon_state = "hair_miku"
-
 /datum/sprite_accessory/hair/modular/impish
     name = "Impish"
     icon_state = "hair_impish"
