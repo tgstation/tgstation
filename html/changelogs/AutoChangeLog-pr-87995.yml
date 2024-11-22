@@ -1,0 +1,4 @@
+author: "EOBGames"
+delete-after: True
+changes:
+  - rscadd: "A new series of shipping containers have been added: keep an eye out for them at your local cargo terminus."
