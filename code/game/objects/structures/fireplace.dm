@@ -30,6 +30,7 @@
 /obj/structure/fireplace/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(burning_loop)
+	remove_shared_particles(/particles/smoke/burning)
 	. = ..()
 
 /obj/structure/fireplace/setDir(newdir)
