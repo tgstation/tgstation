@@ -2,9 +2,6 @@
 
 If you create T5+ please take a pass at mech_fabricator.dm. The parts being good enough allows it to go into minus values and create materials out of thin air when printing stuff.*/
 
-///Sound rped makes when used
-#define USE_SOUND 'sound/items/tools/rped.ogg'
-
 /obj/item/storage/part_replacer
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
@@ -32,7 +29,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 ///Plays the sound for RPED exhanging or installing parts.
 /obj/item/storage/part_replacer/proc/play_rped_sound()
-	playsound(src, USE_SOUND, 40, TRUE)
+	playsound(src, 'sound/items/tools/rped.ogg', 40, TRUE)
 
 
 /**
@@ -80,9 +77,9 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /obj/item/storage/part_replacer/bluespace/play_rped_sound()
 	if(prob(1))
-		playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, TRUE)
+		playsound(src, 'sound/items/pshoom/pshoom_2.ogg', 40, TRUE)
 		return
-	playsound(src, USE_SOUND, 40, TRUE)
+	playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, TRUE)
 
 /**
  * Signal handler for when a part has been inserted into the BRPED.
@@ -134,8 +131,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 	if(removed_component.reagents)
 		UnregisterSignal(removed_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT)
-
-#undef USE_SOUND
 
 /obj/item/storage/part_replacer/bluespace/tier1
 
