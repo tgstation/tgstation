@@ -101,7 +101,7 @@
 			filtered += seen_atom
 	if(!length(filtered))
 		return
-	var/current_time = world.time
+	var/current_time = "[world.time]"
 	for(var/mob/living/viewer in filtered)
 		if(blocking_trait && HAS_TRAIT(viewer, blocking_trait))
 			continue
