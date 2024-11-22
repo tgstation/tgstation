@@ -1,26 +1,26 @@
 // .357 (Syndie Revolver)
 
-/obj/item/ammo_casing/a357
+/obj/item/ammo_casing/c357
 	name = ".357 bullet casing"
 	desc = "A .357 bullet casing."
 	caliber = CALIBER_357
-	projectile_type = /obj/projectile/bullet/a357
+	projectile_type = /obj/projectile/bullet/c357
 
-/obj/item/ammo_casing/a357/spent
+/obj/item/ammo_casing/c357/spent
 	projectile_type = null
 
-/obj/item/ammo_casing/a357/match
+/obj/item/ammo_casing/c357/match
 	name = ".357 match bullet casing"
 	desc = "A .357 bullet casing, manufactured to exceedingly high standards."
-	projectile_type = /obj/projectile/bullet/a357/match
+	projectile_type = /obj/projectile/bullet/c357/match
 
-/obj/item/ammo_casing/a357/phasic
+/obj/item/ammo_casing/c357/phasic
 	name = ".357 phasic bullet casing"
-	projectile_type = /obj/projectile/bullet/a357/phasic
+	projectile_type = /obj/projectile/bullet/c357/phasic
 
-/obj/item/ammo_casing/a357/heartseeker
+/obj/item/ammo_casing/c357/heartseeker
 	name = ".357 heartseeker bullet casing"
-	projectile_type = /obj/projectile/bullet/a357/heartseeker
+	projectile_type = /obj/projectile/bullet/c357/heartseeker
 
 // 7.62x38mmR (Nagant Revolver)
 
@@ -67,3 +67,13 @@
 	name = ".38 Iceblox bullet casing"
 	desc = "A .38 Iceblox bullet casing."
 	projectile_type = /obj/projectile/bullet/c38/iceblox
+
+/obj/item/ammo_casing/c38/phasic
+	name = ".38 Phasic bullet casing"
+	desc = "A .38 Phasic bullet casing."
+	projectile_type = /obj/projectile/bullet/c38/phasic
+
+/obj/item/ammo_casing/c38/true
+	name = ".38 True Strike bullet casing"
+	desc = "A .38 True Strike bullet casing."
+	projectile_type = /obj/projectile/bullet/c38/true

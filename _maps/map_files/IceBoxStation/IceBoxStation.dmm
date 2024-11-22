@@ -77464,6 +77464,9 @@
 "wyF" = (
 /obj/structure/rack,
 /obj/item/gun/energy/ionrifle,
+/obj/item/gun/ballistic/automatic/battle_rifle(
+	pixel_y = 3
+	),
 /obj/item/gun/energy/temperature/security,
 /obj/item/clothing/suit/hooded/ablative,
 /obj/effect/turf_decal/tile/red/half/contrasted{

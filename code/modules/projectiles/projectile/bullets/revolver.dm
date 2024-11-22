@@ -48,7 +48,6 @@
 	name = ".38 Rubber bullet"
 	damage = 10
 	stamina = 30
-	weak_against_armour = TRUE
 	ricochets_max = 6
 	ricochet_incidence_leeway = 0
 	ricochet_chance = 130
@@ -106,9 +105,9 @@
 /obj/projectile/bullet/c38/hotshot/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(6)
-		M.ignite_mob()
+		var/mob/living/carbon/criminal_scum = target
+		criminal_scum.adjust_fire_stacks(6)
+		criminal_scum.ignite_mob()
 
 /obj/projectile/bullet/c38/iceblox //see /obj/projectile/temp for the original code
 	name = ".38 Iceblox bullet"
@@ -119,24 +118,39 @@
 /obj/projectile/bullet/c38/iceblox/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
-		var/mob/living/M = target
-		M.adjust_bodytemperature(((100-blocked)/100)*(temperature - M.bodytemperature))
+		var/mob/living/criminal_scum = target
+		criminal_scum.adjust_bodytemperature(((100-blocked)/100)*(temperature - criminal_scum.bodytemperature))
+
+/obj/projectile/bullet/c38/phasic
+	name = ".38 phasic bullet"
+	icon_state = "gaussphase"
+	damage = 20
+	ricochets_max = 0
+	armour_penetration = 100
+	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+
+/obj/projectile/bullet/c38/true
+	name = ".38 True Strike bullet"
+	damage = 20
+	homing = TRUE
+	homing_turn_speed = 40
+	speed = 1.4 //slightly slower by default
 
 // .357 (Syndie Revolver)
 
-/obj/projectile/bullet/a357
+/obj/projectile/bullet/c357
 	name = ".357 bullet"
 	damage = 60
 	wound_bonus = -30
 
-/obj/projectile/bullet/a357/phasic
+/obj/projectile/bullet/c357/phasic
 	name = ".357 phasic bullet"
 	icon_state = "gaussphase"
 	damage = 35
 	armour_penetration = 100
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
-/obj/projectile/bullet/a357/heartseeker
+/obj/projectile/bullet/c357/heartseeker
 	name = ".357 heartseeker bullet"
 	icon_state = "gauss"
 	damage = 50
@@ -144,7 +158,7 @@
 	homing_turn_speed = 120
 
 // admin only really, for ocelot memes
-/obj/projectile/bullet/a357/match
+/obj/projectile/bullet/c357/match
 	name = ".357 match bullet"
 	ricochets_max = 5
 	ricochet_chance = 140

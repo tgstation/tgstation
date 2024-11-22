@@ -7855,6 +7855,9 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/hooded/ablative,
 /obj/item/gun/energy/ionrifle,
+/obj/item/gun/ballistic/automatic/battle_rifle(
+	pixel_y = 3
+	),
 /obj/item/gun/energy/temperature/security,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,

@@ -57400,6 +57400,9 @@
 /obj/item/gun/energy/ionrifle{
 	pixel_y = 3
 	},
+/obj/item/gun/ballistic/automatic/battle_rifle(
+	pixel_y = 5
+	),
 /obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
