@@ -17,6 +17,11 @@
 	. = ..()
 	if(!.)
 		return
+	// We've completed the surgery
+	if(status > length(steps))
+		remove_fishing_spot()
+		return
+
 	if(!ispath(steps[status], /datum/surgery_step/manipulate_organs))
 		//The manipulate_organs step either hasn't been reached yet or we're already past it.
 		if(!HAS_TRAIT(target, TRAIT_FISHING_SPOT))
@@ -26,10 +31,14 @@
 
 	if(HAS_TRAIT(target, TRAIT_FISHING_SPOT))
 		return
+
 	target.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery)
 
 /datum/surgery/organ_manipulation/Destroy()
-	if(HAS_TRAIT(target, TRAIT_FISHING_SPOT) && ispath(steps[status], /datum/surgery_step/manipulate_organs))
+	if(!QDELETED(target) || !HAS_TRAIT(target, TRAIT_FISHING_SPOT))
+		return
+	// The surgery is not finished yet and we're currently on manipulate organs step
+	if(status < length(steps) && ispath(steps[status], /datum/surgery_step/manipulate_organs))
 		remove_fishing_spot()
 	return ..()
 
