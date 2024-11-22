@@ -26047,9 +26047,9 @@
 "gMo" = (
 /obj/structure/rack,
 /obj/item/gun/energy/ionrifle,
-/obj/item/gun/ballistic/automatic/battle_rifle(
+/obj/item/gun/ballistic/automatic/battle_rifle{
 	pixel_y = 3
-	),
+	},
 /obj/item/clothing/suit/hooded/ablative,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
