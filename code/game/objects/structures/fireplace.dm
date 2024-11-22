@@ -170,11 +170,11 @@
 
 	switch(dir)
 		if(SOUTH)
-			smoke_particles.particles.position = list(0, 36, 0)
+			smoke_particles.particles.position = list(0, 29, 0)
 		if(EAST)
-			smoke_particles.particles.position = list(-12, 16, 0)
+			smoke_particles.particles.position = list(-20, 9, 0)
 		if(WEST)
-			smoke_particles.particles.position = list(12, 16, 0)
+			smoke_particles.particles.position = list(20, 9, 0)
 		if(NORTH) // there is no icon state for SOUTH
 			remove_shared_particles(/particles/smoke/burning)
 
