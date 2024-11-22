@@ -126,10 +126,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return
 	owner.remove_status_effect(status, type)
 
-/obj/item/organ/proc/on_owner_examine(datum/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-	return
-
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 

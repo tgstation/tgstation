@@ -176,6 +176,7 @@
 	name = "Holding Up"
 	desc = "You're currently pointing a gun at someone. Click to cancel."
 	icon_state = "aimed"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/holdup/Click(location, control, params)
 	. = ..()
@@ -358,6 +359,7 @@
 	name = "Surrender"
 	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
 	icon_state = "surrender"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/surrender/Click(location, control, params)
 	. = ..()

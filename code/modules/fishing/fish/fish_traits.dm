@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/nocturnal/proc/check_light(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(isturf(source.loc) || isaquarium(source))
+	if(source.loc && (HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) || isturf(source.loc)))
 		var/turf/turf = get_turf(source)
 		var/light_amount = turf.get_lumcount()
 		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/emulsijack/proc/emulsify(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(!isaquarium(source.loc))
+	if(!source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		return
 	var/emulsified = FALSE
 	for(var/obj/item/fish/victim in source.loc)
@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/necrophage/proc/eat_dead_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(source.get_hunger() > 0.75 || !isaquarium(source.loc))
+	if(source.get_hunger() > 0.75 || !source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		return
 	for(var/obj/item/fish/victim in source.loc)
 		if(victim.status != FISH_DEAD || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH))
@@ -400,7 +400,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	source.set_status(FISH_ALIVE)
 	var/message = span_nicegreen("[source] twitches. It's alive!")
-	if(isaquarium(source.loc))
+	if(source.loc && HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		source.loc.visible_message(message)
 	else
 		source.visible_message(message)
@@ -425,10 +425,9 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/predator/proc/eat_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(source.get_hunger() > 0.75 || !isaquarium(source.loc))
+	if(source.get_hunger() > 0.75 || !source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		return
-	var/obj/structure/aquarium/aquarium = source.loc
-	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
+	for(var/obj/item/fish/victim as anything in source.get_aquarium_fishes(TRUE, source))
 		if(victim.size < source.size * 0.7) // It's a big fish eat small fish world
 			continue
 		if(victim.status != FISH_ALIVE || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH) || SPT_PROB(80, seconds_per_tick))
@@ -531,13 +530,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/aggressive/proc/try_attack_fish(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(!isaquarium(source.loc) || !SPT_PROB(1, seconds_per_tick))
+	if(!source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) || !SPT_PROB(1, seconds_per_tick))
 		return
-	var/obj/structure/aquarium/aquarium = source.loc
-	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
+	for(var/obj/item/fish/victim as anything in source.get_aquarium_fishes(TRUE, source))
 		if(victim.status != FISH_ALIVE)
 			continue
-		aquarium.visible_message(span_warning("[source] violently [pick("whips", "bites", "attacks", "slams")] [victim]"))
+		source.loc.visible_message(span_warning("[source] violently [pick("whips", "bites", "attacks", "slams")] [victim]"))
 		var/damage = round(rand(4, 20) * (source.size / victim.size)) //smaller fishes take extra damage.
 		victim.adjust_health(victim.health - damage)
 		return
@@ -806,4 +804,4 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	var/init_alpha = initial(source.alpha)
 	if(init_alpha != source.alpha)
-		animate(source.alpha, alpha = init_alpha, time = 1.2 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+		animate(source, alpha = init_alpha, time = 1.2 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)

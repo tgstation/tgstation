@@ -418,7 +418,7 @@
 	return owner.body_position == LYING_DOWN
 
 /datum/status_effect/golem/bananium/on_remove()
-	owner.remove_traits(owner, list(TRAIT_WADDLING, TRAIT_NO_SLIP_WATER), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_WADDLING, TRAIT_NO_SLIP_WATER), TRAIT_STATUS_EFFECT(id))
 	QDEL_NULL(slipperiness)
 	return ..()
 

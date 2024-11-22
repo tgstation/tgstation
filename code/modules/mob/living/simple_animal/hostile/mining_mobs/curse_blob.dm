@@ -121,7 +121,7 @@ IGNORE_PROC_IF_NOT_TARGET(attack_animal)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/bullet_act(obj/projectile/Proj)
 	if(Proj.firer != set_target)
-		return
+		return BULLET_ACT_BLOCK
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/attacked_by(obj/item/I, mob/living/L)

@@ -20106,7 +20106,7 @@
 "fkE" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/light_construct/directional/north,
-/obj/item/bot_assembly/floorbot,
+/obj/item/bot_assembly/repairbot,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port)
 "fkG" = (
@@ -25955,7 +25955,7 @@
 "gLt" = (
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
-/mob/living/simple_animal/bot/floorbot,
+/mob/living/basic/bot/repairbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "gLy" = (
@@ -36710,7 +36710,7 @@
 "jBf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
-/obj/item/bot_assembly/floorbot,
+/obj/item/bot_assembly/repairbot,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/starboard/aft)
 "jBm" = (
@@ -65672,7 +65672,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "qSD" = (
-/obj/structure/aquarium/lawyer,
+/obj/item/fish_tank/lawyer,
+/obj/structure/table/wood,
 /turf/open/floor/wood/parquet,
 /area/station/service/lawoffice)
 "qSJ" = (

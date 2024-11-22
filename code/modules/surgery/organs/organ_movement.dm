@@ -15,11 +15,14 @@
 /obj/item/organ/proc/Insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
-	mob_insert(receiver, special, movement_flags)
+	if(!mob_insert(receiver, special, movement_flags))
+		return FALSE
 	bodypart_insert(limb_owner = receiver, movement_flags = movement_flags)
 
 	if(!special && !(receiver.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
 		receiver.update_body_parts()
+
+	return TRUE
 
 /*
  * Remove the organ from the select mob.
@@ -44,15 +47,17 @@
  * movement_flags - Flags for how we behave in movement. See DEFINES/organ_movement for flags
  */
 /obj/item/organ/proc/mob_insert(mob/living/carbon/receiver, special, movement_flags)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(!iscarbon(receiver))
-		stack_trace("Tried to insert organ into non-carbon: [receiver.type]")
-		return
+		//We try to insert the organ in a corgi when running the test, expecting it to return FALSE.
+		if(!PERFORM_ALL_TESTS(organ_sanity))
+			stack_trace("Tried to insert organ into non-carbon: [receiver.type]")
+		return FALSE
 
 	if(owner == receiver)
 		stack_trace("Organ receiver is already organ owner")
-		return
+		return FALSE
 
 	var/obj/item/organ/replaced = receiver.get_organ_slot(slot)
 	if(replaced)
@@ -78,7 +83,7 @@
 	receiver.organs_slot[slot] = src
 	owner = receiver
 
-	on_mob_insert(receiver, special)
+	on_mob_insert(receiver, special, movement_flags)
 
 	return TRUE
 
@@ -99,7 +104,6 @@
 
 	if(!special)
 		organ_owner.hud_used?.update_locked_slots()
-	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_owner_examine))
 	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
@@ -141,7 +145,7 @@
  * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
 /obj/item/organ/proc/mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(organ_owner)
 		if(organ_owner.organs_slot[slot] == src)
@@ -150,7 +154,7 @@
 
 	owner = null
 
-	on_mob_remove(organ_owner, special)
+	on_mob_remove(organ_owner, special, movement_flags)
 
 	return TRUE
 
@@ -172,7 +176,6 @@
 	for(var/datum/status_effect/effect as anything in organ_effects)
 		organ_owner.remove_status_effect(effect, type)
 
-	UnregisterSignal(organ_owner, COMSIG_ATOM_EXAMINE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 	ADD_TRAIT(src, TRAIT_USED_ORGAN, ORGAN_TRAIT)
