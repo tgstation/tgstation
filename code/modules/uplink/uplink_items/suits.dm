@@ -86,4 +86,4 @@
 	desc = "A MODsuit module that grants to the user Optical camouflage and the ability to overload light sources to recharge suit power. \
 		Incompatible with armored MODsuits."
 	item = /obj/item/mod/module/stealth/wraith
-	cost = 4
+	cost = 3
