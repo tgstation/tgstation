@@ -181,7 +181,7 @@
 			break
 
 		//transfer of charge
-		var/transferred = min(our_cell.charge, target_cell.used_charge(), (target_cell.rating_base * target_cell.rating * power_transfer_multiplier))
+		var/transferred = min(our_cell.charge, target_cell.used_charge(), target_cell.rating_base * target_cell.rating * power_transfer_multiplier)
 		if(!transferred)
 			break
 		our_cell.use(target_cell.give(transferred))
