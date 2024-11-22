@@ -315,8 +315,8 @@
 		exposed_mob.adjust_confusion(-2 SECONDS)
 		exposed_mob.adjust_drowsiness(-4 SECONDS)
 		exposed_mob.adjust_jitter(-4 SECONDS)
-		exposed_mob.AdjustSleeping(-150)
-		exposed_mob.AdjustUnconscious(-80)
+		exposed_mob.AdjustSleeping(-15 SECONDS)
+		exposed_mob.AdjustUnconscious(-8 SECONDS)
 		var/drunkness_restored = HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) ? -0.5 : -0.25
 		exposed_mob.adjust_drunk_effect(drunkness_restored)
 
