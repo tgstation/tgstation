@@ -324,7 +324,7 @@
 	if(you_fucked_up || mod.wearer.has_gravity() > NEGATIVE_GRAVITY)
 		return
 
-	if (forced || SHOULD_DISABLE_FOOTSTEPS(source) || !momentum_change)
+	if (forced || SHOULD_DISABLE_FOOTSTEPS(mod.wearer))
 		return
 
 	var/turf/open/current_turf = get_turf(mod.wearer)
