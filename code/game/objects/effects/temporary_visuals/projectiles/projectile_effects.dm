@@ -36,15 +36,12 @@
 		apply_vars(angle_override, p_x, p_y, color_override, scaling)
 	return ..()
 
-/obj/effect/projectile/proc/apply_vars(angle_override, p_x = 0, p_y = 0, color_override, scaling = 1, increment = 0)
-	var/mutable_appearance/look = new(src)
-	SET_PLANE_EXPLICIT(look, plane, src)
-	look.pixel_x = p_x
-	look.pixel_y = p_y
+/obj/effect/projectile/proc/apply_vars(angle_override, p_x = 0, p_y = 0, color_override, scaling = 1, new_plane = null, increment = 0)
+	pixel_x = p_x
+	pixel_y = p_y
 	if(color_override)
-		look.color = color_override
-	appearance = look
-	scale_to(1,scaling, FALSE)
+		color = color_override
+	scale_to(1, scaling, FALSE)
 	turn_to(angle_override, FALSE)
 	for(var/i in 1 to increment)
 		pixel_x += round((sin(angle_override)+16*sin(angle_override)*2), 1)

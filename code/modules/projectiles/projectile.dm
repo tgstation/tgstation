@@ -1151,6 +1151,7 @@
 		color_override = color,
 		scaling = pixel_length_between_points(start_point, end_point) / ICON_SIZE_ALL
 	)
+	SET_PLANE_EXPLICIT(tracer_effect, GAME_PLANE, src)
 
 	QDEL_IN(tracer_effect, PROJECTILE_TRACER_DURATION)
 
