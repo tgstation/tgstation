@@ -695,7 +695,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_TURF, src, reagents, methods, volume_modifier, show_message)
-	for(var/datum/reagent/reagent in reagents)
+	for(var/datum/reagent/reagent as anything in reagents)
 		var/reac_volume = reagents[reagent]
 		. |= reagent.expose_turf(src, reac_volume)
 
