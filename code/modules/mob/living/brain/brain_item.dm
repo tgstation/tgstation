@@ -123,7 +123,7 @@
 		BT.on_lose(TRUE)
 		BT.owner = null
 
-	if((!QDELETED(src) || !QDELETED(owner)) && !(movement_flags & NO_ID_TRANSFER))
+	if((!QDELETED(src) || !QDELETED(organ_owner)) && !(movement_flags & NO_ID_TRANSFER))
 		transfer_identity(organ_owner)
 	if(!special)
 		if(!(organ_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
