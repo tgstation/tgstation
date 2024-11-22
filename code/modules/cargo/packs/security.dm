@@ -261,8 +261,8 @@
 	crate_name = "battle rifle crate"
 
 /datum/supply_pack/security/armory/br_mag
-	name = "NT-Saint Magazine Crate"
-	desc = "Six 6.66mm magazines, able to fit into the NT-Saint. Contains \
+	name = "NT BR-38 Magazine Crate"
+	desc = "Six .38 magazines, able to fit into the NT BR-38. Contains \
 		two standard magazines, two Hot Shot magazines and two Iceblox magazines."
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(
