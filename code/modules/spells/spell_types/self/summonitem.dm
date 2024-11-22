@@ -138,8 +138,6 @@
 					item_to_retrieve = null
 					break
 
-				holding_mark.dropItemToGround(item_to_retrieve)
-
 			else if(isobj(item_to_retrieve.loc))
 				var/obj/retrieved_item = item_to_retrieve.loc
 				// Can't bring anchored things
@@ -159,6 +157,12 @@
 	if(!item_to_retrieve)
 		return
 
+	SEND_SIGNAL(item_to_retrieve, COMSIG_MAGIC_RECALL, caster, item_to_retrieve)
+
+	if (ismob(item_to_retrieve.loc))
+		var/mob/holder = item_to_retrieve.loc
+		holder.dropItemToGround(item_to_retrieve)
+
 	item_to_retrieve.loc?.visible_message(span_warning("[item_to_retrieve] suddenly disappears!"))
 
 	if(isitem(item_to_retrieve) && caster.put_in_hands(item_to_retrieve))
@@ -167,7 +171,6 @@
 		item_to_retrieve.forceMove(caster.drop_location())
 		item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve] suddenly appears!"))
 
-	SEND_SIGNAL(item_to_retrieve, COMSIG_MAGIC_RECALL, caster, item_to_retrieve)
 	playsound(get_turf(item_to_retrieve), 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 
 /datum/action/cooldown/spell/summonitem/abductor

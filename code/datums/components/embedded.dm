@@ -52,6 +52,7 @@
 	limb._embed_object(weapon) // on the inside... on the inside...
 	weapon.forceMove(victim)
 	RegisterSignals(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(weaponDeleted))
+	RegisterSignal(weapon, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
 	victim.visible_message(span_danger("[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] [victim]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] your [limb.plaintext_zone]!"))
 
 	var/damage = weapon.throwforce
@@ -84,7 +85,6 @@
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_RIP, PROC_REF(ripOut))
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_REMOVAL, PROC_REF(safeRemove))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(checkTweeze))
-	RegisterSignal(parent, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(on_ex_act))
 
 /datum/component/embedded/UnregisterFromParent()
