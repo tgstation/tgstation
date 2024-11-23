@@ -107,12 +107,17 @@
 	organ_owner.update_sight()
 	UnregisterSignal(organ_owner, COMSIG_ATOM_BULLET_ACT)
 
-/obj/item/organ/eyes/proc/on_bullet_act(datum/source, obj/projectile/proj, def_zone)
+/obj/item/organ/eyes/proc/on_bullet_act(mob/living/carbon/source, obj/projectile/proj, def_zone)
 	SIGNAL_HANDLER
 
 	// Once-a-dozen-rounds level of rare
 	if (def_zone != BODY_ZONE_HEAD || !prob(proj.damage * 0.1) || !(proj.damage_type == BRUTE || proj.damage_type == BURN))
 		return
+
+	var/blocked = source.check_projectile_armor(def_zone, proj, is_silent = TRUE)
+	if (blocked && source.is_eyes_covered())
+		if (!proj.armour_penetration || prob(blocked - proj.armour_penetration))
+			return
 
 	var/valid_sides = list()
 	if (!(scarring & RIGHT_EYE_SCAR))

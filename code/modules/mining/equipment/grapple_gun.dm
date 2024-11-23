@@ -179,7 +179,7 @@
 	icon_state = "grapple_hook"
 	damage = 0
 	range = 9
-	speed = 0.1
+	speed = 10
 	can_hit_turfs = TRUE
 	hitsound = 'sound/items/weapons/zipline_hit.ogg'
 

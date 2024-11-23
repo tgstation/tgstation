@@ -1,0 +1,6 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Projectiles now visually impact their targets instead of disappearing about a tile short of it."
+  - bugfix: "Fixed multiple minor issues with projectile behavior"
+  - refactor: "Completely rewrote almost all of our projectile code - if anything broke or started looking/behaving oddly, make an issue report!"
