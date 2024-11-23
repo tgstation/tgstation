@@ -230,7 +230,7 @@
 				t_prod.seed.set_instability(round(instability * 0.5))
 			continue
 		else
-			t_prod = new product(output_loc, new_seed = src)
+			t_prod = new product(output_loc, src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
 			t_prod.name = LOWER_TEXT(parent.myseed.plantname)
 		if(productdesc)
