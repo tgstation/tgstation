@@ -183,8 +183,9 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 /datum/computer_file/program/virtual_pet/proc/on_change_dir(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER
 
-	if(!length(selected_hat))
+	if(!length(selected_hat) || !new_dir)
 		return
+
 	set_hat_offsets(new_dir)
 
 /datum/computer_file/program/virtual_pet/proc/on_photo_captured(datum/source, atom/target, atom/user, datum/picture/photo)
