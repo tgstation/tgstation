@@ -1,0 +1,2 @@
+/obj/effect/mapping_helpers/airlock/autoname : @DELETE
+/obj/machinery/door/airlock/@SUBTYPES : /obj/machinery/door/airlock/@SUBTYPES{@OLD;name=@SKIP}, /obj/effect/mapping_helpers/airlock/autoname

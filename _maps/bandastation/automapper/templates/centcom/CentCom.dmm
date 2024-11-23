@@ -88,6 +88,7 @@
 /area/centcom/central_command_areas/planetary_port/plaza)
 "bL" = (
 /obj/machinery/door/airlock/public,
+/obj/effect/mapping_helpers/airlock/autoname,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/planetary_port/hotel)
 "bT" = (
@@ -553,12 +554,6 @@
 /obj/structure/sign/departments/security/directional/north,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/planetary_port)
-"gY" = (
-/obj/machinery/door/airlock/highsecurity,
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
-/obj/effect/mapping_helpers/airlock/autoname,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/planetary_port)
 "gZ" = (
 /obj/effect/turf_decal/siding/wideplating/dark,
 /obj/structure/flora/bush/grassy/style_random,
@@ -646,9 +641,8 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/planetary_port/plaza)
 "iz" = (
-/obj/machinery/door/airlock/service/glass{
-	name = "кафе"
-	},
+/obj/machinery/door/airlock/service/glass,
+/obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/planetary_port)
@@ -751,6 +745,7 @@
 /area/centcom/central_command_areas/planetary_port)
 "jG" = (
 /obj/machinery/door/airlock/highsecurity,
+/obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/planetary_port)
@@ -980,8 +975,8 @@
 /area/centcom/central_command_areas/planetary_port)
 "lB" = (
 /obj/machinery/door/airlock/highsecurity,
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /obj/effect/baseturf_helper,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/planetary_port)
@@ -1184,9 +1179,8 @@
 /turf/closed/wall/r_wall,
 /area/centcom/central_command_areas/planetary_port)
 "oQ" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "пункт первой медицинской помощи"
-	},
+/obj/machinery/door/airlock/medical/glass,
+/obj/effect/mapping_helpers/airlock/autoname,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/planetary_port)
 "oS" = (
@@ -1256,8 +1250,8 @@
 /area/centcom/central_command_areas/planetary_port/club)
 "pJ" = (
 /obj/machinery/door/airlock/multi_tile/public/glass,
-/obj/machinery/scanner_gate/preset_guns,
 /obj/effect/mapping_helpers/airlock/autoname,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/stairs/right{
 	dir = 1
 	},
@@ -1425,10 +1419,6 @@
 "rS" = (
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/planetary_port/club)
-"rT" = (
-/obj/effect/mapping_helpers/airlock/autoname,
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/planetary_port/library)
 "rV" = (
 /obj/machinery/vending/boozeomat,
 /obj/item/reagent_containers/cup/glass/bottle/coconut_rum{
@@ -2159,12 +2149,7 @@
 /area/centcom/central_command_areas/planetary_port)
 "Cj" = (
 /obj/machinery/scanner_gate/preset_guns,
-/obj/effect/mapping_helpers/airlock/autoname,
 /turf/open/floor/iron/stairs/right,
-/area/centcom/central_command_areas/planetary_port)
-"Ck" = (
-/obj/effect/mapping_helpers/airlock/autoname,
-/turf/open/floor/stone,
 /area/centcom/central_command_areas/planetary_port)
 "Cr" = (
 /obj/machinery/vending/cola/sodie,
@@ -2255,7 +2240,6 @@
 /area/centcom/central_command_areas/planetary_port/library)
 "Du" = (
 /obj/machinery/scanner_gate/preset_guns,
-/obj/effect/mapping_helpers/airlock/autoname,
 /turf/open/floor/iron/stairs/left{
 	dir = 1
 	},
@@ -2365,8 +2349,8 @@
 /area/centcom/central_command_areas/planetary_port)
 "EY" = (
 /obj/machinery/door/airlock/multi_tile/public/glass,
-/obj/machinery/scanner_gate/preset_guns,
 /obj/effect/mapping_helpers/airlock/autoname,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/stairs/left,
 /area/centcom/central_command_areas/planetary_port)
 "Fa" = (
@@ -2422,9 +2406,8 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/planetary_port)
 "FZ" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "зона для курения"
-	},
+/obj/machinery/door/airlock/public/glass,
+/obj/effect/mapping_helpers/airlock/autoname,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/planetary_port)
 "Ge" = (
@@ -5692,11 +5675,11 @@ xO
 va
 va
 va
-rT
+iZ
 LZ
 TP
 TP
-rT
+iZ
 LZ
 va
 va
@@ -6149,7 +6132,7 @@ Lb
 Lb
 Lb
 ej
-rT
+iZ
 iZ
 iZ
 iZ
@@ -6434,7 +6417,7 @@ qz
 qz
 qz
 qz
-Ck
+cg
 wN
 qz
 qz
@@ -7185,7 +7168,7 @@ jt
 jt
 jt
 zZ
-gY
+jG
 kw
 jt
 jt
