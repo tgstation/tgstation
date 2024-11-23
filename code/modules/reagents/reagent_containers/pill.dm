@@ -57,7 +57,6 @@
 		on_consumption(target_mob, user)
 		return ITEM_INTERACT_SUCCESS
 
-	to_chat(world, "1")
 	if(!dissolvable || !target.is_refillable())
 		return NONE
 
