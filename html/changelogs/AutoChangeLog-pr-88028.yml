@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - admin: "you no longer get auto deadminned on localhost"
-  - admin: "default prefs are now to be deadminned as antag/head/sec/silicon"

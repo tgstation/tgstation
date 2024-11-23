@@ -1,4 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "fixes atmos goggles not showing the temperature of turfs."

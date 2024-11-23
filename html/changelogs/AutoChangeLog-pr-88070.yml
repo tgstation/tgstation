@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - admin: "Implemented final type filtering for spawn commands - putting * at the end of a spawn string will signify that there should be no subtypes offered!"

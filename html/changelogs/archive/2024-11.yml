@@ -824,3 +824,23 @@
       name
   wallem:
   - image: Updates slot machine sprites
+2024-11-23:
+  EOBGames:
+  - rscadd: 'A new series of shipping containers have been added: keep an eye out
+      for them at your local cargo terminus.'
+  EnterTheJake:
+  - bugfix: fixes atmos goggles not showing the temperature of turfs.
+  Fikou:
+  - admin: you no longer get auto deadminned on localhost
+  - admin: default prefs are now to be deadminned as antag/head/sec/silicon
+  Ghommie:
+  - bugfix: Fixes ink spit not respecting its 21 seconds cooldown.
+  SmArtKar:
+  - balance: Armor now decreases the chances of getting your eye blown out by a rogue
+      bullet
+  - admin: Implemented final type filtering for spawn commands - putting * at the
+      end of a spawn string will signify that there should be no subtypes offered!
+  SyncIt21:
+  - bugfix: inducers can be inserted into storage objects again
+  - bugfix: fixes grown foods(like pineapples) getting deleted sometimes inside crates
+      and stuff

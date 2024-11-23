@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "fixes grown foods(like pineapples) getting deleted sometimes inside crates and stuff"
