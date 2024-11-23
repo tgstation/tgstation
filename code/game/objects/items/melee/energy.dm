@@ -76,7 +76,7 @@
 
 /obj/item/melee/energy/process(seconds_per_tick)
 	if(heat)
-		open_flame()
+		open_flame(heat)
 
 /obj/item/melee/energy/ignition_effect(atom/atom, mob/user)
 	if(!heat && !HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
@@ -119,7 +119,6 @@
 		heat = initial(heat)
 		STOP_PROCESSING(SSobj, src)
 
-	tool_behaviour = (active ? TOOL_SAW : NONE) //Lets energy weapons cut trees. Also lets them do bonecutting surgery, which is kinda metal!
 	if(user)
 		balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
 	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 35, TRUE)
@@ -182,6 +181,9 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = SFX_SWING_HIT
+	tool_behaviour = TOOL_WELDER
+	toolspeed = 0.5
+	usesound = 'sound/items/weapons/blade1.ogg'
 	force = 3
 	throwforce = 5
 	throw_speed = 3
@@ -199,6 +201,26 @@
 		final_block_chance -= 25 //OH GOD GET IT OFF ME
 
 	return ..()
+
+/obj/item/melee/energy/sword/tool_use_check(mob/living/user, amount, heat_required)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		balloon_alert(user, "not active!")
+		return FALSE
+	if(heat < heat_required)
+		balloon_alert(user, "not hot enough!")
+		return FALSE
+	return TRUE
+
+/obj/item/melee/energy/sword/use(used)
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
+
+/obj/item/melee/energy/sword/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
+	var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
+	target.add_overlay(sparks)
+	LAZYADD(update_overlays_on_z, sparks)
+	. = ..()
+	LAZYREMOVE(update_overlays_on_z, sparks)
+	target.cut_overlay(sparks)
 
 /obj/item/melee/energy/sword/cyborg
 	name = "cyborg energy sword"
@@ -234,7 +256,6 @@
 	sharpness = SHARP_EDGED
 	light_color = LIGHT_COLOR_LIGHT_CYAN
 	tool_behaviour = TOOL_SAW
-	toolspeed = 0.7 // Faster than a normal saw.
 
 	active_force = 30
 	sword_color_icon = null // Stops icon from breaking when turned on.

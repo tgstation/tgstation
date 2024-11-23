@@ -309,6 +309,8 @@
 	sharpness = SHARP_POINTY
 	armour_penetration = 20
 	bare_wound_bonus = 10
+	tool_behaviour = TOOL_WELDER
+	usesound = 'sound/items/weapons/blade1.ogg'
 	item_flags = NO_BLOOD_ON_ITEM
 	light_system = OVERLAY_LIGHT
 	light_range = 1.5
@@ -322,6 +324,8 @@
 	var/hidden_desc = "It's a normal black ink pe- Wait. That's a thing used to stab people!"
 	/// The real icons used when extended.
 	var/hidden_icon = "edagger"
+	/// The heat when the pen is active.
+	var/active_heat = 1750
 
 /obj/item/pen/edagger/Initialize(mapload)
 	. = ..()
@@ -418,6 +422,8 @@
 		desc = hidden_desc
 		icon_state = hidden_icon
 		inhand_icon_state = hidden_icon
+		heat = active_heat
+		START_PROCESSING(SSobj, src)
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 		set_embed(/datum/embed_data/edagger_active)
@@ -426,6 +432,8 @@
 		desc = initial(desc)
 		icon_state = initial(icon_state)
 		inhand_icon_state = initial(inhand_icon_state)
+		heat = initial(heat)
+		STOP_PROCESSING(SSobj, src)
 		lefthand_file = initial(lefthand_file)
 		righthand_file = initial(righthand_file)
 		set_embed(embed_type)
@@ -435,6 +443,30 @@
 	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 5, TRUE)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/pen/edagger/process(seconds_per_tick)
+	if(heat)
+		open_flame(heat)
+
+/obj/item/pen/edagger/tool_use_check(mob/living/user, amount, heat_required)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		balloon_alert(user, "not active!")
+		return FALSE
+	if(heat < heat_required)
+		balloon_alert(user, "not hot enough!")
+		return FALSE
+	return TRUE
+
+/obj/item/pen/edagger/use(used)
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
+
+/obj/item/pen/edagger/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
+	var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
+	target.add_overlay(sparks)
+	LAZYADD(update_overlays_on_z, sparks)
+	. = ..()
+	LAZYREMOVE(update_overlays_on_z, sparks)
+	target.cut_overlay(sparks)
 
 /datum/embed_data/edagger_active
 	embed_chance = 100

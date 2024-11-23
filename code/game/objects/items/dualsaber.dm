@@ -16,6 +16,9 @@
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = SFX_SWING_HIT
+	tool_behaviour = TOOL_WELDER
+	toolspeed = 0.25
+	usesound = 'sound/items/weapons/blade1.ogg'
 	armour_penetration = 35
 	light_system = OVERLAY_LIGHT
 	light_range = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
@@ -37,6 +40,7 @@
 	var/two_hand_force = 40
 	var/hacked = FALSE
 	var/list/possible_colors = list("red", "blue", "green", "purple")
+	var/active_heat = 7000 //dualsaber so double heat
 
 /datum/armor/item_dualsaber
 	fire = 100
@@ -61,6 +65,7 @@
 		return COMPONENT_TWOHANDED_BLOCK_WIELD
 	update_weight_class(w_class_on)
 	hitsound = 'sound/items/weapons/blade1.ogg'
+	heat = active_heat
 	START_PROCESSING(SSobj, src)
 	set_light_on(TRUE)
 
@@ -69,8 +74,29 @@
 /obj/item/dualsaber/proc/on_unwield(obj/item/source, mob/living/carbon/user)
 	update_weight_class(initial(w_class))
 	hitsound = SFX_SWING_HIT
+	heat = initial(heat)
 	STOP_PROCESSING(SSobj, src)
 	set_light_on(FALSE)
+
+/obj/item/dualsaber/tool_use_check(mob/living/user, amount, heat_required)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		balloon_alert(user, "not active!")
+		return FALSE
+	if(heat < heat_required)
+		balloon_alert(user, "not hot enough!")
+		return FALSE
+	return TRUE
+
+/obj/item/dualsaber/use(used)
+	return HAS_TRAIT(src, TRAIT_WIELDED)
+
+/obj/item/dualsaber/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
+	var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
+	target.add_overlay(sparks)
+	LAZYADD(update_overlays_on_z, sparks)
+	. = ..()
+	LAZYREMOVE(update_overlays_on_z, sparks)
+	target.cut_overlay(sparks)
 
 /obj/item/dualsaber/get_sharpness()
 	return HAS_TRAIT(src, TRAIT_WIELDED) && sharpness
@@ -165,12 +191,10 @@
 	return ..()
 
 /obj/item/dualsaber/process()
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		if(hacked)
-			set_light_color(pick(COLOR_SOFT_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER))
-		open_flame()
-	else
-		return PROCESS_KILL
+	if(heat)
+		open_flame(heat)
+	if(hacked)
+		set_light_color(pick(COLOR_SOFT_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER))
 
 /obj/item/dualsaber/IsReflect()
 	if(HAS_TRAIT(src, TRAIT_WIELDED) && prob(block_chance))

@@ -47,7 +47,9 @@
 			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 	add_fingerprint(user)
 
-	if(istype(W, /obj/item/gun/energy/plasmacutter))
+	if(istype(W, /obj/item/gun/energy/plasmacutter) || istype(W, /obj/item/melee/energy/sword) || istype(W, /obj/item/dualsaber))
+		if(!W.tool_start_check(user, amount = 1, heat_required = HIGH_TEMPERATURE_REQUIRED))
+			return
 		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=100))
 			if(state == GIRDER_TRAM)
