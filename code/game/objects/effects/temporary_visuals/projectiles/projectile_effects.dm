@@ -36,7 +36,7 @@
 		apply_vars(angle_override, p_x, p_y, color_override, scaling)
 	return ..()
 
-/obj/effect/projectile/proc/apply_vars(angle_override, p_x = 0, p_y = 0, color_override, scaling = 1, new_plane = null, increment = 0)
+/obj/effect/projectile/proc/apply_vars(angle_override, p_x = 0, p_y = 0, color_override, scaling = 1, increment = 0)
 	pixel_x = p_x
 	pixel_y = p_y
 	if(color_override)

@@ -988,7 +988,7 @@
 				return
 			// Similarly with range out deletion, need to calculate how many pixels we can actually move before deleting
 			if (deletion_queued)
-				delete_distance = distance_to_move - (pixels_moved_last_tile - ICON_SIZE_ALL)
+				delete_distance = distance_to_move - (ICON_SIZE_ALL - pixels_moved_last_tile)
 
 		if (deletion_queued)
 			// We moved to the next turf first, then impacted something
