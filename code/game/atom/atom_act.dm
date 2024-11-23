@@ -83,10 +83,10 @@
  * * def_zone - zone hit
  * * piercing_hit - is this hit piercing or normal?
  */
-/atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+/atom/proc/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE, blocked = check_projectile_armor(def_zone, proj))
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_PRE_BULLET_ACT, hitting_projectile, def_zone)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_PRE_BULLET_ACT, proj, def_zone)
 	if(sigreturn & COMPONENT_BULLET_PIERCED)
 		return BULLET_ACT_FORCE_PIERCE
 	if(sigreturn & COMPONENT_BULLET_BLOCKED)
@@ -94,15 +94,15 @@
 	if(sigreturn & COMPONENT_BULLET_ACTED)
 		return BULLET_ACT_HIT
 
-	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
-	if(QDELETED(hitting_projectile)) // Signal deleted it?
+	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, proj, def_zone, piercing_hit, blocked)
+	if(QDELETED(proj)) // Signal deleted it?
 		return BULLET_ACT_BLOCK
 
-	return hitting_projectile.on_hit(
+	return proj.on_hit(
 		target = src,
 		// This armor check only matters for the visuals and messages in on_hit(), it's not actually used to reduce damage since
 		// only living mobs use armor to reduce damage, but on_hit() is going to need the value no matter what is shot.
-		blocked = check_projectile_armor(def_zone, hitting_projectile),
+		blocked = blocked,
 		pierce_hit = piercing_hit,
 	)
 
