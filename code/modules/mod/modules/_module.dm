@@ -39,12 +39,18 @@
 	var/cooldown_time = 0
 	/// The mouse button needed to use this module
 	var/used_signal
+	/// Are all parts needed active- have we ran on_part_activation
+	var/part_activated = FALSE
+	/// Do we need the parts to be extended to run process
+	var/part_process = TRUE
 	/// List of REF()s mobs we are pinned to, linked with their action buttons
 	var/list/pinned_to = list()
 	/// flags that let the module ability be used in odd circumstances
 	var/allow_flags = NONE
 	/// A list of slots required in the suit to work. Formatted like list(x|y, z, ...) where either x or y are required and z is required.
 	var/list/required_slots = list()
+	/// If TRUE worn overlay will be masked with the suit, preventing any bits from poking out of its controur
+	var/mask_worn_overlay = FALSE
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -77,14 +83,14 @@
 		. += span_notice("Complexity level: [complexity]")
 
 /// Looks through the MODsuit's parts to see if it has the parts required to support this module
-/obj/item/mod/module/proc/has_required_parts(list/parts, need_extended = FALSE)
+/obj/item/mod/module/proc/has_required_parts(list/parts, need_active = FALSE)
 	if(!length(required_slots))
 		return TRUE
 	var/total_slot_flags = NONE
 	for(var/part_slot in parts)
-		if(need_extended)
+		if(need_active)
 			var/datum/mod_part/part_datum = parts[part_slot]
-			if(part_datum.part_item.loc == mod)
+			if(!part_datum.sealed)
 				continue
 		total_slot_flags |= text2num(part_slot)
 	var/list/needed_slots = required_slots.Copy()
@@ -107,6 +113,16 @@
 	if(((!mod.active || mod.activating) && !(allow_flags & MODULE_ALLOW_INACTIVE)) || module_type == MODULE_PASSIVE)
 		if(mod.wearer)
 			balloon_alert(mod.wearer, "not active!")
+		return
+	if(!has_required_parts(mod.mod_parts, need_active = TRUE))
+		if(mod.wearer)
+			balloon_alert(mod.wearer, "required parts inactive!")
+			var/list/slot_strings = list()
+			for(var/slot in required_slots)
+				var/list/slot_list = parse_slot_flags(slot)
+				slot_strings += (length(slot_list) == 1 ? "" : "one of ") + english_list(slot_list, and_text = " or ")
+			to_chat(mod.wearer, span_warning("[src] requires these slots to be deployed: [english_list(slot_strings)]"))
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
@@ -157,7 +173,6 @@
 			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
 	active = TRUE
 	mod.wearer.update_clothing(mod.slot_flags)
-	start_cooldown()
 	SEND_SIGNAL(src, COMSIG_MODULE_ACTIVATED)
 	on_activation()
 	return TRUE
@@ -219,6 +234,8 @@
 
 /// Called on the MODsuit's process
 /obj/item/mod/module/proc/on_process(seconds_per_tick)
+	if(part_process && !part_activated)
+		return FALSE
 	if(active)
 		if(!drain_power(active_power_cost * seconds_per_tick))
 			deactivate()
@@ -253,11 +270,11 @@
 	return
 
 /// Called when the MODsuit is activated
-/obj/item/mod/module/proc/on_suit_activation()
+/obj/item/mod/module/proc/on_part_activation()
 	return
 
 /// Called when the MODsuit is deactivated
-/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/proc/on_part_deactivation(deleting = FALSE)
 	return
 
 /// Called when the MODsuit is equipped
@@ -283,7 +300,7 @@
 /obj/item/mod/module/proc/add_ui_data()
 	return list()
 
-/// Creates a list of configuring options for this module
+/// Creates a list of configuring options for this module, possible configs include number, bool, color, list, button.
 /obj/item/mod/module/proc/get_configuration(mob/user)
 	return list()
 
@@ -325,21 +342,46 @@
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay(mutable_appearance/standing)
 	. = list()
-	if(!mod.active)
+	if(!mod.active || !has_required_parts(mod.mod_parts, need_active = TRUE))
 		return
-	var/used_overlay
-	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
-		used_overlay = overlay_state_use
-	else if(overlay_state_active && active)
-		used_overlay = overlay_state_active
-	else if(overlay_state_inactive)
-		used_overlay = overlay_state_inactive
+	var/used_overlay = get_current_overlay_state()
+	if (!used_overlay)
+		return
+	var/mutable_appearance/module_icon
+	if(mask_worn_overlay)
+		module_icon = mutable_appearance(get_module_icon_cache(used_overlay), layer = standing.layer + 0.1)
 	else
-		return
-	var/mutable_appearance/module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
+		module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
 	if(!use_mod_colors)
 		module_icon.appearance_flags |= RESET_COLOR
+
 	. += module_icon
+	SEND_SIGNAL(src, COMSIG_MODULE_GENERATE_WORN_OVERLAY, ., standing)
+
+/obj/item/mod/module/proc/get_current_overlay_state()
+	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
+		return overlay_state_use
+	if(overlay_state_active && active)
+		return overlay_state_active
+	if(overlay_state_inactive)
+		return overlay_state_inactive
+	return null
+
+/obj/item/mod/module/proc/get_module_icon_cache(used_overlay)
+	var/covered_slots = mod.get_sealed_slots(mod.get_parts(all = TRUE))
+	if (GLOB.mod_module_overlays[mod.skin])
+		if (GLOB.mod_module_overlays[mod.skin]["[covered_slots]"])
+			if (GLOB.mod_module_overlays[mod.skin]["[covered_slots]"][used_overlay])
+				return GLOB.mod_module_overlays[mod.skin]["[covered_slots]"][used_overlay]
+		else
+			GLOB.mod_module_overlays[mod.skin]["[covered_slots]"] = list()
+	else
+		GLOB.mod_module_overlays[mod.skin] = list()
+		GLOB.mod_module_overlays[mod.skin]["[covered_slots]"] = list()
+	var/icon/mod_mask = icon(mod.generate_suit_mask())
+	mod_mask.Blend(icon(overlay_icon_file, used_overlay), ICON_MULTIPLY)
+	GLOB.mod_module_overlays[mod.skin]["[covered_slots]"][used_overlay] = mod_mask
+	return GLOB.mod_module_overlays[mod.skin]["[covered_slots]"][used_overlay]
 
 /// Updates the signal used by active modules to be activated
 /obj/item/mod/module/proc/update_signal(value)
@@ -376,7 +418,7 @@
 /obj/item/mod/module/anomaly_locked
 	name = "MOD anomaly locked module"
 	desc = "A form of a module, locked behind an anomalous core to function."
-	incompatible_modules = list(/obj/item/mod/module/anomaly_locked)
+	incompatible_modules = list()
 	/// The core item the module runs off.
 	var/obj/item/assembly/signaler/anomaly/core
 	/// Accepted types of anomaly cores.
@@ -449,7 +491,7 @@
 		balloon_alert(user, "no core!")
 		return
 	if(!core_removable)
-		balloon_alert(user, "can't remove core!")
+		balloon_alert(user, "already has core!")
 		return
 	balloon_alert(user, "removing core...")
 	if(!do_after(user, 3 SECONDS, target = src))

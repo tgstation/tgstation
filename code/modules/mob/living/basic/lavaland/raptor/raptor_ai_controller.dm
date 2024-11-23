@@ -1,5 +1,3 @@
-#define NEXT_EAT_COOLDOWN 45 SECONDS
-
 /datum/ai_controller/basic_controller/raptor
 	blackboard = list(
 		BB_INTERACTIONS_WITH_OWNER = list(
@@ -34,16 +32,9 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/play_with_owner/raptor,
 	)
 
-/datum/ai_controller/basic_controller/raptor/TryPossessPawn(atom/new_pawn)
+/datum/ai_controller/basic_controller/raptor/on_mob_eat()
 	. = ..()
-	if(. & AI_CONTROLLER_INCOMPATIBLE)
-		return
-	RegisterSignal(new_pawn, COMSIG_MOB_ATE, PROC_REF(post_eat))
-
-/datum/ai_controller/basic_controller/raptor/proc/post_eat()
-	SIGNAL_HANDLER
 	clear_blackboard_key(BB_RAPTOR_TROUGH_TARGET)
-	set_blackboard_key(BB_RAPTOR_EAT_COOLDOWN, world.time + NEXT_EAT_COOLDOWN)
 
 /datum/ai_controller/basic_controller/baby_raptor
 	blackboard = list(
@@ -62,5 +53,3 @@
 		/datum/ai_planning_subtree/express_happiness,
 		/datum/ai_planning_subtree/look_for_adult,
 	)
-
-#undef NEXT_EAT_COOLDOWN

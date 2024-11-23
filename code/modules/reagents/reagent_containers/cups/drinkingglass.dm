@@ -36,7 +36,8 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
-		REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, RENAMING_TOOL_LABEL_TRAIT) //so new drinks can rename the glass
+		qdel(GetComponent(/datum/component/rename))
+		REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, SHAKER_LABEL_TRAIT) //so new drinks can rename the glass
 
 // Having our icon state change removes fill thresholds
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_change(datum/glass_style/style)
@@ -58,8 +59,8 @@
 	if(!HAS_TRAIT(src, TRAIT_WAS_RENAMED))
 		return
 
+	qdel(GetComponent(/datum/component/rename))
 	REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, SHAKER_LABEL_TRAIT)
-	REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, RENAMING_TOOL_LABEL_TRAIT)
 	name = initial(name)
 	desc = initial(desc)
 	update_appearance(UPDATE_NAME | UPDATE_DESC)

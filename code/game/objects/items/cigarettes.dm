@@ -185,11 +185,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette/Initialize(mapload)
 	. = ..()
-	create_reagents(chem_volume, INJECTABLE | NO_REACT)
-	if(list_reagents)
-		reagents.add_reagent_list(list_reagents)
-	if(starts_lit)
-		light()
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
 	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(sparks_touched))
@@ -201,15 +196,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		initial_reagents = list_reagents,\
 		food_flags = FOOD_NO_EXAMINE,\
 		foodtypes = JUNKFOOD,\
-		volume = 50,\
+		volume = chem_volume,\
 		eat_time = 0 SECONDS,\
-		tastes = list("a never before experienced flavour.", "finally sitting down after standing your entire life"),\
+		tastes = list("a never before experienced flavour", "finally sitting down after standing your entire life"),\
 		eatverbs = list("taste"),\
-		bite_consumption = 50,\
+		bite_consumption = chem_volume,\
 		junkiness = 0,\
 		reagent_purity = null,\
 		on_consume = CALLBACK(src, PROC_REF(on_consume)),\
 	)
+	if(starts_lit)
+		light()
 
 /obj/item/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -444,12 +441,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			return
 
 	how_long_have_we_been_smokin += seconds_per_tick * (1 SECONDS)
-	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
-	var/obj/item/organ/internal/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
+	reagents.expose(smoker, INHALE, min(to_smoke / reagents.total_volume, 1))
+	var/obj/item/organ/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(lungs && IS_ORGANIC_ORGAN(lungs))
 		var/smoker_resistance = HAS_TRAIT(smoker, TRAIT_SMOKER) ? 0.5 : 1
 		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm * smoker_resistance)
-	if(!reagents.trans_to(smoker, to_smoke, methods = INGEST, ignore_stomach = TRUE))
+	if(!reagents.trans_to(smoker, to_smoke, methods = INHALE, ignore_stomach = TRUE))
 		reagents.remove_all(to_smoke)
 
 /obj/item/cigarette/process(seconds_per_tick)
@@ -949,6 +946,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return TRUE
 
 /obj/item/vape/attack_self(mob/user)
+	if(!screw)
+		balloon_alert(user, "open the cap first!")
+		return
 	if(reagents.total_volume > 0)
 		to_chat(user, span_notice("You empty [src] of all reagents."))
 		reagents.clear_reagents()
@@ -992,7 +992,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		e.start(src)
 		qdel(src)
 
-	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INGEST, ignore_stomach = TRUE))
+	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INHALE, ignore_stomach = TRUE))
 		reagents.remove_all(REAGENTS_METABOLISM)
 
 /obj/item/vape/process(seconds_per_tick)

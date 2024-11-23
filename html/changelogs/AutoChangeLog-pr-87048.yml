@@ -1,5 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "you can now put more than 1 non-stack item relevant to the recipe in a manufacturing crafter"
-  - bugfix: "manufacturing router does not bug out when handling stacks in some cases at the cost of being slower to do so"

@@ -272,10 +272,10 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 /obj/structure/mystery_box/wands/generate_valid_types()
 	valid_types = GLOB.mystery_magic
 
-///One of a kind, rarely found by fishing in the ocean.
+///A fishing and pirate-themed mystery box, rarely found by fishing in the ocean, then another cannot be caught for the next 30 minutes.
 /obj/structure/mystery_box/fishing
 	name = "treasure chest"
-	desc = "A pirate-y chest that seems equally magial and mysterious, capable of granting the user different pieces of gear."
+	desc = "A piratey coffer equally magical and mysterious, capable of granting different pieces of gear to whoever opens it."
 	icon_state = "treasure"
 	uses_left = 18
 	max_integrity = 100

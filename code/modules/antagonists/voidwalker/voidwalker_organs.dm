@@ -1,5 +1,5 @@
 /// Voidwalker eyes with nightvision and thermals
-/obj/item/organ/internal/eyes/voidwalker
+/obj/item/organ/eyes/voidwalker
 	name = "blackened orbs"
 	desc = "These orbs will withstand the light of the sun, yet still see within the darkest voids."
 	eye_icon_state = null
@@ -9,7 +9,7 @@
 	sight_flags = SEE_MOBS
 
 /// Voidwalker brain stacked with a lot of the abilities
-/obj/item/organ/internal/brain/voidwalker
+/obj/item/organ/brain/voidwalker
 	name = "cosmic brain"
 	desc = "A mind fully integrated into the cosmic thread."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
@@ -26,11 +26,11 @@
 	/// Speed modifier given when in gravity
 	var/datum/movespeed_modifier/speed_modifier = /datum/movespeed_modifier/grounded_voidwalker
 	/// The void eater weapon
-	var/obj/item/glass_breaker = /obj/item/void_eater
+	var/obj/item/glass_breaker
 	/// Our brain transmit telepathy spell
 	var/datum/action/transmit = /datum/action/cooldown/spell/list_target/telepathy/voidwalker
 
-/obj/item/organ/internal/brain/voidwalker/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/brain/voidwalker/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
@@ -52,7 +52,7 @@
 	glass_breaker = new/obj/item/void_eater
 	organ_owner.put_in_hands(glass_breaker)
 
-/obj/item/organ/internal/brain/voidwalker/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/brain/voidwalker/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	UnregisterSignal(organ_owner, COMSIG_ENTER_AREA)
@@ -72,10 +72,9 @@
 	transmit.Remove(organ_owner)
 	transmit = initial(transmit)
 
-	if(glass_breaker)
-		qdel(glass_breaker)
+	QDEL_NULL(glass_breaker)
 
-/obj/item/organ/internal/brain/voidwalker/proc/on_atom_entering(mob/living/carbon/organ_owner, atom/entering)
+/obj/item/organ/brain/voidwalker/proc/on_atom_entering(mob/living/carbon/organ_owner, atom/entering)
 	SIGNAL_HANDLER
 
 	if(!isturf(entering))
@@ -90,7 +89,7 @@
 	else
 		organ_owner.remove_movespeed_modifier(speed_modifier)
 
-/obj/item/organ/internal/brain/voidwalker/on_death()
+/obj/item/organ/brain/voidwalker/on_death()
 	. = ..()
 
 	var/turf/spawn_loc = get_turf(owner)

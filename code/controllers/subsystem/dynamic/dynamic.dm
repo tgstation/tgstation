@@ -67,7 +67,9 @@ SUBSYSTEM_DEF(dynamic)
 	var/list/executed_rules = list()
 	/// If TRUE, the next player to latejoin will guarantee roll for a random latejoin antag
 	/// (this does not guarantee they get said antag roll, depending on preferences and circumstances)
-	var/forced_injection = FALSE
+	var/late_forced_injection = FALSE
+	/// If TRUE, a midround ruleset will be rolled
+	var/mid_forced_injection = FALSE
 	/// Forced ruleset to be executed for the next latejoin.
 	var/datum/dynamic_ruleset/latejoin/forced_latejoin_rule = null
 	/// How many percent of the rounds are more peaceful.
@@ -258,10 +260,10 @@ SUBSYSTEM_DEF(dynamic)
 			spend_midround_budget(-threatadd, threat_log, "[worldtime2text()]: decreased by [key_name(usr)]")
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
-		forced_injection = TRUE
+		late_forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a latejoin injection.")
 	else if (href_list["injectmid"])
-		forced_injection = TRUE
+		mid_forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a midround injection.")
 		try_midround_roll()
 	else if (href_list["threatlog"])
@@ -567,7 +569,7 @@ SUBSYSTEM_DEF(dynamic)
 /datum/controller/subsystem/dynamic/proc/post_setup(report)
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/controller/subsystem/dynamic/, execute_roundstart_rule), rule), rule.delay)
+		addtimer(CALLBACK(src, PROC_REF(execute_roundstart_rule), rule), rule.delay)
 
 	if (!CONFIG_GET(flag/no_intercept_report))
 		addtimer(CALLBACK(src, PROC_REF(send_intercept)), rand(waittime_l, waittime_h))
@@ -873,14 +875,14 @@ SUBSYSTEM_DEF(dynamic)
 		forced_latejoin_rule = null
 		return
 
-	if(!forced_injection)
+	if(!late_forced_injection)
 		if(latejoin_injection_cooldown >= world.time)
 			return
 		if(!prob(latejoin_roll_chance))
 			return
 
-	var/was_forced = forced_injection
-	forced_injection = FALSE
+	var/was_forced = late_forced_injection
+	late_forced_injection = FALSE
 	var/list/possible_latejoin_rules = list()
 	for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
 		if(!rule.weight)

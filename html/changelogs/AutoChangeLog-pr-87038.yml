@@ -1,4 +1,0 @@
-author: "Jewelry-x"
-delete-after: True
-changes:
-  - bugfix: "fixes exception during shuttle map rotation vote"

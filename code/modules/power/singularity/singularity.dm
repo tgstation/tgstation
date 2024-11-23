@@ -66,6 +66,7 @@
 	var/datum/component/singularity/new_component = AddComponent(
 		singularity_component_type, \
 		consume_callback = CALLBACK(src, PROC_REF(consume)), \
+		roaming = (move_self && current_size >= STAGE_TWO), \
 	)
 
 	singularity_component = WEAKREF(new_component)
@@ -148,7 +149,7 @@
 			if(current_size <= STAGE_TWO)
 				investigate_log("has been destroyed by a heavy explosion.", INVESTIGATE_ENGINE)
 				qdel(src)
-				return
+				return TRUE
 
 			energy -= round(((energy + 1) / 2), 1)
 		if(EXPLODE_HEAVY)

@@ -11,6 +11,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 15
 	throwforce = 10
+	slot_flags = ITEM_SLOT_BELT
 
 	/// the mode of the resonator; has three modes: auto (1), manual (2), and matrix (3)
 	var/mode = RESONATOR_MODE_AUTO

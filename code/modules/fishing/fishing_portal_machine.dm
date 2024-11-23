@@ -17,6 +17,10 @@
 	var/max_fishing_spots = 1
 	///If true, the fishing portal can stay connected to a linked fishing spot even on different z-levels
 	var/long_range_link = FALSE
+	/// contains ALL fishing destinations.
+	var/all_destinations = FALSE
+	/// If the current active fishing spot is from multitool linkage, this value is the atom it would originally belong to.
+	var/atom/current_linked_atom
 
 /obj/machinery/fishing_portal_generator/Initialize(mapload)
 	. = ..()
@@ -200,7 +204,7 @@
 	if(machine_stat & NOPOWER)
 		balloon_alert(user, "no power!")
 		return ITEM_INTERACT_BLOCKING
-	if(!istype(selected_source, /datum/fish_source/portal)) //likely from a linked fishing spot
+	if(!all_destinations && !istype(selected_source, /datum/fish_source/portal)) //likely from a linked fishing spot
 		var/abort = TRUE
 		for(var/atom/spot as anything in linked_fishing_spots)
 			if(linked_fishing_spots[spot] != selected_source)
@@ -213,8 +217,9 @@
 				abort = FALSE
 			if(!abort)
 				RegisterSignal(spot, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_fishing_spot_z_level_changed))
+				current_linked_atom = spot
 			break
-		if(abort)
+		if(abort && !all_destinations)
 			balloon_alert(user, "cannot reach linked!")
 			return
 
@@ -231,6 +236,7 @@
 		for(var/atom/spot as anything in linked_fishing_spots)
 			if(linked_fishing_spots[spot] == active.fish_source)
 				UnregisterSignal(spot, COMSIG_MOVABLE_Z_CHANGED)
+		current_linked_atom = null
 	QDEL_NULL(active)
 
 	REMOVE_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
@@ -256,7 +262,9 @@
 	if(obj_flags & EMAGGED)
 		var/datum/fish_source/portal/syndicate = GLOB.preset_fish_sources[/datum/fish_source/portal/syndicate]
 		available_fish_sources[syndicate.radial_name] = syndicate
-	for (var/datum/techweb/techweb as anything in SSresearch.techwebs)
+	if(all_destinations)
+		available_fish_sources = GLOB.preset_fish_sources
+	else for (var/datum/techweb/techweb as anything in SSresearch.techwebs)
 		var/get_fish_sources = FALSE
 		for(var/obj/machinery/rnd/server/server as anything in techweb.techweb_servers)
 			if(!is_valid_z_level(get_turf(server), get_turf(src)))
@@ -274,7 +282,7 @@
 
 	var/id = 1
 	for(var/atom/spot as anything in linked_fishing_spots)
-		var/choice_name = "[spot.name] ([id])"
+		var/choice_name = "[id] - [spot.name]"
 		available_fish_sources[choice_name] = linked_fishing_spots[spot]
 		id++
 
@@ -298,3 +306,8 @@
 /obj/machinery/fishing_portal_generator/emagged
 	obj_flags = parent_type::obj_flags | EMAGGED
 	circuit = /obj/item/circuitboard/machine/fishing_portal_generator/emagged
+
+/obj/machinery/fishing_portal_generator/full
+	name = "fish-porter 4000 deluxe"
+	desc = "the ultimate fishing device"
+	all_destinations = TRUE

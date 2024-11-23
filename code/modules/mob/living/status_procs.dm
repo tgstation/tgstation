@@ -421,19 +421,6 @@
 		S = apply_status_effect(/datum/status_effect/incapacitating/sleeping, amount)
 	return S
 
-///Allows us to set a permanent sleep on a player (use with caution and remember to unset it with SetSleeping() after the effect is over)
-/mob/living/proc/PermaSleeping()
-	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, -1) & COMPONENT_NO_STUN)
-		return
-	if(HAS_TRAIT(src, TRAIT_GODMODE))
-		return
-	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-	if(S)
-		S.duration = -1
-	else
-		S = apply_status_effect(/datum/status_effect/incapacitating/sleeping, -1)
-	return S
-
 ///////////////////////// CLEAR STATUS /////////////////////////
 
 /mob/living/proc/adjust_status_effects_on_shake_up()
@@ -681,7 +668,7 @@
 		return 0
 	// Infinite duration status effects technically are not "timed status effects"
 	// by name or nature, but support is included just in case.
-	if(existing.duration == -1)
+	if(existing.duration == STATUS_EFFECT_PERMANENT)
 		return INFINITY
 
 	return existing.duration - world.time

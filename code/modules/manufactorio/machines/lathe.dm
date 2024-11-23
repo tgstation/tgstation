@@ -19,17 +19,34 @@
 	var/atom/movable/withheld
 
 /obj/machinery/power/manufacturing/lathe/Initialize(mapload)
-	. = ..()
 	print_sound = new(src,  FALSE)
 	materials = AddComponent( \
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
-		SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, \
+		0, \
 		MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, \
 	)
+	register_context()
+	. = ..()
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe] = new /datum/techweb/autounlocking/autolathe
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe]
+
+/obj/machinery/power/manufacturing/lathe/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Dump all contained materials"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/power/manufacturing/lathe/click_ctrl_shift(mob/living/user)
+	balloon_alert_to_viewers("materials dumped")
+	materials.retrieve_all()
+
+/obj/machinery/power/manufacturing/lathe/RefreshParts()
+	. = ..()
+	var/datum/stock_part/matter_bin/bin = locate() in component_parts
+	materials.max_amount = bin.tier * (SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE)
+
 
 /obj/machinery/power/manufacturing/lathe/examine(mob/user)
 	. = ..()
@@ -63,7 +80,7 @@
 	return ..()
 
 /obj/machinery/power/manufacturing/lathe/receive_resource(atom/movable/receiving, atom/from, receive_dir)
-	if(!isstack(receiving) || receiving.resistance_flags & INDESTRUCTIBLE || receive_dir != REVERSE_DIR(dir))
+	if(!isstack(receiving) || istype(receiving, /obj/item/stack/ore) || receiving.resistance_flags & INDESTRUCTIBLE || receive_dir != REVERSE_DIR(dir))
 		return MANUFACTURING_FAIL
 	materials.insert_item(receiving)
 	return MANUFACTURING_SUCCESS
@@ -108,7 +125,7 @@
 		return
 
 	var/craft_time = (design.construction_time * design.lathe_time_factor) ** 0.8
-	flick_overlay_view(mutable_appearance(icon, "crafter_printing"), craft_time)
+	flick_overlay_view(mutable_appearance(icon, "lathe_printing"), craft_time)
 	print_sound.start()
 	add_load(power_cost)
 	busy = addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_needed), craft_time, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_DELETE_ME)

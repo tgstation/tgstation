@@ -573,8 +573,8 @@ Difficulty: Hard
 	if(mover == caster.pulledby)
 		return
 	if(isprojectile(mover))
-		var/obj/projectile/P = mover
-		if(P.firer == caster)
+		var/obj/projectile/proj = mover
+		if(proj.firer == caster)
 			return
 	if(mover != caster)
 		return FALSE

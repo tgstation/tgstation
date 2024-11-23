@@ -3,8 +3,8 @@
 @use '../base.scss';
 @use '../colors.scss';
 @use '../functions.scss' as *;
-@use '../components/Button.scss' as button;
-@use '../components/Tabs.scss' as tabs;
+@use 'pkg:tgui-styles/components/Button' as button;
+@use 'pkg:tgui-styles/components/Tabs' as tabs;
 
 .Fabricator__Recipe {
   padding: 0.25em 0;
@@ -66,6 +66,7 @@
 }
 
 .MaterialDock--active .MaterialDock__Dock {
+  animation: materialdock-open 0.125s ease-out;
   @keyframes materialdock-open {
     0% {
       opacity: 0;
@@ -75,8 +76,6 @@
       opacity: 1;
     }
   }
-
-  animation: materialdock-open 0.125s ease-out;
 }
 
 .MaterialDock__Button {
