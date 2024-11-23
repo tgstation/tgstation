@@ -437,6 +437,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "carpenter_hammer"
 	inhand_icon_state = "carpenter_hammer"
+	belt_icon_state = "clawhammer" //plaecholder
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	desc = "Uncanny looking hammer."
