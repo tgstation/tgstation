@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - code_imp: "The cost for Core Equipment for nuclear operatives will always be equal to the cost of the contained items if purchased directly from the uplink."
-  - bugfix: "Improves the descriptions for some uplink entries."

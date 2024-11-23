@@ -168,7 +168,7 @@
 /datum/action/cooldown/spell/pointed/projectile/proc/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	to_fire.firer = owner
 	to_fire.fired_from = src
-	to_fire.preparePixelProjectile(target, owner)
+	to_fire.aim_projectile(target, owner)
 	RegisterSignal(to_fire, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_cast_hit))
 
 	if(istype(to_fire, /obj/projectile/magic))

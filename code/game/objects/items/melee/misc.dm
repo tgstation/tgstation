@@ -188,7 +188,7 @@
 	wound_bonus = 5
 	bare_wound_bonus = 15
 
-/obj/item/melee/sabre/Initialize(mapload)
+/obj/item/melee/parsnip_sabre/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/jousting)
 
