@@ -82,6 +82,7 @@
 	ai_controller.set_blackboard_key(BB_REPAIRBOT_NORMAL_SPEECH, neutral_voicelines)
 	var/static/list/abilities = list(
 		/datum/action/cooldown/mob_cooldown/bot/build_girder = BB_GIRDER_BUILD_ABILITY,
+		/datum/action/repairbot_resources = null,
 	)
 	grant_actions_by_list(abilities)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_NEGATES_GRAVITY, TRAIT_MOB_MERGE_STACKS, TRAIT_FIREDOOR_OPENER), INNATE_TRAIT)
@@ -186,7 +187,7 @@
 
 /mob/living/basic/bot/repairbot/proc/emagged_interactions(atom/target, modifiers)
 	if(!istype(target, /mob/living/silicon/robot))
-		deconstruction_device.interact_with_atom_secondary(target, src, modifiers)
+		deconstruction_device?.interact_with_atom_secondary(target, src, modifiers)
 		return
 	if(HAS_TRAIT(target, TRAIT_MOB_TIPPED))
 		return
@@ -240,8 +241,9 @@
 	return ..()
 
 /mob/living/basic/bot/repairbot/process(seconds_per_tick) //generate 1 iron rod every 2 seconds
-	if(isnull(our_rods) || our_rods.amount < our_rods.max_amount)
-		new /obj/item/stack/rods(src)
+	if(!isnull(our_rods) && our_rods.amount >= our_rods.max_amount)
+		var/obj/item/stack/rods/new_rods = new()
+		new_rods.forceMove(src)
 
 /mob/living/basic/bot/repairbot/turn_on()
 	. = ..()

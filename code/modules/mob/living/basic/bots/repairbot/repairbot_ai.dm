@@ -187,12 +187,20 @@
 		/obj/structure/window,
 		/obj/structure/grille,
 	))
-	for(var/atom/possible_blacklisted as anything in my_target)
+
+	for(var/atom/possible_blacklisted in my_target.contents)
 		if(is_type_in_typecache(possible_blacklisted, blacklist_objects))
 			return FALSE
+
 	if(istype(my_target, /turf/open/floor/plating) && !can_see(controller.pawn, my_target, 5))
 		return FALSE
-	return !istype(get_area(my_target), /area/space)
+
+	var/static/list/blacklist_areas = typecacheof(list(
+		/area/space,
+		/area/station/maintenance,
+	))
+	var/turf_area = get_area(my_target)
+	return !(is_type_in_typecache(turf_area, blacklist_areas))
 
 ///subtree to fix hull breaches
 /datum/ai_planning_subtree/replace_floors/breaches

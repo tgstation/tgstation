@@ -115,17 +115,8 @@
 		return TRUE
 	if(get_turf(pawn) == get_turf(target))
 		return TRUE
-
-	if(minimum_distance == 1)
-		var/direction = get_dir(target, pawn)
-		var/previous_turf = get_step(target, direction)
-		if(diagonally_blocked(target, previous_turf))
-			return FALSE
-
 	var/list/path = get_path_to(pawn, target, simulated_only = !HAS_TRAIT(pawn, TRAIT_SPACEWALK), mintargetdist = minimum_distance, max_distance = distance, access = get_access())
-	if(!length(path))
-		return FALSE
-	return TRUE
+	return (!!length(path))
 
 /datum/ai_planning_subtree/find_patrol_beacon
 	///travel towards beacon behavior
