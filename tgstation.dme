@@ -1513,7 +1513,6 @@
 #include "code\datums\elements\kneecapping.dm"
 #include "code\datums\elements\kneejerk.dm"
 #include "code\datums\elements\knockback.dm"
-#include "code\datums\elements\lazy_fishing_spot.dm"
 #include "code\datums\elements\leeching_walk.dm"
 #include "code\datums\elements\lifesteal.dm"
 #include "code\datums\elements\light_blocking.dm"
