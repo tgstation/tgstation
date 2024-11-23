@@ -285,7 +285,7 @@
 /obj/machinery/coffeemaker/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave //I am positively certain that this is not a microwave
 	. = ..()
 
-	if(brewing || !user.can_perform_action(src, ALLOW_SILICON_REACH))
+	if(brewing || !user.can_perform_action(src))
 		return
 
 	var/list/options = list()
@@ -325,7 +325,7 @@
 		choice = show_radial_menu(user, src, options, require_near = !HAS_SILICON_ACCESS(user))
 
 	// post choice verification
-	if(brewing || (isAI(user) && machine_stat & NOPOWER) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
+	if(brewing || (isAI(user) && machine_stat & NOPOWER) || !user.can_perform_action(src))
 		return
 
 	switch(choice)
