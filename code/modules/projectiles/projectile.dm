@@ -1113,8 +1113,11 @@
 		create_hitscan_point(impact = TRUE)
 
 	if (tracer_type)
+		// Stores all turfs we've created light effects on, in order to not dupe them if we enter a reflector loop
+		// Uses an assoc list for performance reasons
+		var/list/passed_turfs = list()
 		for (var/beam_point in beam_points)
-			generate_tracer(beam_point)
+			generate_tracer(beam_point, passed_turfs)
 
 	if (muzzle_type)
 		var/datum/point/start_point = beam_points[1]
@@ -1137,7 +1140,7 @@
 		impact_effect.set_light(impact_light_range, impact_light_intensity, impact_light_color_override || color)
 		QDEL_IN(impact_effect, PROJECTILE_TRACER_DURATION)
 
-/obj/projectile/proc/generate_tracer(datum/point/start_point)
+/obj/projectile/proc/generate_tracer(datum/point/start_point, list/passed_turfs)
 	if (isnull(beam_points[start_point]))
 		return
 
@@ -1158,17 +1161,12 @@
 	if (!hitscan_light_range || !hitscan_light_intensity)
 		return
 
-	var/self_ref = REF(src)
 	var/list/turf/light_line = get_line(start_point.return_turf(), end_point.return_turf())
 	for (var/turf/light_turf as anything in light_line)
-		var/located_effect = FALSE
-		for(var/obj/effect/abstract/projectile_lighting/light_effect in light_turf)
-			if(light_effect.owner == self_ref)
-				located_effect = TRUE
-				break
-		if (located_effect)
+		if (passed_turfs[light_turf])
 			continue
-		QDEL_IN(new /obj/effect/abstract/projectile_lighting(light_turf, hitscan_light_color_override || color, hitscan_light_range, hitscan_light_intensity, self_ref), PROJECTILE_TRACER_DURATION)
+		passed_turfs[light_turf] = TRUE
+		QDEL_IN(new /obj/effect/abstract/projectile_lighting(light_turf, hitscan_light_color_override || color, hitscan_light_range, hitscan_light_intensity), PROJECTILE_TRACER_DURATION)
 
 /**
  * Aims the projectile at a target.
