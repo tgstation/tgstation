@@ -202,7 +202,7 @@
 			catch_bullet_effect(interesting_atom)
 
 /datum/proximity_monitor/advanced/projectile_dampener/peaceborg/cleanup_field_turf(turf/target)
-	for(var/atom/interesting_atom in target)
+	for(var/atom/interesting_atom as anything in target)
 		if(iscyborg(interesting_atom))
 			REMOVE_TRAIT(interesting_atom, TRAIT_GOT_DAMPENED, REF(src))
 		if(isprojectile(interesting_atom))
