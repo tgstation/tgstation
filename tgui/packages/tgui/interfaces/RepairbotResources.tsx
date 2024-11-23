@@ -1,9 +1,8 @@
 import { useBackend } from '../backend';
 import {
-  Flex,
-  DmIcon,
-  Image,
   Button,
+  DmIcon,
+  Flex,
   ProgressBar,
   Section,
   Stack,
