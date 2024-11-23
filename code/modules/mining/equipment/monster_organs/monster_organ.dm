@@ -83,7 +83,7 @@
 	deltimer(decay_timer)
 	return ..()
 
-/obj/item/organ/monster_core/mob_insert(mob/living/carbon/target_carbon, special = FALSE, movement_flags)
+/obj/item/organ/monster_core/on_mob_insert(mob/living/carbon/target_carbon, special = FALSE, movement_flags)
 	. = ..()
 
 	if (inert)
@@ -96,7 +96,7 @@
 	target_carbon.visible_message(span_notice("[src] stabilizes as it's inserted."))
 	return TRUE
 
-/obj/item/organ/monster_core/mob_remove(mob/living/carbon/target_carbon, special, movement_flags)
+/obj/item/organ/monster_core/on_mob_remove(mob/living/carbon/target_carbon, special, movement_flags)
 	if (!inert && !special)
 		owner.visible_message(span_notice("[src] rapidly decays as it's removed."))
 		go_inert()

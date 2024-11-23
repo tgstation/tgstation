@@ -49,7 +49,7 @@
 /turf/open/lava/Initialize(mapload)
 	. = ..()
 	if(fish_source_type)
-		AddElement(/datum/element/lazy_fishing_spot, fish_source_type)
+		add_lazy_fishing(fish_source_type)
 	// You can release chrabs and lavaloops and likes in lava, or be an absolute scumbag and drop other fish there too.
 	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	refresh_light()
@@ -150,6 +150,8 @@
 	update_appearance(~UPDATE_SMOOTHING)
 
 /turf/open/lava/ex_act(severity, target)
+	if(fish_source)
+		GLOB.preset_fish_sources[fish_source].spawn_reward_from_explosion(src, severity)
 	return FALSE
 
 /turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
