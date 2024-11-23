@@ -42,3 +42,56 @@
 /datum/sprite_accessory/horns/humanoid/broken_l
 	name = "Broken (Left)"
 	icon_state = "lbroken"
+
+/datum/sprite_accessory/horns/humanoid/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
+
+/datum/sprite_accessory/horns/humanoid/drake
+	name = "Drake"
+	icon_state = "drake"
+
+/datum/sprite_accessory/horns/humanoid/crippledbull
+	name = "Crippled Bull"
+	icon_state = "crippledbull"
+
+/datum/sprite_accessory/horns/humanoid/ticketrack
+	name = "Ticket Rack"
+	icon_state = "ticketrack"
+
+/datum/sprite_accessory/horns/humanoid/hopefulhorns
+	name = "Hopeful Horns"
+	icon_state = "hopefulhorns"
+
+/datum/sprite_accessory/horns/humanoid/broadcurls
+	name = "Broad Curls"
+	icon_state = "broadcurls"
+
+/datum/sprite_accessory/horns/humanoid/curly
+	name = "Curly"
+	icon_state = "newcurly"
+
+/datum/sprite_accessory/horns/humanoid/upwards
+	name = "Upwards"
+	icon_state = "upwardshorns"
+
+/datum/sprite_accessory/horns/humanoid/dragon
+	name = "Dragon"
+	icon_state = "dragon"
+
+/datum/sprite_accessory/horns/humanoid/antenna
+	name = "Antenna"
+	icon_state = "antenna"
+
+/datum/sprite_accessory/horns/humanoid/big
+	name = "Painted Points"
+	icon = 'modular_doppler/modular_customization/accessories/icons/human/horns_big.dmi'
+	icon_state = "paintedpoints"
+
+/datum/sprite_accessory/horns/humanoid/big/whoshorns
+	name = "Who's Horns"
+	icon_state = "whoshorns"
+
+/datum/sprite_accessory/horns/humanoid/big/highrisehorns
+	name = "High-rise Horns"
+	icon_state = "highrisehorns"

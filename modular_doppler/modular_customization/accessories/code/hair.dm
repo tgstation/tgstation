@@ -655,6 +655,50 @@
 	name = "Inari"
 	icon_state = "inari"
 
+/datum/sprite_accessory/hair/modular/punktails
+    name = "Punktails"
+    icon_state = "hair_punktails"
+
+/datum/sprite_accessory/hair/modular/firestarter
+    name = "Firestarter"
+    icon_state = "hair_firestarter"
+
+/datum/sprite_accessory/hair/modular/impish
+    name = "Impish"
+    icon_state = "hair_impish"
+
+/datum/sprite_accessory/hair/modular/mermaid
+    name = "Mermaid"
+    icon_state = "hair_mermaid"
+
+/datum/sprite_accessory/hair/modular/royal_curls
+    name = "Royal Curls"
+    icon_state = "hair_royal_curls"
+
+/datum/sprite_accessory/hair/modular/halfcut
+    name = "Halfcut"
+    icon_state = "hair_halfcut"
+
+/datum/sprite_accessory/hair/modular/halfcut_rough
+    name = "Halfcut Rough"
+    icon_state = "hair_halfcut_rough"
+
+/datum/sprite_accessory/hair/modular/glossy
+    name = "Glossy"
+    icon_state = "hair_glossy"
+
+/datum/sprite_accessory/hair/modular/mia
+    name = "Mia"
+    icon_state = "hair_mia"
+
+/datum/sprite_accessory/hair/modular/braided_sidetail
+    name = "Braided Sidetail"
+    icon_state = "hair_braided_sidetail"
+
+/datum/sprite_accessory/hair/modular/glamour
+    name = "Glamour"
+    icon_state = "hair_glamour"
+
 // Facial hair
 
 /datum/sprite_accessory/facial_hair/modular
