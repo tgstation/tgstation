@@ -45,10 +45,6 @@
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
-/obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
-	. = ..()
-	register_context()
-
 /obj/machinery/computer/security/telescreen/entertainment/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle mute button"
 	return CONTEXTUAL_SCREENTIP_SET
@@ -69,6 +65,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
 	find_and_hang_on_wall()
+	register_context()
 	speakers = new(src)
 
 /obj/machinery/computer/security/telescreen/entertainment/Destroy()
