@@ -1,4 +1,0 @@
-author: "Dmeto"
-delete-after: True
-changes:
-  - map: "removes a unused disposal pipe from Cargo, fixes mining dock intercom.\nmap:adds access helper to disposals south airlock."

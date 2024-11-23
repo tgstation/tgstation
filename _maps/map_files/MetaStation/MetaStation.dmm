@@ -11327,7 +11327,7 @@
 	},
 /area/station/engineering/atmos)
 "ecD" = (
-/obj/item/bot_assembly/floorbot{
+/obj/item/bot_assembly/repairbot{
 	created_name = "FloorDiffBot";
 	desc = "Why won't it work?";
 	name = "FloorDiffBot"
@@ -45636,7 +45636,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/mob/living/simple_animal/bot/floorbot,
+/mob/living/basic/bot/repairbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "qiY" = (
@@ -59697,7 +59697,8 @@
 	name = "Lawyer Requests Console"
 	},
 /obj/machinery/newscaster/directional/west,
-/obj/structure/aquarium/lawyer,
+/obj/item/fish_tank/lawyer,
+/obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "uZP" = (

@@ -36,7 +36,7 @@
 		You can only phase in and out when you are on a space or misc turf."
 	gain_text = "You feel like your body can move through space as if you where dust."
 
-	spell_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
+	action_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
 	cost = 1
 
 

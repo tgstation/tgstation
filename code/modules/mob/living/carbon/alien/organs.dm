@@ -103,7 +103,7 @@
 	. = ..()
 	organ_owner.faction |= ROLE_ALIEN
 
-/obj/item/organ/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	if(organ_owner)
 		organ_owner.faction -= ROLE_ALIEN
 	return ..()
@@ -221,11 +221,11 @@
 	stomach_contents -= source
 	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 
-/obj/item/organ/stomach/alien/mob_insert(mob/living/carbon/stomach_owner, special, movement_flags)
+/obj/item/organ/stomach/alien/on_mob_insert(mob/living/carbon/stomach_owner, special, movement_flags)
 	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, PROC_REF(something_moved))
 	return ..()
 
-/obj/item/organ/stomach/alien/mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
+/obj/item/organ/stomach/alien/on_mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
 	UnregisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE)
 	return ..()
 

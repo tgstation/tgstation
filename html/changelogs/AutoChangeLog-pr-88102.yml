@@ -1,0 +1,4 @@
+author: "timothymtorres, SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fix chewable bubblegum not metabolizing due to microdose"

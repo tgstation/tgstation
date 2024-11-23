@@ -68,7 +68,7 @@
 		var/obj/projectile/projectile_obj = new projectile(get_turf(src))
 		projectile_obj.log_override = TRUE //we log being fired ourselves a little further down.
 		projectile_obj.firer = chassis
-		projectile_obj.preparePixelProjectile(target, source, modifiers, spread)
+		projectile_obj.aim_projectile(target, source, modifiers, spread)
 		if(isliving(source) && source.client) //dont want it to happen from syndie mecha npc mobs, they do direct fire anyways
 			var/mob/living/shooter = source
 			projectile_obj.hit_prone_targets = shooter.combat_mode
