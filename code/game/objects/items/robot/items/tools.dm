@@ -155,7 +155,6 @@
 
 /obj/item/borg/projectile_dampen/proc/restore_projectile(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
-
 	tracked_bullet_cost -= REF(projectile)
 
 //bare minimum omni-toolset for modularity

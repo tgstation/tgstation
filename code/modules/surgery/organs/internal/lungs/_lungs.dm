@@ -154,7 +154,7 @@
 	add_gas_reaction(/datum/gas/zauker, while_present = PROC_REF(too_much_zauker))
 
 ///Simply exists so that you don't keep any alerts from your previous lack of lungs.
-/obj/item/organ/lungs/mob_insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
+/obj/item/organ/lungs/on_mob_insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
 	. = ..()
 
 	receiver.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
@@ -163,7 +163,7 @@
 	receiver.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
 	receiver.clear_alert(ALERT_NOT_ENOUGH_N2O)
 
-/obj/item/organ/lungs/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/lungs/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	// This is very "manual" I realize, but it's useful to ensure cleanup for gases we're removing happens
 	// Avoids stuck alerts and such

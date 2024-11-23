@@ -72,9 +72,11 @@
 		to_chat(source, span_warning("[tether_name] prevents you from entering [new_loc]!"))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
+	// If this was called, we know its a movable
+	var/atom/movable/movable_source = source
 	var/atom/movable/anchor = (source == tether_target ? parent : tether_target)
 	if (get_dist(anchor, new_loc) > cur_dist)
-		if (!istype(anchor) || anchor.anchored || !anchor.Move(get_step_towards(anchor, new_loc)))
+		if (!istype(anchor) || anchor.anchored || !(!anchor.anchored && anchor.move_resist <= movable_source.move_force && anchor.Move(get_step_towards(anchor, new_loc))))
 			to_chat(source, span_warning("[tether_name] runs out of slack and prevents you from moving!"))
 			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
@@ -105,7 +107,6 @@
 	if (get_dist(anchor, new_loc) != cur_dist || !ismovable(source))
 		return
 
-	var/atom/movable/movable_source = source
 	var/datum/drift_handler/handler = movable_source.drift_handler
 	if (isnull(handler))
 		return
@@ -179,12 +180,12 @@
 	var/atom/movable/movable_parent = parent
 	var/atom/movable/movable_target = tether_target
 
-	if (istype(movable_parent) && movable_parent.Move(get_step(movable_parent.loc, get_dir(movable_parent, movable_target))))
+	if (istype(movable_parent) && !movable_parent.anchored && movable_parent.move_resist <= movable_target.move_force && movable_parent.Move(get_step(movable_parent.loc, get_dir(movable_parent, movable_target))))
 		cur_dist -= 1
 		location.balloon_alert(user, "tether shortened")
 		return
 
-	if (istype(movable_target) && movable_target.Move(get_step(movable_target.loc, get_dir(movable_target, movable_parent))))
+	if (istype(movable_target) && !movable_target.anchored && movable_target.move_resist <= movable_parent.move_force && movable_target.Move(get_step(movable_target.loc, get_dir(movable_target, movable_parent))))
 		cur_dist -= 1
 		location.balloon_alert(user, "tether shortened")
 		return

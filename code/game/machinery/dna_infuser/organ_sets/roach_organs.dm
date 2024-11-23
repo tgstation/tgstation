@@ -72,7 +72,7 @@
 	QDEL_NULL(roach_shell)
 	return ..()
 
-/obj/item/organ/heart/roach/on_mob_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/heart/roach/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if(!ishuman(organ_owner))
 		return
@@ -87,7 +87,7 @@
 	. = ..()
 	limb.add_bodypart_overlay(roach_shell)
 
-/obj/item/organ/heart/roach/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/heart/roach/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if(!ishuman(organ_owner) || QDELETED(organ_owner))
 		return
@@ -195,7 +195,7 @@
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
 
-/obj/item/organ/liver/roach/on_mob_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/liver/roach/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if(!ishuman(organ_owner))
 		return
@@ -203,7 +203,7 @@
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.tox_mod *= 2
 
-/obj/item/organ/liver/roach/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/liver/roach/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if(!ishuman(organ_owner) || QDELETED(organ_owner))
 		return

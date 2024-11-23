@@ -43,6 +43,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/item/fish/stingray = FISH_ICON_WEAPON,
 		/obj/item/fish/swordfish = FISH_ICON_WEAPON,
 		/obj/item/fish/zipzap = FISH_ICON_ELECTRIC,
+		/obj/item/fishing_rod = FISH_ICON_COIN,
 		/obj/item/instrument/trumpet/spectral = FISH_ICON_BONE,
 		/obj/item/instrument/saxophone/spectral = FISH_ICON_BONE,
 		/obj/item/instrument/trombone/spectral = FISH_ICON_BONE,
@@ -53,11 +54,13 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/item/stack/sheet/bone = FISH_ICON_BONE,
 		/obj/item/stack/sheet/mineral = FISH_ICON_GEM,
 		/obj/item/stack/ore = FISH_ICON_GEM,
+		/obj/item/survivalcapsule/fishing = FISH_ICON_COIN,
 		/obj/structure/closet/crate = FISH_ICON_COIN,
 		/obj/structure/mystery_box = FISH_ICON_COIN,
 	))
 
 	return_list[FISHING_RANDOM_SEED] = FISH_ICON_SEED
+	return_list[FISHING_RANDOM_ORGAN] = FISH_ICON_ORGAN
 	return return_list
 
 /**
@@ -91,6 +94,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/radial_state = "default"
 	///When selected by the fishing portal, this will be the icon_state of the overlay shown on the machine.
 	var/overlay_state = "portal_aquarium"
+	///If set, this overrides the upper and lower bounds of how long you should wait during the waiting phase of the minigame.
+	var/list/wait_time_range
 
 	/// Mindless mobs that can fish will never pull up items on this list
 	var/static/list/profound_fisher_blacklist = typecacheof(list(
@@ -117,6 +122,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	for(var/path in fish_counts)
 		if(!(path in fish_table))
 			stack_trace("path [path] found in the 'fish_counts' list but not in the 'fish_table'")
+	if(wait_time_range && length(wait_time_range) != 2)
+		stack_trace("wait_time_range for [type] is set but has length different than two")
 
 /datum/fish_source/Destroy()
 	exploded_turfs = null
@@ -240,15 +247,14 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	UnregisterSignal(user, COMSIG_MOB_COMPLETE_FISHING)
 	if(!success)
 		return
-	var/turf/fishing_spot = get_turf(challenge.float)
-	var/atom/movable/reward = dispense_reward(challenge.reward_path, user, fishing_spot)
+	var/atom/movable/reward = dispense_reward(challenge.reward_path, user, challenge.location)
 	if(reward)
 		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = reward.name)
 	SEND_SIGNAL(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
 	challenge.used_rod.on_reward_caught(reward, user)
 
 /// Gives out the reward if possible
-/datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, turf/fishing_spot)
+/datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, atom/fishing_spot)
 	var/atom/movable/reward = simple_dispense_reward(reward_path, get_turf(fisherman), fishing_spot)
 	if(!reward) //balloon alert instead
 		fisherman.balloon_alert(fisherman, pick(duds))
@@ -265,7 +271,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	return reward
 
 ///Simplified version of dispense_reward that doesn't need a fisherman.
-/datum/fish_source/proc/simple_dispense_reward(reward_path, atom/spawn_location, turf/fishing_spot)
+/datum/fish_source/proc/simple_dispense_reward(reward_path, atom/spawn_location, atom/fishing_spot)
 	if(isnull(reward_path))
 		return null
 	var/area/area = get_area(fishing_spot)
@@ -296,7 +302,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
-/datum/fish_source/proc/spawn_reward(reward_path, atom/spawn_location, turf/fishing_spot)
+/datum/fish_source/proc/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot)
 	if(reward_path == FISHING_DUD)
 		return
 	if(ispath(reward_path, /datum/chasm_detritus))
@@ -310,8 +316,12 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	return reward
 
 /// Returns the fish table, with with the unavailable items from fish_counts removed.
-/datum/fish_source/proc/get_fish_table()
+/datum/fish_source/proc/get_fish_table(from_explosion = FALSE)
 	var/list/table = fish_table.Copy()
+	//message bottles cannot spawn from explosions. They're meant to be one-time messages (rarely) and photos from past rounds
+	//and it would suck if the pool of bottle messages were constantly being emptied by explosive fishing.
+	if(from_explosion)
+		table -= /obj/effect/spawner/message_in_a_bottle
 	for(var/result in table)
 		if(!isnull(fish_counts[result]) && fish_counts[result] <= 0)
 			table -= result
@@ -466,7 +476,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
 	if(!(fish_source_flags & FISH_SOURCE_FLAG_EXPLOSIVE_MALUS))
-		explosive_spawn(location, severity)
+		explosive_spawn(isturf(location) ? location : location.drop_location(), severity)
 		return
 	if(isnull(exploded_turfs))
 		exploded_turfs = list()
@@ -485,7 +495,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	for(var/i in 1 to (severity + 2))
 		if(!prob((100 + 100 * severity)/i * multiplier))
 			continue
-		var/reward_loot = pick_weight(get_fish_table())
+		var/reward_loot = pick_weight(get_fish_table(from_explosion = TRUE))
 		var/atom/movable/reward = simple_dispense_reward(reward_loot, location, location)
 		if(isnull(reward))
 			continue

@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		investigate_log("Chef's [SSshuttle.chef_groceries.len] sized produce order arrived. Cost was deducted from orderer, not cargo.", INVESTIGATE_CARGO)
 		for(var/datum/orderable_item/item as anything in SSshuttle.chef_groceries)//every order
 			for(var/amt in 1 to SSshuttle.chef_groceries[item])//every order amount
-				new item.item_path(grocery_crate)
+				new item.purchase_path(grocery_crate)
 		SSshuttle.chef_groceries.Cut() //This lets the console know it can order another round.
 
 	if(!SSshuttle.shopping_list.len)
@@ -277,7 +277,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
 			for(var/turf/shuttle_turf as anything in zlevel_turfs)
 				for(var/atom/movable/exporting_atom in shuttle_turf)
-					if(iscameramob(exporting_atom))
+					if(iseyemob(exporting_atom))
 						continue
 					if(exporting_atom.anchored)
 						continue

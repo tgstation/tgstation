@@ -22,6 +22,10 @@
 	var/obj/item/target_item = target
 
 	if (metabolization_amount)
+		// this prevents microdosing which causes the reagent to enter and then delete itself before it can be processed
+		if(metabolization_amount < REAGENTS_METABOLISM)
+			CRASH("Attatching /datum/element/chewable to [target] requires metabolization_amount to be higher than [REAGENTS_METABOLISM]u. The amount used was [metabolization_amount]u!")
+
 		src.metabolization_amount = metabolization_amount
 
 	src.slots_to_check = slots_to_check || target_item.slot_flags

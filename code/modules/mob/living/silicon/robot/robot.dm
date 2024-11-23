@@ -135,6 +135,12 @@
 	QDEL_LIST(upgrades)
 	QDEL_NULL(cell)
 	QDEL_NULL(robot_suit)
+
+	if (smoke_particles)
+		remove_shared_particles(smoke_particles)
+	if (spark_particles)
+		remove_shared_particles(spark_particles)
+
 	return ..()
 
 /mob/living/silicon/robot/Topic(href, href_list)

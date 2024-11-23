@@ -1,0 +1,4 @@
+author: "lovegreenstuff"
+delete-after: True
+changes:
+  - bugfix: "synthmeat is no longer an nft"
