@@ -256,9 +256,15 @@
 	sharpness = SHARP_EDGED
 	light_color = LIGHT_COLOR_LIGHT_CYAN
 	tool_behaviour = TOOL_SAW
-
+	toolspeed = 0.7
 	active_force = 30
 	sword_color_icon = null // Stops icon from breaking when turned on.
+
+/obj/item/melee/energy/sword/cyborg/saw/tool_use_check(mob/living/user, amount, heat_required)
+	return !amount
+
+/obj/item/melee/energy/sword/cyborg/saw/use(used)
+	return !used
 
 /obj/item/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	return FALSE
