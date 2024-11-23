@@ -392,6 +392,10 @@
 
 ///Updates the smoke state to something else, setting particles if relevant
 /obj/machinery/coffeemaker/proc/toggle_steam()
+	if(!brewing)
+		remove_shared_particles("smoke_coffeemaker")
+		return
+
 	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/steam/mild, "smoke_coffeemaker")
 	smoke_particles.particles.position = list(-6, 0, 0)
 
@@ -704,6 +708,10 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/coffeemaker/impressa/toggle_steam()
+	if(!brewing)
+		remove_shared_particles("smoke_impressa")
+		return
+
 	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/steam/mild, "smoke_impressa")
 	smoke_particles.particles.position = list(-2, 1, 0)
 
