@@ -49,8 +49,6 @@
 
 /obj/item/gun/blastcannon/Initialize(mapload)
 	. = ..()
-	if(!pin)
-		pin = new
 	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(channel_blastwave))
 	AddElement(/datum/element/update_icon_updates_onmob)
 
