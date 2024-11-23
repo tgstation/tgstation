@@ -790,6 +790,10 @@
 
 	var/area/turf_area = gravity_turf.loc
 
+	var/force_no_gravity = !gravity_turf.force_no_gravity
+	var/is_gravity_ZTRAIT_active = SSmapping.gravity_by_z_level[gravity_turf.z]
+	var/area_has_gravity = turf_area.has_gravity
+
 	return !gravity_turf.force_no_gravity && (SSmapping.gravity_by_z_level[gravity_turf.z] || turf_area.has_gravity)
 
 /**
