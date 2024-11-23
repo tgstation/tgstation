@@ -67,6 +67,7 @@
 	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
+	RegisterSignal(src, COMSIG_MOB_ATE, PROC_REF(on_eat))
 
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
@@ -127,12 +128,17 @@
 	. = ..()
 	if(!istype(arrived, /obj/item/stack/ore))
 		return
-	playsound(src,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	if(!can_lay_eggs)
 		return
 	if(!istype(arrived, /obj/item/stack/ore/bluespace_crystal) || prob(60))
 		return
 	new /obj/item/food/egg/green/grub_egg(get_turf(src))
+
+/mob/living/basic/mining/goldgrub/proc/on_eat(atom/source, atom/movable/food, mob/feeder)
+	SIGNAL_HANDLER
+
+	food.forceMove(src)
+	return COMSIG_MOB_TERMINATE_EAT
 
 /mob/living/basic/mining/goldgrub/baby
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
