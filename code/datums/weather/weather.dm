@@ -51,6 +51,8 @@
 	var/protect_indoors = FALSE
 	/// Areas to be affected by the weather, calculated when the weather begins
 	var/list/impacted_areas = list()
+	/// Areas affected by weather have their blend modes changed
+	var/list/impacted_areas_blend_modes = list()
 	/// Areas that are protected and excluded from the affected areas.
 	var/list/protected_areas = list()
 	/// The list of z-levels that this weather is actively affecting
@@ -233,8 +235,17 @@
 	for(var/area/impacted as anything in impacted_areas)
 		if(length(overlay_cache))
 			impacted.overlays -= overlay_cache
+			if(impacted_areas_blend_modes[impacted])
+				// revert the blend mode to the old state
+				impacted.blend_mode = impacted_areas_blend_modes[impacted]
+				impacted_areas_blend_modes[impacted] = null
 		if(length(new_overlay_cache))
 			impacted.overlays += new_overlay_cache
+			// only change the blend mode if it's not default or overlay
+			if(impacted.blend_mode > BLEND_OVERLAY)
+				// save the old blend mode state
+				impacted_areas_blend_modes[impacted] = impacted.blend_mode
+				impacted.blend_mode = BLEND_OVERLAY
 
 	overlay_cache = new_overlay_cache
 
