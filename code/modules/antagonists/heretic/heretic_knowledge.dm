@@ -739,7 +739,6 @@
 		color_override = "pink",
 	)
 
-
 	if(!isnull(ascension_achievement))
 		user.client?.give_award(ascension_achievement, user)
 	heretic_datum.increase_rust_strength()
