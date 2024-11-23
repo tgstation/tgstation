@@ -25,7 +25,7 @@
 			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You almost lose your balance for a second."))
 		if(2)
-			if(SPT_PROB(3, seconds_per_tick))
+			if(SPT_PROB(3, seconds_per_tick) && !(HAS_TRAIT_FROM(affected_mob, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)))
 				to_chat(affected_mob, span_danger("You feel yourself lift off the ground."))
 				affected_mob.reagents.add_reagent(/datum/reagent/gravitum, 1)
 
