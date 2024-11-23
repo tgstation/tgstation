@@ -151,8 +151,6 @@
  * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
 /obj/item/organ/proc/mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
-	SHOULD_NOT_OVERRIDE(TRUE)
-
 	if(organ_owner)
 		if(organ_owner.organs_slot[slot] == src)
 			organ_owner.organs_slot.Remove(slot)
