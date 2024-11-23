@@ -195,7 +195,7 @@
 	REMOVE_TRAIT(movable, TRAIT_GOT_DAMPENED, REF(src))
 
 /datum/proximity_monitor/advanced/projectile_dampener/peaceborg/setup_field_turf(turf/target)
-	for(var/atom/interesting_atom in target)
+	for(var/atom/interesting_atom as anything in target)
 		if(iscyborg(interesting_atom))
 			ADD_TRAIT(interesting_atom, TRAIT_GOT_DAMPENED, REF(src))
 		if(isprojectile(interesting_atom))
