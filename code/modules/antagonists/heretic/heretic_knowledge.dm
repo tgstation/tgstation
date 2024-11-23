@@ -734,7 +734,7 @@
 	)
 	priority_announce(
 		text = get_ascension_text(user),
-		title = "[generate_heretic_text()]",
+		title = generate_heretic_text(),
 		sound = announcement_sound,
 		color_override = "pink",
 	)
