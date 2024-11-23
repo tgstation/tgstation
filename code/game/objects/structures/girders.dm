@@ -38,7 +38,7 @@
 		if(GIRDER_TRAM)
 			. += span_notice("[src] is designed for tram usage. Deconstructed with a screwdriver!")
 
-/obj/structure/girder/attackby(obj/item/W, mob/user, params)
+/obj/structure/girder/attackby(obj/item/attacking_item, mob/user, params)
 	var/platingmodifier = 1
 	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
 		platingmodifier = 0.7
@@ -46,12 +46,17 @@
 			next_beep = world.time + 10
 			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 	add_fingerprint(user)
-
-	if(istype(W, /obj/item/gun/energy/plasmacutter) || istype(W, /obj/item/melee/energy/sword) || istype(W, /obj/item/dualsaber))
-		if(!W.tool_start_check(user, amount = 1, heat_required = HIGH_TEMPERATURE_REQUIRED))
+	var/static/list/acceptable_cutters = list(
+		/obj/item/gun/energy/plasmacutter,
+		/obj/item/melee/energy/sword,
+		/obj/item/dualsaber,
+		/obj/item/pen/edagger,
+	)
+	if(is_type_in_list(attacking_item, acceptable_cutters))
+		if(!attacking_item.tool_start_check(user, amount = 1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 			return
 		balloon_alert(user, "slicing apart...")
-		if(W.use_tool(src, user, 40, volume=100))
+		if(attacking_item.use_tool(src, user, 40, volume=100))
 			if(state == GIRDER_TRAM)
 				var/obj/item/stack/sheet/mineral/titanium/M = new (user.loc, 2)
 				if(!QDELETED(M))
@@ -63,7 +68,7 @@
 			qdel(src)
 			return
 
-	else if(isstack(W))
+	else if(isstack(attacking_item))
 		if(iswallturf(loc) || (locate(/obj/structure/falsewall) in src.loc.contents))
 			balloon_alert(user, "wall already present!")
 			return
@@ -75,8 +80,8 @@
 				balloon_alert(user, "need tram floors!")
 				return
 
-		if(istype(W, /obj/item/stack/rods))
-			var/obj/item/stack/rods/rod = W
+		if(istype(attacking_item, /obj/item/stack/rods))
+			var/obj/item/stack/rods/rod = attacking_item
 			var/amount = construction_cost[rod.type]
 			if(state == GIRDER_DISPLACED)
 				if(rod.get_amount() < amount)
@@ -106,10 +111,10 @@
 					qdel(src)
 				return
 
-		if(!istype(W, /obj/item/stack/sheet))
+		if(!istype(attacking_item, /obj/item/stack/sheet))
 			return
 
-		var/obj/item/stack/sheet/sheets = W
+		var/obj/item/stack/sheet/sheets = attacking_item
 		if(istype(sheets, /obj/item/stack/sheet/iron))
 			var/amount = construction_cost[/obj/item/stack/sheet/iron]
 			if(state == GIRDER_DISPLACED)
@@ -287,8 +292,8 @@
 
 		add_hiddenprint(user)
 
-	else if(istype(W, /obj/item/pipe))
-		var/obj/item/pipe/P = W
+	else if(istype(attacking_item, /obj/item/pipe))
+		var/obj/item/pipe/P = attacking_item
 		if (P.pipe_type in list(0, 1, 5)) //simple pipes, simple bends, and simple manifolds.
 			if(!user.transferItemToLoc(P, drop_location()))
 				return

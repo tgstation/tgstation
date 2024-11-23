@@ -183,7 +183,7 @@
 	hitsound = SFX_SWING_HIT
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.5
-	usesound = 'sound/items/weapons/blade1.ogg'
+	usesound = 'sound/items/tools/esword_cut.ogg'
 	force = 3
 	throwforce = 5
 	throw_speed = 3

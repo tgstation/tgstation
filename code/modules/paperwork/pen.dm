@@ -310,7 +310,8 @@
 	armour_penetration = 20
 	bare_wound_bonus = 10
 	tool_behaviour = TOOL_WELDER
-	usesound = 'sound/items/weapons/blade1.ogg'
+	toolspeed = 0.25
+	usesound = 'sound/items/tools/esword_cut.ogg'
 	item_flags = NO_BLOOD_ON_ITEM
 	light_system = OVERLAY_LIGHT
 	light_range = 1.5

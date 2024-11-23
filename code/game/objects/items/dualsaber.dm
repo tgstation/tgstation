@@ -17,8 +17,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = SFX_SWING_HIT
 	tool_behaviour = TOOL_WELDER
-	toolspeed = 0.25
-	usesound = 'sound/items/weapons/blade1.ogg'
+	toolspeed = 0.5
+	usesound = 'sound/items/tools/esword_cut.ogg'
 	armour_penetration = 35
 	light_system = OVERLAY_LIGHT
 	light_range = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
