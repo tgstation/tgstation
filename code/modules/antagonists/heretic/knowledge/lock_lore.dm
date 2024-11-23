@@ -209,10 +209,5 @@
 	new /obj/structure/lock_tear(loc, user.mind)
 
 // i hate this, this has slightly different formatting from all other ascensions, which is the only reason this proc exists tbh.
-/datum/heretic_knowledge/ultimate/lock_final/announce_ascension(mob/living/user)
-	priority_announce(
-		text = "Delta-class dimensional anomaly detec[generate_heretic_text()] Reality rended, torn. Gates open, doors open, [user.real_name] has ascended! Fear the tide! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = announcement_sound,
-		color_override = "pink",
-	)
+/datum/heretic_knowledge/ultimate/lock_final/get_ascension_text(mob/living/user)
+	return "Delta-class dimensional anomaly detec[generate_heretic_text()] Reality rended, torn. Gates open, doors open, [user.real_name] has ascended! Fear the tide! [generate_heretic_text()]"

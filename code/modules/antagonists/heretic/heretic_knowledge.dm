@@ -732,7 +732,13 @@
 		source = user,
 		header = "A Heretic is Ascending!",
 	)
-	announce_ascension(user)
+	priority_announce(
+		text = get_ascension_text(user),
+		title = "[generate_heretic_text()]",
+		sound = announcement_sound,
+		color_override = "pink",
+	)
+
 
 	if(!isnull(ascension_achievement))
 		user.client?.give_award(ascension_achievement, user)
@@ -746,11 +752,6 @@
 
 	return ..()
 
-/// Sends a priority announcement of the heretic's ascension.
-/datum/heretic_knowledge/ultimate/proc/announce_ascension(mob/living/user)
-	priority_announce(
-		text = "[generate_heretic_text()] [replacetext(announcement_text, "%NAME%", user.real_name)] [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = announcement_sound,
-		color_override = "pink",
-	)
+/// Returns the text to be used in the heretic's ascension announcement.
+/datum/heretic_knowledge/ultimate/proc/get_ascension_text(mob/living/user)
+	return "[generate_heretic_text()] [replacetext(announcement_text, "%NAME%", user.real_name)] [generate_heretic_text()]"
