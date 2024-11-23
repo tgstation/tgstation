@@ -665,8 +665,13 @@
 	cost = 2
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
-	//use this to store the achievement typepath
+	/// The typepath of the achievement to grant upon successful ascension.
 	var/datum/award/achievement/misc/ascension_achievement
+	/// The text of the ascension announcement.
+	/// %NAME% is replaced with the heretic's real name.
+	var/announcement_text
+	/// The sound that's played for the ascension announcement.
+	var/announcement_sound
 
 /datum/heretic_knowledge/ultimate/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -727,6 +732,8 @@
 		source = user,
 		header = "A Heretic is Ascending!",
 	)
+	announce_ascension(user)
+
 	if(!isnull(ascension_achievement))
 		user.client?.give_award(ascension_achievement, user)
 	heretic_datum.increase_rust_strength()
@@ -738,3 +745,12 @@
 		sacrifice.gib(DROP_ALL_REMAINS)
 
 	return ..()
+
+/// Sends a priority announcement of the heretic's ascension.
+/datum/heretic_knowledge/ultimate/proc/announce_ascension(mob/living/user)
+	priority_announce(
+		text = "[generate_heretic_text()] [replacetext(announcement_text, "%NAME%", user.real_name)] [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = announcement_sound,
+		color_override = "pink",
+	)
