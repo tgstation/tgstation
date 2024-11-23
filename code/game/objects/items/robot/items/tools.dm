@@ -36,9 +36,9 @@
 	var/projectile_damage_tick_ecost_coefficient = 10
 	/**
 	 * Speed coefficient
-	 * Higher the coefficient slower the projectile.
+	 * Higher the coefficient faster the projectile.
 	*/
-	var/projectile_speed_coefficient = 1.5
+	var/projectile_speed_coefficient = 0.66
 	/// Energy cost per tracked projectile per second
 	var/projectile_tick_speed_ecost = 75
 	/// Projectile sent out by the dampener
@@ -170,8 +170,8 @@
 	SIGNAL_HANDLER
 
 	tracked -= projectile
-	projectile.damage *= (1 / projectile_damage_coefficient)
-	projectile.speed *= (1 / projectile_speed_coefficient)
+	projectile.damage /= projectile_damage_coefficient
+	projectile.speed /= projectile_speed_coefficient
 	projectile.cut_overlay(projectile_effect)
 
 //bare minimum omni-toolset for modularity

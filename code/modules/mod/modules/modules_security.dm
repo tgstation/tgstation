@@ -310,7 +310,7 @@
 	/// Debuff multiplier on projectiles.
 	var/debuff_multiplier = 0.66
 	/// Speed multiplier on projectiles, higher means slower.
-	var/speed_multiplier = 2.5
+	var/speed_multiplier = 0.4
 	/// List of all tracked projectiles.
 	var/list/tracked_projectiles = list()
 	/// Effect image on projectiles.
