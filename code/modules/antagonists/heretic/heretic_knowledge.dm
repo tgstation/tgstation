@@ -668,7 +668,8 @@
 	/// The typepath of the achievement to grant upon successful ascension.
 	var/datum/award/achievement/misc/ascension_achievement
 	/// The text of the ascension announcement.
-	/// %NAME% is replaced with the heretic's real name.
+	/// %NAME% is replaced with the heretic's real name,
+	/// and %SPOOKY% is replaced with output from [generate_heretic_text]
 	var/announcement_text
 	/// The sound that's played for the ascension announcement.
 	var/announcement_sound
@@ -733,7 +734,7 @@
 		header = "A Heretic is Ascending!",
 	)
 	priority_announce(
-		text = get_ascension_text(user),
+		text = replacetext(replacetext(announcement_text, "%NAME%", user.real_name), "%SPOOKY%", GLOBAL_PROC_REF(generate_heretic_text)),
 		title = generate_heretic_text(),
 		sound = announcement_sound,
 		color_override = "pink",
@@ -750,7 +751,3 @@
 		sacrifice.gib(DROP_ALL_REMAINS)
 
 	return ..()
-
-/// Returns the text to be used in the heretic's ascension announcement.
-/datum/heretic_knowledge/ultimate/proc/get_ascension_text(mob/living/user)
-	return "[generate_heretic_text()] [replacetext(announcement_text, "%NAME%", user.real_name)] [generate_heretic_text()]"

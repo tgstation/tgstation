@@ -168,7 +168,7 @@
 		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME! WITNESS MY ASCENSION!"
 
 	ascension_achievement = /datum/award/achievement/misc/rust_ascension
-	announcement_text = "Fear the decay, for the Rustbringer, %NAME% has ascended! None shall escape the corrosion!"
+	announcement_text = "%SPOOKY% Fear the decay, for the Rustbringer, %NAME% has ascended! None shall escape the corrosion! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_rust.ogg'
 	/// If TRUE, then immunities are currently active.
 	var/immunities_active = FALSE
