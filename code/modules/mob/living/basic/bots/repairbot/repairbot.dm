@@ -171,11 +171,11 @@
 			our_screwdriver?.melee_attack_chain(src, target_window)
 
 	//stack interactions
-	for(var/obj/item/stack/type as anything in possible_stack_interactions)
-		if(!is_type_in_typecache(target, possible_stack_interactions[type]))
+	for(var/obj/item/stack/stack_type as anything in possible_stack_interactions)
+		if(!is_type_in_typecache(target, possible_stack_interactions[stack_type]))
 			continue
-		var/obj/item/target_stack = locate(type) in src
-		attempt_use_stack(target_stack ? target_stack : type::name, target)
+		var/obj/item/target_stack = locate(stack_type) in src
+		attempt_use_stack(target_stack ? target_stack : stack_type::name, target)
 		return
 
 	//tool interactions

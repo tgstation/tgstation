@@ -45,9 +45,10 @@
 /datum/action/repairbot_resources
 	name = "Resources"
 	desc = "Manage your resources."
-	background_icon = 'icons/obj/stack_objects.dmi'
+	button_icon = 'icons/obj/stack_objects.dmi'
+	button_icon_state = "sheet-metal_3"
+	background_icon_state = "bg_tech_blue"
 	overlay_icon_state = "bg_tech_blue_border"
-	background_icon_state = "sheet-metal_3"
 	///things we arent allowed to eject
 	var/static/list/eject_blacklist = typecacheof(list(
 		/obj/item/stack/rods,
