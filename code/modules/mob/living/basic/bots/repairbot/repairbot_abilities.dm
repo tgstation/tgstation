@@ -49,7 +49,7 @@
 	overlay_icon_state = "bg_tech_blue_border"
 	background_icon_state = "sheet-metal_3"
 	///things we arent allowed to eject
-	var/static/list/eject_blacklist = typeacheof(list(
+	var/static/list/eject_blacklist = typecacheof(list(
 		/obj/item/stack/rods,
 	))
 
