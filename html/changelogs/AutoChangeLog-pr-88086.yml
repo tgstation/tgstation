@@ -1,0 +1,4 @@
+author: "thimothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix wrong status effect for watery tile"
