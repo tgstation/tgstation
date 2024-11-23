@@ -627,6 +627,9 @@
 	if(!istype(examined_mob) || src == examined_mob || examined_mob.stat >= UNCONSCIOUS || !client || is_blind())
 		return
 
+	if (is_eyes_covered() || examined_mob.is_eyes_covered())
+		return
+
 	var/imagined_eye_contact = FALSE
 	if(!LAZYACCESS(examined_mob.client?.recent_examines, src))
 		// even if you haven't looked at them recently, if you have the shift eyes trait, they may still imagine the eye contact
