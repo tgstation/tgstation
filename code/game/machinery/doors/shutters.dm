@@ -5,7 +5,7 @@
 	icon = 'icons/obj/doors/shutters.dmi'
 	layer = SHUTTER_LAYER
 	closingLayer = SHUTTER_LAYER
-	damage_deflection = 24
+	damage_deflection = 21
 	armor_type = /datum/armor/poddoor_shutters
 	max_integrity = 100
 	recipe_type = /datum/crafting_recipe/shutters
@@ -83,7 +83,7 @@
 	icon_state = "closed"
 	opacity = FALSE
 	glass = TRUE
-	damage_deflection = 21
+	damage_deflection = 20
 
 /obj/machinery/door/poddoor/shutters/window/preopen
 	icon_state = "open"
