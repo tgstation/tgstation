@@ -2,7 +2,7 @@
 	/// A string unique ID for the modpack. Used for self-cheсks, must be same as modpack name in code. /datum/modpack/ru_crayons -> "id = ru_crayons"
 	var/id
 	/// An icon for modpack preview,
-	var/icon = 'modular_meta/mods_icon_placeholder.dmi'
+	var/icon = 'modular_meta/__modpack/mods_icon_placeholder.dmi'
 	/// A string name for the modpack. Used for looking up other modpacks in init.
 	var/name
 	/// A string desc for the modpack. Can be used for modpack verb list as description.
@@ -13,6 +13,9 @@
 	var/group
 	/// A list of your modpack's dependencies. If you use obj from another modpack - put it here.
 	var/list/mod_depends = list()
+	
+	/// Is modpack visible, (for hidden modpacks, like "example" one)
+	var/visible = TRUE // by default set to TRUE
 
 
 // Modpacks initialization steps
@@ -60,19 +63,29 @@
 	
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/modpacks)
 	for(var/datum/modpack/modpack as anything in SSmodpacks.loaded_modpacks)
+		if (!modpack.visible) // if modpack hidden then do not add it to list
+			continue
+		
 		var/list/modpack_data = list(
 			"name" = modpack.name,
 			"desc" = modpack.desc,
 			"author" = modpack.author,
-			"icon_class" = assets.icon_class_name("modpack-[modpack.id]"),
 			"id" = modpack.id,
 			)
+		if (icon == "modular_meta/__modpack/mods_icon_placeholder.dmi")
+			modpack_data += list(
+				"icon_class" = assets.icon_class_name("modpack-cheburek_car"),
+				)
+		else
+			modpack_data += list(
+				"icon_class" = assets.icon_class_name("modpack-[modpack.id]"),
+				)
 
 		if (modpack.group == "Фичи" || modpack.group == "Features")
 			.["features"] += list(modpack_data)
 		else if (modpack.group == "Переводы" || modpack.group == "Translations")
 			.["translations"] += list(modpack_data)
-		else if (modpack.group == "Баланс" || modpack.group == "Reverts")
+		else if (modpack.group == "Балансы" || modpack.group == "Reverts")
 			.["reverts"] += list(modpack_data)
 		else
 			CRASH("Modpack [modpack.name] has bad group name or queued for deletion.")
