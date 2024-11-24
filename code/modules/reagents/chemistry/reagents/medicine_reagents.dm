@@ -646,7 +646,7 @@
 	overdose_threshold = 30
 	ph = 8.96
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opioids = 30) // 30 units of morphine may cause addition
+	addiction_types = list(/datum/addiction/opioids = 20) // 30 units of morphine may cause addition
 	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/affected_mob)
