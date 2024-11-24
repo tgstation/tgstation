@@ -13,7 +13,6 @@
 	else
 		return COMPONENT_INCOMPATIBLE
 	fish_source.on_fishing_spot_init(src)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examined_more))
@@ -34,12 +33,6 @@
 	SIGNAL_HANDLER
 	if(try_start_fishing(rod,user))
 		return FISHING_ROD_CAST_HANDLED
-	return NONE
-
-/datum/component/fishing_spot/proc/handle_attackby(datum/source, obj/item/item, mob/user, params)
-	SIGNAL_HANDLER
-	if(try_start_fishing(item,user))
-		return COMPONENT_NO_AFTERATTACK
 	return NONE
 
 ///If the fish source has fishes that are shown in the

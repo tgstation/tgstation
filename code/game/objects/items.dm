@@ -240,8 +240,10 @@
 
 	/// Has the item been reskinned?
 	var/current_skin
-	///// List of options to reskin.
+	/// List of options to reskin.
 	var/list/unique_reskin
+	/// If reskins change inhands as well
+	var/unique_reskin_changes_inhand = FALSE
 	/// Do we apply a click cooldown when resisting this object if it is restraining them?
 	var/resist_cooldown = CLICK_CD_BREAKOUT
 
