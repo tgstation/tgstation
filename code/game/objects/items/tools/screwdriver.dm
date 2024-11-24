@@ -5,7 +5,7 @@
 	icon_state = "screwdriver_map"
 	inhand_icon_state = "screwdriver"
 	worn_icon_state = "screwdriver"
-	belt_icon_state = "screwdriver"
+	inside_belt_icon_state = "screwdriver"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -81,7 +81,7 @@
 	name = "hand drill"
 	desc = "A simple powered hand drill."
 	icon_state = "drill"
-	belt_icon_state = null
+	inside_belt_icon_state = null
 	inhand_icon_state = "drill"
 	worn_icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
