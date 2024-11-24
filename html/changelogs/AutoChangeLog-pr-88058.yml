@@ -1,0 +1,5 @@
+author: "Mifutus"
+delete-after: True
+changes:
+  - rscadd: "Added new moth customizations available in the character creation under the name \"Dipped\""
+  - image: "added icons for the moth wings, antennae and markings\n:cl:"
