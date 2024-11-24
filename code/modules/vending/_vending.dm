@@ -1189,9 +1189,12 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	src.ai_controller = new /datum/ai_controller/vending_machine(src)
-	balloon_alert(user, "product lock disabled")
+	addtimer(CALLBACK(src, PROC_REF(become_hostile)), rand(10, 30))
+	balloon_alert(user, "experimental features unlocked!")
 	return TRUE
+
+/obj/machinery/vending/proc/become_hostile()
+	src.ai_controller = new /datum/ai_controller/vending_machine(src)
 
 /obj/machinery/vending/interact(mob/user)
 	if (HAS_AI_ACCESS(user))
