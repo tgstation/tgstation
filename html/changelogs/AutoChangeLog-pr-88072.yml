@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - image: "Muzzle flash now is attached to your sprite, meaning you won't run over it if you fire while moving"
