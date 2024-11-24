@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix coffee maker items teleporting to AI/Cyborg locations"
