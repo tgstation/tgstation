@@ -140,10 +140,10 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	// check if target has a weapon
-	var/holding_weapon = FALSE
+	var/holding_weapon
 	for(var/obj/item/potential_weapon in target.held_items)
 		if(!(potential_weapon.item_flags & ABSTRACT))
-			holding_weapon = TRUE
+			holding_weapon = potential_weapon
 			break
 
 	var/attack_results = monkey_attack(controller, target, seconds_per_tick, holding_weapon && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick), holding_weapon)

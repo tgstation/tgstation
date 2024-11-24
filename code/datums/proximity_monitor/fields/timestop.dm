@@ -204,11 +204,11 @@
 		freeze_atom(i)
 	freeze_turf(target)
 
-/datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/projectile/P)
-	P.paused = TRUE
+/datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/projectile/proj)
+	proj.paused = TRUE
 
-/datum/proximity_monitor/advanced/timestop/proc/unfreeze_projectile(obj/projectile/P)
-	P.paused = FALSE
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_projectile(obj/projectile/proj)
+	proj.paused = FALSE
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/victim)
 	frozen_mobs += victim
