@@ -5913,7 +5913,7 @@
 /area/station/cargo/sorting)
 "aST" = (
 /turf/closed/wall/r_wall,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "aTa" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -6259,7 +6259,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "bcq" = (
 /obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
@@ -6952,7 +6952,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/floor,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "bsW" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -9568,7 +9568,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "ckr" = (
 /obj/structure/table,
 /obj/item/assembly/timer{
@@ -10564,7 +10564,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "cCr" = (
 /obj/structure/cable,
 /obj/machinery/light/warm/directional/east,
@@ -10958,7 +10958,7 @@
 	dir = 1
 	},
 /turf/open/openspace,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "cII" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -12237,7 +12237,7 @@
 /obj/effect/turf_decal/stripes/box,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "deU" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light/dim/directional/west,
@@ -13990,7 +13990,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "dMw" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Emergency Exit"
@@ -14954,7 +14954,7 @@
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "edE" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
@@ -15514,7 +15514,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "eqK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -16131,7 +16131,7 @@
 /obj/effect/turf_decal/stripes/box,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "eBd" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
@@ -17508,7 +17508,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "feP" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
@@ -18486,7 +18486,7 @@
 /obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "fvM" = (
 /obj/structure/stairs/north,
 /turf/open/floor/iron/stairs/medium,
@@ -19614,7 +19614,7 @@
 /obj/structure/cable/multilayer/connected,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "fSM" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
@@ -20060,7 +20060,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "gbl" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -21068,7 +21068,7 @@
 	},
 /obj/structure/cable,
 /turf/open/openspace,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "gtZ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/airalarm/directional/south,
@@ -21371,7 +21371,7 @@
 /obj/structure/cable/layer1,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "gAH" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -27807,7 +27807,7 @@
 	},
 /obj/structure/cable,
 /turf/open/openspace,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "iXx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/structure/lattice,
@@ -28337,7 +28337,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "jgn" = (
 /obj/structure/table/reinforced,
 /obj/structure/displaycase/forsale/kitchen{
@@ -31478,7 +31478,7 @@
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "kgG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -31905,7 +31905,7 @@
 "koo" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "koq" = (
 /obj/machinery/air_sensor/oxygen_tank,
 /turf/open/floor/engine/o2,
@@ -34503,7 +34503,7 @@
 /obj/structure/cable/multilayer/connected,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "lhV" = (
 /obj/structure/displaycase/trophy,
 /obj/machinery/light/warm/directional/west,
@@ -35166,7 +35166,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "lsx" = (
 /obj/structure/chair/stool/directional/north,
 /obj/effect/turf_decal/trimline/dark_blue/corner{
@@ -35593,7 +35593,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "lzo" = (
 /obj/machinery/door/window/left/directional/south,
 /turf/open/floor/grass,
@@ -36326,7 +36326,7 @@
 /obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "lMJ" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -37925,7 +37925,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "mns" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
@@ -38298,7 +38298,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "muZ" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -39095,7 +39095,7 @@
 "mJF" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "mJG" = (
 /obj/structure/chair/stool/bar/directional/north,
 /obj/effect/turf_decal/siding/thinplating{
@@ -39123,7 +39123,7 @@
 /obj/structure/cable/layer1,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "mKh" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -39596,7 +39596,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "mWC" = (
 /obj/machinery/holopad,
 /obj/machinery/firealarm/directional/north,
@@ -40056,7 +40056,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "neC" = (
 /obj/structure/railing{
 	dir = 1
@@ -42046,7 +42046,7 @@
 "nNw" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "nNz" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -42081,7 +42081,7 @@
 /area/station/tcommsat/server)
 "nOd" = (
 /turf/open/openspace,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "nOe" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
@@ -43266,7 +43266,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "ojQ" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -44030,7 +44030,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "oAn" = (
 /obj/machinery/airlock_sensor/incinerator_ordmix{
 	pixel_x = 23;
@@ -45775,7 +45775,7 @@
 /area/station/cargo/miningdock)
 "plk" = (
 /turf/closed/wall/r_wall,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "pln" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
@@ -46054,7 +46054,7 @@
 /obj/structure/cable,
 /obj/machinery/light/floor,
 /turf/open/floor/plating,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "ppU" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/trimline/tram/filled/line{
@@ -47368,7 +47368,7 @@
 /obj/structure/cable/layer1,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "pKZ" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
@@ -48162,7 +48162,7 @@
 	},
 /obj/structure/railing,
 /turf/open/openspace,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "pZH" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
@@ -49854,15 +49854,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
-"qCU" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/power/solar{
-	name = "Starboard Solar Array";
-	id = "forestarboard"
-	},
-/obj/structure/cable,
-/turf/open/space/basic,
-/area/space/nearstation)
 "qCW" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -51055,7 +51046,7 @@
 	dir = 8
 	},
 /turf/open/openspace,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "qZx" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/decal/cleanable/dirt,
@@ -54170,7 +54161,7 @@
 	},
 /obj/structure/railing,
 /turf/open/openspace,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "sgB" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/structure/cable,
@@ -54834,7 +54825,7 @@
 /area/station/engineering/supermatter/room)
 "srF" = (
 /turf/open/openspace,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "srN" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/structure/cable,
@@ -55585,7 +55576,7 @@
 "sEZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "sFc" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -55657,7 +55648,7 @@
 /obj/structure/cable,
 /obj/machinery/light/floor,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "sGO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -61857,7 +61848,7 @@
 /obj/structure/railing/corner,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "uIk" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -63603,7 +63594,7 @@
 /obj/structure/cable/layer1,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "vob" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/iron/dark,
@@ -64163,7 +64154,7 @@
 /obj/structure/cable,
 /obj/machinery/light/floor,
 /turf/open/floor/plating,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "vwT" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -64328,11 +64319,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "vAx" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "vAF" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
@@ -65378,7 +65369,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/dim/directional/north,
 /turf/open/floor/catwalk_floor,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "vTj" = (
 /obj/effect/turf_decal/trimline/neutral/warning,
 /obj/machinery/door/window/brigdoor/left/directional/north{
@@ -65691,7 +65682,7 @@
 /obj/structure/railing,
 /obj/structure/cable,
 /turf/open/openspace,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "vZZ" = (
 /obj/machinery/duct,
 /obj/structure/cable,
@@ -69771,7 +69762,7 @@
 "xCe" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "xCm" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
@@ -69818,7 +69809,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
-/area/station/solars/starboard/fore)
+/area/station/maintenance/solars/starboard/fore)
 "xDJ" = (
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/freezer,
@@ -70579,7 +70570,7 @@
 	dir = 8
 	},
 /turf/open/openspace,
-/area/station/solars/port)
+/area/station/maintenance/solars/port)
 "xTM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/nitrogen_output{
 	dir = 1
@@ -113046,7 +113037,7 @@ vXM
 pZH
 vXM
 vXM
-qCU
+bwp
 vXM
 vXM
 aev
