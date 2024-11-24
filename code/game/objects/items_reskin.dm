@@ -64,6 +64,8 @@
 		return
 	current_skin = pick
 	icon_state = unique_reskin[pick]
+	if (unique_reskin_changes_inhand)
+		inhand_icon_state = icon_state
 	to_chat(user, "[src] is now skinned as '[pick].'")
 	SEND_SIGNAL(src, COMSIG_OBJ_RESKIN, user, pick)
 

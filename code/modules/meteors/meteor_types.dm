@@ -76,8 +76,12 @@
 	if(!isatom(chasing))
 		return
 	var/datum/move_loop/new_loop = GLOB.move_manager.move_towards(src, chasing, delay, home, lifetime)
-	if(!new_loop)
-		return
+	if(new_loop)
+		RegisterSignal(new_loop, COMSIG_MOVELOOP_STOP, PROC_REF(on_loop_stopped))
+
+/obj/effect/meteor/proc/on_loop_stopped(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
 
 ///Deals with what happens when we stop moving, IE we die
 /obj/effect/meteor/proc/moved_off_z()

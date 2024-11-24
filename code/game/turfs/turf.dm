@@ -821,8 +821,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/add_fishing_spot_comp(datum/source)
 	SIGNAL_HANDLER
-	remove_lazy_fishing()
 	source.AddComponent(/datum/component/fishing_spot, fish_source)
+	remove_lazy_fishing()
 
 /turf/proc/on_npc_fishing(datum/source, list/fish_spot_container)
 	SIGNAL_HANDLER

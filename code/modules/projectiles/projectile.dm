@@ -610,7 +610,7 @@
 			var/mob/living/living_target = target
 			living_target.block_projectile_effects()
 		return FALSE
-	if(!ignore_source_check && firer)
+	if(!ignore_source_check && firer && !direct_target)
 		if(target == firer || (target == firer.loc && ismecha(firer.loc)) || (target in firer.buckled_mobs))
 			return FALSE
 		if(ismob(firer))
