@@ -77,7 +77,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/asteriod)
 "aan" = (
 /turf/open/floor/iron/stairs/medium{
 	dir = 8
@@ -103,7 +103,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/asteriod)
 "aat" = (
 /obj/item/stack/cable_coil,
 /turf/open/misc/asteroid/airless,
@@ -112,7 +112,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/asteriod)
 "aaw" = (
 /obj/item/storage/toolbox/electrical,
 /turf/open/misc/asteroid/airless,
@@ -136,7 +136,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable/layer1,
 /turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/asteriod)
 "aaD" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/airless,
@@ -1340,19 +1340,19 @@
 	id = "portsolar"
 	},
 /turf/open/floor/plating/airless,
-/area/station/solars/port)
+/area/station/solars/port/asteriod)
 "ael" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable/layer1,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/solars/port)
+/area/station/solars/port/asteriod)
 "aem" = (
 /obj/item/storage/toolbox/electrical,
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable/layer1,
 /turf/open/floor/plating/airless,
-/area/station/solars/port)
+/area/station/solars/port/asteriod)
 "aen" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/stack/ore/glass,
@@ -16912,6 +16912,9 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
+"eSh" = (
+/turf/closed/wall,
+/area/station/solars/starboard/fore/asteriod)
 "eSj" = (
 /obj/structure/table,
 /obj/item/storage/box/firingpins,
@@ -21760,7 +21763,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating/airless,
-/area/station/solars/port)
+/area/station/solars/port/asteriod)
 "gGV" = (
 /obj/structure/table,
 /obj/item/instrument/harmonica,
@@ -23359,7 +23362,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/asteriod)
 "hmb" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 8
@@ -24058,7 +24061,7 @@
 /obj/structure/cable,
 /obj/structure/cable/layer1,
 /turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/asteriod)
 "hDF" = (
 /obj/machinery/computer/apc_control{
 	dir = 1
@@ -28136,7 +28139,7 @@
 "jcT" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/solars/port)
+/area/station/solars/port/asteriod)
 "jde" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Vacant Office A"
@@ -36362,7 +36365,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable/layer1,
 /turf/open/floor/plating/airless,
-/area/station/solars/port)
+/area/station/solars/port/asteriod)
 "lMZ" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
@@ -39928,7 +39931,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/solars/port)
+/area/station/solars/port/asteriod)
 "ncF" = (
 /turf/closed/wall,
 /area/station/maintenance/tram/left)
@@ -40476,7 +40479,7 @@
 "nkU" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/asteriod)
 "nle" = (
 /obj/machinery/door/airlock/security{
 	name = "Evidence Storage"
@@ -41341,7 +41344,7 @@
 /obj/structure/cable,
 /obj/structure/cable/layer1,
 /turf/open/floor/plating/airless,
-/area/station/solars/port)
+/area/station/solars/port/asteriod)
 "nzO" = (
 /mob/living/carbon/human/species/monkey,
 /turf/open/misc/dirt/jungle{
@@ -45349,7 +45352,7 @@
 /obj/structure/cable,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
+/area/station/solars/starboard/fore/asteriod)
 "pdf" = (
 /obj/machinery/camera/directional/north{
 	network = list("ss13","engineering","Security");
@@ -49051,6 +49054,9 @@
 /obj/machinery/microwave,
 /turf/open/floor/iron/white,
 /area/station/commons/vacant_room)
+"qoG" = (
+/turf/closed/wall,
+/area/station/solars/port/asteriod)
 "qoX" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
@@ -91040,7 +91046,7 @@ aac
 aac
 aac
 gGy
-qEH
+qoG
 aac
 aac
 aac
@@ -107135,7 +107141,7 @@ aac
 aac
 aac
 aac
-csA
+eSh
 aac
 aac
 aac
@@ -110735,7 +110741,7 @@ aac
 aac
 aac
 aac
-csA
+eSh
 nkU
 aac
 aac
@@ -114335,7 +114341,7 @@ aac
 aac
 aac
 hlS
-csA
+eSh
 aac
 aac
 aac
@@ -117935,7 +117941,7 @@ aac
 aac
 aac
 aac
-csA
+eSh
 aac
 aac
 aac

@@ -41,9 +41,19 @@
 	name = "\improper Starboard Bow Solar Array"
 	icon_state = "panelsFS"
 
+/area/station/solars/starboard/fore/asteriod
+	name = "\improper Starboard Bow Asteriod Solar Array"
+	icon_state = "panelsFS"
+	area_flags = UNIQUE_AREA // solar areas directly on asteriod have gravity
+
 /area/station/solars/port
 	name = "\improper Port Solar Array"
 	icon_state = "panelsP"
+
+/area/station/solars/port/asteriod
+	name = "\improper Port Asteriod Solar Array"
+	icon_state = "panelsP"
+	area_flags = UNIQUE_AREA // solar areas directly on asteriod have gravity
 
 /area/station/solars/port/aft
 	name = "\improper Port Quarter Solar Array"
