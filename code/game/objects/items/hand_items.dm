@@ -257,8 +257,8 @@
 				)
 
 				// Worse than just help intenting people.
-				slapped.AdjustSleeping(-75)
-				slapped.AdjustUnconscious(-50)
+				slapped.AdjustSleeping(-7.5 SECONDS)
+				slapped.AdjustUnconscious(-5 SECONDS)
 
 			else
 				user.visible_message(
