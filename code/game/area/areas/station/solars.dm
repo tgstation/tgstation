@@ -5,12 +5,12 @@
 /area/station/solars
 	icon_state = "panels"
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA
+	area_flags = UNIQUE_AREA|FORCE_NO_GRAVITY
 	flags_1 = NONE
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
-	has_gravity = FALSE
+	default_gravity = NONE
 
 /area/station/solars/fore
 	name = "\improper Fore Solar Array"

@@ -126,4 +126,4 @@
 /area/station/science/ordnance/bomb
 	name = "\improper Ordnance Bomb Site"
 	icon_state = "ord_boom"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | FORCE_NO_GRAVITY
