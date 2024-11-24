@@ -629,8 +629,8 @@
 		return
 	. = ..()
 	if(mod.active)
-		COOLDOWN_START(src, recloak_timer, 15 SECONDS)
-		addtimer(CALLBACK(src, PROC_REF(start_stealth)), 15 SECONDS)
+		COOLDOWN_START(src, recloak_timer, 20 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(start_stealth)), 20 SECONDS)
 		stealth_active = FALSE
 
 /obj/item/mod/module/stealth/wraith/examine_more(mob/user)
