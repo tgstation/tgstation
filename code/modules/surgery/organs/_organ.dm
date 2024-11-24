@@ -137,9 +137,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(!IS_ROBOTIC_ORGAN(src) && (clean_types & CLEAN_TYPE_BLOOD))
 		add_blood_DNA(blood_dna_info)
 
-/obj/item/organ/process(seconds_per_tick, times_fired)
-	return
-
 /obj/item/organ/proc/on_death(seconds_per_tick, times_fired) //runs decay when outside of a person
 	if(organ_flags & (ORGAN_ROBOTIC | ORGAN_FROZEN))
 		return
@@ -203,7 +200,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/process(seconds_per_tick, times_fired)
 	on_death(seconds_per_tick, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
-
 
 /obj/item/organ/proc/OnEatFrom(eater, feeder)
 	useable = FALSE //You can't use it anymore after eating it you spaztic
