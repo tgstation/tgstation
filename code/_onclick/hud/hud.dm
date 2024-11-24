@@ -151,8 +151,16 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
-	RegisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
-	on_eye_change(null, null, mymob.canon_client.eye)
+	var/client/client = mymob.canon_client
+	if(client.rebuild_plane_masters)
+		var/new_relay_loc = (client.byond_version > 515) ? "1,1" : "CENTER"
+		for(var/group_key as anything in master_groups)
+			var/datum/plane_master_group/group = master_groups[group_key]
+			group.relay_loc = new_relay_loc
+			group.rebuild_plane_masters()
+		client.rebuild_plane_masters = FALSE
+	RegisterSignal(client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
+	on_eye_change(null, null, client.eye)
 
 /datum/hud/proc/clear_client(datum/source)
 	SIGNAL_HANDLER
@@ -198,6 +206,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	SIGNAL_HANDLER
 	update_parallax_pref() // If your eye changes z level, so should your parallax prefs
 	var/turf/eye_turf = get_turf(eye)
+	if(!eye_turf)
+		return
 	SEND_SIGNAL(src, COMSIG_HUD_Z_CHANGED, eye_turf.z)
 	var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
 	if(current_plane_offset == new_offset)
@@ -497,7 +507,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/i = 1
 	for(var/atom/movable/screen/swap_hand/SH in static_inventory)
-		SH.screen_loc = ui_swaphand_position(mymob,!(i % 2) ? 2: 1)
+		SH.screen_loc = ui_swaphand_position(mymob, IS_RIGHT_INDEX(i) ? RIGHT_HANDS : LEFT_HANDS)
 		i++
 	for(var/atom/movable/screen/human/equip/E in static_inventory)
 		E.screen_loc = ui_equip_position(mymob)

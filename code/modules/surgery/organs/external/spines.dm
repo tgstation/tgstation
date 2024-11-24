@@ -16,13 +16,13 @@
 
 	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
 
-/obj/item/organ/spines/mob_insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/spines/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	// If we have a tail, attempt to add a tail spines overlay
 	var/obj/item/organ/tail/our_tail = receiver.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	our_tail?.try_insert_tail_spines(our_tail.bodypart_owner)
 	return ..()
 
-/obj/item/organ/spines/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/spines/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	// If we have a tail, remove any tail spines overlay
 	var/obj/item/organ/tail/our_tail = organ_owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	our_tail?.remove_tail_spines(our_tail.bodypart_owner)

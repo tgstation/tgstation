@@ -157,7 +157,7 @@
 	destabilizer.icon_state = "[projectile_icon]"
 	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
 		attached_trophy.on_projectile_fire(destabilizer, user)
-	destabilizer.preparePixelProjectile(target, user, modifiers)
+	destabilizer.aim_projectile(target, user, modifiers)
 	destabilizer.firer = user
 	playsound(user, 'sound/items/weapons/plasma_cutter.ogg', 100, TRUE)
 	destabilizer.fire()
@@ -423,7 +423,7 @@
 		marker.name = "deadly [marker.name]"
 		marker.icon_state = "chronobolt"
 		marker.damage = bonus_value
-		marker.speed = 2
+		marker.speed = 0.5
 		deadly_shot = FALSE
 
 /obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/living/user)

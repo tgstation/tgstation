@@ -94,13 +94,13 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/heart/nightmare/on_mob_insert(mob/living/carbon/heart_owner, special)
+/obj/item/organ/heart/nightmare/on_mob_insert(mob/living/carbon/heart_owner, special, movement_flags)
 	. = ..()
 	if(special != HEART_SPECIAL_SHADOWIFY)
 		blade = new/obj/item/light_eater
 		heart_owner.put_in_hands(blade)
 
-/obj/item/organ/heart/nightmare/on_mob_remove(mob/living/carbon/heart_owner, special)
+/obj/item/organ/heart/nightmare/on_mob_remove(mob/living/carbon/heart_owner, special, movement_flags)
 	. = ..()
 	respawn_progress = 0
 	if(blade && special != HEART_SPECIAL_SHADOWIFY)

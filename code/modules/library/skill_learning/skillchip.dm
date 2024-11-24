@@ -132,10 +132,12 @@
  * * owner_brain - The brain that this skillchip was implanted in to.
  */
 /obj/item/skillchip/proc/on_implant(obj/item/organ/brain/owner_brain)
+	SHOULD_CALL_PARENT(TRUE)
 	if(holding_brain)
 		CRASH("Skillchip is trying to be implanted into [owner_brain], but it's already implanted in [holding_brain]")
 
 	holding_brain = owner_brain
+	SEND_SIGNAL(src, COMSIG_SKILLCHIP_IMPLANTED, holding_brain)
 
 /**
  * Called when a skillchip is activated.
@@ -172,7 +174,7 @@
 		try_deactivate_skillchip(silent, TRUE)
 
 	COOLDOWN_RESET(src, chip_cooldown)
-
+	SEND_SIGNAL(src, COMSIG_SKILLCHIP_REMOVED, holding_brain)
 	holding_brain = null
 
 /**

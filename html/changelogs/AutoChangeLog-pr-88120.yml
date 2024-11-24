@@ -1,0 +1,4 @@
+author: "Dawnseer"
+delete-after: True
+changes:
+  - bugfix: "fixed some erronous spriting on the zippo"

@@ -378,6 +378,8 @@
 #define SLIPPERY_TURF (1<<5)
 /// For mobs who are slippery, this requires the mob holding it to be lying down.
 #define SLIPPERY_WHEN_LYING_DOWN (1<<6)
+///Like sliding, but it's short, it doesn't knockdown, it doesn't stun, it just staggers a bit.
+#define WEAK_SLIDE (1<<7)
 
 #define MAX_CHICKENS 50
 
@@ -649,7 +651,8 @@
 #define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
 
 // Hair masks
-#define HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM "hide_above_45deg"
+#define HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM "hide_above_45deg_medium"
+#define HAIR_MASK_HIDE_ABOVE_45_DEG_LOW "hide_above_45deg_low"
 
 // Height defines
 // - They are numbers so you can compare height values (x height < y height)
