@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)
 	inherited_stats = new
 	inherit_properties()
-	var/static/list/my_food = list(/obj/item/stack/ore)
+	var/list/my_food = string_list(list(/obj/item/stack/ore))
 	AddElement(/datum/element/basic_eating, food_types = my_food)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured, stop_fleeing_at = 0.5, start_fleeing_below = 0.2)

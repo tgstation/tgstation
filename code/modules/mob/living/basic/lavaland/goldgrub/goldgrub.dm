@@ -106,7 +106,7 @@
 	return ..()
 
 /mob/living/basic/mining/goldgrub/proc/make_tameable()
-	var/static/list/food_types = list(/obj/item/stack/ore)
+	var/list/food_types = string_list(list(/obj/item/stack/ore))
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 5)
 
 /mob/living/basic/mining/goldgrub/tamed(mob/living/tamer, atom/food)
