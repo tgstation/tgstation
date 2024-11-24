@@ -8392,10 +8392,6 @@
 /obj/structure/water_source/puddle,
 /turf/open/misc/asteroid,
 /area/station/security/prison/workout)
-"bRE" = (
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless,
-/area/station/solars/port)
 "bSd" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
@@ -93880,7 +93876,7 @@ aST
 ncE
 ncE
 ncE
-bRE
+jcT
 oQf
 oQf
 oQf
