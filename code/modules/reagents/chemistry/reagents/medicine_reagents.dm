@@ -646,7 +646,7 @@
 	overdose_threshold = 30
 	ph = 8.96
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opioids = 10)
+	addiction_types = list(/datum/addiction/opioids = 20)
 	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/affected_mob)
@@ -661,27 +661,29 @@
 	. = ..()
 	if(current_cycle > 5)
 		affected_mob.add_mood_event("numb", /datum/mood_event/narcotic_medium, name)
-	if(affected_mob.disgust < DISGUST_LEVEL_VERYGROSS && SPT_PROB(50 * max(1 - creation_purity, 0.5), seconds_per_tick))
+	var/normalized = normalise_creation_purity()
+	if(affected_mob.disgust < DISGUST_LEVEL_VERYGROSS && SPT_PROB(50 * (2 - creation_purity), seconds_per_tick))
 		affected_mob.adjust_disgust(1.5 * REM * seconds_per_tick)
 
 	switch(current_cycle)
 		if(16) //~3u
 			to_chat(affected_mob, span_warning("You start to feel tired..."))
-			affected_mob.adjust_eye_blur(2 SECONDS * REM * seconds_per_tick) // just a hint teehee
-			if(SPT_PROB(50, seconds_per_tick))
+			affected_mob.adjust_eye_blur(2 SECONDS * REM * seconds_per_tick)
+			if(SPT_PROB(66, seconds_per_tick))
 				affected_mob.emote("yawn")
 
 		if(24 to 36) // 5u to 7.5u
-			if(SPT_PROB(33, seconds_per_tick))
+			if(SPT_PROB(33 * (2 - creation_purity), seconds_per_tick))
 				affected_mob.adjust_drowsiness_up_to(1 * REM * seconds_per_tick, 6 SECONDS)
 
 		if(36 to 48) // 7.5u to 10u
-			if(SPT_PROB(66, seconds_per_tick))
+			if(SPT_PROB(66 * (2 - creation_purity), seconds_per_tick))
 				affected_mob.adjust_drowsiness_up_to(1 * REM * seconds_per_tick, 12 SECONDS)
 
 		if(48 to INFINITY) //10u onward
 			affected_mob.adjust_drowsiness_up_to(1 * REM * seconds_per_tick, 20 SECONDS)
-			if(SPT_PROB((48 - current_cycle) * 20), seconds_per_tick)
+			// doesn't scale from purity - at this point it tries to guarantee sleep
+			if(SPT_PROB(30 * (48 - current_cycle), seconds_per_tick))
 				affected_mob.Sleeping(4 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/medicine/morphine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
