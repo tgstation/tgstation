@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "Nerfed slipperiness from fish infusion. It no longer knockdowns but it staggers and slides the user one or two tiles away."
+  - balance: "Added a slight natural weakness to fire/heat to the fish infusion, which, taking the minor general damage resistance resistance when wet, is pretty mild."
+  - balance: "hot temperature projectiles from the temperature gun (and watchers I think) also dry living creatures hit by them."
