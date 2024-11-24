@@ -128,7 +128,7 @@ Striking a noncultist, however, will tear their flesh."}
 	free_use = TRUE
 	light_color = COLOR_HERETIC_GREEN
 	light_range = 4
-	demolition_mod = 1.2
+	demolition_mod = 1.5
 	/// holder for the actual action when created.
 	var/datum/action/cooldown/spell/path_wielder_action
 	var/mob/living/trapped_entity
