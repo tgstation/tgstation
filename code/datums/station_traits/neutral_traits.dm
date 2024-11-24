@@ -311,9 +311,9 @@
 	var/mob/living/carbon/human/humanspawned = spawned
 	// Put their silly little scarf or necktie somewhere else
 	if(humanspawned.wear_neck)
-		humanspawned.temporarilyRemoveItemFromInventory(wear_neck)
-		wear_neck.forceMove(get_turf(humanspawned))
-		humanspawned.equip_in_one_of_slots(wear_neck, ITEM_SLOT_BACKPACK, ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET)
+		humanspawned.temporarilyRemoveItemFromInventory(humanspawned.wear_neck)
+		humanspawned.wear_neck.forceMove(get_turf(humanspawned))
+		humanspawned.equip_in_one_of_slots(humanspawned.wear_neck, ITEM_SLOT_BACKPACK, ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET)
 
 
 	spawned.equip_to_slot_or_del(new /obj/item/clothing/neck/link_scryer/loaded(spawned), ITEM_SLOT_NECK, initial = FALSE)
