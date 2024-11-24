@@ -332,7 +332,7 @@
 		QDEL_NULL(fishing_line)
 	var/beam_color = line?.line_color || default_line_color
 	fishing_line = new(firer, target, icon_state = "fishing_line", beam_color = beam_color, emissive = FALSE, override_target_pixel_y = target_py)
-	fishing_line.lefthand = firer.get_held_index_of_item(src) % 2 == 1
+	fishing_line.lefthand = IS_LEFT_INDEX(firer.get_held_index_of_item(src))
 	RegisterSignal(fishing_line, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
 	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(clear_line))
 	INVOKE_ASYNC(fishing_line, TYPE_PROC_REF(/datum/beam/, Start))
@@ -425,13 +425,13 @@
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
 	cast_projectile.range = get_cast_range(user)
-	cast_projectile.decayedRange = get_cast_range(user)
+	cast_projectile.maximum_range = get_cast_range(user)
 	cast_projectile.owner = src
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
 	cast_projectile.firer = user
 	cast_projectile.impacted = list(WEAKREF(user) = TRUE)
-	cast_projectile.preparePixelProjectile(target, user)
+	cast_projectile.aim_projectile(target, user)
 	cast_projectile.fire()
 	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 

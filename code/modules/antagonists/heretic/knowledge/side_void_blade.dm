@@ -116,22 +116,6 @@
 	demolition_mod = 1.5
 	sharpness = SHARP_EDGED
 
-/obj/item/mutant_hand/shattered_risen/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-
-/obj/item/mutant_hand/shattered_risen/visual_equipped(mob/user, slot)
-	. = ..()
-
-	// Even hand indexes are right hands,
-	// Odd hand indexes are left hand
-	// ...But also, we swap it intentionally here,
-	// so right icon is shown on the left (Because hands)
-	if(user.get_held_index_of_item(src) % 2 == 1)
-		icon_state = "[base_icon_state]_right"
-	else
-		icon_state = "[base_icon_state]_left"
-
 /datum/heretic_knowledge/rune_carver
 	name = "Carving Knife"
 	desc = "Allows you to transmute a knife, a shard of glass, and a piece of paper to create a Carving Knife. \

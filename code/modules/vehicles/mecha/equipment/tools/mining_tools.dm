@@ -9,6 +9,9 @@
 	name = "exosuit drill"
 	desc = "Equipment for engineering and combat exosuits. This is the drill that'll pierce the heavens!"
 	icon_state = "mecha_drill"
+	equipment_slot = MECHA_UTILITY
+	can_be_toggled = TRUE
+	active = FALSE
 	equip_cooldown = 15
 	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	force = 15
@@ -31,6 +34,17 @@
 	)
 	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
+
+/obj/item/mecha_parts/mecha_equipment/drill/handle_ui_act(action, list/params)
+	if(action != "toggle")
+		return
+	if(active)
+		RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, PROC_REF(on_mech_click))
+		log_message("Activated.", LOG_MECHA)
+	else
+		UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
+		log_message("Deactivated.", LOG_MECHA)
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/drill/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
@@ -63,6 +77,14 @@
 	if(!action_checks(target))
 		return FALSE
 	return ..()
+
+///Redirects clicks to use the drill if possible when enabled
+/obj/item/mecha_parts/mecha_equipment/drill/proc/on_mech_click(atom/mech, mob/source, atom/target, on_cooldown, adjacent)
+	SIGNAL_HANDLER
+	if(on_cooldown || !adjacent)
+		return
+	INVOKE_ASYNC(src, PROC_REF(action), source, target, null, FALSE)
+	return COMPONENT_CANCEL_MELEE_CLICK
 
 /obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers, bumped)
 	//If bumped, only bother drilling mineral turfs

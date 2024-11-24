@@ -1,9 +1,9 @@
 #define UPDATE_BUFFER_TIME (2.5 SECONDS)
 
-// CAMERA CHUNK
-//
-// A 16x16 grid of the map with a list of turfs that can be seen, are visible and are dimmed.
-// Allows the AI Eye to stream these chunks and know what it can and cannot see.
+/**
+ * A 16x16 grid of the map with a list of turfs that can be seen, are visible and are dimmed. \
+ * Allows Camera Eyes to stream these chunks and know what it can and cannot see.
+ */
 
 /datum/camerachunk
 	///turfs our cameras cant see but are inside our grid. associative list of the form: list(obscured turf = static image on that turf)
@@ -16,7 +16,7 @@
 	///list of all turfs, associative with that turf's static image
 	///turf -> /image
 	var/list/turfs = list()
-	///eye mobs that can see turfs in our grid
+	///Camera mobs that can see turfs in our grid
 	var/list/seenby = list()
 	///images currently in use on obscured turfs.
 	var/list/active_static_images = list()
@@ -27,24 +27,24 @@
 	var/lower_z
 	var/upper_z
 
-/// Add an AI eye to the chunk, then update if changed.
-/datum/camerachunk/proc/add(mob/eye/ai_eye/eye)
+/// Add a camera eye to the chunk, then update if changed.
+/datum/camerachunk/proc/add(mob/eye/camera/eye)
 	eye.visibleCameraChunks += src
 	seenby += eye
 	if(changed)
 		update()
 
 	var/client/client = eye.GetViewerClient()
-	if(client && eye.use_static)
+	if(client && eye.use_visibility)
 		client.images += active_static_images
 
-/// Remove an AI eye from the chunk
-/datum/camerachunk/proc/remove(mob/eye/ai_eye/eye, remove_static_with_last_chunk = TRUE)
+/// Remove a camera eye from the chunk
+/datum/camerachunk/proc/remove(mob/eye/camera/ai/eye)
 	eye.visibleCameraChunks -= src
 	seenby -= eye
 
 	var/client/client = eye.GetViewerClient()
-	if(client && eye.use_static)
+	if(client && eye.use_visibility)
 		client.images -= active_static_images
 
 /// Called when a chunk has changed. I.E: A wall was deleted.
@@ -56,6 +56,7 @@
 /**
  * Updates the chunk, makes sure that it doesn't update too much. If the chunk isn't being watched it will
  * instead be flagged to update the next time an AI Eye moves near it.
+ * 
  * update_delay_buffer is used for cameras that are moving around, which are cyborg inbuilt cameras and
  * mecha onboard cameras. This buffer should be usually lower than UPDATE_BUFFER_TIME because
  * otherwise a moving camera can run out of its own view before updating static.
@@ -89,8 +90,8 @@
 	///turfs that we could see last update but cant see now
 	var/list/newly_obscured_turfs = visibleTurfs - updated_visible_turfs
 
-	for(var/mob/eye/ai_eye/client_eye as anything in seenby)
-		var/client/client = client_eye.ai?.client || client_eye.client
+	for(var/mob/eye/camera/client_eye as anything in seenby)
+		var/client/client = client_eye.GetViewerClient()
 		if(!client)
 			continue
 
@@ -119,8 +120,8 @@
 
 	changed = FALSE
 
-	for(var/mob/eye/ai_eye/client_eye as anything in seenby)
-		var/client/client = client_eye.ai?.client || client_eye.client
+	for(var/mob/eye/camera/client_eye as anything in seenby)
+		var/client/client = client_eye.GetViewerClient()
 		if(!client)
 			continue
 

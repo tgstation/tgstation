@@ -452,7 +452,7 @@
 		return
 	if (isandroid(check))
 		return TRUE
-	if (check.organs < 6 || check.bodyparts < 6)
+	if (length(check.organs) < 6 || length(check.bodyparts) < 6)
 		return FALSE
 
 	var/static/list/augmented_organ_slots = list(

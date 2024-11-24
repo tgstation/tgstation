@@ -12,6 +12,10 @@
 	/// While processing, this becomes the world.time when the next tick will occur.
 	/// -1 = will prevent ticks, and if duration is also unlimited (-1), stop processing wholesale.
 	var/tick_interval = 1 SECONDS
+	///If our tick intervals are set to be a dynamic value within a range, the lowerbound of said range
+	var/tick_interval_lowerbound
+	///If our tick intervals are set to be a dynamic value within a range, the upperbound of said range
+	var/tick_interval_upperbound
 	/// The mob affected by the status effect.
 	VAR_FINAL/mob/living/owner
 	/// How many of the effect can be on one mob, and/or what happens when you try to add a duplicate.
@@ -112,7 +116,7 @@
 		return
 
 	if(tick_interval != STATUS_EFFECT_NO_TICK && tick_interval < world.time)
-		var/tick_length = initial(tick_interval)
+		var/tick_length = (tick_interval_upperbound && tick_interval_lowerbound) ? rand(tick_interval_lowerbound, tick_interval_upperbound) : initial(tick_interval)
 		tick(tick_length / (1 SECONDS))
 		tick_interval = world.time + tick_length
 		if(QDELING(src))
