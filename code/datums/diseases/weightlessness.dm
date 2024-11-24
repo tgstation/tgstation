@@ -25,15 +25,15 @@
 			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You almost lose your balance for a second."))
 		if(2)
-			if(SPT_PROB(3, seconds_per_tick) && !(HAS_TRAIT_FROM(affected_mob, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)))
+			if(SPT_PROB(3, seconds_per_tick) && !HAS_TRAIT_FROM(affected_mob, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT))
 				to_chat(affected_mob, span_danger("You feel yourself lift off the ground."))
 				affected_mob.reagents.add_reagent(/datum/reagent/gravitum, 1)
 
 		if(4)
-			if(SPT_PROB(3, seconds_per_tick) && !(affected_mob.has_quirk(/datum/quirk/spacer_born)))
+			if(SPT_PROB(3, seconds_per_tick) && !affected_mob.has_quirk(/datum/quirk/spacer_born))
 				to_chat(affected_mob, span_danger("You feel sick as the world starts moving around you."))
 				affected_mob.adjust_confusion(3 SECONDS)
-			if(SPT_PROB(8, seconds_per_tick) && !(HAS_TRAIT_FROM(affected_mob, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)))
+			if(SPT_PROB(8, seconds_per_tick) && !HAS_TRAIT_FROM(affected_mob, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT))
 				to_chat(affected_mob, span_danger("You suddenly lift off the ground."))
 				affected_mob.reagents.add_reagent(/datum/reagent/gravitum, 5)
 
