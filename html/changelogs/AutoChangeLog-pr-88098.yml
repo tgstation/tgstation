@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - code_imp: "Change some status effects to use SECONDS define."
