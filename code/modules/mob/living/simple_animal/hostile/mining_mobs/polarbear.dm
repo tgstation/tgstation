@@ -65,20 +65,3 @@
 	name = "magic polar bear"
 	desc = "It seems sentient somehow."
 	faction = list(FACTION_NEUTRAL)
-
-/obj/item/crusher_trophy/bear_paw
-	name = "polar bear paw"
-	desc = "It's a polar bear paw."
-	icon_state = "bear_paw"
-	denied_type = /obj/item/crusher_trophy/bear_paw
-
-/obj/item/crusher_trophy/bear_paw/effect_desc()
-	return "mark detonation to attack twice if you are below half your life"
-
-/obj/item/crusher_trophy/bear_paw/on_mark_detonation(mob/living/target, mob/living/user)
-	if(user.health / user.maxHealth > 0.5)
-		return
-	var/obj/item/I = user.get_active_held_item()
-	if(!I)
-		return
-	I.melee_attack_chain(user, target, null)
