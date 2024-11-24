@@ -844,3 +844,32 @@
   - bugfix: inducers can be inserted into storage objects again
   - bugfix: fixes grown foods(like pineapples) getting deleted sometimes inside crates
       and stuff
+2024-11-24:
+  Ben10Omintrix:
+  - bugfix: fixes the chipped quirk displaying the skill chip's typepath rather than
+      its name
+  - bugfix: fixes chipped quirk's itchy effect not working
+  - bugfix: the chipped quirk's itchy effect now goes away when the skillchip is removed
+  - refactor: projectile dampeners have been refactored. please report any bugs
+  SmArtKar:
+  - qol: Projectiles now visually impact their targets instead of disappearing about
+      a tile short of it.
+  - bugfix: Fixed multiple minor issues with projectile behavior
+  - refactor: Completely rewrote almost all of our projectile code - if anything broke
+      or started looking/behaving oddly, make an issue report!
+  - bugfix: Fixed full augmentation scan experiment being uncompletable
+  - bugfix: Organ manipulation can be completed once again and doesn't cause you to
+      be un-melee-able in some cases.
+  - bugfix: Fixed a rare runtime in jetpack component code
+  - bugfix: Fixed parsnip sabre not receiving a jousting component
+  grungussuss:
+  - bugfix: entertainment screens now properly show their tooltip for muting sound
+  lovegreenstuff:
+  - bugfix: synthmeat is no longer an nft
+  thimothymtorres:
+  - bugfix: Fix wrong status effect for watery tile
+  timothymtorres:
+  - bugfix: Fix coffee maker smoke particles not deleting
+  - bugfix: Fix fireplace particles runtimes.
+  timothymtorres, SmArtKar:
+  - bugfix: Fix chewable bubblegum not metabolizing due to microdose
