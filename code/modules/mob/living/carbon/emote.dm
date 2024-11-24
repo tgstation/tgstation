@@ -91,7 +91,7 @@
 
 /datum/emote/living/carbon/meow/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/obj/item/organ/internal/tongue/cat))
+	if(istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/internal/tongue/cat))
 		sound = SFX_CAT_MEOW
 		message = "meows!"
 		emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
