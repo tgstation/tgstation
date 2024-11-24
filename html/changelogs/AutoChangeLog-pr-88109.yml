@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - qol: "carpenter hammer fits on belt slot"
+  - code_imp: "renames belt_icon_state to inside_belt_icon_state for intelligibiility"
