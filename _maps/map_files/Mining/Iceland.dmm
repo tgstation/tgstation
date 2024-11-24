@@ -472,6 +472,7 @@
 	dir = 6
 	},
 /obj/machinery/seed_extractor,
+/obj/structure/cable,
 /turf/open/floor/iron/colony,
 /area/mine/lounge)
 "da" = (
@@ -895,6 +896,7 @@
 	dir = 4
 	},
 /obj/machinery/biogenerator,
+/obj/structure/cable,
 /turf/open/floor/iron/colony,
 /area/mine/lounge)
 "fL" = (
