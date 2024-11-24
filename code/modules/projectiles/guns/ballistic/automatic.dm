@@ -374,7 +374,7 @@
 	force = 15 //this thing is kind of oversized, okay?
 	mag_display = TRUE
 	projectile_damage_multiplier = 1.2
-	projectile_speed_multiplier = 0.8
+	projectile_speed_multiplier = 1.2
 	can_suppress = FALSE
 	fire_delay = 2
 	burst_size = 2
@@ -392,7 +392,7 @@
 	/// The probability of degradation increasing per shot.
 	var/degradation_probability = 10
 	/// The maximum speed malus for projectile flight speed. Projectiles probably shouldn't move too slowly or else they will start to cause problems.
-	var/maximum_speed_malus = 1.3
+	var/maximum_speed_malus = 0.7
 	/// What is our damage multiplier if the gun is emagged?
 	var/emagged_projectile_damage_multiplier = 1.6
 
@@ -530,7 +530,7 @@
 	else
 		degradation_stage = clamp(degradation_stage - 1, 0, degradation_stage_max)
 		if(degradation_stage)
-			projectile_speed_multiplier = clamp(initial(projectile_speed_multiplier) + degradation_stage * 0.1, initial(projectile_speed_multiplier), maximum_speed_malus)
+			projectile_speed_multiplier = clamp(initial(projectile_speed_multiplier) - degradation_stage * 0.1, maximum_speed_malus, initial(projectile_speed_multiplier))
 			fire_delay = initial(fire_delay) + (degradation_stage * 0.5)
 		else
 			projectile_speed_multiplier = initial(projectile_speed_multiplier)

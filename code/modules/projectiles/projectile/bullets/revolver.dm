@@ -134,7 +134,7 @@
 	damage = 20
 	homing = TRUE
 	homing_turn_speed = 40
-	speed = 1.4 //slightly slower by default
+	speed = 0.6 //slightly slower by default
 
 // .357 (Syndie Revolver)
 
