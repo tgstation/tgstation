@@ -165,11 +165,11 @@
 		FindTarget(list(source))
 	return ..()
 
-/mob/living/simple_animal/hostile/bullet_act(obj/projectile/P)
+/mob/living/simple_animal/hostile/bullet_act(obj/projectile/proj)
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
-		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
-			FindTarget(list(P.firer))
-		Goto(P.starting, move_to_delay, 3)
+		if(proj.firer && get_dist(src, proj.firer) <= aggro_vision_range)
+			FindTarget(list(proj.firer))
+		Goto(proj.starting, move_to_delay, 3)
 	return ..()
 
 //////////////HOSTILE MOB TARGETING AND AGGRESSION////////////

@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_source, list()))
+GLOBAL_LIST_INIT_TYPED(preset_fish_sources, /datum/fish_source, init_subtypes_w_path_keys(/datum/fish_source, list()))
 
 /**
  * When adding new fishable rewards to a table/counts, you can specify an icon to show in place of the

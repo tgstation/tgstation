@@ -145,7 +145,6 @@
 		remove_hat_signals = remove_hat,\
 		traits_prevent_checks = prevent_checks,\
 	)
-
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) || !mapload || !is_station_level(z))
