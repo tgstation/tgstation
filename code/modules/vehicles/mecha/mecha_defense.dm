@@ -121,7 +121,7 @@
 		&& !(mecha_flags & SILICON_PILOT) \
 		&& (def_zone == BODY_ZONE_HEAD || def_zone == BODY_ZONE_CHEST))
 		var/mob/living/hitmob = pick(occupants)
-		return hitmob.bullet_act(hitting_projectile, def_zone, piercing_hit) //If the sides are open, the occupant can be hit
+		return hitmob.projectile_hit(hitting_projectile, def_zone, piercing_hit) //If the sides are open, the occupant can be hit
 
 	. = ..()
 

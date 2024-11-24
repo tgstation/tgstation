@@ -91,7 +91,7 @@
 /mob/living/proc/is_ears_covered()
 	return null
 
-/mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE, blocked = check_projectile_armor(def_zone, proj))
+/mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE, blocked = 0)
 	. = ..()
 	if (. != BULLET_ACT_HIT)
 		return .
