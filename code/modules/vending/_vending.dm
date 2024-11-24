@@ -1189,6 +1189,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
+	src.ai_controller = new /datum/ai_controller/vending_machine(src)
 	balloon_alert(user, "product lock disabled")
 	return TRUE
 
