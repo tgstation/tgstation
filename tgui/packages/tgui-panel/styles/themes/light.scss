@@ -21,7 +21,6 @@
 @use '~tgui/styles/base.scss' with (
   $color-fg: hsl(0, 0%, 0%),
   $color-bg: hsl(0, 0%, 93.3%),
-  $color-bg-section: hsl(0, 0%, 100%),
   $color-bg-grad-spread: 0%
 );
 
@@ -33,7 +32,7 @@
 
   // Components
   @include meta.load-css(
-    '~tgui/styles/components/Tabs.scss',
+    'pkg:tgui-styles/components/Tabs',
     $with: (
       'text-color': rgba(0, 0, 0, 0.5),
       'color-default': rgba(0, 0, 0, 1),
@@ -41,9 +40,13 @@
       'tab-color-hovered': rgba(0, 0, 0, 0.075)
     )
   );
-  @include meta.load-css('~tgui/styles/components/Section.scss');
   @include meta.load-css(
-    '~tgui/styles/components/Button.scss',
+    'pkg:tgui-styles/components/Section',
+    $with: ('background-color': hsl(0, 0%, 100%))
+  );
+
+  @include meta.load-css(
+    'pkg:tgui-styles/components/Button',
     $with: (
       'color-default': hsl(0, 0%, 73.3%),
       'color-disabled': hsl(0, 0%, 21.2%),
@@ -54,17 +57,17 @@
     )
   );
   @include meta.load-css(
-    '~tgui/styles/components/Input.scss',
+    'pkg:tgui-styles/components/Input',
     $with: (
       'border-color': colors.fg(colors.$label),
       'background-color': hsl(0, 0%, 90.2%)
     )
   );
-  @include meta.load-css('~tgui/styles/components/NumberInput.scss');
-  @include meta.load-css('~tgui/styles/components/TextArea.scss');
-  @include meta.load-css('~tgui/styles/components/Knob.scss');
-  @include meta.load-css('~tgui/styles/components/Slider.scss');
-  @include meta.load-css('~tgui/styles/components/ProgressBar.scss');
+  @include meta.load-css('pkg:tgui-styles/components/NumberInput');
+  @include meta.load-css('pkg:tgui-styles/components/TextArea');
+  @include meta.load-css('pkg:tgui-styles/components/Knob');
+  @include meta.load-css('pkg:tgui-styles/components/Slider');
+  @include meta.load-css('pkg:tgui-styles/components/ProgressBar');
 
   // Components specific to tgui-panel
   @include meta.load-css(

@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Organ manipulation can be completed once again and doesn't cause you to be un-melee-able in some cases."

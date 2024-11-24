@@ -52,7 +52,7 @@
 	. = ..()
 	update_temp_deafness()
 
-/obj/item/organ/ears/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/ears/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_MOB_SAY)
 	REMOVE_TRAIT(organ_owner, TRAIT_DEAF, EAR_DAMAGE)

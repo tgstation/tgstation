@@ -96,7 +96,7 @@
 	if(!.)
 		return
 	var/obj/projectile/tether = new /obj/projectile/tether(mod.wearer.loc, src)
-	tether.preparePixelProjectile(target, mod.wearer)
+	tether.aim_projectile(target, mod.wearer)
 	tether.firer = mod.wearer
 	playsound(src, 'sound/items/weapons/batonextend.ogg', 25, TRUE)
 	INVOKE_ASYNC(tether, TYPE_PROC_REF(/obj/projectile, fire))
@@ -164,14 +164,8 @@
 		firer.AddComponent(/datum/component/tether, target, 7, "MODtether", parent_module = parent_module)
 		return
 
-	var/hitx
-	var/hity
-	if(target == original)
-		hitx = target.pixel_x + p_x - 16
-		hity = target.pixel_y + p_y - 16
-	else
-		hitx = target.pixel_x + rand(-8, 8)
-		hity = target.pixel_y + rand(-8, 8)
+	var/hitx = impact_x
+	var/hity = impact_y
 
 	if (!isnull(last_turf) && last_turf != target && last_turf != target.loc)
 		var/turf_dir = get_dir(last_turf, get_turf(target))
