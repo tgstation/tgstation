@@ -90,10 +90,14 @@
 	for(var/obj/item/target in src)
 		if((target in component_parts) || target == beaker)
 			continue
-		to_process["[target.name]"] += 1
+		var/amount = 1
+		if (isstack(target))
+			var/obj/item/stack/target_stack = target
+			amount = target_stack.amount
+		to_process["[target.name]"] += amount
 		total_weight += target.w_class
 	if(to_process.len)
-		. += span_notice("Currently holding.")
+		. += span_notice("Currently holding:")
 		for(var/target_name as anything in to_process)
 			. += span_notice("[to_process[target_name]] [target_name]")
 		. += span_notice("Filled to <b>[round((total_weight / maximum_weight) * 100)]%</b> capacity.")
