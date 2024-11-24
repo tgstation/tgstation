@@ -151,6 +151,8 @@
  * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
 /obj/item/organ/proc/mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if(organ_owner)
 		if(organ_owner.organs_slot[slot] == src)
 			organ_owner.organs_slot.Remove(slot)
@@ -164,7 +166,7 @@
 /// Removes Traits, Actions, and Status Effects on the mob in which the organ was impanted.
 /// Override this proc to create unique side-effects for removing your organ. Must be called by overrides.
 /obj/item/organ/proc/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
-	SHOULD_NOT_OVERRIDE(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 
 	if(!iscarbon(organ_owner))
 		stack_trace("Organ removal should not be happening on non carbon mobs: [organ_owner]")
