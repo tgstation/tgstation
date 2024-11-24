@@ -91,10 +91,13 @@
 
 /datum/emote/living/carbon/meow/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(isfelinid(user))
+	if(istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/obj/item/organ/internal/tongue/cat))
 		sound = SFX_CAT_MEOW
 		message = "meows!"
 		emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	else
+		to_chat(user, span_warning("You can't quite make the sound."))
+		return
 
 /datum/emote/living/carbon/purr
 	key = "purr"
@@ -103,10 +106,13 @@
 
 /datum/emote/living/carbon/purr/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(isfelinid(user))
+	if(istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/internal/tongue/cat))
 		sound = SFX_CAT_PURR
 		message = "purrs."
 		emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	else
+		to_chat(user, span_warning("You can't quite make the sound."))
+		return
 
 /datum/emote/living/carbon/moan
 	key = "moan"
