@@ -200,6 +200,14 @@
 /datum/uplink_item/proc/can_be_bought(datum/uplink_handler/source)
 	return TRUE
 
+///Real cost if this item, accounting for progression_points if uplink_handler has_progression is TRUE
+/datum/uplink_item/proc/real_cost(datum/uplink_handler/source)
+	if (progression_minimum <= 0 || !source?.has_progression)
+		return cost
+	var percentage = CLAMP01(source.progression_points / progression_minimum)
+	var mult = (1 - percentage) * 3 + percentage * 1
+	return ceil(cost * mult)
+
 /datum/uplink_category/discounts
 	name = "Discounted Gear"
 	weight = -1
@@ -217,9 +225,13 @@
 	category = /datum/uplink_category/discounts
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Probably not necessary but just in case
 
+/datum/uplink_category/objective_special
+	name = "Objective-Specific Equipment"
+	weight = -3
+
 // Special equipment (Dynamically fills in uplink component)
 /datum/uplink_item/special_equipment
-	category = "Objective-Specific Equipment"
+	category = /datum/uplink_category/objective_special
 	name = "Objective-Specific Equipment"
 	desc = "Equipment necessary for accomplishing specific objectives. If you are seeing this, something has gone wrong."
 	limited_stock = 1

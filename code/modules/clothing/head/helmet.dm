@@ -39,6 +39,7 @@
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 	visor_toggle_up_sound = SFX_VISOR_UP
 	visor_toggle_down_sound = SFX_VISOR_DOWN
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/helmet/sec/Initialize(mapload)
 	. = ..()
@@ -67,6 +68,17 @@
 		return TRUE
 
 	return ..()
+
+/obj/item/clothing/head/helmet/sec/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return
+	balloon_alert(user, "[flags_inv & HIDEHAIR ? "loosening" : "tightening"] straps...")
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	flags_inv ^= HIDEHAIR
+	balloon_alert(user, "[flags_inv & HIDEHAIR ? "tightened" : "loosened"] straps")
+	return TRUE
 
 /obj/item/clothing/head/helmet/sec/click_alt(mob/user)
 	flipped_visor = !flipped_visor
@@ -645,7 +657,7 @@
 	take_damage(1, BRUTE, 0, 0)
 
 /obj/item/clothing/head/helmet/durability/watermelon
-	name = "Watermelon Helmet"
+	name = "watermelon helmet"
 	desc = "A helmet cut out from a watermelon. Might take a few hits, but don't expect it whitstand much."
 	icon_state = "watermelon"
 	inhand_icon_state = "watermelon"
@@ -677,15 +689,14 @@
 	wound = 5
 
 /obj/item/clothing/head/helmet/durability/holymelon
-	name = "Holymelon Helmet"
-	desc = "A helmet from a hollowed out holymelon. Might take a few hits, but don't expect it whitstand much."
+	name = "holymelon helmet"
+	desc = "A helmet from a hollowed out holymelon. Might take a few hits, but don't expect it to withstand much."
 	icon_state = "holymelon"
 	inhand_icon_state = "holymelon"
 	flags_inv = HIDEEARS
 	dog_fashion = /datum/dog_fashion/head/holymelon
 	armor_type = /datum/armor/helmet_watermelon
 	max_integrity = 15
-	var/decayed = FALSE
 
 /obj/item/clothing/head/helmet/durability/holymelon/fire_resist
 	resistance_flags = FIRE_PROOF
@@ -693,13 +704,10 @@
 
 /obj/item/clothing/head/helmet/durability/holymelon/Initialize(mapload)
 	. = ..()
-	if(decayed)
-		decay()
-		return
 
 	AddComponent(
 		/datum/component/anti_magic, \
-		antimagic_flags = MAGIC_RESISTANCE_HOLY, \
+		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		inventory_flags = ITEM_SLOT_OCLOTHING, \
 		charges = 1, \
 		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
@@ -713,7 +721,7 @@
 	take_damage(8, BRUTE, 0, 0)
 
 /obj/item/clothing/head/helmet/durability/barrelmelon
-	name = "Barrelmelon Helmet"
+	name = "barrelmelon helmet"
 	desc = "A helmet from hollowed out barrelmelon. As sturdy as if made from actual wood, though its rigid structure makes it break up quicker."
 	icon_state = "barrelmelon"
 	inhand_icon_state = "barrelmelon"

@@ -1,7 +1,7 @@
 //The contant in the rate of reagent transfer on life ticks
 #define STOMACH_METABOLISM_CONSTANT 0.25
 
-/obj/item/organ/internal/stomach
+/obj/item/organ/stomach
 	name = "stomach"
 	desc = "Onaka ga suite imasu."
 	icon_state = "stomach"
@@ -20,7 +20,7 @@
 	high_threshold_cleared = span_info("The pain in your stomach dies down for now, but food still seems unappealing.")
 	low_threshold_cleared = span_info("The last bouts of pain in your stomach have died out.")
 
-	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue/stomach_lining = 5)
 	//This is a reagent user and needs more then the 10u from edible component
 	reagent_vol = 1000
 
@@ -35,7 +35,7 @@
 
 	var/operated = FALSE //whether the stomach's been repaired with surgery and can be fixed again or not
 
-/obj/item/organ/internal/stomach/Initialize(mapload)
+/obj/item/organ/stomach/Initialize(mapload)
 	. = ..()
 	//None edible organs do not get a reagent holder by default
 	if(!reagents)
@@ -43,7 +43,7 @@
 	else
 		reagents.flags |= REAGENT_HOLDER_ALIVE
 
-/obj/item/organ/internal/stomach/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/stomach/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
 	//Manage species digestion
@@ -119,7 +119,7 @@
 		body.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = damage)
 		to_chat(body, span_warning("Your stomach reels in pain as you're incapable of holding down all that food!"))
 
-/obj/item/organ/internal/stomach/proc/handle_hunger(mob/living/carbon/human/human, seconds_per_tick, times_fired)
+/obj/item/organ/stomach/proc/handle_hunger(mob/living/carbon/human/human, seconds_per_tick, times_fired)
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))
 		return //hunger is for BABIES
 
@@ -185,21 +185,21 @@
 		handle_hunger_slowdown(human)
 
 ///for when mood is disabled and hunger should handle slowdowns
-/obj/item/organ/internal/stomach/proc/handle_hunger_slowdown(mob/living/carbon/human/human)
+/obj/item/organ/stomach/proc/handle_hunger_slowdown(mob/living/carbon/human/human)
 	var/hungry = (500 - human.nutrition) / 5 //So overeat would be 100 and default level would be 80
 	if(hungry >= 70)
 		human.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (hungry / 50))
 	else
 		human.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
 
-/obj/item/organ/internal/stomach/get_availability(datum/species/owner_species, mob/living/owner_mob)
+/obj/item/organ/stomach/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantstomach
 
 ///This gets called after the owner takes a bite of food
-/obj/item/organ/internal/stomach/proc/after_eat(atom/edible)
+/obj/item/organ/stomach/proc/after_eat(atom/edible)
 	return
 
-/obj/item/organ/internal/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, seconds_per_tick, times_fired)
+/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, seconds_per_tick, times_fired)
 	var/old_disgust = disgusted.old_disgust
 	var/disgust = disgusted.disgust
 
@@ -246,33 +246,33 @@
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/disgusted)
 			disgusted.add_mood_event("disgust", /datum/mood_event/disgusted)
 
-/obj/item/organ/internal/stomach/mob_insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/stomach/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	receiver.hud_used?.hunger?.update_appearance()
 
-/obj/item/organ/internal/stomach/mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
+/obj/item/organ/stomach/on_mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
 	if(ishuman(stomach_owner))
-		var/mob/living/carbon/human/human_owner = owner
+		var/mob/living/carbon/human/human_owner = stomach_owner
 		human_owner.clear_alert(ALERT_DISGUST)
 		human_owner.clear_mood_event("disgust")
 	stomach_owner.hud_used?.hunger?.update_appearance()
 	return ..()
 
-/obj/item/organ/internal/stomach/bone
+/obj/item/organ/stomach/bone
 	name = "mass of bones"
 	desc = "You have no idea what this strange ball of bones does."
 	icon_state = "stomach-bone"
 	metabolism_efficiency = 0.025 //very bad
 	organ_traits = list(TRAIT_NOHUNGER)
 
-/obj/item/organ/internal/stomach/bone/plasmaman
+/obj/item/organ/stomach/bone/plasmaman
 	name = "digestive crystal"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 	icon_state = "stomach-p"
 	metabolism_efficiency = 0.06
 	organ_traits = null
 
-/obj/item/organ/internal/stomach/cybernetic
+/obj/item/organ/stomach/cybernetic
 	name = "basic cybernetic stomach"
 	desc = "A basic device designed to mimic the functions of a human stomach"
 	failing_desc = "seems to be broken."
@@ -282,7 +282,7 @@
 	metabolism_efficiency = 0.035 // not as good at digestion
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
-/obj/item/organ/internal/stomach/cybernetic/emp_act(severity)
+/obj/item/organ/stomach/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
@@ -292,7 +292,7 @@
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
-/obj/item/organ/internal/stomach/cybernetic/tier2
+/obj/item/organ/stomach/cybernetic/tier2
 	name = "cybernetic stomach"
 	desc = "An electronic device designed to mimic the functions of a human stomach. Handles disgusting food a bit better."
 	icon_state = "stomach-c-u"
@@ -301,7 +301,7 @@
 	emp_vulnerability = 40
 	metabolism_efficiency = 0.07
 
-/obj/item/organ/internal/stomach/cybernetic/tier3
+/obj/item/organ/stomach/cybernetic/tier3
 	name = "upgraded cybernetic stomach"
 	desc = "An upgraded version of the cybernetic stomach, designed to improve further upon organic stomachs. Handles disgusting food very well."
 	icon_state = "stomach-c-u2"
@@ -310,7 +310,7 @@
 	emp_vulnerability = 20
 	metabolism_efficiency = 0.1
 
-/obj/item/organ/internal/stomach/cybernetic/surplus
+/obj/item/organ/stomach/cybernetic/surplus
 	name = "surplus prosthetic stomach"
 	desc = "A mechanical plastic oval that utilizes sulfuric acid instead of stomach acid. \
 		Very fragile, with painfully slow metabolism.\
@@ -321,8 +321,8 @@
 	metabolism_efficiency = 0.025
 
 //surplus organs are so awful that they explode when removed, unless failing
-/obj/item/organ/internal/stomach/cybernetic/surplus/Initialize(mapload)
+/obj/item/organ/stomach/cybernetic/surplus/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dangerous_surgical_removal)
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
 #undef STOMACH_METABOLISM_CONSTANT

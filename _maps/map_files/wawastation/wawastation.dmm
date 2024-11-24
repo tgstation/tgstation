@@ -5609,7 +5609,7 @@
 /area/station/security/lockers)
 "bYo" = (
 /obj/machinery/mecha_part_fabricator{
-	dir = 1
+	drop_direction = 1
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/poster/contraband/borg_fancy_1/directional/south,
@@ -11178,7 +11178,7 @@
 /area/station/service/janitor)
 "dWb" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/mob/living/simple_animal/bot/floorbot,
+/mob/living/basic/bot/repairbot,
 /obj/effect/turf_decal/stripes{
 	dir = 6
 	},
@@ -12657,6 +12657,7 @@
 /obj/item/clothing/head/utility/welding,
 /obj/item/clothing/glasses/welding,
 /obj/machinery/airalarm/directional/south,
+/obj/item/toy/crayon/spraycan/roboticist,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "exR" = (
@@ -15445,7 +15446,7 @@
 /obj/item/nullrod{
 	pixel_x = 4
 	},
-/obj/item/organ/internal/heart,
+/obj/item/organ/heart,
 /obj/item/soulstone/anybody/chaplain,
 /turf/open/floor/cult,
 /area/station/service/chapel/office)
@@ -31404,9 +31405,6 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
-"lbg" = (
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "lbl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -33249,7 +33247,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
-/area/station/cargo/storage)
+/area/station/maintenance/department/cargo)
 "lLC" = (
 /obj/structure/chair/stool/directional/east{
 	name = "Quartermaster"
@@ -39320,8 +39318,12 @@
 	pixel_y = -1
 	},
 /obj/item/storage/box/gloves{
-	pixel_x = -4;
-	pixel_y = 8
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/storage/box/masks{
+	pixel_x = -5;
+	pixel_y = -1
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
@@ -39500,7 +39502,7 @@
 /area/station/maintenance/central/lesser)
 "oac" = (
 /obj/machinery/mecha_part_fabricator{
-	dir = 1
+	drop_direction = 1
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/digital_clock/directional/south,
@@ -39517,11 +39519,11 @@
 	pixel_y = 5
 	},
 /obj/item/storage/box/beakers{
-	pixel_x = 24;
-	pixel_y = 6
+	pixel_x = 10;
+	pixel_y = 14
 	},
 /obj/item/storage/box/syringes{
-	pixel_x = 11;
+	pixel_x = 10;
 	pixel_y = 4
 	},
 /turf/open/floor/glass/reinforced,
@@ -39982,6 +39984,14 @@
 /obj/item/clothing/mask/gas{
 	pixel_x = 12;
 	pixel_y = 2
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = 1;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = -2;
+	pixel_x = -5
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
@@ -49890,7 +49900,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
-/area/station/cargo/storage)
+/area/station/maintenance/department/cargo)
 "rFb" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -63386,6 +63396,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
+"wqG" = (
+/obj/structure/lattice/catwalk,
+/turf/open/openspace/telecomms,
+/area/station/science/xenobiology)
 "wqK" = (
 /obj/structure/table,
 /obj/item/circular_saw,
@@ -65600,7 +65614,7 @@
 /obj/item/instrument/musicalmoth,
 /obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/plating,
-/area/station/cargo/storage)
+/area/station/maintenance/department/cargo)
 "xeo" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/cable,
@@ -66272,11 +66286,11 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "xrt" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/organ/external/horns,
-/obj/item/organ/external/antennae,
-/obj/item/organ/external/frills,
-/obj/item/organ/external/spines,
-/obj/item/organ/external/tail/lizard/fake,
+/obj/item/organ/horns,
+/obj/item/organ/antennae,
+/obj/item/organ/frills,
+/obj/item/organ/spines,
+/obj/item/organ/tail/lizard/fake,
 /obj/structure/closet/crate/freezer,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
@@ -67097,6 +67111,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "xFt" = (
@@ -67749,7 +67764,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
-/area/station/cargo/storage)
+/area/station/maintenance/department/cargo)
 "xTs" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
@@ -67962,12 +67977,12 @@
 /area/station/service/kitchen)
 "xXm" = (
 /obj/structure/table,
-/obj/item/storage/box/masks{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/item/clothing/glasses/science{
+	pixel_y = 2
 	},
-/obj/item/clothing/glasses/science,
-/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science{
+	pixel_y = -2
+	},
 /obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
@@ -148879,7 +148894,7 @@ vxX
 vxX
 vxX
 vxX
-sdc
+poi
 xeh
 jir
 sBb
@@ -149136,9 +149151,9 @@ vxX
 vxX
 vxX
 vxX
-sdc
+poi
 rEK
-sdc
+poi
 sdc
 sdc
 aHc
@@ -149393,8 +149408,8 @@ vxX
 vxX
 vxX
 vxX
-sdc
-lbg
+poi
+tdq
 xTb
 sdc
 oZQ
@@ -149650,9 +149665,9 @@ fYe
 fYe
 fYe
 fYe
-sdc
+poi
 lLr
-sdc
+poi
 sdc
 oZQ
 oZQ
@@ -186160,9 +186175,9 @@ qXj
 lKY
 qUi
 wmO
-ybO
-ybO
-ybO
+wqG
+wqG
+wqG
 wmO
 rmi
 lKY
@@ -186417,9 +186432,9 @@ qXj
 avA
 nVm
 wmO
-ybO
-ybO
-ybO
+wqG
+wqG
+wqG
 wmO
 xGG
 uBm
@@ -186674,9 +186689,9 @@ qXj
 lKY
 qGD
 wmO
-ybO
-ybO
-ybO
+wqG
+wqG
+wqG
 wmO
 bLI
 lKY

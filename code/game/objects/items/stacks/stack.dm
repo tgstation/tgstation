@@ -135,13 +135,9 @@
 		return
 	return TRUE
 
-/obj/item/stack/grind(datum/reagents/target_holder, mob/user)
+/obj/item/stack/grind_atom(datum/reagents/target_holder, mob/user)
 	var/current_amount = get_amount()
 	if(current_amount <= 0 || QDELETED(src)) //just to get rid of this 0 amount/deleted stack we return success
-		return TRUE
-	if(on_grind() == -1)
-		return FALSE
-	if(isnull(target_holder))
 		return TRUE
 
 	if(reagents)
@@ -595,7 +591,7 @@
 		return FALSE
 	if(is_cyborg) // No merging cyborg stacks into other stacks
 		return FALSE
-	if(ismob(loc) && !inhand) // no merging with items that are on the mob
+	if(ismob(loc) && !inhand && !HAS_TRAIT(loc, TRAIT_MOB_MERGE_STACKS)) // no merging with items that are on the mob
 		return FALSE
 	if(istype(loc, /obj/machinery)) // no merging items in machines that aren't both in componentparts
 		var/obj/machinery/machine = loc

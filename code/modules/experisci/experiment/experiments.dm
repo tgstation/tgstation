@@ -429,7 +429,7 @@
 	. = ..()
 	if (!.)
 		return
-	var/obj/item/organ/internal/brain/scanned_brain = check.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/scanned_brain = check.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if (isnull(scanned_brain))
 		experiment_handler.announce_message("Subject is brainless!")
 		return FALSE
@@ -452,7 +452,7 @@
 		return
 	if (isandroid(check))
 		return TRUE
-	if (check.organs < 6 || check.bodyparts < 6)
+	if (length(check.organs) < 6 || length(check.bodyparts) < 6)
 		return FALSE
 
 	var/static/list/augmented_organ_slots = list(

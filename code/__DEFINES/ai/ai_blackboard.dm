@@ -49,11 +49,13 @@
 #define BB_BANE_BATMAN "BB_bane_batman"
 //yep that's it
 
-///Hunting BB keys
+//Hunting BB keys
+///key that holds our current hunting target
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
+///key that holds our less priority hunting target
 #define BB_LOW_PRIORITY_HUNTING_TARGET "BB_low_priority_hunting_target"
-#define BB_HUNTING_COOLDOWN "BB_HUNTING_COOLDOWN"
-
+///key that holds the cooldown for our hunting subtree
+#define BB_HUNTING_COOLDOWN(type) "BB_HUNTING_COOLDOWN_[type]"
 ///Basic Mob Keys
 
 ///Targeting subtrees
@@ -172,8 +174,26 @@
 ///Text we display when we befriend someone
 #define BB_FRIENDLY_MESSAGE "friendly_message"
 
+//fishing!
+
 ///our fishing target
-#define BB_FISHING_TARGET "fishing_target"
+#define BB_FISHING_TARGET "BB_fishing_target"
+
+///key holding the list of things we are able to fish from
+#define BB_FISHABLE_LIST "BB_fishable_list"
+
+///key holding our cooldown between fishing attempts
+#define BB_FISHING_COOLDOWN "BB_fishing_cooldown"
+
+///key that holds the next time we will start fishing
+#define BB_FISHING_TIMER "BB_fishing_timer"
+
+///are we ONLY allowed to fish when we're hungry?
+#define BB_ONLY_FISH_WHILE_HUNGRY "BB_only_fish_while_hungry"
+
+///drillable ice we can make holes in
+#define BB_DRILLABLE_ICE "BB_drillable_ice"
+
 
 // Keys used by one and only one behavior
 // Used to hold state without making bigass lists

@@ -560,7 +560,7 @@
 		L.ventcrawl_layer = piping_layer
 	return ..()
 
-/obj/machinery/atmospherics/singularity_pull(S, current_size)
+/obj/machinery/atmospherics/singularity_pull(atom/singularity, current_size)
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 	return ..()
@@ -661,7 +661,7 @@
 			continue
 
 		var/turf/node_turf = get_turf(node)
-		if(isplatingturf(node_turf) || iscatwalkturf(node_turf))
+		if(node_turf.underfloor_accessibility > UNDERFLOOR_HIDDEN)
 			continue
 
 		var/connected_dir = get_dir(src, node)
