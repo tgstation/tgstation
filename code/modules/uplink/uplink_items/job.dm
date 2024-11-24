@@ -250,7 +250,7 @@
 	progression_minimum = 15 MINUTES
 	item = /obj/item/gun/chem
 	cost = 12
-	restricted_roles = list(JOB_CHEMIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BOTANIST)
+	restricted_roles = list(JOB_CHEMIST, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_BOTANIST)
 
 /datum/uplink_item/role_restricted/pie_cannon
 	name = "Banana Cream Pie Cannon"
