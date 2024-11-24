@@ -674,11 +674,11 @@
 
 		if(24 to 36) // 5u to 7.5u
 			if(SPT_PROB(33 * (2 - creation_purity), seconds_per_tick))
-				affected_mob.adjust_drowsiness_up_to(1 * REM * seconds_per_tick, 6 SECONDS)
+				affected_mob.adjust_drowsiness_up_to(2 SECONDS * REM * seconds_per_tick, 6 SECONDS)
 
 		if(36 to 48) // 7.5u to 10u
 			if(SPT_PROB(66 * (2 - creation_purity), seconds_per_tick))
-				affected_mob.adjust_drowsiness_up_to(1 * REM * seconds_per_tick, 12 SECONDS)
+				affected_mob.adjust_drowsiness_up_to(2 SECONDS * REM * seconds_per_tick, 12 SECONDS)
 
 		if(48 to INFINITY) //10u onward
 			affected_mob.adjust_drowsiness_up_to(1 * REM * seconds_per_tick, 20 SECONDS)
