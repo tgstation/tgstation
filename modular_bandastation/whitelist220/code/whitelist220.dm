@@ -1,3 +1,4 @@
+#define TEST_TG_WL_PORT 9876
 #define CKEY_HAS_VALID_WHITELIST_QUERY {"
 			SELECT ckey FROM ckey_whitelist WHERE ckey=:ckey AND
 			is_valid=1 AND port=:port AND date_start<=NOW() AND
@@ -28,7 +29,7 @@
 		"reason"="whitelist",
 		"desc"="\nПричина: Вас ([key]) нет в вайтлисте этого сервера. Приобрести доступ возможно у одного из стримеров Банды за баллы канала или записаться самостоятельно с помощью команды в дискорде, доступной сабам бусти, начиная со второго тира.")
 
-	return is_ckey_whitelisted(ckey) ? null : deny_message
+	return is_ckey_whitelisted(ckey, world.port) ? null : deny_message
 
 /mob/dead/new_player/proc/check_whitelist_or_make_interviewee()
 	if(client.interviewee)
@@ -40,7 +41,10 @@
 	if(!CONFIG_GET(flag/whitelist220))
 		return
 
-	if(is_ckey_whitelisted(ckey))
+	if(is_ckey_whitelisted(ckey, world.port))
+		return
+
+	if(is_ckey_whitelisted(ckey, TEST_TG_WL_PORT))
 		return
 
 	client.interviewee = TRUE
@@ -100,19 +104,19 @@
 			SELECT :ckey, :adminwho, :port
 			WHERE NOT EXISTS ([CKEY_HAS_VALID_WHITELIST_QUERY])
 		"},
-		list("ckey" = owner_ckey, "adminwho" = added_by?.ckey, "port" = "[world.port]")
+		list("ckey" = owner_ckey, "adminwho" = added_by?.ckey, "port" = "[TEST_TG_WL_PORT]")
 	)
 
 	whitelist_query.warn_execute()
 	qdel(whitelist_query)
 
-/proc/is_ckey_whitelisted(ckey_to_check)
+/proc/is_ckey_whitelisted(ckey_to_check, port_to_check)
 	if(!ckey_to_check || !SSdbcore.IsConnected())
 		return FALSE
 
 	var/datum/db_query/whitelist_query = SSdbcore.NewQuery(
 		CKEY_HAS_VALID_WHITELIST_QUERY,
-		list("ckey" = ckey_to_check, "port" = "[world.port]")
+		list("ckey" = ckey_to_check, "port" = "[port_to_check]")
 	)
 
 	if(!whitelist_query.warn_execute())
@@ -128,3 +132,4 @@
 	return FALSE
 
 #undef CKEY_HAS_VALID_WHITELIST_QUERY
+#undef TEST_TG_WL_PORT
