@@ -17,9 +17,9 @@
 	. = ..()
 	if(!.)
 		return
+
 	// We've completed the surgery
 	if(status > length(steps))
-		remove_fishing_spot()
 		return
 
 	if(!ispath(steps[status], /datum/surgery_step/manipulate_organs))
