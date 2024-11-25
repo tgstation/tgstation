@@ -301,7 +301,6 @@
 
 /obj/structure/closet/crate/freezer/organ/PopulateContents()
 	. = ..()
-	new /obj/item/organ/brain(src)
 	new /obj/item/organ/heart(src)
 	new /obj/item/organ/lungs(src)
 	new /obj/item/organ/eyes(src)
