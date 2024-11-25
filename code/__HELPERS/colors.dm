@@ -163,9 +163,10 @@
 	var/saturation = new_color[2] / 100
 	var/added_saturation = 0
 	var/deducted_light = 0
-	if (saturation_behavior == SATURATION_ALWAYS)
+	if (saturation_behavior == SATURATION_OVERRIDE)
 		added_saturation = saturation * 0.75
 		deducted_light = saturation * 0.5
+		saturation = min(saturation, 1 - added_saturation)
 
 	var/list/new_matrix = list(
 		0, 0, 0, 0, // Ignore original hue

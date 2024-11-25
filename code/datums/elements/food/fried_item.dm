@@ -11,10 +11,10 @@
 
 	if (isnull(fried_colors))
 		fried_colors = list(
-			color_transition_filter(COLOR_LIGHT_BROWN, SATURATION_ALWAYS),
-			color_transition_filter(COLOR_BROWNER_BROWN, SATURATION_ALWAYS),
-			color_transition_filter(COLOR_DARKER_BROWN, SATURATION_ALWAYS),
-			color_transition_filter(COLOR_BLACK, SATURATION_ALWAYS),
+			color_transition_filter(COLOR_LIGHT_BROWN, SATURATION_OVERRIDE),
+			color_transition_filter(COLOR_BROWNER_BROWN, SATURATION_OVERRIDE),
+			color_transition_filter(COLOR_DARKER_BROWN, SATURATION_OVERRIDE),
+			color_transition_filter(COLOR_BLACK, SATURATION_OVERRIDE),
 		)
 
 	var/atom/this_food = target
