@@ -24,10 +24,9 @@
 	icon_state = "star_ball"
 	damage = 20
 	damage_type = BURN
-	speed = 1
+	speed = 0.2
 	range = 100
 	knockdown = 4 SECONDS
-	pixel_speed_multiplier = 0.2
 	/// Effect for when the ball hits something
 	var/obj/effect/explosion_effect = /obj/effect/temp_visual/cosmic_explosion
 	/// The range at which people will get marked with a star mark.

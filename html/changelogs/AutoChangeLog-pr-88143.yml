@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - code_imp: "Projectile impacts no longer fetch mobs' armor values thrice"

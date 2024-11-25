@@ -12,7 +12,6 @@ GLOBAL_LIST_INIT(raptor_inherit_traits, list(
 	BB_RAPTOR_MOTHERLY = "Motherly",
 	BB_RAPTOR_PLAYFUL = "Playful",
 	BB_RAPTOR_COWARD = "Coward",
-	BB_RAPTOR_TROUBLE_MAKER = "Trouble Maker",
 ))
 
 GLOBAL_LIST_EMPTY(raptor_population)
@@ -70,6 +69,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		change_offsets = FALSE
 		icon = 'icons/mob/simple/lavaland/raptor_icebox.dmi'
 
+	AddElement(/datum/element/wears_collar)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
 
 	if(!mapload)
@@ -159,7 +159,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		balloon_alert(src, "no food!")
 	else
 		melee_attack(ore_food)
-	return TRUE
+	return FALSE
 
 /mob/living/basic/raptor/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	if(!combat_mode && istype(target, /mob/living/basic/raptor/baby_raptor))
