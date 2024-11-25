@@ -209,19 +209,3 @@
 	crate_name = "body freezer"
 	crate_type = /obj/structure/closet/crate/secure/freezer
 
-/datum/supply_pack/medical/organs
-	name = "Organ Crate"
-	desc = "A freezer containing a set of organic organs. May or may not have been obtained illegally."
-	cost = CARGO_CRATE_VALUE * 2.5
-	contains = list(/obj/item/organ/brain,
-					/obj/item/organ/heart,
-					/obj/item/organ/lungs,
-					/obj/item/organ/eyes,
-					/obj/item/organ/ears,
-					/obj/item/organ/tongue,
-					/obj/item/organ/liver,
-					/obj/item/organ/stomach,
-					/obj/item/organ/appendix,
-				)
-	crate_name = "organ freezer"
-	crate_type = /obj/structure/closet/crate/freezer
