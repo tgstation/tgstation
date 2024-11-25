@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "The Aquarium ui won't show the user contents rather than that of the aquarium itself"
