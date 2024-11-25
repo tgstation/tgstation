@@ -1,0 +1,4 @@
+author: "Hardly"
+delete-after: True
+changes:
+  - bugfix: "Ghosts can no longer emit spooky analyzing sounds when scanning"

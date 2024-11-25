@@ -437,6 +437,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "carpenter_hammer"
 	inhand_icon_state = "carpenter_hammer"
+	worn_icon_state = "clawhammer" //plaecholder
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	desc = "Uncanny looking hammer."
@@ -446,6 +447,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_NORMAL
 	wound_bonus = 20
 	demolition_mod = 1.25
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/carpenter_hammer/Initialize(mapload)
 	. = ..()
