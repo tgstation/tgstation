@@ -1189,7 +1189,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	addtimer(CALLBACK(src, PROC_REF(become_hostile)), rand(10, 30))
+	addtimer(CALLBACK(src, PROC_REF(become_hostile)), rand(1 SECONDS, 3 SECONDS))
 	balloon_alert(user, "experimental features unlocked!")
 	return TRUE
 
