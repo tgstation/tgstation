@@ -14,7 +14,6 @@ Doesn't work on other aliens/AI.*/
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "spell_default"
 	check_flags = AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
-	melee_cooldown_time = 0 SECONDS
 
 	/// How much plasma this action uses.
 	var/plasma_cost = 0
@@ -296,7 +295,7 @@ Doesn't work on other aliens/AI.*/
 		span_alertalien("You spit neurotoxin."),
 	)
 	var/obj/projectile/neurotoxin/neurotoxin = new /obj/projectile/neurotoxin(caller.loc)
-	neurotoxin.preparePixelProjectile(target, caller, modifiers)
+	neurotoxin.aim_projectile(target, caller, modifiers)
 	neurotoxin.firer = caller
 	neurotoxin.fire()
 	caller.newtonian_move(get_angle(target, caller))

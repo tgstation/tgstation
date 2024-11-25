@@ -45,11 +45,10 @@
 	return covering_part
 
 /mob/living/carbon/human/bullet_act(obj/projectile/bullet, def_zone, piercing_hit = FALSE)
-
 	if(bullet.firer == src && bullet.original == src) //can't block or reflect when shooting yourself
 		return ..()
 
-	if(bullet.reflectable & REFLECT_NORMAL)
+	if(bullet.reflectable)
 		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 			visible_message(
 				span_danger("The [bullet.name] gets reflected by [src]!"),
@@ -61,11 +60,8 @@
 					playsound(src, held_item.block_sound, BLOCK_SOUND_VOLUME, TRUE)
 			// Find a turf near or on the original location to bounce to
 			if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
-				bullet.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.
-				loc.bullet_act(bullet, def_zone, piercing_hit)
-				return BULLET_ACT_HIT
+				return loc.projectile_hit(bullet, def_zone, piercing_hit)
 			bullet.reflect(src)
-
 			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
 	if(check_block(bullet, bullet.damage, "the [bullet.name]", PROJECTILE_ATTACK, bullet.armour_penetration, bullet.damage_type))
@@ -99,9 +95,8 @@
 			if(worn_thing in held_items)
 				continue
 		// Things that are supposed to be held, being worn = cannot block
-		else
-			if(!(worn_thing in held_items))
-				continue
+		else if(!(worn_thing in held_items))
+			continue
 
 		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration) / 2, 0, 100)) + block_chance_modifier
 		if(worn_thing.hit_reaction(src, hit_by, attack_text, final_block_chance, damage, attack_type, damage_type))
@@ -379,9 +374,12 @@
 			else if(wear_suit.siemens_coefficient <= 0)
 				siemens_coeff -= 0.95
 		siemens_coeff = max(siemens_coeff, 0)
-	else if(!(flags & SHOCK_NOGLOVES)) //This gets the siemens_coeff for all non tesla shocks
-		if(gloves)
-			siemens_coeff *= gloves.siemens_coefficient
+	if(flags & SHOCK_NOGLOVES) //This gets the siemens_coeff for all non tesla shocks
+		if(wear_suit)
+			siemens_coeff *= wear_suit.siemens_coefficient
+	else if(gloves)
+		siemens_coeff *= gloves.siemens_coefficient
+
 	siemens_coeff *= physiology.siemens_coeff
 	siemens_coeff *= dna.species.siemens_coeff
 	. = ..()

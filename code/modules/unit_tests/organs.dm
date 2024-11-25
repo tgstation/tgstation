@@ -10,22 +10,9 @@
 	var/static/list/species_changing_organs = typecacheof(list(
 		/obj/item/organ/brain/shadow/nightmare,
 	))
-	// List of organ typepaths which are not test-able, such as certain class prototypes.
-	var/static/list/test_organ_blacklist = typecacheof(list(
-		/obj/item/organ,
-		/obj/item/organ,
-		/obj/item/organ/wings,
-		/obj/item/organ/cyberimp,
-		/obj/item/organ/cyberimp/brain,
-		/obj/item/organ/cyberimp/mouth,
-		/obj/item/organ/cyberimp/arm,
-		/obj/item/organ/cyberimp/chest,
-		/obj/item/organ/cyberimp/eyes,
-		/obj/item/organ/alien,
-	))
 
 /datum/unit_test/organ_sanity/Run()
-	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ) - test_organ_blacklist)
+	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ) - GLOB.prototype_organs)
 		organ_test_insert(organ_type)
 
 /datum/unit_test/organ_sanity/proc/organ_test_insert(obj/item/organ/organ_type)

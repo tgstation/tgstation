@@ -137,12 +137,11 @@ export class DraggableControl extends Component {
       } else if (this.inputRef) {
         const input = this.inputRef.current;
         input.value = internalValue;
-        // IE8: Dies when trying to focus a hidden element
-        // (Error: Object does not support this action)
-        try {
+
+        setTimeout(() => {
           input.focus();
           input.select();
-        } catch {}
+        }, 0);
       }
     };
   }

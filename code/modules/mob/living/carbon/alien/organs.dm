@@ -1,6 +1,6 @@
 /obj/item/organ/alien
 	icon_state = "acid"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/toxin/acid = 10)
 
 /obj/item/organ/alien/plasmavessel
 	name = "plasma vessel"
@@ -8,7 +8,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_XENO_PLASMAVESSEL
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/plasma = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/toxin/plasma = 10)
 	actions_types = list(
 		/datum/action/cooldown/alien/make_structure/plant_weeds,
 		/datum/action/cooldown/alien/transfer,
@@ -103,7 +103,7 @@
 	. = ..()
 	organ_owner.faction |= ROLE_ALIEN
 
-/obj/item/organ/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	if(organ_owner)
 		organ_owner.faction -= ROLE_ALIEN
 	return ..()
@@ -221,11 +221,11 @@
 	stomach_contents -= source
 	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 
-/obj/item/organ/stomach/alien/mob_insert(mob/living/carbon/stomach_owner, special, movement_flags)
+/obj/item/organ/stomach/alien/on_mob_insert(mob/living/carbon/stomach_owner, special, movement_flags)
 	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, PROC_REF(something_moved))
 	return ..()
 
-/obj/item/organ/stomach/alien/mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
+/obj/item/organ/stomach/alien/on_mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
 	UnregisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE)
 	return ..()
 

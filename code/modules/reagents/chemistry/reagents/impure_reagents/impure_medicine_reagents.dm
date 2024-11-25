@@ -213,35 +213,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
 
-//failed
-/datum/reagent/inverse/ichiyuri
-	name = "Ichiyuri"
-	description = "Prolonged exposure to this chemical can cause an overwhelming urge to itch oneself."
-	reagent_state = LIQUID
-	color = "#C8A5DC"
-	ph = 1.7
-	addiction_types = list(/datum/addiction/medicine = 2.5)
-	tox_damage = 0.1
-	///Probability of scratch - increases as a function of time
-	var/resetting_probability = 0
-	///Prevents message spam
-	var/spammer = 0
-
-//Just the removed itching mechanism - omage to its origins.
-/datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
-	if(prob(resetting_probability) && !(HAS_TRAIT(affected_mob, TRAIT_RESTRAINED) || affected_mob.incapacitated))
-		. = TRUE
-		if(spammer < world.time)
-			to_chat(affected_mob,span_warning("You can't help but itch yourself."))
-			spammer = world.time + (10 SECONDS)
-		var/scab = rand(1,7)
-		if(affected_mob.adjustBruteLoss(scab*REM, updating_health = FALSE))
-			. = UPDATE_MOB_HEALTH
-		affected_mob.bleed(scab)
-		resetting_probability = 0
-	resetting_probability += (5*((current_cycle-1)/10) * seconds_per_tick) // 10 iterations = >51% to itch
-
 //Aiuri
 //inverse
 /datum/reagent/inverse/aiuri
@@ -509,6 +480,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	overdose_threshold = 20
 	self_consuming = TRUE //No pesky liver shenanigans
 	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
+	affected_organ_flags = NONE
 	///If we brought someone back from the dead
 	var/back_from_the_dead = FALSE
 	/// List of trait buffs to give to the affected mob, and remove as needed.

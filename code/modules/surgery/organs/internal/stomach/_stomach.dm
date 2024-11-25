@@ -20,7 +20,7 @@
 	high_threshold_cleared = span_info("The pain in your stomach dies down for now, but food still seems unappealing.")
 	low_threshold_cleared = span_info("The last bouts of pain in your stomach have died out.")
 
-	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue/stomach_lining = 5)
 	//This is a reagent user and needs more then the 10u from edible component
 	reagent_vol = 1000
 
@@ -246,13 +246,13 @@
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/disgusted)
 			disgusted.add_mood_event("disgust", /datum/mood_event/disgusted)
 
-/obj/item/organ/stomach/mob_insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/stomach/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	receiver.hud_used?.hunger?.update_appearance()
 
-/obj/item/organ/stomach/mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
+/obj/item/organ/stomach/on_mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
 	if(ishuman(stomach_owner))
-		var/mob/living/carbon/human/human_owner = owner
+		var/mob/living/carbon/human/human_owner = stomach_owner
 		human_owner.clear_alert(ALERT_DISGUST)
 		human_owner.clear_mood_event("disgust")
 	stomach_owner.hud_used?.hunger?.update_appearance()

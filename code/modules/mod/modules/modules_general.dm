@@ -104,7 +104,6 @@
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/jetpack)
-	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_jetpack"
 	overlay_state_active = "module_jetpack_on"
 	required_slots = list(ITEM_SLOT_BACK)
@@ -149,9 +148,9 @@
 
 	if (!isnull(mod) && !isnull(mod.wearer) && mod.wearer.get_item_by_slot(slot_flags) == src)
 		if (!stabilize)
-			ADD_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
+			ADD_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, REF(src))
 		else
-			REMOVE_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
+			REMOVE_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, REF(src))
 
 /obj/item/mod/module/jetpack/get_configuration()
 	. = ..()
@@ -172,11 +171,11 @@
 /obj/item/mod/module/jetpack/on_activation()
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
 	if (!stabilize)
-		ADD_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
+		ADD_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, REF(src))
 
 /obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, REF(src))
 
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"
@@ -404,7 +403,6 @@
 	complexity = 1
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/flashlight)
-	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_light"
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_color = COLOR_WHITE
@@ -560,7 +558,6 @@
 	complexity = 1
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/thermal_regulator)
-	cooldown_time = 0.5 SECONDS
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// The temperature we are regulating to.
 	var/temperature_setting = BODYTEMP_NORMAL
@@ -675,10 +672,10 @@
 	return ..()
 
 /obj/item/mod/module/plasma_stabilizer/on_equip()
-	ADD_TRAIT(mod.wearer, TRAIT_HEAD_ATMOS_SEALED, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_HEAD_ATMOS_SEALED, REF(src))
 
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
-	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_ATMOS_SEALED, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_ATMOS_SEALED, REF(src))
 
 
 //Finally, https://pipe.miroware.io/5b52ba1d94357d5d623f74aa/mspfa/Nuke%20Ops/Panels/0648.gif can be real:
@@ -734,10 +731,10 @@
 	required_slots = list(ITEM_SLOT_GLOVES)
 
 /obj/item/mod/module/signlang_radio/on_part_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, REF(src))
 
 /obj/item/mod/module/signlang_radio/on_part_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, REF(src))
 
 ///A module that recharges the suit by an itsy tiny bit whenever the user takes a step. Originally called "magneto module" but the videogame reference sounds cooler.
 /obj/item/mod/module/joint_torsion
@@ -929,7 +926,7 @@
 	icon_state = "fishing_glove"
 	complexity = 1
 	overlay_state_inactive = "fishing_glove"
-	incompatible_modules = (/obj/item/mod/module/fishing_glove)
+	incompatible_modules = list(/obj/item/mod/module/fishing_glove)
 	required_slots = list(ITEM_SLOT_GLOVES)
 	var/obj/item/fishing_rod/equipped
 
@@ -955,7 +952,7 @@
 	if(!istype(tool, /obj/item/fishing_rod))
 		return ..()
 	if(equipped)
-		balloon_alert(user, "remove current rod first!")
+		balloon_alert(user, "already has rod!")
 	if(!user.transferItemToLoc(tool, src))
 		user.balloon_alert(user, "it's stuck!")
 	equipped = tool
@@ -988,7 +985,7 @@
 		return
 	gloves.AddComponent(/datum/component/adjust_fishing_difficulty, 5)
 	if(equipped)
-		gloves.AddComponent(/datum/component/profound_fisher, equipped)
+		gloves.AddComponent(/datum/component/profound_fisher, equipped, delete_rod_when_deleted = FALSE)
 
 /obj/item/mod/module/fishing_glove/on_part_deactivation(deleting = FALSE)
 	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)

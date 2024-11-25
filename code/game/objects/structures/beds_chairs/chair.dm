@@ -271,11 +271,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 		return
 	if(!item_chair || has_buckled_mobs())
 		return
+	if(flags_1 & HOLOGRAM_1)
+		to_chat(user, span_notice("You try to pick up \the [src], but it fades away!"))
+		qdel(src)
+		return
+
 	user.visible_message(span_notice("[user] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
-	var/obj/item/C = new item_chair(loc)
-	C.set_custom_materials(custom_materials)
-	TransferComponents(C)
-	user.put_in_hands(C)
+	var/obj/item/chair_item = new item_chair(loc)
+	chair_item.set_custom_materials(custom_materials)
+	TransferComponents(chair_item)
+	user.put_in_hands(chair_item)
 	qdel(src)
 
 /obj/structure/chair/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
@@ -344,6 +349,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	if(isgroundlessturf(T))
 		to_chat(user, span_warning("You need ground to plant this on!"))
 		return
+	if(flags_1 & HOLOGRAM_1)
+		to_chat(user, span_notice("You try to place down \the [src], but it fades away!"))
+		qdel(src)
+		return
+
 	for(var/obj/A in T)
 		if(istype(A, /obj/structure/chair))
 			to_chat(user, span_warning("There is already a chair here!"))
@@ -353,10 +363,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 			return
 
 	user.visible_message(span_notice("[user] rights \the [src.name]."), span_notice("You right \the [name]."))
-	var/obj/structure/chair/C = new origin_type(get_turf(loc))
-	C.set_custom_materials(custom_materials)
-	TransferComponents(C)
-	C.setDir(user.dir)
+	var/obj/structure/chair/chair = new origin_type(get_turf(loc))
+	chair.set_custom_materials(custom_materials)
+	TransferComponents(chair)
+	chair.setDir(user.dir)
 	qdel(src)
 
 /obj/item/chair/proc/smash(mob/living/user)

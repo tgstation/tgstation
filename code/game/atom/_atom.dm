@@ -199,7 +199,7 @@
 	var/turf/p_turf = get_turf(ricocheting_projectile)
 	var/face_direction = get_dir(src, p_turf) || get_dir(src, ricocheting_projectile)
 	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.Angle + 180))
+	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.angle + 180))
 	var/a_incidence_s = abs(incidence_s)
 	if(a_incidence_s > 90 && a_incidence_s < 270)
 		return FALSE
@@ -881,7 +881,7 @@
 	var/extra_context = ""
 	var/used_name = name
 
-	if(isliving(user) || isovermind(user) || isaicamera(user) || (ghost_screentips && isobserver(user)))
+	if(isliving(user) || isovermind(user) || iscameramob(user) || (ghost_screentips && isobserver(user)))
 		var/obj/item/held_item = user.get_active_held_item()
 
 		if (user.mob_flags & MOB_HAS_SCREENTIPS_NAME_OVERRIDE)

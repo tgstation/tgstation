@@ -170,6 +170,13 @@
 		if(start_T && end_T)
 			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 	var/power_throw = 0
+	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
+
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		power_throw += potential_spine.added_throw_speed
+		extra_throw_range += potential_spine.added_throw_range
+
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		power_throw++
 	if(HAS_TRAIT(src, TRAIT_DWARF))
@@ -200,11 +207,6 @@
 	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw_text]"), \
 					span_danger("You [verb_text] [thrown_thing][power_throw_text]"))
 	log_message("has thrown [thrown_thing] [power_throw_text]", LOG_ATTACK)
-	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
-
-	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
-	if(istype(potential_spine))
-		extra_throw_range += potential_spine.added_throw_range
 
 	var/drift_force = max(0.5 NEWTONS, 1 NEWTONS + power_throw)
 	if (isitem(thrown_thing))
@@ -570,7 +572,11 @@
 	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - total_burn - total_brute, DAMAGE_PRECISION))
 	update_stat()
 	update_stamina()
-	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
+
+	/// The amount of burn damage needed to be done for this mob to be husked
+	var/husk_threshold = get_bodypart(BODY_ZONE_CHEST).max_damage * -1
+
+	if(((maxHealth - total_burn) < husk_threshold) && stat == DEAD )
 		become_husk(BURN)
 	med_hud_set_health()
 	if(stat == SOFT_CRIT)
@@ -743,7 +749,7 @@
 
 	//Fire and Brute damage overlay (BSSR)
 	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
-	if(hurtdamage)
+	if(hurtdamage && !HAS_TRAIT(src, TRAIT_ANALGESIA))
 		var/severity = 0
 		switch(hurtdamage)
 			if(5 to 15)
@@ -1488,3 +1494,9 @@
 		return
 	head.adjustBleedStacks(5)
 	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))
+
+/mob/living/carbon/check_hit_limb_zone_name(hit_zone)
+	if(get_bodypart(hit_zone))
+		return hit_zone
+	// When a limb is missing the damage is actually passed to the chest
+	return BODY_ZONE_CHEST

@@ -8,7 +8,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 	/// How many times you can use the autosurgeon before it becomes useless
-	var/uses = INFINITE
+	var/uses = INFINITY
 	/// What organ will the autosurgeon sub-type will start with. ie, CMO autosurgeon start with a medi-hud.
 	var/starting_organ
 	/// The organ currently loaded in the autosurgeon, ready to be implanted.
@@ -40,7 +40,7 @@
 			to_chat(user, span_alert("[src] already has an implant stored."))
 			return
 
-		if(uses == 0)
+		if(uses <= 0)
 			to_chat(user, span_alert("[src] is used up and cannot be loaded with more implants."))
 			return
 
@@ -69,7 +69,7 @@
 		to_chat(user, span_alert("[src] currently has no implant stored."))
 		return
 
-	if(!uses)
+	if(uses <= 0)
 		to_chat(user, span_alert("[src] has already been used. The tools are dull and won't reactivate."))
 		return
 
@@ -96,9 +96,8 @@
 	playsound(target.loc, 'sound/items/weapons/circsawhit.ogg', 50, vary = TRUE)
 	update_appearance()
 
-	if(uses)
-		uses--
-	if(uses == 0)
+	uses--
+	if(uses <= 0)
 		desc = "[initial(desc)] Looks like it's been used up."
 
 /obj/item/autosurgeon/attack_self(mob/user)//when the object it used...
@@ -129,9 +128,8 @@
 			stored_organ = null
 
 		screwtool.play_tool_sound(src)
-		if (uses)
-			uses--
-		if(!uses)
+		uses--
+		if(uses <= 0)
 			desc = "[initial(desc)] Looks like it's been used up."
 		update_appearance(UPDATE_ICON)
 	return TRUE
