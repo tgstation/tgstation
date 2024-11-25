@@ -243,10 +243,10 @@
 
 	for(var/iteration in 1 to rand(2, 4))
 		var/turf/target_turf = pick(nearby_valid_turfs)
-//		var/obj/item/stack/new_ore = pick_weight(ore_weight_list)
-//		var/obj/new_ore_pile = new new_ore(target_turf, ore_spawn_values[new_ore.type])
+		var/obj/item/stack/new_ore = pick_weight(ore_weight_list)
+		var/obj/new_ore_pile = new new_ore(target_turf, ore_spawn_values[new_ore.type])
 		new /obj/effect/temp_visual/mook_dust(target_turf)
-//		playsound(new_ore_pile, 'modular_nova/master_files/sound/effects/robot_sit.ogg', 25, TRUE) port tallborgs soon
+		playsound(new_ore_pile, 'modular_doppler/kahraman_equipment/sounds/tallborg_sitting_down.ogg', 25, TRUE)
 
 	slam_jams -= slam_jams_needed
 
