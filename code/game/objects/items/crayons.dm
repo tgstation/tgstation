@@ -789,6 +789,12 @@
 	post_noise = FALSE
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
+	/// Types which use their color var for additional logic, so we need to avoid using transition filters on them.
+	var/static/list/direct_color_types = typecacheof(list(
+		/obj/item/paper, // Uses color for TGUI backgrounds
+		/obj/item/fish, // Used for aquarium sprites
+	))
+
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/improvised_coolant)
@@ -968,6 +974,8 @@
 		else
 			balloon_alert(user, "invalid pipe color!")
 			return ITEM_INTERACT_BLOCKING
+	else if (is_type_in_typecache(target, direct_color_types))
+		target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 	else
 		target.add_atom_colour(color_transition_filter(paint_color, saturation_mode), WASHABLE_COLOUR_PRIORITY)
 
