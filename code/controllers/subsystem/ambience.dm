@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(ambience)
 		var/area/current_area = get_area(client_mob)
 		if(!current_area) //Something's gone horribly wrong
 			stack_trace("[key_name(client_mob)] has somehow ended up in nullspace. WTF did you do")
-			ambience_listening_clients -= client_iterator
+			remove_ambience_client(client_iterator)
 			continue
 
 		if(ambience_listening_clients[client_iterator] > world.time)
@@ -59,7 +59,8 @@ SUBSYSTEM_DEF(ambience)
 	new_sound = sound(new_sound, repeat = 0, wait = 0, volume = volume*volume_modifier, channel = CHANNEL_AMBIENCE)
 	SEND_SOUND(M, new_sound)
 
-	return rand(min_ambience_cooldown, max_ambience_cooldown)
+	var/sound_length = ceil(SSsound_cache.get_sound_length(new_sound.file))
+	return rand(min_ambience_cooldown + sound_length, max_ambience_cooldown + sound_length)
 
 /datum/controller/subsystem/ambience/proc/remove_ambience_client(client/to_remove)
 	ambience_listening_clients -= to_remove
