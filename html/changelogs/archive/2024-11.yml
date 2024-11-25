@@ -873,3 +873,67 @@
   - bugfix: Fix fireplace particles runtimes.
   timothymtorres, SmArtKar:
   - bugfix: Fix chewable bubblegum not metabolizing due to microdose
+2024-11-25:
+  Absolucy:
+  - refactor: Cleaned up code relating to heretic ascension announcements and traits.
+  ArcaneMusic:
+  - rscadd: Adds a canned disease that can show randomly in space occasionally, causing
+      the target to begin to providing chemicals resulting in the target to avoid
+      needing to be affected by gravity.
+  Auris456852:
+  - bugfix: Makes a sliced baklava pie keep its complexity after slicing
+  Dawnseer:
+  - bugfix: fixed some erronous spriting on the zippo
+  EnterTheJake:
+  - image: Heretic's Moon Blade has received a new sprite.
+  Ghommie:
+  - balance: Nerfed slipperiness from fish infusion. It no longer knockdowns but it
+      staggers and slides the user one or two tiles away.
+  - balance: Added a slight natural weakness to fire/heat to the fish infusion, which,
+      taking the minor general damage resistance resistance when wet, is pretty mild.
+  - balance: hot temperature projectiles from the temperature gun (and watchers I
+      think) also dry living creatures hit by them.
+  GoblinBackwards:
+  - bugfix: fixed the fire effect not appearing on burning gasses
+  Mifutus:
+  - rscadd: Added new moth customizations available in the character creation under
+      the name "Dipped"
+  - image: 'added icons for the moth wings, antennae and markings
+
+      :cl:'
+  - bugfix: fixed the pulse rifle not spawning when won
+  - code_imp: 'added get_turf to the pulserifle  when the odds are beat.
+
+      :cl:'
+  SmArtKar:
+  - code_imp: Cleaned up organ code
+  - bugfix: Fixed meteors freezing in place if they continiously miss the station
+      on a looping z level
+  - image: Muzzle flash now is attached to your sprite, meaning you won't run over
+      it if you fire while moving
+  - bugfix: Fixed some issues with defib paddle retraction.
+  - bugfix: Fixed atrocinator module footstep spam when you're moving on a tram
+  - qol: Reagent grinders display number of material sheets they hold instead of defaulting
+      to 1
+  - image: Changing clipboard skins now changes the inhands sprite as well
+  - bugfix: Fixed a runtime in cranial fissure remove code
+  - bugfix: Fixed fishing turfs not lazyloading
+  - bugfix: Blind people no longer make eye contact with their hands
+  - bugfix: Blindfolds and other sorts of opaque eye coverage now prevent eye contact
+      from occuring
+  - bugfix: Fixed a random zero in nuke ops uplink UI
+  - bugfix: Fixed a runtime caused by logging out while your runechat message was
+      appearing.
+  carlarctg:
+  - qol: carpenter hammer fits on belt slot
+  - code_imp: renames belt_icon_state to inside_belt_icon_state for intelligibiility
+  grungussuss:
+  - sound: changelings now have a sound for absorbing
+  mc-oofert:
+  - bugfix: fixed some wiring on wawastation, added an additional distro/scrubbers
+      connection to sciences network
+  - bugfix: damage done by thrown objects to objects respects their demolition modifier
+  timothymtorres:
+  - bugfix: Fix weather effects ignoring certain areas like space.
+  - bugfix: Fix coffee maker items teleporting to AI/Cyborg locations
+  - code_imp: Change some status effects to use SECONDS define.

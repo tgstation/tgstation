@@ -533,7 +533,7 @@
 			pierces += 1
 
 		// Targets should handle their impact logic on our own and if they decide that we hit them, they call our on_hit
-		var/result = target.bullet_act(src, def_zone, mode == PROJECTILE_PIERCE_HIT)
+		var/result = target.projectile_hit(src, def_zone, mode == PROJECTILE_PIERCE_HIT)
 		if (result != BULLET_ACT_FORCE_PIERCE && max_pierces && pierces >= max_pierces)
 			return PROJECTILE_IMPACT_SUCCESSFUL
 
