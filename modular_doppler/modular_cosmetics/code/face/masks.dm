@@ -38,4 +38,3 @@
 	. = ..()
 	. += span_notice("[src] can be worn above or below your suit. Alt-Right-click to toggle.")
 	. += span_notice("Alt-click [src] to adjust it.")
-

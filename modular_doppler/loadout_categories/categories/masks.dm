@@ -75,3 +75,15 @@
 /datum/loadout_item/mask/neck_gaiter
 	name = "Neck Gaiter"
 	item_path = /obj/item/clothing/mask/neck_gaiter
+
+/datum/loadout_item/mask/paper
+	name = "Paper Mask"
+	item_path = /obj/item/clothing/mask/paper
+
+/datum/loadout_item/mask/lollipop
+	name = "Lollipop"
+	item_path = /obj/item/food/lollipop
+
+/datum/loadout_item/mask/kitsune
+	name = "Kitsune Mask"
+	item_path = /obj/item/clothing/mask/kitsune

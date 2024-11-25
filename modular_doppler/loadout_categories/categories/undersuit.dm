@@ -89,6 +89,10 @@
 	name = "Jeans"
 	item_path = /obj/item/clothing/under/pants/jeans
 
+/datum/loadout_item/undersuit/pants/moto
+	name = "Moto Pants"
+	item_path = /obj/item/clothing/under/pants/moto_leggings
+
 /datum/loadout_item/undersuit/pants/jeans/shorts
 	name = "Jean Shorts"
 	item_path = /obj/item/clothing/under/shorts/jeanshorts
@@ -132,6 +136,54 @@
 /datum/loadout_item/undersuit/pants/skirt/loincloth/alt
 	name = "Loincloth, Alt"
 	item_path = /obj/item/clothing/under/dress/skirt/loincloth/loincloth_alt
+
+/datum/loadout_item/undersuit/formal
+	name = "Pencilskirt with Shirt"
+	item_path = /obj/item/clothing/under/suit/pencil
+
+/datum/loadout_item/undersuit/formal/pencil
+	name = "Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/pencil/noshirt
+
+/datum/loadout_item/undersuit/formal/pencil/black_really
+	name = "Executive Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/pencil/black_really
+
+/datum/loadout_item/undersuit/formal/pencil/charcoal
+	name = "Charcoal Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/pencil/charcoal
+
+/datum/loadout_item/undersuit/formal/pencil/navy
+	name = "Navy Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/pencil/navy
+
+/datum/loadout_item/undersuit/formal/pencil/burgandy
+	name = "Burgandy Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/pencil/burgandy
+
+/datum/loadout_item/undersuit/formal/pencil/checkered
+	name = "Checkered Pencilskirt with Shirt"
+	item_path = /obj/item/clothing/under/suit/pencil/checkered
+
+/datum/loadout_item/undersuit/formal/pencil/checkered/noshirt
+	name = "Checkered Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/pencil/checkered/noshirt
+
+/datum/loadout_item/undersuit/formal/pencil/tan
+	name = "Tan Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/pencil/tan
+
+/datum/loadout_item/undersuit/formal/pencil/green
+	name = "Green Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/pencil/green
+
+/datum/loadout_item/undersuit/formal/cowl_neck
+	name = "Cowl Neck Shirt & Trousers"
+	item_path = /obj/item/clothing/under/cowl_neck_shirt
+
+/datum/loadout_item/undersuit/formal/collared_shirt
+	name = "Collared Shirt & Trousers"
+	item_path = /obj/item/clothing/under/collared_shirt
 
 /*
 *	BUTTONDOWNS
@@ -214,6 +266,10 @@
 	name = "Strapless Dress"
 	item_path = /obj/item/clothing/under/dress/doppler/strapless
 
+/datum/loadout_item/undersuit/dress/maid
+	name = "Maid Outfit"
+	item_path = /obj/item/clothing/under/maid_costume
+
 /// JAPANESE/LUNAR BREAKER
 
 /datum/loadout_item/undersuit/dress/qipao
@@ -292,6 +348,10 @@
 	name = "Colorable Jumpskirt"
 	item_path = /obj/item/clothing/under/color/jumpskirt
 
-/datum/loadout_item/under/jumpsuit/frontier
+/datum/loadout_item/undersuit/jumpsuit/frontier
 	name = "Frontier Jumpsuit"
 	item_path = /obj/item/clothing/under/frontier_colonist
+
+/datum/loadout_item/undersuit/bunnysuit
+	name = "Bunny Suit"
+	item_path = /obj/item/clothing/under/costume/bunnysuit

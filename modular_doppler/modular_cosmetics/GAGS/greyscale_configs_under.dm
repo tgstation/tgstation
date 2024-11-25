@@ -310,3 +310,48 @@
 /datum/greyscale_config/long_skirt/worn
 	name = "Long Skirt (Worn)"
 	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/miscellania.dmi'
+
+/datum/greyscale_config/pencilskirt
+	name = "Pencilskirt"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/pencilskirt.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/pencilskirt.json'
+
+/datum/greyscale_config/pencilskirt/worn
+	name = "Pencilskirt (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/pencilskirt.dmi'
+
+/datum/greyscale_config/pencilskirt_withshirt
+	name = "Pencilskirt + Shirt"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/pencilskirt.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/pencilskirt_bicol.json'
+
+/datum/greyscale_config/pencilskirt_withshirt/worn
+	name = "Pencilskirt + Shirt (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/pencilskirt.dmi'
+
+/datum/greyscale_config/pencilskirt_checkers
+	name = "Checkered Pencilskirt"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/pencilskirt.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/pencilskirt_bicol.json'
+
+/datum/greyscale_config/pencilskirt_checkers/worn
+	name = "Checkered Pencilskirt (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/pencilskirt.dmi'
+
+/datum/greyscale_config/pencilskirt_checkers_withshirt
+	name = "Checkered Pencilskirt + Shirt"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/pencilskirt.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/pencilskirt_tricol.json'
+
+/datum/greyscale_config/pencilskirt_checkers_withshirt/worn
+	name = "Checkered Pencilskirt + Shirt (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/pencilskirt.dmi'
+
+/datum/greyscale_config/pencilskirt_withsuit
+	name = "Pencilskirt + Suit"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/pencilskirt.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/pencilskirt_quadcol.json'
+
+/datum/greyscale_config/pencilskirt_withsuit/worn
+	name = "Pencilskirt + Suit (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/pencilskirt.dmi'

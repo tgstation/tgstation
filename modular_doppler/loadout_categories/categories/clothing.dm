@@ -47,6 +47,10 @@
 	name = "Marsian PLA Trenchcoat"
 	item_path = /obj/item/clothing/suit/jacket/doppler/red_trench
 
+/datum/loadout_item/suit/warm_coat
+	name = "Warm Coat"
+	item_path = /obj/item/clothing/suit/warm_coat
+
 /*
 *	SUITS / SUIT JACKETS
 */
@@ -326,14 +330,6 @@
 /datum/loadout_item/suit/hawaiian_shirt
 	name = "Hawaiian Shirt"
 	item_path = /obj/item/clothing/suit/costume/hawaiian
-
-/*
-*   MAID OUT WITH THE FIT
-*/
-
-/datum/loadout_item/suit/maid_costume
-	name = "Maid Costume"
-	item_path = /obj/item/clothing/under/costume/maid
 
 /*
 *	MISC
