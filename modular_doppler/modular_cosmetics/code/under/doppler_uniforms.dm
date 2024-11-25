@@ -207,9 +207,9 @@
 /obj/item/clothing/under/rank/civilian/janitor/doppler
 	name = "janitor uniform"
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
-	icon = 'modular_doppler/modular_cosmetics/icons/mob/under/janitor_my_beloved.dmi'
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/under/janitor_my_beloved.dmi'
 	icon_state = "janitor_doppler"
-	worn_icon = 'modular_doppler/modular_cosmetics/icons/obj/under/janitor_my_beloved.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/under/janitor_my_beloved.dmi'
 	inhand_icon_state = "janitor"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = TRUE
@@ -218,9 +218,9 @@
 /obj/item/clothing/under/rank/civilian/janitor/doppler_ct
 	name = "janitor crop top"
 	desc = "It's the unofficial uniform of the station's janitor. It has minor protection from biohazards."
-	icon = 'modular_doppler/modular_cosmetics/icons/mob/under/janitor_my_beloved.dmi'
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/under/janitor_my_beloved.dmi'
 	icon_state = "janitor_doppler_ct"
-	worn_icon = 'modular_doppler/modular_cosmetics/icons/obj/under/janitor_my_beloved.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/under/janitor_my_beloved.dmi'
 	inhand_icon_state = "janitor"
 	body_parts_covered = CHEST|GROIN
 	can_adjust = TRUE
