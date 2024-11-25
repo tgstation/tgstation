@@ -6981,6 +6981,7 @@
 #include "modular_doppler\modular_items\aac_device.dm"
 #include "modular_doppler\modular_items\bettermed_overrides.dm"
 #include "modular_doppler\modular_items\conversion_kits.dm"
+#include "modular_doppler\modular_items\emergency_breach_equipment.dm"
 #include "modular_doppler\modular_items\invisible_gear.dm"
 #include "modular_doppler\modular_items\shipchem_overrides.dm"
 #include "modular_doppler\modular_items\hairbrush\code\hairbrush.dm"
