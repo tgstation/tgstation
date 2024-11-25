@@ -111,7 +111,7 @@
 
 /datum/component/profound_fisher/proc/begin_fishing(mob/living/user, atom/target)
 	our_rod.melee_attack_chain(user, target)
-	ADD_TRAIT(source, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC)
+	ADD_TRAIT(user, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC)
 
 /datum/component/profound_fisher/proc/stop_fishing(datum/source)
 	SIGNAL_HANDLER
