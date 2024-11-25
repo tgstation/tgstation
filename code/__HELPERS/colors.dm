@@ -153,7 +153,7 @@
  * without making it a deep fried blob of color
  * saturation_behavior determines how we handle color saturation:
  * SATURATION_MULTIPLY - Multiply pixel's saturation by color's saturation. Paints accents while keeping dim areas dim.
- * SATURATION_ALWAYS - Affects original lightness/saturation to ensure that pale objects still get doused in color
+ * SATURATION_OVERRIDE- Affects original lightness/saturation to ensure that pale objects still get doused in color
  */
 /proc/color_transition_filter(new_color, saturation_behavior = SATURATION_MULTIPLY)
 	if (islist(new_color))

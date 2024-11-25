@@ -22,7 +22,7 @@
 /// Multiply pixel's saturation by color's saturation. Paints accents while keeping dim areas dim.
 #define SATURATION_MULTIPLY "multiply"
 /// Always affects the original pixel's saturation and lightness.
-#define  SATURATION_ALWAYS "always"
+#define  SATURATION_OVERRIDE"always"
 
 #define COLOR_DARKMODE_BACKGROUND "#202020"
 #define COLOR_DARKMODE_DARKBACKGROUND "#171717"
