@@ -1,0 +1,4 @@
+author: "Isratosh"
+delete-after: True
+changes:
+  - balance: "Time-gated traitor uplink gear is returned to being hard reputation locked with a static price."
