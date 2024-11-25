@@ -8798,6 +8798,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "cmg" = (
@@ -9409,7 +9412,7 @@
 /area/station/engineering/hallway)
 "cul" = (
 /obj/structure/table/wood,
-/obj/item/pinpointer,
+/obj/item/pinpointer/nuke,
 /obj/item/disk/nuclear,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
@@ -16619,6 +16622,9 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/trash/garbage,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "eiu" = (
@@ -19477,12 +19483,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/aft)
 "eYA" = (
-/obj/item/storage/box/monkeycubes{
-	pixel_x = -5;
-	pixel_y = 1
-	},
-/turf/closed/wall/r_wall,
-/area/station/maintenance/ghetto/aft)
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "eYB" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/purple{
@@ -22376,7 +22379,7 @@
 /area/station/maintenance/ghetto/starboard/aft)
 "fKm" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/machinery/light/broken/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "fKp" = (
@@ -30927,6 +30930,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "hZK" = (
@@ -39128,6 +39134,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "kib" = (
@@ -40274,7 +40283,6 @@
 "kwf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/bag/trash,
-/mob/living/basic/mouse/rat,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "kwg" = (
@@ -61414,6 +61422,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "pSx" = (
@@ -89028,6 +89039,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -137051,7 +137065,7 @@ fif
 doz
 doz
 oVL
-eYA
+etx
 uiT
 mrE
 aPQ
@@ -209234,7 +209248,7 @@ fjY
 xth
 bTH
 xVe
-rMZ
+eYA
 aWs
 aWs
 xho
