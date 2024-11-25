@@ -325,7 +325,7 @@
 /mob/living/basic/pet/dog/corgi/exoticcorgi/Initialize(mapload)
 	. = ..()
 	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	add_atom_colour(color_transition_filter(newcolor), FIXED_COLOUR_PRIORITY)
+	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
 //IAN! SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/ian
