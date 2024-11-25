@@ -18,6 +18,11 @@
 // Indexes for color arrays
 #define ATOM_COLOR_VALUE_INDEX 1
 #define ATOM_COLOR_TYPE_INDEX 2
+#define FILTER_ATOM_PRIORITY_COLOR "atom_priority_color"
+/// Multiply pixel's saturation by color's saturation. Paints accents while keeping dim areas dim.
+#define SATURATION_MULTIPLY "multiply"
+/// Always affects the original pixel's saturation and lightness.
+#define  SATURATION_ALWAYS "always"
 
 #define COLOR_DARKMODE_BACKGROUND "#202020"
 #define COLOR_DARKMODE_DARKBACKGROUND "#171717"

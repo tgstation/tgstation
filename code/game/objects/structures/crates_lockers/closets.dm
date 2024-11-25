@@ -233,10 +233,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		var/overlay_state = isnull(base_icon_state) ? initial(icon_state) : base_icon_state
 		if(opened && has_opened_overlay)
 			var/mutable_appearance/door_overlay = mutable_appearance(icon, "[overlay_state]_open", alpha = src.alpha)
+			color_atom_overlay(door_overlay)
 			. += door_overlay
 			door_overlay.overlays += emissive_blocker(door_overlay.icon, door_overlay.icon_state, src, alpha = door_overlay.alpha) // If we don't do this the door doesn't block emissives and it looks weird.
 		else if(has_closed_overlay)
-			. += "[icon_door || overlay_state]_door"
+			var/mutable_appearance/door_overlay = mutable_appearance(icon, "[icon_door || overlay_state]_door", alpha = src.alpha)
+			color_atom_overlay(door_overlay)
+			. += door_overlay
 
 	if(opened)
 		return

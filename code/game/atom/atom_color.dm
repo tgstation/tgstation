@@ -8,8 +8,6 @@
 	are impossible to achieve with just the color variable
 */
 
-#define FILTER_ATOM_PRIORITY_COLOR "atom_priority_color"
-
 /atom
 	/**
 	 * used to store the different colors on an atom
@@ -19,7 +17,7 @@
 	var/list/atom_colours
 
 ///Adds an instance of colour_type to the atom's atom_colours list
-/atom/proc/add_atom_colour(coloration, colour_priority, is_filter = FALSE)
+/atom/proc/add_atom_colour(coloration, colour_priority)
 	if(!atom_colours || !atom_colours.len)
 		atom_colours = list()
 		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
@@ -27,7 +25,7 @@
 		return
 	if(colour_priority > atom_colours.len)
 		return
-	atom_colours[colour_priority] = list(coloration, is_filter ? ATOM_COLOR_TYPE_FILTER : ATOM_COLOR_TYPE_NORMAL)
+	atom_colours[colour_priority] = list(coloration, (islist(coloration) && coloration["type"] == "color") ? ATOM_COLOR_TYPE_FILTER : ATOM_COLOR_TYPE_NORMAL)
 	update_atom_colour()
 
 
@@ -83,10 +81,10 @@
 	color = null
 	remove_filter(FILTER_ATOM_PRIORITY_COLOR)
 
-	if(!atom_colours)
+	if (!atom_colours)
 		return
 
-	for(var/list/checked_color in atom_colours)
+	for (var/list/checked_color in atom_colours)
 		if (checked_color[ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
 			add_filter(FILTER_ATOM_PRIORITY_COLOR, 1, checked_color[ATOM_COLOR_VALUE_INDEX])
 			return
@@ -95,4 +93,20 @@
 			color = checked_color[ATOM_COLOR_VALUE_INDEX]
 			return
 
-#undef FILTER_ATOM_PRIORITY_COLOR
+/// Same as update_atom_color, but simplifies overlay coloring
+/atom/proc/color_atom_overlay(mutable_appearance/overlay)
+	overlay.color = null
+	overlay.remove_filter(FILTER_ATOM_PRIORITY_COLOR)
+
+	if (!atom_colours)
+		overlay.color = color
+		return
+
+	for (var/list/checked_color in atom_colours)
+		if (checked_color[ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
+			overlay.add_filter(FILTER_ATOM_PRIORITY_COLOR, 1, checked_color[ATOM_COLOR_VALUE_INDEX])
+			return
+
+		if (length(checked_color[ATOM_COLOR_VALUE_INDEX]))
+			overlay.color = checked_color[ATOM_COLOR_VALUE_INDEX]
+			return

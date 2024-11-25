@@ -148,3 +148,30 @@
 			return "#[num2hex(c, 2)][num2hex(m, 2)][num2hex(x, 2)]"
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
+
+/* Generates an HSL color transition matrix filter which nicely paints an object
+ * without making it a deep fried blob of color
+ * saturation_behavior determines how we handle color saturation:
+ * SATURATION_MULTIPLY - Multiply pixel's saturation by color's saturation. Paints accents while keeping dim areas dim.
+ * SATURATION_ALWAYS - Affects original lightness/saturation to ensure that pale objects still get doused in color
+ */
+/proc/color_transition_filter(new_color, saturation_behavior = SATURATION_MULTIPLY)
+	if (islist(new_color))
+		new_color = rgb(new_color[1], new_color[2], new_color[3])
+	new_color = rgb2num(new_color, COLORSPACE_HSL)
+	var/hue = new_color[1] / 360
+	var/saturation = new_color[2] / 100
+	var/added_saturation = 0
+	var/deducted_light = 0
+	if (saturation_behavior == SATURATION_ALWAYS)
+		added_saturation = saturation * 0.75
+		deducted_light = saturation * 0.5
+
+	var/list/new_matrix = list(
+		0, 0, 0, 0, // Ignore original hue
+		0, saturation, 0, 0, // Multiply the saturation by ours
+		0, 0, 1 - deducted_light, 0, // If we're highly saturated then remove a bit of lightness to keep some color in
+		0, 0, 0, 1, // Preserve alpha
+		hue, added_saturation, 0, 0, // And apply our preferred hue and some saturation if we're oversaturated
+	)
+	return color_matrix_filter(new_matrix, FILTER_COLOR_HSL)

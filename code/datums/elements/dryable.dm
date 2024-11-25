@@ -22,10 +22,13 @@
 
 /datum/element/dryable/proc/finish_drying(atom/source, datum/weakref/drying_user)
 	SIGNAL_HANDLER
+	var/static/list/dried_color
+	if (isnull(dried_color))
+		dried_color = color_transition_filter(COLOR_DRIED_TAN)
 	var/atom/dried_atom = source
 	if(dry_result == dried_atom.type)//if the dried type is the same as our currrent state, don't bother creating a whole new item, just re-color it.
 		var/atom/movable/resulting_atom = dried_atom
-		resulting_atom.add_atom_colour(COLOR_DRIED_TAN, FIXED_COLOUR_PRIORITY)
+		resulting_atom.add_atom_colour(dried_color, FIXED_COLOUR_PRIORITY)
 		apply_dried_status(resulting_atom, drying_user)
 		return
 	else if(isstack(source)) //Check if its a sheet
