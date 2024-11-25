@@ -63,7 +63,7 @@
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(eatable_food))
 	AddElement(/datum/element/basic_eating, food_types = eatable_food)
 	AddComponent(/datum/component/happiness)
-	RegisterSignal(src, COMSIG_MOB_PRE_EAT, PROC_REF(pre_eat_food)) //signal sent by the element, no support for callbacks sadly (to do)
+	RegisterSignal(src, COMSIG_MOB_PRE_EAT, PROC_REF(pre_eat_food))
 	update_appearance()
 	create_reagents(150, REAGENT_HOLDER_ALIVE)
 	add_verb(src, /mob/living/proc/toggle_resting)
@@ -87,7 +87,7 @@
 	return destined_path
 
 /mob/living/basic/turtle/process(seconds_per_tick)
-	if(isnull(reagents) || !length(reagents.reagent_list)) //if we have no reagents, default to being a plant healer
+	if(isnull(reagents) || !length(reagents.reagent_list)) //if we have no reagents, default to our highest destined path
 		set_plant_growth(retrieve_destined_path(), 0.5)
 		return
 
