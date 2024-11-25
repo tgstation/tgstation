@@ -84,8 +84,10 @@
  * * piercing_hit - is this hit piercing or normal?
  */
 
-/atom/proc/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
-	return bullet_act(hitting_projectile, def_zone, piercing_hit, check_projectile_armor(def_zone, hitting_projectile))
+/atom/proc/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE, blocked = null)
+	if (isnull(blocked))
+		blocked = check_projectile_armor(def_zone, hitting_projectile)
+	return bullet_act(hitting_projectile, def_zone, piercing_hit, blocked)
 
 /**
  * React to a hit by a projectile object
