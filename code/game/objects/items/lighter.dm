@@ -55,7 +55,7 @@
 /obj/item/lighter/examine(mob/user)
 	. = ..()
 	if(get_fuel() <= 0)
-		. += span_notice("It is out of lighter fluid! Refill it with welder fuel.")
+		. += span_warning("It is out of lighter fluid! Refill it with welder fuel.")
 	else
 		. += span_notice("It contains [get_fuel()] units of fuel out of [maximum_fuel].")
 
