@@ -89,7 +89,7 @@
 	if(!istype(get_turf(src), /turf/open/misc))
 		. += span_notice("It must be constructed on <b>suitable terrain</b>, like ash, snow, or sand.")
 	. += span_notice("It must have a powered, <b>wired connection</b> running beneath it with <b>[display_power(active_power_usage, convert = FALSE)]</b> of excess power to function.")
-	. += span_notice("It will produce a box of materials after it has slammed [slam_jams_needed] times.")
+	. += span_notice("It will produce materials after it has slammed [slam_jams_needed] times.")
 	. += span_notice("Currently, it has slammed [slam_jams] / [slam_jams_needed] times needed.")
 	. += span_notice("It will stop producing resources if there are <b>too many piles of ore</b> near it.")
 	. += span_notice("The thumper cannot work if it is <b>too close to another thumper</b>, needing <b>at least [ore_spawn_range] spaces</b> in all directions between it another thumper.")
@@ -243,10 +243,10 @@
 
 	for(var/iteration in 1 to rand(2, 4))
 		var/turf/target_turf = pick(nearby_valid_turfs)
-//		var/obj/item/stack/new_ore = pick_weight(ore_weight_list)
-//		var/obj/new_ore_pile = new new_ore(target_turf, ore_spawn_values[new_ore.type])
+		var/obj/item/stack/new_ore = pick_weight(ore_weight_list)
+		var/obj/new_ore_pile = new new_ore(target_turf, ore_spawn_values[new_ore.type])
 		new /obj/effect/temp_visual/mook_dust(target_turf)
-//		playsound(new_ore_pile, 'modular_nova/master_files/sound/effects/robot_sit.ogg', 25, TRUE) port tallborgs soon
+		playsound(new_ore_pile, 'modular_doppler/kahraman_equipment/sounds/tallborg_sitting_down.ogg', 25, TRUE)
 
 	slam_jams -= slam_jams_needed
 
