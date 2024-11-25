@@ -52,8 +52,6 @@
 
 /obj/item/organ/brain/on_mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
 	. = ..()
-	if(!.)
-		return
 
 	name = initial(name)
 
@@ -116,7 +114,7 @@
 				// Run the try_ proc with force = TRUE.
 				skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
 
-	. = ..()
+	..()
 
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
