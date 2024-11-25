@@ -302,7 +302,7 @@ As a Heretic, you can also sacrifice cultists, rewarding you with a knowledge po
 As a Cultist, if you manage to sacrifice a Heretic, you will unlock one of three powerful and unique items to be created in every one of your cult's forges, archives, or altars.
 As a Cultist, when you sacrifice a Heretic, they will be bound inside a powerful haunted longsword. Anyone can then unbind the blade, unlocking its powers and abilities, but also allowing the blade to act of its own free will.
 As a Syndicate Monkey, you're explosively allergic to species transformations and should probably avoid them.
-Biological armor will protect your limb from a zombie's infective attack, unless the limb's more damaged than the armor value. Thick material, such as firesuits and eva suits, also partially protects, preventing at least the first attack from infection.
+Biological armor will protect your limb from a zombie's infective attack, unless the limb's more damaged than the armor value. Armor with thick material, such as firesuits and EVA suits, also partially protects, preventing at least the first attack from infection.
 In a pinch, you can reduce bleeding or burn infection with several commonplace reagents - flour, salt, saltwater can all be splashed onto the wound to stall for time, and tea can be drank for a boost to your body's defences.
 First-aid analyzers double the speed of wound treatment on injuries, alongside giving out normal and improvised instructions for treatment.
 Syndicate Duffelbags are a lot quicker to zip and unzip, have significantly less slowdown, and can carry up to two of various bulky, objective-related items - such as fire axes, guns, or gibtonite. Examine them closely to see all the possibilities.
