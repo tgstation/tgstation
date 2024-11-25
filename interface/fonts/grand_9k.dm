@@ -4,7 +4,7 @@
 /// Base font
 /datum/font/grand9k
 	name = "Grand9K Pixel"
-	font_family = 'interface/fonts/Minecraft_Rus.ttf' // Bandastation edit: 'interface/fonts/Grand9K_Pixel.ttf' -> 'interface/fonts/Minecraft_Rus.ttf'
+	font_family = 'interface/fonts/Grand9K_Pixel_Rus.ttf' // Bandastation edit: 'interface/fonts/Grand9K_Pixel.ttf' -> 'interface/fonts/Grand9K_Pixel_Rus.ttf'
 
 
 /// For icon overlays
