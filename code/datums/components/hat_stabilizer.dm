@@ -110,7 +110,7 @@
 		// loose hats are slightly angled
 		if(loose_hat)
 			var/matrix/tilt_trix = matrix(worn_overlay.transform)
-			var/angle = rand(2, 6)
+			var/angle = 5
 			tilt_trix.Turn(angle * pick(1, -1))
 			worn_overlay.transform = tilt_trix
 		worn_overlay.pixel_y = pixel_y_offset + attached_hat.worn_y_offset
