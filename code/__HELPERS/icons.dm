@@ -1282,3 +1282,19 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		if(PLANE_TO_TRUE(underlay.plane) != base_plane)
 			appearance.underlays -= underlay
 	return appearance
+
+/// Generates an HSL color transition matrix filter which nicely paints an object without making it a deep fried blob of color
+/proc/color_transition_filter(new_color)
+	if (islist(new_color))
+		new_color = rgb(new_color[1], new_color[2], new_color[3])
+	new_color = rgb2num(new_color, COLORSPACE_HSL)
+	var/hue = new_color[1]
+	var/saturation = new_color[2]
+	var/list/new_matrix = list(
+		0, 0, 0, 0, // Ignore original hue
+		0, saturation / 100, 0, 0, // Multiply by passed saturation, so desaturated colors desaturate the image
+		0, 0, 1, 0, // Pick original lightness, else we'll turn into an ugly color blob
+		0, 0, 0, 1, // Preserve alpha
+		hue / 255, 0, 0, 0, // And apply our preferred hue
+	)
+	return color_matrix_filter(new_matrix, COLORSPACE_HSL)

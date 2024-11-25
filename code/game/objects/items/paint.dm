@@ -118,7 +118,7 @@
 	if(paintleft <= 0)
 		return NONE
 	paintleft--
-	interacting_with.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+	interacting_with.add_atom_colour(color_transition_filter(paint_color), WASHABLE_COLOUR_PRIORITY, is_filter = TRUE)
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
 	return ITEM_INTERACT_SUCCESS

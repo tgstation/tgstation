@@ -202,7 +202,7 @@
 
 /obj/item/toy/crayon/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.add_atom_colour(paint_color, ADMIN_COLOUR_PRIORITY)
+	user.add_atom_colour(color_transition_filter(paint_color), ADMIN_COLOUR_PRIORITY, is_filter = TRUE)
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/Initialize(mapload)
@@ -916,7 +916,7 @@
 
 	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
 		if(actually_paints)
-			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+			target.add_atom_colour(color_transition_filter(paint_color), WASHABLE_COLOUR_PRIORITY, is_filter = TRUE)
 			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
 		use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
@@ -939,7 +939,7 @@
 				if(GLOB.pipe_color_name.Find(paint_color))
 					var/obj/item/pipe/target_pipe = target
 					target_pipe.pipe_color = paint_color
-					target.add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+					target.add_atom_colour(color_transition_filter(paint_color), FIXED_COLOUR_PRIORITY, is_filter = TRUE)
 					balloon_alert(user, "painted in [GLOB.pipe_color_name[paint_color]] color")
 				else
 					balloon_alert(user, "invalid pipe color!")
@@ -953,7 +953,7 @@
 					balloon_alert(user, "invalid pipe color!")
 					return
 			else
-				target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+				target.add_atom_colour(color_transition_filter(paint_color), WASHABLE_COLOUR_PRIORITY, is_filter = TRUE)
 
 			if(isitem(target) && isliving(target.loc))
 				var/obj/item/target_item = target

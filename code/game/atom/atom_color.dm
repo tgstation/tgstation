@@ -3,7 +3,12 @@
 	A System that gives finer control over which atom colour to colour the atom with.
 	The "highest priority" one is always displayed as opposed to the default of
 	"whichever was set last is displayed"
+
+	It can also be used for color filters, since some effects (using non-RGB space matrices)
+	are impossible to achieve with just the color variable
 */
+
+#define FILTER_ATOM_PRIORITY_COLOR "atom_priority_color"
 
 /atom
 	/**
@@ -14,7 +19,7 @@
 	var/list/atom_colours
 
 ///Adds an instance of colour_type to the atom's atom_colours list
-/atom/proc/add_atom_colour(coloration, colour_priority)
+/atom/proc/add_atom_colour(coloration, colour_priority, is_filter = FALSE)
 	if(!atom_colours || !atom_colours.len)
 		atom_colours = list()
 		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
@@ -22,7 +27,7 @@
 		return
 	if(colour_priority > atom_colours.len)
 		return
-	atom_colours[colour_priority] = coloration
+	atom_colours[colour_priority] = list(coloration, is_filter ? ATOM_COLOR_TYPE_FILTER : ATOM_COLOR_TYPE_NORMAL)
 	update_atom_colour()
 
 
@@ -32,8 +37,13 @@
 		return
 	if(colour_priority > atom_colours.len)
 		return
-	if(coloration && atom_colours[colour_priority] != coloration)
-		return //if we don't have the expected color (for a specific priority) to remove, do nothing
+	if(coloration && atom_colours[colour_priority])
+		if (atom_colours[colour_priority][ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_NORMAL)
+			if (atom_colours[colour_priority][ATOM_COLOR_VALUE_INDEX] != coloration)
+				return //if we don't have the expected color (for a specific priority) to remove, do nothing
+		else
+			if (!islist(coloration) || !compare_list(coloration, atom_colours[colour_priority][ATOM_COLOR_VALUE_INDEX]["color"]))
+				return
 	atom_colours[colour_priority] = null
 	update_atom_colour()
 
@@ -43,14 +53,27 @@
  */
 /atom/proc/is_atom_colour(looking_for_color, min_priority_index = 1, max_priority_index = COLOUR_PRIORITY_AMOUNT)
 	// make sure uppertext hex strings don't mess with LOWER_TEXT hex strings
-	looking_for_color = LOWER_TEXT(looking_for_color)
+	if (!islist(looking_for_color))
+		looking_for_color = LOWER_TEXT(looking_for_color)
 
 	if(!LAZYLEN(atom_colours))
 		// no atom colors list has been set up, just check the color var
-		return LOWER_TEXT(color) == looking_for_color
+		if (!islist(color))
+			return LOWER_TEXT(color) == looking_for_color
+		if (!islist(looking_for_color))
+			return FALSE
+		return compare_list(color, looking_for_color)
 
 	for(var/i in min_priority_index to max_priority_index)
-		if(LOWER_TEXT(atom_colours[i]) == looking_for_color)
+		if (atom_colours[i][ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_NORMAL)
+			if(LOWER_TEXT(atom_colours[i][ATOM_COLOR_VALUE_INDEX]) == looking_for_color)
+				return TRUE
+			continue
+
+		if (!islist(looking_for_color))
+			continue
+
+		if (compare_list(looking_for_color, atom_colours[i][ATOM_COLOR_VALUE_INDEX]["color"]))
 			return TRUE
 
 	return FALSE
@@ -58,14 +81,18 @@
 ///Resets the atom's color to null, and then sets it to the highest priority colour available
 /atom/proc/update_atom_colour()
 	color = null
+	remove_filter(FILTER_ATOM_PRIORITY_COLOR)
+
 	if(!atom_colours)
 		return
-	for(var/checked_color in atom_colours)
-		if(islist(checked_color))
-			var/list/color_list = checked_color
-			if(color_list.len)
-				color = color_list
-				return
-		else if(checked_color)
-			color = checked_color
+
+	for(var/list/checked_color in atom_colours)
+		if (checked_color[ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
+			add_filter(FILTER_ATOM_PRIORITY_COLOR, 1, checked_color[ATOM_COLOR_VALUE_INDEX])
 			return
+
+		if (length(checked_color[ATOM_COLOR_VALUE_INDEX]))
+			color = checked_color[ATOM_COLOR_VALUE_INDEX]
+			return
+
+#undef FILTER_ATOM_PRIORITY_COLOR
