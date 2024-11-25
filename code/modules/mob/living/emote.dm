@@ -370,9 +370,9 @@
 	return ..()
 
 /datum/emote/living/scream/get_sound(mob/living/user)
-	. = ..()
 	if(iscyborg(user))
 		return 'sound/mobs/non-humanoids/cyborg/cyborg_scream.ogg' //if you add more sounds for living scream - do the same thing human emotes do for get_sound
+	return ..()
 
 /datum/emote/living/scream/select_message_type(mob/user, message, intentional)
 	. = ..()
