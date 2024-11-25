@@ -6295,6 +6295,7 @@
 #include "code\modules\vending\liberation.dm"
 #include "code\modules\vending\liberation_toy.dm"
 #include "code\modules\vending\magivend.dm"
+#include "code\modules\vending\mail.dm"
 #include "code\modules\vending\medical.dm"
 #include "code\modules\vending\medical_wall.dm"
 #include "code\modules\vending\megaseed.dm"
