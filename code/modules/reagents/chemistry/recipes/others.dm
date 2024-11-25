@@ -575,6 +575,19 @@
 		new /mob/living/basic/pet/dog/corgi(location)
 	..()
 
+/datum/chemical_reaction/lifish
+	required_reagents = list(/datum/reagent/medicine/strange_reagent/fishy_reagent = 1, /datum/reagent/medicine/c2/synthflesh = 1, /datum/reagent/blood = 1)
+	required_temp = 374
+	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+
+/datum/chemical_reaction/lifish/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i in 1 to rand(1, created_volume)) // More flop.
+		var/obj/item/fish/spawned_fish = subtypesof(/obj/item/fish)
+		new spawned_fish(location)
+	..()
+
 //monkey powder heehoo
 /datum/chemical_reaction/monkey_powder
 	results = list(/datum/reagent/monkey_powder = 5)

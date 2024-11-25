@@ -961,7 +961,7 @@
 	var/datum/reagent/medicine/strange_reagent/revival = locate() in reagents
 	if(!revival)
 		return
-	if(reagents[revival] >= 2 * w_class)
+	if(reagents[revival] >= 2 * w_class && revival.pre_rez_check(src))
 		set_status(FISH_ALIVE)
 	else
 		balloon_alert_to_viewers("twitches for a moment!")

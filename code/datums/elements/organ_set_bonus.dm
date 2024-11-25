@@ -57,6 +57,10 @@
 	var/required_biotype = MOB_ORGANIC
 	/// A list of traits added to the mob upon bonus activation, can be of any length.
 	var/list/bonus_traits = list()
+	/// Bonus biotype to add on bonus activation.
+	var/bonus_biotype
+	/// If the biotype was added - used to check if we should remove the biotype or not, on organ set loss.
+	var/biotype_added = FALSE
 	/// Limb overlay to apply upon activation
 	var/limb_overlay
 	/// Color priority for limb overlay
@@ -91,6 +95,11 @@
 		limb.add_bodypart_overlay(new limb_overlay())
 		limb.add_color_override(COLOR_WHITE, color_overlay_priority)
 	carbon_owner.update_body()
+	if(carbon_owner.mob_biotypes & bonus_biotype)
+		biotype_added = FALSE
+		return TRUE
+	carbon_owner.mob_biotypes |= bonus_biotype
+	biotype_added = TRUE
 	return TRUE
 
 /datum/status_effect/organ_set_bonus/proc/disable_bonus()
@@ -109,3 +118,5 @@
 			limb.remove_bodypart_overlay(overlay)
 			limb.remove_color_override(color_overlay_priority)
 	carbon_owner.update_body()
+	if(biotype_added = TRUE)
+		carbon_owner.mob_biotypes &= ~bonus_biotype

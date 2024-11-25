@@ -174,6 +174,9 @@
 
 ///Check if tha target can be caught by the hook
 /obj/item/fishing_hook/proc/can_be_hooked(atom/target)
+	if(isliving(target))
+		var/mob/living/mob = target
+		return (mob.mob_biotypes & MOB_AQUATIC)
 	return isitem(target)
 
 ///Any special effect when hooking a target that's not managed by the fishing rod.
@@ -430,12 +433,12 @@
 ///From the fishing mystery box. It's basically a lazarus and a few bottles of strange reagents.
 /obj/item/storage/box/fish_revival_kit
 	name = "fish revival kit"
-	desc = "Become a fish doctor today."
+	desc = "Become a fish doctor today. A label on the side indicates that fish require two to ten reagent units to be splashed onto them for revival, depending on size."
 	illustration = "fish"
 
 /obj/item/storage/box/fish_revival_kit/PopulateContents()
 	new /obj/item/lazarus_injector(src)
-	new /obj/item/reagent_containers/cup/bottle/strange_reagent(src)
+	new /obj/item/reagent_containers/cup/bottle/strange_reagent/fishy_reagent(src)
 	new /obj/item/reagent_containers/cup(src) //to splash the reagents on the fish.
 	new /obj/item/storage/fish_case(src)
 	new /obj/item/storage/fish_case(src)

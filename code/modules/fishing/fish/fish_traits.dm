@@ -596,6 +596,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	diff_traits_inheritability = 25
 	catalog_description = "This fish will invert the gravity of the bait at random. May fall upward outside after being caught."
 	added_difficulty = 20
+	reagents_to_add = list(/datum/reagent/gravitum = 2.3)
 
 /datum/fish_trait/antigrav/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
 	minigame.special_effects |= FISHING_MINIGAME_RULE_ANTIGRAV
@@ -608,6 +609,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	. = ..()
 	mob.add_traits(list(TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_SPACEWALK), FISH_TRAIT_DATUM)
 	mob.AddElement(/datum/element/simple_flying)
+//	if(venomous ?)
+	mob.AddElement(/datum/element/venomous, reagents_to_add[1], 0.5 * mob.mob_size * venom_mult)
 
 ///Anxiety means the fish will die if in a location with more than 3 fish (including itself)
 ///This is just barely enough to crossbreed out of anxiety, but it severely limits the potential of

@@ -906,6 +906,10 @@
 	/// The maximum amount of damage we can revive from, as a ratio of max health
 	var/max_revive_damage_ratio = 2
 
+// To override for subtypes.
+/datum/reagent/medicine/strange_reagent/proc/pre_rez_check(atom/thing_to_rez)
+	return TRUE
+
 /datum/reagent/medicine/strange_reagent/instant
 	name = "Stranger Reagent"
 	instant = TRUE
@@ -965,6 +969,11 @@
 		exposed_mob.do_jitter_animation(10)
 		return
 
+	if(!pre_rez_check(exposed_mob))
+		exposed_mob.visible_message(span_warning("[exposed_mob]'s body twitches slightly."))
+		exposed_mob.do_jitter_animation(1)
+		return
+
 	exposed_mob.visible_message(span_warning("[exposed_mob]'s body starts convulsing!"))
 	exposed_mob.notify_revival("Your body is being revived with Strange Reagent!")
 	exposed_mob.do_jitter_animation(10)
@@ -994,6 +1003,27 @@
 	need_mob_update += affected_mob.adjustFireLoss(damage_at_random * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
+
+/datum/reagent/medicine/strange_reagent/fishy_reagent
+	name = "Fishy Reagent"
+	description = "This reagent has a chemical composition very similar to that of Strange Reagent, however, it seems to work purely and only on... fish. Or at least, aquatic creatures."
+	reagent_state = LIQUID
+	color = "#5ee8b3"
+	metabolization_rate = 1.25 * REAGENTS_METABOLISM
+	taste_description = "magnetic scales"
+	ph = 0.5
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+// only revives fish.
+/datum/reagent/medicine/strange_reagent/fishy_reagent/pre_rez_check(atom/thing_to_rez)
+	if(ismob(thing_to_rez))
+		var/mob/living/mob_to_rez = thing_to_rez
+		if(mob_to_rez.mob_biotypes & MOB_AQUATIC)
+			return TRUE
+		return FALSE
+	if(isfish(thing_to_rez))
+		return TRUE
+	return FALSE
 
 /datum/reagent/medicine/mannitol
 	name = "Mannitol"
