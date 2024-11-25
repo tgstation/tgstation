@@ -1733,13 +1733,11 @@
 "axq" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/computer/monitor{
-	dir = 4;
-	name = "Grid Power Monitoring Computer"
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "axs" = (
@@ -2117,7 +2115,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "aCH" = (
@@ -7322,7 +7319,6 @@
 "bTk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "bTl" = (
@@ -8540,11 +8536,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"cjN" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable/layer1,
-/turf/open/floor/plating,
-/area/station/engineering/engine_smes)
 "cjR" = (
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Creature Pen";
@@ -21854,11 +21845,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
-"fEJ" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/structure/cable/layer1,
-/turf/open/floor/iron/dark,
-/area/station/engineering/hallway/west)
 "fEV" = (
 /obj/machinery/computer/security/wooden_tv,
 /obj/machinery/button/door/directional/east{
@@ -42930,7 +42916,6 @@
 "lcR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/engineering/hallway/west)
 "lcY" = (
@@ -45075,13 +45060,10 @@
 /turf/open/floor/carpet/black,
 /area/station/service/chapel/office)
 "lFU" = (
-/obj/machinery/computer/monitor{
-	name = "Engine Power Monitoring Computer"
-	},
+/obj/machinery/computer/monitor,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
-/obj/structure/cable/layer1,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "lFX" = (
@@ -51607,10 +51589,6 @@
 /obj/machinery/light/broken/directional/south,
 /turf/open/floor/wood,
 /area/station/maintenance/department/bridge/ntr)
-"nrK" = (
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/command/bridge)
 "nrQ" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/autoname,
@@ -52876,16 +52854,6 @@
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/common/cryopods)
-"nJn" = (
-/obj/machinery/computer/monitor{
-	name = "Grid Power Monitoring Computer"
-	},
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/engineering/engine_smes)
 "nJB" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
@@ -56010,7 +55978,6 @@
 /area/station/security/courtroom)
 "oxN" = (
 /obj/machinery/light/directional/east,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron/stairs/left{
 	dir = 1
 	},
@@ -57354,7 +57321,6 @@
 /area/station/maintenance/starboard/aft)
 "oQv" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "oQA" = (
@@ -62585,8 +62551,7 @@
 /obj/structure/sign/poster/random/directional/south,
 /obj/structure/cable,
 /obj/machinery/computer/monitor{
-	dir = 1;
-	name = "Backup Power Monitoring Console"
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -64832,7 +64797,6 @@
 "qOG" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/machinery/status_display/evac/directional/north,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/engineering/hallway/west)
 "qOQ" = (
@@ -65630,6 +65594,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
+"qYP" = (
+/turf/open/floor/iron,
+/area/station/engineering/lobby)
 "qYS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/bin,
@@ -72957,7 +72924,6 @@
 "sWD" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/item/radio/intercom/directional/north,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/engineering/hallway/west)
 "sWG" = (
@@ -77364,11 +77330,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/ghetto/port/aft)
 "ucY" = (
-/obj/machinery/computer/monitor{
-	name = "bridge power monitoring console"
-	},
+/obj/machinery/computer/monitor,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "udb" = (
@@ -78584,10 +78547,7 @@
 /area/station/service/janitor)
 "uuQ" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/machinery/computer/monitor{
-	name = "Engine Power Monitoring Computer"
-	},
-/obj/structure/cable/layer1,
+/obj/machinery/computer/monitor,
 /turf/open/floor/iron/dark,
 /area/station/engineering/hallway/west)
 "uva" = (
@@ -91197,13 +91157,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/mix)
-"xLR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/cable/layer1,
-/turf/open/floor/iron/dark,
-/area/station/engineering/hallway/west)
 "xLS" = (
 /obj/item/clothing/under/suit/black_really,
 /turf/open/floor/plating,
@@ -184106,11 +184059,11 @@ kFP
 ccQ
 fyD
 utw
-fEJ
+fur
 lcR
-fEJ
+fur
 oxN
-xLR
+eho
 bGT
 pfw
 vYu
@@ -184363,7 +184316,7 @@ dUi
 lTR
 fyD
 utw
-fEJ
+fur
 uZE
 fur
 bAZ
@@ -186939,7 +186892,7 @@ qau
 hZh
 xHY
 jdk
-cjN
+tey
 lFU
 hch
 fdw
@@ -187130,7 +187083,7 @@ acd
 emW
 ucY
 aCF
-nrK
+owV
 fZj
 vmg
 iHv
@@ -187439,7 +187392,7 @@ tPy
 axq
 xur
 hEa
-cPF
+qYP
 cPF
 lNl
 hyZ
@@ -187968,7 +187921,7 @@ hZh
 piJ
 aPB
 tey
-nJn
+lFU
 hch
 oaI
 qHG
