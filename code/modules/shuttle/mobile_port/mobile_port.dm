@@ -79,9 +79,9 @@
 		if(istype(cur_area, area_type))
 			shuttle_areas[cur_area] = TRUE
 
-	#ifdef DOCKING_PORT_HIGHLIGHT
+#ifdef TESTING
 	highlight("#0f0")
-	#endif
+#endif
 
 /obj/docking_port/mobile/Destroy(force)
 	unregister()
