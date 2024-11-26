@@ -3,6 +3,8 @@
 
 /datum/unit_test/status_effect_ticks/Run()
 	for(var/datum/status_effect/checking as anything in subtypesof(/datum/status_effect))
+		if(!initial(checking.id))
+			continue
 		var/tick_speed = initial(checking.tick_interval)
 		if(tick_speed == STATUS_EFFECT_NO_TICK)
 			continue
@@ -26,6 +28,7 @@
 /datum/unit_test/status_effect_alert
 
 /datum/unit_test/status_effect_alert/Run()
+	// The base typepath is used to indicate "I didn't set an alert type"
 	var/bad_alert_type = /datum/status_effect::alert_type
 	TEST_ASSERT_NOTNULL(bad_alert_type, "No alert type defined in /datum/status_effect - This test may be redundant now.")
 
@@ -36,3 +39,18 @@
 			continue
 		TEST_FAIL("[checking] has not set alert_type. If you don't want an alert, set alert_type = null - \
 			Otherwise, give it an alert subtype.")
+
+/// Validates status effect id setup
+/datum/unit_test/status_effect_ids
+
+/datum/unit_test/status_effect_ids/Run()
+	// The base id is used to indicate "I didn't set an id" (null is fine for abstract types)
+	var/bad_id = /datum/status_effect::id
+	TEST_ASSERT_NOTNULL(bad_id, "No id defined in /datum/status_effect - This test may be redundant now.")
+
+	for(var/datum/status_effect/checking as anything in subtypesof(/datum/status_effect))
+		if(!initial(checking.id))
+			continue
+		if(initial(checking.id) != bad_id)
+			continue
+		TEST_FAIL("[checking] has not set an id. This is required for status effects.")

@@ -32,6 +32,7 @@
 	icon_state = "paralysis"
 
 /datum/status_effect/void_eatered
+	id = "void_eatered"
 	duration = 10 SECONDS
 	remove_on_fullheal = TRUE
 	alert_type = null
