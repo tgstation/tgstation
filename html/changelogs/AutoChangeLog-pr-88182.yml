@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Morphine's sedative power has been halved. It now takes ~10 units to guarantee sleep, up from ~5."
+  - balance: "Morphine now causes mild disgust."
+  - balance: "Morphine is now twice as addictive, causing addiction if you down over ~30 units without pause."
