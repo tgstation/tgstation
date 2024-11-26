@@ -316,10 +316,10 @@
 	slowdown_active = 1
 	allowed_suit_storage = list(
 		/obj/item/analyzer,
+		/obj/item/extinguisher,
 		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
-		/obj/item/extinguisher
 	)
 	variants = list(
 		"atmospheric" = list(
