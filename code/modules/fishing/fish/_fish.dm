@@ -203,12 +203,6 @@
 	register_context()
 	register_item_context()
 
-/obj/item/fish/proc/slapperoni(mob/living/user)
-	if(user.stat == DEAD)
-		return
-	user.visible_message(span_bolddanger("*SLAP!*"))
-	user.attackby(src, user)
-
 /obj/item/fish/add_item_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(HAS_TRAIT(source, TRAIT_CATCH_AND_RELEASE))
 		context[SCREENTIP_CONTEXT_RMB] = "Release"
