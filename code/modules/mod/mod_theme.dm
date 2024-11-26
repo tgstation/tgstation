@@ -319,6 +319,7 @@
 		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
+		/obj/item/extinguisher
 	)
 	variants = list(
 		"atmospheric" = list(
