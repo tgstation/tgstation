@@ -89,10 +89,10 @@
 		owner.add_traits(bonus_traits, REF(src))
 
 	// Add biotype
-	if(carbon_owner.mob_biotypes & bonus_biotype)
+	if(owner.mob_biotypes & bonus_biotype)
 		biotype_added = FALSE
 		return TRUE
-	carbon_owner.mob_biotypes |= bonus_biotype
+	owner.mob_biotypes |= bonus_biotype
 	biotype_added = TRUE
 
 	if(bonus_activate_text)
@@ -117,7 +117,7 @@
 		owner.remove_traits(bonus_traits, REF(src))
 	// Remove biotype (if added)
 	if(biotype_added == TRUE)
-		carbon_owner.mob_biotypes &= ~bonus_biotype
+		owner.mob_biotypes &= ~bonus_biotype
 
 	if(bonus_deactivate_text)
 		to_chat(owner, bonus_deactivate_text)

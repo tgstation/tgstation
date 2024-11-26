@@ -231,8 +231,13 @@
 	if(!do_after(user, 2.5 SECONDS, src))
 		return ITEM_INTERACT_FAILURE
 	// Sir... I'm afraid your fish is dying.
-	get_health_warnings(user, always_deep = TRUE)
 	user.visible_message(span_notice("[user] checks the pulse of [src] with [tool]."), span_notice("You check the pulse of [src] with [tool]."))
+	var/warns = get_health_warnings(user, always_deep = TRUE)
+	if(!warns)
+		to_chat(user, span_notice("[src] appears to be perfectly healthy!"))
+		return ITEM_INTERACT_SUCCESS
+	to_chat(user, warns)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fish/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!HAS_TRAIT(interacting_with, TRAIT_CATCH_AND_RELEASE))
@@ -454,7 +459,7 @@
 	. += get_health_warnings(user, always_deep = FALSE)
 
 	if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
-			. += span_smallnoticeital("It can be used as a fishing bait.")
+		. += span_smallnoticeital("It can be used as a fishing bait.")
 
 	if(bites_amount)
 		. += span_warning("It's been bitten by someone.")
