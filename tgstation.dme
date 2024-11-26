@@ -5954,6 +5954,7 @@
 #include "code\modules\shuttle\mobile_port\variants\emergency\emergency.dm"
 #include "code\modules\shuttle\mobile_port\variants\emergency\emergency_console.dm"
 #include "code\modules\shuttle\mobile_port\variants\emergency\emergency_types.dm"
+#include "code\modules\shuttle\mobile_port\variants\emergency\pods.dm"
 #include "code\modules\shuttle\shuttle_consoles\monastery.dm"
 #include "code\modules\shuttle\shuttle_consoles\navigation_computer.dm"
 #include "code\modules\shuttle\shuttle_consoles\shuttle_console.dm"
