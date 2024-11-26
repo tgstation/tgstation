@@ -172,7 +172,7 @@
 7479888 = 19 # antropod
 7483112 = 221 # Jacquerel
 7497261 = 3 # gbfree
-7501474 = 270 # Time-Green
+7501474 = 276 # Time-Green
 7543955 = 5 # Owai-Seek
 7647687 = 3 # mGuv
 7734424 = 123 # Dennok
@@ -1127,7 +1127,7 @@
 98856144 = 59 # orthography
 99276929 = 0 # bun235
 99420088 = 12 # MelokGleb
-99471923 = -4 # Boviro
+99471923 = -3 # Boviro
 99609912 = 6 # Voudez
 99915170 = -3 # Oricana-16
 99981766 = 0 # projectkepler-ru
