@@ -5964,6 +5964,8 @@
 #include "code\modules\shuttle\shuttle_types\infiltrator.dm"
 #include "code\modules\shuttle\shuttle_types\supply.dm"
 #include "code\modules\shuttle\shuttle_types\emergency\emergency.dm"
+#include "code\modules\shuttle\shuttle_types\emergency\emergency_console.dm"
+#include "code\modules\shuttle\shuttle_types\emergency\pods.dm"
 #include "code\modules\spatial_grid\cell_tracker.dm"
 #include "code\modules\spells\spell.dm"
 #include "code\modules\spells\spell_types\madness_curse.dm"
