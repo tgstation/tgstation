@@ -94,6 +94,7 @@
 
 /// You fall on your face if you get teleported while leaning
 /mob/living/proc/teleport_away_while_leaning()
+	SIGNAL_HANDLER
 	// Make sure we unregister signal handlers and reset animation
 	stop_leaning()
 	// -1000 aura
