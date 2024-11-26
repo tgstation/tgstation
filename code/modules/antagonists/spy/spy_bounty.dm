@@ -621,10 +621,10 @@
 		/obj/item/bodypart/arm/right,
 		/obj/item/bodypart/leg/left,
 		/obj/item/bodypart/leg/right,
-		/obj/item/organ/internal/stomach,
-		/obj/item/organ/internal/appendix,
-		/obj/item/organ/internal/liver,
-		/obj/item/organ/internal/eyes,
+		/obj/item/organ/stomach,
+		/obj/item/organ/appendix,
+		/obj/item/organ/liver,
+		/obj/item/organ/eyes,
 	)
 	return ..()
 
@@ -639,7 +639,7 @@
 	theft_time = 10 SECONDS
 	black_market_prob = 0
 	/// What typepath of bot we want to steal.
-	var/mob/living/simple_animal/bot/bot_type
+	var/mob/living/bot_type
 	/// Weakref to the bot we want to steal.
 	VAR_FINAL/datum/weakref/target_bot_ref
 
@@ -655,7 +655,7 @@
 
 /datum/spy_bounty/some_bot/init_bounty(datum/spy_bounty_handler/handler)
 	for(var/datum/spy_bounty/some_bot/existing_bounty in handler.get_all_bounties())
-		var/mob/living/simple_animal/bot/existing_bot_type = existing_bounty.bot_type
+		var/mob/living/existing_bot_type = existing_bounty.bot_type
 		// ensures we don't get two similar bounties.
 		// may occasionally cast a wider net than we'd desire, but it's not that bad.
 		if(ispath(bot_type, initial(existing_bot_type.parent_type)))

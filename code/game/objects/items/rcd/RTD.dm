@@ -38,7 +38,7 @@
 	var/datum/tile_info/tile_design
 	/// overlays on a tile
 	var/list/design_overlays = list()
-
+	var/ranged = TRUE
 /// stores the name, type, icon & cost for each tile type
 /datum/tile_info
 	/// name of this tile design for ui
@@ -150,7 +150,7 @@
 	QDEL_NULL(selected_design)
 	QDEL_NULL(tile_design)
 	QDEL_LIST(design_overlays)
-	. = ..()
+	return ..()
 
 /obj/item/construction/rtd/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -211,19 +211,19 @@
 		if("set_dir")
 			var/direction = text2dir(params["dir"])
 			if(!direction)
-				return TRUE
+				return FALSE
 			selected_design.set_direction(direction)
 
 		if("recipe")
 			var/list/main_root = floor_designs[root_category]
 			if(main_root == null)
-				return TRUE
+				return FALSE
 			var/list/sub_category = main_root[params["category_name"]]
 			if(sub_category == null)
-				return TRUE
+				return FALSE
 			var/list/target_design = sub_category[text2num(params["id"])]
 			if(target_design == null)
-				return
+				return FALSE
 
 			QDEL_LIST(design_overlays)
 			design_category = params["category_name"]
@@ -233,7 +233,7 @@
 	return TRUE
 
 /obj/item/construction/rtd/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!range_check(interacting_with, user))
+	if(!ranged || !range_check(interacting_with, user))
 		return NONE
 	return try_tiling(interacting_with, user)
 
@@ -244,14 +244,27 @@
 
 	return try_tiling(interacting_with, user)
 
+/**
+ * put plating on the turf
+ * Arguments
+ *
+ * * turf/open/floor/floor - the turf we are trying to put plating on
+ * * mob/living/user - the mob trying to do the plating
+ */
 /obj/item/construction/rtd/proc/try_tiling(atom/interacting_with, mob/living/user)
+	PRIVATE_PROC(TRUE)
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+
 	var/turf/open/floor/floor = interacting_with
 	if(!istype(floor))
 		return NONE
 
 	var/floor_designs = GLOB.floor_designs
 	if(!istype(floor, /turf/open/floor/plating)) //we infer what floor type it is if its not the usual plating
-		user.Beam(floor, icon_state = "light_beam", time = 5)
+		if(ranged)
+			user.Beam(floor, icon_state = "light_beam", time = 5)
 		for(var/main_root in floor_designs)
 			for(var/sub_category in floor_designs[main_root])
 				for(var/list/design_info in floor_designs[main_root][sub_category])
@@ -282,15 +295,17 @@
 		balloon_alert(user, "design not supported!")
 		return ITEM_INTERACT_BLOCKING
 
-	var/delay = CONSTRUCTION_TIME(selected_design.cost)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_TURF)
-
 	//resource sanity check before & after delay along with special effects
 	if(!checkResource(selected_design.cost, user))
-		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
-	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
-	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	var/delay = CONSTRUCTION_TIME(selected_design.cost)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_TURF)
+	var/beam
+	if(ranged)
+		beam = user.Beam(floor, icon_state = "light_beam", time = delay)
+		playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	else
+		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	if(!build_delay(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
@@ -299,6 +314,7 @@
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 
+	//do the tilling
 	if(!useResource(selected_design.cost, user))
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
@@ -308,7 +324,7 @@
 	if(QDELETED(final_tile)) //if you were standing on a stack of tiles this newly spawned tile could get merged with it cause its spawned on your location
 		qdel(rcd_effect)
 		balloon_alert(user, "tile got merged with the stack beneath you!")
-		return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 	//step 2 lay tile
 	var/turf/open/new_turf = final_tile.place_tile(floor, user)
 	if(new_turf) //apply infered overlays
@@ -319,7 +335,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/construction/rtd/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!range_check(interacting_with, user))
+	if(!ranged || !range_check(interacting_with, user))
 		return NONE
 	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
@@ -351,15 +367,17 @@
 		balloon_alert(user, "can't deconstruct this type!")
 		return ITEM_INTERACT_BLOCKING
 
-	var/delay = DECONSTRUCTION_TIME(cost)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_DECONSTRUCT)
-
 	//resource sanity check before & after delay along with beam effects
 	if(!checkResource(cost * 0.7, user)) //no ballon alert for checkResource as it already spans an alert to chat
-		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
-	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
-	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	var/delay = DECONSTRUCTION_TIME(cost)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_DECONSTRUCT)
+	var/beam
+	if(ranged)
+		beam = user.Beam(floor, icon_state = "light_beam", time = delay)
+		playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	else
+		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	if(!do_after(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
@@ -368,7 +386,7 @@
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 
-	//do the tiling
+	//begin deconstruction
 	if(!useResource(cost * 0.7, user))
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
@@ -388,6 +406,49 @@
 	rcd_effect.end_animation()
 
 	return ITEM_INTERACT_SUCCESS
+
+///Converting tile cost into joules
+#define RTD_BORG_ENERGY_FACTOR (0.03 * STANDARD_CELL_CHARGE)
+
+/obj/item/construction/rtd/borg
+	ranged = FALSE
+
+///Cannot deconstruct floors
+/obj/item/construction/rtd/borg/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return NONE
+
+/obj/item/construction/rtd/borg/get_matter(mob/user)
+	if(!iscyborg(user))
+		return 0
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		return 0
+	max_matter = borgy.cell.maxcharge
+	return borgy.cell.charge
+
+/obj/item/construction/rtd/borg/useResource(amount, mob/user)
+	if(!iscyborg(user))
+		return 0
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		balloon_alert(user, "no cell found!")
+		return 0
+	. = borgy.cell.use(amount * RTD_BORG_ENERGY_FACTOR)
+	if(!.)
+		balloon_alert(user, "insufficient charge!")
+
+/obj/item/construction/rtd/borg/checkResource(amount, mob/user)
+	if(!iscyborg(user))
+		return 0
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		balloon_alert(user, "no cell found!")
+		return 0
+	. = borgy.cell.charge >= (amount * RTD_BORG_ENERGY_FACTOR)
+	if(!.)
+		balloon_alert(user, "insufficient charge!")
+
+#undef RTD_BORG_ENERGY_FACTOR
 
 /obj/item/construction/rtd/loaded
 	matter = 350

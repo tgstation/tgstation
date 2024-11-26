@@ -75,8 +75,8 @@
 	return !player_mind || !player_mind.current || !player_mind.current.client || player_mind.current.client.is_afk()
 
 ///Return an object with a new maptext (not currently in use)
-/proc/screen_text(obj/object_to_change, maptext = "", screen_loc = "CENTER-7,CENTER-7", maptext_height = 480, maptext_width = 480)
-	if(!isobj(object_to_change))
+/proc/screen_text(atom/movable/object_to_change, maptext = "", screen_loc = "CENTER-7,CENTER-7", maptext_height = 480, maptext_width = 480)
+	if(!istype(object_to_change))
 		object_to_change = new /atom/movable/screen/text()
 	object_to_change.maptext = MAPTEXT(maptext)
 	object_to_change.maptext_height = maptext_height
@@ -284,6 +284,35 @@
 		return FALSE
 
 	return pick(possible_loc)
+
+///Checks to see if `atom/source` is behind `atom/target`
+/proc/check_behind(atom/source, atom/target)
+	// Let's see if source is behind target
+	// "Behind" is defined as 3 tiles directly to the back of the target
+	// x . .
+	// x > .
+	// x . .
+
+	// No tactical spinning allowed
+	if(HAS_TRAIT(target, TRAIT_SPINNING))
+		return TRUE
+
+	// We'll take "same tile" as "behind" for ease
+	if(target.loc == source.loc)
+		return TRUE
+
+	// We'll also assume lying down is behind, as mob directions when lying are unclear
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(living_target.body_position == LYING_DOWN)
+			return TRUE
+
+	// Exceptions aside, let's actually check if they're, yknow, behind
+	var/dir_target_to_source = get_dir(target, source)
+	if(target.dir & REVERSE_DIR(dir_target_to_source))
+		return TRUE
+
+	return FALSE
 
 ///Disable power in the station APCs
 /proc/power_fail(duration_min, duration_max)

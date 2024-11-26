@@ -61,7 +61,6 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	armor_type = /datum/armor/gas_explorer
 	resistance_flags = FIRE_PROOF
-	has_fov = FALSE
 
 /datum/armor/gas_explorer
 	melee = 10
@@ -110,6 +109,7 @@
 	icon_state = "goliath_cloak"
 	desc = "A staunch, practical cape made out of numerous monster materials, it is coveted amongst exiles & hermits."
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|ARMS

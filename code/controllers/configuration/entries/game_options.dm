@@ -108,7 +108,7 @@
 /datum/config_entry/flag/protect_assistant_from_antagonist //If assistants can be traitor/cult/other
 
 /datum/config_entry/string/human_authority //Controls how to enforce human authority
-	default = "HUMAN_WHITELIST"
+	default = "DISABLED"
 
 /////////////////////////////////////////////////Outdated human authority settings
 /datum/config_entry/flag/enforce_human_authority
@@ -437,6 +437,10 @@
 	default = 14
 	min_val = 0
 	integer = FALSE // It is in hours, but just in case one wants to specify minutes.
+
+/// Will drones be restricted from interacting with the Supermatter and Atmospherics area?
+/datum/config_entry/flag/drone_area_interaction_restrict
+	default = TRUE
 
 /datum/config_entry/flag/native_fov
 

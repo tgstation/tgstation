@@ -1,8 +1,8 @@
 /datum/outfit/centcom
 	name = "CentCom Base"
 
-/datum/outfit/centcom/post_equip(mob/living/carbon/human/centcom_member, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/centcom/post_equip(mob/living/carbon/human/centcom_member, visuals_only = FALSE)
+	if(visuals_only)
 		return
 	var/obj/item/implant/mindshield/mindshield = new /obj/item/implant/mindshield(centcom_member)//hmm lets have centcom officials become revs
 	mindshield.implant(centcom_member, null, silent = TRUE)
@@ -17,8 +17,8 @@
 	shoes = /obj/item/clothing/shoes/combat/swat
 	var/additional_radio
 
-/datum/outfit/centcom/ert/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/centcom/ert/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/obj/item/radio/headset/R = H.ears
@@ -168,8 +168,8 @@
 	r_pocket = /obj/item/modular_computer/pda/heads
 	l_hand = /obj/item/clipboard
 
-/datum/outfit/centcom/centcom_official/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/centcom/centcom_official/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/obj/item/modular_computer/pda/heads/pda = H.r_store
@@ -282,9 +282,9 @@
 	r_pocket = /obj/item/bikehorn/golden
 	additional_radio = /obj/item/encryptionkey/heads/hop
 
-/datum/outfit/centcom/ert/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom/ert/clown/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	..()
-	if(visualsOnly)
+	if(visuals_only)
 		return
 	ADD_TRAIT(H.mind, TRAIT_NAIVE, INNATE_TRAIT)
 	H.dna.add_mutation(/datum/mutation/human/clumsy)
@@ -308,8 +308,8 @@
 	r_pocket = /obj/item/ammo_box/strilka310
 	l_hand = /obj/item/gun/ballistic/rifle/boltaction
 
-/datum/outfit/centcom/centcom_intern/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/centcom/centcom_intern/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
@@ -454,8 +454,8 @@
 		/obj/item/skillchip/disk_verifier,
 	)
 
-/datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/squaddie, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/squaddie, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/obj/item/radio/radio = squaddie.ears
@@ -472,15 +472,16 @@
 
 	back = /obj/item/mod/control/pre_equipped/apocryphal/officer
 
-/datum/outfit/centcom/death_commando/officer/post_equip(mob/living/carbon/human/squaddie, visualsOnly = FALSE)
+/datum/outfit/centcom/death_commando/officer/post_equip(mob/living/carbon/human/squaddie, visuals_only = FALSE)
 	. = ..()
 	var/obj/item/mod/control/mod = squaddie.back
 	if(!istype(mod))
 		return
-	var/obj/item/mod/module/hat_stabilizer/hat_holder = locate() in mod.modules
-	var/obj/item/clothing/head/helmet/space/beret/beret = new(hat_holder)
-	hat_holder.attached_hat = beret
-	squaddie.update_clothing(mod.slot_flags)
+	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	var/obj/item/clothing/head/helmet/space/beret/beret = new(helmet)
+	var/datum/component/hat_stabilizer/component = helmet.GetComponent(/datum/component/hat_stabilizer)
+	component.attach_hat(beret)
+	squaddie.update_clothing(helmet.slot_flags)
 
 /datum/outfit/centcom/ert/marine
 	name = "Marine Commander"

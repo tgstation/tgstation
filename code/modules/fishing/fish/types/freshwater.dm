@@ -1,5 +1,6 @@
 /obj/item/fish/goldfish
 	name = "goldfish"
+	fish_id = "goldfish"
 	desc = "Despite common belief, goldfish do not have three-second memories. \
 		They can actually remember things that happened up to three months ago."
 	icon_state = "goldfish"
@@ -36,6 +37,7 @@
 
 /obj/item/fish/goldfish/three_eyes
 	name = "three-eyed goldfish"
+	fish_id = "three_eyes"
 	desc = "A goldfish with an extra half a pair of eyes. You wonder what it's been feeding on lately..."
 	icon_state = "three_eyes"
 	stable_population = 4
@@ -70,6 +72,7 @@
 
 /obj/item/fish/angelfish
 	name = "angelfish"
+	fish_id = "angelfish"
 	desc = "Young Angelfish often live in groups, while adults prefer solitary life. They become territorial and aggressive toward other fish when they reach adulthood."
 	icon_state = "angelfish"
 	sprite_width = 4
@@ -83,6 +86,7 @@
 
 /obj/item/fish/guppy
 	name = "guppy"
+	fish_id = "guppy"
 	desc = "Guppy is also known as rainbow fish because of the brightly colored body and fins."
 	icon_state = "guppy"
 	sprite_width = 5
@@ -97,6 +101,7 @@
 
 /obj/item/fish/plasmatetra
 	name = "plasma tetra"
+	fish_id = "plasmatetra"
 	desc = "Due to their small size, tetras are prey to many predators in their watery world, including eels, crustaceans, and invertebrates."
 	icon_state = "plastetra"
 	sprite_width = 4
@@ -109,6 +114,7 @@
 
 /obj/item/fish/catfish
 	name = "catfish"
+	fish_id = "catfish"
 	desc = "A catfish has about 100,000 taste buds, and their bodies are covered with them to help detect chemicals present in the water and also to respond to touch."
 	icon_state = "catfish"
 	sprite_width = 8
@@ -129,6 +135,7 @@
 
 /obj/item/fish/zipzap
 	name = "anxious zipzap"
+	fish_id = "zipzap"
 	desc = "A fish overflowing with crippling anxiety and electric potential. Worried about the walls of its tank closing in constantly. Both literally and as a general metaphorical unease about life's direction."
 	icon_state = "zipzap"
 	icon_state_dead = "zipzap_dead"
@@ -175,7 +182,7 @@
 
 /obj/item/fish/tadpole/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
-	AddComponent(/datum/component/fish_growth, /mob/living/basic/frog, rand(2.5, 3 MINUTES))
+	AddComponent(/datum/component/fish_growth, /mob/living/basic/frog, rand(2 MINUTES, 3 MINUTES))
 	RegisterSignal(src, COMSIG_FISH_BEFORE_GROWING, PROC_REF(growth_checks))
 	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
 
@@ -189,24 +196,24 @@
 	else
 		deltimer(del_timerid)
 
-/obj/item/fish/tadpole/proc/growth_checks(datum/source, seconds_per_tick, growth)
+/obj/item/fish/tadpole/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = get_hunger()
 	if(hunger >= 0.7) //too hungry to grow
 		return COMPONENT_DONT_GROW
-	var/obj/structure/aquarium/aquarium = loc
-	if(istype(aquarium) && !aquarium.reproduction_and_growth) //the aquarium has breeding disabled
+	if(HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH)) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
 
 /obj/item/fish/tadpole/proc/on_growth(datum/source, mob/living/basic/frog/result)
 	SIGNAL_HANDLER
 	playsound(result, result.attack_sound, 50, TRUE) // reeeeeeeeeeeeeee...
 
-/obj/item/fish/tadpole/get_export_price(price, percent)
+/obj/item/fish/tadpole/get_export_price(price, elasticity_percent)
 	return 2 //two credits. Tadpoles aren't really that valueable.
 
 /obj/item/fish/perch
 	name = "perch"
+	fish_id = "perch"
 	desc = "An all around popular panfish, game fish and unfortunate prey to other, bigger predators."
 	icon_state = "perch"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
@@ -226,3 +233,23 @@
 	/obj/item/fish,
 	/obj/item/fishing_lure, //they love lures in general.
 	)
+
+///Memetic fish from a paleontologically inaccurate, goofy replica of a specimen. Sells decently for its size.
+/obj/item/fish/sacabambaspis
+	name = "sacabambaspis"
+	fish_id = "sacabambaspis"
+	desc = "A jawless fish ought to be extinct by the end of the Ordovician period. Some speculate alien intervention may have been behind its survival and inevitable evolution as a dweller of hot springs."
+	icon_state = "sacabambaspis"
+	sprite_width = 5
+	sprite_height = 3
+	stable_population = 7
+	average_size = 27
+	average_weight = 500
+	required_temperature_min = MIN_AQUARIUM_TEMP+20
+	required_temperature_max = MIN_AQUARIUM_TEMP+45
+	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
+	beauty = FISH_BEAUTY_GOOD
+	fish_traits = list(/datum/fish_trait/necrophage, /datum/fish_trait/wary)
+
+/obj/item/fish/sacabambaspis/get_export_price(price, percent)
+	return ..() * 4.5

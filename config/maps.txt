@@ -37,12 +37,12 @@ map metastation
 	votable
 endmap
 
-map northstar
-	minplayers 50
+map tramstation
+	minplayers 35
 	votable
 endmap
 
-map tramstation
+map nebulastation
 	minplayers 35
 	votable
 endmap

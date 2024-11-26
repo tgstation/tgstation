@@ -56,7 +56,6 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	tint = 0
-	has_fov = FALSE
 	fishing_modifier = 0
 	unique_death = 'sound/items/sec_hailer/sec_death.ogg'
 	COOLDOWN_DECLARE(hailer_cooldown)
@@ -88,6 +87,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	fishing_modifier = 2
+	pepper_tint = FALSE
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"

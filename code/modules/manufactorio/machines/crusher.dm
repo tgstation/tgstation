@@ -39,7 +39,7 @@
 	if(gone == withholding)
 		withholding = null
 
-/obj/machinery/power/manufacturing/crusher/process(seconds_per_tick) //noot functional
+/obj/machinery/power/manufacturing/crusher/process(seconds_per_tick)
 	if(!isnull(withholding) && !send_resource(withholding, dir))
 		return
 	for(var/material in held_mats)

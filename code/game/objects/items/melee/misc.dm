@@ -95,7 +95,7 @@
  */
 /obj/item/melee/sabre/proc/attempt_bane(element_owner, mob/living/carbon/criminal)
 	SIGNAL_HANDLER
-	var/obj/item/organ/internal/liver/liver = criminal.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = criminal.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(isnull(liver) || !HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM))
 		return COMPONENT_CANCEL_BANING
 
@@ -188,7 +188,7 @@
 	wound_bonus = 5
 	bare_wound_bonus = 15
 
-/obj/item/melee/sabre/Initialize(mapload)
+/obj/item/melee/parsnip_sabre/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/jousting)
 

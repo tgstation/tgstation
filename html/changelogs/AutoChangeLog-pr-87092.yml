@@ -1,4 +1,0 @@
-author: "unit0016"
-delete-after: True
-changes:
-  - bugfix: "Shuttles that land next to plasma turfs no longer ruin the mass hallucination that is Icebox having Plasma and not just super-deadly; spiky basalt deltas. You're welcome; unreality fans."

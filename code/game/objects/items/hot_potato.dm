@@ -18,7 +18,7 @@
 	var/stimulant = TRUE
 	var/detonate_explosion = TRUE
 	var/detonate_dev_range = 0
-	var/detonate_heavy_range = 0
+	var/detonate_heavy_range = 1
 	var/detonate_light_range = 2
 	var/detonate_flash_range = 5
 	var/detonate_fire_range = 5
@@ -51,7 +51,10 @@
 /obj/item/hot_potato/proc/detonate()
 	var/atom/location = loc
 	location.visible_message(span_userdanger("[src] [detonate_explosion? "explodes" : "activates"]!"), span_userdanger("[src] activates! You've ran out of time!"))
-	if(detonate_explosion)
+	if(detonate_explosion && isliving(loc))
+		var/mob/living/victim_mob = loc
+		if(victim_mob.is_holding(src))
+			victim_mob.gib(DROP_ALL_REMAINS)
 		explosion(src, detonate_dev_range, detonate_heavy_range, detonate_light_range, detonate_fire_range, detonate_flash_range)
 	deactivate()
 	if(!reusable)

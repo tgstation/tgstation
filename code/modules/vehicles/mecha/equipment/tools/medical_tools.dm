@@ -15,82 +15,33 @@
 	if(!chassis)
 		return PROCESS_KILL
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper
-	name = "mounted sleeper"
-	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents from a equipped exosuit syringe gun."
-	icon_state = "mecha_sleeper"
-	energy_drain = 20
-	range = MECHA_MELEE
-	equip_cooldown = 20
-	/// ref to the patient loaded in the sleeper
-	var/mob/living/carbon/patient
-	/// amount of chems to inject into patient from other hands syringe gun
-	var/inject_amount = 10
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/Destroy()
-	for(var/atom/movable/content as anything in src)
-		content.forceMove(get_turf(src))
-	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/medical/proc/get_reagent_data(list/datum/reagent/reagent_list)
+/obj/item/mecha_parts/mecha_equipment/proc/get_reagent_data(list/datum/reagent/reagent_list)
 	var/list/contained_reagents = list()
 	if(length(reagent_list))
 		for(var/datum/reagent/reagent as anything in reagent_list)
 			contained_reagents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
 	return contained_reagents
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/get_snowflake_data()
-	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_SLEEPER)
-	if(isnull(patient))
-		return data
-	var/patient_state
-	switch(patient.stat)
-		if(0)
-			patient_state = "Conscious"
-		if(1)
-			patient_state = "Unconscious"
-		if(2)
-			patient_state = "*dead*"
-		else
-			patient_state = "Unknown"
-	var/core_temp = ""
-	if(ishuman(patient))
-		var/mob/living/carbon/human/humi = patient
-		core_temp = humi.bodytemperature-T0C
-	data["patient"] = list(
-		"patient_name" = patient.name,
-		"patient_health" = patient.health/patient.maxHealth,
-		"patient_state" = patient_state,
-		"core_temp" = core_temp,
-		"brute_loss" = patient.getBruteLoss(),
-		"burn_loss" = patient.getFireLoss(),
-		"toxin_loss" = patient.getToxLoss(),
-		"oxygen_loss" = patient.getOxyLoss(),
-	)
-	data["has_brain_damage"] = patient.get_organ_loss(ORGAN_SLOT_BRAIN) != 0
-	data["has_traumas"] = length(patient.get_traumas()) != 0
-	data["contained_reagents"] = get_reagent_data(patient.reagents.reagent_list)
+//---- Mecha sleeper, medical subtype has the chemical functionality
+/obj/item/mecha_parts/mecha_equipment/sleeper
+	name = "mounted sleeper"
+	desc = "A mounted sleeper that stabilizes patients."
+	icon_state = "mecha_sleeper_miner"
+	energy_drain = 20
+	range = MECHA_MELEE
+	equip_cooldown = 20
+	/// ref to the patient loaded in the sleeper
+	var/mob/living/carbon/patient
 
-	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
-	if(shooter)
-		data["injectible_reagents"] = get_reagent_data(shooter.reagents.reagent_list)
-	return data
+/obj/item/mecha_parts/mecha_equipment/sleeper/Destroy()
+	for(var/atom/movable/content as anything in src)
+		content.forceMove(get_turf(src))
+	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/handle_ui_act(action, list/params)
-	switch(action)
-		if("eject")
-			go_out()
-			return TRUE
-	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate() in chassis
-	if(shooter)
-		for(var/datum/reagent/medication in shooter.reagents.reagent_list)
-			if(action == ("inject_reagent_" + medication.name))
-				inject_reagent(medication, shooter)
-				break // or maybe return TRUE? i'm not certain
+/obj/item/mecha_parts/mecha_equipment/sleeper/container_resist_act(mob/living/user)
+	go_out()
 
-	return FALSE
-
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/action(mob/source, atom/atomtarget, list/modifiers)
+/obj/item/mecha_parts/mecha_equipment/sleeper/action(mob/source, atom/atomtarget, list/modifiers)
 	if(!action_checks(atomtarget))
 		return
 	if(!iscarbon(atomtarget))
@@ -112,7 +63,7 @@
 	log_message("[target] loaded. Life support functions engaged.", LOG_MECHA)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/patient_insertion_check(mob/living/carbon/target, mob/user)
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/patient_insertion_check(mob/living/carbon/target, mob/user)
 	if(!isnull(target.buckled))
 		to_chat(user, "[icon2html(src, user)][span_warning("[target] will not fit into the sleeper because [target.p_theyre()] buckled to [target.buckled]!")]")
 		return FALSE
@@ -124,7 +75,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/go_out()
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/go_out()
 	if(!patient)
 		return
 	patient.forceMove(get_turf(src))
@@ -133,31 +84,56 @@
 	STOP_PROCESSING(SSobj, src)
 	patient = null
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/detach()
+/obj/item/mecha_parts/mecha_equipment/sleeper/detach()
 	if(patient)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Unable to detach [src] - equipment occupied!")]")
 		return
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R, obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
-	if(!R || !patient || !SG || !(SG in chassis.flat_equipment))
-		return
-	var/to_inject = min(R.volume, inject_amount)
-	if(to_inject && patient.reagents.get_reagent_amount(R.type) + to_inject <= inject_amount*2)
-		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Injecting [patient] with [to_inject] units of [R.name].")]")
-		log_message("Injecting [patient] with [to_inject] units of [R.name].", LOG_MECHA)
-		for(var/driver in chassis.return_drivers())
-			log_combat(driver, patient, "injected", "[name] ([R] - [to_inject] units)")
-		SG.reagents.trans_to(patient, to_inject, target_id = R.type)
+/obj/item/mecha_parts/mecha_equipment/sleeper/get_snowflake_data()
+	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_SLEEPER)
+	if(isnull(patient))
+		return data
+	var/patient_state
+	switch(patient.stat)
+		if(CONSCIOUS)
+			patient_state = "Conscious"
+		if(UNCONSCIOUS)
+			patient_state = "Unconscious"
+		if(DEAD)
+			patient_state = "*Dead*"
+		if(SOFT_CRIT, HARD_CRIT)
+			patient_state = "Critical"
+		else
+			patient_state = "Unknown"
+	var/core_temp = ""
+	if(ishuman(patient))
+		var/mob/living/carbon/human/humi = patient
+		core_temp = humi.bodytemperature-T0C
+	data["patient"] = list(
+		"patient_name" = patient.name,
+		"patient_health" = patient.health/patient.maxHealth,
+		"patient_state" = patient_state,
+		"core_temp" = core_temp,
+		"brute_loss" = patient.getBruteLoss(),
+		"burn_loss" = patient.getFireLoss(),
+		"toxin_loss" = patient.getToxLoss(),
+		"oxygen_loss" = patient.getOxyLoss(),
+	)
+	data["contained_reagents"] = get_reagent_data(patient.reagents.reagent_list)
+	data["has_brain_damage"] = patient.get_organ_loss(ORGAN_SLOT_BRAIN) != 0
+	data["has_traumas"] = length(patient.get_traumas()) != 0
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/container_resist_act(mob/living/user)
-	go_out()
+	return data
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/process(seconds_per_tick)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/sleeper/handle_ui_act(action, list/params)
+	if(action == "eject")
+		go_out()
+		return TRUE
+	return FALSE
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/process(seconds_per_tick)
 	if(!chassis.has_charge(energy_drain))
 		log_message("Deactivated.", LOG_MECHA)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("[src] deactivated - no power.")]")
@@ -171,17 +147,59 @@
 		log_message("[patient] no longer detected - Life support functions disabled.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		patient = null
-	if(ex_patient.health > 0)
-		ex_patient.adjustOxyLoss(-0.5 * seconds_per_tick)
-	ex_patient.AdjustStun(-40 * seconds_per_tick)
-	ex_patient.AdjustKnockdown(-40 * seconds_per_tick)
-	ex_patient.AdjustParalyzed(-40 * seconds_per_tick)
-	ex_patient.AdjustImmobilized(-40 * seconds_per_tick)
-	ex_patient.AdjustUnconscious(-40 * seconds_per_tick)
-	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5)
+	ex_patient.adjustOxyLoss(-2 * seconds_per_tick)
+	ex_patient.AdjustStun(-4 SECONDS * seconds_per_tick)
+	ex_patient.AdjustKnockdown(-4 SECONDS * seconds_per_tick)
+	ex_patient.AdjustParalyzed(-4 SECONDS * seconds_per_tick)
+	ex_patient.AdjustImmobilized(-4 SECONDS * seconds_per_tick)
+	ex_patient.AdjustUnconscious(-4 SECONDS * seconds_per_tick)
+	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5 \
+	&& ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/c2/penthrite) <= 0 \
+	&& ex_patient.stat >= SOFT_CRIT)
 		ex_patient.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
+	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/toxin/formaldehyde) <= 0 && ex_patient.stat == DEAD)
+		ex_patient.reagents.add_reagent(/datum/reagent/toxin/formaldehyde, 3)
 	chassis.use_energy(energy_drain)
 
+//Medical subtype with the chems
+/obj/item/mecha_parts/mecha_equipment/sleeper/medical
+	name = "mounted sleeper"
+	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents from a equipped exosuit syringe gun."
+	icon_state = "mecha_sleeper"
+	mech_flags = EXOSUIT_MODULE_MEDICAL
+	/// amount of chems to inject into patient from other hands syringe gun
+	var/inject_amount = 10
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/medical/get_snowflake_data()
+	var/list/data = ..()
+	if(isnull(patient))
+		return data
+	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
+	if(shooter)
+		data["injectible_reagents"] = get_reagent_data(shooter.reagents.reagent_list)
+	return data
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/medical/handle_ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return TRUE
+	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate() in chassis
+	if(shooter)
+		for(var/datum/reagent/medication as anything in shooter.reagents.reagent_list)
+			if(action == ("inject_reagent_" + medication.name))
+				inject_reagent(medication, shooter)
+				break // or maybe return TRUE? i'm not certain
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/medical/proc/inject_reagent(datum/reagent/reagent_to_inject, obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
+	if(!reagent_to_inject || !patient || !SG || !(SG in chassis.flat_equipment))
+		return
+	var/to_inject = min(reagent_to_inject.volume, inject_amount)
+	if(to_inject && patient.reagents.get_reagent_amount(reagent_to_inject.type) + to_inject <= inject_amount*2)
+		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Injecting [patient] with [to_inject] units of [reagent_to_inject.name].")]")
+		log_message("Injecting [patient] with [to_inject] units of [reagent_to_inject.name].", LOG_MECHA)
+		for(var/driver in chassis.return_drivers())
+			log_combat(driver, patient, "injected", "[name] ([reagent_to_inject] - [to_inject] units)")
+		SG.reagents.trans_to(patient, to_inject, target_id = reagent_to_inject.type)
 
 ///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
 

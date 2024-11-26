@@ -3,47 +3,36 @@
 /// The max amount of health a voiceless dead has.
 #define MUTE_MAX_HEALTH 50
 
-/**
- * # The path of Flesh.
- *
- * Goes as follows:
- *
- * Principle of Hunger
- * Grasp of Flesh
- * Imperfect Ritual
- * > Sidepaths:
- *   Void Cloak
- *
- * Mark of Flesh
- * Ritual of Knowledge
- * Flesh Surgery
- * Raw Ritual
- * > Sidepaths:
- *   Blood Siphon
- *   Opening Blast
- *
- * Bleeding Steel
- * Lonely Ritual
- * > Sidepaths:
- *   Cleave
- *   Aptera Vulnera
- *
- * Priest's Final Hymn
- */
+/datum/heretic_knowledge_tree_column/main/flesh
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/lock_to_flesh
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/flesh_to_void
+
+	route = PATH_FLESH
+	ui_bgr = "node_flesh"
+
+	start = /datum/heretic_knowledge/limited_amount/starting/base_flesh
+	grasp = /datum/heretic_knowledge/limited_amount/flesh_grasp
+	tier1 = /datum/heretic_knowledge/limited_amount/flesh_ghoul
+	mark = 	/datum/heretic_knowledge/mark/flesh_mark
+	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/flesh
+	unique_ability = /datum/heretic_knowledge/spell/flesh_surgery
+	tier2 = /datum/heretic_knowledge/summon/raw_prophet
+	blade = /datum/heretic_knowledge/blade_upgrade/flesh
+	tier3 = /datum/heretic_knowledge/summon/stalker
+	ascension = /datum/heretic_knowledge/ultimate/flesh_final
+
 /datum/heretic_knowledge/limited_amount/starting/base_flesh
 	name = "Principle of Hunger"
 	desc = "Opens up the Path of Flesh to you. \
 		Allows you to transmute a knife and a pool of blood into a Bloody Blade. \
 		You can only create three at a time."
 	gain_text = "Hundreds of us starved, but not me... I found strength in my greed."
-	next_knowledge = list(/datum/heretic_knowledge/limited_amount/flesh_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/effect/decal/cleanable/blood = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
 	limit = 3 // Bumped up so they can arm up their ghouls too.
-	route = PATH_FLESH
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "flesh_blade"
 
@@ -62,11 +51,11 @@
 		Ghouls have only 25 health and look like husks to the heathens' eyes, but can use Bloody Blades effectively. \
 		You can only create one at a time by this method."
 	gain_text = "My new found desires drove me to greater and greater heights."
-	next_knowledge = list(/datum/heretic_knowledge/limited_amount/flesh_ghoul)
+
 	limit = 1
 	cost = 1
-	route = PATH_FLESH
-	depth = 3
+
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_flesh"
 
@@ -131,21 +120,16 @@
 		Voiceless Dead are mute ghouls and only have 50 health, but can use Bloody Blades effectively. \
 		You can only create two at a time."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
-	next_knowledge = list(
-		/datum/heretic_knowledge/mark/flesh_mark,
-		/datum/heretic_knowledge/void_cloak,
-	)
 	required_atoms = list(
 		/mob/living/carbon/human = 1,
 		/obj/item/food/grown/poppy = 1,
 	)
 	limit = 2
 	cost = 1
-	route = PATH_FLESH
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_voiceless"
 
-	depth = 4
+
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -217,13 +201,11 @@
 	desc = "Your Mansus Grasp now applies the Mark of Flesh. The mark is triggered from an attack with your Bloody Blade. \
 		When triggered, the victim begins to bleed significantly."
 	gain_text = "That's when I saw them, the marked ones. They were out of reach. They screamed, and screamed."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/flesh)
-	route = PATH_FLESH
+
+
 	mark_type = /datum/status_effect/eldritch/flesh
 
 /datum/heretic_knowledge/knowledge_ritual/flesh
-	next_knowledge = list(/datum/heretic_knowledge/spell/flesh_surgery)
-	route = PATH_FLESH
 
 /datum/heretic_knowledge/spell/flesh_surgery
 	name = "Knitting of Flesh"
@@ -232,11 +214,8 @@
 		This spell also allows you to heal your minions and summons, or restore failing organs to acceptable status."
 	gain_text = "But they were not out of my reach for long. With every step, the screams grew, until at last \
 		I learned that they could be silenced."
-	next_knowledge = list(/datum/heretic_knowledge/summon/raw_prophet)
-	spell_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
+	action_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
 	cost = 1
-	route = PATH_FLESH
-	depth = 7
 
 /datum/heretic_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
@@ -245,30 +224,21 @@
 		the ability to link minds to communicate with ease, but are very fragile and weak in combat."
 	gain_text = "I could not continue alone. I was able to summon The Uncanny Man to help me see more. \
 		The screams... once constant, now silenced by their wretched appearance. Nothing was out of reach."
-	next_knowledge = list(
-		/datum/heretic_knowledge/blade_upgrade/flesh,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/spell/blood_siphon,
-		/datum/heretic_knowledge/spell/opening_blast,
-	)
 	required_atoms = list(
-		/obj/item/organ/internal/eyes = 1,
+		/obj/item/organ/eyes = 1,
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/bodypart/arm/left = 1,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/raw_prophet
 	cost = 1
-	route = PATH_FLESH
 	poll_ignore_define = POLL_IGNORE_RAW_PROPHET
-	depth = 8
+
 
 /datum/heretic_knowledge/blade_upgrade/flesh
 	name = "Bleeding Steel"
 	desc = "Your Bloody Blade now causes enemies to bleed heavily on attack."
 	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
 		I finally began to understand. And then, blood rained from the heavens."
-	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
-	route = PATH_FLESH
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_flesh"
 	///What type of wound do we apply on hit
@@ -289,23 +259,19 @@
 		Stalkers can jaunt, release EMPs, shapeshift into animals or automatons, and are strong in combat."
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. \
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
-	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/flesh_final,
-		/datum/heretic_knowledge/spell/apetra_vulnera,
-		/datum/heretic_knowledge/spell/cleave,
-	)
+
 	required_atoms = list(
-		/obj/item/organ/external/tail = 1,
-		/obj/item/organ/internal/stomach = 1,
-		/obj/item/organ/internal/tongue = 1,
+		/obj/item/organ/tail = 1,
+		/obj/item/organ/stomach = 1,
+		/obj/item/organ/tongue = 1,
 		/obj/item/pen = 1,
 		/obj/item/paper = 1,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/stalker
 	cost = 1
-	route = PATH_FLESH
+
 	poll_ignore_define = POLL_IGNORE_STALKER
-	depth = 10
+
 
 /datum/heretic_knowledge/ultimate/flesh_final
 	name = "Priest's Final Hymn"
@@ -321,21 +287,14 @@
 		Men of this world, hear me, for the time has come! The Marshal guides my army! \
 		Reality will bend to THE LORD OF THE NIGHT or be unraveled! WITNESS MY ASCENSION!"
 	required_atoms = list(/mob/living/carbon/human = 4)
-	route = PATH_FLESH
 	ascension_achievement = /datum/award/achievement/misc/flesh_ascension
+	announcement_text = "%SPOOKY% Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, %NAME% has ascended! Fear the ever twisting hand! %SPOOKY%"
+	announcement_sound = 'sound/music/antag/heretic/ascend_flesh.ogg'
 
 /datum/heretic_knowledge/ultimate/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = 'sound/music/antag/heretic/ascend_flesh.ogg',
-		color_override = "pink",
-	)
-
 	var/datum/action/cooldown/spell/shapeshift/shed_human_form/worm_spell = new(user.mind)
 	worm_spell.Grant(user)
-
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	var/datum/heretic_knowledge/limited_amount/flesh_grasp/grasp_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_grasp)

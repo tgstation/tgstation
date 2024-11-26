@@ -12,7 +12,6 @@ GLOBAL_LIST_INIT(raptor_inherit_traits, list(
 	BB_RAPTOR_MOTHERLY = "Motherly",
 	BB_RAPTOR_PLAYFUL = "Playful",
 	BB_RAPTOR_COWARD = "Coward",
-	BB_RAPTOR_TROUBLE_MAKER = "Trouble Maker",
 ))
 
 GLOBAL_LIST_EMPTY(raptor_population)
@@ -35,7 +34,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	minimum_survivable_temperature = BODYTEMP_COLD_ICEBOX_SAFE
 	maximum_survivable_temperature = INFINITY
 	attack_verb_continuous = "pecks"
-	attack_verb_simple = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/items/weapons/punch1.ogg'
 	faction = list(FACTION_RAPTOR, FACTION_NEUTRAL)
 	speak_emote = list("screeches")
@@ -70,6 +69,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		change_offsets = FALSE
 		icon = 'icons/mob/simple/lavaland/raptor_icebox.dmi'
 
+	AddElement(/datum/element/wears_collar)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
 
 	if(!mapload)
@@ -97,7 +97,6 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)
 	inherited_stats = new
 	inherit_properties()
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	var/static/list/my_food = list(/obj/item/stack/ore)
 	AddElement(/datum/element/basic_eating, food_types = my_food)
 	AddElement(/datum/element/ai_retaliate)
@@ -147,19 +146,20 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	pixel_y = (direction & NORTH) ? -5 : 0
 
 
-/mob/living/basic/raptor/proc/pre_attack(mob/living/puncher, atom/target)
-	SIGNAL_HANDLER
-
+/mob/living/basic/raptor/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(!istype(target, /obj/structure/ore_container/food_trough/raptor_trough))
-		return
+		return TRUE
 
 	var/obj/ore_food = locate(/obj/item/stack/ore) in target
 
 	if(isnull(ore_food))
 		balloon_alert(src, "no food!")
 	else
-		INVOKE_ASYNC(src, PROC_REF(melee_attack), ore_food)
-	return COMPONENT_HOSTILE_NO_ATTACK
+		melee_attack(ore_food)
+	return FALSE
 
 /mob/living/basic/raptor/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	if(!combat_mode && istype(target, /mob/living/basic/raptor/baby_raptor))

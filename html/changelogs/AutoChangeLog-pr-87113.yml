@@ -1,4 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "Dark matter singularity no longer gets stuck on other z levels when summoned."

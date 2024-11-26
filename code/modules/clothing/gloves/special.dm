@@ -60,7 +60,7 @@
 /obj/item/clothing/gloves/rapid/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
-	AddComponent(/datum/component/adjust_fishing_difficulty, -7)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -9)
 
 /obj/item/clothing/gloves/radio
 	name = "translation gloves"
@@ -78,7 +78,7 @@
 
 /obj/item/clothing/gloves/race/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -7)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -9)
 
 /obj/item/clothing/gloves/captain
 	desc = "Regal blue gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky."
@@ -98,7 +98,7 @@
 
 /obj/item/clothing/gloves/captain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
 
 /datum/armor/captain_gloves
 	bio = 90
@@ -115,6 +115,7 @@
 	armor_type = /datum/armor/latex_gloves
 	clothing_traits = list(TRAIT_QUICK_CARRY)
 	resistance_flags = NONE
+	equip_sound = 'sound/items/equip/glove_equip.ogg'
 
 /datum/armor/latex_gloves
 	bio = 100
@@ -129,7 +130,7 @@
 
 /obj/item/clothing/gloves/latex/nitrile/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
 
 /obj/item/clothing/gloves/latex/coroner
 	name = "coroner's gloves"
@@ -168,7 +169,7 @@
 	resistance_flags = FIRE_PROOF
 	siemens_coefficient = 0.3
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_CHUNKYFINGERS)
-	clothing_flags = THICKMATERIAL
+	clothing_flags = THICKMATERIAL|STOPSPRESSUREDAMAGE
 
 /obj/item/clothing/gloves/atmos/Initialize(mapload)
 	. = ..()
@@ -185,7 +186,7 @@
 /obj/item/clothing/gloves/fishing/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/profound_fisher, new /obj/item/fishing_rod/mob_fisher/athletic(src))
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //on top of the extra that you get from the athletics skill.
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4) //on top of the extra that you get from the athletics skill.
 
 /obj/item/clothing/gloves/fishing/equipped(mob/user, slot)
 	. = ..()
@@ -215,7 +216,7 @@
 	var/mob/living/wearer = loc
 	var/stamina_exhaustion = 2 + challenge.difficulty * 0.02
 	var/is_heavy_gravity = wearer.has_gravity() > STANDARD_GRAVITY
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = wearer.get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = wearer.get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		stamina_exhaustion *= potential_spine.athletics_boost_multiplier
 	if(HAS_TRAIT(wearer, TRAIT_STRENGTH))

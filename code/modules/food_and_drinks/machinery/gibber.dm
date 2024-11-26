@@ -182,7 +182,7 @@
 	var/typeofmeat = /obj/item/food/meat/slab/human
 	var/typeofskin
 
-	var/obj/item/food/meat/slab/allmeat[meat_produced]
+	var/list/results = list()
 	var/obj/item/stack/sheet/animalhide/skin
 	var/list/datum/disease/diseases = mob_occupant.get_static_viruses()
 
@@ -201,22 +201,29 @@
 		if(isalien(C))
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
 
-	var/occupant_volume
-	if(occupant?.reagents)
-		occupant_volume = occupant.reagents.total_volume
-	for (var/i=1 to meat_produced)
+	for (var/i in 1 to meat_produced)
 		var/obj/item/food/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
 		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * SHEET_MATERIAL_AMOUNT))
-		if(istype(newmeat))
-			newmeat.subjectname = sourcename
-			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first
-			if(occupant_volume)
-				occupant.reagents.trans_to(newmeat, occupant_volume / meat_produced, remove_blacklisted = TRUE)
-			if(sourcejob)
-				newmeat.subjectjob = sourcejob
+		if(!istype(newmeat))
+			continue
+		newmeat.subjectname = sourcename
+		if(sourcejob)
+			newmeat.subjectjob = sourcejob
 
-		allmeat[i] = newmeat
+		results += newmeat
+
+	SEND_SIGNAL(occupant, COMSIG_LIVING_GIBBER_ACT, user, src, results)
+
+	var/reagents_in_produced = 0
+	for(var/obj/item/result as anything in results)
+		if(result.reagents)
+			reagents_in_produced++
+
+	for(var/obj/item/result as anything in results)
+		occupant.reagents.trans_to(result, occupant.reagents.total_volume / reagents_in_produced, remove_blacklisted = TRUE)
+		result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, sourcenutriment / reagents_in_produced) // Thehehe. Fat guys go first
+
 
 	if(typeofskin)
 		skin = new typeofskin
@@ -227,9 +234,9 @@
 	mob_occupant.ghostize()
 	set_occupant(null)
 	qdel(mob_occupant)
-	addtimer(CALLBACK(src, PROC_REF(make_meat), skin, allmeat, meat_produced, gibtype, diseases), gibtime)
+	addtimer(CALLBACK(src, PROC_REF(make_meat), skin, results, meat_produced, gibtype, diseases), gibtime)
 
-/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
+/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/results, meat_produced, gibtype, list/datum/disease/diseases)
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	operating = FALSE
 	if (!dirty && prob(50))
@@ -239,9 +246,9 @@
 	if(skin)
 		skin.forceMove(loc)
 		skin.throw_at(pick(nearby_turfs),meat_produced,3)
-	for (var/i=1 to meat_produced)
-		var/obj/item/meatslab = allmeat[i]
 
+	var/iteration = 1
+	for (var/obj/item/meatslab in results)
 		if(LAZYLEN(diseases))
 			var/list/datum/disease/diseases_to_add = list()
 			for(var/datum/disease/disease as anything in diseases)
@@ -254,11 +261,15 @@
 				meatslab.AddComponent(/datum/component/infective, diseases_to_add)
 
 		meatslab.forceMove(loc)
-		meatslab.throw_at(pick(nearby_turfs),i,3)
-		for (var/turfs=1 to meat_produced)
-			var/turf/gibturf = pick(nearby_turfs)
-			if (!gibturf.density && (src in view(gibturf)))
-				new gibtype(gibturf, i, diseases)
+		meatslab.throw_at(pick(nearby_turfs), iteration, 3)
+
+		iteration++
+
+	for (var/i in 1 to meat_produced**2) //2 slabs: 4 giblets, 3 slabs: 9, etc.
+		var/turf/gibturf = pick(nearby_turfs)
+		if (!gibturf.density && (src in view(gibturf)))
+			new gibtype(gibturf, round(1 + i / meat_produced), diseases)
+
 
 	pixel_x = base_pixel_x //return to its spot after shaking
 	operating = FALSE

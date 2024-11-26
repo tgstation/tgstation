@@ -22,7 +22,7 @@
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = TRUE
 
-	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
+	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|princess|queen)( \\(\\d+\\))?")
 	var/static/list/xeno_allowed_items = typecacheof(list(
 		/obj/item/clothing/mask/facehugger,
 		/obj/item/toy/basketball, // playing ball against a xeno is rigged since they cannot be disarmed, their game is out of this world
@@ -53,12 +53,12 @@
 		CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_has_trait), src, TRAIT_ADVANCEDTOOLUSER))
 
 /mob/living/carbon/alien/create_internal_organs()
-	organs += new /obj/item/organ/internal/brain/alien
-	organs += new /obj/item/organ/internal/alien/hivenode
-	organs += new /obj/item/organ/internal/tongue/alien
-	organs += new /obj/item/organ/internal/eyes/alien
-	organs += new /obj/item/organ/internal/liver/alien
-	organs += new /obj/item/organ/internal/ears
+	organs += new /obj/item/organ/brain/alien
+	organs += new /obj/item/organ/alien/hivenode
+	organs += new /obj/item/organ/tongue/alien
+	organs += new /obj/item/organ/eyes/alien
+	organs += new /obj/item/organ/liver/alien
+	organs += new /obj/item/organ/ears
 	..()
 
 /mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
@@ -100,7 +100,7 @@ Des: Gives the client of the alien an image on each infected mob.
 		for (var/i in GLOB.mob_living_list)
 			var/mob/living/L = i
 			if(HAS_TRAIT(L, TRAIT_XENO_HOST))
-				var/obj/item/organ/internal/body_egg/alien_embryo/A = L.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo)
+				var/obj/item/organ/body_egg/alien_embryo/A = L.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo)
 				if(A)
 					var/I = image('icons/mob/nonhuman-player/alien.dmi', loc = L, icon_state = "infected[A.stage]")
 					client.images += I
@@ -139,21 +139,21 @@ Des: Removes all infected images from the alien.
 	)
 
 	new_xeno.setDir(dir)
-	new_xeno.change_name(name, real_name, numba)
+	new_xeno.change_name(name, real_name, identifier)
 
 	if(mind)
 		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)
 
-	var/obj/item/organ/internal/stomach/alien/melting_pot = get_organ_slot(ORGAN_SLOT_STOMACH)
-	var/obj/item/organ/internal/stomach/alien/frying_pan = new_xeno.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/alien/melting_pot = get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/alien/frying_pan = new_xeno.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(melting_pot) && istype(frying_pan))
 		for (var/atom/movable/poor_sod as anything in melting_pot.stomach_contents)
 			frying_pan.consume_thing(poor_sod)
 	qdel(src)
 
 /// Changes the name of the xeno we are evolving into in order to keep the same numerical identifier the old xeno had.
-/mob/living/carbon/alien/proc/change_name(old_name, old_real_name, old_number)
+/mob/living/carbon/alien/proc/change_name(old_name, old_real_name, old_identifier)
 	if(!alien_name_regex.Find(old_name)) // check to make sure there's no admins doing funny stuff with naming these aliens
 		name = old_name
 		real_name = old_real_name
@@ -162,8 +162,8 @@ Des: Removes all infected images from the alien.
 	if(!unique_name)
 		return
 
-	if(old_number != 0)
-		numba = old_number
+	if(old_identifier != 0)
+		identifier = old_identifier
 		name = initial(name) // prevent chicanery like two different numerical identifiers tied to the same mob
 
 	set_name()
