@@ -20,10 +20,9 @@
 		duration = set_duration
 	return ..()
 
-/datum/status_effect/incapacitating/on_apply()
+/datum/status_effect/incapacitating/post_apply()
 	if(needs_update_stat || issilicon(owner))
 		owner.update_stat()
-	return TRUE
 
 /datum/status_effect/incapacitating/on_remove()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates

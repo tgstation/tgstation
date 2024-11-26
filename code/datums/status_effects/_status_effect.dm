@@ -77,8 +77,12 @@
 				START_PROCESSING(SSprocessing, src)
 
 	update_particles()
+	post_apply()
 
 	return TRUE
+
+/datum/status_effect/proc/post_apply()
+	// For subtypes to override
 
 /datum/status_effect/Destroy()
 	switch(processing_speed)
