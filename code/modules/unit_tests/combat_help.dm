@@ -9,8 +9,8 @@
 
 	gets_the_help.forceMove(locate(helps_the_guy.x + 1, helps_the_guy.y, helps_the_guy.z))
 
-	RegisterSignal(helps_the_guy, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(helper_help_recieved))
-	RegisterSignal(gets_the_help, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(helpee_help_recieved))
+	RegisterSignal(helps_the_guy, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(helper_help_received))
+	RegisterSignal(gets_the_help, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(helpee_help_received))
 
 	// Click on self
 	click_wrapper(helps_the_guy, helps_the_guy)
@@ -24,10 +24,10 @@
 	TEST_ASSERT_EQUAL(helper_times_helped, 1, "Helper should not have been helped - helper clicked on helpee.")
 	TEST_ASSERT_EQUAL(helpee_times_helped, 1, "Helpee should have been helped once - helper clicked on helpee.")
 
-/datum/unit_test/help_click/proc/helper_help_recieved()
+/datum/unit_test/help_click/proc/helper_help_received()
 	SIGNAL_HANDLER
 	helper_times_helped += 1
 
-/datum/unit_test/help_click/proc/helpee_help_recieved()
+/datum/unit_test/help_click/proc/helpee_help_received()
 	SIGNAL_HANDLER
 	helpee_times_helped += 1
