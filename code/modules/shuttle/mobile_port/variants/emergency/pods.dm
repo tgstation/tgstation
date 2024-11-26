@@ -1,4 +1,4 @@
-// THIS FILE CONTAINS: Pod mobile/stationary docking port, pod control console, pod storage and pod itemsö
+// THIS FILE CONTAINS: Pod mobile/stationary docking port, pod control console, pod storage and pod items
 
 /obj/docking_port/mobile/pod
 	name = "escape pod"
