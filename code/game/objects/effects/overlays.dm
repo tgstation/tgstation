@@ -28,7 +28,7 @@
 	name = "thermite"
 	desc = "Looks hot."
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "2" //what?
+	icon_state = "medium" //what?
 	anchored = TRUE
 	plane = ABOVE_GAME_PLANE
 	layer = FLY_LAYER

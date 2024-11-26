@@ -1391,4 +1391,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Gives a little examine to their body that they can be revived with a soul
 #define TRAIT_GHOSTROLE_ON_REVIVE "ghostrole_on_revive"
 
+///Trait given to atoms currently affected by projectile dampeners
+#define TRAIT_GOT_DAMPENED "got_dampened"
+
 // END TRAIT DEFINES

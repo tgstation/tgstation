@@ -456,15 +456,16 @@
 		ui = new(user, src, "Aquarium", movable.name)
 		ui.open()
 
-/datum/component/aquarium/ui_data(atom/movable/source, mob/user)
+/datum/component/aquarium/ui_data(mob/user)
 	. = ..()
+	var/atom/movable/aquarium = parent
 	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
-	.["allowBreeding"] = HAS_TRAIT_FROM(source, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
+	.["allowBreeding"] = HAS_TRAIT_FROM(aquarium, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	.["fishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
 	.["propData"] = list()
-	for(var/atom/movable/item as anything in source.contents)
+	for(var/atom/movable/item as anything in aquarium.contents)
 		if(isfish(item))
 			var/obj/item/fish/fish = item
 			.["fishData"] += list(list(

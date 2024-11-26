@@ -341,8 +341,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	else
 		return ..()
 
-/obj/item/gibtonite/bullet_act(obj/projectile/P)
-	GibtoniteReaction(P.firer, "A projectile has primed for detonation a")
+/obj/item/gibtonite/bullet_act(obj/projectile/proj)
+	GibtoniteReaction(proj.firer, "A projectile has primed for detonation a")
 	return ..()
 
 /obj/item/gibtonite/ex_act()
