@@ -1184,7 +1184,7 @@
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-2 SECONDS * REM * seconds_per_tick)
 	holder.remove_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.

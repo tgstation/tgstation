@@ -1426,7 +1426,7 @@ Striking a noncultist, however, will tear their flesh."}
 					qdel(src)
 					return FALSE
 			var/obj/projectile/projectile = hitby
-			if(projectile.reflectable & REFLECT_NORMAL)
+			if(projectile.reflectable)
 				return FALSE //To avoid reflection chance double-dipping with block chance
 		. = ..()
 		if(.)

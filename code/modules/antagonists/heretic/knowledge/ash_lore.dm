@@ -163,6 +163,8 @@
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
 
 	ascension_achievement = /datum/award/achievement/misc/ash_ascension
+	announcement_text = "%SPOOKY% Fear the blaze, for the Ashlord, %NAME% has ascended! The flames shall consume all! %SPOOKY%"
+	announcement_sound = 'sound/music/antag/heretic/ascend_ash.ogg'
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(
 		TRAIT_BOMBIMMUNE,
@@ -187,13 +189,6 @@
 
 /datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = 'sound/music/antag/heretic/ascend_ash.ogg',
-		color_override = "pink",
-	)
-
 	var/datum/action/cooldown/spell/fire_sworn/circle_spell = new(user.mind)
 	circle_spell.Grant(user)
 
@@ -209,5 +204,4 @@
 	var/datum/action/cooldown/spell/aoe/fiery_rebirth/fiery_rebirth = locate() in user.actions
 	fiery_rebirth?.cooldown_time *= 0.16
 
-	if(length(traits_to_apply))
-		user.add_traits(traits_to_apply, MAGIC_TRAIT)
+	user.add_traits(traits_to_apply, type)

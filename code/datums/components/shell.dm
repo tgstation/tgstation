@@ -346,7 +346,11 @@
 	))
 	if(attached_circuit.loc == parent || (!QDELETED(attached_circuit) && attached_circuit.loc == null))
 		var/atom/parent_atom = parent
-		attached_circuit.forceMove(parent_atom.drop_location())
+		var/drop_location = parent_atom.drop_location()
+		if(drop_location)
+			attached_circuit.forceMove(drop_location)
+		else
+			attached_circuit.moveToNullspace()
 
 	for(var/obj/item/circuit_component/to_remove as anything in unremovable_circuit_components)
 		attached_circuit.remove_component(to_remove)

@@ -33,14 +33,14 @@
 	QDEL_NULL(fly)
 	return ..()
 
-/obj/item/organ/wings/functional/mob_insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/wings/functional/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 
 	if(QDELETED(fly))
 		fly = new
 	fly.Grant(receiver)
 
-/obj/item/organ/wings/functional/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/wings/functional/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	fly?.Remove(organ_owner)
 	if(wings_open)
