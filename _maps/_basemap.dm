@@ -11,7 +11,6 @@
 		#include "map_files\IceBoxStation\IceBoxStation.dmm"
 		#include "map_files\MetaStation\MetaStation.dmm"
 		#include "map_files\Mining\Lavaland.dmm"
-		#include "map_files\NorthStar\north_star.dmm"
 		#include "map_files\tramstation\tramstation.dmm"
 		#include "map_files\NebulaStation\NebulaStation.dmm"
 		#include "map_files\wawastation\wawastation.dmm"

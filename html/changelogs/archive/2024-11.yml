@@ -937,3 +937,28 @@
   - bugfix: Fix weather effects ignoring certain areas like space.
   - bugfix: Fix coffee maker items teleporting to AI/Cyborg locations
   - code_imp: Change some status effects to use SECONDS define.
+2024-11-26:
+  Ben10Omintrix:
+  - bugfix: raptors no longer break their trough upon interacting with it
+  - balance: removed the troublesome trait from raptors, they now wont go out to attack
+      their colleagues.
+  - rscadd: you can now give pet collars to ur raptors to rename them
+  Ghommie:
+  - bugfix: Fixed pixel position of fish overlays for aquariums.
+  - bugfix: The Aquarium ui won't show the user contents rather than that of the aquarium
+      itself
+  Hardly:
+  - bugfix: Ghosts can no longer emit spooky analyzing sounds when scanning
+  Isratosh:
+  - balance: Time-gated traitor uplink gear is returned to being hard reputation locked
+      with a static price.
+  OrionTheFox:
+  - qol: added an examine note to lighters showing their fuel
+  SmArtKar:
+  - code_imp: Projectile impacts no longer fetch mobs' armor values thrice
+  - code_imp: Converted pills and patches into interact_with_atom
+  - bugfix: Fixed a non-player facing runtime in portable atmos machinery code.
+  - bugfix: Ensures that if your brain is removed you die
+  - bugfix: Fixed a (non-player facing) runtime in organ manipulation surgery
+  grungussuss:
+  - rscdel: The northstar arcship has been removed. :(
