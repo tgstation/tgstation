@@ -48,7 +48,7 @@
 		/datum/pet_command/automate_mining,
 		/datum/pet_command/free/minebot,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack/minebot,
+		/datum/pet_command/attack/minebot,
 	)
 	///possible colors the bot can have
 	var/static/list/possible_colors= list(

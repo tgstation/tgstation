@@ -36,6 +36,7 @@
 	return TRUE
 
 /datum/keybinding/living/look_up/up(client/user)
+	. = ..()
 	var/mob/living/L = user.mob
 	L.end_look_up()
 	return TRUE
@@ -56,6 +57,7 @@
 	return TRUE
 
 /datum/keybinding/living/look_down/up(client/user)
+	. = ..()
 	var/mob/living/L = user.mob
 	L.end_look_down()
 	return TRUE
@@ -134,6 +136,7 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_move_intent/up(client/user)
+	. = ..()
 	var/mob/living/M = user.mob
 	M.toggle_move_intent()
 	return TRUE

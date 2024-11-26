@@ -41,8 +41,8 @@
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/attack,
+		/datum/pet_command/fetch,
 	)
 
 /mob/living/basic/mining/mook/Initialize(mapload)

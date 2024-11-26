@@ -111,8 +111,9 @@
 	required_distance = 0
 
 ///swirl around the owner in menacing fashion
-/datum/pet_command/point_targeting/attack/swirl
+/datum/pet_command/attack/swirl
 	command_name = "Swirl"
+	requires_pointing = TRUE
 	command_desc = "Your pets will swirl around you and attack whoever you point at!"
 	speech_commands = list("swirl", "spiral", "swarm")
 	pointed_reaction = null
@@ -121,7 +122,7 @@
 	///the owner we will swarm around
 	var/key_to_swarm = BB_SWARM_TARGET
 
-/datum/pet_command/point_targeting/attack/swirl/try_activate_command(mob/living/commander)
+/datum/pet_command/attack/swirl/try_activate_command(mob/living/commander, radial_command)
 	var/mob/living/living_pawn = weak_parent.resolve()
 	if(isnull(living_pawn))
 		return
@@ -132,7 +133,7 @@
 	controller.set_blackboard_key(key_to_swarm, commander)
 	return ..()
 
-/datum/pet_command/point_targeting/attack/swirl/execute_action(datum/ai_controller/controller)
+/datum/pet_command/attack/swirl/execute_action(datum/ai_controller/controller)
 	if(controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
 		return ..()
 	controller.queue_behavior(/datum/ai_behavior/swirl_around_target, BB_SWARM_TARGET)
@@ -184,7 +185,7 @@
 	radial_icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	radial_icon_state = "beebox"
 
-/datum/pet_command/beehive/try_activate_command(mob/living/commander)
+/datum/pet_command/beehive/try_activate_command(mob/living/commander, radial_command)
 	var/mob/living/living_pawn = weak_parent.resolve()
 	if(isnull(living_pawn))
 		return

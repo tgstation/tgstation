@@ -322,10 +322,10 @@
 	radial_icon_state = "mech_eject"
 	ability_key = BB_MINEBOT_DUMP_ABILITY
 
-/datum/pet_command/point_targeting/attack/minebot
+/datum/pet_command/attack/minebot
 	attack_behaviour = /datum/ai_behavior/basic_ranged_attack/minebot
 
-/datum/pet_command/point_targeting/attack/minebot/execute_action(datum/ai_controller/controller)
+/datum/pet_command/attack/minebot/execute_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_AUTOMATED_MINING, FALSE)
 	var/mob/living/living_pawn = controller.pawn
 	if(!living_pawn.combat_mode)

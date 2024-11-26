@@ -39,7 +39,7 @@
 	ability_key = BB_LEAPER_SUMMON
 	finish_planning = FALSE
 
-/datum/pet_command/point_targeting/use_ability/flop
+/datum/pet_command/use_ability/flop
 	command_name = "Flop"
 	command_desc = "Command your pet to belly flop your target!"
 	radial_icon = 'icons/mob/actions/actions_items.dmi'
@@ -47,7 +47,7 @@
 	speech_commands = list("flop", "crush")
 	pet_ability_key = BB_LEAPER_FLOP
 
-/datum/pet_command/point_targeting/use_ability/bubble
+/datum/pet_command/use_ability/bubble
 	command_name = "Poison Bubble"
 	command_desc = "Launch poisonous bubbles at your target!"
 	radial_icon = 'icons/obj/weapons/guns/projectiles.dmi'

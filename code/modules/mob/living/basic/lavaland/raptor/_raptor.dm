@@ -50,9 +50,9 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/attack,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/fetch,
 	)
 	///things we inherited from our parent
 	var/datum/raptor_inheritance/inherited_stats

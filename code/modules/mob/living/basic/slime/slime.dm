@@ -97,7 +97,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack/slime,
+		/datum/pet_command/attack/slime,
 	)
 
 	/// Our evolve action

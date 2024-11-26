@@ -119,12 +119,12 @@
  * # Pet Command: Attack
  * Tells a pet to chase and bite the next thing you point at
  */
-/datum/pet_command/point_targeting/attack
+/datum/pet_command/attack
 	command_name = "Attack"
 	command_desc = "Command your pet to attack things that you point out to it."
 	radial_icon = 'icons/effects/effects.dmi'
 	radial_icon_state = "bite"
-
+	requires_pointing = TRUE
 	callout_type = /datum/callout_option/attack
 	speech_commands = list("attack", "sic", "kill")
 	command_feedback = "growl"
@@ -135,7 +135,7 @@
 	var/attack_behaviour = /datum/ai_behavior/basic_melee_attack
 
 // Refuse to target things we can't target, chiefly other friends
-/datum/pet_command/point_targeting/attack/set_command_target(mob/living/parent, atom/target)
+/datum/pet_command/attack/set_command_target(mob/living/parent, atom/target)
 	if (!target)
 		return
 	var/mob/living/living_parent = parent
@@ -150,27 +150,28 @@
 	return ..()
 
 /// Display feedback about not targeting something
-/datum/pet_command/point_targeting/attack/proc/refuse_target(mob/living/parent, atom/target)
+/datum/pet_command/attack/proc/refuse_target(mob/living/parent, atom/target)
 	var/mob/living/living_parent = parent
 	living_parent.balloon_alert_to_viewers("[refuse_reaction]")
 	living_parent.visible_message(span_notice("[living_parent] refuses to attack [target]."))
 
-/datum/pet_command/point_targeting/attack/execute_action(datum/ai_controller/controller)
+/datum/pet_command/attack/execute_action(datum/ai_controller/controller)
 	controller.queue_behavior(attack_behaviour, BB_CURRENT_PET_TARGET, targeting_strategy_key)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /**
  * # Breed command. breed with a partner!
  */
-/datum/pet_command/point_targeting/breed
+/datum/pet_command/breed
 	command_name = "Breed"
 	command_desc = "Command your pet to attempt to breed with a partner."
 	radial_icon = 'icons/mob/simple/animal.dmi'
+	requires_pointing = TRUE
 	radial_icon_state = "heart"
 	speech_commands = list("breed", "consummate")
 	var/datum/ai_behavior/reproduce_behavior = /datum/ai_behavior/make_babies
 
-/datum/pet_command/point_targeting/breed/set_command_target(mob/living/parent, atom/target)
+/datum/pet_command/breed/set_command_target(mob/living/parent, atom/target)
 	if(isnull(target) || !isliving(target))
 		return
 	if(!HAS_TRAIT(parent, TRAIT_MOB_BREEDER) || !HAS_TRAIT(target, TRAIT_MOB_BREEDER))
@@ -184,7 +185,7 @@
 		return
 	return ..()
 
-/datum/pet_command/point_targeting/breed/execute_action(datum/ai_controller/controller)
+/datum/pet_command/breed/execute_action(datum/ai_controller/controller)
 	if(is_type_in_list(controller.blackboard[BB_CURRENT_PET_TARGET], controller.blackboard[BB_BABIES_PARTNER_TYPES]))
 		controller.queue_behavior(reproduce_behavior, BB_CURRENT_PET_TARGET)
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
@@ -194,11 +195,12 @@
  * # Pet Command: Targetted Ability
  * Tells a pet to use some kind of ability on the next thing you point at
  */
-/datum/pet_command/point_targeting/use_ability
+/datum/pet_command/use_ability
 	command_name = "Use ability"
 	command_desc = "Command your pet to use one of its special skills on something that you point out to it."
 	radial_icon = 'icons/mob/actions/actions_spells.dmi'
 	radial_icon_state = "projectile"
+	requires_pointing = TRUE
 	speech_commands = list("shoot", "blast", "cast")
 	command_feedback = "growl"
 	pointed_reaction = "and growls"
@@ -207,7 +209,7 @@
 	/// The AI behavior to use for the ability
 	var/ability_behavior = /datum/ai_behavior/pet_use_ability
 
-/datum/pet_command/point_targeting/use_ability/execute_action(datum/ai_controller/controller)
+/datum/pet_command/use_ability/execute_action(datum/ai_controller/controller)
 	if (!pet_ability_key)
 		return
 	var/datum/action/cooldown/using_action = controller.blackboard[pet_ability_key]
@@ -278,15 +280,16 @@
 /**
  * # Fish command: command the mob to fish at the next fishing spot you point at. Requires the profound fisher component
  */
-/datum/pet_command/point_targeting/fish
+/datum/pet_command/fish
 	command_name = "Fish"
 	command_desc = "Command your pet to try fishing at a nearby fishing spot."
 	radial_icon = 'icons/obj/aquarium/fish.dmi'
+	requires_pointing = TRUE
 	radial_icon_state = "goldfish"
 	speech_commands = list("fish")
 
 // Refuse to target things we can't target, chiefly other friends
-/datum/pet_command/point_targeting/fish/set_command_target(mob/living/parent, atom/target)
+/datum/pet_command/fish/set_command_target(mob/living/parent, atom/target)
 	if (!target)
 		return
 	if(!parent.ai_controller || !HAS_TRAIT(parent, TRAIT_PROFOUND_FISHER))
@@ -297,6 +300,6 @@
 		return
 	return ..()
 
-/datum/pet_command/point_targeting/fish/execute_action(datum/ai_controller/controller)
+/datum/pet_command/fish/execute_action(datum/ai_controller/controller)
 	controller.queue_behavior(/datum/ai_behavior/hunt_target/interact_with_target/reset_target_combat_mode_off, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING

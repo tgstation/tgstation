@@ -1,6 +1,3 @@
-#define NEXT_PAGE_ID "__next__"
-#define DEFAULT_CHECK_DELAY 20
-
 GLOBAL_LIST_EMPTY(radial_menus)
 
 /atom/movable/screen/radial
@@ -113,7 +110,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 	var/hudfix_method = TRUE //TRUE to change anchor to user, FALSE to shift by py_shift
 	var/py_shift = 0
-	var/entry_animation = TRUE
+	var/button_animation_flags = BUTTON_SLIDE_IN
 
 	///A replacement icon state for the generic radial slice bg icon. Doesn't affect the next page nor the center buttons
 	var/radial_slice_icon
@@ -163,6 +160,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			var/atom/movable/screen/radial/slice/new_element = new /atom/movable/screen/radial/slice
 			new_element.tooltips = use_tooltips
 			new_element.set_parent(src)
+			if(button_animation_flags & BUTTON_FADE_IN)
+				new_element.alpha = 0
 			elements += new_element
 
 	var/page = 1
@@ -186,42 +185,51 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	page_data[page] = current
 	pages = page
 	current_page = clamp(set_page, 1, pages)
-	update_screen_objects(entry_animation, click_on_hover)
+	update_screen_objects(button_animation_flags, click_on_hover)
 
-/datum/radial_menu/proc/update_screen_objects(anim = FALSE, click_on_hover = FALSE)
+/datum/radial_menu/proc/update_screen_objects(anim_flag = NONE, click_on_hover = FALSE)
 	var/list/page_choices = page_data[current_page]
 	var/angle_per_element = round(zone / page_choices.len)
 	for(var/i in 1 to elements.len)
 		var/atom/movable/screen/radial/element = elements[i]
 		var/angle = WRAP(starting_angle + (i - 1) * angle_per_element,0,360)
 		if(i > page_choices.len)
-			HideElement(element)
+			HideElement(element, anim_flag = anim_flag)
 			element.click_on_hover = FALSE
 		else
-			SetElement(element,page_choices[i],angle,anim = anim,anim_order = i)
+			SetElement(element,page_choices[i],angle,anim_flag = anim_flag,anim_order = i)
 			// Only activate click on hover after the animation plays
 			if (!click_on_hover)
 				continue
-			if (anim)
+			if (anim_flag)
 				addtimer(VARSET_CALLBACK(element, click_on_hover, TRUE), i * 0.5)
 			else
 				element.click_on_hover = TRUE
 
-/datum/radial_menu/proc/HideElement(atom/movable/screen/radial/slice/E)
+/datum/radial_menu/proc/HideElement(atom/movable/screen/radial/slice/E, anim_flag = BUTTON_FADE_OUT)
+	if(anim_flag & BUTTON_FADE_OUT)
+		animate(E, alpha = 0, time = 0.5 SECONDS, easing = EASE_OUT)
+		addtimer(CALLBACK(src, PROC_REF(reset_element)), 0.5 SECONDS)
+		return
+	E.alpha = 0
+	reset_element(E)
+
+/datum/radial_menu/proc/reset_element(atom/movable/screen/radial/slice/E)
+	if(isnull(E))
+		return
 	E.cut_overlays()
 	E.vis_contents.Cut()
-	E.alpha = 0
 	E.name = "None"
 	E.maptext = null
 	E.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	E.choice = null
 	E.next_page = FALSE
 
-/datum/radial_menu/proc/SetElement(atom/movable/screen/radial/slice/E,choice_id,angle,anim,anim_order)
+/datum/radial_menu/proc/SetElement(atom/movable/screen/radial/slice/E, choice_id, angle, anim_flag, anim_order)
 	//Position
 	var/py = round(cos(angle) * radius) + py_shift
 	var/px = round(sin(angle) * radius)
-	if(anim)
+	if(anim_flag & BUTTON_SLIDE_IN)
 		var/timing = anim_order * 0.5
 		var/matrix/starting = matrix()
 		starting.Scale(0.1,0.1)
@@ -232,8 +240,11 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		E.pixel_y = py
 		E.pixel_x = px
 
-	//Visuals
-	E.alpha = 255
+	if(anim_flag & BUTTON_FADE_IN)
+		animate(E, alpha = 255, time = 0.5 SECONDS, easing = EASE_OUT)
+	else
+		E.alpha = 255
+
 	E.mouse_opacity = MOUSE_OPACITY_ICON
 	E.cut_overlays()
 	E.vis_contents.Cut()
@@ -329,6 +340,10 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	menu_holder.appearance_flags |= KEEP_APART|RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	menu_holder.vis_contents += elements + close_button
 	current_user.images += menu_holder
+	if(!(button_animation_flags & BUTTON_FADE_IN))
+		return
+	for(var/atom/movable/element as anything in elements)
+		animate(element, alpha = 255, time = 1.5 SECONDS)
 
 /datum/radial_menu/proc/hide()
 	if(current_user)
@@ -356,11 +371,11 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice", autopick_single_option = TRUE, entry_animation = TRUE, click_on_hover = FALSE, user_space = FALSE)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice", autopick_single_option = TRUE, button_animation_flags = BUTTON_SLIDE_IN, click_on_hover = FALSE, user_space = FALSE)
 	if(!user || !anchor || !length(choices))
 		return
 
-	if(length(choices)==1 && autopick_single_option)
+	if(length(choices) == 1 && autopick_single_option)
 		return choices[1]
 
 	if(!uniqueid)
@@ -373,7 +388,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		return
 
 	var/datum/radial_menu/menu = new
-	menu.entry_animation = entry_animation
+	menu.button_animation_flags = button_animation_flags
 	GLOB.radial_menus[uniqueid] = menu
 	if(radius)
 		menu.radius = radius

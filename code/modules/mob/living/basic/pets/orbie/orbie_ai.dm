@@ -123,7 +123,7 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 	return ..()
 
-/datum/pet_command/point_targeting/use_ability/take_photo
+/datum/pet_command/use_ability/take_photo
 	command_name = "Photo"
 	command_desc = "Make your pet take a photo!"
 	radial_icon = 'icons/mob/simple/pets.dmi'
@@ -133,7 +133,7 @@
 	pet_ability_key = BB_PHOTO_ABILITY
 	targeting_strategy_key = BB_TARGETING_STRATEGY
 
-/datum/pet_command/point_targeting/use_ability/take_photo/execute_action(datum/ai_controller/controller)
+/datum/pet_command/use_ability/take_photo/execute_action(datum/ai_controller/controller)
 	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 3)
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 		return SUBTREE_RETURN_FINISH_PLANNING

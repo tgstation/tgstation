@@ -44,9 +44,9 @@
 		/datum/pet_command/follow,
 		/datum/pet_command/untargeted_ability/blood_rain,
 		/datum/pet_command/untargeted_ability/summon_toad,
-		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/use_ability/flop,
-		/datum/pet_command/point_targeting/use_ability/bubble,
+		/datum/pet_command/attack,
+		/datum/pet_command/use_ability/flop,
+		/datum/pet_command/use_ability/bubble,
 	)
 
 /mob/living/basic/leaper/Initialize(mapload)
