@@ -212,3 +212,8 @@
 	var/position_a = fluids_priority.Find(initial(a.required_fluid_type))
 	var/position_b = fluids_priority.Find(initial(b.required_fluid_type))
 	return cmp_numeric_asc(position_a, position_b) || cmp_text_asc(initial(b.name), initial(a.name))
+
+///Sorts stock parts based on tier
+/proc/cmp_rped_sort(obj/item/first_item, obj/item/second_item)
+	///even though stacks aren't stock parts, get_part_rating() is defined on the item level (see /obj/item/proc/get_part_rating()) and defaults to returning 0.
+	return second_item.get_part_rating() - first_item.get_part_rating()
