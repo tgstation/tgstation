@@ -7,11 +7,15 @@
 	density = TRUE
 	max_integrity = 400
 	integrity_failure = 0.33
-	light_power = 0.5
-	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+
+	// circuit = /obj/item/circuitboard/machine/ore_redemption
 
 	/// List of all mail that's inside the mailbox.
 	var/list/mail_list = list()
+	/// The direction in which the mail will be unloaded
+	var/output_dir = SOUTH
+	/// The turf to unload mail at
+	var/turf/unload_turf = null
 	/// List of the departments to sort the mail for.
 	var/list/sorting_departments = list(
 		"Engineering" =  DEPARTMENT_ENGINEERING,
@@ -25,6 +29,40 @@
 
 	req_access = list(ACCESS_CARGO)
 
+/obj/machinery/mailbox/screwdriver_act(mob/living/user, obj/item/tool)
+	default_deconstruction_screwdriver(user, "engi", "engi", tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/mailbox/Initialize(mapload)
+	. = ..()
+	unload_turf = get_step(src, output_dir)
+
+/obj/machinery/mailbox/examine(mob/user)
+	. = ..()
+	. += span_notice("There [length(mail_list) >= 2 ? "are" : "is"] <b>[length(mail_list) ? length(mail_list) : "no"]</b> [length(mail_list) == 1 ? "envelope" : "envelopes"] inside.")
+	if(panel_open)
+		. += span_notice("Alt-click to rotate the output direction.")
+
+// /obj/machinery/mailbox/obj_break(damage_flag)
+// 	. = ..()
+// 	if(!.)
+// 		return
+// 	drop_all_mail()
+
+/obj/machinery/mailbox/Destroy()
+	drop_all_mail()
+	. = ..()
+
+/obj/machinery/mailbox/proc/drop_all_mail(damage_flag)
+	if(!isturf(get_turf(src)))
+		for(var/obj/item/mail in mail_list)
+			qdel(mail)
+		return
+	var/turf/dropturf = unload_turf
+	for(var/obj/item/mail in mail_list)
+		mail.forceMove(dropturf)
+		mail_list -= mail
+
 /obj/machinery/mailbox/proc/accept_check(obj/item/weapon)
 	var/static/list/accepted_items = list(
 		/obj/item/mail,
@@ -36,9 +74,6 @@
 	)
 	return is_type_in_list(weapon, accepted_items)
 
-/obj/machinery/mailbox/Destroy()
-	drop_all_mail()
-	. = ..()
 /obj/machinery/mailbox/proc/sort_delay()
 	playsound(src, 'sound/machines/mail/mail_sort1.ogg', 20, TRUE)
 	sleep(50)
@@ -107,18 +142,13 @@
 	say("[sorted] envelope\s sorted successfully.")
 	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
 	for (var/obj/item/mail/mail_in_list in sorted_mail)
-		mail_in_list.forceMove(get_turf(src))
+		mail_in_list.forceMove(unload_turf)
 		sorted_mail -= mail_in_list
 		mail_list -= mail_in_list
 	to_chat(usr, span_notice("[src] reluctantly spits out [length(sorted_mail)] envelope\s."))
 	sleep(10)
 	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 	say("Couldn't sort [unable_to_sort] envelope\s.")
-
-
-/obj/machinery/mailbox/examine(mob/user)
-	. = ..()
-	. += span_notice("There [length(mail_list) >= 2 ? "are" : "is"] <b>[length(mail_list) ? length(mail_list) : "no"]</b> [length(mail_list) == 1 ? "envelope" : "envelopes"] inside.")
 
 /obj/machinery/mailbox/attackby(obj/item/I, /mob/user, params)
 	var/mob/user = usr
@@ -149,19 +179,7 @@
 		I.forceMove(src)
 		mail_list += I
 		to_chat(user, span_notice("The [src] whizzles as it accepts the [I]."))
-	else
-		sort_mail(usr)
 	. = ..()
-
-/obj/machinery/mailbox/proc/drop_all_mail(damage_flag)
-	if(!isturf(get_turf(src)))
-		for(var/obj/item/mail in mail_list)
-			qdel(mail)
-		return
-	var/turf/dropturf = get_turf(src)
-	for(var/obj/item/mail in mail_list)
-		mail.forceMove(dropturf)
-		mail_list -= mail
 
 /obj/machinery/mailbox/proc/pick_mail(usr)
 	if(!length(mail_list))
@@ -188,6 +206,42 @@
 			weapon.forceMove(src)
 			return TRUE
 
+/obj/machinery/mailbox/click_alt(mob/living/user)
+	if(!panel_open)
+		return CLICK_ACTION_BLOCKING
+	output_dir = turn(output_dir, -90)
+	to_chat(user, span_notice("You change [src]'s I/O settings, setting the output to [dir2text(output_dir)]."))
+	unload_turf = get_step(src, output_dir)
+	update_appearance(UPDATE_OVERLAYS)
+	return CLICK_ACTION_SUCCESS
+
+
+/obj/machinery/mailbox/update_overlays()
+	. = ..()
+	if((machine_stat & NOPOWER))
+		return
+	var/image/mail_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[output_dir]")
+
+	switch(output_dir)
+		if(NORTH)
+			mail_output.pixel_y = 32
+		if(SOUTH)
+			mail_output.pixel_y = -32
+		if(EAST)
+			mail_output.pixel_x = 32
+		if(WEST)
+			mail_output.pixel_x = -32
+
+	mail_output.color = COLOR_MODERATE_BLUE
+	var/mutable_appearance/light_out = emissive_appearance(mail_output.icon, mail_output.icon_state, offset_spokesman = src, alpha = mail_output.alpha)
+	light_out.pixel_y = mail_output.pixel_y
+	light_out.pixel_x = mail_output.pixel_x
+	. += mail_output
+	. += light_out
+
+
+
+
 // /obj/machinery/mailmat/update_appearance(updates=ALL)
 // 	. = ..()
 // 	if(machine_stat & BROKEN)
@@ -202,8 +256,4 @@
 // 	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
 // 	return ..()
 
-// /obj/machinery/mailmat/obj_break(damage_flag)
-// 	. = ..()
-// 	if(!.)
-// 		return
-// 	drop_all_mails()
+
