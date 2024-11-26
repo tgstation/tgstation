@@ -208,10 +208,10 @@
 			to_chat(user, span_warning("The [ciggie.name] is already lit!"))
 			return TRUE
 		var/clumsy_modifier = HAS_TRAIT(user, TRAIT_CLUMSY) ? 2 : 1
-		if(prob(25 * clumsy_modifier ))
+		if(prob(25 * clumsy_modifier) && isliving(user))
 			ciggie.light(span_warning("[user] expertly dips \the [ciggie.name] into [src], along with the rest of [user.p_their()] arm. What a dumbass."))
-			var/obj/item/bodypart/affecting = user.get_active_hand()
-			affecting?.receive_damage(burn = 90)
+			var/mob/living/burned_guy = user
+			burned_guy.apply_damage(90, BURN, user.get_active_hand())
 		else
 			ciggie.light(span_rose("[user] expertly dips \the [ciggie.name] into [src], lighting it with the scorching heat of the planet. Witnessing such a feat is almost enough to make you cry."))
 		return TRUE

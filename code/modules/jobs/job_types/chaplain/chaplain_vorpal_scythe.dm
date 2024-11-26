@@ -19,14 +19,12 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	var/obj/item/vorpalscythe/scythe = active_item
 	if(!scythe)
 		return FALSE
-
-	var/obj/item/bodypart/part = hand
-	if(isnull(part) || scythe.empowerment >= SCYTHE_SATED)
+	if(scythe.empowerment >= SCYTHE_SATED)
 		return ..()
 
 	to_chat(owner, span_userdanger("[scythe] tears into you for your unworthy display of arrogance!"))
 	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
-	part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
+	owner.apply_damage(25, BRUTE, hand, wound_bonus = 10, sharpness = SHARP_EDGED)
 	return ..()
 
 /obj/item/vorpalscythe
