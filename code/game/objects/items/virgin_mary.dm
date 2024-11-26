@@ -1,7 +1,7 @@
 /obj/item/virgin_mary
 	name = "\proper a picture of the virgin mary"
 	desc = "A small, cheap icon depicting the virgin mother."
-	icon = 'icons/obj/blackmarket.dmi'
+	icon = 'icons/obj/devices/blackmarket.dmi'
 	icon_state = "madonna"
 	resistance_flags = FLAMMABLE
 	///Has this item been used already.

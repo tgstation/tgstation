@@ -18,7 +18,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	obj_damage = 50
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/paper_wizard
 	///spell to summon minions
 	var/datum/action/cooldown/spell/conjure/wizard_summon_minions/summon
@@ -161,8 +161,8 @@
 /obj/effect/temp_visual/paperwiz_dying/Initialize(mapload)
 	. = ..()
 	visible_message(span_boldannounce("The wizard cries out in pain as a gate appears behind him, sucking him in!"))
-	playsound(get_turf(src), 'sound/magic/mandswap.ogg', 50, vary = TRUE, pressure_affected = TRUE)
-	playsound(get_turf(src), 'sound/hallucinations/wail.ogg', 50, vary = TRUE, pressure_affected = TRUE)
+	playsound(get_turf(src), 'sound/effects/magic/mandswap.ogg', 50, vary = TRUE, pressure_affected = TRUE)
+	playsound(get_turf(src), 'sound/effects/hallucinations/wail.ogg', 50, vary = TRUE, pressure_affected = TRUE)
 	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_delete))
 
 /obj/effect/temp_visual/paperwiz_dying/proc/on_delete()
@@ -171,7 +171,7 @@
 	for(var/mob/nearby in range(7, src))
 		shake_camera(nearby, duration = 7 SECONDS, strength = 1)
 	var/turf/current_turf = get_turf(src)
-	playsound(current_turf,'sound/magic/summon_magic.ogg', 50, vary = TRUE, vary = TRUE)
+	playsound(current_turf,'sound/effects/magic/summon_magic.ogg', 50, vary = TRUE, vary = TRUE)
 	new /obj/effect/temp_visual/paper_scatter(current_turf)
 	new /obj/item/clothing/suit/wizrobe/paper(current_turf)
 	new /obj/item/clothing/head/collectable/paper(current_turf)

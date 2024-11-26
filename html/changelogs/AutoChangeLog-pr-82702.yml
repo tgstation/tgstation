@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "plumbing machinery begins processing only when wrenched & ends when unwrenched"
-  - bugfix: "plumbing machinery uses energy only when wrenched & doing work, will stop/use less energy when idle"
-  - bugfix: "plumbing grinder chemical will grinds & juice stuff correctly i.e. prefer grinding over juicing for most stuff"

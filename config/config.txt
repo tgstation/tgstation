@@ -8,6 +8,7 @@ $include resources.txt
 $include interviews.txt
 $include lua.txt
 $include auxtools.txt
+$include map_vote.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -143,16 +144,26 @@ GUEST_BAN
 
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net
-## Rating to warn at: (0.9 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
-#IPINTEL_RATING_BAD 0.9
+## Rating to warn at: (0.8 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
+#IPINTEL_RATING_BAD 0.8
 ## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
 #IPINTEL_EMAIL ch@nge.me
-## How long to save good matches (ipintel rate limits to 15 per minute and 500 per day. so this shouldn't be too low, getipintel.net suggests 6 hours, time is in hours) (Your ip will get banned if you go over 500 a day too many times)
-#IPINTEL_SAVE_GOOD 12
-## How long to save bad matches (these numbers can change as ips change hands, best not to save these for too long in case somebody gets a new ip used by a spammer/proxy before.)
-#IPINTEL_SAVE_BAD 3
-## Domain name to query (leave commented out for the default, only needed if you pay getipintel.net for more querys)
-#IPINTEL_DOMAIN check.getipintel.net
+## Query base, if you pay for more queries this is what you want to change.
+#IPINTEL_BASE check.getipintel.net
+## Maximum number of queries in a minute
+#IPINTEL_MAX_QUERY_MINUTE 15
+## Maximum number of queries in a day
+#IPINTEL_MAX_QUERY_DAY 500
+## Whether clients which cannot be checked due to a rate limit will be denied
+#IPINTEL_REJECT_RATE_LIMITED
+## Whether clients which are flagged as a VPN will be denied
+IPINTEL_REJECT_BAD
+## Whether clients which cannot be checked due to an error of some form will be denied
+#IPINTEL_REJECT_UNKNOWN
+## How long to store results in the cache before they must be retrieved again. IN DAYS.
+#IPINTEL_CACHE_LENGTH 7
+## How many minutes of living playtime to be automatically exempt from IPIntel. 0 for never.
+#IPINTEL_EXEMPT_PLAYTIME_LIVING 0
 
 ## Uncomment to allow web client connections
 #ALLOW_WEBCLIENT
@@ -198,19 +209,19 @@ GUEST_BAN
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
 
-## System command that invokes youtube-dl, used by Play Internet Sound.
-## You can install youtube-dl with
-## "pip install youtube-dl" if you have pip installed
-## from https://github.com/rg3/youtube-dl/releases
+## System command that invokes yt-dlp, used by Play Internet Sound.
+## You can install yt-dlp with
+## "pip install yt-dlp" if you have pip installed
+## from https://github.com/yt-dlp/yt-dlp/releases
 ## or your package manager
-## The default value assumes youtube-dl is in your system PATH
-# INVOKE_YOUTUBEDL youtube-dl
+## The default value assumes yt-dlp is in your system PATH
+# INVOKE_YOUTUBEDL yt-dlp
 
 ## Comment this out to disable users ability to use the request internet sounds to be played.
 REQUEST_INTERNET_SOUND
 
 ## Request Internet Sound Allowed URL'S comma separated, urls here are the only sites allowed through Request Internet Sound, Add more to allow more, or remove to disallow.
-## The Defaults here are all supported by youtube-dl
+## The Defaults here are all supported by yt-dlp
 ## Ensure . and / are escaped with \
 REQUEST_INTERNET_ALLOWED youtube\.com\/watch?v=,youtu\.be\/,soundcloud\.com\/,bandcamp\.com\/track\/
 
@@ -220,6 +231,8 @@ REQUEST_INTERNET_ALLOWED youtube\.com\/watch?v=,youtu\.be\/,soundcloud\.com\/,ba
 ## Jobs have specific "keys" tied to their in-game datums, those should sync up otherwise it will fail to load.
 ## Setting Total/Spawn Positions to -1 will open unlimited join slots for it.
 ## Playtime Requirements is in minutes, Required Account Age is in days.
+## Human Authority Whitelist Setting can either be 0 or 1.
+## Make sure to read the start of the file to get a more in-depth explanation of what each entry does!
 #LOAD_JOBS_FROM_TXT
 
 ## Uncomment this to forbid admins from possessing the singularity.
@@ -259,7 +272,7 @@ NOTE_FRESH_DAYS 91.31055
 ## Notes older then this will be completely faded out.
 NOTE_STALE_DAYS 365.2422
 
-## Uncomment to allow drastic performence enhancemet measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
+## Uncomment to allow drastic performance enhancement measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
 #AUTO_LAG_SWITCH_POP 75
 
 ##Note: all population caps can be used with each other if desired.
@@ -286,7 +299,7 @@ EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, f
 BYOND_MEMBER_BYPASS_POPCAP
 
 ## Notify admins when a new player connects for the first x days a player's been around. (0 for first connection only, -1 for never)
-##	Requres database
+##	Requires database
 NOTIFY_NEW_PLAYER_AGE 0
 
 ## Notify admins when a player connects if their byond account was created in the last X days
@@ -294,7 +307,7 @@ NOTIFY_NEW_PLAYER_AGE 0
 NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 
 ## Notify the irc channel when a new player makes their first connection
-##	Requres database
+##	Requires database
 #IRC_FIRST_CONNECTION_ALERT
 
 ## Discord ID of a role that should be pinged when a new player makes their first connection
@@ -368,14 +381,14 @@ AUTOADMIN_RANK Game Master
 ## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
 ## These messages will be followed by one stating the clients current version and the required version for clarity.
 ## If CLIENT_WARN_POPUP is uncommented a popup window with the message will be displayed instead
-#CLIENT_WARN_VERSION 511
-#CLIENT_WARN_BUILD 1421
+#CLIENT_WARN_VERSION 515
+#CLIENT_WARN_BUILD 1635
 #CLIENT_WARN_POPUP
-#CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
-CLIENT_ERROR_VERSION 511
+#CLIENT_WARN_MESSAGE Byond released 515 as the stable release. This comes bundled with a host of niceties, including image generation for UIs and :: operators.
+CLIENT_ERROR_VERSION 515
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
-## The minimum build needed for joining the server, if using 512, a good minimum build would be 1421 as that disables the Middle Mouse Button exploit.
-CLIENT_ERROR_BUILD 1421
+## The minimum build needed for joining the server.
+CLIENT_ERROR_BUILD 1590
 
 ## TOPIC RATE LIMITING
 ## This allows you to limit how many topic calls (clicking on an interface window) the client can do in any given game second and/or game minute.
@@ -398,13 +411,13 @@ SECOND_CLICK_LIMIT 15
 MINUTE_CLICK_LIMIT 400
 
 ##Error handling related options
-## The "cooldown" time for each occurence of a unique error
+## The "cooldown" time for each occurrence of a unique error
 #ERROR_COOLDOWN 600
-## How many occurences before the next will silence them
+## How many occurrences before the next will silence them
 #ERROR_LIMIT 90
 ## How long a unique error will be silenced for
 #ERROR_SILENCE_TIME 6000
-##How long to wait between messaging admins about occurences of a unique error
+##How long to wait between messaging admins about occurrences of a unique error
 #ERROR_MSG_DELAY 50
 
 
@@ -471,6 +484,9 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
+
+## Determines the interval between each saved profiler snapshot (in deciseconds).
+#PROFILER_INTERVAL 3000
 
 ## Threshold (in deciseconds) for real time between ticks before we start dumping profiles
 DRIFT_DUMP_THRESHOLD 40
@@ -593,3 +609,9 @@ UPLOAD_LIMIT 524288
 
 ## Restricts admin client uploads to the server, defined in bytes, default is 5MB
 UPLOAD_LIMIT_ADMIN 5242880
+
+## Uncomment to allow admins with +DEBUG to start the byond-tracy profiler during the round.
+#ALLOW_TRACY_START
+
+## Uncomment to allow admins with +DEBUG to queue the next round to run the byond-tracy profiler.
+#ALLOW_TRACY_QUEUE

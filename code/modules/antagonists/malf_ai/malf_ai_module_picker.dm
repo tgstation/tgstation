@@ -24,7 +24,7 @@
 		filtered_modules[AM.category][AM] = AM
 
 	for(var/category in filtered_modules)
-		filtered_modules[category] = sortTim(filtered_modules[category], GLOBAL_PROC_REF(cmp_malfmodules_priority))
+		sortTim(filtered_modules[category], GLOBAL_PROC_REF(cmp_malfmodules_priority))
 
 	return filtered_modules
 
@@ -62,7 +62,7 @@
 
 	return data
 
-/datum/module_picker/ui_act(action, list/params)
+/datum/module_picker/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

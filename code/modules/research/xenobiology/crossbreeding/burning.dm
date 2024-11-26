@@ -19,8 +19,8 @@ Burning extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
-	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
-	playsound(src, 'sound/magic/fireball.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/fireball.ogg', 50, TRUE)
 	do_effect(user)
 
 /obj/item/slimecross/burning/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -93,7 +93,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
 	user.visible_message(span_danger("[src] explodes into an electrical field!"))
-	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, TRUE)
+	playsound(get_turf(src), 'sound/items/weapons/zapbang.ogg', 50, TRUE)
 	for(var/mob/living/M in range(4,get_turf(user)))
 		if(M != user)
 			var/mob/living/carbon/C = M
@@ -211,9 +211,6 @@ Burning extracts:
 	effect_desc = "The user gets a dull arm blade in the hand it is used in."
 
 /obj/item/slimecross/burning/green/do_effect(mob/user)
-	var/which_hand = "l_hand"
-	if(!(user.active_hand_index % 2))
-		which_hand = "r_hand"
 	var/mob/living/L = user
 	if(!istype(user))
 		return
@@ -226,7 +223,7 @@ Burning extracts:
 	else
 		user.visible_message(span_danger("[src] sublimates the flesh around [user]'s arm, transforming the bone into a gruesome blade!"))
 	user.emote("scream")
-	L.apply_damage(30,BURN,which_hand)
+	L.apply_damage(30, BURN, L.get_active_hand())
 	..()
 
 /obj/item/slimecross/burning/pink
@@ -263,7 +260,7 @@ Burning extracts:
 /// Inflicts a blastwave upon every mob within a small radius.
 /obj/item/slimecross/burning/oil/proc/boom()
 	var/turf/T = get_turf(src)
-	playsound(T, 'sound/effects/explosion2.ogg', 200, TRUE)
+	playsound(T, 'sound/effects/explosion/explosion2.ogg', 200, TRUE)
 	for(var/mob/living/target in range(2, T))
 		new /obj/effect/temp_visual/explosion(get_turf(target))
 		SSexplosions.med_mov_atom += target

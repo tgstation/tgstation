@@ -1,5 +1,4 @@
 import { BooleanLike, classes } from 'common/react';
-import { multiline } from 'common/string';
 import { capitalizeAll } from 'common/string';
 import { useState } from 'react';
 
@@ -347,11 +346,10 @@ export const SmartPipeBlockSection = (props) => {
                 color="transparent"
                 icon="info"
                 tooltipPosition="right"
-                tooltip={multiline`
-                This is a panel for blocking certain connection
+                tooltip="This is a panel for blocking certain connection
                 directions for the smart pipes.
                 The button in the center resets to
-                default (all directions can connect)`}
+                default (all directions can connect)"
               />
             </Stack.Item>
             <Stack.Item>

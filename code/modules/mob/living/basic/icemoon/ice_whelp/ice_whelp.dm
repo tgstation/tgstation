@@ -26,9 +26,9 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	death_message = "collapses on its side."
-	death_sound = 'sound/magic/demon_dies.ogg'
+	death_sound = 'sound/effects/magic/demon_dies.ogg'
 
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
@@ -45,8 +45,6 @@
 	AddComponent(/datum/component/basic_mob_ability_telegraph)
 	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
 
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
-
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/fire_breath/ice = BB_WHELP_STRAIGHTLINE_FIRE,
 		/datum/action/cooldown/mob_cooldown/fire_breath/ice/cross = BB_WHELP_WIDESPREAD_FIRE,
@@ -55,22 +53,24 @@
 	grant_actions_by_list(innate_actions)
 
 
-/mob/living/basic/mining/ice_whelp/proc/pre_attack(mob/living/sculptor, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/mining/ice_whelp/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(istype(target, /obj/structure/flora/rock/icy))
-		INVOKE_ASYNC(src, PROC_REF(create_sculpture), target)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		create_sculpture(target)
+		return FALSE
 
-	if(!istype(target, src.type))
-		return
+	if(!istype(target, type))
+		return TRUE
 
 	var/mob/living/victim = target
 	if(victim.stat != DEAD)
-		return
+		return TRUE
 
-	INVOKE_ASYNC(src, PROC_REF(cannibalize_victim), victim)
-	return COMPONENT_HOSTILE_NO_ATTACK
+	cannibalize_victim(victim)
+	return FALSE
 
 /// Carve a stone into a beautiful self-portrait
 /mob/living/basic/mining/ice_whelp/proc/create_sculpture(atom/target)

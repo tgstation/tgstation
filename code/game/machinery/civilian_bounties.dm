@@ -76,11 +76,11 @@
 		return FALSE
 	if(!inserted_scan_id)
 		status_report = "Please insert your ID first."
-		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 		return FALSE
 	if(!inserted_scan_id.registered_account.civilian_bounty)
 		status_report = "Please accept a new civilian bounty first."
-		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 		return FALSE
 	status_report = "Civilian Bounty: "
 	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
@@ -89,13 +89,13 @@
 			continue
 		if(inserted_scan_id.registered_account.civilian_bounty.applies_to(AM))
 			status_report += "Target Applicable."
-			playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
+			playsound(loc, 'sound/machines/synth/synth_yes.ogg', 30 , TRUE)
 			return
 	status_report += "Not Applicable."
-	playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+	playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 
 /**
- * This fully rewrites base behavior in order to only check for bounty objects, and nothing else.
+ * This fully rewrites base behavior in order to only check for bounty objects, and no other types of objects like pirate-pads do.
  */
 /obj/machinery/computer/piratepad_control/civilian/send()
 	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
@@ -125,6 +125,7 @@
 	if(curr_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
 		status_report += "Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
+		SSblackbox.record_feedback("tally", "bounties_completed", 1, curr_bounty.type)
 		inserted_scan_id.registered_account.reset_bounty()
 		SSeconomy.civ_bounty_tracker++
 
@@ -134,7 +135,7 @@
 	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
-	playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
+	playsound(loc, 'sound/machines/synth/synth_yes.ogg', 30 , TRUE)
 	sending = FALSE
 
 ///Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
@@ -150,17 +151,24 @@
 		say("Requesting ID card has no job assignment registered!")
 		return FALSE
 	var/list/datum/bounty/crumbs = list(random_bounty(pot_acc.account_job.bounty_types), // We want to offer 2 bounties from their appropriate job catagories
-										random_bounty(pot_acc.account_job.bounty_types), // and 1 guarenteed assistant bounty if the other 2 suck.
+										random_bounty(pot_acc.account_job.bounty_types), // and 1 guaranteed assistant bounty if the other 2 suck.
 										random_bounty(CIV_JOB_BASIC))
 	COOLDOWN_START(pot_acc, bounty_timer, (5 MINUTES) - cooldown_reduction)
 	pot_acc.bounties = crumbs
 
-/obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(choice)
+/**
+ * Proc that assigned a civilian bounty to an ID card, from the list of potential bounties that that bank account currently has available.
+ * Available choices are assigned during add_bounties, and one is locked in here.
+ *
+ * @param choice The index of the bounty in the list of bounties that the player can choose from.
+ */
+/obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(datum/bounty/choice)
 	if(!inserted_scan_id || !inserted_scan_id.registered_account || !inserted_scan_id.registered_account.bounties || !inserted_scan_id.registered_account.bounties[choice])
-		playsound(loc, 'sound/machines/synth_no.ogg', 40 , TRUE)
+		playsound(loc, 'sound/machines/synth/synth_no.ogg', 40 , TRUE)
 		return
 	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
 	inserted_scan_id.registered_account.bounties = null
+	SSblackbox.record_feedback("tally", "bounties_assigned", 1, inserted_scan_id.registered_account.civilian_bounty.type)
 	return inserted_scan_id.registered_account.civilian_bounty
 
 /obj/machinery/computer/piratepad_control/civilian/click_alt(mob/user)
@@ -184,6 +192,9 @@
 			data["id_bounty_names"] = list(inserted_scan_id.registered_account.bounties[1].name,
 											inserted_scan_id.registered_account.bounties[2].name,
 											inserted_scan_id.registered_account.bounties[3].name)
+			data["id_bounty_infos"] = list(inserted_scan_id.registered_account.bounties[1].description,
+											inserted_scan_id.registered_account.bounties[2].description,
+											inserted_scan_id.registered_account.bounties[3].description)
 			data["id_bounty_values"] = list(inserted_scan_id.registered_account.bounties[1].reward * (CIV_BOUNTY_SPLIT/100),
 											inserted_scan_id.registered_account.bounties[2].reward * (CIV_BOUNTY_SPLIT/100),
 											inserted_scan_id.registered_account.bounties[3].reward * (CIV_BOUNTY_SPLIT/100))
@@ -192,7 +203,7 @@
 
 	return data
 
-/obj/machinery/computer/piratepad_control/civilian/ui_act(action, params)
+/obj/machinery/computer/piratepad_control/civilian/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -231,13 +242,13 @@
 
 	if(target)
 		if(holder_item && inserting_item.InsertID(target))
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		else
 			id_eject(user, target)
 
 	user.visible_message(span_notice("[user] inserts \the [card_to_insert] into \the [src]."),
 						span_notice("You insert \the [card_to_insert] into \the [src]."))
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 	ui_interact(user)
 	return TRUE
 
@@ -252,7 +263,7 @@
 			user.put_in_hands(target)
 		user.visible_message(span_notice("[user] gets \the [target] from \the [src]."), \
 							span_notice("You get \the [target] from \the [src]."))
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		inserted_scan_id = null
 		return TRUE
 

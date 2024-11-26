@@ -52,6 +52,8 @@
 
 	/// Toggles whether this action is usable or not
 	var/action_disabled = FALSE
+	/// Can this action be shared with our rider?
+	var/can_be_shared = TRUE
 
 /datum/action/New(Target)
 	link_to(Target)
@@ -112,7 +114,8 @@
 		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(update_status_on_signal))
 	if(check_flags & AB_CHECK_PHASED)
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_MAGICALLY_PHASED), SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED)), PROC_REF(update_status_on_signal))
-
+	if(check_flags & AB_CHECK_OPEN_TURF)
+		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 	if(owner_has_control)
 		RegisterSignal(grant_to, COMSIG_MOB_KEYDOWN, PROC_REF(keydown), override = TRUE)
 		GiveAction(grant_to)
@@ -139,6 +142,7 @@
 	UnregisterSignal(owner, list(
 		COMSIG_LIVING_SET_BODY_POSITION,
 		COMSIG_MOB_STATCHANGE,
+		COMSIG_MOVABLE_MOVED,
 		SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED),
 		SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED),
 		SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED),
@@ -197,6 +201,10 @@
 	if((check_flags & AB_CHECK_PHASED) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
 		if (feedback)
 			owner.balloon_alert(owner, "incorporeal!")
+		return FALSE
+	if((check_flags & AB_CHECK_OPEN_TURF) && !isopenturf(owner.loc))
+		if (feedback)
+			owner.balloon_alert(owner, "not enough space!")
 		return FALSE
 	return TRUE
 

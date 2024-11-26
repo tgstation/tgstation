@@ -184,7 +184,7 @@
 	return ..()
 
 /datum/component/mind_linker/active_linking/link_mob(mob/living/to_link)
-	if(HAS_TRAIT(to_link, TRAIT_MINDSHIELD)) // Mindshield implant - no dice
+	if(HAS_MIND_TRAIT(to_link, TRAIT_UNCONVERTABLE)) // Protected mind, so they can't be added to the mindlink
 		return FALSE
 	if(to_link.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 		return FALSE
@@ -239,11 +239,10 @@
 	return ..() && (owner.stat != DEAD)
 
 /datum/action/innate/linked_speech/Activate()
-
 	var/datum/component/mind_linker/linker = target
 	var/mob/living/linker_parent = linker.parent
 
-	var/message = tgui_input_text(owner, "Enter a message to transmit.", "[linker.network_name] Telepathy")
+	var/message = tgui_input_text(owner, "Enter a message to transmit.", "[linker.network_name] Telepathy", max_length = MAX_MESSAGE_LEN)
 	if(!message || QDELETED(src) || QDELETED(owner) || owner.stat == DEAD)
 		return
 
@@ -257,7 +256,8 @@
 	var/list/all_who_can_hear = assoc_to_keys(linker.linked_mobs) + linker_parent
 
 	for(var/mob/living/recipient as anything in all_who_can_hear)
-		to_chat(recipient, formatted_message)
+		var/avoid_highlighting = (recipient == owner) || (recipient == linker_parent)
+		to_chat(recipient, formatted_message, type = MESSAGE_TYPE_RADIO, avoid_highlighting = avoid_highlighting)
 
 	for(var/mob/recipient as anything in GLOB.dead_mob_list)
-		to_chat(recipient, "[FOLLOW_LINK(recipient, owner)] [formatted_message]")
+		to_chat(recipient, "[FOLLOW_LINK(recipient, owner)] [formatted_message]", type = MESSAGE_TYPE_RADIO)

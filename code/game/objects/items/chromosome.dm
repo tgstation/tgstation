@@ -2,7 +2,7 @@
 	name = "blank chromosome"
 	icon = 'icons/obj/science/chromosomes.dmi'
 	icon_state = ""
-	desc = "A tube holding chromosomic data."
+	desc = "A tube holding chromosomal data."
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -16,7 +16,7 @@
 /obj/item/chromosome/proc/can_apply(datum/mutation/human/HM)
 	if(!HM || !(HM.can_chromosome == CHROMOSOME_NONE))
 		return FALSE
-	if((stabilizer_coeff != 1) && (HM.stabilizer_coeff != -1)) //if the chromosome is 1, we dont change anything. If the mutation is -1, we cant change it. sorry
+	if((stabilizer_coeff != 1) && (HM.stabilizer_coeff != -1)) //if the chromosome is 1, we don't change anything. If the mutation is -1, we can't change it. sorry
 		return TRUE
 	if((synchronizer_coeff != 1) && (HM.synchronizer_coeff != -1))
 		return TRUE

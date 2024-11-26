@@ -40,8 +40,18 @@
 	circuit = null
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_MACHINE_REQUIRES_SIGHT
 	frame_type = /obj/item/wallframe/telescreen/entertainment
+	/// Virtual radio inside of the entertainment monitor to broadcast audio
+	var/obj/item/radio/entertainment/speakers/speakers
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
+
+/obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle mute button"
+
+/obj/machinery/computer/security/telescreen/entertainment/click_ctrl(mob/user)
+	. = ..()
+	balloon_alert(user, speakers.should_be_listening ? "muted" : "unmuted")
+	speakers.toggle_mute()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
 
@@ -53,20 +63,75 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_CLICK, PROC_REF(BigClick))
 	find_and_hang_on_wall()
+	speakers = new(src)
 
-// Bypass clickchain to allow humans to use the telescreen from a distance
-/obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
-	SIGNAL_HANDLER
+/obj/machinery/computer/security/telescreen/entertainment/Destroy()
+	. = ..()
+	QDEL_NULL(speakers)
 
-	if(!network.len)
-		balloon_alert(usr, "nothing on TV!")
+/obj/machinery/computer/security/telescreen/entertainment/examine(mob/user)
+	. = ..()
+	. += length(network) ? span_notice("The TV is broadcasting something!") : span_notice("<i>There's nothing on TV.</i>")
+	. += span_notice("The volume is currently [speakers.should_be_listening ? "on" : "off"]")
+
+/obj/machinery/computer/security/telescreen/entertainment/ui_state(mob/user)
+	return GLOB.always_state
+
+// Snowflake ui status to allow mobs to watch TV from across the room,
+// but only allow adjacent mobs / tk users / silicon to change the channel
+/obj/machinery/computer/security/telescreen/entertainment/ui_status(mob/living/user, datum/ui_state/state)
+	if(!can_watch_tv(user))
+		return UI_CLOSE
+	if(!isliving(user))
+		return isAdminGhostAI(user) ? UI_INTERACTIVE : UI_UPDATE
+	if(user.stat >= SOFT_CRIT)
+		return UI_UPDATE
+
+	var/can_range = FALSE
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(carbon_user.dna?.check_mutation(/datum/mutation/human/telekinesis) && tkMaxRangeCheck(user, src))
+			can_range = TRUE
+	if(HAS_SILICON_ACCESS(user) || (user.interaction_range && user.interaction_range >= get_dist(user, src)))
+		can_range = TRUE
+
+	if((can_range || user.CanReach(src)) && ISADVANCEDTOOLUSER(user))
+		if(user.incapacitated)
+			return UI_UPDATE
+		if(!can_range && user.can_hold_items() && (user.usable_hands <= 0 || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED)))
+			return UI_UPDATE
+		return UI_INTERACTIVE
+	return UI_UPDATE
+
+/obj/machinery/computer/security/telescreen/entertainment/Click(location, control, params)
+	if(world.time <= usr.next_click + 1)
+		return // just so someone can't turn an auto clicker on and spam tvs
+
+	. = ..()
+	if(!can_watch_tv(usr))
 		return
-
+	if((!length(network) && !Adjacent(usr)) || LAZYACCESS(params2list(params), SHIFT_CLICK)) // let people examine
+		return
+	// Lets us see the tv regardless of click results
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, interact), usr)
 
-///Sets the monitor's icon to the selected state, and says an announcement
+/obj/machinery/computer/security/telescreen/entertainment/proc/can_watch_tv(mob/living/watcher)
+	if(!is_operational)
+		return FALSE
+	if((watcher.sight & SEE_OBJS) || HAS_SILICON_ACCESS(watcher))
+		if(get_dist(watcher, src) > 7)
+			return FALSE
+	else
+		if(!can_see(watcher, src, 7))
+			return FALSE
+	if(watcher.is_blind())
+		return FALSE
+	if(!isobserver(watcher) && watcher.stat >= UNCONSCIOUS)
+		return FALSE
+	return TRUE
+
+/// Sets the monitor's icon to the selected state, and says an announcement
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
 	if(on && icon_state == icon_state_off)
 		icon_state = icon_state_on
@@ -148,6 +213,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	)
 	frame_type = /obj/item/wallframe/telescreen/rd
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/rd, 32)
+
 /obj/item/wallframe/telescreen/rd
 	name = "\improper Research Director's telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/rd
@@ -162,6 +229,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "research telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/research
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/research, 32)
+
 /obj/machinery/computer/security/telescreen/ce
 	name = "\improper Chief Engineer's telescreen"
 	desc = "Used for watching the engine, telecommunications and the minisat."
@@ -172,6 +241,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "\improper Chief Engineer's telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/ce
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ce, 32)
+
 /obj/machinery/computer/security/telescreen/cmo
 	name = "\improper Chief Medical Officer's telescreen"
 	desc = "A telescreen with access to the medbay's camera network."
@@ -179,8 +250,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	frame_type = /obj/item/wallframe/telescreen/cmo
 
 /obj/item/wallframe/telescreen/cmo
-	name = "\improper Chief Engineer'stelescreen frame"
+	name = "\improper Chief Medical Officer's telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/cmo
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cmo, 32)
+
+/obj/machinery/computer/security/telescreen/med_sec
+	name = "\improper medical telescreen"
+	desc = "A telescreen with access to the medbay's camera network."
+	network = list(CAMERANET_NETWORK_MEDBAY)
+	frame_type = /obj/item/wallframe/telescreen/med_sec
+
+/obj/item/wallframe/telescreen/med_sec
+	name = "\improper medical telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/med_sec
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/med_sec, 32)
 
 /obj/machinery/computer/security/telescreen/vault
 	name = "vault monitor"
@@ -192,6 +277,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "vault telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/vault
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/vault, 32)
+
 /obj/machinery/computer/security/telescreen/ordnance
 	name = "bomb test site monitor"
 	desc = "A telescreen that connects to the bomb test site's camera."
@@ -201,6 +288,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/item/wallframe/telescreen/ordnance
 	name = "bomb test site telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/ordnance
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ordnance, 32)
 
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"
@@ -212,6 +301,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "engine telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/engine
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine, 32)
+
 /obj/machinery/computer/security/telescreen/turbine
 	name = "turbine monitor"
 	desc = "A telescreen that connects to the turbine's camera."
@@ -221,6 +312,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/item/wallframe/telescreen/turbine
 	name = "turbine telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/turbine
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/turbine, 32)
 
 /obj/machinery/computer/security/telescreen/interrogation
 	name = "interrogation room monitor"
@@ -232,6 +325,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "interrogation telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/interrogation
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/interrogation, 32)
+
 /obj/machinery/computer/security/telescreen/prison
 	name = "prison monitor"
 	desc = "A telescreen that connects to the permabrig's camera network."
@@ -241,6 +336,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/item/wallframe/telescreen/prison
 	name = "prison telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/prison
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/prison, 32)
 
 /obj/machinery/computer/security/telescreen/auxbase
 	name = "auxiliary base monitor"
@@ -252,6 +349,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "auxiliary base telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/auxbase
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/auxbase, 32)
+
 /obj/machinery/computer/security/telescreen/minisat
 	name = "minisat monitor"
 	desc = "A telescreen that connects to the minisat's camera network."
@@ -261,6 +360,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/item/wallframe/telescreen/minisat
 	name = "minisat telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/minisat
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/minisat, 32)
 
 /obj/machinery/computer/security/telescreen/aiupload
 	name = "\improper AI upload monitor"
@@ -272,6 +373,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "\improper AI upload telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/aiupload
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/aiupload, 32)
+
 /obj/machinery/computer/security/telescreen/bar
 	name = "bar monitor"
 	desc = "A telescreen that connects to the bar's camera network. Perfect for checking on customers."
@@ -282,6 +385,129 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "bar telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/bar
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/bar, 32)
+
+/obj/machinery/computer/security/telescreen/isolation
+	name = "isolation cell monitor"
+	desc = "A telescreen that connects to the isolation cells camera network."
+	network = list(CAMERANET_NETWORK_ISOLATION)
+	frame_type = /obj/item/wallframe/telescreen/bar
+
+/obj/item/wallframe/telescreen/isolation
+	name = "isolation telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/isolation
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/isolation, 32)
+
+/obj/machinery/computer/security/telescreen/normal
+	name = "security camera monitor"
+	desc = "A telescreen that connects to the stations camera network."
+	network = list(CAMERANET_NETWORK_SS13)
+	frame_type = /obj/item/wallframe/telescreen/normal
+
+/obj/item/wallframe/telescreen/normal
+	name = "security camera telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/normal
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/normal, 32)
+
+/obj/machinery/computer/security/telescreen/tcomms
+	name = "tcomms camera monitor"
+	desc = "A telescreen that connects to the tcomms camera network."
+	network = list(CAMERANET_NETWORK_TELECOMMS)
+	frame_type = /obj/item/wallframe/telescreen/tcomms
+
+/obj/item/wallframe/telescreen/tcomms
+	name = "tcomms camera telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/tcomms
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/tcomms, 32)
+
+/obj/machinery/computer/security/telescreen/test_chamber
+	name = "xenobiology test chamber camera monitor"
+	desc = "A telescreen that connects to the xenobiology test chamber camera network."
+	network = list(CAMERANET_NETWORK_XENOBIOLOGY)
+	frame_type = /obj/item/wallframe/telescreen/test_chamber
+
+/obj/item/wallframe/telescreen/test_chamber
+	name = "xenobiology test chamber camera telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/test_chamber
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/test_chamber, 32)
+
+/obj/machinery/computer/security/telescreen/engine_waste
+	name = "\improper Engine Waste Monitor"
+	desc = "A telescreen that connects to the engine waste camera network."
+	network = list(CAMERANET_NETWORK_WASTE)
+	frame_type = /obj/item/wallframe/telescreen/engine_waste
+
+/obj/item/wallframe/telescreen/engine_waste
+	name = "\improper Engine Waste telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/engine_waste
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine_waste, 32)
+
+/obj/machinery/computer/security/telescreen/cargo_sec
+	name = "cargo camera monitor"
+	desc = "A telescreen that connects to the cargo and main station camera network."
+	network = list(CAMERANET_NETWORK_SS13,
+					CAMERA_NETWORK_CARGO,
+					)
+	frame_type = /obj/item/wallframe/telescreen/cargo_sec
+
+/obj/item/wallframe/telescreen/cargo_sec
+	name = "cargo telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/cargo_sec
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cargo_sec, 32)
+
+// This is used in moonoutpost19.dmm
+/obj/machinery/computer/security/telescreen/moon_outpost
+
+/obj/machinery/computer/security/telescreen/moon_outpost/research
+	name = "research monitor"
+	desc = "Used for monitoring the research division and the labs within."
+	network = list(CAMERANET_NETWORK_MOON19_RESEARCH,
+					CAMERANET_NETWORK_MOON19_XENO,
+					)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/moon_outpost/research, 32)
+
+/obj/machinery/computer/security/telescreen/moon_outpost/xenobio
+	name = "xenobiology monitor"
+	desc = "Used for watching the contents of the xenobiology containment pen."
+	network = list(CAMERANET_NETWORK_MOON19_XENO)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/moon_outpost/xenobio, 32)
+
+// This is used in undergroundoutpost45.dmm
+/obj/machinery/computer/security/telescreen/underground_outpost
+
+/obj/machinery/computer/security/telescreen/underground_outpost/research
+	name = "research monitor"
+	desc = "Used for monitoring the research division and the labs within."
+	network = list(CAMERANET_NETWORK_UGO45_RESEARCH)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/underground_outpost/research, 32)
+
+// This is used in forgottenship.dmm
+/obj/machinery/computer/security/telescreen/forgotten_ship
+
+/obj/machinery/computer/security/telescreen/forgotten_ship/sci
+	name = "Cameras monitor"
+	network = list(CAMERANET_NETWORK_FSCI)
+	req_access = list("syndicate")
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/forgotten_ship/sci, 32)
+
+// This is used in deepstorage.dmm
+/obj/machinery/computer/security/telescreen/deep_storage
+
+/obj/machinery/computer/security/telescreen/deep_storage/bunker
+	name = "Bunker Entrance monitor"
+	network = list(CAMERA_NETWORK_BUNKER)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/deep_storage/bunker, 32)
 
 /// A button that adds a camera network to the entertainment monitors
 /obj/machinery/button/showtime

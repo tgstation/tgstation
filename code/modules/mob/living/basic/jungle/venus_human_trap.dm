@@ -143,9 +143,9 @@
 	combat_mode = TRUE
 	basic_mob_flags = DEL_ON_DEATH
 	death_message = "collapses into bits of plant matter."
-	attacked_sound = 'sound/creatures/venus_trap_hurt.ogg'
-	death_sound = 'sound/creatures/venus_trap_death.ogg'
-	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
+	attacked_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_hurt.ogg'
+	death_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_death.ogg'
+	attack_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_hit.ogg'
 	unsuitable_heat_damage = 5 // heat damage is different from cold damage since coldmos is significantly more common than plasmafires
 	unsuitable_cold_damage = 2 // they now do take cold damage, but this should be sufficiently small that it does not cause major issues
 	habitable_atmos = null
@@ -216,15 +216,19 @@
 	QDEL_LIST(vines)
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle/Activate(atom/target_atom)
-	if(isturf(target_atom) || istype(target_atom, /obj/structure/spacevine))
+/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle/Activate(atom/movable/target_atom)
+	if(!ismovable(target_atom) || istype(target_atom, /obj/structure/spacevine))
+		return
+	if(target_atom.anchored)
+		owner.balloon_alert(owner, "can't pull!")
 		return
 	if(get_dist(owner, target_atom) > vine_grab_distance)
 		owner.balloon_alert(owner, "too far!")
 		return
-	for(var/turf/blockage in get_line(owner, target_atom))
+	var/list/target_turfs = get_line(owner, target_atom) - list(get_turf(owner), get_turf(target_atom))
+	for(var/turf/blockage in target_turfs)
 		if(blockage.is_blocked_turf(exclude_mobs = TRUE))
-			owner.balloon_alert(owner, "something's in the way!")
+			owner.balloon_alert(owner, "path blocked!")
 			return
 
 	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = FALSE)

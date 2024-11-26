@@ -95,8 +95,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 		return
 
-	for(var/i in subtypesof(/datum/station_trait))
-		var/datum/station_trait/trait_typepath = i
+	for(var/datum/station_trait/trait_typepath as anything in subtypesof(/datum/station_trait))
 
 		// If forced, (probably debugging), just set it up now, keep it out of the pool.
 		if(initial(trait_typepath.force))
@@ -114,6 +113,14 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_REQUIRES_AI) && !CONFIG_GET(flag/allow_ai)) //can't have AI traits without AI
 			continue
+
+		if(ispath(trait_typepath, /datum/station_trait/random_event_weight_modifier)) //Don't add event modifiers for events that can't occur on our map.
+			var/datum/station_trait/random_event_weight_modifier/random_trait_typepath = trait_typepath
+			var/datum/round_event_control/event_to_check = initial(random_trait_typepath.event_control_path)
+			if(event_to_check)
+				event_to_check = new event_to_check()
+				if(!event_to_check.valid_for_map())
+					continue
 
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
@@ -157,6 +164,8 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 ///Creates a given trait of a specific type, while also removing any blacklisted ones from the future pool.
 /datum/controller/subsystem/processing/station/proc/setup_trait(datum/station_trait/trait_type)
+	if(locate(trait_type) in station_traits)
+		return
 	var/datum/station_trait/trait_instance = new trait_type()
 	station_traits += trait_instance
 	log_game("Station Trait: [trait_instance.name] chosen for this round.")
@@ -172,5 +181,4 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		var/datum/hud/new_player/observer_hud = player.hud_used
 		if (!istype(observer_hud))
 			continue
-		observer_hud.add_station_trait_buttons()
-		observer_hud.show_hud(observer_hud.hud_version)
+		observer_hud.show_station_trait_buttons()

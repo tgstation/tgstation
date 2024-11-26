@@ -23,6 +23,7 @@
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
+	interaction_flags_mouse_drop = NEED_HANDS
 
 	///What are we sticking our needle in?
 	var/atom/attached
@@ -105,7 +106,7 @@
 		.["containerMaxVolume"] = drip_reagents.maximum_volume
 		.["containerReagentColor"] = mix_color_from_reagents(drip_reagents.reagent_list)
 
-/obj/machinery/iv_drip/ui_act(action, params)
+/obj/machinery/iv_drip/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -161,25 +162,22 @@
 		filling.color = mix_color_from_reagents(container_reagents.reagent_list)
 		. += filling
 
-/obj/machinery/iv_drip/MouseDrop(atom/target)
-	. = ..()
-	if(!Adjacent(target) || !usr.can_perform_action(src))
-		return
-	if(!isliving(usr))
-		to_chat(usr, span_warning("You can't do that!"))
+/obj/machinery/iv_drip/mouse_drop_dragged(atom/target, mob/user)
+	if(!isliving(user))
+		to_chat(user, span_warning("You can't do that!"))
 		return
 	if(!get_reagents())
-		to_chat(usr, span_warning("There's nothing attached to the IV drip!"))
+		to_chat(user, span_warning("There's nothing attached to the IV drip!"))
 		return
-	if(!target.is_injectable(usr))
-		to_chat(usr, span_warning("Can't inject into this!"))
+	if(!target.is_injectable(user))
+		to_chat(user, span_warning("Can't inject into this!"))
 		return
 	if(attached)
 		visible_message(span_warning("[attached] is detached from [src]."))
 		attached = null
 		update_appearance(UPDATE_ICON)
-	usr.visible_message(span_warning("[usr] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
-	attach_iv(target, usr)
+	user.visible_message(span_warning("[user] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
+	attach_iv(target, user)
 
 /obj/machinery/iv_drip/attackby(obj/item/W, mob/user, params)
 	if(use_internal_storage)
@@ -258,7 +256,7 @@
 		// If the human is losing too much blood, beep.
 		if(attached_mob.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
 			audible_message(span_hear("[src] beeps loudly."))
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 		var/atom/movable/target = use_internal_storage ? src : reagent_container
 		attached_mob.transfer_blood_to(target, amount)
 		update_appearance(UPDATE_ICON)
@@ -324,7 +322,7 @@
 		return
 	if(!usr.can_perform_action(src))
 		return
-	if(usr.incapacitated())
+	if(usr.incapacitated)
 		return
 	if(reagent_container)
 		if(attached)
@@ -342,7 +340,7 @@
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return
-	if(!usr.can_perform_action(src) || usr.incapacitated())
+	if(!usr.can_perform_action(src) || usr.incapacitated)
 		return
 	if(inject_only)
 		mode = IV_INJECTING

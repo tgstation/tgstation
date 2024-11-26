@@ -30,7 +30,7 @@
 	suffix = "lavaland_biodome_clown_planet.dmm"
 
 /datum/map_template/ruin/lavaland/lizgas
-	name = "The Lizard's Gas(Lava)"
+	name = "Lava-Ruin The Lizard's Gas"
 	id = "lizgas2"
 	description = "A recently opened gas station from the Lizard's Gas franchise."
 	suffix = "lavaland_surface_gas.dmm"
@@ -278,7 +278,7 @@
 /datum/map_template/ruin/lavaland/lava_phonebooth
 	name = "Lava-Ruin Phonebooth"
 	id = "lava_phonebooth"
-	description = "A venture by nanotrasen to help popularize the use of holopads. This one somehow made its way here."
+	description = "A venture by Nanotrasen to help popularize the use of holopads. This one somehow made its way here."
 	suffix = "lavaland_surface_phonebooth.dmm"
 	allow_duplicates = FALSE
 	cost = 5
@@ -316,3 +316,17 @@
 	suffix = "lavaland_surface_mookvillage.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+
+/datum/map_template/ruin/lavaland/shuttle_wreckage
+	name = "Lava-Ruin Shuttle Wreckage"
+	id = "shuttle_wreckage"
+	description = "Not every shuttle makes it back to CentCom."
+	suffix = "lavaland_surface_shuttle_wreckage.dmm"
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/crashsite
+	name = "Lava-Ruin Pod Crashsite"
+	id = "crashsite"
+	description = "They launched too early"
+	suffix = "lavaland_surface_crashsite.dmm"
+	allow_duplicates = FALSE

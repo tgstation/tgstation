@@ -459,7 +459,6 @@
 	pixel_y = 13
 	},
 /obj/item/fishing_line{
-	layer = 4;
 	pixel_x = 6;
 	pixel_y = 3
 	},

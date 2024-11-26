@@ -8,8 +8,8 @@
 	icon_state = "bow"
 	inhand_icon_state = "bow"
 	base_icon_state = "bow"
-	load_sound = 'sound/weapons/gun/general/ballistic_click.ogg'
-	fire_sound = 'sound/weapons/gun/bow/bow_fire.ogg'
+	load_sound = 'sound/items/weapons/gun/general/ballistic_click.ogg'
+	fire_sound = 'sound/items/weapons/gun/bow/bow_fire.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/bow
 	force = 15
 	pinless = TRUE
@@ -27,7 +27,12 @@
 
 /obj/item/gun/ballistic/bow/update_icon_state()
 	. = ..()
-	icon_state = chambered ? "[base_icon_state]_[drawn ? "drawn" : "nocked"]" : "[base_icon_state]"
+	icon_state = "[base_icon_state][drawn ? "_drawn" : ""]"
+
+/obj/item/gun/ballistic/bow/update_overlays()
+	. = ..()
+	if(chambered)
+		. += "[chambered.base_icon_state][drawn ? "_drawn" : ""]"
 
 /obj/item/gun/ballistic/bow/click_alt(mob/user)
 	if(isnull(chambered))
@@ -60,25 +65,29 @@
 		return
 	balloon_alert(user, "[drawn ? "string released" : "string drawn"]")
 	drawn = !drawn
-	playsound(src, 'sound/weapons/gun/bow/bow_draw.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/gun/bow/bow_draw.ogg', 25, TRUE)
 	update_appearance()
 
-/obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/gun/ballistic/bow/try_fire_gun(atom/target, mob/living/user, params)
 	if(!chambered)
-		return
+		return FALSE
 	if(!drawn)
 		to_chat(user, span_warning("Without drawing the bow, the arrow uselessly falls to the ground."))
 		drop_arrow()
-		return
+		return FALSE
 	return ..() //fires, removing the arrow
+
+/obj/item/gun/ballistic/bow/postfire_empty_checks(last_shot_succeeded)
+	if(!chambered && !get_ammo())
+		drawn = FALSE
+		update_appearance()
 
 /obj/item/gun/ballistic/bow/equipped(mob/user, slot, initial)
 	. = ..()
 	if(slot != ITEM_SLOT_HANDS && chambered)
 		balloon_alert(user, "the arrow falls out!")
 		if(drawn)
-			playsound(src, 'sound/weapons/gun/bow/bow_fire.ogg', 25, TRUE)
+			playsound(src, 'sound/items/weapons/gun/bow/bow_fire.ogg', 25, TRUE)
 		drop_arrow()
 
 
@@ -90,7 +99,7 @@
 	if(ismob(loc) || !chambered)
 		return
 	if(drawn)
-		playsound(src, 'sound/weapons/gun/bow/bow_fire.ogg', 25, TRUE)
+		playsound(src, 'sound/items/weapons/gun/bow/bow_fire.ogg', 25, TRUE)
 	drop_arrow()
 
 /obj/item/gun/ballistic/bow/shoot_with_empty_chamber(mob/living/user)

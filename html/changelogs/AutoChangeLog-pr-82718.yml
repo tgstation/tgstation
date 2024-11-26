@@ -1,4 +1,0 @@
-author: "Sightld2"
-delete-after: True
-changes:
-  - bugfix: "Ants are no longer picky eaters. Low Purity sugar will no longer result in less Ants than you started with."

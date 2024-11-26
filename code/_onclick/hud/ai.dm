@@ -2,7 +2,7 @@
 	icon = 'icons/hud/screen_ai.dmi'
 
 /atom/movable/screen/ai/Click()
-	if(isobserver(usr) || usr.incapacitated())
+	if(isobserver(usr) || usr.incapacitated)
 		return TRUE
 
 /atom/movable/screen/ai/aicore
@@ -10,7 +10,7 @@
 	icon_state = "ai_core"
 
 /atom/movable/screen/ai/aicore/Click()
-	if(..())
+	if(isobserver(usr))
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.view_core()

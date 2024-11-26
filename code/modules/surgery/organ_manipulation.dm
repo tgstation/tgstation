@@ -55,7 +55,7 @@
 	)
 
 /datum/surgery/organ_manipulation/mechanic
-	name = "Prosthesis organ manipulation"
+	name = "Hardware Manipulation"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
 	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_LIMB
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
@@ -85,6 +85,8 @@
 	if(isnull(step))
 		return FALSE
 	var/obj/item/tool = user.get_active_held_item()
+	if(tool)
+		tool = tool.get_proxy_attacker_for(target, user)
 	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 		return TRUE
 	if(tool && tool.tool_behaviour) //Mechanic organ manipulation isn't done with just surgery tools
@@ -110,7 +112,7 @@
 	)
 
 /datum/surgery/organ_manipulation/mechanic/external
-	name = "Prosthetic feature manipulation"
+	name = "Chassis Manipulation"
 	possible_locs = list(
 		BODY_ZONE_CHEST,
 		BODY_ZONE_HEAD,
@@ -128,15 +130,15 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
-///Organ manipulation base class. Do not use, it wont work. Use it's subtypes
+///Organ manipulation base class. Do not use, it wont work. Use its subtypes
 /datum/surgery_step/manipulate_organs
 	name = "manipulate organs"
 	repeatable = TRUE
 	implements = list(
 		/obj/item/organ = 100,
 		/obj/item/borg/apparatus/organ_storage = 100)
-	preop_sound = 'sound/surgery/organ2.ogg'
-	success_sound = 'sound/surgery/organ1.ogg'
+	preop_sound = 'sound/items/handling/surgery/organ2.ogg'
+	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 
 	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55, /obj/item/kitchen/fork = 35)
 	var/current_type
@@ -158,16 +160,16 @@
 		if(!isorgan(target_organ))
 			if (target_zone == BODY_ZONE_PRECISE_EYES)
 				target_zone = check_zone(target_zone)
-			to_chat(user, span_warning("You cannot put [target_organ] into [target]'s [parse_zone(target_zone)]!"))
+			to_chat(user, span_warning("You cannot put [target_organ] into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"))
 			return SURGERY_STEP_FAIL
 		tool = target_organ
 	if(isorgan(tool))
 		current_type = "insert"
-		preop_sound = 'sound/surgery/hemostat1.ogg'
-		success_sound = 'sound/surgery/organ2.ogg'
+		preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
+		success_sound = 'sound/items/handling/surgery/organ2.ogg'
 		target_organ = tool
 		if(target_zone != target_organ.zone || target.get_organ_slot(target_organ.slot))
-			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [parse_zone(target_zone)]!"))
+			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [target.parse_zone_with_bodypart(target_zone)]!"))
 			return SURGERY_STEP_FAIL
 		var/obj/item/organ/meatslab = tool
 		if(!meatslab.useable)
@@ -182,11 +184,11 @@
 		display_results(
 			user,
 			target,
-			span_notice("You begin to insert [tool] into [target]'s [parse_zone(target_zone)]..."),
-			span_notice("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)]."),
-			span_notice("[user] begins to insert something into [target]'s [parse_zone(target_zone)]."),
+			span_notice("You begin to insert [tool] into [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+			span_notice("[user] begins to insert [tool] into [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+			span_notice("[user] begins to insert something into [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 		)
-		display_pain(target, "You can feel something being placed in your [parse_zone(target_zone)]!")
+		display_pain(target, "You can feel something being placed in your [target.parse_zone_with_bodypart(target_zone)]!")
 
 
 	else if(implement_type in implements_extract)
@@ -199,7 +201,7 @@
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
 		if(!length(organs))
-			to_chat(user, span_warning("There are no removable organs in [target]'s [parse_zone(target_zone)]!"))
+			to_chat(user, span_warning("There are no removable organs in [target]'s [target.parse_zone_with_bodypart(target_zone)]!"))
 			return SURGERY_STEP_FAIL
 		else
 			for(var/obj/item/organ/organ in organs)
@@ -211,21 +213,32 @@
 			if(isnull(chosen_organ))
 				return SURGERY_STEP_FAIL
 			target_organ = chosen_organ
-			if(user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
+
+			if(user && target && user.Adjacent(target))
+				//tool check
+				var/obj/item/held_tool = user.get_active_held_item()
+				if(held_tool)
+					held_tool = held_tool.get_proxy_attacker_for(target, user)
+				if(held_tool != tool)
+					return SURGERY_STEP_FAIL
+
+				//organ check
 				target_organ = organs[target_organ]
 				if(!target_organ)
 					return SURGERY_STEP_FAIL
 				if(target_organ.organ_flags & ORGAN_UNREMOVABLE)
 					to_chat(user, span_warning("[target_organ] is too well connected to take out!"))
 					return SURGERY_STEP_FAIL
+
+				//start operation
 				display_results(
 					user,
 					target,
-					span_notice("You begin to extract [target_organ] from [target]'s [parse_zone(target_zone)]..."),
-					span_notice("[user] begins to extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
-					span_notice("[user] begins to extract something from [target]'s [parse_zone(target_zone)]."),
+					span_notice("You begin to extract [target_organ] from [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+					span_notice("[user] begins to extract [target_organ] from [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+					span_notice("[user] begins to extract something from [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 				)
-				display_pain(target, "You can feel your [target_organ.name] being removed from your [parse_zone(target_zone)]!")
+				display_pain(target, "You can feel your [target_organ.name] being removed from your [target.parse_zone_with_bodypart(target_zone)]!")
 			else
 				return SURGERY_STEP_FAIL
 
@@ -239,33 +252,31 @@
 			tool = tool.contents[1]
 		target_organ = tool
 		user.temporarilyRemoveItemFromInventory(target_organ, TRUE)
-		if(target_organ.Insert(target))
-			if(apparatus)
-				apparatus.icon_state = initial(apparatus.icon_state)
-				apparatus.desc = initial(apparatus.desc)
-				apparatus.cut_overlays()
-			display_results(
-				user,
-				target,
-				span_notice("You insert [tool] into [target]'s [parse_zone(target_zone)]."),
-				span_notice("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!"),
-				span_notice("[user] inserts something into [target]'s [parse_zone(target_zone)]!"),
-			)
-			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain as your new [tool.name] comes to life!")
-			target_organ.on_surgical_insertion(user, target, target_zone, tool)
-		else
-			target_organ.forceMove(target.loc)
+		target_organ.Insert(target)
+		if(apparatus)
+			apparatus.icon_state = initial(apparatus.icon_state)
+			apparatus.desc = initial(apparatus.desc)
+			apparatus.cut_overlays()
+		display_results(
+			user,
+			target,
+			span_notice("You insert [tool] into [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+			span_notice("[user] inserts [tool] into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+			span_notice("[user] inserts something into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+		)
+		display_pain(target, "Your [target.parse_zone_with_bodypart(target_zone)] throbs with pain as your new [tool.name] comes to life!")
+		target_organ.on_surgical_insertion(user, target, target_zone, tool)
 
 	else if(current_type == "extract")
 		if(target_organ && target_organ.owner == target)
 			display_results(
 				user,
 				target,
-				span_notice("You successfully extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
-				span_notice("[user] successfully extracts [target_organ] from [target]'s [parse_zone(target_zone)]!"),
-				span_notice("[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!"),
+				span_notice("You successfully extract [target_organ] from [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+				span_notice("[user] successfully extracts [target_organ] from [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+				span_notice("[user] successfully extracts something from [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 			)
-			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ.name] anymore!")
+			display_pain(target, "Your [target.parse_zone_with_bodypart(target_zone)] throbs with pain, you can't feel your [target_organ.name] anymore!")
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 			target_organ.Remove(target)
 			target_organ.forceMove(get_turf(target))
@@ -274,9 +285,9 @@
 			display_results(
 				user,
 				target,
-				span_warning("You can't extract anything from [target]'s [parse_zone(target_zone)]!"),
-				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"),
-				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"),
+				span_warning("You can't extract anything from [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+				span_notice("[user] can't seem to extract anything from [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+				span_notice("[user] can't seem to extract anything from [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 			)
 	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user))
 		var/mob/living/carbon/human/morbid_weirdo = user
@@ -294,7 +305,7 @@
 
 ///only operate on internal organs
 /datum/surgery_step/manipulate_organs/internal/can_use_organ(mob/user, obj/item/organ/organ)
-	return isinternalorgan(organ)
+	return !(organ.organ_flags & ORGAN_EXTERNAL)
 
 ///prosthetic surgery gives full effectiveness to crowbars (and hemostats)
 /datum/surgery_step/manipulate_organs/internal/mechanic
@@ -308,7 +319,7 @@
 
 ///Only operate on external organs
 /datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)
-	return isexternalorgan(organ)
+	return (organ.organ_flags & ORGAN_EXTERNAL)
 
 ///prosthetic surgery gives full effectiveness to crowbars (and hemostats)
 /datum/surgery_step/manipulate_organs/external/mechanic

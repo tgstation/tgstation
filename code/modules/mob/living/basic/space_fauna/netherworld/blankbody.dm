@@ -12,7 +12,7 @@
 	speed = 1
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	melee_attack_cooldown = 1 SECONDS
 	faction = list(FACTION_NETHER)

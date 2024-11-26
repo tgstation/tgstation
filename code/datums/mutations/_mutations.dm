@@ -1,3 +1,23 @@
+
+/// Negatives that are virtually harmless and mostly just funny (language)
+// Set to 0 because munchkinning via miscommunication = bad
+#define NEGATIVE_STABILITY_MINI 0
+/// Negatives that are slightly annoying (unused)
+#define NEGATIVE_STABILITY_MINOR -20
+/// Negatives that present an uncommon or weak, consistent hindrance to gameplay (cough, paranoia)
+#define NEGATIVE_STABILITY_MODERATE -30
+/// Negatives that present a major consistent hindrance to gameplay (deaf, mute, acid flesh)
+#define NEGATIVE_STABILITY_MAJOR -40
+
+/// Positives that provide basically no benefit (glowy)
+#define POSITIVE_INSTABILITY_MINI 5
+/// Positives that are niche in application or useful in rare circumstances (parlor tricks, geladikinesis, autotomy)
+#define POSITIVE_INSTABILITY_MINOR 10
+/// Positives that provide a new ability that's roughly par with station equipment (insulated, cryokinesis)
+#define POSITIVE_INSTABILITY_MODERATE 25
+/// Positives that are unique, very powerful, and noticeably change combat/gameplay (hulk, tk)
+#define POSITIVE_INSTABILITY_MAJOR 35
+
 /datum/mutation
 	var/name
 
@@ -76,6 +96,8 @@
 	var/energy_coeff = -1
 	/// List of strings of valid chromosomes this mutation can accept.
 	var/list/valid_chrom_list = list()
+	/// List of traits that are added or removed by the mutation with GENETIC_TRAIT source.
+	var/list/mutation_traits
 
 /datum/mutation/human/New(class = MUT_OTHER, timer, datum/mutation/human/copymut)
 	. = ..()
@@ -110,6 +132,7 @@
 	owner = acquirer
 	dna = acquirer.dna
 	dna.mutations += src
+	SEND_SIGNAL(src, COMSIG_MUTATION_GAINED, acquirer)
 	if(text_gain_indication)
 		to_chat(owner, text_gain_indication)
 	if(visual_indicators.len)
@@ -121,6 +144,8 @@
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
 	grant_power() //we do checks here so nothing about hulk getting magic
+	if(mutation_traits)
+		owner.add_traits(mutation_traits, GENETIC_MUTATION)
 	if(!modified)
 		addtimer(CALLBACK(src, PROC_REF(modify), 0.5 SECONDS)) //gonna want children calling ..() to run first
 
@@ -134,6 +159,7 @@
 	if(!istype(owner) || !(owner.dna.mutations.Remove(src)))
 		return TRUE
 	. = FALSE
+	SEND_SIGNAL(src, COMSIG_MUTATION_LOST, owner)
 	if(text_lose_indication && owner.stat != DEAD)
 		to_chat(owner, text_lose_indication)
 	if(visual_indicators.len)
@@ -144,6 +170,9 @@
 		mut_overlay.Remove(get_visual_indicator())
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
+
+	if(mutation_traits)
+		owner.remove_traits(mutation_traits, GENETIC_MUTATION)
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return

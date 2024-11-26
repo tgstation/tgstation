@@ -47,7 +47,7 @@
 	volume = 15
 
 /datum/looping_sound/clock
-	mid_sounds = list('sound/ambience/ticking_clock.ogg' = 1)
+	mid_sounds = list('sound/ambience/misc/ticking_clock.ogg' = 1)
 	mid_length = 40
 	volume = 50
 	ignore_walls = FALSE
@@ -79,9 +79,18 @@
 	end_sound = 'sound/machines/microwave/microwave-end.ogg'
 	volume = 90
 
+/datum/looping_sound/lathe_print
+	mid_sounds = list('sound/machines/lathe/lathe_print.ogg' = 1)
+	mid_length = 20
+	volume = 50
+	vary = TRUE
+	ignore_walls = FALSE
+	falloff_distance = 1
+	mid_length_vary = 10
+
 /datum/looping_sound/jackpot
 	mid_length = 11
-	mid_sounds = list('sound/machines/roulettejackpot.ogg' = 1)
+	mid_sounds = list('sound/machines/roulette/roulettejackpot.ogg' = 1)
 	volume = 85
 	vary = TRUE
 
@@ -107,7 +116,7 @@
 	start_sound = 'sound/machines/computer/computer_start.ogg'
 	start_length = 7.2 SECONDS
 	start_volume = 10
-	mid_sounds = list('sound/machines/computer/computer_mid1.ogg', 'sound/machines/computer/computer_mid2.ogg')
+	mid_sounds = list('sound/machines/computer/computer_mid1.ogg' = 1, 'sound/machines/computer/computer_mid2.ogg' = 1)
 	mid_length = 1.8 SECONDS
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	end_volume = 10
@@ -117,15 +126,22 @@
 	falloff_distance = 1 //Instant falloff after initial tile
 
 /datum/looping_sound/gravgen
-	mid_sounds = list('sound/machines/gravgen/gravgen_mid1.ogg' = 1, 'sound/machines/gravgen/gravgen_mid2.ogg' = 1, 'sound/machines/gravgen/gravgen_mid3.ogg' = 1, 'sound/machines/gravgen/gravgen_mid4.ogg' = 1)
-	mid_length = 1.8 SECONDS
-	extra_range = 10
-	volume = 40
+	start_sound = 'sound/machines/gravgen/grav_gen_start.ogg'
+	start_length = 1 SECONDS
+	mid_sounds = list(
+		'sound/machines/gravgen/grav_gen_mid1.ogg' = 12,
+		'sound/machines/gravgen/grav_gen_mid2.ogg' = 1,
+	)
+	mid_length = 1.1 SECONDS
+	end_sound = 'sound/machines/gravgen/grav_gen_end.ogg'
+	extra_range = 8
+	vary = TRUE
+	volume = 70
 	falloff_distance = 5
 	falloff_exponent = 20
 
 /datum/looping_sound/firealarm
-	mid_sounds = list('sound/machines/FireAlarm1.ogg' = 1,'sound/machines/FireAlarm2.ogg' = 1,'sound/machines/FireAlarm3.ogg' = 1,'sound/machines/FireAlarm4.ogg' = 1)
+	mid_sounds = list('sound/machines/fire_alarm/FireAlarm1.ogg' = 1,'sound/machines/fire_alarm/FireAlarm2.ogg' = 1,'sound/machines/fire_alarm/FireAlarm3.ogg' = 1,'sound/machines/fire_alarm/FireAlarm4.ogg' = 1)
 	mid_length = 2.4 SECONDS
 	volume = 30
 
@@ -135,19 +151,34 @@
 	falloff_exponent = 5
 
 /datum/looping_sound/boiling
-	mid_sounds = list('sound/effects/bubbles2.ogg' = 1)
+	mid_sounds = list('sound/effects/bubbles/bubbles2.ogg' = 1)
 	mid_length = 7 SECONDS
 	volume = 25
 
 /datum/looping_sound/typing
 	mid_sounds = list(
-		'sound/machines/terminal_button01.ogg' = 1,
-		'sound/machines/terminal_button02.ogg' = 1,
-		'sound/machines/terminal_button03.ogg' = 1,
-		'sound/machines/terminal_button04.ogg' = 1,
-		'sound/machines/terminal_button05.ogg' = 1,
-		'sound/machines/terminal_button06.ogg' = 1,
-		'sound/machines/terminal_button07.ogg' = 1,
-		'sound/machines/terminal_button08.ogg' = 1,
+		'sound/machines/terminal/terminal_button01.ogg' = 1,
+		'sound/machines/terminal/terminal_button02.ogg' = 1,
+		'sound/machines/terminal/terminal_button03.ogg' = 1,
+		'sound/machines/terminal/terminal_button04.ogg' = 1,
+		'sound/machines/terminal/terminal_button05.ogg' = 1,
+		'sound/machines/terminal/terminal_button06.ogg' = 1,
+		'sound/machines/terminal/terminal_button07.ogg' = 1,
+		'sound/machines/terminal/terminal_button08.ogg' = 1,
 	)
 	mid_length = 0.3 SECONDS
+
+/datum/looping_sound/soup
+	mid_sounds = list(
+		'sound/effects/soup_boil/soup_boil1.ogg' = 1,
+		'sound/effects/soup_boil/soup_boil2.ogg' = 1,
+		'sound/effects/soup_boil/soup_boil3.ogg' = 1,
+		'sound/effects/soup_boil/soup_boil4.ogg' = 1,
+		'sound/effects/soup_boil/soup_boil5.ogg' = 1,
+	)
+	mid_length = 3 SECONDS
+	volume = 80
+	end_sound = 'sound/effects/soup_boil/soup_boil_end.ogg'
+	end_volume = 60
+	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
+	falloff_exponent = 4

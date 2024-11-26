@@ -3,6 +3,8 @@
 	var/can_buckle = FALSE
 	/// Bed-like behaviour, forces mob.lying = buckle_lying if not set to [NO_BUCKLE_LYING].
 	var/buckle_lying = NO_BUCKLE_LYING
+	/// Bed-like behaviour, sets mob dir to buckle_dir if not set to [BUCKLE_MATCH_DIR]. If set to [BUCKLE_MATCH_DIR], makes mob dir match ours.
+	var/buckle_dir = BUCKLE_MATCH_DIR
 	/// Require people to be handcuffed before being able to buckle. eg: pipes
 	var/buckle_requires_restraints = FALSE
 	/// The mobs currently buckled to this atom
@@ -42,8 +44,7 @@
 		else
 			return user_unbuckle_mob(buckled_mobs[1], user)
 
-/atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
-	. = ..()
+/atom/movable/mouse_drop_receive(mob/living/M, mob/user, params)
 	return mouse_buckle_handling(M, user)
 
 /**
@@ -107,7 +108,10 @@
 	M.set_glide_size(glide_size)
 
 	M.Move(loc)
-	M.setDir(dir)
+	if(buckle_dir == BUCKLE_MATCH_DIR)
+		M.setDir(dir)
+	else
+		M.setDir(buckle_dir)
 
 	//Something has unbuckled us in reaction to the above movement
 	if(!M.buckled)
@@ -211,21 +215,23 @@
 	if(target == src)
 		return FALSE
 
-	// Check if the target to buckle isn't INSIDE OF A WALL
-	if(!isopenturf(loc) || !isopenturf(target.loc))
-		return FALSE
-
-	// Check if the target to buckle isn't A SOLID OBJECT (not including vehicles)
 	var/turf/ground = get_turf(src)
-	if(ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-		return FALSE
+	// If we're not already on the same turf as our target...
+	if(get_turf(target) != ground)
+		// Check if the target to buckle isn't INSIDE OF A WALL
+		if(!isopenturf(loc) || !isopenturf(target.loc))
+			return FALSE
+
+		// Check if the target to buckle isn't INSIDE A SOLID OBJECT (not including vehicles)
+		if(ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+			return FALSE
+
+		// If we're checking the loc, make sure the target is on the thing we're bucking them to.
+		if(check_loc && !target.Adjacent(src))
+			return FALSE
 
 	// Check if this atom can have things buckled to it.
 	if(!can_buckle && !force)
-		return FALSE
-
-	// If we're checking the loc, make sure the target is on the thing we're bucking them to.
-	if(check_loc && !target.Adjacent(src))
 		return FALSE
 
 	// Make sure the target isn't already buckled to something.
@@ -262,7 +268,7 @@
  */
 /atom/movable/proc/is_user_buckle_possible(mob/living/target, mob/user, check_loc = TRUE)
 	// Standard adjacency and other checks.
-	if(!Adjacent(user) || !Adjacent(target) || !isturf(user.loc) || user.incapacitated() || target.anchored)
+	if(!Adjacent(user) || !Adjacent(target) || !isturf(user.loc) || user.incapacitated || target.anchored)
 		return FALSE
 
 	if(iscarbon(user))

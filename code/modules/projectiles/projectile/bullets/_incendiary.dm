@@ -30,7 +30,7 @@
 	pass_flags = PASSTABLE | PASSMOB
 	sharpness = NONE
 	shrapnel_type = null
-	embedding = null
+	embed_type = null
 	impact_effect_type = null
 	suppressed = SUPPRESSED_VERY
 	damage_type = BURN
@@ -69,7 +69,7 @@
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
 		return
-	var/turf/throw_at_turf = get_turf_in_angle(Angle, current_turf, 7)
+	var/turf/throw_at_turf = get_turf_in_angle(angle, current_turf, 7)
 	var/thrown_items = 0
 
 	for(var/iter in current_turf.contents)

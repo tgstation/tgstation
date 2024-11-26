@@ -9,7 +9,6 @@
 /datum/component/riding
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	var/last_move_diagonal = FALSE
 	///tick delay between movements, lower = faster, higher = slower
 	var/vehicle_move_delay = 2
 
@@ -48,7 +47,7 @@
 	COOLDOWN_DECLARE(vehicle_move_cooldown)
 
 
-/datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, buckle_mob_flags= NONE, potion_boost = FALSE)
+/datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, buckle_mob_flags= NONE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -56,7 +55,7 @@
 	riding_mob.updating_glide_size = FALSE
 	ride_check_flags |= buckle_mob_flags
 
-	if(potion_boost)
+	if(HAS_TRAIT(parent, TRAIT_SPEED_POTIONED))
 		vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
 
 /datum/component/riding/RegisterWithParent()
@@ -118,6 +117,7 @@
 		if (HAS_TRAIT(parent, trait))
 			ADD_TRAIT(rider, trait, REF(src))
 	rider.add_traits(rider_traits, REF(src))
+	post_vehicle_mob_buckle(movable_parent, rider)
 
 /// This proc is called when the rider attempts to grab the thing they're riding, preventing them from doing so.
 /datum/component/riding/proc/on_rider_try_pull(mob/living/rider_pulling, atom/movable/target, force)
@@ -126,6 +126,10 @@
 		var/mob/living/ridden = parent
 		ridden.balloon_alert(rider_pulling, "not while riding it!")
 		return COMSIG_LIVING_CANCEL_PULL
+
+///any behavior we want to happen after buckling the mob
+/datum/component/riding/proc/post_vehicle_mob_buckle(atom/movable/ridden, atom/movable/rider)
+	return TRUE
 
 /// Some ridable atoms may want to only show on top of the rider in certain directions, like wheelchairs
 /datum/component/riding/proc/handle_vehicle_layer(dir)
@@ -191,7 +195,7 @@
 					if(diroffsets.len == 3)
 						buckled_mob.layer = diroffsets[3]
 					break dir_loop
-	var/list/static/default_vehicle_pixel_offsets = list(TEXT_NORTH = list(0, 0), TEXT_SOUTH = list(0, 0), TEXT_EAST = list(0, 0), TEXT_WEST = list(0, 0))
+	var/static/list/default_vehicle_pixel_offsets = list(TEXT_NORTH = list(0, 0), TEXT_SOUTH = list(0, 0), TEXT_EAST = list(0, 0), TEXT_WEST = list(0, 0))
 	var/px = default_vehicle_pixel_offsets[AM_dir]
 	var/py = default_vehicle_pixel_offsets[AM_dir]
 	if(directional_vehicle_offsets[AM_dir])

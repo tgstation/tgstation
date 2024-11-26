@@ -14,7 +14,7 @@
 	throw_range = 7
 	attack_verb_continuous = list("attacks")
 	attack_verb_simple = list("attack")
-	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH
+	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	/// Artistic style of the deck
 	var/deckstyle = "nanotrasen"
 	/// If the cards in the deck have different icon states (blank and CAS decks do not)
@@ -95,7 +95,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Combine cards"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/toy/crayon) || istype(held_item, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = blank ? "Write on card" : "Mark card"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -103,7 +103,7 @@
 
 /obj/item/toy/singlecard/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] an unlucky card!"))
-	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE)
 	return BRUTELOSS
 
 /**
@@ -170,10 +170,10 @@
 			user.balloon_alert_to_viewers("deals a card")
 
 		var/obj/item/toy/cards/cardhand/new_cardhand = new (drop_location())
-		new_cardhand.insert(src)
-		new_cardhand.insert(card)
 		new_cardhand.pixel_x = pixel_x
 		new_cardhand.pixel_y = pixel_y
+		new_cardhand.insert(src)
+		new_cardhand.insert(card)
 
 		if(!isturf(loc)) // make a cardhand in our active hand
 			user.temporarilyRemoveItemFromInventory(src, TRUE)

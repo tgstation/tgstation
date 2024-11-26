@@ -113,7 +113,7 @@
 		/obj/item/food/flatdough = 1,
 		/datum/reagent/consumable/milk = 1,
 		/datum/reagent/consumable/cherryjelly = 5,
-		/obj/item/stock_parts/cell/super =1,
+		/obj/item/stock_parts/power_store/cell/super =1,
 		/obj/item/melee/sabre = 1
 	)
 	result = /obj/item/food/powercrepe
@@ -154,8 +154,8 @@
 /datum/crafting_recipe/food/butterbear //ITS ALIVEEEEEE!
 	name = "Living bear/butter hybrid"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/heart = 1,
 		/obj/item/food/butter = 4,
 		/obj/item/food/meat/slab = 5,
 		/datum/reagent/blood = 50,

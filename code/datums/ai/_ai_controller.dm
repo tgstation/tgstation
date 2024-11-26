@@ -20,9 +20,9 @@ multiple modular subtrees with behaviors
 	///Bitfield of traits for this AI to handle extra behavior
 	var/ai_traits = NONE
 	///Current actions planned to be performed by the AI in the upcoming plan
-	var/list/planned_behaviors
+	var/list/planned_behaviors = list()
 	///Current actions being performed by the AI.
-	var/list/current_behaviors
+	var/list/current_behaviors = list()
 	///Current actions and their respective last time ran as an assoc list.
 	var/list/behavior_cooldowns = list()
 	///Current status of AI (OFF/ON)
@@ -39,8 +39,6 @@ multiple modular subtrees with behaviors
 	var/continue_processing_when_client = FALSE
 	///distance to give up on target
 	var/max_target_distance = 14
-	///Cooldown for new plans, to prevent AI from going nuts if it can't think of new plans and looping on end
-	COOLDOWN_DECLARE(failed_planning_cooldown)
 	///All subtrees this AI has available, will run them in order, so make sure they're in the order you want them to run. On initialization of this type, it will start as a typepath(s) and get converted to references of ai_subtrees found in SSai_controllers when init_subtrees() is called
 	var/list/planning_subtrees
 
@@ -62,13 +60,22 @@ multiple modular subtrees with behaviors
 	var/can_idle = TRUE
 	///What distance should we be checking for interesting things when considering idling/deidling? Defaults to AI_DEFAULT_INTERESTING_DIST
 	var/interesting_dist = AI_DEFAULT_INTERESTING_DIST
+	/// TRUE if we're able to run, FALSE if we aren't
+	/// Should not be set manually, override get_able_to_run() instead
+	/// Make sure you hook update_able_to_run() in setup_able_to_run() to whatever parameters changing that you added
+	/// Otherwise we will not pay attention to them changing
+	var/able_to_run = FALSE
+	/// are we even able to plan?
+	var/able_to_plan = TRUE
+	/// are we currently on failed planning timeout?
+	var/on_failed_planning_timeout = FALSE
 
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
 	init_subtrees()
 
 	if(idle_behavior)
-		idle_behavior = new idle_behavior()
+		idle_behavior = SSidle_ai_behaviors.idle_behaviors[idle_behavior]
 
 	if(!isnull(new_pawn)) // unit tests need the ai_controller to exist in isolation due to list schenanigans i hate it here
 		PossessPawn(new_pawn)
@@ -83,8 +90,17 @@ multiple modular subtrees with behaviors
 
 ///Sets the current movement target, with an optional param to override the movement behavior
 /datum/ai_controller/proc/set_movement_target(source, atom/target, datum/ai_movement/new_movement)
+	if(current_movement_target)
+		UnregisterSignal(current_movement_target, list(COMSIG_MOVABLE_MOVED, COMSIG_PREQDELETED))
+	if(!isnull(target) && !isatom(target))
+		stack_trace("[pawn]'s current movement target is not an atom, rather a [target.type]! Did you accidentally set it to a weakref?")
+		CancelActions()
+		return
 	movement_target_source = source
 	current_movement_target = target
+	if(!isnull(current_movement_target))
+		RegisterSignal(current_movement_target, COMSIG_MOVABLE_MOVED, PROC_REF(on_movement_target_move))
+		RegisterSignal(current_movement_target, COMSIG_PREQDELETED, PROC_REF(on_movement_target_delete))
 	if(new_movement)
 		change_ai_movement_type(new_movement)
 
@@ -103,12 +119,13 @@ multiple modular subtrees with behaviors
 		return
 	var/list/temp_subtree_list = list()
 	for(var/subtree in planning_subtrees)
-		var/subtree_instance = SSai_controllers.ai_subtrees[subtree]
+		var/subtree_instance = GLOB.ai_subtrees[subtree]
 		temp_subtree_list += subtree_instance
 	planning_subtrees = temp_subtree_list
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)
+	SHOULD_CALL_PARENT(TRUE)
 	if(pawn) //Reset any old signals
 		UnpossessPawn(FALSE)
 
@@ -124,7 +141,7 @@ multiple modular subtrees with behaviors
 
 	var/turf/pawn_turf = get_turf(pawn)
 	if(pawn_turf)
-		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] += src
+		GLOB.ai_controllers_by_zlevel[pawn_turf.z] += src
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_POSSESSED_PAWN)
 
@@ -133,6 +150,8 @@ multiple modular subtrees with behaviors
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
+	update_able_to_run()
+	setup_able_to_run()
 
 	our_cells = new(interesting_dist, interesting_dist, 1)
 	set_new_cells()
@@ -143,6 +162,20 @@ multiple modular subtrees with behaviors
 	SIGNAL_HANDLER
 
 	set_new_cells()
+	if(current_movement_target)
+		check_target_max_distance()
+
+/datum/ai_controller/proc/on_movement_target_move(atom/source)
+	SIGNAL_HANDLER
+	check_target_max_distance()
+
+/datum/ai_controller/proc/on_movement_target_delete(atom/source)
+	SIGNAL_HANDLER
+	set_movement_target(source = type, target = null)
+
+/datum/ai_controller/proc/check_target_max_distance()
+	if(get_dist(current_movement_target, pawn) > max_target_distance)
+		CancelActions()
 
 /datum/ai_controller/proc/set_new_cells()
 	if(isnull(our_cells))
@@ -172,9 +205,21 @@ multiple modular subtrees with behaviors
 			return FALSE
 	return TRUE
 
-/datum/ai_controller/proc/recalculate_idle()
+/datum/ai_controller/proc/recalculate_idle(datum/exited)
 	if(ai_status == AI_STATUS_OFF)
 		return
+
+	var/distance = INFINITY
+	if(islist(exited))
+		var/list/exited_list = exited
+		distance = get_dist(pawn, exited_list[1])
+	else if(isatom(exited))
+		var/atom/exited_atom = exited
+		distance = get_dist(pawn, exited_atom)
+
+	if(distance <= interesting_dist) //is our target in between interesting cells?
+		return
+
 	if(should_idle())
 		set_ai_status(AI_STATUS_IDLE)
 
@@ -187,7 +232,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/on_client_exit(datum/source, datum/exited)
 	SIGNAL_HANDLER
 
-	recalculate_idle()
+	recalculate_idle(exited)
 
 /// Sets the AI on or off based on current conditions, call to reset after you've manually disabled it somewhere
 /datum/ai_controller/proc/reset_ai_status()
@@ -217,32 +262,25 @@ multiple modular subtrees with behaviors
 	if(!pawn_turf)
 		CRASH("AI controller [src] controlling pawn ([pawn]) is not on a turf.")
 #endif
-	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]))
+	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]) || on_failed_planning_timeout || !able_to_run)
 		return AI_STATUS_OFF
 	if(should_idle())
 		return AI_STATUS_IDLE
 	return AI_STATUS_ON
 
-/datum/ai_controller/proc/get_current_turf()
-	var/mob/living/mob_pawn = pawn
-	var/turf/pawn_turf = get_turf(mob_pawn)
-	to_chat(world, "[pawn_turf]")
-
 ///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
 /datum/ai_controller/proc/on_changed_z_level(atom/source, turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	SIGNAL_HANDLER
-	var/mob/mob_pawn = pawn
-	if((mob_pawn?.client && !continue_processing_when_client))
-		return
+	if (ismob(pawn))
+		var/mob/mob_pawn = pawn
+		if((mob_pawn?.client && !continue_processing_when_client))
+			return
 	if(old_turf)
-		SSai_controllers.ai_controllers_by_zlevel[old_turf.z] -= src
-	if(new_turf)
-		SSai_controllers.ai_controllers_by_zlevel[new_turf.z] += src
-		var/new_level_clients = SSmobs.clients_by_zlevel[new_turf.z].len
-		if(new_level_clients)
-			set_ai_status(AI_STATUS_IDLE)
-		else
-			set_ai_status(AI_STATUS_OFF)
+		GLOB.ai_controllers_by_zlevel[old_turf.z] -= src
+	if(isnull(new_turf))
+		return
+	GLOB.ai_controllers_by_zlevel[new_turf.z] += src
+	reset_ai_status()
 
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
@@ -250,52 +288,79 @@ multiple modular subtrees with behaviors
 
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/UnpossessPawn(destroy)
+	SHOULD_CALL_PARENT(TRUE)
 	if(isnull(pawn))
 		return // instantiated without an applicable pawn, fine
 
 	set_ai_status(AI_STATUS_OFF)
 	UnregisterSignal(pawn, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
+	clear_able_to_run()
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
 	var/turf/pawn_turf = get_turf(pawn)
 	if(pawn_turf)
-		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] -= src
+		GLOB.ai_controllers_by_zlevel[pawn_turf.z] -= src
 	if(ai_status)
-		SSai_controllers.ai_controllers_by_status[ai_status] -= src
+		GLOB.ai_controllers_by_status[ai_status] -= src
+	remove_from_unplanned_controllers()
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
 		qdel(src)
 
-///Returns TRUE if the ai controller can actually run at the moment.
-/datum/ai_controller/proc/able_to_run()
+/datum/ai_controller/proc/setup_able_to_run()
+	// paused_until is handled by PauseAi() manually
+	RegisterSignals(pawn, list(SIGNAL_ADDTRAIT(TRAIT_AI_PAUSED), SIGNAL_REMOVETRAIT(TRAIT_AI_PAUSED)), PROC_REF(update_able_to_run))
+
+/datum/ai_controller/proc/clear_able_to_run()
+	UnregisterSignal(pawn, list(SIGNAL_ADDTRAIT(TRAIT_AI_PAUSED), SIGNAL_REMOVETRAIT(TRAIT_AI_PAUSED)))
+
+/datum/ai_controller/proc/update_able_to_run()
+	SIGNAL_HANDLER
+	var/run_flags = get_able_to_run()
+	if(run_flags & AI_UNABLE_TO_RUN)
+		able_to_run = FALSE
+		GLOB.move_manager.stop_looping(pawn) //stop moving
+	else
+		able_to_run = TRUE
+	set_ai_status(get_expected_ai_status(), run_flags)
+
+///Returns TRUE if the ai controller can actually run at the moment, FALSE otherwise
+/datum/ai_controller/proc/get_able_to_run()
 	if(HAS_TRAIT(pawn, TRAIT_AI_PAUSED))
-		return FALSE
+		return AI_UNABLE_TO_RUN
 	if(world.time < paused_until)
+		return AI_UNABLE_TO_RUN
+	return NONE
+
+///Can this pawn interact with objects?
+/datum/ai_controller/proc/ai_can_interact()
+	SHOULD_CALL_PARENT(TRUE)
+	return !QDELETED(pawn)
+
+///Interact with objects
+/datum/ai_controller/proc/ai_interact(target, combat_mode, list/modifiers)
+	if(!ai_can_interact())
 		return FALSE
+
+	var/atom/final_target = isdatum(target) ? target : blackboard[target] //incase we got a blackboard key instead
+
+	if(QDELETED(final_target))
+		return FALSE
+	var/params = list2params(modifiers)
+	var/mob/living/living_pawn = pawn
+	if(isnull(combat_mode))
+		living_pawn.ClickOn(final_target, params)
+		return TRUE
+
+	var/old_combat_mode = living_pawn.combat_mode
+	living_pawn.set_combat_mode(combat_mode)
+	living_pawn.ClickOn(final_target, params)
+	living_pawn.set_combat_mode(old_combat_mode)
 	return TRUE
 
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
-
-	if(!able_to_run())
-		SSmove_manager.stop_looping(pawn) //stop moving
-		return //this should remove them from processing in the future through event-based stuff.
-
-	if(!LAZYLEN(current_behaviors) && idle_behavior)
-		idle_behavior.perform_idle_behavior(seconds_per_tick, src) //Do some stupid shit while we have nothing to do
-		return
-
-	if(current_movement_target)
-		if(!isatom(current_movement_target))
-			stack_trace("[pawn]'s current movement target is not an atom, rather a [current_movement_target.type]! Did you accidentally set it to a weakref?")
-			CancelActions()
-			return
-
-		if(get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
-			CancelActions()
-			return
-
 
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 
@@ -304,92 +369,109 @@ multiple modular subtrees with behaviors
 		// Action cooldowns cannot happen faster than seconds_per_tick, so seconds_per_tick should be the value used in this scenario.
 		var/action_seconds_per_tick = max(current_behavior.get_cooldown(src) * 0.1, seconds_per_tick)
 
-		if(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT) //Might need to move closer
-			if(!current_movement_target)
-				stack_trace("[pawn] wants to perform action type [current_behavior.type] which requires movement, but has no current movement target!")
-				return //This can cause issues, so don't let these slide.
-			///Stops pawns from performing such actions that should require the target to be adjacent.
-			var/atom/movable/moving_pawn = pawn
-			var/can_reach = !(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_REACH) || moving_pawn.CanReach(current_movement_target)
-			if(can_reach && current_behavior.required_distance >= get_dist(moving_pawn, current_movement_target)) ///Are we close enough to engage?
-				if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.
-					ai_movement.stop_moving_towards(src)
-
-				if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
-					continue
-				ProcessBehavior(action_seconds_per_tick, current_behavior)
-				return
-
-			else if(ai_movement.moving_controllers[src] != current_movement_target) //We're too far, if we're not already moving start doing it.
-				ai_movement.start_moving_towards(src, current_movement_target, current_behavior.required_distance) //Then start moving
-
-			if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
-				if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
-					continue
-				ProcessBehavior(action_seconds_per_tick, current_behavior)
-				return
-		else //No movement required
+		if(!(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT))
 			if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
 				continue
 			ProcessBehavior(action_seconds_per_tick, current_behavior)
 			return
 
-///Determines whether the AI can currently make a new plan
-/datum/ai_controller/proc/able_to_plan()
-	. = TRUE
-	if(QDELETED(pawn))
-		return FALSE
-	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
-		if(!(current_behavior.behavior_flags & AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION)) //We have a behavior that blocks planning
-			. = FALSE
-			break
+		if(isnull(current_movement_target))
+			fail_behavior(current_behavior)
+			return
+
+		///Stops pawns from performing such actions that should require the target to be adjacent.
+		var/atom/movable/moving_pawn = pawn
+		var/can_reach = !(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_REACH) || moving_pawn.CanReach(current_movement_target)
+		if(can_reach && current_behavior.required_distance >= get_dist(moving_pawn, current_movement_target)) ///Are we close enough to engage?
+			if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.
+				ai_movement.stop_moving_towards(src)
+
+			if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
+				continue
+			ProcessBehavior(action_seconds_per_tick, current_behavior)
+			return
+
+		if(ai_movement.moving_controllers[src] != current_movement_target) //We're too far, if we're not already moving start doing it.
+			ai_movement.start_moving_towards(src, current_movement_target, current_behavior.required_distance) //Then start moving
+
+		if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
+			if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
+				continue
+			ProcessBehavior(action_seconds_per_tick, current_behavior)
+			return
 
 ///This is where you decide what actions are taken by the AI.
 /datum/ai_controller/proc/SelectBehaviors(seconds_per_tick)
 	SHOULD_NOT_SLEEP(TRUE) //Fuck you don't sleep in procs like this.
-	if(!COOLDOWN_FINISHED(src, failed_planning_cooldown))
-		return FALSE
+	planned_behaviors.Cut()
 
-	LAZYINITLIST(current_behaviors)
-	LAZYCLEARLIST(planned_behaviors)
-
-	if(LAZYLEN(planning_subtrees))
-		for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
-			if(subtree.SelectBehaviors(src, seconds_per_tick) == SUBTREE_RETURN_FINISH_PLANNING)
-				break
+	for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
+		if(subtree.SelectBehaviors(src, seconds_per_tick) == SUBTREE_RETURN_FINISH_PLANNING)
+			break
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, current_behaviors, planned_behaviors)
-	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
-		if(LAZYACCESS(planned_behaviors, current_behavior))
-			continue
+	for(var/datum/ai_behavior/forgotten_behavior as anything in current_behaviors - planned_behaviors)
 		var/list/arguments = list(src, FALSE)
 		var/list/stored_arguments = behavior_args[type]
 		if(stored_arguments)
 			arguments += stored_arguments
-		current_behavior.finish_action(arglist(arguments))
+		forgotten_behavior.finish_action(arglist(arguments))
 
 ///This proc handles changing ai status, and starts/stops processing if required.
-/datum/ai_controller/proc/set_ai_status(new_ai_status)
+/datum/ai_controller/proc/set_ai_status(new_ai_status, additional_flags = NONE)
 	if(ai_status == new_ai_status)
 		return FALSE //no change
 
 	//remove old status, if we've got one
 	if(ai_status)
-		SSai_controllers.ai_controllers_by_status[ai_status] -= src
+		GLOB.ai_controllers_by_status[ai_status] -= src
+	remove_from_unplanned_controllers()
+	stop_previous_processing()
 	ai_status = new_ai_status
-	SSai_controllers.ai_controllers_by_status[new_ai_status] += src
+	GLOB.ai_controllers_by_status[new_ai_status] += src
+	if(ai_status == AI_STATUS_OFF)
+		if(!(additional_flags & AI_PREVENT_CANCEL_ACTIONS))
+			CancelActions()
+		return
+	if(!length(current_behaviors))
+		add_to_unplanned_controllers()
+		return
+	start_ai_processing()
+
+/datum/ai_controller/proc/start_ai_processing()
 	switch(ai_status)
 		if(AI_STATUS_ON)
 			START_PROCESSING(SSai_behaviors, src)
-		if(AI_STATUS_OFF, AI_STATUS_IDLE)
+		if(AI_STATUS_IDLE)
+			START_PROCESSING(SSidle_ai_behaviors, src)
+
+/datum/ai_controller/proc/stop_previous_processing()
+	switch(ai_status)
+		if(AI_STATUS_ON)
 			STOP_PROCESSING(SSai_behaviors, src)
-			CancelActions()
+		if(AI_STATUS_IDLE)
+			STOP_PROCESSING(SSidle_ai_behaviors, src)
 
 /datum/ai_controller/proc/PauseAi(time)
 	paused_until = world.time + time
+	update_able_to_run()
+	addtimer(CALLBACK(src, PROC_REF(update_able_to_run)), time)
+
+/datum/ai_controller/proc/add_to_unplanned_controllers()
+	if(isnull(ai_status) || ai_status == AI_STATUS_OFF || isnull(idle_behavior))
+		return
+	GLOB.unplanned_controllers[ai_status][src] = TRUE
+
+/datum/ai_controller/proc/remove_from_unplanned_controllers()
+	if(isnull(ai_status) || ai_status == AI_STATUS_OFF)
+		return
+	GLOB.unplanned_controllers[ai_status] -= src
+	for(var/datum/controller/subsystem/unplanned_controllers/potential_holder as anything in GLOB.unplanned_controller_subsystems)
+		if(potential_holder.target_status == ai_status)
+			potential_holder.current_run -= src
 
 /datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
-	behavior_cooldowns[behavior.type] = new_cooldown
+	behavior_cooldowns[behavior] = new_cooldown
 
 ///Call this to add a behavior to the stack.
 /datum/ai_controller/proc/queue_behavior(behavior_type, ...)
@@ -399,43 +481,87 @@ multiple modular subtrees with behaviors
 	var/list/arguments = args.Copy()
 	arguments[1] = src
 
-	if(LAZYACCESS(current_behaviors, behavior)) ///It's still in the plan, don't add it again to current_behaviors but do keep it in the planned behavior list so its not cancelled
-		LAZYADDASSOC(planned_behaviors, behavior, TRUE)
+	if(current_behaviors[behavior]) ///It's still in the plan, don't add it again to current_behaviors but do keep it in the planned behavior list so its not cancelled
+		planned_behaviors[behavior] = TRUE
 		return
 
 	if(!behavior.setup(arglist(arguments)))
 		return
-	LAZYADDASSOC(current_behaviors, behavior, TRUE)
-	LAZYADDASSOC(planned_behaviors, behavior, TRUE)
+
+	var/should_exit_unplanned = !length(current_behaviors)
+	planned_behaviors[behavior] = TRUE
+	current_behaviors[behavior] = TRUE
+
 	arguments.Cut(1, 2)
 	if(length(arguments))
 		behavior_args[behavior_type] = arguments
 	else
 		behavior_args -= behavior_type
+
+	if(!(behavior.behavior_flags & AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION)) //this one blocks planning!
+		able_to_plan = FALSE
+
+	if(should_exit_unplanned)
+		exit_unplanned_mode()
+
 	SEND_SIGNAL(src, AI_CONTROLLER_BEHAVIOR_QUEUED(behavior_type), arguments)
+
+/datum/ai_controller/proc/check_able_to_plan()
+	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
+		if(!(current_behavior.behavior_flags & AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION)) //We have a behavior that blocks planning
+			return FALSE
+	return TRUE
+
+/datum/ai_controller/proc/dequeue_behavior(datum/ai_behavior/behavior)
+	current_behaviors -= behavior
+	able_to_plan = check_able_to_plan()
+	if(!length(current_behaviors))
+		enter_unplanned_mode()
+
+/datum/ai_controller/proc/exit_unplanned_mode()
+	remove_from_unplanned_controllers()
+	start_ai_processing()
+
+/datum/ai_controller/proc/enter_unplanned_mode()
+	add_to_unplanned_controllers()
+	stop_previous_processing()
 
 /datum/ai_controller/proc/ProcessBehavior(seconds_per_tick, datum/ai_behavior/behavior)
 	var/list/arguments = list(seconds_per_tick, src)
 	var/list/stored_arguments = behavior_args[behavior.type]
 	if(stored_arguments)
 		arguments += stored_arguments
-	behavior.perform(arglist(arguments))
+
+	var/process_flags = behavior.perform(arglist(arguments))
+	if(process_flags & AI_BEHAVIOR_DELAY)
+		behavior_cooldowns[behavior] = world.time + behavior.get_cooldown(src)
+	if(process_flags & AI_BEHAVIOR_FAILED)
+		arguments[1] = src
+		arguments[2] = FALSE
+		behavior.finish_action(arglist(arguments))
+	else if (process_flags & AI_BEHAVIOR_SUCCEEDED)
+		arguments[1] = src
+		arguments[2] = TRUE
+		behavior.finish_action(arglist(arguments))
 
 /datum/ai_controller/proc/CancelActions()
-	if(!LAZYLEN(current_behaviors))
+	if(!length(current_behaviors))
 		return
-	for(var/i in current_behaviors)
-		var/datum/ai_behavior/current_behavior = i
-		var/list/arguments = list(src, FALSE)
-		var/list/stored_arguments = behavior_args[current_behavior.type]
-		if(stored_arguments)
-			arguments += stored_arguments
-		current_behavior.finish_action(arglist(arguments))
+	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
+		fail_behavior(current_behavior)
+
+/datum/ai_controller/proc/fail_behavior(datum/ai_behavior/current_behavior)
+	var/list/arguments = list(src, FALSE)
+	var/list/stored_arguments = behavior_args[current_behavior.type]
+	if(stored_arguments)
+		arguments += stored_arguments
+	current_behavior.finish_action(arglist(arguments))
 
 /// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
 	reset_ai_status()
+	update_able_to_run()
 
 /datum/ai_controller/proc/on_sentience_gained()
 	SIGNAL_HANDLER
@@ -460,7 +586,10 @@ multiple modular subtrees with behaviors
 
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding. Return the access list you want to use
 /datum/ai_controller/proc/get_access()
-	return
+	if(!isliving(pawn))
+		return
+	var/mob/living/living_pawn = pawn
+	return living_pawn.get_access()
 
 ///Returns the minimum required distance to preform one of our current behaviors. Honestly this should just be cached or something but fuck you
 /datum/ai_controller/proc/get_minimum_distance()
@@ -472,6 +601,15 @@ multiple modular subtrees with behaviors
 		if(iter_behavior.required_distance < minimum_distance)
 			minimum_distance = iter_behavior.required_distance
 	return minimum_distance
+
+/datum/ai_controller/proc/planning_failed()
+	on_failed_planning_timeout = TRUE
+	set_ai_status(get_expected_ai_status())
+	addtimer(CALLBACK(src, PROC_REF(resume_planning)), AI_FAILED_PLANNING_COOLDOWN)
+
+/datum/ai_controller/proc/resume_planning()
+	on_failed_planning_timeout = FALSE
+	set_ai_status(get_expected_ai_status())
 
 /// Returns true if we have a blackboard key with the provided key and it is not qdeleting
 /datum/ai_controller/proc/blackboard_key_exists(key)
@@ -609,7 +747,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/post_blackboard_key_set(key)
 	if (isnull(pawn))
 		return
-	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key))
+	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key), key)
 
 /**
  * Adds the passed "thing" to the associated key
@@ -699,6 +837,8 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/clear_blackboard_key(key)
 	if(isnull(blackboard[key]))
 		return
+	if(pawn && (SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_PRECLEAR(key))))
+		return
 	CLEAR_AI_DATUM_TARGET(blackboard[key], key)
 	blackboard[key] = null
 	if(isnull(pawn))
@@ -738,6 +878,19 @@ multiple modular subtrees with behaviors
 
 	CRASH("remove_thing_from_blackboard_key called with an invalid \"thing\" argument ([thing]). \
 		(The passed value is not tracked in the passed list.)")
+
+///removes a tracked object from a lazylist
+/datum/ai_controller/proc/remove_from_blackboard_lazylist_key(key, thing)
+	var/lazylist = blackboard[key]
+	if(isnull(lazylist))
+		return
+	for(var/key_index in lazylist)
+		if(thing == key_index || lazylist[key_index] == thing)
+			CLEAR_AI_DATUM_TARGET(thing, key)
+			lazylist -= key_index
+			break
+	if(!LAZYLEN(lazylist))
+		clear_blackboard_key(key)
 
 /// Signal proc to go through every key and remove the datum from all keys it finds
 /datum/ai_controller/proc/sig_remove_from_blackboard(datum/source)

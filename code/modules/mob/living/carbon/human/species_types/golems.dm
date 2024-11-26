@@ -18,7 +18,6 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_SNOWSTORM_IMMUNE, // Shared with plasma river... but I guess if you can survive a plasma river a blizzard isn't a big deal
 		TRAIT_UNHUSKABLE,
-		TRAIT_BOULDER_BREAKER,
 	)
 	mutantheart = null
 	mutantlungs = null
@@ -35,13 +34,13 @@
 	bodytemp_heat_damage_limit = BODYTEMP_HEAT_LAVALAND_SAFE
 	bodytemp_cold_damage_limit = BODYTEMP_COLD_ICEBOX_SAFE
 
-	mutant_organs = list(/obj/item/organ/internal/adamantine_resonator)
-	mutanteyes = /obj/item/organ/internal/eyes/golem
-	mutantbrain = /obj/item/organ/internal/brain/golem
-	mutanttongue = /obj/item/organ/internal/tongue/golem
-	mutantstomach = /obj/item/organ/internal/stomach/golem
-	mutantliver = /obj/item/organ/internal/liver/golem
-	mutantappendix = /obj/item/organ/internal/appendix/golem
+	mutant_organs = list(/obj/item/organ/adamantine_resonator)
+	mutanteyes = /obj/item/organ/eyes/golem
+	mutantbrain = /obj/item/organ/brain/golem
+	mutanttongue = /obj/item/organ/tongue/golem
+	mutantstomach = /obj/item/organ/stomach/golem
+	mutantliver = /obj/item/organ/liver/golem
+	mutantappendix = /obj/item/organ/appendix/golem
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem,
@@ -50,15 +49,6 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem,
 	)
-
-	/// Chance that we will generate a human surname, for lore reasons
-	var/human_surname_chance = 3
-
-/datum/species/golem/random_name(gender,unique,lastname)
-	var/name = pick(GLOB.golem_names)
-	if (prob(human_surname_chance))
-		name += " [pick(GLOB.last_names)]"
-	return name
 
 /datum/species/golem/get_physical_attributes()
 	return "Golems are hardy creatures made out of stone, which are thus naturally resistant to many dangers, including asphyxiation, fire, radiation, electricity, and viruses.\

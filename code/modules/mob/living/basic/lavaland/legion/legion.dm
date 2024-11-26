@@ -10,7 +10,7 @@
 	icon_living = "legion"
 	icon_dead = "legion"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL|MOB_UNDEAD
 	basic_mob_flags = DEL_ON_DEATH
 	speed = 3
 	maxHealth = 75
@@ -21,7 +21,7 @@
 	attack_verb_continuous = "lashes out at"
 	attack_verb_simple = "lash out at"
 	speak_emote = list("gurgles")
-	attack_sound = 'sound/weapons/pierce.ogg'
+	attack_sound = 'sound/items/weapons/pierce.ogg'
 	throw_blocked_message = "bounces harmlessly off of"
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
 	death_message = "wails in chorus and dissolves into quivering flesh."
@@ -35,9 +35,14 @@
 
 /mob/living/basic/mining/legion/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, get_loot_list())
 	AddElement(/datum/element/content_barfer)
+	var/list/drops = get_loot_list()
+	if (length(drops))
+		AddElement(/datum/element/death_drops, string_list(drops))
+	assign_abilities()
 
+/// Give the Legion its spells
+/mob/living/basic/mining/legion/proc/assign_abilities()
 	var/datum/action/cooldown/mob_cooldown/skull_launcher/skull_launcher = new(src)
 	skull_launcher.Grant(src)
 	skull_launcher.spawn_type = brood_type
@@ -45,7 +50,7 @@
 
 /// Create what we want to drop on death, in proc form so we can always return a static list
 /mob/living/basic/mining/legion/proc/get_loot_list()
-	var/static/list/death_loot = list(/obj/item/organ/internal/monster_core/regenerative_core/legion)
+	var/static/list/death_loot = list(/obj/item/organ/monster_core/regenerative_core/legion)
 	return death_loot
 
 /mob/living/basic/mining/legion/Exited(atom/movable/gone, direction)
@@ -64,10 +69,11 @@
 	return ..()
 
 /// Put a corpse in this guy
-/mob/living/basic/mining/legion/proc/consume(mob/living/consumed)
+/mob/living/basic/mining/legion/proc/consume(mob/living/carbon/human/consumed)
 	new /obj/effect/gibspawner/generic(consumed.loc)
 	gender = consumed.gender
-	name = consumed.real_name
+	if (!ismonkey(consumed) || consumed == GLOB.the_one_and_only_punpun)
+		name = consumed.real_name
 	consumed.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)
 	consumed.death()
 	consumed.extinguish_mob()
@@ -82,7 +88,7 @@
 	if (prob(75))
 		return
 	// Congratulations you have won a special prize: cancer
-	var/obj/item/organ/internal/legion_tumour/cancer = new()
+	var/obj/item/organ/legion_tumour/cancer = new()
 	cancer.Insert(consumed, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /// A Legion which only drops skeletons instead of corpses which might have fun loot, so it cannot be farmed
@@ -161,5 +167,5 @@
 
 /// Create what we want to drop on death, in proc form so we can always return a static list
 /mob/living/basic/mining/legion/large/get_loot_list()
-	var/static/list/death_loot = list(/obj/item/organ/internal/monster_core/regenerative_core/legion = 3, /obj/effect/mob_spawn/corpse/human/legioninfested = 4)
+	var/static/list/death_loot = list(/obj/item/organ/monster_core/regenerative_core/legion = 3, /obj/effect/mob_spawn/corpse/human/legioninfested = 4)
 	return death_loot

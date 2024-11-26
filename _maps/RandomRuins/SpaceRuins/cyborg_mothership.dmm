@@ -62,7 +62,7 @@
 /turf/template_noop,
 /area/space)
 "s" = (
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "u" = (

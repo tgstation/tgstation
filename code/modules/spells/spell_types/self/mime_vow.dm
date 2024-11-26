@@ -8,7 +8,8 @@
 	panel = "Mime"
 
 	school = SCHOOL_MIME
-	spell_requirements = NONE
+	//MMI mimes should be able to break their vow
+	spell_requirements = SPELL_CASTABLE_AS_BRAIN
 
 	spell_max_level = 1
 
@@ -31,6 +32,6 @@
 	cast_on.log_message("broke [cast_on.p_their()] vow of silence.", LOG_GAME)
 	cast_on.add_mood_event("vow", /datum/mood_event/broken_vow)
 	REMOVE_TRAIT(cast_on, TRAIT_MIMING, "[type]")
-	var/datum/job/mime/mime_job = SSjob.GetJob(JOB_MIME)
+	var/datum/job/mime/mime_job = SSjob.get_job(JOB_MIME)
 	mime_job.total_positions += 1
 	qdel(src)

@@ -64,10 +64,11 @@
 			recharge_console.update_appearance()
 	if(!recharging_mech?.cell)
 		return
-	if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
-		if(!use_energy(active_power_usage * seconds_per_tick, force = FALSE))
-			return
-		charge_cell(recharge_power * seconds_per_tick, recharging_mech.cell, grid_only = TRUE)
+	if(recharging_mech.cell.used_charge())
+		//charge cell, account for heat loss given from work done
+		var/charge_given = charge_cell(recharge_power * seconds_per_tick, recharging_mech.cell, grid_only = TRUE)
+		if(charge_given)
+			use_energy((charge_given + active_power_usage) * 0.01)
 	else
 		recharge_console.update_appearance()
 	if(recharging_mech.loc != recharging_turf)
@@ -113,7 +114,7 @@
 		ui = new(user, src, "MechBayPowerConsole", name)
 		ui.open()
 
-/obj/machinery/computer/mech_bay_power_console/ui_act(action, params)
+/obj/machinery/computer/mech_bay_power_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

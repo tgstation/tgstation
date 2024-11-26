@@ -26,6 +26,9 @@
 	if(isturf(item))
 		RegisterSignal(item, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
 	else
+		// Lest we find ourselves here again, this is intentionally stupid.
+		// It tracks items going out and user actions, otherwise they can refresh the lootpanel.
+		// If this is to be made to track everything, we'll need to make a new signal to specifically create/delete a search object
 		RegisterSignals(item, list(
 			COMSIG_ITEM_PICKUP,
 			COMSIG_MOVABLE_MOVED,
@@ -50,6 +53,7 @@
 	var/build = owner.byond_build
 	var/version = owner.byond_version
 	if(build < 515 || (build == 515 && version < 1635))
+		icon = "n/a"
 		return
 
 	icon = "[item.icon]"
@@ -58,21 +62,22 @@
 
 /datum/search_object/Destroy(force)
 	item = null
+	icon = null
 
 	return ..()
 
 
 /// Generates the icon for the search object. This is the expensive part.
 /datum/search_object/proc/generate_icon(client/owner)
-	if(ismob(item) || length(item.overlays) > 2)
-		icon = costly_icon2html(item, owner, sourceonly = TRUE)
-	else // our pre 515.1635 fallback for normal items
-		icon = icon2html(item, owner, sourceonly = TRUE)
+	icon = costly_icon2html(item, owner, sourceonly = TRUE)
 
 
 /// Parent item has been altered, search object no longer valid
 /datum/search_object/proc/on_item_moved(atom/source)
 	SIGNAL_HANDLER
+
+	if(QDELETED(src))
+		return
 
 	qdel(src)
 
@@ -81,4 +86,4 @@
 /datum/search_object/proc/on_turf_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
 	SIGNAL_HANDLER
 
-	post_change_callbacks += CALLBACK(src, GLOBAL_PROC_REF(qdel), src)
+	post_change_callbacks += CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), src)

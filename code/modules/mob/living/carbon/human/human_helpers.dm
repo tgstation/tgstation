@@ -4,28 +4,6 @@
 		return FALSE
 	return TRUE
 
-///returns a list of "damtype" => damage description based off of which bodypart description is most common
-///used in human examines
-/mob/living/carbon/human/proc/get_majority_bodypart_damage_desc()
-	var/list/seen_damage = list() // This looks like: ({Damage type} = list({Damage description for that damage type} = {number of times it has appeared}, ...), ...)
-	var/list/most_seen_damage = list() // This looks like: ({Damage type} = {Frequency of the most common description}, ...)
-	var/list/final_descriptions = list() // This looks like: ({Damage type} = {Most common damage description for that type}, ...)
-	for(var/obj/item/bodypart/part as anything in bodyparts)
-		for(var/damage_type in part.damage_examines)
-			var/damage_desc = part.damage_examines[damage_type]
-			if(!seen_damage[damage_type])
-				seen_damage[damage_type] = list()
-
-			if(!seen_damage[damage_type][damage_desc])
-				seen_damage[damage_type][damage_desc] = 1
-			else
-				seen_damage[damage_type][damage_desc] += 1
-
-			if(seen_damage[damage_type][damage_desc] > most_seen_damage[damage_type])
-				most_seen_damage[damage_type] = seen_damage[damage_type][damage_desc]
-				final_descriptions[damage_type] = damage_desc
-	return final_descriptions
-
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job", hand_first = TRUE)
@@ -57,15 +35,30 @@
 	return if_no_id
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
-/mob/living/carbon/human/get_visible_name(add_id_name = TRUE)
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
-		return "Unknown"
-	var/list/identity = list(null, null)
+/mob/living/carbon/human/get_visible_name(add_id_name = TRUE, force_real_name = FALSE)
+	var/list/identity = list(null, null, null)
 	SEND_SIGNAL(src, COMSIG_HUMAN_GET_VISIBLE_NAME, identity)
 	var/signal_face = LAZYACCESS(identity, VISIBLE_NAME_FACE)
 	var/signal_id = LAZYACCESS(identity, VISIBLE_NAME_ID)
+	var/force_set = LAZYACCESS(identity, VISIBLE_NAME_FORCED)
+	if(force_set) // our name is overriden by something
+		return signal_face // no need to null-check, because force_set will always set a signal_face
 	var/face_name = !isnull(signal_face) ? signal_face : get_face_name("")
 	var/id_name = !isnull(signal_id) ? signal_id : get_id_name("")
+	if (force_real_name)
+		var/fake_name
+		if (face_name && face_name != real_name)
+			fake_name = face_name
+		if(add_id_name && id_name && id_name != real_name)
+			if (!isnull(fake_name) && id_name != face_name)
+				fake_name = "[fake_name]/[id_name]"
+			else
+				fake_name = id_name
+		if (HAS_TRAIT(src, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN) || (!face_name && !id_name))
+			fake_name = "Unknown"
+		return "[real_name][fake_name ? " (as [fake_name])" : ""]"
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
+		return "Unknown"
 	if(face_name)
 		if(add_id_name && id_name && (id_name != face_name))
 			return "[face_name] (as [id_name])"
@@ -74,27 +67,39 @@
 		return id_name
 	return "Unknown"
 
-//Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
-/mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
+/// Returns "Unknown" if facially disfigured and real_name if not.
+/// Useful for setting name when Fluacided or when updating a human's name variable
+/mob/living/carbon/proc/get_face_name(if_no_face = "Unknown")
+	return real_name
+
+/mob/living/carbon/human/get_face_name(if_no_face = "Unknown")
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return if_no_face //We're Unknown, no face information for you
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) ) //Wearing a mask which hides our face, use id-name if possible
+	for(var/obj/item/worn_item in get_equipped_items())
+		if(!(worn_item.flags_inv & HIDEFACE))
+			continue
 		return if_no_face
-	if( head && (head.flags_inv&HIDEFACE) )
-		return if_no_face //Likewise for hats
-	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
-	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || !real_name || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
+	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(head) || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (head.brutestate + head.burnstate) > 2 || !real_name || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
-/mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
+/mob/living/carbon/proc/get_id_name(if_no_id = "Unknown")
+	return
+
+/mob/living/carbon/human/get_id_name(if_no_id = "Unknown")
 	var/obj/item/storage/wallet/wallet = wear_id
 	var/obj/item/modular_computer/pda = wear_id
 	var/obj/item/card/id/id = wear_id
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		. = if_no_id //You get NOTHING, no id name, good day sir
+		var/list/identity = list(null, null, null)
+		SEND_SIGNAL(src, COMSIG_HUMAN_GET_FORCED_NAME, identity)
+		if(identity[VISIBLE_NAME_FORCED])
+			. = identity[VISIBLE_NAME_FACE] // to return forced names when unknown, instead of ID
+			return
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))
@@ -125,11 +130,16 @@
 /mob/living/carbon/human/proc/check_chunky_fingers()
 	if(HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT) && HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT))
 		return TRUE
-	return (active_hand_index % 2) ? HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT) : HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT)
+	return IS_LEFT_INDEX(active_hand_index) ? HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT) : HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT)
 
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()
 	. += "[dna.species.type]"
+
+/mob/living/carbon/human/proc/get_eye_scars()
+	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	if (!isnull(eyes))
+		return eyes.scarring
 
 /// When we're joining the game in [/mob/dead/new_player/proc/create_character], we increment our scar slot then store the slot in our mind datum.
 /mob/living/carbon/human/proc/increment_scar_slot()
@@ -227,18 +237,6 @@
 	WRITE_FILE(F["scar[char_index]-[scar_index]"], sanitize_text(valid_scars))
 	WRITE_FILE(F["current_scar_index"], sanitize_integer(scar_index))
 
-///Returns death message for mob examine text
-/mob/living/carbon/human/proc/generate_death_examine_text()
-	var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
-	var/t_He = p_They()
-	var/t_his = p_their()
-	var/t_is = p_are()
-	//This checks to see if the body is revivable
-	if(get_organ_by_type(/obj/item/organ/internal/brain) && (client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || (ghost?.can_reenter_corpse && ghost?.client)))
-		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
-	else
-		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
-
 ///copies over clothing preferences like underwear to another human
 /mob/living/carbon/human/proc/copy_clothing_prefs(mob/living/carbon/human/destination)
 	destination.underwear = underwear
@@ -259,7 +257,7 @@
 		if (preference.is_randomizable())
 			preference.apply_to_human(src, preference.create_random_value(preferences))
 
-	fully_replace_character_name(real_name, dna.species.random_name())
+	fully_replace_character_name(real_name, generate_random_mob_name())
 
 /**
  * Setter for mob height
@@ -293,6 +291,11 @@
 			return MONKEY_HEIGHT_DWARF
 		else
 			return HUMAN_HEIGHT_DWARF
+	if(HAS_TRAIT(src, TRAIT_TOO_TALL))
+		if(ismonkey(src))
+			return MONKEY_HEIGHT_TALL
+		else
+			return HUMAN_HEIGHT_TALLEST
 
 	else if(ismonkey(src))
 		return MONKEY_HEIGHT_MEDIUM
@@ -315,16 +318,75 @@
 	clone.fully_replace_character_name(null, dna.real_name)
 	copy_clothing_prefs(clone)
 	clone.age = age
+	clone.voice = voice
+	clone.pitch = pitch
 	dna.transfer_identity(clone, transfer_SE = TRUE, transfer_species = TRUE)
 
-	clone.dress_up_as_job(SSjob.GetJob(job))
+	clone.dress_up_as_job(SSjob.get_job(job))
 
 	for(var/datum/quirk/original_quircks as anything in quirks)
 		clone.add_quirk(original_quircks.type, override_client = client)
 	for(var/datum/mutation/human/mutations in dna.mutations)
-		clone.dna.add_mutation(mutations)
+		clone.dna.add_mutation(mutations, MUT_NORMAL)
 
 	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	clone.domutcheck()
 
 	return clone
+
+/mob/living/carbon/human/calculate_fitness()
+	var/fitness_modifier = 1
+	if (HAS_TRAIT(src, TRAIT_HULK))
+		fitness_modifier *= 2
+	if (HAS_TRAIT(src, TRAIT_STRENGTH))
+		fitness_modifier *= 1.5
+	if (HAS_TRAIT(src, TRAIT_ROD_SUPLEX))
+		fitness_modifier *= 2 // To be able to suplex a rod, you must possess an incredible amount of power
+	if (HAS_TRAIT(src, TRAIT_EASILY_WOUNDED))
+		fitness_modifier /= 2
+	if (HAS_TRAIT(src, TRAIT_GAMER))
+		fitness_modifier /= 1.5
+	if (HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
+		fitness_modifier /= 1.5
+
+	var/athletics_level = mind?.get_skill_level(/datum/skill/athletics) || 1
+
+	var/min_damage = 0
+	var/max_damage = 0
+	for (var/body_zone in GLOB.limb_zones)
+		var/obj/item/bodypart/part = get_bodypart(body_zone)
+		if (isnull(part) || part.unarmed_damage_high <= 0 || HAS_TRAIT(part, TRAIT_PARALYSIS))
+			continue
+		min_damage += part.unarmed_damage_low
+		max_damage += part.unarmed_damage_high
+
+	var/damage = ((min_damage / 4) + (max_damage / 4)) / 2 // We expect you to have 4 functional limbs- if you have fewer you're probably not going to be so good at lifting
+
+	return ceil(damage * (ceil(athletics_level / 2)) * fitness_modifier * maxHealth)
+
+/mob/living/carbon/human/proc/item_heal(mob/user, brute_heal, burn_heal, heal_message_brute, heal_message_burn, required_bodytype)
+	var/obj/item/bodypart/affecting = src.get_bodypart(check_zone(user.zone_selected))
+	if (!affecting || !(affecting.bodytype & required_bodytype))
+		to_chat(user, span_warning("[affecting] is already in good condition!"))
+		return FALSE
+
+	var/brute_damaged = affecting.brute_dam > 0
+	var/burn_damaged = affecting.burn_dam > 0
+
+	var/nothing_to_heal = ((brute_heal <= 0 || !brute_damaged) && (burn_heal <= 0 || !burn_damaged))
+	if (nothing_to_heal)
+		to_chat(user, span_notice("[affecting] is already in good condition!"))
+		return FALSE
+
+	src.update_damage_overlays()
+	var/message
+	if ((brute_damaged && brute_heal > 0) && (burn_damaged && burn_heal > 0))
+		message = "[heal_message_brute] and [heal_message_burn] on"
+	else if (brute_damaged && brute_heal > 0)
+		message = "[heal_message_brute] on"
+	else
+		message = "[heal_message_burn] on"
+	affecting.heal_damage(brute_heal, burn_heal, required_bodytype)
+	user.visible_message(span_notice("[user] fixes some of the [message] [src]'s [affecting.name]."), \
+		span_notice("You fix some of the [message] [src == user ? "your" : "[src]'s"] [affecting.name]."))
+	return TRUE

@@ -23,9 +23,9 @@
 
 // Turret protected
 /area/station/ai_monitored/turret_protected
-	ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
+	ambientsounds = list('sound/ambience/engineering/ambitech.ogg', 'sound/ambience/engineering/ambitech2.ogg', 'sound/ambience/engineering/ambiatmos.ogg', 'sound/ambience/engineering/ambiatmos2.ogg')
 	///Some sounds (like the space jam) are terrible when on loop. We use this variable to add it to other AI areas, but override it to keep it from the AI's core.
-	var/ai_will_not_hear_this = list('sound/ambience/ambimalf.ogg')
+	var/ai_will_not_hear_this = list('sound/ambience/misc/ambimalf.ogg')
 	airlock_wires = /datum/wires/airlock/ai
 
 /area/station/ai_monitored/turret_protected/Initialize(mapload)
@@ -47,7 +47,6 @@
 	name = "\improper AI Chamber"
 	icon_state = "ai_chamber"
 	ai_will_not_hear_this = null
-	area_flags = parent_type::area_flags | ABDUCTOR_PROOF
 
 /area/station/ai_monitored/turret_protected/aisat
 	name = "\improper AI Satellite"
@@ -81,6 +80,14 @@
 /area/station/ai_monitored/turret_protected/aisat/maint
 	name = "\improper AI Satellite Maintenance"
 	icon_state = "ai_maint"
+
+/area/station/ai_monitored/turret_protected/aisat/uppernorth
+	name = "\improper AI Satellite Upper Fore"
+	icon_state = "ai"
+
+/area/station/ai_monitored/turret_protected/aisat/uppersouth
+	name = "\improper AI Satellite Upper Aft"
+	icon_state = "ai"
 
 /area/station/ai_monitored/turret_protected/aisat_interior
 	name = "\improper AI Satellite Antechamber"

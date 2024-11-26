@@ -11,6 +11,7 @@
  */
 /mob/living/proc/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	set waitfor = FALSE
+	SHOULD_NOT_SLEEP(TRUE)
 
 	var/signal_result = SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds_per_tick, times_fired)
 
@@ -53,10 +54,6 @@
 		if (QDELETED(src)) // diseases can qdel the mob via transformations
 			return
 
-		if(stat != DEAD)
-			//Random events (vomiting etc)
-			handle_random_events(seconds_per_tick, times_fired)
-
 		//Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
 		if(environment)
@@ -80,9 +77,6 @@
 	return
 
 /mob/living/proc/handle_wounds(seconds_per_tick, times_fired)
-	return
-
-/mob/living/proc/handle_random_events(seconds_per_tick, times_fired)
 	return
 
 // Base mob environment handler for body temperature

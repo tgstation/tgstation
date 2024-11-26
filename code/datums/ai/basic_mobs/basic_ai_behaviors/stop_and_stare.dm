@@ -11,10 +11,9 @@
 	return cooldown_for.blackboard[BB_STATIONARY_COOLDOWN]
 
 /datum/ai_behavior/stop_and_stare/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/atom/movable/target = controller.blackboard[target_key]
 	if(!ismovable(target) || !isturf(target.loc)) // just to make sure that nothing funky happened between setup and perform
-		return
+		return AI_BEHAVIOR_DELAY
 
 	var/mob/pawn_mob = controller.pawn
 	var/turf/pawn_turf = get_turf(pawn_mob)
@@ -25,3 +24,4 @@
 
 	if(controller.blackboard[BB_STATIONARY_MOVE_TO_TARGET])
 		addtimer(CALLBACK(src, PROC_REF(set_movement_target), controller, target, initial(controller.ai_movement)), (controller.blackboard[BB_STATIONARY_SECONDS] + 1 SECONDS))
+	return AI_BEHAVIOR_DELAY

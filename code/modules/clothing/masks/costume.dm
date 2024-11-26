@@ -4,6 +4,7 @@
 	icon_state = "joy"
 	clothing_flags = MASKINTERNALS
 	flags_inv = HIDESNOUT
+	obj_flags = parent_type::obj_flags | INFINITE_RESKIN
 	unique_reskin = list(
 			"Joy" = "joy",
 			"Flushed" = "flushed",
@@ -16,7 +17,6 @@
 /obj/item/clothing/mask/joy/reskin_obj(mob/user)
 	. = ..()
 	user.update_worn_mask()
-	current_skin = null//so we can infinitely reskin
 
 /obj/item/clothing/mask/mummy
 	name = "mummy mask"
@@ -38,12 +38,25 @@
 	icon_state = "kitsune"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
+	adjusted_flags = ITEM_SLOT_HEAD
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE#AA0000"
 	greyscale_config = /datum/greyscale_config/kitsune
 	greyscale_config_worn = /datum/greyscale_config/kitsune/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/mask/kitsune/examine(mob/user)
+	. = ..()
+	if(up)
+		. += "Use in-hand to wear as a mask!"
+		return
+	else
+		. += "Use in-hand to wear as a hat!"
+
+/obj/item/clothing/mask/kitsune/attack_self(mob/user)
+	adjust_visor(user)
+	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 
 /obj/item/clothing/mask/rebellion
 	name = "rebellion mask"

@@ -54,7 +54,7 @@
 		var/datum/deathmatch_lobby/lobby = lobbies[ckey]
 		if (user.ckey == ckey)
 			.["hosting"] = TRUE
-		if (user.ckey in lobby.observers+lobby.players)
+		if (user.ckey in (lobby.observers+lobby.players))
 			.["playing"] = ckey
 		.["lobbies"] += list(list(
 			name = ckey,
@@ -67,7 +67,7 @@
 /datum/deathmatch_controller/proc/find_lobby_by_user(ckey)
 	for(var/lobbykey in lobbies)
 		var/datum/deathmatch_lobby/lobby = lobbies[lobbykey]
-		if(ckey in lobby.players+lobby.observers)
+		if(ckey in (lobby.players+lobby.observers))
 			return lobby
 
 /datum/deathmatch_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -76,6 +76,9 @@
 		return
 	switch (action)
 		if ("host")
+			if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
+				tgui_alert(usr, "Deathmatch has been temporarily disabled by admins.")
+				return
 			if (lobbies[usr.ckey])
 				return
 			if(!SSticker.HasRoundStarted())
@@ -84,6 +87,9 @@
 			ui.close()
 			create_new_lobby(usr)
 		if ("join")
+			if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
+				tgui_alert(usr, "Deathmatch has been temporarily disabled by admins.")
+				return
 			if (!lobbies[params["id"]])
 				return
 			var/datum/deathmatch_lobby/playing_lobby = find_lobby_by_user(usr.ckey)

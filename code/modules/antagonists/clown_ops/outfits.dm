@@ -24,6 +24,7 @@
 	id_trim = /datum/id_trim/chameleon/operative/clown
 
 /datum/outfit/syndicate/clownop/no_crystals
+	name = "Clown Operative - Reinforcement"
 	tc = 0
 
 /datum/outfit/syndicate/clownop/leader

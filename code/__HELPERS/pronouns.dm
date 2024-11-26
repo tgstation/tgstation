@@ -1,5 +1,8 @@
+#define GET_TARGET_PRONOUN(target, pronoun, gender) call(target, ALL_PRONOUNS[pronoun])(gender)
+
 //pronoun procs, for getting pronouns without using the text macros that only work in certain positions
 //datums don't have gender, but most of their subtypes do!
+
 /datum/proc/p_they(temp_gender)
 	return "it"
 
@@ -68,6 +71,27 @@
 					return "es"
 				else
 					return "s"
+
+/// A proc to replace pronouns in a string with the appropriate pronouns for a target atom.
+/// Uses associative list access from a __DEFINE list, since associative access is slightly
+/// faster
+/datum/proc/REPLACE_PRONOUNS(target_string, atom/targeted_atom, targeted_gender = null)
+	/// If someone specifies targeted_gender we choose that,
+	/// otherwise we go off the gender of our object
+	var/gender
+	if(targeted_gender)
+		if(!istext(targeted_gender) || !(targeted_gender in list(MALE, FEMALE, PLURAL, NEUTER)))
+			stack_trace("REPLACE_PRONOUNS called with improper parameters.")
+			return
+		gender = targeted_gender
+	else
+		gender = targeted_atom.gender
+	///The pronouns are ordered by their length to avoid %PRONOUN_Theyve being translated to "Heve" instead of "He's", for example
+	var/regex/pronoun_regex = regex("%PRONOUN(_(theirs|Theirs|theyve|Theyve|theyre|Theyre|their|Their|they|They|them|Them|have|were|are|do|es|s))")
+	while(pronoun_regex.Find(target_string))
+		target_string = pronoun_regex.Replace(target_string, GET_TARGET_PRONOUN(targeted_atom, pronoun_regex.match, gender))
+	return target_string
+
 
 //like clients, which do have gender.
 /client/p_they(temp_gender)

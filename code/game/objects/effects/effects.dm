@@ -50,7 +50,7 @@
 /obj/effect/abstract
 	resistance_flags = parent_type::resistance_flags | SHUTTLE_CRUSH_PROOF
 
-/obj/effect/abstract/singularity_pull()
+/obj/effect/abstract/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/abstract/singularity_act()
@@ -59,7 +59,7 @@
 /obj/effect/abstract/has_gravity(turf/gravity_turf)
 	return FALSE
 
-/obj/effect/dummy/singularity_pull()
+/obj/effect/dummy/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/dummy/singularity_act()

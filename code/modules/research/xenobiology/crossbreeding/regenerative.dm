@@ -8,20 +8,20 @@ Regenerative extracts:
 	desc = "It's filled with a milky substance, and pulses like a heartbeat."
 	effect = "regenerative"
 	icon_state = "regenerative"
+	effect_desc = "Completely heals your injuries, with no extra effects."
 
 /obj/item/slimecross/regenerative/proc/core_effect(mob/living/carbon/human/target, mob/user)
 	return
 /obj/item/slimecross/regenerative/proc/core_effect_before(mob/living/carbon/human/target, mob/user)
 	return
 
-/obj/item/slimecross/regenerative/afterattack(atom/target,mob/user,prox)
-	. = ..()
-	if(!prox || !isliving(target))
+/obj/item/slimecross/regenerative/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
 		return
-	var/mob/living/H = target
+	var/mob/living/H = interacting_with
 	if(H.stat == DEAD)
 		to_chat(user, span_warning("[src] will not work on the dead!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(H != user)
 		user.visible_message(span_notice("[user] crushes [src] over [H], the milky goo quickly regenerating all of [H.p_their()] injuries!"),
 			span_notice("You squeeze [src], and it bursts over [H], the milky goo regenerating [H.p_their()] injuries."))
@@ -29,10 +29,12 @@ Regenerative extracts:
 		user.visible_message(span_notice("[user] crushes [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!"),
 			span_notice("You squeeze [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!"))
 	core_effect_before(H, user)
+	user.do_attack_animation(interacting_with)
 	H.revive(HEAL_ALL)
 	core_effect(H, user)
-	playsound(target, 'sound/effects/splat.ogg', 40, TRUE)
+	playsound(H, 'sound/effects/splat.ogg', 40, TRUE)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slimecross/regenerative/grey
 	colour = SLIME_TYPE_GREY //Has no bonus effect.
@@ -73,7 +75,11 @@ Regenerative extracts:
 	var/obj/structure/closet/C = new /obj/structure/closet(target.loc)
 	C.name = "slimy closet"
 	C.desc = "Looking closer, it seems to be made of a sort of solid, opaque, metal-like goo."
-	target.forceMove(C)
+	if(target.mob_size > C.max_mob_size) //Prevents capturing megafauna or other large mobs in the closets
+		C.bust_open()
+		C.visible_message(span_warning("[target] is too big, and immediately breaks \the [C.name] open!"))
+	else //This can't be allowed to actually happen to the too-big mobs or it breaks some actions
+		target.forceMove(C)
 
 /obj/item/slimecross/regenerative/yellow
 	colour = SLIME_TYPE_YELLOW
@@ -81,11 +87,11 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/yellow/core_effect(mob/living/target, mob/user)
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/C in target.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/C in target.get_all_contents())
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)
-		var/obj/item/stock_parts/cell/ToCharge = pick(batteries)
+		var/obj/item/stock_parts/power_store/ToCharge = pick(batteries)
 		ToCharge.charge = ToCharge.maxcharge
 		to_chat(target, span_notice("You feel a strange electrical pulse, and one of your electrical items was recharged."))
 
@@ -149,6 +155,8 @@ Regenerative extracts:
 		old_location.visible_message(span_warning("[target] disappears in a shower of sparks!"))
 		to_chat(target, span_danger("The milky goo teleports you somewhere it remembers!"))
 
+	if(HAS_TRAIT(target, TRAIT_NO_TELEPORT))
+		old_location.visible_message(span_warning("[target] sparks briefly, but is prevented from teleporting!"))
 
 /obj/item/slimecross/regenerative/bluespace/Initialize(mapload)
 	. = ..()
@@ -226,7 +234,7 @@ Regenerative extracts:
 	effect_desc = "Fully heals the target and flashes everyone in sight."
 
 /obj/item/slimecross/regenerative/oil/core_effect(mob/living/target, mob/user)
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	for(var/mob/living/L in view(user,7))
 		L.flash_act()
 

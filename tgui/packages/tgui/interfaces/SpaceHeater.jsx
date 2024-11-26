@@ -1,3 +1,5 @@
+import { capitalize } from 'common/string';
+
 import { useBackend } from '../backend';
 import {
   Box,
@@ -96,7 +98,7 @@ export const SpaceHeater = (props) => {
                 data.targetTemp + '°C'}
             </LabeledList.Item>
             <LabeledList.Item label="Mode">
-              {(!data.open && 'Auto') || (
+              {(!data.open && capitalize(data.mode)) || (
                 <>
                   <Button
                     icon="thermometer-half"

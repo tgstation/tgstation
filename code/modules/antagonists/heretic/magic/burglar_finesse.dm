@@ -26,7 +26,7 @@
 		return FALSE
 
 	var/obj/storage_item = locate(/obj/item/storage/backpack) in cast_on.contents
-	
+
 	if(isnull(storage_item))
 		return FALSE
 

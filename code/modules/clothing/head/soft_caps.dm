@@ -5,7 +5,7 @@
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "cargosoft"
 	inhand_icon_state = "greyscale_softcap" //todo wip
-	interaction_flags_click = NEED_DEXTERITY
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	/// For setting icon archetype
 	var/soft_type = "cargo"
 	/// If there is a suffix to append
@@ -33,7 +33,7 @@
 
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)
-	if(!user.incapacitated())
+	if(!user.incapacitated)
 		flipped = !flipped
 		if(flipped)
 			icon_state = "[soft_type][soft_suffix]_flipped"
@@ -136,6 +136,7 @@
 	armor_type = /datum/armor/cosmetic_sec
 	strip_delay = 60
 	dog_fashion = null
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/soft/veteran
 	name = "veteran cap"
@@ -145,6 +146,7 @@
 	armor_type = /datum/armor/cosmetic_sec
 	strip_delay = 60
 	dog_fashion = null
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"
@@ -152,6 +154,7 @@
 	icon_state = "paramedicsoft"
 	soft_type = "paramedic"
 	dog_fashion = null
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/soft/fishing_hat
 	name = "legendary fishing hat"
@@ -169,10 +172,14 @@
 	clothing_flags = SNUG_FIT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	dog_fashion = null
+	clothing_traits = list(TRAIT_SCARY_FISHERMAN) //Fish, carps, lobstrosities and frogs fear me.
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean")) //you asked for this.
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
 
 #define PROPHAT_MOOD "prophat"
 

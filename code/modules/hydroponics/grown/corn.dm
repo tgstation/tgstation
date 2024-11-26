@@ -1,6 +1,6 @@
 // Corn
 /obj/item/seeds/corn
-	name = "pack of corn seeds"
+	name = "corn seed pack"
 	desc = "I don't mean to sound corny..."
 	icon_state = "seed-corn"
 	species = "corn"
@@ -50,14 +50,14 @@
 /obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, params)
 	if(W.get_sharpness())
 		to_chat(user, span_notice("You use [W] to fashion a pipe out of the corn cob!"))
-		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
+		new /obj/item/cigarette/pipe/cobpipe (user.loc)
 		qdel(src)
 	else
 		return ..()
 
 // Snapcorn
 /obj/item/seeds/corn/snapcorn
-	name = "pack of snapcorn seeds"
+	name = "snapcorn seed pack"
 	desc = "Oh snap!"
 	icon_state = "seed-snapcorn"
 	species = "snapcorn"
@@ -100,7 +100,7 @@
 
 //Pepper-corn - Heh funny.
 /obj/item/seeds/corn/pepper
-	name = "pack of pepper-corn seeds"
+	name = "pepper-corn seed pack"
 	desc = "If Peter picked a pack of pepper-corn..."
 	icon_state = "seed-peppercorn"
 	species = "peppercorn"

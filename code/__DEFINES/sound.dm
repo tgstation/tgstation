@@ -10,6 +10,12 @@
 #define CHANNEL_TRAITOR 1016
 #define CHANNEL_CHARGED_SPELL 1015
 #define CHANNEL_ELEVATOR 1014
+#define CHANNEL_ESCAPEMENU 1013
+//THIS SHOULD ALWAYS BE THE LOWEST ONE!
+//KEEP IT UPDATED
+#define CHANNEL_HIGHEST_AVAILABLE 1012
+
+#define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
@@ -23,17 +29,11 @@
 ///The default exponent of sound falloff
 #define SOUND_FALLOFF_EXPONENT 6
 
-//THIS SHOULD ALWAYS BE THE LOWEST ONE!
-//KEEP IT UPDATED
-
-#define CHANNEL_HIGHEST_AVAILABLE 1015
-
-#define MAX_INSTRUMENT_CHANNELS (128 * 6)
-
 #define SOUND_MINIMUM_PRESSURE 10
 
 #define INTERACTION_SOUND_RANGE_MODIFIER -3
 #define EQUIP_SOUND_VOLUME 30
+#define LIQUID_SLOSHING_SOUND_VOLUME 10
 #define PICKUP_SOUND_VOLUME 15
 #define DROP_SOUND_VOLUME 20
 #define YEET_SOUND_VOLUME 90
@@ -174,3 +174,45 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_SEAR "sear"
 #define SFX_REEL "reel"
 #define SFX_RATTLE "rattle"
+#define SFX_PORTAL_ENTER "portal_enter"
+#define SFX_PORTAL_CLOSE "portal_closed"
+#define SFX_PORTAL_CREATED "portal_created"
+#define SFX_SCREECH "screech"
+#define SFX_TOOL_SWITCH "tool_switch"
+#define SFX_KEYBOARD_CLICKS "keyboard_clicks"
+#define SFX_STONE_DROP "stone_drop"
+#define SFX_STONE_PICKUP "stone_pickup"
+#define SFX_MUFFLED_SPEECH "muffspeech"
+#define SFX_DEFAULT_FISH_SLAP "default_fish_slap"
+#define SFX_ALT_FISH_SLAP "alt_fish_slap"
+#define SFX_FISH_PICKUP "fish_pickup"
+#define SFX_CAT_MEOW "cat_meow"
+#define SFX_CAT_PURR "cat_purr"
+#define SFX_LIQUID_POUR "liquid_pour"
+#define SFX_SNORE_FEMALE "snore_female"
+#define SFX_SNORE_MALE "snore_male"
+#define SFX_PLASTIC_BOTTLE_LIQUID_SLOSH "plastic_bottle_liquid_slosh"
+#define SFX_DEFAULT_LIQUID_SLOSH "default_liquid_slosh"
+#define SFX_PLATE_ARMOR_RUSTLE "plate_armor_rustle"
+#define SFX_PIG_OINK "pig_oink"
+#define SFX_VISOR_UP "visor_up"
+#define SFX_VISOR_DOWN "visor_down"
+#define SFX_SIZZLE "sizzle"
+#define SFX_GROWL "growl"
+#define SFX_POLAROID "polaroid"
+#define SFX_HALLUCINATION_TURN_AROUND "hallucination_turn_around"
+#define SFX_HALLUCINATION_I_SEE_YOU "hallucination_i_see_you"
+#define SFX_HALLUCINATION_OVER_HERE "hallucination_over_here"
+#define SFX_HALLUCINATION_I_M_HERE "hallucination_i_m_here"
+#define SFX_VOID_DEFLECT "void_deflect"
+#define SFX_LOW_HISS "low_hiss"
+#define SFX_INDUSTRIAL_SCAN "industrial_scan"
+#define SFX_MALE_SIGH "male_sigh"
+#define SFX_FEMALE_SIGH "female_sigh"
+#define SFX_WRITING_PEN "writing_pen"
+
+// Standard is 44.1khz
+#define MIN_EMOTE_PITCH 40000
+#define MAX_EMOTE_PITCH 48000
+// ~0.6 - 1.4 at 0.12
+#define EMOTE_TTS_PITCH_MULTIPLIER 0.12

@@ -66,7 +66,6 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	telecrystal_reward = list(3, 4)
 
 	progression_minimum = 15 MINUTES
-	progression_maximum = 30 MINUTES
 
 	applicable_jobs = list(
 		JOB_STATION_ENGINEER = /obj/machinery/telecomms/hub,

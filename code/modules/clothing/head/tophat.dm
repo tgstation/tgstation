@@ -21,7 +21,7 @@
 		return
 
 	COOLDOWN_START(src, rabbit_cooldown, RABBIT_CD_TIME)
-	playsound(get_turf(src), 'sound/weapons/emitter.ogg', 70)
+	playsound(get_turf(src), 'sound/items/weapons/emitter.ogg', 70)
 	do_smoke(amount = DIAMOND_AREA(1), holder = src, location = src, smoke_type=/obj/effect/particle_effect/fluid/smoke/quick)
 
 	if(prob(10))
@@ -38,7 +38,7 @@
 
 /obj/item/clothing/head/hats/tophat/balloon
 	name = "balloon top-hat"
-	desc = "It's an colourful looking top-hat to match yout colourful personality."
+	desc = "It's a colourful looking top-hat to match your colourful personality."
 	icon_state = "balloon_tophat"
 	inhand_icon_state = "balloon_that"
 	throwforce = 0

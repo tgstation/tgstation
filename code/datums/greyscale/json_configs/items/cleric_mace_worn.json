@@ -9,7 +9,8 @@
 		{
 			"type": "icon_state",
 			"icon_state": "worn_handle",
-			"blend_mode": "overlay"
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
 		}
 	]
 }

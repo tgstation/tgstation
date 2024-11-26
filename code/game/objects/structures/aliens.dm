@@ -24,12 +24,12 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+				playsound(loc, 'sound/effects/blob/attackblob.ogg', 100, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
 			if(damage_amount)
-				playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+				playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /*
  * Generic alien stuff, not related to the purple lizards but still alien-like
@@ -276,6 +276,10 @@
 	//we are the parent node
 	parent_node = src
 
+	return INITIALIZE_HINT_LATELOAD
+
+// we do this in LateInitialize() because weeds on the same loc may not be done initializing yet (as in create_and_destroy)
+/obj/structure/alien/weeds/node/LateInitialize()
 	//destroy any non-node weeds on turf
 	var/obj/structure/alien/weeds/check_weed = locate(/obj/structure/alien/weeds) in loc
 	if(check_weed && check_weed != src)
@@ -381,14 +385,14 @@
 	. = ..()
 	if(.)
 		return
-	if(user.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
+	if(user.get_organ_by_type(/obj/item/organ/alien/plasmavessel))
 		switch(status)
 			if(BURSTING)
 				to_chat(user, span_notice("The child is hatching out."))
 				return
 			if(BURST)
 				to_chat(user, span_notice("You clear the hatched egg."))
-				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+				playsound(loc, 'sound/effects/blob/attackblob.ogg', 100, TRUE)
 				qdel(src)
 				return
 			if(GROWING)
@@ -453,7 +457,7 @@
 			return
 
 		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
+		if(C.stat == CONSCIOUS && C.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo))
 			return
 
 		Burst(kill=FALSE)

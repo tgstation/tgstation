@@ -61,7 +61,6 @@
 	else if(adjacent)
 		try_move_adjacent(tunnel)
 
-	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
 	qdel(src)
 	return FALSE // used for chasm code
 
@@ -104,11 +103,11 @@
 	light_on = FALSE
 	wibbles = FALSE
 
-/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
+/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M, force = FALSE)
 	. = ..()
 	if(.)
 		// KERPLUNK
-		playsound(M,'sound/weapons/resonator_blast.ogg',50,TRUE)
+		playsound(M,'sound/items/weapons/resonator_blast.ogg',50,TRUE)
 		if(iscarbon(M))
 			var/mob/living/carbon/L = M
 			L.Paralyze(60)

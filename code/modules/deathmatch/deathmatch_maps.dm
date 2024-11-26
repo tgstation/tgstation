@@ -1,6 +1,7 @@
-/datum/lazy_template/deathmatch //deathmatch maps that have any possibility of the walls being destroyed should use indestructible walls, because baseturf moment
+/datum/lazy_template/deathmatch
 	map_dir = "_maps/deathmatch"
 	place_on_top = TRUE
+	turf_reservation_type = /datum/turf_reservation/turf_not_baseturf
 	/// Map UI Name
 	var/name
 	/// Map Description
@@ -15,7 +16,6 @@
 	var/list/allowed_loadouts = list()
 	/// whether we are currently being loaded by a lobby
 	var/template_in_use = FALSE
-		
 
 /datum/lazy_template/deathmatch/ragecage
 	name = "Ragecage"
@@ -153,3 +153,96 @@
 	)
 	map_name = "backalley"
 	key = "backalley"
+
+/datum/lazy_template/deathmatch/raginmages
+	name = "Ragin' Mages"
+	desc = "Greetings! We're the wizards of the wizard federation!"
+	max_players = 8
+	automatic_gameend_time = 4 MINUTES // ill be surprised if this lasts more than two minutes
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/wizard,
+		/datum/outfit/deathmatch_loadout/wizard/pyro,
+		/datum/outfit/deathmatch_loadout/wizard/electro,
+		/datum/outfit/deathmatch_loadout/wizard/necromancer,
+		/datum/outfit/deathmatch_loadout/wizard/larp,
+		/datum/outfit/deathmatch_loadout/wizard/chuuni,
+		/datum/outfit/deathmatch_loadout/wizard/battle,
+		/datum/outfit/deathmatch_loadout/wizard/apprentice,
+		/datum/outfit/deathmatch_loadout/wizard/gunmancer,
+		/datum/outfit/deathmatch_loadout/wizard/monkey,
+		/datum/outfit/deathmatch_loadout/wizard/chaos,
+		/datum/outfit/deathmatch_loadout/wizard/clown,
+	)
+	map_name = "ragin_mages"
+	key = "ragin_mages"
+
+/datum/lazy_template/deathmatch/train
+	name = "Trainship Hijack"
+	desc = "Trouble stirs in Tizira..."
+	max_players = 8
+	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/battler/cowboy)
+	map_name = "train"
+	key = "train"
+	turf_reservation_type = /datum/turf_reservation/indestructible_plating
+
+/datum/lazy_template/deathmatch/finaldestination
+	name = "Final Destination"
+	desc = "1v1v1v1, 1 Stock, Final Destination."
+	max_players = 8
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/captain,
+		/datum/outfit/deathmatch_loadout/head_of_security,
+		/datum/outfit/deathmatch_loadout/traitor,
+		/datum/outfit/deathmatch_loadout/nukie,
+		/datum/outfit/deathmatch_loadout/tider,
+		/datum/outfit/deathmatch_loadout/abductor,
+		/datum/outfit/deathmatch_loadout/chef/upgraded,
+		/datum/outfit/deathmatch_loadout/battler/clown/upgraded,
+		/datum/outfit/deathmatch_loadout/mime,
+		/datum/outfit/deathmatch_loadout/pete,
+	)
+	map_name = "finaldestination"
+	key = "finaldestination"
+
+/datum/lazy_template/deathmatch/species_warfare
+	name = "Species Warfare"
+	desc = "Choose your favorite species and prove its superiority against all the other, lamer species. And also anyone else of your own."
+	max_players = 8
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/humanity,
+		/datum/outfit/deathmatch_loadout/lizardkind,
+		/datum/outfit/deathmatch_loadout/mothman,
+		/datum/outfit/deathmatch_loadout/ethereal,
+		/datum/outfit/deathmatch_loadout/plasmamen,
+		/datum/outfit/deathmatch_loadout/felinid,
+	)
+	map_name = "species_warfare"
+	key = "species_warfare"
+
+/datum/lazy_template/deathmatch/lattice_battles
+	name = "Lattice Battles"
+	desc = "Tired of fisticuffs all the time? Just snip the catwalk underneath instead!"
+	max_players = 8
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/lattice_battles,
+	)
+	map_name = "lattice_battles"
+	key = "lattice_battles"
+
+/datum/lazy_template/deathmatch/ragnarok
+	name = "Ragnarok"
+	desc = "Cultists, heretics, and chaplains all duking it out in the jungle to retrieve the McGuffin."
+	max_players = 8
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/cultish/invoker,
+		/datum/outfit/deathmatch_loadout/cultish/artificer,
+		/datum/outfit/deathmatch_loadout/heresy/warrior,
+		/datum/outfit/deathmatch_loadout/heresy/scribe,
+		/datum/outfit/deathmatch_loadout/holy_crusader,
+		/datum/outfit/deathmatch_loadout/clock_cult,
+	)
+	map_name = "ragnarok"
+	key = "ragnarok"
+
+/datum/turf_reservation/indestructible_plating
+	turf_type = /turf/open/indestructible/plating //a little hacky but i guess it has to be done

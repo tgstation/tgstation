@@ -3,10 +3,13 @@
 	name = "energy gun"
 	desc = "A basic energy-based gun."
 	icon = 'icons/obj/weapons/guns/energy.dmi'
+	pickup_sound = 'sound/items/handling/gun/gun_pick_up.ogg'
+	drop_sound = 'sound/items/handling/gun/gun_drop.ogg'
+	sound_vary = TRUE
 
 	/// What type of power cell this uses
-	var/obj/item/stock_parts/cell/cell
-	var/cell_type = /obj/item/stock_parts/cell
+	var/obj/item/stock_parts/power_store/cell
+	var/cell_type = /obj/item/stock_parts/power_store/cell
 	///if the weapon has custom icons for individual ammo types it can switch between. ie disabler beams, taser, laser/lethals, ect.
 	var/modifystate = FALSE
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
@@ -26,33 +29,45 @@
 	var/single_shot_type_overlay = TRUE
 	///Should we give an overlay to empty guns?
 	var/display_empty = TRUE
-	var/selfcharge = 0
-	var/charge_timer = 0
-	var/charge_delay = 8
+
 	///whether the gun's cell drains the cyborg user's cell to recharge
 	var/use_cyborg_cell = FALSE
 	///set to true so the gun is given an empty cell
 	var/dead_cell = FALSE
 
+	// Self charging vars
+
+	/// Whether or not our gun charges its own cell on a timer.
+	var/selfcharge = 0
+	/// The amount of time between instances of cell self recharge
+	var/charge_timer = 0
+	/// The amount of seconds_per_tick during process() before the gun charges itself
+	var/charge_delay = 8
+	/// The amount restored by the gun to the cell per self charge tick
+	var/self_charge_amount = STANDARD_ENERGY_GUN_SELF_CHARGE_RATE
+
 /obj/item/gun/energy/fire_sounds()
 	// What frequency the energy gun's sound will make
-	var/frequency_to_use
+	var/pitch_to_use = 1
 
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	// What percentage of the full battery a shot will expend
 	var/shot_cost_percent = round(clamp(shot.e_cost / cell.maxcharge, 0, 1) * 100)
 	// Ignore this on oversized/infinite cells or ammo without cost
-	if(shot_cost_percent > 0)
+	if(shot_cost_percent > 0 && shot_cost_percent < 100)
 		// The total amount of shots the fully charged energy gun can fire before running out
-		var/max_shots = round(100/shot_cost_percent)
+		var/max_shots = round(100/shot_cost_percent) - 1
 		// How many shots left before the energy gun's current battery runs out of energy
-		var/shots_left = round((round(clamp(cell.charge / cell.maxcharge, 0, 1) * 100))/shot_cost_percent)
-		frequency_to_use = sin((90/max_shots) * shots_left)
+		var/shots_left = round((round(clamp(cell.charge / cell.maxcharge, 0, 1) * 100))/shot_cost_percent) - 1
+		pitch_to_use = LERP(1, 0.3, (1 - (shots_left/max_shots)) ** 2)
+
+	var/sound/playing_sound = sound(suppressed ? suppressed_sound : fire_sound)
+	playing_sound.pitch = pitch_to_use
 
 	if(suppressed)
-		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = frequency_to_use)
+		playsound(src, playing_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
-		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, frequency = frequency_to_use)
+		playsound(src, playing_sound, fire_sound_volume, vary_fire_sound)
 
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
@@ -62,7 +77,10 @@
 		recharge_newshot() //and try to charge a new shot
 		update_appearance()
 
-/obj/item/gun/energy/get_cell()
+/obj/item/gun/energy/get_cell(atom/movable/interface, mob/user)
+	if(istype(interface, /obj/item/inducer))
+		to_chat(user, span_alert("Error: unable to interface with [interface]."))
+		return null
 	return cell
 
 /obj/item/gun/energy/Initialize(mapload)
@@ -150,7 +168,7 @@
 		if(charge_timer < charge_delay)
 			return
 		charge_timer = 0
-		cell.give(STANDARD_ENERGY_GUN_SELF_CHARGE_RATE * seconds_per_tick)
+		cell.give(self_charge_amount * seconds_per_tick)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
 		update_appearance()

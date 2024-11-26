@@ -93,6 +93,13 @@ GLOBAL_LIST_INIT(alldirs, list(
 	SOUTHWEST,
 ))
 
+GLOBAL_LIST_INIT(cardinal_angles, list(
+	"[NORTH]" = 0,
+	"[SOUTH]" = 180,
+	"[EAST]" = 90,
+	"[WEST]" = 270,
+))
+
 /// list of all landmarks created
 GLOBAL_LIST_EMPTY(landmarks_list)
 /// list of all job spawn points created
@@ -131,9 +138,6 @@ GLOBAL_LIST_EMPTY(bar_areas)
 
 /// List of all the maps that have been cached for /proc/load_map
 GLOBAL_LIST_EMPTY(cached_maps)
-
-/// Away missions
-GLOBAL_LIST_EMPTY(vr_spawnpoints)
 
 /// Just a list of all the area objects in the game
 /// Note, areas can have duplicate types

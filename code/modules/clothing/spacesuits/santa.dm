@@ -7,6 +7,8 @@
 	inhand_icon_state = "santahat"
 	flags_cover = HEADCOVERSEYES
 	dog_fashion = /datum/dog_fashion/head/santa
+	slowdown = 0
+	fishing_modifier = 0
 
 /obj/item/clothing/head/helmet/space/santahat/beardless
 	icon = 'icons/obj/clothing/head/costume.dmi'
@@ -14,6 +16,7 @@
 	icon_state = "santahatnorm"
 	inhand_icon_state = "that"
 	flags_inv = NONE
+	slowdown = 0
 
 /obj/item/clothing/suit/space/santa
 	name = "Santa's suit"
@@ -24,3 +27,4 @@
 	inhand_icon_state = "santa"
 	slowdown = 0
 	allowed = list(/obj/item) //for stuffing exta special presents
+	fishing_modifier = 0

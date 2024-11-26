@@ -1,4 +1,5 @@
 /datum/movespeed_modifier/obesity
+	// large weight slows even if flying and floating
 	multiplicative_slowdown = 1.5
 
 /datum/movespeed_modifier/monkey_reagent_speedmod
@@ -11,6 +12,7 @@
 	variable = TRUE
 
 /datum/movespeed_modifier/hunger
+	movetypes = GROUND|FLYING
 	variable = TRUE
 
 /datum/movespeed_modifier/golem_hunger
@@ -89,6 +91,7 @@
 /datum/movespeed_modifier/limbless
 	variable = TRUE
 	movetypes = GROUND
+	blacklisted_movetypes = FLOATING|FLYING
 	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/simplemob_varspeed
@@ -169,3 +172,11 @@
 
 /datum/movespeed_modifier/basilisk_overheat
 	multiplicative_slowdown = -18
+
+/datum/movespeed_modifier/magic_ties
+	multiplicative_slowdown = 0.5
+
+///speed bonus given by the fish tail organ when inside water.
+/datum/movespeed_modifier/fish_on_water
+	blacklisted_movetypes = MOVETYPES_NOT_TOUCHING_GROUND
+	multiplicative_slowdown = - /turf/open/water::slowdown

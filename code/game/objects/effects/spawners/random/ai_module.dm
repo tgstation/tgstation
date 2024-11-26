@@ -37,6 +37,7 @@
 		/obj/item/ai_module/supplied/safeguard,
 		/obj/item/ai_module/supplied/protect_station,
 		/obj/item/ai_module/supplied/quarantine,
+		/obj/item/ai_module/core/full/yesman,
 		/obj/item/ai_module/remove,
 	)
 

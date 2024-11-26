@@ -67,7 +67,7 @@
 
 //virtual pet keys
 ///the last PDA message we must relay
-#define BB_LAST_RECIEVED_MESSAGE "last_recieved_message"
+#define BB_LAST_RECEIVED_MESSAGE "last_received_message"
 ///our current virtual pet level
 #define BB_VIRTUAL_PET_LEVEL "virtual_pet_level"
 ///the target we will play with

@@ -107,7 +107,7 @@
 	message.title = title
 	message.content = text
 
-	SScommunications.send_message(message)
+	GLOB.communications_controller.send_message(message)
 
 /**
  * Sends a minor annoucement to players.
@@ -120,7 +120,7 @@
  * html_encode - if TRUE, we will html encode our title and message before sending it, to prevent player input abuse.
  * players - optional, a list mobs to send the announcement to. If unset, sends to all palyers.
  * sound_override - optional, use the passed sound file instead of the default notice sounds.
- * should_play_sound - Whether the notice sound should be played or not.
+ * should_play_sound - Whether the notice sound should be played or not. This can also be a callback, if you only want mobs to hear the sound based off of specific criteria.
  * color_override - optional, use the passed color instead of the default notice color.
  */
 /proc/minor_announce(message, title = "Attention:", alert = FALSE, html_encode = TRUE, list/players, sound_override, should_play_sound = TRUE, color_override)
@@ -142,7 +142,7 @@
 	else
 		finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(jointext(minor_announcement_strings, ""))
 
-	var/custom_sound = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
+	var/custom_sound = sound_override || (alert ? 'sound/announcer/notice/notice1.ogg' : 'sound/announcer/notice/notice2.ogg')
 	dispatch_announcement_to_players(finalized_announcement, players, custom_sound, should_play_sound)
 
 /// Sends an announcement about the level changing to players. Uses the passed in datum and the subsystem's previous security level to generate the message.
@@ -185,15 +185,22 @@
 	return jointext(returnable_strings, "")
 
 /// Proc that just dispatches the announcement to our applicable audience. Only the announcement is a mandatory arg.
+/// `should_play_sound` can also be a callback, if you want to only play the sound to specific players.
 /proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE)
-	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/misc/notice2.ogg'
+	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/announcer/notice/notice2.ogg'
+
+	// note for later: low-hanging fruit to convert to astype() behind an experiment define whenever the 516 beta releases
+	// var/datum/callback/should_play_sound_callback = astype(should_play_sound)
+	var/datum/callback/should_play_sound_callback
+	if(istype(should_play_sound, /datum/callback))
+		should_play_sound_callback = should_play_sound
 
 	for(var/mob/target in players)
 		if(isnewplayer(target) || !target.can_hear())
 			continue
 
 		to_chat(target, announcement)
-		if(!should_play_sound)
+		if(!should_play_sound || (should_play_sound_callback && !should_play_sound_callback.Invoke(target)))
 			continue
 
 		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))

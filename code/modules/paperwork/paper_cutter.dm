@@ -163,7 +163,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/papercutter/proc/cut_paper(mob/user)
-	playsound(src.loc, 'sound/weapons/slash.ogg', 50, TRUE)
+	playsound(src.loc, 'sound/items/weapons/slash.ogg', 50, TRUE)
 	var/clumsy = (iscarbon(user) && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(cut_self_chance))
 	to_chat(user, span_userdanger("You neatly cut [stored_paper][clumsy ? "... and your finger in the process!" : "."]"))
 	if(clumsy)
@@ -177,12 +177,7 @@
 	new /obj/item/paper/paperslip(get_turf(src))
 	update_appearance()
 
-/obj/item/papercutter/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/user = usr
-	if(user.incapacitated() || !Adjacent(user))
-		return
-
+/obj/item/papercutter/mouse_drop_dragged(atom/over_object, mob/user)
 	if(over_object == user)
 		user.put_in_hands(src)
 

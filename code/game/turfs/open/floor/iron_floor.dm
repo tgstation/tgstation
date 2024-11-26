@@ -1,6 +1,7 @@
 /turf/open/floor/iron
 	icon_state = "floor"
 	floor_tile = /obj/item/stack/tile/iron/base
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/iron/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
@@ -12,12 +13,6 @@
 /turf/open/floor/iron/examine(mob/user)
 	. = ..()
 	. += span_notice("There's a <b>small crack</b> on the edge of it.")
-
-
-/turf/open/floor/iron/rust_heretic_act()
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
-	ChangeTurf(/turf/open/floor/plating/rust)
 
 /turf/open/floor/iron/update_icon_state()
 	if(broken || burnt)

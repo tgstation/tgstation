@@ -1,14 +1,14 @@
 /datum/component/echolocation
 	/// Radius of our view.
 	var/echo_range = 4
-	/// Time between echolocations.
-	var/cooldown_time = 1.8 SECONDS
+	/// Time between echolocations. IMPORTANT!! The effective time in local and the effective time in live are very different. The second is noticeably slower,
+	var/cooldown_time = 1 SECONDS
 	/// Time for the image to start fading out.
-	var/image_expiry_time = 1.4 SECONDS
+	var/image_expiry_time = 0.7 SECONDS
 	/// Time for the image to fade in.
-	var/fade_in_time = 0.4 SECONDS
+	var/fade_in_time = 0.2 SECONDS
 	/// Time for the image to fade out and delete itself.
-	var/fade_out_time = 0.4 SECONDS
+	var/fade_out_time = 0.3 SECONDS
 	/// Are images static? If yes, spawns them on the turf and makes them not change location. Otherwise they change location and pixel shift with the original.
 	var/images_are_static = TRUE
 	/// With mobs that have this echo group in their echolocation receiver trait, we share echo images.
@@ -32,7 +32,7 @@
 	/// Cooldown for the echolocation.
 	COOLDOWN_DECLARE(cooldown_last)
 
-/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, blocking_trait, echo_group, echo_icon = "echo", color_path)
+/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, blocking_trait, echo_group, echo_icon, color_path)
 	. = ..()
 	var/mob/living/echolocator = parent
 	if(!istype(echolocator))
@@ -105,7 +105,7 @@
 	for(var/mob/living/viewer in filtered)
 		if(blocking_trait && HAS_TRAIT(viewer, blocking_trait))
 			continue
-		if(HAS_TRAIT_FROM(viewer, TRAIT_ECHOLOCATION_RECEIVER, echo_group))
+		if(HAS_TRAIT_FROM(viewer, TRAIT_ECHOLOCATION_RECEIVER, echo_group) && isnull(receivers[viewer]))
 			receivers[viewer] = list()
 	for(var/atom/filtered_atom as anything in filtered)
 		show_image(saved_appearances["[filtered_atom.icon]-[filtered_atom.icon_state]"] || generate_appearance(filtered_atom), filtered_atom, current_time)
@@ -156,7 +156,7 @@
 		copied_appearance.pixel_x = 0
 		copied_appearance.pixel_y = 0
 		copied_appearance.transform = matrix()
-	if(!iscarbon(input)) //wacky overlay people get generated everytime
+	if(input.icon && input.icon_state)
 		saved_appearances["[input.icon]-[input.icon_state]"] = copied_appearance
 	return copied_appearance
 
@@ -175,6 +175,7 @@
 		for(var/atom/rendered_atom as anything in receivers[echolocate_receiver])
 			if(receivers[echolocate_receiver][rendered_atom]["time"] <= from_when && echolocate_receiver.client)
 				echolocate_receiver.client.images -= receivers[echolocate_receiver][rendered_atom]["image"]
+				receivers[echolocate_receiver] -= rendered_atom
 		if(!length(receivers[echolocate_receiver]))
 			receivers -= echolocate_receiver
 

@@ -70,6 +70,7 @@
 /// Determines how fast traitors scale in general.
 /datum/config_entry/number/traitor_scaling_multiplier
 	default = 1
+	integer = FALSE
 	min_val = 0.01
 
 /// Determines how many potential objectives a traitor can have.
@@ -106,9 +107,22 @@
 
 /datum/config_entry/flag/protect_assistant_from_antagonist //If assistants can be traitor/cult/other
 
-/datum/config_entry/flag/enforce_human_authority //If non-human species are barred from joining as a head of staff
+/datum/config_entry/string/human_authority //Controls how to enforce human authority
+	default = "DISABLED"
 
-/datum/config_entry/flag/enforce_human_authority_on_everyone //If non-human species are barred from joining as a head of staff, including jobs flagged as allowed for non-humans, ie. Quartermaster.
+/////////////////////////////////////////////////Outdated human authority settings
+/datum/config_entry/flag/enforce_human_authority
+	deprecated_by = /datum/config_entry/string/human_authority
+
+/datum/config_entry/flag/enforce_human_authority/DeprecationUpdate(value)
+	return value ? HUMAN_AUTHORITY_NON_HUMAN_WHITELIST : HUMAN_AUTHORITY_DISABLED
+
+/datum/config_entry/flag/enforce_human_authority_on_everyone
+	deprecated_by = /datum/config_entry/string/human_authority
+
+/datum/config_entry/flag/enforce_human_authority_on_everyone/DeprecationUpdate(value)
+	return value ? HUMAN_AUTHORITY_ENFORCED : HUMAN_AUTHORITY_DISABLED
+/////////////////////////////////////////////////
 
 /datum/config_entry/flag/allow_latejoin_antagonists // If late-joining players can be traitor/changeling
 
@@ -265,7 +279,7 @@
 /datum/config_entry/flag/roundstart_away //Will random away mission be loaded.
 
 /datum/config_entry/number/gateway_delay //How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
-	default = 18000
+	default = 30 MINUTES
 	integer = FALSE
 	min_val = 0
 
@@ -273,6 +287,16 @@
 	integer = FALSE
 	min_val = 0
 	max_val = 100
+
+///An override to gateway_delay for specific maps or start points
+/datum/config_entry/keyed_list/gateway_delays_by_id
+	default = list(
+		AWAYSTART_BEACH = 5 MINUTES, //Chill RP zone
+		AWAYSTART_MUSEUM = 12 MINUTES, //Chill place with some cool puzzles and effects.
+	)
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+	lowercase_key = FALSE //The macros are written the exact same way as their values, only without the quotation marks.
 
 /datum/config_entry/flag/ghost_interaction
 
@@ -346,6 +370,16 @@
 	default = 1
 	min_val = 0
 	integer = FALSE
+
+/datum/config_entry/number/events_frequency_lower
+	default = 2.5 MINUTES
+	min_val = 0
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/number/events_frequency_upper
+	default = 7 MINUTES
+	min_val = 0
+	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/number/mice_roundstart
 	default = 10
@@ -454,3 +488,13 @@
 /datum/config_entry/number/max_positive_quirks
 	default = 6
 	min_val = -1
+
+/**
+ * A config that skews with the random spawners weights
+ * If the value is lower than 1, it'll tend to even out the odds
+ * If higher than 1, it'll lean toward common spawns even more.
+ */
+/datum/config_entry/number/random_loot_weight_modifier
+	integer = FALSE
+	default = 1
+	min_val = 0.05

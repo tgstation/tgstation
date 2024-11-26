@@ -63,26 +63,26 @@
 /obj/structure/reflector/setDir(new_dir)
 	return ..(NORTH)
 
-/obj/structure/reflector/bullet_act(obj/projectile/P)
-	var/pdir = P.dir
-	var/pangle = P.Angle
-	var/ploc = get_turf(P)
-	if(!finished || !allowed_projectile_typecache[P.type] || !(P.dir in GLOB.cardinals))
+/obj/structure/reflector/bullet_act(obj/projectile/proj)
+	var/pdir = proj.dir
+	var/pangle = proj.angle
+	var/ploc = get_turf(proj)
+	if(!finished || !allowed_projectile_typecache[proj.type] || !(proj.dir in GLOB.cardinals))
 		return ..()
-	if(auto_reflect(P, pdir, ploc, pangle) != BULLET_ACT_FORCE_PIERCE)
+	if(auto_reflect(proj, pdir, ploc, pangle) != BULLET_ACT_FORCE_PIERCE)
 		return ..()
 	return BULLET_ACT_FORCE_PIERCE
 
-/obj/structure/reflector/proc/auto_reflect(obj/projectile/P, pdir, turf/ploc, pangle)
-	P.ignore_source_check = TRUE
-	P.range = P.decayedRange
-	P.decayedRange = max(P.decayedRange--, 0)
+/obj/structure/reflector/proc/auto_reflect(obj/projectile/proj, pdir, turf/ploc, pangle)
+	proj.ignore_source_check = TRUE
+	proj.range = proj.decayedRange
+	proj.decayedRange = max(proj.decayedRange--, 0)
 	return BULLET_ACT_FORCE_PIERCE
 
-/obj/structure/reflector/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/structure/reflector/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(admin && tool.tool_behaviour)
 		return ITEM_INTERACT_BLOCKING
-	return NONE
+	return ..()
 
 /obj/structure/reflector/screwdriver_act(mob/living/user, obj/item/tool)
 	can_rotate = !can_rotate
@@ -191,12 +191,12 @@
 	admin = TRUE
 	anchored = TRUE
 
-/obj/structure/reflector/single/auto_reflect(obj/projectile/P, pdir, turf/ploc, pangle)
-	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (P.Angle + 180))
+/obj/structure/reflector/single/auto_reflect(obj/projectile/proj, pdir, turf/ploc, pangle)
+	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (proj.angle + 180))
 	if(abs(incidence) > 90 && abs(incidence) < 270)
 		return FALSE
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
-	P.set_angle_centered(new_angle)
+	proj.set_angle_centered(new_angle)
 	return ..()
 
 //DOUBLE
@@ -217,10 +217,10 @@
 	admin = TRUE
 	anchored = TRUE
 
-/obj/structure/reflector/double/auto_reflect(obj/projectile/P, pdir, turf/ploc, pangle)
-	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (P.Angle + 180))
+/obj/structure/reflector/double/auto_reflect(obj/projectile/proj, pdir, turf/ploc, pangle)
+	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (proj.angle + 180))
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
-	P.set_angle_centered(new_angle)
+	proj.set_angle_centered(new_angle)
 	return ..()
 
 //BOX
@@ -311,7 +311,7 @@
 
 	return data
 
-/obj/structure/reflector/ui_act(action, params)
+/obj/structure/reflector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

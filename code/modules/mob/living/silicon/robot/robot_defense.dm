@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("The wires seem fine, there's no need to fix them."))
 		return
 
-	if(istype(W, /obj/item/stock_parts/cell) && opened) // trying to put a cell inside
+	if(istype(W, /obj/item/stock_parts/power_store/cell) && opened) // trying to put a cell inside
 		if(wiresexposed)
 			to_chat(user, span_warning("Close the cover first!"))
 		else if(cell)
@@ -186,6 +186,52 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 	return ..()
 
+#define LOW_DAMAGE_UPPER_BOUND 1/3
+#define MODERATE_DAMAGE_UPPER_BOUND 2/3
+
+/mob/living/silicon/robot/proc/update_damage_particles()
+	var/brute_percent = bruteloss / maxHealth
+	var/burn_percent = fireloss / maxHealth
+
+	if (brute_percent > MODERATE_DAMAGE_UPPER_BOUND)
+		if(!smoke_particles)
+			smoke_particles = new(src, /particles/smoke/cyborg/heavy_damage, PARTICLE_ATTACH_MOB)
+		else if(!istype(smoke_particles.particles, /particles/smoke/cyborg/heavy_damage)) //TODO: needs to be darker
+			QDEL_NULL(smoke_particles)
+			smoke_particles = new(src, /particles/smoke/cyborg/heavy_damage, PARTICLE_ATTACH_MOB)
+
+	else if (brute_percent > LOW_DAMAGE_UPPER_BOUND)
+		if(!smoke_particles)
+			smoke_particles = new(src, /particles/smoke/cyborg, PARTICLE_ATTACH_MOB)
+		else if(!istype(smoke_particles.particles, /particles/smoke/cyborg))
+			QDEL_NULL(smoke_particles)
+			smoke_particles = new(src, /particles/smoke/cyborg, PARTICLE_ATTACH_MOB)
+
+	else
+		if(smoke_particles)
+			QDEL_NULL(smoke_particles)
+
+	if (burn_percent > MODERATE_DAMAGE_UPPER_BOUND)
+		if(!spark_particles)
+			spark_particles = new(src, /particles/embers/spark/severe, PARTICLE_ATTACH_MOB)
+		else if(!istype(spark_particles.particles, /particles/embers/spark/severe)) //TODO: needs to be more dramatic
+			QDEL_NULL(spark_particles)
+			spark_particles = new(src, /particles/embers/spark/severe, PARTICLE_ATTACH_MOB)
+
+	else if (burn_percent > LOW_DAMAGE_UPPER_BOUND)
+		if(!spark_particles)
+			spark_particles = new(src, /particles/embers/spark, PARTICLE_ATTACH_MOB)
+		else if(!istype(spark_particles.particles, /particles/embers/spark))
+			QDEL_NULL(spark_particles)
+			spark_particles = new(src, /particles/embers/spark, PARTICLE_ATTACH_MOB)
+
+	else
+		if(spark_particles)
+			QDEL_NULL(spark_particles)
+
+#undef LOW_DAMAGE_UPPER_BOUND
+#undef MODERATE_DAMAGE_UPPER_BOUND
+
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if (LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(body_position == STANDING_UP)
@@ -202,7 +248,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				log_combat(user, src, "pushed")
 				visible_message(span_danger("[user] forces back [src]!"), \
 					span_userdanger("[user] forces back [src]!"), null, COMBAT_MESSAGE_RANGE)
-			playsound(loc, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/pierce.ogg', 50, TRUE, -1)
 	else
 		..()
 	return
@@ -214,7 +260,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!wiresexposed && !issilicon(user))
 		if(!cell)
 			return
-		cell.update_appearance()
 		cell.add_fingerprint(user)
 		to_chat(user, span_notice("You remove \the [cell]."))
 		user.put_in_active_hand(cell)
@@ -242,7 +287,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if (!getBruteLoss())
 		to_chat(user, span_warning("[src] is already in good condition!"))
 		return
-	if (!tool.tool_start_check(user, amount=1)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
+	if (!tool.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED)) //The welder has 1u of fuel consumed by its afterattack, so we don't need to worry about taking any away.
 		return
 	if(src == user)
 		to_chat(user, span_notice("You start fixing yourself..."))
@@ -402,7 +447,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(stat != DEAD)
 		adjustBruteLoss(30)
 	else
-		investigate_log("has been gibbed a blob.", INVESTIGATE_DEATHS)
+		investigate_log("has been gibbed by a blob.", INVESTIGATE_DEATHS)
 		gib(DROP_ALL_REMAINS)
 	return TRUE
 
@@ -432,8 +477,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	spark_system.start()
 
-/mob/living/silicon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	. = ..()
-	if (. || AM.throwforce < CYBORG_THROW_SLOWDOWN_THRESHOLD)
-		return
-	apply_status_effect(/datum/status_effect/borg_throw_slow)
+/mob/living/silicon/robot/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
+	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
+		spark_system.start()
+		. = TRUE
+	return ..() || .

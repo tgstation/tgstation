@@ -17,6 +17,7 @@
 	var/mouse_control_probability = 20
 	/// Allowed time between movements
 	COOLDOWN_DECLARE(move_cooldown)
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /// Admin variant of the chef hat where every mouse pilot input will always be transferred to the wearer
 /obj/item/clothing/head/utility/chefhat/i_am_assuming_direct_control
@@ -54,7 +55,7 @@
 /obj/item/clothing/head/utility/chefhat/proc/on_mouse_emote(mob/living/source, key, emote_message, type_override)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/wearer = loc
-	if(!wearer || wearer.incapacitated(IGNORE_RESTRAINTS))
+	if(!wearer || INCAPACITATED_IGNORING(wearer, INCAPABLE_RESTRAINTS))
 		return
 	if (!prob(mouse_control_probability))
 		return COMPONENT_CANT_EMOTE
@@ -68,7 +69,7 @@
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Didn't roll well enough or on cooldown
 
 	var/mob/living/carbon/wearer = loc
-	if(!wearer || wearer.incapacitated(IGNORE_RESTRAINTS))
+	if(!wearer || INCAPACITATED_IGNORING(wearer, INCAPABLE_RESTRAINTS))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Not worn or can't move
 
 	var/move_direction = get_dir(wearer, moved_to)
@@ -103,6 +104,7 @@
 	armor_type = /datum/armor/hats_caphat
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/captain
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 //Captain: This is no longer space-worthy
 /datum/armor/hats_caphat
@@ -120,6 +122,7 @@
 	desc = "Worn only by Captains with an abundance of class."
 	icon_state = "capcap"
 	dog_fashion = null
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/caphat/beret
 	name = "captain's beret"
@@ -128,6 +131,7 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#0070B7#FFCE5B"
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 //Head of Personnel
 /obj/item/clothing/head/hats/hopcap
@@ -136,6 +140,7 @@
 	desc = "The symbol of true bureaucratic micromanagement."
 	armor_type = /datum/armor/hats_hopcap
 	dog_fashion = /datum/dog_fashion/head/hop
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 //Chaplain
 /datum/armor/hats_hopcap
@@ -166,6 +171,8 @@
 	desc = "An opulent hat that functions as a radio to God. Or as a lightning rod, depending on who you ask."
 	icon_state = "bishopmitre"
 
+#define CANDY_CD_TIME 2 MINUTES
+
 //Detective
 /obj/item/clothing/head/fedora/det_hat
 	name = "detective's fedora"
@@ -173,12 +180,14 @@
 	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
-	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
-	/// Cooldown for retrieving precious candy corn on alt click
-	var/candy_cooldown = 0
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	dog_fashion = /datum/dog_fashion/head/detective
-	///Path for the flask that spawns inside their hat roundstart
+	/// Path for the flask that spawns inside their hat roundstart
 	var/flask_path = /obj/item/reagent_containers/cup/glass/flask/det
+	/// Cooldown for retrieving precious candy corn with rmb
+	COOLDOWN_DECLARE(candy_cooldown)
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
+
 
 /datum/armor/fedora_det_hat
 	melee = 25
@@ -189,27 +198,45 @@
 	acid = 50
 	wound = 5
 
+
 /obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
 	. = ..()
 
 	create_storage(storage_type = /datum/storage/pockets/small/fedora/detective)
 
+	register_context()
+
 	new flask_path(src)
+
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to take a candy corn.")
 
+
+/obj/item/clothing/head/fedora/det_hat/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Candy Time"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+
+/// Now to solve where all these keep coming from
 /obj/item/clothing/head/fedora/det_hat/click_alt(mob/user)
-	if(candy_cooldown >= world.time)
+	if(!COOLDOWN_FINISHED(src, candy_cooldown))
 		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
 		return CLICK_ACTION_BLOCKING
 
-	var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
-	user.put_in_hands(CC)
+	var/obj/item/food/candy_corn/sweets = new /obj/item/food/candy_corn(src)
+	user.put_in_hands(sweets)
 	to_chat(user, span_notice("You slip a candy corn from your hat."))
-	candy_cooldown = world.time+1200
+	COOLDOWN_START(src, candy_cooldown, CANDY_CD_TIME)
+
 	return CLICK_ACTION_SUCCESS
+
+
+#undef CANDY_CD_TIME
 
 /obj/item/clothing/head/fedora/det_hat/minor
 	flask_path = /obj/item/reagent_containers/cup/glass/flask/det/minor
@@ -222,51 +249,76 @@
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
 	dog_fashion = /datum/dog_fashion/head/detective
-	interaction_flags_click = FORBID_TELEKINESIS_REACH
+	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///prefix our phrases must begin with
 	var/prefix = "go go gadget"
-	///an assoc list of phrase = item (like gun = revolver)
-	var/list/items_by_phrase = list()
+	///an assoc list of regex = item (like regex datum = revolver item)
+	var/list/items_by_regex = list()
+	///A an assoc list of regex = phrase (like regex datum = gun text)
+	var/list/phrases_by_regex = list()
 	///how many gadgets can we hold
 	var/max_items = 4
 	///items above this weight cannot be put in the hat
 	var/max_weight = WEIGHT_CLASS_NORMAL
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/fedora/inspector_hat/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
 	QDEL_NULL(atom_storage)
 
+/obj/item/clothing/head/fedora/inspector_hat/proc/set_prefix(desired_prefix)
+
+	prefix = desired_prefix
+
+	// Regenerated the phrases here.
+	for(var/old_regex in phrases_by_regex)
+		var/old_phrase = phrases_by_regex[old_regex]
+		var/obj/item/old_item = items_by_regex[old_regex]
+		items_by_regex -= old_regex
+		phrases_by_regex -= old_regex
+		set_phrase(old_phrase,old_item)
+
+	return TRUE
+
+/obj/item/clothing/head/fedora/inspector_hat/proc/set_phrase(desired_phrase,obj/item/associated_item)
+
+	var/regex/phrase_regex = regex("[prefix]\[\\s\\W\]+[desired_phrase]","i")
+
+	phrases_by_regex[phrase_regex] = desired_phrase
+	items_by_regex[phrase_regex] = associated_item
+
+	return TRUE
+
 /obj/item/clothing/head/fedora/inspector_hat/examine(mob/user)
 	. = ..()
 	. += span_notice("You can put items inside, and get them out by saying a phrase, or using it in-hand!")
 	. += span_notice("The prefix is <b>[prefix]</b>, and you can change it with alt-click!\n")
-	for(var/phrase in items_by_phrase)
-		var/obj/item/item = items_by_phrase[phrase]
-		. += span_notice("[icon2html(item, user)] You can remove [item] by saying <b>\"[prefix] [phrase]\"</b>!")
+	for(var/found_regex in phrases_by_regex)
+		var/found_phrase = phrases_by_regex[found_regex]
+		var/obj/item/found_item = items_by_regex[found_regex]
+		. += span_notice("[icon2html(found_item, user)] You can remove [found_item] by saying <b>\"[prefix] [found_phrase]\"</b>!")
 
 /obj/item/clothing/head/fedora/inspector_hat/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	var/mob/living/carbon/wearer = loc
 	if(!istype(wearer) || speaker != wearer) //if we are worn
-		return FALSE
+		return
 
 	raw_message = htmlrendertext(raw_message)
-	var/prefix_index = findtext(raw_message, prefix)
-	if(prefix_index != 1)
-		return FALSE
 
-	var/the_phrase = trim_left(replacetext(raw_message, prefix, ""))
-	var/obj/item/result = items_by_phrase[the_phrase]
-	if(!result)
-		return FALSE
+	for(var/regex/found_regex as anything in phrases_by_regex)
+		if(!found_regex.Find(raw_message))
+			continue
+		var/obj/item/found_item = items_by_regex[found_regex]
+		if(wearer.put_in_hands(found_item))
+			wearer.visible_message(span_warning("[src] drops [found_item] into the hands of [wearer]!"))
+			. = TRUE
+		else
+			balloon_alert(wearer, "can't put in hands!")
+			break
 
-	if(wearer.put_in_active_hand(result))
-		wearer.visible_message(span_warning("[src] drops [result] into the hands of [wearer]!"))
-	else
-		balloon_alert(wearer, "cant put in hands!")
-
-	return TRUE
+	return .
 
 /obj/item/clothing/head/fedora/inspector_hat/attackby(obj/item/item, mob/user, params)
 	. = ..()
@@ -278,51 +330,61 @@
 		balloon_alert(user, "too big!")
 		return
 
-	var/input = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
-	if(!input || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	if(input in items_by_phrase)
-		balloon_alert(user, "already used!")
+	var/desired_phrase = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
+	if(!desired_phrase || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
 	if(item.loc != user || !user.transferItemToLoc(item, src))
 		return
 
-	to_chat(user, span_notice("You install [item] into the [thtotext(contents.len)] slot in [src]."))
+	to_chat(user, span_notice("You install [item] into the [thtotext(contents.len)] slot of [src]."))
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-	items_by_phrase[input] = item
+	set_phrase(desired_phrase,item)
+
+	return TRUE
 
 /obj/item/clothing/head/fedora/inspector_hat/attack_self(mob/user)
 	. = ..()
-	var/phrase = tgui_input_list(user, "What item do you want to remove by phrase?", "Item Removal", items_by_phrase)
-	if(!phrase || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	user.put_in_inactive_hand(items_by_phrase[phrase])
+	if(!length(items_by_regex))
+		return CLICK_ACTION_BLOCKING
+	var/list/found_items = list()
+	for(var/found_regex in items_by_regex)
+		found_items += items_by_regex[found_regex]
+	var/obj/found_item = tgui_input_list(user, "What item do you want to remove?", "Item Removal", found_items)
+	if(!found_item || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return CLICK_ACTION_BLOCKING
+	user.put_in_inactive_hand(found_item)
 
 /obj/item/clothing/head/fedora/inspector_hat/click_alt(mob/user)
 	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
 	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return CLICK_ACTION_BLOCKING
-	prefix = new_prefix
+	set_prefix(new_prefix)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/fedora/inspector_hat/Exited(atom/movable/gone, direction)
 	. = ..()
-	for(var/phrase in items_by_phrase)
-		var/obj/item/result = items_by_phrase[phrase]
-		if(gone == result)
-			items_by_phrase -= phrase
-			return
+	for(var/found_regex in items_by_regex)
+		var/obj/item/found_item = items_by_regex[found_regex]
+		if(gone != found_item)
+			continue
+		items_by_regex -= found_regex
+		phrases_by_regex -= found_regex
+		break
 
 /obj/item/clothing/head/fedora/inspector_hat/atom_destruction(damage_flag)
-	for(var/phrase in items_by_phrase)
-		var/obj/item/result = items_by_phrase[phrase]
-		result.forceMove(drop_location())
-	items_by_phrase = null
+
+	var/atom/atom_location = drop_location()
+	for(var/found_regex in items_by_regex)
+		var/obj/item/result = items_by_regex[found_regex]
+		result.forceMove(atom_location)
+		items_by_regex -= found_regex
+		phrases_by_regex -= found_regex
+
 	return ..()
 
 /obj/item/clothing/head/fedora/inspector_hat/Destroy()
-	QDEL_LIST_ASSOC(items_by_phrase)
+	QDEL_LIST_ASSOC(items_by_regex) //Anything that failed to drop gets deleted.
 	return ..()
 
 //Mime
@@ -330,11 +392,14 @@
 	name = "beret"
 	desc = "A beret, a mime's favorite headwear."
 	icon_state = "beret"
+	icon_preview = 'icons/obj/clothing/head/beret.dmi'
+	icon_state_preview = "beret"
 	dog_fashion = /datum/dog_fashion/head/beret
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 //Security
 /obj/item/clothing/head/hats/hos
@@ -342,6 +407,7 @@
 	desc = "Please contact the Nanotrasen Costuming Department if found."
 	armor_type = /datum/armor/hats_hos
 	strip_delay = 8 SECONDS
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/hats/hos/cap
 	name = "head of security cap"
@@ -355,8 +421,8 @@
 		/datum/crafting_recipe/sturdy_shako,\
 		)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -407,6 +473,7 @@
 	armor_type = /datum/armor/hats_warden
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /datum/armor/hats_warden
 	melee = 40
@@ -559,6 +626,7 @@
 	name = "chief medical officer beret"
 	desc = "A beret in a distinct surgical turquoise!"
 	greyscale_colors = "#5EB8B8"
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/utility/surgerycap
 	name = "blue surgery cap"
@@ -566,6 +634,10 @@
 	desc = "A blue medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
 	flags_inv = HIDEHAIR //Cover your head doctor!
 	w_class = WEIGHT_CLASS_SMALL //surgery cap can be easily crumpled
+
+/obj/item/clothing/head/utility/surgerycap/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/head/utility/surgerycap/attack_self(mob/user)
 	. = ..()
@@ -609,6 +681,10 @@
 	icon_state = "headmirror"
 	body_parts_covered = NONE
 
+/obj/item/clothing/head/utility/head_mirror/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
+
 /obj/item/clothing/head/utility/head_mirror/examine(mob/user)
 	. = ..()
 	. += span_notice("In a properly lit room, you can use this to examine people's eyes, ears, and mouth <i>closer</i>.")
@@ -642,9 +718,9 @@
 	if(human_examined.is_mouth_covered())
 		final_message += "\tYou can't see [examining.p_their()] mouth."
 	else
-		var/obj/item/organ/internal/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
+		var/obj/item/organ/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
 		var/pill_count = 0
-		for(var/datum/action/item_action/hands_free/activate_pill/pill in human_examined.actions)
+		for(var/datum/action/item_action/activate_pill/pill in human_examined.actions)
 			pill_count++
 
 		if(pill_count >= 1 && has_tongue)
@@ -659,7 +735,7 @@
 	if(human_examined.is_ears_covered())
 		final_message += "\tYou can't see [examining.p_their()] ears."
 	else
-		var/obj/item/organ/internal/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
 		if(has_ears)
 			if(has_ears.deaf)
 				final_message += "\tDamaged eardrums in [examining.p_their()] ear canals."
@@ -671,7 +747,7 @@
 	if(human_examined.is_eyes_covered())
 		final_message += "\tYou can't see [examining.p_their()] eyes."
 	else
-		var/obj/item/organ/internal/eyes/has_eyes = human_examined.get_organ_slot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/eyes/has_eyes = human_examined.get_organ_slot(ORGAN_SLOT_EYES)
 		if(has_eyes)
 			final_message += "\tA pair of [has_eyes.damage ? "" : "healthy "][has_eyes.name]."
 		else

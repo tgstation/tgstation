@@ -72,7 +72,7 @@
 /turf/open/floor/iron/smooth_edge,
 /area/ruin/space/has_grav/derelictsulaco)
 "dk" = (
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /obj/item/stack/sheet/mineral/sandbags{
 	amount = 2
 	},
@@ -1110,7 +1110,7 @@
 /area/template_noop)
 "KS" = (
 /obj/machinery/door/window/brigdoor/left/directional/east,
-/obj/machinery/keycard_auth/directional/north,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /obj/structure/barricade/sandbags,
 /turf/open/floor/iron/stairs{
 	dir = 8

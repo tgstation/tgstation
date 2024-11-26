@@ -2,7 +2,7 @@
 	name = "Magic Missile"
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
 	button_icon_state = "magicm"
-	sound = 'sound/magic/magic_missile.ogg'
+	sound = 'sound/effects/magic/magic_missile.ogg'
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 20 SECONDS

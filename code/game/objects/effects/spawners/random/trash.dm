@@ -28,6 +28,32 @@
 		/obj/item/shard/plasma = 1,
 	)
 
+/obj/effect/spawner/random/trash/deluxe_garbage
+	name = "fancy deluxe garbage spawner"
+	loot = list(
+		/obj/effect/spawner/random/trash/garbage = 25,
+		/obj/effect/spawner/random/trash/food_packaging = 10,
+		/obj/effect/spawner/random/entertainment/money = 10,
+		/obj/effect/spawner/random/trash/crushed_can = 10,
+		/obj/item/shard/plasma = 5,
+		/obj/item/reagent_containers/pill/maintenance = 5,
+		/obj/item/mail/junkmail = 5,
+		/obj/effect/spawner/random/food_or_drink/snack = 5,
+		/obj/effect/spawner/random/trash/soap = 3,
+		/obj/item/reagent_containers/cup/glass/sillycup = 3,
+		/obj/item/broken_bottle = 3,
+		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
+		/obj/effect/spawner/random/engineering/tool = 1,
+		/mob/living/basic/mouse = 1,
+		/obj/item/food/grown/cannabis = 1,
+		/obj/item/reagent_containers/cup/rag = 1,
+		/obj/effect/spawner/random/entertainment/drugs= 1,
+		/obj/item/modular_computer/pda = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/effect/spawner/random/entertainment/cigar = 1,
+		/obj/item/stack/ore/gold = 1,
+	)
+
 /obj/effect/spawner/random/trash/cigbutt
 	name = "cigarette butt spawner"
 	loot = list(
@@ -63,7 +89,6 @@
 		/obj/item/trash/cnds = 1,
 		/obj/item/trash/syndi_cakes = 1,
 		/obj/item/trash/shrimp_chips = 1,
-		/obj/item/trash/waffles = 1,
 		/obj/item/trash/tray = 1,
 	)
 
@@ -299,3 +324,18 @@
 	if(istype(crushed_can))
 		crushed_can.icon_state = pick(soda_icons)
 	return crushed_can
+
+/obj/effect/spawner/random/trash/ghetto_containers
+	name = "ghetto container spawner"
+	loot = list(
+		/obj/item/reagent_containers/cup/bucket = 5,
+		/obj/item/reagent_containers/cup/glass/bottle = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/small = 5,
+		/obj/item/reagent_containers/cup/glass/mug = 5,
+		/obj/item/reagent_containers/cup/glass/shaker = 5,
+		/obj/item/reagent_containers/cup/watering_can/wood = 5,
+		/obj/item/reagent_containers/cup/mortar = 2,
+		/obj/item/reagent_containers/cup/soup_pot = 2,
+		/obj/item/reagent_containers/cup/blastoff_ampoule = 1,
+		/obj/item/reagent_containers/cup/maunamug = 1,
+	)

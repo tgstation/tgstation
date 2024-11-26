@@ -15,6 +15,7 @@
 	designation = "Default" //used for displaying the prefix & getting the current model of cyborg
 	has_limbs = TRUE
 	hud_type = /datum/hud/robot
+	unique_name = TRUE
 
 	///Represents the cyborg's model (engineering, medical, etc.)
 	var/obj/item/robot_model/model = null
@@ -40,8 +41,10 @@
 	///Used for deconstruction to remember what the borg was constructed out of.
 	var/obj/item/robot_suit/robot_suit = null
 	///If this is a path, this gets created as an object in Initialize.
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high
 
+	///If we've been forcibly disabled for a temporary amount of time.
+	COOLDOWN_DECLARE(disabled_time)
 	///If the lamp isn't broken.
 	var/lamp_functional = TRUE
 	///If the lamp is turned on
@@ -55,7 +58,12 @@
 	////Power consumption of the light per lamp_intensity.
 	var/lamp_power_consumption = BORG_LAMP_POWER_CONSUMPTION
 
+	// Overlay for borg eye lights
 	var/mutable_appearance/eye_lights
+	///Holds a reference to the timer taking care of blinking lights on dead cyborgs
+	var/eye_flash_timer = null
+	// Overlay for borg hat
+	var/mutable_appearance/hat_overlay
 
 
 	// Hud
@@ -103,8 +111,6 @@
 	var/ai_lockdown = FALSE
 	///Timer that allows the borg to self-unlock after a set amount of time
 	var/lockdown_timer = null
-	///Random serial number generated for each cyborg upon its initialization
-	var/ident = 0
 	var/locked = TRUE
 	req_one_access = list(ACCESS_ROBOTICS)
 
@@ -112,6 +118,10 @@
 	var/low_power_mode = FALSE
 	///So they can initialize sparks whenever/N
 	var/datum/effect_system/spark_spread/spark_system
+	///Smoke particle holder for brute damage
+	var/obj/effect/abstract/particle_holder/smoke_particles = null
+	///Spark particle holder for burn damage
+	var/obj/effect/abstract/particle_holder/spark_particles = null
 
 	///Jetpack-like effect.
 	var/ionpulse = FALSE
@@ -129,7 +139,7 @@
 
 	var/hasExpanded = FALSE
 	var/obj/item/hat
-	var/hat_offset = -3
+	var/hat_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(4, -3), "west" = list(-4, -3))
 
 	///What types of mobs are allowed to ride/buckle to this mob
 	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
@@ -202,7 +212,7 @@
 		Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 		<i>Help the operatives secure the disk at all costs!</i></b>"
 	set_model = /obj/item/robot_model/syndicate
-	cell = /obj/item/stock_parts/cell/hyper
+	cell = /obj/item/stock_parts/power_store/cell/hyper
 	radio = /obj/item/radio/borg/syndicate
 
 /mob/living/silicon/robot/model/syndicate/Initialize(mapload)

@@ -53,7 +53,7 @@
 		if (!isitem(potential_item))
 			continue
 		var/obj/item/item = potential_item
-		if (vacuum_bag?.attackby(item))
+		if (vacuum_bag.atom_storage.attempt_insert(item))
 			sucked = TRUE // track that we successfully sucked up something
 
 	// if we did indeed suck up something, play a funny noise

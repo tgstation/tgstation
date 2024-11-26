@@ -6,6 +6,10 @@
 	description = "This room looks really bad."
 	mood_change = -3
 
+/datum/mood_event/ehroom
+	description = "This room looks kinda bad."
+	mood_change = -1
+
 /datum/mood_event/decentroom
 	description = "This room looks alright."
 	mood_change = 1

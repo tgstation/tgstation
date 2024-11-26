@@ -34,6 +34,18 @@
 	item_path = /obj/item/kinetic_crusher
 	cost_per_order = 650
 
+/datum/orderable_item/mining/crusher_retool_kit
+	item_path = /obj/item/crusher_trophy/retool_kit
+	cost_per_order = 150
+
+/datum/orderable_item/mining/crusher_retool_kit_harpoon
+	item_path = /obj/item/crusher_trophy/retool_kit/harpoon
+	cost_per_order = 150
+
+/datum/orderable_item/mining/crusher_retool_kit_dagger
+	item_path = /obj/item/crusher_trophy/retool_kit/dagger
+	cost_per_order = 150
+
 /datum/orderable_item/mining/resonator
 	item_path = /obj/item/resonator
 	cost_per_order = 710
@@ -106,6 +118,10 @@
 /datum/orderable_item/mining/weather_radio
 	item_path = /obj/item/radio/weather_monitor
 	cost_per_order = 320
+
+/datum/orderable_item/mining/ventpointer
+	item_path = /obj/item/pinpointer/vent
+	cost_per_order = 1150
 
 /datum/orderable_item/mining/boulder_processing
 	item_path = /obj/item/boulder_beacon

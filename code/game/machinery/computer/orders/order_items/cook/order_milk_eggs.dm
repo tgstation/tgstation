@@ -110,6 +110,16 @@
 	item_path = /obj/item/food/ready_donk/donkrange_chicken
 	cost_per_order = 40
 
+/datum/orderable_item/milk_eggs/ready_donk_salisbury
+	name = "Ready-Donk Meal: Donkriginals Salisbury Steak"
+	item_path = /obj/item/food/ready_donk/salisbury_steak
+	cost_per_order = 40
+
+/datum/orderable_item/milk_eggs/ready_donk_chicken
+	name = "Ready-Donk Meal: Donkriginals Country-Fried Chicken"
+	item_path = /obj/item/food/ready_donk/country_chicken
+	cost_per_order = 40
+
 /datum/orderable_item/milk_eggs/tiziran_goods
 	name = "Tiziran Farm-Fresh Pack"
 	item_path = /obj/item/storage/box/tiziran_goods
@@ -134,3 +144,13 @@
 	name = "Mothic Pantry Pack"
 	item_path = /obj/item/storage/box/mothic_cans_sauces
 	cost_per_order = 120
+
+/datum/orderable_item/milk_eggs/armorfish
+	name = "Cleaned Armorfish"
+	item_path = /obj/item/food/fishmeat/armorfish
+	cost_per_order = 30
+
+/datum/orderable_item/milk_eggs/moonfish
+	name = "Moonfish"
+	item_path = /obj/item/food/fishmeat/moonfish
+	cost_per_order = 30

@@ -118,7 +118,7 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "lg" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "lm" = (
 /obj/structure/spider/stickyweb,
@@ -210,7 +210,7 @@
 "ri" = (
 /obj/structure/lattice/catwalk,
 /obj/item/crowbar/large/emergency,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "rr" = (
 /obj/structure/floodlight_frame,
@@ -222,7 +222,7 @@
 "rI" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "sh" = (
 /obj/item/food/badrecipe/moldy/bacteria,
@@ -492,7 +492,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /obj/effect/spawner/random/entertainment/plushie,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "yS" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -585,7 +585,7 @@
 "Hj" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Hv" = (
 /obj/effect/decal/cleanable/glass/plastitanium/screws,
@@ -653,7 +653,6 @@
 	},
 /obj/machinery/light/warm,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
 	locked = 0;
 	pixel_y = -25;
 	start_charge = 0
@@ -672,7 +671,7 @@
 "Mp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/lead,
+/obj/item/stock_parts/power_store/cell/lead,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "MK" = (
@@ -758,7 +757,7 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Rl" = (
 /obj/item/paper/crumpled,
-/obj/item/stock_parts/cell/hyper,
+/obj/item/stock_parts/power_store/cell/hyper,
 /obj/item/hand_labeler,
 /obj/item/hand_labeler_refill,
 /obj/item/hand_labeler_refill,
@@ -813,8 +812,8 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "Wl" = (
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,
@@ -880,8 +879,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Zi" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ZM" = (
 /obj/item/papercutter,
 /obj/item/paper_bin,

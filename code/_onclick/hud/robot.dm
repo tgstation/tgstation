@@ -87,11 +87,6 @@
 	using.screen_loc = ui_borg_navigate_menu
 	static_inventory += using
 
-// Z-level floor change
-	using = new /atom/movable/screen/floor_menu(null, src)
-	using.screen_loc = ui_borg_floor_menu
-	static_inventory += using
-
 //Radio
 	using = new /atom/movable/screen/robot/radio(null, src)
 	using.screen_loc = ui_borg_radio
@@ -149,12 +144,18 @@
 	action_intent.screen_loc = ui_combat_toggle
 	static_inventory += action_intent
 
+	floor_change = new /atom/movable/screen/floor_changer(null, src)
+	floor_change.icon = ui_style
+	floor_change.screen_loc = ui_borg_floor_changer
+	static_inventory += floor_change
+
 //Health
 	healths = new /atom/movable/screen/healths/robot(null, src)
 	infodisplay += healths
 
 //Installed Module
 	robit.hands = new /atom/movable/screen/robot/module(null, src)
+	robit.hands.icon_state = robit.model ? robit.model.model_select_icon : "nomod"
 	robit.hands.screen_loc = ui_borg_module
 	static_inventory += robit.hands
 
@@ -197,47 +198,50 @@
 	if(!R.client)
 		return
 
-	if(R.shown_robot_modules && screenmob.hud_used.hud_shown)
-		//Modules display is shown
-		screenmob.client.screen += module_store_icon //"store" icon
+	//Module is not currently active
+	screenmob.client.screen -= R.model.get_inactive_modules()
 
-		if(!R.model.modules)
-			to_chat(usr, span_warning("Selected model has no modules to select!"))
-			return
-
-		if(!R.robot_modules_background)
-			return
-
-		var/display_rows = max(CEILING(length(R.model.get_inactive_modules()) / 8, 1),1)
-		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
-		screenmob.client.screen += R.robot_modules_background
-
-		var/x = -4 //Start at CENTER-4,SOUTH+1
-		var/y = 1
-
-		for(var/atom/movable/A in R.model.get_inactive_modules())
-			//Module is not currently active
-			screenmob.client.screen += A
-			if(x < 0)
-				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
-			else
-				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
-			SET_PLANE_IMPLICIT(A, ABOVE_HUD_PLANE)
-
-			x++
-			if(x == 4)
-				x = -4
-				y++
-
-	else
+	if(!R.shown_robot_modules || !screenmob.hud_used.hud_shown)
 		//Modules display is hidden
 		screenmob.client.screen -= module_store_icon //"store" icon
 
-		for(var/atom/A in R.model.get_inactive_modules())
-			//Module is not currently active
-			screenmob.client.screen -= A
 		R.shown_robot_modules = 0
 		screenmob.client.screen -= R.robot_modules_background
+		return
+
+	//Modules display is shown
+	screenmob.client.screen += module_store_icon //"store" icon
+
+	if(!R.model.modules)
+		to_chat(usr, span_warning("Selected model has no modules to select!"))
+		return
+
+	if(!R.robot_modules_background)
+		return
+
+	var/list/usable_modules = R.model.get_usable_modules()
+
+	var/display_rows = max(CEILING(length(usable_modules) / 8, 1),1)
+	R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
+	screenmob.client.screen += R.robot_modules_background
+
+	for(var/i in 1 to length(usable_modules))
+		var/atom/movable/A = usable_modules[i]
+		if(A in R.held_items)
+			//Module is currently active
+			continue
+
+		// Arrange in a grid x=-4 to 3 and y=1 to display_rows
+		var/x = (i - 1) % 8 - 4
+		var/y = floor((i - 1) / 8) + 1
+
+		screenmob.client.screen += A
+		if(x < 0)
+			A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
+		else
+			A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
+		SET_PLANE_IMPLICIT(A, ABOVE_HUD_PLANE)
+
 
 /datum/hud/robot/persistent_inventory_update(mob/viewer)
 	if(!mymob)

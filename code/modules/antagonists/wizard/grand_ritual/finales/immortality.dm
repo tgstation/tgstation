@@ -19,7 +19,7 @@
 
 /datum/grand_finale/immortality/trigger(mob/living/carbon/human/invoker)
 	new /obj/effect/temp_visual/immortality_blast(get_turf(invoker))
-	SEND_SOUND(world, sound('sound/magic/teleport_diss.ogg'))
+	SEND_SOUND(world, sound('sound/effects/magic/teleport_diss.ogg'))
 	for (var/mob/living/alive_guy as anything in GLOB.mob_living_list)
 		new /obj/effect/temp_visual/immortality_pulse(get_turf(alive_guy))
 		if (!alive_guy.mind)
@@ -109,9 +109,6 @@
 	for(var/datum/quirk/target_quirk as anything in target.quirks)
 		LAZYADD(quirks, new target_quirk.type)
 
-	hair_gradient_style = LAZYLISTDUPLICATE(target.grad_style)
-	hair_gradient_colours = LAZYLISTDUPLICATE(target.grad_color)
-
 	voice = target.voice
 	voice_filter = target.voice_filter
 
@@ -120,8 +117,6 @@
 	target.real_name = name
 	target.age = age
 	target.physique = physique
-	target.grad_style = LAZYLISTDUPLICATE(hair_gradient_style)
-	target.grad_color = LAZYLISTDUPLICATE(hair_gradient_colours)
 	target.voice = voice
 	target.voice_filter = voice_filter
 

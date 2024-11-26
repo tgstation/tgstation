@@ -5,6 +5,7 @@
 	icon_state = "srm-8"
 	base_icon_state = "srm-8"
 	projectile_type = /obj/projectile/bullet/rocket
+	newtonian_force = 2
 
 /obj/item/ammo_casing/rocket/Initialize(mapload)
 	. = ..()
@@ -27,6 +28,9 @@
 	icon_state = "low_yield_rocket"
 	base_icon_state = "low_yield_rocket"
 	projectile_type = /obj/projectile/bullet/rocket/weak
+
+/obj/item/ammo_casing/rocket/reverse
+	projectile_type = /obj/projectile/bullet/rocket/reverse
 
 /obj/item/ammo_casing/a75
 	desc = "A .75 bullet casing."

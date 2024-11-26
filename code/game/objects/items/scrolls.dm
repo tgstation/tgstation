@@ -55,7 +55,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
-	if(human_user.incapacitated() || !human_user.is_holding(src))
+	if(human_user.incapacitated || !human_user.is_holding(src))
 		return
 	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/teleport = locate() in actions
 	if(!teleport)

@@ -30,7 +30,6 @@
 	var/blending = FALSE //lets not take pictures while the previous is still processing!
 	var/see_ghosts = CAMERA_NO_GHOSTS //for the spoop of it
 	var/obj/item/disk/holodisk/disk
-	var/sound/custom_sound
 	var/silent = FALSE
 	var/picture_size_x = 2
 	var/picture_size_y = 2
@@ -45,7 +44,7 @@
 
 /obj/item/camera/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera), SHELL_CAPACITY_SMALL)
+	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera, new /obj/item/circuit_component/remotecam/polaroid), SHELL_CAPACITY_SMALL)
 
 /obj/item/camera/attack_self(mob/user)
 	if(!disk)
@@ -107,7 +106,7 @@
 	. += "It has [pictures_left] photos left."
 
 //user can be atom or mob
-/obj/item/camera/proc/can_target(atom/target, mob/user, prox_flag)
+/obj/item/camera/proc/can_target(atom/target, mob/user)
 	if(!on || blending || !pictures_left)
 		return FALSE
 	var/turf/T = get_turf(target)
@@ -118,7 +117,7 @@
 			return FALSE
 		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
 			return FALSE
-		else if(!(get_turf(target) in get_hear(world.view, user)))
+		else if(!(get_turf(target) in get_hear(CONFIG_GET(string/default_view), user)))
 			return FALSE
 	else if(isliving(loc))
 		if(!(get_turf(target) in view(world.view, loc)))
@@ -128,24 +127,34 @@
 			return FALSE
 	return TRUE
 
-/obj/item/camera/afterattack(atom/target, mob/user, flag)
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/camera/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// Always skip on storage and tables
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
 
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/camera/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (disk)
-		if(ismob(target))
+		if(ismob(interacting_with))
 			if (disk.record)
 				QDEL_NULL(disk.record)
 
 			disk.record = new
-			var/mob/M = target
+			var/mob/M = interacting_with
 			disk.record.caller_name = M.name
 			disk.record.set_caller_image(M)
 		else
 			to_chat(user, span_warning("Invalid holodisk target."))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-	if(!can_target(target, user, flag))
-		return
+	if(!can_target(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
+	if(!photo_taken(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/camera/proc/photo_taken(atom/target, mob/user)
 
 	on = FALSE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), cooldown)
@@ -153,7 +162,7 @@
 	icon_state = state_off
 
 	INVOKE_ASYNC(src, PROC_REF(captureimage), target, user, picture_size_x - 1, picture_size_y - 1)
-
+	return TRUE
 
 /obj/item/camera/proc/cooldown()
 	UNTIL(!blending)
@@ -217,8 +226,8 @@
 			dead_spotted += mob
 		desc += mob.get_photo_description(src)
 
-	var/psize_x = (size_x * 2 + 1) * world.icon_size
-	var/psize_y = (size_y * 2 + 1) * world.icon_size
+	var/psize_x = (size_x * 2 + 1) * ICON_SIZE_X
+	var/psize_y = (size_y * 2 + 1) * ICON_SIZE_Y
 	var/icon/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area, size_x, size_y, (size_x * 2 + 1), (size_y * 2 + 1))
 	qdel(clone_area)
 	get_icon.Blend("#000", ICON_UNDERLAY)
@@ -226,7 +235,7 @@
 		if(person.is_face_visible())
 			names += "[person.name]"
 
-	var/datum/picture/picture = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, names, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
+	var/datum/picture/picture = new("picture", desc.Join("<br>"), mobs_spotted, dead_spotted, names, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
 	after_picture(user, picture)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
 	blending = FALSE
@@ -241,6 +250,9 @@
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
 	if(print_picture_on_snap)
 		printpicture(user, picture)
+
+	if(!silent)
+		playsound(loc, SFX_POLAROID, 75, TRUE, -3)
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
 	pictures_left--

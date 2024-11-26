@@ -123,7 +123,7 @@
 		/obj/effect/spawner/random/entertainment/cigarette_pack,
 		/obj/effect/spawner/random/entertainment/cigar,
 		/obj/effect/spawner/random/entertainment/lighter,
-		/obj/item/clothing/mask/cigarette/pipe,
+		/obj/item/cigarette/pipe,
 	)
 
 /datum/quirk_constant_data/smoker
@@ -145,15 +145,15 @@
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
 	var/mob/living/carbon/carbon_holder = quirk_holder
-	var/obj/item/organ/internal/lungs/smoker_lungs = null
-	var/obj/item/organ/internal/lungs/old_lungs = carbon_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/smoker_lungs = null
+	var/obj/item/organ/lungs/old_lungs = carbon_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(old_lungs && IS_ORGANIC_ORGAN(old_lungs))
 		if(isplasmaman(carbon_holder))
-			smoker_lungs = /obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
+			smoker_lungs = /obj/item/organ/lungs/plasmaman/plasmaman_smoker
 		else if(isethereal(carbon_holder))
-			smoker_lungs = /obj/item/organ/internal/lungs/ethereal/ethereal_smoker
+			smoker_lungs = /obj/item/organ/lungs/ethereal/ethereal_smoker
 		else
-			smoker_lungs = /obj/item/organ/internal/lungs/smoker_lungs
+			smoker_lungs = /obj/item/organ/lungs/smoker_lungs
 	if(!isnull(smoker_lungs))
 		smoker_lungs = new smoker_lungs
 		smoker_lungs.Insert(carbon_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
@@ -162,7 +162,7 @@
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/mask_item = human_holder.get_item_by_slot(ITEM_SLOT_MASK)
-	if(istype(mask_item, /obj/item/clothing/mask/cigarette))
+	if(istype(mask_item, /obj/item/cigarette))
 		var/obj/item/storage/fancy/cigarettes/cigarettes = drug_container_type
 		if(istype(mask_item, initial(cigarettes.spawn_type)))
 			quirk_holder.clear_mood_event("wrong_cigs")
@@ -211,13 +211,13 @@
 	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
 	var/obj/item/reagent_containers/brandy_container = drug_container_type
 	if(isnull(brandy_container))
-		stack_trace("Alcoholic quirk added while the GLOB.alcohol_containers is (somehow) not initialized!")
+		stack_trace("Alcoholic quirk added while the GLOB.possible_alcoholic_addictions is (somehow) not initialized!")
 		brandy_container = new drug_container_type
 		qdel(brandy_container)
 
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_alcoholic, protagonist = quirk_holder, preferred_brandy = initial(favorite_alcohol.name))
 	// alcoholic livers have 25% less health and healing
-	var/obj/item/organ/internal/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(alcohol_liver && IS_ORGANIC_ORGAN(alcohol_liver)) // robotic livers aren't affected
 		alcohol_liver.maxHealth = alcohol_liver.maxHealth * 0.75
 		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75

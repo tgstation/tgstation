@@ -54,7 +54,7 @@
 
 /// Removes the specified invisibility source from the tracker
 /atom/proc/RemoveInvisibility(id)
-	if(!invisibility_sources)
+	if(!invisibility_sources?[id])
 		return
 
 	var/list/priority_data = invisibility_sources[id]

@@ -12,7 +12,7 @@
 	for(var/species_id in get_selectable_species())
 
 		var/species_type = GLOB.species_list[species_id]
-		var/datum/species/species = new species_type()
+		var/datum/species/species = GLOB.species_prototypes[species_type]
 
 		// Check the species decription.
 		// If it's not overridden, a stack trace will be thrown (and fail the test).
@@ -29,5 +29,3 @@
 			TEST_FAIL("Species [species] ([species_type]) is selectable, but did not properly implement get_species_lore().")
 		else if(!islist(species_lore))
 			TEST_FAIL("Species [species] ([species_type]) is selectable, but did not properly implement get_species_lore() (Did not return a list).")
-
-		qdel(species)

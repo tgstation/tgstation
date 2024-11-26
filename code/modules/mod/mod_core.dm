@@ -25,29 +25,44 @@
 	mod.update_charge_alert()
 	mod = null
 
+/// Returns the item responsible for charging the suit, like a power cell, an ethereal's stomach, the core itself, etc.
 /obj/item/mod/core/proc/charge_source()
 	return
 
+/// Returns the amount of charge in the core.
 /obj/item/mod/core/proc/charge_amount()
 	return 0
 
+/// Returns the max amount of charge stored in the core.
 /obj/item/mod/core/proc/max_charge_amount()
 	return 1
 
+/// Adds a set amount of charge to the core.
 /obj/item/mod/core/proc/add_charge(amount)
 	return FALSE
 
+/// Subtracts a set amount of charge from the core.
 /obj/item/mod/core/proc/subtract_charge(amount)
 	return FALSE
 
+/// Checks if there's enough charge in the core to use an amount of energy.
 /obj/item/mod/core/proc/check_charge(amount)
 	return FALSE
 
-/**
- * Gets what icon state to display on the HUD for the charge level of this core
- */
+/// Returns what icon state to display on the HUD for the charge level of this core
 /obj/item/mod/core/proc/get_charge_icon_state()
 	return "0"
+
+/// Gets what the UI should use for the charge bar color.
+/obj/item/mod/core/proc/get_chargebar_color()
+	return "bad"
+
+/// Gets what the UI should use for the charge bar text.
+/obj/item/mod/core/proc/get_chargebar_string()
+	var/charge_amount = charge_amount()
+	var/max_charge_amount = max_charge_amount()
+	return "[display_energy(charge_amount)] of [display_energy(max_charge_amount())] \
+		([round((100 * charge_amount) / max_charge_amount, 1)]%)"
 
 /obj/item/mod/core/infinite
 	name = "MOD infinite core"
@@ -76,6 +91,12 @@
 /obj/item/mod/core/infinite/get_charge_icon_state()
 	return "high"
 
+/obj/item/mod/core/infinite/get_chargebar_color()
+	return "teal"
+
+/obj/item/mod/core/infinite/get_chargebar_string()
+	return "Infinite"
+
 /obj/item/mod/core/standard
 	name = "MOD standard core"
 	icon_state = "mod-core-standard"
@@ -85,7 +106,7 @@
 		Which one you have in your suit is unclear, but either way, \
 		it's been repurposed to be an internal power source for a Modular Outerwear Device."
 	/// Installed cell.
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 
 /obj/item/mod/core/standard/Destroy()
 	QDEL_NULL(cell)
@@ -97,7 +118,7 @@
 		install_cell(cell)
 	RegisterSignal(mod, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(mod, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
-	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_mod_interaction))
 	RegisterSignal(mod, COMSIG_MOD_WEARER_SET, PROC_REF(on_wearer_set))
 	if(mod.wearer)
 		on_wearer_set(mod, mod.wearer)
@@ -105,7 +126,12 @@
 /obj/item/mod/core/standard/uninstall()
 	if(!QDELETED(cell))
 		cell.forceMove(drop_location())
-	UnregisterSignal(mod, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACKBY, COMSIG_MOD_WEARER_SET))
+	UnregisterSignal(mod, list(
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_MOD_WEARER_SET,
+	))
 	if(mod.wearer)
 		on_wearer_unset(mod, mod.wearer)
 	return ..()
@@ -114,15 +140,15 @@
 	return cell
 
 /obj/item/mod/core/standard/charge_amount()
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	return charge_source?.charge || 0
 
 /obj/item/mod/core/standard/max_charge_amount(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	return charge_source?.maxcharge || 1
 
 /obj/item/mod/core/standard/add_charge(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	if(isnull(charge_source))
 		return FALSE
 	. = charge_source.give(amount)
@@ -131,7 +157,7 @@
 	return .
 
 /obj/item/mod/core/standard/subtract_charge(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	if(isnull(charge_source))
 		return FALSE
 	. = charge_source.use(amount, TRUE)
@@ -158,6 +184,22 @@
 
 	return "empty"
 
+/obj/item/mod/core/standard/get_chargebar_color()
+	if(isnull(charge_source()))
+		return "transparent"
+	switch(round(charge_amount() / max_charge_amount(), 0.01))
+		if(-INFINITY to 0.33)
+			return "bad"
+		if(0.33 to 0.66)
+			return "average"
+		if(0.66 to INFINITY)
+			return "good"
+
+/obj/item/mod/core/standard/get_chargebar_string()
+	if(isnull(charge_source()))
+		return "Power Cell Missing"
+	return ..()
+
 /obj/item/mod/core/standard/proc/install_cell(new_cell)
 	cell = new_cell
 	cell.forceMove(src)
@@ -166,7 +208,6 @@
 /obj/item/mod/core/standard/proc/uninstall_cell()
 	if(!cell)
 		return
-	cell.update_appearance()
 	cell = null
 	mod.update_charge_alert()
 
@@ -206,23 +247,29 @@
 	cell_to_move.forceMove(drop_location())
 	user.put_in_hands(cell_to_move)
 
-/obj/item/mod/core/standard/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
+/obj/item/mod/core/standard/proc/on_mod_interaction(datum/source, mob/living/user, obj/item/thing)
 	SIGNAL_HANDLER
 
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
-		if(!mod.open)
-			mod.balloon_alert(user, "open the cover first!")
-			playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return NONE
-		if(cell)
-			mod.balloon_alert(user, "cell already installed!")
-			playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return COMPONENT_NO_AFTERATTACK
-		install_cell(attacking_item)
-		mod.balloon_alert(user, "cell installed")
-		playsound(mod, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return COMPONENT_NO_AFTERATTACK
-	return NONE
+	return item_interaction(user, thing)
+
+/obj/item/mod/core/standard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return replace_cell(tool, user) ? ITEM_INTERACT_SUCCESS : NONE
+
+/obj/item/mod/core/standard/proc/replace_cell(obj/item/attacking_item, mob/user)
+	if(!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
+		return FALSE
+	if(!mod.open)
+		mod.balloon_alert(user, "cover closed!")
+		playsound(mod, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE
+	if(cell)
+		mod.balloon_alert(user, "already has cell!")
+		playsound(mod, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE
+	install_cell(attacking_item)
+	mod.balloon_alert(user, "cell installed")
+	playsound(mod, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+	return TRUE
 
 /obj/item/mod/core/standard/proc/on_wearer_set(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -239,7 +286,7 @@
 /obj/item/mod/core/standard/proc/on_borg_charge(datum/source, datum/callback/charge_cell, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	var/obj/item/stock_parts/cell/target_cell = charge_source()
+	var/obj/item/stock_parts/power_store/target_cell = charge_source()
 	if(isnull(target_cell))
 		return
 
@@ -250,41 +297,62 @@
 	name = "MOD ethereal core"
 	icon_state = "mod-core-ethereal"
 	desc = "A reverse engineered core of a Modular Outerwear Device. Using natural liquid electricity from Ethereals, \
-		preventing the need to use external sources to convert electric charge."
+		preventing the need to use external sources to convert electric charge. As the suits are naturally charged by \
+		liquid electricity, this core makes it much more efficient, running all soft, hard, and wetware with several \
+		times less energy usage."
 	/// A modifier to all charge we use, ethereals don't need to spend as much energy as normal suits.
 	var/charge_modifier = 0.1
 
 /obj/item/mod/core/ethereal/charge_source()
-	var/obj/item/organ/internal/stomach/ethereal/ethereal_stomach = mod.wearer.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/ethereal/ethereal_stomach = mod.wearer.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!istype(ethereal_stomach))
 		return
 	return ethereal_stomach
 
 /obj/item/mod/core/ethereal/charge_amount()
-	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
+	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
 	return charge_source?.cell.charge() || ETHEREAL_CHARGE_NONE
 
 /obj/item/mod/core/ethereal/max_charge_amount()
 	return ETHEREAL_CHARGE_FULL
 
 /obj/item/mod/core/ethereal/add_charge(amount)
-	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
-	if(!charge_source)
+	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
+	if(isnull(charge_source))
 		return FALSE
-	charge_source.adjust_charge(amount*charge_modifier)
+	charge_source.adjust_charge(amount * charge_modifier)
 	return TRUE
 
 /obj/item/mod/core/ethereal/subtract_charge(amount)
-	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
-	if(!charge_source)
+	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
+	if(isnull(charge_source))
 		return FALSE
-	return -charge_source.adjust_charge(-amount*charge_modifier)
+	return -charge_source.adjust_charge(-amount * charge_modifier)
 
 /obj/item/mod/core/ethereal/check_charge(amount)
-	return charge_amount() >= amount*charge_modifier
+	return charge_amount() >= amount * charge_modifier
 
 /obj/item/mod/core/ethereal/get_charge_icon_state()
-	return charge_source() ? "0" : "missing"
+	return isnull(charge_source()) ? "missing" : "0"
+
+/obj/item/mod/core/ethereal/get_chargebar_color()
+	if(isnull(charge_source()))
+		return "transparent"
+	switch(charge_amount())
+		if(-INFINITY to ETHEREAL_CHARGE_LOWPOWER)
+			return "bad"
+		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
+			return "average"
+		if(ETHEREAL_CHARGE_NORMAL to ETHEREAL_CHARGE_FULL)
+			return "good"
+		if(ETHEREAL_CHARGE_FULL to INFINITY)
+			return "teal"
+
+/obj/item/mod/core/ethereal/get_chargebar_string()
+	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
+	if(isnull(charge_source()) || isnull(charge_source.cell))
+		return "Biological Battery Missing"
+	return ..()
 
 #define PLASMA_CORE_ORE_CHARGE (1.5 * STANDARD_CELL_CHARGE)
 #define PLASMA_CORE_SHEET_CHARGE (2 * STANDARD_CELL_CHARGE)
@@ -303,15 +371,10 @@
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
-	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_mod_interaction))
 
 /obj/item/mod/core/plasma/uninstall()
-	UnregisterSignal(mod, COMSIG_ATOM_ATTACKBY)
-	return ..()
-
-/obj/item/mod/core/plasma/attackby(obj/item/attacking_item, mob/user, params)
-	if(charge_plasma(attacking_item, user))
-		return TRUE
+	UnregisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION)
 	return ..()
 
 /obj/item/mod/core/plasma/charge_source()
@@ -350,19 +413,27 @@
 
 	return "empty"
 
-/obj/item/mod/core/plasma/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
+/obj/item/mod/core/plasma/get_chargebar_color()
+	switch(round(charge_amount() / max_charge_amount(), 0.01))
+		if(-INFINITY to 0.33)
+			return "bad"
+		if(0.33 to INFINITY)
+			return "purple"
+
+/obj/item/mod/core/plasma/proc/on_mod_interaction(datum/source, mob/living/user, obj/item/thing)
 	SIGNAL_HANDLER
 
-	if(charge_plasma(attacking_item, user))
-		return COMPONENT_NO_AFTERATTACK
-	return NONE
+	return item_interaction(user, thing)
+
+/obj/item/mod/core/plasma/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return charge_plasma(tool, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/plasma, mob/user)
 	var/charge_given = is_type_in_list(plasma, charger_list, zebra = TRUE)
 	if(!charge_given)
 		return FALSE
 	var/uses_needed = min(plasma.amount, ROUND_UP((max_charge_amount() - charge_amount()) / charge_given))
-	if(!plasma.use(uses_needed))
+	if(uses_needed <= 0 || !plasma.use(uses_needed))
 		return FALSE
 	add_charge(uses_needed * charge_given)
 	balloon_alert(user, "core refueled")
@@ -382,8 +453,8 @@
 	light_power = 1.5
 	// Slightly better than the normal plasma core.
 	// Not super sure if this should just be the same, but will see.
-	maxcharge = 15000
-	charge = 15000
+	maxcharge = 15 * STANDARD_CELL_CHARGE
+	charge = 15 * STANDARD_CELL_CHARGE
 	/// The mob to be spawned by the core
 	var/mob/living/spawned_mob_type = /mob/living/basic/butterfly/lavaland/temporary
 	/// Max number of mobs it can spawn

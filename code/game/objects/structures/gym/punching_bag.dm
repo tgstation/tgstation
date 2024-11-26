@@ -7,13 +7,13 @@
 	layer = ABOVE_MOB_LAYER
 	///List of sounds that can be played when punched.
 	var/static/list/hit_sounds = list(
-		'sound/weapons/genhit1.ogg',
-		'sound/weapons/genhit2.ogg',
-		'sound/weapons/genhit3.ogg',
-		'sound/weapons/punch1.ogg',
-		'sound/weapons/punch2.ogg',
-		'sound/weapons/punch3.ogg',
-		'sound/weapons/punch4.ogg',
+		'sound/items/weapons/genhit1.ogg',
+		'sound/items/weapons/genhit2.ogg',
+		'sound/items/weapons/genhit3.ogg',
+		'sound/items/weapons/punch1.ogg',
+		'sound/items/weapons/punch2.ogg',
+		'sound/items/weapons/punch3.ogg',
+		'sound/items/weapons/punch4.ogg',
 	)
 
 /obj/structure/punching_bag/Initialize(mapload)
@@ -58,8 +58,15 @@
 	if (is_heavy_gravity)
 		stamina_exhaustion *= 1.5
 
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		stamina_exhaustion *= potential_spine.athletics_boost_multiplier
+
+	if(HAS_TRAIT(user, TRAIT_STRENGTH)) //The strong get reductions to stamina damage taken while exercising
+		stamina_exhaustion *= 0.5
+
 	user.adjustStaminaLoss(stamina_exhaustion)
-	user.mind?.adjust_experience(/datum/skill/fitness, is_heavy_gravity ? 0.2 : 0.1)
+	user.mind?.adjust_experience(/datum/skill/athletics, is_heavy_gravity ? 0.6 : 0.3)
 	user.apply_status_effect(/datum/status_effect/exercised)
 
 /obj/structure/punching_bag/wrench_act_secondary(mob/living/user, obj/item/tool)

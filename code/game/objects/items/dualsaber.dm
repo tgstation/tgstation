@@ -24,7 +24,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 75
-	block_sound = 'sound/weapons/block_blade.ogg'
+	block_sound = 'sound/items/weapons/block_blade.ogg'
 	max_integrity = 200
 	armor_type = /datum/armor/item_dualsaber
 	resistance_flags = FIRE_PROOF
@@ -47,8 +47,8 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = force, \
 		force_wielded = two_hand_force, \
-		wieldsound = 'sound/weapons/saberon.ogg', \
-		unwieldsound = 'sound/weapons/saberoff.ogg', \
+		wieldsound = 'sound/items/weapons/saberon.ogg', \
+		unwieldsound = 'sound/items/weapons/saberoff.ogg', \
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
@@ -56,12 +56,11 @@
 /// Triggered on wield of two handed item
 /// Specific hulk checks due to reflection chance for balance issues and switches hitsounds.
 /obj/item/dualsaber/proc/on_wield(obj/item/source, mob/living/carbon/user)
-	if(user?.has_dna())
-		if(user.dna.check_mutation(/datum/mutation/human/hulk))
-			to_chat(user, span_warning("You lack the grace to wield this!"))
-			return COMPONENT_TWOHANDED_BLOCK_WIELD
+	if(user && HAS_TRAIT(user, TRAIT_HULK))
+		to_chat(user, span_warning("You lack the grace to wield this!"))
+		return COMPONENT_TWOHANDED_BLOCK_WIELD
 	update_weight_class(w_class_on)
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
 	set_light_on(TRUE)
 
@@ -85,7 +84,7 @@
 		user.visible_message(span_suicide("[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!"))
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
-		var/obj/item/organ/internal/brain/B = user.get_organ_slot(ORGAN_SLOT_BRAIN)
+		var/obj/item/organ/brain/B = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 		B.organ_flags &= ~ORGAN_VITAL //this cant possibly be a good idea
 		var/randdir
 		for(var/i in 1 to 24)//like a headless chicken!
@@ -123,12 +122,11 @@
 	. = ..()
 
 /obj/item/dualsaber/attack(mob/target, mob/living/carbon/human/user)
-	if(user.has_dna())
-		if(user.dna.check_mutation(/datum/mutation/human/hulk))
-			to_chat(user, span_warning("You grip the blade too hard and accidentally drop it!"))
-			if(HAS_TRAIT(src, TRAIT_WIELDED))
-				user.dropItemToGround(src, force=TRUE)
-				return
+	if(HAS_TRAIT(user, TRAIT_HULK))
+		to_chat(user, span_warning("You grip the blade too hard and accidentally drop it!"))
+		if(HAS_TRAIT(src, TRAIT_WIELDED))
+			user.dropItemToGround(src, force=TRUE)
+			return
 	..()
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return

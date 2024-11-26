@@ -2,7 +2,7 @@
 	projectile_type = /obj/projectile/beam/wormhole
 	e_cost = 0 // Can't use the macro
 	harmful = FALSE
-	fire_sound = 'sound/weapons/pulse3.ogg'
+	fire_sound = 'sound/items/weapons/pulse3.ogg'
 	select_name = "blue"
 	//Weakref to the gun that shot us
 	var/datum/weakref/gun

@@ -1,11 +1,11 @@
-///Lavaproof, fireproof, fast mech with low armor and higher energy consumption, cannot strafe and has an internal ore box.
+///Lavaproof, fireproof, fast mech with low armor and higher energy consumption and has an internal ore box.
 /obj/vehicle/sealed/mecha/clarke
-	desc = "Combining man and machine for a better, stronger engineer. Can even resist lava!"
+	desc = "Combining man and machine for a better, stronger miner, Cannot strafe Can even resist lava!"
 	name = "\improper Clarke"
 	icon_state = "clarke"
 	base_icon_state = "clarke"
 	max_temperature = 65000
-	max_integrity = 200
+	max_integrity = 250
 	movedelay = 1.25
 	overclock_coeff = 1.25
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -15,14 +15,14 @@
 	equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
-		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/orebox_manager),
+		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/orebox_manager, /obj/item/mecha_parts/mecha_equipment/sleeper/clarke),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,
-		MECHA_UTILITY = 5,
+		MECHA_UTILITY = 6,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
@@ -35,7 +35,7 @@
 	pivot_step = TRUE
 
 /datum/armor/mecha_clarke
-	melee = 20
+	melee = 40
 	bullet = 10
 	laser = 20
 	energy = 10
@@ -55,13 +55,14 @@
 /obj/vehicle/sealed/mecha/clarke/generate_actions()
 	. = ..()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_search_ruins)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/clarke_scoop_body)
 
 //Ore Box Controls
 
 ///Special equipment for the Clarke mech, handles moving ore without giving the mech a hydraulic clamp and cargo compartment.
 /obj/item/mecha_parts/mecha_equipment/orebox_manager
 	name = "ore storage module"
-	desc = "An automated ore box management device."
+	desc = "An automated ore box management device, complete with a built-in boulder processor."
 	icon_state = "mecha_bin"
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
@@ -77,22 +78,26 @@
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/get_snowflake_data()
 	var/list/contents = chassis.ore_box?.contents
 	var/list/contents_grouped = list()
-	for(var/obj/item/stack/ore/item as anything in contents)
+	for(var/atom/movable/item as anything in contents)
+		var/amount = 1
+		if(isstack(item))
+			var/obj/item/stack/stack = item
+			amount = stack.amount
 		if(isnull(contents_grouped[item.icon_state]))
 			var/ore_data = list()
 			ore_data["name"] = item.name
 			ore_data["icon"] = item.icon_state
-			ore_data["amount"] = item.amount
+			ore_data["amount"] = amount
 			contents_grouped[item.icon_state] = ore_data
 		else
-			contents_grouped[item.icon_state]["amount"] += item.amount
+			contents_grouped[item.icon_state]["amount"] += amount
 	var/list/data = list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_OREBOX_MANAGER,
 		"contents" = contents_grouped,
 		)
 	return data
 
-/obj/item/mecha_parts/mecha_equipment/orebox_manager/ui_act(action, list/params)
+/obj/item/mecha_parts/mecha_equipment/orebox_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return TRUE
@@ -101,9 +106,29 @@
 		if(isnull(cached_ore_box))
 			return FALSE
 		cached_ore_box.dump_box_contents()
-		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
+		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		log_message("Dumped [cached_ore_box].", LOG_MECHA)
 		return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/clarke //The Clarke subtype of the sleeper is a built-in utility module
+	equipment_slot = MECHA_UTILITY
+	detachable = FALSE
+
+/datum/action/vehicle/sealed/mecha/clarke_scoop_body
+	name = "Pick up body"
+	desc = "Activate to pick up a nearby body"
+	button_icon = 'icons/obj/devices/mecha_equipment.dmi'
+	button_icon_state = "mecha_sleeper_miner"
+
+/datum/action/vehicle/sealed/mecha/clarke_scoop_body/Trigger(trigger_flags)
+	var/obj/item/mecha_parts/mecha_equipment/sleeper/clarke/sleeper = locate() in chassis
+	var/mob/living/carbon/human/human_target
+	for(var/mob/living/carbon/human/body in range(1, chassis))
+		if(chassis.is_driver(body) || !ishuman(body) || !chassis.Adjacent(body))
+			continue
+		human_target = body //Non-driver, human, and adjacent
+		break
+	sleeper.action(pick(chassis.return_drivers()), human_target) //This will probably break if anyone allows multiple drivers of the Clarke mech
 
 #define SEARCH_COOLDOWN (1 MINUTES)
 

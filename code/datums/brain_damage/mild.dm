@@ -16,12 +16,17 @@
 	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
 		return
 	if(HAS_TRAIT(owner, TRAIT_RDS_SUPPRESSED))
+		owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 		return
+	if(!HAS_TRAIT(owner, TRAIT_RDS_SUPPRESSED))
+		owner.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 
 	owner.adjust_hallucinations_up_to(10 SECONDS * seconds_per_tick, 100 SECONDS)
 
 /datum/brain_trauma/mild/hallucinations/on_lose()
 	owner.remove_status_effect(/datum/status_effect/hallucination)
+	if(!QDELING(owner))
+		owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 	return ..()
 
 /datum/brain_trauma/mild/stuttering
@@ -118,7 +123,7 @@
 	return ..()
 
 /datum/brain_trauma/mild/healthy/on_life(seconds_per_tick, times_fired)
-	owner.adjustStaminaLoss(-2.5 * seconds_per_tick) //no pain, no fatigue
+	owner.adjustStaminaLoss(-6 * seconds_per_tick) //no pain, no fatigue
 
 /datum/brain_trauma/mild/healthy/on_lose()
 	owner.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)

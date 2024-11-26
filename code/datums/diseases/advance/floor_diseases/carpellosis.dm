@@ -6,7 +6,7 @@
 	desc = "You have an angry space carp inside."
 	form = "Parasite"
 	agent = "Carp Ella"
-	cures = list(/datum/reagent/carpet)
+	cures = list(/datum/reagent/chlorine)
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	severity = DISEASE_SEVERITY_MEDIUM
@@ -41,7 +41,7 @@
 
 	switch(stage)
 		if(2)
-			if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
+			if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS && affected_mob.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL))
 				to_chat(affected_mob, span_warning("You want to wag your tail..."))
 				affected_mob.emote("wag")
 		if(3)

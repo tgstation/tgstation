@@ -10,10 +10,12 @@
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
-	var/obj/item/organ/internal/brain/brain = null //The actual brain
+	var/obj/item/organ/brain/brain = null //The actual brain
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
+	/// Whether the brainmob can move. Doesnt usually matter but SPHERICAL POSIBRAINSSS
+	var/immobilize = TRUE
 
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
@@ -33,7 +35,7 @@
 	if(!brain)
 		icon_state = "[base_icon_state]_off"
 		return ..()
-	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/internal/brain/alien) ? "_alien" : null]"
+	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/brain/alien) ? "_alien" : null]"
 	return ..()
 
 /obj/item/mmi/update_overlays()
@@ -49,8 +51,8 @@
 
 /obj/item/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(O, /obj/item/organ/internal/brain)) //Time to stick a brain in it --NEO
-		var/obj/item/organ/internal/brain/newbrain = O
+	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
+		var/obj/item/organ/brain/newbrain = O
 		if(brain)
 			to_chat(user, span_warning("There's already a brain in the MMI!"))
 			return
@@ -86,10 +88,10 @@
 			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
 		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
 			to_chat(user, span_warning("[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [newbrain] for damage."))
-			playsound(src, 'sound/machines/synth_no.ogg', 5, TRUE)
+			playsound(src, 'sound/machines/synth/synth_no.ogg', 5, TRUE)
 		else
 			to_chat(user, span_warning("[src]'s indicator light turns red and its brainwave activity alarm beeps softly. Perhaps you should check [newbrain] again."))
-			playsound(src, 'sound/machines/triple_beep.ogg', 5, TRUE)
+			playsound(src, 'sound/machines/beep/triple_beep.ogg', 5, TRUE)
 
 		brainmob.reset_perspective()
 		brain = newbrain
@@ -97,7 +99,7 @@
 
 		name = "[initial(name)]: [brainmob.real_name]"
 		update_appearance()
-		if(istype(brain, /obj/item/organ/internal/brain/alien))
+		if(istype(brain, /obj/item/organ/brain/alien))
 			braintype = "Xenoborg" //HISS....Beep.
 		else
 			braintype = "Cyborg"
@@ -119,7 +121,7 @@
  * Arguments:
  * * new_brain - Brain to be force-inserted into the MMI. Any calling code should handle proper removal of the brain from the mob, as this proc only forceMoves.
  */
-/obj/item/mmi/proc/force_brain_into(obj/item/organ/internal/brain/new_brain)
+/obj/item/mmi/proc/force_brain_into(obj/item/organ/brain/new_brain)
 	if(isnull(new_brain))
 		stack_trace("Proc called with null brain.")
 		return FALSE
@@ -158,7 +160,7 @@
 	name = "[initial(name)]: [brainmob.real_name]"
 
 	update_appearance()
-	if(istype(brain, /obj/item/organ/internal/brain/alien))
+	if(istype(brain, /obj/item/organ/brain/alien))
 		braintype = "Xenoborg"
 	else
 		braintype = "Cyborg"
@@ -207,7 +209,7 @@
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		var/obj/item/organ/internal/brain/newbrain = H.get_organ_by_type(/obj/item/organ/internal/brain)
+		var/obj/item/organ/brain/newbrain = H.get_organ_by_type(/obj/item/organ/brain)
 		newbrain.Remove(H, special = TRUE, movement_flags = NO_ID_TRANSFER)
 		newbrain.forceMove(src)
 		brain = newbrain
@@ -218,7 +220,7 @@
 
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_appearance()
-	if(istype(brain, /obj/item/organ/internal/brain/alien))
+	if(istype(brain, /obj/item/organ/brain/alien))
 		braintype = "Xenoborg" //HISS....Beep.
 	else
 		braintype = "Cyborg"
@@ -250,7 +252,7 @@
 	if(new_mecha)
 		if(!. && brainmob) // There was no mecha, there now is, and we have a brain mob that is no longer unaided.
 			brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
-	else if(. && brainmob) // There was a mecha, there no longer is one, and there is a brain mob that is now again unaided.
+	else if(. && brainmob && immobilize) // There was a mecha, there no longer is one, and there is a brain mob that is now again unaided.
 		brainmob.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 
 

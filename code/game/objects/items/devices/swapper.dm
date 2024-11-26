@@ -8,7 +8,7 @@
 	item_flags = NOBLUDGEON
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	interaction_flags_click = NEED_DEXTERITY
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	/// Cooldown for usage
 	var/cooldown = 30 SECONDS
 	/// Next available time
@@ -51,9 +51,9 @@
 	if(QDELETED(linked_swapper))
 		to_chat(user, span_warning("[src] is not linked with another swapper."))
 		return
-	playsound(src, 'sound/weapons/flash.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 25, TRUE)
 	to_chat(user, span_notice("You activate [src]."))
-	playsound(linked_swapper, 'sound/weapons/flash.ogg', 25, TRUE)
+	playsound(linked_swapper, 'sound/items/weapons/flash.ogg', 25, TRUE)
 	if(ismob(linked_swapper.loc))
 		var/mob/holder = linked_swapper.loc
 		to_chat(holder, span_notice("[linked_swapper] starts buzzing."))
@@ -97,7 +97,7 @@
 	return teleportable
 
 /obj/item/swapper/proc/swap(mob/user)
-	if(QDELETED(linked_swapper) || world.time < linked_swapper.cooldown)
+	if(QDELETED(linked_swapper) || isnull(linked_swapper.loc) || world.time < linked_swapper.cooldown)
 		return
 
 	var/atom/movable/A = get_teleportable_container()

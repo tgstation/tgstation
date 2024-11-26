@@ -132,6 +132,14 @@
 /datum/spy_bounty/proc/clean_up_stolen_item(atom/movable/stealing, mob/living/spy)
 	do_sparks(3, FALSE, stealing)
 
+	if(isitem(stealing) && stealing.loc == spy)
+		// get it out of our inventory before we mess with it to prevent any weirdness.
+		// bypasses nodrop - if you want, add a bespoke check for that higher up the chain
+		spy.temporarilyRemoveItemFromInventory(stealing, force = TRUE)
+		// also check for DROPDEL
+		if(QDELETED(stealing))
+			return
+
 	// Don't mess with it while it's going away
 	var/had_attack_hand_interaction = stealing.interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND
 	stealing.interaction_flags_atom &= ~INTERACT_ATOM_ATTACK_HAND
@@ -186,7 +194,7 @@
 
 	var/datum/market_item/stolen_good/new_item = new(thing, item_price)
 
-	return SSblackmarket.markets[/datum/market/blackmarket].add_item(new_item)
+	return SSmarket.markets[/datum/market/blackmarket].add_item(new_item)
 
 /// Steal an item
 /datum/spy_bounty/objective_item
@@ -218,6 +226,8 @@
 		if(isnull(thing_turf)) // nullspaced likely means it was stolen and is in the black market.
 			continue
 		if(!is_station_level(thing_turf.z) && !is_mining_level(thing_turf.z))
+			continue
+		if(HAS_TRAIT(existing_thing, TRAIT_ITEM_OBJECTIVE_BLOCKED))
 			continue
 		all_valid_existing_things += existing_thing
 
@@ -253,16 +263,14 @@
 		return FALSE
 
 	desired_item = pick(valid_possible_items)
-	// We need to do some snowflake for items that do exist vs generic items
-	var/list/obj/item/existing_items = GLOB.steal_item_handler.objectives_by_path[desired_item.targetitem]
-	var/obj/item/the_item = length(existing_items) ? pick(existing_items) : desired_item.targetitem
-	var/the_item_name = istype(the_item) ? the_item.name : initial(the_item.name)
-	name = "[the_item_name] [difficulty == SPY_DIFFICULTY_HARD ? "Grand ":""]Theft"
-	help = "Steal any [the_item_name][desired_item.steal_hint ? ": [desired_item.steal_hint]" : "."]"
+	name = "[desired_item.name] [difficulty == SPY_DIFFICULTY_HARD ? "Grand ":""]Theft"
+	help = "Steal [desired_item.name][desired_item.steal_hint ? ": [desired_item.steal_hint]" : "."]"
 	return TRUE
 
 /datum/spy_bounty/objective_item/is_stealable(atom/movable/stealing)
-	return istype(stealing, desired_item.targetitem) && desired_item.check_special_completion(stealing)
+	return istype(stealing, desired_item.targetitem) \
+		&& !HAS_TRAIT(stealing, TRAIT_ITEM_OBJECTIVE_BLOCKED) \
+		&& desired_item.check_special_completion(stealing)
 
 /datum/spy_bounty/objective_item/random_easy
 	difficulty = SPY_DIFFICULTY_EASY
@@ -529,7 +537,7 @@
 		return TRUE
 	if(IS_WEAKREF_OF(stealing, target_ref))
 		var/mob/living/carbon/human/target = stealing
-		if(!target.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+		if(!INCAPACITATED_IGNORING(target, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 			return FALSE
 		if(find_desired_thing(target))
 			return TRUE
@@ -613,10 +621,10 @@
 		/obj/item/bodypart/arm/right,
 		/obj/item/bodypart/leg/left,
 		/obj/item/bodypart/leg/right,
-		/obj/item/organ/internal/stomach,
-		/obj/item/organ/internal/appendix,
-		/obj/item/organ/internal/liver,
-		/obj/item/organ/internal/eyes,
+		/obj/item/organ/stomach,
+		/obj/item/organ/appendix,
+		/obj/item/organ/liver,
+		/obj/item/organ/eyes,
 	)
 	return ..()
 

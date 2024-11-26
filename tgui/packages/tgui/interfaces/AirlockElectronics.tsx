@@ -1,7 +1,13 @@
-import { BooleanLike } from 'common/react';
+import {
+  Button,
+  Input,
+  LabeledList,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Button, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { AccessConfig, Region } from './common/AccessConfig';
 

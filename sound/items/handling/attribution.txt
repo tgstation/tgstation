@@ -1,0 +1,7 @@
+{
+rcd_drop.ogg - made by sadboysuss - license: CC-by-SA
+rcd_pickup.ogg - made by sadboysuss - license: CC-by-SA
+rpd_drop.ogg - made by sadboysuss - license: CC-by-SA
+rpd_pickup.ogg - made by sadboysuss - license: CC-by-SA
+tool_switch.ogg - made by sadboysuss - license: CC-by-SA
+} - edited by sadboysuss

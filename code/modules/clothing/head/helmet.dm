@@ -4,6 +4,7 @@
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "helmet"
+	base_icon_state = "helmet"
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/head_helmet
 	cold_protection = HEAD
@@ -31,6 +32,14 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/head/helmet/sec
+	var/flipped_visor = FALSE
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	visor_toggle_up_sound = SFX_VISOR_UP
+	visor_toggle_down_sound = SFX_VISOR_DOWN
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
 
 /obj/item/clothing/head/helmet/sec/Initialize(mapload)
 	. = ..()
@@ -60,6 +69,46 @@
 
 	return ..()
 
+/obj/item/clothing/head/helmet/sec/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return
+	balloon_alert(user, "[flags_inv & HIDEHAIR ? "loosening" : "tightening"] straps...")
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	flags_inv ^= HIDEHAIR
+	balloon_alert(user, "[flags_inv & HIDEHAIR ? "tightened" : "loosened"] straps")
+	return TRUE
+
+/obj/item/clothing/head/helmet/sec/click_alt(mob/user)
+	flipped_visor = !flipped_visor
+	balloon_alert(user, "visor flipped")
+	// base_icon_state is modified for seclight attachment component
+	base_icon_state = "[initial(base_icon_state)][flipped_visor ? "-novisor" : ""]"
+	icon_state = base_icon_state
+	if (flipped_visor)
+		flags_cover &= ~HEADCOVERSEYES
+		playsound(src, SFX_VISOR_DOWN, 20, TRUE, -1)
+	else
+		flags_cover |= HEADCOVERSEYES
+		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/clothing/head/helmet/press
+	name = "press helmet"
+	desc = "A blue helmet used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	icon_state = "helmet_press"
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+
+/obj/item/clothing/head/helmet/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
@@ -67,6 +116,10 @@
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/helmet_alt
 	dog_fashion = null
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 
 /datum/armor/helmet_alt
 	melee = 15
@@ -86,12 +139,17 @@
 	name = "tactical combat helmet"
 	desc = "A tactical black helmet, sealed from outside hazards with a plate of glass and not much else."
 	icon_state = "marine_command"
+	base_icon_state = "marine_command"
 	inhand_icon_state = "marine_helmet"
 	armor_type = /datum/armor/helmet_marine
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 
 /datum/armor/helmet_marine
 	melee = 50
@@ -111,18 +169,21 @@
 /obj/item/clothing/head/helmet/marine/security
 	name = "marine heavy helmet"
 	icon_state = "marine_security"
+	base_icon_state = "marine_security"
 
 /obj/item/clothing/head/helmet/marine/engineer
 	name = "marine utility helmet"
 	icon_state = "marine_engineer"
+	base_icon_state = "marine_engineer"
 
 /obj/item/clothing/head/helmet/marine/medic
 	name = "marine medic helmet"
 	icon_state = "marine_medic"
+	base_icon_state = "marine_medic"
 
 /obj/item/clothing/head/helmet/marine/pmc
 	icon_state = "marine"
-	desc = "A tactical black helmet, designed to protect one's head from various injuries sustained in operations. Its stellar survivability making up is for it's lack of space worthiness"
+	desc = "A tactical black helmet, designed to protect one's head from various injuries sustained in operations. Its stellar survivability making up is for its lack of space worthiness"
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	clothing_flags = null
@@ -132,6 +193,10 @@
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
 	tint = 2
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 
 /obj/item/clothing/head/helmet/blueshirt
 	name = "blue helmet"
@@ -139,9 +204,14 @@
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift_helmet"
 	custom_premium_price = PAYCHECK_COMMAND
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 
 
 /obj/item/clothing/head/helmet/toggleable
+	visor_vars_to_toggle = NONE
 	dog_fashion = null
 	///chat message when the visor is toggled down.
 	var/toggle_message
@@ -149,26 +219,11 @@
 	var/alt_toggle_message
 
 /obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
+	adjust_visor(user)
+
+/obj/item/clothing/head/helmet/toggleable/update_icon_state()
 	. = ..()
-	if(.)
-		return
-	if(user.incapacitated() || !try_toggle())
-		return
-	up = !up
-	flags_1 ^= visor_flags
-	flags_inv ^= visor_flags_inv
-	flags_cover ^= visor_flags_cover
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"
-	to_chat(user, span_notice("[up ? alt_toggle_message : toggle_message] \the [src]."))
-
-	user.update_worn_head()
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		carbon_user.head_update(src, forced = TRUE)
-
-///Attempt to toggle the visor. Returns true if it does the thing.
-/obj/item/clothing/head/helmet/toggleable/proc/try_toggle()
-	return TRUE
 
 /obj/item/clothing/head/helmet/toggleable/riot
 	name = "riot helmet"
@@ -185,6 +240,16 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	visor_toggle_up_sound = SFX_VISOR_UP
+	visor_toggle_down_sound = SFX_VISOR_DOWN
+
+/obj/item/clothing/head/helmet/toggleable/riot/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 2)
 
 /datum/armor/toggleable_riot
 	melee = 50
@@ -222,12 +287,25 @@
 	COOLDOWN_DECLARE(visor_toggle_cooldown)
 	///Looping sound datum for the siren helmet
 	var/datum/looping_sound/siren/weewooloop
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	visor_toggle_up_sound = SFX_VISOR_UP
+	visor_toggle_down_sound = SFX_VISOR_DOWN
 
-/obj/item/clothing/head/helmet/toggleable/justice/try_toggle()
+/obj/item/clothing/head/helmet/toggleable/justice/adjust_visor(mob/living/user)
 	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
 		return FALSE
 	COOLDOWN_START(src, visor_toggle_cooldown, 2 SECONDS)
-	return TRUE
+	return ..()
+
+/obj/item/clothing/head/helmet/toggleable/justice/visor_toggling()
+	. = ..()
+	if(up)
+		weewooloop.start()
+	else
+		weewooloop.stop()
 
 /obj/item/clothing/head/helmet/toggleable/justice/Initialize(mapload)
 	. = ..()
@@ -236,13 +314,6 @@
 /obj/item/clothing/head/helmet/toggleable/justice/Destroy()
 	QDEL_NULL(weewooloop)
 	return ..()
-
-/obj/item/clothing/head/helmet/toggleable/justice/attack_self(mob/user)
-	. = ..()
-	if(up)
-		weewooloop.start()
-	else
-		weewooloop.stop()
 
 /obj/item/clothing/head/helmet/toggleable/justice/escape
 	name = "alarm helmet"
@@ -264,6 +335,14 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
 	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+
+/obj/item/clothing/head/helmet/swat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
 
 /datum/armor/helmet_swat
 	melee = 40
@@ -365,41 +444,35 @@
 	flags_cover = HEADCOVERSEYES
 	dog_fashion = null
 
-/obj/item/clothing/head/helmet/redtaghelm
+/obj/item/clothing/head/helmet/taghelm
+	flags_cover = HEADCOVERSEYES
+	// Offer about the same protection as a hardhat.
+	armor_type = /datum/armor/helmet_taghelm
+	dog_fashion = null
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+
+/datum/armor/helmet_taghelm
+	melee = 15
+	bullet = 10
+	laser = 20
+	energy = 10
+	bomb = 20
+	acid = 50
+
+/obj/item/clothing/head/helmet/taghelm/red
 	name = "red laser tag helmet"
 	desc = "They have chosen their own end."
 	icon_state = "redtaghelm"
-	flags_cover = HEADCOVERSEYES
 	inhand_icon_state = "redtag_helmet"
-	armor_type = /datum/armor/helmet_redtaghelm
-	// Offer about the same protection as a hardhat.
-	dog_fashion = null
 
-/datum/armor/helmet_redtaghelm
-	melee = 15
-	bullet = 10
-	laser = 20
-	energy = 10
-	bomb = 20
-	acid = 50
-
-/obj/item/clothing/head/helmet/bluetaghelm
+/obj/item/clothing/head/helmet/taghelm/blue
 	name = "blue laser tag helmet"
 	desc = "They'll need more men."
 	icon_state = "bluetaghelm"
-	flags_cover = HEADCOVERSEYES
 	inhand_icon_state = "bluetag_helmet"
-	armor_type = /datum/armor/helmet_bluetaghelm
-	// Offer about the same protection as a hardhat.
-	dog_fashion = null
-
-/datum/armor/helmet_bluetaghelm
-	melee = 15
-	bullet = 10
-	laser = 20
-	energy = 10
-	bomb = 20
-	acid = 50
 
 /obj/item/clothing/head/helmet/knight
 	name = "medieval helmet"
@@ -409,9 +482,14 @@
 	armor_type = /datum/armor/helmet_knight
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	resistance_flags = NONE
 	strip_delay = 80
 	dog_fashion = null
 	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
+
+/obj/item/clothing/head/helmet/knight/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
 
 /datum/armor/helmet_knight
 	melee = 50
@@ -438,25 +516,6 @@
 	armor_type = /datum/armor/knight_greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 
-/obj/item/clothing/head/helmet/skull
-	name = "skull helmet"
-	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
-	flags_cover = HEADCOVERSEYES
-	armor_type = /datum/armor/helmet_skull
-	icon_state = "skull"
-	inhand_icon_state = null
-	strip_delay = 100
-
-/datum/armor/helmet_skull
-	melee = 35
-	bullet = 25
-	laser = 25
-	energy = 35
-	bomb = 25
-	fire = 50
-	acid = 50
-
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
 	desc = "A helmet made from durathread and leather."
@@ -482,6 +541,10 @@
 	icon_state = "rus_helmet"
 	inhand_icon_state = "rus_helmet"
 	armor_type = /datum/armor/helmet_rus_helmet
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 
 /datum/armor/helmet_rus_helmet
 	melee = 25
@@ -538,3 +601,153 @@
 	fire = 65
 	acid = 40
 	wound = 15
+
+/obj/item/clothing/head/helmet/military
+	name = "Crude Helmet"
+	desc = "A cheaply made kettle helmet with an added faceplate to protect your eyes and mouth."
+	icon_state = "military"
+	inhand_icon_state = "knight_helmet"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flash_protect = FLASH_PROTECTION_FLASH
+	strip_delay = 80
+	dog_fashion = null
+	armor_type = /datum/armor/helmet_military
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+
+/datum/armor/helmet_military
+	melee = 45
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 25
+	fire = 10
+	acid = 50
+	wound = 20
+
+/obj/item/clothing/head/helmet/military/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
+/obj/item/clothing/head/helmet/knight/warlord
+	name = "golden barbute helmet"
+	desc = "There is no man behind the helmet, only a terrible thought."
+	icon_state = "warlord"
+	inhand_icon_state = null
+	armor_type = /datum/armor/helmet_warlord
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEMASK|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flash_protect = FLASH_PROTECTION_FLASH
+	slowdown = 0.2
+
+/datum/armor/helmet_warlord
+	melee = 70
+	bullet = 60
+	laser = 70
+	energy = 70
+	bomb = 40
+	fire = 50
+	acid = 50
+	wound = 30
+
+/obj/item/clothing/head/helmet/durability/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	take_damage(1, BRUTE, 0, 0)
+
+/obj/item/clothing/head/helmet/durability/watermelon
+	name = "watermelon helmet"
+	desc = "A helmet cut out from a watermelon. Might take a few hits, but don't expect it whitstand much."
+	icon_state = "watermelon"
+	inhand_icon_state = "watermelon"
+	flags_inv = HIDEEARS
+	dog_fashion = /datum/dog_fashion/head/watermelon
+	armor_type = /datum/armor/helmet_watermelon
+	max_integrity = 15
+
+/obj/item/clothing/head/helmet/durability/watermelon/fire_resist
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/helmet_watermelon_fr
+
+/datum/armor/helmet_watermelon
+	melee = 15
+	bullet = 10
+	energy = 10
+	bomb = 10
+	fire = 0
+	acid = 25
+	wound = 5
+
+/datum/armor/helmet_watermelon_fr
+	melee = 15
+	bullet = 10
+	energy = 10
+	bomb = 10
+	fire = 15
+	acid = 30
+	wound = 5
+
+/obj/item/clothing/head/helmet/durability/holymelon
+	name = "holymelon helmet"
+	desc = "A helmet from a hollowed out holymelon. Might take a few hits, but don't expect it to withstand much."
+	icon_state = "holymelon"
+	inhand_icon_state = "holymelon"
+	flags_inv = HIDEEARS
+	dog_fashion = /datum/dog_fashion/head/holymelon
+	armor_type = /datum/armor/helmet_watermelon
+	max_integrity = 15
+
+/obj/item/clothing/head/helmet/durability/holymelon/fire_resist
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/helmet_watermelon_fr
+
+/obj/item/clothing/head/helmet/durability/holymelon/Initialize(mapload)
+	. = ..()
+
+	AddComponent(
+		/datum/component/anti_magic, \
+		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
+		inventory_flags = ITEM_SLOT_OCLOTHING, \
+		charges = 1, \
+		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		expiration = CALLBACK(src, PROC_REF(decay)) \
+	)
+
+/obj/item/clothing/head/helmet/durability/holymelon/proc/drain_antimagic(mob/user)
+	to_chat(user, span_warning("[src] looses a bit of its shimmer and glossiness..."))
+
+/obj/item/clothing/head/helmet/durability/holymelon/proc/decay()
+	take_damage(8, BRUTE, 0, 0)
+
+/obj/item/clothing/head/helmet/durability/barrelmelon
+	name = "barrelmelon helmet"
+	desc = "A helmet from hollowed out barrelmelon. As sturdy as if made from actual wood, though its rigid structure makes it break up quicker."
+	icon_state = "barrelmelon"
+	inhand_icon_state = "barrelmelon"
+	flags_inv = HIDEEARS
+	dog_fashion = /datum/dog_fashion/head/barrelmelon
+	armor_type = /datum/armor/helmet_barrelmelon
+	max_integrity = 10
+
+/obj/item/clothing/head/helmet/durability/barrelmelon/fire_resist
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/helmet_barrelmelon_fr
+
+/datum/armor/helmet_barrelmelon
+	melee = 25
+	bullet = 20
+	energy = 15
+	bomb = 10
+	fire = 0
+	acid = 35
+	wound = 10
+
+/datum/armor/helmet_barrelmelon_fr
+	melee = 25
+	bullet = 20
+	energy = 15
+	bomb = 10
+	fire = 20
+	acid = 40
+	wound = 10

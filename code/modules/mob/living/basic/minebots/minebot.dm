@@ -1,6 +1,6 @@
 /mob/living/basic/mining_drone
 	name = "\improper Nanotrasen minebot"
-	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife. Insert any type of ore into it to make it start listening to your commands!"
+	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 	gender = NEUTER
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "mining_drone"
@@ -18,7 +18,7 @@
 	obj_damage = 10
 	attack_verb_continuous = "drills"
 	attack_verb_simple = "drill"
-	attack_sound = 'sound/weapons/circsawhit.ogg'
+	attack_sound = 'sound/items/weapons/circsawhit.ogg'
 	sentience_type = SENTIENCE_MINEBOT
 	speak_emote = list("states")
 	mob_biotypes = MOB_ROBOTIC
@@ -85,7 +85,6 @@
 		/datum/id_trim/job/shaft_miner,
 	)
 	AddElement(/datum/element/mob_access, accesses)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 /mob/living/basic/mining_drone/set_combat_mode(new_mode, silent = TRUE)
 	. = ..()
@@ -107,6 +106,8 @@
 
 	for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
 		. += span_notice("There is \a [modkit] installed, using <b>[modkit.cost]%</b> capacity.")
+	if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
+		. += "The [src] appears to be in <b>sleep mode</b>. You can restore normal functions by <b>tapping</b> it."
 
 
 /mob/living/basic/mining_drone/welder_act(mob/living/user, obj/item/welder)
@@ -132,7 +133,10 @@
 
 /mob/living/basic/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!user.combat_mode)
-		ui_interact(user)
+		if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
+			ai_controller.set_ai_status(AI_STATUS_ON)
+		if(LAZYACCESS(modifiers, LEFT_CLICK)) //Lets Right Click be specifically for re-enabling their AI (and avoiding the UI popup), while Left Click simply does both.
+			ui_interact(user)
 		return
 	return ..()
 
@@ -210,10 +214,10 @@
 	balloon_alert(user, "now [combat_mode ? "attacking wildlife" : "collecting loose ore"]")
 	return CLICK_ACTION_SUCCESS
 
-/mob/living/basic/mining_drone/RangedAttack(atom/target)
+/mob/living/basic/mining_drone/RangedAttack(atom/target, list/modifiers)
 	if(!combat_mode)
 		return
-	stored_gun.afterattack(target, src)
+	stored_gun.try_fire_gun(target, src, list2params(modifiers))
 
 /mob/living/basic/mining_drone/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
@@ -245,13 +249,15 @@
 	QDEL_NULL(stored_gun)
 	return ..()
 
-/mob/living/basic/mining_drone/proc/pre_attack(datum/source, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/mining_drone/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(!istype(target, /mob/living/basic/node_drone))
-		return NONE
-	INVOKE_ASYNC(src, PROC_REF(repair_node_drone), target)
-	return COMPONENT_HOSTILE_NO_ATTACK
+		return TRUE
+	repair_node_drone(target)
+	return FALSE
 
 /mob/living/basic/mining_drone/proc/repair_node_drone(mob/living/my_target)
 	do_sparks(5, FALSE, source = my_target)

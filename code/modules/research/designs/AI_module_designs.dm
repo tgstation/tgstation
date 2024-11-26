@@ -210,6 +210,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/yesman_module
+	name = "Y.E.S.M.A.N. Module"
+	desc = "Allows for the construction of a Y.E.S.M.A.N. AI Core Module."
+	id = "yesman_module"
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/ai_module/core/full/yesman
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/nutimov_module
 	name = "Nutimov Module"
 	desc = "Allows for the construction of a Nutimov AI Core Module."

@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Misc
 	RADIO_KEY_AI_PRIVATE = RADIO_CHANNEL_AI_PRIVATE, // AI Upload channel
+	RADIO_KEY_ENTERTAINMENT = RADIO_CHANNEL_ENTERTAINMENT, // Entertainment monitors
 
 
 	//kinda localization -- rastaf0
@@ -56,7 +57,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"в" = MODE_KEY_DEADMIN,
 
 	// Misc
-	"щ" = RADIO_CHANNEL_AI_PRIVATE
+	"щ" = RADIO_CHANNEL_AI_PRIVATE,
+	"з" = RADIO_CHANNEL_ENTERTAINMENT,
 ))
 
 /**
@@ -208,9 +210,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	spans |= speech_span
 
-	if(language)
-		var/datum/language/L = GLOB.language_datum_instances[language]
-		spans |= L.spans
+	var/datum/language/spoken_lang = GLOB.language_datum_instances[language]
+	if(LAZYLEN(spoken_lang?.spans))
+		spans |= spoken_lang.spans
 
 	if(message_mods[MODE_SING])
 		var/randomnote = pick("\u2669", "\u266A", "\u266B")
@@ -251,7 +253,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(pressure < SOUND_MINIMUM_PRESSURE && !HAS_TRAIT(src, TRAIT_SIGN_LANG))
 		message_range = 1
 
-	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
+	if(pressure < ONE_ATMOSPHERE * (HAS_TRAIT(src, TRAIT_SPEECH_BOOSTER) ? 0.1 : 0.4)) //Thin air, let's italicise the message unless we have a loud low pressure speech trait and not in vacuum
 		spans |= SPAN_ITALICS
 
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, tts_message = tts_message, tts_filter = tts_filter)//roughly 58% of living/say()'s total cost
@@ -285,21 +287,44 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(raw_message != untranslated_raw_message)
 			understood = FALSE
 
+	var/speaker_is_signing = HAS_TRAIT(speaker, TRAIT_SIGN_LANG)
+
+
 	// if someone is whispering we make an extra type of message that is obfuscated for people out of range
 	// Less than or equal to 0 means normal hearing. More than 0 and less than or equal to EAVESDROP_EXTRA_RANGE means
 	// partial hearing. More than EAVESDROP_EXTRA_RANGE means no hearing. Exception for GOOD_HEARING trait
 	var/dist = get_dist(speaker, src) - message_range
 	if(dist > 0 && dist <= EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src)) // ghosts can hear all messages clearly
 		raw_message = stars(raw_message)
-	if (message_range != INFINITY && dist > EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src))
-		return FALSE // Too far away and don't have good hearing, you can't hear anything
+	if(message_range != INFINITY && dist > EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src))
+		// Too far away and don't have good hearing, you can't hear anything
+		if(is_blind() || HAS_TRAIT(speaker, TRAIT_INVISIBLE_MAN)) // Can't see them speak either
+			return FALSE
+		if(!isturf(speaker.loc)) // If they're inside of something, probably can't see them speak
+			return FALSE
+
+		// But we can still see them speak
+		if(speaker_is_signing)
+			deaf_message = "[span_name("[speaker]")] [speaker.get_default_say_verb()] something, but the motions are too subtle to make out from afar."
+		else if(can_hear()) // If we can't hear we want to continue to the default deaf message
+			var/mob/living/living_speaker = speaker
+			if(istype(living_speaker) && living_speaker.is_mouth_covered()) // Can't see them speak if their mouth is covered
+				return FALSE
+			deaf_message = "[span_name("[speaker]")] [speaker.verb_whisper] something, but you are too far away to hear [speaker.p_them()]."
+
+		if(deaf_message)
+			deaf_type = MSG_VISUAL
+			message = deaf_message
+			show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
+			return FALSE
+
 
 	// we need to send this signal before compose_message() is used since other signals need to modify
 	// the raw_message first. After the raw_message is passed through the various signals, it's ready to be formatted
 	// by compose_message() to be displayed in chat boxes for to_chat or runechat
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
-	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
+	if(speaker_is_signing) //Checks if speaker is using sign language
 		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods, TRUE)
 
 		if(speaker != src)
@@ -359,6 +384,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(!(listening_movable in in_view) && !HAS_TRAIT(listening_movable, TRAIT_XRAY_HEARING))
 			listening.Remove(listening_movable)
 
+	if(imaginary_group)
+		listening |= imaginary_group
+
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
 			if(QDELETED(player_mob)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
@@ -401,27 +429,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		var/list/filter = list()
 		var/list/special_filter = list()
-		var/voice_to_use = voice
-		var/use_radio = FALSE
 		if(length(voice_filter) > 0)
 			filter += voice_filter
 
 		if(length(tts_filter) > 0)
 			filter += tts_filter.Join(",")
-		if(ishuman(src))
-			var/mob/living/carbon/human/human_speaker = src
-			if(istype(human_speaker.wear_mask, /obj/item/clothing/mask))
-				var/obj/item/clothing/mask/worn_mask = human_speaker.wear_mask
-				if(!worn_mask.mask_adjusted)
-					if(worn_mask.voice_override)
-						voice_to_use = worn_mask.voice_override
-					if(worn_mask.voice_filter)
-						filter += worn_mask.voice_filter
-					use_radio = worn_mask.use_radio_beeps_tts
-		if(use_radio)
-			special_filter += TTS_FILTER_RADIO
-		if(issilicon(src))
-			special_filter += TTS_FILTER_SILICON
+
+		var/voice_to_use = get_tts_voice(filter, special_filter)
 
 		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice_to_use, filter.Join(","), listened, message_range = message_range, pitch = pitch, special_filters = special_filter.Join("|"))
 
@@ -431,6 +445,22 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), say_popup, speech_bubble_recipients, 3 SECONDS)
 	LAZYADD(update_on_z, say_popup)
 	addtimer(CALLBACK(src, PROC_REF(clear_saypopup), say_popup), 3.5 SECONDS)
+
+/mob/living/proc/get_tts_voice(list/filter, list/special_filter)
+	. = voice
+	var/obj/item/clothing/mask/mask = get_item_by_slot(ITEM_SLOT_MASK)
+	if(!istype(mask) || mask.up)
+		return
+	if(mask.voice_override)
+		. = mask.voice_override
+	if(mask.voice_filter)
+		filter += mask.voice_filter
+	if(mask.use_radio_beeps_tts)
+		special_filter |= TTS_FILTER_RADIO
+
+/mob/living/silicon/get_tts_voice(list/filter, list/special_filter)
+	. = ..()
+	special_filter |= TTS_FILTER_SILICON
 
 /mob/living/proc/clear_saypopup(image/say_popup)
 	LAZYREMOVE(update_on_z, say_popup)
@@ -454,11 +484,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = unintelligize(message)
 
 	tts_filter = list()
-	var/list/data = list(message, tts_message, tts_filter)
+	var/list/data = list(message, tts_message, tts_filter, capitalize_message)
 	SEND_SIGNAL(src, COMSIG_LIVING_TREAT_MESSAGE, data)
 	message = data[TREAT_MESSAGE_ARG]
 	tts_message = data[TREAT_TTS_MESSAGE_ARG]
 	tts_filter = data[TREAT_TTS_FILTER_ARG]
+	capitalize_message = data[TREAT_CAPITALIZE_MESSAGE]
 
 	if(!tts_message)
 		tts_message = message

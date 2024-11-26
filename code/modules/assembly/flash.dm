@@ -109,7 +109,7 @@
 	if(burnt_out || (world.time < last_trigger + cooldown))
 		return FALSE
 	last_trigger = world.time
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	set_light_on(TRUE)
 	addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
@@ -128,7 +128,7 @@
 /**
  * Handles actual flashing part of the attack
  *
- * This proc is awful in every sense of the way, someone should definately refactor this whole code.
+ * This proc is awful in every sense of the way, someone should definitely refactor this whole code.
  * Arguments:
  * * M - Victim
  * * user - Attacker
@@ -161,7 +161,7 @@
 		else if(sigreturn & DEVIATION_OVERRIDE_NONE)
 			deviation = DEVIATION_NONE
 
-	//If you face away from someone they shouldnt notice any effects.
+	//If you face away from someone they shouldn't notice any effects.
 	if(deviation == DEVIATION_FULL)
 		return
 
@@ -185,7 +185,7 @@
 /**
  * Handles the directionality of the attack
  *
- * Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
+ * Returns the amount of 'deviation', 0 being facing each other, 1 being sideways, 2 being facing away from each other.
  * Arguments:
  * * victim - Victim
  * * attacker - Attacker
@@ -313,7 +313,7 @@
 	var/datum/weakref/arm
 
 /obj/item/assembly/flash/armimplant/burn_out()
-	var/obj/item/organ/internal/cyberimp/arm/flash/real_arm = arm.resolve()
+	var/obj/item/organ/cyberimp/arm/flash/real_arm = arm.resolve()
 	if(real_arm?.owner)
 		to_chat(real_arm.owner, span_warning("Your photon projector implant overheats and deactivates!"))
 		real_arm.Retract()
@@ -322,13 +322,13 @@
 
 /obj/item/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
-		var/obj/item/organ/internal/cyberimp/arm/flash/real_arm = arm.resolve()
+		var/obj/item/organ/cyberimp/arm/flash/real_arm = arm.resolve()
 		if(real_arm?.owner)
 			to_chat(real_arm.owner, span_warning("Your photon projector is running too hot to be used again so quickly!"))
 		return FALSE
 	overheat = TRUE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd)
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	update_icon(ALL, TRUE)
 	return TRUE
 

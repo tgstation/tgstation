@@ -17,7 +17,3 @@
 /datum/orderable_item/bepis/sprayoncan
 	item_path = /obj/item/toy/sprayoncan
 	cost_per_order = 750
-
-/datum/orderable_item/bepis/pristine
-	item_path = /obj/item/disk/design_disk/bepis/remove_tech
-	cost_per_order = 1000

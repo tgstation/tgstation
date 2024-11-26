@@ -7,22 +7,30 @@
  *
  * Not intended as a replacement for the mob verb
  */
-/atom/movable/proc/point_at(atom/pointed_atom)
+/atom/movable/proc/point_at(atom/pointed_atom, intentional = FALSE)
 	if(!isturf(loc))
-		return
+		return FALSE
 
 	if (pointed_atom in src)
 		create_point_bubble(pointed_atom)
-		return
+		return FALSE
 
 	var/turf/tile = get_turf(pointed_atom)
 	if (!tile)
-		return
+		return FALSE
 
 	var/turf/our_tile = get_turf(src)
 	var/obj/visual = new /obj/effect/temp_visual/point(our_tile, invisibility)
 
-	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual, intentional)
+
+	animate(visual, pixel_x = (tile.x - our_tile.x) * ICON_SIZE_X + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * ICON_SIZE_Y + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
+	return TRUE
+
+/mob/point_at(atom/pointed_atom, intentional = FALSE)
+	. = ..()
+	if(.)
+		face_atom(pointed_atom)
 
 /atom/movable/proc/create_point_bubble(atom/pointed_atom)
 	var/mutable_appearance/thought_bubble = mutable_appearance(
@@ -106,10 +114,15 @@
 /// possibly delayed verb that finishes the pointing process starting in [/mob/verb/pointed()].
 /// either called immediately or in the tick after pointed() was called, as per the [DEFAULT_QUEUE_OR_CALL_VERB()] macro
 /mob/proc/_pointed(atom/pointing_at)
-	if(client && !(pointing_at in view(client.view, src)))
-		return FALSE
+	if(client) //Clientless mobs can just go ahead and point
+		if(ismovable(pointing_at))
+			var/atom/movable/pointed_movable = pointing_at
+			if(pointed_movable.flags_1 & IS_ONTOP_1)
+				pointing_at = pointed_movable.loc
 
-	point_at(pointing_at)
+		if(!(pointing_at in view(client.view, src)))
+			return FALSE
 
-	SEND_SIGNAL(src, COMSIG_MOB_POINTED, pointing_at)
+	point_at(pointing_at, TRUE)
+
 	return TRUE

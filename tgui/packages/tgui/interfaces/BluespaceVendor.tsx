@@ -1,16 +1,15 @@
 import { filter, sortBy } from 'common/collections';
-import { toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
-import { multiline } from 'common/string';
-
-import { useBackend } from '../backend';
 import {
   Button,
   NumberInput,
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Table, TableCell, TableRow } from '../components/Table';
 import { getGasColor } from '../constants';
 import { Window } from '../layouts';
@@ -124,7 +123,7 @@ export const BluespaceVendor = (props) => {
                   color="transparent"
                   icon="info"
                   tooltipPosition="bottom-start"
-                  tooltip={multiline`
+                  tooltip={`
                   Quick guide for machine use: Prepare a tank to create a
                   new one in the machine, pick how much you want it filled,
                   and finally press start on the gas of your choice!

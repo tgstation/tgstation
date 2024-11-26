@@ -20,7 +20,7 @@ Charged extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
-	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/light_flicker.ogg', 50, TRUE)
 	do_effect(user)
 
@@ -81,7 +81,7 @@ Charged extracts:
 	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity but takes longer to recharge."
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
-	new /obj/item/stock_parts/cell/high/slime_hypercharged(get_turf(user))
+	new /obj/item/stock_parts/power_store/cell/high/slime_hypercharged(get_turf(user))
 	user.visible_message(span_notice("[src] sparks violently, and swells with electric power!"))
 	..()
 

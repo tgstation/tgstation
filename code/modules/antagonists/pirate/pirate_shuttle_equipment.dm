@@ -96,6 +96,9 @@
 	light_color = COLOR_SOFT_RED
 	possible_destinations = "pirate_away;pirate_home;pirate_custom"
 
+/obj/machinery/computer/shuttle/pirate/drop_pod
+	possible_destinations = "null"
+
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate
 	name = "pirate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the pirate shuttle."
@@ -158,11 +161,14 @@
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	surgeries = list(
 		/datum/surgery/advanced/lobotomy,
+		/datum/surgery/advanced/lobotomy/mechanic,
 		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/vein_threading/mechanic,
 		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery/advanced/bioware/nerve_splicing/mechanic,
 		/datum/surgery_step/heal/combo/upgraded,
 		/datum/surgery_step/pacify,
-		/datum/surgery_step/revive,
+		/datum/surgery_step/pacify/mechanic,
 	)
 
 //Pad & Pad Terminal
@@ -258,7 +264,7 @@
 	data["status_report"] = status_report
 	return data
 
-/obj/machinery/computer/piratepad_control/ui_act(action, params)
+/obj/machinery/computer/piratepad_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -425,18 +431,18 @@
 
 /datum/export/pirate/ransom/sell_object(mob/living/carbon/human/sold_item, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
 	. = ..()
-	if(. == EXPORT_NOT_SOLD)
+	if(. == EXPORT_NOT_SOLD || dry_run)
 		return
 	var/turf/picked_turf = pick(GLOB.holdingfacility)
 	sold_item.forceMove(picked_turf)
 	var/mob_cost = get_cost(sold_item)
 	sold_item.process_capture(mob_cost, mob_cost * 1.2)
 	do_sparks(8, FALSE, sold_item)
-	playsound(picked_turf, 'sound/weapons/emitter2.ogg', 25, TRUE)
+	playsound(picked_turf, 'sound/items/weapons/emitter2.ogg', 25, TRUE)
 	sold_item.flash_act()
 	sold_item.adjust_confusion(10 SECONDS)
 	sold_item.adjust_dizzy(10 SECONDS)
-	addtimer(src, CALLBACK(src, PROC_REF(send_back_to_station), sold_item), COME_BACK_FROM_CAPTURE_TIME)
+	addtimer(CALLBACK(src, PROC_REF(send_back_to_station), sold_item), COME_BACK_FROM_CAPTURE_TIME)
 	to_chat(sold_item, span_hypnophrase("A million voices echo in your head... <i>\"Yaarrr, thanks for the booty, landlubber. \
 		You will be ransomed back to your station, so it's only a matter of time before we ship you back...</i>"))
 
@@ -463,12 +469,12 @@
 
 /datum/export/pirate/cash
 	cost = 1
-	unit_name = "bills"
+	unit_name = "bill"
 	export_types = list(/obj/item/stack/spacecash)
 
-/datum/export/pirate/cash/get_amount(obj/exported_item)
+/datum/export/pirate/cash/get_cost(obj/exported_item)
 	var/obj/item/stack/spacecash/cash = exported_item
-	return ..() * cash.amount * cash.value
+	return cash.value * cash.amount
 
 /datum/export/pirate/holochip
 	cost = 1

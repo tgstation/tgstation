@@ -328,7 +328,7 @@
 	SET_REACTION_RESULTS(burned_fuel)
 
 	var/turf/open/location
-	if(istype(holder, /datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
+	if(istype(holder, /datum/pipeline)) //Find the tile the reaction is occurring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/pipenet = holder
 		location = pick(pipenet.members)
 	else if(isatom(holder))
@@ -686,7 +686,7 @@
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 
-	//This reaction is agressively slow. like, a tenth of a mole per fire slow. Keep that in mind
+	//This reaction is aggressively slow. like, a tenth of a mole per fire slow. Keep that in mind
 	var/heat_efficiency = min(temperature / NITRIUM_DECOMPOSITION_TEMP_DIVISOR, cached_gases[/datum/gas/nitrium][MOLES])
 
 	if (heat_efficiency <= 0 || (cached_gases[/datum/gas/nitrium][MOLES] - heat_efficiency < 0)) //Shouldn't produce gas from nothing.
@@ -1091,7 +1091,7 @@
 	SET_REACTION_RESULTS(produced_amount)
 	var/turf/open/location
 	var/energy_released = produced_amount * PN_TRITIUM_CONVERSION_ENERGY
-	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
+	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occurring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/pipenet = holder
 		location = pick(pipenet.members)
 	else if(isatom(holder))
@@ -1143,7 +1143,7 @@
 	SET_REACTION_RESULTS(consumed_amount)
 	var/turf/open/location
 	var/energy_released = consumed_amount * PN_BZASE_ENERGY
-	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
+	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occurring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/pipenet = holder
 		location = pick(pipenet.members)
 	else if(isatom(holder))

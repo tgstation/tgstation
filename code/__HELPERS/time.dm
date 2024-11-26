@@ -28,7 +28,7 @@
 		SSticker.gametime_offset = CEILING(SSticker.gametime_offset, 3600)
 
 //returns timestamp in a sql and a not-quite-compliant ISO 8601 friendly format
-/proc/SQLtime(timevar)
+/proc/ISOtime(timevar)
 	return time2text(timevar || world.timeofday, "YYYY-MM-DD hh:mm:ss")
 
 

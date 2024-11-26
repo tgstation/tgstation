@@ -38,6 +38,13 @@
 	results = list(/datum/reagent/consumable/salt = 2)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/chlorine = 1) // That's what I said! Sodium Chloride!
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_FOOD
+	required_other = TRUE
+
+/datum/chemical_reaction/sodiumchloride/pre_reaction_other_checks(datum/reagents/holder)
+	. = ..()
+	if(holder.has_reagent(/datum/reagent/consumable/liquidelectricity) || holder.has_reagent(/datum/reagent/consumable/liquidelectricity/enriched))
+		return FALSE
+
 
 /datum/chemical_reaction/stable_plasma
 	results = list(/datum/reagent/stable_plasma = 1)
@@ -564,7 +571,7 @@
 
 /datum/chemical_reaction/corgium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i in rand(1, created_volume) to created_volume) // More lulz.
+	for(var/i in 1 to rand(1, created_volume)) // More lulz.
 		new /mob/living/basic/pet/dog/corgi(location)
 	..()
 
@@ -577,7 +584,8 @@
 
 /datum/chemical_reaction/monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/water = 1)
-	mix_message = "<span class='danger'>Expands into a brown mass before shaping itself into a monkey!.</span>"
+	reaction_flags = REACTION_INSTANT
+	mix_message = span_danger("Expands into a brown mass before shaping itself into a monkey!.")
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/mob/living/carbon/M = holder.my_atom
@@ -599,6 +607,18 @@
 	results = list(/datum/reagent/oxygen = 2.5, /datum/reagent/hydrogen = 5)
 	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 1, /datum/reagent/water = 5)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+
+//salt electrolysis
+/datum/chemical_reaction/saltelectrolysis
+	results = list(/datum/reagent/chlorine = 2.5, /datum/reagent/sodium = 2.5)
+	required_reagents = list(/datum/reagent/consumable/salt = 5)
+	required_catalysts = list(/datum/reagent/consumable/liquidelectricity = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+
+/datum/chemical_reaction/saltelectrolysis/enriched
+	required_catalysts = list(/datum/reagent/consumable/liquidelectricity/enriched = 1)
+
+
 //butterflium
 /datum/chemical_reaction/butterflium
 	required_reagents = list(/datum/reagent/colorful_reagent = 1, /datum/reagent/medicine/omnizine = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/nutriment = 1)
@@ -607,7 +627,7 @@
 
 /datum/chemical_reaction/butterflium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i in rand(1, created_volume) to created_volume)
+	for(var/i in 1 to rand(1, created_volume))
 		new /mob/living/basic/butterfly(location)
 	..()
 //scream powder
@@ -620,18 +640,18 @@
 /datum/chemical_reaction/scream/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	/// List of screams to play.
 	var/static/list/screams = list(
-		'sound/voice/human/femalescream_1.ogg',
-		'sound/voice/human/femalescream_2.ogg',
-		'sound/voice/human/femalescream_3.ogg',
-		'sound/voice/human/femalescream_4.ogg',
-		'sound/voice/human/femalescream_5.ogg',
-		'sound/voice/human/malescream_1.ogg',
-		'sound/voice/human/malescream_2.ogg',
-		'sound/voice/human/malescream_3.ogg',
-		'sound/voice/human/malescream_4.ogg',
-		'sound/voice/human/malescream_5.ogg',
-		'sound/voice/human/malescream_6.ogg',
-		'sound/voice/human/wilhelm_scream.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_1.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_2.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_3.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_4.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_5.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_1.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_2.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_3.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_4.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_5.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_6.ogg',
+		'sound/mobs/humanoids/human/scream/wilhelm_scream.ogg',
 	)
 
 	playsound(holder.my_atom, pick(screams), created_volume*5,TRUE)
@@ -864,7 +884,7 @@
 	results = list(/datum/reagent/eigenstate = 1)
 	required_reagents = list(/datum/reagent/bluespace = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/consumable/caramel = 1)
 	mix_message = "the reaction zaps suddenly!"
-	mix_sound = 'sound/chemistry/bluespace.ogg'
+	mix_sound = 'sound/effects/chemistry/bluespace.ogg'
 	//FermiChem vars:
 	required_temp = 350
 	optimal_temp = 600
@@ -956,7 +976,7 @@
 
 /datum/chemical_reaction/ant_slurry/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i in rand(1, created_volume) to created_volume)
+	for(var/i in 1 to rand(1, created_volume))
 		new /mob/living/basic/ant(location)
 	..()
 
@@ -970,3 +990,16 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/hauntium(location)
+
+/datum/chemical_reaction/fish_hallucinogen_degradation
+	results = list(/datum/reagent/consumable/nutriment/protein = 0.1)
+	required_reagents = list(/datum/reagent/toxin/mindbreaker/fish = 1)
+	required_temp = 363.15 // 90°
+	optimal_temp = 450
+	rate_up_lim = 8
+	temp_exponent_factor = 1.5
+	optimal_ph_min = 2
+	optimal_ph_max = 10
+	thermic_constant = 80
+	H_ion_release = 2
+	reaction_tags = REACTION_TAG_EASY

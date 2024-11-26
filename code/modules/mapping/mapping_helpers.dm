@@ -107,6 +107,12 @@
 		return
 	return ..(ceiling)
 
+///Used for marking mapping errors. These should only be created by cases explicitly caught by unit tests, and should NEVER actually appear in production.
+/obj/effect/mapping_error
+	name = "I AM ERROR"
+	desc = "IF YOU SEE ME, YELL AT A MAPPER!!!"
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "mapping_error"
 
 /obj/effect/mapping_helpers
 	icon = 'icons/effects/mapping_helpers.dmi'
@@ -261,6 +267,16 @@
 	else
 		airlock.autoname = TRUE
 
+/obj/effect/mapping_helpers/airlock/inaccessible
+	name = "airlock inaccessible helper"
+	icon_state = "airlock_inaccessible"
+
+/obj/effect/mapping_helpers/airlock/inaccessible/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.req_one_access != null)
+		log_mapping("[src] at [AREACOORD(src)] tried to set req_access, but req__one_access was already set!")
+	else
+		airlock.req_access += list(ACCESS_INACCESSIBLE)
+
 //air alarm helpers
 /obj/effect/mapping_helpers/airalarm
 	desc = "You shouldn't see this. Report it please."
@@ -309,9 +325,6 @@
 		target.give_all_access()
 	if(target.syndicate_access + target.away_general_access + target.engine_access + target.mixingchamber_access + target.all_access > 1)
 		CRASH("Tried to combine incompatible air alarm access helpers!")
-
-	if(target.air_sensor_chamber_id)
-		target.setup_chamber_link()
 
 	target.update_appearance()
 	qdel(src)
@@ -402,6 +415,7 @@
 /obj/effect/mapping_helpers/airalarm/link
 	name = "airalarm link helper"
 	icon_state = "airalarm_link_helper"
+	late = TRUE
 	var/chamber_id = ""
 	var/allow_link_change = FALSE
 
@@ -411,13 +425,15 @@
 		log_mapping("[src] spawned outside of mapload!")
 		return INITIALIZE_HINT_QDEL
 
+/obj/effect/mapping_helpers/airalarm/link/LateInitialize(mapload)
 	var/obj/machinery/airalarm/alarm = locate(/obj/machinery/airalarm) in loc
 	if(!isnull(alarm))
 		alarm.air_sensor_chamber_id = chamber_id
 		alarm.allow_link_change = allow_link_change
+		alarm.setup_chamber_link()
 	else
 		log_mapping("[src] failed to find air alarm at [AREACOORD(src)].")
-		return INITIALIZE_HINT_QDEL
+	qdel(src)
 
 //apc helpers
 /obj/effect/mapping_helpers/apc
@@ -563,17 +579,17 @@
 	if(!mapload)
 		log_mapping("[src] spawned outside of mapload!")
 		return INITIALIZE_HINT_QDEL
-	check_validity()
-	return INITIALIZE_HINT_QDEL
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch/proc/check_validity()
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch/LateInitialize()
 	var/area/needed_area = get_area(src)
 	if(!needed_area.lightswitch)
 		stack_trace("[src] at [AREACOORD(src)] [(needed_area.type)] tried to turn lights off but they are already off!")
 	var/obj/machinery/light_switch/light_switch = locate(/obj/machinery/light_switch) in needed_area
 	if(!light_switch)
-		stack_trace("Trying to turn off lights with lightswitch in area without lightswitches. In [(needed_area.type)] to be precise.")
-	needed_area.lightswitch = FALSE
+		CRASH("Trying to turn off lights with lightswitch in area without lightswitches. In [(needed_area.type)] to be precise.")
+	light_switch.set_lights(FALSE)
+	qdel(src)
 
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
@@ -585,6 +601,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	. = ..()
 	var/turf/T = get_turf(src)
 	T.turf_flags |= NO_LAVA_GEN
+
+INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
+/obj/effect/mapping_helpers/no_atoms_ontop
+	icon_state = "no_atoms_ontop"
+
+/obj/effect/mapping_helpers/no_atoms_ontop/Initialize(mapload)
+	. = ..()
+	var/turf/loc_turf = get_turf(src)
+	loc_turf.turf_flags |= TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES
 
 ///Helpers used for injecting stuff into atoms on the map.
 /obj/effect/mapping_helpers/atom_injector
@@ -849,11 +874,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/admin_spawned
 	///number of bodies to spawn
 	var/bodycount = 3
-	/// These species IDs will be barred from spawning if morgue_cadaver_disable_nonhumans is disabled (In the future, we can also dehardcode this)
-	var/list/blacklisted_from_rng_placement = list(
-		SPECIES_ETHEREAL, // they revive on death which is bad juju
-		SPECIES_HUMAN,  // already have a 50% chance of being selected
-	)
+	/// Corpse type we spawn thats always human
+	var/datum/corpse_damage_class/morgue_body_class = /datum/corpse_damage_class/station/morgue
 
 /obj/effect/mapping_helpers/dead_body_placer/Initialize(mapload)
 	. = ..()
@@ -881,57 +903,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	var/reuse_trays = (numtrays < bodycount) //are we going to spawn more trays than bodies?
 
-	var/use_species = !(CONFIG_GET(flag/morgue_cadaver_disable_nonhumans))
-	var/species_probability = CONFIG_GET(number/morgue_cadaver_other_species_probability)
-	var/override_species = CONFIG_GET(string/morgue_cadaver_override_species)
-	var/list/usable_races
-	if(use_species)
-		var/list/temp_list = get_selectable_species()
-		usable_races = temp_list.Copy()
-		LAZYREMOVE(usable_races, blacklisted_from_rng_placement)
-		if(!LAZYLEN(usable_races))
-			notice("morgue_cadaver_disable_nonhumans. There are no valid roundstart nonhuman races enabled. Defaulting to humans only!")
-		if(override_species)
-			warning("morgue_cadaver_override_species BEING OVERRIDEN since morgue_cadaver_disable_nonhumans is disabled.")
-	else if(override_species)
-		LAZYADD(usable_races, override_species)
-
-	var/guaranteed_human_spawned = FALSE
 	for (var/i in 1 to bodycount)
 		var/obj/structure/bodycontainer/morgue/morgue_tray = reuse_trays ? pick(trays) : pick_n_take(trays)
 		var/obj/structure/closet/body_bag/body_bag = new(morgue_tray.loc)
-		var/mob/living/carbon/human/new_human = new(morgue_tray.loc)
-
-		var/species_to_pick
-
-		if(guaranteed_human_spawned && use_species)
-			if(LAZYLEN(usable_races))
-				if(!isnum(species_probability))
-					species_probability = 50
-					stack_trace("WARNING: morgue_cadaver_other_species_probability CONFIG SET TO 0% WHEN SPAWNING. DEFAULTING TO [species_probability]%.")
-				if(prob(species_probability))
-					species_to_pick = pick(usable_races)
-					var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
-					if(new_human_species)
-						new_human.set_species(new_human_species)
-						new_human_species = new_human.dna.species
-						new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
-					else
-						stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
-		else
-			guaranteed_human_spawned = TRUE
+		var/mob/living/carbon/human/new_human = GLOB.lost_crew_manager.create_lost_crew(revivable = FALSE, forced_class = morgue_body_class)
 
 		body_bag.insert(new_human, TRUE)
 		body_bag.close()
-		body_bag.handle_tag("[new_human.real_name][species_to_pick ? " - [capitalize(species_to_pick)]" : " - Human"]")
+		body_bag.handle_tag("[new_human.real_name][new_human.dna?.species ? " - [new_human.dna.species.name]" : " - Human"]")
 		body_bag.forceMove(morgue_tray)
-
-		new_human.death() //here lies the mans, rip in pepperoni.
-		for (var/obj/item/organ/internal/part in new_human.organs) //randomly remove organs from each body, set those we keep to be in stasis
-			if (prob(40))
-				qdel(part)
-			else
-				part.organ_flags |= ORGAN_FROZEN
 
 		morgue_tray.update_appearance()
 
@@ -1064,7 +1044,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/airlock_note_placer/LateInitialize()
 	var/turf/turf = get_turf(src)
-	if(note_path && !istype(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
+	if(note_path && !ispath(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
 		log_mapping("[src] at [x],[y] had an improper note_path path, could not place paper note.")
 		qdel(src)
 		return
@@ -1175,7 +1155,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(response.errored || response.status_code != 200)
 		query_in_progress = FALSE
 		CRASH("Failed to fetch mapped custom json from url [json_url], code: [response.status_code], error: [response.error]")
-	var/json_data = response["body"]
+	var/json_data = response.body
 	json_cache[json_url] = json_data
 	query_in_progress = FALSE
 	return json_data

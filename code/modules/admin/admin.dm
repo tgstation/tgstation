@@ -286,14 +286,17 @@ ADMIN_VERB(create_or_modify_area, R_DEBUG, "Create Or Modify Area", "Create of m
 
 	return TRUE
 
-/client/proc/adminGreet(logout)
-	if(SSticker.HasRoundStarted())
-		var/string
-		if(logout && CONFIG_GET(flag/announce_admin_logout))
-			string = pick(
-				"Admin logout: [key_name(src)]")
-		else if(!logout && CONFIG_GET(flag/announce_admin_login) && (prefs.toggles & ANNOUNCE_LOGIN))
-			string = pick(
-				"Admin login: [key_name(src)]")
-		if(string)
-			message_admins("[string]")
+/// Sends a message to adminchat when anyone with a holder logs in or logs out.
+/// Is dependent on admin preferences and configuration settings, which means that this proc can fire without sending a message.
+/client/proc/adminGreet(logout = FALSE)
+	if(!SSticker.HasRoundStarted())
+		return
+
+	if(logout && CONFIG_GET(flag/announce_admin_logout))
+		message_admins("Admin logout: [key_name(src)]")
+		return
+
+	if(!logout && CONFIG_GET(flag/announce_admin_login) && (prefs.toggles & ANNOUNCE_LOGIN))
+		message_admins("Admin login: [key_name(src)]")
+		return
+

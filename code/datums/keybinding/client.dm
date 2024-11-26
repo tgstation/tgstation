@@ -32,6 +32,20 @@
 	winset(user, null, "command=.auto")
 	return TRUE
 
+/datum/keybinding/client/toggle_fullscreen
+	hotkey_keys = list("F11")
+	name = "toggle_fullscreen"
+	full_name = "Toggle Fullscreen"
+	description = "Makes the game window fullscreen."
+	keybind_signal = COMSIG_KB_CLIENT_FULLSCREEN_DOWN
+
+/datum/keybinding/client/toggle_fullscreen/down(client/user)
+	. = ..()
+	if(.)
+		return
+	user.toggle_fullscreen()
+	return TRUE
+
 /datum/keybinding/client/minimal_hud
 	hotkey_keys = list("F12")
 	name = "minimal_hud"

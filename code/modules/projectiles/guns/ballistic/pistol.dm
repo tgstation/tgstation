@@ -9,16 +9,18 @@
 	fire_delay = 0
 	actions_types = list()
 	bolt_type = BOLT_TYPE_LOCKING
-	fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
-	dry_fire_sound = 'sound/weapons/gun/pistol/dry_fire.ogg'
-	suppressed_sound = 'sound/weapons/gun/pistol/shot_suppressed.ogg'
-	load_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
-	load_empty_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
-	eject_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
-	eject_empty_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
-	rack_sound = 'sound/weapons/gun/pistol/rack_small.ogg'
-	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
+	fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
+	dry_fire_sound = 'sound/items/weapons/gun/pistol/dry_fire.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/pistol/shot_suppressed.ogg'
+	load_sound = 'sound/items/weapons/gun/pistol/mag_insert.ogg'
+	load_empty_sound = 'sound/items/weapons/gun/pistol/mag_insert.ogg'
+	eject_sound = 'sound/items/weapons/gun/pistol/mag_release.ogg'
+	eject_empty_sound = 'sound/items/weapons/gun/pistol/mag_release.ogg'
+	rack_sound = 'sound/items/weapons/gun/pistol/rack_small.ogg'
+	lock_back_sound = 'sound/items/weapons/gun/pistol/lock_small.ogg'
+	bolt_drop_sound = 'sound/items/weapons/gun/pistol/drop_small.ogg'
+	drop_sound = 'sound/items/handling/gun/ballistics/pistol/pistol_drop1.ogg'
+	pickup_sound = 'sound/items/handling/gun/ballistics/pistol/pistol_pickup1.ogg'
 	fire_sound_volume = 90
 	bolt_wording = "slide"
 	suppressor_x_offset = 10
@@ -29,6 +31,20 @@
 
 /obj/item/gun/ballistic/automatic/pistol/fire_mag
 	spawn_magazine_type = /obj/item/ammo_box/magazine/m9mm/fire
+
+/obj/item/gun/ballistic/automatic/pistol/contraband
+
+/obj/item/gun/ballistic/automatic/pistol/contraband/Initialize(mapload)
+	if(prob(10))
+		pin = pick(
+		list(
+			/obj/item/firing_pin/clown,
+			/obj/item/firing_pin/clown/ultra,
+			/obj/item/firing_pin/clown/ultra/selfdestruct,
+		))
+	. = ..()
+	pin.pin_removable = FALSE
+
 
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
 	. = ..()
@@ -43,6 +59,52 @@
 	empty_indicator = TRUE
 	suppressor_x_offset = 12
 
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher
+	name = "\improper Ansem/SC pistol"
+	desc = "A modified variant of the Ansem, spiritual successor to the Makarov, featuring an integral suppressor and push-button trigger on the grip \
+	for an underbarrel-mounted disruptor, similar in operation to the standalone SC/FISHER. Chambered in 10mm."
+	desc_controls = "Right-click to use the underbarrel disruptor. Two shots maximum between self-charges."
+	icon_state = "pistol_evil_fisher"
+	suppressed = TRUE
+	can_suppress = FALSE
+	can_unsuppress = FALSE
+	var/obj/item/gun/energy/recharge/fisher/underbarrel
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/examine_more(mob/user)
+	. = ..()
+	. += span_notice("The Ansem/SC is a Scarborough Arms-manufactured overhaul suite for the also Scarborough Arms-manufactured Ansem handgun, designed for special \
+	operators who like to operate operationally, and/or people who really, really hate lightbulbs, and tend to fight people who really like lightbulbs. \
+	The slide is lengthened and has an integrated suppressor, while a compact kinetic light disruptor was mounted underneath the barrel. \
+	Scarborough Arms has never actually officially responded to allegations that they're involved with the modification and/or manufacture \
+	of the SC/FISHER or similar disruptor weapons. Operators are reminded that kinetic light disruptors do not actually physically harm targets.<br>\
+	Caveat emptor.")
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/Initialize(mapload)
+	. = ..()
+	underbarrel = new /obj/item/gun/energy/recharge/fisher(src)
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/Destroy()
+	QDEL_NULL(underbarrel)
+	return ..()
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/try_fire_gun(atom/target, mob/living/user, params)
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		return underbarrel.try_fire_gun(target, user, params)
+	return ..()
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/afterattack(atom/target, mob/user, click_parameters)
+	var/obj/projectile/energy/fisher/melee/simulated_hit = new
+	simulated_hit.firer = user
+	simulated_hit.on_hit(target)
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(.)
+		return
+	var/obj/projectile/energy/fisher/melee/simulated_hit = new
+	simulated_hit.firer = throwingdatum.get_thrower()
+	simulated_hit.on_hit(hit_atom)
+
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
 	desc = "A classic .45 handgun with a small magazine capacity."
@@ -50,10 +112,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = FALSE
-	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
-	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
-	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+	fire_sound = 'sound/items/weapons/gun/pistol/shot_alt.ogg'
+	rack_sound = 'sound/items/weapons/gun/pistol/rack.ogg'
+	lock_back_sound = 'sound/items/weapons/gun/pistol/slide_lock.ogg'
+	bolt_drop_sound = 'sound/items/weapons/gun/pistol/slide_drop.ogg'
 
 /**
  * Weak 1911 for syndicate chimps. It comes in a 4 TC kit.
@@ -78,10 +140,23 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m50
 	can_suppress = FALSE
 	mag_display = TRUE
-	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
-	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
-	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+	fire_sound = 'sound/items/weapons/gun/rifle/shot.ogg'
+	rack_sound = 'sound/items/weapons/gun/pistol/rack.ogg'
+	lock_back_sound = 'sound/items/weapons/gun/pistol/slide_lock.ogg'
+	bolt_drop_sound = 'sound/items/weapons/gun/pistol/slide_drop.ogg'
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/contraband
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/contraband/Initialize(mapload)
+	if(prob(10))
+		pin = pick(
+		list(
+			/obj/item/firing_pin/clown,
+			/obj/item/firing_pin/clown/ultra,
+			/obj/item/firing_pin/clown/ultra/selfdestruct,
+		))
+	. = ..()
+	pin.pin_removable = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold
 	desc = "A gold plated Desert Eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."

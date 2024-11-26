@@ -2,7 +2,7 @@
 	name = "flora"
 	desc = "Some sort of plant."
 	resistance_flags = FLAMMABLE
-	max_integrity = 150
+	max_integrity = 100
 	anchored = TRUE
 	drag_slowdown = 1.3
 
@@ -112,6 +112,12 @@
 
 	if(harvest(user))
 		after_harvest(user)
+
+/obj/structure/flora/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == MELEE)
+		if(damage_type == BURN)
+			damage_amount *= 4
+	return ..()
 
 /obj/structure/flora/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	var/use_default_sound = TRUE //Because I don't wanna do unnecessary bitflag checks in a single if statement, while also allowing for multiple sounds to be played
@@ -278,6 +284,7 @@
 	name = "tree"
 	desc = "A large tree."
 	density = TRUE
+	max_integrity = 150
 	pixel_x = -16
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -445,6 +452,10 @@
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
 
+/obj/structure/flora/tree/pine/xmas/presentless
+	icon_state = "pinepresents"
+	desc = "A wondrous decorated Christmas tree. It has presents, though none of them seem to have your name on them."
+
 /obj/structure/flora/tree/pine/xmas/presents
 	icon_state = "pinepresents"
 	desc = "A wondrous decorated Christmas tree. It has presents!"
@@ -499,13 +510,13 @@
 /obj/structure/flora/coconuts
 	gender = PLURAL
 	name = "coconuts"
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "coconuts"
 
 /obj/structure/flora/tree/palm
 	name = "palm tree"
 	desc = "A tree straight from the tropics."
-	icon = 'icons/misc/beach2.dmi'
+	icon = 'icons/obj/fluff/beach2.dmi'
 	icon_state = "palm1"
 	pixel_x = 0
 

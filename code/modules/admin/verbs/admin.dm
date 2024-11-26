@@ -32,7 +32,7 @@ ADMIN_VERB(unprison, R_ADMIN, "UnPrison", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEG
 		tgui_alert(user, "[prisoner.name] is not prisoned.")
 		return
 
-	SSjob.SendToLateJoin(prisoner)
+	SSjob.send_to_late_join(prisoner)
 	message_admins("[key_name_admin(user)] has unprisoned [key_name_admin(prisoner)]")
 	log_admin("[key_name(user)] has unprisoned [key_name(prisoner)]")
 	BLACKBOX_LOG_ADMIN_VERB("Unprison")

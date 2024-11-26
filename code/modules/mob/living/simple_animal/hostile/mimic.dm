@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	harm_intent_damage = 5
 	melee_damage_lower = 8
 	melee_damage_upper = 12
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	emote_taunt = list("growls")
 	speak_emote = list("creaks")
 	taunt_chance = 30
@@ -275,11 +275,11 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 			Pewgun.chambered.forceMove(loc) //rip revolver immersions, blame shotgun snowflake procs
 			Pewgun.chambered = null
 			if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len)
-				Pewgun.chambered = Pewgun.magazine.get_round(0)
+				Pewgun.chambered = Pewgun.magazine.get_round()
 				Pewgun.chambered.forceMove(Pewgun)
 			Pewgun.update_appearance()
 		else if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len) //only true for pumpguns i think
-			Pewgun.chambered = Pewgun.magazine.get_round(0)
+			Pewgun.chambered = Pewgun.magazine.get_round()
 			Pewgun.chambered.forceMove(Pewgun)
 			visible_message(span_danger("The <b>[src]</b> cocks itself!"))
 	else
@@ -298,10 +298,10 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	speak_emote = list("clatters")
 	gold_core_spawnable = HOSTILE_SPAWN
 	var/opened = FALSE
-	var/open_sound = 'sound/machines/crate_open.ogg'
-	var/close_sound = 'sound/machines/crate_close.ogg'
+	var/open_sound = 'sound/machines/crate/crate_open.ogg'
+	var/close_sound = 'sound/machines/crate/crate_close.ogg'
 	///sound played when the mimic attempts to eat more items than it can
-	var/full_sound = 'sound/items/trayhit2.ogg'
+	var/full_sound = 'sound/items/trayhit/trayhit2.ogg'
 	var/max_mob_size = MOB_SIZE_HUMAN
 	var/locked = FALSE
 	var/datum/action/innate/mimic/lock/lock

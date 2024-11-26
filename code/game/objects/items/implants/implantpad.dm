@@ -10,7 +10,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	interaction_flags_click = FORBID_TELEKINESIS_REACH
+	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 
 	///The implant case currently inserted into the pad.
 	var/obj/item/implantcase/inserted_case

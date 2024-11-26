@@ -7,7 +7,7 @@
 	cure_chance = 5
 	agent = "1nqu1s1t10n flu virion"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	spreading_modifier = 0.75
+	spreading_modifier = 0.1
 	desc = "If left untreated the subject will burn to death for being a heretic."
 	severity = DISEASE_SEVERITY_DANGEROUS
 	required_organ = ORGAN_SLOT_LUNGS
@@ -21,7 +21,7 @@
 		if(2)
 			affected_mob.adjust_bodytemperature(5 * seconds_per_tick)
 			if(SPT_PROB(2.5, seconds_per_tick))
-				affected_mob.emote("sneeze")
+				affected_mob.infectious_sneeze(src, TRUE)
 			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("cough")
 			if(SPT_PROB(0.5, seconds_per_tick))
@@ -31,7 +31,7 @@
 		if(3)
 			affected_mob.adjust_bodytemperature(10 * seconds_per_tick)
 			if(SPT_PROB(2.5, seconds_per_tick))
-				affected_mob.emote("sneeze")
+				affected_mob.infectious_sneeze(src, TRUE)
 			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("cough")
 			if(SPT_PROB(2.5, seconds_per_tick))

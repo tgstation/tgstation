@@ -29,7 +29,7 @@
 	var/list/data = list()
 	// Collect all info from each intry.
 	var/list/entry_data = list()
-	for(var/datum/infuser_entry/entry as anything in GLOB.infuser_entries)
+	for(var/datum/infuser_entry/entry as anything in flatten_list(GLOB.infuser_entries))
 		if(entry.tier == DNA_MUTANT_UNOBTAINABLE)
 			continue
 		var/list/individual_entry_data = list()

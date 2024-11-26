@@ -11,7 +11,7 @@
 /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
-	icon = 'icons/obj/restraints.dmi'
+	icon = 'icons/obj/weapons/restraints.dmi'
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -48,13 +48,18 @@
 	breakouttime = 1 MINUTES
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
+	pickup_sound = 'sound/items/handling/handcuffs/handcuffs_pick_up.ogg'
+	drop_sound = 'sound/items/handling/handcuffs/handcuffs_drop.ogg'
+	sound_vary = TRUE
 
 	///How long it takes to handcuff someone
 	var/handcuff_time = 4 SECONDS
 	///Multiplier for handcuff time
 	var/handcuff_time_mod = 1
 	///Sound that plays when starting to put handcuffs on someone
-	var/cuffsound = 'sound/weapons/handcuffs.ogg'
+	var/cuffsound = 'sound/items/weapons/handcuffs.ogg'
+	///Sound that plays when restrain is successful
+	var/cuffsuccesssound = 'sound/items/handcuff_finish.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
 	var/trashtype = null
 	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
@@ -120,6 +125,7 @@
 		return
 
 	apply_cuffs(victim, user, dispense = iscyborg(user))
+	playsound(loc, cuffsuccesssound, 30, TRUE, -2)
 
 	victim.visible_message(
 		span_notice("[user] handcuffs [victim]."),
@@ -175,6 +181,7 @@
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 1 SECONDS
 	restraint_strength = HANDCUFFS_TYPE_WEAK
+	resist_cooldown = CLICK_CD_SLOW
 
 /**
  * # Cable restraints
@@ -193,7 +200,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
 	breakouttime = 30 SECONDS
-	cuffsound = 'sound/weapons/cablecuff.ogg'
+	cuffsound = 'sound/items/weapons/cablecuff.ogg'
+	pickup_sound = null
+	drop_sound = null
 	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, new_color)
@@ -213,8 +222,8 @@
 
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/bola, /datum/crafting_recipe/gonbola)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -356,6 +365,7 @@
 	name = "fake zipties"
 	desc = "Fake zipties meant for gag purposes."
 	breakouttime = 1 SECONDS
+	resist_cooldown = CLICK_CD_SLOW
 
 /obj/item/restraints/handcuffs/cable/zipties/fake/used
 	desc = "A pair of broken fake zipties."
@@ -414,7 +424,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
@@ -449,7 +459,7 @@
  * Does not trigger on tiny mobs.
  * If ignore_movetypes is FALSE, does not trigger on floating / flying / etc. mobs.
  */
-/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE)
+/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE, hit_prone = FALSE)
 	if(!armed || !isturf(loc) || !isliving(target))
 		return
 
@@ -475,7 +485,7 @@
 		victim.visible_message(span_danger("[victim] triggers \the [src]."), \
 				span_userdanger("You trigger \the [src]!"))
 	var/def_zone = BODY_ZONE_CHEST
-	if(iscarbon(victim) && victim.body_position == STANDING_UP)
+	if(iscarbon(victim) && (victim.body_position == STANDING_UP || hit_prone))
 		var/mob/living/carbon/carbon_victim = victim
 		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		if(!carbon_victim.legcuffed && carbon_victim.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
@@ -521,6 +531,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
 	breakouttime = 2 SECONDS // Cyborgs shouldn't have a strong restraint
+	slowdown = 3
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
@@ -534,30 +545,43 @@
 	gender = NEUTER
 	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
+	///Reference of the mob we will attempt to snare
+	var/datum/weakref/ensnare_mob_ref
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE)
 	if(!..())
 		return
-	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, TRUE)
+	playsound(src.loc,'sound/items/weapons/bolathrow.ogg', 75, TRUE)
 
 /obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
-	ensnare(hit_atom)
+	//The mob has been hit, save the reference for ensnaring
+	ensnare_mob_ref = WEAKREF(hit_atom)
+
+/obj/item/restraints/legcuffs/bola/after_throw(datum/callback/callback)
+	. = ..()
+	if (isnull(ensnare_mob_ref))
+		return
+	var/atom/ensnare_mob = ensnare_mob_ref.resolve()
+	if (!isnull(ensnare_mob))
+		ensnare(ensnare_mob)
+	ensnare_mob_ref = null
 
 /**
  * Attempts to legcuff someone with the bola
  *
  * Arguments:
- * * C - the carbon that we will try to ensnare
+ * * snared_mob - the carbon that we will try to ensnare
  */
-/obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
-	if(!C.legcuffed && C.num_legs >= 2)
-		visible_message(span_danger("\The [src] ensnares [C]!"), span_userdanger("\The [src] ensnares you!"))
-		C.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
-		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-		C.Knockdown(knockdown)
-		playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+/obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/snared_mob)
+	if(snared_mob.legcuffed || snared_mob.num_legs < 2)
+		return
+	visible_message(span_danger("\The [src] ensnares [snared_mob]!"), span_userdanger("\The [src] ensnares you!"))
+	snared_mob.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
+	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
+	snared_mob.Knockdown(knockdown)
+	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
 /**
  * A traitor variant of the bola.
@@ -582,7 +606,7 @@
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
 	icon_state = "ebola"
 	inhand_icon_state = "ebola"
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/items/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_COMMAND * 0.35
@@ -593,7 +617,9 @@
 
 /obj/item/restraints/legcuffs/bola/energy/ensnare(atom/hit_atom)
 	var/obj/item/restraints/legcuffs/beartrap/energy/cyborg/B = new (get_turf(hit_atom))
-	B.spring_trap(hit_atom, ignore_movetypes = TRUE)
+	B.spring_trap(hit_atom, ignore_movetypes = TRUE, hit_prone = TRUE)
+	if(B.loc != hit_atom)
+		qdel(B)
 	qdel(src)
 
 /**

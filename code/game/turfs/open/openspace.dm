@@ -10,6 +10,8 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pathing_pass_method = TURF_PATHING_PASS_PROC
 	plane = TRANSPARENT_FLOOR_PLANE
+	layer = SPACE_LAYER
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -148,9 +150,6 @@
 		return TRUE
 	return FALSE
 
-/turf/open/openspace/rust_heretic_act()
-	return FALSE
-
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	var/atom/movable/our_movable = pass_info.caller_ref.resolve()
 	if(our_movable && !our_movable.can_z_move(DOWN, src, null, ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
@@ -166,7 +165,7 @@
 	place_on_top(new_floor_path, flags = flags)
 
 /turf/open/openspace/can_cross_safely(atom/movable/crossing)
-	return HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
+	return HAS_TRAIT(crossing, TRAIT_MOVE_FLYING) || !crossing.can_z_move(DOWN, src, z_move_flags = ZMOVE_FALL_FLAGS)
 
 /turf/open/openspace/icemoon
 	name = "ice chasm"
@@ -200,6 +199,10 @@
 
 /turf/open/openspace/icemoon/keep_below
 	drill_below = FALSE
+
+/turf/open/openspace/xenobio
+	name = "xenobio bz air"
+	initial_gas_mix = XENOBIO_BZ
 
 /turf/open/openspace/icemoon/ruins
 	protect_ruin = FALSE

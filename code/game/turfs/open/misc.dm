@@ -3,7 +3,7 @@
 /// Please do not bloat this. Love you <3
 /turf/open/misc
 	name = "coder/mapper fucked up"
-	desc = "report on github please"
+	desc = "report on GitHub please"
 
 	flags_1 = NO_SCREENTIPS_1 | CAN_BE_DIRTY_1
 	turf_flags = IS_SOLID | NO_RUST
@@ -17,8 +17,8 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN
 	canSmoothWith = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
 
-	thermal_conductivity = 0.04
-	heat_capacity = 10000
+	thermal_conductivity = 0.02
+	heat_capacity = 20000
 	tiled_dirt = TRUE
 
 /turf/open/misc/attackby(obj/item/W, mob/user, params)

@@ -15,6 +15,7 @@
 	desc = "An early design of the proto-kinetic accelerator, it is little more than a combination of various mining tools cobbled together, \
 		forming a high-tech club. While it is an effective mining tool, it did little to aid any but the most skilled and/or \
 		suicidal miners against local fauna."
+	resistance_flags = FIRE_PROOF
 	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -22,7 +23,7 @@
 	throw_speed = 4
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT*1.15, /datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT*2.075)
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("smashes", "crushes", "cleaves", "chops", "pulps")
 	attack_verb_simple = list("smash", "crush", "cleave", "chop", "pulp")
 	sharpness = SHARP_EDGED
@@ -39,6 +40,8 @@
 	var/charge_time = 1.5 SECONDS
 	var/detonation_damage = 50
 	var/backstab_bonus = 30
+	var/current_inhand_icon_state = "crusher" //variable used by retool kits when changing the crusher's appearance
+	var/projectile_icon = "pulse1" //variable used by retool kits when changing the crusher's projectile sprite
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
@@ -48,7 +51,6 @@
 	)
 	//technically it's huge and bulky, but this provides an incentive to use it
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -83,40 +85,33 @@
 		crusher_trophy.remove_from(src, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		to_chat(user, span_warning("[src] is too heavy to use with one hand! You fumble and drop everything."))
-		user.drop_all_held_items()
-		return
-	var/datum/status_effect/crusher_damage/crusher_damage_effect = target.has_status_effect(/datum/status_effect/crusher_damage)
-	if(!crusher_damage_effect)
-		crusher_damage_effect = target.apply_status_effect(/datum/status_effect/crusher_damage)
-	var/target_health = target.health
-	..()
-	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
-		if(!QDELETED(target))
-			crusher_trophy.on_melee_hit(target, user)
-	if(!QDELETED(crusher_damage_effect) && !QDELETED(target))
-		crusher_damage_effect.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
-
-/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, proximity_flag, clickparams)
+/obj/item/kinetic_crusher/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
 	if(.)
+		return TRUE
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		user.balloon_alert(user, "must be wielded!")
+		return TRUE
+	return .
+
+/obj/item/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
+	target.apply_status_effect(/datum/status_effect/crusher_damage)
+	return ..()
+
+/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, clickparams)
+	if(!isliving(target))
 		return
-	if(!proximity_flag || !isliving(target))
+	// Melee effect
+	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
+		crusher_trophy.on_melee_hit(target, user)
+	if(QDELETED(target))
 		return
-	var/valid_crusher_attack = FALSE
-	for(var/datum/status_effect/crusher_mark/crusher_mark_effect as anything in target.get_all_status_effect_of_id(/datum/status_effect/crusher_mark))
-		//this will erase ALL crusher marks, not only ones by you.
-		if(crusher_mark_effect.hammer_synced != src || !target.remove_status_effect(/datum/status_effect/crusher_mark, src))
-			continue
-		valid_crusher_attack = TRUE
-		break
-	if(!valid_crusher_attack)
+	var/datum/status_effect/crusher_mark/mark = target.has_status_effect(/datum/status_effect/crusher_mark)
+	var/boosted_mark = mark?.boosted
+	if(!target.remove_status_effect(mark))
 		return
-	var/datum/status_effect/crusher_damage/crusher_damage_effect = target.has_status_effect(/datum/status_effect/crusher_damage)
-	if(!crusher_damage_effect)
-		crusher_damage_effect = target.apply_status_effect(/datum/status_effect/crusher_damage)
+	// Detonation effect
+	var/datum/status_effect/crusher_damage/crusher_damage_effect = target.has_status_effect(/datum/status_effect/crusher_damage) || target.apply_status_effect(/datum/status_effect/crusher_damage)
 	var/target_health = target.health
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
 		crusher_trophy.on_mark_detonation(target, user)
@@ -127,45 +122,44 @@
 	new /obj/effect/temp_visual/kinetic_blast(get_turf(target))
 	var/backstabbed = FALSE
 	var/combined_damage = detonation_damage
-	var/backstab_dir = get_dir(user, target)
 	var/def_check = target.getarmor(type = BOMB)
-	if((user.dir & backstab_dir) && (target.dir & backstab_dir))
+	// Backstab bonus
+	if(check_behind(user, target) || boosted_mark)
 		backstabbed = TRUE
 		combined_damage += backstab_bonus
-		playsound(user, 'sound/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
+		playsound(user, 'sound/items/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
 	if(!QDELETED(crusher_damage_effect))
 		crusher_damage_effect.total_damage += combined_damage
 	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, target, src, backstabbed)
 	target.apply_damage(combined_damage, BRUTE, blocked = def_check)
 
-/obj/item/kinetic_crusher/attack_secondary(atom/target, mob/living/user, clickparams)
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
-
-/obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
+/obj/item/kinetic_crusher/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		balloon_alert(user, "wield it first!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(target == user)
+		return ITEM_INTERACT_BLOCKING
+	if(interacting_with == user)
 		balloon_alert(user, "can't aim at yourself!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	fire_kinetic_blast(target, user, click_parameters)
+		return ITEM_INTERACT_BLOCKING
+	fire_kinetic_blast(interacting_with, user, modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, click_parameters)
+/obj/item/kinetic_crusher/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
+
+/obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, list/modifiers)
 	if(!charged)
 		return
-	var/modifiers = params2list(click_parameters)
 	var/turf/proj_turf = user.loc
 	if(!isturf(proj_turf))
 		return
 	var/obj/projectile/destabilizer/destabilizer = new(proj_turf)
+	destabilizer.icon_state = "[projectile_icon]"
 	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
 		attached_trophy.on_projectile_fire(destabilizer, user)
 	destabilizer.preparePixelProjectile(target, user, modifiers)
 	destabilizer.firer = user
-	destabilizer.hammer_synced = src
-	playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)
+	playsound(user, 'sound/items/weapons/plasma_cutter.ogg', 100, TRUE)
 	destabilizer.fire()
 	charged = FALSE
 	update_appearance()
@@ -175,20 +169,21 @@
 	if(!charged)
 		charged = TRUE
 		update_appearance()
-		playsound(src.loc, 'sound/weapons/kinetic_reload.ogg', 60, TRUE)
+		playsound(src.loc, 'sound/items/weapons/kinetic_reload.ogg', 60, TRUE)
 
 /obj/item/kinetic_crusher/ui_action_click(mob/user, actiontype)
 	set_light_on(!light_on)
-	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 
-/obj/item/kinetic_crusher/proc/on_saboteur(datum/source, disrupt_duration)
+/obj/item/kinetic_crusher/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	set_light_on(FALSE)
-	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
-	return COMSIG_SABOTEUR_SUCCESS
+	playsound(src, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	return TRUE
 
 /obj/item/kinetic_crusher/update_icon_state()
-	inhand_icon_state = "crusher[HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
+	inhand_icon_state = "[current_inhand_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
 	return ..()
 
 /obj/item/kinetic_crusher/update_overlays()
@@ -205,30 +200,29 @@
 //destablizing force
 /obj/projectile/destabilizer
 	name = "destabilizing force"
-	icon_state = "pulse1"
 	damage = 0 //We're just here to mark people. This is still a melee weapon.
 	damage_type = BRUTE
 	armor_flag = BOMB
 	range = 6
 	log_override = TRUE
-	///The crusher that's firing this projectile.
-	var/obj/item/kinetic_crusher/hammer_synced
+	/// Has this projectile been boosted
+	var/boosted = FALSE
 
-/obj/projectile/destabilizer/Destroy()
-	hammer_synced = null
-	return ..()
+/obj/projectile/destabilizer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile, parry_callback = CALLBACK(src, PROC_REF(on_parry)))
+
+/obj/projectile/destabilizer/proc/on_parry(mob/user)
+	SIGNAL_HANDLER
+	boosted = TRUE
+	// Get a bit of a damage/range boost after being parried
+	damage = 10
+	range = 9
 
 /obj/projectile/destabilizer/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(isliving(target))
 		var/mob/living/living_target = target
-		var/has_mark_from_this_crusher = FALSE
-		for(var/datum/status_effect/crusher_mark/crusher_mark_effect as anything in living_target.get_all_status_effect_of_id(/datum/status_effect/crusher_mark))
-			if(crusher_mark_effect.hammer_synced != hammer_synced)
-				continue
-			has_mark_from_this_crusher = TRUE
-			break
-		if(!has_mark_from_this_crusher)
-			living_target.apply_status_effect(/datum/status_effect/crusher_mark, hammer_synced)
+		living_target.apply_status_effect(/datum/status_effect/crusher_mark, boosted)
 	var/target_turf = get_turf(target)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/hit_mineral = target_turf
@@ -333,15 +327,15 @@
 /obj/item/crusher_trophy/legion_skull/effect_desc()
 	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second\s faster"
 
-/obj/item/crusher_trophy/legion_skull/add_to(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/legion_skull/add_to(obj/item/kinetic_crusher/pkc, mob/living/user)
 	. = ..()
 	if(.)
-		H.charge_time -= bonus_value
+		pkc.charge_time -= bonus_value
 
-/obj/item/crusher_trophy/legion_skull/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/legion_skull/remove_from(obj/item/kinetic_crusher/pkc, mob/living/user)
 	. = ..()
 	if(.)
-		H.charge_time += bonus_value
+		pkc.charge_time += bonus_value
 
 //blood-drunk hunter
 /obj/item/crusher_trophy/miner_eye
@@ -369,7 +363,7 @@
 	for(var/mob/living/living_target in oview(2, user))
 		if(user.faction_check_atom(living_target) || living_target.stat == DEAD)
 			continue
-		playsound(living_target, 'sound/magic/fireball.ogg', 20, TRUE)
+		playsound(living_target, 'sound/effects/magic/fireball.ogg', 20, TRUE)
 		new /obj/effect/temp_visual/fire(living_target.loc)
 		addtimer(CALLBACK(src, PROC_REF(pushback), living_target, user), 1) //no free backstabs, we push AFTER module stuff is done
 		living_target.adjustFireLoss(bonus_value, forced = TRUE)
@@ -391,18 +385,18 @@
 /obj/item/crusher_trophy/demon_claws/effect_desc()
 	return "melee hits to do <b>[bonus_value * 0.2]</b> more damage and heal you for <b>[bonus_value * 0.1]</b>, with <b>5X</b> effect on mark detonation"
 
-/obj/item/crusher_trophy/demon_claws/add_to(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/add_to(obj/item/kinetic_crusher/pkc, mob/living/user)
 	. = ..()
 	if(.)
-		H.force += bonus_value * 0.2
-		H.detonation_damage += bonus_value * 0.8
+		pkc.force += bonus_value * 0.2
+		pkc.detonation_damage += bonus_value * 0.8
 		AddComponent(/datum/component/two_handed, force_wielded=(20 + bonus_value * 0.2))
 
-/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/pkc, mob/living/user)
 	. = ..()
 	if(.)
-		H.force -= bonus_value * 0.2
-		H.detonation_damage -= bonus_value * 0.8
+		pkc.force -= bonus_value * 0.2
+		pkc.detonation_damage -= bonus_value * 0.8
 		AddComponent(/datum/component/two_handed, force_wielded=20)
 
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
@@ -502,3 +496,84 @@
 
 /obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
 	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)
+
+//cosmetic items for changing the crusher's look
+
+/obj/item/crusher_trophy/retool_kit
+	name = "crusher sword retool kit"
+	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a sword."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "retool_kit"
+	denied_type = /obj/item/crusher_trophy/retool_kit
+	///Specifies the sprite/icon state which the crusher is changed to as an item. Should appear in the icons/obj/mining.dmi file with accompanying "lit" and "recharging" sprites
+	var/retool_icon = "crusher_sword"
+	///Specifies the icon state for the crusher's appearance in hand. Should appear in both icons/mob/inhands/weapons/hammers_lefthand.dmi and icons/mob/inhands/weapons/hammers_righthand.dmi
+	var/retool_inhand_icon = "crusher_sword"
+	///For if the retool kit changes the projectile's appearance. The sprite should be in icons/obj/weapons/guns/projectiles.dmi
+	var/retool_projectile_icon = "pulse1"
+
+/obj/item/crusher_trophy/retool_kit/effect_desc()
+	return "the crusher to have the appearance of a sword"
+
+/obj/item/crusher_trophy/retool_kit/add_to(obj/item/kinetic_crusher/pkc, mob/user)
+	. = ..()
+	if(.)
+		pkc.icon_state = retool_icon
+		pkc.current_inhand_icon_state = retool_inhand_icon
+		pkc.projectile_icon = retool_projectile_icon
+		if(iscarbon(pkc.loc))
+			var/mob/living/carbon/holder = pkc.loc
+			holder.update_worn_back()
+			holder.update_suit_storage()
+			holder.update_held_items()
+		pkc.update_appearance()
+
+/obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/pkc)
+	pkc.icon_state = initial(pkc.icon_state)
+	pkc.current_inhand_icon_state = initial(pkc.current_inhand_icon_state)
+	pkc.projectile_icon = initial(pkc.projectile_icon)
+	if(iscarbon(pkc.loc))
+		var/mob/living/carbon/holder = pkc.loc
+		holder.update_worn_back()
+		holder.update_suit_storage()
+		holder.update_held_items()
+	pkc.update_appearance()
+	..()
+
+/obj/item/crusher_trophy/retool_kit/harpoon
+	name = "crusher harpoon retool kit"
+	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a harpoon."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "retool_kit"
+	denied_type = /obj/item/crusher_trophy/retool_kit
+	retool_icon = "crusher_harpoon"
+	retool_inhand_icon = "crusher_harpoon"
+	retool_projectile_icon = "pulse_harpoon"
+
+/obj/item/crusher_trophy/retool_kit/harpoon/effect_desc()
+	return "the crusher to have the appearance of a harpoon"
+
+/obj/item/crusher_trophy/retool_kit/dagger
+	name = "crusher dagger retool kit"
+	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a dual dagger and mini-blaster on a chain."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "retool_kit"
+	denied_type = /obj/item/crusher_trophy/retool_kit
+	retool_icon = "crusher_dagger"
+	retool_inhand_icon = "crusher_dagger"
+
+/obj/item/crusher_trophy/retool_kit/dagger/effect_desc()
+	return "the crusher to have the appearance of a dual dagger and blaster"
+
+/obj/item/crusher_trophy/retool_kit/ashenskull
+	name = "ashen skull"
+	desc = "It burns with the flame of the necropolis, whispering in your ear. It demands to be bound to a suitable weapon."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "retool_kit_skull"
+	denied_type = /obj/item/crusher_trophy/retool_kit
+	retool_icon = "crusher_skull"
+	retool_inhand_icon = "crusher_skull"
+	retool_projectile_icon = "pulse_skull"
+
+/obj/item/crusher_trophy/retool_kit/ashenskull/effect_desc()
+	return "the crusher to appear corrupted by infernal powers"

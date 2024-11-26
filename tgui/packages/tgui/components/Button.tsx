@@ -5,7 +5,7 @@
  */
 
 import { Placement } from '@popperjs/core';
-import { KEY } from 'common/keys';
+import { isEscape, KEY } from 'common/keys';
 import { BooleanLike, classes } from 'common/react';
 import {
   ChangeEvent,
@@ -131,7 +131,7 @@ export const Button = (props: Props) => {
         }
 
         // Refocus layout on pressing escape.
-        if (event.key === KEY.Escape) {
+        if (isEscape(event.key)) {
           event.preventDefault();
         }
       }}
@@ -315,10 +315,15 @@ const ButtonInput = (props: InputProps) => {
       className={classes([
         'Button',
         fluid && 'Button--fluid',
+        disabled && 'Button--disabled',
         'Button--color--' + color,
       ])}
       {...rest}
-      onClick={() => setInInput(true)}
+      onClick={() => {
+        if (!disabled) {
+          setInInput(true);
+        }
+      }}
     >
       {icon && <Icon name={icon} rotation={iconRotation} spin={iconSpin} />}
       <div>{toDisplay}</div>
@@ -343,7 +348,7 @@ const ButtonInput = (props: InputProps) => {
             commitResult(event);
             return;
           }
-          if (event.key === KEY.Escape) {
+          if (isEscape(event.key)) {
             setInInput(false);
           }
         }}
@@ -367,7 +372,7 @@ Button.Input = ButtonInput;
 type FileProps = {
   accept: string;
   multiple?: boolean;
-  onSelectFiles: (files: string | string[]) => void;
+  onSelectFiles: (files: FileList) => void;
 } & Props;
 
 /**  Accepts file input */
@@ -376,24 +381,11 @@ function ButtonFile(props: FileProps) {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  async function read(files: FileList) {
-    const promises = Array.from(files).map((file) => {
-      const reader = new FileReader();
-
-      return new Promise<string>((resolve) => {
-        reader.onload = () => resolve(reader.result as string);
-        reader.readAsText(file);
-      });
-    });
-
-    return await Promise.all(promises);
-  }
-
   async function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const files = event.target.files;
     if (files?.length) {
-      const readFiles = await read(files);
-      onSelectFiles(multiple ? readFiles : readFiles[0]);
+      onSelectFiles(files);
+      event.target.value = '';
     }
   }
 

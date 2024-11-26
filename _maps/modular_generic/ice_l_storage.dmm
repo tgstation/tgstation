@@ -38,9 +38,7 @@
 /turf/closed/wall/ice,
 /area/template_noop)
 "i" = (
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/space_heater,
 /turf/open/floor/plastic,
@@ -122,17 +120,13 @@
 	},
 /obj/item/trash/can,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /turf/open/floor/plastic,
 /area/template_noop)
 "y" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /turf/open/floor/plastic,
 /area/template_noop)
 "z" = (
@@ -164,9 +158,7 @@
 /turf/open/floor/plating,
 /area/template_noop)
 "D" = (
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plastic,
 /area/template_noop)
@@ -203,9 +195,7 @@
 /obj/structure/chair/plastic{
 	dir = 1
 	},
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plastic,
 /area/template_noop)

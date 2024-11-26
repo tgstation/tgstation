@@ -299,14 +299,6 @@
 /obj/effect/temp_visual/gib_animation/animal
 	icon = 'icons/mob/simple/animal.dmi'
 
-/obj/effect/temp_visual/dust_animation
-	icon = 'icons/mob/simple/mob.dmi'
-	duration = 15
-
-/obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
-	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
-	. = ..()
-
 /obj/effect/temp_visual/mummy_animation
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "mummy_revive"
@@ -402,7 +394,12 @@
 	duration = 6
 
 /obj/effect/temp_visual/impact_effect/neurotoxin
-	icon_state = "impact_neurotoxin"
+	icon_state = "impact_spit"
+	color = "#5BDD04"
+
+/obj/effect/temp_visual/impact_effect/ink_spit
+	icon_state = "impact_spit"
+	color = COLOR_NEARLY_ALL_BLACK
 
 /obj/effect/temp_visual/heart
 	name = "heart"
@@ -441,7 +438,7 @@
 	if(size_calc_target)
 		layer = size_calc_target.layer + 0.01
 		var/icon/I = icon(size_calc_target.icon, size_calc_target.icon_state, size_calc_target.dir)
-		size_matrix = matrix() * (I.Height()/world.icon_size)
+		size_matrix = matrix() * (I.Height()/ICON_SIZE_Y)
 		transform = size_matrix //scale the bleed overlay's size based on the target's icon size
 	var/matrix/M = transform
 	if(shrink)
@@ -492,7 +489,7 @@
 	duration = 2 SECONDS
 
 /obj/effect/constructing_effect
-	icon = 'icons/effects/effects_rcd.dmi'
+	icon = 'icons/effects/rcd.dmi'
 	icon_state = ""
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -563,7 +560,7 @@
 /obj/effect/constructing_effect/proc/attacked(mob/user)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, 'sound/weapons/egloves.ogg', vol = 80, vary = TRUE)
+	playsound(loc, 'sound/items/weapons/egloves.ogg', vol = 80, vary = TRUE)
 	end()
 
 /obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)
@@ -709,3 +706,29 @@
 		flags = ANIMATION_RELATIVE,
 	)
 	return ..()
+
+/obj/effect/temp_visual/mech_sparks
+	name = "mech sparks"
+	icon_state = "mech_sparks"
+	duration = 0.4 SECONDS
+
+/obj/effect/temp_visual/mech_sparks/Initialize(mapload, set_color)
+	. = ..()
+	pixel_x = rand(-16, 16)
+	pixel_y = rand(-8, 8)
+
+/obj/effect/temp_visual/mech_attack_aoe_charge
+	name = "mech attack aoe charge"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "mech_attack_aoe_charge"
+	duration = 1 SECONDS
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/temp_visual/mech_attack_aoe_attack
+	name = "mech attack aoe attack"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "mech_attack_aoe_attack"
+	duration = 0.5 SECONDS
+	pixel_x = -32
+	pixel_y = -32

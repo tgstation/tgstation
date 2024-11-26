@@ -1,5 +1,3 @@
-import { multiline } from 'common/string';
-
 import { useBackend } from '../../backend';
 import { Button, Section } from '../../components';
 import { SOUNDS } from './constants';
@@ -18,7 +16,7 @@ export function PodSounds(props) {
           onClick={() => act('soundVolume')}
           selected={soundVolume !== defaultSoundVolume}
           tooltip={
-            multiline`
+            `
             Sound Volume:` + soundVolume
           }
         />

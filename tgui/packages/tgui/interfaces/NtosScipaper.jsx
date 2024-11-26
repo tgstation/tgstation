@@ -5,7 +5,6 @@ import {
   Button,
   Collapsible,
   Dropdown,
-  Icon,
   Input,
   LabeledList,
   NoticeBox,
@@ -13,14 +12,13 @@ import {
   Stack,
   Table,
   Tabs,
-  Tooltip,
 } from '../components';
 import { TableCell, TableRow } from '../components/Table';
 import { NtosWindow } from '../layouts';
 
 export const NtosScipaper = (props) => {
   return (
-    <NtosWindow width={650} height={500}>
+    <NtosWindow width={600} height={600}>
       <NtosWindow.Content scrollable>
         <NtosScipaperContent />
       </NtosWindow.Content>
@@ -50,7 +48,122 @@ const PaperPublishing = (props) => {
   return (
     <>
       <Section title="Submission Form">
-        <LabeledList grow>
+        {fileList.length === 0 && (
+          <NoticeBox>
+            Use data disk to download files from compressor or doppler array.
+          </NoticeBox>
+        )}
+        <LabeledList>
+          <LabeledList.Item
+            label="File (required)"
+            buttons={
+              <Button
+                tooltip="The selected file containing experimental data for our paper. Must be present in the local file system or a data disk to be accesible."
+                icon="info-circle"
+              />
+            }
+          >
+            <Box position="relative" top="8px">
+              <Dropdown
+                width="100%"
+                options={Object.keys(fileList)}
+                selected={selectedFile}
+                onSelected={(ordfile_name) =>
+                  act('select_file', {
+                    selected_uid: fileList[ordfile_name],
+                  })
+                }
+              />
+            </Box>
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Experiment (required)"
+            buttons={
+              <Button
+                tooltip="The topic we want to publish our paper on. Different topics unlock different technologies and possible partners."
+                icon="info-circle"
+              />
+            }
+          >
+            <Box position="relative" top="8px">
+              <Dropdown
+                width="100%"
+                options={Object.keys(expList)}
+                selected={selectedExperiment}
+                onSelected={(experiment_name) =>
+                  act('select_experiment', {
+                    selected_expath: expList[experiment_name],
+                  })
+                }
+              />
+            </Box>
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Tier (required)"
+            buttons={
+              <Button
+                tooltip="The tier we want to publish on. Higher tiers can confer better rewards but means our data will be judged more harshly."
+                icon="info-circle"
+              />
+            }
+          >
+            <Box position="relative" top="8px">
+              <Dropdown
+                width="100%"
+                options={allowedTiers.map((number) => String(number))}
+                selected={String(tier)}
+                onSelected={(new_tier) =>
+                  act('select_tier', {
+                    selected_tier: Number(new_tier),
+                  })
+                }
+              />
+            </Box>
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Partner (required)"
+            buttons={
+              <Button
+                tooltip="Which organization to partner with. We can obtain research boosts in techs related to the partner's interests."
+                icon="info-circle"
+              />
+            }
+          >
+            <Box position="relative" top="8px">
+              <Dropdown
+                width="100%"
+                options={Object.keys(allowedPartners)}
+                selected={selectedPartner}
+                onSelected={(new_partner) =>
+                  act('select_partner', {
+                    selected_partner: allowedPartners[new_partner],
+                  })
+                }
+              />
+            </Box>
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Principal Author"
+            buttons={
+              <Button
+                tooltip="Multiple"
+                selected={etAlia}
+                icon="users"
+                onClick={() => act('et_alia')}
+              />
+            }
+          >
+            <Input
+              mt={2}
+              fluid
+              value={author}
+              onChange={(e, value) =>
+                act('rewrite', {
+                  author: value,
+                })
+              }
+            />
+          </LabeledList.Item>
           <LabeledList.Item label="Title">
             <Input
               fluid
@@ -61,20 +174,6 @@ const PaperPublishing = (props) => {
                 })
               }
             />
-          </LabeledList.Item>
-          <LabeledList.Item label="Principal Author">
-            <Input
-              fluid
-              value={author}
-              onChange={(e, value) =>
-                act('rewrite', {
-                  author: value,
-                })
-              }
-            />
-            <Button selected={etAlia} onClick={() => act('et_alia')}>
-              {'Multiple Authors'}
-            </Button>
           </LabeledList.Item>
           <LabeledList.Item label="Abstract">
             <Input
@@ -87,135 +186,37 @@ const PaperPublishing = (props) => {
               }
             />
           </LabeledList.Item>
-          <LabeledList.Item label="Selected File">
-            <Stack>
-              <Stack.Item>
-                <Dropdown
-                  width="35rem"
-                  options={Object.keys(fileList)}
-                  selected={selectedFile}
-                  onSelected={(ordfile_name) =>
-                    act('select_file', {
-                      selected_uid: fileList[ordfile_name],
-                    })
-                  }
-                />
-              </Stack.Item>
-              <Stack.Item align="center">
-                <Tooltip
-                  position="left"
-                  content="The selected file containing experimental data for our paper. Must be present in the HDD to be accesible. Transfer files with the File Manager program."
-                >
-                  <Icon size={1.15} name="info-circle" />
-                </Tooltip>
-              </Stack.Item>
-            </Stack>
-          </LabeledList.Item>
-          <LabeledList.Item label="Selected Experiment">
-            <Stack>
-              <Stack.Item>
-                <Dropdown
-                  width="35rem"
-                  options={Object.keys(expList)}
-                  selected={selectedExperiment}
-                  onSelected={(experiment_name) =>
-                    act('select_experiment', {
-                      selected_expath: expList[experiment_name],
-                    })
-                  }
-                />
-              </Stack.Item>
-              <Stack.Item align="center">
-                <Tooltip
-                  position="left"
-                  content="The topic we want to publish our paper on. Different topics unlock different technologies and possible partners."
-                >
-                  <Icon size={1.15} name="info-circle" />
-                </Tooltip>
-              </Stack.Item>
-            </Stack>
-          </LabeledList.Item>
-          <LabeledList.Item label="Selected Tier">
-            <Stack>
-              <Stack.Item>
-                <Dropdown
-                  width="35rem"
-                  options={allowedTiers.map((number) => String(number))}
-                  selected={String(tier)}
-                  onSelected={(new_tier) =>
-                    act('select_tier', {
-                      selected_tier: Number(new_tier),
-                    })
-                  }
-                />
-              </Stack.Item>
-              <Stack.Item align="center">
-                <Tooltip
-                  position="left"
-                  content="The tier we want to publish on. Higher tiers can confer better rewards but means our data will be judged more harshly."
-                >
-                  <Icon size={1.15} name="info-circle" />
-                </Tooltip>
-              </Stack.Item>
-            </Stack>
-          </LabeledList.Item>
-          <LabeledList.Item label="Selected Partner">
-            <Stack>
-              <Stack.Item>
-                <Dropdown
-                  width="35rem"
-                  options={Object.keys(allowedPartners)}
-                  selected={selectedPartner}
-                  onSelected={(new_partner) =>
-                    act('select_partner', {
-                      selected_partner: allowedPartners[new_partner],
-                    })
-                  }
-                />
-              </Stack.Item>
-              <Stack.Item align="center">
-                <Tooltip
-                  position="left"
-                  content="Which organization to partner with. We can obtain research boosts in techs related to the partner's interests."
-                >
-                  <Icon size={1.15} name="info-circle" />
-                </Tooltip>
-              </Stack.Item>
-            </Stack>
-          </LabeledList.Item>
         </LabeledList>
       </Section>
       <Section title="Expected Results" key="rewards">
         <Stack fill>
           <Stack.Item grow>
-            <Tooltip
-              position="top"
-              content="How much will our relation improve with the particular partner. Cooperation will be used to unlock boosts."
-            >
-              <Icon size={1.15} name="info-circle" />
-            </Tooltip>
+            <Button
+              tooltip="How much will our relation improve with the particular partner. Cooperation will be used to unlock boosts."
+              icon="info-circle"
+            />
             {' Cooperation: '}
             <BlockQuote>{gains[coopIndex - 1]}</BlockQuote>
           </Stack.Item>
           <Stack.Item grow>
-            <Tooltip
-              position="top"
-              content="How much grant will we be endowed with upon the publication of this paper."
-            >
-              <Icon size={1.15} name="info-circle" />
-            </Tooltip>
+            <Button
+              tooltip="How much grant will we be endowed with upon the publication of this paper."
+              icon="info-circle"
+            />
             {' Funding: '}
             <BlockQuote>{gains[fundingIndex - 1]}</BlockQuote>
           </Stack.Item>
         </Stack>
         <br />
         <Button
+          lineHeight={3}
           icon="upload"
           textAlign="center"
           fluid
           onClick={() => act('publish')}
-          content="Publish Paper"
-        />
+        >
+          Publish Paper
+        </Button>
       </Section>
     </>
   );
@@ -366,7 +367,7 @@ export const NtosScipaperContent = (props) => {
           Please sync this application to a valid techweb to upload progress!
         </Section>
       )}
-      <Tabs key="navigation">
+      <Tabs key="navigation" fluid align="center">
         <Tabs.Tab
           selected={currentTab === 1}
           onClick={() =>
@@ -385,7 +386,7 @@ export const NtosScipaperContent = (props) => {
             })
           }
         >
-          {'View Previous Publications'}
+          {'Publications'}
         </Tabs.Tab>
         <Tabs.Tab
           selected={currentTab === 3}
@@ -395,7 +396,7 @@ export const NtosScipaperContent = (props) => {
             })
           }
         >
-          {'View Available Experiments'}
+          {'Experiments'}
         </Tabs.Tab>
         <Tabs.Tab
           selected={currentTab === 4}
@@ -405,7 +406,7 @@ export const NtosScipaperContent = (props) => {
             })
           }
         >
-          {'View Scientific Partners'}
+          {'Scientific Partners'}
         </Tabs.Tab>
       </Tabs>
       {currentTab === 1 && <PaperPublishing />}

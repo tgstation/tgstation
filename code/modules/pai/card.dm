@@ -27,7 +27,6 @@
 	update_appearance()
 	SSpai.pai_card_list += src
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/pai_card/attackby(obj/item/used, mob/user, params)
 	if(pai && istype(used, /obj/item/encryptionkey))
@@ -71,8 +70,8 @@
 	emotion_icon = initial(emotion_icon)
 	update_appearance()
 
-/obj/item/pai_card/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/item/pai_card/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(pai)
 		return pai.on_saboteur(source, disrupt_duration)
 
@@ -248,7 +247,7 @@
 		ignore_key = POLL_IGNORE_PAI,
 	)
 
-	addtimer(VARSET_CALLBACK(src, request_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
+	addtimer(VARSET_CALLBACK(src, request_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE|TIMER_DELETE_ME)
 	return TRUE
 
 /**

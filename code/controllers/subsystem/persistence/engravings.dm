@@ -14,7 +14,7 @@
 	saved_engravings = json["entries"]
 
 	if(!saved_engravings.len)
-		log_world("Failed to load engraved messages on map [SSmapping.config.map_name]")
+		log_world("Failed to load engraved messages on map [SSmapping.current_map.map_name]")
 		return
 
 	var/list/viable_turfs = get_area_turfs(/area/station/maintenance, subtypes = TRUE) + get_area_turfs(/area/station/security/prison, subtypes = TRUE)
@@ -27,7 +27,7 @@
 
 	var/successfully_loaded_engravings = 0
 
-	for(var/iteration in 1 to rand(MIN_PERSISTENT_ENGRAVINGS, MAX_PERSISTENT_ENGRAVINGS))
+	for(var/iteration in 1 to min(rand(MIN_PERSISTENT_ENGRAVINGS, MAX_PERSISTENT_ENGRAVINGS), saved_engravings.len))
 		var/engraving = pick_n_take(saved_engravings)
 		if(!islist(engraving))
 			stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
@@ -42,7 +42,7 @@
 		successfully_loaded_engravings++
 		turfs_to_pick_from -= engraved_wall
 
-	log_world("Loaded [successfully_loaded_engravings] engraved messages on map [SSmapping.config.map_name]")
+	log_world("Loaded [successfully_loaded_engravings] engraved messages on map [SSmapping.current_map.map_name]")
 
 ///Saves all new engravings in the world.
 /datum/controller/subsystem/persistence/proc/save_wall_engravings()

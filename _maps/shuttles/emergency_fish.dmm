@@ -311,20 +311,17 @@
 "qO" = (
 /obj/structure/table/wood,
 /obj/item/fishing_line{
-	layer = 4;
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/fishing_hook{
-	layer = 5;
-	pixel_y = 3
-	},
 /obj/item/bait_can/worm{
-	pixel_x = -5;
 	pixel_y = 13
 	},
 /obj/effect/turf_decal/tile/dark/half/contrasted{
 	dir = 4
+	},
+/obj/item/fishing_hook{
+	pixel_y = 3
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
@@ -586,12 +583,7 @@
 /area/shuttle/escape)
 "IM" = (
 /obj/structure/table/wood,
-/obj/item/fishing_hook{
-	layer = 5;
-	pixel_y = 3
-	},
 /obj/item/fishing_line{
-	layer = 4;
 	pixel_x = 6;
 	pixel_y = 3
 	},
@@ -601,6 +593,9 @@
 	},
 /obj/effect/turf_decal/tile/dark/half/contrasted{
 	dir = 4
+	},
+/obj/item/fishing_hook{
+	pixel_y = 3
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)

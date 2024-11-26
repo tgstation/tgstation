@@ -3,7 +3,7 @@
 	name = "suspicious beacon"
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "relay_traitor"
-	desc = "This ramshackle device seems capable of recieving and sending signals for some nefarious purpose."
+	desc = "This ramshackle device seems capable of receiving and sending signals for some nefarious purpose."
 	density = TRUE
 	anchored = TRUE
 	/// Traitor's code that they speak into the radio

@@ -25,7 +25,7 @@ GLOBAL_DATUM_INIT(eigenstate_manager, /datum/eigenstate_manager, new)
 			targets -= target
 			continue
 		if(!subtle)
-			target.visible_message("[target] fizzes, collapsing it's unique wavefunction into the others!") //If we're in a eigenlink all on our own and are open to new friends
+			target.visible_message("[target] fizzes, collapsing its unique wavefunction into the others!") //If we're in a eigenlink all on our own and are open to new friends
 		remove_eigen_entry(target) //clearup for new stuff
 	//Do we still have targets?
 	if(!length(targets))
@@ -119,8 +119,7 @@ GLOBAL_DATUM_INIT(eigenstate_manager, /datum/eigenstate_manager, new)
 		spark_time = world.time
 	//Calls a special proc for the atom if needed (closets use bust_open())
 	SEND_SIGNAL(eigen_target, COMSIG_EIGENSTATE_ACTIVATE)
-	if(!subtle)
-		return COMPONENT_CLOSET_INSERT_INTERRUPT
+	return COMPONENT_CLOSET_INSERT_INTERRUPT
 
 ///Prevents tool use on the item
 /datum/eigenstate_manager/proc/tool_interact(atom/source, mob/user, obj/item/item)

@@ -7,6 +7,8 @@
 	department_color = COLOR_CENTCOM_BLUE
 	subdepartment_color = COLOR_CENTCOM_BLUE
 	threat_modifier = -10 // Centcom are legally allowed to do whatever they want
+	big_pointer = TRUE
+	pointer_color = COLOR_CENTCOM_BLUE
 
 /// Trim for Centcom VIPs
 /datum/id_trim/centcom/vip
@@ -20,6 +22,7 @@
 	trim_state = "trim_janitor"
 	department_color = COLOR_CENTCOM_BLUE
 	subdepartment_color = COLOR_SERVICE_LIME
+	big_pointer = FALSE
 
 /// Trim for Centcom Thunderdome Overseers.
 /datum/id_trim/centcom/thunderdome_overseer
@@ -35,10 +38,12 @@
 /datum/id_trim/centcom/intern
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_WEAPONS)
 	assignment = "CentCom Intern"
+	big_pointer = FALSE
 
 /// Trim for Centcom Head Interns. Different assignment, common station access added on.
 /datum/id_trim/centcom/intern/head
 	assignment = "CentCom Head Intern"
+	big_pointer = TRUE
 
 /datum/id_trim/centcom/intern/head/New()
 	. = ..()
@@ -49,11 +54,13 @@
 /datum/id_trim/centcom/bounty_hunter
 	access = list(ACCESS_CENT_GENERAL)
 	assignment = "Bounty Hunter"
+	big_pointer = FALSE
 
 /// Trim for Centcom Bartenders.
 /datum/id_trim/centcom/bartender
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_BAR)
 	assignment = JOB_CENTCOM_BARTENDER
+	big_pointer = FALSE
 
 /// Trim for Centcom Medical Officers.
 /datum/id_trim/centcom/medical_officer
@@ -68,6 +75,7 @@
 /// Trim for Centcom Specops Officers. All Centcom and Station Access.
 /datum/id_trim/centcom/specops_officer
 	assignment = JOB_CENTCOM_SPECIAL_OFFICER
+	big_pointer = FALSE
 
 /datum/id_trim/centcom/specops_officer/New()
 	. = ..()
@@ -129,6 +137,7 @@
 	trim_state = "trim_securityofficer"
 	subdepartment_color = COLOR_SECURITY_RED
 	sechud_icon_state = SECHUD_SECURITY_RESPONSE_OFFICER
+	big_pointer = FALSE
 
 /datum/id_trim/centcom/ert/security/New()
 	. = ..()
@@ -141,6 +150,7 @@
 	trim_state = "trim_stationengineer"
 	subdepartment_color = COLOR_ENGINEERING_ORANGE
 	sechud_icon_state = SECHUD_ENGINEERING_RESPONSE_OFFICER
+	big_pointer = FALSE
 
 /datum/id_trim/centcom/ert/engineer/New()
 	. = ..()
@@ -153,6 +163,7 @@
 	trim_state = "trim_medicaldoctor"
 	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_MEDICAL_RESPONSE_OFFICER
+	big_pointer = FALSE
 
 /datum/id_trim/centcom/ert/medical/New()
 	. = ..()
@@ -165,6 +176,7 @@
 	trim_state = "trim_chaplain"
 	subdepartment_color = COLOR_SERVICE_LIME
 	sechud_icon_state = SECHUD_RELIGIOUS_RESPONSE_OFFICER
+	big_pointer = FALSE
 
 /datum/id_trim/centcom/ert/chaplain/New()
 	. = ..()
@@ -177,6 +189,7 @@
 	trim_state = "trim_ert_janitor"
 	subdepartment_color = COLOR_SERVICE_LIME
 	sechud_icon_state = SECHUD_JANITORIAL_RESPONSE_OFFICER
+	big_pointer = FALSE
 
 /datum/id_trim/centcom/ert/janitor/New()
 	. = ..()
@@ -189,6 +202,7 @@
 	trim_state = "trim_clown"
 	subdepartment_color = COLOR_MAGENTA
 	sechud_icon_state = SECHUD_ENTERTAINMENT_RESPONSE_OFFICER
+	big_pointer = FALSE
 
 /datum/id_trim/centcom/ert/clown/New()
 	. = ..()
@@ -197,6 +211,8 @@
 
 /datum/id_trim/centcom/ert/militia
 	assignment = "Frontier Militia"
+	big_pointer = FALSE
 
 /datum/id_trim/centcom/ert/militia/general
 	assignment = "Frontier Militia General"
+	big_pointer = TRUE

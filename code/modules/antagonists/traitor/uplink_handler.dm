@@ -69,10 +69,6 @@
 	SEND_SIGNAL(src, COMSIG_UPLINK_HANDLER_ON_UPDATE)
 	return
 
-/// Checks if traitor has enough reputation to purchase an item
-/datum/uplink_handler/proc/not_enough_reputation(datum/uplink_item/to_purchase)
-	return has_progression && progression_points < to_purchase.progression_minimum
-
 /// Checks for uplink flags as well as items restricted to roles and species
 /datum/uplink_handler/proc/check_if_restricted(datum/uplink_item/to_purchase)
 	if(!to_purchase.can_be_bought(src))
@@ -104,7 +100,7 @@
 
 	var/current_stock = item_stock[to_purchase.stock_key]
 	var/stock = current_stock != null ? current_stock : INFINITY
-	if(telecrystals < to_purchase.cost || stock <= 0 || not_enough_reputation(to_purchase))
+	if(telecrystals < to_purchase.real_cost(src) || stock <= 0)
 		return FALSE
 
 	return TRUE
@@ -116,7 +112,7 @@
 	if(to_purchase.limited_stock != -1 && !(to_purchase.stock_key in item_stock))
 		item_stock[to_purchase.stock_key] = to_purchase.limited_stock
 
-	telecrystals -= to_purchase.cost
+	telecrystals -= to_purchase.real_cost(src)
 	to_purchase.purchase(user, src, source)
 
 	if(to_purchase.stock_key in item_stock)
@@ -125,6 +121,21 @@
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(to_purchase.name)]", "[to_purchase.cost]"))
 	on_update()
 	return TRUE
+
+/datum/uplink_handler/proc/purchase_raw_tc(mob/user, amount, atom/movable/source)
+	if(shop_locked)
+		return FALSE
+	if(telecrystals < amount)
+		return FALSE
+
+	telecrystals -= amount
+	var/tcs = new /obj/item/stack/telecrystal(get_turf(user), amount)
+	user.put_in_hands(tcs)
+
+	log_uplink("[key_name(user)] purchased [amount] raw telecrystals from [source]'s uplink")
+	on_update()
+	return TRUE
+
 
 /// Generates objectives for this uplink handler
 /datum/uplink_handler/proc/generate_objectives()
@@ -240,7 +251,7 @@
 	if(!(to_take in potential_objectives))
 		return
 
-	user.playsound_local(get_turf(user), 'sound/traitor/objective_taken.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+	user.playsound_local(get_turf(user), 'sound/music/antag/traitor/objective_taken.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 	to_take.on_objective_taken(user)
 	to_take.objective_state = OBJECTIVE_STATE_ACTIVE
 	potential_objectives -= to_take

@@ -270,22 +270,22 @@
 
 /// Minor convenience function for creating each shrapnel piece with circle explosions, mostly stolen from the MIRV component
 /datum/component/pellet_cloud/proc/pew(atom/target, landmine_victim)
-	var/obj/projectile/P = new projectile_type(get_turf(parent))
+	var/obj/projectile/pellet = new projectile_type(get_turf(parent))
 
 	//Shooting Code:
-	P.spread = 0
-	P.original = target
-	P.fired_from = parent
-	P.firer = parent // don't hit ourself that would be really annoying
-	P.impacted = list(parent = TRUE) // don't hit the target we hit already with the flak
-	P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
-	P.preparePixelProjectile(target, parent)
-	RegisterSignal(P, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(pellet_hit))
-	RegisterSignals(P, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_QDELETING), PROC_REF(pellet_range))
-	pellets += P
-	P.fire()
+	pellet.spread = 0
+	pellet.original = target
+	pellet.fired_from = parent
+	pellet.firer = parent // don't hit ourself that would be really annoying
+	pellet.impacted = list(WEAKREF(parent) = TRUE) // don't hit the target we hit already with the flak
+	pellet.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
+	pellet.preparePixelProjectile(target, parent)
+	RegisterSignal(pellet, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(pellet_hit))
+	RegisterSignals(pellet, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_QDELETING), PROC_REF(pellet_range))
+	pellets += pellet
+	pellet.fire()
 	if(landmine_victim)
-		P.process_hit(get_turf(target), target)
+		pellet.process_hit_loop(target)
 
 ///All of our pellets are accounted for, time to go target by target and tell them how many things they got hit by.
 /datum/component/pellet_cloud/proc/finalize()

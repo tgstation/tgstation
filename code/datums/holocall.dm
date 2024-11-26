@@ -1,4 +1,4 @@
-/mob/camera/ai_eye/remote/holo/setLoc(turf/destination, force_update = FALSE)
+/mob/eye/ai_eye/remote/holo/setLoc(turf/destination, force_update = FALSE)
 	// If we're moving outside the space of our projector, then just... don't
 	var/obj/machinery/holopad/H = origin
 	if(!H?.move_hologram(eye_user, destination))
@@ -11,7 +11,7 @@
 		user.reset_perspective(null)
 	user.remote_control = null
 
-//this datum manages it's own references
+//this datum manages its own references
 
 /datum/holocall
 	///the one that called
@@ -24,7 +24,7 @@
 	var/list/dialed_holopads
 
 	///user's eye, once connected
-	var/mob/camera/ai_eye/remote/holo/eye
+	var/mob/eye/ai_eye/remote/holo/eye
 	///user's hologram, once connected
 	var/obj/effect/overlay/holo_pad_hologram/hologram
 	///hangup action
@@ -179,7 +179,7 @@
 	if(QDELETED(src))
 		return FALSE
 
-	. = !QDELETED(user) && !user.incapacitated() && !QDELETED(calling_holopad) && calling_holopad.is_operational && user.loc == calling_holopad.loc
+	. = !QDELETED(user) && !user.incapacitated && !QDELETED(calling_holopad) && calling_holopad.is_operational && user.loc == calling_holopad.loc
 
 	if(.)
 		if(!connected_holopad)

@@ -31,11 +31,12 @@
 	obj_damage = 40
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummel"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	unique_name = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/gorilla
 	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 4, /obj/effect/gibspawner/generic/animal = 1)
+	max_grab = GRAB_KILL
 	/// How likely our meaty fist is to stun someone
 	var/paralyze_chance = 20
 	/// A counter for when we can scream again
@@ -54,19 +55,26 @@
 
 /mob/living/basic/gorilla/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_CHUNKYFINGERS), ROUNDSTART_TRAIT)
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddElement(/datum/element/dextrous)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = gorilla_food)
-	AddElement(
-		/datum/element/amputating_limbs, \
+	AddComponent(
+		/datum/component/amputating_limbs, \
 		surgery_time = 0 SECONDS, \
 		surgery_verb = "punches",\
 	)
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/basic_inhands, y_offset = -1)
 	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(gorilla_food))
+
+/mob/living/basic/gorilla/examine(mob/user)
+	. = ..()
+	if (!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FITNESS))
+		return
+	. += span_notice("This animal appears to be in peak physical condition and yet it has probably never worked out a day in its life. \
+		The untapped potential is almost frightening.")
 
 /mob/living/basic/gorilla/update_overlays()
 	. = ..()
@@ -138,10 +146,7 @@
 	obj_damage = 15
 	ai_controller = /datum/ai_controller/basic_controller/gorilla/lesser
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 2)
-
-/mob/living/basic/gorilla/lesser/Initialize(mapload)
-	. = ..()
-	transform *= 0.75
+	initial_size = 0.75
 
 /// Cargo's wonderful mascot, the tranquil box-carrying ape
 /mob/living/basic/gorilla/cargorilla
@@ -158,5 +163,35 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 	AddComponent(/datum/component/crate_carrier)
+
+/// A version of the gorilla achieved by reaching enough genetic damage as a monkey
+/mob/living/basic/gorilla/genetics
+	name = "Lab Gorilla"
+	maxHealth = 180
+	health = 180
+	desc = "A gorilla created via \"advanced genetic science\". While not quite as strong as their wildborne brethren, this simian still packs a punch."
+	melee_damage_lower = 15
+	melee_damage_upper = 18
+	obj_damage = 25
+	speed = 0.1
+	paralyze_chance = 0
+	initial_size = 0.9
+
+/mob/living/basic/gorilla/hostile
+	name = "Feral Gorilla"
+	maxHealth = 180
+	health = 180
+	desc = "A gorilla created via \"advanced genetic science\". While not quite as strong as their wildborne brethren, this simian still packs a punch."
+	melee_damage_lower = 15
+	melee_damage_upper = 18
+	obj_damage = 25
+	speed = 0.1
+	paralyze_chance = 0
+	initial_size = 0.9
+	faction = list(FACTION_HOSTILE)
+
+/mob/living/basic/gorilla/genetics/Initialize(mapload)
+	. = ..()
+	qdel(GetComponent(/datum/component/amputating_limbs))
 
 #undef GORILLA_HANDS_LAYER

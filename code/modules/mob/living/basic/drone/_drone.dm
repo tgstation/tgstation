@@ -37,7 +37,6 @@
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
-	has_unlimited_silicon_privilege = TRUE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
@@ -132,9 +131,9 @@
 		/obj/item/weldingtool/drone,
 		/obj/item/wirecutters/drone,
 		/obj/item/multitool/drone,
-		/obj/item/pipe_dispenser,
-		/obj/item/t_scanner,
-		/obj/item/analyzer,
+		/obj/item/pipe_dispenser/drone,
+		/obj/item/t_scanner/drone,
+		/obj/item/analyzer/drone,
 		/obj/item/rack_parts,
 	)
 	/// whitelisted drone items, recursive/includes descendants
@@ -202,7 +201,16 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_atom_to_hud(src)
 
-	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_NEGATES_GRAVITY, TRAIT_LITERATE, TRAIT_KNOW_ENGI_WIRES, TRAIT_ADVANCEDTOOLUSER), INNATE_TRAIT)
+	add_traits(list(
+		TRAIT_VENTCRAWLER_ALWAYS,
+		TRAIT_NEGATES_GRAVITY,
+		TRAIT_LITERATE,
+		TRAIT_KNOW_ENGI_WIRES,
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_SILICON_ACCESS,
+		TRAIT_REAGENT_SCANNER,
+		TRAIT_UNOBSERVANT,
+	), INNATE_TRAIT)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
 	RegisterSignal(listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
@@ -213,16 +221,16 @@
 /mob/living/basic/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
 	var/icon/hud_icon = icon(icon, icon_state, dir)
-	holder.pixel_y = hud_icon.Height() - world.icon_size
+	holder.pixel_y = hud_icon.Height() - ICON_SIZE_Y
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
 /mob/living/basic/drone/med_hud_set_status()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	var/icon/hud_icon = icon(icon, icon_state, dir)
-	holder.pixel_y = hud_icon.Height() - world.icon_size
+	holder.pixel_y = hud_icon.Height() - ICON_SIZE_Y
 	if(stat == DEAD)
 		holder.icon_state = "huddead2"
-	else if(incapacitated())
+	else if(incapacitated)
 		holder.icon_state = "hudoffline"
 	else
 		holder.icon_state = "hudstat"
@@ -265,24 +273,24 @@
 	dust()
 
 /mob/living/basic/drone/get_butt_sprite()
-	return BUTT_SPRITE_DRONE
+	return icon('icons/mob/butts.dmi', BUTT_SPRITE_DRONE)
 
 /mob/living/basic/drone/examine(mob/user)
-	. = list("<span class='info'>This is [icon2html(src, user)] \a <b>[src]</b>!")
+	. = list()
 
 	//Hands
 	for(var/obj/item/held_thing in held_items)
 		if(held_thing.item_flags & (ABSTRACT|EXAMINE_SKIP|HAND_ITEM))
 			continue
-		. += "It has [held_thing.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(held_thing))]."
+		. += "It has [held_thing.examine_title(user)] in its [get_held_index_name(get_held_index_of_item(held_thing))]."
 
 	//Internal storage
 	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
-		. += "It is holding [internal_storage.get_examine_string(user)] in its internal storage."
+		. += "It is holding [internal_storage.examine_title(user)] in its internal storage."
 
 	//Cosmetic hat - provides no function other than looks
 	if(head && !(head.item_flags & ABSTRACT))
-		. += "It is wearing [head.get_examine_string(user)] on its head."
+		. += "It is wearing [head.examine_title(user)] on its head."
 
 	//Braindead
 	if(!client && stat != DEAD)
@@ -305,8 +313,6 @@
 			. += span_deadsay("A message repeatedly flashes on its display: \"REBOOT -- REQUIRED\".")
 		else
 			. += span_deadsay("A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".")
-	. += "</span>"
-
 
 /mob/living/basic/drone/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt maintenance drones.
 	return -10

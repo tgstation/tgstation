@@ -11,17 +11,17 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	braintype = "Android"
 
 	///Message sent to the user when polling ghosts
-	var/begin_activation_message = "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
+	var/begin_activation_message = span_notice("You carefully locate the manual activation switch and start the positronic brain's boot process.")
 	///Message sent as a visible message on success
-	var/success_message = "<span class='notice'>The positronic brain pings, and its lights start flashing. Success!</span>"
+	var/success_message = span_notice("The positronic brain pings, and its lights start flashing. Success!")
 	///Message sent as a visible message on failure
-	var/fail_message = "<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>"
+	var/fail_message = span_notice("The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
 	///Visible message sent when a player possesses the brain
-	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
+	var/new_mob_message = span_notice("The positronic brain chimes quietly.")
 	///Examine message when the posibrain has no mob
-	var/dead_message = "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>"
+	var/dead_message = span_deadsay("It appears to be completely inactive. The reset light is blinking.")
 	///Examine message when the posibrain cannot poll ghosts due to cooldown
-	var/recharge_message = "<span class='warning'>The positronic brain isn't ready to activate again yet! Give it some time to recharge.</span>"
+	var/recharge_message = span_warning("The positronic brain isn't ready to activate again yet! Give it some time to recharge.")
 
 	///Can be set to tell ghosts what the brain will be used for
 	var/ask_role = ""
@@ -76,7 +76,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	addtimer(CALLBACK(src, PROC_REF(check_success)), ask_delay)
 
 /obj/item/mmi/posibrain/click_alt(mob/living/user)
-	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, MAX_NAME_LEN)
+	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, max_length = MAX_NAME_LEN)
 	if(isnull(input_seed))
 		return CLICK_ACTION_BLOCKING
 	if(!user.can_perform_action(src))
@@ -137,7 +137,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	brainmob.timeofdeath = transferred_user.timeofdeath
 	brainmob.set_stat(CONSCIOUS)
 	if(brainmob.mind)
-		brainmob.mind.set_assigned_role(SSjob.GetJobType(posibrain_job_path))
+		brainmob.mind.set_assigned_role(SSjob.get_job_type(posibrain_job_path))
 	if(transferred_user.mind)
 		transferred_user.mind.transfer_to(brainmob)
 
@@ -160,7 +160,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/policy = get_policy(ROLE_POSIBRAIN)
 	if(policy)
 		to_chat(brainmob, policy)
-	brainmob.mind.set_assigned_role(SSjob.GetJobType(posibrain_job_path))
+	brainmob.mind.set_assigned_role(SSjob.get_job_type(posibrain_job_path))
 	brainmob.set_stat(CONSCIOUS)
 
 	visible_message(new_mob_message)
@@ -222,3 +222,63 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/display/is_occupied()
 	return TRUE
+
+/// Posibrains but spherical. They can roll around and you can kick them
+/obj/item/mmi/posibrain/sphere
+	name = "positronic sphere"
+	desc = "Recent developments on cost-cutting measures have allowed us to cut positronic brain cubes into twice-as-cheap spheres. \
+	Unfortunately, it also allows them to move around the lab via rolling maneuvers."
+	icon_state = "spheribrain"
+	base_icon_state = "spheribrain"
+	immobilize = FALSE
+	/// Delay between movements
+	var/move_delay = 0.5 SECONDS
+	/// when can we move again?
+	var/can_move
+
+/obj/item/mmi/posibrain/sphere/Initialize(mapload, autoping)
+	. = ..()
+
+	var/matrix/matrix = matrix()
+	transform = matrix.Scale(0.8, 0.8)
+
+	brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
+
+/obj/item/mmi/posibrain/sphere/relaymove(mob/living/user, direction)
+	if(isspaceturf(loc) || !direction || mecha)
+		return
+
+	if(can_move >= world.time)
+		return
+	can_move = world.time + move_delay
+
+	// ESCAPE PRISON
+	if(ismovable(loc) && prob(25))
+		var/obj/item/item = pick(loc.contents)
+		if(istype(loc, /obj/item/storage))
+			item.forceMove(loc.drop_location()) //throw stuff out of the inventory till we free ourselves!
+			playsound(src, SFX_RUSTLE, 30, TRUE)
+		return
+
+	// MOVE US
+	if(isturf(loc))
+		can_move = world.time + move_delay
+		try_step_multiz(direction)
+		SpinAnimation(move_delay, 1, direction == NORTH || direction == EAST)
+
+/obj/item/mmi/posibrain/sphere/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(brainmob && isturf(loc))
+		anchored = TRUE //anchor so we dont broom ourselves.
+		do_sweep(src, brainmob, loc, get_dir(old_loc, loc)) //movement dir doesnt work on objects
+		anchored = FALSE
+
+/// Punt the shit across the room
+/obj/item/mmi/posibrain/sphere/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return .
+	throw_at(get_edge_target_turf(src, get_dir(user, src)), 7, 1, user)
+	user.do_attack_animation(src)
+	can_move = world.time + move_delay //pweeze stawp
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
