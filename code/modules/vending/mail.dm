@@ -39,6 +39,10 @@
 /obj/machinery/mailbox/Destroy()
 	drop_all_mail()
 	. = ..()
+/obj/machinery/mailbox/proc/sort_delay()
+	playsound(src, 'sound/machines/mail/mail_sort1.ogg', 20, TRUE)
+	sleep(50)
+	return TRUE
 
 /obj/machinery/mailbox/interact(mob/user)
 	if (!allowed(user))
@@ -75,7 +79,9 @@
 	var/sorted = 0
 	var/unable_to_sort = 0
 	var/sorting_dept = input(usr, "Choose the department to sort mail for","Mail Sorting", sorting_departments[1]) as null|anything in sorting_departments
-	if(!sorting_dept)
+	if (!sort_delay())
+		return
+	if (!sorting_dept)
 		return
 	for (var/obj/item/mail/M in mail_list)
 		if (!M.recipient_ref)
@@ -160,10 +166,13 @@
 /obj/machinery/mailbox/proc/pick_mail(usr)
 	if(!length(mail_list))
 		return
-	var/mail_throw = input(usr, "Choose the envelope to eject","Mail Sorting", mail_list) as null|anything in mail_list
+	var/obj/item/mail/mail_throw = input(usr, "Choose the envelope to eject","Mail Sorting", mail_list) as null|anything in mail_list
 	if(!mail_throw)
 		return
-	// throw_item.throw_at(target, 16, 3)
+	if (!sort_delay())
+		return
+	testing("[mail_throw]")
+	mail_throw.throw_at(usr, 2, 3)
 
 /obj/machinery/mailbox/proc/load(obj/item/weapon, mob/user)
 	if(ismob(weapon.loc))
