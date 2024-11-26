@@ -118,7 +118,10 @@
 	if(paintleft <= 0)
 		return NONE
 	paintleft--
-	interacting_with.add_atom_colour(color_transition_filter(paint_color, modifiers[RIGHT_CLICK] ? SATURATION_OVERRIDE: SATURATION_MULTIPLY), WASHABLE_COLOUR_PRIORITY)
+	var/color_type = SATURATION_MULTIPLY
+	if (modifiers[RIGHT_CLICK])
+		color_type = SATURATION_OVERRIDE
+	interacting_with.add_atom_colour(color_transition_filter(paint_color, color_type), WASHABLE_COLOUR_PRIORITY, color_type = ATOM_COLOR_TYPE_FILTER)
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
 	return ITEM_INTERACT_SUCCESS

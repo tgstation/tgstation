@@ -17,7 +17,7 @@
 	var/list/atom_colours
 
 ///Adds an instance of colour_type to the atom's atom_colours list
-/atom/proc/add_atom_colour(coloration, colour_priority)
+/atom/proc/add_atom_colour(coloration, colour_priority, color_type = ATOM_COLOR_TYPE_NORMAL)
 	if(!atom_colours || !atom_colours.len)
 		atom_colours = list()
 		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
@@ -25,7 +25,7 @@
 		return
 	if(colour_priority > atom_colours.len)
 		return
-	atom_colours[colour_priority] = list(coloration, (islist(coloration) && coloration["type"] == "color") ? ATOM_COLOR_TYPE_FILTER : ATOM_COLOR_TYPE_NORMAL)
+	atom_colours[colour_priority] = list(coloration, color_type)
 	update_atom_colour()
 
 

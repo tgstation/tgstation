@@ -243,7 +243,7 @@
 	for(var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
 		for(var/turf/area_turf as anything in zlevel_turfs)
 			area_turf.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			area_turf.add_atom_colour(turf_matrix, FIXED_COLOUR_PRIORITY)
+			area_turf.add_atom_colour(turf_matrix, FIXED_COLOUR_PRIORITY, color_type = ATOM_COLOR_TYPE_FILTER)
 	area.area_flags |= XENOBIOLOGY_COMPATIBLE
 	qdel(src)
 

@@ -202,7 +202,7 @@
 
 /obj/item/toy/crayon/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.add_atom_colour(color_transition_filter(paint_color, SATURATION_OVERRIDE), ADMIN_COLOUR_PRIORITY)
+	user.add_atom_colour(color_transition_filter(paint_color, SATURATION_OVERRIDE), ADMIN_COLOUR_PRIORITY, color_type = ATOM_COLOR_TYPE_FILTER)
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/Initialize(mapload)
@@ -929,7 +929,7 @@
 
 	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
 		if(actually_paints)
-			target.add_atom_colour(color_transition_filter(paint_color, saturation_mode), WASHABLE_COLOUR_PRIORITY)
+			target.add_atom_colour(color_transition_filter(paint_color, saturation_mode), WASHABLE_COLOUR_PRIORITY, color_type = ATOM_COLOR_TYPE_FILTER)
 			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
 		use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
@@ -953,31 +953,29 @@
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 		return ITEM_INTERACT_SUCCESS
 
-	if (color_is_dark && saturation_mode == SATURATION_OVERRIDE&& !(target.flags_1 & ALLOW_DARK_PAINTS_1))
+	if (color_is_dark && saturation_mode == SATURATION_OVERRIDE && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
 		to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(target, /obj/item/pipe))
-		if(GLOB.pipe_color_name.Find(paint_color))
-			var/obj/item/pipe/target_pipe = target
-			target_pipe.pipe_color = paint_color
-			target.add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
-			balloon_alert(user, "painted in [GLOB.pipe_color_name[paint_color]] color")
-		else
+		if(!GLOB.pipe_color_name.Find(paint_color))
 			balloon_alert(user, "invalid pipe color!")
 			return ITEM_INTERACT_BLOCKING
+		var/obj/item/pipe/target_pipe = target
+		target_pipe.pipe_color = paint_color
+		target.add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+		balloon_alert(user, "painted in [GLOB.pipe_color_name[paint_color]] color")
 	else if(istype(target, /obj/machinery/atmospherics))
-		if(GLOB.pipe_color_name.Find(paint_color))
-			var/obj/machinery/atmospherics/target_pipe = target
-			target_pipe.paint(paint_color)
-			balloon_alert(user, "painted in  [GLOB.pipe_color_name[paint_color]] color")
-		else
+		if(!GLOB.pipe_color_name.Find(paint_color))
 			balloon_alert(user, "invalid pipe color!")
 			return ITEM_INTERACT_BLOCKING
+		var/obj/machinery/atmospherics/target_pipe = target
+		target_pipe.paint(paint_color)
+		balloon_alert(user, "painted in  [GLOB.pipe_color_name[paint_color]] color")
 	else if (is_type_in_typecache(target, direct_color_types))
 		target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 	else
-		target.add_atom_colour(color_transition_filter(paint_color, saturation_mode), WASHABLE_COLOUR_PRIORITY)
+		target.add_atom_colour(color_transition_filter(paint_color, saturation_mode), WASHABLE_COLOUR_PRIORITY, color_type = ATOM_COLOR_TYPE_FILTER)
 
 	if(isitem(target) && isliving(target.loc))
 		var/obj/item/target_item = target
@@ -1022,7 +1020,13 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/list/skins = list()
-	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
+	var/static/list/style_list_icons = list(
+		"standard" = 'icons/mob/augmentation/augments.dmi',
+		"engineer" = 'icons/mob/augmentation/augments_engineer.dmi',
+		"security" = 'icons/mob/augmentation/augments_security.dmi',
+		"mining" = 'icons/mob/augmentation/augments_mining.dmi',
+		)
+
 	for(var/skin_option in style_list_icons)
 		var/image/part_image = image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.body_zone]")
 		if(limb.aux_zone) //Hands

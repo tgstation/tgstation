@@ -696,10 +696,10 @@
 	balloon_alert(wearer, "no power!")
 	toggle_activate(wearer, force_deactivate = TRUE)
 
-/obj/item/mod/control/proc/set_mod_color(new_color)
+/obj/item/mod/control/proc/set_mod_color(new_color, color_type = ATOM_COLOR_TYPE_NORMAL)
 	for(var/obj/item/part as anything in get_parts(all = TRUE))
 		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		part.add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
+		part.add_atom_colour(new_color, FIXED_COLOUR_PRIORITY, color_type)
 	wearer?.regenerate_icons()
 
 /obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, direction)
@@ -755,7 +755,7 @@
 		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's active!"))
 		return SPEED_POTION_STOP
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
-	set_mod_color(color_transition_filter(COLOR_RED))
+	set_mod_color(color_transition_filter(COLOR_RED), color_type = ATOM_COLOR_TYPE_FILTER)
 	slowdown_inactive = 0
 	slowdown_active = 0
 	update_speed()
