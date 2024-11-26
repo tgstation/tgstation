@@ -1,4 +1,3 @@
-
 /obj/docking_port/mobile
 	name = "shuttle"
 	icon_state = "mobile"
