@@ -468,8 +468,7 @@
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) && !always_deep)
 		return
 	if(status == FISH_DEAD)
-		. += span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
-		return .
+		return span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
 
 	var/list/warnings = list()
 	if(is_starving())
