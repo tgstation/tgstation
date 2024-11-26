@@ -657,3 +657,24 @@
 	held_crossbow.attackby(ammo_to_load, user)
 
 #undef ORE_BAG_BALOON_COOLDOWN
+
+/obj/item/storage/bag/mail
+	name = "mail bag"
+	desc = "A bag for letters, envelopes, and other postage."
+	icon = 'icons/obj/service/janitor.dmi'
+	icon_state = "trashbag"
+	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/mail/Initialize()
+	. = ..()
+	atom_storage.max_slots = 20
+	atom_storage.max_total_storage = 20
+	atom_storage.set_holdable(list(
+		/obj/item/mail,
+		/obj/item/mail/envelope,
+		/obj/item/mail/junkmail,
+		/obj/item/mail/mail_strike,
+		/obj/item/mail/traitor,
+		/obj/item/paper
+	))
