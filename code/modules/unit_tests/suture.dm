@@ -1,5 +1,6 @@
 /// Tests that sutures apply healing.
 /datum/unit_test/use_sutures
+	priority = TEST_LONGER
 
 /datum/unit_test/use_sutures/Run()
 	var/mob/living/carbon/human/consistent/healer = EASY_ALLOCATE()

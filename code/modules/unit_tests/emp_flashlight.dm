@@ -1,3 +1,4 @@
+/// Test EMP flashlight EMPs people you point it at
 /datum/unit_test/emp_flashlight
 	var/sig_caught = 0
 

@@ -1,4 +1,4 @@
-/// Abstract test type for use in easily testing blocking setups.
+/// Test that items can block unarmed attacks
 /datum/unit_test/unarmed_blocking
 
 /datum/unit_test/unarmed_blocking/Run()
@@ -13,6 +13,7 @@
 	click_wrapper(attacker, victim)
 	TEST_ASSERT_EQUAL(victim.getBruteLoss(), 0, "Victim took damage from being punched despite having a 100% block chance chair in their hands.")
 
+/// Test that items can block weapon attacks
 /datum/unit_test/armed_blocking
 
 /datum/unit_test/armed_blocking/Run()

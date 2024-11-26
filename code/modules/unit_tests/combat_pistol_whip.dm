@@ -39,6 +39,7 @@
 	TEST_ASSERT_NOTEQUAL(victim.getBruteLoss(), 0, "Victim did not take brute damage from being bayonet stabbed.")
 	victim.fully_heal()
 
+/// Test that bayonetted weapons can be used to butcher
 /datum/unit_test/bayonet_butchering
 
 /datum/unit_test/bayonet_butchering/Run()

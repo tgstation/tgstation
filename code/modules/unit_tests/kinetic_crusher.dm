@@ -1,4 +1,4 @@
-/// Tests that the Kinetic Crusher fires a projectile on RMB rather than swinging
+/// Tests that the Kinetic Crusher fires a projectile on RMB
 /datum/unit_test/crusher_projectile
 
 /datum/unit_test/crusher_projectile/Run()
