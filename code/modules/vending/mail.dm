@@ -18,13 +18,13 @@
 	var/turf/unload_turf = null
 	/// List of the departments to sort the mail for.
 	var/list/sorting_departments = list(
-		"Engineering" =  DEPARTMENT_ENGINEERING,
-		"Security" =     DEPARTMENT_SECURITY,
-		"Medical" =      DEPARTMENT_MEDICAL,
-		"Science" =      DEPARTMENT_SCIENCE,
-		"Supply" =       DEPARTMENT_CARGO,
-		"Service" =      DEPARTMENT_SERVICE,
-		"Command" =      DEPARTMENT_COMMAND
+		DEPARTMENT_ENGINEERING,
+		DEPARTMENT_SECURITY,
+		DEPARTMENT_MEDICAL,
+		DEPARTMENT_SCIENCE,
+		DEPARTMENT_CARGO,
+		DEPARTMENT_SERVICE,
+		DEPARTMENT_COMMAND
 		)
 
 	req_access = list(ACCESS_CARGO)
@@ -113,7 +113,7 @@
 	var/list/sorted_mail = list()
 	var/sorted = 0
 	var/unable_to_sort = 0
-	var/sorting_dept = input(usr, "Choose the department to sort mail for","Mail Sorting", sorting_departments[1]) as null|anything in sorting_departments
+	var/sorting_dept = tgui_input_list(usr, "Choose the department to sort mail for","Mail Sorting", sorting_departments)
 	if (!sort_delay())
 		return
 	if (!sorting_dept)
@@ -184,7 +184,7 @@
 /obj/machinery/mailbox/proc/pick_mail(usr)
 	if(!length(mail_list))
 		return
-	var/obj/item/mail/mail_throw = input(usr, "Choose the envelope to eject","Mail Sorting", mail_list) as null|anything in mail_list
+	var/obj/item/mail/mail_throw = tgui_input_list(usr, "Choose the envelope to eject","Mail Sorting", mail_list)
 	if(!mail_throw)
 		return
 	if (!sort_delay())
