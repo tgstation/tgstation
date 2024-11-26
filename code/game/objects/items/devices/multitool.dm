@@ -283,7 +283,7 @@
 	desc = "An omni-technological interface."
 	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "multitool"
-	belt_icon_state = "multitool_alien"
+	inside_belt_icon_state = "multitool_alien"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT)
 	toolspeed = 0.1
 

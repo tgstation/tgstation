@@ -94,6 +94,10 @@
 /code/game/area/ @san7890
 /icons/area/ @san7890
 
+# SmArtKar
+
+/code/modules/projectiles/projectile.dm @SmArtKar
+
 # stylemistake
 
 /code/__DEFINES/chat.dm @stylemistake

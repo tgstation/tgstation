@@ -82,6 +82,6 @@
 	desc = "A shooting target that looks like a useless clown."
 	max_integrity = 2000
 
-/obj/item/target/clown/bullet_act(obj/projectile/P)
+/obj/item/target/clown/bullet_act(obj/projectile/proj)
 	. = ..()
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
