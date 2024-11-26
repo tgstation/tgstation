@@ -297,7 +297,6 @@
 #include "subsystem_init.dm"
 #include "suit_storage_icons.dm"
 #include "surgeries.dm"
-#include "suture.dm"
 #include "syringe_gun.dm"
 #include "tail_wag.dm"
 #include "teleporters.dm"

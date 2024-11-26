@@ -11,7 +11,7 @@
 	click_wrapper(artist, spray_turf)
 	TEST_ASSERT_EQUAL(can.charges, can.charges_left, "Spraypaint sprayed paint while capped.")
 	// Uncap it
-	click_wrapper(artist, spray_turf, list(ALT_CLICK = TRUE, BUTTON = ALT_CLICK))
+	click_wrapper(artist, can, list(ALT_CLICK = TRUE, BUTTON = ALT_CLICK))
 	TEST_ASSERT(!can.is_capped, "Spraypaint did not uncap when alt-clicked.")
 	// Try to spray with an uncapped spraycan.
 	click_wrapper(artist, spray_turf)

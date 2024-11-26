@@ -32,7 +32,7 @@
 
 	// Combat mode in melee range with bayonet -> bayonet stab
 	var/obj/item/knife/combat/knife = EASY_ALLOCATE()
-	gun.bayonet = knife
+	gun.AddComponent(/datum/component/bayonet_attachable, starting_bayonet = knife)
 
 	attacker.set_combat_mode(TRUE)
 	click_wrapper(attacker, victim)
@@ -47,11 +47,13 @@
 	meat.death()
 
 	var/mob/living/carbon/human/consistent/butcher = EASY_ALLOCATE()
+	butcher.set_combat_mode(TRUE)
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/gun = EASY_ALLOCATE()
 	var/obj/item/knife/combat/knife = EASY_ALLOCATE()
-	gun.bayonet = knife
+	var/datum/component/bayonet_attachable/bayonet = gun.GetComponent(/datum/component/bayonet_attachable)
+	bayonet.add_bayonet(knife)
 	var/datum/component/butchering/butcher_comp = knife.GetComponent(/datum/component/butchering)
-	butcher_comp.speed = 0.2 SECONDS
+	butcher_comp.speed = 1 SECONDS
 
 	butcher.put_in_active_hand(gun, forced = TRUE)
 	click_wrapper(butcher, meat)

@@ -5,7 +5,7 @@
 /datum/unit_test/damp_rag_smother/Run()
 	var/mob/living/carbon/human/consistent/attacker = EASY_ALLOCATE()
 	var/mob/living/carbon/human/consistent/victim = EASY_ALLOCATE()
-	var/obj/item/organ/internal/stomach/victim_stomach = victim.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/victim_stomach = victim.get_organ_slot(ORGAN_SLOT_STOMACH)
 	var/obj/item/reagent_containers/cup/rag/rag = EASY_ALLOCATE()
 
 	attacker.put_in_active_hand(rag, forced = TRUE)
