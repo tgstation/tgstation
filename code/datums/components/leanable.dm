@@ -97,7 +97,7 @@
 	// Make sure we unregister signal handlers and reset animation
 	stop_leaning()
 	// -1000 aura
-	src.visible_message("[src] falls flat on their face from losing their balance")
+	src.visible_message("[src] falls flat on their face from losing their balance", "You fall suddenly as the object you were leaning on vanishes from contact with you")
 	src.SetKnockdown((3 SECONDS))
 
 /mob/living/proc/stop_leaning()
