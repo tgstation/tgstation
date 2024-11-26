@@ -203,9 +203,18 @@
 	register_context()
 	register_item_context()
 
+/obj/item/fish/proc/slapperoni(mob/living/user)
+	if(user.stat == DEAD)
+		return
+	user.visible_message(span_bolddanger("*SLAP!*"))
+	user.attackby(src, user)
+
 /obj/item/fish/add_item_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(HAS_TRAIT(source, TRAIT_CATCH_AND_RELEASE))
 		context[SCREENTIP_CONTEXT_RMB] = "Release"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/clothing/neck/stethoscope))
+		context[SCREENTIP_CONTEXT_LMB] = "Check Pulse"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
@@ -220,6 +229,16 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Scan"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
+
+/obj/item/fish/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/clothing/neck/stethoscope))
+		return NONE
+	user.balloon_alert_to_viewers("checking pulse")
+	if(!do_after(user, 2.5 SECONDS, src))
+		return ITEM_INTERACT_FAILURE
+	// Sir... I'm afraid your fish is dying.
+	get_health_warnings(user, always_deep = TRUE)
+	user.visible_message(span_notice("[user] checks the pulse of [src] with [tool]."), span_notice("You check the pulse of [src] with [tool]."))
 
 /obj/item/fish/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!HAS_TRAIT(interacting_with, TRAIT_CATCH_AND_RELEASE))
@@ -434,26 +453,46 @@
 
 /obj/item/fish/examine(mob/user)
 	. = ..()
-	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH))
-		if(status == FISH_DEAD)
-			. += span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
-		else
-			var/list/warnings = list()
-			if(is_starving())
-				warnings += "starving"
-			if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
-				warnings += "drowning"
-			if(health < initial(health) * 0.6)
-				warnings += "sick"
-				if(length(warnings))
-					. += span_warning("It's [english_list(warnings)].")
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")
-		if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
+
+	. += get_health_warnings(user, always_deep = FALSE)
+
+	if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
 			. += span_smallnoticeital("It can be used as a fishing bait.")
+
 	if(bites_amount)
 		. += span_warning("It's been bitten by someone.")
+
+/obj/item/fish/proc/get_health_warnings(mob/user, always_deep = FALSE)
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) && !always_deep)
+		return
+	if(status == FISH_DEAD)
+		. += span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
+		return .
+
+	var/list/warnings = list()
+	if(is_starving())
+		warnings += "starving"
+	if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
+		warnings += "drowning"
+
+	var/health_ratio = health / initial(health)
+	switch(health_ratio)
+		if(0 to 0.25)
+			warnings += "dying"
+		if(0.25 to 0.5)
+			warnings += "very unhealthy"
+		if(0.5 to 0.75)
+			warnings += "unhealthy"
+		if(0.75 to 0.9)
+			warnings += "mostly healthy"
+
+	if(length(warnings))
+		. += span_warning("It's [english_list(warnings)].")
+
+	return .
 
 /**
  * This proc takes a base size, base weight and deviation arguments to generate new size and weight through a gaussian distribution (bell curve)

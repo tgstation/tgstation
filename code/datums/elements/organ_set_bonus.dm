@@ -84,10 +84,21 @@
 		if((required_biotype == MOB_ORGANIC) && !owner.can_mutate())
 			return FALSE
 	bonus_active = TRUE
+	// Add traits
 	if(length(bonus_traits))
 		owner.add_traits(bonus_traits, REF(src))
+
+	// Add biotype
+	if(carbon_owner.mob_biotypes & bonus_biotype)
+		biotype_added = FALSE
+		return TRUE
+	carbon_owner.mob_biotypes |= bonus_biotype
+	biotype_added = TRUE
+
 	if(bonus_activate_text)
 		to_chat(owner, bonus_activate_text)
+
+	// Add limb overlay
 	if(!iscarbon(owner) || !limb_overlay)
 		return TRUE
 	var/mob/living/carbon/carbon_owner = owner
@@ -95,20 +106,23 @@
 		limb.add_bodypart_overlay(new limb_overlay())
 		limb.add_color_override(COLOR_WHITE, color_overlay_priority)
 	carbon_owner.update_body()
-	if(carbon_owner.mob_biotypes & bonus_biotype)
-		biotype_added = FALSE
-		return TRUE
-	carbon_owner.mob_biotypes |= bonus_biotype
-	biotype_added = TRUE
 	return TRUE
 
 /datum/status_effect/organ_set_bonus/proc/disable_bonus()
 	SHOULD_CALL_PARENT(TRUE)
 	bonus_active = FALSE
+
+	// Remove traits
 	if(length(bonus_traits))
 		owner.remove_traits(bonus_traits, REF(src))
+	// Remove biotype (if added)
+	if(biotype_added == TRUE)
+		carbon_owner.mob_biotypes &= ~bonus_biotype
+
 	if(bonus_deactivate_text)
 		to_chat(owner, bonus_deactivate_text)
+
+	// Remove limb overlay
 	if(!iscarbon(owner) || QDELETED(owner) || !limb_overlay)
 		return
 	var/mob/living/carbon/carbon_owner = owner
@@ -118,5 +132,3 @@
 			limb.remove_bodypart_overlay(overlay)
 			limb.remove_color_override(color_overlay_priority)
 	carbon_owner.update_body()
-	if(biotype_added = TRUE)
-		carbon_owner.mob_biotypes &= ~bonus_biotype

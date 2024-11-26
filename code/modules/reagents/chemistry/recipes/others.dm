@@ -584,7 +584,7 @@
 /datum/chemical_reaction/lifish/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to rand(1, created_volume)) // More flop.
-		var/obj/item/fish/spawned_fish = subtypesof(/obj/item/fish)
+		var/obj/item/fish/spawned_fish = pick(subtypesof(/obj/item/fish))
 		new spawned_fish(location)
 	..()
 

@@ -438,7 +438,7 @@
 
 /obj/item/storage/box/fish_revival_kit/PopulateContents()
 	new /obj/item/lazarus_injector(src)
-	new /obj/item/reagent_containers/cup/bottle/strange_reagent/fishy_reagent(src)
+	new /obj/item/reagent_containers/cup/bottle/fishy_reagent(src)
 	new /obj/item/reagent_containers/cup(src) //to splash the reagents on the fish.
 	new /obj/item/storage/fish_case(src)
 	new /obj/item/storage/fish_case(src)
