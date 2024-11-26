@@ -8,7 +8,7 @@
 //Largely negative status effects go here, even if they have small beneficial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
-	id = null
+	id = STATUS_EFFECT_ID_ABSTRACT
 	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null

@@ -1,6 +1,6 @@
 /datum/status_effect/fire_handler
 	duration = STATUS_EFFECT_PERMANENT
-	id = null
+	id = STATUS_EFFECT_ID_ABSTRACT
 	alert_type = null
 	status_type = STATUS_EFFECT_REFRESH //Custom code
 	on_remove_on_mob_delete = TRUE

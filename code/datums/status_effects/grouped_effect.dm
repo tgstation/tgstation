@@ -1,5 +1,6 @@
 /// Status effect from multiple sources, when all sources are removed, so is the effect
 /datum/status_effect/grouped
+	id = STATUS_EFFECT_ID_ABSTRACT
 	alert_type = null
 	// Grouped effects adds itself to [var/sources] and destroys itself if one exists already, there are never actually multiple
 	status_type = STATUS_EFFECT_MULTIPLE
