@@ -1,5 +1,6 @@
 /// Parent type for all unique revenant status effects
 /datum/status_effect/revenant
+	alert_type = null
 
 /datum/status_effect/revenant/on_creation(mob/living/new_owner, duration)
 	if(isnum(duration))

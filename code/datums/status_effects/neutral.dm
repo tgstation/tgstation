@@ -110,6 +110,7 @@
 /datum/status_effect/bounty
 	id = "bounty"
 	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
 	var/mob/living/rewarded
 
 /datum/status_effect/bounty/on_creation(mob/living/new_owner, mob/living/caster)
@@ -581,6 +582,7 @@
 	id = "tinea_luxor_light"
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	remove_on_fullheal = TRUE
+	alert_type = null
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
 
 /datum/status_effect/tinlux_light/on_creation(mob/living/new_owner, duration)

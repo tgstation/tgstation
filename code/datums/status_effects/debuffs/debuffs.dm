@@ -967,6 +967,7 @@
 	duration = 10 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 0.2 SECONDS
+	alert_type = null
 
 /datum/status_effect/teleport_madness/tick(seconds_between_ticks)
 	dump_in_space(owner)
