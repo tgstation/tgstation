@@ -159,7 +159,7 @@
 			if(4 to INFINITY)
 				bandage_condition = "clean"
 
-		condition += " underneath a dressing of [bandage_condition] [limb.current_gauze.name]"
+		condition += " underneath a dressing of [bandage_condition] [limb.current_gauze.name]."
 	else
 		switch(infestation)
 			if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
