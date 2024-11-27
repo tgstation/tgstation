@@ -231,3 +231,18 @@
 	desc = "A tool for inductively charging internal power cells. This one has a suspicious colour scheme, and seems to be rigged to transfer charge at a much faster rate."
 	power_transfer_multiplier = 2 // 2x the base speed
 	powerdevice = /obj/item/stock_parts/power_store/battery/super
+
+/obj/item/inducer/cyborg
+	name = "Internal inducer"
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "inducer-engi"
+	powerdevice = null
+
+/obj/item/inducer/cyborg/get_cell(atom/movable/interface, mob/living/silicon/robot/silicon_friend)
+	return istype(silicon_friend) ? silicon_friend.cell : null
+
+/obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
+	return ITEM_INTERACT_FAILURE
+
+/obj/item/inducer/cyborg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_FAILURE
