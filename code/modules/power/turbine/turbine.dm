@@ -8,6 +8,7 @@
 #define NO_INACTIVE_OVERLAY (1 << 1)
 
 /obj/machinery/power/turbine
+	icon = 'icons/obj/machines/engine/turbine.dmi'
 	density = TRUE
 	resistance_flags = FIRE_PROOF
 	can_atmos_pass = ATMOS_PASS_DENSITY
@@ -104,6 +105,9 @@
 
 /obj/machinery/power/turbine/update_overlays()
 	. = ..()
+	if(!base_icon_state)
+		return
+
 	if(panel_open)
 		. += "[base_icon_state]_open"
 
@@ -265,7 +269,6 @@
 /obj/machinery/power/turbine/inlet_compressor
 	name = "inlet compressor"
 	desc = "The input side of a turbine generator, contains the compressor."
-	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "inlet_compressor"
 	base_icon_state = "inlet"
 	circuit = /obj/item/circuitboard/machine/turbine_compressor
@@ -322,7 +325,6 @@
 /obj/machinery/power/turbine/turbine_outlet
 	name = "turbine outlet"
 	desc = "The output side of a turbine generator, contains the turbine and the stator."
-	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "turbine_outlet"
 	base_icon_state = "outlet"
 	circuit = /obj/item/circuitboard/machine/turbine_stator
@@ -367,7 +369,6 @@
 /obj/machinery/power/turbine/core_rotor
 	name = "core rotor"
 	desc = "The middle part of a turbine generator, contains the rotor and the main computer."
-	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "core_rotor"
 	base_icon_state = "core"
 	can_change_cable_layer = TRUE
