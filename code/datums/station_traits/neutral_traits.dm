@@ -297,7 +297,6 @@
 	weight = 2
 	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
-	force = TRUE
 
 /datum/station_trait/scryers/New()
 	. = ..()
@@ -310,13 +309,17 @@
 		return
 	var/mob/living/carbon/human/humanspawned = spawned
 	// Put their silly little scarf or necktie somewhere else
-	if(humanspawned.wear_neck)
-		humanspawned.temporarilyRemoveItemFromInventory(humanspawned.wear_neck)
-		humanspawned.wear_neck.forceMove(get_turf(humanspawned))
-		humanspawned.equip_in_one_of_slots(humanspawned.wear_neck, ITEM_SLOT_BACKPACK, ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET)
+	var/obj/item/silly_little_scarf = humanspawned.wear_neck
+	if(silly_little_scarf)
+		humanspawned.temporarilyRemoveItemFromInventory(silly_little_scarf)
+		silly_little_scarf.forceMove(get_turf(humanspawned))
+		humanspawned.equip_in_one_of_slots(silly_little_scarf, ITEM_SLOT_BACKPACK, ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET, qdel_on_fail = FALSE, indirect_action = TRUE)
 
+	var/obj/item/clothing/neck/link_scryer/loaded/new_scryer = new(spawned)
+	new_scryer.label = spawned.name
+	new_scryer.update_name()
 
-	spawned.equip_to_slot_or_del(new /obj/item/clothing/neck/link_scryer/loaded(spawned), ITEM_SLOT_NECK, initial = FALSE)
+	spawned.equip_to_slot_or_del(new_scryer, ITEM_SLOT_NECK, initial = FALSE)
 
 /datum/station_trait/wallets
 	name = "Wallets!"
