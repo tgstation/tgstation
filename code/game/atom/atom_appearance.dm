@@ -56,7 +56,7 @@
 				continue
 			if(istext(maybe_not_an_atom) || isicon(maybe_not_an_atom))
 				continue
-			if (cached_color_filter)
+			if (cached_color_filter && !(appearance_flags & KEEP_TOGETHER))
 				maybe_not_an_atom.add_filter(FILTER_ATOM_PRIORITY_COLOR, 1, cached_color_filter)
 			new_overlays[i] = maybe_not_an_atom.appearance
 		if(nulls)
