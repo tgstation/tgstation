@@ -297,11 +297,11 @@
 	weight = 2
 	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
+	report_message = "Nanotrasen has chosen your station for an experiment - everyone has free scryers! Use these to talk to other people easily and privately."
 	force = TRUE
 
 /datum/station_trait/scryers/New()
 	. = ..()
-	report_message = "Nanotrasen has chosen your station for an experiment - everyone has free scryers! Use these to talk to other people easily and privately."
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
 /datum/station_trait/scryers/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
