@@ -137,11 +137,11 @@
 				victim.update_damage_overlays()
 	else if(ismouse(target))
 		var/mob/living/basic/mouse/splatted = target
-		visible_message(span_boldannounce("SPLAT!"))
+		visible_message(span_bolddanger("SPLAT!"))
 		splatted.splat() // mousetraps are instadeath for mice
 
 	else if(isregalrat(target))
-		visible_message(span_boldannounce("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.
+		visible_message(span_bolddanger("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.
 
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	pulse()
