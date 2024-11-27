@@ -68,6 +68,8 @@
 	toolspeed = active ? 0.5 : initial(toolspeed)
 	update_item_action_buttons()
 
+	return COMPONENT_NO_DEFAULT_MESSAGE
+
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user, force_mode)
 
 	// if NOT active and NOT forced to act active, OR if forced to act active

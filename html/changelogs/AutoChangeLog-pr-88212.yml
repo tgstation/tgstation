@@ -1,0 +1,4 @@
+author: "ValuedEmployee"
+delete-after: True
+changes:
+  - rscadd: "New purr and meow emotes for players with felinid tongues"

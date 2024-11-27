@@ -36,7 +36,7 @@
 
 /datum/surgery/organ_manipulation/Destroy()
 	if(QDELETED(target) || !HAS_TRAIT(target, TRAIT_FISHING_SPOT))
-		return
+		return ..()
 	// The surgery is not finished yet and we're currently on manipulate organs step
 	if(status <= length(steps) && ispath(steps[status], /datum/surgery_step/manipulate_organs))
 		remove_fishing_spot()
