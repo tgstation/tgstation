@@ -271,7 +271,7 @@
 
 /obj/item/stack/medical/gauze/try_heal_checks(mob/living/patient, mob/user)
 	var/obj/item/bodypart/limb = patient.get_bodypart(check_zone(user.zone_selected))
-	if(!limb)
+	if(isnull(limb))
 		patient.balloon_alert(user, "no [parse_zone(user.zone_selected)]!")
 		return FALSE
 	if(!LAZYLEN(limb.wounds))
@@ -288,6 +288,7 @@
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/user, silent)
+	var/obj/item/bodypart/limb = patient.get_bodypart(check_zone(user.zone_selected))
 	var/treatment_delay = (user == patient ? self_delay : other_delay)
 	var/any_scanned = FALSE
 	for(var/datum/wound/woundies as anything in limb.wounds)
