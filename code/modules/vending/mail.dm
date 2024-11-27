@@ -1,12 +1,14 @@
 /obj/machinery/mailbox
 	name = "mail sorter"
 	desc = "A large mail sorting unit. Sorting mail since 1987!"
-	icon = 'icons/obj/machines/vending.dmi'
+	icon = 'icons/obj/machines/mailsorter.dmi'
 	icon_state = "mailsorter"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	max_integrity = 400
 	integrity_failure = 0.33
+
+	var/enabled = TRUE
 
 	// circuit = /obj/item/circuitboard/machine/ore_redemption
 
@@ -86,13 +88,15 @@
 /obj/machinery/mailbox/interact(mob/user)
 	if (!allowed(user))
 		to_chat(user, span_warning("Access denied."))
-		return FALSE
-
+		return
+	if (currentstate != "idle")
+		return
 	var/list/choices = list()
 	if (length(mail_list) > 0)
 		choices["Eject"] = icon('icons/hud/radial.dmi', "radial_eject")
 		choices["Dump"] = icon('icons/hud/radial.dmi', "mail_dump")
 		choices["Sort"] = icon('icons/hud/radial.dmi', "mail_sort")
+
 	var/choice = show_radial_menu(
 		user,
 		src,
@@ -118,6 +122,8 @@
 	var/sorted = 0
 	var/unable_to_sort = 0
 	var/sorting_dept = tgui_input_list(usr, "Choose the department to sort mail for","Mail Sorting", sorting_departments)
+	currentstate = "sorting"
+	update_appearance()
 	if (!sort_delay())
 		return
 	if (!sorting_dept)
@@ -136,23 +142,26 @@
 		else
 			unable_to_sort ++
 	if (length(sorted_mail) == 0)
+		currentstate = "no"
+		update_appearance()
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 		say("No mail for the following department: [sorting_dept].")
-		sleep(10)
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
-		say("Couldn't sort [unable_to_sort] envelope\s.")
-		return
-
-	say("[sorted] envelope\s sorted successfully.")
-	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
-	for (var/obj/item/mail/mail_in_list in sorted_mail)
-		mail_in_list.forceMove(unload_turf)
-		sorted_mail -= mail_in_list
-		mail_list -= mail_in_list
-	to_chat(usr, span_notice("[src] reluctantly spits out [length(sorted_mail)] envelope\s."))
+	else
+		currentstate = "yes"
+		update_appearance()
+		say("[sorted] envelope\s sorted successfully.")
+		playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
+		for (var/obj/item/mail/mail_in_list in sorted_mail)
+			mail_in_list.forceMove(unload_turf)
+			sorted_mail -= mail_in_list
+			mail_list -= mail_in_list
+		to_chat(usr, span_notice("[src] ejects [length(sorted_mail)] envelope\s."))
 	sleep(10)
 	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 	say("Couldn't sort [unable_to_sort] envelope\s.")
+	sleep(10)
+	currentstate = "idle"
+	update_appearance()
 
 /obj/machinery/mailbox/attackby(obj/item/I, /mob/user, params)
 	var/mob/user = usr
@@ -193,6 +202,7 @@
 		return
 	if (!sort_delay())
 		return
+	to_chat(usr, span_notice("[src] reluctantly spits out [mail_throw]."))
 	mail_throw.forceMove(unload_turf)
 	mail_throw.throw_at(unload_turf, 2, 3)
 	mail_list -= mail_throw
@@ -251,8 +261,7 @@
 		return
 
 	if(enabled)
-		. += currentstate ? mutable_appearance(init_icon, stateicons.currentstate) : mutable_appearance(init_icon, stateicons.idle)
-
+		. += mutable_appearance(init_icon, currentstate)
 
 	// if(atom_integrity <= integrity_failure * max_integrity)
 	// 	. += mutable_appearance(init_icon, "bsod")
