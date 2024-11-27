@@ -4,7 +4,7 @@
 /// Base font
 /datum/font/grand9k
 	name = "Grand9K Pixel"
-//MASSMETA EDIT CHANGE BEGIN (tweak_say_font)
+//MASSMETA EDIT CHANGE BEGIN (ru_tweak_say_font)
 /* ORIGINAL
 	font_family = 'interface/fonts/Grand9K_Pixel.ttf'
 */

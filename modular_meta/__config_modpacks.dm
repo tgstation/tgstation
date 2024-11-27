@@ -3,13 +3,14 @@
 // Looks like mods in minecraft, isn't it?
 // Some mods may have dependencies, have fun buddy!
 
-// If you are ENG server - you need at first turn off all PEREVODY (= translations on russian lang)
+// If you are ENG server - you need at first turn off all translations on russian lang
 
 
 /// FEATURES
-#define ADDITIONAL_CIRCUITS 1
 #define CHEBUREK_CAR 1
+
 /// PEREVODY
 #define RU_CRAYONS 1
 #define RU_VENDORS 1
+
 /// REVERTS

@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(modpacks)
 //Show modpacks button on lobby screen
 //ORIGINAL FILE: code/_onclick/hud/new_player.dm
 /atom/movable/screen/lobby/button/bottom/poll
-	icon = 'modular_meta/mods_button.dmi'
+	icon = 'modular_meta/__modpack/mods_button.dmi'
 	name = "View Loaded Modpacks"
 	icon_state = "mods"
 	base_icon_state = "mods"
