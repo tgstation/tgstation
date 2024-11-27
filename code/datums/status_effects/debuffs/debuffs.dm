@@ -18,9 +18,9 @@
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
-	return ..()
-
-/datum/status_effect/incapacitating/post_apply()
+	. = ..()
+	if(!.)
+		return
 	if(needs_update_stat || issilicon(owner))
 		owner.update_stat()
 
