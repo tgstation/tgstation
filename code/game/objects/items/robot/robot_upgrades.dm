@@ -647,7 +647,6 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
-
 	items_to_add = list(/obj/item/inducer/cyborg)
 
 /obj/item/borg/upgrade/pinpointer
