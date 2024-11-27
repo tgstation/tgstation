@@ -884,7 +884,7 @@
 	var/extra_context = ""
 	var/used_name = name
 
-	if(isliving(user) || isovermind(user) || isaicamera(user) || (ghost_screentips && isobserver(user)))
+	if(isliving(user) || isovermind(user) || iscameramob(user) || (ghost_screentips && isobserver(user)))
 		var/obj/item/held_item = user.get_active_held_item()
 
 		if (user.mob_flags & MOB_HAS_SCREENTIPS_NAME_OVERRIDE)

@@ -19,6 +19,8 @@
 	var/long_range_link = FALSE
 	/// contains ALL fishing destinations.
 	var/all_destinations = FALSE
+	/// If the current active fishing spot is from multitool linkage, this value is the atom it would originally belong to.
+	var/atom/current_linked_atom
 
 /obj/machinery/fishing_portal_generator/Initialize(mapload)
 	. = ..()
@@ -202,7 +204,7 @@
 	if(machine_stat & NOPOWER)
 		balloon_alert(user, "no power!")
 		return ITEM_INTERACT_BLOCKING
-	if(!istype(selected_source, /datum/fish_source/portal)) //likely from a linked fishing spot
+	if(!all_destinations && !istype(selected_source, /datum/fish_source/portal)) //likely from a linked fishing spot
 		var/abort = TRUE
 		for(var/atom/spot as anything in linked_fishing_spots)
 			if(linked_fishing_spots[spot] != selected_source)
@@ -215,6 +217,7 @@
 				abort = FALSE
 			if(!abort)
 				RegisterSignal(spot, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_fishing_spot_z_level_changed))
+				current_linked_atom = spot
 			break
 		if(abort && !all_destinations)
 			balloon_alert(user, "cannot reach linked!")
@@ -233,6 +236,7 @@
 		for(var/atom/spot as anything in linked_fishing_spots)
 			if(linked_fishing_spots[spot] == active.fish_source)
 				UnregisterSignal(spot, COMSIG_MOVABLE_Z_CHANGED)
+		current_linked_atom = null
 	QDEL_NULL(active)
 
 	REMOVE_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)

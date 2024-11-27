@@ -553,7 +553,7 @@
 		return
 	COOLDOWN_START(src, attack_cooldown, 3 SECONDS)
 	var/obj/projectile/projectile = new /obj/projectile/soulscythe(get_turf(src))
-	projectile.preparePixelProjectile(attacked_atom, src)
+	projectile.aim_projectile(attacked_atom, src)
 	projectile.firer = src
 	projectile.fire(null, attacked_atom)
 	visible_message(span_danger("[src] fires at [attacked_atom]!"), span_notice("You fire at [attacked_atom]!"))

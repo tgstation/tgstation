@@ -194,7 +194,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player
 	divine_wrath.original = target
 	divine_wrath.def_zone = body_zone
 	divine_wrath.spread = 0
-	divine_wrath.preparePixelProjectile(target, source_turf)
+	divine_wrath.aim_projectile(target, source_turf)
 	divine_wrath.fire()
 
 /client/proc/punish_log(whom, punishment)

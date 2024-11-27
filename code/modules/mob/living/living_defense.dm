@@ -91,12 +91,11 @@
 /mob/living/proc/is_ears_covered()
 	return null
 
-/mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE)
+/mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE, blocked = 0)
 	. = ..()
 	if (. != BULLET_ACT_HIT)
 		return .
 
-	var/blocked = check_projectile_armor(def_zone, proj, is_silent = TRUE)
 	if(blocked >= 100)
 		if(proj.is_hostile_projectile())
 			apply_projectile_effects(proj, def_zone, blocked)
@@ -174,16 +173,15 @@
 /mob/living/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
 	return run_armor_check(def_zone, impacting_projectile.armor_flag, "","",impacting_projectile.armour_penetration, "", is_silent, impacting_projectile.weak_against_armour)
 
-/mob/living/proc/check_projectile_dismemberment(obj/projectile/P, def_zone)
-	return 0
+/mob/living/proc/check_projectile_dismemberment(obj/projectile/proj, def_zone)
+	return
 
 /obj/item/proc/get_volume_by_throwforce_and_or_w_class()
 	if(throwforce && w_class)
 		return clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
-	else if(w_class)
+	if(w_class)
 		return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
-	else
-		return 0
+	return 0
 
 /mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
 	if(combat_mode == new_mode)

@@ -3096,11 +3096,11 @@
 	. = ..()
 	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID)) //if morbid or undead,acts like an addiction-less drug
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
-		affected_mob.AdjustStun(-50 * REM * seconds_per_tick)
-		affected_mob.AdjustKnockdown(-50 * REM * seconds_per_tick)
-		affected_mob.AdjustUnconscious(-50 * REM * seconds_per_tick)
-		affected_mob.AdjustParalyzed(-50 * REM * seconds_per_tick)
-		affected_mob.AdjustImmobilized(-50 * REM * seconds_per_tick)
+		affected_mob.AdjustStun(-5 SECONDS * REM * seconds_per_tick)
+		affected_mob.AdjustKnockdown(-5 SECONDS * REM * seconds_per_tick)
+		affected_mob.AdjustUnconscious(-5 SECONDS * REM * seconds_per_tick)
+		affected_mob.AdjustParalyzed(-5 SECONDS * REM * seconds_per_tick)
+		affected_mob.AdjustImmobilized(-5 SECONDS * REM * seconds_per_tick)
 	else
 		if(affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, REM * seconds_per_tick)) //1 heart damage per tick
 			. = UPDATE_MOB_HEALTH
