@@ -242,6 +242,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//Yet more templates
 		/obj/machinery/restaurant_portal,
 		//Template type
+		/obj/machinery/power/turbine,
+		//Template type
 		/obj/effect/mob_spawn,
 		//Template type
 		/obj/structure/holosign/robot_seat,

@@ -105,8 +105,6 @@
 
 /obj/machinery/power/turbine/update_overlays()
 	. = ..()
-	if(!base_icon_state)
-		return
 
 	if(panel_open)
 		. += "[base_icon_state]_open"
