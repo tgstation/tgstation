@@ -887,7 +887,7 @@
 	return ..()
 
 /obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, list/modifiers)
-	if(modifiers[CTRL_CLICK])
+	if (LAZYACCESS(modifiers, CTRL_CLICK))
 		return ctrl_interact(target, user)
 
 	if(is_capped)
@@ -924,7 +924,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/saturation_mode = SATURATION_MULTIPLY
-	if (modifiers[RIGHT_CLICK])
+	if (LAZYACCESS(modifiers, RIGHT_CLICK))
 		saturation_mode = SATURATION_OVERRIDE
 
 	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))

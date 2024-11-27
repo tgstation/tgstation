@@ -119,7 +119,7 @@
 		return NONE
 	paintleft--
 	var/color_type = SATURATION_MULTIPLY
-	if (modifiers[RIGHT_CLICK])
+	if (LAZYACCESS(modifiers, RIGHT_CLICK))
 		color_type = SATURATION_OVERRIDE
 	interacting_with.add_atom_colour(color_transition_filter(paint_color, color_type), WASHABLE_COLOUR_PRIORITY, color_type = ATOM_COLOR_TYPE_FILTER)
 	if(paintleft <= 0)
