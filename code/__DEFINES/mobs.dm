@@ -73,7 +73,7 @@
 #define MOB_PLANT (1 << 10)
 ///The mob is a goopy creature, probably coming from xenobiology.
 #define MOB_SLIME (1 << 11)
-/// Mob is fish or fish-related.
+/// Mob is fish or water-related.
 #define MOB_AQUATIC (1 << 12)
 
 //Lung respiration type flags
