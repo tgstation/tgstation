@@ -101,6 +101,7 @@
 	stable_population = INFINITY
 	breeding_timeout = 0
 	fish_flags = parent_type::fish_flags & ~(FISH_FLAG_SHOW_IN_CATALOG|FISH_FLAG_EXPERIMENT_SCANNABLE)
+	fish_id_redirect_path = /obj/item/fish/goldfish //Stops SSfishing from complaining
 	var/expected_num_fillets = 0 //used to know how many fillets should be gotten out of this fish
 
 /obj/item/fish/testdummy/add_fillet_type()
@@ -419,10 +420,10 @@
 /datum/fish_source/unit_test_profound_fisher
 	fish_table = list(/obj/item/fish/testdummy = 1)
 	fish_counts = list(/obj/item/fish/testdummy = 2)
-	fish_source_flags = parent_type::fish_source_flags | FISH_SOURCE_FLAG_SKIP_CATCHABLES
+	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish
-	fish_source_flags = parent_type::fish_source_flags | FISH_SOURCE_FLAG_SKIP_CATCHABLES
+	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish/New()
 	for(var/fish_type as anything in subtypesof(/obj/item/fish))
