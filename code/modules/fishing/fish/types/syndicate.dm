@@ -39,7 +39,8 @@
 
 	var/mob/living/carbon/human/human_user = user
 	for(var/i in 1 to rand(5, 15))
-		human_user.vomit(vomit_flags = pick(VOMIT_CATEGORY_DEFAULT, VOMIT_CATEGORY_BLOOD), distance = 3)
+		human_user.dir = pick(GLOB.alldirs)
+		human_user.vomit(vomit_flags = pick(VOMIT_CATEGORY_DEFAULT, VOMIT_CATEGORY_BLOOD), distance = rand(1, 7))
 	return TOXLOSS
 
 /obj/item/fish/jumpercable
