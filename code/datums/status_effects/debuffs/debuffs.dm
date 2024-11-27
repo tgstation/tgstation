@@ -704,7 +704,7 @@
 
 /datum/status_effect/go_away
 	id = "go_away"
-	duration = 100
+	duration = STATUS_EFFECT_PERMANENT
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 0.2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/go_away
@@ -714,6 +714,10 @@
 	. = ..()
 	direction = pick(NORTH, SOUTH, EAST, WEST)
 	new_owner.setDir(direction)
+	RegisterSignal(new_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(wipe_bozo))
+
+/datum/status_effect/go_away/proc/wipe_bozo()
+	qdel(owner)
 
 /datum/status_effect/go_away/tick(seconds_between_ticks)
 	owner.AdjustStun(1, ignore_canstun = TRUE)

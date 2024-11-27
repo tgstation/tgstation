@@ -1385,6 +1385,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  * (This may be changed later but I chose to do it this way to avoid messing up interactions which require combat mode)
  */
 #define TRAIT_COMBAT_MODE_SKIP_INTERACTION "combat_mode_skip_interaction"
+// bars change of combat mode
+#define TRAIT_COMBAT_MODE_LOCK "combat_mode_lock"
 
 ///A "fake" effect that should not be subject to normal effect removal methods (like the effect remover component)
 #define TRAIT_ILLUSORY_EFFECT "illusory_effect"

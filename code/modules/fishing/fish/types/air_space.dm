@@ -104,6 +104,16 @@
 /obj/item/fish/starfish/flop_animation()
 	DO_FLOATING_ANIM(src)
 
+/obj/item/fish/starfish/suicide_act(mob/living/user)
+	user.visible_message("[user] swallows [src], and looks upwards...")
+	user.say("I must go. My people need me.")
+	addtimer(CALLBACK(src, PROC_REF(ascension), user), 1 SECONDS)
+	return MANUAL_SUICIDE
+
+/obj/item/fish/starfish/proc/ascension(mob/living/user)
+	user.apply_status_effect(/datum/status_effect/go_away)
+	qdel(src)
+
 /obj/item/fish/baby_carp
 	name = "baby space carp"
 	fish_id = "baby_carp"
@@ -148,6 +158,35 @@
 	RegisterSignal(src, COMSIG_FISH_BEFORE_GROWING, PROC_REF(growth_checks))
 	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
 	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/fish/baby_carp/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] swallows [src] whole!"))
+	src.forceMove(user)
+	if(status == FISH_DEAD)
+		user.emote("gasp")
+		user.visible_message(span_suicide("[user] chokes on [src] and dies!"))
+		return OXYLOSS
+
+	// the fish grows
+	addtimer(CALLBACK(src, PROC_REF(gestation), user), 20 SECONDS)
+	user.visible_message(span_suicide("[user] starts growing unnaturally..."))
+
+	var/matrix/M = matrix()
+	M.Scale(1.8, 1.2)
+	animate(user, time = 20 SECONDS, transform = M, easing = SINE_EASING)
+	return MANUAL_SUICIDE
+
+/obj/item/fish/baby_carp/proc/gestation(mob/living/user)
+	// carp grow big and strong inside the nutritious innards of the human
+	var/mob/living/basic/carp/mega/babby = new(get_turf(user))
+	babby.name = user.name + " Jr."
+
+	var/obj/item/bodypart/chest = user.get_bodypart(BODY_ZONE_CHEST)
+	if(chest)
+		babby.set_greyscale(chest.species_color) // this isn't working. why isnt this working
+
+	user.gib()
+	qdel(src)
 
 /obj/item/fish/baby_carp/update_overlays()
 	. = ..()

@@ -26,3 +26,7 @@
 /datum/bodypart_overlay/texture/carpskin
 	texture_icon_state = "carpskin"
 	texture_icon = 'icons/mob/human/textures.dmi'
+
+/datum/bodypart_overlay/texture/checkered
+	texture_icon_state = "checkered"
+	texture_icon = 'icons/mob/human/textures.dmi'

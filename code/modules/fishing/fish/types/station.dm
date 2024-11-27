@@ -150,6 +150,11 @@
 		add_traits(list(TRAIT_FISHING_BAIT, TRAIT_GREAT_QUALITY_BAIT), INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_FISH_SURVIVE_COOKING, INNATE_TRAIT)
 
+/obj/item/fish/fryish/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.say("Mmmm! Delicious!")
+	return OXYLOSS
+
 /obj/item/fish/fryish/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = TRUE)
 	. = ..()
 	if(!next_type)
