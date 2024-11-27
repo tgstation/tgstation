@@ -23,6 +23,8 @@
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5
+	/// How many interactions are we currently performing
+	var/current_interactions = 0
 
 /obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()
@@ -40,6 +42,13 @@
 /obj/item/storage/toolbox/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (user.combat_mode || !user.has_hand_for_held_index(user.get_inactive_hand_index()))
 		return NONE
+
+	if (current_interactions)
+		var/obj/item/other_tool = user.get_inactive_held_item()
+		if (!istype(other_tool)) // what even
+			return NONE
+		INVOKE_ASYNC(src, PROC_REF(use_tool_on), interacting_with, user, modifiers, other_tool)
+		return ITEM_INTERACT_SUCCESS
 
 	if (user.get_inactive_held_item())
 		user.balloon_alert(user, "hands busy!")
@@ -77,15 +86,23 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/toolbox/proc/use_tool_on(atom/interacting_with, mob/living/user, list/modifiers, obj/item/picked_tool)
+	current_interactions += 1
 	picked_tool.melee_attack_chain(user, interacting_with, list2params(modifiers))
+	current_interactions -= 1
+
+	if (QDELETED(picked_tool) || picked_tool.loc != user || !user.CanReach(picked_tool))
+		current_interactions = 0
+		return
+
+	if (current_interactions)
+		return
 
 	if (istype(picked_tool, /obj/item/weldingtool))
 		var/obj/item/weldingtool/welder = picked_tool
 		if (welder.welding)
 			welder.attack_self(user)
 
-	if (picked_tool.loc == user && user.CanReach(picked_tool))
-		atom_storage.attempt_insert(picked_tool, user)
+	atom_storage.attempt_insert(picked_tool, user)
 
 /obj/item/storage/toolbox/update_overlays()
 	. = ..()
