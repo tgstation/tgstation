@@ -114,7 +114,7 @@
 /obj/item/fish/holo/checkered/suicide_act(mob/living/carbon/user)
 
 	if(!iscarbon(user))
-		return
+		return ..()
 
 	for(var/obj/item/bodypart/limb in user.bodyparts)
 		limb.add_bodypart_overlay(new /datum/bodypart_overlay/texture/checkered)
