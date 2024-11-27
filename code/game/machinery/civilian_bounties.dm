@@ -89,6 +89,10 @@
 			continue
 		if(possible_shippable.flags_1 & HOLOGRAM_1)
 			continue
+		if(isitem(possible_shippable))
+			var/obj/item/possible_shippable_item = possible_shippable
+			if(possible_shippable_item.item_flags & ABSTRACT)
+				continue
 		if(inserted_scan_id.registered_account.civilian_bounty.applies_to(possible_shippable))
 			status_report += "Target Applicable."
 			playsound(loc, 'sound/machines/synth/synth_yes.ogg', 30 , TRUE)
