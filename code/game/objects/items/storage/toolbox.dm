@@ -37,6 +37,55 @@
 	atom_storage.rustle_sound = 'sound/items/handling/toolbox/toolbox_rustle.ogg'
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
 
+/obj/item/storage/toolbox/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (user.combat_mode || !user.has_hand_for_held_index(user.get_inactive_hand_index()))
+		return NONE
+
+	if (user.get_inactive_held_item())
+		user.balloon_alert(user, "hands busy!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/list/item_radial = list()
+	for (var/obj/item/tool in atom_storage.real_location)
+		for (var/item_type in GLOB.tool_items)
+			if (istype(tool, item_type))
+				item_radial[tool] = tool.appearance
+				break
+
+	if (!length(item_radial))
+		return NONE
+
+	playsound(user, 'sound/items/handling/toolbox/toolbox_open.ogg', 50)
+	var/obj/item/picked_item = show_radial_menu(user, interacting_with, item_radial, require_near = TRUE)
+	if (!picked_item)
+		return ITEM_INTERACT_BLOCKING
+
+	playsound(user, 'sound/items/handling/toolbox/toolbox_rustle.ogg', 50)
+	if (!user.put_in_inactive_hand(picked_item))
+		return ITEM_INTERACT_BLOCKING
+
+	if (istype(picked_item, /obj/item/weldingtool))
+		var/obj/item/weldingtool/welder = picked_item
+		if (!welder.welding)
+			welder.attack_self(user)
+
+	if (istype(picked_item, /obj/item/spess_knife))
+		picked_item.attack_self(user)
+
+	INVOKE_ASYNC(src, PROC_REF(use_tool_on), interacting_with, user, modifiers, picked_item)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/storage/toolbox/proc/use_tool_on(atom/interacting_with, mob/living/user, list/modifiers, obj/item/picked_tool)
+	picked_tool.melee_attack_chain(user, interacting_with, list2params(modifiers))
+
+	if (istype(picked_tool, /obj/item/weldingtool))
+		var/obj/item/weldingtool/welder = picked_tool
+		if (welder.welding)
+			welder.attack_self(user)
+
+	if (picked_tool.loc == user && user.CanReach(picked_tool))
+		atom_storage.attempt_insert(picked_tool, user)
+
 /obj/item/storage/toolbox/update_overlays()
 	. = ..()
 	if(has_latches)
