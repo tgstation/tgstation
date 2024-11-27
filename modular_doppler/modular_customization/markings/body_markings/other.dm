@@ -211,3 +211,13 @@
 	icon_state = "nips"
 	body_zones = CHEST
 	gender_specific = FALSE
+
+/datum/sprite_accessory/body_marking/other/outer_eye
+	name = "Outer Eye"
+	icon_state = "outereye"
+	body_zones = HEAD
+
+/datum/sprite_accessory/body_marking/other/undereye
+	name = "Undereye"
+	icon_state = "undereye"
+	body_zones = HEAD

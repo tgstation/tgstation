@@ -27,6 +27,9 @@
 
 ///bags drawn beneath the eyes
 /datum/bodypart_overlay/simple/bags
+	//doppler - redirect to overwrite to make these less dark
+	icon = 'modular_doppler/modular_quirks/overwrites/icons/bodypart_overlay_simple.dmi'
+
 	icon_state = "bags"
 	draw_color = COLOR_WEBSAFE_DARK_GRAY
 	layers = EXTERNAL_ADJACENT
