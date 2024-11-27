@@ -369,6 +369,7 @@
 
 /obj/item/fish/chasm_crab/instant_growth
 	fish_traits = list() //We don't want to end up applying traits twice on the resulting lobstrosity
+	fish_id_redirect_path = parent_type
 
 /datum/unit_test/fish_sources
 
