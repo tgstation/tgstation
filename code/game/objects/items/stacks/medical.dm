@@ -269,33 +269,31 @@
 		SEND_SIGNAL(gauzed_bodypart, COMSIG_BODYPART_UNGAUZED, src)
 	gauzed_bodypart = null
 
-// gauze is only relevant for wounds, which are handled in the wounds themselves
-/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/user, silent, looping)
-
-	var/treatment_delay = (user == patient ? self_delay : other_delay)
-
+/obj/item/stack/medical/gauze/try_heal_checks(mob/living/patient, mob/user)
 	var/obj/item/bodypart/limb = patient.get_bodypart(check_zone(user.zone_selected))
 	if(!limb)
 		patient.balloon_alert(user, "no [parse_zone(user.zone_selected)]!")
-		return
+		return FALSE
 	if(!LAZYLEN(limb.wounds))
 		patient.balloon_alert(user, "no wounds!") // good problem to have imo
-		return
-
-	var/gauzeable_wound = FALSE
-	var/any_scanned = FALSE
-	for(var/datum/wound/woundies as anything in limb.wounds)
-		if(woundies.wound_flags & ACCEPTS_GAUZE)
-			gauzeable_wound = TRUE
-		if(HAS_TRAIT(woundies, TRAIT_WOUND_SCANNED))
-			any_scanned = TRUE
-	if(!gauzeable_wound)
-		patient.balloon_alert(user, "can't gauze!")
-		return
-
+		return FALSE
 	if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 1.2 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
 		patient.balloon_alert(user, pick("already bandaged!", "bandage is clean!")) // good enough
-		return
+		return FALSE
+	for(var/datum/wound/woundies as anything in limb.wounds)
+		if(woundies.wound_flags & ACCEPTS_GAUZE)
+			return TRUE
+	patient.balloon_alert(user, "can't gauze!")
+	return FALSE
+
+// gauze is only relevant for wounds, which are handled in the wounds themselves
+/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/user, silent)
+	var/treatment_delay = (user == patient ? self_delay : other_delay)
+	var/any_scanned = FALSE
+	for(var/datum/wound/woundies as anything in limb.wounds)
+		if(HAS_TRAIT(woundies, TRAIT_WOUND_SCANNED))
+			any_scanned = TRUE
+			break
 
 	if(any_scanned)
 		treatment_delay *= 0.5
