@@ -15,6 +15,8 @@
 	 * its inherent color, the colored paint applied on it, special color effect etc...
 	 */
 	var/list/atom_colours
+	/// Currently used color filter - cached because its applied to all of our overlays because BYOND is horrific
+	var/cached_color_filter
 
 ///Adds an instance of colour_type to the atom's atom_colours list
 /atom/proc/add_atom_colour(coloration, colour_priority, color_type = ATOM_COLOR_TYPE_NORMAL)
@@ -63,6 +65,9 @@
 		return compare_list(color, looking_for_color)
 
 	for(var/i in min_priority_index to max_priority_index)
+		if (!atom_colours[i])
+			continue
+
 		if (atom_colours[i][ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_NORMAL)
 			if(LOWER_TEXT(atom_colours[i][ATOM_COLOR_VALUE_INDEX]) == looking_for_color)
 				return TRUE
@@ -87,6 +92,7 @@
 	for (var/list/checked_color in atom_colours)
 		if (checked_color[ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
 			add_filter(FILTER_ATOM_PRIORITY_COLOR, 1, checked_color[ATOM_COLOR_VALUE_INDEX])
+			cached_color_filter = checked_color[ATOM_COLOR_VALUE_INDEX]
 			return
 
 		if (length(checked_color[ATOM_COLOR_VALUE_INDEX]))
@@ -95,18 +101,6 @@
 
 /// Same as update_atom_color, but simplifies overlay coloring
 /atom/proc/color_atom_overlay(mutable_appearance/overlay)
-	overlay.color = null
 	overlay.remove_filter(FILTER_ATOM_PRIORITY_COLOR)
-
-	if (!atom_colours)
-		overlay.color = color
-		return
-
-	for (var/list/checked_color in atom_colours)
-		if (checked_color[ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
-			overlay.add_filter(FILTER_ATOM_PRIORITY_COLOR, 1, checked_color[ATOM_COLOR_VALUE_INDEX])
-			return
-
-		if (length(checked_color[ATOM_COLOR_VALUE_INDEX]))
-			overlay.color = checked_color[ATOM_COLOR_VALUE_INDEX]
-			return
+	if (cached_color_filter)
+		overlay.add_filter(FILTER_ATOM_PRIORITY_COLOR, 1, cached_color_filter)
