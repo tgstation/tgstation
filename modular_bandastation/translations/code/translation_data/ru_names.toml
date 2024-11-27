@@ -4193,3 +4193,68 @@ accusative = "паховую область"
 instrumental = "паховой областью"
 prepositional = "паховой области"
 gender = "female"
+
+# MARK: Pronouns
+["ваш"]
+nominative = "ваш"
+genitive = "вашего"
+dative = "вашему"
+accusative = "ваш"
+instrumental = "вашим"
+prepositional = "вашем"
+
+["ваша"]
+nominative = "ваша"
+genitive = "вашей"
+dative = "вашей"
+accusative = "вашу"
+instrumental = "вашей"
+prepositional = "вашей"
+
+["ваше"]
+nominative = "ваше"
+genitive = "вашего"
+dative = "вашему"
+accusative = "ваше"
+instrumental = "вашим"
+prepositional = "вашем"
+
+["ваши"]
+nominative = "ваши"
+genitive = "ваших"
+dative = "вашим"
+accusative = "ваши"
+instrumental = "вашими"
+prepositional = "ваших"
+
+["свой"]
+nominative = "свой"
+genitive = "своего"
+dative = "своему"
+accusative = "свой"
+instrumental = "своим"
+prepositional = "своём"
+
+["своя"]
+nominative = "своя"
+genitive = "своей"
+dative = "своей"
+accusative = "свою"
+instrumental = "своей"
+prepositional = "своей"
+
+["своё"]
+nominative = "своё"
+genitive = "своего"
+dative = "своему"
+accusative = "своё"
+instrumental = "своим"
+prepositional = "своём"
+
+["свои"]
+nominative = "свои"
+genitive = "своих"
+dative = "своим"
+accusative = "свои"
+instrumental = "своими"
+prepositional = "своих"

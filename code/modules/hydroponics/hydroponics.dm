@@ -483,8 +483,10 @@
 	. = ..()
 	if(myseed)
 		name = "[initial(name)] ([myseed.plantname])"
+		ru_names_rename(ru_names_toml(initial(name), suffix = " ([myseed.plantname])", override_base = name))
 	else
 		name = initial(name)
+		ru_names_rename(ru_names_toml(name))
 
 /obj/machinery/hydroponics/update_overlays()
 	. = ..()
