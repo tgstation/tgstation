@@ -6893,6 +6893,7 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/wood/large,
 /area/station/commons/lounge)
 "bOh" = (
@@ -21762,10 +21763,10 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "fCk" = (
-/obj/machinery/computer/slot_machine,
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
+/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/wood/large,
 /area/station/service/bar)
 "fCl" = (
@@ -27355,8 +27356,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "hcl" = (
-/obj/machinery/restaurant_portal/bar,
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/computer/slot_machine,
 /turf/open/floor/wood/large,
 /area/station/commons/lounge)
 "hcK" = (
@@ -37505,7 +37506,7 @@
 	c_tag = "Bar - South"
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/restaurant_portal/restaurant,
+/obj/machinery/computer/slot_machine,
 /turf/open/floor/wood/large,
 /area/station/commons/lounge)
 "jKL" = (
