@@ -241,7 +241,7 @@
 		used_crusher = fired_from
 
 	if(isliving(target))
-		for(var/obj/item/crusher_trophy/crusher_trophy as anything in used_crusher.trophies)
+		for(var/obj/item/crusher_trophy/crusher_trophy as anything in used_crusher?.trophies)
 			crusher_trophy.on_projectile_hit_mob(target, firer)
 		if(QDELETED(target))
 			return ..()
@@ -252,7 +252,7 @@
 	var/target_turf = get_turf(target)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/hit_mineral = target_turf
-		for(var/obj/item/crusher_trophy/crusher_trophy as anything in used_crusher.trophies)
+		for(var/obj/item/crusher_trophy/crusher_trophy as anything in used_crusher?.trophies)
 			crusher_trophy.on_projectile_hit_mineral(hit_mineral, firer)
 		if(QDELETED(hit_mineral))
 			return ..()
