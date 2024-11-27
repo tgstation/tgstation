@@ -2,7 +2,7 @@
 	name = "mail sorter"
 	desc = "A large mail sorting unit. Sorting mail since 1987!"
 	icon = 'icons/obj/machines/vending.dmi'
-	icon_state = "engi"
+	icon_state = "mailsorter"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	max_integrity = 400
@@ -10,11 +10,15 @@
 
 	// circuit = /obj/item/circuitboard/machine/ore_redemption
 
+	/// Bool that returns if the machine is already sorting mail.
+	var/now_sorting = FALSE
+	/// What the machine is currently doing. Can be "sorting", "idle", "yes", "no".
+	var/currentstate = "idle"
 	/// List of all mail that's inside the mailbox.
 	var/list/mail_list = list()
-	/// The direction in which the mail will be unloaded
+	/// The direction in which the mail will be unloaded.
 	var/output_dir = SOUTH
-	/// The turf to unload mail at
+	/// The turf to unload mail at.
 	var/turf/unload_turf = null
 	/// List of the departments to sort the mail for.
 	var/list/sorting_departments = list(
@@ -30,7 +34,7 @@
 	req_access = list(ACCESS_CARGO)
 
 /obj/machinery/mailbox/screwdriver_act(mob/living/user, obj/item/tool)
-	default_deconstruction_screwdriver(user, "engi", "engi", tool)
+	default_deconstruction_screwdriver(user, "mailsorter-off", "mailsorter", tool)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mailbox/Initialize(mapload)
@@ -86,9 +90,9 @@
 
 	var/list/choices = list()
 	if (length(mail_list) > 0)
-		choices["eject_one"] = icon('icons/hud/radial.dmi', "radial_eject")
-		choices["eject_all"] = icon('icons/hud/radial.dmi', "radial_drop")
-		choices["sort"] = icon('icons/hud/radial.dmi', "radial_shuffle")
+		choices["Eject"] = icon('icons/hud/radial.dmi', "radial_eject")
+		choices["Dump"] = icon('icons/hud/radial.dmi', "mail_dump")
+		choices["Sort"] = icon('icons/hud/radial.dmi', "mail_sort")
 	var/choice = show_radial_menu(
 		user,
 		src,
@@ -100,13 +104,13 @@
 	if (!choice)
 		return
 	switch (choice)
-		if ("eject_one")
+		if ("Eject")
 			pick_mail(usr)
-		if ("eject_all")
+		if ("Dump")
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 			to_chat(usr, span_notice("[src] dumps [length(mail_list)] envelope\s on the floor."))
 			drop_all_mail()
-		if ("sort")
+		if ("Sort")
 			sort_mail(usr)
 
 /obj/machinery/mailbox/proc/sort_mail(usr)
@@ -189,8 +193,9 @@
 		return
 	if (!sort_delay())
 		return
-	testing("[mail_throw]")
-	mail_throw.throw_at(usr, 2, 3)
+	mail_throw.forceMove(unload_turf)
+	mail_throw.throw_at(unload_turf, 2, 3)
+	mail_list -= mail_throw
 
 /obj/machinery/mailbox/proc/load(obj/item/weapon, mob/user)
 	if(ismob(weapon.loc))
@@ -239,7 +244,19 @@
 	. += mail_output
 	. += light_out
 
+/obj/machinery/mailbox/update_overlays()
+	. = ..()
+	var/init_icon = initial(icon)
+	if(!init_icon)
+		return
 
+	if(enabled)
+		. += currentstate ? mutable_appearance(init_icon, stateicons.currentstate) : mutable_appearance(init_icon, stateicons.idle)
+
+
+	// if(atom_integrity <= integrity_failure * max_integrity)
+	// 	. += mutable_appearance(init_icon, "bsod")
+	// 	. += mutable_appearance(init_icon, "broken")
 
 
 // /obj/machinery/mailmat/update_appearance(updates=ALL)
