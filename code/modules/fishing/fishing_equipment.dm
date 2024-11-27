@@ -212,8 +212,8 @@
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
 
-/obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
-	if(fish_type == FISHING_DUD || ispath(fish_type, /obj/item/fish))
+/obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type)
+	if(fish_type == FISHING_DUD || ispath(fish_type, /obj/item/fish) || isfish(fish_type))
 		return ..()
 
 	// We multiply the odds by five for everything that's not a fish nor a dud
@@ -272,9 +272,9 @@
 	return "The hook on your fishing rod wasn't meant for traditional fishing, rendering it useless at doing so!"
 
 
-/obj/item/fishing_hook/rescue/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
+/obj/item/fishing_hook/rescue/get_hook_bonus_multiplicative(fish_type)
 	// Sorry, you won't catch fish with this.
-	if(ispath(fish_type, /obj/item/fish))
+	if(ispath(fish_type, /obj/item/fish) || isfish(fish_type))
 		return RESCUE_HOOK_FISH_MULTIPLIER
 
 	return ..()

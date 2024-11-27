@@ -698,6 +698,46 @@
 
 	return data
 
+#define RANDOM_AQUARIUM_FISH "random_aquarium_fish"
+
+/datum/fish_source/aquarium
+	radial_state = "fish_tank"
+	fish_table = list(
+		FISHING_DUD = 10,
+	)
+	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD|FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG
+	fishing_difficulty = FISHING_EASY_DIFFICULTY - 5
+
+#undef RANDOM_AQUARIUM_FISH
+
+/datum/fish_source/aquarium/get_fish_table(atom/location, from_explosion = FALSE)
+	if(istype(location, /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = location
+		location = portal.current_linked_atom
+	var/list/table = list()
+	for(var/obj/item/fish/fish in location)
+		if(fish.status == FISH_DEAD) //dead fish cannot be caught
+			continue
+		table[fish] = 10
+	if(!length(table))
+		return fish_table
+	return table
+
+/datum/fish_source/aquarium/spawn_reward_from_explosion(atom/location, severity)
+	return //If the aquarium breaks, all fish are released anyway.
+
+/datum/fish_source/aquarium/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
+	var/list/data = list()
+
+	data += LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = "Fish",
+		FISH_SOURCE_AUTOWIKI_DUD = "",
+		FISH_SOURCE_AUTOWIKI_WEIGHT = 100,
+		FISH_SOURCE_AUTOWIKI_NOTES = "Any fish currently inside the aquarium, be they alive or dead.",
+	))
+
+	return data
+
 /datum/fish_source/hot_spring
 	catalog_description = "Hot Springs"
 	radial_state = "onsen"

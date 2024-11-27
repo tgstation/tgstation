@@ -265,6 +265,8 @@
  * present in other sources without this flag as well.
  */
 #define FISH_SOURCE_FLAG_SKIP_CATCHABLES (1<<2)
+/// When examined by someone with enough fishing skill, this will also display fish that doesn't have FISH_FLAG_SHOW_IN_CATALOG
+#define FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG (1<<3)
 
 /**
  * A macro to ensure the wikimedia filenames of fish icons are unique, especially since there're a couple fish that have
