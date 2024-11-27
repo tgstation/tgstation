@@ -117,7 +117,7 @@
 			continue
 		if(possible_shippable.flags_1 & HOLOGRAM_1)
 			continue
-		if(istype(possible_shippable, /obj/item))
+		if(isitem(possible_shippable))
 			var/obj/item/possible_shippable_item = possible_shippable
 			if(possible_shippable_item.item_flags & ABSTRACT)
 				continue
