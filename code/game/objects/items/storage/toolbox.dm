@@ -56,10 +56,9 @@
 
 	var/list/item_radial = list()
 	for (var/obj/item/tool in atom_storage.real_location)
-		for (var/item_type in GLOB.tool_items)
-			if (istype(tool, item_type))
-				item_radial[tool] = tool.appearance
-				break
+		if(is_type_in_list(tool, GLOB.tool_items))
+			item_radial[tool] = tool.appearance
+			break
 
 	if (!length(item_radial))
 		return NONE
