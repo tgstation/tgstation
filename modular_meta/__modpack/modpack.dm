@@ -20,6 +20,8 @@
 
 // Modpacks initialization steps
 /datum/modpack/proc/pre_initialize() // Basic modpack fuctions
+	if(!id)
+		return "Modpack ID is unset."
 	if(!name)
 		return "Modpack name is unset."
 
@@ -70,16 +72,9 @@
 			"name" = modpack.name,
 			"desc" = modpack.desc,
 			"author" = modpack.author,
+			"icon_class" = assets.icon_class_name("modpack-[modpack.id]"),
 			"id" = modpack.id,
 			)
-		if (icon == "modular_meta/__modpack/mods_icon_placeholder.dmi")
-			modpack_data += list(
-				"icon_class" = assets.icon_class_name("modpack-cheburek_car"),
-				)
-		else
-			modpack_data += list(
-				"icon_class" = assets.icon_class_name("modpack-[modpack.id]"),
-				)
 
 		if (modpack.group == "Фичи" || modpack.group == "Features")
 			.["features"] += list(modpack_data)
@@ -89,3 +84,4 @@
 			.["reverts"] += list(modpack_data)
 		else
 			CRASH("Modpack [modpack.name] has bad group name or queued for deletion.")
+		// TODO: add here events group, only visible for admins 

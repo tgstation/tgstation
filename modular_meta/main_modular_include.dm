@@ -8,22 +8,21 @@
 
 /* --FEATURES-- */
 
-#if ADDITIONAL_CIRCUITS
-	#include "features\additional_circuit\includes.dm"
-#endif
+#include "features\additional_circuit\includes.dm"
 #if CHEBUREK_CAR
 	#include "features\cheburek_car\includes.dm"
 #endif
+
+/* -- REVERTS -- */
+
+#include "reverts\revert_glasses_protect_welding\includes.dm"
 
 /* --TRANSLATIONS-- */
 
 #if RU_CRAYONS
 	#include "ru_translate\ru_crayons\includes.dm"
 #endif
+#include "ru_translate\ru_tweak_say_fonts\includes.dm"
 #if RU_VENDORS
 	#include "ru_translate\ru_vendors\includes.dm"
 #endif
-
-/* -- REVERTS -- */
-
-#include "reverts\revert_glasses_protect_welding\includes.dm"
