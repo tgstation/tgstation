@@ -117,6 +117,10 @@
 			continue
 		if(possible_shippable.flags_1 & HOLOGRAM_1)
 			continue
+		if(istype(possible_shippable, /obj/item))
+			var/obj/item/possible_shippable_item = possible_shippable
+			if(possible_shippable_item.item_flags & ABSTRACT)
+				continue
 		if(curr_bounty.applies_to(possible_shippable))
 			active_stack ++
 			curr_bounty.ship(possible_shippable)
