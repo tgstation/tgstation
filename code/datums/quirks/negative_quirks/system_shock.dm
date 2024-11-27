@@ -10,7 +10,7 @@
 	quirk_flags = QUIRK_HUMAN_ONLY
 
 /datum/quirk/system_shock/add(client/client_source)
-	if(issynthetic(quirk_holder))
+	if(SPECIES_ANDROID)
 		RegisterSignals(quirk_holder, list(COMSIG_LIVING_ELECTROCUTE_ACT, COMSIG_LIVING_MINOR_SHOCK), PROC_REF(on_electrocute))
 
 /datum/quirk/system_shock/remove()
@@ -19,7 +19,7 @@
 
 /datum/quirk/system_shock/proc/on_electrocute()
 	SIGNAL_HANDLER
-	var/knockout_length = 0.9 SECONDS + rand(0 SECONDS, 0.5 SECONDS)
+	var/knockout_length = 20 SECONDS + rand(0 SECONDS, 5 SECONDS)
 	quirk_holder.set_static_vision(knockout_length)
 	quirk_holder.balloon_alert(quirk_holder, "system rebooting")
 	to_chat(quirk_holder, span_danger("CRIT&!AL ERR%R: S#STEM REBO#TING."))
