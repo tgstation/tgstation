@@ -290,6 +290,7 @@
 			if(3)
 				brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
 		brainmob.emote("alarm")
+		SEND_SIGNAL(brainmob, COMSIG_LIVING_MINOR_SHOCK) // NOVA EDIT ADDITION
 
 /obj/item/mmi/atom_deconstruct(disassembled = TRUE)
 	if(brain)
