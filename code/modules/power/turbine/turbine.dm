@@ -1,5 +1,11 @@
+///Minimum pressure of gases pumped through the turbine
 #define MINIMUM_TURBINE_PRESSURE 0.01
+///Returns the minimum pressure if it falls below the value
 #define PRESSURE_MAX(value)(max((value), MINIMUM_TURBINE_PRESSURE))
+///Use emissive for overlays
+#define EMISSIVE_OVERLAY (1 << 0)
+///No turned off overlay
+#define NO_INACTIVE_OVERLAY (1 << 1)
 
 /obj/machinery/power/turbine
 	density = TRUE
@@ -17,15 +23,8 @@
 	var/obj/item/turbine_parts/part_path
 	///The gas mixture this turbine part is storing
 	var/datum/gas_mixture/machine_gasmix
-
-	///Our overlay when active
-	var/active_overlay = ""
-	///Our overlay when off
-	var/off_overlay = ""
-	///Our overlay when open
-	var/open_overlay = ""
-	///Should we use emissive appearance?
-	var/emissive = FALSE
+	///Flags for our overlays
+	var/overlay_flags = NONE
 
 /obj/machinery/power/turbine/Initialize(mapload, gas_theoretical_volume)
 	. = ..()
@@ -58,43 +57,6 @@
 
 	deactivate_parts()
 	return ..()
-
-/**
- * Handles all the calculations needed for the gases, work done, temperature increase/decrease
- *
- * Arguments
- * * datum/gas_mixture/input_mix - the gas from the environment or from another part of the turbine
- * * datum/gas_mixture/output_mix - the gas that got pumped into this part from the input mix.
- * ideally should be same as input mix but varying texmperatur & pressures can cause varying results
- * * work_amount_to_remove - the amount of work to subtract from the actual work done to pump in the input mixture.
- * For e.g. if gas was transfered from the inlet compressor to the rotor we want to subtract the work done
- * by the inlet from the rotor to get the true work done
- * * intake_size - the percentage of gas to be fed into an turbine part, controlled by turbine computer for inlet compressor only
- */
-/obj/machinery/power/turbine/proc/transfer_gases(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove, intake_size = 1)
-	PROTECTED_PROC(TRUE)
-
-	//pump gases. if no gases were transferred then no work was done
-	var/output_pressure = PRESSURE_MAX(output_mix.return_pressure())
-	var/datum/gas_mixture/transferred_gases = input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
-	if(!transferred_gases)
-		return 0
-
-	//compute work done
-	var/work_done = QUANTIZE(transferred_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transferred_gases.temperature * log((transferred_gases.volume * PRESSURE_MAX(transferred_gases.return_pressure())) / (output_mix.volume * output_pressure)) * TURBINE_WORK_CONVERSION_MULTIPLIER
-	if(work_amount_to_remove)
-		work_done = work_done - work_amount_to_remove
-
-	//compute temperature & work from temperature if that is a lower value
-	var/output_mix_heat_capacity = output_mix.heat_capacity()
-	if(!output_mix_heat_capacity)
-		return 0
-	work_done = min(work_done, (output_mix_heat_capacity * output_mix.temperature - output_mix_heat_capacity * TCMB) / TURBINE_HEAT_CONVERSION_MULTIPLIER)
-	output_mix.temperature = max((output_mix.temperature * output_mix_heat_capacity + work_done * TURBINE_HEAT_CONVERSION_MULTIPLIER) / output_mix_heat_capacity, TCMB)
-	return work_done
-
-/obj/machinery/power/turbine/block_superconductivity()
-	return TRUE
 
 /obj/machinery/power/turbine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item))
@@ -143,14 +105,52 @@
 /obj/machinery/power/turbine/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += open_overlay
+		. += "[base_icon_state]_open"
 
 	if(active)
-		. += active_overlay
-		if(emissive)
-			. += emissive_appearance(icon, active_overlay, src)
-	else
-		. += off_overlay
+		. += "[base_icon_state]_on"
+		if(overlay_flags & EMISSIVE_OVERLAY)
+			. += emissive_appearance(icon, "[base_icon_state]_on", src)
+	else if(!(overlay_flags & NO_INACTIVE_OVERLAY))
+		. += "[base_icon_state]_off"
+
+
+/**
+ * Handles all the calculations needed for the gases, work done, temperature increase/decrease
+ *
+ * Arguments
+ * * datum/gas_mixture/input_mix - the gas from the environment or from another part of the turbine
+ * * datum/gas_mixture/output_mix - the gas that got pumped into this part from the input mix.
+ * ideally should be same as input mix but varying texmperatur & pressures can cause varying results
+ * * work_amount_to_remove - the amount of work to subtract from the actual work done to pump in the input mixture.
+ * For e.g. if gas was transfered from the inlet compressor to the rotor we want to subtract the work done
+ * by the inlet from the rotor to get the true work done
+ * * intake_size - the percentage of gas to be fed into an turbine part, controlled by turbine computer for inlet compressor only
+ */
+/obj/machinery/power/turbine/proc/transfer_gases(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove, intake_size = 1)
+	PROTECTED_PROC(TRUE)
+
+	//pump gases. if no gases were transferred then no work was done
+	var/output_pressure = PRESSURE_MAX(output_mix.return_pressure())
+	var/datum/gas_mixture/transferred_gases = input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
+	if(!transferred_gases)
+		return 0
+
+	//compute work done
+	var/work_done = QUANTIZE(transferred_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transferred_gases.temperature * log((transferred_gases.volume * PRESSURE_MAX(transferred_gases.return_pressure())) / (output_mix.volume * output_pressure)) * TURBINE_WORK_CONVERSION_MULTIPLIER
+	if(work_amount_to_remove)
+		work_done = work_done - work_amount_to_remove
+
+	//compute temperature & work from temperature if that is a lower value
+	var/output_mix_heat_capacity = output_mix.heat_capacity()
+	if(!output_mix_heat_capacity)
+		return 0
+	work_done = min(work_done, (output_mix_heat_capacity * output_mix.temperature - output_mix_heat_capacity * TCMB) / TURBINE_HEAT_CONVERSION_MULTIPLIER)
+	output_mix.temperature = max((output_mix.temperature * output_mix_heat_capacity + work_done * TURBINE_HEAT_CONVERSION_MULTIPLIER) / output_mix_heat_capacity, TCMB)
+	return work_done
+
+/obj/machinery/power/turbine/block_superconductivity()
+	return TRUE
 
 /obj/machinery/power/turbine/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -267,11 +267,9 @@
 	desc = "The input side of a turbine generator, contains the compressor."
 	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "inlet_compressor"
+	base_icon_state = "inlet"
 	circuit = /obj/item/circuitboard/machine/turbine_compressor
 	part_path = /obj/item/turbine_parts/compressor
-	active_overlay = "inlet_animation"
-	off_overlay = "inlet_off"
-	open_overlay = "inlet_open"
 
 	/// The rotor this inlet is linked to
 	var/obj/machinery/power/turbine/core_rotor/rotor
@@ -326,11 +324,9 @@
 	desc = "The output side of a turbine generator, contains the turbine and the stator."
 	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "turbine_outlet"
+	base_icon_state = "outlet"
 	circuit = /obj/item/circuitboard/machine/turbine_stator
 	part_path = /obj/item/turbine_parts/stator
-	active_overlay = "outlet_animation"
-	off_overlay = "outlet_off"
-	open_overlay = "outlet_open"
 
 	/// The rotor this outlet is linked to
 	var/obj/machinery/power/turbine/core_rotor/rotor
@@ -373,12 +369,11 @@
 	desc = "The middle part of a turbine generator, contains the rotor and the main computer."
 	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "core_rotor"
-	active_overlay = "core_light"
-	open_overlay = "core_open"
-	emissive = TRUE
+	base_icon_state = "core"
 	can_change_cable_layer = TRUE
 	circuit = /obj/item/circuitboard/machine/turbine_rotor
 	part_path = /obj/item/turbine_parts/rotor
+	overlay_flags = EMISSIVE_OVERLAY | NO_INACTIVE_OVERLAY
 
 	///ID to easily connect the main part of the turbine to the computer
 	var/mapping_id
@@ -485,10 +480,7 @@
 		return
 	balloon_alert(viewer, text)
 
-/**
- * Called to activate the complete machine, checks for part presence, correct orientation and installed parts
- * Registers the input/output turfs
- */
+///Called to activate the complete machine, checks for part presence, correct orientation and installed parts
 /obj/machinery/power/turbine/core_rotor/activate_parts(mob/user, check_only = FALSE)
 	//if this is not a checkup and all parts are connected then we have nothing to do
 	if(!check_only && all_parts_connected)
@@ -496,13 +488,13 @@
 
 	//locate compressor & turbine, when checking we simply check to see if they are still there
 	if(!check_only)
-		compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, REVERSE_DIR(dir))
-		turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, dir)
+		compressor = locate() in get_step(src, REVERSE_DIR(dir))
+		turbine = locate() in get_step(src, dir)
 
 		//maybe look for them the other way around. we want the rotor to allign with them either way for player convinience
 		if(!compressor && !turbine)
-			compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, dir)
-			turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, REVERSE_DIR(dir))
+			compressor = locate() in get_step(src, dir)
+			turbine = locate() in get_step(src, REVERSE_DIR(dir))
 
 	//sanity checks for compressor
 	if(QDELETED(compressor))
@@ -522,7 +514,7 @@
 	if(QDELETED(turbine))
 		feedback(user, "missing turbine!")
 		return (all_parts_connected = FALSE)
-	if(turbine.dir != dir && turbine.dir != REVERSE_DIR(dir))
+	if(turbine.dir != dir && turbine.dir != REVERSE_DIR(dir)) //make sure it's not perpendicular to the rotor
 		feedback(user, "turbine not aligned with rotor!")
 		return (all_parts_connected = FALSE)
 	if(!turbine.can_connect)
@@ -532,7 +524,7 @@
 		feedback(user, "turbine is missing stator part!")
 		return (all_parts_connected = FALSE)
 
-	//final sanity check to make sure turbine & compressor are facing the same direction. From an visual perspective they will appear facing away from each other actually. I know blame spriter's
+	//sanity check to make sure turbine & compressor are facing the same direction. From an visual perspective they will appear facing away from each other actually. I know blame spriter's
 	if(compressor.dir != turbine.dir)
 		feedback(user, "turbine & compressor are not facing away from each other!")
 		return (all_parts_connected = FALSE)
@@ -590,7 +582,7 @@
 		update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage)
 		begin_processing()
 	else
-		update_mode_power_usage(IDLE_POWER_USE, idle_power_usage)
+		unset_static_power()
 		end_processing()
 
 /// Getter for turbine integrity, return the amount in %
@@ -676,3 +668,5 @@
 
 #undef PRESSURE_MAX
 #undef MINIMUM_TURBINE_PRESSURE
+#undef EMISSIVE_OVERLAY
+#undef NO_INACTIVE_OVERLAY
