@@ -91,7 +91,6 @@
 	// Add biotype
 	if(owner.mob_biotypes & bonus_biotype)
 		biotype_added = FALSE
-		return TRUE
 	owner.mob_biotypes |= bonus_biotype
 	biotype_added = TRUE
 
@@ -116,7 +115,7 @@
 	if(length(bonus_traits))
 		owner.remove_traits(bonus_traits, REF(src))
 	// Remove biotype (if added)
-	if(biotype_added == TRUE)
+	if(biotype_added)
 		owner.mob_biotypes &= ~bonus_biotype
 
 	if(bonus_deactivate_text)

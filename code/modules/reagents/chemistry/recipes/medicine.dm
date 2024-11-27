@@ -214,7 +214,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/medicine/fishy_reagent/alt
-	results = list(/datum/reagent/medicine/strange_reagent/fishy_reagent = 3)
+	results = list(/datum/reagent/medicine/strange_reagent/fishy_reagent = 6)
 	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/water/salt = 1, /datum/reagent/toxin/tetrodotoxin = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 

@@ -207,9 +207,6 @@
 	if(HAS_TRAIT(source, TRAIT_CATCH_AND_RELEASE))
 		context[SCREENTIP_CONTEXT_RMB] = "Release"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(held_item, /obj/item/clothing/neck/stethoscope))
-		context[SCREENTIP_CONTEXT_LMB] = "Check Pulse"
-		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
 /obj/item/fish/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -221,6 +218,9 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	if(istype(held_item, /obj/item/fish_analyzer))
 		context[SCREENTIP_CONTEXT_LMB] = "Scan"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/clothing/neck/stethoscope))
+		context[SCREENTIP_CONTEXT_LMB] = "Check Pulse"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 

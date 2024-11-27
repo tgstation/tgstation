@@ -583,10 +583,20 @@
 
 /datum/chemical_reaction/lifish/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
+
+	// create fish possibles
+	var/list/fish_types = list()
+	for(var/path in subtypesof(/obj/item/fish))
+		var/obj/item/fish/fake_fish = path
+		if(initial(fake_fish.random_case_rarity) == FISH_RARITY_NOPE) // means they aren't mean to be randomly available
+			continue
+		fish_types |= path
+
+	// spawn from popssible fishes
 	for(var/i in 1 to rand(1, created_volume)) // More flop.
-		var/obj/item/fish/spawned_fish = pick(subtypesof(/obj/item/fish))
+		var/obj/item/fish/spawned_fish = pick(fish_types)
 		new spawned_fish(location)
-	..()
+	return ..()
 
 //monkey powder heehoo
 /datum/chemical_reaction/monkey_powder
