@@ -962,3 +962,21 @@
   - bugfix: Fixed a (non-player facing) runtime in organ manipulation surgery
   grungussuss:
   - rscdel: The northstar arcship has been removed. :(
+2024-11-27:
+  Boviro:
+  - qol: Atmos MODsuits can now hold extinguishers on their suit slot
+  Ghommie:
+  - bugfix: FIsh flops again.
+  Melbert:
+  - balance: Morphine's sedative power has been halved. It now takes ~10 units to
+      guarantee sleep, up from ~5.
+  - balance: Morphine now causes mild disgust.
+  - balance: Morphine is now twice as addictive, causing addiction if you down over
+      ~30 units without pause.
+  SmArtKar:
+  - sound: Reduced volume of fire sounds
+  Time-Green:
+  - bugfix: No more "is blacking out!"
+  - bugfix: Brain transplants work again
+  carlarctg:
+  - spellcheck: Fixes a typo in legionnaire abilities
