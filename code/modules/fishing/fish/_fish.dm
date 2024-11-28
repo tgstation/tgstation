@@ -219,7 +219,25 @@
 	if(istype(held_item, /obj/item/fish_analyzer))
 		context[SCREENTIP_CONTEXT_LMB] = "Scan"
 		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/clothing/neck/stethoscope))
+		context[SCREENTIP_CONTEXT_LMB] = "Check Pulse"
+		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
+
+/obj/item/fish/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/clothing/neck/stethoscope))
+		return NONE
+	user.balloon_alert_to_viewers("checking pulse")
+	if(!do_after(user, 2.5 SECONDS, src))
+		return ITEM_INTERACT_FAILURE
+	// Sir... I'm afraid your fish is dying.
+	user.visible_message(span_notice("[user] checks the pulse of [src] with [tool]."), span_notice("You check the pulse of [src] with [tool]."))
+	var/warns = get_health_warnings(user, always_deep = TRUE)
+	if(!warns)
+		to_chat(user, span_notice("[src] appears to be perfectly healthy!"))
+		return ITEM_INTERACT_SUCCESS
+	to_chat(user, warns)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fish/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!HAS_TRAIT(interacting_with, TRAIT_CATCH_AND_RELEASE))
@@ -434,26 +452,45 @@
 
 /obj/item/fish/examine(mob/user)
 	. = ..()
-	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH))
-		if(status == FISH_DEAD)
-			. += span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
-		else
-			var/list/warnings = list()
-			if(is_starving())
-				warnings += "starving"
-			if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
-				warnings += "drowning"
-			if(health < initial(health) * 0.6)
-				warnings += "sick"
-				if(length(warnings))
-					. += span_warning("It's [english_list(warnings)].")
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")
-		if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
-			. += span_smallnoticeital("It can be used as a fishing bait.")
+
+	. += get_health_warnings(user, always_deep = FALSE)
+
+	if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
+		. += span_smallnoticeital("It can be used as a fishing bait.")
+
 	if(bites_amount)
 		. += span_warning("It's been bitten by someone.")
+
+/obj/item/fish/proc/get_health_warnings(mob/user, always_deep = FALSE)
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) && !always_deep)
+		return
+	if(status == FISH_DEAD)
+		return span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
+
+	var/list/warnings = list()
+	if(is_starving())
+		warnings += "starving"
+	if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
+		warnings += "drowning"
+
+	var/health_ratio = health / initial(health)
+	switch(health_ratio)
+		if(0 to 0.25)
+			warnings += "dying"
+		if(0.25 to 0.5)
+			warnings += "very unhealthy"
+		if(0.5 to 0.75)
+			warnings += "unhealthy"
+		if(0.75 to 0.9)
+			warnings += "mostly healthy"
+
+	if(length(warnings))
+		. += span_warning("It's [english_list(warnings)].")
+
+	return .
 
 /**
  * This proc takes a base size, base weight and deviation arguments to generate new size and weight through a gaussian distribution (bell curve)
@@ -961,7 +998,7 @@
 	var/datum/reagent/medicine/strange_reagent/revival = locate() in reagents
 	if(!revival)
 		return
-	if(reagents[revival] >= 2 * w_class)
+	if(reagents[revival] >= 2 * w_class && revival.pre_rez_check(src))
 		set_status(FISH_ALIVE)
 	else
 		balloon_alert_to_viewers("twitches for a moment!")
