@@ -23,7 +23,7 @@
 	/// The turf to unload mail at.
 	var/turf/unload_turf = null
 	/// List of the departments to sort the mail for.
-	var/list/sorting_departments = list(
+	var/list/datum/sorting_departments = list(
 		DEPARTMENT_ENGINEERING,
 		DEPARTMENT_SECURITY,
 		DEPARTMENT_MEDICAL,
@@ -195,15 +195,15 @@
 				load(mail, usr)
 				loaded++
 
-			if(loaded)
-				user.visible_message(span_notice("[user] loads \the [src] with \the [I]."), \
-				span_notice("You load \the [src] with \the [I]."))
-				if(length(I.contents))
-					to_chat(user, span_warning("Some items are refused."))
-				return TRUE
-			else
-				to_chat(user, span_warning("There is nothing in \the [I] to put in the [src]!"))
-				return FALSE
+		if(loaded)
+			user.visible_message(span_notice("[user] loads \the [src] with \the [I]."), \
+			span_notice("You load \the [src] with \the [I]."))
+			if(length(I.contents))
+				to_chat(user, span_warning("Some items are refused."))
+			return TRUE
+		else
+			to_chat(user, span_warning("There is nothing in \the [I] to put in the [src]!"))
+			return FALSE
 	else if (istype(I, /obj/item/mail))
 		I.forceMove(src)
 		mail_list += I
@@ -227,18 +227,18 @@
 	currentstate = "idle"
 	update_appearance()
 
-/obj/machinery/mailsorter/proc/load(obj/item/weapon, mob/user)
-	if(ismob(weapon.loc))
-		var/mob/owner = weapon.loc
-		if(!owner.transferItemToLoc(weapon, src))
-			to_chat(owner, span_warning("\the [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
+/obj/machinery/mailsorter/proc/load(obj/item/thingy, mob/user)
+	if(ismob(thingy.loc))
+		var/mob/owner = thingy.loc
+		if(!owner.transferItemToLoc(thingy, src))
+			to_chat(owner, span_warning("\the [thingy] is stuck to your hand, you cannot put it in \the [src]!"))
 			return FALSE
 		return TRUE
 	else
-		if(weapon.loc.atom_storage)
-			return weapon.loc.atom_storage.attempt_remove(weapon, src, silent = TRUE)
+		if(thingy.loc.atom_storage)
+			return thingy.loc.atom_storage.attempt_remove(thingy, src, silent = TRUE)
 		else
-			weapon.forceMove(src)
+			thingy.forceMove(src)
 			return TRUE
 
 /obj/machinery/mailsorter/click_alt(mob/living/user)
