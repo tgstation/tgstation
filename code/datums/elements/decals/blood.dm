@@ -16,8 +16,7 @@
 
 /datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)
 	var/obj/item/source_item = source
-	ADD_KEEP_TOGETHER(I, type)
-	var/icon/icon_for_size = icon(icon, icon_state)
+	ADD_KEEP_TOGETHER(source_item, type)
 	var/scale_factor_x = source_item.get_cached_width()
 	var/scale_factor_y = source_item.get_cached_height()
 	var/mutable_appearance/blood_splatter = mutable_appearance('icons/effects/blood.dmi', "itemblood", appearance_flags = RESET_COLOR) //MA of the blood that we apply
