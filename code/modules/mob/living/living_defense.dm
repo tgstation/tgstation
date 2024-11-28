@@ -185,7 +185,7 @@
 
 /mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
 
-	if(HAS_TRAIT(src, TRAIT_COMBAT_MODE_LOCK)) // for suicides
+	if(HAS_TRAIT(src, TRAIT_COMBAT_MODE_LOCK))
 		return
 
 	if(combat_mode == new_mode)

@@ -163,17 +163,21 @@
 
 /obj/item/fish/zipzap/suicide_act(mob/living/user)
 	if(!electrocute_mob(user, power_source = get_area(src), source = src, siemens_coeff = 1, dist_check = FALSE))
-		user.visible_message(span_suicide("[user] tries to slap themselves with [src], but they're immune to electricity!"))
+		user.visible_message(span_suicide("[user] tries to slap [user.p_them()]self with [src], but they're immune to electricity!"))
 		return SHAME
 	return ..()
 
 // real suicide handled by og fish proc
-/obj/item/fish/zipzap/slapperoni(mob/living/user)
-	if(user.stat == DEAD)
-		return
+/obj/item/fish/zipzap/slapperoni(mob/living/user, iteration)
 	user.visible_message(span_bolddanger("*ZAP!*"))
 	user.attackby(src, user)
 	electrocute_mob(user, power_source = get_area(src), source = src, siemens_coeff = 1, dist_check = FALSE) // how do i make this use electrogenesis_power
+	if(user.stat > SOFT_CRIT)
+		user.gib(DROP_ORGANS|DROP_BODYPARTS|DROP_ITEMS)
+		return
+	if(iteration > 100)
+		return // failsafe
+	slapperoni(user, iteration++)
 
 /obj/item/fish/tadpole
 	name = "tadpole"

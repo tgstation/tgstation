@@ -204,7 +204,7 @@
 	register_item_context()
 
 /obj/item/fish/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] starts rapidly slapping [user.p_them()]selves with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] starts rapidly slapping [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.set_combat_mode(TRUE)
 	ADD_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
 	slapperoni(user, iteration = 1)
@@ -218,8 +218,7 @@
 		return
 	if(iteration > 100)
 		return // failsafe
-	addtimer(CALLBACK(src, PROC_REF(slapperoni), user, iteration++), 0.1 SECONDS * iteration)
-//	slapperoni(user)
+	slapperoni(user, iteration++)
 
 /obj/item/fish/add_item_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(HAS_TRAIT(source, TRAIT_CATCH_AND_RELEASE))

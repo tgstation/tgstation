@@ -105,13 +105,13 @@
 	DO_FLOATING_ANIM(src)
 
 /obj/item/fish/starfish/suicide_act(mob/living/user)
-	user.visible_message("[user] swallows [src], and looks upwards...")
-	user.say("I must go. My people need me.")
+	user.visible_message(span_suicide("[user] swallows [src], and looks upwards..."))
+	user.say("I must go. My people need me.", forced = "starfish suicide")
 	addtimer(CALLBACK(src, PROC_REF(ascension), user), 1 SECONDS)
 	return MANUAL_SUICIDE
 
 /obj/item/fish/starfish/proc/ascension(mob/living/user)
-	user.apply_status_effect(/datum/status_effect/go_away)
+	user.apply_status_effect(/datum/status_effect/go_away/deluxe)
 	qdel(src)
 
 /obj/item/fish/baby_carp

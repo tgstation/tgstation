@@ -41,6 +41,7 @@
 	for(var/i in 1 to rand(5, 15))
 		human_user.dir = pick(GLOB.alldirs)
 		human_user.vomit(vomit_flags = pick(VOMIT_CATEGORY_DEFAULT, VOMIT_CATEGORY_BLOOD), distance = rand(1, 7))
+	qdel(src)
 	return TOXLOSS
 
 /obj/item/fish/jumpercable
@@ -200,11 +201,18 @@
 	toolspeed -= bonus_malus * 0.1
 
 // you suicide like a real chainsaw
-/obj/item/fish/chainsawfish/suicide_act(mob/living/user)
-	var/obj/item/chainsaw/fakesaw = new(user)
-	var/result = fakesaw.suicide_act(user, force_mode = (status == FISH_ALIVE))
-	qdel(fakesaw)
-	return result
+/obj/item/fish/chainsawfish/suicide_act(mob/living/carbon/user)
+	if(status == FISH_DEAD)
+		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
+		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
+		return BRUTELOSS
+
+	user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)
+	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
+	if(myhead)
+		myhead.dismember()
+	return BRUTELOSS
 
 /obj/item/fish/pike/armored
 	name = "armored pike"

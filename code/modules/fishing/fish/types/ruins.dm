@@ -38,7 +38,7 @@
 	return ..() * 1.2 //This should push its soft-capped (it's pretty big) price a bit above the rest
 
 /obj/item/fish/mastodon/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] swallows [src] whole (somehow)! It looks like user.p_theyre()] trying to commit suicide!"))
 	src.forceMove(user)
 	user.update_transform(1.25) // become BIG from eating BIG fish
 	addtimer(CALLBACK(src, PROC_REF(skeleton_appears), user), 2 SECONDS)
@@ -49,7 +49,7 @@
 	user.spawn_gibs()
 	user.drop_everything(del_on_drop = FALSE, force = FALSE, del_if_nodrop = FALSE)
 	user.set_species(/datum/species/skeleton)
-	user.say("AAAAAAAAAAAAHHHHHHHHHH!!!!!!!!!!!!!!")
+	user.say("AAAAAAAAAAAAHHHHHHHHHH!!!!!!!!!!!!!!", forced = "mastodon fish suicide")
 	user.AddComponent(/datum/component/omen) // the curse of the fish
 	if(prob(50)) // rare so less likely (the curse keeps you alive)
 		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, death)), 3 SECONDS)
@@ -91,7 +91,7 @@
 	return list("cooked meat" = 2)
 
 /obj/item/fish/soul/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to commit soulcide!"))
+	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to commit soulcide!"))
 	src.forceMove(user)
 	addtimer(CALLBACK(src, PROC_REF(good_ending), user), 2.5 SECONDS)
 	for(var/i in 1 to 7)
@@ -154,8 +154,8 @@
 	return list("cooked crab" = 2)
 
 /obj/item/fish/skin_crab/suicide_act(mob/living/carbon/human/user)
-	user.visible_message(span_suicide("[user] puts [user.p_their()] hand on [src] and focuses intently! It looks like they're trying to transfer their skin to [src]!"))
-	if(!ishuman(user))
+	user.visible_message(span_suicide("[user] puts [user.p_their()] hand on [src] and focuses intently! It looks like [user.p_theyre()] trying to transfer [user.p_their()] skin to [src]!"))
+	if(!ishuman(user) || HAS_TRAIT(user, TRAIT_UNHUSKABLE))
 		user.visible_message(span_suicide("[user] has no skin! How embarrassing!"))
 		return SHAME
 
@@ -170,6 +170,7 @@
 		user.cause_wound_of_type_and_severity(WOUND_SLASH, to_wound, WOUND_SEVERITY_CRITICAL, WOUND_SEVERITY_CRITICAL)
 		user.cause_wound_of_type_and_severity(WOUND_PIERCE, to_wound, WOUND_SEVERITY_CRITICAL, WOUND_SEVERITY_CRITICAL)
 		user.cause_wound_of_type_and_severity(WOUND_BLUNT, to_wound, WOUND_SEVERITY_CRITICAL, WOUND_SEVERITY_CRITICAL)
+		user.become_husk(REF(src))
 		to_wound.skin_tone = COLOR_RED // skin is gone. (if they somehow get revived, don't worry - death from loss of skin takes longer than dehydration, so it's still realistic)
 
 	// skin crab grows powerful

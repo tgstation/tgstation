@@ -704,7 +704,7 @@
 
 /datum/status_effect/go_away
 	id = "go_away"
-	duration = STATUS_EFFECT_PERMANENT
+	duration = 10 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 0.2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/go_away
@@ -714,15 +714,22 @@
 	. = ..()
 	direction = pick(NORTH, SOUTH, EAST, WEST)
 	new_owner.setDir(direction)
-	RegisterSignal(new_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(wipe_bozo))
-
-/datum/status_effect/go_away/proc/wipe_bozo()
-	qdel(owner)
 
 /datum/status_effect/go_away/tick(seconds_between_ticks)
 	owner.AdjustStun(1, ignore_canstun = TRUE)
 	var/turf/T = get_step(owner, direction)
 	owner.forceMove(T)
+
+/datum/status_effect/go_away/deluxe
+	id = "go_away"
+	duration = INFINITY
+
+/datum/status_effect/go_away/deluxe/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	RegisterSignal(new_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(wipe_bozo))
+
+/datum/status_effect/go_away/deluxe/proc/wipe_bozo()
+	qdel(owner)
 
 /atom/movable/screen/alert/status_effect/go_away
 	name = "TO THE STARS AND BEYOND!"

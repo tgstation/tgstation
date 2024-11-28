@@ -37,7 +37,7 @@
 		QDEL_IN(src, 3 SECONDS)
 
 /obj/item/fish/holo/suicide_act(mob/living/user)
-	visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to derez [user.p_them()]selves!"))
+	visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to derez [user.p_them()]selves!"))
 	var/area/station/holodeck/holo_area = get_area(src)
 	if(!istype(holo_area))
 		user.dust(just_ash = TRUE, drop_items = FALSE)
@@ -122,7 +122,7 @@
 			var/obj/item/bodypart/head/head = limb
 			head.head_flags &= ~HEAD_EYESPRITES
 
-	..()
+	return ..()
 
 /obj/item/fish/holo/halffish
 	name = "holographic half-fish"

@@ -144,7 +144,7 @@
 	return //it's all bones and no meat.
 
 /obj/item/fish/boned/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to commit suicide!"))
 	src.forceMove(user)
 	addtimer(CALLBACK(src, PROC_REF(skeleton_appears), user), 2 SECONDS)
 	return MANUAL_SUICIDE_NONLETHAL // chance not to die
@@ -154,7 +154,7 @@
 	user.spawn_gibs()
 	user.drop_everything(del_on_drop = FALSE, force = FALSE, del_if_nodrop = FALSE)
 	user.set_species(/datum/species/skeleton)
-	user.say("AAAAAAAAAAAAHHHHHHHHHH!!!!!!!!!!!!!!")
+	user.say("AAAAAAAAAAAAHHHHHHHHHH!!!!!!!!!!!!!!", forced = "bone fish suicide")
 	if(prob(90))
 		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, death)), 3 SECONDS)
 		user.set_suicide(TRUE)

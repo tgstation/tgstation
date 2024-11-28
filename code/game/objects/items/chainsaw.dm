@@ -70,9 +70,8 @@
 
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-/obj/item/chainsaw/suicide_act(mob/living/carbon/user, force_mode)
-	// if NOT active and NOT forced to act active, OR if forced to act active
-	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && (force_mode != TRUE) || force_mode == FALSE)
+/obj/item/chainsaw/suicide_act(mob/living/carbon/user)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
 		return BRUTELOSS
