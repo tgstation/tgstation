@@ -589,7 +589,7 @@ GLOBAL_LIST_INIT(icon_size_cache, list())
 	else
 		sample_icon = target.icon
 	// If icon is a file, we are guaranteed to always have a consistent sprite size for all objects from that icon
-	GLOB.icon_size_cache[isfile(target.icon) ? target.icon : sample_icon] = list(sample_icon.Width(), sample_icon.Height())
+	GLOB.icon_size_cache[target.icon] = list(sample_icon.Width(), sample_icon.Height())
 
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX
