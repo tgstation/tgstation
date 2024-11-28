@@ -253,10 +253,10 @@
 	desc = "An experimental energy-based ballistc battle rifle. Only available to \
 		Nanotrasen stations for security purposes. DO NOT RESELL TO OUTSIDE COMPANIES. \
 		Contains three NT BR-38 rifles and three magazines containing .38 Standard."
-	cost = CARGO_CRATE_VALUE * 30
+	cost = CARGO_CRATE_VALUE * 100
 	contains = list(
 		/obj/item/gun/ballistic/automatic/battle_rifle = 2,
-		/obj/item/ammo_box/magazine/m38 = 3,
+		/obj/item/ammo_box/magazine/m38 = 4,
 	)
 	crate_name = "battle rifle crate"
 
