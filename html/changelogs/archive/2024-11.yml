@@ -980,3 +980,31 @@
   - bugfix: Brain transplants work again
   carlarctg:
   - spellcheck: Fixes a typo in legionnaire abilities
+2024-11-28:
+  Absolucy:
+  - bugfix: ACTUALLY allow dot radio prefixes to also work with the tgui-say radio
+      prefix display.
+  Ben10Omintrix:
+  - bugfix: repairbots no longer get flashed by their own welder
+  - bugfix: repairbots no longer break glass tables they step on
+  - bugfix: repairbots can no longer flush their own welders
+  - bugfix: fixes some runtimes when emagged repairbots try to deconstruct things
+  - bugfix: fixes sentient repairbots not being able to see or remove their material
+      counts
+  Melbert:
+  - bugfix: Frozen slimes can't latch on to you (but they can still attack you technically)
+  - bugfix: Maybe fixes some organ manipulation bugs
+  - bugfix: Mulebot wire hacking is less fourth wall breaking
+  - bugfix: Stuff like the SM exploding will no longer output to your OOC tab
+  Mothblocks:
+  - qol: IV drips now create a beam from their spout to your body, and will visually
+      pull you closer.
+  SmArtKar:
+  - bugfix: Fixed colossus committing suicide on a regular basis
+  SyncIt21:
+  - bugfix: chainsaw is not invisible when turned off in hand
+  - bugfix: chainsaw won't play ping sound when turned on
+  - bugfix: mounted chainsaw has a new animated sprite when turned on & won't go invisible
+      in hand
+  ValuedEmployee:
+  - rscadd: New purr and meow emotes for players with felinid tongues
