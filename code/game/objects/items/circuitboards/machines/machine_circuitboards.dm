@@ -1467,7 +1467,7 @@
 		/datum/stock_part/card_reader = 1)
 
 /obj/item/circuitboard/machine/mailsorter
-	name = "Mailsorter"
+	name = "Mail Sorter"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/mailsorter
 	req_components = list(

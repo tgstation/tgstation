@@ -477,3 +477,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 #undef MAX_FLAT_PACKS
+
+/obj/item/flatpack/flatpacker // a roundstart flatpacker is NICE you can gahdamn tell the time and everythin'
+	board = /obj/item/circuitboard/machine/flatpacker
+
+/obj/item/flatpack/mailsorter // to have a roundstart mail sorter at cargo
+	board = /obj/item/circuitboard/machine/mailsorter

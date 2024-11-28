@@ -10,8 +10,6 @@
 	var/light_mask = "mailsorter-light-mask"
 	var/panel_type = "panel"
 
-	var/enabled = TRUE
-
 	circuit = /obj/item/circuitboard/machine/mailsorter
 
 	/// Bool that returns if the machine is already sorting mail.
@@ -76,6 +74,17 @@
 		mail.forceMove(dropturf)
 		mail_list -= mail
 
+/obj/machinery/mailsorter/proc/dump_all_mail(damage_flag)
+	if(!isturf(get_turf(src)))
+		for(var/obj/item/mail in mail_list)
+			qdel(mail)
+		return
+	var/turf/dropturf = unload_turf
+	for(var/obj/item/mail in mail_list)
+		mail.forceMove(dropturf)
+		mail.throw_at(unload_turf, 2, 3)
+		mail_list -= mail
+
 /obj/machinery/mailsorter/proc/accept_check(obj/item/weapon)
 	var/static/list/accepted_items = list(
 		/obj/item/mail,
@@ -120,7 +129,7 @@
 		if ("Dump")
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 			to_chat(usr, span_notice("[src] dumps [length(mail_list)] envelope\s on the floor."))
-			drop_all_mail()
+			dump_all_mail()
 		if ("Sort")
 			sort_mail(usr)
 
@@ -174,7 +183,7 @@
 	var/mob/user = usr
 
 	if (istype(I, /obj/item/storage/bag/mail))
-		if (length(I) < 1)
+		if (length(I.contents) < 1)
 			to_chat(user, span_warning("The [I] is empty!"))
 			return
 		var/loaded = 0
@@ -208,6 +217,7 @@
 	if(!mail_throw)
 		return
 	currentstate = "sorting"
+	update_appearance()
 	if (!sort_delay())
 		return
 	to_chat(usr, span_notice("[src] reluctantly spits out [mail_throw]."))
@@ -215,6 +225,7 @@
 	mail_throw.throw_at(unload_turf, 2, 3)
 	mail_list -= mail_throw
 	currentstate = "idle"
+	update_appearance()
 
 /obj/machinery/mailsorter/proc/load(obj/item/weapon, mob/user)
 	if(ismob(weapon.loc))
@@ -267,7 +278,7 @@
 	if(!init_icon)
 		return
 
-	if(enabled)
+	if(!(machine_stat & BROKEN) && powered())
 		. += mutable_appearance(init_icon, currentstate)
 	if(panel_open)
 		. += panel_type
@@ -279,20 +290,4 @@
 	if(machine_stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 	return ..()
-
-
-// /obj/machinery/mailmat/update_appearance(updates=ALL)
-// 	. = ..()
-// 	if(machine_stat & BROKEN)
-// 		set_light(0)
-// 		return
-// 	set_light(powered() ? MINIMUM_USEFUL_LIGHT_RANGE : 0)
-
-// /obj/machinery/mailmat/update_icon_state()
-// 	if(machine_stat & BROKEN)
-// 		icon_state = "[initial(icon_state)]-broken"
-// 		return ..()
-// 	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
-// 	return ..()
-
 
