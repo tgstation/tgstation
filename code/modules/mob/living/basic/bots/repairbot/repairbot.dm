@@ -6,7 +6,6 @@
 	icon_state = "repairbot_base"
 	base_icon_state = "repairbot_base"
 	pass_flags = parent_type::pass_flags | PASSTABLE
-	density = FALSE
 	layer = BELOW_MOB_LAYER
 	anchored = FALSE
 	health = 100
@@ -20,6 +19,8 @@
 	bot_type = REPAIR_BOT
 	additional_access = /datum/id_trim/job/station_engineer
 	ai_controller = /datum/ai_controller/basic_controller/bot/repairbot
+	mob_size = MOB_SIZE_SMALL
+	possessed_message = "You are a repairbot, cursed to prolong the swiss-cheesening of this death metal trap!"
 	///our iron stack
 	var/obj/item/stack/sheet/iron/our_iron
 	///our glass stack
@@ -43,8 +44,8 @@
 		/obj/item/stack/sheet/glass = typecacheof(list(/obj/structure/grille)),
 	)
 	var/static/list/possible_tool_interactions = list(
-		/obj/item/weldingtool/repairbot = typecacheof(list(/obj/machinery, /obj/structure/window)),
-		/obj/item/crowbar = typecacheof(list(/turf/open/floor)),
+		/obj/item/weldingtool/repairbot = typecacheof(list(/obj/structure/window)),
+		/obj/item/crowbar = typecacheof(list(/obj/machinery/door, /turf/open/floor)),
 	)
 	///our neutral voicelines
 	var/static/list/neutral_voicelines = list(
@@ -81,6 +82,7 @@
 	ai_controller.set_blackboard_key(BB_REPAIRBOT_NORMAL_SPEECH, neutral_voicelines)
 	var/static/list/abilities = list(
 		/datum/action/cooldown/mob_cooldown/bot/build_girder = BB_GIRDER_BUILD_ABILITY,
+		/datum/action/repairbot_resources = null,
 	)
 	grant_actions_by_list(abilities)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_NEGATES_GRAVITY, TRAIT_MOB_MERGE_STACKS, TRAIT_FIREDOOR_OPENER), INNATE_TRAIT)
@@ -114,6 +116,7 @@
 			user?.balloon_alert(user, "full!")
 			return
 		if(!our_sheet.can_merge(potential_stack))
+			user?.balloon_alert(user, "not suitable!")
 			return
 		var/atom/movable/to_move = potential_stack.split_stack(user, min(our_sheet.max_amount - our_sheet.amount, potential_stack.amount))
 		to_move.forceMove(src)
@@ -150,12 +153,12 @@
 	if(istype(target, /turf/open/space))
 		var/turf/open/space/space_target = target
 		if(!space_target.has_valid_support() && !(locate(/obj/structure/lattice) in space_target))
-			our_rods?.melee_attack_chain(src, space_target)
+			attempt_use_stack(our_rods ? our_rods : our_rods::name, space_target)
 
 	if(istype(target, /obj/structure/grille))
 		var/obj/structure/grille/grille_target = target
 		if(grille_target.broken)
-			our_rods?.melee_attack_chain(src, grille_target)
+			attempt_use_stack(our_rods ? our_rods : our_rods::name, grille_target)
 
 	if(istype(target, /turf/open))
 		var/turf/open/open_target = target
@@ -168,13 +171,11 @@
 			our_screwdriver?.melee_attack_chain(src, target_window)
 
 	//stack interactions
-	for(var/type in possible_stack_interactions)
-		var/obj/item/target_stack = locate(type) in src
-		if(isnull(target_stack))
+	for(var/obj/item/stack/stack_type as anything in possible_stack_interactions)
+		if(!is_type_in_typecache(target, possible_stack_interactions[stack_type]))
 			continue
-		if(!is_type_in_typecache(target, possible_stack_interactions[type]))
-			continue
-		target_stack.melee_attack_chain(src, target)
+		var/obj/item/target_stack = locate(stack_type) in src
+		attempt_use_stack(target_stack ? target_stack : stack_type::name, target)
 		return
 
 	//tool interactions
@@ -186,7 +187,7 @@
 
 /mob/living/basic/bot/repairbot/proc/emagged_interactions(atom/target, modifiers)
 	if(!istype(target, /mob/living/silicon/robot))
-		deconstruction_device.interact_with_atom_secondary(target, src, modifiers)
+		deconstruction_device?.interact_with_atom_secondary(target, src, modifiers)
 		return
 	if(HAS_TRAIT(target, TRAIT_MOB_TIPPED))
 		return
@@ -199,6 +200,16 @@
 	. = ..()
 	if(pulling)
 		setGrabState(GRAB_AGGRESSIVE) //automatically aggro grab everything!
+
+/mob/living/basic/bot/repairbot/proc/attempt_use_stack(obj/item/stack_to_use, atom/target)
+	if(!isdatum(stack_to_use))
+		to_chat(src, span_warning("You do not have anymore [stack_to_use]!"))
+		return
+	stack_to_use.melee_attack_chain(src, target)
+
+/mob/living/basic/bot/repairbot/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
+	if(affect_silicon)
+		return ..()
 
 /mob/living/basic/bot/repairbot/Destroy()
 	. = ..()
@@ -230,8 +241,9 @@
 	return ..()
 
 /mob/living/basic/bot/repairbot/process(seconds_per_tick) //generate 1 iron rod every 2 seconds
-	if(isnull(our_rods) || our_rods.amount < our_rods.max_amount)
-		new /obj/item/stack/rods(src)
+	if(!isnull(our_rods) && our_rods.amount >= our_rods.max_amount)
+		var/obj/item/stack/rods/new_rods = new()
+		new_rods.forceMove(src)
 
 /mob/living/basic/bot/repairbot/turn_on()
 	. = ..()
@@ -264,7 +276,7 @@
 /mob/living/basic/bot/repairbot/generate_speak_list()
 	return neutral_voicelines + emagged_voicelines
 
-/mob/living/basic/bot/repairbot/Bumped(atom/movable/bumped_object)
+/mob/living/basic/bot/repairbot/Bump(atom/movable/bumped_object)
 	. = ..()
 	if(istype(bumped_object, /obj/machinery/door/firedoor) && bumped_object.density)
 		our_crowbar.melee_attack_chain(src, bumped_object)
