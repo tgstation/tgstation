@@ -538,6 +538,7 @@ Diagnostic HUDs!
 		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
 	else
 		holder.icon_state = "hudnobatt"
+
 /*~~~~~~~~~~~~
 	Airlocks!
 ~~~~~~~~~~~~~*/
@@ -557,45 +558,27 @@ Diagnostic HUDs!
 	SET_PLANE(holder,ABOVE_LIGHTING_PLANE,src)
 	set_hud_image_active(MALF_APC_HUD)
 
-/// Assoc list of icon file/icon to width/height of the icon, used to cut down on RSC operations
-GLOBAL_LIST_INIT(icon_size_cache, list())
-
-#define CACHED_WIDTH_INDEX 1
-#define CACHED_HEIGHT_INDEX 2
+#define CACHED_WIDTH_INDEX "width"
+#define CACHED_HEIGHT_INDEX "height"
 
 /atom/proc/get_cached_width()
-	SHOULD_NOT_OVERRIDE(TRUE)
 	if (isnull(icon))
 		return 0
-	if (GLOB.icon_size_cache[icon])
-		return GLOB.icon_size_cache[icon][CACHED_WIDTH_INDEX]
-	var/list/cache_list = cache_icon_size()
-	return cache_list[CACHED_WIDTH_INDEX]
+	var/list/dimensions = get_icon_dimensions(icon)
+	return dimensions[CACHED_WIDTH_INDEX]
 
 /atom/proc/get_cached_height()
-	SHOULD_NOT_OVERRIDE(TRUE)
 	if (isnull(icon))
 		return 0
-	if (GLOB.icon_size_cache[icon])
-		return GLOB.icon_size_cache[icon][CACHED_HEIGHT_INDEX]
-	var/list/cache_list = cache_icon_size()
-	return cache_list[CACHED_HEIGHT_INDEX]
+	var/list/dimensions = get_icon_dimensions(icon)
+	return dimensions[CACHED_HEIGHT_INDEX]
 
-/atom/proc/cache_icon_size()
-	return cache_atom_icon_size(src)
+// Humans use these in semi-hot code so its better to just hardcode them
+/mob/living/carbon/human/get_cached_width()
+	return 32
 
-/proc/cache_atom_icon_size(atom/target)
-	var/icon/sample_icon
-	if (isfile(target.icon))
-		sample_icon = icon(target.icon, target.icon_state, target.dir)
-	else
-		sample_icon = target.icon
-	var/list/result_list = list(sample_icon.Width(), sample_icon.Height())
-	// Never cache icon instances, that will keep a reference in the memory
-	if (isfile(target.icon))
-		// If icon is a file, we are guaranteed to always have a consistent sprite size for all objects from that icon
-		GLOB.icon_size_cache[target.icon] = list(sample_icon.Width(), sample_icon.Height())
-	return result_list
+/mob/living/carbon/human/get_cached_height()
+	return 32
 
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX
