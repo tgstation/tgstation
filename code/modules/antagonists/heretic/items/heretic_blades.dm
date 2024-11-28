@@ -49,8 +49,10 @@
 	return .
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
+	if(HAS_TRAIT(user, TRAIT_NO_TELEPORT))
+		user.balloon_alert(user, "can't break!")
+		return
 	seek_safety(user)
-	return ..()
 
 /// Attempts to teleport the passed mob to somewhere safe on the station, if they can use the blade.
 /obj/item/melee/sickly_blade/proc/seek_safety(mob/user)
@@ -284,3 +286,26 @@
 		heretic_datum.try_draw_rune(user, target, drawing_time = 14 SECONDS) // Faster than pen, slower than cicatrix
 		return ITEM_INTERACT_BLOCKING
 	return NONE
+
+// Weaker blade variant given to people so they can participate in the heretic arena spell
+/obj/item/melee/sickly_blade/training
+	name = "\improper imperfect blade"
+	desc = "A blade given to those who cannot accept the truth, out of pity. \
+		May it act as a blessing in the short time it remains alongside you."
+	force = 17
+	armour_penetration = 0
+
+/obj/item/melee/sickly_blade/training/Initialize(mapload)
+	. = ..()
+	QDEL_IN(src, 60 SECONDS)
+
+/obj/item/melee/sickly_blade/training/check_usability(mob/living/user)
+	return isliving(user) // Basically anyone should be able to use this
+
+/obj/item/melee/sickly_blade/training/attack_self(mob/user)
+	user.balloon_alert(user, "can't escape!")
+	to_chat(user, span_hypnophrase("Sheep exist only to be slaughtered."))
+	playsound(src, SFX_SHATTER, 70, TRUE)
+	var/obj/item/bodypart/to_remove = user.get_active_hand()
+	to_remove.dismember()
+	qdel(src)
