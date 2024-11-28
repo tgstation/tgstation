@@ -569,7 +569,8 @@ GLOBAL_LIST_INIT(icon_size_cache, list())
 		return 0
 	if (GLOB.icon_size_cache[icon])
 		return GLOB.icon_size_cache[icon][CACHED_WIDTH_INDEX]
-	return cache_icon_size()[CACHED_WIDTH_INDEX]
+	var/list/cache_list = cache_icon_size()
+	return cache_list[CACHED_WIDTH_INDEX]
 
 /atom/proc/get_cached_height()
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -577,10 +578,11 @@ GLOBAL_LIST_INIT(icon_size_cache, list())
 		return 0
 	if (GLOB.icon_size_cache[icon])
 		return GLOB.icon_size_cache[icon][CACHED_HEIGHT_INDEX]
-	return cache_icon_size()[CACHED_HEIGHT_INDEX]
+	var/list/cache_list = cache_icon_size()
+	return cache_list[CACHED_HEIGHT_INDEX]
 
 /atom/proc/cache_icon_size()
-	cache_atom_icon_size(src)
+	return cache_atom_icon_size(src)
 
 /proc/cache_atom_icon_size(atom/target)
 	var/icon/sample_icon
