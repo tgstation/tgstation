@@ -23,6 +23,11 @@
 	if(check_adjacent && (!Adjacent(meal) || !isturf(loc)))
 		return FALSE
 
+	if(!(mobility_flags & MOBILITY_MOVE))
+		if(!silent)
+			balloon_alert(src, "can't move!")
+		return FALSE
+
 	if(meal.stat == DEAD)
 		if(!silent)
 			balloon_alert(src, "no life energy!")

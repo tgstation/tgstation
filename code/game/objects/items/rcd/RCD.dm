@@ -199,6 +199,17 @@
 
 	return TRUE
 
+/obj/item/construction/rcd/build_delay(mob/user, delay, atom/target)
+	//unaffected by ui changes
+	if(mode == RCD_DECONSTRUCT)
+		if(delay <= 0)
+			return TRUE
+
+		return do_after(user, delay, target)
+
+	//checks for ui changes
+	return ..()
+
 /**
  * actual proc to create the structure
  *
@@ -249,6 +260,8 @@
  * * rcd_results- list of params which contains the cost & build mode to create the structure
  */
 /obj/item/construction/rcd/proc/_rcd_create_effect(atom/target, mob/user, delay, list/rcd_results)
+	PRIVATE_PROC(TRUE)
+
 	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, rcd_results["[RCD_DESIGN_MODE]"], upgrade)
 
 	//resource & structure placement sanity checks before & after delay along with beam effects
