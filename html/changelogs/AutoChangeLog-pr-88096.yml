@@ -1,0 +1,6 @@
+author: "Runi-c"
+delete-after: True
+changes:
+  - rscadd: "digitigrade lizards can wear certain shoes and suits"
+  - image: "added digitigrade shoes & oversuit templates"
+  - refactor: "improved digi clothing generator code"
