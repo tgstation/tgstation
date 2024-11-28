@@ -1,13 +1,3 @@
-GLOBAL_VAR_INIT(crash_rscs, FALSE)
-
-/icon/RscFile()
-	. = ..()
-	if (GLOB.crash_rscs)
-		stack_trace("test")
-
-/mob/proc/crash_rsc()
-	GLOB.crash_rscs = TRUE
-
 /datum/component/sizzle
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
