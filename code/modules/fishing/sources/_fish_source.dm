@@ -489,7 +489,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 			START_PROCESSING(SSprocessing, src)
 		else
 			explosive_fishing_score++
-			multiplier = 1/(explosive_fishing_score**EXPLOSIVE_FISHING_MALUS_EXPONENT)
+			multiplier = explosive_fishing_score**-EXPLOSIVE_FISHING_MALUS_EXPONENT
 	for(var/i in 1 to (severity + 2))
 		if(!prob((100 + 100 * severity)/i * multiplier))
 			continue
