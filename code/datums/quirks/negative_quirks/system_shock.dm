@@ -12,7 +12,7 @@
 /datum/quirk/system_shock/add(client/client_source)
 	if(SPECIES_ANDROID)
 		RegisterSignals(quirk_holder, list(COMSIG_LIVING_ELECTROCUTE_ACT, COMSIG_LIVING_MINOR_SHOCK), PROC_REF(on_electrocute))
-	} else {
+	} else if(iscarbon(user))
 /datum/quirk/system_shock/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_ELECTROCUTE_ACT, COMSIG_LIVING_MINOR_SHOCK))
 
