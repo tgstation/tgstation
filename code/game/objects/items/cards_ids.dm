@@ -8,6 +8,8 @@
 #define HONORIFIC_POSITION_FIRST "first_name"
 ///Honorific will display next to the last name.
 #define HONORIFIC_POSITION_LAST "last_name"
+///Honorific will not be displayed
+#define HONORIFIC_POSITION_NONE "none"
 
 /* Cards
  * Contains:
@@ -116,10 +118,8 @@
 	var/big_pointer = FALSE
 	///If set, the arrow will have a different color.
 	var/pointer_color
-	/// What honorific, if any, will we set our wearer's name to when worn?
-	var/honorific
 	/// Will this ID card use the first or last name as the name displayed with the honorific?
-	var/honorific_position = HONORIFIC_POSITION_LAST
+	var/honorific_position = HONORIFIC_POSITION_NONE
 
 /datum/armor/card_id
 	fire = 100
@@ -795,7 +795,7 @@
 	for(var/mob/living/carbon/human/viewing_mob in viewers(user, 2))
 		if(viewing_mob.stat || viewing_mob == user)
 			continue
-		viewing_mob.say("Is something wrong? [user.first_name()]... you're sweating.", forced = "psycho")
+		viewing_mob.say("Is something wrong? [first_name(user)]... you're sweating.", forced = "psycho")
 		break
 
 /obj/item/card/id/examine_more(mob/user)
@@ -856,11 +856,14 @@
 /obj/item/card/id/proc/update_label()
 	var/name_string
 	if(registered_name)
-		if(honorific)
+		if(trim && honorific_position != HONORIFIC_POSITION_NONE)
 			switch(honorific_position)
 				if(HONORIFIC_POSITION_FIRST)
-					name_string = "[registered_name.first_name]'s ID Card"
+					name_string = "[trim.honorific] [first_name(registered_name)]'s ID Card"
 				if(HONORIFIC_POSITION_LAST)
+					name_string = "[trim.honorific] [last_name(registered_name)]'s ID Card"
+				else
+					stack_trace("Invalid honorific position given! Uh oh!")
 		else
 			name_string = "[registered_name]'s ID Card"
 	else
@@ -890,6 +893,28 @@
 	if(iscash(interacting_with))
 		return insert_money(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 	return NONE
+
+/obj/item/card/id/item_ctrl_click(mob/user)
+	if(!trim)
+		balloon_alert("card has no trim!")
+		return
+
+	if(!trim.honorific)
+		balloon_alert("card has no honorific to use!")
+		return
+
+	switch(honorific_position)
+		if(HONORIFIC_POSITION_FIRST)
+			honorific_position = HONORIFIC_POSITION_LAST
+			balloon_alert(user, "honorific set: last name")
+		if(HONORIFIC_POSITION_LAST)
+			honorific_position = HONORIFIC_POSITION_NONE
+			balloon_alert(user, "honorific set: none")
+		if(HONORIFIC_POSITION_NONE)
+			honorific_position = HONORIFIC_POSITION_FIRST
+			balloon_alert(user, "honorific set: first name")
+
+	update_label()
 
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
