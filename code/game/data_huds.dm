@@ -557,41 +557,27 @@ Diagnostic HUDs!
 	SET_PLANE(holder,ABOVE_LIGHTING_PLANE,src)
 	set_hud_image_active(MALF_APC_HUD)
 
-/atom/proc/get_cached_height()
-	SHOULD_NOT_OVERRIDE(TRUE)
-	var/static/list/icon_height_cache = list()
-
-	if (isnull(icon))
-		return null
-
-	if (icon_height_cache[icon])
-		return icon_height_cache[icon]
-
-	var/icon/sample_icon
-	if (isfile(icon))
-		sample_icon = icon(icon, icon_state, dir)
-	else
-		sample_icon = icon
-	// If icon is a file, we are guaranteed to always have a consistent sprite size for all objects from that icon
-	icon_height_cache[isfile(icon) ? icon : sample_icon] = sample_icon.Height()
-	return
-
 /atom/proc/get_cached_width()
 	SHOULD_NOT_OVERRIDE(TRUE)
-	var/static/list/icon_width_cache = list()
-
 	if (isnull(icon))
 		return null
+	if (!GLOB.icon_size_cache[icon])
+		cache_icon_size()
+	return GLOB.icon_size_cache[icon][1]
 
-	if (icon_width_cache[icon])
-		return icon_width_cache[icon]
+/atom/proc/get_cached_height()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if (isnull(icon))
+		return null
+	if (!GLOB.icon_size_cache[icon])
+		cache_icon_size()
+	return GLOB.icon_size_cache[icon][2]
 
+/atom/proc/cache_icon_size()
 	var/icon/sample_icon
 	if (isfile(icon))
 		sample_icon = icon(icon, icon_state, dir)
 	else
 		sample_icon = icon
-
 	// If icon is a file, we are guaranteed to always have a consistent sprite size for all objects from that icon
-	icon_width_cache[isfile(icon) ? icon : sample_icon] = sample_icon.Width()
-	return
+	GLOB.icon_size_cache[isfile(icon) ? icon : sample_icon] = list(sample_icon.Width(), sample_icon.Height())
