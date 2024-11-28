@@ -228,7 +228,7 @@
 					// We haven't even had the time to fade in yet!
 					animate(m.message, alpha = 255, CHAT_MESSAGE_SPAWN_TIME - time_spent)
 				// Stay faded in for a while, then
-				animate(m.message, alpha = 255, remaining_time)
+				animate(m.message, alpha = 255, remaining_time, flags=ANIMATION_CONTINUE)
 				// Fade out
 				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
 				m.animate_lifespan = remaining_time + CHAT_MESSAGE_EOL_FADE
