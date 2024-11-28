@@ -21,13 +21,16 @@
 
 	var/list/required_parts = get_tier_upgrades()
 	if(length(required_parts))
-		. += span_notice("Can be upgraded with [required_parts["amount"]] [required_parts["part"]] sheets.")
+		var/obj/item/stack/material = required_parts["part"]
+		. += span_notice("Can be upgraded with [required_parts["amount"]] [initial(material.name)] sheets.")
 	else
 		. += span_notice("Is already at max tier.")
 
 ///Returns a list containing the typepath & amount of it required to upgrade to the next tier
 /obj/item/turbine_parts/proc/get_tier_upgrades()
 	PROTECTED_PROC(TRUE)
+	SHOULD_BE_PURE(TRUE)
+	RETURN_TYPE(/list)
 
 	switch(current_tier)
 		if(TURBINE_PART_TIER_ONE)
