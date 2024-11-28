@@ -61,6 +61,20 @@
 /obj/item/inducer/examine(mob/living/user)
 	. = ..()
 
+	. += examine_hints(user)
+
+/**
+ * Gives description for this inducer
+ * Arguments
+ *
+ * * mob/living/user - the mob we are returning the description to
+ */
+/obj/item/inducer/proc/examine_hints(mob/living/user)
+	PROTECTED_PROC(TRUE)
+	SHOULD_BE_PURE(TRUE)
+
+	. = list()
+
 	var/obj/item/stock_parts/power_store/our_cell = get_cell(src, user)
 	if(!QDELETED(our_cell))
 		. += span_notice("Its display shows: [display_energy(our_cell.charge)].")
@@ -237,6 +251,12 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
 	powerdevice = null
+
+/obj/item/inducer/cyborg/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	return NONE
+
+/obj/item/inducer/cyborg/examine_hints(mob/living/user)
+	return list()
 
 /obj/item/inducer/cyborg/get_cell(atom/movable/interface, mob/living/silicon/robot/silicon_friend)
 	return istype(silicon_friend) ? silicon_friend.cell : null
