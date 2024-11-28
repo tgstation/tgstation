@@ -16,7 +16,6 @@
 /datum/quirk/system_shock/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_ELECTROCUTE_ACT, COMSIG_LIVING_MINOR_SHOCK))
 
-
 /datum/quirk/system_shock/proc/on_electrocute()
 	SIGNAL_HANDLER
 	var/knockout_length = 20 SECONDS + rand(0 SECONDS, 5 SECONDS)
