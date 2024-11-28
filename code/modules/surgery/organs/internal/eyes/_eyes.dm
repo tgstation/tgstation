@@ -445,7 +445,7 @@
 		owner.emote("scream")
 
 /obj/item/organ/eyes/robotic/xray
-	name = "\improper X-ray eyes"
+	name = "x-ray eyes"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	eye_color_left = "000"
 	eye_color_right = "000"
@@ -517,7 +517,7 @@
 #define UPDATE_EYES_RIGHT 2
 
 /obj/item/organ/eyes/robotic/glow
-	name = "High Luminosity Eyes"
+	name = "high luminosity eyes"
 	desc = "Special glowing eyes, used by snowflakes who want to be special."
 	eye_color_left = "000"
 	eye_color_right = "000"
@@ -796,7 +796,7 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/robotic/xray/moth
-	name = "\improper Moth X-ray Eyes"
+	name = "moth x-ray Eyes"
 	eye_icon_state = "motheyes"
 	icon_state = "eyeballs-cybermoth"
 	desc = "These cybernetic imitation moth eyes will give you X-ray vision. Blinking is futile. Much like actual moth eyes, very sensitive to bright lights."
@@ -808,7 +808,7 @@
 	icon_state = "eyeballs-cybermoth"
 
 /obj/item/organ/eyes/robotic/glow/moth
-	name = "High Luminosity Moth Eyes"
+	name = "high luminosity moth eyes"
 	eye_icon_state = "motheyes"
 	base_eye_state = "eyes_mothglow"
 	icon_state = "eyeballs-cybermoth"
