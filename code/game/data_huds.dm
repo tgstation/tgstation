@@ -580,13 +580,16 @@ GLOBAL_LIST_INIT(icon_size_cache, list())
 	return GLOB.icon_size_cache[icon][CACHED_HEIGHT_INDEX]
 
 /atom/proc/cache_icon_size()
+	cache_atom_icon_size(src)
+
+/proc/cache_atom_icon_size(atom/target)
 	var/icon/sample_icon
-	if (isfile(icon))
-		sample_icon = icon(icon, icon_state, dir)
+	if (isfile(target.icon))
+		sample_icon = icon(target.icon, target.icon_state, target.dir)
 	else
-		sample_icon = icon
+		sample_icon = target.icon
 	// If icon is a file, we are guaranteed to always have a consistent sprite size for all objects from that icon
-	GLOB.icon_size_cache[isfile(icon) ? icon : sample_icon] = list(sample_icon.Width(), sample_icon.Height())
+	GLOB.icon_size_cache[isfile(target.icon) ? target.icon : sample_icon] = list(sample_icon.Width(), sample_icon.Height())
 
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX
