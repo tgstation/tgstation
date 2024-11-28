@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "damage done by thrown objects to objects respects their demolition modifier"

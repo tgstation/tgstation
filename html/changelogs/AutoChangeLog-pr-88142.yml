@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Blind people no longer make eye contact with their hands"
+  - bugfix: "Blindfolds and other sorts of opaque eye coverage now prevent eye contact from occuring"
