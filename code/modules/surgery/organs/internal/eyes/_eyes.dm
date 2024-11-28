@@ -796,7 +796,7 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/robotic/xray/moth
-	name = "moth x-ray Eyes"
+	name = "moth x-ray eyes"
 	eye_icon_state = "motheyes"
 	icon_state = "eyeballs-cybermoth"
 	desc = "These cybernetic imitation moth eyes will give you X-ray vision. Blinking is futile. Much like actual moth eyes, very sensitive to bright lights."
