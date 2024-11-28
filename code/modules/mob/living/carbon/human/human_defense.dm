@@ -60,7 +60,7 @@
 					playsound(src, held_item.block_sound, BLOCK_SOUND_VOLUME, TRUE)
 			// Find a turf near or on the original location to bounce to
 			if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
-				return loc.bullet_act(bullet, def_zone, piercing_hit)
+				return loc.projectile_hit(bullet, def_zone, piercing_hit)
 			bullet.reflect(src)
 			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
@@ -578,7 +578,7 @@
 		body_part.check_for_injuries(src, combined_msg)
 
 	for(var/t in missing)
-		combined_msg += span_boldannounce("Your [parse_zone(t)] is missing!")
+		combined_msg += span_bolddanger("Your [parse_zone(t)] is missing!")
 
 	if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()

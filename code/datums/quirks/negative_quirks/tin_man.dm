@@ -33,5 +33,5 @@
 		new_organ.Insert(human_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /datum/quirk/tin_man/post_add()
-	to_chat(quirk_holder, span_boldannounce("Most of your internal organs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
+	to_chat(quirk_holder, span_bolddanger("Most of your internal organs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
 	Additionally, any EMP will make them stop working entirely."))

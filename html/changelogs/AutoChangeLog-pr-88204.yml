@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Player-controlled lobstrosities, space dragons, space carps and penguins can fish again."

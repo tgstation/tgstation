@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Civilian bounty pads refuse to send holographic items. Nanotrasen have received far too many holographic fish for their liking. Officer Mathews is still weeping in a corner after all the clownfish in his aquarium turned to dust before his very eyes..."
+  - code_imp: "Cleans up the bounty pad code just a smidge."

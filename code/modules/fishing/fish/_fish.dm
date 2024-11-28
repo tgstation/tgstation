@@ -862,7 +862,7 @@
 
 	// Do additional stuff
 	// Start flopping if outside of fish container
-	var/should_be_flopping = status == FISH_ALIVE && !HAS_TRAIT(src, TRAIT_FISH_STASIS) && loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
+	var/should_be_flopping = status == FISH_ALIVE && !HAS_TRAIT(src, TRAIT_FISH_STASIS) && loc && !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
 
 	if(should_be_flopping)
 		start_flopping()

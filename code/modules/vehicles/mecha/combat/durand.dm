@@ -84,7 +84,7 @@
 //Redirects projectiles to the shield if defense_check decides they should be blocked and returns true.
 /obj/vehicle/sealed/mecha/durand/bullet_act(obj/projectile/source, def_zone, mode)
 	if(defense_check(source.loc) && shield)
-		return shield.bullet_act(source, def_zone, mode)
+		return shield.projectile_hit(source, def_zone, mode)
 	return ..()
 
 

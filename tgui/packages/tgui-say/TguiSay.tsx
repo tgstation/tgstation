@@ -23,7 +23,7 @@ type State = {
   size: WINDOW_SIZES;
 };
 
-const CHANNEL_REGEX = /^:\w\s/;
+const CHANNEL_REGEX = /^[:.]\w\s/;
 
 export class TguiSay extends Component<{}, State> {
   private channelIterator: ChannelIterator;
