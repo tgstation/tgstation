@@ -29,6 +29,7 @@
 ///Returns a list containing the typepath & amount of it required to upgrade to the next tier
 /obj/item/turbine_parts/proc/get_tier_upgrades()
 	PROTECTED_PROC(TRUE)
+	SHOULD_BE_PURE(TRUE)
 	RETURN_TYPE(/list)
 
 	switch(current_tier)
