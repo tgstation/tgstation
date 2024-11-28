@@ -1,6 +1,3 @@
-/// Assoc list of icon file/icon to width/height of the icon, used to cut down on RSC operations
-GLOBAL_LIST_INIT(icon_size_cache, list())
-
 /atom
 	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc. Single items are stored on their own, not in a list.
 	var/list/managed_overlays

@@ -557,13 +557,19 @@ Diagnostic HUDs!
 	SET_PLANE(holder,ABOVE_LIGHTING_PLANE,src)
 	set_hud_image_active(MALF_APC_HUD)
 
+/// Assoc list of icon file/icon to width/height of the icon, used to cut down on RSC operations
+GLOBAL_LIST_INIT(icon_size_cache, list())
+
+#define CACHED_WIDTH_INDEX 1
+#define CACHED_HEIGHT_INDEX 2
+
 /atom/proc/get_cached_width()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if (isnull(icon))
 		return null
 	if (!GLOB.icon_size_cache[icon])
 		cache_icon_size()
-	return GLOB.icon_size_cache[icon][1]
+	return GLOB.icon_size_cache[icon][CACHED_WIDTH_INDEX]
 
 /atom/proc/get_cached_height()
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -571,7 +577,7 @@ Diagnostic HUDs!
 		return null
 	if (!GLOB.icon_size_cache[icon])
 		cache_icon_size()
-	return GLOB.icon_size_cache[icon][2]
+	return GLOB.icon_size_cache[icon][CACHED_HEIGHT_INDEX]
 
 /atom/proc/cache_icon_size()
 	var/icon/sample_icon
@@ -581,3 +587,6 @@ Diagnostic HUDs!
 		sample_icon = icon
 	// If icon is a file, we are guaranteed to always have a consistent sprite size for all objects from that icon
 	GLOB.icon_size_cache[isfile(icon) ? icon : sample_icon] = list(sample_icon.Width(), sample_icon.Height())
+
+#undef CACHED_WIDTH_INDEX
+#undef CACHED_HEIGHT_INDEX
