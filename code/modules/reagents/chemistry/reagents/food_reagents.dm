@@ -846,8 +846,9 @@
 	description = "Concentrated gluttony."
 	color = "#f8fc36"
 	taste_description = "gluttony"
+	taste_mult = 0.3
 	nutriment_factor = 0 //the essence of this sauce is to stimulate hunger and improve the absorption of calories from food eaten
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	metabolization_rate = 0.025 * REAGENTS_METABOLISM
 	metabolized_traits = list(TRAIT_GLUTTON)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 

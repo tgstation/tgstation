@@ -147,7 +147,7 @@
 	desc = "A branded bottle of Molt'Obeso sauce. This sauce can stimulate hunger in people, leading them to eat more than they intended. \
 			It also enhances the absorption of calories from the food consumed."
 	item = /obj/item/storage/box/syndie_kit/moltobeso
-	cost = 5
+	cost = 2
 	restricted_roles = list(JOB_COOK)
 
 /datum/uplink_item/role_restricted/turretbox
