@@ -1,0 +1,10 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - rscadd: "Adds a new biotype, MOB_AQUATIC, indicating the mob is water-themed somehow. Given to carp, lobstrosities, frogs, axolotls, penguins, fire sharks."
+  - rscadd: "Aquatic mobs can be hooked by fishing rods, even without a jawed fishing hook installed."
+  - rscadd: "The carp and fish infusion sets now give the infusee the aquatic biotype. Added support for infusions adding a biotype."
+  - rscadd: "You can check for a fish's pulse with a stethoscope, which will tell you its status even without fishing skill."
+  - qol: "Refined fish health status checks to be more precise."
+  - rscadd: "Added 'Fishy' Reagent, a version of strange reagent that only works for fish or aquatic biotype mobs. It's made with omnizine, saltwater, and carpotoxin or tetrodotoxin."
+  - rscadd: "Added a lifish chemical reaction that creates fish."
