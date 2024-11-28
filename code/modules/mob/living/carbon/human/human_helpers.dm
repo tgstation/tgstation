@@ -89,7 +89,7 @@
 /mob/living/carbon/proc/get_id_name(if_no_id = "Unknown")
 	return
 
-/mob/living/carbon/human/get_id_name(if_no_id = "Unknown")
+/mob/living/carbon/human/get_id_name(if_no_id = "Unknown") //HERE
 	var/obj/item/storage/wallet/wallet = wear_id
 	var/obj/item/modular_computer/pda = wear_id
 	var/obj/item/card/id/id = wear_id

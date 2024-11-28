@@ -4,6 +4,11 @@
 /// Max time interval between projecting holopays
 #define HOLOPAY_PROJECTION_INTERVAL (7 SECONDS)
 
+///Honorific will display next to the first name.
+#define HONORIFIC_POSITION_FIRST "first_name"
+///Honorific will display next to the last name.
+#define HONORIFIC_POSITION_LAST "last_name"
+
 /* Cards
  * Contains:
  * DATA CARD
@@ -111,6 +116,10 @@
 	var/big_pointer = FALSE
 	///If set, the arrow will have a different color.
 	var/pointer_color
+	/// What honorific, if any, will we set our wearer's name to when worn?
+	var/honorific
+	/// Will this ID card use the first or last name as the name displayed with the honorific?
+	var/honorific_position = HONORIFIC_POSITION_LAST
 
 /datum/armor/card_id
 	fire = 100
@@ -845,7 +854,18 @@
 
 /// Updates the name based on the card's vars and state.
 /obj/item/card/id/proc/update_label()
-	var/name_string = registered_name ? "[registered_name]'s ID Card" : initial(name)
+	var/name_string
+	if(registered_name)
+		if(honorific)
+			switch(honorific_position)
+				if(HONORIFIC_POSITION_FIRST)
+					name_string = "[registered_name.first_name]'s ID Card"
+				if(HONORIFIC_POSITION_LAST)
+		else
+			name_string = "[registered_name]'s ID Card"
+	else
+		name_string = initial(name)
+
 	var/assignment_string
 
 	if(is_intern)
