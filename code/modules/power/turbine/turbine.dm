@@ -490,10 +490,15 @@
 		compressor = locate() in get_step(src, REVERSE_DIR(dir))
 		turbine = locate() in get_step(src, dir)
 
-		//maybe look for them the other way around. we want the rotor to allign with them either way for player convinience
-		if(!compressor && !turbine)
+		//maybe look for them the other way around. this means the rotor is facing the wrong way
+		if(QDELETED(compressor) && QDELETED(turbine))
 			compressor = locate() in get_step(src, dir)
 			turbine = locate() in get_step(src, REVERSE_DIR(dir))
+
+			//show corrective actions
+			if(!QDELETED(compressor) || !QDELETED(turbine))
+				feedback(user, "rotor is facing the wrong way!")
+				return (all_parts_connected = FALSE)
 
 	//sanity checks for compressor
 	if(QDELETED(compressor))
@@ -517,7 +522,7 @@
 		feedback(user, "turbine not aligned with rotor!")
 		return (all_parts_connected = FALSE)
 	if(!turbine.can_connect)
-		feedback(user, "turbine panel is either open or is misplaced!") //we say misplaced because can_connect becomes FALSE when this turbine is moved
+		feedback(user, "close turbine panel!") //we say misplaced because can_connect becomes FALSE when this turbine is moved
 		return (all_parts_connected = FALSE)
 	if(!turbine.installed_part)
 		feedback(user, "turbine is missing stator part!")
@@ -563,6 +568,8 @@
 
 	//toggle status
 	if(force_off)
+		if(!active) //was already off
+			return
 		active = FALSE
 	else
 		active = !active
