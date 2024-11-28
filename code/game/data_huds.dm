@@ -566,18 +566,18 @@ GLOBAL_LIST_INIT(icon_size_cache, list())
 /atom/proc/get_cached_width()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if (isnull(icon))
-		return null
-	if (!GLOB.icon_size_cache[icon])
-		cache_icon_size()
-	return GLOB.icon_size_cache[icon][CACHED_WIDTH_INDEX]
+		return 0
+	if (GLOB.icon_size_cache[icon])
+		return GLOB.icon_size_cache[icon][CACHED_WIDTH_INDEX]
+	return cache_icon_size()[CACHED_WIDTH_INDEX]
 
 /atom/proc/get_cached_height()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if (isnull(icon))
-		return null
-	if (!GLOB.icon_size_cache[icon])
-		cache_icon_size()
-	return GLOB.icon_size_cache[icon][CACHED_HEIGHT_INDEX]
+		return 0
+	if (GLOB.icon_size_cache[icon])
+		return GLOB.icon_size_cache[icon][CACHED_HEIGHT_INDEX]
+	return cache_icon_size()[CACHED_HEIGHT_INDEX]
 
 /atom/proc/cache_icon_size()
 	cache_atom_icon_size(src)
@@ -588,8 +588,12 @@ GLOBAL_LIST_INIT(icon_size_cache, list())
 		sample_icon = icon(target.icon, target.icon_state, target.dir)
 	else
 		sample_icon = target.icon
-	// If icon is a file, we are guaranteed to always have a consistent sprite size for all objects from that icon
-	GLOB.icon_size_cache[target.icon] = list(sample_icon.Width(), sample_icon.Height())
+	var/list/result_list = list(sample_icon.Width(), sample_icon.Height())
+	// Never cache icon instances, that will keep a reference in the memory
+	if (isfile(target.icon))
+		// If icon is a file, we are guaranteed to always have a consistent sprite size for all objects from that icon
+		GLOB.icon_size_cache[target.icon] = list(sample_icon.Width(), sample_icon.Height())
+	return result_list
 
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX
