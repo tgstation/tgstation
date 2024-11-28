@@ -54,12 +54,6 @@
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the output direction.")
 
-// /obj/machinery/mailsorter/obj_break(damage_flag)
-// 	. = ..()
-// 	if(!.)
-// 		return
-// 	drop_all_mail()
-
 /obj/machinery/mailsorter/Destroy()
 	drop_all_mail()
 	. = ..()
@@ -74,7 +68,7 @@
 		mail.forceMove(dropturf)
 		mail_list -= mail
 
-/obj/machinery/mailsorter/proc/dump_all_mail(damage_flag)
+/obj/machinery/mailsorter/proc/dump_all_mail()
 	if(!isturf(get_turf(src)))
 		for(var/obj/item/mail in mail_list)
 			qdel(mail)
@@ -144,16 +138,16 @@
 	update_appearance()
 	if (!sort_delay())
 		return
-	for (var/obj/item/mail/M in mail_list)
-		if (!M.recipient_ref)
+	for (var/obj/item/mail/some_mail in mail_list)
+		if (!some_mail.recipient_ref)
 			unable_to_sort ++
 			continue
-		var/datum/mind/L = M.recipient_ref.resolve()
-		if (L)
-			var/datum/job/J = L.assigned_role
-			var/departmentname = J.departments_list?[1]?.department_name
+		var/datum/mind/some_recipient = some_mail.recipient_ref.resolve()
+		if (some_recipient)
+			var/datum/job/recipient_job = some_recipient.assigned_role
+			var/departmentname = recipient_job.departments_list?[1]?.department_name
 			if (departmentname == sorting_dept)
-				sorted_mail.Add(M)
+				sorted_mail.Add(some_mail)
 				sorted ++
 		else
 			unable_to_sort ++
@@ -179,35 +173,36 @@
 	currentstate = "idle"
 	update_appearance()
 
-/obj/machinery/mailsorter/attackby(obj/item/I, /mob/user, params)
+/obj/machinery/mailsorter/attackby(obj/item/thingy, /mob/user, params)
 	var/mob/user = usr
 
-	if (istype(I, /obj/item/storage/bag/mail))
-		if (length(I.contents) < 1)
-			to_chat(user, span_warning("The [I] is empty!"))
+	if (istype(thingy, /obj/item/storage/bag/mail))
+		if (length(thingy.contents) < 1)
+			to_chat(user, span_warning("The [thingy] is empty!"))
 			return
 		var/loaded = 0
-		for (var/obj/item/mail in I.contents)
+		for (var/obj/item/mail in thingy.contents)
 			if (!(mail.item_flags & ABSTRACT) && \
 				!(mail.flags_1 & HOLOGRAM_1) && \
 				accept_check(mail) \
 			)
-				load(mail, usr)
-				loaded++
+				if (load(mail, usr))
+					loaded++
+					mail_list += mail
 
 		if(loaded)
 			user.visible_message(span_notice("[user] loads \the [src] with \the [I]."), \
-			span_notice("You load \the [src] with \the [I]."))
-			if(length(I.contents))
+			span_notice("You load \the [src] with \the [thingy]."))
+			if(length(thingy.contents))
 				to_chat(user, span_warning("Some items are refused."))
 			return TRUE
 		else
-			to_chat(user, span_warning("There is nothing in \the [I] to put in the [src]!"))
+			to_chat(user, span_warning("There is nothing in \the [thingy] to put in the [src]!"))
 			return FALSE
-	else if (istype(I, /obj/item/mail))
-		I.forceMove(src)
-		mail_list += I
-		to_chat(user, span_notice("The [src] whizzles as it accepts the [I]."))
+	else if (istype(thingy, /obj/item/mail))
+		thingy.forceMove(src)
+		mail_list += thingy
+		to_chat(user, span_notice("The [src] whizzles as it accepts the [thingy]."))
 	. = ..()
 
 /obj/machinery/mailsorter/proc/pick_mail(usr)
