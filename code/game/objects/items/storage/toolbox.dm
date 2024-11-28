@@ -225,6 +225,45 @@
 	new /obj/item/stack/pipe_cleaner_coil/white(src)
 	new /obj/item/stack/pipe_cleaner_coil/brown(src)
 
+/obj/item/storage/toolbox/medical
+	name = "medical toolbox"
+	desc = "A toolbox painted soft white and light blue. This is getting ridiculous."
+	icon_state = "medical"
+	inhand_icon_state = "medical_toolbox"
+	w_class = WEIGHT_CLASS_BULKY
+	material_flags = NONE
+	force = 5 // its for healing
+	wound_bonus = 25 // wounds are medical right?
+	///var/latches = "single_latch"
+	///var/has_latches = TRUE
+	/// Tray we steal the og contents from.
+	var/obj/item/surgery_tray/tray_type = /obj/item/surgery_tray
+
+/obj/item/storage/toolbox/medical/Initialize(mapload)
+	. = ..()
+	// what do any of these numbers fucking mean
+	atom_storage.max_total_storage = 20
+	atom_storage.max_slots = 11
+
+/obj/item/storage/toolbox/medical/PopulateContents()
+	var/list/tools = initial(tray_type.starting_items)
+	for(var/path in tools)
+		new path(src)
+
+/obj/item/storage/toolbox/medical/full
+	tray_type = /obj/item/surgery_tray/full
+
+/obj/item/storage/toolbox/medical/coroner
+	name = "coroner toolbox"
+	desc = "A toolbox painted soft white and dark grey. This is getting beyond ridiculous."
+	icon_state = "coroner"
+	inhand_icon_state = "coroner_toolbox"
+	w_class = WEIGHT_CLASS_BULKY
+	material_flags = NONE
+	force = 17 // it's not for healing
+	wound_bonus = 25 // wounds are medical right?
+	tray_type = /obj/item/surgery_tray/full/morgue
+
 /obj/item/storage/toolbox/ammobox
 	name = "ammo canister"
 	desc = "A metal canister designed to hold ammunition"
