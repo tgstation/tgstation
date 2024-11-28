@@ -9,4 +9,4 @@
 
 /datum/smite/retcon/effect(client/user, mob/living/target)
 	. = ..()
-	target.temporary_atom(life_time = timer SECONDS, fade_time = fade_out_timer SECONDS)
+	target.fade_into_nothing(life_time = timer SECONDS, fade_time = fade_out_timer SECONDS)
