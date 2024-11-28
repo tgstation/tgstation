@@ -831,6 +831,7 @@
 		livingdoll.icon_state = "living[severity]"
 		if(!livingdoll.filtered)
 			livingdoll.filtered = TRUE
+			var/icon/mob_mask = icon(icon, icon_state)
 			if(get_cached_height() > ICON_SIZE_Y || get_cached_width() > ICON_SIZE_X)
 				var/health_doll_icon_state = health_doll_icon ? health_doll_icon : "megasprite"
 				mob_mask = icon('icons/hud/screen_gen.dmi', health_doll_icon_state) //swap to something generic if they have no special doll
