@@ -233,7 +233,7 @@
 	powerdevice = /obj/item/stock_parts/power_store/battery/super
 
 /obj/item/inducer/cyborg
-	name = "Internal inducer"
+	name = "internal inducer"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
 	powerdevice = null
