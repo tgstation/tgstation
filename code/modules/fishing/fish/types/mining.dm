@@ -143,7 +143,7 @@
 /obj/item/fish/boned/make_edible(weight_val)
 	return //it's all bones and no meat.
 
-/obj/item/fish/bones/get_health_warnings(mob/user, always_deep = FALSE)
+/obj/item/fish/boned/get_health_warnings(mob/user, always_deep = FALSE)
 	return list(span_deadsay("It's bones."))
 
 /obj/item/fish/lavaloop
