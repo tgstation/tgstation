@@ -1,16 +1,18 @@
-/obj/machinery/mailbox
+/obj/machinery/mailsorter
 	name = "mail sorter"
 	desc = "A large mail sorting unit. Sorting mail since 1987!"
 	icon = 'icons/obj/machines/mailsorter.dmi'
 	icon_state = "mailsorter"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	max_integrity = 400
+	max_integrity = 300
 	integrity_failure = 0.33
+	var/light_mask = "mailsorter-light-mask"
+	var/panel_type = "panel"
 
 	var/enabled = TRUE
 
-	// circuit = /obj/item/circuitboard/machine/ore_redemption
+	circuit = /obj/item/circuitboard/machine/mailsorter
 
 	/// Bool that returns if the machine is already sorting mail.
 	var/now_sorting = FALSE
@@ -35,31 +37,36 @@
 
 	req_access = list(ACCESS_CARGO)
 
-/obj/machinery/mailbox/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/machinery/mailsorter/screwdriver_act(mob/living/user, obj/item/tool)
 	default_deconstruction_screwdriver(user, "mailsorter-off", "mailsorter", tool)
+	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/mailbox/Initialize(mapload)
+/obj/machinery/mailsorter/crowbar_act(mob/living/user, obj/item/tool)
+	default_deconstruction_crowbar(tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/mailsorter/Initialize(mapload)
 	. = ..()
 	unload_turf = get_step(src, output_dir)
 
-/obj/machinery/mailbox/examine(mob/user)
+/obj/machinery/mailsorter/examine(mob/user)
 	. = ..()
 	. += span_notice("There [length(mail_list) >= 2 ? "are" : "is"] <b>[length(mail_list) ? length(mail_list) : "no"]</b> [length(mail_list) == 1 ? "envelope" : "envelopes"] inside.")
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the output direction.")
 
-// /obj/machinery/mailbox/obj_break(damage_flag)
+// /obj/machinery/mailsorter/obj_break(damage_flag)
 // 	. = ..()
 // 	if(!.)
 // 		return
 // 	drop_all_mail()
 
-/obj/machinery/mailbox/Destroy()
+/obj/machinery/mailsorter/Destroy()
 	drop_all_mail()
 	. = ..()
 
-/obj/machinery/mailbox/proc/drop_all_mail(damage_flag)
+/obj/machinery/mailsorter/proc/drop_all_mail(damage_flag)
 	if(!isturf(get_turf(src)))
 		for(var/obj/item/mail in mail_list)
 			qdel(mail)
@@ -69,7 +76,7 @@
 		mail.forceMove(dropturf)
 		mail_list -= mail
 
-/obj/machinery/mailbox/proc/accept_check(obj/item/weapon)
+/obj/machinery/mailsorter/proc/accept_check(obj/item/weapon)
 	var/static/list/accepted_items = list(
 		/obj/item/mail,
 		/obj/item/mail/envelope,
@@ -80,16 +87,16 @@
 	)
 	return is_type_in_list(weapon, accepted_items)
 
-/obj/machinery/mailbox/proc/sort_delay()
+/obj/machinery/mailsorter/proc/sort_delay()
 	playsound(src, 'sound/machines/mail/mail_sort1.ogg', 20, TRUE)
 	sleep(50)
 	return TRUE
 
-/obj/machinery/mailbox/interact(mob/user)
+/obj/machinery/mailsorter/interact(mob/user)
 	if (!allowed(user))
 		to_chat(user, span_warning("Access denied."))
 		return
-	if (currentstate != "idle")
+	if (currentstate != "idle" && powered())
 		return
 	var/list/choices = list()
 	if (length(mail_list) > 0)
@@ -117,16 +124,16 @@
 		if ("Sort")
 			sort_mail(usr)
 
-/obj/machinery/mailbox/proc/sort_mail(usr)
+/obj/machinery/mailsorter/proc/sort_mail(usr)
 	var/list/sorted_mail = list()
 	var/sorted = 0
 	var/unable_to_sort = 0
 	var/sorting_dept = tgui_input_list(usr, "Choose the department to sort mail for","Mail Sorting", sorting_departments)
+	if (!sorting_dept)
+		return
 	currentstate = "sorting"
 	update_appearance()
 	if (!sort_delay())
-		return
-	if (!sorting_dept)
 		return
 	for (var/obj/item/mail/M in mail_list)
 		if (!M.recipient_ref)
@@ -135,8 +142,8 @@
 		var/datum/mind/L = M.recipient_ref.resolve()
 		if (L)
 			var/datum/job/J = L.assigned_role
-			var/department = J.departments_list?[1]?.department_name
-			if (department == sorting_dept)
+			var/departmentname = J.departments_list?[1]?.department_name
+			if (departmentname == sorting_dept)
 				sorted_mail.Add(M)
 				sorted ++
 		else
@@ -151,11 +158,11 @@
 		update_appearance()
 		say("[sorted] envelope\s sorted successfully.")
 		playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
+		to_chat(usr, span_notice("[src] ejects [length(sorted_mail)] envelope\s."))
 		for (var/obj/item/mail/mail_in_list in sorted_mail)
 			mail_in_list.forceMove(unload_turf)
 			sorted_mail -= mail_in_list
 			mail_list -= mail_in_list
-		to_chat(usr, span_notice("[src] ejects [length(sorted_mail)] envelope\s."))
 	sleep(10)
 	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 	say("Couldn't sort [unable_to_sort] envelope\s.")
@@ -163,7 +170,7 @@
 	currentstate = "idle"
 	update_appearance()
 
-/obj/machinery/mailbox/attackby(obj/item/I, /mob/user, params)
+/obj/machinery/mailsorter/attackby(obj/item/I, /mob/user, params)
 	var/mob/user = usr
 
 	if (istype(I, /obj/item/storage/bag/mail))
@@ -194,20 +201,22 @@
 		to_chat(user, span_notice("The [src] whizzles as it accepts the [I]."))
 	. = ..()
 
-/obj/machinery/mailbox/proc/pick_mail(usr)
+/obj/machinery/mailsorter/proc/pick_mail(usr)
 	if(!length(mail_list))
 		return
 	var/obj/item/mail/mail_throw = tgui_input_list(usr, "Choose the envelope to eject","Mail Sorting", mail_list)
 	if(!mail_throw)
 		return
+	currentstate = "sorting"
 	if (!sort_delay())
 		return
 	to_chat(usr, span_notice("[src] reluctantly spits out [mail_throw]."))
 	mail_throw.forceMove(unload_turf)
 	mail_throw.throw_at(unload_turf, 2, 3)
 	mail_list -= mail_throw
+	currentstate = "idle"
 
-/obj/machinery/mailbox/proc/load(obj/item/weapon, mob/user)
+/obj/machinery/mailsorter/proc/load(obj/item/weapon, mob/user)
 	if(ismob(weapon.loc))
 		var/mob/owner = weapon.loc
 		if(!owner.transferItemToLoc(weapon, src))
@@ -221,7 +230,7 @@
 			weapon.forceMove(src)
 			return TRUE
 
-/obj/machinery/mailbox/click_alt(mob/living/user)
+/obj/machinery/mailsorter/click_alt(mob/living/user)
 	if(!panel_open)
 		return CLICK_ACTION_BLOCKING
 	output_dir = turn(output_dir, -90)
@@ -231,7 +240,7 @@
 	return CLICK_ACTION_SUCCESS
 
 
-/obj/machinery/mailbox/update_overlays()
+/obj/machinery/mailsorter/update_overlays()
 	. = ..()
 	if((machine_stat & NOPOWER))
 		return
@@ -254,18 +263,22 @@
 	. += mail_output
 	. += light_out
 
-/obj/machinery/mailbox/update_overlays()
-	. = ..()
 	var/init_icon = initial(icon)
 	if(!init_icon)
 		return
 
 	if(enabled)
 		. += mutable_appearance(init_icon, currentstate)
+	if(panel_open)
+		. += panel_type
+	if(light_mask && !(machine_stat & BROKEN) && powered())
+		. += emissive_appearance(icon, light_mask, src)
 
-	// if(atom_integrity <= integrity_failure * max_integrity)
-	// 	. += mutable_appearance(init_icon, "bsod")
-	// 	. += mutable_appearance(init_icon, "broken")
+/obj/machinery/mailsorter/update_icon_state()
+	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
+	if(machine_stat & BROKEN)
+		icon_state = "[initial(icon_state)]-broken"
+	return ..()
 
 
 // /obj/machinery/mailmat/update_appearance(updates=ALL)
