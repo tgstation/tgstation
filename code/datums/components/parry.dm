@@ -91,15 +91,16 @@
 
 	if (!istype(user) || !parriers[user] || parried)
 		return
+
 	parriers -= user
-	attempt_parry(source, user)
+	return attempt_parry(source, user)
 
 /datum/component/parriable_projectile/proc/attempt_parry(obj/projectile/source, mob/user)
 	if (QDELETED(source) || source.deletion_queued)
-		return
+		return NONE
 
 	if (SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, source) & INTERCEPT_PARRY_EFFECTS)
-		return
+		return NONE
 
 	parried = TRUE
 	if (source.firer != user)
@@ -120,4 +121,4 @@
 	user.playsound_local(source.loc, 'sound/effects/parry.ogg', 50, TRUE)
 	user.overlay_fullscreen("projectile_parry", /atom/movable/screen/fullscreen/crit/projectile_parry, 2)
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, clear_fullscreen), "projectile_parry"), 0.25 SECONDS)
-	return PROJECTILE_INTERRUPT_HIT
+	return PROJECTILE_INTERRUPT_HIT_PHASE
