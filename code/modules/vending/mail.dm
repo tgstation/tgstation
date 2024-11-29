@@ -12,6 +12,8 @@
 
 	circuit = /obj/item/circuitboard/machine/mailsorter
 
+	/// How much mail can the mail sorter store.
+	var/mail_capacity = 100
 	/// Bool that returns if the machine is already sorting mail.
 	var/now_sorting = FALSE
 	/// What the machine is currently doing. Can be "sorting", "idle", "yes", "no".
@@ -23,7 +25,7 @@
 	/// The turf to unload mail at.
 	var/turf/unload_turf = null
 	/// List of the departments to sort the mail for.
-	var/list/datum/sorting_departments = list(
+	var/list/sorting_departments = list(
 		DEPARTMENT_ENGINEERING,
 		DEPARTMENT_SECURITY,
 		DEPARTMENT_MEDICAL,
@@ -50,7 +52,8 @@
 
 /obj/machinery/mailsorter/examine(mob/user)
 	. = ..()
-	. += span_notice("There [length(mail_list) >= 2 ? "are" : "is"] <b>[length(mail_list) ? length(mail_list) : "no"]</b> [length(mail_list) == 1 ? "envelope" : "envelopes"] inside.")
+	. += span_notice("There is[length(mail_list) < 100 ? " " : " no more "]space for <b>[length(mail_list) < 100 ? "[100 - length(mail_list)] " : ""]</b>envelope\s inside.")
+	. += span_notice("There [length(mail_list) >= 2 ? "are" : "is"] <b>[length(mail_list) ? length(mail_list) : "no"]</b> envelope\s inside.")
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the output direction.")
 
@@ -63,9 +66,8 @@
 		for(var/obj/item/mail in mail_list)
 			qdel(mail)
 		return
-	var/turf/dropturf = unload_turf
 	for(var/obj/item/mail in mail_list)
-		mail.forceMove(dropturf)
+		mail.forceMove(src)
 		mail_list -= mail
 
 /obj/machinery/mailsorter/proc/dump_all_mail()
@@ -129,6 +131,7 @@
 
 /obj/machinery/mailsorter/proc/sort_mail(usr)
 	var/list/sorted_mail = list()
+	var/total_to_sort = length(mail_list)
 	var/sorted = 0
 	var/unable_to_sort = 0
 	var/sorting_dept = tgui_input_list(usr, "Choose the department to sort mail for","Mail Sorting", sorting_departments)
@@ -145,8 +148,9 @@
 		var/datum/mind/some_recipient = some_mail.recipient_ref.resolve()
 		if (some_recipient)
 			var/datum/job/recipient_job = some_recipient.assigned_role
-			var/departmentname = recipient_job.departments_list?[1]?.department_name
-			if (departmentname == sorting_dept)
+			var/datum/job_department/primary_department = recipient_job.departments_list?[1]
+			var/datum/job_department/main_department = primary_department.department_name
+			if (main_department == sorting_dept)
 				sorted_mail.Add(some_mail)
 				sorted ++
 		else
@@ -167,8 +171,12 @@
 			sorted_mail -= mail_in_list
 			mail_list -= mail_in_list
 	sleep(10)
-	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
-	say("Couldn't sort [unable_to_sort] envelope\s.")
+	if (unable_to_sort > 0)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
+		say("Couldn't sort [unable_to_sort] envelope\s.")
+	else
+		playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
+		say("[total_to_sort] envelope\s processed.")
 	sleep(10)
 	currentstate = "idle"
 	update_appearance()
@@ -186,12 +194,14 @@
 				!(mail.flags_1 & HOLOGRAM_1) && \
 				accept_check(mail) \
 			)
-				if (load(mail, usr))
+				if (length(mail_list) + 1 > mail_capacity)
+					to_chat(user, span_warning("There is no space for more mail in [src]!"))
+					return FALSE
+				else if (load(mail, usr))
 					loaded++
 					mail_list += mail
-
 		if(loaded)
-			user.visible_message(span_notice("[user] loads \the [src] with \the [I]."), \
+			user.visible_message(span_notice("[user] loads \the [src] with \the [thingy]."), \
 			span_notice("You load \the [src] with \the [thingy]."))
 			if(length(thingy.contents))
 				to_chat(user, span_warning("Some items are refused."))
@@ -200,9 +210,12 @@
 			to_chat(user, span_warning("There is nothing in \the [thingy] to put in the [src]!"))
 			return FALSE
 	else if (istype(thingy, /obj/item/mail))
-		thingy.forceMove(src)
-		mail_list += thingy
-		to_chat(user, span_notice("The [src] whizzles as it accepts the [thingy]."))
+		if (length(mail_list) + 1 > mail_capacity)
+			to_chat(user, span_warning("There is no space for more mail in [src]!"))
+		else
+			thingy.forceMove(src)
+			mail_list += thingy
+			to_chat(user, span_notice("The [src] whizzles as it accepts the [thingy]."))
 	. = ..()
 
 /obj/machinery/mailsorter/proc/pick_mail(usr)
@@ -248,32 +261,32 @@
 
 /obj/machinery/mailsorter/update_overlays()
 	. = ..()
-	if((machine_stat & NOPOWER))
-		return
-	var/image/mail_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[output_dir]")
-
-	switch(output_dir)
-		if(NORTH)
-			mail_output.pixel_y = 32
-		if(SOUTH)
-			mail_output.pixel_y = -32
-		if(EAST)
-			mail_output.pixel_x = 32
-		if(WEST)
-			mail_output.pixel_x = -32
-
-	mail_output.color = COLOR_MODERATE_BLUE
-	var/mutable_appearance/light_out = emissive_appearance(mail_output.icon, mail_output.icon_state, offset_spokesman = src, alpha = mail_output.alpha)
-	light_out.pixel_y = mail_output.pixel_y
-	light_out.pixel_x = mail_output.pixel_x
-	. += mail_output
-	. += light_out
-
 	var/init_icon = initial(icon)
 	if(!init_icon)
 		return
 
+	if((machine_stat & NOPOWER))
+		return
+
 	if(!(machine_stat & BROKEN) && powered())
+		var/image/mail_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[output_dir]")
+
+		switch(output_dir)
+			if(NORTH)
+				mail_output.pixel_y = 32
+			if(SOUTH)
+				mail_output.pixel_y = -32
+			if(EAST)
+				mail_output.pixel_x = 32
+			if(WEST)
+				mail_output.pixel_x = -32
+
+		mail_output.color = COLOR_MODERATE_BLUE
+		var/mutable_appearance/light_out = emissive_appearance(mail_output.icon, mail_output.icon_state, offset_spokesman = src, alpha = mail_output.alpha)
+		light_out.pixel_y = mail_output.pixel_y
+		light_out.pixel_x = mail_output.pixel_x
+		. += mail_output
+		. += light_out
 		. += mutable_appearance(init_icon, currentstate)
 	if(panel_open)
 		. += panel_type
