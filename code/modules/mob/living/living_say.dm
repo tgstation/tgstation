@@ -143,9 +143,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			saymode = null
 			message_mods -= RADIO_EXTENSION
 
-	if (forced)
-		message_mods[MODE_FORCED] = TRUE
-
 	switch(stat)
 		if(SOFT_CRIT)
 			message_mods[WHISPER_MODE] = MODE_WHISPER
