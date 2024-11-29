@@ -146,6 +146,9 @@
 /obj/projectile/tether/proc/on_embedded(datum/source, obj/item/payload, atom/hit)
 	SIGNAL_HANDLER
 
+	if (HAS_TRAIT_FROM(hit, TRAIT_TETHER_ATTACHED, REF(parent_module)))
+		return
+
 	firer.AddComponent(/datum/component/tether, hit, 7, "MODtether", payload, parent_module = parent_module, tether_trait_source = REF(parent_module))
 
 /obj/projectile/tether/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
@@ -168,6 +171,8 @@
 		return
 
 	if (istype(target, /obj/item/tether_anchor) || isstructure(target) || ismachinery(target))
+		if (HAS_TRAIT(target, TRAIT_TETHER_ATTACHED))
+			return
 		firer.AddComponent(/datum/component/tether, target, 7, "MODtether", parent_module = parent_module, tether_trait_source = REF(parent_module))
 		return
 
@@ -217,6 +222,10 @@
 	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+	if(HAS_TRAIT(src, TRAIT_TETHER_ATTACHED) || HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(src)))
+		balloon_alert(user, "already tethered!")
+		return
+
 	balloon_alert(user, "attached tether")
 	user.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -226,6 +235,10 @@
 		return
 
 	if (!isliving(target) || !target.CanReach(src))
+		return
+
+	if(HAS_TRAIT(src, TRAIT_TETHER_ATTACHED) || HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(src)))
+		balloon_alert(user, "already tethered!")
 		return
 
 	if (target == user)
