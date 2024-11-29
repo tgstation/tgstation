@@ -3,7 +3,6 @@
 #include "_translations.dm"
 
 #include "code/bodyparts.dm"
-#include "code/design.dm"
 #include "code/moustache.dm"
 #include "code/pronouns.dm"
 #include "code/restaurant_customer.dm"
@@ -13,6 +12,7 @@
 #include "code/translate_suggest_ru_names.dm"
 #include "code/translate_verbs.dm"
 #include "code/ru_names/ru_name_base.dm"
+#include "code/ru_names/ru_name_design.dm"
 #include "code/ru_names/ru_name_materials.dm"
 #include "code/ru_names/ru_name_orderables.dm"
 #include "code/ru_names/ru_name_reagents.dm"

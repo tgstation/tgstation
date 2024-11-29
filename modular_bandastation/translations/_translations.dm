@@ -63,3 +63,29 @@ GLOBAL_LIST_EMPTY(ru_reagent_descs)
 		for(var/reagent_key as anything in GLOB.chemical_reagents_list)
 			var/datum/reagent/reagent = GLOB.chemical_reagents_list[reagent_key]
 			reagent.update_to_ru()
+
+ADMIN_VERB(get_data_to_toml, R_ADMIN, "DEBUG - Get data to toml", "Yeap", ADMIN_CATEGORY_DEBUG)
+	var/list/data = list()
+	var/pair = 0
+	for(var/id in SSresearch.techweb_designs)
+		var/datum/design/board/design = SSresearch.techweb_designs[id]
+		if(!istype(design))
+			continue
+		var/obj/item/circuitboard/board = design::build_path
+		if(!ispath(board::build_path, /atom))
+			continue
+		pair++
+		var/atom/resulted_atom = board::build_path
+		if(LOWER_TEXT(format_text(resulted_atom::name)) == LOWER_TEXT(board::name))
+			data["[pair]::: [format_text(resulted_atom::name)]"] = list(
+				"design_name" = design::name,
+			)
+			continue
+		data["[pair]::: [format_text(resulted_atom::name)]"] = list(
+			"design_name" = design::name,
+			"board_name" = format_text(board::name),
+		)
+
+	var/file_location = "data/toml_data_for_laren_boards.toml"
+	var/payload = "[rustg_toml_encode(data)]"
+	rustg_file_write(payload, file_location)
