@@ -23,6 +23,7 @@
 	if(can_have_cap)
 		if(!cap_icon_state)
 			WARNING("Container that allows caps is lacking a cap_icon_state!")
+		set_cap_status(cap_on)
 	else
 		cap_on = FALSE
 
