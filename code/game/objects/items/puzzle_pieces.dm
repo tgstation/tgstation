@@ -416,6 +416,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
 	var/pass_input = tgui_input_text(user, tgui_text, tgui_title, max_length = input_max_len_is_pass ? length(password) : MAX_NAME_LEN)
 	if(isnull(pass_input) || !user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
 		return
+	to_chat(world, "the password is supposed to be [password] (t:[istext(password)] n:[isnum(password)]), inputted password was [pass_input] (t:[istext(pass_input)] n:[isnum(pass_input)])")
 	var/correct = pass_input == password
 	balloon_alert_to_viewers("[correct ? "correct" : "wrong"] password[correct ? "" : "!"]")
 	if(!correct)
@@ -454,9 +455,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
 			"green",
 			"blue",
 			"yellow",
-			"orange",
-			"brown",
+			COLOR_ORANGE, // orange is also not valid
+			COLOR_BROWN, // brown is NOT a valid byond color
 			"gray",
+			"purple",
 		)
 	for(var/digit in 0 to 9)
 		digit_to_color["[digit]"] = pick_n_take(possible_colors)

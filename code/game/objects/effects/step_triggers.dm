@@ -17,13 +17,13 @@
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
 
-/obj/effect/step_trigger/proc/on_entered(datum/source, H as mob|obj)
+/obj/effect/step_trigger/proc/on_entered(datum/source, entering as mob|obj)
 	SIGNAL_HANDLER
-	if(!H || H == src)
+	if(!entering || entering == src || entering.invisibility == INVISIBILITY_ABSTRACT || istype(entering, /atom/movable/mirage_holder)) //dont teleport ourselves, abstract objects, and mirage holders due to init shenanigans
 		return
-	if(isobserver(H) && !affect_ghosts)
+	if(isobserver(entering) && !affect_ghosts)
 		return
-	if(!ismob(H) && mobs_only)
+	if(!ismob(entering) && mobs_only)
 		return
 	INVOKE_ASYNC(src, PROC_REF(Trigger), H)
 
