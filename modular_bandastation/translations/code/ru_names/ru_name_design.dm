@@ -1,7 +1,9 @@
 /datum/design
+	var/original_name
 
 /datum/design/New()
 	. = ..()
+	original_name = name
 	name = update_to_ru() || name
 
 /datum/design/proc/update_to_ru()

@@ -40,6 +40,13 @@ export type Design = {
    */
   name: string;
 
+  // BANDASTATION EDIT START - Design Translate
+  /**
+   * The original name of the design.
+   */
+  original_name: string;
+  // BANDASTATION EDIT END
+
   /**
    * A human-readable description of the design.
    */
