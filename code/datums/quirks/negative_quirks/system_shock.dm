@@ -26,5 +26,5 @@
 	addtimer(CALLBACK(src, PROC_REF(knock_out), knockout_length - 0.4 SECONDS), 2 SECONDS)
 	//The intent with the 0.4 seconds is so that the visual static effect lasts longer than the actual knockout/sleeping effect.
 
-/datum/quirk/system_shock/proc/knock_out(var/length)
+/datum/quirk/system_shock/proc/knock_out(length)
 	quirk_holder.Sleeping(length)
