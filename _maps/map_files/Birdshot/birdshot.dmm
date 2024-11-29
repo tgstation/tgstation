@@ -10716,7 +10716,7 @@
 /obj/machinery/camera/autoname/directional/north,
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/status_display/ai/directional/west,
-/obj/effect/spawner/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full/deployed,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/theatre)
 "dZk" = (

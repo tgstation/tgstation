@@ -2165,7 +2165,7 @@
 /area/station/commons/fitness/recreation)
 "aJM" = (
 /obj/machinery/light/small/directional/north,
-/obj/effect/spawner/surgery_tray/full/morgue,
+/obj/effect/spawner/surgery_tray/full/morgue/deployed,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "aJP" = (

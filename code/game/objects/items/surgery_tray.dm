@@ -242,13 +242,23 @@
 
 /obj/effect/spawner/surgery_tray/full
 	name = "full surgery tray spawner"
-	icon_state = "medicart"
+	icon_state = "tray"
 	tray_to_spawn = /obj/item/surgery_tray/full
 	rare_toolbox_replacement = /obj/item/storage/toolbox/medical/full
 
+/obj/effect/spawner/surgery_tray/full/deployed
+	name = "full deployed tray spawner"
+	icon_state = "medicart"
+	tray_to_spawn = /obj/item/surgery_tray/full
+
 /obj/effect/spawner/surgery_tray/full/morgue
 	name = "full autopsy tray spawner"
-	icon_state = "medicart"
+	icon_state = "tray"
 	tray_to_spawn = /obj/item/surgery_tray/full/morgue
 	rare_toolbox_replacement = /obj/item/storage/toolbox/medical/coroner
-	toolbox_chance = 3 // rarer
+	toolbox_chance = 3 // tray is rarer, so toolbox is more common
+
+/obj/effect/spawner/surgery_tray/full/morgue/deployed
+	name = "full deployed autopsy tray spawner"
+	icon_state = "medicart"
+	tray_to_spawn = /obj/item/surgery_tray/full/morgue/deployed
