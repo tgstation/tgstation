@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Bombing someone during organ manipulation no longer summons new organs."

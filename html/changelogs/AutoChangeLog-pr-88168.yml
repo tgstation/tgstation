@@ -1,7 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - balance: "Increased Rusted Harvester health from 35 to 45."
-  - balance: "Increased haunted longsword's demolition mod by 20%."
-  - bugfix: "Rusted harvesters won't get narsie telling them to bring her their victims."
-  - bugfix: "Heretic summons aren't affected by void chill anymore."
