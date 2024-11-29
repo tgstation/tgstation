@@ -238,8 +238,6 @@
 	material_flags = NONE
 	force = 5 // its for healing
 	wound_bonus = 25 // wounds are medical right?
-	///var/latches = "single_latch"
-	///var/has_latches = TRUE
 	/// Tray we steal the og contents from.
 	var/obj/item/surgery_tray/tray_type = /obj/item/surgery_tray
 
@@ -269,6 +267,10 @@
 	material_flags = NONE
 	force = 17 // it's not for healing
 	tray_type = /obj/item/surgery_tray/full/morgue
+
+/obj/item/storage/toolbox/medical/coroner/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, mob_biotypes = MOB_UNDEAD, damage_multiplier = 1) //Just in case one of the tennants get uppity
 
 /obj/item/storage/toolbox/ammobox
 	name = "ammo canister"
