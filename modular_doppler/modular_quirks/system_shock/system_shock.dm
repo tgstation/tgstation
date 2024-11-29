@@ -1,3 +1,6 @@
+/// The trait that determines if someone has the system shock quirk.
+#define TRAIT_SYSTEM_SHOCK "trait_system_shock"
+
 /datum/quirk/system_shock
 	name = "System Shock"
 	desc = "You and electricity have a volatile relationship. One spark's liable to forcefully reboot your systems. Note: This quirk only works on synths."
