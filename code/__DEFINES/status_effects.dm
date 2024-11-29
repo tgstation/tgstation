@@ -12,6 +12,11 @@
 /// Use in status effect "tick_interval" to prevent it from calling tick()
 #define STATUS_EFFECT_NO_TICK -1
 
+/// Indicates this status effect is an abstract type, ie not instantiated
+/// Doesn't actually do anything in practice, primarily just a marker / used in unit tests,
+/// so don't worry if your abstract status effect doesn't actually set this
+#define STATUS_EFFECT_ID_ABSTRACT "abstract"
+
 ///Processing flags - used to define the speed at which the status will work
 ///This is fast - 0.2s between ticks (I believe!)
 #define STATUS_EFFECT_FAST_PROCESS 0

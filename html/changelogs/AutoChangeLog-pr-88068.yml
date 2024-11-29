@@ -1,0 +1,7 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "Aquarium kits can now be printed from cargo, service, science protolathes as well as the autolathe. They no longer have to be ordered from cargo."
+  - balance: "Revamped the \"Growth/Reproduction\" setting for aquarium to \"Safe Mode\", which also disables the food, temperature and water requiremenets of aquariums, making it useful for purely decorative aquariums."
+  - balance: "Replaced the \"Aggressive\" fish trait with \"Territorial\". No more angelfish shanking the goldfish and guppy in prefilled aquariums with less than 5 fishes."
+  - qol: "Added screentips to aquariums."

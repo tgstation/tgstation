@@ -1,0 +1,4 @@
+author: "CRITAWAKETS"
+delete-after: True
+changes:
+  - rscadd: "Added in the modulo operator to the circuit arithmetic component."
