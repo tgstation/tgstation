@@ -253,9 +253,11 @@
 	update_appearance()
 
 /obj/machinery/door/airlock/proc/set_bolt(should_bolt)
+	if (obj_flags & EMAGGED)
+		should_bolt = FALSE
 	if(locked == should_bolt)
 		return
-	if (should_bolt && !(obj_flags & EMAGGED))
+	if (should_bolt)
 		locked = TRUE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_SET_BOLT, should_bolt)
 	. = locked
