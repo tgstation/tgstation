@@ -45,13 +45,20 @@
 
 	var/list/required_parts = get_tier_upgrades()
 	if(!length(required_parts))
+		balloon_alert(user, "already at max tier!")
 		return ITEM_INTERACT_FAILURE
 
 	var/obj/item/stack/sheet/material = attacking_item
-	if(!istype(material, required_parts["part"]) || material.amount < required_parts["amount"])
+	if(!istype(material, required_parts["part"]))
+		balloon_alert(user, "incorrect part!")
 		return ITEM_INTERACT_FAILURE
 
-	if(do_after(user, current_tier SECONDS, src) && material.use(required_parts["amount"]))
+	var/amount = required_parts["amount"]
+	if(material.amount < amount)
+		balloon_alert(user, "requires [amount] sheets!")
+		return ITEM_INTERACT_FAILURE
+
+	if(do_after(user, current_tier SECONDS, src) && material.use(amount))
 		current_tier += 1
 		part_efficiency += part_efficiency_increase_amount
 		max_rpm *= 2.5
