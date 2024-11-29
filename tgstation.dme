@@ -5217,6 +5217,7 @@
 #include "code\modules\mob\living\basic\vermin\mothroach\mothroach.dm"
 #include "code\modules\mob\living\basic\vermin\mothroach\mothroach_ai.dm"
 #include "code\modules\mob\living\brain\brain.dm"
+#include "code\modules\mob\living\brain\brain_cybernetic.dm"
 #include "code\modules\mob\living\brain\brain_item.dm"
 #include "code\modules\mob\living\brain\brain_say.dm"
 #include "code\modules\mob\living\brain\death.dm"
