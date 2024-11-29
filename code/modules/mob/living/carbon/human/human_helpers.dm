@@ -60,12 +60,8 @@
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
 		return "Unknown"
 	if(face_name)
-		if(add_id_name && id_name && (id_name != face_name)) //Make sure honorific position resets when inserted into computers/manhandled.
-			return "[face_name] (as [id_name])"
-		var/obj/item/card/id/worn_id = get_idcard(FALSE) //If the wearer is who they say they are, and have their honorific tag active, we return the modified name instead.
-		if(worn_id && worn_id.honorific_position != HONORIFIC_POSITION_NONE)
-			return worn_id.update_honorific() //We can assume there's a trim since you can't change honorifics without one.
-		return face_name
+		if(add_id_name && id_name && (id_name != face_name))
+			return face_name
 	if(id_name)
 		return id_name
 	return "Unknown"
