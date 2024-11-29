@@ -184,7 +184,6 @@
 
 /obj/item/surgery_tray/full/deployed
 	is_portable = FALSE
-	trace_if_mapped_in = FALSE
 
 /obj/item/surgery_tray/full/morgue
 	name = "autopsy tray"
@@ -206,6 +205,9 @@
 		/obj/item/surgicaldrill,
 	)
 
+/obj/item/surgery_tray/full/morgue/deployed
+	is_portable = FALSE
+
 /// Surgery tray with advanced tools for debug
 /obj/item/surgery_tray/full/advanced
 	starting_items = list(
@@ -220,7 +222,6 @@
 		/obj/item/stack/sticky_tape/surgical,
 		/obj/item/clothing/mask/surgical,
 	)
-	trace_if_mapped_in = FALSE
 
 /obj/effect/spawner/surgery_tray
 	name = "surgery tray spawner"
