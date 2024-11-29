@@ -892,8 +892,12 @@
 			honorific_title = "[trim.honorific] [first_name(registered_name)]"
 		if(HONORIFIC_POSITION_LAST)
 			honorific_title = "[trim.honorific] [last_name(registered_name)]"
-		else
+		if(HONORIFIC_POSITION_NONE)
 			honorific_title = null
+		if(HONORIFIC_POSITION_FIRST_FULL)
+			honorific_title = "[trim.honorific] [first_name(registered_name)] [last_name(registered_name)]"
+		if(HONORIFIC_POSITION_LAST_FULL)
+			honorific_title = "[first_name(registered_name)] [last_name(registered_name)][trim.honorific]"
 	return honorific_title
 
 /// Returns the trim assignment name.
@@ -918,16 +922,29 @@
 		balloon_alert(user, "card has no honorific to use!")
 		return
 
-	switch(honorific_position)
+	if(!honorific_positions)
+		balloon_alert(user, "no honorific positions! Error!")
+		stack_trace("ID card with honorifics found with no potential positions!")
+		return
+
+	var/honorific_position_to_use = tgui_input_list(user, "what position do you want your honorific in?", "Flair!", trim.honorific_positions)
+
+	switch(honorific_position_to_use)
 		if(HONORIFIC_POSITION_FIRST)
-			honorific_position = HONORIFIC_POSITION_LAST
-			balloon_alert(user, "honorific set: last name")
-		if(HONORIFIC_POSITION_LAST)
-			honorific_position = HONORIFIC_POSITION_NONE
-			balloon_alert(user, "honorific set: none")
-		if(HONORIFIC_POSITION_NONE)
 			honorific_position = HONORIFIC_POSITION_FIRST
 			balloon_alert(user, "honorific set: first name")
+		if(HONORIFIC_POSITION_LAST)
+			honorific_position = HONORIFIC_POSITION_LAST
+			balloon_alert(user, "honorific set: last name")
+		if(HONORIFIC_POSITION_NONE)
+			honorific_position = HONORIFIC_POSITION_NONE
+			balloon_alert(user, "honorific disabled")
+		if(HONORIFIC_POSITION_FIRST_FULL)
+			honorific_position = HONORIFIC_POSITION_FIRST_FULL
+			balloon_alert(user, "honorific set: start of name")
+		if(HONORIFIC_POSITION_LAST_FULL)
+			honorific_position = HONORIFIC_POSITION_LAST_FULL
+			balloon_alert(user, "honorific set: end of name")
 
 	update_label()
 
