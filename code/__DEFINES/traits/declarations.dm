@@ -71,8 +71,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Antagonizes the above.
 #define TRAIT_DISCOORDINATED_TOOL_USER "discoordinated_tool_user"
 #define TRAIT_PACIFISM "pacifism"
-/// The trait that determines if someone has the system shock quirk.
-#define TRAIT_SYSTEM_SHOCK "trait_system_shock"
 // Trait added to the user of a hippocratic oath status effect
 #define TRAIT_HIPPOCRATIC_OATH "hippocratic_oath"
 #define TRAIT_IGNORESLOWDOWN "ignoreslow"
