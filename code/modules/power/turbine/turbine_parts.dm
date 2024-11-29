@@ -48,7 +48,7 @@
 		return ITEM_INTERACT_FAILURE
 
 	var/obj/item/stack/sheet/material = attacking_item
-	if(!istype(material, required_parts["part"]) || material.amount <= required_parts["amount"])
+	if(!istype(material, required_parts["part"]) || material.amount < required_parts["amount"])
 		return ITEM_INTERACT_FAILURE
 
 	if(do_after(user, current_tier SECONDS, src) && material.use(required_parts["amount"]))
