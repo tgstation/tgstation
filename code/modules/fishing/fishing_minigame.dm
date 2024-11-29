@@ -399,8 +399,8 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 
 	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
 		var/possible_icon
-		if(isatom(reward_path))
-			var/atom/reward = reward_path
+		if(isdatum(reward_path))
+			var/datum/reward = reward_path
 			possible_icon = GLOB.specific_fish_icons[reward.type]
 		else
 			possible_icon = GLOB.specific_fish_icons[reward_path]

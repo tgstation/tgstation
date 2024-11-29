@@ -215,3 +215,7 @@
 	var/position_a = fluids_priority.Find(initial(a.required_fluid_type))
 	var/position_b = fluids_priority.Find(initial(b.required_fluid_type))
 	return cmp_numeric_asc(position_a, position_b) || cmp_text_asc(initial(b.name), initial(a.name))
+
+/// Orders vending products by their price
+/proc/cmp_vending_prices(datum/data/vending_product/a, datum/data/vending_product/b)
+	return b.price - a.price

@@ -701,6 +701,7 @@
 #define RANDOM_AQUARIUM_FISH "random_aquarium_fish"
 
 /datum/fish_source/aquarium
+	catalog_description = "Aquariums"
 	radial_state = "fish_tank"
 	fish_table = list(
 		FISHING_DUD = 10,
@@ -720,7 +721,7 @@
 			continue
 		table[fish] = 10
 	if(!length(table))
-		return fish_table
+		return fish_table.Copy()
 	return table
 
 /datum/fish_source/aquarium/spawn_reward_from_explosion(atom/location, severity)
@@ -773,3 +774,102 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
+
+/datum/fish_source/vending
+	catalog_description = "Vending Machines"
+	radial_state = "vending"
+	overlay_state = "portal_randomizer"
+	fish_table = list(
+		FISHING_DUD = 10,
+	)
+	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD
+	fishing_difficulty = 0 //with decent equipment and just enough money, you should be able to skip the minigame
+
+/datum/fish_source/vending/spawn_reward_from_explosion(atom/location, severity)
+	return //This shouldn't be a way to get free products from other vending machines.
+
+/datum/fish_source/vending/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
+	var/list/data = list()
+
+	data += LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = "Vending Products",
+		FISH_SOURCE_AUTOWIKI_DUD = "",
+		FISH_SOURCE_AUTOWIKI_WEIGHT = 100,
+		FISH_SOURCE_AUTOWIKI_NOTES = "Use chips, bills or coins as bait to get a semi-random vending product, depending on both its and the bait's monetary values",
+	))
+
+	return data
+
+/datum/fish_source/vending/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
+	if(istype(location, /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = location
+		location = portal.current_linked_atom
+	if(!istype(location, /obj/machinery/vending))
+		return FISHING_DUD
+	var/obj/machinery/vending/vending = location
+	///Create a list of products, ordered by price from highest to lowest
+	var/list/products = vending.product_records + vending.coin_records + vending.hidden_records
+	sortTim(products, GLOBAL_PROC_REF(cmp_vending_prices))
+	var/list/table = list()
+
+	var/bait_value = rod.bait?.get_item_credit_value() || 1
+	table[FISHING_VENDING_CHUCK] = 1
+	//Makes using 1 cred chips with the minigame skip (negative fishing difficulty) a bit less cheesy.
+	var/malus = PAYCHECK_LOWER - bait_value
+	if(malus > 0)
+		var/half_len = length(products) * 0.5
+		table[FISHING_DUD] += malus * half_len
+		table[FISHING_VENDING_CHUCK] += malus * half_len
+
+	var/highest_record_price = 0
+	for(var/datum/data/vending_product/product_record as anything in products)
+		if(product_record.amount <= 0)
+			products -= product_record
+			table[FISHING_DUD] += PAYCHECK_LOWER //it gets harder the emptier the machine is
+			continue
+		if(!highest_record_price)
+			highest_record_price = product_record.price
+		var/high = max(highest_record_price, bait_value)
+		var/low = min(highest_record_price, bait_value)
+
+		//the smaller the difference between product price and bait value, the more likely you're to get it.
+		table[product_record] = low/high * 1000 //multiply the value by 1000 for accuracy. pick_weight() doesn't work with zero decimals yet.
+
+	return pick_weight(table)
+
+/datum/fish_source/vending/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
+	//Using less than a minimum paycheck is going to make the challenge a tad harder.
+	var/bait_value = challenge.used_rod.bait?.get_item_credit_value()
+	return ..() + max(PAYCHECK_LOWER * 1.7 - bait_value, 0)
+
+/datum/fish_source/vending/dispense_reward(reward_path, mob/fisherman, atom/fishing_spot)
+	if(reward_path != FISHING_VENDING_CHUCK)
+		return ..()
+	var/obj/machinery/vending/vending = fishing_spot
+	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
+		vending = portal.current_linked_atom
+	if(fishing_spot != vending) //fishing portals
+		vending.forceMove(get_turf(fisherman))
+	vending.tilt(fisherman)
+	return null //Don't spawn any reward at all
+
+/datum/fish_source/vending/spawn_reward(reward_path, atom/spawn_location, obj/machinery/vending/fishing_spot)
+	var/datum/data/vending_product/product_record = reward_path
+	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
+		fishing_spot = portal.current_linked_atom
+	if(!istype(product_record))
+		return ..()
+	if(!istype(fishing_spot) || product_record.amount <= 0)
+		return null
+	return fishing_spot.dispense(product_record, spawn_location)
+
+/datum/fish_source/vending/pre_challenge_started(obj/item/fishing_rod/rod, mob/user, datum/fishing_challenge/challenge)
+	RegisterSignal(rod, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(on_reward))
+
+/datum/fish_source/vending/proc/on_reward(obj/item/fishing_rod/rod, atom/movable/reward, mob/user)
+	SIGNAL_HANDLER
+	if(reward && rod.bait?.get_item_credit_value()) //you pay for what you get
+		qdel(rod.bait) // fishing_rod.Exited() will handle clearing the hard ref.
+	UnregisterSignal(rod, COMSIG_FISHING_ROD_CAUGHT_FISH)

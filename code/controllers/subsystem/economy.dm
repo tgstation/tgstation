@@ -228,8 +228,8 @@ SUBSYSTEM_DEF(economy)
 			continue
 		prices_to_update += vending_lad
 	for(var/i in 1 to length(prices_to_update))
-		var/obj/machinery/vending/V = prices_to_update[i]
-		V.reset_prices(V.product_records, V.coin_records)
+		var/obj/machinery/vending/vending = prices_to_update[i]
+		vending.reset_prices(vending.product_records, vending.coin_records + vending.hidden_records)
 
 #undef ECON_DEPARTMENT_STEP
 #undef ECON_ACCOUNT_STEP

@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 /proc/generate_specific_fish_icons()
 	var/list/return_list = zebra_typecacheof(list(
+		/datum/data/vending_product = FISH_ICON_COIN,
 		/mob/living/basic/axolotl = FISH_ICON_CRITTER,
 		/mob/living/basic/frog = FISH_ICON_CRITTER,
 		/mob/living/basic/carp = FISH_ICON_DEF,
@@ -61,6 +62,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 	return_list[FISHING_RANDOM_SEED] = FISH_ICON_SEED
 	return_list[FISHING_RANDOM_ORGAN] = FISH_ICON_ORGAN
+	return_list[FISHING_VENDING_CHUCK] = FISH_ICON_COIN
 	return return_list
 
 /**
