@@ -850,7 +850,7 @@
 		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
 		vending = portal.current_linked_atom
 	if(fishing_spot != vending) //fishing portals
-		vending.forceMove(get_turf(fisherman))
+		vending.forceMove(get_turf(fishing_spot))
 	vending.tilt(fisherman)
 	return null //Don't spawn any reward at all
 
