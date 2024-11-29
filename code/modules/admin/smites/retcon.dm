@@ -7,6 +7,10 @@
 
 /datum/smite/retcon/configure(client/user)
 	timer = tgui_input_number(user, "How long should it take before the retcon, in seconds?", "Retcon", 5)
+	
+	if (isnull(timer))
+		return FALSE
+
 	fade_out_timer = timer*(3/5)
 
 /datum/smite/retcon/effect(client/user, mob/living/target)
