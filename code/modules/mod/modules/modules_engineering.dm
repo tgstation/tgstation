@@ -237,7 +237,7 @@
 	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
 		return
 
-	if (!ismovable(target) || !target.CanReach(src))
+	if (!isliving(target) || !target.CanReach(src))
 		return
 
 	if(HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(src)))
