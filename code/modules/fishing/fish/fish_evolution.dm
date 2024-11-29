@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 		var/temp_reqs = ""
 		if(required_temperature_min == 0)
 			temp_reqs = "below [required_temperature_max]"
-		else if(required_temperature_max < INFINITY)
+		else if(required_temperature_max == INFINITY)
 			temp_reqs = "above [required_temperature_min]"
 		else
 			temp_reqs = "of [required_temperature_min] to [required_temperature_max]"
