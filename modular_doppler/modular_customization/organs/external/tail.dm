@@ -36,7 +36,7 @@
 /obj/item/organ/tail/mouse
 	name = "mouse tail"
 	preference = "feature_mouse_tail"
-	dna_block = null
+	//dna_block = null
 	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/mouse
 
@@ -55,7 +55,7 @@
 //	Buffs people if they're closeby while you're wagging it!
 /obj/item/organ/tail/dog
 	preference = "feature_dog_tail"
-	dna_block = null
+	//dna_block = null
 	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/dog
 	/// monitor used for the moodbuff
@@ -95,7 +95,7 @@
 //
 /obj/item/organ/tail/fox
 	preference = "feature_fox_tail"
-	dna_block = null
+	//dna_block = null
 	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fox
 
@@ -109,7 +109,7 @@
 //
 /obj/item/organ/tail/bunny
 	preference = "feature_bunny_tail"
-	dna_block = null
+	//dna_block = null
 	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/bunny
 
@@ -123,7 +123,7 @@
 //
 /obj/item/organ/tail/bird
 	preference = "feature_bird_tail"
-	dna_block = null
+	//dna_block = null
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/bird
 
 /datum/bodypart_overlay/mutant/tail/bird
@@ -136,7 +136,7 @@
 //
 /obj/item/organ/tail/bug
 	preference = "feature_bug_tail"
-	dna_block = null
+	//dna_block = null
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/bug
 
 /datum/bodypart_overlay/mutant/tail/bug
@@ -149,7 +149,7 @@
 //
 /obj/item/organ/tail/deer
 	preference = "feature_deer_tail"
-	dna_block = null
+	//dna_block = null
 	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/deer
 
@@ -169,7 +169,7 @@
 //
 /obj/item/organ/tail/cybernetic
 	preference = "feature_synth_tail"
-	dna_block = null
+	//dna_block = null
 	organ_flags = ORGAN_ROBOTIC
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cybernetic
 
@@ -184,7 +184,7 @@
 //
 /obj/item/organ/tail/humanoid
 	preference = "feature_humanoid_tail"
-	dna_block = null
+	//dna_block = null
 	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/humanoid
 
@@ -199,7 +199,7 @@
 //
 /obj/item/organ/tail/alien
 	preference = "feature_alien_tail"
-	dna_block = null
+	//dna_block = null
 	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/alien
 
