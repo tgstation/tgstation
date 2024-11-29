@@ -73,6 +73,8 @@
 #define MOB_PLANT (1 << 10)
 ///The mob is a goopy creature, probably coming from xenobiology.
 #define MOB_SLIME (1 << 11)
+/// Mob is fish or water-related.
+#define MOB_AQUATIC (1 << 12)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
@@ -378,6 +380,8 @@
 #define SLIPPERY_TURF (1<<5)
 /// For mobs who are slippery, this requires the mob holding it to be lying down.
 #define SLIPPERY_WHEN_LYING_DOWN (1<<6)
+///Like sliding, but it's short, it doesn't knockdown, it doesn't stun, it just staggers a bit.
+#define WEAK_SLIDE (1<<7)
 
 #define MAX_CHICKENS 50
 

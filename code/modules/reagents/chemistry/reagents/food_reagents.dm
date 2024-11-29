@@ -13,7 +13,7 @@
 	inverse_chem_val = 0.1
 	inverse_chem = null
 	creation_purity = CONSUMABLE_STANDARD_PURITY
-	/// How much nutrition this reagent supplies
+	/// How much nutrition this reagent supplies. Look at get_nutriment_factor() for an understanding.
 	var/nutriment_factor = 1
 	/// affects mood, typically higher for mixed drinks with more complex recipes'
 	var/quality = 0
@@ -54,7 +54,7 @@
 			if(isitem(the_real_food) && !is_reagent_container(the_real_food))
 				exposed_mob.add_mob_memory(/datum/memory/good_food, food = the_real_food)
 
-/// Gets just how much nutrition this reagent is worth for the passed mob
+/// Gets just how much nutrition this reagent supplies per server tick to the eater
 /datum/reagent/consumable/proc/get_nutriment_factor(mob/living/carbon/eater)
 	return nutriment_factor * REAGENTS_METABOLISM * purity * 2
 
@@ -860,6 +860,27 @@
 	color ="#708a88"
 	taste_description = "rancid fungus"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/moltobeso
+	name = "Molt'Obeso" //pardon my Italian
+	description = "Concentrated gluttony."
+	color = "#f8fc36"
+	taste_description = "gluttony"
+	taste_mult = 0.3
+	nutriment_factor = 0 //the essence of this sauce is to stimulate hunger and improve the absorption of calories from food eaten
+	metabolization_rate = 0.025 * REAGENTS_METABOLISM
+	metabolized_traits = list(TRAIT_GLUTTON)
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/moltobeso/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	for(var/datum/reagent/consumable/food in affected_mob.reagents.reagent_list)
+		if(food == src)
+			continue
+		var/food_factor = food.get_nutriment_factor(affected_mob)
+		if(food_factor <= 0)
+			continue
+		affected_mob.adjust_nutrition(food_factor * REM * seconds_per_tick)
 
 /datum/reagent/consumable/eggrot
 	name = "Rotten Eggyolk"

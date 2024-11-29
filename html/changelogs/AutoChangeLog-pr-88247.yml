@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Light Step now properly prevents your hands and clothes from getting covered in blood when stepping in it."

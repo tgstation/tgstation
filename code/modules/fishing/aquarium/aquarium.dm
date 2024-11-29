@@ -159,7 +159,7 @@
 		min_px = 6,\
 		max_px = 26,\
 		min_py = 6,\
-		min_py = 24,\
+		max_py = 24,\
 		default_beauty = 100,\
 		reagents_size = src.reagent_size,\
 		min_fluid_temp = src.min_fluid_temp,\

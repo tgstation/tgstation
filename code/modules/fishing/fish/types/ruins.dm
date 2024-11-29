@@ -37,6 +37,9 @@
 /obj/item/fish/mastodon/get_export_price(price, elasticity_percent)
 	return ..() * 1.2 //This should push its soft-capped (it's pretty big) price a bit above the rest
 
+/obj/item/fish/mastodon/get_health_warnings(mob/user, always_deep = FALSE)
+	return list(span_deadsay("It's bones."))
+
 ///From the cursed spring
 /obj/item/fish/soul
 	name = "soulfish"
