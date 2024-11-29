@@ -14,8 +14,6 @@
 
 	/// How much mail can the mail sorter store.
 	var/mail_capacity = 100
-	/// Bool that returns if the machine is already sorting mail.
-	var/now_sorting = FALSE
 	/// What the machine is currently doing. Can be "sorting", "idle", "yes", "no".
 	var/currentstate = "idle"
 	/// List of all mail that's inside the mailbox.
