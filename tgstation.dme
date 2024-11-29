@@ -444,7 +444,7 @@
 #include "code\__DEFINES\~doppler_defines\traits.dm"
 #include "code\__DEFINES\~doppler_defines\vv.dm"
 #include "code\__DEFINES\~doppler_defines\wounds.dm"
-#include "code\__DEFINES\~doppler_defines\traits\declarations.dm."
+#include "code\__DEFINES\~doppler_defines\traits\declarations.dm"
 #include "code\__HELPERS\_auxtools_api.dm"
 #include "code\__HELPERS\_dreamluau.dm"
 #include "code\__HELPERS\_lists.dm"
