@@ -22,8 +22,6 @@
 	var/list/mail_list = list()
 	/// The direction in which the mail will be unloaded.
 	var/output_dir = SOUTH
-	/// The turf to unload mail at.
-	var/turf/unload_turf = null
 	/// List of the departments to sort the mail for.
 	var/list/sorting_departments = list(
 		DEPARTMENT_ENGINEERING,
@@ -33,9 +31,17 @@
 		DEPARTMENT_CARGO,
 		DEPARTMENT_SERVICE,
 		DEPARTMENT_COMMAND
-		)
+	)
+	var/list/choices = list(
+		"Eject" = icon('icons/hud/radial.dmi', "radial_eject"),
+		"Dump" = icon('icons/hud/radial.dmi', "mail_dump"),
+		"Sort" = icon('icons/hud/radial.dmi', "mail_sort")
+	)
 
 	req_access = list(ACCESS_CARGO)
+
+/obj/machinery/mailsorter/proc/get_unload_turf()
+	return get_step(src, output_dir)
 
 /obj/machinery/mailsorter/screwdriver_act(mob/living/user, obj/item/tool)
 	default_deconstruction_screwdriver(user, "mailsorter-off", "mailsorter", tool)
@@ -48,7 +54,6 @@
 
 /obj/machinery/mailsorter/Initialize(mapload)
 	. = ..()
-	unload_turf = get_step(src, output_dir)
 
 /obj/machinery/mailsorter/examine(mob/user)
 	. = ..()
@@ -75,9 +80,9 @@
 		for(var/obj/item/mail in mail_list)
 			qdel(mail)
 		return
-	var/turf/dropturf = unload_turf
+	var/turf/unload_turf = get_unload_turf()
 	for(var/obj/item/mail in mail_list)
-		mail.forceMove(dropturf)
+		mail.forceMove(unload_turf)
 		mail.throw_at(unload_turf, 2, 3)
 		mail_list -= mail
 
@@ -101,14 +106,11 @@
 	if (!allowed(user))
 		to_chat(user, span_warning("Access denied."))
 		return
-	if (currentstate != "idle" && powered())
+	if (currentstate != "idle")
 		return
-	var/list/choices = list()
-	if (length(mail_list) > 0)
-		choices["Eject"] = icon('icons/hud/radial.dmi', "radial_eject")
-		choices["Dump"] = icon('icons/hud/radial.dmi', "mail_dump")
-		choices["Sort"] = icon('icons/hud/radial.dmi', "mail_sort")
-
+	if (length(mail_list) == 0)
+		to_chat(user, span_warning("There's no mail inside!"))
+		return
 	var/choice = show_radial_menu(
 		user,
 		src,
@@ -116,7 +118,6 @@
 		require_near = !HAS_SILICON_ACCESS(user),
 		autopick_single_option = FALSE
 	)
-
 	if (!choice)
 		return
 	switch (choice)
@@ -166,6 +167,7 @@
 		say("[sorted] envelope\s sorted successfully.")
 		playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
 		to_chat(usr, span_notice("[src] ejects [length(sorted_mail)] envelope\s."))
+		var/turf/unload_turf = get_unload_turf()
 		for (var/obj/item/mail/mail_in_list in sorted_mail)
 			mail_in_list.forceMove(unload_turf)
 			sorted_mail -= mail_in_list
@@ -227,6 +229,7 @@
 	if (!sort_delay())
 		return
 	to_chat(usr, span_notice("[src] reluctantly spits out [mail_throw]."))
+	var/turf/unload_turf = get_unload_turf()
 	mail_throw.forceMove(unload_turf)
 	mail_throw.throw_at(unload_turf, 2, 3)
 	mail_list -= mail_throw
@@ -252,7 +255,6 @@
 		return CLICK_ACTION_BLOCKING
 	output_dir = turn(output_dir, -90)
 	to_chat(user, span_notice("You change [src]'s I/O settings, setting the output to [dir2text(output_dir)]."))
-	unload_turf = get_step(src, output_dir)
 	update_appearance(UPDATE_OVERLAYS)
 	return CLICK_ACTION_SUCCESS
 
