@@ -11,9 +11,9 @@
 	/// Amount on money on the card
 	var/credits = 0
 
-/obj/item/holochip/Initialize(mapload, amount)
+/obj/item/holochip/Initialize(mapload, amount = 1)
 	. = ..()
-	if(amount)
+	if(!credits && amount)
 		credits = amount
 	if(credits <= 0 && !mapload)
 		stack_trace("Holochip created with 0 or less credits in [get_area_name(src)]!")
