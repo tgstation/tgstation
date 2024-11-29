@@ -937,3 +937,124 @@
   - bugfix: Fix weather effects ignoring certain areas like space.
   - bugfix: Fix coffee maker items teleporting to AI/Cyborg locations
   - code_imp: Change some status effects to use SECONDS define.
+2024-11-26:
+  Ben10Omintrix:
+  - bugfix: raptors no longer break their trough upon interacting with it
+  - balance: removed the troublesome trait from raptors, they now wont go out to attack
+      their colleagues.
+  - rscadd: you can now give pet collars to ur raptors to rename them
+  Ghommie:
+  - bugfix: Fixed pixel position of fish overlays for aquariums.
+  - bugfix: The Aquarium ui won't show the user contents rather than that of the aquarium
+      itself
+  Hardly:
+  - bugfix: Ghosts can no longer emit spooky analyzing sounds when scanning
+  Isratosh:
+  - balance: Time-gated traitor uplink gear is returned to being hard reputation locked
+      with a static price.
+  OrionTheFox:
+  - qol: added an examine note to lighters showing their fuel
+  SmArtKar:
+  - code_imp: Projectile impacts no longer fetch mobs' armor values thrice
+  - code_imp: Converted pills and patches into interact_with_atom
+  - bugfix: Fixed a non-player facing runtime in portable atmos machinery code.
+  - bugfix: Ensures that if your brain is removed you die
+  - bugfix: Fixed a (non-player facing) runtime in organ manipulation surgery
+  grungussuss:
+  - rscdel: The northstar arcship has been removed. :(
+2024-11-27:
+  Boviro:
+  - qol: Atmos MODsuits can now hold extinguishers on their suit slot
+  Ghommie:
+  - bugfix: FIsh flops again.
+  Melbert:
+  - balance: Morphine's sedative power has been halved. It now takes ~10 units to
+      guarantee sleep, up from ~5.
+  - balance: Morphine now causes mild disgust.
+  - balance: Morphine is now twice as addictive, causing addiction if you down over
+      ~30 units without pause.
+  SmArtKar:
+  - sound: Reduced volume of fire sounds
+  Time-Green:
+  - bugfix: No more "is blacking out!"
+  - bugfix: Brain transplants work again
+  carlarctg:
+  - spellcheck: Fixes a typo in legionnaire abilities
+2024-11-28:
+  Absolucy:
+  - bugfix: ACTUALLY allow dot radio prefixes to also work with the tgui-say radio
+      prefix display.
+  Ben10Omintrix:
+  - bugfix: repairbots no longer get flashed by their own welder
+  - bugfix: repairbots no longer break glass tables they step on
+  - bugfix: repairbots can no longer flush their own welders
+  - bugfix: fixes some runtimes when emagged repairbots try to deconstruct things
+  - bugfix: fixes sentient repairbots not being able to see or remove their material
+      counts
+  Melbert:
+  - bugfix: Frozen slimes can't latch on to you (but they can still attack you technically)
+  - bugfix: Maybe fixes some organ manipulation bugs
+  - bugfix: Mulebot wire hacking is less fourth wall breaking
+  - bugfix: Stuff like the SM exploding will no longer output to your OOC tab
+  Mothblocks:
+  - qol: IV drips now create a beam from their spout to your body, and will visually
+      pull you closer.
+  SmArtKar:
+  - bugfix: Fixed colossus committing suicide on a regular basis
+  SyncIt21:
+  - bugfix: chainsaw is not invisible when turned off in hand
+  - bugfix: chainsaw won't play ping sound when turned on
+  - bugfix: mounted chainsaw has a new animated sprite when turned on & won't go invisible
+      in hand
+  ValuedEmployee:
+  - rscadd: New purr and meow emotes for players with felinid tongues
+2024-11-29:
+  Ghommie:
+  - bugfix: Player-controlled lobstrosities, space dragons, space carps and penguins
+      can fish again.
+  - bugfix: Bombing someone during organ manipulation no longer summons new organs.
+  Runi-c:
+  - rscadd: digitigrade lizards can wear certain shoes and suits
+  - image: added digitigrade shoes & oversuit templates
+  - refactor: improved digi clothing generator code
+  TealSeer:
+  - bugfix: Using a bonesetter to correct a dislocated limb should no longer cause
+      you to hit the patient with it too.
+  carlarctg:
+  - qol: Added some tips of the round.
+  - balance: Increased Rusted Harvester health from 35 to 45.
+  - balance: Increased haunted longsword's demolition mod by 20%.
+  - bugfix: Rusted harvesters won't get narsie telling them to bring her their victims.
+  - bugfix: Heretic summons aren't affected by void chill anymore.
+  - rscadd: Centcom's janitorial department has gotten tired of scooping up discarded
+      scarves from the floor and has instead assigned MODlink scryers to some stations'
+      crew in an attempt to spice up the disposal team's jobs.
+  - rscadd: Adds a new biotype, MOB_AQUATIC, indicating the mob is water-themed somehow.
+      Given to carp, lobstrosities, frogs, axolotls, penguins, fire sharks.
+  - rscadd: Aquatic mobs can be hooked by fishing rods, even without a jawed fishing
+      hook installed.
+  - rscadd: The carp and fish infusion sets now give the infusee the aquatic biotype.
+      Added support for infusions adding a biotype.
+  - rscadd: You can check for a fish's pulse with a stethoscope, which will tell you
+      its status even without fishing skill.
+  - qol: Refined fish health status checks to be more precise.
+  - rscadd: Added 'Fishy' Reagent, a version of strange reagent that only works for
+      fish or aquatic biotype mobs. It's made with omnizine, saltwater, and carpotoxin
+      or tetrodotoxin.
+  - rscadd: Added a lifish chemical reaction that creates fish.
+  - rscadd: You can now wear a hat on any modsuit, even w/o the stabilizing module.
+      But it may easily fall off...
+  - rscadd: Added the Atrocinator, Hat Stabilizer, and Tanning modules to the black
+      market.
+  - rscadd: Added the loose hat component to bio/bomb/rad hoods and space helmets.
+  necromanceranne:
+  - bugfix: Civilian bounty pads refuse to send holographic items. Nanotrasen have
+      received far too many holographic fish for their liking. Officer Mathews is
+      still weeping in a corner after all the clownfish in his aquarium turned to
+      dust before his very eyes...
+  - code_imp: Cleans up the bounty pad code just a smidge.
+  oranges:
+  - rscadd: Teleporting a leaning person will now make them fall over
+  paganiy:
+  - rscadd: 'Add a new item to the chef traitor''s uplink: Molt''Obeso sauce. A sauce
+      that makes people want to eat too much.'

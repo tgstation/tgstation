@@ -601,7 +601,7 @@
 				seeds_to_draw_from -= seed_path
 
 	var/picked_path = pick(seeds_to_draw_from)
-	return new picked_path(get_turf(fishing_spot))
+	return new picked_path(spawn_location)
 
 /datum/fish_source/carp_rift
 	catalog_description = "Space Dragon Rifts"
