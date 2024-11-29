@@ -1,0 +1,6 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - rscadd: "You can now wear a hat on any modsuit, even w/o the stabilizing module. But it may easily fall off..."
+  - rscadd: "Added the Atrocinator, Hat Stabilizer, and Tanning modules to the black market."
+  - rscadd: "Added the loose hat component to bio/bomb/rad hoods and space helmets."
