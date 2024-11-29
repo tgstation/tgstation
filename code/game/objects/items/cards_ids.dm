@@ -160,6 +160,21 @@
 	. = ..()
 	if(slot == ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
+		RegisterSignal(user, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, PROC_REF(return_message_name_part))
+
+/obj/item/card/id/proc/return_message_name_part(mob/living/carbon/human/source, list/stored_name, visible_name)
+	SIGNAL_HANDLER
+	var/voice_name = source.GetVoice()
+	var/end_string = ""
+	var/return_string = ""
+	if(source.name != voice_name)
+		end_string += " (as [registered_name])"
+	if(trim && honorific_position != HONORIFIC_POSITION_NONE)
+		return_string += honorific_title
+	else
+		return_string += voice_name
+	return_string += end_string
+	stored_name[NAME_PART_INDEX] = return_string
 
 /obj/item/card/id/proc/on_pointed(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
@@ -176,7 +191,7 @@
 		point.add_overlay(highlight)
 
 /obj/item/card/id/dropped(mob/user)
-	UnregisterSignal(user, COMSIG_MOVABLE_POINTED)
+	UnregisterSignal(user, list(COMSIG_MOVABLE_POINTED, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART))
 	return ..()
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
@@ -852,7 +867,7 @@
 	var/name_string
 	if(registered_name)
 		if(trim && honorific_position != HONORIFIC_POSITION_NONE)
-			name_string = update_honorific()
+			name_string = "[update_honorific()]'s ID Card"
 		else
 			name_string = "[registered_name]'s ID Card"
 	else
@@ -874,9 +889,9 @@
 /obj/item/card/id/proc/update_honorific()
 	switch(honorific_position)
 		if(HONORIFIC_POSITION_FIRST)
-			honorific_title = "[trim.honorific] [first_name(registered_name)]'s ID Card"
+			honorific_title = "[trim.honorific] [first_name(registered_name)]"
 		if(HONORIFIC_POSITION_LAST)
-			honorific_title = "[trim.honorific] [last_name(registered_name)]'s ID Card"
+			honorific_title = "[trim.honorific] [last_name(registered_name)]"
 		else
 			honorific_title = null
 	return honorific_title
@@ -896,11 +911,11 @@
 
 /obj/item/card/id/item_ctrl_click(mob/user)
 	if(!trim)
-		balloon_alert("card has no trim!")
+		balloon_alert(user, "card has no trim!")
 		return
 
 	if(!trim.honorific)
-		balloon_alert("card has no honorific to use!")
+		balloon_alert(user, "card has no honorific to use!")
 		return
 
 	switch(honorific_position)
