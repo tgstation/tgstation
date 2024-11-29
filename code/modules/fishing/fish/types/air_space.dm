@@ -122,7 +122,7 @@
 	fillet_type = /obj/item/food/fishmeat/carp/no_tox
 	fish_traits = list(
 		/datum/fish_trait/carnivore,
-		/datum/fish_trait/aggressive,
+		/datum/fish_trait/territorial,
 		/datum/fish_trait/predator,
 		/datum/fish_trait/necrophage,
 		/datum/fish_trait/no_mating,
