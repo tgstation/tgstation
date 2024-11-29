@@ -239,7 +239,7 @@
 	if(prob(toolbox_chance))
 		new rare_toolbox_replacement(loc)
 		return
-	new tray_to_spawn(loc, effect_spawner = TRUE)
+	new tray_to_spawn(loc, TRUE)
 
 /obj/effect/spawner/surgery_tray/full
 	name = "full surgery tray spawner"
