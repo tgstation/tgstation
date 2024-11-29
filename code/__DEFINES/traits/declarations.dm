@@ -509,6 +509,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_USER_SCOPED "user_scoped"
 /// Mob is unable to feel pain
 #define TRAIT_ANALGESIA "analgesia"
+/// Mob does not get a damage overlay from brute/burn
+#define TRAIT_NO_DAMAGE_OVERLAY "no_damage_overlay"
 /// Mob has a scar on their left/right eye
 #define TRAIT_RIGHT_EYE_SCAR "right_eye_scar"
 #define TRAIT_LEFT_EYE_SCAR "left_eye_scar"
