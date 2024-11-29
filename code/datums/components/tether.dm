@@ -17,8 +17,11 @@
 	var/obj/item/mod/module/tether/parent_module
 	/// Source, if any, for TRAIT_TETHER_ATTACHED we add
 	var/tether_trait_source
+	/// If TRUE, only add TRAIT_TETHER_ATTACHED to our parent
+	var/no_target_trait
 
-/datum/component/tether/Initialize(atom/tether_target, max_dist = 7, tether_name, atom/embed_target = null, start_distance = null, parent_module = null, tether_trait_source = null)
+/datum/component/tether/Initialize(atom/tether_target, max_dist = 7, tether_name, atom/embed_target = null, start_distance = null, \
+	parent_module = null, tether_trait_source = null, no_target_trait = FALSE)
 	if(!ismovable(parent) || !istype(tether_target) || !tether_target.loc)
 		return COMPONENT_INCOMPATIBLE
 
@@ -27,6 +30,7 @@
 	src.max_dist = max_dist
 	src.parent_module = parent_module
 	src.tether_trait_source = tether_trait_source
+	src.no_target_trait = no_target_trait
 	cur_dist = max_dist
 	if (start_distance != null)
 		cur_dist = start_distance
@@ -39,7 +43,8 @@
 		src.tether_name = tether_name
 	if (!isnull(tether_trait_source))
 		ADD_TRAIT(parent, TRAIT_TETHER_ATTACHED, tether_trait_source)
-		ADD_TRAIT(tether_target, TRAIT_TETHER_ATTACHED, tether_trait_source)
+		if (!no_target_trait)
+			ADD_TRAIT(tether_target, TRAIT_TETHER_ATTACHED, tether_trait_source)
 
 /datum/component/tether/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_tether))
@@ -64,7 +69,7 @@
 		REMOVE_TRAIT(parent, TRAIT_TETHER_ATTACHED, tether_trait_source)
 	if (!QDELETED(tether_target))
 		UnregisterSignal(tether_target, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-		if (!isnull(tether_trait_source))
+		if (!isnull(tether_trait_source) && !no_target_trait)
 			REMOVE_TRAIT(tether_target, TRAIT_TETHER_ATTACHED, tether_trait_source)
 	if (!QDELETED(tether_beam))
 		UnregisterSignal(tether_beam.visuals, list(COMSIG_CLICK, COMSIG_QDELETING))
