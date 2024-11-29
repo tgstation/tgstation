@@ -93,7 +93,7 @@
 	return is_type_in_list(weapon, accepted_items)
 
 /obj/machinery/mailsorter/proc/sort_delay()
-	playsound(src, 'sound/machines/mail/mail_sort1.ogg', 20, TRUE)
+	playsound(src, 'sound/machines/mail_sort.ogg', 20, TRUE)
 	sleep(50)
 	return TRUE
 
