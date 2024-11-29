@@ -4,13 +4,6 @@
 /// Max time interval between projecting holopays
 #define HOLOPAY_PROJECTION_INTERVAL (7 SECONDS)
 
-///Honorific will display next to the first name.
-#define HONORIFIC_POSITION_FIRST "first_name"
-///Honorific will display next to the last name.
-#define HONORIFIC_POSITION_LAST "last_name"
-///Honorific will not be displayed
-#define HONORIFIC_POSITION_NONE "none"
-
 /* Cards
  * Contains:
  * DATA CARD
@@ -39,6 +32,8 @@
 
 	/// Cached icon that has been built for this card. Intended to be displayed in chat. Cardboards IDs and actual IDs use it.
 	var/icon/cached_flat_icon
+	///What is our honorific name/title combo to be displayed?
+	var/honorific_title
 
 /obj/item/card/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -857,13 +852,7 @@
 	var/name_string
 	if(registered_name)
 		if(trim && honorific_position != HONORIFIC_POSITION_NONE)
-			switch(honorific_position)
-				if(HONORIFIC_POSITION_FIRST)
-					name_string = "[trim.honorific] [first_name(registered_name)]'s ID Card"
-				if(HONORIFIC_POSITION_LAST)
-					name_string = "[trim.honorific] [last_name(registered_name)]'s ID Card"
-				else
-					stack_trace("Invalid honorific position given! Uh oh!")
+			name_string = update_honorific()
 		else
 			name_string = "[registered_name]'s ID Card"
 	else
@@ -880,6 +869,17 @@
 		assignment_string = assignment
 
 	name = "[name_string] ([assignment_string])"
+
+/// Re-generates the honorific title. Returns the compiled honorific_title value
+/obj/item/card/id/proc/update_honorific()
+	switch(honorific_position)
+		if(HONORIFIC_POSITION_FIRST)
+			honorific_title = "[trim.honorific] [first_name(registered_name)]'s ID Card"
+		if(HONORIFIC_POSITION_LAST)
+			honorific_title = "[trim.honorific] [last_name(registered_name)]'s ID Card"
+		else
+			honorific_title = null
+	return honorific_title
 
 /// Returns the trim assignment name.
 /obj/item/card/id/proc/get_trim_assignment()
