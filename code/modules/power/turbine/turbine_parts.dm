@@ -30,7 +30,7 @@
 	var/fourth_tier_material_amount = 5
 
 	///Max rpm reachable by the part
-	var/max_rpm = 35000
+	var/max_rpm = TURBINE_MAX_BASE_RPM
 	///Multiplier to increase the max rpm per tier, max should be around 500000 rpm
 	var/max_rpm_tier_multiplier = 2.5
 

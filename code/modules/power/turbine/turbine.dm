@@ -634,16 +634,16 @@
 		var/integrity = get_turbine_integrity()
 		if(integrity <= 0)
 			deactivate_parts()
-			if(rpm < 35000)
+			if(rpm < TURBINE_MAX_BASE_RPM)
 				explosion(src, 0, 1, 4)
 				return PROCESS_KILL
-			if(rpm < 87500)
+			if(rpm < TURBINE_MAX_BASE_RPM * 2.5)
 				explosion(src, 0, 2, 6)
 				return PROCESS_KILL
-			if(rpm < 220000)
+			if(rpm < TURBINE_MAX_BASE_RPM * 2.5 * 2.5)
 				explosion(src, 1, 3, 7)
 				return PROCESS_KILL
-			if(rpm < 550000)
+			if(rpm < TURBINE_MAX_BASE_RPM * 2.5 * 2.5 * 2.5)
 				explosion(src, 2, 5, 7)
 			return PROCESS_KILL
 

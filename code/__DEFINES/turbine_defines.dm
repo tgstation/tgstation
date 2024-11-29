@@ -1,7 +1,9 @@
+///Maximum rpm for all tier 1 turbine parts
+#define TURBINE_MAX_BASE_RPM 50000
 ///Multiplier for converting work into rpm and rpm into power
 #define TURBINE_RPM_CONVERSION 15
 ///Efficiency of the turbine to turn work into energy, higher values will yield more power
-#define TURBINE_ENERGY_RECTIFICATION_MULTIPLIER 0.25
+#define TURBINE_ENERGY_RECTIFICATION_MULTIPLIER 0.3
 ///Max allowed damage per tick
 #define TURBINE_MAX_TAKEN_DAMAGE 10
 ///Amount of damage healed when under the heat threshold
