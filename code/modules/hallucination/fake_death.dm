@@ -59,7 +59,7 @@
 				"FUCK",
 				"git gud",
 				"god damn it",
-				"hey [first_name(hallucinator)]",
+				"hey [first_name(hallucinator.name)]",
 				"i[prob(50) ? " fucking" : ""] hate [pick(things_to_hate)]",
 				"is the AI rogue?",
 				"rip",
