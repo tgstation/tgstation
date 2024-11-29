@@ -10,8 +10,6 @@
 	var/list/tails_list_synth
 	var/list/tails_list_humanoid
 	var/list/tails_list_alien
-	/// Used solely so tails behave in consistent test dummies
-	var/list/tails_list_doppler_debug
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
@@ -25,23 +23,6 @@
 	tails_list_synth = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/cybernetic)["default_sprites"]
 	tails_list_humanoid = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/humanoid)["default_sprites"]
 	tails_list_alien = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/alien)["default_sprites"]
-	// Consistent test dummy tails list
-	// If this is still here, add any new doppler tails lists to this or CI will wig out
-	var/list/lists_for_tails = list(
-		tails_list_dog,
-		tails_list_fox,
-		tails_list_bunny,
-		tails_list_mouse,
-		tails_list_bird,
-		tails_list_deer,
-		tails_list_bug,
-		tails_list_synth,
-		tails_list_humanoid,
-		tails_list_alien,
-	)
-	for(var/list/tail_list as anything in lists_for_tails)
-		for(var/tail_accessory as anything in tail_list)
-			tails_list_doppler_debug += tail_accessory
 
 /datum/dna
 	///	This variable is read by the regenerate_organs() proc to know what organ subtype to give
