@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Stuff like the SM exploding will no longer output to your OOC tab"

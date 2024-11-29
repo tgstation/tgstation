@@ -41,7 +41,7 @@
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
 		return
 
-	if(!fish_source.has_known_fishes())
+	if(!fish_source.has_known_fishes(source))
 		return
 
 	examine_text += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
