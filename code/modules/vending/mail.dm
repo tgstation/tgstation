@@ -181,9 +181,7 @@
 	currentstate = "idle"
 	update_appearance()
 
-/obj/machinery/mailsorter/attackby(obj/item/thingy, /mob/user, params)
-	var/mob/user = usr
-
+/obj/machinery/mailsorter/attackby(obj/item/thingy, mob/user, params)
 	if (istype(thingy, /obj/item/storage/bag/mail))
 		if (length(thingy.contents) < 1)
 			to_chat(user, span_warning("The [thingy] is empty!"))
