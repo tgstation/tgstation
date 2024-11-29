@@ -656,7 +656,7 @@
 	work_done = max(work_done - compressor.compressor_work * TURBINE_COMPRESSOR_STATOR_INTERACTION_MULTIPLIER - turbine_work, 0)
 	//calculate final acheived rpm
 	rpm = ((work_done * compressor.get_efficiency()) ** turbine.get_efficiency()) * get_efficiency() / TURBINE_RPM_CONVERSION
-	rpm = FLOOR(min(rpm, max_allowed_rpm), 1)
+	rpm = min(ROUND_UP(rpm), max_allowed_rpm)
 	//add energy into the grid, also use part of it for turbine operation
 	produced_energy = rpm * TURBINE_ENERGY_RECTIFICATION_MULTIPLIER * TURBINE_RPM_CONVERSION * seconds_per_tick
 	add_avail(produced_energy)
