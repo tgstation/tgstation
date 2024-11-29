@@ -573,5 +573,12 @@ Diagnostic HUDs!
 	var/list/dimensions = get_icon_dimensions(icon)
 	return dimensions[CACHED_HEIGHT_INDEX]
 
+// Humans use these in semi-hot code so its better to just hardcode them
+/mob/living/carbon/human/get_cached_width()
+	return 32
+
+/mob/living/carbon/human/get_cached_height()
+	return 32
+
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX
