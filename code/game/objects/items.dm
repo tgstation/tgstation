@@ -1883,11 +1883,12 @@
 	return src
 
 /// Checks if the bait is liked by the fish type or not. Returns a multiplier that affects the chance of catching it.
-/obj/item/proc/check_bait(obj/item/fish/fish_type)
+/obj/item/proc/check_bait(obj/item/fish/fish)
 	if(HAS_TRAIT(src, TRAIT_OMNI_BAIT))
 		return 1
 	var/catch_multiplier = 1
-	var/list/properties = SSfishing.fish_properties[fish_type]
+
+	var/list/properties = SSfishing.fish_properties[isfish(fish) ? fish.type : fish]
 	//Bait matching likes doubles the chance
 	var/list/fav_bait = properties[FISH_PROPERTIES_FAV_BAIT]
 	for(var/bait_identifer in fav_bait)

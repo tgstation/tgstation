@@ -836,7 +836,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	if(!fish_source || !HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
 		return
-	if(!GLOB.preset_fish_sources[fish_source].has_known_fishes())
+	if(!GLOB.preset_fish_sources[fish_source].has_known_fishes(src))
 		return
 	. += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
 

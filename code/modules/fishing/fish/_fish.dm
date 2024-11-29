@@ -170,6 +170,8 @@
 	 * Once set, the value shouldn't be changed, so don't make typos.
 	 */
 	var/fish_id
+	///Used to redirect to another fish path so that catching this fish unlocks its entry instead.
+	var/obj/item/fish/fish_id_redirect_path
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
