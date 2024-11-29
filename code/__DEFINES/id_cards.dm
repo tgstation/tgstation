@@ -44,9 +44,9 @@
 #define ID_ICON_BORDERS 1, 9, 32, 24
 
 ///Honorific will display next to the first name.
-#define HONORIFIC_POSITION_FIRST "Display first name"
+#define HONORIFIC_POSITION_FIRST "Replace last name"
 ///Honorific will display next to the last name.
-#define HONORIFIC_POSITION_LAST "Display last name"
+#define HONORIFIC_POSITION_LAST "Replace first name"
 ///Honorific will not be displayed.
 #define HONORIFIC_POSITION_NONE "No honorific"
 ///Honorific will be appended to the full name at the start.
