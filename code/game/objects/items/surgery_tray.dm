@@ -19,8 +19,6 @@
 
 	/// List of contents to populate with in populatecontents()
 	var/list/starting_items = list()
-	/// Throw out a stack_trace if this is on TRUE, because we want mappers to use the spawner, usually
-	VAR_PROTECTED/trace_if_mapped_in = TRUE
 
 /// Fills the tray with items it should contain on creation
 /obj/item/surgery_tray/proc/populate_contents()
@@ -31,8 +29,6 @@
 
 /obj/item/surgery_tray/Initialize(mapload, effect_spawner = FALSE)
 	. = ..()
-	if(!effect_spawner && trace_if_mapped_in)
-		stack_trace("surgery tray directly mapped in instead of using the spawner!!!")
 	AddElement(/datum/element/drag_pickup)
 	create_storage(storage_type = /datum/storage/surgery_tray)
 	populate_contents()
@@ -168,7 +164,6 @@
 
 /obj/item/surgery_tray/deployed
 	is_portable = FALSE
-	trace_if_mapped_in = FALSE
 
 /obj/item/surgery_tray/full
 	starting_items = list(
@@ -231,8 +226,11 @@
 	name = "surgery tray spawner"
 	icon = 'icons/obj/medical/medicart.dmi'
 	icon_state = "tray"
+	/// Tray to usually spawn in.
 	var/tray_to_spawn = /obj/item/surgery_tray
+	/// Toolbox to sometimes replace the above tray with.
 	var/rare_toolbox_replacement = /obj/item/storage/toolbox/medical
+	/// Chance for replacement
 	var/toolbox_chance = 1
 
 /obj/effect/spawner/surgery_tray/Initialize(mapload)
