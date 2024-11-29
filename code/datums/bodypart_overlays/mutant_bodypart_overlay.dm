@@ -33,6 +33,8 @@
 		var/feature_name = receiver.dna.features[feature_key]
 		if (isnull(feature_name))
 			feature_name = receiver.dna.species.mutant_organs[parent.type]
+		if(isnull(feature_name)) // DOPPLER EDIT - HII EPHE DO YOU HATE THIS YET?
+			feature_name = "No Tail" // DOPPLER EDIT - HII EPHE DO YOU HATE THIS YET?
 		set_appearance_from_name(feature_name)
 		imprint_on_next_insertion = FALSE
 
