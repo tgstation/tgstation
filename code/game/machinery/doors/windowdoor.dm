@@ -263,13 +263,11 @@
 /obj/machinery/door/window/try_to_force_door_open(force_type = DEFAULT_DOOR_CHECKS)
 	switch(force_type)
 		if(DEFAULT_DOOR_CHECKS)
-			if(!hasPower() || (obj_flags & EMAGGED))
+			if(!hasPower())
 				return FALSE
 			return TRUE
 
 		if(FORCING_DOOR_CHECKS)
-			if(obj_flags & EMAGGED)
-				return FALSE
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS) // Get it open!
@@ -305,13 +303,11 @@
 /obj/machinery/door/window/try_to_force_door_shut(force_type = DEFAULT_DOOR_CHECKS)
 	switch(force_type)
 		if(DEFAULT_DOOR_CHECKS)
-			if(!hasPower() || (obj_flags & EMAGGED))
+			if(!hasPower())
 				return FALSE
 			return TRUE
 
 		if(FORCING_DOOR_CHECKS)
-			if(obj_flags & EMAGGED)
-				return FALSE
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS) // Get it shut!
@@ -376,6 +372,8 @@
 /// Timer proc, called ~0.6 seconds after [emag_act]. Finishes the emag sequence by breaking the windoor.
 /obj/machinery/door/window/proc/finish_emag_act()
 	operating = FALSE
+	req_access = list()
+	req_one_access = list()
 	open(BYPASS_DOOR_CHECKS)
 
 /obj/machinery/door/window/examine(mob/user)

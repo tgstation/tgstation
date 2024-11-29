@@ -14,15 +14,16 @@
 	stoplag(0.2 SECONDS)
 	open(FORCING_DOOR_CHECKS)
 
-	locked = TRUE
+	if (!(obj_flags & EMAGGED))
+		locked = TRUE
 	update_appearance()
 
 /// Forces the airlock to close and bolt
 /obj/machinery/door/airlock/proc/secure_close(force_crush = FALSE)
 	locked = FALSE
 	close(forced = TRUE, force_crush = force_crush)
-
-	locked = TRUE
+	if (!(obj_flags & EMAGGED))
+		locked = TRUE
 	stoplag(0.2 SECONDS)
 	update_appearance()
 

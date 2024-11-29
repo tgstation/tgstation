@@ -166,18 +166,23 @@
 	name = "airlock authentication override card"
 	icon_state = "doorjack"
 	worn_icon_state = "doorjack"
-	var/type_whitelist //List of types
+	/// List of all acceptable typepaths that this device can affect
+	var/type_whitelist
+	/// Currently available count of charges, starts fully charged
 	var/charges = 3
+	/// We can't gain more charges if we already have this many
 	var/max_charges = 3
+	/// Timers for when our charges will come back
 	var/list/charge_timers = list()
-	var/charge_time = 1800 //three minutes
+	/// How long it takes for each charge to come home from the war
+	var/charge_time = 3 MINUTES
 
 /obj/item/card/emag/doorjack/Initialize(mapload)
 	. = ..()
-	type_whitelist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/), typesof(/obj/machinery/door/firedoor)) //list of all acceptable typepaths that this device can affect
+	type_whitelist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/), typesof(/obj/machinery/door/firedoor))
 
 /obj/item/card/emag/doorjack/proc/use_charge(mob/user)
-	charges --
+	charges--
 	to_chat(user, span_notice("You use [src]. It now has [charges] charge[charges == 1 ? "" : "s"] remaining."))
 	charge_timers.Add(addtimer(CALLBACK(src, PROC_REF(recharge)), charge_time, TIMER_STOPPABLE))
 

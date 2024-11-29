@@ -244,6 +244,9 @@
 /obj/machinery/door/airlock/proc/bolt()
 	if(locked)
 		return
+	if(obj_flags & EMAGGED)
+		run_animation(DOOR_DENY_ANIMATION)
+		return
 	set_bolt(TRUE)
 	playsound(src,boltDown,30,FALSE,3)
 	audible_message(span_hear("You hear a click from the bottom of the door."), null,  1)
@@ -252,6 +255,8 @@
 /obj/machinery/door/airlock/proc/set_bolt(should_bolt)
 	if(locked == should_bolt)
 		return
+	if (should_bolt && !(obj_flags & EMAGGED))
+		locked = TRUE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_SET_BOLT, should_bolt)
 	. = locked
 	locked = should_bolt
@@ -1221,7 +1226,7 @@
 		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS)
 
 /obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS)
-	if(cycle_pump && !operating && !welded && !seal && locked && density)
+	if(cycle_pump && !operating && !welded && !seal && locked && density && !(obj_flags & EMAGGED))
 		cycle_pump.airlock_act(src)
 		return FALSE // The rest will be handled by the pump
 
@@ -1286,15 +1291,13 @@
 /obj/machinery/door/airlock/try_to_force_door_open(force_type = DEFAULT_DOOR_CHECKS)
 	switch(force_type)
 		if(DEFAULT_DOOR_CHECKS) // Regular behavior.
-			if(!hasPower() || wires.is_cut(WIRE_OPEN) || (obj_flags & EMAGGED))
+			if(!hasPower() || wires.is_cut(WIRE_OPEN))
 				return FALSE
 			use_energy(50 JOULES)
 			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
 
 		if(FORCING_DOOR_CHECKS) // Only one check.
-			if(obj_flags & EMAGGED)
-				return FALSE
 			use_energy(50 JOULES)
 			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
@@ -1371,8 +1374,6 @@
 /obj/machinery/door/airlock/try_to_force_door_shut(force_type = DEFAULT_DOOR_CHECKS)
 	switch(force_type)
 		if(DEFAULT_DOOR_CHECKS to FORCING_DOOR_CHECKS)
-			if(obj_flags & EMAGGED)
-				return FALSE
 			use_energy(50 JOULES)
 			playsound(src, doorClose, 30, TRUE)
 			return TRUE
@@ -1388,8 +1389,6 @@
 	return ..()
 
 /obj/machinery/door/airlock/proc/prison_open()
-	if(obj_flags & EMAGGED)
-		return
 	if(locked)
 		unbolt()
 	open()
@@ -1431,28 +1430,36 @@
 	return !density || (check_access_list(pass_info.access) && !locked && hasPower() && !pass_info.no_id)
 
 /obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/emag_card)
-	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
-		if(istype(emag_card, /obj/item/card/emag/doorjack))
-			var/obj/item/card/emag/doorjack/doorjack_card = emag_card
-			doorjack_card.use_charge(user)
-		operating = TRUE
-		update_icon(ALL, AIRLOCK_EMAG, 1)
-		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
-		return TRUE
-	return FALSE
+	if (obj_flags & EMAGGED)
+		balloon_alert(user, "already hacked!")
+		return FALSE
+	if (operating || !density || !hasPower())
+		return FALSE
 
-/// Timer proc, called ~0.6 seconds after [emag_act]. Finishes the emag sequence by breaking the airlock, permanently locking it, and disabling power.
+	if (istype(emag_card, /obj/item/card/emag/doorjack))
+		if (security_level > AIRLOCK_SECURITY_IRON)
+			balloon_alert(user, "panel is reinforced!")
+			return FALSE
+		var/obj/item/card/emag/doorjack/doorjack_card = emag_card
+		doorjack_card.use_charge(user)
+
+	operating = TRUE
+	obj_flags |= EMAGGED
+	update_icon(ALL, AIRLOCK_EMAG, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
+	return TRUE
+
+/// Timer proc, called ~0.6 seconds after [emag_act]. Finishes the emag sequence by removing all access requirements, unbolting, and opening the door.
 /obj/machinery/door/airlock/proc/finish_emag_act()
 	if(QDELETED(src))
 		return FALSE
 	operating = FALSE
-	if(!open())
-		update_icon(ALL, AIRLOCK_CLOSED, 1)
-	obj_flags |= EMAGGED
-	lights = FALSE
-	locked = TRUE
-	loseMainPower()
-	loseBackupPower()
+	req_access = list()
+	req_one_access = list()
+	set_electrified(MACHINE_NOT_ELECTRIFIED)
+	unbolt()
+	update_icon(ALL, AIRLOCK_CLOSED, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(open)), 0.1 SECONDS)
 
 /obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(isElectrified() && shock(user, 100)) //Mmm, fried xeno!
@@ -2253,7 +2260,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
 	normal_integrity = 1000
-	security_level = 6
+	security_level = AIRLOCK_SECURITY_PLASTEEL
 	explosion_block = 2
 
 /obj/machinery/door/airlock/grunge
@@ -2271,7 +2278,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_vault
 	explosion_block = 2
 	normal_integrity = 400 // reverse engieneerd: 400 * 1.5 (sec lvl 6) = 600 = original
-	security_level = 6
+	security_level = AIRLOCK_SECURITY_PLASTEEL
 
 
 // Hatch Airlocks
@@ -2299,7 +2306,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_highsecurity
 	explosion_block = 2
 	normal_integrity = 500
-	security_level = 1
+	security_level = AIRLOCK_SECURITY_IRON
 	damage_deflection = 30
 
 // Shuttle Airlocks
@@ -2326,7 +2333,7 @@
 	hackProof = TRUE
 	aiControlDisabled = AI_WIRE_DISABLED
 	normal_integrity = 700
-	security_level = 1
+	security_level = AIRLOCK_SECURITY_IRON
 
 // Cult Airlocks
 

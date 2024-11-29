@@ -231,7 +231,7 @@
 
 /obj/machinery/door/Bumped(atom/movable/AM)
 	. = ..()
-	if(operating || (obj_flags & EMAGGED) || (!can_open_with_hands && density))
+	if(operating || (!can_open_with_hands && density))
 		return
 	if(ismob(AM))
 		var/mob/B = AM
@@ -281,7 +281,7 @@
 		return
 
 	add_fingerprint(user)
-	if(!density || (obj_flags & EMAGGED))
+	if(!density)
 		return
 
 	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
@@ -308,7 +308,7 @@
 
 /obj/machinery/door/proc/try_to_activate_door(mob/user, access_bypass = FALSE)
 	add_fingerprint(user)
-	if(operating || (obj_flags & EMAGGED) || !can_open_with_hands)
+	if(operating || !can_open_with_hands)
 		return
 	if(access_bypass || (requiresID() && allowed(user)))
 		if(density)
