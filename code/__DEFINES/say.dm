@@ -53,6 +53,8 @@
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
 
+#define MODE_FORCED "forced"
+
 #define MODE_MAFIA "mafia"
 
 /// Applies singing characters to the message
