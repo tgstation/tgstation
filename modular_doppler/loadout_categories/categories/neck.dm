@@ -53,3 +53,7 @@
 /datum/loadout_item/neck/collar/spike
 	name = "Spiked Collar"
 	item_path = /obj/item/clothing/neck/human_petcollar/locked/spike
+
+/datum/loadout_item/neck/bowtie
+	name = "Bowtie (Colorable)"
+	item_path = /obj/item/clothing/neck/bowtie
