@@ -10,7 +10,7 @@
 	quirk_flags = QUIRK_HUMAN_ONLY
 
 /datum/quirk/system_shock/add(client/client_source)
-	if(SPECIES_ANDROID)
+	if(isandroid(quirk_holder))
 		RegisterSignals(quirk_holder, list(COMSIG_LIVING_ELECTROCUTE_ACT, COMSIG_LIVING_MINOR_SHOCK), PROC_REF(on_electrocute))
 
 /datum/quirk/system_shock/remove()
