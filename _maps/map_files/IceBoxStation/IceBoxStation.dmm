@@ -18953,7 +18953,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -25910,7 +25910,7 @@
 /area/station/science/xenobiology)
 "hvt" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/surgery_tray/full/morgue,
+/obj/effect/spawner/surgery_tray/full/morgue,
 /obj/structure/table/reinforced,
 /obj/machinery/requests_console/auto_name/directional/north,
 /obj/effect/turf_decal/bot_white,
@@ -42635,7 +42635,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},

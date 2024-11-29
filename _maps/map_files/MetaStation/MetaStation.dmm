@@ -9670,7 +9670,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/status_display/evac/directional/west,
 /obj/machinery/digital_clock/directional/south,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "dyr" = (
@@ -12775,7 +12775,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /turf/open/floor/iron/white,
@@ -15055,7 +15055,7 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/status_display/evac/directional/west,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "fpj" = (
@@ -61156,7 +61156,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/north,
-/obj/item/surgery_tray/full/morgue,
+/obj/effect/spawner/surgery_tray/full/morgue,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},

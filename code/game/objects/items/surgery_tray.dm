@@ -1,6 +1,4 @@
 
-GLOBAL_LIST_EMPTY(surgery_trays)
-
 /**
  * Surgery Trays
  * A storage object that displays tools in its contents based on tier, better tools are more visible.
@@ -21,6 +19,8 @@ GLOBAL_LIST_EMPTY(surgery_trays)
 
 	/// List of contents to populate with in populatecontents()
 	var/list/starting_items = list()
+	/// Throw out a stack_trace if this is on TRUE, because we want mappers to use the spawner, usually
+	VAR_PROTECTED/trace_if_mapped_in = TRUE
 
 /// Fills the tray with items it should contain on creation
 /obj/item/surgery_tray/proc/populate_contents()
@@ -29,18 +29,15 @@ GLOBAL_LIST_EMPTY(surgery_trays)
 	update_appearance(UPDATE_ICON)
 	return
 
-/obj/item/surgery_tray/Initialize(mapload)
+/obj/item/surgery_tray/Initialize(mapload, effect_spawner = FALSE)
 	. = ..()
+	if(!effect_spawner && trace_if_mapped_in)
+		stack_trace("surgery tray directly mapped in instead of using the spawner!!!")
 	AddElement(/datum/element/drag_pickup)
 	create_storage(storage_type = /datum/storage/surgery_tray)
 	populate_contents()
 	register_context()
 	set_tray_mode(is_portable)
-	GLOB.surgery_trays += src
-
-/obj/item/surgery_tray/Destroy(force)
-	GLOB.surgery_trays -= src
-	return ..()
 
 /obj/item/surgery_tray/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -171,6 +168,7 @@ GLOBAL_LIST_EMPTY(surgery_trays)
 
 /obj/item/surgery_tray/deployed
 	is_portable = FALSE
+	trace_if_mapped_in = FALSE
 
 /obj/item/surgery_tray/full
 	starting_items = list(
@@ -191,6 +189,7 @@ GLOBAL_LIST_EMPTY(surgery_trays)
 
 /obj/item/surgery_tray/full/deployed
 	is_portable = FALSE
+	trace_if_mapped_in = FALSE
 
 /obj/item/surgery_tray/full/morgue
 	name = "autopsy tray"
@@ -226,3 +225,32 @@ GLOBAL_LIST_EMPTY(surgery_trays)
 		/obj/item/stack/sticky_tape/surgical,
 		/obj/item/clothing/mask/surgical,
 	)
+	trace_if_mapped_in = FALSE
+
+/obj/effect/spawner/surgery_tray
+	name = "surgery tray spawner"
+	icon = 'icons/obj/medical/medicart.dmi'
+	icon_state = "tray"
+	var/tray_to_spawn = /obj/item/surgery_tray
+	var/rare_toolbox_replacement = /obj/item/storage/toolbox/medical
+	var/toolbox_chance = 1
+
+/obj/effect/spawner/surgery_tray/Initialize(mapload)
+	. = ..()
+	if(prob(toolbox_chance))
+		new rare_toolbox_replacement(loc)
+		return
+	new tray_to_spawn(loc, effect_spawner = TRUE)
+
+/obj/effect/spawner/surgery_tray/full
+	name = "full surgery tray spawner"
+	icon_state = "medicart"
+	tray_to_spawn = /obj/item/surgery_tray/full
+	rare_toolbox_replacement = /obj/item/storage/toolbox/medical/full
+
+/obj/effect/spawner/surgery_tray/full/morgue
+	name = "full autopsy tray spawner"
+	icon_state = "medicart"
+	tray_to_spawn = /obj/item/surgery_tray/full/morgue
+	rare_toolbox_replacement = /obj/item/storage/toolbox/medical/coroner
+	toolbox_chance = 3 // rarer

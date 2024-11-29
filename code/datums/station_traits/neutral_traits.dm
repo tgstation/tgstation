@@ -532,34 +532,6 @@
 #undef SKUB_IDFC
 #undef RANDOM_SKUB
 
-/// surgery trays replaced with medical toolboxes
-/datum/station_trait/medical_toolbox
-	name = "Medical Toolbox Mania"
-	trait_type = STATION_TRAIT_NEUTRAL
-	show_in_report = FALSE
-	weight = 2
-
-	force = TRUE
-
-/datum/station_trait/medical_toolbox/New()
-	. = ..()
-	for(var/obj/item/surgery_tray/tray in GLOB.surgery_trays)
-		if(!tray.toolbox_clone)
-			continue
-		new tray.toolbox_clone(tray.loc)
-		qdel(tray)
-
-	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, PROC_REF(toolboxification))
-
-/datum/station_trait/medical_toolbox/proc/toolboxification(datum/source, obj/item/surgery_tray/created_item)
-	SIGNAL_HANDLER
-
-	if(!istype(created_item, /obj/item/surgery_tray))
-		return
-
-	new created_item.toolbox_clone(created_item.loc)
-	qdel(created_item)
-
 /// Crew don't ever spawn as enemies of the station. Obsesseds, blob infection, space changelings etc can still happen though
 /datum/station_trait/background_checks
 	name = "Station-Wide Background Checks"

@@ -32,6 +32,8 @@
 			latches = "double_latch"
 			if(prob(1))
 				latches = "triple_latch"
+				if(prob(0.1))
+					latches = "quad_latch" // like winning the lottery, but worse
 	update_appearance()
 	atom_storage.open_sound = 'sound/items/handling/toolbox/toolbox_open.ogg'
 	atom_storage.rustle_sound = 'sound/items/handling/toolbox/toolbox_rustle.ogg'
@@ -230,6 +232,8 @@
 	desc = "A toolbox painted soft white and light blue. This is getting ridiculous."
 	icon_state = "medical"
 	inhand_icon_state = "medical_toolbox"
+	attack_verb_continuous = list("treats")
+	attack_verb_simple = list("treat")
 	w_class = WEIGHT_CLASS_BULKY
 	material_flags = NONE
 	force = 5 // its for healing
@@ -246,9 +250,10 @@
 	atom_storage.max_slots = 11
 
 /obj/item/storage/toolbox/medical/PopulateContents()
-	var/list/tools = initial(tray_type.starting_items)
-	for(var/path in tools)
-		new path(src)
+	var/atom/fake_tray = new tray_type(get_turf(src)) // not in src lest it fill storage that we need for its tools later
+	for(var/atom/movable/thingy in fake_tray)
+		thingy.forceMove(src)
+	qdel(fake_tray)
 
 /obj/item/storage/toolbox/medical/full
 	tray_type = /obj/item/surgery_tray/full
@@ -258,10 +263,11 @@
 	desc = "A toolbox painted soft white and dark grey. This is getting beyond ridiculous."
 	icon_state = "coroner"
 	inhand_icon_state = "coroner_toolbox"
+	attack_verb_continuous = list("dissects")
+	attack_verb_simple = list("dissect")
 	w_class = WEIGHT_CLASS_BULKY
 	material_flags = NONE
 	force = 17 // it's not for healing
-	wound_bonus = 25 // wounds are medical right?
 	tray_type = /obj/item/surgery_tray/full/morgue
 
 /obj/item/storage/toolbox/ammobox
