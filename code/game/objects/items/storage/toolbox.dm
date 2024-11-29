@@ -232,8 +232,8 @@
 	desc = "A toolbox painted soft white and light blue. This is getting ridiculous."
 	icon_state = "medical"
 	inhand_icon_state = "medical_toolbox"
-	attack_verb_continuous = list("treats")
-	attack_verb_simple = list("treat")
+	attack_verb_continuous = list("treats", "surgeries", "tends", "tends wounds on")
+	attack_verb_simple = list("treat", "surgery", "tend", "tend wounds on")
 	w_class = WEIGHT_CLASS_BULKY
 	material_flags = NONE
 	force = 5 // its for healing
@@ -263,8 +263,8 @@
 	desc = "A toolbox painted soft white and dark grey. This is getting beyond ridiculous."
 	icon_state = "coroner"
 	inhand_icon_state = "coroner_toolbox"
-	attack_verb_continuous = list("dissects")
-	attack_verb_simple = list("dissect")
+	attack_verb_continuous = list("dissects", "autopsies", "corones")
+	attack_verb_simple = list("dissect", "autopsy", "corone")
 	w_class = WEIGHT_CLASS_BULKY
 	material_flags = NONE
 	force = 17 // it's not for healing
