@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	name = "???" //The resulting fish is not shown on the catalog.
 	probability = 40
 	new_fish_type = /obj/item/fish/mastodon
-	new_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	new_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/predator, /datum/fish_trait/territorial)
 	conditions_note = "The fish (and its mate) needs to be unusually big both in size and weight."
 	show_result_on_wiki = FALSE
 
@@ -125,13 +125,13 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 /datum/fish_evolution/chainsawfish
 	probability = 30
 	new_fish_type = /obj/item/fish/chainsawfish
-	new_traits = list(/datum/fish_trait/predator, /datum/fish_trait/aggressive)
-	conditions_note = "The fish needs to be unusually big and aggressive"
+	new_traits = list(/datum/fish_trait/predator, /datum/fish_trait/territorial)
+	conditions_note = "The fish needs to be unusually big and territorial"
 
 /datum/fish_evolution/chainsawfish/check_conditions(obj/item/fish/source, obj/item/fish/mate, atom/movable/aquarium)
 	var/double_avg_size = /obj/item/fish/goldfish::average_size * 2
 	var/double_avg_weight = /obj/item/fish/goldfish::average_weight * 2
-	if(source.size >= double_avg_size && source.weight >= double_avg_weight && (/datum/fish_trait/aggressive in source.fish_traits))
+	if(source.size >= double_avg_size && source.weight >= double_avg_weight && (/datum/fish_trait/territorial in source.fish_traits))
 		return ..()
 	return FALSE
 
