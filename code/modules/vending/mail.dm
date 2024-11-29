@@ -1,3 +1,8 @@
+#define STATE_SORTING "sorting"
+#define STATE_IDLE "idle"
+#define STATE_YES "yes"
+#define STATE_NO "no"
+
 /obj/machinery/mailsorter
 	name = "mail sorter"
 	desc = "A large mail sorting unit. Sorting mail since 1987!"
@@ -15,7 +20,7 @@
 	/// How much mail can the mail sorter store.
 	var/mail_capacity = 100
 	/// What the machine is currently doing. Can be "sorting", "idle", "yes", "no".
-	var/currentstate = "idle"
+	var/currentstate = STATE_IDLE
 	/// List of all mail that's inside the mailbox.
 	var/list/mail_list = list()
 	/// The direction in which the mail will be unloaded.
@@ -104,7 +109,7 @@
 	if (!allowed(user))
 		to_chat(user, span_warning("Access denied."))
 		return
-	if (currentstate != "idle")
+	if (currentstate != STATE_IDLE)
 		return
 	if (length(mail_list) == 0)
 		to_chat(user, span_warning("There's no mail inside!"))
@@ -136,7 +141,7 @@
 	var/sorting_dept = tgui_input_list(usr, "Choose the department to sort mail for","Mail Sorting", sorting_departments)
 	if (!sorting_dept)
 		return
-	currentstate = "sorting"
+	currentstate = STATE_SORTING
 	update_appearance()
 	if (!sort_delay())
 		return
@@ -155,12 +160,12 @@
 		else
 			unable_to_sort ++
 	if (length(sorted_mail) == 0)
-		currentstate = "no"
+		currentstate = STATE_NO
 		update_appearance()
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 		say("No mail for the following department: [sorting_dept].")
 	else
-		currentstate = "yes"
+		currentstate = STATE_YES
 		update_appearance()
 		say("[sorted] envelope\s sorted successfully.")
 		playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
@@ -178,7 +183,7 @@
 		playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
 		say("[total_to_sort] envelope\s processed.")
 	sleep(10)
-	currentstate = "idle"
+	currentstate = STATE_IDLE
 	update_appearance()
 
 /obj/machinery/mailsorter/attackby(obj/item/thingy, mob/user, params)
@@ -222,7 +227,7 @@
 	var/obj/item/mail/mail_throw = tgui_input_list(usr, "Choose the envelope to eject","Mail Sorting", mail_list)
 	if(!mail_throw)
 		return
-	currentstate = "sorting"
+	currentstate = STATE_SORTING
 	update_appearance()
 	if (!sort_delay())
 		return
@@ -231,7 +236,7 @@
 	mail_throw.forceMove(unload_turf)
 	mail_throw.throw_at(unload_turf, 2, 3)
 	mail_list -= mail_throw
-	currentstate = "idle"
+	currentstate = STATE_IDLE
 	update_appearance()
 
 /obj/machinery/mailsorter/proc/load(obj/item/thingy, mob/user)
@@ -297,3 +302,7 @@
 		icon_state = "[initial(icon_state)]-broken"
 	return ..()
 
+#undef STATE_SORTING
+#undef STATE_IDLE
+#undef STATE_YES
+#undef STATE_NO
