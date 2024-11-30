@@ -8339,9 +8339,6 @@
 	pixel_y = 38;
 	req_access = list("qm")
 	},
-/obj/machinery/keycard_auth/directional/east{
-	pixel_y = 26
-	},
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "cRW" = (
@@ -9685,20 +9682,17 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 1
 	},
-/obj/machinery/keycard_auth/directional/west{
-	pixel_y = -5
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/requests_console/directional/south{
 	department = "Captain's Desk";
 	name = "Captain's Requests Console"
 	},
-/obj/effect/mapping_helpers/requests_console/announcement,
-/obj/effect/mapping_helpers/requests_console/information,
-/obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "dmU" = (
@@ -16612,7 +16606,6 @@
 /turf/closed/wall,
 /area/station/maintenance/solars/port/fore)
 "fzk" = (
-/obj/machinery/vending/autodrobe/all_access,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
@@ -36693,9 +36686,6 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -8
 	},
-/obj/machinery/keycard_auth/directional/south{
-	pixel_x = 8
-	},
 /obj/structure/table/reinforced/rglass,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
@@ -47781,11 +47771,6 @@
 /obj/structure/closet/crate/freezer{
 	name = "organ storage"
 	},
-/obj/item/organ/external/tail/cat,
-/obj/item/organ/external/tail/cat,
-/obj/item/organ/internal/ears/cat,
-/obj/item/organ/internal/ears/cat,
-/obj/item/organ/internal/heart,
 /obj/structure/sign/poster/contraband/random/directional/east,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
@@ -58837,9 +58822,6 @@
 	dir = 8;
 	pixel_x = 28
 	},
-/obj/machinery/keycard_auth/directional/east{
-	pixel_y = 26
-	},
 /obj/machinery/button/door/directional/north{
 	id = "rdprivacy";
 	name = "Director's Privacy Toggle";
@@ -58852,9 +58834,6 @@
 	pixel_x = -8;
 	req_access = list("research")
 	},
-/obj/machinery/light_switch/directional/north{
-	pixel_x = 6
-	},
 /obj/machinery/button/door/directional/north{
 	id = "xeno_blastdoor";
 	name = "Xenobiology Containment";
@@ -58864,6 +58843,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
+	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = 6
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
@@ -59331,7 +59313,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "tpY" = (
-/obj/machinery/vending/autodrobe/all_access,
 /obj/structure/noticeboard/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -67991,7 +67972,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "wbT" = (
-/obj/machinery/keycard_auth/directional/north,
 /obj/item/toy/figure/ian{
 	pixel_x = 8
 	},
@@ -68742,9 +68722,6 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_y = 2
 	},
-/obj/machinery/keycard_auth/directional/south{
-	pixel_x = -6
-	},
 /obj/machinery/status_display/evac/directional/west,
 /obj/machinery/button/door/directional/south{
 	id = "hosspace";
@@ -68752,8 +68729,8 @@
 	pixel_x = 8
 	},
 /obj/structure/secure_safe/hos{
-	pixel_y = -33;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = -33
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
@@ -71460,9 +71437,6 @@
 /area/station/maintenance/port/greater)
 "xjl" = (
 /obj/structure/filingcabinet/chestdrawer,
-/obj/machinery/keycard_auth/directional/north{
-	pixel_x = -6
-	},
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 12
 	},
