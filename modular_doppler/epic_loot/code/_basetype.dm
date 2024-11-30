@@ -1,6 +1,6 @@
 /obj/structure/maintenance_loot_structure
 	name = "abandoned crate"
-	icon = 'modular_lethal_doppler/epic_loot/icons/loot_structures.dmi'
+	icon = 'modular_doppler/epic_loot/icons/loot_structures.dmi'
 	density = TRUE
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
@@ -24,7 +24,7 @@
 
 /obj/structure/maintenance_loot_structure/examine(mob/user)
 	. = ..()
-	. += span_engradio("It might have other things you're looking for <b>at a later time</b>?")
+	. += span_engradio("It might have other things you're looking for <b>if you look again later</b>?")
 	return .
 
 // Since it doesn't want to play nice for whatever reason
@@ -36,7 +36,7 @@
 
 /// Fills random contents into this structure's inventory, starting a loop to respawn loot if the container is empty later
 /obj/structure/maintenance_loot_structure/proc/make_contents()
-	var/refill_check_time = rand(7 MINUTES, 15 MINUTES)
+	var/refill_check_time = rand(15 MINUTES, 30 MINUTES)
 	spawn_loot()
 	addtimer(CALLBACK(src, PROC_REF(make_contents)), refill_check_time)
 
@@ -59,7 +59,7 @@
 	rustle_sound = FALSE
 	screen_max_columns = 3
 	/// What sound this makes when people open it's storage
-	var/opening_sound = 'modular_lethal_doppler/epic_loot/sound/containers/plastic.mp3'
+	var/opening_sound = 'modular_doppler/epic_loot/sound/containers/plastic.mp3'
 
 /datum/storage/maintenance_loot_structure/open_storage(mob/to_show)
 	. = ..()
@@ -71,7 +71,7 @@
 /obj/item/epic_loot
 	name = "epic loot!!!!!"
 	desc = "Unknown purpose, unknown maker, unknown value. The only thing I know for real: There will be loot."
-	icon = 'modular_lethal_doppler/epic_loot/icons/epic_loot.dmi'
+	icon = 'modular_doppler/epic_loot/icons/epic_loot.dmi'
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	inhand_icon_state = "binoculars"

@@ -11,15 +11,9 @@
 	icon_state = "jacket_green"
 	density = FALSE
 	storage_datum_to_use = /datum/storage/maintenance_loot_structure/jacket
-	loot_spawn_dice_string = "1d4-2"
+	loot_spawn_dice_string = "1d3-1"
 	loot_weighted_list = list(
-		/obj/effect/spawner/random/entertainment/money_small = 2,
-		/obj/effect/spawner/random/entertainment/money = 2,
-		/obj/effect/spawner/random/entertainment/cigarette_pack = 1,
-		/obj/effect/spawner/random/entertainment/cigarette = 1,
-		/obj/effect/spawner/random/entertainment/wallet_lighter = 2,
-		/obj/effect/spawner/random/epic_loot/pocket_sized_valuables = 2,
-		/obj/effect/spawner/random/epic_loot/random_keycard = 1,
+		/obj/effect/spawner/random/epic_loot/pocket_sized_items = 1,
 	)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/maintenance_loot_structure/wall_jacket, 28)

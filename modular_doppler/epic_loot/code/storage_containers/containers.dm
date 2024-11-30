@@ -1,32 +1,7 @@
-/obj/item/storage/epic_loot_tag_case
-	name = "tag case"
-	desc = "A semi-rigid case for holding captured id tags, which may be useful!"
-	icon = 'modular_lethal_doppler/epic_loot/icons/storage_items.dmi'
-	icon_state = "tag_case"
-	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	storage_type = /datum/storage/maintenance_loot_structure/epic_loot_tag_case
-	slot_flags = ITEM_SLOT_POCKETS
-	w_class = WEIGHT_CLASS_NORMAL
-
-/datum/storage/maintenance_loot_structure/epic_loot_tag_case
-	max_slots = 9
-	max_specific_storage = WEIGHT_CLASS_NORMAL
-	max_total_storage = WEIGHT_CLASS_NORMAL * 9
-	opening_sound = 'sound/items/zip/un_zip.ogg'
-
-/datum/storage/maintenance_loot_structure/epic_loot_tag_case/New()
-	. = ..()
-
-	can_hold = typecacheof(list(
-		/obj/item/card,
-	))
-
 /obj/item/storage/epic_loot_medpen_case
 	name = "autoinjector case"
 	desc = "A semi-rigid case for holding a large number of autoinjectors inside of."
-	icon = 'modular_lethal_doppler/epic_loot/icons/storage_items.dmi'
+	icon = 'modular_doppler/epic_loot/icons/storage_items.dmi'
 	icon_state = "pencase"
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
@@ -61,7 +36,7 @@
 /obj/item/storage/epic_loot_docs_case
 	name = "documents case"
 	desc = "A large pouch conveniently shaped to hold all of the valueable paperwork in the galaxy."
-	icon = 'modular_lethal_doppler/epic_loot/icons/storage_items.dmi'
+	icon = 'modular_doppler/epic_loot/icons/storage_items.dmi'
 	icon_state = "documents"
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
@@ -92,12 +67,13 @@
 		/obj/item/photo,
 		/obj/item/documents,
 		/obj/item/paperwork,
+		/obj/item/clipboard,
 	))
 
 /obj/item/storage/epic_loot_org_pouch
 	name = "organizational pouch"
 	desc = "A pouch with every possible type of pocket and organizer stuck into it, to hold all of the small stuff you could think of."
-	icon = 'modular_lethal_doppler/epic_loot/icons/storage_items.dmi'
+	icon = 'modular_doppler/epic_loot/icons/storage_items.dmi'
 	icon_state = "sick"
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
@@ -114,49 +90,10 @@
 	numerical_stacking = TRUE
 	opening_sound = 'sound/items/zip/un_zip.ogg'
 
-/obj/item/storage/epic_loot_card_holder
-	name = "keycard holder"
-	desc = "A metal clip for holding your pile of extremely useful colored keycards together."
-	icon = 'modular_lethal_doppler/epic_loot/icons/storage_items.dmi'
-	icon_state = "card_holder"
-	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
-	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
-	storage_type = /datum/storage/maintenance_loot_structure/epic_loot_keycards
-	w_class = WEIGHT_CLASS_SMALL
-
-/datum/storage/maintenance_loot_structure/epic_loot_keycards
-	max_slots = 4
-	max_specific_storage = WEIGHT_CLASS_SMALL
-	max_total_storage = WEIGHT_CLASS_SMALL * 4
-	screen_max_columns = 2
-	numerical_stacking = TRUE
-	opening_sound = 'modular_lethal_doppler/epic_loot/sound/containers/plastic.mp3'
-
-/datum/storage/maintenance_loot_structure/epic_loot_keycards/New()
-	. = ..()
-
-	can_hold = typecacheof(list(
-		/obj/item/keycard,
-	))
-
-/obj/item/storage/toolbox/ammobox/epic_loot
-	name = "ammo box"
-	desc = "A box for holding ammunition, magazines, or worse."
-	icon = 'modular_lethal_doppler/epic_loot/icons/storage_items.dmi'
-	icon_state = "ammo"
-	inhand_icon_state = "toolbox_syndi"
-	material_flags = NONE
-
-/obj/item/storage/toolbox/ammobox/epic_loot/magazine_box
-	name = "magazine box"
-	desc = "A box for holding large numbers of spare magazines, though nothing is stopping you from putting bullets in there too..."
-	icon_state = "magazine"
-	inhand_icon_state = "toolbox_syndi"
-
 /obj/item/storage/epic_loot_cooler
 	name = "compact cooler"
 	desc = "A wonder in food storage technology, it's a blue bag that you can put food in."
-	icon = 'modular_lethal_doppler/epic_loot/icons/storage_items.dmi'
+	icon = 'modular_doppler/epic_loot/icons/storage_items.dmi'
 	icon_state = "cooler"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
@@ -183,40 +120,10 @@
 		/obj/item/reagent_containers/cup,
 	))
 
-/obj/item/storage/epic_loot_grenade_case
-	name = "explosives case"
-	desc = "A thick-walled case for neatly storing away a collection of grenades. Keep away from fire."
-	icon = 'modular_lethal_doppler/epic_loot/icons/storage_items.dmi'
-	icon_state = "explosives"
-	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
-	inhand_icon_state = "lockbox"
-	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
-	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
-	storage_type = /datum/storage/maintenance_loot_structure/epic_loot_grenade_box
-	w_class = WEIGHT_CLASS_BULKY
-
-/datum/storage/maintenance_loot_structure/epic_loot_grenade_box
-	max_slots = 8
-	max_specific_storage = WEIGHT_CLASS_NORMAL
-	max_total_storage = WEIGHT_CLASS_NORMAL * 8
-	screen_max_columns = 4
-	numerical_stacking = FALSE
-	opening_sound = 'modular_lethal_doppler/epic_loot/sound/containers/wood_crate_1.mp3'
-
-/datum/storage/maintenance_loot_structure/epic_loot_grenade_box/New()
-	. = ..()
-
-	can_hold = typecacheof(list(
-		/obj/item/grenade,
-		/obj/item/epic_loot/plasma_explosive,
-		/obj/item/epic_loot/grenade_fuze,
-	))
-
 /obj/item/storage/epic_loot_money_case
 	name = "money case"
 	desc = "A heavy duty case for the transportation of (bribe) money."
-	icon = 'modular_lethal_doppler/epic_loot/icons/storage_items.dmi'
+	icon = 'modular_doppler/epic_loot/icons/storage_items.dmi'
 	icon_state = "money_case"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
@@ -232,7 +139,7 @@
 	max_total_storage = WEIGHT_CLASS_NORMAL * 6
 	screen_max_columns = 2
 	numerical_stacking = FALSE
-	opening_sound = 'modular_lethal_doppler/epic_loot/sound/containers/wood_crate_1.mp3'
+	opening_sound = 'modular_doppler/epic_loot/sound/containers/wood_crate_1.mp3'
 
 /datum/storage/maintenance_loot_structure/epic_loot_the_money/New()
 	. = ..()
@@ -245,7 +152,7 @@
 /obj/item/storage/epic_loot_medical_case
 	name = "medical case"
 	desc = "A heavy duty case for the transportation of medical supplies."
-	icon = 'modular_lethal_doppler/epic_loot/icons/storage_items.dmi'
+	icon = 'modular_doppler/epic_loot/icons/storage_items.dmi'
 	icon_state = "medical"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
@@ -261,7 +168,7 @@
 	max_total_storage = WEIGHT_CLASS_BULKY * 21
 	screen_max_columns = 7
 	numerical_stacking = FALSE
-	opening_sound = 'modular_lethal_doppler/epic_loot/sound/containers/wood_crate_1.mp3'
+	opening_sound = 'modular_doppler/epic_loot/sound/containers/wood_crate_1.mp3'
 
 /datum/storage/maintenance_loot_structure/epic_loot_medkit/New()
 	. = ..()

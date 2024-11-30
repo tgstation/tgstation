@@ -3,11 +3,11 @@
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_total_storage = WEIGHT_CLASS_NORMAL * 4
 	screen_max_columns = 2
-	opening_sound = 'modular_lethal_doppler/epic_loot/sound/containers/plastic.mp3'
+	opening_sound = 'modular_doppler/epic_loot/sound/containers/plastic.mp3'
 
 /obj/structure/maintenance_loot_structure/computer_tower
 	name = "computer tower"
-	desc = "A relatively compact computer unit, missing it's monitor. May still contain valuable components inside."
+	desc = "A compact computer unit, missing it's monitor. May still contain valuable components inside."
 	icon_state = "alienware"
 	storage_datum_to_use = /datum/storage/maintenance_loot_structure/computer
 	loot_spawn_dice_string = "1d7-3"
