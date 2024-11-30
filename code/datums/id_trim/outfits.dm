@@ -72,7 +72,7 @@
 	subdepartment_color = COLOR_GREEN
 	threat_modifier = -1 // Cops recognise cops
 	honorific = "CISO"
-	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_NONE)
+	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/cyber_police/New()
 	. = ..()

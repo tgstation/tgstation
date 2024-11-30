@@ -51,7 +51,7 @@
 	big_pointer = FALSE
 	pointer_color = null
 	honorific = "Auditor"
-	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
+	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 
 /datum/id_trim/syndicom/irs/auditor
