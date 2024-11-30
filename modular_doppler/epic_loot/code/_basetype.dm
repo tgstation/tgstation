@@ -79,6 +79,5 @@
 
 /obj/item/epic_loot/examine(mob/user)
 	. = ..()
-	. += span_engradio("You can probably <b>sell</b> this for some good money if you have no other use for it.")
-	. += span_engradio("Examine this <b>closer</b> to see what it can be <b>used</b> for.")
+	. += span_engradio("You should probably <b>sell</b> or <b>recycle</b> this.")
 	return .
