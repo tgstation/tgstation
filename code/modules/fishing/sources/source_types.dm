@@ -801,26 +801,21 @@
 	return data
 
 /datum/fish_source/vending/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
-	var/list/table = list()
 	if(istype(location, /obj/machinery/fishing_portal_generator))
 		var/obj/machinery/fishing_portal_generator/portal = location
 		location = portal.current_linked_atom
 	if(!istype(location, /obj/machinery/vending))
-		return table
+		return list()
 
-	var/obj/machinery/vending/vending = location
+	return get_vending_table(rod, fisherman, location)
+
+/datum/fish_source/vending/proc/get_vending_table(obj/item/fishing_rod/rod, mob/fisherman, obj/machinery/vending/location)
+	var/list/table = list()
 	///Create a list of products, ordered by price from highest to lowest
-	var/list/products = vending.product_records + vending.coin_records + vending.hidden_records
+	var/list/products = location.product_records + location.coin_records + location.hidden_records
 	sortTim(products, GLOBAL_PROC_REF(cmp_vending_prices))
 
 	var/bait_value = rod.bait?.get_item_credit_value() || 1
-	table[FISHING_VENDING_CHUCK] = 1
-	//Makes using 1 cred chips with the minigame skip (negative fishing difficulty) a bit less cheesy.
-	var/malus = PAYCHECK_LOWER - bait_value
-	if(malus > 0)
-		var/half_len = length(products) * 0.5
-		table[FISHING_DUD] += malus * half_len
-		table[FISHING_VENDING_CHUCK] += malus * half_len
 
 	var/highest_record_price = 0
 	for(var/datum/data/vending_product/product_record as anything in products)
@@ -836,12 +831,35 @@
 		//the smaller the difference between product price and bait value, the more likely you're to get it.
 		table[product_record] = low/high * 1000 //multiply the value by 1000 for accuracy. pick_weight() doesn't work with zero decimals yet.
 
+	add_risks(table, bait_value, highest_record_price, length(products) * 0.5)
 	return table
+
+/datum/fish_source/vending/proc/add_risks(list/table, bait_value, highest_price, malus_multiplier)
+	///Using more than the money needed to buy the most expensive item (why would you do it?!) will remove the dud chance.
+	if(bait_value > highest_price)
+		table -= FISHING_DUD
+	else
+		//Makes using 1 cred chips with the minigame skip (negative fishing difficulty) a bit less cheesy.
+		var/malus = min(PAYCHECK_LOWER - bait_value, highest_price)
+		if(malus > 0)
+			table[FISHING_DUD] += malus * malus_multiplier
+			table[FISHING_VENDING_CHUCK] += malus * malus_multiplier
+
+#define FISHING_PRODUCT_DIFFICULTY_MULT 1.6
 
 /datum/fish_source/vending/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman)
 	//Using less than a minimum paycheck is going to make the challenge a tad harder.
 	var/bait_value = rod.bait?.get_item_credit_value()
-	return ..() + max(PAYCHECK_LOWER * 1.7 - bait_value, 0)
+	var/base_diff = PAYCHECK_LOWER - bait_value
+	return ..() + get_product_difficulty(base_diff, result) * FISHING_PRODUCT_DIFFICULTY_MULT
+
+/datum/fish_source/vending/proc/get_product_difficulty(diff, datum/result)
+	if(istype(result, /datum/data/vending_product))
+		var/datum/data/vending_product/product = result
+		diff = min(diff, product.price) // low priced items are easier to catch anyway
+	return diff
+
+#undef FISHING_PRODUCT_DIFFICULTY_MULT
 
 /datum/fish_source/vending/dispense_reward(reward_path, mob/fisherman, atom/fishing_spot)
 	if(reward_path != FISHING_VENDING_CHUCK)
@@ -852,17 +870,20 @@
 		vending = portal.current_linked_atom
 	if(fishing_spot != vending) //fishing portals
 		vending.forceMove(get_turf(fishing_spot))
-	vending.tilt(fisherman)
-	return null //Don't spawn any reward at all
+	vending.tilt(fisherman, range = 4)
+	return null //Don't spawn a reward at all
 
 /datum/fish_source/vending/spawn_reward(reward_path, atom/spawn_location, obj/machinery/vending/fishing_spot)
-	var/datum/data/vending_product/product_record = reward_path
 	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
 		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
 		fishing_spot = portal.current_linked_atom
-	if(!istype(product_record))
-		return ..()
-	if(!istype(fishing_spot) || product_record.amount <= 0)
+	if(!istype(fishing_spot))
+		return null
+	return spawn_vending_reward(reward_path, spawn_location, fishing_spot)
+
+/datum/fish_source/vending/proc/spawn_vending_reward(reward_path, atom/spawn_location, obj/machinery/vending/fishing_spot)
+	var/datum/data/vending_product/product_record = reward_path
+	if(!istype(product_record) || product_record.amount <= 0)
 		return null
 	return fishing_spot.dispense(product_record, spawn_location)
 
@@ -871,6 +892,47 @@
 
 /datum/fish_source/vending/proc/on_reward(obj/item/fishing_rod/rod, atom/movable/reward, mob/user)
 	SIGNAL_HANDLER
-	if(reward && rod.bait?.get_item_credit_value()) //you pay for what you get
+	if(reward && !QDELETED(rod.bait) && rod.bait.get_item_credit_value()) //you pay for what you get
 		qdel(rod.bait) // fishing_rod.Exited() will handle clearing the hard ref.
 	UnregisterSignal(rod, COMSIG_FISHING_ROD_CAUGHT_FISH)
+
+///subtype of fish_source/vending for custom vending machines
+/datum/fish_source/vending/custom
+	catalog_description = null //no duplicate entries on autowiki or catalog
+
+/datum/fish_source/vending/custom/get_vending_table(obj/item/fishing_rod/rod, mob/fisherman, obj/machinery/vending/location)
+	var/list/table = list()
+	///Create a list of products, ordered by price from highest to lowest
+	var/list/products = location.vending_machine_input.Copy()
+	sortTim(products, GLOBAL_PROC_REF(cmp_item_vending_prices))
+
+	var/bait_value = rod.bait?.get_item_credit_value() || 1
+
+	var/highest_record_price = 0
+	for(var/obj/item/stocked as anything in products)
+		if(location.vending_machine_input[stocked] <= 0)
+			products -= stocked
+			table[FISHING_DUD] += PAYCHECK_LOWER //it gets harder the emptier the machine is
+			continue
+		if(!highest_record_price)
+			highest_record_price = stocked.custom_price
+		var/high = max(highest_record_price, bait_value)
+		var/low = min(highest_record_price, bait_value)
+
+		//the smaller the difference between product price and bait value, the more likely you're to get it.
+		table[stocked] = low/high * 1000 //multiply the value by 1000 for accuracy. pick_weight() doesn't work with zero decimals yet.
+
+	add_risks(table, bait_value, highest_record_price, length(products) * 0.5)
+	return table
+
+/datum/fish_source/vending/custom/get_product_difficulty(diff, datum/result)
+	if(isitem(result))
+		var/obj/item/product = result
+		diff = min(diff, product.custom_price)
+	return diff
+
+/datum/fish_source/vending/custom/spawn_vending_reward(obj/item/reward, atom/spawn_location, obj/machinery/vending/fishing_spot)
+	if(!isitem(reward))
+		return null
+	reward.forceMove(spawn_location)
+	return reward

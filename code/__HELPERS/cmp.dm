@@ -219,3 +219,6 @@
 /// Orders vending products by their price
 /proc/cmp_vending_prices(datum/data/vending_product/a, datum/data/vending_product/b)
 	return b.price - a.price
+
+proc/cmp_item_vending_prices(obj/item/a, obj/item/b)
+	return b.custom_price - a.custom_price

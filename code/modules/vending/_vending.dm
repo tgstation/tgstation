@@ -218,6 +218,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	/// used for narcing on underages
 	var/obj/item/radio/sec_radio
 
+	//the path of the fish_source datum to use for the fishing_spot component
+	var/fish_source_path = /datum/fish_source/vending
+
 /datum/armor/machinery_vending
 	melee = 20
 	fire = 50
@@ -289,7 +292,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		GLOB.vending_machines_to_restock += src //We need to keep track of the final onstation vending machines so we can keep them restocked.
 	register_context()
 
-	AddComponent(/datum/component/fishing_spot, /datum/fish_source/vending)
+	if(fish_source_path)
+		AddComponent(/datum/component/fishing_spot, fish_source_path)
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(coin)
@@ -805,8 +809,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * fatty - atom to tilt the vendor onto
  * local_crit_chance - percent chance of a critical hit
  * forced_crit - specific critical hit case to use, if any
+ * range - the range of the machine when thrown if not adjacent
 */
-/obj/machinery/vending/proc/tilt(atom/fatty, local_crit_chance = crit_chance, forced_crit = forcecrit)
+/obj/machinery/vending/proc/tilt(atom/fatty, local_crit_chance = crit_chance, forced_crit = forcecrit, range = 1)
 	if(QDELETED(src) || !has_gravity(src))
 		return
 
@@ -823,7 +828,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			layer = ABOVE_MOB_LAYER
 
 	if(get_turf(fatty) != get_turf(src))
-		throw_at(get_turf(fatty), 1, 1, spin = FALSE, quickstart = FALSE)
+		throw_at(get_turf(fatty), range, 1, spin = FALSE, quickstart = FALSE)
 
 /**
  * Causes src to fall onto [target], crushing everything on it (including itself) with [damage]
@@ -1706,6 +1711,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	payment_department = NO_FREEBIES
 	light_mask = "custom-light-mask"
 	refill_canister = /obj/item/vending_refill/custom
+	fish_source_path = /datum/fish_source/vending/custom
 	/// where the money is sent
 	var/datum/bank_account/linked_account
 	/// max number of items that the custom vendor can hold
