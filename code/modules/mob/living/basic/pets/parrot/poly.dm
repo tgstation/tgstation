@@ -193,6 +193,7 @@
 	color = "#FFFFFF77"
 	sentience_type = SENTIENCE_BOSS //This is so players can't mindswap into ghost poly to become a literal god
 	incorporeal_move = INCORPOREAL_MOVE_BASIC
+	status_flags = NONE
 	butcher_results = list(/obj/item/ectoplasm = 1)
 	ai_controller = /datum/ai_controller/basic_controller/parrot/ghost
 	speech_probability_rate = 1

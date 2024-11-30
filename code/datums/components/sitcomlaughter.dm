@@ -4,7 +4,7 @@
 	proctype = PROC_REF(EngageInComedy)
 	mobtype = /mob/living
 	///Sounds used for when user has a sitcom action occur
-	var/list/comedysounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
+	var/list/comedysounds = list('sound/items/sitcom_laugh/sitcomLaugh1.ogg', 'sound/items/sitcom_laugh/sitcomLaugh2.ogg', 'sound/items/sitcom_laugh/sitcomLaugh3.ogg')
 	///Invoked in EngageInComedy is ran
 	var/datum/callback/post_comedy_callback
 	///Cooldown for inbetween laughs

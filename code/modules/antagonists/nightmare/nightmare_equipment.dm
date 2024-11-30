@@ -15,7 +15,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_MINING
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	wound_bonus = -30
 	bare_wound_bonus = 20
 	///If this is true, our next hit will be critcal, temporarily stunning our target

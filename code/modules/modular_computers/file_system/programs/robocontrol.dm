@@ -122,7 +122,7 @@
 				GLOB.manifest.modify(id_card.registered_name, id_card.assignment, id_card.get_trim_assignment())
 				computer.RemoveID(usr)
 			else
-				playsound(get_turf(computer.ui_host()) , 'sound/machines/buzz-sigh.ogg', 25, FALSE)
+				playsound(get_turf(computer.ui_host()) , 'sound/machines/buzz/buzz-sigh.ogg', 25, FALSE)
 		if("changedroneaccess")
 			if(!computer || !computer.computer_id_slot || !id_card)
 				to_chat(current_user, span_notice("No ID found, authorization failed."))
@@ -143,4 +143,4 @@
 			var/msg = span_boldnotice("NON-DRONE PING: [current_user.name]: [params["ping_type"]] priority alert in [current_area.name]!")
 			_alert_drones(msg, TRUE, current_user)
 			to_chat(current_user, msg)
-			playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+			playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)

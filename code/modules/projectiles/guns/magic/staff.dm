@@ -33,7 +33,7 @@
 /obj/item/gun/magic/staff/change
 	name = "staff of change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
-	fire_sound = 'sound/magic/staff_change.ogg'
+	fire_sound = 'sound/effects/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "staffofchange"
 	inhand_icon_state = "staffofchange"
@@ -64,7 +64,7 @@
 /obj/item/gun/magic/staff/animate
 	name = "staff of animation"
 	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
-	fire_sound = 'sound/magic/staff_animation.ogg'
+	fire_sound = 'sound/effects/magic/staff_animation.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/animate
 	icon_state = "staffofanimation"
 	inhand_icon_state = "staffofanimation"
@@ -73,7 +73,7 @@
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
 	desc = "An artefact that spits bolts of restoring magic which can remove ailments of all kinds and even raise the dead."
-	fire_sound = 'sound/magic/staff_healing.ogg'
+	fire_sound = 'sound/effects/magic/staff_healing.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/heal
 	icon_state = "staffofhealing"
 	inhand_icon_state = "staffofhealing"
@@ -120,7 +120,7 @@
 /obj/item/gun/magic/staff/chaos
 	name = "staff of chaos"
 	desc = "An artefact that spits bolts of chaotic magic that can potentially do anything."
-	fire_sound = 'sound/magic/staff_chaos.ogg'
+	fire_sound = 'sound/effects/magic/staff_chaos.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/chaos
 	icon_state = "staffofchaos"
 	inhand_icon_state = "staffofchaos"
@@ -215,7 +215,7 @@
 /obj/item/gun/magic/staff/door
 	name = "staff of door creation"
 	desc = "An artefact that spits bolts of transformative magic that can create doors in walls."
-	fire_sound = 'sound/magic/staff_door.ogg'
+	fire_sound = 'sound/effects/magic/staff_door.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/door
 	icon_state = "staffofdoor"
 	inhand_icon_state = "staffofdoor"
@@ -227,7 +227,7 @@
 /obj/item/gun/magic/staff/honk
 	name = "staff of the honkmother"
 	desc = "Honk."
-	fire_sound = 'sound/items/airhorn.ogg'
+	fire_sound = 'sound/items/airhorn/airhorn.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/honk
 	icon_state = "honker"
 	inhand_icon_state = "honker"
@@ -238,14 +238,14 @@
 /obj/item/gun/magic/staff/spellblade
 	name = "spellblade"
 	desc = "A deadly combination of laziness and bloodlust, this blade allows the user to dismember their enemies without all the hard work of actually swinging the sword."
-	fire_sound = 'sound/magic/fireball.ogg'
+	fire_sound = 'sound/effects/magic/fireball.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/spellblade
 	icon_state = "spellblade"
 	inhand_icon_state = "spellblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	hitsound = 'sound/weapons/rapierhit.ogg'
-	block_sound = 'sound/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	force = 20
 	armour_penetration = 75
 	block_chance = 50
@@ -270,7 +270,7 @@
 /obj/item/gun/magic/staff/locker
 	name = "staff of the locker"
 	desc = "An artefact that expells encapsulating bolts, for incapacitating thy enemy."
-	fire_sound = 'sound/magic/staff_change.ogg'
+	fire_sound = 'sound/effects/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/locker
 	icon_state = "locker"
 	inhand_icon_state = "locker"
@@ -284,7 +284,7 @@
 /obj/item/gun/magic/staff/flying
 	name = "staff of flying"
 	desc = "An artefact that spits bolts of graceful magic that can make something fly."
-	fire_sound = 'sound/magic/staff_healing.ogg'
+	fire_sound = 'sound/effects/magic/staff_healing.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/flying
 	icon_state = "staffofflight"
 	inhand_icon_state = "staffofchange"
@@ -294,7 +294,7 @@
 /obj/item/gun/magic/staff/babel
 	name = "staff of babel"
 	desc = "An artefact that spits bolts of confusion magic that can make something depressed and incoherent."
-	fire_sound = 'sound/magic/staff_change.ogg'
+	fire_sound = 'sound/effects/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/babel
 	icon_state = "staffofbabel"
 	inhand_icon_state = "staffofdoor"
@@ -304,7 +304,7 @@
 /obj/item/gun/magic/staff/necropotence
 	name = "staff of necropotence"
 	desc = "An artefact that spits bolts of death magic that can repurpose the soul."
-	fire_sound = 'sound/magic/staff_change.ogg'
+	fire_sound = 'sound/effects/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/necropotence
 	icon_state = "staffofnecropotence"
 	inhand_icon_state = "staffofchaos"
@@ -314,7 +314,7 @@
 /obj/item/gun/magic/staff/wipe
 	name = "staff of possession"
 	desc = "An artefact that spits bolts of mind-unlocking magic that can let ghosts invade the victim's mind."
-	fire_sound = 'sound/magic/staff_change.ogg'
+	fire_sound = 'sound/effects/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/wipe
 	icon_state = "staffofwipe"
 	inhand_icon_state = "pharoah_sceptre"
@@ -324,7 +324,7 @@
 /obj/item/gun/magic/staff/shrink
 	name = "staff of shrinking"
 	desc = "An artefact that spits bolts of tiny magic that makes things small. It's easily mistaken for a wand."
-	fire_sound = 'sound/magic/staff_shrink.ogg'
+	fire_sound = 'sound/effects/magic/staff_shrink.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/shrink
 	icon_state = "shrinkstaff"
 	inhand_icon_state = "staff"

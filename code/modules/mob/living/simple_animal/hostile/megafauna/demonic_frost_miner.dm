@@ -16,8 +16,8 @@ Difficulty: Extremely Hard
 	icon_living = "demonic_miner"
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	attack_verb_continuous = "pummels"
-	attack_verb_simple = "pummels"
-	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	attack_verb_simple = "pummel"
+	attack_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	movement_type = GROUND
@@ -81,7 +81,7 @@ Difficulty: Extremely Hard
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', 167 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Destroy()
 	frost_orbs = null
@@ -126,7 +126,7 @@ Difficulty: Extremely Hard
 	if(FROST_MINER_SHOULD_ENRAGE)
 		INVOKE_ASYNC(src, PROC_REF(check_enraged))
 		return COMPONENT_BLOCK_ABILITY_START
-	var/projectile_speed_multiplier = 1 - enraged * 0.5
+	var/projectile_speed_multiplier = 1 + enraged
 	frost_orbs.projectile_speed_multiplier = projectile_speed_multiplier
 	snowball_machine_gun.projectile_speed_multiplier = projectile_speed_multiplier
 	ice_shotgun.projectile_speed_multiplier = projectile_speed_multiplier
@@ -143,7 +143,7 @@ Difficulty: Extremely Hard
 	animate(src, pixel_y = pixel_y + 96, time = 100, easing = ELASTIC_EASING)
 	spin(100, 10)
 	SLEEP_CHECK_DEATH(60, src)
-	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/explosion/explosion3.ogg', 100, TRUE)
 	icon_state = "demonic_miner_phase2"
 	animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
 	spin(8, 2)
@@ -198,8 +198,7 @@ Difficulty: Extremely Hard
 	icon_state = "ice_1"
 	damage = 20
 	armour_penetration = 100
-	speed = 1
-	pixel_speed_multiplier = 0.1
+	speed = 0.1
 	range = 500
 	homing_turn_speed = 3
 	damage_type = BURN
@@ -214,8 +213,7 @@ Difficulty: Extremely Hard
 	icon_state = "nuclear_particle"
 	damage = 5
 	armour_penetration = 100
-	speed = 1
-	pixel_speed_multiplier = 0.333
+	speed = 0.33
 	range = 150
 	damage_type = BRUTE
 	explode_hit_objects = FALSE
@@ -225,8 +223,7 @@ Difficulty: Extremely Hard
 	icon_state = "ice_2"
 	damage = 15
 	armour_penetration = 100
-	speed = 1
-	pixel_speed_multiplier = 0.333
+	speed = 0.33
 	range = 150
 	damage_type = BRUTE
 

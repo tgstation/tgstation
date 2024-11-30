@@ -21,7 +21,7 @@
 	projectile_type = /obj/projectile/energy/wiremod_gun
 	harmful = FALSE
 	select_name = "circuit"
-	fire_sound = 'sound/weapons/blaster.ogg'
+	fire_sound = 'sound/items/weapons/blaster.ogg'
 
 /obj/projectile/energy/wiremod_gun
 	name = "scanning beam"

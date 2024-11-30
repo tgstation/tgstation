@@ -53,7 +53,7 @@
 	name = "Spew Bile"
 	desc = "Spews bile everywhere. Must resurface after use to refresh."
 	projectile_type = /obj/projectile/bileworm_acid
-	projectile_sound = 'sound/creatures/bileworm/bileworm_spit.ogg'
+	projectile_sound = 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg'
 	shared_cooldown = MOB_SHARED_COOLDOWN_1 | MOB_SHARED_COOLDOWN_2
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/Activate(atom/target_atom)
@@ -70,9 +70,9 @@
 /obj/projectile/bileworm_acid
 	name = "acidic bile"
 	icon_state = "neurotoxin"
-	hitsound = 'sound/weapons/sear.ogg'
+	hitsound = 'sound/items/weapons/sear.ogg'
 	damage = 20
-	speed = 2
+	speed = 0.5
 	range = 20
 	jitter = 3 SECONDS
 	stutter = 3 SECONDS

@@ -9,7 +9,7 @@
 	message_admins("[key_name(invoker)] has replaced the Captain")
 	var/list/former_captains = list()
 	var/list/other_crew = list()
-	SEND_SOUND(world, sound('sound/magic/timeparadox2.ogg'))
+	SEND_SOUND(world, sound('sound/effects/magic/timeparadox2.ogg'))
 
 	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
 		if (!crewmate.mind)

@@ -47,7 +47,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "match_lit"
 	damtype = BURN
 	force = 3
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	inhand_icon_state = "cigon"
 	name = "lit [initial(name)]"
 	desc = "A [initial(name)]. This one is lit."
@@ -132,6 +132,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "cigarette"
 	desc = "A roll of tobacco and nicotine. It is not food."
 	icon = 'icons/obj/cigarettes.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "cigoff"
 	inhand_icon_state = "cigon" //gets overriden during intialize(), just have it for unit test sanity.
 	throw_speed = 0.5
@@ -184,11 +185,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette/Initialize(mapload)
 	. = ..()
-	create_reagents(chem_volume, INJECTABLE | NO_REACT)
-	if(list_reagents)
-		reagents.add_reagent_list(list_reagents)
-	if(starts_lit)
-		light()
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
 	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(sparks_touched))
@@ -200,15 +196,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		initial_reagents = list_reagents,\
 		food_flags = FOOD_NO_EXAMINE,\
 		foodtypes = JUNKFOOD,\
-		volume = 50,\
+		volume = chem_volume,\
 		eat_time = 0 SECONDS,\
-		tastes = list("a never before experienced flavour.", "finally sitting down after standing your entire life"),\
+		tastes = list("a never before experienced flavour", "finally sitting down after standing your entire life"),\
 		eatverbs = list("taste"),\
-		bite_consumption = 50,\
+		bite_consumption = chem_volume,\
 		junkiness = 0,\
 		reagent_purity = null,\
 		on_consume = CALLBACK(src, PROC_REF(on_consume)),\
 	)
+	if(starts_lit)
+		light()
 
 /obj/item/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -346,7 +344,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	lit = TRUE
-	playsound(src.loc, 'sound/items/cig_light.ogg', 100, 1)
+	playsound(src.loc, 'sound/items/lighter/cig_light.ogg', 100, 1)
 	make_cig_smoke()
 	if(!(flags_1 & INITIALIZED_1))
 		update_appearance(UPDATE_ICON)
@@ -354,7 +352,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	attack_verb_continuous = string_list(list("burns", "singes"))
 	attack_verb_simple = string_list(list("burn", "singe"))
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	damtype = BURN
 	force = 4
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
@@ -395,7 +393,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	reagents.flags |= NO_REACT
 	lit = FALSE
-	playsound(src.loc, 'sound/items/cig_snuff.ogg', 100, 1)
+	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg', 100, 1)
 	update_appearance(UPDATE_ICON)
 	if(ismob(loc))
 		to_chat(loc, span_notice("Your [name] goes out."))
@@ -443,12 +441,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			return
 
 	how_long_have_we_been_smokin += seconds_per_tick * (1 SECONDS)
-	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
-	var/obj/item/organ/internal/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
+	reagents.expose(smoker, INHALE, min(to_smoke / reagents.total_volume, 1))
+	var/obj/item/organ/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(lungs && IS_ORGANIC_ORGAN(lungs))
 		var/smoker_resistance = HAS_TRAIT(smoker, TRAIT_SMOKER) ? 0.5 : 1
 		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm * smoker_resistance)
-	if(!reagents.trans_to(smoker, to_smoke, methods = INGEST, ignore_stomach = TRUE))
+	if(!reagents.trans_to(smoker, to_smoke, methods = INHALE, ignore_stomach = TRUE))
 		reagents.remove_all(to_smoke)
 
 /obj/item/cigarette/process(seconds_per_tick)
@@ -675,6 +673,27 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
+
+
+/obj/item/cigarette/dart
+	name = "fat dart"
+	desc = "Chuff back this fat dart"
+	icon_state = "bigon"
+	icon_on = "bigon"
+	icon_off = "bigoff"
+	w_class = WEIGHT_CLASS_BULKY
+	smoketime = 18 MINUTES
+	chem_volume = 65
+	list_reagents = list(/datum/reagent/drug/nicotine = 45)
+	choke_time_max = 40 SECONDS
+	lung_harm = 2
+
+/obj/item/cigarette/dart/Initialize(mapload)
+	. = ..()
+	//the compiled icon state is how it appears when it's on.
+	//That's how we want it to show on orbies (little virtual PDA pets).
+	//However we should reset their appearance on runtime.
+	update_appearance(UPDATE_ICON_STATE)
 
 
 ////////////
@@ -927,6 +946,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return TRUE
 
 /obj/item/vape/attack_self(mob/user)
+	if(!screw)
+		balloon_alert(user, "open the cap first!")
+		return
 	if(reagents.total_volume > 0)
 		to_chat(user, span_notice("You empty [src] of all reagents."))
 		reagents.clear_reagents()
@@ -970,7 +992,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		e.start(src)
 		qdel(src)
 
-	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INGEST, ignore_stomach = TRUE))
+	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INHALE, ignore_stomach = TRUE))
 		reagents.remove_all(REAGENTS_METABOLISM)
 
 /obj/item/vape/process(seconds_per_tick)

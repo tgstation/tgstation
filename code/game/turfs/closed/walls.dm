@@ -1,5 +1,3 @@
-#define LEANING_OFFSET 11
-
 /turf/closed/wall
 	name = "wall"
 	desc = "A huge chunk of iron used to separate rooms."
@@ -31,66 +29,10 @@
 	var/girder_type = /obj/structure/girder
 	/// A turf that will replace this turf when this turf is destroyed
 	var/decon_type
+	/// If we added a leaning component to ourselves
+	var/added_leaning = FALSE
 
 	var/list/dent_decals
-
-/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
-	if(dropping != user)
-		return
-	if(!iscarbon(dropping) && !iscyborg(dropping))
-		return
-	var/mob/living/leaner = dropping
-	if(INCAPACITATED_IGNORING(leaner, INCAPABLE_RESTRAINTS) || leaner.stat != CONSCIOUS || HAS_TRAIT(leaner, TRAIT_NO_TRANSFORM))
-		return
-	if(!leaner.density || leaner.pulledby || leaner.buckled || !(leaner.mobility_flags & MOBILITY_STAND))
-		return
-	if(HAS_TRAIT_FROM(leaner, TRAIT_UNDENSE, LEANING_TRAIT))
-		return
-	var/turf/checked_turf = get_step(leaner, REVERSE_DIR(leaner.dir))
-	if(checked_turf != src)
-		return
-	leaner.start_leaning(src)
-
-/mob/living/proc/start_leaning(turf/closed/wall/wall)
-	var/new_y = base_pixel_y + pixel_y
-	var/new_x = base_pixel_x + pixel_x
-	switch(dir)
-		if(SOUTH)
-			new_y += LEANING_OFFSET
-		if(NORTH)
-			new_y -= LEANING_OFFSET
-		if(WEST)
-			new_x += LEANING_OFFSET
-		if(EAST)
-			new_x -= LEANING_OFFSET
-
-	animate(src, 0.2 SECONDS, pixel_x = new_x, pixel_y = new_y)
-	add_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
-	visible_message(
-		span_notice("[src] leans against [wall]."),
-		span_notice("You lean against [wall]."),
-	)
-	RegisterSignals(src, list(
-		COMSIG_MOB_CLIENT_PRE_MOVE,
-		COMSIG_LIVING_DISARM_HIT,
-		COMSIG_LIVING_GET_PULLED,
-		COMSIG_MOVABLE_TELEPORTING,
-		COMSIG_ATOM_DIR_CHANGE,
-	), PROC_REF(stop_leaning))
-	update_fov()
-
-/mob/living/proc/stop_leaning()
-	SIGNAL_HANDLER
-	UnregisterSignal(src, list(
-		COMSIG_MOB_CLIENT_PRE_MOVE,
-		COMSIG_LIVING_DISARM_HIT,
-		COMSIG_LIVING_GET_PULLED,
-		COMSIG_MOVABLE_TELEPORTING,
-		COMSIG_ATOM_DIR_CHANGE,
-	))
-	animate(src, 0.2 SECONDS, pixel_x = base_pixel_x, pixel_y = base_pixel_y)
-	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
-	update_fov()
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
@@ -108,6 +50,15 @@
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
 
+/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
+	. = ..()
+	if (added_leaning)
+		return
+	/// For performance reasons and to cut down on init times we are "lazy-loading" the leaning component when someone drags their sprite onto us, and then calling dragging code again to trigger the component
+	AddComponent(/datum/component/leanable, 11)
+	added_leaning = TRUE
+	dropping.base_mouse_drop_handler(src, null, null, params)
+
 /turf/closed/wall/atom_destruction(damage_flag)
 	. = ..()
 	dismantle_wall(TRUE, FALSE)
@@ -116,7 +67,6 @@
 	if(is_station_level(z))
 		GLOB.station_turfs -= src
 	return ..()
-
 
 /turf/closed/wall/examine(mob/user)
 	. += ..()
@@ -132,7 +82,7 @@
 	if(devastated)
 		devastate_wall()
 	else
-		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+		playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we don't /want/ a girder!
 			transfer_fingerprints_to(newgirder)
@@ -235,26 +185,21 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	to_chat(user, span_notice("You push the wall but nothing happens!"))
-	playsound(src, 'sound/weapons/genhit.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 25, TRUE)
 	add_fingerprint(user)
 
-/turf/closed/wall/attackby(obj/item/W, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
+/turf/closed/wall/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
-		return
-
-	//get the user's location
-	if(!isturf(user.loc))
-		return //can't do this stuff whilst inside objects and such
+		return ITEM_INTERACT_BLOCKING
 
 	add_fingerprint(user)
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(W, user) || try_wallmount(W, user) || try_decon(W, user))
-		return
+	if(try_clean(tool, user) || try_wallmount(tool, user) || try_decon(tool, user))
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user)
 	if((user.combat_mode) || !LAZYLEN(dent_decals))
@@ -302,7 +247,7 @@
 
 	return FALSE
 
-/turf/closed/wall/singularity_pull(S, current_size)
+/turf/closed/wall/singularity_pull(atom/singularity, current_size)
 	..()
 	wall_singularity_pull(current_size)
 
@@ -384,5 +329,3 @@
 /turf/closed/wall/Exited(atom/movable/gone, direction)
 	. = ..()
 	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
-
-#undef LEANING_OFFSET

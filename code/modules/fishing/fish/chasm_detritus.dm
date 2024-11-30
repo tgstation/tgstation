@@ -43,11 +43,11 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 		),
 	)
 
-/datum/chasm_detritus/proc/dispense_detritus(atom/spawn_location, turf/fishing_spot)
+/datum/chasm_detritus/proc/dispense_detritus(atom/spawn_location, atom/fishing_spot)
 	if(prob(default_contents_chance))
 		var/default_spawn = pick(default_contents[default_contents_key])
 		return new default_spawn(spawn_location)
-	return find_chasm_contents(fishing_spot, spawn_location)
+	return find_chasm_contents(get_turf(fishing_spot), spawn_location)
 
 /// Returns the chosen detritus from the given list of things to choose from
 /datum/chasm_detritus/proc/determine_detritus(list/chasm_stuff)
@@ -61,7 +61,9 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 		var/default_spawn = pick(default_contents[default_contents_key])
 		return new default_spawn(fisher_turf)
 
-	return determine_detritus(chasm_contents)
+	var/atom/movable/detritus = determine_detritus(chasm_contents)
+	detritus.forceMove(fisher_turf)
+	return detritus
 
 /datum/chasm_detritus/proc/get_chasm_contents(turf/fishing_spot)
 	. = list()

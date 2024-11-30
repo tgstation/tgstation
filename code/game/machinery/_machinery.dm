@@ -335,6 +335,13 @@
 	remove_all_languages(source = LANGUAGE_EMP)
 	grant_random_uncommon_language(source = LANGUAGE_EMP)
 
+/obj/machinery/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	//takes priority in case material container or other atoms that hook onto item interaction signals won't give it a chance
+	if(istype(tool, /obj/item/storage/part_replacer))
+		return tool.interact_with_atom(src, user, modifiers)
+
+	return ..()
+
 /**
  * Opens the machine.
  *
@@ -647,6 +654,11 @@
 
 	if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON) //if the user was a silicon, we'd have returned out earlier, so the user must not be a silicon
 		return FALSE
+
+	if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_STANDING)
+		var/mob/living/living_user = user
+		if(!(living_user.mobility_flags & MOBILITY_MOVE))
+			return FALSE
 
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
 
@@ -1146,6 +1158,9 @@
 				. += "It appears heavily damaged."
 			if(0 to 25)
 				. += span_warning("It's falling apart!")
+
+/obj/machinery/examine_descriptor(mob/user)
+	return "machine"
 
 /obj/machinery/examine_more(mob/user)
 	. = ..()

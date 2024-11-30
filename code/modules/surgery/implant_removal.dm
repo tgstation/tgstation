@@ -19,7 +19,7 @@
 		TOOL_CROWBAR = 65,
 		/obj/item/kitchen/fork = 35)
 	time = 64
-	success_sound = 'sound/surgery/hemostat1.ogg'
+	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	var/obj/item/implant/implant
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)

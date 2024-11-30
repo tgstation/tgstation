@@ -1,5 +1,3 @@
-#define SHOULD_DISABLE_FOOTSTEPS(source) ((SSlag_switch.measures[DISABLE_FOOTSTEPS] && !(HAS_TRAIT(source, TRAIT_BYPASS_MEASURES))) || HAS_TRAIT(source, TRAIT_SILENT_FOOTSTEPS))
-
 ///Footstep element. Plays footsteps at parents location when it is appropriate.
 /datum/element/footstep
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE
@@ -71,37 +69,54 @@
 
 	if(source.body_position == LYING_DOWN) //play crawling sound if we're lying
 		if(turf.footstep)
-			playsound(turf, 'sound/effects/footstep/crawl1.ogg', 15 * volume, falloff_distance = 1, vary = sound_vary)
+			var/sound = 'sound/effects/footstep/crawl1.ogg'
+			if(HAS_TRAIT(source, TRAIT_FLOPPING))
+				sound = pick(SFX_FISH_PICKUP, 'sound/mobs/non-humanoids/fish/fish_drop1.ogg')
+			playsound(turf, sound, 15 * volume, falloff_distance = 1, vary = sound_vary)
 		return
 
-	if(iscarbon(source))
-		var/mob/living/carbon/carbon_source = source
-		if(!carbon_source.get_bodypart(BODY_ZONE_L_LEG) && !carbon_source.get_bodypart(BODY_ZONE_R_LEG))
-			return
-		if(carbon_source.move_intent == MOVE_INTENT_WALK)
-			return// stealth
+	if(iscarbon(source) && source.move_intent == MOVE_INTENT_WALK)
+		return // stealth
+
 	steps_for_living[source] += 1
 	var/steps = steps_for_living[source]
 
-	if(steps >= 6)
+	if(steps >= 24)
+		// right foot = 0, 4, 8, 12, 16, 20
+		// left foot = 2, 6, 10, 14, 18, 22
+		// 24 -> return to 0 -> right foot, repeat
 		steps_for_living[source] = 0
 		steps = 0
 
 	if(steps % 2)
+		// skipping every other step, anyways. gets noisy otherwise
 		return
 
-	if(steps != 0 && !source.has_gravity()) // don't need to step as often when you hop around
+	if(steps % 6 != 0 && !source.has_gravity())
+		// don't need to step as often when you hop around
 		return
 
-	. = list(FOOTSTEP_MOB_SHOE = turf.footstep, FOOTSTEP_MOB_BAREFOOT = turf.barefootstep, FOOTSTEP_MOB_HEAVY = turf.heavyfootstep, FOOTSTEP_MOB_CLAW = turf.clawfootstep, STEP_SOUND_PRIORITY = STEP_SOUND_NO_PRIORITY)
-	var/overriden = SEND_SIGNAL(turf, COMSIG_TURF_PREPARE_STEP_SOUND, .) & FOOTSTEP_OVERRIDEN
-	//The turf has no footstep sound (e.g. open space) and none of the objects on that turf (e.g. catwalks) overrides it
-	if(!overriden && isnull(turf.footstep))
+	var/list/footstep_data = list(
+		FOOTSTEP_MOB_SHOE = turf.footstep,
+		FOOTSTEP_MOB_BAREFOOT = turf.barefootstep,
+		FOOTSTEP_MOB_HEAVY = turf.heavyfootstep,
+		FOOTSTEP_MOB_CLAW = turf.clawfootstep,
+		STEP_SOUND_PRIORITY = STEP_SOUND_NO_PRIORITY,
+	)
+	var/sigreturn = SEND_SIGNAL(turf, COMSIG_TURF_PREPARE_STEP_SOUND, footstep_data)
+	if(sigreturn & FOOTSTEP_OVERRIDEN)
+		return footstep_data
+	if(isnull(turf.footstep))
+		// The turf has no footstep sound (e.g. open space)
+		// and none of the objects on that turf (e.g. catwalks) overrides it
 		return null
-	return .
+	return footstep_data
 
 /datum/element/footstep/proc/play_simplestep(mob/living/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
+
+	if(source.moving_diagonally == SECOND_DIAG_STEP)
+		return // to prevent a diagonal step from counting as 2
 
 	if (forced || SHOULD_DISABLE_FOOTSTEPS(source))
 		return
@@ -122,7 +137,52 @@
 /datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
+	if(source.moving_diagonally == SECOND_DIAG_STEP)
+		return // to prevent a diagonal step from counting as 2
+
 	if (forced || SHOULD_DISABLE_FOOTSTEPS(source) || !momentum_change)
+		return
+
+	var/list/prepared_steps = prepare_step(source)
+	if(isnull(prepared_steps))
+		return
+
+	var/footstep_type = null
+	var/list/footstep_sounds
+	var/stepcount = steps_for_living[source]
+	// any leg covering sounds defaults to shoe sounds
+	if((source.wear_suit?.body_parts_covered|source.w_uniform?.body_parts_covered|source.shoes?.body_parts_covered) & FEET)
+		footstep_type = FOOTSTEP_MOB_SHOE
+	// now pick whether to draw from left foot or right foot sounds
+	else
+		var/obj/item/bodypart/leg/left_leg = source.get_bodypart(BODY_ZONE_L_LEG)
+		var/obj/item/bodypart/leg/right_leg = source.get_bodypart(BODY_ZONE_R_LEG)
+		if(stepcount == 2 || stepcount == 6)
+			footstep_sounds = left_leg?.special_footstep_sounds || right_leg?.special_footstep_sounds
+			footstep_type = left_leg?.footstep_type || right_leg?.footstep_type
+		else
+			footstep_sounds = right_leg?.special_footstep_sounds || left_leg?.special_footstep_sounds
+			footstep_type = right_leg?.footstep_type || left_leg?.footstep_type
+
+	// allow for snowflake effects to take priority
+	if(!length(footstep_sounds))
+		switch(footstep_type)
+			if(FOOTSTEP_MOB_CLAW)
+				footstep_sounds = GLOB.clawfootstep[prepared_steps[footstep_type]]
+			if(FOOTSTEP_MOB_BAREFOOT)
+				footstep_sounds = GLOB.barefootstep[prepared_steps[footstep_type]]
+			if(FOOTSTEP_MOB_HEAVY)
+				footstep_sounds = GLOB.heavyfootstep[prepared_steps[footstep_type]]
+			if(FOOTSTEP_MOB_SHOE)
+				footstep_sounds = GLOB.footstep[prepared_steps[footstep_type]]
+			if(null)
+				return
+			else
+				// Got an unsupported type, somehow
+				CRASH("Invalid footstep type for human footstep: \[[footstep_type]\]")
+
+	// no snowflake, and no (found) footstep sounds, nothing to do
+	if(!length(footstep_sounds))
 		return
 
 	var/volume_multiplier = 1
@@ -132,37 +192,20 @@
 		volume_multiplier = 0.6
 		range_adjustment = -2
 
-	var/list/prepared_steps = prepare_step(source)
-	if(isnull(prepared_steps))
-		return
-
-	//cache for sanic speed (lists are references anyways)
-	var/footstep_sounds = GLOB.footstep
-	///list returned by playsound() filled by client mobs who heard the footstep. given to play_fov_effect()
+	// list returned by playsound() filled by client mobs who heard the footstep. given to play_fov_effect()
 	var/list/heard_clients
+	var/picked_sound = pick(footstep_sounds[1])
+	var/picked_volume = footstep_sounds[2] * volume * volume_multiplier
+	var/picked_range = footstep_sounds[3] + e_range + range_adjustment
 
-	if((source.wear_suit?.body_parts_covered | source.w_uniform?.body_parts_covered | source.shoes?.body_parts_covered) & FEET)
-		// we are wearing shoes
-
-		var/shoestep_type = prepared_steps[FOOTSTEP_MOB_SHOE]
-		if(!isnull(shoestep_type) && footstep_sounds[shoestep_type]) // shoestep type can be null
-			heard_clients = playsound(source.loc, pick(footstep_sounds[shoestep_type][1]),
-				footstep_sounds[shoestep_type][2] * volume * volume_multiplier,
-				TRUE,
-				footstep_sounds[shoestep_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
-	else
-		// we are barefoot
-
-		if(source.dna.species.special_step_sounds)
-			heard_clients = playsound(source.loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
-		else
-			var/barefoot_type = prepared_steps[FOOTSTEP_MOB_BAREFOOT]
-			var/bare_footstep_sounds = GLOB.barefootstep
-			if(!isnull(barefoot_type) && bare_footstep_sounds[barefoot_type]) // barefoot_type can be null
-				heard_clients = playsound(source.loc, pick(bare_footstep_sounds[barefoot_type][1]),
-					bare_footstep_sounds[barefoot_type][2] * volume * volume_multiplier,
-					TRUE,
-					bare_footstep_sounds[barefoot_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
+	heard_clients = playsound(
+		source = source,
+		soundin = picked_sound,
+		vol = picked_volume,
+		vary = sound_vary,
+		extrarange = picked_range,
+		falloff_distance = 1,
+	)
 
 	if(heard_clients)
 		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)
@@ -171,6 +214,9 @@
 ///Prepares a footstep for machine walking
 /datum/element/footstep/proc/play_simplestep_machine(atom/movable/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
+
+	if(source.moving_diagonally == SECOND_DIAG_STEP)
+		return // to prevent a diagonal step from counting as 2
 
 	if (forced || SHOULD_DISABLE_FOOTSTEPS(source))
 		return
@@ -183,5 +229,3 @@
 		return
 
 	playsound(source_loc, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
-
-#undef SHOULD_DISABLE_FOOTSTEPS

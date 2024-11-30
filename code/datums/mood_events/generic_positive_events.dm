@@ -350,6 +350,17 @@
 	else
 		description = "Returned to the burden of the deep. But is this truly a mercy, [fish.name]? There will always be bigger fish..."
 
+/datum/mood_event/fish_petting
+	description = "It felt nice to pet the fish."
+	mood_change = 2
+	timeout = 2 MINUTES
+
+/datum/mood_event/fish_petting/add_effects(obj/item/fish/fish, morbid)
+	if(!morbid)
+		description = "It felt nice to pet \the [fish]."
+	else
+		description = "I caress \the [fish] as [fish.p_they()] squirms under my touch, blissfully unaware of how cruel this world is."
+
 /datum/mood_event/kobun
 	description = "You are all loved by the Universe. I’m not alone, and you aren’t either."
 	mood_change = 14

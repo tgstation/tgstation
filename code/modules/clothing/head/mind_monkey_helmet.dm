@@ -12,8 +12,8 @@
 	var/light_colors = 1 ///which icon state color this is (red, blue, yellow)
 	/// This chance is increased by 7 every time the helmet fails to get a host, to dissuade spam. starts negative to add 1 safe reuse
 	var/rage_chance = -7
-	/// Holds the steam effect at dangerous rage chance levels.
-	var/obj/effect/abstract/particle_holder/particle_effect
+	/// Currently used particle type
+	var/particle_path
 
 /obj/item/clothing/head/helmet/monkey_sentience/Initialize(mapload)
 	. = ..()
@@ -42,7 +42,7 @@
 		var/mob/living/something = user
 		to_chat(something, span_boldnotice("You feel a stabbing pain in the back of your head for a moment."))
 		something.apply_damage(5,BRUTE,BODY_ZONE_HEAD,FALSE,FALSE,FALSE) //notably: no damage resist (it's in your helmet), no damage spread (it's in your helmet)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		say("ERROR: Central Command has temporarily outlawed monkey sentience helmets in this sector. NEAREST LAWFUL SECTOR: 2.537 million light years away.")
@@ -60,11 +60,12 @@
 		UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 		magnification = null
 		visible_message(span_notice("[src] falls silent and drops on the floor. Maybe you should try again later?"))
-		var/particle_path
+		if (particle_path)
+			remove_shared_particles(particle_path)
 		switch(rage_chance)
 			if(-7 to 0)
 				user.visible_message(span_notice("[src] falls silent and drops on the floor. Try again later?"))
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 				particle_path = null
 			if(7 to 13)
 				user.visible_message(span_notice("[src] sparkles momentarily, then falls silent and drops on the floor. Maybe you should try again later?"))
@@ -80,14 +81,13 @@
 			if(21 to INFINITY)
 				user.visible_message(span_notice("[src] buzzes and smokes heavily, then falls silent and drops on the floor. This is clearly a bad idea."))
 				do_sparks(6, FALSE, src)
-				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 				particle_path = /particles/smoke/steam
 		rage_chance += 7
-
-		QDEL_NULL(particle_effect)
 		if(particle_path)
-			particle_effect = new(src, particle_path)
-		QDEL_IN(particle_effect, 2 MINUTES)
+			add_shared_particles(particle_path)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, remove_shared_particles), particle_path), 2 MINUTES)
+			addtimer(VARSET_CALLBACK(src, particle_path, null), 2 MINUTES)
 
 		if((rage_chance > 0) && prob(rage_chance)) // too much spam means agnry gorilla running at you
 			malfunction(user)
@@ -117,7 +117,7 @@
 			malfunction(magnification)
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
 	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message(span_warning("[src] fizzles and breaks apart!"))
 	magnification = null

@@ -44,7 +44,7 @@
 		return
 	if(IS_HERETIC(viewer))
 		return
-	if(viewer.can_block_magic(MAGIC_RESISTANCE))
+	if(viewer.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
 		return
 	to_chat(viewer, span_notice(text_to_display))
 	viewer.gain_trauma(applied_trauma, TRAUMA_RESILIENCE_SURGERY)
@@ -129,14 +129,14 @@
 
 	// A list made of the organs and bodyparts the heretic can get
 	var/static/list/random_bodypart_or_organ = list(
-		/obj/item/organ/internal/brain,
-		/obj/item/organ/internal/lungs,
-		/obj/item/organ/internal/eyes,
-		/obj/item/organ/internal/ears,
-		/obj/item/organ/internal/heart,
-		/obj/item/organ/internal/liver,
-		/obj/item/organ/internal/stomach,
-		/obj/item/organ/internal/appendix,
+		/obj/item/organ/brain,
+		/obj/item/organ/lungs,
+		/obj/item/organ/eyes,
+		/obj/item/organ/ears,
+		/obj/item/organ/heart,
+		/obj/item/organ/liver,
+		/obj/item/organ/stomach,
+		/obj/item/organ/appendix,
 		/obj/item/bodypart/arm/left,
 		/obj/item/bodypart/arm/right,
 		/obj/item/bodypart/leg/left,

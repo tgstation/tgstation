@@ -25,7 +25,7 @@
 	throw_range = 3
 	pressure_resistance = 0
 
-	item_flags = NOBLUDGEON | XENOMORPH_HOLDABLE //funny ~Jimmyl
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 
 	/// `list` or `null`, contains possible alternate `icon_states`.

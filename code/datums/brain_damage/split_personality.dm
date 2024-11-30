@@ -191,7 +191,7 @@
 	var/codeword
 	var/objective
 
-/datum/brain_trauma/severe/split_personality/brainwashing/New(obj/item/organ/internal/brain/B, _permanent, _codeword, _objective)
+/datum/brain_trauma/severe/split_personality/brainwashing/New(obj/item/organ/brain/B, _permanent, _codeword, _objective)
 	..()
 	if(_codeword)
 		codeword = _codeword
@@ -265,6 +265,10 @@
 
 /datum/brain_trauma/severe/split_personality/blackout/on_gain()
 	. = ..()
+
+	if(QDELETED(src))
+		return
+
 	RegisterSignal(owner, COMSIG_ATOM_SPLASHED, PROC_REF(on_splashed))
 	notify_ghosts(
 		"[owner] is blacking out!",
@@ -305,7 +309,7 @@
 		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT), 10 SECONDS)
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, balloon_alert), owner, "dexterity regained!"), 10 SECONDS)
 	if(prob(15))
-		playsound(owner,'sound/effects/sf_hiccup_male_01.ogg', 50)
+		playsound(owner,'sound/mobs/humanoids/human/hiccup/sf_hiccup_male_01.ogg', 50)
 		owner.emote("hiccup")
 	//too drunk to feel anything
 	//if they're to this point, they're likely dying of liver damage

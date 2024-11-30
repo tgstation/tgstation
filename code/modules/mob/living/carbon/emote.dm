@@ -22,24 +22,24 @@
 	message = "claps."
 	hands_use_check = TRUE
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	audio_cooldown = 5 SECONDS
 	vary = TRUE
+	affected_by_pitch = FALSE
 
 /datum/emote/living/carbon/clap/get_sound(mob/living/user)
 	if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
 		return
 	return pick(
-		'sound/misc/clap1.ogg',
-		'sound/misc/clap2.ogg',
-		'sound/misc/clap3.ogg',
-		'sound/misc/clap4.ogg',
+		'sound/mobs/humanoids/human/clap/clap1.ogg',
+		'sound/mobs/humanoids/human/clap/clap2.ogg',
+		'sound/mobs/humanoids/human/clap/clap3.ogg',
+		'sound/mobs/humanoids/human/clap/clap4.ogg',
 	)
 
 /datum/emote/living/carbon/crack
 	key = "crack"
 	key_third_person = "cracks"
 	message = "cracks their knuckles."
-	sound = 'sound/misc/knuckles.ogg'
+	sound = 'sound/mobs/humanoids/human/knuckle_crack/knuckles.ogg'
 	hands_use_check = TRUE
 	cooldown = 6 SECONDS
 
@@ -53,7 +53,6 @@
 	key_third_person = "cries"
 	message = "cries."
 	message_mime = "sobs silently."
-	audio_cooldown = 5 SECONDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = TRUE
 	stat_allowed = SOFT_CRIT
@@ -83,6 +82,36 @@
 	var/obj/item/hand_item/circlegame/N = new(user)
 	if(user.put_in_hands(N))
 		to_chat(user, span_notice("You make a circle with your hand."))
+
+/datum/emote/living/carbon/meow
+	key = "meow"
+	key_third_person = "meows"
+	vary = TRUE
+
+/datum/emote/living/carbon/meow/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/cat))
+		sound = SFX_CAT_MEOW
+		message = "meows!"
+		emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	else
+		to_chat(user, span_warning("You can't quite make the sound."))
+		return
+
+/datum/emote/living/carbon/purr
+	key = "purr"
+	key_third_person = "purrs"
+	vary = TRUE
+
+/datum/emote/living/carbon/purr/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/cat))
+		sound = SFX_CAT_PURR
+		message = "purrs."
+		emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	else
+		to_chat(user, span_warning("You can't quite make the sound."))
+		return
 
 /datum/emote/living/carbon/moan
 	key = "moan"
@@ -177,10 +206,14 @@
 	message_param = "snaps their fingers at %t."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	hands_use_check = TRUE
+	affected_by_pitch = FALSE
 
 /datum/emote/living/carbon/snap/get_sound(mob/living/user)
 	if(ishuman(user))
-		return pick('sound/misc/fingersnap1.ogg', 'sound/misc/fingersnap2.ogg')
+		return pick(
+			'sound/mobs/humanoids/human/snap/fingersnap1.ogg',
+			'sound/mobs/humanoids/human/snap/fingersnap2.ogg',
+			)
 	return null
 
 /datum/emote/living/carbon/shoesteal

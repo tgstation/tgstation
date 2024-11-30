@@ -9,6 +9,9 @@
 	name = "exosuit drill"
 	desc = "Equipment for engineering and combat exosuits. This is the drill that'll pierce the heavens!"
 	icon_state = "mecha_drill"
+	equipment_slot = MECHA_UTILITY
+	can_be_toggled = TRUE
+	active = FALSE
 	equip_cooldown = 15
 	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	force = 15
@@ -31,6 +34,17 @@
 	)
 	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
+
+/obj/item/mecha_parts/mecha_equipment/drill/handle_ui_act(action, list/params)
+	if(action != "toggle")
+		return
+	if(active)
+		RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, PROC_REF(on_mech_click))
+		log_message("Activated.", LOG_MECHA)
+	else
+		UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
+		log_message("Deactivated.", LOG_MECHA)
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/drill/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
@@ -64,6 +78,14 @@
 		return FALSE
 	return ..()
 
+///Redirects clicks to use the drill if possible when enabled
+/obj/item/mecha_parts/mecha_equipment/drill/proc/on_mech_click(atom/mech, mob/source, atom/target, on_cooldown, adjacent)
+	SIGNAL_HANDLER
+	if(on_cooldown || !adjacent)
+		return
+	INVOKE_ASYNC(src, PROC_REF(action), source, target, null, FALSE)
+	return COMPONENT_CANCEL_MELEE_CLICK
+
 /obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers, bumped)
 	//If bumped, only bother drilling mineral turfs
 	if(bumped)
@@ -74,7 +96,7 @@
 		if(istype(target, /turf/closed/mineral/gibtonite))
 			var/turf/closed/mineral/gibtonite/giberal_turf = target
 			if(giberal_turf.stage != GIBTONITE_UNSTRUCK)
-				playsound(chassis, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+				playsound(chassis, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 				to_chat(source, span_warning("[icon2html(src, source)] Active gibtonite ore deposit detected! Safety protocols preventing continued drilling."))
 				return
 
@@ -115,7 +137,7 @@
 	while(do_after_mecha(target, source, drill_delay))
 		if(isliving(target))
 			drill_mob(target, source)
-			playsound(src,'sound/weapons/drill.ogg',40,TRUE)
+			playsound(src,'sound/items/weapons/drill.ogg',40,TRUE)
 		else if(isobj(target))
 			var/obj/obj_target = target
 			if(istype(obj_target, /obj/item/boulder))
@@ -123,7 +145,7 @@
 				nu_boulder.manual_process(src, source)
 			else
 				obj_target.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
-			playsound(src,'sound/weapons/drill.ogg', 40, TRUE)
+			playsound(src,'sound/items/weapons/drill.ogg', 40, TRUE)
 
 		// If we caused a qdel drilling the target, we can stop drilling them.
 		// Prevents starting a do_after on a qdeleted target.
@@ -185,11 +207,7 @@
 	target.apply_damage(10, BRUTE, def_zone, blocked)
 
 	//blood splatters
-	var/splatter_dir = get_dir(chassis, target)
-	if(isalien(target))
-		new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target.drop_location(), splatter_dir)
-	else
-		new /obj/effect/temp_visual/dir_setting/bloodsplatter(target.drop_location(), splatter_dir)
+	target.create_splatter(get_dir(chassis, target))
 
 	//organs go everywhere
 	if(target_part && blocked < 100 && prob(10 * drill_level))

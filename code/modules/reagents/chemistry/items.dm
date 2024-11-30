@@ -33,7 +33,7 @@
 		user.put_in_active_hand(page)
 		to_chat(user, span_notice("You take [page] out of \the [src]."))
 		number_of_pages--
-		playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+		playsound(user.loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
 		add_fingerprint(user)
 		if(!number_of_pages)
 			icon_state = "pHbooklet_empty"
@@ -57,7 +57,7 @@
 	user.put_in_active_hand(P)
 	to_chat(user, span_notice("You take [P] out of \the [src]."))
 	number_of_pages--
-	playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	playsound(user.loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
 	add_fingerprint(user)
 	if(!number_of_pages)
 		icon_state = "pHbookletEmpty"
@@ -166,7 +166,7 @@
 			var/obj/item/reagent_containers/container = I
 			container.reagents.expose_temperature(get_temperature())
 			to_chat(user, span_notice("You heat up the [I] with the [src]."))
-			playsound(user.loc, 'sound/chemistry/heatdam.ogg', 50, TRUE)
+			playsound(user.loc, 'sound/effects/chemistry/heatdam.ogg', 50, TRUE)
 			return
 		else if(I.is_drainable()) //Transfer FROM it TO us. Special code so it only happens when flame is off.
 			var/obj/item/reagent_containers/container = I
@@ -193,7 +193,7 @@
 		var/obj/item/reagent_containers/container = interacting_with
 		container.reagents.expose_temperature(get_temperature())
 		user.visible_message(span_notice("[user] heats up [src]."), span_notice("You heat up [src]."))
-		playsound(user, 'sound/chemistry/heatdam.ogg', 50, TRUE)
+		playsound(user, 'sound/effects/chemistry/heatdam.ogg', 50, TRUE)
 		return ITEM_INTERACT_SUCCESS
 
 	else if(isitem(interacting_with))
@@ -216,7 +216,7 @@
 	if(lit)
 		force = 5
 		damtype = BURN
-		hitsound = 'sound/items/welder.ogg'
+		hitsound = 'sound/items/tools/welder.ogg'
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
 		START_PROCESSING(SSobj, src)

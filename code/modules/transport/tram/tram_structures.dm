@@ -55,9 +55,9 @@
 	/// Sound when it breaks
 	var/break_sound = SFX_SHATTER
 	/// Sound when hit without combat mode
-	var/knock_sound = 'sound/effects/glassknock.ogg'
+	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
 	/// Sound when hit with combat mode
-	var/bash_sound = 'sound/effects/glassbash.ogg'
+	var/bash_sound = 'sound/effects/glass/glassbash.ogg'
 
 /obj/structure/tram/split
 	base_icon_state = "tram-split"
@@ -145,7 +145,7 @@
 /obj/structure/tram/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
-/obj/structure/tram/singularity_pull(singulo, current_size)
+/obj/structure/tram/singularity_pull(atom/singularity, current_size)
 	..()
 
 	if(current_size >= STAGE_FIVE)

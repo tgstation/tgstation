@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 
 /obj/machinery/trading_card_holder/attack_hand_secondary(mob/user)
 	if(isnull(current_summon))
-		var/card_name = tgui_input_text(user, "Insert card name", "Blank Card Naming", "blank card", MAX_NAME_LEN)
+		var/card_name = tgui_input_text(user, "Insert card name", "Blank Card Naming", "blank card", max_length = MAX_NAME_LEN)
 		if(isnull(card_name) || !user.can_perform_action(src))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		current_summon = new /obj/structure/trading_card_summon/blank(locate(x + summon_offset_x, y + summon_offset_y, z))

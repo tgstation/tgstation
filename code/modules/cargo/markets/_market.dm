@@ -68,7 +68,7 @@
 		uplink.current_user.adjust_money(-price, "Other: Third Party Transaction")
 		if(ismob(user))
 			var/mob/m_user = user
-			m_user.playsound_local(get_turf(m_user), 'sound/machines/twobeep_high.ogg', 50, TRUE)
+			m_user.playsound_local(get_turf(m_user), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 		return TRUE
 
 	return FALSE

@@ -502,7 +502,7 @@
 	///The max intensity of a nebula
 	VAR_PROTECTED/maximum_nebula_intensity = 2 HOURS
 	///How long it takes to go to the next nebula level/intensity
-	VAR_PROTECTED/intensity_increment_time = INFINITE
+	VAR_PROTECTED/intensity_increment_time = 30 MINUTES
 	///Objects that we use to calculate the current shielding level
 	var/list/shielding = list()
 
@@ -713,7 +713,7 @@
 		Every shielding unit will provide an additional [shielder_time] of protection, fully protecting the station with [max_shielders] shielding units.
 	"}
 
-	priority_announce(announcement, sound = 'sound/misc/notice1.ogg')
+	priority_announce(announcement, sound = 'sound/announcer/notice/notice1.ogg')
 
 	//Set the display screens to the radiation alert
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
@@ -755,5 +755,14 @@
 	var/advisory_string = "Advisory Level: <b>Ice Giant</b></center><BR>"
 	advisory_string += "The ongoing blizzard has interfered with our surveillance equipment, and we cannot provide an accurate threat summary at this time. We advise you to stay safe and avoid traversing the area around the station."
 	return advisory_string
+
+/datum/station_trait/spiked_drinks
+	name = "Spiked Drinks"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 3
+	cost = STATION_TRAIT_COST_LOW
+	show_in_report = TRUE
+	report_message = "Due to a mishap at the Robust Softdrinks Megafactory, some drinks may contain traces of ethanol or psychoactive chemicals."
+	trait_to_give = STATION_TRAIT_SPIKED_DRINKS
 
 #undef GLOW_NEBULA

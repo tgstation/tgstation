@@ -8,7 +8,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "caretaker"
-	sound = 'sound/effects/curse2.ogg'
+	sound = 'sound/effects/curse/curse2.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 1 MINUTES

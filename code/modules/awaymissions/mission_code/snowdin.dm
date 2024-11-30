@@ -306,13 +306,13 @@
 	PRESET /datum/preset_holoimage/nanotrasenprivatesecurity
 	NAME James Reed
 	DELAY 10
-	SOUND sound/weapons/laser.ogg
+	SOUND sound/items/weapons/laser.ogg
 	DELAY 10
-	SOUND sound/weapons/laser.ogg
+	SOUND sound/items/weapons/laser.ogg
 	DELAY 10
-	SOUND sound/weapons/laser.ogg
+	SOUND sound/items/weapons/laser.ogg
 	DELAY 10
-	SOUND sound/weapons/laser.ogg
+	SOUND sound/items/weapons/laser.ogg
 	DELAY 15
 	SAY Just go! I'll keep it busy, there's an outpost south of here with an elevator to the surface.
 	NAME Jacob Ullman
@@ -333,9 +333,9 @@
 	DELAY 10
 	SAY You don't need to tell me twice, I just need to swipe access and then..
 	DELAY 15
-	SOUND sound/effects/glassbr1.ogg
+	SOUND sound/effects/glass/glassbr1.ogg
 	DELAY 10
-	SOUND sound/effects/glassbr2.ogg
+	SOUND sound/effects/glass/glassbr2.ogg
 	DELAY 15
 	NAME Jacob Ullman
 	DELAY 10
@@ -347,13 +347,13 @@
 	DELAY 10
 	SAY DON'T FUCKING RUSH ME ALRIGHT IT'S BEING CALLED.
 	DELAY 15
-	SOUND sound/effects/huuu.ogg
+	SOUND sound/mobs/non-humanoids/frog/huuu.ogg
 	DELAY 5
-	SOUND sound/effects/huuu.ogg
+	SOUND sound/mobs/non-humanoids/frog/huuu.ogg
 	DELAY 15
 	SOUND sound/effects/woodhit.ogg
 	DELAY 2
-	SOUND sound/effects/bodyfall3.ogg
+	SOUND sound/effects/bodyfall/bodyfall3.ogg
 	DELAY 5
 	SOUND sound/effects/meow1.ogg
 	DELAY 15

@@ -52,6 +52,13 @@
 	)
 	update_appearance()
 
+/obj/item/lighter/examine(mob/user)
+	. = ..()
+	if(get_fuel() <= 0)
+		. += span_warning("It is out of lighter fluid! Refill it with welder fuel.")
+	else
+		. += span_notice("It contains [get_fuel()] units of fuel out of [maximum_fuel].")
+
 /// Destroy the lighter when it's shot by a bullet
 /obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))
@@ -69,7 +76,7 @@
 /obj/item/lighter/suicide_act(mob/living/carbon/user)
 	if (lit)
 		user.visible_message(span_suicide("[user] begins holding \the [src]'s flame up to [user.p_their()] face! It looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		return FIRELOSS
 	else
 		user.visible_message(span_suicide("[user] begins whacking [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -99,15 +106,15 @@
 	if(lit)
 		force = 5
 		damtype = BURN
-		hitsound = 'sound/items/welder.ogg'
+		hitsound = 'sound/items/tools/welder.ogg'
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
 		heat = heat_while_on
 		START_PROCESSING(SSobj, src)
 		if(fancy)
-			playsound(src.loc , 'sound/items/zippo_on.ogg', 100, 1)
+			playsound(src.loc , 'sound/items/lighter/zippo_on.ogg', 100, 1)
 		else
-			playsound(src.loc, 'sound/items/lighter_on.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/lighter/lighter_on.ogg', 100, 1)
 		if(isliving(loc))
 			var/mob/living/male_model = loc
 			if(male_model.fire_stacks && !(male_model.on_fire))
@@ -120,9 +127,9 @@
 		attack_verb_simple = null
 		STOP_PROCESSING(SSobj, src)
 		if(fancy)
-			playsound(src.loc , 'sound/items/zippo_off.ogg', 100, 1)
+			playsound(src.loc , 'sound/items/lighter/zippo_off.ogg', 100, 1)
 		else
-			playsound(src.loc , 'sound/items/lighter_off.ogg', 100, 1)
+			playsound(src.loc , 'sound/items/lighter/lighter_off.ogg', 100, 1)
 	set_light_on(lit)
 	update_appearance()
 

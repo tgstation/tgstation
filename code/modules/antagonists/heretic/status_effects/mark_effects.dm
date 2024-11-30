@@ -47,7 +47,7 @@
 /datum/status_effect/eldritch/proc/on_effect()
 	SHOULD_CALL_PARENT(TRUE)
 
-	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
+	playsound(owner, 'sound/effects/magic/repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.
 
 //Each mark has different effects when it is destroyed that combine with the mansus grasp effect.
@@ -250,6 +250,8 @@
 
 /datum/status_effect/eldritch/moon/on_apply()
 	. = ..()
+	if(owner.can_block_magic(MAGIC_RESISTANCE_MIND))
+		return FALSE
 	ADD_TRAIT(owner, TRAIT_PACIFISM, id)
 	owner.emote(pick("giggle", "laugh"))
 	owner.balloon_alert(owner, "you feel unable to hurt a soul!")

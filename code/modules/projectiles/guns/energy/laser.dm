@@ -141,7 +141,7 @@
 /obj/item/ammo_casing/energy/laser/accelerator
 	projectile_type = /obj/projectile/beam/laser/accelerator
 	select_name = "accelerator"
-	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
 
 /obj/projectile/beam/laser/accelerator
 	name = "accelerator laser"
@@ -151,11 +151,11 @@
 	var/size_per_tile = 0.1
 	var/max_scale = 4
 
-/obj/projectile/beam/laser/accelerator/Range()
+/obj/projectile/beam/laser/accelerator/reduce_range()
 	..()
 	damage += 7
-	transform = 0
-	transform *= min(1 + (decayedRange - range) * size_per_tile, max_scale)
+	transform = matrix()
+	transform *= min(1 + (maximum_range - range) * size_per_tile, max_scale)
 
 ///X-ray gun
 

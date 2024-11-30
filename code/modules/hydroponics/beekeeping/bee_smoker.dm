@@ -25,6 +25,10 @@
 	. = ..()
 	beesmoke_loop = new(src)
 
+/obj/item/bee_smoker/Destroy(force)
+	remove_shared_particles(/particles/smoke/bee_smoke)
+	return ..()
+
 /obj/item/bee_smoker/attack_self(mob/user)
 	. = ..()
 	if(.)
@@ -96,17 +100,17 @@
 
 /obj/item/bee_smoker/proc/alter_state()
 	activated = !activated
-	playsound(src, 'sound/items/welderdeactivate.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/welderdeactivate.ogg', 50, TRUE)
 
 	if(!activated)
 		beesmoke_loop.stop()
-		QDEL_NULL(particles)
+		remove_shared_particles(/particles/smoke/bee_smoke)
 		STOP_PROCESSING(SSobj, src)
 		return
 
 	beesmoke_loop.start()
 	START_PROCESSING(SSobj, src)
-	particles = new /particles/smoke/bee_smoke
+	add_shared_particles(/particles/smoke/bee_smoke)
 
 /particles/smoke/bee_smoke
 	lifespan = 0.4 SECONDS

@@ -73,7 +73,7 @@
 	original_mind.quick_copy_all_memories(owner)
 
 /datum/antagonist/paradox_clone/roundend_report_header()
-	return "<span class='header'>A paradox clone appeared on the station!</span><br>"
+	return span_header("A paradox clone appeared on the station!<br>")
 
 /datum/outfit/paradox_clone
 	name = "Paradox Clone (Preview only)"

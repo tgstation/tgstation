@@ -36,7 +36,7 @@
 	armour_penetration = 30
 	attack_verb_continuous = "beats down on"
 	attack_verb_simple = "beat down on"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2
 	move_to_delay = 5
@@ -60,25 +60,25 @@
 /datum/action/innate/elite_attack/tentacle_patch
 	name = "Tentacle Patch"
 	button_icon_state = "tentacle_patch"
-	chosen_message = "<span class='boldwarning'>You are now attacking with a patch of tentacles.</span>"
+	chosen_message = span_boldwarning("You are now attacking with a patch of tentacles.")
 	chosen_attack_num = TENTACLE_PATCH
 
 /datum/action/innate/elite_attack/spawn_children
 	name = "Spawn Children"
 	button_icon_state = "spawn_children"
-	chosen_message = "<span class='boldwarning'>You will spawn two children at your location to assist you in combat.  You can have up to 8.</span>"
+	chosen_message = span_boldwarning("You will spawn two children at your location to assist you in combat. You can have up to 8.")
 	chosen_attack_num = SPAWN_CHILDREN
 
 /datum/action/innate/elite_attack/rage
 	name = "Rage"
 	button_icon_state = "rage"
-	chosen_message = "<span class='boldwarning'>You will temporarily increase your movement speed.</span>"
+	chosen_message = span_boldwarning("You will temporarily increase your movement speed.")
 	chosen_attack_num = RAGE
 
 /datum/action/innate/elite_attack/call_children
 	name = "Call Children"
 	button_icon_state = "call_children"
-	chosen_message = "<span class='boldwarning'>You will summon your children to your location.</span>"
+	chosen_message = span_boldwarning("You will summon your children to your location.")
 	chosen_attack_num = CALL_CHILDREN
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/OpenFire()
@@ -133,16 +133,30 @@
 	for(var/i in 1 to 2)
 		if(children_list.len >= 8)
 			return
-		var/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/newchild = new /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child(loc)
-		newchild.GiveTarget(target)
-		newchild.faction = faction.Copy()
-		visible_message(span_boldwarning("[newchild] appears below [src]!"))
-		newchild.mother = src
-		children_list += newchild
+		var/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/new_child = new /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child(loc)
+		new_child.GiveTarget(target)
+		new_child.faction = faction.Copy()
+		visible_message(span_boldwarning("[new_child] appears below [src]!"))
+		register_child(new_child)
+
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/register_child(atom/child)
+	children_list += child
+	RegisterSignals(child, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(remove_child))
+
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/remove_child(atom/source)
+	SIGNAL_HANDLER
+
+	children_list -= source
+	UnregisterSignal(source, list(
+		COMSIG_QDELETING,
+		COMSIG_LIVING_DEATH,
+	))
+
+
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/rage()
 	ranged_cooldown = world.time + 100
-	playsound(src,'sound/voice/insane_low_laugh.ogg', 200, 1)
+	playsound(src,'sound/misc/insane_low_laugh.ogg', 200, 1)
 	visible_message(span_warning("[src] starts picking up speed!"))
 	color = COLOR_RED
 	set_varspeed(0)
@@ -181,7 +195,7 @@
 	melee_damage_upper = 5
 	attack_verb_continuous = "bashes against"
 	attack_verb_simple = "bash against"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2
 	move_to_delay = 5
@@ -191,7 +205,6 @@
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	death_message = "falls to the ground."
 	status_flags = CANPUSH
-	var/mob/living/simple_animal/hostile/asteroid/elite/broodmother/mother = null
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/Initialize(mapload)
 	. = ..()
@@ -208,8 +221,6 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/death()
 	. = ..()
-	if(mother != null)
-		mother.children_list -= src
 	visible_message(span_warning("[src] explodes!"))
 	explosion(src, flame_range = 3, adminlog = FALSE)
 	gib(DROP_ALL_REMAINS)

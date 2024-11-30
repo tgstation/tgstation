@@ -29,9 +29,9 @@
 	/// Can we toggle this light on and off (used for contexual screentips only)
 	var/toggle_context = TRUE
 	/// The sound the light makes when it's turned on
-	var/sound_on = 'sound/weapons/magin.ogg'
+	var/sound_on = 'sound/items/weapons/magin.ogg'
 	/// The sound the light makes when it's turned off
-	var/sound_off = 'sound/weapons/magout.ogg'
+	var/sound_off = 'sound/items/weapons/magout.ogg'
 	/// Should the flashlight start turned on?
 	var/start_on = FALSE
 
@@ -112,8 +112,8 @@
 		to_chat(user, span_warning("You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first!"))
 		return
 
-	var/obj/item/organ/internal/eyes/E = M.get_organ_slot(ORGAN_SLOT_EYES)
-	var/obj/item/organ/internal/brain = M.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/eyes/E = M.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/brain = M.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!E)
 		to_chat(user, span_warning("[M] doesn't have any eyes!"))
 		return
@@ -254,7 +254,7 @@
 	if(!scanning.get_bodypart(BODY_ZONE_HEAD))
 		to_chat(user, span_warning("[scanning] doesn't have a head!"))
 		return
-	if(light_power < 1)
+	if(light_power < 0.5)
 		to_chat(user, span_warning("[src] isn't bright enough to see anything!"))
 		return
 
@@ -359,7 +359,7 @@
 	light_range = 5 // A little better than the standard flashlight.
 	light_power = 0.8
 	light_color = "#99ccff"
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = 'sound/items/weapons/genhit1.ogg'
 
 // the desk lamps are a bit special
 /obj/item/flashlight/lamp
@@ -428,7 +428,7 @@
 	if(light_on)
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
-		hitsound = 'sound/items/welder.ogg'
+		hitsound = 'sound/items/tools/welder.ogg'
 		force = on_damage
 		damtype = BURN
 		update_brightness()
@@ -455,7 +455,7 @@
 	name = "lit [initial(name)]"
 	attack_verb_continuous = string_list(list("burns", "singes"))
 	attack_verb_simple = string_list(list("burn", "singe"))
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	force = on_damage
 	damtype = BURN
 
@@ -889,7 +889,7 @@
 	if(!fuel)
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!"))
 		return SHAME
-	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!"))
 		return SHAME

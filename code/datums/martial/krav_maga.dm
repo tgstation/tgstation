@@ -201,7 +201,7 @@
 			attacker,
 		)
 		to_chat(attacker, span_danger("You disarm [defender]!"))
-		playsound(defender, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+		playsound(defender, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		log_combat(attacker, defender, "disarmed (Krav Maga)", addition = "(disarmed of [stuff_in_hand])")
 	return MARTIAL_ATTACK_INVALID // normal shove
 

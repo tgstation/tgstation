@@ -135,7 +135,7 @@
 	if(src in escapee.do_afters)
 		return //already trying to escape
 	to_chat(escapee, span_warning("You push against the thin pipe walls..."))
-	playsound(loc, 'sound/machines/airlock_alien_prying.ogg', vol = 30, vary = FALSE, extrarange = 3) //yeah I know but at least it sounds like metal being bent.
+	playsound(loc, 'sound/machines/airlock/airlock_alien_prying.ogg', vol = 30, vary = FALSE, extrarange = 3) //yeah I know but at least it sounds like metal being bent.
 
 	if(!do_after(escapee, 20 SECONDS, get_turf(loc)))
 		return

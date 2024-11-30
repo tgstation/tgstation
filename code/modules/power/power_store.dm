@@ -266,7 +266,7 @@
 	if(!eating_success || QDELETED(src) || charge == 0)
 		user.visible_message(span_suicide("[user] chickens out!"))
 		return SHAME
-	playsound(user, 'sound/effects/sparks1.ogg', charge / maxcharge)
+	playsound(user, 'sound/effects/sparks/sparks1.ogg', charge / maxcharge)
 	var/damage = charge / (1 KILO JOULES)
 	user.electrocute_act(damage, src, 1, SHOCK_IGNORE_IMMUNITY|SHOCK_DELAY_STUN|SHOCK_NOGLOVES)
 	charge = 0
@@ -284,18 +284,18 @@
 		return
 	user.dropItemToGround(src)
 	user.dust(just_ash = TRUE)
-	playsound(src, 'sound/magic/lightningshock.ogg', 50, TRUE, 10)
+	playsound(src, 'sound/effects/magic/lightningshock.ogg', 50, TRUE, 10)
 	tesla_zap(source = src, zap_range = 10, power = discharged_energy)
 
 /obj/item/stock_parts/power_store/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/internal/stomach/maybe_stomach = H.get_organ_slot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/stomach/maybe_stomach = H.get_organ_slot(ORGAN_SLOT_STOMACH)
 
-		if(istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
+		if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
 
 			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
-			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
+			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
 			var/obj/item/stock_parts/power_store/stomach_cell = stomach.cell
 			if((stomach.drain_time > world.time) || !stomach)
 				return

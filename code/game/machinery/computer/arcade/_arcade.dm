@@ -78,14 +78,14 @@
 /obj/machinery/computer/arcade/proc/prizevend(mob/living/user, prizes = 1)
 	SEND_SIGNAL(src, COMSIG_ARCADE_PRIZEVEND, user, prizes)
 	if(user.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
-		visible_message("<span class='notice'>[user] inputs an intense cheat code!",\
+		visible_message(span_notice("[user] inputs an intense cheat code!"),\
 		span_notice("You hear a flurry of buttons being pressed."))
 		say("CODE ACTIVATED: EXTRA PRIZES.")
 		prizes *= 2
 	for(var/i in 1 to prizes)
 		user.add_mood_event("arcade", /datum/mood_event/arcade)
 		if(prob(0.0001)) //1 in a million
-			new /obj/item/gun/energy/pulse/prize(src)
+			new /obj/item/gun/energy/pulse/prize(get_turf(src))
 			visible_message(span_notice("[src] dispenses.. woah, a gun! Way past cool."), span_notice("You hear a chime and a shot."))
 			user.client.give_award(/datum/award/achievement/misc/pulse, user)
 			continue

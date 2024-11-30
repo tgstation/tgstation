@@ -70,7 +70,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			j.total_positions++
 			opened_positions[edit_job_target]++
 			log_job_debug("[key_name(usr)] opened a [j.title] job position, for a total of [j.total_positions] open job slots.")
-			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			playsound(computer, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_close_job")
 			var/edit_job_target = params["target"]
@@ -83,7 +83,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			j.total_positions--
 			opened_positions[edit_job_target]--
 			log_job_debug("[key_name(usr)] closed a [j.title] job position, leaving [j.total_positions] open job slots.")
-			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			playsound(computer, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_priority")
 			var/priority_target = params["target"]
@@ -99,7 +99,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					SSjob.prioritized_jobs += j
 				else
 					computer.say("Error: CentCom employment protocols restrict prioritising more than 5 jobs.")
-			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			playsound(computer, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 
 

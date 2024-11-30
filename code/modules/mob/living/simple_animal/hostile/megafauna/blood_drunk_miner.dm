@@ -76,7 +76,7 @@ Difficulty: Medium
 	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
 
-	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', 167 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
 	dash = null
@@ -106,7 +106,7 @@ Difficulty: Medium
 
 /obj/projectile/kinetic/miner
 	damage = 20
-	speed = 0.9
+	speed = 1.1
 	icon_state = "ka_tracer"
 	range = 4
 

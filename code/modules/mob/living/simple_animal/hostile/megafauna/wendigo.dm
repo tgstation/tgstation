@@ -17,7 +17,7 @@ Difficulty: Hard
 	icon = 'icons/mob/simple/icemoon/64x64megafauna.dmi'
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("roars")
@@ -149,7 +149,7 @@ Difficulty: Hard
 
 /proc/wendigo_scream(mob/owner)
 	SLEEP_CHECK_DEATH(5, owner)
-	playsound(owner.loc, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
+	playsound(owner.loc, 'sound/effects/magic/demon_dies.ogg', 600, FALSE, 10)
 	var/pixel_shift = rand(5, 15)
 	animate(owner, pixel_z = pixel_shift, time = 1, loop = 20, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = -pixel_shift, time = 1, flags = ANIMATION_RELATIVE)
@@ -198,11 +198,9 @@ Difficulty: Hard
 
 /obj/projectile/colossus/wendigo_shockwave
 	name = "wendigo shockwave"
-	speed = 2
-	/// If wave movement is enabled
-	var/wave_movement = FALSE
+	speed = 0.5
 	/// Amount the angle changes every pixel move
-	var/wave_speed = 15
+	var/wave_speed = 0.5
 	/// Amount of movements this projectile has made
 	var/pixel_moves = 0
 
@@ -210,18 +208,16 @@ Difficulty: Hard
 	damage = 15
 
 /obj/projectile/colossus/wendigo_shockwave/wave
-	speed = 8
-	wave_movement = TRUE
-	wave_speed = 10
+	speed = 0.125
+	homing = TRUE
+	wave_speed = 0.3
 
 /obj/projectile/colossus/wendigo_shockwave/wave/alternate
-	wave_speed = -10
+	wave_speed = -0.3
 
-/obj/projectile/colossus/wendigo_shockwave/pixel_move(trajectory_multiplier, hitscanning = FALSE)
-	. = ..()
-	if(wave_movement)
-		pixel_moves++
-		set_angle(original_angle + pixel_moves * wave_speed)
+/obj/projectile/colossus/wendigo_shockwave/process_homing()
+	pixel_moves++
+	set_angle(original_angle + pixel_moves * wave_speed)
 
 /obj/item/wendigo_blood
 	name = "bottle of wendigo blood"

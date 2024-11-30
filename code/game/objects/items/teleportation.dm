@@ -110,10 +110,12 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	armor_type = /datum/armor/item_hand_tele
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/list/active_portal_pairs
+	///List of portal pairs created by this hand tele
+	var/list/active_portal_pairs = list()
+	///Maximum concurrent active portal pairs allowed
 	var/max_portal_pairs = 3
 
 	/**
@@ -130,10 +132,7 @@
 	fire = 100
 	acid = 100
 
-/obj/item/hand_tele/Initialize(mapload)
-	. = ..()
-	active_portal_pairs = list()
-
+///Checks if the targeted portal was created by us, then causes it to expire, removing it
 /obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
 	if(is_parent_of_portal(target))
 		to_chat(user, span_notice("You dispel [target] with [src]!"))
@@ -262,6 +261,9 @@
 	RegisterSignal(portal2, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
 
 	try_move_adjacent(portal1, user.dir)
+	if(QDELETED(portal1) || QDELETED(portal2)) //in the event that something managed to delete the portal objects, i.e. something teleported them
+		to_chat(user, span_notice("[src] vibrates, but no portal seems to appear. Maybe you should try something else."))
+		return
 	active_portal_pairs[portal1] = portal2
 
 	investigate_log("was used by [key_name(user)] at [AREACOORD(user)] to create a portal pair with destinations [AREACOORD(portal1)] and [AREACOORD(portal2)].", INVESTIGATE_PORTAL)
@@ -271,6 +273,9 @@
 
 	return TRUE
 
+///Checks for whether creating a portal in our area is allowed or not,
+///returning FALSE when in a NOTELEPORT area, an away mission or when the user is not on a turf.
+///Is, for some reason, separate from the teleport target's check in try_create_portal_to()
 /obj/item/hand_tele/proc/can_teleport_notifies(mob/user)
 	var/turf/current_location = get_turf(user)
 	var/area/current_area = current_location.loc
@@ -280,6 +285,7 @@
 
 	return TRUE
 
+///Clears last teleport location when the teleporter providing our target location changes its target
 /obj/item/hand_tele/proc/on_teleporter_new_target(datum/source)
 	SIGNAL_HANDLER
 
@@ -287,6 +293,7 @@
 		last_portal_location = null
 		UnregisterSignal(source, COMSIG_TELEPORTER_NEW_TARGET)
 
+///Removes a destroyed portal from active_portal_pairs list
 /obj/item/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)
 	SIGNAL_HANDLER
 
@@ -339,6 +346,8 @@
 	var/maximum_teleport_distance = 8
 	//How far the emergency teleport checks for a safe position
 	var/parallel_teleport_distance = 3
+	// How much blood lost per teleport (out of base 560 blood)
+	var/bleed_amount = 20
 
 /obj/item/syndicate_teleporter/Initialize(mapload)
 	. = ..()
@@ -365,7 +374,7 @@
 		if(ishuman(loc))
 			var/mob/living/carbon/human/holder = loc
 			balloon_alert(holder, "teleporter beeps")
-		playsound(src, 'sound/machines/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		playsound(src, 'sound/machines/beep/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
 /obj/item/syndicate_teleporter/emp_act(severity)
 	. = ..()
@@ -427,7 +436,10 @@
 		charges = max(charges - 1, 0)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
-		make_bloods(current_location, destination, user)
+		if(make_bloods(current_location, destination, user))
+			new /obj/effect/temp_visual/circle_wave/syndi_teleporter/bloody(destination)
+		else
+			new /obj/effect/temp_visual/circle_wave/syndi_teleporter(destination)
 		playsound(current_location, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -463,11 +475,14 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
-		if (!HAS_TRAIT(user, TRAIT_NOBLOOD))
-			make_bloods(mobloc, emergency_destination, user)
+		if(make_bloods(destination, emergency_destination, user))
+			new /obj/effect/temp_visual/circle_wave/syndi_teleporter/bloody(destination)
+		else
+			new /obj/effect/temp_visual/circle_wave/syndi_teleporter(destination)
 		playsound(mobloc, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 25, TRUE)
 	else //We tried to save. We failed. Death time.
 		get_fragged(user, destination)
 
@@ -479,7 +494,7 @@
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
 	playsound(mobloc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, 'sound/magic/disintegrate.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, 'sound/effects/magic/disintegrate.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(!not_holding_tele)
 		to_chat(victim, span_userdanger("You teleport into [destination], [src] tries to save you, but..."))
 	else
@@ -495,16 +510,45 @@
 		victim.apply_damage(20, BRUTE)
 		victim.Paralyze(6 SECONDS)
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
+		victim.throw_at(get_step_rand(victim), 1, 1, user, spin = TRUE)
 
 ///Bleed and make blood splatters at tele start and end points
 /obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_NOBLOOD))
+		return FALSE
 	user.add_splatter_floor(old_location)
 	user.add_splatter_floor(new_location)
 	if(!iscarbon(user))
-		return
+		return FALSE
 	var/mob/living/carbon/carbon_user = user
-	carbon_user.bleed(10)
 
+	// always lose a bit
+	carbon_user.bleed(bleed_amount * 0.25)
+	// sometimes lose a lot
+	// average evens out to 10 per teleport, but the randomness spices things up
+	if(prob(25) && bleed_amount)
+		playsound(src, 'sound/effects/wounds/pierce1.ogg', 40, vary = TRUE)
+		visible_message(span_warning("Blood visibly spurts out of [user] as [src] fails to teleport [user.p_their()] body properly!"), \
+			span_boldwarning("Blood visibly spurts out of you as [src] fails to teleport your body properly!"))
+		carbon_user.bleed(bleed_amount * 0.75)
+		carbon_user.spray_blood(pick(GLOB.alldirs), rand(1, 3))
+		return TRUE
+
+	return FALSE
+	// retval used for picking wave type
+
+/// Visual effect spawned when teleporting
+/obj/effect/temp_visual/circle_wave/syndi_teleporter
+	duration = 0.25 SECONDS
+	color = COLOR_SYNDIE_RED
+	max_alpha = 100
+	amount_to_scale = 0.8
+
+/obj/effect/temp_visual/circle_wave/syndi_teleporter/bloody
+	duration = 0.25 SECONDS
+	color = COLOR_VIVID_RED
+	max_alpha = 160
+	amount_to_scale = 1
 
 /obj/item/paper/syndicate_teleporter
 	name = "Teleporter Guide"

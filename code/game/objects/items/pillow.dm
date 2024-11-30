@@ -51,9 +51,9 @@
 	if(!iscarbon(target_mob))
 		return
 	if(bricked || HAS_TRAIT(src, TRAIT_WIELDED))
-		hit_sound = 'sound/items/pillow_hit2.ogg'
+		hit_sound = 'sound/items/pillow/pillow_hit2.ogg'
 	else
-		hit_sound = 'sound/items/pillow_hit.ogg'
+		hit_sound = 'sound/items/pillow/pillow_hit.ogg'
 	user.apply_damage(5, STAMINA) //Had to be done so one person cannot keep multiple people stam critted
 	last_fighter = user
 	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
@@ -116,7 +116,7 @@
 	user.put_in_hands(pillow_trophy)
 	pillow_trophy = null
 	balloon_alert(user, "tag removed")
-	playsound(user,'sound/items/poster_ripped.ogg', 50)
+	playsound(user,'sound/items/poster/poster_ripped.ogg', 50)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 

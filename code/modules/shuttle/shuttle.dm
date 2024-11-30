@@ -73,7 +73,7 @@
 /obj/docking_port/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	return
 
-/obj/docking_port/singularity_pull()
+/obj/docking_port/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/docking_port/singularity_act()
@@ -264,7 +264,7 @@
 
 /obj/docking_port/stationary/proc/load_roundstart()
 	if(json_key)
-		var/sid = SSmapping.config.shuttles[json_key]
+		var/sid = SSmapping.current_map.shuttles[json_key]
 		roundstart_template = SSmapping.shuttle_templates[sid]
 		if(!roundstart_template)
 			CRASH("json_key:[json_key] value \[[sid]\] resulted in a null shuttle template for [src]")
@@ -1203,6 +1203,14 @@
 			LAZYADD(removees, event)
 	for(var/item in removees)
 		event_list.Remove(item)
+
+/// Give a typepath of a shuttle event to add to the shuttle. If added during endgame transit, will insta start the event
+/obj/docking_port/mobile/proc/add_shuttle_event(typepath)
+	var/datum/shuttle_event/event = new typepath (src)
+	event_list.Add(event)
+	if(launch_status == ENDGAME_LAUNCHED)
+		event.start_up_event(0)
+	return event
 
 #ifdef TESTING
 #undef DOCKING_PORT_HIGHLIGHT

@@ -13,7 +13,7 @@
 	force = 8
 	throwforce = 12
 	w_class = WEIGHT_CLASS_NORMAL
-	obj_flags = INDESTRUCTIBLE | EMP_PROTECT_ALL // No fun police
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	slot_flags = NONE
 	light_system = OVERLAY_LIGHT
 	light_color = COLOR_SOFT_RED
@@ -22,6 +22,8 @@
 	light_on = FALSE
 	/// Is camera streaming
 	var/active = FALSE
+	/// Is the microphone turned on
+	var/active_microphone = TRUE
 	/// The name of the broadcast
 	var/broadcast_name = "Curator News"
 	/// The networks it broadcasts to, default is CAMERANET_NETWORK_CURATOR
@@ -30,6 +32,11 @@
 	var/obj/machinery/camera/internal_camera
 	/// The "virtual" radio inside of the the physical camera, a la microphone
 	var/obj/item/radio/entertainment/microphone/internal_radio
+
+/obj/item/broadcast_camera/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/broadcast_camera/Destroy(force)
 	QDEL_NULL(internal_radio)
@@ -56,6 +63,7 @@
 /obj/item/broadcast_camera/examine(mob/user)
 	. = ..()
 	. += span_notice("Broadcast name is <b>[broadcast_name]</b>")
+	. += span_notice("The microphone is <b>[active_microphone ? "On" : "Off"]</b>")
 
 /obj/item/broadcast_camera/on_enter_storage(datum/storage/master_storage)
 	. = ..()
@@ -85,9 +93,11 @@
 
 	// INTERNAL RADIO
 	internal_radio = new(src)
+	/// Sets the state of the microphone
+	set_microphone_state()
 
 	set_light_on(TRUE)
-	playsound(source = src, soundin = 'sound/machines/terminal_processing.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
+	playsound(source = src, soundin = 'sound/machines/terminal/terminal_processing.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
 	balloon_alert_to_viewers("live!")
 
 /// When deactivating the camera
@@ -100,5 +110,20 @@
 	stop_broadcasting_network(camera_networks)
 
 	set_light_on(FALSE)
-	playsound(source = src, soundin = 'sound/machines/terminal_prompt_deny.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
+	playsound(source = src, soundin = 'sound/machines/terminal/terminal_prompt_deny.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
 	balloon_alert_to_viewers("offline")
+
+/obj/item/broadcast_camera/click_alt(mob/user)
+	active_microphone = !active_microphone
+
+	/// Text popup for letting the user know that the microphone has changed state
+	balloon_alert(user, "turned [active_microphone ? "on" : "off"] the microphone.")
+
+	///If the radio exists as an object, set its state accordingly
+	if(active)
+		set_microphone_state()
+
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/broadcast_camera/proc/set_microphone_state()
+	internal_radio.set_broadcasting(active_microphone)

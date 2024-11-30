@@ -195,8 +195,16 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define SHELTER_DEPLOY_BAD_AREA "bad area"
 /// Shelter spot has anchored objects that restrict deployment
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+/// Sheter spot has banned objects that restrict deployment
+#define SHELTER_DEPLOY_BANNED_OBJECTS "banned objects"
 /// Shelter spot is out of bounds from the maps x/y coordinates
 #define SHELTER_DEPLOY_OUTSIDE_MAP "outside map"
+
+//Flags for survival capsules to ignore some deploy checks
+///Ignore anchored, dense objects in the area
+#define CAPSULE_IGNORE_ANCHORED_OBJECTS (1<<0)
+///Ignore banned objects in the area
+#define CAPSULE_IGNORE_BANNED_OBJECTS (1<<1)
 
 /// A map key that corresponds to being one exclusively for Space.
 #define SPACE_KEY "space"
@@ -221,7 +229,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define CLUSTER_CHECK_ALL 30 //!Don't let anything cluster, like, at all
 
 /// Checks the job changes in the map config for the passed change key.
-#define CHECK_MAP_JOB_CHANGE(job, change) SSmapping.config.job_changes?[job]?[change]
+#define CHECK_MAP_JOB_CHANGE(job, change) SSmapping.current_map.job_changes?[job]?[change]
 
 ///Identifiers for away mission spawnpoints
 #define AWAYSTART_BEACH "AWAYSTART_BEACH"

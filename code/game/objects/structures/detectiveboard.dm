@@ -50,11 +50,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			to_chat(user, "You already attaching evidence!")
 			return
 		attaching_evidence = TRUE
-		var/name = tgui_input_text(user, "Please enter the evidence name", "Detective's Board")
+		var/name = tgui_input_text(user, "Please enter the evidence name", "Detective's Board", max_length = MAX_NAME_LEN)
 		if(!name)
 			attaching_evidence = FALSE
 			return
-		var/desc = tgui_input_text(user, "Please enter the evidence description", "Detective's Board")
+		var/desc = tgui_input_text(user, "Please enter the evidence description", "Detective's Board", max_length = MAX_DESC_LEN)
 		if(!desc)
 			attaching_evidence = FALSE
 			return
@@ -146,7 +146,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 		if("add_case")
 			if(cases.len == MAX_CASES)
 				return FALSE
-			var/new_case = tgui_input_text(user, "Please enter the case name", "Detective's Board")
+			var/new_case = tgui_input_text(user, "Please enter the case name", "Detective's Board", max_length = MAX_NAME_LEN)
 			if(!new_case)
 				return FALSE
 			var/case_color = tgui_input_list(user, "Please choose case color", "Detective's Board", case_colors)
@@ -173,7 +173,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 				update_appearance(UPDATE_ICON)
 				return TRUE
 		if("rename_case")
-			var/new_name = tgui_input_text(user, "Please ender the case new name",  "Detective's Board")
+			var/new_name = tgui_input_text(user, "Please enter the new name for the case",  "Detective's Board", max_length = MAX_NAME_LEN)
 			if(new_name)
 				var/datum/case/case = locate(params["case_ref"]) in cases
 				case.name = new_name

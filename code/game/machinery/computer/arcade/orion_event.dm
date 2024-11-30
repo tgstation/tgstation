@@ -67,8 +67,8 @@
 	text = "Oh no! The engine has broken down! \
 	You can repair it with an engine part, or you \
 	can make repairs for 3 days."
-	emag_message = "<span class='warning'>You hear some large object lurch to a halt right behind you! When you go to look, nothing's there...</span>"
-	emag_sound = 'sound/effects/creak1.ogg'
+	emag_message = span_warning("You hear some large object lurch to a halt right behind you! When you go to look, nothing's there...")
+	emag_sound = 'sound/effects/creak/creak1.ogg'
 	weight = 2
 	event_responses = list()
 
@@ -170,7 +170,7 @@
 
 /datum/orion_event/hull_part/proc/fix_floor(obj/machinery/computer/arcade/orion_trail/game)
 	game.say("A new floor suddenly appears around [game]. What the hell?")
-	playsound(game, 'sound/weapons/genhit.ogg', 100, TRUE)
+	playsound(game, 'sound/items/weapons/genhit.ogg', 100, TRUE)
 	for(var/turf/open/space/fixed in orange(1, game))
 		fixed.place_on_top(/turf/open/floor/plating)
 
@@ -264,7 +264,7 @@
 	else
 		to_chat(usr, span_userdanger("Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there..."))
 		gamer.take_bodypart_damage(30)
-		playsound(game, 'sound/weapons/genhit2.ogg', 100, TRUE)
+		playsound(game, 'sound/items/weapons/genhit2.ogg', 100, TRUE)
 
 /datum/orion_event/illness
 	name = "Space Illness"
@@ -321,7 +321,7 @@
 	gamer.Paralyze(60)
 	game.say("A sudden gust of powerful wind slams [gamer] into the floor!")
 	gamer.take_bodypart_damage(25)
-	playsound(game, 'sound/weapons/genhit.ogg', 100, TRUE)
+	playsound(game, 'sound/items/weapons/genhit.ogg', 100, TRUE)
 
 /datum/orion_event/changeling_infiltration
 	name = "Changeling Infiltration"

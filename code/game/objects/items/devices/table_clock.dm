@@ -37,10 +37,10 @@
 	. = ..()
 	if(attacking_item.force < 5 || broken)
 		return
-	if(break_clock(break_sound = 'sound/magic/clockwork/ark_activation.ogg'))
+	if(break_clock(break_sound = 'sound/effects/magic/clockwork/ark_activation.ogg'))
 		user.visible_message(
 			span_warning("[user] smashes \the [src] so hard it stops breaking!"),
-			span_boldannounce("I can't stand this stupid machine anymore! Shut up already!"),
+			span_bolddanger("I can't stand this stupid machine anymore! Shut up already!"),
 			span_notice("You hear repeated smashing!"),
 		)
 

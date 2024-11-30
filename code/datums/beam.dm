@@ -206,11 +206,14 @@
 	owner = null
 	return ..()
 
-/obj/effect/ebeam/singularity_pull()
+/obj/effect/ebeam/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/ebeam/singularity_act()
 	return
+
+/obj/effect/ebeam/Process_Spacemove(movement_dir, continuous_move)
+	return TRUE
 
 /// A beam subtype used for advanced beams, to react to atoms entering the beam
 /obj/effect/ebeam/reacting

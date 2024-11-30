@@ -12,6 +12,10 @@
 	resistance_flags = NONE
 	armor_type = /datum/armor/gloves_bracer
 
+/obj/item/clothing/gloves/bracer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 2)
+
 /datum/armor/gloves_bracer
 	melee = 15
 	bullet = 25

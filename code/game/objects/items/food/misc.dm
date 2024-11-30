@@ -195,7 +195,12 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(OnGrill))
 	if(stink_particles)
-		particles = new stink_particles
+		add_shared_particles(stink_particles)
+
+/obj/item/food/badrecipe/Destroy(force)
+	if (stink_particles)
+		remove_shared_particles(stink_particles)
+	return ..()
 
 // We override the parent procs here to prevent burned messes from cooking into burned messes.
 /obj/item/food/badrecipe/make_grillable()
@@ -328,7 +333,7 @@
 	throwforce = 15
 	block_chance = 55
 	armour_penetration = 80
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	wound_bonus = -50
 	attack_verb_continuous = list("slaps", "slathers")
 	attack_verb_simple = list("slap", "slather")
@@ -339,7 +344,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/branrequests
-	name = "Bran Requests Cereal"
+	name = "bran requests cereal"
 	desc = "A dry cereal that satiates your requests for bran. Tastes uniquely like raisins and salt."
 	icon_state = "bran_requests"
 	food_reagents = list(
@@ -422,7 +427,7 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/crab_rangoon
-	name = "Crab Rangoon"
+	name = "crab rangoon"
 	desc = "Has many names, like crab puffs, cheese won'tons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "crabrangoon"
@@ -611,7 +616,7 @@
 	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/pickle/proc/check_liked(mob/living/carbon/human/consumer)
-	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM))
 		return FOOD_LIKED
 

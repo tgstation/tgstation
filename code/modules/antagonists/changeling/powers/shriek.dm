@@ -18,7 +18,7 @@
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(!IS_CHANGELING(C))
-				var/obj/item/organ/internal/ears/ears = C.get_organ_slot(ORGAN_SLOT_EARS)
+				var/obj/item/organ/ears/ears = C.get_organ_slot(ORGAN_SLOT_EARS)
 				if(ears)
 					ears.adjustEarDamage(0, 30)
 				C.adjust_confusion(25 SECONDS)
@@ -27,7 +27,7 @@
 				SEND_SOUND(C, sound('sound/effects/screech.ogg'))
 
 		if(issilicon(M))
-			SEND_SOUND(M, sound('sound/weapons/flash.ogg'))
+			SEND_SOUND(M, sound('sound/items/weapons/flash.ogg'))
 			M.Paralyze(rand(100,200))
 
 	for(var/obj/machinery/light/L in range(4, user))

@@ -10,3 +10,4 @@
 	map_name = "meta_central"
 	mob_modules = list(/datum/modular_mob_segment/revolutionary)
 	reward_points = BITRUNNER_REWARD_LOW
+	announce_to_ghosts = TRUE

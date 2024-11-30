@@ -181,5 +181,4 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		var/datum/hud/new_player/observer_hud = player.hud_used
 		if (!istype(observer_hud))
 			continue
-		observer_hud.add_station_trait_buttons()
-		observer_hud.show_hud(observer_hud.hud_version)
+		observer_hud.show_station_trait_buttons()

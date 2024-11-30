@@ -6,7 +6,7 @@
 	base_lighting_color = "#FFFFCC"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg','sound/ambience/ambiodd.ogg','sound/ambience/ambinice.ogg')
+	ambientsounds = list('sound/ambience/beach/shore.ogg', 'sound/ambience/beach/seag1.ogg','sound/ambience/beach/seag2.ogg','sound/ambience/beach/seag3.ogg','sound/ambience/misc/ambiodd.ogg','sound/ambience/medical/ambinice.ogg')
 
 /obj/item/paper/fluff/old_pirate_note
 	name = "rum-stained letter"

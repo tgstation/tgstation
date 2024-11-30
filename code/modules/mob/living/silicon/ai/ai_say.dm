@@ -99,7 +99,13 @@
 		to_chat(src, span_notice("Please wait [DisplayTimeText(announcing_vox - world.time)]."))
 		return
 
-	var/message = tgui_input_text(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement)
+	var/message = tgui_input_text(
+		src,
+		"WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'",
+		"Announcement",
+		src.last_announcement,
+		max_length = MAX_MESSAGE_LEN,
+	)
 
 	if(!message || announcing_vox > world.time)
 		return
@@ -142,7 +148,7 @@
 		var/turf/player_turf = get_turf(player_mob)
 		if(is_valid_z_level(ai_turf, player_turf))
 			players += player_mob
-	minor_announce(capitalize(message), "[name] announces:", players = players, should_play_sound = FALSE)
+	minor_announce(capitalize(message), "[name] announces:", players = players, should_play_sound = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(does_target_have_vox_off)))
 
 	for(var/word in words)
 		play_vox_word(word, ai_turf, null)
@@ -162,7 +168,7 @@
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/player_mob as anything in GLOB.player_list)
-				if(!player_mob.can_hear() || !(safe_read_pref(player_mob.client, /datum/preference/toggle/sound_announcements)))
+				if(!player_mob.can_hear() || !safe_read_pref(player_mob.client, /datum/preference/toggle/sound_ai_vox))
 					continue
 
 				var/turf/player_turf = get_turf(player_mob)
@@ -174,6 +180,9 @@
 			SEND_SOUND(only_listener, voice)
 		return TRUE
 	return FALSE
+
+/proc/does_target_have_vox_off(mob/target)
+	return !safe_read_pref(target.client, /datum/preference/toggle/sound_ai_vox)
 
 #undef VOX_DELAY
 #endif

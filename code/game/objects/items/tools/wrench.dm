@@ -13,11 +13,11 @@
 	throwforce = 7
 	demolition_mod = 1.25
 	w_class = WEIGHT_CLASS_SMALL
-	usesound = 'sound/items/ratchet.ogg'
-	operating_sound = list('sound/items/ratchet_fast.ogg', 'sound/items/ratchet_slow.ogg')
+	usesound = 'sound/items/tools/ratchet.ogg'
+	operating_sound = list('sound/items/tools/ratchet_fast.ogg', 'sound/items/tools/ratchet_slow.ogg')
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*1.5)
-	drop_sound = 'sound/items/handling/wrench_drop.ogg'
-	pickup_sound = 'sound/items/handling/wrench_pickup.ogg'
+	drop_sound = 'sound/items/handling/tools/wrench_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/wrench_pickup.ogg'
 
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
@@ -35,14 +35,14 @@
 
 /obj/item/wrench/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/items/weapons/genhit.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
 /obj/item/wrench/abductor
 	name = "alien wrench"
 	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
 	icon = 'icons/obj/antags/abductor.dmi'
-	belt_icon_state = "wrench_alien"
+	inside_belt_icon_state = "wrench_alien"
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 	usesound = 'sound/effects/empulse.ogg'
 	toolspeed = 0.1
@@ -96,7 +96,7 @@
 	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."
 	icon_state = "wrench_combat"
 	inhand_icon_state = "wrench_combat"
-	belt_icon_state = "wrench_combat"
+	inside_belt_icon_state = "wrench_combat"
 	attack_verb_continuous = list("devastates", "brutalizes", "commits a war crime against", "obliterates", "humiliates")
 	attack_verb_simple = list("devastate", "brutalize", "commit a war crime against", "obliterate", "humiliate")
 	tool_behaviour = null
@@ -124,7 +124,7 @@
 	tool_behaviour = active ? TOOL_WRENCH : initial(tool_behaviour)
 	if(user)
 		balloon_alert(user, "[name] [active ? "active, woe!":"restrained"]")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 5, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/wrench/bolter

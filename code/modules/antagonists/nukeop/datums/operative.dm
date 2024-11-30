@@ -8,7 +8,8 @@
 	show_to_ghosts = TRUE
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"
-	stinger_sound = 'sound/ambience/antag/ops.ogg'
+	stinger_sound = 'sound/music/antag/ops.ogg'
+
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
 	/// If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
@@ -114,8 +115,8 @@
 		var/icon/teammate = render_preview_outfit(preview_outfit_behind)
 		teammate.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
 
-		final_icon.Blend(teammate, ICON_UNDERLAY, -world.icon_size / 4, 0)
-		final_icon.Blend(teammate, ICON_UNDERLAY, world.icon_size / 4, 0)
+		final_icon.Blend(teammate, ICON_UNDERLAY, -ICON_SIZE_X / 4, 0)
+		final_icon.Blend(teammate, ICON_UNDERLAY, ICON_SIZE_X / 4, 0)
 
 	if (!isnull(nuke_icon_state))
 		var/icon/nuke = icon('icons/obj/machines/nuke.dmi', nuke_icon_state)

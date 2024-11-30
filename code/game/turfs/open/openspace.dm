@@ -165,7 +165,7 @@
 	place_on_top(new_floor_path, flags = flags)
 
 /turf/open/openspace/can_cross_safely(atom/movable/crossing)
-	return HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
+	return HAS_TRAIT(crossing, TRAIT_MOVE_FLYING) || !crossing.can_z_move(DOWN, src, z_move_flags = ZMOVE_FALL_FLAGS)
 
 /turf/open/openspace/icemoon
 	name = "ice chasm"

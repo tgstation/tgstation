@@ -77,7 +77,7 @@
 			petrified_mob.investigate_log("has been dusted by statue deconstruction.", INVESTIGATE_DEATHS)
 			if(iscarbon(petrified_mob) && brain)
 				var/mob/living/carbon/petrified_carbon = petrified_mob
-				var/obj/item/organ/internal/brain/carbon_brain = petrified_carbon.get_organ_slot(ORGAN_SLOT_BRAIN)
+				var/obj/item/organ/brain/carbon_brain = petrified_carbon.get_organ_slot(ORGAN_SLOT_BRAIN)
 				carbon_brain.Remove(petrified_carbon)
 				carbon_brain.forceMove(get_turf(src))
 				carbon_brain.name = "petrified [carbon_brain.name]"
@@ -111,7 +111,6 @@
 		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer, save_brain)
 	S.name = "statue of [name]"
-	ADD_TRAIT(src, TRAIT_NOBLOOD, MAGIC_TRAIT)
 	S.copy_overlays(src)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	if(colorlist)

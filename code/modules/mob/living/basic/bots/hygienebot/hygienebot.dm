@@ -29,23 +29,23 @@
 	var/static/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/silicon/aibots.dmi', "hygienebot-fire")
 	///announcements we say when we find a target
 	var/static/list/found_announcements = list(
-		HYGIENEBOT_VOICED_UNHYGIENIC = 'sound/voice/hygienebot/unhygienicclient.ogg',
+		HYGIENEBOT_VOICED_UNHYGIENIC = 'sound/mobs/non-humanoids/hygienebot/unhygienicclient.ogg',
 	)
 	///announcements we say when the target keeps moving away
 	var/static/list/threat_announcements = list(
-		HYGIENEBOT_VOICED_THREAT_AIRLOCK = 'sound/voice/hygienebot/dragyouout.ogg',
-		HYGIENEBOT_VOICED_FOUL_SMELL = 'sound/voice/hygienebot/foulsmelling.ogg',
-		HYGIENEBOT_VOICED_TROGLODYTE = 'sound/voice/hygienebot/troglodyte.ogg',
-		HYGIENEBOT_VOICED_GREEN_CLOUD = 'sound/voice/hygienebot/greencloud.ogg',
-		HYGIENEBOT_VOICED_ARSEHOLE = 'sound/voice/hygienebot/letmeclean.ogg',
-		HYGIENEBOT_VOICED_THREAT_ARTERIES = 'sound/voice/hygienebot/cutarteries.ogg',
-		HYGIENEBOT_VOICED_STOP_RUNNING = 'sound/voice/hygienebot/stoprunning.ogg',
+		HYGIENEBOT_VOICED_THREAT_AIRLOCK = 'sound/mobs/non-humanoids/hygienebot/dragyouout.ogg',
+		HYGIENEBOT_VOICED_FOUL_SMELL = 'sound/mobs/non-humanoids/hygienebot/foulsmelling.ogg',
+		HYGIENEBOT_VOICED_TROGLODYTE = 'sound/mobs/non-humanoids/hygienebot/troglodyte.ogg',
+		HYGIENEBOT_VOICED_GREEN_CLOUD = 'sound/mobs/non-humanoids/hygienebot/greencloud.ogg',
+		HYGIENEBOT_VOICED_ARSEHOLE = 'sound/mobs/non-humanoids/hygienebot/letmeclean.ogg',
+		HYGIENEBOT_VOICED_THREAT_ARTERIES = 'sound/mobs/non-humanoids/hygienebot/cutarteries.ogg',
+		HYGIENEBOT_VOICED_STOP_RUNNING = 'sound/mobs/non-humanoids/hygienebot/stoprunning.ogg',
 	)
 	///announcements we say after we have cleaned our target
 	var/static/list/cleaned_announcements = list(
-		HYGIENEBOT_VOICED_FUCKING_FINALLY = 'sound/voice/hygienebot/finally.ogg',
-		HYGIENEBOT_VOICED_THANK_GOD = 'sound/voice/hygienebot/thankgod.ogg',
-		HYGIENEBOT_VOICED_DEGENERATE = 'sound/voice/hygienebot/degenerate.ogg',
+		HYGIENEBOT_VOICED_FUCKING_FINALLY = 'sound/mobs/non-humanoids/hygienebot/finally.ogg',
+		HYGIENEBOT_VOICED_THANK_GOD = 'sound/mobs/non-humanoids/hygienebot/thankgod.ogg',
+		HYGIENEBOT_VOICED_DEGENERATE = 'sound/mobs/non-humanoids/hygienebot/degenerate.ogg',
 	)
 
 /mob/living/basic/bot/hygienebot/Initialize(mapload)

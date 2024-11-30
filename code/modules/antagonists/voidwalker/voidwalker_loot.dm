@@ -35,7 +35,7 @@
 
 	starer.gain_trauma(/datum/brain_trauma/voided/stable)
 	to_chat(user, span_purple("And a whole world opens up to you."))
-	playsound(get_turf(user), 'sound/effects/curse5.ogg', 60)
+	playsound(get_turf(user), 'sound/effects/curse/curse5.ogg', 60)
 
 	uses--
 	if(uses <= 0 )

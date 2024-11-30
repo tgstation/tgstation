@@ -18,7 +18,10 @@
 
 /datum/uplink_item/role_restricted/mail_counterfeit_kit
 	name = "GLA Brand Mail Counterfeit Kit"
-	desc = "A box of five (5) counterfeit devices. Each single-use device can hold one normal sized object, and impersonate an ordinary postal envelope addressed to whoever you choose. Optionally, can be rigged to activate held items - great for if you want to surprise someone with a primed grenade!"
+	desc = "A box containing five devices capable of counterfeiting NT's mail. Can be used to store items within as an easy means of smuggling contraband. \
+			Additionally, you may choose to \"arm\" the item inside, causing the item to be used the moment the mail is opened as if the person had just used it in hand. \
+			The most common usage of this feature is with grenades, as it forces the grenade to prime. Bonus points if the grenade is set to instantly detonate. \
+			Comes with an integrated micro-computer for configuration purposes."
 	item = /obj/item/storage/box/syndie_kit/mail_counterfeit
 	cost = 2
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
@@ -139,6 +142,14 @@
 	cost = 11
 	restricted_roles = list(JOB_COOK)
 
+/datum/uplink_item/role_restricted/moltobeso
+	name = "Molt'Obeso Sauce Bottle"
+	desc = "A branded bottle of Molt'Obeso sauce. This sauce can stimulate hunger in people, leading them to eat more than they intended. \
+			It also enhances the absorption of calories from the food consumed."
+	item = /obj/item/storage/box/syndie_kit/moltobeso
+	cost = 2
+	restricted_roles = list(JOB_COOK)
+
 /datum/uplink_item/role_restricted/turretbox
 	name = "Disposable Sentry Gun"
 	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
@@ -150,7 +161,7 @@
 	name = "Syndicate Rebar Crossbow"
 	desc = "A much more professional version of the engineer's bootleg rebar crossbow. 3 shot mag, quicker loading, and better ammo. Owners manual included."
 	item = /obj/item/storage/box/syndie_kit/rebarxbowsyndie
-	cost = 10
+	cost = 12
 	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
 
 /datum/uplink_item/role_restricted/magillitis_serum
@@ -361,7 +372,7 @@
 	name = "Simian Agent Reinforcements"
 	desc = "Call in an extremely well trained monkey secret agent from our Syndicate Banana Department. \
 		They've been trained to operate machinery and can read, but they can't speak Common. \
-		Please note that these are free-range monkeys that don't react with Mutadone."
+		Please note that these are free-range monkeys that don't react with Mutadone. May contain severe allergies to species-changing phenomena."
 	item = /obj/item/antag_spawner/loadout/monkey_man
 	cost = 6
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_ASSISTANT, JOB_MIME, JOB_CLOWN, JOB_PUN_PUN)

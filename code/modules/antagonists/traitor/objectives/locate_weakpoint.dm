@@ -178,22 +178,22 @@
 	var/area/user_area = get_area(user)
 	if(!(user_area.type in objective.scan_areas))
 		balloon_alert(user, "invalid area!")
-		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 
 	if(!objective.scan_areas[user_area.type])
 		balloon_alert(user, "already scanned here!")
-		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 
 	user.visible_message(span_danger("[user] presses a few buttons on [src] and it starts ominously beeping!"), span_notice("You activate [src] and start scanning the area. Do not exit [get_area_name(user, TRUE)] until the scan finishes!"))
-	playsound(user, 'sound/machines/triple_beep.ogg', 30, TRUE)
+	playsound(user, 'sound/machines/beep/triple_beep.ogg', 30, TRUE)
 	var/alertstr = span_userdanger("Network Alert: Station network probing attempt detected[user_area?" in [get_area_name(user, TRUE)]":". Unable to pinpoint location"].")
 	for(var/mob/living/silicon/ai/ai_player in GLOB.player_list)
 		to_chat(ai_player, alertstr)
 
 	if(!do_after(user, 30 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE | IGNORE_HELD_ITEM | IGNORE_INCAPACITATED | IGNORE_SLOWDOWNS, extra_checks = CALLBACK(src, PROC_REF(scan_checks), user, user_area, objective), hidden = TRUE))
-		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 
 	playsound(user, 'sound/machines/ding.ogg', 100, TRUE)

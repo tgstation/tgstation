@@ -222,7 +222,7 @@
 					computer.say("Purchase succesful.")
 					playsound(computer, 'sound/machines/ping.ogg', 25)
 					return TRUE
-			playsound(computer, 'sound/machines/terminal_error.ogg', 25)
+			playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25)
 			return TRUE
 
 /// Publication and adding points.
@@ -235,5 +235,5 @@
 		SStgui.update_uis(src)
 		playsound(computer, 'sound/machines/ping.ogg', 25)
 		return TRUE
-	playsound(computer, 'sound/machines/terminal_error.ogg', 25)
+	playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25)
 	return FALSE

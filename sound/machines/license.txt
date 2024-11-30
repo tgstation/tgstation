@@ -1,14 +1,6 @@
-crate_close.ogg and crate_open.ogg are made by lawnjelly
-(https://freesound.org/people/lawnjelly/sounds/156892/)
-They have been licensed under CC-BY 3.0, which can be found at http://creativecommons.org/licenses/by/3.0/
-
 coffeemaker_brew.ogg originally made by Adriana Lopez (Acekat13X31), edited to reduce length and added fade
 (https://freesound.org/people/Acekat13X31/sounds/515685/)
 This is licensed under CC-BY 4.0, found at https://creativecommons.org/licenses/by/4.0/
 
 shutter.ogg adapted from Joseph Sardin on BigSoundBank
 https://bigsoundbank.com/detail-2475-manual-roller-shutter-closing-out-2.html
-
-lever_start.ogg and lever_stop.ogg are made by A_Kuha on FreeSound
-https://freesound.org/people/A_Kuha/sounds/676412
-This is licensed under CC-0, found at https://creativecommons.org/publicdomain/zero/1.0/

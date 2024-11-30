@@ -71,7 +71,7 @@
 /datum/religion_sect/proc/can_sacrifice(obj/item/sacrifice, mob/living/chap)
 	. = TRUE
 	if(chap.mind.holy_role == HOLY_ROLE_DEACON)
-		to_chat(chap, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
+		to_chat(chap, span_warning("You are merely a deacon of [GLOB.deity], and therefore cannot perform rites."))
 		return
 	if(!is_type_in_typecache(sacrifice, desired_items_typecache))
 		return FALSE
@@ -169,7 +169,7 @@
 
 	//first we determine if we can charge them
 	var/did_we_charge = FALSE
-	var/obj/item/organ/internal/stomach/ethereal/eth_stomach = blessed.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/ethereal/eth_stomach = blessed.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(eth_stomach))
 		eth_stomach.adjust_charge(0.06 * STANDARD_CELL_CHARGE)
 		did_we_charge = TRUE
@@ -183,7 +183,7 @@
 			blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
 			to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
 			blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-			playsound(chap, 'sound/machines/synth_yes.ogg', 25, TRUE, -1)
+			playsound(chap, 'sound/machines/synth/synth_yes.ogg', 25, TRUE, -1)
 		return TRUE
 
 	//charge(?) and go

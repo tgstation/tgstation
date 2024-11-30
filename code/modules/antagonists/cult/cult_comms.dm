@@ -27,7 +27,7 @@
 	return ..()
 
 /datum/action/innate/cult/comm/Activate()
-	var/input = tgui_input_text(usr, "Message to tell to the other acolytes", "Voice of Blood")
+	var/input = tgui_input_text(usr, "Message to tell to the other acolytes", "Voice of Blood", max_length = MAX_MESSAGE_LEN)
 	if(!input || !IsAvailable(feedback = TRUE))
 		return
 
@@ -122,7 +122,7 @@
 		team_member.current.update_mob_action_buttons()
 		if(team_member.current.incapacitated)
 			continue
-		SEND_SOUND(team_member.current, 'sound/hallucinations/im_here1.ogg')
+		SEND_SOUND(team_member.current, 'sound/effects/hallucinations/im_here1.ogg')
 		to_chat(team_member.current, span_cult_large("Acolyte [nominee] has asserted that [nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly."))
 
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(poll_cultists_for_leader), nominee, team), 10 SECONDS)
@@ -143,7 +143,7 @@
 	for(var/datum/mind/team_member as anything in team.members)
 		if(!team_member.current || team_member.current == nominee || team_member.current.incapacitated)
 			continue
-		SEND_SOUND(team_member.current, 'sound/magic/exit_blood.ogg')
+		SEND_SOUND(team_member.current, 'sound/effects/magic/exit_blood.ogg')
 		asked_cultists += team_member.current
 
 	var/list/yes_voters = SSpolling.poll_candidates(
@@ -244,7 +244,7 @@
 							new /obj/effect/temp_visual/dir_setting/cult/phase(mobloc, B.current.dir)
 							playsound(mobloc, SFX_PORTAL_ENTER, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 						if(4)
-							playsound(mobloc, 'sound/magic/exit_blood.ogg', 100, TRUE)
+							playsound(mobloc, 'sound/effects/magic/exit_blood.ogg', 100, TRUE)
 							if(B.current != owner)
 								var/turf/final = pick(destinations)
 								if(istype(B.current.loc, /obj/item/soulstone))
@@ -268,13 +268,13 @@
 			owner.say("C'arta forbici!", language = /datum/language/common, forced = "cult invocation")
 		if(2)
 			owner.say("Pleggh e'ntrath!", language = /datum/language/common, forced = "cult invocation")
-			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 50, TRUE)
+			playsound(get_turf(owner),'sound/effects/magic/clockwork/narsie_attack.ogg', 50, TRUE)
 		if(3)
 			owner.say("Barhah hra zar'garis!", language = /datum/language/common, forced = "cult invocation")
-			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 75, TRUE)
+			playsound(get_turf(owner),'sound/effects/magic/clockwork/narsie_attack.ogg', 75, TRUE)
 		if(4)
 			owner.say("N'ath reth sh'yro eth d'rekkathnor!!!", language = /datum/language/common, forced = "cult invocation")
-			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 100, TRUE)
+			playsound(get_turf(owner),'sound/effects/magic/clockwork/narsie_attack.ogg', 100, TRUE)
 
 /datum/action/innate/cult/master/cultmark
 	name = "Mark Target"
@@ -399,7 +399,7 @@
 	if(QDELETED(owner) || QDELETED(src))
 		return
 
-	SEND_SOUND(owner, 'sound/magic/enter_blood.ogg')
+	SEND_SOUND(owner, 'sound/effects/magic/enter_blood.ogg')
 	to_chat(owner, span_cult_bold("Your previous mark is gone - you are now ready to create a new blood mark."))
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
@@ -452,7 +452,7 @@
 
 		var/turf/throwee_turf = get_turf(throwee)
 
-		playsound(throwee_turf, 'sound/magic/exit_blood.ogg')
+		playsound(throwee_turf, 'sound/effects/magic/exit_blood.ogg')
 		new /obj/effect/temp_visual/cult/sparks(throwee_turf, caller.dir)
 		throwee.visible_message(
 			span_warning("A pulse of magic whisks [throwee] away!"),
@@ -488,7 +488,7 @@
 			var/mob/living/living_clicked = clicked_on
 			if(!IS_CULTIST(living_clicked))
 				return FALSE
-			SEND_SOUND(caller, sound('sound/weapons/thudswoosh.ogg'))
+			SEND_SOUND(caller, sound('sound/items/weapons/thudswoosh.ogg'))
 			to_chat(caller, span_cult_bold("You reach through the veil with your mind's eye and seize [clicked_on]! <b>Click anywhere nearby to teleport [clicked_on.p_them()]!</b>"))
 			throwee_ref = WEAKREF(clicked_on)
 			return TRUE

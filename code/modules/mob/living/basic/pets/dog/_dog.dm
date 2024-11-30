@@ -31,7 +31,7 @@
 	// The dog attack pet command can raise melee attack above 0
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	melee_attack_cooldown = 0.8 SECONDS
 	/// Instructions you can give to dogs
@@ -40,6 +40,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/good_boy/dog,
 		/datum/pet_command/follow/dog,
+		/datum/pet_command/perform_trick_sequence,
 		/datum/pet_command/point_targeting/attack/dog,
 		/datum/pet_command/point_targeting/fetch,
 		/datum/pet_command/play_dead,
@@ -49,12 +50,22 @@
 	///icon state of our cult icon
 	var/cult_icon_state
 
+/datum/emote/dog
+	mob_type_allowed_typecache = /mob/living/basic/pet/dog
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/dog/woof
+	key = "woof"
+	key_third_person = "woof"
+	message = "woofs happily!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
 /mob/living/basic/pet/dog/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
 	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state)
 	ADD_TRAIT(src, TRAIT_WOUND_LICKER, INNATE_TRAIT)
-	AddElement(/datum/element/pet_bonus, "woofs happily!")
+	AddElement(/datum/element/pet_bonus, "woof")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/unfriend_attacker, untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat/slab/human/mutant/skeleton, /obj/item/stack/sheet/bone), tame_chance = 30, bonus_tame_chance = 15, unique = FALSE)

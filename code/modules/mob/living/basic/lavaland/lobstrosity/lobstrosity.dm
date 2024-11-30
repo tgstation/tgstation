@@ -12,17 +12,18 @@
 	maxHealth = 150
 	health = 150
 	obj_damage = 15
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_AQUATIC
 	melee_damage_lower = 15
 	melee_damage_upper = 19
 	attack_verb_continuous = "snips"
 	attack_verb_simple = "snip"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE // Closer than a scratch to a crustacean pinching effect
 	melee_attack_cooldown = 1 SECONDS
 	butcher_results = list(
 		/obj/item/food/meat/slab/rawcrab = 2,
 		/obj/item/stack/sheet/bone = 2,
-		/obj/item/organ/internal/monster_core/rush_gland = 1,
+		/obj/item/organ/monster_core/rush_gland = 1,
 	)
 	crusher_loot = /obj/item/crusher_trophy/lobster_claw
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity
@@ -55,6 +56,8 @@
 	charge = new charge_type(src)
 	charge.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, charge)
+	var/static/list/fishable_turfs = typecacheof(list(/turf/open/lava))
+	ai_controller.set_blackboard_key(BB_FISHABLE_LIST, fishable_turfs)
 
 /mob/living/basic/mining/lobstrosity/Destroy()
 	QDEL_NULL(charge)
@@ -144,7 +147,7 @@
 	butcher_results = list(
 		/obj/item/food/meat/slab/rawcrab = 1,
 		/obj/item/stack/sheet/bone = 1,
-		/obj/item/organ/internal/monster_core/rush_gland = 1,
+		/obj/item/organ/monster_core/rush_gland = 1,
 	)
 	crusher_loot = null
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity/juvenile
@@ -156,6 +159,17 @@
 	var/mob/living/basic/mining/lobstrosity/grow_type = /mob/living/basic/mining/lobstrosity
 	/// Were we tamed? If yes, tame the mob we become when we grow up too.
 	var/was_tamed = FALSE
+
+/datum/emote/lobstrosity_juvenile
+	mob_type_allowed_typecache = /mob/living/basic/mining/lobstrosity/juvenile
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/lobstrosity_juvenile/chitter
+	key = "chitter"
+	key_third_person = "chitters"
+	message = "chitters pleasantly!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	sound = 'sound/mobs/non-humanoids/insect/chitter.ogg'
 
 /mob/living/basic/mining/lobstrosity/juvenile/Initialize(mapload)
 	. = ..()
@@ -203,7 +217,7 @@
 	. = ..()
 	was_tamed = TRUE
 	// They are more pettable I guess
-	AddElement(/datum/element/pet_bonus, "chitters pleasantly!")
+	AddElement(/datum/element/pet_bonus, "chitter")
 	REMOVE_TRAIT(src, TRAIT_MOB_HIDE_HAPPINESS, INNATE_TRAIT)
 
 /mob/living/basic/mining/lobstrosity/juvenile/proc/ready_to_grow()

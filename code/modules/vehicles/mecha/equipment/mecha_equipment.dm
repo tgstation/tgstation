@@ -33,7 +33,7 @@
 	///Boolean: whether a pacifist can use this equipment
 	var/harmful = FALSE
 	///Sound file: Sound to play when this equipment is destroyed while still attached to the mech
-	var/destroy_sound = 'sound/mecha/critdestr.ogg'
+	var/destroy_sound = 'sound/vehicles/mecha/critdestr.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/Destroy()
 	if(chassis)
@@ -201,7 +201,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto)
 	moveto = moveto || get_turf(chassis)
 	forceMove(moveto)
-	playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
+	playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 	LAZYREMOVE(chassis.flat_equipment, src)
 	var/to_unequip_slot = equipment_slot
 	if(equipment_slot == MECHA_WEAPON)

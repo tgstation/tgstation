@@ -82,6 +82,6 @@
 	investigate_log("Access to the [department_access] department on [src] has expired.]", INVESTIGATE_ACCESSCHANGES)
 	department_access = null
 	say("Access revoked, time ran out.")
-	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE)
 
 #undef ACCESS_TIMER_LIMIT

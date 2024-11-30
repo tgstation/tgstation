@@ -40,7 +40,7 @@
 	var/resulting_reagent_purity
 
 /datum/chemical_reaction/food/pre_reaction_other_checks(datum/reagents/holder)
-	resulting_reagent_purity = holder.get_average_purity(/datum/reagent/consumable)
+	resulting_reagent_purity = holder.get_average_purity()
 	return TRUE
 
 /datum/chemical_reaction/food/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -274,7 +274,7 @@
 	results = list(/datum/reagent/consumable/salt = 2)
 	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 2, /datum/reagent/consumable/grounding_solution = 1)
 	mix_message = "The mixture lets off a sharp snap as the electricity discharges."
-	mix_sound = 'sound/weapons/taser.ogg'
+	mix_sound = 'sound/items/weapons/taser.ogg'
 	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/martian_batter

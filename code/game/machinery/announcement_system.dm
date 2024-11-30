@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	///If true, researched nodes will be announced to the appropriate channels
 	var/announce_research_node = TRUE
 	/// The text that we send when announcing researched nodes.
-	var/node_message = "The '%NODE' techweb node has been researched"
+	var/node_message = "The %NODE techweb node has been researched"
 
 /obj/machinery/announcement_system/Initialize(mapload)
 	. = ..()
@@ -97,12 +97,12 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	switch(message_type)
 		if(AUTO_ANNOUNCE_ARRIVAL)
 			if(!arrival_toggle)
-				message = CompileText(arrival, target, rank)
 				return
+			message = CompileText(arrival, target, rank)
 		if(AUTO_ANNOUNCE_NEWHEAD)
 			if(!newhead_toggle)
-				message = CompileText(newhead, target, rank)
 				return
+			message = CompileText(newhead, target, rank)
 		if(AUTO_ANNOUNCE_ARRIVALS_BROKEN)
 			message = "The arrivals shuttle has been damaged. Docking for repairs..."
 		if(AUTO_ANNOUNCE_NODE)
@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 	if(machine_stat & BROKEN)
 		visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
+		playsound(src.loc, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 		return
 	switch(action)
 		if("ArrivalText")
@@ -164,7 +164,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 				newhead = new_message
 				usr.log_message("updated the head announcement to: [new_message]", LOG_GAME)
 		if("node_message")
-			var/new_message = trim(html_encode(param["new_text"]), MAX_MESSAGE_LEN)
+			var/new_message = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
 			if(new_message)
 				node_message = new_message
 				usr.log_message("updated the researched node announcement to: [node_message]", LOG_GAME)
