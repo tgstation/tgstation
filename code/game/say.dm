@@ -147,7 +147,17 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//Speaker name
 	var/namepart
 	var/list/stored_name = list(null)
-	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, visible_name)
+
+	if(iscarbon(speaker)) //First, try to pull the modified title from a carbon's ID. This will hopefully override both visual and audible names.
+		var/mob/living/carbon/carbon_human = speaker
+		var/obj/item/id_slot = carbon_human.get_item_by_slot(ITEM_SLOT_ID)
+		if(id_slot)
+			var/obj/item/card/id/id_card = id_slot.GetID()
+			SEND_SIGNAL(id_card, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, visible_name)
+
+	if(!stored_name[NAME_PART_INDEX]) //Otherwise, we just use whatever the name signal gives us.
+		SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, visible_name)
+
 	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
 
 	//End name span.

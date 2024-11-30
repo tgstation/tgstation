@@ -146,6 +146,7 @@
 	register_context()
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, PROC_REF(update_in_wallet))
+	RegisterSignal(src, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, PROC_REF(return_message_name_part))
 	if(prob(1))
 		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
@@ -160,7 +161,6 @@
 	. = ..()
 	if(slot == ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
-		RegisterSignal(user, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, PROC_REF(return_message_name_part))
 
 /obj/item/card/id/proc/return_message_name_part(mob/living/carbon/human/source, list/stored_name, visible_name)
 	SIGNAL_HANDLER
@@ -922,9 +922,9 @@
 		balloon_alert(user, "card has no honorific to use!")
 		return
 
-	if(!honorific_positions)
+	if(!trim.honorific_positions)
 		balloon_alert(user, "no honorific positions! Error!")
-		stack_trace("ID card with honorifics found with no potential positions!")
+		stack_trace("ID card with honorifics found with no potential honorific positions!")
 		return
 
 	var/honorific_position_to_use = tgui_input_list(user, "what position do you want your honorific in?", "Flair!", trim.honorific_positions)

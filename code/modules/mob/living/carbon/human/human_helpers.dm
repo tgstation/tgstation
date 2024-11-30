@@ -45,7 +45,7 @@
 		return signal_face // no need to null-check, because force_set will always set a signal_face
 	var/face_name = !isnull(signal_face) ? signal_face : get_face_name("")
 	var/id_name = !isnull(signal_id) ? signal_id : get_id_name("")
-	if (force_real_name) //HERE
+	if(force_real_name)
 		var/fake_name
 		if (face_name && face_name != real_name)
 			fake_name = face_name
@@ -89,7 +89,7 @@
 /mob/living/carbon/proc/get_id_name(if_no_id = "Unknown")
 	return
 
-/mob/living/carbon/human/get_id_name(if_no_id = "Unknown") //HERE
+/mob/living/carbon/human/get_id_name(if_no_id = "Unknown")
 	var/obj/item/storage/wallet/wallet = wear_id
 	var/obj/item/modular_computer/pda = wear_id
 	var/obj/item/card/id/id = wear_id
