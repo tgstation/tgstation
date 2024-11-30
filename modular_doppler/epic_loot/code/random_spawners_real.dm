@@ -664,7 +664,7 @@
 // Maint structure spawner
 
 /obj/effect/spawner/random/epic_loot/random_maint_loot_structure
-	name = "random maintenance loot structure spawner"
+	name = "random maintenance loot structure"
 	desc = "Automagically transforms into a random loot structure that spawns in maint."
 	icon = 'modular_doppler/epic_loot/icons/loot_structures.dmi'
 	icon_state = "random_maint_structure"
