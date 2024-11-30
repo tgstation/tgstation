@@ -11,7 +11,8 @@
 	var/list/possible_transfer_amounts
 	desc = "An infamous knife of syndicate design, \
 	it has a tiny hole going through the blade to the handle which stores toxins. \
-	Use in-hand to to increase or decrease its transfer amount"
+	Use in-hand to to increase or decrease its transfer amount. \
+	Each hit has a 40% chance to transfer reagents from knife's internal storage to your victim"
 
 
 /obj/item/knife/poison/Initialize(mapload)
