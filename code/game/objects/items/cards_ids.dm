@@ -169,10 +169,10 @@
 	var/return_string = ""
 	if(carbon_human.name != voice_name)
 		end_string += " (as [registered_name])"
-	if(trim && honorific_position != HONORIFIC_POSITION_NONE)
+	if(trim && honorific_position != HONORIFIC_POSITION_NONE && (carbon_human.name == voice_name)) //The voice and name are the same, so we display the title.
 		return_string += honorific_title
 	else
-		return_string += voice_name
+		return_string += voice_name //Name on the ID ain't the same as the speaker, so we display their real name with no title.
 	return_string += end_string
 	stored_name[NAME_PART_INDEX] = return_string
 
