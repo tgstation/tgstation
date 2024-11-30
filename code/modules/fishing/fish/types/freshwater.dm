@@ -157,6 +157,7 @@
 	//anxiety naturally limits the amount of zipzaps per tank, so they are stronger alone
 	electrogenesis_power = 6.7 MEGA JOULES
 	beauty = FISH_BEAUTY_GOOD
+	suicide_slap_text = "*ZAP!*"
 
 /obj/item/fish/zipzap/get_fish_taste()
 	return list("raw fish" = 2, "anxiety" = 1)
@@ -169,15 +170,8 @@
 
 // real suicide handled by og fish proc
 /obj/item/fish/zipzap/slapperoni(mob/living/user, iteration)
-	user.visible_message(span_bolddanger("*ZAP!*"))
-	user.attackby(src, user)
 	electrocute_mob(user, power_source = get_area(src), source = src, siemens_coeff = 1, dist_check = FALSE) // how do i make this use electrogenesis_power
-	if(user.stat > SOFT_CRIT)
-		user.gib(DROP_ORGANS|DROP_BODYPARTS|DROP_ITEMS)
-		return
-	if(iteration > 100)
-		return // failsafe
-	slapperoni(user, iteration++)
+	..()
 
 /obj/item/fish/tadpole
 	name = "tadpole"

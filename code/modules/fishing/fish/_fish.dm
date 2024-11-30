@@ -170,6 +170,8 @@
 	 * Once set, the value shouldn't be changed, so don't make typos.
 	 */
 	var/fish_id
+	/// only used in the suicide for comedic value
+	var/suicide_slap_text = "*SLAP!*"
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
@@ -204,6 +206,9 @@
 	register_item_context()
 
 /obj/item/fish/suicide_act(mob/living/user)
+	if(force == 0)
+		user.visible_message(span_suicide("[user] slaps [user.p_them()]self with [src], but nothing happens!"))
+		return SHAME
 	user.visible_message(span_suicide("[user] starts rapidly slapping [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.set_combat_mode(TRUE)
 	ADD_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
@@ -211,13 +216,13 @@
 	return MANUAL_SUICIDE
 
 /obj/item/fish/proc/slapperoni(mob/living/user, iteration)
-	user.visible_message(span_bolddanger("*SLAP!*"))
+	stoplag(0.1 SECONDS)
+	user.visible_message(span_bolddanger(suicide_slap_text))
 	user.attackby(src, user)
-	if(user.stat > SOFT_CRIT)
+	if(user.stat > SOFT_CRIT || (iteration > 100))
+		REMOVE_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
 		user.gib(DROP_ORGANS|DROP_BODYPARTS|DROP_ITEMS)
 		return
-	if(iteration > 100)
-		return // failsafe
 	slapperoni(user, iteration++)
 
 /obj/item/fish/add_item_context(atom/source, list/context, obj/item/held_item, mob/user)

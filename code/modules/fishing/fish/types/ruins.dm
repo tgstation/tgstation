@@ -51,7 +51,7 @@
 	user.set_species(/datum/species/skeleton)
 	user.say("AAAAAAAAAAAAHHHHHHHHHH!!!!!!!!!!!!!!", forced = "mastodon fish suicide")
 	user.AddComponent(/datum/component/omen) // the curse of the fish
-	if(prob(50)) // rare so less likely (the curse keeps you alive)
+	if(prob(75)) // rare so less likely (the curse keeps you alive)
 		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, death)), 3 SECONDS)
 		user.set_suicide(TRUE)
 	qdel(src)
