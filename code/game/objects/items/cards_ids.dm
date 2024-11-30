@@ -146,7 +146,7 @@
 	register_context()
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, PROC_REF(update_in_wallet))
-	RegisterSignal(src, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, PROC_REF(return_message_name_part))
+	RegisterSignal(src, COMSIG_MOVABLE_MESSAGE_GET_HONORIFIC, PROC_REF(return_message_name_part))
 	if(prob(1))
 		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
@@ -162,7 +162,7 @@
 	if(slot == ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
 
-/obj/item/card/id/proc/return_message_name_part(datum/source, list/stored_name, visible_name, mob/living/carbon/carbon_human)
+/obj/item/card/id/proc/return_message_name_part(datum/source, list/stored_name, mob/living/carbon/carbon_human)
 	SIGNAL_HANDLER
 	var/voice_name = carbon_human.GetVoice()
 	var/end_string = ""
@@ -191,7 +191,7 @@
 		point.add_overlay(highlight)
 
 /obj/item/card/id/dropped(mob/user)
-	UnregisterSignal(user, list(COMSIG_MOVABLE_POINTED, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART))
+	UnregisterSignal(user, list(COMSIG_MOVABLE_POINTED, COMSIG_MOVABLE_MESSAGE_GET_HONORIFIC))
 	return ..()
 
 /obj/item/card/id/get_id_examine_strings(mob/user)

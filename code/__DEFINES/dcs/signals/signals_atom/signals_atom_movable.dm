@@ -111,6 +111,9 @@
 	///The index of the name part
 	#define NAME_PART_INDEX 1
 
+/// Sent from /atom/movable/proc/compose_message() to find an honorific. Compatible with NAME_PART_INDEX: (list/stored_name, mob/living/carbon/carbon_human)
+#define COMSIG_MOVABLE_MESSAGE_GET_HONORIFIC "movable_message_get_honorific"
+
 /// From /datum/element/immerse/proc/add_submerge_overlay(): (visual_overlay)
 #define COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY "movable_edit_unique_submerge_overlay"
 /// From base of area/Exited(): (area/left, direction)

@@ -568,6 +568,8 @@
 		ACCESS_HOS,
 	)
 	job = /datum/job/detective
+	honorific = "Detective"
+	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/detective/refresh_trim_access()
 	. = ..()
@@ -1168,6 +1170,8 @@
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
 	)
+	honorific = "Orderly"
+	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/security_officer/science
 	assignment = JOB_SECURITY_OFFICER_SCIENCE
