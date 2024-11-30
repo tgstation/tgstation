@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
  *
  * For non-fish, it's just the source's fishing difficulty minus the fisherman skill.
  */
-/datum/fish_source/proc/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
+/datum/fish_source/proc/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman)
 	. = fishing_difficulty
 
 	// Difficulty modifier added by having the Settler quirk

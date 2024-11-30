@@ -801,16 +801,17 @@
 	return data
 
 /datum/fish_source/vending/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
+	var/list/table = list()
 	if(istype(location, /obj/machinery/fishing_portal_generator))
 		var/obj/machinery/fishing_portal_generator/portal = location
 		location = portal.current_linked_atom
 	if(!istype(location, /obj/machinery/vending))
-		return FISHING_DUD
+		return table
+
 	var/obj/machinery/vending/vending = location
 	///Create a list of products, ordered by price from highest to lowest
 	var/list/products = vending.product_records + vending.coin_records + vending.hidden_records
 	sortTim(products, GLOBAL_PROC_REF(cmp_vending_prices))
-	var/list/table = list()
 
 	var/bait_value = rod.bait?.get_item_credit_value() || 1
 	table[FISHING_VENDING_CHUCK] = 1
@@ -835,11 +836,11 @@
 		//the smaller the difference between product price and bait value, the more likely you're to get it.
 		table[product_record] = low/high * 1000 //multiply the value by 1000 for accuracy. pick_weight() doesn't work with zero decimals yet.
 
-	return pick_weight(table)
+	return table
 
-/datum/fish_source/vending/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
+/datum/fish_source/vending/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman)
 	//Using less than a minimum paycheck is going to make the challenge a tad harder.
-	var/bait_value = challenge.used_rod.bait?.get_item_credit_value()
+	var/bait_value = rod.bait?.get_item_credit_value()
 	return ..() + max(PAYCHECK_LOWER * 1.7 - bait_value, 0)
 
 /datum/fish_source/vending/dispense_reward(reward_path, mob/fisherman, atom/fishing_spot)
