@@ -5,11 +5,25 @@
 # to the same file or dir, add them to the end of under Multiple Owners
 
 
-# MAINTAINERS
+# PASTE HERE ONLY YOUR's REPO MAINTAINERS WITH WRITE ACCSESS!!!
+# COVER ONLY YOUR MODULAR REPO FILES
 
-/modular_meta/ @Huz2e @Artemchik542
+# DM CODE MAINTAINERS
+
+/modular_meta/ @Huz2e
+
 
 # MAP MAINTAINERS
-/_maps/map_files/ProtoBoxStation/ @mothmapper
-/_maps/map_files/PubbyStation/ @mothmapper
-/_maps/map_files/KiloStation/ @mothmapper
+
+/_maps/map_files/KiloStation/ @Huz2e
+/_maps/map_files/ProtoBoxStation/ @Huz2e
+/_maps/map_files/PubbyStation/ @Huz2e
+
+/_maps/kilostation.json @Huz2e
+/_maps/protoboxstation.json @Huz2e
+/_maps/pubbystation.json @Huz2e
+
+
+# TGUI MAINTAINERS
+
+/tgui/packages/tgui/interfaces/Modpacks.tsx @Huz2e
