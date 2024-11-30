@@ -48110,7 +48110,7 @@
 "pNY" = (
 /obj/machinery/conveyor{
 	dir = 8;
-	id = "mining""mining"
+	id = "mining"
 	},
 /obj/machinery/bouldertech/refinery/smelter,
 /turf/open/floor/iron/dark,
