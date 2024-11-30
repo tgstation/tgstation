@@ -45203,7 +45203,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "rie" = (
 /obj/structure/chair/wood{
 	dir = 8
