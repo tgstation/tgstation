@@ -508,6 +508,12 @@
 		/obj/item/pen/fourcolor = 2,
 		/obj/item/pen/survival = 1,
 		/obj/item/storage/epic_loot_docs_case = 1,
+		/obj/item/book/granter/crafting_recipe/dusting/smoothbore_disabler_prime = 1,
+		/obj/item/book/granter/crafting_recipe/dusting/laser_musket_prime = 1,
+		/obj/item/book/granter/crafting_recipe/dusting/pipegun_prime = 1,
+		/obj/item/book/granter/crafting_recipe/death_sandwich = 1,
+		/obj/item/book/granter/crafting_recipe/trash_cannon = 1,
+		/obj/item/book/granter/crafting_recipe/donk_secret_recipe = 1,
 	)
 
 // Stuff that comes in strongboxes specifically
