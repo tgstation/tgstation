@@ -86,10 +86,20 @@
 		COMSIG_MOB_CLIENT_PRE_MOVE,
 		COMSIG_LIVING_DISARM_HIT,
 		COMSIG_LIVING_GET_PULLED,
-		COMSIG_MOVABLE_TELEPORTING,
 	), PROC_REF(stop_leaning))
+
+	RegisterSignal(src, COMSIG_MOVABLE_TELEPORTED, PROC_REF(teleport_away_while_leaning))
 	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(lean_dir_changed))
 	update_fov()
+
+/// You fall on your face if you get teleported while leaning
+/mob/living/proc/teleport_away_while_leaning()
+	SIGNAL_HANDLER
+	// Make sure we unregister signal handlers and reset animation
+	stop_leaning()
+	// -1000 aura
+	visible_message(span_notice("[src] falls flat on [p_their()] face from losing [p_their()] balance!"), span_warning("You fall suddenly as the object you were leaning on vanishes from contact with you!"))
+	Knockdown(3 SECONDS)
 
 /mob/living/proc/stop_leaning()
 	SIGNAL_HANDLER
@@ -97,8 +107,8 @@
 		COMSIG_MOB_CLIENT_PRE_MOVE,
 		COMSIG_LIVING_DISARM_HIT,
 		COMSIG_LIVING_GET_PULLED,
-		COMSIG_MOVABLE_TELEPORTING,
 		COMSIG_ATOM_POST_DIR_CHANGE,
+		COMSIG_MOVABLE_TELEPORTED,
 	))
 	animate(src, 0.2 SECONDS, pixel_x = base_pixel_x + body_position_pixel_x_offset, pixel_y = base_pixel_y + body_position_pixel_y_offset)
 	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)

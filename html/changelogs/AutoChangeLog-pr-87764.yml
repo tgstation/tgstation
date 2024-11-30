@@ -1,6 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "fixes the chipped quirk displaying the skill chip's typepath rather than its name"
-  - bugfix: "fixes chipped quirk's itchy effect not working"
-  - bugfix: "the chipped quirk's itchy effect now goes away when the skillchip is removed"

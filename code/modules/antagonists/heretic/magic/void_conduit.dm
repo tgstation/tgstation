@@ -94,7 +94,7 @@
 				var/mob/living/affected_mob = thing_to_affect
 				if(affected_mob.can_block_magic(MAGIC_RESISTANCE))
 					continue
-				if(IS_HERETIC(affected_mob))
+				if(IS_HERETIC_OR_MONSTER(affected_mob) || HAS_TRAIT(affected_mob, TRAIT_MANSUS_TOUCHED))
 					affected_mob.apply_status_effect(/datum/status_effect/void_conduit)
 				else
 					affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
@@ -116,13 +116,14 @@
 	falloff_exponent = 20
 
 /datum/status_effect/void_conduit
+	id = "void_conduit"
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 
 /datum/status_effect/void_conduit/on_apply()
-	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "void_conduit")
+	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, type)
 	return TRUE
 
 /datum/status_effect/void_conduit/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "void_conduit")
+	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, type)

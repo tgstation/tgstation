@@ -107,14 +107,13 @@
 	organ_owner.update_sight()
 	UnregisterSignal(organ_owner, COMSIG_ATOM_BULLET_ACT)
 
-/obj/item/organ/eyes/proc/on_bullet_act(mob/living/carbon/source, obj/projectile/proj, def_zone)
+/obj/item/organ/eyes/proc/on_bullet_act(mob/living/carbon/source, obj/projectile/proj, def_zone, piercing_hit, blocked)
 	SIGNAL_HANDLER
 
 	// Once-a-dozen-rounds level of rare
 	if (def_zone != BODY_ZONE_HEAD || !prob(proj.damage * 0.1) || !(proj.damage_type == BRUTE || proj.damage_type == BURN))
 		return
 
-	var/blocked = source.check_projectile_armor(def_zone, proj, is_silent = TRUE)
 	if (blocked && source.is_eyes_covered())
 		if (!proj.armour_penetration || prob(blocked - proj.armour_penetration))
 			return
@@ -446,7 +445,7 @@
 		owner.emote("scream")
 
 /obj/item/organ/eyes/robotic/xray
-	name = "\improper X-ray eyes"
+	name = "x-ray eyes"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	eye_color_left = "000"
 	eye_color_right = "000"
@@ -518,7 +517,7 @@
 #define UPDATE_EYES_RIGHT 2
 
 /obj/item/organ/eyes/robotic/glow
-	name = "High Luminosity Eyes"
+	name = "high luminosity eyes"
 	desc = "Special glowing eyes, used by snowflakes who want to be special."
 	eye_color_left = "000"
 	eye_color_right = "000"
@@ -797,7 +796,7 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/robotic/xray/moth
-	name = "robotic eyes"
+	name = "moth x-ray eyes"
 	eye_icon_state = "motheyes"
 	icon_state = "eyeballs-cybermoth"
 	desc = "These cybernetic imitation moth eyes will give you X-ray vision. Blinking is futile. Much like actual moth eyes, very sensitive to bright lights."
@@ -809,7 +808,7 @@
 	icon_state = "eyeballs-cybermoth"
 
 /obj/item/organ/eyes/robotic/glow/moth
-	name = "High Luminosity Moth Eyes"
+	name = "high luminosity moth eyes"
 	eye_icon_state = "motheyes"
 	base_eye_state = "eyes_mothglow"
 	icon_state = "eyeballs-cybermoth"

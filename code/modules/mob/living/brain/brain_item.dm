@@ -52,8 +52,6 @@
 
 /obj/item/organ/brain/on_mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
 	. = ..()
-	if(!.)
-		return
 
 	name = initial(name)
 

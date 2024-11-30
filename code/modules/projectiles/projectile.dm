@@ -523,17 +523,23 @@
 			target = select_target(target_turf, target)
 			continue
 
-		if (SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, src) & PROJECTILE_INTERRUPT_HIT)
+		var/target_signal = SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, src)
+		if (target_signal & PROJECTILE_INTERRUPT_HIT_PHASE)
+			return PROJECTILE_IMPACT_PASSED
+		if (target_signal & PROJECTILE_INTERRUPT_HIT)
 			return PROJECTILE_IMPACT_INTERRUPTED
 
-		if (SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, target) & PROJECTILE_INTERRUPT_HIT)
+		var/self_signal = SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, target)
+		if (self_signal & PROJECTILE_INTERRUPT_HIT_PHASE)
+			return PROJECTILE_IMPACT_PASSED
+		if (self_signal & PROJECTILE_INTERRUPT_HIT)
 			return PROJECTILE_IMPACT_INTERRUPTED
 
 		if(mode == PROJECTILE_PIERCE_HIT)
 			pierces += 1
 
 		// Targets should handle their impact logic on our own and if they decide that we hit them, they call our on_hit
-		var/result = target.bullet_act(src, def_zone, mode == PROJECTILE_PIERCE_HIT)
+		var/result = target.projectile_hit(src, def_zone, mode == PROJECTILE_PIERCE_HIT)
 		if (result != BULLET_ACT_FORCE_PIERCE && max_pierces && pierces >= max_pierces)
 			return PROJECTILE_IMPACT_SUCCESSFUL
 
@@ -610,7 +616,7 @@
 			var/mob/living/living_target = target
 			living_target.block_projectile_effects()
 		return FALSE
-	if(!ignore_source_check && firer)
+	if(!ignore_source_check && firer && !direct_target)
 		if(target == firer || (target == firer.loc && ismecha(firer.loc)) || (target in firer.buckled_mobs))
 			return FALSE
 		if(ismob(firer))
