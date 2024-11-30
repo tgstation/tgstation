@@ -15,10 +15,17 @@
 	return ..()
 
 /datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)
-	var/obj/item/source_item = source
-	ADD_KEEP_TOGETHER(source_item, type)
-	var/scale_factor_x = source_item.get_cached_width() / ICON_SIZE_X
-	var/scale_factor_y = source_item.get_cached_height() / ICON_SIZE_Y
+	var/obj/item/I = source
+	ADD_KEEP_TOGETHER(I, type)
+	var/icon = I.icon
+	var/icon_state = I.icon_state
+	if(!icon || !icon_state)
+		// It's something which takes on the look of other items, probably
+		icon = I.icon
+		icon_state = I.icon_state
+	var/icon/icon_for_size = icon(icon, icon_state)
+	var/scale_factor_x = icon_for_size.Width()/ICON_SIZE_X
+	var/scale_factor_y = icon_for_size.Height()/ICON_SIZE_Y
 	var/mutable_appearance/blood_splatter = mutable_appearance('icons/effects/blood.dmi', "itemblood", appearance_flags = RESET_COLOR) //MA of the blood that we apply
 	blood_splatter.transform = blood_splatter.transform.Scale(scale_factor_x, scale_factor_y)
 	blood_splatter.blend_mode = BLEND_INSET_OVERLAY

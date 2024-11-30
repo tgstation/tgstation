@@ -71,11 +71,13 @@
 		return FALSE
 
 	if(isnull(px) || isnull(py))
+		var/icon/target_mask = icon(target.icon, target.icon_state)
+
 		if(isnull(px))
-			px = rand(1, target.get_cached_width())
+			px = rand(1, target_mask.Width())
 
 		if(isnull(py))
-			py = rand(1, target.get_cached_height())
+			py = rand(1, target_mask.Height())
 
 	if(!isnull(user))
 		user.do_attack_animation(target, used_item = src)
