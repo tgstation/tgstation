@@ -366,13 +366,14 @@
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	dog_fashion = /datum/dog_fashion/head/butter
+	var/can_stick = FALSE
 
 /obj/item/food/butter/examine(mob/user)
 	. = ..()
 	. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
 
 /obj/item/food/butter/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stack/rods))
+	if(istype(item, /obj/item/stack/rods) && can_stick)
 		var/obj/item/stack/rods/rods = item
 		if(!rods.use(1))//borgs can still fail this if they have no metal
 			to_chat(user, span_warning("You do not have enough iron to put [src] on a stick!"))
@@ -393,6 +394,7 @@
 	trash_type = /obj/item/stack/rods
 	food_flags = FOOD_FINGER_FOOD
 	venue_value = FOOD_PRICE_CHEAP
+	can_stick = FALSE
 
 /obj/item/food/butter/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/butterslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
