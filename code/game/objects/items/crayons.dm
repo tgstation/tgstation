@@ -791,10 +791,8 @@
 
 	/// Types which use their color var for additional logic, so we need to avoid using transition filters on them.
 	var/static/list/direct_color_types = typecacheof(list(
-		/obj/item/paper, // Uses color for TGUI backgrounds
-		/obj/item/fish, // Used for aquarium sprites,
-		/obj/machinery/light, // Fancy lighting
-		/obj/item/flashlight, // Same reason
+		/obj/item/paper, // Uses color for TGUI backgrounds, doesn't look very good either
+		/obj/item/fish, // Used for aquarium sprites
 	))
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
