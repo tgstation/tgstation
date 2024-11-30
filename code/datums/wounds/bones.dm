@@ -347,7 +347,7 @@
 		user.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] resetting [victim]'s [limb.plaintext_zone] with [I]."), span_notice("You begin resetting [victim]'s [limb.plaintext_zone] with [I][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
-		return
+		return TRUE
 
 	if(victim == user)
 		limb.receive_damage(brute=15, wound_bonus=CANT_WOUND)
@@ -359,6 +359,7 @@
 
 	victim.emote("scream")
 	qdel(src)
+	return TRUE
 
 /*
 	Severe (Hairline Fracture)

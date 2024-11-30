@@ -1,7 +1,7 @@
 
 /// Status effects that can stack.
 /datum/status_effect/stacking
-	id = "stacking_base"
+	id = STATUS_EFFECT_ID_ABSTRACT
 	duration = STATUS_EFFECT_PERMANENT // Only removed under specific conditions.
 	tick_interval = 1 SECONDS // Deciseconds between decays, once decay starts
 	alert_type = null
