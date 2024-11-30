@@ -133,8 +133,9 @@
 		var/atom/alert_loc = QDELETED(src) ? user : src
 		alert_loc.balloon_alert(user, repeating ? "all used up!" : "treated [parse_zone(healed_zone)]")
 		return
-	if(try_heal_checks(patient, user, healed_zone, silent = TRUE))
-		try_heal(patient, user, healed_zone, silent = TRUE)
+	var/preferred_target = check_zone(user.zone_selected)
+	if(try_heal_checks(patient, user, preferred_target, silent = TRUE))
+		try_heal(patient, user, preferred_target, silent = TRUE)
 		return
 	if(!iscarbon(patient))
 		patient.balloon_alert(user, "fully treated")
@@ -153,7 +154,6 @@
 		patient.balloon_alert(user, "fully treated")
 		return
 
-	var/preferred_target = check_zone(user.zone_selected)
 	var/next_picked = (preferred_target in other_affected_limbs) ? preferred_target : other_affected_limbs[1]
 	user.balloon_alert(user, "treating [next_picked]...")
 	try_heal(patient, user, next_picked, silent = TRUE)
