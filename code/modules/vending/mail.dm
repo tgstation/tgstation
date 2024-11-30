@@ -3,6 +3,8 @@
 #define STATE_YES "yes"
 #define STATE_NO "no"
 
+#define MAIL_CAPACITY 100
+
 /obj/machinery/mailsorter
 	name = "mail sorter"
 	desc = "A large mail sorting unit. Sorting mail since 1987!"
@@ -12,13 +14,12 @@
 	density = TRUE
 	max_integrity = 300
 	integrity_failure = 0.33
+	req_access = list(ACCESS_CARGO)
+	circuit = /obj/item/circuitboard/machine/mailsorter
+
 	var/light_mask = "mailsorter-light-mask"
 	var/panel_type = "panel"
 
-	circuit = /obj/item/circuitboard/machine/mailsorter
-
-	/// How much mail can the mail sorter store.
-	var/mail_capacity = 100
 	/// What the machine is currently doing. Can be "sorting", "idle", "yes", "no".
 	var/currentstate = STATE_IDLE
 	/// List of all mail that's inside the mailbox.
@@ -26,37 +27,32 @@
 	/// The direction in which the mail will be unloaded.
 	var/output_dir = SOUTH
 	/// List of the departments to sort the mail for.
-	var/list/sorting_departments = list(
+	var/static/list/sorting_departments = list(
 		DEPARTMENT_ENGINEERING,
 		DEPARTMENT_SECURITY,
 		DEPARTMENT_MEDICAL,
 		DEPARTMENT_SCIENCE,
 		DEPARTMENT_CARGO,
 		DEPARTMENT_SERVICE,
-		DEPARTMENT_COMMAND
+		DEPARTMENT_COMMAND,
 	)
-	var/list/choices = list(
+	var/static/list/choices = list(
 		"Eject" = icon('icons/hud/radial.dmi', "radial_eject"),
 		"Dump" = icon('icons/hud/radial.dmi', "mail_dump"),
-		"Sort" = icon('icons/hud/radial.dmi', "mail_sort")
+		"Sort" = icon('icons/hud/radial.dmi', "mail_sort"),
 	)
-
-	req_access = list(ACCESS_CARGO)
 
 /obj/machinery/mailsorter/proc/get_unload_turf()
 	return get_step(src, output_dir)
 
 /obj/machinery/mailsorter/screwdriver_act(mob/living/user, obj/item/tool)
-	default_deconstruction_screwdriver(user, "mailsorter-off", "mailsorter", tool)
+	default_deconstruction_screwdriver(user, "[base_icon_state]-off", base_icon_state, tool)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mailsorter/crowbar_act(mob/living/user, obj/item/tool)
 	default_deconstruction_crowbar(tool)
 	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/mailsorter/Initialize(mapload)
-	. = ..()
 
 /obj/machinery/mailsorter/examine(mob/user)
 	. = ..()
@@ -71,8 +67,7 @@
 
 /obj/machinery/mailsorter/proc/drop_all_mail(damage_flag)
 	if(!isturf(get_turf(src)))
-		for(var/obj/item/mail in mail_list)
-			qdel(mail)
+		QDEL_LIST(mail_list)
 		return
 	for(var/obj/item/mail in mail_list)
 		mail.forceMove(src)
@@ -80,8 +75,7 @@
 
 /obj/machinery/mailsorter/proc/dump_all_mail()
 	if(!isturf(get_turf(src)))
-		for(var/obj/item/mail in mail_list)
-			qdel(mail)
+		QDEL_LIST(mail_list)
 		return
 	var/turf/unload_turf = get_unload_turf()
 	for(var/obj/item/mail in mail_list)
@@ -96,14 +90,9 @@
 		/obj/item/mail/junkmail,
 		/obj/item/mail/mail_strike,
 		/obj/item/mail/traitor,
-		/obj/item/paper
+		/obj/item/paper,
 	)
 	return is_type_in_list(weapon, accepted_items)
-
-/obj/machinery/mailsorter/proc/sort_delay()
-	playsound(src, 'sound/machines/mail_sort.ogg', 20, TRUE)
-	sleep(50)
-	return TRUE
 
 /obj/machinery/mailsorter/interact(mob/user)
 	if (!allowed(user))
@@ -119,32 +108,36 @@
 		src,
 		choices,
 		require_near = !HAS_SILICON_ACCESS(user),
-		autopick_single_option = FALSE
+		autopick_single_option = FALSE,
 	)
 	if (!choice)
 		return
 	switch (choice)
 		if ("Eject")
-			pick_mail(usr)
+			pick_mail(user)
 		if ("Dump")
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
-			to_chat(usr, span_notice("[src] dumps [length(mail_list)] envelope\s on the floor."))
+			to_chat(user, span_notice("[src] dumps [length(mail_list)] envelope\s on the floor."))
 			dump_all_mail()
 		if ("Sort")
-			sort_mail(usr)
+			sort_mail(user)
 
-/obj/machinery/mailsorter/proc/sort_mail(usr)
-	var/list/sorted_mail = list()
-	var/total_to_sort = length(mail_list)
-	var/sorted = 0
-	var/unable_to_sort = 0
-	var/sorting_dept = tgui_input_list(usr, "Choose the department to sort mail for","Mail Sorting", sorting_departments)
+/obj/machinery/mailsorter/proc/sort_mail(mob/user)
+	var/sorting_dept = tgui_input_list(user, "Choose the department to sort mail for","Mail Sorting", sorting_departments)
 	if (!sorting_dept)
 		return
 	currentstate = STATE_SORTING
 	update_appearance()
-	if (!sort_delay())
-		return
+	playsound(src, 'sound/machines/mail_sort.ogg', 20, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(continue_sort), user, sorting_dept), 5 SECONDS)
+
+
+/obj/machinery/mailsorter/proc/continue_sort(mob/user, sorting_dept)
+	var/list/sorted_mail = list()
+	var/total_to_sort = length(mail_list)
+	var/sorted = 0
+	var/unable_to_sort = 0
+
 	for (var/obj/item/mail/some_mail in mail_list)
 		if (!some_mail.recipient_ref)
 			unable_to_sort ++
@@ -169,20 +162,24 @@
 		update_appearance()
 		say("[sorted] envelope\s sorted successfully.")
 		playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
-		to_chat(usr, span_notice("[src] ejects [length(sorted_mail)] envelope\s."))
+		to_chat(user, span_notice("[src] ejects [length(sorted_mail)] envelope\s."))
 		var/turf/unload_turf = get_unload_turf()
 		for (var/obj/item/mail/mail_in_list in sorted_mail)
 			mail_in_list.forceMove(unload_turf)
 			sorted_mail -= mail_in_list
 			mail_list -= mail_in_list
-	sleep(10)
+	addtimer(CALLBACK(src, PROC_REF(check_sorted), unable_to_sort, total_to_sort), 1 SECONDS)
+
+/obj/machinery/mailsorter/proc/check_sorted(mob/user, unable_to_sort, total_to_sort)
 	if (unable_to_sort > 0)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 		say("Couldn't sort [unable_to_sort] envelope\s.")
 	else
 		playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
 		say("[total_to_sort] envelope\s processed.")
-	sleep(10)
+	addtimer(CALLBACK(src, PROC_REF(update_state_after_sorting)), 1 SECONDS)
+
+/obj/machinery/mailsorter/proc/update_state_after_sorting()
 	currentstate = STATE_IDLE
 	update_appearance()
 
@@ -197,10 +194,10 @@
 				!(mail.flags_1 & HOLOGRAM_1) && \
 				accept_check(mail) \
 			)
-				if (length(mail_list) + 1 > mail_capacity)
+				if (length(mail_list) + 1 > MAIL_CAPACITY )
 					to_chat(user, span_warning("There is no space for more mail in [src]!"))
 					return FALSE
-				else if (load(mail, usr))
+				else if (load(mail, user))
 					loaded++
 					mail_list += mail
 		if(loaded)
@@ -213,7 +210,7 @@
 			to_chat(user, span_warning("There is nothing in \the [thingy] to put in the [src]!"))
 			return FALSE
 	else if (istype(thingy, /obj/item/mail))
-		if (length(mail_list) + 1 > mail_capacity)
+		if (length(mail_list) + 1 > MAIL_CAPACITY )
 			to_chat(user, span_warning("There is no space for more mail in [src]!"))
 		else
 			thingy.forceMove(src)
@@ -221,17 +218,19 @@
 			to_chat(user, span_notice("The [src] whizzles as it accepts the [thingy]."))
 	. = ..()
 
-/obj/machinery/mailsorter/proc/pick_mail(usr)
+/obj/machinery/mailsorter/proc/pick_mail(mob/user)
 	if(!length(mail_list))
 		return
-	var/obj/item/mail/mail_throw = tgui_input_list(usr, "Choose the envelope to eject","Mail Sorting", mail_list)
+	var/obj/item/mail/mail_throw = tgui_input_list(user, "Choose the envelope to eject","Mail Sorting", mail_list)
 	if(!mail_throw)
 		return
 	currentstate = STATE_SORTING
 	update_appearance()
-	if (!sort_delay())
-		return
-	to_chat(usr, span_notice("[src] reluctantly spits out [mail_throw]."))
+	playsound(src, 'sound/machines/mail_sort.ogg', 20, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(pick_envelope), user, mail_throw), 50)
+
+/obj/machinery/mailsorter/proc/pick_envelope(mob/user, obj/item/mail/mail_throw)
+	to_chat(user, span_notice("[src] reluctantly spits out [mail_throw]."))
 	var/turf/unload_turf = get_unload_turf()
 	mail_throw.forceMove(unload_turf)
 	mail_throw.throw_at(unload_turf, 2, 3)
@@ -258,22 +257,17 @@
 		return CLICK_ACTION_BLOCKING
 	output_dir = turn(output_dir, -90)
 	to_chat(user, span_notice("You change [src]'s I/O settings, setting the output to [dir2text(output_dir)]."))
-	update_appearance(UPDATE_OVERLAYS)
+	update_overlays()
 	return CLICK_ACTION_SUCCESS
 
 
 /obj/machinery/mailsorter/update_overlays()
 	. = ..()
 	var/init_icon = initial(icon)
-	if(!init_icon)
+	if(!powered())
 		return
-
-	if((machine_stat & NOPOWER))
-		return
-
-	if(!(machine_stat & BROKEN) && powered())
+	if(!(machine_stat & BROKEN))
 		var/image/mail_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[output_dir]")
-
 		switch(output_dir)
 			if(NORTH)
 				mail_output.pixel_y = 32
@@ -283,8 +277,7 @@
 				mail_output.pixel_x = 32
 			if(WEST)
 				mail_output.pixel_x = -32
-
-		mail_output.color = COLOR_MODERATE_BLUE
+		mail_output.color = COLOR_CRAYON_ORANGE
 		var/mutable_appearance/light_out = emissive_appearance(mail_output.icon, mail_output.icon_state, offset_spokesman = src, alpha = mail_output.alpha)
 		light_out.pixel_y = mail_output.pixel_y
 		light_out.pixel_x = mail_output.pixel_x
@@ -293,7 +286,7 @@
 		. += mutable_appearance(init_icon, currentstate)
 	if(panel_open)
 		. += panel_type
-	if(light_mask && !(machine_stat & BROKEN) && powered())
+	if(light_mask && !(machine_stat & BROKEN))
 		. += emissive_appearance(icon, light_mask, src)
 
 /obj/machinery/mailsorter/update_icon_state()
