@@ -67,6 +67,12 @@
 
 			exposed_carbon.reagents.remove_reagent(type, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
 
+		// covers them and their worn equipment in blood
+		if((methods & (TOUCH|VAPOR)) && reac_volume > 3)
+			if(data["blood_DNA"] && data["blood_type"])
+				exposed_carbon.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+			else
+				exposed_carbon.add_blood_DNA(list("Non-human DNA" = random_blood_type()))
 
 /datum/reagent/blood/on_new(list/data)
 	. = ..()
@@ -125,6 +131,28 @@
 			bloodsplatter.AddComponent(/datum/component/infective, viruses_to_add)
 	if(data["blood_DNA"])
 		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+
+/datum/reagent/blood/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
+	. = ..()
+	if(!istype(exposed_obj))
+		return
+	if(reac_volume < 3)
+		return
+
+	if(!(methods & (VAPOR|TOUCH)))
+		return
+
+	if(LAZYLEN(data["viruses"]))
+		var/list/viruses_to_add = list()
+		for(var/datum/disease/virus in data["viruses"])
+			if(virus.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+				viruses_to_add += virus
+		if(length(viruses_to_add))
+			exposed_obj.AddComponent(/datum/component/infective, viruses_to_add)
+	if(data["blood_DNA"] && data["blood_type"])
+		exposed_obj.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+	else
+		exposed_obj.add_blood_DNA(list("Non-human DNA" = random_blood_type()))
 
 /datum/reagent/blood/get_taste_description(mob/living/taster)
 	if(isnull(taster))
@@ -238,7 +266,7 @@
  * Water reaction to an object
  */
 
-/datum/reagent/water/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/water/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	exposed_obj.extinguish()
 	exposed_obj.wash(CLEAN_TYPE_ACID)
@@ -281,6 +309,16 @@
 
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
+
+	if(methods & (TOUCH|VAPOR)) // wakey wakey eggs and bakey
+		exposed_mob.adjust_dizzy(-2 SECONDS)
+		exposed_mob.adjust_confusion(-2 SECONDS)
+		exposed_mob.adjust_drowsiness(-4 SECONDS)
+		exposed_mob.adjust_jitter(-4 SECONDS)
+		exposed_mob.AdjustSleeping(-15 SECONDS)
+		exposed_mob.AdjustUnconscious(-8 SECONDS)
+		var/drunkness_restored = HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) ? -0.5 : -0.25
+		exposed_mob.adjust_drunk_effect(drunkness_restored)
 
 	if((methods & INGEST) && HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) && reac_volume >= 4)
 		exposed_mob.adjust_wet_stacks(0.15 * reac_volume)
@@ -973,7 +1011,7 @@
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/copper/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/copper/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	if(!istype(exposed_obj, /obj/item/stack/sheet/iron))
 		return
@@ -1342,7 +1380,7 @@
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS|REAGENT_AFFECTS_WOUNDS
 
-/datum/reagent/space_cleaner/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/space_cleaner/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	exposed_obj?.wash(clean_types)
 
@@ -2344,7 +2382,7 @@
 	// We want one spray of this stuff (5u) to take out a wet floor. Feels better that way
 	exposed_turf.MakeDry(ALL, TRUE, reac_volume * 10 SECONDS)
 
-/datum/reagent/drying_agent/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/drying_agent/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	if(exposed_obj.type != /obj/item/clothing/shoes/galoshes)
 		return
@@ -2727,7 +2765,7 @@
 	/// The amount of materials to apply to the transmuted objects if they don't contain materials
 	var/default_material_amount = 100
 
-/datum/reagent/metalgen/expose_obj(obj/exposed_obj, volume)
+/datum/reagent/metalgen/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	metal_morph(exposed_obj)
 
@@ -2766,7 +2804,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	self_consuming = TRUE //this works on objects, so it should work on skeletons and robots too
 
-/datum/reagent/gravitum/expose_obj(obj/exposed_obj, volume)
+/datum/reagent/gravitum/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	exposed_obj.AddElement(/datum/element/forced_gravity, 0)
 	addtimer(CALLBACK(exposed_obj, PROC_REF(_RemoveElement), list(/datum/element/forced_gravity, 0)), volume * time_multiplier, TIMER_UNIQUE|TIMER_OVERRIDE)
@@ -2943,7 +2981,7 @@
 		amount_left = round(reac_volume,0.1)
 		exposed_mob.apply_status_effect(status_effect, amount_left)
 
-/datum/reagent/ants/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/ants/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	var/turf/open/my_turf = exposed_obj.loc // No dumping ants on an object in a storage slot
 	if(!istype(my_turf)) //Are we actually in an open turf?
@@ -3079,7 +3117,8 @@
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/hauntium/expose_obj(obj/exposed_obj, volume) //gives 15 seconds of haunting effect for every unit of it that touches an object
+//gives 15 seconds of haunting effect for every unit of it that touches an object
+/datum/reagent/hauntium/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	if(HAS_TRAIT_FROM(exposed_obj, TRAIT_HAUNTED, HAUNTIUM_REAGENT_TRAIT))
 		return
