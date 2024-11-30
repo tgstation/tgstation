@@ -374,19 +374,19 @@
 		. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
 
 /obj/item/food/butter/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stack/rods) && can_stick)
-		var/obj/item/stack/rods/rods = item
-		if(!rods.use(1))//borgs can still fail this if they have no metal
-			to_chat(user, span_warning("You do not have enough iron to put [src] on a stick!"))
-			return ..()
-		to_chat(user, span_notice("You stick the rod into the stick of butter."))
-		var/obj/item/food/butter/on_a_stick/new_item = new(usr.loc)
-		var/replace = (user.get_inactive_held_item() == rods)
-		if(!rods && replace)
-			user.put_in_hands(new_item)
-		qdel(src)
-		return TRUE
-	..()
+	if(!istype(item, /obj/item/stack/rods) || !can_stick)
+		return ..()
+	var/obj/item/stack/rods/rods = item
+	if(!rods.use(1))//borgs can still fail this if they have no metal
+		to_chat(user, span_warning("You do not have enough iron to put [src] on a stick!"))
+		return ..()
+	to_chat(user, span_notice("You stick the rod into the stick of butter."))
+	user.temporarilyRemoveItemFromInventory(src)
+	var/obj/item/food/butter/on_a_stick/new_item = new(drop_location())
+	if (user.CanReach(new_item))
+		user.put_in_hands(new_item)
+	qdel(src)
+	return TRUE
 
 /obj/item/food/butter/on_a_stick //there's something so special about putting it on a stick.
 	name = "butter on a stick"
