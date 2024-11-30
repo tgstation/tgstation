@@ -23,6 +23,7 @@
 		TRAIT_EXPANDED_FOV, //fish vision
 		TRAIT_WATER_ADAPTATION,
 		)
+	bonus_biotype = MOB_AQUATIC
 
 /datum/status_effect/organ_set_bonus/fish/enable_bonus()
 	. = ..()

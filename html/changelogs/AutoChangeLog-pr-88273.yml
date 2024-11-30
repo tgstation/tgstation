@@ -1,0 +1,4 @@
+author: "larentoun"
+delete-after: True
+changes:
+  - bugfix: "Printed advanced robotic right leg now has correct name, instead of being \"heavy\""

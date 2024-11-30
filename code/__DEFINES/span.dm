@@ -24,6 +24,8 @@
 #define span_blue(str) ("<span class='blue'>" + str + "</span>")
 #define span_blueteamradio(str) ("<span class='blueteamradio'>" + str + "</span>")
 #define span_bold(str) ("<span class='bold'>" + str + "</span>")
+/// This span outputs to OOC, it's meant for OOC announcements
+/// Use span_bolddanger for IC danger messages, it's identical to this
 #define span_boldannounce(str) ("<span class='boldannounce'>" + str + "</span>")
 #define span_bolddanger(str) ("<span class='bolddanger'>" + str + "</span>")
 #define span_bolditalic(str) ("<span class='bolditalic'>" + str + "</span>")
