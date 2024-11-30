@@ -366,11 +366,12 @@
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	dog_fashion = /datum/dog_fashion/head/butter
-	var/can_stick = FALSE
+	var/can_stick = TRUE
 
 /obj/item/food/butter/examine(mob/user)
 	. = ..()
-	. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
+	if (can_stick)
+		. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
 
 /obj/item/food/butter/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/stack/rods) && can_stick)
