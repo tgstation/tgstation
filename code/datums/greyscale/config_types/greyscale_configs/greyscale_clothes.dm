@@ -276,11 +276,6 @@
 	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
 
-/datum/greyscale_config/jumpsuit/worn_digi
-	name = "Jumpsuit Worn (Digitigrate)"
-	icon_file = 'icons/mob/clothing/under/digi_template.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jumpsuit_worn_digilegs.json'
-
 /datum/greyscale_config/eth_tunic
 	name = "Ethereal Tunic"
 	icon_file = 'icons/obj/clothing/under/ethereal.dmi'
@@ -626,6 +621,14 @@
 /datum/greyscale_config/waistcoat/worn
 	name = "Waistcoat (Worn)"
 	icon_file = 'icons/mob/clothing/accessories.dmi'
+
+// Digi Stuff
+
+/datum/greyscale_config/digitigrade
+	name = "Digitigrade Clothes"
+	icon_file = 'icons/mob/clothing/digi_template.dmi'
+	json_config = 'code/datums/greyscale/json_configs/digitigrade.json'
+
 
 //
 // SUIT + HEAD

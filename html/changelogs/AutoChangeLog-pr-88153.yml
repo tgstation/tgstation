@@ -1,6 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "raptors no longer break their trough upon interacting with it"
-  - balance: "removed the troublesome trait from raptors, they now wont go out to attack their colleagues."
-  - rscadd: "you can now give pet collars to ur raptors to rename them"

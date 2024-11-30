@@ -578,7 +578,7 @@
 		body_part.check_for_injuries(src, combined_msg)
 
 	for(var/t in missing)
-		combined_msg += span_boldannounce("Your [parse_zone(t)] is missing!")
+		combined_msg += span_bolddanger("Your [parse_zone(t)] is missing!")
 
 	if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()
