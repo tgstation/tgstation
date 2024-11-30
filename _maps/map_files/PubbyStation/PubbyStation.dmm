@@ -265,7 +265,6 @@
 /obj/structure/closet/secure_closet/quartermaster,
 /obj/machinery/status_display/supply{
 	dir = 4;
-	layer = 4;
 	pixel_x = -32
 	},
 /turf/open/floor/wood,
@@ -1136,7 +1135,6 @@
 	},
 /obj/machinery/status_display/supply{
 	dir = 4;
-	layer = 4;
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
@@ -1445,12 +1443,8 @@
 	pixel_y = 3
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/item/multitool{
-	layer = 5
-	},
-/obj/item/extinguisher{
-	layer = 4
-	},
+/obj/item/multitool,
+/obj/item/extinguisher,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/ai_sat_ext_as)
 "afU" = (
@@ -2005,9 +1999,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/storage/lockbox/loyalty{
-	layer = 4
-	},
+/obj/item/storage/lockbox/loyalty,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "aik" = (
@@ -4174,9 +4166,7 @@
 	name = "Reception Desk";
 	req_access = list("brig_entrance")
 	},
-/obj/item/paper_bin{
-	layer = 2.9
-	},
+/obj/item/paper_bin,
 /obj/item/pen{
 	pixel_x = 4;
 	pixel_y = 4
@@ -6275,9 +6265,7 @@
 	name = "Brig Shutters"
 	},
 /obj/structure/table/reinforced,
-/obj/item/folder/red{
-	layer = 2.9
-	},
+/obj/item/folder/red,
 /obj/item/food/donut/plain,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
@@ -8135,9 +8123,7 @@
 "aEn" = (
 /obj/structure/table/wood,
 /obj/item/pen,
-/obj/item/paper_bin/carbon{
-	layer = 2.9
-	},
+/obj/item/paper_bin/carbon,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "aEo" = (
@@ -11645,7 +11631,6 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/status_display/supply{
 	dir = 4;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -11783,27 +11768,22 @@
 "aVi" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/glass/bottle/hcider{
-	layer = 3.1;
 	pixel_x = -6;
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/cup/glass/bottle/wine{
-	layer = 3.1;
 	pixel_x = 3;
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/cup/glass/bottle/rum{
-	layer = 3.2;
 	pixel_x = -15;
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/cup/glass/bottle/lizardwine{
-	layer = 3.1;
 	pixel_x = 13;
 	pixel_y = 15
 	},
 /obj/item/reagent_containers/cup/glass/bottle/tequila{
-	layer = 3.2;
 	pixel_x = 13;
 	pixel_y = 7
 	},
@@ -13174,9 +13154,7 @@
 "baR" = (
 /obj/item/pen,
 /obj/structure/table,
-/obj/item/paper_bin{
-	layer = 2.9
-	},
+/obj/item/paper_bin,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
@@ -13592,7 +13570,6 @@
 	},
 /obj/machinery/status_display/supply{
 	dir = 4;
-	layer = 4;
 	pixel_x = 33
 	},
 /turf/open/floor/iron,
@@ -16037,7 +16014,6 @@
 "boR" = (
 /obj/structure/table,
 /obj/item/paper_bin{
-	layer = 2.9;
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -16230,9 +16206,7 @@
 /area/station/science/research)
 "bqc" = (
 /obj/structure/table/reinforced,
-/obj/item/pen{
-	layer = 3.1
-	},
+/obj/item/pen,
 /obj/machinery/door/window/right/directional/south{
 	name = "Research and Development Desk";
 	req_access = list("science")
@@ -16466,9 +16440,7 @@
 "bqE" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/item/paper_bin{
-	layer = 2.9
-	},
+/obj/item/paper_bin,
 /obj/item/folder/blue,
 /obj/item/pen,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
@@ -30631,9 +30603,7 @@
 "eDH" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table,
-/obj/item/stack/sheet/glass/fifty{
-	layer = 4
-	},
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/storage/box/lights/mixed{
 	pixel_x = 6;
 	pixel_y = 8
@@ -34996,9 +34966,7 @@
 /obj/structure/table,
 /obj/structure/sign/poster/random/directional/north,
 /obj/item/clipboard,
-/obj/item/paper_bin/carbon{
-	layer = 2.9
-	},
+/obj/item/paper_bin/carbon,
 /obj/item/coin/silver,
 /obj/item/stamp/head/qm,
 /obj/item/computer_disk/quartermaster,
@@ -35559,7 +35527,6 @@
 "jdr" = (
 /obj/machinery/status_display/supply{
 	dir = 4;
-	layer = 4;
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -36055,9 +36022,7 @@
 /area/station/hallway/primary/aft)
 "jCw" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
+/obj/machinery/chem_dispenser,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
@@ -36416,7 +36381,6 @@
 "jTV" = (
 /obj/structure/table,
 /obj/item/reagent_containers/condiment/saltshaker{
-	layer = 3.1;
 	pixel_x = -2;
 	pixel_y = 2
 	},
@@ -37275,9 +37239,7 @@
 /turf/open/floor/wood,
 /area/station/maintenance/department/engine)
 "kEb" = (
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
+/obj/machinery/chem_dispenser,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
@@ -38959,9 +38921,7 @@
 "mdL" = (
 /obj/structure/table,
 /obj/item/paper_bin,
-/obj/item/pen{
-	layer = 3.1
-	},
+/obj/item/pen,
 /obj/item/reagent_containers/cup/beaker/large{
 	pixel_x = 1;
 	pixel_y = 5
@@ -41546,9 +41506,7 @@
 "ory" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table,
-/obj/item/stack/sheet/glass/fifty{
-	layer = 4
-	},
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/cable_coil,
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -50628,8 +50586,7 @@
 "vzT" = (
 /obj/structure/table,
 /obj/item/stack/rods{
-	amount = 5;
-	layer = 3.3
+	amount = 5
 	},
 /obj/effect/spawner/random/maintenance,
 /obj/item/assembly/prox_sensor{
@@ -53058,9 +53015,7 @@
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/pen{
-	layer = 3.1
-	},
+/obj/item/pen,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
