@@ -783,7 +783,7 @@
 		FISHING_DUD = 10,
 	)
 	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD
-	fishing_difficulty = 0 //with decent equipment and just enough money, you should be able to skip the minigame
+	fishing_difficulty = FISHING_EASY_DIFFICULTY //with some equipment and just enough dosh, you should be able to skip the minigame
 
 /datum/fish_source/vending/spawn_reward_from_explosion(atom/location, severity)
 	return //This shouldn't be a way to get free products from other vending machines.
