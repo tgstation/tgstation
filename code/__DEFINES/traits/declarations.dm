@@ -51,6 +51,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EMOTEMUTE "emotemute"
 #define TRAIT_DEAF "deaf"
 #define TRAIT_FAT "fat"
+/// Always hungry. They can eat as much as they want without eating slowdown.
+#define TRAIT_GLUTTON "glutton"
 #define TRAIT_HUSK "husk"
 ///Blacklisted from being revived via defibrillator
 #define TRAIT_DEFIB_BLACKLISTED "defib_blacklisted"
@@ -507,6 +509,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_USER_SCOPED "user_scoped"
 /// Mob is unable to feel pain
 #define TRAIT_ANALGESIA "analgesia"
+/// Mob does not get a damage overlay from brute/burn
+#define TRAIT_NO_DAMAGE_OVERLAY "no_damage_overlay"
 /// Mob has a scar on their left/right eye
 #define TRAIT_RIGHT_EYE_SCAR "right_eye_scar"
 #define TRAIT_LEFT_EYE_SCAR "left_eye_scar"

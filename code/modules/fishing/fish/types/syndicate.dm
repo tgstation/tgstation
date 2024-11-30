@@ -116,7 +116,7 @@
 			FISH_BAIT_VALUE = GORE,
 		),
 	)
-	fish_traits = list(/datum/fish_trait/aggressive, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/stinger)
+	fish_traits = list(/datum/fish_trait/territorial, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/stinger)
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
 
@@ -240,7 +240,7 @@
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	beauty = FISH_BEAUTY_GREAT
 	fishing_difficulty_modifier = 20
-	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive, /datum/fish_trait/picky_eater, /datum/fish_trait/stinger)
+	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/territorial, /datum/fish_trait/picky_eater, /datum/fish_trait/stinger)
 	evolution_types = null
 	compatible_types = list(/obj/item/fish/pike)
 	favorite_bait = list(

@@ -1,5 +1,5 @@
 sound/instrumental/antag/abductee.ogg is from "Warp SFX" https://freesound.org/people/Breviceps/sounds/453391 (CC0)
-sound/instrumental/antag/brainwash.ogg is from "nog.wav" https://freesound.org/people/_NOMINAL_/sounds/124602 (CC-BY 3.0)
+sound/instrumental/antag/brainwash.ogg is made by FeiH from https://github.com/OracleStation/OracleStation/pull/1122/commits/b28fbbad715b96db029a8e8df38b1357a58daec1
 sound/instrumental/antag/hypnosis.ogg is from "Flashback.wav" https://freesound.org/people/Sclolex/sounds/342103 (CC0)
 
 {

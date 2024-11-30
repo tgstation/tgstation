@@ -357,11 +357,12 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	if(win)
 		if(reward_path != FISHING_DUD)
 			playsound(location, 'sound/effects/bigsplash.ogg', 100)
-		if(ispath(reward_path, /obj/item/fish))
+		if(ispath(reward_path, /obj/item/fish) || isfish(reward_path))
 			var/obj/item/fish/fish_reward = reward_path
-			var/fish_id = initial(fish_reward.fish_id)
+			var/obj/item/fish/redirect_path = initial(fish_reward.fish_id_redirect_path)
+			var/fish_id = ispath(redirect_path, /obj/item/fish) ? initial(redirect_path.fish_id) : initial(fish_reward.fish_id)
 			if(fish_id)
-				user.client?.give_award(/datum/award/score/progress/fish, user, initial(fish_reward.fish_id))
+				user.client?.give_award(/datum/award/score/progress/fish, user, fish_id)
 	SEND_SIGNAL(user, COMSIG_MOB_COMPLETE_FISHING, src, win)
 	if(!QDELETED(src))
 		qdel(src)
@@ -397,7 +398,13 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	playsound(location, 'sound/effects/fish_splash.ogg', 100)
 
 	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
-		fish_icon = GLOB.specific_fish_icons[reward_path] || FISH_ICON_DEF
+		var/possible_icon
+		if(isatom(reward_path))
+			var/atom/reward = reward_path
+			possible_icon = GLOB.specific_fish_icons[reward.type]
+		else
+			possible_icon = GLOB.specific_fish_icons[reward_path]
+		fish_icon = possible_icon || FISH_ICON_DEF
 		switch(fish_icon)
 			if(FISH_ICON_DEF)
 				send_alert("fish!!!")
@@ -455,11 +462,22 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	SIGNAL_HANDLER
 	interrupt()
 
+/datum/fishing_challenge/proc/on_reward_removed(datum/source)
+	SIGNAL_HANDLER
+	send_alert("reward gone!")
+	interrupt()
+
+/datum/fishing_challenge/proc/on_fish_death(obj/item/fish/source)
+	SIGNAL_HANDLER
+	if(source.status == FISH_DEAD)
+		win_anyway()
+
 /datum/fishing_challenge/proc/win_anyway()
-	if(!completed)
-		//winning by timeout or idling around shouldn't give as much experience.
-		experience_multiplier *= 0.5
-		complete(TRUE)
+	if(completed)
+		return
+	//winning by timeout / fish death shouldn't give as much experience.
+	experience_multiplier *= 0.5
+	complete(TRUE)
 
 /datum/fishing_challenge/proc/hurt_fish(datum/source, obj/item/fish/reward)
 	SIGNAL_HANDLER
@@ -506,13 +524,15 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	if(difficulty > FISHING_DEFAULT_DIFFICULTY)
 		completion -= MAX_FISH_COMPLETION_MALUS * (difficulty * 0.01)
 
+	var/is_fish_instance = isfish(reward_path)
+
 	/// Fish minigame properties
-	if(ispath(reward_path,/obj/item/fish))
+	if(ispath(reward_path,/obj/item/fish) || is_fish_instance)
 		var/obj/item/fish/fish = reward_path
 		var/movement_path = initial(fish.fish_movement_type)
 		mover = new movement_path(src)
 		// Apply fish trait modifiers
-		var/list/fish_traits = SSfishing.fish_properties[fish][FISH_PROPERTIES_TRAITS]
+		var/list/fish_traits = is_fish_instance ? fish.fish_traits : SSfishing.fish_properties[fish][FISH_PROPERTIES_TRAITS]
 		for(var/fish_trait in fish_traits)
 			var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
 			trait.minigame_mod(used_rod, user, src)
@@ -552,6 +572,11 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		var/obj/item/fish/fish = reward_path
 		var/wait_time = (initial(fish.health) / FISH_DAMAGE_PER_SECOND) SECONDS
 		addtimer(CALLBACK(src, PROC_REF(win_anyway)), wait_time, TIMER_DELETE_ME)
+	else if(ismovable(reward_path))
+		var/atom/movable/reward = reward_path
+		RegisterSignal(reward, COMSIG_MOVABLE_MOVED, PROC_REF(on_reward_removed))
+		if(is_fish_instance)
+			RegisterSignal(reward, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_fish_death))
 	start_time = world.time
 
 ///Throws a stack with prefixed text.
