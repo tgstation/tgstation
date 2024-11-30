@@ -40519,7 +40519,7 @@
 "ngV" = (
 /obj/machinery/conveyor/inverted{
 	dir = 5;
-	id = s
+	id = "mining"
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
