@@ -299,3 +299,5 @@
 #undef STATE_IDLE
 #undef STATE_YES
 #undef STATE_NO
+
+#undef MAIL_CAPACITY
