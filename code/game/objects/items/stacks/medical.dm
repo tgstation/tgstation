@@ -153,8 +153,10 @@
 		patient.balloon_alert(user, "fully treated")
 		return
 
-	user.balloon_alert(user, "treating [other_affected_limbs[1]]...")
-	try_heal(patient, user, other_affected_limbs[1], silent = TRUE)
+	var/preferred_target = check_zone(user.zone_selected)
+	var/next_picked = (preferred_target in other_affected_limbs) ? preferred_target : other_affected_limbs[1]
+	user.balloon_alert(user, "treating [next_picked]...")
+	try_heal(patient, user, next_picked, silent = TRUE)
 
 /// Checks if the passed patient can be healed by the passed user
 /obj/item/stack/medical/proc/can_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
