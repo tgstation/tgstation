@@ -1923,6 +1923,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Called when mob changes from a standing position into a prone while lacking the ability to stand up at the moment.
 /mob/living/proc/on_fall()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_LIVING_THUD)
+	loc?.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing
 	return
 
 /mob/living/forceMove(atom/destination)
@@ -3004,3 +3007,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	REMOVE_TRAIT(src, TRAIT_BLOCKING_PROJECTILES, BLOCKING_TRAIT)
 	cut_overlay(selected_overlay)
 	update_transform(0.8)
+
+/// Returns the string form of the def_zone we have hit.
+/mob/living/proc/check_hit_limb_zone_name(hit_zone)
+	if(has_limbs)
+		return hit_zone

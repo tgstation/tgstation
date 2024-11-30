@@ -52,6 +52,13 @@
 	)
 	update_appearance()
 
+/obj/item/lighter/examine(mob/user)
+	. = ..()
+	if(get_fuel() <= 0)
+		. += span_warning("It is out of lighter fluid! Refill it with welder fuel.")
+	else
+		. += span_notice("It contains [get_fuel()] units of fuel out of [maximum_fuel].")
+
 /// Destroy the lighter when it's shot by a bullet
 /obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))

@@ -46,7 +46,7 @@
 /obj/vehicle/sealed/car/vim/atom_destruction(damage_flag)
 	new /obj/effect/decal/cleanable/oil(get_turf(src))
 	do_sparks(5, TRUE, src)
-	visible_message(span_boldannounce("[src] blows apart!"))
+	visible_message(span_bolddanger("[src] blows apart!"))
 	return ..()
 
 /obj/vehicle/sealed/car/vim/mob_try_enter(mob/entering)

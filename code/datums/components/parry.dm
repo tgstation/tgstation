@@ -23,7 +23,7 @@
 	/// Callback for special effects upon parrying
 	var/datum/callback/parry_callback
 
-/datum/component/parriable_projectile/Initialize(parry_speed_mult = 0.8, parry_damage_mult = 1.15, boost_speed_mult = 0.6, boost_damage_mult = 1.5, parry_trait = TRAIT_MINING_PARRYING, grace_period = 0.25 SECONDS, datum/callback/parry_callback = null)
+/datum/component/parriable_projectile/Initialize(parry_speed_mult = 1.25, parry_damage_mult = 1.15, boost_speed_mult = 1.6, boost_damage_mult = 1.5, parry_trait = TRAIT_MINING_PARRYING, grace_period = 0.25 SECONDS, datum/callback/parry_callback = null)
 	if(!isprojectile(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.parry_speed_mult = parry_speed_mult
@@ -41,13 +41,13 @@
 	. = ..()
 
 /datum/component/parriable_projectile/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PROJECTILE_PIXEL_STEP, PROC_REF(on_moved))
+	RegisterSignal(parent, COMSIG_PROJECTILE_MOVE_PROCESS_STEP, PROC_REF(on_moved))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(before_move))
 	RegisterSignal(parent, COMSIG_PROJECTILE_BEFORE_MOVE, PROC_REF(before_move))
 	RegisterSignal(parent, COMSIG_PROJECTILE_SELF_PREHIT, PROC_REF(before_hit))
 
 /datum/component/parriable_projectile/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PROJECTILE_PIXEL_STEP, COMSIG_MOVABLE_MOVED, COMSIG_PROJECTILE_BEFORE_MOVE, COMSIG_PROJECTILE_SELF_PREHIT))
+	UnregisterSignal(parent, list(COMSIG_PROJECTILE_MOVE_PROCESS_STEP, COMSIG_MOVABLE_MOVED, COMSIG_PROJECTILE_BEFORE_MOVE, COMSIG_PROJECTILE_SELF_PREHIT))
 
 /datum/component/parriable_projectile/proc/before_move(obj/projectile/source)
 	SIGNAL_HANDLER
@@ -71,7 +71,7 @@
 
 /datum/component/parriable_projectile/proc/on_moved(obj/projectile/source)
 	SIGNAL_HANDLER
-	if (!isturf(source.loc))
+	if (!isturf(source.loc) || parry_turfs[source.loc])
 		return
 	parry_turfs[source.loc] = world.time + grace_period
 	RegisterSignal(source.loc, COMSIG_CLICK, PROC_REF(on_turf_click))
@@ -91,12 +91,16 @@
 
 	if (!istype(user) || !parriers[user] || parried)
 		return
+
 	parriers -= user
-	attempt_parry(source, user)
+	return attempt_parry(source, user)
 
 /datum/component/parriable_projectile/proc/attempt_parry(obj/projectile/source, mob/user)
+	if (QDELETED(source) || source.deletion_queued)
+		return NONE
+
 	if (SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, source) & INTERCEPT_PARRY_EFFECTS)
-		return
+		return NONE
 
 	parried = TRUE
 	if (source.firer != user)
@@ -117,4 +121,4 @@
 	user.playsound_local(source.loc, 'sound/effects/parry.ogg', 50, TRUE)
 	user.overlay_fullscreen("projectile_parry", /atom/movable/screen/fullscreen/crit/projectile_parry, 2)
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, clear_fullscreen), "projectile_parry"), 0.25 SECONDS)
-	return PROJECTILE_INTERRUPT_HIT
+	return PROJECTILE_INTERRUPT_HIT_PHASE

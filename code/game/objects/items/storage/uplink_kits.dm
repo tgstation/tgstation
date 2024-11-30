@@ -570,6 +570,11 @@
 	new /obj/item/book/granter/action/spell/mime/mimery_blockade(src)
 	new /obj/item/book/granter/action/spell/mime/mimery_guns(src)
 
+/obj/item/storage/box/syndie_kit/moltobeso/PopulateContents()
+	new /obj/item/reagent_containers/cup/bottle/moltobeso(src)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/reagent_containers/dropper(src)
+
 /obj/item/storage/box/syndie_kit/combat_baking/PopulateContents()
 	new /obj/item/food/baguette/combat(src)
 	for(var/i in 1 to 2)

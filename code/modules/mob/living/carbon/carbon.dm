@@ -244,10 +244,6 @@
 
 		paper_note.show_through_camera(usr)
 
-/mob/living/carbon/on_fall()
-	. = ..()
-	loc?.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing
-
 /mob/living/carbon/resist_buckle()
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED))
 		buckled.user_unbuckle_mob(src, src)
@@ -749,7 +745,7 @@
 
 	//Fire and Brute damage overlay (BSSR)
 	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
-	if(hurtdamage && !HAS_TRAIT(src, TRAIT_ANALGESIA))
+	if(hurtdamage && !HAS_TRAIT(src, TRAIT_NO_DAMAGE_OVERLAY))
 		var/severity = 0
 		switch(hurtdamage)
 			if(5 to 15)
@@ -1494,3 +1490,9 @@
 		return
 	head.adjustBleedStacks(5)
 	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))
+
+/mob/living/carbon/check_hit_limb_zone_name(hit_zone)
+	if(get_bodypart(hit_zone))
+		return hit_zone
+	// When a limb is missing the damage is actually passed to the chest
+	return BODY_ZONE_CHEST

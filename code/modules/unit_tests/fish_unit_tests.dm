@@ -101,6 +101,7 @@
 	stable_population = INFINITY
 	breeding_timeout = 0
 	fish_flags = parent_type::fish_flags & ~(FISH_FLAG_SHOW_IN_CATALOG|FISH_FLAG_EXPERIMENT_SCANNABLE)
+	fish_id_redirect_path = /obj/item/fish/goldfish //Stops SSfishing from complaining
 	var/expected_num_fillets = 0 //used to know how many fillets should be gotten out of this fish
 
 /obj/item/fish/testdummy/add_fillet_type()
@@ -242,7 +243,7 @@
 /obj/structure/toilet/unit_test/Initialize(mapload)
 	. = ..()
 	if(!HAS_TRAIT(src, TRAIT_FISHING_SPOT)) //Ensure this toilet has a fishing spot because only maploaded ones have it.
-		AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/toilet)
+		AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/toilet])
 
 // we want no default spawns in this unit test
 /datum/chasm_detritus/restricted/bodies/no_defaults
@@ -368,6 +369,7 @@
 
 /obj/item/fish/chasm_crab/instant_growth
 	fish_traits = list() //We don't want to end up applying traits twice on the resulting lobstrosity
+	fish_id_redirect_path = /obj/item/fish/chasm_crab
 
 /datum/unit_test/fish_sources
 
@@ -379,7 +381,8 @@
 
 	///From here, we check that the profound_fisher as well as fish source procs for rolling rewards don't fail.
 	source = GLOB.preset_fish_sources[/datum/fish_source/unit_test_profound_fisher]
-	run_loc_floor_bottom_left.AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/unit_test_profound_fisher)
+
+	run_loc_floor_bottom_left.AddComponent(/datum/component/fishing_spot, source)
 	var/mob/living/basic/fisher = allocate(/mob/living/basic)
 	fisher.AddComponent(/datum/component/profound_fisher)
 	fisher.set_combat_mode(FALSE)
@@ -388,7 +391,7 @@
 		TEST_FAIL("The unit test profound fisher didn't catch the test fish on a lazy fishing spot (element)")
 
 	///For good measure, let's try it again, but with the component this time, and a human mob and gloves
-	run_loc_floor_bottom_left.RemoveElement(/datum/element/lazy_fishing_spot, /datum/fish_source/unit_test_profound_fisher)
+	qdel(run_loc_floor_bottom_left.GetComponent(/datum/component/fishing_spot))
 	var/datum/component/comp = run_loc_floor_bottom_left.AddComponent(/datum/component/fishing_spot, source)
 	var/mob/living/carbon/human/consistent/angler = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/clothing/gloves/noodling = allocate(/obj/item/clothing/gloves)
@@ -418,10 +421,10 @@
 /datum/fish_source/unit_test_profound_fisher
 	fish_table = list(/obj/item/fish/testdummy = 1)
 	fish_counts = list(/obj/item/fish/testdummy = 2)
-	fish_source_flags = parent_type::fish_source_flags | FISH_SOURCE_FLAG_SKIP_CATCHABLES
+	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish
-	fish_source_flags = parent_type::fish_source_flags | FISH_SOURCE_FLAG_SKIP_CATCHABLES
+	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish/New()
 	for(var/fish_type as anything in subtypesof(/obj/item/fish))

@@ -1,5 +1,6 @@
 /datum/status_effect/fire_handler
 	duration = STATUS_EFFECT_PERMANENT
+	id = STATUS_EFFECT_ID_ABSTRACT
 	alert_type = null
 	status_type = STATUS_EFFECT_REFRESH //Custom code
 	on_remove_on_mob_delete = TRUE
@@ -339,7 +340,7 @@
 
 /datum/status_effect/fire_handler/wet_stacks/proc/become_slippery()
 	SIGNAL_HANDLER
-	slipperiness = owner.AddComponent(/datum/component/slippery, 5 SECONDS, lube_flags = SLIPPERY_WHEN_LYING_DOWN)
+	slipperiness = owner.AddComponent(/datum/component/slippery, 5 SECONDS, lube_flags = SLIPPERY_WHEN_LYING_DOWN|NO_SLIP_WHEN_WALKING|WEAK_SLIDE)
 	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/fire_handler/wet_stacks/proc/no_longer_slippery()

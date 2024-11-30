@@ -104,6 +104,8 @@
 /obj/structure/aquarium/prefilled/Initialize(mapload)
 	. = ..()
 
+	ADD_TRAIT(src, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT) //start with safe mode on
+
 	new /obj/item/aquarium_prop/sand(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 
@@ -157,7 +159,7 @@
 		min_px = 6,\
 		max_px = 26,\
 		min_py = 6,\
-		min_py = 24,\
+		max_py = 24,\
 		default_beauty = 100,\
 		reagents_size = src.reagent_size,\
 		min_fluid_temp = src.min_fluid_temp,\
@@ -245,6 +247,8 @@
 
 /obj/item/fish_tank/lawyer/Initialize(mapload)
 	. = ..()
+
+	ADD_TRAIT(src, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT) //start with safe mode on
 
 	new /obj/item/aquarium_prop/sand(src)
 	new /obj/item/aquarium_prop/seaweed(src)
