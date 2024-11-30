@@ -163,6 +163,14 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 	target.rank = assignment
 	target.trim = trim
 
+///Removes a record based on its name.
+/datum/manifest/proc/remove(name)
+	var/datum/record/crew/target = find_record(name)
+	if(!target)
+		return
+	general -= target
+	qdel(target)
+
 /**
  * Using the name to find the record, and person in reference to the body, we recreate photos for the manifest (and records).
  * Args:
