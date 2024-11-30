@@ -137,11 +137,11 @@
 				victim.update_damage_overlays()
 	else if(ismouse(target))
 		var/mob/living/basic/mouse/splatted = target
-		visible_message(span_boldannounce("SPLAT!"))
+		visible_message(span_bolddanger("SPLAT!"))
 		splatted.splat() // mousetraps are instadeath for mice
 
 	else if(isregalrat(target))
-		visible_message(span_boldannounce("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.
+		visible_message(span_bolddanger("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.
 
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	pulse()
@@ -157,7 +157,7 @@
 		return FALSE
 	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		var/which_hand = BODY_ZONE_PRECISE_L_HAND
-		if(!(user.active_hand_index % 2))
+		if(IS_RIGHT_INDEX(user.active_hand_index))
 			which_hand = BODY_ZONE_PRECISE_R_HAND
 		triggered(user, which_hand)
 		user.visible_message(span_warning("[user] accidentally sets off [src], breaking their fingers."), \
@@ -206,7 +206,7 @@
 		if(finder)
 			finder.visible_message(span_warning("[finder] accidentally sets off [src], breaking their fingers."), \
 							   span_warning("You accidentally trigger [src]!"))
-			triggered(finder, (finder.active_hand_index % 2 == 0) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
+			triggered(finder, (IS_RIGHT_INDEX(finder.active_hand_index)) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
 			return TRUE //end the search!
 		else
 			visible_message(span_warning("[src] snaps shut!"))

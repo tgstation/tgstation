@@ -44,7 +44,7 @@
 		if(fish::breeding_timeout != def_breeding)
 			extra_info += "It takes <b>[DisplayTimeText(fish::breeding_timeout)]</b> to reproduce instead of [def_breeding_text]"
 		if(length(extra_info))
-			description += "<br>[extra_info.Join(extra_info,"<br>")]"
+			description += "<br>[extra_info.Join("<br>")]"
 
 		var/list/output_list = list(
 			"name" = full_capitalize(escape_value(fish::name)),

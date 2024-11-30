@@ -30,6 +30,9 @@
 /proc/cmp_name_dsc(atom/a, atom/b)
 	return sorttext(a.name, b.name)
 
+/proc/cmp_init_name_asc(atom/a, atom/b)
+	return sorttext(initial(b.name), initial(a.name))
+
 /proc/cmp_records_asc(datum/record/a, datum/record/b)
 	return sorttext(b.name, a.name)
 

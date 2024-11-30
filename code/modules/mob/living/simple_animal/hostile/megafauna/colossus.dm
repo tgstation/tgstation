@@ -182,7 +182,7 @@
 	icon_state = "chronobolt"
 	damage = 25
 	armour_penetration = 100
-	speed = 2
+	speed = 0.5
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 	plane = GAME_PLANE
@@ -193,7 +193,7 @@
 	AddComponent(/datum/component/parriable_projectile)
 
 /obj/projectile/colossus/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
-	if(isliving(target))
+	if(isliving(target) && target != firer)
 		direct_target = TRUE
 	return ..(target, direct_target, ignore_loc, cross_failed)
 
@@ -278,12 +278,12 @@
 		ActivationReaction(user, ACTIVATE_WEAPON)
 	..()
 
-/obj/machinery/anomalous_crystal/bullet_act(obj/projectile/P, def_zone)
+/obj/machinery/anomalous_crystal/bullet_act(obj/projectile/proj, def_zone)
 	. = ..()
-	if(istype(P, /obj/projectile/magic))
-		ActivationReaction(P.firer, ACTIVATE_MAGIC, P.damage_type)
+	if(istype(proj, /obj/projectile/magic))
+		ActivationReaction(proj.firer, ACTIVATE_MAGIC, proj.damage_type)
 		return
-	ActivationReaction(P.firer, P.armor_flag, P.damage_type)
+	ActivationReaction(proj.firer, proj.armor_flag, proj.damage_type)
 
 /obj/machinery/anomalous_crystal/proc/ActivationReaction(mob/user, method, damtype)
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
@@ -405,9 +405,9 @@
 
 /obj/machinery/anomalous_crystal/emitter/ActivationReaction(mob/user, method)
 	if(..())
-		var/obj/projectile/P = new generated_projectile(get_turf(src))
-		P.firer = src
-		P.fire(dir2angle(dir))
+		var/obj/projectile/proj = new generated_projectile(get_turf(src))
+		proj.firer = src
+		proj.fire(dir2angle(dir))
 
 /obj/machinery/anomalous_crystal/dark_reprise //Revives anyone nearby, but turns them into shadowpeople and renders them uncloneable, so the crystal is your only hope of getting up again if you go down.
 	observer_desc = "When activated, this crystal revives anyone nearby, but turns them into Shadowpeople and makes them unclonable, making the crystal their only hope of getting up again."

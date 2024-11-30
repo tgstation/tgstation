@@ -22,8 +22,18 @@
 	result = /obj/structure/aquarium
 	time = 10 SECONDS
 	reqs = list(
-		/obj/item/stack/sheet/iron = 15,
+		/obj/item/stack/sheet/iron = 10,
 		/obj/item/stack/sheet/glass = 10,
+		/obj/item/aquarium_kit = 1,
+	)
+	category = CAT_FURNITURE
+
+/datum/crafting_recipe/fish_tank
+	name = "Portable Fish Tank"
+	result = /obj/item/fish_tank
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/plastic = 5,
 		/obj/item/aquarium_kit = 1,
 	)
 	category = CAT_FURNITURE

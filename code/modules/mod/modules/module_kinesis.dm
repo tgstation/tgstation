@@ -17,7 +17,7 @@
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 	required_slots = list(ITEM_SLOT_GLOVES)
 	/// Range of the knesis grab.
-	var/grab_range = 5
+	var/grab_range = 8
 	/// Time between us hitting objects with kinesis.
 	var/hit_cooldown_time = 1 SECONDS
 	/// Stat required for us to grab a mob.

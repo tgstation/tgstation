@@ -18,7 +18,7 @@
 	var/basic_report = ..()
 	//Display max blobpoints for blebs that lost
 	if(isovermind(owner.current)) //embarrasing if not
-		var/mob/camera/blob/overmind = owner.current
+		var/mob/eye/blob/overmind = owner.current
 		if(!overmind.victory_in_progress) //if it won this doesn't really matter
 			var/point_report = "<br><b>[owner.name]</b> took over [overmind.max_count] tiles at the height of its growth."
 			return basic_report+point_report
@@ -58,7 +58,7 @@
 
 	if(!isovermind(user))
 		return data
-	var/mob/camera/blob/blob = user
+	var/mob/eye/blob/blob = user
 	var/datum/blobstrain/reagent/blobstrain = blob.blobstrain
 
 	if(!blobstrain)
@@ -100,7 +100,7 @@
 	. = ..()
 	if(owner)
 		addtimer(CALLBACK(src, PROC_REF(Activate), TRUE), autoplace_time, TIMER_UNIQUE|TIMER_OVERRIDE)
-		to_chat(owner, span_boldannounce("You will automatically pop and place your blob core in [DisplayTimeText(autoplace_time)]."))
+		to_chat(owner, span_bolddanger("You will automatically pop and place your blob core in [DisplayTimeText(autoplace_time)]."))
 
 /datum/action/innate/blobpop/Activate(timer_activated = FALSE)
 	var/mob/living/old_body = owner
@@ -129,7 +129,7 @@
 		placement_override = BLOB_RANDOM_PLACEMENT
 		to_chat(owner, span_warning("Because your current location is an invalid starting spot and you need to pop, you've been moved to a random location!"))
 
-	var/mob/camera/blob/blob_cam = new /mob/camera/blob(get_turf(old_body), blobtag.starting_points_human_blob)
+	var/mob/eye/blob/blob_cam = new /mob/eye/blob(get_turf(old_body), blobtag.starting_points_human_blob)
 	owner.mind.transfer_to(blob_cam)
 	old_body.gib()
 	blob_cam.place_blob_core(placement_override, pop_override = TRUE)
@@ -147,7 +147,7 @@
 /datum/antagonist/blob/antag_listing_status()
 	. = ..()
 	if(owner?.current)
-		var/mob/camera/blob/blob_cam = owner.current
+		var/mob/eye/blob/blob_cam = owner.current
 		if(istype(blob_cam))
 			. += "(Progress: [length(blob_cam.blobs_legit)]/[blob_cam.blobwincount])"
 
@@ -183,5 +183,3 @@
 
 /obj/effect/dummy/phased_mob/can_blob_attack()
 	return FALSE
-
-

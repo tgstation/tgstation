@@ -241,7 +241,7 @@
 	. = ..()
 
 	if(!handcuff_overlay)
-		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
+		var/state = IS_RIGHT_INDEX(held_index) ? "markus" : "gabrielle"
 		handcuff_overlay = mutable_appearance('icons/hud/screen_gen.dmi', state)
 
 	if(!hud?.mymob)
@@ -257,7 +257,7 @@
 				. += blocked_overlay
 
 	if(held_index == hud.mymob.active_hand_index)
-		. += (held_index % 2) ? "lhandactive" : "rhandactive"
+		. += IS_LEFT_INDEX(held_index) ? "lhandactive" : "rhandactive"
 
 /atom/movable/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -955,6 +955,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 
 	if(HAS_TRAIT(hungry, TRAIT_FAT))
 		state = HUNGER_STATE_FAT
+		return
+
+	if(HAS_TRAIT(hungry, TRAIT_GLUTTON))
+		state = HUNGER_STATE_HUNGRY // Can't get enough
 		return
 
 	switch(hungry.nutrition)

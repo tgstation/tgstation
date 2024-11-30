@@ -107,7 +107,7 @@
 	if(iscyborg(user) && atom_source.Adjacent(user))
 		dust_mob(source, user, cause = "cyborg attack")
 		return
-	if(isaicamera(user))
+	if(iscameramob(user))
 		return
 	if(islarva(user))
 		dust_mob(source, user, cause = "larva attack")
@@ -165,10 +165,7 @@
 		var/obj/item/cigarette/cig = item
 		var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
 		if(clumsy)
-			var/which_hand = BODY_ZONE_L_ARM
-			if(!(user.active_hand_index % 2))
-				which_hand = BODY_ZONE_R_ARM
-			var/obj/item/bodypart/dust_arm = user.get_bodypart(which_hand)
+			var/obj/item/bodypart/dust_arm = user.get_active_hand()
 			dust_arm.dismember()
 			user.visible_message(span_danger("The [item] flashes out of existence on contact with \the [atom_source], resonating with a horrible sound..."),\
 				span_danger("Oops! The [item] flashes out of existence on contact with \the [atom_source], taking your arm with it! That was clumsy of you!"))
