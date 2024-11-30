@@ -11686,14 +11686,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
-"dTz" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
 "dTJ" = (
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -69193,12 +69185,6 @@
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/carpet,
 /area/station/service/theater)
-"wPM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
 "wPP" = (
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
@@ -113595,11 +113581,11 @@ nHi
 dCm
 dXy
 dXy
-viA
 fIg
 fIg
 fIg
-dTz
+fIg
+fIg
 sgG
 oTJ
 nPB
@@ -178620,7 +178606,7 @@ dCm
 dCm
 dCm
 dCm
-wPM
+bNY
 ojr
 ojr
 ojr
