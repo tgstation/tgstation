@@ -1,0 +1,8 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - bugfix: "repairbots no longer get flashed by their own welder"
+  - bugfix: "repairbots no longer break glass tables they step on"
+  - bugfix: "repairbots can no longer flush their own welders"
+  - bugfix: "fixes some runtimes when emagged repairbots try to deconstruct things"
+  - bugfix: "fixes sentient repairbots not being able to see or remove their material counts"

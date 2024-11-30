@@ -18865,7 +18865,8 @@
 /area/station/commons/vacant_room)
 "fEZ" = (
 /obj/structure/noticeboard/directional/north,
-/obj/structure/aquarium/lawyer,
+/obj/item/fish_tank/lawyer,
+/obj/structure/table/wood,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/wood,

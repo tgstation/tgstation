@@ -100,14 +100,15 @@
 
 /obj/item/inducer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
+
 	if(user.combat_mode || !istype(tool) || tool.flags_1 & HOLOGRAM_1 || tool.item_flags & ABSTRACT)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
-	if(!opened)
-		balloon_alert(user, "open first!")
-		return ITEM_INTERACT_FAILURE
-
 	if(istype(tool, /obj/item/stock_parts/power_store))
+		if(!opened)
+			balloon_alert(user, "open first!")
+			return ITEM_INTERACT_FAILURE
+
 		if(!QDELETED(powerdevice))
 			balloon_alert(user, "cell already installed!")
 			return ITEM_INTERACT_FAILURE
@@ -119,7 +120,7 @@
 		powerdevice = tool
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/stack/sheet/mineral/plasma) && !QDELETED(powerdevice))
+	else if(istype(tool, /obj/item/stack/sheet/mineral/plasma) && !QDELETED(powerdevice))
 		if(!powerdevice.used_charge())
 			balloon_alert(user, "fully charged!")
 			return ITEM_INTERACT_FAILURE
@@ -132,6 +133,10 @@
 
 /obj/item/inducer/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
 	. = NONE
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return
+
 	if(user.combat_mode || !istype(interacting_with) || interacting_with.flags_1 & HOLOGRAM_1)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
@@ -176,7 +181,7 @@
 			break
 
 		//transfer of charge
-		var/transferred = min(our_cell.charge, target_cell.used_charge(), (target_cell.rating_base * target_cell.rating * power_transfer_multiplier))
+		var/transferred = min(our_cell.charge, target_cell.used_charge(), target_cell.rating_base * target_cell.rating * power_transfer_multiplier)
 		if(!transferred)
 			break
 		our_cell.use(target_cell.give(transferred))

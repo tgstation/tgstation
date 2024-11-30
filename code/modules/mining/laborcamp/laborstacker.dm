@@ -150,10 +150,10 @@
 		points += SHEET_POINT_VALUE * input.amount
 	return ..()
 
-/obj/machinery/mineral/stacking_machine/laborstacker/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/mineral/stacking_machine/laborstacker/base_item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
 	if(istype(weapon, /obj/item/stack/sheet))
 		process_sheet(weapon)
-		return
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /**********************Point Lookup Console**************************/

@@ -201,8 +201,8 @@
 	/// Our current position in the working queue
 	var/working_index
 
-/datum/pathfind/sssp/proc/setup(atom/movable/caller, list/access, turf/center, max_distance, simulated_only, turf/avoid, list/datum/callback/on_finish)
-	src.pass_info = new(caller, access)
+/datum/pathfind/sssp/proc/setup(atom/movable/requester, list/access, turf/center, max_distance, simulated_only, turf/avoid, list/datum/callback/on_finish)
+	src.pass_info = new(requester, access)
 	src.start = center
 	src.max_distance = max_distance
 	src.simulated_only = simulated_only

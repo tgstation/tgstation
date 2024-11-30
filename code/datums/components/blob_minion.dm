@@ -150,6 +150,6 @@
 	SIGNAL_HANDLER
 	overmind?.assume_direct_control(replacement)
 
-/datum/component/blob_minion/PostTransfer()
-	if(!isliving(parent))
+/datum/component/blob_minion/PostTransfer(datum/new_parent)
+	if(!isliving(new_parent))
 		return COMPONENT_INCOMPATIBLE

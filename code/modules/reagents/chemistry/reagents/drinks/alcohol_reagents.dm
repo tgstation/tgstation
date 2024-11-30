@@ -183,7 +183,7 @@
 	. = ..()
 	drinker.set_dizzy_if_lower(10 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
-	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
+	drinker.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
 
@@ -231,7 +231,7 @@
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	drinker.adjust_drowsiness(-14 SECONDS * REM * seconds_per_tick)
-	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
+	drinker.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, drinker.get_body_temp_normal())
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
@@ -1411,7 +1411,7 @@
 		if(52 to 201)
 			drinker.Sleeping(100 * REM * seconds_per_tick)
 		if(202 to INFINITY)
-			drinker.AdjustSleeping(40 * REM * seconds_per_tick)
+			drinker.AdjustSleeping(4 SECONDS * REM * seconds_per_tick)
 			if(drinker.adjustToxLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 				return UPDATE_MOB_HEALTH
 

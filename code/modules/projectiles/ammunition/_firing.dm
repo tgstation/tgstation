@@ -83,12 +83,12 @@
 	if(loaded_projectile.firer)
 		firing_dir = get_dir(fired_from, target)
 	if(!loaded_projectile.suppressed && firing_effect_type && !tk_firing(user, fired_from))
-		new firing_effect_type(get_turf(src), firing_dir)
+		new firing_effect_type(user || get_turf(src), firing_dir)
 
 	var/direct_target
 	if(target && curloc.Adjacent(targloc, target=targloc, mover=src)) //if the target is right on our location or adjacent (including diagonally if reachable) we'll skip the travelling code in the proj's fire()
 		direct_target = target
-	loaded_projectile.preparePixelProjectile(target, fired_from, params2list(params), spread)
+	loaded_projectile.aim_projectile(target, fired_from, params2list(params), spread)
 	var/obj/projectile/loaded_projectile_cache = loaded_projectile
 	loaded_projectile = null
 	loaded_projectile_cache.fire(null, direct_target)

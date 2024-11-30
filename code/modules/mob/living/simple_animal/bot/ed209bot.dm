@@ -86,7 +86,7 @@
 
 	var/obj/projectile/fired_bullet = new projectile(loc)
 	playsound(src, shoot_sound, 50, TRUE)
-	fired_bullet.preparePixelProjectile(target, src)
+	fired_bullet.aim_projectile(target, src)
 	fired_bullet.fire()
 
 /mob/living/simple_animal/bot/secbot/ed209/emp_act(severity)

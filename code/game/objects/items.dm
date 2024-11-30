@@ -27,7 +27,7 @@
 	///Icon state for mob worn overlays, if null the normal icon_state will be used.
 	var/worn_icon_state
 	///Icon state for the belt overlay, if null the normal icon_state will be used.
-	var/belt_icon_state
+	var/inside_belt_icon_state
 	///Forced mob worn layer instead of the standard preferred size.
 	var/alternate_worn_layer
 	///The config type to use for greyscaled worn sprites. Both this and greyscale_colors must be assigned to work.
@@ -259,8 +259,10 @@
 
 	/// Has the item been reskinned?
 	var/current_skin
-	///// List of options to reskin.
+	/// List of options to reskin.
 	var/list/unique_reskin
+	/// If reskins change inhands as well
+	var/unique_reskin_changes_inhand = FALSE
 	/// Do we apply a click cooldown when resisting this object if it is restraining them?
 	var/resist_cooldown = CLICK_CD_BREAKOUT
 
@@ -943,7 +945,7 @@
 
 /// Returns the icon used for overlaying the object on a belt
 /obj/item/proc/get_belt_overlay()
-	var/icon_state_to_use = belt_icon_state || icon_state
+	var/icon_state_to_use = inside_belt_icon_state || icon_state
 	if(greyscale_config_belt && greyscale_colors)
 		return mutable_appearance(SSgreyscale.GetColoredIconByType(greyscale_config_belt, greyscale_colors), icon_state_to_use)
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state_to_use)
