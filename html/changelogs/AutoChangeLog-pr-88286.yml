@@ -1,0 +1,5 @@
+author: "KingkumaArt"
+delete-after: True
+changes:
+  - bugfix: "Etherials no longer lose overcharge really slowly."
+  - bugfix: "Etherial Wine/Telepole no longer overcharges etherials with one sip."
