@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/namepart
 	var/list/stored_name = list(null)
 
-	if(iscarbon(speaker)) //First, try to pull the modified title from a carbon's ID. This will hopefully override both visual and audible names.
+	if(iscarbon(speaker)) //First, try to pull the modified title from a carbon's ID. This will override both visual and audible names.
 		var/mob/living/carbon/carbon_human = speaker
 		var/obj/item/id_slot = carbon_human.get_item_by_slot(ITEM_SLOT_ID)
 		if(id_slot)
