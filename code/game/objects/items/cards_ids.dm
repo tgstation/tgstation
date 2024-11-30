@@ -162,12 +162,12 @@
 	if(slot == ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
 
-/obj/item/card/id/proc/return_message_name_part(mob/living/carbon/human/source, list/stored_name, visible_name)
+/obj/item/card/id/proc/return_message_name_part(datum/source, list/stored_name, visible_name, mob/living/carbon/carbon_human)
 	SIGNAL_HANDLER
-	var/voice_name = source.GetVoice()
+	var/voice_name = carbon_human.GetVoice()
 	var/end_string = ""
 	var/return_string = ""
-	if(source.name != voice_name)
+	if(carbon_human.name != voice_name)
 		end_string += " (as [registered_name])"
 	if(trim && honorific_position != HONORIFIC_POSITION_NONE)
 		return_string += honorific_title
