@@ -698,9 +698,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_TURF, src, reagents, methods, volume_modifier, show_message)
-	for(var/reagent in reagents)
-		var/datum/reagent/R = reagent
-		. |= R.expose_turf(src, reagents[R])
+	for(var/datum/reagent/reagent as anything in reagents)
+		var/reac_volume = reagents[reagent]
+		. |= reagent.expose_turf(src, reac_volume)
 
 /**
  * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
@@ -836,7 +836,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	if(!fish_source || !HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
 		return
-	if(!GLOB.preset_fish_sources[fish_source].has_known_fishes())
+	if(!GLOB.preset_fish_sources[fish_source].has_known_fishes(src))
 		return
 	. += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
 
