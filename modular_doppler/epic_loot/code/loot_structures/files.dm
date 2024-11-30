@@ -3,7 +3,7 @@
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_total_storage = WEIGHT_CLASS_NORMAL * 6
 	screen_max_columns = 2
-	opening_sound = 'modular_doppler/epic_loot/sound/containers/cabinet.mp3'
+	opening_sound = 'modular_doppler/epic_loot/sound/cabinet.mp3'
 
 /obj/structure/maintenance_loot_structure/file_cabinet
 	name = "filing cabinet"

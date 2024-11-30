@@ -3,7 +3,7 @@
 	max_specific_storage = WEIGHT_CLASS_BULKY
 	max_total_storage = WEIGHT_CLASS_BULKY * 6
 	screen_max_columns = 3
-	opening_sound = 'modular_doppler/epic_loot/sound/containers/plastic.mp3'
+	opening_sound = 'modular_doppler/epic_loot/sound/plastic.mp3'
 
 /obj/structure/maintenance_loot_structure/medbox
 	name = "emergency medical box"

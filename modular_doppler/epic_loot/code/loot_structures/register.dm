@@ -3,7 +3,7 @@
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_total_storage = WEIGHT_CLASS_NORMAL * 2
 	screen_max_columns = 2
-	opening_sound = 'modular_doppler/epic_loot/sound/containers/wood_crate_2.mp3'
+	opening_sound = 'modular_doppler/epic_loot/sound/wood_crate_2.mp3'
 
 /obj/structure/maintenance_loot_structure/register
 	name = "credits register"

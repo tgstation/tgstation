@@ -59,7 +59,7 @@
 	rustle_sound = FALSE
 	screen_max_columns = 3
 	/// What sound this makes when people open it's storage
-	var/opening_sound = 'modular_doppler/epic_loot/sound/containers/plastic.mp3'
+	var/opening_sound = 'modular_doppler/epic_loot/sound/plastic.mp3'
 
 /datum/storage/maintenance_loot_structure/open_storage(mob/to_show)
 	. = ..()

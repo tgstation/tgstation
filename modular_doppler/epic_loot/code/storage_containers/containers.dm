@@ -139,7 +139,7 @@
 	max_total_storage = WEIGHT_CLASS_NORMAL * 6
 	screen_max_columns = 2
 	numerical_stacking = FALSE
-	opening_sound = 'modular_doppler/epic_loot/sound/containers/wood_crate_1.mp3'
+	opening_sound = 'modular_doppler/epic_loot/sound/wood_crate_1.mp3'
 
 /datum/storage/maintenance_loot_structure/epic_loot_the_money/New()
 	. = ..()
@@ -168,7 +168,7 @@
 	max_total_storage = WEIGHT_CLASS_BULKY * 21
 	screen_max_columns = 7
 	numerical_stacking = FALSE
-	opening_sound = 'modular_doppler/epic_loot/sound/containers/wood_crate_1.mp3'
+	opening_sound = 'modular_doppler/epic_loot/sound/wood_crate_1.mp3'
 
 /datum/storage/maintenance_loot_structure/epic_loot_medkit/New()
 	. = ..()
