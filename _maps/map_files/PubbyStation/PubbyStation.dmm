@@ -11940,6 +11940,15 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"aVI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "Drone Bay Ext."
+	},
+/turf/open/floor/plating,
+/area/station/cargo/drone_bay)
 "aVO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -20239,15 +20248,6 @@
 "bHM" = (
 /turf/closed/wall/r_wall,
 /area/station/service/chapel/dock)
-"bHN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/camera/directional/north{
-	c_tag = "Drone Bay Ext."
-	},
-/turf/open/floor/plating,
-/area/station/cargo/drone_bay)
 "bHP" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -20429,11 +20429,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
-"bIT" = (
-/obj/item/kirbyplants/photosynthetic,
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/plating/abductor,
-/area/station/hallway/primary/central/fore)
 "bIU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
@@ -20454,6 +20449,11 @@
 /obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/dock)
+"bIY" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/kirbyplants/photosynthetic,
+/turf/open/floor/plating/abductor,
+/area/station/hallway/primary/central/fore)
 "bIZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -43530,8 +43530,8 @@
 /turf/open/floor/wood,
 /area/station/maintenance/department/engine)
 "pVL" = (
-/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/kirbyplants/photosynthetic,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/abductor,
 /area/station/hallway/primary/central/fore)
 "pVS" = (
@@ -84231,7 +84231,7 @@ nrE
 aDK
 aED
 aAB
-pVL
+bIY
 cCC
 aHV
 ilz
@@ -85773,13 +85773,13 @@ aCM
 aDN
 aEI
 aAB
-bIT
+pVL
 cCC
 tNf
 mTc
 bft
 axi
-bIT
+pVL
 aKT
 wzm
 wYH
@@ -99914,7 +99914,7 @@ aFi
 aFi
 odG
 aEj
-bHN
+aVI
 wmE
 ofR
 qfa
