@@ -277,10 +277,16 @@ export const DesignBrowser = <T extends Design = Design>(
                       Object.values(root.descendants),
                       (design: T) => design.name,
                     )
-                      .filter((design) =>
-                        design.name
-                          .toLowerCase()
-                          .includes(searchText.toLowerCase()),
+                      // BANDASTATION EDIT START - Design Translate
+                      .filter(
+                        (design) =>
+                          design.name
+                            .toLowerCase()
+                            .includes(searchText.toLowerCase()) ||
+                          (design.original_name || design.name)
+                            .toLowerCase()
+                            .includes(searchText.toLowerCase()),
+                        // BANDASTATION EDIT END
                       )
                       .map((design) =>
                         buildRecipeElement(
