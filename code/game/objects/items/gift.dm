@@ -127,7 +127,7 @@
 	desc = "A capsule from a vending machine. It could contain theoretically anything!"
 
 /obj/item/gift/capsule/get_gift_type()
-	var/static/list/obj/item/possible_gifts = null
+	var/list/obj/item/possible_gifts = null
 
 	var/gacha_odds = rand(1,40)
 
