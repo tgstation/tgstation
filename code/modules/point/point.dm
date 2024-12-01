@@ -126,7 +126,7 @@
 		var/mob/living/carbon/our_carbon = src
 		if(our_carbon.usable_hands <= 0)
 			if(TIMER_COOLDOWN_FINISHED(user, "point_verb_emote_cooldown"))
-				TIMER_COOLDOWN_START(user, "point_verb_emote_cooldown", 2 SECONDS)
+				TIMER_COOLDOWN_START(src, "point_verb_emote_cooldown", 2 SECONDS)
 				our_carbon.emote("point [pointing_at]")
 			else
 				to_chat(src, "you need to wait before doing that again!")
