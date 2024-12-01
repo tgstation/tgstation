@@ -17321,6 +17321,10 @@
 	},
 /obj/item/stock_parts/scanning_module,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker
+	},
+/obj/item/multitool,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "fKf" = (
@@ -22217,6 +22221,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/item/stack/rods/twentyfive,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "hnL" = (
@@ -27260,13 +27265,12 @@
 /area/station/maintenance/port/greater)
 "iLX" = (
 /obj/structure/table,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the RD's goons from the safety of his office.";
-	dir = 1;
-	name = "Research Monitor";
-	network = list("rd")
-	},
 /obj/machinery/newscaster/directional/south,
+/obj/item/restraints/handcuffs,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = 9;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science/research)
 "iMr" = (
@@ -34107,15 +34111,15 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "lbq" = (
-/obj/structure/table,
-/obj/item/stack/rods/twentyfive,
-/obj/item/wrench,
-/obj/item/storage/box/lights/mixed,
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker
+	},
+/obj/item/multitool,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "lby" = (
@@ -47683,6 +47687,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "pGM" = (

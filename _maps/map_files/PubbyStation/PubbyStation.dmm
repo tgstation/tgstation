@@ -18318,10 +18318,11 @@
 /area/station/science/research)
 "byH" = (
 /obj/structure/table,
-/obj/item/multitool,
-/obj/item/clothing/glasses/science,
-/obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker
+	},
+/obj/item/multitool,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "byJ" = (
@@ -22291,11 +22292,14 @@
 /area/station/hallway/primary/aft)
 "bSa" = (
 /obj/structure/table,
-/obj/item/toy/cards/deck,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker
+	},
+/obj/item/multitool,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "bSc" = (
@@ -33825,10 +33829,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
-"huG" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/space/basic,
-/area/station/engineering/atmos/hfr_room)
 "hvm" = (
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/flora/bush/pointy/style_random,
@@ -35121,12 +35121,6 @@
 /obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
-"iFQ" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/security/prison/safe)
 "iGp" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/transit_tube/crossing/horizontal,
@@ -40334,11 +40328,12 @@
 /area/station/service/abandoned_gambling_den)
 "nnl" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/soda_cans/lemon_lime,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/item/toy/cards/deck,
+/obj/item/reagent_containers/cup/soda_cans/lemon_lime,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "nnX" = (
@@ -51343,6 +51338,8 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "vXF" = (
@@ -75655,7 +75652,7 @@ iKi
 ahp
 agM
 fRl
-iFQ
+oVG
 ylS
 wbs
 wbs
@@ -91186,8 +91183,8 @@ aaa
 aht
 aaa
 aht
-aaa
-aaa
+aht
+aht
 pDW
 pDW
 pDW
@@ -91441,8 +91438,8 @@ auI
 auI
 auI
 auI
-huG
-huG
+auI
+auI
 auI
 hzr
 aaa
@@ -93754,8 +93751,8 @@ bYw
 bYw
 hzr
 hzr
-huG
-huG
+auI
+auI
 hzr
 hzr
 aaa
