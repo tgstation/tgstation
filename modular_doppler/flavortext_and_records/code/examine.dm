@@ -149,3 +149,53 @@
 
 			to_chat(viewer, examine_block(span_info(full_examine)))
 			return
+
+/*
+	AIS (AKA ALSO HORRIBLE RUSTBUCKETS)
+*/
+
+/mob/living/silicon/ai/examine_title(mob/user, thats)
+	. = ..()
+
+	// much simpler for silicons since disguises aren't really a thing... for now
+	var/model_name = READ_PREFS(src, text/silicon_model_name)
+	if (model_name)
+		. += ", [prefix_a_or_an(model_name)] <EM>[model_name]</EM>"
+
+
+/mob/living/silicon/ai/Topic(href, href_list)
+	. = ..()
+
+	if (href_list["full_desc"])
+		var/mob/viewer = usr
+		var/can_see = (viewer in viewers(src))
+
+		if (HAS_TRAIT(src, TRAIT_UNKNOWN))
+			to_chat(viewer, span_notice("You can't discern a thing about them!"))
+			return
+
+		if (can_see)
+			var/short_desc = READ_PREFS(src, text/silicon_short_desc)
+			var/extended_desc = READ_PREFS(src, text/silicon_extended_desc)
+			var/headshot_url = READ_PREFS(src, text/headshot/silicon)
+			var/ooc_notes = READ_PREFS(src, text/ooc_notes)
+
+			var/full_examine = compile_examined_text(short_desc, extended_desc, headshot_url, ooc_notes)
+
+			to_chat(viewer, examine_block(span_info(full_examine)))
+			return
+		else
+			to_chat(viewer, span_notice("You're too far away to get a good look at [src]!"))
+			return
+	else if (href_list["species_info"])
+		var/mob/viewer = usr
+		var/can_see = (viewer in viewers(src))
+
+		if (can_see)
+			var/model_name = READ_PREFS(src, text/silicon_model_name)
+			var/model_desc = READ_PREFS(src, text/silicon_model_desc)
+
+			var/full_examine = compile_species_info_text(model_name, model_desc, TRUE)
+
+			to_chat(viewer, examine_block(span_info(full_examine)))
+			return
