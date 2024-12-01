@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "brought fishing difficulty of all fishing spots a bit closer to their original value following a small oopsie that made them unexpectingly easier for more than two months."

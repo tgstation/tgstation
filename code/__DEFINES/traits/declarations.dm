@@ -1377,6 +1377,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to mobs that can dig
 #define TRAIT_MOB_CAN_DIG "mob_can_dig"
 
+/// This atom has a tether attached to it
+#define TRAIT_TETHER_ATTACHED "tether_attached"
+
 /**
  *
  * This trait is used in some interactions very high in the interaction chain to allow

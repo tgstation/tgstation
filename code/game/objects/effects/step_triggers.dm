@@ -17,15 +17,15 @@
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
 
-/obj/effect/step_trigger/proc/on_entered(datum/source, H as mob|obj)
+/obj/effect/step_trigger/proc/on_entered(datum/source, atom/movable/entering)
 	SIGNAL_HANDLER
-	if(!H || H == src)
+	if(!entering || entering == src || entering.invisibility >= INVISIBILITY_ABSTRACT || istype(entering, /atom/movable/mirage_holder)) //dont teleport ourselves, abstract objects, and mirage holders due to init shenanigans
 		return
-	if(isobserver(H) && !affect_ghosts)
+	if(isobserver(entering) && !affect_ghosts)
 		return
-	if(!ismob(H) && mobs_only)
+	if(!ismob(entering) && mobs_only)
 		return
-	INVOKE_ASYNC(src, PROC_REF(Trigger), H)
+	INVOKE_ASYNC(src, PROC_REF(Trigger), entering)
 
 
 /obj/effect/step_trigger/singularity_act()
@@ -144,7 +144,7 @@
 	var/teleport_x_offset = 0
 	var/teleport_y_offset = 0
 
-/obj/effect/step_trigger/teleporter/offset/on_entered(datum/source, H as mob|obj, atom/old_loc)
+/obj/effect/step_trigger/teleporter/offset/on_entered(datum/source, atom/movable/entered, atom/old_loc)
 	if(!old_loc?.Adjacent(loc)) // prevents looping, if we were teleported into this then the old loc is usually not adjacent
 		return
 	return ..()
