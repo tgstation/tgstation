@@ -5,9 +5,6 @@
 	winner_method = VOTE_WINNER_METHOD_NONE
 	display_statistics = FALSE
 
-/datum/vote/map_vote/New()
-	. = ..()
-
 /datum/vote/map_vote/create_vote()
 	default_choices = SSmap_vote.get_valid_map_vote_choices()
 	. = ..()
