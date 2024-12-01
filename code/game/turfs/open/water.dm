@@ -117,9 +117,8 @@
 	// we don't want to end up with 4 different immerse elements, which would cause
 	// the immerse trait to be repeatedly removed and readded as someone moves within the pool,
 	// replacing the status effect over and over, which can be seen through the status effect alert icon.
-	if(!immerse_added)
-		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
-		immerse_added = TRUE
+	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
+	immerse_added = TRUE
 	icon_state = "pool_[rand(1, 4)]"
 	particle_effect = new(src, /particles/hotspring_steam, 4)
 	//render the steam over mobs and objects on the game plane
@@ -145,9 +144,6 @@
 	enter_hot_spring(arrived)
 
 /turf/open/water/hot_spring/on_atom_inited(datum/source, atom/movable/movable)
-	if(!immerse_added && !is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
-		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
-		immerse_added = TRUE
 	enter_hot_spring(movable)
 
 ///Registers the signals from the immerse element and calls dip_in if the movable has the required trait.
