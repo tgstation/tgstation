@@ -335,6 +335,7 @@
 					else
 						message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
 						our_carbon.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+						playsound(user, 'sound/effects/glass/glassbash.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return ..()
 
 /datum/emote/living/sneeze
