@@ -122,7 +122,7 @@
 
 		if(!(pointing_at in view(client.view, src)))
 			return FALSE
-	if(iscarbon(src)) //check for hands to point with if carbon
+	if(iscarbon(src)) // special interactions for carbons
 		var/mob/living/carbon/our_carbon = src
 		if(our_carbon.usable_hands <= 0 || HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 			our_carbon.emote("point [pointing_at]")

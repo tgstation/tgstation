@@ -518,7 +518,7 @@
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
-	if(incapacitated)
+	if(INCAPACITATED_IGNORING(src, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB))
 		return FALSE
 
 	return ..()
