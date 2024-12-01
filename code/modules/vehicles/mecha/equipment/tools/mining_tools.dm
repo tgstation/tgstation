@@ -11,7 +11,6 @@
 	icon_state = "mecha_drill"
 	equipment_slot = MECHA_UTILITY
 	can_be_toggled = TRUE
-	active = FALSE
 	equip_cooldown = 15
 	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	force = 15
@@ -112,6 +111,10 @@
 			if(target_obj.resistance_flags & (UNACIDABLE | INDESTRUCTIBLE))
 				return
 
+	// Check if we can even use the equipment to begin with.
+	if(!action_checks(target))
+		return
+
 	// You can't drill harder by clicking more.
 	if(DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
 		return
@@ -124,10 +127,6 @@
 
 	// Drilling a turf is a one-and-done procedure.
 	if(isturf(target))
-		// Check if we can even use the equipment to begin with.
-		if(!action_checks(target))
-			return
-
 		var/turf/T = target
 		T.drill_act(src, source)
 

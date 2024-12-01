@@ -61,7 +61,9 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 		var/default_spawn = pick(default_contents[default_contents_key])
 		return new default_spawn(fisher_turf)
 
-	return determine_detritus(chasm_contents)
+	var/atom/movable/detritus = determine_detritus(chasm_contents)
+	detritus.forceMove(fisher_turf)
+	return detritus
 
 /datum/chasm_detritus/proc/get_chasm_contents(turf/fishing_spot)
 	. = list()
