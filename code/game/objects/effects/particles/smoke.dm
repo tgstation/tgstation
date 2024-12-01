@@ -107,7 +107,7 @@
 		"steam_cloud_4" = 1,
 		"steam_cloud_5" = 1,
 	)
-	color = "#FFFFFF90"
+	color = "#FFFFFF8A"
 	count = 5
 	spawning = 0.3
 	lifespan = 3 SECONDS
