@@ -79,7 +79,7 @@
 	//It's ok if it's not, it's just important if it is.
 	mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSnewtonian_movement.visual_delay)
 
-/datum/drift_handler/proc/newtonian_impulse(inertia_angle, start_delay, additional_force, controlled_cap)
+/datum/drift_handler/proc/newtonian_impulse(inertia_angle, start_delay, additional_force, controlled_cap, force_loop = TRUE)
 	SIGNAL_HANDLER
 	inertia_last_loc = parent.loc
 	// We've been told to move in the middle of deletion process, tell parent to create a new handler instead
@@ -100,7 +100,7 @@
 	drifting_loop.set_angle(delta_to_angle(force_x, force_y))
 	drifting_loop.set_delay(get_loop_delay(parent))
 	// We have to forcefully fire it here to avoid stuttering in case of server lag
-	if (drifting_loop.timer <= world.time)
+	if (drifting_loop.timer <= world.time && force_loop)
 		SSnewtonian_movement.fire_moveloop(drifting_loop)
 	return TRUE
 

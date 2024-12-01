@@ -180,11 +180,16 @@
 		if (backup && !(backup.dir & move_dir))
 			applied_force = max_drift_force
 
-	source.newtonian_move(dir2angle(move_dir), instant = TRUE, drift_force = applied_force, controlled_cap = max_drift_force)
+	// We don't want to force the loop to fire before stabilizing if we're going to, otherwise its effects will be delayed until the next tick which is jank
+	var/force_stabilize = FALSE
+	if (last_stabilization_tick < world.time)
+		force_stabilize = TRUE
+
+	source.newtonian_move(dir2angle(move_dir), instant = TRUE, drift_force = applied_force, controlled_cap = max_drift_force, force_loop = !force_stabilize)
 	source.setDir(move_dir)
 	last_force_tick = world.time
 
-	if (last_stabilization_tick < world.time)
+	if (force_stabilize)
 		// Newphys is an SS_TICKER subsystem and under ideal circumstances should be firing every tick, thus a period of world.tick_lag
 		// However, since our servers are jank, even SSinput can end up overtiming - which is also an SS_TICKER subsystem that just so
 		// happens to be what is calling this proc - so we can be assured that this is not above world.tick_lag, or at least should not be
