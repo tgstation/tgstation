@@ -336,8 +336,8 @@
 				return FALSE
 			if(iscarbon(user))
 				var/mob/living/carbon/our_mob = user
-				if(our_mob.usable_hands < 1)
-				to_chat(user, span_warning("You have no arms to [key]!"))
+				if(!length(user.get_empty_held_indexes()))
+				to_chat(user, span_warning("You have no free arms to [key]!"))
 				return FALSE
 			to_chat(user, span_warning("You cannot use your hands to [key] right now!"))
 			return FALSE
