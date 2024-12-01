@@ -124,7 +124,6 @@
 	animate(filter, offset = 1, time = 3 SECONDS, loop = -1, easing = SINE_EASING|EASE_IN|EASE_OUT)
 	animate(offset = -1, time = 3 SECONDS, easing = SINE_EASING|EASE_IN|EASE_OUT)
 
-
 /turf/open/water/hot_spring/Destroy()
 	QDEL_NULL(particle_effect)
 	remove_filter("hot_spring_waves")

@@ -4207,6 +4207,7 @@
 #include "code\modules\fishing\admin.dm"
 #include "code\modules\fishing\bait.dm"
 #include "code\modules\fishing\fish_catalog.dm"
+#include "code\modules\fishing\fish_mount.dm"
 #include "code\modules\fishing\fish_movement.dm"
 #include "code\modules\fishing\fishing_equipment.dm"
 #include "code\modules\fishing\fishing_minigame.dm"

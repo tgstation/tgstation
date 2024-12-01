@@ -436,7 +436,7 @@
 	return ..()
 
 /obj/item/fish/update_icon_state()
-	if(status == FISH_DEAD && icon_state_dead)
+	if((status == FISH_DEAD || HAS_TRAIT(src, TRAIT_FISH_STASIS)) && icon_state_dead)
 		icon_state = icon_state_dead
 	else
 		icon_state = base_icon_state
@@ -804,6 +804,7 @@
 /obj/item/fish/proc/enter_stasis(datum/source)
 	SIGNAL_HANDLER
 	stop_flopping()
+	update_appearance()
 	STOP_PROCESSING(SSobj, src)
 
 /// Start processing again when the stasis trait is removed
@@ -908,7 +909,7 @@
 
 	// Do additional stuff
 	// Start flopping if outside of fish container
-	var/should_be_flopping = status == FISH_ALIVE && !HAS_TRAIT(src, TRAIT_FISH_STASIS) && loc && !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
+	var/should_be_flopping = status == FISH_ALIVE && !HAS_TRAIT(loc, TRAIT_STOP_FISH_FLOPPING)
 
 	if(should_be_flopping)
 		start_flopping()

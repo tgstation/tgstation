@@ -128,7 +128,7 @@
 		if(content.flags_1 & INITIALIZED_1)
 			on_entered(movable, content)
 
-	ADD_TRAIT(movable, TRAIT_IS_AQUARIUM, AQUARIUM_TRAIT)
+	movable.add_traits(list(TRAIT_IS_AQUARIUM, TRAIT_STOP_FISH_FLOPPING), AQUARIUM_TRAIT)
 
 /datum/component/aquarium/UnregisterFromParent()
 	var/atom/movable/movable = parent
@@ -155,7 +155,7 @@
 		STOP_PROCESSING(SSobj, src)
 	beauty_by_content = null
 	tracked_fish_by_type = null
-	movable.remove_traits(list(TRAIT_IS_AQUARIUM, TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), AQUARIUM_TRAIT)
+	movable.remove_traits(list(TRAIT_IS_AQUARIUM, TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, TRAIT_STOP_FISH_FLOPPING), AQUARIUM_TRAIT)
 	qdel(movable.GetComponent(/datum/component/fishing_spot))
 	REMOVE_KEEP_TOGETHER(movable, AQUARIUM_TRAIT)
 
