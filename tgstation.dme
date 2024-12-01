@@ -7055,6 +7055,7 @@
 #include "modular_doppler\modular_quirks\permitted_cybernetic\permitted_cybernetic.dm"
 #include "modular_doppler\modular_quirks\permitted_cybernetic\code\preferences.dm"
 #include "modular_doppler\modular_silicons\silicon_edits\on_click.dm"
+#include "modular_doppler\modular_silicons\silicon_edits\pda.dm"
 #include "modular_doppler\modular_sounds\code\sounds.dm"
 #include "modular_doppler\modular_species\_species.dm"
 #include "modular_doppler\modular_species\code\bloodsplatter.dm"
