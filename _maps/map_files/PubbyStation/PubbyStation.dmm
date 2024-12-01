@@ -225,6 +225,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/sign/departments/aisat/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "aba" = (
@@ -24902,7 +24903,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "ceu" = (
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
@@ -24948,21 +24949,18 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "ceU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen/minisat/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "ceV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -24973,7 +24971,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "ceX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -25027,7 +25025,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "cfu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -25087,13 +25085,13 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "cfQ" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "cfS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -25161,7 +25159,7 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/transit_tube,
 /turf/open/floor/plating,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "cgs" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
@@ -25171,7 +25169,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/atmos,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/plating,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "cgu" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -25266,7 +25264,7 @@
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "cgT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -25369,7 +25367,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/atmos,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/plating,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "chw" = (
 /obj/item/kirbyplants/organic/plant22,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -29912,12 +29910,11 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "dWp" = (
-/obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "dWw" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -31047,7 +31044,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "eVA" = (
 /turf/open/floor/iron/chapel{
 	dir = 4
@@ -33710,6 +33707,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/sign/departments/aisat/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "hnu" = (
@@ -38685,7 +38683,7 @@
 /area/station/engineering/atmos)
 "lRh" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -40236,8 +40234,12 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "njS" = (
-/turf/closed/wall/r_wall,
-/area/station/engineering/transit_tube)
+/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "njW" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -44794,7 +44796,7 @@
 "qWG" = (
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "qWM" = (
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = 2;
@@ -45627,7 +45629,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "rCr" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
@@ -46325,13 +46327,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
-"shs" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "shv" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
@@ -53281,7 +53276,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 "xmQ" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -54509,7 +54504,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/engineering/transit_tube)
+/area/station/engineering/main)
 
 (1,1,1) = {"
 aaa
@@ -82695,13 +82690,13 @@ uun
 cbY
 cdc
 ovF
-njS
+bXk
 ceU
 eVy
 dWp
-njS
-njS
-njS
+bXk
+bXk
+bXk
 teJ
 teJ
 teJ
@@ -83209,13 +83204,13 @@ fIc
 cbW
 cbW
 cdM
-njS
+bXk
 xmE
 ymb
 cfQ
-njS
+bXk
 qWG
-njS
+bXk
 mVM
 aht
 aaa
@@ -91166,8 +91161,8 @@ bPQ
 bZT
 sGc
 bVY
-shs
-qsH
+lRh
+njS
 dHc
 vJD
 eYd
@@ -91681,7 +91676,7 @@ nUq
 fDm
 qsS
 lRh
-qsH
+njS
 frC
 wYi
 fda
