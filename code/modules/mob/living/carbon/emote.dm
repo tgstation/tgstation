@@ -48,27 +48,6 @@
 		return FALSE
 	return ..()
 
-/datum/emote/living/carbon/cry
-	key = "cry"
-	key_third_person = "cries"
-	message = "cries."
-	message_mime = "sobs silently."
-	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	vary = TRUE
-	stat_allowed = SOFT_CRIT
-
-/datum/emote/living/carbon/cry/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/human_user = user
-	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
-
-/datum/emote/living/carbon/cry/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
-	return user.dna.species.get_cry_sound(user)
-
 /datum/emote/living/carbon/circle
 	key = "circle"
 	key_third_person = "circles"

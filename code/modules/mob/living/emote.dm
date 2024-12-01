@@ -58,12 +58,11 @@
 	message = "crosses their arms."
 	hands_use_check = TRUE
 
-/datum/emote/living/chuckle
+/datum/emote/living/laugh/chuckle
 	key = "chuckle"
 	key_third_person = "chuckles"
 	message = "chuckles."
 	message_mime = "acts out chuckling."
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/collapse
 	key = "collapse"
@@ -217,14 +216,13 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = SOFT_CRIT
 
-/datum/emote/living/giggle
+/datum/emote/living/laugh/giggle
 	key = "giggle"
 	key_third_person = "giggles"
 	message = "giggles."
 	message_mime = "giggles silently!"
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
-/datum/emote/living/glare
+/datum/emote/living/look/glare
 	key = "glare"
 	key_third_person = "glares"
 	message = "glares."
@@ -291,6 +289,15 @@
 	key_third_person = "looks"
 	message = "looks."
 	message_param = "looks at %t."
+
+/datum/emote/living/look/run_emote(mob/user, status_check, intentional, params)
+	. = ..()
+	message_param = initial(message_param)
+	if(ishuman(user))
+		var/mob/living/carbon/human/our_human = user
+		if(!our_human.get_organ_slot(ORGAN_SLOT_EYES))
+			message_param = "rotates [user.p_their] head towards %s"
+	return ..()
 
 /datum/emote/living/nod
 	key = "nod"
@@ -460,16 +467,28 @@
 		return
 	return user.dna.species.get_snore_sound(user)
 
-/datum/emote/living/stare
+/datum/emote/living/look/stare
 	key = "stare"
 	key_third_person = "stares"
 	message = "stares."
 	message_param = "stares at %t."
 
-/datum/emote/living/strech
+/datum/emote/living/stretch
 	key = "stretch"
 	key_third_person = "stretches"
-	message = "stretches their arms."
+	message = "stretches."
+
+/datum/emote/living/stretch/run_emote(mob/user, status_check, intentional, params)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/our_human = user
+		if(our_human.usable_hands == 0)
+			if(H.usable_legs != 0)
+				message_param = "tries to point at %t with a leg, [span_userdanger("falling down")] in the process!"
+				H.Paralyze(20)
+			else
+				message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 
 /datum/emote/living/sulk
 	key = "sulk"
@@ -484,10 +503,9 @@
 
 /datum/emote/living/surrender/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(isliving(user))
-		var/mob/living/living = user
-		living.Paralyze(20 SECONDS)
-		living.remove_status_effect(/datum/status_effect/grouped/surrender)
+	var/mob/living/living = user
+	living.Paralyze(20 SECONDS)
+	living.remove_status_effect(/datum/status_effect/grouped/surrender)
 
 /datum/emote/living/sway
 	key = "sway"

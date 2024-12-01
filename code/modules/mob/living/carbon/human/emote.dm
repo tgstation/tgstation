@@ -16,7 +16,6 @@
 	key = "glasses"
 	key_third_person = "glasses"
 	message = "pushes up their glasses."
-	emote_type = EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/glasses/can_run_emote(mob/user, status_check = TRUE, intentional, params)
 	var/obj/eyes_slot = user.get_item_by_slot(ITEM_SLOT_EYES)
@@ -170,6 +169,30 @@
 	key = "clear"
 	key_third_person = "clears throat"
 	message = "clears their throat."
+
+/datum/emote/living/carbon/human/cry
+	key = "cry"
+	key_third_person = "cries"
+	message = "cries."
+	message_mime = "sobs silently."
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	vary = TRUE
+	stat_allowed = SOFT_CRIT
+
+/datum/emote/living/carbon/human/cry/can_run_emote(mob/user, status_check, intentional, params)
+	. = ..()
+	if(!user.get_organ_slot(ORGAN_SLOT_EYES))
+		return
+
+/datum/emote/living/carbon/human/cry/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	var/mob/living/carbon/human/human_user = user
+	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
+
+/datum/emote/living/carbon/human/cry/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	return user.dna.species.get_cry_sound(user)
 
 ///Snowflake emotes only for le epic chimp
 /datum/emote/living/carbon/human/monkey

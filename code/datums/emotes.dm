@@ -331,8 +331,13 @@
 				if(DEAD)
 					to_chat(user, span_warning("You cannot [key] while dead!"))
 			return FALSE
-		if(hands_use_check && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		if(hands_use_check && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !length(user.get_empty_held_indexes()))
 			if(!intentional)
+				return FALSE
+			if(iscarbon(user))
+				var/mob/living/carbon/our_mob = user
+				if(our_mob.usable_hands < 1)
+				to_chat(user, span_warning("You have no arms to [key]!"))
 				return FALSE
 			to_chat(user, span_warning("You cannot use your hands to [key] right now!"))
 			return FALSE
@@ -357,9 +362,7 @@
 			return FALSE
 		if(ishuman(user))
 			var/mob/living/carbon/human/loud_mouth = user
-			if(HAS_MIND_TRAIT(loud_mouth, TRAIT_MIMING)) // vow of silence prevents outloud noises
-				return FALSE
-			if(!loud_mouth.get_organ_slot(ORGAN_SLOT_TONGUE))
+			if(HAS_MIND_TRAIT(loud_mouth, TRAIT_MIMING) || !loud_mouth.get_organ_slot(ORGAN_SLOT_TONGUE) !loud_mouth.get_organ_slot(ORGAN_SLOT_LUNGS)) // vow of silence, no tongue or no lungs prevents outloud noises
 				return FALSE
 
 	if(only_forced_audio && intentional)
