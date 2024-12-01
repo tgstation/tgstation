@@ -523,10 +523,16 @@
 			target = select_target(target_turf, target)
 			continue
 
-		if (SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, src) & PROJECTILE_INTERRUPT_HIT)
+		var/target_signal = SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, src)
+		if (target_signal & PROJECTILE_INTERRUPT_HIT_PHASE)
+			return PROJECTILE_IMPACT_PASSED
+		if (target_signal & PROJECTILE_INTERRUPT_HIT)
 			return PROJECTILE_IMPACT_INTERRUPTED
 
-		if (SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, target) & PROJECTILE_INTERRUPT_HIT)
+		var/self_signal = SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, target)
+		if (self_signal & PROJECTILE_INTERRUPT_HIT_PHASE)
+			return PROJECTILE_IMPACT_PASSED
+		if (self_signal & PROJECTILE_INTERRUPT_HIT)
 			return PROJECTILE_IMPACT_INTERRUPTED
 
 		if(mode == PROJECTILE_PIERCE_HIT)
