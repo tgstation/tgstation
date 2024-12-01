@@ -480,15 +480,22 @@
 
 /datum/emote/living/stretch/run_emote(mob/user, status_check, intentional, params)
 	. = ..()
+	message = initial(message) //reset
 	if(ishuman(user))
 		var/mob/living/carbon/human/our_human = user
-		if(our_human.usable_hands == 0)
-			if(H.usable_legs != 0)
-				message_param = "tries to point at %t with a leg, [span_userdanger("falling down")] in the process!"
-				H.Paralyze(20)
+		if(our_human.usable_hands)
+			var/one_hand = FALSE
+			if(our_human.usable_hands == 1)
+				one_hand = TRUE
+			message = "stretches [our_human.p_their] arm[one_hand ? "" : "s"]"
+		else
+			if(our_human.usable_legs)
+			var/one_leg = FALSE
+			if(our_human.usable_legs == 1)
+				one_leg = TRUE
+			message = "stretches [our_human.p_their] leg[one_leg ? "" : "s"]"
 			else
-				message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+				message = "stretches [our_human.p_their] neck"
 
 /datum/emote/living/sulk
 	key = "sulk"
@@ -523,7 +530,7 @@
 /datum/emote/living/tilt
 	key = "tilt"
 	key_third_person = "tilts"
-	message = "tilts their head to the side."
+	message = "tilts [user.p_their] head to the side."
 
 /datum/emote/living/tremble
 	key = "tremble"
