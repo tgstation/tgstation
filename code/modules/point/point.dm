@@ -124,7 +124,7 @@
 			return FALSE
 	if(iscarbon(src)) // special interactions for carbons
 		var/mob/living/carbon/our_carbon = src
-		if(our_carbon.usable_hands <= 0 || HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		if(our_carbon.usable_hands <= 0)
 			if(TIMER_COOLDOWN_FINISHED(user, "point_verb_emote_cooldown"))
 				TIMER_COOLDOWN_START(user, "point_verb_emote_cooldown", 2 SECONDS)
 				our_carbon.emote("point [pointing_at]")
