@@ -184,11 +184,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/nocturnal/proc/check_light(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(source.loc && (HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) || isturf(source.loc)))
-		var/turf/turf = get_turf(source)
-		var/light_amount = turf.get_lumcount()
-		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
-			source.adjust_health(source.health - 0.5 * seconds_per_tick)
+	if(!source.loc || (!HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) && !isturf(source.loc)))
+		return
+	var/turf/turf = get_turf(source)
+	var/light_amount = turf.get_lumcount()
+	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
+		source.adjust_health(source.health - 0.5 * seconds_per_tick)
 
 /datum/fish_trait/nocturnal/apply_to_mob(mob/living/basic/mob)
 	. = ..()
@@ -518,19 +519,22 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_CROSSBREEDER, FISH_TRAIT_DATUM)
 
-/datum/fish_trait/aggressive
-	name = "Aggressive"
+/datum/fish_trait/territorial
+	name = "Territorial"
 	inheritability = 80
 	diff_traits_inheritability = 40
-	catalog_description = "This fish is aggressively territorial, and may attack fish that come close to it."
+	catalog_description = "This fish will start attacking other fish if the aquarium has five or more."
 
-/datum/fish_trait/aggressive/apply_to_fish(obj/item/fish/fish)
+/datum/fish_trait/territorial/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(try_attack_fish))
 
-/datum/fish_trait/aggressive/proc/try_attack_fish(obj/item/fish/source, seconds_per_tick)
+/datum/fish_trait/territorial/proc/try_attack_fish(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	if(!source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) || !SPT_PROB(1, seconds_per_tick))
+		return
+	var/list/fishes = source.get_aquarium_fishes(TRUE, source)
+	if(length(fishes) < 5)
 		return
 	for(var/obj/item/fish/victim as anything in source.get_aquarium_fishes(TRUE, source))
 		if(victim.status != FISH_ALIVE)
@@ -596,6 +600,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	diff_traits_inheritability = 25
 	catalog_description = "This fish will invert the gravity of the bait at random. May fall upward outside after being caught."
 	added_difficulty = 20
+	reagents_to_add = list(/datum/reagent/gravitum = 2.3)
 
 /datum/fish_trait/antigrav/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
 	minigame.special_effects |= FISHING_MINIGAME_RULE_ANTIGRAV
