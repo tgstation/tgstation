@@ -10,6 +10,7 @@
 	default_choices = SSmap_vote.get_valid_map_vote_choices()
 
 /datum/vote/map_vote/create_vote()
+	default_choices = SSmap_vote.get_valid_map_vote_choices()
 	. = ..()
 	if(!.)
 		return FALSE
