@@ -10,6 +10,7 @@
 	desc = "A large mail sorting unit. Sorting mail since 1987!"
 	icon = 'icons/obj/machines/mailsorter.dmi'
 	icon_state = "mailsorter"
+	base_icon_state = "mailsorter"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	max_integrity = 300
@@ -127,7 +128,7 @@
 	if (!sorting_dept)
 		return
 	currentstate = STATE_SORTING
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 	playsound(src, 'sound/machines/mail_sort.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(continue_sort), user, sorting_dept), 5 SECONDS)
 
@@ -154,12 +155,12 @@
 			unable_to_sort ++
 	if (length(sorted_mail) == 0)
 		currentstate = STATE_NO
-		update_appearance()
+		update_appearance(UPDATE_OVERLAYS)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 		say("No mail for the following department: [sorting_dept].")
 	else
 		currentstate = STATE_YES
-		update_appearance()
+		update_appearance(UPDATE_OVERLAYS)
 		say("[sorted] envelope\s sorted successfully.")
 		playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
 		to_chat(user, span_notice("[src] ejects [length(sorted_mail)] envelope\s."))
@@ -181,7 +182,7 @@
 
 /obj/machinery/mailsorter/proc/update_state_after_sorting()
 	currentstate = STATE_IDLE
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/mailsorter/attackby(obj/item/thingy, mob/user, params)
 	if (istype(thingy, /obj/item/storage/bag/mail))
@@ -225,7 +226,7 @@
 	if(!mail_throw)
 		return
 	currentstate = STATE_SORTING
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 	playsound(src, 'sound/machines/mail_sort.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(pick_envelope), user, mail_throw), 50)
 
@@ -236,7 +237,7 @@
 	mail_throw.throw_at(unload_turf, 2, 3)
 	mail_list -= mail_throw
 	currentstate = STATE_IDLE
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/mailsorter/proc/load(obj/item/thingy, mob/user)
 	if(ismob(thingy.loc))
@@ -257,13 +258,12 @@
 		return CLICK_ACTION_BLOCKING
 	output_dir = turn(output_dir, -90)
 	to_chat(user, span_notice("You change [src]'s I/O settings, setting the output to [dir2text(output_dir)]."))
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 	return CLICK_ACTION_SUCCESS
 
 
 /obj/machinery/mailsorter/update_overlays()
 	. = ..()
-	var/init_icon = initial(icon)
 	if(!powered())
 		return
 	if(!(machine_stat & BROKEN))
@@ -283,16 +283,16 @@
 		light_out.pixel_x = mail_output.pixel_x
 		. += mail_output
 		. += light_out
-		. += mutable_appearance(init_icon, currentstate)
+		. += mutable_appearance(base_icon_state, currentstate)
 	if(panel_open)
 		. += panel_type
 	if(light_mask && !(machine_stat & BROKEN))
 		. += emissive_appearance(icon, light_mask, src)
 
 /obj/machinery/mailsorter/update_icon_state()
-	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
+	icon_state = "[base_icon_state][powered() ? null : "-off"]"
 	if(machine_stat & BROKEN)
-		icon_state = "[initial(icon_state)]-broken"
+		icon_state = "[base_icon_state]-broken"
 	return ..()
 
 #undef STATE_SORTING
