@@ -49,6 +49,9 @@
 		visual_delay = start_delay
 
 	apply_initial_visuals(visual_delay)
+	// Fire the engines!
+	if (drifting_loop.timer <= world.time)
+		SSnewtonian_movement.fire_moveloop(drifting_loop)
 
 /datum/drift_handler/Destroy()
 	inertia_last_loc = null
