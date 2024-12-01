@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Mining drills are now active by default"
+  - bugfix: "Fixes mining drill displaying drilling messages while inactive"
