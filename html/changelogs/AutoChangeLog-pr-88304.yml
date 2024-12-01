@@ -1,0 +1,4 @@
+author: "githubuser4141"
+delete-after: True
+changes:
+  - bugfix: "fixes splinter cell pistols causing mechs to suddenly have all their flags deleted"
