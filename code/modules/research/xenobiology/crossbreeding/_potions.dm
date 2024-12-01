@@ -198,7 +198,7 @@ Slimecrossing Potions
 		to_chat(user, span_warning("The slime is too unstable to return!"))
 		return ITEM_INTERACT_BLOCKING
 	user.do_attack_animation(interacting_with)
-	revive_target.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
+	revive_target.revive(HEAL_ALL)
 	revive_target.set_stat(CONSCIOUS)
 	revive_target.visible_message(span_notice("[revive_target] is filled with renewed vigor and blinks awake!"))
 	revive_target.maxHealth -= 10 //Revival isn't healthy.
