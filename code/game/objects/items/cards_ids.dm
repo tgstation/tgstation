@@ -497,6 +497,8 @@
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Assign account"
 	else if(registered_account.account_balance > 0)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Withdraw credits"
+	if(trim && trim.honorific)
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle honorific"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/card/id/proc/try_project_paystand(mob/user, turf/target)
@@ -887,15 +889,22 @@
 
 /// Re-generates the honorific title. Returns the compiled honorific_title value
 /obj/item/card/id/proc/update_honorific()
+	var/is_mononym = FALSE
+	if(is_mononym(registered_name))
+		is_mononym = TRUE
 	switch(honorific_position)
 		if(HONORIFIC_POSITION_FIRST)
 			honorific_title = "[trim.honorific] [first_name(registered_name)]"
 		if(HONORIFIC_POSITION_LAST)
 			honorific_title = "[trim.honorific] [last_name(registered_name)]"
 		if(HONORIFIC_POSITION_FIRST_FULL)
-			honorific_title = "[trim.honorific] [first_name(registered_name)] [last_name(registered_name)]"
+			honorific_title = "[trim.honorific] [first_name(registered_name)]"
+			if(!is_mononym)
+				honorific_title += " [last_name(registered_name)]"
 		if(HONORIFIC_POSITION_LAST_FULL)
-			honorific_title = "[first_name(registered_name)] [last_name(registered_name)][trim.honorific]"
+			if(!is_mononym)
+				honorific_title += "[first_name(registered_name)] "
+			honorific_title += "[last_name(registered_name)][trim.honorific]"
 		if(HONORIFIC_POSITION_NONE)
 			honorific_title = null
 	return honorific_title

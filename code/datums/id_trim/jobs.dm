@@ -448,7 +448,7 @@
 	job = /datum/job/chief_medical_officer
 	big_pointer = TRUE
 	pointer_color = COLOR_MEDICAL_BLUE
-	honorific = ", PhD"
+	honorific = ", PhD."
 	honorific_positions = list(HONORIFIC_POSITION_LAST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/clown

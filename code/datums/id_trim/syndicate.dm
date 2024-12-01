@@ -18,7 +18,7 @@
 
 /// Interdyne medical Staff
 /datum/id_trim/syndicom/Interdyne
-	honorific = ", PhD"
+	honorific = ", PhD."
 	honorific_positions = list(HONORIFIC_POSITION_LAST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/syndicom/Interdyne/pharmacist
