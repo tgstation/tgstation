@@ -303,19 +303,38 @@
 	key_third_person = "points"
 	message = "points."
 	message_param = "points at %t."
-	hands_use_check = TRUE
+	cooldown = 3 SECONDS
+	// don't put hands use check here, everything is handled in run_emote
 
 /datum/emote/living/point/run_emote(mob/user, params, type_override, intentional)
 	message_param = initial(message_param) // reset
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.usable_hands == 0)
-			if(H.usable_legs != 0)
-				message_param = "tries to point at %t with a leg, [span_userdanger("falling down")] in the process!"
-				H.Paralyze(20)
+	if(iscarbon(user))
+		var/mob/living/carbon/our_carbon = user
+		if(our_carbon.usable_hands <= 0)
+			if(our_carbon.usable_legs > 0)
+				var/one_leg = FALSE
+				var/has_shoes = our_carbon.get_item_by_slot(ITEM_SLOT_FEET)
+				if(our_carbon.usable_legs == 1)
+					one_leg = TRUE
+				var/success_prob = 65
+				if(HAS_TRAIT(our_carbon, TRAIT_FREERUNNING))
+					success_prob += 35
+				if(one_leg)
+					success_prob -= 40
+				if(prob(success_prob))
+					message_param = "[one_leg ? "jumps into the air and " : ""]points at %t with their [has_shoes ? "leg" : "toes"]!"
+				else
+					message_param = "[one_leg ? "jumps into the air and " : ""]tries to point at %t with their [has_shoes ? "leg" : "toes"], [span_userdanger("falling down")] in the process!"
+					our_carbon.Paralyze(2 SECONDS)
 			else
-				message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+				if(our_carbon.get_organ_slot(ORGAN_SLOT_EYES))
+					message_param = "gives a meaningful glance at %t!"
+				else
+					if(our_carbon.get_organ_slot(ORGAN_SLOT_TONGUE))
+						message_param = "motions their tongue towards %t!"
+					else
+						message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
+						our_carbon.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 	return ..()
 
 /datum/emote/living/sneeze
