@@ -5,10 +5,14 @@
 	button_icon_state = "last_resort"
 	chemical_cost = 20
 	dna_cost = CHANGELING_POWER_INNATE
-	req_human = TRUE
 	req_stat = DEAD
 	ignores_fakedeath = TRUE
 	disabled_by_fire = FALSE
+
+/datum/action/changeling/headcrab/can_be_used_by(mob/living/user)
+	if(!istype(user, /mob/living/basic/headslug) && isanimal_or_basicmob(user))
+		return TRUE
+	return ..()
 
 /datum/action/changeling/headcrab/sting_action(mob/living/user)
 	set waitfor = FALSE
