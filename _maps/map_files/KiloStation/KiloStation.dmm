@@ -4390,14 +4390,11 @@
 "bzc" = (
 /obj/structure/table,
 /obj/machinery/recharger,
-/obj/machinery/computer/security/telescreen/prison{
-	dir = 4;
-	pixel_x = -24
-	},
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/computer/security/telescreen/prison/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "bzo" = (
@@ -7298,7 +7295,7 @@
 "cuS" = (
 /obj/structure/bookcase/random,
 /obj/machinery/light/small/directional/north,
-/obj/item/radio/intercom/directional/north,
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron/grimy,
 /area/station/security/prison)
 "cuU" = (
@@ -10331,12 +10328,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 1;
-	pixel_y = -28
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
+/obj/machinery/computer/security/telescreen/minisat/directional/south,
 /turf/open/floor/plating,
 /area/station/hallway/primary/central/fore)
 "dwh" = (
@@ -11333,11 +11327,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "dNL" = (
-/obj/machinery/computer/security/telescreen/interrogation{
-	name = "isolation room monitor";
-	network = list("isolation");
-	pixel_y = 31
-	},
 /obj/machinery/button/flasher{
 	id = "IsolationFlash";
 	pixel_x = -23;
@@ -14756,7 +14745,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/insectguts,
-/obj/item/radio/intercom/directional/north,
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron/grimy,
 /area/station/security/prison/safe)
 "eXY" = (
@@ -18472,9 +18461,6 @@
 /area/station/hallway/primary/starboard)
 "gcy" = (
 /obj/structure/table,
-/obj/machinery/computer/security/telescreen/turbine{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
@@ -25685,10 +25671,9 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/left/directional/south{
+/obj/machinery/door/window/left/directional/north{
 	name = "Cyborg Upload Console Window";
-	req_access = list("ai_upload");
-	dir = 1
+	req_access = list("ai_upload")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -31404,6 +31389,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
+/obj/machinery/computer/security/telescreen/cmo/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/cmo)
 "khy" = (
@@ -32505,6 +32491,21 @@
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
+"kCH" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/computer/security/telescreen/turbine/directional/west,
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "kCK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -45051,9 +45052,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "oPX" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 8;
-	piping_layer = 2
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer2{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
@@ -52151,6 +52151,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen/cmo/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "rhy" = (
@@ -58292,6 +58293,9 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/door/window/left/directional/west,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 "sZL" = (
@@ -63527,12 +63531,6 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "uJs" = (
-/obj/machinery/computer/security/telescreen/cmo{
-	dir = 1;
-	name = "Chief Medical Officer's telescreen";
-	network = list("medical");
-	pixel_y = 2
-	},
 /obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/cmo)
@@ -69120,6 +69118,10 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
+"wsr" = (
+/obj/item/pickaxe/rusted,
+/turf/open/misc/asteroid/airless,
+/area/space/nearstation)
 "wsy" = (
 /obj/structure/chair/office/light,
 /obj/machinery/light/directional/west,
@@ -71163,11 +71165,10 @@
 /area/station/science/xenobiology)
 "xcj" = (
 /obj/effect/turf_decal/siding/green,
-/obj/machinery/door/window/right/directional/west{
-	name = "Animal Pen A";
-	dir = 2
-	},
 /mob/living/basic/cow,
+/obj/machinery/door/window/right/directional/south{
+	name = "Animal Pen A"
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/garden)
 "xck" = (
@@ -72796,7 +72797,7 @@
 "xDG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/item/radio/intercom/directional/north,
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "xDM" = (
@@ -74258,10 +74259,9 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/right/directional/south{
+/obj/machinery/door/window/left/directional/north{
 	name = "Upload Console Window";
-	req_access = list("ai_upload");
-	dir = 1
+	req_access = list("ai_upload")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -80947,7 +80947,7 @@ aaa
 aeU
 aeu
 aeu
-aeU
+wsr
 aeU
 mWy
 gCY
@@ -100783,7 +100783,7 @@ kCk
 dyC
 qAx
 wzY
-ouE
+kCH
 qoi
 xCy
 ouE

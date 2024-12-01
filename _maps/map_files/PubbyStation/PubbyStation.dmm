@@ -18578,6 +18578,7 @@
 /area/station/hallway/secondary/entry)
 "bzA" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/navigate_destination/chapel,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
 "bzB" = (
@@ -42386,6 +42387,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
+"oVG" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/security/prison/safe)
 "oVU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/cable,
@@ -74081,10 +74087,10 @@ aaa
 aaa
 aaa
 pDW
-aht
-aht
-aht
-aht
+pDW
+pDW
+pDW
+pDW
 adE
 xoX
 vXF
@@ -74621,7 +74627,7 @@ lYA
 ahp
 agM
 agX
-iFQ
+oVG
 ylS
 xWN
 mJe
@@ -76651,11 +76657,11 @@ aaa
 aaa
 aaa
 pDW
-aht
-aht
-aht
-aht
-aht
+pDW
+pDW
+pDW
+pDW
+pDW
 aem
 aem
 aem
