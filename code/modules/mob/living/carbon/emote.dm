@@ -103,8 +103,8 @@
 	vary = TRUE
 	sound = SFX_CAT_PURR
 	message = "purrs."
-	message_mime = "purrs silently."
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	message_mime = "imitates a tongue trill."
+	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/carbon/purr/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional, params)
 	if(!iscarbon(user) || (!istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/cat)))
