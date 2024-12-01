@@ -129,9 +129,6 @@
 /obj/item/gift/capsule/get_gift_type()
 	var/static/list/obj/item/possible_gifts = null
 
-	if(isnull(possible_gifts))
-		possible_gifts = list(/obj/item/card/emag)
-
 	var/gacha_odds = rand(1,40)
 
 	switch(gacha_odds)
@@ -139,6 +136,9 @@
 			possible_gifts = subtypesof(/obj/item/toy/figure)
 		if(20 to 40)
 			possible_gifts = subtypesof(/obj/item/toy)
+
+	if(isnull(possible_gifts))
+		possible_gifts = list(/obj/item/card/emag)
 
 	var/gift_type = pick(possible_gifts)
 	return gift_type
