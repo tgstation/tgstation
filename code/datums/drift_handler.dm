@@ -96,6 +96,9 @@
 
 	drifting_loop.set_angle(delta_to_angle(force_x, force_y))
 	drifting_loop.set_delay(get_loop_delay(parent))
+	// We have to forcefully fire it here to avoid stuttering in case of server lag
+	if (drifting_loop.timer <= world.time)
+		SSnewtonian_movement.fire_moveloop(drifting_loop)
 	return TRUE
 
 /datum/drift_handler/proc/drifting_start()

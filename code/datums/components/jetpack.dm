@@ -23,6 +23,10 @@
 	var/stabilization_force
 	/// Our current user
 	var/mob/user
+	/// Last tick on which we triggered, to prevent double-dipping
+	var/last_force_tick
+	/// Last tick on which we stabilized
+	var/last_stabilization_tick
 
 /**
  * Arguments:
@@ -101,6 +105,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_react))
 	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE_NOGRAV, PROC_REF(on_client_move))
 	RegisterSignal(user, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, PROC_REF(on_pushoff))
+	last_stabilization_tick = world.time
 	START_PROCESSING(SSnewtonian_movement, src)
 	setup_trail(user)
 
@@ -142,10 +147,15 @@
 	trail.oldposition = get_turf(source)
 
 /datum/component/jetpack/process(seconds_per_tick)
+	if (last_stabilization_tick == world.time)
+		return
+
+	last_stabilization_tick = world.time
+
 	if (!should_trigger(user) || !stabilize || isnull(user.drift_handler))
 		return
 
-	var/max_drift_force = (DEFAULT_INERTIA_SPEED / user.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
+	var/max_drift_force = MOVE_DELAY_TO_DRIFT(user.cached_multiplicative_slowdown)
 	user.drift_handler.stabilize_drift(user.client.intended_direction ? dir2angle(user.client.intended_direction) : null, user.client.intended_direction ? max_drift_force : 0, stabilization_force * (seconds_per_tick * 1 SECONDS))
 
 /datum/component/jetpack/proc/on_client_move(mob/source, list/move_args)
@@ -154,12 +164,30 @@
 	if (!should_trigger(source))
 		return
 
+	if (last_force_tick == world.time)
+		return
+
 	if (!check_on_move.Invoke(TRUE))
 		return
 
-	var/max_drift_force = (DEFAULT_INERTIA_SPEED / source.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	source.newtonian_move(dir2angle(source.client.intended_direction), instant = TRUE, drift_force = drift_force, controlled_cap = max_drift_force)
-	source.setDir(source.client.intended_direction)
+	var/max_drift_force = MOVE_DELAY_TO_DRIFT(source.cached_multiplicative_slowdown)
+	var/applied_force = drift_force
+	var/move_dir = source.client.intended_direction
+	// We're not moving anywhere, try to see if we can simulate pushing off a wall
+	if (isnull(source.drift_handler))
+		var/atom/movable/backup = source.get_spacemove_backup(move_dir, FALSE)
+		if (backup && !(backup.dir & move_dir))
+			applied_force = max_drift_force
+
+	source.newtonian_move(dir2angle(move_dir), instant = TRUE, drift_force = applied_force, controlled_cap = max_drift_force)
+	source.setDir(move_dir)
+	last_force_tick = world.time
+
+	if (last_stabilization_tick < world.time)
+		// Newphys is an SS_TICKER subsystem and under ideal circumstances should be firing every tick, thus a period of world.tick_lag
+		// However, since our servers are jank, even SSinput can end up overtiming - which is also an SS_TICKER subsystem that just so
+		// happens to be what is calling this proc - so we can be assured that this is not above world.tick_lag, or at least should not be
+		process(world.tick_lag)
 
 /datum/component/jetpack/proc/on_pushoff(mob/source, movement_dir, continuous_move, atom/backup)
 	SIGNAL_HANDLER

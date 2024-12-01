@@ -63,7 +63,7 @@
 	if (!owner || !allow_flight() || isnull(owner.drift_handler))
 		return
 
-	var/max_drift_force = (DEFAULT_INERTIA_SPEED / owner.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
+	var/max_drift_force = MOVE_DELAY_TO_DRIFT(owner.cached_multiplicative_slowdown)
 	owner.drift_handler.stabilize_drift(owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, MOTH_WING_FORCE * (seconds_per_tick * 1 SECONDS))
 
 /obj/item/organ/wings/moth/proc/on_client_move(mob/source, list/move_args)
@@ -72,9 +72,16 @@
 	if (!allow_flight())
 		return
 
-	var/max_drift_force = (DEFAULT_INERTIA_SPEED / source.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	source.newtonian_move(dir2angle(source.client.intended_direction), instant = TRUE, drift_force = MOTH_WING_FORCE, controlled_cap = max_drift_force)
-	source.setDir(source.client.intended_direction)
+	var/max_drift_force = MOVE_DELAY_TO_DRIFT(source.cached_multiplicative_slowdown)
+	var/applied_force = MOTH_WING_FORCE
+	var/move_dir = source.client.intended_direction
+	// We're not moving anywhere, try to see if we can simulate pushing off a wall
+	if (isnull(source.drift_handler))
+		var/atom/movable/backup = source.get_spacemove_backup(move_dir, FALSE)
+		if (backup && !(backup.dir & move_dir))
+			applied_force = max_drift_force
+	source.newtonian_move(dir2angle(move_dir), instant = TRUE, drift_force = applied_force, controlled_cap = max_drift_force)
+	source.setDir(move_dir)
 
 /obj/item/organ/wings/moth/proc/on_pushoff(mob/source, movement_dir, continuous_move, atom/backup)
 	SIGNAL_HANDLER

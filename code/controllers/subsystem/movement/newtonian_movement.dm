@@ -29,3 +29,12 @@ MOVEMENT_SUBSYSTEM_DEF(newtonian_movement)
 			STOP_PROCESSING(src, thing)
 		if (MC_TICK_CHECK)
 			return
+
+/datum/controller/subsystem/movement/newtonian_movement/proc/fire_moveloop(datum/move_loop/loop)
+	// Drop the loop, process it, and if its still valid - queue it again
+	dequeue_loop(loop)
+	loop.process()
+	if(QDELETED(loop))
+		return
+	loop.timer = world.time + loop.delay
+	queue_loop(loop)
