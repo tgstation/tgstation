@@ -107,7 +107,8 @@
 	RegisterSignal(user, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, PROC_REF(on_pushoff))
 	last_stabilization_tick = world.time
 	START_PROCESSING(SSnewtonian_movement, src)
-	setup_trail(user)
+	if (effect_type)
+		setup_trail(user)
 
 /datum/component/jetpack/proc/deactivate(datum/source, mob/old_user)
 	SIGNAL_HANDLER
@@ -124,7 +125,7 @@
 	if (!should_trigger(source))
 		return
 
-	if(source.client.intended_direction && check_on_move.Invoke(FALSE))//You use jet when press keys. yes.
+	if(source.client.intended_direction && check_on_move.Invoke(FALSE) && trail) //You use jet when press keys. yes.
 		trail.generate_effect()
 
 /datum/component/jetpack/proc/should_trigger(mob/source)
