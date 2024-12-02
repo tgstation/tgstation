@@ -121,7 +121,7 @@
 	var/color_type = SATURATION_MULTIPLY
 	if (LAZYACCESS(modifiers, RIGHT_CLICK))
 		color_type = SATURATION_OVERRIDE
-	interacting_with.add_atom_colour(color_transition_filter(paint_color, color_type), WASHABLE_COLOUR_PRIORITY, color_type = ATOM_COLOR_TYPE_FILTER)
+	interacting_with.add_atom_colour(color_transition_filter(paint_color, color_type), WASHABLE_COLOUR_PRIORITY)
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
 	return ITEM_INTERACT_SUCCESS

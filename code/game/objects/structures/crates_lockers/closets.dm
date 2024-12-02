@@ -256,10 +256,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	. += emissive_appearance(icon, "locked", src, alpha = src.alpha)
 	. += locked ? "locked" : "unlocked"
 
-/obj/structure/closet/update_atom_colour()
-	. = ..()
-	update_appearance()
-
 /obj/structure/closet/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, opened))
 		if(vval == opened)

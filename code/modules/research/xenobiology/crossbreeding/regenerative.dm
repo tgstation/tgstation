@@ -131,7 +131,7 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/darkblue/proc/fireproof(obj/item/clothing/clothing_piece)
 	clothing_piece.name = "fireproofed [clothing_piece.name]"
 	clothing_piece.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	clothing_piece.add_atom_colour(color_transition_filter(COLOR_NAVY, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY, color_type = ATOM_COLOR_TYPE_FILTER)
+	clothing_piece.add_atom_colour(color_transition_filter(COLOR_NAVY, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY)
 	clothing_piece.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	clothing_piece.heat_protection = clothing_piece.body_parts_covered
 	clothing_piece.resistance_flags |= FIRE_PROOF
@@ -188,7 +188,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/pyrite/core_effect(mob/living/target, mob/user)
 	target.visible_message(span_warning("The milky goo coating [target] leaves [target.p_them()] a different color!"))
-	target.add_atom_colour(color_transition_filter(rgb(rand(0,255), rand(0,255), rand(0,255)), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY, color_type = ATOM_COLOR_TYPE_FILTER)
+	target.add_atom_colour(color_transition_filter(rgb(rand(0,255), rand(0,255), rand(0,255)), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/slimecross/regenerative/red
 	colour = SLIME_TYPE_RED

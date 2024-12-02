@@ -28,7 +28,7 @@
 	var/atom/dried_atom = source
 	if(dry_result == dried_atom.type)//if the dried type is the same as our currrent state, don't bother creating a whole new item, just re-color it.
 		var/atom/movable/resulting_atom = dried_atom
-		resulting_atom.add_atom_colour(dried_color, FIXED_COLOUR_PRIORITY, color_type = ATOM_COLOR_TYPE_FILTER)
+		resulting_atom.add_atom_colour(dried_color, FIXED_COLOUR_PRIORITY)
 		apply_dried_status(resulting_atom, drying_user)
 		return
 	else if(isstack(source)) //Check if its a sheet

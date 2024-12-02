@@ -223,7 +223,7 @@
 		if(color)
 			color_set = color
 		if (cached_color_filter)
-			color_set = apply_color_filter(color_set, cached_color_filter["color"], cached_color_filter["space"] || COLORSPACE_RGB)
+			color_set = apply_matrix_to_color(color_set, cached_color_filter["color"], cached_color_filter["space"] || COLORSPACE_RGB)
 		if(reagents)
 			START_PROCESSING(SSmachines, src)
 		var/area/local_area = get_room_area()

@@ -921,7 +921,7 @@
 
 	to_chat(user, span_notice("You slather the red gunk over the [interacting_with], making it faster."))
 	interacting_with.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	interacting_with.add_atom_colour(color_transition_filter(COLOR_RED, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY, color_type = ATOM_COLOR_TYPE_FILTER)
+	interacting_with.add_atom_colour(color_transition_filter(COLOR_RED, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY)
 	interacting_with.drag_slowdown = 0
 	ADD_TRAIT(interacting_with, TRAIT_SPEED_POTIONED, SLIME_POTION_TRAIT)
 	qdel(src)
@@ -952,7 +952,7 @@
 	to_chat(user, span_notice("You slather the blue gunk over the [clothing], fireproofing it."))
 	clothing.name = "fireproofed [clothing.name]"
 	clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	clothing.add_atom_colour(color_transition_filter(COLOR_NAVY, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY, color_type = ATOM_COLOR_TYPE_FILTER)
+	clothing.add_atom_colour(color_transition_filter(COLOR_NAVY, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY)
 	clothing.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	clothing.heat_protection = clothing.body_parts_covered
 	clothing.resistance_flags |= FIRE_PROOF

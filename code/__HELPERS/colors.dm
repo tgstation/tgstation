@@ -178,38 +178,66 @@
 	return color_matrix_filter(new_matrix, FILTER_COLOR_HSL)
 
 /// Applies a color filter to a hex/RGB list color
-/proc/apply_color_filter(color, list/matrix, colorspace = COLORSPACE_HSL)
-	if (istext(color))
-		color = rgb2num(color)
+/proc/apply_matrix_to_color(color, list/matrix, colorspace = COLORSPACE_HSL)
+	if (islist(color))
+		color = rgb(color[1], color[2], color[3], color[4])
+	color = rgb2num(color, colorspace)
 	// Pad alpha if we're lacking it
 	if (length(color) < 4)
 		color += 255
-	// Ugly but this is the easiest way
-	color = rgb(color[1], color[2], color[3], color[4], space = colorspace)
-	color = rgb2num(color, colorspace)
 
-	var/row_length = 3
-	if (length(matrix) >= 16)
-		row_length = 4
+	// Do we have a constants row?
+	var/has_constants = FALSE
+	// Do we have an alpha row/parameters?
+	var/has_alpha = FALSE
+
+	switch (length(matrix))
+		if (9)
+			has_constants = FALSE
+			has_alpha = FALSE
+		if (12)
+			has_constants = TRUE
+			has_alpha = FALSE
+		if (16)
+			has_constants = FALSE
+			has_alpha = TRUE
+		if (20)
+			has_constants = TRUE
+			has_alpha = TRUE
+		else
+			CRASH("Matrix of invalid length [length(matrix)] was passed into apply_matrix_to_color!")
 
 	var/list/new_color = list(0, 0, 0, 0)
+	var/row_length = 3
+	if (has_alpha)
+		row_length = 4
+	else
+		new_color[4] = 255
 
 	for (var/row_index in 1 to length(matrix) / row_length)
 		for (var/row_elem in 1 to row_length)
 			var/elem = matrix[(row_index - 1) * row_length + row_elem]
-			if (row_index != (length(matrix) / row_length) || (length(matrix) != 12 && length(matrix) != 20))
+			if (!has_constants || row_index != (length(matrix) / row_length))
 				new_color[row_index] += color[row_elem] * elem
 				continue
 
 			// Constant values at the end of the list (if we have such)
+			if (colorspace != COLORSPACE_HSV && colorspace != COLORSPACE_HCY && colorspace != COLORSPACE_HSL)
+				new_color[row_elem] += elem * 255
+				continue
+
+			// HSV/HSL/HCY have non-255 maximums for their values
 			var/multiplier = 255
-			if (colorspace != COLORSPACE_RGB)
+			switch (row_elem)
 				// Hue goes from 0 to 360
-				if (row_elem == 1)
+				if (1)
 					multiplier = 360
 				// Value, luminance, chroma, etc go from 0 to 100
-				else
+				if (2 to 3)
 					multiplier = 100
+				// Alpha still goes from 0 to 255
+				if (4)
+					multiplier = 255
 			new_color[row_elem] += elem * multiplier
 
 	var/rgbcolor = rgb(new_color[1], new_color[2], new_color[3], new_color[4], space = colorspace)

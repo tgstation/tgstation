@@ -19,7 +19,7 @@
 	var/cached_color_filter
 
 ///Adds an instance of colour_type to the atom's atom_colours list
-/atom/proc/add_atom_colour(coloration, colour_priority, color_type = ATOM_COLOR_TYPE_NORMAL)
+/atom/proc/add_atom_colour(coloration, colour_priority)
 	if(!atom_colours || !atom_colours.len)
 		atom_colours = list()
 		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
@@ -27,6 +27,11 @@
 		return
 	if(colour_priority > atom_colours.len)
 		return
+	var/color_type = ATOM_COLOR_TYPE_NORMAL
+	if (islist(coloration))
+		var/list/color_matrix = coloration
+		if (color_matrix["type"] == "color")
+			color_type = ATOM_COLOR_TYPE_FILTER
 	atom_colours[colour_priority] = list(coloration, color_type)
 	update_atom_colour()
 
@@ -68,15 +73,20 @@
 		if (!atom_colours[i])
 			continue
 
-		if (atom_colours[i][ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_NORMAL)
-			if(LOWER_TEXT(atom_colours[i][ATOM_COLOR_VALUE_INDEX]) == looking_for_color)
-				return TRUE
-			continue
-
 		if (!islist(looking_for_color))
+			if (islist(atom_colours[i][ATOM_COLOR_VALUE_INDEX]))
+				continue
+
+			if (LOWER_TEXT(atom_colours[i][ATOM_COLOR_VALUE_INDEX]) == looking_for_color)
+				return TRUE
+
 			continue
 
-		if (compare_list(looking_for_color, atom_colours[i][ATOM_COLOR_VALUE_INDEX]["color"]))
+		var/compared_matrix = atom_colours[i][ATOM_COLOR_VALUE_INDEX]
+		if (atom_colours[i][ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
+			compared_matrix = atom_colours[i][ATOM_COLOR_VALUE_INDEX]["color"]
+
+		if (compare_list(looking_for_color, compared_matrix))
 			return TRUE
 
 	return FALSE
@@ -84,14 +94,14 @@
 ///Resets the atom's color to null, and then sets it to the highest priority colour available
 /atom/proc/update_atom_colour()
 	color = null
-	remove_filter(FILTER_ATOM_PRIORITY_COLOR)
+	remove_filter(ATOM_PRIORITY_COLOR_FILTER)
 
 	if (!atom_colours)
 		return
 
 	for (var/list/checked_color in atom_colours)
 		if (checked_color[ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
-			add_filter(FILTER_ATOM_PRIORITY_COLOR, 1, checked_color[ATOM_COLOR_VALUE_INDEX])
+			add_filter(ATOM_PRIORITY_COLOR_FILTER, ATOM_PRIORITY_COLOR_FILTER_PRIORITY, checked_color[ATOM_COLOR_VALUE_INDEX])
 			cached_color_filter = checked_color[ATOM_COLOR_VALUE_INDEX]
 			return
 
@@ -99,9 +109,11 @@
 			color = checked_color[ATOM_COLOR_VALUE_INDEX]
 			return
 
+	update_appearance()
+
 /// Same as update_atom_color, but simplifies overlay coloring
 /atom/proc/color_atom_overlay(mutable_appearance/overlay)
 	overlay.color = color
-	overlay.remove_filter(FILTER_ATOM_PRIORITY_COLOR)
+	overlay.remove_filter(ATOM_PRIORITY_COLOR_FILTER)
 	if (cached_color_filter)
-		overlay.add_filter(FILTER_ATOM_PRIORITY_COLOR, 1, cached_color_filter)
+		overlay.add_filter(ATOM_PRIORITY_COLOR_FILTER, ATOM_PRIORITY_COLOR_FILTER_PRIORITY, cached_color_filter)
