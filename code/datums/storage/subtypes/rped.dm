@@ -32,7 +32,22 @@
 	)
 
 /datum/storage/rped/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = FALSE)
-	//we check how much of glass,plasteel & cable the user can insert
+	//only stock parts permited
+	if(!to_insert.get_part_rating())
+		//items that are permited inside the rped even though they are not stock parts
+		var/static/list/obj/item/exceptions = list(
+			/obj/item/stack,
+			/obj/item/circuitboard/machine,
+			/obj/item/circuitboard/computer,
+		)
+
+		//if its not a exception return FALSE
+		if(!is_type_in_list(to_insert, exceptions))
+			return FALSE
+
+	return ..()
+
+/datum/storage/rped/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
 	if(isstack(to_insert))
 		//user tried to insert invalid stacktype
 		if(!is_type_in_list(to_insert, allowed_material_types) && !is_type_in_list(to_insert, allowed_bluespace_types))
@@ -60,14 +75,17 @@
 		if(!available)
 			return FALSE
 
-		//we want the user to insert the exact stack amount which is available so we dont have to bother subtracting & leaving left overs for the user
-		if(available - the_stack.amount < 0)
-			return FALSE
+		var/obj/item/stack/target = the_stack
+		if(the_stack.amount > available) //take in only a portion of the stack that can fit in our quota
+			target = fast_split_stack(the_stack, available)
+			target.copy_evidences(the_stack)
 
-	//check normal insertion of other stock parts
-	else if(!to_insert.get_part_rating())
-		if(!istype(to_insert, /obj/item/circuitboard/machine) && !istype(to_insert, /obj/item/circuitboard/computer))
-			return FALSE
+		. = ..(target, user, override, force, messages)
+		if(!. && target != the_stack) //in case of failure merge back the split amount into the original
+			the_stack.add(target.amount)
+			qdel(target)
+
+		return
 
 	return ..()
 
