@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed Hilbert's rigged analyzer not being able to scan the hotel orb"
