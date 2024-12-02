@@ -13,12 +13,11 @@
 	numerical_stacking = TRUE
 
 	/**
-	 * as of now only these stack components are required to build machines like[thermomachine,crystallizer,electrolyzer  & turbine]
+	 * as of now only these stack components are required to build machines like[thermomachine,crystallizer,electrolyzer]
 	 * so we limit the rped to pick up only these stack types so players dont cheat and use this as a general storage medium
 	 */
 	var/static/list/allowed_material_types = list(
 		/obj/item/stack/sheet/glass,
-		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/plasteel,
 		/obj/item/stack/cable_coil,
 	)
