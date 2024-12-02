@@ -32,10 +32,6 @@
 	)
 
 /datum/storage/rped/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = FALSE)
-	. = ..()
-	if(!.)
-		return
-
 	//we check how much of glass,plasteel & cable the user can insert
 	if(isstack(to_insert))
 		//user tried to insert invalid stacktype
@@ -67,12 +63,14 @@
 		if(available - the_stack.amount < 0)
 			return FALSE
 
-	else if(istype(to_insert, /obj/item/circuitboard/machine) || istype(to_insert, /obj/item/circuitboard/computer))
-		return TRUE
+	else if(!istype(to_insert, /obj/item/circuitboard/machine) && !istype(to_insert, /obj/item/circuitboard/computer))
+		return FALSE
 
 	//check normal insertion of other stock parts
 	else if(!to_insert.get_part_rating())
 		return FALSE
+
+	return ..()
 
 /datum/storage/rped/mass_empty(datum/source, mob/user)
 	var/list/obj/item/parts_list = list()
