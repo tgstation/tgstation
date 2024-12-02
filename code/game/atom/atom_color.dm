@@ -103,11 +103,11 @@
 		if (checked_color[ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
 			add_filter(ATOM_PRIORITY_COLOR_FILTER, ATOM_PRIORITY_COLOR_FILTER_PRIORITY, checked_color[ATOM_COLOR_VALUE_INDEX])
 			cached_color_filter = checked_color[ATOM_COLOR_VALUE_INDEX]
-			return
+			break
 
 		if (length(checked_color[ATOM_COLOR_VALUE_INDEX]))
 			color = checked_color[ATOM_COLOR_VALUE_INDEX]
-			return
+			break
 
 	update_appearance()
 
