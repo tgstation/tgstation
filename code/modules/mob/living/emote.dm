@@ -303,14 +303,14 @@
 	key_third_person = "points"
 	message = "points."
 	message_param = "points at %t."
-	cooldown = 3 SECONDS
+	cooldown = 1 SECONDS
 	// don't put hands use check here, everything is handled in run_emote
 
 /datum/emote/living/point/run_emote(mob/user, params, type_override, intentional)
 	message_param = initial(message_param) // reset
 	if(iscarbon(user))
 		var/mob/living/carbon/our_carbon = user
-		if(our_carbon.usable_hands <= 0)
+		if(our_carbon.usable_hands <= 0 || user.incapacitated & INCAPABLE_RESTRAINTS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 			if(our_carbon.usable_legs > 0)
 				var/one_leg = FALSE
 				var/has_shoes = our_carbon.get_item_by_slot(ITEM_SLOT_FEET)
@@ -326,16 +326,20 @@
 				else
 					message_param = "[one_leg ? "jumps into the air and " : ""]tries to point at %t with their [has_shoes ? "leg" : "toes"], [span_userdanger("falling down")] in the process!"
 					our_carbon.Paralyze(2 SECONDS)
+				TIMER_COOLDOWN_START(user, "point_verb_emote_cooldown", 1 SECONDS)
 			else
 				if(our_carbon.get_organ_slot(ORGAN_SLOT_EYES))
 					message_param = "gives a meaningful glance at %t!"
+					TIMER_COOLDOWN_START(src, "point_verb_emote_cooldown", 1.5 SECONDS)
 				else
 					if(our_carbon.get_organ_slot(ORGAN_SLOT_TONGUE))
 						message_param = "motions their tongue towards %t!"
+						TIMER_COOLDOWN_START(src, "point_verb_emote_cooldown", 2 SECONDS)
 					else
 						message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
 						our_carbon.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 						playsound(user, 'sound/effects/glass/glassbash.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+						TIMER_COOLDOWN_START(src, "point_verb_emote_cooldown", 2.5 SECONDS)
 	return ..()
 
 /datum/emote/living/sneeze
