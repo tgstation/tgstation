@@ -63,7 +63,7 @@
 		return
 
 	// does not use the status effect api because we snowflake it a bit
-	owner.throw_alert(id, /atom/movable/screen/alert/tazed)
+	owner.throw_alert(type, /atom/movable/screen/alert/tazed)
 
 	set_taser(fired_from)
 	set_firer(firer)
@@ -160,7 +160,7 @@
 	if(!QDELING(owner))
 		owner.adjust_jitter_up_to(10 SECONDS, 1 MINUTES)
 		if(!owner.has_status_effect(type))
-			owner.clear_alert(id)
+			owner.clear_alert(type)
 
 	taser = null
 	firer = null
@@ -244,7 +244,7 @@
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		return NONE
 	end_tase()
-	owner.changeNext_move(CLICK_CD_GRABBING)
+	source.changeNext_move(CLICK_CD_GRABBING)
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /datum/status_effect/tased/proc/end_tase(...)
