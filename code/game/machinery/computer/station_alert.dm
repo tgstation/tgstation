@@ -9,7 +9,9 @@
 	var/datum/station_alert/alert_control
 
 /obj/machinery/computer/station_alert/Initialize(mapload)
-	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), title = name)
+	// An area list so we only send an alarm if we're in one of the station or mining home areas
+	var/list/allowed_areas = GLOB.the_station_areas + typesof(/area/mine)
+	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), listener_areas = allowed_areas, title = name)
 	RegisterSignals(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
 	return ..()
 

@@ -56,8 +56,13 @@
 	priority_alarms.Cut()
 	minor_alarms.Cut()
 
+	// An area list so we only send an alarm if we're in one of the station or mining home areas
+	var/list/allowed_areas = GLOB.the_station_areas + typesof(/area/mine)
 	for (var/obj/machinery/airalarm/air_alarm as anything in GLOB.air_alarms)
 		if (air_alarm.z != z)
+			continue
+
+		if (!(air_alarm.my_area.type in allowed_areas))
 			continue
 
 		switch (air_alarm.danger_level)
