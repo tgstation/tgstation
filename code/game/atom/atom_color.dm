@@ -97,6 +97,7 @@
 	color = null
 	cached_color_filter = null
 	remove_filter(ATOM_PRIORITY_COLOR_FILTER)
+	REMOVE_KEEP_TOGETHER(src, ATOM_COLOR_TRAIT)
 
 	if (!atom_colours)
 		if (old_filter)
@@ -113,6 +114,7 @@
 			color = checked_color[ATOM_COLOR_VALUE_INDEX]
 			break
 
+	ADD_KEEP_TOGETHER(src, ATOM_COLOR_TRAIT)
 	if (cached_color_filter != old_filter)
 		update_appearance()
 
