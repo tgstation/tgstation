@@ -36,6 +36,10 @@
 	. = ..()
 	if(fishing_modifier)
 		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+	add_stabilizer()
+
+/obj/item/clothing/head/helmet/space/proc/add_stabilizer(loose_hat = TRUE)
+	AddComponent(/datum/component/hat_stabilizer, loose_hat = loose_hat)
 
 /datum/armor/helmet_space
 	bio = 100

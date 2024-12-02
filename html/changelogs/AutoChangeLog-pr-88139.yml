@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "fixed some wiring on wawastation, added an additional distro/scrubbers connection to sciences network"

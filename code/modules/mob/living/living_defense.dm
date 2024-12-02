@@ -91,12 +91,11 @@
 /mob/living/proc/is_ears_covered()
 	return null
 
-/mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE)
+/mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE, blocked = 0)
 	. = ..()
 	if (. != BULLET_ACT_HIT)
 		return .
 
-	var/blocked = check_projectile_armor(def_zone, proj, is_silent = TRUE)
 	if(blocked >= 100)
 		if(proj.is_hostile_projectile())
 			apply_projectile_effects(proj, def_zone, blocked)
@@ -678,9 +677,9 @@
 
 	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) * 0.01 : 0
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
-	for(var/reagent in reagents)
-		var/datum/reagent/R = reagent
-		. |= R.expose_mob(src, methods, reagents[R], show_message, touch_protection)
+	for(var/datum/reagent/reagent as anything in reagents)
+		var/reac_volume = reagents[reagent]
+		. |= reagent.expose_mob(src, methods, reac_volume, show_message, touch_protection)
 
 /// Simplified ricochet angle calculation for mobs (also the base version doesn't work on mobs)
 /mob/living/handle_ricochet(obj/projectile/ricocheting_projectile)
