@@ -64,7 +64,6 @@
 		"medkit_burn",
 		"medkit_toxin",
 		"medkit_o2",
-		"medkit_buffs",
 	)
 	return ..()
 
