@@ -296,7 +296,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/our_human = user
 		if(!our_human.get_organ_slot(ORGAN_SLOT_EYES))
-			message_param = "rotates [user.p_their] head towards %s"
+			message_param = "rotates their head towards %s"
 	return ..()
 
 /datum/emote/living/nod
@@ -487,15 +487,15 @@
 			var/one_hand = FALSE
 			if(our_human.usable_hands == 1)
 				one_hand = TRUE
-			message = "stretches [our_human.p_their] arm[one_hand ? "" : "s"]"
+			message = "stretches their arm[one_hand ? "" : "s"]"
 		else
 			if(our_human.usable_legs)
-			var/one_leg = FALSE
-			if(our_human.usable_legs == 1)
-				one_leg = TRUE
-			message = "stretches [our_human.p_their] leg[one_leg ? "" : "s"]"
+				var/one_leg = FALSE
+				if(our_human.usable_legs == 1)
+					one_leg = TRUE
+					message = "stretches their leg[one_leg ? "" : "s"]"
 			else
-				message = "stretches [our_human.p_their] neck"
+				message = "stretches their neck"
 
 /datum/emote/living/sulk
 	key = "sulk"
@@ -530,7 +530,7 @@
 /datum/emote/living/tilt
 	key = "tilt"
 	key_third_person = "tilts"
-	message = "tilts [user.p_their] head to the side."
+	message = "tilts their head to the side."
 
 /datum/emote/living/tremble
 	key = "tremble"
