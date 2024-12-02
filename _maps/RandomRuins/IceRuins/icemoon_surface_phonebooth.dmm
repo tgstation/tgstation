@@ -10,7 +10,6 @@
 /area/icemoon/underground/explored)
 "e" = (
 /obj/structure/lattice,
-/obj/structure/billboard/Phone_booth,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "k" = (
@@ -28,17 +27,10 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/icemoon_phone_booth)
 "q" = (
-/obj/machinery/vending/coffee,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 8
-	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/weather/snow,
-/turf/open/floor/plating/icemoon,
-/area/ruin/powered/icemoon_phone_booth)
+/obj/structure/lattice,
+/obj/structure/billboard/Phone_booth,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "v" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/light/small/directional/north,
@@ -83,27 +75,34 @@
 /obj/machinery/holopad,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
-/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/powered/icemoon_phone_booth)
 "V" = (
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/obj/machinery/vending/coffee,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/icemoon_phone_booth)
 "W" = (
-/obj/structure/lattice,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 
 (1,1,1) = {"
-e
-M
 q
+M
+V
 k
 M
 c
 "}
 (2,1,1) = {"
-V
+W
 M
 R
 a
@@ -111,7 +110,7 @@ z
 c
 "}
 (3,1,1) = {"
-W
+e
 M
 v
 J
