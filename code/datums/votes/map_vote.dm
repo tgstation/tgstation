@@ -6,7 +6,7 @@
 	display_statistics = FALSE
 	default_choices = list(
 		"MetaStation",
-		"DeltaStation",
+		"Birdshot",
 		"IceBox",
 		"TramStation",
 	)
