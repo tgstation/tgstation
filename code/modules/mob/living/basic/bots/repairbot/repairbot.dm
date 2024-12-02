@@ -74,7 +74,7 @@
 	///our color
 	var/toolbox_color = "#445eb3"
 	///toolbox type we drop on death
-	var/toolbox = /obj/item/storage/toolbox
+	var/toolbox = /obj/item/storage/toolbox/mechanical
 
 /mob/living/basic/bot/repairbot/Initialize(mapload)
 	. = ..()
@@ -120,6 +120,7 @@
 			return
 		var/atom/movable/to_move = potential_stack.split_stack(user, min(our_sheet.max_amount - our_sheet.amount, potential_stack.amount))
 		to_move.forceMove(src)
+		balloon_alert(src, "inserted")
 		return
 
 /mob/living/basic/bot/repairbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -241,7 +242,7 @@
 	return ..()
 
 /mob/living/basic/bot/repairbot/process(seconds_per_tick) //generate 1 iron rod every 2 seconds
-	if(!isnull(our_rods) && our_rods.amount >= our_rods.max_amount)
+	if(isnull(our_rods) || our_rods.amount < our_rods.max_amount)
 		var/obj/item/stack/rods/new_rods = new()
 		new_rods.forceMove(src)
 
@@ -337,6 +338,9 @@
 	if(!(bot_access_flags & BOT_COVER_EMAGGED) || !isnull(deconstruction_device))
 		return
 	deconstruction_device = new(src)
+
+/mob/living/basic/bot/repairbot/explode()
+	drop_part(toolbox, drop_location())
 
 /obj/item/weldingtool/repairbot
 	max_fuel = INFINITY

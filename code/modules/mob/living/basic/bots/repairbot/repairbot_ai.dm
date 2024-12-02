@@ -234,7 +234,7 @@
 	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_wall_target, BB_GIRDER_TARGET, searchable_turfs, 5, 10, FALSE, TRUE)
 
 /datum/ai_behavior/bot_search/valid_wall_target
-	action_cooldown = 5 SECONDS
+	action_cooldown = 30 SECONDS
 
 /datum/ai_behavior/bot_search/valid_wall_target/valid_target(datum/ai_controller/basic_controller/bot/controller, turf/my_target)
 	if(istype(get_area(my_target), /area/space) || isgroundlessturf(my_target) || my_target.is_blocked_turf())
