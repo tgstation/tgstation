@@ -97,6 +97,7 @@
 	remove_filter(ATOM_PRIORITY_COLOR_FILTER)
 
 	if (!atom_colours)
+		update_appearance()
 		return
 
 	for (var/list/checked_color in atom_colours)
