@@ -1390,9 +1390,10 @@
 /obj/machinery/door/airlock/proc/prison_open()
 	if(obj_flags & EMAGGED)
 		return
-	locked = FALSE
+	if(locked)
+		unbolt()
 	open()
-	locked = TRUE
+	bolt()
 	return
 
 // gets called when a player uses an airlock painter on this airlock
@@ -1816,7 +1817,7 @@
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
 
-/obj/structure/fluff/airlock_filler/can_be_pulled(user, grab_state, force)
+/obj/structure/fluff/airlock_filler/can_be_pulled(user, force)
 	return FALSE
 
 /obj/structure/fluff/airlock_filler/singularity_act()

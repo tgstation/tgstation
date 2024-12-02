@@ -1,0 +1,4 @@
+author: "SmArtKar, Kapu"
+delete-after: True
+changes:
+  - bugfix: "Atmospheric tanks no longer fetch icons every tick"

@@ -11,8 +11,6 @@
 	VAR_FINAL/on = FALSE
 	/// A reference to the current soup pot overtop
 	VAR_FINAL/obj/item/container
-	/// A particle holder for the smoke that comes out of the soup while a container is cooking.
-	VAR_FINAL/obj/effect/abstract/particle_holder/soup_smoke
 	/// Typepath of particles to use for the particle holder.
 	VAR_FINAL/particle_type = /particles/smoke/steam/mild
 	/// Ref to our looping sound played when cooking
@@ -60,11 +58,12 @@
 	real_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/stove/UnregisterFromParent()
+	var/obj/machinery/real_parent = parent
 	if(!QDELING(parent))
-		var/obj/machinery/real_parent = parent
 		container.forceMove(real_parent.drop_location())
 
-	QDEL_NULL(soup_smoke)
+	if (particle_type)
+		real_parent.remove_shared_particles("[particle_type]_stove_[container_x]")
 
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
@@ -248,6 +247,7 @@
 	SIGNAL_HANDLER
 
 	var/existing_temp = container?.reagents.chem_temp || 0
+	var/old_type = particle_type
 	if(existing_temp >= SOUP_BURN_TEMP)
 		particle_type = /particles/smoke/steam/bad
 	else if(existing_temp >= WATER_BOILING_POINT)
@@ -255,20 +255,23 @@
 	else
 		particle_type = null
 
-	update_smoke()
+	update_smoke(old_type)
 
-/datum/component/stove/proc/update_smoke()
-	if(on && container?.reagents.total_volume > 0)
-		soup_sound.start()
-		// Don't override existing particles, wasteful
-		if(isnull(soup_smoke) || soup_smoke.particles.type != particle_type)
-			QDEL_NULL(soup_smoke)
-			if(isnull(particle_type))
-				return
-			// this gets badly murdered by sidemap
-			soup_smoke = new(parent, particle_type)
-			soup_smoke.set_particle_position(container_x, round(ICON_SIZE_Y * 0.66), 0)
+/datum/component/stove/proc/update_smoke(old_type = null)
+	var/obj/obj_parent = parent
+
+	if (old_type)
+		obj_parent.remove_shared_particles("[old_type]_stove_[container_x]")
+
+	if(!on || !container?.reagents.total_volume)
+		soup_sound?.stop()
+		if (!isnull(particle_type))
+			obj_parent.remove_shared_particles("[particle_type]_stove_[container_x]")
 		return
 
-	QDEL_NULL(soup_smoke)
-	soup_sound?.stop()
+	soup_sound.start()
+	if(isnull(particle_type))
+		return
+	var/obj/effect/abstract/shared_particle_holder/soup_smoke = obj_parent.add_shared_particles(particle_type, "[particle_type]_stove_[container_x]")
+	soup_smoke.particles.position = list(container_x, round(ICON_SIZE_Y * 0.66), 0)
+

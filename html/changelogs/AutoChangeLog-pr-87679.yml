@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "RLD won't try to put lights on storage objects like bags & such"

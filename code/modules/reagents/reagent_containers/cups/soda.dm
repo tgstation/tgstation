@@ -82,23 +82,21 @@
 		return TRUE
 	return ..()
 
-/obj/item/reagent_containers/cup/soda_cans/bullet_act(obj/projectile/P)
+/obj/item/reagent_containers/cup/soda_cans/bullet_act(obj/projectile/proj)
 	. = ..()
 	if(QDELETED(src))
 		return
-	if(P.damage > 0 && P.damage_type == BRUTE)
-		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
-		crushed_can.icon_state = icon_state
-
-		//MASSMETA EDIT ADDITION BEGIN (kvass)
-		if(icon_state == "kvass")
-			crushed_can.icon = 'massmeta/icons/items/janitor.dmi'
-		//MASSMETA EDIT ADDITION END
-
-		var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
-		crushed_can.throw_at(throw_target, rand(1,2), 7)
-		qdel(src)
+	if(!proj.damage || proj.damage_type != BRUTE)
 		return
+	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(loc)
+	crushed_can.icon_state = icon_state
+	//MASSMETA EDIT ADDITION BEGIN (kvass)
+	if(icon_state == "kvass")
+		crushed_can.icon = 'massmeta/icons/items/janitor.dmi'
+	//MASSMETA EDIT ADDITION END
+	var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
+	crushed_can.throw_at(throw_target, rand(1,2), 7)
+	qdel(src)
 
 /obj/item/reagent_containers/cup/soda_cans/proc/open_soda(mob/user)
 	if(prob(fizziness))
@@ -150,7 +148,7 @@
 
 	burst_soda(hit_atom, hide_message = TRUE)
 	visible_message(span_danger("[src]'s impact with [hit_atom] causes it to rupture, spilling everywhere!"))
-	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
+	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(loc)
 	crushed_can.icon_state = icon_state
 
 	//MASSMETA EDIT ADDITION BEGIN (kvass)

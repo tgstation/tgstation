@@ -78,8 +78,7 @@
 		return
 	//Now we generate the tracer.
 	var/angle = get_angle(our_turf, target_turf)
-	var/datum/point/vector/V = new(our_turf.x, our_turf.y, our_turf.z, 0, 0, angle)
-	generate_tracer_between_points(V, V.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, 0, shot_delay, 0, 0, 0, null)
+	our_turf.Beam(target_turf, 'icons/effects/beam.dmi', "blood_light", time = shot_delay)
 	playsound(src, 'sound/machines/airlock/airlockopen.ogg', 100, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(fire_beam), angle), shot_delay)
 
@@ -104,11 +103,6 @@
 	impact_type = /obj/effect/projectile/tracer/legion
 	hitscan = TRUE
 	projectile_piercing = ALL
-
-/// Used for the legion turret tracer.
-/obj/effect/projectile/tracer/legion/tracer
-	icon = 'icons/effects/beam.dmi'
-	icon_state = "blood_light"
 
 /// Used for the legion turret beam.
 /obj/effect/projectile/tracer/legion

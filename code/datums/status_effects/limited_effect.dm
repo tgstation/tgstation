@@ -1,8 +1,9 @@
 /// These effects reapply their on_apply() effect when refreshed while stacks < max_stacks.
 /datum/status_effect/limited_buff
 	id = "limited_buff"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
 	///How many stacks we currently have
 	var/stacks = 1
 	///How many stacks we can have maximum

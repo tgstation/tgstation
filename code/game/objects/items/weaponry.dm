@@ -64,7 +64,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/balloon_mallet/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
-		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
+		. += "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
 
 /obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
 	playsound(loc, 'sound/mobs/non-humanoids/clown/hehe.ogg', 20)
@@ -297,19 +297,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			new_name = "triple-notched claymore"
 			add_atom_colour(rgb(255, 215, 215), ADMIN_COLOUR_PRIORITY)
 		if(4)
-			to_chat(user, span_notice("You've lost count of</span> <span class='boldannounce'>how many you've killed."))
+			to_chat(user, span_notice("You've lost count of</span> <span class='bolddanger'>how many you've killed."))
 			new_name = "many-notched claymore"
 			add_atom_colour(rgb(255, 195, 195), ADMIN_COLOUR_PRIORITY)
 		if(5)
-			to_chat(user, span_boldannounce("Five voices now echo in your mind, cheering the slaughter."))
+			to_chat(user, span_bolddanger("Five voices now echo in your mind, cheering the slaughter."))
 			new_name = "battle-tested claymore"
 			add_atom_colour(rgb(255, 175, 175), ADMIN_COLOUR_PRIORITY)
 		if(6)
-			to_chat(user, span_boldannounce("Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe."))
+			to_chat(user, span_bolddanger("Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe."))
 			new_name = "battle-scarred claymore"
 			add_atom_colour(rgb(255, 155, 155), ADMIN_COLOUR_PRIORITY)
 		if(7)
-			to_chat(user, span_boldannounce("Kill. Butcher. <i>Conquer.</i>"))
+			to_chat(user, span_bolddanger("Kill. Butcher. <i>Conquer.</i>"))
 			new_name = "vicious claymore"
 			add_atom_colour(rgb(255, 135, 135), ADMIN_COLOUR_PRIORITY)
 		if(8)
@@ -431,6 +431,44 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /datum/embed_data/throwing_star/toy
 	pain_mult = 0
 	jostle_pain_mult = 0
+
+/obj/item/carpenter_hammer
+	name = "carpenter hammer"
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "carpenter_hammer"
+	inhand_icon_state = "carpenter_hammer"
+	worn_icon_state = "clawhammer" //plaecholder
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	desc = "Uncanny looking hammer."
+	force = 20
+	throwforce = 20
+	throw_range = 4
+	w_class = WEIGHT_CLASS_NORMAL
+	wound_bonus = 20
+	demolition_mod = 1.25
+	slot_flags = ITEM_SLOT_BELT
+
+/obj/item/carpenter_hammer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/item_killsound, \
+	allowed_mobs = list(/mob/living/carbon/human), \
+	killsound = 'sound/items/weapons/hammer_death_scream.ogg', \
+	replace_default_death_sound = TRUE, \
+	)
+
+/obj/item/carpenter_hammer/examine(mob/user)
+	. = ..()
+	. += ""
+	. += "Real World Tip:"
+	. += pick(
+		"Every building, from hospitals to homes, has a room that serves as the heart of the building \
+		and carries blood and nutrients to its extremities. Try to find the heart of your home!",
+		"All the food you've tried is rotten. You've never eaten fresh food.",
+		"Viruses do not exist. Illness is simply your body punishing you for what you have done wrong.",
+		"Space stations must have at least 50 mammalian teeth embedded in the north walls for structural safety reasons.",
+		"Queen dragonfly sleeps and smiles.",
+	)
 
 /obj/item/switchblade
 	name = "switchblade"

@@ -646,7 +646,7 @@
 	overdose_threshold = 30
 	ph = 8.96
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opioids = 10)
+	addiction_types = list(/datum/addiction/opioids = 20) // 30 units of morphine may cause addition
 	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/affected_mob)
@@ -661,13 +661,28 @@
 	. = ..()
 	if(current_cycle > 5)
 		affected_mob.add_mood_event("numb", /datum/mood_event/narcotic_medium, name)
+	if(affected_mob.disgust < DISGUST_LEVEL_VERYGROSS && SPT_PROB(50 * (2 - creation_purity), seconds_per_tick))
+		affected_mob.adjust_disgust(1.5 * REM * seconds_per_tick)
+
 	switch(current_cycle)
-		if(12)
-			to_chat(affected_mob, span_warning("You start to feel tired...") )
-		if(13 to 25)
-			affected_mob.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
-		if(25 to INFINITY)
-			affected_mob.Sleeping(40 * REM * seconds_per_tick)
+		if(16) //~3u
+			to_chat(affected_mob, span_warning("You start to feel tired..."))
+			affected_mob.adjust_eye_blur(2 SECONDS * REM * seconds_per_tick)
+			if(SPT_PROB(66, seconds_per_tick))
+				affected_mob.emote("yawn")
+
+		if(24 to 36) // 5u to 7.5u
+			if(SPT_PROB(66 * (2 - creation_purity), seconds_per_tick))
+				affected_mob.adjust_drowsiness_up_to(2 SECONDS * REM * seconds_per_tick, 12 SECONDS)
+
+		if(36 to 48) // 7.5u to 10u
+			affected_mob.adjust_drowsiness_up_to(2 SECONDS * REM * seconds_per_tick, 12 SECONDS)
+
+		if(48 to INFINITY) //10u onward
+			affected_mob.adjust_drowsiness_up_to(3 SECONDS * REM * seconds_per_tick, 20 SECONDS)
+			// doesn't scale from purity - at this point it tries to guarantee sleep
+			if(SPT_PROB(30 * (48 - current_cycle), seconds_per_tick))
+				affected_mob.Sleeping(4 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/medicine/morphine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -906,6 +921,10 @@
 	/// The maximum amount of damage we can revive from, as a ratio of max health
 	var/max_revive_damage_ratio = 2
 
+// To override for subtypes.
+/datum/reagent/medicine/strange_reagent/proc/pre_rez_check(atom/thing_to_rez)
+	return TRUE
+
 /datum/reagent/medicine/strange_reagent/instant
 	name = "Stranger Reagent"
 	instant = TRUE
@@ -965,6 +984,11 @@
 		exposed_mob.do_jitter_animation(10)
 		return
 
+	if(!pre_rez_check(exposed_mob))
+		exposed_mob.visible_message(span_warning("[exposed_mob]'s body twitches slightly."))
+		exposed_mob.do_jitter_animation(1)
+		return
+
 	exposed_mob.visible_message(span_warning("[exposed_mob]'s body starts convulsing!"))
 	exposed_mob.notify_revival("Your body is being revived with Strange Reagent!")
 	exposed_mob.do_jitter_animation(10)
@@ -994,6 +1018,27 @@
 	need_mob_update += affected_mob.adjustFireLoss(damage_at_random * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
+
+/datum/reagent/medicine/strange_reagent/fishy_reagent
+	name = "Fishy Reagent"
+	description = "This reagent has a chemical composition very similar to that of Strange Reagent, however, it seems to work purely and only on... fish. Or at least, aquatic creatures."
+	reagent_state = LIQUID
+	color = "#5ee8b3"
+	metabolization_rate = 1.25 * REAGENTS_METABOLISM
+	taste_description = "magnetic scales"
+	ph = 0.5
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+// only revives fish.
+/datum/reagent/medicine/strange_reagent/fishy_reagent/pre_rez_check(atom/thing_to_rez)
+	if(ismob(thing_to_rez))
+		var/mob/living/mob_to_rez = thing_to_rez
+		if(mob_to_rez.mob_biotypes & MOB_AQUATIC)
+			return TRUE
+		return FALSE
+	if(isfish(thing_to_rez))
+		return TRUE
+	return FALSE
 
 /datum/reagent/medicine/mannitol
 	name = "Mannitol"
@@ -1184,7 +1229,7 @@
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-2 SECONDS * REM * seconds_per_tick)
 	holder.remove_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.

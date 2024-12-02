@@ -73,7 +73,7 @@
 	. = ..()
 	if(!new_viewer || hud_users_all_z_levels.len != 1)
 		return
-	for(var/mob/camera/ai_eye/eye as anything in GLOB.aiEyes)
+	for(var/mob/eye/camera/ai/eye as anything in GLOB.camera_eyes)
 		eye.update_ai_detect_hud()
 
 /datum/atom_hud/data/malf_apc
@@ -541,7 +541,7 @@ Diagnostic HUDs!
 	switch(mode)
 		if(BOT_SUMMON, BOT_RESPONDING) //Responding to PDA or AI summons
 			holder.icon_state = "hudcalled"
-		if(BOT_CLEANING, BOT_REPAIRING, BOT_HEALING) //Cleanbot cleaning, Floorbot fixing, or Medibot Healing
+		if(BOT_CLEANING, BOT_HEALING) //Cleanbot cleaning, repairbot fixing, or Medibot Healing
 			holder.icon_state = "hudworking"
 		if(BOT_PATROL, BOT_START_PATROL) //Patrol mode
 			holder.icon_state = "hudpatrol"

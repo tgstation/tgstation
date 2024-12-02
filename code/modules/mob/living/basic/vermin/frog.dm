@@ -4,7 +4,7 @@
 	icon_state = "frog"
 	icon_living = "frog"
 	icon_dead = "frog_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_AQUATIC
 	verb_say = "ribbits"
 	verb_ask = "ribbits inquisitively"
 	verb_exclaim = "croaks"

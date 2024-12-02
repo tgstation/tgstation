@@ -1,0 +1,1 @@
+/obj/machinery/mecha_part_fabricator/@SUBTYPES{dir = @ANY} : /obj/machinery/mecha_part_fabricator/@SUBTYPES{@OLD;dir=@SKIP;drop_direction=@OLD:dir}

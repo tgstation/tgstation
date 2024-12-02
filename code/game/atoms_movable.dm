@@ -514,7 +514,7 @@
 /atom/movable/proc/start_pulling(atom/movable/pulled_atom, state, force = move_force, supress_message = FALSE)
 	if(QDELETED(pulled_atom))
 		return FALSE
-	if(!(pulled_atom.can_be_pulled(src, state, force)))
+	if(!(pulled_atom.can_be_pulled(src, force)))
 		return FALSE
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
@@ -618,7 +618,7 @@
 		buckled_mob.set_glide_size(target)
 
 /**
- * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
+ * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like eye mobs or ghosts)
  * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
  * most of the time you want forceMove()
  */
@@ -1320,6 +1320,7 @@
 		step(src, hitting_atom.dir)
 	return ..()
 
+// Calls throw_at after checking that the move strength is greater than the thrown atom's move resist. Identical args.
 /atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	if((force < (move_resist * MOVE_FORCE_THROW_RATIO)) || (move_resist == INFINITY))
 		return
@@ -1643,7 +1644,7 @@
 /atom/movable/proc/get_cell(atom/movable/interface, mob/user)
 	return
 
-/atom/movable/proc/can_be_pulled(user, grab_state, force)
+/atom/movable/proc/can_be_pulled(user, force)
 	if(src == user || !isturf(loc))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_ATOM_CAN_BE_PULLED, user) & COMSIG_ATOM_CANT_PULL)
