@@ -65,7 +65,8 @@
 
 	//check normal insertion of other stock parts
 	else if(!to_insert.get_part_rating())
-		return istype(to_insert, /obj/item/circuitboard/machine) || istype(to_insert, /obj/item/circuitboard/computer)
+		if(!istype(to_insert, /obj/item/circuitboard/machine) && !istype(to_insert, /obj/item/circuitboard/computer))
+			return FALSE
 
 	return ..()
 
