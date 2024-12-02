@@ -1,6 +1,6 @@
 /obj/item/knife/poison
 	name = "venom knife"
-	icon = 'icons/obj/weapons/stabby.dmi'
+	icon = 'icons/obj/weapons/stabby.dmi'    // Пока что использует стандартный спрайт боевого ножа, если есть желание сделать уникальный спрайт - дерзайте.
 	icon_state = "buckknife"
 	worn_icon_state = "buckknife"
 	force = 12
