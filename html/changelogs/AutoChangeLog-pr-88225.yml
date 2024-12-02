@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "chainsaw is not invisible when turned off in hand"
+  - bugfix: "chainsaw won't play ping sound when turned on"
+  - bugfix: "mounted chainsaw has a new animated sprite when turned on & won't go invisible in hand"

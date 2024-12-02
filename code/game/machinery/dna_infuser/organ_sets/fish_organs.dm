@@ -8,8 +8,8 @@
 	id = "organ_set_bonus_fish"
 	tick_interval = 1 SECONDS
 	organs_needed = 3
-	bonus_activate_text = span_notice("Fish DNA is deeply infused with you! While wet, you crawl faster, are slippery, and cannot slip, and it takes longer to dry out. \
-		You're also more resistant to high pressure, better at fishing, but less resilient when dry, especially against burns.")
+	bonus_activate_text = span_notice("Fish DNA is deeply infused with you! While wet, you crawl faster, are slippery, cannot slip, and it takes longer to dry out. \
+		You're also resistant to high pressure, better at fishing, but less resilient when dry, especially against burns.")
 	bonus_deactivate_text = span_notice("You no longer feel as fishy. The moisture around your body begins to dissipate faster...")
 	bonus_traits = list(
 		TRAIT_RESISTHIGHPRESSURE,
@@ -34,6 +34,9 @@
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
+		//Fish is slightly weaker to being cooked. oh oh.
+		human.physiology.burn_mod *= 1.15
+		human.physiology.heat_mod *= 1.15
 		human.physiology.damage_resistance += 8 //base 8% damage resistance, much wow.
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET))
 		apply_debuff()
@@ -61,6 +64,8 @@
 	owner.clear_mood_event("fish_organs_bonus")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
+		human.physiology.burn_mod /= 1.15
+		human.physiology.heat_mod /= 1.15
 		human.physiology.damage_resistance -= 8
 	if(HAS_TRAIT(owner, TRAIT_IS_WET) && istype(owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/tail/fish))
 		remove_speed_buff()

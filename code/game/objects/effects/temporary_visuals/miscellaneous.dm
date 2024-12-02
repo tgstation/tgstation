@@ -57,6 +57,12 @@
 	icon_state = "firing_effect"
 	duration = 3
 
+/obj/effect/temp_visual/dir_setting/firing_effect/Initialize(mapload, set_dir)
+	. = ..()
+	if (ismovable(loc))
+		var/atom/movable/spawned_inside = loc
+		spawned_inside.vis_contents += src
+
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
 		if(NORTH)
@@ -245,7 +251,7 @@
 
 /obj/effect/temp_visual/fire
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "3"
+	icon_state = "heavy"
 	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10

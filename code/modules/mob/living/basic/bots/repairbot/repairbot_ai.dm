@@ -3,7 +3,6 @@
 /datum/ai_controller/basic_controller/bot/repairbot
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/repairbot_speech,
-		/datum/ai_planning_subtree/manage_unreachable_list,
 		/datum/ai_planning_subtree/mug_robot,
 		/datum/ai_planning_subtree/refill_materials,
 		/datum/ai_planning_subtree/repairbot_deconstruction,
@@ -82,6 +81,7 @@
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/bot_search/valid_robot
+	action_cooldown = 10 SECONDS
 
 /datum/ai_behavior/bot_search/valid_robot/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	return (!HAS_TRAIT(my_target, TRAIT_MOB_TIPPED)) && can_see(controller.pawn, my_target)
@@ -113,6 +113,7 @@
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/bot_search/deconstructable
+	action_cooldown = 5 SECONDS
 
 /datum/ai_behavior/bot_search/deconstructable/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	return (!(my_target.resistance_flags & INDESTRUCTIBLE) && !isgroundlessturf(my_target))
@@ -179,18 +180,27 @@
 	controller.queue_behavior(search_behavior, floor_key, type_of_turf, 5, 10, FALSE, TRUE)
 
 /datum/ai_behavior/bot_search/valid_plateless_turf
+	action_cooldown = 5 SECONDS
 
 /datum/ai_behavior/bot_search/valid_plateless_turf/valid_target(datum/ai_controller/basic_controller/bot/controller, turf/open/my_target)
 	var/static/list/blacklist_objects = typecacheof(list(
 		/obj/structure/window,
 		/obj/structure/grille,
 	))
-	for(var/atom/possible_blacklisted as anything in my_target)
+
+	for(var/atom/possible_blacklisted in my_target.contents)
 		if(is_type_in_typecache(possible_blacklisted, blacklist_objects))
 			return FALSE
+
 	if(istype(my_target, /turf/open/floor/plating) && !can_see(controller.pawn, my_target, 5))
 		return FALSE
-	return !istype(get_area(my_target), /area/space)
+
+	var/static/list/blacklist_areas = typecacheof(list(
+		/area/space,
+		/area/station/maintenance,
+	))
+	var/turf_area = get_area(my_target)
+	return !(is_type_in_typecache(turf_area, blacklist_areas))
 
 ///subtree to fix hull breaches
 /datum/ai_planning_subtree/replace_floors/breaches
@@ -256,11 +266,7 @@
 
 /datum/ai_behavior/targeted_mob_ability/build_girder/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
-	var/atom/target = controller.blackboard[target_key]
 	controller.clear_blackboard_key(target_key)
-	if(!succeeded && !isnull(target))
-		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
-
 
 ///subtree to place glass on windows
 /datum/ai_planning_subtree/replace_window
@@ -299,6 +305,9 @@
 	var/static/list/searchable_girder = typecacheof(list(/obj/structure/girder))
 	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_girder, BB_GIRDER_TO_WALL_TARGET, searchable_girder)
 
+/datum/ai_behavior/bot_search/valid_girder
+	action_cooldown = 5 SECONDS
+
 /datum/ai_behavior/bot_search/valid_girder/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
 	return isfloorturf(my_target.loc)
 
@@ -313,6 +322,7 @@
 	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_window_fix, BB_WELDER_TARGET, searchable_objects)
 
 /datum/ai_behavior/bot_search/valid_window_fix
+	action_cooldown = 5 SECONDS
 
 /datum/ai_behavior/bot_search/valid_window_fix/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
 	return (my_target.get_integrity() < my_target.max_integrity || !my_target.anchored)

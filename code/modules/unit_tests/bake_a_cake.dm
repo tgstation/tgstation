@@ -10,9 +10,6 @@
 	var/obj/structure/table/the_table = allocate(/obj/structure/table, table_loc)
 	var/obj/item/knife/kitchen/a_knife = allocate(/obj/item/knife/kitchen, table_loc)
 	var/obj/item/reagent_containers/cup/beaker/beaker = allocate(/obj/item/reagent_containers/cup/beaker, table_loc)
-	/// DOPPLER SHIFT ADDITION BEGIN
-	beaker.set_cap_status(FALSE)
-	/// DOPPLER SHIFT ADDITION END
 	var/obj/item/reagent_containers/condiment/flour/flour_bag = allocate(/obj/item/reagent_containers/condiment/flour, table_loc)
 	var/obj/item/reagent_containers/condiment/sugar/sugar_bag = allocate(/obj/item/reagent_containers/condiment/sugar, table_loc)
 	var/obj/item/storage/fancy/egg_box/egg_box = allocate(/obj/item/storage/fancy/egg_box, table_loc)

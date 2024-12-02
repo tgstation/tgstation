@@ -26,12 +26,12 @@
 		can even catch a glimpse of the odd fish darting through the water."
 	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = "ICEMOON_ATMOS"
+	fishing_datum = /datum/fish_source/icecat_hot_spring
 	/// Holder for the steam particles that show up sometimes
 	var/obj/effect/abstract/particle_holder/particle_effect
 
 /turf/open/water/hot_spring/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/icecat_hot_spring)
 	if(prob(60))
 		particle_effect = new(src, /particles/hotspring_steam)
 

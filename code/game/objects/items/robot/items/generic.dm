@@ -54,6 +54,7 @@
 			span_userdanger("[user] prods you with [src]!"),
 		)
 
+	SEND_SIGNAL(attacked_mob, COMSIG_LIVING_MINOR_SHOCK) // DOPPLER EDIT ADDITION 
 	playsound(loc, 'sound/items/weapons/egloves.ogg', 50, TRUE, -1)
 	cooldown_check = world.time + cooldown
 	log_combat(user, attacked_mob, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")

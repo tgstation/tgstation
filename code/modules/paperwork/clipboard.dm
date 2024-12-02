@@ -19,6 +19,7 @@
 		"Black" = "clipboard_black",
 		"White" = "clipboard_white",
 	)
+	unique_reskin_changes_inhand = TRUE
 
 	/// The stored pen
 	var/obj/item/pen/pen

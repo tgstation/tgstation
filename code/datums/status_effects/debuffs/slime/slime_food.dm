@@ -21,8 +21,10 @@
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_feeder_deleted))
 	RegisterSignal(owner, COMSIG_SLIME_DRAINED, PROC_REF(on_drained))
 	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-
 	return ..()
+
+/datum/status_effect/slime_food/on_remove()
+	feeder = null
 
 ///Handles the source of the pheromones getting deleted, or the owner getting washed
 /datum/status_effect/slime_food/proc/on_feeder_deleted(datum/source)
@@ -51,6 +53,3 @@
 	draining_slime.befriend(feeder)
 	new /obj/effect/temp_visual/heart(draining_slime.loc)
 	qdel(src)
-
-/datum/status_effect/slime_food/on_remove()
-	feeder = null

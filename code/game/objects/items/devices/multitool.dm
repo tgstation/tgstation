@@ -204,7 +204,7 @@
 	var/turf/our_turf = get_turf(src)
 	detect_state = PROXIMITY_NONE
 
-	for(var/mob/eye/ai_eye/AI_eye as anything in GLOB.aiEyes)
+	for(var/mob/eye/camera/ai/AI_eye as anything in GLOB.camera_eyes)
 		if(!AI_eye.ai_detector_visible)
 			continue
 
@@ -253,7 +253,7 @@
 // copied from camera chunks but we are doing a really big edge case here though
 /obj/item/multitool/ai_detect/proc/surrounding_chunks(turf/epicenter)
 	. = list()
-	var/static_range = /mob/eye/ai_eye::static_visibility_range
+	var/static_range = /mob/eye/camera/ai::static_visibility_range
 	var/x1 = max(1, epicenter.x - static_range)
 	var/y1 = max(1, epicenter.y - static_range)
 	var/x2 = min(world.maxx, epicenter.x + static_range)
@@ -283,7 +283,7 @@
 	desc = "An omni-technological interface."
 	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "multitool"
-	belt_icon_state = "multitool_alien"
+	inside_belt_icon_state = "multitool_alien"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT)
 	toolspeed = 0.1
 

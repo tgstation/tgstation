@@ -32,12 +32,12 @@
 	var/turf/target_turf = get_turf(target)
 	for(var/turf/shootat_turf in RANGE_TURFS(radius, target) - RANGE_TURFS(radius-1, target))
 
-		var/obj/projectile/P = new projectile_type(target_turf)
+		var/obj/projectile/proj = new projectile_type(target_turf)
 		//Shooting Code:
-		P.range = radius+1
+		proj.range = radius+1
 		if(override_projectile_range)
-			P.range = override_projectile_range
-		P.preparePixelProjectile(shootat_turf, target)
-		P.firer = firer // don't hit ourself that would be really annoying
-		P.impacted = list(WEAKREF(target) = TRUE) // don't hit the target we hit already with the flak
-		P.fire()
+			proj.range = override_projectile_range
+		proj.aim_projectile(shootat_turf, target)
+		proj.firer = firer // don't hit ourself that would be really annoying
+		proj.impacted = list(WEAKREF(target) = TRUE) // don't hit the target we hit already with the flak
+		proj.fire()

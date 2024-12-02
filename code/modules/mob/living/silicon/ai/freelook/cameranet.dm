@@ -12,7 +12,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	var/list/obj/machinery/camera/cameras = list()
 	/// The chunks of the map, mapping the areas that the cameras can see.
 	var/list/chunks = list()
-	var/ready = 0
 
 	/// List of images cloned by all chunk static images put onto turfs cameras cant see
 	/// Indexed by the plane offset to use
@@ -56,16 +55,12 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	if(!.)
 		chunks[key] = . = new /datum/camerachunk(x, y, lowest.z)
 
-/// Updates what the aiEye can see. It is recommended you use this when the aiEye moves or its location is set.
-/datum/cameranet/proc/visibility(list/moved_eyes, client/C, list/other_eyes, use_static = TRUE)
+/// Updates what the camera eye can see. It is recommended you use this when a camera eye moves or its location is set.
+/datum/cameranet/proc/visibility(list/moved_eyes)
 	if(!islist(moved_eyes))
 		moved_eyes = moved_eyes ? list(moved_eyes) : list()
-	if(islist(other_eyes))
-		other_eyes = (other_eyes - moved_eyes)
-	else
-		other_eyes = list()
 
-	for(var/mob/eye/ai_eye/eye as anything in moved_eyes)
+	for(var/mob/eye/camera/eye as anything in moved_eyes)
 		var/list/visibleChunks = list()
 		//Get the eye's turf in case its located in an object like a mecha
 		var/turf/eye_turf = get_turf(eye)
@@ -129,6 +124,8 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
  * to change the time between static updates.
  */
 /datum/cameranet/proc/majorChunkChange(atom/c, choice, update_delay_buffer)
+	PROTECTED_PROC(TRUE)
+
 	if(QDELETED(c) && choice == 1)
 		CRASH("Tried to add a qdeleting camera to the net")
 
