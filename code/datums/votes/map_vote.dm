@@ -6,9 +6,9 @@
 	display_statistics = FALSE
 	default_choices = list(
 		"MetaStation",
-		"DeltaStation",
-		"IceBox",
-		"TramStation",
+		"Birdshot Station",
+		"Ice Box Station",
+		"Tramstation",
 	)
 
 /datum/vote/map_vote/create_vote()
