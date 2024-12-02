@@ -341,6 +341,7 @@
 
 /mob/living/basic/bot/repairbot/explode()
 	drop_part(toolbox, drop_location())
+	return ..()
 
 /obj/item/weldingtool/repairbot
 	max_fuel = INFINITY
