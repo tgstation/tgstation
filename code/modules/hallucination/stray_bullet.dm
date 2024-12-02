@@ -218,32 +218,6 @@
 	afflicted.adjustStaminaLoss(20)
 	afflicted.adjust_eye_blur(4 SECONDS)
 
-/obj/projectile/hallucination/taser
-	name = "electrode"
-	damage_type = BURN
-	hal_icon_state = "spark"
-	color = COLOR_YELLOW
-	hal_fire_sound = 'sound/items/weapons/taser.ogg'
-	hal_hitsound = 'sound/items/weapons/taserhit.ogg'
-	hal_hitsound_wall = null
-	hal_impact_effect = null
-	hal_impact_effect_wall = null
-
-/obj/projectile/hallucination/taser/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.Paralyze(10 SECONDS)
-	afflicted.adjust_stutter(40 SECONDS)
-	if(HAS_TRAIT(afflicted, TRAIT_HULK))
-		afflicted.say(pick(
-			";RAAAAAAAARGH!",
-			";HNNNNNNNNNGGGGGGH!",
-			";GWAAAAAAAARRRHHH!",
-			"NNNNNNNNGGGGGGGGHH!",
-			";AAAAAAARRRGH!"),
-			forced = "hulk (hallucinating)",
-		)
-	else if(!afflicted.check_stun_immunity(CANKNOCKDOWN))
-		addtimer(CALLBACK(afflicted, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation), 20), 0.5 SECONDS)
-
 /obj/projectile/hallucination/disabler
 	name = "disabler beam"
 	damage_type = STAMINA
