@@ -1,7 +1,6 @@
 /obj/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
-	gender = PLURAL
 	color = COLOR_YELLOW
 	hitsound = 'sound/items/weapons/taserhit.ogg'
 	range = 5
