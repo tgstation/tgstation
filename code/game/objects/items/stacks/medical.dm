@@ -36,9 +36,30 @@
 /obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
-	if(!begin_heal_loop(interacting_with, user))
+	if(!begin_heal_loop(interacting_with, user, auto_change_zone = TRUE))
 		return NONE // [ITEM_INTERACT_BLOCKING] would be redundant as we are nobludgeon
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/stack/medical/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+	if(!begin_heal_loop(interacting_with, user, auto_change_zone = FALSE))
+		return NONE // see above
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/stack/medical/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+	register_item_context()
+
+/obj/item/stack/medical/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	if(!isliving(target))
+		return NONE
+	if(iscarbon(target))
+		context[SCREENTIP_CONTEXT_LMB] = "Auto Heal"
+		context[SCREENTIP_CONTEXT_RMB] = "Manual Heal"
+	else
+		context[SCREENTIP_CONTEXT_LMB] = "Heal"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/stack/medical/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -63,18 +84,34 @@
 
 /// Used to begin the recursive healing loop.
 /// Returns TRUE if we entered the loop, FALSE if we didn't
-/obj/item/stack/medical/proc/begin_heal_loop(mob/living/patient, mob/living/user)
+/obj/item/stack/medical/proc/begin_heal_loop(mob/living/patient, mob/living/user, auto_change_zone = TRUE)
 	if(DOING_INTERACTION_WITH_TARGET(user, patient))
 		return FALSE
 	var/heal_zone = check_zone(user.zone_selected)
 	if(!try_heal_checks(patient, user, heal_zone))
 		return FALSE
-	INVOKE_ASYNC(src, PROC_REF(try_heal), patient, user, heal_zone)
+	SSblackbox.record_feedback("nested tally", "medical_item_used", 1, list(type, auto_change_zone ? "auto" : "manual"))
+	patient.balloon_alert(user, "treating [parse_zone(heal_zone)]...")
+	INVOKE_ASYNC(src, PROC_REF(try_heal), patient, user, heal_zone, FALSE, iscarbon(patient) && auto_change_zone) // auto change is useless for non-carbons
 	return TRUE
 
-/// In which we print the message that we're starting to heal someone, then we try healing them.
-/// Does the do_after whether or not it can actually succeed on a targeted mob
-/obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
+/**
+ * What actually handles printing the message that we're starting to heal someone, and trying to heal them
+ *
+ * This proc is recursively called until we run out of charges OR until the patient is fully healed
+ * OR until the target zone is fully healed (if auto_change_zone is FALSE)
+ *
+ * * patient - The mob we're trying to heal
+ * * user - The mob that's trying to heal the patient
+ * * healed_zone - The zone we're trying to heal on the patient
+ * Disregarded if auto_change_zone is TRUE
+ * * silent - If we should not print the message that we're starting to heal the patient
+ * Used so looping the proc doesn't spam messages
+ * * auto_change_zone - Handles the behavior when we finish healing a zone
+ * If auto_change_zone is set to TRUE, it picks the next most damaged zone to heal
+ * If auto_change_zone is set to FALSE, it'll give the user a chance to pick a new zone to heal
+ */
+/obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE)
 	if(patient == user)
 		if(!silent)
 			user.balloon_alert(user, "treating [parse_zone(healed_zone)]...")
@@ -85,11 +122,13 @@
 			)
 		if(!do_after(
 			user,
-			self_delay,
+			self_delay * (auto_change_zone ? 1 : 0.9),
 			patient,
 			extra_checks = CALLBACK(src, PROC_REF(can_heal), patient, user, healed_zone),
 		))
 			return
+		if(!auto_change_zone)
+			healed_zone = check_zone(user.zone_selected)
 		if(!try_heal_checks(patient, user, healed_zone))
 			return
 
@@ -103,11 +142,13 @@
 			)
 		if(!do_after(
 			user,
-			other_delay,
+			other_delay * (auto_change_zone ? 1 : 0.9),
 			patient,
 			extra_checks = CALLBACK(src, PROC_REF(can_heal), patient, user, healed_zone),
 		))
 			return
+		if(!auto_change_zone)
+			healed_zone = check_zone(user.zone_selected)
 		if(!try_heal_checks(patient, user, healed_zone))
 			return
 
@@ -133,19 +174,33 @@
 		var/atom/alert_loc = QDELETED(src) ? user : src
 		alert_loc.balloon_alert(user, repeating ? "all used up!" : "treated [parse_zone(healed_zone)]")
 		return
+
+	// first, just try looping
+	// 1. we can keep healing the current target
+	// 2. the user's changed their target (and thus we should heal that limb instead)
 	var/preferred_target = check_zone(user.zone_selected)
 	if(try_heal_checks(patient, user, preferred_target, silent = TRUE))
-		try_heal(patient, user, preferred_target, silent = TRUE)
-		return
-	if(!iscarbon(patient))
-		patient.balloon_alert(user, "fully treated")
+		if(preferred_target != healed_zone)
+			patient.balloon_alert(user, "treating [parse_zone(preferred_target)]...")
+		try_heal(patient, user, preferred_target, TRUE, auto_change_zone)
 		return
 
-	var/mob/living/carbon/carb_patient = patient
+	// second, handle what happens otherwise
+	if(!iscarbon(patient))
+		// behavior 0: non-carbons have no limbs so we can assume they are fully healed
+		patient.balloon_alert(user, "fully treated")
+	else if(auto_change_zone)
+		// behavior 1: automatically pick another zone to heal
+		try_heal_auto_change_zone(patient, user, preferred_target, healed_zone)
+	else
+		// behavior 2: assess injury, giving the user time to manually pick another zone
+		try_heal_manual_target(patient, user)
+
+/obj/item/stack/medical/proc/try_heal_auto_change_zone(mob/living/carbon/patient, mob/living/user, preferred_target, last_zone)
+	PRIVATE_PROC(TRUE)
+
 	var/list/other_affected_limbs = list()
-	for(var/obj/item/bodypart/limb as anything in carb_patient.bodyparts)
-		if(limb.body_zone == healed_zone)
-			continue
+	for(var/obj/item/bodypart/limb as anything in patient.bodyparts)
 		if(!try_heal_checks(patient, user, limb.body_zone, silent = TRUE))
 			continue
 		other_affected_limbs += limb.body_zone
@@ -155,8 +210,21 @@
 		return
 
 	var/next_picked = (preferred_target in other_affected_limbs) ? preferred_target : other_affected_limbs[1]
-	user.balloon_alert(user, "treating [next_picked]...")
-	try_heal(patient, user, next_picked, silent = TRUE)
+	if(next_picked != last_zone)
+		user.balloon_alert(user, "treating [parse_zone(next_picked)]...")
+	try_heal(patient, user, next_picked, silent = TRUE, auto_change_zone = TRUE)
+
+/obj/item/stack/medical/proc/try_heal_manual_target(mob/living/carbon/patient, mob/living/user)
+	PRIVATE_PROC(TRUE)
+
+	patient.balloon_alert(user, "assessing injury...")
+	if(!do_after(user, 1 SECONDS, patient))
+		return
+	var/new_zone = check_zone(user.zone_selected)
+	if(!try_heal_checks(patient, user, new_zone))
+		return
+	patient.balloon_alert(user, "treating [parse_zone(new_zone)]...")
+	try_heal(patient, user, new_zone, silent = TRUE, auto_change_zone = FALSE)
 
 /// Checks if the passed patient can be healed by the passed user
 /obj/item/stack/medical/proc/can_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
@@ -194,7 +262,7 @@
 		if(!brute_to_heal && !burn_to_heal && !can_heal_burn_wounds && !can_suture_bleeding)
 			if(!silent)
 				if(!brute_to_heal && stop_bleeding) // no brute, no bleeding
-					carbon_patient.balloon_alert(user, "[affecting.plaintext_zone] is not bleeding!")
+					carbon_patient.balloon_alert(user, "[affecting.plaintext_zone] is not bleeding or bruised!")
 				else if(!burn_to_heal && (flesh_regeneration || sanitization) && any_burn_wound) // no burns, existing burn wounds are treated
 					carbon_patient.balloon_alert(user, "[affecting.plaintext_zone] has been fully treated!")
 				else if(!affecting.brute_dam && !affecting.burn_dam) // not hurt at all
@@ -307,6 +375,12 @@
 		SEND_SIGNAL(gauzed_bodypart, COMSIG_BODYPART_UNGAUZED, src)
 	gauzed_bodypart = null
 
+/obj/item/stack/medical/gauze/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	if(iscarbon(target))
+		context[SCREENTIP_CONTEXT_LMB] = "Apply Gauze"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
 /obj/item/stack/medical/gauze/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
 	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
 	if(isnull(limb))
@@ -329,7 +403,7 @@
 	return FALSE
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
-/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/living/user, silent, healed_zone)
+/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/living/user, silent, healed_zone, auto_change_zone)
 	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
 	var/treatment_delay = (user == patient ? self_delay : other_delay)
 	var/any_scanned = FALSE
