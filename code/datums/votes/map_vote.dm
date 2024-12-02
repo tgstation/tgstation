@@ -4,10 +4,12 @@
 	count_method = VOTE_COUNT_METHOD_SINGLE
 	winner_method = VOTE_WINNER_METHOD_NONE
 	display_statistics = FALSE
-
-/datum/vote/map_vote/New()
-	. = ..()
-	default_choices = SSmap_vote.get_valid_map_vote_choices()
+	default_choices = list(
+		"MetaStation",
+		"DeltaStation",
+		"IceBox",
+		"TramStation",
+	)
 
 /datum/vote/map_vote/create_vote()
 	default_choices = SSmap_vote.get_valid_map_vote_choices()
