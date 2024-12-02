@@ -484,7 +484,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		else if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			//If not emagged, only target carbons that can use items
-			if(mode != TURRET_LETHAL && !(C.mobility_flags & (MOBILITY_USE|MOBILITY_UI)))
+			if(mode != TURRET_LETHAL && (!(C.mobility_flags & MOBILITY_USE) || HAS_TRAIT(C, TRAIT_INCAPACITATED)))
 				continue
 
 			//If emagged, target all but dead carbons
