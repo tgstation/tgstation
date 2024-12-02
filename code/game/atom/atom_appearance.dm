@@ -56,9 +56,10 @@
 				continue
 			if(istext(maybe_not_an_atom) || isicon(maybe_not_an_atom))
 				continue
+			var/mutable_appearance/overlay_appearance = maybe_not_an_atom.appearance
 			if (cached_color_filter && !(appearance_flags & KEEP_TOGETHER))
-				maybe_not_an_atom.add_filter(ATOM_PRIORITY_COLOR_FILTER, ATOM_PRIORITY_COLOR_FILTER_PRIORITY, cached_color_filter)
-			new_overlays[i] = maybe_not_an_atom.appearance
+				overlay_appearance = filter_appearance_recursive(overlay_appearance, cached_color_filter)
+			new_overlays[i] = overlay_appearance
 		if(nulls)
 			for(var/i in 1 to nulls)
 				new_overlays -= null

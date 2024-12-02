@@ -114,6 +114,6 @@
 /// Same as update_atom_color, but simplifies overlay coloring
 /atom/proc/color_atom_overlay(mutable_appearance/overlay)
 	overlay.color = color
-	overlay.remove_filter(ATOM_PRIORITY_COLOR_FILTER)
-	if (cached_color_filter)
-		overlay.add_filter(ATOM_PRIORITY_COLOR_FILTER, ATOM_PRIORITY_COLOR_FILTER_PRIORITY, cached_color_filter)
+	if (!cached_color_filter)
+		return overlay
+	return filter_appearance_recursive(overlay, cached_color_filter)

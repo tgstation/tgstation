@@ -242,3 +242,20 @@
 
 	var/rgbcolor = rgb(new_color[1], new_color[2], new_color[3], new_color[4], space = colorspace)
 	return rgbcolor
+
+/// Recursively applies a filter to a passed in static appearance, returns the modified appearance
+/proc/filter_appearance_recursive(mutable_appearance/filter, filter_to_apply)
+    var/mutable_appearance/modify = new(filter)
+    var/list/existing_filters = modify.filters.Copy()
+    modify.filters = list(filter_to_apply) + existing_filters
+
+    if(modify.appearance_flags & KEEP_TOGETHER)
+        return modify
+
+    for(var/overlay_index in 1 to length(modify.overlays))
+        modify.overlays[overlay_index] = filter_appearance_recursive(modify.overlays[overlay_index], filter_to_apply)
+
+    for(var/underlay_index in 1 to length(modify.underlays))
+        modify.underlays[underlay_index] = filter_appearance_recursive(modify.underlays[underlay_index], filter_to_apply)
+
+    return modify
