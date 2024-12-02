@@ -4,7 +4,7 @@
 ///maximum a vampire will drain, they will drain less if they hit their cap
 #define VAMP_DRAIN_AMOUNT 50
 
-/datum/species/vampire
+/datum/species/human/vampire
 	name = "Vampire"
 	id = SPECIES_VAMPIRE
 	examine_limb_id = SPECIES_HUMAN
@@ -18,33 +18,30 @@
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	changesource_flags = MIRROR_BADMIN | MIRROR_PRIDE | WABBAJACK | ERT_SPAWN
-	exotic_bloodtype = "U"
+	exotic_bloodtype = "V"
 	blood_deficiency_drain_rate = BLOOD_DEFICIENCY_MODIFIER // vampires already passively lose blood, so this just makes them lose it slightly more quickly when they have blood deficiency.
 	mutantheart = /obj/item/organ/heart/vampire
 	mutanttongue = /obj/item/organ/tongue/vampire
-	mutantstomach = null
-	mutantlungs = null
-	skinned_type = /obj/item/stack/sheet/animalhide/human
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
 
-/datum/species/vampire/check_roundstart_eligible()
+/datum/species/human/vampire/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 
-/datum/species/vampire/on_species_gain(mob/living/carbon/human/new_vampire, datum/species/old_species)
+/datum/species/human/vampire/on_species_gain(mob/living/carbon/human/new_vampire, datum/species/old_species)
 	. = ..()
 	to_chat(new_vampire, "[info_text]")
 	new_vampire.skin_tone = "albino"
 	new_vampire.update_body(0)
 	RegisterSignal(new_vampire, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
 
-/datum/species/vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/species/human/vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
 
-/datum/species/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
+/datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
 	. = ..()
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
 		var/need_mob_update = FALSE
@@ -66,27 +63,27 @@
 		vampire.adjust_fire_stacks(3 * seconds_per_tick)
 		vampire.ignite_mob()
 
-/datum/species/vampire/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+/datum/species/human/vampire/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
 
 	if(istype(attacking_item, /obj/item/nullrod/whip))
 		damage_mods += 2
 
-/datum/species/vampire/get_physical_attributes()
+/datum/species/human/vampire/get_physical_attributes()
 	return "Vampires are afflicted with the Thirst, needing to sate it by draining the blood out of another living creature. However, they do not need to breathe or eat normally. \
 		They will instantly turn into dust if they run out of blood or enter a holy area. However, coffins stabilize and heal them, and they can transform into bats!"
 
-/datum/species/vampire/get_species_description()
+/datum/species/human/vampire/get_species_description()
 	return "A classy Vampire! They descend upon Space Station Thirteen Every year to spook the crew! \"Bleeg!!\""
 
-/datum/species/vampire/get_species_lore()
+/datum/species/human/vampire/get_species_lore()
 	return list(
 		"Vampires are unholy beings blessed and cursed with The Thirst. \
 		The Thirst requires them to feast on blood to stay alive, and in return it gives them many bonuses. \
 		Because of this, Vampires have split into two clans, one that embraces their powers as a blessing and one that rejects it.",
 	)
 
-/datum/species/vampire/create_pref_unique_perks()
+/datum/species/human/vampire/create_pref_unique_perks()
 	var/list/to_add = list()
 
 	to_add += list(
@@ -115,7 +112,7 @@
 	return to_add
 
 // Vampire blood is special, so it needs to be handled with its own entry.
-/datum/species/vampire/create_pref_blood_perks()
+/datum/species/human/vampire/create_pref_blood_perks()
 	var/list/to_add = list()
 
 	to_add += list(list(
@@ -132,7 +129,7 @@
 	return to_add
 
 // There isn't a "Minor Undead" biotype, so we have to explain it in an override (see: dullahans)
-/datum/species/vampire/create_pref_biotypes_perks()
+/datum/species/human/vampire/create_pref_biotypes_perks()
 	var/list/to_add = list()
 
 	to_add += list(list(

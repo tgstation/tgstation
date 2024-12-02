@@ -14,12 +14,12 @@
 
 /obj/item/mod/module/visor/on_activation()
 	if(length(visor_traits))
-		mod.wearer.add_traits(visor_traits, MOD_TRAIT)
+		mod.wearer.add_traits(visor_traits, REF(src))
 	mod.wearer.update_sight()
 
 /obj/item/mod/module/visor/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(length(visor_traits))
-		mod.wearer.remove_traits(visor_traits, MOD_TRAIT)
+		mod.wearer.remove_traits(visor_traits, REF(src))
 	mod.wearer.update_sight()
 
 //Medical Visor - Gives you a medical HUD.

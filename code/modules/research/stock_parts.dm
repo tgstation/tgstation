@@ -18,13 +18,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	. = ..()
 	create_storage(storage_type = /datum/storage/rped)
 
-/obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
-	. = ..()
-	if(.)
-		return .
-
-	return part_replace_action(attacked_object, user)
-
 /obj/item/storage/part_replacer/proc/part_replace_action(obj/attacked_object, mob/living/user)
 	if(!ismachinery(attacked_object) || istype(attacked_object, /obj/machinery/computer))
 		return FALSE

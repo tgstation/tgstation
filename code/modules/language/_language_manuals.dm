@@ -16,7 +16,7 @@
 		to_chat(user, span_boldwarning("You start skimming through [src], but you already know [initial(language.name)]."))
 		return
 
-	to_chat(user, span_boldannounce("You start skimming through [src], and [flavour_text]."))
+	to_chat(user, span_bolddanger("You start skimming through [src], and [flavour_text]."))
 
 	user.grant_language(language)
 	user.remove_blocked_language(language, source=LANGUAGE_ALL)

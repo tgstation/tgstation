@@ -22,6 +22,7 @@
 	craftsman = AddComponent(/datum/component/personal_crafting/machine)
 	if(ispath(recipe))
 		recipe = locate(recipe) in (cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes)
+	START_PROCESSING(SSmanufacturing, src)
 
 /obj/machinery/power/manufacturing/crafter/examine(mob/user)
 	. = ..()
@@ -45,8 +46,7 @@
 	var/turf/machine_turf = get_turf(src)
 	if(length(machine_turf.contents) >= MANUFACTURING_TURF_LAG_LIMIT)
 		return MANUFACTURING_FAIL_FULL
-	receiving.Move(machine_turf, receive_dir)
-	START_PROCESSING(SSmanufacturing, src)
+	receiving.forceMove(machine_turf)
 	return MANUFACTURING_SUCCESS
 
 /obj/machinery/power/manufacturing/crafter/multitool_act(mob/living/user, obj/item/tool)

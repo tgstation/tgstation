@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(opened)
 			to_chat(user, span_warning("You must close the cover to swipe an ID card!"))
 		else
-			if(allowed(usr))
+			if(allowed(user))
 				locked = !locked
 				to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] [src]'s cover."))
 				update_icons()
@@ -193,41 +193,34 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	var/brute_percent = bruteloss / maxHealth
 	var/burn_percent = fireloss / maxHealth
 
+	var/old_smoke = smoke_particles
 	if (brute_percent > MODERATE_DAMAGE_UPPER_BOUND)
-		if(!smoke_particles)
-			smoke_particles = new(src, /particles/smoke/cyborg/heavy_damage, PARTICLE_ATTACH_MOB)
-		else if(!istype(smoke_particles.particles, /particles/smoke/cyborg/heavy_damage)) //TODO: needs to be darker
-			QDEL_NULL(smoke_particles)
-			smoke_particles = new(src, /particles/smoke/cyborg/heavy_damage, PARTICLE_ATTACH_MOB)
-
+		smoke_particles = /particles/smoke/cyborg/heavy_damage
 	else if (brute_percent > LOW_DAMAGE_UPPER_BOUND)
-		if(!smoke_particles)
-			smoke_particles = new(src, /particles/smoke/cyborg, PARTICLE_ATTACH_MOB)
-		else if(!istype(smoke_particles.particles, /particles/smoke/cyborg))
-			QDEL_NULL(smoke_particles)
-			smoke_particles = new(src, /particles/smoke/cyborg, PARTICLE_ATTACH_MOB)
-
+		smoke_particles = /particles/smoke/cyborg
 	else
-		if(smoke_particles)
-			QDEL_NULL(smoke_particles)
+		smoke_particles = null
 
+	if (old_smoke != smoke_particles)
+		if (old_smoke)
+			remove_shared_particles(old_smoke)
+		if (smoke_particles)
+			add_shared_particles(smoke_particles)
+
+	var/old_sparks = spark_particles
 	if (burn_percent > MODERATE_DAMAGE_UPPER_BOUND)
-		if(!spark_particles)
-			spark_particles = new(src, /particles/embers/spark/severe, PARTICLE_ATTACH_MOB)
-		else if(!istype(spark_particles.particles, /particles/embers/spark/severe)) //TODO: needs to be more dramatic
-			QDEL_NULL(spark_particles)
-			spark_particles = new(src, /particles/embers/spark/severe, PARTICLE_ATTACH_MOB)
-
+		spark_particles = /particles/embers/spark/severe
 	else if (burn_percent > LOW_DAMAGE_UPPER_BOUND)
-		if(!spark_particles)
-			spark_particles = new(src, /particles/embers/spark, PARTICLE_ATTACH_MOB)
-		else if(!istype(spark_particles.particles, /particles/embers/spark))
-			QDEL_NULL(spark_particles)
-			spark_particles = new(src, /particles/embers/spark, PARTICLE_ATTACH_MOB)
-
+		spark_particles = /particles/embers/spark
 	else
-		if(spark_particles)
-			QDEL_NULL(spark_particles)
+		spark_particles = null
+
+	if (old_sparks != spark_particles)
+		if (old_sparks)
+			remove_shared_particles(old_sparks)
+		if (spark_particles)
+			add_shared_particles(spark_particles)
+
 
 #undef LOW_DAMAGE_UPPER_BOUND
 #undef MODERATE_DAMAGE_UPPER_BOUND
@@ -280,7 +273,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		. &= ~(SHOVE_CAN_MOVE|SHOVE_CAN_HIT_SOMETHING)
 
 /mob/living/silicon/robot/welder_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode && usr != src)
+	if(user.combat_mode && user != src)
 		return FALSE
 	. = TRUE
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -456,7 +449,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(EXPLODE_DEVASTATE)
 			investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 			gib(DROP_ALL_REMAINS)
-			return
+			return TRUE
 		if(EXPLODE_HEAVY)
 			if (stat != DEAD)
 				adjustBruteLoss(60)

@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "destructive analyser accepts all items without interacting with them (no planting c4 on the machine or radio jammer jamming the machine). Use combat mode to get these default behaviour's instead"

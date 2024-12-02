@@ -1,8 +1,9 @@
 /datum/status_effect/incapacitating/stamcrit
+	id = "stamcrit"
 	status_type = STATUS_EFFECT_UNIQUE
 	// Lasts until we go back to 0 stamina, which is handled by the mob
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	/// Cooldown between displaying warning messages that we hit diminishing returns
 	COOLDOWN_DECLARE(warn_cd)
 	/// A counter that tracks every time we've taken enough damage to trigger diminishing returns

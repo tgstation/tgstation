@@ -1,15 +1,11 @@
 /proc/point_midpoint_points(datum/point/a, datum/point/b) //Obviously will not support multiZ calculations! Same for the two below.
-	var/datum/point/P = new
-	P.x = a.x + (b.x - a.x) * 0.5
-	P.y = a.y + (b.y - a.y) * 0.5
-	P.z = a.z
-	return P
+	return new /datum/point(_z = a.z, _pixel_x = (a.return_px() + b.return_px()) * 0.5, _pixel_y = (a.return_py() + b.return_py()) * 0.5)
 
 /proc/pixel_length_between_points(datum/point/a, datum/point/b)
-	return sqrt(((b.x - a.x) ** 2) + ((b.y - a.y) ** 2))
+	return sqrt(((b.return_px() - a.return_px()) ** 2) + ((b.return_py() - a.return_py()) ** 2))
 
 /proc/angle_between_points(datum/point/a, datum/point/b)
-	return ATAN2((b.y - a.y), (b.x - a.x))
+	return ATAN2(b.return_py() - a.return_py(), b.return_px() - a.return_px())
 
 /// For positions with map x/y/z and pixel x/y so you don't have to return lists. Could use addition/subtraction in the future I guess.
 /datum/position
@@ -29,8 +25,8 @@
 		_x = T.x
 		_y = T.y
 		_z = T.z
-		_pixel_x = P.return_px()
-		_pixel_y = P.return_py()
+		_pixel_x = P.pixel_x
+		_pixel_y = P.pixel_y
 	else if(isatom(_x))
 		var/atom/A = _x
 		_x = A.x
@@ -61,6 +57,8 @@
 	var/x = 0
 	var/y = 0
 	var/z = 0
+	var/pixel_x = 0
+	var/pixel_y = 0
 
 /datum/point/proc/valid()
 	return x && y && z
@@ -89,143 +87,88 @@
 		_pixel_y = A.pixel_y
 	initialize_location(_x, _y, _z, _pixel_x, _pixel_y)
 
-/datum/point/proc/initialize_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0)
+/datum/point/proc/initialize_location(tile_x, tile_y, tile_z, p_x, p_y)
 	if(!isnull(tile_x))
-		x = ((tile_x - 1) * ICON_SIZE_X) + ICON_SIZE_X * 0.5 + p_x + 1
+		x = tile_x
 	if(!isnull(tile_y))
-		y = ((tile_y - 1) * ICON_SIZE_Y) + ICON_SIZE_Y * 0.5 + p_y + 1
+		y = tile_y
 	if(!isnull(tile_z))
 		z = tile_z
+	if(!isnull(p_x))
+		var/x_offset = SIGNED_FLOOR_DIVISION(p_x, ICON_SIZE_X)
+		x += x_offset
+		pixel_x = p_x - x_offset * ICON_SIZE_X
+	if(!isnull(p_y))
+		var/y_offset = SIGNED_FLOOR_DIVISION(p_y, ICON_SIZE_Y)
+		y += y_offset
+		pixel_y = p_y - y_offset * ICON_SIZE_Y
+
+/datum/point/proc/increment(p_x, p_y)
+	var/x_offset = SIGNED_FLOOR_DIVISION(p_x, ICON_SIZE_X)
+	x += x_offset
+	pixel_x += p_x - x_offset * ICON_SIZE_X
+	var/y_offset = SIGNED_FLOOR_DIVISION(p_y, ICON_SIZE_Y)
+	y += y_offset
+	pixel_y += p_y - y_offset * ICON_SIZE_Y
 
 /datum/point/proc/debug_out()
 	var/turf/T = return_turf()
-	return "[text_ref(src)] aX [x] aY [y] aZ [z] pX [return_px()] pY [return_py()] mX [T.x] mY [T.y] mZ [T.z]"
+	return "[text_ref(src)] aX [x] aY [y] aZ [z] pX [pixel_x] pY [pixel_y] mX [T.x] mY [T.y] mZ [T.z]"
 
 /datum/point/proc/move_atom_to_src(atom/movable/AM)
 	AM.forceMove(return_turf())
-	AM.pixel_x = return_px()
-	AM.pixel_y = return_py()
+	AM.pixel_x = pixel_x
+	AM.pixel_y = pixel_y
 
 /datum/point/proc/return_turf()
-	return locate(CEILING(x / ICON_SIZE_X, 1), CEILING(y / ICON_SIZE_Y, 1), z)
+	return locate(x + SIGNED_FLOOR_DIVISION(pixel_x, ICON_SIZE_X), y + SIGNED_FLOOR_DIVISION(pixel_y, ICON_SIZE_Y), z)
 
 /datum/point/proc/return_coordinates() //[turf_x, turf_y, z]
-	return list(CEILING(x / ICON_SIZE_X, 1), CEILING(y / ICON_SIZE_Y, 1), z)
+	return list(x + SIGNED_FLOOR_DIVISION(pixel_x, ICON_SIZE_X), y + SIGNED_FLOOR_DIVISION(pixel_y, ICON_SIZE_Y), z)
 
 /datum/point/proc/return_position()
 	return new /datum/position(src)
 
 /datum/point/proc/return_px()
-	return MODULUS(x, ICON_SIZE_X) - (ICON_SIZE_X/2) - 1
+	return x * ICON_SIZE_X + pixel_x
 
 /datum/point/proc/return_py()
-	return MODULUS(y, ICON_SIZE_Y) - (ICON_SIZE_Y/2) - 1
+	return y * ICON_SIZE_Y + pixel_y
 
-/datum/point/vector
-	/// Pixels per iteration
-	var/speed = ICON_SIZE_ALL
-	var/iteration = 0
+/datum/vector
+	var/magnitude = 1
 	var/angle = 0
-	/// Calculated x movement amounts to prevent having to do trig every step.
-	var/mpx = 0
-	/// Calculated y movement amounts to prevent having to do trig every step.
-	var/mpy = 0
-	var/starting_x = 0 //just like before, pixels from EDGE of map! This is set in initialize_location().
-	var/starting_y = 0
-	var/starting_z = 0
+	// Calculated coordinate amounts to prevent having to do trig every step.
+	var/pixel_x = 0
+	var/pixel_y = 0
+	var/total_x = 0
+	var/total_y = 0
 
-/datum/point/vector/New(_x, _y, _z, _pixel_x = 0, _pixel_y = 0, _angle, _speed, initial_increment = 0)
-	..()
-	initialize_trajectory(_speed, _angle)
-	if(initial_increment)
-		increment(initial_increment)
-
-/datum/point/vector/initialize_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0)
+/datum/vector/New(new_magnitude, new_angle)
 	. = ..()
-	starting_x = x
-	starting_y = y
-	starting_z = z
+	initialize_trajectory(new_magnitude, new_angle)
 
-/// Same effect as initiliaze_location, but without setting the starting_x/y/z
-/datum/point/vector/proc/set_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0)
-	if(!isnull(tile_x))
-		x = ((tile_x - 1) * ICON_SIZE_X) + ICON_SIZE_X * 0.5 + p_x + 1
-	if(!isnull(tile_y))
-		y = ((tile_y - 1) * ICON_SIZE_Y) + ICON_SIZE_Y * 0.5 + p_y + 1
-	if(!isnull(tile_z))
-		z = tile_z
-
-/datum/point/vector/copy_to(datum/point/vector/v = new)
-	..(v)
-	v.speed = speed
-	v.iteration = iteration
-	v.angle = angle
-	v.mpx = mpx
-	v.mpy = mpy
-	v.starting_x = starting_x
-	v.starting_y = starting_y
-	v.starting_z = starting_z
-	return v
-
-/datum/point/vector/proc/initialize_trajectory(pixel_speed, new_angle)
-	if(!isnull(pixel_speed))
-		speed = pixel_speed
+/datum/vector/proc/initialize_trajectory(new_magnitude, new_angle)
+	if(!isnull(new_magnitude))
+		magnitude = new_magnitude
 	set_angle(new_angle)
 
 /// Calculations use "byond angle" where north is 0 instead of 90, and south is 180 instead of 270.
-/datum/point/vector/proc/set_angle(new_angle)
+/datum/vector/proc/set_angle(new_angle)
 	if(isnull(angle))
 		return
 	angle = new_angle
 	update_offsets()
 
-/datum/point/vector/proc/update_offsets()
-	mpx = sin(angle) * speed
-	mpy = cos(angle) * speed
+/datum/vector/proc/update_offsets()
+	pixel_x = sin(angle)
+	pixel_y = cos(angle)
+	total_x = pixel_x * magnitude
+	total_y = pixel_y * magnitude
 
-/datum/point/vector/proc/set_speed(new_speed)
-	if(isnull(new_speed) || speed == new_speed)
+/datum/vector/proc/set_speed(new_magnitude)
+	if(isnull(new_magnitude) || magnitude == new_magnitude)
 		return
-	speed = new_speed
-	update_offsets()
-
-/datum/point/vector/proc/increment(multiplier = 1)
-	iteration++
-	x += mpx * (multiplier)
-	y += mpy * (multiplier)
-
-/datum/point/vector/proc/return_vector_after_increments(amount = 7, multiplier = 1, force_simulate = FALSE)
-	var/datum/point/vector/v = copy_to()
-	if(force_simulate)
-		for(var/i in 1 to amount)
-			v.increment(multiplier)
-	else
-		v.increment(multiplier * amount)
-	return v
-
-/datum/point/vector/proc/on_z_change()
-	return
-
-/datum/point/vector/processed //pixel_speed is per decisecond.
-	var/last_process = 0
-	var/last_move = 0
-	var/paused = FALSE
-
-/datum/point/vector/processed/Destroy()
-	STOP_PROCESSING(SSprojectiles, src)
-	return ..()
-
-/datum/point/vector/processed/proc/start()
-	last_process = world.time
-	last_move = world.time
-	START_PROCESSING(SSprojectiles, src)
-
-/datum/point/vector/processed/process()
-	if(paused)
-		last_move += world.time - last_process
-		last_process = world.time
-		return
-	var/needed_time = world.time - last_move
-	last_process = world.time
-	last_move = world.time
-	increment(needed_time / SSprojectiles.wait)
+	magnitude = new_magnitude
+	total_x = pixel_x * magnitude
+	total_y = pixel_y * magnitude

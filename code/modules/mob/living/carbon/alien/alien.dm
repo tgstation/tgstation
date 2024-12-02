@@ -22,7 +22,7 @@
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = TRUE
 
-	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
+	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|princess|queen)( \\(\\d+\\))?")
 	var/static/list/xeno_allowed_items = typecacheof(list(
 		/obj/item/clothing/mask/facehugger,
 		/obj/item/toy/basketball, // playing ball against a xeno is rigged since they cannot be disarmed, their game is out of this world
@@ -139,7 +139,7 @@ Des: Removes all infected images from the alien.
 	)
 
 	new_xeno.setDir(dir)
-	new_xeno.change_name(name, real_name, numba)
+	new_xeno.change_name(name, real_name, identifier)
 
 	if(mind)
 		mind.name = new_xeno.real_name
@@ -153,7 +153,7 @@ Des: Removes all infected images from the alien.
 	qdel(src)
 
 /// Changes the name of the xeno we are evolving into in order to keep the same numerical identifier the old xeno had.
-/mob/living/carbon/alien/proc/change_name(old_name, old_real_name, old_number)
+/mob/living/carbon/alien/proc/change_name(old_name, old_real_name, old_identifier)
 	if(!alien_name_regex.Find(old_name)) // check to make sure there's no admins doing funny stuff with naming these aliens
 		name = old_name
 		real_name = old_real_name
@@ -162,8 +162,8 @@ Des: Removes all infected images from the alien.
 	if(!unique_name)
 		return
 
-	if(old_number != 0)
-		numba = old_number
+	if(old_identifier != 0)
+		identifier = old_identifier
 		name = initial(name) // prevent chicanery like two different numerical identifiers tied to the same mob
 
 	set_name()

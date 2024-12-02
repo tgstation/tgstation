@@ -144,7 +144,7 @@
 	tram_registration.active = FALSE
 	SSblackbox.record_feedback("amount", "tram_destroyed", 1)
 	SSpersistence.save_tram_history(specific_transport_id)
-	..()
+	return ..()
 
 /**
  * Register transport modules to the controller

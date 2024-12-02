@@ -1,7 +1,11 @@
 
-/obj/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+/obj/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..()
-	take_damage(AM.throwforce, BRUTE, MELEE, 1, get_dir(src, AM))
+	var/damage_taken = hit_by.throwforce
+	if(isitem(hit_by))
+		var/obj/item/as_item = hit_by
+		damage_taken *= as_item.demolition_mod
+	take_damage(damage_taken, BRUTE, MELEE, 1, get_dir(src, hit_by))
 
 /obj/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)

@@ -1014,7 +1014,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				to_chat(src, span_boldnotice(get_emagged_message()))
 				return
 			if(!(bot_cover_flags & BOT_COVER_HACKED))
-				to_chat(user, span_boldannounce("You fail to repair [src]'s [hackables]."))
+				to_chat(user, span_bolddanger("You fail to repair [src]'s [hackables]."))
 				return
 			bot_cover_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
 			to_chat(user, span_notice("You reset the [src]'s [hackables]."))
