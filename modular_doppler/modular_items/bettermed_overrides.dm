@@ -57,11 +57,6 @@
 	id = "medkit_o2"
 	build_path = /obj/item/storage/medkit/o2/empty
 
-/datum/design/spare_medkit/buffs
-	name = "Support Medkit"
-	id = "medkit_buffs"
-	build_path = /obj/item/storage/medkit/buffs
-
 /datum/techweb_node/medbay_equip/New()
 	design_ids += list(
 		"medkit",
