@@ -333,11 +333,9 @@
 	return TRUE
 
 
-/mob/living/basic/bot/repairbot/emag_act(mob/user, obj/item/card/emag/emag_card)
-	. = ..()
-	if(!(bot_access_flags & BOT_COVER_EMAGGED) || !isnull(deconstruction_device))
-		return
-	deconstruction_device = new(src)
+/mob/living/basic/bot/repairbot/emag_effects(mob/user)
+	if(isnull(deconstruction_device))
+		deconstruction_device = new(src)
 
 /mob/living/basic/bot/repairbot/explode()
 	drop_part(toolbox, drop_location())
