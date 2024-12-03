@@ -2395,6 +2395,7 @@
 #include "code\game\objects\items\extinguisher.dm"
 #include "code\game\objects\items\fireaxe.dm"
 #include "code\game\objects\items\flamethrower.dm"
+#include "code\game\objects\items\forensicsspoofer.dm"
 #include "code\game\objects\items\frog_statue.dm"
 #include "code\game\objects\items\gift.dm"
 #include "code\game\objects\items\gun_maintenance.dm"
