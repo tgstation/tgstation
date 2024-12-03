@@ -10,7 +10,9 @@
 	disabled_by_fire = FALSE
 
 /datum/action/changeling/headcrab/can_be_used_by(mob/living/user)
-	if(!istype(user, /mob/living/basic/headslug) && isanimal_or_basicmob(user))
+	if(HAS_TRAIT(user, TRAIT_TEMPORARY_BODY))
+		return FALSE
+	if(isanimal_or_basicmob(user) && !istype(user, /mob/living/basic/headslug) && !isconstruct(user) && !(user.mob_biotypes & MOB_SPIRIT))
 		return TRUE
 	return ..()
 
