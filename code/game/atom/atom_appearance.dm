@@ -56,7 +56,6 @@
 				continue
 			if(istext(maybe_not_an_atom) || isicon(maybe_not_an_atom))
 				continue
-			var/mutable_appearance/overlay_appearance = maybe_not_an_atom.appearance
 			new_overlays[i] = maybe_not_an_atom.appearance
 		if(nulls)
 			for(var/i in 1 to nulls)
