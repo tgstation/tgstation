@@ -16,13 +16,13 @@
 		return .
 	do_sparks(1, TRUE, src)
 	if(. == BULLET_ACT_BLOCK || !isliving(target) || blocked >= 100)
-		visible_message(span_warning("[src]\s fail to shock [target], falling to [get_turf(target)]."))
+		visible_message(span_warning("[src]\s fail to shock [target][isfloorturf(target.loc) ? ", falling to [target.loc]" : ""]."))
 		return .
 
 	var/mob/living/tased = target
 	if(tased.apply_status_effect(/datum/status_effect/tased, fired_from, firer, tase_stamina, null, "\the [src]\s"))
 		return .
-	visible_message(span_warning("[src]\s fail to shock [target], falling to [get_turf(target)]."))
+	visible_message(span_warning("[src]\s fail to shock [target][isfloorturf(target.loc) ? ", falling to [target.loc]" : ""]."))
 	return BULLET_ACT_BLOCK
 
 /obj/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
@@ -251,8 +251,8 @@
 	if(QDELING(src))
 		return
 	owner.visible_message(
-		span_warning("[capitalize(electrode_name)] stop shocking [owner], falling to [get_turf(owner)]."),
-		span_notice("[capitalize(electrode_name)] stop shocking you, falling to [get_turf(owner)]."),
+		span_warning("[capitalize(electrode_name)] stop shocking [owner][isfloorturf(owner.loc) ? ", falling to [owner.loc]" : ""]."),
+		span_notice("[capitalize(electrode_name)] stop shocking you[isfloorturf(owner.loc) ? ", falling to [owner.loc]" : ""]."),
 	)
 	qdel(src)
 
