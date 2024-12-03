@@ -1,6 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - balance: "Wraith Module recloaking timer bumped from 5 to 20 seconds."
-  - balance: "The Wraith Module's cloak now dissipates on ranged attacks and any type of bump."
-  - balance: "Wraith Module can no longer be installed In suits with the armor booster module ."

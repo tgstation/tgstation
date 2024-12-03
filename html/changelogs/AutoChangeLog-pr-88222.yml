@@ -1,4 +1,0 @@
-author: "thegrb93"
-delete-after: True
-changes:
-  - bugfix: "Borg lights not turning off when flashed or empd"

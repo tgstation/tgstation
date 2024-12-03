@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Made the broadcast camera's sprite more consistent, it hopefully shouldn't reset to the inactive sprite while recording in some weird scenarios now."
