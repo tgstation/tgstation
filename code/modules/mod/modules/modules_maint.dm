@@ -324,16 +324,20 @@
 	if(you_fucked_up || mod.wearer.has_gravity() > NEGATIVE_GRAVITY)
 		return
 
-	if (forced || SHOULD_DISABLE_FOOTSTEPS(mod.wearer))
-		return
-
 	var/turf/open/current_turf = get_turf(mod.wearer)
 	var/turf/open/openspace/turf_above = get_step_multiz(mod.wearer, UP)
 	if(current_turf && istype(turf_above))
 		current_turf.zFall(mod.wearer)
+		return
+
 	else if(!turf_above && istype(current_turf) && current_turf.planetary_atmos) //nothing holding you down
 		INVOKE_ASYNC(src, PROC_REF(fly_away))
-	else if(!(step_count % 2))
+		return
+
+	if (forced || SHOULD_DISABLE_FOOTSTEPS(mod.wearer))
+		return
+
+	if(!(step_count % 2))
 		playsound(current_turf, 'sound/items/modsuit/atrocinator_step.ogg', 50)
 	step_count++
 
