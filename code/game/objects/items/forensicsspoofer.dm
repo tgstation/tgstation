@@ -33,7 +33,7 @@
 	. = ..()
 	// most things have add_fingerprint in their item interaction because lol lmao
 	// tl;dr cut off the chain before anything fires so we dont add user fingerprints to target
-	RegisterSignals(src, list(COMSIG_ITEM_INTERACTING_WITH_ATOM, COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY), PROC_REF(do_interact))
+	RegisterSignal(src, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(do_interact))
 
 /obj/item/forensics_spoofer/attack_self_secondary(mob/user, modifiers)
 	. = ..()
