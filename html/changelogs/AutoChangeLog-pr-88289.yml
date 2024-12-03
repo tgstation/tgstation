@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "You cannot have more than one MODtether (excluding manual connections)"
-  - qol: "Tethers are easier to cut (require less pixelhunting)"

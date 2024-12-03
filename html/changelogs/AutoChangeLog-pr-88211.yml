@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes:
+  - image: "Updates slime potion sprites, adds some new colors and rearranges some others."

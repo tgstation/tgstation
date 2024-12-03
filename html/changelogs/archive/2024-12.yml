@@ -39,3 +39,64 @@
   - image: Add new alert icons for bloody/dirty showers
   - code_imp: Refactored some expose_obj reagent code to support method types.
   - code_imp: Improved mood typecasting for owner to allow checking of mob biotypes.
+2024-12-02:
+  Ghommie:
+  - balance: brought fishing difficulty of all fishing spots a bit closer to their
+      original value following a small oopsie that made them unexpectingly easier
+      for more than two months.
+  - bugfix: Fixed fishing lures.
+  OrionTheFox:
+  - bugfix: fixed the "tactical combat/engineering uniform" allowing toggling with
+      no alt sprite
+  SmArtKar:
+  - bugfix: Fixed lunar parade soundloop
+  - bugfix: You cannot have more than one MODtether (excluding manual connections)
+  - qol: Tethers are easier to cut (require less pixelhunting)
+  - bugfix: Fixed flipped fishing hooks
+  - bugfix: You can no longer stick a butter on a stick on a stick
+  - qol: Mining drills are now active by default
+  - bugfix: Fixes mining drill displaying drilling messages while inactive
+  githubuser4141:
+  - bugfix: fixes splinter cell pistols causing mechs to suddenly have all their flags
+      deleted
+  mc-oofert:
+  - bugfix: fixed the museum password puzzle (to the cafeteria), and the scrubbers
+      and vents there now look correctly (also fixed a rare visual bug)
+  - bugfix: it is now harder to bypass indestructible windows and grilles (those are
+      placed there for a reason, you know!)
+  norsvenska:
+  - spellcheck: You are no longer faced with a typo after either not writing on paper,
+      or attempting to stamp a paper that's been stamped too many times.
+2024-12-03:
+  Absolucy:
+  - bugfix: Made the broadcast camera's sprite more consistent, it hopefully shouldn't
+      reset to the inactive sprite while recording in some weird scenarios now.
+  - bugfix: Abductor doohickeys (i.e abductor device circuit boards, mental interface
+      device, silencer, science tool, and omnitool) now properly unlock alien tech
+      via the experimentor.
+  EnterTheJake:
+  - balance: Wraith Module recloaking timer bumped from 5 to 20 seconds.
+  - balance: The Wraith Module's cloak now dissipates on ranged attacks and any type
+      of bump.
+  - balance: Wraith Module can no longer be installed In suits with the armor booster
+      module .
+  SmArtKar:
+  - bugfix: Fixed Hilbert's rigged analyzer not being able to scan the hotel orb
+  - bugfix: Fixed all parried projectiles only going up or down
+  - bugfix: Fixed "Leave Body" escape menu tab runtiming
+  - bugfix: Fixed smoker addictions not refreshing
+  ValuedEmployee:
+  - bugfix: Only players with Felinid tongues get to meow and purr for real this time,
+      and other carbons cannot
+  - bugfix: Mimes can no longer meow out loud and have their own mime message
+  - bugfix: Stopped delay on meow and purr emotes where they had to be used twice
+      to work the first time they're used
+  - rscdel: Removed redundant text warning for players that can't use the meow or
+      purr emotes
+  norsvenska:
+  - spellcheck: Station commission plaques (the gold ones that have the date they
+      were added) have been updated, adding Nebula's, fixing Wawa's, and decommissioning
+      Northstar's.
+  thegrb93:
+  - bugfix: Borg lights not turning off when flashed or empd
+  - bugfix: Air alarms stuck in warning state when area alarms are cleared
