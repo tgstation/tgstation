@@ -89,8 +89,8 @@
 	log_game("[key_name(teleatom)] has teleported from [loc_name(curturf)] to [loc_name(destturf)]")
 	tele_play_specials(teleatom, destturf, effectout, asoundout)
 
-	if(ismob(teleatom))
-		var/mob/teleported_mob = teleatom
+	if(isliving(teleatom))
+		var/mob/living/teleported_mob = teleatom
 		teleatom.log_message("teleported from [loc_name(curturf)] to [loc_name(destturf)].", LOG_GAME, log_globally = FALSE)
 		teleported_mob.cancel_camera()
 		teleported_mob.refresh_gravity()
