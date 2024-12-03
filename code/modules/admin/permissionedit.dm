@@ -140,13 +140,14 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 	permissions_assets.send(usr.client)
 	var/admin_key = href_list["key"]
 	var/admin_ckey = ckey(admin_key)
+	
+	var/task = href_list["editrights"]
 	var/datum/admins/target_admin_datum = GLOB.admin_datums[admin_ckey]
 	if(!target_admin_datum)
 		target_admin_datum = GLOB.deadmins[admin_ckey]
 	if (!target_admin_datum && task != "add")
 		return
 	var/use_db
-	var/task = href_list["editrights"]
 	var/skip
 	var/legacy_only
 	if(task == "activate" || task == "deactivate" || task == "sync" || task == "verify")
