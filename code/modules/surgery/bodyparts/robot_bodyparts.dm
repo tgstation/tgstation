@@ -574,7 +574,7 @@
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 
 /obj/item/bodypart/leg/right/robot/advanced
-	name = "heavy robotic right leg"
+	name = "advanced robotic right leg"
 	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'

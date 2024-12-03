@@ -26,7 +26,7 @@
 /datum/antagonist/fugitive_hunter/greet()
 	switch(backstory)
 		if(HUNTER_PACK_COPS)
-			to_chat(owner, span_boldannounce("Justice has arrived. I am a member of the Spacepol!"))
+			to_chat(owner, span_bolddanger("Justice has arrived. I am a member of the Spacepol!"))
 			to_chat(owner, "<B>The criminals should be on the station, we have special huds implanted to recognize them.</B>")
 			to_chat(owner, "<B>As we have lost pretty much all power over these damned lawless megacorporations, it's a mystery if their security will cooperate with us.</B>")
 		if(HUNTER_PACK_RUSSIAN)
@@ -47,7 +47,7 @@
 			to_chat(owner, span_danger("Your mission is simple. Infiltrate the facility and extract the target, dead or alive."))
 			to_chat(owner, span_danger("This is a stealth infiltration mission in hostile enemy territory. Be wary, and avoid being caught if possible."))
 
-	to_chat(owner, span_boldannounce("You are not an antagonist in that you may kill whomever you please, but you can do anything to ensure the capture of the fugitives, even if that means going through the station."))
+	to_chat(owner, span_bolddanger("You are not an antagonist in that you may kill whomever you please, but you can do anything to ensure the capture of the fugitives, even if that means going through the station."))
 	owner.announce_objectives()
 
 /datum/antagonist/fugitive_hunter/create_team(datum/team/fugitive_hunters/new_team)
