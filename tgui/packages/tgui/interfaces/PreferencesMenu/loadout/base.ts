@@ -31,7 +31,7 @@ export type LoadoutItem = {
   buttons: LoadoutButton[];
   reskins: ReskinOption[] | null;
   information: string[];
-  cost: string;
+  cost: number;
 };
 
 // Category of items in the loadout

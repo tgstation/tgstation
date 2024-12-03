@@ -1,0 +1,276 @@
+/**
+ * Copyright (c) 2024 Aylong (https://github.com/AyIong)
+ * SPDX-License-Identifier: MIT
+ */
+@use '~tgui/styles/base.scss';
+@use '~tgui/styles/colors.scss';
+@use '../styles/functions.scss' as *;
+
+$color-default: colors.bg(base.$color-bg-section) !default;
+$color-disabled: hsl(0, 55%, 25%) !default;
+$color-selected: colors.bg(colors.$green) !default;
+$bg-map: colors.$bg-map !default;
+
+@function round-color($color, $opacity: null) {
+  $r: round(red($color));
+  $g: round(green($color));
+  $b: round(blue($color));
+  @if $opacity != null {
+    @return rgba($r, $g, $b, $opacity);
+  }
+  @return rgb($r, $g, $b);
+}
+
+@mixin button-style(
+  $color,
+  $border-color: round-color(lighten($color, 50%), 0.2),
+  $border-width: 1px 0 0 0,
+  $opacity: 0.2,
+  $hoverable: true,
+  $transition-duration: 0.2s
+) {
+  $text-color: if(luminance($color) > 0.3, black, white);
+  background-color: round-color($color, $opacity);
+  color: $text-color;
+  border: solid $border-color;
+  border-width: $border-width;
+  transition:
+    background-color $transition-duration,
+    border-color $transition-duration;
+
+  @if $hoverable {
+    &:hover {
+      background-color: round-color(lighten($color, 50%), $opacity);
+    }
+  }
+}
+
+@each $color-name, $color-value in $bg-map {
+  .color__#{$color-name} {
+    @include button-style($color-value, $border-width: 1px);
+  }
+
+  .contentColor__#{$color-name} {
+    @include button-style(
+      $color-value,
+      $border-color: lighten($color-value, 25%),
+      $opacity: 1,
+      $hoverable: false
+    );
+  }
+
+  .buttonsContainerColor__#{$color-name} {
+    @include button-style(
+      $color-value,
+      $border-width: 1px 1px 1px 0,
+      $opacity: 0.33,
+      $hoverable: false,
+      $transition-duration: 0
+    );
+  }
+}
+
+.color__default {
+  @include button-style(lighten($color-default, 85%), $border-width: 1px);
+}
+
+.disabled {
+  background-color: rgba($color-disabled, 0.25) !important;
+  border-color: rgba($color-disabled, 0.25) !important;
+}
+
+.selected {
+  @include button-style(
+    $color-selected,
+    $border-color: rgba($color-selected, 0.25),
+    $border-width: 1px
+  );
+}
+
+.contentColor__default {
+  @include button-style(
+    lighten($color-default, 80%),
+    $border-color: lighten($color-default, 100%),
+    $opacity: 1,
+    $hoverable: false
+  );
+}
+
+.contentDisabled {
+  background-color: $color-disabled !important;
+  border-top: 1px solid lighten($color-disabled, 25%) !important;
+}
+
+.contentSelected {
+  @include button-style(
+    $color-selected,
+    $border-color: lighten($color-selected, 25%),
+    $opacity: 1,
+    $hoverable: false
+  );
+}
+
+.buttonsContainerColor__default {
+  @include button-style(
+    lighten($color-default, 85%),
+    $border-width: 1px 1px 1px 0,
+    $hoverable: false,
+    $transition-duration: 0
+  );
+}
+
+.ImageButton {
+  display: inline-table;
+  position: relative;
+  text-align: center;
+  margin: 0.25em;
+  user-select: none;
+  -ms-user-select: none;
+
+  .noAction {
+    pointer-events: none;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.33em;
+  }
+
+  .image {
+    position: relative;
+    align-self: center;
+    pointer-events: none;
+    overflow: hidden;
+    line-height: 0;
+    padding: 0.25em;
+    border-radius: 0.33em;
+  }
+
+  .buttonsContainer {
+    display: flex;
+    position: absolute;
+    overflow: hidden;
+    left: 1px;
+    bottom: 1.8em;
+    max-width: 100%;
+    z-index: 1;
+
+    &.buttonsAltContainer {
+      overflow: visible;
+      flex-direction: column;
+      pointer-events: none;
+      top: 1px;
+      bottom: inherit !important;
+    }
+
+    &.buttonsEmpty {
+      bottom: 1px;
+    }
+
+    & > * {
+      /* I know !important is bad, but here's no other way */
+      margin: 0 !important;
+      padding: 0 0.2em !important;
+      border-radius: 0 !important;
+    }
+  }
+
+  .content {
+    -ms-user-select: none;
+    user-select: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0.25em 0.5em;
+    margin: -1px;
+    border-radius: 0 0 0.33em 0.33em;
+    z-index: 2;
+  }
+}
+
+.fluid {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  text-align: center;
+  margin: 0 0 0.5em 0;
+  user-select: none;
+  -ms-user-select: none;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .title {
+    font-weight: bold;
+    padding: 0.5em;
+
+    &.divider {
+      margin: 0 0.5em;
+      border-bottom: base.em(2px) solid rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .contentFluid {
+    padding: 0.5em;
+    color: white;
+  }
+
+  .container {
+    flex-direction: row;
+    flex: 1;
+
+    &.hasButtons {
+      border-radius: 0.33em 0 0 0.33em;
+      border-width: 1px 0 1px 1px;
+    }
+  }
+
+  .image {
+    padding: 0;
+  }
+
+  .buttonsContainer {
+    position: relative;
+    left: inherit;
+    bottom: inherit;
+    border-radius: 0 0.33em 0.33em 0;
+
+    &.buttonsEmpty {
+      bottom: inherit;
+    }
+
+    &.buttonsAltContainer {
+      overflow: hidden;
+      pointer-events: auto;
+      top: inherit;
+
+      & > * {
+        border-top: 1px solid rgba(255, 255, 255, 0.075);
+
+        &:first-child {
+          border-top: 0;
+        }
+      }
+    }
+
+    & > * {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      white-space: pre-wrap;
+      line-height: base.em(14px);
+      height: 100%;
+      border-left: 1px solid rgba(255, 255, 255, 0.075);
+    }
+  }
+}
