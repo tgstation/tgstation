@@ -129,4 +129,4 @@
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | NO_GRAVITY
 
 /area/station/science/ordnance/bomb/planet
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = /area/station/science/ordnance/bomb::area_flags & ~NO_GRAVITY
