@@ -108,12 +108,9 @@
 /obj/machinery/bitcoin_miner/examine(mob/user)
 	. = ..()
 	. += "The miner reports [bitcoin_balance] bitcoins are available."
-	. += span_notice("The miner can get [min] minimum bitcoin.")
-	. += span_notice("The miner can get [max] maximum bitcoin.")
+	. += span_notice("The miner can get between [min] and [max] bitcoin.")
+	. += span_notice("ALT-LMB to withdraw bitcoins.")
 	. += span_notice("Current price: [SSbitcoin.get_price()] credits.")
-
-///obj/machinery/bitcoin_miner/get_upgrade()
-//	return upgrade_state
 
 /obj/machinery/bitcoin_miner/proc/mine()
 	got = rand(min, max)
@@ -131,10 +128,5 @@
 		var/obj/item/holochip/holochip = new (user.drop_location(), bitcoin_balance * SSbitcoin.get_price())
 		user.put_in_hands(holochip)
 		bitcoin_balance = 0
+		playsound(src, 'sound/items/equip/sneakers-equip1.ogg', 50, FALSE)
 		return CLICK_ACTION_SUCCESS
-
-/obj/machinery/bitcoin_miner/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-
-	if(powered())
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "Withdraw"
