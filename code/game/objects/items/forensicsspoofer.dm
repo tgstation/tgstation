@@ -1,6 +1,6 @@
-/obj/item/forensics_spoofer //todo kit with 1x forensics spoofer 1x shitty awful soap 1x instruction paper
+/obj/item/forensics_spoofer
 	name = /obj/item/detective_scanner::name
-	desc = "Used to remotely scan objects for fibers and fingerprints. Can replicate the findings."
+	desc = "Used to adjacently scan objects and biomass for fibers and fingerprints. Can replicate the findings."
 	icon = /obj/item/detective_scanner::icon
 	icon_state = /obj/item/detective_scanner::icon_state
 	w_class = WEIGHT_CLASS_SMALL
