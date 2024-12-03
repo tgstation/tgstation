@@ -184,7 +184,7 @@
 	currentstate = STATE_IDLE
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/machinery/mailsorter/attackby(obj/item/thingy, mob/user, params)
+/obj/machinery/mailsorter/item_interaction(mob/user, obj/item/thingy, params)
 	if (istype(thingy, /obj/item/storage/bag/mail))
 		if (length(thingy.contents) < 1)
 			to_chat(user, span_warning("The [thingy] is empty!"))
@@ -217,7 +217,6 @@
 			thingy.forceMove(src)
 			mail_list += thingy
 			to_chat(user, span_notice("The [src] whizzles as it accepts the [thingy]."))
-	. = ..()
 
 /obj/machinery/mailsorter/proc/pick_mail(mob/user)
 	if(!length(mail_list))
