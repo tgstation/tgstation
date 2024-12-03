@@ -1592,6 +1592,14 @@
 		/datum/stock_part/servo = 1,
 		)
 
+/obj/item/circuitboard/machine/bitcoin_miner
+	name = "Bitcoin miner"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/bitcoin_miner
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/datum/stock_part/scanning_module = 1)
+
 /obj/item/circuitboard/machine/tank_compressor
 	name = "Tank Compressor"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
