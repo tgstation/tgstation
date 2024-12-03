@@ -90,9 +90,10 @@
 	tele_play_specials(teleatom, destturf, effectout, asoundout)
 
 	if(ismob(teleatom))
-		var/mob/M = teleatom
+		var/mob/teleported_mob = teleatom
 		teleatom.log_message("teleported from [loc_name(curturf)] to [loc_name(destturf)].", LOG_GAME, log_globally = FALSE)
-		M.cancel_camera()
+		teleported_mob.cancel_camera()
+		teleported_mob.refresh_gravity()
 
 	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT, destination, channel)
 
@@ -112,6 +113,7 @@
 
 			// [mob/living].forceMove() forces mobs to unbuckle, so we need to buckle them again
 			teleatom.buckle_mob(rider, force=TRUE)
+			rider.refresh_gravity()
 
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)
 	if(!location)
