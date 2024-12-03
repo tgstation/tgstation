@@ -120,7 +120,7 @@
 	got = 0
 
 /obj/machinery/bitcoin_miner/process(seconds_per_tick)
-	if(SPT_PROB(10, seconds_per_tick))
+	if(SPT_PROB(10, seconds_per_tick) && powered())
 		mine()
 
 /obj/machinery/bitcoin_miner/click_alt(mob/living/user)
