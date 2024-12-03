@@ -91,14 +91,14 @@ export const ForensicsSpoofer = (props) => {
               <Stack vertical>
                 {Object.keys(currentTab === 0 ? fingerprints : fibers).map(
                   (forensic_data, _) => (
-                    <Stack.Item>
+                    <Stack.Item key={forensic_data}>
                       <Stack>
                         <Stack.Item>
                           <Button.Checkbox
                             checked={
                               (currentTab === 0
                                 ? chosen_fingerprint
-                                : chosen_fiber) == forensic_data
+                                : chosen_fiber) === forensic_data
                             }
                             onClick={() =>
                               act('choose', { chosen: forensic_data })
