@@ -131,33 +131,6 @@
 	)
 	crate_name = "crate"
 
-/datum/supply_pack/imports/wt550
-	name = "Smuggled WT-550 Autorifle Crate"
-	desc = "(*!&@#GOOD NEWS, OPERATIVE! WE CAN'T GET YOU THE BIG LEAGUE AUTOMATIC WEAPONS. BUT, BY \
-		SMUGGLING THIS CRATE THROUGH A FEW OUTDATED CUSTOMS CHECKPOINTS, WE'VE THE NEXT BEST THING! \
-		SERVICE AUTORIFLES. DON'T WORRY, THE RUMORS ABOUT THE GUN MELTING YOU ARE JUST THAT! RUMORS! \
-		THESE THINGS WORK FINE! MIGHT BE SLIGHTLY DIRTY.!#@*$"
-	hidden = TRUE
-	cost = CARGO_CRATE_VALUE * 7
-	contains = list(
-		/obj/item/gun/ballistic/automatic/wt550 = 2,
-		/obj/item/ammo_box/magazine/wt550m9 = 2,
-	)
-	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
-
-/datum/supply_pack/imports/wt550ammo
-	name = "Smuggled WT-550 Ammo Crate"
-	desc = "(*!&@#OPERATIVE, YOU LIKE THAT WT-550? THEN WHY NOT EQUIP YOURSELF WITH SOME MORE AMMO!!#@*$"
-	hidden = TRUE
-	cost = CARGO_CRATE_VALUE * 4
-	contains = list(
-		/obj/item/ammo_box/magazine/wt550m9 = 2,
-		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
-		/obj/item/ammo_box/magazine/wt550m9/wtic = 2,
-	)
-	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
-
 /datum/supply_pack/imports/shocktrooper
 	name = "Shocktrooper Crate"
 	desc = "(*!&@#WANT TO PUT THE FEAR OF DEATH INTO YOUR ENEMIES? THIS CRATE OF GOODIES CAN HELP MAKE THAT A REALITY. \
