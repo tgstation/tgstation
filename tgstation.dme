@@ -6892,7 +6892,6 @@
 #include "modular_doppler\modular_customization\accessories\code\monkey_accessories\monkey_tail.dm"
 #include "modular_doppler\modular_customization\accessories\code\moth_accessories\moth_antennae.dm"
 #include "modular_doppler\modular_customization\accessories\code\moth_accessories\moth_fluff.dm"
-#include "modular_doppler\modular_customization\accessories\code\moth_accessories\moth_wings.dm"
 #include "modular_doppler\modular_customization\accessories\code\non_species_specific\avian_accessories\avian_ears.dm"
 #include "modular_doppler\modular_customization\accessories\code\non_species_specific\avian_accessories\avian_fluff.dm"
 #include "modular_doppler\modular_customization\accessories\code\non_species_specific\avian_accessories\avian_snout.dm"
