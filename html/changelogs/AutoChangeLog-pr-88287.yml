@@ -1,5 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "fixed the museum password puzzle (to the cafeteria), and the scrubbers and vents there now look correctly (also fixed a rare visual bug)"
-  - bugfix: "it is now harder to bypass indestructible windows and grilles (those are placed there for a reason, you know!)"
