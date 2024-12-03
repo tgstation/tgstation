@@ -10,7 +10,7 @@
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
-	default_gravity = NONE
+	default_gravity = ZERO_GRAVITY
 
 /area/station/solars/fore
 	name = "\improper Fore Solar Array"

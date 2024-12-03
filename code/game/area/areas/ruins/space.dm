@@ -1,7 +1,7 @@
 //Space Ruin Parents
 
 /area/ruin/space
-	default_gravity = NONE
+	default_gravity = ZERO_GRAVITY
 	area_flags = UNIQUE_AREA
 
 /area/ruin/space/unpowered
@@ -535,7 +535,7 @@
 	name = "\improper DJ Station Solars"
 	icon_state = "DJ"
 	area_flags = UNIQUE_AREA
-	default_gravity = NONE
+	default_gravity = ZERO_GRAVITY
 
 /area/ruin/space/djstation/service
 	name = "\improper DJ Station Service"

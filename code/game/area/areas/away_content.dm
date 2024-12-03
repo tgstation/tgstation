@@ -46,7 +46,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	outdoors = TRUE
 
 /area/awaymission/secret/unpowered/no_grav
-	default_gravity = NONE
+	default_gravity = ZERO_GRAVITY
 
 /area/awaymission/secret/fullbright
 	static_lighting = FALSE
