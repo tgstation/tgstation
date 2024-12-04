@@ -115,8 +115,7 @@
 	return SFX_SNORE_MALE
 
 /datum/species/lizard/get_hiss_sound(mob/living/carbon/human/lizard)
-	return
-	//lizard sounds here
+	return 'sound/mobs/humanoids/lizard/lizard_hiss.ogg'
 
 /datum/species/lizard/get_physical_attributes()
 	return "Lizardpeople can withstand slightly higher temperatures than most species, but they are very vulnerable to the cold \
