@@ -37,7 +37,7 @@
  *
  * (IE, no wacky hair styles / colors)
  */
-/proc/randomize_human_normie(mob/living/carbon/human/human, randomize_mutations = FALSE)
+/proc/randomize_human_normie(mob/living/carbon/human/human, randomize_mutations = FALSE, update_body = TRUE)
 	// Sorry enbys but statistically you are not average enough
 	human.gender = human.dna.species.sexes ? pick(MALE, FEMALE) : PLURAL
 	human.physique = human.gender
@@ -59,4 +59,5 @@
 	// Normal DNA init stuff, these can generally be wacky but we care less, they're aliens after all
 	human.dna.initialize_dna(newblood_type = random_blood_type(), create_mutation_blocks = randomize_mutations, randomize_features = TRUE)
 	human.updatehealth()
-	human.updateappearance(mutcolor_update = TRUE)
+	if(update_body)
+		human.updateappearance(mutcolor_update = TRUE)

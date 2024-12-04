@@ -525,7 +525,7 @@
 	unset_wearer()
 	old_wearer.temporarilyRemoveItemFromInventory(src)
 
-/obj/item/mod/control/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+/obj/item/mod/control/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species, pref_load, regenerate_icons)
 	SIGNAL_HANDLER
 
 	for(var/obj/item/part in get_parts(all = TRUE))
