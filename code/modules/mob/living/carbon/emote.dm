@@ -242,6 +242,7 @@
 	key = "hiss"
 	key_third_person = "hisses"
 	message = "hisses!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/hiss/get_sound(mob/living/carbon/human/user)
 	. = ..()
