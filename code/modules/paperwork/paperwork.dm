@@ -61,6 +61,10 @@
 	add_stamp()
 	return TRUE
 
+/obj/item/paperwork/examine(mob/user) // DOPPLER EDIT - paperwork has more description, modifying examine to fake the standard extended examine text
+	. = ..()
+	. += span_notice("This item could be examined further...")
+
 /obj/item/paperwork/examine_more(mob/user)
 	. = ..()
 
