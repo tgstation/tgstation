@@ -419,6 +419,7 @@
  * Performs a reset of the tram's position data by finding a predetermined reference landmark, then driving to it.
  */
 /datum/transport_controller/linear/tram/proc/reset_position()
+	malf_active = TRANSPORT_SYSTEM_NORMAL
 	if(idle_platform)
 		if(get_turf(idle_platform) == get_turf(nav_beacon))
 			set_status_code(SYSTEM_FAULT, FALSE)
@@ -606,6 +607,7 @@
 /datum/transport_controller/linear/tram/proc/start_malf_event()
 	malf_active = TRANSPORT_LOCAL_WARNING
 	throw_chance *= 1.25
+	paired_cabinet.update_appearance()
 	log_transport("TC: [specific_transport_id] starting Tram Malfunction event.")
 
 /**
@@ -1081,7 +1083,7 @@
 		"recoveryMode" = controller_datum.recovery_mode,
 		"currentSpeed" = controller_datum.current_speed,
 		"currentLoad" = controller_datum.current_load,
-		"statusSF" = controller_datum.controller_status & SYSTEM_FAULT,
+		"statusSF" = controller_datum.controller_status & SYSTEM_FAULT || controller_datum.malf_active != TRANSPORT_SYSTEM_NORMAL,
 		"statusCE" = controller_datum.controller_status & COMM_ERROR,
 		"statusES" = controller_datum.controller_status & EMERGENCY_STOP,
 		"statusPD" = controller_datum.controller_status & PRE_DEPARTURE,
