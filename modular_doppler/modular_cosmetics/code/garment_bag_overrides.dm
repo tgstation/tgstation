@@ -7,9 +7,9 @@
 
 /obj/item/storage/bag/garment/hop/PopulateContents()
 	. = ..()
-	new /obj/item/clothing/under/misc/doppler_uniform/service(src)
+	new /obj/item/clothing/under/misc/doppler_uniform/command(src)
 	new /obj/item/clothing/neck/doppler_mantle/service(src)
-	new /obj/item/clothing/head/beret/doppler_command/service(src)
+	new /obj/item/clothing/head/beret/doppler_command/command(src)
 	new /obj/item/clothing/head/utility/hardhat/welding/doppler_command/service(src)
 
 /obj/item/storage/bag/garment/hos/PopulateContents()
