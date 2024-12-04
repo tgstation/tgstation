@@ -182,8 +182,7 @@
 	)
 
 /datum/species/ethereal/get_hiss_sound(mob/living/carbon/human/ethereal)
-	return
-	//ethereal sounds here
+	return 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg'
 
 /datum/species/ethereal/get_physical_attributes()
 	return "Ethereals process electricity as their power supply, not food, and are somewhat resistant to it.\
