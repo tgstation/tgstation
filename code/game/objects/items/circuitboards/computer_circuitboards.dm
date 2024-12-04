@@ -44,6 +44,20 @@
 	name = "Atmospheric Alert"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/atmos_alert
+	var/station_only = FALSE
+
+/obj/item/circuitboard/computer/atmos_alert/station_only
+	station_only = TRUE
+
+/obj/item/circuitboard/computer/atmos_alert/examine(mob/user)
+	. = ..()
+	. += span_info("The board is configured to [station_only ? "track all station and mining alarms" : "track alarms on the same z-level"].")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+
+/obj/item/circuitboard/computer/atmos_alert/multitool_act(mob/living/user)
+	station_only = !station_only
+	balloon_alert(user, "tracking set to [station_only ? "station" : "z-level"]")
+	return TRUE
 
 /obj/item/circuitboard/computer/atmos_control
 	name = "Atmospheric Control"
