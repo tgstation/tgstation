@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Aquarium safe mode is now safe."
-  - bugfix: "Fish are no longer still hungry after being fed."

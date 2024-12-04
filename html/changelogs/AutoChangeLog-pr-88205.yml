@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "A ton of things now use the more correct method of applying damage to you. Which means they will correctly factor in damage modifiers and are less likely to break your sprite. Some examples include embedded objects jostling around, chiropractice, and tackling a wall. Report any oddities, such as extreme damage or bodyparts being wrongly affected."
-  - bugfix: "Having acid splashed on your face may now disfigure you and make you bald, as it once did three years ago."
-  - bugfix: "Itchy heretic trauma now better checks if the bodypart is covered or not before determining if you should itch."
-  - bugfix: "\"Repair Puncture\" logs no longer mistakenly report you are \"Incising burned flesh\""
