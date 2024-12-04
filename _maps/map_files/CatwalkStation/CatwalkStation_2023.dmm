@@ -5666,7 +5666,7 @@
 /area/station/commons/lounge)
 "bVB" = (
 /obj/machinery/door/airlock/maintenance,
-/turf/closed/wall,
+/turf/open/floor/plating,
 /area/station/medical/coldroom)
 "bVK" = (
 /obj/structure/railing{
@@ -5731,15 +5731,6 @@
 /obj/structure/reagent_dispensers/plumbed/storage,
 /turf/open/floor/wood,
 /area/station/medical/medbay/central)
-"bWP" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
 "bWY" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
@@ -14039,9 +14030,6 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "eIW" = (
-/obj/effect/spawner/structure/window/reinforced{
-	layer = 2.31
-	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
 "eJb" = (
@@ -17519,7 +17507,7 @@
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/mapping_helpers/airlock/welded,
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/closed/wall/r_wall,
+/turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "fRE" = (
 /obj/machinery/computer/security/qm{
@@ -17820,7 +17808,6 @@
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "fVD" = (
-/obj/structure/lattice/catwalk,
 /turf/closed/wall,
 /area/station/maintenance/solars/port/aft)
 "fVM" = (
@@ -22076,9 +22063,6 @@
 /turf/open/floor/iron,
 /area/station/science/lobby)
 "hoc" = (
-/obj/effect/spawner/structure/window/reinforced{
-	layer = 2.31
-	},
 /turf/open/floor/plating,
 /area/station/commons/fitness/recreation)
 "hoj" = (
@@ -29218,8 +29202,6 @@
 	dir = 1
 	},
 /obj/machinery/computer/security/telescreen/minisat/directional/north{
-	pixel_x = 0;
-	pixel_y = 32;
 	name = "AI Ministat Camera Monitor"
 	},
 /turf/open/floor/iron/dark,
@@ -31033,9 +31015,6 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "kfs" = (
-/obj/effect/spawner/structure/window/reinforced{
-	layer = 2.31
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chapel_shutters_space";
 	name = "Chapel Shutters"
@@ -35745,16 +35724,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"lKe" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 2
-	},
-/turf/open/floor/iron/large,
-/area/station/hallway/primary/central)
 "lKj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -40367,12 +40336,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"nmc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
 "nmf" = (
 /obj/structure/cable,
 /turf/open/floor/iron/textured_large,
@@ -47157,10 +47120,6 @@
 	},
 /turf/open/water,
 /area/station/maintenance/port/fore)
-"pBZ" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/starboard/fore)
 "pCb" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/storage)
@@ -72707,9 +72666,6 @@
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
 "ydS" = (
-/obj/effect/spawner/structure/window/reinforced{
-	layer = 2.31
-	},
 /turf/open/floor/plating,
 /area/station/engineering/atmos/hfr_room)
 "ydU" = (
@@ -108991,7 +108947,7 @@ cib
 cib
 cib
 cib
-lKe
+cib
 cib
 qRN
 aZs
@@ -111030,7 +110986,7 @@ qAd
 vfe
 vfe
 dCm
-nmc
+bNY
 bNY
 khn
 udl
@@ -112831,7 +112787,7 @@ aMC
 cCK
 fIg
 fIg
-bWP
+fIg
 dCm
 dCm
 uBD
@@ -113340,7 +113296,7 @@ heR
 heR
 heR
 heR
-pBZ
+hkm
 dUE
 roj
 dCm
@@ -174997,7 +174953,7 @@ nlm
 nlm
 nlm
 nlm
-hoc
+ixf
 rNe
 rNe
 rNe
@@ -175254,7 +175210,7 @@ nlm
 nlm
 nlm
 nlm
-hoc
+ixf
 rNe
 rNe
 rxo
@@ -175511,7 +175467,7 @@ qwn
 nlm
 nlm
 dDL
-hoc
+ixf
 rNe
 rNe
 hnK
@@ -175768,7 +175724,7 @@ nNC
 wua
 nlm
 dDL
-hoc
+ixf
 rNe
 rNe
 hnK
@@ -176282,7 +176238,7 @@ lrW
 wua
 nlm
 tSA
-hoc
+ixf
 rNe
 rNe
 hnK
@@ -176539,7 +176495,7 @@ vlH
 nlm
 nlm
 tSA
-hoc
+ixf
 rNe
 rNe
 hnK
@@ -176796,7 +176752,7 @@ nlm
 nlm
 nlm
 tSA
-hoc
+ixf
 rNe
 rNe
 dOm
@@ -177053,7 +177009,7 @@ nlm
 nlm
 nlm
 tSA
-hoc
+ixf
 rNe
 rNe
 rNe
