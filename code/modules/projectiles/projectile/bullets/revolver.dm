@@ -59,7 +59,7 @@
 /obj/projectile/bullet/c38/match/true
 	name = ".38 True Strike bullet"
 	damage = 15
-	ricochet_auto_aim_range = 9
+	ricochet_auto_aim_range = 3
 	ricochet_auto_aim_angle = 100
 	ricochet_incidence_leeway = 0
 	ricochet_shoots_firer = FALSE
