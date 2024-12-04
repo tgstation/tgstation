@@ -606,8 +606,8 @@
  */
 /datum/transport_controller/linear/tram/proc/start_malf_event()
 	malf_active = TRANSPORT_LOCAL_WARNING
-	throw_chance *= 1.25
 	paired_cabinet.update_appearance()
+	throw_chance *= 1.25
 	log_transport("TC: [specific_transport_id] starting Tram Malfunction event.")
 
 /**
@@ -620,6 +620,7 @@
 	if(!(malf_active))
 		return
 	malf_active = TRANSPORT_SYSTEM_NORMAL
+	paired_cabinet.update_appearance()
 	throw_chance = initial(throw_chance)
 	log_transport("TC: [specific_transport_id] ending Tram Malfunction event.")
 
