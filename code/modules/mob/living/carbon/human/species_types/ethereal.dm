@@ -181,6 +181,10 @@
 		'sound/mobs/humanoids/ethereal/ethereal_scream_3.ogg',
 	)
 
+/datum/species/ethereal/get_hiss_sound(mob/living/carbon/human/ethereal)
+	return
+	//ethereal sounds here
+
 /datum/species/ethereal/get_physical_attributes()
 	return "Ethereals process electricity as their power supply, not food, and are somewhat resistant to it.\
 		They do so via their crystal core, their equivalent of a human heart, which will also encase them in a reviving crystal if they die.\

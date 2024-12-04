@@ -1457,6 +1457,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/get_snore_sound(mob/living/carbon/human/human)
 	return
 
+/// Returns the species' hiss sound
+/datum/species/proc/get_hiss_sound(mob/living/carbon/human/human)
+	return
+
 /datum/species/proc/get_mut_organs(include_brain = TRUE)
 	var/list/mut_organs = list()
 	mut_organs += mutant_organs

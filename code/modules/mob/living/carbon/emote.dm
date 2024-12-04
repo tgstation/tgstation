@@ -237,3 +237,16 @@
 	key = "wink"
 	key_third_person = "winks"
 	message = "winks."
+
+/datum/emote/living/carbon/hiss
+	key = "hiss"
+	key_third_person = "hisses"
+	message = "hisses!"
+
+/datum/emote/living/carbon/hiss/get_sound(mob/living/carbon/human/user)
+	. = ..()
+	if(isalien(user))
+		return SFX_HISS
+	if(!istype(user))
+		return
+	return user.dna.get.species.get_sigh_sound()
