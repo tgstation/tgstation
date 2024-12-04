@@ -251,10 +251,7 @@
 		return TRUE
 	if(prob(15))
 		to_chat(user, span_cult_large(pick("\"An untouched mind? Amusing.\"", "\" I suppose it isn't worth the effort to stop you.\"", "\"Go ahead. I don't care.\"", "\"You'll be mine soon enough.\"")))
-		var/obj/item/bodypart/affecting = user.get_active_hand()
-		if(!affecting)
-			return
-		affecting.receive_damage(burn = 5)
+		user.apply_damage(5, BURN, user.get_active_hand())
 		playsound(src, SFX_SEAR, 25, TRUE)
 		to_chat(user, span_danger("Your hand sizzles.")) // Nar nar might not care but their essence still doesn't like you
 	else if(prob(15))

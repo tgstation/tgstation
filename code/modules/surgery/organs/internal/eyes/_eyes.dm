@@ -54,7 +54,7 @@
 	. = ..()
 	receiver.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
-	refresh(receiver, call_update = TRUE)
+	refresh(receiver, call_update = !special)
 	RegisterSignal(receiver, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	if (scarring)
 		apply_scarring_effects()
