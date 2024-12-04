@@ -129,7 +129,7 @@
 				//cooldown handled in the emote.
 				our_carbon.emote("point [pointing_at]")
 			else
-				to_chat(src, "you need to wait before doing that again!")
+				to_chat(src, span_notice("you need to wait before pointing again!"))
 				return FALSE
 	point_at(pointing_at, TRUE)
 

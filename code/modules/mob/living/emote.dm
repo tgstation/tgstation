@@ -324,7 +324,7 @@
 				if(prob(success_prob))
 					message_param = "[one_leg ? "jumps into the air and " : ""]points at %t with their [has_shoes ? "leg" : "toes"]!"
 				else
-					message_param = "[one_leg ? "jumps into the air and " : ""]tries to point at %t with their [has_shoes ? "leg" : "toes"], [span_userdanger("falling down")] in the process!"
+					message_param = "[one_leg ? "jumps into the air and " : ""]tries to point at %t with their [has_shoes ? "leg" : "toes"], falling down in the process!"
 					our_carbon.Paralyze(2 SECONDS)
 				TIMER_COOLDOWN_START(user, "point_verb_emote_cooldown", 1 SECONDS)
 			else
