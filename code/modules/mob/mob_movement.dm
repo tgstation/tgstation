@@ -335,9 +335,9 @@
 		if(rebound.last_pushoff == world.time)
 			continue
 		if(continuous_move && !pass_allowed)
-			var/datum/move_loop/move/rebound_engine = GLOB.move_manager.processing_on(rebound, SSnewtonian_movement)
+			var/datum/move_loop/smooth_move/rebound_engine = GLOB.move_manager.processing_on(rebound, SSnewtonian_movement)
 			// If you're moving toward it and you're both going the same direction, stop
-			if(moving_direction == get_dir(src, pushover) && rebound_engine && moving_direction == rebound_engine.direction)
+			if(moving_direction == get_dir(src, pushover) && rebound_engine && moving_direction == angle2dir(rebound_engine.angle))
 				continue
 		else if(!pass_allowed)
 			if(moving_direction == get_dir(src, pushover)) // Can't push "off" of something that you're walking into

@@ -211,7 +211,6 @@
 	// Create new footprints
 	if(theoretical_new_blood >= BLOOD_FOOTPRINTS_MIN)
 		adjust_bloody_shoes(last_blood_state, blood_lost)
-		update_icon()
 
 		var/obj/effect/decal/cleanable/blood/footprints/FP = new(get_turf(parent_atom), footprint_sprite)
 		if(!QDELETED(FP)) ///prints merged

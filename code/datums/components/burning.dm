@@ -91,16 +91,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		source.extinguish()
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	var/obj/item/bodypart/affecting = user.get_active_hand()
-	//Should not happen!
-	if(!affecting)
-		return NONE
-
-	affecting.receive_damage(burn = 5)
+	user.apply_damage(5, BURN, user.get_active_hand())
 	to_chat(user, span_userdanger("You burn your hand on [source]!"))
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 	playsound(source, SFX_SEAR, 50, TRUE)
-	user.update_damage_overlays()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Maintains the burning overlay on the parent atom
