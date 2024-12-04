@@ -142,8 +142,9 @@
 	. = ..()
 	//Moonfish can lay eggs (unaffected by breeding, so think of them as unfertilizard)
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(generate_aquarium_appearance))
-	RegisterSignal(src, AQUARIUM_CONTENT_RANDOMIZE_POSITION, PROC_REF(randomize_aquarium_position))
-	AddComponent(/datum/component/aquarium_content, beauty = 100)
+	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_RANDOMIZE_POSITION, PROC_REF(randomize_aquarium_position))
+	AddComponent(/datum/component/aquarium_content)
+	RegisterSignal(src, COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY, PROC_REF(get_aquarium_beauty))
 
 /obj/item/food/moonfish_eggs/proc/generate_aquarium_appearance(datum/source, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
@@ -153,13 +154,18 @@
 
 /obj/item/food/moonfish_eggs/proc/randomize_aquarium_position(datum/source, obj/structure/aquarium/current_aquarium, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
-	var/list/aq_properties = current_aquarium.get_surface_properties()
 	var/sprite_width = 5
-	var/px_min = aq_properties[AQUARIUM_PROPERTIES_PX_MIN]
-	var/px_max = aq_properties[AQUARIUM_PROPERTIES_PX_MAX] - sprite_width
+	var/sprite_height = 4
+	var/px_min = visual.aquarium_zone_min_px
+	var/px_max = visual.aquarium_zone_max_px - sprite_width
+	var/py_min = visual.aquarium_zone_min_py - sprite_height
 
-	visual.pixel_x = rand(px_min,px_max)
-	visual.pixel_y = rand(-1, 1)
+	visual.pixel_x = rand(px_min, px_max)
+	visual.pixel_y = py_min + rand(-1, 1)
+
+/obj/item/food/moonfish_eggs/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
+	SIGNAL_HANDLER
+	beauty_holder += 100 //moonfish eggs are kinda eye candy
 
 /obj/item/food/moonfish_caviar
 	name = "moonfish caviar paste"
@@ -575,7 +581,7 @@
 		/datum/reagent/consumable/nutriment/protein = 10,
 	)
 	tastes = list("bread" = 1, "meat" = 1)
-	foodtypes = MEAT | NUTS | RAW | GORE
+	foodtypes = MEAT | NUTS | GORE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/flatbread/stinging

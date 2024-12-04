@@ -1,8 +1,4 @@
 import { sortBy } from 'common/collections';
-import { BooleanLike } from 'common/react';
-import { toTitleCase } from 'common/string';
-
-import { useBackend } from '../backend';
 import {
   Button,
   Collapsible,
@@ -10,7 +6,11 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { toTitleCase } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 

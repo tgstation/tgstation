@@ -62,12 +62,12 @@
 	var/list/active_traits = list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NEGATES_GRAVITY)
 
 /obj/item/mod/module/magboot/on_activation()
-	mod.wearer.add_traits(active_traits, MOD_TRAIT)
+	mod.wearer.add_traits(active_traits, REF(src))
 	mod.slowdown += slowdown_active
 	mod.wearer.update_equipment_speed_mods()
 
 /obj/item/mod/module/magboot/on_deactivation(display_message = TRUE, deleting = FALSE)
-	mod.wearer.remove_traits(active_traits, MOD_TRAIT)
+	mod.wearer.remove_traits(active_traits, REF(src))
 	mod.slowdown -= slowdown_active
 	mod.wearer.update_equipment_speed_mods()
 
@@ -91,12 +91,19 @@
 	cooldown_time = 1.5 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
 
+/obj/item/mod/module/tether/used()
+	if(HAS_TRAIT_FROM(mod.wearer, TRAIT_TETHER_ATTACHED, REF(src)))
+		balloon_alert(mod.wearer, "already tethered!")
+		playsound(src, 'sound/items/weapons/gun/general/dry_fire.ogg', 25, TRUE)
+		return FALSE
+	return ..()
+
 /obj/item/mod/module/tether/on_select_use(atom/target)
 	. = ..()
 	if(!.)
 		return
 	var/obj/projectile/tether = new /obj/projectile/tether(mod.wearer.loc, src)
-	tether.preparePixelProjectile(target, mod.wearer)
+	tether.aim_projectile(target, mod.wearer)
 	tether.firer = mod.wearer
 	playsound(src, 'sound/items/weapons/batonextend.ogg', 25, TRUE)
 	INVOKE_ASYNC(tether, TYPE_PROC_REF(/obj/projectile, fire))
@@ -104,7 +111,7 @@
 
 /obj/item/mod/module/tether/get_configuration()
 	. = ..()
-	.["cut_tethers"] = add_ui_configuration("Cut Tethers", "pin", TRUE)
+	.["cut_tethers"] = add_ui_configuration("Cut Tethers", "button", "scissors")
 
 /obj/item/mod/module/tether/configure_edit(key, value)
 	if (key != "cut_tethers")
@@ -139,7 +146,10 @@
 /obj/projectile/tether/proc/on_embedded(datum/source, obj/item/payload, atom/hit)
 	SIGNAL_HANDLER
 
-	firer.AddComponent(/datum/component/tether, hit, 7, "MODtether", payload, parent_module = parent_module)
+	if (HAS_TRAIT_FROM(hit, TRAIT_TETHER_ATTACHED, REF(parent_module)))
+		return
+
+	firer.AddComponent(/datum/component/tether, hit, 7, "MODtether", payload, parent_module = parent_module, tether_trait_source = REF(parent_module))
 
 /obj/projectile/tether/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -161,17 +171,16 @@
 		return
 
 	if (istype(target, /obj/item/tether_anchor) || isstructure(target) || ismachinery(target))
-		firer.AddComponent(/datum/component/tether, target, 7, "MODtether", parent_module = parent_module)
+		if(HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(parent_module)))
+			return
+		var/avoid_target_trait = FALSE
+		if (istype(target, /obj/item/tether_anchor))
+			avoid_target_trait = TRUE
+		firer.AddComponent(/datum/component/tether, target, 7, "MODtether", parent_module = parent_module, tether_trait_source = REF(parent_module), no_target_trait = avoid_target_trait)
 		return
 
-	var/hitx
-	var/hity
-	if(target == original)
-		hitx = target.pixel_x + p_x - 16
-		hity = target.pixel_y + p_y - 16
-	else
-		hitx = target.pixel_x + rand(-8, 8)
-		hity = target.pixel_y + rand(-8, 8)
+	var/hitx = impact_x
+	var/hity = impact_y
 
 	if (!isnull(last_turf) && last_turf != target && last_turf != target.loc)
 		var/turf_dir = get_dir(last_turf, get_turf(target))
@@ -188,7 +197,7 @@
 	anchor.pixel_x = hitx
 	anchor.pixel_y = hity
 	anchor.anchored = TRUE
-	firer.AddComponent(/datum/component/tether, anchor, 7, "MODtether", parent_module = parent_module)
+	firer.AddComponent(/datum/component/tether, anchor, 7, "MODtether", parent_module = parent_module, tether_trait_source = REF(parent_module))
 
 /obj/projectile/tether/Destroy()
 	QDEL_NULL(line)
@@ -216,8 +225,12 @@
 	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+	if(HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(src)))
+		balloon_alert(user, "already tethered!")
+		return
+
 	balloon_alert(user, "attached tether")
-	user.AddComponent(/datum/component/tether, src, 7, "tether")
+	user.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/tether_anchor/mouse_drop_receive(atom/target, mob/user, params)
@@ -227,9 +240,13 @@
 	if (!isliving(target) || !target.CanReach(src))
 		return
 
+	if(HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(src)))
+		balloon_alert(user, "already tethered!")
+		return
+
 	if (target == user)
 		balloon_alert(user, "attached tether")
-		user.AddComponent(/datum/component/tether, src, 7, "tether")
+		user.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src), no_target_trait = TRUE)
 		return
 
 	balloon_alert(user, "attaching tether...")
@@ -237,9 +254,13 @@
 	if (!do_after(user, 5 SECONDS, target))
 		return
 
+	if(HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(src)))
+		balloon_alert(user, "already tethered!")
+		return
+
 	balloon_alert(user, "attached tether")
 	to_chat(target, span_userdanger("[user] attaches a tether to you!"))
-	target.AddComponent(/datum/component/tether, src, 7, "tether")
+	target.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src), no_target_trait = TRUE)
 
 /datum/embed_data/tether_projectile
 	embed_chance = 65 //spiky
@@ -267,14 +288,14 @@
 
 /obj/item/mod/module/rad_protection/on_part_activation()
 	AddComponent(/datum/component/geiger_sound)
-	ADD_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, REF(src))
 	RegisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION, PROC_REF(on_pre_potential_irradiation))
 	for(var/obj/item/part in mod.get_parts(all = TRUE))
 		ADD_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
 
 /obj/item/mod/module/rad_protection/on_part_deactivation(deleting = FALSE)
 	qdel(GetComponent(/datum/component/geiger_sound))
-	REMOVE_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, REF(src))
 	UnregisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION)
 	for(var/obj/item/part in mod.get_parts(all = TRUE))
 		REMOVE_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
@@ -309,10 +330,10 @@
 	required_slots = list(ITEM_SLOT_GLOVES)
 
 /obj/item/mod/module/constructor/on_part_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, REF(src))
 
 /obj/item/mod/module/constructor/on_part_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, REF(src))
 
 /obj/item/mod/module/constructor/on_use()
 	rcd_scan(src, fade_time = 10 SECONDS)
@@ -332,10 +353,10 @@
 	required_slots = list(ITEM_SLOT_HEAD)
 
 /obj/item/mod/module/headprotector/on_part_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
 
 /obj/item/mod/module/headprotector/on_part_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
 
 ///Mister - Sprays water over an area.
 /obj/item/mod/module/mister

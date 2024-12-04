@@ -65,8 +65,20 @@
 
 	if(damage > 0)
 		var/armor = victim.run_armor_check(limb.body_zone, MELEE, "Your armor has protected your [limb.plaintext_zone].", "Your armor has softened a hit to your [limb.plaintext_zone].", weapon.armour_penetration, weak_against_armour = weapon.weak_against_armour)
-		limb.receive_damage(brute = (1 - embed_data.pain_stam_pct) * damage, blocked = armor, wound_bonus = weapon.wound_bonus, bare_wound_bonus = weapon.bare_wound_bonus, sharpness = weapon.get_sharpness())
-		victim.adjustStaminaLoss(embed_data.pain_stam_pct * damage)
+		victim.apply_damage(
+			damage = (1 - embed_data.pain_stam_pct) * damage,
+			damagetype = BRUTE,
+			def_zone = limb,
+			blocked = armor,
+			wound_bonus = weapon.wound_bonus,
+			bare_wound_bonus = weapon.bare_wound_bonus,
+			sharpness = weapon.get_sharpness(),
+			attacking_item = weapon,
+		)
+		victim.apply_damage(
+			damage = embed_data.pain_stam_pct * damage,
+			damagetype = STAMINA,
+		)
 
 /datum/component/embedded/Destroy()
 	var/mob/living/carbon/victim = parent
@@ -111,8 +123,18 @@
 		pain_chance_current *= 0.2
 
 	if(harmful && prob(pain_chance_current))
-		limb.receive_damage(brute = (1 - embed_data.pain_stam_pct) * damage, wound_bonus = CANT_WOUND)
-		victim.adjustStaminaLoss(embed_data.pain_stam_pct * damage)
+		victim.apply_damage(
+			damage = (1 - embed_data.pain_stam_pct) * damage,
+			damagetype = BRUTE,
+			def_zone = limb,
+			wound_bonus = CANT_WOUND,
+			sharpness = weapon.get_sharpness(),
+			attacking_item = weapon,
+		)
+		victim.apply_damage(
+			damage = embed_data.pain_stam_pct * damage,
+			damagetype = STAMINA,
+		)
 		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.plaintext_zone] hurts!"))
 
 	var/fall_chance_current = SPT_PROB_RATE(embed_data.fall_chance / 100, seconds_per_tick) * 100
@@ -152,8 +174,18 @@
 
 	if(harmful && prob(chance))
 		var/damage = weapon.w_class * embed_data.jostle_pain_mult
-		limb.receive_damage(brute = (1 - embed_data.pain_stam_pct) * damage, wound_bonus = CANT_WOUND)
-		victim.adjustStaminaLoss(embed_data.pain_stam_pct * damage)
+		victim.apply_damage(
+			damage = (1 - embed_data.pain_stam_pct) * damage,
+			damagetype = BRUTE,
+			def_zone = limb,
+			wound_bonus = CANT_WOUND,
+			sharpness = weapon.get_sharpness(),
+			attacking_item = weapon,
+		)
+		victim.apply_damage(
+			damage = embed_data.pain_stam_pct * damage,
+			damagetype = STAMINA,
+		)
 		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.plaintext_zone] jostles and stings!"))
 
 
@@ -164,8 +196,18 @@
 
 	if(harmful)
 		var/damage = weapon.w_class * embed_data.remove_pain_mult
-		limb.receive_damage(brute= (1 - embed_data.pain_stam_pct) * damage, wound_bonus = CANT_WOUND)
-		victim.adjustStaminaLoss(embed_data.pain_stam_pct * damage)
+		victim.apply_damage(
+			damage = (1 - embed_data.pain_stam_pct) * damage,
+			damagetype = BRUTE,
+			def_zone = limb,
+			wound_bonus = CANT_WOUND,
+			sharpness = weapon.get_sharpness(),
+			attacking_item = weapon,
+		)
+		victim.apply_damage(
+			damage = embed_data.pain_stam_pct * damage,
+			damagetype = STAMINA,
+		)
 	victim.visible_message(span_danger("[weapon] falls [harmful ? "out" : "off"] of [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] falls [harmful ? "out" : "off"] of your [limb.plaintext_zone]!"))
 	safeRemove()
 
@@ -199,8 +241,18 @@
 /datum/component/embedded/proc/damaging_removal(mob/living/carbon/victim, obj/item/removed, obj/item/bodypart/limb, ouch_multiplier = 1)
 	var/datum/embed_data/embed_data = weapon.get_embed()
 	var/damage = weapon.w_class * embed_data.remove_pain_mult * ouch_multiplier
-	limb.receive_damage(brute= (1 - embed_data.pain_stam_pct) * damage, sharpness = SHARP_EDGED) //It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
-	victim.adjustStaminaLoss(embed_data.pain_stam_pct * damage)
+	victim.apply_damage(
+		damage = (1 - embed_data.pain_stam_pct) * damage,
+		damagetype = BRUTE,
+		def_zone = limb,
+		wound_bonus = max(0, weapon.wound_bonus), // It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
+		sharpness = weapon.get_sharpness() || SHARP_EDGED, // always sharp, even if the object isn't
+		attacking_item = weapon,
+	)
+	victim.apply_damage(
+		damage = embed_data.pain_stam_pct * damage,
+		damagetype = STAMINA,
+	)
 	victim.emote("scream")
 
 /// This proc handles the final step and actual removal of an embedded/stuck item from a carbon, whether or not it was actually removed safely.
@@ -301,10 +353,20 @@
 
 	var/datum/embed_data/embed_data = weapon.get_embed()
 	var/damage = weapon.w_class * embed_data.remove_pain_mult
-	limb.receive_damage(brute = (1 - embed_data.pain_stam_pct) * damage * 1.5, sharpness = SHARP_EDGED) // Performs exit wounds and flings the user to the caster if nearby
+	victim.apply_damage(
+		damage = (1 - embed_data.pain_stam_pct) * damage * 1.5,
+		damagetype = BRUTE,
+		def_zone = limb,
+		wound_bonus = max(0, weapon.wound_bonus), // Performs exit wounds and flings the user to the caster if nearby
+		sharpness = weapon.get_sharpness() || SHARP_EDGED,
+		attacking_item = weapon,
+	)
+	victim.apply_damage(
+		damage = embed_data.pain_stam_pct * damage,
+		damagetype = STAMINA,
+	)
 	victim.cause_wound_of_type_and_severity(WOUND_PIERCE, limb, WOUND_SEVERITY_MODERATE)
-	victim.adjustStaminaLoss(embed_data.pain_stam_pct * damage)
-	playsound(get_turf(victim), 'sound/effects/wounds/blood2.ogg', 50, TRUE)
+	playsound(victim, 'sound/effects/wounds/blood2.ogg', 50, TRUE)
 
 	var/dist = get_dist(caster, victim) //Check if the caster is close enough to yank them in
 	if(dist < 7)

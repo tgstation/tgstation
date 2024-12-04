@@ -192,6 +192,14 @@
 	crate_name = "Strong-Arm implant crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
+/datum/supply_pack/medical/paperwork_implants
+	name = "Paperwork Implant Set"
+	desc = "A crate containing two implants, which can be surgically implanted to effectivize crewmembers at paperwork. Warranty void if exposed to electromagnetic pulses."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/organ/cyberimp/arm/paperwork = 2)
+	crate_name = "Paperwork implant crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
+
 /datum/supply_pack/medical/lost_crew
 	name = "Recovered NT Employee corpse"
 	desc = "We don't have the accomodations to bring them back, could we send them to you? Please revive and employ them. \

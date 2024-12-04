@@ -62,7 +62,7 @@
 		However, people with a star mark will get transported along with another person using the rune."
 	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. \
 		I spoke, and heard my own words echoed back."
-	spell_to_add = /datum/action/cooldown/spell/cosmic_rune
+	action_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
 
 
@@ -86,7 +86,7 @@
 		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
 	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \
 		My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
-	spell_to_add = /datum/action/cooldown/spell/touch/star_touch
+	action_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 1
 
 /datum/heretic_knowledge/spell/star_blast
@@ -94,7 +94,7 @@
 	desc = "Fires a projectile that moves very slowly, raising a short-lived wall of cosmic fields where it goes. \
 		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark."
 	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
-	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
+	action_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 1
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
@@ -199,7 +199,7 @@
 	desc = "Grants you Cosmic Expansion, a spell that creates a 3x3 area of cosmic fields around you. \
 		Nearby beings will also receive a star mark."
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
-	spell_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
+	action_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 1
 
 /datum/heretic_knowledge/ultimate/cosmic_final
@@ -219,6 +219,8 @@
 		WITNESS MY ASCENSION!"
 
 	ascension_achievement = /datum/award/achievement/misc/cosmic_ascension
+	announcement_text = "%SPOOKY% A Star Gazer has arrived into the station, %NAME% has ascended! This station is the domain of the Cosmos! %SPOOKY%"
+	announcement_sound = 'sound/music/antag/heretic/ascend_cosmic.ogg'
 	/// A static list of command we can use with our mob.
 	var/static/list/star_gazer_commands = list(
 		/datum/pet_command/idle,
@@ -236,12 +238,6 @@
 
 /datum/heretic_knowledge/ultimate/cosmic_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = 'sound/music/antag/heretic/ascend_cosmic.ogg',
-		color_override = "pink",
-	)
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)
 	star_gazer_mob.maxHealth = INFINITY
 	star_gazer_mob.health = INFINITY

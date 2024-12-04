@@ -63,7 +63,7 @@
 
 /obj/item/fishing_lure
 	name = "artificial minnow"
-	desc = "A fishing lure meant to attract smaller omnivore fish."
+	desc = "A fishing lure that may attract small fish. Too tiny, too large, or too picky prey won't be interested in it, though."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "minnow"
 	w_class = WEIGHT_CLASS_SMALL
@@ -88,13 +88,11 @@
 	rod.spin_frequency = null
 
 ///Called for every fish subtype by the fishing subsystem when initializing, to populate the list of fish that can be catched with this lure.
-/obj/item/fishing_lure/proc/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
-	var/avg_size = initial(fish_type.average_size)
+/obj/item/fishing_lure/proc/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
 	var/intermediate_size = FISH_SIZE_SMALL_MAX + (FISH_SIZE_NORMAL_MAX - FISH_SIZE_SMALL_MAX)
-	if(!ISINRANGE(avg_size, FISH_SIZE_TINY_MAX * 0.5, intermediate_size))
+	if(!ISINRANGE(fish.size, FISH_SIZE_TINY_MAX * 0.5, intermediate_size))
 		return FALSE
-	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
-	if(length(list(/datum/fish_trait/vegan, /datum/fish_trait/picky_eater, /datum/fish_trait/nocturnal, /datum/fish_trait/heavy) & fish_traits))
+	if(length(list(/datum/fish_trait/vegan, /datum/fish_trait/picky_eater, /datum/fish_trait/nocturnal, /datum/fish_trait/heavy) & fish.fish_traits))
 		return FALSE
 	return TRUE
 
@@ -120,25 +118,28 @@
 	. += span_info("You can catch the following fish with this lure: [english_list(known_fishes)].")
 
 ///Check if the fish is in the list of catchable fish for this fishing lure. Return value is a multiplier.
-/obj/item/fishing_lure/check_bait(obj/item/fish/fish_type)
+/obj/item/fishing_lure/check_bait(obj/item/fish/fish)
 	var/multiplier = 0
-	if(is_type_in_list(/obj/item/fishing_lure, SSfishing.fish_properties[fish_type][FISH_PROPERTIES_FAV_BAIT]))
+	var/is_instance = istype(fish)
+	var/list/fish_properties = SSfishing.fish_properties[is_instance ? fish.type : fish]
+	if(is_type_in_list(/obj/item/fishing_lure, fish_properties[FISH_PROPERTIES_FAV_BAIT]))
 		multiplier += 2
-	if(fish_type in SSfishing.lure_catchables[type])
+	if(is_instance)
+		if(is_catchable_fish(fish, fish_properties))
+			multiplier += 10
+	else if(fish in SSfishing.lure_catchables[type])
 		multiplier += 10
 	return multiplier
 
 /obj/item/fishing_lure/plug
-	name = "big plug lure"
-	desc = "A fishing lure used to catch larger omnivore fish."
+	name = "artificial plug lure"
+	desc = "A bigger fishing lure that may attract larger fish. Tiny or picky prey will remain uninterested."
 	icon_state = "plug"
 
-/obj/item/fishing_lure/plug/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
-	var/avg_size = initial(fish_type.average_size)
-	if(avg_size <= FISH_SIZE_SMALL_MAX)
+/obj/item/fishing_lure/plug/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
+	if(fish.size <= FISH_SIZE_SMALL_MAX)
 		return FALSE
-	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
-	if(length(list(/datum/fish_trait/vegan, /datum/fish_trait/picky_eater, /datum/fish_trait/nocturnal, /datum/fish_trait/heavy) & fish_traits))
+	if(length(list(/datum/fish_trait/vegan, /datum/fish_trait/picky_eater, /datum/fish_trait/nocturnal, /datum/fish_trait/heavy) & fish.fish_traits))
 		return FALSE
 	return TRUE
 
@@ -148,55 +149,52 @@
 	icon_state = "dropping"
 	spin_frequency = list(1.5 SECONDS, 2.8 SECONDS)
 
-/obj/item/fishing_lure/dropping/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
+/obj/item/fishing_lure/dropping/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
 	var/list/sources = list(/datum/fish_source/toilet, /datum/fish_source/moisture_trap)
 	for(var/datum/fish_source/source as anything in sources)
 		var/datum/fish_source/instance = GLOB.preset_fish_sources[/datum/fish_source/toilet]
-		if(fish_type in instance.fish_table)
+		if(fish.type in instance.fish_table)
 			return TRUE
 	var/list/fav_baits = fish_properties[FISH_PROPERTIES_FAV_BAIT]
 	for(var/list/identifier in fav_baits)
 		if(identifier[FISH_BAIT_TYPE] == FISH_BAIT_FOODTYPE && (identifier[FISH_BAIT_VALUE] & (JUNKFOOD|GROSS|TOXIC)))
 			return TRUE
-	if(initial(fish_type.beauty) <= FISH_BEAUTY_DISGUSTING)
+	if(fish.beauty <= FISH_BEAUTY_DISGUSTING)
 		return TRUE
 	return FALSE
 
 /obj/item/fishing_lure/spoon
 	name = "\improper Indy spoon lure"
-	desc = "A lustrous piece of metal mimicking the scales of a fish. Good for catching small to medium freshwater omnivore fish."
+	desc = "A lustrous piece of metal mimicking the scales of a fish. It specializes in catching small-to-medium-sized fish that live in freshwater."
 	icon_state = "spoon"
 	spin_frequency = list(1.25 SECONDS, 2.25 SECONDS)
 
-/obj/item/fishing_lure/spoon/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
-	var/avg_size = initial(fish_type.average_size)
-	if(!ISINRANGE(avg_size, FISH_SIZE_TINY_MAX + 1, FISH_SIZE_NORMAL_MAX))
+/obj/item/fishing_lure/spoon/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
+	if(!ISINRANGE(fish.size, FISH_SIZE_TINY_MAX + 1, FISH_SIZE_NORMAL_MAX))
 		return FALSE
-	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
-	if(length(list(/datum/fish_trait/vegan, /datum/fish_trait/picky_eater, /datum/fish_trait/nocturnal, /datum/fish_trait/heavy) & fish_traits))
+	if(length(list(/datum/fish_trait/vegan, /datum/fish_trait/picky_eater, /datum/fish_trait/nocturnal, /datum/fish_trait/heavy) & fish.fish_traits))
 		return FALSE
-	var/fluid_type = initial(fish_type.required_fluid_type)
+	var/fluid_type = fish.required_fluid_type
 	if(fluid_type == AQUARIUM_FLUID_FRESHWATER || fluid_type == AQUARIUM_FLUID_ANADROMOUS || fluid_type == AQUARIUM_FLUID_ANY_WATER)
 		return TRUE
-	if((/datum/fish_trait/amphibious in fish_traits) && fluid_type == AQUARIUM_FLUID_AIR)
+	if((/datum/fish_trait/amphibious in fish.fish_traits) && fluid_type == AQUARIUM_FLUID_AIR)
 		return TRUE
 	return FALSE
 
 /obj/item/fishing_lure/artificial_fly
 	name = "\improper Silkbuzz artificial fly"
-	desc = "A fishing lure resembling a large wooly fly. Good for catching all sort of picky fish."
+	desc = "A fishing lure resembling a large wooly fly. Unlike most other lures, it's fancy enough to catch the interest of picky fish, but only those."
 	icon_state = "artificial_fly"
 	spin_frequency = list(1.1 SECONDS, 2 SECONDS)
 
-/obj/item/fishing_lure/artificial_fly/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
-	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
-	if(/datum/fish_trait/picky_eater in fish_traits)
+/obj/item/fishing_lure/artificial_fly/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
+	if(/datum/fish_trait/picky_eater in fish.fish_traits)
 		return TRUE
 	return FALSE
 
 /obj/item/fishing_lure/led
 	name = "\improper LED fishing lure"
-	desc = "A heavy, waterproof and fish-looking LED stick, used to catch abyssal and demersal fish alike."
+	desc = "A heavy, waterproof and fish-looking LED stick, specialized to catch only nocturnal and deep-dwelling fish."
 	icon_state = "led"
 	spin_frequency = list(3 SECONDS, 3.8 SECONDS)
 
@@ -216,15 +214,14 @@
 	. = ..()
 	REMOVE_TRAIT(rod, TRAIT_ROD_IGNORE_ENVIRONMENT, type)
 
-/obj/item/fishing_lure/led/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
-	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
-	if(length(list(/datum/fish_trait/nocturnal, /datum/fish_trait/heavy) & fish_traits))
+/obj/item/fishing_lure/led/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
+	if(length(list(/datum/fish_trait/nocturnal, /datum/fish_trait/heavy) & fish.fish_traits))
 		return TRUE
 	return FALSE
 
 /obj/item/fishing_lure/lucky_coin
 	name = "\improper Maneki-Coin lure"
-	desc = "A faux-gold lure used to attract shiny-loving fish."
+	desc = "A faux-gold lure. Catches the attention of fishies that love shinies. Not nearly tasty-looking enough for anything else."
 	icon_state = "lucky_coin"
 	spin_frequency = list(1.5 SECONDS, 2.7 SECONDS)
 
@@ -236,78 +233,72 @@
 	. = ..()
 	REMOVE_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
 
-/obj/item/fishing_lure/lucky_coin/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
-	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
-	if(/datum/fish_trait/shiny_lover in fish_traits)
+/obj/item/fishing_lure/lucky_coin/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
+	if(/datum/fish_trait/shiny_lover in fish.fish_traits)
 		return TRUE
 	return FALSE
 
 /obj/item/fishing_lure/algae
 	name = "plastic algae lure"
-	desc = "A soft clump of fake algae used to attract herbivore water critters."
+	desc = "A soft clump of fake algae. Herbivores love it. Nothing else does, not even omnivores."
 	icon_state = "algae"
 	spin_frequency = list(3 SECONDS, 5 SECONDS)
 
-/obj/item/fishing_lure/algae/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
-	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
-	if(/datum/fish_trait/vegan in fish_traits)
+/obj/item/fishing_lure/algae/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
+	if(/datum/fish_trait/vegan in fish.fish_traits)
 		return TRUE
 	return FALSE
 
 /obj/item/fishing_lure/grub
 	name = "\improper Twister Worm lure"
-	desc = "A soft plastic lure with the body of a grub and a twisting tail. Good for panfish and other small omnivore fish."
+	desc = "A soft plastic lure with the body of a grub and a twisting tail. Specialized for catching small fish, as long as they aren't herbivores, picky, or picky herbivores."
 	icon_state = "grub"
 	spin_frequency = list(1 SECONDS, 2.7 SECONDS)
 
-/obj/item/fishing_lure/grub/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
-	if(initial(fish_type.average_size) >= FISH_SIZE_SMALL_MAX)
+/obj/item/fishing_lure/grub/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
+	if(fish.size >= FISH_SIZE_SMALL_MAX)
 		return FALSE
-	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
-	if(length(list(/datum/fish_trait/vegan, /datum/fish_trait/picky_eater) & fish_traits))
+	if(length(list(/datum/fish_trait/vegan, /datum/fish_trait/picky_eater) & fish.fish_traits))
 		return FALSE
 	return TRUE
 
 /obj/item/fishing_lure/buzzbait
 	name = "\improper Electric-Buzz lure"
-	desc = "A metallic, colored clanked attached to a series of cables that somehow attract shock-worthy fish."
+	desc = "A metallic, colored clanker attached to a series of cables that somehow attract shock-worthy fish."
 	icon_state = "buzzbait"
 	spin_frequency = list(0.8 SECONDS, 1.7 SECONDS)
 
-/obj/item/fishing_lure/buzzbait/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
-	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
-	if(/datum/fish_trait/electrogenesis in fish_traits)
+/obj/item/fishing_lure/buzzbait/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
+	if(HAS_TRAIT(fish, TRAIT_FISH_ELECTROGENESIS))
 		return TRUE
 	return FALSE
 
 /obj/item/fishing_lure/spinnerbait
 	name = "spinnerbait lure"
-	desc = "A versatile lure, good for catching all sort of predatory freshwater fish."
+	desc = "A spinny, vulnerable lure, great for attracting freshwater predators, though omnivores won't be interested in it."
 	icon_state = "spinnerbait"
 	spin_frequency = list(2 SECONDS, 4 SECONDS)
 
-/obj/item/fishing_lure/spinnerbait/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
-	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
-	if(!(/datum/fish_trait/predator in fish_traits))
+/obj/item/fishing_lure/spinnerbait/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
+	if(!(/datum/fish_trait/predator in fish.fish_traits))
 		return FALSE
-	var/init_fluid_type = initial(fish_type.required_fluid_type)
+	var/init_fluid_type = fish.required_fluid_type
 	if(init_fluid_type == AQUARIUM_FLUID_FRESHWATER || init_fluid_type == AQUARIUM_FLUID_ANADROMOUS || init_fluid_type == AQUARIUM_FLUID_ANY_WATER)
 		return TRUE
-	if((/datum/fish_trait/amphibious in fish_traits) && init_fluid_type == AQUARIUM_FLUID_AIR) //fluid type is changed to freshwater on init
+	if((/datum/fish_trait/amphibious in fish.fish_traits) && init_fluid_type == AQUARIUM_FLUID_AIR) //fluid type is changed to freshwater on init
 		return TRUE
 	return FALSE
 
 /obj/item/fishing_lure/daisy_chain
 	name = "daisy chain lure"
-	desc = "A lure resembling a small school of fish, good for catching several saltwater predators."
+	desc = "A lure resembling a small school of fish. Saltwater predators love it, but not much else will."
 	icon_state = "daisy_chain"
 	spin_frequency = list(2 SECONDS, 4 SECONDS)
 
-/obj/item/fishing_lure/daisy_chain/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
-	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
-	if(!(/datum/fish_trait/predator in fish_traits))
+/obj/item/fishing_lure/daisy_chain/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
+	if(!(/datum/fish_trait/predator in fish.fish_traits))
 		return FALSE
-	var/init_fluid_type = initial(fish_type.required_fluid_type)
+	var/init_fluid_type = fish.required_fluid_type
 	if(init_fluid_type == AQUARIUM_FLUID_SALTWATER || init_fluid_type == AQUARIUM_FLUID_ANADROMOUS || init_fluid_type == AQUARIUM_FLUID_ANY_WATER)
 		return TRUE
 	return FALSE
