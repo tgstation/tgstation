@@ -15,6 +15,22 @@
 	shoes = /obj/item/clothing/shoes/combat/swat
 	r_pocket = /obj/item/lighter
 
+/datum/outfit/centcom/admin
+	name = "Department Officer"
+
+	id = /obj/item/card/id/advanced/debug
+	uniform = /obj/item/clothing/under/rank/centcom/commander
+	suit = /obj/item/clothing/suit/space/officer
+	back = /obj/item/storage/backpack/satchel/leather
+	belt = /obj/item/gun/energy/pulse/pistol/m1911
+	ears = /obj/item/radio/headset/headset_cent/commander
+	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
+	head = /obj/item/clothing/head/helmet/space/beret
+	mask = /obj/item/cigarette/cigar/havana
+	shoes = /obj/item/clothing/shoes/combat/swat
+	r_pocket = /obj/item/lighter
+
 /datum/outfit/centcom/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
