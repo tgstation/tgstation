@@ -250,4 +250,4 @@
 		return SFX_HISS
 	if(!istype(user))
 		return
-	return user.dna.get.species.get_sigh_sound()
+	return user.dna.get.species.get_sigh_sound(user)
