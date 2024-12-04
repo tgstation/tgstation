@@ -34,7 +34,7 @@
 		"N/a.",
 	)
 
-/datum/species/human/genemod/on_species_gain(mob/living/carbon/human/target, datum/species/old_species, pref_load)
+/datum/species/human/genemod/on_species_gain(mob/living/carbon/human/target, datum/species/old_species, pref_load, regenerate_icons)
 	apply_animal_trait(target, find_animal_trait(target))
 	return ..()
 

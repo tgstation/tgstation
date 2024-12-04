@@ -29,7 +29,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/anthromorph,
 	)
 
-/datum/species/anthromorph/on_species_gain(mob/living/carbon/human/target, datum/species/old_species, pref_load)
+/datum/species/anthromorph/on_species_gain(mob/living/carbon/human/target, datum/species/old_species, pref_load, regenerate_icons)
 	apply_animal_trait(target, find_animal_trait(target))
 	return ..()
 
