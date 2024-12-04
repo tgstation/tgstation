@@ -177,6 +177,8 @@
 	return MANUAL_SUICIDE
 
 /obj/item/fish/baby_carp/proc/gestation(mob/living/user)
+	if(QDELETED(user) || QDELETED(src))
+		return
 	// carp grow big and strong inside the nutritious innards of the human
 	var/mob/living/basic/carp/mega/babby = new(get_turf(user))
 	babby.name = user.name + " Jr."

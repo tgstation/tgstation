@@ -239,6 +239,8 @@
 	return MANUAL_SUICIDE
 
 /obj/item/fish/tadpole/proc/gestation(mob/living/user)
+	if(QDELETED(user) || QDELETED(src))
+		return
 	new /mob/living/basic/frog(user)
 	user.gib()
 	qdel(src)
