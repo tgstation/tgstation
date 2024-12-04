@@ -53,6 +53,11 @@
 	desc = "A .38 rubber bullet casing, manufactured to exceedingly bouncy standards."
 	projectile_type = /obj/projectile/bullet/c38/match/bouncy
 
+/obj/item/ammo_casing/c38/true
+	name = ".38 True Strike bullet casing"
+	desc = "A .38 True Strike bullet casing."
+	projectile_type = /obj/projectile/bullet/c38/match/true
+
 /obj/item/ammo_casing/c38/dumdum
 	name = ".38 DumDum bullet casing"
 	desc = "A .38 DumDum bullet casing."
@@ -67,13 +72,3 @@
 	name = ".38 Iceblox bullet casing"
 	desc = "A .38 Iceblox bullet casing."
 	projectile_type = /obj/projectile/bullet/c38/iceblox
-
-/obj/item/ammo_casing/c38/phasic
-	name = ".38 Phasic bullet casing"
-	desc = "A .38 Phasic bullet casing."
-	projectile_type = /obj/projectile/bullet/c38/phasic
-
-/obj/item/ammo_casing/c38/true
-	name = ".38 True Strike bullet casing"
-	desc = "A .38 True Strike bullet casing."
-	projectile_type = /obj/projectile/bullet/c38/true

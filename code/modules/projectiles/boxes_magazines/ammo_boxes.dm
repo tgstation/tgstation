@@ -60,6 +60,12 @@
 	ammo_type = /obj/item/ammo_casing/c38/match/bouncy
 	ammo_band_color = "#556696"
 
+/obj/item/ammo_box/c38/true
+	name = "speed loader (.38 True Strike)"
+	desc = "Designed to quickly reload revolvers. Bullets bounce towards new targets with surprising accuracy."
+	ammo_type = /obj/item/ammo_casing/c38/match/true
+	ammo_band_color = "#d647b0"
+
 /obj/item/ammo_box/c38/dumdum
 	name = "speed loader (.38 DumDum)"
 	desc = "Designed to quickly reload revolvers. These rounds expand on impact, allowing them to shred the target and cause massive bleeding. Very weak against armor and distant targets."
@@ -77,18 +83,6 @@
 	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 	ammo_band_color = "#658e94"
-
-/obj/item/ammo_box/c38/phasic
-	name = "speed loader (.38 PHasic)"
-	desc = "Designed to quickly reload revolvers. These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material."
-	ammo_type = /obj/item/ammo_casing/c38/phasic
-	ammo_band_color = "#47d66d"
-
-/obj/item/ammo_box/c38/true
-	name = "speed loader (.38 True Strike)"
-	desc = "Designed to quickly reload revolvers. Bullets veer slightly towards targets."
-	ammo_type = /obj/item/ammo_casing/c38/true
-	ammo_band_color = "#d647b0"
 
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"

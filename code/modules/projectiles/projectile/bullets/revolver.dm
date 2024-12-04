@@ -56,6 +56,16 @@
 	sharpness = NONE
 	embed_type = null
 
+/obj/projectile/bullet/c38/match/true
+	name = ".38 True Strike bullet"
+	damage = 15
+	ricochet_auto_aim_range = 9
+	ricochet_auto_aim_angle = 100
+	ricochet_incidence_leeway = 0
+	ricochet_shoots_firer = FALSE
+	shrapnel_type = null
+	embed_type = null
+
 // premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/projectile/bullet/c38/dumdum
 	name = ".38 DumDum bullet"
@@ -120,21 +130,6 @@
 	if(isliving(target))
 		var/mob/living/criminal_scum = target
 		criminal_scum.adjust_bodytemperature(((100-blocked)/100)*(temperature - criminal_scum.bodytemperature))
-
-/obj/projectile/bullet/c38/phasic
-	name = ".38 phasic bullet"
-	icon_state = "gaussphase"
-	damage = 20
-	ricochets_max = 0
-	armour_penetration = 100
-	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
-
-/obj/projectile/bullet/c38/true
-	name = ".38 True Strike bullet"
-	damage = 20
-	homing = TRUE
-	homing_turn_speed = 40
-	speed = 0.6 //slightly slower by default
 
 // .357 (Syndie Revolver)
 

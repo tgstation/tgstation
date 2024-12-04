@@ -32,7 +32,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = CALIBER_38
-	max_ammo = 30
+	max_ammo = 15
 	ammo_band_icon = "+38mag_ammo_band"
 	ammo_band_color = null
 
@@ -61,6 +61,12 @@
 	ammo_type = /obj/item/ammo_casing/c38/match/bouncy
 	ammo_band_color = "#556696"
 
+/obj/item/ammo_box/magazine/m38/true
+	name = "battle rifle magazine (.38 True Strike)"
+	desc = "A magazine for a BR-38 battle rifle. Bullets bounce towards new targets with surprising accuracy."
+	ammo_type = /obj/item/ammo_casing/c38/match/true
+	ammo_band_color = "#d647b0"
+
 /obj/item/ammo_box/magazine/m38/dumdum
 	name = "battle rifle magazine (.38 DumDum)"
 	desc = "A magazine for a BR-38 battle rifle. These rounds expand on impact, allowing them to shred the target and cause massive bleeding. Very weak against armor and distant targets."
@@ -78,15 +84,3 @@
 	desc = "A magazine for a BR-38 battle rifle. Iceblox bullets contain a cryogenic payload."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 	ammo_band_color = "#658e94"
-
-/obj/item/ammo_box/magazine/m38/phasic
-	name = "battle rifle magazine (.38 Phasic)"
-	desc = "A magazine for a BR-38 battle rifle. These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material."
-	ammo_type = /obj/item/ammo_casing/c38/phasic
-	ammo_band_color = "#47d66d"
-
-/obj/item/ammo_box/magazine/m38/true
-	name = "battle rifle magazine (.38 True Strike)"
-	desc = "A magazine for a BR-38 battle rifle. Bullets veer slightly towards targets."
-	ammo_type = /obj/item/ammo_casing/c38/true
-	ammo_band_color = "#d647b0"

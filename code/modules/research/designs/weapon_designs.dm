@@ -69,31 +69,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/datum/design/c38_phasic
-	name = "Speedloader (.38 Phasic) (Lethal)"
-	desc = "Designed to quickly reload revolvers. These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material."
-	id = "c38_phasic"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 10,
-		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/ammo_box/magazine/m38/phasic
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-
 /datum/design/c38_true
 	name = "Speedloader (.38 True Strike) (Lethal)"
-	desc = "Designed to quickly reload revolvers. Bullets veer slightly towards targets. It also temporarily disables MODsuit stealth modules."
+	desc = "Designed to quickly reload revolvers. Bullets bounce towards new targets with surprising accuracy."
 	id = "c38_true_strike"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 10,
 		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	build_path = /obj/item/ammo_box/magazine/m38/phasic
+	build_path = /obj/item/ammo_box/magazine/m38/true
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
@@ -180,25 +165,9 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/datum/design/c38_phasic_mag
-	name = "Magazine (.38 Phasic) (Lethal)"
-	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material."
-	id = "c38_phasic_mag"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 30,
-		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
-		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/ammo_box/magazine/m38/phasic
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-
 /datum/design/c38_true_mag
 	name = "Magazine (.38 Truee Strike) (Lethal)"
-	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Bullets veer slightly towards targets. It also temporarily disables MODsuit stealth modules."
+	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Bullets bounce towards new targets with surprising accuracy."
 	id = "c38_true_strike_mag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
@@ -206,7 +175,7 @@
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT * 3,
 		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	build_path = /obj/item/ammo_box/magazine/m38/phasic
+	build_path = /obj/item/ammo_box/magazine/m38/true
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
