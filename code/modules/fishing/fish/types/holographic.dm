@@ -118,9 +118,10 @@
 
 	for(var/obj/item/bodypart/limb in user.bodyparts)
 		limb.add_bodypart_overlay(new /datum/bodypart_overlay/texture/checkered)
-		if(istype(limb, /obj/item/bodypart/head))
-			var/obj/item/bodypart/head/head = limb
-			head.head_flags &= ~HEAD_EYESPRITES
+	
+	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
+	if(!isnull(head))
+		head.head_flags &= ~HEAD_EYESPRITES
 
 	return ..()
 

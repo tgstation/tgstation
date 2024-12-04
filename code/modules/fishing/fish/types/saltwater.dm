@@ -272,10 +272,10 @@
 
 	if(!HAS_TRAIT(user, TRAIT_STRENGTH) && !HAS_TRAIT(user, TRAIT_HULK))
 		return OXYLOSS
-	else
-		head.dismember(silent = FALSE)
-		user.visible_message(span_suicide("[user]'s head goes FLYING OFF from the overpressurized ink jet!"))
-		return MANUAL_SUICIDE
+
+	head.dismember(silent = FALSE)
+	user.visible_message(span_suicide("[user]'s head goes FLYING OFF from the overpressurized ink jet!"))
+	return MANUAL_SUICIDE
 
 /obj/item/fish/squid/get_fish_taste()
 	return list("raw mollusk" = 2)
