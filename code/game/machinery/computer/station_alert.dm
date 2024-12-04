@@ -7,13 +7,33 @@
 	light_color = LIGHT_COLOR_CYAN
 	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control
+	/// Determines if the alerts track via z-level, or only show all station areas
+	var/station_only
+
+/obj/machinery/computer/station_alert/examine(mob/user)
+	. = ..()
+	. += span_info("The console is set to [station_only ? "track all station and mining alarms" : "track alarms on the same z-level"].")
 
 /obj/machinery/computer/station_alert/Initialize(mapload)
-	// An area list so we only send an alarm if we're in one of the station or mining home areas
-	var/list/allowed_areas = GLOB.the_station_areas + typesof(/area/mine)
-	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), listener_areas = allowed_areas, title = name)
+	// Checks the internal circuit to determine if it's been altered by players to (or spawned in) station_only mode
+	var/obj/item/circuitboard/computer/station_alert/my_circuit = circuit
+	station_only = my_circuit.station_only
+
+	// If the console is station_only, set up the alert_control to only listen to station areas
+	if(station_only)
+		var/list/alert_areas
+		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), listener_areas = alert_areas, title = name)
+	else // If not station_only, just check the z-level
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), title = name)
 	RegisterSignals(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
 	return ..()
+
+/obj/machinery/computer/station_alert/on_construction(mob/user)
+	. = ..()
+	// Same code as Initialize to make sure that the circuit and console share the station_only setting
+	var/obj/item/circuitboard/computer/station_alert/my_circuit = circuit
+	station_only = my_circuit.station_only
 
 /obj/machinery/computer/station_alert/Destroy()
 	QDEL_NULL(alert_control)
@@ -45,3 +65,8 @@
 /obj/machinery/computer/station_alert/proc/update_alarm_display(datum/source)
 	SIGNAL_HANDLER
 	update_icon()
+
+// Subtype which only checks station areas and the mining station
+/obj/machinery/computer/station_alert/station_only
+	circuit = /obj/item/circuitboard/computer/station_alert/station_only
+	station_only = TRUE
