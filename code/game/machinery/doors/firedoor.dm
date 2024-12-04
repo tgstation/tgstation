@@ -577,11 +577,11 @@
 	else
 		close()
 
-/obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/crowbar_owner)
+/obj/machinery/door/firedoor/proc/handle_held_open_adjacency(atom/crowbar_owner)
 	SIGNAL_HANDLER
 
 
-	if(!QDELETED(crowbar_owner) && Adjacent(crowbar_owner))
+	if(!QDELETED(crowbar_owner) && crowbar_owner.CanReach(src))
 		if(!ismob(crowbar_owner))
 			return
 		var/mob/living/mob_user = crowbar_owner
