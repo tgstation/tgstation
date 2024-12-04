@@ -12,7 +12,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = null
 	hat_type = null
-	mask_overlay_icon = 'modular_doppler/modular_cosmetics/icons/obj/head/doppler_command_hardhats.dmi'
+	mask_overlay_icon = 'modular_doppler/modular_cosmetics/icons/mob/head/doppler_command_hardhats.dmi'
 
 /obj/item/clothing/head/utility/hardhat/welding/doppler_command/medical
 	name = "medical command hardhat"
