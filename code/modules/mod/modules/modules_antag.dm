@@ -102,6 +102,16 @@
 	else
 		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
 
+/obj/item/mod/module/armor_booster/on_install()
+	RegisterSignal(mod, COMSIG_MOD_GET_VISOR_OVERLAY, PROC_REF(on_visor_overlay))
+
+/obj/item/mod/module/armor_booster/on_uninstall(deleting)
+	UnregisterSignal(mod, COMSIG_MOD_GET_VISOR_OVERLAY)
+
+/obj/item/mod/module/armor_booster/proc/on_visor_overlay(datum/source,  mutable_appearance/standing, list/overrides)
+	SIGNAL_HANDLER
+	overrides += mutable_appearance(overlay_icon_file, "module_armorbooster_visor-[mod.skin]", layer = standing.layer + 0.1)
+
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
 /obj/item/mod/module/energy_shield
 	name = "MOD energy shield module"

@@ -769,3 +769,10 @@
 
 	mod_link.end_call()
 	mod_link.frequency = null
+
+/obj/item/mod/control/proc/get_visor_overlay(mutable_appearance/standing)
+	var/list/overrides = list()
+	SEND_SIGNAL(src, COMSIG_MOD_GET_VISOR_OVERLAY, standing, overrides)
+	if (length(overrides))
+		return overrides[1]
+	return mutable_appearance(worn_icon, "[skin]-helmet-visor", layer = standing.layer + 0.1)
