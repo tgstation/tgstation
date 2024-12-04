@@ -94,8 +94,7 @@
 	return SFX_SNORE_MALE
 
 /datum/species/human/get_hiss_sound(mob/living/carbon/human/human)
-	return
-	//human sounds here
+	return 'sound/mobs/humanoids/human/hiss/human_hiss.ogg'
 
 /datum/species/human/get_species_description()
 	return "Humans are the dominant species in the known galaxy. \
