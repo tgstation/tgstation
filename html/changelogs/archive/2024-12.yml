@@ -1,0 +1,69 @@
+2024-12-01:
+  KingkumaArt:
+  - bugfix: Etherials no longer lose overcharge really slowly.
+  - bugfix: Etherial Wine/Telepole no longer overcharges etherials with one sip.
+  OrionTheFox:
+  - image: resprited the (Analog) Wall Clock
+  SmArtKar:
+  - bugfix: Fixed cargo ticket and pet adventure drone loot pools not working
+  - bugfix: Fixed plasmamen envirosuits being unrepairable
+  SmArtKar, Kapu:
+  - bugfix: Atmospheric tanks no longer fetch icons every tick
+  distributivgesetz:
+  - bugfix: The labor shuttle can no longer be cheesed by piggybacking a prisoner
+      who has completed their sentence.
+  larentoun:
+  - bugfix: Printed advanced robotic right leg now has correct name, instead of being
+      "heavy"
+  - bugfix: Printed Moth X-Ray eyes are now correctly named, instead of being just
+      "robotic eyes"
+  timothymtorres:
+  - rscadd: The revenant defile spell now affects showers by removing all water recyclers
+      and reagents that gets replaced with blood.
+  - rscadd: Showering in clean water (+70%) results in positive mood/regen/stamina
+      effects. It will wash off the mob.
+  - rscadd: Showering in dirty water results in negative mood effects and disgust.
+      It will NOT wash off the mob.
+  - rscadd: Showering with radioactive reagents (+20%) results in the preventing the
+      shower from washing off the radiation.
+  - rscadd: Showering in blood (+70%) results in severe negative mood effects and
+      disgust.  (unless you are morbid, evil, or undead then it's considered positive)
+      It will cover the mob in blood.
+  - rscadd: Water effects that interact with a mob from touch or vapor (showering/spray
+      bottles/etc.) will now heal sleep, unconsciousness, confusion, drowsiness, jitters,
+      dizziness, and drunkenness.
+  - bugfix: Fix bloody showers not covering objects in blood.
+  - bugfix: Tossing or spraying a container full of blood now covers objects/mobs
+      in blood
+  - bugfix: Fix wrong status effect for watery tile
+  - image: Add new alert icons for bloody/dirty showers
+  - code_imp: Refactored some expose_obj reagent code to support method types.
+  - code_imp: Improved mood typecasting for owner to allow checking of mob biotypes.
+2024-12-02:
+  Ghommie:
+  - balance: brought fishing difficulty of all fishing spots a bit closer to their
+      original value following a small oopsie that made them unexpectingly easier
+      for more than two months.
+  - bugfix: Fixed fishing lures.
+  OrionTheFox:
+  - bugfix: fixed the "tactical combat/engineering uniform" allowing toggling with
+      no alt sprite
+  SmArtKar:
+  - bugfix: Fixed lunar parade soundloop
+  - bugfix: You cannot have more than one MODtether (excluding manual connections)
+  - qol: Tethers are easier to cut (require less pixelhunting)
+  - bugfix: Fixed flipped fishing hooks
+  - bugfix: You can no longer stick a butter on a stick on a stick
+  - qol: Mining drills are now active by default
+  - bugfix: Fixes mining drill displaying drilling messages while inactive
+  githubuser4141:
+  - bugfix: fixes splinter cell pistols causing mechs to suddenly have all their flags
+      deleted
+  mc-oofert:
+  - bugfix: fixed the museum password puzzle (to the cafeteria), and the scrubbers
+      and vents there now look correctly (also fixed a rare visual bug)
+  - bugfix: it is now harder to bypass indestructible windows and grilles (those are
+      placed there for a reason, you know!)
+  norsvenska:
+  - spellcheck: You are no longer faced with a typo after either not writing on paper,
+      or attempting to stamp a paper that's been stamped too many times.

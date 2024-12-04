@@ -352,6 +352,7 @@
 #include "code\__DEFINES\dcs\signals\signals_restaurant.dm"
 #include "code\__DEFINES\dcs\signals\signals_scangate.dm"
 #include "code\__DEFINES\dcs\signals\signals_screentips.dm"
+#include "code\__DEFINES\dcs\signals\signals_shuttle.dm"
 #include "code\__DEFINES\dcs\signals\signals_spatial_grid.dm"
 #include "code\__DEFINES\dcs\signals\signals_species.dm"
 #include "code\__DEFINES\dcs\signals\signals_spell.dm"

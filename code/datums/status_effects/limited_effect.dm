@@ -3,6 +3,7 @@
 	id = "limited_buff"
 	duration = STATUS_EFFECT_PERMANENT
 	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
 	///How many stacks we currently have
 	var/stacks = 1
 	///How many stacks we can have maximum
