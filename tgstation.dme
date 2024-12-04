@@ -752,6 +752,7 @@
 #include "code\controllers\subsystem\persistence\scars.dm"
 #include "code\controllers\subsystem\persistence\tattoos.dm"
 #include "code\controllers\subsystem\persistence\trophies.dm"
+#include "code\controllers\subsystem\persistence\trophy_fishes.dm"
 #include "code\controllers\subsystem\processing\acid.dm"
 #include "code\controllers\subsystem\processing\ai_basic_avoidance.dm"
 #include "code\controllers\subsystem\processing\ai_behaviors.dm"

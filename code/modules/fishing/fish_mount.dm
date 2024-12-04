@@ -1,11 +1,17 @@
-
-/obj/item/wallframe/fishing
+/obj/item/wallframe/fish
 	name = "fish mount"
 	desc = "The frame for a frame used to mount your proudest catch."
 	icon_state = "fish_mount"
 	result_path = /obj/structure/fish_mount
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	pixel_shift = 30
+	///Reference to the persistent_id of the mount this was spawned from.
+	var/persistence_id
+
+/obj/item/wallframe/fish/after_attach(obj/structure/fish_mount/mount)
+	. = ..()
+	mount.find_and_hang_on_wall()
+	mount.persistence_id = persistence_id
 
 /obj/structure/fish_mount
 	name = "fish mount"
@@ -22,7 +28,20 @@
 
 /obj/structure/fish_mount/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_STOP_FISH_FLOPPING, INNATE_TRAIT)
+	//Mounted fish shouldn't flop. It should also show size and weight to everyone.
+	add_traits(list(TRAIT_STOP_FISH_FLOPPING, TRAIT_EXAMINE_FISH), INNATE_TRAIT)
+	if(mapload)
+		find_and_hang_on_wall()
+	if(!persistence_id)
+		return
+	SSpersistence.load_trophy_fish(src)
+
+/obj/structure/fish_mount/atom_deconstruct(disassembled = TRUE)
+	. = ..()
+	if(disassembled)
+		var/obj/item/wallframe/fish/frame = new (loc)
+		frame.persistence_id = persistence_id
+		mounted_fish?.forceMove(loc)
 
 /obj/structure/fish_mount/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if(!isfish(item) || user.combat_mode)
@@ -40,7 +59,9 @@
 	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/fish_mount/proc/add_fish(obj/item/fish/fish, user)
+/obj/structure/fish_mount/proc/add_fish(obj/item/fish/fish, from_persistence = FALSE)
+	if(mounted_fish)
+		mounted_fish.forceMove(loc)
 	fish.forceMove(src)
 	vis_contents += fish
 	fish.flags_1 |= IS_ONTOP_1
@@ -50,6 +71,12 @@
 	RegisterSignal(fish, COMSIG_ATOM_EXAMINE, PROC_REF(on_fish_examined))
 	RegisterSignal(fish, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_fish_attack_hand))
 	rotate_fish(dir)
+	if(from_persistence)
+		persistence_loaded_fish = TRUE
+		fish.remove_fillet_type()
+		fish.fillet_type = null
+	else if(persistence_id)
+		SSpersistence.save_trophy_fish(src)
 
 /obj/structure/fish_mount/proc/rotate_fish(direction, old_direction)
 	var/rotation = SIMPLIFY_DEGREES(angle2dir(direction) - angle2dir(old_direction))
@@ -90,7 +117,7 @@
 		if(fish_reference.w_class >= WEIGHT_CLASS_BULKY)
 			ash_type = /obj/effect/decal/cleanable/ash/large
 		new ash_type(loc)
-		visible_message("[fish_reference] turns into dust as it's removed from [src].")
+		visible_message("[fish_reference] turns into dust as [fish_reference.p_theyre()] removed from [src].")
 	balloon_alert_to_viewers("fish removed!")
 
 /obj/structure/fish_mount/Exited(atom/movable/gone)
@@ -99,6 +126,8 @@
 		if(persistence_loaded_fish && !QDELETED(gone))
 			qdel(gone)
 		else
+			if(persistence_id)
+				SSpersistence.trophy_fishes_database.remove(persistence_id)
 			rotate_fish(0, dir)
 		persistence_loaded_fish = FALSE
 		UnregisterSignal(gone, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACK_HAND))
@@ -108,6 +137,3 @@
 		catch_date = null
 		mounted_fish = null
 	return ..()
-
-/obj/structure/fish_mount/proc/load_persistence_fish(list/data)
-	return

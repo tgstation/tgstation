@@ -457,7 +457,7 @@
 
 /obj/item/fish/examine(mob/user)
 	. = ..()
-	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
+	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH) || HAS_TRAIT(loc, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")
 
@@ -1492,6 +1492,14 @@
 /obj/item/fish/update_atom_colour()
 	. = ..()
 	aquarium_vc_color = color || initial(aquarium_vc_color)
+
+///Proc called in trophy_fishes.dm, when a fish is mounted on persistent trophy mounts
+/obj/item/fish/proc/persistence_save(list/data)
+	return
+
+///Proc called in trophy_fishes.dm, when a persistent fishing trophy mount is spawned and the fish instantiated
+/obj/item/fish/proc/persistence_load(list/data)
+	return
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)

@@ -281,12 +281,3 @@
 #define FISH_SOURCE_AUTOWIKI_OTHER "Other Stuff"
 ///The filename for the icon for "other stuff" which we don't articulate about on the autowiki
 #define FISH_SOURCE_AUTOWIKI_QUESTIONMARK "questionmark"
-
-//Defines for fish persistence, for mounted trophy fish.
-#define PERSISTENCE_FISH_TYPE "fish_type"
-#define PERSISTENCE_FISH_SIZE "fish_size"
-#define PERSISTENCE_FISH_WEIGHT "fish_weight"
-#define PERSISTENCE_FISH_MATERIAL "fish_material"
-#define PERSISTENCE_FISH_CUSTOM_NAME "fish_custom_name"
-#define PERSISTENCE_FISH_CATCHER "fish_catcher"
-#define PERSISTENCE_FISH_CATCH_DATE "fish_catch_date"
