@@ -82,7 +82,7 @@
 	average_size = 30
 	average_weight = 500
 	stable_population = 3
-	fish_traits = list(/datum/fish_trait/aggressive)
+	fish_traits = list(/datum/fish_trait/territorial)
 	required_temperature_min = MIN_AQUARIUM_TEMP+22
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
 

@@ -191,6 +191,9 @@
 		ADD_TRAIT(src, TRAIT_UNCOMPOSTABLE, REF(src)) //Composting a food that is not real food wouldn't work anyway.
 		START_PROCESSING(SSobj, src)
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_FISH_STASIS), PROC_REF(enter_stasis))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_FISH_STASIS), PROC_REF(exit_stasis))
+
 	//Adding this because not all fish have the gore foodtype that makes them automatically eligible for dna infusion.
 	ADD_TRAIT(src, TRAIT_VALID_DNA_INFUSION, INNATE_TRAIT)
 
@@ -473,7 +476,7 @@
 		return span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
 
 	var/list/warnings = list()
-	if(is_starving())
+	if(get_starvation_mult())
 		warnings += "starving"
 	if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
 		warnings += "drowning"
@@ -797,25 +800,29 @@
 	. = ..()
 	check_flopping()
 
-/obj/item/fish/proc/enter_stasis()
-	ADD_TRAIT(src, TRAIT_FISH_STASIS, INNATE_TRAIT)
-	// Stop processing until inserted into aquarium again.
+/// Stop processing once the stasis trait is added
+/obj/item/fish/proc/enter_stasis(datum/source)
+	SIGNAL_HANDLER
 	stop_flopping()
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/fish/proc/exit_stasis()
-	REMOVE_TRAIT(src, TRAIT_FISH_STASIS, INNATE_TRAIT)
-	if(status != FISH_DEAD)
-		START_PROCESSING(SSobj, src)
+/// Start processing again when the stasis trait is removed
+/obj/item/fish/proc/exit_stasis(datum/source)
+	SIGNAL_HANDLER
+	if(status == FISH_DEAD)
+		return
+	START_PROCESSING(SSobj, src)
+	check_flopping()
 
-///Returns the 0-1 value for hunger
-/obj/item/fish/proc/get_hunger()
-	. = CLAMP01((world.time - last_feeding) / feeding_frequency)
+///Returns the value for hunger ranging from 0 to the cap (by default 1)
+/obj/item/fish/proc/get_hunger(cap = 1)
+	. = clamp((world.time - last_feeding) / feeding_frequency, 0, cap)
 	if(HAS_TRAIT(src, TRAIT_FISH_NO_HUNGER))
 		return min(., 0.2)
 
-/obj/item/fish/proc/is_starving()
-	return get_hunger() >= 1
+/obj/item/fish/proc/get_starvation_mult()
+	var/hunger = get_hunger(cap = 2)
+	return hunger >= 1 ? hunger : 0
 
 ///Feed the fishes with the contents of the fish feed
 /obj/item/fish/proc/feed(datum/reagents/fed_reagents)
@@ -864,9 +871,10 @@
 		last_feeding = world.time
 		return
 	var/hunger = get_hunger()
+	last_feeding = world.time
 	if(hunger < 0.05) //don't bother growing for very small amounts.
-		last_feeding = world.time
 		return
+
 	var/new_size = size
 	var/new_weight = weight
 	var/hunger_mult
@@ -912,12 +920,17 @@
 	if(HAS_TRAIT(src, TRAIT_FISH_STASIS) || status != FISH_ALIVE)
 		return
 
-	process_health(seconds_per_tick)
-	if(ready_to_reproduce())
-		try_to_reproduce()
+	//safe mode, don't do much except a few things that don't involve growing or reproducing.
+	if(loc && HAS_TRAIT_FROM(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
+		last_feeding += seconds_per_tick SECONDS
+		breeding_wait += seconds_per_tick SECONDS
+	else
+		process_health(seconds_per_tick)
+		if(ready_to_reproduce())
+			try_to_reproduce()
 
-	if(HAS_TRAIT(src, TRAIT_FISH_ELECTROGENESIS) && COOLDOWN_FINISHED(src, electrogenesis_cooldown))
-		try_electrogenesis()
+		if(HAS_TRAIT(src, TRAIT_FISH_ELECTROGENESIS) && COOLDOWN_FINISHED(src, electrogenesis_cooldown))
+			try_electrogenesis()
 
 	SEND_SIGNAL(src, COMSIG_FISH_LIFE, seconds_per_tick)
 
@@ -1137,13 +1150,14 @@
 /obj/item/fish/proc/process_health(seconds_per_tick)
 	var/health_change_per_second = 0
 	if(!proper_environment())
-		health_change_per_second -= 3 //Dying here
-	if(is_starving())
-		health_change_per_second -= 0.5 //Starving
+		health_change_per_second -= 2.5 //Dying here
+	var/starvation_mult = get_starvation_mult()
+	if(starvation_mult)
+		health_change_per_second -= 0.25 * starvation_mult //Starving
 	else
 		health_change_per_second += 0.5 //Slowly healing
 	if(HAS_TRAIT(src, TRAIT_FISH_ON_TESLIUM))
-		health_change_per_second -= 0.65 //This becomes - 0.15 if safe and not starving.
+		health_change_per_second -= 0.65
 
 	adjust_health(health + health_change_per_second * seconds_per_tick)
 
@@ -1362,7 +1376,7 @@
 		flop_animation()
 
 /obj/item/fish/proc/try_electrogenesis()
-	if(status == FISH_DEAD || is_starving())
+	if(status == FISH_DEAD || get_starvation_mult())
 		return
 	COOLDOWN_START(src, electrogenesis_cooldown, ELECTROGENESIS_DURATION + ELECTROGENESIS_VARIANCE)
 	var/fish_zap_range = 1
@@ -1446,7 +1460,7 @@
 		user.electrocute_act(5, src) //was it all worth it?
 	fish_flags |= FISH_FLAG_PETTED
 	new /obj/effect/temp_visual/heart(get_turf(src))
-	if((/datum/fish_trait/aggressive in fish_traits) && prob(50))
+	if((/datum/fish_trait/predator in fish_traits) && prob(50))
 		if(!in_aquarium)
 			user.visible_message(
 				span_warning("[src] dances around before biting [user]!"),

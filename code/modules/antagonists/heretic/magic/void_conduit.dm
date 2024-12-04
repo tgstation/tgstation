@@ -116,13 +116,14 @@
 	falloff_exponent = 20
 
 /datum/status_effect/void_conduit
+	id = "void_conduit"
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 
 /datum/status_effect/void_conduit/on_apply()
-	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "void_conduit")
+	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, type)
 	return TRUE
 
 /datum/status_effect/void_conduit/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "void_conduit")
+	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, type)

@@ -147,7 +147,7 @@
 	return list(span_deadsay("It's bones."))
 
 /obj/item/fish/lavaloop
-	name = "lavaloop fish"
+	name = "lavaloop"
 	fish_id = "lavaloop"
 	desc = "Due to its curvature, it can be used as make-shift boomerang."
 	icon_state = "lava_loop"
@@ -159,13 +159,14 @@
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER //if we can survive hot lava and freezing plasrivers, we can survive anything
 	fish_movement_type = /datum/fish_movement/zippy
 	min_pressure = HAZARD_LOW_PRESSURE
-	required_temperature_min = MIN_AQUARIUM_TEMP+30
-	required_temperature_max = MIN_AQUARIUM_TEMP+35
+	required_temperature_min = MIN_AQUARIUM_TEMP+40
+	required_temperature_max = MAX_AQUARIUM_TEMP+900
 	fish_traits = list(
 		/datum/fish_trait/carnivore,
 		/datum/fish_trait/heavy,
 	)
 	compatible_types = list(/obj/item/fish/lavaloop/plasma_river)
+	evolution_types = list(/datum/fish_evolution/plasmaloop)
 	hitsound = null
 	throwforce = 5
 	beauty = FISH_BEAUTY_GOOD
@@ -191,7 +192,7 @@
 	return list("chewy fish" = 2)
 
 /obj/item/fish/lavaloop/get_food_types()
-	return SEAFOOD|MEAT|GORE //Well-cooked in lava
+	return SEAFOOD|MEAT|GORE //Well-cooked in lava/plasma
 
 /obj/item/fish/lavaloop/proc/explode_on_user(mob/living/user)
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
@@ -207,8 +208,15 @@
 	return (target.mob_size >= MOB_SIZE_LARGE)
 
 /obj/item/fish/lavaloop/plasma_river
+	name = "plasmaloop"
+	desc = "A lavaloop that has evolved to survive in cold liquid plasma. Can be used as make-shift boomerang."
 	fish_id = "plasma_lavaloop"
+	icon_state = "plasma_loop"
+	dedicated_in_aquarium_icon_state = /obj/item/fish/lavaloop::icon_state + "_small"
+	required_temperature_min = MIN_AQUARIUM_TEMP - 100
+	required_temperature_max = MIN_AQUARIUM_TEMP+80
 	compatible_types = list(/obj/item/fish/lavaloop)
+	evolution_types = list(/datum/fish_evolution/lavaloop)
 	maximum_bonus = 30
 
 /obj/item/fish/lavaloop/plasma_river/explode_on_user(mob/living/user)
