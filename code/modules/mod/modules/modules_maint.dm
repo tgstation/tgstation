@@ -334,7 +334,7 @@
 		INVOKE_ASYNC(src, PROC_REF(fly_away))
 		return
 
-	if (forced)
+	if (forced || (SSlag_switch.measures[DISABLE_FOOTSTEPS] && !(HAS_TRAIT(source, TRAIT_BYPASS_MEASURES))))
 		return
 
 	if(!(step_count % 2))
