@@ -150,8 +150,10 @@
 	if(isinhands)
 		return
 
-	if(!up)
+	if(!up && !mask_overlay_icon) // DOPPLER EDIT - ORIGINAL - if(!up)
 		. += mutable_appearance('icons/mob/clothing/head/utility.dmi', visor_state)
+	else if(!up) // DOPPLER EDIT ADDITION - SEE modular_doppler/modular_cosmetics/code/hats/doppler_command_hats.dm
+		. += mutable_appearance(mask_overlay_icon, visor_state) // DOPPLER EDIT ADDITION
 
 /obj/item/clothing/head/utility/hardhat/welding/update_overlays()
 	. = ..()

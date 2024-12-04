@@ -1,5 +1,9 @@
 // Cool firehelmets
 
+/obj/item/clothing/head/utility/hardhat/welding
+	/// If we use a special icon file for the welding mask overlay
+	var/mask_overlay_icon = null
+
 /obj/item/clothing/head/utility/hardhat/welding/doppler_command
 	name = "generic command hardhat"
 	desc = "A heavy-duty hardhat for protecting the heads of the heads when everything starts to go wrong."
@@ -8,6 +12,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = null
 	hat_type = null
+	mask_overlay_icon = 'modular_doppler/modular_cosmetics/icons/obj/head/doppler_command_hardhats.dmi'
 
 /obj/item/clothing/head/utility/hardhat/welding/doppler_command/medical
 	name = "medical command hardhat"
