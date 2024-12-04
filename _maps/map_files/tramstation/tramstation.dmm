@@ -7755,7 +7755,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "bHP" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -17356,7 +17356,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "far" = (
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer/atmos_alert/station_only{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -31542,7 +31542,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "kis" = (
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer/atmos_alert/station_only{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -48311,7 +48311,7 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "qcw" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
@@ -60245,7 +60245,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "ukE" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -67663,7 +67663,7 @@
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
 "wLx" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -67796,7 +67796,7 @@
 /turf/open/floor/iron/white/side,
 /area/station/science/lobby)
 "wNY" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 8
 	},
 /obj/machinery/requests_console/directional/east{
@@ -68582,7 +68582,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "xfx" = (
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer/atmos_alert/station_only{
 	dir = 8
 	},
 /obj/machinery/button/door/directional/east{
