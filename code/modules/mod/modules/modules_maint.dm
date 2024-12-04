@@ -334,7 +334,7 @@
 		INVOKE_ASYNC(src, PROC_REF(fly_away))
 		return
 
-	if (forced || SHOULD_DISABLE_FOOTSTEPS(mod.wearer))
+	if (forced)
 		return
 
 	if(!(step_count % 2))
