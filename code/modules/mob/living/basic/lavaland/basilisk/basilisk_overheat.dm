@@ -2,6 +2,7 @@
 /datum/status_effect/basilisk_overheat
 	id = "basilisk_overheat"
 	duration = 3 MINUTES
+	alert_type = null
 	/// Things which will chill us out if we get hit by them
 	var/static/list/chilling_reagents = list(
 		/datum/reagent/medicine/cryoxadone,

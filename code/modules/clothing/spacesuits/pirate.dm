@@ -39,6 +39,9 @@
 	desc = "A modified EVA helmet with a five-thousand credit Lizzy Vuitton hat affixed to the top, proving that working in deep space is no excuse for being poor."
 	icon_state = "spacetophat"
 
+/obj/item/clothing/head/helmet/space/pirate/tophat/add_stabilizer(loose_hat = FALSE)
+	return
+
 /obj/item/clothing/suit/space/pirate/silverscale
 	name = "designer pirate suit"
 	desc = "A specially-made Cybersun branded space suit; the fine plastisilk exterior is woven from the cocoons of black-market Lümlan mothroaches \

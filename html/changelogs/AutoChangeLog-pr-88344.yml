@@ -1,0 +1,5 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - bugfix: "repairbots now gain their destructive abilities when hacked by an AI"
+  - bugfix: "repairbot crafting recipes have been updated"
