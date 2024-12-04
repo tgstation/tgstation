@@ -3,7 +3,7 @@
 	desc = "Used to access the station's automated alert system."
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
-	circuit = /obj/item/circuitboard/computer/stationalert
+	circuit = /obj/item/circuitboard/computer/station_alert
 	light_color = LIGHT_COLOR_CYAN
 	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control

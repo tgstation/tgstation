@@ -3692,7 +3692,7 @@
 	anchored = 1;
 	dir = 8
 	},
-/obj/item/circuitboard/computer/stationalert,
+/obj/item/circuitboard/computer/station_alert,
 /obj/effect/turf_decal/bot/right,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4

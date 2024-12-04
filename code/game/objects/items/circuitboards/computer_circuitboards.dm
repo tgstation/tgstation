@@ -237,7 +237,7 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/power/solar_control
 
-/obj/item/circuitboard/computer/stationalert
+/obj/item/circuitboard/computer/station_alert
 	name = "Station Alerts"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/station_alert
