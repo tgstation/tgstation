@@ -1246,7 +1246,7 @@
 
 /obj/item/card/id/advanced/debug
 	name = "\improper Debug ID"
-	desc = "A debug ID card. Has ALL the all access and a boatload of money, you really shouldn't have this."
+	desc = "A debug ID card. Has ALL the all access and a boatload of money. This is only available to members of the Department of Opposition"
 	icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
 	trim = /datum/id_trim/admin

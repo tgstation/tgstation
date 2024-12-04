@@ -235,7 +235,7 @@
 /datum/outfit/centcom/commander
 	name = "CentCom Commander"
 
-	id = /obj/item/card/id/advanced/centcom
+	id = /obj/item/card/id/advanced/debug
 	id_trim = /datum/id_trim/centcom/commander
 	uniform = /obj/item/clothing/under/rank/centcom/commander
 	suit = /obj/item/clothing/suit/armor/centcom_formal
