@@ -441,8 +441,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	desc = "Uncanny looking hammer."
-	force = 20
-	throwforce = 20
+	force = 15
+	throwforce = 12
 	throw_range = 4
 	w_class = WEIGHT_CLASS_NORMAL
 	wound_bonus = 20
