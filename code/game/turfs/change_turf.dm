@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
 
-	// we need to update gravity for any mob is under a tile that is being created or destroyed
+	// we need to update gravity for any mob on a tile that is being created or destroyed
 	for(var/mob/living/target in new_turf.contents)
 		target.refresh_gravity()
 
