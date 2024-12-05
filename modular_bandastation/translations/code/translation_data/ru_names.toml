@@ -4655,21 +4655,21 @@ prepositional = "взрыве для агрессивной добычи"
 gender = "male"
 
 ["Exploreverse Mk.I"]
-nominative = "Экплореверс Mk.I"
-genitive = "Экплореверса Mk.I"
-dative = "Экплореверсу Mk.I"
-accusative = "Экплореверс Mk.I"
-instrumental = "Экплореверсом Mk.I"
-prepositional = "Экплореверсе Mk.I"
+nominative = "Эксплореверс Mk.I"
+genitive = "Эксплореверса Mk.I"
+dative = "Эксплореверсу Mk.I"
+accusative = "Эксплореверс Mk.I"
+instrumental = "Эксплореверсом Mk.I"
+prepositional = "Эксплореверсе Mk.I"
 gender = "male"
 
 ["Exploreverse Mk.II"]
-nominative = "Экплореверс Mk.II"
-genitive = "Экплореверса Mk.II"
-dative = "Экплореверсу Mk.II"
-accusative = "Экплореверс Mk.II"
-instrumental = "Экплореверсом Mk.II"
-prepositional = "Экплореверсе Mk.II"
+nominative = "Эксплореверс Mk.II"
+genitive = "Эксплореверса Mk.II"
+dative = "Эксплореверсу Mk.II"
+accusative = "Эксплореверс Mk.II"
+instrumental = "Эксплореверсом Mk.II"
+prepositional = "Эксплореверсе Mk.II"
 gender = "male"
 
 ["Express Supply Drop Pod Upgrade Disk"]
