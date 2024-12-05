@@ -36345,7 +36345,8 @@
 /area/station/maintenance/starboard/lesser)
 "lUV" = (
 /obj/machinery/camera/directional/east{
-	c_tag = "Prison Isolation Cell"
+	c_tag = "Prison Isolation Cell";
+	network = list("isolation")
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/security/prison)
