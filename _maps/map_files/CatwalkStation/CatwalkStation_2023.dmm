@@ -4785,9 +4785,8 @@
 /area/station/science/cytology)
 "bHr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/visible,
-/obj/machinery/computer/security/telescreen/normal/directional/west{
-	name = "Isolation Room Monitor";
-	network = list("isolation")
+/obj/machinery/computer/security/telescreen/isolation/directional/west{
+	name = "Isolation Room Monitor"
 	},
 /turf/open/floor/plating,
 /area/station/security/execution/education)
@@ -36346,8 +36345,7 @@
 /area/station/maintenance/starboard/lesser)
 "lUV" = (
 /obj/machinery/camera/directional/east{
-	c_tag = "Prison Isolation Cell";
-	network = list("isolation")
+	c_tag = "Prison Isolation Cell"
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/security/prison)
