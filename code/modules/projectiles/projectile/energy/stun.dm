@@ -4,26 +4,56 @@
 	color = COLOR_YELLOW
 	hitsound = 'sound/items/weapons/taserhit.ogg'
 	range = 5
+	reflectable = FALSE
 	tracer_type = /obj/effect/projectile/tracer/stun
 	muzzle_type = /obj/effect/projectile/muzzle/stun
 	impact_type = /obj/effect/projectile/impact/stun
 	/// How much stamina damage will the tase deal in 1 second
-	var/tase_stamina = 60
+	VAR_PROTECTED/tase_stamina = 60
+	/// Electrodes that follow the projectile
+	VAR_PRIVATE/datum/weakref/beam_weakref
+	/// We need to track who was the ORIGINAL firer of the projectile specifically to ensure deflects work correctly
+	VAR_PRIVATE/datum/weakref/initial_firer_weakref
+
+/obj/projectile/energy/electrode/is_hostile_projectile()
+	return TRUE
+
+/obj/projectile/energy/electrode/Destroy()
+	QDEL_NULL(beam_weakref)
+	return ..()
+
+/obj/projectile/energy/electrode/fire(fire_angle, atom/direct_target)
+	if(firer)
+		beam_weakref = WEAKREF(firer.Beam(
+			BeamTarget = src,
+			icon = 'icons/effects/beam.dmi',
+			icon_state = "electrodes_nozap",
+			maxdistance = maximum_range + 1,
+			beam_type = /obj/effect/ebeam/electrodes_nozap,
+		))
+		initial_firer_weakref = WEAKREF(firer)
+	return ..()
 
 /obj/projectile/energy/electrode/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(pierce_hit)
-		return .
+		return
+
 	do_sparks(1, TRUE, src)
 	if(. == BULLET_ACT_BLOCK || !isliving(target) || blocked >= 100)
 		visible_message(span_warning("[src]\s fail to shock [target][isfloorturf(target.loc) ? ", falling to [target.loc]" : ""]."))
-		return .
+		return
+
+	// make sure we have the right guy
+	// (this lets scarp users deflect electrodes and send it at another person)
+	var/atom/movable/current_firer = firer
+	if(!IS_WEAKREF_OF(firer, initial_firer_weakref))
+		current_firer = initial_firer_weakref?.resolve() || firer
 
 	var/mob/living/tased = target
-	if(tased.apply_status_effect(/datum/status_effect/tased, fired_from, firer, tase_stamina, null, "\the [src]\s"))
-		return .
-	visible_message(span_warning("[src]\s fail to shock [target][isfloorturf(target.loc) ? ", falling to [target.loc]" : ""]."))
-	return BULLET_ACT_BLOCK
+	if(!tased.apply_status_effect(/datum/status_effect/tased, fired_from, current_firer, tase_stamina, null, "\the [src]\s", maximum_range + 1))
+		visible_message(span_warning("[src]\s fail to shock [target][isfloorturf(target.loc) ? ", falling to [target.loc]" : ""]."))
+		return
 
 /obj/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
 	do_sparks(1, TRUE, src)
@@ -40,19 +70,29 @@
 	tick_interval = 0.25 SECONDS
 	on_remove_on_mob_delete = TRUE
 	/// What atom is tasing us?
-	var/atom/taser
+	VAR_PRIVATE/datum/taser
 	/// What atom is using the atom tasing us? Sometimes the same as the taser, such as with turrets.
-	var/atom/firer
+	VAR_PRIVATE/atom/movable/firer
 	/// The beam datum representing the taser electrodes
-	var/datum/beam/tase_line
+	VAR_PRIVATE/datum/beam/tase_line
 	/// How much stamina damage does it aim to cause in a second?
-	var/stamina_per_second = 80
+	VAR_FINAL/stamina_per_second = 80
 	/// How much energy does the taser use per tick?
-	var/energy_drain = STANDARD_CELL_CHARGE * 0.05
+	VAR_FINAL/energy_drain = STANDARD_CELL_CHARGE * 0.05
 	/// What do we name the electrodes?
-	var/electrode_name
+	VAR_FINAL/electrode_name
+	/// How far can the taser reach?
+	VAR_FINAL/tase_range = 6
 
-/datum/status_effect/tased/on_creation(mob/living/new_owner, atom/fired_from, atom/firer, tase_stamina = 80, energy_drain = STANDARD_CELL_CHARGE * 0.05, electrode_name = "the electrodes")
+/datum/status_effect/tased/on_creation(
+	mob/living/new_owner,
+	datum/fired_from,
+	atom/movable/firer,
+	tase_stamina = 80,
+	energy_drain = STANDARD_CELL_CHARGE * 0.05,
+	electrode_name = "the electrodes",
+	tase_range = 6,
+)
 	if(isnull(fired_from) || isnull(firer) || !can_tase_with(fired_from))
 		qdel(src)
 		return
@@ -61,17 +101,15 @@
 	if(!.)
 		return
 
-	// does not use the status effect api because we snowflake it a bit
-	owner.throw_alert(type, /atom/movable/screen/alert/tazed)
-
 	set_taser(fired_from)
 	set_firer(firer)
 	src.stamina_per_second = tase_stamina
 	src.energy_drain = energy_drain
 	src.electrode_name = electrode_name
+	src.tase_range = tase_range
 
 /// Checks if the passed atom is captable of being used to tase someone
-/datum/status_effect/tased/proc/can_tase_with(atom/with_what)
+/datum/status_effect/tased/proc/can_tase_with(datum/with_what)
 	if(istype(with_what, /obj/item/gun/energy))
 		var/obj/item/gun/energy/taser_gun = with_what
 		if(isnull(taser_gun.cell))
@@ -124,18 +162,21 @@
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(try_remove_taser))
 	RegisterSignal(owner, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(someome_removing_taser))
 	SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
-	owner.add_mood_event("tased", /datum/mood_event/tased)
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/being_tased)
-	if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
-		owner.emote("scream")
-	if(HAS_TRAIT(owner, TRAIT_HULK))
-		owner.say(pick(
-			";RAAAAAAAARGH!",
-			";HNNNNNNNNNGGGGGGH!",
-			";GWAAAAAAAARRRHHH!",
-			"NNNNNNNNGGGGGGGGHH!",
-			";AAAAAAARRRGH!",
-		), forced = "hulk")
+	if(!owner.has_status_effect(type))
+		// does not use the status effect api because we snowflake it a bit
+		owner.throw_alert(type, /atom/movable/screen/alert/tazed)
+		owner.add_mood_event("tased", /datum/mood_event/tased)
+		owner.add_movespeed_modifier(/datum/movespeed_modifier/being_tased)
+		if(!HAS_TRAIT(owner, TRAIT_ANALGESIA))
+			owner.emote("scream")
+		if(HAS_TRAIT(owner, TRAIT_HULK))
+			owner.say(pick(
+				";RAAAAAAAARGH!",
+				";HNNNNNNNNNGGGGGGH!",
+				";GWAAAAAAAARRRHHH!",
+				"NNNNNNNNGGGGGGGGHH!",
+				";AAAAAAARRRGH!",
+			), forced = "hulk")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.force_say()
@@ -155,11 +196,10 @@
 	if(istype(mob_firer))
 		mob_firer.remove_movespeed_modifier(/datum/movespeed_modifier/tasing_someone)
 
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/being_tased)
-	if(!QDELING(owner))
+	if(!QDELING(owner) && !owner.has_status_effect(type))
 		owner.adjust_jitter_up_to(10 SECONDS, 1 MINUTES)
-		if(!owner.has_status_effect(type))
-			owner.clear_alert(type)
+		owner.remove_movespeed_modifier(/datum/movespeed_modifier/being_tased)
+		owner.clear_alert(type)
 
 	taser = null
 	firer = null
@@ -191,7 +231,7 @@
 		owner.apply_damage(stamina_per_second * seconds_between_ticks, STAMINA)
 
 /// Sets the passed atom as the "taser"
-/datum/status_effect/tased/proc/set_taser(atom/new_taser)
+/datum/status_effect/tased/proc/set_taser(datum/new_taser)
 	taser = new_taser
 	RegisterSignals(taser, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(end_tase))
 	RegisterSignal(taser, COMSIG_GUN_TRY_FIRE, PROC_REF(block_firing))
@@ -220,11 +260,14 @@
 	if(istype(mob_firer))
 		mob_firer.add_movespeed_modifier(/datum/movespeed_modifier/tasing_someone)
 
+	if(firer == owner)
+		return
+
 	tase_line = firer.Beam(
 		BeamTarget = owner,
 		icon = 'icons/effects/beam.dmi',
 		icon_state = "electrodes",
-		maxdistance = 6,
+		maxdistance = tase_range,
 		beam_type = /obj/effect/ebeam/reacting/electrodes,
 	)
 	RegisterSignal(tase_line, COMSIG_BEAM_ENTERED, PROC_REF(disrupt_tase))
@@ -327,6 +370,9 @@
 		return
 	var/mob/living/clicker = usr
 	clicker.resist()
+
+/obj/effect/ebeam/electrodes_nozap
+	name = "electrodes"
 
 /obj/effect/ebeam/reacting/electrodes
 	name = "electrodes"
