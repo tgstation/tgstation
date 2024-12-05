@@ -112,7 +112,6 @@
 
 			// [mob/living].forceMove() forces mobs to unbuckle, so we need to buckle them again
 			teleatom.buckle_mob(rider, force=TRUE)
-			rider.refresh_gravity()
 
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)
 	if(!location)
