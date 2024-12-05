@@ -23,9 +23,9 @@
 /obj/item/knife/poison/attack_self(mob/user)
 	if(possible_transfer_amounts.len)
 		var/i=0
-		for(var/A in possible_transfer_amounts)
+		for(var/amount in possible_transfer_amounts)
 			i++
-			if(A == amount_per_transfer_from_this)
+			if(amount == amount_per_transfer_from_this)
 				if(i<possible_transfer_amounts.len)
 					amount_per_transfer_from_this = possible_transfer_amounts[i+1]
 				else
@@ -34,10 +34,10 @@
 				to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
 				return
 
-/obj/item/knife/poison/afterattack(mob/living/M, mob/user)
-	if(!istype(M))
+/obj/item/knife/poison/afterattack(mob/living/enemy, mob/user)
+	if(!istype(enemy))
 		return
-	if(reagents?.total_volume && M.reagents && prob(40))
-		reagents.trans_to(M, amount_per_transfer_from_this)
+	if(reagents?.total_volume && enemy.reagents && prob(40))
+		reagents.trans_to(enemy, amount_per_transfer_from_this)
 	else
 		return ..()
