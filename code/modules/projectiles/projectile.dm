@@ -112,6 +112,8 @@
 	var/nondirectional_sprite = FALSE
 	/// Random spread done projectile-side for convinience
 	var/spread = 0
+	/// Additional rotation for the projectile, in case it uses some object's sprite
+	var/projectile_angle = 0
 	/// Gliding does not enjoy something getting moved multiple turfs in a tick, which is why we animate it manually
 	animate_movement = NO_STEPS
 
@@ -523,10 +525,16 @@
 			target = select_target(target_turf, target)
 			continue
 
-		if (SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, src) & PROJECTILE_INTERRUPT_HIT)
+		var/target_signal = SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, src)
+		if (target_signal & PROJECTILE_INTERRUPT_HIT_PHASE)
+			return PROJECTILE_IMPACT_PASSED
+		if (target_signal & PROJECTILE_INTERRUPT_HIT)
 			return PROJECTILE_IMPACT_INTERRUPTED
 
-		if (SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, target) & PROJECTILE_INTERRUPT_HIT)
+		var/self_signal = SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, target)
+		if (self_signal & PROJECTILE_INTERRUPT_HIT_PHASE)
+			return PROJECTILE_IMPACT_PASSED
+		if (self_signal & PROJECTILE_INTERRUPT_HIT)
 			return PROJECTILE_IMPACT_INTERRUPTED
 
 		if(mode == PROJECTILE_PIERCE_HIT)
@@ -767,7 +775,7 @@
 			stack_trace("WARNING: Projectile [type] deleted due to being unable to resolve a target after angle was null!")
 			qdel(src)
 			return
-		var/turf/target = locate(clamp(starting + xo, 1, world.maxx), clamp(starting + yo, 1, world.maxy), starting.z)
+		var/turf/target = locate(clamp(starting.x + xo, 1, world.maxx), clamp(starting.y + yo, 1, world.maxy), starting.z)
 		set_angle(get_angle(src, target))
 	if (spread)
 		set_angle(angle + (rand() - 0.5) * spread)
@@ -809,7 +817,7 @@
 	if (angle == new_angle)
 		return
 	if(!nondirectional_sprite)
-		transform = transform.TurnTo(angle, new_angle)
+		transform = transform.TurnTo(angle, new_angle + projectile_angle)
 	angle = new_angle
 	if(movement_vector)
 		movement_vector.set_angle(new_angle)
@@ -821,7 +829,7 @@
 	if (angle == new_angle)
 		return
 	if(!nondirectional_sprite)
-		transform = transform.TurnTo(angle, new_angle)
+		transform = transform.TurnTo(angle, new_angle + projectile_angle)
 	free_hitscan_forceMove = TRUE
 	forceMove(center_turf)
 	entry_x = 0

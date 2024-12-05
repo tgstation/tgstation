@@ -470,13 +470,13 @@
 	for(var/component_key in dc)
 		var/component_or_list = dc[component_key]
 		if(islist(component_or_list))
-			for(var/datum/component/I in component_or_list)
-				if(I.can_transfer)
-					target.TakeComponent(I)
+			for(var/datum/component/component in component_or_list)
+				if(component.can_transfer)
+					target.TakeComponent(component)
 		else
-			var/datum/component/C = component_or_list
-			if(C.can_transfer)
-				target.TakeComponent(C)
+			var/datum/component/component = component_or_list
+			if(!QDELETED(component) && component.can_transfer)
+				target.TakeComponent(component)
 
 /**
  * Return the object that is the host of any UI's that this component has

@@ -527,12 +527,8 @@
 		if(99 to INFINITY)
 			// can you imagine standing around minding your own business when all of the sudden some guy fucking launches himself into a wall at full speed and irreparably paralyzes himself?
 			user.visible_message(span_danger("[user] slams face-first into [hit] at an awkward angle, severing [user.p_their()] spinal column with a sickening crack! Fucking shit!"), span_userdanger("You slam face-first into [hit] at an awkward angle, severing your spinal column with a sickening crack! Fucking shit!"))
-			var/obj/item/bodypart/head/hed = user.get_bodypart(BODY_ZONE_HEAD)
-			if(hed)
-				hed.receive_damage(brute=40, updating_health=FALSE, wound_bonus = 40)
-			else
-				user.adjustBruteLoss(40, updating_health=FALSE)
-			user.adjustStaminaLoss(30)
+			user.apply_damage(40, BRUTE, BODY_ZONE_HEAD, wound_bonus = 40)
+			user.apply_damage(30, STAMINA)
 			playsound(user, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
 			playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
@@ -543,12 +539,8 @@
 
 		if(97 to 98)
 			user.visible_message(span_danger("[user] slams skull-first into [hit] with a sound like crumpled paper, revealing a horrifying breakage in [user.p_their()] cranium! Holy shit!"), span_userdanger("You slam skull-first into [hit] and your senses are filled with warm goo flooding across your face! Your skull is open!"))
-			var/obj/item/bodypart/head/hed = user.get_bodypart(BODY_ZONE_HEAD)
-			if(hed)
-				hed.receive_damage(brute = 30, updating_health = FALSE, wound_bonus = 25)
-			else
-				user.adjustBruteLoss(40, updating_health = FALSE)
-			user.adjustStaminaLoss(30)
+			user.apply_damage(30, BRUTE, BODY_ZONE_HEAD, wound_bonus = 25)
+			user.apply_damage(30, STAMINA)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
 			playsound(user, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
@@ -558,8 +550,8 @@
 
 		if(93 to 96)
 			user.visible_message(span_danger("[user] slams face-first into [hit] with a concerning squish, immediately going limp!"), span_userdanger("You slam face-first into [hit], and immediately lose consciousness!"))
-			user.adjustStaminaLoss(30)
-			user.adjustBruteLoss(30)
+			user.apply_damage(30, BRUTE, spread_damage = TRUE)
+			user.apply_damage(30, STAMINA)
 			user.Unconscious(10 SECONDS)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
 			user.playsound_local(get_turf(user), 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8)
@@ -568,8 +560,8 @@
 
 		if(86 to 92)
 			user.visible_message(span_danger("[user] slams head-first into [hit], suffering major cranial trauma!"), span_userdanger("You slam head-first into [hit], and the world explodes around you!"))
-			user.adjustStaminaLoss(30, updating_stamina = FALSE)
-			user.adjustBruteLoss(30)
+			user.apply_damage(30, BRUTE, spread_damage = TRUE)
+			user.apply_damage(30, STAMINA)
 			user.adjust_confusion(15 SECONDS)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
@@ -580,16 +572,16 @@
 
 		if(68 to 85)
 			user.visible_message(span_danger("[user] slams hard into [hit], knocking [user.p_them()] senseless!"), span_userdanger("You slam hard into [hit], knocking yourself senseless!"))
-			user.adjustStaminaLoss(30, updating_stamina = FALSE)
-			user.adjustBruteLoss(10)
+			user.apply_damage(10, BRUTE, spread_damage = TRUE)
+			user.apply_damage(30, STAMINA)
 			user.adjust_confusion(10 SECONDS)
 			user.Knockdown(3 SECONDS)
 			shake_camera(user, 3, 4)
 
 		if(1 to 67)
 			user.visible_message(span_danger("[user] slams into [hit]!"), span_userdanger("You slam into [hit]!"))
-			user.adjustStaminaLoss(20, updating_stamina = FALSE)
-			user.adjustBruteLoss(10)
+			user.apply_damage(10, BRUTE, spread_damage = TRUE)
+			user.apply_damage(20, STAMINA)
 			user.Knockdown(2 SECONDS)
 			shake_camera(user, 2, 2)
 

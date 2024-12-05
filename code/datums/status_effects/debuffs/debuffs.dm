@@ -8,6 +8,7 @@
 //Largely negative status effects go here, even if they have small beneficial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
+	id = STATUS_EFFECT_ID_ABSTRACT
 	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
@@ -18,12 +19,11 @@
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
-	return ..()
-
-/datum/status_effect/incapacitating/on_apply()
+	. = ..()
+	if(!.)
+		return
 	if(needs_update_stat || issilicon(owner))
 		owner.update_stat()
-	return TRUE
 
 /datum/status_effect/incapacitating/on_remove()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
@@ -837,8 +837,7 @@
 
 /datum/status_effect/ants/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/victim = owner
-	var/need_mob_update
-	need_mob_update = victim.adjustBruteLoss(max(0.1, round((ants_remaining * damage_per_ant) * seconds_between_ticks,0.1)), updating_health = FALSE) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
+	victim.apply_damage(max(0.1, round((ants_remaining * damage_per_ant), 0.1)) * seconds_between_ticks, BRUTE, spread_damage = TRUE) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
 	if(victim.stat <= SOFT_CRIT) //Makes sure people don't scratch at themselves while they're in a critical condition
 		if(prob(15))
 			switch(rand(1,2))
@@ -849,26 +848,21 @@
 		if(prob(50)) // Most of the damage is done through random chance. When tested yielded an average 100 brute with 200u ants.
 			switch(rand(1,50))
 				if (1 to 8) //16% Chance
-					var/obj/item/bodypart/head/hed = victim.get_bodypart(BODY_ZONE_HEAD)
 					to_chat(victim, span_danger("You scratch at the ants on your scalp!."))
-					need_mob_update += hed.receive_damage(brute = 0.4 * seconds_between_ticks, burn = 0, updating_health = FALSE)
+					owner.apply_damage(0.4 * seconds_between_ticks, BRUTE, BODY_ZONE_HEAD)
 				if (9 to 29) //40% chance
-					var/obj/item/bodypart/arm = victim.get_bodypart(pick(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM))
 					to_chat(victim, span_danger("You scratch at the ants on your arms!"))
-					need_mob_update += arm.receive_damage(brute = 1.2 * seconds_between_ticks, burn = 0, updating_health = FALSE)
+					owner.apply_damage(1.2 * seconds_between_ticks, BRUTE, pick(GLOB.arm_zones))
 				if (30 to 49) //38% chance
-					var/obj/item/bodypart/leg = victim.get_bodypart(pick(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG))
 					to_chat(victim, span_danger("You scratch at the ants on your leg!"))
-					need_mob_update += leg.receive_damage(brute = 1.2 * seconds_between_ticks, burn = 0, updating_health = FALSE)
+					owner.apply_damage(1.2 * seconds_between_ticks, BRUTE, pick(GLOB.leg_zones))
 				if(50) // 2% chance
 					to_chat(victim, span_danger("You rub some ants away from your eyes!"))
 					victim.set_eye_blur_if_lower(6 SECONDS)
 					ants_remaining -= 5 // To balance out the blindness, it'll be a little shorter.
 	ants_remaining--
-	if(need_mob_update)
-		victim.updatehealth()
 	if(ants_remaining <= 0 || victim.stat >= HARD_CRIT)
-		victim.remove_status_effect(type) //If this person has no more ants on them or are dead, they are no longer affected.
+		qdel(src) //If this person has no more ants on them or are dead, they are no longer affected.
 
 /atom/movable/screen/alert/status_effect/ants
 	name = "Ants!"
@@ -967,6 +961,7 @@
 	duration = 10 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 0.2 SECONDS
+	alert_type = null
 
 /datum/status_effect/teleport_madness/tick(seconds_between_ticks)
 	dump_in_space(owner)

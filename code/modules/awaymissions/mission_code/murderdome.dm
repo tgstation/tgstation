@@ -1,19 +1,14 @@
 
 /obj/structure/window/reinforced/fulltile/indestructible
 	name = "robust window"
+	move_resist = MOVE_FORCE_OVERPOWERING
 	flags_1 = PREVENT_CLICK_UNDER_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/structure/window/reinforced/fulltile/indestructible/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/window/reinforced/fulltile/indestructible/wrench_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/window/reinforced/fulltile/indestructible/crowbar_act(mob/living/user, obj/item/tool)
-	return NONE
 
 /obj/structure/grille/indestructible
+	desc = "A STRONG framework of hardened plasteel rods, that you cannot possibly get through. If you were an engineer you would be drooling over its construction right now."
+	move_resist = MOVE_FORCE_OVERPOWERING
 	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 

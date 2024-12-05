@@ -513,6 +513,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 	return FALSE
 
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
+	if(resistance_flags & INDESTRUCTIBLE)
+		balloon_alert(user, "too resilient!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	switch(state)
 		if(RWINDOW_SECURE)
 			if(tool.tool_behaviour == TOOL_WELDER)
@@ -591,7 +594,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 
 /obj/structure/window/reinforced/examine(mob/user)
 	. = ..()
-
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
 	switch(state)
 		if(RWINDOW_SECURE)
 			. += span_notice("It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out.")

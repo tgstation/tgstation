@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed a qdel loop in hypnosis brain trauma"

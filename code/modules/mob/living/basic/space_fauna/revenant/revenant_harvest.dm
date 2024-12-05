@@ -88,7 +88,7 @@
 
 	if(target.stat == CONSCIOUS)
 		to_chat(src, span_revenwarning("[target_Theyre] now powerful enough to fight off your draining!"))
-		to_chat(target, span_boldannounce("You feel something tugging across your body before subsiding.")) //hey, wait a minute...
+		to_chat(target, span_bolddanger("You feel something tugging across your body before subsiding.")) //hey, wait a minute...
 		return FALSE
 
 	to_chat(src, span_revenminor("You begin siphoning essence from [target]'s soul."))
