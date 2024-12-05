@@ -2,7 +2,7 @@
 #include "code\uplink.dm"
 
 /datum/modpack/venom_knife
-	id = "venomous_knife"
+	id = "venom_knife"
 	icon = 'modular_meta/features/venom_knife/preview.dmi'
 	name = "Ядовитый Нож"
 	group = "Features"

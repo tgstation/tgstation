@@ -1,4 +1,4 @@
-## Module ID: VENOMOUS_KNIFE
+## Module ID: VENOM_KNIFE
 
 ### Defines:
 
