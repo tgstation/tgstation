@@ -38,7 +38,7 @@
 	/// The date of when the fish was mounted (which should coincide with the day when it was actually caught)
 	var/catch_date
 
-/obj/structure/fish_mount/Initialize(floor_to_wall_dir, mapload)
+/obj/structure/fish_mount/Initialize(mapload, floor_to_wall_dir)
 	. = ..()
 	//Mounted fish shouldn't flop. It should also show size and weight to everyone.
 	add_traits(list(TRAIT_STOP_FISH_FLOPPING, TRAIT_EXAMINE_FISH), INNATE_TRAIT)
