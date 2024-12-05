@@ -1,12 +1,19 @@
 // Invisible effect that doesnt exist outside of containing the prox monitor
 /obj/effect/abstract/heretic_arena
+	icon = null
+	icon_state = null
+	alpha = 0
+	invisibility = INVISIBILITY_ABSTRACT
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE
 	/// Proximity monitor that handles the effects we are looking for
 	var/datum/proximity_monitor/advanced/heretic_arena/arena
 
-/obj/effect/abstract/heretic_arena/Initialize(mapload, range)
+/obj/effect/abstract/heretic_arena/Initialize(mapload, range, duration)
 	. = ..()
 	arena = new(src, range)
-	QDEL_IN(src, 60 SECONDS)
+	QDEL_IN(src, duration)
 
 /obj/effect/abstract/heretic_arena/Destroy(force)
 	. = ..()
@@ -46,17 +53,13 @@
 		if(!IS_HERETIC(human_in_range))
 			var/obj/item/melee/sickly_blade/training/new_blade = new(get_turf(human_in_range))
 			INVOKE_ASYNC(human_in_range, TYPE_PROC_REF(/mob, put_in_hands), new_blade)
-
-		//XANTODO placeholder sprite
-		var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/mob/effects/halo.dmi', "halo[rand(1, 6)]", -HALO_LAYER)
-		human_in_range.overlays_standing[HALO_LAYER] = new_halo_overlay
-		human_in_range.apply_overlay(HALO_LAYER)
+		human_in_range.apply_status_effect(/datum/status_effect/arena_tracker)
+		RegisterSignal(human_in_range)
 
 /datum/proximity_monitor/advanced/heretic_arena/Destroy()
 	for(var/mob/living/carbon/human/mob in contained_mobs)
 		mob.remove_traits(given_immunities, HERETIC_ARENA_TRAIT)
-		mob.remove_overlay(HALO_LAYER)
-		mob.update_body()
+		mob.remove_status_effect(/datum/status_effect/arena_tracker)
 	for(var/turf/to_restore in border_walls)
 		to_restore.ChangeTurf(border_walls[to_restore])
 	return ..()
@@ -68,8 +71,11 @@
 	border_walls += target
 	border_walls[target] += old_turf
 
-/datum/proximity_monitor/advanced/heretic_arena/field_turf_crossed(atom/movable/movable, turf/old_location, turf/new_location)
-	. = ..()
+/datum/proximity_monitor/advanced/heretic_arena/field_edge_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
+	if(isliving(movable))
+		var/mob/living/living_mob = movable
+		living_mob.remove_status_effect(/datum/status_effect/arena_tracker) // Once you leave the arena you can't come back
+		living_mob.remove_traits(given_immunities, HERETIC_ARENA_TRAIT)
 
 /turf/closed/indestructible/heretic_wall
 	name = "eldritch wall"
@@ -77,107 +83,127 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "eldritch_wall"
 	opacity = FALSE
+	pass_flags_self = NONE // No PASSCLOSEDTURF because only arena victors are allowed to go in or out
+
+/turf/closed/indestructible/heretic_wall/CanAllowThrough(atom/movable/mover, border_dir)
+	if(isliving(mover))
+		var/mob/living/living_mover = mover
+		var/datum/status_effect/arena_tracker/tracker = living_mover.has_status_effect(/datum/status_effect/arena_tracker)
+		if(tracker?.arena_victor)
+			return TRUE
+	return ..()
 
 /turf/closed/indestructible/heretic_wall/Bumped(atom/movable/bumped_atom)
 	. = ..()
 	if(isliving(bumped_atom))
 		var/mob/living/living_mob = bumped_atom
 		var/atom/target = get_edge_target_turf(living_mob, get_dir(src, get_step_away(living_mob, src)))
-		living_mob.throw_at(target, 4, 10)
+		living_mob.throw_at(target, 4, 5)
 		to_chat(living_mob, span_userdanger("The wall repels you with tremendous force!"))
 
-/*
-/obj/machinery/field/proc/bump_field(atom/movable/considered_atom as mob|obj)
-	if(has_shocked)
-		return FALSE
-	has_shocked = TRUE
-	do_sparks(5, TRUE, considered_atom.loc)
-	var/atom/target = get_edge_target_turf(considered_atom, get_dir(src, get_step_away(considered_atom, src)))
-	if(isliving(considered_atom))
-		to_chat(considered_atom, span_userdanger("The field repels you with tremendous force!"))
-	playsound(src, 'sound/effects/gravhit.ogg', 50, TRUE)
-	considered_atom.throw_at(target, 200, 4)
-	addtimer(CALLBACK(src, PROC_REF(clear_shock)), 0.5 SECONDS)
-*/
+/**
+ * Status applied to every mob in the heretic arena.
+ * Tracks the last person to damage owner.
+ * When owner enters crit, we send a signal to their status so they can leave the arena
+ */
 
+/datum/status_effect/arena_tracker
+	id = "arena_tracker"
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	/// Tracks the last person who dealt damage to this mob
+	var/mob/last_attacker
+	/// If our mob is free to leave, set to true
+	var/arena_victor = FALSE
+	/// The overlay for our mob, changes color to indicate that they are a victor and are free to leave
+	var/mutable_appearance/crown_overlay
 
-/*
-/datum/proximity_monitor/advanced/heretic_arena/ona_pply()
-	. = ..()
-	RegisterSignal(owner, COMSIG_MOVABLE_PRE_THROW, PROC_REF(on_pre_throw))
-	RegisterSignal(owner, COMSIG_MOVABLE_TELEPORTING, PROC_REF(on_teleport))
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-
-/datum/proximity_monitor/advanced/heretic_arena/on_remove()
-	UnregisterSignal(owner, list(
-		COMSIG_MOVABLE_PRE_THROW,
-		COMSIG_MOVABLE_TELEPORTING,
-		COMSIG_MOVABLE_MOVED,
-	))
-
-	return ..()
-
-/// Checks if the movement from moving_from to going_to leaves our [var/locked_to] area. Returns TRUE if so.
-/datum/proximity_monitor/advanced/heretic_arena/proc/is_escaping_locked_area(atom/moving_from, atom/going_to)
-	if(!locked_to)
-		return FALSE
-
-	// If moving_from isn't in our locked area, it means they've
-	// somehow completely escaped, so we'll opt not to act on them.
-	if(get_area(moving_from) != locked_to)
-		return FALSE
-
-	// If going_to is in our locked area,
-	// they're just moving within the area like normal.
-	if(get_area(going_to) == locked_to)
-		return FALSE
-
+/datum/status_effect/arena_tracker/on_apply()
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_enter_crit))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
+	RegisterSignal(owner, "COMSIG_OWNER_ENTERED_CRIT", PROC_REF(on_crit_somebody))
+	// XANTODO - Placeholder sprite
+	crown_overlay = mutable_appearance('icons/mob/effects/halo.dmi', "halo[rand(1, 6)]", -HALO_LAYER)
+	owner.add_overlay(crown_overlay)
 	return TRUE
 
-/// Signal proc for [COMSIG_MOVABLE_PRE_THROW] that prevents people from escaping our locked area via throw.
-/datum/proximity_monitor/advanced/heretic_arena/proc/on_pre_throw(mob/living/source, list/throw_args)
+/datum/status_effect/arena_tracker/on_remove()
+	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOB_APPLY_DAMAGE, "COMSIG_OWNER_ENTERED_CRIT"))
+	owner.cut_overlay(crown_overlay)
+	crown_overlay = null
+
+/datum/status_effect/arena_tracker/proc/on_enter_crit(mob/owner)
 	SIGNAL_HANDLER
+	SEND_SIGNAL(last_attacker, "COMSIG_OWNER_ENTERED_CRIT")
 
-	var/atom/throw_dest = throw_args[1]
-	if(!is_escaping_locked_area(source, throw_dest))
-		return
-
-	var/mob/thrower = throw_args[4]
-	if(istype(thrower))
-		to_chat(thrower, span_hypnophrase("An otherworldly force prevents you from throwing [source] out of [get_area_name(locked_to)]!"))
-
-	to_chat(source, span_hypnophrase("An otherworldly force prevents you from being thrown out of [get_area_name(locked_to)]!"))
-
-	return COMPONENT_CANCEL_THROW
-
-/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area.
-/datum/proximity_monitor/advanced/heretic_arena/proc/on_teleport(mob/living/source, atom/destination, channel)
+/datum/status_effect/arena_tracker/proc/damage_taken(
+	datum/source,
+	damage_amount,
+	damagetype,
+	def_zone,
+	blocked,
+	wound_bonus,
+	bare_wound_bonus,
+	sharpness,
+	attack_direction,
+	attacking_item,
+	wound_clothing,
+)
 	SIGNAL_HANDLER
+	if(isnull(attacking_item))
+		stack_trace("proc/damage_taken() was called but without passing attacking_item")
+		return
+	if(!isobj(attacking_item))
+		return
+	var/obj/attacking_object = attacking_item
 
-	if(!is_escaping_locked_area(source, destination))
+	// Track being hit by a mob holding a stick
+	if(ismob(attacking_object.loc))
+		last_attacker = attacking_object.loc
 		return
 
-	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
+	// Track being hit by a mob throwing a stick
+	if(isitem(attacking_object))
+		var/obj/item/thrown_item = attacking_item
+		var/thrown_by = thrown_item.thrownby?.resolve()
+		if(ismob(thrown_by))
+			last_attacker = thrown_by
+			return
 
-	source.Stun(1 SECONDS)
-	return COMPONENT_BLOCK_TELEPORT
+	// Edge case. If our attacking_item is a gun which the owner has dropped we need to find out who shot us
+	// Track being hit by a mob shooting a stick
+	if(isprojectile(attacking_object))
+		var/obj/projectile/attacking_projectile = attacking_object
+		if(ismob(attacking_projectile.firer))
+			last_attacker = attacking_projectile.firer
 
-/// Signal proc for [COMSIG_MOVABLE_MOVED] that blocks any movement out of our locked area
-/datum/proximity_monitor/advanced/heretic_arena/proc/on_move(mob/living/source, turf/old_loc, movement_dir, forced)
+/// Called when you crit somebody to update your crown
+/datum/status_effect/arena_tracker/proc/on_crit_somebody()
 	SIGNAL_HANDLER
+	owner.cut_overlay(crown_overlay)
+	crown_overlay.color = list(
+		1, 1, 0,
+		1, 1, 0,
+		1, 1, 0,
+	)
+	owner.add_overlay(crown_overlay)
 
-	// Let's not mess with heretics dragging a potential victim.
-	if(ismob(source.pulledby) && IS_HERETIC(source.pulledby))
+	// The mansus celebrates your efforts
+	if(IS_HERETIC(owner))
+		owner.heal_overall_damage(60, 60, 60)
+		owner.adjustToxLoss(-60)
+		owner.adjustOxyLoss(-60)
+		if(iscarbon(owner))
+			var/mob/living/carbon/carbon_owner = owner
+			for(var/datum/wound/wound as anything in carbon_owner.all_wounds)
+				wound.remove_wound()
+
+	if(arena_victor) // No need to spam if we've already killed at least 1 person
 		return
-
-	// If the movement's forced, just let it happen regardless.
-	if(forced || !is_escaping_locked_area(old_loc, source))
-		return
-
-	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
-
-	var/turf/further_behind_old_loc = get_edge_target_turf(old_loc, REVERSE_DIR(movement_dir))
-
-	source.Stun(1 SECONDS)
-	source.throw_at(further_behind_old_loc, 3, 1, gentle = TRUE) // Keeping this gentle so they don't smack into the heretic max speed
-*/
+	if(IS_HERETIC(owner))
+		to_chat(owner, span_hypnophrase("The mansus is pleased with your performance."))
+	else
+		to_chat(owner, span_hypnophrase("You feel a weight lift off your shoulders."))
+	arena_victor = TRUE
