@@ -110,7 +110,8 @@
 
 /obj/item/mod/module/armor_booster/proc/on_visor_overlay(datum/source,  mutable_appearance/standing, list/overrides)
 	SIGNAL_HANDLER
-	overrides += mutable_appearance(overlay_icon_file, "module_armorbooster_visor-[mod.skin]", layer = standing.layer + 0.1)
+	if (active)
+		overrides += mutable_appearance(overlay_icon_file, "module_armorbooster_visor-[mod.skin]", layer = standing.layer + 0.1)
 
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
 /obj/item/mod/module/energy_shield
