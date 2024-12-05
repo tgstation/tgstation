@@ -1,0 +1,4 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - bugfix: "fixed the Icebox Phonebooth air alarm being on the outside, thus triggering because the planet is, indeed, cold. It is now inside and all-access so that callers can turn it off when they decide the phone's more important than their health and safety."
