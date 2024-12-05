@@ -50,14 +50,14 @@
 
 	do_sparks(1, TRUE, src)
 	do_sparks(1, TRUE, fired_from)
-	tased.apply_status_effect(
-		/*type*/ = /datum/status_effect/tased,
-		/*taser*/ = fired_from,
-		/*firer*/ = initial_firer_weakref?.resolve() || firer,
-		/*tase_stamina*/ = tase_stamina,
-		/*energy_drain*/ = STANDARD_CELL_CHARGE * 0.05,
-		/*electrode_name*/ = "\the [src]\s",
-		/*tase_range*/ = maximum_range + 1,
+	target.apply_status_effect(
+		/*type = *//datum/status_effect/tased,
+		/*taser = */fired_from,
+		/*firer = */initial_firer_weakref?.resolve() || firer,
+		/*tase_stamina = */tase_stamina,
+		/*energy_drain = */STANDARD_CELL_CHARGE * 0.05,
+		/*electrode_name = */"\the [src]\s",
+		/*tase_range = */maximum_range + 1,
 	)
 
 /obj/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
