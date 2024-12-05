@@ -126,9 +126,9 @@
 	return round(beauty)
 
 /obj/structure/fish_mount/proc/rotate_fish(direction, old_direction)
-	var/rotation = angle2dir(INVERSE_DIR(direction))
+	var/rotation = angle2dir(REVERSE_DIR(direction))
 	if(old_direction)
-		rotation -= angle2dir(INVERSE_DIR(old_direction))
+		rotation -= angle2dir(REVERSE_DIR(old_direction))
 
 	if(!rotation)
 		return
