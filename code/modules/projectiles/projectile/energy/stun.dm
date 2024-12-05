@@ -34,26 +34,31 @@
 		initial_firer_weakref = WEAKREF(firer)
 	return ..()
 
-/obj/projectile/energy/electrode/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/energy/electrode/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(pierce_hit)
 		return
+	if(. == BULLET_ACT_BLOCK || blocked >= 100 || !isliving(target))
+		return
+	// we need a "from", otherwise, where does the electricity come from?
+	if(isnull(fired_from))
+		target.visible_message(
+			span_warning("[src]\s collide with [target] harmlessly[isfloorturf(target.loc) ? ", before falling to [target.loc]" : ""]."),
+			span_notice("[src] collide with you harmlessly[isfloorturf(target.loc) ? ", before falling to [target.loc]" : ""]."),
+		)
+		return
 
 	do_sparks(1, TRUE, src)
-	if(. == BULLET_ACT_BLOCK || !isliving(target) || blocked >= 100)
-		visible_message(span_warning("[src]\s fail to shock [target][isfloorturf(target.loc) ? ", falling to [target.loc]" : ""]."))
-		return
-
-	// make sure we have the right guy
-	// (this lets scarp users deflect electrodes and send it at another person)
-	var/atom/movable/current_firer = firer
-	if(!IS_WEAKREF_OF(firer, initial_firer_weakref))
-		current_firer = initial_firer_weakref?.resolve() || firer
-
-	var/mob/living/tased = target
-	if(!tased.apply_status_effect(/datum/status_effect/tased, fired_from, current_firer, tase_stamina, null, "\the [src]\s", maximum_range + 1))
-		visible_message(span_warning("[src]\s fail to shock [target][isfloorturf(target.loc) ? ", falling to [target.loc]" : ""]."))
-		return
+	do_sparks(1, TRUE, fired_from)
+	tased.apply_status_effect(
+		/*type*/ = /datum/status_effect/tased,
+		/*taser*/ = fired_from,
+		/*firer*/ = initial_firer_weakref?.resolve() || firer,
+		/*tase_stamina*/ = tase_stamina,
+		/*energy_drain*/ = STANDARD_CELL_CHARGE * 0.05,
+		/*electrode_name*/ = "\the [src]\s",
+		/*tase_range*/ = maximum_range + 1,
+	)
 
 /obj/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
 	do_sparks(1, TRUE, src)
@@ -97,16 +102,17 @@
 		qdel(src)
 		return
 
+	src.stamina_per_second = tase_stamina
+	src.energy_drain = energy_drain
+	src.electrode_name = electrode_name
+	src.tase_range = tase_range
+
 	. = ..()
 	if(!.)
 		return
 
 	set_taser(fired_from)
 	set_firer(firer)
-	src.stamina_per_second = tase_stamina
-	src.energy_drain = energy_drain
-	src.electrode_name = electrode_name
-	src.tase_range = tase_range
 
 /// Checks if the passed atom is captable of being used to tase someone
 /datum/status_effect/tased/proc/can_tase_with(datum/with_what)
@@ -157,6 +163,7 @@
 
 /datum/status_effect/tased/on_apply()
 	if(issilicon(owner) || isbot(owner) || isdrone(owner) || HAS_TRAIT(owner, TRAIT_PIERCEIMMUNE))
+		owner.visible_message(span_warning("[capitalize(electrode_name)] fail to catch [owner][isfloorturf(owner.loc) ? ", falling to [owner.loc]" : ""]!"))
 		return FALSE
 
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(try_remove_taser))
@@ -373,6 +380,7 @@
 
 /obj/effect/ebeam/electrodes_nozap
 	name = "electrodes"
+	alpha = 192
 
 /obj/effect/ebeam/reacting/electrodes
 	name = "electrodes"
