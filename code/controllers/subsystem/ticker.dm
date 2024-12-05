@@ -67,6 +67,8 @@ SUBSYSTEM_DEF(ticker)
 	/// Why an emergency shuttle was called
 	var/emergency_reason
 
+	var/reboot_timer = null
+
 /datum/controller/subsystem/ticker/Initialize()
 	var/list/byond_sound_formats = list(
 		"mid" = TRUE,
@@ -697,11 +699,13 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, span_info("Round logs can be located <a href=\"[gamelogloc]\">at this website!</a>"))
 
 	var/start_wait = world.time
-	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2)) //don't wait forever
-	sleep(delay - (world.time - start_wait))
+	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string, skip_delay), delay - (world.time - start_wait), TIMER_STOPPABLE)
 
+
+/datum/controller/subsystem/ticker/proc/reboot_callback(reason, end_string, skip_delay)
 	if(delay_end && !skip_delay)
 		to_chat(world, span_boldannounce("Reboot was cancelled by an admin."))
+		reboot_timer = null
 		return
 	if(end_string)
 		end_state = end_string
