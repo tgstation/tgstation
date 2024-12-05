@@ -1,4 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - rscdel: "Time Dilation no longer shows in the hub text"
