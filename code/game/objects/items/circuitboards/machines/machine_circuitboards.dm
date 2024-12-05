@@ -1473,8 +1473,7 @@
 	req_components = list(
 		/obj/item/stack/sheet/glass = 1,
 		/datum/stock_part/matter_bin = 2,
-		/datum/stock_part/scanning_module = 1,
-		/datum/stock_part/servo = 2)
+		/datum/stock_part/scanning_module = 1)
 	needs_anchored = TRUE
 
 //Tram
