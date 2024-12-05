@@ -321,7 +321,7 @@
 	linked = null
 	return ..()
 
-/obj/item/warp_cube/attack_self(mob/living/user)
+/obj/item/warp_cube/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)
 	var/area/current_area = current_location.loc
 	if(!linked || (current_area.area_flags & NOTELEPORT))
