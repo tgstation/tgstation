@@ -244,10 +244,10 @@
 	message = "hisses!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
-/datum/emote/living/carbon/hiss/get_sound(mob/living/carbon/human/user)
+/datum/emote/living/carbon/hiss/get_sound(mob/living/carbon/user)
 	. = ..()
-	if(isalien(user))
-		return SFX_HISS
 	if(!istype(user))
 		return
+	if(isalien(user))
+		return SFX_HISS
 	return user.dna.species.get_hiss_sound()
