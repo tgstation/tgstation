@@ -4785,9 +4785,9 @@
 /area/station/science/cytology)
 "bHr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/visible,
-/obj/machinery/computer/security/telescreen/interrogation/directional/west{
-	network = list("isolation");
-	name = "Isolation Room Monitor"
+/obj/machinery/computer/security/telescreen/normal/directional/west{
+	name = "Isolation Room Monitor";
+	network = list("isolation")
 	},
 /turf/open/floor/plating,
 /area/station/security/execution/education)
@@ -13484,9 +13484,6 @@
 	dir = 8
 	},
 /obj/structure/table/glass,
-/obj/machinery/computer/security/telescreen/minisat{
-	pixel_x = 2
-	},
 /obj/machinery/digital_clock/directional/south,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -14658,6 +14655,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/computer/security/telescreen/test_chamber/directional/south{
+	name = "Test Chamber Monitor"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/science/xenobiology)
 "eUg" = (
@@ -20817,7 +20817,7 @@
 /area/station/security/detectives_office)
 "gUQ" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Nanotransen Museum"
+	name = "Nanotrasen Museum"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -22753,6 +22753,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/xenobiology)
+"hAt" = (
+/obj/machinery/computer/security/telescreen/minisat/directional/west{
+	name = "Minisat Monitor"
+	},
+/turf/open/floor/carpet,
+/area/station/command/bridge)
 "hAx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/sustenance,
@@ -28707,10 +28713,6 @@
 /obj/structure/table,
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
-	},
-/obj/machinery/computer/security/telescreen{
-	name = "Telecomms Camera Monitor";
-	network = list("tcomms")
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/tcommsat/computer)
@@ -54147,10 +54149,6 @@
 "rRd" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen{
-	network = list("xeno");
-	name = "Test Chamber Monitor"
-	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "rRf" = (
@@ -56672,10 +56670,6 @@
 /obj/structure/fluff/paper/stack{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen/normal/directional/south{
-	network = list("lasertag");
-	name = "Laser Tag Monitor"
-	},
 /turf/open/floor/carpet/black,
 /area/station/maintenance/hallway/abandoned_recreation)
 "sKF" = (
@@ -57715,7 +57709,7 @@
 /area/space)
 "tdW" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Nanotransen Museum"
+	name = "Nanotrasen Museum"
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
@@ -59411,7 +59405,7 @@
 /area/station/security/detectives_office)
 "tHs" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Nanotransen Museum"
+	name = "Nanotrasen Museum"
 	},
 /turf/open/floor/carpet,
 /area/station/command/corporate_showroom)
@@ -64882,6 +64876,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
+"vxe" = (
+/obj/machinery/computer/security/telescreen/tcomms/directional/north{
+	name = "Telecommunications Monitor"
+	},
+/turf/open/floor/glass,
+/area/station/tcommsat/computer)
 "vxh" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
@@ -65376,9 +65376,6 @@
 "vGr" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/green/filled/mid_joiner,
-/obj/structure/window/reinforced/spawner/directional/south{
-	dir = 8
-	},
 /obj/item/storage/box/monkeycubes{
 	pixel_y = 10
 	},
@@ -65388,6 +65385,7 @@
 	pixel_y = 2;
 	pixel_x = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/virology)
 "vGC" = (
@@ -170835,7 +170833,7 @@ gcf
 sfn
 sfn
 sfn
-sfn
+hAt
 oLi
 iRf
 iRf
@@ -195486,7 +195484,7 @@ nxZ
 gqT
 kFi
 jur
-cxE
+vxe
 wYk
 cxE
 hDV
