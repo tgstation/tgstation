@@ -8,9 +8,9 @@
 	inhand_icon_state = "laser_gate"
 	pin = /obj/item/firing_pin/explorer
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/awaymission_aeg)
-	can_select = FALSE
-	selfcharge = TRUE
 	ammo_x_offset = 0
+	charge_delay = 10
+	selfcharge = TRUE
 	can_charge = FALSE
 
 /obj/projectile/beam/laser/awaymission_aeg
