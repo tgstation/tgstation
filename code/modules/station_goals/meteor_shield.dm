@@ -97,17 +97,18 @@
 
 /obj/machinery/satellite/meteor_shield/Initialize(mapload)
 	. = ..()
-	proximity_monitor = new(src,0)
+	proximity_monitor = new(src, /* range = */ 0)
 
 /obj/machinery/satellite/meteor_shield/HasProximity(atom/movable/proximity_check_mob)
 	. = ..()
-	if(istype(proximity_check_mob, /obj/effect/meteor))
-		var/obj/effect/meteor/meteor_to_destroy = proximity_check_mob
-		if(space_los(meteor_to_destroy))
-			var/turf/beam_from = get_turf(src)
-			beam_from.Beam(get_turf(meteor_to_destroy), icon_state="sat_beam", time = 5)
-			if(meteor_to_destroy.shield_defense(src))
-				qdel(meteor_to_destroy)
+	if(!istype(proximity_check_mob, /obj/effect/meteor))
+		return
+	var/obj/effect/meteor/meteor_to_destroy = proximity_check_mob
+	if(space_los(meteor_to_destroy))
+		var/turf/beam_from = get_turf(src)
+		beam_from.Beam(get_turf(meteor_to_destroy), icon_state="sat_beam", time = 5)
+		if(meteor_to_destroy.shield_defense(src))
+			qdel(meteor_to_destroy)
 
 /obj/machinery/satellite/meteor_shield/toggle(user)
 	if(user)
