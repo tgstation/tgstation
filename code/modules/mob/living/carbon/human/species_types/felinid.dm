@@ -115,8 +115,7 @@
 	return SFX_SNORE_MALE
 
 /datum/species/felinid/get_hiss_sound(mob/living/carbon/human/felinid)
-	return
-	//felinid sounds here
+	return 'sound/mobs/humanoids/felinid/felinid_hiss.ogg'
 
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)
