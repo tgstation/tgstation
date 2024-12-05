@@ -92,6 +92,7 @@
 	icon_state = "tizira_water"
 	base_icon_state = "tizira_water"
 	baseturfs = /turf/open/water/beach/tizira
+	fishing_datum = /datum/fish_source/tizira
 
 /**
  * A special subtype of water with steam particles and a status effect similar to showers, that's however only applied if
