@@ -65055,7 +65055,7 @@
 "sIb" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/light/warm/directional/north,
-/obj/machinery/digital_clock/directional/north,
+/obj/structure/fish_mount/bar/directional/north,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "sIl" = (

@@ -14,7 +14,7 @@
 		trophy_fishes_database = new("data/trophy_fishes.json")
 
 	var/list/data = trophy_fishes_database.get_key(mount.persistence_id)
-	if(isnull(data))
+	if(!length(data))
 		return
 	var/fish_id = PERSISTENCE_FISH_ID
 	if(!fish_id) //For a reason or another, the id isn't there
@@ -32,7 +32,7 @@
 	mount.catcher_name = data[PERSISTENCE_FISH_CATCHER]
 	mount.catch_date = data[PERSISTENCE_FISH_CATCH_DATE]
 	fish.set_status(FISH_DEAD, silent = TRUE)
-	mount.add_fish(fish, TRUE)
+	mount.add_fish(fish, from_persistence = TRUE)
 
 /datum/controller/subsystem/persistence/proc/save_trophy_fish(obj/structure/fish_mount/mount)
 	var/obj/item/fish/fish = mount.mounted_fish

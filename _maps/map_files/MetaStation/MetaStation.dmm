@@ -1603,7 +1603,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
-/obj/structure/sign/poster/random/directional/north,
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/wood/large,
 /area/station/service/theater)
 "aEH" = (
@@ -10708,7 +10708,6 @@
 /area/station/cargo/miningoffice)
 "dSJ" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/wood/large,
 /area/station/service/theater)
 "dTi" = (
@@ -31345,7 +31344,6 @@
 	dir = 10
 	},
 /obj/structure/window/spawner/directional/west,
-/obj/structure/sign/poster/random/directional/north,
 /obj/effect/spawner/random/structure/musician/piano/random_piano,
 /turf/open/floor/wood/large,
 /area/station/service/theater)
@@ -53802,13 +53800,13 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "sZa" = (
-/obj/machinery/light_switch/directional/north,
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/landmark/start/clown,
 /obj/structure/chair/wood/wings{
 	dir = 8
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/fish_mount/bar/directional/north,
 /turf/open/floor/wood/large,
 /area/station/service/theater)
 "sZo" = (

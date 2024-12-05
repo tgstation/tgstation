@@ -7838,7 +7838,6 @@
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/cigarette,
 /obj/item/lighter,
-/obj/machinery/status_display/ai/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/directional/north{
 	c_tag = "Service - Bar Fore";
@@ -7848,6 +7847,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/structure/fish_mount/bar/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "bSq" = (
@@ -40190,10 +40190,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
-"jVP" = (
-/obj/machinery/status_display/ai/directional/south,
-/turf/open/floor/iron/dark,
-/area/station/hallway/secondary/service)
 "jVS" = (
 /obj/structure/tank_dispenser,
 /obj/effect/decal/cleanable/dirt,
@@ -62206,6 +62202,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "pEU" = (
@@ -133286,7 +133283,7 @@ pPI
 kVP
 xiu
 uMT
-jVP
+giz
 kVP
 pET
 vwr

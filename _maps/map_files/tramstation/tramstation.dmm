@@ -13984,6 +13984,12 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
+"dMl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/fish_mount/bar/directional/north,
+/turf/open/floor/wood/large,
+/area/station/service/theater)
 "dMv" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
@@ -171170,7 +171176,7 @@ eDV
 pnD
 iZn
 dME
-evW
+dMl
 sRA
 hrF
 wLd
