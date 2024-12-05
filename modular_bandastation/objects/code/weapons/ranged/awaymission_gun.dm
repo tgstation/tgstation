@@ -1,42 +1,27 @@
 /obj/item/gun/energy/laser/awaymission_aeg
 	name = "Exploreverse Mk.I"
-	desc = "Прототип оружия с миниатюрным реактором для исследований в крайне отдаленных секторах. \
-	\n Данная модель использует экспериментальную систему обратного восполнения, работающую на принципе огромной аккумуляции энергии, но крайне уязвимую к радиопомехам, которыми кишит сектор станции, попростую не работая там."
+	desc = "Прототип оружия с миниатюрным реактором для исследований в крайне отдаленных секторах."
 	icon = 'modular_bandastation/objects/icons/guns.dmi'
 	lefthand_file = 'modular_bandastation/objects/icons/inhands/guns_lefthand.dmi'
 	righthand_file = 'modular_bandastation/objects/icons/inhands/guns_righthand.dmi'
 	icon_state = "laser_gate"
 	inhand_icon_state = "laser_gate"
+	pin = /obj/item/firing_pin/explorer
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/awaymission_aeg)
 	can_select = FALSE
 	selfcharge = TRUE
 	ammo_x_offset = 0
 	can_charge = FALSE
 
+/obj/projectile/beam/laser/awaymission_aeg
+	name = "weak laser"
+	wound_bonus = -40
+	bare_wound_bonus = -40
+	damage = 15
+
 /obj/item/ammo_casing/energy/lasergun/awaymission_aeg
+	projectile_type = /obj/projectile/beam/laser/awaymission_aeg
 	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE)
-
-/obj/item/gun/energy/laser/awaymission_aeg/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(check_z))
-	check_z()
-
-/obj/item/gun/energy/laser/awaymission_aeg/proc/check_z()
-	SIGNAL_HANDLER
-
-	if(onAwayMission())
-		selfcharge = TRUE
-		if(ismob(loc))
-			to_chat(loc, span_notice("[src.name] активируется, начиная аккумулировать энергию из материи сущего."))
-	else
-		selfcharge = FALSE
-		cell.change(-STANDARD_BATTERY_CHARGE)
-		update_appearance()
-		if(ismob(loc))
-			var/turf/our_turf = get_turf(src)
-			if(is_station_level(our_turf.z))
-				to_chat(loc, span_danger("[capitalize(declent_ru(NOMINATIVE))] деактивируется, так как подавляется системами станции."))
-				recharge_newshot(no_cyborg_drain = TRUE)
 
 /obj/item/gun/energy/laser/awaymission_aeg/mk2
 	name = "Exploreverse Mk.II"
@@ -48,10 +33,6 @@
 
 /obj/item/gun/energy/laser/awaymission_aeg/mk2/attack_self(mob/living/user)
 	. = ..()
-	if(!onAwayMission())
-		user.balloon_alert(user, "не в гейте!")
-		return FALSE
-
 	if(cell.charge >= cell.maxcharge)
 		user.balloon_alert(user, "полностью заряжен!")
 		return FALSE
@@ -66,12 +47,13 @@
 
 	if(!do_after(user, 3 SECONDS, target = src))
 		return
-	cell.give(STANDARD_CELL_CHARGE * 0.1)
+	var/obj/item/ammo_casing/energy/ammo = ammo_type[1]
+	cell.give(ammo::e_cost)
 	user.adjust_nutrition(-10)
 
 /datum/design/exploreverse_mk1
 	name = "Exploreverse Mk.I"
-	desc = "Энергетическое оружие с экспериментальным миниатюрным реактором. Работает только во вратах."
+	desc = "Энергетическое оружие с экспериментальным миниатюрным реактором."
 	id = "exploreverse_mk1"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
@@ -84,10 +66,10 @@
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_RANGED,
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SECURITY
 /datum/design/exploreverse_mk2
 	name = "Exploreverse Mk.II"
-	desc = "Энергетическое оружие с экспериментальным миниатюрным реактором и рычагом для ручной зарядки. Работает только во вратах."
+	desc = "Энергетическое оружие с экспериментальным миниатюрным реактором и рычагом для ручной зарядки."
 	id = "exploreverse_mk2"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
@@ -101,7 +83,7 @@
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_RANGED,
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SECURITY
 
 /datum/techweb_node/mining/New()
 	. = ..()
