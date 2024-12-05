@@ -37,7 +37,7 @@ PROCESSING_SUBSYSTEM_DEF(fishing)
 		unknown_icon.Blend(questionmark, ICON_OVERLAY, x = width, y = height)
 		cached_unknown_fish_icons[fish_type] = icon2base64(unknown_icon)
 
-		var/obj/item/fish/fish = new fish_type(null, FALSE)
+		var/obj/item/fish/fish = new fish_type
 		spawned_fish += fish
 		var/list/properties = list()
 		fish_properties[fish_type] = properties
