@@ -1,0 +1,6 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - balance: "Bioscramblers are no longer immortal"
+  - balance: "Anomalies give 20 extra seconds to defuse! Or 20 extra seconds for them to reach havoc..."
+  - balance: "Material anomalies only teleport 1-4 times before detonating"
