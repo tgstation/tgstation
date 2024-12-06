@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "condensed code for reagent grinder"
+  - bugfix: "reagent grinder won't break when 2 or more people are simultaneously interacting with it"
+  - bugfix: "ejecting contents & examining the reagent grinder as an AI via the radial menu does not require it to be powered or anchored"
+  - bugfix: "examine block for reagent grinder as an AI is properly formatted"
