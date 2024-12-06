@@ -33933,7 +33933,7 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/airalarm/directional/north,
 /obj/structure/rack,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large/old,
 /obj/item/wirecutters,
 /obj/item/wrench,
 /turf/open/floor/iron,
@@ -43772,7 +43772,7 @@
 /area/station/science/ordnance/burnchamber)
 "oZL" = (
 /obj/structure/table,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large/old,
 /obj/item/stack/cable_coil,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,

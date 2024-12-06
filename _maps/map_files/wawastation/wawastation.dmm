@@ -65380,7 +65380,7 @@
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "wZU" = (
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large/old,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "xad" = (
@@ -68229,7 +68229,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large/old,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "ybh" = (
