@@ -886,7 +886,7 @@
 	if(isnull(liver) || !(liver.organ_flags & affected_organ_flags))
 		return
 	// non-trivial but not immediately dangerous liver damage
-	liver.apply_organ_damage(0.33 * REM * seconds_per_tick)
+	liver.apply_organ_damage(0.5 * REM * seconds_per_tick)
 	// anti-hallucinogens can counteract the effects
 	if(HAS_TRAIT(affected_mob, TRAIT_HALLUCINATION_IMMUNE) || affected_mob.reagents.has_reagent(/datum/reagent/medicine/haloperidol, amount = 3, needs_metabolizing = TRUE))
 		QDEL_NULL(active_hallucination_weakref)
