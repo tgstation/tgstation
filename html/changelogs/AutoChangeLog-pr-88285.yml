@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "AI laws and tape recorders no longer cause radio blips"
