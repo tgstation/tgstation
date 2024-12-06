@@ -11,6 +11,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	throwforce = 20
 	throw_speed = 4
+	demolition_mod = 0.75
 	embed_type = /datum/embed_data/spear
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass= HALF_SHEET_MATERIAL_AMOUNT * 2)
