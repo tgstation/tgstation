@@ -7,6 +7,11 @@
 	mood_change = -4
 	timeout = 3 MINUTES
 
+/datum/mood_event/no_nose
+	description = "I have no nose..."
+	mood_change = -1
+	timeout = 2 MINUTES
+
 /datum/mood_event/on_fire
 	description = "I'M ON FIRE!!!"
 	mood_change = -12

@@ -39,6 +39,11 @@
 	mood_change = 3
 	timeout = 8 MINUTES
 
+/datum/mood_event/no_nose
+	description = "My nose is back!"
+	mood_change = 1
+	timeout = 2 MINUTES
+
 /datum/mood_event/blessing
 	description = "I've been blessed."
 	mood_change = 3
