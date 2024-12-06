@@ -2,7 +2,6 @@
 #define STATE_IDLE "idle"
 #define STATE_YES "yes"
 #define STATE_NO "no"
-
 #define MAIL_CAPACITY 100
 
 /obj/machinery/mailsorter
@@ -298,5 +297,4 @@
 #undef STATE_IDLE
 #undef STATE_YES
 #undef STATE_NO
-
 #undef MAIL_CAPACITY
