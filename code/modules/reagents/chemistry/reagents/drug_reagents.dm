@@ -874,7 +874,7 @@
 	color = "#c90000"
 	taste_description = "metallic"
 	ph = 7
-	overdose_threshold = 30
+	overdose_threshold = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 20)
 	/// Track the active hallucination we're giving out so we don't replace it by accident
@@ -892,10 +892,6 @@
 		QDEL_NULL(active_hallucination_weakref)
 		return
 
-	// cause a small amount of fatigue
-	if(affected_mob.getStaminaLoss() < 20)
-		affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick)
-
 	// and the main event, funny hallucinations
 	if(active_hallucination_weakref?.resolve())
 		return
@@ -907,16 +903,16 @@
 
 	if(greatest_fear)
 		// 5 minutes = 15 units, roughly. we cancel the hallucination early when we exit the mob, anyway
-		active_hallucination_weakref = WEAKREF(affected_mob.cause_hallucination(greatest_fear, name, duration = 5 MINUTES, skip_nearby = TRUE))
+		active_hallucination_weakref = WEAKREF(affected_mob.cause_hallucination(greatest_fear, name, duration = 5 MINUTES, skip_nearby = !overdosed))
 	else
 		// if they're just some random schmuck, give them random hallucinations
 		affected_mob.adjust_hallucinations_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
 
 /datum/reagent/drug/syndol/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	affected_mob.adjust_hallucinations(-20 SECONDS)
+	affected_mob.adjust_hallucinations(-16 SECONDS)
 	QDEL_NULL(active_hallucination_weakref)
 
-/datum/reagent/drug/syndol/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
-	affected_mob.adjust_hallucinations_up_to(10 SECONDS * REM * seconds_per_tick, 3 MINUTES)
+/datum/reagent/drug/syndol/overdose_start(mob/living/affected_mob)
+	// no message, just refresh the hallucination
+	QDEL_NULL(active_hallucination_weakref)
