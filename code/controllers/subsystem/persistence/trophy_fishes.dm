@@ -23,16 +23,19 @@
 	if(!fish_path) //the fish was removed, uh uh.
 		return
 	var/obj/item/fish/fish = new fish_path(mount, /* apply_qualities = */ FALSE)
+	fish.fish_traits.Cut()
 	fish.update_size_and_weight(data[PERSISTENCE_FISH_SIZE], data[PERSISTENCE_FISH_WEIGHT])
-	var/material = text2path(data[PERSISTENCE_FISH_MATERIAL])
-	if(material)
-		fish.set_custom_materials(list(material = fish.weight))
+	var/material_path = text2path(data[PERSISTENCE_FISH_MATERIAL])
+	if(material_path)
+		//setting the list inside the proccall doesn't seem to work
+		var/list/mat_list = list(material_path = fish.weight)
+		fish.set_custom_materials(mat_list)
 	fish.persistence_load(data)
 	fish.name = data[PERSISTENCE_FISH_NAME]
 	mount.catcher_name = data[PERSISTENCE_FISH_CATCHER]
 	mount.catch_date = data[PERSISTENCE_FISH_CATCH_DATE]
 	fish.set_status(FISH_DEAD, silent = TRUE)
-	mount.add_fish(fish, from_persistence = TRUE)
+	mount.add_fish(fish, from_persistence = TRUE, catcher = data[PERSISTENCE_FISH_CATCHER])
 
 /datum/controller/subsystem/persistence/proc/save_trophy_fish(obj/structure/fish_mount/mount)
 	var/obj/item/fish/fish = mount.mounted_fish

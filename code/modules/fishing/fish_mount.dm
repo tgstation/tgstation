@@ -48,16 +48,16 @@
 	if(!persistence_id)
 		return
 	if(SSfishing.initialized)
-		SSpersistence.load_trophy_fish(src)
+		load_trophy_fish()
 	else
-		RegisterSignal(SSfishing, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(late_load_trophy_fish))
-	if(!mounted_fish)
-		add_first_fish()
+		RegisterSignal(SSfishing, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(load_trophy_fish))
 
-/obj/structure/fish_mount/proc/late_load_trophy_fish()
+/obj/structure/fish_mount/proc/load_trophy_fish(datum/source)
 	SIGNAL_HANDLER
 	SSpersistence.load_trophy_fish(src)
 	UnregisterSignal(SSfishing, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	if(!mounted_fish)
+		add_first_fish()
 
 /obj/structure/fish_mount/screwdriver_act(mob/living/user, obj/item/item)
 	. = ..()
@@ -116,7 +116,7 @@
 	mounted_fish = fish
 
 	catcher_name = catcher
-	catch_date = "[time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]"
+	catch_date = "[time2text(world.realtime, "Day, Month DD")], [CURRENT_STATION_YEAR]"
 
 	AddElement(/datum/element/beauty, get_fish_beauty())
 	RegisterSignal(fish, COMSIG_ATOM_EXAMINE, PROC_REF(on_fish_examined))
@@ -152,7 +152,7 @@
 
 /obj/structure/fish_mount/proc/on_fish_examined(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_green("Caught by [catcher_name] on [catch_date].")
+	examine_list += span_boldnicegreen("Caught by [catcher_name] on [catch_date].")
 
 /obj/structure/fish_mount/proc/on_fish_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
@@ -172,13 +172,16 @@
 	if(!do_after(user, 3 SECONDS, src) || !mounted_fish)
 		return
 	var/obj/item/fish/fish_reference = mounted_fish
-	user.put_in_hands(mounted_fish)
+	//remove it before trying to put it in hands so we don't end up with a lingering in-hand overlay if the fish is deleted.
+	fish_reference.moveToNullspace()
 	if(QDELETED(fish_reference))
 		var/ash_type = /obj/effect/decal/cleanable/ash
 		if(fish_reference.w_class >= WEIGHT_CLASS_BULKY)
 			ash_type = /obj/effect/decal/cleanable/ash/large
 		new ash_type(loc)
 		visible_message("[fish_reference] turns into dust as [fish_reference.p_theyre()] removed from [src].")
+	else
+		user.put_in_hands(mounted_fish)
 	balloon_alert_to_viewers("fish removed")
 
 /obj/structure/fish_mount/Exited(atom/movable/gone)
