@@ -655,7 +655,7 @@
 // Hair masks
 #define HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM "hide_above_45deg_medium"
 #define HAIR_MASK_HIDE_ABOVE_45_DEG_LOW "hide_above_45deg_low"
-#define HAIR_MASK_HIDE_WINTERCOAT "hide_winterhood"
+#define HAIR_MASK_HIDE_WINTERHOOD "hide_winterhood"
 
 // Height defines
 // - They are numbers so you can compare height values (x height < y height)
