@@ -67,11 +67,8 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 #undef TGS_RESTART
 
 ADMIN_VERB(cancel_reboot, R_SERVER, "Cancel Reboot", "Cancels a pending world reboot.", ADMIN_CATEGORY_SERVER)
-	if(!SSticker.reboot_timer)
-		to_chat(user, span_warning("There is no pending reboot!"))
+	if(!SSticker.cancel_reboot(user))
 		return
-	deltimer(SSticker.reboot_timer)
-	SSticker.reboot_timer = null
 	log_admin("[key_name(user)] cancelled the pending world reboot.")
 	message_admins("[key_name_admin(user)] cancelled the pending world reboot.")
 
@@ -140,6 +137,8 @@ ADMIN_VERB(delay_round_end, R_SERVER, "Delay Round End", "Prevent the server fro
 
 	SSticker.delay_end = TRUE
 	SSticker.admin_delay_notice = delay_reason
+	if(SSticker.reboot_timer)
+		SSticker.cancel_reboot(user)
 
 	log_admin("[key_name(user)] delayed the round end for reason: [SSticker.admin_delay_notice]")
 	message_admins("[key_name_admin(user)] delayed the round end for reason: [SSticker.admin_delay_notice]")

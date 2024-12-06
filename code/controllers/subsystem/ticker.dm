@@ -699,20 +699,24 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, span_info("Round logs can be located <a href=\"[gamelogloc]\">at this website!</a>"))
 
 	var/start_wait = world.time
-	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string, skip_delay), delay - (world.time - start_wait), TIMER_STOPPABLE)
+	reboot_timer = addtimer(CALLBACK(src, PROC_REF(reboot_callback), reason, end_string), delay - (world.time - start_wait), TIMER_STOPPABLE)
 
 
-/datum/controller/subsystem/ticker/proc/reboot_callback(reason, end_string, skip_delay)
-	if(delay_end && !skip_delay)
-		to_chat(world, span_boldannounce("Reboot was cancelled by an admin."))
-		reboot_timer = null
-		return
+/datum/controller/subsystem/ticker/proc/reboot_callback(reason, end_string)
 	if(end_string)
 		end_state = end_string
 
 	log_game(span_boldannounce("Rebooting World. [reason]"))
 
 	world.Reboot()
+
+/datum/controller/subsystem/ticker/proc/cancel_reboot(mob/user)
+	if(!reboot_timer)
+		to_chat(user, span_warning("There is no pending reboot!"))
+		return FALSE
+	deltimer(reboot_timer)
+	reboot_timer = null
+	return TRUE
 
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
