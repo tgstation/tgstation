@@ -47,9 +47,17 @@
 	find_and_hang_on_wall()
 	if(!persistence_id)
 		return
-	SSpersistence.load_trophy_fish(src)
+	if(SSfishing.initialized)
+		SSpersistence.load_trophy_fish(src)
+	else
+		RegisterSignal(SSfishing, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(late_load_trophy_fish))
 	if(!mounted_fish)
 		add_first_fish()
+
+/obj/structure/fish_mount/proc/late_load_trophy_fish()
+	SIGNAL_HANDLER
+	SSpersistence.load_trophy_fish(src)
+	UnregisterSignal(SSfishing, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /obj/structure/fish_mount/screwdriver_act(mob/living/user, obj/item/item)
 	. = ..()
@@ -65,10 +73,9 @@
 	var/obj/item/fish/fish_path = pick(subtypesof(/obj/item/fish) - typesof(/obj/item/fish/holo))
 	if(fish_path.fish_id_redirect_path)
 		fish_path = fish_path.fish_id_redirect_path
-	add_fish(new fish_path(src), from_persistence = TRUE)
+	var/fluff_name = pick("John Trasen III", "a nameless intern", "Pun Pun", AQUARIUM_COMPANY, "Unknown", "Central Command")
+	add_fish(new fish_path(src), from_persistence = TRUE, catcher = fluff_name)
 	mounted_fish.randomize_size_and_weight()
-	catcher_name = pick("John Trasen III", "a nameless intern", "Pun Pun", AQUARIUM_COMPANY, "Unknown", "Central Command")
-	catch_date = "[time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]"
 	mounted_fish.set_status(FISH_DEAD)
 	SSpersistence.save_trophy_fish(src)
 
@@ -91,25 +98,29 @@
 	balloon_alert(user, "mounting fish...")
 	if(!do_after(user, 3 SECONDS, src) || mounted_fish)
 		return ITEM_INTERACT_BLOCKING
-	add_fish(item)
-	catcher_name = user.name
-	catch_date = "[time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]"
+	add_fish(item, catcher = user.name)
 	balloon_alert_to_viewers("fish mounted")
 	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/fish_mount/proc/add_fish(obj/item/fish/fish, from_persistence = FALSE)
+/obj/structure/fish_mount/proc/add_fish(obj/item/fish/fish, from_persistence = FALSE, catcher)
 	if(mounted_fish)
 		mounted_fish.forceMove(loc)
 	fish.forceMove(src)
 	vis_contents += fish
 	fish.flags_1 |= IS_ONTOP_1
-	fish.vis_flags |= VIS_INHERIT_PLANE
+	fish.vis_flags |= (VIS_INHERIT_PLANE|VIS_INHERIT_LAYER)
+	fish.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
+	fish.obj_flags &= ~UNIQUE_RENAME
+	fish.anchored = TRUE
 	mounted_fish = fish
+
+	catcher_name = catcher
+	catch_date = "[time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]"
 
 	AddElement(/datum/element/beauty, get_fish_beauty())
 	RegisterSignal(fish, COMSIG_ATOM_EXAMINE, PROC_REF(on_fish_examined))
-	RegisterSignal(fish, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_fish_attack_hand))
+	RegisterSignals(fish, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW), PROC_REF(on_fish_attack_hand))
 	rotate_fish(dir)
 	if(from_persistence)
 		persistence_loaded_fish = TRUE
@@ -141,7 +152,7 @@
 
 /obj/structure/fish_mount/proc/on_fish_examined(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_greentext("Caught by [catcher_name] on [catch_date].")
+	examine_list += span_green("Caught by [catcher_name] on [catch_date].")
 
 /obj/structure/fish_mount/proc/on_fish_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
@@ -158,7 +169,7 @@
 
 /obj/structure/fish_mount/proc/remove_fish(mob/living/user)
 	balloon_alert(user, "removing fish...")
-	if(!do_after(user, 3 SECONDS, src) && mounted_fish)
+	if(!do_after(user, 3 SECONDS, src) || !mounted_fish)
 		return
 	var/obj/item/fish/fish_reference = mounted_fish
 	user.put_in_hands(mounted_fish)
@@ -175,14 +186,17 @@
 		return ..()
 	RemoveElement(/datum/element/beauty, get_fish_beauty())
 	if(persistence_loaded_fish)
-		if(!QDELETED(gone))
-			qdel(gone)
+		if(!QDELETED(mounted_fish))
+			qdel(mounted_fish)
 	else
 		rotate_fish(0, dir)
-		persistence_loaded_fish = FALSE
-		UnregisterSignal(gone, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACK_HAND))
-		gone.flags_1 &= ~IS_ONTOP_1
-		gone.vis_flags &= ~VIS_INHERIT_PLANE
+		UnregisterSignal(mounted_fish, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW))
+		mounted_fish.flags_1 &= ~IS_ONTOP_1
+		mounted_fish.vis_flags &= ~(VIS_INHERIT_PLANE|VIS_INHERIT_LAYER)
+		mounted_fish.interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
+		mounted_fish.obj_flags |= UNIQUE_RENAME
+		mounted_fish.anchored = FALSE
+	persistence_loaded_fish = FALSE
 	catcher_name = null
 	catch_date = null
 	mounted_fish = null

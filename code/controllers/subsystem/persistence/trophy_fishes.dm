@@ -16,7 +16,7 @@
 	var/list/data = trophy_fishes_database.get_key(mount.persistence_id)
 	if(!length(data))
 		return
-	var/fish_id = PERSISTENCE_FISH_ID
+	var/fish_id = data[PERSISTENCE_FISH_ID]
 	if(!fish_id) //For a reason or another, the id isn't there
 		return
 	var/fish_path = SSfishing.catchable_fish[fish_id]
@@ -51,7 +51,8 @@
 	data[PERSISTENCE_FISH_NAME] = fish.name
 	data[PERSISTENCE_FISH_SIZE] = fish.size
 	data[PERSISTENCE_FISH_WEIGHT] = fish.weight / fish.material_weight_mult
-	data[PERSISTENCE_FISH_MATERIAL] = fish.get_master_material()
+	var/datum/material/material = fish.get_master_material()
+	data[PERSISTENCE_FISH_MATERIAL] = "[material?.type]"
 	data[PERSISTENCE_FISH_CATCHER] = mount.catcher_name
 	data[PERSISTENCE_FISH_CATCH_DATE] = mount.catch_date
 
