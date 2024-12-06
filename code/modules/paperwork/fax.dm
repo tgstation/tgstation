@@ -71,15 +71,17 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 /obj/machinery/fax/admin/syndicate
 	name = "Syndicate Fax Machine"
+	syndicate_network = TRUE
 
 /obj/machinery/fax/admin/syndicate/Initialize(mapload)
 	fax_name = "[special_networks["syndicate"]["fax_name"]]"
 	fax_id = special_networks["syndicate"]["fax_id"]
-	syndicate_network = TRUE
 	return ..()
 
 /obj/machinery/fax/admin
 	name = "CentCom Fax Machine"
+	visible_to_network = FALSE
+	allow_exotic_faxes = TRUE
 
 /obj/machinery/fax/admin/Initialize(mapload)
 	if (!fax_name)
@@ -87,7 +89,6 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	if(!fax_id)
 		fax_id = special_networks["nanotrasen"]["fax_id"]
 	name = "[fax_name] Fax Machine"
-	visible_to_network = FALSE
 	return ..()
 
 /obj/machinery/fax/Initialize(mapload)

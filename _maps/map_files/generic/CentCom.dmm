@@ -2917,9 +2917,7 @@
 /area/centcom/central_command_areas/fore)
 "nz" = (
 /obj/structure/table/reinforced,
-/obj/machinery/fax/admin{
-	allow_exotic_faxes = 1
-	},
+/obj/machinery/fax/admin,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/briefing)
 "nA" = (
