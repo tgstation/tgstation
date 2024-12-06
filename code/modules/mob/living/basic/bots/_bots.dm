@@ -319,6 +319,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	to_chat(src, span_boldnotice(get_emagged_message()))
 	if(user)
 		log_combat(user, src, "emagged")
+	emag_effects(user)
 	return TRUE
 
 /mob/living/basic/bot/examine(mob/user)
@@ -623,6 +624,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 				return
 			if(!(bot_access_flags & BOT_COVER_EMAGGED))
 				bot_access_flags |= (BOT_COVER_LOCKED|BOT_COVER_EMAGGED|BOT_COVER_HACKED)
+				emag_effects(the_user)
 				to_chat(the_user, span_warning("You overload [src]'s [hackables]."))
 				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(the_user)] in [ADMIN_VERBOSEJMP(the_user)]")
 				the_user.log_message("disabled safety lock of [the_user]", LOG_GAME)
@@ -631,7 +633,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 				to_chat(src, span_boldnotice(get_emagged_message()))
 				return
 			if(!(bot_access_flags & BOT_COVER_HACKED))
-				to_chat(the_user, span_boldannounce("You fail to repair [src]'s [hackables]."))
+				to_chat(the_user, span_bolddanger("You fail to repair [src]'s [hackables]."))
 				return
 			bot_access_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
 			to_chat(the_user, span_notice("You reset the [src]'s [hackables]."))
@@ -813,6 +815,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 	if(attack_flags & ATTACKER_DAMAGING_ATTACK)
 		do_sparks(number = 5, cardinal_only = TRUE, source = src)
+
+/mob/living/basic/bot/proc/emag_effects(user)
+	return
 
 /mob/living/basic/bot/spawn_gibs(drop_bitflags = NONE)
 	new /obj/effect/gibspawner/robot(drop_location(), src)

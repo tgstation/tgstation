@@ -116,7 +116,7 @@
 	if(prob(50) || !LAZYLEN(buckled_mobs))
 		return ..()
 	for(var/mob/buckled_mob as anything in buckled_mobs)
-		return buckled_mob.bullet_act(proj)
+		return buckled_mob.projectile_hit(proj)
 	return ..()
 
 /obj/vehicle/ridden/atv/atom_destruction()

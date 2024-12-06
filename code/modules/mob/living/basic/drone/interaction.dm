@@ -148,7 +148,7 @@
 		Stun(40)
 		visible_message(span_warning("[src]'s display glows a vicious red!"), \
 						span_userdanger("ERROR: LAW OVERRIDE DETECTED"))
-		to_chat(src, span_boldannounce("From now on, these are your laws:"))
+		to_chat(src, span_bolddanger("From now on, these are your laws:"))
 		laws = \
 		"1. You must always involve yourself in the matters of other beings, even if such matters conflict with Law Two or Law Three.\n"+\
 		"2. You may harm any being, regardless of intent or circumstance.\n"+\

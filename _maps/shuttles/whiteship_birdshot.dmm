@@ -736,7 +736,6 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/abandoned/crew)
 "yM" = (
-/obj/machinery/light/cold/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/broken/directional/south,
 /obj/machinery/firealarm/directional/east,
@@ -1084,15 +1083,6 @@
 	},
 /turf/open/floor/iron/small,
 /area/shuttle/abandoned/pod)
-"Jk" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron/smooth_large,
-/area/shuttle/abandoned/cargo)
 "Jn" = (
 /obj/structure/dresser,
 /obj/effect/decal/cleanable/dirt,
@@ -1712,7 +1702,7 @@ wE
 RX
 gV
 EX
-Jk
+Ui
 kQ
 Jn
 iS

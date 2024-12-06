@@ -297,7 +297,7 @@
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = model.cyborg_base_icon
-	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
+	if(stat < UNCONSCIOUS && !HAS_TRAIT(src, TRAIT_KNOCKEDOUT) && !IsStun() && !IsParalyzed() && !low_power_mode) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)
@@ -572,7 +572,7 @@
 		removing.update_appearance()
 
 	else
-		to_chat(src, span_boldannounce("Oops! Something went very wrong, your MMI was unable to receive your mind. \
+		to_chat(src, span_bolddanger("Oops! Something went very wrong, your MMI was unable to receive your mind. \
 			You have been ghosted. Please make a bug report so we can fix this bug."))
 		ghostize()
 		stack_trace("Borg MMI lacked a brainmob")
@@ -1077,4 +1077,3 @@
 		buckled_mob.Paralyze(1 SECONDS)
 		unbuckle_mob(buckled_mob)
 	do_sparks(5, 0, src)
-

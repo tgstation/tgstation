@@ -132,7 +132,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie/infectious,
 	)
 
-/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species)
+/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	new_zombie.set_combat_mode(TRUE)
 

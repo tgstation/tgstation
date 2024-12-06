@@ -52,8 +52,6 @@
 
 /obj/item/organ/brain/on_mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
 	. = ..()
-	if(!.)
-		return
 
 	name = initial(name)
 
@@ -107,6 +105,7 @@
 		brain_owner.update_body_parts()
 
 /obj/item/organ/brain/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
 	if(!QDELETED(organ_owner) && length(skillchips))
 		if(!special)
@@ -114,9 +113,7 @@
 			for(var/chip in skillchips)
 				var/obj/item/skillchip/skillchip = chip
 				// Run the try_ proc with force = TRUE.
-				skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
-
-	. = ..()
+				skillchip.try_deactivate_skillchip(silent = special, force = TRUE, brain_owner = organ_owner)
 
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X

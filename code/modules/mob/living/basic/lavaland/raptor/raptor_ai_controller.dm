@@ -27,7 +27,6 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/raptor_trough,
 		/datum/ai_planning_subtree/find_and_hunt_target/care_for_young,
 		/datum/ai_planning_subtree/make_babies,
-		/datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble,
 		/datum/ai_planning_subtree/express_happiness,
 		/datum/ai_planning_subtree/find_and_hunt_target/play_with_owner/raptor,
 	)
