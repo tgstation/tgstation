@@ -1,66 +1,54 @@
+// Cool firehelmets
+
+/obj/item/clothing/head/utility/hardhat/welding
+	/// If we use a special icon file for the welding mask overlay
+	var/mask_overlay_icon = null
+
 /obj/item/clothing/head/utility/hardhat/welding/doppler_command
-	name = "generic doppler command hardhat"
-	desc = "You shouldn't be seeing this. Yell at Naaka."
+	name = "generic command hardhat"
+	desc = "A heavy-duty hardhat for protecting the heads of the heads when everything starts to go wrong."
 	icon = 'modular_doppler/modular_cosmetics/icons/obj/head/doppler_command_hardhats.dmi'
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/head/doppler_command_hardhats.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = null
 	hat_type = null
+	mask_overlay_icon = 'modular_doppler/modular_cosmetics/icons/mob/head/doppler_command_hardhats.dmi'
 
 /obj/item/clothing/head/utility/hardhat/welding/doppler_command/medical
-	name = "doppler medical hardhat"
-	desc = "Heavy-duty headgear demarkated in standard command colors.  A special of Doppler Shift-series stations."
+	name = "medical command hardhat"
 	icon_state = "hardhat0_med"
 	hat_type = "med"
 
 /obj/item/clothing/head/utility/hardhat/welding/doppler_command/science
-	name = "doppler science hardhat"
-	desc = "Heavy-duty headgear demarkated in standard command colors.  A special of Doppler Shift-series stations."
+	name = "science command hardhat"
 	icon_state = "hardhat0_sci"
 	hat_type = "sci"
 
 /obj/item/clothing/head/utility/hardhat/welding/doppler_command/engineering
-	name = "doppler engineering hardhat"
-	desc = "Heavy-duty headgear demarkated in standard command colors.  A special of Doppler Shift-series stations."
+	name = "engineering command hardhat"
 	icon_state = "hardhat0_eng"
 	hat_type = "eng"
 
 /obj/item/clothing/head/utility/hardhat/welding/doppler_command/cargo
-	name = "doppler cargo hardhat"
-	desc = "Heavy-duty headgear demarkated in standard command colors.  A special of Doppler Shift-series stations."
+	name = "supply command hardhat"
 	icon_state = "hardhat0_cargo"
 	hat_type = "cargo"
 
-/obj/item/clothing/head/utility/hardhat/welding/doppler_command/service
-	name = "doppler service hardhat"
-	desc = "Heavy-duty headgear demarkated in standard command colors.  A special of Doppler Shift-series stations."
-	icon_state = "hardhat0_serv"
-	hat_type = "serv"
-
 /obj/item/clothing/head/utility/hardhat/welding/doppler_command/command
-	name = "doppler command hardhat"
-	desc = "Heavy-duty headgear demarkated in standard command colors.  A special of Doppler Shift-series stations."
+	name = "command hardhat"
 	icon_state = "hardhat0_cmd"
 	hat_type = "cmd"
 
-/obj/item/clothing/head/utility/hardhat/welding/doppler_command/performer
-	name = "doppler performer hardhat"
-	desc = "Heavy-duty headgear demarkated in standard command colors.  A special of Doppler Shift-series stations."
-	icon_state = "hardhat0_perf"
-	hat_type = "perf"
-
 /obj/item/clothing/head/utility/hardhat/welding/doppler_command/security
-	name = "doppler security hardhat"
-	desc = "Heavy-duty headgear demarkated in standard command colors.  A special of Doppler Shift-series stations."
+	name = "security command hardhat"
 	icon_state = "hardhat0_sec"
 	hat_type = "sec"
 
+/// Beret but cooler
 
-
-/// Beret breaker
 /obj/item/clothing/head/beret/doppler_command
-	name = "generic doppler command beret"
-	desc = "You shouldn't be seeing this. Yell at Naaka."
+	name = "generic command beret"
+	desc = "A slim beret denoting the wearer as the command for some aspect of the station."
 	icon = 'modular_doppler/modular_cosmetics/icons/obj/head/doppler_command_hats.dmi'
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/head/doppler_command_hats.dmi'
 	icon_state = null
@@ -72,41 +60,25 @@
 	flags_1 = NONE
 
 /obj/item/clothing/head/beret/doppler_command/medical
-	name = "doppler medical beret"
-	desc = "A cozy, fashionable beret used to connotate command staff on Doppler Shift-series stations."
+	name = "medical command beret"
 	icon_state = "doppler_med"
 
 /obj/item/clothing/head/beret/doppler_command/science
-	name = "doppler science beret"
-	desc = "A cozy, fashionable beret used to connotate command staff on Doppler Shift-series stations."
+	name = "science command beret"
 	icon_state = "doppler_sci"
 
 /obj/item/clothing/head/beret/doppler_command/engineering
-	name = "doppler engineering beret"
-	desc = "A cozy, fashionable beret used to connotate command staff on Doppler Shift-series stations."
+	name = "engineering command beret"
 	icon_state = "doppler_eng"
 
 /obj/item/clothing/head/beret/doppler_command/cargo
-	name = "doppler cargo beret"
-	desc = "A cozy, fashionable beret used to connotate command staff on Doppler Shift-series stations."
+	name = "supply command beret"
 	icon_state = "doppler_cargo"
 
-/obj/item/clothing/head/beret/doppler_command/service
-	name = "doppler service beret"
-	desc = "A cozy, fashionable beret used to connotate command staff on Doppler Shift-series stations."
-	icon_state = "doppler_serv"
-
 /obj/item/clothing/head/beret/doppler_command/command
-	name = "doppler command beret"
-	desc = "A cozy, fashionable beret used to connotate command staff on Doppler Shift-series stations."
+	name = "command beret"
 	icon_state = "doppler_cmd"
 
-/obj/item/clothing/head/beret/doppler_command/performer
-	name = "doppler performer beret"
-	desc = "A cozy, fashionable beret used to connotate command staff on Doppler Shift-series stations."
-	icon_state = "doppler_perf"
-
 /obj/item/clothing/head/beret/doppler_command/security
-	name = "doppler security beret"
-	desc = "A cozy, fashionable beret used to connotate command staff on Doppler Shift-series stations."
+	name = "security command beret"
 	icon_state = "doppler_sec"
