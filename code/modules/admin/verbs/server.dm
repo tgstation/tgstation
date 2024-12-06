@@ -71,6 +71,7 @@ ADMIN_VERB(cancel_reboot, R_SERVER, "Cancel Reboot", "Cancels a pending world re
 		to_chat(user, span_warning("There is no pending reboot!"))
 		return
 	deltimer(SSticker.reboot_timer)
+	SSticker.reboot_timer = null
 	log_admin("[key_name(user)] cancelled the pending world reboot.")
 	message_admins("[key_name_admin(user)] cancelled the pending world reboot.")
 
