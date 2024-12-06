@@ -1,0 +1,5 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - balance: "burglars finesse spell range increased from 4 to 6 and it may loot any back storage object, caretakers refuge cooldown is only applied when exiting refuge, labyrinth handbook accepts any crayon instead of a white crayon"
+  - qol: "you may click an id with the knock heretic id card to make it consume it"
