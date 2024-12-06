@@ -1402,6 +1402,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GOT_DAMPENED "got_dampened"
 
 ///Trait given to the owner of a stolen nose after using the *nosesteal abstract item
-#define TRAIT_STOLEN_NOSE "stolen_nose"
+#define TRAIT_NOSE_STOLEN "stolen_nose"
 
 // END TRAIT DEFINES

@@ -177,7 +177,7 @@
 
 /datum/emote/living/carbon/human/nose_steal/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(!HAS_TRAIT(user, TRAIT_MIMING) || !ishuman(user))
+	if((!HAS_TRAIT(user, TRAIT_MIMING) || !HAS_TRAIT(user, TRAIT_CLUMSY)) || !ishuman(user))
 		to_chat(user, span_notice("You scratch your nose...")) // no fun for non miming :3
 		return
 	var/obj/item/hand_item/nose_stealer/nose_stealer = new(user)
