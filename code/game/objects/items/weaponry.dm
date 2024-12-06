@@ -441,12 +441,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	desc = "Uncanny looking hammer."
-	force = 15
-	throwforce = 12
+	force = 17
+	throwforce = 14
 	throw_range = 4
 	w_class = WEIGHT_CLASS_NORMAL
 	wound_bonus = 20
-	demolition_mod = 1.25
+	demolition_mod = 1.15
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/carpenter_hammer/Initialize(mapload)
