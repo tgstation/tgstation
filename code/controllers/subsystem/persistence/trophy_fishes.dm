@@ -22,7 +22,7 @@
 	var/fish_path = SSfishing.catchable_fish[fish_id]
 	if(!fish_path) //the fish was removed, uh uh.
 		return
-	var/obj/item/fish/fish = new fish_path(mount, apply_qualities = FALSE)
+	var/obj/item/fish/fish = new fish_path(mount, /* apply_qualities = */ FALSE)
 	fish.update_size_and_weight(data[PERSISTENCE_FISH_SIZE], data[PERSISTENCE_FISH_WEIGHT])
 	var/material = text2path(data[PERSISTENCE_FISH_MATERIAL])
 	if(material)
