@@ -140,3 +140,17 @@
   - code_imp: The stacked_lights test now screams with area names too.
   SmArtKar:
   - qol: Shifted the escape menu stat panel down a bit
+2024-12-06:
+  Autisem:
+  - refactor: Nanotrasen has introducted new upgrades into the aging station shield
+      statalites, they require a but longer to toggle on however
+  OrionTheFox:
+  - bugfix: fixed the Icebox Phonebooth air alarm being on the outside, thus triggering
+      because the planet is, indeed, cold. It is now inside and all-access so that
+      callers can turn it off when they decide the phone's more important than their
+      health and safety.
+  SmArtKar:
+  - bugfix: Fixed atrocinator not yeeting you up
+  - bugfix: Fixed a qdel loop in hypnosis brain trauma
+  imedial:
+  - bugfix: Map vote now cares about current player count
