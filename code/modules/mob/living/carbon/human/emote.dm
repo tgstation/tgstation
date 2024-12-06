@@ -171,6 +171,23 @@
 	key_third_person = "clears throat"
 	message = "clears their throat."
 
+/datum/emote/living/carbon/human/nose_steal
+	key = "nosesteal"
+	key_third_person = "nosesteals"
+
+/datum/emote/living/carbon/human/nose_steal/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!HAS_TRAIT(user, TRAIT_MIMING) || !ishuman(user))
+		to_chat(user, span_notice("You scratch your nose...")) // no fun for non miming :3
+		return
+	var/obj/item/hand_item/nose_stealer/nose_stealer = new(user)
+	if(user.put_in_hands(nose_stealer))
+		to_chat(user, span_notice("You get ready to steal someone's nose!"))
+	else
+		qdel(nose_stealer)
+		to_chat(user, span_warning("You're incapable of stealing someone's nose in your current state!"))
+
+
 ///Snowflake emotes only for le epic chimp
 /datum/emote/living/carbon/human/monkey
 
