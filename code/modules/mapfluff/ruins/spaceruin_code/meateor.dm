@@ -36,7 +36,6 @@
 		/datum/reagent/medicine/c2/penthrite = 5,
 		/datum/reagent/consumable/vinegar = 5,
 	)
-	drink_type = NONE
 	age_restricted = FALSE
 
 /// Abstract holder object for shared behaviour
