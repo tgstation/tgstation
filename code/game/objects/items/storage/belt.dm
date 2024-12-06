@@ -744,7 +744,7 @@
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_casing/strilka310,
 		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_casing/a357,
+		/obj/item/ammo_casing/c357,
 		/obj/item/ammo_casing/junk,
 	))
 
