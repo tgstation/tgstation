@@ -12,6 +12,7 @@
 	charge_delay = 10
 	selfcharge = TRUE
 	can_charge = FALSE
+	var/going_boom = FALSE
 
 /obj/projectile/beam/laser/awaymission_aeg
 	name = "weak laser"
@@ -22,6 +23,21 @@
 /obj/item/ammo_casing/energy/lasergun/awaymission_aeg
 	projectile_type = /obj/projectile/beam/laser/awaymission_aeg
 	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE)
+
+/obj/item/gun/energy/laser/awaymission_aeg/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF || going_boom)
+		return
+	var/turf/current_turf = get_turf(src)
+	going_boom = TRUE
+	addtimer(CALLBACK(src, PROC_REF(boom)), 3 SECONDS)
+	do_sparks(3, FALSE, current_turf)
+	playsound(current_turf, 'sound/effects/alert.ogg', 35, TRUE)
+	loc.visible_message(span_warning("[capitalize(declent_ru(NOMINATIVE))] начинает пищать и светиться!"), span_userdanger("[capitalize(declent_ru(NOMINATIVE))] начинает пищать и светиться!"))
+
+/obj/item/gun/energy/laser/awaymission_aeg/proc/boom()
+	explosion(src, -1, -1, 1, 2)
+	qdel(src)
 
 /obj/item/gun/energy/laser/awaymission_aeg/mk2
 	name = "Exploreverse Mk.II"
