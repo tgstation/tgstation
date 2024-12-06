@@ -228,9 +228,19 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			if(request.req_type != REQUEST_FAX)
 				to_chat(usr, "Request doesn't have a paper to read.", confidential = TRUE)
 				return TRUE
-			var/obj/item/paper/request_message = request.additional_information
+			var/obj/item/paper/request_message = request.additional_information[1]
 			request_message.ui_interact(usr)
 			return TRUE
+		if ("print")
+			if (request.req_type != REQUEST_FAX)
+				to_chat(usr, "Request doesn't have a paper to print.", confidential = TRUE)
+				return TRUE
+			for(var/obj/machinery/fax/admin/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax/admin))
+				if(FAX.fax_id != request.additional_information[2])
+					continue
+				var/obj/item/paper/request_message = request.additional_information[1]
+				var/sender_name = request.additional_information[3]
+				FAX.receive(request_message, sender_name)
 		if ("play")
 			if(request.req_type != REQUEST_INTERNET_SOUND)
 				to_chat(usr, "Request doesn't have a sound to play.", confidential = TRUE)
