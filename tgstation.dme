@@ -7051,6 +7051,7 @@
 #include "modular_doppler\modular_quirks\hardened_soles\hardened_soles.dm"
 #include "modular_doppler\modular_quirks\left_handed\left_handed.dm"
 #include "modular_doppler\modular_quirks\linguist\linguist.dm"
+#include "modular_doppler\modular_quirks\narcolepsy\narcolepsy.dm"
 #include "modular_doppler\modular_quirks\night_vision\night_vision.dm"
 #include "modular_doppler\modular_quirks\overwrites\equipping.dm"
 #include "modular_doppler\modular_quirks\overwrites\musician.dm"
