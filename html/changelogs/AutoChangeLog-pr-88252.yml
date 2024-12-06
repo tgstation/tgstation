@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Toolboxes can be used on any object to pull out and use a tool from it as long as your offhand is free."
