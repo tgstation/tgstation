@@ -24,6 +24,9 @@
 		do_teleport(AM, locate(AM.x, AM.y, AM.z), 8, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/anomaly/bluespace/detonate()
+	new /obj/effect/temp_visual/circle_wave/bluespace(get_turf(src))
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50)
+
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(!T)
 		return
@@ -110,3 +113,8 @@
 
 	var/mob/living/living = bumpee
 	living.apply_status_effect(/datum/status_effect/teleport_madness)
+
+/obj/effect/temp_visual/circle_wave/bluespace
+	color = COLOR_BLUE_LIGHT
+	duration = 1 SECONDS
+	amount_to_scale = 5
