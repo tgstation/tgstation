@@ -546,3 +546,6 @@
 
 ///Sent from /obj/item/skillchip/on_remove()
 #define COMSIG_SKILLCHIP_REMOVED "skillchip_removed"
+
+/// from /obj/machinery/computer/camera_advanced/shuttle_docker/gatherNavComputerOverlays() : (list/images_out)
+#define COMSIG_SHUTTLE_NAV_COMPUTER_IMAGE_REQUESTED "shuttle_nav_computer_image_requested"
