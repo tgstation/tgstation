@@ -43,10 +43,17 @@
 		return PROCESS_KILL
 
 	for (var/obj/item/item as anything in processing)
-		var/mob/chewer = item.loc
+		var/mob/living/chewer = item.loc
+		var/is_out_of_flavor = !item.reagents?.total_volume
 
-		if (!istype(chewer) || !item.reagents?.total_volume)
+		if(!istype(chewer))
 			processing -= item
+			continue
+
+		if(is_out_of_flavor)
+			processing -= item
+			to_chat(chewer, span_notice("\The [item] you are chewing runs out of flavor."))
+			qdel(item)
 			continue
 
 		handle_reagents(item, seconds_per_tick)
