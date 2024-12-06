@@ -865,3 +865,58 @@
 	)
 	new /obj/structure/bouncy_castle(gored.loc, gored)
 	gored.gib()
+
+/datum/reagent/drug/syndol
+	name = "Syndol"
+	description = "A potent and addictive hallucinogen used by syndicate agents disorient certain targets. \
+		It is said that the hallucinations it causes are tailored to the user's fears, but tests have been inconclusive, \
+		with subjects in security and assistants reporting wildly different experiences."
+	color = "#c90000"
+	taste_description = "metallic"
+	ph = 7
+	overdose_threshold = 30
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	addiction_types = list(/datum/addiction/hallucinogens = 20)
+	/// Track the active hallucination we're giving out so we don't replace it by accident
+	VAR_PRIVATE/datum/weakref/active_hallucination_weakref
+
+/datum/reagent/drug/syndol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/obj/item/organ/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(isnull(liver) || !(liver.organ_flags & affected_organ_flags))
+		return
+	// non-trivial but not immediately dangerous liver damage
+	liver.apply_organ_damage(0.33 * REM * seconds_per_tick)
+	// anti-hallucinogens can counteract the effects
+	if(HAS_TRAIT(affected_mob, TRAIT_HALLUCINATION_IMMUNE) || affected_mob.reagents.has_reagent(/datum/reagent/medicine/haloperidol, amount = 3, needs_metabolizing = TRUE))
+		QDEL_NULL(active_hallucination_weakref)
+		return
+
+	// cause a small amount of fatigue
+	if(affected_mob.getStaminaLoss() < 20)
+		affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick)
+
+	// and the main event, funny hallucinations
+	if(active_hallucination_weakref?.resolve())
+		return
+	var/greatest_fear
+	if(HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		greatest_fear = /datum/hallucination/delusion/preset/syndies
+	else if(HAS_TRAIT(liver, TRAIT_MAINTENANCE_METABOLISM) || HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
+		greatest_fear = /datum/hallucination/delusion/preset/seccies
+
+	if(greatest_fear)
+		// 5 minutes = 15 units, roughly. we cancel the hallucination early when we exit the mob, anyway
+		active_hallucination_weakref = WEAKREF(affected_mob.cause_hallucination(greatest_fear, name, duration = 5 MINUTES, skip_nearby = TRUE))
+	else
+		// if they're just some random schmuck, give them random hallucinations
+		affected_mob.adjust_hallucinations_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
+
+/datum/reagent/drug/syndol/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.adjust_hallucinations(-20 SECONDS)
+	QDEL_NULL(active_hallucination_weakref)
+
+/datum/reagent/drug/syndol/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.adjust_hallucinations_up_to(10 SECONDS * REM * seconds_per_tick, 3 MINUTES)
