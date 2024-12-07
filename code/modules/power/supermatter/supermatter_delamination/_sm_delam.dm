@@ -4,6 +4,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	/datum/sm_delam/singularity = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_singularity_can_select)),
 	/datum/sm_delam/tesla = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_singularity_can_select)),
 	/datum/sm_delam/explosive = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_explosive_can_select)),
+	/datum/sm_delam/cascade/emitter = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_cascade_emitter_can_select)),
 ))
 
 /// Logic holder for supermatter delaminations, goes off the strategy design pattern.
@@ -79,6 +80,9 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 
 	SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_ALARM)
 	return TRUE
+
+/datum/sm_delam/proc/modify_damage(damage_to_be_applied)
+	return damage_to_be_applied
 
 /// Called when a supermatter switches its strategy from another one to us.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]

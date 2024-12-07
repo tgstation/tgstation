@@ -12,12 +12,20 @@
 	if(!istype(local_turf))
 		return NONE
 
+	if(delamination_strategy.on_bullet(projectile))
+		return COMPONENT_BULLET_BLOCKED
+
+	if(istype(projectile, /obj/projectile/beam/emitter/hitscan/cascade))
+		set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade/emitter)
+		if(damage + 5 <= emergency_point)
+			external_damage_immediate += 5
+		return
+
 	var/kiss_power = 0
 	if (istype(projectile, /obj/projectile/kiss/death))
 		kiss_power = 20000
 	else if (istype(projectile, /obj/projectile/kiss))
 		kiss_power = 60
-
 
 	if(!istype(projectile.firer, /obj/machinery/power/emitter))
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_ENGINE)

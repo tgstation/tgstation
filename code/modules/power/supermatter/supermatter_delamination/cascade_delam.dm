@@ -1,4 +1,9 @@
-/datum/sm_delam/cascade
+/// The amount of time it takes from the last cascade emitter shot until the SM starts healing again.
+#define HEAL_COOLDOWN (10 SECONDS)
+/// The amount of cascade emitter hits it takes until the SM delaminates.
+#define CASCADE_EMITTER_STRIKES 35 // 70 seconds
+/// The amount of strikes it takes until the cascade announcement is made.
+#define STRIKES_UNTIL_ANNOUNCEMENT 5 // 10 seconds after the first shot is made
 
 /proc/delam_cascade_can_select(obj/machinery/power/supermatter_crystal/sm)
 	if(!sm.is_main_engine)
@@ -94,3 +99,37 @@
 /datum/sm_delam/cascade/proc/end_round_holder()
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(effect_evac_rift_end))
+
+/proc/delam_cascade_emitter_can_select(obj/machinery/power/supermatter_crystal/sm)
+	return FALSE
+
+/datum/sm_delam/cascade/emitter
+	var/strikes_remaining = CASCADE_EMITTER_STRIKES
+	COOLDOWN_DECLARE(heal_cooldown)
+
+/datum/sm_delam/cascade/emitter/modify_damage(damage_to_be_applied)
+	// get it down to the emergency point, but not below, unless we are out of strikes then just allow all damage
+	if(strikes_remaining > 0)
+		damage_to_be_applied *= clamp((sm.emergency_point - (sm.damage + damage_to_be_applied)) / sm.emergency_point, 0, 1)
+
+	// block healing unless its been HEAL_COOLDOWN seconds since the last shot
+	if(!COOLDOWN_FINISHED(src, heal_cooldown))
+		damage_to_be_applied = max(0, damage_to_be_applied)
+
+	return damage_to_be_applied
+
+/datum/sm_delam/cascade/emitter/on_bullet(obj/projectile/beam/emitter/hitscan/cascade/projectile)
+	if(!istype(projectile))
+		return FALSE
+
+	strikes_remaining--
+	sm.external_damage_immediate += 5
+	COOLDOWN_START(src, heal_cooldown, HEAL_COOLDOWN)
+
+	switch(strikes_remaining)
+		if(CASCADE_EMITTER_STRIKES - STRIKES_UNTIL_ANNOUNCEMENT)
+			announce_cascade()
+		if(0)
+			sm.external_damage_immediate = sm.explosion_point * 5 // no more saving this
+
+	return TRUE
