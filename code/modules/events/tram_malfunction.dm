@@ -42,7 +42,7 @@
 
 /datum/round_event/tram_malfunction/end()
 	for(var/datum/transport_controller/linear/tram/malfunctioning_controller as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
-		if(malfunctioning_controller.specific_transport_id == specific_transport_id && malfunctioning_controller.malf_active)
+		if(malfunctioning_controller.specific_transport_id == specific_transport_id && malfunctioning_controller.malf_active != TRANSPORT_SYSTEM_NORMAL)
 			malfunctioning_controller.end_malf_event()
 			return
 

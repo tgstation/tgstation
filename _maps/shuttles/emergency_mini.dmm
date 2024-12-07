@@ -227,7 +227,7 @@
 "W" = (
 /obj/structure/table,
 /obj/item/clothing/suit/apron/surgical,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "X" = (

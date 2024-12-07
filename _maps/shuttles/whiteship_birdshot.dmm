@@ -146,7 +146,7 @@
 	pixel_y = 3
 	},
 /obj/item/reagent_containers/blood,
-/obj/item/surgery_tray/full{
+/obj/effect/spawner/surgery_tray/full{
 	pixel_x = 2;
 	pixel_y = 9
 	},

@@ -45,6 +45,9 @@
 
 /obj/effect/meteor/Destroy()
 	GLOB.meteor_list -= src
+	var/datum/move_loop/moveloop = GLOB.move_manager.processing_on(src, SSmovement)
+	if (!isnull(moveloop))
+		UnregisterSignal(moveloop, COMSIG_MOVELOOP_STOP)
 	return ..()
 
 /obj/effect/meteor/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)

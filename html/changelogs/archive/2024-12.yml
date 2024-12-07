@@ -128,3 +128,104 @@
   Wallem:
   - image: Updates slime potion sprites, adds some new colors and rearranges some
       others.
+2024-12-05:
+  13spacemen:
+  - rscdel: Time Dilation no longer shows in the hub text
+  Ben10Omintrix:
+  - bugfix: repairbots now gain their destructive abilities when hacked by an AI
+  - bugfix: repairbot crafting recipes have been updated
+  Majkl-J:
+  - bugfix: Ruins will now correctly spawn their tied ruins in
+  - bugfix: The map_logging test now runs proper
+  - code_imp: The stacked_lights test now screams with area names too.
+  SmArtKar:
+  - qol: Shifted the escape menu stat panel down a bit
+2024-12-06:
+  Autisem:
+  - refactor: Nanotrasen has introducted new upgrades into the aging station shield
+      statalites, they require a but longer to toggle on however
+  OrionTheFox:
+  - bugfix: fixed the Icebox Phonebooth air alarm being on the outside, thus triggering
+      because the planet is, indeed, cold. It is now inside and all-access so that
+      callers can turn it off when they decide the phone's more important than their
+      health and safety.
+  SmArtKar:
+  - bugfix: Fixed atrocinator not yeeting you up
+  - bugfix: Fixed a qdel loop in hypnosis brain trauma
+  imedial:
+  - bugfix: Map vote now cares about current player count
+2024-12-07:
+  Ben10Omintrix:
+  - qol: u can now directly feed animals from ur hands, like raptors or cats, by clicking
+      on them with their preferred food.
+  - balance: u can now heal ur raptors mid or post battles by hand feeding them ores
+  FlufflesTheDog:
+  - spellcheck: paywall firing pins no longer set the gun description to the pin's
+      description on removal
+  LT3:
+  - bugfix: Tram spoilers correctly provide welder or multitool hints depending on
+      their damage
+  - bugfix: Malfunctioning tram controller flashes orange and can be preemptively
+      fixed before it crashes
+  SmArtKar:
+  - qol: AI laws and tape recorders no longer cause radio blips
+  - balance: Removed organ "refreshing" from legion cores, magic wands and regenerative
+      crossbreeds so they no longer get rid of your implants
+  - bugfix: Fixed an edge case with meteor moveloop code
+  - bugfix: Fixed projectile homing
+  - rscadd: Toolboxes can be used on any object to pull out and use a tool from it
+      as long as your offhand is free.
+  - qol: Jetpacks are significantly smoother and nicer to use now - and not affected
+      by lag anymore!
+  - code_imp: Cleaned up spacemove/jetpack code a bit and moved some common code to
+      helpers.
+  - refactor: Wings are now... jetpacks. They behave exactly the same and this should
+      reduce the amount of copypaste code in spacemove significantly.
+  SmArtKar, Kapu:
+  - code_imp: Implemented caching for icon sizes which should significantly improve
+      mob health performance due to HUDs constantly fetching icons
+  SyncIt21:
+  - code_imp: improved code for machinery
+  - code_imp: slightly improved code for borg inducer
+  - spellcheck: fixes examines & screentips for borg inducer
+  - code_imp: condensed code for reagent grinder
+  - bugfix: reagent grinder won't break when 2 or more people are simultaneously interacting
+      with it
+  - bugfix: ejecting contents & examining the reagent grinder as an AI via the radial
+      menu does not require it to be powered or anchored
+  - bugfix: examine block for reagent grinder as an AI is properly formatted
+  Time-Green:
+  - balance: Bioscramblers are no longer immortal
+  - balance: Anomalies give 20 extra seconds to defuse! Or 20 extra seconds for them
+      to reach havoc...
+  - balance: Material anomalies only teleport 1-4 times before detonating
+  carlarctg:
+  - bugfix: Recovered crew no longer show up on roundend report
+  - rscadd: Surgery trays now have a small chance to become medical toolboxes. Autopsy
+      trays can become coroner toolboxes.
+  - rscadd: Added a 1 in 1.000.000 chance for a toolbox to have four latches.
+  mc-oofert:
+  - balance: A mutation in gatfruit seeds has led to a drastic alteration in the observable
+      traits of the plant, which now fires hardened peas that deal less damage, but
+      poison the target. Additionally, its poison can be, with some botanical engineering,
+      replaced with whatever you wish.
+  - balance: burglars finesse spell range increased from 4 to 6 and it may loot any
+      back storage object, caretakers refuge cooldown is only applied when exiting
+      refuge, labyrinth handbook accepts any crayon instead of a white crayon
+  - qol: you may click an id with the knock heretic id card to make it consume it
+  - rscadd: janitor modsuit space cleaner mister module
+  - bugfix: manufacturing assembling machine crafts junk shells and lizard boots properly,
+      may no longer craft anchored objects (broken check), and sends its crafted stuff
+      at once
+  - balance: changeling last resort works as a monkey or animal
+  timothymtorres:
+  - bugfix: Fix drink labels for alcohol bottles
+  - rscadd: Add medical human organ crate emergency medical holodeck simulation
+  - bugfix: Fix gravity not updating for mobs when teleporting, wormhole jaunters,
+      wizard spells, tile creation/destruction, mech entry/ejection and other methods.
+  - bugfix: Fix gravity for areas in space near station (solars, nearspace, bomb testing,
+      etc.)
+  tontyGH:
+  - bugfix: runetext fades in correctly in bulk. signers rejoice
+  zxaber:
+  - bugfix: Mechs with crowbar-like tools can now hold adjacent firelocks open correctly.
