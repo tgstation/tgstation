@@ -166,9 +166,8 @@
 		SEND_SOUND(player, 'sound/effects/magic/charge.ogg')
 
 /datum/sm_delam/proc/effect_emergency_state()
-	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
-		SSsecurity_level.set_level(SEC_LEVEL_DELTA) // skip the announcement and shuttle timer adjustment in set_security_level()
-	make_maint_all_access()
+	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+	make_maint_all_access(post_announcement = FALSE)
 	for(var/obj/machinery/light/light_to_break as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
 		if(prob(35))
 			light_to_break.set_major_emergency_light()
