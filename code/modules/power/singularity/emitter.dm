@@ -193,13 +193,17 @@
 
 /obj/machinery/power/emitter/process_early(seconds_per_tick)
 	var/power_usage = active_power_usage * seconds_per_tick
-	if(machine_stat & (BROKEN))
+	if((machine_stat & (BROKEN)) || panel_open)
 		return
 	if(!welded || (!powernet && power_usage))
 		active = FALSE
 		update_appearance()
 		return
-	if(!active)
+	if(contains_cascade_kit) // cascade kit skips everything and just fires on
+		if(check_delay())
+			fire_beam()
+		return
+	if(!active) // cascade kit forces the emitter to be on
 		return
 	if(power_usage && surplus() < power_usage)
 		if(powered)
@@ -249,8 +253,8 @@
 		projectile.fire(dir2angle(dir))
 	if(!manual)
 		last_shot = world.time
-		if(shot_number < 3)
-			fire_delay = 20
+		if(shot_number < 3 || contains_cascade_kit)
+			fire_delay = 2 SECONDS
 			shot_number ++
 		else
 			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
@@ -312,6 +316,16 @@
 	return TRUE
 
 /obj/machinery/power/emitter/crowbar_act(mob/living/user, obj/item/item)
+	if(contains_cascade_kit)
+		to_chat(span_warning("You try to forcibly pry the suspicious device out of the emitter..."))
+		item.play_tool_operating_sound(src)
+		item.play_tool_sound(src)
+		if(do_after(user, 10 SECONDS, src))
+			item.play_tool_sound(src)
+			to_chat(span_danger("You successfully pry the suspicious device from the emitter, destroying it in the process."))
+			contains_cascade_kit = FALSE
+			set_projectile()
+			return
 	if(panel_open && gun)
 		return remove_gun(user)
 	default_deconstruction_crowbar(item)
