@@ -1,17 +1,20 @@
 /obj/structure/closet/emcloset
-	desc = "A large closet to store breach control equipment and materials.
-	icon = '/modular_doppler/sprite_swaps/icons/elockers.dmi'
+	desc = "A sturdy closet to store breach control equipment and materials. It could probably protect you from dangerous air pressure."
+	icon = 'modular_doppler/sprite_swaps/icons/elockers.dmi'
 	max_integrity = 300
 	contents_pressure_protection = 1
-
-/obj/structure/closet/emcloset/proc/animate_door(closing = FALSE)
-	is_animating_door = FALSE
+	door_anim_time = 0
+	max_mob_size = MOB_SIZE_LARGE
+	mob_storage_capacity = 4
+	storage_capacity = 45
 
 /obj/structure/closet/firecloset
-	desc = "A large closet to store fire suppression equipment and materials.
-	icon = '/modular_doppler/sprite_swaps/icons/elockers.dmi'
+	desc = "A sturdy closet to store fire suppression equipment and materials. It could probably protect you from dangerous ambient temperatures."
+	icon = 'modular_doppler/sprite_swaps/icons/elockers.dmi'
 	max_integrity = 300
 	contents_thermal_insulation = 1
+	door_anim_time = 0
+	max_mob_size = MOB_SIZE_LARGE
+	mob_storage_capacity = 4
+	storage_capacity = 45
 
-/obj/structure/closet/firecloset/proc/animate_door(closing = FALSE)
-	is_animating_door = FALSE
