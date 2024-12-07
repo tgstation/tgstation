@@ -25,7 +25,7 @@
 /datum/armor/mecha_durand
 	melee = 40
 	bullet = 35
-	laser = 15
+	laser = 30
 	energy = 10
 	bomb = 20
 	fire = 100
