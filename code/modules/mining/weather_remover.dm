@@ -162,3 +162,4 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 #undef MAX_PLASMA_SHEETS
+#undef MIN_PLASMA_SHEETS_TO_WORK
