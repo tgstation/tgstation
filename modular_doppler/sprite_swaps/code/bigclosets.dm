@@ -17,4 +17,12 @@
 	max_mob_size = MOB_SIZE_LARGE
 	mob_storage_capacity = 4
 	storage_capacity = 45
+	armor_type = /datum/armor/fire_closet
 
+/datum/armor/fire_closet
+	melee = 20
+	bullet = 10
+	laser = 10
+	bomb = 10
+	fire = 100
+	acid = 60
