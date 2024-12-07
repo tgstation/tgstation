@@ -1,7 +1,7 @@
 /datum/quirk/item_quirk/chronic_illness
 	name = "Eradicative Chronic Illness"
 	desc = "You have an anomalous chronic illness that requires constant medication to keep under control, or else causes timestream correction."
-	icon = FA_ICON_ERADICATE
+	icon = "person-dots-from-line"
 	value = -12
 	gain_text = span_danger("You feel like you are fading away...")
 	lose_text = span_notice("You suddenly feel more substantial.")
