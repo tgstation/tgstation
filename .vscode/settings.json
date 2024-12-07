@@ -6,7 +6,9 @@
   	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"search.exclude": {
 		"**/.yarn": true,
-		"**/.pnp.*": true
+		"**/.pnp.*": true,
+		"html/**": true,
+		"_maps/**": true,
 	},
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit"

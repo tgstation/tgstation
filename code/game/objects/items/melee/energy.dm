@@ -1,5 +1,6 @@
 /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
+	icon_angle = -45
 	max_integrity = 200
 	armor_type = /datum/armor/melee_energy
 	attack_verb_continuous = list("hits", "taps", "pokes")
@@ -356,3 +357,4 @@
 	icon_state = "lightblade"
 	inhand_icon_state = "lightblade"
 	base_icon_state = "lightblade"
+	icon_angle = 0

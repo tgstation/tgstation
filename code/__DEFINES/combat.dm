@@ -128,16 +128,16 @@ DEFINE_BITFIELD(status_flags, list(
 
 //Attack types for checking block reactions
 /// Attack was made with a melee weapon
-#define MELEE_ATTACK 1
+#define MELEE_ATTACK (1<<0)
 /// Attack is a punch or kick.
 /// Mob attacks are not classified as unarmed (currently).
-#define UNARMED_ATTACK 2
+#define UNARMED_ATTACK (1<<1)
 /// A projectile is hitting us.
-#define PROJECTILE_ATTACK 3
+#define PROJECTILE_ATTACK (1<<2)
 /// A thrown item is hitting us.
-#define THROWN_PROJECTILE_ATTACK 4
+#define THROWN_PROJECTILE_ATTACK (1<<3)
 /// We're being tackled or leaped at.
-#define LEAP_ATTACK 5
+#define LEAP_ATTACK (1<<4)
 
 /// Used in check block to get what mob is attacking the blocker.
 #define GET_ASSAILANT(weapon) (get(weapon, /mob/living))
@@ -153,6 +153,13 @@ DEFINE_BITFIELD(status_flags, list(
 #define ATTACK_EFFECT_MECHFIRE "mech_fire"
 #define ATTACK_EFFECT_MECHTOXIN "mech_toxin"
 #define ATTACK_EFFECT_BOOP "boop" //Honk
+
+/// Attack animation for sharp items
+#define ATTACK_ANIMATION_SLASH "slash"
+/// Attack animation for pointy items
+#define ATTACK_ANIMATION_PIERCE "pierce"
+/// Animation for blunt attacks
+#define ATTACK_ANIMATION_BLUNT "blunt"
 
 //the define for visible message range in combat
 #define SAMETILE_MESSAGE_RANGE 1

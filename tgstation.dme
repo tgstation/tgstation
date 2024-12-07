@@ -1044,6 +1044,7 @@
 #include "code\datums\components\ai_has_target_timer.dm"
 #include "code\datums\components\ai_listen_to_weather.dm"
 #include "code\datums\components\ai_retaliate_advanced.dm"
+#include "code\datums\components\alternative_sharpness.dm"
 #include "code\datums\components\amputating_limbs.dm"
 #include "code\datums\components\anti_magic.dm"
 #include "code\datums\components\appearance_on_aggro.dm"

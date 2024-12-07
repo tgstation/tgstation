@@ -242,6 +242,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/spellblade
 	icon_state = "spellblade"
 	inhand_icon_state = "spellblade"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/items/weapons/rapierhit.ogg'
