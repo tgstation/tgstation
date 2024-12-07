@@ -7,6 +7,8 @@
  * Used in creating spooky-text for heretic ascension announcements.
  */
 /proc/generate_heretic_text(length = 25)
+	if(!isnum(length)) // stupid thing so we can use this directly in replacetext
+		length = 25
 	. = ""
 	for(var/i in 1 to length)
 		. += pick("!", "$", "^", "@", "&", "#", "*", "(", ")", "?")
@@ -93,9 +95,9 @@
 	//if the knowledge is a spell, use the spell's button
 	else if(ispath(knowledge,/datum/heretic_knowledge/spell))
 		var/datum/heretic_knowledge/spell/spell_knowledge = knowledge
-		var/datum/action/cooldown/spell/result_spell = spell_knowledge.spell_to_add
-		icon_path = result_spell.button_icon
-		icon_state = result_spell.button_icon_state
+		var/datum/action/result_action = spell_knowledge.action_to_add
+		icon_path = result_action.button_icon
+		icon_state = result_action.button_icon_state
 
 	//if the knowledge is a summon, use the mob sprite
 	else if(ispath(knowledge,/datum/heretic_knowledge/summon))

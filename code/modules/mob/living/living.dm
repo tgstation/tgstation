@@ -388,7 +388,7 @@
 	if(pulling)
 		// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
 		if(AM == pulling)
-			return
+			return FALSE
 		stop_pulling()
 
 	changeNext_move(CLICK_CD_GRABBING)
@@ -456,6 +456,7 @@
 			update_pull_movespeed()
 
 		set_pull_offsets(M, state)
+		return TRUE
 
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
 	if(M.buckled)
@@ -533,7 +534,7 @@
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 			if(whispered)
-				to_chat(src, span_notice("Your immortal body is keeping you alive. If you want to accept death, you must do so [span_bold("quietly")]."), type=MESSAGE_TYPE_INFO)
+				to_chat(src, span_notice("Your immortal body is keeping you alive! Unless you just press the UI button."), type=MESSAGE_TYPE_INFO)
 				return
 		else
 			to_chat(src, span_warning("You are unable to succumb to death! This life continues."), type=MESSAGE_TYPE_INFO)
@@ -741,9 +742,7 @@
 
 /// Returns what the body_position_pixel_y_offset should be if the current size were `value`
 /mob/living/proc/get_pixel_y_offset_standing(value)
-	var/icon/living_icon = icon(icon)
-	var/height = living_icon.Height()
-	return (value-1) * height * 0.5
+	return (value-1) * get_cached_height() * 0.5
 
 /mob/living/proc/update_density()
 	if(HAS_TRAIT(src, TRAIT_UNDENSE))
@@ -833,7 +832,7 @@
 		if(!livingdoll.filtered)
 			livingdoll.filtered = TRUE
 			var/icon/mob_mask = icon(icon, icon_state)
-			if(mob_mask.Height() > ICON_SIZE_Y || mob_mask.Width() > ICON_SIZE_X)
+			if(get_cached_height() > ICON_SIZE_Y || get_cached_width() > ICON_SIZE_X)
 				var/health_doll_icon_state = health_doll_icon ? health_doll_icon : "megasprite"
 				mob_mask = icon('icons/hud/screen_gen.dmi', health_doll_icon_state) //swap to something generic if they have no special doll
 			livingdoll.add_filter("mob_shape_mask", 1, alpha_mask_filter(icon = mob_mask))
@@ -1200,16 +1199,42 @@
 
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
-	//If we're in an aggressive grab or higher, we're lying down, we're vulnerable to grabs, or we're staggered and we have some amount of stamina loss, we must resist
-	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || get_timed_status_effect_duration(/datum/status_effect/staggered) && (getFireLoss()*0.5 + getBruteLoss()*0.5) >= 40)
-		var/altered_grab_state = pulledby.grab_state
-		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || get_timed_status_effect_duration(/datum/status_effect/staggered)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
-			altered_grab_state++
-		if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE))
-			altered_grab_state--
+
+	//Our effective grab state. GRAB_PASSIVE is equal to 0, so if we have no other altering factors to our grab state, we can break free immediately on resist.
+	var/effective_grab_state = pulledby.grab_state
+	//The amount of damage inflicted on a failed resist attempt.
+	var/damage_on_resist_fail = rand(7, 13)
+
+	if(body_position == LYING_DOWN) //If prone, treat the grab state as one higher
+		effective_grab_state++
+
+	if(HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) //If we have grab weakness from some source, treat the grab state as one higher
+		effective_grab_state++
+
+	if(get_timed_status_effect_duration(/datum/status_effect/staggered) && (getFireLoss() + getBruteLoss()) >= 40) //If we are staggered, and we have at least 40 damage, treat the grab state as one higher.
+		effective_grab_state++
+
+	if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE)) //If we have grab resistance from some source, treat the grab state as one lower.
+		effective_grab_state--
+
+	//If our puller is a human, and they have an active hand they're grabbing with (please don't ask how people grab without hands), then apply their unarmed values to the grab values
+	if(pulledby && ishuman(pulledby))
+		var/mob/living/carbon/human/human_puller = pulledby
+		var/obj/item/bodypart/grabbing_bodypart = human_puller.get_active_hand()
+		if(grabbing_bodypart)
+			damage_on_resist_fail += rand(grabbing_bodypart.unarmed_damage_low, grabbing_bodypart.unarmed_damage_high)
+
+		//If our puller is a drunken brawler, they add more damage based on their own damage taken so long as they're drunk and treat the grab state as one higher
+		var/puller_drunkenness = human_puller.get_drunk_amount()
+		if(puller_drunkenness && HAS_TRAIT(human_puller, TRAIT_DRUNKEN_BRAWLER))
+			damage_on_resist_fail += clamp((human_puller.getFireLoss() + human_puller.getBruteLoss()) / 10, 3, 20)
+			effective_grab_state ++
+
+	//We only resist our grab state if we are currently in a grab equal to or greater than GRAB_AGGRESSIVE (1). Otherwise, break out immediately!
+	if(effective_grab_state >= GRAB_AGGRESSIVE)
 		// see defines/combat.dm, this should be baseline 60%
 		// Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
-		var/resist_chance = altered_grab_state ? (BASE_GRAB_RESIST_CHANCE / altered_grab_state) : 100
+		var/resist_chance = clamp(BASE_GRAB_RESIST_CHANCE / effective_grab_state, 0, 100)
 		if(prob(resist_chance))
 			visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
 							span_danger("You break free of [pulledby]'s grip!"), null, null, pulledby)
@@ -1218,7 +1243,7 @@
 			pulledby.stop_pulling()
 			return FALSE
 		else
-			adjustStaminaLoss(rand(15,20))//failure to escape still imparts a pretty serious penalty
+			adjustStaminaLoss(damage_on_resist_fail) //Do some stamina damage if we fail to resist
 			visible_message(span_danger("[src] struggles as they fail to break free of [pulledby]'s grip!"), \
 							span_warning("You struggle as you fail to break free of [pulledby]'s grip!"), null, null, pulledby)
 			to_chat(pulledby, span_danger("[src] struggles as they fail to break free of your grip!"))
@@ -1896,6 +1921,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Called when mob changes from a standing position into a prone while lacking the ability to stand up at the moment.
 /mob/living/proc/on_fall()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_LIVING_THUD)
+	loc?.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing
 	return
 
 /mob/living/forceMove(atom/destination)
@@ -1905,6 +1933,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			buckled.unbuckle_mob(src, force = TRUE)
 		if(has_buckled_mobs())
 			unbuckle_all_mobs(force = TRUE)
+	refresh_gravity()
 	. = ..()
 	if(. && client)
 		reset_perspective()
@@ -2977,3 +3006,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	REMOVE_TRAIT(src, TRAIT_BLOCKING_PROJECTILES, BLOCKING_TRAIT)
 	cut_overlay(selected_overlay)
 	update_transform(0.8)
+
+/// Returns the string form of the def_zone we have hit.
+/mob/living/proc/check_hit_limb_zone_name(hit_zone)
+	if(has_limbs)
+		return hit_zone

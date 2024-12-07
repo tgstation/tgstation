@@ -5,7 +5,7 @@
 /datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
-	if(istype(result) && !isnull(user.mind))
+	if(istype(result) && istype(user) && !isnull(user.mind))
 		ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
 
 /datum/crafting_recipe/food/New()
@@ -40,7 +40,7 @@
 	var/resulting_reagent_purity
 
 /datum/chemical_reaction/food/pre_reaction_other_checks(datum/reagents/holder)
-	resulting_reagent_purity = holder.get_average_purity(/datum/reagent/consumable)
+	resulting_reagent_purity = holder.get_average_purity()
 	return TRUE
 
 /datum/chemical_reaction/food/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)

@@ -803,7 +803,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "anP" = (
 /obj/structure/table,
 /obj/machinery/light_switch/directional/north,
@@ -841,6 +841,32 @@
 "aom" = (
 /obj/machinery/pdapainter/engineering,
 /obj/effect/turf_decal/tile/neutral/full,
+/obj/machinery/button/door/directional/west{
+	id = "Engineering";
+	name = "Engineering Lockdown Control";
+	pixel_y = -8;
+	req_access = list("engineering")
+	},
+/obj/machinery/button/door/directional/west{
+	id = "engstorage";
+	name = "Engineering Secure Storage Control";
+	pixel_x = -36;
+	pixel_y = 4;
+	req_access = list("engine_equip")
+	},
+/obj/machinery/button/door/directional/west{
+	id = "atmos";
+	name = "Atmospherics Lockdown Control";
+	pixel_y = 4;
+	req_access = list("atmospherics")
+	},
+/obj/machinery/button/door/directional/west{
+	id = "ceprivacy";
+	name = "Privacy Shutter Control";
+	pixel_y = -8;
+	req_access = list("engineering");
+	pixel_x = -36
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/ce)
 "aon" = (
@@ -3301,7 +3327,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "aWc" = (
 /obj/structure/railing{
 	dir = 8
@@ -3977,7 +4003,7 @@
 	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
 	name = "hyper-reinforced wall"
 	},
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "bff" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
@@ -4309,7 +4335,6 @@
 "bjK" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "bjL" = (
@@ -4803,7 +4828,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "bqt" = (
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/circuit,
@@ -5478,7 +5503,7 @@
 "byB" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "byH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /turf/open/floor/iron/dark,
@@ -7944,7 +7969,8 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "cgB" = (
-/obj/structure/aquarium/lawyer,
+/obj/item/fish_tank/lawyer,
+/obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "cgC" = (
@@ -9869,7 +9895,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "cJC" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/four,
@@ -15789,7 +15815,7 @@
 /area/station/security/prison/rec)
 "evT" = (
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "ewi" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
@@ -18927,7 +18953,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -25884,7 +25910,7 @@
 /area/station/science/xenobiology)
 "hvt" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/surgery_tray/full/morgue,
+/obj/effect/spawner/surgery_tray/full/morgue,
 /obj/structure/table/reinforced,
 /obj/machinery/requests_console/auto_name/directional/north,
 /obj/effect/turf_decal/bot_white,
@@ -26432,7 +26458,7 @@
 "hDA" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "hDG" = (
 /obj/docking_port/stationary/random/icemoon{
 	dir = 4;
@@ -30113,7 +30139,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "iJK" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -30157,7 +30183,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "iKd" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/siding/white,
@@ -38592,7 +38618,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "lhu" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Xenobiology Lab Access";
@@ -41086,7 +41112,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "lRf" = (
 /obj/machinery/teleport/station,
 /turf/open/floor/plating,
@@ -42492,7 +42518,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "mpH" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -42609,7 +42635,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -42887,7 +42913,7 @@
 "mvE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "mvG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
 	dir = 8
@@ -44017,7 +44043,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "mNi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -50593,7 +50619,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "oDg" = (
 /obj/structure/chair/stool/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -51249,7 +51275,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "oLz" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -55070,7 +55096,7 @@
 /area/station/medical/treatment_center)
 "pRa" = (
 /turf/closed/wall,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "pRj" = (
 /turf/closed/wall,
 /area/station/maintenance/port/aft)
@@ -58067,7 +58093,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "qKQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -60263,8 +60289,8 @@
 /area/station/engineering/atmos/storage)
 "rqF" = (
 /obj/machinery/door/poddoor{
-	id = "Secure Storage";
-	name = "Secure Storage"
+	id = "engstorage";
+	name = "Engineering Secure Storage Lockdown"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
@@ -62768,6 +62794,14 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
+"sdp" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "atmos";
+	name = "Atmospherics Blast Door"
+	},
+/turf/open/floor/plating,
+/area/station/engineering/atmos)
 "sdr" = (
 /obj/structure/transit_tube/horizontal,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -65787,7 +65821,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/mob/living/simple_animal/bot/floorbot,
+/mob/living/basic/bot/repairbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
 "sUE" = (
@@ -70994,7 +71028,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/icemoon,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "uyW" = (
 /obj/machinery/washing_machine,
 /obj/effect/turf_decal/siding/blue{
@@ -79885,7 +79919,7 @@
 	name = "BOMB RANGE"
 	},
 /turf/closed/wall,
-/area/station/science/ordnance/bomb)
+/area/station/science/ordnance/bomb/planet)
 "xgK" = (
 /obj/structure/table,
 /obj/item/transfer_valve{
@@ -245994,7 +246028,7 @@ keP
 cRO
 guU
 ayq
-hpI
+sdp
 bID
 iKh
 rOU

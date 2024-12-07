@@ -817,7 +817,11 @@
 
 /obj/item/drake_remains/Initialize(mapload)
 	. = ..()
-	particles = new /particles/bonfire()
+	add_shared_particles(/particles/bonfire)
+
+/obj/item/drake_remains/Destroy(force)
+	remove_shared_particles(/particles/bonfire)
+	return ..()
 
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"
@@ -968,9 +972,7 @@
 	if(!katana.drew_blood)
 		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
 		playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
-		var/obj/item/bodypart/part = owner.get_holding_bodypart_of_item(katana)
-		if(part)
-			part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
+		owner.apply_damage(25, BRUTE, hand, wound_bonus = 10, sharpness = SHARP_EDGED)
 	katana.drew_blood = FALSE
 	katana.wash(CLEAN_TYPE_BLOOD)
 	return ..()

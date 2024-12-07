@@ -1,5 +1,11 @@
+import {
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
 export const DisposalUnit = (props) => {

@@ -82,6 +82,10 @@
 		A.throw_at(target, 5, 1)
 		boing = 0
 
+/obj/effect/anomaly/grav/detonate()
+	new /obj/effect/temp_visual/circle_wave/gravity(get_turf(src))
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50)
+
 /obj/effect/anomaly/grav/high
 	var/datum/proximity_monitor/advanced/gravity/grav_field
 
@@ -93,6 +97,7 @@
 	grav_field = new(src, 7, TRUE, rand(0, 3))
 
 /obj/effect/anomaly/grav/high/detonate()
+	..()
 	for(var/obj/machinery/gravity_generator/main/the_generator as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/gravity_generator/main))
 		if(is_station_level(the_generator.z))
 			the_generator.blackout()
@@ -111,3 +116,6 @@
 	. = ..()
 
 	transform *= 3
+
+/obj/effect/temp_visual/circle_wave/gravity
+	color = COLOR_NAVY

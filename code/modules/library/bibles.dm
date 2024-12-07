@@ -367,8 +367,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	uses -= 1
 	to_chat(user, span_userdanger("You try to open the book AND IT BITES YOU!"))
 	playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)
-	var/active_hand_zone = (!(user.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
-	user.apply_damage(5, BRUTE, active_hand_zone, attacking_item = src)
+	user.apply_damage(5, BRUTE, user.get_active_hand(), attacking_item = src)
 	to_chat(user, span_notice("Your name appears on the inside cover, in blood."))
 	owner_name = user.real_name
 

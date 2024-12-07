@@ -187,26 +187,26 @@
 /datum/heretic_knowledge/spell
 	abstract_parent_type = /datum/heretic_knowledge/spell
 	/// Spell path we add to the heretic. Type-path.
-	var/datum/action/cooldown/spell/spell_to_add
+	var/datum/action/action_to_add
 	/// The spell we actually created.
-	var/datum/weakref/created_spell_ref
+	var/datum/weakref/created_action_ref
 
 /datum/heretic_knowledge/spell/Destroy()
-	QDEL_NULL(created_spell_ref)
+	QDEL_NULL(created_action_ref)
 	return ..()
 
 /datum/heretic_knowledge/spell/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	// Added spells are tracked on the body, and not the mind,
 	// because we handle heretic mind transfers
 	// via the antag datum (on_gain and on_lose).
-	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve() || new spell_to_add(user)
-	created_spell.Grant(user)
-	created_spell_ref = WEAKREF(created_spell)
+	var/datum/action/created_action = created_action_ref?.resolve() || new action_to_add(user)
+	created_action.Grant(user)
+	created_action_ref = WEAKREF(created_action)
 
 /datum/heretic_knowledge/spell/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve()
-	if(created_spell?.owner == user)
-		created_spell.Remove(user)
+	var/datum/action/cooldown/spell/created_action = created_action_ref?.resolve()
+	if(created_action?.owner == user)
+		created_action.Remove(user)
 
 /**
  * A knowledge subtype for knowledge that can only
@@ -665,8 +665,14 @@
 	cost = 2
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
-	//use this to store the achievement typepath
+	/// The typepath of the achievement to grant upon successful ascension.
 	var/datum/award/achievement/misc/ascension_achievement
+	/// The text of the ascension announcement.
+	/// %NAME% is replaced with the heretic's real name,
+	/// and %SPOOKY% is replaced with output from [generate_heretic_text]
+	var/announcement_text
+	/// The sound that's played for the ascension announcement.
+	var/announcement_sound
 
 /datum/heretic_knowledge/ultimate/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -727,6 +733,13 @@
 		source = user,
 		header = "A Heretic is Ascending!",
 	)
+	priority_announce(
+		text = replacetext(replacetext(announcement_text, "%NAME%", user.real_name), "%SPOOKY%", GLOBAL_PROC_REF(generate_heretic_text)),
+		title = generate_heretic_text(),
+		sound = announcement_sound,
+		color_override = "pink",
+	)
+
 	if(!isnull(ascension_achievement))
 		user.client?.give_award(ascension_achievement, user)
 	heretic_datum.increase_rust_strength()

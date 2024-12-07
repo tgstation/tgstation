@@ -18,7 +18,7 @@
 		return MANUFACTURING_FAIL
 	var/list/stacks = contents - circuit
 	if(length(stacks) >= 5 && !may_merge_in_contents_and_do_so(receiving))
-		return MANUFACTURING_FAIL_FULL
+		return MANUFACTURING_FAIL
 	receiving.Move(src, get_dir(receiving, src))
 	START_PROCESSING(SSmanufacturing, src)
 	return MANUFACTURING_SUCCESS

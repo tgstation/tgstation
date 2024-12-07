@@ -32,7 +32,7 @@
 		return MANUFACTURING_FAIL
 	var/list/real_contents = contents - circuit
 	if(length(real_contents))
-		return MANUFACTURING_FAIL_FULL
+		return MANUFACTURING_FAIL
 
 	var/obj/structure/closet/as_closet = receiving
 	var/obj/structure/ore_box/as_orebox = receiving

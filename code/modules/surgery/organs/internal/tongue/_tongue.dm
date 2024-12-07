@@ -124,7 +124,7 @@
 		food_taste_reaction = FOOD_LIKED
 	return food_taste_reaction
 
-/obj/item/organ/tongue/mob_insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/tongue/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 
 	if(modifies_speech)
@@ -138,7 +138,7 @@
 	REMOVE_TRAIT(receiver, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	apply_tongue_effects()
 
-/obj/item/organ/tongue/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/tongue/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	temp_say_mod = ""
@@ -197,7 +197,7 @@
 		new /regex(@"\bX([\-|r|R]|\b)", "g") = "ECKS$1",
 	)
 
-/obj/item/organ/tongue/lizard/New(class, timer, datum/mutation/human/copymut)
+/obj/item/organ/tongue/lizard/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 

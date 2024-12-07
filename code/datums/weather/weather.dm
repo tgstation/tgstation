@@ -51,6 +51,8 @@
 	var/protect_indoors = FALSE
 	/// Areas to be affected by the weather, calculated when the weather begins
 	var/list/impacted_areas = list()
+	/// Areas affected by weather have their blend modes changed
+	var/list/impacted_areas_blend_modes = list()
 	/// Areas that are protected and excluded from the affected areas.
 	var/list/protected_areas = list()
 	/// The list of z-levels that this weather is actively affecting
@@ -104,15 +106,19 @@
 		return
 	stage = STARTUP_STAGE
 	var/list/affectareas = list()
-	for(var/V in get_areas(area_type))
-		affectareas += V
-	for(var/V in protected_areas)
-		affectareas -= get_areas(V)
-	for(var/area/A as anything in affectareas)
-		if(protect_indoors && !A.outdoors)
+	for(var/area/selected_area as anything in get_areas(area_type))
+		affectareas += selected_area
+	for(var/area/protected_area as anything in protected_areas)
+		affectareas -= get_areas(protected_area)
+	for(var/area/affected_area as anything in affectareas)
+		if(protect_indoors && !affected_area.outdoors)
 			continue
-		if(A.z in impacted_z_levels)
-			impacted_areas |= A
+
+		for(var/z in impacted_z_levels)
+			if(length(affected_area.turfs_by_zlevel) >= z && length(affected_area.turfs_by_zlevel[z]))
+				impacted_areas |= affected_area
+				continue
+
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	SSweather.processing |= src
 	update_areas()
@@ -231,8 +237,17 @@
 	for(var/area/impacted as anything in impacted_areas)
 		if(length(overlay_cache))
 			impacted.overlays -= overlay_cache
+			if(impacted_areas_blend_modes[impacted])
+				// revert the blend mode to the old state
+				impacted.blend_mode = impacted_areas_blend_modes[impacted]
+				impacted_areas_blend_modes[impacted] = null
 		if(length(new_overlay_cache))
 			impacted.overlays += new_overlay_cache
+			// only change the blend mode if it's not default or overlay
+			if(impacted.blend_mode > BLEND_OVERLAY)
+				// save the old blend mode state
+				impacted_areas_blend_modes[impacted] = impacted.blend_mode
+				impacted.blend_mode = BLEND_OVERLAY
 
 	overlay_cache = new_overlay_cache
 

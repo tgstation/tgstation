@@ -15,8 +15,13 @@
 	var/datum/beam/tether_beam
 	/// Tether module if we were created by one
 	var/obj/item/mod/module/tether/parent_module
+	/// Source, if any, for TRAIT_TETHER_ATTACHED we add
+	var/tether_trait_source
+	/// If TRUE, only add TRAIT_TETHER_ATTACHED to our parent
+	var/no_target_trait
 
-/datum/component/tether/Initialize(atom/tether_target, max_dist = 7, tether_name, atom/embed_target = null, start_distance = null, parent_module = null)
+/datum/component/tether/Initialize(atom/tether_target, max_dist = 7, tether_name, atom/embed_target = null, start_distance = null, \
+	parent_module = null, tether_trait_source = null, no_target_trait = FALSE)
 	if(!ismovable(parent) || !istype(tether_target) || !tether_target.loc)
 		return COMPONENT_INCOMPATIBLE
 
@@ -24,6 +29,8 @@
 	src.embed_target = embed_target
 	src.max_dist = max_dist
 	src.parent_module = parent_module
+	src.tether_trait_source = tether_trait_source
+	src.no_target_trait = no_target_trait
 	cur_dist = max_dist
 	if (start_distance != null)
 		cur_dist = start_distance
@@ -34,6 +41,10 @@
 		src.tether_name = initial(tmp.name)
 	else
 		src.tether_name = tether_name
+	if (!isnull(tether_trait_source))
+		ADD_TRAIT(parent, TRAIT_TETHER_ATTACHED, tether_trait_source)
+		if (!no_target_trait)
+			ADD_TRAIT(tether_target, TRAIT_TETHER_ATTACHED, tether_trait_source)
 
 /datum/component/tether/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_tether))
@@ -54,8 +65,12 @@
 
 /datum/component/tether/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED))
+	if (!isnull(tether_trait_source))
+		REMOVE_TRAIT(parent, TRAIT_TETHER_ATTACHED, tether_trait_source)
 	if (!QDELETED(tether_target))
 		UnregisterSignal(tether_target, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
+		if (!isnull(tether_trait_source) && !no_target_trait)
+			REMOVE_TRAIT(tether_target, TRAIT_TETHER_ATTACHED, tether_trait_source)
 	if (!QDELETED(tether_beam))
 		UnregisterSignal(tether_beam.visuals, list(COMSIG_CLICK, COMSIG_QDELETING))
 		qdel(tether_beam)
@@ -72,9 +87,11 @@
 		to_chat(source, span_warning("[tether_name] prevents you from entering [new_loc]!"))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
+	// If this was called, we know its a movable
+	var/atom/movable/movable_source = source
 	var/atom/movable/anchor = (source == tether_target ? parent : tether_target)
 	if (get_dist(anchor, new_loc) > cur_dist)
-		if (!istype(anchor) || anchor.anchored || !anchor.Move(get_step_towards(anchor, new_loc)))
+		if (!istype(anchor) || anchor.anchored || !(!anchor.anchored && anchor.move_resist <= movable_source.move_force && anchor.Move(get_step_towards(anchor, new_loc))))
 			to_chat(source, span_warning("[tether_name] runs out of slack and prevents you from moving!"))
 			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
@@ -105,7 +122,6 @@
 	if (get_dist(anchor, new_loc) != cur_dist || !ismovable(source))
 		return
 
-	var/atom/movable/movable_source = source
 	var/datum/drift_handler/handler = movable_source.drift_handler
 	if (isnull(handler))
 		return
@@ -142,12 +158,23 @@
 	INVOKE_ASYNC(src, PROC_REF(process_beam_click), source, location, params, user)
 
 /datum/component/tether/proc/process_beam_click(atom/source, atom/location, params, mob/user)
-	if (!location.can_interact(user))
+	var/turf/nearest_turf
+	for (var/turf/line_turf in get_line(get_turf(parent), get_turf(tether_target)))
+		if (user.CanReach(line_turf))
+			nearest_turf = line_turf
+			break
+
+	if (isnull(nearest_turf))
 		return
+
+	if (!user.can_perform_action(nearest_turf))
+		nearest_turf.balloon_alert(user, "cannot reach!")
+		return
+
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		location.balloon_alert(user, "cutting the tether...")
-		if (!do_after(user, 1 SECONDS, user))
+		if (!do_after(user, 2 SECONDS, user))
 			return
 
 		qdel(src)
@@ -179,12 +206,12 @@
 	var/atom/movable/movable_parent = parent
 	var/atom/movable/movable_target = tether_target
 
-	if (istype(movable_parent) && movable_parent.Move(get_step(movable_parent.loc, get_dir(movable_parent, movable_target))))
+	if (istype(movable_parent) && !movable_parent.anchored && movable_parent.move_resist <= movable_target.move_force && movable_parent.Move(get_step(movable_parent.loc, get_dir(movable_parent, movable_target))))
 		cur_dist -= 1
 		location.balloon_alert(user, "tether shortened")
 		return
 
-	if (istype(movable_target) && movable_target.Move(get_step(movable_target.loc, get_dir(movable_target, movable_parent))))
+	if (istype(movable_target) && !movable_target.anchored && movable_target.move_resist <= movable_parent.move_force && movable_target.Move(get_step(movable_target.loc, get_dir(movable_target, movable_parent))))
 		cur_dist -= 1
 		location.balloon_alert(user, "tether shortened")
 		return

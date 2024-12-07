@@ -4,7 +4,7 @@
  * It will yield until a path is returned, using magic
  *
  * Arguments:
- * * caller: The movable atom that's trying to find the path
+ * * requester: The movable atom that's trying to find the path
  * * end: What we're trying to path to. It doesn't matter if this is a turf or some other atom, we're gonna just path to the turf it's on anyway
  * * max_distance: The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)
  * * mintargetdistance: Minimum distance to the target before path returns, could be used to get near a target, but not right to it - for an AI mob with a gun, for example.
@@ -14,16 +14,16 @@
  * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
  * * diagonal_handling: defines how we handle diagonal moves. see __DEFINES/path.dm
  */
-/proc/get_path_to(atom/movable/caller, atom/end, max_distance = 30, mintargetdist, access=list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE, diagonal_handling=DIAGONAL_REMOVE_CLUNKY)
+/proc/get_path_to(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access=list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE, diagonal_handling=DIAGONAL_REMOVE_CLUNKY)
 	var/list/hand_around = list()
 	// We're guaranteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
 	var/datum/callback/await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
-	if(!SSpathfinder.pathfind(caller, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, await))
+	if(!SSpathfinder.pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, await))
 		return list()
 
 	UNTIL(length(hand_around))
 	var/list/return_val = hand_around[1]
-	if(!islist(return_val) || (QDELETED(caller) || QDELETED(end))) // It's trash, just hand back empty to make it easy
+	if(!islist(return_val) || (QDELETED(requester) || QDELETED(end))) // It's trash, just hand back empty to make it easy
 		return list()
 	return return_val
 
@@ -37,7 +37,7 @@
  * It will yield until a path is returned, using magic
  *
  * Arguments:
- * * caller: The movable atom that's trying to find the path
+ * * requester: The movable atom that's trying to find the path
  * * end: What we're trying to path to. It doesn't matter if this is a turf or some other atom, we're gonna just path to the turf it's on anyway
  * * max_distance: The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)
  * * mintargetdistance: Minimum distance to the target before path returns, could be used to get near a target, but not right to it - for an AI mob with a gun, for example.
@@ -47,29 +47,29 @@
  * * exclude: If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
  * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
  */
-/proc/get_swarm_path_to(atom/movable/caller, atom/end, max_distance = 30, mintargetdist, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE)
+/proc/get_swarm_path_to(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE)
 	var/list/hand_around = list()
 	// We're guaranteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
 	var/datum/callback/await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
-	if(!SSpathfinder.swarmed_pathfind(caller, end, max_distance, mintargetdist, age, access, simulated_only, exclude, skip_first, await))
+	if(!SSpathfinder.swarmed_pathfind(requester, end, max_distance, mintargetdist, age, access, simulated_only, exclude, skip_first, await))
 		return list()
 
 	UNTIL(length(hand_around))
 	var/list/return_val = hand_around[1]
-	if(!islist(return_val) || (QDELETED(caller) || QDELETED(end))) // It's trash, just hand back empty to make it easy
+	if(!islist(return_val) || (QDELETED(requester) || QDELETED(end))) // It's trash, just hand back empty to make it easy
 		return list()
 	return return_val
 
-/proc/get_sssp(atom/movable/caller, max_distance = 30, access = list(), simulated_only = TRUE, turf/exclude)
+/proc/get_sssp(atom/movable/requester, max_distance = 30, access = list(), simulated_only = TRUE, turf/exclude)
 	var/list/hand_around = list()
 	// We're guaranteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
 	var/datum/callback/await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
-	if(!SSpathfinder.build_map(caller, get_turf(caller), max_distance, access, simulated_only, exclude, await))
+	if(!SSpathfinder.build_map(requester, get_turf(requester), max_distance, access, simulated_only, exclude, await))
 		return null
 
 	UNTIL(length(hand_around))
 	var/datum/path_map/return_val = hand_around[1]
-	if(!istype(return_val, /datum/path_map) || (QDELETED(caller))) // It's trash, just hand back null to make it easy
+	if(!istype(return_val, /datum/path_map) || (QDELETED(requester))) // It's trash, just hand back null to make it easy
 		return null
 	return return_val
 
@@ -202,7 +202,7 @@
 	return modified_path
 
 /**
- * For seeing if we can actually move between 2 given turfs while accounting for our access and the caller's pass_flags
+ * For seeing if we can actually move between 2 given turfs while accounting for our access and the requester's pass_flags
  *
  * Assumes destinantion turf is non-dense - check and shortcircuit in code invoking this proc to avoid overhead.
  * Makes some other assumptions, such as assuming that unless declared, non dense objects will not block movement.
@@ -311,7 +311,7 @@
 	/// Let's avoid this
 	var/camera_type
 
-	/// Weakref to the caller used to generate this info
+	/// Weakref to the requester used to generate this info
 	/// Should not use this almost ever, it's for context and to allow for proc chains that
 	/// Require a movable
 	var/datum/weakref/caller_ref = null

@@ -21,9 +21,9 @@
 /datum/experiment/physical/meat_wall_explosion/check_progress()
 	. += EXPERIMENT_PROG_BOOL("Fire an emitter at a tracked meat wall", is_complete())
 
-/datum/experiment/physical/meat_wall_explosion/proc/check_experiment(datum/source, obj/projectile/Proj)
+/datum/experiment/physical/meat_wall_explosion/proc/check_experiment(datum/source, obj/projectile/proj)
 	SIGNAL_HANDLER
-	if(istype(Proj, /obj/projectile/beam/emitter))
+	if(istype(proj, /obj/projectile/beam/emitter))
 		finish_experiment(linked_experiment_handler)
 
 /datum/experiment/physical/meat_wall_explosion/finish_experiment(datum/component/experiment_handler/experiment_handler)

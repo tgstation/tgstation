@@ -313,7 +313,7 @@
 	if(!.)
 		return
 	var/obj/projectile/flame = new /obj/projectile/bullet/incendiary/fire(mod.wearer.loc)
-	flame.preparePixelProjectile(target, mod.wearer)
+	flame.aim_projectile(target, mod.wearer)
 	flame.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
 	INVOKE_ASYNC(flame, TYPE_PROC_REF(/obj/projectile, fire))
@@ -566,11 +566,16 @@
 
 /obj/item/mod/module/stealth/wraith
 	name = "MOD Wraith Cloaking Module"
-	desc = "A more destructive adaptation of the stealth module."
+	desc = "A more destructive adaptation of the stealth module. Incompatible with armor modules"
 	icon_state = "cloak_traitor"
 	stealth_alpha = 30
 	module_type = MODULE_ACTIVE
 	cooldown_time = 2 SECONDS
+	incompatible_modules = list(/obj/item/mod/module/stealth, /obj/item/mod/module/armor_booster)
+	/// How much time before we are able to cloak again after the cloak is broken (not disabled)
+	COOLDOWN_DECLARE(recloak_timer)
+	/// If the stealth portion of the module is active
+	var/stealth_active = FALSE
 
 /obj/item/mod/module/stealth/wraith/on_select_use(atom/target)
 	. = ..()
@@ -592,28 +597,41 @@
 		if(disrupted.on_saboteur(src, 1 MINUTES))
 			mod.add_charge(DEFAULT_CHARGE_DRAIN * 250)
 
+/obj/item/mod/module/stealth/wraith/on_activation()
+	return // Don't activate stealth when the module is activated because the stealth portion of the module is fully passive
+
+/obj/item/mod/module/stealth/wraith/on_deactivation(display_message = TRUE, deleting = FALSE)
+	. = ..()
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
+
 /obj/item/mod/module/stealth/wraith/on_part_activation()
 	start_stealth()
 
 /obj/item/mod/module/stealth/wraith/on_part_deactivation(deleting)
-	if(bumpoff)
-		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
-	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
 	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
+	stealth_active = FALSE
 
 /obj/item/mod/module/stealth/wraith/proc/start_stealth()
-	if(bumpoff)
-		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth))
+	if(!COOLDOWN_FINISHED(src, recloak_timer)) // Prevents being able to bypass the cooldown by disabling and re-enabling the module
+		addtimer(CALLBACK(src, PROC_REF(start_stealth)), recloak_timer)
+		return
+	RegisterSignals(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN), PROC_REF(unstealth))
 	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignals(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth))
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 	drain_power(use_energy_cost)
+	stealth_active = TRUE
 
 /obj/item/mod/module/stealth/wraith/unstealth(datum/source)
+	if(!stealth_active)
+		return
 	. = ..()
 	if(mod.active)
-		addtimer(CALLBACK(src, PROC_REF(start_stealth)), 5 SECONDS)
+		COOLDOWN_START(src, recloak_timer, 20 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(start_stealth)), 20 SECONDS)
+		stealth_active = FALSE
 
 /obj/item/mod/module/stealth/wraith/examine_more(mob/user)
 	. = ..()

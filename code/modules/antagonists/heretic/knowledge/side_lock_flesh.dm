@@ -22,7 +22,7 @@
 		However, you will fall unconscious a short time after casting this spell."
 	gain_text = "My shackles undone in dark fury, their feeble bindings crumble before my power."
 
-	spell_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation
+	action_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation
 	cost = 1
 
 /datum/heretic_knowledge/spell/apetra_vulnera
@@ -32,7 +32,7 @@
 		Wounds a random limb if no limb is sufficiently damaged."
 	gain_text = "Flesh opens, and blood spills. My master seeks sacrifice, and I shall appease."
 
-	spell_to_add = /datum/action/cooldown/spell/pointed/apetra_vulnera
+	action_to_add = /datum/action/cooldown/spell/pointed/apetra_vulnera
 	cost = 1
 
 

@@ -699,7 +699,8 @@
 	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 	if(!istype(helmet))
 		return
-	helmet.AddComponent(/datum/component/hat_stabilizer)
+	// Override pre-existing component
+	helmet.AddComponent(/datum/component/hat_stabilizer, loose_hat = FALSE)
 
 /obj/item/mod/module/hat_stabilizer/on_part_deactivation(deleting = FALSE)
 	if(deleting)
@@ -707,7 +708,8 @@
 	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 	if(!istype(helmet))
 		return
-	qdel(helmet.GetComponent(/datum/component/hat_stabilizer))
+	// Override again!
+	helmet.AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 
 /obj/item/mod/module/hat_stabilizer/syndicate
 	name = "MOD elite hat stabilizer module"
@@ -926,7 +928,7 @@
 	icon_state = "fishing_glove"
 	complexity = 1
 	overlay_state_inactive = "fishing_glove"
-	incompatible_modules = (/obj/item/mod/module/fishing_glove)
+	incompatible_modules = list(/obj/item/mod/module/fishing_glove)
 	required_slots = list(ITEM_SLOT_GLOVES)
 	var/obj/item/fishing_rod/equipped
 

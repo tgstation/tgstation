@@ -4780,7 +4780,7 @@
 "NO" = (
 /obj/machinery/airalarm/directional/west,
 /obj/structure/broken_flooring/singular/always_floorplane/directional/east,
-/obj/item/surgery_tray/full/deployed,
+/obj/effect/spawner/surgery_tray/full/deployed,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "NR" = (
