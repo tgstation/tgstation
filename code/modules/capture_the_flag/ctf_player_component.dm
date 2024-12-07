@@ -24,10 +24,10 @@
 	ckey_reference = player_mob.ckey
 	register_mob()
 
-/datum/component/ctf_player/PostTransfer()
-	if(!istype(parent, /datum/mind))
+/datum/component/ctf_player/PostTransfer(datum/new_parent)
+	if(!istype(new_parent, /datum/mind))
 		return COMPONENT_INCOMPATIBLE
-	var/datum/mind/true_parent = parent
+	var/datum/mind/true_parent = new_parent
 	player_mob = true_parent.current
 	register_mob()
 

@@ -218,7 +218,7 @@
  *
  * Do not call `qdel(src)` from this function, `return COMPONENT_INCOMPATIBLE` instead
  */
-/datum/component/proc/PostTransfer()
+/datum/component/proc/PostTransfer(datum/new_parent)
 	return COMPONENT_INCOMPATIBLE //Do not support transfer by default as you must properly support it
 
 /**
