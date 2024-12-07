@@ -41,9 +41,10 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	else
 		. += "Time To Start: SOON"
 
-	. += "Players: [LAZYLEN(GLOB.clients)]"
+	// . += "Players: [LAZYLEN(GLOB.clients)]"  // BANDASTATION REMOVAL
+	. += "Players Ready: [SSticker.totalPlayersReady]" // BANDASTATION ADD
 	if(client.holder)
-		. += "Players Ready: [SSticker.totalPlayersReady]"
+		// . += "Players Ready: [SSticker.totalPlayersReady]" // BANDASTATION REMOVAL
 		. += "Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
 
 #define SERVER_HOPPER_TRAIT "server_hopper"
