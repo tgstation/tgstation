@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "manufacturing assembling machine crafts junk shells and lizard boots properly, may no longer craft anchored objects (broken check), and sends its crafted stuff at once"

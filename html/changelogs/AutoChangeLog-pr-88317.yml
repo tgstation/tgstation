@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Jetpacks are significantly smoother and nicer to use now - and not affected by lag anymore!"
-  - code_imp: "Cleaned up spacemove/jetpack code a bit and moved some common code to helpers."
-  - refactor: "Wings are now... jetpacks. They behave exactly the same and this should reduce the amount of copypaste code in spacemove significantly."

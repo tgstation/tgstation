@@ -1,4 +1,0 @@
-author: "FlufflesTheDog"
-delete-after: True
-changes:
-  - spellcheck: "paywall firing pins no longer set the gun description to the pin's description on removal"

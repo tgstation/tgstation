@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Removed organ \"refreshing\" from legion cores, magic wands and regenerative crossbreeds so they no longer get rid of your implants"

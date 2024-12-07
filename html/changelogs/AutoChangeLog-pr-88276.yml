@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Surgery trays now have a small chance to become medical toolboxes. Autopsy trays can become coroner toolboxes."
-  - rscadd: "Added a 1 in 1.000.000 chance for a toolbox to have four latches."

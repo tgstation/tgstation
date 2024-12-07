@@ -1,4 +1,0 @@
-author: "SmArtKar, Kapu"
-delete-after: True
-changes:
-  - code_imp: "Implemented caching for icon sizes which should significantly improve mob health performance due to HUDs constantly fetching icons"
