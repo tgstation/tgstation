@@ -77,7 +77,7 @@
 			if(3) //VICTORY ROYALE
 				to_chat(affected_mob, span_hierophant("You win, and the malevolent spirits fade away as well as your wounds."))
 				affected_mob.client.give_award(/datum/award/achievement/jobs/helbitaljanken, affected_mob)
-				affected_mob.revive(HEAL_ALL)
+				affected_mob.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
 				holder.del_reagent(type)
 				return
 
