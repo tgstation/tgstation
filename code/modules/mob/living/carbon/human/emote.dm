@@ -179,11 +179,6 @@
 	vary = TRUE
 	stat_allowed = SOFT_CRIT
 
-/datum/emote/living/carbon/human/cry/can_run_emote(mob/user, status_check, intentional, params)
-	. = ..()
-	if(!user.get_organ_slot(ORGAN_SLOT_EYES))
-		return FALSE
-
 /datum/emote/living/carbon/human/cry/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	var/mob/living/carbon/human/human_user = user

@@ -510,9 +510,10 @@
 
 /datum/emote/living/surrender/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	var/mob/living/living = user
-	living.Paralyze(20 SECONDS)
-	living.remove_status_effect(/datum/status_effect/grouped/surrender)
+	if(isliving(user))
+		var/mob/living/living = user
+		living.Paralyze(20 SECONDS)
+		living.remove_status_effect(/datum/status_effect/grouped/surrender)
 
 /datum/emote/living/sway
 	key = "sway"
