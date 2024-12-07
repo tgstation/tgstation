@@ -224,6 +224,20 @@
 	hitscan_light_color_override = 	COLOR_MOSTLY_PURE_RED
 	muzzle_flash_color_override = COLOR_MOSTLY_PURE_RED
 	impact_light_color_override = COLOR_MOSTLY_PURE_RED
+	damage = 300
+
+/obj/projectile/beam/emitter/hitscan/cascade/on_hit(atom/target, blocked, pierce_hit)
+	if(isliving(target))
+		var/mob/living/mob_target = target
+		mob_target.dust()
+		return
+
+	if(iswallturf(target))
+		var/turf/closed/wall/wall_target = target
+		wall_target.dismantle_wall()
+		return
+
+	return ..()
 
 /obj/projectile/beam/lasertag
 	name = "laser tag beam"
