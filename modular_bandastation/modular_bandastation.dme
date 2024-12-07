@@ -38,3 +38,12 @@
 #include "objects/_objects.dme"
 #include "orderables/_orderables.dme"
 #include "overrides/_overrides.dme"
+
+
+// --- PRIME --- //
+// #define DISABLE_PRIME_MODPACKS
+// Чтобы отлючить модпаки прайма, нужно раскоментить строку "#define DISABLE_PRIME_MODPACKS" выше.
+// Модпаки включены по умолчанию для запуска всех тестов и для этого кода тоже.
+#ifndef DISABLE_PRIME_MODPACKS
+#include "prime_only/_prime_only.dme"
+#endif
