@@ -9,9 +9,6 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
-	light_power = 1
-	light_range = 5
-	light_color = COLOR_VIVID_YELLOW
 	move_resist = INFINITY
 	///All dirs we can expand to
 	var/list/available_dirs = list(NORTH,SOUTH,EAST,WEST,UP,DOWN)
@@ -141,8 +138,6 @@
 
 /obj/cascade_portal/Bumped(atom/movable/hit_object)
 	consume(hit_object)
-	new /obj/effect/particle_effect/sparks(loc)
-	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /**
  * Proc to consume the objects colliding with the portal
@@ -170,9 +165,7 @@
 		consumed_mob.Paralyze(100)
 		consumed_mob.adjustBruteLoss(30)
 		consumed_mob.flash_act(1, TRUE, TRUE)
-
 		new /obj/effect/particle_effect/sparks(consumed_object)
-		playsound(consumed_object, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	else if(isitem(consumed_object))
 		consumed_object.visible_message(span_danger("\The [consumed_object] smacks into \the [src] and disappears out of sight."), null,
 			span_hear("You hear a loud crack as a small distortion passes through you."))
