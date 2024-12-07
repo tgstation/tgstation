@@ -33,19 +33,17 @@
 
 /datum/storage/rped/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = FALSE)
 	//only stock parts permited
-	if(!to_insert.get_part_rating())
-		//items that are permited inside the rped even though they are not stock parts
-		var/static/list/obj/item/exceptions = list(
-			/obj/item/stack,
-			/obj/item/circuitboard/machine,
-			/obj/item/circuitboard/computer,
-		)
+	if(to_insert.get_part_rating())
+		return ..()
 
-		//if its not a exception return FALSE
-		if(!is_type_in_list(to_insert, exceptions))
-			return FALSE
+	//some exceptions to non stock parts
+	var/static/list/obj/item/exceptions = list(
+		/obj/item/stack,
+		/obj/item/circuitboard/machine,
+		/obj/item/circuitboard/computer,
+	)
 
-	return ..()
+	return is_type_in_list(to_insert, exceptions) ? ..() : FALSE
 
 /datum/storage/rped/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
 	if(isstack(to_insert))
