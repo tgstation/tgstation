@@ -141,8 +141,7 @@
 	. = ..()
 	if(hud_icon)
 		var/image/holder = user.hud_list[ID_HUD]
-		var/icon/I = icon(user.icon, user.icon_state, user.dir)
-		holder.pixel_y = I.Height() - ICON_SIZE_Y
+		holder.pixel_y = user.get_cached_height() - ICON_SIZE_Y
 		holder.icon_state = hud_icon
 
 /**

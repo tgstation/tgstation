@@ -1,6 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "Ruins will now correctly spawn their tied ruins in"
-  - bugfix: "The map_logging test now runs proper"
-  - code_imp: "The stacked_lights test now screams with area names too."
