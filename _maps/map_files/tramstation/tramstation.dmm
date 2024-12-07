@@ -3161,10 +3161,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/structure/closet/radiation,
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "arP" = (
@@ -19885,10 +19881,15 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/power_store/cell/high,
 /obj/structure/disposalpipe/segment,
+/obj/structure/table,
+/obj/item/multitool/circuit{
+	pixel_x = 7
+	},
+/obj/item/multitool/circuit,
+/obj/item/multitool/circuit{
+	pixel_x = -8
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "fXY" = (
@@ -22300,12 +22301,8 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/structure/rack,
-/obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/suit/hazardvest,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/module_duplicator,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "gRY" = (
@@ -46961,6 +46958,11 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/station/science/xenobiology)
+"pEb" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/structure/closet/radiation,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "pEe" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -50338,6 +50340,25 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningfoundry)
+"qMJ" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/rack,
+/obj/item/pipe_dispenser,
+/obj/item/clothing/glasses/meson/engine{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/pipe_dispenser,
+/obj/item/pipe_dispenser,
+/obj/item/clothing/glasses/meson/engine,
+/obj/item/clothing/glasses/meson/engine{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "qMQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -54582,21 +54603,9 @@
 	network = list("ss13","engineering");
 	c_tag = "Engineering - Main"
 	},
-/obj/structure/rack,
-/obj/item/clothing/glasses/meson/engine{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/meson/engine,
-/obj/item/clothing/glasses/meson/engine{
-	pixel_x = 4;
-	pixel_y = 6
-	},
-/obj/item/pipe_dispenser,
-/obj/item/pipe_dispenser,
-/obj/item/pipe_dispenser,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/component_printer,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "sne" = (
@@ -60787,6 +60796,9 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
 	},
+/obj/structure/table,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/machinery/cell_charger,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "utk" = (
@@ -101816,7 +101828,7 @@ eTZ
 eTZ
 eTZ
 hJd
-nxT
+pEb
 lfB
 ltq
 bWN
@@ -102582,7 +102594,7 @@ jHP
 kaJ
 eKn
 dIn
-eKn
+qMJ
 jbb
 cyH
 eKn

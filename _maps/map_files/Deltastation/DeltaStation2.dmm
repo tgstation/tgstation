@@ -36949,13 +36949,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/bot,
-/obj/structure/rack,
-/obj/item/lightreplacer{
-	pixel_y = 7
-	},
-/obj/item/storage/box/lights/mixed,
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "jhd" = (
@@ -49644,22 +49640,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "mtf" = (
-/obj/structure/rack,
-/obj/item/book/manual/wiki/engineering_hacking{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/book/manual/wiki/engineering_guide,
-/obj/item/book/manual/wiki/engineering_construction{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/multitool,
-/obj/effect/turf_decal/bot,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/module_duplicator,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "mti" = (
@@ -51505,8 +51490,6 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "mPr" = (
-/obj/machinery/recharge_station,
-/obj/effect/turf_decal/bot/right,
 /obj/machinery/camera/directional/south{
 	c_tag = "Engineering - Break Room";
 	name = "engineering camera"
@@ -51515,6 +51498,13 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
+/obj/item/multitool/circuit{
+	pixel_x = -8
+	},
+/obj/item/multitool/circuit{
+	pixel_x = 7
+	},
+/obj/item/multitool/circuit,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "mPu" = (
@@ -78050,9 +78040,6 @@
 /turf/open/floor/wood/large,
 /area/station/service/barber)
 "tBm" = (
-/obj/machinery/recharge_station,
-/obj/effect/landmark/start/hangover,
-/obj/effect/turf_decal/bot/left,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -78060,6 +78047,7 @@
 	c_tag = "Engineering - Break Room";
 	name = "engineering camera"
 	},
+/obj/machinery/component_printer,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "tBs" = (

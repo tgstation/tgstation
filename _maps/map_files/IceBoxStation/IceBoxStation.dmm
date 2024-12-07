@@ -550,10 +550,14 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
 "akz" = (
-/obj/structure/chair/sofa/corp/left{
-	dir = 1
+/obj/structure/table,
+/obj/item/multitool/circuit{
+	pixel_x = 7
 	},
-/obj/effect/landmark/start/hangover,
+/obj/item/multitool/circuit,
+/obj/item/multitool/circuit{
+	pixel_x = -8
+	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "akD" = (
@@ -37842,10 +37846,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "kVM" = (
-/obj/structure/chair/sofa/corp/right{
-	dir = 1
-	},
-/obj/effect/landmark/start/hangover,
+/obj/machinery/module_duplicator,
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "kVN" = (
@@ -78099,9 +78101,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "wHj" = (
-/obj/structure/chair/sofa/corp{
-	dir = 1
-	},
+/obj/machinery/component_printer,
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "wHH" = (
@@ -80440,6 +80441,7 @@
 /obj/item/multitool{
 	pixel_x = 8
 	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "xpw" = (
