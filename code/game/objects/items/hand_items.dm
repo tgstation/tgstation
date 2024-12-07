@@ -135,7 +135,8 @@
 	to_chat(nose_thief, span_danger("Got [nose_thief]'s nose!"))
 	nose_owner.emote("gasp")
 	nose_owner.throw_alert(ALERT_NOSE_STOLEN, /atom/movable/screen/alert/nose_stolen)
-	ADD_TRAIT(nose_owner, TRAIT_NOSE_STOLEN, "emote")
+	ADD_TRAIT(nose_owner, TRAIT_NOSE_STOLEN, "nose_stolen")
+	ADD_TRAIT(nose_owner, TRAIT_ANOSMIA, "nose_stolen")
 	stolen_nose.nose_owner = nose_owner
 	stolen_nose.name = "[nose_owner]'s nose" //named nose :troll:
 	nose_owner.add_mood_event(/datum/mood_event/no_nose)
@@ -159,7 +160,8 @@
 	nose_owner.add_mood_event(/datum/mood_event/nose_back)
 	to_chat(nose_owner, span_notice("My nose is back!"))
 	nose_owner.clear_alert(ALERT_NOSE_STOLEN)
-	REMOVE_TRAIT(nose_owner, TRAIT_NOSE_STOLEN, "emote")
+	REMOVE_TRAIT(nose_owner, TRAIT_NOSE_STOLEN, "nose_stolen")
+	REMOVE_TRAIT(nose_owner, TRAIT_ANOSMIA, "nose_stolen")
 	qdel(src)
 
 /obj/item/hand_item/noogie
