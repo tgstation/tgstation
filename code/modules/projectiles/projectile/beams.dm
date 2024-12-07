@@ -216,6 +216,15 @@
 	impact_light_range = 2.5
 	impact_light_color_override = COLOR_LIME
 
+/obj/projectile/beam/emitter/hitscan/cascade
+	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter/cascade
+	tracer_type = /obj/effect/projectile/tracer/laser/emitter/cascade
+	impact_type = /obj/effect/projectile/impact/laser/emitter/cascade
+	light_color = COLOR_MOSTLY_PURE_RED
+	hitscan_light_color_override = 	COLOR_MOSTLY_PURE_RED
+	muzzle_flash_color_override = COLOR_MOSTLY_PURE_RED
+	impact_light_color_override = COLOR_MOSTLY_PURE_RED
+
 /obj/projectile/beam/lasertag
 	name = "laser tag beam"
 	icon_state = "omnilaser"

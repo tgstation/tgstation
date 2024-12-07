@@ -53,5 +53,5 @@
 			podspawn(list(
 				"target" = get_turf(user),
 				"style" = /datum/pod_style/syndicate,
-				"spawn" = /obj/item/destabilizing_crystal,
+				"spawn" = /obj/item/cascade_emitter_kit,
 			))

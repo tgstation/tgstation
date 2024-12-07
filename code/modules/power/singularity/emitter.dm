@@ -49,6 +49,8 @@
 	var/list/gun_properties
 	//only used to always have the gun properties on non-letal (no other instances found)
 	var/mode = FALSE
+	///Set if a cascade kit was added to the emitter. Overrides initial projectile type
+	var/contains_cascade_kit = FALSE
 
 	// The following 3 vars are mostly for the prototype
 	///manual shooting? (basically you hop onto the emitter and choose the shooting direction, is very janky since you can only shoot at the 8 directions and i don't think is ever used since you can't build those)
@@ -346,6 +348,14 @@
 	if(panel_open && !gun && istype(item,/obj/item/gun/energy))
 		if(integrate(item,user))
 			return
+	if(panel_open && istype(item, /obj/item/cascade_emitter_kit))
+		visible_message(span_warning("[user] tries to install a suspicious device into \the [src]..."))
+		if(do_after(user, 5 SECONDS, src))
+			visible_message(span_danger("[user] successfully installs a device into \the [src]."))
+			contains_cascade_kit = TRUE
+			set_projectile()
+			qdel(item)
+			return
 	return ..()
 
 
@@ -378,7 +388,7 @@
 			projectile_type = gun_properties["lethal_projectile"]
 			projectile_sound = gun_properties["lethal_projectile_sound"]
 		return
-	projectile_type = initial(projectile_type)
+	projectile_type = contains_cascade_kit ? /obj/projectile/beam/emitter/hitscan/cascade : initial(projectile_type)
 	projectile_sound = initial(projectile_sound)
 
 /obj/machinery/power/emitter/emag_act(mob/user, obj/item/card/emag/emag_card)

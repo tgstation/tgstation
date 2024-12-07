@@ -88,7 +88,7 @@
 		to_chat(user, span_warning("You poke [src] with [item]'s hyper-noblium tips. Nothing happens."))
 		return
 
-	if(istype(item, /obj/item/destabilizing_crystal))
+/*	if(istype(item, /obj/item/destabilizing_crystal))
 		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
 
 		if(!is_main_engine)
@@ -110,7 +110,7 @@
 			external_power_trickle += 500
 			log_activation(who = user, how = destabilizing_crystal)
 			qdel(destabilizing_crystal)
-		return
+		return */
 
 	return ..()
 

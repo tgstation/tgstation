@@ -58,5 +58,8 @@
 	name = "emitter beam"
 	icon_state = "emitter"
 
+/obj/effect/projectile/tracer/laser/emitter/cascade
+	icon_state = "eye"
+
 /obj/effect/projectile/tracer/sniper
 	icon_state = "sniper"

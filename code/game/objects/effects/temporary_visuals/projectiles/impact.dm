@@ -41,6 +41,9 @@
 	name = "emitter impact"
 	icon_state = "impact_emitter"
 
+/obj/effect/projectile/impact/laser/emitter/cascade
+	icon_state = "impact_eye"
+
 /obj/effect/projectile/impact/solar
 	name = "solar impact"
 	icon_state = "impact_solar"
