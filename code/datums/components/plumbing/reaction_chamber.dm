@@ -15,12 +15,16 @@
 
 /datum/component/plumbing/reaction_chamber/send_request(dir)
 	var/obj/machinery/plumbing/reaction_chamber/chamber = parent
+
 	if(chamber.emptying)
 		return
 
 	//take in reagents
 	var/present_amount
 	var/diff
+
+	chamber.catalyst_beaker.reagents.trans_to(chamber, chamber.catalyst_beaker.reagents.total_volume)
+
 	for(var/required_reagent in chamber.required_reagents)
 		//find how much amount is already present if at all and get the reagent reference
 		present_amount = 0

@@ -22,8 +22,18 @@
 	///towards which temperature do we build (except during draining)?
 	var/target_temperature = 300
 
+	///beaker that holds catalysts (all accretions by john "lovegreenstuff" sh*tcoder are gonna be completely wack. gaze upon my works ye mighty and despair)
+	var/obj/item/reagent_containers/cup/beaker/large/catalyst_beaker
+	///list of catalyst reagents to take
+	var/list/catalist = list()
+
+/obj/machinery/plumbing/reaction_chamber/Destroy()
+	QDEL_NULL(catalyst_beaker)
+	return ..()
+
 /obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt, layer)
 	. = ..()
+	catalyst_beaker = new (src)
 	AddComponent(/datum/component/plumbing/reaction_chamber, bolt, layer)
 
 /obj/machinery/plumbing/reaction_chamber/create_reagents(max_vol, flags)
@@ -42,9 +52,17 @@
 /obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 
-	if(!holder.total_volume && emptying) //we were emptying, but now we aren't
-		emptying = FALSE
-		holder.flags |= NO_REACT
+	if(emptying)
+		for(var/catalyst in catalist)
+			holder.trans_to(catalyst_beaker, min(holder.get_reagent_amount(catalyst), catalist[catalyst]), target_id = catalyst)
+			if(min(holder.get_reagent_amount(catalyst), catalist[catalyst]))
+				message_admins("Intaking [catalyst]. [holder.get_reagent_amount(catalyst)] || [catalist[catalyst]]")
+
+		if(!holder.total_volume) //we were emptying, but now we aren't
+
+			emptying = FALSE
+			holder.flags |= NO_REACT
+
 	return NONE
 
 /obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
@@ -81,11 +99,21 @@
 	var/list/reagents_data = list()
 	for(var/datum/reagent/required_reagent as anything in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
 		var/list/reagent_data = list()
+		if(catalist.Find(required_reagent))
+			continue
 		reagent_data["name"] = initial(required_reagent.name)
 		reagent_data["volume"] = required_reagents[required_reagent]
 		reagents_data += list(reagent_data)
 
+	var/list/catalyst_data = list()
+	for(var/datum/reagent/required_catalyst as anything in catalist)
+		var/list/reagent_data = list()
+		reagent_data["name"] = initial(required_catalyst.name)
+		reagent_data["volume"] = catalist[required_catalyst]
+		catalyst_data += list(reagent_data)
+
 	.["reagents"] = reagents_data
+	.["catalysts"] = catalyst_data
 	.["emptying"] = emptying
 	.["temperature"] = round(reagents.chem_temp, 0.1)
 	.["targetTemp"] = target_temperature
@@ -126,6 +154,30 @@
 			var/target = text2num(params["target"])
 			if(!isnull(target))
 				target_temperature = clamp(target, 0, 1000)
+				return TRUE
+			return FALSE
+
+		if("catalyst")
+			var/reagent = get_chem_id(params["chem"])
+			message_admins("[get_chem_id(params["chem"])]")
+
+			if(!reagent)
+				message_admins("Fuck. [get_chem_id(params["chem"])]")
+				return FALSE
+
+			if(reagent && !catalist.Find(reagent))
+				catalist[reagent] = required_reagents[reagent]
+				message_admins("[catalist[reagent]], [reagent]")
+				return TRUE
+			else
+				message_admins("Fuck. [get_chem_id(params["chem"])] || [catalist.Find(reagent)]")
+				return FALSE
+			return FALSE
+
+		if("catremove")
+			var/reagent = get_chem_id(params["chem"])
+			if(reagent)
+				catalist.Remove(reagent)
 				return TRUE
 			return FALSE
 

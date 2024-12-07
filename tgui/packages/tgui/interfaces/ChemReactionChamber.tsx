@@ -36,6 +36,7 @@ export const ChemReactionChamber = (props) => {
     reagentAlkaline,
   } = data;
   const reagents = data.reagents || [];
+  const catalysts = data.catalysts || [];
   return (
     <Window width={290} height={400}>
       <Window.Content>
@@ -185,11 +186,12 @@ export const ChemReactionChamber = (props) => {
                     </LabeledList.Item>
                   </LabeledList>
                 </Stack.Item>
+
                 <Stack.Item>
                   <Stack fill>
                     <Stack.Item grow>
                       <Button
-                        content="Add Reagent"
+                        content="help"
                         color="good"
                         icon="plus"
                         onClick={() =>
@@ -213,6 +215,7 @@ export const ChemReactionChamber = (props) => {
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>
+
                 <Stack.Item>
                   <Stack vertical>
                     {reagents.map((reagent) => (
@@ -235,10 +238,51 @@ export const ChemReactionChamber = (props) => {
                               }
                             />
                           </Stack.Item>
+                          <Stack.Item>
+                            <Button
+                              content="C"
+                              color="average"
+                              onClick={() =>
+                                act('catalyst', {
+                                  chem: reagent.name,
+                                })
+                              }
+                            />
+                          </Stack.Item>
                         </Stack>
                       </Stack.Item>
                     ))}
                   </Stack>
+
+                  <Stack.Item>
+                    <Stack vertical>
+                      {catalysts.map((reagent) => (
+                        <Stack.Item key={reagent.name}>
+                          <Stack fill>
+                            <Stack.Item mt={0.25} textColor="label">
+                              {reagent.name + ':'}
+                            </Stack.Item>
+                            <Stack.Item mt={0.25} grow>
+                              {reagent.volume}
+                            </Stack.Item>
+                            <Stack.Item>
+                              <Button
+                                content="C"
+                                color="bad"
+                                onClick={() =>
+                                  act('catremove', {
+                                    chem: reagent.name,
+                                  })
+                                }
+                              />
+                            </Stack.Item>
+
+                          </Stack>
+                        </Stack.Item>
+                      ))}
+                     </Stack>
+                  </Stack.Item>
+
                 </Stack.Item>
               </Stack>
             </Section>
