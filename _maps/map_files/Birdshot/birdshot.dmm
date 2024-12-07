@@ -1682,6 +1682,11 @@
 	},
 /turf/open/misc/sandy_dirt,
 /area/station/security/tram)
+"aGE" = (
+/obj/structure/table,
+/obj/item/controller,
+/turf/open/floor/iron/smooth,
+/area/station/engineering/main)
 "aGH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -7221,15 +7226,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/bridge)
 "cLa" = (
-/obj/structure/table,
-/obj/item/multitool/circuit{
-	pixel_x = 7
-	},
-/obj/item/multitool/circuit,
-/obj/item/multitool/circuit{
-	pixel_x = -8
-	},
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "cLg" = (
@@ -11171,7 +11167,15 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "ehd" = (
-/obj/machinery/component_printer,
+/obj/structure/table,
+/obj/item/multitool/circuit{
+	pixel_x = 7
+	},
+/obj/item/multitool/circuit,
+/obj/item/multitool/circuit{
+	pixel_x = -8
+	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "ehf" = (
@@ -16409,13 +16413,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
-"fVj" = (
-/obj/effect/turf_decal/siding/wideplating{
-	dir = 8
-	},
-/obj/structure/closet/crate/solarpanel_small,
-/turf/open/floor/wood,
-/area/station/engineering/main)
 "fVl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -21942,10 +21939,6 @@
 "hLc" = (
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
-"hLs" = (
-/obj/machinery/module_duplicator,
-/turf/open/floor/iron/smooth,
-/area/station/engineering/main)
 "hLx" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
@@ -23931,6 +23924,30 @@
 "isj" = (
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/aisat/teleporter)
+"iso" = (
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
+/obj/item/screwdriver,
+/obj/structure/table/greyscale,
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/stack/cable_coil/cut{
+	pixel_x = 11;
+	pixel_y = 7
+	},
+/obj/item/stack/cable_coil,
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/turf/open/floor/wood,
+/area/station/engineering/main)
 "ist" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -24945,26 +24962,9 @@
 /area/station/science/ordnance/testlab)
 "iHw" = (
 /obj/effect/turf_decal/siding/wideplating{
-	dir = 4
+	dir = 8
 	},
-/obj/item/screwdriver,
-/obj/structure/table/greyscale,
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -5;
-	pixel_y = 6
-	},
-/obj/item/stack/cable_coil/cut{
-	pixel_x = 11;
-	pixel_y = 7
-	},
-/obj/item/stack/cable_coil,
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/obj/item/electronics/airlock,
-/obj/item/electronics/airlock,
-/obj/item/electronics/airlock,
+/obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/wood,
 /area/station/engineering/main)
 "iHz" = (
@@ -35606,6 +35606,12 @@
 /area/station/command/heads_quarters/cmo)
 "mbG" = (
 /obj/structure/table,
+/obj/item/integrated_circuit/loaded/hello_world{
+	pixel_x = -11
+	},
+/obj/item/integrated_circuit/loaded/speech_relay{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "mbP" = (
@@ -43134,6 +43140,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "oOs" = (
+/obj/machinery/component_printer,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "oOv" = (
@@ -49091,11 +49098,6 @@
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos/office)
-"qPv" = (
-/obj/structure/table,
-/obj/item/controller,
-/turf/open/floor/iron/smooth,
-/area/station/engineering/main)
 "qPJ" = (
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron,
@@ -51537,6 +51539,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
+"rCB" = (
+/obj/machinery/module_duplicator,
+/turf/open/floor/iron/smooth,
+/area/station/engineering/main)
 "rCS" = (
 /obj/structure/chair/stool/bar/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -87712,8 +87718,8 @@ eCJ
 vdt
 pOi
 kEo
-hLs
-oOs
+rCB
+cLa
 lUG
 djX
 bNq
@@ -87969,9 +87975,9 @@ aIY
 kBC
 iyn
 kEo
-ehd
 oOs
-oOs
+cLa
+cLa
 vvs
 bNq
 hwr
@@ -88226,9 +88232,9 @@ iCF
 sHO
 vOL
 kEo
+ehd
 cLa
-oOs
-oOs
+cLa
 mbG
 bNq
 bNq
@@ -88483,9 +88489,9 @@ nmH
 sHO
 ojz
 hlC
-qPv
-oOs
-oOs
+aGE
+cLa
+cLa
 srx
 jmN
 qUJ
@@ -88740,7 +88746,7 @@ bKl
 cqM
 dgm
 kEo
-fVj
+iHw
 hkd
 hkd
 hkd
@@ -89254,7 +89260,7 @@ btV
 lMl
 ayR
 kEo
-iHw
+iso
 aQX
 aQX
 aQX

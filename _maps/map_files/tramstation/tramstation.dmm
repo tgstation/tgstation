@@ -3161,6 +3161,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "arP" = (
@@ -19889,6 +19890,12 @@
 /obj/item/multitool/circuit,
 /obj/item/multitool/circuit{
 	pixel_x = -8
+	},
+/obj/item/integrated_circuit/loaded/hello_world{
+	pixel_x = -11
+	},
+/obj/item/integrated_circuit/loaded/speech_relay{
+	pixel_y = 6
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -44038,6 +44045,25 @@
 /obj/item/folder/yellow,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
+"oAO" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/rack,
+/obj/item/pipe_dispenser,
+/obj/item/clothing/glasses/meson/engine{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/pipe_dispenser,
+/obj/item/pipe_dispenser,
+/obj/item/clothing/glasses/meson/engine,
+/obj/item/clothing/glasses/meson/engine{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "oAV" = (
 /turf/closed/wall,
 /area/station/cargo/office)
@@ -46958,11 +46984,6 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/station/science/xenobiology)
-"pEb" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/structure/closet/radiation,
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "pEe" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -50340,25 +50361,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningfoundry)
-"qMJ" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
-	},
-/obj/structure/rack,
-/obj/item/pipe_dispenser,
-/obj/item/clothing/glasses/meson/engine{
-	pixel_x = 4;
-	pixel_y = 6
-	},
-/obj/item/pipe_dispenser,
-/obj/item/pipe_dispenser,
-/obj/item/clothing/glasses/meson/engine,
-/obj/item/clothing/glasses/meson/engine{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "qMQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -101828,7 +101830,7 @@ eTZ
 eTZ
 eTZ
 hJd
-pEb
+nxT
 lfB
 ltq
 bWN
@@ -102594,7 +102596,7 @@ jHP
 kaJ
 eKn
 dIn
-qMJ
+oAO
 jbb
 cyH
 eKn

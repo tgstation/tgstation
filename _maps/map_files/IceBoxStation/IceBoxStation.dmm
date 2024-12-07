@@ -80442,6 +80442,12 @@
 	pixel_x = 8
 	},
 /obj/structure/table,
+/obj/item/integrated_circuit/loaded/speech_relay{
+	pixel_y = 6
+	},
+/obj/item/integrated_circuit/loaded/hello_world{
+	pixel_x = -11
+	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "xpw" = (

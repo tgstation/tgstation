@@ -51505,6 +51505,7 @@
 	pixel_x = 7
 	},
 /obj/item/multitool/circuit,
+/obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "mPu" = (
@@ -55165,6 +55166,12 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
+	},
+/obj/item/integrated_circuit/loaded/speech_relay{
+	pixel_y = 6
+	},
+/obj/item/integrated_circuit/loaded/hello_world{
+	pixel_x = -11
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)

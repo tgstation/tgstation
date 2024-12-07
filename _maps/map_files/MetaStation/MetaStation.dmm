@@ -13176,15 +13176,9 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "eKw" = (
+/obj/machinery/component_printer,
 /obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/structure/table,
-/obj/item/integrated_circuit/loaded/hello_world{
-	pixel_x = -11
-	},
-/obj/item/integrated_circuit/loaded/speech_relay{
-	pixel_y = 6
+	dir = 8
 	},
 /turf/open/floor/iron/checker,
 /area/station/engineering/storage_shared)
@@ -24195,8 +24189,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "iHy" = (
-/turf/closed/wall/r_wall,
-/area/station/engineering/storage_shared)
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
 "iHD" = (
 /turf/closed/wall/r_wall,
 /area/station/security/courtroom)
@@ -27854,7 +27849,6 @@
 /obj/item/multitool{
 	pixel_x = 8
 	},
-/obj/item/controller,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -39258,8 +39252,10 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/visit)
 "nWl" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "nWu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -57910,10 +57906,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "uwe" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/turf/open/floor/iron,
+/turf/closed/wall/r_wall,
 /area/station/engineering/storage_shared)
 "uwh" = (
 /obj/structure/chair/comfy{
@@ -59311,8 +59304,14 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/multitool/circuit,
+/obj/item/multitool/circuit{
+	pixel_x = -8
+	},
+/obj/item/multitool/circuit{
+	pixel_x = 7
+	},
 /obj/structure/table,
-/obj/item/controller,
 /turf/open/floor/iron/checker,
 /area/station/engineering/storage_shared)
 "uUX" = (
@@ -62326,9 +62325,9 @@
 	},
 /area/station/medical/treatment_center)
 "vSC" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/maintenance/department/engine)
+/area/station/engineering/storage_shared)
 "vSI" = (
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
@@ -66867,10 +66866,17 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "xyw" = (
-/obj/machinery/component_printer,
 /obj/effect/turf_decal/tile/yellow{
-	dir = 8
+	dir = 4
 	},
+/obj/structure/table,
+/obj/item/integrated_circuit/loaded/hello_world{
+	pixel_x = -11
+	},
+/obj/item/integrated_circuit/loaded/speech_relay{
+	pixel_y = 6
+	},
+/obj/item/controller,
 /turf/open/floor/iron/checker,
 /area/station/engineering/storage_shared)
 "xyz" = (
@@ -111277,7 +111283,7 @@ kYG
 nJM
 lOg
 pom
-uwe
+nWl
 uUL
 qsv
 bjH
@@ -111788,12 +111794,12 @@ fJP
 ycw
 uJL
 kYG
-eKw
-pom
-pom
-pom
 xyw
-vSC
+pom
+pom
+pom
+eKw
+iHy
 kDp
 ayr
 dRA
@@ -112307,7 +112313,7 @@ uhu
 wWN
 wLw
 oJH
-vSC
+iHy
 pHj
 aap
 wsI
@@ -112559,9 +112565,9 @@ rtQ
 mBo
 hJi
 kYG
-iHy
-nWl
-nWl
+uwe
+vSC
+vSC
 svo
 jXz
 bDW
@@ -112818,9 +112824,9 @@ wBV
 rOK
 dgd
 dgj
-nWl
-nWl
-iHy
+vSC
+vSC
+uwe
 fJy
 fJy
 pnJ
