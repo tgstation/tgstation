@@ -84,8 +84,8 @@
 	TEST_ASSERT_NOTEQUAL(cloner_jr.type, aquarium.sterile.type, "The test aquarium's cloner fish mated with the sterile fish")
 
 /obj/item/fish_tank/reproduction
-	var/obj/item/fish/testdummy/fish
-	var/obj/item/fish/testdummy/partner
+	var/obj/item/fish/testdummy/small/fish
+	var/obj/item/fish/testdummy/small/partner
 
 /obj/item/fish_tank/reproduction/Initialize(mapload)
 	. = ..()
@@ -134,6 +134,10 @@
 	fish_flags = parent_type::fish_flags & ~(FISH_FLAG_SHOW_IN_CATALOG|FISH_FLAG_EXPERIMENT_SCANNABLE)
 	fish_id_redirect_path = /obj/item/fish/goldfish //Stops SSfishing from complaining
 	var/expected_num_fillets = 0 //used to know how many fillets should be gotten out of this fish
+
+/obj/item/fish/testdummy/small
+	// The parent type is too big to reproduce inside the more compact fish tank
+	average_size = /obj/item/fish_tank::max_total_size * 0.2
 
 /obj/item/fish/testdummy/add_fillet_type()
 	expected_num_fillets = ..()
