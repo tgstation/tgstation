@@ -136,3 +136,7 @@
 /datum/loadout_item/belts/deforest_surgical
 	name = "Firest Responder Med-kit"
 	item_path = /obj/item/storage/backpack/duffelbag/deforest_surgical
+
+/datum/loadout_item/belts/crusader_belt
+	name = "Sword Belt & Sheath"
+	item_path = /obj/item/storage/belt/crusader
