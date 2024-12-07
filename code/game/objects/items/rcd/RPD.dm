@@ -9,7 +9,7 @@
 #define DESTROY_MODE (1<<2)
 #define REPROGRAM_MODE (1<<3)
 
-///Maximum number of pipe layers the RPED can support
+///Maximum number of pipe layers the RPD can support
 #define MAX_PIPE_LAYERS 5
 
 ///Converts the pipe layer into a bitflag so we can append multiple layers into 1 bitfield
