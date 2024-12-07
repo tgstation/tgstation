@@ -828,7 +828,6 @@
 	var/datum/dimension_theme/shifter = SSmaterials.dimensional_themes[new_theme_path]
 	for(var/turf/shiftee in range(1, user))
 		shifter.apply_theme(shiftee, show_effect = TRUE)
-	qdel(shifter)
 	// prevent *total* spam conversion
 	min_cooldown += 2 SECONDS
 	max_cooldown += 2 SECONDS
