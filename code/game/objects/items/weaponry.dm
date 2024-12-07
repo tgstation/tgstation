@@ -1190,7 +1190,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/static/list/alt_continuous = list("stabs", "pierces", "impales")
 	var/static/list/alt_simple = list("stab", "pierce", "impale")
 
-/obj/item/melee/moonlit_greatsword/Initialize(mapload)
+/obj/item/melee/moonlight_greatsword/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
