@@ -1,3 +1,8 @@
+///String to access turbine part typepath to upgrade
+#define TURBINE_UPGRADE_PART "part"
+///String to access turbine part required amount to upgrade
+#define TURBINE_UPGRADE_AMOUNT "amount"
+
 /obj/item/turbine_parts
 	name = "turbine parts"
 	desc = "you really should call an admin"
@@ -21,8 +26,8 @@
 
 	var/list/required_parts = get_tier_upgrades()
 	if(length(required_parts))
-		var/obj/item/stack/material = required_parts["part"]
-		. += span_notice("Can be upgraded with [required_parts["amount"]] [initial(material.name)] sheets.")
+		var/obj/item/stack/material = required_parts[TURBINE_UPGRADE_PART]
+		. += span_notice("Can be upgraded with [required_parts[TURBINE_UPGRADE_AMOUNT]] [initial(material.name)] sheets.")
 	else
 		. += span_notice("Is already at max tier.")
 
@@ -34,11 +39,11 @@
 
 	switch(current_tier)
 		if(TURBINE_PART_TIER_ONE)
-			return list("part" = /obj/item/stack/sheet/plasteel, "amount" = 10)
+			return list(TURBINE_UPGRADE_PART = /obj/item/stack/sheet/plasteel, TURBINE_UPGRADE_AMOUNT = 10)
 		if(TURBINE_PART_TIER_TWO)
-			return list("part" = /obj/item/stack/sheet/mineral/titanium, "amount" = 10)
+			return list(TURBINE_UPGRADE_PART = /obj/item/stack/sheet/mineral/titanium, TURBINE_UPGRADE_AMOUNT = 10)
 		if(TURBINE_PART_TIER_THREE)
-			return list("part" = /obj/item/stack/sheet/mineral/metal_hydrogen, "amount" = 5)
+			return list(TURBINE_UPGRADE_PART = /obj/item/stack/sheet/mineral/metal_hydrogen, TURBINE_UPGRADE_AMOUNT = 5)
 
 /obj/item/turbine_parts/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
 	. = NONE
@@ -49,11 +54,11 @@
 		return ITEM_INTERACT_FAILURE
 
 	var/obj/item/stack/sheet/material = attacking_item
-	if(!istype(material, required_parts["part"]))
+	if(!istype(material, required_parts[TURBINE_UPGRADE_PART]))
 		balloon_alert(user, "incorrect part!")
 		return ITEM_INTERACT_FAILURE
 
-	var/amount = required_parts["amount"]
+	var/amount = required_parts[TURBINE_UPGRADE_AMOUNT]
 	if(material.amount < amount)
 		balloon_alert(user, "requires [amount] sheets!")
 		return ITEM_INTERACT_FAILURE
@@ -89,8 +94,11 @@
 /obj/item/turbine_parts/stator/get_tier_upgrades()
 	switch(current_tier)
 		if(TURBINE_PART_TIER_ONE)
-			return list("part" = /obj/item/stack/sheet/mineral/titanium, "amount" = 15)
+			return list(TURBINE_UPGRADE_PART = /obj/item/stack/sheet/mineral/titanium, TURBINE_UPGRADE_AMOUNT = 15)
 		if(TURBINE_PART_TIER_TWO)
-			return list("part" = /obj/item/stack/sheet/mineral/metal_hydrogen, "amount" = 15)
+			return list(TURBINE_UPGRADE_PART = /obj/item/stack/sheet/mineral/metal_hydrogen, TURBINE_UPGRADE_AMOUNT = 15)
 		if(TURBINE_PART_TIER_THREE)
-			return list("part" = /obj/item/stack/sheet/mineral/zaukerite, "amount" = 10)
+			return list(TURBINE_UPGRADE_PART = /obj/item/stack/sheet/mineral/zaukerite, TURBINE_UPGRADE_AMOUNT = 10)
+
+#undef TURBINE_UPGRADE_PART
+#undef TURBINE_UPGRADE_AMOUNT
