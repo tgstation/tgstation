@@ -318,8 +318,8 @@ SUBSYSTEM_DEF(shuttle)
 /// Returns TRUE if we can. Otherwise, returns a string detailing the problem.
 /datum/controller/subsystem/shuttle/proc/canEvac()
 	var/shuttle_refuel_delay = CONFIG_GET(number/shuttle_refuel_delay)
-	if(world.time - SSticker.round_start_time < shuttle_refuel_delay)
-		return "The emergency shuttle is refueling. Please wait [DisplayTimeText(shuttle_refuel_delay - (world.time - SSticker.round_start_time))] before attempting to call."
+	if(STATION_TIME_PASSED() < shuttle_refuel_delay)
+		return "The emergency shuttle is refueling. Please wait [DisplayTimeText(shuttle_refuel_delay - (STATION_TIME_PASSED()))] before attempting to call."
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)

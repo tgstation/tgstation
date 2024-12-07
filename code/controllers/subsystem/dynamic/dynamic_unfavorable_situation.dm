@@ -42,7 +42,7 @@
 		if (!ruleset.acceptable(GLOB.alive_player_list.len, threat_level))
 			continue
 
-		if (ruleset.minimum_round_time > world.time - SSticker.round_start_time)
+		if (ruleset.minimum_round_time > STATION_TIME_PASSED())
 			continue
 
 		if(istype(ruleset, /datum/dynamic_ruleset/midround/from_ghosts) && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT))

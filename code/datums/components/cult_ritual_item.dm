@@ -288,8 +288,8 @@
 		return
 
 	if(ispath(rune_to_scribe, /obj/effect/rune/apocalypse))
-		if((world.time - SSticker.round_start_time) <= 6000)
-			var/wait = 6000 - (world.time - SSticker.round_start_time)
+		if((STATION_TIME_PASSED()) <= 6000)
+			var/wait = 6000 - (STATION_TIME_PASSED())
 			to_chat(cultist, span_cult_italic("The veil is not yet weak enough for this rune - it will be available in [DisplayTimeText(wait)]."))
 			return
 		if(!check_if_in_ritual_site(cultist, user_team, TRUE))

@@ -56,8 +56,8 @@
 			log_dynamic("FAIL: [ruleset] is too expensive, and cannot be bought. Midround budget: [mid_round_budget], ruleset cost: [ruleset.cost]")
 			continue
 
-		if (ruleset.minimum_round_time > world.time - SSticker.round_start_time)
-			log_dynamic("FAIL: [ruleset] is trying to run too early. Minimum round time: [ruleset.minimum_round_time], current round time: [world.time - SSticker.round_start_time]")
+		if (ruleset.minimum_round_time > STATION_TIME_PASSED())
+			log_dynamic("FAIL: [ruleset] is trying to run too early. Minimum round time: [ruleset.minimum_round_time], current round time: [STATION_TIME_PASSED()]")
 			continue
 
 		// If admins have disabled dynamic from picking from the ghost pool
