@@ -203,7 +203,7 @@
 		// BANDASTATION END
 	)
 
-/obj/item/organ/tongue/lizard/New(class, timer, datum/mutation/human/copymut)
+/obj/item/organ/tongue/lizard/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 

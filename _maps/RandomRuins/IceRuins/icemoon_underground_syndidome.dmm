@@ -3503,7 +3503,7 @@
 /area/ruin/syndibiodome)
 "Pw" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 5
 	},

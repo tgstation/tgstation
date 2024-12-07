@@ -130,7 +130,7 @@
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/light/small/directional/south,
 /obj/structure/table/reinforced,
-/obj/item/surgery_tray/full/morgue,
+/obj/effect/spawner/surgery_tray/full/morgue,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "adL" = (
@@ -10716,7 +10716,7 @@
 /obj/machinery/camera/autoname/directional/north,
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/status_display/ai/directional/west,
-/obj/item/surgery_tray/full/deployed,
+/obj/effect/spawner/surgery_tray/full/deployed,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/theatre)
 "dZk" = (
@@ -34878,7 +34878,7 @@
 /area/station/tcommsat/server)
 "lPO" = (
 /obj/structure/table,
-/obj/item/surgery_tray/full{
+/obj/effect/spawner/surgery_tray/full{
 	pixel_y = -5
 	},
 /obj/item/wirecutters{

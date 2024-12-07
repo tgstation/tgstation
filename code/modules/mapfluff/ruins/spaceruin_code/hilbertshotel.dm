@@ -392,7 +392,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
-	has_gravity = TRUE
+	default_gravity = STANDARD_GRAVITY
 	area_flags = NOTELEPORT | HIDDEN_AREA
 	static_lighting = TRUE
 	ambientsounds = list('sound/ambience/ruin/servicebell.ogg')
@@ -483,7 +483,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
 	area_flags = HIDDEN_AREA | NOTELEPORT | UNIQUE_AREA
-	has_gravity = TRUE
+	default_gravity = STANDARD_GRAVITY
 
 /obj/item/abstracthotelstorage
 	anchored = TRUE
