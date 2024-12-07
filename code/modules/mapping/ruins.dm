@@ -214,8 +214,7 @@
 				ruins_available -= R
 
 	if(PERFORM_ALL_TESTS(log_mapping))
-		log_mapping("List of corresponding Z-Levels are as follows:")
-		log_mapping(gather_z_level_information())
+		log_mapping("Ruin loader [ruins_type] finished placed [placed_ruins]/[ruins.len] with [budget] left to spend.")
 		return
 
 	log_world("Ruin loader [ruins_type] finished placed [placed_ruins]/[ruins.len] with [budget] left to spend.")
