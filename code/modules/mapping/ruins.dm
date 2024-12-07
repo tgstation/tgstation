@@ -171,7 +171,7 @@
 			for(var/datum/map_template/ruin/R in ruins_available)
 				if(R.id == current_pick.id)
 					ruins_available -= R
-			log_world("Failed to place [current_pick.name] ruin.")
+			log_world("Failed to place [current_pick.name] ruin!")
 		else
 			budget -= current_pick.cost
 			mineral_budget -= current_pick.mineral_cost
@@ -203,9 +203,17 @@
 								if(PLACE_ISOLATED)
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
 
+			if(PERFORM_ALL_TESTS(log_mapping))
+				log_mapping("Successfully placed [current_pick.name] ruin.")
+
 		//Update the available list
 		for(var/datum/map_template/ruin/R in ruins_available)
 			if(R.cost > budget || R.mineral_cost > mineral_budget)
 				ruins_available -= R
+
+	if(PERFORM_ALL_TESTS(log_mapping))
+		log_mapping("List of corresponding Z-Levels are as follows:")
+		log_mapping(gather_z_level_information())
+		return
 
 	log_world("Ruin loader finished with [budget] left to spend.")
