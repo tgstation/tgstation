@@ -23,6 +23,8 @@
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5
+	/// How many interactions are we currently performing
+	var/current_interactions = 0
 
 /obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()
@@ -32,10 +34,76 @@
 			latches = "double_latch"
 			if(prob(1))
 				latches = "triple_latch"
+				if(prob(0.1))
+					latches = "quad_latch" // like winning the lottery, but worse
 	update_appearance()
 	atom_storage.open_sound = 'sound/items/handling/toolbox/toolbox_open.ogg'
 	atom_storage.rustle_sound = 'sound/items/handling/toolbox/toolbox_rustle.ogg'
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
+
+/obj/item/storage/toolbox/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (user.combat_mode || !user.has_hand_for_held_index(user.get_inactive_hand_index()))
+		return NONE
+
+	if (current_interactions)
+		var/obj/item/other_tool = user.get_inactive_held_item()
+		if (!istype(other_tool)) // what even
+			return NONE
+		INVOKE_ASYNC(src, PROC_REF(use_tool_on), interacting_with, user, modifiers, other_tool)
+		return ITEM_INTERACT_SUCCESS
+
+	if (user.get_inactive_held_item())
+		user.balloon_alert(user, "hands busy!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/list/item_radial = list()
+	for (var/obj/item/tool in atom_storage.real_location)
+		if(is_type_in_list(tool, GLOB.tool_items))
+			item_radial[tool] = tool.appearance
+			break
+
+	if (!length(item_radial))
+		return NONE
+
+	playsound(user, 'sound/items/handling/toolbox/toolbox_open.ogg', 50)
+	var/obj/item/picked_item = show_radial_menu(user, interacting_with, item_radial, require_near = TRUE)
+	if (!picked_item)
+		return ITEM_INTERACT_BLOCKING
+
+	playsound(user, 'sound/items/handling/toolbox/toolbox_rustle.ogg', 50)
+	if (!user.put_in_inactive_hand(picked_item))
+		return ITEM_INTERACT_BLOCKING
+
+	atom_storage.animate_parent()
+	if (istype(picked_item, /obj/item/weldingtool))
+		var/obj/item/weldingtool/welder = picked_item
+		if (!welder.welding)
+			welder.attack_self(user)
+
+	if (istype(picked_item, /obj/item/spess_knife))
+		picked_item.attack_self(user)
+
+	INVOKE_ASYNC(src, PROC_REF(use_tool_on), interacting_with, user, modifiers, picked_item)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/storage/toolbox/proc/use_tool_on(atom/interacting_with, mob/living/user, list/modifiers, obj/item/picked_tool)
+	current_interactions += 1
+	picked_tool.melee_attack_chain(user, interacting_with, list2params(modifiers))
+	current_interactions -= 1
+
+	if (QDELETED(picked_tool) || picked_tool.loc != user || !user.CanReach(picked_tool))
+		current_interactions = 0
+		return
+
+	if (current_interactions)
+		return
+
+	if (istype(picked_tool, /obj/item/weldingtool))
+		var/obj/item/weldingtool/welder = picked_tool
+		if (welder.welding)
+			welder.attack_self(user)
+
+	atom_storage.attempt_insert(picked_tool, user)
 
 /obj/item/storage/toolbox/update_overlays()
 	. = ..()
@@ -224,6 +292,51 @@
 	new /obj/item/stack/pipe_cleaner_coil/cyan(src)
 	new /obj/item/stack/pipe_cleaner_coil/white(src)
 	new /obj/item/stack/pipe_cleaner_coil/brown(src)
+
+/obj/item/storage/toolbox/medical
+	name = "medical toolbox"
+	desc = "A toolbox painted soft white and light blue. This is getting ridiculous."
+	icon_state = "medical"
+	inhand_icon_state = "toolbox_medical"
+	attack_verb_continuous = list("treats", "surgeries", "tends", "tends wounds on")
+	attack_verb_simple = list("treat", "surgery", "tend", "tend wounds on")
+	w_class = WEIGHT_CLASS_BULKY
+	material_flags = NONE
+	force = 5 // its for healing
+	wound_bonus = 25 // wounds are medical right?
+	/// Tray we steal the og contents from.
+	var/obj/item/surgery_tray/tray_type = /obj/item/surgery_tray
+
+/obj/item/storage/toolbox/medical/Initialize(mapload)
+	. = ..()
+	// what do any of these numbers fucking mean
+	atom_storage.max_total_storage = 20
+	atom_storage.max_slots = 11
+
+/obj/item/storage/toolbox/medical/PopulateContents()
+	var/atom/fake_tray = new tray_type(get_turf(src)) // not in src lest it fill storage that we need for its tools later
+	for(var/atom/movable/thingy in fake_tray)
+		thingy.forceMove(src)
+	qdel(fake_tray)
+
+/obj/item/storage/toolbox/medical/full
+	tray_type = /obj/item/surgery_tray/full
+
+/obj/item/storage/toolbox/medical/coroner
+	name = "coroner toolbox"
+	desc = "A toolbox painted soft white and dark grey. This is getting beyond ridiculous."
+	icon_state = "coroner"
+	inhand_icon_state = "toolbox_coroner"
+	attack_verb_continuous = list("dissects", "autopsies", "corones")
+	attack_verb_simple = list("dissect", "autopsy", "corone")
+	w_class = WEIGHT_CLASS_BULKY
+	material_flags = NONE
+	force = 17 // it's not for healing
+	tray_type = /obj/item/surgery_tray/full/morgue
+
+/obj/item/storage/toolbox/medical/coroner/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, mob_biotypes = MOB_UNDEAD, damage_multiplier = 1) //Just in case one of the tennants get uppity
 
 /obj/item/storage/toolbox/ammobox
 	name = "ammo canister"

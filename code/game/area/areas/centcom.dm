@@ -7,7 +7,7 @@
 	icon_state = "centcom"
 	static_lighting = TRUE
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
@@ -151,7 +151,7 @@
 	icon_state = "wizards_den"
 	static_lighting = TRUE
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
@@ -164,7 +164,7 @@
 	area_flags = UNIQUE_AREA | NOTELEPORT
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 
 //Syndicates
@@ -172,7 +172,7 @@
 	name = "Syndicate Mothership"
 	icon_state = "syndie-ship"
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_DANGER
@@ -217,7 +217,7 @@
 
 	base_lighting_alpha = 255
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	area_flags = BLOCK_SUICIDE | UNIQUE_AREA
 
@@ -228,7 +228,7 @@
 	requires_power = FALSE
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	area_flags = UNIQUE_AREA | NOTELEPORT | NO_DEATH_MESSAGE | BLOCK_SUICIDE
 
@@ -273,7 +273,7 @@
 	name = "\improper Asteroid"
 	icon_state = "asteroid"
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA
 	ambience_index = AMBIENCE_MINING
 	flags_1 = CAN_BE_DIRTY_1

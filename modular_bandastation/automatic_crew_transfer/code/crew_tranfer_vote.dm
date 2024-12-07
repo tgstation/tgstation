@@ -30,13 +30,14 @@
 
 /datum/vote/crew_transfer/finalize_vote(winning_option)
 	SSautomatic_transfer.plan_crew_transfer_vote()
-	if(winning_option == CHOICE_CONTINUE)
-		return
-
-	if(winning_option == CHOICE_INITIATE_CREW_TRANSFER)
-		initiate_tranfer()
-
-	CRASH("[type] wasn't passed a valid winning choice. (Got: [winning_option || "null"])")
+	switch(winning_option)
+		if(CHOICE_CONTINUE)
+			return
+		if(CHOICE_INITIATE_CREW_TRANSFER)
+			initiate_tranfer()
+			return
+		else
+			CRASH("[type] wasn't passed a valid winning choice. (Got: [winning_option || "null"])")
 
 /datum/vote/crew_transfer/proc/initiate_tranfer()
 	PRIVATE_PROC(TRUE)

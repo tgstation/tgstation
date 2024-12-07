@@ -55,12 +55,10 @@
 		// BANDASTATION END
 	)
 
-/obj/item/organ/tongue/fly/New(class, timer, datum/mutation/human/copymut)
-	. = ..()
-	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 
 /obj/item/organ/tongue/fly/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
 
 /obj/item/organ/tongue/fly/get_possible_languages()
