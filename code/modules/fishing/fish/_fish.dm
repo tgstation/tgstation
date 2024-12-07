@@ -517,7 +517,7 @@
 	if(!maximum_size)
 		maximum_size = min(base_size * 2, average_size * MAX_FISH_DEVIATION_COEFF)
 	if(!maximum_weight)
-		maximum_weight = min(base_weight * 2, average_size * MAX_FISH_DEVIATION_COEFF)
+		maximum_weight = min(base_weight * 2, average_weight * MAX_FISH_DEVIATION_COEFF)
 
 ///Updates weight and size, along with weight class, number of fillets you can get and grind results.
 /obj/item/fish/proc/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = TRUE)

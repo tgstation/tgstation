@@ -84,8 +84,8 @@
 	TEST_ASSERT_NOTEQUAL(cloner_jr.type, aquarium.sterile.type, "The test aquarium's cloner fish mated with the sterile fish")
 
 /obj/item/fish_tank/reproduction
-	var/obj/item/fish/fish
-	var/obj/item/fish/partner
+	var/obj/item/fish/testdummy/fish
+	var/obj/item/fish/testdummy/partner
 
 /obj/item/fish_tank/reproduction/Initialize(mapload)
 	. = ..()
