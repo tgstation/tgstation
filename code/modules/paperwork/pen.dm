@@ -305,8 +305,8 @@
  * (Alan) Edaggers
  */
 /obj/item/pen/edagger
-	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts") //these won't show up if the pen is off
-	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts") //these won't show up if the pen is off
+	attack_verb_simple = list("slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_POINTY
 	armour_penetration = 20
 	bare_wound_bonus = 10
@@ -323,9 +323,12 @@
 	var/hidden_desc = "It's a normal black ink pe- Wait. That's a thing used to stab people!"
 	/// The real icons used when extended.
 	var/hidden_icon = "edagger"
+	var/static/list/alt_continuous = list("stabs", "pierces", "shanks")
+	var/static/list/alt_simple = list("stab", "pierce", "shank")
 
 /obj/item/pen/edagger/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -5, TRAIT_TRANSFORM_ACTIVE)
 	AddComponent(/datum/component/butchering, \
 	speed = 6 SECONDS, \
 	butcher_sound = 'sound/items/weapons/blade1.ogg', \

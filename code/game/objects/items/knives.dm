@@ -18,13 +18,15 @@
 	throw_speed = 3
 	throw_range = 6
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
-	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	armor_type = /datum/armor/item_knife
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
+	var/static/list/alt_continuous = list("stabs", "pierces", "shanks")
+	var/static/list/alt_simple = list("stab", "pierce", "shank")
 
 /datum/armor/item_knife
 	fire = 50
@@ -34,6 +36,7 @@
 	. = ..()
 	AddElement(/datum/element/eyestab)
 	set_butchering()
+	make_stabby()
 
 ///Adds the butchering component, used to override stats for special cases
 /obj/item/knife/proc/set_butchering()
@@ -43,6 +46,10 @@
 	bonus_modifier = force - 10, \
 	)
 	//bonus chance increases depending on force
+
+///Adds alt sharpness component, used for overrides
+/obj/item/knife/proc/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
 /obj/item/knife/suicide_act(mob/living/user)
 	user.visible_message(pick(span_suicide("[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide."), \
@@ -107,6 +114,9 @@
 	custom_price = PAYCHECK_CREW * 5
 	wound_bonus = 15
 
+/obj/item/knife/butcher/make_stabby()
+	return
+
 /obj/item/knife/hunting
 	name = "hunting knife"
 	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
@@ -122,6 +132,9 @@
 	effectiveness = 100, \
 	bonus_modifier = force + 10, \
 	)
+
+/obj/item/knife/hunting/make_stabby()
+	return
 
 /obj/item/knife/combat
 	name = "combat knife"
@@ -146,6 +159,9 @@
 /obj/item/knife/combat/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
+
+/obj/item/knife/combat/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -5)
 
 /obj/item/knife/combat/dropped(mob/living/user, slot)
 	. = ..()
@@ -224,6 +240,9 @@
 	attack_verb_simple = list("shank", "shiv")
 	armor_type = /datum/armor/none
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
+
+/obj/item/knife/shiv/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -3)
 
 /obj/item/knife/shiv/plasma
 	name = "plasma shiv"

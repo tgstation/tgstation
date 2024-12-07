@@ -791,9 +791,15 @@
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices")
-	attack_verb_simple = list("attack", "slash", "stab", "slice")
+	attack_verb_continuous = list("attacks", "slashes", "slices")
+	attack_verb_simple = list("attack", "slash", "slice")
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	var/static/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/static/list/alt_simple = list("stab", "pierce", "impale")
+
+/obj/item/toy/katana/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
 /*
  * Snap pops
