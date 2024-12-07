@@ -116,7 +116,7 @@
 		if(R.unpickable)
 			continue
 		ruins_available[R] = R.placement_weight
-	while(((budget > 0 || mineral_budget > 0) && ruins_available.len) || forced_ruins.len)
+	while((budget > 0 || mineral_budget > 0) && (ruins_available.len || forced_ruins.len)
 		var/datum/map_template/ruin/current_pick
 		var/forced = FALSE
 		var/forced_z //If set we won't pick z level and use this one instead.
@@ -213,5 +213,4 @@
 			if(R.cost > budget || R.mineral_cost > mineral_budget)
 				ruins_available -= R
 
-	log_mapping("[ruins_type] loader finished placing [placed_ruins]/[ruins.len] ruins with [budget] left to spend.")
 	log_world("[ruins_type] loader finished placing [placed_ruins]/[ruins.len] ruins with [budget] left to spend.")
