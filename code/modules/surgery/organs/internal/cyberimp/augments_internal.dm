@@ -6,16 +6,6 @@
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
 	var/implant_color = COLOR_WHITE
-	var/implant_overlay
-
-/obj/item/organ/cyberimp/New(mob/implanted_mob = null)
-	if(iscarbon(implanted_mob))
-		src.Insert(implanted_mob)
-	if(implant_overlay)
-		var/mutable_appearance/overlay = mutable_appearance(icon, implant_overlay)
-		overlay.color = implant_color
-		add_overlay(overlay)
-	return ..()
 
 //[[[[BRAIN]]]]
 
