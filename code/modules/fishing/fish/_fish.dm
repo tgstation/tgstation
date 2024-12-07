@@ -855,16 +855,6 @@
 		return
 	fed_reagents.remove_reagent(wrong_reagent.type, 0.1)
 
-/**
- * Base multiplier of the difference between current size and weight and their maximum value
- * Used to calculate how much fish grow each time they're fed, alongside with the current hunger,
- * and the current size and weight, meaning bigger fish naturally tend to grow way more slowly
- * Growth peaks at 45% hunger but very rapidly wanes past that.
- */
-#define FISH_GROWTH_MULT 0.38
-#define FISH_GROWTH_PEAK 0.45
-#define FISH_SIZE_WEIGHT_GROWTH_MALUS 0.5
-
 ///Proc that should be called when the fish is fed. By default, it grows the fish depending on various variables.
 /obj/item/fish/proc/sate_hunger()
 	if(HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH))
@@ -878,8 +868,8 @@
 	var/new_size = size
 	var/new_weight = weight
 	var/hunger_mult
-	if(hunger < FISH_GROWTH_PEAK)
-		hunger_mult = hunger * (1/FISH_GROWTH_PEAK)
+	if(hunger <= FISH_GROWTH_PEAK)
+		hunger_mult = hunger / FISH_GROWTH_PEAK
 	else
 		hunger_mult = 1 - (hunger - FISH_GROWTH_PEAK) * 4
 		if(hunger_mult <= 0)
@@ -895,10 +885,6 @@
 		new_weight = min(new_weight, maximum_weight)
 	if(new_size != size || new_weight != weight)
 		update_size_and_weight(new_size, new_weight)
-
-#undef FISH_SIZE_WEIGHT_GROWTH_MALUS
-#undef FISH_GROWTH_MULT
-#undef FISH_GROWTH_PEAK
 
 /obj/item/fish/proc/check_flopping()
 	if(QDELETED(src)) //we don't care anymore
