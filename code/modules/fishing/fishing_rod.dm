@@ -140,7 +140,7 @@
 	var/list/block = list()
 	var/get_percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH)
 	block += span_info("You think you can cast it up to [get_cast_range()] tiles away.")
-	block += get_stat_info(get_percent, difficulty_modifier * 0.01, "Fishing will be", "easier", "harder", "with this fishing rod")
+	block += get_stat_info(get_percent, difficulty_modifier * 0.01, "Fishing will be", "easier", "harder", "with this fishing rod", offset = 0)
 	block += get_stat_info(get_percent, experience_multiplier, "You will gain experience", "faster", "slower")
 	block += get_stat_info(get_percent, completion_speed_mult, "You should complete the minigame", "faster", "slower")
 	block += get_stat_info(get_percent, bait_speed_mult, "Reeling is", "faster", "slower")
@@ -173,10 +173,10 @@
 		. += examine_block(block.Join("\n"))
 
 ///Used in examine_more to reduce all the copypasta when getting more information about the various stats of the fishing rod.
-/obj/item/fishing_rod/proc/get_stat_info(get_percent, value, prefix, easier, harder, suffix = "with this fishing rod", span_info = FALSE, less_is_better = FALSE)
+/obj/item/fishing_rod/proc/get_stat_info(get_percent, value, prefix, easier, harder, suffix = "with this fishing rod", span_info = FALSE, less_is_better = FALSE, offset = 1)
 	if(value == 1)
 		return
-	value -= 1
+	value -= offset
 	var/percent = get_percent ? "[abs(value * 100)]% " : ""
 	var/harder_easier = value > 0 ? easier : harder
 	. = "[prefix] [percent][harder_easier] [suffix]."
