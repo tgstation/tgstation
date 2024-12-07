@@ -879,16 +879,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(manual_delam_path == SM_DELAM_STRATEGY_PURGE)
 		for (var/delam_path in GLOB.sm_delam_list)
-			var/datum/sm_delam/delam = GLOB.sm_delam_list[delam_path]
-			if(!delam.can_select(src))
+			var/datum/callback/can_select_delam = GLOB.sm_delam_list[delam_path]
+			if(!can_select_delam.Invoke(src))
 				continue
-			if(delam == delamination_strategy)
+			if(istype(delamination_strategy, delam_path))
 				return FALSE
-			new_delam = delam
+			new_delam = new delam_path
 			break
 		delam_priority = SM_DELAM_PRIO_NONE
 	else
-		new_delam = GLOB.sm_delam_list[manual_delam_path]
+		new_delam = new manual_delam_path
 		delam_priority = priority
 
 	if(!new_delam)

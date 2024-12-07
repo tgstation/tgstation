@@ -1,6 +1,6 @@
 /datum/sm_delam/cascade
 
-/datum/sm_delam/cascade/can_select(obj/machinery/power/supermatter_crystal/sm)
+/proc/delam_cascade_can_select(obj/machinery/power/supermatter_crystal/sm)
 	if(!sm.is_main_engine)
 		return FALSE
 	var/total_moles = sm.absorbed_gasmix.total_moles()

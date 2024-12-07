@@ -1,9 +1,9 @@
 /// Priority is top to bottom.
 GLOBAL_LIST_INIT(sm_delam_list, list(
-	/datum/sm_delam/cascade = new /datum/sm_delam/cascade,
-	/datum/sm_delam/singularity = new /datum/sm_delam/singularity,
-	/datum/sm_delam/tesla = new /datum/sm_delam/tesla,
-	/datum/sm_delam/explosive = new /datum/sm_delam/explosive,
+	/datum/sm_delam/cascade = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_cascade_can_select)),
+	/datum/sm_delam/singularity = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_singularity_can_select)),
+	/datum/sm_delam/tesla = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_singularity_can_select)),
+	/datum/sm_delam/explosive = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_explosive_can_select)),
 ))
 
 /// Logic holder for supermatter delaminations, goes off the strategy design pattern.
