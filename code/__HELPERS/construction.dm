@@ -48,7 +48,7 @@
 /**
  * Splits a stack. we don't use /obj/item/stack/proc/split_stack because Byond complains that should only be called asynchronously.
  * This proc is also more faster because it doesn't deal with mobs, copying evidences or refreshing atom storages
- * Has special internal uses for e.g. by the material container & rped
+ * Has special internal uses for e.g. by the material container & RPED
  *
  * Arguments:
  * - [target][obj/item/stack]: the stack to split
