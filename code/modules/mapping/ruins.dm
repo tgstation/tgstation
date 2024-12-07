@@ -213,9 +213,9 @@
 			if(R.cost > budget || R.mineral_cost > mineral_budget)
 				ruins_available -= R
 
-	if(PERFORM_ALL_TESTS(log_mapping) || )
+	if(PERFORM_ALL_TESTS(log_mapping))
 		log_mapping("List of corresponding Z-Levels are as follows:")
 		log_mapping(gather_z_level_information())
 		return
 
-	log_world("Ruin loader [ruins_type] finished placed [placed_ruins]/[potentialRuins.len] with [budget] left to spend.")
+	log_world("Ruin loader [ruins_type] finished placed [placed_ruins]/[ruins.len] with [budget] left to spend.")
