@@ -25,4 +25,6 @@
 				light_state = "emergency_open"
 			else
 				light_state = "poweron_open"
+	if(!light_state)
+		return
 	. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
