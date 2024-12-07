@@ -68,7 +68,7 @@
 	))
 
 	send_to_playing_players(span_narsie("NAR'SIE HAS RISEN"))
-	sound_to_playing_players('sound/music/antag/bloodcult/narsie_rises.ogg')
+	sound_to_playing_players('modular_bandastation/aesthetics_sounds/sound/narsie/narsie_risen.ogg') // BANDASTATION EDIT
 
 	var/area/area = get_area(src)
 	if(area)
