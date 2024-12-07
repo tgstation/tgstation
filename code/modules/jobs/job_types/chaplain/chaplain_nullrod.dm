@@ -793,13 +793,20 @@
 	bare_wound_bonus = 30
 	slot_flags = ITEM_SLOT_BELT
 	block_sound = 'sound/items/weapons/parry.ogg'
-	sharpness = SHARP_POINTY
+	sharpness = SHARP_EDGED
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
-	attack_verb_continuous = list("attacks", "punctures", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "puncture", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slashes", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "A blade that deals variable, low amounts of damage, but does easily inflict wounds. \
 		The stronger your swinging arm is, the stronger the blade is, though only slightly. \
 		Against debilitated targets, can also deal additional sneak attack damage with a very high wound chance."
+
+	var/static/list/alt_continuous = list("stabs", "pierces", "impales", "punctures")
+	var/static/list/alt_simple = list("stab", "pierce", "impale", "puncture")
+
+/obj/item/nullrod/nullblade/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
 /obj/item/nullrod/nullblade/melee_attack_chain(mob/user, atom/target, params)
 	//Track our actual force separately
