@@ -493,7 +493,6 @@
 
 ///internal proc that removes all static power usage from the current area
 /obj/machinery/proc/unset_static_power()
-	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/old_usage = static_power_usage
