@@ -72,8 +72,9 @@
  * @param clear_below Whether to clear the area below the ruin. Used for multiz ruins.
  * @param mineral_budget The budget to spend on ruins that spawn ore vents. Map templates with vents have that defined by mineral_cost.
  * @param mineral_budget_update What type of ore distribution should spawn from ruins picked by this cave generator? This list is copied from ores_spawned.dm into SSore_generation.ore_vent_minerals.
+ * @param ruin_type The type of ruins that are spawning (ZTRAIT_SPACE_RUINS, ZTRAIT_ICE_RUINS, ZTRAIT_LAVA_RUINS, etc.)
  */
-/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins, clear_below = FALSE, mineral_budget = 15, mineral_budget_update)
+/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins, clear_below = FALSE, mineral_budget = 15, mineral_budget_update, ruins_type = ZTRAIT_STATION)
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")
 		return
@@ -86,7 +87,7 @@
 			return
 
 	var/list/ruins = potentialRuins.Copy()
-
+	var/placed_ruins = 0 // our count of how many ruins have been placed
 	var/list/forced_ruins = list() //These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
 	var/list/ruins_available = list() //we can try these in the current pass
 
@@ -173,6 +174,7 @@
 					ruins_available -= R
 			log_world("Failed to place [current_pick.name] ruin!")
 		else
+			placed_ruins++
 			budget -= current_pick.cost
 			mineral_budget -= current_pick.mineral_cost
 			if(!current_pick.allow_duplicates)
@@ -212,6 +214,7 @@
 				ruins_available -= R
 
 	if(PERFORM_ALL_TESTS(log_mapping))
+		log_mapping("Placed [placed_ruins]/[ruins.len] of ruins for [ruins_type].")
 		log_mapping("List of corresponding Z-Levels are as follows:")
 		log_mapping(gather_z_level_information())
 		return
