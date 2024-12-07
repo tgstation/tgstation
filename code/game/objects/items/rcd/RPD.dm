@@ -9,7 +9,11 @@
 #define DESTROY_MODE (1<<2)
 #define REPROGRAM_MODE (1<<3)
 
-#define PIPE_LAYER(num) (1<<(num-1))
+///Maximum number of pipe layers the RPED can support
+#define MAX_PIPE_LAYERS 5
+
+///Converts the pipe layer into a bitflag so we can append multiple layers into 1 bitfield
+#define PIPE_LAYER(num) (1 << (num - 1))
 
 ///Sound to make when we use the item to build/destroy something
 #define RPD_USE_SOUND 'sound/items/deconstruct.ogg'
@@ -57,8 +61,6 @@
 	var/pipe_layers = PIPE_LAYER(3)
 	///Are we laying multiple layers per click
 	var/multi_layer = FALSE
-	///Layer for disposal ducts
-	var/ducting_layer = DUCT_LAYER_DEFAULT
 	///Stores the current device to spawn
 	var/datum/pipe_info/recipe
 	///Stores the first atmos device
@@ -133,13 +135,13 @@
 	playsound(get_turf(user), RPD_USE_SOUND, 50, TRUE)
 	return BRUTELOSS
 
-///Returns pipe layers that contain the current selected direction
+///Converts pipe_layers bitflag into its corresponding list of actual pipe layers
 /obj/item/pipe_dispenser/proc/get_active_pipe_layers()
 	PRIVATE_PROC(TRUE)
 	RETURN_TYPE(/list)
 
 	var/list/layer_nums = list()
-	for(var/pipe_layer_number in 1 to 5)
+	for(var/pipe_layer_number in 1 to MAX_PIPE_LAYERS)
 		if(PIPE_LAYER(pipe_layer_number) & pipe_layers)
 			layer_nums += pipe_layer_number
 	return layer_nums
@@ -156,14 +158,16 @@
 		ui.open()
 
 /obj/item/pipe_dispenser/ui_static_data(mob/user)
-	return list("paint_colors" = GLOB.pipe_paint_colors)
+	return list(
+		"paint_colors" = GLOB.pipe_paint_colors,
+		"max_pipe_layers" = MAX_PIPE_LAYERS,
+	)
 
 /obj/item/pipe_dispenser/ui_data(mob/user)
 	var/list/data = list(
 		"category" = category,
 		"multi_layer" = multi_layer,
 		"pipe_layers" = pipe_layers,
-		"ducting_layer" = ducting_layer,
 		"categories" = list(),
 		"selected_recipe" = recipe.name,
 		"selected_color" = paint_color,
@@ -210,10 +214,11 @@
 
 	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
-	var/playeffect = TRUE
 	switch(action)
 		if("color")
 			paint_color = params["paint_color"]
+			return TRUE
+
 		if("category")
 			category = text2num(params["category"])
 			switch(category)
@@ -224,42 +229,51 @@
 				if(TRANSIT_CATEGORY)
 					recipe = first_transit
 			p_dir = NORTH
-			playeffect = FALSE
+			return TRUE
+
 		if("pipe_layers")
 			var/selected_layers = text2num(params["pipe_layers"])
+
+			//is valid
 			var/valid_layer = FALSE
-			for(var/pipe_layer_number in 1 to 5)
+			for(var/pipe_layer_number in 1 to MAX_PIPE_LAYERS)
 				if(!(PIPE_LAYER(pipe_layer_number) & selected_layers))
 					continue
 				valid_layer = TRUE
+				break
 			if(!valid_layer)
-				return
+				return FALSE
+
+			//append or set the layer
 			if(multi_layer)
 				if(pipe_layers != selected_layers)
 					pipe_layers ^= selected_layers
 			else
 				pipe_layers = selected_layers
-			playeffect = FALSE
+
+			return TRUE
+
 		if("toggle_multi_layer")
 			if(multi_layer)
 				pipe_layers = PIPE_LAYER(max(get_active_pipe_layers()))
 			multi_layer = !multi_layer
-		if("ducting_layer")
-			ducting_layer = text2num(params["ducting_layer"])
-			playeffect = FALSE
+
 		if("pipe_type")
 			var/static/list/recipes
 			if(!recipes)
 				recipes = GLOB.disposal_pipe_recipes + GLOB.atmos_pipe_recipes + GLOB.transit_tube_recipes
 			recipe = recipes[params["category"]][text2num(params["pipe_type"])]
 			p_dir = NORTH
+
 		if("setdir")
 			p_dir = text2dir(params["dir"])
 			p_flipped = text2num(params["flipped"])
-			playeffect = FALSE
+			return TRUE
+
 		if("mode")
 			var/selected_mode = text2num(params["mode"])
 			mode ^= selected_mode
+
 		if("init_dir_setting")
 			var/target_dir = p_init_dir ^ text2dir(params["dir_flag"])
 			// Refuse to create a smart pipe that can only connect in one direction (it would act weirdly and lack an icon)
@@ -267,12 +281,13 @@
 				p_init_dir = target_dir
 			else
 				to_chat(ui.user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
-				playeffect = FALSE
+				return FALSE
+
 		if("init_reset")
 			p_init_dir = ALL_CARDINALS
-	if(playeffect)
-		spark_system.start()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
+
+	spark_system.start()
+	playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
 	return TRUE
 
 /obj/item/pipe_dispenser/interact_with_atom(atom/attack_target, mob/living/user, list/modifiers)
@@ -515,26 +530,20 @@
 /obj/item/pipe_dispenser/proc/do_pipe_build(atom/atom_to_target, mob/user)
 	PRIVATE_PROC(TRUE)
 
+	if(!check_can_make_pipe(atom_to_target))
+		return FALSE
+
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_pipe_type = recipe.id
 	var/queued_pipe_dir = p_dir
 	var/queued_pipe_flipped = p_flipped
 
-	var/can_make_pipe = check_can_make_pipe(atom_to_target)
 	var/list/pipe_layer_numbers = get_active_pipe_layers()
-	var/continued_build = FALSE
-	for(var/pipe_layer_num in 1 to length(pipe_layer_numbers))
-		var/layer_to_build = pipe_layer_numbers[pipe_layer_num]
-		if(layer_to_build != pipe_layer_numbers[1])
-			continued_build = TRUE
-		if(!layer_to_build)
-			return FALSE
-		if(!can_make_pipe)
-			return FALSE
+	for(var/layer_to_build in pipe_layer_numbers)
 		playsound(get_turf(src), SFX_TOOL_SWITCH, 20, vary = TRUE)
-		if(!continued_build && !do_after(user, atmos_build_speed, target = atom_to_target))
+		if(!do_after(user, atmos_build_speed, target = atom_to_target))
 			return FALSE
-		if(!recipe.all_layers && (layer_to_build == 1 || layer_to_build == 5))
+		if(!recipe.all_layers && (layer_to_build == 1 || layer_to_build == MAX_PIPE_LAYERS))
 			balloon_alert(user, "can't build on layer [layer_to_build]!")
 			if(multi_layer)
 				continue
@@ -581,7 +590,7 @@
 		return
 
 	if(delta_y < 0)
-		pipe_layers = min(PIPE_LAYER(5), pipe_layers << 1)
+		pipe_layers = min(PIPE_LAYER(MAX_PIPE_LAYERS), pipe_layers << 1)
 	else if(delta_y > 0)
 		pipe_layers = max(PIPE_LAYER(1), pipe_layers >> 1)
 	else //mice with side-scrolling wheels are apparently a thing and fuck this up
@@ -616,3 +625,4 @@
 #undef PIPE_LAYER
 
 #undef RPD_USE_SOUND
+#undef MAX_PIPE_LAYERS
