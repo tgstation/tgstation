@@ -12,7 +12,9 @@
 			return FALSE
 	return TRUE
 
-/datum/sm_delam/cascade/delam_progress(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade
+
+/datum/sm_delam/cascade/delam_progress()
 	if(!..())
 		return FALSE
 
@@ -32,7 +34,7 @@
 
 	return TRUE
 
-/datum/sm_delam/cascade/on_select(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/on_select()
 	message_admins("[sm] is heading towards a cascade. [ADMIN_VERBOSEJMP(sm)]")
 	sm.investigate_log("is heading towards a cascade.", INVESTIGATE_ENGINE)
 
@@ -41,16 +43,14 @@
 	animate(sm.warp, time = 1, transform = matrix().Scale(0.5,0.5))
 	animate(time = 9, transform = matrix())
 
-	addtimer(CALLBACK(src, PROC_REF(announce_cascade), sm), 2 MINUTES)
-
-/datum/sm_delam/cascade/on_deselect(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/on_deselect()
 	message_admins("[sm] will no longer cascade. [ADMIN_VERBOSEJMP(sm)]")
 	sm.investigate_log("will no longer cascade.", INVESTIGATE_ENGINE)
 
 	sm.vis_contents -= sm.warp
 	QDEL_NULL(sm.warp)
 
-/datum/sm_delam/cascade/delaminate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/delaminate()
 	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a cascade delam.")
 	sm.investigate_log("triggered a cascade delam.", INVESTIGATE_ENGINE)
 
@@ -69,23 +69,21 @@
 	effect_crystal_mass(sm, rift)
 	return ..()
 
-/datum/sm_delam/cascade/examine(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/examine()
 	return list(span_bolddanger("The crystal is vibrating at immense speeds, warping space around it!"))
 
-/datum/sm_delam/cascade/overlays(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/overlays()
 	return list()
 
-/datum/sm_delam/cascade/count_down_messages(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/count_down_messages()
 	var/list/messages = list()
 	messages += "CRYSTAL DELAMINATION IMMINENT. The supermatter has reached critical integrity failure. Harmonic frequency limits exceeded. Causality destabilization field could not be engaged."
 	messages += "Crystalline hyperstructure returning to safe operating parameters. Harmonic frequency restored within emergency bounds. Anti-resonance filter initiated."
 	messages += "remain before resonance-induced stabilization."
 	return messages
 
-/datum/sm_delam/cascade/proc/announce_cascade(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/proc/announce_cascade()
 	if(QDELETED(sm))
-		return FALSE
-	if(!can_select(sm))
 		return FALSE
 	priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \
 	a subject within [station_name()], a resonance collapse may occur.",

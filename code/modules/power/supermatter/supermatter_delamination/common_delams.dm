@@ -1,12 +1,13 @@
 // Singulo, tesla, and explosive delam
 
 /// When we have too much gas.
-/datum/sm_delam/singularity
 
 /proc/delam_singularity_can_select(obj/machinery/power/supermatter_crystal/sm)
 	return (sm.absorbed_gasmix.total_moles() >= MOLE_PENALTY_THRESHOLD)
 
-/datum/sm_delam/singularity/delam_progress(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/singularity
+
+/datum/sm_delam/singularity/delam_progress()
 	if(!..())
 		return FALSE
 	sm.radio.talk_into(
@@ -16,7 +17,7 @@
 	)
 	return TRUE
 
-/datum/sm_delam/singularity/delaminate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/singularity/delaminate()
 	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a singularity delam.")
 	sm.investigate_log("triggered a singularity delam.", INVESTIGATE_ENGINE)
 
@@ -28,7 +29,7 @@
 		effect_explosion(sm)
 	return ..()
 
-/datum/sm_delam/singularity/filters(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/singularity/filters()
 	..()
 
 	sm.modify_filter(name = "ray", new_params = list(
@@ -50,24 +51,24 @@
 	else
 		sm.remove_filter("icon")
 
-/datum/sm_delam/singularity/on_deselect(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/singularity/on_deselect()
 	. = ..()
 	sm.remove_filter(list("outline", "icon"))
 
-/datum/sm_delam/singularity/overlays(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/singularity/overlays()
 	return list()
 
-/datum/sm_delam/singularity/lights(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/singularity/lights()
 	..()
 	sm.set_light_color(SUPERMATTER_SINGULARITY_LIGHT_COLOUR)
 
 /// When we have too much power.
 /datum/sm_delam/tesla
 
-/proc/delam_singularity_can_select(obj/machinery/power/supermatter_crystal/sm)
+/proc/delam_tesla_can_select(obj/machinery/power/supermatter_crystal/sm)
 	return (sm.internal_energy > POWER_PENALTY_THRESHOLD)
 
-/datum/sm_delam/tesla/delam_progress(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/tesla/delam_progress()
 	if(!..())
 		return FALSE
 	sm.radio.talk_into(
@@ -77,7 +78,7 @@
 	)
 	return TRUE
 
-/datum/sm_delam/tesla/delaminate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/tesla/delaminate()
 	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a tesla delam.")
 	sm.investigate_log("triggered a tesla delam.", INVESTIGATE_ENGINE)
 
@@ -89,8 +90,7 @@
 	effect_explosion(sm)
 	return ..()
 
-
-/datum/sm_delam/tesla/filters(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/tesla/filters()
 	..()
 
 	sm.modify_filter(name = "ray", new_params = list(
@@ -103,11 +103,11 @@
 		flags = FILTER_UNDERLAY
 	))
 
-/datum/sm_delam/tesla/on_deselect(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/tesla/on_deselect()
 	. = ..()
 	sm.remove_filter(list("icon"))
 
-/datum/sm_delam/tesla/lights(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/tesla/lights()
 	..()
 	sm.set_light_color(SUPERMATTER_TESLA_COLOUR)
 
@@ -117,7 +117,7 @@
 /proc/delam_explosive_can_select(obj/machinery/power/supermatter_crystal/sm)
 	return TRUE
 
-/datum/sm_delam/explosive/delaminate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/explosive/delaminate()
 	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a normal delam.")
 	sm.investigate_log("triggered a normal delam.", INVESTIGATE_ENGINE)
 
