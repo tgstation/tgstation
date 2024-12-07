@@ -6643,6 +6643,7 @@
 #include "modular_doppler\deforest_medical_items\code\medstation_designs\blood.dm"
 #include "modular_doppler\deforest_medical_items\code\medstation_designs\medical.dm"
 #include "modular_doppler\disable_suicide\config_entries.dm"
+#include "modular_doppler\doppler_command_uniforms\hop\overrides.dm"
 #include "modular_doppler\dopplerboop\dopplerboops.dm"
 #include "modular_doppler\dopplerboop\human.dm"
 #include "modular_doppler\emotes\code\emotes.dm"
