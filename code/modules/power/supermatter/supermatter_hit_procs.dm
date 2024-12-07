@@ -35,11 +35,9 @@
 		external_power_immediate += projectile.damage * bullet_energy + kiss_power
 		log_activation(who = projectile.firer, how = projectile.fired_from)
 	else
-		external_damage_immediate += projectile.damage * bullet_energy * 0.1
+		external_damage_immediate += projectile.damage * bullet_energy * 0.1 * clamp((emergency_point - (damage + external_damage_immediate)) / emergency_point, 0, 1)
 		// Stop taking damage at emergency point, yell to players at danger point.
-		// This isn't clean and we are repeating [/obj/machinery/power/supermatter_crystal/proc/calculate_damage], sorry for this.
-		var/damage_to_be = damage + external_damage_immediate * clamp((emergency_point - damage) / emergency_point, 0, 1)
-		if(damage_to_be > danger_point)
+		if(damage + external_damage_immediate > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 
@@ -132,4 +130,4 @@
 
 /obj/machinery/power/supermatter_crystal/proc/consume_callback(matter_increase, damage_increase)
 	external_power_trickle += matter_increase
-	external_damage_immediate += damage_increase
+	external_damage_immediate += damage_increase * clamp((emergency_point - (damage + external_damage_immediate)) / emergency_point, 0, 1)

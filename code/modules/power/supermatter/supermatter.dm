@@ -836,7 +836,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	// We dont let external factors deal more damage than the emergency point.
 	// Only cares about the damage before this proc is run. We ignore soon-to-be-applied damage.
-	additive_damage[SM_DAMAGE_EXTERNAL] = external_damage_immediate * clamp((emergency_point - damage) / emergency_point, 0, 1)
+	additive_damage[SM_DAMAGE_EXTERNAL] = external_damage_immediate
 	external_damage_immediate = 0
 
 	additive_damage[SM_DAMAGE_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 24000, 0, 0.15)
@@ -857,6 +857,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/total_damage = 0
 	for (var/damage_type in additive_damage)
 		total_damage += additive_damage[damage_type]
+
+	total_damage = delamination_strategy.modify_damage(total_damage)
 
 	damage += total_damage
 	damage = max(damage, 0)
