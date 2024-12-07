@@ -214,7 +214,7 @@
 				ruins_available -= R
 
 	if(PERFORM_ALL_TESTS(log_mapping))
-		log_mapping("Placed [placed_ruins]/[ruins.len] of ruins for [ruins_type].")
+		log_mapping("Placed [placed_ruins]/[potentialRuins.len] of ruins for [ruins_type].")
 		log_mapping("List of corresponding Z-Levels are as follows:")
 		log_mapping(gather_z_level_information())
 		return
