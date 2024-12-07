@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(automatic_transfer)
 	if(!CONFIG_GET(flag/enable_automatic_crew_transfer))
 		return
 	if(!delay)
-		delay = CONFIG_GET(number/automatic_crew_transfer_vote_interval)
+		delay = CONFIG_GET(number/automatic_crew_transfer_vote_interval) || 1
 	if(!crew_transfer_timer_id)
 		crew_transfer_timer_id = addtimer(CALLBACK(src, PROC_REF(start_crew_transfer_vote)), delay)
 
