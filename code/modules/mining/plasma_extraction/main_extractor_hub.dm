@@ -1,5 +1,5 @@
 ///How many mining points every single miner gets as an award for completing the objective.
-#define OBJECTIVE_MINING_POINTS_AWARD 2500
+#define OBJECTIVE_MINING_POINTS_AWARD 3000
 ///Amount in % that each dot represents of the total.
 #define AMOUNT_COMPLETED_PER_DOT 5
 ///Time you have to wait before you can turn the machine on/off to prevent cheesing.
@@ -100,8 +100,10 @@
 	STOP_PROCESSING(SSprocessing, src)
 	QDEL_NULL(display_panel_ref)
 	//unlocks plasma canisters purchasable from Cargo.
-	var/datum/supply_pack/pack = SSshuttle.supply_packs["/datum/supply_pack/materials/gas_canisters/plasma"] //canister IDs are stored as strings
-	pack.hidden = FALSE
+	var/datum/supply_pack/plasma_pack = SSshuttle.supply_packs["/datum/supply_pack/materials/gas_canisters/plasma"] //canister IDs are uniquely stored as strings
+	plasma_pack.hidden = FALSE
+	var/datum/supply_pack/weather_pack = SSshuttle.supply_packs[/datum/supply_pack/imports/weather_remover]
+	weather_pack.hidden = FALSE
 	//give miners their points.
 	if(SSeconomy.bank_accounts_by_job[/datum/job/shaft_miner])
 		for(var/datum/bank_account/miners as anything in SSeconomy.bank_accounts_by_job[/datum/job/shaft_miner])

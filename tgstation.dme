@@ -4735,6 +4735,7 @@
 #include "code\modules\mining\satchel_ore_box.dm"
 #include "code\modules\mining\shelters.dm"
 #include "code\modules\mining\voucher_sets.dm"
+#include "code\modules\mining\weather_remover.dm"
 #include "code\modules\mining\boulder_processing\_boulder_processing.dm"
 #include "code\modules\mining\boulder_processing\beacon.dm"
 #include "code\modules\mining\boulder_processing\boulder.dm"

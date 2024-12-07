@@ -305,6 +305,17 @@
 	crate_name = "materials market crate"
 	crate_type = /obj/structure/closet/crate/cargo
 
+/datum/supply_pack/imports/weather_remover
+	name = "Plasma-based Weather Manipulator Crate"
+	desc = "A circuit board to build your own plasma-fuelled machine allowing for the manipulation of Lavaland's atmosphere."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(
+		/obj/item/circuitboard/machine/weather_remover = 1,
+	)
+	crate_name = "weather manipulator crate"
+	crate_type = /obj/structure/closet/crate/cargo
+	hidden = TRUE
+
 /datum/supply_pack/imports/floortilecamo
 	name = "Floor-tile Camouflage Uniform"
 	desc = "Hey there, looking to surprise somebody? Spy? Steal? Then you're lucky, meet our newest \
