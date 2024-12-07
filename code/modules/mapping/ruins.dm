@@ -213,8 +213,5 @@
 			if(R.cost > budget || R.mineral_cost > mineral_budget)
 				ruins_available -= R
 
-	if(PERFORM_ALL_TESTS(log_mapping))
-		log_mapping("Ruin loader [ruins_type] finished placed [placed_ruins]/[ruins.len] with [budget] left to spend.")
-		return
-
-	log_world("Ruin loader [ruins_type] finished placed [placed_ruins]/[ruins.len] with [budget] left to spend.")
+	log_mapping("[ruins_type] loader finished placing [placed_ruins]/[ruins.len] ruins with [budget] left to spend.")
+	log_world("[ruins_type] loader finished placing [placed_ruins]/[ruins.len] ruins with [budget] left to spend.")
