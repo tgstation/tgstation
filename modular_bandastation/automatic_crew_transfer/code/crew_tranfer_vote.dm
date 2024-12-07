@@ -29,7 +29,6 @@
 			return "Game not started yet."
 
 /datum/vote/crew_transfer/finalize_vote(winning_option)
-	SSautomatic_transfer.plan_crew_transfer_vote()
 	switch(winning_option)
 		if(CHOICE_CONTINUE)
 			return
