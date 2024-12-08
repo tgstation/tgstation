@@ -114,7 +114,7 @@
 		return SFX_SNORE_FEMALE
 	return SFX_SNORE_MALE
 
-/datum/species/felinid/get_hiss_sound(mob/living/carbon/human/felinid)
+/datum/species/human/felinid/get_hiss_sound(mob/living/carbon/human/felinid)
 	return 'sound/mobs/humanoids/felinid/felinid_hiss.ogg'
 
 /proc/mass_purrbation()
