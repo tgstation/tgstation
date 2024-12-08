@@ -1,0 +1,6 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - rscadd: "pointing now has interactions with the amount of limbs/organs you have"
+  - balance: "you can now point while restrained"
+  - sound: "pointing with your head makes a sound"
