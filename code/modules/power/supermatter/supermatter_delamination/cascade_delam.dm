@@ -118,6 +118,11 @@
 
 	return damage_to_be_applied
 
+/datum/sm_delam/cascade/emitter/delam_progress()
+	. = ..()
+	if(strikes_remaining <= 0)
+		sm.external_damage_immediate += 2.5 // quickly bleed integrity
+
 /datum/sm_delam/cascade/emitter/on_bullet(obj/projectile/beam/emitter/hitscan/cascade/projectile)
 	if(!istype(projectile))
 		return FALSE
@@ -129,7 +134,17 @@
 	switch(strikes_remaining)
 		if(CASCADE_EMITTER_STRIKES - STRIKES_UNTIL_ANNOUNCEMENT)
 			announce_cascade()
+		if(10)
+			sm.radio.talk_into(
+				sm,
+				"DANGER: OSCILLATION FREQUENCY APPROACHING FILTER LIMIT. FREQUENCY FILTER SHUTDOWN IMMINENT.", // "oh fuck" time
+				sm.damage >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel
+			)
 		if(0)
-			sm.external_damage_immediate = sm.explosion_point * 5 // no more saving this
+			sm.radio.talk_into(
+				sm,
+				"DANGER: FREQUENCY FILTER OVERLOAD. FILTER SHUTTING DOWN FOR EMERGENCY RECALIBRATION.", // no more saving this
+				sm.damage >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel
+			)
 
 	return TRUE
