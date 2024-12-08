@@ -71,6 +71,7 @@
 		QDEL_NULL(energy_tracker)
 
 /datum/species/android/spec_revival(mob/living/carbon/human/target)
+	core_energy += 0.5 MEGA JOULES
 	playsound(target.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	target.visible_message(span_notice("[target]'s LEDs flicker to life!"), span_notice("All systems nominal. You're back online!"))
 
@@ -91,11 +92,6 @@
 		return
 	if(core_energy > 0)
 		core_energy -= ENERGY_DRAIN_AMT
-	// alerts
-	if(core_energy <= 0.75 MEGA JOULES)
-		if(prob(10))
-			target.balloon_alert_to_viewers("power low!")
-			playsound(target, 'sound/machines/beep/triple_beep.ogg', 50, FALSE)
 	// alerts end, death begins
 	if(core_energy <= 0)
 		target.death() // You can do a lot in a day.
