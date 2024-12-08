@@ -285,6 +285,7 @@
 
 	var/static/list/syndie_typecache = typecacheof(list(
 		/area/centcom/syndicate_mothership, // syndicate base itself
+		/area/centcom/syndicate_base, // SS220 EDIT - ADDITION
 		/area/shuttle/assault_pod, // steel rain
 		/area/shuttle/syndicate, // infiltrator
 	))

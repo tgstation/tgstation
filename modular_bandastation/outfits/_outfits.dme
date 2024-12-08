@@ -1,0 +1,3 @@
+#include "_outfits.dm"
+
+#include "code/syndicate.dm"

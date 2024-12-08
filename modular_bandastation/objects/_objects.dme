@@ -4,6 +4,7 @@
 #include "code/material_pouch.dm"
 #include "code/papershredder.dm"
 #include "code/platform.dm"
+#include "code/shuttles.dm"
 #include "code/wallets.dm"
 
 #include "code/clothing/head/hat.dm"
@@ -16,7 +17,15 @@
 #include "code/consumables/drinks.dm"
 #include "code/consumables/customer_data.dm"
 
+#include "code/effects/turf_decal.dm"
+
+#include "code/items/banners.dm"
+
+#include "code/machinery/photocopier.dm"
+
+#include "code/structures/chairs.dm"
 #include "code/structures/posters.dm"
+#include "code/structures/statues.dm"
 
 #include "code/vending/vending.dm"
 
