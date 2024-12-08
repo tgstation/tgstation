@@ -278,9 +278,9 @@
 	if(living_cast_on.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
 		to_chat(owner, span_warning("Members of security are uncorruptable! You cannot declare one evil!"))
 		return FALSE
-
-	return TRUE
 	*/ //DOPPLER EDIT CHANGE END
+	return TRUE
+
 /datum/action/cooldown/spell/pointed/declare_evil/before_cast(mob/living/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
