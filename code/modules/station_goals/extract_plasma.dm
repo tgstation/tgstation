@@ -8,8 +8,8 @@
 		"<blockquote>Our plasma reserves are running low, hitting our Research Division hard.",
 		"We need you to send the plasma extraction machine down to the surface of the planet.",
 		"",
-		"Once the machine is in place, connect it to the fuming plasma geysers planet-side using rapid pipe dispensers, which you can find the location of these using a GPS.",
+		"Once the machine is in place, connect it to the fuming plasma geysers planet-side using rapid pipe dispensers, which you can find the location of using a GPS.",
 		"Once fully piped, you can begin extracting plasma from the planet's core.",
-		"Get it filled as much as you can, once completed we'll be processing it and we'll open new trades from Cargo;",
-		"Processed plasma canisters and a new machine we like to call the Weather Barrier, using brand new top-of-the-line plasma technologies to remove ash storms before they start.</blockquote>",
+		"Get it filled as much as you can, once completed we'll be processing it and open new trades from Cargo;",
+		"Processed plasma canisters and a new machine we like to call the Weather Barrier, using brand new top-of-the-line plasma technologies to remove ash storms before they start, will be available.</blockquote>",
 	).Join("\n")
