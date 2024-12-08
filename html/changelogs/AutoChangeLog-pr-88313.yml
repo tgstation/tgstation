@@ -1,7 +1,0 @@
-author: "ValuedEmployee"
-delete-after: True
-changes:
-  - bugfix: "Only players with Felinid tongues get to meow and purr for real this time, and other carbons cannot"
-  - bugfix: "Mimes can no longer meow out loud and have their own mime message"
-  - bugfix: "Stopped delay on meow and purr emotes where they had to be used twice to work the first time they're used"
-  - rscdel: "Removed redundant text warning for players that can't use the meow or purr emotes"
