@@ -122,7 +122,15 @@
 
 		if(!(pointing_at in view(client.view, src)))
 			return FALSE
-
+	if(iscarbon(src)) // special interactions for carbons
+		var/mob/living/carbon/our_carbon = src
+		if(our_carbon.usable_hands <= 0 || src.incapacitated & INCAPABLE_RESTRAINTS || HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+			if(TIMER_COOLDOWN_FINISHED(src, "point_verb_emote_cooldown"))
+				//cooldown handled in the emote.
+				our_carbon.emote("point [pointing_at]")
+			else
+				to_chat(src, span_warning("You need to wait before pointing again!"))
+				return FALSE
 	point_at(pointing_at, TRUE)
 
 	return TRUE
