@@ -125,7 +125,7 @@
 	. = ..()
 	var/turf/location = get_turf(src)
 	var/area_name = get_area_name(src)
-	centcom_turf = get_turf(locate(/obj/effect/landmark/centcom_dock) in GLOB.landmarks)
+	centcom_turf = get_turf(locate(/obj/effect/landmark/centcom_dock) in GLOB.landmarks_list)
 	message_admins("Exit rift created at [area_name]. [ADMIN_VERBOSEJMP(location)]")
 	log_game("Bluespace Exit Rift was created at [area_name].")
 	investigate_log("created at [area_name].", INVESTIGATE_ENGINE)
@@ -154,17 +154,17 @@
 				You contemplate about this decision before landing face first onto the cold, hard floor."),
 			span_hear("You hear a loud crack as a distortion passes through you."))
 
+		var/turf/arrival_turf
 
 		if (centcom_turf)
-			var/turf/arrival_turf = pick(range(3, centcom_turf))
+			arrival_turf = pick(range(3, centcom_turf))
 		else
 			message_admins("No centcom dock landmark found! Performing fallback algorithm, yell at a mapper.")
 			stack_trace("Missing centcom dock landmark, place one in the middle of the centcom evac dock")
 			var/list/arrival_turfs = get_area_turfs(/area/centcom/central_command_areas/evacuation)
-			var/turf/arrival_turf
 			do
 				arrival_turf = pick_n_take(arrival_turfs)
-			while(!is_safe_turf(arrival_turf))
+			while(!is_safe_turf(arrival_turf)) // if this shit turns out to be null then i will be VERY surprised
 
 		var/mob/living/consumed_mob = consumed_object
 		message_admins("[key_name_admin(consumed_mob)] has entered [src] [ADMIN_VERBOSEJMP(src)].")
