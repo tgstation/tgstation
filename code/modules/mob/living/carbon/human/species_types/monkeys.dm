@@ -63,6 +63,10 @@
 /datum/species/monkey/get_scream_sound(mob/living/carbon/human/monkey)
 	return get_sfx(SFX_SCREECH)
 
+/datum/species/monkey/get_hiss_sound(mob/living/carbon/human/monkey)
+	return 'sound/mobs/humanoids/human/hiss/human_hiss.ogg'
+	// we're both great apes, or something..
+
 /datum/species/monkey/get_physical_attributes()
 	return "Monkeys are slippery, can crawl into vents, and are more dextrous than humans.. but only when stealing things. \
 		Natural monkeys cannot operate machinery or most tools with their paws, but unusually clever monkeys or those that were once something else can."
