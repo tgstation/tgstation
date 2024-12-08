@@ -229,3 +229,8 @@
   - bugfix: runetext fades in correctly in bulk. signers rejoice
   zxaber:
   - bugfix: Mechs with crowbar-like tools can now hold adjacent firelocks open correctly.
+2024-12-08:
+  SyncIt21:
+  - refactor: improved attack chain code for rapid pipe dispenser
+  - code_imp: organized lists & global vars for rapid pipe dispenser into their own
+      respective files & improved a bunch of code
