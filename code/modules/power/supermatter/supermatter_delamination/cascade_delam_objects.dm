@@ -60,10 +60,8 @@
 					[checked_atom.p_their()] body begins to shine with a brilliant light before crystallizing from the inside out and joining \the [src]!"),
 				span_userdanger("The crystal mass lunges on you and hits you in the chest. As your vision is filled with a blinding light, you think to yourself \"Damn it.\""))
 		else if(istype(checked_atom, /obj/cascade_portal))
-			checked_atom.visible_message(span_userdanger("\The [checked_atom] screeches and closes away as it is hit by \a [src]! Too late!"))
-			playsound(get_turf(checked_atom), 'sound/effects/magic/charge.ogg', 50, TRUE)
-			playsound(get_turf(checked_atom), 'sound/effects/supermatter.ogg', 50, TRUE)
-			qdel(checked_atom)
+			var/obj/cascade_portal/portal = checked_atom
+			portal.close_portal(hitter = src)
 		else if(isitem(checked_atom))
 			playsound(get_turf(checked_atom), 'sound/effects/supermatter.ogg', 50, TRUE)
 			qdel(checked_atom)
@@ -129,6 +127,7 @@
 	message_admins("Exit rift created at [area_name]. [ADMIN_VERBOSEJMP(location)]")
 	log_game("Bluespace Exit Rift was created at [area_name].")
 	investigate_log("created at [area_name].", INVESTIGATE_ENGINE)
+	addtimer(CALLBACK(src, PROC_REF(close_portal)), 45 SECONDS)
 
 /obj/cascade_portal/Destroy(force)
 	var/turf/location = get_turf(src)
@@ -137,6 +136,15 @@
 	log_game("Bluespace Exit Rift at [area_name] was deleted.")
 	investigate_log("was deleted.", INVESTIGATE_ENGINE)
 	return ..()
+
+/obj/cascade_portal/proc/close_portal(atom/hitter)
+	if(hitter)
+		visible_message(span_userdanger("\The [src] screeches and closes away as it is hit by \a [hitter]! Too late!"))
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
+	else
+		visible_message(span_userdanger("\The [src] screeches and closes away! Too late!"))
+	playsound(get_turf(src), 'sound/effects/magic/charge.ogg', 50, TRUE)
+	qdel(src)
 
 /obj/cascade_portal/Bumped(atom/movable/hit_object)
 	consume(hit_object)

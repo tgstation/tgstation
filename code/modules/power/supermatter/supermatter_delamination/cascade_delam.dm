@@ -46,7 +46,7 @@
 	sm.warp = new(sm)
 	sm.vis_contents += sm.warp
 	animate(sm.warp, time = 1, transform = matrix().Scale(0.5,0.5))
-	animate(time = 9, transform = matrix())
+	animate(time = 1 SECONDS, transform = matrix())
 
 /datum/sm_delam/cascade/on_deselect()
 	message_admins("[sm] will no longer cascade. [ADMIN_VERBOSEJMP(sm)]")
