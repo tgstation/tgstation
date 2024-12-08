@@ -26,6 +26,7 @@
 /obj/item/key/janitor
 	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
 	icon_state = "keyjanitor"
+	icon_angle = 90
 	force = 2
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 9
