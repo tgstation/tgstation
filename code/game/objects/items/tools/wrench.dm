@@ -5,7 +5,7 @@
 	icon_state = "wrench"
 	inhand_icon_state = "wrench"
 	worn_icon_state = "wrench"
-	icon_angle = -45
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY

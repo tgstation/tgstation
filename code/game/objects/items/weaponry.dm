@@ -138,11 +138,15 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -15)
+	make_stabby()
 	AddComponent(/datum/component/butchering, \
 	speed = 4 SECONDS, \
 	effectiveness = 105, \
 	)
+
+// Applies alt sharpness component, for overrides
+/obj/item/claymore/proc/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -15)
 
 /obj/item/claymore/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

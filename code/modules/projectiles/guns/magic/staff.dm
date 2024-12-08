@@ -3,6 +3,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/nothing
 	worn_icon_state = null
 	icon_state = "staff"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	item_flags = NEEDS_PERMIT | NO_MAT_REDEMPTION

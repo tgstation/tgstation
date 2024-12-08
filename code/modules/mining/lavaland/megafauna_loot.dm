@@ -46,6 +46,7 @@
 	desc = "The strange technology of this large club allows various nigh-magical teleportation feats. It used to beat you, but now you can set the beat."
 	icon_state = "hierophant_club_ready_beacon"
 	inhand_icon_state = "hierophant_club_ready_beacon"
+	icon_angle = -135
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
@@ -788,6 +789,7 @@
 	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
 	icon_state = "lavastaff"
 	inhand_icon_state = "lavastaff"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/weapons/guns/magic.dmi'
@@ -989,6 +991,7 @@
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
 	inhand_icon_state = "staffofstorms"
+	icon_angle = -45
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'

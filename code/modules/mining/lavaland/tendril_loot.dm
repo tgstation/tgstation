@@ -73,6 +73,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon_state = "asclepius_dormant"
 	inhand_icon_state = "asclepius_dormant"
+	icon_angle = -45
 	var/activated = FALSE
 
 /obj/item/rod_of_asclepius/Initialize(mapload)
