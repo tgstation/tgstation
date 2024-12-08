@@ -2,17 +2,20 @@
 /datum/element/fried_item
 	/// List of colors to apply the element target.
 	/// Each index corresponds to a different level.
-	var/static/list/fried_colors = list(
-		COLOR_LIGHT_BROWN,
-		COLOR_BROWNER_BROWN,
-		COLOR_DARKER_BROWN,
-		COLOR_BLACK,
-	)
+	var/static/list/fried_colors
 
 /datum/element/fried_item/Attach(datum/target, fry_time)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
+
+	if (isnull(fried_colors))
+		fried_colors = list(
+			color_transition_filter(COLOR_LIGHT_BROWN, SATURATION_OVERRIDE),
+			color_transition_filter(COLOR_BROWNER_BROWN, SATURATION_OVERRIDE),
+			color_transition_filter(COLOR_DARKER_BROWN, SATURATION_OVERRIDE),
+			color_transition_filter(COLOR_BLACK, SATURATION_OVERRIDE),
+		)
 
 	var/atom/this_food = target
 

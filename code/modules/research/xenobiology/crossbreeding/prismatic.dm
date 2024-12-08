@@ -14,7 +14,7 @@ Prismatic extracts:
 	if(!isturf(interacting_with) || isspaceturf(interacting_with))
 		return NONE
 	user.do_attack_animation(interacting_with)
-	interacting_with.add_atom_colour(paintcolor, WASHABLE_COLOUR_PRIORITY)
+	interacting_with.add_atom_colour(color_transition_filter(paintcolor, SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
 	playsound(interacting_with, 'sound/effects/slosh.ogg', 20, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
