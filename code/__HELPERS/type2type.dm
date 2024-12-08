@@ -99,10 +99,8 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		else
 			return null
 
-///Returns a single dir rotated by x degrees.
-#define rotate_dir(dir, rotation) ( angle2dir( dir2angle(dir) + rotation ) )
-///Returns a single dir rotated by x degrees, adhering to the cardinal directions.
-#define rotate_dir_cardinal(dir, rotation) ( angle2dir_cardinal ( dir2angle(dir) + rotation ) )
+///Returns a single dir rotated by x degrees clockwise, adhering to the cardinal directions.
+#define turn_cardinal(dir, rotation) ( angle2dir_cardinal ( dir2angle(dir) + rotation ) )
 
 //Returns the angle in english
 /proc/angle2text(degree)

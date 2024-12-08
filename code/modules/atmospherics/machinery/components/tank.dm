@@ -157,27 +157,34 @@
 // Port stuff
 
 /**
- * Enables/Disables a port direction in [./var/open_ports]. \
- * Use this, then call [./proc/set_init_directions()] instead of setting initialize_directions directly \
- * This system exists because having some initialize_directions set to null breaks rotation
+ * Enables/Disables a port direction in var/open_ports. \
+ * Use this, then call set_init_directions() instead of setting initialize_directions directly \
+ * This system exists because tanks not having all initialize_directions set correctly breaks shuttle rotations
  */
 /obj/machinery/atmospherics/components/tank/proc/set_portdir_relative(relative_port_dir, enable)
-
-	if(isnull(enable)) //toggle it if we weren't given a state to set it to
-		enable = ((initialize_directions & relative_port_dir) ? FALSE : TRUE)
+	ASSERT(!isnull(enable), "Did not recieve argument enable")
 
 	// Rotate the given dir so that it's relative to north
 	var/port_dir
-	if(dir == NORTH)
+	if(dir == NORTH) // We're already facing north, no rotation needed
 		port_dir = relative_port_dir
 	else
 		var/offnorth_angle = dir2angle(dir)
-		port_dir = rotate_dir(relative_port_dir, -offnorth_angle)
+		port_dir = turn(relative_port_dir, offnorth_angle)
 
 	if(enable)
 		open_ports |= port_dir
 	else
 		open_ports &= ~port_dir
+
+/**
+ * Toggles a port direction in var/open_ports \
+ * Use this, then call set_init_directions() instead of setting initialize_directions directly \
+ * This system exists because tanks not having all initialize_directions set correctly breaks shuttle rotations
+ */
+/obj/machinery/atmospherics/components/tank/proc/toggle_portdir_relative(relative_port_dir)
+	var/toggle = ((initialize_directions & relative_port_dir) ? FALSE : TRUE)
+	set_portdir_relative(relative_port_dir, toggle)
 
 /obj/machinery/atmospherics/components/tank/set_init_directions()
 	if(!open_ports)
@@ -193,13 +200,13 @@
 		if(!current_dir)
 			continue
 
-		var/rotated_dir = rotate_dir(current_dir, dir_angle)
+		var/rotated_dir = turn(current_dir, -dir_angle)
 		relative_port_dirs |= rotated_dir
 
 	initialize_directions = relative_port_dirs
 
 /obj/machinery/atmospherics/components/tank/proc/toggle_side_port(port_dir)
-	set_portdir_relative(port_dir)
+	toggle_portdir_relative(port_dir)
 	set_init_directions()
 
 	for(var/i in 1 to length(nodes))

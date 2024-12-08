@@ -86,7 +86,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 		if(isnull(node_dir))
 			continue
 
-		real_node_connect[i] = rotate_dir(node_dir, rotation)
+		real_node_connect[i] = turn(node_dir, -rotation)
 
 	. = ..()
 	set_init_directions()
