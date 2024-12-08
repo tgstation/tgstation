@@ -99,18 +99,20 @@
 	. = ..()
 	STOP_PROCESSING(SSprocessing, src)
 	QDEL_NULL(display_panel_ref)
-	//unlocks plasma canisters purchasable from Cargo.
+	//makes plasma canisters & weather manipulators purchasable from Cargo
 	var/datum/supply_pack/plasma_pack = SSshuttle.supply_packs["/datum/supply_pack/materials/gas_canisters/plasma"] //canister IDs are uniquely stored as strings
 	plasma_pack.hidden = FALSE
 	var/datum/supply_pack/weather_pack = SSshuttle.supply_packs[/datum/supply_pack/imports/weather_remover]
 	weather_pack.hidden = FALSE
-	//give miners their points.
+	//give miners their points
 	if(SSeconomy.bank_accounts_by_job[/datum/job/shaft_miner])
 		for(var/datum/bank_account/miners as anything in SSeconomy.bank_accounts_by_job[/datum/job/shaft_miner])
 			miners.mining_points += OBJECTIVE_MINING_POINTS_AWARD
 			miners.bank_card_talk("You've been awarded [OBJECTIVE_MINING_POINTS_AWARD] mining points for the completion of the plasma extraction objective.")
-	var/datum/station_goal/extract_plasma/goal = SSstation.get_station_goal(/datum/station_goal/extract_plasma)
-	goal.completed = TRUE
+	//completes the objective
+	var/datum/station_goal/extract_plasma/extraction_goal = SSstation.get_station_goal(MINING_GOAL)
+	if(istype(extraction_goal))
+		extraction_goal.completed = TRUE
 
 /**
  * Toggles the drilling process on/off.
