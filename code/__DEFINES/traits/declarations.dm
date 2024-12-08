@@ -1399,4 +1399,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to atoms currently affected by projectile dampeners
 #define TRAIT_GOT_DAMPENED "got_dampened"
 
+///Trait given to the owner of a stolen nose after using the *nosesteal abstract item
+#define TRAIT_NOSE_STOLEN "stolen_nose"
+
 // END TRAIT DEFINES

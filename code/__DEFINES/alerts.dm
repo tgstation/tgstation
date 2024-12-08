@@ -26,6 +26,7 @@
 #define ALERT_SHOES_KNOT "shoealert"
 #define ALERT_RADIOACTIVE_AREA "radioactive_area"
 #define ALERT_UNPOSSESS_OBJECT "unpossess_object"
+#define ALERT_NOSE_STOLEN "nose_stolen"
 
 //antag related
 #define ALERT_HYPNOSIS "hypnosis"
