@@ -1,3 +1,4 @@
+/* DOPPLER EDIT REMOVAL - Fundamentally Evil replaced with Unholy Aura and Bad Vibes
 /datum/quirk/evil
 	name = "Fundamentally Evil"
 	desc = "Where you would have a soul is but an ink-black void. While you are committed to maintaining your social standing, \
@@ -10,3 +11,4 @@
 	lose_text = span_notice("You suddenly care more about others and their needs.")
 	medical_record_text = "Patient has passed all our social fitness tests with flying colours, but had trouble on the empathy tests."
 	mail_goodies = list(/obj/item/food/grown/citrus/lemon)
+*/
