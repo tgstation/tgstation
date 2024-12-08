@@ -213,7 +213,7 @@
 "M" = (
 /obj/effect/turf_decal/bot/right,
 /obj/structure/closet/crate/large,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large/twenty_force,
 /turf/open/floor/plating,
 /area/template_noop)
 "N" = (

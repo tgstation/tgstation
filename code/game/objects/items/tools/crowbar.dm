@@ -88,7 +88,7 @@
 	custom_materials = list(/datum/material/wood=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7)
 	wound_bonus = 35
 
-/obj/item/crowbar/large/heavy //from space ruin
+/obj/item/crowbar/large/twenty_force //from space ruin
 	name = "heavy crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
 	force = 20

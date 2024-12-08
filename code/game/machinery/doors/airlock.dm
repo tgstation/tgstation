@@ -1549,6 +1549,7 @@
 	assembly.previous_assembly = previous_airlock
 	assembly.update_name()
 	assembly.update_appearance()
+	assembly.dir = dir
 
 /obj/machinery/door/airlock/on_deconstruction(disassembled)
 	var/obj/structure/door_assembly/A
@@ -2464,6 +2465,10 @@
 	multi_tile = TRUE
 	opacity = FALSE
 	glass = TRUE
+
+/obj/machinery/door/airlock/multi_tile/setDir(newdir)
+	. = ..()
+	set_bounds()
 
 /obj/structure/fluff/airlock_filler
 	name = "airlock fluff"
