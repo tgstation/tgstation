@@ -9,8 +9,9 @@
 		/obj/item/melee/roastingstick,
 		/obj/item/toy/crayon/spraycan
 	))
+	var/supermatter_effects
 
-/datum/component/supermatter_crystal/Initialize(datum/callback/tool_act_callback, datum/callback/consume_callback)
+/datum/component/supermatter_crystal/Initialize(datum/callback/tool_act_callback, datum/callback/consume_callback, supermatter_effects = FALSE)
 
 	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, PROC_REF(blob_hit))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, PROC_REF(paw_hit))
@@ -27,6 +28,7 @@
 
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
+	src.supermatter_effects = supermatter_effects
 
 /datum/component/supermatter_crystal/Destroy(force)
 	tool_act_callback = null
@@ -303,7 +305,7 @@
 		message_admins("[atom_source] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(atom_source)].")
 		atom_source.investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.investigate_log("has been dusted by [atom_source].", INVESTIGATE_DEATHS)
-		if(istype(consumed_mob, /mob/living/basic/parrot/poly)) // Dusting Poly creates a power surge
+		if(supermatter_effects && istype(consumed_mob, /mob/living/basic/parrot/poly)) // Dusting Poly creates a power surge
 			force_event(/datum/round_event_control/supermatter_surge/poly, "Poly's revenge")
 			notify_ghosts(
 				"[consumed_mob] has been dusted by [atom_source]!",
