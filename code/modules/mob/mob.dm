@@ -525,6 +525,11 @@
 	face_atom(examinify)
 	var/result_combined
 	if(client)
+		if(isliving(examinify) && isliving(src) && !issilicon(src) && TIMER_COOLDOWN_FINISHED(src, "[src]_examine_message_cooldown_for_[examinify]"))
+			var/mob/living/examiner = src
+			var/combat_intent_active = examiner.combat_mode
+			examiner.visible_message(span_notice("[examiner] [combat_intent_active ? pick("stares at", "glares at", "oggles at") : pick("glances at", "looks at", "takes a look at", "examines", "inspects")] [examinify][combat_intent_active ? "!" : "."]"))
+			TIMER_COOLDOWN_START(examiner, "[src]_examine_message_cooldown_for_[examinify]", 1.5 SECONDS)
 		LAZYINITLIST(client.recent_examines)
 		var/ref_to_atom = REF(examinify)
 		var/examine_time = client.recent_examines[ref_to_atom]
