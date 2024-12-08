@@ -1,5 +1,9 @@
+///How many sheets of plasma the weather remover can hold at once.
 #define MAX_PLASMA_SHEETS 50
-#define MIN_PLASMA_SHEETS_TO_WORK (MAX_PLASMA_SHEETS / 2)
+///How many sheets less do you need to get rid of an ash storm per tier.
+#define PLASMA_LESS_PER_TIER 10
+///How much light does the machine emit while active, each part tier increasing by this.
+#define WEATHER_LIGHT_POWER 1.25
 
 /obj/machinery/weather_remover
 	name = "plasma-fuelled weather barrier"
@@ -15,9 +19,12 @@
 	var/activated = FALSE
 	///Amount of sheets of plasma is currently in the machine.
 	var/sheets_of_plasma
+	///Amount of sheets of plasma is required to work once.
+	var/required_sheets = MAX_PLASMA_SHEETS
 
 /obj/machinery/weather_remover/Initialize(mapload)
 	. = ..()
+	RefreshParts()
 	register_context()
 
 /obj/machinery/weather_remover/Destroy(force)
@@ -27,7 +34,7 @@
 
 /obj/machinery/weather_remover/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [sheets_of_plasma] sheets of plasma stored in it. It costs 25 sheets of plasma per storm.")
+	. += span_notice("It has [sheets_of_plasma] sheets of plasma stored in it. It costs [required_sheets] sheets of plasma per storm.")
 
 /obj/machinery/weather_remover/on_set_is_operational(was_operational)
 	if(was_operational && activated)
@@ -38,7 +45,7 @@
 	if((machine_stat & BROKEN) || !activated)
 		set_light(0)
 		return
-	set_light(l_range = 1.5, l_power = 2, l_color = COLOR_THEME_PLASMAFIRE)
+	set_light(l_range = 1.5, l_color = COLOR_THEME_PLASMAFIRE)
 
 /obj/machinery/weather_remover/update_overlays()
 	. = ..()
@@ -68,6 +75,19 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/machinery/weather_remover/RefreshParts()
+	. = ..()
+	//tier 1 requires 40, tier 4 (max) requires 10.
+	var/matterbin_rating
+	for(var/datum/stock_part/matter_bin/matterbins in component_parts)
+		matterbin_rating += matterbins.tier
+	required_sheets = max(10, initial(required_sheets) - (matterbin_rating * PLASMA_LESS_PER_TIER))
+	//extra light power for every tier it's at
+	var/servo_rating
+	for(var/datum/stock_part/servo/servos in component_parts)
+		servo_rating += servos.tier
+	set_light_power(servo_rating * WEATHER_LIGHT_POWER)
+
 /obj/machinery/weather_remover/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(panel_open)
@@ -76,7 +96,7 @@
 	if(!anchored)
 		balloon_alert(user, "unanchored!")
 		return
-	if(sheets_of_plasma < MIN_PLASMA_SHEETS_TO_WORK)
+	if(sheets_of_plasma < required_sheets)
 		balloon_alert(user, "not enough plasma!")
 		return
 	activated = !activated
@@ -143,6 +163,7 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
+///Called when an ash storm is being telegraphed and the machine is active, will cancel the machine and use the sheets of plasma.
 /obj/machinery/weather_remover/proc/on_storm_start(datum/controller/subsystem/processing/dcs/source, datum/weather/ash_storm/storm)
 	SIGNAL_HANDLER
 	if(!(z in storm.impacted_z_levels) || (obj_flags & EMAGGED))
@@ -151,11 +172,12 @@
 		CRASH("[src] called on_storm_start but isn't activated, they shouldn't be listening to any signal to call this!")
 	playsound(src, 'sound/items/night_vision_on.ogg', 30, TRUE, -3) //honestly just a cool sfx that i thought fit
 	Shake(duration = 2 SECONDS)
-	sheets_of_plasma -= MIN_PLASMA_SHEETS_TO_WORK
-	if(sheets_of_plasma < MIN_PLASMA_SHEETS_TO_WORK) //not enough to go a second time.
+	sheets_of_plasma -= required_sheets
+	if(sheets_of_plasma < required_sheets) //not enough to go a second time.
 		deactivate()
 	return CANCEL_WEATHER_TELEGRAPH
 
+///Deactivates the machine and updates the appearance.
 /obj/machinery/weather_remover/proc/deactivate()
 	UnregisterSignal(SSdcs, list(COMSIG_WEATHER_TELEGRAPH(/datum/weather/ash_storm)))
 	activated = FALSE
