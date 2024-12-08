@@ -1,7 +1,7 @@
 /// The starter amount for the android's core
 #define ENERGY_START_AMT 5 MEGA JOULES
 /// The amount at which mob energy decreases
-#define ENERGY_DRAIN_AMT 5 KILO JOULES
+#define ENERGY_DRAIN_AMT 2.5 KILO JOULES
 
 /datum/species/android
 	name = "Android"
