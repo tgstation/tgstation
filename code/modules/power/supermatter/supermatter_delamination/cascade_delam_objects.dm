@@ -178,7 +178,7 @@
 		investigate_log("was entered by [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.forceMove(arrival_turf)
 		consumed_mob.Paralyze(10 SECONDS)
-		consumed_mob.adjustBruteLoss(30)
+		consumed_mob.take_damage(damage_amount = 30, damage_type = BRUTE, forced = TRUE)
 		consumed_mob.flash_act(1, TRUE, TRUE)
 		new /obj/effect/particle_effect/sparks(consumed_object)
 	else if(isitem(consumed_object))

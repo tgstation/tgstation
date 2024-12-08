@@ -146,7 +146,7 @@
 		)
 	else
 	// except if you are on it already, then you are safe c:
-		minor_announce("ERROR: Corruption detected in navigation protocols. Connection with Transponder #XCC-P5831-ES13 lost. \
+		minor_announce("ERROR: Corruption detected in navigation protocols. Connection with Transponder XCC-P5831-ES13 lost. \
 				Backup exit route protocol decrypted. Calibrating route...",
 			"Emergency Shuttle", TRUE) // wait out until the rift on the station gets destroyed and the final message plays
 		var/list/mobs = mobs_in_area_type(list(/area/shuttle/escape))
