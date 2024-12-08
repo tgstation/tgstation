@@ -59,7 +59,7 @@
 	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a cascade delam.")
 	sm.investigate_log("triggered a cascade delam.", INVESTIGATE_ENGINE)
 
-	effect_explosion(sm)
+	effect_explosion()
 	effect_emergency_state()
 	effect_cascade_demoralize()
 	priority_announce("A Type-C resonance shift event has occurred in your sector. Scans indicate local oscillation flux affecting spatial and gravitational substructure. \
@@ -68,10 +68,9 @@
 	effect_strand_shuttle()
 	sleep(3 SECONDS)
 	var/obj/cascade_portal/rift = effect_evac_rift_start()
-	RegisterSignal(rift, COMSIG_QDELETING, PROC_REF(end_round_holder))
 	SSsupermatter_cascade.can_fire = TRUE
 	SSsupermatter_cascade.cascade_initiated = TRUE
-	effect_crystal_mass(sm, rift)
+	effect_crystal_mass(rift)
 	return ..()
 
 /datum/sm_delam/cascade/examine()
@@ -94,11 +93,6 @@
 		a subject within [station_name()], a resonance cascade event may occur.",
 		"Nanotrasen Astrophysics Division", 'sound/announcer/alarm/airraid.ogg')
 	return TRUE
-
-/// Signal calls cant sleep, we gotta do this.
-/datum/sm_delam/cascade/proc/end_round_holder()
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(effect_evac_rift_end))
 
 /proc/delam_cascade_emitter_can_select(obj/machinery/power/supermatter_crystal/sm)
 	return FALSE

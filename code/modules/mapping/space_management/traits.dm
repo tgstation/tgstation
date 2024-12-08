@@ -50,6 +50,6 @@
 	return final_return
 
 /// Prefer not to use this one too often
-/datum/controller/subsystem/mapping/proc/get_station_center()
-	var/station_z = levels_by_trait(ZTRAIT_STATION)[1]
-	return locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), station_z)
+/datum/controller/subsystem/mapping/proc/get_station_center() as /turf
+	var/datum/space_level/station_level = levels_by_trait(ZTRAIT_STATION)[1]
+	return station_level.get_center_turf()

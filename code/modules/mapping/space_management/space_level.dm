@@ -20,3 +20,6 @@
 
 
 	set_linkage(new_traits[ZTRAIT_LINKAGE])
+
+/datum/space_level/proc/get_center_turf() as /turf
+	return locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), z_value)

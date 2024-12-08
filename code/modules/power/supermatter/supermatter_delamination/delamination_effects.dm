@@ -5,7 +5,7 @@
 
 /// Irradiates mobs around 20 tiles of the sm.
 /// Just the mobs apparently.
-/datum/sm_delam/proc/effect_irradiate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/effect_irradiate()
 	var/turf/sm_turf = get_turf(sm)
 	for (var/mob/living/victim in range(DETONATION_RADIATION_RANGE, sm))
 		if(!is_valid_z_level(get_turf(victim), sm_turf))
@@ -16,7 +16,7 @@
 	return TRUE
 
 /// Hallucinates and makes mobs in Z level sad.
-/datum/sm_delam/proc/effect_demoralize(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/effect_demoralize()
 	var/turf/sm_turf = get_turf(sm)
 	for(var/mob/living/victim as anything in GLOB.alive_mob_list)
 		if(!istype(victim) || !is_valid_z_level(get_turf(victim), sm_turf))
@@ -49,7 +49,7 @@
 	return TRUE
 
 /// Spawns anomalies all over the station. Half instantly, the other half over time.
-/datum/sm_delam/proc/effect_anomaly(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/effect_anomaly()
 	var/anomalies = 10
 	var/list/anomaly_types = list(GRAVITATIONAL_ANOMALY = 55, HALLUCINATION_ANOMALY = 45, DIMENSIONAL_ANOMALY = 35, BIOSCRAMBLER_ANOMALY = 35, FLUX_ANOMALY = 25, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
 	var/list/anomaly_places = GLOB.generic_event_spawns
@@ -74,7 +74,7 @@
 	return TRUE
 
 /// Explodes
-/datum/sm_delam/proc/effect_explosion(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/effect_explosion()
 	var/explosion_power = sm.explosion_power
 	var/power_scaling = sm.gas_heat_power_generation
 	var/turf/sm_turf = get_turf(sm)
@@ -90,7 +90,7 @@
 	return TRUE
 
 /// Spawns a scrung and eat the SM.
-/datum/sm_delam/proc/effect_singulo(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/effect_singulo()
 	var/turf/sm_turf = get_turf(sm)
 	if(!sm_turf)
 		stack_trace("Supermatter [sm] failed to spawn singularity, cant get current turf.")
@@ -101,7 +101,7 @@
 	return TRUE
 
 /// Teslas
-/datum/sm_delam/proc/effect_tesla(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/effect_tesla()
 	var/turf/sm_turf = get_turf(sm)
 	if(!sm_turf)
 		stack_trace("Supermatter [sm] failed to spawn tesla, cant get current turf.")
@@ -130,7 +130,7 @@
 	and that the shuttle is in stranded mode, then frees it with an announcement.
 	This is a botched solution to a problem that could be solved with a small change in shuttle code, however-
 	*/
-	if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
+	if(SSshuttle.emergency.mode == SHUTTLE_IDLE || SSshuttle.emergency.mode == SHUTTLE_DOCKED || SSshuttle.emergency.mode == SHUTTLE_IGNITING)
 		SSshuttle.emergency.mode = SHUTTLE_STRANDED
 		SSshuttle.registerHostileEnvironment(src)
 		return
@@ -176,14 +176,21 @@
 
 /// Spawn an evacuation rift for people to go through.
 /datum/sm_delam/proc/effect_evac_rift_start()
-	var/obj/cascade_portal/rift = new /obj/cascade_portal(get_turf(pick(GLOB.generic_event_spawns)))
+	var/obj/effect/landmark/position = pick(GLOB.generic_event_spawns)
+	var/obj/cascade_portal/rift = new /obj/cascade_portal(get_turf(position))
 	priority_announce("We have been hit by a sector-wide electromagnetic pulse. All of our systems are heavily damaged, including those \
 		required for shuttle navigation. We can only reasonably conclude that a supermatter cascade is occurring on or near your station.\n\n\
 		Evacuation is no longer possible by conventional means; however, we managed to open a rift near the [get_area_name(rift)]. \
 		All personnel are hereby required to enter the rift by any means available.\n\n\
 		[Gibberish("Retrieval of survivors will be conducted upon recovery of necessary facilities.", FALSE, 5)] \
 		[Gibberish("Good luck--", FALSE, 25)]")
-	return rift
+	RegisterSignal(rift, COMSIG_QDELETING, PROC_REF(end_round_holder))
+	return position
+
+/// Signal calls cant sleep, we gotta do this.
+/datum/sm_delam/proc/end_round_holder()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(effect_evac_rift_end))
 
 /// Announce the destruction of the rift and end the round.
 /datum/sm_delam/proc/effect_evac_rift_end()
@@ -212,13 +219,38 @@
 	SSticker.news_report = SUPERMATTER_CASCADE
 	SSticker.force_ending = FORCE_END_ROUND
 
-/// Scatters crystal mass over the event spawns as long as they are at least 30 tiles away from whatever we want to avoid.
-/datum/sm_delam/proc/effect_crystal_mass(obj/machinery/power/supermatter_crystal/sm, avoid)
-	new /obj/crystal_mass(get_turf(sm))
-	var/list/possible_spawns = GLOB.generic_event_spawns.Copy()
-	for(var/i in 1 to rand(4,6))
-		var/spawn_location
-		do
-			spawn_location = pick_n_take(possible_spawns)
-		while(get_dist(spawn_location, avoid) < 30)
-		new /obj/crystal_mass(get_turf(spawn_location))
+#define MIN_DIST_TO_PORTAL 30
+
+/// Scatters crystal mass over the event spawns. Tries to cover all station levels.
+/datum/sm_delam/proc/effect_crystal_mass(obj/effect/landmark/avoid)
+	var/list/possible_spawns = GLOB.generic_event_spawns + GLOB.mining_event_spawns - avoid
+	var/obj/crystal_mass/sm_mass = new /obj/crystal_mass(get_turf(sm))
+	var/list/levels_to_spawn = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING)) - sm_mass.z
+	var/list/crystal_masses_spawned = list(sm_mass)
+	var/mass_soft_limit = rand(6,8)
+
+	// spawn a mass on every z level
+	for(var/obj/effect/landmark/landmark as anything in possible_spawns)
+		if(length(levels_to_spawn) == 0)
+			break
+		if(get_dist(landmark, avoid) < MIN_DIST_TO_PORTAL)
+			continue
+		if(!(landmark.z in levels_to_spawn))
+			continue
+		possible_spawns -= landmark
+		levels_to_spawn -= landmark.z
+		crystal_masses_spawned += new /obj/crystal_mass(get_turf(landmark))
+
+	// fallback in case the required z-level has no landmark spawn
+	for(var/datum/space_level/level as anything in levels_to_spawn)
+		var/turf/center_turf = level.get_center_turf()
+		crystal_masses_spawned += new /obj/crystal_mass(center_turf)
+
+	// spawn additional masses
+	for(var/i in length(crystal_masses_spawned) to mass_soft_limit)
+		var/obj/effect/landmark/spawn_location = pick_n_take(possible_spawns)
+		if(get_dist(spawn_location, avoid) < MIN_DIST_TO_PORTAL)
+			continue
+		crystal_masses_spawned += new /obj/crystal_mass(get_turf(spawn_location))
+
+#undef MIN_DIST_TO_PORTAL
