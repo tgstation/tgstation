@@ -237,6 +237,11 @@
 		wall_target.dismantle_wall()
 		return
 
+	if(istype(target, /obj/effect/anomaly))
+		var/obj/effect/anomaly/anomaly_target = target
+		anomaly_target.anomalyNeutralize()
+		return
+
 	return ..()
 
 /obj/projectile/beam/lasertag
