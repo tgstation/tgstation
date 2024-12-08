@@ -60,6 +60,15 @@
 	///stores the direction and orientation of the last projectile
 	var/last_projectile_params
 
+/datum/armor/emitter_cascade
+	melee = 10
+	bullet = 25
+	laser = 75
+	energy = 75
+	fire = 50
+	acid = 25
+	bomb = 25
+
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
 	//Add to the early process queue to prioritize power draw
@@ -317,15 +326,7 @@
 
 /obj/machinery/power/emitter/crowbar_act(mob/living/user, obj/item/item)
 	if(contains_cascade_kit)
-		to_chat(span_warning("You try to forcibly pry the suspicious device out of the emitter..."))
-		item.play_tool_operating_sound(src)
-		item.play_tool_sound(src)
-		if(do_after(user, 10 SECONDS, src))
-			item.play_tool_sound(src)
-			to_chat(span_danger("You successfully pry the suspicious device from the emitter, destroying it in the process."))
-			contains_cascade_kit = FALSE
-			set_projectile()
-			return
+		return
 	if(panel_open && gun)
 		return remove_gun(user)
 	default_deconstruction_crowbar(item)
@@ -334,22 +335,25 @@
 /obj/machinery/power/emitter/screwdriver_act(mob/living/user, obj/item/item)
 	if(..())
 		return TRUE
+	if(contains_cascade_kit && !panel_open)
+		balloon_alert(user, "can't open!")
+		return TRUE
 	default_deconstruction_screwdriver(user, "[base_icon_state]_open", base_icon_state, item)
 	return TRUE
 
 /// Attempt to toggle the controls lock of the emitter
 /obj/machinery/power/emitter/proc/togglelock(mob/user)
 	if(obj_flags & EMAGGED)
-		to_chat(user, span_warning("The lock seems to be broken!"))
+		balloon_alert(user, "lock broken!")
 		return
 	if(!allowed(user))
-		to_chat(user, span_danger("Access denied."))
+		balloon_alert(user, "access denied")
 		return
 	if(!active)
-		to_chat(user, span_warning("The controls can only be locked when \the [src] is online!"))
+		balloon_alert(user, "turn off first!")
 		return
 	locked = !locked
-	to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
+	balloon_alert(user, "controls [src.locked ? "" : "un"]locked")
 
 /obj/machinery/power/emitter/attackby(obj/item/item, mob/user, params)
 	if(item.GetID())
@@ -363,13 +367,20 @@
 		if(integrate(item,user))
 			return
 	if(panel_open && istype(item, /obj/item/cascade_emitter_kit))
-		visible_message(span_warning("[user] tries to install a suspicious device into \the [src]..."))
+		visible_message(
+			message = span_warning("[user] tries to install a suspicious device into \the [src]..."),
+			self_message = span_warning("You begin to put \the [item] onto \the [src]")
+		)
 		if(do_after(user, 5 SECONDS, src))
-			visible_message(span_danger("[user] successfully installs a device into \the [src]."))
+			visible_message(
+				message = span_danger("[user] successfully installs a device into \the [src]."),
+				self_message = span_danger("You successfully install \the [item] on \the [src].")
+			)
 			contains_cascade_kit = TRUE
+			set_armor(/datum/armor/emitter_cascade)
 			set_projectile()
 			qdel(item)
-			return
+		return
 	return ..()
 
 
