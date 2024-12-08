@@ -55,3 +55,16 @@
 		/obj/item/stack/sheet/cardboard = 1,
 	)
 	category = CAT_MISC
+
+/datum/crafting_recipe/bitcoin_circuit
+	name = "Bitcoin miner circuit"
+	tool_behaviors = list(TOOL_CROWBAR)
+	result = /obj/item/circuitboard/machine/bitcoin_miner
+	time = 4 SECONDS
+	reqs = list(
+		/obj/item/stock_parts/capacitor = 2,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
+	)
+	category = CAT_MISC
+
