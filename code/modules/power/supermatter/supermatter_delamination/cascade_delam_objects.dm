@@ -155,11 +155,12 @@
  */
 /obj/cascade_portal/proc/consume(atom/movable/consumed_object)
 	if(isliving(consumed_object))
-		consumed_object.visible_message(span_danger("\The [consumed_object] walks into \the [src]... \
-			A blinding light covers [consumed_object.p_their()] body before disappearing completely!"),
-			span_userdanger("You walk into \the [src] as your body is washed with a powerful blue light. \
-				You contemplate about this decision before landing face first onto the cold, hard floor."),
-			span_hear("You hear a loud crack as a distortion passes through you."))
+		consumed_object.visible_message(
+			message = span_danger("\The [consumed_object] walks into \the [src]... A blinding light covers \
+				[consumed_object.p_their()] body before disappearing completely!"),
+			self_message = span_userdanger("You walk into \the [src] as your body is washed with a powerful \
+				blue light. You contemplate about this decision before landing face first onto the cold, hard floor."),
+			blind_message = span_hear("You hear a loud crack as a distortion passes through you."))
 
 		var/turf/arrival_turf
 
@@ -178,11 +179,13 @@
 		investigate_log("was entered by [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.forceMove(arrival_turf)
 		consumed_mob.Paralyze(10 SECONDS)
-		consumed_mob.take_damage(damage_amount = 30, damage_type = BRUTE, forced = TRUE)
+		consumed_mob.apply_damage(damage = 30, damagetype = BRUTE, forced = TRUE)
 		consumed_mob.flash_act(1, TRUE, TRUE)
 		new /obj/effect/particle_effect/sparks(consumed_object)
 	else if(isitem(consumed_object))
-		consumed_object.visible_message(span_danger("\The [consumed_object] smacks into \the [src] and disappears out of sight."), null,
-			span_hear("You hear a loud crack as a small distortion passes through you."))
+		consumed_object.visible_message(
+			message = span_danger("\The [consumed_object] smacks into \the [src] and disappears out of sight."),
+			blind_message = span_hear("You hear a loud crack as a small distortion passes through you.")
+		)
 
 		qdel(consumed_object)
