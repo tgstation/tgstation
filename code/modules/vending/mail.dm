@@ -42,12 +42,13 @@
 		"Sort" = icon('icons/hud/radial.dmi', "mail_sort"),
 	)
 
+/// Steps one tile in the `output_dir`. Returns `turf`.
 /obj/machinery/mailsorter/proc/get_unload_turf()
 	return get_step(src, output_dir)
 
 /obj/machinery/mailsorter/screwdriver_act(mob/living/user, obj/item/tool)
 	default_deconstruction_screwdriver(user, "[base_icon_state]-off", base_icon_state, tool)
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mailsorter/crowbar_act(mob/living/user, obj/item/tool)
@@ -65,6 +66,7 @@
 	drop_all_mail()
 	. = ..()
 
+/// Drops all enevlopes on the machine turf. Only occurs when the machine is broken.
 /obj/machinery/mailsorter/proc/drop_all_mail(damage_flag)
 	if(!isturf(get_turf(src)))
 		QDEL_LIST(mail_list)
@@ -73,6 +75,7 @@
 		mail.forceMove(src)
 		mail_list -= mail
 
+/// Dumps all envelopes on the `unload_turf`.
 /obj/machinery/mailsorter/proc/dump_all_mail()
 	if(!isturf(get_turf(src)))
 		QDEL_LIST(mail_list)
@@ -83,6 +86,7 @@
 		mail.throw_at(unload_turf, 2, 3)
 		mail_list -= mail
 
+/// Validates whether the inserted item is acceptable.
 /obj/machinery/mailsorter/proc/accept_check(obj/item/weapon)
 	var/static/list/accepted_items = list(
 		/obj/item/mail,
@@ -122,6 +126,7 @@
 		if ("Sort")
 			sort_mail(user)
 
+/// Prompts the player to select a department to sort the mail for. Returns if `null`.
 /obj/machinery/mailsorter/proc/sort_mail(mob/user)
 	var/sorting_dept = tgui_input_list(user, "Choose the department to sort mail for","Mail Sorting", sorting_departments)
 	if (!sorting_dept)
@@ -131,7 +136,7 @@
 	playsound(src, 'sound/machines/mail_sort.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(continue_sort), user, sorting_dept), 5 SECONDS)
 
-
+/// Sorts the mail based on the picked department. Ejects the sorted envelopes onto the `unload_turf`.
 /obj/machinery/mailsorter/proc/continue_sort(mob/user, sorting_dept)
 	var/list/sorted_mail = list()
 	var/total_to_sort = length(mail_list)
@@ -170,6 +175,7 @@
 			mail_list -= mail_in_list
 	addtimer(CALLBACK(src, PROC_REF(check_sorted), unable_to_sort, total_to_sort), 1 SECONDS)
 
+/// Informs the player of the amount of processed envelopes.
 /obj/machinery/mailsorter/proc/check_sorted(mob/user, unable_to_sort, total_to_sort)
 	if (unable_to_sort > 0)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
@@ -217,6 +223,7 @@
 			mail_list += thingy
 			to_chat(user, span_notice("The [src] whizzles as it accepts the [thingy]."))
 
+/// Prompts the user to select an anvelope from the list of all the envelopes inside.
 /obj/machinery/mailsorter/proc/pick_mail(mob/user)
 	if(!length(mail_list))
 		return
@@ -228,6 +235,7 @@
 	playsound(src, 'sound/machines/mail_sort.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(pick_envelope), user, mail_throw), 50)
 
+/// Ejects a single envelope the player has picked onto the `unload_turf`.
 /obj/machinery/mailsorter/proc/pick_envelope(mob/user, obj/item/mail/mail_throw)
 	to_chat(user, span_notice("[src] reluctantly spits out [mail_throw]."))
 	var/turf/unload_turf = get_unload_turf()
@@ -237,6 +245,7 @@
 	currentstate = STATE_IDLE
 	update_appearance(UPDATE_OVERLAYS)
 
+/// Tries to load something into the machine.
 /obj/machinery/mailsorter/proc/load(obj/item/thingy, mob/user)
 	if(ismob(thingy.loc))
 		var/mob/owner = thingy.loc
