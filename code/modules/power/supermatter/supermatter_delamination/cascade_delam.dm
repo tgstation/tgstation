@@ -64,7 +64,7 @@
 	effect_cascade_demoralize()
 	priority_announce("A Type-C resonance shift event has occurred in your sector. Scans indicate local oscillation flux affecting spatial and gravitational substructure. \
 		Multiple resonance hotspots have formed. Please standby.", "Nanotrasen Astrophysics Division", ANNOUNCER_SPANOMALIES)
-	sleep(3 SECONDS)
+	sleep(4 SECONDS)
 	effect_strand_shuttle()
 	sleep(3 SECONDS)
 	var/obj/cascade_portal/rift = effect_evac_rift_start()
@@ -91,7 +91,7 @@
 	if(QDELETED(sm))
 		return FALSE
 	priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \
-		a subject within [station_name()], a resonance collapse may occur.",
+		a subject within [station_name()], a resonance cascade event may occur.",
 		"Nanotrasen Astrophysics Division", 'sound/announcer/alarm/airraid.ogg')
 	return TRUE
 
@@ -130,7 +130,7 @@
 		return FALSE
 
 	strikes_remaining--
-	sm.external_damage_immediate += 5
+	sm.external_damage_immediate += 10
 	COOLDOWN_START(src, heal_cooldown, HEAL_COOLDOWN)
 
 	switch(strikes_remaining)
@@ -145,7 +145,7 @@
 		if(0)
 			sm.radio.talk_into(
 				sm,
-				"DANGER: FREQUENCY FILTER OVERLOAD. FILTER SHUTTING DOWN FOR EMERGENCY RECALIBRATION.", // no more saving this
+				"DANGER: FREQUENCY FILTER OVERLOAD. PLEASE CONTACT A REPAIR TECHNICIAN IMMEDIATELY.", // no more saving this
 				sm.damage >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel
 			)
 

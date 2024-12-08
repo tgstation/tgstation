@@ -72,9 +72,8 @@
 	SIGNAL_HANDLER
 
 	visible_message(
-		span_warning("[hitting_projectile] flies into [src] with a loud crack, before rapidly flashing into ash."),
-		null,
-		span_hear("You hear a loud crack as you are washed with a wave of heat."),
+		message = span_warning("[hitting_projectile] flies into [src] with a loud crack, before rapidly flashing into ash."),
+		blind_message = span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
 
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
@@ -102,7 +101,7 @@
 	return ..()
 
 /obj/cascade_portal
-	name = "Bluespace Rift"
+	name = "bluespace rift"
 	desc = "Your mind begins to spin as it tries to comprehend what it sees."
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "reality"

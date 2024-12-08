@@ -187,19 +187,14 @@
 
 /// Announce the destruction of the rift and end the round.
 /datum/sm_delam/proc/effect_evac_rift_end()
-	priority_announce("[Gibberish("The rift has been destroyed, we can no longer help you. Asset retrieval commenced, all units on standby cease evacuation and return to base.", FALSE, 5)]")
+	priority_announce("[Gibberish("The rift has been destroyed, we can no longer help you. All evacuation personnal on standby: cease evacuation, return to base.", FALSE, 5)]")
 
-	sleep(10 SECONDS)
+	sleep(20 SECONDS)
 
-	priority_announce("Reports indicate formation of crystalline seeds following resonance shift event. \
-		Rapid expansion of crystal mass proportional to rising gravitational force. \
-		Matter collapse due to gravitational pull likely.",
-		"Nanotrasen Astrophysics Division")
-
-	sleep(10 SECONDS)
-
-	priority_announce("[Gibberish("All attempts at evacuation have now ceased, and all assets have been retrieved from your sector.\n \
+	priority_announce("[Gibberish("All attempts at evacuation have now ceased, and all assets have been retrieved from your sector.\
 		To the remaining survivors of [station_name()], farewell.", FALSE, 5)]")
+
+	sleep(3 SECONDS)
 
 	if(SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
 		// special message for hijacks
