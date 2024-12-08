@@ -16,12 +16,12 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /* Can a gateway link to this destination right now. */
 /datum/gateway_destination/proc/is_available()
-	return enabled && (world.time - SSticker.round_start_time >= wait)
+	return enabled && (STATION_TIME_PASSED() >= wait)
 
 /* Returns user-friendly description why you can't connect to this destination, displayed in UI */
 /datum/gateway_destination/proc/get_available_reason()
 	. = "Unreachable"
-	if(world.time - SSticker.round_start_time < wait)
+	if(STATION_TIME_PASSED() < wait)
 		playsound(src, 'sound/machines/gateway/gateway_calibrating.ogg', 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		. = "Connection desynchronized. Recalibration in progress."
 
@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	.["available"] = is_available()
 	.["reason"] = get_available_reason()
 	if(wait)
-		.["timeout"] = max(1 - (wait - (world.time - SSticker.round_start_time)) / wait, 0)
+		.["timeout"] = max(1 - (wait - (STATION_TIME_PASSED())) / wait, 0)
 
 /* Destination is another gateway */
 /datum/gateway_destination/gateway

@@ -314,7 +314,7 @@
 		return
 	// We only allow people to actually buy the shuttle once the round gets going - otherwise you'd just be able to do it roundstart (Not really intended)
 	var/minimum_allowed_purchase_time = (CONFIG_GET(number/shuttle_refuel_delay) * 0.6)
-	if((world.time - SSticker.round_start_time) > minimum_allowed_purchase_time)
+	if((STATION_TIME_PASSED()) > minimum_allowed_purchase_time)
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_SCRAPHEAP] = TRUE
 	else
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_SCRAPHEAP] = FALSE
