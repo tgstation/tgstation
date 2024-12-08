@@ -11,6 +11,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// Selected by [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam
 	var/obj/machinery/power/supermatter_crystal/sm
+	var/warn_time = SUPERMATTER_WARNING_DELAY
 
 /datum/sm_delam/New(obj/machinery/power/supermatter_crystal/sm)
 	src.sm = sm
@@ -47,7 +48,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		sm.investigate_log("has entered the emergency point.", INVESTIGATE_ENGINE)
 		message_admins("[sm] has entered the emergency point [ADMIN_VERBOSEJMP(sm)].")
 
-	if((REALTIMEOFDAY - sm.lastwarning) < SUPERMATTER_WARNING_DELAY)
+	if((REALTIMEOFDAY - sm.lastwarning) < warn_time)
 		return FALSE
 	sm.lastwarning = REALTIMEOFDAY
 
@@ -71,7 +72,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 
 	if(sm.damage >= sm.emergency_point) // In emergency
 		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT! Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
-		sm.lastwarning = REALTIMEOFDAY - (SUPERMATTER_WARNING_DELAY / 2) // Cut the time to next announcement in half.
+		sm.lastwarning = REALTIMEOFDAY - (warn_time / 2) // Cut the time to next announcement in half.
 	else if(sm.damage_archived > sm.damage) // Healing, in warning
 		sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
 		return FALSE

@@ -104,13 +104,15 @@
 	return FALSE
 
 /datum/sm_delam/cascade/emitter
+	warn_time = SUPERMATTER_WARNING_DELAY / 3
 	var/strikes_remaining = CASCADE_EMITTER_STRIKES
 	COOLDOWN_DECLARE(heal_cooldown)
 
 /datum/sm_delam/cascade/emitter/modify_damage(damage_to_be_applied)
 	// get it down to the emergency point, but not below, unless we are out of strikes then just allow all damage
+	var/half_emergency_point = sm.emergency_point + (sm.explosion_point - sm.emergency_point) / 2
 	if(strikes_remaining > 0)
-		damage_to_be_applied *= clamp((sm.emergency_point - (sm.damage + damage_to_be_applied)) / sm.emergency_point, 0, 1)
+		damage_to_be_applied *= clamp((half_emergency_point - (sm.damage + damage_to_be_applied)) / half_emergency_point, 0, 1)
 
 	// block healing unless its been HEAL_COOLDOWN seconds since the last shot
 	if(!COOLDOWN_FINISHED(src, heal_cooldown))
