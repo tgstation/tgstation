@@ -10,6 +10,10 @@
 	icon_state = "skirt"
 	inhand_icon_state = null
 
+/obj/item/clothing/under/rank/civilian/head_of_personnel/suit // This wasn't resprited, so we set the icon back to normal
+	icon = 'icons/obj/clothing/under/civilian.dmi'
+	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
+
 /obj/item/clothing/suit/armor/vest/hop
 	icon = 'modular_doppler/doppler_command_uniforms/hop/icon.dmi'
 	worn_icon = 'modular_doppler/doppler_command_uniforms/hop/worn.dmi'
