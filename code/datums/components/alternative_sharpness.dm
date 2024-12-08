@@ -23,7 +23,7 @@
 	src.alt_sharpness = alt_sharpness
 	src.verbs_continuous = verbs_continuous
 	src.verbs_simple = verbs_simple
-	src.force_mod = 0
+	src.force_mod = force_mod
 	src.required_trait = required_trait
 	base_continuous = weapon.attack_verb_continuous
 	base_simple = weapon.attack_verb_simple
