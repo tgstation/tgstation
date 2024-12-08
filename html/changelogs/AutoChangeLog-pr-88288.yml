@@ -1,0 +1,5 @@
+author: "mcbalaam"
+delete-after: True
+changes:
+  - rscadd: "Added the mail sorting unit - working with mail has never been simpler!"
+  - rscadd: "Added two flatpack pre-defined subtypes for the flatpacker and the mail sorter."
