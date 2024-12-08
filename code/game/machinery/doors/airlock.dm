@@ -545,7 +545,7 @@
 	else
 		. += get_airlock_overlay("fill_[frame_state]", icon, src, em_block = TRUE)
 
-	if(lights && hasPower())
+	if(lights && hasPower() && light_state)
 		. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
 
 	if(panel_open)
