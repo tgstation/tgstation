@@ -274,7 +274,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	flick("shield_impact", src)
 	if(!.)
 		return
-	if(!chassis.use_energy(. * (STANDARD_CELL_CHARGE / 15)))
+	if(!chassis.use_energy(. * (STANDARD_CELL_CHARGE / 150)))
 		chassis.cell?.charge = 0
 		for(var/O in chassis.occupants)
 			var/mob/living/occupant = O
