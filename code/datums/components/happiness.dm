@@ -105,8 +105,7 @@
 /datum/component/happiness/proc/view_happiness(mob/living/source, mob/living/clicker)
 	if(HAS_TRAIT(source, TRAIT_MOB_HIDE_HAPPINESS) || !istype(clicker) || !COOLDOWN_FINISHED(src, happiness_inspect) || !clicker.CanReach(source))
 		return
-	var/list/offset_to_add = get_icon_dimensions(source.icon)
-	var/y_position = offset_to_add["height"] + 1
+	var/y_position = source.get_cached_height() + 1
 	var/obj/effect/overlay/happiness_overlay/hearts = new
 	hearts.pixel_y = y_position
 	hearts.set_hearts(happiness_level/maximum_happiness)

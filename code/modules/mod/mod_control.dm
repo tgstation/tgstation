@@ -515,6 +515,8 @@
 		for(var/obj/item/part as anything in get_parts())
 			seal_part(part, is_sealed = FALSE)
 	for(var/obj/item/part as anything in get_parts())
+		if(part.loc == src)
+			continue
 		INVOKE_ASYNC(src, PROC_REF(retract), wearer, part, /* instant = */ TRUE) // async to appease spaceman DMM because the branch we don't run has a do_after
 	if(active)
 		control_activation(is_on = FALSE)
@@ -523,7 +525,7 @@
 	unset_wearer()
 	old_wearer.temporarilyRemoveItemFromInventory(src)
 
-/obj/item/mod/control/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+/obj/item/mod/control/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species, pref_load, regenerate_icons)
 	SIGNAL_HANDLER
 
 	for(var/obj/item/part in get_parts(all = TRUE))

@@ -709,7 +709,7 @@
 /area/shuttle/ruin/cyborg_mothership)
 "Oq" = (
 /obj/structure/table,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/effect/turf_decal/bot,
 /obj/structure/sink/directional/east,
 /obj/item/toy/figure/borg{

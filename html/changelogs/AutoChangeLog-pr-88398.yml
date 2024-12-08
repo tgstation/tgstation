@@ -1,0 +1,5 @@
+author: "tontyGH"
+delete-after: True
+changes:
+  - bugfix: "/datum/component/PostTransfer() procs that didn't have their new_parent arguments have now been fixed"
+  - bugfix: "This means that turning into a Domain gondola shouldn't RR people anymore"
