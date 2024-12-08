@@ -162,7 +162,7 @@
  * This system exists because tanks not having all initialize_directions set correctly breaks shuttle rotations
  */
 /obj/machinery/atmospherics/components/tank/proc/set_portdir_relative(relative_port_dir, enable)
-	ASSERT(!isnull(enable), "Did not recieve argument enable")
+	ASSERT(!isnull(enable), "Did not receive argument enable")
 
 	// Rotate the given dir so that it's relative to north
 	var/port_dir
