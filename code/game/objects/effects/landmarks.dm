@@ -473,6 +473,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "portal_exit"
 	var/id
 
+/obj/effect/landmark/centcom_dock
+	name = "centcom dock"
+
 /// Marks the bottom left of the testing zone.
 /// In landmarks.dm and not unit_test.dm so it is always active in the mapping tools.
 /obj/effect/landmark/unit_test_bottom_left

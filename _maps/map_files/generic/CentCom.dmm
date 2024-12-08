@@ -6515,6 +6515,7 @@
 /area/centcom/central_command_areas/control)
 "Dg" = (
 /obj/machinery/light/floor,
+/obj/effect/landmark/centcom_dock,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/evacuation)
 "Di" = (

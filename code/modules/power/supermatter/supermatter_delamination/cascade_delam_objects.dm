@@ -119,11 +119,13 @@
 	pixel_x = -96
 	pixel_y = -96
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	var/turf/centcom_turf
 
 /obj/cascade_portal/Initialize(mapload)
 	. = ..()
 	var/turf/location = get_turf(src)
 	var/area_name = get_area_name(src)
+	centcom_turf = get_turf(locate(/obj/effect/landmark/centcom_dock) in GLOB.landmarks)
 	message_admins("Exit rift created at [area_name]. [ADMIN_VERBOSEJMP(location)]")
 	log_game("Bluespace Exit Rift was created at [area_name].")
 	investigate_log("created at [area_name].", INVESTIGATE_ENGINE)
@@ -152,17 +154,23 @@
 				You contemplate about this decision before landing face first onto the cold, hard floor."),
 			span_hear("You hear a loud crack as a distortion passes through you."))
 
-		var/list/arrival_turfs = get_area_turfs(/area/centcom/central_command_areas/evacuation)
-		var/turf/arrival_turf
-		do
-			arrival_turf = pick_n_take(arrival_turfs)
-		while(!is_safe_turf(arrival_turf))
+
+		if (centcom_turf)
+			var/turf/arrival_turf = pick(range(3, centcom_turf))
+		else
+			message_admins("No centcom dock landmark found! Performing fallback algorithm, yell at a mapper.")
+			stack_trace("Missing centcom dock landmark, place one in the middle of the centcom evac dock")
+			var/list/arrival_turfs = get_area_turfs(/area/centcom/central_command_areas/evacuation)
+			var/turf/arrival_turf
+			do
+				arrival_turf = pick_n_take(arrival_turfs)
+			while(!is_safe_turf(arrival_turf))
 
 		var/mob/living/consumed_mob = consumed_object
 		message_admins("[key_name_admin(consumed_mob)] has entered [src] [ADMIN_VERBOSEJMP(src)].")
 		investigate_log("was entered by [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.forceMove(arrival_turf)
-		consumed_mob.Paralyze(100)
+		consumed_mob.Paralyze(10 SECONDS)
 		consumed_mob.adjustBruteLoss(30)
 		consumed_mob.flash_act(1, TRUE, TRUE)
 		new /obj/effect/particle_effect/sparks(consumed_object)
