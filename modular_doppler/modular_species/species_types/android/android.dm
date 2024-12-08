@@ -71,7 +71,8 @@
 		QDEL_NULL(energy_tracker)
 
 /datum/species/android/spec_revival(mob/living/carbon/human/target)
-	core_energy += 0.5 MEGA JOULES
+	if(core_energy < 0.5 MEGA JOULES)
+		core_energy += 0.5 MEGA JOULES
 	playsound(target.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	target.visible_message(span_notice("[target]'s LEDs flicker to life!"), span_notice("All systems nominal. You're back online!"))
 
