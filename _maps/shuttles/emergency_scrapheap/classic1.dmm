@@ -1,0 +1,358 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"e" = (
+/obj/modular_map_root/scrapheapchallenge{
+	key = "classic_starboard"
+	},
+/turf/template_noop,
+/area/template_noop)
+"f" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"g" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"h" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"i" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"k" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"n" = (
+/obj/structure/table_frame,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"p" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"q" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"s" = (
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"t" = (
+/obj/modular_map_root/scrapheapchallenge{
+	key = "classic_aft"
+	},
+/turf/template_noop,
+/area/template_noop)
+"v" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"w" = (
+/obj/item/kirbyplants/random,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"z" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/radio/intercom/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"A" = (
+/obj/structure/table/wood,
+/obj/item/toy/cards/deck/cas/black,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"B" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"C" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/shuttle/escape)
+"D" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"E" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"F" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/grimy,
+/area/shuttle/escape)
+"H" = (
+/obj/structure/table/wood,
+/obj/item/toy/cards/deck/cas,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"I" = (
+/obj/structure/table/wood,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"J" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"L" = (
+/obj/structure/table/wood,
+/obj/item/storage/medkit/fire,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"M" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"O" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"Q" = (
+/obj/modular_map_root/scrapheapchallenge{
+	key = "classic_fore"
+	},
+/turf/template_noop,
+/area/template_noop)
+"R" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"V" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"W" = (
+/obj/structure/barricade/wooden,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"X" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Y" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Z" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+R
+O
+Z
+B
+B
+O
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+k
+V
+g
+s
+n
+G
+Y
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+p
+Z
+A
+H
+L
+C
+h
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+D
+B
+X
+F
+I
+C
+h
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+D
+B
+d
+q
+E
+B
+h
+a
+"}
+(6,1,1) = {"
+a
+a
+Q
+w
+e
+a
+a
+a
+a
+a
+Z
+J
+t
+"}
+(7,1,1) = {"
+a
+a
+a
+g
+a
+a
+a
+a
+a
+a
+B
+W
+a
+"}
+(8,1,1) = {"
+B
+B
+i
+f
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+v
+j
+j
+q
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+B
+Z
+i
+M
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+O
+z
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
