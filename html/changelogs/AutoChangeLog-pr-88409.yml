@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "multitile airlock assemblies from a broken multitile airlock are the same direction"
