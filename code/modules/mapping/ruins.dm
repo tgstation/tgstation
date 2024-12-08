@@ -116,7 +116,7 @@
 		if(R.unpickable)
 			continue
 		ruins_available[R] = R.placement_weight
-	while((budget > 0 || mineral_budget > 0) && (ruins_available.len || forced_ruins.len))
+	while(((budget > 0 || mineral_budget > 0) && ruins_available.len) || forced_ruins.len)
 		var/datum/map_template/ruin/current_pick
 		var/forced = FALSE
 		var/forced_z //If set we won't pick z level and use this one instead.
@@ -172,7 +172,7 @@
 			for(var/datum/map_template/ruin/R in ruins_available)
 				if(R.id == current_pick.id)
 					ruins_available -= R
-			log_world("Failed to place [current_pick.name] ruin!")
+			log_mapping("Failed to place [current_pick.name] ruin!")
 		else
 			placed_ruins++
 			budget -= current_pick.cost
@@ -205,8 +205,8 @@
 								if(PLACE_ISOLATED)
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
 
-			if(PERFORM_ALL_TESTS(log_mapping))
-				log_mapping("Successfully placed [current_pick.name] ruin.")
+
+			log_mapping("Successfully placed [current_pick.name] ruin.")
 
 		//Update the available list
 		for(var/datum/map_template/ruin/R in ruins_available)
