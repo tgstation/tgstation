@@ -20,7 +20,7 @@
 		delete_record(target)
 		delete_bank_account(target)
 		//reopen_job_slot(target)
-
+		//TODO: open a new job slot
 /datum/smite/retcon/proc/delete_record(mob/living/target)
 	var/name = target.real_name
 	GLOB.manifest.remove(target)
