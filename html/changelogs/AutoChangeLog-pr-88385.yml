@@ -1,0 +1,5 @@
+author: "grungussuss and Sothanforax"
+delete-after: True
+changes:
+  - rscadd: "hiss emote"
+  - sound: "hissssssing sounds"
