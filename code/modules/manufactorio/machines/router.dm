@@ -52,7 +52,7 @@
 			dir = receive_dir
 			update_appearance(UPDATE_OVERLAYS) // im sorry
 			return MANUFACTURING_SUCCESS
-	return MANUFACTURING_FAIL_FULL
+	return MANUFACTURING_FAIL
 
 /obj/machinery/power/manufacturing/router/proc/handle_stack(obj/item/stack/stack, direction)
 	if(stack.amount <= 1) // last implementation was just not good so lets cheap out
