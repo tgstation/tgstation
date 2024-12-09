@@ -272,9 +272,9 @@
 	return
 
 /obj/structure/holosign/robot_seat/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
 	if(tool.type == projector?.type && !linked_venue.linked_seats[src])
 		qdel(src)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/holosign/robot_seat/Destroy()
 	linked_venue.linked_seats -= src
