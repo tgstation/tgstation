@@ -100,6 +100,7 @@
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_BODY_DROP_SFX)
 
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
