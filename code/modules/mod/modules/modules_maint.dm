@@ -87,7 +87,6 @@
 	desc = "A Super Cool Awesome Visor (SCAV), intended for modular suits."
 	icon_state = "rave_visor"
 	complexity = 1
-	overlay_state_inactive = "module_rave"
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK)
 	/// The client colors applied to the wearer.
 	var/datum/client_colour/rave_screen
@@ -132,9 +131,13 @@
 	SEND_SOUND(mod.wearer, sound('sound/machines/terminal/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
 
 /obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
-	. = ..()
-	for(var/mutable_appearance/appearance as anything in .)
-		appearance.color = isnull(music_player.active_song_sound) ? null : rainbow_order[rave_number]
+	if (!active)
+		return list()
+	var/mutable_appearance/visor_overlay = mod.get_visor_overlay(standing)
+	visor_overlay.appearance_flags |= RESET_COLOR
+	if (!isnull(music_player.active_song_sound))
+		visor_overlay.color = rainbow_order[rave_number]
+	return list(visor_overlay)
 
 /obj/item/mod/module/visor/rave/on_active_process(seconds_per_tick)
 	rave_number++
