@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - refactor: "improved attack chain code for rapid pipe dispenser"
-  - code_imp: "organized lists & global vars for rapid pipe dispenser into their own respective files & improved a bunch of code"
