@@ -47,7 +47,7 @@
 		if(round_number == i) //only count odd numbers.
 			continue
 		var/obj/item/ammo_casing/foam_dart/boolet = stored_ammo[i]
-		. += "c20r45-foam-[boolet.tip_color]-[round_number]"
+		. += "c20r45-foam-[boolet::tip_color]-[round_number]"
 
 
 /obj/item/ammo_box/magazine/toy/smgm45/riot

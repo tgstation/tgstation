@@ -34,7 +34,7 @@ ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_
 		log_admin("[key_name(user)] admin ghosted.")
 		message_admins("[key_name_admin(user)] admin ghosted.")
 		var/mob/body = user.mob
-		body.ghostize(TRUE)
+		body.ghostize(TRUE, TRUE)
 		user.init_verbs()
 		if(body && !body.key)
 			body.key = "@[user.key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus

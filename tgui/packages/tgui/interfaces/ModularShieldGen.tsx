@@ -1,6 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   LabeledList,
@@ -8,7 +5,10 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type ModularShieldGenData = {
@@ -25,7 +25,6 @@ type ModularShieldGenData = {
 };
 
 export const ModularShieldGen = (props) => {
-  const { topLevel } = props;
   const { act, data } = useBackend<ModularShieldGenData>();
   const {
     max_strength,
@@ -50,7 +49,6 @@ export const ModularShieldGen = (props) => {
               color={recovering ? 'red' : 'white'}
             >
               <ProgressBar
-                title="Shield Strength"
                 value={current_strength}
                 maxValue={max_strength}
                 ranges={{
@@ -64,7 +62,6 @@ export const ModularShieldGen = (props) => {
             </Section>
             <Section title="Regeneration and Radius">
               <ProgressBar
-                title="Regeneration rate"
                 value={current_regeneration}
                 maxValue={max_regeneration}
                 ranges={{
@@ -77,7 +74,6 @@ export const ModularShieldGen = (props) => {
               </ProgressBar>
               <Section>
                 <ProgressBar
-                  title="Shield radius"
                   value={current_radius}
                   maxValue={max_radius}
                   ranges={{

@@ -502,7 +502,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 
 	return TRUE
 
-/// Notifies all admins about the existance of an admin pm, then logs the pm
+/// Notifies all admins about the existence of an admin pm, then logs the pm
 /// message_target here can be either [EXTERNAL_PM_USER], indicating that this message is intended for some external chat channel
 /// or a /client, in which case we send in the standard form
 /// log_message is the raw message to send, it will be filtered and treated to ensure we do not break any text handling

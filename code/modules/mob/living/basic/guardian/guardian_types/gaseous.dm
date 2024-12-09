@@ -81,7 +81,6 @@
 	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "smoke"
 	cooldown_time = 0 SECONDS // We're here for the interface not the cooldown
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
 	/// Gas being expelled.
 	var/active_gas = null

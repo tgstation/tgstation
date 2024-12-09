@@ -251,6 +251,8 @@
 
 	owner = null
 
+	QDEL_LAZYLIST(scars)
+
 	for(var/atom/movable/movable in contents)
 		qdel(movable)
 

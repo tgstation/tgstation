@@ -125,7 +125,7 @@
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/monkey_attack_mob
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION //performs to increase frustration
 
 /datum/ai_behavior/monkey_attack_mob/setup(datum/ai_controller/controller, target_key)
 	. = ..()
@@ -134,104 +134,76 @@
 /datum/ai_behavior/monkey_attack_mob/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/mob/living/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
+	var/datum/targeting_strategy/strategy = GET_TARGETING_STRATEGY(controller.blackboard[BB_TARGETING_STRATEGY])
 
-	if(!target || target.stat != CONSCIOUS) //Target == owned
+	if(QDELETED(target) || !strategy.can_attack(living_pawn, target)) //Target == owned
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-	if(!isturf(target.loc) || IS_DEAD_OR_INCAP(living_pawn)) // Check if they're a valid target
-		return AI_BEHAVIOR_DELAY
 	// check if target has a weapon
-	var/obj/item/W
-	for(var/obj/item/I in target.held_items)
-		if(!(I.item_flags & ABSTRACT))
-			W = I
+	var/holding_weapon
+	for(var/obj/item/potential_weapon in target.held_items)
+		if(!(potential_weapon.item_flags & ABSTRACT))
+			holding_weapon = potential_weapon
 			break
 
-	// if the target has a weapon, chance to disarm them
-	var/perform_flags = NONE
-	if(W && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick))
-		perform_flags = monkey_attack(controller, target, seconds_per_tick, TRUE)
-	else
-		perform_flags = monkey_attack(controller, target, seconds_per_tick, FALSE)
-	return AI_BEHAVIOR_DELAY | perform_flags
+	var/attack_results = monkey_attack(controller, target, seconds_per_tick, holding_weapon && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick), holding_weapon)
+
+	if(!attack_results || controller.blackboard[BB_MONKEY_AGGRESSIVE])
+		return AI_BEHAVIOR_DELAY
+
+	//check if we can de-aggro on the enemy...
+	var/hatred_value = controller.blackboard[BB_MONKEY_ENEMIES][target]
+
+	if(isnull(hatred_value))
+		hatred_value = 1
+		controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
+
+	if(!SPT_PROB(MONKEY_HATRED_REDUCTION_PROB, seconds_per_tick))
+		return AI_BEHAVIOR_DELAY
+
+	//we decrease our hatred value to them by 1
+	hatred_value--
+	if(hatred_value <= 0)
+		controller.remove_thing_from_blackboard_key(BB_MONKEY_ENEMIES, target)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+	controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
+	return AI_BEHAVIOR_DELAY
 
 /datum/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
-	var/mob/living/living_pawn = controller.pawn
 	controller.clear_blackboard_key(target_key)
-	if(QDELETED(living_pawn)) // pawn can be null at this point
-		return
-	GLOB.move_manager.stop_looping(living_pawn)
 
 /// attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
-/datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, seconds_per_tick, disarm)
+/datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, seconds_per_tick, disarm, holding_weapon)
 	var/mob/living/living_pawn = controller.pawn
 
 	if(living_pawn.next_move > world.time)
-		return NONE
+		return FALSE
 
-	living_pawn.changeNext_move(CLICK_CD_MELEE) //We play fair
+	//are we holding a gun? can we shoot it? if so, FIRE
+	var/obj/item/gun/gun_to_shoot = locate() in living_pawn.held_items
+	if(gun_to_shoot?.can_shoot())
+		if(gun_to_shoot != living_pawn.get_active_held_item())
+			living_pawn.swap_hand(living_pawn.get_inactive_hand_index())
+		controller.ai_interact(target = target, combat_mode = TRUE)
+		return TRUE
 
-	var/obj/item/weapon = locate(/obj/item) in living_pawn.held_items
+	//look for any potential weapons we're holding
+	var/obj/item/potential_weapon = locate() in living_pawn.held_items
+	if(!living_pawn.CanReach(target, potential_weapon))
+		return FALSE
 
-	living_pawn.face_atom(target)
+	if(isnull(potential_weapon))
+		controller.ai_interact(target = target, modifiers = disarm ? list(RIGHT_CLICK = TRUE) : null, combat_mode = TRUE)
+		if(!isnull(holding_weapon))
+			controller.remove_thing_from_blackboard_key(BB_MONKEY_BLACKLISTITEMS, holding_weapon) //lets try to pickpocket it again!
+		return TRUE
 
-	living_pawn.set_combat_mode(TRUE)
-
-	if(isnull(controller.blackboard[BB_MONKEY_GUN_WORKED]))
-		controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE)
-
-	// attack with weapon if we have one
-	if(living_pawn.CanReach(target, weapon))
-		if(weapon)
-			weapon.melee_attack_chain(living_pawn, target)
-		else
-			controller.ai_interact(target = target, modifiers = disarm ? list(RIGHT_CLICK = TRUE) : null)
-		controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE) // We reset their memory of the gun being 'broken' if they accomplish some other attack
-	else if(weapon)
-		var/atom/real_target = target
-		if(prob(10)) // Artificial miss
-			real_target = pick(oview(2, target))
-
-		var/obj/item/gun/gun = locate() in living_pawn.held_items
-		var/can_shoot = gun?.can_shoot() || FALSE
-		if(gun && controller.blackboard[BB_MONKEY_GUN_WORKED] && prob(95))
-			// We attempt to attack even if we can't shoot so we get the effects of pulling the trigger
-			gun.interact_with_atom(real_target, living_pawn)
-			controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, can_shoot ? TRUE : prob(80)) // Only 20% likely to notice it didn't work
-			if(can_shoot)
-				controller.set_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)
-		else
-			living_pawn.throw_item(real_target)
-			controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE) // 'worked'
-
-	// no de-aggro
-	if(controller.blackboard[BB_MONKEY_AGGRESSIVE])
-		return NONE
-
-	// we've queued up a monkey attack on a mob which isn't already an enemy, so give them 1 threat to start
-	// note they might immediately reduce threat and drop from the list.
-	// this is fine, we're just giving them a love tap then leaving them alone.
-	// unless they fight back, then we retaliate
-
-	// Some mobs delete on death. If the target is no longer alive, go back to idle
-	if(QDELETED(target))
-		finish_action(controller, TRUE)
-		return
-
-	if(isnull(controller.blackboard[BB_MONKEY_ENEMIES][target]))
-		controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, 1)
-
-	/// mob refs are uids, so this is safe
-	if(SPT_PROB(MONKEY_HATRED_REDUCTION_PROB, seconds_per_tick))
-		controller.add_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, -1)
-
-	// if we are not angry at our target, go back to idle
-	if(controller.blackboard[BB_MONKEY_ENEMIES][target] <= 0)
-		controller.remove_thing_from_blackboard_key(BB_MONKEY_ENEMIES, target)
-		if(controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] == target)
-			return AI_BEHAVIOR_SUCCEEDED
-	return NONE
+	if(potential_weapon != living_pawn.get_active_held_item())
+		living_pawn.swap_hand(living_pawn.get_inactive_hand_index())
+	controller.ai_interact(target = target, combat_mode = TRUE)
+	return TRUE
 
 /datum/ai_behavior/disposal_mob
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration

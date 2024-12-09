@@ -112,21 +112,21 @@
 	// Misc bonuses to the climb speed.
 	var/misc_multiplier = 1
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		misc_multiplier *= potential_spine.athletics_boost_multiplier
 
 	var/final_travel_time = (travel_time - fitness_level) * misc_multiplier
 
 	if(do_after(user, final_travel_time, target = src, interaction_key = DOAFTER_SOURCE_CLIMBING_LADDER))
-		travel(user, going_up)
+		travel(user, going_up, grant_exp = TRUE)
 
 /// The message shown when the player starts climbing the ladder
 /obj/structure/ladder/proc/show_initial_fluff_message(mob/user, going_up)
 	var/up_down = going_up ? "up" : "down"
 	user.balloon_alert_to_viewers("climbing [up_down]...")
 
-/obj/structure/ladder/proc/travel(mob/user, going_up = TRUE, is_ghost = FALSE)
+/obj/structure/ladder/proc/travel(mob/user, going_up = TRUE, is_ghost = FALSE, grant_exp = FALSE)
 	var/obj/structure/ladder/ladder = going_up ? up : down
 	if(!ladder)
 		balloon_alert(user, "there's nothing that way!")
@@ -137,6 +137,9 @@
 
 	var/turf/target = get_turf(ladder)
 	user.zMove(target = target, z_move_flags = ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED|ZMOVE_INCLUDE_PULLED)
+
+	if(grant_exp)
+		user.mind?.adjust_experience(/datum/skill/athletics, 10) //get a little experience for our trouble
 
 	if(!is_ghost)
 		show_final_fluff_message(user, ladder, going_up)

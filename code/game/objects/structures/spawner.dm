@@ -299,5 +299,5 @@
 	proteon.add_filter("sentient_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2, "alpha" = 40))
 
 /obj/structure/spawner/sentient/proteon_spawner/handle_deconstruct(disassembled)
-	playsound('sound/effects/hallucinations/veryfar_noise.ogg', 125)
+	playsound(src, 'sound/effects/hallucinations/veryfar_noise.ogg', 75)
 	visible_message(span_cult_bold("[src] completely falls apart, the screams of the damned reaching a feverous pitch before slowly fading away into nothing."))

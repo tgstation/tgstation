@@ -94,6 +94,10 @@
 /code/game/area/ @san7890
 /icons/area/ @san7890
 
+# SmArtKar
+
+/code/modules/projectiles/projectile.dm @SmArtKar
+
 # stylemistake
 
 /code/__DEFINES/chat.dm @stylemistake
@@ -161,14 +165,7 @@
 
 # MrStonedOne
 
-/code/__DEFINES/MC.dm @MrStonedOne
-/code/controllers/admin.dm @MrStonedOne
-/code/controllers/master.dm @MrStonedOne
-/code/controllers/failsafe.dm @MrStonedOne
-/code/controllers/subsystem.dm @MrStonedOne
 /code/controllers/subsystem/timer.dm @MrStonedOne
-/code/controllers/configuration/entries @MrStonedOne
-/config/ @MrStonedOne
 
 # NamelessFairy
 
@@ -184,7 +181,7 @@
 
 # MULTIPLE OWNERS
 
-/SQL/ @Jordie0608 @MrStonedOne
+/SQL/ @Jordie0608 @MrStonedOne @scriptis
 
 /_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
 
@@ -193,6 +190,12 @@
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
 
 /code/__HELPERS/logging/ @dragomagol @ZephyrTFA
+
+/code/__DEFINES/MC.dm @LemonInTheDark @MrStonedOne
+/code/controllers/admin.dm @LemonInTheDark @MrStonedOne
+/code/controllers/master.dm @LemonInTheDark @MrStonedOne
+/code/controllers/failsafe.dm @LemonInTheDark @MrStonedOne
+/code/controllers/subsystem.dm @LemonInTheDark @MrStonedOne
 
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 
@@ -209,10 +212,15 @@
 
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
 
-/tools/build/ @MrStonedOne @stylemistake
-/tools/tgs_scripts/ @Cyberboss @MrStonedOne
+/tools/build/ @MrStonedOne @scriptis @stylemistake
+/tools/tgs_scripts/ @Cyberboss @MrStonedOne @scriptis
 
 /tools/WebhookProcessor/ @BraveMole @TiviPlus
+
+# Host Hell
+
+/code/controllers/configuration/entries @MrStonedOne @scriptis
+/config/ @MrStonedOne @scriptis
 
 # Expensive files that touching basically always cause performance problems
 ## Init times
@@ -220,4 +228,4 @@
 
 # SIC SEMPER TYRANNIS
 
-/code/modules/hydroponics/grown/citrus.dm @optimumtact
+/code/modules/hydroponics/grown/citrus.dm @LemonInTheDark @optimumtact

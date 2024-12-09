@@ -1,6 +1,7 @@
 ///Contains fish that can be found in the syndicate fishing portal setting as well as the ominous fish case.
 /obj/item/fish/emulsijack
 	name = "toxic emulsijack"
+	fish_id = "emulsijack"
 	desc = "Ah, the terrifying emulsijack. Created in a laboratory, the only real use of this slimey, scaleless fish is for completely ruining a tank."
 	icon_state = "emulsijack"
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
@@ -18,6 +19,7 @@
 
 /obj/item/fish/donkfish
 	name = "donk co. company patent donkfish"
+	fish_id = "donkfish"
 	desc = "A lab-grown donkfish. Its invention was an accident for the most part, as it was intended to be consumed in donk pockets. Unfortunately, it tastes horrible, so it has now become a pseudo-mascot."
 	icon_state = "donkfish"
 	random_case_rarity = FISH_RARITY_VERY_RARE
@@ -32,6 +34,7 @@
 
 /obj/item/fish/jumpercable
 	name = "monocloning jumpercable"
+	fish_id = "jumpercable"
 	desc = "A surprisingly useful if nasty looking creation from the syndicate fish labs. Drop one in a tank, and \
 		watch it self-feed and multiply. Generates more and more power as a growing swarm!"
 	icon_state = "jumpercable"
@@ -52,8 +55,13 @@
 	electrogenesis_power = 0.9 MEGA JOULES
 	beauty = FISH_BEAUTY_UGLY
 
+/obj/item/fish/jumpercable/get_export_price(price, elasticity_percent)
+	//without this, they'd sell for over 6000 each, minimum. That's a lot for a fish that requires no maintance nor partner to farm.
+	return ..() * 0.4
+
 /obj/item/fish/chainsawfish
 	name = "chainsawfish"
+	fish_id = "chainsawfish"
 	desc = "A very, very angry bioweapon, whose sole purpose is to rip and tear."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "chainsawfish"
@@ -89,7 +97,7 @@
 			FISH_BAIT_VALUE = GORE,
 		),
 	)
-	fish_traits = list(/datum/fish_trait/aggressive, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/stinger)
+	fish_traits = list(/datum/fish_trait/territorial, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/stinger)
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
 
@@ -175,6 +183,7 @@
 
 /obj/item/fish/pike/armored
 	name = "armored pike"
+	fish_id = "armored_pike"
 	desc = "A long-bodied, metal-clad predator with a snout that almost looks like an halberd. Definitely a weapon to swing around."
 	icon_state = "armored_pike"
 	inhand_icon_state = "armored_pike"
@@ -198,7 +207,7 @@
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	beauty = FISH_BEAUTY_GREAT
 	fishing_difficulty_modifier = 20
-	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive, /datum/fish_trait/picky_eater, /datum/fish_trait/stinger)
+	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/territorial, /datum/fish_trait/picky_eater, /datum/fish_trait/stinger)
 	evolution_types = null
 	compatible_types = list(/obj/item/fish/pike)
 	favorite_bait = list(

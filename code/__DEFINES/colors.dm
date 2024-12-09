@@ -452,3 +452,9 @@ GLOBAL_LIST_INIT(heretic_path_to_color, list(
 #define CM_COLOR_SAT_MAX 0.7
 #define CM_COLOR_LUM_MIN 0.65
 #define CM_COLOR_LUM_MAX 0.75
+
+// Lowest priority
+#define EYE_COLOR_ORGAN_PRIORITY 1
+#define EYE_COLOR_SPECIES_PRIORITY 10
+#define EYE_COLOR_WEED_PRIORITY 20
+#define EYE_COLOR_CULT_PRIORITY 30

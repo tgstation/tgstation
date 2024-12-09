@@ -59,6 +59,20 @@
 	else
 		QDEL_NULL(my_port)
 
+/obj/machinery/computer/camera_advanced/shuttle_docker/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname in list(NAMEOF(src, view_range), NAMEOF(src, x_offset), NAMEOF(src, y_offset), NAMEOF(src, see_hidden)))
+		refresh_eye()
+
+/// Destroys the eyeobj of this console, safely refreshing it if the console is currently being used.
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/refresh_eye()
+	var/mob/living/user = current_user
+	if(user)
+		remove_eye_control(user)
+	QDEL_NULL(eyeobj)
+	if(user)
+		attack_hand(user)
+
 /// "Initializes" any default port ids we have, done so add_jumpable_port can be a proper setter
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/set_init_ports()
 	var/list/init_ports = jump_to_ports.Copy()
@@ -93,8 +107,8 @@
 		shuttle_port = null
 		return
 
-	eyeobj = new /mob/camera/ai_eye/remote/shuttle_docker(null, src)
-	var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
+	eyeobj = new /mob/eye/camera/remote/shuttle_docker(null, src)
+	var/mob/eye/camera/remote/shuttle_docker/the_eye = eyeobj
 	the_eye.setDir(shuttle_port.dir)
 	var/turf/origin = locate(shuttle_port.x + x_offset, shuttle_port.y + y_offset, shuttle_port.z)
 	for(var/area/shuttle_area as anything in shuttle_port.shuttle_areas)
@@ -111,10 +125,12 @@
 				I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 				the_eye.placement_images[I] = list(x_off, y_off)
 
+	return TRUE
+
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
 	..()
 	if(!QDELETED(user) && user.client)
-		var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
+		var/mob/eye/camera/remote/shuttle_docker/the_eye = eyeobj
 		var/list/to_add = list()
 		to_add += the_eye.placement_images
 		to_add += the_eye.placed_images
@@ -127,7 +143,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/remove_eye_control(mob/living/user)
 	..()
 	if(!QDELETED(user) && user.client)
-		var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
+		var/mob/eye/camera/remote/shuttle_docker/the_eye = eyeobj
 		var/list/to_remove = list()
 		to_remove += the_eye.placement_images
 		to_remove += the_eye.placed_images
@@ -141,7 +157,7 @@
 	if(designating_target_loc || !current_user)
 		return
 
-	var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
+	var/mob/eye/camera/remote/shuttle_docker/the_eye = eyeobj
 	var/landing_clear = checkLandingSpot()
 	if(designate_time && (landing_clear != SHUTTLE_DOCKER_BLOCKED))
 		to_chat(current_user, span_warning("Targeting transit location, please wait [DisplayTimeText(designate_time)]..."))
@@ -209,7 +225,7 @@
 	return TRUE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/rotateLandingSpot()
-	var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
+	var/mob/eye/camera/remote/shuttle_docker/the_eye = eyeobj
 	var/list/image_cache = the_eye.placement_images
 	the_eye.setDir(turn(the_eye.dir, -90))
 	for(var/i in 1 to image_cache.len)
@@ -225,7 +241,7 @@
 	checkLandingSpot()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingSpot()
-	var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
+	var/mob/eye/camera/remote/shuttle_docker/the_eye = eyeobj
 	var/turf/eyeturf = get_turf(the_eye)
 	if(!eyeturf)
 		return SHUTTLE_DOCKER_BLOCKED
@@ -302,22 +318,17 @@
 		add_jumpable_port(dock.shuttle_id)
 	return TRUE
 
-/mob/camera/ai_eye/remote/shuttle_docker
-	visible_icon = FALSE
-	use_static = FALSE
+/mob/eye/camera/remote/shuttle_docker
+	use_visibility = FALSE
 	var/list/image/placement_images = list()
 	var/list/image/placed_images = list()
 
-/mob/camera/ai_eye/remote/shuttle_docker/Initialize(mapload, obj/machinery/computer/camera_advanced/origin)
-	src.origin = origin
-	return ..()
-
-/mob/camera/ai_eye/remote/shuttle_docker/setLoc(turf/destination, force_update = FALSE)
+/mob/eye/camera/remote/shuttle_docker/setLoc(turf/destination, force_update = FALSE)
 	. = ..()
-	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin_ref?.resolve()
 	console.checkLandingSpot()
 
-/mob/camera/ai_eye/remote/shuttle_docker/update_remote_sight(mob/living/user)
+/mob/eye/camera/remote/shuttle_docker/update_remote_sight(mob/living/user)
 	user.set_sight(BLIND|SEE_TURFS)
 	// Pale blue, should look nice I think
 	user.lighting_color_cutoffs = list(30, 40, 50)
@@ -332,8 +343,8 @@
 /datum/action/innate/shuttledocker_rotate/Activate()
 	if(QDELETED(owner) || !isliving(owner))
 		return
-	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
-	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin
+	var/mob/eye/camera/remote/remote_eye = owner.remote_control
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin_ref.resolve()
 	origin.rotateLandingSpot()
 
 /datum/action/innate/shuttledocker_place
@@ -344,8 +355,8 @@
 /datum/action/innate/shuttledocker_place/Activate()
 	if(QDELETED(owner) || !isliving(owner))
 		return
-	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
-	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin
+	var/mob/eye/camera/remote/remote_eye = owner.remote_control
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin_ref.resolve()
 	origin.placeLandingSpot(owner)
 
 /datum/action/innate/camera_jump/shuttle_docker
@@ -355,8 +366,8 @@
 /datum/action/innate/camera_jump/shuttle_docker/Activate()
 	if(QDELETED(owner) || !isliving(owner))
 		return
-	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
-	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = remote_eye.origin
+	var/mob/eye/camera/remote/remote_eye = owner.remote_control
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = remote_eye.origin_ref.resolve()
 
 	playsound(console, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
 

@@ -1273,6 +1273,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "apC" = (
@@ -21003,6 +21004,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/cold/directional/east,
+/obj/structure/sign/eyechart/directional/east,
 /turf/open/floor/iron,
 /area/station/medical/treatment_center)
 "fih" = (
@@ -21052,7 +21054,6 @@
 "fiL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
@@ -44022,6 +44023,7 @@
 /obj/item/folder/red,
 /obj/item/lighter,
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/electronic_marketing_den)
 "kWE" = (
@@ -44888,7 +44890,8 @@
 /area/station/hallway/primary/fore)
 "lhp" = (
 /obj/structure/sign/poster/official/report_crimes/directional/south,
-/obj/structure/aquarium/lawyer,
+/obj/item/fish_tank/lawyer,
+/obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "lhC" = (
@@ -49571,6 +49574,7 @@
 "msx" = (
 /obj/item/kirbyplants/random,
 /obj/structure/sign/poster/contraband/random/directional/south,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/electronic_marketing_den)
 "msB" = (
@@ -55830,6 +55834,7 @@
 	pixel_y = 3
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/detectives_office/private_investigators_office)
 "nXY" = (
@@ -57720,7 +57725,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "oxV" = (
-/obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -58617,7 +58621,6 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "oLz" = (
-/obj/structure/cable,
 /obj/structure/chair/office{
 	dir = 4
 	},
@@ -59131,7 +59134,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "oRD" = (
-/obj/structure/cable,
 /obj/item/circuitboard/computer/secure_data,
 /obj/structure/frame/computer{
 	anchored = 1;
@@ -59892,7 +59894,7 @@
 /area/station/service/abandoned_gambling_den/gaming)
 "pcJ" = (
 /obj/machinery/mecha_part_fabricator{
-	dir = 4
+	drop_direction = 4
 	},
 /obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/tile/neutral/full,
@@ -63252,7 +63254,6 @@
 "pQT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/structure/chair/comfy/brown{
 	dir = 8
 	},
@@ -72632,6 +72633,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/dim/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/checker,
 /area/station/service/hydroponics/garden/abandoned)
 "sgh" = (
@@ -85738,7 +85740,6 @@
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/plant_analyzer,
 /obj/structure/sign/poster/contraband/kudzu/directional/south,
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/siding/green{
 	dir = 8
@@ -92439,7 +92440,6 @@
 	},
 /area/station/science/lobby)
 "xeF" = (
-/obj/structure/cable,
 /obj/item/kirbyplants/random,
 /obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/wood,

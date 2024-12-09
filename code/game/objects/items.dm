@@ -27,7 +27,7 @@
 	///Icon state for mob worn overlays, if null the normal icon_state will be used.
 	var/worn_icon_state
 	///Icon state for the belt overlay, if null the normal icon_state will be used.
-	var/belt_icon_state
+	var/inside_belt_icon_state
 	///Forced mob worn layer instead of the standard preferred size.
 	var/alternate_worn_layer
 	///The config type to use for greyscaled worn sprites. Both this and greyscale_colors must be assigned to work.
@@ -38,12 +38,6 @@
 	var/greyscale_config_inhand_right
 	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_belt
-
-	/// Greyscale config used when generating digitigrade versions of the sprite.
-	var/digitigrade_greyscale_config_worn
-	/// Greyscale colors used when generating digitigrade versions of the sprite.
-	/// Optional - If not set it will default to normal greyscale colors, or approximate them if those are unset as well
-	var/digitigrade_greyscale_colors
 
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
@@ -240,8 +234,10 @@
 
 	/// Has the item been reskinned?
 	var/current_skin
-	///// List of options to reskin.
+	/// List of options to reskin.
 	var/list/unique_reskin
+	/// If reskins change inhands as well
+	var/unique_reskin_changes_inhand = FALSE
 	/// Do we apply a click cooldown when resisting this object if it is restraining them?
 	var/resist_cooldown = CLICK_CD_BREAKOUT
 
@@ -449,7 +445,7 @@
 	.[weight_class_to_text(w_class)] = weight_class_to_tooltip(w_class)
 
 	if(item_flags & CRUEL_IMPLEMENT)
-		.[span_red("morbid")] = "It seems quite practical for particularly <font color='red'>morbid</font> procedures and experiments."
+		.[span_red("morbid")] = "It seems quite practical for particularly morbid procedures and experiments."
 
 	if (siemens_coefficient == 0)
 		.["insulated"] = "It is made from a robust electrical insulator and will block any electricity passing through it!"
@@ -863,6 +859,8 @@
 		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
 		return
 	var/volume = get_volume_by_throwforce_and_or_w_class()
+	if(.) //it's been caught.
+		return
 	if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
 		if (mob_throw_hit_sound)
 			playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
@@ -906,7 +904,7 @@
 
 /// Returns the icon used for overlaying the object on a belt
 /obj/item/proc/get_belt_overlay()
-	var/icon_state_to_use = belt_icon_state || icon_state
+	var/icon_state_to_use = inside_belt_icon_state || icon_state
 	if(greyscale_config_belt && greyscale_colors)
 		return mutable_appearance(SSgreyscale.GetColoredIconByType(greyscale_config_belt, greyscale_colors), icon_state_to_use)
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state_to_use)
@@ -1025,36 +1023,93 @@
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
+	PROTECTED_PROC(TRUE)
+
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_GRIND)
 
 ///Grind item, adding grind_results to item's reagents and transfering to target_holder if specified
-/obj/item/proc/grind(datum/reagents/target_holder, mob/user)
+/obj/item/proc/grind(datum/reagents/target_holder, mob/user, atom/movable/grinder = loc)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	. = FALSE
-	if(on_grind() == -1)
+	if(on_grind() == -1 || target_holder.holder_full())
 		return
 
+	. = grind_atom(target_holder, user)
+
+	//reccursive grinding to get all them juices
+	var/result
+	for(var/obj/item/ingredient as anything in get_all_contents_type(/obj/item))
+		if(ingredient == src)
+			continue
+
+		result = ingredient.grind(target_holder, user)
+		if(!.)
+			. = result
+
+	if(. && istype(grinder))
+		return grinder.blended(src, grinded = TRUE)
+
+///Subtypes override his proc for custom grinding
+/obj/item/proc/grind_atom(datum/reagents/target_holder, mob/user)
+	PROTECTED_PROC(TRUE)
+
+	. = FALSE
 	if(length(grind_results))
 		target_holder.add_reagent_list(grind_results)
 		. = TRUE
-	if(reagents?.total_volume)
-		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	if(reagents?.trans_to(target_holder, reagents.total_volume, transferred_by = user))
 		. = TRUE
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_juice()
+	PROTECTED_PROC(TRUE)
+
 	if(!juice_typepath)
 		return -1
+
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
 
 ///Juice item, converting nutriments into juice_typepath and transfering to target_holder if specified
-/obj/item/proc/juice(datum/reagents/target_holder, mob/user)
+/obj/item/proc/juice(datum/reagents/target_holder, mob/user, atom/movable/juicer = loc)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	. = FALSE
 	if(on_juice() == -1 || !reagents?.total_volume)
-		return FALSE
+		return
+
+	. = juice_atom(target_holder, user)
+
+	//reccursive juicing to get all them juices
+	var/result
+	for(var/obj/item/ingredient as anything in get_all_contents_type(/obj/item))
+		if(ingredient == src)
+			continue
+
+		result = ingredient.juice(target_holder, user)
+		if(!.)
+			. = result
+
+	if(. && istype(juicer))
+		return juicer.blended(src, grinded = FALSE)
+
+///Subtypes override his proc for custom juicing
+/obj/item/proc/juice_atom(datum/reagents/target_holder, mob/user)
+	PROTECTED_PROC(TRUE)
+
+	. = FALSE
 
 	if(ispath(juice_typepath))
 		reagents.convert_reagent(/datum/reagent/consumable/nutriment, juice_typepath, include_source_subtypes = FALSE)
 		reagents.convert_reagent(/datum/reagent/consumable/nutriment/vitamin, juice_typepath, include_source_subtypes = FALSE)
-	reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+		. = TRUE
+
+	if(!QDELETED(target_holder))
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+
+///What should The atom that blended an object do with it afterwards? Default behaviour is to delete it
+/atom/movable/proc/blended(obj/item/blended_item, grinded)
+	qdel(blended_item)
 
 	return TRUE
 
@@ -1804,13 +1859,13 @@
 
 /obj/item/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !slowdown)
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
 		return
 	slowdown += GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
 
 /obj/item/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !slowdown)
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
 		return
 	slowdown -= GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
 
@@ -1828,11 +1883,12 @@
 	return src
 
 /// Checks if the bait is liked by the fish type or not. Returns a multiplier that affects the chance of catching it.
-/obj/item/proc/check_bait(obj/item/fish/fish_type)
+/obj/item/proc/check_bait(obj/item/fish/fish)
 	if(HAS_TRAIT(src, TRAIT_OMNI_BAIT))
 		return 1
 	var/catch_multiplier = 1
-	var/list/properties = SSfishing.fish_properties[fish_type]
+
+	var/list/properties = SSfishing.fish_properties[isfish(fish) ? fish.type : fish]
 	//Bait matching likes doubles the chance
 	var/list/fav_bait = properties[FISH_PROPERTIES_FAV_BAIT]
 	for(var/bait_identifer in fav_bait)

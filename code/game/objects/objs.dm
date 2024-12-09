@@ -206,10 +206,10 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("Unimplemented.")
 
-/obj/handle_ricochet(obj/projectile/P)
+/obj/handle_ricochet(obj/projectile/proj)
 	. = ..()
 	if(. && receive_ricochet_damage_coeff)
-		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.armor_flag, 0, REVERSE_DIR(P.dir), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
+		take_damage(proj.damage * receive_ricochet_damage_coeff, proj.damage_type, proj.armor_flag, 0, REVERSE_DIR(proj.dir), proj.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
 
 /// Handles exposing an object to reagents.
 /obj/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
@@ -218,9 +218,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return
 
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_OBJ, src, reagents, methods, volume_modifier, show_message)
-	for(var/reagent in reagents)
-		var/datum/reagent/R = reagent
-		. |= R.expose_obj(src, reagents[R])
+	for(var/datum/reagent/reagent as anything in reagents)
+		var/reac_volume = reagents[reagent]
+		. |= reagent.expose_obj(src, reac_volume, methods, show_message)
 
 /// Attempt to freeze this obj if possible. returns TRUE if it succeeded, FALSE otherwise.
 /obj/proc/freeze()

@@ -50,7 +50,7 @@ https://freesound.org/s/431740/ (CC 0)
 chainsaw_stop.ogg is adapted from kyles "chainsaw sawing short cuts +stop.flac" (CC 0)
 https://freesound.org/people/kyles/sounds/453256/
 
-clock.mp3 is adapted from Tetrisrocker's "Clock", which uses CC Attributions 0
+clock.ogg is adapted from Tetrisrocker's "Clock", which uses CC Attributions 0
 https://freesound.org/people/Tetrisrocker/sounds/458627/
 
 ark_activation.ogg is taken from ScottFerguson1's "Cucko Clock edited version", which is licensed under CC Attribution 3.0
@@ -191,6 +191,10 @@ liquid_pour2.ogg and liquid_pour3.ogg were cut from
 https://freesound.org/people/MattRuthSound/sounds/561896/
 https://freesound.org/people/MattRuthSound/sounds/561895/
 
+
+roaring_fire.ogg made from: 10835 big fire loop.wav by Robinhood76 -- https://freesound.org/s/612277/ -- License: Attribution NonCommercial 4.0
+fire_puff made from: Bonfire Being Lit by samararaine -- https://freesound.org/s/186374/ -- License: Creative Commons 0
+
 ayylien.ogg was made by remixing:
 SCIRetro_Energy Swells Synth_Funky Audio_Sonics Spices by Funky_Audio under CC0 -- https://freesound.org/people/realtheremin/sounds/119011/
 scifi_scare_a.aiff by realtheremin under CC0 -- https://freesound.org/people/Funky_Audio/sounds/729392/
@@ -204,8 +208,12 @@ Bottle Tap.wav by alex_alexalex -- https://freesound.org/s/395492/ -- License: A
 beaker_place.ogg was made by cutting and lowering pitch:
 place glass object.wav by milpower -- https://freesound.org/s/353105/ -- License: Creative Commons 0
 
+
+
 glass_reverse.ogg is adapted from a combination of:
 https://freesound.org/people/C_Rogers/sounds/203368/ -- glass-shattering-hit_01.ogg by C_Rogers on freesound.org (CC0)
 https://freesound.org/people/Czarcazas/sounds/330800/ -- Audio reversal/fading of Shattering Glass (Small) by Czarcazas -- https://freesound.org/s/330800/ -- License: Attribution 3.0
 
 sound/effects/bonk.ogg - recorded by oranges on a coke zero bottle, edited by ninjanomnom, released to public domain
+
+sound\items\weapons\hammer_death_scream.ogg - Undefeatablesos' scream recorded by Niron3206, edited by Niron3206, License: Creative Commons 0

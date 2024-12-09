@@ -301,3 +301,7 @@
 	. = ..()
 	for(var/other_type in other_cham_types)
 		add_chameleon_items(other_type)
+
+/datum/action/item_action/chameleon/change/gun/ballistic
+	chameleon_type = /obj/item/gun/ballistic
+	chameleon_name = "Gun"

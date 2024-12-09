@@ -119,7 +119,6 @@
 	var/obj/item/note
 	/// The seal on the airlock
 	var/obj/item/seal
-	var/detonated = FALSE
 	var/abandoned = FALSE
 	/// Controls if the door closes quickly or not. FALSE = the door autocloses in 1.5 seconds, TRUE = 8 seconds - see autoclose_in()
 	var/normalspeed = TRUE
@@ -701,8 +700,9 @@
 
 	switch (held_item?.tool_behaviour)
 		if (TOOL_SCREWDRIVER)
-			context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
-			return CONTEXTUAL_SCREENTIP_SET
+			if(has_access_panel)
+				context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+				return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_CROWBAR)
 			if (panel_open)
 				if (security_level == AIRLOCK_SECURITY_PLASTEEL_O_S || security_level == AIRLOCK_SECURITY_PLASTEEL_I_S)
@@ -745,9 +745,6 @@
 			to_chat(user, span_warning("Airlock AI control has been blocked with a firewall. Unable to hack."))
 	if(obj_flags & EMAGGED)
 		to_chat(user, span_warning("Unable to interface: Airlock is unresponsive."))
-		return
-	if(detonated)
-		to_chat(user, span_warning("Unable to interface. Airlock control panel damaged."))
 		return
 
 	ui_interact(user)
@@ -858,7 +855,7 @@
 		set_electrified(MACHINE_ELECTRIFIED_PERMANENT)
 
 /obj/machinery/door/airlock/screwdriver_act(mob/living/user, obj/item/tool)
-	if(panel_open && detonated)
+	if(!has_access_panel)
 		to_chat(user, span_warning("[src] has no maintenance panel!"))
 		return ITEM_INTERACT_SUCCESS
 	toggle_panel_open()
@@ -1393,9 +1390,10 @@
 /obj/machinery/door/airlock/proc/prison_open()
 	if(obj_flags & EMAGGED)
 		return
-	locked = FALSE
+	if(locked)
+		unbolt()
 	open()
-	locked = TRUE
+	bolt()
 	return
 
 // gets called when a player uses an airlock painter on this airlock
@@ -1819,7 +1817,7 @@
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
 
-/obj/structure/fluff/airlock_filler/can_be_pulled(user, grab_state, force)
+/obj/structure/fluff/airlock_filler/can_be_pulled(user, force)
 	return FALSE
 
 /obj/structure/fluff/airlock_filler/singularity_act()
@@ -2001,12 +1999,12 @@
 	glass = TRUE
 
 /obj/machinery/door/airlock/maintenance/glass
-	name = "maintainence glass airlock"
+	name = "maintenance glass airlock"
 	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/maintenance/external/glass
-	name = "maintainence external glass airlock"
+	name = "maintenance external glass airlock"
 	opacity = FALSE
 	glass = TRUE
 	normal_integrity = 200

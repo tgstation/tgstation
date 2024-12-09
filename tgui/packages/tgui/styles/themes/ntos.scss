@@ -6,7 +6,7 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-$nanotrasen: #384e68;
+$nanotrasen: hsl(213, 30%, 32%);
 
 @use '../colors.scss' with (
   $fg-map-keys: (),
@@ -19,20 +19,20 @@ $nanotrasen: #384e68;
 .theme-ntos {
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    'pkg:tgui-styles/components/Button',
     $with: (
       'color-default': $nanotrasen,
       'color-transparent-text': rgba(227, 240, 255, 0.75)
     )
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
+    'pkg:tgui-styles/components/ProgressBar',
     $with: (
       'color-default-fill': $nanotrasen,
       'background-color': rgba(0, 0, 0, 0.5)
     )
   );
-  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('pkg:tgui-styles/components/Section');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');

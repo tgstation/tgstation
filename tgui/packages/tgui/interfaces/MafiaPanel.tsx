@@ -1,8 +1,4 @@
-import { BooleanLike, classes } from 'common/react';
-import { decodeHtmlEntities } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -13,7 +9,11 @@ import {
   Stack,
   Tabs,
   TextArea,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
+import { decodeHtmlEntities } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
 

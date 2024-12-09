@@ -218,6 +218,7 @@
 
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
+	SEND_SIGNAL(slapped, COMSIG_LIVING_SLAPPED, user)
 
 	if(iscarbon(slapped))
 		var/mob/living/carbon/potential_tailed = slapped
@@ -257,8 +258,8 @@
 				)
 
 				// Worse than just help intenting people.
-				slapped.AdjustSleeping(-75)
-				slapped.AdjustUnconscious(-50)
+				slapped.AdjustSleeping(-7.5 SECONDS)
+				slapped.AdjustUnconscious(-5 SECONDS)
 
 			else
 				user.visible_message(
@@ -493,7 +494,7 @@
 	blown_kiss.fired_from = user
 	blown_kiss.firer = user // don't hit ourself that would be really annoying
 	blown_kiss.impacted = list(WEAKREF(user) = TRUE) // just to make sure we don't hit the wearer
-	blown_kiss.preparePixelProjectile(target, user)
+	blown_kiss.aim_projectile(target, user)
 	blown_kiss.fire()
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
@@ -520,7 +521,7 @@
 	blown_kiss.fired_from = offerer
 	blown_kiss.firer = offerer // don't hit ourself that would be really annoying
 	blown_kiss.impacted = list(WEAKREF(offerer) = TRUE) // just to make sure we don't hit the wearer
-	blown_kiss.preparePixelProjectile(taker, offerer)
+	blown_kiss.aim_projectile(taker, offerer)
 	blown_kiss.suppressed = SUPPRESSED_VERY // this also means it's a direct offer
 	blown_kiss.fire()
 	qdel(src)
@@ -545,7 +546,7 @@
 	hitsound = 'sound/effects/emotes/kiss.ogg'
 	hitsound_wall = 'sound/effects/emotes/kiss.ogg'
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	speed = 1.6
+	speed = 0.66
 	damage_type = BRUTE
 	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
@@ -561,7 +562,7 @@
 
 	return ..()
 
-/obj/projectile/kiss/Impact(atom/A)
+/obj/projectile/kiss/impact(atom/A)
 	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
 
 	if(damage > 0 || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
@@ -635,7 +636,7 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/heartbreakee = target
-	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
 	dont_go_breakin_my_heart.apply_organ_damage(999)
 
 // Based on energy gun characteristics

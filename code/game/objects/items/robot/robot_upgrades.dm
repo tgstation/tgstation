@@ -12,7 +12,7 @@
 	var/require_model = FALSE
 	var/list/model_type = null
 	/// Bitflags listing model compatibility. Used in the exosuit fabricator for creating sub-categories.
-	var/list/model_flags = NONE
+	var/model_flags = NONE
 
 	/// List of items to add with the module, if any
 	var/list/items_to_add
@@ -665,6 +665,9 @@
 /obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
 	return NONE
 
+/obj/item/inducer/cyborg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_FAILURE
+
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
 	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
@@ -808,6 +811,17 @@
 	model_flags = BORG_MODEL_SERVICE
 
 	items_to_add = list(/obj/item/borg/cookbook)
+
+/obj/item/borg/upgrade/botany_upgrade
+	name = "Service Cyborg Botany Tools"
+	desc = "An upgrade to the service model cyborg, that let them do gardening and plant processing."
+	icon_state = "module_service"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+	items_to_add = list(/obj/item/storage/bag/plants/cyborg, /obj/item/borg/cyborg_omnitool/botany, /obj/item/plant_analyzer)
+
 
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.

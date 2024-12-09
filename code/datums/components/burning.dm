@@ -8,8 +8,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /datum/component/burning
 	/// Fire overlay appearance we apply
 	var/fire_overlay
-	/// Particle holder for fire particles, if any
+	/// Particle holder for fire particles, if any. Still utilized over shared holders because they're movable-only
 	var/obj/effect/abstract/particle_holder/particle_effect
+	/// Particle type we're using for cleaning up our shared holder
+	var/particle_type
 
 /datum/component/burning/Initialize(fire_overlay = GLOB.fire_overlay, fire_particles = /particles/smoke/burning)
 	if(!isatom(parent))
@@ -25,9 +27,14 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return
 
 	src.fire_overlay = fire_overlay
-	if(fire_particles)
-		// burning particles look pretty bad when they stack on mobs, so that behavior is not wanted for items
-		particle_effect = new(atom_parent, fire_particles, isitem(atom_parent) ? NONE : PARTICLE_ATTACH_MOB)
+	if (fire_particles)
+		if(ismovable(parent))
+			var/atom/movable/movable_parent = parent
+			// burning particles look pretty bad when they stack on mobs, so that behavior is not wanted for items
+			movable_parent.add_shared_particles(fire_particles, "[fire_particles]_[isitem(parent)]", isitem(parent) ? NONE : PARTICLE_ATTACH_MOB)
+			particle_type = fire_particles
+		else
+			particle_effect = new(atom_parent, fire_particles)
 	START_PROCESSING(SSburning, src)
 
 /datum/component/burning/Destroy(force)
@@ -35,6 +42,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	fire_overlay = null
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
+	if (ismovable(parent) && particle_type)
+		var/atom/movable/movable_parent = parent
+		movable_parent.remove_shared_particles("[particle_type]_[isitem(parent)]")
 	return ..()
 
 /datum/component/burning/RegisterWithParent()

@@ -30,6 +30,7 @@
 /obj/structure/fireplace/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(burning_loop)
+	remove_shared_particles(/particles/smoke/burning)
 	. = ..()
 
 /obj/structure/fireplace/setDir(newdir)
@@ -166,17 +167,17 @@
 	fuel_added = 0
 	update_appearance()
 	adjust_light()
-	particles = new /particles/smoke/burning()
+	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/burning)
 
 	switch(dir)
 		if(SOUTH)
-			particles.position = list(0, 29, 0)
+			smoke_particles.particles.position = list(0, 29, 0)
 		if(EAST)
-			particles.position = list(-20, 9, 0)
+			smoke_particles.particles.position = list(-20, 9, 0)
 		if(WEST)
-			particles.position = list(20, 9, 0)
+			smoke_particles.particles.position = list(20, 9, 0)
 		if(NORTH) // there is no icon state for SOUTH
-			QDEL_NULL(particles)
+			remove_shared_particles(/particles/smoke/burning)
 
 /obj/structure/fireplace/proc/put_out()
 	STOP_PROCESSING(SSobj, src)
@@ -185,7 +186,7 @@
 	update_appearance()
 	adjust_light()
 	desc = initial(desc)
-	QDEL_NULL(particles)
+	remove_shared_particles(/particles/smoke/burning)
 
 #undef LOG_BURN_TIMER
 #undef PAPER_BURN_TIMER

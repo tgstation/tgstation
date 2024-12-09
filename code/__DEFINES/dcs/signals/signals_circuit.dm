@@ -82,6 +82,9 @@
 /// Called when an equipment action component is removed from a shell (/obj/item/circuit_component/equipment_action/action_comp)
 #define COMSIG_CIRCUIT_ACTION_COMPONENT_UNREGISTERED "circuit_action_component_unregistered"
 
+/// Called when an NFC sender sends data to this circuit
+#define COMSIG_CIRCUIT_NFC_DATA_SENT "circuit_nfc_data_receive"
+
 ///Sent to the shell component when a circuit is attached.
 #define COMSIG_SHELL_CIRCUIT_ATTACHED "shell_circuit_attached"
 ///Sent to the shell component when a circuit is removed.

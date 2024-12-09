@@ -12,8 +12,8 @@
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "reel_blue"
 	w_class = WEIGHT_CLASS_SMALL
-	///A list of traits that this fishing line has, checked by fish traits and the minigame.
-	var/list/fishing_line_traits
+	///A bitfield of traits that this fishing line has, checked by fish traits and the minigame.
+	var/fishing_line_traits
 	/// Color of the fishing line
 	var/line_color = COLOR_GRAY
 	///The description given to the autowiki
@@ -23,9 +23,21 @@
 	name = "reinforced fishing line reel"
 	desc = "Essential for fishing in extreme environments."
 	icon_state = "reel_green"
-	fishing_line_traits = FISHING_LINE_REINFORCED
 	line_color = "#2b9c2b"
 	wiki_desc = "Allows you to fish in lava and plasma rivers and lakes."
+
+/obj/item/fishing_line/reinforced/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
+
+/obj/item/fishing_line/reinforced/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	ADD_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
+
+/obj/item/fishing_line/reinforced/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /obj/item/fishing_line/cloaked
 	name = "cloaked fishing line reel"
@@ -47,9 +59,22 @@
 	name = "fishing sinew"
 	desc = "An all-natural fishing line made of stretched out sinew. A bit stiff, but usable to fish in extreme enviroments."
 	icon_state = "reel_sinew"
-	fishing_line_traits = FISHING_LINE_REINFORCED|FISHING_LINE_STIFF
+	fishing_line_traits = FISHING_LINE_STIFF
 	line_color = "#d1cca3"
 	wiki_desc = "Crafted from sinew. It allows you to fish in lava and plasma like the reinforced line, but it'll make the minigame harder."
+
+/obj/item/fishing_line/sinew/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
+
+/obj/item/fishing_line/sinew/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	ADD_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
+
+/obj/item/fishing_line/sinew/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /**
  * A special line reel that let you skip the biting phase of the minigame, netting you a completion bonus,
@@ -68,17 +93,16 @@
 
 /obj/item/fishing_line/auto_reel/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_FISHING_EQUIPMENT_SLOTTED, PROC_REF(line_equipped))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
 
-/obj/item/fishing_line/auto_reel/proc/line_equipped(datum/source, obj/item/fishing_rod/rod)
+/obj/item/fishing_line/auto_reel/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	RegisterSignal(rod, COMSIG_FISHING_ROD_HOOKED_ITEM, PROC_REF(on_hooked_item))
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_removed))
 
-/obj/item/fishing_line/auto_reel/proc/on_removed(atom/movable/source, atom/old_loc, dir, forced)
+/obj/item/fishing_line/auto_reel/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(old_loc, COMSIG_FISHING_ROD_HOOKED_ITEM)
+	UnregisterSignal(rod, COMSIG_FISHING_ROD_HOOKED_ITEM)
 
 /obj/item/fishing_line/auto_reel/proc/on_hooked_item(obj/item/fishing_rod/source, atom/target, mob/living/user)
 	SIGNAL_HANDLER
@@ -94,10 +118,10 @@
 	else
 		destination = user
 		throw_callback = CALLBACK(src, PROC_REF(clear_hitby_signal), movable_target)
-		RegisterSignal(movable_target, COMSIG_ATOM_PREHITBY, PROC_REF(catch_it_chucklenut))
+		RegisterSignal(movable_target, COMSIG_MOVABLE_PRE_IMPACT, PROC_REF(catch_it_chucklenut))
 
 	if(!movable_target.safe_throw_at(destination, source.cast_range, 2, callback = throw_callback, gentle = please_be_gentle))
-		UnregisterSignal(movable_target, COMSIG_ATOM_PREHITBY)
+		UnregisterSignal(movable_target, COMSIG_MOVABLE_PRE_IMPACT)
 	else
 		playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 
@@ -105,12 +129,13 @@
 	SIGNAL_HANDLER
 	var/mob/living/user = throwingdatum.initial_target.resolve()
 	if(QDELETED(user) || hit_atom != user)
-		return
-	if(user.try_catch_item(source, skip_throw_mode_check = TRUE, try_offhand = TRUE))
-		return COMSIG_HIT_PREVENTED
+		return NONE
+	if(!user.try_catch_item(source, skip_throw_mode_check = TRUE, try_offhand = TRUE))
+		return NONE
+	return COMPONENT_MOVABLE_IMPACT_NEVERMIND
 
 /obj/item/fishing_line/auto_reel/proc/clear_hitby_signal(obj/item/item)
-	UnregisterSignal(item, COMSIG_ATOM_PREHITBY)
+	UnregisterSignal(item, COMSIG_MOVABLE_PRE_IMPACT)
 
 // Hooks
 
@@ -121,11 +146,11 @@
 	icon_state = "hook"
 	w_class = WEIGHT_CLASS_TINY
 
-	/// A list of traits that this fishing hook has, checked by fish traits and the minigame
-	var/list/fishing_hook_traits
+	/// A bitfield of traits that this fishing hook has, checked by fish traits and the minigame
+	var/fishing_hook_traits
 	/// icon state added to main rod icon when this hook is equipped
 	var/rod_overlay_icon_state = "hook_overlay"
-	/// What subtype of `/obj/item/chasm_detritus` do we fish out of chasms? Defaults to `/obj/item/chasm_detritus`.
+	/// What subtype of `/datum/chasm_detritus` do we fish out of chasms? Defaults to `/datum/chasm_detritus`.
 	var/chasm_detritus_type = /datum/chasm_detritus
 	///The description given to the autowiki
 	var/wiki_desc = "A generic fishing hook. <b>You won't be able to fish without one.</b>"
@@ -149,6 +174,9 @@
 
 ///Check if tha target can be caught by the hook
 /obj/item/fishing_hook/proc/can_be_hooked(atom/target)
+	if(isliving(target))
+		var/mob/living/mob = target
+		return (mob.mob_biotypes & MOB_AQUATIC)
 	return isitem(target)
 
 ///Any special effect when hooking a target that's not managed by the fishing rod.
@@ -176,21 +204,19 @@
 
 /obj/item/fishing_hook/magnet/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_FISHING_EQUIPMENT_SLOTTED, PROC_REF(hook_equipped))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
 
-///We make sure that the fishng rod doesn't need a bait to reliably catch non-fish loot.
-/obj/item/fishing_hook/magnet/proc/hook_equipped(datum/source, obj/item/fishing_rod/rod)
+/obj/item/fishing_hook/magnet/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
-	ADD_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, type)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_removed))
+	ADD_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
 
-/obj/item/fishing_hook/magnet/proc/on_removed(atom/movable/source, atom/old_loc, dir, forced)
+/obj/item/fishing_hook/magnet/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
-	REMOVE_TRAIT(old_loc, TRAIT_ROD_REMOVE_FISHING_DUD, type)
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	REMOVE_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
 
-/obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
-	if(fish_type == FISHING_DUD || ispath(fish_type, /obj/item/fish))
+/obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type)
+	if(fish_type == FISHING_DUD || ispath(fish_type, /obj/item/fish) || isfish(fish_type))
 		return ..()
 
 	// We multiply the odds by five for everything that's not a fish nor a dud
@@ -199,9 +225,23 @@
 /obj/item/fishing_hook/shiny
 	name = "shiny lure hook"
 	icon_state = "gold_shiny"
-	fishing_hook_traits = FISHING_HOOK_SHINY
 	rod_overlay_icon_state = "hook_shiny_overlay"
 	wiki_desc = "It's used to attract shiny-loving fish and make them easier to catch."
+
+/obj/item/fishing_hook/shiny/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
+
+/obj/item/fishing_hook/shiny/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	rod.material_fish_chance += 15 //Increases the chance of catching a shiny po... erh, material fish
+	ADD_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
+
+/obj/item/fishing_hook/shiny/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	rod.material_fish_chance -= 15
+	REMOVE_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
 
 /obj/item/fishing_hook/weighted
 	name = "weighted hook"
@@ -235,9 +275,9 @@
 	return "The hook on your fishing rod wasn't meant for traditional fishing, rendering it useless at doing so!"
 
 
-/obj/item/fishing_hook/rescue/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
+/obj/item/fishing_hook/rescue/get_hook_bonus_multiplicative(fish_type)
 	// Sorry, you won't catch fish with this.
-	if(ispath(fish_type, /obj/item/fish))
+	if(ispath(fish_type, /obj/item/fish) || isfish(fish_type))
 		return RESCUE_HOOK_FISH_MULTIPLIER
 
 	return ..()
@@ -336,7 +376,7 @@
 	new /obj/item/storage/box/fishing_hooks/master(src)
 	new /obj/item/storage/box/fishing_lines/master(src)
 	new /obj/item/bait_can/super_baits(src)
-	new /obj/item/fish_feed(src)
+	new /obj/item/reagent_containers/cup/fish_feed(src)
 	new /obj/item/aquarium_kit(src)
 	new /obj/item/fish_analyzer(src)
 
@@ -393,12 +433,12 @@
 ///From the fishing mystery box. It's basically a lazarus and a few bottles of strange reagents.
 /obj/item/storage/box/fish_revival_kit
 	name = "fish revival kit"
-	desc = "Become a fish doctor today."
+	desc = "Become a fish doctor today. A label on the side indicates that fish require two to ten reagent units to be splashed onto them for revival, depending on size."
 	illustration = "fish"
 
 /obj/item/storage/box/fish_revival_kit/PopulateContents()
 	new /obj/item/lazarus_injector(src)
-	new /obj/item/reagent_containers/cup/bottle/strange_reagent(src)
+	new /obj/item/reagent_containers/cup/bottle/fishy_reagent(src)
 	new /obj/item/reagent_containers/cup(src) //to splash the reagents on the fish.
 	new /obj/item/storage/fish_case(src)
 	new /obj/item/storage/fish_case(src)
@@ -440,6 +480,102 @@
 		The light will flash <b>green</b> and a <b>sound</b> cue will be played when the lure is <b>ready</b> to be spun. \
 		Do <b>not</b> spin while the light is still <b>red</b>.<br><br>\
 		That's all, best of luck to your angling journey."
+
+///A modified mining capsule from the black market and sometimes random loot.
+/obj/item/survivalcapsule/fishing
+	name = "fishing spot capsule"
+	desc = "An illegally modified mining capsule containing a small fishing spot connected to some faraway place."
+	icon_state = "capsule_fishing"
+	initial_language_holder = /datum/language_holder/speaking_machine
+	verb_say = "beeps"
+	verb_yell = "blares"
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.3:ratio=40:attack=15:release=350:makeup=1.5,highpass=f=1000,rubberband=pitch=1.5"
+	template_id = "fishing_default"
+	yeet_back = FALSE
+
+/obj/item/survivalcapsule/fishing/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+	register_context()
+
+	if(SStts.tts_enabled) //This capsule informs you on why it cannot be deployed in a sliiiiightly different way.
+		voice = pick(SStts.available_speakers)
+
+/obj/item/survivalcapsule/fishing/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item || held_item == src)
+		context[SCREENTIP_CONTEXT_RMB] = "Change fishing spot"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/survivalcapsule/fishing/examine(mob/user)
+	. = ..()
+	. += span_info("[EXAMINE_HINT("Right-Click")] to change the selected fishing spot when held.")
+
+/obj/item/survivalcapsule/fishing/examine_more(mob/user)
+	. = ..()
+	. += span_tinynotice("A tiny print on the side reads: \"Use a cryptographic sequencer to disable safeties\".")
+
+/obj/item/survivalcapsule/fishing/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	balloon_alert(user, "safeties disabled")
+	playsound(src, SFX_SPARKS, 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
+
+/obj/item/survivalcapsule/fishing/attack_self_secondary(mob/living/user)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(used)
+		return
+	var/list/choices = list()
+	var/list/spot_ids_by_name = list()
+	for(var/datum/map_template/shelter/fishing/spot as anything in typesof(/datum/map_template/shelter/fishing))
+		if(!spot::safe && !(obj_flags & EMAGGED))
+			continue
+		choices[spot::name] = image('icons/hud/radial_fishing.dmi', spot::radial_icon)
+		spot_ids_by_name[spot::name] = spot::shelter_id
+	var/choice = show_radial_menu(user, src, choices, radius = 38, custom_check = CALLBACK(src, TYPE_PROC_REF(/atom, can_interact), user), tooltips = TRUE)
+	if(!choice || used || !can_interact(user))
+		return
+	template_id = spot_ids_by_name[choice]
+	template = SSmapping.shelter_templates[template_id]
+	to_chat(user, span_notice("You change [src]'s selected fishing spot to [choice]."))
+	playsound(src, 'sound/items/pen_click.ogg', 20, TRUE, -3)
+	return
+
+/obj/item/survivalcapsule/fishing/get_ignore_flags()
+	. = ..()
+	if(obj_flags & EMAGGED)
+		. += CAPSULE_IGNORE_ANCHORED_OBJECTS|CAPSULE_IGNORE_BANNED_OBJECTS
+
+/obj/item/survivalcapsule/fishing/fail_feedback(status)
+	switch(status)
+		if(SHELTER_DEPLOY_BAD_AREA)
+			say("I refuse to deploy in this area.")
+		if(SHELTER_DEPLOY_BAD_TURFS)
+			say("The walls are too close! I need [template.width]x[template.height] area to deploy.")
+		if(SHELTER_DEPLOY_ANCHORED_OBJECTS)
+			say("Get these anchored objects out of the way! I need [template.width]x[template.height] area to deploy.")
+		if(SHELTER_DEPLOY_BANNED_OBJECTS)
+			say("Remove all cables and pipes around me in a [template.width]x[template.height] area or I won't deploy.")
+		if(SHELTER_DEPLOY_OUTSIDE_MAP)
+			say("For fucks sake, deploy me somewhere less far fatched!")
+
+/obj/item/survivalcapsule/fishing/trigger_admin_alert(mob/triggerer, turf/trigger_loc)
+	var/datum/map_template/shelter/fishing/spot = template
+	if(spot.safe) //Don't log if the fishing spot is safe
+		return
+
+	var/area/area = get_area(src)
+
+	if(!area.outdoors)
+		message_admins("[ADMIN_LOOKUPFLW(triggerer)] activated an unsafe fishing capsule at [ADMIN_VERBOSEJMP(trigger_loc)]")
+	log_admin("[key_name(triggerer)] activated an unsafe fishing capsule at [AREACOORD(trigger_loc)]")
+
+/obj/item/survivalcapsule/fishing/hacked
+	obj_flags = parent_type::obj_flags | EMAGGED
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER

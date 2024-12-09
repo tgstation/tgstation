@@ -107,6 +107,8 @@
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
 	mouse_opacity = MOUSE_OPACITY_ICON
+	/// do we glow to represent we do stuff when clicked
+	var/clickable_glow = FALSE
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
 	var/alerttooltipstyle = ""
@@ -116,6 +118,10 @@
 	/// Boolean. If TRUE, the Click() proc will attempt to Click() on the master first if there is a master.
 	var/click_master = TRUE
 
+/atom/movable/screen/alert/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	if(clickable_glow)
+		add_filter("clickglow", 2, outline_filter(color = COLOR_GOLD, size = 1))
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
 	. = ..()
@@ -129,7 +135,7 @@
 
 //Gas alerts
 // Gas alerts are continuously thrown/cleared by:
-// * /obj/item/organ/internal/lungs/proc/check_breath()
+// * /obj/item/organ/lungs/proc/check_breath()
 // * /mob/living/carbon/check_breath()
 // * /mob/living/carbon/human/check_breath()
 // * /datum/element/atmos_requirements/proc/on_non_stasis_life()
@@ -237,6 +243,7 @@
 	name = "Mind Control"
 	desc = "Your mind has been hijacked! Click to view the mind control command."
 	icon_state = ALERT_MIND_CONTROL
+	clickable_glow = TRUE
 	var/command
 
 /atom/movable/screen/alert/mind_control/Click()
@@ -250,6 +257,7 @@
 	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
 		If you're feeling frisky, examine yourself and click the underlined item to pull the object out."
 	icon_state = ALERT_EMBEDDED_OBJECT
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/embeddedobject/Click()
 	. = ..()
@@ -287,6 +295,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "On Fire"
 	desc = "You're on fire. Stop, drop and roll to put the fire out or move to a vacuum area."
 	icon_state = "fire"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/fire/Click()
 	. = ..()
@@ -305,6 +314,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/give // information set when the give alert is made
 	icon_state = "default"
+	clickable_glow = TRUE
 	/// The offer we're linked to, yes this is suspiciously like a status effect alert
 	var/datum/status_effect/offering/offer
 	/// Additional text displayed in the description of the alert.
@@ -476,19 +486,31 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Succumb"
 	desc = "Shuffle off this mortal coil."
 	icon_state = ALERT_SUCCUMB
+	clickable_glow = TRUE
+	var/static/list/death_titles = list(
+		"Goodnight, Sweet Prince",
+		"Game Over, Man",
+		"End Of The Road",
+		"Live Long And Prosper",
+		"See You Space Cowboy...",
+		"It's Been An Honor",
+		"The Curtains Close",
+		"All Good Things Must End"
+	)
 
-/atom/movable/screen/alert/succumb/Click()
+/atom/movable/screen/alert/succumb/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 	var/mob/living/living_owner = owner
-	var/last_whisper
-	if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
-		last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince", encode = FALSE) // saycode already handles sanitization
+	if(!CAN_SUCCUMB(living_owner) && !HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE)) //checked again in [mob/living/verb/succumb()]
+		return
+
+	var/title = pick(death_titles)
+
+	//Succumbing with a message
+	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", title, max_length = CHAT_MESSAGE_MAX_LENGTH, encode = FALSE) // saycode already handles sanitization
 	if(isnull(last_whisper))
-		if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
-			return
-	if(!CAN_SUCCUMB(living_owner) && !HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 		return
 	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")
@@ -773,6 +795,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		additional processing time to unlock more malfunction abilities."
 	icon_state = ALERT_HACKING_APC
 	timeout = 60 SECONDS
+	clickable_glow = TRUE
 	var/atom/target = null
 
 /atom/movable/screen/alert/hackingapc/Click()
@@ -800,6 +823,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
 	icon_state = "template"
 	timeout = 300
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/revival/Click()
 	. = ..()
@@ -813,6 +837,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "This can be clicked on to perform an action."
 	icon_state = "template"
 	timeout = 30 SECONDS
+	clickable_glow = TRUE
 	/// Weakref to the target atom to use the action on
 	var/datum/weakref/target_ref
 	/// If we want to interact on click rather than jump/orbit
@@ -820,6 +845,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/notify_action/Click()
 	. = ..()
+	if(!.)
+		return
 
 	var/atom/target = target_ref?.resolve()
 	if(isnull(target) || !isobserver(owner) || target == owner)
@@ -988,6 +1015,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Buckled"
 	desc = "You've been buckled to something. Click the alert to unbuckle unless you're handcuffed."
 	icon_state = ALERT_BUCKLED
+	clickable_glow = TRUE
+
+/atom/movable/screen/alert/restrained
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/restrained/handcuffed
 	name = "Handcuffed"
@@ -1035,6 +1066,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Knotted Shoes"
 	desc = "Someone tied your shoelaces together! Click the alert or your shoes to undo the knot."
 	icon_state = ALERT_SHOES_KNOT
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/shoes/Click()
 	. = ..()
@@ -1053,6 +1085,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Unpossess"
 	desc = "You are possessing an object. Click this alert to unpossess it."
 	icon_state = "buckled"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/unpossess_object/Click()
 	. = ..()

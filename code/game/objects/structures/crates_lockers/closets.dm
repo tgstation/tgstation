@@ -518,7 +518,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))
-		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
+		if(!isliving(AM)) //let's not put ghosts or eye mobs inside closets...
 			return FALSE
 		var/mob/living/L = AM
 		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())

@@ -8,6 +8,7 @@
 	callback.Invoke()
 
 /datum/ai_behavior/find_hunt_target/pollinate
+	action_cooldown = 10 SECONDS
 
 /datum/ai_behavior/find_hunt_target/pollinate/valid_dinner(mob/living/source, obj/machinery/hydroponics/dinner, radius)
 	if(!dinner.can_bee_pollinate())
@@ -16,6 +17,7 @@
 
 /datum/ai_behavior/enter_exit_hive
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
+	action_cooldown = 10 SECONDS
 
 /datum/ai_behavior/enter_exit_hive/setup(datum/ai_controller/controller, target_key, attack_key)
 	. = ..()

@@ -72,7 +72,7 @@
 			. += span_notice("Left-click or right-click in-hand to view its transfer amount.")
 	if(isliving(user) && HAS_TRAIT(user, TRAIT_REMOTE_TASTING))
 		var/mob/living/living_user = user
-		living_user.taste(reagents)
+		living_user.taste_container(reagents)
 
 /obj/item/reagent_containers/create_reagents(max_vol, flags)
 	. = ..()

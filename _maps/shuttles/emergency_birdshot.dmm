@@ -904,14 +904,14 @@
 /obj/structure/closet/crate/freezer,
 /obj/item/bodypart/arm/left/moth,
 /obj/item/bodypart/arm/left/moth,
-/obj/item/organ/external/tail/lizard,
+/obj/item/organ/tail/lizard,
 /obj/item/bodypart/leg/right/digitigrade,
 /obj/item/bodypart/leg/right/digitigrade,
 /obj/item/bodypart/leg/left/fly,
 /obj/item/bodypart/leg/left/fly,
 /obj/item/bodypart/arm/right,
 /obj/item/bodypart/arm/right,
-/obj/item/organ/external/tail/cat,
+/obj/item/organ/tail/cat,
 /obj/effect/turf_decal/stripes/white/end{
 	dir = 1
 	},

@@ -108,7 +108,7 @@
 	set_bloody_shoes(pool.blood_state, new_our_bloodiness)
 	pool.bloodiness = total_bloodiness - new_our_bloodiness // Give the pool the remaining blood incase we were limited
 
-	if(HAS_TRAIT(parent_atom, TRAIT_LIGHT_STEP)) //the character is agile enough to don't mess their clothing and hands just from one blood splatter at floor
+	if(HAS_TRAIT(parent_atom, TRAIT_LIGHT_STEP) || (wielder && HAS_TRAIT(wielder, TRAIT_LIGHT_STEP))) //the character is agile enough to don't mess their clothing and hands just from one blood splatter at floor
 		return TRUE
 
 	parent_atom.add_blood_DNA(GET_ATOM_BLOOD_DNA(pool))

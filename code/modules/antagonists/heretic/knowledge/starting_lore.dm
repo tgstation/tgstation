@@ -1,6 +1,6 @@
 // Heretic starting knowledge.
 
-/// Global list of all heretic knowledge that have route = PATH_START. List of PATHS.
+/// Global list of all heretic knowledge that have is_starting_knowledge = TRUE. List of PATHS.
 GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 /**
@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /proc/initialize_starting_knowledge()
 	. = list()
 	for(var/datum/heretic_knowledge/knowledge as anything in subtypesof(/datum/heretic_knowledge))
-		if(initial(knowledge.route) == PATH_START)
+		if(initial(knowledge.is_starting_knowledge) == TRUE)
 			. += knowledge
 
 /*
@@ -21,13 +21,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	desc = "Starts your journey into the Mansus. \
 		Grants you the Mansus Grasp, a powerful and upgradable \
 		disabling spell that can be cast regardless of having a focus."
-	spell_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
+	action_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
 	cost = 0
-	route = PATH_START
-
-/datum/heretic_knowledge/spell/basic/New()
-	. = ..()
-	next_knowledge = subtypesof(/datum/heretic_knowledge/limited_amount/starting)
+	is_starting_knowledge = TRUE
 
 /**
  * The Living Heart heretic knowledge.
@@ -47,12 +43,12 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY - 1 // Knowing how to remake your heart is important
-	route = PATH_START
+	is_starting_knowledge = TRUE
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "living_heart"
 	research_tree_icon_frame = 1
 	/// The typepath of the organ type required for our heart.
-	var/required_organ_type = /obj/item/organ/internal/heart
+	var/required_organ_type = /obj/item/organ/heart
 
 /datum/heretic_knowledge/living_heart/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -65,9 +61,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	// If a heretic is made from a species without a heart, we need to find a backup.
 	if(!where_to_put_our_heart)
 		var/static/list/backup_organs = list(
-			ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs,
-			ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver,
-			ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach,
+			ORGAN_SLOT_LUNGS = /obj/item/organ/lungs,
+			ORGAN_SLOT_LIVER = /obj/item/organ/liver,
+			ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
 		)
 
 		for(var/backup_slot in backup_organs)
@@ -201,13 +197,13 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	desc = "Allows you to transmute a sheet of glass and a pair of eyes to create an Amber Focus. \
 		A focus must be worn in order to cast more advanced spells."
 	required_atoms = list(
-		/obj/item/organ/internal/eyes = 1,
+		/obj/item/organ/eyes = 1,
 		/obj/item/stack/sheet/glass = 1,
 	)
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY - 2 // Not as important as making a heart or sacrificing, but important enough.
-	route = PATH_START
+	is_starting_knowledge = TRUE
 	research_tree_icon_path = 'icons/obj/clothing/neck.dmi'
 	research_tree_icon_state = "eldritch_necklace"
 
@@ -215,9 +211,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	name = "Cloak of Shadow"
 	desc = "Grants you the spell Cloak of Shadow. This spell will completely conceal your identity in a purple smoke \
 		for three minutes, assisting you in keeping secrecy. Requires a focus to cast."
-	spell_to_add = /datum/action/cooldown/spell/shadow_cloak
+	action_to_add = /datum/action/cooldown/spell/shadow_cloak
 	cost = 0
-	route = PATH_START
+	is_starting_knowledge = TRUE
 
 /**
  * Codex Cicatrixi is available at the start:
@@ -241,7 +237,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	banned_atom_types = list(/obj/item/pen)
 	result_atoms = list(/obj/item/codex_cicatrix)
 	cost = 1
-	route = PATH_START
+	is_starting_knowledge = TRUE
 	priority = MAX_KNOWLEDGE_PRIORITY - 3 // Least priority out of the starting knowledges, as it's an optional boon.
 	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide))
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
@@ -306,7 +302,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	name = "Feast of Owls"
 	desc = "Allows you to undergo a ritual that gives you 5 knowledge points but locks you out of ascension. This can only be done once and cannot be reverted."
 	gain_text = "Under the soft glow of unreason there is a beast that stalks the night. I shall bring it forth and let it enter my presence. It will feast upon my amibitions and leave knowledge in its wake."
-	route = PATH_START
+	is_starting_knowledge = TRUE
 	required_atoms = list()
 	research_tree_icon_path = 'icons/mob/actions/actions_animal.dmi'
 	research_tree_icon_state = "god_transmit"

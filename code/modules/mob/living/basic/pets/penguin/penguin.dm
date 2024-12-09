@@ -11,6 +11,7 @@
 	response_harm_simple = "kick"
 
 	faction = list(FACTION_NEUTRAL)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_AQUATIC
 	ai_controller = /datum/ai_controller/basic_controller/penguin
 	///it can lay an egg?
 	var/can_lay_eggs = TRUE
@@ -36,6 +37,13 @@
 	AddElement(/datum/element/pet_bonus, "honk")
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	ADD_TRAIT(src, TRAIT_MOB_CAN_DIG, INNATE_TRAIT)
+
+	var/static/list/fishable_objects = typecacheof(list(/turf/open/misc/ice))
+	ai_controller.set_blackboard_key(BB_FISHABLE_LIST, fishable_objects)
+	var/static/list/delicious_food = list(/obj/item/fish)
+	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = delicious_food)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(delicious_food))
+
 	if(!can_lay_eggs)
 		return
 	AddComponent(\
@@ -48,11 +56,6 @@
 		max_eggs_held = 1,\
 		egg_laid_callback = CALLBACK(src, PROC_REF(lay_penguin_egg)),\
 	)
-	var/static/list/fishable_objects = typecacheof(list(/turf/open/misc/ice))
-	ai_controller.set_blackboard_key(BB_FISHABLE_LIST, fishable_objects)
-	var/static/list/delicious_food = list(/obj/item/fish)
-	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = delicious_food)
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(delicious_food))
 
 /mob/living/basic/pet/penguin/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
@@ -131,7 +134,7 @@
 	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
-	butcher_results = list(/obj/item/organ/internal/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 1)
+	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 1)
 	ai_controller = /datum/ai_controller/basic_controller/penguin/baby
 	can_lay_eggs = FALSE
 	///will it grow up?

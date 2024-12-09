@@ -15,9 +15,14 @@
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	///The id we use to fetch the template datum
 	var/template_id = "shelter_alpha"
+	///The template datum we use to load the shelter
 	var/datum/map_template/shelter/template
+	///If true, this capsule is active and will deploy the area if conditions are met.
 	var/used = FALSE
+	///Will this capsule yeet mobs back once the area is deployed?
+	var/yeet_back = TRUE
 
 /obj/item/survivalcapsule/proc/get_template()
 	if(template)
@@ -37,7 +42,7 @@
 	. += "This capsule has the [template.name] stored."
 	. += template.description
 
-/obj/item/survivalcapsule/interact(mob/user)
+/obj/item/survivalcapsule/interact(mob/living/user)
 	. = ..()
 	if(.)
 		return .
@@ -50,6 +55,9 @@
 	loc.visible_message(span_warning("[src] begins to shake. Stand back!"))
 	used = TRUE
 	addtimer(CALLBACK(src, PROC_REF(expand), user), 5 SECONDS)
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon = user
+		carbon.throw_mode_on(THROW_MODE_TOGGLE)
 	return TRUE
 
 /// Expands the capsule into a full shelter, placing the template at the item's location (NOT triggerer's location)
@@ -58,23 +66,31 @@
 		return
 
 	var/turf/deploy_location = get_turf(src)
-	var/status = template.check_deploy(deploy_location)
-	switch(status)
-		if(SHELTER_DEPLOY_BAD_AREA)
-			loc.visible_message(span_warning("[src] will not function in this area."))
-		if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS, SHELTER_DEPLOY_OUTSIDE_MAP)
-			loc.visible_message(span_warning("[src] doesn't have room to deploy! You need to clear a [template.width]x[template.height] area!"))
-
+	var/status = template.check_deploy(deploy_location, src, get_ignore_flags())
 	if(status != SHELTER_DEPLOY_ALLOWED)
+		fail_feedback(status)
 		used = FALSE
 		return
 
-	yote_nearby(deploy_location)
+	if(yeet_back)
+		yote_nearby(deploy_location)
 	template.load(deploy_location, centered = TRUE)
 	trigger_admin_alert(triggerer, deploy_location)
 	playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
 	new /obj/effect/particle_effect/fluid/smoke(get_turf(src))
 	qdel(src)
+
+/// Returns a bitfield used to ignore some checks in template.check_deploy()
+/obj/item/survivalcapsule/proc/get_ignore_flags()
+	return NONE
+
+///Returns a message including the reason why it couldn't be deployed
+/obj/item/survivalcapsule/proc/fail_feedback(status)
+	switch(status)
+		if(SHELTER_DEPLOY_BAD_AREA)
+			loc.visible_message(span_warning("[src] will not function in this area."))
+		if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS, SHELTER_DEPLOY_OUTSIDE_MAP, SHELTER_DEPLOY_BANNED_OBJECTS)
+			loc.visible_message(span_warning("[src] doesn't have room to deploy! You need to clear a [template.width]x[template.height] area!"))
 
 /// Throws any mobs near the deployed location away from the item / shelter
 /// Does some math to make closer mobs get thrown further

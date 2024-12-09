@@ -18,12 +18,12 @@ In all, this is a lot like the monkey code. /N
 		if(user == src && check_self_for_injuries())
 			return
 		set_resting(FALSE)
-		AdjustStun(-60)
-		AdjustKnockdown(-60)
-		AdjustImmobilized(-60)
-		AdjustParalyzed(-60)
-		AdjustUnconscious(-60)
-		AdjustSleeping(-100)
+		AdjustStun(-6 SECONDS)
+		AdjustKnockdown(-6 SECONDS)
+		AdjustImmobilized(-6 SECONDS)
+		AdjustParalyzed(-6 SECONDS)
+		AdjustUnconscious(-6 SECONDS)
+		AdjustSleeping(-10 SECONDS)
 		visible_message(span_notice("[user.name] nuzzles [src] trying to wake [p_them()] up!"))
 	else if(health > 0)
 		user.do_attack_animation(src, ATTACK_EFFECT_BITE)
@@ -66,12 +66,15 @@ In all, this is a lot like the monkey code. /N
 			var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
 			apply_damage(rand(1, 3), BRUTE, affecting)
 
+/mob/living/carbon/alien/create_splatter(splatter_dir)
+	new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(get_turf(src), splatter_dir)
+
 /mob/living/carbon/alien/ex_act(severity, target, origin)
 	. = ..()
 	if(!. || QDELETED(src))
 		return FALSE
 
-	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			gib(DROP_ALL_REMAINS)

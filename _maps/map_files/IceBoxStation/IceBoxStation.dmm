@@ -841,6 +841,32 @@
 "aom" = (
 /obj/machinery/pdapainter/engineering,
 /obj/effect/turf_decal/tile/neutral/full,
+/obj/machinery/button/door/directional/west{
+	id = "Engineering";
+	name = "Engineering Lockdown Control";
+	pixel_y = -8;
+	req_access = list("engineering")
+	},
+/obj/machinery/button/door/directional/west{
+	id = "engstorage";
+	name = "Engineering Secure Storage Control";
+	pixel_x = -36;
+	pixel_y = 4;
+	req_access = list("engine_equip")
+	},
+/obj/machinery/button/door/directional/west{
+	id = "atmos";
+	name = "Atmospherics Lockdown Control";
+	pixel_y = 4;
+	req_access = list("atmospherics")
+	},
+/obj/machinery/button/door/directional/west{
+	id = "ceprivacy";
+	name = "Privacy Shutter Control";
+	pixel_y = -8;
+	req_access = list("engineering");
+	pixel_x = -36
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/ce)
 "aon" = (
@@ -4309,7 +4335,6 @@
 "bjK" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "bjL" = (
@@ -7944,7 +7969,8 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "cgB" = (
-/obj/structure/aquarium/lawyer,
+/obj/item/fish_tank/lawyer,
+/obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "cgC" = (
@@ -52616,7 +52642,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "pgN" = (
-/obj/item/organ/external/tail/monkey,
+/obj/item/organ/tail/monkey,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -56829,7 +56855,7 @@
 	pixel_y = 4
 	},
 /obj/item/bodypart/chest,
-/obj/item/organ/internal/heart,
+/obj/item/organ/heart,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "qrj" = (
@@ -60263,8 +60289,8 @@
 /area/station/engineering/atmos/storage)
 "rqF" = (
 /obj/machinery/door/poddoor{
-	id = "Secure Storage";
-	name = "Secure Storage"
+	id = "engstorage";
+	name = "Engineering Secure Storage Lockdown"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
@@ -62768,6 +62794,14 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
+"sdp" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "atmos";
+	name = "Atmospherics Blast Door"
+	},
+/turf/open/floor/plating,
+/area/station/engineering/atmos)
 "sdr" = (
 /obj/structure/transit_tube/horizontal,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -65787,7 +65821,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/mob/living/simple_animal/bot/floorbot,
+/mob/living/basic/bot/repairbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
 "sUE" = (
@@ -71065,6 +71099,7 @@
 	c_tag = "Medbay Mid-South";
 	network = list("ss13","medbay")
 	},
+/obj/structure/sign/warning/no_smoking/circle/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "uzs" = (
@@ -78726,6 +78761,7 @@
 /obj/machinery/computer/operating,
 /obj/effect/turf_decal/tile/blue/full,
 /obj/machinery/light/cold/directional/east,
+/obj/structure/sign/eyechart/directional/east,
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
 "wRI" = (
@@ -81160,7 +81196,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/end,
-/obj/structure/sign/warning/no_smoking/circle/directional/west,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/directional/west,
 /obj/structure/window/spawner/directional/south,
@@ -245993,7 +246028,7 @@ keP
 cRO
 guU
 ayq
-hpI
+sdp
 bID
 iKh
 rOU

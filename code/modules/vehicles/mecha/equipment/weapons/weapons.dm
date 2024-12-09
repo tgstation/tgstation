@@ -68,13 +68,13 @@
 		var/obj/projectile/projectile_obj = new projectile(get_turf(src))
 		projectile_obj.log_override = TRUE //we log being fired ourselves a little further down.
 		projectile_obj.firer = chassis
-		projectile_obj.preparePixelProjectile(target, source, modifiers, spread)
+		projectile_obj.aim_projectile(target, source, modifiers, spread)
 		if(isliving(source) && source.client) //dont want it to happen from syndie mecha npc mobs, they do direct fire anyways
 			var/mob/living/shooter = source
 			projectile_obj.hit_prone_targets = shooter.combat_mode
 		projectile_obj.fire()
 		if(!projectile_obj.suppressed && firing_effect_type)
-			new firing_effect_type(get_turf(src), chassis.dir)
+			new firing_effect_type(chassis || get_turf(src), chassis.dir)
 		playsound(chassis, fire_sound, 50, TRUE)
 
 		log_combat(source, target, "fired [projectile_obj] at", src, "from [chassis] at [get_area_name(src, TRUE)]")
@@ -211,7 +211,7 @@
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.adjust_stutter(40 SECONDS)
-		var/obj/item/organ/internal/ears/ears = M.get_organ_slot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/ears/ears = M.get_organ_slot(ORGAN_SLOT_EARS)
 		if(ears)
 			ears.adjustEarDamage(0, 30)
 		M.Paralyze(60)

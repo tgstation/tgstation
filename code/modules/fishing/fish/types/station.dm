@@ -1,5 +1,6 @@
 /obj/item/fish/ratfish
 	name = "ratfish"
+	fish_id = "ratfish"
 	desc = "A rat exposed to the murky waters of maintenance too long. Any higher power, if it revealed itself, would state that the ratfish's continued existence is extremely unwelcome."
 	icon_state = "ratfish"
 	sprite_width = 7
@@ -41,6 +42,7 @@
 
 /obj/item/fish/sludgefish
 	name = "sludgefish"
+	fish_id = "sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop, the only thing that'd ever thrive in the acidic and claustrophobic cavities of the station's organic waste disposal system."
 	icon_state = "sludgefish"
 	sprite_width = 7
@@ -62,13 +64,15 @@
 
 /obj/item/fish/sludgefish/purple
 	name = "purple sludgefish"
+	fish_id = "purple_sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop. This one has developed sexual reproduction mechanisms, and a purple tint to boot."
 	icon_state = "sludgefish_purple"
 	random_case_rarity = FISH_RARITY_NOPE
 	fish_traits = list(/datum/fish_trait/parthenogenesis)
 
 /obj/item/fish/slimefish
-	name = "acquatic slime"
+	name = "aquatic slime"
+	fish_id = "slimefish"
 	desc = "Kids, this is what happens when a slime overcomes its hydrophobic nature. It goes glug glug."
 	icon_state = "slimefish"
 	icon_state_dead = "slimefish_dead"
@@ -103,6 +107,7 @@
 
 /obj/item/fish/fryish
 	name = "fryish"
+	fish_id = "fryish"
 	desc = "A youngling of the Fritterish family of <u>delicious</u> extremophile, piscine lifeforms. Just don't tell 'Mankind for Ethical Animal Treatment' you ate it."
 	icon_state = "fryish"
 	sprite_width = 3
@@ -140,13 +145,13 @@
 	///How long does it take for us to grow up?
 	var/growth_time = 3.5 MINUTES
 
-/obj/item/fish/fryish/Initialize(mapload)
+/obj/item/fish/fryish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	if(is_bait)
 		add_traits(list(TRAIT_FISHING_BAIT, TRAIT_GREAT_QUALITY_BAIT), INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_FISH_SURVIVE_COOKING, INNATE_TRAIT)
 
-/obj/item/fish/fryish/update_size_and_weight(new_size = average_size, new_weight = average_weight)
+/obj/item/fish/fryish/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = TRUE)
 	. = ..()
 	if(!next_type)
 		return
@@ -176,6 +181,7 @@
 
 /obj/item/fish/fryish/fritterish
 	name = "fritterish"
+	fish_id = "fritterish"
 	desc = "A <u>deliciously</u> extremophile alien fish. This one looks like a taiyaki."
 	icon_state = "fritterish"
 	average_size = 50
@@ -230,6 +236,7 @@
 
 /obj/item/fish/fryish/nessie
 	name = "nessie-fish"
+	fish_id = "nessie"
 	desc = "A <u>deliciously</u> extremophile alien fish. This one is so big, you could write legends about it."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "nessiefish"

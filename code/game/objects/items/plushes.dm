@@ -633,7 +633,7 @@
 			"I WILL DIE TO JUST ONE ATTTTTTAAAAACKKKKKK!!",
 			"I WILLLLLL NOT DROP GOOOD IITITTEEEEEMMMS!!",
 		)
-	AddComponent(/datum/component/keep_me_secure, CALLBACK(src, PROC_REF(secured_process)) , CALLBACK(src, PROC_REF(unsecured_process)))
+	AddComponent(/datum/component/keep_me_secure, CALLBACK(src, PROC_REF(secured_process)) , CALLBACK(src, PROC_REF(unsecured_process)), 0)
 
 /obj/item/toy/plush/whiny_plushie/proc/secured_process(last_move)
 	icon_state = initial(icon_state)

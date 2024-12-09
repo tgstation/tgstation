@@ -155,6 +155,7 @@
 
 //Installed Module
 	robit.hands = new /atom/movable/screen/robot/module(null, src)
+	robit.hands.icon_state = robit.model ? robit.model.model_select_icon : "nomod"
 	robit.hands.screen_loc = ui_borg_module
 	static_inventory += robit.hands
 

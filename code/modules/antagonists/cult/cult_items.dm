@@ -128,6 +128,7 @@ Striking a noncultist, however, will tear their flesh."}
 	free_use = TRUE
 	light_color = COLOR_HERETIC_GREEN
 	light_range = 3
+	demolition_mod = 1.5
 	/// holder for the actual action when created.
 	var/list/datum/action/cooldown/spell/path_sword_actions
 	/// holder for the actual action when created.
@@ -1426,7 +1427,7 @@ Striking a noncultist, however, will tear their flesh."}
 					qdel(src)
 					return FALSE
 			var/obj/projectile/projectile = hitby
-			if(projectile.reflectable & REFLECT_NORMAL)
+			if(projectile.reflectable)
 				return FALSE //To avoid reflection chance double-dipping with block chance
 		. = ..()
 		if(.)

@@ -1,5 +1,6 @@
 /obj/item/fish/sand_surfer
 	name = "sand surfer"
+	fish_id = "sand_surfer"
 	desc = "A bronze alien \"fish\" living and swimming underneath faraway sandy places."
 	icon_state = "sand_surfer"
 	sprite_height = 6
@@ -19,6 +20,7 @@
 
 /obj/item/fish/sand_crab
 	name = "burrower crab"
+	fish_id = "sand_crab"
 	desc = "A sand-dwelling crustacean. It looks like a crab and tastes like a crab, but waddles like a fish."
 	icon_state = "crab"
 	dedicated_in_aquarium_icon_state = "crab_small"
@@ -48,6 +50,7 @@
 
 /obj/item/fish/bumpy
 	name = "bump-fish"
+	fish_id = "bumpy"
 	desc = "An misshapen fish-thing all covered in stubby little tendrils"
 	icon_state = "bumpy"
 	sprite_height = 4
@@ -67,6 +70,7 @@
 
 /obj/item/fish/starfish
 	name = "cosmostarfish"
+	fish_id = "cosmostarfish"
 	desc = "A peculiar, gravity-defying, echinoderm-looking critter from hyperspace."
 	icon_state = "starfish"
 	icon_state_dead = "starfish_dead"
@@ -102,6 +106,7 @@
 
 /obj/item/fish/baby_carp
 	name = "baby space carp"
+	fish_id = "baby_carp"
 	desc = "A juvenile spawn of the dreaded space carp. Don't let the innocent looks fool you, they're aggressive little bastards."
 	icon_state = "baby_carp"
 	sprite_height = 3
@@ -117,7 +122,7 @@
 	fillet_type = /obj/item/food/fishmeat/carp/no_tox
 	fish_traits = list(
 		/datum/fish_trait/carnivore,
-		/datum/fish_trait/aggressive,
+		/datum/fish_trait/territorial,
 		/datum/fish_trait/predator,
 		/datum/fish_trait/necrophage,
 		/datum/fish_trait/no_mating,
@@ -154,7 +159,7 @@
 	. += eyes
 
 ///Determines the speed at which the carp grows based on how big it's
-/obj/item/fish/baby_carp/update_size_and_weight(new_size = average_size, new_weight = average_weight)
+/obj/item/fish/baby_carp/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = TRUE)
 	. = ..()
 	var/growth_rate = 4.5 MINUTES
 	growth_rate *= clamp(size/average_size, 0.5, 2)
@@ -162,19 +167,18 @@
 
 	AddComponent(/datum/component/fish_growth, /mob/living/basic/carp/advanced, growth_rate)
 
-/obj/item/fish/baby_carp/proc/growth_checks(datum/source, seconds_per_tick)
+/obj/item/fish/baby_carp/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
 	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
 		return COMPONENT_DONT_GROW
 
-	if(!isaquarium(loc))
+	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
 		return
 
-	var/obj/structure/aquarium/aquarium = loc
-	if(!aquarium.reproduction_and_growth) //the aquarium has breeding disabled
+	if(HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH)) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
-	if(length(aquarium.get_fishes()) > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
+	if(length(get_aquarium_fishes()) > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
 		return COMPONENT_DONT_GROW
 
 /obj/item/fish/baby_carp/proc/on_growth(datum/source, mob/living/basic/carp/result)

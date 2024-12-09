@@ -12,7 +12,7 @@
 	is_dimorphic = FALSE
 	burn_modifier = 2
 	biological_state = (BIO_FLESH|BIO_BLOODED)
-	wing_types = NONE
+	wing_types = null
 
 /obj/item/bodypart/arm/left/snail
 	limb_id = SPECIES_SNAIL
@@ -58,7 +58,7 @@
 	limb_id = SPECIES_ABDUCTOR
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	wing_types = NONE
+	wing_types = null
 
 /obj/item/bodypart/chest/abductor/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_GREY)
@@ -96,7 +96,7 @@
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
-	wing_types = list(/obj/item/organ/external/wings/functional/slime)
+	wing_types = list(/obj/item/organ/wings/functional/slime)
 
 /obj/item/bodypart/chest/jelly/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_SLIME)
@@ -177,7 +177,7 @@
 	limb_id = SPECIES_ZOMBIE
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	wing_types = NONE
+	wing_types = null
 
 /obj/item/bodypart/arm/left/zombie
 	limb_id = SPECIES_ZOMBIE
@@ -216,7 +216,7 @@
 	limb_id = SPECIES_PODPERSON
 	is_dimorphic = TRUE
 	burn_modifier = 1.25
-	wing_types = NONE
+	wing_types = null
 
 /obj/item/bodypart/chest/pod/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_FLOWERPOT)
@@ -260,7 +260,7 @@
 	limb_id = SPECIES_FLYPERSON
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
-	wing_types = list(/obj/item/organ/external/wings/functional/fly)
+	wing_types = list(/obj/item/organ/wings/functional/fly)
 	bodypart_traits = list(TRAIT_TACKLING_FRAIL_ATTACKER)
 
 /obj/item/bodypart/arm/left/fly
@@ -292,7 +292,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	burn_modifier = 1.5
-	wing_types = NONE
+	wing_types = null
 
 /obj/item/bodypart/arm/left/shadow
 	limb_id = SPECIES_SHADOW
@@ -337,7 +337,7 @@
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	bodypart_flags = BODYPART_UNHUSKABLE
-	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)
+	wing_types = list(/obj/item/organ/wings/functional/skeleton)
 
 /obj/item/bodypart/arm/left/skeleton
 	biological_state = (BIO_BONE|BIO_JOINTED)
@@ -380,7 +380,7 @@
 	is_dimorphic = TRUE
 	bodypart_traits = list(TRAIT_NO_JUMPSUIT)
 	burn_modifier = 1.25
-	wing_types = NONE
+	wing_types = null
 
 /obj/item/bodypart/arm/left/mushroom
 	limb_id = SPECIES_MUSHROOM
@@ -483,7 +483,7 @@
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_NO_JUMPSUIT)
-	wing_types = NONE
+	wing_types = null
 
 /obj/item/bodypart/chest/golem/Initialize(mapload)
 	worn_belt_offset = new(

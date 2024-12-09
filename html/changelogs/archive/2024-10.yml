@@ -781,3 +781,140 @@
   zxaber:
   - rscadd: Borgs now get the job title of someone sending them a message through
       SiliConnect.
+2024-10-26:
+  Ghommie:
+  - bugfix: Fixed a small botherance with special fish infusions. You no longer need
+      to infuse squids and pufferfish last to reap their special organs.
+  Melbert:
+  - rscadd: Drinking any ethanol (beer, wine, etc) will trigger alcohol allergies
+  - rscadd: Drinking ants will trigger Bug allergies
+  - rscadd: Getting stung by a bee, or bitten by a (giant) ant or (giant) spider,
+      will trigger bug allergies
+  - rscadd: Drinking plain sugar or caramel will trigger sugar allergies
+  - qol: Ethanol can speed up the surgeries of any mob type applied to, rather than
+      solely humans.
+  MelokGleb and KREKS:
+  - rscadd: very hard wiz-only sm sword craft
+  WebcomicArtist:
+  - bugfix: Un-breaks etherial apc charging and charge from ethereal wine.
+  carlarctg:
+  - bugfix: Hitting an SM with extraction tongs won't dust them anymore
+  grungussuss:
+  - bugfix: fixed plastic flaps losing atmos qualities when anchored
+  - sound: radio noise will no longer play on the common channel
+  necromanceranne:
+  - balance: Shock touch is now less-than-lethal, dealing a decent amount of stamina
+      damage at the cost of lethal damage. Lower cooldown. Power chromosome makes
+      it force a stagger rather than cause a chain lightning effect (this used to
+      do like only 5 damage so...)
+2024-10-27:
+  Absolucy:
+  - rscadd: GPSes now show the general direction of cross-linked z-levels.
+  CliffracerX:
+  - config: altered coded defaults for human authority, no impact on TG
+  Jewelry-x:
+  - admin: make sparks optional when sending a supply pod
+  KazooBard:
+  - balance: Knock path's grasp now stuns the previous mech occupant when ejecting
+      them and unlocks BOTH the ID and DNA lock, allowing the heretic to freely board
+      the vehicle.
+  SmArtKar:
+  - bugfix: Fixed hat stabilizer component not cancelling the attack chain
+  Time-Green, 00-Steven:
+  - rscadd: 'Adds Lost Crew as an orderable cargo package by medical! Fix and revive
+      them to bring new players back into the game and make some money for medical!
+
+      admin:'
+  Vekter:
+  - bugfix: Changed the color of entertainment radio to be darker
+  carlarctg:
+  - bugfix: spray-on insulated gloves are chunky once more. does not affect regular
+      ones
+  - rscadd: Modernizes polymorph types by adding mob types that never entered the
+      wabbajack list.
+  - balance: Updated a few species' changesource flags
+  grungussuss:
+  - qol: you can now turn off the volume on an entertainment monitor
+  - sound: fan loop sounds have been improved
+  grungussuss and redemptionarc:
+  - sound: sigh sounds have been improved
+  tontyGH:
+  - bugfix: pointing at stuff on-top of plates, griddles, stoves and ovens will point
+      at the plate and no longer just do nothing
+2024-10-28:
+  DATA-xPUNGED:
+  - bugfix: The parrot from the Corsair Cove will no longer be immediatelly shanked
+      by the pirates upon loading of the domain.
+  Pepsilawn:
+  - bugfix: You will now receive the advertised amount of credits for selling spacecash
+      bills through cargo
+  SmArtKar:
+  - bugfix: Fixed deathsquad commandos not getting their berets
+  - bugfix: Changelings no longer have a soul when examined if their brain is missing
+  - bugfix: MODules don't create visual overlays when their required part isn't deployed
+  Time-Green:
+  - bugfix: Randomly generated female bodies/humans no longer have a 50% to get a
+      male name
+  carlarctg:
+  - rscadd: adds big pointer to chipped quirk
+  grungussuss:
+  - bugfix: signers can sign past muzzles
+  - sound: bags now have handling and equip sounds
+  - sound: shoes have handling and equip sounds
+  - bugfix: it is now possible to succumb without speaking
+  necromanceranne:
+  - bugfix: Fixes a runtime when trying to remove someones scarred eyes. Now you can
+      remove them!
+2024-10-29:
+  Aliceee2ch:
+  - qol: replaced old engineer borg "tile stacker" on crippled RTD
+  Fikou:
+  - rscadd: The Bridge Assistant's no item wielding disability was replaced with a
+      duty-sworn axe protection brain trauma.
+  - balance: you need something spaceproof to cover your legs (or feet) and arms (or
+      hands) to be spaceproof, not only head and chest
+  - balance: magboots and atmos gloves now have pressure protection
+  Ghommie:
+  - bugfix: Throw impact sounds won't play if the item has been caught.
+  Jackal-boop:
+  - bugfix: fixes the toy larva hugger getting shredded
+  r3dj4ck0424:
+  - bugfix: certain office chairs are now properly labelled
+2024-10-30:
+  JackEnoff:
+  - spellcheck: spellchecks "maintainance glass airlock"
+  SmArtKar:
+  - bugfix: Fixed harddels caused by certain projectiles
+  - code_imp: Magazines now lazyload their contents in order to save on gun init times.
+      Please report any broken/non-functional guns!
+  - qol: Detailed examine descriptions are prettier now.
+  carlarctg:
+  - bugfix: The Traps won't spawn traps on walls anymore
+2024-10-31:
+  Ben10Omintrix:
+  - bugfix: penguins now correctly hunt for food
+  Ghommie:
+  - code_imp: Removed internal/external pathing from organs in favor of a bit flag.
+      Hopefully this shouldn't break anything about organs.
+  - bugfix: Fixed invisible fox ears.
+  - bugfix: Fixed mushpeople caps not being colored red by default.
+  - rscadd: You can now dye most tails, podpeople hair, mushpeople caps etc. with
+      a hair dye spray.
+  OrionTheFox:
+  - qol: added fail feedback to xenobio Regenerative Metal/Bluespace Extracts
+  - bugfix: fixed Regenerative Metal Extract not checking for mob size when moving
+      them into the spawned closet
+  Sealed101:
+  - bugfix: fixed APC control console found in CE office only accessing APCs on its
+      z-level
+  - bugfix: fixed restoring an emagged APC control console potentially leaving the
+      console in a forever state of restoring
+  SmArtKar:
+  - bugfix: Fixed green raptor corpses being able to mine rocks
+  larentoun:
+  - bugfix: 'Bitrunning: falling into chasms and other ways of destroying your virtual
+      body instead of killing it, WILL now return you to your body'
+  necromanceranne:
+  - code_imp: Introduces a INHALE method for reagent transfer. Cigarettes and smoke
+      reactions use this new method.
+  - balance: Nitrous oxide now brain damage if you inhale it. So don't do that.

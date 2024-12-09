@@ -1,4 +1,4 @@
-/obj/item/organ/internal/heart/ethereal
+/obj/item/organ/heart/ethereal
 	name = "crystal core"
 	icon_state = "ethereal_heart-on"
 	base_icon_state = "ethereal_heart"
@@ -16,38 +16,38 @@
 	///Color of the heart, is set by the species on gain
 	var/ethereal_color = "#9c3030"
 
-/obj/item/organ/internal/heart/ethereal/Initialize(mapload)
+/obj/item/organ/heart/ethereal/Initialize(mapload)
 	. = ..()
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 	update_appearance()
 
-/obj/item/organ/internal/heart/ethereal/mob_insert(mob/living/carbon/heart_owner, special = FALSE, movement_flags)
+/obj/item/organ/heart/ethereal/on_mob_insert(mob/living/carbon/heart_owner, special = FALSE, movement_flags)
 	. = ..()
 
 	RegisterSignal(heart_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 	RegisterSignal(heart_owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_owner_fully_heal))
 	RegisterSignal(heart_owner, COMSIG_QDELETING, PROC_REF(owner_deleted))
 
-/obj/item/organ/internal/heart/ethereal/mob_remove(mob/living/carbon/heart_owner, special, movement_flags)
+/obj/item/organ/heart/ethereal/on_mob_remove(mob/living/carbon/heart_owner, special, movement_flags)
 	UnregisterSignal(heart_owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_QDELETING))
 	REMOVE_TRAIT(heart_owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(heart_owner)
 	QDEL_NULL(current_crystal)
 	return ..()
 
-/obj/item/organ/internal/heart/ethereal/update_overlays()
+/obj/item/organ/heart/ethereal/update_overlays()
 	. = ..()
 	var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[base_icon_state]_overlay-[beating ? "on" : "off"]")
 	shine.appearance_flags = RESET_COLOR //No color on this, just pure white
 	. += shine
 
-/obj/item/organ/internal/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/healed, heal_flags)
+/obj/item/organ/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/healed, heal_flags)
 	SIGNAL_HANDLER
 
 	QDEL_NULL(current_crystal) //Kicks out the ethereal
 
 ///Ran when examined while crystalizing, gives info about the amount of time left
-/obj/item/organ/internal/heart/ethereal/proc/on_examine(mob/living/carbon/human/examined_human, mob/user, list/examine_list)
+/obj/item/organ/heart/ethereal/proc/on_examine(mob/living/carbon/human/examined_human, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	if(!crystalize_timer_id)
@@ -62,7 +62,7 @@
 			examine_list += span_notice("Some crystals are coming out of [examined_human]. ")
 
 ///On stat changes, if the victim is no longer dead but they're crystalizing, cancel it, if they become dead, start the crystalizing process if possible
-/obj/item/organ/internal/heart/ethereal/proc/on_stat_change(mob/living/victim, new_stat)
+/obj/item/organ/heart/ethereal/proc/on_stat_change(mob/living/victim, new_stat)
 	SIGNAL_HANDLER
 
 	if(new_stat != DEAD)
@@ -92,7 +92,7 @@
 	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 
 ///Ran when disarmed, prevents the ethereal from reviving
-/obj/item/organ/internal/heart/ethereal/proc/reset_crystalizing(mob/living/defender, mob/living/attacker, zone, obj/item/weapon)
+/obj/item/organ/heart/ethereal/proc/reset_crystalizing(mob/living/defender, mob/living/attacker, zone, obj/item/weapon)
 	SIGNAL_HANDLER
 	defender.visible_message(
 		span_notice("The crystals on [defender] are gently broken off."),
@@ -102,7 +102,7 @@
 	crystalize_timer_id = addtimer(CALLBACK(src, PROC_REF(crystalize), defender), CRYSTALIZE_DISARM_WAIT_TIME, TIMER_STOPPABLE) //Lets us restart the timer on disarm
 
 ///Actually spawns the crystal which puts the ethereal in it.
-/obj/item/organ/internal/heart/ethereal/proc/crystalize(mob/living/ethereal)
+/obj/item/organ/heart/ethereal/proc/crystalize(mob/living/ethereal)
 
 	var/location = ethereal.loc
 
@@ -118,7 +118,7 @@
 	stop_crystalization_process(ethereal, TRUE)
 
 ///Stop the crystalization process, unregistering any signals and resetting any variables.
-/obj/item/organ/internal/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, succesful = FALSE)
+/obj/item/organ/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, succesful = FALSE)
 	UnregisterSignal(ethereal, COMSIG_LIVING_DISARM_HIT)
 	UnregisterSignal(ethereal, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(ethereal, COMSIG_MOB_APPLY_DAMAGE)
@@ -133,14 +133,14 @@
 		deltimer(crystalize_timer_id)
 		crystalize_timer_id = null
 
-/obj/item/organ/internal/heart/ethereal/proc/owner_deleted(datum/source)
+/obj/item/organ/heart/ethereal/proc/owner_deleted(datum/source)
 	SIGNAL_HANDLER
 
 	stop_crystalization_process(owner)
 	return
 
 ///Lets you stop the process with enough brute damage
-/obj/item/organ/internal/heart/ethereal/proc/on_take_damage(datum/source, damage, damagetype, def_zone, ...)
+/obj/item/organ/heart/ethereal/proc/on_take_damage(datum/source, damage, damagetype, def_zone, ...)
 	SIGNAL_HANDLER
 	if(damagetype != BRUTE)
 		return
@@ -170,7 +170,7 @@
 	density = TRUE
 	anchored = TRUE
 	///The organ this crystal belongs to
-	var/obj/item/organ/internal/heart/ethereal/ethereal_heart
+	var/obj/item/organ/heart/ethereal/ethereal_heart
 	///Timer for the healing process. Stops if destroyed.
 	var/crystal_heal_timer
 	///Is the crystal still being built? True by default, gets changed after a timer.
@@ -179,7 +179,7 @@
 /obj/structure/ethereal_crystal/relaymove()
 	return
 
-/obj/structure/ethereal_crystal/Initialize(mapload, obj/item/organ/internal/heart/ethereal/ethereal_heart)
+/obj/structure/ethereal_crystal/Initialize(mapload, obj/item/organ/heart/ethereal/ethereal_heart)
 	. = ..()
 	if(!ethereal_heart)
 		stack_trace("Our crystal has no related heart")

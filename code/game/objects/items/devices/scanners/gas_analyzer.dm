@@ -151,7 +151,7 @@
 	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(can_see(user, interacting_with, ranged_scan_distance))
+	if(!HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && can_see(user, interacting_with, ranged_scan_distance))
 		atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : get_turf(interacting_with)))
 	return NONE // Non-blocking
 
@@ -183,8 +183,8 @@
 
 	var/icon = target
 	var/message = list()
-	playsound(user, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	if(!silent && isliving(user))
+		playsound(user, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		user.visible_message(span_notice("[user] uses the analyzer on [icon2html(icon, viewers(user))] [target]."), span_notice("You use the analyzer on [icon2html(icon, user)] [target]."))
 	message += span_boldnotice("Results of analysis of [icon2html(icon, user)] [target].")
 

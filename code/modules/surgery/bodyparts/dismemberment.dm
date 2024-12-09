@@ -70,7 +70,8 @@
 		if(org_zone != BODY_ZONE_CHEST)
 			continue
 		organ.Remove(chest_owner)
-		organ.forceMove(chest_owner.loc)
+		if(chest_owner.loc)
+			organ.forceMove(chest_owner.loc)
 		. += organ
 
 	if(cavity_item)
@@ -192,14 +193,13 @@
 
 /obj/item/bodypart/arm/drop_limb(special, dismembered, move_to_floor = TRUE)
 	var/mob/living/carbon/arm_owner = owner
-
 	if(special || !arm_owner)
 		return ..()
-
 	if(arm_owner.hand_bodyparts[held_index] == src)
 		// We only want to do this if the limb being removed is the active hand part.
 		// This catches situations where limbs are "hot-swapped" such as augmentations and roundstart prosthetics.
 		arm_owner.dropItemToGround(arm_owner.get_item_for_held_index(held_index), 1)
+	. = ..()
 	if(arm_owner.handcuffed)
 		arm_owner.handcuffed.forceMove(drop_location())
 		arm_owner.handcuffed.dropped(arm_owner)
@@ -208,21 +208,22 @@
 	if(arm_owner.hud_used)
 		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots["[held_index]"]
 		associated_hand?.update_appearance()
-	. = ..()
 	if(arm_owner.num_hands == 0)
-		arm_owner.dropItemToGround(arm_owner.gloves, TRUE)
+		arm_owner.dropItemToGround(arm_owner.gloves, force = TRUE)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
 /obj/item/bodypart/leg/drop_limb(special, dismembered, move_to_floor = TRUE)
-	if(owner && !special)
-		if(owner.legcuffed)
-			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
-			owner.legcuffed.dropped(owner)
-			owner.legcuffed = null
-			owner.update_worn_legcuffs()
-		if(owner.shoes)
-			owner.dropItemToGround(owner.shoes, TRUE)
-	return ..()
+	var/mob/living/carbon/leg_owner = owner
+	. = ..()
+	if(special || !leg_owner)
+		return
+	if(leg_owner.legcuffed)
+		leg_owner.legcuffed.forceMove(drop_location())
+		leg_owner.legcuffed.dropped(leg_owner)
+		leg_owner.legcuffed = null
+		leg_owner.update_worn_legcuffs()
+	if(leg_owner.shoes)
+		leg_owner.dropItemToGround(leg_owner.shoes, force = TRUE)
 
 /obj/item/bodypart/head/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(!special)

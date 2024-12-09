@@ -76,8 +76,12 @@
 	if(!isatom(chasing))
 		return
 	var/datum/move_loop/new_loop = GLOB.move_manager.move_towards(src, chasing, delay, home, lifetime)
-	if(!new_loop)
-		return
+	if(new_loop)
+		RegisterSignal(new_loop, COMSIG_MOVELOOP_STOP, PROC_REF(on_loop_stopped))
+
+/obj/effect/meteor/proc/on_loop_stopped(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
 
 ///Deals with what happens when we stop moving, IE we die
 /obj/effect/meteor/proc/moved_off_z()
@@ -379,7 +383,7 @@
 	hits = 2
 	heavy = TRUE
 	meteorsound = 'sound/effects/blob/blobattack.ogg'
-	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/internal/heart, /obj/item/organ/internal/lungs, /obj/item/organ/internal/tongue, /obj/item/organ/internal/appendix/)
+	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
 	signature = "culinary material"
@@ -391,7 +395,7 @@
 			meteordrop += pick(subtypesof(path))
 
 	for(var/path in meteordrop)
-		if(path == /obj/item/organ/internal/tongue)
+		if(path == /obj/item/organ/tongue)
 			meteordrop -= path
 			meteordrop += pick(typesof(path))
 	return ..()
@@ -412,12 +416,12 @@
 //Meaty Ore Xeno edition
 /obj/effect/meteor/meaty/xeno
 	color = "#5EFF00"
-	meteordrop = list(/obj/item/food/meat/slab/xeno, /obj/item/organ/internal/tongue/alien)
+	meteordrop = list(/obj/item/food/meat/slab/xeno, /obj/item/organ/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
 	signature = "exotic culinary material"
 
 /obj/effect/meteor/meaty/xeno/Initialize(mapload)
-	meteordrop += subtypesof(/obj/item/organ/internal/alien)
+	meteordrop += subtypesof(/obj/item/organ/alien)
 	return ..()
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)

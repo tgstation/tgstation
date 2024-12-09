@@ -230,7 +230,6 @@
 	default_projectile_spread = 10
 	shot_count = 10
 	shot_delay = 0.2 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	shared_cooldown = NONE
 	///how long we must charge up before firing off
 	var/charge_up_timer = 3 SECONDS

@@ -1,32 +1,22 @@
-/**
- * # The path of VOID.
- *
- * Goes as follows:
- *
- * Glimmer of Winter
- * Grasp of Void
- * Aristocrat's Way
- * > Sidepaths:
- *   Void Cloak
- *   Shattered Ritual
- *
- * Mark of Void
- * Ritual of Knowledge
- * Void Conduit
- * Void Phase
- * > Sidepaths:
- *   Void Stasis
- *   Carving Knife
- *   Blood Siphon
- *
- * Seeking blade
- * Void Pull
- * > Sidepaths:
- *   Cleave
- *   Maid in the Mirror
- *
- * Waltz at the End of Time
- */
+
+/datum/heretic_knowledge_tree_column/main/void
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/flesh_to_void
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/void_to_blade
+
+	route = PATH_VOID
+	ui_bgr = "node_void"
+
+	start = /datum/heretic_knowledge/limited_amount/starting/base_void
+	grasp = /datum/heretic_knowledge/void_grasp
+	tier1 = /datum/heretic_knowledge/cold_snap
+	mark = 	/datum/heretic_knowledge/mark/void_mark
+	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/void
+	unique_ability = /datum/heretic_knowledge/spell/void_conduit
+	tier2 = /datum/heretic_knowledge/spell/void_phase
+	blade = /datum/heretic_knowledge/blade_upgrade/void
+	tier3 =	/datum/heretic_knowledge/spell/void_pull
+	ascension = /datum/heretic_knowledge/ultimate/void_final
+
 /datum/heretic_knowledge/limited_amount/starting/base_void
 	name = "Glimmer of Winter"
 	desc = "Opens up the Path of Void to you. \
@@ -34,10 +24,8 @@
 		You can only create two at a time."
 	gain_text = "I feel a shimmer in the air, the air around me gets colder. \
 		I start to realize the emptiness of existence. Something's watching me."
-	next_knowledge = list(/datum/heretic_knowledge/void_grasp)
 	required_atoms = list(/obj/item/knife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
-	route = PATH_VOID
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "void_blade"
 
@@ -58,10 +46,7 @@
 	desc = "Your Mansus Grasp will temporarily mute and chill the victim."
 	gain_text = "I saw the cold watcher who observes me. The chill mounts within me. \
 		They are quiet. This isn't the end of the mystery."
-	next_knowledge = list(/datum/heretic_knowledge/cold_snap)
 	cost = 1
-	route = PATH_VOID
-	depth = 3
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_void"
 
@@ -87,16 +72,10 @@
 		You can still take damage due to a lack of pressure."
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
 		Translucent and white, a depiction of a nobleman stood before me."
-	next_knowledge = list(
-		/datum/heretic_knowledge/mark/void_mark,
-		/datum/heretic_knowledge/void_cloak,
-		/datum/heretic_knowledge/limited_amount/risen_corpse,
-	)
 	cost = 1
-	route = PATH_VOID
 	research_tree_icon_path = 'icons/effects/effects.dmi'
 	research_tree_icon_state = "the_freezer"
-	depth = 4
+
 	/// Traits we apply to become immune to the environment
 	var/static/list/gain_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
 
@@ -127,13 +106,9 @@
 		When triggered, further silences the victim and swiftly lowers the temperature of their body and the air around them."
 	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, \
 		my senses began to betray me. My mind is my own enemy."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/void)
-	route = PATH_VOID
 	mark_type = /datum/status_effect/eldritch/void
 
 /datum/heretic_knowledge/knowledge_ritual/void
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_conduit)
-	route = PATH_VOID
 
 /datum/heretic_knowledge/spell/void_conduit
 	name = "Void Conduit"
@@ -141,11 +116,8 @@
 	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
 		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
 		The doors won't close. I can't keep the cold out now."
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
-	spell_to_add = /datum/action/cooldown/spell/conjure/void_conduit
+	action_to_add = /datum/action/cooldown/spell/conjure/void_conduit
 	cost = 1
-	route = PATH_VOID
-	depth = 7
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
@@ -153,25 +125,16 @@
 		Additionally causes damage to heathens around your original and target destination."
 	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
 		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
-	next_knowledge = list(
-		/datum/heretic_knowledge/blade_upgrade/void,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/spell/blood_siphon,
-		/datum/heretic_knowledge/spell/void_prison,
-		/datum/heretic_knowledge/rune_carver,
-	)
-	spell_to_add = /datum/action/cooldown/spell/pointed/void_phase
+	action_to_add = /datum/action/cooldown/spell/pointed/void_phase
 	cost = 1
-	route = PATH_VOID
-	depth = 8
 	research_tree_icon_frame = 7
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"
 	desc = "Your blade now freezes enemies. Additionally, you can now attack distant marked targets with your Void Blade, teleporting directly next to them."
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_pull)
-	route = PATH_VOID
+
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_void"
 
@@ -198,15 +161,11 @@
 	desc = "Grants you Void Pull, a spell that pulls all nearby heathens towards you, stunning them briefly."
 	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
 		The Aristocrat reveals themselves to me again. They tell me I am late. Their pull is immense, I cannot turn back."
-	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/void_final,
-		/datum/heretic_knowledge/spell/cleave,
-		/datum/heretic_knowledge/summon/maid_in_mirror,
-	)
-	spell_to_add = /datum/action/cooldown/spell/aoe/void_pull
+
+	action_to_add = /datum/action/cooldown/spell/aoe/void_pull
 	cost = 1
-	route = PATH_VOID
-	depth = 10
+
+
 	research_tree_icon_frame = 6
 
 /datum/heretic_knowledge/ultimate/void_final
@@ -219,8 +178,10 @@
 	gain_text = "The world falls into darkness. I stand in an empty plane, small flakes of ice fall from the sky. \
 		The Aristocrat stands before me, beckoning. We will play a waltz to the whispers of dying reality, \
 		as the world is destroyed before our eyes. The void will return all to nothing, WITNESS MY ASCENSION!"
-	route = PATH_VOID
+
 	ascension_achievement = /datum/award/achievement/misc/void_ascension
+	announcement_text = "%SPOOKY% The nobleman of void %NAME% has arrived, stepping along the Waltz that ends worlds! %SPOOKY%"
+	announcement_sound = 'sound/music/antag/heretic/ascend_void.ogg'
 	///soundloop for the void theme
 	var/datum/looping_sound/void_loop/sound_loop
 	///Reference to the ongoing voidstrom that surrounds the heretic
@@ -242,13 +203,7 @@
 
 /datum/heretic_knowledge/ultimate/void_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] The nobleman of void [user.real_name] has arrived, stepping along the Waltz that ends worlds! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = 'sound/music/antag/heretic/ascend_void.ogg',
-		color_override = "pink",
-	)
-	user.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_NEGATES_GRAVITY, TRAIT_MOVE_FLYING, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAGIC_TRAIT)
+	user.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_NEGATES_GRAVITY, TRAIT_MOVE_FLYING, TRAIT_FREE_HYPERSPACE_MOVEMENT), type)
 
 	// Let's get this show on the road!
 	sound_loop = new(user, TRUE, TRUE)
@@ -258,7 +213,7 @@
 	heavy_storm = new(user, 10)
 	if(ishuman(user))
 		var/mob/living/carbon/human/ascended_human = user
-		var/obj/item/organ/internal/eyes/heretic_eyes = ascended_human.get_organ_slot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/eyes/heretic_eyes = ascended_human.get_organ_slot(ORGAN_SLOT_EYES)
 		heretic_eyes?.color_cutoffs = list(30, 30, 30)
 		ascended_human.update_sight()
 

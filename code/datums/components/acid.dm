@@ -25,8 +25,10 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/turf_acid_ignores_mobs = FALSE
 	/// The ambient sound of acid eating away at the parent [/atom].
 	var/datum/looping_sound/acid/sizzle
-	/// Particle holder for acid particles (sick)
+	/// Particle holder for acid particles (sick). Still utilized over shared holders because they're movable-only
 	var/obj/effect/abstract/particle_holder/particle_effect
+	/// Particle type we're using for cleaning up our shared holder
+	var/particle_type
 	/// The proc used to handle the parent [/atom] when processing. TODO: Unify damage and resistance flags so that this doesn't need to exist!
 	var/datum/callback/process_effect
 
@@ -68,8 +70,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	sizzle = new(atom_parent, TRUE)
 	if(acid_particles)
-		// acid particles look pretty bad when they stack on mobs, so that behavior is not wanted for items
-		particle_effect = new(atom_parent, acid_particles, isitem(atom_parent) ? NONE : PARTICLE_ATTACH_MOB)
+		if (ismovable(parent))
+			var/atom/movable/movable_parent = parent
+			movable_parent.add_shared_particles(acid_particles, "[acid_particles]_[isitem(parent)]", isitem(parent) ? NONE : PARTICLE_ATTACH_MOB)
+			particle_type = acid_particles
+		else
+			// acid particles look pretty bad when they stack on mobs, so that behavior is not wanted for items
+			particle_effect = new(atom_parent, acid_particles, isitem(atom_parent) ? NONE : PARTICLE_ATTACH_MOB)
 	START_PROCESSING(SSacid, src)
 
 /datum/component/acid/Destroy(force)
@@ -78,6 +85,9 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		QDEL_NULL(sizzle)
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
+	if (ismovable(parent) && particle_type)
+		var/atom/movable/movable_parent = parent
+		movable_parent.remove_shared_particles("[particle_type]_[isitem(parent)]")
 	process_effect = null
 	return ..()
 

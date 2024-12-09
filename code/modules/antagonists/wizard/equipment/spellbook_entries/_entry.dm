@@ -31,10 +31,10 @@
 	/// Whether the spell requires wizard garb or not
 	var/requires_wizard_garb = FALSE
 	/// Used so you can't have specific spells together
-	var/list/no_coexistance_typecache
+	var/list/no_coexistence_typecache
 
 /datum/spellbook_entry/New()
-	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
+	no_coexistence_typecache = typecacheof(no_coexistence_typecache)
 
 	if(ispath(spell_type))
 		if(isnull(limit))
@@ -68,13 +68,13 @@
 	if(!isnull(limit) && times >= limit)
 		return FALSE
 	for(var/spell in user.actions)
-		if(is_type_in_typecache(spell, no_coexistance_typecache))
+		if(is_type_in_typecache(spell, no_coexistence_typecache))
 			return FALSE
 	var/datum/antagonist/wizard/wizard_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(!wizard_datum)
 		return TRUE
 	for(var/perks in wizard_datum.perks)
-		if(is_type_in_typecache(perks, no_coexistance_typecache))
+		if(is_type_in_typecache(perks, no_coexistence_typecache))
 			return FALSE
 	if(is_type_in_list(src, wizard_datum.perks))
 		to_chat(user, span_warning("This perk already learned!"))

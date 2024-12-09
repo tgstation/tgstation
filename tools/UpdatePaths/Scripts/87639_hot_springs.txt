@@ -1,0 +1,1 @@
+/turf/open/water/cursed_spring : /turf/open/water/hot_spring/cursed{@OLD}

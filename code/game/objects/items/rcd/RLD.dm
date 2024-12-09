@@ -99,7 +99,18 @@
 		return .
 	return try_lighting(interacting_with, user)
 
+/**
+ * Try to place/remove a light or throw a glowstick
+ * Arguments
+ *
+ * * atom/interacting_with - the target atom to light or throw glowsticks at
+ * * mob/user - the player doing this action
+ */
 /obj/item/construction/rld/proc/try_lighting(atom/interacting_with, mob/user)
+	PRIVATE_PROC(TRUE)
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
 
 	var/turf/start = get_turf(src)
 	switch(mode)

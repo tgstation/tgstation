@@ -55,6 +55,28 @@
 	///Prevents spamming the line casting, without affecting the player's click cooldown.
 	COOLDOWN_DECLARE(casting_cd)
 
+	///The chance of catching fish made of the same material of the fishing rod (if MATERIAL_EFFECTS is enabled)
+	var/material_fish_chance = 10
+	///The multiplier of how much experience is gained when fishing with this rod.
+	var/experience_multiplier = 1
+	///The multiplier of the completion gain during the minigame
+	var/completion_speed_mult = 1
+	///The multiplier of the speed of the bobber/bait during the minigame
+	var/bait_speed_mult = 1
+	///The multiplier of the decelaration during the minigame
+	var/deceleration_mult = 1
+	///The multiplier of the bounciness of the bobber/bait upon hitting the edges of the minigame area
+	var/bounciness_mult = 1
+	/// The multiplier of negative velocity that pulls the bait/bobber down when not holding the click
+	var/gravity_mult = 1
+	/**
+	 * The multiplier of the bait height. Influenced by the strength_modifier of a material,
+	 * unlike the other variables, lest we add too many vars to materials.
+	 * Also materials with a strength_modifier lower than 1 don't do anything, since
+	 * they're already likely to be quite bad
+	 */
+	var/bait_height_mult = 1
+
 /obj/item/fishing_rod/Initialize(mapload)
 	. = ..()
 	register_context()
@@ -100,11 +122,96 @@
 	if(hook)
 		equipped_stuff += "[icon2html(hook, user)] <b>[hook.name]</b>"
 	if(bait)
-		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b> as bait."
+		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b>"
 	if(length(equipped_stuff))
 		. += span_notice("It has \a [english_list(equipped_stuff)] equipped.")
 	if(!bait)
 		. += span_warning("It doesn't have a bait attached to it. Fishing will be more tedious!")
+	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
+		. += "" //add a new line
+		. += span_notice("Thanks to your fishing skills, you can examine it again for more in-depth information.")
+		return
+
+/obj/item/fishing_rod/examine_more(mob/user)
+	. = ..()
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
+		return
+
+	var/list/block = list()
+	var/get_percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH)
+	block += span_info("You think you can cast it up to [get_cast_range()] tiles away.")
+	block += get_stat_info(get_percent, difficulty_modifier, "Fishing will be", "easier", "harder", "with this fishing rod")
+	block += get_stat_info(get_percent, experience_multiplier, "You will gain experience", "faster", "slower")
+	block += get_stat_info(get_percent, completion_speed_mult, "You should complete the minigame", "faster", "slower")
+	block += get_stat_info(get_percent, bait_speed_mult, "Reeling is", "faster", "slower")
+	block += get_stat_info(get_percent, deceleration_mult, "Deceleration is", "faster", "slower", less_is_better = TRUE)
+	block += get_stat_info(get_percent, bounciness_mult, "This fishing rod is ", "bouncier", "less bouncy", "than a normal one", less_is_better = TRUE)
+	block += get_stat_info(get_percent, gravity_mult, "The lure will sink", "faster", "slower", span_info = TRUE)
+
+	. += examine_block(block.Join("\n"))
+
+	if(get_percent && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
+		block = list()
+		block += span_info("Right now, fish caught by this fishing rod have a [get_material_fish_chance(user)]% of being made of its same materials.")
+		var/datum/material/material = get_master_material()
+		if(material.fish_weight_modifier != 1)
+			var/heavier = material.fish_weight_modifier > 1 ? "heavier" : "lighter"
+			block += span_info("Fish made of the same material as this rod tend to be [abs(material.fish_weight_modifier - 1) * 100]% [heavier].")
+		. += examine_block(block.Join("\n"))
+
+	block = list()
+	if(HAS_TRAIT(src, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
+		block += span_info("This fishing rod will attract shiny-loving fish.")
+	if(HAS_TRAIT(src, TRAIT_ROD_IGNORE_ENVIRONMENT))
+		block += span_info("Environment and light shouldn't be an issue with this rod.")
+	if(HAS_TRAIT_NOT_FROM(src, TRAIT_ROD_REMOVE_FISHING_DUD, INNATE_TRAIT)) // Duds are innately removed by baits, we all know that.
+		block += span_info("You won't catch duds with this rod.")
+	if(HAS_TRAIT(src, TRAIT_ROD_LAVA_USABLE))
+		block += span_info("This fishing rod can be used to fish on lava.")
+	if(length(block))
+		. += examine_block(block.Join("\n"))
+
+///Used in examine_more to reduce all the copypasta when getting more information about the various stats of the fishing rod.
+/obj/item/fishing_rod/proc/get_stat_info(get_percent, value, prefix, easier, harder, suffix = "with this fishing rod", span_info = FALSE, less_is_better = FALSE)
+	if(value == 1)
+		return
+	var/percent = get_percent ? "[abs(value)]% " : ""
+	var/harder_easier = value > 1 ? easier : harder
+	. = "[prefix] [percent][harder_easier] [suffix]."
+	if(span_info)
+		return span_info(.)
+	if(less_is_better ? value < 1 : value > 1)
+		return span_nicegreen(.)
+	return span_danger(.)
+
+/obj/item/fishing_rod/apply_single_mat_effect(datum/material/custom_material, amount, multiplier)
+	. = ..()
+	difficulty_modifier += custom_material.fishing_difficulty_modifier * multiplier
+	cast_range += custom_material.fishing_cast_range * multiplier
+	experience_multiplier *= GET_MATERIAL_MODIFIER(custom_material.fishing_experience_multiplier, multiplier)
+	completion_speed_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_completion_speed, multiplier)
+	bait_speed_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_bait_speed_mult, multiplier)
+	deceleration_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_deceleration_mult, multiplier)
+	bounciness_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_bounciness_mult, multiplier)
+	gravity_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_gravity_mult, multiplier)
+	var/height_mod = GET_MATERIAL_MODIFIER(custom_material.strength_modifier, multiplier)
+	if(height_mod > 1)
+		bait_height_mult *= height_mod**0.75
+
+
+/obj/item/fishing_rod/remove_single_mat_effect(datum/material/custom_material, amount, multiplier)
+	. = ..()
+	difficulty_modifier -= custom_material.fishing_difficulty_modifier * multiplier
+	cast_range -= custom_material.fishing_cast_range * multiplier
+	experience_multiplier /= GET_MATERIAL_MODIFIER(custom_material.fishing_experience_multiplier, multiplier)
+	completion_speed_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_completion_speed, multiplier)
+	bait_speed_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_bait_speed_mult, multiplier)
+	deceleration_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_deceleration_mult, multiplier)
+	bounciness_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_bounciness_mult, multiplier)
+	gravity_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_gravity_mult, multiplier)
+	var/height_mod = GET_MATERIAL_MODIFIER(custom_material.strength_modifier, multiplier)
+	if(height_mod > 1)
+		bait_height_mult *= 1/(height_mod**0.75)
 
 /**
  * Is there a reason why this fishing rod couldn't fish in target_fish_source?
@@ -116,16 +223,25 @@
 /obj/item/fishing_rod/proc/reason_we_cant_fish(datum/fish_source/target_fish_source)
 	return hook?.reason_we_cant_fish(target_fish_source)
 
-/obj/item/fishing_rod/proc/consume_bait(atom/movable/reward)
+///Called at the end of on_challenge_completed() once the reward has been spawned
+/obj/item/fishing_rod/proc/on_reward_caught(atom/movable/reward, mob/user)
+	if(isnull(reward))
+		return
+	var/isfish = isfish(reward)
+	if((material_flags & MATERIAL_EFFECTS) && isfish && length(custom_materials))
+		if(prob(get_material_fish_chance(user)))
+			var/obj/item/fish/fish = reward
+			var/datum/material/material = get_master_material()
+			fish.set_custom_materials(list(material.type = fish.weight))
 	// catching things that aren't fish or alive mobs doesn't consume baits.
-	if(isnull(reward) || isnull(bait) || HAS_TRAIT(bait, TRAIT_BAIT_UNCONSUMABLE))
+	if(isnull(bait) || HAS_TRAIT(bait, TRAIT_BAIT_UNCONSUMABLE))
 		return
 	if(isliving(reward))
 		var/mob/living/caught_mob = reward
 		if(caught_mob.stat == DEAD)
 			return
 	else
-		if(!isfish(reward))
+		if(!isfish)
 			return
 		var/obj/item/fish/fish = reward
 		if(HAS_TRAIT(bait, TRAIT_POISONOUS_BAIT) && !HAS_TRAIT(fish, TRAIT_FISH_TOXIN_IMMUNE))
@@ -139,6 +255,19 @@
 
 	QDEL_NULL(bait)
 	update_icon()
+
+///Returns the probability that a fish caught by this (custom material) rod will be of the same material.
+/obj/item/fishing_rod/proc/get_material_fish_chance(mob/user)
+	var/material_chance = material_fish_chance
+	if(bait)
+		if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
+			material_chance += 16
+		else if(HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT))
+			material_chance += 8
+		else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
+			material_chance += 4
+	material_chance += user.mind?.get_skill_level(/datum/skill/fishing) * 1.5
+	return material_chance
 
 ///Fishing rodss should only bane fish DNA-infused spessman
 /obj/item/fishing_rod/proc/attempt_bane(datum/source, mob/living/fish)
@@ -162,7 +291,7 @@
 		return
 
 	playsound(src, SFX_REEL, 50, vary = FALSE)
-	var/time = (0.8 - round(user.mind?.get_skill_level(/datum/skill/fishing) * 0.04, 0.1)) SECONDS
+	var/time = (0.8 - round(user.mind?.get_skill_level(/datum/skill/fishing) * 0.04, 0.1)) SECONDS * bait_speed_mult
 	if(!do_after(user, time, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
 		return
 
@@ -171,7 +300,7 @@
 		return
 
 	//About thirty minutes of non-stop reeling to get from zero to master... not worth it but hey, you do what you do.
-	user.mind?.adjust_experience(/datum/skill/fishing, time * 0.13)
+	user.mind?.adjust_experience(/datum/skill/fishing, time * 0.13 * experience_multiplier)
 
 	//Try to move it 'till it's under the user's feet, then try to pick it up
 	if(isitem(currently_hooked))
@@ -203,7 +332,7 @@
 		QDEL_NULL(fishing_line)
 	var/beam_color = line?.line_color || default_line_color
 	fishing_line = new(firer, target, icon_state = "fishing_line", beam_color = beam_color, emissive = FALSE, override_target_pixel_y = target_py)
-	fishing_line.lefthand = firer.get_held_index_of_item(src) % 2 == 1
+	fishing_line.lefthand = IS_LEFT_INDEX(firer.get_held_index_of_item(src))
 	RegisterSignal(fishing_line, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
 	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(clear_line))
 	INVOKE_ASYNC(fishing_line, TYPE_PROC_REF(/datum/beam/, Start))
@@ -221,13 +350,14 @@
 	currently_hooked = null
 
 /obj/item/fishing_rod/proc/get_cast_range(mob/living/user)
-	. = cast_range
+	. = max(cast_range, 1)
 	if(!user && !isliving(loc))
 		return
 	user = loc
 	if(!user.is_holding(src) || !user.mind)
 		return
 	. += round(user.mind.get_skill_level(/datum/skill/fishing) * 0.3)
+	return max(., 1)
 
 /obj/item/fishing_rod/dropped(mob/user, silent)
 	. = ..()
@@ -295,12 +425,13 @@
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
 	cast_projectile.range = get_cast_range(user)
+	cast_projectile.maximum_range = get_cast_range(user)
 	cast_projectile.owner = src
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
 	cast_projectile.firer = user
 	cast_projectile.impacted = list(WEAKREF(user) = TRUE)
-	cast_projectile.preparePixelProjectile(target, user)
+	cast_projectile.aim_projectile(target, user)
 	cast_projectile.fire()
 	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 
@@ -336,12 +467,14 @@
 	/// Line part by the rod.
 	if(reel_overlay)
 		var/mutable_appearance/reel_appearance = mutable_appearance(icon, reel_overlay)
+		reel_appearance.appearance_flags = RESET_COLOR
 		reel_appearance.color = line_color
 		. += reel_appearance
 
 	// Line & hook is also visible when only bait is equipped but it uses default appearances then
 	if(hook || bait)
 		var/mutable_appearance/line_overlay = mutable_appearance(icon, "line_overlay")
+		line_overlay.appearance_flags = RESET_COLOR
 		line_overlay.color = line_color
 		. += line_overlay
 		. += hook?.rod_overlay_icon_state || "hook_overlay"
@@ -501,19 +634,26 @@
 		else
 			CRASH("set_slot called with an undefined slot: [slot]")
 
-	SEND_SIGNAL(equipment, COMSIG_FISHING_EQUIPMENT_SLOTTED, src)
+	SEND_SIGNAL(equipment, COMSIG_ITEM_FISHING_ROD_SLOTTED, src, slot)
 
 /obj/item/fishing_rod/Exited(atom/movable/gone, direction)
 	. = ..()
+	var/slot
 	if(gone == bait)
+		slot = ROD_SLOT_BAIT
 		bait = null
 		REMOVE_TRAIT(src, TRAIT_ROD_REMOVE_FISHING_DUD, INNATE_TRAIT)
 	if(gone == line)
+		slot = ROD_SLOT_LINE
 		cast_range -= FISHING_ROD_REEL_CAST_RANGE
 		line = null
 	if(gone == hook)
+		slot = ROD_SLOT_HOOK
 		QDEL_NULL(fishing_line)
 		hook = null
+
+	if(slot)
+		SEND_SIGNAL(gone, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, src, slot)
 
 ///Found in the fishing toolbox (the hook and line are separate items)
 /obj/item/fishing_rod/unslotted
@@ -547,6 +687,11 @@
 	ui_description = "A collapsible fishing rod that can fit within a backpack."
 	wiki_description = "<b>It has to be bought from Cargo</b>."
 	reel_overlay = "reel_telescopic"
+	completion_speed_mult = 1.1
+	bait_speed_mult = 1.1
+	deceleration_mult = 1.1
+	bounciness_mult = 0.9
+	gravity_mult = 0.9
 	///The force of the item when extended.
 	var/active_force = 8
 
@@ -615,6 +760,13 @@
 	cast_range = 5
 	line = /obj/item/fishing_line/bouncy
 	hook = /obj/item/fishing_hook/weighted
+	completion_speed_mult = 1.55
+	bait_speed_mult = 1.2
+	deceleration_mult = 1.2
+	bounciness_mult = 0.3
+	gravity_mult = 1.2
+	material_fish_chance = 33 //if somehow you metalgen it.
+	bait_height_mult = 1.4
 
 /obj/item/fishing_rod/tech
 	name = "advanced fishing rod"
@@ -624,6 +776,10 @@
 	icon_state = "fishing_rod_science"
 	reel_overlay = "reel_science"
 	bait = /obj/item/food/bait/doughball/synthetic/unconsumable
+	completion_speed_mult = 1.1
+	bait_speed_mult = 1.1
+	deceleration_mult = 1.1
+	gravity_mult = 1.2
 
 /obj/item/fishing_rod/tech/Initialize(mapload)
 	. = ..()
@@ -650,6 +806,23 @@
 		return
 	return ..()
 
+/obj/item/fishing_rod/material
+	name = "material fishing rod" //name shown on the autowiki.
+	desc = "A custom fishing rod from your local autolathe."
+	icon_state = "fishing_rod_material"
+	reel_overlay = "reel_material"
+	ui_description = "An autolathe-printable fishing rod made of some material."
+	wiki_description = "Different materials can have different effects. They also catch fish made of the same material used to print the rod."
+	material_flags = MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_COLOR|MATERIAL_ADD_PREFIX
+
+/obj/item/fishing_rod/material/Initialize(mapload)
+	. = ..()
+	name = "fishing rod"
+
+/obj/item/fishing_rod/material/finalize_remove_material_effects(list/materials)
+	. = ..()
+	name = "fishing rod" //so it doesn't reset to "material fishing rod"
+
 #undef ROD_SLOT_BAIT
 #undef ROD_SLOT_LINE
 #undef ROD_SLOT_HOOK
@@ -657,11 +830,12 @@
 /obj/projectile/fishing_cast
 	name = "fishing hook"
 	icon = 'icons/obj/fishing.dmi'
-	icon_state = "hook_projectile"
+	icon_state = "hook"
 	damage = 0
 	range = 5
 	suppressed =  SUPPRESSED_VERY
 	can_hit_turfs = TRUE
+	projectile_angle = 180
 
 	var/obj/item/fishing_rod/owner
 	var/datum/beam/our_line
@@ -669,7 +843,6 @@
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)
 	if(owner.hook)
 		icon_state = owner.hook.icon_state
-		transform = transform.Scale(1, -1)
 	. = ..()
 	if(!QDELETED(src))
 		our_line = owner.create_fishing_line(src, firer)

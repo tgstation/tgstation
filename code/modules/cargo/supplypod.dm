@@ -39,6 +39,7 @@
 	var/datum/pod_style/style = /datum/pod_style //Style is a variable that keeps track of what the pod is supposed to look like. Only stores a path, type is set for ease of var access
 	var/reversing = FALSE //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	var/list/reverse_dropoff_coords //Turf that the reverse pod will drop off its newly-acquired cargo to
+	var/create_sparks = TRUE // If true, the pod will create sparks before being deleted.
 	var/fallingSoundLength = 11
 	var/fallingSound = 'sound/items/weapons/mortar_long_whistle.ogg'//Admin sound to play before the pod lands
 	var/landingSound //Admin sound to play when the pod lands
@@ -399,7 +400,7 @@
 		close(holder)
 	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a separate holder exists)
 		deleteRubble()
-		if (!effectQuiet && !ispath(style, /datum/pod_style/invisible) && !ispath(style, /datum/pod_style/seethrough))
+		if (!effectQuiet && create_sparks && !ispath(style, /datum/pod_style/invisible) && !ispath(style, /datum/pod_style/seethrough))
 			do_sparks(5, TRUE, holder) //Create some sparks right before closing
 		qdel(src) //Delete ourselves and the holder
 		if (holder != src)
@@ -443,7 +444,7 @@
 	if(ismob(to_insert))
 		if(!reverse_option_list["Mobs"])
 			return FALSE
-		if(!isliving(to_insert)) //let's not put ghosts or camera mobs inside
+		if(!isliving(to_insert)) //let's not put ghosts or eye mobs inside
 			return FALSE
 		var/mob/living/mob_to_insert = to_insert
 		if(mob_to_insert.anchored || mob_to_insert.incorporeal_move)

@@ -11,7 +11,7 @@
 
 /obj/item/clothing/head/costume/pirate/equipped(mob/user, slot)
 	. = ..()
-	if(!(slot_flags & slot))
+	if(!(slot_flags & slot) || isdrone(user))
 		return
 	user.grant_language(/datum/language/piratespeak, source = LANGUAGE_HAT)
 	to_chat(user, span_boldnotice("You suddenly know how to speak like a pirate!"))

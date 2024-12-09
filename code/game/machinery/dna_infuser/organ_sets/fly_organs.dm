@@ -19,7 +19,7 @@
 	to_chat(new_fly, span_danger("Too much fly DNA! Your skin begins to discolor into a horrible black as you become more fly than person!"))
 	new_fly.set_species(/datum/species/fly)
 
-/obj/item/organ/internal/eyes/fly
+/obj/item/organ/eyes/fly
 	name = "fly eyes"
 	desc = "These eyes seem to stare back no matter the direction you look at it from."
 	eye_icon_state = "flyeyes"
@@ -27,11 +27,11 @@
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	native_fov = NONE //flies can see all around themselves.
 
-/obj/item/organ/internal/eyes/fly/Initialize(mapload)
+/obj/item/organ/eyes/fly/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
 
-/obj/item/organ/internal/tongue/fly
+/obj/item/organ/tongue/fly
 	name = "proboscis"
 	desc = "A freakish looking meat tube that apparently can take in liquids."
 	icon = 'icons/obj/medical/organs/fly_organs.dmi'
@@ -49,56 +49,56 @@
 		"S" = "Z",
 	)
 
-/obj/item/organ/internal/tongue/fly/New(class, timer, datum/mutation/human/copymut)
+/obj/item/organ/tongue/fly/New(class, timer, datum/mutation/human/copymut)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 
-/obj/item/organ/internal/tongue/fly/Initialize(mapload)
+/obj/item/organ/tongue/fly/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
 
-/obj/item/organ/internal/tongue/fly/get_possible_languages()
+/obj/item/organ/tongue/fly/get_possible_languages()
 	return ..() + /datum/language/buzzwords
 
-/obj/item/organ/internal/heart/fly
+/obj/item/organ/heart/fly
 	desc = FLY_INFUSED_ORGAN_DESC
 
-/obj/item/organ/internal/heart/fly/Initialize(mapload)
+/obj/item/organ/heart/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = FLY_INFUSED_ORGAN_ICON
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
 	AddElement(/datum/element/update_icon_blocker)
 
-/obj/item/organ/internal/lungs/fly
+/obj/item/organ/lungs/fly
 	desc = FLY_INFUSED_ORGAN_DESC
 
-/obj/item/organ/internal/lungs/fly/Initialize(mapload)
+/obj/item/organ/lungs/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = FLY_INFUSED_ORGAN_ICON
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
 
-/obj/item/organ/internal/liver/fly
+/obj/item/organ/liver/fly
 	desc = FLY_INFUSED_ORGAN_DESC
 	alcohol_tolerance = 0.007 //flies eat vomit, so a lower alcohol tolerance is perfect!
 
-/obj/item/organ/internal/liver/fly/Initialize(mapload)
+/obj/item/organ/liver/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = FLY_INFUSED_ORGAN_ICON
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
 
-/obj/item/organ/internal/stomach/fly
+/obj/item/organ/stomach/fly
 	desc = FLY_INFUSED_ORGAN_DESC
 
-/obj/item/organ/internal/stomach/fly/Initialize(mapload)
+/obj/item/organ/stomach/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = FLY_INFUSED_ORGAN_ICON
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
 
-/obj/item/organ/internal/stomach/fly/after_eat(edible)
+/obj/item/organ/stomach/fly/after_eat(edible)
 	var/mob/living/carbon/body = owner
 	ASSERT(istype(body))
 	// we do not lose any nutrition as a fly when vomiting out food
@@ -110,28 +110,28 @@
 	)
 	return ..()
 
-/obj/item/organ/internal/appendix/fly
+/obj/item/organ/appendix/fly
 	desc = FLY_INFUSED_ORGAN_DESC
 
-/obj/item/organ/internal/appendix/fly/Initialize(mapload)
+/obj/item/organ/appendix/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = FLY_INFUSED_ORGAN_ICON
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
 
-/obj/item/organ/internal/appendix/fly/update_appearance(updates=ALL)
+/obj/item/organ/appendix/fly/update_appearance(updates=ALL)
 	return ..(updates & ~(UPDATE_NAME|UPDATE_ICON)) //don't set name or icon thank you
 
 //useless organs we throw in just to fuck with surgeons a bit more. they aren't part of a bonus, just the (absolute) state of flies
-/obj/item/organ/internal/fly
+/obj/item/organ/fly
 	desc = FLY_INFUSED_ORGAN_DESC
 
-/obj/item/organ/internal/fly/Initialize(mapload)
+/obj/item/organ/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = FLY_INFUSED_ORGAN_ICON
 
-/obj/item/organ/internal/fly/groin //appendix is the only groin organ so we gotta have one of these too lol
+/obj/item/organ/fly/groin //appendix is the only groin organ so we gotta have one of these too lol
 	zone = BODY_ZONE_PRECISE_GROIN
 
 #undef FLY_INFUSED_ORGAN_DESC
