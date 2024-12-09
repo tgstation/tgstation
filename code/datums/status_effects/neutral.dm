@@ -691,17 +691,14 @@
 	icon_state = "shower_regen_catgirl"
 
 /atom/movable/screen/alert/status_effect/washing_regen/dislike
-	name = "Washing"
 	desc = "This water feels dirty..."
 	icon_state = "shower_regen_dirty"
 
 /atom/movable/screen/alert/status_effect/washing_regen/bloody_like
-	name = "Washing"
 	desc = "Mhhhmmmm... the crimson red drops of life. How delightful."
 	icon_state = "shower_regen_blood_happy"
 
 /atom/movable/screen/alert/status_effect/washing_regen/bloody_dislike
-	name = "Washing"
 	desc = "Is that... blood? What the fuck!"
 	icon_state = "shower_regen_blood_bad"
 
