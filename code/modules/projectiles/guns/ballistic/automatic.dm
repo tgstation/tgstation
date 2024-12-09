@@ -375,11 +375,12 @@
 	mag_display = TRUE
 	projectile_damage_multiplier = 1.2
 	projectile_speed_multiplier = 1.2
-	can_suppress = FALSE
 	fire_delay = 2
-	burst_size = 2
+	burst_size = 1
+	actions_types = list()
 	spread = 10 //slightly inaccurate in burst fire mode, mostly important for long range shooting
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
+	suppressor_x_offset = 8
 
 	/// Determines how many shots we can make before the weapon needs to be maintained.
 	var/shots_before_degradation = 10
@@ -476,13 +477,6 @@
 	fire_delay = initial(fire_delay)
 	update_appearance()
 	balloon_alert(user, "system reset.")
-
-/obj/item/gun/ballistic/automatic/battle_rifle/burst_select()
-	. = ..()
-	if(!burst_fire_selection)
-		spread = 0
-	else
-		spread = initial(spread)
 
 /obj/item/gun/ballistic/automatic/battle_rifle/try_fire_gun(atom/target, mob/living/user, params)
 	. = ..()
