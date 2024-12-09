@@ -763,6 +763,7 @@
  * Gravity situations:
  * * No gravity if you're not in a turf
  * * No gravity if this atom is in is a space turf
+ * * No gravity if the area has NO_GRAVITY flag (space, ordnance bomb site, nearstation, solars)
  * * Gravity if the area it's in always has gravity
  * * Gravity if there's a gravity generator on the z level
  * * Gravity if the Z level has an SSMappingTrait for ZTRAIT_GRAVITY
@@ -790,7 +791,7 @@
 
 	var/area/turf_area = gravity_turf.loc
 
-	return !gravity_turf.force_no_gravity && (SSmapping.gravity_by_z_level[gravity_turf.z] || turf_area.has_gravity)
+	return (!gravity_turf.force_no_gravity && !(turf_area.area_flags & NO_GRAVITY)) && (SSmapping.gravity_by_z_level[gravity_turf.z] || turf_area.default_gravity)
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod
