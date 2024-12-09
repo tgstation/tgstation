@@ -67,6 +67,7 @@ SUBSYSTEM_DEF(ticker)
 	/// Why an emergency shuttle was called
 	var/emergency_reason
 
+	/// ID of round reboot timer, if it exists
 	var/reboot_timer = null
 
 /datum/controller/subsystem/ticker/Initialize()
@@ -711,6 +712,12 @@ SUBSYSTEM_DEF(ticker)
 
 	world.Reboot()
 
+/**
+ * Deletes the current reboot timer and nulls the var
+ *
+ * Arguments:
+ * * user - the user that cancelled the reboot, may be null
+ */
 /datum/controller/subsystem/ticker/proc/cancel_reboot(mob/user)
 	if(!reboot_timer)
 		to_chat(user, span_warning("There is no pending reboot!"))
