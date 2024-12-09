@@ -169,7 +169,7 @@
 	return (BRUTELOSS|FIRELOSS)
 
 /// Energy swords.
-/datum/embed_data/esword
+/datum/embedding/esword
 	embed_chance = 75
 	impact_pain_mult = 10
 
@@ -189,7 +189,7 @@
 	armour_penetration = 35
 	block_chance = 50
 	block_sound = 'sound/items/weapons/block_blade.ogg'
-	embed_type = /datum/embed_data/esword
+	embed_type = /datum/embedding/esword
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))

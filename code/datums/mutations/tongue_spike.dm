@@ -48,7 +48,7 @@
 	force = 2
 	throwforce = 25
 	throw_speed = 4
-	embed_type = /datum/embed_data/tongue_spike
+	embed_type = /datum/embedding/tongue_spike
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
 	custom_materials = list(/datum/material/biomass = SMALL_MATERIAL_AMOUNT * 5)
@@ -57,7 +57,7 @@
 	/// if we missed our target
 	var/missed = TRUE
 
-/datum/embed_data/tongue_spike
+/datum/embedding/tongue_spike
 	impact_pain_mult = 0
 	pain_mult = 15
 	embed_chance = 100
@@ -111,11 +111,11 @@
 	desc = "Hardened biomass, shaped into... something."
 	icon_state = "tonguespikechem"
 	throwforce = 2
-	embed_type = /datum/embed_data/tongue_spike/chem
+	embed_type = /datum/embedding/tongue_spike/chem
 	/// Whether the tongue's already embedded in a target once before
 	var/embedded_once_alread = FALSE
 
-/datum/embed_data/tongue_spike/chem
+/datum/embedding/tongue_spike/chem
 	pain_mult = 0
 	pain_chance = 0
 

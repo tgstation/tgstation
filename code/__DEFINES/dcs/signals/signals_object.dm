@@ -198,8 +198,6 @@
 #define COMSIG_TOOL_START_USE "tool_start_use"
 /// From /obj/item/multitool/remove_buffer(): (buffer)
 #define COMSIG_MULTITOOL_REMOVE_BUFFER "multitool_remove_buffer"
-///from [/obj/item/proc/disableEmbedding]:
-#define COMSIG_ITEM_DISABLE_EMBED "item_disable_embed"
 ///from [/obj/effect/mine/proc/triggermine]:
 #define COMSIG_MINE_TRIGGERED "minegoboom"
 ///from [/obj/structure/closet/supplypod/proc/preOpen]:
@@ -404,9 +402,6 @@
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"
 ///from the base of /obj/projectile/process(): ()
 #define COMSIG_PROJECTILE_BEFORE_MOVE "projectile_before_move"
-///from [/obj/item/proc/tryEmbed] sent when trying to force an embed (mainly for projectiles and eating glass)
-#define COMSIG_EMBED_TRY_FORCE "item_try_embed"
-	#define COMPONENT_EMBED_SUCCESS (1<<1)
 // FROM [/obj/item/proc/updateEmbedding] sent when an item's embedding properties are changed : ()
 #define COMSIG_ITEM_EMBEDDING_UPDATE "item_embedding_update"
 
@@ -479,10 +474,8 @@
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
 ///from base of obj/item/embedded(): (atom/target, obj/item/bodypart/part)
 #define COMSIG_ITEM_EMBEDDED "item_embedded"
-///from base of datum/component/embedded/safeRemove(): (mob/living/carbon/victim)
+///from base of datum/embedding/on_remove(): (mob/living/carbon/victim, obj/item/bodypart/limb)
 #define COMSIG_ITEM_UNEMBEDDED "item_unembedded"
-/// from base of obj/item/failedEmbed()
-#define COMSIG_ITEM_FAILED_EMBED "item_failed_embed"
 
 /// from base of datum/element/disarm_attack/secondary_attack(), used to prevent shoving: (victim, user, send_message)
 #define COMSIG_ITEM_CAN_DISARM_ATTACK "item_pre_disarm_attack"
@@ -500,9 +493,6 @@
 /// from base of /obj/item/slimepotion/speed/interact_with_atom(): (obj/target, /obj/src, mob/user)
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
-
-/// from /obj/structure/sign/poster/trap_succeeded() : (mob/user)
-#define COMSIG_POSTER_TRAP_SUCCEED "poster_trap_succeed"
 
 /// from /obj/item/detective_scanner/scan(): (mob/user, list/extra_data)
 #define COMSIG_DETECTIVE_SCANNED "det_scanned"

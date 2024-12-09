@@ -1082,7 +1082,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.set_embed(/datum/embed_data/glass_candy)
+				shard.set_embed(/datum/embedding/glass_candy)
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
 				shard.set_embed(initial(shard.embed_type))
 			return TRUE

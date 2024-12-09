@@ -865,13 +865,26 @@
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	our_plant.throwforce = (our_seed.potency/20)
 	if (!our_plant.get_embed())
+		if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
+			our_plant.set_embed(/datum/embedding/spiky_plant)
+		else
+			our_plant.set_embed(/datum/embedding/sticky_plant)
 		return
 
+	our_plant.embed_data.ignore_throwspeed_threshold = TRUE
 	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
-		our_plant.set_embed(our_plant.get_embed().generate_with_values(ignore_throwspeed_threshold = TRUE))
 		return
 
-	our_plant.set_embed(our_plant.get_embed().generate_with_values(ignore_throwspeed_threshold = TRUE, pain_mult = 0, jostle_pain_mult = 0))
+	our_plant.embed_data.pain_mult = 0
+	our_plant.embed_data.jostle_pain_mult = 0
+
+/datum/embedding/sticky_plant
+	pain_mult = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = TRUE
+
+/datum/embedding/spiky_plant
+	ignore_throwspeed_threshold = TRUE
 
 /**
  * This trait automatically heats up the plant's chemical contents when harvested.

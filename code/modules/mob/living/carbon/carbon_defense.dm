@@ -410,21 +410,19 @@
 		return
 
 	var/embeds = FALSE
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/LB = X
-		for(var/obj/item/I in LB.embedded_objects)
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		for(var/obj/item/weapon in limb.embedded_objects)
 			if(!embeds)
 				embeds = TRUE
 				// this way, we only visibly try to examine ourselves if we have something embedded, otherwise we'll still hug ourselves :)
 				visible_message(span_notice("[src] examines [p_them()]self."), \
 					span_notice("You check yourself for shrapnel."))
-			if(I.is_embed_harmless())
-				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
+			if(!weapon.embed_data.is_harmless())
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(weapon)];embedded_limb=[REF(limb)]' class='warning'>There is \a [weapon] embedded in your [limb.name]!</a>")
 			else
-				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(weapon)];embedded_limb=[REF(limb)]' class='warning'>There is \a [weapon] stuck to your [limb.name]!</a>")
 
 	return embeds
-
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)

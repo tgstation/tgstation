@@ -129,7 +129,9 @@
 
 ///Remove a specific embedded item from the carbon mob
 /mob/living/carbon/proc/remove_embedded_object(obj/item/embedded)
-	SEND_SIGNAL(src, COMSIG_CARBON_EMBED_REMOVAL, embedded)
+	if (!embedded.get_embed()?.owner == src)
+		return
+	embedded.embed_data.remove_embedding()
 
 ///Remove all embedded objects from all limbs on the carbon mob
 /mob/living/carbon/proc/remove_all_embedded_objects()
@@ -140,7 +142,7 @@
 /mob/living/carbon/proc/has_embedded_objects(include_harmless=FALSE)
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		for(var/obj/item/embedded in bodypart.embedded_objects)
-			if(!include_harmless && embedded.is_embed_harmless())
+			if(!include_harmless && embedded.embed_data.is_harmless())
 				continue
 			return TRUE
 

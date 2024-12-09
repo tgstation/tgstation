@@ -61,8 +61,8 @@
 			disabled += body_part
 		missing -= body_part.body_zone
 		for(var/obj/item/embedded as anything in body_part.embedded_objects)
-			var/stuck_wordage = embedded.is_embed_harmless() ? "stuck to" : "embedded in"
-			. += span_boldwarning("[t_He] [t_has] [icon2html(embedded, user)] \a [embedded] [stuck_wordage] [t_his] [body_part.plaintext_zone]!")
+			var/stuck_wordage = embedded.embed_data.is_harmless() ? "stuck to" : "embedded in"
+			. += span_boldwarning("[t_He] [t_has] [icon2html(embedded, user)] \a <a href='?src=[REF(src)];embedded_object=[REF(embedded)];embedded_limb=[REF(body_part)]' class='danger'>[embedded]</a> [stuck_wordage] [t_his] [body_part.plaintext_zone]!")
 
 		for(var/datum/wound/iter_wound as anything in body_part.wounds)
 			. += span_danger(iter_wound.get_examine_description(user))

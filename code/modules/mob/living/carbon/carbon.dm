@@ -228,13 +228,13 @@
 /mob/living/carbon/Topic(href, href_list)
 	..()
 	if(href_list["embedded_object"])
-		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
-		if(!L)
+		var/obj/item/bodypart/limb = locate(href_list["embedded_limb"]) in bodyparts
+		if(!limb)
 			return
-		var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
-		if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
+		var/obj/item/weapon = locate(href_list["embedded_object"]) in limb.embedded_objects
+		if(!weapon || weapon.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 			return
-		SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
+		weapon.embed_data.rip_out(usr)
 		return
 
 	if(href_list["show_paper_note"])

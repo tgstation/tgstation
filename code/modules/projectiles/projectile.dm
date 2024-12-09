@@ -247,7 +247,7 @@
 	/// If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target
 	var/embed_type
 	/// Saves embedding data
-	var/datum/embed_data/embed_data
+	var/datum/embedding/embed_data
 	/// If TRUE, hit mobs, even if they are lying on the floor and are not our target within MAX_RANGE_HIT_PRONE_TARGETS tiles
 	var/hit_prone_targets = FALSE
 	/// If TRUE, ignores the range of MAX_RANGE_HIT_PRONE_TARGETS tiles of hit_prone_targets
@@ -272,8 +272,8 @@
 /obj/projectile/Initialize(mapload)
 	. = ..()
 	maximum_range = range
-	if (get_embed())
-		AddElement(/datum/element/embed)
+	if (embed_type)
+		set_embed(embed_type)
 	add_traits(list(TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT), INNATE_TRAIT)
 
 /obj/projectile/Destroy()
@@ -298,7 +298,7 @@
 		wound_bonus += wound_falloff_tile
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embed_falloff_tile && get_embed())
-		set_embed(embed_data.generate_with_values(embed_data.embed_chance + embed_falloff_tile))
+		embed_data.embed_chance += embed_falloff_tile
 	if(damage_falloff_tile && damage >= 0)
 		damage += damage_falloff_tile
 	if(stamina_falloff_tile && stamina >= 0)
@@ -1318,7 +1318,7 @@
 
 ///Checks if the projectile can embed into someone
 /obj/projectile/proc/can_embed_into(atom/hit)
-	return get_embed() && shrapnel_type && iscarbon(hit) && !HAS_TRAIT(hit, TRAIT_PIERCEIMMUNE)
+	return shrapnel_type && get_embed().can_embed(src, hit)
 
 /// Reflects the projectile off of something
 /obj/projectile/proc/reflect(atom/hit_atom)
@@ -1358,19 +1358,32 @@
 	bullet.fire()
 	return bullet
 
-/// Fetches embedding data
-/obj/projectile/proc/get_embed()
-	RETURN_TYPE(/datum/embed_data)
-	return embed_type ? (embed_data ||= get_embed_by_type(embed_type)) : embed_data
-
-/obj/projectile/proc/set_embed(datum/embed_data/embed)
-	if(embed_data == embed)
-		return
-	// GLOB.embed_by_type stores shared "default" embedding values of datums
-	// Dynamically generated embeds use the base class and thus are not present in there, and should be qdeleted upon being discarded
-	if(!isnull(embed_data) && !GLOB.embed_by_type[embed_data.type])
-		qdel(embed_data)
-	embed_data = ispath(embed) ? get_embed_by_type(armor) : embed
-
 #undef MOVES_HITSCAN
 #undef MUZZLE_EFFECT_PIXEL_INCREMENT
+
+/// Fetches, or lazyloads, our embedding datum
+/obj/projectile/proc/get_embed()
+	if (embed_data)
+		return embed_data
+	if (embed_type)
+		embed_data = new embed_type(src)
+	return embed_data
+
+/// Sets our embedding datum to a different one, singleton or not. Can also take types
+/obj/projectile/proc/set_embed(datum/embedding/new_embed)
+	if (new_embed == embed_data)
+		SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDING_UPDATE)
+		return
+
+	if (embed_data)
+		qdel(embed_data)
+
+	if (ispath(new_embed))
+		new_embed = new new_embed(src)
+
+	// If somethiong created it without knowing who to assign it to
+	if (new_embed.parent != src)
+		new_embed.attach(src)
+
+	embed_data = new_embed
+	SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDING_UPDATE)
