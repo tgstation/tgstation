@@ -376,9 +376,9 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack/alternating_circle/attack_sequence(mob/living/firer, atom/target)
 	wendigo_scream(firer)
 	if(enraged)
-		projectile_type = /obj/projectile/colossus/wendigo_shockwave/enraged
+		projectile_speed_multiplier = 1
 	else
-		projectile_type = /obj/projectile/colossus/wendigo_shockwave
+		projectile_speed_multiplier = 0.66
 	var/shots_per = 24
 	for(var/shoot_times in 1 to 8)
 		var/offset = shoot_times % 2

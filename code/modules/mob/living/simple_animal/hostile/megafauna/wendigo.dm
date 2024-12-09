@@ -198,15 +198,12 @@ Difficulty: Hard
 
 /obj/projectile/colossus/wendigo_shockwave
 	name = "wendigo shockwave"
-	speed = 0.3
+	speed = 0.5
 
 	/// Amount the angle changes every pixel move
 	var/wave_speed = 0.5
 	/// Amount of movements this projectile has made
 	var/pixel_moves = 0
-
-/obj/projectile/colossus/wendigo_shockwave/enraged
-	speed = 0.5
 
 /obj/projectile/colossus/wendigo_shockwave/spiral
 	damage = 15
