@@ -87,8 +87,6 @@
 		"c38_iceblox_mag",
 		"c38_trac",
 		"c38_trac_mag",
-		"c38_phasic",
-		"c38_phasic_mag",
 		"c38_true_strike",
 		"c38_true_strike_mag",
 		"techshotshell",
