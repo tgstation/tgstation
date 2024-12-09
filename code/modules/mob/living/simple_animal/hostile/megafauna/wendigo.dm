@@ -198,7 +198,7 @@ Difficulty: Hard
 
 /obj/projectile/colossus/wendigo_shockwave
 	name = "wendigo shockwave"
-	speed = 0.3
+	speed = 0.5
 
 	/// Amount the angle changes every pixel move
 	var/wave_speed = 0.5
