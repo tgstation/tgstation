@@ -79,7 +79,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(selected_area in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES))
 		washing_face = TRUE
 
-	playsound(src, 'sound/machines/sink-faucet.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/sink-faucet.ogg', 50)
 	user.visible_message(span_notice("[user] starts washing [user.p_their()] [washing_face ? "face" : "hands"]..."), \
 						span_notice("You start washing your [washing_face ? "face" : "hands"]..."))
 	busy = TRUE
@@ -209,7 +209,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
 	if(!user.combat_mode || (O.item_flags & NOBLUDGEON))
 		to_chat(user, span_notice("You start washing [O]..."))
-		playsound(src, 'sound/machines/sink-faucet.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/sink-faucet.ogg', 50)
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))
 			busy = FALSE
