@@ -408,6 +408,14 @@
 /obj/item/gun/ballistic/automatic/battle_rifle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 2)
+	register_context()
+
+/obj/item/gun/ballistic/automatic/battle_rifle/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+
+	if(held_item.tool_behaviour == TOOL_MULTITOOL && shots_before_degradation < max_shots_before_degradation)
+		context[SCREENTIP_CONTEXT_LMB] = "Reset System"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/gun/ballistic/automatic/battle_rifle/examine_more(mob/user)
 	. = ..()
@@ -426,9 +434,9 @@
 /obj/item/gun/ballistic/automatic/battle_rifle/examine(mob/user)
 	. = ..()
 	if(shots_before_degradation)
-		. += span_notice("\The [src] can fire [shots_before_degradation] more times before risking system degradation.")
+		. += span_notice("[src] can fire [shots_before_degradation] more times before risking system degradation.")
 	else
-		. += span_notice("\The [src] is in the process of system degradation. It is currently at stage [degradation_stage] of [degradation_stage_max]. Use a multitool on [src] to recalibrate. Alternatively, insert it into a weapon recharger.")
+		. += span_notice("[src] is in the process of system degradation. It is currently at stage [degradation_stage] of [degradation_stage_max]. Use a multitool on [src] to recalibrate. Alternatively, insert it into a weapon recharger.")
 
 /obj/item/gun/ballistic/automatic/battle_rifle/update_icon_state()
 	. = ..()
@@ -436,7 +444,6 @@
 		inhand_icon_state = "[base_icon_state]-empty"
 	else
 		inhand_icon_state = "[base_icon_state]"
-	return ..()
 
 /obj/item/gun/ballistic/automatic/battle_rifle/update_overlays()
 	. = ..()
@@ -463,31 +470,29 @@
 	return TRUE
 
 /obj/item/gun/ballistic/automatic/battle_rifle/multitool_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(!tool.use_tool(src, user, 20 SECONDS, volume = 50))
 		balloon_alert(user, "interrupted!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(emp_malfunction)
-		emp_malfunction = FALSE
-
+	emp_malfunction = FALSE
 	shots_before_degradation = initial(shots_before_degradation)
 	degradation_stage = initial(degradation_stage)
 	projectile_speed_multiplier = initial(projectile_speed_multiplier)
 	fire_delay = initial(fire_delay)
 	update_appearance()
-	balloon_alert(user, "system reset.")
+	balloon_alert(user, "system reset")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/ballistic/automatic/battle_rifle/try_fire_gun(atom/target, mob/living/user, params)
 	. = ..()
-	if(!chambered || chambered && !chambered.loaded_projectile)
+	if(!chambered || (chambered && !chambered.loaded_projectile))
 		return
 
 	if(shots_before_degradation)
 		shots_before_degradation --
 		return
 
-	else if (obj_flags & EMAGGED && degradation_stage == degradation_stage_max && !explosion_timer)
+	else if ((obj_flags & EMAGGED) && degradation_stage == degradation_stage_max && !explosion_timer)
 		perform_extreme_malfunction(user)
 
 	else
@@ -495,7 +500,7 @@
 
 
 /obj/item/gun/ballistic/automatic/battle_rifle/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(chambered.loaded_projectile && emp_malfunction && prob(75) || chambered.loaded_projectile && degradation_stage == degradation_stage_max && prob(75))
+	if(chambered.loaded_projectile && prob(75) && (emp_malfunction || degradation_stage == degradation_stage_max))
 		balloon_alert_to_viewers("*click*")
 		playsound(src, dry_fire_sound, dry_fire_sound_volume, TRUE)
 		return
@@ -515,8 +520,7 @@
 
 /// Called by /obj/machinery/recharger while inserted: attempts to recalibrate our gun but reducing degradation.
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/attempt_recalibration(restoring_shots_before_degradation = FALSE, recharge_rate = 1)
-	if(emp_malfunction)
-		emp_malfunction = FALSE
+	emp_malfunction = FALSE
 
 	if(restoring_shots_before_degradation)
 		shots_before_degradation = clamp(round(shots_before_degradation + recharge_rate, 1), 0, max_shots_before_degradation)
@@ -534,7 +538,7 @@
 
 /// Proc to handle the countdown for our detonation
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/perform_extreme_malfunction(mob/living/user)
-	balloon_alert(user, UNLINT("HOLY FUCK THE GUN IS GOING TO EXPLODE, THROW IT, THROW IT NOW!"))
+	balloon_alert(user, UNLINT("[src] is exploding, throw it!"))
 	explosion_timer = addtimer(CALLBACK(src, PROC_REF(fucking_explodes_you)), 5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE))
 	playsound(src, 'sound/items/weapons/gun/general/empty_alarm.ogg', 50, FALSE)
 
