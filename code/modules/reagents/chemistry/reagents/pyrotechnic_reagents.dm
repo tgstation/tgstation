@@ -379,7 +379,7 @@
 		air.react(src)
 		qdel(hotspot)
 
-/datum/reagent/firefighting_foam/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/firefighting_foam/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	exposed_obj.extinguish()
 

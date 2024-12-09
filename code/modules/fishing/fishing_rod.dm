@@ -830,11 +830,12 @@
 /obj/projectile/fishing_cast
 	name = "fishing hook"
 	icon = 'icons/obj/fishing.dmi'
-	icon_state = "hook_projectile"
+	icon_state = "hook"
 	damage = 0
 	range = 5
 	suppressed =  SUPPRESSED_VERY
 	can_hit_turfs = TRUE
+	projectile_angle = 180
 
 	var/obj/item/fishing_rod/owner
 	var/datum/beam/our_line
@@ -842,7 +843,6 @@
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)
 	if(owner.hook)
 		icon_state = owner.hook.icon_state
-		transform = transform.Scale(1, -1)
 	. = ..()
 	if(!QDELETED(src))
 		our_line = owner.create_fishing_line(src, firer)

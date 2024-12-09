@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - bugfix: "Using a bonesetter to correct a dislocated limb should no longer cause you to hit the patient with it too."

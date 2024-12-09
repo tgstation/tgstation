@@ -24,7 +24,7 @@
 	average_size = 180
 	average_weight = 5000
 	death_text = "%SRC stops moving."
-	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/territorial)
 	beauty = FISH_BEAUTY_BAD
 
 /obj/item/fish/mastodon/Initialize(mapload, apply_qualities = TRUE)
@@ -36,6 +36,9 @@
 
 /obj/item/fish/mastodon/get_export_price(price, elasticity_percent)
 	return ..() * 1.2 //This should push its soft-capped (it's pretty big) price a bit above the rest
+
+/obj/item/fish/mastodon/get_health_warnings(mob/user, always_deep = FALSE)
+	return list(span_deadsay("It's bones."))
 
 ///From the cursed spring
 /obj/item/fish/soul

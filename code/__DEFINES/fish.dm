@@ -166,7 +166,7 @@
 ///The breeding timeout for newly instantiated fish is multiplied by this.
 #define NEW_FISH_BREEDING_TIMEOUT_MULT 2
 ///The last feeding timestamp of newly instantiated fish is multiplied by this: ergo, they spawn 50% hungry.
-#define NEW_FISH_LAST_FEEDING_MULT 0.5
+#define NEW_FISH_LAST_FEEDING_MULT 0.33
 
 //IF YOU ADD ANY NEW FLAG, ADD IT TO THE RESPECTIVE BITFIELD in _globalvars/bitfields.dm TOO!
 
@@ -186,7 +186,6 @@
 #define FISH_FLAG_SAFE_TEMPERATURE (1<<6)
 ///Flag added when in an aquarium with the right fluid type.
 #define FISH_FLAG_SAFE_FLUID (1<<7)
-
 
 #define MIN_AQUARIUM_TEMP T0C
 #define MAX_AQUARIUM_TEMP (T0C + 100)
@@ -260,11 +259,8 @@
 #define FISH_SOURCE_FLAG_EXPLOSIVE_MALUS (1<<0)
 /// The fish source is not elegible for random rewards from bluespace fishing rods
 #define FISH_SOURCE_FLAG_NO_BLUESPACE_ROD (1<<1)
-/**
- * If present, fish that can be caught from this source won't be included in the 'fish caught' score, unless
- * present in other sources without this flag as well.
- */
-#define FISH_SOURCE_FLAG_SKIP_CATCHABLES (1<<2)
+/// When examined by someone with enough fishing skill, this will also display fish that doesn't have FISH_FLAG_SHOW_IN_CATALOG
+#define FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG (1<<2)
 
 /**
  * A macro to ensure the wikimedia filenames of fish icons are unique, especially since there're a couple fish that have
