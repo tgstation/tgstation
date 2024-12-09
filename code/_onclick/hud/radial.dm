@@ -194,7 +194,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		var/atom/movable/screen/radial/element = elements[i]
 		var/angle = WRAP(starting_angle + (i - 1) * angle_per_element,0,360)
 		if(i > page_choices.len)
-			HideElement(element, anim_flag = anim_flag)
+			HideElement(element)
 			element.click_on_hover = FALSE
 		else
 			SetElement(element,page_choices[i],angle,anim_flag = anim_flag,anim_order = i)
@@ -206,19 +206,10 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			else
 				element.click_on_hover = TRUE
 
-/datum/radial_menu/proc/HideElement(atom/movable/screen/radial/slice/E, anim_flag = BUTTON_FADE_OUT)
-	if(anim_flag & BUTTON_FADE_OUT)
-		animate(E, alpha = 0, time = 0.5 SECONDS, easing = EASE_OUT)
-		addtimer(CALLBACK(src, PROC_REF(reset_element)), 0.5 SECONDS)
-		return
-	E.alpha = 0
-	reset_element(E)
-
-/datum/radial_menu/proc/reset_element(atom/movable/screen/radial/slice/E)
-	if(isnull(E))
-		return
+/datum/radial_menu/proc/HideElement(atom/movable/screen/radial/slice/E)
 	E.cut_overlays()
 	E.vis_contents.Cut()
+	E.alpha = 0
 	E.name = "None"
 	E.maptext = null
 	E.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -277,7 +268,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			info_button.layer = RADIAL_CONTENT_LAYER
 			E.vis_contents += info_button
 
-/datum/radial_menu/New()
+/datum/radial_menu/New(display_close_button)
+	if(!display_close_button)
+		return
 	close_button = new
 	close_button.set_parent(src)
 
@@ -338,12 +331,10 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing", layer = RADIAL_BACKGROUND_LAYER, pixel_x = offset_x, pixel_y = offset_y)
 	SET_PLANE_EXPLICIT(menu_holder, ABOVE_HUD_PLANE, M)
 	menu_holder.appearance_flags |= KEEP_APART|RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
-	menu_holder.vis_contents += elements + close_button
+	menu_holder.vis_contents += elements
+	if(!isnull(close_button))
+		menu_holder.vis_contents += close_button
 	current_user.images += menu_holder
-	if(!(button_animation_flags & BUTTON_FADE_IN))
-		return
-	for(var/atom/movable/element as anything in elements)
-		animate(element, alpha = 255, time = 1.5 SECONDS)
 
 /datum/radial_menu/proc/hide()
 	if(current_user)
@@ -360,6 +351,14 @@ GLOBAL_LIST_EMPTY(radial_menus)
 				next_check = world.time + check_delay
 		stoplag(1)
 
+/datum/radial_menu/proc/remove_menu()
+	if(!(button_animation_flags & BUTTON_FADE_OUT))
+		qdel(src)
+		return
+	for(var/atom/movable/element as anything in elements)
+		animate(element, alpha = 0, time = 0.5 SECONDS)
+	QDEL_IN(src, 0.5 SECONDS)
+
 /datum/radial_menu/Destroy()
 	Reset()
 	hide()
@@ -371,7 +370,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice", autopick_single_option = TRUE, button_animation_flags = BUTTON_SLIDE_IN, click_on_hover = FALSE, user_space = FALSE)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice", autopick_single_option = TRUE, button_animation_flags = BUTTON_SLIDE_IN, click_on_hover = FALSE, user_space = FALSE, check_delay = DEFAULT_CHECK_DELAY, display_close_button = TRUE)
 	if(!user || !anchor || !length(choices))
 		return
 
@@ -387,8 +386,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			menu.finished = TRUE
 		return
 
-	var/datum/radial_menu/menu = new
+	var/datum/radial_menu/menu = new(display_close_button)
 	menu.button_animation_flags = button_animation_flags
+	menu.check_delay = check_delay
 	GLOB.radial_menus[uniqueid] = menu
 	if(radius)
 		menu.radius = radius
@@ -408,7 +408,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	menu.show_to(user, offset_x, offset_y)
 	menu.wait(user, anchor, require_near)
 	var/answer = menu.selected_choice
-	qdel(menu)
+	menu.remove_menu()
 	GLOB.radial_menus -= uniqueid
 	if(require_near && !in_range(anchor, user))
 		return

@@ -6,8 +6,7 @@
 /datum/pet_command/fetch
 	command_name = "Fetch"
 	command_desc = "Command your pet to retrieve something you throw or point at."
-	radial_icon = 'icons/mob/actions/actions_spells.dmi'
-	radial_icon_state = "summons"
+	radial_icon_state = "fetch"
 	requires_pointing = TRUE
 	speech_commands = list("fetch")
 	command_feedback = "bounces"
@@ -31,6 +30,11 @@
 	. = ..()
 	UnregisterSignal(unfriended, COMSIG_MOB_THROW)
 
+/datum/pet_command/fetch/generate_emote_command(atom/target)
+	. = ..()
+	if(!. || isnull(target))
+		return null
+	. += " to fetch [target]!"
 /// A friend has thrown something, if we're listening or at least not busy then go get it
 /datum/pet_command/fetch/proc/listened_throw(mob/living/carbon/thrower)
 	SIGNAL_HANDLER

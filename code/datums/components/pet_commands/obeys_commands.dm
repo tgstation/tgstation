@@ -13,9 +13,11 @@
 	var/radial_menu_radius = 48
 	///after how long we shutdown radial menus
 	var/radial_menu_lifetime = 5 SECONDS
+	///offset to display the radial menu
+	var/list/radial_menu_offset
 
 /// The available_commands parameter should be passed as a list of typepaths
-/datum/component/obeys_commands/Initialize(list/command_typepaths = list())
+/datum/component/obeys_commands/Initialize(list/command_typepaths = list(), list/radial_menu_offset = list(0, 0))
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -24,7 +26,7 @@
 		return COMPONENT_INCOMPATIBLE
 	if (!length(command_typepaths))
 		CRASH("Initialised obedience component with no commands.")
-
+	src.radial_menu_offset = radial_menu_offset
 	for (var/command_path in command_typepaths)
 		var/datum/pet_command/new_command = new command_path(parent)
 		available_commands[new_command.command_name] = new_command
@@ -44,16 +46,18 @@
 /// Add someone to our friends list
 /datum/component/obeys_commands/proc/add_friend(datum/source, mob/living/new_friend)
 	SIGNAL_HANDLER
-	RegisterSignal(new_friend, COMSIG_KB_LIVING_VIEW_PET_COMMANDS, PROC_REF(display_menu))
-	RegisterSignal(new_friend, DEACTIVATE_KEYBIND(COMSIG_KB_LIVING_VIEW_PET_COMMANDS), PROC_REF(remove_from_viewers))
+	RegisterSignal(new_friend, COMSIG_KB_LIVING_VIEW_PET_COMMANDS, PROC_REF(on_key_pressed))
+	RegisterSignal(new_friend, DEACTIVATE_KEYBIND(COMSIG_KB_LIVING_VIEW_PET_COMMANDS), PROC_REF(on_key_unpressed))
 	for (var/command_name as anything in available_commands)
 		var/datum/pet_command/command = available_commands[command_name]
 		INVOKE_ASYNC(command, TYPE_PROC_REF(/datum/pet_command, add_new_friend), new_friend)
 
-/datum/component/obeys_commands/proc/remove_from_viewers(mob/living/source)
+/datum/component/obeys_commands/proc/on_key_unpressed(mob/living/source)
 	SIGNAL_HANDLER
-	radial_viewers -= REF(source)
+	UnregisterSignal(source, COMSIG_ATOM_MOUSE_ENTERED)
 
+/datum/component/obeys_commands/proc/remove_from_viewers(mob/living/source)
+	radial_viewers -= REF(source)
 
 /// Remove someone from our friends list
 /datum/component/obeys_commands/proc/remove_friend(datum/source, mob/living/old_friend)
@@ -76,22 +80,31 @@
 		return
 	examine_list += span_notice("[source.p_They()] seem[source.p_s()] happy to see you!")
 
+/datum/component/obeys_commands/proc/on_key_pressed(mob/living/friend)
+	SIGNAL_HANDLER
+	RegisterSignal(friend, COMSIG_ATOM_MOUSE_ENTERED, PROC_REF(on_mouse_hover))
+
+/datum/component/obeys_commands/proc/on_mouse_hover(mob/living/friend, atom/mouse_hovered)
+	SIGNAL_HANDLER
+	if(mouse_hovered == parent)
+		display_menu(friend)
+		return
+	if(isliving(mouse_hovered))
+		remove_from_viewers(friend)
+
 /// Displays a radial menu of commands
 /datum/component/obeys_commands/proc/display_menu(mob/living/friend)
-	SIGNAL_HANDLER
 
 	var/mob/living/living_parent = parent
 	if (IS_DEAD_OR_INCAP(living_parent) || friend.stat != CONSCIOUS)
-		return NONE
+		return
 	if (!(friend in living_parent.ai_controller?.blackboard[BB_FRIENDS_LIST]))
-		return NONE// Not our friend, can't boss us around
+		return // Not our friend, can't boss us around
 	if(radial_viewers[REF(friend)])
-		return NONE
-	var/viewing_distance = friend.client?.view || DEFAULT_RADIAL_VIEWING_DISTANCE
-	if(!can_see(friend, parent, viewing_distance))
-		return NONE
+		return
+	if(!can_see(friend, parent, DEFAULT_RADIAL_VIEWING_DISTANCE))
+		return
 	INVOKE_ASYNC(src, PROC_REF(display_radial_menu), friend)
-	return NONE
 
 /// Actually display the radial menu and then do something with the result
 /datum/component/obeys_commands/proc/display_radial_menu(mob/living/friend)
@@ -103,8 +116,8 @@
 			continue
 		radial_options += choice
 	radial_viewers[REF(friend)] = world.time + radial_menu_lifetime
-	var/pick = show_radial_menu(friend, parent, radial_options, tooltips = TRUE, radius = radial_menu_radius, button_animation_flags = BUTTON_FADE_IN | BUTTON_FADE_OUT, custom_check = CALLBACK(src, PROC_REF(check_menu_viewer), friend))
-	radial_viewers -= REF(friend)
+	var/pick = show_radial_menu(friend, parent, radial_options, radius = radial_menu_radius, button_animation_flags = BUTTON_FADE_IN | BUTTON_FADE_OUT, custom_check = CALLBACK(src, PROC_REF(check_menu_viewer), friend), check_delay = 0.15 SECONDS, display_close_button = FALSE)
+	remove_from_viewers(friend)
 	if(!pick)
 		return
 	var/datum/pet_command/picked_command = available_commands[pick]
@@ -115,7 +128,7 @@
 		return FALSE
 	if(world.time > radial_viewers[REF(user)])
 		return FALSE
-	var/viewing_distance = user.client?.view || DEFAULT_RADIAL_VIEWING_DISTANCE
+	var/viewing_distance = DEFAULT_RADIAL_VIEWING_DISTANCE
 	if(!can_see(user, parent, viewing_distance))
 		return FALSE
 	return TRUE

@@ -13,7 +13,7 @@
 	/// If true, command will not appear in radial menu and can only be accessed through speech
 	var/hidden = FALSE
 	/// Icon to display in radial menu
-	var/icon/radial_icon
+	var/icon/radial_icon = 'icons/hud/radial_pets.dmi'
 	/// Icon state to display in radial menu
 	var/radial_icon_state
 	/// Speech strings to listen out for
@@ -62,7 +62,6 @@
 /// Respond to something that one of our friends has asked us to do
 /datum/pet_command/proc/respond_to_command(mob/living/speaker, speech_args)
 	SIGNAL_HANDLER
-
 	var/mob/living/parent = weak_parent.resolve()
 	if (!parent)
 		return
@@ -129,10 +128,12 @@
 	if(!pet_able_to_respond())
 		return FALSE
 	var/mob/living/parent = weak_parent.resolve()
-	if(parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] == src)
-		return FALSE
 	set_command_active(parent, commander, radial_command)
 	return TRUE
+
+/datum/pet_command/proc/generate_emote_command(atom/target)
+	var/mob/living/living_pet = weak_parent?.resolve()
+	return isnull(living_pet) ? null : "signals [living_pet]"
 
 /// Target the pointed atom for actions
 /datum/pet_command/proc/look_for_target(mob/living/friend, atom/potential_target)
@@ -156,10 +157,15 @@
 	parent.ai_controller.set_blackboard_key(BB_ACTIVE_PET_COMMAND, src)
 	if (command_feedback)
 		parent.balloon_alert_to_viewers("[command_feedback]") // If we get a nicer runechat way to do this, refactor this
-	if(radial_command && requires_pointing)
-		RegisterSignal(commander, COMSIG_MOB_CLICKON, PROC_REF(click_on_target))
-		commander.client?.mouse_override_icon = 'icons/effects/mouse_pointers/weapon_pointer.dmi'
-		commander.update_mouse_pointer()
+	if(!radial_command)
+		return
+	if(!requires_pointing)
+		var/manual_emote_text = generate_emote_command()
+		commander.manual_emote(manual_emote_text)
+		return
+	RegisterSignal(commander, COMSIG_MOB_CLICKON, PROC_REF(click_on_target))
+	commander.client?.mouse_override_icon = 'icons/effects/mouse_pointers/pet_paw.dmi'
+	commander.update_mouse_pointer()
 
 /datum/pet_command/proc/click_on_target(mob/living/source, atom/target, list/modifiers)
 	SIGNAL_HANDLER
@@ -169,6 +175,9 @@
 	UnregisterSignal(source, COMSIG_MOB_CLICKON)
 	source.client?.mouse_override_icon = source.client::mouse_override_icon
 	source.update_mouse_pointer()
+	var/manual_emote_text = generate_emote_command(target)
+	if(!isnull(manual_emote_text))
+		INVOKE_ASYNC(source, TYPE_PROC_REF(/atom, manual_emote), manual_emote_text)
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /datum/pet_command/proc/point_on_target(mob/living/friend, atom/potential_target)
@@ -187,11 +196,6 @@
 	var/datum/radial_menu_choice/choice = new()
 	choice.name = command_name
 	choice.image = icon(icon = radial_icon, icon_state = radial_icon_state)
-	var/tooltip = command_desc
-	if (length(speech_commands))
-		tooltip += "<br>Speak this command with the words [speech_commands.Join(", ")]."
-	choice.info = tooltip
-
 	return list("[command_name]" = choice)
 
 /**
