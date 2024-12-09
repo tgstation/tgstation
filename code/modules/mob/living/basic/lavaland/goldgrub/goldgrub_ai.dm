@@ -211,6 +211,8 @@
 
 /datum/pet_command/grub_spit
 	command_name = "Spit"
+	radial_icon = 'icons/obj/ore.dmi'
+	radial_icon_state = "uranium"
 	command_desc = "Ask your grub pet to spit out its ores."
 	speech_commands = list("spit", "ores")
 
@@ -222,4 +224,9 @@
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
+/datum/pet_command/grub_spit/generate_emote_command(atom/target)
+	. = ..()
+	if(!.)
+		return null
+	. += " to spit out its ores!"
 #undef BURROW_RANGE

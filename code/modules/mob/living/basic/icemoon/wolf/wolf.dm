@@ -43,6 +43,7 @@
 	//commands to give when tamed
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
+		/datum/pet_command/move,
 		/datum/pet_command/free,
 		/datum/pet_command/good_boy/wolf,
 		/datum/pet_command/follow/wolf,

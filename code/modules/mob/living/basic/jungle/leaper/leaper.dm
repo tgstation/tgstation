@@ -40,6 +40,7 @@
 	///list of pet commands we can issue
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
+		/datum/pet_command/move,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
 		/datum/pet_command/untargeted_ability/blood_rain,

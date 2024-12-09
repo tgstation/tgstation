@@ -193,6 +193,7 @@
 	requires_pointing = TRUE
 	radial_icon_state = "breed"
 	speech_commands = list("breed", "consummate")
+	///the behavior we use to make babies
 	var/datum/ai_behavior/reproduce_behavior = /datum/ai_behavior/make_babies
 
 /datum/pet_command/breed/set_command_target(mob/living/parent, atom/target)
@@ -344,3 +345,29 @@
 	if(!.)
 		return
 	. += " to go fish!"
+
+/datum/pet_command/move
+	command_name = "Move"
+	command_desc = "Command your pet to move to a location!"
+	requires_pointing = TRUE
+	radial_icon_state = "move"
+	speech_commands = list("move", "walk")
+	///the behavior we use to walk towards targets
+	var/datum/ai_behavior/walk_behavior = /datum/ai_behavior/travel_towards
+
+/datum/pet_command/move/set_command_target(mob/living/parent, atom/target)
+	if(isnull(target) || !can_see(parent, target, 9))
+		return FALSE
+	return ..()
+
+/datum/pet_command/move/execute_action(datum/ai_controller/controller)
+	if(!controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
+		return
+	controller.queue_behavior(walk_behavior, BB_CURRENT_PET_TARGET)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/pet_command/move/generate_emote_command(atom/target)
+	. = ..()
+	if(!. || isnull(target))
+		return
+	. += " to move towards [target]!"

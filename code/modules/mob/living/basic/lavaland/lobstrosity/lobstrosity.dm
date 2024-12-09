@@ -72,6 +72,7 @@
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
+		/datum/pet_command/move,
 		/datum/pet_command/attack,
 		charge_command,
 		/datum/pet_command/follow,

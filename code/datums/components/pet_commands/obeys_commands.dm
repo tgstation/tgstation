@@ -116,7 +116,7 @@
 			continue
 		radial_options += choice
 	radial_viewers[REF(friend)] = world.time + radial_menu_lifetime
-	var/pick = show_radial_menu(friend, parent, radial_options, radius = radial_menu_radius, button_animation_flags = BUTTON_FADE_IN | BUTTON_FADE_OUT, custom_check = CALLBACK(src, PROC_REF(check_menu_viewer), friend), check_delay = 0.15 SECONDS, display_close_button = FALSE)
+	var/pick = show_radial_menu(friend, parent, radial_options, radius = radial_menu_radius, button_animation_flags = BUTTON_FADE_IN | BUTTON_FADE_OUT, custom_check = CALLBACK(src, PROC_REF(check_menu_viewer), friend), check_delay = 0.15 SECONDS, display_close_button = FALSE, radial_menu_offset = radial_menu_offset)
 	remove_from_viewers(friend)
 	if(!pick)
 		return
