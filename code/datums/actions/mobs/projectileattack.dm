@@ -407,7 +407,7 @@
 			projectile_type = /obj/projectile/colossus/wendigo_shockwave/wave/alternate
 		if(1)
 			projectile_type = /obj/projectile/colossus/wendigo_shockwave/wave
-	for(var/shoot_times in 1 to 16)
+	for(var/shoot_times in 1 to 12)
 		for(var/shot in 1 to shots_per)
 			var/angle = shot * difference + shoot_times * 5 * wave_direction * -1
 			shoot_projectile(firer, target, angle, firer, null, null)
