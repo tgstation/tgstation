@@ -721,7 +721,7 @@
 	var/turf/T = get_step(owner, direction)
 	owner.forceMove(T)
 
-/datum/status_effect/go_away/deluxe
+/datum/status_effect/go_away/deletes_mob
 	id = "go_away"
 	duration = INFINITY
 
