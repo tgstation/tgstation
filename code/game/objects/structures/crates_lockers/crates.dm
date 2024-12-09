@@ -295,6 +295,21 @@
 	new /obj/item/bodypart/leg/right/robot/surplus(src)
 	new /obj/item/bodypart/leg/right/robot/surplus(src)
 
+/obj/structure/closet/crate/freezer/organ
+	name = "organ freezer"
+	desc = "A freezer containing a set of organic organs."
+
+/obj/structure/closet/crate/freezer/organ/PopulateContents()
+	. = ..()
+	new /obj/item/organ/heart(src)
+	new /obj/item/organ/lungs(src)
+	new /obj/item/organ/eyes(src)
+	new /obj/item/organ/ears(src)
+	new /obj/item/organ/tongue(src)
+	new /obj/item/organ/liver(src)
+	new /obj/item/organ/stomach(src)
+	new /obj/item/organ/appendix(src)
+
 /obj/structure/closet/crate/freezer/food
 	name = "food icebox"
 	icon_state = "food"

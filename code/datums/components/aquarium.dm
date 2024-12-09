@@ -473,7 +473,7 @@
 	var/atom/movable/aquarium = parent
 	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
-	.["safe_mode"] = !HAS_TRAIT_FROM(aquarium, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
+	.["safe_mode"] = HAS_TRAIT_FROM(aquarium, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	.["fishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
 	.["propData"] = list()

@@ -512,16 +512,14 @@
 		return BRUTELOSS
 
 	patient.emote("scream")
-	for(var/i in patient.bodyparts)
-		var/obj/item/bodypart/bone = i // fine to just, use these raw, its a meme anyway
+	for(var/obj/item/bodypart/bone as anything in patient.bodyparts)
+		// fine to just, use these raw, its a meme anyway
 		var/datum/wound/blunt/bone/severe/oof_ouch = new
 		oof_ouch.apply_wound(bone, wound_source = "bone gel")
 		var/datum/wound/blunt/bone/critical/oof_OUCH = new
 		oof_OUCH.apply_wound(bone, wound_source = "bone gel")
-
-	for(var/i in patient.bodyparts)
-		var/obj/item/bodypart/bone = i
-		bone.receive_damage(brute=60)
+	for(var/zone in GLOB.all_body_zones)
+		patient.apply_damage(60, BRUTE, zone)
 	use(1)
 	return BRUTELOSS
 

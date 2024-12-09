@@ -871,9 +871,10 @@
 		last_feeding = world.time
 		return
 	var/hunger = get_hunger()
+	last_feeding = world.time
 	if(hunger < 0.05) //don't bother growing for very small amounts.
-		last_feeding = world.time
 		return
+
 	var/new_size = size
 	var/new_weight = weight
 	var/hunger_mult
