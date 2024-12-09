@@ -87,31 +87,28 @@
 	key = "meow"
 	key_third_person = "meows"
 	vary = TRUE
+	sound = SFX_CAT_MEOW
+	message = "meows!"
+	message_mime = "meows silently."
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
-/datum/emote/living/carbon/meow/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/cat))
-		sound = SFX_CAT_MEOW
-		message = "meows!"
-		emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	else
-		to_chat(user, span_warning("You can't quite make the sound."))
-		return
+/datum/emote/living/carbon/meow/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional, params)
+	if(!iscarbon(user) || (!istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/cat)))
+		return FALSE
+	return ..()
 
 /datum/emote/living/carbon/purr
 	key = "purr"
 	key_third_person = "purrs"
 	vary = TRUE
+	sound = SFX_CAT_PURR
+	message = "purrs."
+	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/carbon/purr/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/cat))
-		sound = SFX_CAT_PURR
-		message = "purrs."
-		emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	else
-		to_chat(user, span_warning("You can't quite make the sound."))
-		return
+/datum/emote/living/carbon/purr/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional, params)
+	if(!iscarbon(user) || (!istype(user.get_organ_slot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/cat)) || HAS_MIND_TRAIT(user, TRAIT_MIMING))
+		return FALSE
+	return ..()
 
 /datum/emote/living/carbon/moan
 	key = "moan"

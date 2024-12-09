@@ -205,6 +205,7 @@
 			hitpush = FALSE
 			skipcatch = TRUE
 			blocked = TRUE
+			throwingdatum.blocked = TRUE
 		else
 			playsound(loc, 'sound/items/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
 			if(!isvendor(AM) && !iscarbon(AM)) //Vendors have special interactions, while carbon mobs already generate visible messages!
@@ -678,9 +679,9 @@
 
 	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) * 0.01 : 0
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
-	for(var/reagent in reagents)
-		var/datum/reagent/R = reagent
-		. |= R.expose_mob(src, methods, reagents[R], show_message, touch_protection)
+	for(var/datum/reagent/reagent as anything in reagents)
+		var/reac_volume = reagents[reagent]
+		. |= reagent.expose_mob(src, methods, reac_volume, show_message, touch_protection)
 
 /// Simplified ricochet angle calculation for mobs (also the base version doesn't work on mobs)
 /mob/living/handle_ricochet(obj/projectile/ricocheting_projectile)
@@ -801,6 +802,6 @@
 
 /mob/living/proc/check_block(atom/hit_by, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CHECK_BLOCK, hit_by, damage, attack_text, attack_type, armour_penetration, damage_type) & SUCCESSFUL_BLOCK)
-		return TRUE
+		return SUCCESSFUL_BLOCK
 
 	return FALSE

@@ -39,12 +39,6 @@
 	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_belt
 
-	/// Greyscale config used when generating digitigrade versions of the sprite.
-	var/digitigrade_greyscale_config_worn
-	/// Greyscale colors used when generating digitigrade versions of the sprite.
-	/// Optional - If not set it will default to normal greyscale colors, or approximate them if those are unset as well
-	var/digitigrade_greyscale_colors
-
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
 		IF YOU ADD MORE ICON CRAP TO THIS
@@ -1889,11 +1883,12 @@
 	return src
 
 /// Checks if the bait is liked by the fish type or not. Returns a multiplier that affects the chance of catching it.
-/obj/item/proc/check_bait(obj/item/fish/fish_type)
+/obj/item/proc/check_bait(obj/item/fish/fish)
 	if(HAS_TRAIT(src, TRAIT_OMNI_BAIT))
 		return 1
 	var/catch_multiplier = 1
-	var/list/properties = SSfishing.fish_properties[fish_type]
+
+	var/list/properties = SSfishing.fish_properties[isfish(fish) ? fish.type : fish]
 	//Bait matching likes doubles the chance
 	var/list/fav_bait = properties[FISH_PROPERTIES_FAV_BAIT]
 	for(var/bait_identifer in fav_bait)

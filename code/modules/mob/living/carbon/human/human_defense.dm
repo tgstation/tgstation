@@ -86,7 +86,7 @@
 /mob/living/carbon/human/check_block(atom/hit_by, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
 	. = ..()
 	if(.)
-		return TRUE
+		return SUCCESSFUL_BLOCK
 
 	var/block_chance_modifier = round(damage / -3)
 	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_HELD))
@@ -100,7 +100,7 @@
 
 		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration) / 2, 0, 100)) + block_chance_modifier
 		if(worn_thing.hit_reaction(src, hit_by, attack_text, final_block_chance, damage, attack_type, damage_type))
-			return TRUE
+			return SUCCESSFUL_BLOCK
 
 	return FALSE
 
@@ -512,17 +512,16 @@
 
 	//DAMAGE//
 	for(var/obj/item/bodypart/affecting in damaged)
-		affecting.receive_damage(acidity, 2*acidity)
+		var/damage_mod = 1
+		if(affecting.body_zone == BODY_ZONE_HEAD && prob(min(acidpwr * acid_volume * 0.1, 90))) //Applies disfigurement
+			damage_mod = 2
+			emote("scream")
+			set_facial_hairstyle("Shaved", update = FALSE)
+			set_hairstyle("Bald") //This calls update_body_parts()
+			ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
-		if(affecting.name == BODY_ZONE_HEAD)
-			if(prob(min(acidpwr*acid_volume/10, 90))) //Applies disfigurement
-				affecting.receive_damage(acidity, 2*acidity)
-				emote("scream")
-				set_facial_hairstyle("Shaved", update = FALSE)
-				set_hairstyle("Bald") //This calls update_body_parts()
-				ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
-
-		update_damage_overlays()
+		apply_damage(acidity * damage_mod, BRUTE, affecting)
+		apply_damage(acidity * damage_mod * 2, BURN, affecting)
 
 	//MELTING INVENTORY ITEMS//
 	//these items are all outside of armour visually, so melt regardless.
@@ -578,7 +577,7 @@
 		body_part.check_for_injuries(src, combined_msg)
 
 	for(var/t in missing)
-		combined_msg += span_boldannounce("Your [parse_zone(t)] is missing!")
+		combined_msg += span_bolddanger("Your [parse_zone(t)] is missing!")
 
 	if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()

@@ -134,6 +134,11 @@
 	desc = "A small bottle. May be used to revive people."
 	list_reagents = list(/datum/reagent/medicine/strange_reagent = 30)
 
+/obj/item/reagent_containers/cup/bottle/fishy_reagent
+	name = "Fishy Reagent Bottle"
+	desc = "A small bottle. May be used to revive fish."
+	list_reagents = list(/datum/reagent/medicine/strange_reagent/fishy_reagent = 30)
+
 /obj/item/reagent_containers/cup/bottle/traitor
 	name = "syndicate bottle"
 	desc = "A small bottle. Contains a random nasty chemical."
@@ -254,6 +259,12 @@
 	name = "romerol bottle"
 	desc = "A small bottle of Romerol. The REAL zombie powder."
 	list_reagents = list(/datum/reagent/romerol = 30)
+
+/obj/item/reagent_containers/cup/bottle/moltobeso
+	name = "Molt'Obeso bottle"
+	desc = "The revolutionary new sauce from Syndicate's culinary experts, designed to instantly reshape your figure! \
+			The key to the effectiveness of this product lies in its unique formulation, which combines carefully selected ingredients to stimulate appetite and enhance the absorption of calories."
+	list_reagents = list(/datum/reagent/consumable/moltobeso = 50)
 
 /obj/item/reagent_containers/cup/bottle/random_virus
 	name = "Experimental disease culture bottle"

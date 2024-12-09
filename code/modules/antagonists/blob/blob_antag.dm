@@ -100,7 +100,7 @@
 	. = ..()
 	if(owner)
 		addtimer(CALLBACK(src, PROC_REF(Activate), TRUE), autoplace_time, TIMER_UNIQUE|TIMER_OVERRIDE)
-		to_chat(owner, span_boldannounce("You will automatically pop and place your blob core in [DisplayTimeText(autoplace_time)]."))
+		to_chat(owner, span_bolddanger("You will automatically pop and place your blob core in [DisplayTimeText(autoplace_time)]."))
 
 /datum/action/innate/blobpop/Activate(timer_activated = FALSE)
 	var/mob/living/old_body = owner
@@ -183,5 +183,3 @@
 
 /obj/effect/dummy/phased_mob/can_blob_attack()
 	return FALSE
-
-

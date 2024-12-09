@@ -25,6 +25,7 @@
 /obj/item/fish/goldfish/gill
 	name = "McGill"
 	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case."
+	fish_id_redirect_path = /obj/item/fish/goldfish
 	stable_population = 1
 	random_case_rarity = FISH_RARITY_NOPE
 	fish_flags = parent_type::fish_flags & ~FISH_FLAG_SHOW_IN_CATALOG
@@ -61,6 +62,7 @@
 /obj/item/fish/goldfish/three_eyes/gill
 	name = "McGill"
 	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case. It looks kinda different today..."
+	fish_id_redirect_path = /obj/item/fish/goldfish/three_eyes
 	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/goldfish/three_eyes)
 	beauty = FISH_BEAUTY_GREAT
 	fish_flags = parent_type::fish_flags & ~FISH_FLAG_SHOW_IN_CATALOG
@@ -80,7 +82,7 @@
 	average_size = 30
 	average_weight = 500
 	stable_population = 3
-	fish_traits = list(/datum/fish_trait/aggressive)
+	fish_traits = list(/datum/fish_trait/territorial)
 	required_temperature_min = MIN_AQUARIUM_TEMP+22
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
 
@@ -163,6 +165,7 @@
 
 /obj/item/fish/tadpole
 	name = "tadpole"
+	fish_id = "tadpole"
 	desc = "The larval spawn of an amphibian. A very minuscle, round creature with a long tail it uses to swim around."
 	icon_state = "tadpole"
 	average_size = 3

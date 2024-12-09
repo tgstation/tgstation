@@ -82,7 +82,7 @@
 	description = "Unaffected by critical condition and pain"
 
 /datum/deathmatch_modifier/tenacity/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
-	player.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), DEATHMATCH_TRAIT)
+	player.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA, TRAIT_NO_DAMAGE_OVERLAY), DEATHMATCH_TRAIT)
 
 /datum/deathmatch_modifier/no_wounds
 	name = "No Wounds"

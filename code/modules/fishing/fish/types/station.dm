@@ -64,6 +64,7 @@
 
 /obj/item/fish/sludgefish/purple
 	name = "purple sludgefish"
+	fish_id = "purple_sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop. This one has developed sexual reproduction mechanisms, and a purple tint to boot."
 	icon_state = "sludgefish_purple"
 	random_case_rarity = FISH_RARITY_NOPE
