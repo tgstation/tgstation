@@ -722,6 +722,7 @@ SUBSYSTEM_DEF(ticker)
 	if(!reboot_timer)
 		to_chat(user, span_warning("There is no pending reboot!"))
 		return FALSE
+	to_chat(world, span_boldannounce("An admin has delayed the round end."))
 	deltimer(reboot_timer)
 	reboot_timer = null
 	return TRUE
