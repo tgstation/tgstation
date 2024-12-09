@@ -34,6 +34,13 @@
 	. = ..()
 	. += deconstruction_hints(user)
 
+/obj/structure/lattice/Destroy(force)
+	var/turf/turfloc = loc
+	. = ..()
+	if(isturf(turfloc))
+		for(var/atom/movable/thing_that_falls in turfloc)
+			turfloc.zFall((thing_that_falls))
+
 /obj/structure/lattice/proc/deconstruction_hints(mob/user)
 	return span_notice("The rods look like they could be <b>cut</b>. There's space for more <i>rods</i> or a <i>tile</i>.")
 
