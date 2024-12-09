@@ -34,11 +34,11 @@
 	. = ..()
 	. += deconstruction_hints(user)
 
-/obj/structure/lattice/Destroy(force)
+/obj/structure/lattice/Destroy(force) // so items on the lattice fall when the lattice is destroyed
 	var/turf/turfloc = loc
 	. = ..()
 	if(isturf(turfloc))
-		for(var/atom/movable/thing_that_falls in turfloc)
+		for(var/thing_that_falls as anything in turfloc) // as anything because loc can only contain movables
 			turfloc.zFall((thing_that_falls))
 
 /obj/structure/lattice/proc/deconstruction_hints(mob/user)
