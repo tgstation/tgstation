@@ -411,11 +411,11 @@
 	register_context()
 
 /obj/item/gun/ballistic/automatic/battle_rifle/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = NONE
+	. = ..()
 
 	if(held_item.tool_behaviour == TOOL_MULTITOOL && shots_before_degradation < max_shots_before_degradation)
 		context[SCREENTIP_CONTEXT_LMB] = "Reset System"
-		return CONTEXTUAL_SCREENTIP_SET
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/gun/ballistic/automatic/battle_rifle/examine_more(mob/user)
 	. = ..()
