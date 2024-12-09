@@ -2447,7 +2447,7 @@
 "XV" = (
 /obj/structure/table/reinforced,
 /obj/item/radio/intercom/directional/east,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/machinery/defibrillator_mount/directional/south,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,

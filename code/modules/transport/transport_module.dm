@@ -171,6 +171,13 @@
 		if(!(movable_contents.loc in locs))
 			remove_item_from_transport(movable_contents)
 
+/obj/structure/transport/linear/proc/check_for_humans()
+	for(var/atom/movable/movable_contents as anything in transport_contents)
+		if(ishuman(movable_contents))
+			return TRUE
+
+	return FALSE
+
 ///signal handler for COMSIG_MOVABLE_UPDATE_GLIDE_SIZE: when a movable in transport_contents changes its glide_size independently.
 ///adds that movable to a lazy list, movables in that list have their glide_size updated when the tram next moves
 /obj/structure/transport/linear/proc/on_changed_glide_size(atom/movable/moving_contents, new_glide_size)

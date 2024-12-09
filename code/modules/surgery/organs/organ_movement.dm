@@ -107,6 +107,12 @@
 	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
+	// organs_slot must ALWAYS be ordered in the same way as organ_process_order
+	// Otherwise life processing breaks down
+	sortTim(owner.organs_slot, GLOBAL_PROC_REF(cmp_organ_slot_asc))
+
+	STOP_PROCESSING(SSobj, src)
+
 /// Insert an organ into a limb, assume the limb as always detached and include no owner operations here (except the get_bodypart helper here I guess)
 /// Give EITHER a limb OR a limb owner
 /obj/item/organ/proc/bodypart_insert(obj/item/bodypart/bodypart, mob/living/carbon/limb_owner, movement_flags)
@@ -153,9 +159,7 @@
 		organ_owner.organs -= src
 
 	owner = null
-
 	on_mob_remove(organ_owner, special, movement_flags)
-
 	return TRUE
 
 /// Called after the organ is removed from a mob.
@@ -184,6 +188,13 @@
 	organ_owner.synchronize_bodyshapes()
 	if(!special)
 		organ_owner.hud_used?.update_locked_slots()
+
+	if((organ_flags & ORGAN_VITAL) && !special && !HAS_TRAIT(organ_owner, TRAIT_GODMODE))
+		if(organ_owner.stat != DEAD)
+			organ_owner.investigate_log("has been killed by losing a vital organ ([src]).", INVESTIGATE_DEATHS)
+		organ_owner.death()
+
+	START_PROCESSING(SSobj, src)
 
 	var/list/diseases = organ_owner.get_static_viruses()
 	if(!LAZYLEN(diseases))

@@ -171,11 +171,10 @@ have ways of interacting with a specific mob and control it.
 		return FALSE
 
 	set_blackboard_key(BB_MONKEY_PICKUPTARGET, weapon)
-	set_movement_target(type, weapon)
 	if(pickpocket)
-		queue_behavior(/datum/ai_behavior/monkey_equip/pickpocket)
+		queue_behavior(/datum/ai_behavior/monkey_equip/pickpocket, BB_MONKEY_PICKUPTARGET)
 	else
-		queue_behavior(/datum/ai_behavior/monkey_equip/ground)
+		queue_behavior(/datum/ai_behavior/monkey_equip/ground, BB_MONKEY_PICKUPTARGET)
 	return TRUE
 
 ///Reactive events to being hit

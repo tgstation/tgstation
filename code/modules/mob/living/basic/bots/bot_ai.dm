@@ -1,3 +1,5 @@
+#define BOT_NO_BEACON_PATH_PENALTY 30 SECONDS
+
 /datum/ai_controller/basic_controller/bot
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
@@ -9,12 +11,10 @@
 	)
 
 	ai_movement = /datum/ai_movement/jps/bot
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/salute_authority,
 		/datum/ai_planning_subtree/find_patrol_beacon,
-		/datum/ai_planning_subtree/manage_unreachable_list,
 	)
 	max_target_distance = AI_BOT_PATH_LENGTH
 	can_idle = FALSE
@@ -40,7 +40,7 @@
 		return ..()
 	var/list/path = get_path_to(living_mob, living_target, mintargetdist = my_controller.minimum_distance, max_distance = 10, access = my_controller.get_access())
 	if(!length(path) || QDELETED(living_mob))
-		my_controller?.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, living_target, TRUE)
+		my_controller?.add_to_blacklist(living_target)
 		return FALSE
 	return ..()
 
@@ -56,6 +56,16 @@
 	SIGNAL_HANDLER
 	if(current_movement_target == blackboard[BB_BEACON_TARGET])
 		source.update_bot_mode(new_mode = BOT_PATROL)
+
+/datum/ai_controller/basic_controller/bot/proc/add_to_blacklist(atom/target, duration)
+	var/final_duration = duration || blackboard[BB_UNREACHABLE_LIST_COOLDOWN]
+	set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(remove_from_blacklist), target), final_duration)
+
+/datum/ai_controller/basic_controller/bot/proc/remove_from_blacklist(atom/target)
+	if(QDELETED(target))
+		return
+	remove_from_blackboard_lazylist_key(BB_TEMPORARY_IGNORE_LIST, target)
 
 /datum/ai_controller/basic_controller/bot/proc/clear_summon()
 	SIGNAL_HANDLER
@@ -90,12 +100,14 @@
 		clear_blackboard_key(key)
 
 ///set the target if we can reach them
-/datum/ai_controller/basic_controller/bot/proc/set_if_can_reach(key, target, distance = 10, bypass_add_to_blacklist = FALSE)
+/datum/ai_controller/basic_controller/bot/proc/set_if_can_reach(key, target, duration, distance = 10, bypass_add_to_blacklist = FALSE)
 	if(can_reach_target(target, distance))
 		set_blackboard_key(key, target)
 		return TRUE
-	if(!bypass_add_to_blacklist)
-		set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
+	if(bypass_add_to_blacklist)
+		return FALSE
+	var/final_duration = duration || blackboard[BB_UNREACHABLE_LIST_COOLDOWN]
+	add_to_blacklist(target, final_duration)
 	return FALSE
 
 /datum/ai_controller/basic_controller/bot/proc/can_reach_target(target, distance = 10)
@@ -104,29 +116,7 @@
 	if(get_turf(pawn) == get_turf(target))
 		return TRUE
 	var/list/path = get_path_to(pawn, target, simulated_only = !HAS_TRAIT(pawn, TRAIT_SPACEWALK), mintargetdist = minimum_distance, max_distance = distance, access = get_access())
-	if(!length(path))
-		return FALSE
-	return TRUE
-
-/// subtree to manage our list of unreachables, we reset it every 15 seconds
-/datum/ai_planning_subtree/manage_unreachable_list
-
-/datum/ai_planning_subtree/manage_unreachable_list/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(isnull(controller.blackboard[BB_UNREACHABLE_LIST_COOLDOWN]) || controller.blackboard[BB_CLEAR_LIST_READY] > world.time)
-		return
-	controller.queue_behavior(/datum/ai_behavior/manage_unreachable_list, BB_TEMPORARY_IGNORE_LIST)
-
-/datum/ai_behavior/manage_unreachable_list
-	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-
-/datum/ai_behavior/manage_unreachable_list/perform(seconds_per_tick, datum/ai_controller/controller, list_key)
-	if(!isnull(controller.blackboard[list_key]))
-		controller.clear_blackboard_key(list_key)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-/datum/ai_behavior/manage_unreachable_list/finish_action(datum/ai_controller/controller, succeeded)
-	. = ..()
-	controller.set_blackboard_key(BB_CLEAR_LIST_READY, controller.blackboard[BB_UNREACHABLE_LIST_COOLDOWN] + world.time)
+	return (!!length(path))
 
 /datum/ai_planning_subtree/find_patrol_beacon
 	///travel towards beacon behavior
@@ -134,6 +124,10 @@
 
 /datum/ai_planning_subtree/find_patrol_beacon/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
+
+	if(controller.blackboard[BB_BOT_BEACON_COOLDOWN] > world.time)
+		return
+
 	if(!(bot_pawn.bot_mode_flags & BOT_MODE_AUTOPATROL) || bot_pawn.mode == BOT_SUMMON)
 		return
 
@@ -168,7 +162,10 @@
 	controller.set_blackboard_key(BB_BEACON_TARGET, final_target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/find_next_beacon_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/ai_behavior/find_next_beacon_target
+	action_cooldown = 5 SECONDS
+
+/datum/ai_behavior/find_next_beacon_target/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	var/atom/final_target
 	var/obj/machinery/navbeacon/prev_beacon = controller.blackboard[BB_PREVIOUS_BEACON_TARGET]
@@ -181,19 +178,37 @@
 			break
 
 	if(isnull(final_target))
-		controller.clear_blackboard_key(BB_PREVIOUS_BEACON_TARGET)
+		controller.clear_blackboard_key(BB_PREVIOUS_BEACON_TARGET) //failed to find the next beacon, search for a first beacon again
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	controller.set_blackboard_key(BB_BEACON_TARGET, final_target)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	controller.set_blackboard_key(BB_PREVIOUS_BEACON_TARGET, final_target)
+	controller.clear_blackboard_key(BB_BEACON_TARGET)
+
+	if(LAZYACCESS(controller.blackboard[BB_TEMPORARY_IGNORE_LIST], final_target) || get_dist(bot_pawn, final_target) > controller.max_target_distance)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	if(controller.set_if_can_reach(key = BB_BEACON_TARGET, target = final_target, duration = 3 MINUTES, distance = controller.max_target_distance))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+	controller.set_blackboard_key(BB_BOT_BEACON_COOLDOWN, world.time + BOT_NO_BEACON_PATH_PENALTY)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 
 /datum/ai_behavior/travel_towards/beacon
 	clear_target = TRUE
 	new_movement_type = /datum/ai_movement/jps/bot/travel_to_beacon
 
-/datum/ai_behavior/travel_towards/beacon/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/ai_behavior/travel_towards/beacon/setup(datum/ai_controller/controller, target_key)
+	var/atom/target_beacon = controller.blackboard[target_key]
+	if(LAZYACCESS(controller.blackboard[BB_TEMPORARY_IGNORE_LIST], target_beacon))
+		return FALSE
+	return ..()
+
+/datum/ai_behavior/travel_towards/beacon/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, target_key)
 	var/atom/target = controller.blackboard[target_key]
+	if(!succeeded)
+		controller.set_blackboard_key(BB_BOT_BEACON_COOLDOWN, world.time + BOT_NO_BEACON_PATH_PENALTY)
+		controller.add_to_blacklist(target, 3 MINUTES)
 	controller.set_blackboard_key(BB_PREVIOUS_BEACON_TARGET, target)
 	return ..()
 
@@ -274,7 +289,7 @@
 
 	var/mob/living/living_pawn = controller.pawn
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	var/list/objects_to_search = turf_search ? spiral_range_turfs(radius, controller.pawn) : oview(radius, controller.pawn) //use range turfs instead of oview when we can for performance
+	var/list/objects_to_search = turf_search ? RANGE_TURFS(radius, controller.pawn) : oview(radius, controller.pawn) //use range turfs instead of oview when we can for performance
 	for(var/atom/potential_target as anything in objects_to_search)
 		if(QDELETED(living_pawn))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -284,7 +299,9 @@
 			continue
 		if(!valid_target(controller, potential_target))
 			continue
-		if(controller.set_if_can_reach(target_key, potential_target, distance = pathing_distance, bypass_add_to_blacklist = bypass_add_blacklist))
+		if(!can_see(controller.pawn, potential_target, radius))
+			continue
+		if(controller.set_if_can_reach(key = target_key, target = potential_target, distance = pathing_distance, bypass_add_to_blacklist = bypass_add_blacklist))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
@@ -328,13 +345,16 @@
 	living_pawn.UnarmedAttack(target, proximity_flag = TRUE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/bot_interact/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/ai_behavior/bot_interact/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, target_key)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(clear_target)
 		controller.clear_blackboard_key(target_key)
 	if(!succeeded && !isnull(target))
-		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
+		controller.add_to_blacklist(target)
 
 /datum/ai_behavior/bot_interact/keep_target
 	clear_target = FALSE
+
+
+#undef BOT_NO_BEACON_PATH_PENALTY

@@ -70,11 +70,11 @@
 	need_mob_update += inspired_human.adjustFireLoss(-15, updating_health = FALSE)
 	if(need_mob_update)
 		inspired_human.updatehealth()
-	inspired_human.AdjustStun(-40)
-	inspired_human.AdjustKnockdown(-40)
-	inspired_human.AdjustImmobilized(-40)
-	inspired_human.AdjustParalyzed(-40)
-	inspired_human.AdjustUnconscious(-40)
+	inspired_human.AdjustStun(-4 SECONDS)
+	inspired_human.AdjustKnockdown(-4 SECONDS)
+	inspired_human.AdjustImmobilized(-4 SECONDS)
+	inspired_human.AdjustParalyzed(-4 SECONDS)
+	inspired_human.AdjustUnconscious(-4 SECONDS)
 	playsound(inspired_human, 'sound/effects/magic/staff_healing.ogg', 25, FALSE)
 
 /obj/item/banner/proc/special_inspiration(mob/living/carbon/human/H) //Any banner-specific inspiration effects go here
