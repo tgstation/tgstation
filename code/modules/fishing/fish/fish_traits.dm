@@ -286,11 +286,13 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/emulsijack
 	name = "Emulsifier"
 	catalog_description = "This fish emits an invisible toxin that emulsifies other fish for it to feed on."
+	var/list/resistance_traits = list(TRAIT_RESIST_EMULSIFY, TRAIT_FISH_TOXIN_IMMUNE)
+	var/trait_to_add = TRAIT_RESIST_EMULSIFY
 
 /datum/fish_trait/emulsijack/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(emulsify))
-	ADD_TRAIT(fish, TRAIT_RESIST_EMULSIFY, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, trait_to_add, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/emulsijack/proc/emulsify(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
@@ -298,8 +300,9 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	var/emulsified = FALSE
 	for(var/obj/item/fish/victim in source.loc)
-		if(HAS_TRAIT(victim, TRAIT_RESIST_EMULSIFY) || HAS_TRAIT(victim, TRAIT_FISH_TOXIN_IMMUNE)) //no team killing
-			continue
+		for(var/trait in resistance_traits)
+			if(HAS_TRAIT(victim, trait))
+				continue
 		victim.adjust_health(victim.health - 3 * seconds_per_tick) //the victim may heal a bit but this will quickly kill
 		emulsified = TRUE
 	if(emulsified)
@@ -321,6 +324,15 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	stench.gases[/datum/gas/miasma][MOLES] = MIASMA_CORPSE_MOLES * 2 * seconds_per_tick
 	stench.temperature = mob.bodytemperature
 	our_turf.assume_air(stench)
+
+/datum/fish_trait/emulsijack/psychic
+	name = "Psychic Aura"
+	catalog_description = "This fish emits an almost unblockable psychic aura that assaults minds, slowly killing all nearby fish and making humanoids have a bad time."
+	resistance_traits = list(TRAIT_RESIST_PSYCHIC)
+	trait_to_add = TRAIT_RESIST_PSYCHIC
+
+/datum/fish_trait/emulsijack/psychic/on_non_stasis_life(mob/living/basic/mob, seconds_per_tick)
+	return
 
 /datum/fish_trait/necrophage
 	name = "Necrophage"

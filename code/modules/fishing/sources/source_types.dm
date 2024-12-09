@@ -773,3 +773,21 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
+
+/datum/fish_source/dimensional_rift
+	catalog_description = null //it's a secret (sorta, I know you're reading this)
+	radial_state = "cursed" // placeholder
+	fish_table = list(
+		/obj/item/fish/starfish/chrystarfish = 7,
+		/obj/item/fish/dolphish = 6,
+		/obj/item/fish/flumpulus = 5,
+		/obj/item/fish/gullion = 4,
+		/obj/item/fish/pete = 3,
+		/obj/item/fish/mossglob = 2,
+		/obj/item/fish/babbelfish = 1,
+	)
+	fish_counts = list(
+		/obj/item/fishing_rod/telescopic/master = 1, // silly heretic rod?
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 60
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS

@@ -1028,6 +1028,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///fish traits
 #define TRAIT_FISH_STASIS "fish_stasis"
 #define TRAIT_FISH_FLOPPING "fish_flopping"
+#define TRAIT_RESIST_PSYCHIC "resist_psychic"
 #define TRAIT_RESIST_EMULSIFY "resist_emulsify"
 #define TRAIT_FISH_SELF_REPRODUCE "fish_self_reproduce"
 #define TRAIT_FISH_NO_MATING "fish_no_mating"
