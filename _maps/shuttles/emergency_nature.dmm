@@ -497,7 +497,7 @@
 /area/shuttle/escape)
 "sF" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/item/surgery_tray/full{
+/obj/effect/spawner/surgery_tray/full{
 	pixel_y = 5
 	},
 /obj/structure/rack,

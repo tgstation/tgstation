@@ -1,4 +1,0 @@
-author: "imedial"
-delete-after: True
-changes:
-  - bugfix: "Map vote now cares about current player count"
