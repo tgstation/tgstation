@@ -722,7 +722,7 @@
 	owner.forceMove(T)
 
 /datum/status_effect/go_away/deletes_mob
-	id = "go_away"
+	id = "go_away_deletes_mob"
 	duration = INFINITY
 
 /datum/status_effect/go_away/deluxe/on_creation(mob/living/new_owner, set_duration)
