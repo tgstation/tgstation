@@ -271,9 +271,9 @@
 /obj/structure/holosign/robot_seat/attack_holosign(mob/living/user, list/modifiers)
 	return
 
-/obj/structure/holosign/robot_seat/attacked_by(obj/item/I, mob/living/user)
+/obj/structure/holosign/robot_seat/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(I.type == projector?.type && !linked_venue.linked_seats[src])
+	if(tool.type == projector?.type && !linked_venue.linked_seats[src])
 		qdel(src)
 
 /obj/structure/holosign/robot_seat/Destroy()
