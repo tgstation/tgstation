@@ -56,7 +56,7 @@
 	var/growth = growth_rate * deciseconds_elapsed
 	if(HAS_TRAIT(source, TRAIT_FISH_QUICK_GROWTH))
 		growth *= 2
-	if(SEND_SIGNAL(source, COMSIG_FISH_BEFORE_GROWING, seconds_per_tick, growth) & COMPONENT_DONT_GROW)
+	if(SEND_SIGNAL(source, COMSIG_FISH_BEFORE_GROWING, seconds_per_tick, growth, result_type) & COMPONENT_DONT_GROW)
 		return
 	maturation += growth
 	if(maturation >= 100)
@@ -87,7 +87,7 @@
 			addtimer(CALLBACK(result, TYPE_PROC_REF(/mob/living/basic, hop_on_nearby_turf)), 0.1 SECONDS)
 
 	if(is_evo || location == source.loc)
-		var/message_verb = del_on_grow ? "grows into" : "generates"
+		var/message_verb = del_on_grow ? "grows into" : "lays"
 		location.visible_message(span_notice("[source] [message_verb] \a [result]."), vision_distance = 3)
 
 	if(inherit_name && HAS_TRAIT(source, TRAIT_WAS_RENAMED))

@@ -4,12 +4,12 @@
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	r_pocket = /obj/item/knife/shiv
 
-/datum/outfit/prisoner/post_equip(mob/living/carbon/human/prisoner, visualsOnly=FALSE)
+/datum/outfit/prisoner/post_equip(mob/living/carbon/human/prisoner, visuals_only=FALSE)
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if(SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		prisoner.w_uniform?.update_greyscale()
 		prisoner.update_worn_undersuit()
-	if(visualsOnly)
+	if(visuals_only)
 		return
 	prisoner.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
 
@@ -30,10 +30,10 @@
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/regular/circle
 
-/datum/outfit/waldo/post_equip(mob/living/carbon/human/equipped_on, visualsOnly=FALSE)
+/datum/outfit/waldo/post_equip(mob/living/carbon/human/equipped_on, visuals_only=FALSE)
 	equipped_on.w_uniform?.update_greyscale()
 	equipped_on.update_worn_undersuit()
-	if(visualsOnly)
+	if(visuals_only)
 		return
 	equipped_on.fully_replace_character_name(null, "Waldo")
 	equipped_on.eye_color_left = COLOR_BLACK
@@ -63,10 +63,10 @@
 	uniform = /obj/item/clothing/under/color/white
 	ears = /obj/item/radio/headset
 
-/datum/outfit/synthetic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/synthetic/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
-	var/obj/item/organ/internal/eyes/robotic/glow/eyes = new()
+	var/obj/item/organ/eyes/robotic/glow/eyes = new()
 	eyes.Insert(H, movement_flags = DELETE_IF_REPLACED)
 
 /datum/outfit/invisible_man
@@ -82,7 +82,7 @@
 		/obj/item/reagent_containers/hypospray/medipen/invisibility = 3,
 	)
 
-/datum/outfit/invisible_man/post_equip(mob/living/carbon/human/equipee, visualsOnly)
+/datum/outfit/invisible_man/post_equip(mob/living/carbon/human/equipee, visuals_only)
 	. = ..()
 
 	var/obj/item/implant/camouflage/invisibility_implant = new(equipee)

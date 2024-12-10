@@ -84,6 +84,8 @@
 #define ROLE_SYNDICATE_MEDBORG "Syndicate Medical Cyborg"
 #define ROLE_SYNDICATE_ASSAULTBORG "Syndicate Assault Cyborg"
 
+#define ROLE_RECOVERED_CREW "Recovered Crew"
+
 //Spawner roles
 #define ROLE_ANCIENT_CREW "Ancient Crew"
 #define ROLE_ASHWALKER "Ash Walker"
@@ -167,6 +169,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_GLITCH = 0,
 	ROLE_PAI = 0,
 	ROLE_SENTIENCE = 0,
+	ROLE_RECOVERED_CREW = 0,
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection

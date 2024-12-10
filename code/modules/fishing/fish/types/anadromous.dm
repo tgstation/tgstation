@@ -1,5 +1,6 @@
 /obj/item/fish/sockeye_salmon
 	name = "sockeye salmon"
+	fish_id = "sockeye_salmon"
 	desc = "A fairly common and iconic salmon endemic of the Pacific Ocean. At some point imported into outer space, where we're now."
 	icon_state = "sockeye"
 	sprite_width = 6
@@ -18,6 +19,7 @@
 
 /obj/item/fish/arctic_char
 	name = "arctic char"
+	fish_id = "arctic_char"
 	desc = "A cold-water anadromous fish widespread around the Northern Hemisphere of Earth, yet it has somehow found a way here."
 	icon_state = "arctic_char"
 	sprite_width = 7
@@ -32,6 +34,7 @@
 
 /obj/item/fish/pike
 	name = "pike"
+	fish_id = "pike"
 	desc = "A long-bodied predator with a snout that almost looks like a beak. Definitely not a weapon to swing around."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "pike"
@@ -52,7 +55,7 @@
 	fishing_difficulty_modifier = 10
 	required_temperature_min = MIN_AQUARIUM_TEMP+12
 	required_temperature_max = MIN_AQUARIUM_TEMP+27
-	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/territorial)
 	evolution_types = list(/datum/fish_evolution/armored_pike)
 	compatible_types = list(/obj/item/fish/pike/armored)
 	favorite_bait = list(

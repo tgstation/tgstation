@@ -74,10 +74,31 @@ GLOBAL_VAR(station_nuke_source)
 
 /obj/machinery/nuclearbomb/examine(mob/user)
 	. = ..()
-	if(exploding)
-		. += span_bolddanger("It is in the process of exploding. Perhaps reviewing your affairs is in order.")
-	if(timing)
-		. += span_danger("There are [get_time_left()] seconds until detonation.")
+	switch(deconstruction_state)
+		if(NUKESTATE_UNSCREWED)
+			. += span_notice("The front panel has been unscrewed and can be <b>pried open</b>.")
+		if(NUKESTATE_PANEL_REMOVED)
+			. += span_notice("The inner plate is exposed and can be cut with a <b>welding tool</b>.")
+		if(NUKESTATE_WELDED)
+			. += span_notice("The inner plate has been cut through and can be <b>pried off</b>.")
+		if(NUKESTATE_CORE_EXPOSED)
+			. += span_danger("The inner chamber is exposed, revealing [core] to the outside!")
+			. += span_notice("The damaged inner plate covering the inner chamber can be replaced with some <b>iron</b>.")
+		if(NUKESTATE_CORE_REMOVED)
+			. += span_notice("The inner chamber is exposed, but is empty.")
+		if(NUKESTATE_INTACT)
+			. += span_notice("The front panel is secured.")
+
+	switch(get_nuke_state())
+		if(NUKE_OFF_LOCKED)
+			. += span_notice("The device is awaiting activation codes.")
+		if(NUKE_OFF_UNLOCKED)
+			. += span_notice("The device is set and is ready for arming the detonation countdown.")
+		if(NUKE_ON_TIMING)
+			. += span_danger("There are [get_time_left()] seconds until detonation.")
+		if(NUKE_ON_EXPLODING)
+			. += span_bolddanger("It is in the process of exploding. Perhaps reviewing your affairs is in order.")
+
 
 /// Checks if the disk inserted is a real nuke disk or not.
 /obj/machinery/nuclearbomb/proc/disk_check(obj/item/disk/nuclear/inserted_disk)
@@ -225,12 +246,11 @@ GLOBAL_VAR(station_nuke_source)
 		if(NUKESTATE_CORE_REMOVED)
 			interior = "core-removed"
 		if(NUKESTATE_INTACT)
-			return
+			interior = null
 
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED)
-			lights = ""
-			return
+			lights = null
 		if(NUKE_OFF_UNLOCKED)
 			lights = "lights-safety"
 		if(NUKE_ON_TIMING)
@@ -425,11 +445,12 @@ GLOBAL_VAR(station_nuke_source)
 	// We're safe now, so stop any ongoing timers
 	if(safety)
 		if(timing)
+			timing = FALSE
 			disarm_nuke()
 
-		timing = FALSE
 		detonation_timer = null
 		countdown.stop()
+	update_appearance(UPDATE_OVERLAYS) //only the lights overlay are affected by safety
 
 /// Arms the nuke, or disarms it if it's already active.
 /obj/machinery/nuclearbomb/proc/toggle_nuke_armed()
@@ -632,7 +653,7 @@ GLOBAL_VAR(station_nuke_source)
 	if(istype(gibbed.loc, /obj/structure/closet/secure_closet/freezer))
 		var/obj/structure/closet/secure_closet/freezer/freezer = gibbed.loc
 		if(!freezer.jones)
-			to_chat(gibbed, span_boldannounce("You hold onto [freezer] as [source] goes off. \
+			to_chat(gibbed, span_bolddanger("You hold onto [freezer] as [source] goes off. \
 				Luckily, as [freezer] is lead-lined, you survive."))
 			freezer.jones = TRUE
 			return FALSE

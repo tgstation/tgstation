@@ -137,7 +137,7 @@
 	if(occupant.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "Specimen deceased."
-	var/obj/item/organ/internal/heart/gland/GlandTest = locate() in occupant.organs
+	var/obj/item/organ/heart/gland/GlandTest = locate() in occupant.organs
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "No glands detected!"
@@ -158,7 +158,7 @@
 		user_abductor.team.abductees += occupant.mind
 		occupant.mind.add_antag_datum(/datum/antagonist/abductee)
 
-		for(var/obj/item/organ/internal/heart/gland/G in occupant.organs)
+		for(var/obj/item/organ/heart/gland/G in occupant.organs)
 			G.Start()
 			point_reward++
 		if(point_reward > 0)

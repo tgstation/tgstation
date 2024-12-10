@@ -16,10 +16,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	basic_mob_flags = DEL_ON_DEATH
 	density = FALSE
 
-	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "medibot0"
-	base_icon_state = "medibot"
-
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	habitable_atmos = null
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
@@ -103,6 +99,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 		TRAIT_IMMOBILIZED,
 		TRAIT_HANDS_BLOCKED,
 	)
+	///name of the UI we will attempt to open
+	var/bot_ui = "SimpleBot"
 	/// If true we will offer this
 	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 
@@ -371,7 +369,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "SimpleBot", name)
+		ui = new(user, src, bot_ui, name)
 		ui.open()
 
 /mob/living/basic/bot/click_alt(mob/user)
@@ -633,7 +631,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 				to_chat(src, span_boldnotice(get_emagged_message()))
 				return
 			if(!(bot_access_flags & BOT_COVER_HACKED))
-				to_chat(the_user, span_boldannounce("You fail to repair [src]'s [hackables]."))
+				to_chat(the_user, span_bolddanger("You fail to repair [src]'s [hackables]."))
 				return
 			bot_access_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
 			to_chat(the_user, span_notice("You reset the [src]'s [hackables]."))

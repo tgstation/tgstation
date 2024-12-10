@@ -96,7 +96,7 @@
 		stored = null
 		deconstruct(FALSE)
 
-/obj/machinery/disposal/singularity_pull(S, current_size)
+/obj/machinery/disposal/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()

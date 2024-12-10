@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Getting a fish tail, cat ears, or a cat tail as any of the slime species no longer runtimes."

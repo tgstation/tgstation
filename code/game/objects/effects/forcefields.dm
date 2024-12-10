@@ -14,7 +14,7 @@
 	if(initial_duration > 0 SECONDS)
 		QDEL_IN(src, initial_duration)
 
-/obj/effect/forcefield/singularity_pull()
+/obj/effect/forcefield/singularity_pull(atom/singularity, current_size)
 	return
 
 /// The wizard's forcefield, summoned by forcewall

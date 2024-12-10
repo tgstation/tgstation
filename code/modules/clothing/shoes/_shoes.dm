@@ -4,6 +4,10 @@
 	lefthand_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
 	desc = "Comfortable-looking shoes."
+	pickup_sound = 'sound/items/handling/shoes/sneakers_pickup1.ogg'
+	drop_sound = 'sound/items/handling/shoes/sneakers_drop1.ogg'
+	equip_sound = 'sound/items/equip/sneakers_equip1.ogg'
+	sound_vary = TRUE
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 
 	body_parts_covered = FEET
@@ -105,6 +109,9 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_worn_shoes()
+
+/obj/item/clothing/shoes/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "boots_worn")
 
 /**
  * adjust_laces adjusts whether our shoes (assuming they can_be_tied) and tied, untied, or knotted

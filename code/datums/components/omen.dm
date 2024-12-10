@@ -106,7 +106,7 @@
 
 	var/has_watchers = FALSE
 	for(var/mob/viewer in viewers(our_guy, world.view))
-		if(viewer.client)
+		if(viewer.client && !viewer.client.is_afk())
 			has_watchers = TRUE
 			break
 	if(!has_watchers)
@@ -115,7 +115,9 @@
 	if(!prob(8 * effective_luck))
 		return
 
-	var/our_guy_pos = get_turf(living_guy)
+	var/turf/open/our_guy_pos = living_guy.loc
+	if(!isopenturf(our_guy_pos))
+		return
 	for(var/obj/machinery/door/airlock/darth_airlock in our_guy_pos)
 		if(darth_airlock.locked || !darth_airlock.hasPower())
 			continue

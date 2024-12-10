@@ -109,6 +109,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// Never directly access this, use get_explosive_block() instead
 	var/inherent_explosive_resistance = -1
 
+	///The typepath we use for lazy fishing on turfs, to save on world init time.
+	var/fish_source
+
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))
@@ -270,7 +273,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * * type_list - are we checking for types of atoms to ignore and not physical atoms
  */
 /turf/proc/is_blocked_turf(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms, type_list = FALSE)
-	if((!isnull(source_atom) && !CanPass(source_atom, get_dir(src, source_atom))) || density)
+	if(density)
 		return TRUE
 
 	for(var/atom/movable/movable_content as anything in contents)
@@ -668,7 +671,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	clear_reagents_to_vomit_pool(vomiter, throw_up, purge_ratio)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
-	var/obj/item/organ/internal/stomach/belly = M.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/belly = M.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!belly?.reagents.total_volume)
 		return
 	var/chemicals_lost = belly.reagents.total_volume * purge_ratio
@@ -695,9 +698,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_TURF, src, reagents, methods, volume_modifier, show_message)
-	for(var/reagent in reagents)
-		var/datum/reagent/R = reagent
-		. |= R.expose_turf(src, reagents[R])
+	for(var/datum/reagent/reagent as anything in reagents)
+		var/reac_volume = reagents[reagent]
+		. |= reagent.expose_turf(src, reac_volume)
 
 /**
  * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
@@ -790,3 +793,67 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)
 	return TRUE
+
+/**
+ * the following are some hacky fishing-related optimizations to shave off
+ * time we spend implementing the fishing as possible, even if that means
+ * doing hackier code, because we've hundreds of turfs like lava, water etc every round,
+ */
+/turf/proc/add_lazy_fishing(fish_source_path)
+	RegisterSignal(src, COMSIG_PRE_FISHING, PROC_REF(add_fishing_spot_comp))
+	RegisterSignal(src, COMSIG_NPC_FISHING, PROC_REF(on_npc_fishing))
+	RegisterSignal(src, COMSIG_FISH_RELEASED_INTO, PROC_REF(on_fish_release_into))
+	RegisterSignal(src, COMSIG_TURF_CHANGE, PROC_REF(remove_lazy_fishing))
+	ADD_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
+	fish_source = fish_source_path
+
+/turf/proc/remove_lazy_fishing()
+	SIGNAL_HANDLER
+	UnregisterSignal(src, list(
+		COMSIG_PRE_FISHING,
+		COMSIG_NPC_FISHING,
+		COMSIG_FISH_RELEASED_INTO,
+		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
+		COMSIG_TURF_CHANGE,
+	))
+	REMOVE_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
+	fish_source = null
+
+/turf/proc/add_fishing_spot_comp(datum/source)
+	SIGNAL_HANDLER
+	source.AddComponent(/datum/component/fishing_spot, fish_source)
+	remove_lazy_fishing()
+
+/turf/proc/on_npc_fishing(datum/source, list/fish_spot_container)
+	SIGNAL_HANDLER
+	fish_spot_container[NPC_FISHING_SPOT] = GLOB.preset_fish_sources[fish_source]
+
+/turf/proc/on_fish_release_into(datum/source, obj/item/fish/fish, mob/living/releaser)
+	SIGNAL_HANDLER
+	GLOB.preset_fish_sources[fish_source].readd_fish(fish, releaser)
+
+/turf/examine(mob/user)
+	. = ..()
+	if(!fish_source || !HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
+		return
+	if(!GLOB.preset_fish_sources[fish_source].has_known_fishes(src))
+		return
+	. += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
+
+/turf/examine_more(mob/user)
+	. = ..()
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT) || !fish_source)
+		return
+	GLOB.preset_fish_sources[fish_source].get_catchable_fish_names(user, src, .)
+
+/turf/ex_act(severity, target)
+	. = ..()
+	if(!fish_source)
+		return
+	GLOB.preset_fish_sources[fish_source].spawn_reward_from_explosion(src, severity)
+
+/turf/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!fish_source || !istype(tool.buffer, /obj/machinery/fishing_portal_generator))
+		return ..()
+	var/obj/machinery/fishing_portal_generator/portal = tool.buffer
+	return portal.link_fishing_spot(GLOB.preset_fish_sources[fish_source], src, user)

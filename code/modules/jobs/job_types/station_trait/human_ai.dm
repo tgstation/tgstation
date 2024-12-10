@@ -111,9 +111,9 @@
 
 	l_hand = /obj/item/paper/default_lawset_list
 
-/datum/outfit/job/human_ai/pre_equip(mob/living/carbon/human/equipped, visualsOnly)
+/datum/outfit/job/human_ai/pre_equip(mob/living/carbon/human/equipped, visuals_only)
 	. = ..()
-	if(visualsOnly)
+	if(visuals_only)
 		return
 	if(is_safe_turf(equipped.loc, dense_atoms = TRUE)) //skip this if it's safe. We allow dense atoms because we spawn out of the inactive core.
 		return
@@ -123,12 +123,12 @@
 	suit = /obj/item/clothing/suit/space/nasavoid
 	head = /obj/item/clothing/head/helmet/space/nasavoid
 
-/datum/outfit/job/human_ai/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+/datum/outfit/job/human_ai/post_equip(mob/living/carbon/human/equipped, visuals_only)
 	. = ..()
-	if(visualsOnly)
+	if(visuals_only)
 		return
 	if(!equipped.get_quirk(/datum/quirk/body_purist))
-		var/obj/item/organ/internal/tongue/robot/cybernetic = new()
+		var/obj/item/organ/tongue/robot/cybernetic = new()
 		cybernetic.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 		//you only get respect if you go all the way, man.
 		ADD_TRAIT(equipped, TRAIT_COMMISSIONED, INNATE_TRAIT)

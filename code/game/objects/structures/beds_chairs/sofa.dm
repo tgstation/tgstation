@@ -74,6 +74,7 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	icon_state = "bench_middle"
 	greyscale_config = /datum/greyscale_config/bench_middle
 	greyscale_colors = "#af7d28"
+	has_armrest = FALSE
 
 /obj/structure/chair/sofa/bench/left
 	icon_state = "bench_left"
@@ -101,6 +102,7 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	max_integrity = 60
 	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
 	buildstackamount = 3
+	has_armrest = FALSE
 
 /obj/structure/chair/sofa/bamboo/left
 	icon_state = "bamboo_sofaend_left"

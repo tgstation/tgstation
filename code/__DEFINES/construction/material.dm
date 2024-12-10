@@ -58,6 +58,8 @@
 #define MATERIAL_AFFECT_STATISTICS (1<<3)
 /// Applies the material greyscale color to the atom's greyscale color.
 #define MATERIAL_GREYSCALE (1<<4)
+/// Materials like plasteel and alien alloy won't apply slowdowns.
+#define MATERIAL_NO_SLOWDOWN (1<<5)
 
 //Special return values of [/datum/component/material_container/insert_item]
 /// No material was found inside them item

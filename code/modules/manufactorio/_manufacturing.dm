@@ -106,7 +106,7 @@
 		if(!manufactury.anchored)
 			return MANUFACTURING_FAIL
 		return manufactury.receive_resource(sending, src, isturf(what_or_dir) ? get_dir(src, what_or_dir) : what_or_dir)
-	if(next_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = sending))
+	if(next_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = sending) && !ischasm(next_turf))
 		return MANUFACTURING_FAIL
 	if(length(next_turf.contents) >= MANUFACTURING_TURF_LAG_LIMIT)
 		return MANUFACTURING_FAIL_FULL

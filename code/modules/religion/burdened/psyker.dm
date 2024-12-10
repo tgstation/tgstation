@@ -1,4 +1,4 @@
-/obj/item/organ/internal/brain/psyker
+/obj/item/organ/brain/psyker
 	name = "psyker brain"
 	desc = "This brain is blue, split into two hemispheres, and has immense psychic powers. What kind of monstrosity would use that?"
 	icon_state = "brain-psyker"
@@ -10,17 +10,17 @@
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/organ/internal/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
+/obj/item/organ/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
 	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
-/obj/item/organ/internal/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
+/obj/item/organ/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
 	. = ..()
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
 
-/obj/item/organ/internal/brain/psyker/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/brain/psyker/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	var/obj/item/bodypart/head/psyker/psyker_head = owner.get_bodypart(zone)
 	if(istype(psyker_head))
@@ -72,15 +72,15 @@
 /// Proc with no side effects that turns someone into a psyker. returns FALSE if it could not psykerize.
 /mob/living/carbon/human/proc/psykerize()
 	var/obj/item/bodypart/head/old_head = get_bodypart(BODY_ZONE_HEAD)
-	var/obj/item/organ/internal/brain/old_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
-	var/obj/item/organ/internal/old_eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/brain/old_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/old_eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(stat == DEAD || !old_head || !old_brain)
 		return FALSE
 	var/obj/item/bodypart/head/psyker/psyker_head = new()
 	if(!psyker_head.replace_limb(src, special = TRUE))
 		return FALSE
 	qdel(old_head)
-	var/obj/item/organ/internal/brain/psyker/psyker_brain = new()
+	var/obj/item/organ/brain/psyker/psyker_brain = new()
 	old_brain.before_organ_replacement(psyker_brain)
 	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)

@@ -140,22 +140,27 @@
 
 /datum/emote/living/flap/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		var/open = FALSE
-		var/obj/item/organ/external/wings/functional/wings = human_user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	var/obj/item/organ/wings/wings = human_user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 
-		// open/close functional wings
-		if(istype(wings))
-			if(wings.wings_open)
-				open = TRUE
-				wings.close_wings()
-			else
-				wings.open_wings()
-			addtimer(CALLBACK(wings,  open ? TYPE_PROC_REF(/obj/item/organ/external/wings/functional, open_wings) : TYPE_PROC_REF(/obj/item/organ/external/wings/functional, close_wings)), wing_time)
+	// play a flapping noise if the wing has this implemented
+	if(!istype(wings))
+		return
+	wings.make_flap_sound(human_user)
 
-		// play a flapping noise if the wing has this implemented
-		wings.make_flap_sound(human_user)
+	// open/close functional wings
+	var/obj/item/organ/wings/functional/wings_functional = wings
+	if(!istype(wings_functional))
+		return
+	var/open = FALSE
+	if(wings_functional.wings_open)
+		open = TRUE
+		wings_functional.close_wings()
+	else
+		wings_functional.open_wings()
+	addtimer(CALLBACK(wings_functional, open ? TYPE_PROC_REF(/obj/item/organ/wings/functional, open_wings) : TYPE_PROC_REF(/obj/item/organ/wings/functional, close_wings)), wing_time)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"

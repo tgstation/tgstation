@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(polling)
 	name = "Polling"
 	flags = SS_BACKGROUND | SS_NO_INIT
 	wait = 1 SECONDS
-	runlevels = RUNLEVEL_GAME
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	/// List of polls currently ongoing, to be checked on next fire()
 	var/list/datum/candidate_poll/currently_polling
 	/// Number of polls performed since the start

@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed bolt of possession incorrectly setting up the previous owner of the victim's body, resulting in a fucked-up camera mob with no icon or movement capability"

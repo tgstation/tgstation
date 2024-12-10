@@ -4,8 +4,7 @@
 	///The description of the surgery, what it does.
 	var/desc
 
-	///From __DEFINES/surgery.dm
-	///Selection: SURGERY_IGNORE_CLOTHES | SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB | SURGERY_MORBID_CURIOSITY
+	///Bitfield for flags that determine different behaviors and requirement for the surgery. See __DEFINES/surgery.dm
 	var/surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
 	///The surgery step we're currently on, increases each time we do a step.
 	var/status = 1
@@ -120,23 +119,22 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		try_to_fail = TRUE
 
-	var/datum/surgery_step/step = get_surgery_step()
-	if(isnull(step))
+	var/datum/surgery_step/surgery_step = GLOB.surgery_steps[steps[status]]
+	if(isnull(surgery_step))
 		return FALSE
 	var/obj/item/tool = user.get_active_held_item()
 	if(tool)
 		tool = tool.get_proxy_attacker_for(target, user)
-	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
+	if(surgery_step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 		return TRUE
-	if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+	if(!tool)
+		return FALSE
+	//Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+	if((surgery_flags & SURGERY_CHECK_TOOL_BEHAVIOUR) ? tool.tool_behaviour : (tool.item_flags & SURGICAL_TOOL))
 		to_chat(user, span_warning("This step requires a different tool!"))
 		return TRUE
 
 	return FALSE
-
-/datum/surgery/proc/get_surgery_step()
-	var/step_type = steps[status]
-	return new step_type
 
 /datum/surgery/proc/get_surgery_next_step()
 	if(status < steps.len)

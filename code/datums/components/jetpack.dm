@@ -164,6 +164,12 @@
 /datum/component/jetpack/proc/on_pushoff(mob/source, movement_dir, continuous_move, atom/backup)
 	SIGNAL_HANDLER
 
+	if (get_dir(source, backup) == movement_dir || source.loc == backup.loc)
+		return
+
+	if (!source.client?.intended_direction || (source.client.intended_direction & get_dir(source, backup)))
+		return
+
 	if (!should_trigger(source) || !check_on_move.Invoke(FALSE))
 		return
 

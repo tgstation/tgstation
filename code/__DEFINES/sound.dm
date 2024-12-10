@@ -10,9 +10,10 @@
 #define CHANNEL_TRAITOR 1016
 #define CHANNEL_CHARGED_SPELL 1015
 #define CHANNEL_ELEVATOR 1014
+#define CHANNEL_ESCAPEMENU 1013
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
-#define CHANNEL_HIGHEST_AVAILABLE 1013
+#define CHANNEL_HIGHEST_AVAILABLE 1012
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
@@ -206,9 +207,12 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_VOID_DEFLECT "void_deflect"
 #define SFX_LOW_HISS "low_hiss"
 #define SFX_INDUSTRIAL_SCAN "industrial_scan"
+#define SFX_MALE_SIGH "male_sigh"
+#define SFX_FEMALE_SIGH "female_sigh"
+#define SFX_WRITING_PEN "writing_pen"
 
-// Default is 45kbps
-#define MIN_EMOTE_PITCH 42000
-#define MAX_EMOTE_PITCH 50000
+// Standard is 44.1khz
+#define MIN_EMOTE_PITCH 40000
+#define MAX_EMOTE_PITCH 48000
 // ~0.6 - 1.4 at 0.12
 #define EMOTE_TTS_PITCH_MULTIPLIER 0.12

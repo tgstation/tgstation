@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Abductor doohickeys (i.e abductor device circuit boards, mental interface device, silencer, science tool, and omnitool) now properly unlock alien tech via the experimentor."

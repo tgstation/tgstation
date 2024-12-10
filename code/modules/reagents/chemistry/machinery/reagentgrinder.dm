@@ -90,10 +90,14 @@
 	for(var/obj/item/target in src)
 		if((target in component_parts) || target == beaker)
 			continue
-		to_process["[target.name]"] += 1
+		var/amount = 1
+		if (isstack(target))
+			var/obj/item/stack/target_stack = target
+			amount = target_stack.amount
+		to_process["[target.name]"] += amount
 		total_weight += target.w_class
 	if(to_process.len)
-		. += span_notice("Currently holding.")
+		. += span_notice("Currently holding:")
 		for(var/target_name as anything in to_process)
 			. += span_notice("[to_process[target_name]] [target_name]")
 		. += span_notice("Filled to <b>[round((total_weight / maximum_weight) * 100)]%</b> capacity.")
@@ -434,42 +438,32 @@
 		playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 
 	var/total_weight
-	for(var/obj/item/weapon in src)
-		if((weapon in component_parts) || weapon == beaker)
-			continue
+	var/item_weight
+	for(var/obj/item/ingredient in contents)
 		if(beaker.reagents.holder_full())
 			break
+		if((ingredient in component_parts) || ingredient == beaker)
+			continue
 
-		//recursively process everything inside this atom
-		var/item_processed = FALSE
-		var/item_weight = weapon.w_class
-		for(var/obj/item/ingredient as anything in weapon.get_all_contents_type(/obj/item))
-			if(beaker.reagents.holder_full())
-				break
+		//record item weight before & after blending
+		item_weight = ingredient.w_class
 
-			if(juicing)
-				if(!ingredient.juice(beaker.reagents, user))
-					to_chat(user, span_danger("[src] shorts out as it tries to juice up [ingredient], and transfers it back to storage."))
-					continue
-				item_processed = TRUE
-			else if(length(ingredient.grind_results) || ingredient.reagents?.total_volume)
-				if(!ingredient.grind(beaker.reagents, user))
-					if(isstack(ingredient))
-						to_chat(user, span_notice("[src] attempts to grind as many pieces of [ingredient] as possible."))
-					else
-						to_chat(user, span_danger("[src] shorts out as it tries to grind up [ingredient], and transfers it back to storage."))
-					continue
-				item_processed = TRUE
+		if(juicing)
+			if(!ingredient.juice(beaker.reagents, user))
+				to_chat(user, span_danger("[src] shorts out as it tries to juice up [ingredient], and transfers it back to storage."))
+				continue
+		else if(!ingredient.grind(beaker.reagents, user))
+			if(isstack(ingredient))
+				to_chat(user, span_notice("[src] attempts to grind as many pieces of [ingredient] as possible."))
+			else
+				to_chat(user, span_danger("[src] shorts out as it tries to grind up [ingredient], and transfers it back to storage."))
+			continue
 
 		//happens only for stacks where some of the sheets were grinded so we roughly compute the weight grinded
-		if(item_weight != weapon.w_class)
-			total_weight += item_weight - weapon.w_class
+		if(item_weight != ingredient.w_class)
+			total_weight += item_weight - ingredient.w_class
 		else
 			total_weight += item_weight
-
-		//delete only if operation was successfull for atleast 1 item(also delete atoms for whom only some of its contents were processed as they are non functional now)
-		if(item_processed)
-			qdel(weapon)
 
 	//use power according to the total weight of items grinded
 	use_energy((active_power_usage * (duration / 1 SECONDS)) * (total_weight / maximum_weight))

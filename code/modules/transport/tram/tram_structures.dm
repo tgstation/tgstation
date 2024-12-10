@@ -145,7 +145,7 @@
 /obj/structure/tram/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
-/obj/structure/tram/singularity_pull(singulo, current_size)
+/obj/structure/tram/singularity_pull(atom/singularity, current_size)
 	..()
 
 	if(current_size >= STAGE_FIVE)

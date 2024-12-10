@@ -73,7 +73,7 @@
 /obj/docking_port/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	return
 
-/obj/docking_port/singularity_pull()
+/obj/docking_port/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/docking_port/singularity_act()
@@ -644,6 +644,9 @@
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
 /obj/docking_port/mobile/proc/canMove()
+	SHOULD_CALL_PARENT(TRUE)
+	if(SEND_SIGNAL(src, COMSIG_SHUTTLE_SHOULD_MOVE) & BLOCK_SHUTTLE_MOVE)
+		return FALSE
 	return TRUE
 
 //this is to check if this shuttle can physically dock at dock stationary_dock

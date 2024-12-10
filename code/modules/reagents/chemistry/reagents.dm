@@ -82,7 +82,7 @@
 	var/purge_multiplier = 1
 
 	///The default reagent container for the reagent, used for icon generation
-	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
+	var/obj/default_container = /obj/item/reagent_containers/cup/bottle
 
 	// Used for restaurants.
 	///The amount a robot will pay for a glass of this (20 units but can be higher if you pour more, be frugal!)
@@ -129,10 +129,10 @@
 			exposed_mob.reagents.add_reagent(type, amount, added_purity = purity)
 
 /// Applies this reagent to an [/obj]
-/datum/reagent/proc/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/proc/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_OBJ, exposed_obj, reac_volume)
+	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_OBJ, exposed_obj, reac_volume, methods, show_message)
 
 /// Applies this reagent to a [/turf]
 /datum/reagent/proc/expose_turf(turf/exposed_turf, reac_volume)
@@ -279,7 +279,7 @@ Primarily used in reagents/reaction_agents
  */
 /datum/reagent/proc/get_inverse_purity(purity)
 	if(!inverse_chem || !inverse_chem_val)
-		return
+		return 0
 	if(!purity)
 		purity = src.purity
 	return min(1-inverse_chem_val + purity + 0.01, 1) //Gives inverse reactions a 1% purity threshold for being 100% pure to appease players with OCD.

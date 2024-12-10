@@ -189,7 +189,7 @@
 				pipe.setDir(dir)
 	spew_forth()
 
-/obj/structure/disposalpipe/singularity_pull(S, current_size)
+/obj/structure/disposalpipe/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()

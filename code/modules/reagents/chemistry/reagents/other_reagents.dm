@@ -17,7 +17,6 @@
 	required_drink_type = /datum/reagent/blood
 	name = "glass of tomato juice"
 	desc = "Are you sure this is tomato juice?"
-	icon_state = "glass_red"
 
 	// FEED ME
 /datum/reagent/blood/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -42,7 +41,7 @@
 					continue
 
 				exposed_mob.ForceContractDisease(strain)
-			else if((methods & VAPOR) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+			else if((methods & (VAPOR|INHALE)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
 				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_LUNGS))
 					continue
 
@@ -51,7 +50,7 @@
 				exposed_mob.ContactContractDisease(strain)
 
 	if(data && data["resistances"])
-		if(methods & (INGEST|INJECT)) //have to inject or ingest it. no curefoam/cheap curesprays
+		if(methods & (INGEST|INJECT|INHALE)) //have to inject, inhale or ingest it. no curefoam/cheap curesprays
 			for(var/stuff in exposed_mob.diseases)
 				var/datum/disease/infection = stuff
 				if(infection.GetDiseaseID() in data["resistances"])
@@ -68,6 +67,12 @@
 
 			exposed_carbon.reagents.remove_reagent(type, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
 
+		// covers them and their worn equipment in blood
+		if((methods & (TOUCH|VAPOR)) && reac_volume > 3)
+			if(data["blood_DNA"] && data["blood_type"])
+				exposed_carbon.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+			else
+				exposed_carbon.add_blood_DNA(list("Non-human DNA" = random_blood_type()))
 
 /datum/reagent/blood/on_new(list/data)
 	. = ..()
@@ -126,6 +131,28 @@
 			bloodsplatter.AddComponent(/datum/component/infective, viruses_to_add)
 	if(data["blood_DNA"])
 		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+
+/datum/reagent/blood/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
+	. = ..()
+	if(!istype(exposed_obj))
+		return
+	if(reac_volume < 3)
+		return
+
+	if(!(methods & (VAPOR|TOUCH)))
+		return
+
+	if(LAZYLEN(data["viruses"]))
+		var/list/viruses_to_add = list()
+		for(var/datum/disease/virus in data["viruses"])
+			if(virus.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+				viruses_to_add += virus
+		if(length(viruses_to_add))
+			exposed_obj.AddComponent(/datum/component/infective, viruses_to_add)
+	if(data["blood_DNA"] && data["blood_type"])
+		exposed_obj.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+	else
+		exposed_obj.add_blood_DNA(list("Non-human DNA" = random_blood_type()))
 
 /datum/reagent/blood/get_taste_description(mob/living/taster)
 	if(isnull(taster))
@@ -239,7 +266,7 @@
  * Water reaction to an object
  */
 
-/datum/reagent/water/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/water/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	exposed_obj.extinguish()
 	exposed_obj.wash(CLEAN_TYPE_ACID)
@@ -282,6 +309,16 @@
 
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
+
+	if(methods & (TOUCH|VAPOR)) // wakey wakey eggs and bakey
+		exposed_mob.adjust_dizzy(-2 SECONDS)
+		exposed_mob.adjust_confusion(-2 SECONDS)
+		exposed_mob.adjust_drowsiness(-4 SECONDS)
+		exposed_mob.adjust_jitter(-4 SECONDS)
+		exposed_mob.AdjustSleeping(-15 SECONDS)
+		exposed_mob.AdjustUnconscious(-8 SECONDS)
+		var/drunkness_restored = HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) ? -0.5 : -0.25
+		exposed_mob.adjust_drunk_effect(drunkness_restored)
 
 	if((methods & INGEST) && HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) && reac_volume >= 4)
 		exposed_mob.adjust_wet_stacks(0.15 * reac_volume)
@@ -974,7 +1011,7 @@
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/copper/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/copper/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	if(!istype(exposed_obj, /obj/item/stack/sheet/iron))
 		return
@@ -1313,7 +1350,7 @@
 
 /datum/reagent/fuel/on_mob_life(mob/living/carbon/victim, seconds_per_tick, times_fired)
 	. = ..()
-	var/obj/item/organ/internal/liver/liver = victim.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = victim.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_HUMAN_AI_METABOLISM))
 		return
 	if(victim.adjustToxLoss(0.5 * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
@@ -1343,7 +1380,7 @@
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS|REAGENT_AFFECTS_WOUNDS
 
-/datum/reagent/space_cleaner/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/space_cleaner/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	exposed_obj?.wash(clean_types)
 
@@ -1449,10 +1486,10 @@
 
 /datum/reagent/cyborg_mutation_nanomachines/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
-	var/obj/item/organ/internal/liver/liver = exposed_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = exposed_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_HUMAN_AI_METABOLISM))
 		return
-	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if((methods & (PATCH|INGEST|INJECT|INHALE)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		exposed_mob.ForceContractDisease(new /datum/disease/transformation/robot(), FALSE, TRUE)
 
 /datum/reagent/xenomicrobes
@@ -1464,7 +1501,7 @@
 
 /datum/reagent/xenomicrobes/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
-	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if((methods & (PATCH|INGEST|INJECT|INHALE)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		exposed_mob.ForceContractDisease(new /datum/disease/transformation/xeno(), FALSE, TRUE)
 
 /datum/reagent/fungalspores
@@ -1477,7 +1514,7 @@
 
 /datum/reagent/fungalspores/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
-	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if((methods & (PATCH|INGEST|INJECT|INHALE)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		exposed_mob.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)
 
 /datum/reagent/snail
@@ -1490,7 +1527,7 @@
 
 /datum/reagent/snail/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
-	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if((methods & (PATCH|INGEST|INJECT|INHALE)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		exposed_mob.ForceContractDisease(new /datum/disease/gastrolosis(), FALSE, TRUE)
 
 /datum/reagent/fluorosurfactant//foam precursor
@@ -1586,10 +1623,13 @@
 
 /datum/reagent/nitrous_oxide/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
-	if(methods & VAPOR)
+	if(methods & (VAPOR|INHALE))
 		// apply 2 seconds of drowsiness per unit applied, with a min duration of 4 seconds
 		var/drowsiness_to_apply = max(round(reac_volume, 1) * 2 SECONDS, 4 SECONDS)
 		exposed_mob.adjust_drowsiness(drowsiness_to_apply)
+	if(methods & INHALE)
+		exposed_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25 * reac_volume, required_organ_flag = affected_organ_flags)
+		exposed_mob.adjust_hallucinations(10 SECONDS * reac_volume)
 
 /datum/reagent/nitrous_oxide/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -1945,7 +1985,7 @@
 
 /datum/reagent/carpet/royal/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver)
 		// Heads of staff and the captain have a "royal metabolism"
 		if(HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM))
@@ -2117,7 +2157,7 @@
 	name = "Acetone Oxide"
 	description = "Enslaved oxygen"
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#966199cb"
 	taste_description = "acid"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2164,7 +2204,7 @@
 	description = "Thoroughly sample the rainbow."
 	reagent_state = LIQUID
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
-	color = "#C8A5DC"
+	color = COLOR_GRAY
 	taste_description = "rainbows"
 	var/can_colour_mobs = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -2200,7 +2240,7 @@
 	description = "Has a high chance of making you look like a mad scientist."
 	reagent_state = LIQUID
 	var/list/potential_colors = list("#00aadd","#aa00ff","#ff7733","#dd1144","#dd1144","#00bb55","#00aadd","#ff7733","#ffcc22","#008844","#0055ee","#dd2222","#ffaa00") // fucking hair code
-	color = "#C8A5DC"
+	color = COLOR_GRAY
 	taste_description = "sourness"
 	penetrates_skin = NONE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -2342,7 +2382,7 @@
 	// We want one spray of this stuff (5u) to take out a wet floor. Feels better that way
 	exposed_turf.MakeDry(ALL, TRUE, reac_volume * 10 SECONDS)
 
-/datum/reagent/drying_agent/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/drying_agent/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	if(exposed_obj.type != /obj/item/clothing/shoes/galoshes)
 		return
@@ -2436,7 +2476,7 @@
 	. = ..()
 	// Silently add the zombie infection organ to be activated upon death
 	if(!exposed_mob.get_organ_slot(ORGAN_SLOT_ZOMBIE))
-		var/obj/item/organ/internal/zombie_infection/nodamage/ZI = new()
+		var/obj/item/organ/zombie_infection/nodamage/ZI = new()
 		ZI.Insert(exposed_mob)
 
 /datum/reagent/magillitis
@@ -2612,7 +2652,7 @@
 
 /datum/reagent/gondola_mutation_toxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
-	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
+	if((methods & (PATCH|INGEST|INJECT|INHALE)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		exposed_mob.ForceContractDisease(new gondola_disease, FALSE, TRUE)
 
 
@@ -2723,7 +2763,7 @@
 	/// The amount of materials to apply to the transmuted objects if they don't contain materials
 	var/default_material_amount = 100
 
-/datum/reagent/metalgen/expose_obj(obj/exposed_obj, volume)
+/datum/reagent/metalgen/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	metal_morph(exposed_obj)
 
@@ -2762,7 +2802,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	self_consuming = TRUE //this works on objects, so it should work on skeletons and robots too
 
-/datum/reagent/gravitum/expose_obj(obj/exposed_obj, volume)
+/datum/reagent/gravitum/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	exposed_obj.AddElement(/datum/element/forced_gravity, 0)
 	addtimer(CALLBACK(exposed_obj, PROC_REF(_RemoveElement), list(/datum/element/forced_gravity, 0)), volume * time_multiplier, TIMER_UNIQUE|TIMER_OVERRIDE)
@@ -2931,13 +2971,15 @@
 
 /datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
-	if(!iscarbon(exposed_mob) || (methods & (INGEST|INJECT)))
+	if(!iscarbon(exposed_mob))
 		return
+	if(methods & INGEST)
+		exposed_mob.check_allergic_reaction(BUGS, chance = reac_volume * 10, histamine_add = min(10, reac_volume))
 	if(methods & (PATCH|TOUCH|VAPOR))
 		amount_left = round(reac_volume,0.1)
 		exposed_mob.apply_status_effect(status_effect, amount_left)
 
-/datum/reagent/ants/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/ants/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	var/turf/open/my_turf = exposed_obj.loc // No dumping ants on an object in a storage slot
 	if(!istype(my_turf)) //Are we actually in an open turf?
@@ -3073,7 +3115,8 @@
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/hauntium/expose_obj(obj/exposed_obj, volume) //gives 15 seconds of haunting effect for every unit of it that touches an object
+//gives 15 seconds of haunting effect for every unit of it that touches an object
+/datum/reagent/hauntium/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	if(HAS_TRAIT_FROM(exposed_obj, TRAIT_HAUNTED, HAUNTIUM_REAGENT_TRAIT))
 		return
@@ -3092,11 +3135,11 @@
 	. = ..()
 	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID)) //if morbid or undead,acts like an addiction-less drug
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
-		affected_mob.AdjustStun(-50 * REM * seconds_per_tick)
-		affected_mob.AdjustKnockdown(-50 * REM * seconds_per_tick)
-		affected_mob.AdjustUnconscious(-50 * REM * seconds_per_tick)
-		affected_mob.AdjustParalyzed(-50 * REM * seconds_per_tick)
-		affected_mob.AdjustImmobilized(-50 * REM * seconds_per_tick)
+		affected_mob.AdjustStun(-5 SECONDS * REM * seconds_per_tick)
+		affected_mob.AdjustKnockdown(-5 SECONDS * REM * seconds_per_tick)
+		affected_mob.AdjustUnconscious(-5 SECONDS * REM * seconds_per_tick)
+		affected_mob.AdjustParalyzed(-5 SECONDS * REM * seconds_per_tick)
+		affected_mob.AdjustImmobilized(-5 SECONDS * REM * seconds_per_tick)
 	else
 		if(affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, REM * seconds_per_tick)) //1 heart damage per tick
 			. = UPDATE_MOB_HEALTH

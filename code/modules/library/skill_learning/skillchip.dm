@@ -42,7 +42,7 @@
 	/// Set to TRUE when the skill chip's effects are applied. Set to FALSE when they're not.
 	var/active = FALSE
 	/// Brain that holds this skillchip.
-	var/obj/item/organ/internal/brain/holding_brain
+	var/obj/item/organ/brain/holding_brain
 
 /obj/item/skillchip/Initialize(mapload, is_removable = TRUE)
 	. = ..()
@@ -131,11 +131,13 @@
  * Arguments:
  * * owner_brain - The brain that this skillchip was implanted in to.
  */
-/obj/item/skillchip/proc/on_implant(obj/item/organ/internal/brain/owner_brain)
+/obj/item/skillchip/proc/on_implant(obj/item/organ/brain/owner_brain)
+	SHOULD_CALL_PARENT(TRUE)
 	if(holding_brain)
 		CRASH("Skillchip is trying to be implanted into [owner_brain], but it's already implanted in [holding_brain]")
 
 	holding_brain = owner_brain
+	SEND_SIGNAL(src, COMSIG_SKILLCHIP_IMPLANTED, holding_brain)
 
 /**
  * Called when a skillchip is activated.
@@ -172,7 +174,7 @@
 		try_deactivate_skillchip(silent, TRUE)
 
 	COOLDOWN_RESET(src, chip_cooldown)
-
+	SEND_SIGNAL(src, COMSIG_SKILLCHIP_REMOVED, holding_brain)
 	holding_brain = null
 
 /**
@@ -205,7 +207,7 @@
  * Arguments:
  * * skillchip - The skillchip you're intending to activate. Does not activate the chip.
  */
-/obj/item/skillchip/proc/has_activate_incompatibility(obj/item/organ/internal/brain/brain)
+/obj/item/skillchip/proc/has_activate_incompatibility(obj/item/organ/brain/brain)
 	if(QDELETED(brain))
 		return "No brain detected."
 
@@ -255,7 +257,7 @@
 		return "Incompatible lifeform detected."
 
 	// No brain
-	var/obj/item/organ/internal/brain/brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(brain))
 		return "No brain detected."
 
@@ -274,7 +276,7 @@
  * Arguments:
  * * brain - The brain to check for implantability with.
  */
-/obj/item/skillchip/proc/has_brain_incompatibility(obj/item/organ/internal/brain/brain)
+/obj/item/skillchip/proc/has_brain_incompatibility(obj/item/organ/brain/brain)
 	if(!istype(brain))
 		stack_trace("Attempted to check incompatibility with invalid brain object [brain].")
 		return "Incompatible brain."

@@ -80,6 +80,8 @@
 	var/last_tracked_name
 	/// Whether the target radial is currently opened.
 	var/radial_open = FALSE
+	/// Navigator to our target that we have.
+	var/datum/status_effect/agent_pinpointer/scan/heretic/heretic_pinpointer
 
 /datum/action/cooldown/track_target/Grant(mob/granted)
 	if(!IS_HERETIC(granted))
@@ -144,6 +146,7 @@
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
 
+
 	// Let them know how to sacrifice people if they're able to be sac'd
 	if(tracked_mob.stat == DEAD)
 		to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring them to a transmutation rune \
@@ -151,6 +154,26 @@
 
 	StartCooldown()
 	return TRUE
+
+/datum/action/cooldown/track_target/proc/make_navigate_arrow(turf/tracked_turf, arrow_color)
+	var/datum/hud/user_hud = owner.hud_used
+	if(!user_hud)
+		return
+	var/atom/movable/screen/heretic_arrow/arrow = new /atom/movable/screen/heretic_arrow(null, user_hud)
+	animate(arrow, transform = matrix(dir2angle(get_dir(owner, tracked_turf)), MATRIX_ROTATE), 0.2 SECONDS)
+	arrow.screen_loc = around_player
+	arrow.color = arrow_color
+	user_hud.infodisplay += arrow
+	user_hud.show_hud(user_hud.hud_version)
+	addtimer(CALLBACK(src, PROC_REF(end_effect), user_hud, arrow), 1.6 SECONDS)
+
+/datum/action/cooldown/track_target/proc/end_effect(datum/hud/user_hud, atom/movable/screen/heretic_arrow/arrow)
+	arrow.icon_state = "heretic_arrow_disappear"
+	addtimer(CALLBACK(src, PROC_REF(null_arrow), user_hud, arrow), 0.4 SECONDS)
+
+/datum/action/cooldown/track_target/proc/null_arrow(datum/hud/user_hud, atom/movable/screen/heretic_arrow/arrow)
+	user_hud.infodisplay -= arrow
+	user_hud.show_hud(user_hud.hud_version)
 
 /// Callback for the radial to ensure it's closed when not allowed.
 /datum/action/cooldown/track_target/proc/check_menu()
@@ -204,17 +227,32 @@
 		var/dist = get_dist(our_turf, their_turf)
 		var/dir = get_dir(our_turf, their_turf)
 
+		var/arrow_color
+
 		switch(dist)
 			if(0 to 15)
 				balloon_message = "very near, [dir2text(dir)]!"
+				arrow_color = COLOR_GREEN
 			if(16 to 31)
 				balloon_message = "near, [dir2text(dir)]!"
+				arrow_color = COLOR_YELLOW
 			if(32 to 127)
 				balloon_message = "far, [dir2text(dir)]!"
+				arrow_color = COLOR_ORANGE
 			else
 				balloon_message = "very far!"
+				arrow_color = COLOR_RED
+
+		make_navigate_arrow(their_turf, arrow_color)
 
 	if(tracked_mob.stat == DEAD)
 		balloon_message = "they're dead, " + balloon_message
 
 	return balloon_message
+
+/atom/movable/screen/heretic_arrow
+	icon = 'icons/effects/96x96.dmi'
+	name = "heretic arrow"
+	icon_state = "heretic_arrow_appear"
+	pixel_x = -32
+	pixel_y = -32

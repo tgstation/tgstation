@@ -17,7 +17,7 @@
 /atom/movable/screen/blob/jump_to_node/Click()
 	if(!isovermind(usr))
 		return FALSE
-	var/mob/camera/blob/blob = usr
+	var/mob/eye/blob/blob = usr
 	blob.jump_to_node()
 
 /atom/movable/screen/blob/jump_to_core
@@ -27,7 +27,7 @@
 
 /atom/movable/screen/blob/jump_to_core/MouseEntered(location,control,params)
 	if(hud?.mymob && isovermind(hud.mymob))
-		var/mob/camera/blob/B = hud.mymob
+		var/mob/eye/blob/B = hud.mymob
 		if(!B.placed)
 			name = "Place Blob Core"
 			desc = "Attempt to place your blob core at this location."
@@ -39,7 +39,7 @@
 /atom/movable/screen/blob/jump_to_core/Click()
 	if(!isovermind(usr))
 		return FALSE
-	var/mob/camera/blob/blob = usr
+	var/mob/eye/blob/blob = usr
 	if(!blob.placed)
 		blob.place_blob_core(BLOB_NORMAL_PLACEMENT)
 	blob.transport_core()
@@ -58,7 +58,7 @@
 /atom/movable/screen/blob/blobbernaut/Click()
 	if(!isovermind(usr))
 		return FALSE
-	var/mob/camera/blob/blob = usr
+	var/mob/eye/blob/blob = usr
 	blob.create_blobbernaut()
 
 /atom/movable/screen/blob/resource_blob
@@ -75,7 +75,7 @@
 /atom/movable/screen/blob/resource_blob/Click()
 	if(!isovermind(usr))
 		return FALSE
-	var/mob/camera/blob/blob = usr
+	var/mob/eye/blob/blob = usr
 	blob.create_special(BLOB_STRUCTURE_RESOURCE_COST, /obj/structure/blob/special/resource, BLOB_RESOURCE_MIN_DISTANCE, TRUE)
 
 /atom/movable/screen/blob/node_blob
@@ -92,7 +92,7 @@
 /atom/movable/screen/blob/node_blob/Click()
 	if(!isovermind(usr))
 		return FALSE
-	var/mob/camera/blob/blob = usr
+	var/mob/eye/blob/blob = usr
 	blob.create_special(BLOB_STRUCTURE_NODE_COST, /obj/structure/blob/special/node, BLOB_NODE_MIN_DISTANCE, FALSE)
 
 /atom/movable/screen/blob/factory_blob
@@ -109,7 +109,7 @@
 /atom/movable/screen/blob/factory_blob/Click()
 	if(!isovermind(usr))
 		return FALSE
-	var/mob/camera/blob/blob = usr
+	var/mob/eye/blob/blob = usr
 	blob.create_special(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/special/factory, BLOB_FACTORY_MIN_DISTANCE, TRUE)
 
 /atom/movable/screen/blob/readapt_strain
@@ -120,7 +120,7 @@
 
 /atom/movable/screen/blob/readapt_strain/MouseEntered(location,control,params)
 	if(hud?.mymob && isovermind(hud.mymob))
-		var/mob/camera/blob/B = hud.mymob
+		var/mob/eye/blob/B = hud.mymob
 		if(B.free_strain_rerolls)
 			name = "[initial(name)] (FREE)"
 			desc = "Randomly rerolls your strain for free."
@@ -131,7 +131,7 @@
 
 /atom/movable/screen/blob/readapt_strain/Click()
 	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
+		var/mob/eye/blob/B = usr
 		B.strain_reroll()
 
 /atom/movable/screen/blob/relocate_core
@@ -147,7 +147,7 @@
 
 /atom/movable/screen/blob/relocate_core/Click()
 	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
+		var/mob/eye/blob/B = usr
 		B.relocate_core()
 
 /datum/hud/blob_overmind/New(mob/owner)
@@ -182,11 +182,11 @@
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/node_blob(null, src)
-	using.screen_loc = ui_hand_position(2)
+	using.screen_loc = ui_hand_position(RIGHT_HANDS)
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/factory_blob(null, src)
-	using.screen_loc = ui_hand_position(1)
+	using.screen_loc = ui_hand_position(LEFT_HANDS)
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/readapt_strain(null, src)

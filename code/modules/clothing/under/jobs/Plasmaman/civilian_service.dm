@@ -43,7 +43,7 @@
 	// This is weird but basically we're calling this proc once the cooldown ends in case our wearer gets set on fire again during said cooldown
 	// This is why we're ignoring source and instead checking by loc
 	var/mob/living/carbon/human/owner = loc
-	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, ignore_chest_pressureprot = TRUE))
+	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, alt_flags = TRUE))
 		return
 
 	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))
@@ -59,7 +59,7 @@
 
 /obj/item/clothing/under/plasmaman/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (!istype(tool, /obj/item/extinguisher_refill))
-		return
+		return ..()
 
 	if (extinguishes_left == 5)
 		to_chat(user, span_notice("The inbuilt extinguisher is full."))
@@ -163,7 +163,7 @@
 	// This is weird but basically we're calling this proc once the cooldown ends in case our wearer gets set on fire again during said cooldown
 	// This is why we're ignoring source and instead checking by loc
 	var/mob/living/carbon/human/owner = loc
-	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, ignore_chest_pressureprot = TRUE))
+	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, alt_flags = TRUE))
 		return
 
 	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))

@@ -39,10 +39,13 @@
 	var/exenteration_cooldown_duration = 0.5 SECONDS
 	//aoe slash ability
 	var/datum/action/cooldown/mob_cooldown/bot/exenterate
+	var/list/remains = list(/obj/effect/gibspawner/robot)
 
 /mob/living/basic/bot/dedbot/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/robot)
+	if(length(remains))
+		remains = string_list(remains)
+		AddElement(/datum/element/death_drops, remains)
 	var/static/list/innate_actions = list(
 	SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
 	)
@@ -60,7 +63,6 @@
 		/datum/ai_planning_subtree/targeted_mob_ability/exenterate,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/find_patrol_beacon,
-		/datum/ai_planning_subtree/manage_unreachable_list,
 	)
 	max_target_distance = AI_BOT_PATH_LENGTH
 	///keys to be reset when the bot is reseted

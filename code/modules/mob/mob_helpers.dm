@@ -172,6 +172,12 @@
 	var/min_x = -(strength*ICON_SIZE_X)
 	var/min_y = -(strength*ICON_SIZE_Y)
 
+	if(C.prefs?.read_preference(/datum/preference/toggle/screen_shake_darken))
+		var/type = /atom/movable/screen/fullscreen/flash/black
+
+		M.overlay_fullscreen("flash", type)
+		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 3 SECONDS), 3 SECONDS)
+
 	//How much time to allot for each pixel moved
 	var/time_scalar = (1 / ICON_SIZE_ALL) * TILES_PER_SECOND
 	var/last_x = oldx

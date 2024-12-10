@@ -10,7 +10,7 @@
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 	is_dimorphic = TRUE
-	wing_types = list(/obj/item/organ/external/wings/functional/dragon)
+	wing_types = list(/obj/item/organ/wings/functional/dragon)
 
 /obj/item/bodypart/chest/lizard/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_LIZARD)

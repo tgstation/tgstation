@@ -98,12 +98,16 @@
  * That's awful, and it'll limit us to drop-deletable shrapnels in the worry of stuff like
  * arrows and harpoons being embeddable even when not let loose by their weapons.
  */
-/datum/element/embed/proc/check_embed_projectile(obj/projectile/source, atom/movable/firer, atom/hit, angle, hit_zone, blocked)
+/datum/element/embed/proc/check_embed_projectile(obj/projectile/source, atom/movable/firer, atom/hit, angle, hit_zone, blocked, pierce_hit)
 	SIGNAL_HANDLER
+
+	if (pierce_hit)
+		return
 
 	if(!source.can_embed_into(hit) || blocked)
 		Detach(source)
 		return // we don't care
+
 	var/payload_type = source.shrapnel_type
 	var/obj/item/payload = new payload_type(get_turf(hit))
 	payload.set_embed(source.get_embed())

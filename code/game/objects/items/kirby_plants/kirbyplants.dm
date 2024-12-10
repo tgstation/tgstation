@@ -95,8 +95,8 @@
 
 //Handles randomizing the icon during initialize()
 /obj/item/kirbyplants/random/proc/randomize_base_icon_state()
-	if(!random_plant_states)
-		generate_states()
+	if(isnull(random_plant_states))
+		random_plant_states = generate_states()
 	base_icon_state = pick(random_plant_states)
 	if(!dead) //no need to update the icon if we're already dead.
 		update_appearance(UPDATE_ICON)

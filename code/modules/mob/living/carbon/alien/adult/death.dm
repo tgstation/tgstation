@@ -15,7 +15,7 @@
 	for(var/mob/living/carbon/C in GLOB.alive_mob_list)
 		if(C == src) //Make sure not to proc it on ourselves.
 			continue
-		var/obj/item/organ/internal/alien/hivenode/node = C.get_organ_by_type(/obj/item/organ/internal/alien/hivenode)
+		var/obj/item/organ/alien/hivenode/node = C.get_organ_by_type(/obj/item/organ/alien/hivenode)
 		if(istype(node)) // just in case someone would ever add a diffirent node to hivenode slot
 			node.queen_death()
 

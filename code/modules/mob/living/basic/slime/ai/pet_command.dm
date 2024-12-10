@@ -10,7 +10,7 @@
 
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
 	if(isslime(slime_pawn) && slime_pawn.can_feed_on(controller.blackboard[BB_CURRENT_PET_TARGET], check_friendship = TRUE))
-		controller.queue_behavior(hunting_behavior, BB_CURRENT_PET_TARGET, BB_HUNTING_COOLDOWN)
+		controller.queue_behavior(hunting_behavior, BB_CURRENT_PET_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	return ..()

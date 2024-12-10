@@ -384,7 +384,7 @@
 
 
 /datum/chemical_reaction/slime/slimeoil
-	results = list(/datum/reagent/consumable/nutriment/fat/oil = 10)
+	results = list(/datum/reagent/consumable/nutriment/fat/oil/corn = 10)
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/oil
 

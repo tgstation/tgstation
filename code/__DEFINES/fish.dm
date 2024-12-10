@@ -2,6 +2,8 @@
 #define FISHING_DUD "dud"
 ///Used in the the hydro tray fishing spot to define a random seed reward
 #define FISHING_RANDOM_SEED "Random seed"
+///Used in the surgery fishing spot to define a random organ reward
+#define FISHING_RANDOM_ORGAN "Random organ"
 
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
@@ -33,30 +35,25 @@
 // through the fishing rod, and not the hook itself. They could probably be
 // handled differently, but for now that's how they work. It's grounds for
 // a future refactor, however.
-/// Fishing hook trait that signifies that it's shiny. Useful for fishes
-/// that care about shiner hooks more.
-#define FISHING_HOOK_SHINY (1 << 0)
 /// Fishing hook trait that lessens the bounce from hitting the edges of the minigame bar.
-#define FISHING_HOOK_WEIGHTED (1 << 1)
+#define FISHING_HOOK_WEIGHTED (1 << 0)
 ///See FISHING_MINIGAME_RULE_BIDIRECTIONAL
-#define FISHING_HOOK_BIDIRECTIONAL (1 << 2)
+#define FISHING_HOOK_BIDIRECTIONAL (1 << 1)
 ///Prevents the user from losing the game by letting the fish get away.
-#define FISHING_HOOK_NO_ESCAPE (1 << 3)
+#define FISHING_HOOK_NO_ESCAPE (1 << 2)
 ///Limits the completion loss of the minigame when the fsh is not on the bait area.
-#define FISHING_HOOK_ENSNARE (1 << 4)
+#define FISHING_HOOK_ENSNARE (1 << 3)
 ///Automatically kills the fish after a while, at the cost of killing it.
-#define FISHING_HOOK_KILL (1 << 5)
+#define FISHING_HOOK_KILL (1 << 4)
 
 ///Reduces the difficulty of the minigame
 #define FISHING_LINE_CLOAKED (1 << 0)
-///Required to cast a line on lava.
-#define FISHING_LINE_REINFORCED (1 << 1)
 /// Much like FISHING_HOOK_ENSNARE but for the fishing line.
-#define FISHING_LINE_BOUNCY (1 << 2)
+#define FISHING_LINE_BOUNCY (1 << 1)
 /// The sorta opposite of FISHING_LINE_BOUNCY. It makes it slower to gain completion and faster to lose it.
-#define FISHING_LINE_STIFF (1 << 3)
+#define FISHING_LINE_STIFF (1 << 2)
 ///Skip the biting phase and go straight to the fishing phase.
-#define FISHING_LINE_AUTOREEL (1 << 4)
+#define FISHING_LINE_AUTOREEL (1 << 3)
 
 ///Keeps the bait from falling from gravity, instead allowing the player to move the bait down with right click.
 #define FISHING_MINIGAME_RULE_BIDIRECTIONAL (1 << 0)
@@ -99,14 +96,24 @@
 #define FISH_ICON_WEAPON "weapon"
 #define FISH_ICON_CRITTER "critter"
 #define FISH_ICON_SEED "seed"
+#define FISH_ICON_ORGAN "organ"
 
 #define AQUARIUM_ANIMATION_FISH_SWIM "fish"
 #define AQUARIUM_ANIMATION_FISH_DEAD "dead"
 
-#define AQUARIUM_PROPERTIES_PX_MIN "px_min"
-#define AQUARIUM_PROPERTIES_PX_MAX "px_max"
-#define AQUARIUM_PROPERTIES_PY_MIN "py_min"
-#define AQUARIUM_PROPERTIES_PY_MAX "py_max"
+//standard layer defines for aquariums
+
+///The distance that should separate each layer of the aquarium
+#define AQUARIUM_LAYER_STEP 0.01
+/// Aquarium content layer offsets
+#define AQUARIUM_MIN_OFFSET 0.02
+#define AQUARIUM_MAX_OFFSET 1
+/// The layer of the glass overlay
+#define AQUARIUM_GLASS_LAYER 0.02
+/// The layer of the aquarium pane borders
+#define AQUARIUM_BORDERS_LAYER AQUARIUM_MAX_OFFSET + AQUARIUM_LAYER_STEP
+/// Layer for stuff rendered below the glass overlay
+#define AQUARIUM_BELOW_GLASS_LAYER 0.01
 
 #define AQUARIUM_LAYER_MODE_BOTTOM "bottom"
 #define AQUARIUM_LAYER_MODE_TOP "top"
@@ -146,10 +153,20 @@
 ///Used to calculate how many bites a fish can take and therefore the amount of reagents it has.
 #define FISH_WEIGHT_BITE_DIVISOR (FISH_GRIND_RESULTS_WEIGHT_DIVISOR * FISH_WEIGHT_GRIND_TO_BITE_MULT)
 
+///Set of operations that calculate the slowdown of fish based on weight
+#define GET_FISH_SLOWDOWN(weighty) round(((weighty/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT)-1.3, 0.1)
+
+/**
+ * Gets a "rank" for fish weight to determine the force of the fish (or fish tank)
+ * basically, a gross estimate based on how weight generaly scales up (250, 500, 1000, 2000, 4000 etc...)
+ * for most fish
+ */
+#define GET_FISH_WEIGHT_RANK(weighty) max(round(1 + log(2, max(weighty/FISH_WEIGHT_FORCE_DIVISOR, 1)), 1), 1)
+
 ///The breeding timeout for newly instantiated fish is multiplied by this.
 #define NEW_FISH_BREEDING_TIMEOUT_MULT 2
 ///The last feeding timestamp of newly instantiated fish is multiplied by this: ergo, they spawn 50% hungry.
-#define NEW_FISH_LAST_FEEDING_MULT 0.5
+#define NEW_FISH_LAST_FEEDING_MULT 0.33
 
 //IF YOU ADD ANY NEW FLAG, ADD IT TO THE RESPECTIVE BITFIELD in _globalvars/bitfields.dm TOO!
 
@@ -161,6 +178,14 @@
 #define FISH_FLAG_PETTED (1<<2)
 ///This fish can be scanned to complete fish scanning experiments
 #define FISH_FLAG_EXPERIMENT_SCANNABLE (1<<3)
+///It lets us know that fish/update_size_and_weight() is currently running.
+#define FISH_FLAG_UPDATING_SIZE_AND_WEIGHT (1<<4)
+///Flag added when the population of this fish type exceeeds the stable population inside the aquarium
+#define FISH_FLAG_OVERPOPULATED (1<<5)
+///Flag added when in an aquarium which temperature is within its safe limits
+#define FISH_FLAG_SAFE_TEMPERATURE (1<<6)
+///Flag added when in an aquarium with the right fluid type.
+#define FISH_FLAG_SAFE_FLUID (1<<7)
 
 #define MIN_AQUARIUM_TEMP T0C
 #define MAX_AQUARIUM_TEMP (T0C + 100)
@@ -170,7 +195,7 @@
 #define FISH_RARITY_BASIC 1000
 #define FISH_RARITY_RARE 400
 #define FISH_RARITY_VERY_RARE 200
-#define FISH_RARITY_GOOD_LUCK_FINDING_THIS 5
+#define FISH_RARITY_GOOD_LUCK_FINDING_THIS 50
 #define FISH_RARITY_NOPE 0
 
 ///Aquarium fluid variables. The fish' required fluid has to match this, or it'll slowly die.
@@ -225,6 +250,17 @@
 
 ///We multiply the weight of fish inside the loot table by this value if we are goofy enough to fish without a bait.
 #define FISH_WEIGHT_MULT_WITHOUT_BAIT 0.15
+
+
+/**
+ * Flag for fish sources. It makes large explosions less efficient at spawning fish.
+ * Meant for lazy fishing spots that cover multiple turfs (rivers, oceans etc.)
+ */
+#define FISH_SOURCE_FLAG_EXPLOSIVE_MALUS (1<<0)
+/// The fish source is not elegible for random rewards from bluespace fishing rods
+#define FISH_SOURCE_FLAG_NO_BLUESPACE_ROD (1<<1)
+/// When examined by someone with enough fishing skill, this will also display fish that doesn't have FISH_FLAG_SHOW_IN_CATALOG
+#define FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG (1<<2)
 
 /**
  * A macro to ensure the wikimedia filenames of fish icons are unique, especially since there're a couple fish that have

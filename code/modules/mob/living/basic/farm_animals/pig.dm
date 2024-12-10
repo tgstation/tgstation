@@ -51,8 +51,6 @@
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 25, bonus_tame_chance = 15)
 
 /mob/living/basic/pig/tamed(mob/living/tamer, atom/food)
-	can_buckle = TRUE
-	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pig)
 	visible_message(span_notice("[src] snorts respectfully."))
 

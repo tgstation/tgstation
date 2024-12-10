@@ -469,6 +469,11 @@
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
 						  span_userdanger("You step on [src] causing the handle to hit you right in the face!"))
 
+/obj/item/cultivator/cyborg
+	name = "cyborg cultivator"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili_cultivator"
+
 /obj/item/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
@@ -513,6 +518,11 @@
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 1)
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
+
+/obj/item/hatchet/cyborg
+	name = "cyborg hatchet"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili_hatchet"
 
 /obj/item/scythe
 	name = "scythe"
@@ -606,6 +616,11 @@
 ///Send a signal to whatever we clicked and ask them if they wanna be PLANT RESTYLED YEAAAAAAAH
 /obj/item/secateurs/proc/restyle(atom/target, mob/living/user)
 	SEND_SIGNAL(target, COMSIG_ATOM_RESTYLE, user, target, user.zone_selected, EXTERNAL_RESTYLE_PLANT, 6 SECONDS)
+
+/obj/item/secateurs/cyborg
+	name = "cyborg secateurs"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili_secateur"
 
 /obj/item/geneshears
 	name = "botanogenetic plant shears"

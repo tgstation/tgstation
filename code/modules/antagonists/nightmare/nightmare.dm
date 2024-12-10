@@ -20,7 +20,7 @@
 /datum/outfit/nightmare
 	name = "Nightmare (Preview only)"
 
-/datum/outfit/nightmare/post_equip(mob/living/carbon/human/human, visualsOnly)
+/datum/outfit/nightmare/post_equip(mob/living/carbon/human/human, visuals_only)
 	human.set_species(/datum/species/shadow/nightmare)
 
 /datum/objective/nightmare_fluff
