@@ -5,6 +5,9 @@
 ///Used in the surgery fishing spot to define a random organ reward
 #define FISHING_RANDOM_ORGAN "Random organ"
 
+///Represents the chance of getting squashed by the vending machine from the vending machine fish source
+#define FISHING_VENDING_CHUCK "thinkfastchucklenuts"
+
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
 #define FISHING_EASY_DIFFICULTY 10
