@@ -188,6 +188,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/machinery/turretid,
 	/obj/machinery/barsign,
 	/obj/structure/extinguisher_cabinet,
+	/obj/structure/fish_mount,
 	/obj/structure/fireaxecabinet,
 	/obj/structure/mirror,
 	/obj/structure/noticeboard,
