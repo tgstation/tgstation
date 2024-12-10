@@ -10072,6 +10072,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/stone,
 /area/station/service/bar)
 "dMm" = (
@@ -19953,7 +19954,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/newscaster/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/stone,
 /area/station/service/bar)
 "hcT" = (
@@ -32108,11 +32109,11 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/structure/fish_mount/bar/directional/north,
 /turf/open/floor/stone,
 /area/station/service/bar)
 "kWJ" = (
