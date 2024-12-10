@@ -7,11 +7,16 @@
 #include "code/shuttles.dm"
 #include "code/wallets.dm"
 
+#include "code/clothing/eyes/eyes.dm"
+#include "code/clothing/gloves/gloves.dm"
 #include "code/clothing/head/hat.dm"
 #include "code/clothing/head/soft_caps.dm"
+#include "code/clothing/shoes/shoes.dm"
+#include "code/clothing/suits/armor.dm"
 #include "code/clothing/suits/cloaks.dm"
 #include "code/clothing/suits/jacket.dm"
 #include "code/clothing/suits/wintercoats.dm"
+#include "code/clothing/under/jobs/centcom.dm"
 #include "code/clothing/under/jobs/rnd.dm"
 
 #include "code/consumables/drinks.dm"
@@ -30,3 +35,4 @@
 #include "code/vending/vending.dm"
 
 #include "code/weapons/ranged/awaymission_gun.dm"
+#include "code/weapons/melee/centcom/rapier.dm"
