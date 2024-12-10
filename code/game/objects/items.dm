@@ -1351,7 +1351,7 @@
 
 		victim.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
 		victim.losebreath += 2
-		if(get_embed()?.embed_object(src, victim, victim.get_bodypart(BODY_ZONE_CHEST))) //and if it embeds successfully in their chest, cause a lot of pain
+		if(get_embed()?.embed_into(victim, victim.get_bodypart(BODY_ZONE_CHEST))) //and if it embeds successfully in their chest, cause a lot of pain
 			victim.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
 			victim.losebreath += 6
 			discover_after = FALSE
@@ -1872,7 +1872,7 @@
 		embed_data = new embed_type(src)
 	return embed_data
 
-/// Sets our embedding datum to a different one, singleton or not. Can also take types
+/// Sets our embedding datum to a different one. Can also take types
 /obj/item/proc/set_embed(datum/embedding/new_embed)
 	if (new_embed == embed_data)
 		SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDING_UPDATE)

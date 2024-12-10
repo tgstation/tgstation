@@ -398,8 +398,6 @@
 	desc = "It somehow heals those who touch it."
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "globule"
-	embed_type = /datum/embedding/mending_globule
-	var/obj/item/bodypart/bodypart
 	var/heals_left = 35
 
 /datum/embedding/mending_globule
@@ -414,10 +412,11 @@
 	. = ..()
 	if(!owner_limb) //this is fucked
 		return
+	var/obj/item/mending_globule/globule = parent
 	owner_limb.heal_damage(0.5 * seconds_per_tick, 0.5 * seconds_per_tick)
-	heals_left--
-	if(heals_left <= 0)
-		qdel(parent)
+	globule.heals_left--
+	if(globule.heals_left <= 0)
+		qdel(globule)
 
 ///This action lets you put a mob inside of a cacoon that will inject it with some chemicals.
 /datum/action/cooldown/gel_cocoon

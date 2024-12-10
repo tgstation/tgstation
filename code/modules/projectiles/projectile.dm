@@ -1369,10 +1369,9 @@
 		embed_data = new embed_type(src)
 	return embed_data
 
-/// Sets our embedding datum to a different one, singleton or not. Can also take types
+/// Sets our embedding datum to a different one. Can also take types
 /obj/projectile/proc/set_embed(datum/embedding/new_embed)
 	if (new_embed == embed_data)
-		SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDING_UPDATE)
 		return
 
 	if (embed_data)
@@ -1381,9 +1380,4 @@
 	if (ispath(new_embed))
 		new_embed = new new_embed(src)
 
-	// If somethiong created it without knowing who to assign it to
-	if (new_embed.parent != src)
-		new_embed.attach(src)
-
 	embed_data = new_embed
-	SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDING_UPDATE)

@@ -125,16 +125,18 @@
 /datum/embedding/proc/try_embed(obj/item/weapon, mob/living/carbon/victim, hit_zone, blocked, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 
-	if (blocked || !can_embed(weapon, victim, hit_zone, throwingdatum))
+	if (blocked || !can_embed(parent, victim, hit_zone, throwingdatum))
+		failed_embed(victim, hit_zone)
 		return FALSE
 
-	if (!roll_embed_chance(weapon, victim, hit_zone, throwingdatum))
+	if (!roll_embed_chance(victim, hit_zone, throwingdatum))
+		failed_embed(victim, hit_zone, random = TRUE)
 		return FALSE
 
 	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone)
 	if (isnull(limb))
 		limb = pick(victim.bodyparts)
-	embed_object(weapon, victim, limb)
+	embed_into(victim, limb)
 	return TRUE
 
 /// Attempts to embed shrapnel from a projectile
@@ -142,33 +144,34 @@
 	SIGNAL_HANDLER
 
 	if (pierce_hit)
-		return null
+		return
 
-	if (!can_embed(source, hit) || blocked)
-		return null
+	if (blocked || !can_embed(source, hit))
+		return
 
 	var/mob/living/carbon/victim = hit
 	var/shrapnel_type = source.shrapnel_type
 	var/obj/item/payload = new shrapnel_type(get_turf(victim))
 	setup_shrapnel(payload, source, victim)
 
-	if (!roll_embed_chance(payload, victim, hit_zone))
-		return payload
+	if (!payload.embed_data.roll_embed_chance(victim, hit_zone))
+		return
 
 	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone)
 	if (isnull(limb))
 		limb = pick(victim.bodyparts)
-	embed_object(payload, victim, limb)
-	return payload
+	payload.embed_data.embed_into(victim, limb)
+	SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_EMBEDDED, payload, hit)
 
 /// Used for custom logic while setting up shrapnel payload
 /datum/embedding/proc/setup_shrapnel(obj/item/payload, obj/projectile/source, mob/living/carbon/victim)
 	payload.set_embed(create_copy(payload))
 	if(istype(payload, /obj/item/shrapnel/bullet))
 		payload.name = source.name
+	SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED, payload, victim)
 
 /// Calculates the actual chance to embed based on armour penetration and throwing speed, then returns true if we pass that probability check
-/datum/embedding/proc/roll_embed_chance(obj/item/weapon, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum)
+/datum/embedding/proc/roll_embed_chance(mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum)
 	var/chance = embed_chance
 
 	// Something threw us really, really fast
@@ -195,12 +198,18 @@
 
 	return prob(chance)
 
+/// We've tried to embed into something and failed
+/// Random being TRUE means we've lost the roulette, FALSE means we've either been blocked or the target is invalid
+/datum/embedding/proc/failed_embed(mob/living/carbon/victim, hit_zone, random = FALSE)
+	SEND_SIGNAL(parent, COMSIG_ITEM_FAILED_EMBED, victim, hit_zone)
+	return
+
 /// Does this item deal any damage when embedding or jostling inside of someone?
 /datum/embedding/proc/is_harmless()
 	return pain_mult == 0 && jostle_pain_mult == 0
 
 //Handles actual embedding logic.
-/datum/embedding/proc/embed_object(obj/item/weapon, mob/living/carbon/victim, obj/item/bodypart/target_limb)
+/datum/embedding/proc/embed_into(mob/living/carbon/victim, obj/item/bodypart/target_limb)
 	owner = victim
 	owner_limb = target_limb
 	RegisterWithOwner()
@@ -210,24 +219,25 @@
 	parent.forceMove(owner)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(weapon_disappeared))
 	RegisterSignal(parent, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
-	owner.visible_message(span_danger("[weapon] [is_harmless() ? "sticks itself to" : "embeds itself in"] [owner]'s [owner_limb.plaintext_zone]!"),
-		span_userdanger("[weapon] [is_harmless() ? "sticks itself to" : "embeds itself in"] your [owner_limb.plaintext_zone]!"))
+	owner.visible_message(span_danger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] [owner]'s [owner_limb.plaintext_zone]!"),
+		span_userdanger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] your [owner_limb.plaintext_zone]!"))
 
-	var/damage = weapon.throwforce
+	var/damage = parent.throwforce
 	if (!is_harmless())
 		owner.throw_alert(ALERT_EMBEDDED_OBJECT, /atom/movable/screen/alert/embeddedobject)
 		playsound(owner,'sound/items/weapons/bladeslice.ogg', 40)
 		if (owner_limb.can_bleed())
-			weapon.add_mob_blood(owner) // it embedded itself in you, of course it's bloody!
-		damage += weapon.w_class * impact_pain_mult
+			parent.add_mob_blood(owner) // it embedded itself in you, of course it's bloody!
+		damage += parent.w_class * impact_pain_mult
 		owner.add_mood_event("embedded", /datum/mood_event/embedded)
 
+	SEND_SIGNAL(parent, COMSIG_ITEM_EMBEDDED, victim, target_limb)
 	if (damage <= 0)
 		return
 
 	var/armor = owner.run_armor_check(owner_limb.body_zone, MELEE, "Your armor has protected your [owner_limb.plaintext_zone].",
-		"Your armor has softened a hit to your [owner_limb.plaintext_zone].", weapon.armour_penetration,
-		weak_against_armour = weapon.weak_against_armour,
+		"Your armor has softened a hit to your [owner_limb.plaintext_zone].", parent.armour_penetration,
+		weak_against_armour = parent.weak_against_armour,
 	)
 
 	owner.apply_damage(
@@ -235,10 +245,10 @@
 		damagetype = BRUTE,
 		def_zone = owner_limb.body_zone,
 		blocked = armor,
-		wound_bonus = weapon.wound_bonus,
-		bare_wound_bonus = weapon.bare_wound_bonus,
-		sharpness = weapon.get_sharpness(),
-		attacking_item = weapon,
+		wound_bonus = parent.wound_bonus,
+		bare_wound_bonus = parent.bare_wound_bonus,
+		sharpness = parent.get_sharpness(),
+		attacking_item = parent,
 	)
 
 	owner.apply_damage(
@@ -331,7 +341,6 @@
 /// The proper proc to call when you want to remove something. If a mob is passed, the item will be put in its hands - otherwise its just dumped onto the ground
 /datum/embedding/proc/remove_embedding(mob/living/to_hands)
 	var/mob/living/carbon/stored_owner = owner
-	var/obj/item/bodypart/stored_limb = owner_limb
 	stop_embedding()
 	SEND_SIGNAL(parent, COMSIG_ITEM_UNEMBEDDED, stored_owner, owner_limb)
 	parent.forceMove(stored_owner.drop_location())
@@ -370,7 +379,7 @@
 /datum/embedding/proc/on_attackby(mob/living/carbon/victim, obj/item/tool, mob/user)
 	SIGNAL_HANDLER
 
-	if (user.zone_selected != owner_limb.body_zone || (tool.tool_behaviour != TOOL_HEMOSTAT && tool.tool_behavior != TOOL_WIRECUTTER))
+	if (user.zone_selected != owner_limb.body_zone || (tool.tool_behaviour != TOOL_HEMOSTAT && tool.tool_behaviour != TOOL_WIRECUTTER))
 		return
 
 	if (parent != owner_limb.embedded_objects[1]) // Don't pluck everything at the same time
@@ -386,7 +395,6 @@
 /datum/embedding/process(seconds_per_tick)
 	if (!owner || !owner_limb || owner_limb.owner != owner)
 		parent.forceMove(get_turf(parent))
-		stop_embedding()
 		return
 
 	if (owner.stat == DEAD)
