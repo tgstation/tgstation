@@ -108,11 +108,15 @@
 	icon_state = "plastetra"
 	sprite_width = 4
 	sprite_height = 2
-	average_size = 30
-	average_weight = 500
+	average_size = 20
+	average_weight = 180
 	stable_population = 3
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
 	required_temperature_max = MIN_AQUARIUM_TEMP+28
+
+/obj/item/fish/plasmatetra/Initialize(mapload, apply_qualities = TRUE)
+	. = ..()
+	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_GOOD_QUALITY_BAIT), INNATE_TRAIT)
 
 /obj/item/fish/catfish
 	name = "catfish"
