@@ -30,7 +30,7 @@
 		/obj/structure/table,
 		/obj/structure/rack,
 		/obj/structure/closet,
-		/obj/structure/disposal,
+		/obj/machinery/disposal,
 	))
 
 /obj/item/storage/toolbox/Initialize(mapload)
