@@ -4,7 +4,7 @@
  */
 
 ///Time in ticks before the anomaly goes poof/explodes depending on type.
-#define ANOMALY_COUNTDOWN_TIMER (99 SECONDS)
+#define ANOMALY_COUNTDOWN_TIMER (120 SECONDS)
 
 /**
  * Nuisance/funny anomalies
