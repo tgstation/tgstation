@@ -34,6 +34,8 @@
 	new_baseturfs.Add(baseturfs)
 	if(isopenturf(src))
 		new_baseturfs.Add(type)
+	var/area/our_area = get_area(src)
+	flags = our_area.PlaceOnTopReact(new_baseturfs, added_layer, flags)
 
 	return ChangeTurf(added_layer, new_baseturfs, flags)
 
@@ -170,3 +172,13 @@
 	var/floor_position = baseturfs.Find(floor)
 	if(floor_position != 0)
 		insert_baseturf(floor_position + 1, roof)
+
+/// Places a baseturf below a searched for baseturf.
+/turf/proc/stack_below_baseturf(search_type, stack_type)
+	if(!islist(baseturfs))
+		baseturfs = list(baseturfs)
+	var/search_position = baseturfs.Find(search_type)
+	if(search_position != 0)
+		insert_baseturf(search_position - 1, stack_type)
+	else if(type == search_type)
+		insert_baseturf(turf_type = stack_type)

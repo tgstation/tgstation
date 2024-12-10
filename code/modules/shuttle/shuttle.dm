@@ -493,6 +493,19 @@
 	///List of shuttle events that can run or are running
 	var/list/datum/shuttle_event/event_list = list()
 
+	var/list/underlying_areas_by_turf = list()
+
+	///Whether this shuttle can be expanded by placing shuttle frame rods on turfs adjacent to a shuttle area.
+	var/can_expand = FALSE
+
+	///The maximum width this shuttle can be expanded to. Only applicable when `can_expand` is true.
+	var/max_width
+	///The maximum height this shuttle can be expanded to. Only applicable when `can_expand` is true.
+	var/max_height
+
+	///How many turfs this shuttle has. Used to check against max shuttle size when expanding expandable shuttles.
+	var/turf_count = 0
+
 #define WORLDMAXX_CUTOFF (world.maxx + 1)
 #define WORLDMAXY_CUTOFF (world.maxx + 1)
 /**
@@ -511,35 +524,43 @@
 		if(!length(shuttle_areas))
 			CRASH("Attempted to calculate a docking port's information without a template before it was assigned any areas!")
 		// no template given, use shuttle_areas to calculate width and height
-		var/min_x = -1
-		var/min_y = -1
-		var/max_x = WORLDMAXX_CUTOFF
-		var/max_y = WORLDMAXY_CUTOFF
+		var/min_x = WORLDMAXX_CUTOFF
+		var/min_y = WORLDMAXY_CUTOFF
+		var/max_x = -1
+		var/max_y = -1
 		for(var/area/shuttle_area as anything in shuttle_areas)
 			for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
 				for(var/turf/turf as anything in zlevel_turfs)
-					min_x = max(turf.x, min_x)
-					max_x = min(turf.x, max_x)
-					min_y = max(turf.y, min_y)
-					max_y = min(turf.y, max_y)
+					min_x = min(turf.x, min_x)
+					max_x = max(turf.x, max_x)
+					min_y = min(turf.y, min_y)
+					max_y = max(turf.y, max_y)
 				CHECK_TICK
 
-		if(min_x == -1 || max_x == WORLDMAXX_CUTOFF)
+		if(min_x == WORLDMAXX_CUTOFF || max_x == -1)
 			CRASH("Failed to locate shuttle boundaries when iterating through shuttle areas, somehow.")
-		if(min_y == -1 || max_y == WORLDMAXY_CUTOFF)
+		if(min_y ==  WORLDMAXY_CUTOFF || max_y == -1)
 			CRASH("Failed to locate shuttle boundaries when iterating through shuttle areas, somehow.")
 
 		width = (max_x - min_x) + 1
 		height = (max_y - min_y) + 1
-		port_x_offset = min_x - x
-		port_y_offset = min_y - y
+		port_x_offset = x - min_x + 1
+		port_y_offset = y - min_y + 1
 
 	if(dir in list(EAST, WEST))
 		src.width = height
 		src.height = width
+		if(!max_width)
+			max_width = height
+		if(!max_height)
+			max_height = width
 	else
 		src.width = width
 		src.height = height
+		if(!max_width)
+			max_width = width
+		if(!max_height)
+			max_height = height
 
 	switch(dir)
 		if(NORTH)
@@ -557,13 +578,19 @@
 #undef WORLDMAXX_CUTOFF
 #undef WORLDMAXY_CUTOFF
 
+/obj/docking_port/mobile/is_in_shuttle_bounds(atom/A)
+	. = ..()
+	if(. && !shuttle_areas[get_area(A)])
+		return FALSE
+
 /**
  * Actions to be taken after shuttle is loaded but before it has been moved out of transit z-level to its final location
  *
  * Arguments:
  * * replace - TRUE if this shuttle is replacing an existing one. FALSE by default.
+ * * custom -  TRUE if this shuttle should be added to the custom shuttle list. FALSE by default.
  */
-/obj/docking_port/mobile/register(replace = FALSE)
+/obj/docking_port/mobile/register(replace = FALSE, custom = FALSE)
 	. = ..()
 	if(!shuttle_id)
 		shuttle_id = "shuttle"
@@ -582,6 +609,8 @@
 			linkup()
 		else
 			SSshuttle.assoc_mobile[shuttle_id] = 1
+	if(custom)
+		SSshuttle.custom_shuttles += src
 
 	SSshuttle.mobile_docking_ports += src
 
@@ -597,6 +626,7 @@
 /obj/docking_port/mobile/unregister()
 	. = ..()
 	SSshuttle.mobile_docking_ports -= src
+	SSshuttle.custom_shuttles -= src
 
 /obj/docking_port/mobile/Destroy(force)
 	unregister()
@@ -609,7 +639,7 @@
 	remove_ripples()
 	return ..()
 
-/obj/docking_port/mobile/Initialize(mapload)
+/obj/docking_port/mobile/Initialize(mapload, list/areas)
 	. = ..()
 
 	if(!shuttle_id)
@@ -624,12 +654,17 @@
 		shuttle_id = "[tmp_id]_[counter]"
 		name = "[tmp_name] [counter]"
 
-	var/list/all_turfs = return_ordered_turfs(x, y, z, dir)
-	for(var/i in 1 to all_turfs.len)
-		var/turf/curT = all_turfs[i]
-		var/area/cur_area = curT.loc
-		if(istype(cur_area, area_type))
-			shuttle_areas[cur_area] = TRUE
+	if(areas)
+		for(var/area/area as anything in areas)
+			shuttle_areas[area] = TRUE
+	else
+		var/list/all_turfs = return_ordered_turfs(x, y, z, dir)
+		for(var/i in 1 to all_turfs.len)
+			var/turf/curT = all_turfs[i]
+			var/area/cur_area = curT.loc
+			if(istype(cur_area, area_type))
+				turf_count++
+				shuttle_areas[cur_area] = TRUE
 
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#0f0")
@@ -776,9 +811,8 @@
 	if(!underlying_area)
 		underlying_area = new underlying_area_type(null)
 
-	for(var/i in 1 to old_turfs.len)
-		var/turf/oldT = old_turfs[i]
-		if(!oldT || !istype(oldT.loc, area_type))
+	for(var/turf/oldT as anything in old_turfs)
+		if(!oldT || !shuttle_areas[oldT.loc])
 			continue
 		oldT.change_area(oldT.loc, underlying_area)
 		oldT.empty(FALSE)
@@ -826,7 +860,7 @@
 	for(var/i in 1 to stop)
 		var/turf/T0 = L0[i]
 		var/turf/T1 = L1[i]
-		if(!istype(T0.loc, area_type) || istype(T0.loc, /area/shuttle/transit))
+		if(!shuttle_areas[T0.loc] || istype(T0.loc, /area/shuttle/transit))
 			continue  // not part of the shuttle
 		ripple_turfs += T1
 
@@ -914,9 +948,8 @@
 	if(assigned_transit?.assigned_area)
 		assigned_transit.assigned_area.parallax_movedir = FALSE
 	var/list/L0 = return_ordered_turfs(x, y, z, dir)
-	for (var/thing in L0)
-		var/turf/T = thing
-		if(!T || !istype(T.loc, area_type))
+	for (var/turf/T as anything in L0)
+		if(!T || !shuttle_areas[T.loc])
 			continue
 		for (var/atom/movable/movable as anything in T)
 			if (movable.client_mobs_in_contents)

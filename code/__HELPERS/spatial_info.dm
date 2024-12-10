@@ -431,6 +431,16 @@
 		)
 	list_clear_nulls(.)
 
+///Returns a list of all turfs that are adjacent to the center atom's turf, clear the list of nulls at the end.
+/proc/get_adjacent_turfs(atom/center)
+	. = list(
+		get_ranged_target_turf(center, NORTH, 1),
+		get_ranged_target_turf(center, SOUTH, 1),
+		get_ranged_target_turf(center, EAST, 1),
+		get_ranged_target_turf(center, WEST, 1)
+		)
+	list_clear_nulls(.)
+
 ///Checks if the mob provided (must_be_alone) is alone in an area
 /proc/alone_in_area(area/the_area, mob/must_be_alone, check_type = /mob/living/carbon)
 	var/area/our_area = get_area(the_area)

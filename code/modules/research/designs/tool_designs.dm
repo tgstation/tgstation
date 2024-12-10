@@ -426,12 +426,12 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/design/shuttlecreator
-	name = "Rapid Shuttle Designator"
-	desc = "An advanced device capable of defining areas for use in the creation of shuttles"
-	id = "shuttle_creator"
-	build_path = /obj/item/shuttle_creator
+/datum/design/shuttle_blueprints
+	name = "Shuttle Blueprints"
+	desc = "Blueprints suitable for constructing shuttles"
+	id = "shuttle_blueprints"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 1000, /datum/material/titanium = 500, /datum/material/bluespace = 100)
-	category = list("Tool Designs")
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+	materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/shuttle_blueprints
+	category = list(RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
