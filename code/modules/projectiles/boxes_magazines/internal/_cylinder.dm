@@ -1,6 +1,6 @@
 /obj/item/ammo_box/magazine/internal/cylinder
 	name = "revolver cylinder"
-	ammo_type = /obj/item/ammo_casing/a357
+	ammo_type = /obj/item/ammo_casing/c357
 	caliber = CALIBER_357
 	max_ammo = 7
 
