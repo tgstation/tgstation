@@ -56,7 +56,20 @@
 	///List of shuttle events that can run or are running
 	var/list/datum/shuttle_event/event_list = list()
 
-/obj/docking_port/mobile/Initialize(mapload)
+	var/list/underlying_areas_by_turf = list()
+
+	///Whether this shuttle can be expanded by placing shuttle frame rods on turfs adjacent to a shuttle area.
+	var/can_expand = FALSE
+
+	///The maximum width this shuttle can be expanded to. Only applicable when `can_expand` is true.
+	var/max_width
+	///The maximum height this shuttle can be expanded to. Only applicable when `can_expand` is true.
+	var/max_height
+
+	///How many turfs this shuttle has. Used to check against max shuttle size when expanding expandable shuttles.
+	var/turf_count = 0
+
+/obj/docking_port/mobile/Initialize(mapload, list/areas)
 	. = ..()
 
 	if(!shuttle_id)
@@ -71,12 +84,17 @@
 		shuttle_id = "[tmp_id]_[counter]"
 		name = "[tmp_name] [counter]"
 
-	var/list/all_turfs = return_ordered_turfs(x, y, z, dir)
-	for(var/i in 1 to all_turfs.len)
-		var/turf/curT = all_turfs[i]
-		var/area/cur_area = curT.loc
-		if(istype(cur_area, area_type))
-			shuttle_areas[cur_area] = TRUE
+	if(areas)
+		for(var/area/area as anything in areas)
+			shuttle_areas[area] = TRUE
+	else
+		var/list/all_turfs = return_ordered_turfs(x, y, z, dir)
+		for(var/i in 1 to all_turfs.len)
+			var/turf/curT = all_turfs[i]
+			var/area/cur_area = curT.loc
+			if(istype(cur_area, area_type))
+				turf_count++
+				shuttle_areas[cur_area] = TRUE
 
 #ifdef TESTING
 	highlight("#0f0")
@@ -162,8 +180,9 @@
  *
  * Arguments:
  * * replace - TRUE if this shuttle is replacing an existing one. FALSE by default.
+ * * custom -  TRUE if this shuttle should be added to the custom shuttle list. FALSE by default.
  */
-/obj/docking_port/mobile/register(replace = FALSE)
+/obj/docking_port/mobile/register(replace = FALSE, custom = FALSE)
 	. = ..()
 	if(!shuttle_id)
 		shuttle_id = "shuttle"
@@ -185,6 +204,9 @@
 
 	SSshuttle.mobile_docking_ports += src
 
+	if(custom)
+		SSshuttle.custom_shuttles += src
+
 /**
  * Actions to be taken after shuttle is loaded and has been moved to its final location
  *
@@ -197,6 +219,7 @@
 /obj/docking_port/mobile/unregister()
 	. = ..()
 	SSshuttle.mobile_docking_ports -= src
+	SSshuttle.custom_shuttles -= src
 
 
 
