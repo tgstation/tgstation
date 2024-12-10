@@ -156,9 +156,7 @@
 #define CATWALK_LAYER (14 + TOPDOWN_LAYER)
 #define LOWER_RUNE_LAYER (15 + TOPDOWN_LAYER)
 #define RUNE_LAYER (16 + TOPDOWN_LAYER)
-/// [GAME_CLEAN_LAYER] but for floors.
-/// Basically any layer below this (numerically) is "on" a floor for the purposes of washing
-#define FLOOR_CLEAN_LAYER (21 + TOPDOWN_LAYER)
+#define CLEANABLE_FLOOR_OBJECT_LAYER (21 + TOPDOWN_LAYER)
 
 //Placeholders in case the game plane and possibly other things between it and the floor plane are ever made into topdown planes
 
@@ -185,9 +183,7 @@
 #define BOT_PATH_LAYER 2.497
 #define LOW_OBJ_LAYER 2.5
 #define HIGH_PIPE_LAYER 2.54
-// Anything above this layer is not "on" a turf for the purposes of washing
-// I hate this life of ours
-#define GAME_CLEAN_LAYER 2.55
+#define CLEANABLE_OBJECT_LAYER 2.55
 #define TRAM_STRUCTURE_LAYER 2.57
 #define TRAM_FLOOR_LAYER 2.58
 #define TRAM_WALL_LAYER 2.59
