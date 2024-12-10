@@ -383,12 +383,14 @@
 /obj/machinery/cryo_cell/begin_processing()
 	. = ..()
 	SSair.start_processing_machine(src)
-	soundloop.start()
+	if(soundloop)
+		soundloop.start()
 
 /obj/machinery/cryo_cell/end_processing()
 	. = ..()
 	SSair.stop_processing_machine(src)
-	soundloop.stop()
+	if(soundloop)
+		soundloop.stop()
 
 /obj/machinery/cryo_cell/on_set_is_operational(old_value)
 	//Turned off
