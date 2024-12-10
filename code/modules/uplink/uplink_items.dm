@@ -194,7 +194,8 @@
 		return
 
 	QDEL_NULL(gun_reward.pin)
-	gun_reward.pin = new /obj/item/firing_pin(gun_reward)
+	var/obj/item/firing_pin/pin = new
+	pin.gun_insert(new_gun = gun_reward)
 
 ///For special overrides if an item can be bought or not.
 /datum/uplink_item/proc/can_be_bought(datum/uplink_handler/source)
