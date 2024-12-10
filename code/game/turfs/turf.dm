@@ -635,7 +635,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	new /obj/effect/glowing_rune(src)
 
 /turf/handle_fall(mob/faller)
-	if(has_gravity(src))
+	if(has_gravity(src) && !HAS_TRAIT(faller, TRAIT_NO_BODY_DROP_SFX))
 		playsound(src, SFX_BODYFALL, 50, TRUE)
 	faller.drop_all_held_items()
 

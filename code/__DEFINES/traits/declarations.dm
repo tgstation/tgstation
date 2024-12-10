@@ -515,6 +515,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RIGHT_EYE_SCAR "right_eye_scar"
 #define TRAIT_LEFT_EYE_SCAR "left_eye_scar"
 
+/// Mob doesn't play body drop sfx when dying/in crit
+#define TRAIT_NO_BODY_DROP_SFX "NO_BODY_DROP_SFX"
+
 /// Trait added when a revenant is visible.
 #define TRAIT_REVENANT_REVEALED "revenant_revealed"
 /// Trait added when a revenant has been inhibited (typically by the bane of a holy weapon)
