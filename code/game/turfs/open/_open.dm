@@ -400,7 +400,7 @@
 		slipper.Knockdown(knockdown_amount)
 		slipper.Paralyze(paralyze_amount)
 
-	if(!ismob(buckled_obj))
+	if(!isnull(buckled_obj) && !ismob(buckled_obj))
 		buckled_obj.unbuckle_mob(slipper)
 		// This is added onto the end so they slip "out of their chair" (one tile)
 		lube |= SLIDE_ICE
