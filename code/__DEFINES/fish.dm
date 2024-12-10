@@ -135,6 +135,17 @@
 ///The coefficient for maximum weight/size divergence relative to the averages.
 #define MAX_FISH_DEVIATION_COEFF 2.5
 
+/**
+ * Base multiplier of the difference between current size and weight and their maximum value
+ * used to calculate how much fish grow each time they're fed, alongside with the current hunger,
+ * and the current size and weight, meaning bigger fish naturally tend to grow way slowier
+ */
+#define FISH_GROWTH_MULT 0.38
+/// Growth peaks at 45% hunger but very rapidly wanes past that.
+#define FISH_GROWTH_PEAK 0.45
+/// Used as part of the divisor to slow down growth of bigger fish
+#define FISH_SIZE_WEIGHT_GROWTH_MALUS 0.5
+
 ///The volume of the grind results is multiplied by the fish' weight and divided by this.
 #define FISH_GRIND_RESULTS_WEIGHT_DIVISOR 500
 ///The number of fillets is multiplied by the fish' size and divided by this.
