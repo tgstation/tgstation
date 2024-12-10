@@ -603,7 +603,7 @@
 			shard.set_embed(/datum/embed_data/glass_candy)
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
 			shard.set_embed(initial(shard.embed_type))
-		W.deconstruct(disassembled = FALSE)
+		W.atom_destruction()
 		user.adjustStaminaLoss(10 * speed)
 		user.Paralyze(3 SECONDS)
 		user.visible_message(span_danger("[user] smacks into [W] and shatters it, shredding [user.p_them()]self with glass!"), span_userdanger("You smacks into [W] and shatter it, shredding yourself with glass!"))
@@ -618,7 +618,7 @@
 
 /datum/component/tackler/proc/delayedSmash(obj/structure/window/W)
 	if(W)
-		W.deconstruct(disassembled = FALSE)
+		W.atom_destruction()
 		playsound(W, SFX_SHATTER, 70, TRUE)
 
 ///Check to see if we hit a table, and if so, make a big mess!

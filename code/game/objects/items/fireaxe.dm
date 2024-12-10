@@ -67,8 +67,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	if(target.resistance_flags & INDESTRUCTIBLE)
 		return
 	if(istype(target, /obj/structure/window) || istype(target, /obj/structure/grille))
-		var/obj/smashed = target
-		smashed.deconstruct(disassembled = FALSE)
+		target.atom_destruction("fireaxe")
 
 /*
  * Bone Axe
