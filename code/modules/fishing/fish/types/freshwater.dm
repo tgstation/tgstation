@@ -163,9 +163,21 @@
 	//anxiety naturally limits the amount of zipzaps per tank, so they are stronger alone
 	electrogenesis_power = 6.7 MEGA JOULES
 	beauty = FISH_BEAUTY_GOOD
+	suicide_slap_text = "*ZAP!*"
 
 /obj/item/fish/zipzap/get_fish_taste()
 	return list("raw fish" = 2, "anxiety" = 1)
+
+/obj/item/fish/zipzap/suicide_act(mob/living/user)
+	if(!electrocute_mob(user, power_source = get_area(src), source = src, siemens_coeff = 1, dist_check = FALSE))
+		user.visible_message(span_suicide("[user] tries to slap [user.p_them()]self with [src], but they're immune to electricity!"))
+		return SHAME
+	return ..()
+
+// real suicide handled by og fish proc
+/obj/item/fish/zipzap/slapperoni(mob/living/user, iteration)
+	electrocute_mob(user, power_source = get_area(src), source = src, siemens_coeff = 1, dist_check = FALSE) // how do i make this use electrogenesis_power
+	return ..()
 
 /obj/item/fish/tadpole
 	name = "tadpole"
@@ -217,6 +229,25 @@
 
 /obj/item/fish/tadpole/get_export_price(price, elasticity_percent)
 	return 2 //two credits. Tadpoles aren't really that valueable.
+
+/obj/item/fish/tadpole/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] swallows [src] whole!"))
+	src.forceMove(user)
+	if(status == FISH_DEAD)
+		user.emote("gasp")
+		user.visible_message(span_suicide("[user] croaks!"))
+		return OXYLOSS
+
+	// the frogg grows
+	addtimer(CALLBACK(src, PROC_REF(gestation), user), 5 SECONDS)
+	return MANUAL_SUICIDE
+
+/obj/item/fish/tadpole/proc/gestation(mob/living/user)
+	if(QDELETED(user) || QDELETED(src))
+		return
+	new /mob/living/basic/frog(user)
+	user.gib()
+	qdel(src)
 
 /obj/item/fish/perch
 	name = "perch"
