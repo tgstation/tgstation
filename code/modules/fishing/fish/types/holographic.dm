@@ -36,6 +36,15 @@
 		animate(src, alpha = 0, 3 SECONDS, easing = SINE_EASING)
 		QDEL_IN(src, 3 SECONDS)
 
+/obj/item/fish/holo/suicide_act(mob/living/user)
+	visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to derez [user.p_them()]selves!"))
+	var/area/station/holodeck/holo_area = get_area(src)
+	if(!istype(holo_area))
+		user.dust(just_ash = TRUE, drop_items = FALSE)
+		return MANUAL_SUICIDE
+	holo_area.linked.add_to_spawned(user) // oh no
+	return MANUAL_SUICIDE_NONLETHAL
+
 /obj/item/fish/holo/crab
 	name = "holographic crab"
 	fish_id = "holocrab"
@@ -101,6 +110,20 @@
 	sprite_width = 4
 	sprite_height = 3
 	beauty = FISH_BEAUTY_NULL
+
+/obj/item/fish/holo/checkered/suicide_act(mob/living/carbon/user)
+
+	if(!iscarbon(user))
+		return ..()
+
+	for(var/obj/item/bodypart/limb in user.bodyparts)
+		limb.add_bodypart_overlay(new /datum/bodypart_overlay/texture/checkered)
+	
+	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
+	if(!isnull(head))
+		head.head_flags &= ~HEAD_EYESPRITES
+
+	return ..()
 
 /obj/item/fish/holo/halffish
 	name = "holographic half-fish"
