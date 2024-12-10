@@ -28,6 +28,8 @@
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
 	mergeable_decal = FALSE
 
+	is_mopped = TRUE // probably shouldn't be, but janitor powercreep
+
 /obj/effect/decal/cleanable/xenoblood/xgibs/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))

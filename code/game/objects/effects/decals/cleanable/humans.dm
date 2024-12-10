@@ -121,6 +121,8 @@
 	decal_reagent = /datum/reagent/consumable/liquidgibs
 	reagent_amount = 5
 
+	is_mopped = TRUE // probably shouldn't be, but janitor powercreep
+
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	AddElement(/datum/element/squish_sound)

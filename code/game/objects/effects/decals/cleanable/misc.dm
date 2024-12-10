@@ -153,6 +153,7 @@
 	resistance_flags = FLAMMABLE
 	beauty = -100
 	clean_type = CLEAN_TYPE_HARD_DECAL
+	is_mopped = FALSE
 
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
@@ -568,6 +569,8 @@
 	beauty = -10
 	plane = GAME_PLANE
 	layer = BELOW_OBJ_LAYER
+	clean_type = CLEAN_TYPE_HARD_DECAL
+	is_mopped = FALSE
 
 /obj/effect/decal/cleanable/rubble/Initialize(mapload)
 	. = ..()
