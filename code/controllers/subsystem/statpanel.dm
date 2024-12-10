@@ -37,6 +37,10 @@ SUBSYSTEM_DEF(statpanels)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
+		if(SSticker.reboot_timer)
+			var/reboot_time = timeleft(SSticker.reboot_timer)
+			if(reboot_time)
+				global_data += "Reboot: [DisplayTimeText(reboot_time, 1)]"
 		src.currentrun = GLOB.clients.Copy()
 		mc_data = null
 
