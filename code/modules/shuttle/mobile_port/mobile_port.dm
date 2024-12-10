@@ -129,51 +129,50 @@
 		if(!length(shuttle_areas))
 			CRASH("Attempted to calculate a docking port's information without a template before it was assigned any areas!")
 		// no template given, use shuttle_areas to calculate width and height
-		var/min_x = -1
-		var/min_y = -1
-		var/max_x = WORLDMAXX_CUTOFF
-		var/max_y = WORLDMAXY_CUTOFF
+		var/min_x = WORLDMAXX_CUTOFF
+		var/min_y = WORLDMAXY_CUTOFF
+		var/max_x = -1
+		var/max_y = -1
 		for(var/area/shuttle_area as anything in shuttle_areas)
 			for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
 				for(var/turf/turf as anything in zlevel_turfs)
-					min_x = max(turf.x, min_x)
-					max_x = min(turf.x, max_x)
-					min_y = max(turf.y, min_y)
-					max_y = min(turf.y, max_y)
+					min_x = min(turf.x, min_x)
+					max_x = max(turf.x, max_x)
+					min_y = min(turf.y, min_y)
+					max_y = max(turf.y, max_y)
 				CHECK_TICK
 
-		if(min_x == -1 || max_x == WORLDMAXX_CUTOFF)
+		if(min_x == WORLDMAXX_CUTOFF || max_x == -1)
 			CRASH("Failed to locate shuttle boundaries when iterating through shuttle areas, somehow.")
-		if(min_y == -1 || max_y == WORLDMAXY_CUTOFF)
+		if(min_y ==  WORLDMAXY_CUTOFF || max_y == -1)
 			CRASH("Failed to locate shuttle boundaries when iterating through shuttle areas, somehow.")
 
 		width = (max_x - min_x) + 1
 		height = (max_y - min_y) + 1
-		port_x_offset = min_x - x
-		port_y_offset = min_y - y
+		port_x_offset = x - min_x + 1
+		port_y_offset = y - min_y + 1
 
 	if(dir in list(EAST, WEST))
 		src.width = height
 		src.height = width
+		if(!max_width)
+			max_width = height
+		if(!max_height)
+			max_height = width
 	else
 		src.width = width
 		src.height = height
-
-	switch(dir)
-		if(NORTH)
-			dwidth = port_x_offset - 1
-			dheight = port_y_offset - 1
-		if(EAST)
-			dwidth = height - port_y_offset
-			dheight = port_x_offset - 1
-		if(SOUTH)
-			dwidth = width - port_x_offset
-			dheight = height - port_y_offset
-		if(WEST)
-			dwidth = port_y_offset - 1
-			dheight = width - port_x_offset
+		if(!max_width)
+			max_width = width
+		if(!max_height)
+			max_height = height
 #undef WORLDMAXX_CUTOFF
 #undef WORLDMAXY_CUTOFF
+
+/obj/docking_port/mobile/is_in_shuttle_bounds(atom/A)
+	. = ..()
+	if(. && !shuttle_areas[get_area(A)])
+		return FALSE
 
 /**
  * Actions to be taken after shuttle is loaded but before it has been moved out of transit z-level to its final location
