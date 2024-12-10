@@ -568,7 +568,7 @@
 	mergeable_decal = FALSE
 	beauty = -10
 	plane = GAME_PLANE
-	layer = BELOW_OBJ_LAYER
+	layer = GIB_LAYER
 	clean_type = CLEAN_TYPE_HARD_DECAL
 	is_mopped = FALSE
 
