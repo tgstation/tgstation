@@ -206,7 +206,7 @@
 	if (get_dir(source, backup) == movement_dir || source.loc == backup.loc)
 		return
 
-	if (!source.client?.intended_direction || (source.client.intended_direction & get_dir(source, backup)))
+	if (!source.client?.intended_direction || source.client.intended_direction == get_dir(source, backup))
 		return
 
 	if (isnull(source.drift_handler))
