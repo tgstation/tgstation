@@ -14,7 +14,7 @@
 	default_area = areas[1]
 
 /obj/docking_port/mobile/custom/canMove()
-	return current_engine_power > 0
+	return ..() && (current_engine_power > 0)
 
 /obj/docking_port/mobile/custom/get_engine_coeff()
 	var/thrust_ratio = (current_engine_power * CUSTOM_ENGINE_POWER_MULTIPLIER)*(turf_count + CUSTOM_ENGINE_POWER_TURF_COUNT_OFFSET)
