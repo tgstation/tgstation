@@ -1,1 +1,6 @@
 felinid_hiss is catHisses2.wav by Zabuhailo -- https://freesound.org/s/146962/ -- License: Creative Commons 0
+
+felinid_scream1 is MAD CAT !.wav by temawas -- https://freesound.org/s/133047/ -- License: Creative Commons 0
+felinid_scream2 is MAD CAT !.wav by temawas -- https://freesound.org/s/133047/ -- License: Creative Commons 0
+felinid_scream3 is cat_screaming.wav by 16FPanskaRollerova_Adriena -- https://freesound.org/s/498844/ -- License: Creative Commons 0
+felinid_scream4 is Cat, Screaming, A.wav by InspectorJ -- https://freesound.org/s/415209/ -- License: Attribution 4.0
