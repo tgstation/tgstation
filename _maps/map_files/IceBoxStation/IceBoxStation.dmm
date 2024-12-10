@@ -80433,7 +80433,6 @@
 "xpc" = (
 /obj/effect/turf_decal/siding/yellow/corner,
 /obj/machinery/status_display/evac/directional/south,
-/obj/structure/table,
 /obj/item/flatpack{
 	board = /obj/item/circuitboard/machine/flatpacker;
 	pixel_x = -5
