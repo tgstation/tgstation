@@ -285,7 +285,7 @@
 	///Maximum fuel capacity of the generator, in units
 	var/max_fuel = 75 * SHEET_MATERIAL_AMOUNT
 	///Energy recharged per second
-	var/rechargerate = 0.005 * STANDARD_CELL_RATE
+	var/rechargerate = 0.05 * STANDARD_CELL_RATE
 
 /obj/item/mecha_parts/mecha_equipment/generator/Initialize(mapload)
 	. = ..()
