@@ -215,7 +215,7 @@
 	RegisterWithOwner()
 
 	START_PROCESSING(SSprocessing, src)
-	owner_limb._embed_object()
+	owner_limb._embed_object(parent)
 	parent.forceMove(owner)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(weapon_disappeared))
 	RegisterSignal(parent, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
@@ -263,7 +263,8 @@
 	RegisterSignal(owner, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(owner, COMSIG_ATOM_EX_ACT, PROC_REF(on_ex_act))
 
-/// Avoid calling this directly as this doesn't send a removal comsig OR move the object from its owner's contents
+/// Avoid calling this directly as this doesn't move the object from its owner's contents
+/// Returns TRUE if the item got deleted due to DROPDEL flag
 /datum/embedding/proc/stop_embedding()
 	owner_limb?._unembed_object(parent)
 	if (owner)
@@ -272,8 +273,13 @@
 			owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 			owner.clear_mood_event("embedded")
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MAGIC_RECALL))
+	SEND_SIGNAL(parent, COMSIG_ITEM_UNEMBEDDED, owner, owner_limb)
 	owner = null
 	owner_limb = null
+	if(parent.item_flags & DROPDEL && !QDELETED(parent))
+		qdel(src)
+		return TRUE
+	return FALSE
 
 /datum/embedding/proc/on_qdel(atom/movable/source)
 	SIGNAL_HANDLER
@@ -286,7 +292,7 @@
 	if (!jack_the_ripper.CanReach(owner))
 		return
 
-	if (!jack_the_ripper.can_perform_action(owner, FORBID_TELEKINESIS_REACH|NEED_HANDS))
+	if (!jack_the_ripper.can_perform_action(owner, FORBID_TELEKINESIS_REACH | NEED_HANDS | ALLOW_RESTING))
 		return
 
 	var/time_taken = rip_time * parent.w_class
@@ -341,10 +347,10 @@
 /// The proper proc to call when you want to remove something. If a mob is passed, the item will be put in its hands - otherwise its just dumped onto the ground
 /datum/embedding/proc/remove_embedding(mob/living/to_hands)
 	var/mob/living/carbon/stored_owner = owner
-	stop_embedding()
-	SEND_SIGNAL(parent, COMSIG_ITEM_UNEMBEDDED, stored_owner, owner_limb)
+	if (stop_embedding()) // Dropdel?
+		return
 	parent.forceMove(stored_owner.drop_location())
-	if (!isnull(to_hands) && !QDELETED(parent)) // Dropdel?
+	if (!isnull(to_hands))
 		to_hands.put_in_hands(parent)
 
 /// When owner moves around, attempt to jostle the item
