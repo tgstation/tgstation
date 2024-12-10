@@ -15456,9 +15456,14 @@
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
 "fzW" = (
-/obj/structure/table/glass,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/power_store/cell/high,
+/obj/item/multitool/circuit{
+	pixel_x = 7
+	},
+/obj/item/multitool/circuit,
+/obj/item/multitool/circuit{
+	pixel_x = -8
+	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "fzY" = (
@@ -17860,18 +17865,7 @@
 /turf/open/floor/plating,
 /area/station/science/ordnance)
 "grv" = (
-/obj/structure/table/glass,
-/obj/item/clothing/head/cone{
-	pixel_x = -3
-	},
-/obj/item/clothing/head/cone{
-	pixel_x = 9;
-	pixel_y = 11
-	},
-/obj/item/clothing/head/cone{
-	pixel_x = -14;
-	pixel_y = 10
-	},
+/obj/machinery/module_duplicator,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "grw" = (
@@ -18032,13 +18026,11 @@
 /area/station/security/checkpoint/science)
 "gur" = (
 /obj/structure/table/glass,
-/obj/item/book/manual/wiki/engineering_construction{
-	pixel_x = -3
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/integrated_circuit/loaded/speech_relay{
+	pixel_y = 6
 	},
-/obj/item/book/manual/wiki/engineering_hacking{
-	pixel_x = 4
-	},
-/obj/item/book/manual/wiki/engineering_guide,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "guF" = (
@@ -67415,11 +67407,7 @@
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "xKC" = (
-/obj/structure/table/glass,
-/obj/item/clothing/head/utility/hardhat,
-/obj/item/clothing/head/utility/hardhat{
-	pixel_y = 5
-	},
+/obj/machinery/component_printer,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "xKV" = (
@@ -106573,8 +106561,8 @@ gTV
 piu
 gEJ
 jEc
-sJo
 xKC
+sJo
 omE
 jxd
 mQk
