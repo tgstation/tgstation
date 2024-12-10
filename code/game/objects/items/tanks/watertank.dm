@@ -371,7 +371,7 @@
 	qdel(src)
 
 // Please don't spacedrift thanks
-/obj/effect/resin_container/newtonian_move(direction, instant = FALSE, start_delay = 0)
+/obj/effect/resin_container/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 0, controlled_cap = null)
 	return TRUE
 
 #undef EXTINGUISHER

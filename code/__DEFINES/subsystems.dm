@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 27
+#define DB_MINOR_VERSION 28
 
 
 //! ## Timing subsystem
@@ -165,6 +165,7 @@
 #define INIT_ORDER_OUTPUTS 35
 #define INIT_ORDER_RESTAURANT 34
 #define INIT_ORDER_TTS 33
+#define INIT_ORDER_FLUIDS 32 // Needs to be above atoms, as some atoms may want to start fluids/gases on init
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_LANGUAGE 25
 #define INIT_ORDER_MACHINES 20
@@ -193,6 +194,7 @@
 
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
+#define FIRE_PRIORITY_UNPLANNED_NPC 3
 #define FIRE_PRIORITY_IDLE_NPC 5
 #define FIRE_PRIORITY_PING 10
 #define FIRE_PRIORITY_SERVER_MAINT 10

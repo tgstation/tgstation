@@ -1,4 +1,3 @@
-import { capitalizeFirst } from 'common/string';
 import {
   Box,
   Button,
@@ -12,6 +11,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
+import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -24,7 +24,7 @@ type Data = {
   fluidTypes: string[];
   fishData: FishData[];
   propData: PropData[];
-  allowBreeding: BooleanLike;
+  safe_mode: BooleanLike;
   feedingInterval: number;
   heartIcon: string;
   heartIconState: string;
@@ -116,7 +116,7 @@ const FishInfo = (props) => {
                 ml={1}
                 style={{ fontSize: '13px', fontWeight: 'bold' }}
               >
-                {fish.fish_name.toUpperCase()}
+                {fish.fish_name}
               </Stack.Item>
               <Stack.Item mt={fish.fish_health > 0 ? -4 : 1}>
                 {(fish.fish_health > 0 && (
@@ -270,7 +270,7 @@ const Settings = (props) => {
     maxTemperature,
     fluidTypes,
     fluidType,
-    allowBreeding,
+    safe_mode,
     feedingInterval,
   } = data;
 
@@ -319,13 +319,14 @@ const Settings = (props) => {
         <Section fill title="Settings">
           <Box mt={2}>
             <LabeledList>
-              <LabeledList.Item label="Reproduction/Growth">
+              <LabeledList.Item label="Safe Mode">
                 <Button
                   textAlign="center"
                   width="75px"
-                  content={allowBreeding ? 'Online' : 'Offline'}
-                  selected={allowBreeding}
-                  onClick={() => act('allow_breeding')}
+                  tooltip="Prevent fish dying in hostile water and temperatures at the cost of features like growth and reproduction"
+                  content={safe_mode ? 'Online' : 'Offline'}
+                  selected={safe_mode}
+                  onClick={() => act('safe_mode')}
                 />
               </LabeledList.Item>
               <LabeledList.Item label="Feeding Interval">

@@ -31,7 +31,7 @@
 	taste_description = "the bomb"
 	color = "#8B2500"
 
-/datum/reagent/blob/explosive_lattice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+/datum/reagent/blob/explosive_lattice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/eye/blob/overmind)
 	. = ..()
 	var/brute_loss = 0
 	var/burn_loss = 0
@@ -51,7 +51,7 @@
 			brute_loss = brute_loss*(2 - round(bomb_armor*0.01, 0.05))
 
 		burn_loss = brute_loss
-			
+
 		exposed_mob.take_overall_damage(brute_loss, burn_loss)
 
 		for(var/mob/living/nearby_mob in orange(epicenter_turf, 1))
@@ -69,6 +69,6 @@
 				burn_loss = brute_loss
 
 			nearby_mob.take_overall_damage(brute_loss, burn_loss)
-		
+
 	else
 		exposed_mob.apply_damage(0.6*reac_volume, BRUTE, wound_bonus=CANT_WOUND)

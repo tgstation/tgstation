@@ -388,8 +388,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	if (user_space)
 		var/turf/user_turf = get_turf(user)
 		var/turf/anchor_turf = get_turf(anchor)
-		offset_x = (anchor_turf.x - user_turf.x) * world.icon_size + anchor.pixel_x - user.pixel_x
-		offset_y = (anchor_turf.y - user_turf.y) * world.icon_size + anchor.pixel_y - user.pixel_y
+		offset_x = (anchor_turf.x - user_turf.x) * ICON_SIZE_X + anchor.pixel_x - user.pixel_x
+		offset_y = (anchor_turf.y - user_turf.y) * ICON_SIZE_Y + anchor.pixel_y - user.pixel_y
 	menu.show_to(user, offset_x, offset_y)
 	menu.wait(user, anchor, require_near)
 	var/answer = menu.selected_choice

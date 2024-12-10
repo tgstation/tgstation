@@ -21,7 +21,8 @@
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_ATTACK_PAW
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	/// How many prior grand rituals have been completed?
 	var/potency = 0
 	/// Time to take per invocation of rune.
@@ -393,7 +394,7 @@
 	mergeable_decal = FALSE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clean_type = CLEAN_TYPE_HARD_DECAL
-	layer = SIGIL_LAYER
+	layer = RUNE_LAYER
 
 /obj/effect/decal/cleanable/grand_remains/cheese
 	name = "cheese soot marks"

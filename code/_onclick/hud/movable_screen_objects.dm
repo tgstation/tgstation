@@ -37,8 +37,8 @@
 	var/client/our_client = usr.client
 	var/list/offset	= screen_loc_to_offset(LAZYACCESS(modifiers, SCREEN_LOC))
 	if(snap2grid) //Discard Pixel Values
-		offset[1] = FLOOR(offset[1], world.icon_size) // drops any pixel offset
-		offset[2] = FLOOR(offset[2], world.icon_size) // drops any pixel offset
+		offset[1] = FLOOR(offset[1], ICON_SIZE_X) // drops any pixel offset
+		offset[2] = FLOOR(offset[2], ICON_SIZE_Y) // drops any pixel offset
 	else //Normalise Pixel Values (So the object drops at the center of the mouse, not 16 pixels off)
 		offset[1] += x_off
 		offset[2] += y_off

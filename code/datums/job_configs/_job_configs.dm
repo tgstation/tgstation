@@ -33,6 +33,12 @@
 	stack_trace("Attempted to validate value for the default job config! You're doing something wrong!!")
 	return FALSE
 
+/// Check if the config entry should be made for a specific job
+/// By default returns TRUE, meaning that by default every job will have the config entry created by the datum
+/// An example of what this could be used for is: A value that only appears if the job is a head of staff
+/datum/job_config_type/proc/validate_entry(datum/job/occupation)
+	return TRUE
+
 /// This is the proc that we actually invoke to set the config-based values for each job. Is also intended to handle all in-depth logic checks pertient to the job datum itself.
 /// Return TRUE if the value was set successfully (or if expected behavior did indeed occur), FALSE if it was not.
 /datum/job_config_type/proc/set_current_value(datum/job/occupation, value)

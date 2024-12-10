@@ -1,4 +1,22 @@
+/datum/heretic_knowledge_tree_column/moon_to_lock
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/main/moon
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/main/lock
+
+	route = PATH_SIDE
+
+	tier1 = /datum/heretic_knowledge/spell/mind_gate
+	tier2 = list(/datum/heretic_knowledge/unfathomable_curio, /datum/heretic_knowledge/painting)
+	tier3 = /datum/heretic_knowledge/dummy_moon_to_lock
+
 // Sidepaths for knowledge between Knock and Moon.
+
+/datum/heretic_knowledge/dummy_moon_to_lock
+	name = "Lock and Moon ways"
+	desc = "Research this to gain access to the other path"
+	gain_text = "The powers of Madness are like a wound in one's soul, and every wound can be opened and closed."
+	cost = 1
+
+
 
 /datum/heretic_knowledge/spell/mind_gate
 	name = "Mind Gate"
@@ -6,14 +24,9 @@
 		confusion, oxygen loss and brain damage to its target over 10 seconds.\
 		The caster takes 20 brain damage per use."
 	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
-	next_knowledge = list(
-		/datum/heretic_knowledge/key_ring,
-		/datum/heretic_knowledge/spell/moon_smile,
-	)
-	spell_to_add = /datum/action/cooldown/spell/pointed/mind_gate
+
+	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
 	cost = 1
-	route = PATH_SIDE
-	depth = 4
 
 /datum/heretic_knowledge/unfathomable_curio
 	name = "Unfathomable Curio"
@@ -22,21 +35,18 @@
 			veil you, allowing you to take 5 hits without suffering damage, this veil will recharge very slowly \
 			outside of combat."
 	gain_text = "The mansus holds many a curio, some are not meant for the mortal eye."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/burglar_finesse,
-		/datum/heretic_knowledge/moon_amulet,
-	)
+
 	required_atoms = list(
-		/obj/item/organ/internal/lungs = 1,
+		/obj/item/organ/lungs = 1,
 		/obj/item/stack/rods = 3,
 		/obj/item/storage/belt = 1,
 	)
 	result_atoms = list(/obj/item/storage/belt/unfathomable_curio)
 	cost = 1
-	route = PATH_SIDE
+
 	research_tree_icon_path = 'icons/obj/clothing/belts.dmi'
 	research_tree_icon_state = "unfathomable_curio"
-	depth = 8
+
 
 /datum/heretic_knowledge/painting
 	name = "Unsealed Arts"
@@ -49,24 +59,21 @@
 			Master of the Rusted Mountain: Requires a piece of Trash. Curses non-heretics to rust the floor they walk on."
 	gain_text = "A wind of inspiration blows through me. Beyond the veil and past the gate great works exist, yet to be painted. \
 				They yearn for mortal eyes, so I shall give them an audience."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/burglar_finesse,
-		/datum/heretic_knowledge/moon_amulet,
-	)
+
 	required_atoms = list(/obj/item/canvas = 1)
 	result_atoms = list(/obj/item/canvas)
 	cost = 1
-	route = PATH_SIDE
+
 	research_tree_icon_path = 'icons/obj/signs.dmi'
 	research_tree_icon_state = "eldritch_painting_weeping"
-	depth = 8
+
 
 /datum/heretic_knowledge/painting/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	if(locate(/obj/item/organ/internal/eyes) in atoms)
+	if(locate(/obj/item/organ/eyes) in atoms)
 		src.result_atoms = list(/obj/item/wallframe/painting/eldritch/weeping)
 		src.required_atoms = list(
 			/obj/item/canvas = 1,
-			/obj/item/organ/internal/eyes = 1,
+			/obj/item/organ/eyes = 1,
 		)
 		return TRUE
 

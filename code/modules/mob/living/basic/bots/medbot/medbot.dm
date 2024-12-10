@@ -145,7 +145,6 @@
 		remove_hat_signals = remove_hat,\
 		traits_prevent_checks = prevent_checks,\
 	)
-
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) || !mapload || !is_station_level(z))
@@ -245,10 +244,7 @@
 
 	update_appearance()
 
-/mob/living/basic/bot/medbot/emag_act(mob/user, obj/item/card/emag/emag_card)
-	. = ..()
-	if(!(bot_access_flags & BOT_COVER_EMAGGED))
-		return
+/mob/living/basic/bot/medbot/emag_effects(mob/user)
 	medical_mode_flags &= ~MEDBOT_DECLARE_CRIT
 	balloon_alert(user, "reagent synthesis circuits shorted")
 	audible_message(span_danger("[src] buzzes oddly!"))

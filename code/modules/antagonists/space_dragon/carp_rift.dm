@@ -111,6 +111,8 @@
 		healing_color = COLOR_BLUE, \
 	)
 
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/carp_rift)
+
 	gravity_aura = new(
 		/* host = */src,
 		/* range = */15,

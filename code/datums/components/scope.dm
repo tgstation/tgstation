@@ -170,8 +170,10 @@
 	tracker_owner_ckey = user.ckey
 	if(user.is_holding(parent))
 		RegisterSignals(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_QDELETING), PROC_REF(stop_zooming))
+		RegisterSignal(user, COMSIG_ATOM_ENTERING, PROC_REF(on_enter_new_loc))
 	else // The item is likely worn (eg. mothic cap)
 		RegisterSignal(user, COMSIG_QDELETING, PROC_REF(stop_zooming))
+		RegisterSignal(user, COMSIG_ATOM_ENTERING, PROC_REF(on_enter_new_loc))
 		var/static/list/capacity_signals = list(
 			COMSIG_LIVING_STATUS_KNOCKDOWN,
 			COMSIG_LIVING_STATUS_PARALYZE,
@@ -181,6 +183,13 @@
 	START_PROCESSING(SSprojectiles, src)
 	ADD_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 	return TRUE
+
+///Stop scoping if the `newloc` we move to is not a turf
+/datum/component/scope/proc/on_enter_new_loc(datum/source, atom/newloc, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+
+	if(!isturf(newloc))
+		stop_zooming(tracker.owner)
 
 /datum/component/scope/proc/on_incapacitated(mob/living/source, amount = 0, ignore_canstun = FALSE)
 	SIGNAL_HANDLER
@@ -207,6 +216,7 @@
 		COMSIG_LIVING_STATUS_STUN,
 		COMSIG_MOB_SWAP_HANDS,
 		COMSIG_QDELETING,
+		COMSIG_ATOM_ENTERING,
 	))
 	REMOVE_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 
@@ -246,18 +256,18 @@
 	if(isnull(icon_x))
 		icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
 		if(isnull(icon_x))
-			icon_x = view_list[1]*world.icon_size/2
+			icon_x = view_list[1]*ICON_SIZE_X/2
 	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
 	if(isnull(icon_y))
 		icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 		if(isnull(icon_y))
-			icon_y = view_list[2]*world.icon_size/2
-	var/x_cap = range_modifier * view_list[1]*world.icon_size / 2
-	var/y_cap = range_modifier * view_list[2]*world.icon_size / 2
-	var/uncapped_x = round(range_modifier * (icon_x - view_list[1]*world.icon_size/2) * MOUSE_POINTER_OFFSET_MULT)
-	var/uncapped_y = round(range_modifier * (icon_y - view_list[2]*world.icon_size/2) * MOUSE_POINTER_OFFSET_MULT)
+			icon_y = view_list[2]*ICON_SIZE_Y/2
+	var/x_cap = range_modifier * view_list[1]*ICON_SIZE_X / 2
+	var/y_cap = range_modifier * view_list[2]*ICON_SIZE_Y / 2
+	var/uncapped_x = round(range_modifier * (icon_x - view_list[1]*ICON_SIZE_X/2) * MOUSE_POINTER_OFFSET_MULT)
+	var/uncapped_y = round(range_modifier * (icon_y - view_list[2]*ICON_SIZE_Y/2) * MOUSE_POINTER_OFFSET_MULT)
 	given_x = clamp(uncapped_x, -x_cap, x_cap)
 	given_y = clamp(uncapped_y, -y_cap, y_cap)
-	given_turf = locate(owner.x+round(given_x/world.icon_size, 1),owner.y+round(given_y/world.icon_size, 1),owner.z)
+	given_turf = locate(owner.x+round(given_x/ICON_SIZE_X, 1),owner.y+round(given_y/ICON_SIZE_Y, 1),owner.z)
 
 #undef MOUSE_POINTER_OFFSET_MULT

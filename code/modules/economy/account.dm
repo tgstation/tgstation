@@ -83,7 +83,8 @@
 
 	if(old_job)
 		SSeconomy.bank_accounts_by_job[old_job.type] -= src
-	LAZYADD(SSeconomy.bank_accounts_by_job[new_job.type], src)
+	if(new_job)
+		LAZYADD(SSeconomy.bank_accounts_by_job[new_job.type], src)
 
 /datum/bank_account/vv_edit_var(var_name, var_value) // just so you don't have to do it manually
 	var/old_id = account_id

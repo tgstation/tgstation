@@ -504,8 +504,8 @@
 	var/clicky
 
 	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
-		clickx = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-		clicky = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
+		clickx = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
+		clicky = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
 
 	if(!instant)
 		to_chat(user, span_notice("You start drawing a [temp] on the [target.name]..."))
@@ -819,7 +819,13 @@
 		return .
 
 	context[SCREENTIP_CONTEXT_LMB] = "Paint"
-	context[SCREENTIP_CONTEXT_RMB] = "Copy color"
+
+	if(isbodypart(target))
+		var/obj/item/bodypart/limb = target
+		if(IS_ROBOTIC_LIMB(limb))
+			context[SCREENTIP_CONTEXT_RMB] = "Restyle robotic limb"
+	else
+		context[SCREENTIP_CONTEXT_RMB] = "Copy color"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -981,7 +987,7 @@
 
 	if(isbodypart(interacting_with) && actually_paints)
 		var/obj/item/bodypart/limb = interacting_with
-		if(!IS_ORGANIC_LIMB(limb))
+		if(IS_ROBOTIC_LIMB(limb))
 			var/list/skins = list()
 			var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 			for(var/skin_option in style_list_icons)
@@ -1092,6 +1098,13 @@
 	name = "infinite spraycan"
 	charges = INFINITE_CHARGES
 	desc = "Now with 30% more bluespace technology."
+
+/obj/item/toy/crayon/spraycan/roboticist
+	name = "roboticist spraycan"
+	desc = "Paint for restyling unattached robotic limbs. Sadly doesn't shine like chrome."
+	icon_state = "robocan"
+	icon_capped = "robocan_cap"
+	icon_uncapped = "robocan"
 
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER

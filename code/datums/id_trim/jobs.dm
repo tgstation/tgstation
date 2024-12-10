@@ -27,7 +27,7 @@
 		job = SSjob.get_job_type(job)
 
 	if(isnull(job_changes))
-		job_changes = SSmapping.config.job_changes
+		job_changes = SSmapping.current_map.job_changes
 
 	if(!length(job_changes))
 		refresh_trim_access()
@@ -75,6 +75,9 @@
 		access |= list(ACCESS_MAINT_TUNNELS)
 
 	return TRUE
+
+/datum/id_trim/job/find_job()
+	return job
 
 /datum/id_trim/job/assistant
 	assignment = JOB_ASSISTANT

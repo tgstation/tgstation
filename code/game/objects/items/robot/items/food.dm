@@ -199,7 +199,7 @@
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
 	damage = 0
-	speed = 0.5
+	speed = 2
 	embed_type = null
 
 /obj/projectile/bullet/gumball/Initialize(mapload)
@@ -232,7 +232,7 @@
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
 	damage = 0
-	speed = 0.5
+	speed = 2
 	embed_type = null
 	var/head_color
 

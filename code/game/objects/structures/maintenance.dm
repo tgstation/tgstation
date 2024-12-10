@@ -80,12 +80,11 @@ at the cost of risking a vicious bite.**/
 		return
 	if(critter_infested && prob(50) && iscarbon(user))
 		var/mob/living/carbon/bite_victim = user
-		var/obj/item/bodypart/affecting = bite_victim.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-		to_chat(user, span_danger("You feel a sharp pain as an unseen creature sinks its [pick("fangs", "beak", "proboscis")] into your arm!"))
-		if(affecting?.receive_damage(30))
-			bite_victim.update_damage_overlays()
-			playsound(src,'sound/items/weapons/bite.ogg', 70, TRUE)
-			return
+		var/obj/item/bodypart/affecting = bite_victim.get_active_hand()
+		to_chat(user, span_danger("You feel a sharp pain as an unseen creature sinks its [pick("fangs", "beak", "proboscis")] into your [affecting.plaintext_zone]!"))
+		bite_victim.apply_damage(30, BRUTE, affecting)
+		playsound(src,'sound/items/weapons/bite.ogg', 70, TRUE)
+		return
 	to_chat(user, span_warning("You find nothing of value..."))
 
 /obj/structure/moisture_trap/attackby(obj/item/I, mob/user, params)
@@ -122,7 +121,7 @@ at the cost of risking a vicious bite.**/
 	desc = "What is this? Who put it on this station? And why does it emanate <span class='hypnophrase'>strange energy?</span>"
 	icon_state = "altar"
 	cult_examine_tip = "Even you don't understand the eldritch magic behind this."
-	break_message = "<span class='warning'>The structure shatters, leaving only a demonic screech!</span>"
+	break_message = span_warning("The structure shatters, leaving only a demonic screech!")
 	break_sound = 'sound/effects/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_range = 2

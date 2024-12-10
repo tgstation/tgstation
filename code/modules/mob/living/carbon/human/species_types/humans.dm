@@ -80,13 +80,21 @@
 
 /datum/species/human/get_sigh_sound(mob/living/carbon/human/human)
 	if(human.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/sigh/female_sigh.ogg'
-	return 'sound/mobs/humanoids/human/sigh/male_sigh.ogg'
+		return SFX_FEMALE_SIGH
+	return SFX_MALE_SIGH
 
 /datum/species/human/get_sniff_sound(mob/living/carbon/human/human)
 	if(human.physique == FEMALE)
 		return 'sound/mobs/humanoids/human/sniff/female_sniff.ogg'
 	return 'sound/mobs/humanoids/human/sniff/male_sniff.ogg'
+
+/datum/species/human/get_snore_sound(mob/living/carbon/human/human)
+	if(human.physique == FEMALE)
+		return SFX_SNORE_FEMALE
+	return SFX_SNORE_MALE
+
+/datum/species/human/get_hiss_sound(mob/living/carbon/human/human)
+	return 'sound/mobs/humanoids/human/hiss/human_hiss.ogg'
 
 /datum/species/human/get_species_description()
 	return "Humans are the dominant species in the known galaxy. \
@@ -124,7 +132,9 @@
 				to humans. As a human, silicons are required to both protect and obey you.",
 		))
 
-	if(CONFIG_GET(flag/enforce_human_authority))
+	var/human_authority_setting = CONFIG_GET(string/human_authority)
+
+	if(human_authority_setting == HUMAN_AUTHORITY_NON_HUMAN_WHITELIST || human_authority_setting == HUMAN_AUTHORITY_ENFORCED)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "bullhorn",

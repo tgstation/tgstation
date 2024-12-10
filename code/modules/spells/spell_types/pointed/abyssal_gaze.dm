@@ -13,7 +13,7 @@
 	cooldown_time = 75 SECONDS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
-	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND
 
 	cast_range = 5
 	active_msg = "You prepare to instill a deep terror in a target..."

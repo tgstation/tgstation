@@ -655,7 +655,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 
 	//Shooting Code:
-	A.preparePixelProjectile(target, T)
+	A.aim_projectile(target, T)
 	A.firer = src
 	A.fired_from = src
 	if(ignore_faction)
@@ -903,6 +903,13 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile = /obj/projectile/beam/weak/penetrator
 	lethal_projectile = /obj/projectile/beam/weak/penetrator
 	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
+
+/obj/machinery/porta_turret/centcom_shuttle/weak/mining
+	name = "Old Mining Turret"
+	lethal_projectile = /obj/projectile/kinetic/miner
+	lethal_projectile_sound = 'sound/items/weapons/kinetic_accel.ogg'
+	stun_projectile = /obj/projectile/kinetic/miner
+	stun_projectile_sound = 'sound/items/weapons/kinetic_accel.ogg'
 
 ////////////////////////
 //Turret Control Panel//

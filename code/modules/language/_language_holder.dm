@@ -510,13 +510,9 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 
 // Explicitly empty one for readability
 /datum/language_holder/empty
-	understood_languages = null
-	spoken_languages = null
 
 // Has all the languages known (via "mind")
 /datum/language_holder/universal
-	understood_languages = null
-	spoken_languages = null
 
 /datum/language_holder/universal/New()
 	. = ..()

@@ -184,10 +184,8 @@
 
 /datum/action/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
-	target.visible_message("<span class='warning'>With a sickening crunch, \
-	[target] reforms [target.p_their()] [blade.name] into an arm!</span>",
-	span_warning("[blade] reforms back to normal."),
-	"<span class='italics>You hear organic matter ripping and tearing!</span>")
+	target.visible_message(span_warning("With a sickening crunch, [target] reforms [target.p_their()] [blade.name] into an arm!"),
+	span_warning("[blade] reforms back to normal."), span_italics("You hear organic matter ripping and tearing!"))
 
 	qdel(blade)
 	target.update_held_items()
@@ -236,7 +234,7 @@
 	dna_cost = 1
 
 /datum/action/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		user.balloon_alert(user, "no eyes!")
 		return FALSE

@@ -58,6 +58,7 @@
 #define MEDAL_SISYPHUS "Sisyphus"
 #define MEDAL_ARCHMAGE "Archmage"
 #define MEDAL_CIGARETTES "Cigarettes"
+#define MEDAL_SHARKDRAGON "Sharkdragon"
 #define MEDAL_THEORETICAL_LIMITS "All Within Theoretical Limits"
 
 //Skill medal hub IDs
@@ -140,6 +141,9 @@
 
 /// DB ID for the amount of achievements unlocked by the player.
 #define ACHIEVEMENTS_SCORE "Achievements Score"
+
+///DB ID for all the different kinds of fish that you've caught so far.
+#define FISH_SCORE "Fish Score"
 
 // Tourist related achievements and scores
 

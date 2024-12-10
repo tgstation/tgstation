@@ -339,8 +339,7 @@
 		/obj/item/stack/rods = 4,
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/clothing/glasses/regular = 1,
-		/obj/item/reagent_containers/cup/glass/drinkingglass = 1,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 2,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	time = 10 SECONDS

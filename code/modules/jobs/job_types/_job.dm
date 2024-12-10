@@ -120,8 +120,7 @@
 	/// Alternate titles to register as pointing to this job.
 	var/list/alternate_titles
 
-	/// Does this job ignore human authority?
-	var/ignore_human_authority = FALSE
+	var/human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED
 
 	/// String key to track any variables we want to tie to this job in config, so we can avoid using the job title. We CAPITALIZE it in order to ensure it's unique and resistant to trivial formatting changes.
 	/// You'll probably break someone's config if you change this, so it's best to not to.
@@ -133,6 +132,8 @@
 	/// Minimal character age for this job
 	var/required_character_age
 
+	/// If set, look for a policy with this instead of the job title
+	var/policy_override
 
 /datum/job/New()
 	. = ..()
@@ -150,7 +151,7 @@
 	if(length(mind_traits))
 		spawned.mind.add_traits(mind_traits, JOB_TRAIT)
 
-	var/obj/item/organ/internal/liver/liver = spawned.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = spawned.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && length(liver_traits))
 		liver.add_traits(liver_traits, JOB_TRAIT)
 
@@ -305,7 +306,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	var/list/info = list()
 	info += "<b>You are the [title].</b>\n"
-	var/related_policy = get_policy(title)
+	var/related_policy = get_policy(policy_override || title)
 	var/radio_info = get_radio_information()
 	if(related_policy)
 		info += related_policy
@@ -350,7 +351,7 @@
 
 	var/pda_slot = ITEM_SLOT_BELT
 
-/datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/pre_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	if(ispath(back, /obj/item/storage/backpack))
 		switch(H.backpack)
 			if(GBACKPACK)
@@ -387,8 +388,8 @@
 	if(client?.is_veteran() && client?.prefs.read_preference(/datum/preference/toggle/playtime_reward_cloak))
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
-/datum/outfit/job/post_equip(mob/living/carbon/human/equipped, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/job/post_equip(mob/living/carbon/human/equipped, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/datum/job/equipped_job = SSjob.get_job_type(jobtype)
@@ -531,11 +532,28 @@
 	if(!player_client)
 		return // Disconnected while checking for the appearance ban.
 
-	var/require_human = CONFIG_GET(flag/enforce_human_authority) && (job.job_flags & JOB_HEAD_OF_STAFF)
-	if(require_human)
-		var/all_authority_require_human = CONFIG_GET(flag/enforce_human_authority_on_everyone)
-		if(!all_authority_require_human && job.ignore_human_authority)
-			require_human = FALSE
+	var/human_authority_setting = CONFIG_GET(string/human_authority)
+	var/require_human = FALSE
+
+	// If the job in question is a head of staff,
+	// check the config to see if we should force the player onto a human character or not
+	if(job.job_flags & JOB_HEAD_OF_STAFF)
+		switch(human_authority_setting)
+
+			// If non-humans are the norm and jobs must be forced to be only for humans
+			// then we only force the player to be a human if the job exclusively allows humans
+			if(HUMAN_AUTHORITY_HUMAN_WHITELIST)
+				require_human = job.human_authority == JOB_AUTHORITY_HUMANS_ONLY
+
+			// If humans are the norm and jobs must be allowed to be played by non-humans
+			// then we only force the player to be a human if the job doesn't allow for non-humans to play it
+			if(HUMAN_AUTHORITY_NON_HUMAN_WHITELIST)
+				require_human = job.human_authority != JOB_AUTHORITY_NON_HUMANS_ALLOWED
+
+			// If humans are the norm and there is no chance that a non-human can be a head of staff
+			// always return true, since there is no chance that a non-human can be a head of staff.
+			if(HUMAN_AUTHORITY_ENFORCED)
+				require_human = TRUE
 
 	src.job = job.title
 

@@ -3,6 +3,7 @@
 	desc = "High speed, low drag combat boots."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	body_parts_covered = FEET|LEGS
 	armor_type = /datum/armor/shoes_combat
 	strip_delay = 40
@@ -45,6 +46,7 @@
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	strip_delay = 30
 	equip_delay_other = 50
 	resistance_flags = NONE
@@ -71,16 +73,18 @@
 	desc = "Is it just me or is there a pair of jackboots on the floor?"
 	icon_state = "ftc_boots"
 	inhand_icon_state = null
+	supports_variations_flags = NONE
 
 /obj/item/clothing/shoes/jackboots/floortile/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //tacticool
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5) //tacticool
 
 /obj/item/clothing/shoes/winterboots
 	name = "winter boots"
 	desc = "Boots lined with 'synthetic' animal fur."
 	icon_state = "winterboots"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	armor_type = /datum/armor/shoes_winterboots
 	cold_protection = FEET|LEGS
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
@@ -131,6 +135,7 @@
 	icon_state = "workboots"
 	inhand_icon_state = "jackboots"
 	armor_type = /datum/armor/shoes_workboots
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	strip_delay = 20
 	equip_delay_other = 40
 	lace_time = 8 SECONDS
@@ -155,6 +160,7 @@
 	icon_state = "rus_shoes"
 	inhand_icon_state = null
 	lace_time = 8 SECONDS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /obj/item/clothing/shoes/russian/Initialize(mapload)
 	. = ..()
@@ -181,7 +187,7 @@
 
 /obj/item/clothing/shoes/pirate/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
 
 /obj/item/clothing/shoes/pirate/armored
 	armor_type = /datum/armor/shoes_pirate

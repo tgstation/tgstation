@@ -160,11 +160,9 @@
 	if(!base_icon_state)
 		return
 
-	// Even hand indexes are right hands,
-	// Odd hand indexes are left hand
-	// ...But also, we swap it intentionally here,
+	// We swap it intentionally here,
 	// so right icon is shown on the left (Because hands)
-	if(user.get_held_index_of_item(src) % 2 == 1)
+	if(IS_LEFT_INDEX(user.get_held_index_of_item(src)))
 		icon_state = "[base_icon_state]_right"
 	else
 		icon_state = "[base_icon_state]_left"

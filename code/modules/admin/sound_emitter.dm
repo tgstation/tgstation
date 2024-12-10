@@ -30,7 +30,7 @@
 /obj/effect/sound_emitter/singularity_act()
 	return
 
-/obj/effect/sound_emitter/singularity_pull()
+/obj/effect/sound_emitter/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/sound_emitter/examine(mob/user)

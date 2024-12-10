@@ -226,8 +226,8 @@
 			dead_spotted += mob
 		desc += mob.get_photo_description(src)
 
-	var/psize_x = (size_x * 2 + 1) * world.icon_size
-	var/psize_y = (size_y * 2 + 1) * world.icon_size
+	var/psize_x = (size_x * 2 + 1) * ICON_SIZE_X
+	var/psize_y = (size_y * 2 + 1) * ICON_SIZE_Y
 	var/icon/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area, size_x, size_y, (size_x * 2 + 1), (size_y * 2 + 1))
 	qdel(clone_area)
 	get_icon.Blend("#000", ICON_UNDERLAY)
@@ -252,7 +252,7 @@
 		printpicture(user, picture)
 
 	if(!silent)
-		playsound(loc, pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg'), 75, TRUE, -3)
+		playsound(loc, SFX_POLAROID, 75, TRUE, -3)
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
 	pictures_left--

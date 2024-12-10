@@ -53,7 +53,6 @@
 	health = maxHealth
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_attacked_target))
 
 /datum/ai_controller/basic_controller/mushroom
 	blackboard = list(
@@ -78,14 +77,9 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/mushroom_food
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/mushroom_food
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/reset_target
 	hunt_targets = list(/obj/item/food/grown/mushroom)
 	hunt_range = 6
-
-
-/datum/ai_behavior/hunt_target/unarmed_attack_target/mushroom_food
-	hunt_cooldown = 15 SECONDS
-	always_reset_target = TRUE
 
 /mob/living/basic/mushroom/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
@@ -99,20 +93,17 @@
 		recover(attack_target)
 		return TRUE
 
-/mob/living/basic/mushroom/proc/on_attacked_target(mob/living/basic/attacker, atom/target)
-	SIGNAL_HANDLER
-
-	if(!istype(target, /mob/living/basic/mushroom))
+/mob/living/basic/mushroom/melee_attack(mob/living/basic/mushroom/target, list/modifiers, ignore_cooldown = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!istype(target) || target.stat != DEAD)
 		return
-	var/mob/living/basic/mushroom/victim = target
-	if(victim.stat != DEAD)
+	if(target.faint_ticker >= 3)
+		consume_mushroom(target)
 		return
-	if(victim.faint_ticker >= 3)
-		consume_mushroom(victim)
-		return
-
-	victim.faint_ticker++
-	visible_message(span_notice("[src] chews a bit on [victim]."))
+	target.faint_ticker++
+	visible_message(span_notice("[src] chews a bit on [target]."))
 
 /mob/living/basic/mushroom/proc/consume_mushroom(mob/living/basic/mushroom/consumed)
 	visible_message(span_warning("[src] devours [consumed]!"))

@@ -22,7 +22,7 @@
 		target = potential_target
 		break
 	//if target was never chosen the target is null aka the matteor will act as spacedust (and can technically miss)
-	spawn_meteor(list(/obj/effect/meteor/dark_matteor = 1), null, target)
+	spawn_meteor(list(/obj/effect/meteor/dark_matteor = 1), null, target, distance_from_edge = 10)
 
 /datum/round_event/dark_matteor/announce(fake)
 	priority_announce("Warning. Excessive tampering of meteor satellites has attracted a dark matt-eor. Signature approaching [GLOB.station_name]. Please brace for impact.", "Meteor Alert", 'sound/announcer/alarm/airraid.ogg')

@@ -73,7 +73,7 @@
 	return TRUE
 
 ///Colorizes the limb it's inserted to, if required.
-/datum/bodypart_overlay/proc/override_color(rgb_value)
+/datum/bodypart_overlay/proc/override_color(obj/item/bodypart/bodypart_owner)
 	CRASH("External organ color set to override with no override proc.")
 
 ///Generate a unique identifier to cache with. If you change something about the image, but the icon cache stays the same, it'll simply pull the unchanged image out of the cache

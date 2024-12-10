@@ -59,3 +59,12 @@
 
 /datum/movespeed_modifier/status_effect/guardian_shield
 	multiplicative_slowdown = 1
+
+///movespeed modifier that makes you go faster when wet and lying on the floor once past the fish organ set threshold.
+/datum/movespeed_modifier/fish_flopping
+	blacklisted_movetypes = MOVETYPES_NOT_TOUCHING_GROUND
+	multiplicative_slowdown = - (CRAWLING_ADD_SLOWDOWN * 0.65)
+
+///speed malus given by the fish organ set when dry
+/datum/movespeed_modifier/fish_waterless
+	multiplicative_slowdown = 0.36

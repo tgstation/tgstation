@@ -24,7 +24,7 @@
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual, intentional)
 
-	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
+	animate(visual, pixel_x = (tile.x - our_tile.x) * ICON_SIZE_X + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * ICON_SIZE_Y + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 	return TRUE
 
 /mob/point_at(atom/pointed_atom, intentional = FALSE)
@@ -114,9 +114,23 @@
 /// possibly delayed verb that finishes the pointing process starting in [/mob/verb/pointed()].
 /// either called immediately or in the tick after pointed() was called, as per the [DEFAULT_QUEUE_OR_CALL_VERB()] macro
 /mob/proc/_pointed(atom/pointing_at)
-	if(client && !(pointing_at in view(client.view, src)))
-		return FALSE
+	if(client) //Clientless mobs can just go ahead and point
+		if(ismovable(pointing_at))
+			var/atom/movable/pointed_movable = pointing_at
+			if(pointed_movable.flags_1 & IS_ONTOP_1)
+				pointing_at = pointed_movable.loc
 
+		if(!(pointing_at in view(client.view, src)))
+			return FALSE
+	if(iscarbon(src)) // special interactions for carbons
+		var/mob/living/carbon/our_carbon = src
+		if(our_carbon.usable_hands <= 0 || src.incapacitated & INCAPABLE_RESTRAINTS || HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+			if(TIMER_COOLDOWN_FINISHED(src, "point_verb_emote_cooldown"))
+				//cooldown handled in the emote.
+				our_carbon.emote("point [pointing_at]")
+			else
+				to_chat(src, span_warning("You need to wait before pointing again!"))
+				return FALSE
 	point_at(pointing_at, TRUE)
 
 	return TRUE

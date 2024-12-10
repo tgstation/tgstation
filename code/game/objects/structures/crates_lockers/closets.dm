@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(isnull(card_reader_choices))
 		card_reader_choices = list(
 			"Personal",
-			"Departmental",
+			"Job",
 			"None"
 			)
 	if(access_choices)
@@ -331,15 +331,15 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(id_card)
 		. += span_notice("It can be [EXAMINE_HINT("marked")] with a pen.")
 	if(can_weld_shut && !welded)
-		. += span_notice("Its can be [EXAMINE_HINT("welded")] shut.")
+		. += span_notice("It can be [EXAMINE_HINT("welded")] shut.")
 	if(welded)
-		. += span_notice("Its [EXAMINE_HINT("welded")] shut.")
+		. += span_notice("It's [EXAMINE_HINT("welded")] shut.")
 	if(anchorable && !anchored)
 		. += span_notice("It can be [EXAMINE_HINT("bolted")] to the ground.")
 	if(anchored)
 		. += span_notice("It's [anchorable ? EXAMINE_HINT("bolted") : "attached firmly"] to the ground.")
 	if(length(paint_jobs))
-		. += span_notice("It can be [EXAMINE_HINT("painted")] another texture.")
+		. += span_notice("It can be [EXAMINE_HINT("painted")] with another texture.")
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
 
@@ -518,7 +518,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))
-		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
+		if(!isliving(AM)) //let's not put ghosts or eye mobs inside closets...
 			return FALSE
 		var/mob/living/L = AM
 		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
@@ -800,11 +800,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		switch(choice)
 			if("Personal") //only the player who swiped their id has access.
 				id_card = WEAKREF(id)
-				name = "[id.registered_name] locker"
-				desc = "now owned by [id.registered_name]. [initial(desc)]"
-			if("Departmental") //anyone who has the same access permissions as this id has access
-				name = "[id.assignment] closet"
-				desc = "Its a [id.assignment] closet. [initial(desc)]"
+				name = "[id.registered_name]'s locker"
+				desc += " It has been ID locked to [id.registered_name]."
+			if("Job") //anyone who has the same access permissions as this id has access. Does NOT apply to the whole department.
+				name = "[id.assignment]'s locker"
+				desc += " It has been access locked to [id.assignment]s."
 				set_access(id.GetAccess())
 			if("None") //free for all
 				name = initial(name)

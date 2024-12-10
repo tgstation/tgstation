@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/energy/e_gun/advtaser,
 	/obj/item/gun/energy/laser,
 	/obj/item/gun/ballistic/revolver,
-	/obj/item/gun/ballistic/revolver/syndicate,
+	/obj/item/gun/ballistic/revolver/badass,
 	/obj/item/gun/ballistic/revolver/c38/detective,
 	/obj/item/gun/ballistic/automatic/pistol/deagle/camo,
 	/obj/item/gun/ballistic/automatic/gyropistol,

@@ -192,11 +192,11 @@
 	else
 		return ..()
 
-/obj/item/toy/balloon/bullet_act(obj/projectile/P)
-	if((istype(P,/obj/projectile/bullet/p50) || istype(P,/obj/projectile/bullet/foam_dart)) && ismonkey(P.firer))
+/obj/item/toy/balloon/bullet_act(obj/projectile/proj)
+	if((istype(proj, /obj/projectile/bullet/p50) || istype(proj,/obj/projectile/bullet/foam_dart)) && ismonkey(proj.firer))
 		pop_balloon(monkey_pop = TRUE)
-	else
-		return ..()
+		return BULLET_ACT_HIT
+	return ..()
 
 /obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
 	playsound(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 50, vary = TRUE)
@@ -474,7 +474,7 @@
 	desc = "<i>\"Surviving the encounter with the \
 		horrible thing, I realized immediately what I \
 		had to do: sell marketable toys of it. \
-		\"</i><br>- Chief Engineer Miles O'Brien"
+		\"</i><br>- Chief Engineer Tenshin Nakamura"
 	icon = 'icons/obj/machines/engine/singularity.dmi'
 	icon_state = "dark_matter_s1"
 
@@ -963,7 +963,7 @@
 		cooldown = world.time + 600
 		user.audible_message(span_hear("You hear the click of a button."), self_message = span_notice("You activate [src], it plays a loud noise!"))
 		sleep(0.5 SECONDS)
-		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
+		playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg', 20, FALSE)
 		sleep(14 SECONDS)
 		user.visible_message(span_alert("[src] violently explodes!"))
 		explosion(src, light_impact_range = 1)
@@ -973,7 +973,7 @@
 		user.visible_message(span_warning("[user] presses a button on [src]."), span_notice("You activate [src], it plays a loud noise!"), span_hear("You hear the click of a button."))
 		sleep(0.5 SECONDS)
 		icon_state = "nuketoy"
-		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
+		playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg', 20, FALSE)
 		sleep(13.5 SECONDS)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
@@ -1360,6 +1360,11 @@
 	toysay = "EI NATH!"
 	toysound = 'sound/effects/magic/disintegrate.ogg'
 
+/obj/item/toy/figure/wizard/special
+	name = "\improper Wizard action figure special edition"
+	toysay = "CLANG!";
+	toysound = 'sound/effects/clang.ogg'
+
 /obj/item/toy/figure/rd
 	name = "\improper Research Director action figure"
 	icon_state = "rd"
@@ -1562,7 +1567,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 #define DISARM "disarm"
 #define GRAB "grab"
 #define HARM "harm"
-#define ICON_SPLIT world.icon_size/2
+#define ICON_SPLIT ICON_SIZE_ALL/2
 
 // These states do not have any associated processing.
 #define STATE_AWAITING_PLAYER_INPUT "awaiting_player_input"
@@ -1810,6 +1815,6 @@ GLOBAL_LIST_EMPTY(intento_players)
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("smacks", "clubs", "wacks", "vendors")
-	attack_verb_simple = list("smack", "club", "wacks", "vendor")
+	attack_verb_simple = list("smack", "club", "wack", "vendor")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE

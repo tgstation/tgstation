@@ -127,7 +127,7 @@
 	if(!istype(new_boulder) || QDELETED(new_boulder))
 		return FALSE
 
-	//someone just processed this
+	//someone is still processing this
 	if(new_boulder.processed_by)
 		return FALSE
 
@@ -149,7 +149,6 @@
  */
 /obj/machinery/bouldertech/proc/accept_boulder(obj/item/boulder/new_boulder)
 	PRIVATE_PROC(TRUE)
-
 	if(!can_process_boulder(new_boulder))
 		return FALSE
 
@@ -408,6 +407,9 @@
 		return TRUE
 	if(locate(/obj/item/boulder) in loc) //There is an boulder in our loc. it has be removed so we don't clog up our loc with even more boulders
 		return FALSE
+	if(!length(specific_boulder.custom_materials))
+		specific_boulder.break_apart()
+		return TRUE
 
 	//Reset durability to little random lower value cause we have crushed it so many times
 	var/size = specific_boulder.boulder_size

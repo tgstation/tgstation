@@ -224,10 +224,10 @@
 			break
 
 ///One of our pellets hit something, record what it was and check if we're done (terminated == num_pellets)
-/datum/component/pellet_cloud/proc/pellet_hit(obj/projectile/P, atom/movable/firer, atom/target, Angle, hit_zone)
+/datum/component/pellet_cloud/proc/pellet_hit(obj/projectile/proj, atom/movable/firer, atom/target, Angle, hit_zone)
 	SIGNAL_HANDLER
 
-	pellets -= P
+	pellets -= proj
 	terminated++
 	hits++
 	var/obj/item/bodypart/hit_part
@@ -237,60 +237,60 @@
 		hit_part = hit_carbon.get_bodypart(hit_zone)
 		if(hit_part)
 			target = hit_part
-			if(P.wound_bonus != CANT_WOUND) // handle wounding
+			if(proj.wound_bonus != CANT_WOUND) // handle wounding
 				// unfortunately, due to how pellet clouds handle finalizing only after every pellet is accounted for, that also means there might be a short delay in dealing wounds if one pellet goes wide
 				// while buckshot may reach a target or miss it all in one tick, we also have to account for possible ricochets that may take a bit longer to hit the target
 				if(isnull(wound_info_by_part[hit_part]))
 					wound_info_by_part[hit_part] = list(0, 0, 0)
-				wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE] += P.damage // these account for decay
-				wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS] += P.wound_bonus
-				wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS] += P.bare_wound_bonus
-				P.wound_bonus = CANT_WOUND // actual wounding will be handled aggregate
+				wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE] += proj.damage // these account for decay
+				wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS] += proj.wound_bonus
+				wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS] += proj.bare_wound_bonus
+				proj.wound_bonus = CANT_WOUND // actual wounding will be handled aggregate
 	else if(isobj(target))
 		var/obj/hit_object = target
-		if(hit_object.damage_deflection > P.damage || !P.damage)
+		if(hit_object.damage_deflection > proj.damage || !proj.damage)
 			damage = FALSE
 
 	LAZYADDASSOC(targets_hit[target], "hits", 1)
 	LAZYSET(targets_hit[target], "damage", damage)
 	if(targets_hit[target]["hits"] == 1)
-		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_qdel), override=TRUE)
-	UnregisterSignal(P, list(COMSIG_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_qdel), override = TRUE)
+	UnregisterSignal(proj, list(COMSIG_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
 	if(terminated == num_pellets)
 		finalize()
 
 ///One of our pellets disappeared due to hitting their max range (or just somehow got qdel'd), remove it from our list and check if we're done (terminated == num_pellets)
-/datum/component/pellet_cloud/proc/pellet_range(obj/projectile/P)
+/datum/component/pellet_cloud/proc/pellet_range(obj/projectile/proj)
 	SIGNAL_HANDLER
-	pellets -= P
+	pellets -= proj
 	terminated++
-	UnregisterSignal(P, list(COMSIG_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
+	UnregisterSignal(proj, list(COMSIG_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
 	if(terminated == num_pellets)
 		finalize()
 
 /// Minor convenience function for creating each shrapnel piece with circle explosions, mostly stolen from the MIRV component
 /datum/component/pellet_cloud/proc/pew(atom/target, landmine_victim)
-	var/obj/projectile/P = new projectile_type(get_turf(parent))
+	var/obj/projectile/pellet = new projectile_type(get_turf(parent))
 
 	//Shooting Code:
-	P.spread = 0
-	P.original = target
-	P.fired_from = parent
-	P.firer = parent // don't hit ourself that would be really annoying
-	P.impacted = list(WEAKREF(parent) = TRUE) // don't hit the target we hit already with the flak
-	P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
-	P.preparePixelProjectile(target, parent)
-	RegisterSignal(P, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(pellet_hit))
-	RegisterSignals(P, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_QDELETING), PROC_REF(pellet_range))
-	pellets += P
-	P.fire()
+	pellet.spread = 0
+	pellet.original = target
+	pellet.fired_from = parent
+	pellet.firer = parent // don't hit ourself that would be really annoying
+	pellet.impacted = list(WEAKREF(parent) = TRUE) // don't hit the target we hit already with the flak
+	pellet.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
+	pellet.aim_projectile(target, parent)
+	RegisterSignal(pellet, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(pellet_hit))
+	RegisterSignals(pellet, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_QDELETING), PROC_REF(pellet_range))
+	pellets += pellet
+	pellet.fire()
 	if(landmine_victim)
-		P.process_hit(get_turf(target), target)
+		pellet.impact(target)
 
 ///All of our pellets are accounted for, time to go target by target and tell them how many things they got hit by.
 /datum/component/pellet_cloud/proc/finalize()
-	var/obj/projectile/P = projectile_type
-	var/proj_name = initial(P.name)
+	var/obj/projectile/proj_type = projectile_type
+	var/proj_name = initial(proj_type.name)
 
 	for(var/atom/target in targets_hit)
 		var/num_hits = targets_hit[target]["hits"]
@@ -303,24 +303,24 @@
 				hit_part = null //so the visible_message later on doesn't generate extra text.
 			else
 				target = hit_part.owner
-				if(wound_info_by_part[hit_part] && (initial(P.damage_type) == BRUTE || initial(P.damage_type) == BURN)) // so a cloud of disablers that deal stamina don't inadvertently end up causing burn wounds)
+				if(wound_info_by_part[hit_part] && (initial(proj_type.damage_type) == BRUTE || initial(proj_type.damage_type) == BURN)) // so a cloud of disablers that deal stamina don't inadvertently end up causing burn wounds)
 					var/damage_dealt = wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE]
 					var/w_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS]
 					var/bw_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS]
-					var/wounding_type = (initial(P.damage_type) == BRUTE) ? WOUND_BLUNT : WOUND_BURN // sharpness is handled in the wound rolling
+					var/wounding_type = (initial(proj_type.damage_type) == BRUTE) ? WOUND_BLUNT : WOUND_BURN // sharpness is handled in the wound rolling
 					wound_info_by_part -= hit_part
 
 					// technically this only checks armor worn the moment that all the pellets resolve rather than as each one hits you,
 					// but this isn't important enough to warrant all the extra loops of mostly redundant armor checks
 					var/mob/living/carbon/hit_carbon = target
-					var/armor_factor = hit_carbon.getarmor(hit_part, initial(P.armor_flag))
+					var/armor_factor = hit_carbon.getarmor(hit_part, initial(proj_type.armor_flag))
 					armor_factor = min(ARMOR_MAX_BLOCK, armor_factor) //cap damage reduction at 90%
 					if(armor_factor > 0)
-						if(initial(P.weak_against_armour) && armor_factor >= 0)
+						if(initial(proj_type.weak_against_armour) && armor_factor >= 0)
 							armor_factor *= ARMOR_WEAKENED_MULTIPLIER
 						damage_dealt *= max(0, 1 - armor_factor*0.01)
 
-					hit_part.painless_wound_roll(wounding_type, damage_dealt, w_bonus, bw_bonus, initial(P.sharpness))
+					hit_part.painless_wound_roll(wounding_type, damage_dealt, w_bonus, bw_bonus, initial(proj_type.sharpness))
 
 		var/limb_hit_text = ""
 		if(hit_part)

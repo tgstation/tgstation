@@ -41,7 +41,7 @@
 		return
 
 	. = ..()
-	if(strikes_to_lose_limb == 0) // we've already hit sepsis, nothing more to do
+	if(strikes_to_lose_limb <= 0) // we've already hit sepsis, nothing more to do
 		victim.adjustToxLoss(0.25 * seconds_per_tick)
 		if(SPT_PROB(0.5, seconds_per_tick))
 			victim.visible_message(span_danger("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"), span_warning("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"), vision_distance = COMBAT_MESSAGE_RANGE)
@@ -135,6 +135,13 @@
 						threshold_penalty = 120 // piss easy to destroy
 						set_disabling(TRUE)
 
+/datum/wound/burn/flesh/set_disabling(new_value)
+	. = ..()
+	if(new_value && strikes_to_lose_limb <= 0)
+		treat_text_short = "Amputate or augment limb immediately, or place the patient into cryogenics."
+	else
+		treat_text_short = initial(treat_text_short)
+
 /datum/wound/burn/flesh/get_wound_description(mob/user)
 	if(strikes_to_lose_limb <= 0)
 		return span_deadsay("<B>[victim.p_Their()] [limb.plaintext_zone] has locked up completely and is non-functional.</B>")
@@ -168,9 +175,25 @@
 
 	return "<B>[condition.Join()]</B>"
 
+/datum/wound/burn/flesh/severity_text(simple = FALSE)
+	. = ..()
+	. += " Burn / "
+	switch(infestation)
+		if(-INFINITY to WOUND_INFECTION_MODERATE)
+			. += "No"
+		if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
+			. += "Moderate"
+		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
+			. += "<b>Severe</b>"
+		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
+			. += "<b>Critical</b>"
+		if(WOUND_INFECTION_SEPTIC to INFINITY)
+			. += "<b>Total</b>"
+	. += " Infection"
+
 /datum/wound/burn/flesh/get_scanner_description(mob/user)
 	if(strikes_to_lose_limb <= 0) // Unclear if it can go below 0, best to not take the chance
-		var/oopsie = "Type: [name]\nSeverity: [severity_text()]"
+		var/oopsie = "Type: [name]<br>Severity: [severity_text()]"
 		oopsie += "<div class='ml-3'>Infection Level: [span_deadsay("The body part has suffered complete sepsis and must be removed. Amputate or augment limb immediately, or place the patient in a cryotube.")]</div>"
 		return oopsie
 
@@ -249,7 +272,7 @@
 // people complained about burns not healing on stasis beds, so in addition to checking if it's cured, they also get the special ability to very slowly heal on stasis beds if they have the healing effects stored
 /datum/wound/burn/flesh/on_stasis(seconds_per_tick, times_fired)
 	. = ..()
-	if(strikes_to_lose_limb == 0) // we've already hit sepsis, nothing more to do
+	if(strikes_to_lose_limb <= 0) // we've already hit sepsis, nothing more to do
 		if(SPT_PROB(0.5, seconds_per_tick))
 			victim.visible_message(span_danger("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"), span_warning("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return
@@ -280,7 +303,8 @@
 /datum/wound/burn/flesh/moderate
 	name = "Second Degree Burns"
 	desc = "Patient is suffering considerable burns with mild skin penetration, weakening limb integrity and increased burning sensations."
-	treat_text = "Recommended application of topical ointment or regenerative mesh to affected region."
+	treat_text = "Apply topical ointment or regenerative mesh to the wound."
+	treat_text_short = "Apply healing aid such as regenerative mesh."
 	examine_desc = "is badly burned and breaking out in blisters"
 	occur_text = "breaks out with violent red burns"
 	severity = WOUND_SEVERITY_MODERATE
@@ -304,7 +328,11 @@
 /datum/wound/burn/flesh/severe
 	name = "Third Degree Burns"
 	desc = "Patient is suffering extreme burns with full skin penetration, creating serious risk of infection and greatly reduced limb integrity."
-	treat_text = "Recommended immediate disinfection and excision of any infected skin, followed by bandaging and ointment. If the limb has locked up, it must be amputated, augmented or treated with cryogenics."
+	treat_text = "Swiftly apply healing aids such as Synthflesh or regenerative mesh to the wound. \
+		Disinfect the wound and surgically debride any infected skin, and wrap in clean gauze / use ointment to prevent further infection. \
+		If the limb has locked up, it must be amputated, augmented or treated with cryogenics."
+	treat_text_short = "Apply healing aid such as regenerative mesh, Synthflesh, or cryogenics and disinfect / debride. \
+		Clean gauze or ointment will slow infection rate."
 	examine_desc = "appears seriously charred, with aggressive red splotches"
 	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
 	severity = WOUND_SEVERITY_SEVERE
@@ -330,7 +358,11 @@
 /datum/wound/burn/flesh/critical
 	name = "Catastrophic Burns"
 	desc = "Patient is suffering near complete loss of tissue and significantly charred muscle and bone, creating life-threatening risk of infection and negligible limb integrity."
-	treat_text = "Immediate surgical debriding of any infected skin, followed by potent tissue regeneration formula and bandaging. If the limb has locked up, it must be amputated, augmented or treated with cryogenics."
+	treat_text = "Immediately apply healing aids such as Synthflesh or regenerative mesh to the wound. \
+		Disinfect the wound and surgically debride any infected skin, and wrap in clean gauze / use ointment to prevent further infection. \
+		If the limb has locked up, it must be amputated, augmented or treated with cryogenics."
+	treat_text_short = "Apply healing aid such as regenerative mesh, Synthflesh, or cryogenics and disinfect / debride. \
+		Clean gauze or ointment will slow infection rate."
 	examine_desc = "is a ruined mess of blanched bone, melted fat, and charred tissue"
 	occur_text = "vaporizes as flesh, bone, and fat melt together in a horrifying mess"
 	severity = WOUND_SEVERITY_CRITICAL

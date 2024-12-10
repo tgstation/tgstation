@@ -85,14 +85,14 @@
 			. += span_warning("An [circuit.name] is installed and should be [EXAMINE_HINT("screwed")] in place.")
 			. += span_notice("The circuit board can be [EXAMINE_HINT("pried")] out.")
 		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
-			. += span_warning("Its requires [EXAMINE_HINT("5 cable")] pieces to wire it.")
+			. += span_warning("It can be [EXAMINE_HINT("wired")] with some cable.")
 			. += span_notice("The circuit board can be [EXAMINE_HINT("screwed")] loose.")
 		if(FRAME_COMPUTER_STATE_WIRED)
-			. += span_notice("The wires can be cut out with [EXAMINE_HINT("wire cutters")].")
-			. += span_warning("Its requires [EXAMINE_HINT("2 glass")] sheets to complete the screen.")
+			. += span_notice("The wires can be cut with [EXAMINE_HINT("wirecutters")].")
+			. += span_warning("There is a slot for 2 [EXAMINE_HINT("glass panels")].")
 		if(FRAME_COMPUTER_STATE_GLASSED)
 			. += span_notice("The screen can be [EXAMINE_HINT("pried")] out.")
-			. += span_notice("The moniter can be [EXAMINE_HINT("screwed")] to complete it")
+			. += span_notice("The monitor can be [EXAMINE_HINT("screwed")] on to complete it")
 
 /obj/structure/frame/computer/circuit_added(obj/item/circuitboard/added)
 	state = FRAME_COMPUTER_STATE_BOARD_INSTALLED

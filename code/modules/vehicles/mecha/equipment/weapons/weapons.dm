@@ -53,7 +53,7 @@
 		return FALSE
 
 	/// Find our mecha, find the opposite direction. Used for kickback while the mecha is drifting in zero-g to launch us in this direction.
-	var/newtonian_target = REVERSE_DIR(chassis.dir)
+	var/newtonian_target = dir2angle(REVERSE_DIR(chassis.dir))
 	. = ..()//start the cooldown early because of sleeps
 	for(var/projectiles_to_shoot in 1 to projectiles_per_shot)
 		if(energy_drain && !chassis.has_charge(energy_drain))//in case we run out of energy mid-burst, such as emp
@@ -68,13 +68,13 @@
 		var/obj/projectile/projectile_obj = new projectile(get_turf(src))
 		projectile_obj.log_override = TRUE //we log being fired ourselves a little further down.
 		projectile_obj.firer = chassis
-		projectile_obj.preparePixelProjectile(target, source, modifiers, spread)
+		projectile_obj.aim_projectile(target, source, modifiers, spread)
 		if(isliving(source) && source.client) //dont want it to happen from syndie mecha npc mobs, they do direct fire anyways
 			var/mob/living/shooter = source
 			projectile_obj.hit_prone_targets = shooter.combat_mode
 		projectile_obj.fire()
 		if(!projectile_obj.suppressed && firing_effect_type)
-			new firing_effect_type(get_turf(src), chassis.dir)
+			new firing_effect_type(chassis || get_turf(src), chassis.dir)
 		playsound(chassis, fire_sound, 50, TRUE)
 
 		log_combat(source, target, "fired [projectile_obj] at", src, "from [chassis] at [get_area_name(src, TRUE)]")
@@ -211,7 +211,7 @@
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.adjust_stutter(40 SECONDS)
-		var/obj/item/organ/internal/ears/ears = M.get_organ_slot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/ears/ears = M.get_organ_slot(ORGAN_SLOT_EARS)
 		if(ears)
 			ears.adjustEarDamage(0, 30)
 		M.Paralyze(60)
@@ -381,7 +381,7 @@
 		return
 	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)
 	chassis.use_energy(energy_drain)
-	var/newtonian_target = turn(chassis.dir,180)
+	var/newtonian_target = dir2angle(REVERSE_DIR(chassis.dir))
 	var/obj/O = new projectile(chassis.loc)
 	playsound(chassis, fire_sound, 50, TRUE)
 	log_message("Launched a [O.name] from [name], targeting [target].", LOG_MECHA)

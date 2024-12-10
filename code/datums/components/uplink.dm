@@ -191,7 +191,8 @@
 	data["current_progression_scaling"] = SStraitor.current_progression_scaling
 
 	data["maximum_potential_objectives"] = uplink_handler.maximum_potential_objectives
-	if(uplink_handler.has_objectives)
+
+	if(uplink_handler.primary_objectives)
 		var/list/primary_objectives = list()
 		for(var/datum/objective/task as anything in uplink_handler.primary_objectives)
 			var/list/task_data = list()
@@ -201,7 +202,9 @@
 				task_data["task_name"] = "DIRECTIVE [uppertext(GLOB.phonetic_alphabet[length(primary_objectives) + 1])]"
 			task_data["task_text"] = task.explanation_text
 			primary_objectives += list(task_data)
+		data["primary_objectives"] = primary_objectives
 
+	if(uplink_handler.has_objectives)
 		var/list/potential_objectives = list()
 		for(var/index in 1 to uplink_handler.potential_objectives.len)
 			var/datum/traitor_objective/objective = uplink_handler.potential_objectives[index]
@@ -216,7 +219,7 @@
 			objective_data["id"] = index
 			active_objectives += list(objective_data)
 
-		data["primary_objectives"] = primary_objectives
+
 		data["potential_objectives"] = potential_objectives
 		data["active_objectives"] = active_objectives
 		data["completed_final_objective"] = uplink_handler.final_objective

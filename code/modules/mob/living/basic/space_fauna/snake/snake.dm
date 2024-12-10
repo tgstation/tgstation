@@ -73,7 +73,7 @@
 /// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them
 /datum/ai_controller/basic_controller/snake
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends/allow_items,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -82,7 +82,7 @@
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/random_speech/snake,
 	)

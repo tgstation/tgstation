@@ -114,13 +114,13 @@
 		interrupt_interrogation()
 		return
 	if(SPT_PROB(5, seconds_per_tick) && !(C.get_eye_protection() > 0))
-		to_chat(C, "<span class='hypnophrase'>[pick(\
+		to_chat(C, span_hypnophrase(pick(\
 			"...blue... red... green... blue, red, green, blueredgreen[span_small("blueredgreen")]",\
 			"...pretty colors...",\
 			"...you keep hearing words, but you can't seem to understand them...",\
 			"...so peaceful...",\
 			"...an annoying buzz in your ears..."\
-		)]</span>")
+		)))
 
 	use_energy(active_power_usage * seconds_per_tick)
 

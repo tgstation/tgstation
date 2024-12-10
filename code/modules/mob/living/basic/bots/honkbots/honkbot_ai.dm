@@ -7,7 +7,6 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/use_mob_ability/random_honk,
-		/datum/ai_planning_subtree/manage_unreachable_list,
 		/datum/ai_planning_subtree/find_wanted_targets,
 		/datum/ai_planning_subtree/troll_target,
 		/datum/ai_planning_subtree/slip_victims,
@@ -41,7 +40,7 @@
 		return
 
 	var/atom/slip_target = blackboard[BB_SLIP_TARGET]
-	set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, slip_target, TRUE)
+	add_to_blacklist(slip_target)
 	clear_blackboard_key(BB_SLIP_TARGET)
 
 /datum/ai_planning_subtree/find_wanted_targets
@@ -139,12 +138,12 @@
 	living_pawn.emote("beep")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/play_with_clown/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
+/datum/ai_behavior/play_with_clown/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	var/mob/living/living_target = controller.blackboard[target_key]
 	if(QDELETED(living_target))
 		return
-	controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, living_target, TRUE)
+	controller.add_to_blacklist(living_target)
 	controller.clear_blackboard_key(target_key)
 
 /datum/ai_planning_subtree/slip_victims/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
@@ -204,14 +203,14 @@
 	our_pawn.stop_pulling()
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/drag_to_slip/finish_action(datum/ai_controller/controller, success, slip_target, slippery_target)
+/datum/ai_behavior/drag_to_slip/finish_action(datum/ai_controller/basic_controller/bot/controller, success, slip_target, slippery_target)
 	. = ..()
 	if(success)
 		var/mob/living/living_pawn = controller.pawn
 		living_pawn.emote("flip")
 	var/atom/slipped_victim = controller.blackboard[slip_target]
 	if(!isnull(slipped_victim))
-		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, slipped_victim, TRUE)
+		controller.add_to_blacklist(slipped_victim)
 	controller.clear_blackboard_key(slip_target)
 	controller.clear_blackboard_key(slippery_target)
 

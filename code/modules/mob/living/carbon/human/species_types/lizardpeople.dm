@@ -9,13 +9,13 @@
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	body_markings = list(/datum/bodypart_overlay/simple/body_marking/lizard = "None")
 	mutant_organs = list(
-		/obj/item/organ/external/horns = "None",
-		/obj/item/organ/external/frills = "None",
-		/obj/item/organ/external/snout = "Round",
-		/obj/item/organ/external/spines = "None",
-		/obj/item/organ/external/tail/lizard = "Smooth",
+		/obj/item/organ/horns = "None",
+		/obj/item/organ/frills = "None",
+		/obj/item/organ/snout = "Round",
+		/obj/item/organ/spines = "None",
+		/obj/item/organ/tail/lizard = "Smooth",
 	)
-	mutanttongue = /obj/item/organ/internal/tongue/lizard
+	mutanttongue = /obj/item/organ/tongue/lizard
 	coldmod = 1.5
 	heatmod = 0.67
 	payday_modifier = 1.0
@@ -101,13 +101,21 @@
 
 /datum/species/lizard/get_sigh_sound(mob/living/carbon/human/lizard)
 	if(lizard.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/sigh/female_sigh.ogg'
-	return 'sound/mobs/humanoids/human/sigh/male_sigh.ogg'
+		return SFX_FEMALE_SIGH
+	return SFX_MALE_SIGH
 
 /datum/species/lizard/get_sniff_sound(mob/living/carbon/human/lizard)
 	if(lizard.physique == FEMALE)
 		return 'sound/mobs/humanoids/human/sniff/female_sniff.ogg'
 	return 'sound/mobs/humanoids/human/sniff/male_sniff.ogg'
+
+/datum/species/lizard/get_snore_sound(mob/living/carbon/human/lizard)
+	if(lizard.physique == FEMALE)
+		return SFX_SNORE_FEMALE
+	return SFX_SNORE_MALE
+
+/datum/species/lizard/get_hiss_sound(mob/living/carbon/human/lizard)
+	return 'sound/mobs/humanoids/lizard/lizard_hiss.ogg'
 
 /datum/species/lizard/get_physical_attributes()
 	return "Lizardpeople can withstand slightly higher temperatures than most species, but they are very vulnerable to the cold \
@@ -160,8 +168,8 @@ Lizard subspecies: ASHWALKERS
 	name = "Ash Walker"
 	id = SPECIES_LIZARD_ASH
 	examine_limb_id = SPECIES_LIZARD
-	mutantlungs = /obj/item/organ/internal/lungs/lavaland
-	mutantbrain = /obj/item/organ/internal/brain/primitive
+	mutantlungs = /obj/item/organ/lungs/lavaland
+	mutantbrain = /obj/item/organ/brain/primitive
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_VIRUSIMMUNE,
@@ -202,34 +210,26 @@ Lizard subspecies: SILVER SCALED
 	mutantlungs = null
 	damage_modifier = 10 //very light silvery scales soften blows
 	species_language_holder = /datum/language_holder/lizard/silver
-	mutanttongue = /obj/item/organ/internal/tongue/lizard/silver
-	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
+	mutanttongue = /obj/item/organ/tongue/lizard/silver
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
 	examine_limb_id = SPECIES_LIZARD
 	///stored mutcolor for when we turn back off of a silverscale.
 	var/old_mutcolor
-	///stored eye color for when we turn back off of a silverscale.
-	var/old_eye_color_left
-	///See above
-	var/old_eye_color_right
 
 /datum/species/lizard/silverscale/get_physical_attributes()
 	return "Silver Scales are to lizardpeople what angels are to humans. \
 		Mostly identical, they are holy, don't breathe, don't get viruses, their hide cannot be pierced, love the taste of wine, \
 		and their tongue allows them to turn into a statue, for some reason."
 
-/datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/human/new_silverscale, datum/species/old_species, pref_load)
+/datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/human/new_silverscale, datum/species/old_species, pref_load, regenerate_icons)
 	old_mutcolor = new_silverscale.dna.features["mcolor"]
-	old_eye_color_left = new_silverscale.eye_color_left
-	old_eye_color_right = new_silverscale.eye_color_right
 	new_silverscale.dna.features["mcolor"] = "#eeeeee"
-	new_silverscale.eye_color_left = "#0000a0"
-	new_silverscale.eye_color_right = "#0000a0"
+	new_silverscale.add_eye_color("#0000a0", EYE_COLOR_SPECIES_PRIORITY)
 	. = ..()
 	new_silverscale.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff63", "size" = 2))
 
 /datum/species/lizard/silverscale/on_species_loss(mob/living/carbon/human/was_silverscale, datum/species/new_species, pref_load)
 	was_silverscale.dna.features["mcolor"] = old_mutcolor
-	was_silverscale.eye_color_left = old_eye_color_left
-	was_silverscale.eye_color_right = old_eye_color_right
+	was_silverscale.remove_eye_color(EYE_COLOR_SPECIES_PRIORITY)
 	was_silverscale.remove_filter("silver_glint")
 	return ..()

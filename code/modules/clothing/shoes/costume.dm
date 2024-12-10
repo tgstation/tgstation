@@ -129,7 +129,7 @@
 
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 	LoadComponent(/datum/component/squeak, list('sound/effects/quack.ogg' = 1), 50, falloff_exponent = 20)
-	AddComponent(/datum/component/adjust_fishing_difficulty, -6) //deploy tactical duckling lure
+	AddComponent(/datum/component/adjust_fishing_difficulty, -7) //deploy tactical duckling lure
 
 /obj/item/clothing/shoes/ducky_shoes/equipped(mob/living/user, slot)
 	. = ..()

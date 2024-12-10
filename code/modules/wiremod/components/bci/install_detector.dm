@@ -10,13 +10,13 @@
 	desc = "A component that detects when a BCI is installed or removed from its user."
 	category = "BCI"
 
-	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
+	required_shells = list(/obj/item/organ/cyberimp/bci)
 
 	var/datum/port/output/implanted
 	var/datum/port/output/removed
 	var/datum/port/output/current_state
 
-	var/obj/item/organ/internal/cyberimp/bci/bci
+	var/obj/item/organ/cyberimp/bci/bci
 
 /obj/item/circuit_component/install_detector/populate_ports()
 	. = ..()
@@ -26,7 +26,7 @@
 
 /obj/item/circuit_component/install_detector/register_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell, /obj/item/organ/internal/cyberimp/bci))
+	if(istype(shell, /obj/item/organ/cyberimp/bci))
 		bci = shell
 		RegisterSignal(shell, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_implanted))
 		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))

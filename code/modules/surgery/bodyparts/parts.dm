@@ -35,7 +35,7 @@
 	/// Offset to apply to equipment worn on the neck
 	var/datum/worn_feature_offset/worn_neck_offset
 	/// Which functional (i.e. flightpotion) wing types (if any) does this bodypart support? If count is >1 a radial menu is used to choose between all icons in list
-	var/list/wing_types = list(/obj/item/organ/external/wings/functional/angel)
+	var/list/wing_types = list(/obj/item/organ/wings/functional/angel)
 
 /obj/item/bodypart/chest/forced_removal(dismembered, special, move_to_floor)
 	var/mob/living/carbon/old_owner = owner
@@ -74,7 +74,7 @@
 	if(!ishuman(owner))
 		return null
 	var/mob/living/carbon/human/human_owner = owner
-	var/obj/item/organ/external/tail/tail = human_owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	var/obj/item/organ/tail/tail = human_owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(tail)
 		return tail.get_butt_sprite()
 
@@ -106,7 +106,7 @@
 	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = LIMB_MAX_HP_ALIEN_CORE
 	acceptable_bodyshape = BODYSHAPE_HUMANOID
-	wing_types = NONE
+	wing_types = null
 
 /obj/item/bodypart/chest/larva
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
@@ -119,7 +119,7 @@
 	max_damage = LIMB_MAX_HP_ALIEN_LARVA
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER
-	wing_types = NONE
+	wing_types = null
 
 /// Parent Type for arms, should not appear in game.
 /obj/item/bodypart/arm
@@ -396,11 +396,31 @@
 	unarmed_damage_low = 7
 	unarmed_damage_high = 15
 	unarmed_effectiveness = 15
+	biological_state = BIO_STANDARD_JOINTED
 	/// Datum describing how to offset things worn on the foot of this leg, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_foot_offset
 	/// Used by the bloodysoles component to make footprints
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
-	biological_state = BIO_STANDARD_JOINTED
+	/// What does our footsteps (barefoot) sound like? Only BAREFOOT, CLAW, HEAVY, and SHOE (or null, I guess) are valid
+	var/footstep_type = FOOTSTEP_MOB_BAREFOOT
+	/// You can set this to a list of sounds to pick from when a footstep is played rather than use the footstep types
+	/// Requires special formatting: list(list(sounds, go, here), volume, range modifier)
+	var/list/special_footstep_sounds
+
+/obj/item/bodypart/leg/Initialize(mapload)
+	. = ..()
+	if(PERFORM_ALL_TESTS(focus_only/humanstep_validity))
+		// Update this list if more types are suported in the footstep element
+		var/list/supported_types = list(
+			null,
+			FOOTSTEP_MOB_BAREFOOT,
+			FOOTSTEP_MOB_CLAW,
+			FOOTSTEP_MOB_HEAVY,
+			FOOTSTEP_MOB_SHOE,
+		)
+		if(!(footstep_type in supported_types))
+			stack_trace("Invalid footstep type set on leg: \[[footstep_type]\] \
+				If you want to use this type, you will need to create a global footstep index for it.")
 
 /obj/item/bodypart/leg/Destroy()
 	QDEL_NULL(worn_foot_offset)

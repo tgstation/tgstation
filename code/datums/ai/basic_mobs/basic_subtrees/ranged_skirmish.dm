@@ -43,6 +43,5 @@
 	if (distance > max_range || distance < min_range)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/mob/living/basic/gunman = controller.pawn
-	gunman.RangedAttack(target)
+	controller.ai_interact(target = target, combat_mode = TRUE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

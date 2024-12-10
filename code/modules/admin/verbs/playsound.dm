@@ -41,7 +41,8 @@ ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connec
 ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN, sound as sound)
 	log_admin("[key_name(user)] played a local sound [sound]")
 	message_admins("[key_name_admin(user)] played a local sound [sound]")
-	playsound(get_turf(user.mob), sound, 50, FALSE, FALSE)
+	var/volume = tgui_input_number(user, "What volume would you like the sound to play at?", max_value = 100)
+	playsound(get_turf(user.mob), sound, volume || 50, FALSE)
 	BLACKBOX_LOG_ADMIN_VERB("Play Local Sound")
 
 ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a sound directly to a mob.", ADMIN_CATEGORY_FUN, sound as sound, mob/target in world)
@@ -51,6 +52,10 @@ ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a soun
 		return
 	log_admin("[key_name(user)] played a direct mob sound [sound] to [key_name_admin(target)].")
 	message_admins("[key_name_admin(user)] played a direct mob sound [sound] to [ADMIN_LOOKUPFLW(target)].")
+	var/volume = tgui_input_number(user, "What volume would you like the sound to play at?", max_value = 100)
+	var/sound/admin_sound = sound(sound)
+	if(volume)
+		admin_sound.volume = volume
 	SEND_SOUND(target, sound)
 	BLACKBOX_LOG_ADMIN_VERB("Play Direct Mob Sound")
 
@@ -175,6 +180,10 @@ ADMIN_VERB(play_web_sound, R_SOUND, "Play Internet Sound", "Play a given interne
 		web_sound(user.mob, null)
 
 ADMIN_VERB(set_round_end_sound, R_SOUND, "Set Round End Sound", "Set the sound that plays on round end.", ADMIN_CATEGORY_FUN, sound as sound)
+	var/volume = tgui_input_number(user, "What volume would you like this sound to play at?", max_value = 100)
+	var/sound/admin_sound = sound(sound)
+	if(volume)
+		admin_sound.volume = volume
 	SSticker.SetRoundEndSound(sound)
 
 	log_admin("[key_name(user)] set the round end sound to [sound]")

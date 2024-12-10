@@ -163,6 +163,13 @@
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/shovel/spade/cyborg
+	name = "cyborg spade"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili_shovel"
+	toolspeed = 0.6
+	worn_icon_state = null
+
 /obj/item/shovel/serrated
 	name = "serrated bone shovel"
 	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs. \

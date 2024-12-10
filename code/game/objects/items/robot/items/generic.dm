@@ -88,9 +88,9 @@
 			mode = HUG_MODE_NICE
 	switch(mode)
 		if(HUG_MODE_NICE)
-			to_chat(user, "<span class='infoplain'>Power reset. Hugs!</span>")
+			to_chat(user, span_infoplain("Power reset. Hugs!"))
 		if(HUG_MODE_HUG)
-			to_chat(user, "<span class='infoplain'>Power increased!</span>")
+			to_chat(user, span_infoplain("Power increased!"))
 		if(HUG_MODE_SHOCK)
 			to_chat(user, "<span class='warningplain'>BZZT. Electrifying arms...</span>")
 		if(HUG_MODE_CRUSH)

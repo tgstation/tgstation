@@ -63,12 +63,7 @@
 /obj/item/cult_shift,
 /obj/effect/decal/remains/human,
 /obj/item/melee/cultblade/dagger,
-/obj/effect/step_trigger/sound_effect{
-	happens_once = 1;
-	name = "\proper a grave mistake";
-	sound = 'sound/effects/hallucinations/i_see_you1.ogg';
-	triggerer_only = 1
-	},
+/obj/effect/step_trigger/sound_effect/lavaland_cult_altar,
 /obj/effect/step_trigger/message{
 	message = "<span class='cult italic'><b><span class='big'>You've made a grave mistake, haven't you?</span></b></span>";
 	name = "ohfuck"
