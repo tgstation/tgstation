@@ -195,6 +195,14 @@
 #define BB_DRILLABLE_ICE "BB_drillable_ice"
 
 
+//emotions we displays depending on our happiness
+///emotions we display when happy
+#define BB_HAPPY_EMOTIONS "happy_emotions"
+///emotions we display when neutral
+#define BB_MODERATE_EMOTIONS "moderate_emotions"
+///emotions we display when depressed
+#define BB_SAD_EMOTIONS "sad_emotions"
+
 // Keys used by one and only one behavior
 // Used to hold state without making bigass lists
 /// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
