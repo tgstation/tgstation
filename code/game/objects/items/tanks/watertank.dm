@@ -287,7 +287,7 @@
 			return
 	return
 
-/obj/item/extinguisher/mini/nozzle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/extinguisher/mini/nozzle/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(AttemptRefill(interacting_with, user))
 		return NONE
 	if(nozzle_mode == EXTINGUISHER)
