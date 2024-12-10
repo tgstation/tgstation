@@ -54,6 +54,7 @@
 /obj/item/grenade/stingbang
 	name = "stingbang"
 	icon_state = "timeg_locked"
+	base_icon_state = "timeg"
 	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
@@ -122,6 +123,7 @@
 	name = "rotfrag grenade"
 	desc = "A grenade that generates more shrapnel the more you rotate it in your hand after pulling the pin. This one releases shrapnel shards."
 	icon_state = "timeg_locked"
+	base_icon_state = "timeg"
 	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
