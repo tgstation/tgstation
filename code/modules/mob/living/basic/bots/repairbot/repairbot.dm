@@ -49,18 +49,18 @@
 	)
 	///our neutral voicelines
 	var/static/list/neutral_voicelines = list(
-		REPAIRBOT_VOICED_BRICK = 'sound/voice/repairbot/brick.ogg',
-		REPAIRBOT_VOICED_ENTROPY = 'sound/voice/repairbot/entropy.ogg',
-		REPAIRBOT_VOICED_FIX_IT = 'sound/voice/repairbot/fixit.ogg',
-		REPAIRBOT_VOICED_FIX_TOUCH = 'sound/voice/repairbot/fixtouch.ogg',
-		REPAIRBOT_VOICED_HOLE = 'sound/voice/repairbot/patchingholes.ogg',
-		REPAIRBOT_VOICED_PAY = 'sound/voice/repairbot/pay.ogg',
+		REPAIRBOT_VOICED_BRICK = 'sound/mobs/non-humanoids/repairbot/brick.ogg',
+		REPAIRBOT_VOICED_ENTROPY = 'sound/mobs/non-humanoids/repairbot/entropy.ogg',
+		REPAIRBOT_VOICED_FIX_IT = 'sound/mobs/non-humanoids/repairbot/fixit.ogg',
+		REPAIRBOT_VOICED_FIX_TOUCH = 'sound/mobs/non-humanoids/repairbot/fixtouch.ogg',
+		REPAIRBOT_VOICED_HOLE = 'sound/mobs/non-humanoids/repairbot/patchingholes.ogg',
+		REPAIRBOT_VOICED_PAY = 'sound/mobs/non-humanoids/repairbot/pay.ogg',
 	)
 	///our emagged voicelines
 	var/static/list/emagged_voicelines = list(
-		REPAIRBOT_VOICED_ENTROPY = 'sound/voice/repairbot/entropy.ogg',
-		REPAIRBOT_VOICED_STRINGS = 'sound/voice/repairbot/strings.ogg',
-		REPAIRBOT_VOICED_PASSION = 'sound/voice/repairbot/passionproject.ogg',
+		REPAIRBOT_VOICED_ENTROPY = 'sound/mobs/non-humanoids/repairbot/entropy.ogg',
+		REPAIRBOT_VOICED_STRINGS = 'sound/mobs/non-humanoids/repairbot/strings.ogg',
+		REPAIRBOT_VOICED_PASSION = 'sound/mobs/non-humanoids/repairbot/passionproject.ogg',
 	)
 	///types we can retrieve from our ui
 	var/static/list/retrievable_types = list(
