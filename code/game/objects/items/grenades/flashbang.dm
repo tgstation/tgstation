@@ -65,6 +65,8 @@
 
 /obj/item/grenade/stingbang/mega
 	name = "mega stingbang"
+	icon_state = "timeg_mega_locked"
+	base_icon_state = "timeg_mega"
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball/mega
 	shrapnel_radius = 12
 
