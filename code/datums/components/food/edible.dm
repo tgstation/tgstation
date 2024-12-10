@@ -561,7 +561,7 @@ Behavior that's still missing from this component that original food items had t
 			gourmand.add_mob_memory(/datum/memory/good_food, food = parent)
 
 	//Bruh this breakfast thing is cringe and shouldve been handled separately from food-types, remove this in the future (Actually, just kill foodtypes in general)
-	if((foodtypes & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
+	if((foodtypes & BREAKFAST) && STATION_TIME_PASSED() < STOP_SERVING_BREAKFAST)
 		gourmand.add_mood_event("breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
 

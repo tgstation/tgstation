@@ -308,7 +308,7 @@
 	if (!chosen_effect)
 		select_finale(user)
 		return
-	var/round_time_passed = world.time - SSticker.round_start_time
+	var/round_time_passed = STATION_TIME_PASSED()
 	if (chosen_effect && finale_effect.minimum_time >= round_time_passed)
 		to_chat(user, span_warning("The chosen grand finale will only be available in <b>[DisplayTimeText(finale_effect.minimum_time - round_time_passed)]</b>!"))
 		return

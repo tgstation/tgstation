@@ -655,11 +655,11 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	var/rampupdelta = 5
 
 /datum/dynamic_ruleset/roundstart/meteor/rule_process()
-	if(nometeors || meteordelay > world.time - SSticker.round_start_time)
+	if(nometeors || meteordelay > STATION_TIME_PASSED())
 		return
 
 	var/list/wavetype = GLOB.meteors_normal
-	var/meteorminutes = (world.time - SSticker.round_start_time - meteordelay) / 10 / 60
+	var/meteorminutes = (STATION_TIME_PASSED() - meteordelay) / 10 / 60
 
 	if (prob(meteorminutes))
 		wavetype = GLOB.meteors_threatening

@@ -22,7 +22,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		return
 
 	declaring_war = TRUE
-	var/are_you_sure = tgui_alert(user, "Consult your team carefully before you declare war on [station_name()]. Are you sure you want to alert the enemy crew? You have [DisplayTimeText(CHALLENGE_TIME_LIMIT - world.time - SSticker.round_start_time)] to decide.", "Declare war?", list("Yes", "No"))
+	var/are_you_sure = tgui_alert(user, "Consult your team carefully before you declare war on [station_name()]. Are you sure you want to alert the enemy crew? You have [DisplayTimeText(CHALLENGE_TIME_LIMIT - STATION_TIME_PASSED())] to decide.", "Declare war?", list("Yes", "No"))
 	declaring_war = FALSE
 
 	if(!check_allowed(user))
@@ -152,7 +152,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	if(!user.onSyndieBase())
 		to_chat(user, span_boldwarning("You have to be at your base to use this."))
 		return FALSE
-	if(world.time - SSticker.round_start_time > CHALLENGE_TIME_LIMIT)
+	if(STATION_TIME_PASSED() > CHALLENGE_TIME_LIMIT)
 		to_chat(user, span_boldwarning("It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand."))
 		return FALSE
 	for(var/obj/item/circuitboard/computer/syndicate_shuttle/board as anything in GLOB.syndicate_shuttle_boards)
