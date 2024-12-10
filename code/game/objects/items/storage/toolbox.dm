@@ -26,7 +26,7 @@
 	/// How many interactions are we currently performing
 	var/current_interactions = 0
 	/// Items we should not interact with when left clicking
-	var/static/list/lmb_exception_typecache = list(typecacheof(
+	var/static/list/lmb_exception_typecache = typecacheof(list(
 		/obj/structure/table,
 		/obj/structure/rack,
 		/obj/structure/closet,
