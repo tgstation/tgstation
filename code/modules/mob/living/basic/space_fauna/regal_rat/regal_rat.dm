@@ -179,11 +179,11 @@
 	if(SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src) & COMPONENT_RAT_INTERACTED)
 		return FALSE
 
-	if(isnull(mind) || !combat_mode)
+	if(isnull(mind) || combat_mode)
 		return TRUE
 
 	poison_target(target)
-	return TRUE
+	return FALSE
 
 /// Checks if we are allowed to attack this mob. Will return TRUE if we are potentially allowed to attack, but if we end up in a case where we should NOT attack, return FALSE.
 /mob/living/basic/regal_rat/proc/allowed_to_attack(atom/the_target)
