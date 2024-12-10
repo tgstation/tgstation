@@ -435,7 +435,6 @@
 
 	to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] hurts!"))
 
-
 /// Attempt to pluck out the embedded item using tweezers of some kind
 /datum/embedding/proc/try_pluck(obj/item/tool, mob/user)
 	var/pluck_time = rip_time * (parent.w_class * 0.3) * tool.toolspeed

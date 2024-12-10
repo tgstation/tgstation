@@ -139,7 +139,7 @@
 		for(var/obj/item/embedded in bodypart.embedded_objects)
 			remove_embedded_object(embedded)
 
-/mob/living/carbon/proc/has_embedded_objects(include_harmless=FALSE)
+/mob/living/carbon/proc/has_embedded_objects(include_harmless = FALSE)
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		for(var/obj/item/embedded in bodypart.embedded_objects)
 			if(!include_harmless && embedded.embed_data.is_harmless())
