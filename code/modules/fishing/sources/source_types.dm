@@ -58,10 +58,10 @@
 		FISHING_DUD = 4,
 		/obj/item/fish/goldfish = 5,
 		/obj/item/fish/guppy = 5,
+		/obj/item/fish/plasmatetra = 4,
 		/obj/item/fish/perch = 4,
 		/obj/item/fish/angelfish = 4,
 		/obj/item/fish/catfish = 4,
-		/obj/item/fish/perch = 5,
 		/obj/item/fish/slimefish = 2,
 		/obj/item/fish/sockeye_salmon = 1,
 		/obj/item/fish/arctic_char = 1,
@@ -113,6 +113,7 @@
 		/obj/item/fish/angelfish = 10,
 		/obj/item/fish/perch = 5,
 		/obj/item/fish/goldfish/three_eyes = 3,
+		/obj/item/fish/plasmatetra = 3,
 	)
 	catalog_description = "Aquarium dimension (Fishing portal generator)"
 	radial_state = "fish_tank"
