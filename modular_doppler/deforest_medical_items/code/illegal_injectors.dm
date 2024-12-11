@@ -43,6 +43,7 @@
 		/datum/reagent/inverse/healing/tirimol = 5,
 	)
 	custom_price = PAYCHECK_COMMAND * 2.5
+	volume = 30
 
 // Combat stimulant that makes you immune to slowdowns for a bit
 /obj/item/reagent_containers/hypospray/medipen/deforest/synalvipitol
