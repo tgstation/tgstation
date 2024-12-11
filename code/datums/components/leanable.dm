@@ -70,6 +70,8 @@
 		return
 	if (!isnull(lean_check) && !lean_check.Invoke(dropped, params))
 		return
+	if(!is_currently_leanable)
+		return
 	leaner.start_leaning(source, leaning_offset)
 	leaning_mobs += leaner
 	RegisterSignals(leaner, list(COMSIG_LIVING_STOPPED_LEANING, COMSIG_QDELETING), PROC_REF(stopped_leaning))
