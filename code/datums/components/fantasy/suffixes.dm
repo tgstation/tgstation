@@ -285,8 +285,8 @@
 
 /datum/fantasy_affix/doot/apply(datum/component/fantasy/comp, newName)
 	. = ..()
-	comp.parent.AddElement(/datum/element/spooky, stam_damage_mult = comp.quality * 0.1)
+	comp.parent.AddElement(/datum/element/spooky, too_spooky = comp.quality > 17, stam_damage_mult = comp.quality * 0.1)
 	return "[newName] of [pick("dooting", "spooks", "rattling", "the bones")]"
 
 /datum/fantasy_affix/doot/remove(datum/component/fantasy/comp)
-	comp.parent.RemoveElement(/datum/element/spooky, stam_damage_mult = comp.quality * 0.1)
+	comp.parent.RemoveElement(/datum/element/spooky, too_spooky = comp.quality > 17, stam_damage_mult = comp.quality * 0.1)
