@@ -138,6 +138,7 @@
 		INVOKE_ASYNC(src, PROC_REF(stop_leaning))
 
 /datum/component/leanable/proc/on_density_change()
+	SIGNAL_HANDLER
 	is_currently_leanable = !is_currently_leanable
 	if(!is_currently_leanable)
 		stop_leaning_leaners(fall = TRUE)
