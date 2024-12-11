@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Toolboxes can now be placed onto tables/into crates"
+  - bugfix: "Fixed toolboxes automatically using the first item in them"
