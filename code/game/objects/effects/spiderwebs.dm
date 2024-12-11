@@ -275,6 +275,6 @@
 
 /obj/structure/spider/effigy/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/temporary_atom, 1 MINUTES)
+	fade_into_nothing(1 MINUTES)
 
 #undef SPIDER_WEB_TINT
