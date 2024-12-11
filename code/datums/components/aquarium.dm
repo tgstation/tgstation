@@ -189,6 +189,8 @@
 
 /datum/component/aquarium/proc/on_click_alt(atom/movable/source, mob/living/user)
 	SIGNAL_HANDLER
+	if(!user.can_perform_action(src))
+		return
 	var/closing = HAS_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN)
 	if(closing)
 		REMOVE_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, AQUARIUM_TRAIT)
@@ -358,7 +360,7 @@
 		types_to_mate_with = types_to_mate_with & types_to_check
 
 	for(var/obj/item/fish/fish_type as anything in types_to_mate_with)
-		var/list/type_fishes = types_to_mate_with[fish_type]
+		var/list/type_fishes = tracked_fish_by_type[fish_type]
 		if(length(type_fishes) >= initial(fish_type.stable_population))
 			continue
 		candidates += type_fishes
