@@ -72,7 +72,10 @@
 	human.set_species(/datum/species/skeleton)
 	human.visible_message(span_warning("[human] has given up on life as a mortal."))
 	to_chat(human, span_boldnotice("You are a spooky skeleton!"))
-	to_chat(human, span_boldnotice("A new life and identity has begun. Help your fellow skeletons into bringing out the spooky-pocalypse. You haven't forgotten your past life, and are still beholden to past loyalties."))
+	to_chat(human, span_boldnotice("A new life and identity has begun.\
+		[too_spooky ? "Help your fellow skeletons into bringing out the spooky-pocalypse." : ""] \
+		You haven't forgotten your past life, and are still beholden to past loyalties."
+	))
 	INVOKE_ASYNC(src, PROC_REF(change_name), human) //time for a new name!
 
 	if(!too_spooky)
