@@ -142,6 +142,14 @@
 	cost = 11
 	restricted_roles = list(JOB_COOK)
 
+/datum/uplink_item/role_restricted/moltobeso
+	name = "Molt'Obeso Sauce Bottle"
+	desc = "A branded bottle of Molt'Obeso sauce. This sauce can stimulate hunger in people, leading them to eat more than they intended. \
+			It also enhances the absorption of calories from the food consumed."
+	item = /obj/item/storage/box/syndie_kit/moltobeso
+	cost = 2
+	restricted_roles = list(JOB_COOK)
+
 /datum/uplink_item/role_restricted/turretbox
 	name = "Disposable Sentry Gun"
 	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."

@@ -55,7 +55,7 @@
 	name = "Android (Species Preview)"
 	// nude
 
-/datum/species/android/on_species_gain(mob/living/carbon/target, datum/species/old_species, pref_load)
+/datum/species/android/on_species_gain(mob/living/carbon/target, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	if(ishuman(target))
 		power_cord = new

@@ -38,7 +38,7 @@
 	neck = /obj/item/clothing/neck/scarf/primitive_genemod_scarf
 	back = /obj/item/forging/reagent_weapon/axe/fake_copper
 
-/datum/species/human/genemod/primitive/on_species_gain(mob/living/carbon/new_primitive, datum/species/old_species, pref_load)
+/datum/species/human/genemod/primitive/on_species_gain(mob/living/carbon/new_primitive, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	var/mob/living/carbon/human/hearthkin = new_primitive
 	if(!istype(hearthkin))

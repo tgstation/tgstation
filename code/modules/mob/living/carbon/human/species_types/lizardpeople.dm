@@ -218,7 +218,7 @@ Lizard subspecies: SILVER SCALED
 		Mostly identical, they are holy, don't breathe, don't get viruses, their hide cannot be pierced, love the taste of wine, \
 		and their tongue allows them to turn into a statue, for some reason."
 
-/datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/human/new_silverscale, datum/species/old_species, pref_load)
+/datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/human/new_silverscale, datum/species/old_species, pref_load, regenerate_icons)
 	old_mutcolor = new_silverscale.dna.features["mcolor"]
 	new_silverscale.dna.features["mcolor"] = "#eeeeee"
 	new_silverscale.add_eye_color("#0000a0", EYE_COLOR_SPECIES_PRIORITY)

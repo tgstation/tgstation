@@ -1323,6 +1323,7 @@
 		step(src, hitting_atom.dir)
 	return ..()
 
+// Calls throw_at after checking that the move strength is greater than the thrown atom's move resist. Identical args.
 /atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	if((force < (move_resist * MOVE_FORCE_THROW_RATIO)) || (move_resist == INFINITY))
 		return

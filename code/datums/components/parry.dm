@@ -91,22 +91,23 @@
 
 	if (!istype(user) || !parriers[user] || parried)
 		return
+
 	parriers -= user
-	attempt_parry(source, user)
+	return attempt_parry(source, user)
 
 /datum/component/parriable_projectile/proc/attempt_parry(obj/projectile/source, mob/user)
 	if (QDELETED(source) || source.deletion_queued)
-		return
+		return NONE
 
 	if (SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, source) & INTERCEPT_PARRY_EFFECTS)
-		return
+		return NONE
 
 	parried = TRUE
 	if (source.firer != user)
-		if (abs(source.angle - dir2angle(user)) < 15)
+		if (abs(source.angle - dir2angle(user.dir)) < 15)
 			source.set_angle((source.angle + 180) % 360 + rand(-3, 3))
 		else
-			source.set_angle(dir2angle(user) + rand(-3, 3))
+			source.set_angle(dir2angle(user.dir) + rand(-3, 3))
 		user.visible_message(span_warning("[user] expertly parries [source] with [user.p_their()] bare hand!"), span_warning("You parry [source] with your hand!"))
 	else
 		user.visible_message(span_warning("[user] boosts [source] with [user.p_their()] bare hand!"), span_warning("You boost [source] with your hand!"))
@@ -120,4 +121,4 @@
 	user.playsound_local(source.loc, 'sound/effects/parry.ogg', 50, TRUE)
 	user.overlay_fullscreen("projectile_parry", /atom/movable/screen/fullscreen/crit/projectile_parry, 2)
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, clear_fullscreen), "projectile_parry"), 0.25 SECONDS)
-	return PROJECTILE_INTERRUPT_HIT
+	return PROJECTILE_INTERRUPT_HIT_PHASE

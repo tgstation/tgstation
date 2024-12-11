@@ -47,7 +47,7 @@
 	QDEL_NULL(ethereal_light)
 	return ..()
 
-/datum/species/ethereal/on_species_gain(mob/living/carbon/human/new_ethereal, datum/species/old_species, pref_load)
+/datum/species/ethereal/on_species_gain(mob/living/carbon/human/new_ethereal, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	if(!ishuman(new_ethereal))
 		return
@@ -272,7 +272,7 @@
 		'sound/mobs/humanoids/ethereal/lustrous_scream_3.ogg',
 	)
 
-/datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load)
+/datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load, regenerate_icons)
 	..()
 	default_color = new_lustrous.dna.features["ethcolor"]
 	new_lustrous.dna.features["ethcolor"] = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.
