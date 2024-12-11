@@ -454,6 +454,32 @@
 	for(var/i in 1 to 3)
 		new extra_to_spawn (src)
 
+/obj/item/storage/toolbox/guncase/traitor
+	name = "makarov gun case"
+	var/ammo_box_to_spawn = /obj/item/ammo_box/c9mm
+
+/obj/item/storage/toolbox/guncase/traitor/PopulateContents()
+	new weapon_to_spawn (src)
+	for(var/i in 1 to 2)
+		new extra_to_spawn (src)
+	new ammo_box_to_spawn(src)
+
+/obj/item/storage/toolbox/guncase/ammunition
+	name = "makarov 9mm magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/m9mm
+
+/obj/item/storage/toolbox/guncase/traitor/donksoft
+	name = "\improper Donksoft riot pistol gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine
+	extra_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	ammo_box_to_spawn = /obj/item/ammo_box/foambox/riot
+
+/obj/item/storage/toolbox/guncase/ammunition/donksoft
+	name = "\improper Donksoft riot pistol magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	extra_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	ammo_box_to_spawn = /obj/item/ammo_box/foambox/riot
+
 /obj/item/storage/toolbox/guncase/bulldog
 	name = "bulldog gun case"
 	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/bulldog
