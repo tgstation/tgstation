@@ -357,7 +357,7 @@
 	name = "change floor"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "floor_change"
-	screen_loc = ui_floor_changer
+	screen_loc = ui_above_intent
 	var/vertical = FALSE
 
 /atom/movable/screen/floor_changer/Click(location,control,params)
@@ -452,7 +452,7 @@
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return ..()
-	icon_state = "[base_icon_state][user.resting ? 0 : null]"
+	icon_state = "[base_icon_state][user.resting ? "_on" : null]"
 	return ..()
 
 /atom/movable/screen/storage
@@ -525,7 +525,7 @@
 /atom/movable/screen/throw_catch
 	name = "throw/catch"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "act_throw_off"
+	icon_state = "act_throw"
 
 /atom/movable/screen/throw_catch/Click()
 	if(iscarbon(usr))

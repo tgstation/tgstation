@@ -61,7 +61,6 @@
 
 	floor_change = new /atom/movable/screen/floor_changer(null, src)
 	floor_change.icon = ui_style
-	floor_change.screen_loc = ui_above_intent
 	static_inventory += floor_change
 
 	using = new/atom/movable/screen/language_menu(null, src)
