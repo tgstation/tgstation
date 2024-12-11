@@ -1,0 +1,4 @@
+#include "_outfits.dm"
+
+#include "code/centcom.dm"
+#include "code/syndicate.dm"

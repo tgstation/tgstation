@@ -229,3 +229,69 @@
   - bugfix: runetext fades in correctly in bulk. signers rejoice
   zxaber:
   - bugfix: Mechs with crowbar-like tools can now hold adjacent firelocks open correctly.
+2024-12-08:
+  SyncIt21:
+  - refactor: improved attack chain code for rapid pipe dispenser
+  - code_imp: organized lists & global vars for rapid pipe dispenser into their own
+      respective files & improved a bunch of code
+2024-12-09:
+  FlufflesTheDog:
+  - bugfix: Dimensional shifter relics work more reliably.
+  Ghommie:
+  - bugfix: You should be once again able to fish moonfish and other fish used in
+      lizard cuisine from tiziran water turfs.
+  Melbert:
+  - rscdel: Some crowbars on Wawa, Nebula, and Birdboat are significantly less heavy
+  SmArtKar:
+  - image: Added unique sprites for Endotherm wintercoats
+  - image: Wintercoat hoods now show a bit of your hair!
+  grungussuss:
+  - rscadd: pointing now has interactions with the amount of limbs/organs you have
+  - balance: you can now point while restrained
+  - sound: pointing with your head makes a sound
+  grungussuss and Sothanforax:
+  - rscadd: hiss emote
+  - sound: hissssssing sounds
+  mc-oofert:
+  - bugfix: The Men in Grey may no longer access birdshots engineering via a certain
+      maintenance airlock
+  - bugfix: multitile airlock assemblies from a broken multitile airlock are the same
+      direction
+  mcbalaam:
+  - rscadd: Added the mail sorting unit - working with mail has never been simpler!
+  - rscadd: Added two flatpack pre-defined subtypes for the flatpacker and the mail
+      sorter.
+  timothymtorres:
+  - code_imp: Add better logging for ruins
+  tontyGH:
+  - bugfix: Pubby's whiteship no longer breaks when it tries to dock
+  - bugfix: /datum/component/PostTransfer() procs that didn't have their new_parent
+      arguments have now been fixed
+  - bugfix: This means that turning into a Domain gondola shouldn't RR people anymore
+2024-12-10:
+  MelokGleb:
+  - qol: changes Chronic Illness quirk name, description and icon to match it's dangerousness
+2024-12-11:
+  Ghommie:
+  - bugfix: Fixed feeding fish only increasing their size but not the weight.
+  - bugfix: Fixing remote/ghost alt-click functioning on aquariums
+  - bugfix: Added missing plasma tetra to freshwater fishing spots.
+  - balance: plasma tetra is now smaller and qualifies as baitfish.
+  LT3:
+  - bugfix: Map vote will no longer sometimes ignore the winning choice and pick a
+      cached, ineligible map
+  SmArtKar:
+  - bugfix: Removed rogue sand decals from Island Brawl domain walls
+  WebcomicArtist:
+  - bugfix: Durand shield now uses proper amount of power upon taking damage
+  - bugfix: Mech plasma generator now produces the correct amount of charge, previously
+      bugged to be 10% of intended.
+  carlarctg:
+  - rscadd: Adds suicides to fish. Like, a lot of suicides. Almost all of them very
+      unique. I'm too lazy to make a video, but they've been thoroughly tested.
+  grungussuss:
+  - bugfix: fixed *me emote being called when using the *help emote
+  - bugfix: you will no longer slip off your mount when traversing slippery surfaces
+  - bugfix: fixed being unable to remove bar seating holograms
+  - bugfix: fixed an error with slipping
+  - bugfix: fixed items not falling from a lattice after being deconstructed/destroyed

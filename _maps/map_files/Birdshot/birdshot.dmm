@@ -33933,7 +33933,7 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/airalarm/directional/north,
 /obj/structure/rack,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large,
 /obj/item/wirecutters,
 /obj/item/wrench,
 /turf/open/floor/iron,
@@ -43772,7 +43772,7 @@
 /area/station/science/ordnance/burnchamber)
 "oZL" = (
 /obj/structure/table,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large,
 /obj/item/stack/cable_coil,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
@@ -47524,7 +47524,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "qmz" = (
