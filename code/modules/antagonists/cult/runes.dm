@@ -82,6 +82,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/image/I = image(icon = 'icons/effects/blood.dmi', icon_state = null, loc = src)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_runes", I)
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
 /obj/effect/rune/examine(mob/user)
 	. = ..()

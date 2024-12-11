@@ -1389,12 +1389,7 @@
 	if(reac_volume < 1)
 		return
 
-	exposed_turf.wash(clean_types)
-	for(var/am in exposed_turf)
-		var/atom/movable/movable_content = am
-		if(ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash
-			continue
-		movable_content.wash(clean_types)
+	exposed_turf.wash(clean_types, TRUE)
 
 	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
 		exposed_slime.adjustToxLoss(rand(5,10))

@@ -171,7 +171,7 @@
 	/// Timer until the rune can be cleaned up off the floor
 	var/protected_timer
 
-/obj/effect/decal/cleanable/traitor_rune/traitor/Destroy()
+/obj/effect/decal/cleanable/traitor_rune/Destroy()
 	deltimer(protected_timer)
 	QDEL_NULL(demoraliser)
 	return ..()

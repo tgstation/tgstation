@@ -21,7 +21,7 @@
 	icon_state = "brimdust"
 	icon = 'icons/obj/mining.dmi'
 	plane = GAME_PLANE
-	layer = GAME_CLEAN_LAYER
+	layer = CLEANABLE_OBJECT_LAYER
 	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/brimdust/Initialize(mapload)
