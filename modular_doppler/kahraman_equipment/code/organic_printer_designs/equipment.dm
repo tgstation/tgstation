@@ -22,17 +22,6 @@
 		RND_CATEGORY_AKHTER_EQUIPMENT,
 	)
 
-/datum/design/frontier_medtech_belt
-	name = "Medical Technician Kit"
-	id = "frontier_medtech_belt"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 200)
-	build_path = /obj/item/storage/backpack/duffelbag/deforest_paramedic
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_AKHTER_EQUIPMENT,
-	)
-
 /datum/design/frontier_medkit
 	name = "Frontier Medical Kit"
 	id = "frontier_medkit"
