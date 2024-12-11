@@ -24,6 +24,8 @@
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(parent, COMSIG_ATOM_DENSITY_CHANGED, PROC_REF(on_density_change))
+	var/atom/leanable_atom = parent
+	is_currently_leanable = leanable_atom.density
 
 /datum/component/leanable/UnregisterFromParent()
 	. = ..()
@@ -71,7 +73,7 @@
 	if (!isnull(lean_check) && !lean_check.Invoke(dropped, params))
 		return
 	if(!is_currently_leanable)
-		return
+		return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 	leaner.start_leaning(source, leaning_offset)
 	leaning_mobs += leaner
 	RegisterSignals(leaner, list(COMSIG_LIVING_STOPPED_LEANING, COMSIG_QDELETING), PROC_REF(stopped_leaning))
