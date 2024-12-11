@@ -28,6 +28,10 @@
 	var/big_pointer = FALSE
 	///If set, IDs with this trim will give wearers arrows of different colors when pointing
 	var/pointer_color
+	/// What honorific, if any, will we set our wearer's name to when worn?
+	var/honorific
+	/// What positions can our honorific take? To prevent names like "Peter Dr."
+	var/list/honorific_positions
 
 /datum/id_trim/proc/find_job()
 	return null
