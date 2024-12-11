@@ -9,7 +9,7 @@
 /datum/uplink_item/ammo/toydarts
 	name = "Donksoft Riot Pistol Ammunition Case"
 	desc = "A case containing three spare magazines for the Donksoft riot pistol, along with a box of loose riot darts."
-	item = /obj/item/ammo_box/foambox/riot
+	item = /obj/item/storage/toolbox/guncase/ammunition/donksoft
 	cost = 2
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	purchasable_from = ~UPLINK_SERIOUS_OPS
@@ -18,7 +18,7 @@
 	name = "9mm Magazine Case"
 	desc = "A case containing three additional 8-round 9mm magazines, compatible with the Makarov pistol, as well as \
 		a box of loose 9mm ammunition."
-	item = /obj/item/storage/toolbox/guncase/ammunition
+	item = /obj/item/storage/toolbox/guncase/traitor/ammunition
 	cost = 2
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND

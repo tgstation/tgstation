@@ -13,7 +13,7 @@
 		riot darts. Perfect for nonlethal takedowns at range, as well as deniability. While not included in the kit, the \
 		pistol is compatible with suppressors, which can be purchased separately."
 	item = /obj/item/storage/toolbox/guncase/traitor/donksoft
-	cost = 2
+	cost = 6
 	surplus = 10
 	purchasable_from = ~UPLINK_SERIOUS_OPS
 

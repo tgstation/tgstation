@@ -464,7 +464,7 @@
 		new extra_to_spawn (src)
 	new ammo_box_to_spawn(src)
 
-/obj/item/storage/toolbox/guncase/ammunition
+/obj/item/storage/toolbox/guncase/traitor/ammunition
 	name = "makarov 9mm magazine case"
 	weapon_to_spawn = /obj/item/ammo_box/magazine/m9mm
 
@@ -474,7 +474,7 @@
 	extra_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
 	ammo_box_to_spawn = /obj/item/ammo_box/foambox/riot
 
-/obj/item/storage/toolbox/guncase/ammunition/donksoft
+/obj/item/storage/toolbox/guncase/traitor/ammunition/donksoft
 	name = "\improper Donksoft riot pistol magazine case"
 	weapon_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
 	extra_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
