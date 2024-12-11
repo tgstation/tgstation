@@ -166,6 +166,20 @@
 			max_width = width
 		if(!max_height)
 			max_height = height
+
+	switch(dir)
+		if(NORTH)
+			dwidth = port_x_offset - 1
+			dheight = port_y_offset - 1
+		if(EAST)
+			dwidth = height - port_y_offset
+			dheight = port_x_offset - 1
+		if(SOUTH)
+			dwidth = width - port_x_offset
+			dheight = height - port_y_offset
+		if(WEST)
+			dwidth = port_y_offset - 1
+			dheight = width - port_x_offset
 #undef WORLDMAXX_CUTOFF
 #undef WORLDMAXY_CUTOFF
 
