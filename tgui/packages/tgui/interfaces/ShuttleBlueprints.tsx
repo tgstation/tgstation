@@ -350,6 +350,14 @@ const ShuttleConfiguration = (props: ShuttleConfigurationProps) => {
           Remove Area
         </Button.Confirm>
       </Stack.Item>
+      <Stack.Item>
+        <Button.Confirm
+          tooltip="Remove all empty space from the shuttle. This will delete any areas left without any space."
+          onClick={() => act('cleanupEmptyTurfs')}
+        >
+          Remove Area
+        </Button.Confirm>
+      </Stack.Item>
     </Stack>
   );
 };

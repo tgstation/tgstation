@@ -642,6 +642,32 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 				return TRUE
 			expand_shuttle(usr, shuttle, turfs, areas)
 			return TRUE
+		if("cleanupEmptyTurfs")
+			var/obj/docking_port/mobile/custom/shuttle = shuttle_ref?.resolve()
+			if(!shuttle)
+				balloon_alert(usr, "not linked!")
+				return TRUE
+			var/shuttle_z = shuttle.z
+			for(var/area/area as anything in shuttle.shuttle_areas)
+				var/list/turfs = area.get_turfs_by_zlevel(shuttle_z)
+				for(var/turf/turf as anything in turfs)
+					var/move_mode = turf.fromShuttleMove(move_mode = MOVE_AREA)
+					if(move_mode & (MOVE_TURF | MOVE_CONTENTS))
+						continue
+					for(var/atom/movable/movable as anything in turf.contents)
+						CHECK_TICK
+						if(movable.loc != turf)
+							continue
+						move_mode = movable.hypotheticalShuttleMove(0, move_mode, shuttle)
+					if(move_mode & (MOVE_TURF | MOVE_CONTENTS))
+						continue
+					turf.change_area(area, shuttle.underlying_areas_by_turf[turf])
+					shuttle.underlying_areas_by_turf -= turf
+					shuttle.turf_count--
+					turfs -= turf
+				if((area != shuttle.default_area) && !length(turfs))
+					shuttle.shuttle_areas -= area
+					qdel(area)
 
 /obj/item/shuttle_blueprints/crude
 	name = "crude shuttle blueprints"
