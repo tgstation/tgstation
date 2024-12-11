@@ -18,6 +18,7 @@
 	max_integrity = 250
 	integrity_failure = 0.4
 	armor_type = /datum/armor/machinery_firealarm
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	power_channel = AREA_USAGE_ENVIRON

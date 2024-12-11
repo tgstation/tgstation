@@ -1,5 +1,6 @@
 /atom/movable/screen/ghost
 	icon = 'icons/hud/screen_ghost.dmi'
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/ghost/MouseEntered(location, control, params)
 	. = ..()
@@ -118,4 +119,3 @@
 	if (istype(O) && O.observetarget)
 		return
 	. = ..()
-

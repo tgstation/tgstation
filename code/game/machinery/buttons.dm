@@ -12,6 +12,7 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OPEN
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	///Icon suffix for the skin of the front pannel that is added to base_icon_state
 	var/skin = ""
 	///Whether it is possible to change the panel skin
