@@ -48,6 +48,7 @@
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "house_edge0"
 	inhand_icon_state = "house_edge0"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE

@@ -5,6 +5,7 @@
 	desc = "You can fish with this."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "fishing_rod"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/equipment/fishing_rod_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/fishing_rod_righthand.dmi'
 	inhand_icon_state = "rod"

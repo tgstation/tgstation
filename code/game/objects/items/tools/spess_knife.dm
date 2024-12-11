@@ -8,6 +8,7 @@
 	worn_icon_state = "spess_knife"
 	inside_belt_icon_state = "spess_knife"
 	inhand_icon_state = "spess_knife"
+	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY

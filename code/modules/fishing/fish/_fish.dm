@@ -10,6 +10,7 @@
 	icon = 'icons/obj/aquarium/fish.dmi'
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
+	icon_angle = 180
 	force = 6
 	throwforce = 6
 	throw_range = 8
