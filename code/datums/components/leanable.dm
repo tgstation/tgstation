@@ -10,6 +10,8 @@
 	var/same_turf = FALSE
 	/// List of mobs currently leaning on our parent
 	var/list/leaning_mobs = list()
+	/// Is this object currently leanable?
+	var/is_currently_leanable = TRUE
 
 /datum/component/leanable/Initialize(leaning_offset = 11, list/click_mods = null, datum/callback/lean_check = null, same_turf = FALSE)
 	. = ..()
@@ -21,12 +23,27 @@
 /datum/component/leanable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(parent, COMSIG_ATOM_DENSITY_CHANGED, PROC_REF(on_density_change))
+
+/datum/component/leanable/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, list(
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_MOUSEDROPPED_ONTO,
+		COMSIG_ATOM_DENSITY_CHANGED,
+	))
 
 /datum/component/leanable/Destroy(force)
+	stop_leaning_leaners()
+	return ..()
+
+/datum/component/leanable/proc/stop_leaning_leaners(fall)
 	for (var/mob/living/leaner as anything in leaning_mobs)
 		leaner.stop_leaning()
+		if(fall)
+			to_chat(leaner, span_danger("You lose balance!"))
+			leaner.Paralyze(0.5 SECONDS)
 	leaning_mobs = null
-	return ..()
 
 /datum/component/leanable/proc/on_moved(datum/source)
 	SIGNAL_HANDLER
@@ -119,3 +136,10 @@
 	SIGNAL_HANDLER
 	if (old_dir != new_dir)
 		INVOKE_ASYNC(src, PROC_REF(stop_leaning))
+
+/datum/component/leanable/proc/on_density_change()
+	is_currently_leanable = !is_currently_leanable
+	if(!is_currently_leanable)
+		stop_leaning_leaners(fall = TRUE)
+		return
+	stop_leaning_leaners()

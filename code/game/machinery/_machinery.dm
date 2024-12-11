@@ -153,7 +153,7 @@
 	///TRUE for on, FALSE for off, -1 for never checked
 	var/appearance_power_state = -1
 	///Have we added a leaning component to ourselves?
-	added_leaning = FALSE
+	var/added_leaning = FALSE
 
 /datum/armor/obj_machinery
 	melee = 25
@@ -183,11 +183,6 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_MACHINES_GLITCHED) && mapload)
 		randomize_language_if_on_station()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_MACHINE, src)
-
-	/// For performance reasons and to cut down on init times we are "lazy-loading" the leaning component when someone drags their sprite onto us, and then calling dragging code again to trigger the component
-	AddComponent(/datum/component/leanable, 11)
-	added_leaning = TRUE
-	dropping.base_mouse_drop_handler(src, null, null, params)
 
 	return INITIALIZE_HINT_LATELOAD
 
