@@ -43,7 +43,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 	var/list/departments = list()
 	var/list/data = list(
 		"disable_jobs_for_non_observers" = SSlag_switch.measures[DISABLE_NON_OBSJOBS],
-		"round_duration" = DisplayTimeText(world.time - SSticker.round_start_time, round_seconds_to = 1),
+		"round_duration" = DisplayTimeText(STATION_TIME_PASSED(), round_seconds_to = 1),
 		"departments" = departments,
 	)
 	if(SSshuttle.emergency)

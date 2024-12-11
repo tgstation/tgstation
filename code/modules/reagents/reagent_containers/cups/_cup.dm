@@ -42,7 +42,7 @@
 		return FALSE
 	var/mob/living/carbon/human/gourmand = eater
 	//Bruh this breakfast thing is cringe and shouldve been handled separately from food-types, remove this in the future (Actually, just kill foodtypes in general)
-	if((drink_type & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
+	if((drink_type & BREAKFAST) && STATION_TIME_PASSED() < STOP_SERVING_BREAKFAST)
 		gourmand.add_mood_event("breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
 
