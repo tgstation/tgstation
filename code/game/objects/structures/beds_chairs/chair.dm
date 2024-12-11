@@ -396,7 +396,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	user.visible_message(span_danger("[user] smashes [src] to pieces against [target]"))
 	if(ishuman(target))
 		var/mob/living/carbon/human/give_this_fucker_the_chair = target
-		if(prob(force + break_chance) || give_this_fucker_the_chair.get_timed_status_effect_duration(/datum/status_effect/staggered) && check_behind(user, give_this_fucker_the_chair))
+		if(!HAS_TRAIT (give_this_fucker_the_chair, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && (prob(force + break_chance) || give_this_fucker_the_chair.get_timed_status_effect_duration(/datum/status_effect/staggered) && check_behind(user, give_this_fucker_the_chair)))
 			give_this_fucker_the_chair.Paralyze(2 SECONDS)
 	smash(user)
 
