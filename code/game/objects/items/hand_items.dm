@@ -157,7 +157,7 @@
 	return_nose(src.nose_owner)
 
 /obj/item/hand_item/nose/proc/return_nose(mob/living/carbon/human/nose_owner)
-	nose_owner.add_mood_event(/datum/mood_event/nose_back)
+	nose_owner?.add_mood_event(/datum/mood_event/nose_back) // shrodinger's nose owner
 	to_chat(nose_owner, span_notice("My nose is back!"))
 	nose_owner.clear_alert(ALERT_NOSE_STOLEN)
 	REMOVE_TRAIT(nose_owner, TRAIT_NOSE_STOLEN, "nose_stolen")
