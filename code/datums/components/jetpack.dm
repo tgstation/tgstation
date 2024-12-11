@@ -3,8 +3,10 @@
 // So propulsion through space on move, that sort of thing
 /datum/component/jetpack
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	/// Checks to ensure if we can move & if we can activate
+	/// Checks to ensure if we can move
 	var/datum/callback/check_on_move
+	/// Checks to ensure we can activate
+	var/datum/callback/check_on_activation
 	/// If we should stabilize ourselves when not drifting
 	var/stabilize = FALSE
 	/// The signal we listen for as an activation
@@ -39,7 +41,7 @@
  * * check_on_move - Callback we call each time we attempt a move, we expect it to retun true if the move is ok, false otherwise. It expects an arg, TRUE if fuel should be consumed, FALSE othewise
  * * effect_type - Type of trail_follow to spawn
  */
-/datum/component/jetpack/Initialize(stabilize, drift_force = 1 NEWTONS, stabilization_force = 1 NEWTONS, activation_signal, deactivation_signal, return_flag, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
+/datum/component/jetpack/Initialize(stabilize, drift_force = 1 NEWTONS, stabilization_force = 1 NEWTONS, activation_signal, deactivation_signal, return_flag, datum/callback/check_on_move, datum/callback/check_on_activation, datum/effect_system/trail_follow/effect_type)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -52,6 +54,7 @@
 
 	src.stabilize = stabilize
 	src.check_on_move = check_on_move
+	src.check_on_activation = check_on_activation
 	src.activation_signal = activation_signal
 	src.deactivation_signal = deactivation_signal
 	src.return_flag = return_flag
@@ -59,7 +62,7 @@
 	src.drift_force = drift_force
 	src.stabilization_force = stabilization_force
 
-/datum/component/jetpack/InheritComponent(datum/component/component, original, stabilize, drift_force = 1 NEWTONS, stabilization_force = 1 NEWTONS, activation_signal, deactivation_signal, return_flag, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
+/datum/component/jetpack/InheritComponent(datum/component/component, original, stabilize, drift_force = 1 NEWTONS, stabilization_force = 1 NEWTONS, activation_signal, deactivation_signal, return_flag, datum/callback/check_on_move, datum/callback/check_on_activation, datum/effect_system/trail_follow/effect_type)
 	UnregisterSignal(parent, src.activation_signal)
 	if(src.deactivation_signal)
 		UnregisterSignal(parent, src.deactivation_signal)
@@ -69,6 +72,7 @@
 
 	src.stabilize = stabilize
 	src.check_on_move = check_on_move
+	src.check_on_activation = check_on_activation
 	src.activation_signal = activation_signal
 	src.deactivation_signal = deactivation_signal
 	src.return_flag = return_flag
@@ -84,6 +88,7 @@
 		QDEL_NULL(trail)
 	user = null
 	check_on_move = null
+	check_on_activation = null
 	return ..()
 
 /datum/component/jetpack/proc/setup_trail(mob/user)
@@ -97,7 +102,7 @@
 /datum/component/jetpack/proc/activate(datum/source, mob/new_user)
 	SIGNAL_HANDLER
 
-	if(!check_on_move.Invoke(TRUE))
+	if(!isnull(check_on_activation) && !check_on_activation.Invoke())
 		return return_flag
 
 	user = new_user
@@ -201,7 +206,10 @@
 	if (get_dir(source, backup) == movement_dir || source.loc == backup.loc)
 		return
 
-	if (!source.client?.intended_direction || (source.client.intended_direction & get_dir(source, backup)))
+	if (!source.client?.intended_direction || source.client.intended_direction == get_dir(source, backup))
+		return
+
+	if (isnull(source.drift_handler))
 		return
 
 	if (!should_trigger(source) || !check_on_move.Invoke(FALSE))

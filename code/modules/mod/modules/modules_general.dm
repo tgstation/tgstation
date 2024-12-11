@@ -143,6 +143,7 @@
 		COMSIG_MODULE_DEACTIVATED, \
 		MOD_ABORT_USE, \
 		thrust_callback, \
+		thrust_callback, \
 		/datum/effect_system/trail_follow/ion/grav_allowed, \
 	)
 
