@@ -785,9 +785,20 @@
 		/obj/item/fish/pete = 3,
 		/obj/item/fish/mossglob = 2,
 		/obj/item/fish/babbelfish = 1,
+		/mob/living/basic/heretic_summon/fire_shark = 3,
+		/obj/item/eldritch_potion/crucible_soul = 2,
+		/obj/item/eldritch_potion/duskndawn = 2,
+		/obj/item/eldritch_potion/wounded = 2,
+		/obj/item/reagent_containers/cup/beaker/eldritch = 2,
 	)
 	fish_counts = list(
-		/obj/item/fishing_rod/telescopic/master = 1, // silly heretic rod?
+		/obj/item/fish/mossglob = 2,
+		/obj/item/fish/babbelfish = 1,
+		/mob/living/basic/heretic_summon/fire_shark = 3,
+		/obj/item/eldritch_potion/crucible_soul = 1,
+		/obj/item/eldritch_potion/duskndawn = 1,
+		/obj/item/eldritch_potion/wounded = 1,
+		/obj/item/reagent_containers/cup/beaker/eldritch = 2,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 60
-	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_NONE

@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /// Proc used by both the predator and necrophage traits.
 /datum/fish_trait/proc/eat_fish(obj/item/fish/predator, obj/item/fish/prey)
-	var/message = prey.status == FISH_DEAD ? "[src] eats [prey]'s carcass." : "[src] hunts down and eats [prey]."
+	var/message = prey.status == FISH_DEAD ? "[predator] eats [prey]'s carcass." : "[predator] hunts down and eats [prey]."
 	predator.loc.visible_message(span_warning(message))
 	SEND_SIGNAL(prey, COMSIG_FISH_EATEN_BY_OTHER_FISH, predator)
 	qdel(prey)
