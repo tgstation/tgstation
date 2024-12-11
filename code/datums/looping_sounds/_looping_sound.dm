@@ -174,7 +174,7 @@
 	if(!each_once)
 		. = play_from
 		while(!isfile(.) && !isnull(.))
-			. = pick_weight(.)
+			. = pick_weight_recursive(.)
 		return .
 
 	if(in_order)
@@ -192,7 +192,7 @@
 		// Tree is a list of lists containign files
 		// If an entry in the tree goes to 0 length, we cut it from the list
 		tree += list(.)
-		. = pick_weight(.)
+		. = pick_weight_recursive(.)
 
 	if(!isfile(.))
 		return
