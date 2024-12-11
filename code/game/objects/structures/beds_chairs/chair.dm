@@ -385,6 +385,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance) || attack_type == LEAP_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message(span_danger("[owner] fends off [attack_text] with [src]!"))
+		if(prob(break_chance + damage + 10)) //We want to at least ensure that there is always a minimum chance of it breaking to prevent infinite blocks
+			smash(owner)
 		return TRUE
 	return FALSE
 
@@ -392,10 +394,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	if(!prob(break_chance))
 		return
 	user.visible_message(span_danger("[user] smashes [src] to pieces against [target]"))
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(C.health < C.maxHealth*0.5)
-			C.Paralyze(20)
+	if(ishuman(target))
+		var/mob/living/carbon/human/give_this_fucker_the_chair = target
+		if(prob(force + break_chance) || give_this_fucker_the_chair.get_timed_status_effect_duration(/datum/status_effect/staggered) && check_behind(user, give_this_fucker_the_chair))
+			give_this_fucker_the_chair.Paralyze(2 SECONDS)
 	smash(user)
 
 /obj/item/chair/greyscale
