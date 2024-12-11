@@ -38,6 +38,10 @@
 	name = "Custom Duffelbag"
 	item_path = /obj/item/storage/backpack/duffelbag/custom
 
+/datum/loadout_item/backpack/adventurer
+	name = "Adventurer's Bandolier"
+	item_path = /obj/item/storage/backpack/satchel/crusader
+
 /datum/loadout_item/backpack/duffel/industrial
 	name = "Custom Industrial Duffelbag"
 	item_path = /obj/item/storage/backpack/duffelbag/engineering/custom
