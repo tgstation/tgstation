@@ -53,8 +53,6 @@
 		speak("I don't take bribes! Pay with labor points!")
 		return FALSE
 	var/obj/item/card/id/advanced/prisoner/paying_scum_id = paying_id_card
-	if(coin_records.Find(product_to_vend) || hidden_records.Find(product_to_vend))
-		price_to_use = product_to_vend.custom_premium_price ? product_to_vend.custom_premium_price : extra_price
 	if(LAZYLEN(product_to_vend.returned_products))
 		price_to_use = 0 //returned items are free
 	if(price_to_use && !(paying_scum_id.points >= price_to_use)) //not enough good prisoner points
