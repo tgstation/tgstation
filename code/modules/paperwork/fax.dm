@@ -71,17 +71,15 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 /obj/machinery/fax/admin/syndicate
 	name = "Syndicate Fax Machine"
-	syndicate_network = TRUE
 
 /obj/machinery/fax/admin/syndicate/Initialize(mapload)
 	fax_name = "[special_networks["syndicate"]["fax_name"]]"
 	fax_id = special_networks["syndicate"]["fax_id"]
+	syndicate_network = TRUE
 	return ..()
 
 /obj/machinery/fax/admin
 	name = "CentCom Fax Machine"
-	visible_to_network = FALSE
-	allow_exotic_faxes = TRUE
 
 /obj/machinery/fax/admin/Initialize(mapload)
 	if (!fax_name)
@@ -89,6 +87,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	if(!fax_id)
 		fax_id = special_networks["nanotrasen"]["fax_id"]
 	name = "[fax_name] Fax Machine"
+	visible_to_network = FALSE
 	return ..()
 
 /obj/machinery/fax/Initialize(mapload)
@@ -326,8 +325,11 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 			history_add("Send", params["name"])
 
-			GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [params["name"]]", list("paper" = fax_paper, "destination_id" = params["id"], "sender_name" = fax_name))
-			to_chat(GLOB.admins, span_adminnotice("[icon2html(src.icon, GLOB.admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [html_encode(params["name"])]")] [ADMIN_SHOW_PAPER(fax_paper)] [ADMIN_PRINT_FAX(fax_paper, fax_name, params["id"])]"), confidential = TRUE)
+			GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [params["name"]]", fax_paper)
+			to_chat(GLOB.admins,
+				span_adminnotice("[icon2html(src.icon, GLOB.admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [html_encode(params["name"])]")] [ADMIN_SHOW_PAPER(fax_paper)] [ADMIN_PRINT_FAX(fax_paper, fax_name, params["id"])]"),
+				type = MESSAGE_TYPE_PRAYER,
+				confidential = TRUE)
 			for(var/client/staff as anything in GLOB.admins)
 				if(staff?.prefs.read_preference(/datum/preference/toggle/comms_notification))
 					SEND_SOUND(staff, sound('sound/misc/server-ready.ogg'))
