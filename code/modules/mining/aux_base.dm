@@ -312,10 +312,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 /obj/docking_port/mobile/auxiliary_base
 	name = "auxiliary base"
 	shuttle_id = "colony_drop"
+	preferred_direction = 2 //Aux bases always face south, so don't rotate it during flight.
 
 /obj/docking_port/mobile/auxiliary_base/takeoff(list/old_turfs, list/new_turfs, list/moved_atoms, rotation, movement_direction, old_dock, area/underlying_old_area)
-	for(var/i in new_turfs)
-		var/turf/place = i
+	for(var/turf/place as anything in new_turfs)
 		if(ismineralturf(place))
 			place.ScrapeAway()
 	return ..()

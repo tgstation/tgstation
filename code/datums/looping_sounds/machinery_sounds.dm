@@ -79,6 +79,11 @@
 	end_sound = 'sound/machines/microwave/microwave-end.ogg'
 	volume = 90
 
+/datum/looping_sound/plasma_engine
+	mid_length = 2 SECONDS
+	mid_sounds = list('sound/machines/plasma_extractor/running_engine.ogg' = 1)
+	volume = 90
+
 /datum/looping_sound/lathe_print
 	mid_sounds = list('sound/machines/lathe/lathe_print.ogg' = 1)
 	mid_length = 20
