@@ -36,6 +36,7 @@ type ShuttleConfigurationProps = Partial<{
   apcInMergeRegion: BooleanLike;
   apcs: Map<string, BooleanLike>;
   neighboringAreas: Map<string, string>;
+  idle: BooleanLike;
 }>;
 
 type ShuttleBlueprintsData = Partial<{
@@ -209,6 +210,7 @@ const ShuttleConfiguration = (props: ShuttleConfigurationProps) => {
     apcs = new Map<string, BooleanLike>(),
     defaultApc,
     apcInMergeRegion,
+    idle,
   } = props;
   const { name: currentAreaName = '', ref: currentAreaRef = '' } =
     currentArea || {};
@@ -315,12 +317,14 @@ const ShuttleConfiguration = (props: ShuttleConfigurationProps) => {
         <Stack>
           <Stack.Item>
             <Button.Confirm
-              disabled={!onShuttleFrame}
+              disabled={!(idle && onShuttleFrame)}
               tooltip={
                 'Expand the linked shuttle with an incomplete shuttle frame.' +
-                (onShuttleFrame
-                  ? ''
-                  : '\nYou must be on an incomplete shuttle frame to do this.')
+                (idle
+                  ? onShuttleFrame
+                    ? ''
+                    : '\nYou must be on an incomplete shuttle frame to do this.'
+                  : '\nThe shuttle must be idle to do this.')
               }
               onClick={() => act('expandWithFrame')}
             >
@@ -352,7 +356,14 @@ const ShuttleConfiguration = (props: ShuttleConfigurationProps) => {
       </Stack.Item>
       <Stack.Item>
         <Button.Confirm
-          tooltip="Remove all empty space from the shuttle. This will delete any areas left without any space."
+          disabled={!idle}
+          tooltip={
+            'Remove all empty space from the shuttle.' +
+            (idle
+              ? 'This will delete any areas left without any space, \
+              and will decommission the shuttle entirely if there is nothing left of it.'
+              : 'The shuttle must be idle to do this.')
+          }
           onClick={() => act('cleanupEmptyTurfs')}
         >
           Remove Area
@@ -378,6 +389,7 @@ export const ShuttleBlueprints = (props) => {
     apcs,
     masterExists,
     neighboringAreas,
+    idle,
   } = data;
   return (
     <Window width={450} height={340}>
@@ -424,6 +436,7 @@ export const ShuttleBlueprints = (props) => {
               apcs={apcs}
               visualizing={visualizing}
               neighboringAreas={neighboringAreas}
+              idle={idle}
             />
           ) : (
             <ShuttleConstruction

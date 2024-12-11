@@ -348,12 +348,17 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 		for(var/area/area as anything in linked_shuttle.shuttle_areas - default_area)
 			apcs[REF(area)] = !!area.apc
 		data["apcs"] = apcs
+		data["idle"] = linked_shuttle.launch_status == SHUTTLE_IDLE
 	return data
 
 /obj/item/shuttle_blueprints/proc/link_to_shuttle(obj/docking_port/mobile/custom/shuttle, is_master = FALSE)
 	shuttle_ref = WEAKREF(shuttle)
 	if(is_master)
 		shuttle.master_blueprint = WEAKREF(src)
+	update_appearance()
+
+/obj/item/shuttle_blueprints/proc/unlink(removing = FALSE)
+	shuttle_ref = null
 	update_appearance()
 
 /obj/item/shuttle_blueprints/update_name(updates)
@@ -668,6 +673,10 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 				if((area != shuttle.default_area) && !length(turfs))
 					shuttle.shuttle_areas -= area
 					qdel(area)
+			if(!shuttle.turf_count)
+				qdel(shuttle.default_area)
+				qdel(shuttle)
+				unlink(removing = TRUE)
 
 /obj/item/shuttle_blueprints/crude
 	name = "crude shuttle blueprints"
@@ -705,6 +714,11 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 		if(shuttle.master_blueprint.resolve() == src)
 			. += span_notice("This is the master blueprint for \the [shuttle]. You can copy it to a blank set of blueprints, or to another engineering cyborg with a shuttle database module installed.")
 
+/obj/item/shuttle_blueprints/borg/unlink(removing)
+	if(removing)
+		shuttles -= shuttle_ref
+	..()
+
 /obj/item/shuttle_blueprints/borg/ui_data(mob/user)
 	var/list/data = ..()
 	var/list/shuttle_data = list()
@@ -738,8 +752,7 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 				link_to_shuttle(shuttle)
 			return TRUE
 		if("unsetShuttle")
-			shuttle_ref = null
-			update_appearance()
+			unlink()
 			return TRUE
 
 /obj/item/shuttle_blueprints/borg/link_to_shuttle(obj/docking_port/mobile/custom/shuttle, is_master)
