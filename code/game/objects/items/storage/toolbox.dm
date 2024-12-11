@@ -456,6 +456,7 @@
 
 /obj/item/storage/toolbox/guncase/traitor
 	name = "makarov gun case"
+	icon_state = "pistol_case"
 	var/ammo_box_to_spawn = /obj/item/ammo_box/c9mm
 
 /obj/item/storage/toolbox/guncase/traitor/PopulateContents()
