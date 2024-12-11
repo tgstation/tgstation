@@ -271,3 +271,27 @@
 2024-12-10:
   MelokGleb:
   - qol: changes Chronic Illness quirk name, description and icon to match it's dangerousness
+2024-12-11:
+  Ghommie:
+  - bugfix: Fixed feeding fish only increasing their size but not the weight.
+  - bugfix: Fixing remote/ghost alt-click functioning on aquariums
+  - bugfix: Added missing plasma tetra to freshwater fishing spots.
+  - balance: plasma tetra is now smaller and qualifies as baitfish.
+  LT3:
+  - bugfix: Map vote will no longer sometimes ignore the winning choice and pick a
+      cached, ineligible map
+  SmArtKar:
+  - bugfix: Removed rogue sand decals from Island Brawl domain walls
+  WebcomicArtist:
+  - bugfix: Durand shield now uses proper amount of power upon taking damage
+  - bugfix: Mech plasma generator now produces the correct amount of charge, previously
+      bugged to be 10% of intended.
+  carlarctg:
+  - rscadd: Adds suicides to fish. Like, a lot of suicides. Almost all of them very
+      unique. I'm too lazy to make a video, but they've been thoroughly tested.
+  grungussuss:
+  - bugfix: fixed *me emote being called when using the *help emote
+  - bugfix: you will no longer slip off your mount when traversing slippery surfaces
+  - bugfix: fixed being unable to remove bar seating holograms
+  - bugfix: fixed an error with slipping
+  - bugfix: fixed items not falling from a lattice after being deconstructed/destroyed
