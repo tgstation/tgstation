@@ -5,6 +5,7 @@
 	name = "toggle"
 	icon_state = "toggle"
 	base_icon_state = "toggle"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/human/toggle/Click()
 
@@ -41,6 +42,7 @@
 	name = "current sting"
 	screen_loc = ui_lingstingdisplay
 	invisibility = INVISIBILITY_ABSTRACT
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/ling/sting/Click()
 	if(isobserver(usr))
