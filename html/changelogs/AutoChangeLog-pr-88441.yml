@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Made wendigo's bullet hell lag less, at cost of its visuals."

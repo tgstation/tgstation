@@ -1,4 +1,0 @@
-author: "Kocma-san"
-delete-after: True
-changes:
-  - admin: "moves all admin requests in admin stuff section. Now they have type Prayers"

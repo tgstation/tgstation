@@ -295,3 +295,10 @@
   - bugfix: fixed being unable to remove bar seating holograms
   - bugfix: fixed an error with slipping
   - bugfix: fixed items not falling from a lattice after being deconstructed/destroyed
+2024-12-12:
+  Kocma-san:
+  - admin: moves all admin requests in admin stuff section. Now they have type Prayers
+  SmArtKar:
+  - bugfix: Made wendigo's bullet hell lag less, at cost of its visuals.
+  - bugfix: Toolboxes can now be placed onto tables/into crates
+  - bugfix: Fixed toolboxes automatically using the first item in them
