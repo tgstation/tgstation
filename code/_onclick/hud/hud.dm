@@ -587,11 +587,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/generate_landings(atom/movable/screen/movable/action_button/button)
 	listed_actions.generate_landing()
 	palette_actions.generate_landing()
+	toggle_palette.activate_landing()
 
 /// Clears all currently visible landings
 /datum/hud/proc/hide_landings()
 	listed_actions.clear_landing()
 	palette_actions.clear_landing()
+	toggle_palette.disable_landing()
 
 // Updates any existing "owned" visuals, ensures they continue to be visible
 /datum/hud/proc/update_our_owner()
