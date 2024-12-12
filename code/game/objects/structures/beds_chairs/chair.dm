@@ -402,7 +402,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	user.visible_message(span_danger("[user] smashes [src] to pieces against [target]"))
 	if(ishuman(target) && !HAS_TRAIT(target, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 		var/mob/living/carbon/human/give_this_fucker_the_chair = target
-		if(check_behind(user, give_this_fucker_the_chair) && !HAS_TRAIT(give_this_fucker_the_chair, TRAIT_NO_SIDE_KICK))
+		if(check_behind(user, give_this_fucker_the_chair) || give_this_fucker_the_chair.get_timed_status_effect_duration(/datum/status_effect/staggered))
 			give_this_fucker_the_chair.Knockdown(2 SECONDS)
 			if(inflicts_stun_vulnerability)
 				give_this_fucker_the_chair.apply_status_effect(/datum/status_effect/next_shove_stuns)
