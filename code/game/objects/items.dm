@@ -1622,7 +1622,7 @@
 	var/image/attack_image = image(icon = used_item)
 	attack_image.plane = attacked_atom.plane + 1
 	// Scale the icon.
-	attack_image.transform *= 0.4
+	attack_image.transform *= 0.5
 	// The icon should not rotate.
 	attack_image.appearance_flags = APPEARANCE_UI
 
@@ -1659,16 +1659,39 @@
 			animate(alpha = 0, time = 0.1 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
 
 		if (ATTACK_ANIMATION_PIERCE)
-			// Deducting 90 because we're assuming that icon_angle of 0 means an east-facing sprite
 			var/attack_angle = dir2angle(direction) + rand(-7, 7)
+			// Deducting 90 because we're assuming that icon_angle of 0 means an east-facing sprite
 			var/anim_angle = attack_angle - 90 - used_item.icon_angle
-			attack.pixel_x = 22 * x_sign
-			attack.pixel_y = 18 * y_sign
+			var/angle_mult = 1
+			if (x_sign && y_sign)
+				angle_mult = 1.4
+			attack.pixel_x = 22 * x_sign * angle_mult
+			attack.pixel_y = 18 * y_sign * angle_mult
 			attack.transform = attack.transform.Turn(anim_angle)
 			copy_transform = copy_transform.Turn(anim_angle)
-			animate(attack, alpha = 175, transform = copy_transform.Scale(0.75), pixel_x = 22 * x_sign + 26 * sin(attack_angle), pixel_y = 18 * y_sign + 22 * cos(attack_angle), time = 0.3 SECONDS)
-			animate(time = 0.1 SECONDS)
-			animate(alpha = 0, pixel_x = -3 * -(x_sign + sin(attack_angle)), pixel_y = -2 * -(y_sign + cos(attack_angle)), time = 0.1 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+			animate(
+				attack,
+				pixel_x = (22 * x_sign - 12 * sin(attack_angle)) * angle_mult,
+				pixel_y = (18 * y_sign - 8 * cos(attack_angle)) * angle_mult,
+				time = 0.1 SECONDS,
+				easing = CUBIC_EASING|EASE_IN,
+			)
+			animate(
+				attack,
+				alpha = 175,
+				transform = copy_transform.Scale(0.75),
+				pixel_x = (22 * x_sign + 26 * sin(attack_angle)) * angle_mult,
+				pixel_y = (18 * y_sign + 22 * cos(attack_angle)) * angle_mult,
+				time = 0.3 SECONDS,
+				easing = CUBIC_EASING|EASE_OUT,
+			)
+			animate(
+				alpha = 0,
+				pixel_x = -3 * -(x_sign + sin(attack_angle)),
+				pixel_y = -2 * -(y_sign + cos(attack_angle)),
+				time = 0.1 SECONDS,
+				easing = CIRCULAR_EASING|EASE_OUT
+			)
 
 		if (ATTACK_ANIMATION_SLASH)
 			attack.pixel_x = 18 * x_sign
