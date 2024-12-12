@@ -47,7 +47,9 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	var/ridable_component = /datum/component/riding/creature/raptor
 	//pet commands when we tame the raptor
 	var/static/list/pet_commands = list(
+		/datum/pet_command/breed,
 		/datum/pet_command/idle,
+		/datum/pet_command/move,
 		/datum/pet_command/free,
 		/datum/pet_command/attack,
 		/datum/pet_command/follow,

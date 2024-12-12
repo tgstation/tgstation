@@ -15,9 +15,11 @@
 	var/radial_menu_lifetime = 5 SECONDS
 	///offset to display the radial menu
 	var/list/radial_menu_offset
+	///should the commands move with the pet owner's screen?
+	var/radial_relative_to_user
 
 /// The available_commands parameter should be passed as a list of typepaths
-/datum/component/obeys_commands/Initialize(list/command_typepaths = list(), list/radial_menu_offset = list(0, 0))
+/datum/component/obeys_commands/Initialize(list/command_typepaths = list(), list/radial_menu_offset = list(0, 0), radial_relative_to_user = FALSE)
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -27,6 +29,7 @@
 	if (!length(command_typepaths))
 		CRASH("Initialised obedience component with no commands.")
 	src.radial_menu_offset = radial_menu_offset
+	src.radial_relative_to_user = radial_relative_to_user
 	for (var/command_path in command_typepaths)
 		var/datum/pet_command/new_command = new command_path(parent)
 		available_commands[new_command.command_name] = new_command
@@ -116,7 +119,7 @@
 			continue
 		radial_options += choice
 	radial_viewers[REF(friend)] = world.time + radial_menu_lifetime
-	var/pick = show_radial_menu(friend, parent, radial_options, radius = radial_menu_radius, button_animation_flags = BUTTON_FADE_IN | BUTTON_FADE_OUT, custom_check = CALLBACK(src, PROC_REF(check_menu_viewer), friend), check_delay = 0.15 SECONDS, display_close_button = FALSE, radial_menu_offset = radial_menu_offset)
+	var/pick = show_radial_menu(friend, parent, radial_options, radius = radial_menu_radius, button_animation_flags = BUTTON_FADE_IN | BUTTON_FADE_OUT, custom_check = CALLBACK(src, PROC_REF(check_menu_viewer), friend), check_delay = 0.15 SECONDS, display_close_button = FALSE, radial_menu_offset = radial_menu_offset, user_space = radial_relative_to_user)
 	remove_from_viewers(friend)
 	if(!pick)
 		return

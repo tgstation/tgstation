@@ -324,20 +324,9 @@
 	radial_icon_state = "fish"
 	speech_commands = list("fish")
 
-// Refuse to target things we can't target, chiefly other friends
-/datum/pet_command/fish/set_command_target(mob/living/parent, atom/target)
-	if (!target)
-		return
-	if(!parent.ai_controller || !HAS_TRAIT(parent, TRAIT_PROFOUND_FISHER))
-		return
-	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(/datum/targeting_strategy/fishing)
-	if (!targeter?.can_attack(parent, target))
-		parent.balloon_alert_to_viewers("shakes head!")
-		return
-	return ..()
-
 /datum/pet_command/fish/execute_action(datum/ai_controller/controller)
-	controller.queue_behavior(/datum/ai_behavior/hunt_target/interact_with_target/reset_target_combat_mode_off, BB_CURRENT_PET_TARGET)
+	if(controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
+		controller.queue_behavior(/datum/ai_behavior/interact_with_target/fishing, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/pet_command/fish/generate_emote_command(atom/target)
@@ -361,13 +350,12 @@
 	return ..()
 
 /datum/pet_command/move/execute_action(datum/ai_controller/controller)
-	if(!controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
-		return
-	controller.queue_behavior(walk_behavior, BB_CURRENT_PET_TARGET)
+	if(controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
+		controller.queue_behavior(walk_behavior, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/pet_command/move/generate_emote_command(atom/target)
 	. = ..()
 	if(!. || isnull(target))
 		return
-	. += " to move towards [target]!"
+	. += " to move!"

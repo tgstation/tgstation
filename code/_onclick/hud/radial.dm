@@ -232,7 +232,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		E.pixel_x = px
 
 	if(anim_flag & BUTTON_FADE_IN)
-		animate(E, alpha = 255, time = 0.5 SECONDS, easing = EASE_OUT)
+		animate(E, alpha = 255, time = 0.15 SECONDS, easing = EASE_OUT)
 	else
 		E.alpha = 255
 
@@ -356,7 +356,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		qdel(src)
 		return
 	for(var/atom/movable/element as anything in elements)
-		animate(element, alpha = 0, time = 0.5 SECONDS)
+		animate(element, alpha = 0, time = 0.15 SECONDS)
 	QDEL_IN(src, 0.5 SECONDS)
 
 /datum/radial_menu/Destroy()
