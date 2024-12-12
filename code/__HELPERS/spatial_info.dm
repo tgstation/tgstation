@@ -446,10 +446,10 @@
 ///Returns a list of all turfs that are adjacent to the center atom's turf, clear the list of nulls at the end.
 /proc/get_adjacent_turfs(atom/center)
 	. = list(
-		get_ranged_target_turf(center, NORTH, 1),
-		get_ranged_target_turf(center, SOUTH, 1),
-		get_ranged_target_turf(center, EAST, 1),
-		get_ranged_target_turf(center, WEST, 1)
+		get_step(center, NORTH),
+		get_step(center, SOUTH),
+		get_step(center, EAST),
+		get_step(center, WEST)
 		)
 	list_clear_nulls(.)
 
