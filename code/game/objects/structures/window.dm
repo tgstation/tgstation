@@ -85,7 +85,7 @@
 	if (flags_1 & ON_BORDER_1)
 		return
 
-	///Lazy load the leaning component to save init times
+	//Adds the component only once. We do it here & not in Initialize() because there are tons of windows & we don't want to add to their init times
 	LoadComponent(/datum/component/leanable, dropping)
 
 /obj/structure/window/examine(mob/user)

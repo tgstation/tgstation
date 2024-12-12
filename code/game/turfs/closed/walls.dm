@@ -51,7 +51,7 @@
 		underlays += underlay_appearance
 
 /turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
-	/// Lazy load the leaning component to save init times
+	//Adds the component only once. We do it here & not in Initialize() because there are tons of walls & we don't want to add to their init times
 	LoadComponent(/datum/component/leanable, dropping)
 
 /turf/closed/wall/atom_destruction(damage_flag)
