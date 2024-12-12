@@ -21,6 +21,7 @@
 #include "examine_panel/_examine_panel.dme"
 #include "gunhud/_gunhud.dme"
 #include "hair/_hair.dme"
+#include "jobs/_jobs.dme"
 #include "keybinding/_keybinding.dme"
 #include "loadout/_loadout.dme"
 #include "mapping/_mapping.dme"

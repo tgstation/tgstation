@@ -8,8 +8,8 @@
 	icon_state = "bar_toppled_dark"
 	inhand_icon_state = "stool_bar_dark"
 	origin_type = /obj/structure/chair/stool/bar/dark
-	lefthand_file = 'modular_bandastation/objects/icons/inhands/chairs_lefthand.dmi'
-	righthand_file = 'modular_bandastation/objects/icons/inhands/chairs_righthand.dmi'
+	lefthand_file = 'modular_bandastation/objects/icons/mob/inhands/chairs_lefthand.dmi'
+	righthand_file = 'modular_bandastation/objects/icons/mob/inhands/chairs_righthand.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/chair/stool/bar/dark, 0)
 

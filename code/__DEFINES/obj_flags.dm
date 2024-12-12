@@ -87,6 +87,10 @@
 #define HEADINTERNALS (1<<16)
 /// Prevents masks from getting adjusted from enabling internals
 #define INTERNALS_ADJUST_EXEMPT (1<<17)
+// BANDASTATION ADDITION - START
+/// Does not leave fibers behind
+#define FIBERLESS_GLOVES (1<<18)
+// BANDASTATION ADDITION - END
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing

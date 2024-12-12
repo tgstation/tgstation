@@ -1,8 +1,8 @@
 // MARK: Banners
 /obj/item/banner
 	icon = 'modular_bandastation/objects/icons/obj/items/banner.dmi'
-	lefthand_file = 'modular_bandastation/objects/icons/inhands/banners_lefthand.dmi'
-	righthand_file = 'modular_bandastation/objects/icons/inhands/banners_righthand.dmi'
+	lefthand_file = 'modular_bandastation/objects/icons/mob/inhands/banners_lefthand.dmi'
+	righthand_file = 'modular_bandastation/objects/icons/mob/inhands/banners_righthand.dmi'
 
 /obj/item/banner/atmos
 	name = "atmosia banner"
