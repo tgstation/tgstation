@@ -1146,33 +1146,38 @@
 		loc = destination
 
 		if(!same_loc)
-			if(is_multi_tile && isturf(destination))
-				var/list/new_locs = block(
-					destination,
-					locate(
-						min(world.maxx, destination.x + ROUND_UP(bound_width / ICON_SIZE_X)),
-						min(world.maxy, destination.y + ROUND_UP(bound_height / ICON_SIZE_Y)),
-						destination.z
+			if(loc != oldloc)
+				if(is_multi_tile && isturf(destination))
+					var/list/new_locs = block(
+						destination,
+						locate(
+							min(world.maxx, destination.x + ROUND_UP(bound_width / ICON_SIZE_X)),
+							min(world.maxy, destination.y + ROUND_UP(bound_height / ICON_SIZE_Y)),
+							destination.z
+						)
 					)
-				)
-				if(old_area && old_area != destarea)
-					old_area.Exited(src, movement_dir)
-				for(var/atom/left_loc as anything in locs - new_locs)
-					left_loc.Exited(src, movement_dir)
-
-				for(var/atom/entering_loc as anything in new_locs - locs)
-					entering_loc.Entered(src, movement_dir)
-
-				if(old_area && old_area != destarea)
-					destarea.Entered(src, movement_dir)
-			else
-				if(oldloc)
-					oldloc.Exited(src, movement_dir)
 					if(old_area && old_area != destarea)
 						old_area.Exited(src, movement_dir)
-				destination.Entered(src, oldloc)
-				if(destarea && old_area != destarea)
-					destarea.Entered(src, old_area)
+					for(var/atom/left_loc as anything in locs - new_locs)
+						left_loc.Exited(src, movement_dir)
+
+					for(var/atom/entering_loc as anything in new_locs - locs)
+						entering_loc.Entered(src, movement_dir)
+
+					if(old_area && old_area != destarea)
+						destarea.Entered(src, movement_dir)
+				else
+					if(oldloc)
+						oldloc.Exited(src, movement_dir)
+						if(old_area && old_area != destarea)
+							old_area.Exited(src, movement_dir)
+					destination.Entered(src, oldloc)
+					if(destarea && old_area != destarea)
+						destarea.Entered(src, old_area)
+			else
+				// when attempting to move an atom A into an atom B which already contains A, BYOND seems
+				// to silently refuse to move A to the new loc. This can really break stuff (see #77067)
+				stack_trace("Failed to move atom to new loc, possibly due to cyclic contents")
 
 		. = TRUE
 
