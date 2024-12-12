@@ -27,8 +27,7 @@
 	if(.)
 		return
 	var/mob/living/owner = user.mob
-	// Check for current state to avoid overriding flicks when pressing the key
-	if (owner.hud_used?.resist_icon && owner.hud_used.resist_icon.icon_state != owner.hud_used.resist_icon.base_icon_state)
+	if (owner.hud_used?.resist_icon)
 		owner.hud_used.resist_icon.icon_state = owner.hud_used.resist_icon.base_icon_state
 
 /datum/keybinding/living/look_up
