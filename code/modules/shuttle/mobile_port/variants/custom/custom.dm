@@ -1,9 +1,6 @@
 /obj/docking_port/mobile/custom
 	name = "custom shuttle"
 	shuttle_id = "custom"
-	can_expand = TRUE
-	max_width = INFINITY
-	max_height = INFINITY
 	var/datum/weakref/master_blueprint
 	var/area/default_area
 	var/datum/weakref/control_console

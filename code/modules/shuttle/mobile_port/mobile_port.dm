@@ -58,14 +58,6 @@
 
 	var/list/underlying_areas_by_turf = list()
 
-	///Whether this shuttle can be expanded by placing shuttle frame rods on turfs adjacent to a shuttle area.
-	var/can_expand = FALSE
-
-	///The maximum width this shuttle can be expanded to. Only applicable when `can_expand` is true.
-	var/max_width
-	///The maximum height this shuttle can be expanded to. Only applicable when `can_expand` is true.
-	var/max_height
-
 	///How many turfs this shuttle has. Used to check against max shuttle size when expanding expandable shuttles.
 	var/turf_count = 0
 
@@ -155,17 +147,9 @@
 	if(dir in list(EAST, WEST))
 		src.width = height
 		src.height = width
-		if(!max_width)
-			max_width = height
-		if(!max_height)
-			max_height = width
 	else
 		src.width = width
 		src.height = height
-		if(!max_width)
-			max_width = width
-		if(!max_height)
-			max_height = height
 
 	switch(dir)
 		if(NORTH)
