@@ -165,6 +165,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		if(!str)
 			return
 		newA = new area_choice
+		newA.AddComponent(/datum/component/custom_area)
 		newA.setup(str)
 		newA.default_gravity = oldA.default_gravity
 		GLOB.custom_areas[newA] = TRUE

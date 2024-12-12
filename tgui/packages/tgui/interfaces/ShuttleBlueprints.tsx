@@ -37,6 +37,7 @@ type ShuttleConfigurationProps = Partial<{
   apcs: Map<string, BooleanLike>;
   neighboringAreas: Map<string, string>;
   idle: BooleanLike;
+  masterExists: BooleanLike;
 }>;
 
 type ShuttleBlueprintsData = Partial<{
@@ -211,6 +212,7 @@ const ShuttleConfiguration = (props: ShuttleConfigurationProps) => {
     defaultApc,
     apcInMergeRegion,
     idle,
+    masterExists,
   } = props;
   const { name: currentAreaName = '', ref: currentAreaRef = '' } =
     currentArea || {};
@@ -356,17 +358,18 @@ const ShuttleConfiguration = (props: ShuttleConfigurationProps) => {
       </Stack.Item>
       <Stack.Item>
         <Button.Confirm
-          disabled={!idle}
+          disabled={!idle || masterExists}
           tooltip={
-            'Remove all empty space from the shuttle.' +
-            (idle
-              ? 'This will delete any areas left without any space, \
+            'Remove all empty space from the shuttle.' + masterExists
+              ? '\nOnly the master blueprint can do this.'
+              : idle
+                ? '\nThis will delete any areas left without any space, \
               and will decommission the shuttle entirely if there is nothing left of it.'
-              : 'The shuttle must be idle to do this.')
+                : '\nThe shuttle must be idle to do this.'
           }
           onClick={() => act('cleanupEmptyTurfs')}
         >
-          Remove Area
+          Clean Up Empty Space
         </Button.Confirm>
       </Stack.Item>
     </Stack>
@@ -437,6 +440,7 @@ export const ShuttleBlueprints = (props) => {
               visualizing={visualizing}
               neighboringAreas={neighboringAreas}
               idle={idle}
+              masterExists={masterExists}
             />
           ) : (
             <ShuttleConstruction

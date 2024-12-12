@@ -337,7 +337,8 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 		data["onCustomShuttle"] = istype(loc_shuttle)
 		data["masterExists"] = loc_shuttle?.master_blueprint?.resolve()
 	else
-		data["masterExists"] = linked_shuttle.master_blueprint?.resolve()
+		var/obj/item/shuttle_blueprints/master = linked_shuttle.master_blueprint?.resolve()
+		data["masterExists"] = master && (master != src)
 		var/area/current_area = get_area(current_turf)
 		var/area/default_area = linked_shuttle.default_area
 		data["onShuttle"] = linked_shuttle.shuttle_areas[current_area]
@@ -348,16 +349,24 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 		for(var/area/area as anything in linked_shuttle.shuttle_areas - default_area)
 			apcs[REF(area)] = !!area.apc
 		data["apcs"] = apcs
-		data["idle"] = linked_shuttle.launch_status == SHUTTLE_IDLE
+		data["idle"] = linked_shuttle.mode == SHUTTLE_IDLE
 	return data
 
 /obj/item/shuttle_blueprints/proc/link_to_shuttle(obj/docking_port/mobile/custom/shuttle, is_master = FALSE)
 	shuttle_ref = WEAKREF(shuttle)
 	if(is_master)
 		shuttle.master_blueprint = WEAKREF(src)
+	RegisterSignal(shuttle, COMSIG_QDELETING, PROC_REF(on_shuttle_deleted))
 	update_appearance()
 
+/obj/item/shuttle_blueprints/proc/on_shuttle_deleted()
+	SIGNAL_HANDLER
+	unlink(removing = TRUE)
+
 /obj/item/shuttle_blueprints/proc/unlink(removing = FALSE)
+	var/obj/docking_port/mobile/custom/shuttle = shuttle_ref.resolve()
+	if(!QDELETED(shuttle))
+		UnregisterSignal(shuttle, COMSIG_QDELETING)
 	shuttle_ref = null
 	update_appearance()
 
@@ -652,31 +661,61 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 			if(!shuttle)
 				balloon_alert(usr, "not linked!")
 				return TRUE
+			var/obj/item/shuttle_blueprints/master = shuttle.master_blueprint?.resolve()
+			if(master && master != src)
+				balloon_alert(usr, "not master blueprints!")
 			var/shuttle_z = shuttle.z
+			var/bounds_need_recalculation
+			var/docking_port_needs_relocated
+			var/list/bounds = shuttle.return_coords()
+			var/x0 = bounds[1]
+			var/y0 = bounds[2]
+			var/x1 = bounds[3]
+			var/y1 = bounds[4]
 			for(var/area/area as anything in shuttle.shuttle_areas)
 				var/list/turfs = area.get_turfs_by_zlevel(shuttle_z)
+				turfs = turfs.Copy()
 				for(var/turf/turf as anything in turfs)
 					var/move_mode = turf.fromShuttleMove(move_mode = MOVE_AREA)
 					if(move_mode & (MOVE_TURF | MOVE_CONTENTS))
 						continue
 					for(var/atom/movable/movable as anything in turf.contents)
-						CHECK_TICK
+						//CHECK_TICK
 						if(movable.loc != turf)
+							continue
+						if(movable == shuttle)
 							continue
 						move_mode = movable.hypotheticalShuttleMove(0, move_mode, shuttle)
 					if(move_mode & (MOVE_TURF | MOVE_CONTENTS))
 						continue
-					turf.change_area(area, shuttle.underlying_areas_by_turf[turf])
+					if(shuttle.loc == turf)
+						docking_port_needs_relocated = TRUE
+						bounds_need_recalculation = TRUE
+					var/area/new_area = shuttle.underlying_areas_by_turf[turf]
+					if(!istype(new_area))
+						new_area = GLOB.areas_by_type[SHUTTLE_DEFAULT_UNDERLYING_AREA]
+					if(!istype(new_area))
+						new_area = new SHUTTLE_DEFAULT_UNDERLYING_AREA(null)
 					shuttle.underlying_areas_by_turf -= turf
 					shuttle.turf_count--
 					turfs -= turf
+					turf.change_area(area, new_area)
+					if(bounds_need_recalculation)
+						continue
+					if(turf.x == x0 || turf.x == x1 || turf.y == y0 || turf.y == y1)
+						bounds_need_recalculation = TRUE
 				if((area != shuttle.default_area) && !length(turfs))
 					shuttle.shuttle_areas -= area
 					qdel(area)
 			if(!shuttle.turf_count)
 				qdel(shuttle.default_area)
 				qdel(shuttle)
-				unlink(removing = TRUE)
+				return
+			if(docking_port_needs_relocated)
+				shuttle.forceMove(pick(shuttle.underlying_areas_by_turf))
+			if(bounds_need_recalculation)
+				QDEL_NULL(shuttle.assigned_transit)
+				shuttle.calculate_docking_port_information()
 
 /obj/item/shuttle_blueprints/crude
 	name = "crude shuttle blueprints"
@@ -862,12 +901,15 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 			. |= INTERSECTS_NON_WHITELISTED_AREA
 		turfs -= area_turfs
 
-/proc/convert_areas_to_shuttle_areas(list/turfs, list/in_areas, list/out_areas, area_type = /area/shuttle/custom)
+/proc/convert_areas_to_shuttle_areas(list/turfs, list/in_areas, list/out_areas, list/underlying_areas, area_type = /area/shuttle/custom)
 	for(var/area/area as anything in in_areas)
 		var/area/new_area = new area_type()
 		new_area.setup(area.name)
 		out_areas += new_area
 		var/list/area_turfs = in_areas[area]
+		var/datum/component/custom_area/custom_area = area.GetComponent(/datum/component/custom_area)
+		if(custom_area)
+			underlying_areas += (custom_area.previous_areas & area_turfs)
 		set_turfs_to_area(area_turfs, new_area)
 		turfs -= area_turfs
 		new_area.reg_in_areas_in_z()
@@ -886,7 +928,10 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 	var/list/default_area_turfs = turfs.Copy()
 	// Convert each custom area into a shuttle area, then remove the affected turfs from the list of turfs to add to the default area
 	var/list/shuttle_areas = list()
-	convert_areas_to_shuttle_areas(default_area_turfs, areas, shuttle_areas, area_type)
+	var/list/underlying_areas = list()
+	convert_areas_to_shuttle_areas(default_area_turfs, areas, shuttle_areas, underlying_areas, area_type)
+	for(var/turf/turf as anything in default_area_turfs)
+		underlying_areas[turf] = turf.loc
 
 	// Merge the remaining frame turfs into a default shuttle area
 	var/list/affected_areas = list()
@@ -905,6 +950,7 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 	shuttle_areas.Insert(1, default_area)
 
 	var/obj/docking_port/mobile/mobile_port = new docking_port_type(origin, shuttle_areas)
+	mobile_port.underlying_areas_by_turf += underlying_areas
 	mobile_port.name = name
 	mobile_port.shuttle_id = id
 	mobile_port.port_direction = REVERSE_DIR(shuttle_dir)
@@ -934,7 +980,10 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 	var/list/default_area_turfs = turfs.Copy()
 	// Convert each custom area into a shuttle area, then remove the affected turfs from the list of turfs to add to the default area
 	var/list/shuttle_areas = list()
-	convert_areas_to_shuttle_areas(default_area_turfs, areas, shuttle_areas, shuttle.area_type)
+	var/list/underlying_areas = list()
+	convert_areas_to_shuttle_areas(default_area_turfs, areas, shuttle_areas, underlying_areas, shuttle.area_type)
+	for(var/turf/turf as anything in default_area_turfs)
+		underlying_areas[turf] = turf.loc
 
 	var/list/affected_areas = list()
 	var/area/default_area = shuttle.shuttle_areas[1]
@@ -951,12 +1000,25 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 	for(var/area/shuttle_area as anything in shuttle_areas)
 		shuttle.shuttle_areas[shuttle_area] = TRUE
 
+	var/list/bounds = shuttle.return_coords()
+	var/x0 = bounds[1]
+	var/y0 = bounds[2]
+	var/x1 = bounds[3]
+	var/y1 = bounds[4]
+	var/bounds_need_recalculation
 	for(var/turf/turf as anything in turfs)
 		turf.stack_below_baseturf(/turf/open/floor/plating, /turf/baseturf_skipover/shuttle)
 		SEND_SIGNAL(turf, COMSIG_TURF_ADDED_TO_SHUTTLE, shuttle)
+		if(bounds_need_recalculation)
+			continue
+		if(!(ISINRANGE(turf.x, x0, x1) && ISINRANGE(turf.y, y0, y1)))
+			bounds_need_recalculation = TRUE
 
 	shuttle.turf_count += length(turfs)
-	shuttle.calculate_docking_port_information()
+	shuttle.underlying_areas_by_turf += underlying_areas
+	if(bounds_need_recalculation)
+		QDEL_NULL(shuttle.assigned_transit)
+		shuttle.calculate_docking_port_information()
 	shuttle.initiate_docking(shuttle.get_docked(), force = TRUE)
 
 	message_admins("[key_name(user)] has expanded [shuttle] at [ADMIN_VERBOSEJMP(user)].")

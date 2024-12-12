@@ -179,6 +179,6 @@
 		baseturfs = list(baseturfs)
 	var/search_position = baseturfs.Find(search_type)
 	if(search_position != 0)
-		insert_baseturf(search_position - 1, stack_type)
+		insert_baseturf(search_position, stack_type)
 	else if(type == search_type)
 		insert_baseturf(turf_type = stack_type)
