@@ -105,6 +105,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_react))
 	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE_NOGRAV, PROC_REF(on_client_move))
 	RegisterSignal(user, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, PROC_REF(on_pushoff))
+	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT, PROC_REF(on_input_block))
 	last_stabilization_tick = world.time
 	START_PROCESSING(SSnewtonian_movement, src)
 	if (effect_type)
@@ -158,6 +159,17 @@
 
 	var/max_drift_force = MOVE_DELAY_TO_DRIFT(user.cached_multiplicative_slowdown)
 	user.drift_handler.stabilize_drift(user.client.intended_direction ? dir2angle(user.client.intended_direction) : null, user.client.intended_direction ? max_drift_force : 0, stabilization_force * (seconds_per_tick * 1 SECONDS))
+
+/datum/component/jetpack/proc/on_input_block(mob/source)
+	SIGNAL_HANDLER
+
+	if (!should_trigger(source))
+		return
+
+	if (!check_on_move.Invoke(TRUE))
+		return
+
+	return DRIFT_ALLOW_INPUT
 
 /datum/component/jetpack/proc/on_client_move(mob/source, list/move_args)
 	SIGNAL_HANDLER
