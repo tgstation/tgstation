@@ -12,7 +12,7 @@
 	///radius of our radial menu
 	var/radial_menu_radius = 48
 	///after how long we shutdown radial menus
-	var/radial_menu_lifetime = 5 SECONDS
+	var/radial_menu_lifetime = 10 SECONDS
 	///offset to display the radial menu
 	var/list/radial_menu_offset
 	///should the commands move with the pet owner's screen?
