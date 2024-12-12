@@ -33,7 +33,7 @@
 	return ..()
 
 /obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine
-	projectile_damage_multiplier = 1.6
+	projectile_damage_multiplier = 1.4
 
 /obj/item/gun/ballistic/shotgun/toy
 	name = "foam force shotgun"
