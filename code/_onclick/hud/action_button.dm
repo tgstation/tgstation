@@ -289,11 +289,11 @@
 /atom/movable/screen/button_palette/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	update_appearance()
-	disable_landing() // If our hud already has elements, don't force hide us
 
 /atom/movable/screen/button_palette/proc/set_hud(datum/hud/our_hud)
 	src.our_hud = our_hud
 	refresh_owner()
+	disable_landing() // If our hud already has elements, don't force hide us
 
 /atom/movable/screen/button_palette/update_name(updates)
 	. = ..()
