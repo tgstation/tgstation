@@ -179,10 +179,10 @@
 	inv_box.slot_id = ITEM_SLOT_SUITSTORE
 	static_inventory += inv_box
 
-	using = new /atom/movable/screen/resist(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_above_movement
-	hotkeybuttons += using
+	resist_icon = new /atom/movable/screen/resist(null, src)
+	resist_icon.icon = ui_style
+	resist_icon.screen_loc = ui_above_movement
+	hotkeybuttons += resist_icon
 
 	using = new /atom/movable/screen/human/toggle(null, src)
 	using.icon = ui_style

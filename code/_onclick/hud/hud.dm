@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/pull_icon
 	var/atom/movable/screen/rest_icon
 	var/atom/movable/screen/throw_icon
+	var/atom/movable/screen/resist_icon
 	var/atom/movable/screen/module_store_icon
 	var/atom/movable/screen/floor_change
 
@@ -505,10 +506,17 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		static_inventory += hand_box
 		hand_box.update_appearance()
 
-	var/i = 1
-	for(var/atom/movable/screen/swap_hand/SH in static_inventory)
-		SH.screen_loc = ui_swaphand_position(mymob, IS_RIGHT_INDEX(i) ? RIGHT_HANDS : LEFT_HANDS)
-		i++
+	var/num_of_swaps = 0
+	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+		num_of_swaps += 1
+
+	var/hand_num = 1
+	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+		var/hand_ind = RIGHT_HANDS
+		if (num_of_swaps > 1)
+			hand_ind = IS_RIGHT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
+		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
+		hand_num += 1
 
 	if(ismob(mymob) && mymob.hud_used == src)
 		show_hud(hud_version)

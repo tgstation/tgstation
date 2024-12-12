@@ -429,9 +429,11 @@
 	name = "resist"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_resist"
+	base_icon_state = "act_resist"
 	plane = HUD_PLANE
 
 /atom/movable/screen/resist/Click()
+	flick("[base_icon_state]_on", src)
 	if(isliving(usr))
 		var/mob/living/L = usr
 		L.resist()
