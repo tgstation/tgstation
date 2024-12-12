@@ -1178,6 +1178,7 @@
 				// when attempting to move an atom A into an atom B which already contains A, BYOND seems
 				// to silently refuse to move A to the new loc. This can really break stuff (see #77067)
 				stack_trace("Failed to move atom to new loc, possibly due to cyclic contents")
+				return FALSE
 
 		. = TRUE
 
