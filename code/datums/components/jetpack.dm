@@ -174,11 +174,10 @@
 	var/max_drift_force = MOVE_DELAY_TO_DRIFT(source.cached_multiplicative_slowdown)
 	var/applied_force = drift_force
 	var/move_dir = source.client.intended_direction
-	// We're not moving anywhere, try to see if we can simulate pushing off a wall
-	if (isnull(source.drift_handler))
-		var/atom/movable/backup = source.get_spacemove_backup(move_dir, FALSE)
-		if (backup && !(backup.dir & move_dir))
-			applied_force = max_drift_force
+	// Try to see if we can simulate pushing off a wall
+	var/atom/movable/backup = source.get_spacemove_backup(move_dir, FALSE, include_floors = TRUE)
+	if (backup && !(backup.dir & move_dir))
+		applied_force = max_drift_force
 
 	// We don't want to force the loop to fire before stabilizing if we're going to, otherwise its effects will be delayed until the next tick which is jank
 	var/force_stabilize = FALSE
