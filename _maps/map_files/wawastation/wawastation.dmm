@@ -151,6 +151,9 @@
 /obj/item/clothing/suit/hooded/ablative,
 /obj/item/gun/energy/temperature/security,
 /obj/item/gun/energy/ionrifle,
+/obj/item/gun/ballistic/automatic/battle_rifle{
+	pixel_y = 3
+	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
@@ -4661,7 +4664,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white/small,
 /area/station/science/lobby)
@@ -21692,7 +21695,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -34884,7 +34887,7 @@
 /area/station/engineering/atmos)
 "moT" = (
 /obj/effect/turf_decal/siding/white,
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
 /turf/open/floor/iron/white/small,
 /area/station/science/lobby)
 "moU" = (
@@ -65378,7 +65381,7 @@
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "wZU" = (
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large/old,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "xad" = (
@@ -68227,7 +68230,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "ybh" = (
