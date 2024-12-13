@@ -67,6 +67,7 @@
 
 		if(AI_MECH_HACK) //Called by AIs on the mech
 			AI.linked_core = new /obj/structure/ai_core/deactivated(AI.loc)
+			AI.linked_core.RegisterSignal(AI, COMSIG_QDELETING, TYPE_PROC_REF(/mob/living/silicon/ai, ShutOffDoomsdayDevice)) //Protect that core! The structure goes bye-bye when we re-shunt back in so no need for cleanup.
 			AI.linked_core.remote_ai = AI
 			if(AI.can_dominate_mechs && LAZYLEN(occupants)) //Oh, I am sorry, were you using that?
 				to_chat(AI, span_warning("Occupants detected! Forced ejection initiated!"))
