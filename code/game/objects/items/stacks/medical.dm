@@ -644,6 +644,10 @@
 	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
 	merge_type = /obj/item/stack/medical/aloe
 
+/obj/item/stack/medical/aloe/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+	AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(10 SECONDS, 15 SECONDS), FALSE)
+
 /obj/item/stack/medical/aloe/fresh
 	amount = 2
 
