@@ -3,6 +3,7 @@
 	var/datum/hud/our_hud
 	var/actiontooltipstyle = ""
 	screen_loc = null
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 	/// The icon state of our active overlay, used to prevent re-applying identical overlays
 	var/active_overlay_icon_state
@@ -269,6 +270,7 @@
 	icon = 'icons/hud/64x16_actions.dmi'
 	icon_state = "screen_gen_palette"
 	screen_loc = ui_action_palette
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/datum/hud/our_hud
 	var/expanded = FALSE
 	/// Id of any currently running timers that set our color matrix
@@ -394,6 +396,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 /atom/movable/screen/palette_scroll
 	icon = 'icons/hud/screen_gen.dmi'
 	screen_loc = ui_palette_scroll
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	/// How should we move the palette's actions?
 	/// Positive scrolls down the list, negative scrolls back
 	var/scroll_direction = 0
