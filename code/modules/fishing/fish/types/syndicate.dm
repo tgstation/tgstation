@@ -32,6 +32,18 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+28
 	beauty = FISH_BEAUTY_EXCELLENT
 
+/obj/item/fish/donkfish/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to commit suicide!"))
+	if(!ishuman(user))
+		return TOXLOSS
+
+	var/mob/living/carbon/human/human_user = user
+	for(var/i in 1 to rand(5, 15))
+		human_user.dir = pick(GLOB.alldirs)
+		human_user.vomit(vomit_flags = pick(VOMIT_CATEGORY_DEFAULT, VOMIT_CATEGORY_BLOOD), distance = rand(1, 7))
+	qdel(src)
+	return TOXLOSS
+
 /obj/item/fish/jumpercable
 	name = "monocloning jumpercable"
 	fish_id = "jumpercable"
@@ -58,6 +70,13 @@
 /obj/item/fish/jumpercable/get_export_price(price, elasticity_percent)
 	//without this, they'd sell for over 6000 each, minimum. That's a lot for a fish that requires no maintance nor partner to farm.
 	return ..() * 0.4
+
+/obj/item/fish/jumpercable/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] hooks both ends of [src] to their chest! It looks like [user.p_theyre()] trying to commit suicide!"))
+	electrocute_mob(user, power_source = get_area(src), source = src, siemens_coeff = 1, dist_check = FALSE)
+	tesla_zap(source = user, zap_range = 4, power = electrogenesis_power, cutoff = 1e3, zap_flags = ZAP_LOW_POWER_GEN|ZAP_MOB_DAMAGE)
+	playsound(user, 'sound/items/weapons/zapbang.ogg', 75)
+	return OXYLOSS
 
 /obj/item/fish/chainsawfish
 	name = "chainsawfish"
@@ -180,6 +199,20 @@
 	bare_wound_bonus += bonus_malus * 3
 	block_chance += bonus_malus * 2
 	toolspeed -= bonus_malus * 0.1
+
+// you suicide like a real chainsaw
+/obj/item/fish/chainsawfish/suicide_act(mob/living/carbon/user)
+	if(status == FISH_DEAD)
+		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
+		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
+		return BRUTELOSS
+
+	user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)
+	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
+	if(myhead)
+		myhead.dismember()
+	return BRUTELOSS
 
 /obj/item/fish/pike/armored
 	name = "armored pike"
