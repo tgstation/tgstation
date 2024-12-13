@@ -249,6 +249,8 @@
 	var/list/existing_filters = modify.filters.Copy()
 	modify.filters = list(filter_to_apply) + existing_filters
 
+	// Ideally this should be recursive to check for KEEP_APART elements that need this applied to it
+	// and RESET_COLOR flags but this is much simpler, and hopefully we don't have that point of layering here
 	if(modify.appearance_flags & KEEP_TOGETHER)
 		return modify
 
