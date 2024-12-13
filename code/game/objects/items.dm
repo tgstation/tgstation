@@ -182,8 +182,7 @@
 	var/flags_cover = 0
 	var/heat = 0
 	/// All items with sharpness of SHARP_EDGED or higher will automatically get the butchering component.
-	/// Use set_sharpness and get_sharpness helpers to access this variable
-	VAR_PROTECTED/sharpness = NONE
+	var/sharpness = NONE
 
 	///How a tool acts when you use it on something, such as wirecutters cutting wires while multitools measure power
 	var/tool_behaviour = null
@@ -959,10 +958,6 @@
 ///Returns the sharpness of src. If you want to get the sharpness of an item use this.
 /obj/item/proc/get_sharpness()
 	return sharpness
-
-///Sets item sharpness
-/obj/item/proc/set_sharpness(new_value)
-	sharpness = new_value
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)

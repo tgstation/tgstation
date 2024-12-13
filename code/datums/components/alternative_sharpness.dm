@@ -41,7 +41,7 @@
 	alt_attacking = TRUE
 	source.force += force_mod
 	base_sharpness = source.sharpness
-	source.set_sharpness(alt_sharpness)
+	source.sharpness = alt_sharpness
 	if (!isnull(verbs_continuous))
 		source.attack_verb_continuous = verbs_continuous
 
@@ -57,4 +57,4 @@
 	weapon.force -= force_mod
 	weapon.attack_verb_continuous = base_continuous
 	weapon.attack_verb_simple = base_simple
-	weapon.set_sharpness(base_sharpness)
+	weapon.sharpness = base_sharpness
