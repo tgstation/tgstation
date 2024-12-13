@@ -20,6 +20,7 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 
 /datum/proximity_monitor/advanced/shuttle_construction_visualizer/Destroy()
 	. = ..()
+	parent = null
 	QDEL_LIST_ASSOC_VAL(image_holders)
 
 /datum/proximity_monitor/advanced/shuttle_construction_visualizer/proc/set_user(mob/new_user)
