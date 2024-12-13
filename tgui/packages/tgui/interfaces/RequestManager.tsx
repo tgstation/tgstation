@@ -12,7 +12,7 @@ import { Window } from '../layouts';
 
 type Data = {
   requests: Request[];
-  fax_autoprinting: Boolean;
+  fax_autoprinting: boolean;
 };
 
 type Request = {
