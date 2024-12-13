@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Hovering over clickable screen elements will now update your mouse cursor to indicate they're clickable"
-  - qol: "Hovering over small wall mounts (light switches, buttons, fire alarms) will now update to mouse cursor indicating you're hovering them"

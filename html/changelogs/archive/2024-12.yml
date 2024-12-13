@@ -302,3 +302,33 @@
   - bugfix: Made wendigo's bullet hell lag less, at cost of its visuals.
   - bugfix: Toolboxes can now be placed onto tables/into crates
   - bugfix: Fixed toolboxes automatically using the first item in them
+2024-12-13:
+  Majkl-J:
+  - bugfix: Fauna can no longer push necropolis gates
+  Melbert:
+  - bugfix: Words in other languages will be randomized far less often (depending
+      on how commonly they are used). This bug was 10 years old.
+  - qol: Hovering over clickable screen elements will now update your mouse cursor
+      to indicate they're clickable
+  - qol: Hovering over small wall mounts (light switches, buttons, fire alarms) will
+      now update to mouse cursor indicating you're hovering them
+  - qol: Cauterizing bleeding wounds now plays the cautery sfx.
+  - qol: Bleeding wounds will now go away the moment they're fully healed, rather
+      than a second or two later.
+  - qol: Suture / Mesh treatment is now uniform! meaning healing bruises with a suture
+      is now the same thing as healing cuts with a suture. This has very little difference
+      in practice, but it should generally result in a lot smoother experience.
+  - qol: 'Suture / Mesh usage has been reworked slightly, and now offers two modes
+      of use:'
+  - qol: LEFT CLICKING will heal in AUTO MODE, which will AUTOMATICALLY switch between
+      damaged bodyparts, prioritizing your targeted limb. You cannot change target
+      mid-heal; changing target simply changes your priority for your NEXT heal.
+  - qol: RIGHT CLICKING will heal in MANUAL MODE, which functions like it does currently
+      - allowing you to change your target before you finish your heal and giving
+      you a 1 second "assessment" step to change your target when you're done healing
+      a limb. Manual mode is 10% faster than Auto mode.
+  SmArtKar:
+  - image: Scarves have received a minor update to their sprites
+  - bugfix: Fixed moths only being able to fly if they spawn in zero gravity
+  grungussuss:
+  - bugfix: '*me emote works again'

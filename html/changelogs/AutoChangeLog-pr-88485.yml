@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Words in other languages will be randomized far less often (depending on how commonly they are used). This bug was 10 years old."
