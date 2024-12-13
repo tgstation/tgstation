@@ -155,6 +155,8 @@
 	setup_shrapnel(payload, source, victim)
 
 	if (!payload.embed_data.roll_embed_chance(victim, hit_zone))
+		if(payload.item_flags & DROPDEL && !QDELETED(payload))
+			qdel(payload)
 		return
 
 	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone)
@@ -277,7 +279,7 @@
 	owner = null
 	owner_limb = null
 	if(parent.item_flags & DROPDEL && !QDELETED(parent))
-		qdel(src)
+		qdel(parent)
 		return TRUE
 	return FALSE
 
