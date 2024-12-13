@@ -583,4 +583,8 @@
 		if(undershirt.has_sensor == BROKEN_SENSORS)
 			. += list(span_notice("The [undershirt]'s medical sensors are sparking."))
 
+	for(var/datum/scar/iter_scar as anything in all_scars)
+		if(iter_scar.is_visible(user))
+			. += iter_scar.get_examine_description(user)
+
 #undef ADD_NEWLINE_IF_NECESSARY
