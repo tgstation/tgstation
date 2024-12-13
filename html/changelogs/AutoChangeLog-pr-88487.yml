@@ -1,0 +1,5 @@
+author: "norsvenska"
+delete-after: True
+changes:
+  - spellcheck: "The Lance and Raven shuttle airlocks are now properly labelled emergency airlocks, rather than emegency airlocks."
+  - spellcheck: "The radio jammer now releases disruptor waves, rather than distruptor waves."
