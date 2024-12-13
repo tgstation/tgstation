@@ -206,7 +206,6 @@
 
 	return TRUE
 
-/// Attempts to add rat spit to a target, effectively poisoning it to whoever eats it. Yuckers.
 /**
  * Attempts to add rat spit to a target, effectively poisoning it to whoever eats it. Yuckers.
  * Returns TRUE if the target is valid for adding rat spit
