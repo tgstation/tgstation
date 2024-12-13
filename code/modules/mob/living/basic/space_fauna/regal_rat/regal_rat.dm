@@ -182,8 +182,7 @@
 	if(isnull(mind) || combat_mode)
 		return TRUE
 
-	if(!isnull(target.reagents) && target.is_injectable(src, allowmobs = TRUE))
-		poison_target(target)
+	if(poison_target(target))
 		return FALSE
 
 	return TRUE
@@ -208,7 +207,18 @@
 	return TRUE
 
 /// Attempts to add rat spit to a target, effectively poisoning it to whoever eats it. Yuckers.
+/**
+ * Attempts to add rat spit to a target, effectively poisoning it to whoever eats it. Yuckers.
+ * Returns TRUE if the target is valid for adding rat spit
+ * Returns FALSE if the target is invalid for adding rat spit
+ * Arguments
+ *
+ * * atom/lean_target - the target we try to add the spit to
+ */
 /mob/living/basic/regal_rat/proc/poison_target(atom/target)
+	if(isnull(target.reagents) || !target.is_injectable(src, allowmobs = TRUE))
+		return FALSE
+
 	visible_message(
 		span_warning("[src] starts licking [target] passionately!"),
 		span_notice("You start licking [target]..."),
@@ -216,10 +226,11 @@
 	)
 
 	if (!do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))
-		return
+		return TRUE // don't return false here because they tried to lick and weren't able to, otherwise cancelling the do_after will make them hit the target.
 
 	target.reagents.add_reagent(/datum/reagent/rat_spit, rand(1,3), no_react = TRUE)
 	balloon_alert(src, "licked")
+	return TRUE
 
 /**
  * Conditionally "eat" cheese object and heal, if injured.
