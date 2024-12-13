@@ -117,6 +117,7 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 	name = "shuttle blueprints"
 	desc = "A blank sheet of synthetic engineering-grade paper."
 	icon = 'icons/obj/scrolls.dmi'
+	icon_state = "shuttle_blueprints0"
 	base_icon_state = "shuttle_blueprints"
 	inhand_icon_state = "blueprints"
 	attack_verb_continuous = list("attacks", "baps", "hits")
@@ -721,6 +722,7 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 /obj/item/shuttle_blueprints/crude
 	name = "crude shuttle blueprints"
 	desc = "This is just a sheet of paper thoroughly covered in what could either be crayon or spraypaint."
+	icon_state = "shuttle_blueprints_crude0"
 	base_icon_state = "shuttle_blueprints_crude"
 	base_desc = "This is just a sheet of paper thoroughly covered in what could either be crayon or spraypaint."
 	linked_desc = "This is just a crude doodle of a shuttle drawn on a background of what could either be crayon or spraypaint."
@@ -729,6 +731,7 @@ GLOBAL_LIST_INIT(shuttle_construction_area_whitelist, list(/area/space, /area/la
 	name = "shuttle blueprint database"
 	desc = "A module designed to store the plans for one or more shuttles."
 	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "shuttle_database0"
 	base_icon_state = "shuttle_database"
 	damtype = BURN // In case fantasy affixes or adminbus end up making this actually capable of hurting someone.
 	attack_verb_continuous = list("attacks", "scans", "analyzes")
