@@ -492,9 +492,8 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/cook
-	honorific = "Head Chef"
+	honorific = "Cook"
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
-
 
 /datum/id_trim/job/cook/chef
 	assignment = JOB_CHEF
