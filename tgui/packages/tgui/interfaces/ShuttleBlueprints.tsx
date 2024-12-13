@@ -18,34 +18,30 @@ type AreaData = { name: string; ref: string };
 
 type VisualizationToggleProps = { visualizing: BooleanLike };
 
-type ShuttleConstructionProps = Partial<{
-  visualizing: BooleanLike;
-  onShuttleFrame: BooleanLike;
+type ShuttleConstructionUnieuqData = {
+  linkedShuttle: 0;
   tooManyShuttles: BooleanLike;
   onCustomShuttle: BooleanLike;
-  masterExists: BooleanLike;
-}>;
+};
 
-type ShuttleConfigurationProps = Partial<{
-  visualizing: BooleanLike;
-  onShuttleFrame: BooleanLike;
+type ShuttleConfigurationUniqueData = {
+  linkedShuttle: string;
   onShuttle: BooleanLike;
   inDefaultArea: BooleanLike;
   currentArea: AreaData;
   defaultApc: BooleanLike;
   apcInMergeRegion: BooleanLike;
-  apcs: Map<string, BooleanLike>;
-  neighboringAreas: Map<string, string>;
+  apcs: Record<string, BooleanLike>;
+  neighboringAreas: Record<string, string>;
   idle: BooleanLike;
-  masterExists: BooleanLike;
-}>;
+};
 
-type ShuttleBlueprintsData = Partial<{
-  linkedShuttle: string;
-  shuttles: Map<string, string>;
-}> &
-  ShuttleConstructionProps &
-  ShuttleConfigurationProps;
+type ShuttleBlueprintsData = {
+  shuttles?: Record<string, string>;
+  visualizing: BooleanLike;
+  onShuttleFrame: BooleanLike;
+  masterExists: BooleanLike;
+} & (ShuttleConstructionUnieuqData | ShuttleConfigurationUniqueData);
 
 type DirectionPadProps = {
   title: string;
@@ -127,18 +123,21 @@ const VisualizationToggle = (props: VisualizationToggleProps) => {
   );
 };
 
-const ShuttleConstruction = (props: ShuttleConstructionProps) => {
+const ShuttleConstruction = () => {
   const [shuttleDirection, setShuttleDirection] = useState<Direction>(
     Direction.NORTH,
   );
-  const { act } = useBackend<ShuttleBlueprintsData>();
+  const { act, data } = useBackend<ShuttleBlueprintsData>();
+  if (data.linkedShuttle !== 0) {
+    throw new Error('type guard failure - linkedShuttle must be 0');
+  }
   const {
     onShuttleFrame,
     visualizing,
     tooManyShuttles,
     onCustomShuttle,
     masterExists,
-  } = props;
+  } = data;
   return (
     <Stack justify="space-around">
       <Stack.Item grow>
@@ -198,27 +197,29 @@ const ShuttleConstruction = (props: ShuttleConstructionProps) => {
   );
 };
 
-const ShuttleConfiguration = (props: ShuttleConfigurationProps) => {
+const ShuttleConfiguration = () => {
   const [name, setName] = useState<string>();
-  const [mergeArea, setMergeArea] = useState<AreaData>();
+  const [mergeArea = { name: '', ref: '' }, setMergeArea] =
+    useState<AreaData>();
+  const { act, data } = useBackend<ShuttleBlueprintsData>();
+  if (data.linkedShuttle === 0) {
+    throw new Error('type guard failure - linkedShuttle must be non-zero');
+  }
   const {
     visualizing,
     onShuttleFrame,
     onShuttle,
     inDefaultArea,
-    currentArea,
-    neighboringAreas = new Map<string, string>(),
-    apcs = new Map<string, BooleanLike>(),
+    currentArea = { name: '', ref: '' },
+    neighboringAreas = {},
+    apcs = {},
     defaultApc,
     apcInMergeRegion,
     idle,
     masterExists,
-  } = props;
-  const { name: currentAreaName = '', ref: currentAreaRef = '' } =
-    currentArea || {};
-  const { name: mergeAreaName = undefined, ref: mergeAreaRef = '' } =
-    mergeArea || {};
-  const { act } = useBackend<ShuttleBlueprintsData>();
+  } = data;
+  const { name: currentAreaName, ref: currentAreaRef } = currentArea;
+  const { name: mergeAreaName, ref: mergeAreaRef } = mergeArea;
   const removalApcConflict = defaultApc && apcs?.[currentAreaRef];
   const mergeApcConflict = apcInMergeRegion && apcs[mergeAreaRef];
   return (
@@ -378,22 +379,7 @@ const ShuttleConfiguration = (props: ShuttleConfigurationProps) => {
 
 export const ShuttleBlueprints = (props) => {
   const { act, data } = useBackend<ShuttleBlueprintsData>();
-  const {
-    linkedShuttle,
-    shuttles,
-    visualizing,
-    onShuttleFrame,
-    tooManyShuttles,
-    onCustomShuttle,
-    onShuttle,
-    inDefaultArea,
-    currentArea,
-    defaultApc,
-    apcs,
-    masterExists,
-    neighboringAreas,
-    idle,
-  } = data;
+  const { linkedShuttle, shuttles, masterExists } = data;
   return (
     <Window width={450} height={340}>
       <Window.Content>
@@ -429,28 +415,7 @@ export const ShuttleBlueprints = (props) => {
             </>
           }
         >
-          {linkedShuttle ? (
-            <ShuttleConfiguration
-              onShuttle={onShuttle}
-              onShuttleFrame={onShuttleFrame}
-              inDefaultArea={inDefaultArea}
-              currentArea={currentArea}
-              defaultApc={defaultApc}
-              apcs={apcs}
-              visualizing={visualizing}
-              neighboringAreas={neighboringAreas}
-              idle={idle}
-              masterExists={masterExists}
-            />
-          ) : (
-            <ShuttleConstruction
-              onShuttleFrame={onShuttleFrame}
-              visualizing={visualizing}
-              tooManyShuttles={tooManyShuttles}
-              onCustomShuttle={onCustomShuttle}
-              masterExists={masterExists}
-            />
-          )}
+          {linkedShuttle ? <ShuttleConfiguration /> : <ShuttleConstruction />}
         </Section>
       </Window.Content>
     </Window>
