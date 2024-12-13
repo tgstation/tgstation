@@ -154,7 +154,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 		to_chat(usr, "You do not have permission to do this, you require +ADMIN", confidential = TRUE)
 		return
 
-	if (action == "toggleprit")
+	if (action == "toggleprint")
 		GLOB.fax_autoprinting = !GLOB.fax_autoprinting
 		return TRUE
 
