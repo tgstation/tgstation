@@ -77,7 +77,7 @@
 		if(!hurt)
 			return
 
-		if(victim.check_block(src, 0, "[name]", LEAP_ATTACK) || throwingdatum.blocked == TRUE)
+		if(victim.check_block(src, 0, "[name]", LEAP_ATTACK) || . == SUCCESSFUL_BLOCK)
 			blocked = TRUE
 
 		take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
