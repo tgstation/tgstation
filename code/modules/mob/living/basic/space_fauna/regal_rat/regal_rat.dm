@@ -225,7 +225,7 @@
 	)
 
 	if (!do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))
-		return TRUE // don't return false here because they tried to lick and weren't able to, otherwise cancelling the do_after will make them hit the target.
+		return TRUE // don't return false here because they tried to lick and the do_after was interrupted, otherwise cancelling the do_after will make them hit the target.
 
 	target.reagents.add_reagent(/datum/reagent/rat_spit, rand(1,3), no_react = TRUE)
 	balloon_alert(src, "licked")
