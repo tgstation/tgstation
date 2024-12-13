@@ -134,7 +134,7 @@
 		ACCESS_CE,
 		)
 	job = /datum/job/atmospheric_technician
-	honorific = "Technician"
+	honorifics = list("Technician")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/bartender
@@ -183,7 +183,7 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/pun_pun
-	honorific = ", Almighty Scourge"
+	honorifics = list(", Almighty Scourge")
 	honorific_positions = list(HONORIFIC_POSITION_LAST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/bitrunner
@@ -209,8 +209,6 @@
 		ACCESS_QM,
 	)
 	job = /datum/job/bitrunner
-	honorific = "Bitrunner"
-	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/botanist
 	assignment = JOB_BOTANIST
@@ -234,8 +232,6 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/botanist
-	honorific = "Botanist"
-	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/bridge_assistant
 	assignment = JOB_BRIDGE_ASSISTANT
@@ -258,7 +254,7 @@
 		ACCESS_CHANGE_IDS,
 	)
 	job = /datum/job/bridge_assistant
-	honorific = "Underling"
+	honorifics = list("Underling", "Assistant", "Mate")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/captain
@@ -276,7 +272,7 @@
 	job = /datum/job/captain
 	big_pointer = TRUE
 	pointer_color = COLOR_COMMAND_BLUE
-	honorific = "Captain"
+	honorifics = list("Captain", "Cpt.")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /// Captain gets all station accesses hardcoded in because it's the Captain.
@@ -312,7 +308,7 @@
 		ACCESS_QM,
 		)
 	job = /datum/job/cargo_technician
-	honorific = "Courier"
+	honorifics = list("Courier")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 
@@ -337,7 +333,7 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/chaplain
-	honorific = "Chaplain"
+	honorifics = list("Chaplain", "Reverend")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/chemist
@@ -407,6 +403,8 @@
 	job = /datum/job/chief_engineer
 	big_pointer = TRUE
 	pointer_color = COLOR_ENGINEERING_ORANGE
+	honorifics = list("Chief")
+	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/chief_medical_officer
 	assignment = JOB_CHIEF_MEDICAL_OFFICER
@@ -448,7 +446,7 @@
 	job = /datum/job/chief_medical_officer
 	big_pointer = TRUE
 	pointer_color = COLOR_MEDICAL_BLUE
-	honorific = ", PhD."
+	honorifics = list(", PhD.", ", MD.")
 	honorific_positions = list(HONORIFIC_POSITION_LAST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/clown
@@ -492,13 +490,13 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/cook
-	honorific = "Cook"
+	honorifics = list("Cook")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/cook/chef
 	assignment = JOB_CHEF
 	sechud_icon_state = SECHUD_CHEF
-	honorific = "Chef"
+	honorifics = list("Chef")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/coroner
@@ -576,7 +574,7 @@
 		ACCESS_HOS,
 	)
 	job = /datum/job/detective
-	honorific = "Detective"
+	honorifics = list("Detective", "Investigator")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/detective/refresh_trim_access()
@@ -722,7 +720,7 @@
 	job = /datum/job/head_of_security
 	big_pointer = TRUE
 	pointer_color = COLOR_SECURITY_RED
-	honorific = "Chief Officer"
+	honorifics = list("Chief Officer", "Chief", "Officer")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/head_of_security/refresh_trim_access()
@@ -754,7 +752,7 @@
 		ACCESS_CHANGE_IDS,
 		)
 	job = /datum/job/janitor
-	honorific = "Custodian"
+	honorifics = list("Custodian")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/lawyer
@@ -777,7 +775,7 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/lawyer
-	honorific = ", Esq."
+	honorifics = list(", Esq.")
 	honorific_positions = list(HONORIFIC_POSITION_LAST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/medical_doctor
@@ -804,7 +802,7 @@
 		ACCESS_CMO,
 		)
 	job = /datum/job/doctor
-	honorific = "Doctor"
+	honorifics = list("Doctor", "Dr.")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/mime
@@ -857,7 +855,7 @@
 		ACCESS_CMO,
 		)
 	job = /datum/job/paramedic
-	honorific = "EMT"
+	honorifics = list("EMT", "Doctor", "Dr.")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/prisoner
@@ -874,7 +872,7 @@
 		)
 	job = /datum/job/prisoner
 	threat_modifier = 1 // I'm watching you
-	honorific = "Convict"
+	honorifics = list("Convict")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/prisoner/one
@@ -928,7 +926,7 @@
 		ACCESS_HOP,
 	)
 	job = /datum/job/psychologist
-	honorific = ", PhD."
+	honorifics = list(", PhD.")
 	honorific_positions = list(HONORIFIC_POSITION_LAST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/quartermaster
@@ -970,7 +968,7 @@
 	job = /datum/job/quartermaster
 	big_pointer = TRUE
 	pointer_color = COLOR_CARGO_BROWN
-	honorific = "Manager"
+	honorifics = list("Manager")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/research_director
@@ -1022,7 +1020,7 @@
 	job = /datum/job/research_director
 	big_pointer = TRUE
 	pointer_color = COLOR_SCIENCE_PINK
-	honorific = "Director"
+	honorifics = list("Director", "Dir.")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/roboticist
@@ -1081,7 +1079,7 @@
 		ACCESS_RD,
 		)
 	job = /datum/job/scientist
-	honorific = "Researcher"
+	honorifics = list("Researcher")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /// Sec officers have departmental variants. They each have their own trims with bonus departmental accesses.
@@ -1111,7 +1109,7 @@
 		ACCESS_HOS,
 		)
 	job = /datum/job/security_officer
-	honorific = "Officer"
+	honorifics = list("Officer")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 	/// List of bonus departmental accesses that departmental sec officers get by default.
 	var/department_access = list()
@@ -1191,7 +1189,7 @@
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
 	)
-	honorific = "Orderly"
+	honorifics = list("Orderly", "Officer")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/security_officer/science
@@ -1275,7 +1273,7 @@
 		ACCESS_CE,
 		)
 	job = /datum/job/station_engineer
-	honorific = "Engineer"
+	honorifics = list("Engineer")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/veteran_advisor
@@ -1298,7 +1296,7 @@
 	template_access = list()
 	job = /datum/job/veteran_advisor
 	big_pointer = TRUE
-	honorific = "General"
+	honorifics = list("General", "Gen.")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/veteran_advisor/refresh_trim_access()
@@ -1338,7 +1336,7 @@
 		ACCESS_HOS,
 		)
 	job = /datum/job/warden
-	honorific = "Watchman"
+	honorifics = list("Officer", "Watchman", "Lieutenant", "Lt.")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/warden/refresh_trim_access()

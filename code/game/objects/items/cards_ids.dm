@@ -497,7 +497,7 @@
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Assign account"
 	else if(registered_account.account_balance > 0)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Withdraw credits"
-	if(trim && trim.honorific)
+	if(trim && length(trim.honorifics))
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle honorific"
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -894,17 +894,17 @@
 		is_mononym = TRUE
 	switch(honorific_position)
 		if(HONORIFIC_POSITION_FIRST)
-			honorific_title = "[trim.honorific] [first_name(registered_name)]"
+			honorific_title = "[trim.chosen_honorific] [first_name(registered_name)]"
 		if(HONORIFIC_POSITION_LAST)
-			honorific_title = "[trim.honorific] [last_name(registered_name)]"
+			honorific_title = "[trim.chosen_honorific] [last_name(registered_name)]"
 		if(HONORIFIC_POSITION_FIRST_FULL)
-			honorific_title = "[trim.honorific] [first_name(registered_name)]"
+			honorific_title = "[trim.chosen_honorific] [first_name(registered_name)]"
 			if(!is_mononym)
 				honorific_title += " [last_name(registered_name)]"
 		if(HONORIFIC_POSITION_LAST_FULL)
 			if(!is_mononym)
 				honorific_title += "[first_name(registered_name)] "
-			honorific_title += "[last_name(registered_name)][trim.honorific]"
+			honorific_title += "[last_name(registered_name)][trim.chosen_honorific]"
 		if(HONORIFIC_POSITION_NONE)
 			honorific_title = null
 	return honorific_title
@@ -927,7 +927,7 @@
 		balloon_alert(user, "card has no trim!")
 		return
 
-	if(!trim.honorific)
+	if(!length(trim.honorifics))
 		balloon_alert(user, "card has no honorific to use!")
 		return
 
@@ -938,22 +938,25 @@
 
 	var/honorific_position_to_use = tgui_input_list(user, "what position do you want your honorific in?", "Flair!", trim.honorific_positions)
 
-	switch(honorific_position_to_use)
-		if(HONORIFIC_POSITION_FIRST)
-			honorific_position = HONORIFIC_POSITION_FIRST
-			balloon_alert(user, "honorific set: display first name")
-		if(HONORIFIC_POSITION_LAST)
-			honorific_position = HONORIFIC_POSITION_LAST
-			balloon_alert(user, "honorific set: display last name")
-		if(HONORIFIC_POSITION_FIRST_FULL)
-			honorific_position = HONORIFIC_POSITION_FIRST_FULL
-			balloon_alert(user, "honorific set: start of full name")
-		if(HONORIFIC_POSITION_LAST_FULL)
-			honorific_position = HONORIFIC_POSITION_LAST_FULL
-			balloon_alert(user, "honorific set: end of full name")
-		if(HONORIFIC_POSITION_NONE)
-			honorific_position = HONORIFIC_POSITION_NONE
-			balloon_alert(user, "honorific disabled")
+	if(honorific_position_to_use == HONORIFIC_POSITION_NONE)
+		honorific_position = HONORIFIC_POSITION_NONE
+		balloon_alert(user, "honorific disabled")
+	else
+		trim.chosen_honorific = tgui_input_list(user, "what honorific do you want to use?", "Flair!!!", trim.honorifics)
+
+		switch(honorific_position_to_use)
+			if(HONORIFIC_POSITION_FIRST)
+				honorific_position = HONORIFIC_POSITION_FIRST
+				balloon_alert(user, "honorific set: display first name")
+			if(HONORIFIC_POSITION_LAST)
+				honorific_position = HONORIFIC_POSITION_LAST
+				balloon_alert(user, "honorific set: display last name")
+			if(HONORIFIC_POSITION_FIRST_FULL)
+				honorific_position = HONORIFIC_POSITION_FIRST_FULL
+				balloon_alert(user, "honorific set: start of full name")
+			if(HONORIFIC_POSITION_LAST_FULL)
+				honorific_position = HONORIFIC_POSITION_LAST_FULL
+				balloon_alert(user, "honorific set: end of full name")
 
 	update_label()
 
