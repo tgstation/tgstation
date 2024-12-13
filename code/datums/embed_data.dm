@@ -155,8 +155,7 @@
 	setup_shrapnel(payload, source, victim)
 
 	if (!payload.embed_data.roll_embed_chance(victim, hit_zone))
-		if(payload.item_flags & DROPDEL && !QDELETED(payload))
-			qdel(payload)
+		payload.embed_data.failed_embed(victim, hit_zone, random = TRUE)
 		return
 
 	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone)
@@ -204,7 +203,8 @@
 /// Random being TRUE means we've lost the roulette, FALSE means we've either been blocked or the target is invalid
 /datum/embedding/proc/failed_embed(mob/living/carbon/victim, hit_zone, random = FALSE)
 	SEND_SIGNAL(parent, COMSIG_ITEM_FAILED_EMBED, victim, hit_zone)
-	return
+	if((parent.item_flags & DROPDEL) && !QDELETED(parent))
+		qdel(parent)
 
 /// Does this item deal any damage when embedding or jostling inside of someone?
 /datum/embedding/proc/is_harmless()
