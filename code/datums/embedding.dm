@@ -37,7 +37,7 @@
 	var/list/immune_traits = list(TRAIT_PIERCEIMMUNE)
 
 	/// Thing that we're attached to
-	var/obj/item/parent
+	var/obj/parent
 	/// Mob we've embedded into, if any
 	var/mob/living/carbon/owner
 	/// Limb we've embedded into in whose contents we reside
@@ -147,6 +147,7 @@
 		return
 
 	if (blocked || !can_embed(source, hit))
+		failed_embed(hit, hit_zone)
 		return
 
 	var/mob/living/carbon/victim = hit
@@ -182,19 +183,20 @@
 	if (is_harmless())
 		return prob(embed_chance)
 
+	var/obj/item/item_parent = parent
 	// We'll be nice and take the better of bullet and bomb armor, halved
-	var/armor = max(victim.run_armor_check(hit_zone, BULLET, silent = TRUE), victim.run_armor_check(hit_zone, BOMB, silent = TRUE)) * 0.5
+	var/armor = max(victim.run_armor_check(hit_zone, BULLET, armour_penetration = item_parent.armour_penetration, silent = TRUE), victim.run_armor_check(hit_zone, BOMB, armour_penetration = item_parent.armour_penetration,  silent = TRUE)) * 0.5
 	// We only care about armor penetration if there's actually armor to penetrate
 	if(!armor)
 		return prob(chance)
 
-	if (parent.weak_against_armour)
+	if (item_parent.weak_against_armour)
 		armor *= ARMOR_WEAKENED_MULTIPLIER
 
 	chance -= armor
 	if (chance < 0)
-		victim.visible_message(span_danger("[parent] bounces off [victim]'s armor, unable to embed!"),
-			span_notice("[parent] bounces off your armor, unable to embed!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		victim.visible_message(span_danger("[item_parent] bounces off [victim]'s armor, unable to embed!"),
+			span_notice("[item_parent] bounces off your armor, unable to embed!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return FALSE
 
 	return prob(chance)
@@ -203,8 +205,11 @@
 /// Random being TRUE means we've lost the roulette, FALSE means we've either been blocked or the target is invalid
 /datum/embedding/proc/failed_embed(mob/living/carbon/victim, hit_zone, random = FALSE)
 	SEND_SIGNAL(parent, COMSIG_ITEM_FAILED_EMBED, victim, hit_zone)
-	if((parent.item_flags & DROPDEL) && !QDELETED(parent))
-		qdel(parent)
+	if (!isitem(parent))
+		return
+	var/obj/item/item_parent = parent
+	if((item_parent.item_flags & DROPDEL) && !QDELETED(item_parent))
+		qdel(item_parent)
 
 /// Does this item deal any damage when embedding or jostling inside of someone?
 /datum/embedding/proc/is_harmless()
@@ -212,34 +217,38 @@
 
 //Handles actual embedding logic.
 /datum/embedding/proc/embed_into(mob/living/carbon/victim, obj/item/bodypart/target_limb)
+	if (!isitem(parent))
+		CRASH("Non-item [parent] ([parent.type]) attempted to embed into [victim]'s [target_limb]!")
+
 	owner = victim
 	owner_limb = target_limb
 	RegisterWithOwner()
 
+	var/obj/item/item_parent = parent
 	START_PROCESSING(SSprocessing, src)
-	owner_limb._embed_object(parent)
-	parent.forceMove(owner)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(weapon_disappeared))
-	RegisterSignal(parent, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
-	owner.visible_message(span_danger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] [owner]'s [owner_limb.plaintext_zone]!"),
-		span_userdanger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] your [owner_limb.plaintext_zone]!"))
+	owner_limb._embed_object(item_parent)
+	item_parent.forceMove(owner)
+	RegisterSignal(item_parent, COMSIG_MOVABLE_MOVED, PROC_REF(weapon_disappeared))
+	RegisterSignal(item_parent, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
+	owner.visible_message(span_danger("[item_parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] [owner]'s [owner_limb.plaintext_zone]!"),
+		span_userdanger("[item_parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] your [owner_limb.plaintext_zone]!"))
 
-	var/damage = parent.throwforce
+	var/damage = item_parent.throwforce
 	if (!is_harmless())
 		owner.throw_alert(ALERT_EMBEDDED_OBJECT, /atom/movable/screen/alert/embeddedobject)
 		playsound(owner,'sound/items/weapons/bladeslice.ogg', 40)
 		if (owner_limb.can_bleed())
-			parent.add_mob_blood(owner) // it embedded itself in you, of course it's bloody!
-		damage += parent.w_class * impact_pain_mult
+			item_parent.add_mob_blood(owner) // it embedded itself in you, of course it's bloody!
+		damage += item_parent.w_class * impact_pain_mult
 		owner.add_mood_event("embedded", /datum/mood_event/embedded)
 
-	SEND_SIGNAL(parent, COMSIG_ITEM_EMBEDDED, victim, target_limb)
+	SEND_SIGNAL(item_parent, COMSIG_ITEM_EMBEDDED, victim, target_limb)
 	if (damage <= 0)
 		return
 
 	var/armor = owner.run_armor_check(owner_limb.body_zone, MELEE, "Your armor has protected your [owner_limb.plaintext_zone].",
-		"Your armor has softened a hit to your [owner_limb.plaintext_zone].", parent.armour_penetration,
-		weak_against_armour = parent.weak_against_armour,
+		"Your armor has softened a hit to your [owner_limb.plaintext_zone].", item_parent.armour_penetration,
+		weak_against_armour = item_parent.weak_against_armour,
 	)
 
 	owner.apply_damage(
@@ -247,10 +256,10 @@
 		damagetype = BRUTE,
 		def_zone = owner_limb.body_zone,
 		blocked = armor,
-		wound_bonus = parent.wound_bonus,
-		bare_wound_bonus = parent.bare_wound_bonus,
-		sharpness = parent.get_sharpness(),
-		attacking_item = parent,
+		wound_bonus = item_parent.wound_bonus,
+		bare_wound_bonus = item_parent.bare_wound_bonus,
+		sharpness = item_parent.get_sharpness(),
+		attacking_item = item_parent,
 	)
 
 	owner.apply_damage(
@@ -268,18 +277,19 @@
 /// Avoid calling this directly as this doesn't move the object from its owner's contents
 /// Returns TRUE if the item got deleted due to DROPDEL flag
 /datum/embedding/proc/stop_embedding()
-	owner_limb?._unembed_object(parent)
+	var/obj/item/item_parent = parent
+	owner_limb?._unembed_object(item_parent)
 	if (owner)
 		UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EX_ACT))
 		if (!owner.has_embedded_objects())
 			owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 			owner.clear_mood_event("embedded")
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MAGIC_RECALL))
-	SEND_SIGNAL(parent, COMSIG_ITEM_UNEMBEDDED, owner, owner_limb)
+	UnregisterSignal(item_parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MAGIC_RECALL))
+	SEND_SIGNAL(item_parent, COMSIG_ITEM_UNEMBEDDED, owner, owner_limb)
 	owner = null
 	owner_limb = null
-	if(parent.item_flags & DROPDEL && !QDELETED(parent))
-		qdel(parent)
+	if(item_parent.item_flags & DROPDEL && !QDELETED(item_parent))
+		qdel(item_parent)
 		return TRUE
 	return FALSE
 
@@ -297,31 +307,32 @@
 	if (!jack_the_ripper.can_perform_action(owner, FORBID_TELEKINESIS_REACH | NEED_HANDS | ALLOW_RESTING))
 		return
 
-	var/time_taken = rip_time * parent.w_class
+	var/obj/item/item_parent = parent
+	var/time_taken = rip_time * item_parent.w_class
 	var/damage_mult = 1
 	if (jack_the_ripper != owner)
 		time_taken *= RIPPING_OUT_HELP_TIME_MULTIPLIER
 		damage_mult *= RIPPING_OUT_HELP_DAMAGE_MULTIPLIER
-		owner.visible_message(span_warning("[jack_the_ripper] attempts to remove [parent] from [owner]'s [owner_limb.plaintext_zone]!"),
-			span_userdanger("[jack_the_ripper] attempt to remove [parent] from your [owner_limb.plaintext_zone]!"), ignored_mobs = jack_the_ripper)
-		to_chat(jack_the_ripper, span_notice("You attempt to remove [parent] from [owner]'s [owner_limb.plaintext_zone]..."))
+		owner.visible_message(span_warning("[jack_the_ripper] attempts to remove [item_parent] from [owner]'s [owner_limb.plaintext_zone]!"),
+			span_userdanger("[jack_the_ripper] attempt to remove [item_parent] from your [owner_limb.plaintext_zone]!"), ignored_mobs = jack_the_ripper)
+		to_chat(jack_the_ripper, span_notice("You attempt to remove [item_parent] from [owner]'s [owner_limb.plaintext_zone]..."))
 	else
-		owner.visible_message(span_warning("[owner] attempts to remove [parent] from [owner.p_their()] [owner_limb.plaintext_zone]."),
-			span_notice("You attempt to remove [parent] from your [owner_limb.plaintext_zone]..."))
+		owner.visible_message(span_warning("[owner] attempts to remove [item_parent] from [owner.p_their()] [owner_limb.plaintext_zone]."),
+			span_notice("You attempt to remove [item_parent] from your [owner_limb.plaintext_zone]..."))
 
 	if (!do_after(jack_the_ripper, time_taken, owner))
 		return
 
-	if (parent.loc != owner || !(parent in owner_limb?.embedded_objects))
+	if (item_parent.loc != owner || !(item_parent in owner_limb?.embedded_objects))
 		return
 
 	if (jack_the_ripper == owner)
-		owner.visible_message(span_notice("[owner] successfully rips [parent] [is_harmless() ? "off" : "out"] of [owner.p_their()] [owner_limb.plaintext_zone]!"),
-			span_notice("You successfully remove [parent] from your [owner_limb.plaintext_zone]."))
+		owner.visible_message(span_notice("[owner] successfully rips [item_parent] [is_harmless() ? "off" : "out"] of [owner.p_their()] [owner_limb.plaintext_zone]!"),
+			span_notice("You successfully remove [item_parent] from your [owner_limb.plaintext_zone]."))
 	else
-		owner.visible_message(span_notice("[jack_the_ripper] successfully rips [parent] [is_harmless() ? "off" : "out"] of [owner]'s [owner_limb.plaintext_zone]!"),
-			span_userdanger("[jack_the_ripper] removes [parent] from your [owner_limb.plaintext_zone]!"), ignored_mobs = jack_the_ripper)
-		to_chat(jack_the_ripper, span_notice("You successfully remove [parent] from [owner]'s [owner_limb.plaintext_zone]."))
+		owner.visible_message(span_notice("[jack_the_ripper] successfully rips [item_parent] [is_harmless() ? "off" : "out"] of [owner]'s [owner_limb.plaintext_zone]!"),
+			span_userdanger("[jack_the_ripper] removes [item_parent] from your [owner_limb.plaintext_zone]!"), ignored_mobs = jack_the_ripper)
+		to_chat(jack_the_ripper, span_notice("You successfully remove [item_parent] from [owner]'s [owner_limb.plaintext_zone]."))
 
 	if (!is_harmless())
 		damaging_removal_effect(damage_mult)
@@ -329,14 +340,15 @@
 
 /// Handles damage effects upon forceful removal
 /datum/embedding/proc/damaging_removal_effect(ouchies_multiplier)
-	var/damage = parent.w_class * remove_pain_mult * ouchies_multiplier
+	var/obj/item/item_parent = parent
+	var/damage = item_parent.w_class * remove_pain_mult * ouchies_multiplier
 	owner.apply_damage(
 		damage = (1 - pain_stam_pct) * damage,
 		damagetype = BRUTE,
 		def_zone = owner_limb,
-		wound_bonus = max(0, parent.wound_bonus), // It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
-		sharpness = parent.get_sharpness() || SHARP_EDGED, // always sharp, even if the object isn't
-		attacking_item = parent,
+		wound_bonus = max(0, item_parent.wound_bonus), // It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
+		sharpness = item_parent.get_sharpness() || SHARP_EDGED, // always sharp, even if the object isn't
+		attacking_item = item_parent,
 	)
 
 	owner.apply_damage(
@@ -366,14 +378,15 @@
 	if(is_harmless() || !prob(chance))
 		return
 
-	var/damage = parent.w_class * jostle_pain_mult
+	var/obj/item/item_parent = parent
+	var/damage = item_parent.w_class * jostle_pain_mult
 	owner.apply_damage(
 		damage = (1 - pain_stam_pct) * damage,
 		damagetype = BRUTE,
 		def_zone = owner_limb,
 		wound_bonus = CANT_WOUND,
-		sharpness = parent.get_sharpness(),
-		attacking_item = parent,
+		sharpness = item_parent.get_sharpness(),
+		attacking_item = item_parent,
 	)
 
 	owner.apply_damage(
@@ -381,7 +394,7 @@
 		damagetype = STAMINA,
 	)
 
-	to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] jostles and stings!"))
+	to_chat(owner, span_userdanger("[item_parent] embedded in your [owner_limb.plaintext_zone] jostles and stings!"))
 
 /// When someone attempts to pluck us with tweezers or wirecutters
 /datum/embedding/proc/on_attackby(mob/living/carbon/victim, obj/item/tool, mob/user)
@@ -416,7 +429,8 @@
 		fall_out()
 		return
 
-	var/damage = parent.w_class * pain_mult
+	var/obj/item/item_parent = parent
+	var/damage = item_parent.w_class * pain_mult
 	var/pain_chance_current = SPT_PROB_RATE(pain_chance / 100, seconds_per_tick) * 100
 	if(pain_stam_pct && HAS_TRAIT_FROM(owner, TRAIT_INCAPACITATED, STAMINA)) //if it's a less-lethal embed, give them a break if they're already stamcritted
 		pain_chance_current *= 0.2
@@ -432,8 +446,8 @@
 		damagetype = BRUTE,
 		def_zone = owner_limb,
 		wound_bonus = CANT_WOUND,
-		sharpness = parent.get_sharpness(),
-		attacking_item = parent,
+		sharpness = item_parent.get_sharpness(),
+		attacking_item = item_parent,
 	)
 
 	owner.apply_damage(
@@ -441,11 +455,12 @@
 		damagetype = STAMINA,
 	)
 
-	to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] hurts!"))
+	to_chat(owner, span_userdanger("[item_parent] embedded in your [owner_limb.plaintext_zone] hurts!"))
 
 /// Attempt to pluck out the embedded item using tweezers of some kind
 /datum/embedding/proc/try_pluck(obj/item/tool, mob/user)
-	var/pluck_time = rip_time * (parent.w_class * 0.3) * tool.toolspeed
+	var/obj/item/item_parent = parent
+	var/pluck_time = rip_time * (item_parent.w_class * 0.3) * tool.toolspeed
 	var/self_pluck = (user == owner)
 	var/safe_pluck = tool.tool_behaviour != TOOL_HEMOSTAT
 	// Don't harm ourselves if we're just stuck
@@ -458,23 +473,23 @@
 		pluck_time *= 1.5
 
 	if (self_pluck)
-		owner.visible_message(span_danger("[owner] begins plucking [parent] from [owner.p_their()] [owner_limb.plaintext_zone] with [tool]..."),
-			span_notice("You start plucking [parent] from your [owner_limb.plaintext_zone] with [tool]..."))
+		owner.visible_message(span_danger("[owner] begins plucking [item_parent] from [owner.p_their()] [owner_limb.plaintext_zone] with [tool]..."),
+			span_notice("You start plucking [item_parent] from your [owner_limb.plaintext_zone] with [tool]..."))
 	else
-		user.visible_message(span_danger("[user] begins plucking [parent] from [owner]'s [owner_limb.plaintext_zone] with [tool]..."),
-			span_notice("You start plucking [parent] from [owner]'s [owner_limb.plaintext_zone] with [tool]..."), ignored_mobs = owner)
-		to_chat(owner, span_userdanger("[user] begins plucking [parent] from your [owner_limb.plaintext_zone] with [tool]... "))
+		user.visible_message(span_danger("[user] begins plucking [item_parent] from [owner]'s [owner_limb.plaintext_zone] with [tool]..."),
+			span_notice("You start plucking [item_parent] from [owner]'s [owner_limb.plaintext_zone] with [tool]..."), ignored_mobs = owner)
+		to_chat(owner, span_userdanger("[user] begins plucking [item_parent] from your [owner_limb.plaintext_zone] with [tool]... "))
 
 	if (!do_after(user, pluck_time, owner))
 		if (self_pluck)
-			to_chat(user, span_danger("You fail to pluck [parent] from your [owner_limb.plaintext_zone]."))
+			to_chat(user, span_danger("You fail to pluck [item_parent] from your [owner_limb.plaintext_zone]."))
 		else
-			to_chat(user, span_danger("You fail to pluck [parent] from [owner]'s [owner_limb.plaintext_zone]."))
-			to_chat(owner, span_danger("[user] fails to pluck [parent] from your [owner_limb.plaintext_zone]."))
+			to_chat(user, span_danger("You fail to pluck [item_parent] from [owner]'s [owner_limb.plaintext_zone]."))
+			to_chat(owner, span_danger("[user] fails to pluck [item_parent] from your [owner_limb.plaintext_zone]."))
 		return
 
 	if (self_pluck)
-		to_chat(span_notice("You pluck [parent] from your [owner_limb.plaintext_zone][safe_pluck ? "." : span_danger(", but it hurts like hell")]"))
+		to_chat(span_notice("You pluck [item_parent] from your [owner_limb.plaintext_zone][safe_pluck ? "." : span_danger(", but it hurts like hell")]"))
 
 	if(!safe_pluck)
 		damaging_removal_effect(min(self_pluck ? 1 : RIPPING_OUT_HELP_DAMAGE_MULTIPLIER, 0.4 * tool.w_class))
@@ -489,14 +504,15 @@
 		remove_embedding()
 		return
 
-	var/damage = parent.w_class * remove_pain_mult
+	var/obj/item/item_parent = parent
+	var/damage = item_parent.w_class * remove_pain_mult
 	owner.apply_damage(
 		damage = (1 - pain_stam_pct) * damage,
 		damagetype = BRUTE,
 		def_zone = owner_limb,
 		wound_bonus = CANT_WOUND,
-		sharpness = parent.get_sharpness(),
-		attacking_item = parent,
+		sharpness = item_parent.get_sharpness(),
+		attacking_item = item_parent,
 	)
 
 	owner.apply_damage(
@@ -504,8 +520,8 @@
 		damagetype = STAMINA,
 	)
 
-	owner.visible_message(span_danger("[parent] falls out of [owner.name]'s [owner_limb.plaintext_zone]!"),
-		span_userdanger("[parent] falls out of your [owner_limb.plaintext_zone]!"))
+	owner.visible_message(span_danger("[item_parent] falls out of [owner.name]'s [owner_limb.plaintext_zone]!"),
+		span_userdanger("[item_parent] falls out of your [owner_limb.plaintext_zone]!"))
 	remove_embedding()
 
 /// Whenever the parent item is forcefully moved by some weird means
@@ -538,15 +554,16 @@
 		owner.visible_message(span_danger("[parent] vanishes from [owner]'s [owner_limb.plaintext_zone]!"), span_userdanger("[parent] vanishes from [owner_limb.plaintext_zone]!"))
 		return
 
-	var/damage = parent.w_class * remove_pain_mult
+	var/obj/item/item_parent = parent
+	var/damage = item_parent.w_class * remove_pain_mult
 
 	owner.apply_damage(
 		damage = (1 - pain_stam_pct) * damage * 1.5,
 		damagetype = BRUTE,
 		def_zone = owner_limb,
-		wound_bonus = max(0, parent.wound_bonus), // Performs exit wounds and flings the user to the caster if nearby
-		sharpness = parent.get_sharpness() || SHARP_EDGED,
-		attacking_item = parent,
+		wound_bonus = max(0, item_parent.wound_bonus), // Performs exit wounds and flings the user to the caster if nearby
+		sharpness = item_parent.get_sharpness() || SHARP_EDGED,
+		attacking_item = item_parent,
 	)
 
 	owner.apply_damage(
@@ -559,12 +576,12 @@
 
 	var/dist = get_dist(caster, owner) //Check if the caster is close enough to yank them in
 	if(dist >= 7)
-		owner.visible_message(span_danger("[parent] is violently torn from [owner]'s [owner_limb.plaintext_zone]!"), span_userdanger("[parent] is violently torn from your [owner_limb.plaintext_zone]!"))
+		owner.visible_message(span_danger("[item_parent] is violently torn from [owner]'s [owner_limb.plaintext_zone]!"), span_userdanger("[item_parent] is violently torn from your [owner_limb.plaintext_zone]!"))
 		return
 
 	owner.throw_at(caster, get_dist(owner, caster) - 1, 1, caster)
 	owner.Paralyze(1 SECONDS)
-	owner.visible_message(span_alert("[owner] is sent flying towards [caster] as the [parent] tears out of them!"), span_alert("You are launched at [caster] as the [parent] tears from your body and towards their hand!"))
+	owner.visible_message(span_alert("[owner] is sent flying towards [caster] as the [item_parent] tears out of them!"), span_alert("You are launched at [caster] as the [item_parent] tears from your body and towards their hand!"))
 
 #undef RIPPING_OUT_HELP_TIME_MULTIPLIER
 #undef RIPPING_OUT_HELP_DAMAGE_MULTIPLIER
