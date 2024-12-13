@@ -53,7 +53,7 @@
 		I.wound_bonus = I.wound_bonus + increment //wound_bonus has no cap
 	user.visible_message(span_notice("[user] sharpens [I] with [src]!"), span_notice("You sharpen [I], making it much more deadly than before."))
 	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE)
-	I.sharpness = SHARP_EDGED //When you whetstone something, it becomes an edged weapon, even if it was previously dull or pointy
+	I.set_sharpness(SHARP_EDGED) //When you whetstone something, it becomes an edged weapon, even if it was previously dull or pointy
 	I.throwforce = clamp(I.throwforce + increment, 0, max)
 	I.name = "[prefix] [I.name]" //This adds a prefix and a space to the item's name regardless of what the prefix is
 	desc = "[desc] At least, it used to."

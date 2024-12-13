@@ -229,8 +229,8 @@
 	bare_wound_bonus = 15
 	/// How this looks when placed in a surgical tray
 	var/surgical_tray_overlay = "scalpel_normal"
-	var/static/list/alt_continuous = list("stabs", "pierces", "impales")
-	var/static/list/alt_simple = list("stab", "pierce", "impale")
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
 
 /obj/item/scalpel/Initialize(mapload)
 	. = ..()
@@ -240,6 +240,8 @@
 	bonus_modifier = 0, \
 	)
 	AddElement(/datum/element/eyestab)
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
 /obj/item/scalpel/get_surgery_tool_overlay(tray_extended)

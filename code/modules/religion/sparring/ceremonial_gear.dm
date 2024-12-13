@@ -28,8 +28,8 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE //doesn't affect stats of the weapon as to avoid gamering your opponent with a dope weapon
 	armor_type = /datum/armor/item_ceremonial_blade
 	resistance_flags = FIRE_PROOF
-	var/static/list/alt_continuous = list("stabs", "pierces", "impales")
-	var/static/list/alt_simple = list("stab", "pierce", "impale")
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
 
 /datum/armor/item_ceremonial_blade
 	fire = 100
@@ -37,6 +37,8 @@
 
 /obj/item/ceremonial_blade/Initialize(mapload)
 	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 	AddComponent(/datum/component/butchering, \
 	speed = 4 SECONDS, \

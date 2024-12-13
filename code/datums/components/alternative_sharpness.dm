@@ -15,6 +15,7 @@
 	// Old values before we overrode them
 	var/base_continuous = null
 	var/base_simple = null
+	var/base_sharpness = NONE
 
 /datum/component/alternative_sharpness/Initialize(alt_sharpness, verbs_continuous = null, verbs_simple = null, force_mod = 0, required_trait = null)
 	if (!isitem(parent))
@@ -30,10 +31,6 @@
 
 /datum/component/alternative_sharpness/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_secondary_attack))
-	RegisterSignal(parent, COMSIG_ITEM_SHARPNESS_OVERRIDE, PROC_REF(on_sharpness_override))
-
-/datum/component/alternative_sharpness/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_PRE_ATTACK_SECONDARY, COMSIG_ITEM_SHARPNESS_OVERRIDE))
 
 /datum/component/alternative_sharpness/proc/on_secondary_attack(obj/item/source, atom/target, mob/user, params)
 	SIGNAL_HANDLER
@@ -43,6 +40,8 @@
 
 	alt_attacking = TRUE
 	source.force += force_mod
+	base_sharpness = source.sharpness
+	source.set_sharpness(alt_sharpness)
 	if (!isnull(verbs_continuous))
 		source.attack_verb_continuous = verbs_continuous
 
@@ -52,21 +51,10 @@
 	// I absolutely despise this but this is geniunely the best way to do this without creating and hooking up to a dozen signals and still risking failure edge cases
 	addtimer(CALLBACK(src, PROC_REF(disable_alt_attack)), 1)
 
-/datum/component/alternative_sharpness/proc/on_sharpness_override(obj/item/source)
-	SIGNAL_HANDLER
-
-	if (!alt_attacking)
-		return
-
-	switch(alt_sharpness)
-		if (SHARP_EDGED)
-			return ITEM_SHARPNESS_OVERRIDE_EDGED
-		if (SHARP_POINTY)
-			return ITEM_SHARPNESS_OVERRIDE_POINTY
-
 /datum/component/alternative_sharpness/proc/disable_alt_attack()
 	var/obj/item/weapon = parent
 	alt_attacking = FALSE
 	weapon.force -= force_mod
 	weapon.attack_verb_continuous = base_continuous
 	weapon.attack_verb_simple = base_simple
+	weapon.set_sharpness(base_sharpness)

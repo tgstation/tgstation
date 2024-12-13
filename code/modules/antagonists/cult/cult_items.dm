@@ -81,11 +81,8 @@ Striking a noncultist, however, will tear their flesh."}
 	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	/// If TRUE, it can be used at will by anyone, non-cultists included
 	var/free_use = FALSE
-	var/static/list/alt_continuous = list("stabs", "pierces", "impales")
-	var/static/list/alt_simple = list("stab", "pierce", "impale")
-
-/obj/item/toy/katana/Initialize(mapload)
-	. = ..()
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
 
 /obj/item/melee/cultblade/Initialize(mapload)
 	. = ..()
@@ -93,6 +90,8 @@ Striking a noncultist, however, will tear their flesh."}
 	speed = 4 SECONDS, \
 	effectiveness = 100, \
 	)
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -5)
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 

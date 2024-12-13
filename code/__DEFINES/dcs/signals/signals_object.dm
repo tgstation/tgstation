@@ -205,11 +205,6 @@
 ///from [/obj/structure/closet/supplypod/proc/preOpen]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
-///from [/obj/item/proc/get_sharpness]:
-#define COMSIG_ITEM_SHARPNESS_OVERRIDE "item_sharpness_override"
-	#define ITEM_SHARPNESS_OVERRIDE_EDGED (1<<0)
-	#define ITEM_SHARPNESS_OVERRIDE_POINTY (1<<1)
-
 /// from [/obj/item/stack/proc/can_merge]: (obj/item/stack/merge_with, in_hand)
 #define COMSIG_STACK_CAN_MERGE "stack_can_merge"
 	#define CANCEL_STACK_MERGE (1<<0)

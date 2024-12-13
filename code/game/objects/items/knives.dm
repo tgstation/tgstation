@@ -25,8 +25,8 @@
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
-	var/static/list/alt_continuous = list("stabs", "pierces", "shanks")
-	var/static/list/alt_simple = list("stab", "pierce", "shank")
+	var/list/alt_continuous = list("stabs", "pierces", "shanks")
+	var/list/alt_simple = list("stab", "pierce", "shank")
 
 /datum/armor/item_knife
 	fire = 50
@@ -36,6 +36,8 @@
 	. = ..()
 	AddElement(/datum/element/eyestab)
 	set_butchering()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
 	make_stabby()
 
 ///Adds the butchering component, used to override stats for special cases
