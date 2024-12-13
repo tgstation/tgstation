@@ -200,11 +200,11 @@
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(!isitem(AM))
 		// Filled with made up numbers for non-items.
-		if(check_block(AM, 30, "\the [AM.name]", THROWN_PROJECTILE_ATTACK, 0, BRUTE))
+		if(check_block(AM, 30, "\the [AM.name]", THROWN_PROJECTILE_ATTACK, 0, BRUTE) == SUCCESSFUL_BLOCK)
 			hitpush = FALSE
 			skipcatch = TRUE
 			blocked = TRUE
-			throwingdatum.blocked = TRUE
+			return SUCCESSFUL_BLOCK
 		else
 			playsound(loc, 'sound/items/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
 			if(!isvendor(AM) && !iscarbon(AM)) //Vendors have special interactions, while carbon mobs already generate visible messages!
@@ -229,7 +229,7 @@
 		hitpush = FALSE
 
 	if(blocked)
-		return TRUE
+		return SUCCESSFUL_BLOCK
 
 	var/mob/thrown_by = thrown_item.thrownby?.resolve()
 	if(thrown_by)
@@ -803,4 +803,4 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CHECK_BLOCK, hit_by, damage, attack_text, attack_type, armour_penetration, damage_type) & SUCCESSFUL_BLOCK)
 		return SUCCESSFUL_BLOCK
 
-	return FALSE
+	return FAILED_BLOCK
