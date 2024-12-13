@@ -413,9 +413,9 @@
 /obj/item/gun/ballistic/automatic/battle_rifle/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if(held_item.tool_behaviour == TOOL_MULTITOOL && shots_before_degradation < max_shots_before_degradation)
+	if(held_item?.tool_behaviour == TOOL_MULTITOOL && shots_before_degradation < max_shots_before_degradation)
 		context[SCREENTIP_CONTEXT_LMB] = "Reset System"
-	return CONTEXTUAL_SCREENTIP_SET
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/gun/ballistic/automatic/battle_rifle/examine_more(mob/user)
 	. = ..()
@@ -538,7 +538,7 @@
 
 /// Proc to handle the countdown for our detonation
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/perform_extreme_malfunction(mob/living/user)
-	balloon_alert(user, UNLINT("[src] is exploding, throw it!"))
+	balloon_alert(user, "gun is exploding, throw it!")
 	explosion_timer = addtimer(CALLBACK(src, PROC_REF(fucking_explodes_you)), 5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE))
 	playsound(src, 'sound/items/weapons/gun/general/empty_alarm.ogg', 50, FALSE)
 
