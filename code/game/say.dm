@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		messagepart = message_mods[MODE_CUSTOM_SAY_EMOTE]
 	else
-		messagepart = speaker.say_quote(say_emphasis(raw_message), spans, message_mods)
+		messagepart = speaker.say_quote(raw_message, spans, message_mods)
 
 		var/datum/language/dialect = GLOB.language_datum_instances[message_language]
 		if(istype(dialect) && dialect.display_icon(src))
@@ -223,8 +223,14 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(copytext_char(input, -2) == "!!")
 		spans |= SPAN_YELL
 
-	var/spanned = attach_spans(input, spans)
-	return "[say_mod], \"[spanned]\""
+	/* all inputs should be fully figured out past this point */
+
+	var/processed_input = say_emphasis(input) //This MUST be done first so that we don't get clipped by spans
+	processed_input = attach_spans(processed_input, spans)
+
+	var/processed_say_mod = say_emphasis(say_mod)
+	
+	return "[processed_say_mod], \"[processed_input]\""
 
 /// Transforms the speech emphasis mods from [/atom/movable/proc/say_emphasis] into the appropriate HTML tags. Includes escaping.
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
