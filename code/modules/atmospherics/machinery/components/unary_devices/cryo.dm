@@ -102,8 +102,6 @@
 	var/datum/gas_machine_connector/internal_connector
 	/// Check if the machine has been turned on
 	var/on = FALSE
-	/// The sound loop that can be heard when the generator is processing.
-	var/datum/looping_sound/cryo_cell/soundloop
 
 /datum/armor/unary_cryo_cell
 	energy = 100
@@ -122,7 +120,6 @@
 	occupant_vis = new(mapload, src)
 	vis_contents += occupant_vis
 	internal_connector = new(loc, src, dir, CELL_VOLUME * 0.5)
-	soundloop = new(src)
 
 	register_context()
 
@@ -134,7 +131,6 @@
 	QDEL_NULL(radio)
 	QDEL_NULL(beaker)
 	QDEL_NULL(internal_connector)
-	QDEL_NULL(soundloop)
 
 	return ..()
 
@@ -383,12 +379,10 @@
 /obj/machinery/cryo_cell/begin_processing()
 	. = ..()
 	SSair.start_processing_machine(src)
-	soundloop.start()
 
 /obj/machinery/cryo_cell/end_processing()
 	. = ..()
 	SSair.stop_processing_machine(src)
-	soundloop.stop()
 
 /obj/machinery/cryo_cell/on_set_is_operational(old_value)
 	//Turned off
