@@ -184,10 +184,6 @@
 	update_appearance()
 
 /mob/living/basic/turtle/item_interaction(mob/living/user, obj/item/used_item, list/modifiers)
-	if(istype(used_item, /obj/item/seeds) && stat == CONSCIOUS)
-		melee_attack(used_item)
-		return ITEM_INTERACT_SUCCESS
-
 	if(!istype(used_item, /obj/item/reagent_containers))
 		return NONE
 
@@ -209,7 +205,7 @@
 		balloon_alert(user, "refuses to drink!")
 		return ITEM_INTERACT_SUCCESS
 
-	if(!do_after(user, 1.5 SECONDS, target = target))
+	if(!do_after(user, 1.5 SECONDS, target = src))
 		return ITEM_INTERACT_SUCCESS
 
 	used_item.reagents.trans_to(reagents, 5)
