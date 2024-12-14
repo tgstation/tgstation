@@ -410,8 +410,6 @@
 // This already processes, zero logic to add additional tracking to the item
 /datum/embedding/mending_globule/process(seconds_per_tick)
 	. = ..()
-	if(!owner_limb) //this is fucked
-		return
 	var/obj/item/mending_globule/globule = parent
 	owner_limb.heal_damage(0.5 * seconds_per_tick, 0.5 * seconds_per_tick)
 	globule.heals_left--

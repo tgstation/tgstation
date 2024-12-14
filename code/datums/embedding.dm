@@ -24,7 +24,7 @@
 	/// Coefficient of multiplication for the damage the item does when it falls out or is removed without a surgery (this*item.w_class)
 	var/remove_pain_mult = 6
 	/// Time in ticks, total removal time = (this*item.w_class)
-	var/rip_time = 30
+	var/rip_time = 3 SECONDS
 	/// If this should ignore throw speed threshold of 4
 	var/ignore_throwspeed_threshold = FALSE
 	/// Chance for embedded objects to cause pain every time they move (jostle)
@@ -37,17 +37,17 @@
 	var/list/immune_traits = list(TRAIT_PIERCEIMMUNE)
 
 	/// Thing that we're attached to
-	var/obj/parent
+	VAR_FINAL/obj/parent
 	/// Mob we've embedded into, if any
-	var/mob/living/carbon/owner
+	VAR_FINAL/mob/living/carbon/owner
 	/// Limb we've embedded into in whose contents we reside
-	var/obj/item/bodypart/owner_limb
+	VAR_FINAL/obj/item/bodypart/owner_limb
 
 /datum/embedding/New(atom/movable/creator)
 	. = ..()
 
 	if(!isitem(creator) && !isprojectile(creator))
-		return
+		CRASH("Embedding datum attempted to register on a non-item and non-projectile object [creator] ([creator?.type])")
 
 	parent = creator
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_qdel))
@@ -62,11 +62,11 @@
 /datum/embedding/Destroy(force)
 	if (isprojectile(parent))
 		var/obj/projectile/proj = parent
-		proj.embed_data = null
+		proj.set_embed(null)
 
 	if (isitem(parent))
 		var/obj/item/item = parent
-		item.embed_data = null
+		item.set_embed(null)
 
 	UnregisterSignal(parent, list(COMSIG_QDELETING, COMSIG_PROJECTILE_SELF_ON_HIT, COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ATOM_EXAMINE, COMSIG_MOVABLE_MOVED))
 	owner = null
@@ -127,17 +127,15 @@
 
 	if (blocked || !can_embed(parent, victim, hit_zone, throwingdatum))
 		failed_embed(victim, hit_zone)
-		return FALSE
+		return
 
 	if (!roll_embed_chance(victim, hit_zone, throwingdatum))
 		failed_embed(victim, hit_zone, random = TRUE)
-		return FALSE
+		return
 
-	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone)
-	if (isnull(limb))
-		limb = pick(victim.bodyparts)
+	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || victim.bodyparts[1]
 	embed_into(victim, limb)
-	return TRUE
+	return MOVABLE_IMPACT_ZONE_OVERRIDE
 
 /// Attempts to embed shrapnel from a projectile
 /datum/embedding/proc/try_embed_projectile(obj/projectile/source, atom/movable/firer, atom/hit, angle, hit_zone, blocked, pierce_hit)
@@ -155,14 +153,13 @@
 	var/obj/item/payload = new shrapnel_type(get_turf(victim))
 	setup_shrapnel(payload, source, victim)
 
-	if (!payload.embed_data.roll_embed_chance(victim, hit_zone))
-		payload.embed_data.failed_embed(victim, hit_zone, random = TRUE)
+	var/datum/embedding/payload_embed = payload.get_embed()
+	if (!payload_embed.roll_embed_chance(victim, hit_zone))
+		payload_embed.failed_embed(victim, hit_zone, random = TRUE)
 		return
 
-	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone)
-	if (isnull(limb))
-		limb = pick(victim.bodyparts)
-	payload.embed_data.embed_into(victim, limb)
+	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || victim.bodyparts[1]
+	payload_embed.embed_into(victim, limb)
 	SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_EMBEDDED, payload, hit)
 
 /// Used for custom logic while setting up shrapnel payload
@@ -217,12 +214,13 @@
 
 //Handles actual embedding logic.
 /datum/embedding/proc/embed_into(mob/living/carbon/victim, obj/item/bodypart/target_limb)
-	if (!isitem(parent))
-		CRASH("Non-item [parent] ([parent.type]) attempted to embed into [victim]'s [target_limb]!")
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-	owner = victim
-	owner_limb = target_limb
-	RegisterWithOwner()
+	if (!isitem(parent))
+		stack_trace("Non-item [parent] ([parent.type]) attempted to embed into [victim]'s [target_limb]!")
+		return FALSE
+
+	set_owner(victim, target_limb)
 
 	var/obj/item/item_parent = parent
 	START_PROCESSING(SSprocessing, src)
@@ -243,8 +241,10 @@
 		owner.add_mood_event("embedded", /datum/mood_event/embedded)
 
 	SEND_SIGNAL(item_parent, COMSIG_ITEM_EMBEDDED, victim, target_limb)
+	on_successful_embed(victim, target_limb)
+
 	if (damage <= 0)
-		return
+		return TRUE
 
 	var/armor = owner.run_armor_check(owner_limb.body_zone, MELEE, "Your armor has protected your [owner_limb.plaintext_zone].",
 		"Your armor has softened a hit to your [owner_limb.plaintext_zone].", item_parent.armour_penetration,
@@ -266,19 +266,29 @@
 		damage = pain_stam_pct * damage,
 		damagetype = STAMINA,
 	)
+	return TRUE
+
+/// Proc which is called upon successfully embedding into someone/something, for children to override
+/datum/embedding/proc/on_successful_embed(mob/living/carbon/victim, obj/item/bodypart/target_limb)
+	return
 
 /// Registers signals that our owner should have
 /// Handles jostling, tweezing embedded items out and grenade chain reactions
-/datum/embedding/proc/RegisterWithOwner()
+/datum/embedding/proc/set_owner(mob/living/carbon/victim, obj/item/bodypart/target_limb)
+	owner = victim
+	owner_limb = target_limb
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(owner_moved))
 	RegisterSignal(owner, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(owner, COMSIG_ATOM_EX_ACT, PROC_REF(on_ex_act))
+	RegisterSignal(owner_limb, COMSIG_BODYPART_REMOVED, PROC_REF(on_removed))
 
 /// Avoid calling this directly as this doesn't move the object from its owner's contents
 /// Returns TRUE if the item got deleted due to DROPDEL flag
 /datum/embedding/proc/stop_embedding()
 	var/obj/item/item_parent = parent
-	owner_limb?._unembed_object(item_parent)
+	if (owner_limb)
+		UnregisterSignal(owner_limb, COMSIG_BODYPART_REMOVED)
+		owner_limb._unembed_object(item_parent)
 	if (owner)
 		UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EX_ACT))
 		if (!owner.has_embedded_objects())
@@ -288,7 +298,7 @@
 	SEND_SIGNAL(item_parent, COMSIG_ITEM_UNEMBEDDED, owner, owner_limb)
 	owner = null
 	owner_limb = null
-	if(item_parent.item_flags & DROPDEL && !QDELETED(item_parent))
+	if((item_parent.item_flags & DROPDEL) && !QDELETED(item_parent))
 		qdel(item_parent)
 		return TRUE
 	return FALSE
@@ -298,6 +308,12 @@
 	if (owner_limb)
 		weapon_disappeared()
 	qdel(src)
+
+/// Move self to owner's turf when our limb gets removed
+/datum/embedding/proc/on_removed(datum/source, mob/living/carbon/old_owner)
+	SIGNAL_HANDLER
+	stop_embedding()
+	parent.forceMove(old_owner.drop_location())
 
 /// Someone attempted to pull us out! Either the owner by inspecting themselves, or someone else by examining the owner and clicking the link.
 /datum/embedding/proc/rip_out(mob/living/jack_the_ripper)
@@ -320,7 +336,7 @@
 		owner.visible_message(span_warning("[owner] attempts to remove [item_parent] from [owner.p_their()] [owner_limb.plaintext_zone]."),
 			span_notice("You attempt to remove [item_parent] from your [owner_limb.plaintext_zone]..."))
 
-	if (!do_after(jack_the_ripper, time_taken, owner))
+	if (!do_after(jack_the_ripper, time_taken, owner, extra_checks = CALLBACK(src, PROC_REF(still_in))))
 		return
 
 	if (item_parent.loc != owner || !(item_parent in owner_limb?.embedded_objects))
@@ -372,7 +388,7 @@
 	SIGNAL_HANDLER
 
 	var/chance = jostle_chance
-	if(!forced && (owner.move_intent == MOVE_INTENT_WALK || owner.body_position == LYING_DOWN))
+	if(!forced && (owner.move_intent == MOVE_INTENT_WALK || owner.body_position == LYING_DOWN) && !CHECK_MOVE_LOOP_FLAGS(source, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		chance *= 0.5
 
 	if(is_harmless() || !prob(chance))
@@ -474,13 +490,13 @@
 
 	if (self_pluck)
 		owner.visible_message(span_danger("[owner] begins plucking [item_parent] from [owner.p_their()] [owner_limb.plaintext_zone] with [tool]..."),
-			span_notice("You start plucking [item_parent] from your [owner_limb.plaintext_zone] with [tool]..."))
+			span_notice("You start plucking [item_parent] from your [owner_limb.plaintext_zone] with [tool]..."), visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
 	else
 		user.visible_message(span_danger("[user] begins plucking [item_parent] from [owner]'s [owner_limb.plaintext_zone] with [tool]..."),
 			span_notice("You start plucking [item_parent] from [owner]'s [owner_limb.plaintext_zone] with [tool]..."), ignored_mobs = owner)
 		to_chat(owner, span_userdanger("[user] begins plucking [item_parent] from your [owner_limb.plaintext_zone] with [tool]... "))
 
-	if (!do_after(user, pluck_time, owner))
+	if (!do_after(user, pluck_time, owner, extra_checks = CALLBACK(src, PROC_REF(still_in))))
 		if (self_pluck)
 			to_chat(user, span_danger("You fail to pluck [item_parent] from your [owner_limb.plaintext_zone]."))
 		else
@@ -529,7 +545,7 @@
 	SIGNAL_HANDLER
 	// If something moved it to their limb, its not really *disappearing*, is it?
 	if (owner && parent.loc != owner_limb)
-		to_chat(owner, span_userdanger("\The [parent] that was embedded in your [owner_limb.plaintext_zone] disappears!"))
+		to_chat(owner, span_userdanger("[parent] that was embedded in your [owner_limb.plaintext_zone] disappears!"))
 	stop_embedding()
 
 /// So the sticky grenades chain-detonate, because mobs are very careful with which of their contents they blow up
@@ -582,6 +598,15 @@
 	owner.throw_at(caster, get_dist(owner, caster) - 1, 1, caster)
 	owner.Paralyze(1 SECONDS)
 	owner.visible_message(span_alert("[owner] is sent flying towards [caster] as the [item_parent] tears out of them!"), span_alert("You are launched at [caster] as the [item_parent] tears from your body and towards their hand!"))
+
+/datum/embedding/proc/still_in()
+	if (parent.loc != owner)
+		return FALSE
+	if (!(parent in owner_limb?.embedded_objects))
+		return FALSE
+	if (owner_limb?.owner != owner)
+		return FALSE
+	return TRUE
 
 #undef RIPPING_OUT_HELP_TIME_MULTIPLIER
 #undef RIPPING_OUT_HELP_DAMAGE_MULTIPLIER

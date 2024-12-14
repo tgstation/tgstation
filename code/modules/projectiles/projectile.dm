@@ -247,7 +247,7 @@
 	/// If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target
 	var/embed_type
 	/// Saves embedding data
-	var/datum/embedding/embed_data
+	VAR_PROTECTED/datum/embedding/embed_data
 	/// If TRUE, hit mobs, even if they are lying on the floor and are not our target within MAX_RANGE_HIT_PRONE_TARGETS tiles
 	var/hit_prone_targets = FALSE
 	/// If TRUE, ignores the range of MAX_RANGE_HIT_PRONE_TARGETS tiles of hit_prone_targets
@@ -1380,7 +1380,8 @@
 	if (new_embed == embed_data)
 		return
 
-	if (embed_data)
+	// Needs to be QDELETED as embed data uses this to clean itself up from its parent (us)
+	if (!QDELETED(embed_data))
 		qdel(embed_data)
 
 	if (ispath(new_embed))

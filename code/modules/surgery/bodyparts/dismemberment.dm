@@ -106,9 +106,6 @@
 			qdel(surgery)
 			break
 
-	for(var/obj/item/embedded in embedded_objects)
-		embedded.forceMove(drop_loc) // It'll self remove via signal reaction, just need to move it
-
 	if(!phantom_owner.has_embedded_objects())
 		phantom_owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 		phantom_owner.clear_mood_event("embedded")

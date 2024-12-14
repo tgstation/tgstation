@@ -118,9 +118,7 @@
 	pain_mult = 0
 	pain_chance = 0
 
-/datum/embedding/tongue_spike/chem/embed_into(mob/living/carbon/victim, obj/item/bodypart/target_limb)
-	. = ..()
-
+/datum/embedding/tongue_spike/chem/on_successful_embed(mob/living/carbon/victim, obj/item/bodypart/target_limb)
 	var/obj/item/hardened_spike/chem/tongue_spike = parent
 	var/mob/living/carbon/fired_by = tongue_spike.fired_by_ref?.resolve()
 	if(!istype(fired_by))
@@ -177,7 +175,7 @@
 	var/obj/item/hardened_spike/chem/chem_spike = target
 
 	// This is where it would deal damage, if it transfers chems it removes itself so no damage
-	var/mob/living/carbon/spike_owner = chem_spike.embed_data?.owner
+	var/mob/living/carbon/spike_owner = chem_spike.get_embed()?.owner
 	// Message first because it'll shift back into a tongue right after moving
 	if (istype(spike_owner))
 		spike_owner.visible_message(span_notice("[chem_spike] falls out of [spike_owner]!"))

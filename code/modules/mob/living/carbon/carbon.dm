@@ -234,7 +234,7 @@
 		var/obj/item/weapon = locate(href_list["embedded_object"]) in limb.embedded_objects
 		if(!weapon || weapon.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 			return
-		weapon.embed_data.rip_out(usr)
+		weapon.get_embed().rip_out(usr)
 		return
 
 	if(href_list["show_paper_note"])

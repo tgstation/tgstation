@@ -173,7 +173,7 @@
 	/// Does it embed and if yes, what kind of embed
 	var/embed_type
 	/// Stores embedding data
-	var/datum/embedding/embed_data
+	VAR_PROTECTED/datum/embedding/embed_data
 
 	///for flags such as [GLASSESCOVERSEYES]
 	var/flags_cover = 0
@@ -1351,7 +1351,7 @@
 
 		victim.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
 		victim.losebreath += 2
-		if(get_embed()?.embed_into(victim, victim.get_bodypart(BODY_ZONE_CHEST))) //and if it embeds successfully in their chest, cause a lot of pain
+		if(force_embed(victim, BODY_ZONE_CHEST)) //and if it embeds successfully in their chest, cause a lot of pain
 			victim.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
 			victim.losebreath += 6
 			discover_after = FALSE
@@ -1879,7 +1879,8 @@
 		SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDING_UPDATE)
 		return
 
-	if (embed_data)
+	// Needs to be QDELETED as embed data uses this to clean itself up from its parent (us)
+	if (!QDELETED(embed_data))
 		qdel(embed_data)
 
 	if (ispath(new_embed))
@@ -1887,3 +1888,13 @@
 
 	embed_data = new_embed
 	SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDING_UPDATE)
+
+/// Embed ourselves into an object if we possess embedding data
+/obj/item/proc/force_embed(mob/living/carbon/victim, obj/item/bodypart/target_limb)
+	if (!istype(victim))
+		return FALSE
+
+	if (!istype(target_limb))
+		target_limb = victim.get_bodypart(target_limb) || victim.bodyparts[1]
+
+	return get_embed()?.embed_into(victim, target_limb)
