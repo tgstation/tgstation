@@ -1,4 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "temporary blocks such as blade heretic orbiting knives properly stop body throws."

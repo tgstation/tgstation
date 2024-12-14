@@ -1,5 +1,0 @@
-author: "SmArtKar, LemonInTheDark"
-delete-after: True
-changes:
-  - rscadd: "Changed how spraycans color items - \"old\" mode is still availible via right click."
-  - refactor: "Refactored how some items and effects color things so that they look prettier."

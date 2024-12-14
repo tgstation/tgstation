@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "Overcharged SMESes no longer spam runtime when timers chug up"
