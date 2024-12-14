@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes:
+  - bugfix: "Fixes resin sprayers not working if the target is more than one tile away from you"

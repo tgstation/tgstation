@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Metalgen works as a lockpick; igniting a crate metalgen'd into plasma will properly drop its contents."
+  - code_imp: "Hiding stuff in food should generally work more consistently now."
+  - bugfix: "Fixes players not doing the \"searching for item\" do-after for items hidden in food."
