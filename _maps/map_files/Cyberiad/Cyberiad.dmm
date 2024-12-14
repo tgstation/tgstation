@@ -4350,10 +4350,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/psychology)
-"bfT" = (
-/obj/item/ammo_casing/a357/spent,
-/turf/open/floor/wood,
-/area/station/maintenance/department/bridge/ntr)
 "bfW" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
@@ -17424,19 +17420,6 @@
 "esq" = (
 /turf/open/floor/iron/grimy,
 /area/station/service/abandoned_gambling_den)
-"ess" = (
-/obj/item/ammo_casing/a357/spent,
-/obj/item/ammo_casing/a357/spent,
-/obj/item/ammo_casing/a357/spent{
-	dir = 1;
-	pixel_x = 4
-	},
-/obj/item/ammo_casing/a357/spent{
-	pixel_x = 12;
-	pixel_y = 4
-	},
-/turf/open/floor/wood,
-/area/station/maintenance/department/bridge/ntr)
 "est" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -23453,10 +23436,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/service/theater)
-"fWv" = (
-/obj/item/ammo_casing/a357/spent,
-/turf/open/floor/plating,
-/area/station/maintenance/department/bridge/ntr)
 "fWH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /obj/effect/turf_decal/tile/neutral/half{
@@ -186426,7 +186405,7 @@ mPo
 rAg
 xlM
 vCp
-bfT
+aBF
 aBF
 lkH
 nrJ
@@ -186682,8 +186661,8 @@ tEb
 dyi
 aas
 lkH
-fWv
-ess
+lkH
+aBF
 lkH
 cdj
 caV
