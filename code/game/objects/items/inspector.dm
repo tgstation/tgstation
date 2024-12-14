@@ -10,7 +10,7 @@
 	name = "\improper N-spect scanner"
 	desc = "Central Command standard issue inspection device. \
 	Performs wide area scan reports for inspectors to use to verify the security and integrity of the station. \
-	Can additionaly be used for precision scans to determine if an item contains, or is itself, contraband."
+	Can additionally be used for precision scans to determine if an item contains, or is itself, contraband."
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "inspector"
 	worn_icon_state = "salestagger"
