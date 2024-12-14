@@ -348,6 +348,31 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				priority_announce("The NAP is now in full effect.", null, SSstation.announcer.get_rand_report_sound())
 			else
 				priority_announce("The NAP has been revoked.", null, SSstation.announcer.get_rand_report_sound())
+		if("send_shuttle_back")
+			if(!is_funmin)
+				return
+			if(SSshuttle.emergency.mode != SHUTTLE_ESCAPE)
+				to_chat(usr, span_warning("Emergency shuttle not currently in transit!"), confidential = TRUE)
+				return
+			var/make_announcement = tgui_alert(user, "Make a CentCom announcement?", "Emergency shuttle return", list("Yes", "No"))
+			var/new_timer = tgui_input_number(usr, "How long should the shuttle remain in transit?", "When are we droppin' boys?", 3 MINUTES, 10 MINUTES)
+			if (isnull(new_timer) || SSshuttle.emergency.mode != SHUTTLE_ESCAPE)
+				return
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Send Shuttle Back"))
+			message_admins("[key_name_admin(holder)] sent the escape shuttle back to the station")
+			if (make_announcement)
+				priority_announce(
+					text = "Emergency shuttle trajectory overriden, rerouting course back to [station_name()].",
+					title = "Shuttle Trajectory Override",
+					sound =  'sound/announcer/announcement/announce_dig.ogg',
+					sender_override = "Emergency Shuttle Uplink Alert",
+					color_override = "grey",
+				)
+			SSshuttle.emergency.timer = INFINITY
+			if (new_timer > 0)
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(return_escape_shuttle), make_announcement), new_timer)
+			else
+				INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(return_escape_shuttle), make_announcement)
 		if("blackout")
 			if(!is_funmin)
 				return
@@ -672,6 +697,27 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 	var/turf/T = get_step(loc, SOUTHWEST)
 	T.flick_overlay_static(portal_appearance[GET_TURF_PLANE_OFFSET(T) + 1], 15)
 	playsound(T, 'sound/effects/magic/lightningbolt.ogg', rand(80, 100), TRUE)
+
+/// Docks the emergency shuttle back to the station and resets its' state
+/proc/return_escape_shuttle(make_announcement = TRUE)
+	if (SSshuttle.emergency.initiate_docking(SSshuttle.getDock("emergency_home"), force = TRUE) != DOCKING_SUCCESS)
+		message_admins("Emergency shuttle was unable to dock back to the station!")
+		SSshuttle.emergency.timer = 1 // Prevents softlocks
+		return
+	if (make_announcement)
+		priority_announce(
+			text = "[SSshuttle.emergency] has returned to the station.",
+			title = "Emergency Shuttle Override",
+			sound = ANNOUNCER_SHUTTLEDOCK,
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "grey",
+		)
+	SSshuttle.emergency.mode = SHUTTLE_IDLE
+	SSshuttle.emergency.timer = 0
+	// Docks the pods back (don't ask about physics)
+	for (var/obj/docking_port/mobile/pod/pod in SSshuttle.mobile_docking_ports)
+		if (pod.previous)
+			pod.initiate_docking(pod.previous, force = TRUE)
 
 /datum/everyone_is_an_antag_controller
 	var/chosen_antag = ""
