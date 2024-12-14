@@ -1866,6 +1866,7 @@
 
 /// Fetches, or lazyloads, our embedding datum
 /obj/item/proc/get_embed()
+	RETURN_TYPE(/datum/embedding)
 	if (embed_data)
 		return embed_data
 	if (embed_type)

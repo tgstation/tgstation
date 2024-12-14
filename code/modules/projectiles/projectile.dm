@@ -1323,7 +1323,7 @@
 
 ///Checks if the projectile can embed into someone
 /obj/projectile/proc/can_embed_into(atom/hit)
-	return shrapnel_type && get_embed().can_embed(src, hit)
+	return shrapnel_type && get_embed()?.can_embed(src, hit)
 
 /// Reflects the projectile off of something
 /obj/projectile/proc/reflect(atom/hit_atom)
@@ -1368,6 +1368,7 @@
 
 /// Fetches, or lazyloads, our embedding datum
 /obj/projectile/proc/get_embed()
+	RETURN_TYPE(/datum/embedding)
 	if (embed_data)
 		return embed_data
 	if (embed_type)
