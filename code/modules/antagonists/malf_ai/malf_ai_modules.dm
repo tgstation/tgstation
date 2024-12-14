@@ -909,7 +909,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	cost = 30
 	upgrade = TRUE
 	unlock_text = span_notice("Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. \
-		Loss of signal will result in total system lockout.</b>")
+		Loss of signal will result in total system lockout. If your inactive core is destroyed, you will be lose connection with the Doomsday Device and the countdown will cease.</b>")
 	unlock_sound = 'sound/vehicles/mecha/nominal.ogg'
 
 /datum/ai_module/malf/upgrade/mecha_domination/upgrade(mob/living/silicon/ai/AI)
