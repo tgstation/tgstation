@@ -32,7 +32,7 @@ type ShuttleConfigurationUniqueData = {
   defaultApc: BooleanLike;
   apcInMergeRegion: BooleanLike;
   apcs: Record<string, BooleanLike>;
-  neighboringAreas: Record<string, string>;
+  neighboringAreas: Map<string, string>;
   idle: BooleanLike;
 };
 
@@ -198,7 +198,7 @@ const ShuttleConstruction = () => {
 };
 
 const ShuttleConfiguration = () => {
-  const [name, setName] = useState<string>();
+  const [name, setName] = useState('');
   const [mergeArea = { name: '', ref: '' }, setMergeArea] =
     useState<AreaData>();
   const { act, data } = useBackend<ShuttleBlueprintsData>();
@@ -211,7 +211,7 @@ const ShuttleConfiguration = () => {
     onShuttle,
     inDefaultArea,
     currentArea = { name: '', ref: '' },
-    neighboringAreas = {},
+    neighboringAreas,
     apcs = {},
     defaultApc,
     apcInMergeRegion,
@@ -278,14 +278,15 @@ const ShuttleConfiguration = () => {
           <Stack.Item>
             <Dropdown
               placeholder="Select Area"
-              options={Object.entries(neighboringAreas).map(
-                ([ref, name]: [string, string]) => {
+              options={neighboringAreas
+                ?.entries()
+                .toArray()
+                .map(([ref, name]) => {
                   return {
                     displayText: name,
                     value: ref,
                   };
-                },
-              )}
+                })}
               selected={mergeAreaName}
               onSelected={(value) =>
                 setMergeArea({ name: neighboringAreas[value], ref: value })
