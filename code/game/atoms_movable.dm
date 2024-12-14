@@ -1145,13 +1145,13 @@
 
 		loc = destination
 
-		if(!same_loc && loc == oldloc)
-			// when attempting to move an atom A into an atom B which already contains A, BYOND seems
-			// to silently refuse to move A to the new loc. This can really break stuff (see #77067)
-			stack_trace("Attempt to move [src] to [destination] was rejected by BYOND, possibly due to cyclic contents")
-			return FALSE
-
 		if(!same_loc)
+			if(loc == oldloc)
+				// when attempting to move an atom A into an atom B which already contains A, BYOND seems
+				// to silently refuse to move A to the new loc. This can really break stuff (see #77067)
+				stack_trace("Attempt to move [src] to [destination] was rejected by BYOND, possibly due to cyclic contents")
+				return FALSE
+
 			if(is_multi_tile && isturf(destination))
 				var/list/new_locs = block(
 					destination,
