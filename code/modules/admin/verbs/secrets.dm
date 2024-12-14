@@ -363,7 +363,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Send Shuttle Back"))
 			message_admins("[key_name_admin(holder)] sent the escape shuttle back to the station")
-			if (make_announcement != "No")
+			if (make_announcement && make_announcement != "No")
 				priority_announce(
 					text = announcement_text,
 					title = "Shuttle Trajectory Override",
@@ -707,7 +707,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 		message_admins("Emergency shuttle was unable to dock back to the station!")
 		SSshuttle.emergency.timer = 1 // Prevents softlocks
 		return
-	if (make_announcement != "No")
+	if (make_announcement && make_announcement != "No")
 		priority_announce(
 			text = "[SSshuttle.emergency] has returned to the station.",
 			title = "Emergency Shuttle Override",
