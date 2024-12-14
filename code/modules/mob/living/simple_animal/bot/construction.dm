@@ -197,8 +197,10 @@
 	icon_state = "repairbot_base"
 	throwforce = 10
 	created_name = "Repairbot"
+	///the toolbox our repairbot is made of
 	var/toolbox = /obj/item/storage/toolbox/mechanical
-	var/toolbox_color = "" //Blank for blue, r for red, y for yellow, etc.
+	///the color of our toolbox
+	var/toolbox_color = ""
 
 /obj/item/bot_assembly/repairbot/Initialize(mapload)
 	. = ..()
@@ -245,7 +247,9 @@
 			repair.toolbox = toolbox
 			repair.set_color(toolbox_color)
 			to_chat(user, span_notice("You add [item] to [src]. Boop beep!"))
-			qdel(item)
+			var/obj/item/stack/crafting_stack = item
+			var/atom/used_belt = crafting_stack.split_stack(user, 1)
+			qdel(used_belt)
 			qdel(src)
 
 

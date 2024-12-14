@@ -5893,8 +5893,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/ks13/science/ordnance)
 "Nk" = (
-/obj/effect/spawner/random/maintenance,
 /obj/structure/lattice,
+/obj/effect/spawner/random/maintenance/no_decals,
 /turf/template_noop,
 /area/space/nearstation)
 "Nl" = (

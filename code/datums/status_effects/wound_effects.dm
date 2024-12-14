@@ -30,6 +30,7 @@
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/limp
+	on_remove_on_mob_delete = TRUE
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 	/// The left leg of the limping person
 	var/obj/item/bodypart/leg/left/left
