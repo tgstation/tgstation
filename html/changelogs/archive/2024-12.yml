@@ -332,3 +332,41 @@
   - bugfix: Fixed moths only being able to fly if they spawn in zero gravity
   grungussuss:
   - bugfix: '*me emote works again'
+2024-12-14:
+  EnterTheJake:
+  - bugfix: temporary blocks such as blade heretic orbiting knives properly stop body
+      throws.
+  Ghommie:
+  - bugfix: Actually fixed alt-clicking aquariums.
+  Majkl-J:
+  - bugfix: Aloe cream no longer catches fire seconds after finishing baking
+  - bugfix: Overcharged SMESes no longer spam runtime when timers chug up
+  NecromancerAnne (code), orcacora (sprites):
+  - rscadd: Adds NT BR-38 Battle Rifles. A hybrid weapon. Find it in your local armory
+      and cargo catalogue today. (Keep away from EMPs)
+  Runi-c:
+  - balance: medical doctors can buy Reagent Dartgun from traitor uplink
+  SmArtKar:
+  - bugfix: Fixes primed stingbangs being invisible
+  SmArtKar, LemonInTheDark:
+  - rscadd: Changed how spraycans color items - "old" mode is still availible via
+      right click.
+  - refactor: Refactored how some items and effects color things so that they look
+      prettier.
+  SyncIt21:
+  - code_imp: improved code for leaning
+  distributivgesetz:
+  - code_imp: Fixed rare cases where moving an object somewhere could silently fail,
+      but still run unintended code. Report any weird issues on Github
+  grungussuss:
+  - bugfix: fixed regal rat attack logic
+  - bugfix: fixed access on birdshot engi mulebot delivery window
+  mcbalaam:
+  - qol: Now all antagonists are visible to an admin in the orbit menu!
+  norsvenska:
+  - spellcheck: The Lance and Raven shuttle airlocks are now properly labelled emergency
+      airlocks, rather than emegency airlocks.
+  - spellcheck: The radio jammer now releases disruptor waves, rather than distruptor
+      waves.
+  timothymtorres:
+  - sound: Add water sound to sinks

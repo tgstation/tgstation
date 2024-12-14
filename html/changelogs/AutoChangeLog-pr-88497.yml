@@ -1,4 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes:
-  - code_imp: "Fixed rare cases where moving an object somewhere could silently fail, but still run unintended code. Report any weird issues on Github"
