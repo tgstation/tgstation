@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tram spoilers correctly provide welder or multitool hints depending on their damage"
-  - bugfix: "Malfunctioning tram controller flashes orange and can be preemptively fixed before it crashes"

@@ -1264,14 +1264,11 @@
  * * gauze- Just the gauze stack we're taking a sheet from to apply here
  */
 /obj/item/bodypart/proc/apply_gauze(obj/item/stack/medical/gauze/new_gauze)
-	if(!istype(new_gauze) || !new_gauze.absorption_capacity)
+	if(!istype(new_gauze) || !new_gauze.absorption_capacity || !new_gauze.use(1))
 		return
-	var/newly_gauzed = FALSE
-	if(!current_gauze)
-		newly_gauzed = TRUE
+	var/newly_gauzed = !current_gauze
 	QDEL_NULL(current_gauze)
 	current_gauze = new new_gauze.type(src, 1)
-	new_gauze.use(1)
 	current_gauze.gauzed_bodypart = src
 	if(newly_gauzed)
 		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZED, current_gauze, new_gauze)
