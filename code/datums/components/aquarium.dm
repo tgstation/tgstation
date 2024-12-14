@@ -189,7 +189,7 @@
 
 /datum/component/aquarium/proc/on_click_alt(atom/movable/source, mob/living/user)
 	SIGNAL_HANDLER
-	if(!user.can_perform_action(src))
+	if(!user.can_perform_action(source))
 		return
 	var/closing = HAS_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN)
 	if(closing)
