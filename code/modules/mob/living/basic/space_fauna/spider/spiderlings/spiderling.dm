@@ -36,7 +36,7 @@
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddComponent(/datum/component/swarming)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, 50) // they're small but you can hear 'em
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, 30) // they're small but you can hear 'em
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/spiderling_web)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
