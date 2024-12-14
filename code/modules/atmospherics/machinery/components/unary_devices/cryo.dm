@@ -74,7 +74,6 @@
 	circuit = /obj/item/circuitboard/machine/cryo_tube
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
 	processing_flags = NONE
-	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.75
