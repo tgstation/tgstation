@@ -20,20 +20,32 @@
 	station_only = my_circuit.station_only
 
 	// If the console is station_only, set up the alert_control to only listen to station areas
+	// This only functions for mapped in ones. Ones built in-round have to redo this in on_construction().
 	if(station_only)
+		name = "station alert console"
 		var/list/alert_areas
 		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
 		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), listener_areas = alert_areas, title = name)
 	else // If not station_only, just check the z-level
+		name = "local alert console"
 		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), title = name)
 	RegisterSignals(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
 	return ..()
 
 /obj/machinery/computer/station_alert/on_construction(mob/user)
 	. = ..()
-	// Same code as Initialize to make sure that the circuit and console share the station_only setting
 	var/obj/item/circuitboard/computer/station_alert/my_circuit = circuit
 	station_only = my_circuit.station_only
+	// The circuitboard isn't "added" to the machine until this proc... this code resets and re-does
+	// the code done in Initialize, so that station crew can re-build these during a round.
+	if(station_only)
+		UnregisterSignal(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
+		QDEL_NULL(alert_control)
+		name = "station alert console"
+		var/list/alert_areas
+		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), listener_areas = alert_areas, title = name)
+		RegisterSignals(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
 
 /obj/machinery/computer/station_alert/Destroy()
 	QDEL_NULL(alert_control)
