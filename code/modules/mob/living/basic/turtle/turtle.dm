@@ -1,7 +1,7 @@
 #define PATH_PEST_KILLER "path_pest_killer"
 #define PATH_PLANT_HEALER "path_plant_healer"
 #define PATH_PLANT_MUTATOR "path_plant_mutator"
-#define REQUIRED_TREE_GROWTH 400
+#define REQUIRED_TREE_GROWTH 250
 #define UPPER_BOUND_VOLUME 50
 #define LOWER_BOUND_VOLUME 10
 
