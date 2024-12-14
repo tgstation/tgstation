@@ -50,7 +50,11 @@
 	if(uploaded_icons["[name]"])
 		CRASH("We tried uploading an icon, but the name \"[name]\" was already taken!")
 
-	fcopy(icon, "data/autowiki_files/[name].png")
+	// BANDASTATION EDIT - START
+	var/icon/scaled_icon = icon
+	scaled_icon.Scale(64, 64)
+	fcopy(scaled_icon, "data/autowiki_files/[name].png") // icon -> scaled_icon
+	// BANDASTATION EDIT - END
 	uploaded_icons["[name]"] = TRUE
 
 /// Escape a parameter such that it can be correctly put inside a wiki output

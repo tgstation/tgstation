@@ -1,0 +1,4 @@
+#include "_jobs.dm"
+
+#include "code/detective/detective.dm"
+#include "code/detective/forensics.dm"
