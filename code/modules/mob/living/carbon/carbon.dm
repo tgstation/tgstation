@@ -245,9 +245,8 @@
 		paper_note.show_through_camera(usr)
 
 /mob/living/carbon/on_fall()
-	..()
+	. = ..()
 	loc?.handle_fall(src)
-	return
 
 /mob/living/carbon/resist_buckle()
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED))
