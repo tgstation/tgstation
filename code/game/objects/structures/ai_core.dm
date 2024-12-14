@@ -94,6 +94,7 @@
 		core_mmi.update_appearance()
 
 /obj/structure/ai_core/deactivated/Destroy()
+	attached_ai.linked_core = null
 	attached_ai = null
 	. = ..()
 
