@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - code_imp: "Various mob attack procs are treated as unarmed attacks as a baseline assumption, rather than melee attacks."
