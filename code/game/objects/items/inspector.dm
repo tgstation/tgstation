@@ -90,14 +90,16 @@
 
 /obj/item/inspector/examine(mob/user)
 	. = ..()
+	. += span_info("Use in-hand to scan the local area, creating an encrypted security inspection.")
+	. += span_info("Use on an item to scan if it contains, or is, contraband.")
 	if(!cell_cover_open)
-		. += "Its cell cover is closed. It looks like it could be <strong>pried</strong> out, but doing so would require an appropriate tool."
+		. += span_notice("Its cell cover is closed. It looks like it could be <strong>pried</strong> out, but doing so would require an appropriate tool.")
 		return
-	. += "Its cell cover is open, exposing the cell slot. It looks like it could be <strong>pried</strong> in, but doing so would require an appropriate tool."
+	. += span_notice("Its cell cover is open, exposing the cell slot. It looks like it could be <strong>pried</strong> in, but doing so would require an appropriate tool.")
 	if(!cell)
-		. += "The slot for a cell is empty."
+		. += span_notice("The slot for a cell is empty.")
 	else
-		. += "\The [cell] is firmly in place. [span_info("Ctrl-click with an empty hand to remove it.")]"
+		. += span_notice("\The [cell] is firmly in place. Ctrl-click with an empty hand to remove it.")
 
 /obj/item/inspector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!user.Adjacent(interacting_with))
