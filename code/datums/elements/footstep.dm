@@ -15,7 +15,7 @@
 	///Whether or not to add variation to the sounds played
 	var/sound_vary = FALSE
 
-/datum/element/footstep/Attach(datum/target, footstep_type = FOOTSTEP_MOB_BAREFOOT, volume = 0.5, e_range = -8, sound_vary = FALSE)
+/datum/element/footstep/Attach(datum/target, footstep_type = FOOTSTEP_MOB_BAREFOOT, volume = 70, e_range = -8, sound_vary = FALSE)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
@@ -72,7 +72,7 @@
 			var/sound = 'sound/effects/footstep/crawl1.ogg'
 			if(HAS_TRAIT(source, TRAIT_FLOPPING))
 				sound = pick(SFX_FISH_PICKUP, 'sound/mobs/non-humanoids/fish/fish_drop1.ogg')
-			playsound(turf, sound, 15 * volume, falloff_distance = 1, vary = sound_vary)
+			playsound(turf, sound, 15, extrarange = e_range, falloff_distance = 1, vary = sound_vary)
 		return
 
 	if(iscarbon(source) && source.move_intent == MOVE_INTENT_WALK)
@@ -126,7 +126,7 @@
 		return
 
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
-		playsound(source.loc, footstep_sounds, volume, falloff_distance = 1, vary = sound_vary)
+		playsound(source.loc, footstep_sounds, volume, extrarange = e_range, falloff_distance = 1, vary = sound_vary)
 		return
 
 	var/turf_footstep = prepared_steps[footstep_type]
@@ -228,4 +228,4 @@
 	if(CHECK_MOVE_LOOP_FLAGS(source, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		return
 
-	playsound(source_loc, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
+	playsound(source_loc, footstep_sounds, 50, extrarange = e_range, falloff_distance = 1, vary = sound_vary)

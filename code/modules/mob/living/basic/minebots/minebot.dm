@@ -66,7 +66,7 @@
 	var/static/list/death_drops = list(/obj/effect/decal/cleanable/robot_debris/old)
 	AddElement(/datum/element/death_drops, death_drops)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
-	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
+	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 70, -6, sound_vary = TRUE)
 
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/missile_launcher = BB_MINEBOT_MISSILE_ABILITY,
