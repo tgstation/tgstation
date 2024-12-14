@@ -92,6 +92,7 @@
 	icon_state = "tizira_water"
 	base_icon_state = "tizira_water"
 	baseturfs = /turf/open/water/beach/tizira
+	fishing_datum = /datum/fish_source/tizira
 
 /**
  * A special subtype of water with steam particles and a status effect similar to showers, that's however only applied if
@@ -113,6 +114,12 @@
 
 /turf/open/water/hot_spring/Initialize(mapload)
 	. = ..()
+	// We need to add the immerse element now because the icon_states are randomized and
+	// we don't want to end up with 4 different immerse elements, which would cause
+	// the immerse trait to be repeatedly removed and readded as someone moves within the pool,
+	// replacing the status effect over and over, which can be seen through the status effect alert icon.
+	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
+	immerse_added = TRUE
 	icon_state = "pool_[rand(1, 4)]"
 	particle_effect = new(src, /particles/hotspring_steam, 4)
 	//render the steam over mobs and objects on the game plane
@@ -122,8 +129,7 @@
 	add_filter("hot_spring_waves", 1, wave_filter(y = 1, size = 1, offset = 0, flags = WAVE_BOUNDED))
 	var/filter = get_filter("hot_spring_waves")
 	animate(filter, offset = 1, time = 3 SECONDS, loop = -1, easing = SINE_EASING|EASE_IN|EASE_OUT)
-	animate(offset = -1, time = 3 SECONDS, easing = SINE_EASING|EASE_IN|EASE_OUT)
-
+	animate(offset = 0, time = 3 SECONDS, easing = SINE_EASING|EASE_IN|EASE_OUT)
 
 /turf/open/water/hot_spring/Destroy()
 	QDEL_NULL(particle_effect)
@@ -138,11 +144,7 @@
 		return
 	enter_hot_spring(arrived)
 
-/turf/open/water/hot_spring/proc/enter_initialized_movable(datum/source, atom/movable/movable)
-	SIGNAL_HANDLER
-	if(!immerse_added && !is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
-		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
-		immerse_added = TRUE
+/turf/open/water/hot_spring/on_atom_inited(datum/source, atom/movable/movable)
 	enter_hot_spring(movable)
 
 ///Registers the signals from the immerse element and calls dip_in if the movable has the required trait.
