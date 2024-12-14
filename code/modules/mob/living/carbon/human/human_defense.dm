@@ -85,8 +85,8 @@
 
 /mob/living/carbon/human/check_block(atom/hit_by, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
 	. = ..()
-	if(.)
-		return TRUE
+	if(. == SUCCESSFUL_BLOCK)
+		return SUCCESSFUL_BLOCK
 
 	var/block_chance_modifier = round(damage / -3)
 	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_HELD))
@@ -100,9 +100,9 @@
 
 		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration) / 2, 0, 100)) + block_chance_modifier
 		if(worn_thing.hit_reaction(src, hit_by, attack_text, final_block_chance, damage, attack_type, damage_type))
-			return TRUE
+			return SUCCESSFUL_BLOCK
 
-	return FALSE
+	return FAILED_BLOCK
 
 /mob/living/carbon/human/grippedby(mob/living/carbon/user, instant = FALSE)
 	if(w_uniform)

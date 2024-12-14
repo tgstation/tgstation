@@ -25,6 +25,13 @@
 	wound_bonus = 5
 	/// How many interactions are we currently performing
 	var/current_interactions = 0
+	/// Items we should not interact with when left clicking
+	var/static/list/lmb_exception_typecache = typecacheof(list(
+		/obj/structure/table,
+		/obj/structure/rack,
+		/obj/structure/closet,
+		/obj/machinery/disposal,
+	))
 
 /obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()
@@ -45,6 +52,9 @@
 	if (user.combat_mode || !user.has_hand_for_held_index(user.get_inactive_hand_index()))
 		return NONE
 
+	if (is_type_in_typecache(interacting_with, lmb_exception_typecache) && !LAZYACCESS(modifiers, RIGHT_CLICK))
+		return NONE
+
 	if (current_interactions)
 		var/obj/item/other_tool = user.get_inactive_held_item()
 		if (!istype(other_tool)) // what even
@@ -60,7 +70,6 @@
 	for (var/obj/item/tool in atom_storage.real_location)
 		if(is_type_in_list(tool, GLOB.tool_items))
 			item_radial[tool] = tool.appearance
-			break
 
 	if (!length(item_radial))
 		return NONE
