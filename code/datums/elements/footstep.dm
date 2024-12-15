@@ -218,6 +218,10 @@
 /datum/element/footstep/proc/play_simplestep_machine(atom/movable/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
+	var/list/prepared_steps = prepare_step(source)
+	if(isnull(prepared_steps))
+		return
+
 	if(source.moving_diagonally == SECOND_DIAG_STEP)
 		return // to prevent a diagonal step from counting as 2
 
