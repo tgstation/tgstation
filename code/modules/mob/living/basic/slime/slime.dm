@@ -127,7 +127,7 @@
 
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/basic_health_examine, light_damage_message = "It has some punctures in its flesh!", heavy_damage_message = span_bold("It has severe punctures and tears in its flesh!"), heavy_threshold = 0.4)
-	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SLIME)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SLIME)
 	AddElement(/datum/element/soft_landing)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 

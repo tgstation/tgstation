@@ -60,7 +60,7 @@
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/wall_smasher)
 	AddElement(/datum/element/ridable, component_type = /datum/component/riding/creature/leaper)
-	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_HEAVY)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	var/datum/action/cooldown/mob_cooldown/blood_rain/volley = new(src)
 	volley.Grant(src)
 	ai_controller.set_blackboard_key(BB_LEAPER_VOLLEY, volley)

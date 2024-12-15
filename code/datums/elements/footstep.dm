@@ -1,25 +1,28 @@
-///Footstep element. Plays footsteps at parents location when it is appropriate.
+/// Footstep element. Plays footsteps at parents location when it is appropriate.
 /datum/element/footstep
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	///A list containing living mobs and the number of steps they have taken since the last time their footsteps were played.
+	/// A list containing living mobs and the number of steps they have taken since the last time their footsteps were played.
 	var/list/steps_for_living = list()
-	///volume determines the extra volume of the footstep. This is multiplied by the base volume, should there be one.
+	/// The volume of a sound that will be played
 	var/volume
-	///e_range stands for extra range - aka how far the sound can be heard. This is added to the base value and ignored if there isn't a base value.
+	/// The volume multipler of a sound
+	var/volume_multiplier
+	/// Extra range - aka how far the sound can be heard. This is added to the base value and ignored if there isn't a base value.
 	var/e_range
-	///footstep_type is a define which determines what kind of sounds should get chosen.
+	/// Footstep_type is a define which determines what kind of sounds should get chosen.
 	var/footstep_type
-	///This can be a list OR a soundfile OR null. Determines whatever sound gets played.
+	/// This can be a list OR a soundfile OR null. Determines whatever sound gets played.
 	var/footstep_sounds
-	///Whether or not to add variation to the sounds played
+	/// Whether or not to add variation to the sounds played
 	var/sound_vary = FALSE
 
-/datum/element/footstep/Attach(datum/target, footstep_type = FOOTSTEP_MOB_BAREFOOT, volume = 70, e_range = -8, sound_vary = FALSE)
+/datum/element/footstep/Attach(datum/target, footstep_type = FOOTSTEP_MOB_BAREFOOT, e_range = -8, volume = 40, volume_multiplier = 1, sound_vary = FALSE)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	src.volume = volume
+	src.volume_multiplier = volume_multiplier
 	src.e_range = e_range
 	src.footstep_type = footstep_type
 	src.sound_vary = sound_vary
@@ -72,7 +75,7 @@
 			var/sound = 'sound/effects/footstep/crawl1.ogg'
 			if(HAS_TRAIT(source, TRAIT_FLOPPING))
 				sound = pick(SFX_FISH_PICKUP, 'sound/mobs/non-humanoids/fish/fish_drop1.ogg')
-			playsound(turf, sound, 15, extrarange = e_range, falloff_distance = 1, vary = sound_vary)
+			playsound(turf, sound, 7.5 * volume_multiplier, extrarange = e_range, falloff_distance = 1, vary = sound_vary)
 		return
 
 	if(iscarbon(source) && source.move_intent == MOVE_INTENT_WALK)
@@ -126,13 +129,13 @@
 		return
 
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
-		playsound(source.loc, footstep_sounds, volume, extrarange = e_range, falloff_distance = 1, vary = sound_vary)
+		playsound(source.loc, footstep_sounds, volume * volume_multiplier, extrarange = e_range, falloff_distance = 1, vary = sound_vary)
 		return
 
 	var/turf_footstep = prepared_steps[footstep_type]
 	if(isnull(turf_footstep) || !footstep_sounds[turf_footstep])
 		return
-	playsound(source.loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary)
+	playsound(source.loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume_multiplier, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary)
 
 /datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
@@ -185,18 +188,18 @@
 	if(!length(footstep_sounds))
 		return
 
-	var/volume_multiplier = 1
-	var/range_adjustment = 0
+	var/combined_volume_multiplier = volume_multiplier
+	var/combined_range_adjustment = e_range
 
 	if(HAS_TRAIT(source, TRAIT_LIGHT_STEP))
-		volume_multiplier = 0.6
-		range_adjustment = -2
+		combined_volume_multiplier *= 0.6
+		combined_range_adjustment += -2
 
 	// list returned by playsound() filled by client mobs who heard the footstep. given to play_fov_effect()
 	var/list/heard_clients
 	var/picked_sound = pick(footstep_sounds[1])
-	var/picked_volume = footstep_sounds[2] * volume * volume_multiplier
-	var/picked_range = footstep_sounds[3] + e_range + range_adjustment
+	var/picked_volume = footstep_sounds[2] * combined_volume_multiplier
+	var/picked_range = footstep_sounds[3] + combined_range_adjustment
 
 	heard_clients = playsound(
 		source = source,
@@ -228,4 +231,4 @@
 	if(CHECK_MOVE_LOOP_FLAGS(source, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		return
 
-	playsound(source_loc, footstep_sounds, 50, extrarange = e_range, falloff_distance = 1, vary = sound_vary)
+	playsound(source_loc, footstep_sounds, volume, extrarange = e_range, falloff_distance = 1, vary = sound_vary)

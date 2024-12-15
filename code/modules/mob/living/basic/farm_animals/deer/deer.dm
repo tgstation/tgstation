@@ -28,7 +28,7 @@
 /mob/living/basic/deer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	var/time_to_freeze_for = (rand(5, 10) SECONDS)
 	ai_controller.set_blackboard_key(BB_STATIONARY_SECONDS, time_to_freeze_for)
 	ai_controller.set_blackboard_key(BB_STATIONARY_COOLDOWN, (time_to_freeze_for * (rand(3, 5))))

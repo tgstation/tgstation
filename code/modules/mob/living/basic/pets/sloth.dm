@@ -50,7 +50,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 /mob/living/basic/sloth/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "ssmile")
-	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/tree_climber)
 

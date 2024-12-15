@@ -25,7 +25,7 @@
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
 	AddComponent(/datum/component/personal_crafting)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 70, -6)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, e_range=-6, volume_multiplier=2)
 	AddComponent(/datum/component/bloodysoles/feet, FOOTPRINT_SPRITE_SHOES)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items, TYPE_PROC_REF(/mob/living/carbon/human/, should_strip))

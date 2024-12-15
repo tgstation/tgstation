@@ -113,7 +113,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 			post_birth = CALLBACK(src, PROC_REF(egg_inherit)),\
 			breed_timer = 3 MINUTES,\
 		)
-	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
 	adjust_offsets(dir)
 	add_happiness_component()

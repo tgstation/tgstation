@@ -49,7 +49,7 @@
 	. = ..()
 	add_udder()
 	AddElement(/datum/element/cliff_walking) //we walk the cliff
-	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/ai_retaliate)
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attack))
