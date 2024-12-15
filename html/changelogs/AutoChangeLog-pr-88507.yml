@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Treatment message now better reflects what you're doing (\"suturing\", \"applying\", etc)"
+  - bugfix: "Gauze is now stickier (and will actually apply to bodyparts)"
