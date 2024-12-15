@@ -671,6 +671,8 @@
 		to_chat(user, span_boldwarning("You cannot send IC messages (muted)."))
 		return FALSE
 
+/datum/emote/living/custom/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
 	var/our_message = params ? params : get_custom_emote_from_user()
 
 	if(!emote_is_valid(user, our_message))
