@@ -38,7 +38,7 @@
 
 /mob/living/basic/mining/brimdemon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume_multiplier = 0.5)
 	beam = new(src)
 	beam.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, beam)

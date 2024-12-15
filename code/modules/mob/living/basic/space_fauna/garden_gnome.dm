@@ -105,7 +105,7 @@
 	chosen_hat_colour = pick_weight(gnome_hat_colours)
 	apply_colour()
 	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE, volume_multiplier = 0.5)
 	AddComponent(/datum/component/ai_retaliate_advanced, retaliate_callback)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/ground_sinking, target_icon_state = icon_state, outline_colour = chosen_hat_colour, damage_res_sinked = resistance_when_sinked)

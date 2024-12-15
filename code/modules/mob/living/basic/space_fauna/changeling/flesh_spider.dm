@@ -46,7 +46,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_WEB_SURFER, INNATE_TRAIT)
 	AddElement(/datum/element/cliff_walking)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume_multiplier = 0.5)
 	AddElement(/datum/element/venomous, /datum/reagent/toxin/hunterspider, 5, injection_flags = INJECT_CHECK_PENETRATE_THICK)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
 	AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)

@@ -56,7 +56,7 @@
 	. = ..()
 
 	ADD_TRAIT(src, TRAIT_WOUND_LICKER, INNATE_TRAIT)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume_multiplier = 0.5)
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/basic_mob_ability_telegraph)

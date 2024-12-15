@@ -62,7 +62,7 @@
 		/obj/item/staff
 	))
 	AddElement(/datum/element/death_drops, remains)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE, volume_multiplier = 0.5)
 
 	if(isnull(targeted_spell_path))
 		targeted_spell_path = pick(targeted_spell_list)

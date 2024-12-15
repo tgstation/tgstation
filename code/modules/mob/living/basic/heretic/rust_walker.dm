@@ -16,7 +16,7 @@
 
 /mob/living/basic/heretic_summon/rust_walker/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_RUST)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_RUST, volume_multiplier = 0.5)
 
 	var/static/list/grantable_spells = list(
 		/datum/action/cooldown/spell/aoe/rust_conversion = BB_GENERIC_ACTION,

@@ -44,7 +44,7 @@
 
 /mob/living/basic/clown/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE, volume_multiplier = 0.5)
 	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(retaliate_callback)))
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, emotes)
 	//im not putting dynamic humans or whatever its called here because this is the base path of nonhuman clownstrosities

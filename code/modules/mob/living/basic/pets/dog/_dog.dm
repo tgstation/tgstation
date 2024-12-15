@@ -66,7 +66,7 @@
 	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state)
 	ADD_TRAIT(src, TRAIT_WOUND_LICKER, INNATE_TRAIT)
 	AddElement(/datum/element/pet_bonus, "woof")
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume_multiplier = 0.5)
 	AddElement(/datum/element/unfriend_attacker, untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat/slab/human/mutant/skeleton, /obj/item/stack/sheet/bone), tame_chance = 30, bonus_tame_chance = 15, unique = FALSE)
 	AddComponent(/datum/component/obeys_commands, pet_commands)

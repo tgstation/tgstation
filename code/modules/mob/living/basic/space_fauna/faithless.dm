@@ -39,7 +39,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	AddElement(/datum/element/door_pryer)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE, volume_multiplier = 0.5)
 	AddElement(/datum/element/mob_grabber, steal_from_others = FALSE)
 
 /mob/living/basic/faithless/melee_attack(atom/target, list/modifiers, ignore_cooldown)

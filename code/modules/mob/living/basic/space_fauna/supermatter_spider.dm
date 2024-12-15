@@ -42,7 +42,7 @@
 	AddComponent(/datum/component/swarming)
 
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume_multiplier = 0.5)
 
 /// Proc that we call on attacking something to dust 'em.
 /mob/living/basic/supermatter_spider/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)

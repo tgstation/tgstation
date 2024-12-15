@@ -44,7 +44,7 @@
 	. = ..()
 	AddComponent(/datum/component/profound_fisher)
 	AddElement(/datum/element/mob_grabber)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume_multiplier = 0.5)
 	AddElement(/datum/element/basic_eating, food_types = target_foods)
 	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
 	AddComponent(\

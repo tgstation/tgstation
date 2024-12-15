@@ -53,7 +53,7 @@
 	AddElement(/datum/element/cultist_pet)
 	AddElement(/datum/element/wears_collar)
 	AddElement(/datum/element/pet_bonus, "yap")
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume_multiplier = 0.5)
 	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_SMALL)
 	AddElement(/datum/element/ai_retaliate)
 

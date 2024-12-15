@@ -55,7 +55,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_TENTACLE_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY, volume_multiplier = 0.5)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = goliath_foods)
 	AddElement(\
 		/datum/element/change_force_on_death,\

@@ -41,7 +41,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY, volume_multiplier = 0.5)
 	AddComponent(/datum/component/basic_mob_ability_telegraph)
 	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
 

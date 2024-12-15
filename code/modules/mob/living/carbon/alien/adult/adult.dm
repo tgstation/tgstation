@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 
 /mob/living/carbon/alien/adult/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, e_range=-11, volume_multiplier=2)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, e_range = -11)
 	AddElement(/datum/element/strippable, GLOB.strippable_alien_humanoid_items)
 
 /mob/living/carbon/alien/adult/create_internal_organs()

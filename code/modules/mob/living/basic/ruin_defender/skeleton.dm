@@ -44,7 +44,7 @@
 /mob/living/basic/skeleton/Initialize(mapload)
 	. = ..()
 	apply_dynamic_human_appearance(src, outfit, species, r_hand = held_item)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE, volume_multiplier = 0.5)
 	if(LAZYLEN(loot))
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
