@@ -32,7 +32,7 @@ type ShuttleConfigurationUniqueData = {
   defaultApc: BooleanLike;
   apcInMergeRegion: BooleanLike;
   apcs: Record<string, BooleanLike>;
-  neighboringAreas: Map<string, string>;
+  neighboringAreas: Record<string, string>;
   idle: BooleanLike;
 };
 
@@ -220,7 +220,7 @@ const ShuttleConfiguration = () => {
   } = data;
   const { name: currentAreaName, ref: currentAreaRef } = currentArea;
   const { name: mergeAreaName, ref: mergeAreaRef } = mergeArea;
-  const removalApcConflict = defaultApc && apcs?.[currentAreaRef];
+  const removalApcConflict = defaultApc && apcs[currentAreaRef];
   const mergeApcConflict = apcInMergeRegion && apcs[mergeAreaRef];
   return (
     <Stack fill vertical align="center" justify="space-around">
@@ -278,15 +278,12 @@ const ShuttleConfiguration = () => {
           <Stack.Item>
             <Dropdown
               placeholder="Select Area"
-              options={neighboringAreas
-                ?.entries()
-                .toArray()
-                .map(([ref, name]) => {
-                  return {
-                    displayText: name,
-                    value: ref,
-                  };
-                })}
+              options={Object.entries(neighboringAreas).map(([ref, name]) => {
+                return {
+                  displayText: name,
+                  value: ref,
+                };
+              })}
               selected={mergeAreaName}
               onSelected={(value) =>
                 setMergeArea({ name: neighboringAreas[value], ref: value })
