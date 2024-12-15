@@ -37,6 +37,11 @@
 	desc = "A small bottle of spewium."
 	list_reagents = list(/datum/reagent/toxin/spewium = 30)
 
+/obj/item/reagent_containers/cup/bottle/syndol
+	name = "syndol bottle"
+	desc = "A small bottle of syndol."
+	list_reagents = list(/datum/reagent/drug/syndol = 30)
+
 /obj/item/reagent_containers/cup/bottle/morphine
 	name = "morphine bottle"
 	desc = "A small bottle of morphine."

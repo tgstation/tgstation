@@ -311,7 +311,7 @@
 	},
 /obj/structure/rack,
 /obj/item/wrench,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large/twenty_force,
 /obj/machinery/light/small/built/directional/south,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)

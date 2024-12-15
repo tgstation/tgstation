@@ -130,7 +130,7 @@
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/light/small/directional/south,
 /obj/structure/table/reinforced,
-/obj/item/surgery_tray/full/morgue,
+/obj/effect/spawner/surgery_tray/full/morgue,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "adL" = (
@@ -10716,7 +10716,7 @@
 /obj/machinery/camera/autoname/directional/north,
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/status_display/ai/directional/west,
-/obj/item/surgery_tray/full/deployed,
+/obj/effect/spawner/surgery_tray/full/deployed,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/theatre)
 "dZk" = (
@@ -10872,7 +10872,10 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/machinery/door/window/right/directional/east,
+/obj/machinery/door/window/right/directional/east{
+	name = "Engineering Deliveries";
+	req_access = list("engineering")
+	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "ecn" = (
@@ -33933,7 +33936,7 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/airalarm/directional/north,
 /obj/structure/rack,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large,
 /obj/item/wirecutters,
 /obj/item/wrench,
 /turf/open/floor/iron,
@@ -34878,7 +34881,7 @@
 /area/station/tcommsat/server)
 "lPO" = (
 /obj/structure/table,
-/obj/item/surgery_tray/full{
+/obj/effect/spawner/surgery_tray/full{
 	pixel_y = -5
 	},
 /obj/item/wirecutters{
@@ -43772,7 +43775,7 @@
 /area/station/science/ordnance/burnchamber)
 "oZL" = (
 /obj/structure/table,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large,
 /obj/item/stack/cable_coil,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
@@ -47524,7 +47527,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "qmz" = (
@@ -57399,6 +57402,9 @@
 /obj/item/gun/energy/temperature/security,
 /obj/item/gun/energy/ionrifle{
 	pixel_y = 3
+	},
+/obj/item/gun/ballistic/automatic/battle_rifle{
+	pixel_y = 5
 	},
 /obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/iron/dark/small,

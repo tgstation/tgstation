@@ -344,7 +344,7 @@
 		movable_content.wash(CLEAN_WASH)
 	return TRUE
 
-/turf/open/handle_slip(mob/living/carbon/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, force_drop)
+/turf/open/handle_slip(mob/living/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, force_drop)
 	if(slipper.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return FALSE
 	if(!has_gravity(src))
@@ -382,9 +382,10 @@
 
 	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
 	slipper.add_mood_event("slipped", /datum/mood_event/slipped)
-	if(force_drop)
+	if(force_drop && iscarbon(slipper)) //carbon specific behavior that living doesn't have
+		var/mob/living/carbon/carbon = slipper
 		for(var/obj/item/item in slipper.held_items)
-			slipper.accident(item)
+			carbon.accident(item)
 
 	var/olddir = slipper.dir
 	slipper.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
@@ -399,7 +400,7 @@
 		slipper.Knockdown(knockdown_amount)
 		slipper.Paralyze(paralyze_amount)
 
-	if(buckled_obj)
+	if(!isnull(buckled_obj) && !ismob(buckled_obj))
 		buckled_obj.unbuckle_mob(slipper)
 		// This is added onto the end so they slip "out of their chair" (one tile)
 		lube |= SLIDE_ICE
