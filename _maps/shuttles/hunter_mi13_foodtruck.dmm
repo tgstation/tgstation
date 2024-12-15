@@ -15,7 +15,7 @@
 /area/shuttle/hunter/mi13_foodtruck)
 "af" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/structure/sign/poster/contraband/hacking_guide/directional/south,
 /turf/open/floor/circuit/red/off,
 /area/shuttle/hunter/mi13_foodtruck)

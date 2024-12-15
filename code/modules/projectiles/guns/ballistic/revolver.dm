@@ -318,3 +318,9 @@
 	clumsy_check = FALSE
 	icon_state = "mateba"
 
+/obj/item/gun/ballistic/revolver/peashooter
+	name = "peashooter"
+	icon_state = "peashooter"
+	desc = "A wild plantlife mutation that shoots hardened peas. Incredible."
+	fire_sound = 'sound/items/weapons/peashoot.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/peashooter

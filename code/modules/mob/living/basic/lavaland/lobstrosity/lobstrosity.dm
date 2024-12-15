@@ -184,7 +184,7 @@
 		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
 		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_up))\
 	)
-	AddComponent(/datum/component/tameable, target_foods, tame_chance = 35, bonus_tame_chance = 20)
+	AddComponent(/datum/component/tameable, tame_chance = 35, bonus_tame_chance = 20)
 	AddComponent(/datum/component/swarming, 16, 11)
 	ADD_TRAIT(src, TRAIT_MOB_HIDE_HAPPINESS, INNATE_TRAIT) //Do not let strangers know it gets happy when poked if stray.
 

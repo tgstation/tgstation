@@ -80,11 +80,12 @@
 	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
-	set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
 	if(limb.can_bleed())
 		if(victim.bodytemperature < (BODYTEMP_NORMAL - 10))
 			adjust_blood_flow(-0.1 * seconds_per_tick)
+			if(QDELETED(src))
+				return
 			if(SPT_PROB(2.5, seconds_per_tick))
 				to_chat(victim, span_notice("You feel the [LOWER_TEXT(name)] in your [limb.plaintext_zone] firming up from the cold!"))
 
@@ -92,15 +93,16 @@
 			adjust_blood_flow(0.25 * seconds_per_tick) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)
-		adjust_blood_flow(-limb.current_gauze.absorption_rate * gauzed_clot_rate * seconds_per_tick)
-		limb.current_gauze.absorption_capacity -= limb.current_gauze.absorption_rate * seconds_per_tick
+		var/gauze_power = limb.current_gauze.absorption_rate
+		limb.seep_gauze(gauze_power * seconds_per_tick)
+		adjust_blood_flow(-gauze_power * gauzed_clot_rate * seconds_per_tick)
 
-	if(blood_flow <= 0)
-		qdel(src)
-
-/datum/wound/pierce/bleed/on_stasis(seconds_per_tick, times_fired)
+/datum/wound/pierce/bleed/adjust_blood_flow(adjust_by, minimum)
 	. = ..()
-	if(blood_flow <= 0)
+	if(blood_flow > WOUND_MAX_BLOODFLOW)
+		blood_flow = WOUND_MAX_BLOODFLOW
+	if(blood_flow <= 0 && !QDELETED(src))
+		to_chat(victim, span_green("The holes on your [limb.plaintext_zone] have [!limb.can_bleed() ? "healed up" : "stopped bleeding"]!"))
 		qdel(src)
 
 /datum/wound/pierce/bleed/check_grab_treatments(obj/item/I, mob/user)
@@ -108,9 +110,7 @@
 		return TRUE
 
 /datum/wound/pierce/bleed/treat(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/medical/suture))
-		return suture(I, user)
-	else if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature())
+	if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature())
 		return tool_cauterize(I, user)
 
 /datum/wound/pierce/bleed/on_xadone(power)
@@ -122,32 +122,6 @@
 /datum/wound/pierce/bleed/on_synthflesh(reac_volume)
 	. = ..()
 	adjust_blood_flow(-0.025 * reac_volume) // 20u * 0.05 = -1 blood flow, less than with slashes but still good considering smaller bleed rates
-
-/// If someone is using a suture to close this puncture
-/datum/wound/pierce/bleed/proc/suture(obj/item/stack/medical/suture/I, mob/user)
-	var/self_penalty_mult = (user == victim ? 1.4 : 1)
-	var/treatment_delay = base_treat_time * self_penalty_mult
-
-	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
-		treatment_delay *= 0.5
-		user.visible_message(span_notice("[user] begins expertly stitching [victim]'s [limb.plaintext_zone] with [I]..."), span_notice("You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I], keeping the holo-image information in mind..."))
-	else
-		user.visible_message(span_notice("[user] begins stitching [victim]'s [limb.plaintext_zone] with [I]..."), span_notice("You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
-
-	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
-		return TRUE
-	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
-	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
-	var/blood_sutured = I.stop_bleeding / self_penalty_mult
-	adjust_blood_flow(-blood_sutured)
-	limb.heal_damage(I.heal_brute, I.heal_burn)
-	I.use(1)
-
-	if(blood_flow > 0)
-		return try_treating(I, user)
-	else
-		to_chat(user, span_green("You successfully close the hole in [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]."))
-		return TRUE
 
 /// If someone is using either a cautery tool or something with heat to cauterize this pierce
 /datum/wound/pierce/bleed/proc/tool_cauterize(obj/item/I, mob/user)
@@ -163,8 +137,12 @@
 	else
 		user.visible_message(span_danger("[user] begins cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
 
+	playsound(user, 'sound/items/handling/surgery/cautery1.ogg', 75, TRUE)
+
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
+
+	playsound(user, 'sound/items/handling/surgery/cautery2.ogg', 75, TRUE)
 
 	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
 	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
