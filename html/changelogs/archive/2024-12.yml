@@ -370,3 +370,27 @@
       waves.
   timothymtorres:
   - sound: Add water sound to sinks
+2024-12-15:
+  Ghommie:
+  - bugfix: Fixed the displayed stats when examining fishing rods twice.
+  LT3:
+  - bugfix: Fixed unconstructed solar panels on Nebulastation port aft solars
+  Melbert:
+  - rscadd: Adds Syndol to the chemical kit, an addictive hallucinogen that applies
+      bonus effects when security officers, assistants, or clowns are exposed.
+  - bugfix: Metalgen works as a lockpick; igniting a crate metalgen'd into plasma
+      will properly drop its contents.
+  - code_imp: Hiding stuff in food should generally work more consistently now.
+  - bugfix: Fixes players not doing the "searching for item" do-after for items hidden
+      in food.
+  - qol: When dragging an item (like, with your mouse cursor. not physically), your
+      cursor updates when hovering humans or cyborgs to indicate you're hovering over
+      a human or cyborg.
+  Paxilmaniac:
+  - bugfix: Fixes resin sprayers not working if the target is more than one tile away
+      from you
+  necromanceranne:
+  - code_imp: Various mob attack procs are treated as unarmed attacks as a baseline
+      assumption, rather than melee attacks.
+  timothymtorres:
+  - code_imp: Improve looping sounds to allow nested and non-associative lists
