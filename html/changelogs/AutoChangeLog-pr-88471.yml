@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "When dragging an item (like, with your mouse cursor. not physically), your cursor updates when hovering humans or cyborgs to indicate you're hovering over a human or cyborg."
