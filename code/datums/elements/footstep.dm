@@ -17,7 +17,7 @@
 	/// Whether or not to add variation to the sounds played
 	var/sound_vary = FALSE
 
-/datum/element/footstep/Attach(datum/target, footstep_type = FOOTSTEP_MOB_BAREFOOT, e_range = -8, volume = 40, volume_multiplier = 1, sound_vary = FALSE)
+/datum/element/footstep/Attach(datum/target, footstep_type = FOOTSTEP_MOB_BAREFOOT, volume = 75, e_range = -8, sound_vary = FALSE, volume_multiplier = 1)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
