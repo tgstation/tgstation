@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "Turbine converts energy to power correctly & shows correct reading with multitool"
+  - refactor: "turbine code has been overall improved. report bugs on github"

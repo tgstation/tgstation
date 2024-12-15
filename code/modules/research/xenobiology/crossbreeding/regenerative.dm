@@ -30,7 +30,7 @@ Regenerative extracts:
 			span_notice("You squeeze [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!"))
 	core_effect_before(H, user)
 	user.do_attack_animation(interacting_with)
-	H.revive(HEAL_ALL)
+	H.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
 	core_effect(H, user)
 	playsound(H, 'sound/effects/splat.ogg', 40, TRUE)
 	qdel(src)
@@ -128,13 +128,13 @@ Regenerative extracts:
 	if(fireproofed)
 		target.visible_message(span_notice("Some of [target]'s clothing gets coated in the goo, and turns blue!"))
 
-/obj/item/slimecross/regenerative/darkblue/proc/fireproof(obj/item/clothing/C)
-	C.name = "fireproofed [C.name]"
-	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	C.add_atom_colour(COLOR_NAVY, FIXED_COLOUR_PRIORITY)
-	C.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	C.heat_protection = C.body_parts_covered
-	C.resistance_flags |= FIRE_PROOF
+/obj/item/slimecross/regenerative/darkblue/proc/fireproof(obj/item/clothing/clothing_piece)
+	clothing_piece.name = "fireproofed [clothing_piece.name]"
+	clothing_piece.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	clothing_piece.add_atom_colour(color_transition_filter(COLOR_NAVY, SATURATION_OVERRIDE), FIXED_COLOUR_PRIORITY)
+	clothing_piece.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	clothing_piece.heat_protection = clothing_piece.body_parts_covered
+	clothing_piece.resistance_flags |= FIRE_PROOF
 
 /obj/item/slimecross/regenerative/silver
 	colour = SLIME_TYPE_SILVER
@@ -188,7 +188,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/pyrite/core_effect(mob/living/target, mob/user)
 	target.visible_message(span_warning("The milky goo coating [target] leaves [target.p_them()] a different color!"))
-	target.add_atom_colour(rgb(rand(0,255),rand(0,255),rand(0,255)),WASHABLE_COLOUR_PRIORITY)
+	target.add_atom_colour(color_transition_filter(rgb(rand(0,255), rand(0,255), rand(0,255)), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/slimecross/regenerative/red
 	colour = SLIME_TYPE_RED
@@ -270,7 +270,7 @@ Regenerative extracts:
 	if(target == user)
 		return
 	var/mob/living/U = user
-	U.revive(HEAL_ALL)
+	U.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
 	to_chat(U, span_notice("Some of the milky goo sprays onto you, as well!"))
 
 /obj/item/slimecross/regenerative/adamantine
