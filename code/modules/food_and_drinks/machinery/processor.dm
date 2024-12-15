@@ -295,9 +295,6 @@
 
 /obj/item/circuit_component/slime_processor/input_received()
 	var/list/contents = attached_processor.processor_contents
-	if(!LAZYLEN(contents))
-		amount.set_output(0)
-	else
-		amount.set_output(LAZYLEN(contents))
+	amount.set_output(LAZYLEN(contents))
 
 #undef PROCESSOR_SELECT_RECIPE
