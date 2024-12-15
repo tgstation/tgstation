@@ -208,10 +208,10 @@
 	if(is_type_in_typecache(target, kinetic_gun?.ignored_mob_types))
 		return PROJECTILE_PIERCE_PHASE
 	. = ..()
-
+	if(. == PROJECTILE_PIERCE_PHASE)
+			return
 	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in kinetic_gun?.modkits)
 		modkit_upgrade.projectile_prehit(src, target, kinetic_gun)
-
 	if(!pressure_decrease_active && !lavaland_equipment_pressure_check(get_turf(target)))
 		name = "weakened [name]"
 		damage = damage * pressure_decrease
