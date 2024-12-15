@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Rave and plasma stabilizer MODules now utilize theme-specific visors"
