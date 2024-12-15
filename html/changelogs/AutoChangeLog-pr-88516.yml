@@ -1,0 +1,4 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - bugfix: "fixed the outdated N-Spect description falsely claiming it can scan people. It can't. Nanotrasen denies all claims it ever broke sapient right to privacy by giving crew full-body scanners in a handheld format."
