@@ -6571,6 +6571,8 @@
 #include "modular_doppler\autotransfer\autotransfer_config.dm"
 #include "modular_doppler\autotransfer\shuttle.dm"
 #include "modular_doppler\autotransfer\transfer_vote.dm"
+#include "modular_doppler\bitrunning_prefs_disks\code\disks\prefs_disk.dm"
+#include "modular_doppler\bitrunning_prefs_disks\code\outfit_overrides\bitrunner_outfit_override.dm"
 #include "modular_doppler\cell_component\code\cell_component.dm"
 #include "modular_doppler\colony_fabricator\code\cargo_packs.dm"
 #include "modular_doppler\colony_fabricator\code\colony_fabricator.dm"
