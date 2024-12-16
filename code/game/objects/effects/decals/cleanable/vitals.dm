@@ -203,7 +203,7 @@
 	qdel(src)
 	new /obj/effect/hotspot(T)
 
-/obj/effect/decal/cleanable/robotic/vital/oil/slippery/Initialize(mapload)
+/obj/effect/decal/cleanable/vital/robotic/oil/slippery/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 80, (NO_SLIP_WHEN_WALKING | SLIDE))
 
