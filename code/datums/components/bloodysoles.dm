@@ -118,14 +118,14 @@
  * Find a blood decal on a turf that matches our last_blood_state
  */
 /datum/component/bloodysoles/proc/find_pool_by_blood_state(turf/turfLoc, typeFilter = null, footprint_sprite)
-	for(var/obj/effect/decal/cleanable/blood/pool in turfLoc)
+	for(var/obj/effect/decal/cleanable/vital/organic/blood/pool in turfLoc)
 		if(pool.blood_state == last_blood_state && pool.footprint_sprite == footprint_sprite && (!typeFilter || istype(pool, typeFilter)))
 			return pool
 
 /**
  * Adds the parent type to the footprint's shoe_types var
  */
-/datum/component/bloodysoles/proc/add_parent_to_footprint(obj/effect/decal/cleanable/blood/footprints/FP)
+/datum/component/bloodysoles/proc/add_parent_to_footprint(obj/effect/decal/cleanable/vital/organic/blood/FP)
 	FP.shoe_types |= parent.type
 
 /**
@@ -180,7 +180,7 @@
 	// Add footprints in old loc if we have enough cream
 	if(theoretical_new_blood >= BLOOD_FOOTPRINTS_MIN)
 		var/turf/oldLocTurf = get_turf(OldLoc)
-		var/obj/effect/decal/cleanable/blood/footprints/oldLocFP = find_pool_by_blood_state(oldLocTurf, /obj/effect/decal/cleanable/blood/footprints, footprint_sprite)
+		var/obj/effect/decal/cleanable/vital/organic/blood/footprints/oldLocFP = find_pool_by_blood_state(oldLocTurf, /obj/effect/decal/cleanable/vital/organic/blood/footprints, footprint_sprite)
 		if(oldLocFP)
 			// Footprints found in the tile we left, add us to it
 			add_parent_to_footprint(oldLocFP)
@@ -212,7 +212,7 @@
 	if(theoretical_new_blood >= BLOOD_FOOTPRINTS_MIN)
 		adjust_bloody_shoes(last_blood_state, blood_lost)
 
-		var/obj/effect/decal/cleanable/blood/footprints/FP = new(get_turf(parent_atom), footprint_sprite)
+		var/obj/effect/decal/cleanable/vital/organic/blood/footprints/FP = new(get_turf(parent_atom), footprint_sprite)
 		if(!QDELETED(FP)) ///prints merged
 			FP.blood_state = last_blood_state
 			FP.entered_dirs |= wielder.dir
@@ -233,9 +233,9 @@
 	if(QDELETED(wielder) || is_obscured())
 		return
 
-	if(istype(pool, /obj/effect/decal/cleanable/blood/footprints) && pool.blood_state == last_blood_state)
+	if(istype(pool, /obj/effect/decal/cleanable/vital/organic/blood/footprints) && pool.blood_state == last_blood_state)
 		// The pool we stepped in was actually footprints with the same type
-		var/obj/effect/decal/cleanable/blood/footprints/pool_FP = pool
+		var/obj/effect/decal/cleanable/vital/organic/blood/footprints/pool_FP = pool
 		add_parent_to_footprint(pool_FP)
 		if((bloody_shoes[last_blood_state] - (bloody_shoes[last_blood_state] * BLOOD_PERCENT_LOSS_ON_STEP)) >= BLOOD_FOOTPRINTS_MIN && !(pool_FP.entered_dirs & wielder.dir))
 			// If our feet are bloody enough, add an entered dir
@@ -292,7 +292,7 @@
 	else
 		wielder.update_worn_shoes()
 
-/datum/component/bloodysoles/feet/add_parent_to_footprint(obj/effect/decal/cleanable/blood/footprints/FP)
+/datum/component/bloodysoles/feet/add_parent_to_footprint(obj/effect/decal/cleanable/vital/organic/blood/footprints/FP)
 	if(!ishuman(wielder))
 		FP.species_types |= "unknown"
 		return
