@@ -27,15 +27,17 @@
 	var/drydesc = "Looks like it's been here a while. Eew." //as above
 	var/drytime = 0
 	var/footprint_sprite = null
+	var/flammable = FALSE
 
 //changes the decal per the parameters
-/obj/effect/decal/cleanable/vital/Initialize()
+/obj/effect/decal/cleanable/vital/New()
 	var/type_params = get_vocab()
 	var/base_icon_state = icon_state
 	var/base_beauty = beauty
 	icon_state = "[type_params[4]][base_icon_state]"
-	beauty = base_beauty * type_params[7]
 	desc = replacetext(desc, "%BLOOD_COLOR%", type_params[2])
+	beauty = base_beauty * type_params[7]
+	flammable = type_params[8]
 			
 /obj/effect/decal/cleanable/vital/proc/get_vocab()
 //order is as follows:
@@ -46,6 +48,7 @@
 	//decal_reagent
 	var/color_food //a food associated with the color
 	var/beauty_mult
+	//flammable
 	switch(blood_state)
 		if(BLOOD_STATE_HUMAN)
 			return list(icon,
@@ -54,7 +57,8 @@
 			"" = blood_species_prefix,
 			decal_reagent,
 			"ketchup" = color_food,
-			1 = beauty_mult,)
+			1 = beauty_mult,
+			flammable,)
 		if(BLOOD_STATE_XENO)
 			return list(icon,
 			"green" = blood_color,
@@ -62,7 +66,8 @@
 			"x" = blood_species_prefix,
 			decal_reagent,
 			"avocado" = color_food,
-			2.5 = beauty_mult,)
+			2.5 = beauty_mult,
+			flammable,)
 		if(BLOOD_STATE_OIL)
 			return list('icons/mob/silicon/robots.dmi' = icon,
 			"black" = blood_color,
@@ -70,7 +75,8 @@
 			"" = blood_species_prefix,
 			/datum/reagent/fuel/oil = decal_reagent,
 			"nero di seppia" = color_food,
-			1 = beauty_mult,)
+			1 = beauty_mult,
+			TRUE = flammable,)
 		//if(BLOOD_STATE_LATEX) - TODO: Aliens-esque synth blood
 			
 			//"calamari" = color_food,
@@ -117,7 +123,6 @@
 	decal_reagent = /datum/reagent/fuel/oil
 	reagent_amount = 30
 	should_dry = FALSE
-	var/flammable = FALSE
 	
 //base for robotic "chunks"
 /obj/effect/decal/cleanable/vital/robotic/debris
@@ -198,7 +203,7 @@
 	qdel(src)
 	new /obj/effect/hotspot(T)
 
-/obj/effect/decal/cleanable/robotic/oil/slippery/Initialize(mapload)
+/obj/effect/decal/cleanable/robotic/vital/oil/slippery/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 80, (NO_SLIP_WHEN_WALKING | SLIDE))
 
@@ -438,7 +443,7 @@
 
 //selectors for for robotic "blood"
 
-/obj/effect/decal/cleanable/vital/robotic/streak
+/obj/effect/decal/cleanable/vital/robotic/oil/streak
 	icon_state = "streak1"
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
 	beauty = BEAUTY_IMPACT_LOW 
