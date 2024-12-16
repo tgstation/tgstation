@@ -394,3 +394,24 @@
       assumption, rather than melee attacks.
   timothymtorres:
   - code_imp: Improve looping sounds to allow nested and non-associative lists
+2024-12-16:
+  JoshAdamPowell:
+  - map: In the new year's budget the syndicate have decided that chemists need beakers
+      to do their job properly.
+  Melbert:
+  - qol: Treatment message now better reflects what you're doing ("suturing", "applying",
+      etc)
+  - bugfix: Gauze is now stickier (and will actually apply to bodyparts)
+  OrionTheFox:
+  - bugfix: fixed the outdated N-Spect description falsely claiming it can scan people.
+      It can't. Nanotrasen denies all claims it ever broke sapient right to privacy
+      by giving crew full-body scanners in a handheld format.
+  SmArtKar:
+  - rscadd: Rave and plasma stabilizer MODules now utilize theme-specific visors
+  - qol: Jetpacks should ACTUALLY feel better now
+  SyncIt21:
+  - bugfix: Turbine converts energy to power correctly & shows correct reading with
+      multitool
+  - refactor: turbine code has been overall improved. report bugs on github
+  tontyGH:
+  - bugfix: Underlining your messages in loud mode shouldn't break anymore
