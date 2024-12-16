@@ -66,6 +66,10 @@
 	drop_all_mail()
 	. = ..()
 
+/obj/machinery/mailsorter/deconstruct(disassembled)
+	drop_all_mail()
+	. = ..()
+
 /// Drops all enevlopes on the machine turf. Only occurs when the machine is broken.
 /obj/machinery/mailsorter/proc/drop_all_mail(damage_flag)
 	if(!isturf(get_turf(src)))
@@ -151,7 +155,7 @@
 		if (some_recipient)
 			var/datum/job/recipient_job = some_recipient.assigned_role
 			var/datum/job_department/primary_department = recipient_job.departments_list?[1]
-			var/datum/job_department/main_department = primary_department.department_name
+			var/datum/job_department/main_department = primary_department.department_name?
 			if (main_department == sorting_dept)
 				sorted_mail.Add(some_mail)
 				sorted ++
