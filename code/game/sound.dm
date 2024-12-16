@@ -156,7 +156,7 @@
 			sound_to_use.volume *= pressure_factor
 			//End Atmosphere affecting sound
 
-		if(sound_to_use.volume <= 0)
+		if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
 			return //No sound
 
 		var/dx = turf_source.x - turf_loc.x // Hearing from the right/left
