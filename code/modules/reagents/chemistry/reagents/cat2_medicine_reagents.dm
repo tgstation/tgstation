@@ -533,9 +533,11 @@
 	if (carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
 		return
 
-	var/pure_units = carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) * carbies.reagents.get_reagent_purity(/datum/reagent/medicine/c2/synthflesh)
+	var/volume = carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh)
+	var/purity = carbies.reagents.get_reagent_purity(/datum/reagent/medicine/c2/synthflesh)
 
-	if(pure_units >= SYNTHFLESH_UNHUSK_AMOUNT)
+	//when purity = 100%, 60u to unhusk, when purity = 60%, 100u to unhusk.
+	if(volume * purity >= SYNTHFLESH_UNHUSK_AMOUNT || volume >= SYNTHFLESH_UNHUSK_MAX)
 		carbies.cure_husk(BURN)
 		carbies.visible_message(span_nicegreen("A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!")) //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 
