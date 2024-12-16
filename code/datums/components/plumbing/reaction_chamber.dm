@@ -8,10 +8,15 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
-	. = ..()
+
 	var/obj/machinery/plumbing/reaction_chamber/reaction_chamber = parent
-	if(!. || !reaction_chamber.emptying || reagents.is_reacting)
+	if(!reaction_chamber.emptying || reagents.is_reacting)
 		return FALSE
+
+	for(var/catalyst in reaction_chamber.catalist)
+		reaction_chamber.reagents.trans_to(reaction_chamber.catalyst_beaker, min(reaction_chamber.reagents.get_reagent_amount(catalyst), reaction_chamber.catalist[catalyst]), target_id = catalyst)
+
+	. = ..()
 
 /datum/component/plumbing/reaction_chamber/send_request(dir)
 	var/obj/machinery/plumbing/reaction_chamber/chamber = parent

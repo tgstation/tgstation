@@ -34,6 +34,7 @@
 /obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt, layer)
 	. = ..()
 	catalyst_beaker = new (src)
+	catalyst_beaker.reagent_flags |= NO_REACT
 	AddComponent(/datum/component/plumbing/reaction_chamber, bolt, layer)
 
 /obj/machinery/plumbing/reaction_chamber/create_reagents(max_vol, flags)
@@ -52,16 +53,10 @@
 /obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 
-	if(emptying)
-		for(var/catalyst in catalist)
-			holder.trans_to(catalyst_beaker, min(holder.get_reagent_amount(catalyst), catalist[catalyst]), target_id = catalyst)
-			if(min(holder.get_reagent_amount(catalyst), catalist[catalyst]))
-				message_admins("Intaking [catalyst]. [holder.get_reagent_amount(catalyst)] || [catalist[catalyst]]")
+	if(!holder.total_volume && emptying) //we were emptying, but now we aren't
 
-		if(!holder.total_volume) //we were emptying, but now we aren't
-
-			emptying = FALSE
-			holder.flags |= NO_REACT
+		emptying = FALSE
+		holder.flags |= NO_REACT
 
 	return NONE
 
@@ -159,18 +154,14 @@
 
 		if("catalyst")
 			var/reagent = get_chem_id(params["chem"])
-			message_admins("[get_chem_id(params["chem"])]")
 
 			if(!reagent)
-				message_admins("Fuck. [get_chem_id(params["chem"])]")
 				return FALSE
 
 			if(reagent && !catalist.Find(reagent))
 				catalist[reagent] = required_reagents[reagent]
-				message_admins("[catalist[reagent]], [reagent]")
 				return TRUE
 			else
-				message_admins("Fuck. [get_chem_id(params["chem"])] || [catalist.Find(reagent)]")
 				return FALSE
 			return FALSE
 

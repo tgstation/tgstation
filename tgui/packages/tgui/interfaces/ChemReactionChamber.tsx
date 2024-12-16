@@ -191,7 +191,7 @@ export const ChemReactionChamber = (props) => {
                   <Stack fill>
                     <Stack.Item grow>
                       <Button
-                        content="help"
+                        content="Add Reagent"
                         color="good"
                         icon="plus"
                         onClick={() =>
@@ -227,6 +227,24 @@ export const ChemReactionChamber = (props) => {
                           <Stack.Item mt={0.25} grow>
                             {reagent.volume}
                           </Stack.Item>
+
+                          <Stack.Item>
+                            <Button
+                              content="C"
+                              color="transparent"
+                              tooltip={`
+                                This button converts this reagent entry into a catalyst.
+                                Catalyst reagents are not removed from the reaction chamber
+                                on completion. Useful for certain reactions.`}
+                              tooltipPosition="bottom-start"
+                              onClick={() =>
+                                act('catalyst', {
+                                  chem: reagent.name,
+                                })
+                              }
+                            />
+                          </Stack.Item>
+
                           <Stack.Item>
                             <Button
                               icon="minus"
@@ -238,23 +256,21 @@ export const ChemReactionChamber = (props) => {
                               }
                             />
                           </Stack.Item>
-                          <Stack.Item>
-                            <Button
-                              content="C"
-                              color="average"
-                              onClick={() =>
-                                act('catalyst', {
-                                  chem: reagent.name,
-                                })
-                              }
-                            />
-                          </Stack.Item>
+
                         </Stack>
                       </Stack.Item>
                     ))}
                   </Stack>
 
-                  <Stack.Item>
+                </Stack.Item>
+              </Stack>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section
+              title="Catalysts"
+            >
+            <Stack.Item>
                     <Stack vertical>
                       {catalysts.map((reagent) => (
                         <Stack.Item key={reagent.name}>
@@ -283,9 +299,7 @@ export const ChemReactionChamber = (props) => {
                      </Stack>
                   </Stack.Item>
 
-                </Stack.Item>
-              </Stack>
-            </Section>
+              </Section>
           </Stack.Item>
         </Stack>
       </Window.Content>
