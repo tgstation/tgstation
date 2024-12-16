@@ -1,4 +1,6 @@
 //keeping the old files to ensure compatability while things get moved to this system.
+//Future me thinks this is a bad idea because of the GLOB defines. Oh well.
+//Remove these comments before merge
 //but yeah, unified blood decal system I guess
 
 #define BEAUTY_IMPACT_LOW -50
