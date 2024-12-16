@@ -46,7 +46,7 @@
 ///Health threshold for synthflesh and rezadone to unhusk someone
 #define UNHUSK_DAMAGE_THRESHOLD 50
 ///Amount of synthflesh required to unhusk someone
-#define SYNTHFLESH_UNHUSK_AMOUNT 100
+#define SYNTHFLESH_UNHUSK_AMOUNT 40
 
 //used by chem masters and pill presses
 // The categories of reagent packaging

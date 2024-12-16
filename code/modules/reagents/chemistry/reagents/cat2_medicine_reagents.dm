@@ -524,7 +524,18 @@
 		to_chat(carbies, span_danger("You feel your burns and bruises healing! It stings like hell!"))
 
 	carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
-	if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN) && carbies.getFireLoss() < UNHUSK_DAMAGE_THRESHOLD && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= SYNTHFLESH_UNHUSK_AMOUNT))
+
+	//if mob is not husked, don't try to unhusk
+	if (!HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN))
+		return
+
+	//if mob is above damage threshold for unhusk, don't try to unhusk
+	if (carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
+		return
+
+	var/pure_units = carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) * carbies.reagents.get_reagent_purity(/datum/reagent/medicine/c2/synthflesh)
+
+	if(pure_units >= SYNTHFLESH_UNHUSK_AMOUNT)
 		carbies.cure_husk(BURN)
 		carbies.visible_message(span_nicegreen("A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!")) //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 
