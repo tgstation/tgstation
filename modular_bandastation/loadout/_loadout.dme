@@ -6,3 +6,8 @@
 #include "code/loadout_preference.dm"
 #include "code/categories/accessories.dm"
 #include "code/categories/pocket.dm"
+#include "code/categories/suits.dm"
+#include "code/categories/gloves.dm"
+#include "code/items/gloves.dm"
+#include "code/items/suits.dm"
+#include "code/items/masks.dm"
