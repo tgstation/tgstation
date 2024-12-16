@@ -2295,6 +2295,7 @@
 #include "code\game\objects\effects\decals\cleanable\humans.dm"
 #include "code\game\objects\effects\decals\cleanable\misc.dm"
 #include "code\game\objects\effects\decals\cleanable\robots.dm"
+#include "code\game\objects\effects\decals\cleanable\vitals.dm"
 #include "code\game\objects\effects\decals\turfdecal\dirt.dm"
 #include "code\game\objects\effects\decals\turfdecal\markings.dm"
 #include "code\game\objects\effects\decals\turfdecal\tilecoloring.dm"
