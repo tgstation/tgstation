@@ -125,7 +125,7 @@
 /**
  * Adds the parent type to the footprint's shoe_types var
  */
-/datum/component/bloodysoles/proc/add_parent_to_footprint(obj/effect/decal/cleanable/vital/organic/blood/FP)
+/datum/component/bloodysoles/proc/add_parent_to_footprint(obj/effect/decal/cleanable/vital/organic/blood/footprints/FP)
 	FP.shoe_types |= parent.type
 
 /**

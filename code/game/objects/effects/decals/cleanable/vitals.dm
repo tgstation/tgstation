@@ -35,9 +35,10 @@
 	var/base_icon_state = icon_state
 	var/base_beauty = beauty
 	var/base_name = name
+	var/base_desc = desc
 	icon = type_params[1]
-	desc = replacetext(desc, "%BLOOD_COLOR%", type_params[2])
-	name = replacetext(name, "%SOURCE_SPECIES%", type_params[3])
+	desc = replacetext(base_desc, "%BLOOD_COLOR%", type_params[2])
+	name = replacetext(base_name, "%SOURCE_SPECIES%", type_params[3])
 	icon_state = "[type_params[4]][base_icon_state]"
 	desc = replacetext(desc, "%SIMILAR_FOOD%", type_params[6])
 	beauty = base_beauty * type_params[7]
@@ -54,7 +55,7 @@
 	switch(blood_state)
 		if(BLOOD_STATE_HUMAN)
 			return list(
-			icon,
+			'icons/effects/blood.dmi' = icon,
 			"red" = blood_color,
 			"humanoid" = blood_species_full,
 			"" = blood_species_prefix,
@@ -64,7 +65,7 @@
 			)
 		if(BLOOD_STATE_XENO)
 			return list(
-			icon,
+			'icons/effects/blood.dmi' = icon,
 			"green" = blood_color,
 			"xeno" = blood_species_full,
 			"x" = blood_species_prefix,
@@ -121,7 +122,7 @@
 	blood_state = BLOOD_STATE_XENO
 	beauty = BEAUTY_IMPACT_HIGH
 
-/obj/effect/decal/cleanable/xenoblood/Initialize(mapload)
+/obj/effect/decal/cleanable/vital/organic/xenoblood/Initialize(mapload)
 	. = ..()
 	add_blood_DNA(list("UNKNOWN DNA" = "X*"))
 	
@@ -135,8 +136,7 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
 
-	
-/obj/effect/decal/cleanable/xgibs/Initialize(mapload)
+/obj/effect/decal/cleanable/vital/organic/xgibs/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
 
@@ -483,6 +483,9 @@
 
 //handlers for xeno "blood"
 
+/obj/effect/decal/cleanable/vital/organic/xenoblood/xsplatter
+	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")
+
 //handlers for xeno "gib"s
 
 /obj/effect/decal/cleanable/vital/organic/xgibs/proc/streak(list/directions, mapload=FALSE)
@@ -496,7 +499,7 @@
 		for (var/i in 1 to range)
 			var/turf/my_turf = get_turf(src)
 			if(!isgroundlessturf(my_turf) || GET_TURF_BELOW(my_turf))
-				new /obj/effect/decal/cleanable/vital/organic/xenoblood/splatter(my_turf)
+				new /obj/effect/decal/cleanable/vital/organic/xenoblood/xsplatter(my_turf)
 			if (!step_to(src, get_step(src, direction), 0))
 				break
 		return
@@ -508,7 +511,7 @@
 	SIGNAL_HANDLER
 	if(NeverShouldHaveComeHere(loc))
 		return
-	new /obj/effect/decal/cleanable/organic/xenoblood/splatter(loc)
+	new /obj/effect/decal/cleanable/vital/organic/xenoblood/xsplatter(loc)
 
 /obj/effect/decal/cleanable/vital/organic/xgibs/proc/on_pipe_eject(atom/source, direction)
 	SIGNAL_HANDLER
@@ -521,18 +524,18 @@
 
 	streak(dirs)
 
-/obj/effect/decal/cleanable/organic/xgibs/ex_act()
+/obj/effect/decal/cleanable/vital/organic/xgibs/ex_act()
 	return FALSE
 
-/obj/effect/decal/cleanable/organic/xgibs/up
+/obj/effect/decal/cleanable/vital/organic/xgibs/up
 	icon_state = "xgibup1"
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibup1","xgibup1","xgibup1")
 
-/obj/effect/decal/cleanable/organic/xgibs/down
+/obj/effect/decal/cleanable/vital/organic/xgibs/down
 	icon_state = "xgibdown1"
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibdown1","xgibdown1","xgibdown1")
 
-/obj/effect/decal/cleanable/organic/xgibs/body
+/obj/effect/decal/cleanable/vital/organic/xgibs/body
 	icon_state = "xgibtorso"
 	random_icon_states = list("xgibhead", "xgibtorso")
 
