@@ -27,7 +27,6 @@
 	var/drydesc = "Looks like it's been here a while. Eew." //as above
 	var/drytime = 0
 	var/footprint_sprite = null
-	var/blood_color = "blurple"
 
 //changes the decal per the parameters
 /obj/effect/decal/cleanable/vital/Initialize()
@@ -36,7 +35,7 @@
 	var/base_beauty = beauty
 	icon_state = "[type_params[4]][base_icon_state]"
 	beauty = base_beauty * type_params[7]
-	blood_color = type_params[2]
+	desc = replacetext(desc, "%BLOOD_COLOR%", type_params[2])
 			
 /obj/effect/decal/cleanable/vital/proc/get_vocab()
 //order is as follows:
@@ -81,11 +80,11 @@
 
 /obj/effect/decal/cleanable/vital/organic
 	name = "blood"
-	desc = "It's [blood_color] and gooey. Perhaps it's the chef's cooking?"
+	desc = "It's %BLOOD_COLOR% and gooey. Perhaps it's the chef's cooking?"
 	
 /obj/effect/decal/cleanable/vital/robotic
 	name = "motor oil"
-	desc = "It's [blood_color] and greasy. Looks like Beepsky made another mess."
+	desc = "It's %BLOOD_COLOR% and greasy. Looks like Beepsky made another mess."
 	icon_state = "floor1"
 	random_icon_states = list(
 	"floor1",
@@ -122,7 +121,7 @@
 	if(NeverShouldHaveComeHere(loc))
 		return
 	if (prob(40))
-		new /obj/effect/decal/cleanable/vital/robotic/debris/streak(loc)
+		new /obj/effect/decal/cleanable/vital/robotic/streak(loc)
 	else if (prob(10))
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, src)
@@ -401,7 +400,7 @@
 
 /obj/effect/decal/cleanable/vital/organic/drip
 	name = "drips of blood"
-	desc = "It's [blood_color]."
+	desc = "It's %BLOOD_COLOR%."
 	icon_state = "drip5" //using drip5 since the others tend to blend in with pipes & wires.
 	random_icon_states = list(
 	"drip1",
@@ -412,7 +411,7 @@
 	bloodiness = 0
 	var/drips = 1
 	dryname = "drips of blood"
-	drydesc = "It's [blood_color]."
+	drydesc = "It's %BLOOD_COLOR%."
 
 /obj/effect/decal/cleanable/vital/organic/drip/can_bloodcrawl_in()
 	return TRUE
