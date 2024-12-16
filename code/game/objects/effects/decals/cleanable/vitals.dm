@@ -34,10 +34,13 @@
 	var/type_params = get_vocab()
 	var/base_icon_state = icon_state
 	var/base_beauty = beauty
-	icon_state = "[type_params[4]][base_icon_state]"
+	var/base_name = name
+	icon = type_params[1]
 	desc = replacetext(desc, "%BLOOD_COLOR%", type_params[2])
+	name = replacetext(name, "%SOURCE_SPECIES%", type_params[3])
+	icon_state = "[type_params[4]][base_icon_state]"
+	desc = replacetext(desc, "%SIMILAR_FOOD%", type_params[6])
 	beauty = base_beauty * type_params[7]
-	flammable = type_params[8]
 			
 /obj/effect/decal/cleanable/vital/proc/get_vocab()
 //order is as follows:
@@ -48,35 +51,37 @@
 	//decal_reagent
 	var/color_food //a food associated with the color
 	var/beauty_mult
-	//flammable
 	switch(blood_state)
 		if(BLOOD_STATE_HUMAN)
-			return list(icon,
+			return list(
+			icon,
 			"red" = blood_color,
-			"human" = blood_species_full,
+			"humanoid" = blood_species_full,
 			"" = blood_species_prefix,
 			decal_reagent,
 			"ketchup" = color_food,
 			1 = beauty_mult,
-			flammable,)
+			)
 		if(BLOOD_STATE_XENO)
-			return list(icon,
+			return list(
+			icon,
 			"green" = blood_color,
 			"xeno" = blood_species_full,
 			"x" = blood_species_prefix,
 			decal_reagent,
 			"avocado" = color_food,
 			2.5 = beauty_mult,
-			flammable,)
+			)
 		if(BLOOD_STATE_OIL)
-			return list('icons/mob/silicon/robots.dmi' = icon,
+			return list(
+			'icons/mob/silicon/robots.dmi' = icon,
 			"black" = blood_color,
-			"robot" = blood_species_full,
+			"robotic" = blood_species_full,
 			"" = blood_species_prefix,
 			/datum/reagent/fuel/oil = decal_reagent,
 			"nero di seppia" = color_food,
 			1 = beauty_mult,
-			TRUE = flammable,)
+			)
 		//if(BLOOD_STATE_LATEX) - TODO: Aliens-esque synth blood
 			
 			//"calamari" = color_food,
@@ -86,25 +91,55 @@
 
 //base for organic "blood"
 /obj/effect/decal/cleanable/vital/organic/blood
-	name = "blood"
+	name = "%SOURCE_SPECIES% blood"
 	desc = "It's %BLOOD_COLOR% and gooey. Perhaps it's the chef's cooking?"
 	icon_state = "floor1"
+	blood_state = BLOOD_STATE_HUMAN
 	
 //base for organic "chunk"s
 /obj/effect/decal/cleanable/vital/organic/gibs
-	name = "gibs"
+	name = "%SOURCE_SPECIES% gibs"
 	desc = "They look bloody and gruesome."
 	icon_state = "gib1"
 	layer = BELOW_OBJ_LAYER
 	plane = GAME_PLANE
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6",)
 	mergeable_decal = FALSE
+	blood_state = BLOOD_STATE_HUMAN
 
 	dryname = "rotting gibs"
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
 	decal_reagent = /datum/reagent/consumable/liquidgibs
 	reagent_amount = 5
+
+//base for xenomorph blood
+/obj/effect/decal/cleanable/vital/organic/xenoblood
+	name = "%SOURCE_SPECIES% blood"
+	desc = "It's %BLOOD_COLOR% and acidic. It looks like... <i>blood?</i>"
+	icon_state = "floor1"
+	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+	blood_state = BLOOD_STATE_XENO
+	beauty = BEAUTY_IMPACT_HIGH
+
+/obj/effect/decal/cleanable/xenoblood/Initialize(mapload)
+	. = ..()
+	add_blood_DNA(list("UNKNOWN DNA" = "X*"))
 	
+//base for xenomorph gibs
+/obj/effect/decal/cleanable/vital/organic/xgibs
+	name = "%SOURCE_SPECIES% blood"
+	desc = "Gnarly..."
+	icon_state = "gib1"
+	plane = GAME_PLANE
+	layer = BELOW_OBJ_LAYER
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
+	mergeable_decal = FALSE
+
+	
+/obj/effect/decal/cleanable/xgibs/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
+
 //base for robotic "blood"
 /obj/effect/decal/cleanable/vital/robotic/oil
 	name = "motor oil"
@@ -123,10 +158,11 @@
 	decal_reagent = /datum/reagent/fuel/oil
 	reagent_amount = 30
 	should_dry = FALSE
+	flammable = TRUE
 	
 //base for robotic "chunks"
 /obj/effect/decal/cleanable/vital/robotic/debris
-	name = "robot debris"
+	name = "%SOURCE_SPECIES% debris"
 	desc = "It's a useless heap of junk... <i>or is it?</i>"
 	icon_state = "gib1"
 	plane = GAME_PLANE
@@ -141,6 +177,7 @@
 	"gib7",)
 	mergeable_decal = FALSE
 	beauty = BEAUTY_IMPACT_LOW 
+	blood_state = BLOOD_STATE_OIL
 	
 /obj/effect/decal/cleanable/vital/robotic/attackby(obj/item/I, mob/living/user)
 	var/attacked_by_hot_thing = I.get_temperature()
@@ -293,12 +330,16 @@
 
 // normal version of the above trail holder object for use in less convoluted things
 /obj/effect/decal/cleanable/vital/organic/trails
-	desc = "Looks like a corpse was smeared all over the floor like ketchup. Kinda makes you hungry."
+	desc = "Looks like a corpse was smeared all over the floor like %SIMILAR_FOOD%. Kinda makes you hungry."
 	random_icon_states = list("trails_1", "trails_2",)
 	icon_state = "trails_1"
 	beauty = BEAUTY_IMPACT_LOW 
 	dryname = "dried tracks"
-	drydesc = "Looks like a corpse was smeared all over the floor like ketchup, but it's all dried up and nasty now, ew. You lose some of your appetite."
+	drydesc = "Looks like a corpse was smeared all over the floor like %SIMILAR_FOOD%, but it's all dried up and nasty now, ew. You lose some of your appetite."
+
+
+
+//handlers for organic "chunk"s
 
 /obj/effect/decal/cleanable/vital/organic/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -356,7 +397,6 @@
 		return
 	new /obj/effect/decal/cleanable/vital/organic/blood/splatter(loc)
 
-//selector for organic "chunk"s
 /obj/effect/decal/cleanable/vital/organic/gibs/up
 	icon_state = "gibup1"
 	random_icon_states = list(
@@ -422,7 +462,7 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
 	dry()
 
-//selectors for organic "blood"
+//handlers for organic "blood"
 /obj/effect/decal/cleanable/vital/organic/blood/drip
 	name = "drips of blood"
 	desc = "It's %BLOOD_COLOR%."
@@ -441,7 +481,82 @@
 /obj/effect/decal/cleanable/vital/organic/blood/drip/can_bloodcrawl_in()
 	return TRUE
 
-//selectors for for robotic "blood"
+//handlers for xeno "blood"
+
+//handlers for xeno "gib"s
+
+/obj/effect/decal/cleanable/vital/organic/xgibs/proc/streak(list/directions, mapload=FALSE)
+	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions)
+	var/direction = pick(directions)
+	var/delay = 2
+	var/range = pick(0, 200; 1, 150; 2, 50; 3, 17; 50) //the 3% chance of 50 steps is intentional and played for laughs.
+	if(!step_to(src, get_step(src, direction), 0))
+		return
+	if(mapload)
+		for (var/i in 1 to range)
+			var/turf/my_turf = get_turf(src)
+			if(!isgroundlessturf(my_turf) || GET_TURF_BELOW(my_turf))
+				new /obj/effect/decal/cleanable/vital/organic/xenoblood/splatter(my_turf)
+			if (!step_to(src, get_step(src, direction), 0))
+				break
+		return
+
+	var/datum/move_loop/loop = GLOB.move_manager.move(src, direction, delay = delay, timeout = range * delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(spread_movement_effects))
+
+/obj/effect/decal/cleanable/vital/organic/xgibs/proc/spread_movement_effects(datum/move_loop/has_target/source)
+	SIGNAL_HANDLER
+	if(NeverShouldHaveComeHere(loc))
+		return
+	new /obj/effect/decal/cleanable/organic/xenoblood/splatter(loc)
+
+/obj/effect/decal/cleanable/vital/organic/xgibs/proc/on_pipe_eject(atom/source, direction)
+	SIGNAL_HANDLER
+
+	var/list/dirs
+	if(direction)
+		dirs = list(direction, turn(direction, -45), turn(direction, 45))
+	else
+		dirs = GLOB.alldirs.Copy()
+
+	streak(dirs)
+
+/obj/effect/decal/cleanable/organic/xgibs/ex_act()
+	return FALSE
+
+/obj/effect/decal/cleanable/organic/xgibs/up
+	icon_state = "xgibup1"
+	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibup1","xgibup1","xgibup1")
+
+/obj/effect/decal/cleanable/organic/xgibs/down
+	icon_state = "xgibdown1"
+	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibdown1","xgibdown1","xgibdown1")
+
+/obj/effect/decal/cleanable/organic/xgibs/body
+	icon_state = "xgibtorso"
+	random_icon_states = list("xgibhead", "xgibtorso")
+
+/obj/effect/decal/cleanable/vital/organic/xgibs/torso
+	icon_state = "xgibtorso"
+	random_icon_states = list("xgibtorso")
+
+/obj/effect/decal/cleanable/vital/organic/xgibs/limb
+	icon_state = "xgibleg"
+	random_icon_states = list("xgibleg", "xgibarm")
+
+/obj/effect/decal/cleanable/vital/organic/xgibs/core
+	icon_state = "xgibmid1"
+	random_icon_states = list("xgibmid1", "xgibmid2", "xgibmid3")
+
+/obj/effect/decal/cleanable/vital/organic/xgibs/larva
+	icon_state = "xgiblarva1"
+	random_icon_states = list("xgiblarva1", "xgiblarva2")
+
+/obj/effect/decal/cleanable/vital/organic/xgibs/larva/body
+	icon_state = "xgiblarvatorso"
+	random_icon_states = list("xgiblarvahead", "xgiblarvatorso")
+
+//handlers for for robotic "blood"
 
 /obj/effect/decal/cleanable/vital/robotic/oil/streak
 	icon_state = "streak1"
