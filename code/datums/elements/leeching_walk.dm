@@ -45,7 +45,7 @@
 	var/delta_time = DELTA_WORLD_TIME(SSmobs)
 	need_mob_update += source.adjustBruteLoss(-3 * delta_time, updating_health = FALSE)
 	need_mob_update += source.adjustFireLoss(-3 * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(-3 * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people to
+	need_mob_update += source.adjustToxLoss(-3 * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people too
 	need_mob_update += source.adjustOxyLoss(-1.5 * delta_time, updating_health = FALSE)
 	need_mob_update += source.adjustStaminaLoss(-10 * delta_time, updating_stamina = FALSE)
 	if(need_mob_update)
