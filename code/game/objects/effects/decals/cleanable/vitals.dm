@@ -20,48 +20,61 @@
 	"floor6",
 	"floor7",)
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	beauty = BEAUTY_IMPACT_HIGH * beauty_mult
+	beauty = BEAUTY_IMPACT_HIGH
 	clean_type = CLEAN_TYPE_BLOOD
 	var/should_dry = TRUE
 	var/dryname = "dried blood" //when the blood lasts long enough, it becomes dry and gets a new name
 	var/drydesc = "Looks like it's been here a while. Eew." //as above
 	var/drytime = 0
 	var/footprint_sprite = null
-	var/blood_color = "strange"
-	var/color_food = "unobtanium"
-	var/blood_species_full = "generic"
-	var/blood_species_prefix = ""
-	var/beauty_mult = 1
+	var/blood_color = "blurple"
 
 //changes the decal per the parameters
-/obj/effect/decal/cleanable/vital/New()
-	. = ..()
-	get_vocab()
+/obj/effect/decal/cleanable/vital/Initialize()
+	var/type_params = get_vocab()
 	var/base_icon_state = icon_state
-	icon_state = "[blood_species_prefix][icon_state]"
+	var/base_beauty = beauty
+	icon_state = "[type_params[4]][base_icon_state]"
+	beauty = base_beauty * type_params[7]
+	blood_color = type_params[2]
 			
 /obj/effect/decal/cleanable/vital/proc/get_vocab()
+//order is as follows:
+	//icon
+	var/blood_color
+	var/blood_species_full
+	var/blood_species_prefix
+	//decal_reagent
+	var/color_food //a food associated with the color
+	var/beauty_mult
 	switch(blood_state)
 		if(BLOOD_STATE_HUMAN)
-			// blood_color = "red"
-			// blood_species_full = "human"
-			// color_food = "ketchup"
-			// blood_species_prefix = ""
-			return list("red" = blood_color, "human" = blood_species_full, "ketchup" = color_food, "" = blood_species_prefix,)
+			return list(icon,
+			"red" = blood_color,
+			"human" = blood_species_full,
+			"" = blood_species_prefix,
+			decal_reagent,
+			"ketchup" = color_food,
+			1 = beauty_mult,)
 		if(BLOOD_STATE_XENO)
-			// blood_color = "green"
-			// blood_species_full = "xeno"
-			// color_food = "avocado"
-			// blood_species_prefix = "x"
-			// beautymult = 2.5
-			return list("green" = blood_color, "xeno" = blood_species_full, "avocado" = color_food, "x" = blood_species_prefix, 2.5 = beauty_mult,)
+			return list(icon,
+			"green" = blood_color,
+			"xeno" = blood_species_full,
+			"x" = blood_species_prefix,
+			decal_reagent,
+			"avocado" = color_food,
+			2.5 = beauty_mult,)
 		if(BLOOD_STATE_OIL)
-			// icon = 'icons/mob/silicon/robots.dmi'
-			// blood_color = "black"
-			// blood_species_full = "robot"
-			// color_food = "nero di seppia"
-			// blood_species_prefix = ""
-			return list("black" = blood_color, "robot" = blood_species_full, "nero di seppia" = color_food, "" = blood_species_prefix, 'icons/mob/silicon/robots.dmi' = icon,)
+			return list('icons/mob/silicon/robots.dmi' = icon,
+			"black" = blood_color,
+			"robot" = blood_species_full,
+			"" = blood_species_prefix,
+			/datum/reagent/fuel/oil = decal_reagent,
+			"nero di seppia" = color_food,
+			1 = beauty_mult,)
+		//if(BLOOD_STATE_LATEX) - TODO: Aliens-esque synth blood
+			
+			//"calamari" = color_food,
 		if(null)
 			return
 	return
@@ -84,11 +97,11 @@
 	"floor7",)
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	beauty = BEAUTY_IMPACT_HIGH * beauty_mult
+	beauty = BEAUTY_IMPACT_HIGH 
 	clean_type = CLEAN_TYPE_BLOOD
 	decal_reagent = /datum/reagent/fuel/oil
 	reagent_amount = 30
-	var/should_dry = FALSE
+	should_dry = FALSE
 	var/flammable = FALSE
 	
 /obj/effect/decal/cleanable/vital/robotic/attackby(obj/item/I, mob/living/user)
@@ -109,12 +122,30 @@
 	if(NeverShouldHaveComeHere(loc))
 		return
 	if (prob(40))
-		new /obj/effect/decal/cleanable/oil/streak(loc)
+		new /obj/effect/decal/cleanable/vital/robotic/debris/streak(loc)
 	else if (prob(10))
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		
+
+/obj/effect/decal/cleanable/vital/robotic/debris/proc/streak(list/directions, mapload=FALSE)
+	var/direction = pick(directions)
+	var/delay = 2
+	var/range = pick(1, 200; 2, 150; 3, 50; 4, 17; 50) //the 3% chance of 50 steps is intentional and played for laughs.
+	if(!step_to(src, get_step(src, direction), 0))
+		return
+	if(mapload)
+		for (var/i in 1 to range)
+			var/turf/my_turf = get_turf(src)
+			if(prob(40) && (!isgroundlessturf(my_turf) || GET_TURF_BELOW(my_turf)))
+				new /obj/effect/decal/cleanable/vital/robotic/streak(my_turf)
+			if (!step_to(src, get_step(src, direction), 0))
+				break
+		return
+
+	var/datum/move_loop/loop = GLOB.move_manager.move(src, direction, delay = delay, timeout = range * delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(spread_movement_effects))
+
 /obj/effect/decal/cleanable/vital/robotic/debris/proc/on_pipe_eject(atom/source, direction)
 	SIGNAL_HANDLER
 
@@ -134,7 +165,7 @@
 	qdel(src)
 	new /obj/effect/hotspot(T)
 
-/obj/effect/decal/cleanable/oil/slippery/Initialize(mapload)
+/obj/effect/decal/cleanable/robotic/debris/slippery/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 80, (NO_SLIP_WHEN_WALKING | SLIDE))
 
@@ -177,7 +208,7 @@
 		STOP_PROCESSING(SSobj, src)
 		return TRUE
 
-/obj/effect/decal/cleanable/vital/organic/replace_decal(obj/effect/decal/cleanable/blood/C)
+/obj/effect/decal/cleanable/vital/organic/replace_decal(obj/effect/decal/cleanable/vital/organic/C)
 	C.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	if (bloodiness)
 		C.bloodiness = min((C.bloodiness + bloodiness), BLOOD_AMOUNT_PER_DECAL)
@@ -208,7 +239,7 @@
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
 	random_icon_states = null
-	beauty = BEAUTY_IMPACT_LOW * beauty_mult
+	beauty = BEAUTY_IMPACT_LOW 
 	dryname = "dried tracks"
 	drydesc = "Some old bloody tracks left by wheels. Machines are evil, perhaps."
 
@@ -227,7 +258,7 @@
 	desc = "Looks like a corpse was smeared all over the floor like ketchup. Kinda makes you hungry."
 	random_icon_states = list("trails_1", "trails_2",)
 	icon_state = "trails_1"
-	beauty = BEAUTY_IMPACT_LOW * beauty_mult
+	beauty = BEAUTY_IMPACT_LOW 
 	dryname = "dried tracks"
 	drydesc = "Looks like a corpse was smeared all over the floor like ketchup, but it's all dried up and nasty now, ew. You lose some of your appetite."
 
@@ -391,7 +422,7 @@
 /obj/effect/decal/cleanable/vital/robotic/streak
 	icon_state = "streak1"
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
-	beauty = BEAUTY_IMPACT_LOW * beauty_mult
+	beauty = BEAUTY_IMPACT_LOW 
 
 /obj/effect/decal/cleanable/vital/robotic/debris
 	name = "robot debris"
@@ -408,7 +439,7 @@
 	"gib6", 
 	"gib7",)
 	mergeable_decal = FALSE
-	beauty = BEAUTY_IMPACT_LOW * beauty_mult
+	beauty = BEAUTY_IMPACT_LOW 
 
 /obj/effect/decal/cleanable/vital/robotic/debris/ex_act()
 	return FALSE
