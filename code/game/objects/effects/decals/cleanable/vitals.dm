@@ -8,52 +8,62 @@
 	name = "vital fluids"
 	desc = "Universally-generic vital fluids"
 	icon = 'icons/effects/blood.dmi'
-	icon_state = "[blood_species_prefix]floor1"
+	icon_state = "floor1"
 	random_icon_states = list(
-	"[blood_species_prefix]floor1",
-	"[blood_species_prefix]floor2",
-	"[blood_species_prefix]floor3",
-	"[blood_species_prefix]floor4",
-	"[blood_species_prefix]floor5",
-	"[blood_species_prefix]floor6",
-	"[blood_species_prefix]floor7",)
+	"floor1",
+	"floor2",
+	"floor3",
+	"floor4",
+	"floor5",
+	"floor6",
+	"floor7",)
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	beauty = (BEAUTY_IMPACT_HIGH*beauty_mult)
+	beauty = BEAUTY_IMPACT_HIGH * beauty_mult
 	clean_type = CLEAN_TYPE_BLOOD
 	var/should_dry = TRUE
 	var/dryname = "dried blood" //when the blood lasts long enough, it becomes dry and gets a new name
 	var/drydesc = "Looks like it's been here a while. Eew." //as above
 	var/drytime = 0
 	var/footprint_sprite = null
-	var/blood_color
-	var/color_food
-	var/blood_species_full
-	var/blood_species_prefix
+	var/blood_color = "strange"
+	var/color_food = "unobtanium"
+	var/blood_species_full = "generic"
+	var/blood_species_prefix = ""
 	var/beauty_mult = 1
+
+//changes the decal per the parameters
+/obj/effect/decal/cleanable/vital/New()
+	. = ..()
+	get_vocab()
+	var/base_icon_state = icon_state
+	icon_state = "[blood_species_prefix][icon_state]"
+			
+/obj/effect/decal/cleanable/vital/proc/get_vocab()
 	switch(blood_state)
 		if(BLOOD_STATE_HUMAN)
-			blood_color = "red"
-			blood_species_full = "human"
-			color_food = "ketchup"
-			blood_species_prefix = null
+			// blood_color = "red"
+			// blood_species_full = "human"
+			// color_food = "ketchup"
+			// blood_species_prefix = ""
+			return list("red" = blood_color, "human" = blood_species_full, "ketchup" = color_food, "" = blood_species_prefix,)
 		if(BLOOD_STATE_XENO)
-			blood_color = "green"
-			blood_species_full = "xeno"
-			color_food = "pandan"
-			blood_species_prefix = "x"
-			beautymult = 2.5
+			// blood_color = "green"
+			// blood_species_full = "xeno"
+			// color_food = "avocado"
+			// blood_species_prefix = "x"
+			// beautymult = 2.5
+			return list("green" = blood_color, "xeno" = blood_species_full, "avocado" = color_food, "x" = blood_species_prefix, 2.5 = beauty_mult,)
 		if(BLOOD_STATE_OIL)
-			icon = 'icons/mob/silicon/robots.dmi'
-			blood_color = "black"
-			blood_species_full = "robot"
-			color_food = "nero di seppia"
-			blood_species_prefix = null
+			// icon = 'icons/mob/silicon/robots.dmi'
+			// blood_color = "black"
+			// blood_species_full = "robot"
+			// color_food = "nero di seppia"
+			// blood_species_prefix = ""
+			return list("black" = blood_color, "robot" = blood_species_full, "nero di seppia" = color_food, "" = blood_species_prefix, 'icons/mob/silicon/robots.dmi' = icon,)
 		if(null)
-			blood_color = "strange"
-			blood_species_full = "generic"
-			color_food = "unobtanium"
-			blood_species_prefix = null
-			
+			return
+	return
+
 /obj/effect/decal/cleanable/vital/organic
 	name = "blood"
 	desc = "It's [blood_color] and gooey. Perhaps it's the chef's cooking?"
@@ -61,18 +71,18 @@
 /obj/effect/decal/cleanable/vital/robotic
 	name = "motor oil"
 	desc = "It's [blood_color] and greasy. Looks like Beepsky made another mess."
-	icon_state = "[blood_species_prefix]floor1"
+	icon_state = "floor1"
 	random_icon_states = list(
-	"[blood_species_prefix]floor1",
-	"[blood_species_prefix]floor2",
-	"[blood_species_prefix]floor3",
-	"[blood_species_prefix]floor4",
-	"[blood_species_prefix]floor5",
-	"[blood_species_prefix]floor6",
-	"[blood_species_prefix]floor7",)
+	"floor1",
+	"floor2",
+	"floor3",
+	"floor4",
+	"floor5",
+	"floor6",
+	"floor7",)
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	beauty = (BEAUTY_IMPACT_HIGH*beauty_mult)
+	beauty = BEAUTY_IMPACT_HIGH * beauty_mult
 	clean_type = CLEAN_TYPE_BLOOD
 	decal_reagent = /datum/reagent/fuel/oil
 	reagent_amount = 30
@@ -173,15 +183,15 @@
 
 /obj/effect/decal/cleanable/vital/organic/old
 	bloodiness = 0
-	icon_state = "[blood_species_prefix]floor1-old"
+	icon_state = "floor1-old"
 
 /obj/effect/decal/cleanable/vital/organic/old/Initialize(mapload, list/datum/disease/diseases)
 	add_blood_DNA(list("Non-human DNA" = random_blood_type())) // Needs to happen before ..()
 	return ..()
 
 /obj/effect/decal/cleanable/vital/organic/splatter
-	icon_state = "[blood_species_prefix]gibbl1"
-	random_icon_states = list("[blood_species_prefix]gibbl1", "[blood_species_prefix]gibbl2", "[blood_species_prefix]gibbl3", "[blood_species_prefix]gibbl4", "[blood_species_prefix]gibbl5",)
+	icon_state = "gibbl1"
+	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5",)
 
 /obj/effect/decal/cleanable/vital/organic/splatter/over_window // special layer/plane set to appear on windows
 	layer = ABOVE_WINDOW_LAYER
@@ -193,10 +203,10 @@
 	return isgroundlessturf(here_turf)
 
 /obj/effect/decal/cleanable/vital/organic/tracks
-	icon_state = "[blood_species_prefix]tracks"
+	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
 	random_icon_states = null
-	beauty = (BEAUTY_IMPACT_LOW*beauty_mult)
+	beauty = BEAUTY_IMPACT_LOW * beauty_mult
 	dryname = "dried tracks"
 	drydesc = "Some old bloody tracks left by wheels. Machines are evil, perhaps."
 
@@ -204,7 +214,7 @@
 	name = "blood"
 	icon = 'icons/effects/blood.dmi'
 	desc = "Your instincts say you shouldn't be following these."
-	beauty = (BEAUTY_IMPACT_LOW*beauty_mult)
+	beauty = (BEAUTY_IMPACT_LOW)
 	var/list/existing_dirs = list()
 
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
@@ -213,9 +223,9 @@
 // normal version of the above trail holder object for use in less convoluted things
 /obj/effect/decal/cleanable/vital/organic/trails
 	desc = "Looks like a corpse was smeared all over the floor like ketchup. Kinda makes you hungry."
-	random_icon_states = list("[blood_species_prefix]trails_1", "[blood_species_prefix]trails_2",)
-	icon_state = "[blood_species_prefix]trails_1"
-	beauty = (BEAUTY_IMPACT_LOW*beauty_mult)
+	random_icon_states = list("trails_1", "trails_2",)
+	icon_state = "trails_1"
+	beauty = BEAUTY_IMPACT_LOW * beauty_mult
 	dryname = "dried tracks"
 	drydesc = "Looks like a corpse was smeared all over the floor like ketchup, but it's all dried up and nasty now, ew. You lose some of your appetite."
 
@@ -223,10 +233,10 @@
 	name = "gibs"
 	desc = "They look bloody and gruesome."
 	icon = 'icons/effects/blood.dmi'
-	icon_state = "[blood_species_prefix]gib1"
+	icon_state = "gib1"
 	layer = BELOW_OBJ_LAYER
 	plane = GAME_PLANE
-	random_icon_states = list("[blood_species_prefix]gib1", "[blood_species_prefix]gib2", "[blood_species_prefix]gib3", "[blood_species_prefix]gib4", "[blood_species_prefix]gib5", "[blood_species_prefix]gib6",)
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6",)
 	mergeable_decal = FALSE
 
 	dryname = "rotting gibs"
@@ -292,58 +302,58 @@
 
 //segments for misc organic vitals
 /obj/effect/decal/cleanable/vital/organic/gibs/up
-	icon_state = "[blood_species_prefix]gibup1"
+	icon_state = "gibup1"
 	random_icon_states = list(
-	"[blood_species_prefix]gib1",
-	"[blood_species_prefix]gib2", 
-	"[blood_species_prefix]gib3", 
-	"[blood_species_prefix]gib4", 
-	"[blood_species_prefix]gib5", 
-	"[blood_species_prefix]gib6", 
-	"[blood_species_prefix]gibup1", 
-	"[blood_species_prefix]gibup1", 
-	"[blood_species_prefix]gibup1",)
+	"gib1",
+	"gib2", 
+	"gib3", 
+	"gib4", 
+	"gib5", 
+	"gib6", 
+	"gibup1", 
+	"gibup1", 
+	"gibup1",)
 
 /obj/effect/decal/cleanable/vital/organic/gibs/down
-	icon_state = "[blood_species_prefix]gibdown1"
+	icon_state = "gibdown1"
 	random_icon_states = list(
-	"[blood_species_prefix]gib1",
-	"[blood_species_prefix]gib2",
-	"[blood_species_prefix]gib3",
-	"[blood_species_prefix]gib4",
-	"[blood_species_prefix]gib5",
-	"[blood_species_prefix]gib6",
-	"[blood_species_prefix]gibdown1",
-	"[blood_species_prefix]gibdown1",
-	"[blood_species_prefix]gibdown1",)
+	"gib1",
+	"gib2",
+	"gib3",
+	"gib4",
+	"gib5",
+	"gib6",
+	"gibdown1",
+	"gibdown1",
+	"gibdown1",)
 
 /obj/effect/decal/cleanable/vital/organic/gibs/body
-	icon_state = "[blood_species_prefix]gibtorso"
+	icon_state = "gibtorso"
 	random_icon_states = list(
-	"[blood_species_prefix]gibhead",
-	"[blood_species_prefix]gibtorso",)
+	"gibhead",
+	"gibtorso",)
 
 /obj/effect/decal/cleanable/vital/organic/gibs/torso
-	icon_state = "[blood_species_prefix]gibtorso"
+	icon_state = "gibtorso"
 	random_icon_states = null
 
 /obj/effect/decal/cleanable/vital/organic/gibs/limb
-	icon_state = "[blood_species_prefix]gibleg"
+	icon_state = "gibleg"
 	random_icon_states = list(
-	"[blood_species_prefix]gibleg",
-	"[blood_species_prefix]gibarm",)
+	"gibleg",
+	"gibarm",)
 
 /obj/effect/decal/cleanable/vital/organic/gibs/core
-	icon_state = "[blood_species_prefix]gibmid1"
+	icon_state = "gibmid1"
 	random_icon_states = list(
-	"[blood_species_prefix]gibmid1",
-	"[blood_species_prefix]gibmid2",
-	"[blood_species_prefix]gibmid3",)
+	"gibmid1",
+	"gibmid2",
+	"gibmid3",)
 
 /obj/effect/decal/cleanable/vital/organic/gibs/old
 	name = "old rotting gibs"
 	desc = "Space Jesus, why didn't anyone clean this up? They smell terrible."
-	icon_state = "[blood_species_prefix]gib1-old"
+	icon_state = "gib1-old"
 	bloodiness = 0
 	should_dry = FALSE
 	dryname = "old rotting gibs"
@@ -359,13 +369,13 @@
 /obj/effect/decal/cleanable/vital/organic/drip
 	name = "drips of blood"
 	desc = "It's [blood_color]."
-	icon_state = "[blood_species_prefix]drip5" //using drip5 since the others tend to blend in with pipes & wires.
+	icon_state = "drip5" //using drip5 since the others tend to blend in with pipes & wires.
 	random_icon_states = list(
-	"[blood_species_prefix]drip1",
-	"[blood_species_prefix]drip2",
-	"[blood_species_prefix]drip3",
-	"[blood_species_prefix]drip4",
-	"[blood_species_prefix]drip5",)
+	"drip1",
+	"drip2",
+	"drip3",
+	"drip4",
+	"drip5",)
 	bloodiness = 0
 	var/drips = 1
 	dryname = "drips of blood"
@@ -379,7 +389,7 @@
 /obj/effect/decal/cleanable/vital/robotic/streak
 	icon_state = "streak1"
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
-	beauty = (BEAUTY_IMPACT_LOW*beauty_mult)
+	beauty = BEAUTY_IMPACT_LOW * beauty_mult
 
 /obj/effect/decal/cleanable/vital/robotic/debris
 	name = "robot debris"
@@ -388,15 +398,15 @@
 	plane = GAME_PLANE
 	layer = BELOW_OBJ_LAYER
 	random_icon_states = list(
-	"[blood_species_prefix]gib1",
-	"[blood_species_prefix]gib2",
-	"[blood_species_prefix]gib3",
-	"[blood_species_prefix]gib4",
-	"[blood_species_prefix]gib5",
-	"[blood_species_prefix]gib6", 
-	"[blood_species_prefix]gib7",)
+	"gib1",
+	"gib2",
+	"gib3",
+	"gib4",
+	"gib5",
+	"gib6", 
+	"gib7",)
 	mergeable_decal = FALSE
-	beauty = (BEAUTY_IMPACT_LOW*beauty_mult)
+	beauty = BEAUTY_IMPACT_LOW * beauty_mult
 
 /obj/effect/decal/cleanable/vital/robotic/debris/ex_act()
 	return FALSE
@@ -534,8 +544,8 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 /obj/effect/decal/cleanable/vital/organic/hitsplatter
 	name = "blood splatter"
 	pass_flags = PASSTABLE | PASSGRILLE
-	icon_state = "[blood_species_prefix]hitsplatter1"
-	random_icon_states = list("[blood_species_prefix]hitsplatter1", "[blood_species_prefix]hitsplatter2", "[blood_species_prefix]hitsplatter3",)
+	icon_state = "hitsplatter1"
+	random_icon_states = list("hitsplatter1", "hitsplatter2", "hitsplatter3",)
 	plane = GAME_PLANE
 	layer = ABOVE_WINDOW_LAYER
 	/// The turf we just came from, so we can back up when we hit a wall
