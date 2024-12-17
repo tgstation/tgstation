@@ -243,6 +243,7 @@
 					to_chat(user, span_warning("[human_target] is just way too shaved. Like, really really shaved."))
 					return
 				user.visible_message(span_notice("[user] tries to change [human_target]'s facial hairstyle using [src]."), span_notice("You try to change [human_target]'s facial hairstyle using [src]."))
+				playsound(src, 'sound/items/hair-clippers.ogg', 50)
 				if(new_style && do_after(user, 6 SECONDS, target = human_target))
 					user.visible_message(span_notice("[user] successfully changes [human_target]'s facial hairstyle using [src]."), span_notice("You successfully change [human_target]'s facial hairstyle using [src]."))
 					human_target.set_facial_hairstyle(new_style, update = TRUE)
@@ -263,6 +264,7 @@
 			if(human_target == user) //shaving yourself
 				user.visible_message(span_notice("[user] starts to shave [user.p_their()] facial hair with [src]."), \
 					span_notice("You take a moment to shave your facial hair with [src]..."))
+				playsound(src, 'sound/items/hair-clippers.ogg', 50)
 				if(do_after(user, 5 SECONDS, target = user))
 					user.visible_message(span_notice("[user] shaves [user.p_their()] facial hair clean with [src]."), \
 						span_notice("You finish shaving with [src]. Fast and clean!"))
@@ -271,6 +273,7 @@
 			else
 				user.visible_message(span_warning("[user] tries to shave [human_target]'s facial hair with [src]."), \
 					span_notice("You start shaving [human_target]'s facial hair..."))
+				playsound(src, 'sound/items/hair-clippers.ogg', 50)
 				if(do_after(user, 5 SECONDS, target = human_target))
 					user.visible_message(span_warning("[user] shaves off [human_target]'s facial hair with [src]."), \
 						span_notice("You shave [human_target]'s facial hair clean off."))
@@ -296,6 +299,7 @@
 				to_chat(user, span_warning("[human_target] is just way too bald. Like, really really bald."))
 				return
 			user.visible_message(span_notice("[user] tries to change [human_target]'s hairstyle using [src]."), span_notice("You try to change [human_target]'s hairstyle using [src]."))
+			playsound(src, 'sound/items/hair-clippers.ogg', 50)
 			if(new_style && do_after(user, 6 SECONDS, target = human_target))
 				user.visible_message(span_notice("[user] successfully changes [human_target]'s hairstyle using [src]."), span_notice("You successfully change [human_target]'s hairstyle using [src]."))
 				human_target.set_hairstyle(new_style, update = TRUE)
@@ -314,6 +318,7 @@
 			if(human_target == user) //shaving yourself
 				user.visible_message(span_notice("[user] starts to shave [user.p_their()] head with [src]."), \
 					span_notice("You start to shave your head with [src]..."))
+				playsound(src, 'sound/items/hair-clippers.ogg', 50)
 				if(do_after(user, 5 SECONDS, target = user))
 					user.visible_message(span_notice("[user] shaves [user.p_their()] head with [src]."), \
 						span_notice("You finish shaving with [src]."))
@@ -322,6 +327,7 @@
 			else
 				user.visible_message(span_warning("[user] tries to shave [human_target]'s head with [src]!"), \
 					span_notice("You start shaving [human_target]'s head..."))
+				playsound(src, 'sound/items/hair-clippers.ogg', 50)
 				if(do_after(user, 5 SECONDS, target = human_target))
 					user.visible_message(span_warning("[user] shaves [human_target]'s head bald with [src]!"), \
 						span_notice("You shave [human_target]'s head bald."))
