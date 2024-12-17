@@ -363,9 +363,9 @@
 		marked_underlay.pixel_y = -owner.pixel_y
 
 		var/list/new_color = list(
-			0, 255, 0,
-			0, 255, 0,
-			0, 255, 0
+			0, 1, 0,
+			0, 1, 0,
+			0, 1, 0
 		)
 		owner.vis_contents += marked_underlay
 		animate(marked_underlay, color = new_color, time = 5 SECONDS, loop = 1)
@@ -383,12 +383,13 @@
 	name = "Crusher mark underlay"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield"
+	appearance_flags = TILE_BOUND|LONG_GLIDE|RESET_COLOR
 	vis_flags = VIS_UNDERLAY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	color = list(
-		255, 0, 0,
-		255, 0, 0,
-		255, 0, 0
+		1, 0, 0,
+		1, 0, 0,
+		1, 0, 0
 	)
 
 /datum/status_effect/stacking/saw_bleed
