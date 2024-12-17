@@ -30,6 +30,11 @@
 		A += matter_bin.tier
 	accuracy = A
 
+/obj/machinery/teleport/hub/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += span_notice("The status display reads: Success chance is <b>[70 + (accuracy * 10)]%</b>.")
+
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
 		return
