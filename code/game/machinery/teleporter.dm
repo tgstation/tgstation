@@ -112,6 +112,8 @@
 	icon_state = "controller"
 	base_icon_state = "controller"
 	circuit = /obj/item/circuitboard/machine/teleporter_station
+	use_power = IDLE_POWER_USE
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 3
 	var/engaged = FALSE
 	var/obj/machinery/computer/teleporter/teleporter_console
 	var/obj/machinery/teleport/hub/teleporter_hub

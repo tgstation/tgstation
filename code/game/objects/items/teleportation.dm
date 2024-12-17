@@ -180,9 +180,7 @@
 		if(!computer_area || (computer_area.area_flags & NOTELEPORT))
 			continue
 		if(computer.power_station?.teleporter_hub && computer.power_station.engaged)
-			locations["[get_area(target)] (Active)"] = computer
-		else
-			locations["[get_area(target)] (Inactive)"] = computer
+			locations["[get_area(target)]"] = computer
 
 	locations["None (Dangerous)"] = PORTAL_LOCATION_DANGEROUS
 
