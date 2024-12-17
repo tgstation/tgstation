@@ -138,8 +138,8 @@ const ShoppingTab = (props) => {
                       />
                     </Stack.Item>
                   )}
-                  <Stack.Item>{capitalize(item.name)}</Stack.Item>
-                  <Stack.Item grow color="label" fontSize="10px">
+                  <Stack.Item grow>{capitalize(item.name)}</Stack.Item>
+                  <Stack.Item color="label" fontSize="10px">
                     <Button
                       mt={-1}
                       color="transparent"
