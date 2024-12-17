@@ -66,7 +66,7 @@
 	drop_all_mail()
 	. = ..()
 
-/obj/machinery/mailsorter/deconstruct(disassembled)
+/obj/machinery/mailsorter/on_deconstruction(disassembled)
 	drop_all_mail()
 	. = ..()
 
@@ -155,10 +155,13 @@
 		if (some_recipient)
 			var/datum/job/recipient_job = some_recipient.assigned_role
 			var/datum/job_department/primary_department = recipient_job.departments_list?[1]
-			var/datum/job_department/main_department = primary_department.department_name?
-			if (main_department == sorting_dept)
-				sorted_mail.Add(some_mail)
-				sorted ++
+			if (primary_department == null)	// permabrig is temporary, tide is forever
+				unable_to_sort ++
+			else
+				var/datum/job_department/main_department = primary_department.department_name
+				if (main_department == sorting_dept)
+					sorted_mail.Add(some_mail)
+					sorted ++
 		else
 			unable_to_sort ++
 	if (length(sorted_mail) == 0)
