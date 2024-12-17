@@ -10,8 +10,7 @@ SUBSYSTEM_DEF(weather)
 
 /datum/controller/subsystem/weather/fire()
 	// process active weather
-	for(var/V in processing)
-		var/datum/weather/our_event = V
+	for(var/datum/weather/our_event as anything in processing)
 		if(our_event.aesthetic || our_event.stage != MAIN_STAGE)
 			continue
 		for(var/mob/act_on as anything in GLOB.mob_living_list)
@@ -28,16 +27,16 @@ SUBSYSTEM_DEF(weather)
 		next_hit_by_zlevel["[z]"] = addtimer(CALLBACK(src, PROC_REF(make_eligible), z, possible_weather), randTime + initial(our_event.weather_duration_upper), TIMER_UNIQUE|TIMER_STOPPABLE) //Around 5-10 minutes between weathers
 
 /datum/controller/subsystem/weather/Initialize()
-	for(var/V in subtypesof(/datum/weather))
-		var/datum/weather/W = V
+	for(var/datum/weather/W as anything in subtypesof(/datum/weather))
 		var/probability = initial(W.probability)
 		var/target_trait = initial(W.target_trait)
 
 		// any weather with a probability set may occur at random
-		if (probability)
-			for(var/z in SSmapping.levels_by_trait(target_trait))
-				LAZYINITLIST(eligible_zlevels["[z]"])
-				eligible_zlevels["[z]"][W] = probability
+		if (!probability)
+			continue
+		for(var/z in SSmapping.levels_by_trait(target_trait))
+			LAZYINITLIST(eligible_zlevels["[z]"])
+			eligible_zlevels["[z]"][W] = probability
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/weather/proc/update_z_level(datum/space_level/level)
@@ -75,8 +74,7 @@ SUBSYSTEM_DEF(weather)
 
 /datum/controller/subsystem/weather/proc/get_weather(z, area/active_area)
 	var/datum/weather/A
-	for(var/V in processing)
-		var/datum/weather/W = V
+	for(var/datum/weather/W as anything in processing)
 		if((z in W.impacted_z_levels) && W.area_type == active_area.type)
 			A = W
 			break
