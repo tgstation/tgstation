@@ -5,7 +5,7 @@
 	desc = "A massive glowing holosign warning you to keep out of it, there's probably some important stuff happening in there!"
 	icon = 'modular_doppler/deforest_medical_items/icons/telegraph_96x96.dmi'
 	icon_state = "treatment_zone"
-	layer = BELOW_OBJ_LAYER
+	layer = BOT_PATH_LAYER
 	pixel_x = -32
 	pixel_y = -32
 	use_vis_overlay = FALSE

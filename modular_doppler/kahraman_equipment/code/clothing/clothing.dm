@@ -34,7 +34,7 @@
 		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi')
 	worn_icon_state = "boots"
 	armor_type = /datum/armor/colonist_clothing
-	resistance_flags = NONE
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/shoes/jackboots/frontier_colonist/Initialize(mapload)
 	. = ..()
@@ -178,7 +178,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	resistance_flags = NONE
+	resistance_flags = FIRE_PROOF
 	clothing_traits = list(TRAIT_QUICK_CARRY)
 
 /obj/item/clothing/gloves/frontier_colonist/Initialize(mapload)

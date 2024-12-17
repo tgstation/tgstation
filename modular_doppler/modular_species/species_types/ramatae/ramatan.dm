@@ -84,7 +84,7 @@
 	head = /obj/item/clothing/head/beret/doppler_command/science
 	neck = /obj/item/clothing/neck/doppler_mantle/science
 
-/datum/species/ramatan/on_species_gain(mob/living/carbon/human/new_ramatan, datum/species/old_species, pref_load)
+/datum/species/ramatan/on_species_gain(mob/living/carbon/human/new_ramatan, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	new_ramatan.AddComponent(/datum/component/sign_language)
 

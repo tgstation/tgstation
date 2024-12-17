@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Frozen slimes can't latch on to you (but they can still attack you technically)"

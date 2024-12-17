@@ -135,7 +135,7 @@
 		var/datum/job/job = target_human.mind?.assigned_role
 		var/is_holy = target_human.mind?.holy_role
 		if(is_holy || (job?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
-			to_chat(honorbound_human, span_warning("There is nothing righteous in attacking the <b>just</b>."))
+			to_chat(honorbound_human, span_warning("The <b>just</b> and fair guards? If you truly think they are not <b>innocent</b>, declare them guilty.")) //DOPPLER EDIT CHANGE - ORIGINAL: to_chat(honorbound_human, span_warning("There is nothing righteous in attacking the <b>just</b>."))
 			return FALSE
 		if(job?.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL && !is_guilty)
 			to_chat(honorbound_human, span_warning("If you truly think this healer is not <b>innocent</b>, declare them guilty."))
@@ -274,10 +274,11 @@
 		return FALSE
 
 	// cannot declare security as evil
+	/* //DOPPLER EDIT CHANGE START - Commented out. You can, but they're good on a normal basis.
 	if(living_cast_on.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
 		to_chat(owner, span_warning("Members of security are uncorruptable! You cannot declare one evil!"))
 		return FALSE
-
+	*/ //DOPPLER EDIT CHANGE END
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/declare_evil/before_cast(mob/living/cast_on)

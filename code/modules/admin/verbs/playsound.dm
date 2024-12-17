@@ -42,9 +42,7 @@ ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only yo
 	log_admin("[key_name(user)] played a local sound [sound]")
 	message_admins("[key_name_admin(user)] played a local sound [sound]")
 	var/volume = tgui_input_number(user, "What volume would you like the sound to play at?", max_value = 100)
-	var/sound/admin_sound = sound(sound)
-	admin_sound.volume = volume || 50
-	playsound(get_turf(user.mob), sound, FALSE, FALSE)
+	playsound(get_turf(user.mob), sound, volume || 50, FALSE)
 	BLACKBOX_LOG_ADMIN_VERB("Play Local Sound")
 
 ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a sound directly to a mob.", ADMIN_CATEGORY_FUN, sound as sound, mob/target in world)

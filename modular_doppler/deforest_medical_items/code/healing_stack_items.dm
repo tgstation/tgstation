@@ -33,7 +33,7 @@
 	var/treatment_sound = 'sound/items/duct_tape/duct_tape_rip.ogg'
 
 // This is only relevant for the types of wounds defined, we can't work if there are none
-/obj/item/stack/medical/wound_recovery/try_heal(mob/living/patient, mob/user, silent, looping)
+/obj/item/stack/medical/wound_recovery/try_heal(mob/living/patient, mob/user, silent, looping, auto_change_zone = FALSE)
 
 	if(patient.has_status_effect(/datum/status_effect/vulnerable_to_damage))
 		patient.balloon_alert(user, "still recovering from last use!")

@@ -38,3 +38,16 @@
 	. = ..()
 	. += span_notice("[src] can be worn above or below your suit. Alt-Right-click to toggle.")
 	. += span_notice("Alt-click [src] to adjust it.")
+
+/obj/item/clothing/mask/neck_gaiter/cybersun
+	name = "advanced neck gaiter"
+	desc = "A glistening neck accessory, colored in a black pinstripe texture. The material is an attempt to imitate 'heatsilk' technology, but it is barely any <b>laser-reflective</b>. Has a small respirator to be used with internals."
+	unique_death = 'modular_doppler/modular_sounds/sound/machines/hacked.ogg'
+	greyscale_colors = "#333333"
+	var/hit_reflect_chance = 5 // don't count on it, operative
+
+/obj/item/clothing/mask/neck_gaiter/cybersun/IsReflect(def_zone)
+	if(def_zone in list(BODY_ZONE_HEAD))
+		return FALSE
+	if (prob(hit_reflect_chance))
+		return TRUE

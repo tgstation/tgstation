@@ -182,7 +182,7 @@
 	dir = 1
 	},
 /obj/structure/chair/sofa/bamboo/left,
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "dj" = (
 /obj/structure/flora/bush/snow/style_random,
@@ -275,7 +275,7 @@
 "fK" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/wall_torch/spawns_lit/directional/north,
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "fV" = (
 /obj/effect/turf_decal/siding/wood{
@@ -302,7 +302,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "gz" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -317,7 +317,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "gU" = (
 /obj/structure/rack/wooden,
@@ -589,7 +589,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "mr" = (
 /obj/structure/wall_torch/spawns_lit/directional/west,
@@ -646,7 +646,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "nG" = (
 /obj/machinery/griddle/stone,
@@ -704,7 +704,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "ol" = (
 /obj/structure/railing/wooden_fencing{
@@ -740,7 +740,7 @@
 /area/ruin/unpowered/primitive_genemod_den)
 "oJ" = (
 /obj/effect/turf_decal/weather/dirt,
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "oL" = (
 /obj/machinery/smartfridge/wooden/seed_shelf,
@@ -788,7 +788,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "po" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -804,7 +804,7 @@
 /area/ruin/unpowered/primitive_genemod_den)
 "pW" = (
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "qb" = (
 /obj/effect/turf_decal/siding/wood{
@@ -816,7 +816,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "qr" = (
 /obj/structure/rack/wooden,
@@ -877,7 +877,7 @@
 /obj/structure/chair/sofa/bamboo{
 	dir = 1
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "sj" = (
 /obj/structure/spacevine{
@@ -1010,7 +1010,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "vy" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1063,7 +1063,7 @@
 /area/ruin/unpowered/primitive_genemod_den)
 "wU" = (
 /obj/structure/wall_torch/spawns_lit/directional/south,
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "xc" = (
 /obj/structure/wall_torch/spawns_lit/directional/west,
@@ -1149,14 +1149,14 @@
 /obj/structure/chair/sofa/bamboo/right{
 	dir = 1
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "yx" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
 /obj/structure/wall_torch/spawns_lit/directional/south,
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "yy" = (
 /obj/effect/mob_spawn/ghost_role/human/primitive_genemod,
@@ -1164,7 +1164,7 @@
 /area/ruin/unpowered/primitive_genemod_den)
 "yE" = (
 /obj/effect/turf_decal/siding/wood,
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "yN" = (
 /obj/structure/rack/wooden,
@@ -1182,7 +1182,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "yU" = (
 /obj/structure/window/green_glass_pane,
@@ -1193,7 +1193,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "zu" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1543,7 +1543,7 @@
 	dir = 1
 	},
 /obj/structure/chair/sofa/bamboo/right,
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "Fj" = (
 /obj/structure/chair/wood,
@@ -1631,7 +1631,7 @@
 /turf/open/floor/wood/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "Hd" = (
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "Hv" = (
 /obj/structure/rack/wooden,
@@ -1690,7 +1690,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "IJ" = (
 /obj/structure/wall_torch/spawns_lit/directional/east,
@@ -1746,7 +1746,7 @@
 	name = "thick vines";
 	opacity = 1
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "Jn" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -1755,7 +1755,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "Jq" = (
 /turf/open/misc/hay/icemoon,
@@ -1845,7 +1845,7 @@
 	dir = 1
 	},
 /obj/structure/chair/sofa/bamboo,
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "Ku" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1960,7 +1960,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "Mr" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,
@@ -2000,7 +2000,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "Nr" = (
 /obj/effect/turf_decal/siding/wood{
@@ -2165,7 +2165,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "RZ" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
@@ -2229,7 +2229,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "TW" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -2277,7 +2277,7 @@
 /area/ruin/unpowered/primitive_genemod_den)
 "Vc" = (
 /obj/structure/fluff/minepost,
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "Vp" = (
 /obj/structure/table/wood,
@@ -2402,7 +2402,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
-/turf/open/water/hot_spring,
+/turf/open/water/hot_spring/icemoon,
 /area/ruin/unpowered/primitive_genemod_den)
 "YO" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,

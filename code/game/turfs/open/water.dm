@@ -92,6 +92,7 @@
 	icon_state = "tizira_water"
 	base_icon_state = "tizira_water"
 	baseturfs = /turf/open/water/beach/tizira
+	fishing_datum = /datum/fish_source/tizira
 
 /**
  * A special subtype of water with steam particles and a status effect similar to showers, that's however only applied if
@@ -109,16 +110,16 @@
 	immerse_overlay_alpha = 190
 	fishing_datum = /datum/fish_source/hot_spring
 	/// Holder for the steam particles
-	var/obj/effect/abstract/particle_holder/cached/steam_effect
+	var/obj/effect/abstract/particle_holder/cached/particle_effect
 
 /turf/open/water/hot_spring/Initialize(mapload)
 	. = ..()
 	icon_state = "pool_[rand(1, 4)]"
-	steam_effect = new(src, /particles/hotspring_steam, 4)
+	particle_effect = new(src, /particles/hotspring_steam, 4)
 	//render the steam over mobs and objects on the game plane
-	steam_effect.vis_flags &= ~VIS_INHERIT_PLANE
+	particle_effect.vis_flags &= ~VIS_INHERIT_PLANE
 	//And be unaffected by ambient occlusions, which would render the steam grey
-	steam_effect.plane = MUTATE_PLANE(MASSIVE_OBJ_PLANE, src)
+	particle_effect.plane = MUTATE_PLANE(MASSIVE_OBJ_PLANE, src)
 	add_filter("hot_spring_waves", 1, wave_filter(y = 1, size = 1, offset = 0, flags = WAVE_BOUNDED))
 	var/filter = get_filter("hot_spring_waves")
 	animate(filter, offset = 1, time = 3 SECONDS, loop = -1, easing = SINE_EASING|EASE_IN|EASE_OUT)
@@ -126,7 +127,7 @@
 
 
 /turf/open/water/hot_spring/Destroy()
-	QDEL_NULL(steam_effect)
+	QDEL_NULL(particle_effect)
 	remove_filter("hot_spring_waves")
 	for(var/atom/movable/movable as anything in contents)
 		exit_hot_spring(movable)

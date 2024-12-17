@@ -94,10 +94,10 @@
 
 /// ACTUAL AESTHETIC CHANGES BEGIN HERE
 /obj/item/reagent_containers/cup/beaker
+	desc = "A beaker. It can hold up to 60 units."
 	icon = 'modular_doppler/modular_items/icons/shipchems.dmi'
 	fill_icon = 'modular_doppler/modular_items/icons/shipchems_reagentfillings.dmi'
 	fill_icon_thresholds = list(1, 40, 60, 80, 100)
-	//fill_icon_state = "beaker"
 
 	cap_on = TRUE
 	can_have_cap = TRUE
@@ -106,7 +106,6 @@
 	volume = 60
 	possible_transfer_amounts = list(5,10,15,20,30,60)
 	amount_per_transfer_from_this = 5
-	desc = "A beaker. It can hold up to 60 units."
 
 /obj/item/reagent_containers/cup/beaker/oldstation
 	amount_per_transfer_from_this = 5
@@ -121,36 +120,36 @@
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 
 /obj/item/reagent_containers/cup/beaker/large
+	desc = "A large beaker. Can hold up to 120 units."
 	fill_icon_thresholds = list(1, 40, 60, 80, 100)
 	cap_icon_state = "beakerlarge_cap"
 
 	volume = 120
 	possible_transfer_amounts = list(5,10,15,20,30,40,60,120)
-	desc = "A large beaker. Can hold up to 120 units."
 
 /obj/item/reagent_containers/cup/beaker/plastic
+	desc = "An extra-large beaker. Can hold up to 180 units."
 	fill_icon_thresholds = list(1, 25, 50, 75, 100)
 	fill_icon_state = "beakerxlarge"
 	cap_icon_state = "beakerwhite_cap"
 
 	volume = 180
 	possible_transfer_amounts = list(5,10,15,20,30,60,90,180)
-	desc = "An extra-large beaker. Can hold up to 180 units."
 
 /obj/item/reagent_containers/cup/beaker/meta
+	desc = "An ultra-large beaker. Can hold up to 240 units."
 	fill_icon_thresholds = list(1, 25, 50, 75, 100)
 	cap_icon_state = "beakergold_cap"
 
 	volume = 240
 	possible_transfer_amounts = list(5,10,15,20,30,60,120,240)
-	desc = "An ultra-large beaker. Can hold up to 240 units."
 
 /obj/item/reagent_containers/cup/beaker/noreact
+	desc = "A cryostasis beaker that allows for chemical storage without \
+		reactions. Can hold up to 120 units."
 	cap_icon_state = "beakernoreact_cap"
 
 	volume = 120
-	desc = "A cryostasis beaker that allows for chemical storage without \
-		reactions. Can hold up to 120 units."
 
 /obj/item/reagent_containers/cup/beaker/bluespace
 	cap_icon_state = "beakerbluespace_cap"
