@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Tasers are now more realistic"
-  - rscdel: "Electrodes are no longer in the hallucination projectile pool"

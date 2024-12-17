@@ -6,6 +6,7 @@
 	icon_state = "tongs"
 	base_icon_state = "tongs"
 	inhand_icon_state = "fork" // close enough
+	icon_angle = -45
 	attack_verb_continuous = list("pinches", "tongs", "nips")
 	attack_verb_simple = list("pinch", "tong", "nip")
 	/// What are we holding in our tongs?

@@ -415,3 +415,12 @@
   - refactor: turbine code has been overall improved. report bugs on github
   tontyGH:
   - bugfix: Underlining your messages in loud mode shouldn't break anymore
+2024-12-17:
+  Melbert:
+  - balance: Tasers are now more realistic
+  - rscdel: Electrodes are no longer in the hallucination projectile pool
+  OrionTheFox:
+  - image: resprited the Blood Cult Archives/Altar (the two summoning tables)
+  SyncIt21:
+  - code_imp: improved code for RPED
+  - refactor: RPED attack chain has been refactored. Reports bugs on github
