@@ -116,7 +116,6 @@
 /obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE)
 	if(patient == user)
 		if(!silent)
-			user.balloon_alert(user, "[apply_verb] [parse_zone(healed_zone)]...")
 			user.visible_message(
 				span_notice("[user] starts to apply [src] on [user.p_them()]self..."),
 				span_notice("You begin applying [src] on yourself..."),
@@ -136,7 +135,6 @@
 
 	else if(other_delay)
 		if(!silent)
-			patient.balloon_alert(user, "[apply_verb] [parse_zone(healed_zone)]...")
 			user.visible_message(
 				span_notice("[user] starts to apply [src] on [patient]."),
 				span_notice("You begin applying [src] on [patient]..."),
