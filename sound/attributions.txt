@@ -213,3 +213,5 @@ sound/effects/bonk.ogg - recorded by oranges on a coke zero bottle, edited by ni
 sound\items\weapons\hammer_death_scream.ogg - Undefeatablesos' scream recorded by Niron3206, edited by Niron3206, License: Creative Commons 0
 
 sound/machines/sink-faucet.ogg -- https://freesound.org/people/FOSSarts/sounds/740086/ -- by FOSSarts (CC0)
+
+sound/items/dice_roll.ogg -- https://freesound.org/people/Crovic/sounds/661935/ -- by Crovic (CC0)
