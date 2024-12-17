@@ -12,7 +12,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 25 // only used when teleporting (same as gateway)
 	var/accuracy = 0
 	var/obj/machinery/teleport/station/power_station
-	var/calibrated = FALSE//Calibration prevents mutation
+	var/calibrated = FALSE // Calibration prevents mutation
 	var/teleport_radius = 9 // T1 9x9, T2 6x6, T3 3x3, T4 exact turf
 
 /obj/machinery/teleport/hub/Initialize(mapload)
@@ -94,7 +94,6 @@
 				to_chat(M, span_hear("You hear a buzzing in your ears."))
 				human.set_species(species_to_transform)
 				human.log_message("was turned into a [initial(species_to_transform.name)] through [src].", LOG_GAME)
-	calibrated = FALSE
 
 /obj/machinery/teleport/hub/update_icon_state()
 	icon_state = "[base_icon_state][panel_open ? "-o" : (is_ready() ? 1 : 0)]"
