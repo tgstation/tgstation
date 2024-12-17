@@ -9,6 +9,11 @@
 	body_parts_covered = CHEST|ARMS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+/obj/item/clothing/neck/doppler_mantle/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "mantle-emissive", src, alpha = src.alpha)
+
 /obj/item/clothing/neck/doppler_mantle/medical
 	name = "medical command mantle"
 	icon_state = "doppler_med"

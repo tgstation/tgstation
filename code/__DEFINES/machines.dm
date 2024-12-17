@@ -73,6 +73,8 @@
 // DOPPLER EDIT ADDITION
 /// Can be made by the orderable colony fabricator
 #define COLONY_FABRICATOR (1<<11)
+/// Can be made in emergency damage lathes
+#define DAMAGE_FAB (1<<12)
 // DOPPLER EDIT END
 
 #define HYPERTORUS_INACTIVE 0 // No or minimal energy

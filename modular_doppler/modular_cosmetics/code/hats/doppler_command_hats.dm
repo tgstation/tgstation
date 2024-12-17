@@ -8,11 +8,23 @@
 	name = "generic command hardhat"
 	desc = "A heavy-duty hardhat for protecting the heads of the heads when everything starts to go wrong."
 	icon = 'modular_doppler/modular_cosmetics/icons/obj/head/doppler_command_hardhats.dmi'
-	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/head/doppler_command_hardhats.dmi'
-	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = null
 	hat_type = null
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/head/doppler_command_hardhats.dmi'
 	mask_overlay_icon = 'modular_doppler/modular_cosmetics/icons/mob/head/doppler_command_hardhats.dmi'
+
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	light_range = 4
+
+/obj/item/clothing/head/utility/hardhat/welding/doppler_command/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "hardhat_emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/head/utility/hardhat/welding/doppler_command/medical
 	name = "medical command hardhat"
