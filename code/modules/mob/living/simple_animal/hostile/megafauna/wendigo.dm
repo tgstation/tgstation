@@ -240,25 +240,6 @@ Difficulty: Hard
 	playsound(human_user.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)
 
-/obj/item/crusher_trophy/wendigo_horn
-	name = "wendigo horn"
-	desc = "A gnarled horn ripped from the skull of a wendigo. Suitable as a trophy for a kinetic crusher."
-	icon_state = "wendigo_horn"
-	denied_type = /obj/item/crusher_trophy/wendigo_horn
-
-/obj/item/crusher_trophy/wendigo_horn/effect_desc()
-	return "melee hits inflict twice as much damage"
-
-/obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
-	. = ..()
-	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=40)
-
-/obj/item/crusher_trophy/wendigo_horn/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
-	. = ..()
-	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=20)
-
 /obj/item/wendigo_skull
 	name = "wendigo skull"
 	desc = "A bloody skull torn from a murderous beast, the soulless eye sockets seem to constantly track your movement."
