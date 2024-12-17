@@ -139,7 +139,7 @@
 /datum/supply_pack/misc/funeral
 	name = "Funeral Supplies Crate"
 	desc = "At the end of the day, someone's gonna want someone dead. Give them a proper send-off with these \
-		funeral supplies! Contains a coffin, burial garments and flowers."
+		funeral supplies! Contains a coffin with burial garments and flowers."
 	cost = CARGO_CRATE_VALUE * 1.6
 	access_view = ACCESS_CHAPEL_OFFICE
 	contains = list(/obj/item/clothing/under/misc/burial,
