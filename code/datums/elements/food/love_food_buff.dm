@@ -14,7 +14,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	src.love_buff_type = love_buff_type
-	RegisterSignal(food.reagents, list(
+	RegisterSignals(food.reagents, list(
 		COMSIG_REAGENTS_ADD_REAGENT,
 		COMSIG_REAGENTS_CLEAR_REAGENTS,
 		COMSIG_REAGENTS_DEL_REAGENT,
