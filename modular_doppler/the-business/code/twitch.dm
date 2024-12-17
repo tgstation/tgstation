@@ -8,9 +8,6 @@
 
 // Reaction to make twitch, makes 10u from 17u input reagents
 /datum/chemical_reaction/twitch
-	results = list(
-		/datum/reagent/drug/twitch = 10,
-	)
 	required_reagents = list(
 		/datum/reagent/impedrezene = 5,
 		/datum/reagent/bluespace = 10,
@@ -19,14 +16,36 @@
 	mob_react = FALSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
-// Twitch drug, makes the takers of it faster and able to dodge bullets while in their system, to potentially bad side effects
+/datum/chemical_reaction/twitch/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/iteration in 1 to created_volume)
+		var/obj/item/reagent_containers/hypospray/medipen/deforest/twitch/new_injector = new(location)
+		new_injector.pixel_x = rand(-6, 6)
+		new_injector.pixel_y = rand(-6, 6)
+
+// Injector, because it needs to look kickass
+/obj/item/reagent_containers/hypospray/medipen/deforest/twitch
+	name = "T-WITCH vial"
+	desc = "An almost cartoonish looking glass injector filled with a horribly corrosive green liquid that slowly swirls around. \
+		A heavily regulated substance called T-WITCH that is claimed to make the users of it 'see faster'."
+	icon = 'modular_doppler/the-business/icons/items.dmi'
+	base_icon_state = "twitch"
+	icon_state = "twitch"
+	list_reagents = list(
+		/datum/reagent/drug/twitch = 10,
+		/datum/reagent/drug/maint/tar = 5,
+		/datum/reagent/medicine/silibinin = 5,
+		/datum/reagent/toxin/leadacetate = 5,
+	)
+
+// T-WITCH, makes the user faster in movement and attacks, they can even dodge projectiles when overdosing on it
 /datum/reagent/drug/twitch
-	name = "TWitch"
-	description = "A drug originally developed by and for plutonians to assist them during raids. \
-		Does not see wide use due to the whole reality-disassociation and heart disease thing afterwards. \
-		Can be intentionally overdosed to increase the drug's effects"
+	name = "T-WITCH"
+	description = "An invention by the drug ~artists~ of Europa, a wicked stimulant that both slow's the user's \
+		perception of time and speeds of their actions. This is a recipe for some extreme performance, at heavy \
+		cost to the user's health in most cases."
 	reagent_state = LIQUID
-	color = "#c22a44"
+	color = "#91db69"
 	taste_description = "television static"
 	metabolization_rate = 0.65 * REAGENTS_METABOLISM
 	ph = 3
@@ -40,7 +59,6 @@
 	var/speech_effect_span
 	/// How much the mob heating is multiplied by, if the target is a robot or has muscled veins
 	var/mob_heating_muliplier = 5
-
 
 /datum/reagent/drug/twitch/on_mob_metabolize(mob/living/our_guy)
 	. = ..()
@@ -71,7 +89,6 @@
 
 	game_plane_master_controller.add_filter(TWITCH_SCREEN_BLUR, 1, list("type" = "radial_blur", "size" = 0.02))
 
-
 /datum/reagent/drug/twitch/on_mob_end_metabolize(mob/living/carbon/our_guy)
 	. = ..()
 
@@ -79,8 +96,6 @@
 	our_guy.next_move_modifier += (overdosed ? 0.5 : 0.3)
 
 	our_guy.sound_environment_override = NONE
-
-	speech_effect_span = "hierophant"
 
 	UnregisterSignal(our_guy, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(our_guy, COMSIG_MOVABLE_HEAR)
@@ -90,13 +105,13 @@
 	if(constant_dose_time < CONSTANT_DOSE_SAFE_LIMIT) // Anything less than this and you'll come out fiiiine, aside from a big hit of stamina damage
 		if(!(our_guy.mob_biotypes & MOB_ROBOTIC))
 			our_guy.visible_message(
-				span_danger("[our_guy] suddenly slows from [our_guy.p_their()] inhuman speeds, coming back with a wicked nosebleed!"),
-				span_danger("You suddenly slow back to normal, a stream of blood gushing from your nose!")
+				span_danger("[our_guy] stops dead, [our_guy.p_their()] afterimages quickly catching up to them!"),
+				span_danger("You suddenly stop dead in your tracks, a stream of blood gushing from your nose!")
 			)
 		else
 			our_guy.visible_message(
-				span_danger("[our_guy] suddenly slows from [our_guy.p_their()] inhuman speeds!"),
-				span_danger("You suddenly slow back to normal speed!")
+				span_danger("[our_guy] stops dead, [our_guy.p_their()] afterimages quickly catching up to them!"),
+				span_danger("You suddenly stop dead in your tracks!")
 			)
 		our_guy.adjustStaminaLoss(constant_dose_time)
 
@@ -105,13 +120,13 @@
 			our_guy.spray_blood(our_guy.dir, 2) // The before mentioned coughing up blood
 			our_guy.emote("cough")
 			our_guy.visible_message(
-				span_danger("[our_guy] suddenly snaps back from [our_guy.p_their()] inhuman speeds, coughing up a spray of blood!"),
-				span_danger("As you snap back to normal speed you cough up a worrying amount of blood. You feel like you've just been run over by a power loader.")
+				span_danger("[our_guy] stops dead, coughing up a spray of blood!"),
+				span_danger("As you stop dead in your tracks, you cough up a worrying amount of blood.")
 			)
 		else
 			our_guy.visible_message(
-				span_danger("[our_guy] suddenly snaps back from [our_guy.p_their()] inhuman speeds!"),
-				span_danger("You suddenly snap back to normal speeds. You feel like you've just been run over by a power loader.")
+				span_danger("[our_guy] stops dead, heat venting from [our_guy.p_their()] body!"),
+				span_danger("You suddenly stop dead in your tracks, superheated air venting from your body!")
 			)
 		our_guy.adjustStaminaLoss(constant_dose_time)
 		if(!HAS_TRAIT(our_guy, TRAIT_TWITCH_ADAPTED))
@@ -120,17 +135,17 @@
 	if(!our_guy.hud_used)
 		return
 
+	our_guy.Stun(1 SECONDS)
+
 	var/atom/movable/plane_master_controller/game_plane_master_controller = our_guy.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	game_plane_master_controller.remove_filter(TWITCH_SCREEN_FILTER)
 	game_plane_master_controller.remove_filter(TWITCH_SCREEN_BLUR)
 
-
 /// Leaves an afterimage behind the mob when they move
 /datum/reagent/drug/twitch/proc/on_movement(mob/living/carbon/our_guy, atom/old_loc)
 	SIGNAL_HANDLER
 	new /obj/effect/temp_visual/decoy/twitch_afterimage(old_loc, our_guy)
-
 
 /// Tries to dodge incoming bullets if we aren't disabled for any reasons
 /datum/reagent/drug/twitch/proc/dodge_bullets(mob/living/carbon/human/source, obj/projectile/hitting_projectile, def_zone)
@@ -146,7 +161,6 @@
 	source.add_filter(TWITCH_BLUR_EFFECT, 2, gauss_blur_filter(5))
 	addtimer(CALLBACK(source, TYPE_PROC_REF(/datum, remove_filter), TWITCH_BLUR_EFFECT), 0.5 SECONDS)
 	return COMPONENT_BULLET_PIERCED
-
 
 /datum/reagent/drug/twitch/on_mob_life(mob/living/carbon/our_guy, seconds_per_tick, times_fired)
 	. = ..()
@@ -168,9 +182,10 @@
 	if(locate(/datum/reagent/drug/kronkaine) in our_guy.reagents.reagent_list) // Kronkaine, another heart-straining drug, could cause problems if mixed with this
 		our_guy.ForceContractDisease(new /datum/disease/adrenal_crisis(), FALSE, TRUE)
 
-
 /datum/reagent/drug/twitch/overdose_start(mob/living/our_guy)
 	. = ..()
+
+	speech_effect_span = "hierophant"
 
 	RegisterSignal(our_guy, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
 
@@ -185,7 +200,6 @@
 
 	for(var/filter in game_plane_master_controller.get_filters(TWITCH_SCREEN_FILTER))
 		animate(filter, loop = -1, color = col_filter_ourple, time = 4 SECONDS, easing = BOUNCE_EASING)
-
 
 /datum/reagent/drug/twitch/overdose_process(mob/living/carbon/our_guy, seconds_per_tick, times_fired)
 	. = ..()
@@ -205,9 +219,8 @@
 	our_guy.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
 
 	if(SPT_PROB(5, seconds_per_tick) && !(our_guy.mob_biotypes & MOB_ROBOTIC))
-		to_chat(our_guy, span_danger("You cough up a splatter of blood!"))
-		our_guy.spray_blood(our_guy.dir, 1)
-		our_guy.emote("cough")
+		our_guy.playsound_local(our_guy, 'sound/effects/singlebeat.ogg', 100, TRUE)
+		flash_color(our_guy, flash_color = "#ff0000", flash_time = 3 SECONDS)
 
 	if(SPT_PROB(10, seconds_per_tick))
 		our_guy.add_filter(TWITCH_OVERDOSE_BLUR_EFFECT, 2, phase_filter(8))
@@ -218,14 +231,12 @@
 	SIGNAL_HANDLER
 	hearing_args[HEARING_RAW_MESSAGE] = "<span class='[speech_effect_span]'>[hearing_args[HEARING_RAW_MESSAGE]]</span>"
 
-
 /// Cool filter that I'm using for some of this :)))
 /proc/phase_filter(size)
 	. = list("type" = "wave")
 	.["x"] = 1
 	if(!isnull(size))
 		.["size"] = size
-
 
 // Temp visual that changes color for that bootleg sandevistan effect
 /obj/effect/temp_visual/decoy/twitch_afterimage

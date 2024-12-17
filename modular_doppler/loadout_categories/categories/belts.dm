@@ -129,10 +129,6 @@
 	name = "Frontier Med-kit"
 	item_path = /obj/item/storage/medkit/frontier/stocked
 
-/datum/loadout_item/belts/deforest_paramed
-	name = "Satchel Tech-kit"
-	item_path = /obj/item/storage/backpack/duffelbag/deforest_paramedic
-
 /datum/loadout_item/belts/deforest_surgical
 	name = "Firest Responder Med-kit"
 	item_path = /obj/item/storage/backpack/duffelbag/deforest_surgical

@@ -77,7 +77,7 @@
 		/datum/reagent/medicine/synaptizine = 5,
 		/datum/reagent/medicine/inaprovaline = 5,
 		/datum/reagent/determination = 10,
-		/datum/reagent/toxin/histamine = 5,
+		/datum/reagent/toxin/lipolicide = 5,
 	)
 
 // Morpital, heals a small amount of damage and kills pain for a bit
@@ -87,9 +87,9 @@
 	base_icon_state = "morpital"
 	icon_state = "morpital"
 	list_reagents = list(
-		/datum/reagent/medicine/morphine = 5,
-		/datum/reagent/medicine/omnizine/protozine = 15,
-		/datum/reagent/toxin/staminatoxin = 5,
+		/datum/reagent/medicine/mine_salve = 5,
+		/datum/reagent/medicine/omnizine = 15,
+		/datum/reagent/toxin/lipolicide = 5,
 	)
 
 // Lipital, heals more damage than morpital but doesnt work much at higher damages
@@ -102,7 +102,7 @@
 	list_reagents = list(
 		/datum/reagent/medicine/lidocaine = 5,
 		/datum/reagent/medicine/omnizine = 5,
-		/datum/reagent/medicine/c2/probital = 10,
+		/datum/reagent/medicine/c2/libital = 10,
 	)
 
 // Anti-poisoning injector, with a little bit of radiation healing as a treat
@@ -115,7 +115,7 @@
 	list_reagents = list(
 		/datum/reagent/medicine/c2/multiver = 10,
 		/datum/reagent/medicine/potass_iodide = 10,
-		/datum/reagent/nitrous_oxide = 5,
+		/datum/reagent/toxin/lipolicide = 5,
 	)
 
 // Epinephrine and helps a little bit against stuns and stamina damage
@@ -141,7 +141,7 @@
 		/datum/reagent/medicine/atropine = 10,
 		/datum/reagent/medicine/coagulant/fabricated = 5,
 		/datum/reagent/medicine/salbutamol = 5,
-		/datum/reagent/toxin/staminatoxin = 5,
+		/datum/reagent/toxin/lipolicide = 5,
 	)
 
 // Coagulant, really not a whole lot more
@@ -180,7 +180,7 @@
 		/datum/reagent/medicine/mine_salve = 5,
 		/datum/reagent/medicine/leporazine = 5,
 		/datum/reagent/medicine/c2/lenturi = 10,
-		/datum/reagent/toxin/staminatoxin = 5,
+		/datum/reagent/toxin/lipolicide = 5,
 	)
 
 // Stabilizes a lot of stats like drowsiness, sanity, dizziness, so on

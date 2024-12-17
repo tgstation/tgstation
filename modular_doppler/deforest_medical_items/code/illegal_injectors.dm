@@ -1,18 +1,3 @@
-// Twitch, because having sandevistans be implants is for losers, just inject it!
-/obj/item/reagent_containers/hypospray/medipen/deforest/twitch
-	name = "TWitch sensory stimulant injector"
-	desc = "A Deforest branded autoinjector, loaded with 'TWitch' among other reagents. This drug is known to make \
-		those who take it 'see faster', whatever that means."
-	base_icon_state = "twitch"
-	icon_state = "twitch"
-	list_reagents = list(
-		/datum/reagent/drug/twitch = 10,
-		/datum/reagent/drug/maint/tar = 5,
-		/datum/reagent/medicine/silibinin = 5,
-		/datum/reagent/toxin/leadacetate = 5,
-	)
-	custom_price = PAYCHECK_COMMAND * 3.5
-
 // Demoneye, for when you feel the need to become "fucking invincible"
 /obj/item/reagent_containers/hypospray/medipen/deforest/demoneye
 	name = "DemonEye steroid injector"
@@ -54,10 +39,11 @@
 		/datum/reagent/medicine/c2/penthrite = 5,
 		/datum/reagent/medicine/polypyr = 5,
 		/datum/reagent/medicine/silibinin = 5,
-		/datum/reagent/medicine/omnizine = 5,
+		/datum/reagent/medicine/omnizine = 10,
 		/datum/reagent/inverse/healing/tirimol = 5,
 	)
 	custom_price = PAYCHECK_COMMAND * 2.5
+	volume = 30
 
 // Combat stimulant that makes you immune to slowdowns for a bit
 /obj/item/reagent_containers/hypospray/medipen/deforest/synalvipitol

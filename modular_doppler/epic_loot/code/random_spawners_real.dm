@@ -473,7 +473,6 @@
 		/obj/item/flatpacked_machine/wind_turbine = 2,
 		/obj/item/folded_navigation_gigabeacon = 1,
 		/obj/item/wallframe/cell_charger_multi = 2,
-		/obj/item/wallframe/frontier_medstation = 1,
 		/obj/item/wallframe/wall_heater = 2,
 		/obj/item/wallframe/digital_clock = 1,
 		// Other things
