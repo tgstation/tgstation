@@ -42,6 +42,10 @@
 		"Sort" = icon('icons/hud/radial.dmi', "mail_sort"),
 	)
 
+/obj/machinery/mailsorter/Destroy()
+	QDEL_LIST(mail_list)
+	. = ..()
+
 /// Steps one tile in the `output_dir`. Returns `turf`.
 /obj/machinery/mailsorter/proc/get_unload_turf()
 	return get_step(src, output_dir)
@@ -62,28 +66,15 @@
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the output direction.")
 
-/obj/machinery/mailsorter/Destroy()
-	drop_all_mail()
-	. = ..()
-
 /// Drops all enevlopes on the machine turf. Only occurs when the machine is broken.
-/obj/machinery/mailsorter/proc/drop_all_mail(damage_flag)
-	if(!isturf(get_turf(src)))
-		QDEL_LIST(mail_list)
-		return
-	for(var/obj/item/mail in mail_list)
-		mail.forceMove(src)
-		mail_list -= mail
+/obj/machinery/mailsorter/atom_deconstruct(disassembled)
+	dump_all_mail()
 
 /// Dumps all envelopes on the `unload_turf`.
 /obj/machinery/mailsorter/proc/dump_all_mail()
-	if(!isturf(get_turf(src)))
-		QDEL_LIST(mail_list)
-		return
-	var/turf/unload_turf = get_unload_turf()
-	for(var/obj/item/mail in mail_list)
-		mail.forceMove(unload_turf)
-		mail.throw_at(unload_turf, 2, 3)
+	var/atom/drop_location = drop_location()
+	for(var/obj/item/mail as anything in mail_list)
+		mail.forceMove(drop_location)
 		mail_list -= mail
 
 /// Validates whether the inserted item is acceptable.
