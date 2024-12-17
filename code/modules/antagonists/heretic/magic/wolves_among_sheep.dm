@@ -1,8 +1,8 @@
 /datum/action/cooldown/spell/wolves_among_sheep
 	name = "Wolves among Sheep"
 	desc = "Locks down an area, making it a death battle. You gain more power the more heathens are nearby."
-	background_icon_state = "bg_heretic"
-	overlay_icon_state = "bg_heretic_border"
+	background_icon_state = "bg_rose"
+	overlay_icon_state = null
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "among_sheep"
 
@@ -57,9 +57,11 @@
 /datum/action/cooldown/spell/wolves_among_sheep/proc/apply_visual(list/turfs)
 	for(var/turf/target as anything in turfs)
 		if(istype(target, /turf/open))
-			target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/turf/floors.dmi', target, "blade_arena", layer = ABOVE_OPEN_TURF_LAYER))
+			var/turf_icon = "rose_stone_" + "[pick(1, 2, 3, 4, 5, 6, 7, 8)]"
+			target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/turf/floors/rose_stone_turf.dmi', target, turf_icon, layer = ABOVE_OPEN_TURF_LAYER))
 		else if(istype(target, /turf/closed))
-			target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/turf/walls.dmi', target, "blade_arena", layer = ABOVE_OPEN_TURF_LAYER))
+			var/wall_icon = "rose_stone_" + "[pick(1, 2, 3, 4, 5, 6, 7, 8)]"
+			target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/turf/walls/rose_stone_wall.dmi', target, wall_icon, layer = ABOVE_OPEN_TURF_LAYER))
 
 		// Phase out the doors (restore them afterwards)
 		for(var/obj/machinery/door/airlock/to_banish in target)
