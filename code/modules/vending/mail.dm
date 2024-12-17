@@ -67,8 +67,9 @@
 		. += span_notice("Alt-click to rotate the output direction.")
 
 /// Drops all enevlopes on the machine turf. Only occurs when the machine is broken.
-/obj/machinery/mailsorter/atom_deconstruct(disassembled)
+/obj/machinery/mailsorter/on_deconstruction(disassembled)
 	dump_all_mail()
+	return ..()
 
 /// Dumps all envelopes on the `unload_turf`.
 /obj/machinery/mailsorter/proc/dump_all_mail()
