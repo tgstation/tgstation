@@ -855,7 +855,7 @@
 		ACCESS_CMO,
 		)
 	job = /datum/job/paramedic
-	honorifics = list("EMT", "Doctor", "Dr.")
+	honorifics = list("EMT")
 	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
 
 /datum/id_trim/job/prisoner
