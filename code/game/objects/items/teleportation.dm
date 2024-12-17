@@ -183,10 +183,7 @@
 		if(!computer.power_station || !computer.power_station.teleporter_hub)
 			continue
 
-		if((computer.power_station.machine_stat & (NOPOWER|BROKEN|MAINT)) || computer.power_station.panel_open)
-			continue
-
-		if((computer.power_station.teleporter_hub.machine_stat & (NOPOWER|BROKEN|MAINT)) || computer.power_station.teleporter_hub.panel_open)
+		if(!computer.power_station.is_operational || !computer.power_station.teleporter_hub.is_operational)
 			continue
 
 		if(computer.power_station.engaged)
