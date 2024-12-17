@@ -118,8 +118,8 @@ const ShoppingTab = (props) => {
         <Section fill scrollable>
           <Stack vertical mt={-2}>
             <Divider />
-            {goods.map((item, key) => (
-              <Stack.Item key={key}>
+            {goods.map((item) => (
+              <Stack.Item key={item.ref}>
                 <Stack>
                   <span
                     style={{
