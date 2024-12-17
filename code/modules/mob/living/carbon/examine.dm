@@ -228,6 +228,7 @@
 					. += "[t_He] [t_is] flushed and wheezing."
 				if (bodytemperature < dna.species.bodytemp_cold_damage_limit)
 					. += "[t_He] [t_is] shivering."
+				/* DOPPLER EDIT REMOVAL - Fundamentally Evil
 				if(HAS_TRAIT(src, TRAIT_EVIL))
 					. += "[t_His] eyes radiate with a unfeeling, cold detachment. There is nothing but darkness within [t_his] soul."
 					if(living_user.mind?.holy_role >= HOLY_ROLE_PRIEST)
@@ -235,6 +236,19 @@
 					else
 						living_user.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
 						living_user.set_jitter_if_lower(15 SECONDS)
+				*/
+				// DOPPLER EDIT ADDITION - Unholy Aura & Bad Vibes
+				if(HAS_TRAIT(src, TRAIT_EVIL) && living_user.mind?.holy_role >= HOLY_ROLE_PRIEST)
+					. += span_warning("[t_He] [t_is] cloaked in a miasma of unholy energy!")
+
+				if(HAS_TRAIT(src, TRAIT_BAD_VIBES))
+					. += span_warning("[t_He] give[p_s()] off an unsettling aura.")
+					living_user.add_mood_event("bad_vibes", /datum/mood_event/bad_vibes)
+
+			if(HAS_TRAIT(user, TRAIT_EVIL) && (mind?.holy_role || HAS_TRAIT(src, TRAIT_SPIRITUAL)))
+				. += span_warning("[t_He] shimmer[p_s()] with radiant protection.")
+				living_user.add_mood_event("holy_figure", /datum/mood_event/holy_figure)
+			// DOPPLER EDIT ADDITION END
 
 			if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && mind?.holy_role)
 				. += "[t_He] [t_has] a holy aura about [t_him]."
@@ -591,5 +605,11 @@
 		var/obj/item/clothing/under/undershirt = w_uniform
 		if(undershirt.has_sensor == BROKEN_SENSORS)
 			. += list(span_notice("The [undershirt]'s medical sensors are sparking."))
+
+	// DOPPLER EDIT ADDITION BEGIN - working scar examine..?
+	for(var/datum/scar/scar in all_scars)
+		if(scar.is_visible(user))
+			. += scar.get_examine_description(user)
+	// DOPPLER EDIT ADDITION END
 
 #undef ADD_NEWLINE_IF_NECESSARY
