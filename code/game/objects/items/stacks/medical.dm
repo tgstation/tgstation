@@ -211,7 +211,7 @@
 
 	var/next_picked = (preferred_target in other_affected_limbs) ? preferred_target : other_affected_limbs[1]
 	if(next_picked != last_zone)
-		user.balloon_alert(user, "[apply_verb] [parse_zone(next_picked)]...")
+		patient.balloon_alert(user, "[apply_verb] [parse_zone(next_picked)]...")
 	try_heal(patient, user, next_picked, silent = TRUE, auto_change_zone = TRUE)
 
 /obj/item/stack/medical/proc/try_heal_manual_target(mob/living/carbon/patient, mob/living/user)
@@ -233,6 +233,10 @@
 /// Checks a bunch of stuff to see if we can heal the patient, including can_heal
 /// Gives a feedback if we can't ultimatly heal the patient (unless silent is TRUE)
 /obj/item/stack/medical/proc/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
+	if(!(healed_zone in GLOB.all_body_zones))
+		stack_trace("Invalid zone ([healed_zone || "null"]) passed to try_heal_checks.")
+		healed_zone = BODY_ZONE_CHEST
+
 	if(!can_heal(patient, user, healed_zone, silent))
 		// has its own feedback
 		return FALSE
