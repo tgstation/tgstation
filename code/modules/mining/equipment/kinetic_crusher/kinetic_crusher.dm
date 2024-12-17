@@ -228,6 +228,10 @@
 	. = ..()
 	AddComponent(/datum/component/parriable_projectile, parry_callback = CALLBACK(src, PROC_REF(on_parry)))
 
+/obj/projectile/destabilizer/Destroy()
+	fired_from = null
+	return ..()
+
 /obj/projectile/destabilizer/proc/on_parry(mob/user)
 	SIGNAL_HANDLER
 	boosted = TRUE
