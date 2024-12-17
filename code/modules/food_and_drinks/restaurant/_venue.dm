@@ -37,6 +37,7 @@
 	COOLDOWN_START(src, visit_cooldown, rand(min_time_between_visitor, max_time_between_visitor))
 	if(current_visitors.len < max_guests && current_visitors.len < linked_seats.len + 1) //Not above max guests, and not more than one waiting customer.
 		create_new_customer()
+		restaurant_portal.use_energy(restaurant_portal.active_power_usage * 2)
 
 ///Spawns a new customer at the portal
 /datum/venue/proc/create_new_customer()
@@ -147,6 +148,7 @@
 	restaurant_portal.update_icon()
 	COOLDOWN_START(src, visit_cooldown, 4 SECONDS) //First one comes faster
 	START_PROCESSING(SSobj, src)
+	restaurant_portal.update_use_power(ACTIVE_POWER_USE)
 
 /datum/venue/proc/close()
 	open = FALSE
@@ -154,6 +156,7 @@
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/basic/robot_customer as anything in current_visitors)
 		robot_customer.ai_controller.set_blackboard_key(BB_CUSTOMER_LEAVING, TRUE) //LEAVEEEEEE
+	restaurant_portal.update_use_power(IDLE_POWER_USE)
 
 /obj/machinery/restaurant_portal
 	name = "restaurant portal"
@@ -165,6 +168,7 @@
 	circuit = /obj/item/circuitboard/machine/restaurant_portal
 	layer = BELOW_OBJ_LAYER
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 	///What venue is this portal for? Uses a typepath which is turned into an instance on Initialize
 	var/datum/venue/linked_venue = /datum/venue
 

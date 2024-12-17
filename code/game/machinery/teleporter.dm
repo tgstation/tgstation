@@ -9,9 +9,11 @@
 	icon_state = "tele0"
 	base_icon_state = "tele"
 	circuit = /obj/item/circuitboard/machine/teleporter_hub
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 25 // only used when teleporting (same as gateway)
 	var/accuracy = 0
 	var/obj/machinery/teleport/station/power_station
 	var/calibrated = FALSE//Calibration prevents mutation
+	var/teleport_radius = 9 // T1 9x9, T2 6x6, T3 3x3, T4 exact turf
 
 /obj/machinery/teleport/hub/Initialize(mapload)
 	. = ..()
@@ -25,15 +27,16 @@
 
 /obj/machinery/teleport/hub/RefreshParts()
 	. = ..()
-	var/A = 0
+	var/parts_accuracy = 0
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
-		A += matter_bin.tier
-	accuracy = A
+		parts_accuracy += matter_bin.tier
+	accuracy = parts_accuracy
+	teleport_radius = initial(teleport_radius) - ((accuracy-1) * 3)
 
 /obj/machinery/teleport/hub/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Probability of malfunction decreased by <b>[(accuracy*25)-25]%</b>.")
+		. += span_notice("The status display reads: Error of margin is <b>±[teleport_radius] radius</b>.")
 
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
@@ -76,7 +79,7 @@
 	if(!ismovable(M))
 		return
 	var/turf/start_turf = get_turf(M)
-	if(!do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
+	if(!do_teleport(M, target, precision=teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE))
 		return
 	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	use_energy(active_power_usage)
@@ -113,7 +116,7 @@
 	base_icon_state = "controller"
 	circuit = /obj/item/circuitboard/machine/teleporter_station
 	use_power = IDLE_POWER_USE
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 3
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	var/engaged = FALSE
 	var/obj/machinery/computer/teleporter/teleporter_console
 	var/obj/machinery/teleport/hub/teleporter_hub
@@ -197,17 +200,21 @@
 /obj/machinery/teleport/station/proc/toggle(mob/user)
 	if(machine_stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
 		return
+	if(!teleporter_hub.calibrated)
+		to_chat(user, span_alert("The teleporter hub is still calibrating!"))
+		return
+
 	if (teleporter_console.target_ref?.resolve())
 		if(teleporter_hub.panel_open || teleporter_hub.machine_stat & (BROKEN|NOPOWER))
 			to_chat(user, span_alert("The teleporter hub isn't responding."))
 		else
 			engaged = !engaged
-			use_energy(active_power_usage)
 			to_chat(user, span_notice("Teleporter [engaged ? "" : "dis"]engaged!"))
 	else
 		teleporter_console.target_ref = null
 		to_chat(user, span_alert("No target detected."))
 		engaged = FALSE
+	update_use_power(engaged ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 	teleporter_hub.update_appearance()
 	add_fingerprint(user)
 

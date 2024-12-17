@@ -273,6 +273,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		return
 	AM.forceMove(target.get_target_turf())
 	target.post_transfer(AM)
+	if(!isobserver(AM)) // ghosts can teleport using the gateway
+		use_energy(active_power_usage * 10)
 
 /obj/machinery/gateway/attack_ghost(mob/user)
 	. = ..()

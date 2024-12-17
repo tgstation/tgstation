@@ -179,7 +179,7 @@
 		var/area/computer_area = get_area(target)
 		if(!computer_area || (computer_area.area_flags & NOTELEPORT))
 			continue
-		if(computer.power_station?.teleporter_hub && computer.power_station.engaged)
+		if(computer.check_hub_connection() && computer.power_station.engaged)
 			locations["[get_area(target)]"] = computer
 
 	locations["None (Dangerous)"] = PORTAL_LOCATION_DANGEROUS
@@ -215,6 +215,7 @@
 		return
 
 	var/atom/teleport_target
+	var/teleport_radius = 0
 
 	if (teleport_location == PORTAL_LOCATION_DANGEROUS)
 		var/list/dangerous_turfs = list()
@@ -234,6 +235,9 @@
 		var/atom/target = computer.target_ref?.resolve()
 		if(!target)
 			computer.target_ref = null
+		var/obj/machinery/teleport/hub/hub = computer.power_station.teleporter_hub
+		hub.use_energy(hub.active_power_usage)
+		teleport_radius = hub.teleport_radius + 3 // T1 12x12, T2 9x9, T3 6x6, T4 3x3
 		teleport_target = target
 
 	if (teleport_target == null)
@@ -248,7 +252,7 @@
 	if (!can_teleport_notifies(user))
 		return
 
-	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target)), 300, 1, null)
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target), precision = teleport_radius), 300, 1, null)
 	if(LAZYLEN(created) != 2)
 		return
 

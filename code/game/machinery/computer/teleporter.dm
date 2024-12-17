@@ -72,7 +72,7 @@
 	data["target"] = !target ? "None" : "[get_area(target)] [(regime_set != REGIME_GATE) ? "" : REGIME_TELEPORTER]"
 	data["calibrating"] = calibrating
 
-	if(power_station?.teleporter_hub?.calibrated || power_station?.teleporter_hub?.accuracy >= 3)
+	if(power_station?.teleporter_hub?.calibrated || power_station?.teleporter_hub?.accuracy >= 4)
 		data["calibrated"] = TRUE
 	else
 		data["calibrated"] = FALSE
@@ -113,10 +113,10 @@
 				say("Hub is already calibrated!")
 				return
 
-			say("Processing hub calibration to target...")
+			say("Processing hub calibration to target in [10 * (4 - power_station.teleporter_hub.accuracy)] seconds...")
 			calibrating = TRUE
 			power_station.update_appearance()
-			addtimer(CALLBACK(src, PROC_REF(finish_calibration)), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
+			addtimer(CALLBACK(src, PROC_REF(finish_calibration)), 10 SECONDS * (4 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			return TRUE
 
 /obj/machinery/computer/teleporter/proc/set_teleport_target(new_target)
@@ -143,10 +143,13 @@
 	power_station.update_appearance()
 
 /obj/machinery/computer/teleporter/proc/check_hub_connection()
-	if(!power_station)
+	if(!power_station || !power_station.teleporter_hub)
 		return FALSE
-	if(!power_station.teleporter_hub)
+	if(power_station.teleporter_hub.panel_open || (power_station.teleporter_hub.machine_stat & (BROKEN|NOPOWER)))
 		return FALSE
+	if(power_station.panel_open || (power_station.machine_stat & (BROKEN|NOPOWER)))
+		return FALSE
+
 	return TRUE
 
 /obj/machinery/computer/teleporter/proc/reset_regime()
@@ -237,7 +240,6 @@
 	if(!A || (A.area_flags & NOTELEPORT))
 		return FALSE
 	return TRUE
-
 
 #undef REGIME_TELEPORTER
 #undef REGIME_GATE
