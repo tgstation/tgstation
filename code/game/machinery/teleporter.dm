@@ -36,7 +36,7 @@
 /obj/machinery/teleport/hub/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Error of margin is <b>±[teleport_radius] radius</b>.")
+		. += span_notice("The status display reads: Error of margin is <b>±[teleport_radius] radius</b> for target destination.")
 
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
