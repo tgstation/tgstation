@@ -92,7 +92,7 @@
 	var/heal_zone = check_zone(user.zone_selected)
 	if(!try_heal_checks(patient, user, heal_zone))
 		return FALSE
-	SSblackbox.record_feedback("nested tally", "medical_item_used", 1, list(type, "[auto_change_zone ? "auto" : "manual"]"))
+	SSblackbox.record_feedback("nested tally", "medical_item_used", 1, list("[auto_change_zone ? "auto" : "manual"]", "[type]"))
 	patient.balloon_alert(user, "[apply_verb] [parse_zone(heal_zone)]...")
 	INVOKE_ASYNC(src, PROC_REF(try_heal), patient, user, heal_zone, FALSE, iscarbon(patient) && auto_change_zone) // auto change is useless for non-carbons
 	return TRUE
