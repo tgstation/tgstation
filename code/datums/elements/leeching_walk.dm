@@ -42,7 +42,7 @@
 
 	// Heals all damage + Stamina
 	var/need_mob_update = FALSE
-	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+	var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
 	need_mob_update += source.adjustBruteLoss(-3 * delta_time, updating_health = FALSE)
 	need_mob_update += source.adjustFireLoss(-3 * delta_time, updating_health = FALSE)
 	need_mob_update += source.adjustToxLoss(-3 * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people too
