@@ -89,26 +89,28 @@
 			continue
 		if(!uplink_item.surplus)
 			continue
+		if(handler.not_enough_reputation(uplink_item))
+			continue
 		possible_items += uplink_item
 	return possible_items
 
 /// picks items from the list given to proc and generates a valid uplink item that is less or equal to the amount of TC it can spend
-/datum/uplink_item/bundles_tc/surplus/proc/pick_possible_item(list/possible_items, tc_budget, datum/uplink_handler/handler)
+/datum/uplink_item/bundles_tc/surplus/proc/pick_possible_item(list/possible_items, tc_budget)
 	var/datum/uplink_item/uplink_item = pick(possible_items)
 	if(prob(100 - uplink_item.surplus))
 		return null
-	if(tc_budget < uplink_item.real_cost(handler))
+	if(tc_budget < uplink_item.cost)
 		return null
 	return uplink_item
 
 /// fills the crate that will be given to the traitor, edit this to change the crate and how the item is filled
-/datum/uplink_item/bundles_tc/surplus/proc/fill_crate(obj/structure/closet/crate/surplus_crate, list/possible_items, datum/uplink_handler/handler)
+/datum/uplink_item/bundles_tc/surplus/proc/fill_crate(obj/structure/closet/crate/surplus_crate, list/possible_items)
 	var/tc_budget = crate_tc_value
 	while(tc_budget)
-		var/datum/uplink_item/uplink_item = pick_possible_item(possible_items, tc_budget, handler)
+		var/datum/uplink_item/uplink_item = pick_possible_item(possible_items, tc_budget)
 		if(!uplink_item)
 			continue
-		tc_budget -= uplink_item.real_cost(handler)
+		tc_budget -= uplink_item.cost
 		new uplink_item.item(surplus_crate)
 
 /// overwrites item spawning proc for surplus items to spawn an appropriate crate via a podspawn
@@ -140,7 +142,7 @@
 	crate_type = /obj/structure/closet/crate/secure/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key
-/datum/uplink_item/bundles_tc/surplus/united/fill_crate(obj/structure/closet/crate/secure/syndicrate/surplus_crate, list/possible_items, datum/uplink_handler/handler)
+/datum/uplink_item/bundles_tc/surplus/united/fill_crate(obj/structure/closet/crate/secure/syndicrate/surplus_crate, list/possible_items)
 	if(!istype(surplus_crate))
 		return
 	var/tc_budget = crate_tc_value
@@ -148,7 +150,7 @@
 		var/datum/uplink_item/uplink_item = pick_possible_item(possible_items, tc_budget)
 		if(!uplink_item)
 			continue
-		tc_budget -= uplink_item.real_cost(handler)
+		tc_budget -= uplink_item.cost
 		surplus_crate.unlock_contents += uplink_item.item
 
 /datum/uplink_item/bundles_tc/surplus_key

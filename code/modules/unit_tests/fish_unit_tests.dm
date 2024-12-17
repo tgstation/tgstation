@@ -23,8 +23,7 @@
 /datum/unit_test/fish_size_weight/Run()
 
 	var/obj/structure/table/table = allocate(/obj/structure/table)
-	var/obj/item/fish/testdummy/fish = new /obj/item/fish/testdummy (table.loc)
-	allocated += fish
+	var/obj/item/fish/testdummy/fish = allocate(__IMPLIED_TYPE__, table.loc)
 	var/datum/reagent/reagent = fish.reagents?.has_reagent(/datum/reagent/fishdummy)
 	TEST_ASSERT(reagent, "the test fish doesn't have the test reagent.[fish.reagents ? "" : " It doesn't even have a reagent holder."]")
 	var/expected_units = FISH_REAGENT_AMOUNT * fish.weight / FISH_WEIGHT_BITE_DIVISOR
@@ -42,14 +41,32 @@
 			allocated += content
 	TEST_ASSERT_EQUAL(counted_fillets, expected_num_fillets, "the test fish yielded [counted_fillets] fillets when it should have been [expected_num_fillets]")
 
+/// Make sure fish don't stay hungry after being fed
+/datum/unit_test/fish_feeding
+
+/datum/unit_test/fish_feeding/Run()
+	var/obj/item/fish/testdummy/hungry = allocate(__IMPLIED_TYPE__)
+	hungry.last_feeding = 0 //the fish should be hungry.
+	TEST_ASSERT(hungry.get_hunger(), "the fish doesn't seem to be hungry in the slightest")
+	var/obj/item/reagent_containers/cup/fish_feed/yummy = allocate(__IMPLIED_TYPE__)
+	hungry.feed(yummy.reagents)
+	TEST_ASSERT(!hungry.get_hunger(), "the fish is still hungry despite having been just fed")
+
+	///Try feeding it again, but this time with the right hunger so they actually grow
+	hungry.last_feeding = world.time - (hungry.feeding_frequency * FISH_GROWTH_PEAK)
+	var/old_size = hungry.size
+	var/old_weight = hungry.weight
+	hungry.feed(yummy.reagents)
+	TEST_ASSERT(hungry.size > old_size, "the fish size didn't increase after being properly fed")
+	TEST_ASSERT(hungry.weight > old_weight, "the fish weight didn't increase after being properly fed")
+
 ///Checks that fish breeding works correctly.
 /datum/unit_test/fish_breeding
 
 /datum/unit_test/fish_breeding/Run()
-	var/obj/item/fish/fish = allocate(/obj/item/fish/testdummy)
+	var/obj/item/fish_tank/reproduction/fish_tank = allocate(__IMPLIED_TYPE__)
 	///Check if the fishes can generate offsprings at all.
-	var/obj/item/fish/fish_two = allocate(/obj/item/fish/testdummy/two)
-	var/obj/item/fish/new_fish = fish.create_offspring(fish_two.type, fish_two)
+	var/obj/item/fish/new_fish = fish_tank.fish.try_to_reproduce()
 	TEST_ASSERT(new_fish, "the two test fishes couldn't generate an offspring")
 	var/traits_len = length(new_fish.fish_traits)
 	TEST_ASSERT_NOTEQUAL(traits_len, 2, "the offspring of the test fishes has both parents' traits, which are incompatible with each other")
@@ -65,6 +82,20 @@
 	var/obj/item/fish/cloner_jr = aquarium.cloner.try_to_reproduce()
 	TEST_ASSERT(cloner_jr, "The test aquarium's cloner fish didn't manage to reproduce when it should have")
 	TEST_ASSERT_NOTEQUAL(cloner_jr.type, aquarium.sterile.type, "The test aquarium's cloner fish mated with the sterile fish")
+
+/obj/item/fish_tank/reproduction
+	var/obj/item/fish/testdummy/small/fish
+	var/obj/item/fish/testdummy/small/partner
+
+/obj/item/fish_tank/reproduction/Initialize(mapload)
+	. = ..()
+	fish = new(src)
+	partner = new(src)
+
+/obj/item/fish_tank/reproduction/Destroy()
+	fish = null
+	partner = null
+	return ..()
 
 ///Checks that fish evolutions work correctly.
 /datum/unit_test/fish_evolution
@@ -101,7 +132,12 @@
 	stable_population = INFINITY
 	breeding_timeout = 0
 	fish_flags = parent_type::fish_flags & ~(FISH_FLAG_SHOW_IN_CATALOG|FISH_FLAG_EXPERIMENT_SCANNABLE)
+	fish_id_redirect_path = /obj/item/fish/goldfish //Stops SSfishing from complaining
 	var/expected_num_fillets = 0 //used to know how many fillets should be gotten out of this fish
+
+/obj/item/fish/testdummy/small
+	// The parent type is too big to reproduce inside the more compact fish tank
+	average_size = /obj/item/fish_tank::max_total_size * 0.2
 
 /obj/item/fish/testdummy/add_fillet_type()
 	expected_num_fillets = ..()
@@ -368,6 +404,7 @@
 
 /obj/item/fish/chasm_crab/instant_growth
 	fish_traits = list() //We don't want to end up applying traits twice on the resulting lobstrosity
+	fish_id_redirect_path = /obj/item/fish/chasm_crab
 
 /datum/unit_test/fish_sources
 
@@ -419,10 +456,10 @@
 /datum/fish_source/unit_test_profound_fisher
 	fish_table = list(/obj/item/fish/testdummy = 1)
 	fish_counts = list(/obj/item/fish/testdummy = 2)
-	fish_source_flags = parent_type::fish_source_flags | FISH_SOURCE_FLAG_SKIP_CATCHABLES
+	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish
-	fish_source_flags = parent_type::fish_source_flags | FISH_SOURCE_FLAG_SKIP_CATCHABLES
+	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish/New()
 	for(var/fish_type as anything in subtypesof(/obj/item/fish))

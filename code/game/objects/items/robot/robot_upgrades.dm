@@ -647,26 +647,7 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
-
 	items_to_add = list(/obj/item/inducer/cyborg)
-
-/obj/item/inducer/cyborg
-	name = "Internal inducer"
-	icon = 'icons/obj/tools.dmi'
-	icon_state = "inducer-engi"
-	powerdevice = null
-
-/obj/item/inducer/cyborg/get_cell()
-	var/obj/item/robot_model/possible_model = loc
-	var/mob/living/silicon/robot/silicon_friend = istype(possible_model) ? possible_model.robot : possible_model
-	if(istype(silicon_friend))
-		. = silicon_friend.cell
-
-/obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/item/inducer/cyborg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	return ITEM_INTERACT_FAILURE
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"

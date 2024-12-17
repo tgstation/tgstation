@@ -112,7 +112,7 @@
 
 /datum/hallucination/station_message/supermatter_delam/start()
 	SEND_SOUND(hallucinator, 'sound/effects/magic/charge.ogg')
-	to_chat(hallucinator, span_boldannounce("You feel reality distort for a moment..."))
+	to_chat(hallucinator, span_bolddanger("You feel reality distort for a moment..."))
 	return ..()
 
 /datum/hallucination/station_message/clock_cult_ark
