@@ -34,6 +34,8 @@
 	var/flesh_regeneration
 	/// Verb used when applying this object to someone
 	var/apply_verb = "treating"
+	/// Whether this item can be used on dead bodies
+	var/works_on_dead = FALSE
 
 /obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -240,7 +242,7 @@
 	if(!can_heal(patient, user, healed_zone, silent))
 		// has its own feedback
 		return FALSE
-	if(patient.stat == DEAD)
+	if(!works_on_dead && patient.stat == DEAD)
 		if(!silent)
 			patient.balloon_alert(user, "[patient.p_theyre()] dead!")
 		return FALSE
@@ -371,6 +373,7 @@
 	burn_cleanliness_bonus = 0.35
 	merge_type = /obj/item/stack/medical/gauze
 	apply_verb = "wrapping"
+	works_on_dead = TRUE
 	var/obj/item/bodypart/gauzed_bodypart
 
 /obj/item/stack/medical/gauze/Destroy(force)
@@ -728,6 +731,7 @@
 	hitsound = 'sound/misc/moist_impact.ogg'
 	merge_type = /obj/item/stack/medical/poultice
 	apply_verb = "applying to"
+	works_on_dead = TRUE
 
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/living/user)
 	. = ..()
