@@ -21,6 +21,7 @@
 		COMSIG_REAGENTS_NEW_REAGENT,
 		COMSIG_REAGENTS_REM_REAGENT,
 	), PROC_REF(on_reagents_changed))
+	RegisterSignal(food, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/love_food_buff/Detach(datum/source, ...)
 	var/obj/item/food/food = source
@@ -32,6 +33,7 @@
 			COMSIG_REAGENTS_NEW_REAGENT,
 			COMSIG_REAGENTS_REM_REAGENT,
 		))
+		UnregisterSignal(food, COMSIG_ATOM_EXAMINE)
 	return ..()
 
 /datum/element/love_food_buff/proc/on_reagents_changed(datum/reagents/source, ...)
@@ -41,7 +43,9 @@
 	if(!istype(food))
 		return
 
-	if(source.has_reagent(/datum/reagent/love))
-		food.crafted_food_buff = love_buff_type
-	else
-		food.crafted_food_buff = initial(food.crafted_food_buff)
+	food.crafted_food_buff = source.has_reagent(/datum/reagent/love) ? love_buff_type : initial(food.crafted_food_buff)
+
+/datum/element/love_food_buff/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += span_notice("Delivering a chef's kiss to [source] will alter [source.p_their()] effects.")
