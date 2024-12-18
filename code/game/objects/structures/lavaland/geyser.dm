@@ -121,6 +121,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
 	worn_icon_state = "plunger"
+	icon_angle = 90
 
 	slot_flags = ITEM_SLOT_MASK
 	flags_inv = HIDESNOUT
