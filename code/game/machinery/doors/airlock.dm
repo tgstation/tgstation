@@ -1216,7 +1216,7 @@
 	if(prying_so_hard)
 		return
 
-	var/time_to_open = 50
+	var/time_to_open = 5 SECONDS
 	playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
 	prying_so_hard = TRUE
 
