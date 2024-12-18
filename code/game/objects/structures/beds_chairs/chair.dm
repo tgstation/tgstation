@@ -317,6 +317,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
 	inhand_icon_state = "chair"
+	icon_angle = 180
 	lefthand_file = 'icons/mob/inhands/items/chairs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/chairs_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE

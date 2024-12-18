@@ -110,6 +110,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_react))
 	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE_NOGRAV, PROC_REF(on_client_move))
 	RegisterSignal(user, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, PROC_REF(on_pushoff))
+	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT, PROC_REF(on_input_block))
 	last_stabilization_tick = world.time
 	START_PROCESSING(SSnewtonian_movement, src)
 	if (effect_type)
@@ -164,6 +165,17 @@
 	var/max_drift_force = MOVE_DELAY_TO_DRIFT(user.cached_multiplicative_slowdown)
 	user.drift_handler.stabilize_drift(user.client.intended_direction ? dir2angle(user.client.intended_direction) : null, user.client.intended_direction ? max_drift_force : 0, stabilization_force * (seconds_per_tick * 1 SECONDS))
 
+/datum/component/jetpack/proc/on_input_block(mob/source)
+	SIGNAL_HANDLER
+
+	if (!should_trigger(source))
+		return
+
+	if (!check_on_move.Invoke(TRUE))
+		return
+
+	return DRIFT_ALLOW_INPUT
+
 /datum/component/jetpack/proc/on_client_move(mob/source, list/move_args)
 	SIGNAL_HANDLER
 
@@ -179,11 +191,10 @@
 	var/max_drift_force = MOVE_DELAY_TO_DRIFT(source.cached_multiplicative_slowdown)
 	var/applied_force = drift_force
 	var/move_dir = source.client.intended_direction
-	// We're not moving anywhere, try to see if we can simulate pushing off a wall
-	if (isnull(source.drift_handler))
-		var/atom/movable/backup = source.get_spacemove_backup(move_dir, FALSE)
-		if (backup && !(backup.dir & move_dir))
-			applied_force = max_drift_force
+	// Try to see if we can simulate pushing off a wall
+	var/atom/movable/backup = source.get_spacemove_backup(move_dir, FALSE, include_floors = TRUE)
+	if (backup && !(backup.dir & move_dir))
+		applied_force = max_drift_force
 
 	// We don't want to force the loop to fire before stabilizing if we're going to, otherwise its effects will be delayed until the next tick which is jank
 	var/force_stabilize = FALSE

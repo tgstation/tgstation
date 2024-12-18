@@ -420,11 +420,17 @@
 	// Shooting yourself point-blank
 	if (firer == original)
 		original = null
+	if (firer == fired_from)
+		fired_from = null
 	firer = null
 
 /obj/projectile/proc/original_deleted(datum/source)
 	SIGNAL_HANDLER
 	original = null
+
+/obj/projectile/proc/fired_from_deleted(datum/source)
+	SIGNAL_HANDLER
+	fired_from = null
 
 /obj/projectile/proc/on_ricochet(atom/target)
 	ricochets++
@@ -752,11 +758,13 @@
 
 /obj/projectile/proc/fire(fire_angle, atom/direct_target)
 	LAZYINITLIST(impacted)
-	if (fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	if (firer)
 		RegisterSignal(firer, COMSIG_QDELETING, PROC_REF(firer_deleted))
 		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
+	if (fired_from)
+		if (firer != fired_from)
+			RegisterSignal(fired_from, COMSIG_QDELETING, PROC_REF(fired_from_deleted))
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	if (original)
 		if (firer != original)
 			RegisterSignal(original, COMSIG_QDELETING, PROC_REF(original_deleted))
