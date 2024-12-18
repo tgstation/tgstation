@@ -46,11 +46,13 @@
 /obj/machinery/mailsorter/proc/get_unload_turf()
 	return get_step(src, output_dir)
 
+/// Opening the maintenance panel.
 /obj/machinery/mailsorter/screwdriver_act(mob/living/user, obj/item/tool)
 	default_deconstruction_screwdriver(user, "[base_icon_state]-off", base_icon_state, tool)
 	update_appearance(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS
 
+/// Deconstructing the mail sorter.
 /obj/machinery/mailsorter/crowbar_act(mob/living/user, obj/item/tool)
 	default_deconstruction_crowbar(tool)
 	return ITEM_INTERACT_SUCCESS
@@ -63,15 +65,15 @@
 		. += span_notice("Alt-click to rotate the output direction.")
 
 /obj/machinery/mailsorter/Destroy()
-	drop_all_mail()
+	QDEL_LIST(mail_list)
 	. = ..()
 
 /obj/machinery/mailsorter/on_deconstruction(disassembled)
 	drop_all_mail()
 	. = ..()
 
-/// Drops all enevlopes on the machine turf. Only occurs when the machine is broken.
-/obj/machinery/mailsorter/proc/drop_all_mail(damage_flag)
+/// Drops all enevlopes on the machine turf.
+/obj/machinery/mailsorter/proc/drop_all_mail()
 	if(!isturf(get_turf(src)))
 		QDEL_LIST(mail_list)
 		return
@@ -94,10 +96,6 @@
 /obj/machinery/mailsorter/proc/accept_check(obj/item/weapon)
 	var/static/list/accepted_items = list(
 		/obj/item/mail,
-		/obj/item/mail/envelope,
-		/obj/item/mail/junkmail,
-		/obj/item/mail/mail_strike,
-		/obj/item/mail/traitor,
 		/obj/item/paper,
 	)
 	return is_type_in_list(weapon, accepted_items)
