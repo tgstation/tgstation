@@ -958,7 +958,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	// No subtypes
 	if(type != /obj/item/melee/baseball_bat)
 		return
-	if(prob(check_holidays(APRIL_FOOLS) ? 50 | 1))
+	if(prob(check_holidays(APRIL_FOOLS) ? 50 : 1))
 		make_silly()
 
 /obj/item/melee/baseball_bat/attack_self(mob/user)
