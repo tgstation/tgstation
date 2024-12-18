@@ -280,6 +280,9 @@
 /obj/item/mecha_parts/mecha_equipment/rcd/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
+	// No meson action!
+	if (!(target in view(rcd_range, get_turf(chassis))))
+		return
 	if(get_dist(chassis, target) > rcd_range)
 		balloon_alert(source, "out of range!")
 		return
