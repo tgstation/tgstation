@@ -917,13 +917,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/melee/baseball_bat/Initialize(mapload)
 	. = ..()
-	if(prob(1))
-		name = "cricket bat"
-		icon_state = "baseball_bat_brit"
-		inhand_icon_state = "baseball_bat_brit"
-		desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
-
 	AddElement(/datum/element/kneecapping)
+	// No subtypes
+	if(type != /obj/item/melee/baseball_bat)
+		return
+	if(prob(1))
+		new /obj/item/melee/baseball_bat/british(loc)
+		qdel(src)
 
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
@@ -1038,6 +1038,17 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
 	return TRUE
+
+// In case you ever want to spawn it via map/admin console
+/obj/item/melee/baseball_bat/british
+	name = "cricket bat"
+	icon_state = "baseball_bat_brit"
+	inhand_icon_state = "baseball_bat_brit"
+	desc = "You've got red on you."
+
+/obj/item/melee/baseball_bat/british/Initialize(mapload)
+	. = ..()
+	desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
 
 /obj/item/melee/flyswatter
 	name = "flyswatter"
