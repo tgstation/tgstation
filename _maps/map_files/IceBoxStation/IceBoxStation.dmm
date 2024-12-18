@@ -26483,13 +26483,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"hEd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/iron,
-/area/station/commons/fitness)
 "hEm" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron/dark,
@@ -27989,10 +27982,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
-"iaa" = (
-/obj/structure/weightmachine,
-/turf/open/floor/iron,
-/area/station/commons/fitness)
 "iag" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -46016,6 +46005,13 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/entry)
+"nqI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/station/commons/fitness)
 "nqP" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Research Division West";
@@ -81098,6 +81094,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/detectives_office)
+"xyg" = (
+/obj/structure/weightmachine,
+/turf/open/floor/iron,
+/area/station/commons/fitness)
 "xyl" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
@@ -249326,7 +249326,7 @@ cGB
 cGB
 gsI
 tLL
-hEd
+nqI
 kKL
 kKL
 kKL
@@ -250350,7 +250350,7 @@ skl
 gaC
 vfW
 vfW
-iaa
+xyg
 vfW
 lvk
 crv
