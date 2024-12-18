@@ -712,7 +712,7 @@
 /obj/item/radio/toy
 	name = "\improper Little-Crew: Assistant's First Radio"
 	icon_state = "walkieian"
-	desc = "A Little-Crew branded toy radio in the shape of a lovable pet. After Little-Crew HQ was hit with a DonkSoft Nuke, these have become collectors items!"
+	desc = "A Little-Crew branded toy radio in the shape of a lovable pet. After Little-Crew HQ was hit with a Donksoft Nuke, these have become collector's items!"
 	overlay_speaker_idle = null
 	overlay_speaker_active = null
 	overlay_mic_idle = null
