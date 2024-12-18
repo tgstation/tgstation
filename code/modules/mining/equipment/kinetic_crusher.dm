@@ -6,15 +6,16 @@
  * a good tradeoff and a decent playstyle.
  */
 /obj/item/kinetic_crusher
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "crusher"
-	inhand_icon_state = "crusher0"
-	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "proto-kinetic crusher"
 	desc = "An early design of the proto-kinetic accelerator, it is little more than a combination of various mining tools cobbled together, \
 		forming a high-tech club. While it is an effective mining tool, it did little to aid any but the most skilled and/or \
 		suicidal miners against local fauna."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "crusher"
+	inhand_icon_state = "crusher0"
+	icon_angle = -45
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	resistance_flags = FIRE_PROOF
 	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
