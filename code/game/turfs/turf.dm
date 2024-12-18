@@ -702,19 +702,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		var/reac_volume = reagents[reagent]
 		. |= reagent.expose_turf(src, reac_volume)
 
-/**
- * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
- */
-/turf/wash(clean_types)
+// When our turf is washed, we may wash everything on top of the turf
+// By default we will only wash mopable things (like blood or vomit)
+// but you may optionally pass in all_contents = TRUE to wash everything
+/turf/wash(clean_types, all_contents = FALSE)
 	. = ..()
-
-	for(var/am in src)
-		if(am == src)
-			continue
-		var/atom/movable/movable_content = am
-		if(!ismopable(movable_content))
-			continue
-		movable_content.wash(clean_types)
+	for(var/atom/movable/to_clean as anything in src)
+		if(all_contents || HAS_TRAIT(to_clean, TRAIT_MOPABLE))
+			to_clean.wash(clean_types)
 
 /turf/set_density(new_value)
 	var/old_density = density
