@@ -958,9 +958,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	// No subtypes
 	if(type != /obj/item/melee/baseball_bat)
 		return
-	if(prob(1))
-		new /obj/item/melee/baseball_bat/british(loc)
-		qdel(src)
+	if(prob(check_holidays(APRIL_FOOLS) ? 50 | 1))
+		make_silly()
 
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
@@ -1048,6 +1047,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	target.throw_at(target_turf, get_dist(target, target_turf), datum_throw_speed + 1, user, callback = CALLBACK(src, PROC_REF(on_hit), target))
 	thrown_datums[target] = target.throwing
 
+/obj/item/melee/baseball_bat/proc/make_silly()
+	name = "cricket bat"
+	icon_state = "baseball_bat_brit"
+	inhand_icon_state = "baseball_bat_brit"
+	desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
+
 /obj/item/melee/baseball_bat/proc/on_hit(atom/movable/target)
 	target.remove_filter("baseball_launch")
 	target.throwforce *= 0.5
@@ -1077,15 +1082,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return TRUE
 
 // In case you ever want to spawn it via map/admin console
-/obj/item/melee/baseball_bat/british
-	name = "cricket bat"
-	icon_state = "baseball_bat_brit"
-	inhand_icon_state = "baseball_bat_brit"
-	desc = "You've got red on you."
-
 /obj/item/melee/baseball_bat/british/Initialize(mapload)
 	. = ..()
-	desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
+	make_silly()
 
 /obj/item/melee/flyswatter
 	name = "flyswatter"
