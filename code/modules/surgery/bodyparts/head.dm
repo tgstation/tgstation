@@ -140,8 +140,9 @@
 			. += span_info("[real_name]'s tongue has been removed.")
 
 /obj/item/bodypart/head/can_dismember(obj/item/item)
-	if (!can_dismember)
+	if(owner.stat < HARD_CRIT)
 		return FALSE
+	return ..()
 
 	if(!HAS_TRAIT(owner, TRAIT_CURSED) && owner.stat < HARD_CRIT)
 		return FALSE
