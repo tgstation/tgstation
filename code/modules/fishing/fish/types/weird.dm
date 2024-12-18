@@ -175,9 +175,6 @@
 	wound_bonus *= multiplier
 	bare_wound_bonus *= multiplier
 
-
-/obj/item/fish/dolphish
-
 /obj/item/fish/dolphish/process(seconds_per_tick)
 	. = ..()
 	var/patience_reduction = 1
@@ -587,6 +584,9 @@
 		visible_message(span_bolddanger("[src]'s wail kills [affected] fish nearby!")) // m-m-m-m-m-MONSTER KILL
 
 /obj/item/fish/babbelfish/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(loc != user)
+		return
 	if((user.usable_hands < 2) && !HAS_TRAIT(user, TRAIT_STRENGTH))
 		to_chat(user, span_notice("[src] is too dense to twist apart with only one hand."))
 		return
@@ -630,10 +630,9 @@
 	. = ..()
 	removal_holder = new(src)
 
-/obj/item/organ/ears/babbelfish/attack(mob/M, mob/living/user)
-	if(M != user)
-		return ..()
-	var/obj/item/organ/ears/ears = owner.get_organ_slot(ORGAN_SLOT_EARS)
+/obj/item/organ/ears/babbelfish/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	var/obj/item/organ/ears/ears = user.get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)
 		to_chat(user, span_notice("You don't have any ears to shove [src] into!"))
 		return
