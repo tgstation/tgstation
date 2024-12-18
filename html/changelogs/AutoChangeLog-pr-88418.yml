@@ -1,8 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Added new (purely visual) animations to sharp and pointy items."
-  - rscadd: "Certain items, like knives and swords, now have a secondary stabbing attack."
-  - balance: "Spears are now pointy and no longer act as oversized knives."
-  - balance: "Structure damage is now affected by attacking item's AP."
-  - bugfix: "You will now see the same attack verb in chat as everyone else."
