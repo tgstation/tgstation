@@ -1923,7 +1923,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/on_fall()
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_LIVING_THUD)
-	loc?.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing
 	return
 
 /mob/living/forceMove(atom/destination)

@@ -244,6 +244,13 @@
 
 		paper_note.show_through_camera(usr)
 
+/mob/living/carbon/on_fall()
+	. = ..()
+	loc?.handle_fall(src)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_LIVING_THUD)
+	loc?.handle_fall(src) //it's loc so it doesn't call the mob's handle_fall which does nothing
+
 /mob/living/carbon/resist_buckle()
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED))
 		buckled.user_unbuckle_mob(src, src)
