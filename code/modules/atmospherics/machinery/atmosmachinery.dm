@@ -544,7 +544,7 @@
 	SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/update_name()
-	if(!override_naming)
+	if(!override_naming && !HAS_TRAIT(src, TRAIT_WAS_RENAMED))
 		name = "[GLOB.pipe_color_name[pipe_color]] [initial(name)]"
 	return ..()
 
