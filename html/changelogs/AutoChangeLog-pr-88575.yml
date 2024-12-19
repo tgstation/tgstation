@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Meshes should work better"
+  - bugfix: "Medical item usage is correctly blackbox logged"
+  - bugfix: "Double balloon alerts from medical item usage"
+  - bugfix: "Poultice works on dead people"
