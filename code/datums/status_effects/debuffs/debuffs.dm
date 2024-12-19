@@ -351,10 +351,15 @@
 	var/obj/effect/abstract/crusher_mark/marked_underlay
 	/// If the projectile that applies this was boosted, the mark will also be boosted
 	var/boosted = FALSE
+	/// How long before the mark is ready to be detonated. Used for both the visual overlay and to determine when it's ready
+	var/ready_delay = 0.8 SECONDS
+	/// Tracks world.time when the mark was applied
+	var/mark_applied
 
 /datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, was_boosted)
 	. = ..()
 	boosted = was_boosted
+	mark_applied = world.time
 
 /datum/status_effect/crusher_mark/on_apply()
 	if(owner.mob_size >= MOB_SIZE_LARGE)
@@ -368,7 +373,7 @@
 			0, 1, 0
 		)
 		owner.vis_contents += marked_underlay
-		animate(marked_underlay, color = new_color, time = 5 SECONDS, loop = 1)
+		animate(marked_underlay, color = new_color, time = ready_delay, loop = 1)
 		return TRUE
 	return FALSE
 
