@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Resist button now has visible feedback."
-  - qol: "Readjusted UI layout."
-  - image: "Completely redrawn Midnight and Midnight-derived UIs!"
