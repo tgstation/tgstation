@@ -40,18 +40,22 @@
  * Will also be called if the assembly holder is attached to a plasma (internals) tank or welding fuel (dispenser) tank.
  */
 /obj/item/assembly/proc/on_attach()
+	SHOULD_CALL_PARENT(TRUE)
 	if(!holder && connected)
 		holder = connected.holder
+	SEND_SIGNAL(src, COMSIG_ASSEMBLY_ATTACHED, holder)
 
 /**
  * on_detach: Called when removed from an assembly holder or wiring datum
  */
 /obj/item/assembly/proc/on_detach()
+	SHOULD_CALL_PARENT(TRUE)
 	if(connected)
 		connected = null
 	if(!holder)
 		return FALSE
 	forceMove(holder.drop_location())
+	SEND_SIGNAL(src, COMSIG_ASSEMBLY_DETACHED, holder)
 	holder = null
 	return TRUE
 
