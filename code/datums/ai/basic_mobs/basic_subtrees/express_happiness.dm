@@ -31,11 +31,11 @@
 	var/list/final_list
 	switch(happiness_value)
 		if(HIGH_HAPPINESS_THRESHOLD to INFINITY)
-			final_list = happy_emotions
+			final_list = controller.blackboard[BB_HAPPY_EMOTIONS] || happy_emotions
 		if(MODERATE_HAPPINESS_THRESHOLD to HIGH_HAPPINESS_THRESHOLD)
-			final_list = moderate_emotions
+			final_list = controller.blackboard[BB_MODERATE_EMOTIONS] || moderate_emotions
 		else
-			final_list = depressed_emotions
+			final_list = controller.blackboard[BB_SAD_EMOTIONS] || depressed_emotions
 	if(!length(final_list))
 		return
 	controller.queue_behavior(/datum/ai_behavior/perform_emote, pick(final_list))
