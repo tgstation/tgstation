@@ -1,10 +1,3 @@
-/// We are not nearsighted right now.
-#define SHOULDNT_BE 0
-/// Something is correcting our vision, but we are still a bit nearsighted.
-#define ONLY_CORRECTED 1
-/// We are fully nearsighted.
-#define SHOULD_BE 2
-
 /// Maximum severity level possible.
 #define MAX_SEVERITY 3
 
@@ -66,10 +59,10 @@
 /// Checks if we should be nearsighted currently, or if we should clear the overlay
 /datum/status_effect/grouped/nearsighted/proc/should_be_nearsighted()
 	if(HAS_TRAIT(owner, TRAIT_SIGHT_BYPASS))
-		return SHOULDNT_BE
+		return NEARSIGHTED_DISABLED
 	if(HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED))
-		return ONLY_CORRECTED
-	return SHOULD_BE
+		return NEARSIGHTED_CORRECTED
+	return NEARSIGHTED_ENABLED
 
 /// Updates our nearsightd overlay, either removing it if we have the trait or adding it if we don't
 /datum/status_effect/grouped/nearsighted/proc/update_nearsighted_overlay()
@@ -87,7 +80,7 @@
 		return 0
 
 	var/final_severity = absolute_severity
-	if(are_we_nearsighted != ONLY_CORRECTED) //We don't have corrective vision
+	if(are_we_nearsighted != NEARSIGHTED_CORRECTED) //We don't have corrective vision
 		final_severity += correctable_severity
 
 	final_severity = min(final_severity, MAX_SEVERITY)
@@ -136,7 +129,3 @@
 		absolute_severity = highest_severity
 
 #undef MAX_SEVERITY
-
-#undef SHOULD_BE
-#undef ONLY_CORRECTED
-#undef SHOULDNT_BE
