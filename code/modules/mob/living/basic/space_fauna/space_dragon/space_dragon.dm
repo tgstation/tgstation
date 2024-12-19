@@ -40,8 +40,6 @@
 	armour_penetration = 30
 	pixel_x = -16
 	base_pixel_x = -16
-	maptext_height = 64
-	maptext_width = 64
 	mouse_opacity = MOUSE_OPACITY_ICON
 	death_sound = 'sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg'
 	death_message = "screeches in agony as it collapses to the floor, its life extinguished."
