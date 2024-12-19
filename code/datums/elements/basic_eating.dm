@@ -46,8 +46,10 @@
 	SIGNAL_HANDLER
 	if(user.combat_mode || !is_type_in_list(possible_food, food_types))
 		return NONE
-
-	try_eating(source, possible_food, user)
+	var/mob/living/living_source = source
+	if(living_source.stat != CONSCIOUS)
+		return NONE
+	return try_eating(source, possible_food, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /datum/element/basic_eating/proc/on_unarm_attack(mob/living/eater, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
