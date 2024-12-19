@@ -42,6 +42,7 @@
 	. = ..()
 	connection_callback = null
 	disconnection_callback = null
+	post_set_cable_layer_callback = null
 
 /datum/component/circuit_component_wirenet_connection/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_CIRCUIT_COMPONENT_PERFORM_ACTION, PROC_REF(on_action))
