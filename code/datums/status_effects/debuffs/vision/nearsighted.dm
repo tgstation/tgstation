@@ -120,7 +120,7 @@
 
 /datum/status_effect/grouped/nearsighted/proc/recalculate_severity(correctable)
 	if(isnull(correctable))
-		CRASH("Please provide a parameter")
+		CRASH("was not provided with an argument (this needs to be explicit)")
 
 	var/highest_severity = 0
 	var/list/to_search = correctable ? correctable_sources : absolute_sources
