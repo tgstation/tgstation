@@ -570,3 +570,8 @@
 /// Sent from /obj/machinery/button/remove_assembly(obj/machinery/button/button, mob/user)
 #define COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON "assembly_removed_from_button"
 
+/// Sent from /datum/powernet/add_cable()
+#define COMSIG_CABLE_ADDED_TO_POWERNET "cable_added_to_powernet"
+
+/// Sent from /datum/powernet/remove_cable()
+#define COMSIG_CABLE_REMOVED_FROM_POWERNET "cable_removed_from_powernet"

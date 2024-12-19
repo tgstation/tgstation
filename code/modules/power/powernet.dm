@@ -35,6 +35,7 @@
 //if the powernet is then empty, delete it
 //Warning : this proc DON'T check if the cable exists
 /datum/powernet/proc/remove_cable(obj/structure/cable/C)
+	SEND_SIGNAL(C, COMSIG_CABLE_REMOVED_FROM_POWERNET)
 	cables -= C
 	C.powernet = null
 	if(is_empty())//the powernet is now empty...
@@ -50,6 +51,7 @@
 			C.powernet.remove_cable(C) //..remove it
 	C.powernet = src
 	cables +=C
+	SEND_SIGNAL(C, COMSIG_CABLE_ADDED_TO_POWERNET)
 
 //remove a power machine from the current powernet
 //if the powernet is then empty, delete it
