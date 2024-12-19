@@ -145,7 +145,7 @@
 
 #define CORRECTABLE_SOURCE "\[CORRECTABLE SOURCE\]"
 #define ABSOLUTE_SOURCE "\[ABSOLUTE SOURCE\]"
-TEST_FOCUS(/datum/unit_test/nearsighted_effect)
+/datum/unit_test/nearsighted_effect
 /*!
  * This tests [/datum/status_effect/grouped/nearsighted]
  * * Application (absolute/correctable)
