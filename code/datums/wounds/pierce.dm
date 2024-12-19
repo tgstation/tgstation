@@ -17,6 +17,8 @@
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
+	/// How much our blood_flow will naturally decrease per second, even without gauze
+	var/clot_rate
 	/// If gauzed, what percent of the internal bleeding actually clots of the total absorption rate
 	var/gauzed_clot_rate
 
@@ -72,8 +74,10 @@
 		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 		return BLOOD_FLOW_INCREASING
-	if(limb.current_gauze)
+	if(limb.current_gauze || clot_rate > 0)
 		return BLOOD_FLOW_DECREASING
+	if(clot_rate < 0)
+		return BLOOD_FLOW_INCREASING
 	return BLOOD_FLOW_STEADY
 
 /datum/wound/pierce/bleed/handle_process(seconds_per_tick, times_fired)
@@ -92,10 +96,16 @@
 		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 			adjust_blood_flow(0.25 * seconds_per_tick) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
+	//gauze always reduces blood flow, even for non bleeders
 	if(limb.current_gauze)
+		if(clot_rate > 0)
+			adjust_blood_flow(-clot_rate * seconds_per_tick)
 		var/gauze_power = limb.current_gauze.absorption_rate
 		limb.seep_gauze(gauze_power * seconds_per_tick)
 		adjust_blood_flow(-gauze_power * gauzed_clot_rate * seconds_per_tick)
+	//otherwise, only clot if it's a bleeder
+	else if(limb.can_bleed())
+		adjust_blood_flow(-clot_rate * seconds_per_tick)
 
 /datum/wound/pierce/bleed/adjust_blood_flow(adjust_by, minimum)
 	. = ..()
@@ -174,12 +184,13 @@
 		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
 		Follow with food and a rest period."
 	treat_text_short = "Apply bandaging or suturing."
-	examine_desc = "has a small, circular hole, gently bleeding"
+	examine_desc = "has a small, torn hole, gently bleeding"
 	occur_text = "spurts out a thin stream of blood"
 	sound_effect = 'sound/effects/wounds/pierce1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 1.5
 	gauzed_clot_rate = 0.8
+	clot_rate = 0.03
 	internal_bleeding_chance = 30
 	internal_bleeding_coefficient = 1.25
 	threshold_penalty = 20
@@ -189,6 +200,11 @@
 	simple_treat_text = "<b>Bandaging</b> the wound will reduce blood loss, help the wound close by itself quicker, and speed up the blood recovery period. The wound itself can be slowly <b>sutured</b> shut."
 	homemade_treat_text = "<b>Tea</b> stimulates the body's natural healing systems, slightly fastening clotting. The wound itself can be rinsed off on a sink or shower as well. Other remedies are unnecessary."
 
+/datum/wound/pierce/bleed/moderate/update_descriptions()
+	if(!limb.can_bleed())
+		examine_desc = "has a small, torn hole"
+		occur_text = "splits a small hole open"
+
 /datum/wound_pregen_data/flesh_pierce/breakage
 	abstract = FALSE
 
@@ -196,13 +212,35 @@
 
 	threshold_minimum = 30
 
-/datum/wound/pierce/bleed/moderate/update_descriptions()
+/datum/wound_pregen_data/flesh_pierce/breakage/get_weight(obj/item/bodypart/limb, woundtype, damage, attack_direction, damage_source)
+	if (isprojectile(damage_source))
+		return 0
+	return weight
+
+/datum/wound/pierce/bleed/moderate/projectile
+	name = "Minor Skin Penetration"
+	desc = "Patient's skin has been pierced through, causing severe bruising and minor internal bleeding in affected area."
+	treat_text = "Apply bandaging or suturing to the wound, make use of blood clotting agents, \
+		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
+		Follow with food and a rest period."
+	examine_desc = "has a small, circular hole, gently bleeding"
+	clot_rate = 0
+
+/datum/wound/pierce/bleed/moderate/projectile/update_descriptions()
 	if(!limb.can_bleed())
 		examine_desc = "has a small, circular hole"
 		occur_text = "splits a small hole open"
 
+/datum/wound_pregen_data/flesh_pierce/breakage/projectile
+	wound_path_to_generate = /datum/wound/pierce/bleed/moderate/projectile
+
+/datum/wound_pregen_data/flesh_pierce/breakage/projectile/get_weight(obj/item/bodypart/limb, woundtype, damage, attack_direction, damage_source)
+	if (!isprojectile(damage_source))
+		return 0
+	return weight
+
 /datum/wound/pierce/bleed/severe
-	name = "Open Puncture"
+	name = "Open Stab Puncture"
 	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and reduced limb stability."
 	treat_text = "Swiftly apply bandaging or suturing to the wound, make use of blood clotting agents or saline-glucose, \
 		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
@@ -214,6 +252,7 @@
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 2.25
 	gauzed_clot_rate = 0.6
+	clot_rate = 0.02
 	internal_bleeding_chance = 60
 	internal_bleeding_coefficient = 1.5
 	threshold_penalty = 35
@@ -223,6 +262,10 @@
 	simple_treat_text = "<b>Bandaging</b> the wound is essential, and will reduce blood loss. Afterwards, the wound can be <b>sutured</b> shut, preferably while the patient is resting and/or grasping their wound."
 	homemade_treat_text = "Bed sheets can be ripped up to make <b>makeshift gauze</b>. <b>Flour, table salt, or salt mixed with water</b> can be applied directly to stem the flow, though unmixed salt will irritate the skin and worsen natural healing. Resting and grabbing your wound will also reduce bleeding."
 
+/datum/wound/pierce/bleed/severe/update_descriptions()
+	if(!limb.can_bleed())
+		occur_text = "tears a hole open"
+
 /datum/wound_pregen_data/flesh_pierce/open_puncture
 	abstract = FALSE
 
@@ -230,9 +273,23 @@
 
 	threshold_minimum = 50
 
-/datum/wound/pierce/bleed/severe/update_descriptions()
-	if(!limb.can_bleed())
-		occur_text = "tears a hole open"
+/datum/wound_pregen_data/flesh_pierce/open_puncture/get_weight(obj/item/bodypart/limb, woundtype, damage, attack_direction, damage_source)
+	if (isprojectile(damage_source))
+		return 0
+	return weight
+
+/datum/wound/pierce/bleed/severe/projectile
+	name = "Open Bullet Puncture"
+	examine_desc = "is pierced clear through, with bits of tissue obscuring the cleanly torn hole"
+	clot_rate = 0
+
+/datum/wound_pregen_data/flesh_pierce/open_puncture/projectile
+	wound_path_to_generate = /datum/wound/pierce/bleed/severe/projectile
+
+/datum/wound_pregen_data/flesh_pierce/open_puncture/projectile/get_weight(obj/item/bodypart/limb, woundtype, damage, attack_direction, damage_source)
+	if (!isprojectile(damage_source))
+		return 0
+	return weight
 
 /datum/wound/pierce/bleed/severe/eye
 	name = "Eyeball Puncture"
