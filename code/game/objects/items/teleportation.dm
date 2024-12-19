@@ -179,7 +179,17 @@
 		var/area/computer_area = get_area(target)
 		if(!computer_area || (computer_area.area_flags & NOTELEPORT))
 			continue
-		if(computer.power_station?.teleporter_hub && computer.power_station.engaged)
+
+		if(!computer.power_station || !computer.power_station.teleporter_hub)
+			continue
+
+		if((computer.power_station.machine_stat & (NOPOWER|BROKEN|MAINT)) || computer.power_station.panel_open)
+			continue
+
+		if((computer.power_station.teleporter_hub.machine_stat & (NOPOWER|BROKEN|MAINT)) || computer.power_station.teleporter_hub.panel_open)
+			continue
+
+		if(computer.power_station.engaged)
 			locations["[get_area(target)] (Active)"] = computer
 		else
 			locations["[get_area(target)] (Inactive)"] = computer
