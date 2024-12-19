@@ -34,6 +34,8 @@
 	var/flesh_regeneration
 	/// Verb used when applying this object to someone
 	var/apply_verb = "treating"
+	/// Whether this item can be used on dead bodies
+	var/works_on_dead = FALSE
 
 /obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -92,7 +94,7 @@
 	var/heal_zone = check_zone(user.zone_selected)
 	if(!try_heal_checks(patient, user, heal_zone))
 		return FALSE
-	SSblackbox.record_feedback("nested tally", "medical_item_used", 1, list(type, "[auto_change_zone ? "auto" : "manual"]"))
+	SSblackbox.record_feedback("nested tally", "medical_item_used", 1, list("[auto_change_zone ? "auto" : "manual"]", "[type]"))
 	patient.balloon_alert(user, "[apply_verb] [parse_zone(heal_zone)]...")
 	INVOKE_ASYNC(src, PROC_REF(try_heal), patient, user, heal_zone, FALSE, iscarbon(patient) && auto_change_zone) // auto change is useless for non-carbons
 	return TRUE
@@ -116,7 +118,6 @@
 /obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE)
 	if(patient == user)
 		if(!silent)
-			user.balloon_alert(user, "[apply_verb] [parse_zone(healed_zone)]...")
 			user.visible_message(
 				span_notice("[user] starts to apply [src] on [user.p_them()]self..."),
 				span_notice("You begin applying [src] on yourself..."),
@@ -136,7 +137,6 @@
 
 	else if(other_delay)
 		if(!silent)
-			patient.balloon_alert(user, "[apply_verb] [parse_zone(healed_zone)]...")
 			user.visible_message(
 				span_notice("[user] starts to apply [src] on [patient]."),
 				span_notice("You begin applying [src] on [patient]..."),
@@ -213,7 +213,7 @@
 
 	var/next_picked = (preferred_target in other_affected_limbs) ? preferred_target : other_affected_limbs[1]
 	if(next_picked != last_zone)
-		user.balloon_alert(user, "[apply_verb] [parse_zone(next_picked)]...")
+		patient.balloon_alert(user, "[apply_verb] [parse_zone(next_picked)]...")
 	try_heal(patient, user, next_picked, silent = TRUE, auto_change_zone = TRUE)
 
 /obj/item/stack/medical/proc/try_heal_manual_target(mob/living/carbon/patient, mob/living/user)
@@ -235,10 +235,14 @@
 /// Checks a bunch of stuff to see if we can heal the patient, including can_heal
 /// Gives a feedback if we can't ultimatly heal the patient (unless silent is TRUE)
 /obj/item/stack/medical/proc/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
+	if(!(healed_zone in GLOB.all_body_zones))
+		stack_trace("Invalid zone ([healed_zone || "null"]) passed to try_heal_checks.")
+		healed_zone = BODY_ZONE_CHEST
+
 	if(!can_heal(patient, user, healed_zone, silent))
 		// has its own feedback
 		return FALSE
-	if(patient.stat == DEAD)
+	if(!works_on_dead && patient.stat == DEAD)
 		if(!silent)
 			patient.balloon_alert(user, "[patient.p_theyre()] dead!")
 		return FALSE
@@ -369,6 +373,7 @@
 	burn_cleanliness_bonus = 0.35
 	merge_type = /obj/item/stack/medical/gauze
 	apply_verb = "wrapping"
+	works_on_dead = TRUE
 	var/obj/item/bodypart/gauzed_bodypart
 
 /obj/item/stack/medical/gauze/Destroy(force)
@@ -585,7 +590,7 @@
 		return ..()
 	icon_state = "regen_mesh_closed"
 
-/obj/item/stack/medical/mesh/try_heal_checks(mob/living/patient, mob/living/user, silent = FALSE)
+/obj/item/stack/medical/mesh/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
 	if(!is_open)
 		if(!silent)
 			balloon_alert(user, "open it first!")
@@ -726,6 +731,7 @@
 	hitsound = 'sound/misc/moist_impact.ogg'
 	merge_type = /obj/item/stack/medical/poultice
 	apply_verb = "applying to"
+	works_on_dead = TRUE
 
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/living/user)
 	. = ..()
