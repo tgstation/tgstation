@@ -81,7 +81,7 @@
 
 	var/final_severity = absolute_severity
 	if(are_we_nearsighted != NEARSIGHTED_CORRECTED) //We don't have corrective vision
-		final_severity += correctable_severity
+		final_severity = max(absolute_severity, correctable_severity)
 
 	final_severity = min(final_severity, MAX_SEVERITY)
 
