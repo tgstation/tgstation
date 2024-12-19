@@ -21,18 +21,18 @@
 	ricochet_auto_aim_range = 3
 	wound_bonus = -20
 	bare_wound_bonus = 10
-	embed_type = /datum/embed_data/bullet_c38
+	embed_type = /datum/embedding/bullet_c38
 	embed_falloff_tile = -4
 
-/datum/embed_data/bullet_c38
-	embed_chance=25
-	fall_chance=2
-	jostle_chance=2
-	ignore_throwspeed_threshold=TRUE
-	pain_stam_pct=0.4
-	pain_mult=3
-	jostle_pain_mult=5
-	rip_time=1 SECONDS
+/datum/embedding/bullet_c38
+	embed_chance = 25
+	fall_chance = 2
+	jostle_chance = 2
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.4
+	pain_mult = 3
+	jostle_pain_mult = 5
+	rip_time = 1 SECONDS
 
 /obj/projectile/bullet/c38/match
 	name = ".38 Match bullet"
@@ -75,19 +75,19 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 20
 	bare_wound_bonus = 20
-	embed_type = /datum/embed_data/bullet_c38_dumdum
+	embed_type = /datum/embedding/bullet_c38_dumdum
 	wound_falloff_tile = -5
 	embed_falloff_tile = -15
 
-/datum/embed_data/bullet_c38_dumdum
-	embed_chance=75
-	fall_chance=3
-	jostle_chance=4
-	ignore_throwspeed_threshold=TRUE
-	pain_stam_pct=0.4
-	pain_mult=5
-	jostle_pain_mult=6
-	rip_time=1 SECONDS
+/datum/embedding/bullet_c38_dumdum
+	embed_chance = 75
+	fall_chance = 3
+	jostle_chance = 4
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.4
+	pain_mult = 5
+	jostle_pain_mult = 6
+	rip_time = 1 SECONDS
 
 /obj/projectile/bullet/c38/trac
 	name = ".38 TRAC bullet"

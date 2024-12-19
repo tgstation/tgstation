@@ -34,9 +34,9 @@
 	ignore_range_hit_prone_targets = TRUE
 	sharpness = SHARP_EDGED
 	wound_bonus = 30
-	embed_type = /datum/embed_data/shrapnel
+	embed_type = /datum/embedding/shrapnel
 
-/datum/embed_data/shrapnel
+/datum/embedding/shrapnel
 	embed_chance = 70
 	ignore_throwspeed_threshold = TRUE
 	fall_chance = 1
@@ -75,9 +75,9 @@
 	ricochet_incidence_leeway = 0
 	embed_falloff_tile = -2
 	shrapnel_type = /obj/item/shrapnel/stingball
-	embed_type = /datum/embed_data/stingball
+	embed_type = /datum/embedding/stingball
 
-/datum/embed_data/stingball
+/datum/embedding/stingball
 	embed_chance = 55
 	fall_chance = 2
 	jostle_chance = 7
@@ -107,11 +107,11 @@
 	ricochets_max = 2
 	ricochet_chance = 140
 	shrapnel_type = /obj/item/shrapnel/capmine
-	embed_type = /datum/embed_data/capmine
+	embed_type = /datum/embedding/capmine
 	wound_falloff_tile = 0
 	embed_falloff_tile = 0
 
-/datum/embed_data/capmine
+/datum/embedding/capmine
 	embed_chance = 90
 	fall_chance = 3
 	jostle_chance = 7
