@@ -322,8 +322,6 @@
 		var/obj/item/organ/eyes/eyes = human_mob.get_organ_slot(ORGAN_SLOT_EYES)
 		if(eyes?.no_glasses)
 			blocked_slots |= ITEM_SLOT_EYES
-		if(human_mob.bodyshape & BODYSHAPE_DIGITIGRADE)
-			blocked_slots |= ITEM_SLOT_FEET
 
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(!inv.slot_id)
