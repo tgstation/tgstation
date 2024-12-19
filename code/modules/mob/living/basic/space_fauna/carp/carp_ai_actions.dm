@@ -1,6 +1,6 @@
 #define MAGICARP_SPELL_TARGET_SEEK_RANGE 4
 
-/datum/pet_command/point_targeting/use_ability/magicarp
+/datum/pet_command/use_ability/magicarp
 	pet_ability_key = BB_MAGICARP_SPELL
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/carp
