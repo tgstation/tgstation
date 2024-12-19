@@ -14,9 +14,9 @@
 	sharpness = SHARP_POINTY
 	max_integrity = 200
 	layer = CORGI_ASS_PIN_LAYER
-	embed_type = /datum/embed_data/corgi_pin
+	embed_type = /datum/embedding/corgi_pin
 
-/datum/embed_data/corgi_pin
+/datum/embedding/corgi_pin
 	pain_chance = 0
 	jostle_pain_mult = 0
 	ignore_throwspeed_threshold = TRUE
