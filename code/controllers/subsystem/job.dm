@@ -605,7 +605,7 @@ SUBSYSTEM_DEF(job)
 	var/timegate_expired = FALSE
 	// allow only forcing deadminning in the first X seconds of the round if auto_deadmin_timegate is set in config
 	var/timegate = CONFIG_GET(number/auto_deadmin_timegate)
-	if(timegate && (world.time - SSticker.round_start_time > timegate))
+	if(timegate && (STATION_TIME_PASSED() > timegate))
 		timegate_expired = TRUE
 
 	if(!job)

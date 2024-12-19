@@ -2,6 +2,9 @@
 /proc/worldtime2text()
 	return gameTimestamp("hh:mm:ss", world.time)
 
+/proc/roundtime2text()
+	return gameTimestamp("hh:mm:ss", STATION_TIME_PASSED())
+
 /proc/time_stamp(format = "hh:mm:ss", show_ds)
 	var/time_string = time2text(world.timeofday, format)
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string

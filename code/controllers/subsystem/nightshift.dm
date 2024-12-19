@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(nightshift)
 	if(resumed)
 		update_nightshift(resumed = TRUE)
 		return
-	if(world.time - SSticker.round_start_time < nightshift_first_check)
+	if(STATION_TIME_PASSED() < nightshift_first_check)
 		return
 	check_nightshift()
 
