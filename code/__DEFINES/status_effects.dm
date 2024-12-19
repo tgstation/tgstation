@@ -98,7 +98,7 @@
 	var/datum/status_effect/grouped/nearsighted/nearsight = has_status_effect(/datum/status_effect/grouped/nearsighted)
 	if(isnull(nearsight))
 		return FALSE
-	return (nearsight.should_be_nearsighted() < NEARSIGHTED_CORRECTED)
+	return (nearsight.should_be_nearsighted() > NEARSIGHTED_CORRECTED)
 
 // Status effect application helpers.
 // These are macros for easier use of adjust_timed_status_effect and set_timed_status_effect.
