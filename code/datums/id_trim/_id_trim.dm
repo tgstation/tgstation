@@ -31,7 +31,7 @@
 	/// What honorifics, if any, will we set our wearer's name to when worn?
 	var/list/honorifics
 	/// What positions can our honorific take? To prevent names like "Peter Dr."
-	var/list/honorific_positions
+	var/honorific_positions = NONE
 	/// What is our selected honorific?
 	var/chosen_honorific
 

@@ -255,7 +255,7 @@
 	)
 	job = /datum/job/bridge_assistant
 	honorifics = list("Underling", "Assistant", "Mate")
-	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
+	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_FIRST_FULL | HONORIFIC_POSITION_NONE
 
 /datum/id_trim/job/captain
 	assignment = JOB_CAPTAIN
@@ -273,7 +273,7 @@
 	big_pointer = TRUE
 	pointer_color = COLOR_COMMAND_BLUE
 	honorifics = list("Captain", "Cpt.")
-	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
+	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_FIRST_FULL | HONORIFIC_POSITION_NONE
 
 /// Captain gets all station accesses hardcoded in because it's the Captain.
 /datum/id_trim/job/captain/New()
@@ -309,7 +309,7 @@
 		)
 	job = /datum/job/cargo_technician
 	honorifics = list("Courier")
-	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
+	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_FIRST_FULL | HONORIFIC_POSITION_NONE
 
 
 /datum/id_trim/job/chaplain
@@ -334,7 +334,7 @@
 		)
 	job = /datum/job/chaplain
 	honorifics = list("Chaplain", "Reverend")
-	honorific_positions = list(HONORIFIC_POSITION_FIRST, HONORIFIC_POSITION_LAST, HONORIFIC_POSITION_FIRST_FULL, HONORIFIC_POSITION_NONE)
+	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_FIRST_FULL | HONORIFIC_POSITION_NONE
 
 /datum/id_trim/job/chemist
 	assignment = JOB_CHEMIST

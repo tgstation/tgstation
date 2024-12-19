@@ -931,14 +931,14 @@
 		balloon_alert(user, "card has no honorific to use!")
 		return
 
-	if(!trim.honorific_positions)
+	if(trim.honorific_positions == NONE)
 		balloon_alert(user, "no honorific positions! Error!")
 		stack_trace("ID card with honorifics found with no potential honorific positions!")
 		return
 
 	var/honorific_position_to_use = tgui_input_list(user, "what position do you want your honorific in?", "Flair!", trim.honorific_positions)
 
-	if(honorific_position_to_use == HONORIFIC_POSITION_NONE)
+	if(honorific_position_to_use & HONORIFIC_POSITION_NONE)
 		honorific_position = HONORIFIC_POSITION_NONE
 		balloon_alert(user, "honorific disabled")
 	else

@@ -44,12 +44,20 @@
 #define ID_ICON_BORDERS 1, 9, 32, 24
 
 ///Honorific will display next to the first name.
-#define HONORIFIC_POSITION_FIRST "Include first name"
+#define HONORIFIC_POSITION_FIRST (1<<0)
 ///Honorific will display next to the last name.
-#define HONORIFIC_POSITION_LAST "Include last name"
+#define HONORIFIC_POSITION_LAST (1<<1)
 ///Honorific will not be displayed.
-#define HONORIFIC_POSITION_NONE "No honorific"
+#define HONORIFIC_POSITION_NONE (1<<2)
 ///Honorific will be appended to the full name at the start.
-#define HONORIFIC_POSITION_FIRST_FULL "Start of full name"
+#define HONORIFIC_POSITION_FIRST_FULL (1<<3)
 ///Honorific will be appended to the full name at the end.
-#define HONORIFIC_POSITION_LAST_FULL "End of full name"
+#define HONORIFIC_POSITION_LAST_FULL (1<<4)
+
+DEFINE_BITFIELD(honorific_positions, list(
+	"Honorific + First Name" = HONORIFIC_POSITION_FIRST,
+	"Honorific + Last Name" = HONORIFIC_POSITION_LAST,
+	"Remove Honorific" = HONORIFIC_POSITION_NONE,
+	"Honorific + Full Name" = HONORIFIC_POSITION_FIRST_FULL,
+	"Full Name + Honorific" = HONORIFIC_POSITION_LAST_FULL,
+))
