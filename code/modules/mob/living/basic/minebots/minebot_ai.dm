@@ -281,13 +281,15 @@
 /datum/pet_command/automate_mining
 	command_name = "Automate mining"
 	command_desc = "Make your minebot automatically mine!"
-	radial_icon = 'icons/obj/mining.dmi'
-	radial_icon_state = "pickaxe"
+	radial_icon_state = "mine"
 	speech_commands = list("mine")
 	callout_type = /datum/callout_option/mine
 
 /datum/pet_command/automate_mining/valid_callout_target(mob/living/caller, datum/callout_option/callout, atom/target)
 	return ismineralturf(target)
+
+/datum/pet_command/automate_mining/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to start mining!"
 
 /datum/pet_command/automate_mining/execute_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_AUTOMATED_MINING, TRUE)

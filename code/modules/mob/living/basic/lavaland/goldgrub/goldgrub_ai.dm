@@ -224,9 +224,7 @@
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
-/datum/pet_command/grub_spit/generate_emote_command(atom/target)
-	. = ..()
-	if(!.)
-		return null
-	. += " to spit out its ores!"
+/datum/pet_command/grub_spit/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to spit its ores!"
+
 #undef BURROW_RANGE

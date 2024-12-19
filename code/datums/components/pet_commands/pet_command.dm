@@ -133,7 +133,10 @@
 
 /datum/pet_command/proc/generate_emote_command(atom/target)
 	var/mob/living/living_pet = weak_parent?.resolve()
-	return isnull(living_pet) ? null : "signals [living_pet]"
+	return isnull(living_pet) ? null : retrieve_command_text(living_pet, target)
+
+/datum/pet_command/proc/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to spring into action!"
 
 /// Target the pointed atom for actions
 /datum/pet_command/proc/look_for_target(mob/living/friend, atom/potential_target)

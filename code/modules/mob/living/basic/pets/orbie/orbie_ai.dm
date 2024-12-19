@@ -123,15 +123,22 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 	return ..()
 
+/datum/pet_command/use_ability/pet_lights/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to toggle its lights!"
+
 /datum/pet_command/use_ability/take_photo
 	command_name = "Photo"
 	command_desc = "Make your pet take a photo!"
-	radial_icon = 'icons/mob/simple/pets.dmi'
-	radial_icon_state = "orbie_lights_action"
+	radial_icon = 'icons/obj/art/camera.dmi'
+	radial_icon_state = "camera"
 	speech_commands = list("photo", "picture", "image")
 	command_feedback = "Readys camera mode"
 	pet_ability_key = BB_PHOTO_ABILITY
 	targeting_strategy_key = BB_TARGETING_STRATEGY
+
+/datum/pet_command/use_ability/take_photo/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to take a photo of [target]!"
+
 
 /datum/pet_command/use_ability/take_photo/execute_action(datum/ai_controller/controller)
 	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 3)

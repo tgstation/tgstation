@@ -30,11 +30,9 @@
 	. = ..()
 	UnregisterSignal(unfriended, COMSIG_MOB_THROW)
 
-/datum/pet_command/fetch/generate_emote_command(atom/target)
-	. = ..()
-	if(!. || isnull(target))
-		return null
-	. += " to fetch [target]!"
+/datum/pet_command/fetch/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to fetch [target]!"
+
 /// A friend has thrown something, if we're listening or at least not busy then go get it
 /datum/pet_command/fetch/proc/listened_throw(mob/living/carbon/thrower)
 	SIGNAL_HANDLER

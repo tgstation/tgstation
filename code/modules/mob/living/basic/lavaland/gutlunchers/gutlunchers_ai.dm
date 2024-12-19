@@ -102,6 +102,7 @@
 
 /datum/pet_command/mine_walls
 	command_name = "Mine"
+	radial_icon_state = "mine"
 	command_desc = "Command your pet to mine down walls."
 	speech_commands = list("mine", "smash")
 

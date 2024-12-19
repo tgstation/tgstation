@@ -14,11 +14,8 @@
 /datum/pet_command/idle/execute_action(datum/ai_controller/controller)
 	return SUBTREE_RETURN_FINISH_PLANNING // This cancels further AI planning
 
-/datum/pet_command/idle/generate_emote_command(atom/target)
-	. = ..()
-	if(!.)
-		return
-	. += " to stay idle!"
+/datum/pet_command/idle/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to stay idle!"
 
 /**
  * # Pet Command: Stop
@@ -35,11 +32,8 @@
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	return // Just move on to the next planning subtree.
 
-/datum/pet_command/free/generate_emote_command(atom/target)
-	. = ..()
-	if(!.)
-		return
-	. += " to go free!"
+/datum/pet_command/free/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to go free!"
 
 /**
  * # Pet Command: Follow
@@ -58,11 +52,8 @@
 	. = ..()
 	set_command_target(parent, commander)
 
-/datum/pet_command/follow/generate_emote_command(atom/target)
-	. = ..()
-	if(!.)
-		return
-	. += " to follow!"
+/datum/pet_command/follow/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to follow!"
 
 /datum/pet_command/follow/execute_action(datum/ai_controller/controller)
 	controller.queue_behavior(follow_behavior, BB_CURRENT_PET_TARGET)
@@ -82,11 +73,8 @@
 	controller.queue_behavior(/datum/ai_behavior/play_dead)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
-/datum/pet_command/play_dead/generate_emote_command(atom/target)
-	. = ..()
-	if(!.)
-		return
-	. += " to play dead!"
+/datum/pet_command/play_dead/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to play dead!"
 
 /**
  * # Pet Command: Good Boy
@@ -135,6 +123,9 @@
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
+/datum/pet_command/untargeted_ability/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to use an ability!"
+
 /**
  * # Pet Command: Attack
  * Tells a pet to chase and bite the next thing you point at
@@ -168,11 +159,8 @@
 		return
 	return ..()
 
-/datum/pet_command/attack/generate_emote_command(atom/target)
-	. = ..()
-	if(!.)
-		return
-	. += " to attack [target]!"
+/datum/pet_command/attack/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to attack [target]!"
 
 /// Display feedback about not targeting something
 /datum/pet_command/attack/proc/refuse_target(mob/living/parent, atom/target)
@@ -216,11 +204,8 @@
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
-/datum/pet_command/breed/generate_emote_command(atom/target)
-	. = ..()
-	if(!. || isnull(target))
-		return
-	. += " to breed with [target]!"
+/datum/pet_command/breed/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to breed with [target]!"
 
 /**
  * # Pet Command: Targetted Ability
@@ -251,11 +236,8 @@
 	controller.queue_behavior(ability_behavior, pet_ability_key, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
-/datum/pet_command/use_ability/generate_emote_command(atom/target)
-	. = ..()
-	if(!. || isnull(target))
-		return
-	. += " to use an ability on [target]!"
+/datum/pet_command/use_ability/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to use an ability on [target]!"
 
 /datum/pet_command/protect_owner
 	command_name = "Protect owner"
@@ -329,11 +311,8 @@
 		controller.queue_behavior(/datum/ai_behavior/interact_with_target/fishing, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
-/datum/pet_command/fish/generate_emote_command(atom/target)
-	. = ..()
-	if(!.)
-		return
-	. += " to go fish!"
+/datum/pet_command/fish/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to go fish!"
 
 /datum/pet_command/move
 	command_name = "Move"
@@ -354,8 +333,5 @@
 		controller.queue_behavior(walk_behavior, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
-/datum/pet_command/move/generate_emote_command(atom/target)
-	. = ..()
-	if(!. || isnull(target))
-		return
-	. += " to move!"
+/datum/pet_command/move/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to move!"
