@@ -22,8 +22,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	var/message_living = null
 	/// Stores world.time to figure out when to next give resources
 	var/resource_delay = 0
-	/// For blob-mobs and extinguishing-based effects
-	var/fire_based = FALSE
+	///The blob overmind eye mob used to control the spread
 	var/mob/eye/blob/overmind
 	/// The amount of health regenned on core_process
 	var/base_core_regen = BLOB_CORE_HP_REGEN
