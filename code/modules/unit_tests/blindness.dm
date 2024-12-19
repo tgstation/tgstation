@@ -63,11 +63,11 @@
 	TEST_ASSERT(!HAS_SCREEN_OVERLAY(dummy, /atom/movable/screen/fullscreen/blind), "Dummy, [status_message], still had the blind sceen overlay.")
 
 /**
- * Unit test to check that nearsighted is added and disabled correctly
+ * Unit test to check that the nearsighted quirk is added and disabled correctly
  */
-/datum/unit_test/nearsightedness
+/datum/unit_test/nearsighted_quirk
 
-/datum/unit_test/nearsightedness/Run()
+/datum/unit_test/nearsighted_quirk/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/clothing/glasses/regular/glasses = allocate(/obj/item/clothing/glasses/regular)
 
@@ -125,7 +125,7 @@
 	TEST_ASSERT(dummy.is_nearsighted(), "After sustaining minor eye damage ([minor_damage]), the dummy was not nearsighted.")
 	// Check that the severity is correct
 	nearsightedness = dummy.is_nearsighted()
-	TEST_ASSERT_EQUAL(nearsightedness.overlay_severity, 2, "After taking minor eye damage, the dummy's nearsightedness was the incorrect severity.")
+	TEST_ASSERT_EQUAL(nearsightedness.get_severity(), 2, "After taking minor eye damage, the dummy's nearsightedness was the incorrect severity.")
 	nearsightedness = null
 	// Heal eye damage
 	eyes.set_organ_damage(0)
@@ -137,11 +137,120 @@
 	TEST_ASSERT(dummy.is_nearsighted(), "After sustaining major eye damage ([major_damage]), the dummy was not nearsighted.")
 	// Check that the severity is correct
 	nearsightedness = dummy.is_nearsighted()
-	TEST_ASSERT_EQUAL(nearsightedness.overlay_severity, 3, "After taking major eye damage, the dummy's nearsightedness was the incorrect severity.")
+	TEST_ASSERT_EQUAL(nearsightedness.get_severity(), 3, "After taking major eye damage, the dummy's nearsightedness was the incorrect severity.")
 	nearsightedness = null
 	// Heal eye damage
 	eyes.set_organ_damage(0)
 	TEST_ASSERT(!dummy.is_nearsighted(), "After curing eye damage, the dummy was still nearsighted.")
+
+#define CORRECTABLE_SOURCE "\[CORRECTABLE SOURCE\]"
+#define ABSOLUTE_SOURCE "\[ABSOLUTE SOURCE\]"
+/datum/unit_test/nearsighted_effect
+/*!
+ * This tests [/datum/status_effect/grouped/nearsighted]
+ * * Application (correctable/absolute)
+ * * Removal (absolute/correctable)
+ */
+/datum/unit_test/nearsighted_effect/Run()
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
+	var/datum/status_effect/grouped/nearsighted/myopia
+
+	/* APPLICATION */
+	// Let's test regular nearsightedness first
+	dummy.assign_nearsightedness(CORRECTABLE_SOURCE, 2, TRUE)
+	validate_correctable_severity(dummy, "after being given [CORRECTABLE_SOURCE]", 2, list(
+		CORRECTABLE_SOURCE = 2,
+	))
+
+	myopia = dummy.is_nearsighted()
+	TEST_ASSERT_EQUAL(myopia.get_severity(), 2, "Final severity amount was incorrect when checked with only correctable nearsightedness.")
+
+	// We'll test if the glasses work as expected...
+	validate_glasses_behaviour(dummy, "after being given [CORRECTABLE_SOURCE]", 0, 2)
+
+	// Let's apply an absolute source, we'll test two things at once
+	dummy.assign_nearsightedness(ABSOLUTE_SOURCE, 1, FALSE)
+	validate_absolute_severity(dummy, "after being given [ABSOLUTE_SOURCE]", 1, list(
+		ABSOLUTE_SOURCE = 1,
+	))
+
+	myopia = dummy.is_nearsighted()
+	TEST_ASSERT_EQUAL(myopia.get_severity(), 2, "Final severity amount wasn't equal to [CORRECTABLE_SOURCE] when a smaller absolute source was present.")
+
+	// Do the glasses still work after adding an absolute source?
+	validate_glasses_behaviour(dummy, "after being given [ABSOLUTE_SOURCE]", 1, 2)
+
+	/* REMOVAL */
+	//There are two different ways a source can be removed, let's test both of them
+	dummy.cure_nearsighted(ABSOLUTE_SOURCE)
+	validate_absolute_severity(dummy, "after removing [ABSOLUTE_SOURCE]", 0, list())
+
+	myopia = dummy.is_nearsighted()
+	TEST_ASSERT_NOTNULL(myopia, "Dummy lost nearsightedness after removing [CORRECTABLE_SOURCE] even though there were still sources left.")
+
+	//After this, the effect should be removed.
+	dummy.assign_nearsightedness(CORRECTABLE_SOURCE, 0, TRUE)
+	TEST_ASSERT(!dummy.is_nearsighted(), "Dummy was still nearsighted after all sources were removed.")
+
+/datum/unit_test/nearsighted_effect/proc/validate_source_contents(checking, status, list/current_sources, list/expected_sources)
+	TEST_ASSERT_EQUAL(length(current_sources), length(expected_sources), "[checking] had a different amount of contents than expected [status].")
+	//We'll copy the list to make sure we got all the sources
+	var/list/hopefully_empty_result = expected_sources.Copy()
+	for(var/expected_source in expected_sources)
+		var/expected_severity = expected_sources[expected_source]
+		TEST_ASSERT_NOTNULL(current_sources[expected_source], "[expected_source] wasn't in [checking] [status].")
+		TEST_ASSERT_EQUAL(current_sources[expected_source], expected_severity, "The severity for [expected_source] in [checking] [status] wasn't as expected.")
+		hopefully_empty_result -= expected_source
+	TEST_ASSERT(!length(hopefully_empty_result), "[checking] has all the sources we wanted [status], but there were unexpected extra sources.")
+
+/datum/unit_test/nearsighted_effect/proc/validate_correctable_severity(mob/living/carbon/human/dummy, status, expected_final_severity, list/expected_sources)
+	//! This proc expects the dummy to be nearsighted
+	var/datum/status_effect/grouped/nearsighted/myopia = dummy.is_nearsighted()
+	TEST_ASSERT_NOTNULL(myopia, "Dummy was not nearsighted when given correctable nearsightedness [status].")
+
+	validate_source_contents("correctable sources", status, myopia.correctable_sources, expected_sources)
+	TEST_ASSERT_EQUAL(myopia.correctable_severity, expected_final_severity, "The determined correctable severity [status] was wrong.")
+
+/datum/unit_test/nearsighted_effect/proc/validate_absolute_severity(mob/living/carbon/human/dummy, status, expected_final_severity, list/expected_sources)
+	//! This proc expects the dummy to be nearsighted
+	var/datum/status_effect/grouped/nearsighted/myopia = dummy.is_nearsighted()
+	TEST_ASSERT_NOTNULL(myopia, "Dummy was not nearsighted when given absolute nearsightedness [status].")
+
+	validate_source_contents("absolute sources", status, myopia.absolute_sources, expected_sources)
+	TEST_ASSERT_EQUAL(myopia.absolute_severity, expected_final_severity, "The determined absolute severity [status] was wrong.")
+
+/// Makes sure that having vision corrected affects the dummy and preserves vision
+/datum/unit_test/nearsighted_effect/proc/validate_glasses_behaviour(mob/living/carbon/human/dummy, status, expected_severity_with, expected_severity_without)
+	//! This proc expects the dummy to be nearsighted
+	var/obj/item/clothing/glasses/regular/prescriptions = allocate(/obj/item/clothing/glasses/regular)
+	dummy.equip_to_slot_if_possible(prescriptions, ITEM_SLOT_EYES)
+	var/datum/status_effect/grouped/nearsighted/myopia = dummy.is_nearsighted()
+
+	TEST_ASSERT_NOTNULL(myopia, "Dummy no longer had the nearsighted status after putting on glasses. They should still be nearsighted.")
+	TEST_ASSERT(!dummy.is_nearsighted_currently(), "Dummy was nearsighted currently [status] even though they were wearing glasses.")
+	TEST_ASSERT_EQUAL(myopia.get_severity(), expected_severity_with, "get_severity() returned an impossible severity amount when putting on glasses [status].")
+
+	// Check their overlay, they might need to lose it
+	if(expected_severity_with == 0)
+		TEST_ASSERT(!HAS_SCREEN_OVERLAY(dummy, /atom/movable/screen/fullscreen/impaired), "Dummy still had the nearsighted overlay when putting glasses on [status].")
+	else
+		TEST_ASSERT(HAS_SCREEN_OVERLAY(dummy, /atom/movable/screen/fullscreen/impaired), "Dummy lost the nearsighted overlay when putting glasses on [status].")
+
+	// Now take them off
+	QDEL_NULL(prescriptions)
+	TEST_ASSERT(dummy.is_nearsighted_currently(), "Dummy didn't become nearsighted currently [status] even though they weren't wearing glasses.")
+	TEST_ASSERT_EQUAL(myopia.get_severity(), expected_severity_without, "get_severity() returned an impossible severity amount when taking off glasses [status].")
+
+	// Check their overlay again, they may or may not should still have it
+	if(expected_severity_without != 0)
+		TEST_ASSERT(HAS_SCREEN_OVERLAY(dummy, /atom/movable/screen/fullscreen/impaired), "Dummy had the nearsighted overlay when putting glasses on [status].")
+	else //If the bottom condition is hit, what are we even doing man
+		TEST_ASSERT(!HAS_SCREEN_OVERLAY(dummy, /atom/movable/screen/fullscreen/impaired),
+		"Dummy had the nearsighted overlay when putting glasses on [status].")
+
+
+#undef CORRECTABLE_SOURCE
+#undef ABSOLUTE_SOURCE
 
 #undef HAS_SCREEN_OVERLAY
 #undef HAS_CLIENT_COLOR
