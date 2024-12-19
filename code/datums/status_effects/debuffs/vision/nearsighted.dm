@@ -119,8 +119,8 @@
 		update_nearsighted_overlay()
 
 /datum/status_effect/grouped/nearsighted/proc/recalculate_severity(correctable)
-	if(!isnum(correctable))
-		CRASH("Please provide a valid parameter")
+	if(isnull(correctable))
+		CRASH("Please provide a parameter")
 
 	var/highest_severity = 0
 	var/list/to_search = correctable ? correctable_sources : absolute_sources
