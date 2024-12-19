@@ -73,9 +73,11 @@
 /// Is the mob blind from the passed source or sources?
 #define is_blind_from(sources) has_status_effect_from_source(/datum/status_effect/grouped/blindness, sources)
 
-/// Causes the mob to become nearsighted via the passed source
+/// Simplified macro that causes the mob to become nearsighted (with correction possible) via the passed source.
 #define become_nearsighted(source) apply_status_effect(/datum/status_effect/grouped/nearsighted, source)
-/// Cures the mob's nearsightedness from the passed source, removing nearsighted wholesale if no sources are left
+/// Causes the mob to become nearsighted from the passed source by a severity, which may be corrected with glasses.
+#define assign_nearsightedness(source, amount, correctable) apply_status_effect(/datum/status_effect/grouped/nearsighted, source, amount, correctable)
+/// Cures the mob's nearsightedness from the passed source, removing nearsighted wholesale if no sources are left.
 #define cure_nearsighted(source) remove_status_effect(/datum/status_effect/grouped/nearsighted, source)
 
 /// Is the mob nearsighted?
