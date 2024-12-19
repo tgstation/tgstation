@@ -1,5 +1,0 @@
-author: "WebcomicArtist"
-delete-after: True
-changes:
-  - bugfix: "Durand shield now uses proper amount of power upon taking damage"
-  - bugfix: "Mech plasma generator now produces the correct amount of charge, previously bugged to be 10% of intended."
