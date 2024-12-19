@@ -14,6 +14,9 @@
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 	interaction_flags_click = ALLOW_SILICON_REACH
+	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 3
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 3
 	var/stasis_enabled = TRUE
 	var/last_stasis_sound = FALSE
 	var/stasis_can_toggle = 0
@@ -24,6 +27,20 @@
 	. = ..()
 	AddElement(/datum/element/elevation, pixel_shift = 6)
 	update_buckle_vars(dir)
+
+/obj/machinery/stasis/RefreshParts()
+	. = ..()
+
+	var/energy_rating = 0
+	for(var/datum/stock_part/part in component_parts)
+		energy_rating += part.energy_rating()
+
+	for(var/obj/item/stock_parts/part in component_parts)
+		energy_rating += part.energy_rating
+
+	idle_power_usage = initial(idle_power_usage) / (energy_rating/2)
+	active_power_usage = initial(active_power_usage) / (energy_rating/2)
+	update_current_power_usage()
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
