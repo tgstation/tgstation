@@ -148,9 +148,8 @@
 /datum/unit_test/nearsighted_effect
 /*!
  * This tests [/datum/status_effect/grouped/nearsighted]
- * * Application (absolute/correctable)
- * * Modification (applying again after it was applied once)
- * *
+ * * Application (correctable/absolute)
+ * * Removal (absolute/correctable)
  */
 /datum/unit_test/nearsighted_effect/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
@@ -175,7 +174,6 @@
 		ABSOLUTE_SOURCE = 1,
 	))
 
-	// Let's make sure
 	myopia = dummy.is_nearsighted()
 	TEST_ASSERT_EQUAL(myopia.get_severity(), 2, "Final severity amount wasn't equal to [CORRECTABLE_SOURCE] when a smaller absolute source was present.")
 
@@ -194,40 +192,34 @@
 	dummy.assign_nearsightedness(CORRECTABLE_SOURCE, 0, TRUE)
 	TEST_ASSERT(!dummy.is_nearsighted(), "Dummy was still nearsighted after all sources were removed.")
 
-/datum/unit_test/nearsighted_effect/proc/validate_correctable_severity(mob/living/carbon/human/dummy, status, expected_final_severity, list/expected_sources)
-	//! This proc expects the dummy to be nearsighted
-	var/datum/status_effect/grouped/nearsighted/myopia = dummy.is_nearsighted()
-	TEST_ASSERT_NOTNULL(myopia, "Dummy was not nearsighted when given correctable nearsightedness [status].")
-	TEST_ASSERT_EQUAL(length(myopia.correctable_sources), length(expected_sources), "correctable_sources had a different amount of contents than expected [status].")
-
+/datum/unit_test/nearsighted_effect/proc/validate_source_contents(checking, status, list/current_sources, list/expected_sources)
+	TEST_ASSERT_EQUAL(length(current_sources), length(expected_sources), "[checking] had a different amount of contents than expected [status].")
 	//We'll copy the list to make sure we got all the sources
 	var/list/hopefully_empty_result = expected_sources.Copy()
 	for(var/expected_source in expected_sources)
 		var/expected_severity = expected_sources[expected_source]
-		TEST_ASSERT_NOTNULL(myopia.correctable_sources[expected_source], "[expected_source] wasn't in correctable_sources [status].")
-		TEST_ASSERT_EQUAL(myopia.correctable_sources[expected_source], expected_severity, "The correctable severity for [expected_source] wasn't as expected [status].")
+		TEST_ASSERT_NOTNULL(current_sources[expected_source], "[expected_source] wasn't in [checking] [status].")
+		TEST_ASSERT_EQUAL(current_sources[expected_source], expected_severity, "The severity for [expected_source] in [checking] [status] wasn't as expected.")
 		hopefully_empty_result -= expected_source
-	TEST_ASSERT(!length(hopefully_empty_result), "All the expected correctable sources [status] were there, but there were unexpected extra sources.")
+	TEST_ASSERT(!length(hopefully_empty_result), "[checking] has all the sources we wanted [status], but there were unexpected extra sources.")
 
+/datum/unit_test/nearsighted_effect/proc/validate_correctable_severity(mob/living/carbon/human/dummy, status, expected_final_severity, list/expected_sources)
+	//! This proc expects the dummy to be nearsighted
+	var/datum/status_effect/grouped/nearsighted/myopia = dummy.is_nearsighted()
+	TEST_ASSERT_NOTNULL(myopia, "Dummy was not nearsighted when given correctable nearsightedness [status].")
+
+	validate_source_contents("correctable sources", status, myopia.correctable_sources, expected_sources)
 	TEST_ASSERT_EQUAL(myopia.correctable_severity, expected_final_severity, "The determined correctable severity [status] was wrong.")
 
 /datum/unit_test/nearsighted_effect/proc/validate_absolute_severity(mob/living/carbon/human/dummy, status, expected_final_severity, list/expected_sources)
 	//! This proc expects the dummy to be nearsighted
 	var/datum/status_effect/grouped/nearsighted/myopia = dummy.is_nearsighted()
 	TEST_ASSERT_NOTNULL(myopia, "Dummy was not nearsighted when given absolute nearsightedness [status].")
-	TEST_ASSERT_EQUAL(length(myopia.absolute_sources), length(expected_sources), "absolute_sources had a different amount of contents than expected [status].")
 
-	//We'll copy the list to make sure we got all the sources
-	var/list/hopefully_empty_result = expected_sources.Copy()
-	for(var/expected_source in expected_sources)
-		var/expected_severity = expected_sources[expected_source]
-		TEST_ASSERT_NOTNULL(myopia.absolute_sources[expected_source], "[expected_source] wasn't in absolute_sources [status].")
-		TEST_ASSERT_EQUAL(myopia.absolute_sources[expected_source], expected_severity, "The absolute severity for [expected_source] wasn't as expected [status].")
-		hopefully_empty_result -= expected_source
-	TEST_ASSERT(!length(hopefully_empty_result), "All the expected absolute sources [status] were there, but there were unexpected extra sources.")
-
+	validate_source_contents("absolute sources", status, myopia.absolute_sources, expected_sources)
 	TEST_ASSERT_EQUAL(myopia.absolute_severity, expected_final_severity, "The determined absolute severity [status] was wrong.")
 
+/// Makes sure that having vision corrected affects the dummy and preserves vision
 /datum/unit_test/nearsighted_effect/proc/validate_glasses_behaviour(mob/living/carbon/human/dummy, status, expected_severity_with, expected_severity_without)
 	//! This proc expects the dummy to be nearsighted
 	var/obj/item/clothing/glasses/regular/prescriptions = allocate(/obj/item/clothing/glasses/regular)
