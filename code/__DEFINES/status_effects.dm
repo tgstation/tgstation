@@ -73,9 +73,18 @@
 /// Is the mob blind from the passed source or sources?
 #define is_blind_from(sources) has_status_effect_from_source(/datum/status_effect/grouped/blindness, sources)
 
-/// Causes the mob to become nearsighted via the passed source
+/// We are not nearsighted right now.
+#define NEARSIGHTED_DISABLED 0
+/// Something is correcting our vision, but we are still a bit nearsighted.
+#define NEARSIGHTED_CORRECTED 1
+/// We are fully nearsighted.
+#define NEARSIGHTED_ENABLED 2
+
+/// Simplified macro that causes the mob to become nearsighted (with correction possible) via the passed source.
 #define become_nearsighted(source) apply_status_effect(/datum/status_effect/grouped/nearsighted, source)
-/// Cures the mob's nearsightedness from the passed source, removing nearsighted wholesale if no sources are left
+/// Causes the mob to become nearsighted from the passed source by a severity, which may be corrected with glasses.
+#define assign_nearsightedness(source, amount, correctable) apply_status_effect(/datum/status_effect/grouped/nearsighted, source, amount, correctable)
+/// Cures the mob's nearsightedness from the passed source, removing nearsighted wholesale if no sources are left.
 #define cure_nearsighted(source) remove_status_effect(/datum/status_effect/grouped/nearsighted, source)
 
 /// Is the mob nearsighted?
@@ -89,7 +98,7 @@
 	var/datum/status_effect/grouped/nearsighted/nearsight = has_status_effect(/datum/status_effect/grouped/nearsighted)
 	if(isnull(nearsight))
 		return FALSE
-	return nearsight.should_be_nearsighted()
+	return (nearsight.should_be_nearsighted() > NEARSIGHTED_CORRECTED)
 
 // Status effect application helpers.
 // These are macros for easier use of adjust_timed_status_effect and set_timed_status_effect.
