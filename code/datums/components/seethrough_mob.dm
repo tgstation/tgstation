@@ -56,7 +56,7 @@
 		seethrough.unhide_plane(fool)
 
 	render_source_atom.pixel_x = -fool.pixel_x
-	render_source_atom.pixel_y = (fool.get_cached_height() - ICON_SIZE_Y * 0.5)
+	render_source_atom.pixel_y = ((fool.get_cached_height() - ICON_SIZE_Y) * 0.5)
 
 	initial_render_target_value = fool.render_target
 	fool.render_target = "*transparent_bigmob[personal_uid]"
