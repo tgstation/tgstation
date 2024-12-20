@@ -229,6 +229,8 @@
 	range = MECHA_MELEE | MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
 
+	///Did the mecha move during build
+	var/mecha_moved = FALSE
 	///Whether or not to deconstruct instead.
 	var/deconstruct_active = FALSE
 	///The internal RCD item used by this equipment.
@@ -253,9 +255,11 @@
 /// Set the RCD's owner when attaching and detaching it
 /obj/item/mecha_parts/mecha_equipment/rcd/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	internal_rcd.owner = new_mecha
+	RegisterSignal(new_mecha, COMSIG_MOVABLE_MOVED, PROC_REF(cancel_action))
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/detach(atom/moveto)
+	UnregisterSignal(internal_rcd.owner, COMSIG_MOVABLE_MOVED)
 	internal_rcd.owner = null
 	return ..()
 
@@ -275,12 +279,17 @@
 				internal_rcd.ui_interact(driver)
 			return TRUE
 
+/obj/item/mecha_parts/mecha_equipment/rcd/proc/cancel_action()
+	SIGNAL_HANDLER
+
+	mecha_moved = TRUE
+
 /obj/item/mecha_parts/mecha_equipment/rcd/do_after_checks(atom/target)
-	// Gotta be close to the target
-	if(get_dist(chassis, target) > RCD_RANGE)
+	// Mecha moved during action
+	if(mecha_moved)
 		return FALSE
 	// Cancel build if design changes
-	if(deconstruct_active && internal_rcd.blueprint_changed)
+	if(!deconstruct_active && internal_rcd.blueprint_changed)
 		return FALSE
 	return ..()
 
@@ -290,7 +299,10 @@
 	if(get_dist(chassis, target) > RCD_RANGE)
 		balloon_alert(source, "out of range!")
 		return
+	mecha_moved = FALSE
+
 	..() // do this now because the do_after can take a while
+
 	var/construction_mode = internal_rcd.mode
 	if(deconstruct_active) // deconstruct isn't in the RCD menu so switch it to deconstruct mode and set it back when it's done
 		internal_rcd.mode = RCD_DECONSTRUCT
