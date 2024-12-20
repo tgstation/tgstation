@@ -11,7 +11,7 @@ $luminance: luminance(base.$color-bg);
 $scrollbar-color-multiplier: 1 !default;
 $scrollbar-base: color.scale(
   base.$color-bg,
-  $lightness: -25% * $scrollbar-color-multiplier
+  $lightness: -33% * $scrollbar-color-multiplier
 );
 $scrollbar-face: color.scale(
   base.$color-bg,

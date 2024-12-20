@@ -191,7 +191,7 @@ img {
  * MARK: Dark theme colors
  */
 .dark:root {
-	--scrollbar-base: #181818;
+	--scrollbar-base: #151515;
 	--scrollbar-thumb: #363636;
 }
 
