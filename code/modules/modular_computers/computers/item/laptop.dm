@@ -37,8 +37,7 @@
 	else
 		context[SCREENTIP_CONTEXT_RMB] = "Open"
 
-	. = CONTEXTUAL_SCREENTIP_SET
-	return .
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/modular_computer/laptop/Initialize(mapload)
 	. = ..()
@@ -101,7 +100,7 @@
 /obj/item/modular_computer/laptop/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return .
+		return
 
 	attack_self(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
