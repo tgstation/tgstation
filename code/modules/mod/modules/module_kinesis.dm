@@ -8,7 +8,7 @@
 		Oddly enough, it doesn't seem to work on living creatures."
 	icon_state = "kinesis"
 	module_type = MODULE_ACTIVE
-	complexity = 3
+	complexity = 2
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked/kinesis)
 	cooldown_time = 0.5 SECONDS
@@ -16,7 +16,7 @@
 	overlay_state_active = "module_kinesis_on"
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 	required_slots = list(ITEM_SLOT_GLOVES)
-	/// Range of the knesis grab.
+	/// Range of the kinesis grab.
 	var/grab_range = 8
 	/// Time between us hitting objects with kinesis.
 	var/hit_cooldown_time = 1 SECONDS
@@ -34,6 +34,8 @@
 	var/datum/looping_sound/gravgen/kinesis/soundloop
 	/// The cooldown between us hitting objects with kinesis.
 	COOLDOWN_DECLARE(hit_cooldown)
+	/// Can this module launch grabbed items?
+	var/can_launch = TRUE
 
 /obj/item/mod/module/anomaly_locked/kinesis/Initialize(mapload)
 	. = ..()
@@ -223,6 +225,8 @@
 		clear_grab()
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/launch(atom/movable/launched_object)
+	if(!can_launch)
+		return
 	playsound(launched_object, 'sound/effects/magic/repulse.ogg', 100, TRUE)
 	RegisterSignal(launched_object, COMSIG_MOVABLE_IMPACT, PROC_REF(launch_impact))
 	var/turf/target_turf = get_turf_in_angle(get_angle(mod.wearer, launched_object), get_turf(src), 10)
@@ -262,19 +266,46 @@
 	removable = FALSE
 	core_removable = FALSE
 
+/// weak version of the kinesis module for engineers
+/obj/item/mod/module/anomaly_locked/kinesis/weak
+	name = "MOD magnalock module"
+	desc = "A modular plug-in to the forearm, an experimental unit used for handling cargo and heavy objects. \
+		This piece of technology allows the user to generate precise magnetic fields, \
+		letting them move objects objects at a limited range. \
+		Oddly enough, it doesn't seem to work on living creatures."
+	grab_range = 3
+	can_launch = FALSE
+	dummy_cored = TRUE
+	prebuilt = TRUE
+
+/// researchable and printable
+/obj/item/mod/module/anomaly_locked/kinesis/upgraded
+	name = "MOD experimental kinesis module"
+	desc = "A modular plug-in to the forearm, recently developed in Nanotrasen labs based off the magnalock module using miniature gravity generators. \
+		This piece of technology allows the user to generate precise anti-gravity fields, \
+		letting them move objects as small as a titanium rod to as large as industrial machinery from a longer range! \
+		Oddly enough, conscious beings are able to resist out of its fields."
+	can_launch = FALSE
+	dummy_cored = TRUE
+	prebuilt = TRUE
+	stat_required = UNCONSCIOUS
+
+/// requires an anomaly core, but can grab live people
 /obj/item/mod/module/anomaly_locked/kinesis/plus
-	name = "MOD kinesis+ module"
-	desc = "A modular plug-in to the forearm, this module was recently redeveloped in secret. \
+	name = "MOD kinesis module"
+	desc = "A modular plug-in to the forearm, this module was developed with the technology of an anomaly core. \
 		The bane of all ne'er-do-wells, the kinesis+ module is a powerful tool that allows the user \
 		to manipulate the world around them. Like its older counterpart, it's capable of manipulating \
-		structures, machinery, vehicles, and, thanks to the fruitful efforts of its creators - living beings."
-	complexity = 0
-	prebuilt = TRUE
+		structures, machinery, vehicles, and, thanks to the fruitful efforts of its creators - living beings. \
+		can trap objects in a gravity field and launch them at high speeds!"
 	stat_required = CONSCIOUS
+
+/obj/item/mod/module/anomaly_locked/kinesis/plus/prebuilt
+	prebuilt = TRUE
 
 /// Admin suit version of kinesis. Can grab anything at any range, may enable phasing through walls.
 /obj/item/mod/module/anomaly_locked/kinesis/admin
-	name = "MOD kinesis++ module"
+	name = "MOD omega kinesis module"
 	desc = "A modular plug-in to the forearm, this module was recently reredeveloped in super secret. \
 		This one can force some of the grasped objects to phase through walls. Oh no."
 	complexity = 0
