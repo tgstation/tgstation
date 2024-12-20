@@ -160,7 +160,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	if(isnull(ore_food))
 		balloon_alert(src, "no food!")
 	else
-		melee_attack(ore_food)
+		UnarmedAttack(ore_food, TRUE, modifiers)
 	return FALSE
 
 /mob/living/basic/raptor/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
