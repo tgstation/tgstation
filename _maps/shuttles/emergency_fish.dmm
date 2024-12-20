@@ -844,7 +844,7 @@
 /area/shuttle/escape)
 "VD" = (
 /obj/structure/table/glass,
-/obj/item/surgery_tray/full{
+/obj/effect/spawner/surgery_tray/full{
 	pixel_y = 6
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{

@@ -276,6 +276,38 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/spear,
 ))
 
+/// List of all "tools" that can fit into belts or work from toolboxes
+
+GLOBAL_LIST_INIT(tool_items, list(
+	/obj/item/airlock_painter,
+	/obj/item/analyzer,
+	/obj/item/assembly/signaler,
+	/obj/item/construction/rcd,
+	/obj/item/construction/rld,
+	/obj/item/construction/rtd,
+	/obj/item/crowbar,
+	/obj/item/extinguisher/mini,
+	/obj/item/flashlight,
+	/obj/item/forcefield_projector,
+	/obj/item/geiger_counter,
+	/obj/item/holosign_creator/atmos,
+	/obj/item/holosign_creator/engineering,
+	/obj/item/inducer,
+	/obj/item/lightreplacer,
+	/obj/item/multitool,
+	/obj/item/pipe_dispenser,
+	/obj/item/pipe_painter,
+	/obj/item/plunger,
+	/obj/item/radio,
+	/obj/item/screwdriver,
+	/obj/item/stack/cable_coil,
+	/obj/item/t_scanner,
+	/obj/item/weldingtool,
+	/obj/item/wirecutters,
+	/obj/item/wrench,
+	/obj/item/spess_knife,
+))
+
 /// String for items placed into the left pocket.
 #define LOCATION_LPOCKET "in your left pocket"
 /// String for items placed into the right pocket
