@@ -571,7 +571,7 @@
 
 	var/obj/item/mecha_parts/mecha_equipment/rcd/module = loc
 
-	//construction can be cancelled from ui changes
+	//deconstruction can't be cancelled by ui changes
 	if(mode != RCD_DECONSTRUCT)
 		blueprint_changed = FALSE
 
