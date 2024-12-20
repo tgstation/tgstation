@@ -317,12 +317,18 @@
 	radial_icon_state = "mech_lights_off"
 	ability_key = BB_MINEBOT_LIGHT_ABILITY
 
+/datum/pet_command/minebot_ability/light/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to toggle its lights!"
+
 /datum/pet_command/minebot_ability/dump
 	command_name = "Dump ore"
 	command_desc = "Make your minebot dump all its ore!"
 	speech_commands = list("dump", "ore")
 	radial_icon_state = "mech_eject"
 	ability_key = BB_MINEBOT_DUMP_ABILITY
+
+/datum/pet_command/minebot_ability/light/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to dump its ore!"
 
 /datum/pet_command/attack/minebot
 	attack_behaviour = /datum/ai_behavior/basic_ranged_attack/minebot

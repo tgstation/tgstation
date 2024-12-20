@@ -159,6 +159,9 @@
 		return FALSE
 	return findtext(spoken_text, text_command)
 
+/datum/pet_command/perform_trick_sequence/light/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to dance!"
+
 /datum/pet_command/perform_trick_sequence/execute_action(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/trick_sequence = controller.blackboard[BB_TRICK_SEQUENCE]

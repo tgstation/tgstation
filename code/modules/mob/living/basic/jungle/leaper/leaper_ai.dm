@@ -55,6 +55,9 @@
 	speech_commands = list("bubble", "shoot")
 	pet_ability_key = BB_LEAPER_BUBBLE
 
+/datum/pet_command/use_ability/bubble/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to shoot a bubble towards [target]!"
+
 /datum/pet_command/untargeted_ability/blood_rain
 	command_name = "Blood Rain"
 	command_desc = "Let it rain poisonous blood!"
@@ -63,6 +66,8 @@
 	speech_commands = list("blood", "rain", "volley")
 	ability_key = BB_LEAPER_VOLLEY
 
+/datum/pet_command/untargeted_ability/blood_rain/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to unleash a volley of rain!"
 
 /datum/pet_command/untargeted_ability/summon_toad
 	command_name = "Summon Toads"
@@ -71,3 +76,6 @@
 	radial_icon_state = "frog_trash"
 	speech_commands = list("frogs", "bombers")
 	ability_key = BB_LEAPER_SUMMON
+
+/datum/pet_command/untargeted_ability/summon_toad/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to summon some explosive frogs!"

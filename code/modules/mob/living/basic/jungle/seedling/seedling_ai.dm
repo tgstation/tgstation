@@ -174,6 +174,10 @@
 	speech_commands = list("beam", "solar")
 	pet_ability_key = BB_SOLARBEAM_ABILITY
 
+/datum/pet_command/use_ability/solarbeam/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to use a solar beam on [target]!"
+
+
 /datum/pet_command/use_ability/rapidseeds
 	command_name = "Rapid seeds"
 	command_desc = "Command your pet to launch a volley of seeds at your target!"
@@ -181,3 +185,6 @@
 	radial_icon_state = "seedling"
 	speech_commands = list("rapid", "seeds", "volley")
 	pet_ability_key = BB_RAPIDSEEDS_ABILITY
+
+/datum/pet_command/use_ability/rapidseeds/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to unleash a volley of seeds on [target]!"

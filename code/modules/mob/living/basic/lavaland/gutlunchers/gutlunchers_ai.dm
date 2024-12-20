@@ -122,6 +122,9 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 	controller.queue_behavior(/datum/ai_behavior/find_mineral_wall, BB_CURRENT_PET_TARGET)
 
+/datum/pet_command/mine_walls/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to start mining!"
+
 //pet commands
 /datum/pet_command/breed/gutlunch
 
