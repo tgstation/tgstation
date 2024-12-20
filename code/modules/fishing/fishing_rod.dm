@@ -132,7 +132,7 @@
 		. += span_notice("Thanks to your fishing skills, you can examine it again for more in-depth information.")
 		return
 	if(HAS_TRAIT(src, TRAIT_ROD_MANSUS_INFUSED))
-		if(IS_HERETIC())
+		if(IS_HERETIC(user))
 			. += span_purple("This rod has been <b>infused</b> by a heretic, improving its ability to catch glimpses of the Mansus. And fish.")
 		else
 			. += span_purple("It's glowing an eerie green...")
