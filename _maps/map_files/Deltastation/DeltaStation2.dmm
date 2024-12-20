@@ -84092,10 +84092,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/disposal/delivery_chute{
+/obj/effect/turf_decal/box/red,
+/obj/structure/disposaloutlet{
 	dir = 8
 	},
-/obj/effect/turf_decal/box/red,
 /turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "uYg" = (

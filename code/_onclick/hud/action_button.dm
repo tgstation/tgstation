@@ -110,32 +110,37 @@
 	last_hovored_ref = null
 	if(!can_use(usr))
 		return
+
 	var/datum/hud/our_hud = usr.hud_used
 	if(over_object == src)
 		our_hud.hide_landings()
 		return
+
 	if(istype(over_object, /atom/movable/screen/action_landing))
 		var/atom/movable/screen/action_landing/reserve = over_object
 		reserve.hit_by(src)
-		our_hud.hide_landings()
 		save_position()
+		our_hud.hide_landings()
 		return
 
-	our_hud.hide_landings()
 	if(istype(over_object, /atom/movable/screen/button_palette) || istype(over_object, /atom/movable/screen/palette_scroll))
 		our_hud.position_action(src, SCRN_OBJ_IN_PALETTE)
 		save_position()
+		our_hud.hide_landings()
 		return
+
 	if(istype(over_object, /atom/movable/screen/movable/action_button))
 		var/atom/movable/screen/movable/action_button/button = over_object
 		our_hud.position_action_relative(src, button)
 		save_position()
+		our_hud.hide_landings()
 		return
 
 	. = ..()
 
 	our_hud.position_action(src, screen_loc)
 	save_position()
+	our_hud.hide_landings()
 
 /atom/movable/screen/movable/action_button/proc/save_position()
 	var/mob/user = our_hud.mymob
@@ -290,6 +295,7 @@
 /atom/movable/screen/button_palette/proc/set_hud(datum/hud/our_hud)
 	src.our_hud = our_hud
 	refresh_owner()
+	disable_landing() // If our hud already has elements, don't force hide us
 
 /atom/movable/screen/button_palette/update_name(updates)
 	. = ..()
@@ -310,6 +316,15 @@
 	var/ui_name = ui_paths[length(ui_paths)]
 
 	icon_state = "[ui_name]_palette"
+
+/atom/movable/screen/button_palette/proc/activate_landing()
+	// Reveal ourselves to the user
+	invisibility = INVISIBILITY_NONE
+
+/atom/movable/screen/button_palette/proc/disable_landing()
+	// If we have no elements in the palette, hide your ugly self please
+	if (!length(our_hud.palette_actions?.actions))
+		invisibility = INVISIBILITY_ABSTRACT
 
 /atom/movable/screen/button_palette/MouseEntered(location, control, params)
 	. = ..()

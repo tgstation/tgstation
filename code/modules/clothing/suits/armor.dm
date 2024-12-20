@@ -336,7 +336,7 @@
 /obj/item/clothing/suit/armor/balloon_vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(isitem(hitby))
 		var/obj/item/item_hit = hitby
-		if(item_hit.sharpness)
+		if(item_hit.get_sharpness())
 			pop()
 
 	if(istype(hitby, /obj/projectile/bullet))
