@@ -533,8 +533,10 @@
 	if (carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
 		return
 
-	var/current_volume = carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh)
-	var/current_purity = carbies.reagents.get_reagent_purity(/datum/reagent/medicine/c2/synthflesh)
+	var/datum/reagent/synthflesh = carbies.reagents.has_reagent(/datum/reagent/medicine/c2/synthflesh)
+	var/current_volume = synthflesh ? synthflesh.volume : 0
+	var/current_purity = synthflesh ? synthflesh.purity : 0
+
 	if (methods & TOUCH)	//touch does not apply chems to blood, we want to combine the two volumes before attempting to unhusk
 		current_purity = current_volume > 0 ? (current_volume * current_purity + reac_volume * creation_purity) / (current_volume + reac_volume) : creation_purity
 		current_volume += reac_volume
