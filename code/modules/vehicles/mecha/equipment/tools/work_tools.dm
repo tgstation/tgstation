@@ -229,7 +229,7 @@
 	range = MECHA_MELEE | MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
 
-	///The location the mech is when it began using the rcd
+	///The location the mech was when it began using the rcd
 	var/atom/initial_location = FALSE
 	///Whether or not to deconstruct instead.
 	var/deconstruct_active = FALSE
@@ -281,7 +281,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/rcd/do_after_checks(atom/target)
 	// Checks if mech moved during operation
-	if(chassis.loc != initial_location) //mech moved
+	if(chassis.loc != initial_location)
 		return FALSE
 
 	// Cancel build if design changes
