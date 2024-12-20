@@ -4,6 +4,8 @@
 #define FISHING_RANDOM_SEED "Random seed"
 ///Used in the surgery fishing spot to define a random organ reward
 #define FISHING_RANDOM_ORGAN "Random organ"
+///Used in the dimensional rift fishing spot to define influence gain
+#define FISHING_INFLUENCE "Influence"
 
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15

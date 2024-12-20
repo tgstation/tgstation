@@ -919,6 +919,9 @@
 		stop_flopping()
 
 /obj/item/fish/process(seconds_per_tick)
+	do_fish_process(seconds_per_tick)
+
+/obj/item/fish/proc/do_fish_process(seconds_per_tick)
 	if(HAS_TRAIT(src, TRAIT_FISH_STASIS) || status != FISH_ALIVE)
 		return
 
