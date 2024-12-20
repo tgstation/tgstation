@@ -34,16 +34,17 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/spell/basic/proc/on_grasp_cast(mob/living/carbon/cast_on)
 	SIGNAL_HANDLER
 
-	var/obj/item/fishing_rod/held_item = cast_on.get_active_held_item()
-	if(!istype(held_item, /obj/item/fishing_rod))
+	var/obj/item/fishing_rod/held_rod = cast_on.get_active_held_item()
+	if(!istype(held_rod, /obj/item/fishing_rod))
 		return NONE
 	INVOKE_ASYNC(cast_on, TYPE_PROC_REF(/atom/movable, say), message = "R'CH T'H F'SH!", forced = "fishing rod infusion invocation")
 	playsound(cast_on, /datum/action/cooldown/spell/touch/mansus_grasp::sound, 15)
+	cast_on.visible_message(span_notice("[cast_on] snaps [user.p_their()] fingers next to [held_rod], covering it in a burst of purple flames!"))
 
-	ADD_TRAIT(held_item, TRAIT_ROD_MANSUS_INFUSED, REF(held_item))
-	held_item.difficulty_modifier -= 20
-	RegisterSignal(held_item, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(unfuse))
-	held_item.add_filter("mansus_infusion", 2, list("type" = "outline", "color" = COLOR_HERETIC_GREEN, "size" = 1))
+	ADD_TRAIT(held_rod, TRAIT_ROD_MANSUS_INFUSED, REF(held_rod))
+	held_rod.difficulty_modifier -= 20
+	RegisterSignal(held_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(unfuse))
+	held_rod.add_filter("mansus_infusion", 2, list("type" = "outline", "color" = COLOR_VOID_PURPLE, "size" = 1))
 	var/filter = get_filter("mansus_infusion")
 
 	animate(filter, alpha = 110, time = 1.5 SECONDS, loop = -1)
