@@ -306,7 +306,7 @@
  * * raw_message - The text content of the message
  * * spans - Additional classes to be added to the message
  */
-/atom/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans, runechat_flags = NONE)
+/mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans, runechat_flags = NONE)
 	if(SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(speaker, TRAIT_BYPASS_MEASURES))
 		return
 	if(HAS_TRAIT(speaker, TRAIT_RUNECHAT_HIDDEN))
