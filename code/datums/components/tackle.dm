@@ -673,7 +673,7 @@
 		if(prob(25 * (src.speed - 1))) // if our tackle speed is higher than 1, with chance (speed - 1 * 25%), throw the thing at our tackle speed + 1
 			item_launch_speed = speed + 1
 		item_in_mess.throw_at(get_ranged_target_turf(item_in_mess, pick(GLOB.alldirs), range = item_launch_distance), range = item_launch_distance, speed = item_launch_speed)
-		item_in_mess.visible_message(span_danger("[item_in_mess] goes flying[item_launch_speed > 3 ? " dangerously fast" : ""]!")) // standard embed speed
+		item_in_mess.visible_message(span_danger("[item_in_mess] goes flying[item_launch_speed < EMBED_THROWSPEED_THRESHOLD ? "" : " dangerously fast" ]!")) // standard embed speed
 
 	var/datum/thrownthing/tackle = tackle_ref?.resolve()
 
