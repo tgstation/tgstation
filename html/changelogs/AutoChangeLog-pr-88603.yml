@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "personal ordered crates can be unlocked & relocked as many times again after the 1st attempt"
