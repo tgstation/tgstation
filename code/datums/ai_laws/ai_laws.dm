@@ -79,8 +79,15 @@ GLOBAL_VAR(round_default_lawset)
 /proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
 	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
+	var/list/specified_law_ids = CONFIG_GET(keyed_list/specified_laws)
+
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
-		law_weights -= AI_LAWS_ASIMOV
+		switch(CONFIG_GET(number/default_laws))
+			if(CONFIG_ASIMOV)
+				law_weights -= AI_LAWS_ASIMOV
+			if(CONFIG_CUSTOM)
+				law_weights -= specified_law_ids
+
 	while(!lawtype && law_weights.len)
 		var/possible_id = pick_weight(law_weights)
 		lawtype = lawid_to_type(possible_id)
