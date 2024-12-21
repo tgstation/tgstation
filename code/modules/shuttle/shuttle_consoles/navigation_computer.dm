@@ -187,8 +187,8 @@
 		var/list/coords = placement_image_cache[placement_image]
 		var/turf/shuttle_turf = shuttle_turf_from_coords(coords)
 		var/list/images_to_add = list()
-		for(var/atom/A in shuttle_turf)
-			SEND_SIGNAL(A, COMSIG_SHUTTLE_NAV_COMPUTER_IMAGE_REQUESTED, images_to_add)
+		for(var/atom/atom as anything in shuttle_turf)
+			SEND_SIGNAL(atom, COMSIG_SHUTTLE_NAV_COMPUTER_IMAGE_REQUESTED, images_to_add)
 		for(var/i2 in 1 to images_to_add.len)
 			var/image/extra_image = images_to_add[i2]
 			extra_image.dir = turn(extra_image.dir, dir2angle(the_eye.dir) - dir2angle(shuttle_port.dir))
@@ -315,10 +315,10 @@
 				. = SHUTTLE_DOCKER_BLOCKED
 	var/list/extra_image_cache = the_eye.extra_images
 	for(var/i in 1 to extra_image_cache.len)
-		var/image/I = extra_image_cache[i]
-		var/list/coords = extra_image_cache[I]
-		var/turf/T = locate(eyeturf.x + coords[1], eyeturf.y + coords[2], eyeturf.z)
-		I.loc = T
+		var/image/image = extra_image_cache[i]
+		var/list/coords = extra_image_cache[image]
+		var/turf/turf = locate(eyeturf.x + coords[1], eyeturf.y + coords[2], eyeturf.z)
+		image.loc = turf
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingTurf(turf/T, list/overlappers)
 	// Too close to the map edge is never allowed

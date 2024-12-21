@@ -28,8 +28,8 @@
 	if(only_show_on_shuttle_edge)
 		var/isOnEdge = FALSE
 		for(var/direction in GLOB.cardinals)
-			var/turf/T = get_step(source_obj, direction)
-			if(!istype(T?.loc, /area/shuttle))
+			var/turf/turf = get_step(source_obj, direction)
+			if(!istype(turf?.loc, /area/shuttle))
 				isOnEdge = TRUE
 				break
 		if(!isOnEdge)
