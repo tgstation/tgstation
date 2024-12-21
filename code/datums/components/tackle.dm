@@ -274,6 +274,7 @@
 	user.visible_message(span_warning("[user] lands a [tackle_word] on [target], briefly staggering them both!"), span_userdanger("You land a [tackle_word] on [target], briefly staggering [target.p_them()] and yourself!"), ignored_mobs = target)
 	to_chat(target, span_userdanger("[user] lands a [tackle_word] on you, briefly staggering you both!"))
 
+	user.SetKnockdown(0, ignore_canstun = TRUE)
 	user.get_up(TRUE)
 	user.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 	target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS) //okay maybe slightly good for the sacker, it's a mild benefit okay?
