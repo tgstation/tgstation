@@ -155,6 +155,7 @@
 		limb.receive_damage(brute = (1 - embed_data.pain_stam_pct) * damage, wound_bonus = CANT_WOUND)
 		victim.adjustStaminaLoss(embed_data.pain_stam_pct * damage)
 		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.plaintext_zone] jostles and stings!"))
+		embed_data.jostle_callback?.Invoke(victim, weapon, embed_data)
 
 
 /// Called when then item randomly falls out of a carbon. This handles the damage and descriptors, then calls safe_remove()

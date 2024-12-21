@@ -31,8 +31,12 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	..()
 	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
 
-/datum/heretic_knowledge/spell/basic/proc/on_grasp_cast(mob/living/carbon/cast_on)
+/datum/heretic_knowledge/spell/basic/proc/on_grasp_cast(mob/living/carbon/cast_on, datum/action/cooldown/spell/touch/touch_spell)
 	SIGNAL_HANDLER
+
+	// Not a grasp, we dont want this to activate with say star touch.
+	if(!istype(touch_spell, action_to_add))
+		return NONE
 
 	var/obj/item/fishing_rod/held_rod = cast_on.get_active_held_item()
 	if(!istype(held_rod, /obj/item/fishing_rod))

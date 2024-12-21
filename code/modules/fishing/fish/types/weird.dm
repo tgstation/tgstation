@@ -16,7 +16,7 @@
 	throwforce = 11
 	throw_range = 8
 	throw_speed = 4
-	embed_type = /datum/embed_data/throwing_star
+	embed_type = /datum/embed_data/chrystarfish
 	attack_verb_continuous = list("stabs", "jabs")
 	attack_verb_simple = list("stab", "jab")
 	hitsound = SFX_DEFAULT_FISH_SLAP
@@ -29,6 +29,8 @@
 	sprite_width = 7
 	sprite_height = 9
 
+	average_size = 40
+	average_weight = 1000
 	food = /datum/reagent/bluespace
 	feeding_frequency = 10 MINUTES
 	health = 300 // it has 300 health why does it die instantly upon bein bit once..
@@ -46,10 +48,28 @@
 	// something something bluespace
 	electrogenesis_power = 9 MEGA JOULES
 
+// Basically a ninja star that's highly likely to embed and teleports you around if you don't stop to remove it. However it doesn't deal that much damage!
 /datum/embed_data/chrystarfish
 	pain_mult = 1
-	embed_chance = 100
+	embed_chance = 85
 	fall_chance = 3
+	pain_chance = 9
+	impact_pain_mult = 1
+	remove_pain_mult = 2
+	rip_time = 1.5 SECONDS
+	ignore_throwspeed_threshold = TRUE // basically shaped like a shuriken
+	jostle_chance = 15
+	jostle_pain_mult = 1
+	// about to be set!
+	jostle_callback = null
+
+/datum/embed_data/chrystarfish/New()
+	..()
+	jostle_callback = CALLBACK(src, PROC_REF(teleport))
+
+/datum/embed_data/chrystarfish/proc/teleport(mob/victim, atom/embed_parent, datum/embed_data/real_data)
+	do_teleport(victim, get_turf(victim), 3, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+	victim.visible_message(span_danger("[victim] teleports as [embed_parent] jostles inside [victim.p_them()]!"))
 
 /obj/item/fish/starfish/chrystarfish/set_status(new_status, silent)
 	. = ..()
@@ -57,8 +77,6 @@
 		new fillet_type(get_turf(src))
 		playsound(src, SFX_SHATTER, 50)
 		qdel(src)
-
-// todo : embed causes constant teleport
 
 /obj/item/fish/starfish/chrystarfish/get_base_edible_reagents_to_add()
 	var/list/return_list = ..()
@@ -87,6 +105,10 @@
 	qdel(src)
 	return MANUAL_SUICIDE
 
+// Prevents the first 2 messages from spamming on each patience update.
+#define PATIENCE_FLINCH "PATIENCE_FLINCH"
+#define PATIENCE_UNCOMFY "PATIENCE_UNCOMFY"
+
 /obj/item/fish/dolphish
 	name = "walro-dolphish"
 	fish_id = "walro-dolphish"
@@ -114,8 +136,8 @@
 
 	base_pixel_x = -16
 	pixel_x = -16
-	sprite_width = 4
-	sprite_height = 3
+	sprite_width = 13
+	sprite_height = 9
 
 	required_fluid_type = AQUARIUM_FLUID_AIR
 	required_temperature_min = BODYTEMP_COLD_DAMAGE_LIMIT // you mean just like a human? that's odd...
@@ -142,10 +164,12 @@
 	min_pressure = HAZARD_LOW_PRESSURE
 	max_pressure = HAZARD_HIGH_PRESSURE
 	beauty = FISH_BEAUTY_GREAT
-	// Maximum patience for below var.
-	var/max_patience = 15
-	// Counter of how much patience the fish currently has before it attacks its wielder.
-	var/patience
+	/// Maximum patience for below var.
+	var/max_patience = 20
+	/// Counter of how much patience the fish currently has before it attacks its wielder.
+	var/patience = 20
+	/// Ensures the last warning fx isn't repeated
+	var/last_effect
 
 /obj/item/fish/dolphish/get_force_rank()
 	var/multiplier = 1
@@ -191,7 +215,7 @@
 	if(!ismob(loc))
 		// dividing by the multiplier nets us an increasing value. happy dolphish gain patience quicker
 		var/patience_bonus = (1 / patience_reduction)
-		patience = FLOOR(patience + patience_bonus * seconds_per_tick, max_patience)
+		patience = clamp(patience + patience_bonus * seconds_per_tick, 0, max_patience)
 		return
 
 	var/mob/living/moc = loc
@@ -200,26 +224,37 @@
 	if(HAS_TRAIT(moc, TRAIT_IS_WET))
 		patience_reduction *= 0.6
 
-	patience = FLOOR(patience - (patience_reduction * seconds_per_tick), max_patience)
+	patience = clamp(patience - (patience_reduction * seconds_per_tick), 0, max_patience)
 
 	switch(patience)
 		if(0)
-			moc.visible_message(span_bolddanger("[src] bites directly into [moc]!"), span_userdanger("[src] bites directly into you!!"))
+			// No check, we always want sharky to bite jerky on 0
+			moc.visible_message(span_bolddanger("[src] bites directly into [moc] and squirms away from [moc.p_their()] grasp!"), span_userdanger("[src] sinks its fangs into you!!"))
 			moc.apply_damage(force, BRUTE, moc.get_active_hand(), wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attacking_item = src)
 			forceMove(moc.drop_location())
-		if(1 to 5)
-			if(prob(60))
-				visible_message(span_bolddanger("[src] thrashes wildly against [moc]'s grasp!"))
-				moc.shake_up_animation()
-		if(6 to 11)
-			if(prob(40))
-				visible_message(span_danger("[src] flinches away from [moc]!"))
-				moc.shake_up_animation()
-		if(11 to 15)
-			if(prob(20))
-				visible_message(span_notice("[src] seems uncomfortable in [moc]'s grasp."))
+			INVOKE_ASYNC(moc, TYPE_PROC_REF(/mob, emote), "scream")
+			patience = max_patience
+			playsound(src, hitsound, 45)
+		if(1 to 10)
+			// No check, final warning as they struggle, also funny.
+			visible_message(span_bolddanger("[src] thrashes against [moc]'s grasp!"))
+			moc.shake_up_animation()
+		if(10 to 15)
+			if(last_effect == PATIENCE_FLINCH)
+				return
+			visible_message(span_danger("[src] flinches away from [moc]!"))
+			moc.shake_up_animation()
+			last_effect = PATIENCE_FLINCH
+		if(15 to 20)
+			if(last_effect == PATIENCE_UNCOMFY)
+				return
+			visible_message(span_notice("[src] seems uncomfortable in [moc]'s grasp."))
+			last_effect = PATIENCE_UNCOMFY
 
 	return
+
+#undef PATIENCE_FLINCH
+#undef PATIENCE_UNCOMFY
 
 /obj/item/fish/flumpulus
 	name = "flumpulus"
