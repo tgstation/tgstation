@@ -145,7 +145,7 @@
 	SIGNAL_HANDLER
 
 	// linters hate this if it's not async for some reason even though nothing blocks
-	INVOKE_ASYNC(disguise_ability, TYPE_PROC_REF(/datum/action/cooldown, InterceptClickOn), caller = source, target = target)
+	INVOKE_ASYNC(disguise_ability, TYPE_PROC_REF(/datum/action/cooldown, InterceptClickOn), clicker = source, target = target)
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Handles the logic for attacking anything.

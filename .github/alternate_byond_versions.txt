@@ -5,4 +5,8 @@
 # Format is version: map
 # Example:
 # 500.1337: runtimestation
+
+# Lowest supported version
 515.1627: runtimestation
+# Beta version
+516.1648: runtimestation
