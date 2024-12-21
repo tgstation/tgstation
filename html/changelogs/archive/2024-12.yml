@@ -471,3 +471,9 @@
   - bugfix: Poultice works on dead people
   SmArtKar:
   - bugfix: Fixed an airlock unlocking runtime
+2024-12-21:
+  Deadgebert:
+  - balance: Synthflesh required for unhusking now between 60u and 100u depending
+      on purity.
+  Melbert:
+  - bugfix: Lobby button sprites
