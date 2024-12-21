@@ -2505,7 +2505,7 @@
 	pixel_y = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "aUK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -4971,7 +4971,7 @@
 	},
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "bLm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
@@ -12412,7 +12412,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "eup" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -14188,7 +14188,7 @@
 	},
 /obj/item/modular_computer/laptop/preset/civilian,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "fbI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad,
@@ -19273,7 +19273,7 @@
 "gWL" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "gWT" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -21841,7 +21841,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "hSi" = (
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/rods/fifty,
@@ -23976,7 +23976,7 @@
 /obj/structure/cable,
 /obj/machinery/holopad,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "iBL" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -24113,7 +24113,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "iFF" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -25682,7 +25682,7 @@
 /obj/effect/landmark/start/assistant,
 /obj/effect/turf_decal/trimline/green/line,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "jgk" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -28230,7 +28230,7 @@
 	name = "Jim Norton's Quebecois Coffee stool"
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "jXe" = (
 /obj/structure/lattice,
 /obj/item/wirecutters,
@@ -30821,7 +30821,7 @@
 	},
 /obj/effect/turf_decal/trimline/green/line,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "kSP" = (
 /obj/item/kirbyplants/organic/plant21,
 /obj/structure/sign/departments/botany/directional/east,
@@ -35763,7 +35763,7 @@
 	name = "Jim Norton's Quebecois Coffee cap"
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "mLL" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/cable,
@@ -37539,7 +37539,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "nrV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron/dark,
@@ -39666,7 +39666,7 @@
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "ocC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -43678,7 +43678,7 @@
 	dir = 6
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "pAr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/hangover,
@@ -44559,7 +44559,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "pPM" = (
 /obj/machinery/mecha_part_fabricator/maint{
 	name = "forgotten exosuit fabricator"
@@ -46888,7 +46888,7 @@
 /obj/item/reagent_containers/condiment/milk,
 /obj/structure/closet/secure_closet/freezer/empty/open,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "qIq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
@@ -47684,7 +47684,7 @@
 /obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "qTH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -51041,7 +51041,7 @@
 	},
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "saN" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/wood,
@@ -52645,7 +52645,7 @@
 /obj/structure/table/wood,
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "sEZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/stripes/white/line,
@@ -53990,7 +53990,7 @@
 	},
 /obj/machinery/coffeemaker/impressa,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "tcu" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
@@ -59283,7 +59283,7 @@
 /obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "uTP" = (
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron,
@@ -67635,7 +67635,7 @@
 "xML" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "xMX" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable,
@@ -68971,7 +68971,7 @@
 	},
 /obj/effect/turf_decal/trimline/green/line,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/station/service/jimnorton)
 "ykS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

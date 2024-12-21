@@ -191,6 +191,10 @@
 	name = "\improper Boutique"
 	icon_state = "boutique"
 
+/area/station/service/jimnorton
+	name = "\improper Jim Norton's Quebecois Coffee"
+	icon_state = "jimnorton"
+
 /*
 * Abandoned Rooms
 */
