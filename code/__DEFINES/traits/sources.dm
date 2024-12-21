@@ -312,6 +312,3 @@
 
 /// From the aquarium component
 #define AQUARIUM_TRAIT "aquarium"
-
-/// Trait aquired from being painted a certain color
-#define ATOM_COLOR_TRAIT "atom_color"

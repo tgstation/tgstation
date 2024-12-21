@@ -20,6 +20,11 @@
 	var/pin_removable = TRUE
 	var/obj/item/gun/gun
 
+/obj/item/firing_pin/New(newloc)
+	..()
+	if(isgun(newloc))
+		gun = newloc
+
 /obj/item/firing_pin/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isgun(interacting_with))
 		return NONE
@@ -53,8 +58,8 @@
 	balloon_alert(user, "authentication checks overridden")
 	return TRUE
 
-/obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/new_gun)
-	gun = new_gun
+/obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/G)
+	gun = G
 	forceMove(gun)
 	gun.pin = src
 	return TRUE
@@ -160,9 +165,9 @@
 			return TRUE //The clown op leader antag datum isn't a subtype of the normal clown op antag datum.
 	return FALSE
 
-/obj/item/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/gun/new_gun)
+/obj/item/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/gun/G)
 	..()
-	new_gun.clumsy_check = FALSE
+	G.clumsy_check = FALSE
 
 /obj/item/firing_pin/clown/ultra/gun_remove(mob/living/user)
 	gun.clumsy_check = initial(gun.clumsy_check)
@@ -239,15 +244,14 @@
 	if(pin_owner)
 		. += span_notice("This firing pin is currently authorized to pay into the account of [pin_owner.account_holder].")
 
-/obj/item/firing_pin/paywall/gun_insert(mob/living/user, obj/item/gun/new_gun)
+/obj/item/firing_pin/paywall/gun_insert(mob/living/user, obj/item/gun/G)
 	if(!pin_owner)
-		if(isnull(user))
-			forceMove(new_gun.drop_location())
-		else
-			to_chat(user, span_warning("ERROR: Please swipe valid identification card before installing firing pin!"))
-			user.put_in_hands(src)
+		to_chat(user, span_warning("ERROR: Please swipe valid identification card before installing firing pin!"))
+		user.put_in_hands(src)
 		return FALSE
-	..()
+	gun = G
+	forceMove(gun)
+	gun.pin = src
 	if(multi_payment)
 		gun.desc += span_notice(" This [gun.name] has a per-shot cost of [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""].")
 		return TRUE
@@ -256,7 +260,7 @@
 
 
 /obj/item/firing_pin/paywall/gun_remove(mob/living/user)
-	gun.desc = gun::desc
+	gun.desc = initial(desc)
 	..()
 
 /obj/item/firing_pin/paywall/attackby(obj/item/M, mob/living/user, params)

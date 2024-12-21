@@ -53,7 +53,6 @@
 		COMSIG_JETPACK_DEACTIVATED, \
 		JETPACK_ACTIVATION_FAILED, \
 		thrust_callback, \
-		thrust_callback, \
 		/datum/effect_system/trail_follow/ion, \
 	)
 

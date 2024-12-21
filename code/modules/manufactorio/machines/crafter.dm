@@ -6,8 +6,8 @@
 	circuit = /obj/item/circuitboard/machine/manucrafter
 	/// power used per process() spent crafting
 	var/power_cost = 5 KILO WATTS
-	/// list of weakrefs to crafted items still on the machine that we failed to send forward
-	var/list/datum/weakref/withheld = list()
+	/// our output, if the way out was blocked is held here
+	var/atom/movable/withheld
 	/// current recipe
 	var/datum/crafting_recipe/recipe
 	/// crafting component
@@ -45,7 +45,7 @@
 /obj/machinery/power/manufacturing/crafter/receive_resource(obj/receiving, atom/from, receive_dir)
 	var/turf/machine_turf = get_turf(src)
 	if(length(machine_turf.contents) >= MANUFACTURING_TURF_LAG_LIMIT)
-		return MANUFACTURING_FAIL
+		return MANUFACTURING_FAIL_FULL
 	receiving.forceMove(machine_turf)
 	return MANUFACTURING_SUCCESS
 
@@ -53,8 +53,10 @@
 	. = NONE
 	var/list/unavailable = list()
 	for(var/datum/crafting_recipe/potential_recipe as anything in cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes)
-		var/obj/as_obj = potential_recipe.result
-		if(!(ispath(as_obj, /obj) && !ispath(as_obj, /obj/effect) && initial(as_obj.anchored)) && craftsman.is_recipe_available(potential_recipe, user))
+		if(craftsman.is_recipe_available(potential_recipe, user))
+			continue
+		var/obj/result = initial(potential_recipe.result)
+		if(istype(result) && initial(result.anchored))
 			continue
 		unavailable += potential_recipe
 	var/result = tgui_input_list(usr, "Recipe", "Select Recipe", (cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes) - unavailable)
@@ -64,14 +66,24 @@
 	balloon_alert(user, "set")
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/power/manufacturing/crafter/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == withheld)
+		withheld = null
+
+/obj/machinery/power/manufacturing/crafter/atom_destruction(damage_flag)
+	. = ..()
+	withheld?.Move(drop_location(src))
+
 /obj/machinery/power/manufacturing/crafter/Destroy()
 	. = ..()
 	recipe = null
 	craftsman = null
-	withheld.Cut()
+	QDEL_NULL(withheld)
 
 /obj/machinery/power/manufacturing/crafter/process(seconds_per_tick)
-	send_withheld() // try send any pending stuff
+	if(!isnull(withheld) && !send_resource(withheld, dir))
+		return
 	if(!isnull(craft_timer))
 		if(surplus() >= power_cost)
 			add_load()
@@ -85,37 +97,19 @@
 	flick_overlay_view(mutable_appearance(icon, "crafter_printing"), recipe.time)
 	craft_timer = addtimer(CALLBACK(src, PROC_REF(craft), recipe), recipe.time, TIMER_STOPPABLE)
 
-/obj/machinery/power/manufacturing/crafter/proc/send_withheld()
-	if(!length(withheld))
-		return FALSE
-	for(var/datum/weakref/weakref as anything in withheld)
-		var/atom/movable/resolved = weakref?.resolve()
-		if(isnull(resolved))
-			withheld -= weakref
-			continue
-		if(resolved.loc != loc || send_resource(resolved, dir))
-			withheld -= weakref
-	return length(withheld)
-
 /obj/machinery/power/manufacturing/crafter/proc/craft(datum/crafting_recipe/recipe)
 	if(QDELETED(src))
 		return
 	craft_timer = null
-	var/list/prediff = get_overfloor_objects()
-	var/result = craftsman.construct_item(src, recipe)
-	if(istext(result))
-		say("Crafting failed,[result]")
-		return
-	var/list/diff = get_overfloor_objects() - prediff
-	for(var/atom/movable/diff_result as anything in diff)
-		if(iseffect(diff_result) || ismob(diff_result)) // PLEASE dont stuff cats (or other mobs) into the cat grinder 9000
-			continue
-		if(isitem(diff_result))
-			diff_result.pixel_x += rand(-4, 4)
-			diff_result.pixel_y += rand(-4, 4)
-		withheld += WEAKREF(diff_result)
-		recipe.on_craft_completion(src, diff_result)
-	send_withheld()
+	var/atom/movable/result = craftsman.construct_item(src, recipe)
+	if(istype(result))
+		if(isitem(result))
+			result.pixel_x += rand(-4, 4)
+			result.pixel_y += rand(-4, 4)
+		result.Move(src)
+		send_resource(result, dir)
+	else
+		say(result)
 
 /obj/machinery/power/manufacturing/crafter/cooker
 	name = "manufacturing cooking machine" // maybe this shouldnt be available dont wanna make chef useless, though otherwise it would need a sprite

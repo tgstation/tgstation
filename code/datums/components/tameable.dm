@@ -2,6 +2,8 @@
 /datum/component/tameable
 	///If true, this atom can only be domesticated by one person
 	var/unique
+	///What the mob eats, typically used for taming or animal husbandry.
+	var/list/food_types
 	///Starting success chance for taming.
 	var/tame_chance
 	///Added success chance after every failed tame attempt.
@@ -13,6 +15,8 @@
 	if(!isatom(parent)) //yes, you could make a tameable toolbox.
 		return COMPONENT_INCOMPATIBLE
 
+	if(food_types)
+		src.food_types = food_types
 	if(tame_chance)
 		src.tame_chance = tame_chance
 		src.current_tame_chance = tame_chance
@@ -20,30 +24,35 @@
 		src.bonus_tame_chance = bonus_tame_chance
 	src.unique = unique
 
-	if(food_types && !HAS_TRAIT(parent, TRAIT_MOB_EATER))
-		parent.AddElement(/datum/element/basic_eating, food_types = food_types)
-
-	RegisterSignal(parent, COMSIG_MOB_ATE, PROC_REF(try_tame))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(try_tame))
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_SENTIENCEPOTION, PROC_REF(on_tame)) //Instantly succeeds
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_TRANSFERPOTION, PROC_REF(on_tame)) //Instantly succeeds
 
-/datum/component/tameable/proc/try_tame(atom/source, obj/item/food, mob/living/attacker)
+/datum/component/tameable/proc/try_tame(datum/source, obj/item/food, mob/living/attacker, params)
 	SIGNAL_HANDLER
-
-	if(isnull(attacker) || already_friends(attacker))
+	if(!is_type_in_list(food, food_types))
 		return
+	if(isliving(source))
+		var/mob/living/potentially_dead_horse = source
+		if(potentially_dead_horse.stat == DEAD)
+			to_chat(attacker, span_warning("[parent] is dead!"))
+			return COMPONENT_CANCEL_ATTACK_CHAIN
 
+	var/atom/atom_parent = source
 	var/inform_tamer = FALSE
+	atom_parent.balloon_alert(attacker, "fed")
 	var/modified_tame_chance = current_tame_chance
 	if(HAS_TRAIT(attacker, TRAIT_BEAST_EMPATHY))
 		modified_tame_chance += 50
 		inform_tamer = TRUE
+	if(unique || !already_friends(attacker))
+		if(prob(modified_tame_chance)) //note: lack of feedback message is deliberate, keep them guessing unless they're an expert!
+			on_tame(source, attacker, food, inform_tamer)
+		else
+			current_tame_chance += bonus_tame_chance
 
-	source.balloon_alert(attacker, "eats from your hand")
-	if(prob(modified_tame_chance)) //note: lack of feedback message is deliberate, keep them guessing unless they're an expert!
-		on_tame(source, attacker, food, inform_tamer)
-	else
-		current_tame_chance += bonus_tame_chance
+	qdel(food)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Check if the passed mob is already considered one of our friends
 /datum/component/tameable/proc/already_friends(mob/living/potential_friend)

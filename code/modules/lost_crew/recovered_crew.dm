@@ -7,4 +7,3 @@
 	show_to_ghosts = FALSE
 	silent = TRUE
 	block_midrounds = FALSE
-	show_in_roundend = FALSE

@@ -6,7 +6,7 @@
 	name = "Shuttle"
 	requires_power = FALSE
 	static_lighting = TRUE
-	default_gravity = STANDARD_GRAVITY
+	has_gravity = STANDARD_GRAVITY
 	always_unpowered = FALSE
 	// Loading the same shuttle map at a different time will produce distinct area instances.
 	area_flags = NONE
@@ -256,7 +256,7 @@
 // ----------- Arena Shuttle
 /area/shuttle/shuttle_arena
 	name = "arena"
-	default_gravity = STANDARD_GRAVITY
+	has_gravity = STANDARD_GRAVITY
 	requires_power = FALSE
 
 /obj/effect/forcefield/arena_shuttle

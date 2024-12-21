@@ -15,7 +15,7 @@
 	icon_state = "bit_ruin"
 	icon = 'icons/area/areas_station.dmi'
 	area_flags = UNIQUE_AREA | NOTELEPORT | EVENT_PROTECTED | HIDDEN_AREA | UNLIMITED_FISHING
-	default_gravity = STANDARD_GRAVITY
+	has_gravity = STANDARD_GRAVITY
 	requires_power = FALSE
 
 /area/virtual_domain/fullbright

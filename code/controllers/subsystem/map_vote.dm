@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(map_vote)
 	last_message_at = world.time
 
 	var/list/messages = args.Copy()
-	to_chat(world, span_purple(examine_block("Map Vote\n<hr>[messages.Join("\n")]")))
+	to_chat(world, span_purple(examine_block("Map Vote\n<hr>\n[messages.Join("\n")]")))
 
 /datum/controller/subsystem/map_vote/proc/finalize_map_vote(datum/vote/map_vote/map_vote)
 	if(already_voted)
@@ -74,9 +74,14 @@ SUBSYSTEM_DEF(map_vote)
 		send_map_vote_notice("Admin Override is in effect. Map will not be changed.", "Tallies are recorded and saved.")
 		return
 
+	var/list/valid_maps = filter_cache_to_valid_maps()
+	if(!length(valid_maps))
+		send_map_vote_notice("No valid maps.")
+		return
+
 	var/winner
 	var/winner_amount = 0
-	for(var/map in map_vote.choices)
+	for(var/map in valid_maps)
 		if(!winner_amount)
 			winner = map
 			winner_amount = map_vote_cache[map]
@@ -93,7 +98,7 @@ SUBSYSTEM_DEF(map_vote)
 	messages += tally_printout
 
 	// do not reset tallies if only one map is even possible
-	if(length(map_vote.choices) > 1)
+	if(length(valid_maps) > 1)
 		map_vote_cache[winner] = CONFIG_GET(number/map_vote_minimum_tallies)
 		write_cache()
 		update_tally_printout()
@@ -170,4 +175,4 @@ SUBSYSTEM_DEF(map_vote)
 	for(var/map_id in map_vote_cache)
 		var/datum/map_config/map = config.maplist[map_id]
 		data += "[map.map_name] - [map_vote_cache[map_id]]"
-	tally_printout = examine_block("Current Tallies\n<hr>[data.Join("\n")]")
+	tally_printout = examine_block("Current Tallies\n<hr>\n[data.Join("\n")]")

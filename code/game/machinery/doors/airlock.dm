@@ -545,7 +545,7 @@
 	else
 		. += get_airlock_overlay("fill_[frame_state]", icon, src, em_block = TRUE)
 
-	if(lights && hasPower() && light_state)
+	if(lights && hasPower())
 		. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
 
 	if(panel_open)
@@ -1549,7 +1549,6 @@
 	assembly.previous_assembly = previous_airlock
 	assembly.update_name()
 	assembly.update_appearance()
-	assembly.dir = dir
 
 /obj/machinery/door/airlock/on_deconstruction(disassembled)
 	var/obj/structure/door_assembly/A
@@ -2465,10 +2464,6 @@
 	multi_tile = TRUE
 	opacity = FALSE
 	glass = TRUE
-
-/obj/machinery/door/airlock/multi_tile/setDir(newdir)
-	. = ..()
-	set_bounds()
 
 /obj/structure/fluff/airlock_filler
 	name = "airlock fluff"

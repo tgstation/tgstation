@@ -76,15 +76,15 @@
 	avatar.set_temp_blindness(1 SECONDS) // I'm in
 
 
-/datum/component/avatar_connection/PostTransfer(datum/new_parent)
+/datum/component/avatar_connection/PostTransfer()
 	var/obj/machinery/netpod/pod = netpod_ref?.resolve()
 	if(isnull(pod))
 		return COMPONENT_INCOMPATIBLE
 
-	if(!isliving(new_parent))
+	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	pod.avatar_ref = WEAKREF(new_parent)
+	pod.avatar_ref = WEAKREF(parent)
 
 
 /datum/component/avatar_connection/RegisterWithParent()

@@ -50,7 +50,8 @@
 	if(!owner)
 		return
 	var/image/holder = owner.hud_list[GLAND_HUD]
-	holder.pixel_y = owner.get_cached_height() - ICON_SIZE_Y
+	var/icon/I = icon(owner.icon, owner.icon_state, owner.dir)
+	holder.pixel_y = I.Height() - ICON_SIZE_Y
 	if(active_mind_control)
 		holder.icon_state = "hudgland_active"
 	else if(mind_control_uses)

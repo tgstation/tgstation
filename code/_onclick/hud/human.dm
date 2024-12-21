@@ -4,7 +4,6 @@
 /atom/movable/screen/human/toggle
 	name = "toggle"
 	icon_state = "toggle"
-	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/human/toggle/Click()
 
@@ -27,7 +26,6 @@
 /atom/movable/screen/human/equip
 	name = "equip"
 	icon_state = "act_equip"
-	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/human/equip/Click()
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
@@ -47,7 +45,6 @@
 	name = "current sting"
 	screen_loc = ui_lingstingdisplay
 	invisibility = INVISIBILITY_ABSTRACT
-	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/ling/sting/Click()
 	if(isobserver(usr))

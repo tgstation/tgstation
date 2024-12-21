@@ -4,7 +4,7 @@
 	icon_state = "away"
 	static_lighting = TRUE
 	requires_power = FALSE
-	default_gravity = STANDARD_GRAVITY
+	has_gravity = STANDARD_GRAVITY
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 	flags_1 = CAN_BE_DIRTY_1
 

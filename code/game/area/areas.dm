@@ -80,8 +80,8 @@
 	var/power_light = TRUE
 	var/power_environ = TRUE
 	var/power_apc_charge = TRUE
-	/// The default gravity for the area
-	var/default_gravity = ZERO_GRAVITY
+
+	var/has_gravity = FALSE
 
 	var/parallax_movedir = 0
 

@@ -9,6 +9,7 @@
 	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
+	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OFFLINE
 	anchored_tabletop_offset = 8
 
 	/// The maximum weight of items this grinder can hold
@@ -272,36 +273,45 @@
 	return NONE
 
 /obj/machinery/reagentgrinder/wrench_act(mob/living/user, obj/item/tool)
-	. = NONE
+	if(user.combat_mode)
+		return NONE
 
+	var/tool_result = ITEM_INTERACT_BLOCKING
 	if(operating)
 		balloon_alert(user, "still operating!")
-		return ITEM_INTERACT_BLOCKING
+		return tool_result
 
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		update_appearance(UPDATE_OVERLAYS)
-		return ITEM_INTERACT_SUCCESS
+		tool_result = ITEM_INTERACT_SUCCESS
+	return tool_result
 
 /obj/machinery/reagentgrinder/screwdriver_act(mob/living/user, obj/item/tool)
-	. = NONE
+	if(user.combat_mode)
+		return NONE
 
+	var/tool_result = ITEM_INTERACT_BLOCKING
 	if(operating)
 		balloon_alert(user, "still operating!")
-		return ITEM_INTERACT_BLOCKING
+		return tool_result
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance(UPDATE_OVERLAYS)
-		return ITEM_INTERACT_SUCCESS
+		tool_result = ITEM_INTERACT_SUCCESS
+	return tool_result
 
 /obj/machinery/reagentgrinder/crowbar_act(mob/living/user, obj/item/tool)
-	. = NONE
+	if(user.combat_mode)
+		return NONE
 
+	var/tool_result = ITEM_INTERACT_BLOCKING
 	if(operating)
 		balloon_alert(user, "still operating!")
-		return ITEM_INTERACT_BLOCKING
+		return tool_result
 
 	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+		tool_result = ITEM_INTERACT_SUCCESS
+	return tool_result
 
 /obj/machinery/reagentgrinder/proc/on_storage_dump(datum/source, datum/storage/storage, mob/user)
 	SIGNAL_HANDLER
@@ -318,7 +328,9 @@
 
 /obj/machinery/reagentgrinder/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !check_interactable(user))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(operating || !can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -330,11 +342,13 @@
 	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/reagentgrinder/ui_interact(mob/user)
-	//sanity check
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
-		return
+	. = ..()
 
+	//some interaction sanity checks
+	if(!anchored || operating || !can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+		return
 	var/static/radial_eject = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_eject")
+	var/static/radial_mix = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_mix")
 
 	//create list of options available
 	var/list/options = list()
@@ -343,7 +357,7 @@
 		if((to_process in component_parts) || to_process == beaker)
 			continue
 
-		if(is_operational && anchored && !QDELETED(beaker) && !beaker.reagents.holder_full())
+		if(!QDELETED(beaker) && !beaker.reagents.holder_full() && is_operational && anchored)
 			var/static/radial_grind = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind")
 			options["grind"] = radial_grind
 
@@ -352,17 +366,16 @@
 
 		options["eject"] = radial_eject
 		break
-
 	//eject action if we have a beaker
 	if(!QDELETED(beaker))
 		options["eject"] = radial_eject
 		//mix reagents present inside
-		if(is_operational && anchored && beaker.reagents.total_volume)
-			var/static/radial_mix = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_mix")
+		if(beaker?.reagents.total_volume && is_operational && anchored)
 			options["mix"] = radial_mix
-
 	//examine action if Ai is trying to see whats up
 	if(HAS_AI_ACCESS(user))
+		if(machine_stat & NOPOWER)
+			return
 		var/static/radial_examine = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine")
 		options["examine"] = radial_examine
 
@@ -376,18 +389,16 @@
 	)
 	if(!choice)
 		return
-
-	//act on choice
 	switch(choice)
 		if("eject")
 			replace_beaker(user)
 			dump_inventory_contents()
 		if("grind", "juice")
-			operate_for(6 SECONDS, choice == "juice", user)
+			operate_for(60 DECISECONDS, choice == "juice", user)
 		if("mix")
-			mix(5 SECONDS, user)
+			mix(50 DECISECONDS, user)
 		if("examine")
-			to_chat(user, examine_block(jointext(examine(user), "\n")))
+			to_chat(user, examine_block(span_infoplain("[examine(user)]")))
 
 /**
  * Checks if the radial menu can interact with this machine
@@ -398,7 +409,13 @@
 /obj/machinery/reagentgrinder/proc/check_interactable(mob/user)
 	PRIVATE_PROC(TRUE)
 
-	return !operating && user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH)
+	if(!can_interact(user))
+		return FALSE
+
+	if(!anchored || operating || !user.can_perform_action(src, ALLOW_SILICON_REACH))
+		return FALSE
+
+	return TRUE
 
 /**
  * Grinds/Juices all contents inside the grinder
@@ -411,14 +428,10 @@
 /obj/machinery/reagentgrinder/proc/operate_for(time, juicing = FALSE, mob/user)
 	PRIVATE_PROC(TRUE)
 
-	if(!anchored || !is_operational || QDELETED(beaker) || beaker.reagents.holder_full())
-		operating = FALSE
-		return
-	operating = TRUE
-
 	var/duration = time / speed
 
 	Shake(pixelshiftx = 1, pixelshifty = 0, duration = duration)
+	operating = TRUE
 	if(!juicing)
 		playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
 	else
@@ -473,15 +486,10 @@
 /obj/machinery/reagentgrinder/proc/mix(time, mob/user)
 	PRIVATE_PROC(TRUE)
 
-	if(!anchored || !is_operational || QDELETED(beaker) || !beaker.reagents.total_volume)
-		operating = FALSE
-		return
-	operating = TRUE
-
 	var/duration = time / speed
 
 	Shake(pixelshiftx = 1, pixelshifty = 0, duration = duration)
-
+	operating = TRUE
 	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(mix_complete), duration), duration)
@@ -495,7 +503,8 @@
 /obj/machinery/reagentgrinder/proc/mix_complete(duration)
 	PRIVATE_PROC(TRUE)
 
-	if(QDELETED(src) || !is_operational)
+	if(QDELETED(beaker) || beaker.reagents.total_volume <= 0)
+		operating = FALSE
 		return
 
 	//Recipe to make Butter
@@ -507,12 +516,13 @@
 		tasty_butter.reagents.set_all_reagents_purity(purity)
 
 	//Recipe to make Mayonnaise
-	beaker.reagents.convert_reagent(/datum/reagent/consumable/eggyolk, /datum/reagent/consumable/mayonnaise)
+	if (beaker.reagents.has_reagent(/datum/reagent/consumable/eggyolk))
+		beaker.reagents.convert_reagent(/datum/reagent/consumable/eggyolk, /datum/reagent/consumable/mayonnaise)
 
 	//Recipe to make whipped cream
-	beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)
+	if (beaker.reagents.has_reagent(/datum/reagent/consumable/cream))
+		beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)
 
 	//power consumed based on the ratio of total reagents mixed
 	use_energy((active_power_usage * (duration / 1 SECONDS)) * (beaker.reagents.total_volume / beaker.reagents.maximum_volume))
-
 	operating = FALSE

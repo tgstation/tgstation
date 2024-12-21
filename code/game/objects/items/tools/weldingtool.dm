@@ -234,7 +234,7 @@
 // /Switches the welder on
 /obj/item/weldingtool/proc/switched_on(mob/user)
 	if(!status)
-		balloon_alert(user, "unsecured!")
+		to_chat(user, span_warning("[src] can't be turned on while unsecured!"))
 		return
 	set_welding(!welding)
 	if(welding)

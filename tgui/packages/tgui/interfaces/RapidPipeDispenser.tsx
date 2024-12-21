@@ -48,6 +48,29 @@ const TOOLS = [
   },
 ];
 
+const LAYERS = [
+  {
+    name: '1',
+    bitmask: 1,
+  },
+  {
+    name: '2',
+    bitmask: 2,
+  },
+  {
+    name: '3',
+    bitmask: 4,
+  },
+  {
+    name: '4',
+    bitmask: 8,
+  },
+  {
+    name: '5',
+    bitmask: 16,
+  },
+] as const;
+
 type DirectionsAllowed = {
   north: BooleanLike;
   south: BooleanLike;
@@ -90,19 +113,19 @@ type Preview = {
 };
 
 type Data = {
-  // Static
-  paint_colors: Colors;
-  max_pipe_layers: number;
   // Dynamic
   category: number;
   pipe_layers: number;
   multi_layer: BooleanLike;
+  ducting_layer: number;
   categories: Category[];
   selected_recipe: string;
   selected_color: string;
   selected_category: string;
   mode: number;
   init_directions: DirectionsAllowed;
+  // Static
+  paint_colors: Colors;
 };
 
 export const ColorItem = (props) => {
@@ -145,14 +168,13 @@ const ModeItem = (props) => {
         <Button.Checkbox
           key={tool.bitmask}
           checked={mode & tool.bitmask}
+          content={tool.name}
           onClick={() =>
             act('mode', {
               mode: tool.bitmask,
             })
           }
-        >
-          {tool.name}
-        </Button.Checkbox>
+        />
       ))}
     </LabeledList.Item>
   );
@@ -179,7 +201,7 @@ const CategoryItem = (props) => {
 };
 
 const SelectionSection = (props) => {
-  const { data } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
   const { category: rootCategoryIndex } = data;
   return (
     <Section fill>
@@ -195,46 +217,37 @@ const SelectionSection = (props) => {
 
 const LayerSelect = (props) => {
   const { act, data } = useBackend<Data>();
-  const { pipe_layers, multi_layer, max_pipe_layers } = data;
-  const layer_to_bitmask = (layer: number) => {
-    return 1 << layer;
-  };
-
+  const { pipe_layers } = data;
+  const { multi_layer } = data;
   return (
     <LabeledList.Item label="Layer">
-      {Array(max_pipe_layers)
-        .keys()
-        .map((layer) => (
-          <Button.Checkbox
-            key={layer}
-            checked={
-              multi_layer
-                ? pipe_layers & layer_to_bitmask(layer)
-                : layer_to_bitmask(layer) === pipe_layers
-            }
-            onClick={() =>
-              act('pipe_layers', { pipe_layers: layer_to_bitmask(layer) })
-            }
-          >
-            {layer + 1}
-          </Button.Checkbox>
-        ))}
+      {LAYERS.map((layer) => (
+        <Button.Checkbox
+          key={layer.bitmask}
+          checked={
+            multi_layer
+              ? pipe_layers & layer.bitmask
+              : layer.bitmask === pipe_layers
+          }
+          content={layer.name}
+          onClick={() => act('pipe_layers', { pipe_layers: layer.bitmask })}
+        />
+      ))}
       <Button.Checkbox
         key="multilayer"
         checked={multi_layer}
+        content="Multi"
         tooltip="Build on multiple pipe layers simultaneously"
         onClick={() => {
           act('toggle_multi_layer');
         }}
-      >
-        Multi
-      </Button.Checkbox>
+      />
     </LabeledList.Item>
   );
 };
 
 const PreviewSelect = (props) => {
-  const { act } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
   return (
     <Box>
       {props.previews.map((preview) => (
@@ -275,8 +288,8 @@ const PreviewSelect = (props) => {
 };
 
 const PipeTypeSection = (props) => {
-  const { data } = useBackend<Data>();
-  const { categories = [], selected_category } = data;
+  const { act, data } = useBackend<Data>();
+  const { categories = [], selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useState(selected_category);
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
@@ -398,7 +411,7 @@ export const SmartPipeBlockSection = (props) => {
 };
 
 export const RapidPipeDispenser = (props) => {
-  const { data } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
   const { category: rootCategoryIndex } = data;
   return (
     <Window width={550} height={580}>

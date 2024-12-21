@@ -83,8 +83,7 @@
 	if (tame)
 		faction |= FACTION_NEUTRAL
 	else
-		var/static/list/food_types = list(/obj/item/food/cheese)
-		AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 100)
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100)
 
 /mob/living/basic/mouse/Destroy()
 	SSmobs.cheeserats -= src

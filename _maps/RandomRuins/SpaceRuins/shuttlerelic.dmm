@@ -63,7 +63,7 @@
 /obj/structure/chair/old{
 	dir = 1
 	},
-/obj/item/crowbar/large/twenty_force,
+/obj/item/crowbar/large/heavy,
 /turf/open/floor/oldshuttle,
 /area/ruin/space/has_grav/powered)
 "o" = (

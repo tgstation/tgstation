@@ -7,9 +7,7 @@
 		"toy_armblade",
 		"toygun",
 		"c38_rubber",
-		"c38_rubber_mag",
-		"c38_sec",
-		"c38_mag",
+		"sec_38",
 		"capbox",
 		"foam_dart",
 		"sec_beanbag_slug",
@@ -82,13 +80,7 @@
 	prereq_ids = list(TECHWEB_NODE_EXPLOSIVES)
 	design_ids = list(
 		"c38_hotshot",
-		"c38_hotshot_mag",
 		"c38_iceblox",
-		"c38_iceblox_mag",
-		"c38_trac",
-		"c38_trac_mag",
-		"c38_true_strike",
-		"c38_true_strike_mag",
 		"techshotshell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)

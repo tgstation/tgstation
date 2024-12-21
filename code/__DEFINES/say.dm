@@ -53,9 +53,6 @@
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
 
-/// Automatically playing a set of lines
-#define MODE_SEQUENTIAL "sequential"
-
 #define MODE_MAFIA "mafia"
 
 /// Applies singing characters to the message

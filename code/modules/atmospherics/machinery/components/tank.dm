@@ -31,8 +31,6 @@
 	///The image showing the gases inside of the tank
 	var/image/window
 
-	/// The open node directions of the tank, assuming that the tank is facing NORTH.
-	var/open_ports = NONE
 	/// The volume of the gas mixture
 	var/volume = 2500 //in liters
 	/// The max pressure of the gas mixture before damaging the tank
@@ -99,8 +97,7 @@
 
 	// Mapped in tanks should automatically connect to adjacent pipenets in the direction set in dir
 	if(mapload)
-		set_portdir_relative(dir, TRUE)
-		set_init_directions()
+		initialize_directions = dir
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -154,60 +151,28 @@
 	refresh_window()
 
 ///////////////////////////////////////////////////////////////////
-// Port stuff
+// Pipenet stuff
 
-/**
- * Enables/Disables a port direction in var/open_ports. \
- * Use this, then call set_init_directions() instead of setting initialize_directions directly \
- * This system exists because tanks not having all initialize_directions set correctly breaks shuttle rotations
- */
-/obj/machinery/atmospherics/components/tank/proc/set_portdir_relative(relative_port_dir, enable)
-	ASSERT(!isnull(enable), "Did not receive argument enable")
+/obj/machinery/atmospherics/components/tank/return_analyzable_air()
+	return air_contents
 
-	// Rotate the given dir so that it's relative to north
-	var/port_dir
-	if(dir == NORTH) // We're already facing north, no rotation needed
-		port_dir = relative_port_dir
-	else
-		var/offnorth_angle = dir2angle(dir)
-		port_dir = turn(relative_port_dir, offnorth_angle)
-
-	if(enable)
-		open_ports |= port_dir
-	else
-		open_ports &= ~port_dir
-
-/**
- * Toggles a port direction in var/open_ports \
- * Use this, then call set_init_directions() instead of setting initialize_directions directly \
- * This system exists because tanks not having all initialize_directions set correctly breaks shuttle rotations
- */
-/obj/machinery/atmospherics/components/tank/proc/toggle_portdir_relative(relative_port_dir)
-	var/toggle = ((initialize_directions & relative_port_dir) ? FALSE : TRUE)
-	set_portdir_relative(relative_port_dir, toggle)
-
-/obj/machinery/atmospherics/components/tank/set_init_directions()
-	if(!open_ports)
-		initialize_directions = NONE
+/obj/machinery/atmospherics/components/tank/return_airs_for_reconcilation(datum/pipeline/requester)
+	. = ..()
+	if(!air_contents)
 		return
+	. += air_contents
 
-	//We're rotating open_ports relative to dir, and
-	//setting initialize_directions to that rotated dir
-	var/relative_port_dirs = NONE
-	var/dir_angle = dir2angle(dir)
-	for(var/cardinal in GLOB.cardinals)
-		var/current_dir = cardinal & open_ports
-		if(!current_dir)
-			continue
+/obj/machinery/atmospherics/components/tank/return_pipenets_for_reconcilation(datum/pipeline/requester)
+	. = ..()
+	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
+	for(var/obj/machinery/atmospherics/components/tank/tank as anything in merge_group.members)
+		. += tank.parents
 
-		var/rotated_dir = turn(current_dir, -dir_angle)
-		relative_port_dirs |= rotated_dir
-
-	initialize_directions = relative_port_dirs
-
-/obj/machinery/atmospherics/components/tank/proc/toggle_side_port(port_dir)
-	toggle_portdir_relative(port_dir)
-	set_init_directions()
+/obj/machinery/atmospherics/components/tank/proc/toggle_side_port(new_dir)
+	if(initialize_directions & new_dir)
+		initialize_directions &= ~new_dir
+	else
+		initialize_directions |= new_dir
 
 	for(var/i in 1 to length(nodes))
 		var/obj/machinery/atmospherics/components/node = nodes[i]
@@ -229,24 +194,6 @@
 	SSair.add_to_rebuild_queue(src)
 
 	update_parents()
-
-///////////////////////////////////////////////////////////////////
-// Pipenet stuff
-
-/obj/machinery/atmospherics/components/tank/return_analyzable_air()
-	return air_contents
-
-/obj/machinery/atmospherics/components/tank/return_airs_for_reconcilation(datum/pipeline/requester)
-	. = ..()
-	if(!air_contents)
-		return
-	. += air_contents
-
-/obj/machinery/atmospherics/components/tank/return_pipenets_for_reconcilation(datum/pipeline/requester)
-	. = ..()
-	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
-	for(var/obj/machinery/atmospherics/components/tank/tank as anything in merge_group.members)
-		. += tank.parents
 
 ///////////////////////////////////////////////////////////////////
 // Merger handling
