@@ -1,0 +1,290 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"b" = (
+/obj/machinery/flasher/directional/east,
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"h" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/table/reinforced,
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_x = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"i" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"k" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/clothing/suit/utility/fire/firefighter,
+/obj/item/clothing/head/utility/hardhat/red,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"l" = (
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"m" = (
+/turf/template_noop,
+/area/template_noop)
+"o" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/table/glass,
+/obj/item/clipboard,
+/obj/item/paper,
+/obj/item/pen/red{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/pen,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"p" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/computer/atmos_alert,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"q" = (
+/obj/structure/marker_beacon/olive,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"r" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/escape)
+"u" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"v" = (
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/turf/template_noop,
+/area/template_noop)
+"y" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/shuttle/escape)
+"z" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red/half{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_half{
+	dir = 8
+	},
+/area/shuttle/escape/brig)
+"B" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"F" = (
+/obj/machinery/door/window/brigdoor/left/directional/south{
+	name = "Emergency Shuttle Brig";
+	req_access = list("security")
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape/brig)
+"K" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/tile/red/half{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/dark/smooth_half{
+	dir = 8
+	},
+/area/shuttle/escape/brig)
+"M" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/computer/communications,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"N" = (
+/obj/modular_map_connector,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red/half{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/iron/dark/smooth_half{
+	dir = 8
+	},
+/area/shuttle/escape/brig)
+"P" = (
+/obj/machinery/computer/emergency_shuttle,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Q" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"R" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape/brig)
+"V" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"X" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/tile/iron/dark/smooth_half,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"Z" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+m
+m
+m
+m
+d
+a
+Z
+a
+"}
+(2,1,1) = {"
+q
+r
+r
+r
+a
+u
+l
+Q
+"}
+(3,1,1) = {"
+m
+m
+m
+m
+r
+m
+u
+B
+"}
+(4,1,1) = {"
+m
+m
+y
+Q
+X
+z
+k
+Q
+"}
+(5,1,1) = {"
+m
+m
+y
+B
+U
+F
+i
+a
+"}
+(6,1,1) = {"
+m
+m
+y
+Q
+K
+N
+V
+m
+"}
+(7,1,1) = {"
+m
+m
+y
+B
+a
+d
+R
+m
+"}
+(8,1,1) = {"
+m
+M
+h
+m
+m
+m
+m
+m
+"}
+(9,1,1) = {"
+m
+P
+j
+v
+m
+b
+m
+m
+"}
+(10,1,1) = {"
+m
+p
+o
+m
+m
+m
+m
+m
+"}
