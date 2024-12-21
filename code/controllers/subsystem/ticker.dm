@@ -1,4 +1,4 @@
-#define ROUND_START_MUSIC_LIST "strings/round_start_sounds.txt"
+#define ROUND_START_MUSIC_LIST "strings/round_start_sounds.txt" //some default music that will play in lobby if you have none on your server.
 #define SS_TICKER_TRAIT "SS_Ticker"
 
 SUBSYSTEM_DEF(ticker)
@@ -117,7 +117,7 @@ SUBSYSTEM_DEF(ticker)
 				continue
 		music -= S
 
-	if(!length(music))
+	if(!length(music)) // if you have no music - use some default ones
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 		login_music = pick(music)
 	else

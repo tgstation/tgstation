@@ -1,4 +1,3 @@
-sound/music/lobby_music/title1.mod
 sound/music/lobby_music/title2.ogg
 sound/music/lobby_music/title3.ogg
 sound/music/lobby_music/clown.ogg
