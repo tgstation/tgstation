@@ -54,12 +54,13 @@
 			var/obj/item/melee/sickly_blade/training/new_blade = new(get_turf(human_in_range))
 			INVOKE_ASYNC(human_in_range, TYPE_PROC_REF(/mob, put_in_hands), new_blade)
 		human_in_range.apply_status_effect(/datum/status_effect/arena_tracker)
-		RegisterSignal(human_in_range)
+		RegisterSignal(human_in_range, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(mob_change_z))
 
 /datum/proximity_monitor/advanced/heretic_arena/Destroy()
 	for(var/mob/living/carbon/human/mob in contained_mobs)
 		mob.remove_traits(given_immunities, HERETIC_ARENA_TRAIT)
 		mob.remove_status_effect(/datum/status_effect/arena_tracker)
+		UnregisterSignal(mob, COMSIG_MOVABLE_Z_CHANGED)
 	for(var/turf/to_restore in border_walls)
 		to_restore.ChangeTurf(border_walls[to_restore])
 	return ..()
@@ -74,8 +75,19 @@
 /datum/proximity_monitor/advanced/heretic_arena/field_edge_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
 	if(isliving(movable))
 		var/mob/living/living_mob = movable
-		living_mob.remove_status_effect(/datum/status_effect/arena_tracker) // Once you leave the arena you can't come back
+		addtimer(CALLBACK(living_mob, TYPE_PROC_REF(/mob/living, remove_status_effect), /datum/status_effect/arena_tracker), 10 SECONDS)
 		living_mob.remove_traits(given_immunities, HERETIC_ARENA_TRAIT)
+
+/// If a mob tries to change Z level while the arena is active, we teleport them back to the center of the arena
+/datum/proximity_monitor/advanced/heretic_arena/proc/mob_change_z(datum/source, old_turf, new_turf, same_z_layer)
+	SIGNAL_HANDLER
+	if(!same_z_layer)
+		do_teleport(source, host, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
+	if(isliving(source))
+		var/mob/living/leaver = source
+		leaver.adjustBruteLoss(10) // Trying to cheese via z levels leads to eventual death
+		leaver.balloon_alert(leaver, "can't escape!")
+	return Z_CHANGE_PREVENTED
 
 /turf/closed/indestructible/heretic_wall
 	name = "eldritch wall"
