@@ -427,6 +427,8 @@
 	var/prebuilt = FALSE
 	/// If the core is removable once socketed.
 	var/core_removable = TRUE
+	/// If true, removes all mentions of the anomaly core inside and interactions with the core inside. This is done so subtypes can inherit behaviors and become anomaly locked.
+	var/dummy_cored = FALSE
 
 /obj/item/mod/module/anomaly_locked/Initialize(mapload)
 	. = ..()
@@ -442,7 +444,7 @@
 
 /obj/item/mod/module/anomaly_locked/examine(mob/user)
 	. = ..()
-	if(!length(accepted_anomalies))
+	if(!length(accepted_anomalies) || dummy_cored) // don't add mentions of a core if it's dummy cored
 		return
 	if(core)
 		. += span_notice("There is a [core.name] installed in it. [core_removable ? "You could remove it with a <b>screwdriver</b>..." : "Unfortunately, due to a design quirk, it's unremovable."]")
@@ -457,6 +459,8 @@
 
 /obj/item/mod/module/anomaly_locked/on_select()
 	if(!core)
+		if(dummy_cored)
+			stack_trace("[src] is dummy cored but doesn't have a core! this is never supposed to happen, please report this bug.")
 		balloon_alert(mod.wearer, "no core!")
 		return
 	return ..()
@@ -472,7 +476,7 @@
 	return TRUE
 
 /obj/item/mod/module/anomaly_locked/attackby(obj/item/item, mob/living/user, params)
-	if(item.type in accepted_anomalies)
+	if(item.type in accepted_anomalies && !dummy_cored) // no need for this if it's dummy cored
 		if(core)
 			balloon_alert(user, "core already in!")
 			return
@@ -487,6 +491,8 @@
 
 /obj/item/mod/module/anomaly_locked/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
+	if(dummy_cored) // no need for core interactions if it's dummy cored
+		return
 	if(!core)
 		balloon_alert(user, "no core!")
 		return
