@@ -3,6 +3,7 @@
  * @copyright 2021 bobbahbrown (https://github.com/bobbahbrown)
  * @license MIT
  */
+import { BooleanLike } from 'common/react';
 import { createSearch, decodeHtmlEntities } from 'common/string';
 import { useState } from 'react';
 
@@ -12,6 +13,7 @@ import { Window } from '../layouts';
 
 type Data = {
   requests: Request[];
+  fax_autoprinting: BooleanLike;
 };
 
 type Request = {
@@ -72,6 +74,15 @@ export const RequestManager = (props) => {
           buttons={
             <Stack>
               <Stack.Item>
+                <Button.Checkbox
+                  checked={data.fax_autoprinting}
+                  onClick={() => act('toggleprint')}
+                  tooltip={
+                    'Enables automatic printing of fax requests to the admin fax machine. By default, this fax is located in the briefing room at the central command station'
+                  }
+                >
+                  Auto-print Faxes
+                </Button.Checkbox>
                 <Input
                   value={searchText}
                   onInput={(_, value) => setSearchText(value)}
@@ -146,7 +157,12 @@ const RequestControls = (props) => {
         </Button>
       )}
       {request.req_type === 'request_fax' && (
-        <Button onClick={() => act('show', { id: request.id })}>SHOW</Button>
+        <>
+          <Button onClick={() => act('show', { id: request.id })}>SHOW</Button>
+          <Button onClick={() => act('print', { id: request.id })}>
+            PRINT
+          </Button>
+        </>
       )}
       {request.req_type === 'request_internet_sound' && (
         <Button onClick={() => act('play', { id: request.id })}>PLAY</Button>
