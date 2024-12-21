@@ -10,7 +10,7 @@
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_GIRDER
-	canSmoothWith = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_GIRDER
+	canSmoothWith = SMOOTH_GROUP_GIRDER + SMOOTH_GROUP_WALLS
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
