@@ -565,6 +565,18 @@
 		return owner.ui_status(user)
 	return UI_CLOSE
 
+/obj/item/construction/rcd/exosuit/build_delay(mob/user, delay, atom/target)
+	if(delay <= 0)
+		return TRUE
+
+	var/obj/item/mecha_parts/mecha_equipment/rcd/module = loc
+
+	//deconstruction can't be cancelled by ui changes
+	if(mode != RCD_DECONSTRUCT)
+		blueprint_changed = FALSE
+
+	return module.do_after_mecha(target, user, delay)
+
 /obj/item/construction/rcd/exosuit/get_matter(mob/user)
 	if(silo_link)
 		return ..()
