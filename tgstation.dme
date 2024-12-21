@@ -1612,6 +1612,7 @@
 #include "code\datums\elements\food\foodlike_drink.dm"
 #include "code\datums\elements\food\fried_item.dm"
 #include "code\datums\elements\food\grilled_item.dm"
+#include "code\datums\elements\food\love_food_buff.dm"
 #include "code\datums\elements\food\microwavable.dm"
 #include "code\datums\elements\food\processable.dm"
 #include "code\datums\elements\food\venue_price.dm"
