@@ -118,8 +118,9 @@
 	// we don't want to end up with 4 different immerse elements, which would cause
 	// the immerse trait to be repeatedly removed and readded as someone moves within the pool,
 	// replacing the status effect over and over, which can be seen through the status effect alert icon.
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
-	immerse_added = TRUE
+	if(!immerse_added) // DOPPLER EDIT ADDITION
+		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha) // DOPPLER EDIT JUST REMOVE ONE TAB BEFORE
+		immerse_added = TRUE // DOPPLER EDIT JUST REMOVE ONE TAB BEFORE
 	icon_state = "pool_[rand(1, 4)]"
 	particle_effect = new(src, /particles/hotspring_steam, 4)
 	//render the steam over mobs and objects on the game plane
