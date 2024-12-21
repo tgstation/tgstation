@@ -85,6 +85,7 @@
 /obj/effect/visible_heretic_influence/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(show_presence)), 15 SECONDS)
+	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift])
 
 	var/image/silicon_image = image('icons/effects/eldritch.dmi', src, null, OBJ_LAYER)
 	silicon_image.override = TRUE
@@ -175,6 +176,7 @@
 
 	AddElement(/datum/element/block_turf_fingerprints)
 	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(verify_user_can_see)))
+	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift])
 
 /obj/effect/heretic_influence/proc/verify_user_can_see(mob/user)
 	return (user.mind in GLOB.reality_smash_track.tracked_heretics)

@@ -78,6 +78,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/obj/item/organ/heart/mutantheart = /obj/item/organ/heart
 	///Replaces default lungs with a different organ
 	var/obj/item/organ/lungs/mutantlungs = /obj/item/organ/lungs
+	/// Smoker lungs for the quirk, overriden by certain species
+	var/obj/item/organ/lungs/smoker_lungs = /obj/item/organ/lungs/smoker_lungs
 	///Replaces default eyes with a different organ
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	///Replaces default ears with a different organ

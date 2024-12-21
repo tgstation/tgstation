@@ -73,15 +73,22 @@
 #define DUST_ANIMATION_TIME 1.3 SECONDS
 
 /**
- * This is the proc for turning a mob into ash.
+ * This is the proc for turning an atom into ash.
  * Dusting robots does not eject the MMI, so it's a bit more powerful than gib()
  *
- * Arguments:
+ * Arguments: (Only used for mobs)
  * * just_ash - If TRUE, ash will spawn where the mob was, as opposed to remains
  * * drop_items - Should the mob drop their items before dusting?
  * * force - Should this mob be FORCABLY dusted?
 */
-/mob/living/proc/dust(just_ash, drop_items, force)
+/atom/movable/proc/dust(just_ash, drop_items, force)
+	dust_animation()
+	// since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play.
+	// Looks much nicer and doesn't cause multiple runtimes.
+	QDEL_IN(src, DUST_ANIMATION_TIME)
+
+/mob/living/dust(just_ash, drop_items, force)
+	..()
 	if(body_position == STANDING_UP)
 		// keep us upright so the animation fits.
 		ADD_TRAIT(src, TRAIT_FORCED_STANDING, TRAIT_GENERIC)
@@ -93,10 +100,8 @@
 	if(buckled)
 		buckled.unbuckle_mob(src, force = TRUE)
 
-	dust_animation()
 	addtimer(CALLBACK(src, PROC_REF(spawn_dust), just_ash), DUST_ANIMATION_TIME - 0.3 SECONDS)
 	ghostize()
-	QDEL_IN(src, DUST_ANIMATION_TIME) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 
 /// Animates turning into dust.
 /// Does not delete src afterwards, BUT it will become invisible (and grey), so ensure you handle that yourself
