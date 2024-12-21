@@ -9394,10 +9394,9 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks,
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
 	},
-/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/service/bar)
 "dxZ" = (
@@ -10072,6 +10071,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/stone,
 /area/station/service/bar)
 "dMm" = (
@@ -33247,11 +33247,10 @@
 	pixel_x = -7;
 	pixel_y = 15
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/obj/effect/turf_decal/siding/wood,
 /obj/structure/sign/warning/no_smoking/circle/directional/north,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/station/service/bar)
 "lnI" = (
@@ -50833,12 +50832,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/lawoffice)
-"rrX" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 4
-	},
-/turf/open/floor/stone,
-/area/station/service/bar)
 "rrZ" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/spawner/random/trash/garbage,
@@ -56445,11 +56438,14 @@
 /turf/open/floor/eighties/red,
 /area/station/hallway/primary/central/fore)
 "tjT" = (
-/obj/structure/extinguisher_cabinet/directional/north,
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
+/obj/machinery/chem_master/condimaster,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
 	},
-/turf/open/floor/stone,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/diagonal,
 /area/station/service/bar)
 "tjY" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -100086,7 +100082,7 @@ iXW
 dRb
 sON
 tjT
-rrX
+xkV
 lAV
 fYJ
 eGU
