@@ -64,7 +64,9 @@
 	return ..()
 
 /turf/closed/wall/examine(mob/user)
-	. += ..()
+	. = ..()
+	if(initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS)
+		. += span_notice("You could adjust its corners with a <b>wrench</b>.")
 	. += deconstruction_hints(user)
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)
@@ -324,3 +326,15 @@
 /turf/closed/wall/Exited(atom/movable/gone, direction)
 	. = ..()
 	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
+
+/turf/closed/wall/wrench_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode || !(initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
+		smoothing_flags &= ~SMOOTH_DIAGONAL_CORNERS
+	else
+		smoothing_flags |= SMOOTH_DIAGONAL_CORNERS
+	QUEUE_SMOOTH(src)
+	to_chat(user, span_notice("You adjust [src]."))
+	tool.play_tool_sound(src)
+	return ITEM_INTERACT_SUCCESS
