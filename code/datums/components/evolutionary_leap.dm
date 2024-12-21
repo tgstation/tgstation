@@ -24,7 +24,7 @@
 		return
 
 	//if the round has already taken long enough, just leap right away.
-	if((world.time - SSticker.round_start_time) > evolve_mark)
+	if((STATION_TIME_PASSED()) > evolve_mark)
 		leap(silent = TRUE)
 		return
 
@@ -44,8 +44,8 @@
 	setup_timer()
 
 /datum/component/evolutionary_leap/proc/setup_timer()
-	//in cases where this is calculating roundstart, world.time - SSticker.round_start_time should equal 0
-	var/sum = (world.time - SSticker.round_start_time)
+	//in cases where this is calculating roundstart, STATION_TIME_PASSED() should equal 0
+	var/sum = (STATION_TIME_PASSED())
 	var/mark = evolve_mark - sum
 	timer_id = addtimer(CALLBACK(src, PROC_REF(leap), FALSE), mark, TIMER_STOPPABLE)
 
