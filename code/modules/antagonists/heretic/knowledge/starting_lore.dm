@@ -38,12 +38,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	if(!istype(touch_spell, action_to_add))
 		return NONE
 
-	if(HAS_TRAIT(held_rod, TRAIT_ROD_MANSUS_INFUSED))
-		return NONE
 
 	var/obj/item/fishing_rod/held_rod = cast_on.get_active_held_item()
-	if(!istype(held_rod, /obj/item/fishing_rod))
+	if(!istype(held_rod, /obj/item/fishing_rod) || HAS_TRAIT(held_rod, TRAIT_ROD_MANSUS_INFUSED))
 		return NONE
+
 	INVOKE_ASYNC(cast_on, TYPE_PROC_REF(/atom/movable, say), message = "R'CH T'H F'SH!", forced = "fishing rod infusion invocation")
 	playsound(cast_on, /datum/action/cooldown/spell/touch/mansus_grasp::sound, 15)
 	cast_on.visible_message(span_notice("[cast_on] snaps [cast_on.p_their()] fingers next to [held_rod], covering it in a burst of purple flames!"))
