@@ -127,7 +127,7 @@
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targeting/clean,
+		/datum/pet_command/clean,
 	)
 
 /mob/living/basic/bot/cleanbot/Initialize(mapload)

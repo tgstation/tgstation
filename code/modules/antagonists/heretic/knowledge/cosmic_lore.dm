@@ -226,7 +226,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack/star_gazer
+		/datum/pet_command/attack/star_gazer
 	)
 
 /datum/heretic_knowledge/ultimate/cosmic_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
@@ -242,7 +242,7 @@
 	star_gazer_mob.maxHealth = INFINITY
 	star_gazer_mob.health = INFINITY
 	user.AddComponent(/datum/component/death_linked, star_gazer_mob)
-	star_gazer_mob.AddComponent(/datum/component/obeys_commands, star_gazer_commands)
+	star_gazer_mob.AddComponent(/datum/component/obeys_commands, star_gazer_commands, radial_menu_lifetime = 15 SECONDS, radial_relative_to_user = TRUE)
 	star_gazer_mob.AddComponent(/datum/component/damage_aura, range = 7, burn_damage = 0.5, simple_damage = 0.5, immune_factions = list(FACTION_HERETIC), current_owner = user)
 	star_gazer_mob.befriend(user)
 	var/datum/action/cooldown/open_mob_commands/commands_action = new /datum/action/cooldown/open_mob_commands()

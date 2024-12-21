@@ -3,11 +3,11 @@
  * Watch for someone throwing or pointing at something and then go get it and bring it back.
  * If it's food we might eat it instead.
  */
-/datum/pet_command/point_targeting/fetch
+/datum/pet_command/fetch
 	command_name = "Fetch"
 	command_desc = "Command your pet to retrieve something you throw or point at."
-	radial_icon = 'icons/mob/actions/actions_spells.dmi'
-	radial_icon_state = "summons"
+	radial_icon_state = "fetch"
+	requires_pointing = TRUE
 	speech_commands = list("fetch")
 	command_feedback = "bounces"
 	pointed_reaction = "with great interest"
@@ -16,22 +16,25 @@
 	/// If true, this is a poorly trained pet who will eat food you throw instead of bringing it back
 	var/will_eat_targets = TRUE
 
-/datum/pet_command/point_targeting/fetch/New(mob/living/parent)
+/datum/pet_command/fetch/New(mob/living/parent)
 	. = ..()
 	if(isnull(parent))
 		return
 	parent.AddElement(/datum/element/ai_held_item) // We don't remove this on destroy because they might still be holding something
 
-/datum/pet_command/point_targeting/fetch/add_new_friend(mob/living/tamer)
+/datum/pet_command/fetch/add_new_friend(mob/living/tamer)
 	. = ..()
 	RegisterSignal(tamer, COMSIG_MOB_THROW, PROC_REF(listened_throw))
 
-/datum/pet_command/point_targeting/fetch/remove_friend(mob/living/unfriended)
+/datum/pet_command/fetch/remove_friend(mob/living/unfriended)
 	. = ..()
 	UnregisterSignal(unfriended, COMSIG_MOB_THROW)
 
+/datum/pet_command/fetch/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to fetch [target]!"
+
 /// A friend has thrown something, if we're listening or at least not busy then go get it
-/datum/pet_command/point_targeting/fetch/proc/listened_throw(mob/living/carbon/thrower)
+/datum/pet_command/fetch/proc/listened_throw(mob/living/carbon/thrower)
 	SIGNAL_HANDLER
 
 	var/mob/living/parent = weak_parent.resolve()
@@ -57,7 +60,7 @@
 	RegisterSignal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(listen_throw_land))
 
 /// A throw we were listening to has finished, see if it's in range for us to try grabbing it
-/datum/pet_command/point_targeting/fetch/proc/listen_throw_land(obj/item/thrown_thing, datum/thrownthing/throwingdatum)
+/datum/pet_command/fetch/proc/listen_throw_land(obj/item/thrown_thing, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED)
@@ -76,7 +79,7 @@
 		parent.ai_controller.set_blackboard_key(BB_FETCH_DELIVER_TO, thrower)
 
 // Don't try and fetch turfs or anchored objects if someone points at them
-/datum/pet_command/point_targeting/fetch/look_for_target(mob/living/pointing_friend, obj/item/pointed_atom)
+/datum/pet_command/fetch/look_for_target(mob/living/pointing_friend, obj/item/pointed_atom)
 	if (!istype(pointed_atom))
 		return FALSE
 	if (pointed_atom.anchored)
@@ -89,7 +92,7 @@
 	parent.ai_controller.set_blackboard_key(BB_FETCH_DELIVER_TO, pointing_friend)
 
 // Finally, plan our actions
-/datum/pet_command/point_targeting/fetch/execute_action(datum/ai_controller/controller)
+/datum/pet_command/fetch/execute_action(datum/ai_controller/controller)
 	controller.queue_behavior(/datum/ai_behavior/forget_failed_fetches)
 
 	var/atom/target = controller.blackboard[BB_CURRENT_PET_TARGET]
