@@ -46005,6 +46005,13 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/entry)
+"nqI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/station/commons/fitness)
 "nqP" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Research Division West";
@@ -53846,8 +53853,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/kirbyplants/random,
 /obj/structure/sign/flag/terragov/directional/north,
+/obj/structure/weightmachine/weightlifter,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "pyn" = (
@@ -81087,6 +81094,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/detectives_office)
+"xyg" = (
+/obj/structure/weightmachine,
+/turf/open/floor/iron,
+/area/station/commons/fitness)
 "xyl" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
@@ -249315,7 +249326,7 @@ cGB
 cGB
 gsI
 tLL
-spy
+nqI
 kKL
 kKL
 kKL
@@ -250338,8 +250349,8 @@ dyA
 skl
 gaC
 vfW
-eOl
 vfW
+xyg
 vfW
 lvk
 crv
