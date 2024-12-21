@@ -293,7 +293,7 @@
 		mutate()
 		return BULLET_ACT_HIT
 	if(istype(proj, /obj/projectile/energy/flora/yield))
-		return myseed.bullet_act(proj)
+		return myseed.projectile_hit(proj)
 	if(istype(proj, /obj/projectile/energy/flora/evolution))
 		if(myseed)
 			if(LAZYLEN(myseed.mutatelist))

@@ -23,6 +23,7 @@
 	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "oar"
 	inhand_icon_state = "oar"
+	icon_angle = 45
 	lefthand_file = 'icons/mob/inhands/items/lavaland_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/lavaland_righthand.dmi'
 	force = 12

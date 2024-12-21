@@ -11,6 +11,7 @@
 	response_harm_simple = "kick"
 
 	faction = list(FACTION_NEUTRAL)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_AQUATIC
 	ai_controller = /datum/ai_controller/basic_controller/penguin
 	///it can lay an egg?
 	var/can_lay_eggs = TRUE

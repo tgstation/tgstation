@@ -109,9 +109,11 @@
 /obj/item/clothing/head/helmet/space/plasmaman/Initialize(mapload)
 	. = ..()
 	visor_toggling()
-	AddComponent(/datum/component/hat_stabilizer)
 	update_appearance()
 	register_context()
+
+/obj/item/clothing/head/helmet/space/plasmaman/add_stabilizer(loose_hat = FALSE)
+	..()
 
 /obj/item/clothing/head/helmet/space/plasmaman/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle Welding Screen"

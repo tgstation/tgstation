@@ -77,7 +77,7 @@
 			if(3) //VICTORY ROYALE
 				to_chat(affected_mob, span_hierophant("You win, and the malevolent spirits fade away as well as your wounds."))
 				affected_mob.client.give_award(/datum/award/achievement/jobs/helbitaljanken, affected_mob)
-				affected_mob.revive(HEAL_ALL)
+				affected_mob.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
 				holder.del_reagent(type)
 				return
 
@@ -524,7 +524,25 @@
 		to_chat(carbies, span_danger("You feel your burns and bruises healing! It stings like hell!"))
 
 	carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
-	if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN) && carbies.getFireLoss() < UNHUSK_DAMAGE_THRESHOLD && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= SYNTHFLESH_UNHUSK_AMOUNT))
+
+	//don't unhusked non husked mobs
+	if (!HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN))
+		return
+
+	//don't try to unhusk mobs above burn damage threshold
+	if (carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
+		return
+
+	var/datum/reagent/synthflesh = carbies.reagents.has_reagent(/datum/reagent/medicine/c2/synthflesh)
+	var/current_volume = synthflesh ? synthflesh.volume : 0
+	var/current_purity = synthflesh ? synthflesh.purity : 0
+
+	if (methods & TOUCH)	//touch does not apply chems to blood, we want to combine the two volumes before attempting to unhusk
+		current_purity = current_volume > 0 ? (current_volume * current_purity + reac_volume * creation_purity) / (current_volume + reac_volume) : creation_purity
+		current_volume += reac_volume
+
+	//when purity = 100%, 60u to unhusk, when purity = 60%, 100u to unhusk.
+	if(current_volume >= SYNTHFLESH_UNHUSK_MAX || current_volume * current_purity >= SYNTHFLESH_UNHUSK_AMOUNT)
 		carbies.cure_husk(BURN)
 		carbies.visible_message(span_nicegreen("A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!")) //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 

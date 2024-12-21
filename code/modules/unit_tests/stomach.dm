@@ -18,7 +18,7 @@
 
 	//Give them meth and let it kick in
 	pill.reagents.add_reagent(meth, 1.9 * initial(meth.metabolization_rate) * SSMOBS_DT)
-	pill.attack(human, human)
+	pill.interact_with_atom(human, human)
 	human.Life(SSMOBS_DT)
 
 	TEST_ASSERT(human.reagents.has_reagent(meth), "Human body does not have meth after life tick")

@@ -698,23 +698,18 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_TURF, src, reagents, methods, volume_modifier, show_message)
-	for(var/reagent in reagents)
-		var/datum/reagent/R = reagent
-		. |= R.expose_turf(src, reagents[R])
+	for(var/datum/reagent/reagent as anything in reagents)
+		var/reac_volume = reagents[reagent]
+		. |= reagent.expose_turf(src, reac_volume)
 
-/**
- * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
- */
-/turf/wash(clean_types)
+// When our turf is washed, we may wash everything on top of the turf
+// By default we will only wash mopable things (like blood or vomit)
+// but you may optionally pass in all_contents = TRUE to wash everything
+/turf/wash(clean_types, all_contents = FALSE)
 	. = ..()
-
-	for(var/am in src)
-		if(am == src)
-			continue
-		var/atom/movable/movable_content = am
-		if(!ismopable(movable_content))
-			continue
-		movable_content.wash(clean_types)
+	for(var/atom/movable/to_clean as anything in src)
+		if(all_contents || HAS_TRAIT(to_clean, TRAIT_MOPABLE))
+			to_clean.wash(clean_types)
 
 /turf/set_density(new_value)
 	var/old_density = density
@@ -821,8 +816,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/add_fishing_spot_comp(datum/source)
 	SIGNAL_HANDLER
-	remove_lazy_fishing()
 	source.AddComponent(/datum/component/fishing_spot, fish_source)
+	remove_lazy_fishing()
 
 /turf/proc/on_npc_fishing(datum/source, list/fish_spot_container)
 	SIGNAL_HANDLER
@@ -836,7 +831,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	if(!fish_source || !HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
 		return
-	if(!GLOB.preset_fish_sources[fish_source].has_known_fishes())
+	if(!GLOB.preset_fish_sources[fish_source].has_known_fishes(src))
 		return
 	. += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
 
