@@ -547,6 +547,9 @@
 ///Sent from /obj/item/skillchip/on_remove()
 #define COMSIG_SKILLCHIP_REMOVED "skillchip_removed"
 
+/// from /obj/machinery/computer/camera_advanced/shuttle_docker/gatherNavComputerOverlays() : (list/images_out)
+#define COMSIG_SHUTTLE_NAV_COMPUTER_IMAGE_REQUESTED "shuttle_nav_computer_image_requested"
+
 /// Sent from /obj/item/organ/wings/functional/proc/open_wings(): (mob/living/carbon/owner)
 #define COMSIG_WINGS_OPENED "wings_opened"
 /// Sent from /obj/item/organ/wings/functional/proc/close_wings(): (mob/living/carbon/owner)
