@@ -8,19 +8,28 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
-	. = ..()
+
 	var/obj/machinery/plumbing/reaction_chamber/reaction_chamber = parent
-	if(!. || !reaction_chamber.emptying || reagents.is_reacting)
+	if(!reaction_chamber.emptying || reagents.is_reacting)
 		return FALSE
+
+	for(var/catalyst in reaction_chamber.catalist)
+		reaction_chamber.reagents.trans_to(reaction_chamber.catalyst_beaker, min(reaction_chamber.reagents.get_reagent_amount(catalyst), reaction_chamber.catalist[catalyst]), target_id = catalyst)
+
+	. = ..()
 
 /datum/component/plumbing/reaction_chamber/send_request(dir)
 	var/obj/machinery/plumbing/reaction_chamber/chamber = parent
+
 	if(chamber.emptying)
 		return
 
 	//take in reagents
 	var/present_amount
 	var/diff
+
+	chamber.catalyst_beaker.reagents.trans_to(chamber, chamber.catalyst_beaker.reagents.total_volume)
+
 	for(var/required_reagent in chamber.required_reagents)
 		//find how much amount is already present if at all and get the reagent reference
 		present_amount = 0

@@ -36,6 +36,7 @@ export const ChemReactionChamber = (props) => {
     reagentAlkaline,
   } = data;
   const reagents = data.reagents || [];
+  const catalysts = data.catalysts || [];
   return (
     <Window width={290} height={400}>
       <Window.Content>
@@ -185,6 +186,7 @@ export const ChemReactionChamber = (props) => {
                     </LabeledList.Item>
                   </LabeledList>
                 </Stack.Item>
+
                 <Stack.Item>
                   <Stack fill>
                     <Stack.Item grow>
@@ -213,6 +215,7 @@ export const ChemReactionChamber = (props) => {
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>
+
                 <Stack.Item>
                   <Stack vertical>
                     {reagents.map((reagent) => (
@@ -224,6 +227,24 @@ export const ChemReactionChamber = (props) => {
                           <Stack.Item mt={0.25} grow>
                             {reagent.volume}
                           </Stack.Item>
+
+                          <Stack.Item>
+                            <Button
+                              content="C"
+                              color="transparent"
+                              tooltip={`
+                                This button converts this reagent entry into a catalyst.
+                                Catalyst reagents are not removed from the reaction chamber
+                                on completion. Useful for certain reactions.`}
+                              tooltipPosition="bottom-start"
+                              onClick={() =>
+                                act('catalyst', {
+                                  chem: reagent.name,
+                                })
+                              }
+                            />
+                          </Stack.Item>
+
                           <Stack.Item>
                             <Button
                               icon="minus"
@@ -235,13 +256,50 @@ export const ChemReactionChamber = (props) => {
                               }
                             />
                           </Stack.Item>
+
                         </Stack>
                       </Stack.Item>
                     ))}
                   </Stack>
+
                 </Stack.Item>
               </Stack>
             </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section
+              title="Catalysts"
+            >
+            <Stack.Item>
+                    <Stack vertical>
+                      {catalysts.map((reagent) => (
+                        <Stack.Item key={reagent.name}>
+                          <Stack fill>
+                            <Stack.Item mt={0.25} textColor="label">
+                              {reagent.name + ':'}
+                            </Stack.Item>
+                            <Stack.Item mt={0.25} grow>
+                              {reagent.volume}
+                            </Stack.Item>
+                            <Stack.Item>
+                              <Button
+                                content="C"
+                                color="bad"
+                                onClick={() =>
+                                  act('catremove', {
+                                    chem: reagent.name,
+                                  })
+                                }
+                              />
+                            </Stack.Item>
+
+                          </Stack>
+                        </Stack.Item>
+                      ))}
+                     </Stack>
+                  </Stack.Item>
+
+              </Section>
           </Stack.Item>
         </Stack>
       </Window.Content>
