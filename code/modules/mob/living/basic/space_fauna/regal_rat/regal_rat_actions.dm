@@ -233,7 +233,6 @@
 /datum/reagent/rat_spit
 	name = "Rat Spit"
 	description = "Something coming from a rat. Dear god! Who knows where it's been!"
-	reagent_state = LIQUID
 	color = "#C8C8C8"
 	metabolization_rate = 0.03 * REAGENTS_METABOLISM
 	taste_description = "something funny"
