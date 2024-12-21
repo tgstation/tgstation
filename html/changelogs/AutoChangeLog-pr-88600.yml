@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed shoes slot being semi-transparent when you have digitigrade legs"

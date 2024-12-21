@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Gibs get bulk cleaned if you clean the turf again"
-  - refactor: "Changed how things determine \"I can be bulk cleaned if I clean the turf underneath me\", let me know if you notice anything not getting bulk cleaned or weird things getting bulk cleaned"

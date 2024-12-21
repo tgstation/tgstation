@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Custom emotes done via the custom emote keybind default to both audible and visible again."

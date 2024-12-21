@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "improved code for mecha rcd"
+  - bugfix: "mecha rcd will cancel its action when the mech is rotated or moves during the action"

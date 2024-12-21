@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - spellcheck: "Bioscrambler no longer informs you about \"your armor softening the blow!\""
