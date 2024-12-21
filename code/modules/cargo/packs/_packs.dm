@@ -106,7 +106,7 @@
 	name = "mining order"
 	hidden = TRUE
 	crate_name = "shaft mining delivery crate"
-	access = list(ACCESS_MINING)
+	access = ACCESS_MINING
 
 /datum/supply_pack/custom/New(purchaser, cost, list/contains)
 	. = ..()
@@ -117,7 +117,7 @@
 /datum/supply_pack/custom/minerals
 	name = "materials order"
 	crate_name = "galactic materials market delivery crate"
-	access = list()
+	access = FALSE
 	crate_type = /obj/structure/closet/crate/cardboard
 
 /datum/supply_pack/custom/minerals/New(purchaser, cost, list/contains)
