@@ -396,15 +396,15 @@
 		return
 
 	if(rable.loaded)
-		to_chat(user, span_warning("You already have a roller table docked!"))
+		to_chat(user, span_warning("You already have \a [rable.loaded] docked!"))
 		return ITEM_INTERACT_FAILURE
 	if(locate(/mob/living) in get_turf(src))
-		to_chat(user, span_warning("You can't collect the table with that much on top!"))
+		to_chat(user, span_warning("You can't collect \the [src] with that much on top!"))
 		return ITEM_INTERACT_FAILURE
 
 	rable.loaded = src
 	forceMove(rable)
-	user.visible_message(span_notice("[user] collects [src]."), balloon_alert(user, "you collect the [src]."))
+	user.visible_message(span_notice("[user] collects \the [src]."), balloon_alert(user, "you collect \the [src]."))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/thing, mob/living/user)
