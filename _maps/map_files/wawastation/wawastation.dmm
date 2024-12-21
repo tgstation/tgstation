@@ -151,6 +151,9 @@
 /obj/item/clothing/suit/hooded/ablative,
 /obj/item/gun/energy/temperature/security,
 /obj/item/gun/energy/ionrifle,
+/obj/item/gun/ballistic/automatic/battle_rifle{
+	pixel_y = 3
+	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
@@ -2165,9 +2168,7 @@
 /area/station/commons/fitness/recreation)
 "aJM" = (
 /obj/machinery/light/small/directional/north,
-/obj/item/surgery_tray/full/morgue{
-	is_portable = 0
-	},
+/obj/effect/spawner/surgery_tray/full/morgue/deployed,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "aJP" = (
@@ -4663,7 +4664,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white/small,
 /area/station/science/lobby)
@@ -21694,7 +21695,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -34388,7 +34389,7 @@
 "mhI" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/item/surgery_tray/full/deployed,
+/obj/effect/spawner/surgery_tray/full/deployed,
 /obj/effect/turf_decal/tile/blue/full,
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/white,
@@ -34886,7 +34887,7 @@
 /area/station/engineering/atmos)
 "moT" = (
 /obj/effect/turf_decal/siding/white,
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
 /turf/open/floor/iron/white/small,
 /area/station/science/lobby)
 "moU" = (
@@ -38134,7 +38135,7 @@
 /turf/open/floor/glass/reinforced,
 /area/station/security/prison)
 "nvT" = (
-/obj/item/surgery_tray/full/deployed,
+/obj/effect/spawner/surgery_tray/full/deployed,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -58322,7 +58323,7 @@
 /turf/open/openspace,
 /area/station/hallway/secondary/exit/departure_lounge)
 "uxw" = (
-/obj/item/surgery_tray/full/deployed,
+/obj/effect/spawner/surgery_tray/full/deployed,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -65380,7 +65381,7 @@
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "wZU" = (
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large/old,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "xad" = (
@@ -68229,7 +68230,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "ybh" = (

@@ -77,7 +77,7 @@
 		if(!hurt)
 			return
 
-		if(victim.check_block(src, 0, "[name]", LEAP_ATTACK))
+		if(. == SUCCESSFUL_BLOCK || victim.check_block(src, 0, "[name]", LEAP_ATTACK))
 			blocked = TRUE
 
 		take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
@@ -120,7 +120,7 @@
 		return
 	throw_mode = THROW_MODE_DISABLED
 	if(hud_used)
-		hud_used.throw_icon.icon_state = "act_throw_off"
+		hud_used.throw_icon.icon_state = "act_throw"
 	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 

@@ -16,9 +16,19 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/L = user.mob
-	L.resist()
+	var/mob/living/owner = user.mob
+	owner.resist()
+	if (owner.hud_used?.resist_icon)
+		owner.hud_used.resist_icon.icon_state = "[owner.hud_used.resist_icon.base_icon_state]_on"
 	return TRUE
+
+/datum/keybinding/living/resist/up(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/owner = user.mob
+	if (owner.hud_used?.resist_icon)
+		owner.hud_used.resist_icon.icon_state = owner.hud_used.resist_icon.base_icon_state
 
 /datum/keybinding/living/look_up
 	hotkey_keys = list("L")
