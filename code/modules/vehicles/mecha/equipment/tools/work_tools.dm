@@ -294,7 +294,7 @@
 	if(!action_checks(target))
 		return
 	// No meson action!
-	if (!(target in view(rcd_range, get_turf(chassis))))
+	if (!(target in view(RCD_RANGE, get_turf(chassis))))
 		return
 	if(get_dist(chassis, target) > RCD_RANGE)
 		balloon_alert(source, "out of range!")
