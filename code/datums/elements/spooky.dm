@@ -27,12 +27,12 @@
 	if(ishuman(user) && !isskeleton(target)) //this weapon wasn't meant for mortals.
 		var/mob/living/carbon/human/human = user
 		if(rattle_bones(human, stam_dam_mult = stam_damage_mult * 2))
-			to_chat(human, "<font color ='red', size ='4'><B>Your ears weren't meant for this spectral sound.</B></font>")
+			to_chat(human, span_userdanger("Your ears weren't meant for this spectral sound."))
 			INVOKE_ASYNC(src, PROC_REF(spectral_change), human, user, source)
 		return
 
 	target.add_mood_event("spooked", /datum/mood_event/spooked)
-	to_chat(target, "<font color='red' size='4'><B>DOOT</B></font>")
+	to_chat(target, span_userdanger("<b>DOOT</b"))
 
 	if(!ishuman(target))//the sound will spook basic mobs.
 		target.set_jitter_if_lower(30 SECONDS)
@@ -58,7 +58,7 @@
 	if(iszombie(human))
 		human.adjustStaminaLoss(25)
 		human.Paralyze(15) //zombies can't resist the doot
-	return bone_amount ? TRUE : FALSE
+	return bone_amount
 
 /datum/element/spooky/proc/spectral_change(mob/living/carbon/human/human, mob/living/user, obj/item/source)
 	if(human.getStaminaLoss() <= 95)
@@ -82,15 +82,15 @@
 	if(!too_spooky)
 		return
 	var/turf/turf = get_turf(human)
-	if(prob(90))
-		var/obj/item/instrument = pick(
-			/obj/item/instrument/saxophone/spectral,
-			/obj/item/instrument/trumpet/spectral,
-			/obj/item/instrument/trombone/spectral,
-		)
-		new instrument(turf)
-	else
+	if(!prob(90))
 		to_chat(human, span_boldwarning("The spooky gods forgot to ship your instrument. Better luck next unlife."))
+		return
+	var/obj/item/instrument = pick(
+		/obj/item/instrument/saxophone/spectral,
+		/obj/item/instrument/trumpet/spectral,
+		/obj/item/instrument/trombone/spectral,
+	)
+	new instrument(turf)
 
 /datum/element/spooky/proc/change_name(mob/living/carbon/human/spooked)
 	var/skeleton_name = spooked.client ? sanitize_name(tgui_input_text(spooked, "Enter your new skeleton name", "Spookifier", spooked.real_name, MAX_NAME_LEN)) : null
