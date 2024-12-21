@@ -30,7 +30,7 @@
 	sprite_height = 9
 
 	average_size = 40
-	average_weight = 1000
+	average_weight = 1500
 	food = /datum/reagent/bluespace
 	feeding_frequency = 10 MINUTES
 	health = 300 // it has 300 health why does it die instantly upon bein bit once..
@@ -340,7 +340,7 @@
 	name = "gullion"
 	fish_id = "gullion"
 	desc = "This crystalline fish is actually one of only two known silicon-based lifeforms.\
-		It avoids death via oxygen-silicate reactions by organically shielding its exterior, allowing the thick scales to calcify into quartz, at the cost of rendering the fish functionally blind. \
+		It avoids death via oxygen-silicate reactions by organically shielding its exterior, allowing the thick scales to calcify into quartz and diamond, at the cost of rendering the fish functionally blind. \
 		How xenomorphs manage is a complete mystery bordering on bullshit."
 	icon = 'icons/obj/aquarium/weird.dmi'
 	dedicated_in_aquarium_icon = 'icons/obj/aquarium/weird.dmi'
@@ -352,7 +352,6 @@
 	hitsound = SFX_DEFAULT_FISH_SLAP
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
-	pickup_sound = SFX_FISH_PICKUP
 	sprite_width = 7
 	sprite_height = 5
 

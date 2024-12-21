@@ -34,8 +34,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/spell/basic/proc/on_grasp_cast(mob/living/carbon/cast_on, datum/action/cooldown/spell/touch/touch_spell)
 	SIGNAL_HANDLER
 
-	// Not a grasp, we dont want this to activate with say star touch.
+	// Not a grasp, we dont want this to activate with say star or mending touch.
 	if(!istype(touch_spell, action_to_add))
+		return NONE
+
+	if(HAS_TRAIT(held_rod, TRAIT_ROD_MANSUS_INFUSED))
 		return NONE
 
 	var/obj/item/fishing_rod/held_rod = cast_on.get_active_held_item()
@@ -49,10 +52,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	held_rod.difficulty_modifier -= 20
 	RegisterSignal(held_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(unfuse))
 	held_rod.add_filter("mansus_infusion", 2, list("type" = "outline", "color" = COLOR_VOID_PURPLE, "size" = 1))
-	var/filter = get_filter("mansus_infusion")
-
-	animate(filter, alpha = 110, time = 1.5 SECONDS, loop = -1)
-	animate(alpha = 40, time = 2.5 SECONDS)
 	return COMPONENT_CAST_HANDLESS
 
 /datum/heretic_knowledge/spell/basic/proc/unfuse(obj/item/fishing_rod/item, reward, mob/user)
