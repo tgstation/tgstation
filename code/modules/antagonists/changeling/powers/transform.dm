@@ -139,10 +139,11 @@
 
 /obj/item/changeling/id/equipped(mob/user, slot, initial)
 	. = ..()
-	if(hud_icon)
-		var/image/holder = user.hud_list[ID_HUD]
-		holder.pixel_y = user.get_cached_height() - ICON_SIZE_Y
-		holder.icon_state = hud_icon
+	if(!hud_icon)
+		return
+	var/image/holder = user.hud_list[ID_HUD]
+	user.adjust_hud_position(holder)
+	holder.icon_state = hud_icon
 
 /**
  * Returns cached flat icon of the ID, creates one if there is not one already cached

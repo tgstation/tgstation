@@ -1,11 +1,11 @@
 /mob/living/basic/bot/proc/diag_hud_set_bothealth()
 	var/image/holder = hud_list[DIAG_HUD]
-	holder.pixel_y = get_cached_height() - ICON_SIZE_Y
+	adjust_hud_position(holder)
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
 /mob/living/basic/bot/proc/diag_hud_set_botstat() //On (With wireless on or off), Off, EMP'ed
 	var/image/holder = hud_list[DIAG_STAT_HUD]
-	holder.pixel_y = get_cached_height() - ICON_SIZE_Y
+	adjust_hud_position(holder)
 	if(bot_mode_flags & BOT_MODE_ON)
 		holder.icon_state = "hudstat"
 		return
@@ -16,7 +16,7 @@
 
 /mob/living/basic/bot/proc/diag_hud_set_botmode() //Shows a bot's current operation
 	var/image/holder = hud_list[DIAG_BOT_HUD]
-	holder.pixel_y = get_cached_height() - ICON_SIZE_Y
+	adjust_hud_position(holder)
 	if(client) //If the bot is player controlled, it will not be following mode logic!
 		holder.icon_state = "hudsentient"
 		return
