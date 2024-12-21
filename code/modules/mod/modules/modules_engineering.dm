@@ -128,7 +128,7 @@
 	hitsound_wall = 'sound/items/weapons/batonextend.ogg'
 	suppressed = SUPPRESSED_VERY
 	hit_threshhold = ABOVE_NORMAL_TURF_LAYER
-	embed_type = /datum/embed_data/tether_projectile
+	embed_type = /datum/embedding/tether_projectile
 	shrapnel_type = /obj/item/tether_anchor
 	/// Reference to the beam following the projectile.
 	var/line
@@ -262,7 +262,7 @@
 	to_chat(target, span_userdanger("[user] attaches a tether to you!"))
 	target.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src), no_target_trait = TRUE)
 
-/datum/embed_data/tether_projectile
+/datum/embedding/tether_projectile
 	embed_chance = 65 //spiky
 	fall_chance = 2
 	ignore_throwspeed_threshold = TRUE

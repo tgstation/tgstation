@@ -170,7 +170,7 @@
 	return (BRUTELOSS|FIRELOSS)
 
 /// Energy swords.
-/datum/embed_data/esword
+/datum/embedding/esword
 	embed_chance = 75
 	impact_pain_mult = 10
 
@@ -190,7 +190,7 @@
 	armour_penetration = 35
 	block_chance = 50
 	block_sound = 'sound/items/weapons/block_blade.ogg'
-	embed_type = /datum/embed_data/esword
+	embed_type = /datum/embedding/esword
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
 	var/list/alt_simple = list("stab", "pierce", "impale")
 
