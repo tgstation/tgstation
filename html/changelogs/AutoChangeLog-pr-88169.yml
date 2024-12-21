@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes:
+  - rscadd: "Shuttle navigation computers now show the location of airlocks, turrets, and the shuttle control consoles on the ship outline while placing a custom landing location."
