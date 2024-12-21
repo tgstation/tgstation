@@ -38,11 +38,16 @@
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flash_range = 5)
 	qdel(src)
 
+/datum/armor/crate_secure/weapons // return to emitters
+	melee = 100
+	bullet = 100
+
 /obj/structure/closet/crate/secure/weapon
-	desc = "A secure weapons crate."
+	desc = "A secure weapons crate. The specially alloyed material hardens in response to physical trauma."
 	name = "weapons crate"
 	icon_state = "weaponcrate"
 	base_icon_state = "weaponcrate"
+	armor_type = /datum/armor/crate_secure/weapons
 
 /obj/structure/closet/crate/secure/plasma
 	desc = "A secure plasma crate."
