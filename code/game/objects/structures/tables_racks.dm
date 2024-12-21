@@ -404,7 +404,7 @@
 
 	rable.loaded = src
 	forceMove(rable)
-	user.visible_message(span_notice("[user] collects \the [src]."), balloon_alert(user, "you collect \the [src]."))
+	user.visible_message(span_notice("[user] collects \the [src]."), span_notice("you collect \the [src]."))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/thing, mob/living/user)
