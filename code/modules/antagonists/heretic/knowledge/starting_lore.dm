@@ -38,7 +38,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	if(!istype(touch_spell, action_to_add))
 		return NONE
 
-
 	var/obj/item/fishing_rod/held_rod = cast_on.get_active_held_item()
 	if(!istype(held_rod, /obj/item/fishing_rod) || HAS_TRAIT(held_rod, TRAIT_ROD_MANSUS_INFUSED))
 		return NONE
