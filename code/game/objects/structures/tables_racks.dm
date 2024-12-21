@@ -390,6 +390,23 @@
 	LAZYNULL(attached_items) // safety
 	return ..()
 
+/obj/structure/table/rolling/item_interaction(mob/living/user, obj/item/rolling_table_dock/rable, list/modifiers)
+	. = NONE
+	if(!istype(rable))
+		return
+
+	if(rable.loaded)
+		to_chat(user, span_warning("You already have \a [rable.loaded] docked!"))
+		return ITEM_INTERACT_FAILURE
+	if(locate(/mob/living) in get_turf(src))
+		to_chat(user, span_warning("You can't collect \the [src] with that much on top!"))
+		return ITEM_INTERACT_FAILURE
+
+	rable.loaded = src
+	forceMove(rable)
+	user.visible_message(span_notice("[user] collects \the [src]."), span_notice("you collect \the [src]."))
+	return ITEM_INTERACT_SUCCESS
+
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	. = ..()
 	LAZYADD(attached_items, thing)
