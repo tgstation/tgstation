@@ -3,6 +3,7 @@
  * @copyright 2021 bobbahbrown (https://github.com/bobbahbrown)
  * @license MIT
  */
+import { BooleanLike } from 'common/react';
 import { createSearch, decodeHtmlEntities } from 'common/string';
 import { useState } from 'react';
 
@@ -12,7 +13,7 @@ import { Window } from '../layouts';
 
 type Data = {
   requests: Request[];
-  fax_autoprinting: boolean;
+  fax_autoprinting: BooleanLike;
 };
 
 type Request = {
