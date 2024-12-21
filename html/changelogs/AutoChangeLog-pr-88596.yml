@@ -1,0 +1,5 @@
+author: "Kocma-san"
+delete-after: True
+changes:
+  - bugfix: "fix radio sound output when receiving a message"
+  - sound: "the sound of receiving your own messages over the radio is no longer played"

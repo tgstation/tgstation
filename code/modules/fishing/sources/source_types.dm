@@ -29,7 +29,7 @@
 		/obj/item/fish/swordfish = 5 MINUTES,
 		/obj/structure/mystery_box/fishing = 32 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/ocean/beach
@@ -48,7 +48,7 @@
 		/obj/item/fish/chasm_crab/ice = 2,
 		/obj/item/fish/boned = 1,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 30
 
 /datum/fish_source/river
 	catalog_description = "River water"
@@ -58,10 +58,10 @@
 		FISHING_DUD = 4,
 		/obj/item/fish/goldfish = 5,
 		/obj/item/fish/guppy = 5,
+		/obj/item/fish/plasmatetra = 4,
 		/obj/item/fish/perch = 4,
 		/obj/item/fish/angelfish = 4,
 		/obj/item/fish/catfish = 4,
-		/obj/item/fish/perch = 5,
 		/obj/item/fish/slimefish = 2,
 		/obj/item/fish/sockeye_salmon = 1,
 		/obj/item/fish/arctic_char = 1,
@@ -74,7 +74,7 @@
 	fish_count_regen = list(
 		/obj/item/fish/pike = 4 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/sand
@@ -87,7 +87,7 @@
 		/obj/item/fish/bumpy = 10,
 		/obj/item/coin/gold = 3,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 30
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/cursed_spring
@@ -102,7 +102,7 @@
 	fish_counts = list(
 		/obj/item/fishing_rod/telescopic/master = 1,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 35
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/portal
@@ -113,6 +113,7 @@
 		/obj/item/fish/angelfish = 10,
 		/obj/item/fish/perch = 5,
 		/obj/item/fish/goldfish/three_eyes = 3,
+		/obj/item/fish/plasmatetra = 3,
 	)
 	catalog_description = "Aquarium dimension (Fishing portal generator)"
 	radial_state = "fish_tank"
@@ -154,7 +155,7 @@
 		/obj/item/stack/sheet/bone = 5,
 	)
 	catalog_description = "Chasm dimension (Fishing portal generator)"
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	radial_name = "Chasm"
 	overlay_state = "portal_chasm"
 	radial_state = "ground_hole"
@@ -182,7 +183,7 @@
 		/obj/item/fish/swordfish = 5 MINUTES,
 	)
 	catalog_description = "Ocean dimension (Fishing portal generator)"
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	radial_name = "Ocean"
 	overlay_state = "portal_ocean"
 	radial_state = "seaboat"
@@ -205,7 +206,7 @@
 		/obj/item/stack/ore/bluespace_crystal = 10,
 	)
 	catalog_description = "Hyperspace dimension (Fishing portal generator)"
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	radial_name = "Hyperspace"
 	overlay_state = "portal_hyperspace"
 	radial_state = "space_rocket"
@@ -231,7 +232,7 @@
 	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
 	overlay_state = "portal_syndicate"
 	radial_state = "syndi_snake"
 
@@ -324,7 +325,7 @@
 		/obj/item/fish/chasm_crab = 15,
 		/datum/chasm_detritus = 30,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
 
 /datum/fish_source/chasm/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
@@ -362,7 +363,7 @@
 	fish_count_regen = list(
 		/obj/structure/closet/crate/necropolis/tendril = 27 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
@@ -404,7 +405,7 @@
 		/obj/item/fish/ratfish = 10,
 		/obj/item/fish/slimefish = 4,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 
 /datum/fish_source/toilet
 	catalog_description = "Station toilets"
@@ -422,7 +423,7 @@
 		/obj/item/storage/wallet/money = 2,
 		/obj/item/survivalcapsule/fishing = 1,
 	)
-	fishing_difficulty = FISHING_EASY_DIFFICULTY //For beginners
+	fishing_difficulty = FISHING_EASY_DIFFICULTY + 10
 
 /datum/fish_source/holographic
 	catalog_description = "Holographic water"
@@ -435,7 +436,7 @@
 		/obj/item/fish/holo/checkered = 5,
 		/obj/item/fish/holo/halffish = 5,
 	)
-	fishing_difficulty = FISHING_EASY_DIFFICULTY
+	fishing_difficulty = FISHING_EASY_DIFFICULTY + 10
 	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD
 
 /datum/fish_source/holographic/on_fishing_spot_init(datum/component/fishing_spot/spot)
@@ -492,7 +493,7 @@
 	fish_count_regen = list(
 		/obj/item/fish/mastodon = 8 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
 
 /datum/fish_source/hydro_tray
 	catalog_description = "Hydroponics trays"
@@ -515,7 +516,7 @@
 		/mob/living/basic/frog = 1,
 		/mob/living/basic/axolotl = 1,
 	)
-	fishing_difficulty = FISHING_EASY_DIFFICULTY - 5
+	fishing_difficulty = FISHING_EASY_DIFFICULTY + 5
 
 /datum/fish_source/hydro_tray/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
 	var/list/data = list()
@@ -624,7 +625,7 @@
 	fish_count_regen = list(
 		/mob/living/basic/carp/mega = 9 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 18
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 28
 
 /datum/fish_source/deepfryer
 	catalog_description = "Deep Fryers"
@@ -647,7 +648,7 @@
 		/obj/item/fish/fryish/fritterish = 6 MINUTES,
 		/obj/item/fish/fryish/nessie = 22 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 13
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 23
 
 /datum/fish_source/surgery
 	catalog_description = "Surgery"
@@ -656,7 +657,7 @@
 	background = "background_lavaland" //Kinda red.
 	fish_table = list(FISHING_RANDOM_ORGAN = 10)
 	//This should get you below zero difficulty and skip the minigame phase, unless you're wearing something that counteracts this.
-	fishing_difficulty = -20
+	fishing_difficulty = -10
 	//The range for waiting is also a bit narrower, so it cannot take as few as 3 seconds or as many as 25 to snatch an organ.
 	wait_time_range = list(6 SECONDS, 12 SECONDS)
 
@@ -707,7 +708,7 @@
 		FISHING_DUD = 10,
 	)
 	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD|FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG
-	fishing_difficulty = FISHING_EASY_DIFFICULTY - 5
+	fishing_difficulty = FISHING_EASY_DIFFICULTY + 5
 
 #undef RANDOM_AQUARIUM_FISH
 
@@ -757,7 +758,7 @@
 	fish_count_regen = list(
 		/obj/item/fish/sacabambaspis = 4 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 30
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/tizira
@@ -772,7 +773,7 @@
 		/obj/item/fish/moonfish/dwarf = 2,
 		/obj/item/fish/moonfish = 2,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/vending
@@ -861,13 +862,21 @@
 
 #undef FISHING_PRODUCT_DIFFICULTY_MULT
 
-/datum/fish_source/vending/dispense_reward(reward_path, mob/fisherman, atom/fishing_spot)
-	if(reward_path != FISHING_VENDING_CHUCK)
-		return ..()
+/datum/fish_source/vending/dispense_reward(reward_path, mob/fisherman, atom/fishing_spot, obj/item/fishing_rod/rod)
 	var/obj/machinery/vending/vending = fishing_spot
 	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
 		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
 		vending = portal.current_linked_atom
+
+	if(reward_path != FISHING_VENDING_CHUCK)
+		var/atom/movable/reward = ..()
+		if(reward)
+			var/creds_value = rod.bait?.get_item_credit_value()
+			if(creds_value)
+				vending.credits_contained += round(creds_value * VENDING_CREDITS_COLLECTION_AMOUNT)
+				qdel(rod.bait)
+		return reward
+
 	if(fishing_spot != vending) //fishing portals
 		vending.forceMove(get_turf(fishing_spot))
 	vending.tilt(fisherman, range = 4)
@@ -889,6 +898,13 @@
 
 /datum/fish_source/vending/pre_challenge_started(obj/item/fishing_rod/rod, mob/user, datum/fishing_challenge/challenge)
 	RegisterSignal(rod, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(on_reward))
+
+/datum/fish_source/vending/on_challenge_completed(mob/user, datum/fishing_challenge/challenge, success)
+	. = ..()
+	//the COMSIG_FISHING_ROD_CAUGHT_FISH is not sent if success is false (minigame was lost or interrupted)
+	//but we need to unregister it still.
+	if(!success)
+		UnregisterSignal(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH)
 
 /datum/fish_source/vending/proc/on_reward(obj/item/fishing_rod/rod, atom/movable/reward, mob/user)
 	SIGNAL_HANDLER

@@ -217,31 +217,32 @@
 			attempt_refill(usr)
 			return TRUE
 
+///Maximum range the RCD can construct at.
+#define RCD_RANGE 3
+
 /obj/item/mecha_parts/mecha_equipment/rcd
 	name = "mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device."
 	icon_state = "mecha_rcd"
 	equip_cooldown = 0 // internal RCD already handles it
 	energy_drain = 0 // internal RCD handles power consumption based on matter use
-	range = MECHA_MELEE|MECHA_RANGED
+	range = MECHA_MELEE | MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
-	///Maximum range the RCD can construct at.
-	var/rcd_range = 3
+
+	///The location the mech was when it began using the rcd
+	var/atom/initial_location = FALSE
 	///Whether or not to deconstruct instead.
 	var/deconstruct_active = FALSE
-	///The type of internal RCD this equipment uses.
-	var/rcd_type = /obj/item/construction/rcd/exosuit
 	///The internal RCD item used by this equipment.
-	var/obj/item/construction/rcd/internal_rcd
+	var/obj/item/construction/rcd/exosuit/internal_rcd
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Initialize(mapload)
 	. = ..()
-	internal_rcd = new rcd_type(src)
-	GLOB.rcd_list += src
+	internal_rcd = new(src)
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
-	GLOB.rcd_list -= src
-	qdel(internal_rcd)
+	initial_location = null
+	QDEL_NULL(internal_rcd)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/get_snowflake_data()
@@ -277,16 +278,31 @@
 				internal_rcd.ui_interact(driver)
 			return TRUE
 
+
+/obj/item/mecha_parts/mecha_equipment/rcd/do_after_checks(atom/target)
+	// Checks if mech moved during operation
+	if(chassis.loc != initial_location)
+		return FALSE
+
+	// Cancel build if design changes
+	if(!deconstruct_active && internal_rcd.blueprint_changed)
+		return FALSE
+
+	return ..()
+
 /obj/item/mecha_parts/mecha_equipment/rcd/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
-	if(get_dist(chassis, target) > rcd_range)
+	// No meson action!
+	if (!(target in view(RCD_RANGE, get_turf(chassis))))
+		return
+	if(get_dist(chassis, target) > RCD_RANGE)
 		balloon_alert(source, "out of range!")
 		return
-	if(!internal_rcd) // if it somehow went missing
-		internal_rcd = new rcd_type(src)
-		stack_trace("Exosuit-mounted RCD had no internal RCD!")
+	initial_location = chassis.loc
+
 	..() // do this now because the do_after can take a while
+
 	var/construction_mode = internal_rcd.mode
 	if(deconstruct_active) // deconstruct isn't in the RCD menu so switch it to deconstruct mode and set it back when it's done
 		internal_rcd.mode = RCD_DECONSTRUCT
@@ -294,11 +310,13 @@
 	internal_rcd.mode = construction_mode
 	return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/rcd/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/mecha_parts/mecha_equipment/rcd/interact_with_atom(obj/item/attacking_item, mob/living/user, list/modifiers)
+	. = NONE
 	if(istype(attacking_item, /obj/item/rcd_upgrade))
 		internal_rcd.install_upgrade(attacking_item, user)
-		return
-	return ..()
+		return ITEM_INTERACT_SUCCESS
+
+#undef RCD_RANGE
 
 //Dunno where else to put this so shrug
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade

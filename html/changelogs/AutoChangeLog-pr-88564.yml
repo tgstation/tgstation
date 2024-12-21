@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - spellcheck: "Update teleporter machine desc to be accurate"

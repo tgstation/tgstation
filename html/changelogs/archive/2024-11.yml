@@ -1058,3 +1058,30 @@
   paganiy:
   - rscadd: 'Add a new item to the chef traitor''s uplink: Molt''Obeso sauce. A sauce
       that makes people want to eat too much.'
+2024-11-30:
+  Absolucy:
+  - bugfix: Light Step now properly prevents your hands and clothes from getting covered
+      in blood when stepping in it.
+  - bugfix: Fixed double-encoded messages with AI shuttle call reasons.
+  CRITAWAKETS:
+  - rscadd: Added in the modulo operator to the circuit arithmetic component.
+  Ghommie:
+  - bugfix: Aquariums are now potential fishing spots.
+  - balance: Aquarium kits can now be printed from cargo, service, science protolathes
+      as well as the autolathe. They no longer have to be ordered from cargo.
+  - balance: Revamped the "Growth/Reproduction" setting for aquarium to "Safe Mode",
+      which also disables the food, temperature and water requiremenets of aquariums,
+      making it useful for purely decorative aquariums.
+  - balance: Replaced the "Aggressive" fish trait with "Territorial". No more angelfish
+      shanking the goldfish and guppy in prefilled aquariums with less than 5 fishes.
+  - qol: Added screentips to aquariums.
+  - rscadd: Icemoon lavaloops (now named plasmaloops) fish now look different.
+  Melbert:
+  - bugfix: You should be afflicted by the "Curse of Mundanity" far, far less
+  - bugfix: Fixed play local sound for admins
+  OrionTheFox:
+  - image: resprited the worn sprites of all Fannypacks
+  SmArtKar:
+  - bugfix: Fixed Nebula's robotics fabricators being obstructed roundstart
+  - bugfix: Fixed damage overlays hiding themselves or flickering when you get wounded.
+  - bugfix: Fixed projectile parrying

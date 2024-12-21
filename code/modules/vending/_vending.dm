@@ -1158,15 +1158,15 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	return FALSE
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)
-	if(!istype(replacer))
-		return FALSE
-	if(!component_parts || !refill_canister)
+	if(!istype(replacer) || !component_parts || !refill_canister)
 		return FALSE
 
-	if(!panel_open || replacer.works_from_distance)
+	var/works_from_distance = istype(replacer, /obj/item/storage/part_replacer/bluespace)
+
+	if(!panel_open || works_from_distance)
 		to_chat(user, display_parts(user))
 
-	if(!panel_open && !replacer.works_from_distance)
+	if(!panel_open && !works_from_distance)
 		return FALSE
 
 	var/restocked = 0
@@ -1526,7 +1526,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 		SSeconomy.track_purchase(account, price_to_use, name)
 		log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
-	credits_contained += round(price_to_use * 0.2)
+	credits_contained += round(price_to_use * VENDING_CREDITS_COLLECTION_AMOUNT)
 	return TRUE
 
 /obj/machinery/vending/process(seconds_per_tick)
