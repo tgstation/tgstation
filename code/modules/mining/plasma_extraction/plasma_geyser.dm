@@ -15,6 +15,7 @@
 	AddComponent(/datum/component/gps, "Toxic Signal")
 	particles = new /particles/smoke/plasma()
 	update_appearance(UPDATE_OVERLAYS)
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_NO_TERRAFORM)))
 
 /obj/structure/liquid_plasma_geyser/Destroy(force)
 	QDEL_NULL(particles)
