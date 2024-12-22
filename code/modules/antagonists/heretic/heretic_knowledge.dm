@@ -40,6 +40,8 @@
 	var/research_tree_icon_dir = SOUTH
 	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
 	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
+	/// If this is set, the knowledge will call on_ascension() on ascension, as long as the heretic's path is the same as the variable.
+	var/ascension_upgrade_path
 
 /** Called when the knowledge is first researched.
  * This is only ever called once per heretic.
@@ -54,6 +56,9 @@
 	if(gain_text)
 		to_chat(user, span_warning("[gain_text]"))
 	on_gain(user, our_heretic)
+	// Grant ascension buffs if applicable!
+	if(our_heretic.ascended && ascension_buff_applicable(our_heretic))
+		on_ascension(user)
 
 /**
  * Called when the knowledge is applied to a mob.
@@ -86,6 +91,14 @@
  */
 /datum/heretic_knowledge/proc/can_be_invoked(datum/antagonist/heretic/invoker)
 	return !!LAZYLEN(required_atoms)
+
+/**
+ * Called when heretic ascends on every knowledge they have.
+ * Argument is the ascendant heretic.
+ */
+/datum/heretic_knowledge/proc/on_ascension(mob/invoker)
+	SHOULD_CALL_PARENT(TRUE)
+	return
 
 /**
  * Special check for rituals.
@@ -194,6 +207,24 @@
 /datum/heretic_knowledge/spell/Destroy()
 	QDEL_NULL(created_action_ref)
 	return ..()
+
+/**
+ * This proc is only actually called if the var ascension_upgrade_path is set. Most spells are unaffected.
+ */
+/datum/heretic_knowledge/spell/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
+	..()
+	if(heretic_datum.heretic_path != ascension_upgrade_path)
+		return
+	var/datum/action/cooldown/spell/linked_spell = locate(action_to_add) in invoker.actions // if we didnt find this, something went seriously wrong..
+
+	linked_spell.background_color = color_transition_filter(GLOB.heretic_path_to_color[heretic_datum.heretic_path])
+	linked_spell.base_overlay_icon_state = "bg_heretic_border_ascension"
+	linked_spell.base_background_icon_state = "bg_heretic_ascension"
+	linked_spell.background_icon_state = "bg_heretic_ascension"
+	linked_spell.active_background_icon_state = "bg_heretic_ascension"
+	linked_spell.build_all_button_icons(force = TRUE)
+	to_chat(invoker, span_purple("Your connection to your [linked_spell.name] has grown stronger!"))
+	return linked_spell
 
 /datum/heretic_knowledge/spell/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	// Added spells are tracked on the body, and not the mind,
@@ -743,6 +774,20 @@
 	if(!isnull(ascension_achievement))
 		user.client?.give_award(ascension_achievement, user)
 	heretic_datum.increase_rust_strength()
+
+	for(var/typepath in heretic_datum.researched_knowledge)
+		var/datum/heretic_knowledge/knowhow = heretic_datum.researched_knowledge[typepath]
+		if(!ascension_buff_applicable(knowhow))
+			continue
+		knowhow.on_ascension(user, heretic_datum)
+
+	return TRUE
+
+/datum/heretic_knowledge/proc/ascension_buff_applicable(datum/antagonist/heretic/heretic_datum)
+	if(!ascension_upgrade_path)
+		return FALSE
+	if(ascension_upgrade_path != heretic_datum.heretic_path)
+		return FALSE
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)

@@ -146,11 +146,17 @@
 	wound_type = /datum/wound/slash/flesh/critical
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_lock"
+	ascension_upgrade_path = PATH_LOCK
 	var/chance = 35
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(prob(chance))
 		return ..()
+
+/datum/heretic_knowledge/blade_upgrade/flesh/lock/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
+	..()
+	chance += 20
+	to_chat(invoker, span_boldnotice("Your blades have unlocked their full wounding potential."))
 
 /datum/heretic_knowledge/spell/caretaker_refuge
 	name = "Caretaker’s Last Refuge"
@@ -204,7 +210,4 @@
 	var/datum/action/cooldown/spell/shapeshift/eldritch/ascension/transform_spell = new(user.mind)
 	transform_spell.Grant(user)
 
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
-	var/datum/heretic_knowledge/blade_upgrade/flesh/lock/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/flesh/lock)
-	blade_upgrade.chance += 30
 	new /obj/structure/lock_tear(loc, user.mind)

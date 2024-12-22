@@ -102,7 +102,16 @@
 	action_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 1
 	research_tree_icon_frame = 7
+	ascension_upgrade_path = PATH_ASH
 
+/datum/heretic_knowledge/spell/fire_blast/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
+	. = ..()
+
+	var/datum/action/cooldown/spell/charged/beam/fire_blast/existing_beam_spell = .
+	existing_beam_spell.max_beam_bounces *= 1.5 // More beams
+	existing_beam_spell.channel_time *= 0.66 // faster channel
+	existing_beam_spell.beam_duration *= 0.66 // Faster beams
+	existing_beam_spell.cooldown_time *= 0.66 // Lower cooldown
 
 /datum/heretic_knowledge/mad_mask
 	name = "Mask of Madness"
@@ -148,6 +157,13 @@
 	action_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
 	research_tree_icon_frame = 5
+	ascension_upgrade_path = PATH_ASH
+
+/datum/heretic_knowledge/spell/flame_birth/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
+	. = ..()
+
+	var/datum/action/cooldown/spell/aoe/fiery_rebirth/fiery_rebirth = .
+	fiery_rebirth?.cooldown_time *= 0.16
 
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"
@@ -194,14 +210,5 @@
 
 	var/datum/action/cooldown/spell/fire_cascade/big/screen_wide_fire_spell = new(user.mind)
 	screen_wide_fire_spell.Grant(user)
-
-	var/datum/action/cooldown/spell/charged/beam/fire_blast/existing_beam_spell = locate() in user.actions
-	if(existing_beam_spell)
-		existing_beam_spell.max_beam_bounces *= 2 // Double beams
-		existing_beam_spell.beam_duration *= 0.66 // Faster beams
-		existing_beam_spell.cooldown_time *= 0.66 // Lower cooldown
-
-	var/datum/action/cooldown/spell/aoe/fiery_rebirth/fiery_rebirth = locate() in user.actions
-	fiery_rebirth?.cooldown_time *= 0.16
 
 	user.add_traits(traits_to_apply, type)

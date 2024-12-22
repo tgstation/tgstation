@@ -676,6 +676,8 @@
 
 	.["Adjust Knowledge Points"] = CALLBACK(src, PROC_REF(admin_change_points))
 	.["Give Focus"] = CALLBACK(src, PROC_REF(admin_give_focus))
+	.["Learn Path Tree"] = CALLBACK(src, PROC_REF(learn_path_tree))
+	.["Force Ascend"] = CALLBACK(src, PROC_REF(force_ascend))
 
 /**
  * Admin proc for giving a heretic a Living Heart easily.
@@ -762,6 +764,54 @@
 	var/mob/living/pawn = owner.current
 	pawn.equip_to_slot_if_possible(new /obj/item/clothing/neck/heretic_focus(get_turf(pawn)), ITEM_SLOT_NECK, TRUE, TRUE)
 	to_chat(pawn, span_hypnophrase("The Mansus has manifested you a focus."))
+
+
+/datum/antagonist/heretic/proc/learn_path_tree(mob/admin)
+	if(!admin.client?.holder)
+		to_chat(admin, span_warning("You shouldn't be using this!"))
+		return
+
+	var/main_tree
+	for(var/datum/heretic_knowledge_tree_column/main/tree_of_knowledge as anything in subtypesof(/datum/heretic_knowledge_tree_column/main))
+		if(initial(tree_of_knowledge.route) != heretic_path)
+			continue
+		main_tree = tree_of_knowledge
+
+	if(!main_tree)
+		to_chat(admin, span_admin("hey man either the heretic didnt pick a path yet or shit is FUBAR"))
+
+	learn_tree_branches(main_tree)
+
+/datum/antagonist/heretic/proc/learn_tree_branches(datum/heretic_knowledge_tree_column/main/tree_of_knowledge)
+
+	var/list/knowledge_to_learn = list()
+	knowledge_to_learn |= initial(tree_of_knowledge.start)
+	knowledge_to_learn |= initial(tree_of_knowledge.grasp)
+	knowledge_to_learn |= initial(tree_of_knowledge.tier1)
+	knowledge_to_learn |= initial(tree_of_knowledge.mark)
+	knowledge_to_learn |= initial(tree_of_knowledge.ritual_of_knowledge)
+	knowledge_to_learn |= initial(tree_of_knowledge.unique_ability)
+	knowledge_to_learn |= initial(tree_of_knowledge.tier2)
+	knowledge_to_learn |= initial(tree_of_knowledge.blade)
+	knowledge_to_learn |= initial(tree_of_knowledge.tier3)
+	// not ascension (you can force it if you need to)
+
+	for(var/knowpath in knowledge_to_learn)
+		if(knowpath in researched_knowledge) // not for double dipping
+			continue
+		gain_knowledge(knowpath)
+
+/datum/antagonist/heretic/proc/force_ascend(mob/admin)
+	if(!admin.client?.holder)
+		to_chat(admin, span_warning("You shouldn't be using this!"))
+		return
+
+	for(var/datum/heretic_knowledge_tree_column/main/tree_of_knowledge as anything in subtypesof(/datum/heretic_knowledge_tree_column/main))
+		if(initial(tree_of_knowledge.route) != heretic_path)
+			continue
+		var/ascension_ritual = initial(tree_of_knowledge.ascension)
+		var/datum/heretic_knowledge/ultimate/path_ascension = new ascension_ritual(owner.current)
+		path_ascension.on_finished_recipe(owner.current, null, get_turf(owner.current))
 
 /datum/antagonist/heretic/antag_panel_data()
 	var/list/string_of_knowledge = list()

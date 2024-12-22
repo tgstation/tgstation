@@ -115,10 +115,18 @@
 	action_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 1
 	research_tree_icon_frame = 5
+	ascension_upgrade_path = PATH_RUST
 
 /datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	our_heretic.increase_rust_strength(TRUE)
+
+// Halved cooldown on ascension.
+/datum/heretic_knowledge/spell/area_conversion/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
+	. = ..()
+	var/datum/action/cooldown/spell/linked_spell = .
+	linked_spell.cooldown_time *= 0.5
+	return
 
 /datum/heretic_knowledge/blade_upgrade/rust
 	name = "Toxic Blade"
@@ -214,8 +222,6 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	user.client?.give_award(/datum/award/achievement/misc/rust_ascension, user)
-	var/datum/action/cooldown/spell/aoe/rust_conversion/rust_spread_spell = locate() in user.actions
-	rust_spread_spell?.cooldown_time /= 2
 
 // I sure hope this doesn't have performance implications
 /datum/heretic_knowledge/ultimate/rust_final/proc/trigger(turf/center)

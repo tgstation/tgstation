@@ -366,6 +366,13 @@
 		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
+	ascension_upgrade_path = PATH_BLADE
+
+/datum/heretic_knowledge/spell/furious_steel/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
+	. = ..()
+	var/datum/action/cooldown/spell/linked_spell = .
+	linked_spell.cooldown_time *= 0.5
+	return
 
 /datum/heretic_knowledge/ultimate/blade_final
 	name = "Maelstrom of Silver"
@@ -409,8 +416,6 @@
 		delete_after_passing_max = FALSE,
 		recharge_time = 2 MINUTES,
 	)
-	var/datum/action/cooldown/spell/pointed/projectile/furious_steel/steel_spell = locate() in user.actions
-	steel_spell?.cooldown_time /= 2
 
 	var/mob/living/carbon/human/heretic = user
 	heretic.physiology.knockdown_mod = 0.75 // Otherwise knockdowns would probably overpower the stun absorption effect.

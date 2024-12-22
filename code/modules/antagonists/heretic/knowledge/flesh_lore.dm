@@ -35,6 +35,7 @@
 	limit = 3 // Bumped up so they can arm up their ghouls too.
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "flesh_blade"
+	ascension_upgrade_path = PATH_FLESH
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -44,6 +45,13 @@
 
 	to_chat(user, span_hierophant("Undertaking the Path of Flesh, you are given another objective."))
 	our_heretic.owner.announce_objectives()
+
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
+	..()
+	limit = 999
+	to_chat(invoker, span_boldnotice("You feel your capacity for blade creation become nigh-infinite!"))
+
+	return
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp
 	name = "Grasp of Flesh"
@@ -58,12 +66,19 @@
 
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_flesh"
+	ascension_upgrade_path = PATH_FLESH
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
+
+/datum/heretic_knowledge/limited_amount/flesh_grasp/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
+	..()
+	limit = 3
+	to_chat(invoker, span_boldnotice("You feel your grasp's ghouling ability triple in strength!"))
+	return
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
@@ -128,8 +143,16 @@
 	cost = 1
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_voiceless"
+	ascension_upgrade_path = PATH_FLESH
+	var/perfect_ritual = FALSE
 
-
+/datum/heretic_knowledge/limited_amount/flesh_ghoul/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
+	..()
+	limit = 3
+	to_chat(invoker, span_boldnotice("You have perfected your ghoul ritual."))
+	name = "Perfect Ritual"
+	perfect_ritual = TRUE
+	return
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -180,7 +203,7 @@
 
 	victim.apply_status_effect(
 		/datum/status_effect/ghoul,
-		MUTE_MAX_HEALTH,
+		perfect_ritual ? 100 : MUTE_MAX_HEALTH,
 		user.mind,
 		CALLBACK(src, PROC_REF(apply_to_ghoul)),
 		CALLBACK(src, PROC_REF(remove_from_ghoul)),
@@ -189,7 +212,8 @@
 /// Callback for the ghoul status effect - Tracks all of our ghouls and applies effects
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/apply_to_ghoul(mob/living/ghoul)
 	LAZYADD(created_items, WEAKREF(ghoul))
-	ADD_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
+	if(!perfect_ritual)
+		ADD_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
 
 /// Callback for the ghoul status effect - Tracks all of our ghouls and applies effects
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/remove_from_ghoul(mob/living/ghoul)
@@ -295,14 +319,6 @@
 	. = ..()
 	var/datum/action/cooldown/spell/shapeshift/shed_human_form/worm_spell = new(user.mind)
 	worm_spell.Grant(user)
-
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
-	var/datum/heretic_knowledge/limited_amount/flesh_grasp/grasp_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_grasp)
-	grasp_ghoul.limit *= 3
-	var/datum/heretic_knowledge/limited_amount/flesh_ghoul/ritual_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_ghoul)
-	ritual_ghoul.limit *= 3
-	var/datum/heretic_knowledge/limited_amount/starting/base_flesh/blade_ritual = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/starting/base_flesh)
-	blade_ritual.limit = 999
 
 #undef GHOUL_MAX_HEALTH
 #undef MUTE_MAX_HEALTH
