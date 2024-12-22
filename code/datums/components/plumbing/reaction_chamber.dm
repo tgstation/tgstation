@@ -8,15 +8,48 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
-
 	var/obj/machinery/plumbing/reaction_chamber/reaction_chamber = parent
 	if(!reaction_chamber.emptying || reagents.is_reacting)
 		return FALSE
 
-	for(var/catalyst in reaction_chamber.catalist)
-		reaction_chamber.reagents.trans_to(reaction_chamber.catalyst_beaker, min(reaction_chamber.reagents.get_reagent_amount(catalyst), reaction_chamber.catalist[catalyst]), target_id = catalyst)
+	if(amount <= 0)
+		return
 
-	. = ..()
+	if(reagent)
+		for(var/datum/reagent/contained_reagent as anything in reagents.reagent_list)
+			if(reaction_chamber.catalyst.Find(reagent))
+				if(reaction_chamber.catalyst[reagent] < reagents.reagent_list[reagent])
+					return TRUE
+			else if(contained_reagent.type == reagent)
+				return TRUE
+
+	for(var/datum/reagent/tester in reagents.reagent_list)
+		if(!reaction_chamber.catalyst.Find(tester))
+			return TRUE
+
+	return FALSE
+
+/datum/component/plumbing/reaction_chamber/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
+	var/obj/machinery/plumbing/reaction_chamber/chamber = parent
+	if(!chamber.catalyst)
+		. = ..()
+	else
+		if(!reagents || !target || !target.reagents)
+			return FALSE
+		var/list/togive = list()
+		var/givetotal = 0
+		for(var/datum/reagent/currentreagent as anything in reagents.reagent_list)
+			var/currentdatum = get_chem_id("[currentreagent]")
+			if(!chamber.catalyst.Find(currentdatum))
+				togive[currentdatum] = reagents.get_reagent_amount(currentdatum)
+				givetotal += togive[currentdatum]
+			else
+				if(chamber.catalyst[currentdatum] < reagents.reagent_list[currentdatum])
+					togive[currentdatum] = reagents.reagent_list[currentdatum] - chamber.catalyst[currentdatum]
+					givetotal += togive[currentdatum]
+
+		for(var/datum/reagent/currentreagent as anything in togive)
+			reagents.trans_to(target.recipient_reagents_holder, amount * (togive[currentreagent]/givetotal), target_id = currentreagent, methods = round_robin ? LINEAR : NONE)
 
 /datum/component/plumbing/reaction_chamber/send_request(dir)
 	var/obj/machinery/plumbing/reaction_chamber/chamber = parent
@@ -27,8 +60,6 @@
 	//take in reagents
 	var/present_amount
 	var/diff
-
-	chamber.catalyst_beaker.reagents.trans_to(chamber, chamber.catalyst_beaker.reagents.total_volume)
 
 	for(var/required_reagent in chamber.required_reagents)
 		//find how much amount is already present if at all and get the reagent reference
