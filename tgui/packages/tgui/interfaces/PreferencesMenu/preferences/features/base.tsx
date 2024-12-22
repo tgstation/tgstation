@@ -261,7 +261,7 @@ export const FeatureShortTextInput = (
       width="100%"
       value={props.value}
       maxLength={props.serverData.maximum_length}
-      updateOnPropsChange // TODO: Tgui core
+      updateOnPropsChange
       onChange={(_, value) => props.handleSetValue(value)}
     />
   );

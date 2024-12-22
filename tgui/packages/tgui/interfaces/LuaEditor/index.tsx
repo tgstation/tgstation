@@ -16,11 +16,11 @@ import {
   Flex,
   MenuBar,
   ProgressBar,
+  Section,
   Stack,
   Tabs,
   TextArea,
 } from 'tgui-core/components';
-import { Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -311,7 +311,7 @@ export const LuaEditor = () => {
                   <Stack.Item grow>
                     <Section
                       title={<Box height="1rem" width="1rem" />}
-                      ref={sectionRef} // TODO: Refs with tgui-core
+                      ref={sectionRef}
                       fill
                       scrollable
                       scrollableHorizontal

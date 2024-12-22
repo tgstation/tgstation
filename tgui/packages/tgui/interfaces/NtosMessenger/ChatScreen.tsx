@@ -6,10 +6,10 @@ import {
   Image,
   Input,
   Modal,
+  Section,
   Stack,
   Tooltip,
 } from 'tgui-core/components';
-import { Section } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
@@ -348,7 +348,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             fill
             fitted
             title={`${recipient.name} (${recipient.job})`}
-            ref={this.scrollRef} // TODO: Refs with tgui-core
+            ref={this.scrollRef}
           >
             <Stack vertical className="NtosChatLog">
               {!!(messages.length > 0 && canReply) && (

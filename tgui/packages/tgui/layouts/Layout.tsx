@@ -5,12 +5,9 @@
  */
 
 import { useEffect, useRef } from 'react';
-import {
-  Box,
-  computeBoxClassName,
-  computeBoxProps, // TODO: Tgui core
-} from 'tgui-core/components';
+import { Box } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
+import { computeBoxClassName, computeBoxProps } from 'tgui-core/ui';
 
 import { addScrollableNode, removeScrollableNode } from '../events';
 
