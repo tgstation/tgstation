@@ -187,6 +187,7 @@
 #include "code\__DEFINES\pronouns.dm"
 #include "code\__DEFINES\qdel.dm"
 #include "code\__DEFINES\quirks.dm"
+#include "code\__DEFINES\radial_defines.dm"
 #include "code\__DEFINES\radiation.dm"
 #include "code\__DEFINES\radio.dm"
 #include "code\__DEFINES\radioactive_nebula.dm"
