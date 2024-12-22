@@ -5771,6 +5771,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/cmo)
+"bCi" = (
+/obj/structure/sink/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/station/service/jimnorton)
 "bCp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -47853,6 +47858,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
+"nOF" = (
+/obj/effect/turf_decal/trimline/green/line,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/station/service/jimnorton)
 "nOG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -255140,7 +255150,7 @@ kKL
 tvZ
 cDw
 kVv
-wgo
+bCi
 lcs
 eGg
 dua
@@ -255655,7 +255665,7 @@ tvZ
 cDw
 lWw
 wgo
-lqM
+nOF
 nfE
 bXC
 lso

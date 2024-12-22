@@ -61325,6 +61325,7 @@
 /obj/item/clothing/suit/apron/chef{
 	name = "Jim Norton's Quebecois Coffee apron"
 	},
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/jimnorton)
 "ptI" = (

@@ -32,6 +32,7 @@
 /area/station/security/prison/shower)
 "aaH" = (
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/station/service/jimnorton)
@@ -9240,6 +9241,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics/augments)
+"due" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
 "duj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -9302,6 +9307,10 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/ai_monitored/command/nuke_storage)
+"dvw" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/small,
+/area/station/security/checkpoint/customs/auxiliary)
 "dvJ" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
@@ -9919,6 +9928,11 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
+"dIy" = (
+/obj/structure/cable,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
 "dIQ" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/structure/flora/bush/flowers_yw/style_3,
@@ -16076,6 +16090,12 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"fOP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
 "fOQ" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -16900,6 +16920,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"gdT" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
 "geb" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/flashlight/lamp/green,
@@ -17007,6 +17031,7 @@
 	name = "Jim Norton's Quebecois Coffee"
 	},
 /obj/structure/sign/poster/official/jim_nortons/directional/west,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/service/jimnorton)
 "gfM" = (
@@ -35234,6 +35259,7 @@
 /obj/effect/turf_decal/trimline/green/line,
 /obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/service/jimnorton)
 "lVg" = (
@@ -40513,6 +40539,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/jimnorton)
 "nNz" = (
@@ -40981,6 +41008,7 @@
 /obj/structure/chair/stool/bar/directional/north,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/station/service/jimnorton)
 "nVU" = (
@@ -53789,6 +53817,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/customs/auxiliary)
 "sqa" = (
@@ -106915,7 +106944,7 @@ qUt
 hdZ
 qUt
 qUt
-tnb
+gdT
 qUt
 tkq
 hcr
@@ -107169,9 +107198,9 @@ eeJ
 eeJ
 eeJ
 qUt
-hdZ
+fOP
 tnb
-tnb
+due
 tnb
 qUt
 lrH
@@ -107430,7 +107459,7 @@ hdZ
 qUt
 qUt
 tnb
-tnb
+gdT
 wua
 spi
 dqO
@@ -107686,11 +107715,11 @@ qUt
 tNs
 tNs
 tNs
-tNs
+dIy
 tNs
 rbW
 xgg
-dqO
+dvw
 taD
 pzL
 qQB
