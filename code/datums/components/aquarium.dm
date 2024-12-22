@@ -241,10 +241,11 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///Called when the feed storage is no longer empty.
-/datum/component/aquarium/proc/start_autofeed(atom/movable/source, new_reagent, amount, reagtemp, data, no_react)
+/datum/component/aquarium/proc/start_autofeed(datum/reagents/source, new_reagent, amount, reagtemp, data, no_react)
 	SIGNAL_HANDLER
 	START_PROCESSING(SSobj, src)
-	UnregisterSignal(source.reagents, COMSIG_REAGENTS_NEW_REAGENT)
+	var/atom/movable/movable = parent
+	UnregisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT)
 
 ///Feed the fish at defined intervals until the feed storage is empty.
 /datum/component/aquarium/process(seconds_per_tick)
