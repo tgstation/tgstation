@@ -197,6 +197,6 @@ interface Window {
 
   // 516 byondstorage API.
   hubStorage: Storage;
-  byondStorage: Storage;
+  domainStorage: Storage;
   serverStorage: Storage;
 }
