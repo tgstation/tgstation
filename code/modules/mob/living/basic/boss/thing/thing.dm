@@ -1,3 +1,4 @@
+#define PHASEREGEN_FILTER "healing_glow"
 /mob/living/basic/boss/thing
 	name = "\improper Thing"
 	icon = 'icons/mob/simple/icemoon/thething.dmi'
@@ -15,8 +16,10 @@
 	attack_verb_simple = "eviscerate"
 	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	speed = 3.5 //holy fuck never make this lower its stupid lethal even on p1 with that speed and i havent even added aoe AI yet
+	speed = 3.5 //dont make this any faster PLEASE
 	ai_controller = /datum/ai_controller/basic_controller/thing_boss
+	loot = list(/obj/item/gun/ballistic/shotgun/lethal)
+	crusher_loot = list(/obj/item/food/little_shiro_sandwich)
 	/// Current phase of the boss fight
 	var/phase = 1
 	/// Time the Thing will be invulnerable between phases
@@ -41,13 +44,12 @@
 		/datum/action/cooldown/mob_cooldown/the_thing/cardinal_tendrils = BB_THETHING_CARDTENDRILS,
 	)
 	grant_actions_by_list(innate_actions)
-	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.5 SECONDS)
+	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.3 SECONDS)
 	if(ruin_spawned)
 		SSqueuelinks.add_to_queue(src, ruin_queue_id, 0)
 		return INITIALIZE_HINT_LATELOAD
 
 /mob/living/basic/boss/thing/LateInitialize()
-	. = ..()
 	SSqueuelinks.pop_link(ruin_queue_id)
 
 /mob/living/basic/boss/thing/update_icon_state()
@@ -55,7 +57,7 @@
 	if(stat)
 		icon_state = "dead"
 		return
-	icon_state = "p[phase][!isnull(phase_invulnerability_timer) ? "-invul" : ""]"
+	icon_state = "p[phase]"
 	icon_living = icon_state
 
 /mob/living/basic/boss/thing/adjust_health(amount, updating_health = TRUE, forced = FALSE)
@@ -76,10 +78,13 @@
 		return
 	ADD_TRAIT(src, TRAIT_GODMODE, MEGAFAUNA_TRAIT)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT)
-	balloon_alert_to_viewers("weakened! use the cannons!")
+	balloon_alert_to_viewers("weakened! overload the machines!")
 	visible_message(span_danger("[src] drops to the ground staggered, unable to keep up with injuries!"))
 	phase_invulnerability_timer = addtimer(CALLBACK(src, PROC_REF(phase_too_slow)), phase_invul_time, TIMER_STOPPABLE|TIMER_UNIQUE)
-	update_appearance()
+	add_filter(PHASEREGEN_FILTER, 2, list("type" = "outline", "color" = COLOR_PALE_GREEN, "alpha" = 0, "size" = 1))
+	var/filter = get_filter(PHASEREGEN_FILTER)
+	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+	animate(alpha = 0, time = 0.5 SECONDS)
 	SEND_SIGNAL(src, COMSIG_MEGAFAUNA_THETHING_PHASEUPDATED)
 
 /// The Thing is successfully hit by incendiary fire while downed by damage (alternatively takes too much damage if not ruin spawned)
@@ -94,7 +99,12 @@
 		phase++
 		emote("scream")
 	update_appearance()
+	var/filter = get_filter(PHASEREGEN_FILTER)
+	if(!isnull(filter))
+		animate(filter)
+		remove_filter(PHASEREGEN_FILTER)
 	SEND_SIGNAL(src, COMSIG_MEGAFAUNA_THETHING_PHASEUPDATED)
+	new /obj/effect/gibspawner/human/bodypartless(loc)
 
 /mob/living/basic/boss/thing/proc/phase_too_slow()
 	phase_invulnerability_timer = null
@@ -103,7 +113,10 @@
 	balloon_alert_to_viewers("recovers!")
 	visible_message(span_danger("[src] recovers from the damage! Too slow!"))
 	adjust_health(-(maxHealth/3) * 0.5) //half of a phase (which is a third of maxhealth)
-	update_appearance()
+	var/filter = get_filter(PHASEREGEN_FILTER)
+	if(!isnull(filter))
+		animate(filter)
+		remove_filter(PHASEREGEN_FILTER)
 	emote("roar")
 	SEND_SIGNAL(src, COMSIG_MEGAFAUNA_THETHING_PHASEUPDATED)
 
@@ -119,9 +132,9 @@
 /obj/structure/thing_boss_phase_depleter
 	name = "Molecular Accelerator"
 	desc = "Weird-ass lab equipment."
-	icon_state = "" //todo sprites
+	icon_state = "thingdepleter"
 	anchored = TRUE
-	density = FALSE
+	density = TRUE
 	move_resist = INFINITY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	/// is this not broken yet
@@ -159,13 +172,6 @@
 	. = ..()
 	. += density ? span_boldnotice("It may be possible to overload this and destroy that things defenses...") : span_bolddanger("The machine is currently being restrained by tendrils.")
 
-/obj/structure/thing_boss_phase_depleter/update_icon_state()
-	. = ..()
-	if(!functional)
-		icon_state = ""
-		return
-	icon_state = density ? "" : ""
-
 /obj/structure/thing_boss_phase_depleter/proc/set_circuit_floor(state)
 	for(var/turf/open/floor/circuit/circuit in RANGE_TURFS(1, loc))
 		circuit.on = state
@@ -175,19 +181,20 @@
 	if(!density)
 		return
 	density = FALSE
-	//lights and messages maybe
 	obj_flags &= ~CAN_BE_HIT
-	update_appearance(UPDATE_ICON)
 	set_circuit_floor(FALSE)
+	name = "hatch"
+	icon_state = "thingdepleter_infloor"
 
 /obj/structure/thing_boss_phase_depleter/proc/go_out_floor()
 	if(density)
 		return
 	density = TRUE
-	//lights and messages maybe
-	update_appearance(UPDATE_ICON)
 	obj_flags |= CAN_BE_HIT
 	set_circuit_floor(TRUE)
+	name = initial(name)
+	icon_state = "thingdepleter"
+	new /obj/effect/temp_visual/mook_dust(loc)
 
 /obj/structure/thing_boss_phase_depleter/interact(mob/user, list/modifiers)
 	var/mob/living/basic/boss/thing/the_thing = boss_weakref?.resolve()
@@ -196,13 +203,22 @@
 	if(!user.can_perform_action(src) || !user.can_interact_with(src))
 		return
 	balloon_alert_to_viewers("overloading...")
+	icon_state = "thingdepleter_overriding"
 	if(!do_after(user, 1 SECONDS, target = src))
+		if(density)
+			icon_state = "thingdepleter"
 		return
 	new /obj/effect/temp_visual/circle_wave/orange(loc)
 	playsound(src, 'sound/effects/explosion/explosion3.ogg', 100)
+	animate(src, transform = matrix()*1.5, time = 0.2 SECONDS)
+	animate(transform = matrix(), time = 0)
 	the_thing.phase_successfully_depleted()
 	functional = FALSE
 	go_in_floor()
+	icon_state = "thingdepleter_overriding"
+	addtimer(VARSET_CALLBACK(src, icon_state, "thingdepleter_broken"), 0.2 SECONDS)
 
 /obj/effect/temp_visual/circle_wave/orange
 	color = COLOR_ORANGE
+
+#undef PHASEREGEN_FILTER

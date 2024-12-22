@@ -17,6 +17,10 @@
 	layer = LARGE_MOB_LAYER
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	/// Loot if not killed by crusher. ONLY matters on initialize.
+	var/list/loot
+	/// Loot if killed by crusher. ONLY matters on initialize.
+	var/list/crusher_loot
 	/// Achievement given to surrounding players when the megafauna is killed
 	var/achievement_type
 	/// Crusher achievement given to players when megafauna is killed
@@ -39,6 +43,15 @@
 	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE, TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE, TRAIT_NO_FLOATING_ANIM), MEGAFAUNA_TRAIT)
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
+	if(!isnull(loot))
+		AddElement(/datum/element/death_drops, loot)
+	if(!isnull(crusher_loot))
+		AddElement(\
+			/datum/element/crusher_loot,\
+			trophy_type = crusher_loot,\
+			drop_mod = 100,\
+			drop_immediately = TRUE,\
+		)
 
 /mob/living/basic/boss/gib()
 	if(health > 0)
@@ -50,8 +63,8 @@
 	if(!force && health > 0)
 		return
 
-	/*crusher_loot.Cut()
-	loot.Cut()*/
+	RemoveElement(/datum/element/death_drops)
+	RemoveElement(/datum/element/crusher_loot)
 
 	return ..()
 
@@ -66,8 +79,8 @@
 	var/crusher_kill = FALSE
 	if(crusher_dmg && crusher_dmg.total_damage >= maxHealth * 0.6)
 		crusher_kill = TRUE
-		//if(crusher_loot) // spawn crusher loot, if any
-		//	spawn_crusher_loot()
+		if(crusher_loot)
+			RemoveElement(/datum/element/death_drops)
 	if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
 		var/tab = "megafauna_kills"
 		if(crusher_kill)
