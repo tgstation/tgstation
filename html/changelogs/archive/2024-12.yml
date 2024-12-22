@@ -477,3 +477,66 @@
       on purity.
   Melbert:
   - bugfix: Lobby button sprites
+2024-12-22:
+  Absolucy:
+  - rscadd: Added a notice for clients on BYOND 516 that 516 is still in beta, and
+      UI elements may not be fully compatible yet.
+  - qol: Rust heretic healing (leeching walk, rust ascension) now, so server lag shouldn't
+      fuck you over nearly as much if you're relying on the healing.
+  Cruix:
+  - rscadd: Shuttle navigation computers now show the location of airlocks, turrets,
+      and the shuttle control consoles on the ship outline while placing a custom
+      landing location.
+  Darkened-Earth:
+  - bugfix: Alarm ranchers have wrangled up a rogue fire alarm in Meta class station
+      custom offices and relocated it to a safe habitat
+  Gaxeer:
+  - bugfix: modular computer laptops can now be interacted with RMB, instead of picked
+      up
+  - qol: modular computer laptops can now be interacted with RMB when open, or opened
+      with RMB when closed. Also screentips for  this added
+  Kocma-san:
+  - rscadd: added a "print" button to the request manager
+  - rscadd: admin fax can now send exotic items
+  - rscadd: added "Auto-print Faxes" button to the request manager, which allows you
+      to enable automatic printing of requests on the admin fax
+  - bugfix: fixed a bug where pressing the print button would cause the receive animation
+      to appear on all admin faxes.
+  - bugfix: fix radio sound output when receiving a message
+  - sound: the sound of receiving your own messages over the radio is no longer played
+  Melbert:
+  - rscadd: Nitroglycerin now heals heart damage.
+  SmArtKar:
+  - bugfix: Fixed floodlights not being affected by spraycan painting
+  - balance: Mech-mounted RCD no longer has wallhacks
+  - balance: Reinforced walls now take double the time to get deconstructed when using
+      an RCD
+  - map: Added a Condi-Master to Birdshot's bar
+  - bugfix: Fixed shoes slot being semi-transparent when you have digitigrade legs
+  - spellcheck: Bioscrambler no longer informs you about "your armor softening the
+      blow!"
+  - bugfix: Chemmaster no longer rounds reagent amounts when trying to transfer a
+      custom amount
+  Sparex:
+  - map: Added lifting benches/workout benches to the fitness room for IceboxStation.dmm
+  SyncIt21:
+  - bugfix: fixed runtime when sealing mecha cabin with air tank installed
+  - bugfix: personal ordered crates can be unlocked & relocked as many times again
+      after the 1st attempt
+  - bugfix: greyscale modify menu has better validation for player entered colours
+  - code_imp: improved code for mecha rcd
+  - bugfix: mecha rcd will cancel its action when the mech is rotated or moves during
+      the action
+  TealSeer:
+  - qol: Atmos devices like valves and pumps can now be renamed with a pen.
+  UnokiAs:
+  - rscadd: Make spears able to break open lockers in melee.
+  grungussuss:
+  - rscdel: screenshake from explosions will no longer happen when it's really far
+      and not on a station area (turf)
+  mcbalaam:
+  - bugfix: The mail sorter no longer runtimes processing assistant mail
+  timothymtorres:
+  - spellcheck: Update teleporter machine desc to be accurate
+  - spellcheck: Fix holodeck emag message claiming to increase power
+  - rscadd: Add power efficiency when stasis bed stock parts are upgraded

@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - rscadd: "Add power efficiency when stasis bed stock parts are upgraded"

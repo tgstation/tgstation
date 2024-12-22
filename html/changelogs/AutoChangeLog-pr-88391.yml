@@ -1,7 +1,0 @@
-author: "Kocma-san"
-delete-after: True
-changes:
-  - rscadd: "added a \"print\" button to the request manager"
-  - rscadd: "admin fax can now send exotic items"
-  - rscadd: "added \"Auto-print Faxes\" button to the request manager, which allows you to enable automatic printing of requests on the admin fax"
-  - bugfix: "fixed a bug where pressing the print button would cause the receive animation to appear on all admin faxes."

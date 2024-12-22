@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Mech-mounted RCD no longer has wallhacks"
-  - balance: "Reinforced walls now take double the time to get deconstructed when using an RCD"

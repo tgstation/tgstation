@@ -1,5 +1,0 @@
-author: "Gaxeer"
-delete-after: True
-changes:
-  - bugfix: "modular computer laptops can now be interacted with RMB, instead of picked up"
-  - qol: "modular computer laptops can now be interacted with RMB when open, or opened with RMB when closed. Also screentips for  this added"
