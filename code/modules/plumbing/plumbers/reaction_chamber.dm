@@ -56,7 +56,6 @@
 	else
 		var/allgood = TRUE
 		for(var/datum/reagent/reagent as anything in holder.reagent_list)
-			testmessage += "[reagent] - "
 			if(!catalyst.Find(get_chem_id("[reagent]")))
 				allgood = FALSE
 				break
