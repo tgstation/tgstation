@@ -901,16 +901,12 @@
 
 /datum/fish_source/vending/on_challenge_completed(mob/user, datum/fishing_challenge/challenge, success)
 	. = ..()
-	//the COMSIG_FISHING_ROD_CAUGHT_FISH is not sent if success is false (minigame was lost or interrupted)
-	//but we need to unregister it still.
-	if(!success)
-		UnregisterSignal(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH)
+	UnregisterSignal(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH)
 
 /datum/fish_source/vending/proc/on_reward(obj/item/fishing_rod/rod, atom/movable/reward, mob/user)
 	SIGNAL_HANDLER
 	if(reward && !QDELETED(rod.bait) && rod.bait.get_item_credit_value()) //you pay for what you get
 		qdel(rod.bait) // fishing_rod.Exited() will handle clearing the hard ref.
-	UnregisterSignal(rod, COMSIG_FISHING_ROD_CAUGHT_FISH)
 
 ///subtype of fish_source/vending for custom vending machines
 /datum/fish_source/vending/custom
