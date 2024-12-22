@@ -344,11 +344,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
 
 	// Wash up.
-	wash_atom(loc)
-	for(var/atom/movable/movable_content as anything in loc)
-		if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
-			wash_atom(movable_content) // Reagent exposure is handled in wash_atom
-
+	wash_atom(loc, TRUE)
 	reagents.remove_all(SHOWER_SPRAY_VOLUME)
 
 /obj/machinery/shower/on_deconstruction(disassembled = TRUE)

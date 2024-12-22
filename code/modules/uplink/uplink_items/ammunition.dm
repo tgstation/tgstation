@@ -7,19 +7,19 @@
 	surplus = 40
 
 /datum/uplink_item/ammo/toydarts
-	name = "Box of Riot Darts"
-	desc = "A box of 40 Donksoft riot darts, for reloading any compatible foam dart magazine. Don't forget to share!"
-	item = /obj/item/ammo_box/foambox/riot
+	name = "Donksoft Riot Pistol Ammunition Case"
+	desc = "A case containing three spare magazines for the Donksoft riot pistol, along with a box of loose riot darts."
+	item = /obj/item/storage/toolbox/guncase/traitor/ammunition/donksoft
 	cost = 2
-	surplus = 0
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	purchasable_from = ~UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/ammo/pistol
-	name = "9mm Handgun Magazine"
-	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol."
-	item = /obj/item/ammo_box/magazine/m9mm
-	cost = 1
+	name = "9mm Magazine Case"
+	desc = "A case containing three additional 8-round 9mm magazines, compatible with the Makarov pistol, as well as \
+		a box of loose 9mm ammunition."
+	item = /obj/item/storage/toolbox/guncase/traitor/ammunition
+	cost = 2
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
