@@ -2035,7 +2035,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple/half/contrasted,
-/obj/machinery/camera/directional/south,
+/obj/machinery/camera/directional/south{
+	network = list("ss13","rd");
+	c_tag = "Science Lobby"
+	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "aLW" = (
