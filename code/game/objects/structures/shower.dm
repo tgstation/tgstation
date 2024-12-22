@@ -343,8 +343,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		// FOREVER mode stays processing so it can cycle back on.
 		return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
 
+	// Got nullspaced?
+	if (isnull(loc))
+		return
+
 	// Wash up.
-	wash_atom(loc, TRUE)
+	for (var/atom/on_loc as anything in loc.contents + loc)
+		wash_atom(on_loc, TRUE)
 	reagents.remove_all(SHOWER_SPRAY_VOLUME)
 
 /obj/machinery/shower/on_deconstruction(disassembled = TRUE)
