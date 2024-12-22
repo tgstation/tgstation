@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscdel: "Removed N-Spect scanner's and scanner gate's ability to scan people for contraband."

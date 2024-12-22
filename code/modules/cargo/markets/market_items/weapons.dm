@@ -64,6 +64,16 @@
 	stock_max = 3
 	availability_prob = 45
 
+/datum/market_item/weapon/carpenter_hammer
+	name = "Carpenter hammer"
+	desc = "When you really want to look like a psycho..."
+	item = /obj/item/carpenter_hammer
+
+	price_min = CARGO_CRATE_VALUE * 1
+	price_max = CARGO_CRATE_VALUE * 1.25
+	stock_max = 2
+	availability_prob = 65
+
 /datum/market_item/weapon/emp_grenade
 	name = "EMP Grenade"
 	desc = "Use this grenade for SHOCKING results!"

@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	desc = "Starts your journey into the Mansus. \
 		Grants you the Mansus Grasp, a powerful and upgradable \
 		disabling spell that can be cast regardless of having a focus."
-	spell_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
+	action_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
 	cost = 0
 	is_starting_knowledge = TRUE
 
@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	name = "Cloak of Shadow"
 	desc = "Grants you the spell Cloak of Shadow. This spell will completely conceal your identity in a purple smoke \
 		for three minutes, assisting you in keeping secrecy. Requires a focus to cast."
-	spell_to_add = /datum/action/cooldown/spell/shadow_cloak
+	action_to_add = /datum/action/cooldown/spell/shadow_cloak
 	cost = 0
 	is_starting_knowledge = TRUE
 
@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	// A golem or an android doesn't have skin!
 	var/exterior_text = "skin"
 	// If carbon, it's the limb. If not, it's the body.
-	var/ripped_thing = body
+	var/atom/movable/ripped_thing = body
 
 	// We will check if it's a carbon's body.
 	// If it is, we will damage a random bodypart, and check that bodypart for its body type, to select between 'skin' or 'exterior'.
@@ -280,14 +280,15 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		var/mob/living/carbon/carbody = body
 		var/obj/item/bodypart/bodypart = pick(carbody.bodyparts)
 		ripped_thing = bodypart
-		bodypart.receive_damage(25, sharpness = SHARP_EDGED)
+
+		carbody.apply_damage(25, BRUTE, bodypart, sharpness = SHARP_EDGED)
 		if(!(bodypart.bodytype & BODYTYPE_ORGANIC))
 			exterior_text = "exterior"
 	else
+		body.apply_damage(25, BRUTE, sharpness = SHARP_EDGED)
 		// If it is not a carbon mob, we will just check biotypes and damage it directly.
 		if(body.mob_biotypes & (MOB_MINERAL|MOB_ROBOTIC))
 			exterior_text = "exterior"
-			body.apply_damage(25, BRUTE)
 
 	// Procure book for flavor text. This is why we call parent at the end.
 	var/obj/item/book/le_book = locate() in selected_atoms

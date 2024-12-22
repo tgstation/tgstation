@@ -2,7 +2,7 @@
 #define PERCEPTOMATRIX_INACTIVE_FLAGS SNUG_FIT|STACKABLE_HELMET_EXEMPT|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT
 #define PERCEPTOMATRIX_ACTIVE_FLAGS PERCEPTOMATRIX_INACTIVE_FLAGS|CASTING_CLOTHES // we love casting spells
 
-/// Belt which can turn you into a beast, once an anomaly core is inserted
+/// Helmet which can turn you into a BEAST!! once an anomaly core is inserted
 /obj/item/clothing/head/helmet/perceptomatrix
 	name = "perceptomatrix helm"
 	desc = "This piece of headgear harnesses the energies of a hallucinative anomaly to create a safe audiovisual replica of -all- external stimuli directly into the cerebral cortex, \
@@ -66,6 +66,8 @@
 
 	update_appearance(UPDATE_ICON_STATE)
 	update_anomaly_state()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -7) // PSYCHIC FISHING
+	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 
 /obj/item/clothing/head/helmet/perceptomatrix/equipped(mob/living/user, slot)
 	. = ..()

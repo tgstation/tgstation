@@ -362,7 +362,7 @@
 	mytray.adjust_toxic(round(volume * 6))
 	mytray.adjust_weedlevel(-rand(4,8))
 
-/datum/reagent/toxin/plantbgone/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/toxin/plantbgone/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	if(istype(exposed_obj, /obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = exposed_obj
@@ -1097,7 +1097,7 @@
 		return
 	exposed_carbon.acid_act(acidpwr, reac_volume)
 
-/datum/reagent/toxin/acid/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/toxin/acid/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	if(ismob(exposed_obj.loc)) //handled in human acid_act()
 		return
@@ -1223,12 +1223,12 @@
 		if(BP)
 			playsound(affected_mob, SFX_DESECRATION, 50, TRUE, -1)
 			affected_mob.visible_message(span_warning("[affected_mob]'s bones hurt too much!!"), span_danger("Your bones hurt too much!!"))
-			affected_mob.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
-			if(BP.receive_damage(brute = 20 * REM * seconds_per_tick, burn = 0, blocked = 200, updating_health = FALSE, wound_bonus = rand(30, 130)))
-				. = UPDATE_MOB_HEALTH
+			affected_mob.say("OOF!!", forced = type)
+			affected_mob.apply_damage(20, BRUTE, BP, wound_bonus = rand(30, 130))
+
 		else //SUCH A LUST FOR REVENGE!!!
 			to_chat(affected_mob, span_warning("A phantom limb hurts!"))
-			affected_mob.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
+			affected_mob.say("Why are we still here, just to suffer?", forced = type)
 
 /datum/reagent/toxin/bonehurtingjuice/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
@@ -1435,3 +1435,9 @@
 	SIGNAL_HANDLER
 	if(current_cycle > 28 && !HAS_TRAIT(source, TRAIT_TETRODOTOXIN_HEALING))
 		return COMSIG_CARBON_BLOCK_BREATH
+
+/datum/reagent/toxin/gatfruit
+	name = "Phytotoxin"
+	description = "A poison produced by the rare and elusive gatfruit plant."
+	liver_damage_multiplier = 0
+	toxpwr = 1

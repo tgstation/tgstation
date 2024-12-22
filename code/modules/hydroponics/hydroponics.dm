@@ -202,6 +202,7 @@
 /obj/machinery/hydroponics/Destroy()
 	if(myseed)
 		QDEL_NULL(myseed)
+	remove_shared_particles(/particles/pollen)
 	return ..()
 
 /obj/machinery/hydroponics/Exited(atom/movable/gone)
@@ -292,7 +293,7 @@
 		mutate()
 		return BULLET_ACT_HIT
 	if(istype(proj, /obj/projectile/energy/flora/yield))
-		return myseed.bullet_act(proj)
+		return myseed.projectile_hit(proj)
 	if(istype(proj, /obj/projectile/energy/flora/evolution))
 		if(myseed)
 			if(LAZYLEN(myseed.mutatelist))
@@ -536,7 +537,7 @@
 	age = 0
 	update_appearance()
 	if(isnull(myseed))
-		particles = null
+		remove_shared_particles(/particles/pollen)
 
 /*
  * Setter proc to set a tray to a new self_sustaining state and update all values associated with it.
@@ -798,12 +799,11 @@
 			T.myseed.set_instability(round((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability))))
 			T.myseed.set_yield(round((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield))))
 			any_adjacent = TRUE
-			if(isnull(particles))
-				particles = new /particles/pollen()
+			add_shared_particles(/particles/pollen)
 			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
 				myseed.perform_reagent_pollination(T.myseed)
 	if(!any_adjacent)
-		particles = null
+		remove_shared_particles(/particles/pollen)
 
 /**
  * Bee pollinate proc.

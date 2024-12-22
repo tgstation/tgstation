@@ -60,7 +60,7 @@
 				affected_mob.visible_message(span_warning("[affected_mob] collapses!"))
 				if(prob(30))
 					to_chat(affected_mob, span_danger("Your vision blurs as you faint!"))
-					affected_mob.AdjustSleeping(10)
+					affected_mob.AdjustSleeping(1 SECONDS)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("[pick("You feel as though your atoms are accelerating in place.", "You feel like you're being torn apart!")]"))
 				affected_mob.emote("scream")

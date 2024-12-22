@@ -438,6 +438,10 @@
 	min_val = 0
 	integer = FALSE // It is in hours, but just in case one wants to specify minutes.
 
+/// Will drones be restricted from interacting with the Supermatter and Atmospherics area?
+/datum/config_entry/flag/drone_area_interaction_restrict
+	default = TRUE
+
 /datum/config_entry/flag/native_fov
 
 /datum/config_entry/flag/disallow_title_music

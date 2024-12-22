@@ -16,6 +16,7 @@
 	has_limbs = TRUE
 	hud_type = /datum/hud/robot
 	unique_name = TRUE
+	mouse_drop_zone = TRUE
 
 	///Represents the cyborg's model (engineering, medical, etc.)
 	var/obj/item/robot_model/model = null
@@ -118,10 +119,10 @@
 	var/low_power_mode = FALSE
 	///So they can initialize sparks whenever/N
 	var/datum/effect_system/spark_spread/spark_system
-	///Smoke particle holder for brute damage
-	var/obj/effect/abstract/particle_holder/smoke_particles = null
-	///Spark particle holder for burn damage
-	var/obj/effect/abstract/particle_holder/spark_particles = null
+	///Smoke particle type for brute damage
+	var/smoke_particles
+	///Spark particle type for burn damage
+	var/spark_particles
 
 	///Jetpack-like effect.
 	var/ionpulse = FALSE

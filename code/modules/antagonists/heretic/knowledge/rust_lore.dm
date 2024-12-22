@@ -104,7 +104,7 @@
 		Anyone overtop the wall will be throw aside (or upwards) and sustain damage."
 	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
 		they no longer looked man made. Or perhaps they never were in the first place."
-	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
+	action_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
 
 /datum/heretic_knowledge/spell/area_conversion
@@ -112,7 +112,7 @@
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
 		Already rusted surfaces are destroyed \ Also improves the rusting abilities of non rust-heretics."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
-	spell_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
+	action_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 1
 	research_tree_icon_frame = 5
 
@@ -147,7 +147,7 @@
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 
-	spell_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
+	action_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 1
 
 
@@ -168,6 +168,8 @@
 		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME! WITNESS MY ASCENSION!"
 
 	ascension_achievement = /datum/award/achievement/misc/rust_ascension
+	announcement_text = "%SPOOKY% Fear the decay, for the Rustbringer, %NAME% has ascended! None shall escape the corrosion! %SPOOKY%"
+	announcement_sound = 'sound/music/antag/heretic/ascend_rust.ogg'
 	/// If TRUE, then immunities are currently active.
 	var/immunities_active = FALSE
 	/// A typepath to an area that we must finish the ritual in.
@@ -208,12 +210,6 @@
 
 /datum/heretic_knowledge/ultimate/rust_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = 'sound/music/antag/heretic/ascend_rust.ogg',
-		color_override = "pink",
-	)
 	trigger(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
@@ -291,12 +287,13 @@
 		return
 
 	var/need_mob_update = FALSE
-	need_mob_update += source.adjustBruteLoss(-5, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss(-5, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(-5, updating_health = FALSE, forced = TRUE)
-	need_mob_update += source.adjustOxyLoss(-5, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss(-20, updating_stamina = FALSE)
+	var/base_heal_amt = 2.5 * DELTA_WORLD_TIME(SSmobs)
+	need_mob_update += source.adjustBruteLoss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(-base_heal_amt, updating_health = FALSE, forced = TRUE)
+	need_mob_update += source.adjustOxyLoss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss(-base_heal_amt * 4, updating_stamina = FALSE)
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += 5 * seconds_per_tick
+		source.blood_volume += base_heal_amt
 	if(need_mob_update)
 		source.updatehealth()

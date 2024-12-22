@@ -202,21 +202,23 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isspider(A) (istype(A, /mob/living/basic/spider))
 
-
-//Misc mobs
-#define isobserver(A) (istype(A, /mob/dead/observer))
-
-#define isdead(A) (istype(A, /mob/dead))
-
-#define isnewplayer(A) (istype(A, /mob/dead/new_player))
+//Eye mobs
+#define iseyemob(A) (istype(A, /mob/eye))
 
 #define isovermind(A) (istype(A, /mob/eye/blob))
 
-#define issentientdisease(A) (istype(A, /mob/eye/disease))
+#define iscameramob(A) (istype(A, /mob/eye/camera))
 
-#define iseyemob(A) (istype(A, /mob/eye))
+#define isaicamera(A) (istype(A, /mob/eye/camera/ai))
 
-#define isaicamera(A) (istype(A, /mob/eye/ai_eye))
+#define isremotecamera(A) (istype(A, /mob/eye/camera/remote))
+
+//Dead mobs
+#define isdead(A) (istype(A, /mob/dead))
+
+#define isobserver(A) (istype(A, /mob/dead/observer))
+
+#define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
@@ -241,8 +243,6 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isstructure(A) (istype(A, /obj/structure))
 
-#define isaquarium(A) (istype(A, /obj/structure/aquarium))
-
 #define ismachinery(A) (istype(A, /obj/machinery))
 
 #define istramwall(A) (istype(A, /obj/structure/tram))
@@ -252,8 +252,6 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isvehicle(A) (istype(A, /obj/vehicle))
 
 #define ismecha(A) (istype(A, /obj/vehicle/sealed/mecha))
-
-#define ismopable(A) (A && ((PLANE_TO_TRUE(A.plane) == FLOOR_PLANE) ? (A.layer <= FLOOR_CLEAN_LAYER) : (A.layer <= GAME_CLEAN_LAYER))) //If something can be cleaned by floor-cleaning devices such as mops or clean bots
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 

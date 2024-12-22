@@ -445,7 +445,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	for(var/type_index as anything in hat_selections)
 		if(level >= hat_selections[type_index])
 			var/obj/item/hat = type_index
-			var/obj/item/hat_name = initial(hat.name)
+			var/hat_name = initial(hat.name)
 			if(length(SSachievements.achievements)) // The Achievements subsystem is active.
 				var/datum/award/required_cheevo = cheevo_hats[hat]
 				if(required_cheevo && !user.client.get_award_status(required_cheevo))

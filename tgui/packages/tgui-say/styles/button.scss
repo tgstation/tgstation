@@ -15,7 +15,11 @@
   padding: 0;
   width: 2.6rem;
   &:hover {
-    background-color: lighten(colors.$button, 10%);
+    background-color: color.adjust(
+      colors.$button,
+      $lightness: 10%,
+      $space: hsl
+    );
   }
 }
 
