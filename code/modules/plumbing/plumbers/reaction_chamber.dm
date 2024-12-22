@@ -50,7 +50,6 @@
 
 	if(!catalyst)
 		if(!holder.total_volume && emptying) //we were emptying, but now we aren't
-			message_admins("No Catalyst list detected.")
 			emptying = FALSE
 			holder.flags |= NO_REACT
 	else

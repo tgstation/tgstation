@@ -270,36 +270,36 @@ export const ChemReactionChamber = (props) => {
             <Section
               title="Catalysts"
             >
-            <Stack.Item>
-                    <Stack vertical>
-                      {catalysts.map((reagent) => (
-                        <Stack.Item key={reagent.name}>
-                          <Stack fill>
-                            <Stack.Item mt={0.25} textColor="label">
-                              {reagent.name + ':'}
-                            </Stack.Item>
-                            <Stack.Item mt={0.25} grow>
-                              {reagent.volume}
-                            </Stack.Item>
-                            <Stack.Item>
-                              <Button
-                                content="C"
-                                color="bad"
-                                onClick={() =>
-                                  act('catremove', {
-                                    chem: reagent.name,
-                                  })
-                                }
-                              />
-                            </Stack.Item>
-
-                          </Stack>
+              <Stack.Item>
+                <Stack vertical>
+                  {catalysts.map((reagent) => (
+                    <Stack.Item key={reagent.name}>
+                      <Stack fill>
+                        <Stack.Item mt={0.25} textColor="label">
+                          {reagent.name + ':'}
                         </Stack.Item>
-                      ))}
-                     </Stack>
-                  </Stack.Item>
+                        <Stack.Item mt={0.25} grow>
+                          {reagent.volume}
+                        </Stack.Item>
+                        <Stack.Item>
+                          <Button
+                            content="C"
+                            color="bad"
+                            onClick={() =>
+                              act('catremove', {
+                                chem: reagent.name,
+                              })
+                            }
+                          />
+                        </Stack.Item>
 
-              </Section>
+                      </Stack>
+                    </Stack.Item>
+                  ))}
+                </Stack>
+              </Stack.Item>
+
+            </Section>
           </Stack.Item>
         </Stack>
       </Window.Content>
