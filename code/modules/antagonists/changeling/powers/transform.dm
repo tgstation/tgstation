@@ -141,9 +141,7 @@
 	. = ..()
 	if(!hud_icon)
 		return
-	var/image/holder = user.hud_list[ID_HUD]
-	user.adjust_hud_position(holder)
-	holder.icon_state = hud_icon
+	user.set_hud_image_state(ID_HUD, hud_icon)
 
 /**
  * Returns cached flat icon of the ID, creates one if there is not one already cached
