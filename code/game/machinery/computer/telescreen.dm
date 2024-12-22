@@ -12,7 +12,7 @@
 	light_power = 0
 	/// The kind of wallframe that this telescreen drops
 	var/frame_type = /obj/item/wallframe/telescreen
-	proj_pass_chance = 100
+	projectiles_pass_chance = 100
 
 /obj/item/wallframe/telescreen
 	name = "telescreen frame"
