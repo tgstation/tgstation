@@ -66,6 +66,7 @@
 	animate(src, transform = ntransform, time = animate_time, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT))
 	for (var/hud_key in hud_list)
 		var/image/hud_image = hud_list[hud_key]
-		adjust_hud_position(hud_image, animate_time = animate_time)
+		if (istype(hud_image))
+			adjust_hud_position(hud_image, animate_time = animate_time)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_UPDATE_TRANSFORM, resize, lying_angle, is_opposite_angle)
