@@ -268,7 +268,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	if(!has_language(language))
 		var/datum/language/dialect = GLOB.language_datum_instances[language]
-		raw_message = dialect.scramble(raw_message)
+		raw_message = dialect.scramble_sentence(raw_message, get_mutually_understood_languages())
 
 	return raw_message
 

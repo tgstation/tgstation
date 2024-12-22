@@ -55,3 +55,8 @@
 			"his", "ing", "ion", "ith", "not", "ome", "oul", "our", "sho", "ted", "ter", "tha", "the", "thi",
 		),
 	)
+
+	mutual_understanding = list(
+		/datum/language/beachbum = 33,
+		/datum/language/uncommon = 20,
+	)

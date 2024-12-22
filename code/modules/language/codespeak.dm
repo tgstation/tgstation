@@ -7,10 +7,10 @@
 	icon_state = "codespeak"
 	always_use_default_namelist = TRUE // No syllables anyways
 
-/datum/language/codespeak/scramble(input)
-	var/lookup = check_cache(input)
-	if(lookup)
-		return lookup
+/datum/language/codespeak/scramble_sentence(input, list/mutual_languages)
+	. = read_word_cache(input)
+	if(.)
+		return .
 
 	. = ""
 	var/list/words = list()
@@ -29,4 +29,4 @@
 	if(input_ending in endings)
 		. += input_ending
 
-	add_to_cache(input, .)
+	write_word_cache(input, .)

@@ -176,6 +176,18 @@ Key procs
 /datum/language_holder/proc/get_random_understood_language()
 	return pick(understood_languages)
 
+/// Gets a list of all mutually understood languages.
+/datum/language_holder/proc/get_mutually_understood_languages()
+	var/list/mutual_languages = list()
+	for(var/language_type in understood_languages)
+		var/datum/language/language_instance = GLOB.language_datum_instances[language_type]
+		for(var/mutual_language_type in language_instance.mutual_understanding)
+			// add it to the list OR override it if it's a stronger mutual understanding
+			if(!mutual_languages[mutual_language_type] || mutual_languages[mutual_language_type] < language_instance.mutual_understanding[mutual_language_type])
+				mutual_languages[mutual_language_type] = language_instance.mutual_understanding[mutual_language_type]
+
+	return mutual_languages
+
 /// Gets a random spoken language, useful for forced speech and such.
 /datum/language_holder/proc/get_random_spoken_language()
 	return pick(spoken_languages)

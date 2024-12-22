@@ -1595,6 +1595,10 @@
 /atom/movable/proc/get_random_understood_language()
 	return get_language_holder().get_random_understood_language()
 
+/// Gets a list of all mutually understood languages.
+/atom/movable/proc/get_mutually_understood_languages()
+	return get_language_holder().get_mutually_understood_languages()
+
 /// Gets a random spoken language, useful for forced speech and such.
 /atom/movable/proc/get_random_spoken_language()
 	return get_language_holder().get_random_spoken_language()

@@ -19,3 +19,8 @@
 	)
 	icon_state = "beach"
 	always_use_default_namelist = TRUE
+
+	mutual_understanding = list(
+		/datum/language/common = 50,
+		/datum/language/uncommon = 30,
+	)

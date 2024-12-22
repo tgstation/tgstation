@@ -267,3 +267,14 @@ GLOBAL_LIST_INIT(status_display_state_pictures, list(
 ))
 
 GLOBAL_LIST_INIT(fishing_tips, world.file2list("strings/fishing_tips.txt"))
+
+/// 1000 element long list containing the 1000 most common words in the English language.
+/// Indexed by word, value is the rank of the word in the list. So accessing it is fasta.
+GLOBAL_LIST_INIT(most_common_words, init_common_words())
+
+/proc/init_common_words()
+	. = list()
+	var/i = 1
+	for(var/word in world.file2list("strings/1000_most_common.txt"))
+		.[word] = i
+		i += 1
