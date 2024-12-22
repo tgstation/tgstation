@@ -967,10 +967,30 @@ em {
 }
 
 .examine_block {
-  background: hsl(220, 5.3%, 11.2%);
-  border: 1px solid hsl(213.6, 37.9%, 74.1%);
-  margin: 0.5em;
+  background: hsl(220, 10%, 10%);
+  border: 1px solid hsla(220, 40%, 75%, 0.25);
+  border-width: 1em * calc(1px / 12px) 1em * calc(5px / 12px);
+  margin: 0.5em 0;
   padding: 0.5em 0.75em;
+  border-radius: 0.5em;
+}
+
+.custom_fieldset {
+  margin: 1.5em 0 0.5em;
+  padding: 1em 0.75em 0.5em;
+}
+
+.fieldset_legend {
+  max-width: 95%;
+  font-size: 120%;
+  text-align: center;
+  padding: 0.25rem 0.75rem;
+  margin-bottom: -1.5em;
+  background: inherit;
+  border: 1px solid;
+  border-color: inherit;
+  border-radius: 0.33em;
+  transform: translateY(-100%);
 }
 
 .tooltip {
