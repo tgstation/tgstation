@@ -984,14 +984,42 @@ h2.alert {
   margin-left: 3em;
 }
 
-.boxed_message {
-  background: hsl(220, 100%, 97.5%);
-  border-color: hsla(220, 75%, 25%, 0.5);
-}
-
 .tooltip {
   font-style: italic;
   border-bottom: 1px dashed #000;
+}
+
+.fieldset_legend {
+  background: #ffffff; // Chat background color
+
+  &:before {
+    background: #ffffff; // Chat background color
+  }
+}
+
+.boxed_message {
+  background: hsl(220, 100%, 97.5%);
+  border-color: hsla(220, 75%, 25%, 0.5);
+
+  &.red {
+    background: hsl(0, 100%, 97.5%);
+    border-color: hsla(0, 100%, 50%, 0.5);
+  }
+
+  &.green {
+    background: hsl(140, 100%, 97.5%);
+    border-color: hsl(120, 100%, 33%, 0.5);
+  }
+
+  &.blue {
+    background: hsl(220, 100%, 97.5%);
+    border-color: hsla(225, 100%, 50%, 0.5);
+  }
+
+  &.purple {
+    background: hsl(260, 100%, 97.5%);
+    border-color: hsla(260, 100%, 50%, 0.5);
+  }
 }
 
 // Provides a horizontal bar with text in the middle
