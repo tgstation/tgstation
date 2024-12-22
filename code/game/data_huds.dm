@@ -265,7 +265,6 @@ Security HUDs! Basic mode shows only the job.
 
 /mob/living/proc/sec_hud_set_implants()
 	for(var/hud_type in (list(IMPSEC_FIRST_HUD, IMPLOYAL_HUD, IMPSEC_SECOND_HUD) & hud_list))
-		set_hud_image_state(hud_type, null)
 		set_hud_image_inactive(hud_type)
 
 	var/security_slot = 1 //Which of the two security hud slots are we putting found security implants in?
@@ -298,13 +297,11 @@ Security HUDs! Basic mode shows only the job.
 	var/perp_name = get_face_name(get_id_name(""))
 
 	if(!perp_name || !GLOB.manifest)
-		set_hud_image_state(WANTED_HUD, null)
 		set_hud_image_inactive(WANTED_HUD)
 		return
 
 	var/datum/record/crew/target = find_record(perp_name)
 	if(!target || target.wanted_status == WANTED_NONE)
-		set_hud_image_state(WANTED_HUD, null)
 		set_hud_image_inactive(WANTED_HUD)
 		return
 
@@ -388,7 +385,6 @@ Diagnostic HUDs!
 //borg-AI shell tracking
 /mob/living/silicon/robot/proc/diag_hud_set_aishell() //Shows if AI is controlling a cyborg via a BORIS module
 	if(!shell) //Not an AI shell
-		set_hud_image_state(DIAG_TRACK_HUD, null)
 		set_hud_image_inactive(DIAG_TRACK_HUD)
 		return
 	if(deployed) //AI shell in use by an AI
@@ -400,11 +396,11 @@ Diagnostic HUDs!
 //AI side tracking of AI shell control
 /mob/living/silicon/ai/proc/diag_hud_set_deployed() //Shows if AI is currently shunted into a BORIS borg
 	if(!deployed_shell)
-		set_hud_image_state(DIAG_TRACK_HUD, null)
 		set_hud_image_inactive(DIAG_TRACK_HUD)
-	else //AI is currently controlling a shell
-		set_hud_image_state(DIAG_TRACK_HUD, "hudtrackingai")
-		set_hud_image_active(DIAG_TRACK_HUD)
+		return
+ 	//AI is currently controlling a shell
+	set_hud_image_state(DIAG_TRACK_HUD, "hudtrackingai")
+	set_hud_image_active(DIAG_TRACK_HUD)
 
 /*~~~~~~~~~~~~~~~~~~~~
 	BIG STOMPY MECHS
@@ -420,13 +416,12 @@ Diagnostic HUDs!
 		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
 
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_mechstat()
-	if(internal_damage)
-		set_hud_image_state(DIAG_STAT_HUD, "hudwarn")
-		set_hud_image_active(DIAG_STAT_HUD)
+	if(!internal_damage)
+		set_hud_image_inactive(DIAG_STAT_HUD)
 		return
 
-	set_hud_image_state(DIAG_STAT_HUD, null)
-	set_hud_image_inactive(DIAG_STAT_HUD)
+	set_hud_image_state(DIAG_STAT_HUD, "hudwarn")
+	set_hud_image_active(DIAG_STAT_HUD)
 
 ///Shows tracking beacons on the mech
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_mechtracking()
@@ -443,15 +438,13 @@ Diagnostic HUDs!
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_camera()
 	if(!chassis_camera)
 		set_hud_image_inactive(DIAG_CAMERA_HUD)
-		set_hud_image_state(DIAG_CAMERA_HUD, null)
 		return
 
 	set_hud_image_active(DIAG_CAMERA_HUD)
 	if(chassis_camera?.is_emp_scrambled)
 		set_hud_image_state(DIAG_CAMERA_HUD, "hudcamera_empd")
-		return
-
-	set_hud_image_state(DIAG_CAMERA_HUD, "hudcamera")
+	else
+		set_hud_image_state(DIAG_CAMERA_HUD, "hudcamera")
 
 /*~~~~~~~~~
 	Bots!
@@ -554,32 +547,19 @@ Diagnostic HUDs!
 
 /atom/proc/adjust_hud_position(image/holder, animate_time = null)
 	if (animate_time)
-		animate(holder, pixel_x = -(get_visual_width() - ICON_SIZE_X) / 2, pixel_y = get_visual_height() - ICON_SIZE_Y, time = animate_time)
+		animate(holder, pixel_x = -(get_cached_width() - ICON_SIZE_X) / 2, pixel_y = get_cached_height() - ICON_SIZE_Y, time = animate_time)
 		return
-	holder.pixel_x = -(get_visual_width() - ICON_SIZE_X) / 2
-	holder.pixel_y = get_visual_height() - ICON_SIZE_Y
-
-/mob/living/adjust_hud_position(image/holder, animate_time = null)
-	// Account for "forced" sprite offsets since we're technically including them already by being attached to the mob
-	var/hud_x_offset = -(get_visual_width() - ICON_SIZE_X) / 2 - body_position_pixel_x_offset
-	var/hud_y_offset = get_visual_height() - ICON_SIZE_Y - body_position_pixel_y_offset
-	// Since we're axing body y offset, need to include this one manually
-	if(rotate_on_lying && body_position == LYING_DOWN)
-		hud_y_offset += PIXEL_Y_OFFSET_LYING
-
-	if (animate_time)
-		animate(holder, pixel_x = hud_x_offset, pixel_y = hud_y_offset, time = animate_time)
-		return
-
-	holder.pixel_x = hud_x_offset
-	holder.pixel_y = hud_y_offset
+	holder.pixel_x = -(get_cached_width() - ICON_SIZE_X) / 2
+	holder.pixel_y = get_cached_height() - ICON_SIZE_Y
 
 /atom/proc/set_hud_image_state(hud_type, hud_state, x_offset = 0, y_offset = 0)
 	if (!hud_list) // Still initializing
 		return
 	var/image/holder = hud_list[hud_type]
-	if (!istype(holder)) // Can contain lists for HUD_LIST_LIST hinted HUDs
+	if (!holder)
 		return
+	if (!istype(holder)) // Can contain lists for HUD_LIST_LIST hinted HUDs, if someone fucks up and passes this here we wanna know about it
+		CRASH("[src] ([type]) had a HUD_LIST_LIST hud_type [hud_type] passed into set_hud_image_state!")
 	holder.icon_state = hud_state
 	adjust_hud_position(holder)
 	if (x_offset || y_offset)
