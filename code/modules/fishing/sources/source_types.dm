@@ -868,19 +868,19 @@
 		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
 		vending = portal.current_linked_atom
 
-	if(reward_path != FISHING_VENDING_CHUCK)
-		var/atom/movable/reward = ..()
-		if(reward)
-			var/creds_value = rod.bait?.get_item_credit_value()
-			if(creds_value)
-				vending.credits_contained += round(creds_value * VENDING_CREDITS_COLLECTION_AMOUNT)
-				qdel(rod.bait)
-		return reward
+	if(reward_path == FISHING_VENDING_CHUCK)
+		if(fishing_spot != vending) //fishing portals
+			vending.forceMove(get_turf(fishing_spot))
+		vending.tilt(fisherman, range = 4)
+		return null //Don't spawn a reward at all
 
-	if(fishing_spot != vending) //fishing portals
-		vending.forceMove(get_turf(fishing_spot))
-	vending.tilt(fisherman, range = 4)
-	return null //Don't spawn a reward at all
+	var/atom/movable/reward = ..()
+	if(reward)
+		var/creds_value = rod.bait?.get_item_credit_value()
+		if(creds_value)
+			vending.credits_contained += round(creds_value * VENDING_CREDITS_COLLECTION_AMOUNT)
+			qdel(rod.bait)
+	return reward
 
 /datum/fish_source/vending/spawn_reward(reward_path, atom/spawn_location, obj/machinery/vending/fishing_spot)
 	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
