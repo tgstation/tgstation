@@ -349,4 +349,4 @@
 		message = html_encode(message)
 	else
 		message = copytext(message, 2)
-	to_chat(target, span_purple(examine_block("<span class='oocplain'><b>[source]: </b>[message]</span>")))
+	to_chat(target, span_purple(boxed_message("<span class='oocplain'><b>[source]: </b>[message]</span>")))

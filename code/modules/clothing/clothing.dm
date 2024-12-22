@@ -456,7 +456,7 @@
 			readout += "No armor or durability information available."
 
 		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
-		to_chat(usr, examine_block(formatted_readout))
+		to_chat(usr, boxed_message(formatted_readout))
 
 /**
  * Rounds armor_value down to the nearest 10, divides it by 10 and then converts it to Roman numerals.

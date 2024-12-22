@@ -44,7 +44,7 @@
 /// Used for debug messages to the server
 #define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")
 /// Adds a generic box around whatever message you're sending in chat. Really makes things stand out.
-#define examine_block(str) ("<div class='examine_block'>" + str + "</div>")
+#define boxed_message(str) ("<div class='boxed_message'>" + str + "</div>")
 /// Makes a custom fieldset with a name in the middle top part. Can apply additional classes
 #define fieldset_block(title, content, classes) ("<div class='custom_fieldset " + classes + "'><legend align='center' class='fieldset_legend'>" + title + "</legend>" + content + "</div>")
 /// Makes a horizontal line with text in the middle
