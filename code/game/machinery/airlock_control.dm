@@ -9,11 +9,9 @@
 
 /obj/machinery/door/airlock/mouse_drop_receive(mob/living/dropping, mob/user, params)
 	. = ..()
-	/// For performance reasons and to cut down on init times we are "lazy-loading" the leaning component when someone drags their sprite onto us, and then calling dragging code again to trigger the component
+	// We add the component only once here & not in Initialize() because there are tons of airlocks & we don't want to add to their init times
 	// This is on airlock rather than on door because windoors are door and leaning looks whack on windoors
-	added_leaning = TRUE
-	AddComponent(/datum/component/leanable, 11)
-	dropping.base_mouse_drop_handler(src, null, null, params)
+	LoadComponent(/datum/component/leanable, dropping)
 
 
 /// Forces the airlock to unbolt and open

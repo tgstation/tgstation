@@ -152,8 +152,6 @@
 	///What was our power state the last time we updated its appearance?
 	///TRUE for on, FALSE for off, -1 for never checked
 	var/appearance_power_state = -1
-	///Have we added a leaning component to ourselves?
-	var/added_leaning = FALSE
 
 /datum/armor/obj_machinery
 	melee = 25
