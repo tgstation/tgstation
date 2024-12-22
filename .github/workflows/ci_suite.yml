@@ -287,10 +287,11 @@ jobs:
   completion_gate: # Serves as a non-moving target for branch rulesets
     if: always() && !cancelled()
     name: Completion Gate
-    needs: [ test_windows, compare_screenshots, compile_all_maps, run_linters ]
+    needs: [ test_windows, compare_screenshots, compile_all_maps, run_all_tests, run_alternate_tests, run_linters ]
     runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed
         uses: re-actors/alls-green@release/v1
         with:
           jobs: ${{ toJSON(needs) }}
+          allowed-skips: compare_screenshots
