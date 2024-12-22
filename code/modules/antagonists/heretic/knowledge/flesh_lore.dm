@@ -149,9 +149,6 @@
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
 	..()
 	limit = 3
-	to_chat(invoker, span_boldnotice("You have perfected your ghoul ritual."))
-	name = "Perfect Ritual"
-	perfect_ritual = TRUE
 	return
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -203,7 +200,7 @@
 
 	victim.apply_status_effect(
 		/datum/status_effect/ghoul,
-		perfect_ritual ? 100 : MUTE_MAX_HEALTH,
+		MUTE_MAX_HEALTH,
 		user.mind,
 		CALLBACK(src, PROC_REF(apply_to_ghoul)),
 		CALLBACK(src, PROC_REF(remove_from_ghoul)),
@@ -212,8 +209,7 @@
 /// Callback for the ghoul status effect - Tracks all of our ghouls and applies effects
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/apply_to_ghoul(mob/living/ghoul)
 	LAZYADD(created_items, WEAKREF(ghoul))
-	if(!perfect_ritual)
-		ADD_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
+	ADD_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
 
 /// Callback for the ghoul status effect - Tracks all of our ghouls and applies effects
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/remove_from_ghoul(mob/living/ghoul)
