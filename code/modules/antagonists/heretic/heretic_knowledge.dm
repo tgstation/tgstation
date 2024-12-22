@@ -58,7 +58,7 @@
 	on_gain(user, our_heretic)
 	// Grant ascension buffs if applicable!
 	if(our_heretic.ascended && ascension_buff_applicable(our_heretic))
-		on_ascension(user)
+		on_ascension(user, our_heretic)
 
 /**
  * Called when the knowledge is applied to a mob.
@@ -96,7 +96,7 @@
  * Called when heretic ascends on every knowledge they have.
  * Argument is the ascendant heretic.
  */
-/datum/heretic_knowledge/proc/on_ascension(mob/invoker)
+/datum/heretic_knowledge/proc/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
 	SHOULD_CALL_PARENT(TRUE)
 	return
 

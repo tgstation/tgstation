@@ -163,7 +163,7 @@
 	. = ..()
 
 	var/datum/action/cooldown/spell/aoe/fiery_rebirth/fiery_rebirth = .
-	fiery_rebirth?.cooldown_time *= 0.16
+	fiery_rebirth.cooldown_time *= 0.16
 
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"

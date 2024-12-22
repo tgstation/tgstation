@@ -149,6 +149,7 @@
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
 	..()
 	limit = 3
+	to_chat(invoker, span_notice("Your Imperfect Ritual approaches perfection."))
 	return
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
