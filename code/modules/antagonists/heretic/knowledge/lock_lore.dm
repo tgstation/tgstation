@@ -155,7 +155,7 @@
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
 	..()
-	chance += 20
+	chance += 30
 	to_chat(invoker, span_boldnotice("Your blades have unlocked their full wounding potential."))
 
 /datum/heretic_knowledge/spell/caretaker_refuge
