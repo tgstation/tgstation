@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "you will no longer slip off your mount when traversing slippery surfaces"

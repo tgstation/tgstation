@@ -757,7 +757,7 @@
 		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's active!"))
 		return SPEED_POTION_STOP
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
-	set_mod_color(COLOR_RED)
+	set_mod_color(color_transition_filter(COLOR_RED))
 	slowdown_inactive = 0
 	slowdown_active = 0
 	update_speed()
@@ -771,3 +771,10 @@
 
 	mod_link.end_call()
 	mod_link.frequency = null
+
+/obj/item/mod/control/proc/get_visor_overlay(mutable_appearance/standing)
+	var/list/overrides = list()
+	SEND_SIGNAL(src, COMSIG_MOD_GET_VISOR_OVERLAY, standing, overrides)
+	if (length(overrides))
+		return overrides[1]
+	return mutable_appearance(worn_icon, "[skin]-helmet-visor", layer = standing.layer + 0.1)

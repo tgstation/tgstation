@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixing remote/ghost alt-click functioning on aquariums"
-  - bugfix: "Added missing plasma tetra to freshwater fishing spots."
-  - balance: "plasma tetra is now smaller and qualifies as baitfish."
