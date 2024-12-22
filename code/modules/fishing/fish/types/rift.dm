@@ -5,8 +5,6 @@
 	icon = 'icons/obj/aquarium/weird.dmi'
 	dedicated_in_aquarium_icon = 'icons/obj/aquarium/weird.dmi'
 	icon_state = "chrystarfish"
-	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
 	force = 12
 	sharpness = SHARP_POINTY
 	wound_bonus = -10
@@ -19,12 +17,9 @@
 	embed_type = /datum/embed_data/chrystarfish
 	attack_verb_continuous = list("stabs", "jabs")
 	attack_verb_simple = list("stab", "jab")
-	hitsound = SFX_DEFAULT_FISH_SLAP
+	hitsound = SFX_SHATTER
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
-	pickup_sound = SFX_FISH_PICKUP
-	sound_vary = TRUE
-	item_flags = SLOWS_WHILE_IN_HAND
 
 	sprite_width = 7
 	sprite_height = 9
@@ -33,7 +28,7 @@
 	average_weight = 1500
 	food = /datum/reagent/bluespace
 	feeding_frequency = 10 MINUTES
-	health = 300 // it has 300 health why does it die instantly upon bein bit once..
+	health = 50
 	death_text = "%SRC splinters apart into shards!"
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	fillet_type = /obj/item/stack/ore/bluespace_crystal
@@ -232,7 +227,7 @@
 			moc.visible_message(span_bolddanger("[src] bites directly into [moc] and squirms away from [moc.p_their()] grasp!"), span_userdanger("[src] sinks its fangs into you!!"))
 			moc.apply_damage(force, BRUTE, moc.get_active_hand(), wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attacking_item = src)
 			forceMove(moc.drop_location())
-			INVOKE_ASYNC(moc, TYPE_PROC_REF(/mob, emote), "scream")
+			moc.painful_scream()
 			patience = max_patience
 			playsound(src, hitsound, 45)
 		if(1 to 10)
@@ -301,7 +296,7 @@
 	forceMove(user)
 	. = MANUAL_SUICIDE
 	for(var/i in 1 to rand(5, 15))
-		addtimer(CALLBACK(src, PROC_REF(flump_attack), user), 0.1 SECONDS * i)
+		addtimer(CALLBACK(src, PROC_REF(flump_attack), user), 0.4 SECONDS * i)
 
 /obj/item/fish/flumpulus/proc/flump_attack(mob/living/user)
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
@@ -366,12 +361,11 @@
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/parthenogenesis) // this thing is a diamond farm
 	beauty = FISH_BEAUTY_EXCELLENT
 	fish_movement_type = /datum/fish_movement/slow
-	fishing_difficulty_modifier = 45 // thick hide
 	favorite_bait = list(/obj/item/stack/sheet/mineral/diamond)
 	fishing_difficulty_modifier = 22
 	average_size = 30
 	average_weight = 2000
-	material_weight_mult = 4
+	custom_materials = list(/datum/material/diamond = 2000)
 	weight_size_deviation = 0.3
 	safe_air_limits = list(
 		/datum/gas/oxygen = list(0, 2), // does NOT like oxygen

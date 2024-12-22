@@ -158,6 +158,7 @@
 	radial_name = "Chasm"
 	overlay_state = "portal_chasm"
 	radial_state = "ground_hole"
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_NONE
 
 /datum/fish_source/portal/ocean
 	fish_table = list(
@@ -705,7 +706,7 @@
 	fish_table = list(
 		FISHING_DUD = 10,
 	)
-	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD|FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG
+	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD|FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG|FISH_SOURCE_FLAG_EXPLOSIVE_NONE
 	fishing_difficulty = FISHING_EASY_DIFFICULTY + 5
 
 #undef RANDOM_AQUARIUM_FISH

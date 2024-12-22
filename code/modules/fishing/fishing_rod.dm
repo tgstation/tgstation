@@ -135,7 +135,7 @@
 		if(IS_HERETIC(user))
 			. += span_purple("This rod has been <b>infused</b> by a heretic, improving its ability to catch glimpses of the Mansus. And fish.")
 		else
-			. += span_purple("It's glowing an eerie green...")
+			. += span_purple("It's glowing an eerie purple...")
 	else if(IS_HERETIC(user))
 		. += span_purple("As a Heretic, you can infuse this fishing rod with your <b>Mansus Grasp</b> by activating the spell while wielding it, to enhance its fishing power.")
 
