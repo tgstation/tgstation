@@ -33,8 +33,7 @@
 	uid++
 	src.personal_uid = uid
 
-	if (!keep_color)
-		render_source_atom.appearance_flags |= (RESET_COLOR|KEEP_APART)
+	render_source_atom.appearance_flags |= KEEP_APART
 
 	render_source_atom.vis_flags |= (VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER)
 
@@ -56,7 +55,7 @@
 	for(var/atom/movable/screen/plane_master/seethrough as anything in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
 		seethrough.unhide_plane(fool)
 
-	render_source_atom.pixel_x = -(fool.get_cached_width() - ICON_SIZE_X) / 2
+	render_source_atom.pixel_x = -fool.pixel_x
 	render_source_atom.pixel_y = ((fool.get_cached_height() - ICON_SIZE_Y) * 0.5)
 
 	initial_render_target_value = fool.render_target
