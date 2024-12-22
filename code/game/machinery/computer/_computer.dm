@@ -19,6 +19,8 @@
 	var/time_to_unscrew = 2 SECONDS
 	/// Are we authenticated to use this? Used by things like comms console, security and medical data, and apc controller.
 	var/authenticated = FALSE
+	/// Will projectiles be able to pass over this computer?
+	var/projectiles_pass_chance = 75
 
 /datum/armor/machinery_computer
 	fire = 40
@@ -27,6 +29,19 @@
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	power_change()
+
+/obj/machinery/computer/CanAllowThrough(atom/movable/mover, border_dir) // allows projectiles to fly over the computer
+	. = ..()
+	if(!projectiles_pass_chance)
+		return FALSE
+	if(!isprojectile(mover))
+		return FALSE
+	var/obj/projectile/proj = mover
+	if(proj.firer && Adjacent(proj.firer))
+		return TRUE
+	if(prob(proj_pass_chance))
+		return TRUE
+	return FALSE
 
 /obj/machinery/computer/process()
 	if(machine_stat & (NOPOWER|BROKEN))
