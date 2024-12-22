@@ -6,12 +6,6 @@
  * @license MIT
  */
 
-declare interface Window {
-  hubStorage: Storage;
-  msIndexedDB: IDBFactory;
-  msIDBTransaction: IDBTransaction;
-}
-
 export const IMPL_MEMORY = 0;
 export const IMPL_HUB_STORAGE = 1;
 export const IMPL_INDEXED_DB = 2;
