@@ -398,7 +398,7 @@ Diagnostic HUDs!
 	if(!deployed_shell)
 		set_hud_image_inactive(DIAG_TRACK_HUD)
 		return
- 	//AI is currently controlling a shell
+	//AI is currently controlling a shell
 	set_hud_image_state(DIAG_TRACK_HUD, "hudtrackingai")
 	set_hud_image_active(DIAG_TRACK_HUD)
 
