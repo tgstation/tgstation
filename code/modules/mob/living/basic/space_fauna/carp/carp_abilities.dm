@@ -28,8 +28,8 @@
 	projectile_type = pick(permitted_projectiles)
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/InterceptClickOn(mob/living/caller, params, atom/target)
-	if (!caller.combat_mode)
+/datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/InterceptClickOn(mob/living/clicker, params, atom/target)
+	if (!clicker.combat_mode)
 		return FALSE
 	return ..()
 

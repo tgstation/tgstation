@@ -23,7 +23,7 @@
 /**
  * Overrides 'aim assist' because we always want to hit just the turf we clicked on.
  */
-/datum/action/cooldown/spell/pointed/rust_construction/aim_assist(mob/living/caller, atom/target)
+/datum/action/cooldown/spell/pointed/rust_construction/aim_assist(mob/living/clicker, atom/target)
 	return get_turf(target)
 
 /datum/action/cooldown/spell/pointed/rust_construction/is_valid_target(atom/cast_on)

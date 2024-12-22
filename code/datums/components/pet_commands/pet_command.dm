@@ -63,7 +63,7 @@
 	try_activate_command(speaker)
 
 /// Respond to a callout
-/datum/pet_command/proc/respond_to_callout(mob/living/caller, datum/callout_option/callout, atom/target)
+/datum/pet_command/proc/respond_to_callout(mob/living/speaker, datum/callout_option/callout, atom/target)
 	SIGNAL_HANDLER
 
 	if (isnull(callout_type) || !ispath(callout, callout_type))
@@ -73,21 +73,21 @@
 	if (!parent)
 		return
 
-	if (!valid_callout_target(caller, callout, target))
+	if (!valid_callout_target(speaker, callout, target))
 		var/found_new_target = FALSE
 		for (var/atom/new_target in range(2, target))
-			if (valid_callout_target(caller, callout, new_target))
+			if (valid_callout_target(speaker, callout, new_target))
 				target = new_target
 				found_new_target = TRUE
 
 		if (!found_new_target)
 			return
 
-	if (try_activate_command(caller))
+	if (try_activate_command(speaker))
 		look_for_target(parent, target)
 
 /// Does this callout with this target trigger this command?
-/datum/pet_command/proc/valid_callout_target(mob/living/caller, datum/callout_option/callout, atom/target)
+/datum/pet_command/proc/valid_callout_target(mob/living/speaker, datum/callout_option/callout, atom/target)
 	return TRUE
 
 /**
