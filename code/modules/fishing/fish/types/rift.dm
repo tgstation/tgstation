@@ -368,7 +368,6 @@
 	fishing_difficulty_modifier = 22
 	average_size = 30
 	average_weight = 2000
-	custom_materials = list(/datum/material/diamond = 2000)
 	weight_size_deviation = 0.3
 	safe_air_limits = list(
 		/datum/gas/oxygen = list(0, 2), // does NOT like oxygen
