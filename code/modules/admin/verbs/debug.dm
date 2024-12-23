@@ -749,7 +749,7 @@ ADMIN_VERB(allow_browser_inspect, R_DEBUG, "Allow Browser Inspect", "Allow brows
 		return
 
 	to_chat(user, span_notice("You can now right click to use inspect on browsers."))
-	winset(user, null, list("browser-options" = "devtools,find,refresh,byondstorage"))
+	winset(user, null, list("browser-options" = "+devtools"))
 
 /proc/generate_timer_source_output(list/datum/timedevent/events)
 	var/list/per_source = list()
