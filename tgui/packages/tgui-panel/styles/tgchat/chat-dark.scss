@@ -987,7 +987,7 @@ em {
   background: #151515; // Chat background color
   border: 1px solid;
   border-color: inherit;
-  border-radius: 0.5em;
+  border-radius: 0.33em;
   z-index: 1;
 
   // "Mask" a half of the border
@@ -1012,7 +1012,7 @@ em {
   border-color: hsla(220, 40%, 75%, 0.25);
   margin: 0.5em 0;
   padding: 0.5em 0.75em;
-  border-radius: 0.5em;
+  border-radius: 0.33em;
 
   &.red_box {
     background: hsl(0, 20%, 10%);
