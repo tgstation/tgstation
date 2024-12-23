@@ -1015,22 +1015,22 @@ em {
   padding: 0.5em 0.75em;
   border-radius: 0.5em;
 
-  &.red {
+  &.red_box {
     background: hsl(0, 20%, 10%);
     border-color: hsla(0, 100%, 50%, 0.5);
   }
 
-  &.green {
+  &.green_box {
     background: hsl(140, 20%, 10%);
     border-color: hsla(120, 100%, 50%, 0.5);
   }
 
-  &.blue {
+  &.blue_box {
     background: hsl(220, 20%, 10%);
     border-color: hsla(225, 90%, 65%, 0.5);
   }
 
-  &.purple {
+  &.purple_box {
     background: hsl(260, 25%, 12.5%);
     border-color: hsla(260, 100%, 75%, 0.5);
   }
