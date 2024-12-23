@@ -57982,6 +57982,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
+"qHq" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "qHt" = (
 /obj/structure/chair{
 	dir = 1
@@ -256691,7 +256695,7 @@ kKL
 vYv
 lli
 lli
-kKL
+qHq
 gkP
 hFg
 kKL

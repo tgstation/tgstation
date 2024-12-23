@@ -12483,7 +12483,7 @@
 /area/station/engineering/lobby)
 "dag" = (
 /obj/machinery/camera/directional/north{
-	c_tag = "Bridge - Central"
+	c_tag = "Jim Nortons"
 	},
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/ice{
@@ -88254,19 +88254,10 @@
 /area/station/security/courtroom)
 "wap" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch"
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
-/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
 "wav" = (
 /obj/structure/disposalpipe/segment,
