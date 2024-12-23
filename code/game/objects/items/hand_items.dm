@@ -647,6 +647,7 @@
 
 /obj/projectile/kiss/ink
 	name = "ink kiss"
+	color = COLOR_ALMOST_BLACK
 	damage = /obj/projectile/ink_spit::damage
 	damage_type = /obj/projectile/ink_spit::damage_type
 	armor_flag = /obj/projectile/ink_spit::armor_flag
