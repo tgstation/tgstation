@@ -36,6 +36,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// Paint jobs for this closet, crates are a subtype of closet so they override these values
 	var/list/paint_jobs = TRUE
 	/// Controls whether a door overlay should be applied using the icon_door value as the icon state
+	var/began_resisting = FALSE
 	var/enable_door_overlay = TRUE
 	var/has_opened_overlay = TRUE
 	var/has_closed_overlay = TRUE
@@ -1032,28 +1033,31 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		open()
 		return
 
-	//okay, so the closet is either welded or locked... resist!!!
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message(span_warning("[src] begins to shake violently!"), \
-		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
-		span_hear("You hear banging from [src]."))
+	if(!began_resisting)
+		//okay, so the closet is either welded or locked... resist!!!
+		user.changeNext_move(CLICK_CD_BREAKOUT)
+		user.last_special = world.time + CLICK_CD_BREAKOUT
+		user.visible_message(span_warning("[src] begins to shake violently!"), \
+			span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
+			span_hear("You hear banging from [src]."))
 
-	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 1 SECONDS)
 
-	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || (loc_required && (user.loc != src)) || opened || (!locked && !welded) )
-			return
-		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
-		user.visible_message(span_danger("[user] successfully broke out of [src]!"),
-							span_notice("You successfully break out of [src]!"))
-		bust_open()
-	else
-		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
+		began_resisting = TRUE
+		if(do_after(user,(breakout_time), target = src))
+			began_resisting = FALSE
+			if(!user || user.stat != CONSCIOUS || (loc_required && (user.loc != src)) || opened || (!locked && !welded) )
+				return
+			//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
+			user.visible_message(span_danger("[user] successfully broke out of [src]!"),
+								span_notice("You successfully break out of [src]!"))
+			bust_open()
+		else if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, span_warning("You fail to break out of [src]!"))
+			began_resisting = FALSE
 
 /obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
-	container.container_resist_act()
+	container.container_resist_act(user)
 
 /// Check if someone is still resisting inside, and choose to either keep shaking or stop shaking the closet
 /obj/structure/closet/proc/check_if_shake()
