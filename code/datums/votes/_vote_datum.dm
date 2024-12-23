@@ -216,7 +216,7 @@
 	returned_text += "\n"
 	returned_text += get_winner_text(all_winners, real_winner, non_voters)
 
-	return fieldset_block(title_text, returned_text, "boxed_message purple")
+	return fieldset_block(title_text, returned_text, "boxed_message purple_box")
 
 /**
  * Gets the text that displays the winning options within the result text.

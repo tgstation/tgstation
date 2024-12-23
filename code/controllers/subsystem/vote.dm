@@ -230,7 +230,7 @@ SUBSYSTEM_DEF(vote)
 	var/to_display = current_vote.initiate_vote(vote_initiator_name, duration)
 
 	log_vote(to_display)
-	to_chat(world, custom_boxed_message("purple center", span_infoplain(vote_font("[span_bold(to_display)]<br>\
+	to_chat(world, custom_boxed_message("purple_box center", span_infoplain(vote_font("[span_bold(to_display)]<br>\
 		Type <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\n\
 		You have [DisplayTimeText(duration)] to vote."))))
 
