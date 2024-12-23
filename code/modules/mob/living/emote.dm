@@ -263,9 +263,11 @@
 		kiss_type = /obj/item/hand_item/kisser/death
 
 	var/datum/action/cooldown/ink_spit/ink_action = locate() in user.actions
-	if(ink_action && ink_action.IsAvailable())
+	if(ink_action?.IsAvailable())
 		kiss_type = /obj/item/hand_item/kisser/ink
 		ink_action.StartCooldown()
+	else
+		ink_action = null
 
 	var/obj/item/kiss_blower = new kiss_type(user)
 	if(user.put_in_hands(kiss_blower))
