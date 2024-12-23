@@ -432,7 +432,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	to_chat(
 		initiator,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = span_notice("PM to - <b>Admins</b>: [span_linkify(message)]"),
+		html = span_notice("PM to-<b>Admins</b>: [span_linkify(message)]"),
 		confidential = TRUE,
 	)
 
