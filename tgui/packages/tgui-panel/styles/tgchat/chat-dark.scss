@@ -1034,6 +1034,11 @@ em {
     background: hsl(260, 25%, 12.5%);
     border-color: hsla(260, 100%, 75%, 0.5);
   }
+
+  hr {
+    margin: 0.5em -0.75em;
+    border-color: inherit;
+  }
 }
 
 // Provides a horizontal bar with text in the middle
