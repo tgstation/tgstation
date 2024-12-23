@@ -116,6 +116,34 @@
 ///Excludes catalysts during the emptying process
 /datum/reagents/plumbing/reaction_chamber
 
+///Returns the total volume of reagents without the catalysts
+/datum/reagents/plumbing/reaction_chamber/proc/get_catalyst_excluded_volume()
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	. = 0
+	if(!total_volume)
+		return
+
+	var/obj/machinery/plumbing/reaction_chamber/reactor = my_atom
+	var/list/datum/reagent/catalysts = reactor.catalysts
+
+	var/working_volume
+	var/catalyst_volume
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		catalyst_volume = catalysts[reagent.type]
+		working_volume = reagent.volume
+
+		//regular reagent add to total as normal
+		if(!catalyst_volume)
+			. += working_volume
+			continue
+
+		//only add the excess to total as that's what will get transferred
+		if(working_volume > catalyst_volume)
+			. += working_volume - catalyst_volume
+	. = min(round(., CHEMICAL_VOLUME_ROUNDING), maximum_volume)
+
 /datum/reagents/plumbing/reaction_chamber/trans_to(
 	atom/target,
 	amount = 1,
@@ -154,23 +182,7 @@
 		target_holder = target.reagents
 	var/list/cached_reagents = reagent_list
 
-	//compute real volume after subtracting catalysts
-	var/actual_volume = 0
-	var/working_volume
-	var/catalyst_volume
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		catalyst_volume = catalysts[reagent.type]
-
-		//regular reagent add to total as normal
-		if(!catalyst_volume)
-			actual_volume += reagent.volume
-			continue
-
-		//only add the excess to total as that's what will get transferred
-		working_volume = reagent.volume
-		if(working_volume > catalyst_volume)
-			actual_volume += working_volume - catalyst_volume
-	actual_volume = min(round(actual_volume, CHEMICAL_VOLUME_ROUNDING), maximum_volume)
+	var/actual_volume = get_catalyst_excluded_volume()
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = round(min(amount, actual_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
@@ -181,6 +193,8 @@
 	transfer_reactions(target_holder)
 
 	var/list/reagents_to_remove = list()
+	var/working_volume
+	var/catalyst_volume
 	var/transfer_amount
 	var/transfered_amount
 	var/total_transfered_amount = 0
