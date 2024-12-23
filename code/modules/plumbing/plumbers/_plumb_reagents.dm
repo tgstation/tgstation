@@ -132,31 +132,115 @@
 	var/obj/machinery/plumbing/reaction_chamber/reactor = my_atom
 	var/list/datum/reagent/catalysts = reactor.catalysts
 
-	//no catalysts means proceed normal operations
+	//usual stuff
 	if(!catalysts.len)
 		return ..()
 
-	//locate & extract catalysts
-	var/list/datum/reagent/stored_catalysts = list()
-	for(var/datum/reagent/chemical as anything in reagent_list)
-		for(var/datum/reagent/catalyst as anything in catalysts)
-			if(chemical.type == catalyst)
-				stored_catalysts += chemical
-				reagent_list -= chemical
-	//could not locate catalysts in reaction chamber. Proceed as normal
-	if(!stored_catalysts.len)
-		return ..()
+	if(QDELETED(target))
+		return FALSE
 
-	//compute new volume & ph after removing reagents
-	update_total()
+	if(!IS_FINITE(amount))
+		stack_trace("non finite amount passed to trans_to [amount] amount of reagents")
+		return FALSE
 
-	//do the transfer as if the catalysts never existed
-	. = ..()
+	if(!isnull(target_id) && !ispath(target_id))
+		stack_trace("invalid target reagent id [target_id] passed to trans_to")
+		return FALSE
 
-	//add them back
-	reagent_list += stored_catalysts
+	var/datum/reagents/target_holder
+	if(istype(target, /datum/reagents))
+		target_holder = target
+	else
+		target_holder = target.reagents
+	var/list/cached_reagents = reagent_list
 
-	//update back to regular values
-	update_total()
+	//compute real volume after subtracting catalysts
+	var/actual_volume = 0
+	var/working_volume
+	var/catalyst_volume
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		catalyst_volume = catalysts[reagent.type]
 
+		//regular reagent add to total as normal
+		if(!catalyst_volume)
+			actual_volume += reagent.volume
+			continue
 
+		//only add the excess to total as that's what will get transferred
+		working_volume = reagent.volume
+		if(working_volume > catalyst_volume)
+			actual_volume += working_volume - catalyst_volume
+
+	// Prevents small amount problems, as well as zero and below zero amounts.
+	amount = round(min(amount, actual_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	if(amount <= 0)
+		return FALSE
+
+	//Set up new reagents to inherit the old ongoing reactions
+	transfer_reactions(target_holder)
+
+	var/list/reagents_to_remove = list()
+	var/transfer_amount
+	var/transfered_amount
+	var/total_transfered_amount = 0
+
+	var/round_robin = methods & LINEAR
+	var/part
+	var/to_transfer
+	if(round_robin)
+		to_transfer = amount
+	else
+		part = amount / actual_volume
+
+	//first add reagents to target
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(round_robin && !to_transfer)
+			break
+		working_volume = reagent.volume
+
+		catalyst_volume = catalysts[reagent.type]
+		if(catalyst_volume) //we have a working catalyst
+			if(reagent.volume <= catalyst_volume) //dont transfer since we have the required volume
+				continue
+			else
+				working_volume -= catalyst_volume //dump out the excess
+
+		if(!isnull(target_id))
+			if(reagent.type == target_id)
+				force_stop_reagent_reacting(reagent)
+				transfer_amount = min(amount, working_volume)
+			else
+				continue
+		else
+			if(round_robin)
+				transfer_amount = min(to_transfer, working_volume)
+			else
+				transfer_amount = working_volume * part
+
+		if(reagent.intercept_reagents_transfer(target_holder, amount))
+			update_total()
+			target_holder.update_total()
+			continue
+
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, copy_data(reagent), chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transferred.
+		if(!transfered_amount)
+			continue
+		reagents_to_remove += list(list("R" = reagent, "T" = transfer_amount))
+		total_transfered_amount += transfered_amount
+		if(round_robin)
+			to_transfer -= transfered_amount
+
+		if(!isnull(target_id))
+			break
+
+	//remove chemicals that were added above
+	for(var/list/data as anything in reagents_to_remove)
+		var/datum/reagent/reagent = data["R"]
+		transfer_amount = data["T"]
+		remove_reagent(reagent.type, transfer_amount)
+
+	//handle reactions
+	target_holder.handle_reactions()
+	src.handle_reactions()
+
+	return round(total_transfered_amount, CHEMICAL_VOLUME_ROUNDING)
