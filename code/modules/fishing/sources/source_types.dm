@@ -507,6 +507,7 @@
 		/obj/item/seeds/random = 1,
 		/mob/living/basic/frog = 1,
 		/mob/living/basic/axolotl = 1,
+		/mob/living/basic/turtle = 2,
 	)
 	fish_counts = list(
 		/obj/item/food/grown/grass = 10,
