@@ -170,6 +170,7 @@
 		working_volume = reagent.volume
 		if(working_volume > catalyst_volume)
 			actual_volume += working_volume - catalyst_volume
+	actual_volume = min(round(actual_volume, CHEMICAL_VOLUME_ROUNDING), maximum_volume)
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = round(min(amount, actual_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
