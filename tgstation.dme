@@ -4849,6 +4849,7 @@
 #include "code\modules\mob\living\basic\boss\thing\thing.dm"
 #include "code\modules\mob\living\basic\boss\thing\thing_abilities.dm"
 #include "code\modules\mob\living\basic\boss\thing\thing_ai.dm"
+#include "code\modules\mob\living\basic\boss\thing\thing_objects.dm"
 #include "code\modules\mob\living\basic\bots\_bots.dm"
 #include "code\modules\mob\living\basic\bots\bot_ai.dm"
 #include "code\modules\mob\living\basic\bots\bot_hud.dm"
