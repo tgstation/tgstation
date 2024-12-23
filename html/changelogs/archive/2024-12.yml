@@ -540,3 +540,36 @@
   - spellcheck: Update teleporter machine desc to be accurate
   - spellcheck: Fix holodeck emag message claiming to increase power
   - rscadd: Add power efficiency when stasis bed stock parts are upgraded
+2024-12-23:
+  AyIong:
+  - bugfix: Fixed scrollbar colors and background position in TGUI on Byond 516
+  Ben10Omintrix:
+  - rscadd: adds flora-turtles. obtainable through cargo or by fishing from the hydroponics
+      tray
+  - qol: holding shift and hovering over your pet will display a list of commands
+      you can click from
+  - bugfix: fixes the fishing pet command not working
+  DATA-xPUNGED:
+  - map: removed the sec record computer from the Icemoon Listening Post.
+  Melbert:
+  - balance: Carpenter hammer force 20 -> 17
+  - balance: Carpenter hammer throwforce 20 -> 14
+  - balance: Carpenter hammer demo mod 1.25 -> 1.15
+  NecromancerAnne (code), SmArtKar (sprites):
+  - balance: Makarovs and Toy Pistols come in weapon cases. Complete with spare ammo.
+  - balance: Basic ammo for either weapon comes in weapon cases of three extra magazines
+      at an affordable price.
+  - balance: Donksoft Toy Pistols from the uplink are much stronger than their standard
+      counterparts, but now priced at 6 TC.
+  - balance: Makarovs and Toy pistols have a magazine capacity of 12 rounds.
+  - balance: Gun/Ammo cases from the traitor uplink can be destroyed by activating
+      the disposal bomb. Press Alt-Right-Click on the case to start the timer.
+  Rhials:
+  - rscadd: Nukie uplinks now offer an OG-style nuke pinpointer in their Badassery
+      shop section.
+  TealSeer:
+  - qol: The time until the server reboots is now visible in the status tab.
+  - admin: Added a cancel reboot verb to the server tab.
+  grungussuss:
+  - code_imp: removed an extra proc override in digitigrade legs preference logic
+      code
