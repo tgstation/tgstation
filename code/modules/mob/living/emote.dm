@@ -733,6 +733,9 @@
 	if(!emote_is_valid(user, our_message))
 		return FALSE
 
+	if(type_override)
+		emote_type = type_override
+
 	if(!params)
 		var/user_emote_type = get_custom_emote_type_from_user()
 

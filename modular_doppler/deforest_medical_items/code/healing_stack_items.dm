@@ -33,15 +33,14 @@
 	var/treatment_sound = 'sound/items/duct_tape/duct_tape_rip.ogg'
 
 // This is only relevant for the types of wounds defined, we can't work if there are none
-/obj/item/stack/medical/wound_recovery/try_heal(mob/living/patient, mob/user, silent, looping, auto_change_zone = FALSE)
-
+/obj/item/stack/medical/wound_recovery/try_heal/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE)
 	if(patient.has_status_effect(/datum/status_effect/vulnerable_to_damage))
 		patient.balloon_alert(user, "still recovering from last use!")
 		return
 
 	var/treatment_delay = (user == patient ? self_delay : other_delay)
 
-	var/obj/item/bodypart/limb = patient.get_bodypart(check_zone(user.zone_selected))
+	var/obj/item/bodypart/limb = patient.get_bodypart(check_zone(healed_zone))
 	if(!limb)
 		patient.balloon_alert(user, "missing limb!")
 		return

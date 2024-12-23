@@ -27,7 +27,7 @@
 
 	. = ..()
 
-/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, area/signal_origin, reason, red_alert, set_coefficient=null, silent = FALSE) // DOPPLER EDIT - ORIGINAL - /obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, area/signal_origin, reason, red_alert, set_coefficient=null)
+/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, area/signal_origin, reason, red_alert, set_coefficient=null, silent = FALSE) // DOPPLER EDIT : /obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, area/signal_origin, reason, red_alert, set_coefficient=null)
 	if(!isnum(set_coefficient))
 		set_coefficient = SSsecurity_level.current_security_level.shuttle_call_time_mod
 	alert_coeff = set_coefficient
@@ -48,8 +48,8 @@
 	else
 		SSshuttle.emergency_last_call_loc = null
 
-	if(silent) // DOPPLER EDIT ADDITION - SEE modular_doppler/autotransfer/shuttle.dm
-		return // DOPPLER EDIT ADDITION
+	if(silent) // DOPPLER EDIT ADDITION
+		return // THIS ONE DOPPLER TOO
 	priority_announce(
 		text = "The emergency shuttle has been called. [red_alert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [(timeLeft(60 SECONDS))] minutes.[reason][SSshuttle.emergency_last_call_loc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ][SSshuttle.admin_emergency_no_recall ? "\n\nWarning: Shuttle recall subroutines disabled; Recall not possible." : ""]",
 		title = "Emergency Shuttle Dispatched",

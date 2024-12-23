@@ -21,7 +21,7 @@
 // Hotspring water with icebox air
 
 /turf/open/water/hot_spring/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	initial_gas_mix = "ICEMOON_ATMOS"
 
 // The area
 

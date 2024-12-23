@@ -394,3 +394,86 @@
       assumption, rather than melee attacks.
   timothymtorres:
   - code_imp: Improve looping sounds to allow nested and non-associative lists
+2024-12-16:
+  JoshAdamPowell:
+  - map: In the new year's budget the syndicate have decided that chemists need beakers
+      to do their job properly.
+  Melbert:
+  - qol: Treatment message now better reflects what you're doing ("suturing", "applying",
+      etc)
+  - bugfix: Gauze is now stickier (and will actually apply to bodyparts)
+  OrionTheFox:
+  - bugfix: fixed the outdated N-Spect description falsely claiming it can scan people.
+      It can't. Nanotrasen denies all claims it ever broke sapient right to privacy
+      by giving crew full-body scanners in a handheld format.
+  SmArtKar:
+  - rscadd: Rave and plasma stabilizer MODules now utilize theme-specific visors
+  - qol: Jetpacks should ACTUALLY feel better now
+  SyncIt21:
+  - bugfix: Turbine converts energy to power correctly & shows correct reading with
+      multitool
+  - refactor: turbine code has been overall improved. report bugs on github
+  tontyGH:
+  - bugfix: Underlining your messages in loud mode shouldn't break anymore
+2024-12-17:
+  Melbert:
+  - balance: Tasers are now more realistic
+  - rscdel: Electrodes are no longer in the hallucination projectile pool
+  OrionTheFox:
+  - image: resprited the Blood Cult Archives/Altar (the two summoning tables)
+  SyncIt21:
+  - code_imp: improved code for RPED
+  - refactor: RPED attack chain has been refactored. Reports bugs on github
+2024-12-18:
+  SmArtKar:
+  - rscadd: Added new (purely visual) animations to sharp and pointy items.
+  - rscadd: Certain items, like knives and swords, now have a secondary stabbing attack.
+  - balance: Spears are now pointy and no longer act as oversized knives.
+  - balance: Structure damage is now affected by attacking item's AP.
+  - bugfix: You will now see the same attack verb in chat as everyone else.
+2024-12-19:
+  00-Steven:
+  - bugfix: Custom emotes done via the custom emote keybind default to both audible
+      and visible again.
+  Darkened-Earth:
+  - bugfix: NanoTrasen has shown a xenobiology containment engineer for Delta class
+      stations a very important lesson between inlets and outlets
+  Hatterhat:
+  - qol: You can now pull singular trophies off kinetic crushers with RMB.
+  - qol: Kinetic crushers now have screentips informing people that they can remove
+      trophies via empty hand (RMB) or crowbar (LMB).
+  Melbert:
+  - bugfix: Gibs get bulk cleaned if you clean the turf again
+  - refactor: Changed how things determine "I can be bulk cleaned if I clean the turf
+      underneath me", let me know if you notice anything not getting bulk cleaned
+      or weird things getting bulk cleaned
+  SmArtKar:
+  - bugfix: Fixed a Honkerblast 5000 runtime
+  - bugfix: Fixed mech KA AOE dealing full damage in pressurized environments
+  - bugfix: Fixed c38 not misfiring when chambered in c357
+  - qol: Resist button now has visible feedback.
+  - qol: Readjusted UI layout.
+  - image: Completely redrawn Midnight and Midnight-derived UIs!
+  mikederkan:
+  - bugfix: fixes a minor spelling/grammatical error in the Funeral Supply and Religious
+      Supplies crates.
+  timothymtorres:
+  - sound: Add fishtank looping sounds to cryo cells when in use. Sound is from https://freesound.org/people/DudeAwesome/sounds/386023/
+  - sound: Add dice rolling sound
+  tontyGH:
+  - bugfix: /datum/gas_machine_connector will abstract_move() if their parent also
+      abstract_move()s, preventing a runtime
+2024-12-20:
+  Melbert:
+  - bugfix: Meshes should work better
+  - bugfix: Medical item usage is correctly blackbox logged
+  - bugfix: Double balloon alerts from medical item usage
+  - bugfix: Poultice works on dead people
+  SmArtKar:
+  - bugfix: Fixed an airlock unlocking runtime
+2024-12-21:
+  Deadgebert:
+  - balance: Synthflesh required for unhusking now between 60u and 100u depending
+      on purity.
+  Melbert:
+  - bugfix: Lobby button sprites
