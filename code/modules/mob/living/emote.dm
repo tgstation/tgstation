@@ -275,7 +275,7 @@
 	else
 		qdel(kiss_blower)
 		to_chat(user, span_warning("You're incapable of blowing a kiss in your current state."))
-		ink_action.ResetCooldown()
+		ink_action?.ResetCooldown()
 
 /datum/emote/living/laugh
 	key = "laugh"
