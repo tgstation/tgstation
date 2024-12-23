@@ -480,6 +480,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	overdose_threshold = 20
 	self_consuming = TRUE //No pesky liver shenanigans
 	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
+	affected_organ_flags = NONE
 	///If we brought someone back from the dead
 	var/back_from_the_dead = FALSE
 	/// List of trait buffs to give to the affected mob, and remove as needed.

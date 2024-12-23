@@ -23,7 +23,6 @@ champagne_pop.ogg is credited to ultradust on freesound https://freesound.org/pe
 can_open.ogg adapted from https://freesound.org/people/MaxDemianAGL/sounds/130031/
 can_shake.ogg adapted from https://freesound.org/people/mcmast/sounds/456703/
 
-
 splatter.ogg adapted from https://freesound.org/people/Rocktopus/sounds/233418/
 hohoho.ogg and hehe.ogg are cut from a recording by Nanakisan on freesound: https://freesound.org/people/Nanakisan/sounds/253534/
 mbox_full.ogg and mbox_end.ogg make use of The Ragtime Drummer by James Lent, in the public domain
@@ -50,7 +49,7 @@ https://freesound.org/s/431740/ (CC 0)
 chainsaw_stop.ogg is adapted from kyles "chainsaw sawing short cuts +stop.flac" (CC 0)
 https://freesound.org/people/kyles/sounds/453256/
 
-clock.mp3 is adapted from Tetrisrocker's "Clock", which uses CC Attributions 0
+clock.ogg is adapted from Tetrisrocker's "Clock", which uses CC Attributions 0
 https://freesound.org/people/Tetrisrocker/sounds/458627/
 
 ark_activation.ogg is taken from ScottFerguson1's "Cucko Clock edited version", which is licensed under CC Attribution 3.0
@@ -181,8 +180,6 @@ https://freesound.org/people/shw489/sounds/234389/
 soup_boil1.ogg through soup_boil5.ogg and soup_boil_end.ogg are taken from Boiling Soup from Freesoung.org (CC4) and converted to OGG / split apart (but is otherwise unchanged):
 https://freesound.org/people/jorickhoofd/sounds/632783/
 
-
-
 valve_opening.ogg was made by mixing water flowing samples from:
 https://freesound.org/people/scriotxstudios/sounds/349111/?attribution=1 and squeaky scrape sound from:
 https://freesound.org/people/Department64/sounds/669028/ which was modified with lower pitch
@@ -190,6 +187,9 @@ https://freesound.org/people/Department64/sounds/669028/ which was modified with
 liquid_pour2.ogg and liquid_pour3.ogg were cut from
 https://freesound.org/people/MattRuthSound/sounds/561896/
 https://freesound.org/people/MattRuthSound/sounds/561895/
+
+roaring_fire.ogg made from: 10835 big fire loop.wav by Robinhood76 -- https://freesound.org/s/612277/ -- License: Attribution NonCommercial 4.0
+fire_puff made from: Bonfire Being Lit by samararaine -- https://freesound.org/s/186374/ -- License: Creative Commons 0
 
 ayylien.ogg was made by remixing:
 SCIRetro_Energy Swells Synth_Funky Audio_Sonics Spices by Funky_Audio under CC0 -- https://freesound.org/people/realtheremin/sounds/119011/
@@ -209,3 +209,12 @@ https://freesound.org/people/C_Rogers/sounds/203368/ -- glass-shattering-hit_01.
 https://freesound.org/people/Czarcazas/sounds/330800/ -- Audio reversal/fading of Shattering Glass (Small) by Czarcazas -- https://freesound.org/s/330800/ -- License: Attribution 3.0
 
 sound/effects/bonk.ogg - recorded by oranges on a coke zero bottle, edited by ninjanomnom, released to public domain
+
+sound\items\weapons\hammer_death_scream.ogg - Undefeatablesos' scream recorded by Niron3206, edited by Niron3206, License: Creative Commons 0
+
+sound/machines/sink-faucet.ogg -- https://freesound.org/people/FOSSarts/sounds/740086/ -- by FOSSarts (CC0)
+
+cryo_1.ogg, cryo_2.ogg, cryo_3.ogg, cryo_4.ogg, cryo_5.ogg, cryo_6.ogg, cryo_7.ogg, cryo_8.ogg, cryo_9.ogg, cryo_10.ogg:
+converted to OGG / split apart (but is otherwise unchanged) -- original from https://freesound.org/people/DudeAwesome/sounds/386023/ by DudeAwesome -- License: CC BY 4.0
+
+sound/items/dice_roll.ogg -- https://freesound.org/people/Crovic/sounds/661935/ -- by Crovic (CC0)

@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - refactor: "Eye color effects are now controlled via a new overrides system, which should prevent conflicts between different sources."

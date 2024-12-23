@@ -461,7 +461,7 @@
 
 /obj/item/storage/box/syndie_kit/chemical/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 14
+	atom_storage.max_slots = 15
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
 	new /obj/item/reagent_containers/cup/bottle/polonium(src)
@@ -469,6 +469,7 @@
 	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
 	new /obj/item/reagent_containers/cup/bottle/formaldehyde(src)
 	new /obj/item/reagent_containers/cup/bottle/spewium(src)
+	new /obj/item/reagent_containers/cup/bottle/syndol(src)
 	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
 	new /obj/item/reagent_containers/cup/bottle/histamine(src)
 	new /obj/item/reagent_containers/cup/bottle/initropidril(src)
@@ -569,6 +570,11 @@
 /obj/item/storage/box/syndie_kit/mimery/PopulateContents()
 	new /obj/item/book/granter/action/spell/mime/mimery_blockade(src)
 	new /obj/item/book/granter/action/spell/mime/mimery_guns(src)
+
+/obj/item/storage/box/syndie_kit/moltobeso/PopulateContents()
+	new /obj/item/reagent_containers/cup/bottle/moltobeso(src)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/reagent_containers/dropper(src)
 
 /obj/item/storage/box/syndie_kit/combat_baking/PopulateContents()
 	new /obj/item/food/baguette/combat(src)

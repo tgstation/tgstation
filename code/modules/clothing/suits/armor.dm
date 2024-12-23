@@ -336,7 +336,7 @@
 /obj/item/clothing/suit/armor/balloon_vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(isitem(hitby))
 		var/obj/item/item_hit = hitby
-		if(item_hit.sharpness)
+		if(item_hit.get_sharpness())
 			pop()
 
 	if(istype(hitby, /obj/projectile/bullet))
@@ -803,7 +803,6 @@
 	equip_delay_other = 40
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	max_integrity = 15
-	var/decayed = FALSE
 
 /obj/item/clothing/suit/armor/durability/holymelon/fire_resist
 	resistance_flags = FIRE_PROOF
@@ -811,13 +810,10 @@
 
 /obj/item/clothing/suit/armor/durability/holymelon/Initialize(mapload)
 	. = ..()
-	if(decayed)
-		decay()
-		return
 
 	AddComponent(
 		/datum/component/anti_magic, \
-		antimagic_flags = MAGIC_RESISTANCE_HOLY, \
+		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		inventory_flags = ITEM_SLOT_OCLOTHING, \
 		charges = 1, \
 		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \

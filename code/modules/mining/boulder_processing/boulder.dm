@@ -158,8 +158,10 @@
 /**
  * This function is called while breaking boulders manually, and drops ore based on the boulder's mineral content.
  * Quantity of ore spawned here is 1 less than if the boulder was processed by a machine, but clamped at 10 maximum, 1 minimum.
+ *
+ * target_destination: Optional - Sets the location directly instead of dropping it
  */
-/obj/item/boulder/proc/convert_to_ore()
+/obj/item/boulder/proc/convert_to_ore(atom/target_destination)
 	for(var/datum/material/picked in custom_materials)
 		var/obj/item/stack/ore/cracked_ore // Take the associated value and convert it into ore stacks...
 		var/quantity = clamp(round((custom_materials[picked] - SHEET_MATERIAL_AMOUNT)/SHEET_MATERIAL_AMOUNT), 1, 10) //but less resources than if they processed it by hand.
@@ -168,7 +170,10 @@
 		if(isnull(cracked_ore_type))
 			stack_trace("boulder found containing material type [picked.type] with no set ore_type")
 			continue
-		cracked_ore = new cracked_ore_type (drop_location(), quantity)
+		var/atom/ore_destination = drop_location()
+		if(target_destination)
+			ore_destination = target_destination
+		cracked_ore = new cracked_ore_type (ore_destination, quantity)
 		SSblackbox.record_feedback("tally", "ore_mined", quantity, cracked_ore.type)
 
 ///Moves boulder contents to the drop location, and then deletes the boulder.

@@ -19,9 +19,11 @@
 	active_msg = "You summon forth three blades of furious silver."
 	deactive_msg = "You conceal the blades of furious silver."
 	cast_range = 20
-	projectile_type = /obj/effect/floating_blade
+	projectile_type = /obj/projectile/floating_blade
 	projectile_amount = 3
 
+	///Effect of the projectile that surrounds us while the spell is active
+	var/projectile_effect = /obj/effect/floating_blade
 	/// A ref to the status effect surrounding our heretic on activation.
 	var/datum/status_effect/protective_blades/blade_effect
 
@@ -67,7 +69,7 @@
 		QDEL_NULL(blade_effect)
 
 	var/mob/living/living_user = on_who
-	blade_effect = living_user.apply_status_effect(/datum/status_effect/protective_blades, null, projectile_amount, 25, 0.66 SECONDS, projectile_type)
+	blade_effect = living_user.apply_status_effect(/datum/status_effect/protective_blades, null, projectile_amount, 25, 0.66 SECONDS, projectile_effect)
 	RegisterSignal(blade_effect, COMSIG_QDELETING, PROC_REF(on_status_effect_deleted))
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/on_deactivation(mob/on_who, refund_cooldown = TRUE)
@@ -100,7 +102,7 @@
 	name = "blade"
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "dio_knife"
-	speed = 2
+	speed = 0.5
 	damage = 25
 	armour_penetration = 100
 	sharpness = SHARP_EDGED
@@ -167,3 +169,4 @@
 	deactive_msg = "You conceal the cursed blades."
 	projectile_amount = 2
 	projectile_type = /obj/projectile/floating_blade/haunted
+	projectile_effect = /obj/effect/floating_blade/haunted

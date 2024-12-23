@@ -45,8 +45,8 @@
   width: 100%;
   top: 0%;
   left: 0;
-  background: #4d5f2b;
-  border: 0px #4d5f2b;
+  background: hsl(80.8, 37.7%, 27.1%);
+  border: 0px hsl(80.8, 37.7%, 27.1%);
   border-radius: 10px;
 }
 
@@ -71,7 +71,7 @@
 .fishing .completion .bar {
   position: absolute;
   width: 100%;
-  background: #7cb413;
+  background: hsl(80.9, 80.9%, 39%);
   bottom: 0;
   border-radius: 5px;
 }

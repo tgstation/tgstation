@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added fishing bluespace capsules to the game, which can be used to spawn a variety of fishing spots, from freshwater to tiziran sea to hot springs, and also lava and plasma if emagged."
-  - rscadd: "Added two new fish: the zagoskian moonfish and the sacabambaspis. Moonfish will now periodically lay moonfish eggs."
-  - map: "The 'crashed pod' lavaland ruin now has a hot spring, and the cursed hotspring on icemoon now has a plastic chair and a fishing toolbox."

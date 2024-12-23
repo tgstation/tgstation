@@ -8,8 +8,8 @@
 	id = "organ_set_bonus_fish"
 	tick_interval = 1 SECONDS
 	organs_needed = 3
-	bonus_activate_text = span_notice("Fish DNA is deeply infused with you! While wet, you crawl faster, are slippery, and cannot slip, and it takes longer to dry out. \
-		You're also more resistant to high pressure, better at fishing, but less resilient when dry, especially against burns.")
+	bonus_activate_text = span_notice("Fish DNA is deeply infused with you! While wet, you crawl faster, are slippery, cannot slip, and it takes longer to dry out. \
+		You're also resistant to high pressure, better at fishing, but less resilient when dry, especially against burns.")
 	bonus_deactivate_text = span_notice("You no longer feel as fishy. The moisture around your body begins to dissipate faster...")
 	bonus_traits = list(
 		TRAIT_RESISTHIGHPRESSURE,
@@ -23,6 +23,7 @@
 		TRAIT_EXPANDED_FOV, //fish vision
 		TRAIT_WATER_ADAPTATION,
 		)
+	bonus_biotype = MOB_AQUATIC
 
 /datum/status_effect/organ_set_bonus/fish/enable_bonus()
 	. = ..()
@@ -34,6 +35,9 @@
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
+		//Fish is slightly weaker to being cooked. oh oh.
+		human.physiology.burn_mod *= 1.15
+		human.physiology.heat_mod *= 1.15
 		human.physiology.damage_resistance += 8 //base 8% damage resistance, much wow.
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET))
 		apply_debuff()
@@ -61,6 +65,8 @@
 	owner.clear_mood_event("fish_organs_bonus")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
+		human.physiology.burn_mod /= 1.15
+		human.physiology.heat_mod /= 1.15
 		human.physiology.damage_resistance -= 8
 	if(HAS_TRAIT(owner, TRAIT_IS_WET) && istype(owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/tail/fish))
 		remove_speed_buff()
@@ -190,6 +196,7 @@
 	. = ..()
 	owner.AddElementTrait(TRAIT_WADDLING, type, /datum/element/waddling)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_location))
+	RegisterSignal(owner, COMSIG_LIVING_GIBBER_ACT, PROC_REF(on_gibber_processed))
 	check_location(owner, null)
 
 /obj/item/organ/tail/fish/on_mob_remove(mob/living/carbon/owner)
@@ -197,7 +204,12 @@
 	owner.remove_traits(list(TRAIT_WADDLING, TRAIT_NO_STAGGER), type)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/fish_on_water)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/fish_on_water)
-	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_GIBBER_ACT))
+
+/obj/item/organ/tail/fish/proc/on_gibber_processed(mob/living/carbon/owner, mob/living/user, obj/machinery/gibber, list/results)
+	SIGNAL_HANDLER
+	for(var/iteration in 1 to fillet_amount * 0.5)
+		results += new fillet_type
 
 /obj/item/organ/tail/fish/get_greyscale_color_from_draw_color()
 	set_greyscale(bodypart_overlay.draw_color)

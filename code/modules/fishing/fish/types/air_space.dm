@@ -104,6 +104,16 @@
 /obj/item/fish/starfish/flop_animation()
 	DO_FLOATING_ANIM(src)
 
+/obj/item/fish/starfish/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] swallows [src], and looks upwards..."))
+	user.say("I must go. My people need me.", forced = "starfish suicide")
+	addtimer(CALLBACK(src, PROC_REF(ascension), user), 1 SECONDS)
+	return MANUAL_SUICIDE
+
+/obj/item/fish/starfish/proc/ascension(mob/living/user)
+	user.apply_status_effect(/datum/status_effect/go_away/deluxe)
+	qdel(src)
+
 /obj/item/fish/baby_carp
 	name = "baby space carp"
 	fish_id = "baby_carp"
@@ -122,7 +132,7 @@
 	fillet_type = /obj/item/food/fishmeat/carp/no_tox
 	fish_traits = list(
 		/datum/fish_trait/carnivore,
-		/datum/fish_trait/aggressive,
+		/datum/fish_trait/territorial,
 		/datum/fish_trait/predator,
 		/datum/fish_trait/necrophage,
 		/datum/fish_trait/no_mating,
@@ -149,6 +159,37 @@
 	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
 	update_appearance(UPDATE_OVERLAYS)
 
+/obj/item/fish/baby_carp/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] swallows [src] whole!"))
+	src.forceMove(user)
+	if(status == FISH_DEAD)
+		user.emote("gasp")
+		user.visible_message(span_suicide("[user] chokes on [src] and dies!"))
+		return OXYLOSS
+
+	// the fish grows
+	addtimer(CALLBACK(src, PROC_REF(gestation), user), 20 SECONDS)
+	user.visible_message(span_suicide("[user] starts growing unnaturally..."))
+
+	var/matrix/M = matrix()
+	M.Scale(1.8, 1.2)
+	animate(user, time = 20 SECONDS, transform = M, easing = SINE_EASING)
+	return MANUAL_SUICIDE
+
+/obj/item/fish/baby_carp/proc/gestation(mob/living/user)
+	if(QDELETED(user) || QDELETED(src))
+		return
+	// carp grow big and strong inside the nutritious innards of the human
+	var/mob/living/basic/carp/mega/babby = new(get_turf(user))
+	babby.name = user.name + " Jr."
+
+	var/obj/item/bodypart/chest = user.get_bodypart(BODY_ZONE_CHEST)
+	if(chest)
+		babby.set_greyscale(chest.species_color) // this isn't working. why isnt this working
+
+	user.gib()
+	qdel(src)
+
 /obj/item/fish/baby_carp/update_overlays()
 	. = ..()
 	var/mutable_appearance/eyes = mutable_appearance(icon, "baby_carp_eyes")
@@ -173,13 +214,12 @@
 	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
 		return COMPONENT_DONT_GROW
 
-	if(!isaquarium(loc))
+	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
 		return
 
-	var/obj/structure/aquarium/aquarium = loc
-	if(!aquarium.reproduction_and_growth) //the aquarium has breeding disabled
+	if(HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH)) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
-	if(length(aquarium.get_fishes()) > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
+	if(length(get_aquarium_fishes()) > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
 		return COMPONENT_DONT_GROW
 
 /obj/item/fish/baby_carp/proc/on_growth(datum/source, mob/living/basic/carp/result)

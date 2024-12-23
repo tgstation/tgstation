@@ -854,10 +854,6 @@
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
-"kI" = (
-/obj/effect/turf_decal/sand,
-/turf/closed/wall/mineral/wood,
-/area/virtual_domain)
 "kJ" = (
 /obj/machinery/shower/directional/south,
 /obj/effect/turf_decal/siding/wood{
@@ -3177,10 +3173,6 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/virtual_domain)
-"NZ" = (
-/obj/effect/turf_decal/sand,
-/turf/closed/wall/mineral/wood,
-/area/virtual_domain/fullbright)
 "Of" = (
 /obj/item/reagent_containers/cup/soda_cans/space_mountain_wind{
 	pixel_x = -17;
@@ -7866,9 +7858,9 @@ bX
 ev
 ka
 ka
-NZ
-NZ
-eK
+Bq
+Bq
+Bq
 JN
 JN
 ka
@@ -7948,7 +7940,7 @@ bX
 Yo
 sz
 ka
-NZ
+Bq
 YI
 LD
 JN
@@ -8030,9 +8022,9 @@ Yo
 Yo
 sz
 ka
-NZ
-kI
-eK
+Bq
+Bq
+Bq
 JN
 JN
 ka
@@ -8112,7 +8104,7 @@ Yo
 ka
 ka
 ka
-NZ
+Bq
 Qk
 Uf
 JN
@@ -8194,9 +8186,9 @@ ka
 th
 ka
 eK
-kI
-kI
-eK
+Bq
+Bq
+Bq
 JN
 JN
 ka
@@ -8276,7 +8268,7 @@ ka
 ka
 ka
 ka
-NZ
+Bq
 ZB
 sa
 JN
@@ -8358,9 +8350,9 @@ ka
 ka
 ka
 ka
-eK
-eK
-eK
+Bq
+Bq
+Bq
 JN
 JN
 ka
@@ -11225,8 +11217,8 @@ cO
 oa
 th
 ka
-NZ
-NZ
+eK
+eK
 eK
 ka
 ka
@@ -11307,7 +11299,7 @@ cO
 wb
 MT
 ka
-NZ
+eK
 EA
 xe
 ka

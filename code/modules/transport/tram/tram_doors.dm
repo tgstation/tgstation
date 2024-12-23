@@ -211,7 +211,7 @@
 	if(!hasPower()  && density)
 		balloon_alert(user, "pulling emergency exit...")
 		if(do_after(user, 4 SECONDS, target = src))
-			try_to_crowbar(src, user, TRUE)
+			try_to_crowbar(null, user, TRUE)
 			return TRUE
 
 /**

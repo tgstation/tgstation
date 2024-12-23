@@ -29,6 +29,9 @@
 /// Gets the sign of x, returns -1 if negative, 0 if 0, 1 if positive
 #define SIGN(x) ( ((x) > 0) - ((x) < 0) )
 
+/// Returns the integer closest to 0 from a division
+#define SIGNED_FLOOR_DIVISION(x, y) (SIGN(x) * FLOOR(abs(x) / y, 1))
+
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
 #define ROUND_UP(x) ( -round(-(x)))

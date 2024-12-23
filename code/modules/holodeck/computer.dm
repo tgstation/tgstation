@@ -341,6 +341,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		var/obj/item/clothing/under/holo_clothing = holo_atom
 		holo_clothing.dump_attachments()
 
+	if(istype(holo_atom, /obj/item/organ))
+		var/obj/item/organ/holo_organ = holo_atom
+		if(holo_organ.owner) // a mob has the holo organ inside them... oh dear
+			to_chat(holo_organ.owner, span_warning("\The [holo_organ] inside of you fades away!"))
 	if(!silent)
 		visible_message(span_notice("[holo_atom] fades away!"))
 
@@ -430,8 +434,8 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	playsound(src, SFX_SPARKS, 75, TRUE)
 	obj_flags |= EMAGGED
 	if (user)
-		balloon_alert(user, "safety protocols destroyed") // im gonna keep this once since this perfectly describes it, and the to_chat is just flavor
-		to_chat(user, span_warning("You vastly increase projector power and override the safety and security protocols."))
+		balloon_alert(user, "safety protocols destroyed") // im gonna keep this once since this perfectly describes it
+		to_chat(user, span_warning("You override the safety and security protocols."))
 		user.log_message("emagged the Holodeck Control Console.", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(user)] emagged the Holodeck Control Console.")
 

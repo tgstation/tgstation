@@ -81,7 +81,7 @@
 				if(liver.apply_organ_damage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * liver.alcohol_tolerance * heavy_drinker_multiplier * seconds_per_tick, 0))/150)))
 					return UPDATE_MOB_HEALTH
 
-/datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	if(istype(exposed_obj, /obj/item/paper))
 		var/obj/item/paper/paperaffected = exposed_obj
 		paperaffected.clear_paper()
@@ -183,7 +183,7 @@
 	. = ..()
 	drinker.set_dizzy_if_lower(10 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
-	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
+	drinker.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
 
@@ -231,7 +231,7 @@
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	drinker.adjust_drowsiness(-14 SECONDS * REM * seconds_per_tick)
-	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
+	drinker.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, drinker.get_body_temp_normal())
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
@@ -1411,7 +1411,7 @@
 		if(52 to 201)
 			drinker.Sleeping(100 * REM * seconds_per_tick)
 		if(202 to INFINITY)
-			drinker.AdjustSleeping(40 * REM * seconds_per_tick)
+			drinker.AdjustSleeping(4 SECONDS * REM * seconds_per_tick)
 			if(drinker.adjustToxLoss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 				return UPDATE_MOB_HEALTH
 
@@ -2655,7 +2655,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.02 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 0.001 * ETHEREAL_CHARGE_NORMAL)
 
 /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
@@ -2675,7 +2675,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.05 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 0.008 * ETHEREAL_CHARGE_NORMAL)
 
 /datum/reagent/consumable/ethanol/pod_tesla
 	name = "Pod Tesla"
@@ -2702,7 +2702,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.1 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 0.03 * ETHEREAL_CHARGE_NORMAL)
 
 // Welcome to the Blue Room Bar and Grill, home to Mars' finest cocktails
 /datum/reagent/consumable/ethanol/rice_beer

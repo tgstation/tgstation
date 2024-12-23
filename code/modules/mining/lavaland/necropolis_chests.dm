@@ -145,8 +145,8 @@
 /obj/structure/closet/crate/necropolis/colossus
 	name = "colossus chest"
 
-/obj/structure/closet/crate/necropolis/colossus/bullet_act(obj/projectile/P)
-	if(istype(P, /obj/projectile/colossus))
+/obj/structure/closet/crate/necropolis/colossus/bullet_act(obj/projectile/proj)
+	if(istype(proj, /obj/projectile/colossus))
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 

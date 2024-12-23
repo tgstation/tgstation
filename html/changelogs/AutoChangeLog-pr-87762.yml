@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "Losing malf no longer wipes nonmalf AI abilities"

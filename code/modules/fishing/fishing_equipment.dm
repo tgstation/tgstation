@@ -12,8 +12,8 @@
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "reel_blue"
 	w_class = WEIGHT_CLASS_SMALL
-	///A list of traits that this fishing line has, checked by fish traits and the minigame.
-	var/list/fishing_line_traits
+	///A bitfield of traits that this fishing line has, checked by fish traits and the minigame.
+	var/fishing_line_traits
 	/// Color of the fishing line
 	var/line_color = COLOR_GRAY
 	///The description given to the autowiki
@@ -118,10 +118,10 @@
 	else
 		destination = user
 		throw_callback = CALLBACK(src, PROC_REF(clear_hitby_signal), movable_target)
-		RegisterSignal(movable_target, COMSIG_ATOM_PREHITBY, PROC_REF(catch_it_chucklenut))
+		RegisterSignal(movable_target, COMSIG_MOVABLE_PRE_IMPACT, PROC_REF(catch_it_chucklenut))
 
 	if(!movable_target.safe_throw_at(destination, source.cast_range, 2, callback = throw_callback, gentle = please_be_gentle))
-		UnregisterSignal(movable_target, COMSIG_ATOM_PREHITBY)
+		UnregisterSignal(movable_target, COMSIG_MOVABLE_PRE_IMPACT)
 	else
 		playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 
@@ -129,12 +129,13 @@
 	SIGNAL_HANDLER
 	var/mob/living/user = throwingdatum.initial_target.resolve()
 	if(QDELETED(user) || hit_atom != user)
-		return
-	if(user.try_catch_item(source, skip_throw_mode_check = TRUE, try_offhand = TRUE))
-		return COMSIG_HIT_PREVENTED
+		return NONE
+	if(!user.try_catch_item(source, skip_throw_mode_check = TRUE, try_offhand = TRUE))
+		return NONE
+	return COMPONENT_MOVABLE_IMPACT_NEVERMIND
 
 /obj/item/fishing_line/auto_reel/proc/clear_hitby_signal(obj/item/item)
-	UnregisterSignal(item, COMSIG_ATOM_PREHITBY)
+	UnregisterSignal(item, COMSIG_MOVABLE_PRE_IMPACT)
 
 // Hooks
 
@@ -145,11 +146,11 @@
 	icon_state = "hook"
 	w_class = WEIGHT_CLASS_TINY
 
-	/// A list of traits that this fishing hook has, checked by fish traits and the minigame
-	var/list/fishing_hook_traits
+	/// A bitfield of traits that this fishing hook has, checked by fish traits and the minigame
+	var/fishing_hook_traits
 	/// icon state added to main rod icon when this hook is equipped
 	var/rod_overlay_icon_state = "hook_overlay"
-	/// What subtype of `/obj/item/chasm_detritus` do we fish out of chasms? Defaults to `/obj/item/chasm_detritus`.
+	/// What subtype of `/datum/chasm_detritus` do we fish out of chasms? Defaults to `/datum/chasm_detritus`.
 	var/chasm_detritus_type = /datum/chasm_detritus
 	///The description given to the autowiki
 	var/wiki_desc = "A generic fishing hook. <b>You won't be able to fish without one.</b>"
@@ -173,6 +174,9 @@
 
 ///Check if tha target can be caught by the hook
 /obj/item/fishing_hook/proc/can_be_hooked(atom/target)
+	if(isliving(target))
+		var/mob/living/mob = target
+		return (mob.mob_biotypes & MOB_AQUATIC)
 	return isitem(target)
 
 ///Any special effect when hooking a target that's not managed by the fishing rod.
@@ -211,8 +215,8 @@
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
 
-/obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
-	if(fish_type == FISHING_DUD || ispath(fish_type, /obj/item/fish))
+/obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type)
+	if(fish_type == FISHING_DUD || ispath(fish_type, /obj/item/fish) || isfish(fish_type))
 		return ..()
 
 	// We multiply the odds by five for everything that's not a fish nor a dud
@@ -271,9 +275,9 @@
 	return "The hook on your fishing rod wasn't meant for traditional fishing, rendering it useless at doing so!"
 
 
-/obj/item/fishing_hook/rescue/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
+/obj/item/fishing_hook/rescue/get_hook_bonus_multiplicative(fish_type)
 	// Sorry, you won't catch fish with this.
-	if(ispath(fish_type, /obj/item/fish))
+	if(ispath(fish_type, /obj/item/fish) || isfish(fish_type))
 		return RESCUE_HOOK_FISH_MULTIPLIER
 
 	return ..()
@@ -429,12 +433,12 @@
 ///From the fishing mystery box. It's basically a lazarus and a few bottles of strange reagents.
 /obj/item/storage/box/fish_revival_kit
 	name = "fish revival kit"
-	desc = "Become a fish doctor today."
+	desc = "Become a fish doctor today. A label on the side indicates that fish require two to ten reagent units to be splashed onto them for revival, depending on size."
 	illustration = "fish"
 
 /obj/item/storage/box/fish_revival_kit/PopulateContents()
 	new /obj/item/lazarus_injector(src)
-	new /obj/item/reagent_containers/cup/bottle/strange_reagent(src)
+	new /obj/item/reagent_containers/cup/bottle/fishy_reagent(src)
 	new /obj/item/reagent_containers/cup(src) //to splash the reagents on the fish.
 	new /obj/item/storage/fish_case(src)
 	new /obj/item/storage/fish_case(src)
