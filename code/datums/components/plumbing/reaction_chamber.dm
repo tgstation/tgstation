@@ -9,47 +9,16 @@
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
 	var/obj/machinery/plumbing/reaction_chamber/reaction_chamber = parent
+
+	//cannot give when we outselves are requesting or reacting the reagents
 	if(!reaction_chamber.emptying || reagents.is_reacting)
 		return FALSE
 
-	if(amount <= 0)
-		return
+	//cannot give catalysts to anyone
+	if(reagent && reaction_chamber.catalysts[reagent])
+		return FALSE
 
-	if(reagent)
-		for(var/datum/reagent/contained_reagent as anything in reagents.reagent_list)
-			if(reaction_chamber.catalyst.Find(reagent))
-				if(reaction_chamber.catalyst[reagent] < reagents.reagent_list[reagent])
-					return TRUE
-			else if(contained_reagent.type == reagent)
-				return TRUE
-
-	for(var/datum/reagent/tester in reagents.reagent_list)
-		if(!reaction_chamber.catalyst.Find(tester))
-			return TRUE
-
-	return FALSE
-
-/datum/component/plumbing/reaction_chamber/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
-	var/obj/machinery/plumbing/reaction_chamber/chamber = parent
-	if(!chamber.catalyst)
-		. = ..()
-	else
-		if(!reagents || !target || !target.reagents)
-			return FALSE
-		var/list/togive = list()
-		var/givetotal = 0
-		for(var/datum/reagent/currentreagent as anything in reagents.reagent_list)
-			var/currentdatum = get_chem_id("[currentreagent]")
-			if(!chamber.catalyst.Find(currentdatum))
-				togive[currentdatum] = reagents.get_reagent_amount(currentdatum)
-				givetotal += togive[currentdatum]
-			else
-				if(chamber.catalyst[currentdatum] < reagents.reagent_list[currentdatum])
-					togive[currentdatum] = reagents.reagent_list[currentdatum] - chamber.catalyst[currentdatum]
-					givetotal += togive[currentdatum]
-
-		for(var/datum/reagent/currentreagent as anything in togive)
-			reagents.trans_to(target.recipient_reagents_holder, amount * (togive[currentreagent]/givetotal), target_id = currentreagent, methods = round_robin ? LINEAR : NONE)
+	return ..()
 
 /datum/component/plumbing/reaction_chamber/send_request(dir)
 	var/obj/machinery/plumbing/reaction_chamber/chamber = parent
@@ -60,8 +29,8 @@
 	//take in reagents
 	var/present_amount
 	var/diff
-
-	for(var/required_reagent in chamber.required_reagents)
+	var/list/datum/reagent/required_reagents = chamber.catalysts | chamber.required_reagents
+	for(var/datum/reagent/required_reagent as anything in required_reagents)
 		//find how much amount is already present if at all and get the reagent reference
 		present_amount = 0
 		for(var/datum/reagent/present_reagent as anything in reagents.reagent_list)
@@ -70,10 +39,11 @@
 				break
 
 		//compute how much more is needed
-		diff = min(chamber.required_reagents[required_reagent] - present_amount, MACHINE_REAGENT_TRANSFER)
+		diff = min(required_reagents[required_reagent] - present_amount, MACHINE_REAGENT_TRANSFER)
 		if(diff >= CHEMICAL_QUANTISATION_LEVEL) // the closest we can ask for so values like 0.9999 become 1
 			process_request(diff, required_reagent, dir)
-			return
+			if(!chamber.catalysts[required_reagent]) //only block if not a catalyst as they can come in whenever they are available
+				return
 
 	reagents.flags &= ~NO_REACT
 	reagents.handle_reactions()
