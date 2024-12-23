@@ -31,9 +31,9 @@
 /turf/open/floor/iron/small,
 /area/station/security/prison/shower)
 "aaH" = (
-/obj/structure/barricade/wooden/crude,
-/turf/open/floor/plating,
-/area/station/maintenance/central/lesser)
+/obj/structure/flora/bush/flowers_yw/style_random,
+/turf/open/misc/sandy_dirt,
+/area/station/hallway/secondary/recreation)
 "aaZ" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/tile/blue,
@@ -17680,6 +17680,14 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/execution/education)
+"gro" = (
+/obj/structure/flora/bush/large/style_random{
+	pixel_x = -20;
+	pixel_y = -16
+	},
+/obj/structure/flora/bush/flowers_yw/style_random,
+/turf/open/misc/sandy_dirt,
+/area/station/hallway/secondary/recreation)
 "grx" = (
 /obj/machinery/vending/wardrobe/medi_wardrobe,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -19946,12 +19954,6 @@
 /obj/item/clothing/shoes/clown_shoes/jester,
 /turf/open/floor/iron/dark/small,
 /area/station/commons/fitness/locker_room)
-"hcr" = (
-/obj/structure/chair/sofa/bench{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/space)
 "hcs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -33526,9 +33528,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
-"lrH" = (
-/turf/closed/wall,
-/area/space)
 "lrN" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Atmospherics Tank - Mix"
@@ -35200,6 +35199,10 @@
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
+"lUW" = (
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
 "lVg" = (
 /obj/structure/transit_tube/horizontal,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -40471,12 +40474,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
-"nNq" = (
-/obj/structure/chair/sofa/bench/left{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/space)
 "nNz" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/disposalpipe/segment{
@@ -48685,8 +48682,8 @@
 	pixel_y = 3
 	},
 /obj/effect/dummy/lighting_obj,
-/obj/effect/light_emitter/fake_outdoors,
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/light_emitter/fake_outdoors,
 /turf/open/floor/grass/Airless,
 /area/station/hallway/primary/central/aft)
 "qGu" = (
@@ -51012,6 +51009,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
+"rtZ" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
+	},
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/recreation)
 "rub" = (
 /obj/structure/railing/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -53809,6 +53813,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
+"sqY" = (
+/obj/structure/chair/sofa/bench{
+	dir = 4
+	},
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/recreation)
 "srb" = (
 /obj/effect/turf_decal/box/red/corners{
 	dir = 4
@@ -55957,12 +55968,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
-"taZ" = (
-/obj/structure/chair/sofa/bench/right{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/space)
 "tbb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -56508,6 +56513,13 @@
 /obj/structure/window/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
+"tkq" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 4
+	},
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/recreation)
 "tkE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -107316,7 +107328,7 @@ qUt
 hdZ
 tnb
 qUt
-aaH
+lUW
 qUt
 wua
 sLE
@@ -108860,11 +108872,11 @@ mnl
 uOx
 llY
 rdA
-lrH
-dDB
-dDB
-dDB
-lrH
+shD
+gro
+aaH
+gro
+shD
 xaH
 nkH
 xMr
@@ -109117,11 +109129,11 @@ oJx
 qUt
 izo
 qUt
-lrH
-nNq
-hcr
-taZ
-lrH
+shD
+rtZ
+sqY
+tkq
+shD
 qWD
 ugh
 xMr
