@@ -1053,8 +1053,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		user.visible_message(span_danger("[user] successfully broke out of [src]!"),
 							span_notice("You successfully break out of [src]!"))
 		bust_open()
-	else if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-		to_chat(user, span_warning("You fail to break out of [src]!"))
+	else
+		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
+			to_chat(user, span_warning("You fail to break out of [src]!"))
 		began_resisting = FALSE
 
 /obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
