@@ -987,7 +987,9 @@ em {
   border-radius: 0.5em;
   z-index: 1;
 
-  // Cutting off 50% of border
+  // "Mask" a half of the border
+  // It very rough but it only possible way i see with IE compat
+  // Replace it with normal mask-image when 516 got stable
   &:before {
     content: '';
     position: absolute;

@@ -47,7 +47,7 @@
 #define boxed_message(str) ("<div class='boxed_message'>" + str + "</div>")
 /// Adds a box around whatever message you're sending in chat. Can apply color and/or additional classes. Available colors: red, green, blue, purple.
 #define custom_boxed_message(classes, str) ("<div class='boxed_message " + classes + "'>" + str + "</div>")
-/// Makes a fieldset with a name in the middle top part. Can apply additional classes
+/// Makes a fieldset with a neaty styled name. Can apply additional classes.
 #define fieldset_block(title, content, classes) ("<fieldset class='fieldset " + classes + "'><legend class='fieldset_legend'>" + title + "</legend>" + content + "</fieldset>")
 /// Makes a horizontal line with text in the middle
 #define separator_hr(str) ("<div class='separator'>" + str + "</div>")

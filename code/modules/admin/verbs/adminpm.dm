@@ -387,23 +387,14 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 			recipient_ticket_id = recipient_ticket?.id
 			SSblackbox.LogAhelp(recipient_ticket_id, "Ticket Opened", send_message, recipient.ckey, src.ckey)
 
-		to_chat(recipient,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = "<font color='red' size='4'><b>-- Administrator private message --</b></font>",
-			confidential = TRUE)
-
 		recipient.receive_ahelp(
 			link_to_us,
 			span_linkify(send_message),
 		)
 
-		to_chat(recipient,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
-			confidential = TRUE)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = span_notice("Admin PM to-<b>[their_name_with_link]</b>: [span_linkify(send_message)]"),
+			html = span_notice("Admin PM to - <b>[their_name_with_link]</b>: [span_linkify(send_message)]"),
 			confidential = TRUE)
 
 		admin_ticket_log(recipient,
@@ -466,12 +457,12 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = span_notice("Admin PM to-<b>[their_name_with_link]</b>: [span_linkify(keyword_parsed_msg)]"),
+			html = span_notice("Admin PM to - <b>[their_name_with_link]</b>: [span_linkify(keyword_parsed_msg)]"),
 			confidential = TRUE)
 
 		//omg this is dumb, just fill in both their logs
-		var/interaction_message = "<font color='purple'>PM from-<b>[name_key_with_link]</b> to-<b>[their_name_with_link]</b>: [keyword_parsed_msg]</font>"
-		var/player_interaction_message = "<font color='purple'>PM from-<b>[link_to_us]</b> to-<b>[link_to_their]</b>: [send_message]</font>"
+		var/interaction_message = "<font color='purple'>PM from - <b>[name_key_with_link]</b> to - <b>[their_name_with_link]</b>: [keyword_parsed_msg]</font>"
+		var/player_interaction_message = "<font color='purple'>PM from - <b>[link_to_us]</b> to - <b>[link_to_their]</b>: [send_message]</font>"
 		admin_ticket_log(src,
 			interaction_message,
 			log_in_blackbox = FALSE,
@@ -486,8 +477,8 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 		return TRUE
 
 	// This is us (a player) trying to talk to the recipient (an admin)
-	var/replymsg = "Reply PM from-<b>[name_key_with_link]</b>: [span_linkify(keyword_parsed_msg)]"
-	var/player_replymsg = "Reply PM from-<b>[link_to_us]</b>: [span_linkify(send_message)]"
+	var/replymsg = "Reply PM from - <b>[name_key_with_link]</b>: [span_linkify(keyword_parsed_msg)]"
+	var/player_replymsg = "Reply PM from - <b>[link_to_us]</b>: [span_linkify(send_message)]"
 	admin_ticket_log(src,
 		"<font color='red'>[replymsg]</font>",
 		log_in_blackbox = FALSE,
@@ -707,20 +698,10 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 	message_admins("External message from [sender] to [recipient_name_linked] : [message]")
 	log_admin_private("External PM: [sender] -> [recipient_name] : [message]")
 
-	to_chat(recipient,
-		type = MESSAGE_TYPE_ADMINPM,
-		html = "<font color='red' size='4'><b>-- Administrator private message --</b></font>",
-		confidential = TRUE)
-
 	recipient.receive_ahelp(
 		"<a href='?priv_msg=[stealthkey]'>[adminname]</a>",
 		message,
 	)
-
-	to_chat(recipient,
-		type = MESSAGE_TYPE_ADMINPM,
-		html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
-		confidential = TRUE)
 
 	admin_ticket_log(recipient, "<font color='purple'>PM From [tgs_tagged]: [message]</font>", log_in_blackbox = FALSE)
 
@@ -766,8 +747,13 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 	to_chat(
 		src,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = "<span class='[span_class]'>Admin PM from-<b>[reply_to]</b>: [message]</span>",
-		confidential = TRUE,
+		html = fieldset_block(
+			"<b>Administrator private message</b>",
+			"<span class='[span_class]'>Admin PM from - <b>[reply_to]</b></span>\n\n\
+			<span class='[span_class]'>[message]</span>\n\n\
+			<i class='adminsay'>Click on the administrator's name to reply.</i>",
+			"boxed_message red"),
+		confidential = TRUE
 	)
 
 	current_ticket?.player_replied = FALSE
