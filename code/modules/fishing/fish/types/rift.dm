@@ -73,6 +73,9 @@
 		playsound(src, SFX_SHATTER, 50)
 		qdel(src)
 
+/obj/item/fish/starfish/chrystarfish/add_emissive()
+	return
+
 /obj/item/fish/starfish/chrystarfish/get_base_edible_reagents_to_add()
 	var/list/return_list = ..()
 	return_list[/datum/reagent/bluespace] = 5
