@@ -71,13 +71,7 @@ function setupApp() {
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    // prettier-ignore
-    module.hot.accept([
-      './components',
-      './debug',
-      './layouts',
-      './routes',
-    ], () => {
+    module.hot.accept(['./debug', './layouts', './routes'], () => {
       renderApp();
     });
   }
