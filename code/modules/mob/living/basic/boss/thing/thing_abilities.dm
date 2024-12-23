@@ -81,7 +81,7 @@
 
 /datum/action/cooldown/mob_cooldown/the_thing/IsAvailable(feedback)
 	var/mob/living/basic/boss/thing/the_thing = owner
-	if(!istype(the_thing) || !the_thing.ruin_spawned)
+	if(!istype(the_thing))
 		return ..()
 	return ..() && !!(the_thing.phase in available_in_phases)
 
@@ -214,6 +214,7 @@
 	button_icon_state = "huntingknife"
 	cooldown_time = 10 SECONDS
 	available_in_phases = list(2,3)
+	click_to_activate = FALSE
 	/// range of tendril
 	var/range = 9
 
@@ -244,3 +245,74 @@
 			continue
 		new /obj/effect/temp_visual/mook_dust(target)
 		new /obj/structure/thing_boss_spike(target)
+
+/datum/action/cooldown/mob_cooldown/the_thing/acid_spit
+	name = "Acid Shower"
+	desc = "Spit patches of acid in a radius around you."
+	button_icon = 'icons/obj/weapons/stabby.dmi'
+	button_icon_state = "huntingknife"
+	cooldown_time = 10 SECONDS
+	click_to_activate = FALSE
+	available_in_phases = list(3)
+
+/datum/action/cooldown/mob_cooldown/the_thing/acid_spit/Activate(atom/target)
+	if(HAS_TRAIT_FROM(owner, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT))
+		return
+	. = ..()
+	var/turf/owner_turf = get_turf(owner)
+	owner.visible_message(span_danger("[owner] spits acid!"))
+	var/list/potential = list()
+	for(var/turf/open/turf in RANGE_TURFS(6, owner_turf))
+		potential += turf
+
+	for(var/i = 1 to rand(2,4))
+		new /obj/effect/temp_visual/incoming_thing_acid(pick(potential))
+
+/obj/effect/temp_visual/incoming_thing_acid
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	icon_state = "toxin"
+	name = "acid"
+	desc = "Get out of the way!"
+	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
+	randomdir = FALSE
+	duration = 0.9 SECONDS
+	pixel_z = 270
+
+/obj/effect/temp_visual/incoming_thing_acid/Initialize(mapload)
+	. = ..()
+	animate(src, pixel_z = 0, time = duration)
+	addtimer(CALLBACK(src, PROC_REF(make_acid)), 0.85 SECONDS)
+
+/obj/effect/temp_visual/incoming_thing_acid/proc/make_acid()
+	for(var/turf/open/open in RANGE_TURFS(1, loc))
+		new /obj/effect/thing_acid(open)
+
+/obj/effect/thing_acid
+	name = "stomach acid"
+	icon = 'icons/effects/acid.dmi'
+	icon_state = "default"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	anchored = TRUE
+	/// how long does the acid exist for
+	var/duration_time = 5 SECONDS
+
+/obj/effect/thing_acid/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	QDEL_IN(src, duration_time)
+
+/obj/effect/thing_acid/proc/on_entered(datum/source, mob/living/victim)
+	SIGNAL_HANDLER
+	if(!istype(victim) || ismegafauna(victim))
+		return
+	for(var/zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		var/blocked = victim.run_armor_check(zone, ACID)
+		victim.apply_damage(25, BURN, def_zone = zone, blocked = blocked)
+	to_chat(victim, span_userdanger("You are burnt by the acid!"))
+	playsound(victim, 'sound/effects/wounds/sizzle1.ogg', vol = 50, vary = TRUE)
+	qdel(src)

@@ -7,6 +7,7 @@
 		BB_THETHING_BIGTENDRILS = null,
 		BB_THETHING_CARDTENDRILS = null,
 		BB_THETHING_SHRIEK = null,
+		BB_THETHING_ACIDSPIT = null,
 		BB_THETHING_ATTACKMODE = TRUE,
 		BB_THETHING_NOAOE = TRUE,
 		BB_THETHING_LASTAOE = null,
@@ -30,7 +31,7 @@
 		return
 
 	controller.set_blackboard_key(BB_THETHING_ATTACKMODE, TRUE) // putting this here so we go to melee mode if we cant do any aoe
-	var/static/list/aoe_attacks = list(BB_THETHING_DECIMATE, BB_THETHING_BIGTENDRILS, BB_THETHING_CARDTENDRILS)
+	var/static/list/aoe_attacks = list(BB_THETHING_DECIMATE, BB_THETHING_BIGTENDRILS, BB_THETHING_CARDTENDRILS, BB_THETHING_ACIDSPIT)
 	var/list/possible_attacks = aoe_attacks.Copy() - controller.blackboard[BB_THETHING_LASTAOE]
 	for(var/bb_action_key in possible_attacks)
 		var/datum/action/action = controller.blackboard[bb_action_key]

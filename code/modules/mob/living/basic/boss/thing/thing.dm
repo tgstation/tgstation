@@ -1,4 +1,5 @@
 #define PHASEREGEN_FILTER "healing_glow"
+#define RUIN_QUEUE "the_thing_depleter"
 /mob/living/basic/boss/thing
 	name = "\improper Thing"
 	icon = 'icons/mob/simple/icemoon/thething.dmi'
@@ -31,8 +32,6 @@
 
 	/// if true, this boss may only be killed proper in its ruin by the associated machines as part of the bossfight. Turn off if admin shitspawn
 	var/ruin_spawned = TRUE
-	/// ruin queue id for the phase depleters if ruin spawned
-	var/ruin_queue_id = "the_thing_depleter"
 
 /mob/living/basic/boss/thing/Initialize(mapload)
 	. = ..()
@@ -42,15 +41,16 @@
 		/datum/action/cooldown/mob_cooldown/the_thing/big_tendrils = BB_THETHING_BIGTENDRILS,
 		/datum/action/cooldown/mob_cooldown/the_thing/shriek = BB_THETHING_SHRIEK,
 		/datum/action/cooldown/mob_cooldown/the_thing/cardinal_tendrils = BB_THETHING_CARDTENDRILS,
+		/datum/action/cooldown/mob_cooldown/the_thing/acid_spit = BB_THETHING_ACIDSPIT,
 	)
 	grant_actions_by_list(innate_actions)
 	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.3 SECONDS)
 	if(ruin_spawned)
-		SSqueuelinks.add_to_queue(src, ruin_queue_id, 0)
+		SSqueuelinks.add_to_queue(src, RUIN_QUEUE, 0)
 		return INITIALIZE_HINT_LATELOAD
 
 /mob/living/basic/boss/thing/LateInitialize()
-	SSqueuelinks.pop_link(ruin_queue_id)
+	SSqueuelinks.pop_link(RUIN_QUEUE)
 
 /mob/living/basic/boss/thing/update_icon_state()
 	. = ..()
@@ -78,7 +78,7 @@
 		return
 	ADD_TRAIT(src, TRAIT_GODMODE, MEGAFAUNA_TRAIT)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT)
-	balloon_alert_to_viewers("weakened! overload the machines!")
+	balloon_alert_to_viewers("invulnerable! overload the machines!")
 	visible_message(span_danger("[src] drops to the ground staggered, unable to keep up with injuries!"))
 	phase_invulnerability_timer = addtimer(CALLBACK(src, PROC_REF(phase_too_slow)), phase_invul_time, TIMER_STOPPABLE|TIMER_UNIQUE)
 	add_filter(PHASEREGEN_FILTER, 2, list("type" = "outline", "color" = COLOR_PALE_GREEN, "alpha" = 0, "size" = 1))
@@ -139,18 +139,16 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	/// is this not broken yet
 	var/functional = TRUE
-	/// queue id
-	var/queue_id = "the_thing_depleter"
 	/// boss weakref
 	var/datum/weakref/boss_weakref
 
 /obj/structure/thing_boss_phase_depleter/Initialize(mapload)
 	. = ..()
 	go_in_floor()
-	SSqueuelinks.add_to_queue(src, queue_id, 0)
+	SSqueuelinks.add_to_queue(src, RUIN_QUEUE, 0)
 
 /obj/structure/thing_boss_phase_depleter/MatchedLinks(id, list/partners)
-	if(id != queue_id)
+	if(id != RUIN_QUEUE)
 		return
 	var/mob/living/basic/boss/thing/thing = locate() in partners
 	if(isnull(thing))
@@ -220,5 +218,48 @@
 
 /obj/effect/temp_visual/circle_wave/orange
 	color = COLOR_ORANGE
+
+/obj/structure/aggro_gate
+	name = "biohazard gate"
+	desc = "A wall of solid light, only activating when a human is endangered by a biohazard, unfortunately that does little for safety as it locks you in with said biohazard. Virtually indestructible, you must evade (or kill) the threat."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "wave2"
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	move_resist = MOVE_FORCE_OVERPOWERING
+	opacity = FALSE
+	density = FALSE
+	invisibility = INVISIBILITY_MAXIMUM
+	anchored = TRUE
+	/// queue id
+	var/queue_id = RUIN_QUEUE
+	/// blackboard key for target
+	var/target_bb_key = BB_BASIC_MOB_CURRENT_TARGET
+
+/obj/structure/aggro_gate/Initialize(mapload)
+	. = ..()
+	SSqueuelinks.add_to_queue(src, queue_id)
+
+/obj/structure/aggro_gate/MatchedLinks(id, list/partners)
+	if(id != queue_id)
+		return
+	for(var/mob/living/partner in partners)
+		RegisterSignal(partner, COMSIG_AI_BLACKBOARD_KEY_SET(target_bb_key), PROC_REF(bar_the_gates))
+		RegisterSignals(partner, list(COMSIG_AI_BLACKBOARD_KEY_CLEARED(target_bb_key), COMSIG_LIVING_DEATH, COMSIG_MOB_LOGIN), PROC_REF(open_gates))
+
+/obj/structure/aggro_gate/proc/bar_the_gates(mob/living/source)
+	SIGNAL_HANDLER
+	var/atom/target = source.ai_controller?.blackboard[target_bb_key]
+	if (QDELETED(target))
+		return
+	invisibility = INVISIBILITY_NONE
+	density = TRUE
+	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	do_sparks(3, cardinal_only = FALSE, source = src)
+
+/obj/structure/aggro_gate/proc/open_gates(mob/living/source)
+	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	do_sparks(3, cardinal_only = FALSE, source = src)
+	density = FALSE
+	invisibility = INVISIBILITY_MAXIMUM
 
 #undef PHASEREGEN_FILTER

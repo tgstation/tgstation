@@ -109,7 +109,7 @@
 		victor.client.give_award(score_achievement_type, victor) //Score progression for specific boss killed
 	return TRUE
 
-/mob/living/basic/boss/melee_attack(mob/living/target, list/modifiers, ignore_cooldown = FALSE)
+/mob/living/basic/boss/early_melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	. = ..()
 	if(!. || !istype(target))
 		return

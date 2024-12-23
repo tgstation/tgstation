@@ -311,6 +311,7 @@
 #define BB_THETHING_BIGTENDRILS "BB_THETHING_BIGTENDRILS"
 #define BB_THETHING_SHRIEK "BB_THETHING_SHRIEK"
 #define BB_THETHING_CARDTENDRILS "BB_THETHING_CARDTENDRILS"
+#define BB_THETHING_ACIDSPIT "BB_THETHING_ACIDSPIT"
 /// Blackboard key for The Thing boss that determines attack mode. TRUE means it will focus on closing the distance and murdering the person in question. Otherwise AOE.
 #define BB_THETHING_ATTACKMODE "BB_THETHING_ATTACKMODE"
 /// The Thing will be in attack mode forever if true
