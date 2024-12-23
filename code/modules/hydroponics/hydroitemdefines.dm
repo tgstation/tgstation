@@ -424,6 +424,7 @@
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "cultivator"
 	inhand_icon_state = "cultivator"
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -442,6 +443,7 @@
 /obj/item/cultivator/rake
 	name = "rake"
 	icon_state = "rake"
+	icon_angle = -45
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("slashes", "slices", "bashes", "claws")
 	attack_verb_simple = list("slash", "slice", "bash", "claw")
@@ -473,6 +475,7 @@
 	name = "cyborg cultivator"
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "sili_cultivator"
+	icon_angle = 0
 
 /obj/item/hatchet
 	name = "hatchet"
@@ -480,6 +483,7 @@
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hatchet"
 	inhand_icon_state = "hatchet"
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -523,6 +527,7 @@
 	name = "cyborg hatchet"
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "sili_hatchet"
+	icon_angle = 0
 
 /obj/item/scythe
 	name = "scythe"
@@ -530,6 +535,7 @@
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "scythe0"
 	inhand_icon_state = "scythe0"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	force = 15
@@ -594,6 +600,7 @@
 	icon_state = "secateurs"
 	inhand_icon_state = null
 	worn_icon_state = "cutters"
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -621,6 +628,7 @@
 	name = "cyborg secateurs"
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "sili_secateur"
+	icon_angle = 0
 
 /obj/item/geneshears
 	name = "botanogenetic plant shears"
