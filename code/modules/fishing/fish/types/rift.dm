@@ -2,8 +2,8 @@
 	name = "chrystarfish"
 	fish_id = "chrystarfish"
 	desc = "This is what happens when a cosmostarfish sneaks into the bluespace compartment of a hyperspace engine. Very pointy and damaging - leading cause of spaceship explosions in 2554."
-	icon = 'icons/obj/aquarium/weird.dmi'
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/weird.dmi'
+	icon = 'icons/obj/aquarium/rift.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/rift.dmi'
 	icon_state = "chrystarfish"
 	force = 12
 	sharpness = SHARP_POINTY
@@ -109,7 +109,7 @@
 	fish_id = "walro-dolphish"
 	desc = "Strange bloodthirsty apex predator from beyond. A powerful weapon, but it -hates- being held."
 	icon = 'icons/obj/aquarium/wide.dmi'
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/weird.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/rift.dmi'
 	icon_state = "dolphish"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -255,8 +255,8 @@
 	name = "flumpulus"
 	fish_id = "flumpulus"
 	desc = "You can hardly even guess as to how this possibly counts as a fish. Inexplicably, you get the feeling that it could serve as a fantastic way to cushion a fall."
-	icon = 'icons/obj/aquarium/weird.dmi'
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/weird.dmi'
+	icon = 'icons/obj/aquarium/rift.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/rift.dmi'
 	icon_state = "flumpulus"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -337,8 +337,8 @@
 	desc = "This crystalline fish is actually one of only two known silicon-based lifeforms.\
 		It avoids death via oxygen-silicate reactions by organically shielding its exterior, allowing the thick scales to calcify into quartz and diamond, at the cost of rendering the fish functionally blind. \
 		How xenomorphs manage is a complete mystery bordering on bullshit."
-	icon = 'icons/obj/aquarium/weird.dmi'
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/weird.dmi'
+	icon = 'icons/obj/aquarium/rift.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/rift.dmi'
 	icon_state = "gullion"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
