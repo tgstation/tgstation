@@ -106,12 +106,13 @@
 				)
 			return COMPONENT_BLOCK_MISC_HELP
 
-	terror_buildup -= HUG_TERROR_AMOUNT
-	owner.visible_message(
-		span_notice("[owner] seems to relax as [hugger] gives [owner.p_them()] a comforting hug."),
-		span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
-		span_hear("You hear shuffling and a sigh of relief."),
-	)
+	if(hugger != owner)
+		terror_buildup -= HUG_TERROR_AMOUNT
+		owner.visible_message(
+			span_notice("[owner] seems to relax as [hugger] gives [owner.p_them()] a comforting hug."),
+			span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
+			span_hear("You hear shuffling and a sigh of relief."),
+		)
 
 /**
  * Checks the surroundings of our victim and returns TRUE if the user is surrounded by enough darkness
