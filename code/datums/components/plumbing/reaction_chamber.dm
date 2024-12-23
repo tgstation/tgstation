@@ -14,10 +14,6 @@
 	if(!reaction_chamber.emptying || reagents.is_reacting)
 		return FALSE
 
-	//cannot give catalysts to anyone
-	if(reagent && reaction_chamber.catalysts[reagent])
-		return FALSE
-
 	return ..()
 
 /datum/component/plumbing/reaction_chamber/send_request(dir)
