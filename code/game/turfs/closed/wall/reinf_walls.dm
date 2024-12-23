@@ -215,9 +215,13 @@
 			dismantle_wall()
 
 /turf/closed/wall/r_wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(the_rcd.canRturf || the_rcd.construction_mode == RCD_WALLFRAME)
+	if (the_rcd.construction_mode == RCD_WALLFRAME)
 		return ..()
-
+	if(!the_rcd.canRturf)
+		return
+	. = ..()
+	if (.)
+		.["delay"] *= RCD_RWALL_DELAY_MULT
 
 /turf/closed/wall/r_wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(the_rcd.canRturf || rcd_data["[RCD_DESIGN_MODE]"] == RCD_WALLFRAME)

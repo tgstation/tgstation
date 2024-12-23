@@ -206,3 +206,19 @@
 	end_volume = 60
 	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 	falloff_exponent = 4
+
+/datum/looping_sound/cryo_cell
+	mid_sounds = list(
+		'sound/machines/cryo/cryo_1.ogg',
+		'sound/machines/cryo/cryo_2.ogg',
+		'sound/machines/cryo/cryo_3.ogg',
+		'sound/machines/cryo/cryo_4.ogg',
+		'sound/machines/cryo/cryo_5.ogg',
+		'sound/machines/cryo/cryo_6.ogg',
+		'sound/machines/cryo/cryo_7.ogg',
+		'sound/machines/cryo/cryo_8.ogg',
+		'sound/machines/cryo/cryo_9.ogg',
+		'sound/machines/cryo/cryo_10.ogg',
+	)
+	mid_length = 5 SECONDS
+	volume = 50

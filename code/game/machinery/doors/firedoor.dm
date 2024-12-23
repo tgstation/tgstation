@@ -548,7 +548,7 @@
 	if(welded || operating)
 		return
 
-	var/atom/crowbar_owner = acting_object.loc //catchs mechs and any other non-mob using a crowbar
+	var/atom/crowbar_owner = acting_object?.loc || user // catches mechs and any other non-mob using a crowbar
 
 	if(density)
 		being_held_open = TRUE
