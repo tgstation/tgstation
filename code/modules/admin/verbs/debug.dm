@@ -853,6 +853,11 @@ ADMIN_VERB(check_missing_sprites, R_DEBUG, "Debug Worn Item Sprites", "We're can
 				if(!(sprite.icon_state in icon_states(actual_file_name)))
 					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Suit Storage slot."), confidential = TRUE)
 
+ADMIN_VERB(cmd_admin_test_sound, R_DEBUG, "Test Sound", "Test Sound Nearby Mobs", ADMIN_CATEGORY_DEBUG, mob/living/carbon/human/H in world)
+	message_admins(span_adminnotice("[key_name_admin(user)] tested the sound debug."))
+	for(var/i in 1 to 100000)
+		playsound(H, SFX_SEAR, 50, TRUE)
+
 #ifndef OPENDREAM
 ADMIN_VERB(start_tracy, R_DEBUG, "Run Tracy Now", "Start running the byond-tracy profiler immediately", ADMIN_CATEGORY_DEBUG)
 	if(GLOB.tracy_initialized)
