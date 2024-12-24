@@ -146,27 +146,29 @@ const ItemTile = ({ item }) => {
             left="0"
             bottom="0"
             fontWeight="bold"
-            fontSize="14px">
+            fontSize="14px"
+          >
             <NumberInput
               width="25px"
               minValue={1}
               maxValue={item.amount}
               step={1}
               value={itemCount}
-              onChange={(value) => setItemCount(value)} />
-            </Box>
+              onChange={(value) => setItemCount(value)}
+            />
+          </Box>
         )}
       </Button>
       <Box
-          style={{
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-            textAlign: 'center',
-          }}
-        >
-          {item.name}
-        </Box>
+        style={{
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+          textAlign: 'center',
+        }}
+      >
+        {item.name}
+      </Box>
     </Box>
   ) as any;
 };
