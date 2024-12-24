@@ -76,15 +76,15 @@
 	avatar.set_temp_blindness(1 SECONDS) // I'm in
 
 
-/datum/component/avatar_connection/PostTransfer()
+/datum/component/avatar_connection/PostTransfer(datum/new_parent)
 	var/obj/machinery/netpod/pod = netpod_ref?.resolve()
 	if(isnull(pod))
 		return COMPONENT_INCOMPATIBLE
 
-	if(!isliving(parent))
+	if(!isliving(new_parent))
 		return COMPONENT_INCOMPATIBLE
 
-	pod.avatar_ref = WEAKREF(parent)
+	pod.avatar_ref = WEAKREF(new_parent)
 
 
 /datum/component/avatar_connection/RegisterWithParent()
@@ -107,8 +107,9 @@
 		COMSIG_BITRUNNER_ALERT_SEVER,
 		COMSIG_BITRUNNER_CACHE_SEVER,
 		COMSIG_BITRUNNER_LADDER_SEVER,
-		COMSIG_LIVING_DEATH,
 		COMSIG_LIVING_PILL_CONSUMED,
+		COMSIG_LIVING_DEATH,
+		COMSIG_QDELETING,
 		COMSIG_MOB_APPLY_DAMAGE,
 	))
 
