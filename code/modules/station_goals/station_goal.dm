@@ -1,10 +1,37 @@
+/**
+ * Station goals
+ *
+ * Objecives given to the whole station's crew to complete.
+ * This gives the crew something to work towards during a round.
+ */
 /datum/station_goal
+	///The name of the objective.
 	var/name = "Generic Goal"
-	var/weight = 1 //In case of multiple goals later.
-	var/required_crew = 10
+	/**
+	 * The goal budget says how many objectives they want, and  this takes away from said budget.
+	 * we keep taking from the budget until there's no more. As of currently, it's either 1, or infinite for greenshift
+	 * meaning this only makes one station objective spawn, or all on a greenshift. Basically this doesn't do much and
+	 * you shouldn't really change it.
+	 */
+	var/report_weight = 1
+	///Whether this objective requires to be in a space station, barring it from planetary maps.
 	var/requires_space = FALSE
+	///Boolean on whether or not the objective has been completed. Most subtypes overwrite this anyways.
 	var/completed = FALSE
+	///The message that will be sent to the station via station report when the objective is received.
+	///This is typically overwritten by subtypes in order to use formatting.
 	var/report_message = "Complete this goal."
+	///The type of goal this is, used to sort goals by type and to give one station-side and one mining-side.
+	var/goal_type = STATION_GOAL
+
+/datum/station_goal/New()
+	. = ..()
+	SSstation.goals_by_type[goal_type] = src
+
+/datum/station_goal/Destroy(force)
+	if(SSstation.goals_by_type[goal_type] == src)
+		SSstation.goals_by_type[goal_type] = null
+	return ..()
 
 /datum/station_goal/proc/send_report()
 	priority_announce("Priority Nanotrasen directive received. Project \"[name]\" details inbound.", "Incoming Priority Message", SSstation.announcer.get_rand_report_sound())
@@ -37,15 +64,3 @@
 		send_report()
 	else if(href_list["remove"])
 		qdel(src)
-
-/datum/station_goal/New()
-	if(type in SSstation.goals_by_type)
-		stack_trace("Creating a new station_goal of type [type] when one already exists in SSstation.goals_by_type this is not supported anywhere. I trust you tho")
-	else
-		SSstation.goals_by_type[type] = src
-	return ..()
-
-/datum/station_goal/Destroy(force)
-	if(SSstation.goals_by_type[type] == src)
-		SSstation.goals_by_type -= type
-	return ..()
