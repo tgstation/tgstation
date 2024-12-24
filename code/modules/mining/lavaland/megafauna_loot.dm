@@ -1210,7 +1210,7 @@
 	else
 		lines += span_warning("Organic organs detected. Robotic organs only, cannot take over.")
 
-	to_chat(user, examine_block(jointext(lines, "\n")), type = MESSAGE_TYPE_INFO)
+	to_chat(user, boxed_message(jointext(lines, "\n")), type = MESSAGE_TYPE_INFO)
 
 /obj/item/organ/brain/cybernetic/ai/Topic(href, href_list)
 	..()
