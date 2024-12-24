@@ -22,7 +22,7 @@
 		if(isliving(living_victim))
 			hit_someone = TRUE
 			living_victim.apply_damage(40, damagetype = BRUTE, sharpness = SHARP_POINTY)
-		else if(potential_target.uses_integrity && !(potential_target.resistance_flags & INDESTRUCTIBLE) && !isitem(potential_target) && !HAS_TRAIT(potential_target, TRAIT_UNDERFLOOR))
+		else if(potential_target.uses_integrity && !(potential_target.resistance_flags & INDESTRUCTIBLE) && !(initial(potential_target.density)) && !HAS_TRAIT(potential_target, TRAIT_UNDERFLOOR))
 			potential_target.take_damage(100, BRUTE)
 	if (hit_someone)
 		expiry_time /= 2
@@ -122,3 +122,9 @@
 	to_chat(victim, span_userdanger("You are burnt by the acid!"))
 	playsound(victim, 'sound/effects/wounds/sizzle1.ogg', vol = 50, vary = TRUE)
 	qdel(src)
+
+/obj/item/keycard/thing_boss
+	name = "Storage Room 2 Keycard"
+	desc = "A fancy keycard for storage room 2."
+	color = COLOR_PALE_GREEN
+	puzzle_id = "thingbosslootroom"

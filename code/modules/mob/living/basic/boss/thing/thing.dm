@@ -20,8 +20,8 @@
 	speed = 3.5 //dont make this any faster PLEASE
 	gps_name = "L-4 Biohazard Beacon"
 	ai_controller = /datum/ai_controller/basic_controller/thing_boss
-	loot = list(/obj/item/gun/ballistic/shotgun/lethal)
-	crusher_loot = list(/obj/item/food/little_shiro_sandwich)
+	loot = list(/obj/item/keycard/thing_boss)
+	crusher_loot = list(/obj/item/keycard/thing_boss, /obj/item/crusher_trophy/flesh_glob)
 	/// Current phase of the boss fight
 	var/phase = 1
 	/// Time the Thing will be invulnerable between phases

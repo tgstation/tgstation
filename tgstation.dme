@@ -5051,6 +5051,7 @@
 #include "code\modules\mob\living\basic\pets\penguin\penguin_ai.dm"
 #include "code\modules\mob\living\basic\pets\pet_cult\pet_cult_abilities.dm"
 #include "code\modules\mob\living\basic\pets\pet_cult\pet_cult_ai.dm"
+#include "code\modules\mob\living\basic\ruin_defender\blob_of_flesh.dm"
 #include "code\modules\mob\living\basic\ruin_defender\cybersun_aicore.dm"
 #include "code\modules\mob\living\basic\ruin_defender\flesh.dm"
 #include "code\modules\mob\living\basic\ruin_defender\living_floor.dm"
