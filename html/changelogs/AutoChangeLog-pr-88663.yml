@@ -1,0 +1,4 @@
+author: "Absolucy, ShadowLarkens, S34N"
+delete-after: True
+changes:
+  - bugfix: "Fixed chat rapidly flickering in BYOND 516."
