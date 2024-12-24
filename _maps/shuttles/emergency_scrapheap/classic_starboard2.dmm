@@ -1,0 +1,269 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"b" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"c" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/corner{
+	dir = 4
+	},
+/area/shuttle/escape)
+"f" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"g" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"h" = (
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/door/window/right/directional/west{
+	name = "Red Corner"
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_x = 2;
+	pixel_y = 9
+	},
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 4
+	},
+/area/shuttle/escape)
+"l" = (
+/obj/item/stack/tile/iron/corner,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"o" = (
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/smooth_corner,
+/area/shuttle/escape)
+"s" = (
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"w" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/shuttle/escape)
+"x" = (
+/turf/open/floor/iron/corner{
+	dir = 1
+	},
+/area/shuttle/escape)
+"y" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"z" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"A" = (
+/obj/effect/turf_decal/tile/blue/anticorner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Blue Corner"
+	},
+/obj/item/clothing/gloves/boxing/blue{
+	pixel_x = 5;
+	pixel_y = -7
+	},
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 8
+	},
+/area/shuttle/escape)
+"B" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"C" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red/half,
+/turf/open/floor/iron/dark/smooth_edge,
+/area/shuttle/escape)
+"D" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/shuttle/escape)
+"E" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 1
+	},
+/area/shuttle/escape)
+"F" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 1
+	},
+/area/shuttle/escape)
+"G" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/smooth_edge,
+/area/shuttle/escape)
+"H" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"J" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 1
+	},
+/area/shuttle/escape)
+"N" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/shuttle/escape)
+"P" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"S" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"T" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron/corner{
+	dir = 8
+	},
+/area/shuttle/escape)
+"U" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"X" = (
+/obj/modular_map_connector,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Y" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red/half{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/shuttle/escape)
+
+(1,1,1) = {"
+X
+s
+B
+B
+z
+y
+"}
+(2,1,1) = {"
+y
+P
+F
+D
+Y
+h
+"}
+(3,1,1) = {"
+y
+S
+J
+l
+T
+C
+"}
+(4,1,1) = {"
+a
+S
+E
+c
+x
+G
+"}
+(5,1,1) = {"
+b
+o
+A
+N
+w
+r
+"}
+(6,1,1) = {"
+f
+f
+g
+g
+U
+H
+"}
