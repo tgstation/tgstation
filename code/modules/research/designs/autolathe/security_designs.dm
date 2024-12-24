@@ -186,12 +186,12 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/datum/design/strilka310_surplus
+/datum/design/striker310_surplus
 	name = ".310 Surplus Bullet Casing (VERY Lethal)"
-	id = "strilka310_surplus"
+	id = "striker310_surplus"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
-	build_path = /obj/item/ammo_casing/strilka310/surplus
+	build_path = /obj/item/ammo_casing/striker310/surplus
 	category = list(
 		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,

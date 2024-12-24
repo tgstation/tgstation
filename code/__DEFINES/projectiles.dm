@@ -37,7 +37,7 @@
 /// The caliber used by the the M-90gl Carbine, and NT-ARG 'Boarder'.
 #define CALIBER_A223 "a223"
 /// The caliber used by bolt action rifles.
-#define CALIBER_STRILKA310 ".310_strilka"
+#define CALIBER_STRIKER ".310_striker"
 /// The caliber used by shotguns.
 #define CALIBER_SHOTGUN "shotgun"
 /// The caliber used by grenade launchers.
