@@ -20,7 +20,7 @@
 	/// Are we authenticated to use this? Used by things like comms console, security and medical data, and apc controller.
 	var/authenticated = FALSE
 	/// Will projectiles be able to pass over this computer?
-	var/projectiles_pass_chance = 75
+	var/projectiles_pass_chance = 65
 
 /datum/armor/machinery_computer
 	fire = 40
@@ -41,7 +41,7 @@
 	var/obj/projectile/proj = mover
 	if(!anchored)
 		return TRUE
-	if(proj.firer && Adjacent(proj.firer) && projectiles_pass_chance) // projectiles_pass_chance check is here in case you don't want a computer to act like a barricade
+	if(proj.firer && Adjacent(proj.firer)) // projectiles_pass_chance check is here in case you don't want a computer to act like a barricade
 		return TRUE
 	if(prob(projectiles_pass_chance))
 		return TRUE
