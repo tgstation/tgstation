@@ -19,16 +19,16 @@ const INDEXED_DB_VERSION = 1;
 const INDEXED_DB_NAME = 'tgui';
 const INDEXED_DB_STORE_NAME = 'storage-v1';
 
-const READ_ONLY = 'readonly' as const;
-const READ_WRITE = 'readwrite' as const;
+const READ_ONLY = 'readonly';
+const READ_WRITE = 'readwrite';
 
-interface StorageBackend {
+type StorageBackend = {
   impl: StorageImplementation;
   get(key: string): Promise<any>;
   set(key: string, value: any): Promise<void>;
   remove(key: string): Promise<void>;
   clear(): Promise<void>;
-}
+};
 
 const testGeneric = (testFn: () => boolean) => (): boolean => {
   try {
