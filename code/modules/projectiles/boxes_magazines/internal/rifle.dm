@@ -2,7 +2,7 @@
 	name = "bolt action rifle internal magazine"
 	desc = "Oh god, this shouldn't be here"
 	ammo_type = /obj/item/ammo_casing/striker310
-	caliber = CALIBER_STRIKER310
+	caliber = CALIBER_STRIKER
 	max_ammo = 5
 	multiload = TRUE
 
@@ -34,7 +34,7 @@
 
 /obj/item/ammo_box/magazine/internal/enchanted
 	max_ammo = 1
-	caliber = CALIBER_STRIKER310
+	caliber = CALIBER_STRIKER
 	ammo_type = /obj/item/ammo_casing/striker310/enchanted
 
 /obj/item/ammo_box/magazine/internal/boltaction/harpoon

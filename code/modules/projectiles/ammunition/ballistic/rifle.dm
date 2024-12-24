@@ -4,7 +4,7 @@
 	name = ".310 Striker bullet casing"
 	desc = "A .310 Striker bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder."
 	icon_state = "310-casing"
-	caliber = CALIBER_STRIKER310
+	caliber = CALIBER_STRIKER
 	projectile_type = /obj/projectile/bullet/striker310
 
 /obj/item/ammo_casing/striker310/Initialize(mapload)
