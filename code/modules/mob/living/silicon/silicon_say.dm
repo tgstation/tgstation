@@ -32,7 +32,7 @@
 					M,
 					span_binarysay("\
 						Robotic Talk, \
-						<a href='?src=[REF(M)];track=[html_encode(namepart)]'>[span_name("[namepart] ([designation])")]</a> \
+						<a href='byond://?src=[REF(M)];track=[html_encode(namepart)]'>[span_name("[namepart] ([designation])")]</a> \
 						<span class='message'>[quoted_message]</span>\
 					"),
 					avoid_highlighting = src == M
