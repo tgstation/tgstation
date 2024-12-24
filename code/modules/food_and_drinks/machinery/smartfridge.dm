@@ -410,7 +410,7 @@
 				return
 
 			if (amount > 1)
-				desired = tgui_input_number(living_mob, "How many items would you like to take out?", "Release", default = min(amount, 50), max_value = min(amount, 50))
+				desired = tgui_input_number(living_mob, "How many items would you like to take out?", "Release", default = min(amount, 50), max_value = min(amount, 50), min_value = 1)
 				if(!desired)
 					return
 

@@ -128,7 +128,7 @@ const ItemTile = ({ item }) => {
         />
         {item.amount > 1 && (
           <Button
-            color="transparent"
+            backgroundColor="transparent"
             minWidth="24px"
             height="24px"
             lineHeight="24px"
@@ -218,38 +218,13 @@ const ItemList = ({ item }) => {
           }}
         />
       </Stack.Item>
-      {item.amount > 1 && (
-        <Stack.Item
-          style={{
-            lineHeight: '32px',
-          }}
-        >
-          {`x${item.amount}`}
-        </Stack.Item>
-      )}
       <Stack.Item>
         <Button
+          color="transparent"
           py="4px"
           mt="4px"
           height="24px"
           lineHeight="16px"
-          onClick={() =>
-            act('Release', {
-              path: item.path,
-              amount: 1,
-            })
-          }
-        >
-          Vend
-        </Button>
-      </Stack.Item>
-      <Stack.Item>
-        <Button
-          py="4px"
-          mt="4px"
-          height="24px"
-          lineHeight="16px"
-          disabled={item.amount <= 1}
           onClick={(e) => {
             act('Release', {
               path: item.path,
@@ -257,7 +232,7 @@ const ItemList = ({ item }) => {
             });
           }}
         >
-          Amount
+          {`x${item.amount}`}
         </Button>
       </Stack.Item>
     </Stack>
