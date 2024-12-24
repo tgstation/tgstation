@@ -12,7 +12,7 @@
 	display_combos = TRUE
 	/// Weakref to a mob we're currently restraining (with grab-grab combo)
 	VAR_PRIVATE/datum/weakref/restraining_mob
-	/// Probability of successfully blocking attacks while on throw mode
+	/// How much stamina it costs to block
 	var/block_stamina = 30
 
 /datum/martial_art/cqc/on_teach(mob/living/new_holder)
