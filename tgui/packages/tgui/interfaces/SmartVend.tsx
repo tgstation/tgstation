@@ -122,6 +122,19 @@ const ItemTile = ({ item }) => {
         textAlign="right"
         disabled={item.amount < 1}
       >
+        <Box
+          position="absolute"
+          right="2px"
+          // in case you click on this instead, let it work as a regular click.
+          onClick={() =>
+            act('Release', {
+              path: item.path,
+              amount: itemCount,
+            })
+          }
+        >
+          x{item.amount}
+        </Box>
         <DmIcon
           fallback={fallback}
           icon={item.icon}
