@@ -743,6 +743,14 @@ ADMIN_VERB(reestablish_tts_connection, R_DEBUG, "Re-establish Connection To TTS"
 	message_admins("[key_name_admin(user)] successfully re-established the connection to the TTS HTTP server.")
 	log_admin("[key_name(user)] successfully re-established the connection to the TTS HTTP server.")
 
+ADMIN_VERB(allow_browser_inspect, R_DEBUG, "Allow Browser Inspect", "Allow browser debugging via inspect", ADMIN_CATEGORY_DEBUG)
+	if(user.byond_version < 516)
+		to_chat(user, span_warning("You can only use this on 516!"))
+		return
+
+	to_chat(user, span_notice("You can now right click to use inspect on browsers."))
+	winset(user, null, list("browser-options" = "+devtools"))
+
 /proc/generate_timer_source_output(list/datum/timedevent/events)
 	var/list/per_source = list()
 
