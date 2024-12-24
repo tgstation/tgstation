@@ -1,0 +1,5 @@
+author: "AyIong"
+delete-after: True
+changes:
+  - qol: "AdminPMs, admin tickets, vote results and started vote notification are now much more visible in the chat."
+  - qol: "Boxed messages in chat (like examine), has been restyled."
