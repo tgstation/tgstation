@@ -658,7 +658,7 @@
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting, inhand = TRUE))
 		if(merge(hitting))
-			playsound(src, drop_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE) // same settings as pickup
+			playsound(src, drop_sound, PICKUP_SOUND_VOLUME, sound_vary, ignore_walls = FALSE) // same settings as pickup
 	. = ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -712,7 +712,7 @@
 	if(can_merge(stack, inhand = TRUE))
 		var/obj/item/stack/merging_into = stack
 		if(merge(merging_into))
-			playsound(merging_into, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE) // same settings as pickup
+			playsound(merging_into, pickup_sound, PICKUP_SOUND_VOLUME, sound_vary, ignore_walls = FALSE) // same settings as pickup
 			to_chat(user, span_notice("Your [merging_into.name] stack now contains [merging_into.get_amount()] [merging_into.singular_name]\s."))
 			return ITEM_INTERACT_SUCCESS
 	return NONE
