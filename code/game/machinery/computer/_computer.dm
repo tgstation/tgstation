@@ -41,7 +41,7 @@
 	var/obj/projectile/proj = mover
 	if(!anchored)
 		return TRUE
-	if(proj.firer && Adjacent(proj.firer)) // projectiles_pass_chance check is here in case you don't want a computer to act like a barricade
+	if(proj.firer && Adjacent(proj.firer))
 		return TRUE
 	if(prob(projectiles_pass_chance))
 		return TRUE
