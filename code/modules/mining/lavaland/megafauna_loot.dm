@@ -1256,7 +1256,7 @@
 	if(!istype(carb_owner))
 		return
 	for(var/obj/item/organ/organ as anything in carb_owner.organs)
-		if(!IS_ROBOTIC_ORGAN(organ) && !istype(organ, /obj/item/organ/tongue)) //tongues dont have a cyber variant anyway
+		if(!IS_ROBOTIC_ORGAN(organ) && !istype(organ, /obj/item/organ/tongue)) //tongues are not in the exosuit fab and nobody is going to bother to find them so
 			return FALSE
 
 /obj/item/organ/brain/cybernetic/ai/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
