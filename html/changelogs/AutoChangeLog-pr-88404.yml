@@ -1,0 +1,4 @@
+author: "lovegreenstuff"
+delete-after: True
+changes:
+  - rscadd: "catalyst function for plumbing reaction chambers"

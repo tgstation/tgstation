@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Navigate verb better indicates areas on a separate level. Selecting an area on a different level will direct you to the nearest staircase (as with \"Nearest Way Up/Down\")"
+  - qol: "Navigating to a staircase or ladder will shorten the cooldown of navigate and clear your existing path for you upon finding it"

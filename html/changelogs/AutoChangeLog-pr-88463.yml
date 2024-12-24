@@ -1,0 +1,5 @@
+author: "araeotu"
+delete-after: True
+changes:
+  - rscadd: "slime processor now have usb port and circuit component"
+  - code_imp: "the process code of processor now separate from interact"
