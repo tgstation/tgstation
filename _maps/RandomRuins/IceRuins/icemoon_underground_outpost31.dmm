@@ -460,13 +460,6 @@
 /obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/freezer,
 /area/ruin/outpost31/crewquarters)
-"iM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron,
-/area/ruin/outpost31)
 "jl" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
@@ -1441,15 +1434,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/ruin/outpost31/crewquarters)
-"Cu" = (
-/obj/structure/cable,
-/obj/structure/sign/poster/quirk/crew/hang{
-	pixel_y = 32
-	},
-/turf/open/floor/catwalk_floor/iron_white{
-	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
-	},
-/area/ruin/outpost31/lab)
 "CA" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/structure/window/spawner/directional/west,
@@ -3262,7 +3246,7 @@ gu
 gu
 me
 nP
-Cu
+Bc
 Bc
 Dg
 in
@@ -3590,7 +3574,7 @@ LW
 YK
 YK
 YK
-iM
+YK
 YK
 YK
 ge

@@ -44,11 +44,11 @@
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
 	if(!isnull(loot))
-		AddElement(/datum/element/death_drops, loot)
+		AddElement(/datum/element/death_drops, string_list(loot))
 	if(!isnull(crusher_loot))
 		AddElement(\
 			/datum/element/crusher_loot,\
-			trophy_type = crusher_loot,\
+			trophy_type = islist(crusher_loot) ? string_list(crusher_loot) : crusher_loot,\
 			drop_mod = 100,\
 			drop_immediately = TRUE,\
 		)

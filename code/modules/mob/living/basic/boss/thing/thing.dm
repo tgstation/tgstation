@@ -266,3 +266,4 @@
 	invisibility = INVISIBILITY_MAXIMUM
 
 #undef PHASEREGEN_FILTER
+#undef RUIN_QUEUE

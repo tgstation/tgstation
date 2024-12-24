@@ -1158,7 +1158,7 @@
 	RegisterSignal(brain_owner, COMSIG_CLICK, PROC_REF(owner_clicked))
 	RegisterSignal(brain_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 	RegisterSignal(brain_owner, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, PROC_REF(cancel_rolls))
-	RegisterSignal(brain_owner, list(COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED), PROC_REF(undeploy))
+	RegisterSignals(brain_owner, list(COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED), PROC_REF(undeploy))
 	RegisterSignal(brain_owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_organ_gain))
 
 /obj/item/organ/brain/cybernetic/ai/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
@@ -1206,7 +1206,7 @@
 	lines += "Target is currently [!HAS_TRAIT(owner, TRAIT_INCAPACITATED) ? "functional" : "incapacitated"]"
 	lines += "Estimated organic/inorganic integrity: [owner.health]"
 	if(is_sufficiently_augmented())
-		lines += "<a href='?src=[REF(src)];ai_take_control=[REF(user)]'>[span_boldnotice("Take control?")]</a><br>"
+		lines += "<a href='byond://?src=[REF(src)];ai_take_control=[REF(user)]'>[span_boldnotice("Take control?")]</a><br>"
 	else
 		lines += span_warning("Organic organs detected. Robotic organs only, cannot take over.")
 
@@ -1244,7 +1244,7 @@
 
 /obj/item/organ/brain/cybernetic/ai/proc/undeploy(datum/source)
 	SIGNAL_HANDLER
-	if(!owner.mind || !mainframe)
+	if(!owner?.mind || !mainframe)
 		return
 	mainframe.UnregisterSignal(src, COMSIG_LIVING_DEATH)
 	mainframe.redeploy_action.Remove(mainframe)
