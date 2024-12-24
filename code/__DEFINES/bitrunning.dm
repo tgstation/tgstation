@@ -26,3 +26,22 @@
 
 /// Camera network bitrunner bodycams are on
 #define BITRUNNER_CAMERA_NET "bitrunner"
+
+/**
+ * Bitrunner Domain External Load Restriction Bitflags
+ */
+/// Domain forbids external sources from loading items onto avatars
+#define DOMAIN_FORBIDS_ITEMS (1<<0)
+/// Domain forbids external sources from loading abilities onto avatars
+#define DOMAIN_FORBIDS_ABILITIES (1<<1)
+
+/// Combination flag for blocking anything from being loaded onto avatars by external sources
+#define DOMAIN_FORBIDS_ALL (DOMAIN_FORBIDS_ITEMS | DOMAIN_FORBIDS_ABILITIES)
+
+/**
+ * COMSIG_BITRUNNER_STOCKING_GEAR Return Bitflags
+ */
+/// Something failed to load
+#define LOAD_FAILED (1<<0)
+/// The domain restrictions blocked something from loading
+#define LOAD_BLOCKED (1<<1)
