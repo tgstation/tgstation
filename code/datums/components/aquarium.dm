@@ -244,8 +244,7 @@
 /datum/component/aquarium/proc/start_autofeed(datum/reagents/source, new_reagent, amount, reagtemp, data, no_react)
 	SIGNAL_HANDLER
 	START_PROCESSING(SSobj, src)
-	var/atom/movable/movable = parent
-	UnregisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT)
+	UnregisterSignal(source, COMSIG_REAGENTS_NEW_REAGENT)
 
 ///Feed the fish at defined intervals until the feed storage is empty.
 /datum/component/aquarium/process(seconds_per_tick)
