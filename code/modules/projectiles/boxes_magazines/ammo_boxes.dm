@@ -124,7 +124,7 @@
 	return FALSE
 
 /obj/item/ammo_box/striker310
-	name = "stripper clip (.310 Strilka)"
+	name = "stripper clip (.310 Striker)"
 	desc = "A stripper clip."
 	icon_state = "310_strip"
 	ammo_type = /obj/item/ammo_casing/striker310

@@ -2,7 +2,7 @@
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
-	icon_state = "obrez"
+	icon_state = "carabine"
 	w_class = WEIGHT_CLASS_BULKY
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
@@ -42,17 +42,17 @@
 ///////////////////////
 
 /obj/item/gun/ballistic/rifle/boltaction
-	name = "\improper Obrez Precision Rifle"
-	desc = "A Obrez Precision Rifle, a bolt action weapon that was (and certainly still is) popular with \
+	name = "\improper Carabine Precision Rifle"
+	desc = "A Carabine Precision Rifle, a bolt action weapon that was (and certainly still is) popular with \
 		cargo runners, private security forces, explorers, and other unsavoury types. This particular \
 		pattern of the rifle dates back all the way to 2440."
-	sawn_desc = "A sawn-off Obrez Precision Rifle, popularly known as a \"Oboe\". \
+	sawn_desc = "A sawn-off Carabine Precision Rifle, popularly known as a \"Obrez\". \
 		There was probably a reason it wasn't manufactured this short to begin with. \
 		Despite the terrible nature of the modification, the weapon seems otherwise in good condition."
 
-	icon_state = "obrez"
-	inhand_icon_state = "obrez"
-	worn_icon_state = "obrez"
+	icon_state = "carabine"
+	inhand_icon_state = "carabine"
+	worn_icon_state = "carabine"
 
 	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
@@ -134,22 +134,22 @@
 	SET_BASE_PIXEL(0, 0)
 
 /obj/item/gun/ballistic/rifle/boltaction/surplus
-	name = "\improper Obrez M2442 Army"
-	desc = "A modification of the Obrez Precision Rifle, \"Obrez M2442 Army\" is stamped into the side. \
+	name = "\improper Carabine M2442 Army"
+	desc = "A modification of the Carabine Precision Rifle, \"Carabine M2442 Army\" is stamped into the side. \
 		It is unknown what army this pattern of rifle was made for or if it was ever even used by an army \
 		of any sort. What you can discern, however, is that its previous owner did not treat the weapon well. \
 		For some reason, there's moisture all through the internals."
-	sawn_desc = "A sawn-off Obrez Precision Rifle, popularly known as an \"Oboe\". \
-		\"Obrez M2442 Army\" is stamped into the side of it. \
+	sawn_desc = "A sawn-off Carabine Precision Rifle, popularly known as an \"Obrez\". \
+		\"Carabine M2442 Army\" is stamped into the side of it. \
 		There was probably a reason it wasn't manufactured this short to begin with. \
 		Cutting the weapon down seems to have not helped with the moisture problem."
-	icon_state = "obrez_tactifucked"
+	icon_state = "carabine_tactifucked"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	can_jam = TRUE
 
 /obj/item/gun/ballistic/rifle/boltaction/prime
-	name = "\improper Obrez-Zhihao Sporting Rifle"
-	desc = "An upgrade and modernisation of the original Obrez rifle, made with such wonders as \
+	name = "\improper Carabine-Zhihao Sporting Rifle"
+	desc = "An upgrade and modernisation of the original Carabine rifle, made with such wonders as \
 		modern materials, a scope, and other impressive technological advancements that, to be honest, \
 		were already around when the original weapon was designed. Surprisingly for a rifle of this type, \
 		the scope actually has magnification, rather than being decorative."
@@ -157,8 +157,8 @@
 	inhand_icon_state = "zhihao"
 	worn_icon_state = "zhihao"
 	can_be_sawn_off = TRUE
-	sawn_desc = "A sawn-off Obrez-Zhihao Sporting Rifle... Doing this was a sin, I hope you're happy. \
-		You are now probably one of the few people in the universe to ever hold an \"Oboe Moderna\". \
+	sawn_desc = "A sawn-off Carabine-Zhihao Sporting Rifle... Doing this was a sin, I hope you're happy. \
+		You are now probably one of the few people in the universe to ever hold an \"Obrez Moderna\". \
 		All you had to do was take an allen wrench to the stock to take it off. But no, you just had to \
 		go for the saw."
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/phasic
@@ -170,7 +170,7 @@
 /obj/item/gun/ballistic/rifle/boltaction/prime/sawoff(mob/user)
 	. = ..()
 	if(.)
-		name = "\improper Oboe Moderna" // wear it loud and proud
+		name = "\improper Obrez Moderna" // wear it loud and proud
 
 /obj/item/gun/ballistic/rifle/boltaction/donkrifle
 	name = "\improper Donk Co. Aardvark"

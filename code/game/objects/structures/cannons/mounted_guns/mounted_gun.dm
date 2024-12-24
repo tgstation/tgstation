@@ -20,9 +20,9 @@
 	///shots added to gun, per piece of ammo loaded.
 	var/shots_per_load = 1
 	///Accepted "ammo" type
-	var/obj/item/ammo_type = /obj/item/ammo_casing/strilka310
+	var/obj/item/ammo_type = /obj/item/ammo_casing/striker310
 	///Projectile from said gun. Doesnt automatically inherit said ammo's projectile in case you wanted to make a gun that shoots floor tiles or something.
-	var/obj/projectile/projectile_type = /obj/projectile/bullet/strilka310
+	var/obj/projectile/projectile_type = /obj/projectile/bullet/striker310
 	///If the gun has anything in it.
 	var/loaded_gun = TRUE
 	///If the gun is currently loaded with its maximum capacity.

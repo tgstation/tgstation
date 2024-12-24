@@ -198,7 +198,7 @@
 	set_holdable(list(/obj/item/reagent_containers/cup/glass/bottle/vodka,
 					  /obj/item/reagent_containers/cup/glass/bottle/molotov,
 					  /obj/item/reagent_containers/cup/glass/drinkingglass,
-					  /obj/item/ammo_box/strilka310))
+					  /obj/item/ammo_box/striker310))
 
 
 /datum/storage/pockets/void_cloak
@@ -214,7 +214,7 @@
 )
 	. = ..()
 	set_holdable(list(
-		/obj/item/ammo_box/strilka310/lionhunter,
+		/obj/item/ammo_box/striker310/lionhunter,
 		/obj/item/bodypart, // Bodyparts are often used in rituals. They're also often normal sized, so you can only fit one.
 		/obj/item/clothing/neck/eldritch_amulet,
 		/obj/item/clothing/neck/heretic_focus,

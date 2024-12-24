@@ -223,7 +223,7 @@
 		new item(our_crate)
 
 /datum/supply_pack/imports/moistnuggets
-	name = "Refurbished Orbez Precision Rifle Crate"
+	name = "Refurbished Carabine Precision Rifle Crate"
 	desc = "Hello Comrade Operative. You need gun? You hate garbage we sell to station normally? \
 		Then we have the perfect weapon for you! Special price for good friends! \
 		We don't have enough spare ammo, so you'll have to pick up the weapon of \

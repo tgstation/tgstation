@@ -702,7 +702,7 @@
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"
-	desc = "A bandolier for holding rifle shotgun, and bigger revolver caliber ammunition."
+	desc = "A bandolier for holding rifle, shotgun, and bigger revolver caliber ammunition."
 	icon_state = "bandolier"
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
@@ -716,7 +716,7 @@
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.numerical_stacking = TRUE
 	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/strilka310,
+		/obj/item/ammo_casing/striker310,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_casing/c357,
 		/obj/item/ammo_casing/junk,
