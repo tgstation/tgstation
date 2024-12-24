@@ -1,0 +1,3 @@
+#comment This repaths the strilka magazines and casings to the renamed paths in https://github.com/tgstation/tgstation/pull/88710
+
+/obj/item/ammo_box/strilka310/@SUBTYPES : /obj/item/ammo_box/striker310/@SUBTYPES
