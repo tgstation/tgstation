@@ -492,14 +492,14 @@
 	throwforce = 15
 	throw_speed = 4
 	throw_range = 7
-	embed_type = /datum/embed_data/hatchet
+	embed_type = /datum/embedding/hatchet
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5)
 	attack_verb_continuous = list("chops", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("chop", "tear", "lacerate", "cut")
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
-/datum/embed_data/hatchet
+/datum/embedding/hatchet
 	pain_mult = 4
 	embed_chance = 35
 	fall_chance = 10
