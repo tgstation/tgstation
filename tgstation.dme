@@ -5529,6 +5529,7 @@
 #include "code\modules\photography\photos\photo.dm"
 #include "code\modules\plumbing\ducts.dm"
 #include "code\modules\plumbing\plumbers\_plumb_machinery.dm"
+#include "code\modules\plumbing\plumbers\_plumb_reagents.dm"
 #include "code\modules\plumbing\plumbers\acclimator.dm"
 #include "code\modules\plumbing\plumbers\bottler.dm"
 #include "code\modules\plumbing\plumbers\destroyer.dm"
