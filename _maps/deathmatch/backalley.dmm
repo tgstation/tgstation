@@ -198,7 +198,7 @@
 /area/deathmatch)
 "sR" = (
 /obj/structure/closet/crate/cardboard,
-/obj/item/storage/toolbox/ammobox/strilka310,
+/obj/item/storage/toolbox/ammobox/striker310,
 /turf/open/indestructible/rockyground,
 /area/deathmatch)
 "tQ" = (
