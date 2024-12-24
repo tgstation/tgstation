@@ -347,19 +347,33 @@
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
-	var/mutable_appearance/marked_underlay
+	/// The bubble that is added to the mob as a visual
+	var/obj/effect/abstract/crusher_mark/marked_underlay
+	/// If the projectile that applies this was boosted, the mark will also be boosted
 	var/boosted = FALSE
+	/// How long before the mark is ready to be detonated. Used for both the visual overlay and to determine when it's ready
+	var/ready_delay = 0.8 SECONDS
+	/// Tracks world.time when the mark was applied
+	var/mark_applied
 
 /datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, was_boosted)
 	. = ..()
 	boosted = was_boosted
+	mark_applied = world.time
 
 /datum/status_effect/crusher_mark/on_apply()
 	if(owner.mob_size >= MOB_SIZE_LARGE)
-		marked_underlay = mutable_appearance('icons/effects/effects.dmi', boosted ? "shield" : "shield2")
+		marked_underlay = new()
 		marked_underlay.pixel_x = -owner.pixel_x
 		marked_underlay.pixel_y = -owner.pixel_y
-		owner.underlays += marked_underlay
+
+		var/list/new_color = list(
+			0, 1, 0,
+			0, 1, 0,
+			0, 1, 0
+		)
+		owner.vis_contents += marked_underlay
+		animate(marked_underlay, color = new_color, time = ready_delay, loop = 1)
 		return TRUE
 	return FALSE
 
@@ -368,6 +382,20 @@
 		owner.underlays -= marked_underlay
 	QDEL_NULL(marked_underlay)
 	return ..()
+
+// Object used to apply a underlay to the mob that gets this status applied
+/obj/effect/abstract/crusher_mark
+	name = "Crusher mark underlay"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shield"
+	appearance_flags = TILE_BOUND|LONG_GLIDE|RESET_COLOR
+	vis_flags = VIS_UNDERLAY
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	color = list(
+		1, 0, 0,
+		1, 0, 0,
+		1, 0, 0
+	)
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
