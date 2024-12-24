@@ -121,12 +121,6 @@ const ItemTile = ({ item }) => {
         tooltipPosition="bottom"
         textAlign="right"
         disabled={item.amount < 1}
-        onClick={() =>
-          act('Release', {
-            path: item.path,
-            amount: itemCount,
-          })
-        }
       >
         <DmIcon
           fallback={fallback}
@@ -134,6 +128,12 @@ const ItemTile = ({ item }) => {
           icon_state={item.icon_state}
           height="64px"
           width="64px"
+          onClick={() =>
+            act('Release', {
+              path: item.path,
+              amount: itemCount,
+            })
+          }
         />
         {item.amount > 1 && (
           <Box
