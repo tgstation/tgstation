@@ -107,6 +107,7 @@ export const SmartVend = (props) => {
 
 const ItemTile = ({ item }) => {
   const { act } = useBackend<Data>();
+  const [itemCount, setItemCount] = useState(1);
   const fallback = (
     <Icon name="spinner" lineHeight="64px" size={3} spin color="gray" />
   );
@@ -123,7 +124,7 @@ const ItemTile = ({ item }) => {
         onClick={() =>
           act('Release', {
             path: item.path,
-            amount: 1,
+            amount: itemCount,
           })
         }
       >
@@ -135,7 +136,7 @@ const ItemTile = ({ item }) => {
           width="64px"
         />
         {item.amount > 1 && (
-          <Button
+          <Box
             color="transparent"
             minWidth="24px"
             height="24px"
@@ -145,29 +146,27 @@ const ItemTile = ({ item }) => {
             left="0"
             bottom="0"
             fontWeight="bold"
-            fontSize="14px"
-            onClick={(e) => {
-              act('Release', {
-                path: item.path,
-                amount: item.amount,
-              });
-              e.stopPropagation();
-            }}
-          >
-            {item.amount}
-          </Button>
+            fontSize="14px">
+            <NumberInput
+              width="25px"
+              minValue={1}
+              maxValue={item.amount}
+              step={1}
+              value={itemCount}
+              onChange={(value) => setItemCount(value)} />
+            </Box>
         )}
       </Button>
       <Box
-        style={{
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          textAlign: 'center',
-        }}
-      >
-        {item.name}
-      </Box>
+          style={{
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            textAlign: 'center',
+          }}
+        >
+          {item.name}
+        </Box>
     </Box>
   ) as any;
 };
