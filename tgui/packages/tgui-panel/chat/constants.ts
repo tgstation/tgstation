@@ -66,7 +66,7 @@ export const MESSAGE_TYPES = [
   {
     type: MESSAGE_TYPE_ENTERTAINMENT,
     name: 'Entertainment',
-    description: 'Entertainment and newscaster broadcasts.',
+    description: 'Entertainment and newscaster broadcasts',
     selector: '.enteradio, .newscaster',
   },
   {
