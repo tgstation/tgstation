@@ -68,6 +68,9 @@
 			banished_airlocks += to_banish
 			banished_airlocks[to_banish] = to_banish.loc
 			to_banish.moveToNullspace()
+		// Windows will also get an alt appearance
+		for(var/obj/structure/window/to_change in target)
+			to_change.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/obj/structures.dmi', to_change, "stone_window_pane", layer = ABOVE_OPEN_TURF_LAYER))
 
 /// Sets up the proximity monitor which handles things that are within the area and leave once they get someone to crit
 /datum/action/cooldown/spell/wolves_among_sheep/proc/create_arena(turf/target)
@@ -80,6 +83,7 @@
 /datum/action/cooldown/spell/wolves_among_sheep/proc/on_caster_crit()
 	deltimer(revert_timer)
 	revert_effects()
+	QDEL_NULL(ongoing_arena)
 
 /// Undoes our changes
 /datum/action/cooldown/spell/wolves_among_sheep/proc/revert_effects()
@@ -96,5 +100,8 @@
 /datum/action/cooldown/spell/wolves_among_sheep/proc/revert_terrain(list/turfs)
 	for(var/turf/target as anything in turfs)
 		target.remove_alt_appearance("heretic_arena")
+		for(var/obj/structure/window/to_revert in target)
+			to_revert.remove_alt_appearance("heretic_arena")
 	for(var/obj/machinery/door/airlock/to_restore in banished_airlocks)
 		to_restore.forceMove(banished_airlocks[to_restore])
+		banished_airlocks -= to_restore
