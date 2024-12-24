@@ -27,16 +27,16 @@ SUBSYSTEM_DEF(weather)
 		next_hit_by_zlevel["[z]"] = addtimer(CALLBACK(src, PROC_REF(make_eligible), z, possible_weather), randTime + initial(our_event.weather_duration_upper), TIMER_UNIQUE|TIMER_STOPPABLE) //Around 5-10 minutes between weathers
 
 /datum/controller/subsystem/weather/Initialize()
-	for(var/datum/weather/W as anything in subtypesof(/datum/weather))
-		var/probability = initial(W.probability)
-		var/target_trait = initial(W.target_trait)
+	for(var/datum/weather/weather as anything in subtypesof(/datum/weather))
+		var/probability = initial(weather.probability)
+		var/target_trait = initial(weather.target_trait)
 
 		// any weather with a probability set may occur at random
 		if (!probability)
 			continue
 		for(var/z in SSmapping.levels_by_trait(target_trait))
 			LAZYINITLIST(eligible_zlevels["[z]"])
-			eligible_zlevels["[z]"][W] = probability
+			eligible_zlevels["[z]"][weather] = probability
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/weather/proc/update_z_level(datum/space_level/level)
@@ -50,10 +50,9 @@ SUBSYSTEM_DEF(weather)
 
 /datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels)
 	if (istext(weather_datum_type))
-		for (var/V in subtypesof(/datum/weather))
-			var/datum/weather/W = V
-			if (initial(W.name) == weather_datum_type)
-				weather_datum_type = V
+		for (var/datum/weather/weather as anything in subtypesof(/datum/weather))
+			if (initial(weather.name) == weather_datum_type)
+				weather_datum_type = weather
 				break
 	if (!ispath(weather_datum_type, /datum/weather))
 		CRASH("run_weather called with invalid weather_datum_type: [weather_datum_type || "null"]")
@@ -65,20 +64,20 @@ SUBSYSTEM_DEF(weather)
 	else if (!islist(z_levels))
 		CRASH("run_weather called with invalid z_levels: [z_levels || "null"]")
 
-	var/datum/weather/W = new weather_datum_type(z_levels)
-	W.telegraph()
+	var/datum/weather/weather = new weather_datum_type(z_levels)
+	weather.telegraph()
 
 /datum/controller/subsystem/weather/proc/make_eligible(z, possible_weather)
 	eligible_zlevels[z] = possible_weather
 	next_hit_by_zlevel["[z]"] = null
 
 /datum/controller/subsystem/weather/proc/get_weather(z, area/active_area)
-	var/datum/weather/A
-	for(var/datum/weather/W as anything in processing)
-		if((z in W.impacted_z_levels) && W.area_type == active_area.type)
-			A = W
+	var/datum/weather/returned_weather
+	for(var/datum/weather/weather as anything in processing)
+		if((z in weather.impacted_z_levels) && weather.area_type == active_area.type)
+			returned_weather = weather
 			break
-	return A
+	return returned_weather
 
 ///Returns an active storm by its type
 /datum/controller/subsystem/weather/proc/get_weather_by_type(type)

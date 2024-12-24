@@ -60,7 +60,7 @@
 	// 9x9 block obtained from the bottom middle of the block
 	var/list/spawn_turfs = CORNER_BLOCK_OFFSET(our_turf, 3, 3, -1, 0)
 	var/count = 10
-	for(var/turf/spawned_turf in spawn_turfs)
+	for(var/turf/spawned_turf as anything in spawn_turfs)
 		count--
 		if(spawned_turf == our_turf) // Skip our turf.
 			continue
