@@ -614,7 +614,7 @@
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
 
-///Defines for AI holograms
+//Defines for AI holograms
 #define AI_HOLOGRAM_CATEGORY_ANIMAL "Animal"
 	#define AI_HOLOGRAM_BEAR "Bear"
 	#define AI_HOLOGRAM_CARP "Carp"
