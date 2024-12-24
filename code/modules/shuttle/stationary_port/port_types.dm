@@ -31,10 +31,12 @@
 /obj/docking_port/stationary/syndicate/northwest
 	name = "northwest of station"
 	shuttle_id = "syndicate_nw"
+	REGISTER_REQUIRED_MAP_ITEM(1,1) // syndicate battlecruiser can't get to station without this
 
 /obj/docking_port/stationary/syndicate/northeast
 	name = "northeast of station"
 	shuttle_id = "syndicate_ne"
+	REGISTER_REQUIRED_MAP_ITEM(1,1) // syndicate battlecruiser can't get to station without this
 
 /obj/docking_port/stationary/transit
 	name = "In Transit"
