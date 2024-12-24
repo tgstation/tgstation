@@ -2,10 +2,6 @@
 #define MINIMUM_TURBINE_PRESSURE 0.01
 ///Returns the minimum pressure if it falls below the value
 #define PRESSURE_MAX(value)(max((value), MINIMUM_TURBINE_PRESSURE))
-///Use emissive for overlays
-#define EMISSIVE_OVERLAY (1 << 0)
-///No turned off overlay
-#define NO_INACTIVE_OVERLAY (1 << 1)
 
 /obj/machinery/power/turbine
 	icon = 'icons/obj/machines/engine/turbine.dmi'
@@ -14,18 +10,14 @@
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	processing_flags = START_PROCESSING_MANUALLY
 
-	///Checks if the machine is processing or not
-	var/active = FALSE
-	///The parts can be registered on the main one only when their panel is closed
-	var/can_connect = TRUE
+	///The cached efficiency of this turbines installed part
+	var/efficiency = 0
 	///Reference to our turbine part
 	var/obj/item/turbine_parts/installed_part
 	///Path of the turbine part we can install
 	var/obj/item/turbine_parts/part_path
 	///The gas mixture this turbine part is storing
 	var/datum/gas_mixture/machine_gasmix
-	///Flags for our overlays
-	var/overlay_flags = NONE
 
 /obj/machinery/power/turbine/Initialize(mapload, gas_theoretical_volume)
 	. = ..()
@@ -35,16 +27,17 @@
 
 	if(mapload)
 		installed_part = new part_path(src)
+		efficiency = installed_part.get_tier_value(TURBINE_MAX_EFFICIENCY)
 
 	air_update_turf(TRUE)
 
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 
 	register_context()
 
-
 /obj/machinery/power/turbine/post_machine_initialize()
 	. = ..()
+
 	activate_parts()
 
 /obj/machinery/power/turbine/Destroy()
@@ -57,6 +50,10 @@
 		QDEL_NULL(machine_gasmix)
 
 	deactivate_parts()
+	return ..()
+
+/obj/machinery/power/turbine/on_deconstruction(disassembled)
+	installed_part?.forceMove(loc)
 	return ..()
 
 /obj/machinery/power/turbine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -103,19 +100,31 @@
 		. += span_notice("It can rotated with a [EXAMINE_HINT("wrench")]")
 		. += span_notice("The full machine can be [EXAMINE_HINT("pried")] apart")
 
+///Is this machine currently running
+/obj/machinery/power/turbine/proc/is_active()
+	SHOULD_BE_PURE(TRUE)
+	PROTECTED_PROC(TRUE)
+
+	return FALSE
+
+/**
+ * Adds overlays to this turbines appearance
+ * Arguments
+ *
+ * * list/overlays - the list of overlays to add to
+ */
+/obj/machinery/power/turbine/proc/set_overlays(list/overlays)
+	PROTECTED_PROC(TRUE)
+
+	overlays += "[base_icon_state]_[is_active() ? "on" : "off"]"
+
 /obj/machinery/power/turbine/update_overlays()
 	. = ..()
 
 	if(panel_open)
 		. += "[base_icon_state]_open"
 
-	if(active)
-		. += "[base_icon_state]_on"
-		if(overlay_flags & EMISSIVE_OVERLAY)
-			. += emissive_appearance(icon, "[base_icon_state]_on", src)
-	else if(!(overlay_flags & NO_INACTIVE_OVERLAY))
-		. += "[base_icon_state]_off"
-
+	set_overlays(.)
 
 /**
  * Handles all the calculations needed for the gases, work done, temperature increase/decrease
@@ -156,7 +165,7 @@
 
 /obj/machinery/power/turbine/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
-	if(active)
+	if(is_active())
 		balloon_alert(user, "turn it off!")
 		return
 	if(!anchored)
@@ -183,10 +192,6 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/power/turbine/on_deconstruction(disassembled)
-	installed_part?.forceMove(loc)
-	return ..()
-
 /obj/machinery/power/turbine/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(!panel_open)
@@ -195,7 +200,7 @@
 	if(!installed_part)
 		balloon_alert(user, "no rotor installed!")
 		return
-	if(active)
+	if(is_active())
 		balloon_alert(user, "[src] is on!")
 		return
 
@@ -210,7 +215,11 @@
  * * check_only - if TRUE it will not activate the machine but will only check if it can be activated
  */
 /obj/machinery/power/turbine/proc/activate_parts(mob/user, check_only = FALSE)
-	can_connect = TRUE
+	SHOULD_CALL_PARENT(TRUE)
+
+	set_machine_stat(machine_stat & ~MAINT)
+
+	return TRUE
 
 /**
  * Allow easy disabling of each machine from the main controller
@@ -219,13 +228,18 @@
  * * mob/user - the player who deactivated the parts
  */
 /obj/machinery/power/turbine/proc/deactivate_parts(mob/user)
-	can_connect = FALSE
+	SHOULD_CALL_PARENT(TRUE)
+
+	set_machine_stat(machine_stat | MAINT)
+
+	return TRUE
 
 /obj/machinery/power/turbine/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	set_panel_open(TRUE)
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 	deactivate_parts()
+	old_loc.air_update_turf(TRUE)
 	air_update_turf(TRUE)
 
 /obj/machinery/power/turbine/Exited(atom/movable/gone, direction)
@@ -236,10 +250,10 @@
 /obj/machinery/power/turbine/item_interaction(mob/living/user, obj/item/turbine_parts/object, list/modifiers)
 	. = NONE
 	if(!istype(object, part_path))
-		return ..()
+		return
 
-	//not in a state to accep the part. return TRUE so we don't bash the machine and damage it
-	if(active)
+	//not in a state to accept the part. block so we don't bash the machine and damage it
+	if(is_active())
 		balloon_alert(user, "turn off the machine first!")
 		return ITEM_INTERACT_BLOCKING
 	if(!panel_open)
@@ -256,13 +270,9 @@
 		balloon_alert(user, "installed new part")
 	user.transferItemToLoc(object, src)
 	installed_part = object
+	efficiency = installed_part.get_tier_value(TURBINE_MAX_EFFICIENCY)
+
 	return ITEM_INTERACT_SUCCESS
-
-/// Gets the efficiency of the installed part, returns 0 if no part is installed
-/obj/machinery/power/turbine/proc/get_efficiency()
-	SHOULD_BE_PURE(TRUE)
-
-	return installed_part?.part_efficiency || 0
 
 /obj/machinery/power/turbine/inlet_compressor
 	name = "inlet compressor"
@@ -286,6 +296,9 @@
 /obj/machinery/power/turbine/inlet_compressor/Initialize(mapload)
 	//Volume of gas mixture is 1000
 	return ..(mapload, gas_theoretical_volume = 1000)
+
+/obj/machinery/power/turbine/inlet_compressor/is_active()
+	return QDELETED(rotor) ? FALSE : rotor.is_active()
 
 /obj/machinery/power/turbine/inlet_compressor/deactivate_parts(mob/user)
 	. = ..()
@@ -337,6 +350,9 @@
 	//Volume of gas mixture is 6000
 	return ..(mapload, gas_theoretical_volume = 6000)
 
+/obj/machinery/power/turbine/turbine_outlet/is_active()
+	return QDELETED(rotor) ? FALSE : rotor.is_active()
+
 /obj/machinery/power/turbine/turbine_outlet/deactivate_parts(mob/user)
 	. = ..()
 	if(!QDELETED(rotor))
@@ -354,7 +370,7 @@
 	if(!TURF_SHARES(output_turf))
 		return FALSE
 
-	//eject gases and update turf is any was ejected
+	//eject gases and update turf if any was ejected
 	var/datum/gas_mixture/ejected_gases = machine_gasmix.pump_gas_to(output_turf.air, machine_gasmix.return_pressure())
 	if(ejected_gases)
 		output_turf.air_update_turf(TRUE)
@@ -372,10 +388,11 @@
 	can_change_cable_layer = TRUE
 	circuit = /obj/item/circuitboard/machine/turbine_rotor
 	part_path = /obj/item/turbine_parts/rotor
-	overlay_flags = EMISSIVE_OVERLAY | NO_INACTIVE_OVERLAY
 
 	///ID to easily connect the main part of the turbine to the computer
 	var/mapping_id
+	///Checks if the machine is processing or not
+	var/active = FALSE
 	///Reference to the compressor
 	var/obj/machinery/power/turbine/inlet_compressor/compressor
 	///Reference to the turbine
@@ -433,6 +450,15 @@
 	if(!all_parts_connected)
 		. += span_warning("The parts need to be linked via a [EXAMINE_HINT("multitool")]")
 
+///Adds overlays to this turbines appearance
+/obj/machinery/power/turbine/core_rotor/set_overlays(list/overlays)
+	if(active)
+		overlays += "[base_icon_state]_on"
+		overlays += emissive_appearance(icon, "[base_icon_state]_on", src)
+
+/obj/machinery/power/turbine/core_rotor/is_active()
+	return active
+
 /obj/machinery/power/turbine/core_rotor/cable_layer_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		balloon_alert(user, "open panel first!")
@@ -485,6 +511,11 @@
 	if(!check_only && all_parts_connected)
 		return TRUE
 
+	//are we broken
+	if(machine_stat & BROKEN)
+		feedback(user, "rotor is broken!")
+		return (all_parts_connected = FALSE)
+
 	//locate compressor & turbine, when checking we simply check to see if they are still there
 	if(!check_only)
 		compressor = locate() in get_step(src, REVERSE_DIR(dir))
@@ -507,8 +538,11 @@
 	if(compressor.dir != dir && compressor.dir != REVERSE_DIR(dir)) //make sure it's not perpendicular to the rotor
 		feedback(user, "compressor not aligned with rotor!")
 		return (all_parts_connected = FALSE)
-	if(!compressor.can_connect)
+	if(compressor.machine_stat & MAINT)
 		feedback(user, "close compressor panel!")
+		return (all_parts_connected = FALSE)
+	if(compressor.machine_stat & BROKEN)
+		feedback(user, "compressor is broken!")
 		return (all_parts_connected = FALSE)
 	if(!compressor.installed_part)
 		feedback(user, "compressor has a missing part!")
@@ -521,8 +555,11 @@
 	if(turbine.dir != dir && turbine.dir != REVERSE_DIR(dir)) //make sure it's not perpendicular to the rotor
 		feedback(user, "turbine not aligned with rotor!")
 		return (all_parts_connected = FALSE)
-	if(!turbine.can_connect)
-		feedback(user, "close turbine panel!") //we say misplaced because can_connect becomes FALSE when this turbine is moved
+	if(turbine.machine_stat & MAINT)
+		feedback(user, "close turbine panel!")
+		return (all_parts_connected = FALSE)
+	if(turbine.machine_stat & BROKEN)
+		feedback(user, "turbine is broken!")
 		return (all_parts_connected = FALSE)
 	if(!turbine.installed_part)
 		feedback(user, "turbine is missing stator part!")
@@ -540,15 +577,13 @@
 
 	compressor.rotor = src
 	turbine.rotor = src
-	max_allowed_rpm = (compressor.installed_part.max_rpm + turbine.installed_part.max_rpm + installed_part.max_rpm) / 3
-	max_allowed_temperature = (compressor.installed_part.max_temperature + turbine.installed_part.max_temperature + installed_part.max_temperature) / 3
+	max_allowed_rpm = (compressor.installed_part.get_tier_value(TURBINE_MAX_RPM) + turbine.installed_part.get_tier_value(TURBINE_MAX_RPM) + installed_part.get_tier_value(TURBINE_MAX_RPM)) / 3
+	max_allowed_temperature = (compressor.installed_part.get_tier_value(TURBINE_MAX_TEMP) + turbine.installed_part.get_tier_value(TURBINE_MAX_TEMP) + installed_part.get_tier_value(TURBINE_MAX_TEMP)) / 3
 	connect_to_network()
 
-	return TRUE
+	return ..()
 
-/**
- * Allows to null the various machines and references from the main core
- */
+///Allows to null the various machines and references from the main core
 /obj/machinery/power/turbine/core_rotor/deactivate_parts()
 	toggle_power(force_off = TRUE)
 	compressor?.rotor = null
@@ -556,7 +591,11 @@
 	turbine?.rotor = null
 	turbine = null
 	all_parts_connected = FALSE
+	rpm = 0
+	produced_energy = 0
 	disconnect_from_network()
+
+	return ..()
 
 /obj/machinery/power/turbine/core_rotor/on_deconstruction(disassembled)
 	deactivate_parts()
@@ -577,10 +616,8 @@
 	//update operation status of parts
 	update_appearance(UPDATE_OVERLAYS)
 	if(!QDELETED(compressor))
-		compressor.active = active
 		compressor.update_appearance(UPDATE_OVERLAYS)
 	if(!QDELETED(turbine))
-		turbine.active = active
 		turbine.update_appearance(UPDATE_OVERLAYS)
 
 	//start or stop processing
@@ -595,12 +632,10 @@
 /obj/machinery/power/turbine/core_rotor/proc/get_turbine_integrity()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	var/integrity = damage / 500
-	integrity = max(round(100 - integrity * 100, 0.01), 0)
-	return integrity
+	return max(round(100 - (damage / 500) * 100, 0.01), 0)
 
 /obj/machinery/power/turbine/core_rotor/process(seconds_per_tick)
-	if(!active || !activate_parts(check_only = TRUE) || (machine_stat & BROKEN) || !powered(ignore_use_power = TRUE))
+	if(!active || !activate_parts(check_only = TRUE) || !powered(ignore_use_power = TRUE))
 		deactivate_parts()
 		return PROCESS_KILL
 
@@ -622,16 +657,16 @@
 		var/integrity = get_turbine_integrity()
 		if(integrity <= 0)
 			deactivate_parts()
-			if(rpm < 35000)
+			if(rpm < TURBINE_MAX_BASE_RPM)
 				explosion(src, 0, 1, 4)
 				return PROCESS_KILL
-			if(rpm < 87500)
+			if(rpm < TURBINE_MAX_BASE_RPM * 2.5)
 				explosion(src, 0, 2, 6)
 				return PROCESS_KILL
-			if(rpm < 220000)
+			if(rpm < TURBINE_MAX_BASE_RPM * 2.5 * 2.5)
 				explosion(src, 1, 3, 7)
 				return PROCESS_KILL
-			if(rpm < 550000)
+			if(rpm < TURBINE_MAX_BASE_RPM * 2.5 * 2.5 * 2.5)
 				explosion(src, 2, 5, 7)
 			return PROCESS_KILL
 
@@ -655,7 +690,7 @@
 	//removing the work needed to move the compressor but adding back the turbine work that is the one generating most of the power.
 	work_done = max(work_done - compressor.compressor_work * TURBINE_COMPRESSOR_STATOR_INTERACTION_MULTIPLIER - turbine_work, 0)
 	//calculate final acheived rpm
-	rpm = ((work_done * compressor.get_efficiency()) ** turbine.get_efficiency()) * get_efficiency() / TURBINE_RPM_CONVERSION
+	rpm = ((work_done * compressor.efficiency) ** turbine.efficiency) * efficiency / TURBINE_RPM_CONVERSION
 	rpm = min(ROUND_UP(rpm), max_allowed_rpm)
 	//add energy into the grid, also use part of it for turbine operation
 	produced_energy = rpm * TURBINE_ENERGY_RECTIFICATION_MULTIPLIER * TURBINE_RPM_CONVERSION * seconds_per_tick
@@ -674,5 +709,3 @@
 
 #undef PRESSURE_MAX
 #undef MINIMUM_TURBINE_PRESSURE
-#undef EMISSIVE_OVERLAY
-#undef NO_INACTIVE_OVERLAY
