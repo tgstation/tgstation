@@ -1240,6 +1240,7 @@
 	mainframe = AI
 	undeployment_action.Grant(owner)
 	update_med_hud_status(owner)
+	to_chat(owner, span_boldbig("You are still considered a silicon/cyborg/AI. Follow your laws."))
 
 /obj/item/organ/brain/cybernetic/ai/proc/undeploy(datum/source)
 	SIGNAL_HANDLER
