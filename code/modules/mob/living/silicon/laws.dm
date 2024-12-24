@@ -2,7 +2,7 @@
 	laws_sanity_check()
 	var/list/law_box = list(span_bold("Obey these laws:"))
 	law_box += laws.get_law_list(include_zeroth = TRUE)
-	to_chat(src, examine_block(jointext(law_box, "\n")))
+	to_chat(src, boxed_message(jointext(law_box, "\n")))
 
 /mob/living/silicon/proc/try_sync_laws()
 	return
