@@ -93,7 +93,7 @@
 	name = "eldritch wall"
 	desc = "A wall? Made of something incomprehensible. You really don't want to be touching this..."
 	icon = 'icons/turf/walls.dmi'
-	icon_state = "eldritch_wall"
+	icon_state = "eldritch_forcewall"
 	opacity = FALSE
 	pass_flags_self = NONE // No PASSCLOSEDTURF because only arena victors are allowed to go in or out
 
@@ -136,8 +136,8 @@
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_enter_crit))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
 	RegisterSignal(owner, "COMSIG_OWNER_ENTERED_CRIT", PROC_REF(on_crit_somebody))
-	// XANTODO - Placeholder sprite
-	crown_overlay = mutable_appearance('icons/mob/effects/halo.dmi', "halo[rand(1, 6)]", -HALO_LAYER)
+	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_fighter", -HALO_LAYER)
+	crown_overlay.pixel_y = 24
 	owner.add_overlay(crown_overlay)
 	return TRUE
 
@@ -148,7 +148,8 @@
 
 /datum/status_effect/arena_tracker/proc/on_enter_crit(mob/owner)
 	SIGNAL_HANDLER
-	SEND_SIGNAL(last_attacker, "COMSIG_OWNER_ENTERED_CRIT")
+	if(last_attacker) // Safety check in case they somehow enter crit with *nobody* attacking them
+		SEND_SIGNAL(last_attacker, "COMSIG_OWNER_ENTERED_CRIT")
 
 /datum/status_effect/arena_tracker/proc/damage_taken(
 	datum/source,
@@ -195,11 +196,8 @@
 /datum/status_effect/arena_tracker/proc/on_crit_somebody()
 	SIGNAL_HANDLER
 	owner.cut_overlay(crown_overlay)
-	crown_overlay.color = list(
-		1, 1, 0,
-		1, 1, 0,
-		1, 1, 0,
-	)
+	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_victor", -HALO_LAYER)
+	crown_overlay.pixel_y = 24
 	owner.add_overlay(crown_overlay)
 
 	// The mansus celebrates your efforts
