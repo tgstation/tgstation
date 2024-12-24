@@ -204,6 +204,8 @@
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE|AB_CHECK_INCAPACITATED
 	/// What do we call devouring something
 	var/devour_verb = "devour"
+	/// how much time to eat someone
+	var/devour_time = 1.5 SECONDS
 	///The mob thats being consumed by this creature
 	var/mob/living/vored_mob
 
@@ -226,7 +228,7 @@
 		return FALSE
 	var/mob/living/eat_target = ooze.pulling
 	owner.visible_message(span_warning("[ooze] starts attempting to [devour_verb] [eat_target]!"), span_notice("You start attempting to [devour_verb] [eat_target]."))
-	if(!do_after(ooze, 1.5 SECONDS, eat_target))
+	if(!do_after(ooze, devour_time, eat_target))
 		return FALSE
 
 	if(!(eat_target.mob_biotypes & MOB_ORGANIC) || eat_target.stat == DEAD)
@@ -240,7 +242,7 @@
 	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
 	RegisterSignal(vored_mob, COMSIG_QDELETING, PROC_REF(stop_consuming))
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
-	owner.visible_message(span_warning("[src] [devour_verb]s [target]!"), span_notice("You [devour_verb] [target]."))
+	owner.visible_message(span_warning("[owner] [devour_verb]s [target]!"), span_notice("You [devour_verb] [target]."))
 	START_PROCESSING(SSprocessing, src)
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 

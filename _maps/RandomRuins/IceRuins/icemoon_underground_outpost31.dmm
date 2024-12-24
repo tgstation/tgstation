@@ -14,6 +14,7 @@
 /area/ruin/outpost31/lab)
 "an" = (
 /obj/effect/decal/cleanable/blood/old,
+/mob/living/basic/fleshblob,
 /turf/open/floor/iron/white,
 /area/ruin/outpost31/medical)
 "aq" = (
@@ -363,6 +364,12 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/outpost31/kitchendiningroom)
+"gC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/item/organ/brain/cybernetic/ai,
+/turf/open/floor/plating,
+/area/ruin/outpost31/lootroom)
 "gM" = (
 /turf/open/floor/iron/white,
 /area/ruin/outpost31/medical)
@@ -463,6 +470,7 @@
 "jl" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
+/obj/item/paper,
 /turf/open/floor/plating,
 /area/ruin/outpost31/lootroom)
 "jv" = (
@@ -1425,6 +1433,7 @@
 "Cc" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/crowbar,
 /turf/open/floor/pod,
 /area/ruin/outpost31)
 "Ce" = (
@@ -1566,6 +1575,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron/white,
 /area/ruin/outpost31/medical)
 "Fo" = (
@@ -1642,7 +1652,7 @@
 	},
 /obj/item/paper{
 	can_become_message_in_bottle = 0;
-	default_raw_text = "That dumbass egghead from the lab took my keycard AGAIN without asking. I swear to fuck im going to break this guys spine."
+	default_raw_text = "Research was promising. We managed to stream an artificial intelligence into an organic host via this brain. Too bad it needs all robotic organs because apparently the human biology hates not having a properly functional nervous system."
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -1954,6 +1964,7 @@
 /obj/structure/mirror/directional/north{
 	pixel_y = 33
 	},
+/mob/living/basic/fleshblob,
 /turf/open/floor/iron/freezer,
 /area/ruin/outpost31/crewquarters)
 "Nk" = (
@@ -2140,6 +2151,12 @@
 	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
 	},
 /area/ruin/outpost31/lab)
+"RK" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/crowbar,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
 "RL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -2185,6 +2202,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
+/mob/living/basic/fleshblob,
 /turf/open/floor/wood,
 /area/ruin/outpost31/commander_room)
 "Sy" = (
@@ -2487,6 +2505,10 @@
 /obj/structure/curtain,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/fluff/shower_drain,
+/obj/item/food/candy_trash{
+	desc = "Tooth fillings.";
+	name = "tooth fillings"
+	},
 /turf/open/floor/iron/freezer,
 /area/ruin/outpost31/crewquarters)
 "Yh" = (
@@ -2753,7 +2775,7 @@ ce
 dV
 aM
 DF
-jl
+gC
 jl
 nH
 yo
@@ -3624,7 +3646,7 @@ bp
 Uy
 wO
 EL
-oN
+RK
 db
 oN
 Uy

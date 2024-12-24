@@ -26,6 +26,3 @@
 
 /datum/ai_planning_subtree/targeted_mob_ability/continue_planning
 	finish_planning = FALSE
-
-/datum/ai_planning_subtree/targeted_mob_ability/adjacent
-	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range/adjacent

@@ -56,6 +56,3 @@
 
 /datum/ai_behavior/targeted_mob_ability/min_range/short
 	required_distance = 3
-
-/datum/ai_behavior/targeted_mob_ability/min_range/adjacent
-	required_distance = 1

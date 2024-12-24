@@ -1401,4 +1401,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to atoms currently affected by projectile dampeners
 #define TRAIT_GOT_DAMPENED "got_dampened"
 
+/// humans with this trait will have their health visible to AIs without suit
+#define HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT "hmsensorsvisiblewithoutsuit"
+
 // END TRAIT DEFINES
