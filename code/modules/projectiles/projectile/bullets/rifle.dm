@@ -16,27 +16,27 @@
 	armour_penetration = 100
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
-// .310 Strilka (Sakhno Rifle)
+// .310 Striker (Obrez Rifle)
 
-/obj/projectile/bullet/strilka310
-	name = ".310 Strilka bullet"
+/obj/projectile/bullet/striker310
+	name = ".310 Striker bullet"
 	damage = 60
 	armour_penetration = 10
 	wound_bonus = -45
 	wound_falloff_tile = 0
 
-/obj/projectile/bullet/strilka310/surplus
-	name = ".310 Strilka surplus bullet"
+/obj/projectile/bullet/striker310/surplus
+	name = ".310 Striker surplus bullet"
 	weak_against_armour = TRUE //this is specifically more important for fighting carbons than fighting noncarbons. Against a simple mob, this is still a full force bullet
 	armour_penetration = 0
 
-/obj/projectile/bullet/strilka310/enchanted
-	name = "enchanted .310 bullet"
+/obj/projectile/bullet/striker310/enchanted
+	name = "enchanted Striker .310 bullet"
 	damage = 20
 	stamina = 80
 
-/obj/projectile/bullet/strilka310/phasic
-	name = "phasic .310 bullet"
+/obj/projectile/bullet/striker310/phasic
+	name = "phasic Striker .310 bullet"
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
 // Harpoons (Harpoon Gun)

@@ -1,29 +1,29 @@
-// .310 Strilka (Sakhno Rifle)
+// .310 Striker (Obrez Rifle)
 
-/obj/item/ammo_casing/strilka310
-	name = ".310 Strilka bullet casing"
-	desc = "A .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder."
+/obj/item/ammo_casing/striker310
+	name = ".310 Striker bullet casing"
+	desc = "A .310 Striker bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder."
 	icon_state = "310-casing"
-	caliber = CALIBER_STRILKA310
-	projectile_type = /obj/projectile/bullet/strilka310
+	caliber = CALIBER_STRIKER310
+	projectile_type = /obj/projectile/bullet/striker310
 
-/obj/item/ammo_casing/strilka310/Initialize(mapload)
+/obj/item/ammo_casing/striker310/Initialize(mapload)
 	. = ..()
 
 	AddElement(/datum/element/caseless)
 
-/obj/item/ammo_casing/strilka310/surplus
-	name = ".310 Strilka surplus bullet casing"
-	desc = "A surplus .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder. Damp red powder at that."
-	projectile_type = /obj/projectile/bullet/strilka310/surplus
+/obj/item/ammo_casing/striker310/surplus
+	name = ".310 Striker surplus bullet casing"
+	desc = "A surplus .310 Striker bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder. Damp red powder at that."
+	projectile_type = /obj/projectile/bullet/striker310/surplus
 
-/obj/item/ammo_casing/strilka310/enchanted
-	projectile_type = /obj/projectile/bullet/strilka310/enchanted
+/obj/item/ammo_casing/striker310/enchanted
+	projectile_type = /obj/projectile/bullet/striker310/enchanted
 
-/obj/item/ammo_casing/strilka310/phasic
-	name = ".310 Strilka phasic bullet casing"
+/obj/item/ammo_casing/striker310/phasic
+	name = ".310 Striker phasic bullet casing"
 	desc = "A phasic .310 Strika bullet casing. "
-	projectile_type = /obj/projectile/bullet/strilka310/phasic
+	projectile_type = /obj/projectile/bullet/striker310/phasic
 // .223 (M-90gl Carbine)
 
 /obj/item/ammo_casing/a223

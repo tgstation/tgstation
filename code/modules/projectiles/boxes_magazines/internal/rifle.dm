@@ -42,7 +42,7 @@
 	caliber = CALIBER_HARPOON
 	ammo_type = /obj/item/ammo_casing/harpoon
 
-/obj/item/ammo_box/magazine/internal/boltaction/jezail
+/obj/item/ammo_box/magazine/internal/boltaction/aardvark
 	max_ammo = 4
 
 /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
