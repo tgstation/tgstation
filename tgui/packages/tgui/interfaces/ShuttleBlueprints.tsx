@@ -10,7 +10,7 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
 import { Direction } from '../constants';
 import { Window } from '../layouts';
 
