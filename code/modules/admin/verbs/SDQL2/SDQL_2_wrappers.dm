@@ -117,9 +117,6 @@
 /proc/_text2num(T)
 	return text2num(T)
 
-/proc/_trimtext(Text)
-	return trimtext(Text)
-
 /proc/_ohearers(Dist, Center = usr)
 	return ohearers(Dist, Center)
 

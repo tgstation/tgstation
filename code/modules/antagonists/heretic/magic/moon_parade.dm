@@ -26,12 +26,11 @@
 	icon_state = "lunar_parade"
 	damage = 0
 	damage_type = BURN
-	speed = 1
+	speed = 0.2
 	range = 75
 	ricochets_max = 40
 	ricochet_chance = 500
 	ricochet_incidence_leeway = 0
-	pixel_speed_multiplier = 0.2
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	///looping sound datum for our projectile.
 	var/datum/looping_sound/moon_parade/soundloop

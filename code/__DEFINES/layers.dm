@@ -156,9 +156,14 @@
 #define CATWALK_LAYER (14 + TOPDOWN_LAYER)
 #define LOWER_RUNE_LAYER (15 + TOPDOWN_LAYER)
 #define RUNE_LAYER (16 + TOPDOWN_LAYER)
-/// [GAME_CLEAN_LAYER] but for floors.
-/// Basically any layer below this (numerically) is "on" a floor for the purposes of washing
-#define FLOOR_CLEAN_LAYER (21 + TOPDOWN_LAYER)
+#define CLEANABLE_FLOOR_OBJECT_LAYER (21 + TOPDOWN_LAYER)
+
+//Placeholders in case the game plane and possibly other things between it and the floor plane are ever made into topdown planes
+
+///Below this level, objects with topdown layers are rendered as if underwater by the immerse element
+#define TOPDOWN_WATER_LEVEL_LAYER 100 + TOPDOWN_LAYER
+///Above this level, objects with topdown layers are unaffected by the immerse element
+#define TOPDOWN_ABOVE_WATER_LAYER 200 + TOPDOWN_LAYER
 
 //WALL_PLANE layers
 #define BELOW_CLOSED_TURF_LAYER 2.053
@@ -178,9 +183,7 @@
 #define BOT_PATH_LAYER 2.497
 #define LOW_OBJ_LAYER 2.5
 #define HIGH_PIPE_LAYER 2.54
-// Anything above this layer is not "on" a turf for the purposes of washing
-// I hate this life of ours
-#define GAME_CLEAN_LAYER 2.55
+#define CLEANABLE_OBJECT_LAYER 2.55
 #define TRAM_STRUCTURE_LAYER 2.57
 #define TRAM_FLOOR_LAYER 2.58
 #define TRAM_WALL_LAYER 2.59
@@ -194,6 +197,7 @@
 #define DOOR_HELPER_LAYER 2.72 //keep this above DOOR_ACCESS_HELPER_LAYER and OPEN_DOOR_LAYER since the others tend to have tiny sprites that tend to be covered up.
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
+#define GIB_LAYER 2.85 // sit on top of tables, but below machines
 #define BELOW_OBJ_LAYER 2.9
 #define LOW_ITEM_LAYER 2.95
 //#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define

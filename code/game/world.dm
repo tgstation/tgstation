@@ -73,7 +73,8 @@ GLOBAL_PROTECT(tracy_init_reason)
 /world/proc/Genesis(tracy_initialized = FALSE)
 	RETURN_TYPE(/datum/controller/master)
 
-	GLOB.tracy_initialized = FALSE
+	if(!tracy_initialized)
+		GLOB.tracy_initialized = FALSE
 #ifndef OPENDREAM
 	if(!tracy_initialized)
 #ifdef USE_BYOND_TRACY
@@ -421,8 +422,6 @@ GLOBAL_PROTECT(tracy_init_reason)
 			new_status += "<br>Time: <b>[time2text(STATION_TIME_PASSED(), "hh:mm", 0)]</b>"
 			if(SSshuttle?.emergency && SSshuttle?.emergency?.mode != (SHUTTLE_IDLE || SHUTTLE_ENDGAME))
 				new_status += " | Shuttle: <b>[SSshuttle.emergency.getModeStr()] [SSshuttle.emergency.getTimerStr()]</b>"
-			if(SStime_track?.time_dilation_avg > 0)
-				new_status += " | Time Dilation: <b>[round(SStime_track?.time_dilation_avg)]%</b>"
 		else if(SSticker.current_state == GAME_STATE_FINISHED)
 			new_status += "<br><b>RESTARTING</b>"
 	if(SSmapping.current_map)

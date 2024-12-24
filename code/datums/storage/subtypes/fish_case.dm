@@ -7,7 +7,7 @@
 	. = ..()
 	if(!.)
 		return .
-	if(!HAS_TRAIT(to_insert, TRAIT_FISH_CASE_COMPATIBILE))
+	if(!HAS_TRAIT(to_insert, TRAIT_AQUARIUM_CONTENT))
 		if(messages && user)
 			user.balloon_alert(user, "can't hold!")
 		return FALSE

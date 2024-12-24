@@ -329,7 +329,7 @@ effective or pretty fucking useless.
 
 /obj/item/jammer
 	name = "radio jammer"
-	desc = "Device used to disrupt nearby radio communication. Alternate function creates a powerful distruptor wave which disables all nearby listening devices."
+	desc = "Device used to disrupt nearby radio communication. Alternate function creates a powerful disruptor wave which disables all nearby listening devices."
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
@@ -341,8 +341,8 @@ effective or pretty fucking useless.
 	. = ..()
 	register_context()
 
-/atom/movable/screen/alert/give/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	context[SCREENTIP_CONTEXT_LMB] = "Release distruptor wave"
+/obj/item/jammer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_LMB] = "Release disruptor wave"
 	context[SCREENTIP_CONTEXT_RMB] = "Toggle"
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -352,8 +352,8 @@ effective or pretty fucking useless.
 		user.balloon_alert(user, "on cooldown!")
 		return
 
-	user.balloon_alert(user, "distruptor wave released!")
-	to_chat(user, span_notice("You release a distruptor wave, disabling all nearby radio devices."))
+	user.balloon_alert(user, "disruptor wave released!")
+	to_chat(user, span_notice("You release a disruptor wave, disabling all nearby radio devices."))
 	for (var/atom/potential_owner in view(7, user))
 		disable_radios_on(potential_owner)
 	COOLDOWN_START(src, jam_cooldown, jam_cooldown_duration)
@@ -379,8 +379,8 @@ effective or pretty fucking useless.
 		user.balloon_alert(user, "out of reach!")
 		return
 
-	interacting_with.balloon_alert(user, "radio distrupted!")
-	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [interacting_with]."))
+	interacting_with.balloon_alert(user, "radio disrupted!")
+	to_chat(user, span_notice("You release a directed disruptor wave, disabling all radio devices on [interacting_with]."))
 	disable_radios_on(interacting_with)
 
 	return ITEM_INTERACT_SUCCESS
@@ -530,4 +530,4 @@ effective or pretty fucking useless.
 
 /obj/projectile/bullet/toolbox_turret
 	damage = 10
-	speed = 0.6
+	speed = 1.6

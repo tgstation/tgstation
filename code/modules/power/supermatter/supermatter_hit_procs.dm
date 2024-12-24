@@ -48,7 +48,7 @@
 		if(!is_valid_z_level(get_turf(hearing_mob), sm_turf))
 			continue
 		SEND_SOUND(hearing_mob, 'sound/effects/supermatter.ogg') //everyone goan know bout this
-		to_chat(hearing_mob, span_boldannounce("A horrible screeching fills your ears, and a wave of dread washes over you..."))
+		to_chat(hearing_mob, span_bolddanger("A horrible screeching fills your ears, and a wave of dread washes over you..."))
 	qdel(src)
 	return gain
 

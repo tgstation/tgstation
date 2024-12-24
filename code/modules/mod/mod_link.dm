@@ -511,6 +511,7 @@
 	desc = "Someone is calling you! Left-click this to accept the call. Right-click to deny it."
 	icon_state = "called"
 	timeout = 10 SECONDS
+	clickable_glow = TRUE
 	var/end_message = "call timed out!"
 	/// A weak reference to the MODlink that is calling.
 	var/datum/weakref/caller_ref

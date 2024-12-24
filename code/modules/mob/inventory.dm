@@ -16,7 +16,7 @@
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
 /mob/proc/get_inactive_hand_index()
 	var/other_hand = 0
-	if(!(active_hand_index % 2))
+	if(IS_RIGHT_INDEX(active_hand_index))
 		other_hand = active_hand_index-1 //finding the matching "left" limb
 	else
 		other_hand = active_hand_index+1 //finding the matching "right" limb
@@ -33,7 +33,7 @@
 
 //Odd = left. Even = right
 /mob/proc/held_index_to_dir(i)
-	if(!(i % 2))
+	if(IS_RIGHT_INDEX(i))
 		return "r"
 	return "l"
 
@@ -132,7 +132,7 @@
 	if(i > 2)
 		hand += "upper "
 	var/num = 0
-	if(!(i % 2))
+	if(IS_RIGHT_INDEX(i))
 		num = i-2
 		hand += "right hand"
 	else

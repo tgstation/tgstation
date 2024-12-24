@@ -9,18 +9,22 @@
 	icon_state = "reaction_chamber"
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
+	reagents = /datum/reagents/plumbing/reaction_chamber
 
 	/**
 	* list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
 	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
 	*/
-	var/list/required_reagents = list()
-
+	var/list/datum/reagent/required_reagents = list()
+	///list of catalyst reagents to take
+	var/list/datum/reagent/catalysts = list()
 	///our reagent goal has been reached, so now we lock our inputs and start emptying
 	var/emptying = FALSE
-
 	///towards which temperature do we build (except during draining)?
 	var/target_temperature = 300
+
+/obj/machinery/plumbing/reaction_chamber/Destroy()
+	return ..()
 
 /obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt, layer)
 	. = ..()
@@ -36,15 +40,17 @@
 	SIGNAL_HANDLER
 
 	UnregisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED, COMSIG_QDELETING))
+
 	return NONE
 
 /// Handles stopping the emptying process when the chamber empties.
-/obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/holder, ...)
+/obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/plumbing/reaction_chamber/holder, ...)
 	SIGNAL_HANDLER
 
-	if(!holder.total_volume && emptying) //we were emptying, but now we aren't
+	if(!holder.get_catalyst_excluded_volume() && emptying) //we were emptying, but now we aren't
 		emptying = FALSE
 		holder.flags |= NO_REACT
+
 	return NONE
 
 /obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
@@ -60,8 +66,15 @@
 		//do other stuff with final solution
 		handle_reagents(seconds_per_tick)
 
-///For subtypes that want to do additional reagent handling
+/**
+ * For subtypes that want to do additional reagent handling
+ * Arguments
+ *
+ * * seconds_per_tick - passed down from process()
+ */
 /obj/machinery/plumbing/reaction_chamber/proc/handle_reagents(seconds_per_tick)
+	PROTECTED_PROC(TRUE)
+
 	return
 
 /obj/machinery/plumbing/reaction_chamber/power_change()
@@ -81,11 +94,21 @@
 	var/list/reagents_data = list()
 	for(var/datum/reagent/required_reagent as anything in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
 		var/list/reagent_data = list()
+		if(catalysts[required_reagent])
+			continue
 		reagent_data["name"] = initial(required_reagent.name)
 		reagent_data["volume"] = required_reagents[required_reagent]
 		reagents_data += list(reagent_data)
 
+	var/list/catalyst_data = list()
+	for(var/datum/reagent/required_catalyst as anything in catalysts)
+		var/list/reagent_data = list()
+		reagent_data["name"] = initial(required_catalyst.name)
+		reagent_data["volume"] = catalysts[required_catalyst]
+		catalyst_data += list(reagent_data)
+
 	.["reagents"] = reagents_data
+	.["catalysts"] = catalyst_data
 	.["emptying"] = emptying
 	.["temperature"] = round(reagents.chem_temp, 0.1)
 	.["targetTemp"] = target_temperature
@@ -108,9 +131,9 @@
 			if(!input_reagent)
 				return FALSE
 
-			if(!required_reagents.Find(input_reagent))
+			if(!required_reagents[input_reagent])
 				var/input_amount = text2num(params["amount"])
-				if(!isnull(input_amount))
+				if(input_amount)
 					required_reagents[input_reagent] = input_amount
 					return TRUE
 			return FALSE
@@ -129,6 +152,25 @@
 				return TRUE
 			return FALSE
 
+		if("catalyst")
+			var/reagent = get_chem_id(params["chem"])
+
+			if(!reagent)
+				return FALSE
+
+			if(reagent && !catalysts[reagent])
+				catalysts[reagent] = required_reagents[reagent]
+				return TRUE
+			else
+				return FALSE
+
+		if("catremove")
+			var/reagent = get_chem_id(params["chem"])
+			if(reagent)
+				catalysts -= reagent
+				return TRUE
+			return FALSE
+
 	var/result = handle_ui_act(action, params, ui, state)
 	if(isnull(result))
 		result = FALSE
@@ -136,6 +178,8 @@
 
 /// For custom handling of ui actions from inside a subtype
 /obj/machinery/plumbing/reaction_chamber/proc/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	PROTECTED_PROC(TRUE)
+
 	return null
 
 ///Chemistry version of reaction chamber that allows for acid and base buffers to be used while reacting

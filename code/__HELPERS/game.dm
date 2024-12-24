@@ -75,8 +75,8 @@
 	return !player_mind || !player_mind.current || !player_mind.current.client || player_mind.current.client.is_afk()
 
 ///Return an object with a new maptext (not currently in use)
-/proc/screen_text(obj/object_to_change, maptext = "", screen_loc = "CENTER-7,CENTER-7", maptext_height = 480, maptext_width = 480)
-	if(!isobj(object_to_change))
+/proc/screen_text(atom/movable/object_to_change, maptext = "", screen_loc = "CENTER-7,CENTER-7", maptext_height = 480, maptext_width = 480)
+	if(!istype(object_to_change))
 		object_to_change = new /atom/movable/screen/text()
 	object_to_change.maptext = MAPTEXT(maptext)
 	object_to_change.maptext_height = maptext_height

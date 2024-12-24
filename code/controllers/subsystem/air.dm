@@ -222,6 +222,7 @@ SUBSYSTEM_DEF(air)
 		cost_atoms = MC_AVERAGE(cost_atoms, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
 
+
 	currentpart = SSAIR_PIPENETS
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 

@@ -81,8 +81,9 @@
 	cost = 16
 	cant_discount = TRUE
 
-/datum/uplink_item/suits/modsuit/Wraith
+/datum/uplink_item/suits/modsuit/wraith
 	name = "MODsuit wraith cloaking module"
-	desc = "A MODsuit module that grants to the user Optical camouflage and the ability to overload light sources to recharge suit power."
+	desc = "A MODsuit module that grants to the user Optical camouflage and the ability to overload light sources to recharge suit power. \
+		Incompatible with armored MODsuits."
 	item = /obj/item/mod/module/stealth/wraith
 	cost = 3

@@ -185,7 +185,7 @@
 		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack. \
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
-	spell_to_add = /datum/action/cooldown/spell/realignment
+	action_to_add = /datum/action/cooldown/spell/realignment
 	cost = 1
 
 
@@ -364,7 +364,7 @@
 		at a target, dealing damage and causing bleeding."
 	gain_text = "Without thinking, I took the knife of a fallen soldier and threw with all my might. My aim was true! \
 		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
-	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
+	action_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
 
 /datum/heretic_knowledge/ultimate/blade_final
@@ -380,6 +380,8 @@
 		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
 
 	ascension_achievement = /datum/award/achievement/misc/blade_ascension
+	announcement_text = "%SPOOKY% Master of blades, the Torn Champion's disciple, %NAME% has ascended! Their steel is that which will cut reality in a maelstom of silver! %SPOOKY%"
+	announcement_sound = 'sound/music/antag/heretic/ascend_blade.ogg'
 
 /datum/heretic_knowledge/ultimate/blade_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()
@@ -390,13 +392,7 @@
 
 /datum/heretic_knowledge/ultimate/blade_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Master of blades, the Torn Champion's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = 'sound/music/antag/heretic/ascend_blade.ogg',
-		color_override = "pink",
-	)
-	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, name)
+	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, type)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, /obj/effect/floating_blade, 1 MINUTES)
 	user.add_stun_absorption(

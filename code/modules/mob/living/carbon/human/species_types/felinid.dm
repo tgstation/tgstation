@@ -33,7 +33,7 @@
 		var/datum/reagent/toxin/carpotoxin/fish = chem
 		fish.toxpwr = 0
 
-/datum/species/human/felinid/on_species_gain(mob/living/carbon/carbon_being, datum/species/old_species, pref_load)
+/datum/species/human/felinid/on_species_gain(mob/living/carbon/carbon_being, datum/species/old_species, pref_load, regenerate_icons)
 	if(ishuman(carbon_being))
 		var/mob/living/carbon/human/target_human = carbon_being
 		if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
@@ -114,6 +114,8 @@
 		return SFX_SNORE_FEMALE
 	return SFX_SNORE_MALE
 
+/datum/species/human/felinid/get_hiss_sound(mob/living/carbon/human/felinid)
+	return 'sound/mobs/humanoids/felinid/felinid_hiss.ogg'
 
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)

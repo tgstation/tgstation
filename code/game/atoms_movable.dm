@@ -1146,6 +1146,12 @@
 		loc = destination
 
 		if(!same_loc)
+			if(loc == oldloc)
+				// when attempting to move an atom A into an atom B which already contains A, BYOND seems
+				// to silently refuse to move A to the new loc. This can really break stuff (see #77067)
+				stack_trace("Attempt to move [src] to [destination] was rejected by BYOND, possibly due to cyclic contents")
+				return FALSE
+
 			if(is_multi_tile && isturf(destination))
 				var/list/new_locs = block(
 					destination,
@@ -1272,12 +1278,12 @@
 /// Only moves the object if it's under no gravity
 /// Accepts the direction to move, if the push should be instant, and an optional parameter to fine tune the start delay
 /// Drift force determines how much acceleration should be applied. Controlled cap, if set, will ensure that if the object was moving slower than the cap before, it cannot accelerate past the cap from this move.
-/atom/movable/proc/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 1 NEWTONS, controlled_cap = null)
+/atom/movable/proc/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 1 NEWTONS, controlled_cap = null, force_loop = TRUE)
 	if(!isturf(loc) || Process_Spacemove(angle2dir(inertia_angle), continuous_move = TRUE))
 		return FALSE
 
 	if (!isnull(drift_handler))
-		if (drift_handler.newtonian_impulse(inertia_angle, start_delay, drift_force, controlled_cap))
+		if (drift_handler.newtonian_impulse(inertia_angle, start_delay, drift_force, controlled_cap, force_loop))
 			return TRUE
 
 	new /datum/drift_handler(src, inertia_angle, instant, start_delay, drift_force)
@@ -1320,6 +1326,7 @@
 		step(src, hitting_atom.dir)
 	return ..()
 
+// Calls throw_at after checking that the move strength is greater than the thrown atom's move resist. Identical args.
 /atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	if((force < (move_resist * MOVE_FORCE_THROW_RATIO)) || (move_resist == INFINITY))
 		return
@@ -1490,9 +1497,16 @@
 	return
 
 
-/atom/movable/proc/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect, fov_effect = TRUE)
+/atom/movable/proc/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect, fov_effect = TRUE, item_animation_override = null)
 	if(!no_effect && (visual_effect_icon || used_item))
-		do_item_attack_animation(attacked_atom, visual_effect_icon, used_item)
+		var/animation_type = item_animation_override || ATTACK_ANIMATION_BLUNT
+		if (used_item && !item_animation_override)
+			switch(used_item.get_sharpness())
+				if (SHARP_EDGED)
+					animation_type = ATTACK_ANIMATION_SLASH
+				if (SHARP_POINTY)
+					animation_type = ATTACK_ANIMATION_PIERCE
+		do_item_attack_animation(attacked_atom, visual_effect_icon, used_item, animation_type = animation_type)
 
 	if(attacked_atom == src)
 		return //don't do an animation if attacking self
