@@ -148,7 +148,12 @@
 /obj/machinery/coffeemaker/proc/overlay_checks()
 	. = list()
 	if(coffeepot)
-		. += "coffeemaker_pot"
+		if(istype(coffeepot, /obj/item/reagent_containers/cup/coffeepot/bluespace))
+			. += "coffeemaker_pot_bluespace"
+		else if(coffeepot.reagents.total_volume > 0)
+			. += "coffeemaker_pot_full"
+		else
+			. += "coffeemaker_pot_empty"
 	if(cartridge)
 		. += "coffeemaker_cartidge"
 	return .
@@ -418,6 +423,7 @@
 	operate_for(brew_time)
 	coffeepot.reagents.add_reagent_list(cartridge.drink_type)
 	cartridge.charges--
+	update_appearance(UPDATE_OVERLAYS)
 
 //Coffee Cartridges: like toner, but for your coffee!
 /obj/item/coffee_cartridge
@@ -535,7 +541,9 @@
 /obj/machinery/coffeemaker/impressa/overlay_checks()
 	. = list()
 	if(coffeepot)
-		if(coffeepot.reagents.total_volume > 0)
+		if(istype(coffeepot, /obj/item/reagent_containers/cup/coffeepot/bluespace))
+			. += "pot_bluespace"
+		else if(coffeepot.reagents.total_volume > 0)
 			. += "pot_full"
 		else
 			. += "pot_empty"
