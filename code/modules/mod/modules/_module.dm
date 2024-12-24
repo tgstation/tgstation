@@ -476,7 +476,7 @@
 	return TRUE
 
 /obj/item/mod/module/anomaly_locked/attackby(obj/item/item, mob/living/user, params)
-	if(item.type in accepted_anomalies && !dummy_cored) // no need for this if it's dummy cored
+	if((item.type in accepted_anomalies) && !dummy_cored) // no need for this if it's dummy cored
 		if(core)
 			balloon_alert(user, "core already in!")
 			return
