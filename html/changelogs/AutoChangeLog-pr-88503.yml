@@ -1,0 +1,4 @@
+author: "KazooBard"
+delete-after: True
+changes:
+  - qol: "Selecting which spells to cast with hotkeys, and using them in general is faster."

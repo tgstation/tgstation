@@ -1,0 +1,5 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - balance: "computers can now be used as cover, firing a projectile over them is now possible, while they may block projectiles if you are not adjacent to them when firing."
+  - bugfix: "computer laptops will not block projectiles"
