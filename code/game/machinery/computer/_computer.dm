@@ -32,6 +32,8 @@
 
 /obj/machinery/computer/CanAllowThrough(atom/movable/mover, border_dir) // allows projectiles to fly over the computer
 	. = ..()
+	if(.)
+		return
 	if(!projectiles_pass_chance)
 		return FALSE
 	if(!isprojectile(mover))
