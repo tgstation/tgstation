@@ -12,5 +12,12 @@
 					'modular_doppler/modular_sounds/sound/bricks/brick_pick_up_1.ogg',
 					'modular_doppler/modular_sounds/sound/bricks/brick_pick_up_2.ogg',
 				)
+			if(SFX_JINGLEBELL)
+				soundin = pick(
+					'sound/items/collarbell1.ogg',
+					'sound/items/collarbell2.ogg',
+					'sound/items/collarbell3.ogg',
+					'sound/items/collarbell4.ogg',
+				)
 
 	return soundin

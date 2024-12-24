@@ -92,14 +92,9 @@
 	greyscale_config_worn = /datum/greyscale_config/collar/bell/worn
 	greyscale_colors = "#222222#C0C0C0"
 
-/obj/item/clothing/neck/human_petcollar/locked/bell/Initialize()
+/obj/item/clothing/neck/human_petcollar/locked/bell/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/squeak, list(
-										'sound/items/collarbell1.ogg' = 1,
-										'sound/items/collarbell2.ogg' = 1,
-										'sound/items/collarbell3.ogg' = 1,
-										'sound/items/collarbell4.ogg' = 1,
-										), 100)
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_JINGLEBELL)
 
 /obj/item/clothing/neck/human_petcollar/locked/choker
 	name = "choker"
