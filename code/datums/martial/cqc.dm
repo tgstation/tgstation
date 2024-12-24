@@ -13,7 +13,7 @@
 	/// Weakref to a mob we're currently restraining (with grab-grab combo)
 	VAR_PRIVATE/datum/weakref/restraining_mob
 	/// Probability of successfully blocking attacks while on throw mode
-	var/block_chance = 75
+	var/block_stamina = 30
 
 /datum/martial_art/cqc/on_teach(mob/living/new_holder)
 	. = ..()
@@ -50,8 +50,6 @@
 		return NONE
 	if(attack_type == PROJECTILE_ATTACK)
 		return NONE
-	if(!prob(block_chance))
-		return NONE
 
 	var/mob/living/attacker = GET_ASSAILANT(hitby)
 	if(istype(attacker) && cqc_user.Adjacent(attacker))
@@ -59,6 +57,7 @@
 			span_danger("[cqc_user] blocks [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
 			span_userdanger("You block [attack_text]!"),
 		)
+		cqc_user.adjustStaminaLoss(block_stamina)
 		attacker.Stun(4 SECONDS)
 	else
 		cqc_user.visible_message(
