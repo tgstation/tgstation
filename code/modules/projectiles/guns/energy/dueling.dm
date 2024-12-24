@@ -301,6 +301,8 @@
 	var/obj/projectile/energy/duel/D = loaded_projectile
 	D.setting = setting
 	D.update_appearance()
+	if(!isturf(target))
+		D.loaded_projectile.set_homing_target(target)
 
 /obj/item/ammo_casing/energy/duel/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	. = ..()
@@ -314,7 +316,6 @@
 	name = "dueling beam"
 	icon_state = "declone"
 	reflectable = FALSE
-	homing = TRUE
 	var/setting
 
 /obj/projectile/energy/duel/update_icon()
