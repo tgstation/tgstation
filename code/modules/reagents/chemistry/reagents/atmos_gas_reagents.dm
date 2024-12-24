@@ -1,7 +1,6 @@
 /datum/reagent/freon
 	name = "Freon"
 	description = "A powerful heat absorbent."
-	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "burning"
@@ -18,7 +17,6 @@
 /datum/reagent/halon
 	name = "Halon"
 	description = "A fire suppression gas that removes oxygen and cools down the area"
-	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
 	color = "90560B"
 	taste_description = "minty"
@@ -36,7 +34,6 @@
 /datum/reagent/healium
 	name = "Healium"
 	description = "A powerful sleeping agent with healing properties"
-	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
 	color = "90560B"
 	taste_description = "rubbery"
@@ -59,7 +56,6 @@
 /datum/reagent/hypernoblium
 	name = "Hyper-Noblium"
 	description = "A suppressive gas that stops gas reactions on those who inhale it."
-	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hyper-nob are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "searingly cold"
@@ -73,7 +69,6 @@
 /datum/reagent/nitrium_high_metabolization
 	name = "Nitrosyl plasmide"
 	description = "A highly reactive byproduct that stops you from sleeping, while dealing increasing toxin damage over time."
-	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "E1A116"
 	taste_description = "sourness"
@@ -93,7 +88,6 @@
 /datum/reagent/nitrium_low_metabolization
 	name = "Nitrium"
 	description = "A highly reactive gas that makes you feel faster."
-	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "burning"
@@ -111,7 +105,6 @@
 /datum/reagent/pluoxium
 	name = "Pluoxium"
 	description = "A gas that is eight times more efficient than O2 at lung diffusion with organ healing properties on sleeping patients."
-	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
 	color = COLOR_GRAY
 	taste_description = "irradiated air"
@@ -132,7 +125,6 @@
 /datum/reagent/zauker
 	name = "Zauker"
 	description = "An unstable gas that is toxic to all living beings."
-	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
 	color = "90560B"
 	taste_description = "bitter"

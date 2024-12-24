@@ -92,7 +92,6 @@
 /datum/reagent/inverse/cryostylane
 	name = "Cryogelidia"
 	description = "Freezes the live or dead patient in a cryostasis ice block."
-	reagent_state = LIQUID
 	color = "#03dbfc"
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
 	ph = 14
