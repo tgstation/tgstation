@@ -839,9 +839,11 @@
 	//We do this because our force could have been changed by things like whetstones and RPG stats.
 	force += old_force - initial(force)
 
+	//Record change to our force in case something modifies it down the chain
+	var/force_diff = force - old_force
 	. = ..()
 	//Reapply our old force.
-	force = old_force
+	force -= force_diff
 
 /obj/item/nullrod/nullblade/afterattack(atom/target, mob/user, click_parameters)
 	if(!isliving(target))
