@@ -96,6 +96,9 @@
 /datum/status_effect/terrified/proc/comfort_owner(datum/source, mob/living/hugger)
 	SIGNAL_HANDLER
 
+	if(hugger == owner)
+		return
+
 	if(isnightmare(hugger)) //hey wait a minute, that's not a comforting, friendly hug!
 		if(check_surrounding_darkness())
 			addtimer(CALLBACK(src, PROC_REF(freak_out), HUG_TERROR_AMOUNT))
@@ -106,13 +109,12 @@
 				)
 			return COMPONENT_BLOCK_MISC_HELP
 
-	if(hugger != owner)
-		terror_buildup -= HUG_TERROR_AMOUNT
-		owner.visible_message(
-			span_notice("[owner] seems to relax as [hugger] gives [owner.p_them()] a comforting hug."),
-			span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
-			span_hear("You hear shuffling and a sigh of relief."),
-		)
+	terror_buildup -= HUG_TERROR_AMOUNT
+	owner.visible_message(
+		span_notice("[owner] seems to relax as [hugger] gives [owner.p_them()] a comforting hug."),
+		span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
+		span_hear("You hear shuffling and a sigh of relief."),
+	)
 
 /**
  * Checks the surroundings of our victim and returns TRUE if the user is surrounded by enough darkness
