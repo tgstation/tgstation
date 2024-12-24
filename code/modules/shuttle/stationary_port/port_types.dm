@@ -27,16 +27,17 @@
 	height = 17
 	width = 23
 	shuttle_id = "syndicate_nearby"
+	max_amount_on_map = 1
 
 /obj/docking_port/stationary/syndicate/northwest
 	name = "northwest of station"
 	shuttle_id = "syndicate_nw"
-	REGISTER_REQUIRED_MAP_ITEM(1,1) // syndicate battlecruiser stuff can't get to station without this
+	min_amount_on_map = 1
 
 /obj/docking_port/stationary/syndicate/northeast
 	name = "northeast of station"
 	shuttle_id = "syndicate_ne"
-	REGISTER_REQUIRED_MAP_ITEM(1,1) // syndicate battlecruiser stuff can't get to station without this
+	min_amount_on_map = 1
 
 /obj/docking_port/stationary/syndicate/north
 	name = "north of station"

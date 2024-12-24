@@ -34,6 +34,17 @@
 	///are we registered in SSshuttles?
 	var/registered = FALSE
 
+	///minimum amount of mandatory placements
+	var/min_amount_on_map
+
+	///maximum allowed amount of placements
+	var/max_amount_on_map
+
+/obj/docking_port/Initialize(mapload)
+	. = ..()
+	if(min_amount_on_map || max_amount_on_map)
+		REGISTER_REQUIRED_MAP_ITEM(min_amount_on_map ? min_amount_on_map : 0,max_amount_on_map ? max_amount_on_map : INFINITY)
+
 ///register to SSshuttles
 /obj/docking_port/proc/register()
 	if(registered)
