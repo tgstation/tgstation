@@ -722,7 +722,7 @@
 		return
 	. = density
 	density = new_value
-
+	SEND_SIGNAL(src, COMSIG_ATOM_DENSITY_CHANGED)
 
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)

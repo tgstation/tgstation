@@ -28,6 +28,11 @@
 	. = ..()
 	power_change()
 
+/obj/machinery/computer/mouse_drop_receive(mob/living/dropping, mob/user, params)
+	. = ..()
+	// We add the component only once here & not in Initialize() because there are tons of computers & we don't want to add to their init times
+	LoadComponent(/datum/component/leanable, dropping)
+
 /obj/machinery/computer/process()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE

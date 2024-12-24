@@ -145,7 +145,7 @@
 	chassis.mecha_flags |= QUIET_STEPS|QUIET_TURNS|CANNOT_INTERACT
 	chassis.phasing = "flying"
 	chassis.movedelay = 1
-	chassis.density = FALSE
+	chassis.set_density(FALSE)
 	chassis.layer = ABOVE_ALL_MOB_LAYER
 	animate(chassis, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(chassis, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising mech (just like pods hehe)
@@ -176,7 +176,7 @@
 	chassis.mecha_flags &= ~(QUIET_STEPS|QUIET_TURNS|CANNOT_INTERACT)
 	chassis.phasing = initial(chassis.phasing)
 	chassis.movedelay = initial(chassis.movedelay)
-	chassis.density = TRUE
+	chassis.set_density(TRUE)
 	chassis.layer = initial(chassis.layer)
 	SET_PLANE(chassis, initial(chassis.plane), landed_on)
 	skyfall_charge_level = 0

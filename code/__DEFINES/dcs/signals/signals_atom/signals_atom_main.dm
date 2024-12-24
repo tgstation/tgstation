@@ -145,3 +145,6 @@
 
 /// From whoever has been revealed (atom/revealed)
 #define COMSIG_ATOM_REVEAL "atom_reveal"
+
+/// From /atom/proc/set_density(new_value) for when an atom changes density
+#define COMSIG_ATOM_DENSITY_CHANGED "atom_density_change"
