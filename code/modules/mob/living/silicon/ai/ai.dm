@@ -690,12 +690,7 @@
 		return
 
 	var/static/list/choices = assoc_to_keys(GLOB.ai_hologram_category_options) + "Existing Character"
-	var/choice = tgui_input_list(
-		usr,
-		"What kind of hologram do you want?",
-		"Customize",
-		choices
-	)
+	var/choice = tgui_input_list(usr, "What kind of hologram do you want?",	"Customize", choices)
 
 	if(choice == "Existing Character")
 		switch(tgui_alert(usr,"Would you like to base it off of your current character loadout, or a member on station?", "Customize", list("My Character","Station Member")))
