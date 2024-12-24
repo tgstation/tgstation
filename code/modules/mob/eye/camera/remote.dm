@@ -119,7 +119,7 @@
 		sprint = initial
 
 	for(var/i = 0; i < max(sprint, initial); i += 20)
-		var/turf/step = get_turf(get_step(src, direction))
+		var/turf/step = get_turf(get_step_multiz(src, direction))
 		if(step)
 			setLoc(step)
 
