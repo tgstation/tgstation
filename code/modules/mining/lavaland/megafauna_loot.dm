@@ -1124,7 +1124,7 @@
 
 /obj/item/organ/brain/cybernetic/ai
 	name = "AI-uplink brain"
-	desc = "Can be inserted into a body with NO ORGANIC ORGANS (robotics only) to allow AIs to control it. Comes with its own health sensors beacon."
+	desc = "Can be inserted into a body with NO ORGANIC ORGANS (robotics only) to allow AIs to control it. Comes with its own health sensors beacon. MUST be a humanoid or bad things happen to the consciousness."
 	can_smoothen_out = FALSE
 	/// if connected, our AI
 	var/mob/living/silicon/ai/mainframe
@@ -1143,20 +1143,20 @@
 
 /obj/item/organ/brain/cybernetic/ai/on_mob_insert(mob/living/carbon/brain_owner, special, movement_flags)
 	. = ..()
-	ADD_TRAIT(brain_owner, HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, ORGAN_TRAIT)
+	brain_owner.add_traits(list(HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, TRAIT_NO_MINDSWAP), ORGAN_TRAIT)
 	update_med_hud_status(brain_owner)
 	RegisterSignal(brain_owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_med_hud_status))
 	RegisterSignal(brain_owner, COMSIG_CLICK, PROC_REF(owner_clicked))
 	RegisterSignal(brain_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 	RegisterSignal(brain_owner, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, PROC_REF(cancel_rolls))
-	RegisterSignal(brain_owner, COMSIG_QDELETING, PROC_REF(undeploy))
+	RegisterSignal(brain_owner, list(COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED), PROC_REF(undeploy))
 	RegisterSignal(brain_owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_organ_gain))
 
 /obj/item/organ/brain/cybernetic/ai/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	undeploy()
 	. = ..()
-	REMOVE_TRAIT(organ_owner, HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, ORGAN_TRAIT)
-	UnregisterSignal(organ_owner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_CLICK, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, COMSIG_QDELETING))
+	organ_owner.remove_traits(list(HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT, TRAIT_NO_MINDSWAP), ORGAN_TRAIT)
+	UnregisterSignal(organ_owner, list(COMSIG_LIVING_HEALTH_UPDATE, COMSIG_CLICK, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, COMSIG_QDELETING, COMSIG_LIVING_PRE_WABBAJACKED))
 
 /obj/item/organ/brain/cybernetic/ai/proc/cancel_rolls(mob/living/source, datum/mind/mind, datum/antagonist/antagonist)
 	SIGNAL_HANDLER
@@ -1179,7 +1179,7 @@
 	holder.pixel_y = size_check.Height() - ICON_SIZE_Y
 	if(mob_parent.stat == DEAD || HAS_TRAIT(mob_parent, TRAIT_FAKEDEATH) || isnull(mainframe))
 		holder.icon_state = "huddead2"
-		holder.pixel_x = -16 // new icon states? nuh uh
+		holder.pixel_x = -8 // new icon states? nuh uh
 	else
 		holder.icon_state = "hudtrackingai"
 		holder.pixel_x = -16
@@ -1256,7 +1256,7 @@
 	if(!istype(carb_owner))
 		return
 	for(var/obj/item/organ/organ as anything in carb_owner.organs)
-		if(!IS_ROBOTIC_ORGAN(organ))
+		if(!IS_ROBOTIC_ORGAN(organ) && !istype(organ, /obj/item/organ/tongue)) //tongues dont have a cyber variant anyway
 			return FALSE
 
 /obj/item/organ/brain/cybernetic/ai/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
