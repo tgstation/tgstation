@@ -573,3 +573,14 @@
   grungussuss:
   - code_imp: removed an extra proc override in digitigrade legs preference logic
       code
+2024-12-24:
+  SmArtKar:
+  - admin: Admins can now return the shuttle back to the station without ending the
+      round
+  - bugfix: Fixed moth wing stabilization working in zero-g as long as you keep moving
+  - bugfix: Fixed showers not passively washing objects
+  SyncIt21:
+  - bugfix: rolling tables can be rolled up again
+  carlarctg:
+  - rscadd: Kissing while you have the ink infusion ability off cooldown gives you
+      an ink kiss
