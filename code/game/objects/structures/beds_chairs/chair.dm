@@ -328,8 +328,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	hit_reaction_chance = 50
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	item_flags = SKIP_FANTASY_ON_SPAWN
-	// THe likelihood for the chair to be smashed to pieces, either from hitting something or being hit while used as a shield.
-	var/break_chance = 5
+	// The chairs durability. Reduced by hitting stuff with it and using it to block attacks.
+	var/chair_impact_durability = 50
 
 	// Whether or not the chair causes the target to become shove stun vulnerable if smashed against someone from behind.
 	var/inflicts_stun_vulnerability = TRUE
@@ -391,22 +391,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance) || attack_type == LEAP_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message(span_danger("[owner] fends off [attack_text] with [src]!"))
-		if(prob(break_chance + damage + 10)) //We want to at least ensure that there is always a minimum chance of it breaking to prevent infinite blocks
+		if(take_chair_damage(damage)) // Our chair takes our incoming damage for us, which can result in it smashing.
 			smash(owner)
 		return TRUE
 	return FALSE
 
 /obj/item/chair/afterattack(atom/target, mob/user, click_parameters)
-	if(!prob(break_chance))
+	if(!take_chair_damage(force))
 		return
 	user.visible_message(span_danger("[user] smashes [src] to pieces against [target]"))
 	if(ishuman(target) && !HAS_TRAIT(target, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 		var/mob/living/carbon/human/give_this_fucker_the_chair = target
 		if(check_behind(user, give_this_fucker_the_chair) || give_this_fucker_the_chair.get_timed_status_effect_duration(/datum/status_effect/staggered))
 			give_this_fucker_the_chair.Knockdown(2 SECONDS)
+			if(give_this_fucker_the_chair.health < give_this_fucker_the_chair.maxHealth*0.5)
+				give_this_fucker_the_chair.adjust_confusion(10 SECONDS)
 			if(inflicts_stun_vulnerability)
 				give_this_fucker_the_chair.apply_status_effect(/datum/status_effect/next_shove_stuns)
 	smash(user)
+
+/obj/item/chair/proc/take_chair_damage(damage_to_inflict)
+	chair_impact_durability = clamp(chair_impact_durability - damage_to_inflict, 0, 100)
+	if(chair_impact_durability == 0)
+		return FALSE
+	return TRUE
 
 /obj/item/chair/greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
@@ -417,7 +425,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon_state = "stool_toppled"
 	inhand_icon_state = "stool"
 	origin_type = /obj/structure/chair/stool
-	break_chance = 0 //It's too sturdy.
+	chair_impact_durability = 100 //It's too sturdy.
 
 /obj/item/chair/stool/bar
 	name = "bar stool"
@@ -431,7 +439,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	inhand_icon_state = "stool_bamboo"
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/stool/bamboo
-	break_chance = 50	//Submissive and breakable unlike the chad iron stool
+	chair_impact_durability = 20 //Submissive and breakable unlike the chad iron stool
 	inflicts_stun_vulnerability = FALSE //Not hard enough to cause them to become vulnerable to a shove
 
 /obj/item/chair/stool/narsie_act()
@@ -446,7 +454,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
 	custom_materials = null
-	break_chance = 50
+	chair_impact_durability = 20
 	inflicts_stun_vulnerability = FALSE
 
 /obj/item/chair/wood/narsie_act()
@@ -568,7 +576,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	force = 7
 	throw_range = 5 //Lighter Weight --> Flies Farther.
 	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
-	break_chance = 25
+	chair_impact_durability = 40
 	inflicts_stun_vulnerability = FALSE
 	origin_type = /obj/structure/chair/plastic
 
