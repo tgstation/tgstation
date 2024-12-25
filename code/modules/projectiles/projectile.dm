@@ -112,6 +112,8 @@
 	var/nondirectional_sprite = FALSE
 	/// Random spread done projectile-side for convinience
 	var/spread = 0
+	/// Additional rotation for the projectile, in case it uses some object's sprite
+	var/projectile_angle = 0
 	/// Gliding does not enjoy something getting moved multiple turfs in a tick, which is why we animate it manually
 	animate_movement = NO_STEPS
 
@@ -167,8 +169,9 @@
 	var/impact_light_color_override
 
 	// Homing
-	/// If the projectile is homing. Warning - this changes projectile's processing logic, reverting it to segmented processing instead of new raymarching logic
-	var/homing = FALSE
+	/// If the projectile is currently homing. Warning - this changes projectile's processing logic, reverting it to segmented processing instead of new raymarching logic
+	/// This does not actually set up the projectile to home in on a target - you need to set that up with set_homing_target() on the projectile!
+	VAR_FINAL/homing = FALSE
 	/// Target the projectile is homing on
 	var/atom/homing_target
 	/// Angles per move segment, distance is based on SSprojectiles.pixels_per_decisecond
@@ -418,11 +421,17 @@
 	// Shooting yourself point-blank
 	if (firer == original)
 		original = null
+	if (firer == fired_from)
+		fired_from = null
 	firer = null
 
 /obj/projectile/proc/original_deleted(datum/source)
 	SIGNAL_HANDLER
 	original = null
+
+/obj/projectile/proc/fired_from_deleted(datum/source)
+	SIGNAL_HANDLER
+	fired_from = null
 
 /obj/projectile/proc/on_ricochet(atom/target)
 	ricochets++
@@ -750,11 +759,13 @@
 
 /obj/projectile/proc/fire(fire_angle, atom/direct_target)
 	LAZYINITLIST(impacted)
-	if (fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	if (firer)
 		RegisterSignal(firer, COMSIG_QDELETING, PROC_REF(firer_deleted))
 		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
+	if (fired_from)
+		if (firer != fired_from)
+			RegisterSignal(fired_from, COMSIG_QDELETING, PROC_REF(fired_from_deleted))
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	if (original)
 		if (firer != original)
 			RegisterSignal(original, COMSIG_QDELETING, PROC_REF(original_deleted))
@@ -773,7 +784,7 @@
 			stack_trace("WARNING: Projectile [type] deleted due to being unable to resolve a target after angle was null!")
 			qdel(src)
 			return
-		var/turf/target = locate(clamp(starting + xo, 1, world.maxx), clamp(starting + yo, 1, world.maxy), starting.z)
+		var/turf/target = locate(clamp(starting.x + xo, 1, world.maxx), clamp(starting.y + yo, 1, world.maxy), starting.z)
 		set_angle(get_angle(src, target))
 	if (spread)
 		set_angle(angle + (rand() - 0.5) * spread)
@@ -815,7 +826,7 @@
 	if (angle == new_angle)
 		return
 	if(!nondirectional_sprite)
-		transform = transform.TurnTo(angle, new_angle)
+		transform = transform.TurnTo(angle, new_angle + projectile_angle)
 	angle = new_angle
 	if(movement_vector)
 		movement_vector.set_angle(new_angle)
@@ -827,7 +838,7 @@
 	if (angle == new_angle)
 		return
 	if(!nondirectional_sprite)
-		transform = transform.TurnTo(angle, new_angle)
+		transform = transform.TurnTo(angle, new_angle + projectile_angle)
 	free_hitscan_forceMove = TRUE
 	forceMove(center_turf)
 	entry_x = 0
@@ -904,6 +915,7 @@
  * Normal behavior moves projectiles in a straight line through tiles, but it gets trickier with homing.
  * Every pixels_per_decisecond we will stop and call process_homing(), which while a bit rough, does not have a significant performance impact
  * This proc needs to be very performant, so do not add overridable logic that can be handled in homing or animations here.
+ * Return is how many tiles we've actually passed (or attempted to pass, if we ended up on a half-move)
  *
  * pixels_to_move determines how many pixels the projectile should move
  * hitscan prevents animation logic from running
@@ -911,8 +923,9 @@
  */
 /obj/projectile/proc/process_movement(pixels_to_move, hitscan = FALSE, tile_limit = FALSE)
 	if (!isturf(loc) || !movement_vector)
-		return
+		return 0
 	var/total_move_distance = pixels_to_move
+	var/movements_done = 0
 	last_projectile_move = world.time
 	while (pixels_to_move > 0 && isturf(loc) && !QDELETED(src) && !deletion_queued)
 		// Because pixel_x/y represents offset and not actual visual position of the projectile, we add 16 pixels to each and cut the excess because projectiles are not meant to be highly offset by default
@@ -947,7 +960,7 @@
 		if (distance_to_border == INFINITY)
 			stack_trace("WARNING: Projectile had an empty movement vector and tried to process")
 			qdel(src)
-			return
+			return movements_done
 
 		var/distance_to_move = min(distance_to_border, pixels_to_move)
 		// For homing we cap the maximum distance to move every loop
@@ -969,14 +982,14 @@
 			// We've hit an invalid turf, end of a z level or smth went wrong
 			if (!istype(new_turf))
 				qdel(src)
-				return
+				return movements_done
 
 			// Move to the next tile
 			step_towards(src, new_turf)
 			SEND_SIGNAL(src, COMSIG_PROJECTILE_MOVE_PROCESS_STEP)
 			// We hit something and got deleted, stop the loop
 			if (QDELETED(src))
-				return
+				return movements_done
 			if (loc != new_turf)
 				moving_turfs = FALSE
 			// If we've impacted something, we need to animate our movement until the actual hit
@@ -986,12 +999,13 @@
 				// to move in the next turf to get from entry to impact position
 				delete_distance = distance_to_move + sqrt((impact_x - entry_x) ** 2 + (impact_y - entry_y) ** 2)
 
+		movements_done += 1
 		// We cannot move more than one turf worth of distance per loop, so this is a safe solution
 		pixels_moved_last_tile += distance_to_move
 		if (!deletion_queued && pixels_moved_last_tile >= ICON_SIZE_ALL)
 			reduce_range()
 			if (QDELETED(src))
-				return
+				return movements_done
 			// Similarly with range out deletion, need to calculate how many pixels we can actually move before deleting
 			if (deletion_queued)
 				delete_distance = distance_to_move - (ICON_SIZE_ALL - pixels_moved_last_tile)
@@ -1017,7 +1031,7 @@
 			if (!move_animate(delete_x, delete_y, animate_time, deleting = TRUE))
 				animate(src, pixel_x = delete_x, pixel_y = delete_y, time = animate_time, flags = ANIMATION_PARALLEL | ANIMATION_CONTINUE)
 				animate(alpha = 0, time = 0, flags = ANIMATION_CONTINUE)
-			return
+			return movements_done
 
 		pixels_to_move -= distance_to_move
 		// animate() instantly changes pixel_x/y values and just interpolates them client-side so next loop processes properly
@@ -1037,16 +1051,18 @@
 
 		// We've hit a timestop field, abort any remaining movement
 		if (paused)
-			return
+			return movements_done
 
 		// Prevents long-range high-speed projectiles from ruining the server performance by moving 100 tiles per tick when subsystem is set to a high cap
 		if (TICK_CHECK)
 			// If we ran out of time, add whatever distance we're yet to pass to overrun debt to be processed next tick and break the loop
 			overrun += pixels_to_move
-			return
+			return movements_done
 
 		if (tile_limit && moving_turfs)
-			return
+			return movements_done
+
+	return movements_done
 
 /// Called every time projectile animates its movement, in case child wants to have custom animations.
 /// Returning TRUE cancels normal animation
@@ -1058,8 +1074,8 @@
 	if(!homing_target)
 		return
 	var/datum/point/new_point = RETURN_PRECISE_POINT(homing_target)
-	new_point.x += clamp(homing_offset_x, 1, world.maxx)
-	new_point.y += clamp(homing_offset_y, 1, world.maxy)
+	new_point.pixel_x += homing_offset_x
+	new_point.pixel_y += homing_offset_y
 	var/new_angle = closer_angle_difference(angle, angle_between_points(RETURN_PRECISE_POINT(src), new_point))
 	set_angle(angle + clamp(new_angle, -homing_turn_speed, homing_turn_speed))
 

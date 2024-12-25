@@ -545,7 +545,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if (old_species.properly_gained)
 		old_species.on_species_loss(src, new_race, pref_load)
 
-	dna.species.on_species_gain(src, old_species, pref_load)
+	dna.species.on_species_gain(src, old_species, pref_load, regenerate_icons = icon_update)
 	log_mob_tag("TAG: [tag] SPECIES: [key_name(src)] \[[mrace]\]")
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)

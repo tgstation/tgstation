@@ -57,6 +57,7 @@ As a Janitor, if someone steals your janicart, you can instead use your space cl
 As a Janitor, mousetraps can be used to create bombs or booby-trap containers.
 As a Janitor, you can command cleanbots by pointing at a tile and saying mop/clean.
 As a Medical Cyborg, you can fully perform surgery and even augment people.
+As a Medical Doctor, a shower can be used to help recover from sleep, unconsciousness, confusion, drowsiness, jitters, dizziness, and drunkness.
 As a Medical Doctor, almost every type of wound can be treated at least temporarily with gauze. When in doubt, wrap it up!
 As a Medical Doctor, corpses placed inside a freezer or morgue tray will have their organs frozen preventing decay. If you don't have time to revive multiple dead bodies, transfer them to the morgue temporarily!
 As a Medical Doctor, corpses with the "...and their soul has departed" description no longer have a ghost attached to them and can't be revived.
@@ -226,6 +227,7 @@ Basketball requires skill. Spinning drains stamina, reduces accuracy, but gives 
 Basketball requires teamwork. Passing the ball with LMB is instant and costs no stamina.
 Clicking on a windoor rather then bumping into it will keep it open, you can click it again to close it.
 Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacked normally.
+Spears are capable of breaking into secure lockers by striking them in melee!
 Don't be afraid to ask for help, whether from your peers or from admins.
 Experiment with different setups of the Supermatter engine to maximize output, but don't risk the crew's safety to do so!
 Felinids get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one.

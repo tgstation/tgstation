@@ -515,6 +515,8 @@
 		for(var/obj/item/part as anything in get_parts())
 			seal_part(part, is_sealed = FALSE)
 	for(var/obj/item/part as anything in get_parts())
+		if(part.loc == src)
+			continue
 		INVOKE_ASYNC(src, PROC_REF(retract), wearer, part, /* instant = */ TRUE) // async to appease spaceman DMM because the branch we don't run has a do_after
 	if(active)
 		control_activation(is_on = FALSE)
@@ -523,7 +525,7 @@
 	unset_wearer()
 	old_wearer.temporarilyRemoveItemFromInventory(src)
 
-/obj/item/mod/control/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+/obj/item/mod/control/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species, pref_load, regenerate_icons)
 	SIGNAL_HANDLER
 
 	for(var/obj/item/part in get_parts(all = TRUE))
@@ -755,7 +757,7 @@
 		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's active!"))
 		return SPEED_POTION_STOP
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
-	set_mod_color(COLOR_RED)
+	set_mod_color(color_transition_filter(COLOR_RED))
 	slowdown_inactive = 0
 	slowdown_active = 0
 	update_speed()
@@ -769,3 +771,10 @@
 
 	mod_link.end_call()
 	mod_link.frequency = null
+
+/obj/item/mod/control/proc/get_visor_overlay(mutable_appearance/standing)
+	var/list/overrides = list()
+	SEND_SIGNAL(src, COMSIG_MOD_GET_VISOR_OVERLAY, standing, overrides)
+	if (length(overrides))
+		return overrides[1]
+	return mutable_appearance(worn_icon, "[skin]-helmet-visor", layer = standing.layer + 0.1)

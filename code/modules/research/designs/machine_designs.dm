@@ -1347,3 +1347,13 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/board/mailsorter
+	name = "Mail Sorter"
+	desc = "The circuit board for a mail sorting unit."
+	id = "mailsorter"
+	build_path = /obj/item/circuitboard/machine/mailsorter
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_CARGO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING

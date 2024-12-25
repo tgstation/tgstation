@@ -6513,11 +6513,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
-"Dg" = (
-/obj/machinery/light/floor,
-/obj/effect/landmark/centcom_dock,
-/turf/open/floor/iron/white,
-/area/centcom/central_command_areas/evacuation)
 "Di" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/ai_multicam_room)
@@ -9841,6 +9836,19 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
+"UL" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/surgery_tray/full{
+	pixel_y = 10;
+	pixel_x = 2
+	},
+/obj/item/storage/box/masks{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/white,
+/area/centcom/central_command_areas/evacuation/ship)
 "UM" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
@@ -9928,19 +9936,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
-"Vh" = (
-/obj/structure/table/reinforced,
-/obj/item/surgery_tray/full{
-	pixel_y = 10;
-	pixel_x = 2
-	},
-/obj/item/storage/box/masks{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/white,
-/area/centcom/central_command_areas/evacuation/ship)
 "Vi" = (
 /obj/item/book/manual/wiki/security_space_law,
 /obj/structure/table/wood,
@@ -10089,6 +10084,11 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/four)
+"VQ" = (
+/obj/machinery/light/floor,
+/obj/effect/landmark/centcom_dock,
+/turf/open/floor/iron/white,
+/area/centcom/central_command_areas/evacuation)
 "VT" = (
 /obj/machinery/status_display/evac/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -37861,7 +37861,7 @@ Lt
 aa
 aa
 Lt
-Vh
+UL
 LI
 CH
 CH
@@ -61202,7 +61202,7 @@ xt
 rq
 xt
 Vd
-Dg
+VQ
 vX
 xt
 rq
@@ -62230,7 +62230,7 @@ xt
 xt
 xt
 xt
-xt
+PG
 xt
 Vd
 zm
@@ -62487,7 +62487,7 @@ xt
 xt
 xt
 xt
-rq
+xt
 xt
 xt
 zl

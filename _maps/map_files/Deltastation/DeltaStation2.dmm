@@ -53109,6 +53109,9 @@
 "nmT" = (
 /obj/structure/rack,
 /obj/item/gun/energy/ionrifle,
+/obj/item/gun/ballistic/automatic/battle_rifle{
+	pixel_y = 3
+	},
 /obj/item/clothing/suit/hooded/ablative,
 /obj/item/gun/energy/temperature/security,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -75220,7 +75223,7 @@
 /area/station/service/abandoned_gambling_den/gaming)
 "sOp" = (
 /obj/structure/table/glass,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
@@ -79128,7 +79131,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/surgery_tray/full/morgue,
+/obj/effect/spawner/surgery_tray/full/morgue,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
@@ -84089,10 +84092,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/disposal/delivery_chute{
+/obj/effect/turf_decal/box/red,
+/obj/structure/disposaloutlet{
 	dir = 8
 	},
-/obj/effect/turf_decal/box/red,
 /turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "uYg" = (
@@ -94584,7 +94587,7 @@
 /area/station/cargo/storage)
 "xES" = (
 /obj/structure/table/glass,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /obj/effect/turf_decal/tile/neutral/fourcorners,

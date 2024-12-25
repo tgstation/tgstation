@@ -63,6 +63,8 @@
 	return do_after(user, delay, target, extra_checks = CALLBACK(src, PROC_REF(blueprint_change)))
 
 /obj/item/construction/proc/blueprint_change()
+	PRIVATE_PROC(TRUE)
+
 	return !blueprint_changed
 
 ///used for examining the RCD and for its UI

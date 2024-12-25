@@ -4,6 +4,7 @@
 	icon_state = "wrench_caravan"
 	desc = "A prototype of a new wrench design, allegedly the red color scheme makes it go faster."
 	name = "experimental wrench"
+	icon_angle = -90
 	toolspeed = 0.3
 
 /obj/item/screwdriver/caravan
