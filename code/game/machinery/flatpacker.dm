@@ -338,6 +338,7 @@
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 2.5
 	drag_slowdown = 3.5 //use the cart stupid
+	custom_premium_price = PAYCHECK_COMMAND * 1.5
 
 	/// The board we deploy
 	var/obj/item/circuitboard/machine/board
@@ -359,7 +360,7 @@
 	if(board.loc != src)
 		board.forceMove(src)
 	var/obj/machinery/build = initial(board.build_path)
-	name += " ([initial(build.name)])"
+	name = "flatpack ([initial(build.name)])"
 
 /obj/item/flatpack/Destroy()
 	QDEL_NULL(board)
@@ -477,9 +478,3 @@
 	return ITEM_INTERACT_SUCCESS
 
 #undef MAX_FLAT_PACKS
-
-/obj/item/flatpack/flatpacker // a roundstart flatpacker is NICE you can gahdamn tell the time and everythin'
-	board = /obj/item/circuitboard/machine/flatpacker
-
-/obj/item/flatpack/mailsorter // to have a roundstart mail sorter at cargo
-	board = /obj/item/circuitboard/machine/mailsorter
