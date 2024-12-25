@@ -18,16 +18,12 @@
 
 /obj/item/clothing/shoes/cowboy/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
-
-	if(prob(2))
-		//There's a snake in my boot
+	if(prob(2)) //There's a snake in my boot
 		new /mob/living/basic/snake(src)
-
 	if(has_spurs)
 		LoadComponent(/datum/component/squeak, spur_sound, 50, falloff_exponent = 20)
-
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()

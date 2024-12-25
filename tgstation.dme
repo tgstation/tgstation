@@ -1514,6 +1514,7 @@
 #include "code\datums\elements\honkspam.dm"
 #include "code\datums\elements\hostile_machine.dm"
 #include "code\datums\elements\human_biter.dm"
+#include "code\datums\elements\ignites_matches.dm"
 #include "code\datums\elements\immerse.dm"
 #include "code\datums\elements\inverted_movement.dm"
 #include "code\datums\elements\item_fov.dm"
