@@ -10,11 +10,7 @@
 /datum/sm_delam/singularity/delam_progress()
 	if(!..())
 		return FALSE
-	sm.radio.talk_into(
-		sm,
-		"Warning: Critical coolant mass reached.",
-		sm.damage > sm.emergency_point ? sm.emergency_channel : sm.warning_channel
-	)
+	sm.post_alert("Warning: Critical coolant mass reached.")
 	return TRUE
 
 /datum/sm_delam/singularity/delaminate()
@@ -71,11 +67,7 @@
 /datum/sm_delam/tesla/delam_progress()
 	if(!..())
 		return FALSE
-	sm.radio.talk_into(
-		sm,
-		"DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.",
-		sm.damage > sm.emergency_point ? sm.emergency_channel : sm.warning_channel
-	)
+	sm.post_alert("DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.")
 	return TRUE
 
 /datum/sm_delam/tesla/delaminate()

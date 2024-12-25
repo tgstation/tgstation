@@ -4,6 +4,8 @@
 #define CASCADE_EMITTER_STRIKES 35 // 70 seconds
 /// The amount of strikes it takes until the cascade announcement is made.
 #define STRIKES_UNTIL_ANNOUNCEMENT 5 // 10 seconds after the first shot is made
+/// The amount of strikes until we start to memorize saviours.
+#define STRIKES_LEFT_UNTIL_MEMORIZE_SAVIORS 3
 
 /proc/delam_cascade_can_select(obj/machinery/power/supermatter_crystal/sm)
 	if(!sm.is_main_engine)
@@ -18,16 +20,18 @@
 	return TRUE
 
 /datum/sm_delam/cascade
+	/// List of the crazy engineers who managed to turn a cascading engine around.
+	var/list/datum/weakref/saviors = list()
 
 /datum/sm_delam/cascade/delam_progress()
+	// handle the engineers that saved the engine from cascading, if there were any
+	if(sm.get_status() < SUPERMATTER_EMERGENCY)
+		handle_post_emergency_point_award()
+
 	if(!..())
 		return FALSE
 
-	sm.radio.talk_into(
-		sm,
-		"DANGER: HYPERSTRUCTURE OSCILLATION FREQUENCY OUT OF BOUNDS.",
-		sm.damage >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel
-	)
+	sm.post_alert("DANGER: HYPERSTRUCTURE OSCILLATION FREQUENCY OUT OF BOUNDS.")
 	var/list/messages = list(
 		"Space seems to be shifting around you...",
 		"You hear a high-pitched ringing sound.",
@@ -45,7 +49,7 @@
 
 	sm.warp = new(sm)
 	sm.vis_contents += sm.warp
-	animate(sm.warp, time = 1, transform = matrix().Scale(0.5,0.5))
+	animate(sm.warp, transform = matrix().Scale(0.5,0.5))
 	animate(time = 1 SECONDS, transform = matrix())
 
 /datum/sm_delam/cascade/on_deselect()
@@ -54,6 +58,29 @@
 
 	sm.vis_contents -= sm.warp
 	QDEL_NULL(sm.warp)
+
+/datum/sm_delam/cascade/on_leave_countdown()
+	memorize_saviors()
+
+/datum/sm_delam/cascade/proc/memorize_saviors()
+	// save people who stuck around to save the engine
+	for(var/mob/living/lucky_engi as anything in mobs_in_area_type(list(/area/station/engineering/supermatter)))
+		if(isnull(lucky_engi.client))
+			continue
+		if(!ishuman(lucky_engi) && !issilicon(lucky_engi))
+			continue
+		saviors |= WEAKREF(lucky_engi)
+
+/datum/sm_delam/cascade/proc/handle_post_emergency_point_award() // the wonders of inheritance
+	award_saviors()
+
+/datum/sm_delam/cascade/proc/award_saviors()
+	for(var/datum/weakref/savior_ref as anything in saviors)
+		var/mob/living/savior = savior_ref.resolve()
+		if(!istype(savior)) // didn't live to tell the tale, sadly.
+			continue
+		savior.client?.give_award(/datum/award/achievement/jobs/theoretical_limits, savior)
+		saviors -= savior_ref
 
 /datum/sm_delam/cascade/delaminate()
 	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a cascade delam.")
@@ -102,6 +129,13 @@
 	var/strikes_remaining = CASCADE_EMITTER_STRIKES
 	COOLDOWN_DECLARE(heal_cooldown)
 
+/datum/sm_delam/cascade/emitter/handle_post_emergency_point_award()
+	return
+
+/datum/sm_delam/cascade/emitter/on_deselect()
+	. = ..()
+	award_saviors()
+
 /datum/sm_delam/cascade/emitter/modify_damage(damage_to_be_applied)
 	// get it down to the emergency point, but not below, unless we are out of strikes then just allow all damage
 	var/half_emergency_point = sm.emergency_point + (sm.explosion_point - sm.emergency_point) / 2
@@ -123,24 +157,22 @@
 	if(!istype(projectile))
 		return FALSE
 
+	if(strikes_remaining <= 0)
+		return FALSE // nothing more to be done now
+
 	strikes_remaining--
 	sm.external_damage_immediate += 10
 	COOLDOWN_START(src, heal_cooldown, HEAL_COOLDOWN)
 
+	if(strikes_remaining <= STRIKES_LEFT_UNTIL_MEMORIZE_SAVIORS)
+		memorize_saviors()
+
 	switch(strikes_remaining)
 		if(CASCADE_EMITTER_STRIKES - STRIKES_UNTIL_ANNOUNCEMENT)
 			announce_cascade()
-		if(10)
-			sm.radio.talk_into(
-				sm,
-				"DANGER: OSCILLATION FREQUENCY APPROACHING FILTER LIMIT. FREQUENCY FILTER SHUTDOWN IMMINENT.", // "oh fuck" time
-				sm.damage >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel
-			)
+		if(15)
+			sm.post_alert("DANGER: OSCILLATION FREQUENCY APPROACHING FILTER LIMIT. FREQUENCY FILTER SHUTDOWN IMMINENT.") // "oh fuck" time
 		if(0)
-			sm.radio.talk_into(
-				sm,
-				"DANGER: FREQUENCY FILTER OVERLOAD. PLEASE CONTACT A REPAIR TECHNICIAN IMMEDIATELY.", // no more saving this
-				sm.damage >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel
-			)
+			sm.post_alert("DANGER: FREQUENCY FILTER OVERLOAD. PLEASE CONTACT A REPAIR TECHNICIAN IMMEDIATELY.")  // no more saving this
 
 	return TRUE

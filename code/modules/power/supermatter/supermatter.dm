@@ -177,9 +177,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// Only values greater or equal to the current one can change the strat.
 	var/delam_priority = SM_DELAM_PRIO_NONE
 
-	/// Lazy list of the crazy engineers who managed to turn a cascading engine around.
-	var/list/datum/weakref/saviors = null
-
 	/// If a sliver of the supermatter has been removed. Almost certainly by a traitor. Lowers the delamination countdown time.
 	var/supermatter_sliver_removed = FALSE
 
@@ -351,15 +348,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	processing_sound()
 	handle_high_power()
 	psychological_examination()
-
-	// handle the engineers that saved the engine from cascading, if there were any
-	if(get_status() < SUPERMATTER_EMERGENCY && !isnull(saviors))
-		for(var/datum/weakref/savior_ref as anything in saviors)
-			var/mob/living/savior = savior_ref.resolve()
-			if(!istype(savior)) // didn't live to tell the tale, sadly.
-				continue
-			savior.client?.give_award(/datum/award/achievement/jobs/theoretical_limits, savior)
-		LAZYNULL(saviors)
 
 	if(prob(15))
 		supermatter_pull(loc, min(internal_energy/850, 3))//850, 1700, 2550
@@ -565,6 +553,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	final_countdown = TRUE
 
+	delamination_strategy.on_enter_countdown()
+
 	notify_ghosts(
 		"[src] has begun the delamination process!",
 		source = src,
@@ -573,24 +563,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/list/count_down_messages = delamination_strategy.count_down_messages()
 
-	radio.talk_into(
-		src,
-		count_down_messages[1],
-		emergency_channel,
-		list(SPAN_COMMAND)
-	)
+	post_alert(count_down_messages[1])
 
 	var/delamination_countdown_time = SUPERMATTER_COUNTDOWN_TIME
 	// If a sliver was removed from the supermatter, the countdown time is significantly decreased
 	if (supermatter_sliver_removed == TRUE)
 		delamination_countdown_time = SUPERMATTER_SLIVER_REMOVED_COUNTDOWN_TIME
-		radio.talk_into(
-			src,
-			"WARNING: Projected time until full crystal delamination significantly lower than expected. \
-			Please inspect crystal for structural abnormalities or sabotage!",
-			emergency_channel,
-			list(SPAN_COMMAND)
-			)
+		post_alert("WARNING: Projected time until full crystal delamination significantly lower than expected. \
+			Please inspect crystal for structural abnormalities or sabotage!")
 
 	for(var/i in delamination_countdown_time to 0 step -10)
 		var/message
@@ -607,21 +587,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			message = "[i*0.1]..."
 
-		radio.talk_into(src, message, emergency_channel, list(SPAN_COMMAND))
+		post_alert(message)
 
 		if(healed)
 			final_countdown = FALSE
-
-			if(!istype(delamination_strategy, /datum/sm_delam/cascade))
-				return
-
-			for(var/mob/living/lucky_engi as anything in mobs_in_area_type(list(/area/station/engineering/supermatter)))
-				if(isnull(lucky_engi.client))
-					continue
-				if(isanimal_or_basicmob(lucky_engi))
-					continue
-				LAZYADD(saviors, WEAKREF(lucky_engi))
-
+			delamination_strategy.on_leave_countdown()
 			return // delam averted
 		sleep(1 SECONDS)
 
@@ -1065,6 +1035,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(zap_count > 1)
 			child_targets_hit = targets_hit.Copy() //Pass by ref begone
 		supermatter_zap(target, new_range, zap_str, zap_flags, child_targets_hit, zap_cutoff, power_level, zap_icon, color)
+
+/obj/machinery/power/supermatter_crystal/proc/post_alert(message)
+	radio.talk_into(
+		src,
+		message,
+		delamination_strategy.get_radio_alert_channel(),
+		delamination_strategy.get_radio_alert_spans()
+	)
 
 // For /datum/sm_delam to check if it should be sending an alert on common radio channel
 /obj/machinery/power/supermatter_crystal/proc/should_alert_common()
