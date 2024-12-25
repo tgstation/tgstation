@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(possible_quirk_atypical_tastes, list(
 /datum/quirk/atypical_tastes
 	name = "Atypical Tastes"
 	desc = "For one reason or another, your tastes in food are similar to that of another species."
-	value = 8
+	value = 0
 	mob_trait = TRAIT_ATYPICAL_TASTER
 	icon = FA_ICON_PLATE_WHEAT
 
