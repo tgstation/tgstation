@@ -122,7 +122,7 @@
 	if(isnull(picked_gas) || isnull(gas_type))
 		return
 
-	if(!is_deployed())
+	if(!owner.is_deployed())
 		to_chat(owner, span_warning("You cannot release gas without being summoned!"))
 		return
 
@@ -154,7 +154,7 @@
 	SIGNAL_HANDLER
 	if (isnull(active_gas))
 		return // We shouldn't even be registered at this point but just in case
-	if(!is_deployed())
+	if(!owner.is_deployed())
 		stop_gas()
 		return
 
