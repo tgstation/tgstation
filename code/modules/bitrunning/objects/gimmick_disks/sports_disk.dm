@@ -68,6 +68,7 @@
 /obj/item/storage/bag/quiver/endless
 	name = "endless quiver"
 	desc = "Holds arrows for your bow. A deep digital void is contained within."
+	max_slots = 1
 
 /obj/item/storage/bag/quiver/endless/Initialize(mapload)
 	. = ..()
@@ -75,8 +76,7 @@
 
 /obj/item/storage/bag/quiver/endless/PopulateContents()
 	. = ..()
-	for(var/i in 1 to max_slots)
-		new arrow_path(src)
+	new arrow_path(src)
 
 /obj/item/storage/bag/quiver/endless/proc/handle_removed(datum/source, obj/item/gone)
 	new arrow_path(src)
