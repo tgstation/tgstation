@@ -1,7 +1,7 @@
 /// The amount of time it takes from the last cascade emitter shot until the SM starts healing again.
 #define HEAL_COOLDOWN (10 SECONDS)
 /// The amount of cascade emitter hits it takes until the SM delaminates.
-#define CASCADE_EMITTER_STRIKES 35 // 70 seconds
+#define CASCADE_EMITTER_STRIKES 155 // 310 seconds
 /// The amount of strikes it takes until the cascade announcement is made.
 #define STRIKES_UNTIL_ANNOUNCEMENT 5 // 10 seconds after the first shot is made
 /// The amount of strikes until we start to memorize saviours.
@@ -125,7 +125,7 @@
 	return FALSE
 
 /datum/sm_delam/cascade/emitter
-	warn_time = SUPERMATTER_WARNING_DELAY / 3
+	warn_time = SUPERMATTER_WARNING_DELAY / 2
 	var/strikes_remaining = CASCADE_EMITTER_STRIKES
 	COOLDOWN_DECLARE(heal_cooldown)
 

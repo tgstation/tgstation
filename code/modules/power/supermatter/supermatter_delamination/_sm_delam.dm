@@ -4,7 +4,6 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	/datum/sm_delam/singularity = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_singularity_can_select)),
 	/datum/sm_delam/tesla = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_singularity_can_select)),
 	/datum/sm_delam/explosive = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_explosive_can_select)),
-	/datum/sm_delam/cascade/emitter = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_cascade_emitter_can_select)),
 ))
 
 /// Logic holder for supermatter delaminations, goes off the strategy design pattern.
