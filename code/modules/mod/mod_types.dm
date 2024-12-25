@@ -64,11 +64,13 @@
 		/obj/item/mod/module/tether,
 		/obj/item/mod/module/magboot,
 		/obj/item/mod/module/headprotector,
+		/obj/item/mod/module/anomaly_locked/kinesis/weak,
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/tether,
+		/obj/item/mod/module/anomaly_locked/kinesis/weak,
 	)
 
 /obj/item/mod/control/pre_equipped/atmospheric
@@ -99,12 +101,14 @@
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/headprotector,
 		/obj/item/mod/module/tether,
+		/obj/item/mod/module/anomaly_locked/kinesis/upgraded,
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/tether,
+		/obj/item/mod/module/anomaly_locked/kinesis/upgraded,
 	)
 
 /obj/item/mod/control/pre_equipped/loader
@@ -603,14 +607,14 @@
 		/obj/item/mod/module/timestopper,
 		/obj/item/mod/module/rewinder,
 		/obj/item/mod/module/tem,
-		/obj/item/mod/module/anomaly_locked/kinesis/plus,
+		/obj/item/mod/module/anomaly_locked/kinesis/plus/prebuilt,
 	)
 	default_pins = list(
 		/obj/item/mod/module/timestopper,
 		/obj/item/mod/module/timeline_jumper,
 		/obj/item/mod/module/rewinder,
 		/obj/item/mod/module/tem,
-		/obj/item/mod/module/anomaly_locked/kinesis/plus,
+		/obj/item/mod/module/anomaly_locked/kinesis/plus/prebuilt,
 	)
 
 /obj/item/mod/control/pre_equipped/debug

@@ -2757,18 +2757,29 @@
 	)
 
 /datum/design/module/mod_kinesis
-	name = "Kinesis Module"
-	id = "mod_kinesis"
+	name = "Experimental Kinesis Module"
+	id = "mod_kinesis_experimental"
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT *1.25,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT,
 		/datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	build_path = /obj/item/mod/module/anomaly_locked/kinesis
+	build_path = /obj/item/mod/module/anomaly_locked/kinesis/upgraded
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
+
+/datum/design/module/mod_kinesis/anomaly_cored
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT *2,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT *3,
+		/datum/material/uranium =SHEET_MATERIAL_AMOUNT,
+		/datum/material/bluespace =SHEET_MATERIAL_AMOUNT,
+	)
+	name = "Kinesis Module"
+	id = "mod_kinesis"
+	build_path = /obj/item/mod/module/anomaly_locked/kinesis/upgraded
 
 /datum/design/module/fishing_glove
 	name = "MOD Fishing Glove Module"
