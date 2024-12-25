@@ -3,7 +3,7 @@
 /obj/machinery/coffeemaker
 	name = "coffeemaker"
 	desc = "A Modello 3 Coffeemaker that brews coffee and holds it at the perfect temperature of 176 fahrenheit. Made by Piccionaia Home Appliances."
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/machines/coffeemaker.dmi'
 	icon_state = "coffeemaker_nopot_nocart"
 	base_icon_state = "coffeemaker"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -148,7 +148,12 @@
 /obj/machinery/coffeemaker/proc/overlay_checks()
 	. = list()
 	if(coffeepot)
-		. += "coffeemaker_pot"
+		if(istype(coffeepot, /obj/item/reagent_containers/cup/coffeepot/bluespace))
+			. += "coffeemaker_pot_bluespace"
+		else if(coffeepot.reagents.total_volume > 0)
+			. += "coffeemaker_pot_full"
+		else
+			. += "coffeemaker_pot_empty"
 	if(cartridge)
 		. += "coffeemaker_cartidge"
 	return .
@@ -418,6 +423,7 @@
 	operate_for(brew_time)
 	coffeepot.reagents.add_reagent_list(cartridge.drink_type)
 	cartridge.charges--
+	update_appearance(UPDATE_OVERLAYS)
 
 //Coffee Cartridges: like toner, but for your coffee!
 /obj/item/coffee_cartridge
@@ -501,7 +507,6 @@
 /obj/machinery/coffeemaker/impressa
 	name = "impressa coffeemaker"
 	desc = "An industry-grade Impressa Modello 5 Coffeemaker of the Piccionaia Home Appliances premium coffeemakers product line. Makes coffee from fresh dried whole beans."
-	icon = 'icons/obj/machines/coffeemaker.dmi'
 	icon_state = "coffeemaker_impressa"
 	circuit = /obj/item/circuitboard/machine/coffeemaker/impressa
 	initial_cartridge = null //no cartridge, just coffee beans
@@ -536,7 +541,9 @@
 /obj/machinery/coffeemaker/impressa/overlay_checks()
 	. = list()
 	if(coffeepot)
-		if(coffeepot.reagents.total_volume > 0)
+		if(istype(coffeepot, /obj/item/reagent_containers/cup/coffeepot/bluespace))
+			. += "pot_bluespace"
+		else if(coffeepot.reagents.total_volume > 0)
 			. += "pot_full"
 		else
 			. += "pot_empty"
