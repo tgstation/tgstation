@@ -36,6 +36,8 @@
 	/// This is the icon state state for the BACKGROUND underlay icon of the button
 	/// (If set to ACTION_BUTTON_DEFAULT_BACKGROUND, uses the hud's default background)
 	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
+	/// If set adds the color to the background.
+	var/background_color = null
 
 	/// This is the file for the icon that appears on the button
 	var/button_icon = 'icons/hud/actions.dmi'
@@ -284,7 +286,9 @@
 
 	// Make the underlay
 	current_button.underlays.Cut()
-	current_button.underlays += image(icon = icon_settings["bg_icon"], icon_state = icon_settings[used_icon_key])
+	var/image/background_img = image(icon = icon_settings["bg_icon"], icon_state = icon_settings[used_icon_key])
+	background_img.color = background_color
+	current_button.underlays += background_img
 	current_button.active_underlay_icon_state = icon_settings[used_icon_key]
 
 /**

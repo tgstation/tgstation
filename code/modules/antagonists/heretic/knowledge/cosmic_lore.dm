@@ -88,6 +88,13 @@
 		My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
 	action_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 1
+	ascension_upgrade_path = PATH_COSMIC
+
+/datum/heretic_knowledge/spell/star_touch/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
+	. = ..()
+
+	var/datum/action/cooldown/spell/touch/star_touch/starspell = .
+	starspell.cosmic_range++
 
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
@@ -108,6 +115,8 @@
 		The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_cosmos"
+	ascension_upgrade_path = PATH_COSMIC
+
 	/// Storage for the second target.
 	var/datum/weakref/second_target
 	/// Storage for the third target.
@@ -124,6 +133,14 @@
 	var/increase_amount = 0.5 SECONDS
 	/// The hits we have on a mob with a mind.
 	var/combo_counter = 0
+
+/datum/heretic_knowledge/blade_upgrade/cosmic/on_ascension(mob/invoker)
+	..()
+	combo_duration *= 3.3
+	combo_duration_amount *= 3.3
+	max_combo_duration *= 3
+	increase_amount *= 4
+	to_chat(invoker, span_boldnotice("The Stargazer smiles upon your blades. Your cosmic combos are thrice as strong."))
 
 /datum/heretic_knowledge/blade_upgrade/cosmic/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	var/static/list/valid_organ_slots = list(
@@ -201,6 +218,14 @@
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
 	action_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 1
+	ascension_upgrade_path = PATH_COSMIC
+
+/datum/heretic_knowledge/spell/cosmic_expansion/on_ascension(mob/invoker, datum/antagonist/heretic/heretic_datum)
+	. = ..()
+	var/datum/action/cooldown/spell/conjure/cosmic_expansion/linked_spell = .
+	linked_spell.trap_victims = TRUE
+	to_chat(invoker, span_notice("The Stargazer is everywhere. Your Cosmic Expansion will now trap those it marks."))
+	return
 
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"
@@ -247,17 +272,8 @@
 	star_gazer_mob.befriend(user)
 	var/datum/action/cooldown/open_mob_commands/commands_action = new /datum/action/cooldown/open_mob_commands()
 	commands_action.Grant(user, star_gazer_mob)
+
 	var/datum/action/cooldown/spell/touch/star_touch/star_touch_spell = locate() in user.actions
 	if(star_touch_spell)
 		star_touch_spell.set_star_gazer(star_gazer_mob)
-		star_touch_spell.ascended = TRUE
-
-	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
-	var/datum/heretic_knowledge/blade_upgrade/cosmic/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/cosmic)
-	blade_upgrade.combo_duration = 10 SECONDS
-	blade_upgrade.combo_duration_amount = 10 SECONDS
-	blade_upgrade.max_combo_duration = 30 SECONDS
-	blade_upgrade.increase_amount = 2 SECONDS
-
-	var/datum/action/cooldown/spell/conjure/cosmic_expansion/cosmic_expansion_spell = locate() in user.actions
-	cosmic_expansion_spell?.ascended = TRUE
+		// how do u even make this less janky
