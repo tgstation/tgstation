@@ -1,6 +1,6 @@
 /datum/traitor_objective/destroy_item
 	name = "Steal %ITEM% and destroy it"
-	description = "Find %ITEM% and destroy it using any means necessary. We can't allow the crew to have %ITEM% as it conflicts with our interests."
+	description = "Find %ITEM% and destroy it using any means necessary. We can't allow the crew to have %ITEM% as it conflicts with our interests. %METHOD%"
 
 	var/list/possible_items = list()
 	/// The current target item that we are stealing.
@@ -29,7 +29,6 @@
 	progression_minimum = 40 MINUTES
 	progression_reward = 15 MINUTES
 	telecrystal_reward = list(6, 9)
-
 	possible_items = list(
 		/datum/objective_item/steal/blackbox,
 	)
@@ -76,6 +75,10 @@
 	if(length(target_item.special_equipment))
 		special_equipment = target_item.special_equipment
 	replace_in_name("%ITEM%", target_item.name)
+	if(target_item.name == "the Blackbox")
+		replace_in_name("%METHOD%", "Too strong to be be destroyed via normal means - needs to be dusted via the supermatter, or burnt in the chapel crematorium.")
+	else
+		replace_in_name("%METHOD%", "This item can be destroyed normally, using a recyler.")
 	AddComponent(/datum/component/traitor_objective_mind_tracker, generating_for, \
 		signals = list(COMSIG_MOB_EQUIPPED_ITEM = PROC_REF(on_item_pickup)))
 	return TRUE

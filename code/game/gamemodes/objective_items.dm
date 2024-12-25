@@ -557,7 +557,7 @@
 	excludefromjob = list(JOB_CHIEF_ENGINEER, JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
 	exists_on_map = TRUE
 	difficulty = 4
-	steal_hint = "The station's data Blackbox, found solely within Telecommunications. Too strong to be be destroyed via normal means - needs to be dusted via the supermatter, or burnt in the chapel crematorium."
+	steal_hint = "The station's data Blackbox, found solely within Telecommunications."
 
 /obj/item/blackbox/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/blackbox)
