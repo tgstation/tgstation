@@ -207,6 +207,7 @@
 	)
 
 /datum/action/cooldown/spell/pointed/untie_shoes/digital
+	name = "Untie Digi-Shoes"
 	spell_requirements = SPELL_REQUIRES_WIZARD_GARB
 
 /datum/action/cooldown/spell/smoke/digital
