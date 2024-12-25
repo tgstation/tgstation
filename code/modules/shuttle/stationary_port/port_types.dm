@@ -27,14 +27,33 @@
 	height = 17
 	width = 23
 	shuttle_id = "syndicate_nearby"
+	max_amount_on_map = 1
 
 /obj/docking_port/stationary/syndicate/northwest
 	name = "northwest of station"
 	shuttle_id = "syndicate_nw"
+	min_amount_on_map = 1
 
 /obj/docking_port/stationary/syndicate/northeast
 	name = "northeast of station"
 	shuttle_id = "syndicate_ne"
+	min_amount_on_map = 1
+
+/obj/docking_port/stationary/syndicate/north
+	name = "north of station"
+	shuttle_id = "syndicate_n"
+
+/obj/docking_port/stationary/syndicate/southwest
+	name = "southwest of station"
+	shuttle_id = "syndicate_sw"
+
+/obj/docking_port/stationary/syndicate/southeast
+	name = "southeast of station"
+	shuttle_id = "syndicate_se"
+
+/obj/docking_port/stationary/syndicate/south
+	name = "south of station"
+	shuttle_id = "syndicate_s"
 
 /obj/docking_port/stationary/transit
 	name = "In Transit"
