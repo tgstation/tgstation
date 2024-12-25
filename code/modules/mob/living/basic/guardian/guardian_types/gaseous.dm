@@ -122,6 +122,10 @@
 	if(isnull(picked_gas) || isnull(gas_type))
 		return
 
+	if(!is_deployed())
+		to_chat(owner, span_warning("You cannot release gas without being summoned!"))
+		return
+
 	to_chat(owner, span_bolddanger("You start releasing [picked_gas]."))
 	owner.investigate_log("set their gas type to [picked_gas].", INVESTIGATE_ATMOS)
 	var/had_gas = !isnull(active_gas)
@@ -150,6 +154,10 @@
 	SIGNAL_HANDLER
 	if (isnull(active_gas))
 		return // We shouldn't even be registered at this point but just in case
+	if(!is_deployed())
+		stop_gas()
+		return
+
 	var/datum/gas_mixture/mix_to_spawn = new()
 	mix_to_spawn.add_gas(active_gas)
 	mix_to_spawn.gases[active_gas][MOLES] = possible_gases[active_gas] * seconds_per_tick
