@@ -92,6 +92,10 @@
 	greyscale_config_worn = /datum/greyscale_config/collar/bell/worn
 	greyscale_colors = "#222222#C0C0C0"
 
+/obj/item/clothing/neck/human_petcollar/locked/bell/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_JINGLEBELL)
+
 /obj/item/clothing/neck/human_petcollar/locked/choker
 	name = "choker"
 	desc = "Quite fashionable... if you're somebody who's just read their first BDSM-themed erotica novel."
