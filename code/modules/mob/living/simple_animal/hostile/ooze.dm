@@ -202,6 +202,10 @@
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "consume"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE|AB_CHECK_INCAPACITATED
+	/// What do we call devouring something
+	var/devour_verb = "devour"
+	/// how much time to eat someone
+	var/devour_time = 1.5 SECONDS
 	///The mob thats being consumed by this creature
 	var/mob/living/vored_mob
 
@@ -223,8 +227,8 @@
 		to_chat(src, span_warning("You need to be pulling a creature for this to work!"))
 		return FALSE
 	var/mob/living/eat_target = ooze.pulling
-	owner.visible_message(span_warning("[ooze] starts attempting to devour [eat_target]!"), span_notice("You start attempting to devour [eat_target]."))
-	if(!do_after(ooze, 1.5 SECONDS, eat_target))
+	owner.visible_message(span_warning("[ooze] starts attempting to [devour_verb] [eat_target]!"), span_notice("You start attempting to [devour_verb] [eat_target]."))
+	if(!do_after(ooze, devour_time, eat_target))
 		return FALSE
 
 	if(!(eat_target.mob_biotypes & MOB_ORGANIC) || eat_target.stat == DEAD)
@@ -238,7 +242,7 @@
 	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
 	RegisterSignal(vored_mob, COMSIG_QDELETING, PROC_REF(stop_consuming))
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
-	owner.visible_message(span_warning("[src] devours [target]!"), span_notice("You devour [target]."))
+	owner.visible_message(span_warning("[owner] [devour_verb]s [target]!"), span_notice("You [devour_verb] [target]."))
 	START_PROCESSING(SSprocessing, src)
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
@@ -260,7 +264,8 @@
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
 	vored_mob.adjustBruteLoss(5)
 	ooze.heal_ordered_damage((ooze.maxHealth * 0.03), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
-	ooze.adjust_ooze_nutrition(3)
+	if(istype(ooze))
+		ooze.adjust_ooze_nutrition(3)
 
 	///Dump 'em if they're dead.
 	if(vored_mob.stat == DEAD)
