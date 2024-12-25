@@ -36,6 +36,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// Paint jobs for this closet, crates are a subtype of closet so they override these values
 	var/list/paint_jobs = TRUE
 	/// Controls whether a door overlay should be applied using the icon_door value as the icon state
+	var/began_resisting = FALSE
 	var/enable_door_overlay = TRUE
 	var/has_opened_overlay = TRUE
 	var/has_closed_overlay = TRUE
@@ -1032,6 +1033,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		open()
 		return
 
+	if(began_resisting)
+		return
 	//okay, so the closet is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
@@ -1041,7 +1044,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 1 SECONDS)
 
+	began_resisting = TRUE
 	if(do_after(user,(breakout_time), target = src))
+		began_resisting = FALSE
 		if(!user || user.stat != CONSCIOUS || (loc_required && (user.loc != src)) || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
@@ -1051,9 +1056,10 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, span_warning("You fail to break out of [src]!"))
+		began_resisting = FALSE
 
 /obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
-	container.container_resist_act()
+	container.container_resist_act(user)
 
 /// Check if someone is still resisting inside, and choose to either keep shaking or stop shaking the closet
 /obj/structure/closet/proc/check_if_shake()
