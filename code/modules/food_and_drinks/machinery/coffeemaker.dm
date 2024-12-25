@@ -150,7 +150,8 @@
 	if(coffeepot)
 		if(istype(coffeepot, /obj/item/reagent_containers/cup/coffeepot/bluespace))
 			. += "coffeemaker_pot_bluespace"
-		. += "coffeemaker_pot_[coffeepot.reagents.total_volume ? "full" : "empty"]"
+		else
+			. += "coffeemaker_pot_[coffeepot.reagents.total_volume ? "full" : "empty"]"
 	if(cartridge)
 		. += "coffeemaker_cartidge"
 	return .
@@ -540,10 +541,8 @@
 	if(coffeepot)
 		if(istype(coffeepot, /obj/item/reagent_containers/cup/coffeepot/bluespace))
 			. += "pot_bluespace"
-		else if(coffeepot.reagents.total_volume > 0)
-			. += "pot_full"
 		else
-			. += "pot_empty"
+			. += "pot_[coffeepot.reagents.total_volume ? "full" : "empty"]"
 	if(coffee_cups > 0)
 		if(coffee_cups >= max_coffee_cups/3)
 			if(coffee_cups > max_coffee_cups/1.5)
