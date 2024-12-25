@@ -21,27 +21,27 @@
 
 	var/dat = "<center><B>Game Panel</B></center><hr>"
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
-		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
-		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
+		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
+		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
 		if (GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 			for(var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
-				dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=[text_ref(rule)]'>-> [rule.name] <-</A><br>"}
-			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</A><br>"
-		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_options=1'>(Dynamic mode options)</A><br>"
+				dat += {"<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=[text_ref(rule)]'>-> [rule.name] <-</A><br>"}
+			dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</A><br>"
+		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_options=1'>(Dynamic mode options)</A><br>"
 	dat += "<hr/>"
 	if(SSticker.IsRoundInProgress())
-		dat += "<a href='?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
-		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
+		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
+		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
 	dat += {"
 		<BR>
-		<A href='?src=[REF(src)];[HrefToken()];create_object=1'>Create Object</A><br>
-		<A href='?src=[REF(src)];[HrefToken()];quick_create_object=1'>Quick Create Object</A><br>
-		<A href='?src=[REF(src)];[HrefToken()];create_turf=1'>Create Turf</A><br>
-		<A href='?src=[REF(src)];[HrefToken()];create_mob=1'>Create Mob</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];create_object=1'>Create Object</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];quick_create_object=1'>Quick Create Object</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];create_turf=1'>Create Turf</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];create_mob=1'>Create Mob</A><br>
 		"}
 
 	if(marked_datum && istype(marked_datum, /atom))
-		dat += "<A href='?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
+		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
 
 	usr << browse(dat, "window=admin2;size=240x280")
 	return
@@ -110,17 +110,17 @@ ADMIN_VERB(spawn_cargo, R_SPAWN, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CA
 		<h3>Common options</h3>
 		<i>All these options can be changed midround.</i> <br/>
 		<br/>
-		<b>Force extended:</b> - Option is <a href='?src=[REF(src)];[HrefToken()];f_dynamic_force_extended=1'> <b>[GLOB.dynamic_forced_extended ? "ON" : "OFF"]</a></b>.
+		<b>Force extended:</b> - Option is <a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_force_extended=1'> <b>[GLOB.dynamic_forced_extended ? "ON" : "OFF"]</a></b>.
 		<br/>This will force the round to be extended. No rulesets will be drafted. <br/>
 		<br/>
-		<b>No stacking:</b> - Option is <a href='?src=[REF(src)];[HrefToken()];f_dynamic_no_stacking=1'> <b>[GLOB.dynamic_no_stacking ? "ON" : "OFF"]</b></a>.
+		<b>No stacking:</b> - Option is <a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_no_stacking=1'> <b>[GLOB.dynamic_no_stacking ? "ON" : "OFF"]</b></a>.
 		<br/>Unless the threat goes above [GLOB.dynamic_stacking_limit], only one "round-ender" ruleset will be drafted. <br/>
 		<br/>
-		<b>Forced threat level:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_forced_threat=1'><b>[GLOB.dynamic_forced_threat_level]</b></a>.
+		<b>Forced threat level:</b> Current value : <a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_forced_threat=1'><b>[GLOB.dynamic_forced_threat_level]</b></a>.
 		<br/>The value threat is set to if it is higher than -1.<br/>
 		<br/>
 		<br/>
-		<b>Stacking threeshold:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_stacking_limit=1'><b>[GLOB.dynamic_stacking_limit]</b></a>.
+		<b>Stacking threeshold:</b> Current value : <a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_stacking_limit=1'><b>[GLOB.dynamic_stacking_limit]</b></a>.
 		<br/>The threshold at which "round-ender" rulesets will stack. A value higher than 100 ensure this never happens. <br/>
 		"}
 
@@ -131,9 +131,9 @@ ADMIN_VERB(spawn_cargo, R_SPAWN, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CA
 		Change these options to forcibly enable or disable dynamic rulesets.<br/>\
 		Disabled rulesets will never run, even if they would otherwise be valid.<br/>\
 		Enabled rulesets will run even if the qualifying minimum of threat or player count is not present, this does not guarantee that they will necessarily be chosen (for example their weight may be set to 0 in config).<br/>\
-		\[<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_on=1'>force enable all</A> / \
-		<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_off=1'>force disable all</A> / \
-		<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_reset=1'>reset all</A>\]"
+		\[<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_on=1'>force enable all</A> / \
+		<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_off=1'>force disable all</A> / \
+		<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_all_reset=1'>reset all</A>\]"
 
 	if (SSticker.current_state <= GAME_STATE_PREGAME) // Don't bother displaying after the round has started
 		var/static/list/rulesets_by_context = list()
@@ -166,9 +166,9 @@ ADMIN_VERB(spawn_cargo, R_SPAWN, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CA
 			if (RULESET_FORCE_DISABLED)
 				color = COLOR_RED
 		dat += "<tr><td><b>[initial(rule.name)]</b></td><td>\[<font color=[color]>[forced]</font>\]</td><td>\[\
-			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_on=[text_ref(rule)]'>force enabled</A> /\
-			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_off=[text_ref(rule)]'>force disabled</A> /\
-			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_reset=[text_ref(rule)]'>reset</A>\]</td></tr>"
+			<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_on=[text_ref(rule)]'>force enabled</A> /\
+			<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_off=[text_ref(rule)]'>force disabled</A> /\
+			<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_reset=[text_ref(rule)]'>reset</A>\]</td></tr>"
 	dat += "</table>"
 	return dat
 
@@ -199,10 +199,10 @@ ADMIN_VERB(spawn_cargo, R_SPAWN, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CA
 		dat += "<tr><td><b>[rule.name]</b></td>\
 			<td>\[Weight : [rule.weight]\]\
 			<td>\[<font color=[color]>[active][explanation]</font>\]</td><td>\[\
-			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_on=[text_ref(rule.type)]'>force enabled</A> /\
-			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_off=[text_ref(rule.type)]'>force disabled</A> /\
-			<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_reset=[text_ref(rule.type)]'>reset</A>\]</td>\
-			<td>\[<A href='?src=[REF(src)];[HrefToken()];f_inspect_ruleset=[text_ref(rule)]'>VV</A>\]</td></tr>"
+			<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_on=[text_ref(rule.type)]'>force enabled</A> /\
+			<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_off=[text_ref(rule.type)]'>force disabled</A> /\
+			<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_force_reset=[text_ref(rule.type)]'>reset</A>\]</td>\
+			<td>\[<A href='byond://?src=[REF(src)];[HrefToken()];f_inspect_ruleset=[text_ref(rule)]'>VV</A>\]</td></tr>"
 	dat += "</table>"
 	return dat
 

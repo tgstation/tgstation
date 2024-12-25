@@ -346,7 +346,7 @@
 				span_adminnotice( \
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to send \
 					the following message to <b>[destination]</b> (will autoapprove in [GLOB.communications_controller.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
-					<b><a href='?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
+					<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
 					[html_encode(message)]" \
 				)
 			)
@@ -408,7 +408,7 @@
 
 			state = STATE_MAIN
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, FALSE)
-			imprint_gps(gps_tag = "Encrypted Communications Channel")
+			imprint_gps("Encrypted Communications Channel")
 
 		if ("toggleEmergencyAccess")
 			if(emergency_access_cooldown(user)) //if were in cooldown, dont allow the following code

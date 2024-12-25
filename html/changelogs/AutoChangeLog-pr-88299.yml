@@ -1,4 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes:
-  - bugfix: "fixed the \"tactical combat/engineering uniform\" allowing toggling with no alt sprite"
