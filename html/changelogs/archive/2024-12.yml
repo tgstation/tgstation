@@ -471,3 +471,153 @@
   - bugfix: Poultice works on dead people
   SmArtKar:
   - bugfix: Fixed an airlock unlocking runtime
+2024-12-21:
+  Deadgebert:
+  - balance: Synthflesh required for unhusking now between 60u and 100u depending
+      on purity.
+  Melbert:
+  - bugfix: Lobby button sprites
+2024-12-22:
+  Absolucy:
+  - rscadd: Added a notice for clients on BYOND 516 that 516 is still in beta, and
+      UI elements may not be fully compatible yet.
+  - qol: Rust heretic healing (leeching walk, rust ascension) now, so server lag shouldn't
+      fuck you over nearly as much if you're relying on the healing.
+  Cruix:
+  - rscadd: Shuttle navigation computers now show the location of airlocks, turrets,
+      and the shuttle control consoles on the ship outline while placing a custom
+      landing location.
+  Darkened-Earth:
+  - bugfix: Alarm ranchers have wrangled up a rogue fire alarm in Meta class station
+      custom offices and relocated it to a safe habitat
+  Gaxeer:
+  - bugfix: modular computer laptops can now be interacted with RMB, instead of picked
+      up
+  - qol: modular computer laptops can now be interacted with RMB when open, or opened
+      with RMB when closed. Also screentips for  this added
+  Kocma-san:
+  - rscadd: added a "print" button to the request manager
+  - rscadd: admin fax can now send exotic items
+  - rscadd: added "Auto-print Faxes" button to the request manager, which allows you
+      to enable automatic printing of requests on the admin fax
+  - bugfix: fixed a bug where pressing the print button would cause the receive animation
+      to appear on all admin faxes.
+  - bugfix: fix radio sound output when receiving a message
+  - sound: the sound of receiving your own messages over the radio is no longer played
+  Melbert:
+  - rscadd: Nitroglycerin now heals heart damage.
+  SmArtKar:
+  - bugfix: Fixed floodlights not being affected by spraycan painting
+  - balance: Mech-mounted RCD no longer has wallhacks
+  - balance: Reinforced walls now take double the time to get deconstructed when using
+      an RCD
+  - map: Added a Condi-Master to Birdshot's bar
+  - bugfix: Fixed shoes slot being semi-transparent when you have digitigrade legs
+  - spellcheck: Bioscrambler no longer informs you about "your armor softening the
+      blow!"
+  - bugfix: Chemmaster no longer rounds reagent amounts when trying to transfer a
+      custom amount
+  Sparex:
+  - map: Added lifting benches/workout benches to the fitness room for IceboxStation.dmm
+  SyncIt21:
+  - bugfix: fixed runtime when sealing mecha cabin with air tank installed
+  - bugfix: personal ordered crates can be unlocked & relocked as many times again
+      after the 1st attempt
+  - bugfix: greyscale modify menu has better validation for player entered colours
+  - code_imp: improved code for mecha rcd
+  - bugfix: mecha rcd will cancel its action when the mech is rotated or moves during
+      the action
+  TealSeer:
+  - qol: Atmos devices like valves and pumps can now be renamed with a pen.
+  UnokiAs:
+  - rscadd: Make spears able to break open lockers in melee.
+  grungussuss:
+  - rscdel: screenshake from explosions will no longer happen when it's really far
+      and not on a station area (turf)
+  mcbalaam:
+  - bugfix: The mail sorter no longer runtimes processing assistant mail
+  timothymtorres:
+  - spellcheck: Update teleporter machine desc to be accurate
+  - spellcheck: Fix holodeck emag message claiming to increase power
+  - rscadd: Add power efficiency when stasis bed stock parts are upgraded
+2024-12-23:
+  AyIong:
+  - bugfix: Fixed scrollbar colors and background position in TGUI on Byond 516
+  Ben10Omintrix:
+  - rscadd: adds flora-turtles. obtainable through cargo or by fishing from the hydroponics
+      tray
+  - qol: holding shift and hovering over your pet will display a list of commands
+      you can click from
+  - bugfix: fixes the fishing pet command not working
+  DATA-xPUNGED:
+  - map: removed the sec record computer from the Icemoon Listening Post.
+  Melbert:
+  - balance: Carpenter hammer force 20 -> 17
+  - balance: Carpenter hammer throwforce 20 -> 14
+  - balance: Carpenter hammer demo mod 1.25 -> 1.15
+  NecromancerAnne (code), SmArtKar (sprites):
+  - balance: Makarovs and Toy Pistols come in weapon cases. Complete with spare ammo.
+  - balance: Basic ammo for either weapon comes in weapon cases of three extra magazines
+      at an affordable price.
+  - balance: Donksoft Toy Pistols from the uplink are much stronger than their standard
+      counterparts, but now priced at 6 TC.
+  - balance: Makarovs and Toy pistols have a magazine capacity of 12 rounds.
+  - balance: Gun/Ammo cases from the traitor uplink can be destroyed by activating
+      the disposal bomb. Press Alt-Right-Click on the case to start the timer.
+  Rhials:
+  - rscadd: Nukie uplinks now offer an OG-style nuke pinpointer in their Badassery
+      shop section.
+  TealSeer:
+  - qol: The time until the server reboots is now visible in the status tab.
+  - admin: Added a cancel reboot verb to the server tab.
+  grungussuss:
+  - code_imp: removed an extra proc override in digitigrade legs preference logic
+      code
+2024-12-24:
+  SmArtKar:
+  - admin: Admins can now return the shuttle back to the station without ending the
+      round
+  - bugfix: Fixed moth wing stabilization working in zero-g as long as you keep moving
+  - bugfix: Fixed showers not passively washing objects
+  SyncIt21:
+  - bugfix: rolling tables can be rolled up again
+  carlarctg:
+  - rscadd: Kissing while you have the ink infusion ability off cooldown gives you
+      an ink kiss
+2024-12-25:
+  Absolucy, ShadowLarkens, S34N:
+  - bugfix: Fixed chat rapidly flickering in BYOND 516.
+  AyIong:
+  - qol: AdminPMs, admin tickets, vote results and started vote notification are now
+      much more visible in the chat.
+  - qol: Boxed messages in chat (like examine), has been restyled.
+  Ghommie:
+  - bugfix: Fixed aquariums auto-feeding.
+  Hatterhat:
+  - bugfix: .357 Heartseeker homes in on people if you click on them, instead of not
+      homing in at all.
+  KazooBard:
+  - qol: Selecting which spells to cast with hotkeys, and using them in general is
+      faster.
+  LT3:
+  - bugfix: You can no longer hug yourself to overcome fear of the dark
+  Melbert:
+  - balance: Lava no longer burns mobs thrown over it
+  - qol: Navigate verb better indicates areas on a separate level. Selecting an area
+      on a different level will direct you to the nearest staircase (as with "Nearest
+      Way Up/Down")
+  - qol: Navigating to a staircase or ladder will shorten the cooldown of navigate
+      and clear your existing path for you upon finding it
+  SyncIt21:
+  - bugfix: Big manipulator respects storage limits of storages when dropping stuff
+      into them
+  araeotu:
+  - rscadd: slime processor now have usb port and circuit component
+  - code_imp: the process code of processor now separate from interact
+  grungussuss:
+  - balance: computers can now be used as cover, firing a projectile over them is
+      now possible, while they may block projectiles if you are not adjacent to them
+      when firing.
+  - bugfix: computer laptops will not block projectiles
+  lovegreenstuff:
+  - rscadd: catalyst function for plumbing reaction chambers
