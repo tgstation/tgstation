@@ -67095,10 +67095,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
-"xBX" = (
-/obj/machinery/firealarm/directional/east,
-/turf/closed/wall,
-/area/station/security/checkpoint/customs)
 "xCf" = (
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/electropack,
@@ -83046,7 +83042,7 @@ wdr
 fcq
 xfI
 fcq
-xBX
+xjh
 qhW
 xjh
 yme

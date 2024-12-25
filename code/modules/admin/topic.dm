@@ -847,7 +847,7 @@
 		exportable_text += "[special_role_description]<br>"
 		exportable_text += ADMIN_FULLMONTY_NONAME(subject)
 
-		to_chat(src.owner, examine_block(exportable_text), confidential = TRUE)
+		to_chat(src.owner, boxed_message(exportable_text), confidential = TRUE)
 
 	else if(href_list["addjobslot"])
 		if(!check_rights(R_ADMIN))
@@ -1731,7 +1731,7 @@
 			if(FAX.fax_id != href_list["destination"])
 				continue
 			FAX.receive(locate(href_list["print_fax"]), href_list["sender_name"])
-
+			return
 
 	else if(href_list["play_internet"])
 		if(!check_rights(R_SOUND))

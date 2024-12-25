@@ -106,3 +106,9 @@
 		Contains enough special solution to spray a single super-size seditious symbol, subjecting station staff to slippery suffering."
 	item = /obj/item/traitor_spraycan
 	cost = 1
+
+/datum/uplink_item/badass/pinpointer
+	name = "Surplus Pinpointer"
+	desc = "Provides a surplus pinpointer, left over from the previous models that were abandoned in favor of a SAAS cloud-based PDA app."
+	item = /obj/item/pinpointer/nuke/syndicate
+	cost = 2

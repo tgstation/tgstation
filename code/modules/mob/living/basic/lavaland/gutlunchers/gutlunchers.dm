@@ -61,7 +61,7 @@
 	if(isnull(ore_food))
 		balloon_alert(src, "no food!")
 	else
-		melee_attack(ore_food)
+		UnarmedAttack(ore_food, TRUE, modifiers)
 	return FALSE
 
 /mob/living/basic/mining/gutlunch/proc/after_birth(mob/living/basic/mining/gutlunch/grub/baby, mob/living/partner)
@@ -111,11 +111,12 @@
 	//pet commands when we tame the gutluncher
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
+		/datum/pet_command/move,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/breed/gutlunch,
+		/datum/pet_command/attack,
+		/datum/pet_command/breed/gutlunch,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/fetch,
 		/datum/pet_command/mine_walls,
 	)
 

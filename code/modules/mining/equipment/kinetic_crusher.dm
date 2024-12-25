@@ -6,15 +6,16 @@
  * a good tradeoff and a decent playstyle.
  */
 /obj/item/kinetic_crusher
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "crusher"
-	inhand_icon_state = "crusher0"
-	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "proto-kinetic crusher"
 	desc = "An early design of the proto-kinetic accelerator, it is little more than a combination of various mining tools cobbled together, \
 		forming a high-tech club. While it is an effective mining tool, it did little to aid any but the most skilled and/or \
 		suicidal miners against local fauna."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "crusher"
+	inhand_icon_state = "crusher0"
+	icon_angle = -45
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	resistance_flags = FIRE_PROOF
 	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
@@ -51,6 +52,17 @@
 	)
 	//technically it's huge and bulky, but this provides an incentive to use it
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
+	register_context()
+
+/obj/item/kinetic_crusher/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(!held_item)
+		context[SCREENTIP_CONTEXT_RMB] = "Detach trophy"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Detach all trophies"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -84,6 +96,46 @@
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
 		crusher_trophy.remove_from(src, user)
 	return ITEM_INTERACT_SUCCESS
+
+// adapted from kinetic accelerator attack_hand_secodary
+/obj/item/kinetic_crusher/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(!LAZYLEN(trophies))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+	var/list/display_names = list()
+	var/list/items = list()
+	for(var/trophies_length in 1 to length(trophies))
+		var/obj/item/crusher_trophy/trophy = trophies[trophies_length]
+		display_names[trophy.name] = REF(trophy)
+		var/image/item_image = image(icon = trophy.icon, icon_state = trophy.icon_state)
+		if(length(trophy.overlays))
+			item_image.copy_overlays(trophy)
+		items["[trophy.name]"] = item_image
+
+	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE, tooltips = TRUE)
+	if(!pick)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	var/trophy_reference = display_names[pick]
+	var/obj/item/crusher_trophy/trophy_to_remove = locate(trophy_reference) in trophies
+	if(!istype(trophy_to_remove))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	trophy_to_remove.remove_from(src, user)
+	if(!user.put_in_hands(trophy_to_remove))
+		trophy_to_remove.forceMove(drop_location())
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/kinetic_crusher/proc/check_menu(mob/living/carbon/human/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated)
+		return FALSE
+	return TRUE
 
 /obj/item/kinetic_crusher/pre_attack(atom/A, mob/living/user, params)
 	. = ..()

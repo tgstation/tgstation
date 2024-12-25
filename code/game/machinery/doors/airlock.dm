@@ -181,6 +181,8 @@
 	// Click on the floor to close airlocks
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
+	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "airlock", TRUE)
+
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
@@ -1172,13 +1174,15 @@
 
 	return TRUE
 
-/obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user, forced = FALSE)
-	if(I.tool_behaviour == TOOL_CROWBAR && should_try_removing_electronics() && !operating)
+/obj/machinery/door/airlock/try_to_crowbar(obj/item/tool, mob/living/user, forced = FALSE)
+	if(!isnull(tool) && tool.tool_behaviour == TOOL_CROWBAR && should_try_removing_electronics() && !operating)
 		user.visible_message(span_notice("[user] removes the electronics from the airlock assembly."), \
 			span_notice("You start to remove electronics from the airlock assembly..."))
-		if(I.use_tool(src, user, 40, volume = 100))
+
+		if(tool.use_tool(src, user, 40, volume = 100))
 			deconstruct(TRUE, user)
 			return
+
 	if(seal)
 		to_chat(user, span_warning("Remove the seal first!"))
 		return
@@ -1188,37 +1192,48 @@
 	if(welded)
 		to_chat(user, span_warning("It's welded, it won't budge!"))
 		return
-	if(hasPower())
-		if(forced)
-			var/check_electrified = isElectrified() //setting this so we can check if the mob got shocked during the do_after below
-			if(check_electrified && shock(user,100))
-				return //it's like sticking a fork in a power socket
 
-			if(!density)//already open
-				return
+	if(!hasPower())
+		if(operating)
+			return
 
-			if(!prying_so_hard)
-				var/time_to_open = 50
-				playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
-				prying_so_hard = TRUE
-				if(I.use_tool(src, user, time_to_open, volume = 100))
-					if(check_electrified && shock(user, 100))
-						prying_so_hard = FALSE
-						return
-					open(BYPASS_DOOR_CHECKS)
-					take_damage(25, BRUTE, 0, 0) // Enough to sometimes spark
-					if(density && !open(BYPASS_DOOR_CHECKS))
-						to_chat(user, span_warning("Despite your attempts, [src] refuses to open."))
-				prying_so_hard = FALSE
-				return
+		if(istype(tool, /obj/item/fireaxe) && !HAS_TRAIT(tool, TRAIT_WIELDED)) //being fireaxe'd
+			to_chat(user, span_warning("You need to be wielding [tool] to do that!"))
+			return
+
+		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS)
+		return
+
+	if(!forced)
 		to_chat(user, span_warning("The airlock's motors resist your efforts to force it!"))
 		return
 
-	if(!operating)
-		if(istype(I, /obj/item/fireaxe) && !HAS_TRAIT(I, TRAIT_WIELDED)) //being fireaxe'd
-			to_chat(user, span_warning("You need to be wielding [I] to do that!"))
-			return
-		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS)
+	var/check_electrified = isElectrified() //setting this so we can check if the mob got shocked during the do_after below
+	if(check_electrified && shock(user,100))
+		return //it's like sticking a fork in a power socket
+
+	if(!density)//already open
+		return
+
+	if(prying_so_hard)
+		return
+
+	var/time_to_open = 5 SECONDS
+	playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
+	prying_so_hard = TRUE
+
+	if(!tool.use_tool(src, user, time_to_open, volume = 100))
+		prying_so_hard = FALSE
+		return
+
+	if(check_electrified && shock(user, 100))
+		prying_so_hard = FALSE
+		return
+
+	open(BYPASS_DOOR_CHECKS)
+	take_damage(25, BRUTE, 0, 0) // Enough to sometimes spark
+	if(density && !open(BYPASS_DOOR_CHECKS))
+		to_chat(user, span_warning("Despite your attempts, [src] refuses to open."))
 
 /obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS)
 	if(cycle_pump && !operating && !welded && !seal && locked && density)
@@ -2227,7 +2242,7 @@
 		if(!hasPower())
 			to_chat(user, span_notice("You begin unlocking the airlock safety mechanism..."))
 			if(do_after(user, 15 SECONDS, target = src))
-				try_to_crowbar(src, user, TRUE)
+				try_to_crowbar(null, user, TRUE)
 				return TRUE
 		else
 			// always open from the space side

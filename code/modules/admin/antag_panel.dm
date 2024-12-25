@@ -30,7 +30,7 @@ GLOBAL_VAR(antag_prototypes)
 /datum/antagonist/proc/antag_panel()
 	var/list/commands = list()
 	for(var/command in get_admin_commands())
-		commands += "<a href='?src=[REF(src)];command=[command]'>[command]</a>"
+		commands += "<a href='byond://?src=[REF(src)];command=[command]'>[command]</a>"
 	var/command_part = commands.Join(" | ")
 	var/data_part = antag_panel_data()
 	var/objective_part = antag_panel_objectives()
@@ -47,30 +47,30 @@ GLOBAL_VAR(antag_prototypes)
 		var/obj_count = 1
 		for(var/datum/objective/objective as anything in objectives)
 			result += "<B>[obj_count]</B>: [objective.explanation_text] \
-				<a href='?src=[REF(owner)];obj_edit=[REF(objective)]'>Edit</a> \
-				<a href='?src=[REF(owner)];obj_delete=[REF(objective)]'>Delete</a> \
-				<a href='?src=[REF(owner)];obj_completed=[REF(objective)]'><font color=[objective.check_completion() ? "green" : "red"]>[objective.completed ? "Mark as incomplete" : "Mark as complete"]</font></a> \
+				<a href='byond://?src=[REF(owner)];obj_edit=[REF(objective)]'>Edit</a> \
+				<a href='byond://?src=[REF(owner)];obj_delete=[REF(objective)]'>Delete</a> \
+				<a href='byond://?src=[REF(owner)];obj_completed=[REF(objective)]'><font color=[objective.check_completion() ? "green" : "red"]>[objective.completed ? "Mark as incomplete" : "Mark as complete"]</font></a> \
 				<br>"
 			obj_count++
-	result += "<a href='?src=[REF(owner)];obj_add=1;target_antag=[REF(src)]'>Add objective</a><br>"
-	result += "<a href='?src=[REF(owner)];obj_prompt_custom=1;target_antag=[REF(src)]'>Prompt custom objective entry</a><br>"
-	result += "<a href='?src=[REF(owner)];obj_announce=1'>Announce objectives</a><br>"
+	result += "<a href='byond://?src=[REF(owner)];obj_add=1;target_antag=[REF(src)]'>Add objective</a><br>"
+	result += "<a href='byond://?src=[REF(owner)];obj_prompt_custom=1;target_antag=[REF(src)]'>Prompt custom objective entry</a><br>"
+	result += "<a href='byond://?src=[REF(owner)];obj_announce=1'>Announce objectives</a><br>"
 	return result
 
 /datum/mind/proc/get_common_admin_commands()
 	var/common_commands = "<span>Common Commands:</span>"
 	if(ishuman(current))
-		common_commands += "<a href='?src=[REF(src)];common=undress'>undress</a>"
+		common_commands += "<a href='byond://?src=[REF(src)];common=undress'>undress</a>"
 	else if(iscyborg(current))
 		var/mob/living/silicon/robot/R = current
 		if(R.emagged)
-			common_commands += "<a href='?src=[REF(src)];silicon=Unemag'>Unemag</a>"
+			common_commands += "<a href='byond://?src=[REF(src)];silicon=Unemag'>Unemag</a>"
 	else if(isAI(current))
 		var/mob/living/silicon/ai/A = current
 		if (A.connected_robots.len)
 			for (var/mob/living/silicon/robot/R in A.connected_robots)
 				if (R.emagged)
-					common_commands += "<a href='?src=[REF(src)];silicon=unemagcyborgs'>Unemag slaved cyborgs</a>"
+					common_commands += "<a href='byond://?src=[REF(src)];silicon=unemagcyborgs'>Unemag slaved cyborgs</a>"
 					break
 	return common_commands
 
@@ -99,9 +99,9 @@ GLOBAL_VAR(antag_prototypes)
 
 	var/out = "<B>[name]</B>[(current && (current.real_name != name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
-	out += "Assigned role: [assigned_role.title]. <a href='?src=[REF(src)];role_edit=1'>Edit</a><br>"
+	out += "Assigned role: [assigned_role.title]. <a href='byond://?src=[REF(src)];role_edit=1'>Edit</a><br>"
 	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
-	out += "<a href='?_src_=holder;[HrefToken()];check_teams=1'>Show Teams</a><br><br>"
+	out += "<a href='byond://?_src_=holder;[HrefToken()];check_teams=1'>Show Teams</a><br><br>"
 
 	var/special_statuses = get_special_statuses()
 	if(length(special_statuses))
@@ -138,7 +138,7 @@ GLOBAL_VAR(antag_prototypes)
 					continue //Let's skip subtypes of what we already shown.
 			else if(prototype.show_in_antagpanel)
 				if(prototype.can_be_owned(src))
-					possible_admin_antags += "<a href='?src=[REF(src)];add_antag=[prototype.type]' title='[prototype.type]'>[prototype.name]</a>"
+					possible_admin_antags += "<a href='byond://?src=[REF(src)];add_antag=[prototype.type]' title='[prototype.type]'>[prototype.name]</a>"
 				else
 					possible_admin_antags += "<a class='linkOff'>[prototype.name]</a>"
 			else
@@ -155,8 +155,8 @@ GLOBAL_VAR(antag_prototypes)
 		else //Show removal and current one
 			priority_sections |= antag_category
 			antag_header_parts += span_bad("[current_antag.name]")
-			antag_header_parts += "<a href='?src=[REF(src)];remove_antag=[REF(current_antag)]'>Remove</a>"
-			antag_header_parts += "<a href='?src=[REF(src)];open_antag_vv=[REF(current_antag)]'>Open VV</a>"
+			antag_header_parts += "<a href='byond://?src=[REF(src)];remove_antag=[REF(current_antag)]'>Remove</a>"
+			antag_header_parts += "<a href='byond://?src=[REF(src)];open_antag_vv=[REF(current_antag)]'>Open VV</a>"
 
 
 		//We aren't antag of this category, grab first prototype to check the prefs (This is pretty vague but really not sure how else to do this)
@@ -196,19 +196,19 @@ GLOBAL_VAR(antag_prototypes)
 		var/datum/component/uplink/U = find_syndicate_uplink()
 		if(U)
 			if(!U.uplink_handler.has_objectives)
-				uplink_info += "<a href='?src=[REF(src)];common=takeuplink'>take</a>"
+				uplink_info += "<a href='byond://?src=[REF(src)];common=takeuplink'>take</a>"
 			if (check_rights(R_FUN, 0))
-				uplink_info += ", <a href='?src=[REF(src)];common=crystals'>[U.uplink_handler.telecrystals]</a> TC"
+				uplink_info += ", <a href='byond://?src=[REF(src)];common=crystals'>[U.uplink_handler.telecrystals]</a> TC"
 				if(U.uplink_handler.has_progression)
-					uplink_info += ", <a href='?src=[REF(src)];common=progression'>[U.uplink_handler.progression_points]</a> PR"
+					uplink_info += ", <a href='byond://?src=[REF(src)];common=progression'>[U.uplink_handler.progression_points]</a> PR"
 				if(U.uplink_handler.has_objectives)
-					uplink_info += ", <a href='?src=[REF(src)];common=give_objective'>Force Give Objective</a>"
+					uplink_info += ", <a href='byond://?src=[REF(src)];common=give_objective'>Force Give Objective</a>"
 			else
 				uplink_info += ", [U.uplink_handler.telecrystals] TC"
 				if(U.uplink_handler.has_progression)
 					uplink_info += ", [U.uplink_handler.progression_points] PR"
 		else
-			uplink_info += "<a href='?src=[REF(src)];common=uplink'>give</a>"
+			uplink_info += "<a href='byond://?src=[REF(src)];common=uplink'>give</a>"
 		uplink_info += "." //hiel grammar
 
 		out += uplink_info + "<br>"

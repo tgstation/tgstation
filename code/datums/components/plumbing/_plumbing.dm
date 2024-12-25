@@ -121,6 +121,8 @@
 
 ///returns TRUE when they can give the specified amount and reagent. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
+	SHOULD_BE_PURE(TRUE)
+
 	if(amount <= 0)
 		return
 

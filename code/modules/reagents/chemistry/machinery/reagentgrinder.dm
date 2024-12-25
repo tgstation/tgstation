@@ -387,7 +387,7 @@
 		if("mix")
 			mix(5 SECONDS, user)
 		if("examine")
-			to_chat(user, examine_block(jointext(examine(user), "\n")))
+			to_chat(user, boxed_message(jointext(examine(user), "\n")))
 
 /**
  * Checks if the radial menu can interact with this machine
