@@ -78,7 +78,7 @@
 	if(target_item.name == "the Blackbox")
 		replace_in_name("%METHOD%", "Too strong to be be destroyed via normal means - needs to be dusted via the supermatter, or burnt in the chapel crematorium.")
 	else
-		replace_in_name("%METHOD%", "This item can be destroyed normally, using a recyler.")
+		replace_in_name("%METHOD%", "This item can be destroyed normally, using a recycler.")
 	AddComponent(/datum/component/traitor_objective_mind_tracker, generating_for, \
 		signals = list(COMSIG_MOB_EQUIPPED_ITEM = PROC_REF(on_item_pickup)))
 	return TRUE
