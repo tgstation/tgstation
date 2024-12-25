@@ -88,7 +88,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/autolathe/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
+	. = NONE
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
