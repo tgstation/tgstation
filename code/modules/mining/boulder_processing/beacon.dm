@@ -21,8 +21,8 @@
 		if(3)
 			new /obj/machinery/brm(drop_location())
 		if(2)
-			new /obj/machinery/bouldertech/refinery(drop_location())
-		if(1)
 			new /obj/machinery/bouldertech/refinery/smelter(drop_location())
+		if(1)
+			new /obj/machinery/bouldertech/refinery(drop_location())
 			qdel(src)
 	uses--

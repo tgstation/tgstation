@@ -3164,8 +3164,14 @@
 /area/station/science/xenobiology)
 "bll" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
-/obj/structure/closet/crate,
-/obj/effect/spawner/random/engineering/flashlight,
+/obj/structure/rack,
+/obj/item/stack/conveyor/thirty,
+/obj/item/conveyor_switch_construct{
+	pixel_x = 10
+	},
+/obj/item/boulder_beacon{
+	pixel_x = -5
+	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "blt" = (

@@ -49566,11 +49566,11 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "qzh" = (
-/obj/machinery/bouldertech/refinery/smelter,
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "mining"
 	},
+/obj/machinery/bouldertech/refinery,
 /turf/open/floor/iron,
 /area/station/cargo/miningfoundry)
 "qzn" = (
@@ -54268,11 +54268,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "siF" = (
-/obj/machinery/bouldertech/refinery,
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "mining"
 	},
+/obj/machinery/bouldertech/refinery/smelter,
 /turf/open/floor/iron,
 /area/station/cargo/miningfoundry)
 "siL" = (

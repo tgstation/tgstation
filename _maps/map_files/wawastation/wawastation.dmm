@@ -22929,12 +22929,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "iee" = (
-/obj/machinery/bouldertech/refinery/smelter,
 /obj/machinery/conveyor{
 	dir = 6;
 	id = "brm"
 	},
 /obj/effect/turf_decal/sand/plating,
+/obj/machinery/bouldertech/refinery,
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
 "ief" = (
@@ -38044,12 +38044,12 @@
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "nuu" = (
-/obj/machinery/bouldertech/refinery,
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "brm"
 	},
 /obj/effect/turf_decal/sand/plating,
+/obj/machinery/bouldertech/refinery/smelter,
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
 "nuC" = (

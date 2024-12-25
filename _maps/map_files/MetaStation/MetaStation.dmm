@@ -21572,6 +21572,13 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"hMR" = (
+/obj/structure/lattice/catwalk,
+/obj/item/boulder_beacon{
+	pixel_x = -5
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "hNb" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window,
@@ -64206,7 +64213,7 @@
 	dir = 8;
 	id = "mining"
 	},
-/obj/machinery/bouldertech/refinery/smelter,
+/obj/machinery/bouldertech/refinery,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "wyV" = (
@@ -65532,7 +65539,7 @@
 	dir = 10;
 	id = "mining"
 	},
-/obj/machinery/bouldertech/refinery,
+/obj/machinery/bouldertech/refinery/smelter,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "wZw" = (
@@ -85065,7 +85072,7 @@ aaa
 aaa
 aaa
 aaa
-aox
+hMR
 aox
 jXu
 jXu
