@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - image: "Returned plasmafire and clockwork UI's transparency, slightly adjusted active hand slot overlays"
