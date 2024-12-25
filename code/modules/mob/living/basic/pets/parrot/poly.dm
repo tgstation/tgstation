@@ -32,6 +32,10 @@
 /mob/living/basic/parrot/poly/Initialize(mapload)
 	. = ..()
 
+	if(check_holidays(CHRISTMAS))
+		name = "Jolly"
+		desc = "Jolly the Parrot. An expert on quantum present theory."
+
 	if(!memory_saved)
 		roundend_callback = CALLBACK(src, PROC_REF(Write_Memory))
 		SSticker.OnRoundend(roundend_callback)
