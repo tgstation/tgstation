@@ -463,6 +463,78 @@
 	for(var/i in 1 to 3)
 		new extra_to_spawn (src)
 
+/obj/item/storage/toolbox/guncase/traitor
+	name = "makarov gun case"
+	desc = "A weapon's case. Has a blood-red 'S' stamped on the cover. There seems to be a strange switch along the side inside a plastic flap."
+	icon_state = "pistol_case"
+	base_icon_state = "pistol_case"
+	// What ammo box do we spawn in our case?
+	var/ammo_box_to_spawn = /obj/item/ammo_box/c9mm
+	// Timer for the bomb in the case.
+	var/explosion_timer
+	// Whether or not our case is exploding. Used for determining sprite changes.
+	var/currently_exploding = FALSE
+
+/obj/item/storage/toolbox/guncase/traitor/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/storage/toolbox/guncase/traitor/examine(mob/user)
+	. = ..()
+	. += span_notice("Activate the Evidence Disposal Explosive using Alt-Right-Click.")
+
+/obj/item/storage/toolbox/guncase/traitor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Activate Evidence Disposal Explosive"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/storage/toolbox/guncase/traitor/PopulateContents()
+	new weapon_to_spawn (src)
+	for(var/i in 1 to 2)
+		new extra_to_spawn (src)
+	new ammo_box_to_spawn(src)
+
+/obj/item/storage/toolbox/guncase/traitor/update_icon_state()
+	. = ..()
+	if(currently_exploding)
+		icon_state = "[base_icon_state]_exploding"
+	else
+		icon_state = "[base_icon_state]"
+
+/obj/item/storage/toolbox/guncase/traitor/click_alt_secondary(mob/user)
+	. = ..()
+	var/i_dont_even_think_once_about_blowing_stuff_up = tgui_alert(user, "Would you like to activate the evidence disposal bomb now?", "BYE BYE", list("Yes","No"))
+	if(i_dont_even_think_once_about_blowing_stuff_up == "No")
+		return
+	explosion_timer = addtimer(CALLBACK(src, PROC_REF(think_fast_chucklenuts)), 5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE))
+	to_chat(user, span_warning("You prime [src]'s evidence disposal bomb!"))
+	log_bomber(user, "has activated a", src, "for detonation")
+	playsound(src, 'sound/items/weapons/armbomb.ogg', 50, TRUE)
+	currently_exploding = TRUE
+	update_appearance()
+
+/// proc to handle our detonation
+/obj/item/storage/toolbox/guncase/traitor/proc/think_fast_chucklenuts()
+	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 2, explosion_cause = src)
+	qdel(src)
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition
+	name = "makarov 9mm magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/m9mm
+
+/obj/item/storage/toolbox/guncase/traitor/donksoft
+	name = "\improper Donksoft riot pistol gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine
+	extra_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	ammo_box_to_spawn = /obj/item/ammo_box/foambox/riot
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition/donksoft
+	name = "\improper Donksoft riot pistol magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	extra_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	ammo_box_to_spawn = /obj/item/ammo_box/foambox/riot
+
 /obj/item/storage/toolbox/guncase/bulldog
 	name = "bulldog gun case"
 	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/bulldog
