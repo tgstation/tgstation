@@ -584,3 +584,40 @@
   carlarctg:
   - rscadd: Kissing while you have the ink infusion ability off cooldown gives you
       an ink kiss
+2024-12-25:
+  Absolucy, ShadowLarkens, S34N:
+  - bugfix: Fixed chat rapidly flickering in BYOND 516.
+  AyIong:
+  - qol: AdminPMs, admin tickets, vote results and started vote notification are now
+      much more visible in the chat.
+  - qol: Boxed messages in chat (like examine), has been restyled.
+  Ghommie:
+  - bugfix: Fixed aquariums auto-feeding.
+  Hatterhat:
+  - bugfix: .357 Heartseeker homes in on people if you click on them, instead of not
+      homing in at all.
+  KazooBard:
+  - qol: Selecting which spells to cast with hotkeys, and using them in general is
+      faster.
+  LT3:
+  - bugfix: You can no longer hug yourself to overcome fear of the dark
+  Melbert:
+  - balance: Lava no longer burns mobs thrown over it
+  - qol: Navigate verb better indicates areas on a separate level. Selecting an area
+      on a different level will direct you to the nearest staircase (as with "Nearest
+      Way Up/Down")
+  - qol: Navigating to a staircase or ladder will shorten the cooldown of navigate
+      and clear your existing path for you upon finding it
+  SyncIt21:
+  - bugfix: Big manipulator respects storage limits of storages when dropping stuff
+      into them
+  araeotu:
+  - rscadd: slime processor now have usb port and circuit component
+  - code_imp: the process code of processor now separate from interact
+  grungussuss:
+  - balance: computers can now be used as cover, firing a projectile over them is
+      now possible, while they may block projectiles if you are not adjacent to them
+      when firing.
+  - bugfix: computer laptops will not block projectiles
+  lovegreenstuff:
+  - rscadd: catalyst function for plumbing reaction chambers

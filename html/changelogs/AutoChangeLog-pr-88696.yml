@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: ".357 Heartseeker homes in on people if you click on them, instead of not homing in at all."
