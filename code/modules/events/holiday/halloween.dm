@@ -33,7 +33,7 @@
 	icon_state = "skeletoncookie"
 	crafting_complexity = FOOD_COMPLEXITY_2
 
-/obj/item/food/cookie/sugar/spookyskull/Initialize(mapload, seasonal_changes = TRUE)
+/obj/item/food/cookie/sugar/spookyskull/Initialize(mapload, seasonal_changes = FALSE)
 	// Changes default parameter of seasonal_changes to FALSE, pass to parent
 	return ..(mapload, seasonal_changes)
 
