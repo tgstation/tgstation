@@ -1,10 +1,5 @@
 import { sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { classes, shallowDiffers } from 'common/react';
 import { Component, createRef, RefObject } from 'react';
-
-import { resolveAsset } from '../assets';
-import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -16,7 +11,12 @@ import {
   Slider,
   Stack,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { flow } from 'tgui-core/fp';
+import { classes, shallowDiffers } from 'tgui-core/react';
+
+import { resolveAsset } from '../assets';
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 import { Connection, Connections, Position } from './common/Connections';
 import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';

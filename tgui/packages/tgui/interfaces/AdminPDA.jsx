@@ -1,7 +1,13 @@
-import { Box, Dropdown, Input, Section, TextArea } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Input,
+  Section,
+  TextArea,
+} from 'tgui-core/components';
 
 import { useBackend, useLocalState } from '../backend';
-import { Button } from '../components/Button';
 import { Window } from '../layouts';
 
 export const AdminPDA = (props) => {

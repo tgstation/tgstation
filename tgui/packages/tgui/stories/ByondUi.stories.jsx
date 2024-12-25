@@ -5,8 +5,8 @@
  */
 
 import { useState } from 'react';
+import { Box, Button, ByondUi, Section } from 'tgui-core/components';
 
-import { Box, Button, ByondUi, Section } from '../components';
 import { logger } from '../logging';
 
 export const meta = {

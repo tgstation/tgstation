@@ -1,8 +1,8 @@
 import { sortBy } from 'common/collections';
-import { round } from 'common/math';
+import { ColorBox, ProgressBar, Section, Stack } from 'tgui-core/components';
+import { round } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
-import { ColorBox, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const Restock = (props) => {

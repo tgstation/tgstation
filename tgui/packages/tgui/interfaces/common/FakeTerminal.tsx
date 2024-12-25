@@ -1,8 +1,14 @@
 import { Component, Fragment } from 'react';
+import { Box } from 'tgui-core/components';
 
-import { Box } from './Box';
+type State = {
+  currentIndex: number;
+  currentDisplay: string[];
+};
 
-export class FakeTerminal extends Component {
+export class FakeTerminal extends Component<any, State> {
+  timer: ReturnType<typeof setTimeout> | null;
+
   constructor(props) {
     super(props);
     this.timer = null;
@@ -23,7 +29,7 @@ export class FakeTerminal extends Component {
       const { currentDisplay } = state;
       currentDisplay.push(props.allMessages[state.currentIndex]);
     } else {
-      clearTimeout(this.timer);
+      clearTimeout(this.timer!);
       setTimeout(props.onFinished, props.finishedTimeout);
     }
   }
@@ -34,7 +40,7 @@ export class FakeTerminal extends Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timer);
+    clearTimeout(this.timer!);
   }
 
   render() {

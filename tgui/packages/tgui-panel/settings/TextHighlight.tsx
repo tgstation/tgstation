@@ -8,7 +8,7 @@ import {
   Section,
   Stack,
   TextArea,
-} from 'tgui/components';
+} from 'tgui-core/components';
 
 import { rebuildChat } from '../chat/actions';
 import {

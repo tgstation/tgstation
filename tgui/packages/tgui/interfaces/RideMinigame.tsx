@@ -1,8 +1,14 @@
-import { randomPick } from 'common/random';
 import { useEffect, useState } from 'react';
+import {
+  Button,
+  Image,
+  LabeledList,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { randomPick } from 'tgui-core/random';
 
 import { useBackend } from '../backend';
-import { Button, Image, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {

@@ -1,6 +1,6 @@
 import { Component, createRef } from 'react';
+import { Box, Button, Stack } from 'tgui-core/components';
 
-import { Box, Button, Stack } from '../../components';
 import { noop } from './constants';
 import { Port } from './Port';
 

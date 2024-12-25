@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Box, Button, Icon, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Box, Button, Icon, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { Connection, Connections, Position } from '../common/Connections';
 import { BoardTabs } from './BoardTabs';

@@ -10,9 +10,9 @@ import {
   Section,
   Table,
 } from 'tgui-core/components';
+import { round, toFixed } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
 
-import { round, toFixed } from '../../common/math';
-import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';

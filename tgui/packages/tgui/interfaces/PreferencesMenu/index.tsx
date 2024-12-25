@@ -1,4 +1,4 @@
-import { exhaustiveCheck } from 'common/exhaustive';
+import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
 import { useBackend } from '../../backend';
 import { CharacterPreferenceWindow } from './CharacterPreferenceWindow';

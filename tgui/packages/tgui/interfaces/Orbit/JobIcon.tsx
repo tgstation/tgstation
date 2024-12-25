@@ -1,4 +1,5 @@
-import { DmIcon, Icon } from '../../components';
+import { DmIcon, Icon } from 'tgui-core/components';
+
 import { JOB2ICON } from '../common/JobToIcon';
 import { Antagonist, Observable } from './types';
 

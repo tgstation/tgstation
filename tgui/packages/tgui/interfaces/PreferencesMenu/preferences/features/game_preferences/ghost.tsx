@@ -1,9 +1,9 @@
 import { binaryInsertWith } from 'common/collections';
-import { classes } from 'common/react';
 import { ReactNode } from 'react';
+import { useBackend } from 'tgui/backend';
+import { Box, Dropdown, Flex } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
-import { useBackend } from '../../../../../backend';
-import { Box, Dropdown, Flex } from '../../../../../components';
 import { PreferencesMenuData } from '../../../data';
 import {
   CheckboxInput,

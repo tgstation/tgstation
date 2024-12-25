@@ -1,5 +1,6 @@
-import { Flex } from '../../components';
-import { formatSiUnit } from '../../format';
+import { Flex } from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
+
 import { MaterialIcon } from './MaterialIcon';
 import { Design, MaterialMap } from './Types';
 

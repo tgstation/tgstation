@@ -1,8 +1,15 @@
 import { filter } from 'common/collections';
 import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Icon,
+  Popper,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Box, Button, Icon, Popper, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk, RandomSetting, ServerData } from './data';
 import { getRandomization, PreferenceList } from './MainPage';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';

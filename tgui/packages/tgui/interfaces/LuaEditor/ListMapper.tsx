@@ -1,7 +1,4 @@
-import { BooleanLike } from 'common/react';
-import React, { Dispatch, SetStateAction } from 'react';
-
-import { useBackend } from '../../backend';
+import React, { ComponentProps, Dispatch, SetStateAction } from 'react';
 import {
   Box,
   Button,
@@ -9,8 +6,10 @@ import {
   LabeledList,
   Section,
   Tooltip,
-} from '../../components';
-import { BoxProps } from '../../components/Box';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../../backend';
 import { logger } from '../../logging';
 import { CallInfo, LuaEditorModal, Variant, VariantList } from './types';
 import { ListElement, ListPath } from './types';
@@ -94,7 +93,7 @@ const mapListVariants = (list: any[], variants: VariantList) => {
   });
 };
 
-type ListMapperProps = BoxProps & {
+type ListMapperProps = ComponentProps<typeof Box> & {
   list: ListElement[];
 } & Partial<{
     variants: VariantList;

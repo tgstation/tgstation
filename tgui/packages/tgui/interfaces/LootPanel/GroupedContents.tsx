@@ -1,7 +1,7 @@
-import { createSearch } from 'common/string';
 import { useMemo } from 'react';
+import { Flex } from 'tgui-core/components';
+import { createSearch } from 'tgui-core/string';
 
-import { Flex } from '../../components';
 import { LootBox } from './LootBox';
 import { SearchGroup, SearchItem } from './types';
 

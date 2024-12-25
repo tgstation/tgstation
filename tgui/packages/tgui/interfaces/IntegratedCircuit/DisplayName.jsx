@@ -1,4 +1,5 @@
-import { Box, Button, Flex } from '../../components';
+import { Box, Button, Flex } from 'tgui-core/components';
+
 import {
   DATATYPE_DISPLAY_HANDLERS,
   FUNDAMENTAL_DATA_TYPES,

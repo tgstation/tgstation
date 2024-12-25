@@ -1,8 +1,8 @@
-import { BooleanLike } from 'common/react';
-import { capitalizeAll, capitalizeFirst } from 'common/string';
+import { Tooltip } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { capitalizeAll, capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
-import { Tooltip } from '../../components';
 import { IconDisplay } from './IconDisplay';
 import { SearchGroup, SearchItem } from './types';
 

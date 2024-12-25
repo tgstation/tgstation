@@ -1,6 +1,5 @@
-import { BooleanLike } from 'common/react';
-import { capitalizeAll } from 'common/string';
 import { useBackend } from 'tgui/backend';
+import { Window } from 'tgui/layouts';
 import {
   Button,
   Icon,
@@ -10,8 +9,9 @@ import {
   Slider,
   Stack,
   Tooltip,
-} from 'tgui/components';
-import { Window } from 'tgui/layouts';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { capitalizeAll } from 'tgui-core/string';
 
 type Data = {
   can_hack: BooleanLike;
@@ -372,10 +372,8 @@ function FloorbotLine(props: ControlProps) {
         name={control[1] ? 'compass' : 'toggle-off'}
         onClick={() => act('line_mode')}
         size={!control[1] ? 2 : 1.5}
-      >
-        {' '}
-        {control[1] ? control[1].toString().charAt(0).toUpperCase() : ''}
-      </Icon>
+      />
+      {control[1] ? control[1].toString().charAt(0).toUpperCase() : ''}
     </Tooltip>
   );
 }

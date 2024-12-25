@@ -5,7 +5,6 @@
  */
 
 import { useState } from 'react';
-
 import {
   Box,
   DraggableControl,
@@ -16,7 +15,7 @@ import {
   NumberInput,
   Section,
   Slider,
-} from '../components';
+} from 'tgui-core/components';
 
 export const meta = {
   title: 'Input',

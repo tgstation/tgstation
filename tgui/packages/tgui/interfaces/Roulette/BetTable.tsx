@@ -1,8 +1,8 @@
-import { BooleanLike, classes } from 'common/react';
 import { useState } from 'react';
+import { Box, Button, NumberInput, Stack, Table } from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
-import { Box, Button, NumberInput, Stack, Table } from '../../components';
 import { getNumberColor } from './helpers';
 
 type Data = {

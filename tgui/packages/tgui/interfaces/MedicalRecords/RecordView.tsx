@@ -6,7 +6,7 @@ import {
   RestrictedInput,
   Section,
   Stack,
-} from 'tgui/components';
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { CharacterPreview } from '../common/CharacterPreview';

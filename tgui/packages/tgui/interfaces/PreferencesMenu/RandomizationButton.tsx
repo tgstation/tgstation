@@ -1,6 +1,6 @@
-import { exhaustiveCheck } from 'common/exhaustive';
+import { Dropdown } from 'tgui-core/components';
+import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
-import { Dropdown } from '../../components';
 import { RandomSetting } from './data';
 
 const options = [

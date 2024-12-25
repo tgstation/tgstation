@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, Input, Section, Stack } from 'tgui/components';
+import { Box, Button, Input, Section, Stack } from 'tgui-core/components';
 
 import {
   getDefaultPrintDescription,

@@ -1,5 +1,6 @@
+import { Button, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { RequestsConsoleHeader } from './RequestsConsoleHeader';
 import { RequestMainScreen } from './RequestsConsoleMainScreen';

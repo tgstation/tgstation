@@ -19,7 +19,7 @@
     "tgui:test-ci": "CI=true jest --color --collect-coverage",
     "tgui:tsc": "tsc",
     "tgui:prettier-fix": "prettier --write .",
-    "tgui:eslint-fix": "eslint --fix packages --ext .js,.cjs,.ts,.tsx"
+    "tgui:eslint-fix": "eslint --fix packages --ext .js,.cjs,.ts,.jsx,.tsx"
   },
   "dependencies": {
     "@swc/core": "^1.9.1",

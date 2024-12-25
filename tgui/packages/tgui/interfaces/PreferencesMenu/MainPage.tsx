@@ -1,9 +1,5 @@
 import { filter, map, sortBy } from 'common/collections';
-import { classes } from 'common/react';
-import { createSearch } from 'common/string';
 import { ReactNode, useState } from 'react';
-
-import { sendAct, useBackend } from '../../backend';
 import {
   Autofocus,
   Box,
@@ -13,7 +9,11 @@ import {
   LabeledList,
   Popper,
   Stack,
-} from '../../components';
+} from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { sendAct, useBackend } from '../../backend';
 import { CharacterPreview } from '../common/CharacterPreview';
 import {
   createSetPreference,

@@ -1,9 +1,9 @@
-import { classes } from 'common/react';
-import { capitalizeAll } from 'common/string';
 import { useState } from 'react';
+import { Box, Button, Section, Stack, Tabs } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+import { capitalizeAll } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import { InfoSection } from './RapidConstructionDevice';
 

@@ -1,7 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { resolveAsset } from '../assets';
-import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -12,7 +8,11 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { resolveAsset } from '../assets';
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 type Data = {

@@ -5,8 +5,8 @@
  */
 
 import { useState } from 'react';
+import { Flex, Section, Tabs } from 'tgui-core/components';
 
-import { Flex, Section, Tabs } from '../components';
 import { Pane, Window } from '../layouts';
 
 const r = require.context('../stories', false, /\.stories\.jsx$/);

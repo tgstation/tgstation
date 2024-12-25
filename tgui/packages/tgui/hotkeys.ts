@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import * as keycodes from 'common/keycodes';
+import * as keycodes from 'tgui-core/keycodes';
 
 import { globalEvents, KeyEvent } from './events';
 import { createLogger } from './logging';

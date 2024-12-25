@@ -1,9 +1,16 @@
-import { BooleanLike, classes } from 'common/react';
-import { capitalizeAll } from 'common/string';
 import { useState } from 'react';
+import {
+  Box,
+  Button,
+  LabeledList,
+  Section,
+  Stack,
+  Tabs,
+} from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
+import { capitalizeAll } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import { AirLockMainSection } from './AirlockElectronics';
 
