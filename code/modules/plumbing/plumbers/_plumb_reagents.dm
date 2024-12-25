@@ -133,7 +133,7 @@
 	if(!catalysts.len)
 		return total_volume
 
-	//filter out catalysts except when we have a excess of them
+	//filter out catalysts except when we have excess of them
 	var/working_volume
 	var/catalyst_volume
 	var/list/cached_reagents = reagent_list
