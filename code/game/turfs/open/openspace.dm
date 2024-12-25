@@ -113,18 +113,18 @@
 /turf/open/openspace/proc/CanBuildHere()
 	return can_build_on
 
-/turf/open/openspace/attackby(obj/item/C, mob/user, params)
+/turf/open/openspace/attackby(obj/item/attacking_item, mob/user, params)
 	..()
 	if(!CanBuildHere())
 		return
-	if(istype(C, /obj/item/stack/rods))
-		build_with_rods(C, user)
-	else if(istype(C, /obj/item/stack/tile/iron))
-		build_with_floor_tiles(C, user)
-	else if(istype(C, /obj/item/stack/thermoplastic))
-		build_with_transport_tiles(C, user)
-	else if(istype(C, /obj/item/stack/sheet/mineral/titanium))
-		build_with_titanium(C, user)
+	if(istype(attacking_item, /obj/item/stack/rods))
+		build_with_rods(attacking_item, user)
+	else if(ismetaltile(attacking_item))
+		build_with_floor_tiles(attacking_item, user)
+	else if(istype(attacking_item, /obj/item/stack/thermoplastic))
+		build_with_transport_tiles(attacking_item, user)
+	else if(istype(attacking_item, /obj/item/stack/sheet/mineral/titanium))
+		build_with_titanium(attacking_item, user)
 
 /turf/open/openspace/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles)
 	if(!CanCoverUp())

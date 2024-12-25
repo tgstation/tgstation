@@ -135,26 +135,28 @@
 /turf/open/floor/plating/foam/break_tile()
 	return //jetfuel can't break steel foam...
 
-/turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/tile/iron))
-		var/obj/item/stack/tile/iron/P = I
-		if(P.use(1))
-			var/obj/L = locate(/obj/structure/lattice) in src
-			if(L)
-				qdel(L)
-			to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
-			playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
-			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+/turf/open/floor/plating/foam/attackby(obj/item/attacking_item, mob/user, params)
+	if(ismetaltile(attacking_item))
+		var/obj/item/stack/tile/tiles = attacking_item
+		if(!tiles.use(1))
+			return
+		var/obj/lattice = locate(/obj/structure/lattice) in src
+		if(lattice)
+			qdel(lattice)
+		to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
+		playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
+		ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		return
+
+	playsound(src, 'sound/items/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if(prob(attacking_item.force * 20 - 25))
+		user.visible_message(span_danger("[user] smashes through [src]!"), \
+						span_danger("You smash through [src] with [attacking_item]!"))
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else
-		playsound(src, 'sound/items/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		if(prob(I.force * 20 - 25))
-			user.visible_message(span_danger("[user] smashes through [src]!"), \
-							span_danger("You smash through [src] with [I]!"))
-			ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		else
-			to_chat(user, span_danger("You hit [src], to no effect!"))
+		to_chat(user, span_danger("You hit [src], to no effect!"))
 
 /turf/open/floor/plating/foam/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
