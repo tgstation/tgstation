@@ -9,6 +9,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/coffeemaker
 	anchored_tabletop_offset = 4
+	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OFFLINE
 	var/obj/item/reagent_containers/cup/coffeepot/coffeepot = null
 	var/brewing = FALSE
 	var/brew_time = 20 SECONDS
