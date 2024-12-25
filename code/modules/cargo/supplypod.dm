@@ -259,7 +259,10 @@
 	return
 
 ///Called by the drop pods that return captured crewmembers from the ninja den.
-/obj/structure/closet/supplypod/proc/return_from_capture(mob/living/victim, turf/destination = get_safe_random_station_turf())
+/obj/structure/closet/supplypod/proc/return_from_capture(
+	mob/living/victim,
+	turf/destination = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
+)
 	if(isnull(destination)) //Uuuuh, something went wrong. This is gonna hurt.
 		to_chat(victim, span_hypnophrase("A million voices echo in your head... \"Seems where you got sent won't \
 			be able to handle our pod... as if we wanted the occupant to survive. Brace yourself, corporate dog.\""))
