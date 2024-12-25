@@ -17,6 +17,7 @@
 
 /obj/item/gun/ballistic/automatic/toy/riot
 	spawn_magazine_type = /obj/item/ammo_box/magazine/toy/smg/riot
+
 /obj/item/gun/ballistic/automatic/pistol/toy
 	name = "foam force pistol"
 	desc = "A small, easily concealable toy handgun. Ages 8 and up."
@@ -30,6 +31,9 @@
 /obj/item/gun/ballistic/automatic/pistol/riot/Initialize(mapload)
 	magazine = new /obj/item/ammo_box/magazine/toy/pistol/riot(src)
 	return ..()
+
+/obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine
+	projectile_damage_multiplier = 1.4
 
 /obj/item/gun/ballistic/shotgun/toy
 	name = "foam force shotgun"

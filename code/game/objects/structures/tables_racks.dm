@@ -197,7 +197,7 @@
 	var/extra_wound = 0
 	if(HAS_TRAIT(user, TRAIT_HULK))
 		extra_wound = 20
-	banged_limb?.receive_damage(30, wound_bonus = extra_wound)
+	pushed_mob.apply_damage(30, BRUTE, banged_limb, wound_bonus = extra_wound)
 	pushed_mob.apply_damage(60, STAMINA)
 	take_damage(50)
 	if(user.mind?.martial_art?.smashes_tables && user.mind?.martial_art.can_use(user))
@@ -389,6 +389,23 @@
 		clear_item_reference(item)
 	LAZYNULL(attached_items) // safety
 	return ..()
+
+/obj/structure/table/rolling/item_interaction(mob/living/user, obj/item/rolling_table_dock/rable, list/modifiers)
+	. = NONE
+	if(!istype(rable))
+		return
+
+	if(rable.loaded)
+		to_chat(user, span_warning("You already have \a [rable.loaded] docked!"))
+		return ITEM_INTERACT_FAILURE
+	if(locate(/mob/living) in get_turf(src))
+		to_chat(user, span_warning("You can't collect \the [src] with that much on top!"))
+		return ITEM_INTERACT_FAILURE
+
+	rable.loaded = src
+	forceMove(rable)
+	user.visible_message(span_notice("[user] collects \the [src]."), span_notice("you collect \the [src]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	. = ..()

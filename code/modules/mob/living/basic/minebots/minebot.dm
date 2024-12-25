@@ -42,13 +42,14 @@
 	///the commands our owner can give us
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle/minebot,
+		/datum/pet_command/move,
 		/datum/pet_command/protect_owner/minebot,
 		/datum/pet_command/minebot_ability/light,
 		/datum/pet_command/minebot_ability/dump,
 		/datum/pet_command/automate_mining,
 		/datum/pet_command/free/minebot,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack/minebot,
+		/datum/pet_command/attack/minebot,
 	)
 	///possible colors the bot can have
 	var/static/list/possible_colors= list(
