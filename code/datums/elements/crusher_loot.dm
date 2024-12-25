@@ -38,7 +38,7 @@
 	if(damage && prob((damage.total_damage/target.maxHealth) * drop_mod)) //on average, you'll need to kill 4 creatures before getting the item. by default.
 		if(islist(trophy_type))
 			for(var/trophypath in trophy_type)
-				make_path(target, trophy_type)
+				make_path(target, trophypath)
 			return
 		make_path(target, trophy_type)
 

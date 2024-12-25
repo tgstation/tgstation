@@ -18,9 +18,9 @@
 	layer = LARGE_MOB_LAYER
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	/// Loot if not killed by crusher. ONLY matters on initialize.
+	/// List of loot if not killed by crusher.
 	var/list/loot
-	/// Loot if killed by crusher. ONLY matters on initialize.
+	/// List of loot if killed by crusher.
 	var/list/crusher_loot
 	/// Achievement given to surrounding players when the megafauna is killed
 	var/achievement_type
@@ -44,29 +44,17 @@
 	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE, TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE, TRAIT_NO_FLOATING_ANIM), MEGAFAUNA_TRAIT)
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
-	if(!isnull(loot))
-		AddElement(/datum/element/death_drops, string_list(loot))
-	if(!isnull(crusher_loot))
-		AddElement(\
-			/datum/element/crusher_loot,\
-			trophy_type = islist(crusher_loot) ? string_list(crusher_loot) : crusher_loot,\
-			drop_mod = 100,\
-			drop_immediately = TRUE,\
-		)
 
 /mob/living/basic/boss/gib()
 	if(health > 0)
 		return
-
 	return ..()
 
 /mob/living/basic/boss/dust(just_ash, drop_items, force)
 	if(!force && health > 0)
 		return
-
-	RemoveElement(/datum/element/death_drops)
-	RemoveElement(/datum/element/crusher_loot)
-
+	loot.Cut()
+	crusher_loot.Cut()
 	return ..()
 
 /mob/living/basic/boss/death(gibbed, list/force_grant)
@@ -77,11 +65,7 @@
 		return
 	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
 	///Whether we killed the megafauna with primarily crusher damage or not
-	var/crusher_kill = FALSE
-	if(crusher_dmg && crusher_dmg.total_damage >= maxHealth * 0.6)
-		crusher_kill = TRUE
-		if(crusher_loot)
-			RemoveElement(/datum/element/death_drops)
+	var/crusher_kill = (crusher_dmg && (crusher_dmg.total_damage >= floor(maxHealth * 0.6)))
 	if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
 		var/tab = "megafauna_kills"
 		if(crusher_kill)
@@ -89,6 +73,10 @@
 		if(!elimination) //used so the achievment only occurs for the last legion to die.
 			grant_achievement(achievement_type, score_achievement_type, crusher_kill, force_grant)
 			SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
+
+	for(var/path in crusher_kill ? crusher_loot : loot) // using this instead of deathdrops and crusher_loot because we calculate differently and removing the element is ass
+		new path(drop_location())
+
 	return ..()
 
 /// Grants medals and achievements to surrounding players
