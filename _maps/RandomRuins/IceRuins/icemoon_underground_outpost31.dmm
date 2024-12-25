@@ -137,6 +137,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/dim/directional/west,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/outpost31/kennel)
 "cp" = (
@@ -541,6 +542,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/mob/living/basic/fleshblob,
 /turf/open/floor/wood,
 /area/ruin/outpost31/commander_room)
 "lr" = (
@@ -754,6 +756,15 @@
 /obj/item/storage/cans/sixbeer,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/outpost31/recroom)
+"pa" = (
+/obj/item/keycard{
+	puzzle_id = "thingbossentry";
+	name = "lab keycard";
+	color = "blue"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/ruin/outpost31/commander_room)
 "pd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
@@ -1109,6 +1120,14 @@
 	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
 	},
 /area/ruin/outpost31/lab)
+"wu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/girder,
+/obj/structure/barricade/wooden,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/outpost31)
 "wx" = (
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/textured_half,
@@ -1601,6 +1620,7 @@
 /obj/machinery/door/airlock/grunge,
 /obj/effect/turf_decal/siding/blue/end,
 /obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/welded,
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/outpost31/crewquarters)
 "FW" = (
@@ -2088,6 +2108,13 @@
 	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
 	},
 /area/ruin/outpost31/lab)
+"PW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/girder,
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
 "Qj" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/effect/mapping_helpers/broken_floor,
@@ -2186,7 +2213,6 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/mob/living/basic/fleshblob,
 /turf/open/floor/wood,
 /area/ruin/outpost31/commander_room)
 "Sy" = (
@@ -2238,6 +2264,7 @@
 	power_gen = 25000
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/outpost31/kennel)
 "Tr" = (
@@ -2263,6 +2290,15 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/outpost31/kitchendiningroom)
+"Tx" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/girder,
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron,
+/area/ruin/outpost31)
 "TP" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
@@ -2331,11 +2367,6 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/structure/table/wood,
-/obj/item/keycard{
-	puzzle_id = "thingbossentry";
-	name = "lab keycard";
-	color = "blue"
-	},
 /turf/open/floor/wood,
 /area/ruin/outpost31/commander_room)
 "Vx" = (
@@ -3548,7 +3579,7 @@ pe
 cp
 Ht
 Ht
-VG
+Tx
 cp
 Ht
 cp
@@ -3590,7 +3621,7 @@ ge
 YK
 YK
 YK
-YK
+wu
 YK
 YK
 ge
@@ -3632,7 +3663,7 @@ wO
 EL
 RK
 db
-oN
+PW
 Uy
 oN
 Uy
@@ -3968,7 +3999,7 @@ op
 LA
 ZL
 ZT
-ZT
+pa
 EY
 ZT
 sF
