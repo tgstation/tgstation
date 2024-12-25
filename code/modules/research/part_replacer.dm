@@ -12,7 +12,7 @@
 
 /obj/item/storage/part_replacer/interact_with_atom(obj/attacked_object, mob/living/user, list/modifiers)
 	if(user.combat_mode || !istype(attacked_object) || HAS_TRAIT(attacked_object, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
-		return ITEM_INTERACT_SKIP_TO_ATTACK
+		return FALSE
 
 	//its very important to NOT block so frames can still interact with it
 	if(!ismachinery(attacked_object) || istype(attacked_object, /obj/machinery/computer))
