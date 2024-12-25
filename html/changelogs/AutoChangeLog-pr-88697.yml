@@ -1,0 +1,5 @@
+author: "LordHookie"
+delete-after: True
+changes:
+  - bugfix: "The Syndicate Medical Space Suit is no longer labelled a 'green space suit' despite being a noticeably non-green color."
+  - bugfix: "Syndicate Medical and Engineering space helmets now display themselves as such."
