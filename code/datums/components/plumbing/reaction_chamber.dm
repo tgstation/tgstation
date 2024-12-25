@@ -17,12 +17,13 @@
 		return
 
 	//check to see if we can give catalysts only if they are in excess
+	var/list/datum/reagent/catalysts = reaction_chamber.catalysts
 	for(var/datum/reagent/chemical as anything in reagents.reagent_list)
 		if(reagent && chemical.type != reagent)
 			continue
 
 		//we have the exact amounts so no excess to spare
-		if(chemical.volume <= reaction_chamber.catalysts[chemical.type] || 0)
+		if(chemical.volume <= catalysts[chemical.type] || 0)
 			if(reagent)
 				break
 			else
