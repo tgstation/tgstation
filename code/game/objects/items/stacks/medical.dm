@@ -32,6 +32,10 @@
 	var/sanitization
 	/// How much we add to flesh_healing for burn wounds on application
 	var/flesh_regeneration
+	/// Verb used when applying this object to someone
+	var/apply_verb = "treating"
+	/// Whether this item can be used on dead bodies
+	var/works_on_dead = FALSE
 
 /obj/item/stack/medical/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -90,8 +94,8 @@
 	var/heal_zone = check_zone(user.zone_selected)
 	if(!try_heal_checks(patient, user, heal_zone))
 		return FALSE
-	SSblackbox.record_feedback("nested tally", "medical_item_used", 1, list(type, auto_change_zone ? "auto" : "manual"))
-	patient.balloon_alert(user, "treating [parse_zone(heal_zone)]...")
+	SSblackbox.record_feedback("nested tally", "medical_item_used", 1, list("[auto_change_zone ? "auto" : "manual"]", "[type]"))
+	patient.balloon_alert(user, "[apply_verb] [parse_zone(heal_zone)]...")
 	INVOKE_ASYNC(src, PROC_REF(try_heal), patient, user, heal_zone, FALSE, iscarbon(patient) && auto_change_zone) // auto change is useless for non-carbons
 	return TRUE
 
@@ -114,7 +118,6 @@
 /obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE)
 	if(patient == user)
 		if(!silent)
-			user.balloon_alert(user, "treating [parse_zone(healed_zone)]...")
 			user.visible_message(
 				span_notice("[user] starts to apply [src] on [user.p_them()]self..."),
 				span_notice("You begin applying [src] on yourself..."),
@@ -134,7 +137,6 @@
 
 	else if(other_delay)
 		if(!silent)
-			patient.balloon_alert(user, "treating [parse_zone(healed_zone)]...")
 			user.visible_message(
 				span_notice("[user] starts to apply [src] on [patient]."),
 				span_notice("You begin applying [src] on [patient]..."),
@@ -181,7 +183,7 @@
 	var/preferred_target = check_zone(user.zone_selected)
 	if(try_heal_checks(patient, user, preferred_target, silent = TRUE))
 		if(preferred_target != healed_zone)
-			patient.balloon_alert(user, "treating [parse_zone(preferred_target)]...")
+			patient.balloon_alert(user, "[apply_verb] [parse_zone(preferred_target)]...")
 		try_heal(patient, user, preferred_target, TRUE, auto_change_zone)
 		return
 
@@ -211,7 +213,7 @@
 
 	var/next_picked = (preferred_target in other_affected_limbs) ? preferred_target : other_affected_limbs[1]
 	if(next_picked != last_zone)
-		user.balloon_alert(user, "treating [parse_zone(next_picked)]...")
+		patient.balloon_alert(user, "[apply_verb] [parse_zone(next_picked)]...")
 	try_heal(patient, user, next_picked, silent = TRUE, auto_change_zone = TRUE)
 
 /obj/item/stack/medical/proc/try_heal_manual_target(mob/living/carbon/patient, mob/living/user)
@@ -223,7 +225,7 @@
 	var/new_zone = check_zone(user.zone_selected)
 	if(!try_heal_checks(patient, user, new_zone))
 		return
-	patient.balloon_alert(user, "treating [parse_zone(new_zone)]...")
+	patient.balloon_alert(user, "[apply_verb] [parse_zone(new_zone)]...")
 	try_heal(patient, user, new_zone, silent = TRUE, auto_change_zone = FALSE)
 
 /// Checks if the passed patient can be healed by the passed user
@@ -233,10 +235,14 @@
 /// Checks a bunch of stuff to see if we can heal the patient, including can_heal
 /// Gives a feedback if we can't ultimatly heal the patient (unless silent is TRUE)
 /obj/item/stack/medical/proc/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
+	if(!(healed_zone in GLOB.all_body_zones))
+		stack_trace("Invalid zone ([healed_zone || "null"]) passed to try_heal_checks.")
+		healed_zone = BODY_ZONE_CHEST
+
 	if(!can_heal(patient, user, healed_zone, silent))
 		// has its own feedback
 		return FALSE
-	if(patient.stat == DEAD)
+	if(!works_on_dead && patient.stat == DEAD)
 		if(!silent)
 			patient.balloon_alert(user, "[patient.p_theyre()] dead!")
 		return FALSE
@@ -343,6 +349,7 @@
 	other_delay = 2 SECONDS
 	grind_results = list(/datum/reagent/medicine/c2/libital = 10)
 	merge_type = /obj/item/stack/medical/bruise_pack
+	apply_verb = "applying to"
 
 /obj/item/stack/medical/bruise_pack/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -365,6 +372,8 @@
 	splint_factor = 0.7
 	burn_cleanliness_bonus = 0.35
 	merge_type = /obj/item/stack/medical/gauze
+	apply_verb = "wrapping"
+	works_on_dead = TRUE
 	var/obj/item/bodypart/gauzed_bodypart
 
 /obj/item/stack/medical/gauze/Destroy(force)
@@ -403,7 +412,7 @@
 	return FALSE
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
-/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/living/user, silent, healed_zone, auto_change_zone)
+/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/living/user, healed_zone, silent, auto_change_zone)
 	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
 	var/treatment_delay = (user == patient ? self_delay : other_delay)
 	var/any_scanned = FALSE
@@ -435,8 +444,6 @@
 				span_warning("You begin wrapping the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone] with [src]..."),
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
-
-	patient.balloon_alert(user, "wrapping [parse_zone(healed_zone)]...")
 
 	if(!do_after(user, treatment_delay, target = patient))
 		return
@@ -510,6 +517,7 @@
 	stop_bleeding = 0.6
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 	merge_type = /obj/item/stack/medical/suture
+	apply_verb = "suturing"
 
 /obj/item/stack/medical/suture/emergency
 	name = "emergency suture"
@@ -546,6 +554,7 @@
 	sanitization = 0.25
 	grind_results = list(/datum/reagent/medicine/c2/lenturi = 10)
 	merge_type = /obj/item/stack/medical/ointment
+	apply_verb = "applying to"
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is squeezing [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?"))
@@ -581,7 +590,7 @@
 		return ..()
 	icon_state = "regen_mesh_closed"
 
-/obj/item/stack/medical/mesh/try_heal_checks(mob/living/patient, mob/living/user, silent = FALSE)
+/obj/item/stack/medical/mesh/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
 	if(!is_open)
 		if(!silent)
 			balloon_alert(user, "open it first!")
@@ -643,6 +652,7 @@
 	heal_burn = 3
 	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
 	merge_type = /obj/item/stack/medical/aloe
+	apply_verb = "applying to"
 
 /obj/item/stack/medical/aloe/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
@@ -667,6 +677,7 @@
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
 	novariants = TRUE
 	merge_type = /obj/item/stack/medical/bone_gel
+	apply_verb = "applying to"
 
 /obj/item/stack/medical/bone_gel/get_surgery_tool_overlay(tray_extended)
 	return "gel" + (tray_extended ? "" : "_out")
@@ -719,6 +730,8 @@
 	mob_throw_hit_sound = 'sound/misc/moist_impact.ogg'
 	hitsound = 'sound/misc/moist_impact.ogg'
 	merge_type = /obj/item/stack/medical/poultice
+	apply_verb = "applying to"
+	works_on_dead = TRUE
 
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/living/user)
 	. = ..()
@@ -740,6 +753,7 @@
 	self_delay = 3 SECONDS
 	other_delay = 1 SECONDS
 	grind_results = list(/datum/reagent/medicine/c2/libital = 2)
+	apply_verb = "applying to"
 
 /obj/item/stack/medical/bandage/makeshift
 	name = "makeshift bandage"

@@ -434,8 +434,8 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	playsound(src, SFX_SPARKS, 75, TRUE)
 	obj_flags |= EMAGGED
 	if (user)
-		balloon_alert(user, "safety protocols destroyed") // im gonna keep this once since this perfectly describes it, and the to_chat is just flavor
-		to_chat(user, span_warning("You vastly increase projector power and override the safety and security protocols."))
+		balloon_alert(user, "safety protocols destroyed") // im gonna keep this once since this perfectly describes it
+		to_chat(user, span_warning("You override the safety and security protocols."))
 		user.log_message("emagged the Holodeck Control Console.", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(user)] emagged the Holodeck Control Console.")
 

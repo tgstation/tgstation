@@ -19,10 +19,16 @@
 
 /datum/reagent/nitroglycerin
 	name = "Nitroglycerin"
-	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
+	description = "Nitroglycerin is a heavy, colorless, oily liquid obtained by nitrating glycerol. \
+		It is commonly used to treat heart conditions, but also in the creation of explosives."
 	color = COLOR_GRAY
 	taste_description = "oil"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/nitroglycerin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, -1 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/stabilizing_agent
 	name = "Stabilizing Agent"
