@@ -14,7 +14,7 @@
 
 	//cannot give when we outselves are requesting or reacting the reagents
 	if(amount <= 0 || !reagents.total_volume || !reaction_chamber.emptying || reagents.is_reacting)
-		return FALSE
+		return
 
 	//check to see if we can give catalysts only if they are in excess
 	for(var/datum/reagent/chemical as anything in reagents.reagent_list)
