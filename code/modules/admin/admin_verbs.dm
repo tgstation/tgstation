@@ -555,6 +555,8 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 		if(ishuman(character))
 			GLOB.manifest.inject(character)
 
+		SSmobs.clients_by_zlevel[destination.z] += character
+
 		number_made++
 		CHECK_TICK
 
