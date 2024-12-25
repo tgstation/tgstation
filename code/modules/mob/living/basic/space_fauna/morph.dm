@@ -77,16 +77,14 @@
 		return ..()
 
 	//we hide medical hud while in regular state or an item
-	var/image/holder = hud_list[HEALTH_HUD]
-	holder.icon_state = null
+	set_hud_image_state(HEALTH_HUD, null)
 
 /mob/living/basic/morph/med_hud_set_status()
 	if(isliving(form_typepath))
 		return ..()
 
 	//we hide medical hud while in regular state or an item
-	var/image/holder = hud_list[STATUS_HUD]
-	holder.icon_state = null
+	set_hud_image_state(STATUS_HUD, null)
 
 /mob/living/basic/morph/death(gibbed)
 	if(HAS_TRAIT(src, TRAIT_DISGUISED))

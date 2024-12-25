@@ -90,7 +90,7 @@
 
 	// actually flip to other direction?
 	if(abs(angle - azimuth_current) > 180)
-		mid_azimuth = reverse_angle(mid_azimuth)
+		mid_azimuth = REVERSE_ANGLE(mid_azimuth)
 
 	// Split into 2 parts so it doesn't distort on large changes
 	animate(part,
