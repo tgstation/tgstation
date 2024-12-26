@@ -410,8 +410,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	if(!take_chair_damage(damage_to_inflict, damtype, MELEE)) // If we would do enough damage to bring our chair's integrity to 0, we instead go past the check to smash it against our target
 		return
 
-	user.visible_message(span_danger("[user] smashes [src] to pieces against [target]"))
-	if(!HAS_TRAIT(target, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && vulnerable_hit)
+	user.visible_message(span_danger("[user] smashes [src] to pieces against [give_this_fucker_the_chair]"))
+	if(!HAS_TRAIT(give_this_fucker_the_chair, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && vulnerable_hit)
 		give_this_fucker_the_chair.Knockdown(2 SECONDS)
 		if(give_this_fucker_the_chair.health < give_this_fucker_the_chair.maxHealth*0.5)
 			give_this_fucker_the_chair.adjust_confusion(10 SECONDS)
