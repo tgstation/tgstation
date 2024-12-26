@@ -805,9 +805,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	storage_type = /datum/storage/test_tube_rack
 
-/obj/item/storage/test_tube_rack/attack_self(mob/user)
-	emptyStorage()
-
 /obj/item/storage/test_tube_rack/update_icon_state()
 	icon_state = "[base_icon_state][contents.len > 0 ? contents.len : null]"
 	return ..()

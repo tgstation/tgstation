@@ -3,6 +3,7 @@
 	screen_max_columns = 4
 	screen_max_rows = 2
 	allow_quick_gather = TRUE
+	allow_quick_empty = TRUE
 
 /datum/storage/test_tube_rack/New(
 	atom/parent,
