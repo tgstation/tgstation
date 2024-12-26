@@ -165,7 +165,7 @@
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 	resistance_flags = FLAMMABLE
-	max_integrity = 50
+	max_integrity = 40
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
@@ -306,7 +306,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "A makeshift bamboo stool with a rustic look."
 	icon_state = "bamboo_stool"
 	resistance_flags = FLAMMABLE
-	max_integrity = 50
+	max_integrity = 40
 	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
 	buildstackamount = 2
 	item_chair = /obj/item/chair/stool/bamboo
@@ -402,7 +402,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	var/mob/living/carbon/human/give_this_fucker_the_chair = target
 
 	// Here we determine if our attack is against a vulnerable target
-	var/vulnerable_hit = (check_behind(user, give_this_fucker_the_chair) || give_this_fucker_the_chair.get_timed_status_effect_duration(/datum/status_effect/staggered))
+	var/vulnerable_hit = check_behind(user, give_this_fucker_the_chair)
 
 	// If our attack is against a vulnerable target, we do additional damage to the chair
 	var/damage_to_inflict = vulnerable_hit ? (force * 5) : (force * 2.5)
@@ -411,12 +411,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 		return
 
 	user.visible_message(span_danger("[user] smashes [src] to pieces against [give_this_fucker_the_chair]"))
-	if(!HAS_TRAIT(give_this_fucker_the_chair, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && vulnerable_hit)
-		give_this_fucker_the_chair.Knockdown(2 SECONDS)
-		if(give_this_fucker_the_chair.health < give_this_fucker_the_chair.maxHealth*0.5)
-			give_this_fucker_the_chair.adjust_confusion(10 SECONDS)
-		if(inflicts_stun_vulnerability)
-			give_this_fucker_the_chair.apply_status_effect(/datum/status_effect/next_shove_stuns)
+	if(!HAS_TRAIT(give_this_fucker_the_chair, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
+		if(vulnerable_hit | give_this_fucker_the_chair.get_timed_status_effect_duration(/datum/status_effect/staggered))
+			give_this_fucker_the_chair.Knockdown(2 SECONDS)
+			if(give_this_fucker_the_chair.health < give_this_fucker_the_chair.maxHealth*0.5)
+				give_this_fucker_the_chair.adjust_confusion(10 SECONDS)
+			if(inflicts_stun_vulnerability)
+				give_this_fucker_the_chair.apply_status_effect(/datum/status_effect/next_shove_stuns)
 
 	smash(user)
 
@@ -449,7 +450,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	inhand_icon_state = "stool_bamboo"
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/stool/bamboo
-	max_integrity = 50 //Submissive and breakable unlike the chad iron stool
+	max_integrity = 40 //Submissive and breakable unlike the chad iron stool
 	inflicts_stun_vulnerability = FALSE //Not hard enough to cause them to become vulnerable to a shove
 
 /obj/item/chair/stool/narsie_act()
@@ -460,7 +461,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon_state = "wooden_chair_toppled"
 	inhand_icon_state = "woodenchair"
 	resistance_flags = FLAMMABLE
-	max_integrity = 50
+	max_integrity = 40
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
 	custom_materials = null
