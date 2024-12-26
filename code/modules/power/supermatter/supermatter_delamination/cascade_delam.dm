@@ -2,6 +2,8 @@
 #define HEAL_COOLDOWN (10 SECONDS)
 /// The amount of cascade emitter hits it takes until the SM delaminates.
 #define CASCADE_EMITTER_STRIKES 155 // 310 seconds
+/// The amount of cascade emitter hits left until the emergency point.
+#define CASCADE_EMITTER_STRIKES_EMERGENCY_POINT 15
 /// The amount of strikes it takes until the cascade announcement is made.
 #define STRIKES_UNTIL_ANNOUNCEMENT 5 // 10 seconds after the first shot is made
 /// The amount of strikes until we start to memorize saviours.
@@ -151,7 +153,11 @@
 	return damage_to_be_applied
 
 /datum/sm_delam/cascade/emitter/get_radio_alert_spans()
-	return list(SPAN_COMMAND)
+	return strikes_remaining <= CASCADE_EMITTER_STRIKES_EMERGENCY_POINT ? list(SPAN_COMMAND) : list()
+
+/datum/sm_delam/cascade/emitter/get_radio_alert_channel()
+	// the crew should be notified about the progress of this potential round-ender
+	return sm.emergency_channel
 
 /datum/sm_delam/cascade/emitter/delam_progress()
 	. = ..()
@@ -172,7 +178,7 @@
 	switch(strikes_remaining)
 		if(CASCADE_EMITTER_STRIKES - STRIKES_UNTIL_ANNOUNCEMENT)
 			announce_cascade()
-		if(15)
+		if(CASCADE_EMITTER_STRIKES_EMERGENCY_POINT)
 			sm.post_alert("DANGER: OSCILLATION FREQUENCY APPROACHING FILTER LIMIT. FREQUENCY FILTER SHUTDOWN IMMINENT.") // "oh fuck" time
 		if(1 to STRIKES_LEFT_UNTIL_MEMORIZE_SAVIORS)
 			memorize_saviors()
