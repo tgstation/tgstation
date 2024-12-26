@@ -311,8 +311,9 @@
 	ASYNC
 		user.emote("scream")
 		sleep(5 SECONDS)
-		eyes.visible_message(span_danger("[eyes] rapidly turn to dust."))
-		eyes.dust()
+		if(!QDELETED(eyes))
+			eyes.visible_message(span_danger("[eyes] rapidly turn to dust."))
+			eyes.dust()
 
 /obj/item/fish/flumpulus/get_base_edible_reagents_to_add()
 	var/list/return_list = ..()
