@@ -121,9 +121,6 @@
 		"Nanotrasen Astrophysics Division", 'sound/announcer/alarm/airraid.ogg')
 	return TRUE
 
-/proc/delam_cascade_emitter_can_select(obj/machinery/power/supermatter_crystal/sm)
-	return FALSE
-
 /datum/sm_delam/cascade/emitter
 	warn_time = SUPERMATTER_WARNING_DELAY / 2
 	var/strikes_remaining = CASCADE_EMITTER_STRIKES
@@ -148,6 +145,9 @@
 
 	return damage_to_be_applied
 
+/datum/sm_delam/cascade/emitter/get_radio_alert_spans()
+	return list(SPAN_COMMAND)
+
 /datum/sm_delam/cascade/emitter/delam_progress()
 	. = ..()
 	if(strikes_remaining <= 0)
@@ -164,14 +164,13 @@
 	sm.external_damage_immediate += 10
 	COOLDOWN_START(src, heal_cooldown, HEAL_COOLDOWN)
 
-	if(strikes_remaining <= STRIKES_LEFT_UNTIL_MEMORIZE_SAVIORS)
-		memorize_saviors()
-
 	switch(strikes_remaining)
 		if(CASCADE_EMITTER_STRIKES - STRIKES_UNTIL_ANNOUNCEMENT)
 			announce_cascade()
 		if(15)
 			sm.post_alert("DANGER: OSCILLATION FREQUENCY APPROACHING FILTER LIMIT. FREQUENCY FILTER SHUTDOWN IMMINENT.") // "oh fuck" time
+		if(1 to STRIKES_LEFT_UNTIL_MEMORIZE_SAVIORS)
+			memorize_saviors()
 		if(0)
 			sm.post_alert("DANGER: FREQUENCY FILTER OVERLOAD. PLEASE CONTACT A REPAIR TECHNICIAN IMMEDIATELY.")  // no more saving this
 

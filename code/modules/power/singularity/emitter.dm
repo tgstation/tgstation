@@ -405,7 +405,7 @@
 	return TRUE
 
 /obj/machinery/power/emitter/proc/set_projectile()
-	if(LAZYLEN(gun_properties))
+	if(!contains_cascade_kit && LAZYLEN(gun_properties))
 		if(mode || !gun_properties["lethal_projectile"])
 			projectile_type = gun_properties["stun_projectile"]
 			projectile_sound = gun_properties["stun_projectile_sound"]
