@@ -88,12 +88,11 @@
 
 /obj/structure/aquarium/donkfish/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	new /obj/item/aquarium_prop/rocks(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 	new /obj/item/fish/donkfish(src)
 	new /obj/item/fish/donkfish(src)
-	create_reagents(20, SEALED_CONTAINER)
-	reagents.add_reagent(/datum/reagent/consumable/nutriment, 20)
 
 //gimmick ketchup bottle for healing minor injuries
 /obj/item/reagent_containers/condiment/donksauce

@@ -67,19 +67,12 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 				fdel("data/custom_map_json/[config_file]")
 			if(!fcopy(config_file, "data/custom_map_json/[config_file]"))
 				return
-			if (virtual_map.LoadConfig("data/custom_map_json/[config_file]", TRUE) != TRUE)
+
+			json_value = virtual_map.LoadConfig("data/custom_map_json/[config_file]", TRUE)
+
+			if(!json_value)
 				to_chat(src, span_warning("Failed to load config: [config_file]. Check that the fields are filled out correctly. \"map_path\": \"custom\" and \"map_file\": \"your_map_name.dmm\""))
 				return
-			json_value = list(
-				"version" = MAP_CURRENT_VERSION,
-				"map_name" = virtual_map.map_name,
-				"map_path" = virtual_map.map_path,
-				"map_file" = virtual_map.map_file,
-				"shuttles" = virtual_map.shuttles,
-				"traits" = virtual_map.traits,
-				"job_changes" = virtual_map.job_changes,
-				"library_areas" = virtual_map.library_areas,
-			)
 		else
 			virtual_map = load_map_config()
 			virtual_map.map_name = input(user, "Choose the name for the map", "Map Name") as null|text

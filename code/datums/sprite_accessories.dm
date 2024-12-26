@@ -2264,6 +2264,10 @@
 	name = "Lightbearer"
 	icon_state = "lightbearer"
 
+/datum/sprite_accessory/moth_wings/dipped
+	name = "Dipped"
+	icon_state = "dipped"
+
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
 	icon = 'icons/mob/human/species/moth/moth_antennae.dmi'
 	color_src = null
@@ -2355,6 +2359,10 @@
 	name = "Lightbearer"
 	icon_state = "lightbearer"
 
+/datum/sprite_accessory/moth_antennae/dipped
+	name = "Dipped"
+	icon_state = "dipped"
+
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
 	color_src = null
@@ -2418,3 +2426,7 @@
 /datum/sprite_accessory/moth_markings/lightbearer
 	name = "Lightbearer"
 	icon_state = "lightbearer"
+
+/datum/sprite_accessory/moth_markings/dipped
+	name = "Dipped"
+	icon_state = "dipped"

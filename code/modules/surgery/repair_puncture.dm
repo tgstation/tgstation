@@ -81,8 +81,8 @@
 		span_notice("[user] successfully realigns some of the blood vessels in [target]'s [target.parse_zone_with_bodypart(target_zone)] with [tool]!"),
 		span_notice("[user] successfully realigns some of the blood vessels in  [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
-	log_combat(user, target, "excised infected flesh in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
-	surgery.operated_bodypart.receive_damage(brute=3, wound_bonus=CANT_WOUND)
+	log_combat(user, target, "realigned blood vessels in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
+	target.apply_damage(3, BRUTE, surgery.operated_bodypart, wound_bonus = CANT_WOUND, sharpness = SHARP_EDGED, attacking_item = tool)
 	pierce_wound.adjust_blood_flow(-0.25)
 	return ..()
 
@@ -95,7 +95,7 @@
 		span_notice("[user] jerks apart some of the blood vessels in [target]'s [target.parse_zone_with_bodypart(target_zone)] with [tool]!"),
 		span_notice("[user] jerk apart some of the blood vessels in [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
-	surgery.operated_bodypart.receive_damage(brute=rand(4,8), sharpness=SHARP_EDGED, wound_bonus = 10)
+	target.apply_damage(rand(4, 8), BRUTE, surgery.operated_bodypart, wound_bonus = 10, sharpness = SHARP_EDGED, attacking_item = tool)
 
 ///// Sealing the vessels back together
 /datum/surgery_step/seal_veins
@@ -144,7 +144,7 @@
 	)
 	log_combat(user, target, "dressed burns in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 	pierce_wound.adjust_blood_flow(-0.5)
-	if(pierce_wound.blood_flow > 0)
+	if(!QDELETED(pierce_wound) && pierce_wound.blood_flow > 0)
 		surgery.status = REALIGN_INNARDS
 		to_chat(user, span_notice("<i>There still seems to be misaligned blood vessels to finish...</i>"))
 	else

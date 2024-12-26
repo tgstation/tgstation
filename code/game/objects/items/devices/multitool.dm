@@ -16,6 +16,7 @@
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "multitool"
 	inhand_icon_state = "multitool"
+	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	force = 5
@@ -283,7 +284,7 @@
 	desc = "An omni-technological interface."
 	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "multitool"
-	belt_icon_state = "multitool_alien"
+	inside_belt_icon_state = "multitool_alien"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT)
 	toolspeed = 0.1
 
@@ -292,6 +293,7 @@
 	desc = "Optimised version of a regular multitool. Streamlines processes handled by its internal microchip."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_multitool"
+	icon_angle = 0
 	toolspeed = 0.5
 
 #undef PROXIMITY_NEAR

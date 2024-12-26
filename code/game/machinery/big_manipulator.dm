@@ -288,7 +288,12 @@
 		target.forceMove(drop_turf)
 		target.dir = get_dir(get_turf(target), get_turf(src))
 	else
-		target.forceMove(where_we_drop)
+		var/atom/drop_target = where_we_drop
+		if(drop_target.atom_storage)
+			if(!drop_target.atom_storage.attempt_insert(target, override = TRUE, messages = FALSE))
+				target.forceMove(drop_target.drop_location())
+		else
+			target.forceMove(where_we_drop)
 	finish_manipulation()
 
 /// 3.3 take and drop proc from [take and drop procs loop]:

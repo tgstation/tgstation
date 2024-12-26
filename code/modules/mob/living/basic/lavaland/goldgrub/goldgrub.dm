@@ -36,7 +36,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/grub_spit,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/fetch,
 	)
 
 /mob/living/basic/mining/goldgrub/Initialize(mapload)
@@ -67,6 +67,7 @@
 	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
+	RegisterSignal(src, COMSIG_MOB_ATE, PROC_REF(on_eat))
 
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
@@ -105,7 +106,8 @@
 	return ..()
 
 /mob/living/basic/mining/goldgrub/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/stack/ore), tame_chance = 25, bonus_tame_chance = 5)
+	var/list/food_types = string_list(list(/obj/item/stack/ore))
+	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 5)
 
 /mob/living/basic/mining/goldgrub/tamed(mob/living/tamer, atom/food)
 	new /obj/effect/temp_visual/heart(src.loc)
@@ -127,12 +129,17 @@
 	. = ..()
 	if(!istype(arrived, /obj/item/stack/ore))
 		return
-	playsound(src,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	if(!can_lay_eggs)
 		return
 	if(!istype(arrived, /obj/item/stack/ore/bluespace_crystal) || prob(60))
 		return
 	new /obj/item/food/egg/green/grub_egg(get_turf(src))
+
+/mob/living/basic/mining/goldgrub/proc/on_eat(atom/source, atom/movable/food, mob/feeder)
+	SIGNAL_HANDLER
+
+	food.forceMove(src)
+	return COMSIG_MOB_TERMINATE_EAT
 
 /mob/living/basic/mining/goldgrub/baby
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'

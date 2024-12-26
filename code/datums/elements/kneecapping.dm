@@ -78,15 +78,16 @@
 	attacker.visible_message(span_warning("[attacker] carefully aims [attacker.p_their()] [weapon] for a swing at [target]'s kneecaps!"), span_danger("You carefully aim \the [weapon] for a swing at [target]'s kneecaps!"))
 	log_combat(attacker, target, "started aiming a swing to break the kneecaps of", weapon)
 
-	if(do_after(attacker, 3 SECONDS, target, interaction_key = weapon))
-		attacker.visible_message(span_warning("[attacker] swings [attacker.p_their()] [weapon] at [target]'s kneecaps!"), span_danger("You swing \the [weapon] at [target]'s kneecaps!"))
+	if(!do_after(attacker, 3 SECONDS, target, interaction_key = weapon))
+		return
 
-		var/min_wound = leg.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_SEVERE, return_value_if_no_wound = 30, wound_source = weapon)
-		var/max_wound = leg.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_CRITICAL, return_value_if_no_wound = 50, wound_source = weapon)
+	attacker.visible_message(span_warning("[attacker] swings [attacker.p_their()] [weapon] at [target]'s kneecaps!"), span_danger("You swing \the [weapon] at [target]'s kneecaps!"))
 
-		leg.receive_damage(brute = weapon.force, wound_bonus = rand(min_wound, max_wound + 10), damage_source = "kneecapping")
-		target.emote("scream")
-		log_combat(attacker, target, "broke the kneecaps of", weapon)
-		target.update_damage_overlays()
-		attacker.do_attack_animation(target, used_item = weapon)
-		playsound(source = get_turf(weapon), soundin = weapon.hitsound, vol = weapon.get_clamped_volume(), vary = TRUE)
+	var/min_wound = leg.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_SEVERE, return_value_if_no_wound = 30, wound_source = weapon)
+	var/max_wound = leg.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_CRITICAL, return_value_if_no_wound = 50, wound_source = weapon)
+
+	target.apply_damage(weapon.force, weapon.damtype, leg, wound_bonus = rand(min_wound, max_wound + 10), attacking_item = weapon)
+	target.emote("scream")
+	log_combat(attacker, target, "broke the kneecaps of", weapon)
+	attacker.do_attack_animation(target, used_item = weapon)
+	playsound(source = weapon, soundin = weapon.hitsound, vol = weapon.get_clamped_volume(), vary = TRUE)

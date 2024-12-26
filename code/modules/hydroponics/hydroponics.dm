@@ -293,7 +293,7 @@
 		mutate()
 		return BULLET_ACT_HIT
 	if(istype(proj, /obj/projectile/energy/flora/yield))
-		return myseed.bullet_act(proj)
+		return myseed.projectile_hit(proj)
 	if(istype(proj, /obj/projectile/energy/flora/evolution))
 		if(myseed)
 			if(LAZYLEN(myseed.mutatelist))
@@ -559,7 +559,7 @@
 	if(weedlevel == new_weedlevel)
 		return
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_WEEDLEVEL, new_weedlevel)
-	weedlevel = new_weedlevel
+	weedlevel = max(new_weedlevel, 0)
 	if(update_icon)
 		update_appearance()
 
