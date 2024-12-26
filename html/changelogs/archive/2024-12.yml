@@ -584,3 +584,62 @@
   carlarctg:
   - rscadd: Kissing while you have the ink infusion ability off cooldown gives you
       an ink kiss
+2024-12-25:
+  Absolucy, ShadowLarkens, S34N:
+  - bugfix: Fixed chat rapidly flickering in BYOND 516.
+  AyIong:
+  - qol: AdminPMs, admin tickets, vote results and started vote notification are now
+      much more visible in the chat.
+  - qol: Boxed messages in chat (like examine), has been restyled.
+  Ghommie:
+  - bugfix: Fixed aquariums auto-feeding.
+  Hatterhat:
+  - bugfix: .357 Heartseeker homes in on people if you click on them, instead of not
+      homing in at all.
+  KazooBard:
+  - qol: Selecting which spells to cast with hotkeys, and using them in general is
+      faster.
+  LT3:
+  - bugfix: You can no longer hug yourself to overcome fear of the dark
+  Melbert:
+  - balance: Lava no longer burns mobs thrown over it
+  - qol: Navigate verb better indicates areas on a separate level. Selecting an area
+      on a different level will direct you to the nearest staircase (as with "Nearest
+      Way Up/Down")
+  - qol: Navigating to a staircase or ladder will shorten the cooldown of navigate
+      and clear your existing path for you upon finding it
+  SyncIt21:
+  - bugfix: Big manipulator respects storage limits of storages when dropping stuff
+      into them
+  araeotu:
+  - rscadd: slime processor now have usb port and circuit component
+  - code_imp: the process code of processor now separate from interact
+  grungussuss:
+  - balance: computers can now be used as cover, firing a projectile over them is
+      now possible, while they may block projectiles if you are not adjacent to them
+      when firing.
+  - bugfix: computer laptops will not block projectiles
+  lovegreenstuff:
+  - rscadd: catalyst function for plumbing reaction chambers
+2024-12-26:
+  LordHookie:
+  - bugfix: The Syndicate Medical Space Suit is no longer labelled a 'green space
+      suit' despite being a noticeably non-green color.
+  - bugfix: Syndicate Medical and Engineering space helmets now display themselves
+      as such.
+  SmArtKar:
+  - image: Returned plasmafire and clockwork UI's transparency, slightly adjusted
+      active hand slot overlays
+  SyncIt21:
+  - bugfix: skull cookies are visible again
+  Wallem:
+  - rscadd: Rare collectors radios have been reported around Nanotrasen stations!
+  grungussuss:
+  - bugfix: picking stuff up actually respects the vary settings of an item
+  mc-oofert:
+  - image: girders and reinforced girders smooth now (except cult girders, bronze
+      girders, and whatever other special type)
+  rintherat:
+  - bugfix: Fixes alert level changing during a Delta+ scenario
+  timothymtorres:
+  - bugfix: Fix holodeck computer using wrong power settings and not updating properly
