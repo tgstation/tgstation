@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Added fish mounts to the game. They can be crafted with 3 sheets of wood. Otherwise there's one at the bar that stores the fish between rounds."
