@@ -14,9 +14,12 @@
 	///Determines whether we throw all things away when ramming them or just mobs, varedit only
 	var/crash_all = FALSE
 
-/obj/vehicle/sealed/car/speedwagon/Initialize(mapload)
+/obj/vehicle/sealed/car/speedwagon/update_overlays()
 	. = ..()
-	add_overlay(image(icon, "speedwagon_cover", ABOVE_MOB_LAYER))
+	var/mutable_appearance/cover_overlay = mutable_appearance(icon, "speedwagon_cover", ABOVE_MOB_LAYER, src)
+	cover_overlay.appearance_flags |= KEEP_APART
+	color_atom_overlay(cover_overlay)
+	. += cover_overlay
 
 /obj/vehicle/sealed/car/speedwagon/Bump(atom/bumped)
 	. = ..()
