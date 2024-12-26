@@ -803,15 +803,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	var/max_slots = 8
-
-/obj/item/storage/test_tube_rack/Initialize(mapload)
-	. = ..()
-	atom_storage.allow_quick_gather = TRUE
-	atom_storage.max_slots = max_slots
-	atom_storage.screen_max_columns = 4
-	atom_storage.screen_max_rows = 2
-	atom_storage.set_holdable(/obj/item/reagent_containers/cup/tube)
+	storage_type = /datum/storage/test_tube_rack
 
 /obj/item/storage/test_tube_rack/attack_self(mob/user)
 	emptyStorage()
@@ -821,7 +813,7 @@
 	return ..()
 
 /obj/item/storage/test_tube_rack/full/PopulateContents()
-	for(var/i in 1 to max_slots)
+	for(var/i in 1 to atom_storage.max_slots)
 		new /obj/item/reagent_containers/cup/tube(src)
-	update_appearance()
+	update_appearance(UPDATE_ICON_STATE)
 
