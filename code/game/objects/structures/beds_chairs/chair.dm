@@ -405,7 +405,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	var/vulnerable_hit = (check_behind(user, give_this_fucker_the_chair) || give_this_fucker_the_chair.get_timed_status_effect_duration(/datum/status_effect/staggered))
 
 	// If our attack is against a vulnerable target, we do additional damage to the chair
-	var/damage_to_inflict = vulnerable_hit ? (force * 2.5) : force
+	var/damage_to_inflict = vulnerable_hit ? (force * 5) : (force * 2.5)
 
 	if(!take_chair_damage(damage_to_inflict, damtype, MELEE)) // If we would do enough damage to bring our chair's integrity to 0, we instead go past the check to smash it against our target
 		return
