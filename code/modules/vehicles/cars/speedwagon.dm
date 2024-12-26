@@ -18,7 +18,7 @@
 	. = ..()
 	var/mutable_appearance/cover_overlay = mutable_appearance(icon, "speedwagon_cover", ABOVE_MOB_LAYER, src)
 	cover_overlay.appearance_flags |= KEEP_APART
-	color_atom_overlay(cover_overlay)
+	cover_overlay = color_atom_overlay(cover_overlay)
 	. += cover_overlay
 
 /obj/vehicle/sealed/car/speedwagon/Bump(atom/bumped)

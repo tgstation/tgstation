@@ -154,7 +154,7 @@
 		return FALSE
 	var/mutable_appearance/workout = mutable_appearance(icon, "[base_icon_state]-o", ABOVE_MOB_LAYER, src)
 	workout.appearance_flags |= KEEP_APART
-	color_atom_overlay(workout)
+	workout = color_atom_overlay(workout)
 	flick_overlay_view(workout, 0.8 SECONDS)
 	flick("[base_icon_state]-u", src)
 	var/mob/living/user = buckled_mobs[1]

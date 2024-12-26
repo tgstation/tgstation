@@ -153,8 +153,9 @@
 /datum/component/electrified_buckle/proc/on_update_overlays(atom/movable/source, list/overlays)
 	SIGNAL_HANDLER
 	var/overlay_layer = length(source.buckled_mobs) ? ABOVE_MOB_LAYER : OBJ_LAYER
-	for (var/image/overlay_image in requested_overlays)
+	for (var/mutable_appearance/overlay_image in requested_overlays)
 		overlay_image.layer = overlay_layer
+		overlay_image = source.color_atom_overlay(overlay_image)
 		overlays += overlay_image
 
 ///where the guinea pig is actually shocked if possible
