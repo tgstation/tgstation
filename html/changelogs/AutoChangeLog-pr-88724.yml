@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix vent clog event triggering on non-station areas"
