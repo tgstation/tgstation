@@ -23,7 +23,7 @@
 			continue
 
 		//we have the exact amounts so no excess to spare
-		if(chemical.volume <= catalysts[chemical.type] || 0)
+		if(chemical.volume <= (catalysts[chemical.type] || 0))
 			if(reagent)
 				break
 			else
