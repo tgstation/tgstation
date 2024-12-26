@@ -95,7 +95,7 @@
 	forceMove(user)
 	// *everything*
 	for(var/obj/thing in user.get_contents())
-		if(istype(thing, /obj/item/bodypart/chest))
+		if(QDELETED(thing) || istype(thing, /obj/item/bodypart/chest))
 			continue // don't want a gib
 		stoplag(0.1 SECONDS)
 		playsound(src, 'sound/effects/phasein.ogg', 15, TRUE)
@@ -311,8 +311,9 @@
 	ASYNC
 		user.emote("scream")
 		sleep(5 SECONDS)
-		eyes.visible_message(span_danger("[eyes] rapidly turn to dust."))
-		eyes.dust()
+		if(!QDELETED(eyes))
+			eyes.visible_message(span_danger("[eyes] rapidly turn to dust."))
+			eyes.dust()
 
 /obj/item/fish/flumpulus/get_base_edible_reagents_to_add()
 	var/list/return_list = ..()
