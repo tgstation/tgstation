@@ -95,7 +95,7 @@
 	forceMove(user)
 	// *everything*
 	for(var/obj/thing in user.get_contents())
-		if(istype(thing, /obj/item/bodypart/chest))
+		if(QDELETED(thing) || istype(thing, /obj/item/bodypart/chest))
 			continue // don't want a gib
 		stoplag(0.1 SECONDS)
 		playsound(src, 'sound/effects/phasein.ogg', 15, TRUE)
