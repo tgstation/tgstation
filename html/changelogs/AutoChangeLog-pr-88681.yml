@@ -1,0 +1,4 @@
+author: "AyIong"
+delete-after: True
+changes:
+  - qol: "Now you can hide `Initialized some shit within 0s` messages, by unchecking `Debug Log` checkbox into the chat tabs settings"

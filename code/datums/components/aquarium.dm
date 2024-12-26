@@ -100,11 +100,12 @@
 	ADD_KEEP_TOGETHER(movable, AQUARIUM_TRAIT) //render the fish on the same layer of the aquarium.
 
 	if(reagents_size > 0)
-		RegisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
 		if(!movable.reagents)
 			movable.create_reagents(reagents_size, SEALED_CONTAINER)
-		else if(movable.reagents.total_volume)
+		if(movable.reagents.total_volume)
 			start_autofeed(movable.reagents)
+		else
+			RegisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
 		RegisterSignal(movable, COMSIG_PLUNGER_ACT, PROC_REF(on_plunger_act))
 
 	RegisterSignal(movable, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
@@ -240,10 +241,10 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///Called when the feed storage is no longer empty.
-/datum/component/aquarium/proc/start_autofeed(atom/movable/source, new_reagent, amount, reagtemp, data, no_react)
+/datum/component/aquarium/proc/start_autofeed(datum/reagents/source, new_reagent, amount, reagtemp, data, no_react)
 	SIGNAL_HANDLER
 	START_PROCESSING(SSobj, src)
-	UnregisterSignal(source.reagents, COMSIG_REAGENTS_NEW_REAGENT)
+	UnregisterSignal(source, COMSIG_REAGENTS_NEW_REAGENT)
 
 ///Feed the fish at defined intervals until the feed storage is empty.
 /datum/component/aquarium/process(seconds_per_tick)

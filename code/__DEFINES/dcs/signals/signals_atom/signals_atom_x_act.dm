@@ -92,3 +92,6 @@
 /// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
 #define COMSIG_ATOM_SABOTEUR_ACT "hit_by_saboteur"
 	#define COMSIG_SABOTEUR_SUCCESS 1
+
+/// signal sent when a mouse is hovering over us, sent by atom/proc/on_mouse_entered
+#define COMSIG_ATOM_MOUSE_ENTERED "mouse_entered"

@@ -225,6 +225,11 @@
 	update_appearance()
 
 /obj/projectile/kinetic/on_range()
+	if(!pressure_decrease_active && !lavaland_equipment_pressure_check(get_turf(src)))
+		name = "weakened [name]"
+		damage = damage * pressure_decrease
+		pressure_decrease_active = TRUE
+
 	strike_thing(loc)
 	..()
 
