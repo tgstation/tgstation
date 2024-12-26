@@ -165,7 +165,8 @@
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 	resistance_flags = FLAMMABLE
-	max_integrity = 70
+	max_integrity = 10
+	atom_integrity = 10
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
@@ -324,6 +325,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	throwforce = 10
 	demolition_mod = 1.25
 	throw_range = 3
+	max_integrity = 100
+	atom_integrity = 100
 	hitsound = 'sound/items/trayhit/trayhit1.ogg'
 	hit_reaction_chance = 50
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
@@ -424,6 +427,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	inhand_icon_state = "stool"
 	origin_type = /obj/structure/chair/stool
 	max_integrity = 300 //It's too sturdy.
+	atom_integrity = 300
 
 /obj/item/chair/stool/bar
 	name = "bar stool"
@@ -438,6 +442,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/stool/bamboo
 	max_integrity = 10 //Submissive and breakable unlike the chad iron stool
+	atom_integrity = 10
 	inflicts_stun_vulnerability = FALSE //Not hard enough to cause them to become vulnerable to a shove
 
 /obj/item/chair/stool/narsie_act()
@@ -449,6 +454,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	inhand_icon_state = "woodenchair"
 	resistance_flags = FLAMMABLE
 	max_integrity = 10
+	atom_integrity = 10
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
 	custom_materials = null
@@ -538,6 +544,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "No matter how much you squirm, it'll still be uncomfortable."
 	resistance_flags = FLAMMABLE
 	max_integrity = 30
+	atom_integrity = 30
 	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	buildstacktype = /obj/item/stack/sheet/plastic
 	buildstackamount = 2
@@ -574,6 +581,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	throw_range = 5 //Lighter Weight --> Flies Farther.
 	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 30
+	atom_integrity = 30
 	inflicts_stun_vulnerability = FALSE
 	origin_type = /obj/structure/chair/plastic
 
