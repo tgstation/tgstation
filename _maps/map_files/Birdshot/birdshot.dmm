@@ -20930,6 +20930,7 @@
 	},
 /obj/machinery/vending/boozeomat,
 /obj/effect/turf_decal/siding/wood,
+/obj/structure/sign/warning/no_smoking/circle/directional/north,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/service/bar)
 "hsC" = (
@@ -30567,11 +30568,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/barsign{
-	chosen_sign = "thecavern";
-	icon_state = "thecavern";
-	pixel_y = 32
-	},
 /obj/machinery/reagentgrinder{
 	pixel_x = -5;
 	pixel_y = 10
@@ -33247,9 +33243,13 @@
 	pixel_x = -7;
 	pixel_y = 15
 	},
-/obj/structure/sign/warning/no_smoking/circle/directional/north,
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 8
+	},
+/obj/machinery/barsign{
+	chosen_sign = "thecavern";
+	icon_state = "thecavern";
+	pixel_y = 32
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/station/service/bar)
@@ -58691,7 +58691,7 @@
 	},
 /obj/machinery/chem_dispenser/drinks/beer,
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/digital_clock/directional/north,
+/obj/structure/fish_mount/bar/directional/north,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/service/bar)
 "tVt" = (
