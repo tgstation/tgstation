@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix custom map loading ignoring JSON values that were ignored previously. (minetype, planetary, etc.)"
