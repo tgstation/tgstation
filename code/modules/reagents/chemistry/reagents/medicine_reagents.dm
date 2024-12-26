@@ -828,8 +828,9 @@
 	ASYNC
 		affected_mob.emote("scream")
 		sleep(5 SECONDS)
-		eyes.visible_message(span_danger("[eyes] rapidly turn to dust."))
-		eyes.dust()
+		if(!QDELETED(eyes))
+			eyes.visible_message(span_danger("[eyes] rapidly turn to dust."))
+			eyes.dust()
 
 /datum/reagent/medicine/inacusiate
 	name = "Inacusiate"
