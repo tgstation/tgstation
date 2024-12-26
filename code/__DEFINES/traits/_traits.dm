@@ -1,5 +1,5 @@
-#define SIGNAL_ADDTRAIT(trait_ref) "addtrait [trait_ref]"
-#define SIGNAL_REMOVETRAIT(trait_ref) "removetrait [trait_ref]"
+#define SIGNAL_ADDTRAIT(trait_ref)		("addtrait " + trait_ref)
+#define SIGNAL_REMOVETRAIT(trait_ref)	("removetrait " + trait_ref)
 
 // trait accessor defines
 #define ADD_TRAIT(target, trait, source) \
