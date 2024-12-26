@@ -328,8 +328,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	hit_reaction_chance = 50
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	item_flags = SKIP_FANTASY_ON_SPAWN
-	// The chairs durability. Reduced by hitting stuff with it and using it to block attacks.
-	var/chair_impact_durability = 50
 
 	// Whether or not the chair causes the target to become shove stun vulnerable if smashed against someone from behind.
 	var/inflicts_stun_vulnerability = TRUE
@@ -391,13 +389,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance) || attack_type == LEAP_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message(span_danger("[owner] fends off [attack_text] with [src]!"))
-		if(take_chair_damage(damage)) // Our chair takes our incoming damage for us, which can result in it smashing.
+		if(take_chair_damage(damage, damage_type, MELEE)) // Our chair takes our incoming damage for us, which can result in it smashing.
 			smash(owner)
 		return TRUE
 	return FALSE
 
 /obj/item/chair/afterattack(atom/target, mob/user, click_parameters)
-	if(!take_chair_damage(force))
+	if(!take_chair_damage(force, damtype, MELEE))
 		return
 	user.visible_message(span_danger("[user] smashes [src] to pieces against [target]"))
 	if(ishuman(target) && !HAS_TRAIT(target, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
@@ -410,11 +408,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 				give_this_fucker_the_chair.apply_status_effect(/datum/status_effect/next_shove_stuns)
 	smash(user)
 
-/obj/item/chair/proc/take_chair_damage(damage_to_inflict)
-	chair_impact_durability = clamp(chair_impact_durability - damage_to_inflict, 0, 100)
-	if(chair_impact_durability == 0)
-		return FALSE
-	return TRUE
+/obj/item/chair/proc/take_chair_damage(damage_to_inflict, damage_type, armor_flag)
+	if(damage_to_inflict >= atom_integrity)
+		return TRUE
+	take_damage(damage_to_inflict, damage_type, armor_flag)
+	return FALSE
 
 /obj/item/chair/greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
@@ -425,7 +423,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon_state = "stool_toppled"
 	inhand_icon_state = "stool"
 	origin_type = /obj/structure/chair/stool
-	chair_impact_durability = 100 //It's too sturdy.
+	max_integrity = 300 //It's too sturdy.
 
 /obj/item/chair/stool/bar
 	name = "bar stool"
@@ -439,7 +437,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	inhand_icon_state = "stool_bamboo"
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/stool/bamboo
-	chair_impact_durability = 20 //Submissive and breakable unlike the chad iron stool
+	max_integrity = 10 //Submissive and breakable unlike the chad iron stool
 	inflicts_stun_vulnerability = FALSE //Not hard enough to cause them to become vulnerable to a shove
 
 /obj/item/chair/stool/narsie_act()
@@ -450,11 +448,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon_state = "wooden_chair_toppled"
 	inhand_icon_state = "woodenchair"
 	resistance_flags = FLAMMABLE
-	max_integrity = 70
+	max_integrity = 10
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
 	custom_materials = null
-	chair_impact_durability = 20
 	inflicts_stun_vulnerability = FALSE
 
 /obj/item/chair/wood/narsie_act()
@@ -540,7 +537,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	name = "folding plastic chair"
 	desc = "No matter how much you squirm, it'll still be uncomfortable."
 	resistance_flags = FLAMMABLE
-	max_integrity = 50
+	max_integrity = 30
 	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	buildstacktype = /obj/item/stack/sheet/plastic
 	buildstackamount = 2
@@ -576,7 +573,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	force = 7
 	throw_range = 5 //Lighter Weight --> Flies Farther.
 	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
-	chair_impact_durability = 40
+	max_integrity = 30
 	inflicts_stun_vulnerability = FALSE
 	origin_type = /obj/structure/chair/plastic
 
