@@ -1,4 +1,0 @@
-author: "rintherat"
-delete-after: True
-changes:
-  - bugfix: "Fixes alert level changing during a Delta+ scenario"

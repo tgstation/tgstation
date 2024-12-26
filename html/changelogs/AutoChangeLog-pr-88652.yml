@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix kidnapping pod returning a player to unsafe location where air is bad"

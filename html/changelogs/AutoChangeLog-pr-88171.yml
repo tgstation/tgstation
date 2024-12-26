@@ -1,0 +1,8 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - rscadd: "Bileworm crusher trophy now gives you AOE mining"
+  - balance: "The pk crusher no longer has click delay after shooting the projectile"
+  - balance: "The pk crusher gives mining XP when it mines rocks"
+  - balance: "the pk crusher charges faster when you mine rocks based on your skill as a miner"
+  - code_imp: "cleaned up some of the kinetic crusher code"

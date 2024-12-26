@@ -621,3 +621,25 @@
   - bugfix: computer laptops will not block projectiles
   lovegreenstuff:
   - rscadd: catalyst function for plumbing reaction chambers
+2024-12-26:
+  LordHookie:
+  - bugfix: The Syndicate Medical Space Suit is no longer labelled a 'green space
+      suit' despite being a noticeably non-green color.
+  - bugfix: Syndicate Medical and Engineering space helmets now display themselves
+      as such.
+  SmArtKar:
+  - image: Returned plasmafire and clockwork UI's transparency, slightly adjusted
+      active hand slot overlays
+  SyncIt21:
+  - bugfix: skull cookies are visible again
+  Wallem:
+  - rscadd: Rare collectors radios have been reported around Nanotrasen stations!
+  grungussuss:
+  - bugfix: picking stuff up actually respects the vary settings of an item
+  mc-oofert:
+  - image: girders and reinforced girders smooth now (except cult girders, bronze
+      girders, and whatever other special type)
+  rintherat:
+  - bugfix: Fixes alert level changing during a Delta+ scenario
+  timothymtorres:
+  - bugfix: Fix holodeck computer using wrong power settings and not updating properly
