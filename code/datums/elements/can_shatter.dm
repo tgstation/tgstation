@@ -53,9 +53,11 @@
 
 /// Handles the actual shattering part, throwing shards of whatever is defined on the component everywhere
 /datum/element/can_shatter/proc/shatter(atom/movable/source, atom/hit_atom)
-	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)
-	var/scatter_turf = get_turf(hit_atom)
+	var/turf/scatter_turf = get_turf(hit_atom)
+	if(!TURF_SHARES(scatter_turf)) //turf blocked(e.g by a wall, airlock, window etc i.e. anything that blocks air) so drop on the source location
+		scatter_turf = get_turf(source)
 
+	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)
 	for(var/obj/item/scattered_item as anything in source.contents)
 		scattered_item.forceMove(scatter_turf)
 		var/list/scatter_vector = scatter_gen.Rand()
