@@ -63,8 +63,8 @@
 /datum/armor/emitter_cascade
 	melee = 10
 	bullet = 25
-	laser = 75
-	energy = 75
+	laser = 50
+	energy = 50
 	fire = 50
 	acid = 25
 	bomb = 25
