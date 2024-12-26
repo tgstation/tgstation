@@ -146,7 +146,7 @@
 	if(!COOLDOWN_FINISHED(src, heal_cooldown))
 		damage_to_be_applied = max(0, damage_to_be_applied)
 		for(var/damage_type in individual_damages)
-			individual_damages[damage_type] = max(0, damage_type)
+			individual_damages[damage_type] = max(0, individual_damages[damage_type])
 
 	return damage_to_be_applied
 
