@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - qol: "You can now pull singular trophies off kinetic crushers with RMB."
-  - qol: "Kinetic crushers now have screentips informing people that they can remove trophies via empty hand (RMB) or crowbar (LMB)."

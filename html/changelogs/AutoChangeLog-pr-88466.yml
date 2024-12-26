@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - sound: "Add fishtank looping sounds to cryo cells when in use. Sound is from https://freesound.org/people/DudeAwesome/sounds/386023/"

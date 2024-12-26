@@ -12,8 +12,6 @@
 	var/taste_mult = 1
 	/// reagent holder this belongs to
 	var/datum/reagents/holder = null
-	/// LIQUID, SOLID, GAS
-	var/reagent_state = LIQUID
 	/// Special data associated with the reagent that will be passed on upon transfer to a new holder.
 	var/list/data
 	/// increments everytime on_mob_life is called

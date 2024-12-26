@@ -464,12 +464,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	desc = "Uncanny looking hammer."
-	force = 20
-	throwforce = 20
+	force = 17
+	throwforce = 14
 	throw_range = 4
 	w_class = WEIGHT_CLASS_NORMAL
 	wound_bonus = 20
-	demolition_mod = 1.25
+	demolition_mod = 1.15
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/carpenter_hammer/Initialize(mapload)
@@ -954,13 +954,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/melee/baseball_bat/Initialize(mapload)
 	. = ..()
-	if(prob(1))
-		name = "cricket bat"
-		icon_state = "baseball_bat_brit"
-		inhand_icon_state = "baseball_bat_brit"
-		desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
-
 	AddElement(/datum/element/kneecapping)
+	// No subtypes
+	if(type != /obj/item/melee/baseball_bat)
+		return
+	if(prob(check_holidays(APRIL_FOOLS) ? 50 : 1))
+		make_silly()
 
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
@@ -1048,6 +1047,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	target.throw_at(target_turf, get_dist(target, target_turf), datum_throw_speed + 1, user, callback = CALLBACK(src, PROC_REF(on_hit), target))
 	thrown_datums[target] = target.throwing
 
+/obj/item/melee/baseball_bat/proc/make_silly()
+	name = "cricket bat"
+	icon_state = "baseball_bat_brit"
+	inhand_icon_state = "baseball_bat_brit"
+	desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
+
 /obj/item/melee/baseball_bat/proc/on_hit(atom/movable/target)
 	target.remove_filter("baseball_launch")
 	target.throwforce *= 0.5
@@ -1075,6 +1080,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
 	return TRUE
+
+// In case you ever want to spawn it via map/admin console
+/obj/item/melee/baseball_bat/british/Initialize(mapload)
+	. = ..()
+	make_silly()
 
 /obj/item/melee/flyswatter
 	name = "flyswatter"

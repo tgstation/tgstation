@@ -1,0 +1,5 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - image: "updated the cartridge coffeemaker + coffeepot sprites, and added bluespace pot overlays to coffeemakers"
+  - qol: "the coffeemakers can now be interacted with while unpowered! No longer will your coffeepot be stuck inside the machine because it's unplugged! (Still need power to brew)"
