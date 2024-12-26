@@ -90,7 +90,7 @@
 	if(area_check(target))
 		//noice, delivered!
 		var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		cargo_account.adjust_money(payment)
+		cargo_account.adjust_money(min(payment,DEPARTMENTAL_ORDER_MAX_PAYOUT))
 	remove_lock(target)
 
 ///called to remove the element in a flavorful way, either from delivery or from emagging/breaking open the crate

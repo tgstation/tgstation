@@ -47,3 +47,13 @@
 #define EXPORT_SOLD 1
 ///Sell the item, but for the love of god, don't delete it, we're handling it in a fancier way.
 #define EXPORT_SOLD_DONT_DELETE 2
+
+
+/// Minimum almost the lowest value of a crate
+#define DEPARTMENTAL_ORDER_COOLDOWN_CREDITS_MIN CARGO_CRATE_VALUE * 1.6
+/// Maximum fairly expensive crate at 3000
+#define DEPARTMENTAL_ORDER_COOLDOWN_CREDITS_MAX CARGO_CRATE_VALUE * 15
+/// The base cooldown time for departmental orders. Particularly expensive orders have twice the cooldown.
+#define DEPARTMENTAL_ORDER_COOLDOWN_TIME 10 MINUTES
+/// Cargo will not gain payouts greater than this, when a crate is delivered
+#define DEPARTMENTAL_ORDER_MAX_PAYOUT CARGO_CRATE_VALUE * 15
