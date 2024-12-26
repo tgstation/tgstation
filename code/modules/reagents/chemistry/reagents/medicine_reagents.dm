@@ -784,7 +784,7 @@
 	taste_description = "fungus"
 	purity = 1
 	ph = 0.01
-	chemical_flags = REAGENT_DEAD_PROCESS|REAGENT_IGNORE_STASIS|REAGENT_NO_RANDOM_RECIPE
+	chemical_flags = REAGENT_DEAD_PROCESS|REAGENT_IGNORE_STASIS|REAGENT_NO_RANDOM_RECIPE|REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem = /datum/reagent/inverse
 	inverse_chem_val = 0
 	var/static/list/eye_types = list(/obj/item/organ/eyes/snail, /obj/item/organ/eyes/night_vision/mushroom)
