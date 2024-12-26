@@ -1,0 +1,6 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "A new maint-kata has taken shape in the periphery of Spinward control. Borrowing techniques from an ancient Martian martial artist, as well as an entire franchise of extremely muscular acrobats and performance artists, talented assistants have discovered that a swift application of a flimsy chair to the back of the head can end fights more promptly than just bashing the opponent's head in with their foot. That, and it looks awesome."
+  - balance: "Chairs start to break apart when you hit someone with them or block an attack with them."
+  - balance: "Breaking a chair against a target while attacking from behind or while they're staggered will cause them to get knocked down. Chairs made of more sturdy materials can even cause them to become vulnerable to shove stuns."
