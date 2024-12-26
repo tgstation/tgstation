@@ -828,7 +828,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for (var/damage_type in additive_damage)
 		total_damage += additive_damage[damage_type]
 
-	total_damage = delamination_strategy.modify_damage(total_damage)
+	total_damage = delamination_strategy.modify_damage(total_damage, additive_damage)
 
 	damage += total_damage
 	damage = max(damage, 0)

@@ -133,15 +133,20 @@
 	. = ..()
 	award_saviors()
 
-/datum/sm_delam/cascade/emitter/modify_damage(damage_to_be_applied)
+/datum/sm_delam/cascade/emitter/modify_damage(damage_to_be_applied, list/individual_damages)
 	// get it down to the emergency point, but not below, unless we are out of strikes then just allow all damage
-	var/half_emergency_point = sm.emergency_point + (sm.explosion_point - sm.emergency_point) / 2
 	if(strikes_remaining > 0)
-		damage_to_be_applied *= clamp((half_emergency_point - (sm.damage + damage_to_be_applied)) / half_emergency_point, 0, 1)
+		var/half_emergency_point = sm.emergency_point + (sm.explosion_point - sm.emergency_point) / 2
+		var/damage_mult = clamp((half_emergency_point - (sm.damage + damage_to_be_applied)) / half_emergency_point, 0, 1)
+		damage_to_be_applied *= damage_mult
+		for(var/damage_type in individual_damages)
+			individual_damages[damage_type] *= damage_mult
 
 	// block healing unless its been HEAL_COOLDOWN seconds since the last shot
 	if(!COOLDOWN_FINISHED(src, heal_cooldown))
 		damage_to_be_applied = max(0, damage_to_be_applied)
+		for(var/damage_type in individual_damages)
+			individual_damages[damage_type] = max(0, damage_type)
 
 	return damage_to_be_applied
 
