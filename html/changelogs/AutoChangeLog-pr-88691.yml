@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Smartfridges on grid mode (like botany's) will no longer instantly spit out all the items it has when you try to set how many it should spit out."
