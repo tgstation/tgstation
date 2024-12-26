@@ -7,7 +7,7 @@
 	can_buckle = TRUE
 	buckle_lying = 0 //you sit in a chair, not lay
 	resistance_flags = NONE
-	max_integrity = 250
+	max_integrity = 100
 	integrity_failure = 0.1
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	layer = OBJ_LAYER
@@ -260,6 +260,7 @@
 	can_buckle = FALSE
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
+	max_integrity = 300
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 
@@ -280,6 +281,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	var/obj/item/chair_item = new item_chair(loc)
 	chair_item.set_custom_materials(custom_materials)
 	TransferComponents(chair_item)
+	chair_item.update_integrity(get_integrity())
 	user.put_in_hands(chair_item)
 	qdel(src)
 
@@ -372,6 +374,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	chair.set_custom_materials(custom_materials)
 	TransferComponents(chair)
 	chair.setDir(user.dir)
+	chair.update_integrity(get_integrity())
 	qdel(src)
 
 /obj/item/chair/proc/smash(mob/living/user)
