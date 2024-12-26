@@ -342,9 +342,6 @@
 
 	return rod.hook.chasm_detritus_type
 
-/datum/fish_source/chasm/spawn_reward_from_explosion(atom/location, severity)
-	return //Spawned content would immediately fall back into the chasm, so it wouldn't matter.
-
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
 	background = "background_lavaland"
@@ -723,9 +720,6 @@
 	if(!length(table))
 		return fish_table
 	return table
-
-/datum/fish_source/aquarium/spawn_reward_from_explosion(atom/location, severity)
-	return //If the aquarium breaks, all fish are released anyway.
 
 /datum/fish_source/aquarium/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
 	var/list/data = list()
