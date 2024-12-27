@@ -1,0 +1,7 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - rscadd: "Adds rift fishing to the game. Includes new wacky fish!"
+  - rscadd: "Drained and undrained influences can be fished in, the latter only by heretics. Fishing in an undrained influence shows a bobber floating over nothing to other people, so don't be stupid!"
+  - rscadd: "influences cannot be bombed for fish."
+  - rscadd: "Heretics can now infuse their fishing rod, and fish for knowledge."

@@ -169,8 +169,9 @@
 	var/impact_light_color_override
 
 	// Homing
-	/// If the projectile is homing. Warning - this changes projectile's processing logic, reverting it to segmented processing instead of new raymarching logic
-	var/homing = FALSE
+	/// If the projectile is currently homing. Warning - this changes projectile's processing logic, reverting it to segmented processing instead of new raymarching logic
+	/// This does not actually set up the projectile to home in on a target - you need to set that up with set_homing_target() on the projectile!
+	VAR_FINAL/homing = FALSE
 	/// Target the projectile is homing on
 	var/atom/homing_target
 	/// Angles per move segment, distance is based on SSprojectiles.pixels_per_decisecond
