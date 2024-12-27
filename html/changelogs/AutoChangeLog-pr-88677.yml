@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Big manipulator respects storage limits of storages when dropping stuff into them"
