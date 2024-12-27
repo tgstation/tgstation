@@ -283,6 +283,7 @@
 	STOP_PROCESSING(SSprojectiles, src)
 	firer = null
 	original = null
+	QDEL_NULL(embed_data)
 	if (movement_vector)
 		QDEL_NULL(movement_vector)
 	if (beam_points)
@@ -387,6 +388,8 @@
 		new impact_effect_type(target_turf, impact_x, impact_y)
 
 	var/mob/living/living_target = target
+	if (get_embed())
+		get_embed().try_embed_projectile(src, target, hit_limb_zone, blocked, pierce_hit)
 	var/reagent_note
 	if(reagents?.reagent_list)
 		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
@@ -1385,15 +1388,14 @@
 	return embed_data
 
 /// Sets our embedding datum to a different one. Can also take types
-/obj/projectile/proc/set_embed(datum/embedding/new_embed)
+/obj/projectile/proc/set_embed(datum/embedding/new_embed, dont_delete = FALSE)
 	if (new_embed == embed_data)
 		return
 
-	// Needs to be QDELETED as embed data uses this to clean itself up from its parent (us)
-	if (!QDELETED(embed_data))
+	if (!isnull(embed_data) && !dont_delete)
 		qdel(embed_data)
 
 	if (ispath(new_embed))
-		new_embed = new new_embed(src)
+		new_embed = new new_embed()
 
 	embed_data = new_embed
