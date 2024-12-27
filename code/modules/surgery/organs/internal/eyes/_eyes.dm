@@ -74,7 +74,7 @@
 		affected_human.add_eye_color_left(eye_color_left, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 	if(eye_color_right)
 		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
-	refresh_atom_color_overrides()
+	refresh_atom_color_overrides(affected_human)
 
 	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
 		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
@@ -114,15 +114,14 @@
 /obj/item/organ/eyes/update_atom_colour()
 	. = ..()
 	if (ishuman(owner))
-		refresh_atom_color_overrides()
-		human_owner.update_body()
+		refresh_atom_color_overrides(owner)
+		owner.update_body()
 
 /// Adds eye color overrides to our owner from our atom color
-/obj/item/organ/eyes/proc/refresh_atom_color_overrides()
+/obj/item/organ/eyes/proc/refresh_atom_color_overrides(mob/living/carbon/human/human_owner)
 	if (!atom_colours)
 		return
 
-	var/mob/living/carbon/human/human_owner = owner
 	for(var/i in 1 to COLOUR_PRIORITY_AMOUNT)
 		var/list/checked_color = atom_colours[i]
 		if (!checked_color)
