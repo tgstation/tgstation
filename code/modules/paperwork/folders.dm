@@ -67,7 +67,15 @@
 /obj/item/folder/update_overlays()
 	. = ..()
 	if(contents.len)
-		. += "folder_paper"
+		var/to_add = get_paper_overlay()
+		if (to_add)
+			. += to_add
+
+/obj/item/folder/proc/get_paper_overlay()
+	var/mutable_appearance/paper_overlay = mutable_appearance(icon, "folder_paper", offset_spokesman = src)
+	paper_overlay.appearance_flags |= KEEP_APART
+	paper_overlay = contents[1].color_atom_overlay(paper_overlay)
+	return paper_overlay
 
 /obj/item/folder/attackby(obj/item/weapon, mob/user, params)
 	if(burn_paper_product_attackby_check(weapon, user))
