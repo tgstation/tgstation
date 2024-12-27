@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - admin: "Admins can now return the shuttle back to the station without ending the round"

@@ -150,7 +150,7 @@
 	block += get_stat_info(get_percent, gravity_mult, "The lure will sink", "faster", "slower", span_info = TRUE)
 
 	list_clear_nulls(block)
-	. += examine_block(block.Join("\n"))
+	. += boxed_message(block.Join("\n"))
 
 	if(get_percent && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
 		block = list()
@@ -159,7 +159,7 @@
 		if(material.fish_weight_modifier != 1)
 			var/heavier = material.fish_weight_modifier > 1 ? "heavier" : "lighter"
 			block += span_info("Fish made of the same material as this rod tend to be [abs(material.fish_weight_modifier - 1) * 100]% [heavier].")
-		. += examine_block(block.Join("\n"))
+		. += boxed_message(block.Join("\n"))
 
 	block = list()
 	if(HAS_TRAIT(src, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
@@ -171,7 +171,7 @@
 	if(HAS_TRAIT(src, TRAIT_ROD_LAVA_USABLE))
 		block += span_info("This fishing rod can be used to fish on lava.")
 	if(length(block))
-		. += examine_block(block.Join("\n"))
+		. += boxed_message(block.Join("\n"))
 
 ///Used in examine_more to reduce all the copypasta when getting more information about the various stats of the fishing rod.
 /obj/item/fishing_rod/proc/get_stat_info(get_percent, value, prefix, easier, harder, suffix = "with this fishing rod", span_info = FALSE, less_is_better = FALSE, offset = 1)
