@@ -7,7 +7,7 @@
 	var/mob/living/basic/boss/thing/the_thing = owner
 	if(!istype(the_thing))
 		return ..()
-	return ..() && !!(the_thing.phase in available_in_phases)
+	return ..() && (the_thing.phase in available_in_phases)
 
 //decimate
 
@@ -197,9 +197,7 @@
 	. = ..()
 	var/turf/owner_turf = get_turf(owner)
 	owner.visible_message(span_danger("[owner] spits acid!"))
-	var/list/potential = list()
-	for(var/turf/open/turf in RANGE_TURFS(6, owner_turf))
-		potential += turf
+	var/list/potential = RANGE_TURFS(6, owner_turf)
 
 	for(var/i = 1 to rand(2,4))
 		new /obj/effect/temp_visual/incoming_thing_acid(pick(potential))

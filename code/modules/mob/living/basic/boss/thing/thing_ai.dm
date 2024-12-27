@@ -2,12 +2,6 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/no_gutted_mobs,
 		BB_TARGET_MINIMUM_STAT = DEAD, // Will attack dead ungutted mobs
-		BB_THETHING_CHARGE = null,
-		BB_THETHING_DECIMATE = null,
-		BB_THETHING_BIGTENDRILS = null,
-		BB_THETHING_CARDTENDRILS = null,
-		BB_THETHING_SHRIEK = null,
-		BB_THETHING_ACIDSPIT = null,
 		BB_THETHING_ATTACKMODE = TRUE, //Whether we are using our melee abilities right now
 		BB_THETHING_NOAOE = TRUE, // Restricts us to only melee abilities
 		BB_THETHING_LASTAOE = null, // Last AOE ability key executed
@@ -28,7 +22,7 @@
 		return
 	// our target
 	var/mob/living/shaft_miner = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(isnull(shaft_miner) || (isturf(shaft_miner.loc) && shaft_miner.z != pawn.z) || shaft_miner.stat == DEAD) //Dont use abilities on off z level targets, or dead shaft miners. We want to melee those.
+	if(QDELETED(shaft_miner) || shaft_miner.stat == DEAD) //Dont use abilities on off z level targets, or dead shaft miners. We want to melee those.
 		return
 
 	controller.set_blackboard_key(BB_THETHING_ATTACKMODE, TRUE) // putting this here so we go to melee mode if we cant do any aoe
@@ -55,7 +49,7 @@
 
 	// our target
 	var/mob/living/shaft_miner = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(isnull(shaft_miner) || (isturf(shaft_miner.loc) && shaft_miner.z != pawn.z))
+	if(QDELETED(shaft_miner))
 		return
 	var/target_dist = get_dist(pawn, shaft_miner)
 

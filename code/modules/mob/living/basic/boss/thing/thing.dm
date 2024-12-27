@@ -77,8 +77,7 @@
 	if(!ruin_spawned)
 		phase_successfully_depleted()
 		return
-	ADD_TRAIT(src, TRAIT_GODMODE, MEGAFAUNA_TRAIT)
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT)
+	add_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), MEGAFAUNA_TRAIT)
 	balloon_alert_to_viewers("invulnerable! overload the machines!")
 	visible_message(span_danger("[src] drops to the ground staggered, unable to keep up with injuries!"))
 	phase_invulnerability_timer = addtimer(CALLBACK(src, PROC_REF(phase_too_slow)), phase_invul_time, TIMER_STOPPABLE|TIMER_UNIQUE)
@@ -92,8 +91,7 @@
 /mob/living/basic/boss/thing/proc/phase_successfully_depleted()
 	playsound(src, 'sound/effects/pop_expl.ogg', 65)
 	ai_controller?.set_blackboard_key(BB_THETHING_NOAOE, FALSE)
-	REMOVE_TRAIT(src, TRAIT_GODMODE, MEGAFAUNA_TRAIT)
-	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT)
+	remove_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), MEGAFAUNA_TRAIT)
 	deltimer(phase_invulnerability_timer)
 	phase_invulnerability_timer = null
 	if(phase < 3) //after phase 3 we literally just die
@@ -109,8 +107,7 @@
 
 /mob/living/basic/boss/thing/proc/phase_too_slow()
 	phase_invulnerability_timer = null
-	REMOVE_TRAIT(src, TRAIT_GODMODE, MEGAFAUNA_TRAIT)
-	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT)
+	remove_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), MEGAFAUNA_TRAIT)
 	balloon_alert_to_viewers("recovers!")
 	visible_message(span_danger("[src] recovers from the damage! Too slow!"))
 	adjust_health(-(maxHealth/3) * 0.5) //half of a phase (which is a third of maxhealth)
