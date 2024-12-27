@@ -350,9 +350,10 @@
 
 /datum/pet_command/protect_owner/minebot/set_command_target(mob/living/parent, atom/target)
 	if(!parent.ai_controller.blackboard[BB_MINEBOT_AUTO_DEFEND])
-		return
+		return FALSE
 	if(!parent.ai_controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET) && !QDELETED(target)) //we are already dealing with something,
 		parent.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+	return TRUE
 
 /datum/pet_command/protect_owner/minebot/execute_action(datum/ai_controller/controller)
 	if(controller.blackboard[BB_MINEBOT_AUTO_DEFEND])

@@ -174,13 +174,12 @@
 	SIGNAL_HANDLER
 	if(!can_see(source, target, 9))
 		return COMSIG_MOB_CANCEL_CLICKON
-	on_target_set(source, target)
+	var/manual_emote_text = generate_emote_command(target)
+	if(on_target_set(source, target) && !isnull(manual_emote_text))
+		INVOKE_ASYNC(source, TYPE_PROC_REF(/atom, manual_emote), manual_emote_text)
 	UnregisterSignal(source, COMSIG_MOB_CLICKON)
 	source.client?.mouse_override_icon = source.client::mouse_override_icon
 	source.update_mouse_pointer()
-	var/manual_emote_text = generate_emote_command(target)
-	if(!isnull(manual_emote_text))
-		INVOKE_ASYNC(source, TYPE_PROC_REF(/atom, manual_emote), manual_emote_text)
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /datum/pet_command/proc/point_on_target(mob/living/friend, atom/potential_target)
@@ -214,11 +213,12 @@
 /datum/pet_command/proc/on_target_set(mob/living/friend, atom/potential_target)
 	var/mob/living/parent = weak_parent.resolve()
 	if (!parent)
-		return
+		return FALSE
 
 	parent.ai_controller.CancelActions()
 	if(!look_for_target(friend, potential_target) || !set_command_target(parent, potential_target))
-		return
+		return FALSE
 	parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [potential_target] [pointed_reaction]!"))
+	return TRUE
 
 
