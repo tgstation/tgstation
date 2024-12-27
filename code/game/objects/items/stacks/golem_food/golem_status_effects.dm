@@ -123,7 +123,7 @@
 	mineral_name = "uranium"
 	applied_fluff = "Glowing crystals sprout from your body. You feel energised!"
 	alert_icon_state = "sheet-uranium"
-	alert_desc = "Internal radiation is providing all of your nutritional needs."
+	alert_desc = "Internal radiation is providing all of your nutritional needs, and your punches inflict radiation."
 
 /datum/status_effect/golem/uranium/on_apply()
 	. = ..()
@@ -168,20 +168,20 @@
 	mineral_name = "plasma"
 	applied_fluff = "Plasma cooling rods sprout from your body. You can take the heat!"
 	alert_icon_state = "sheet-plasma"
-	alert_desc = "You are protected from high pressure and can convert heat damage into power."
+	alert_desc = "You can convert heat damage into power."
 
 /datum/status_effect/golem/plasma/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
-	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_burned))
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.burn_mod *= BURN_MULTIPLIER
 	return TRUE
 
 /datum/status_effect/golem/plasma/on_remove()
-	owner.remove_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.burn_mod /= BURN_MULTIPLIER
@@ -213,24 +213,44 @@
 	owner.Beam(target, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
 	playsound(owner, 'sound/effects/magic/lightningshock.ogg', vol = 50, vary = TRUE)
 
-/// Makes you spaceproof
+/// Makes you tenacious, but not invincible
 /datum/status_effect/golem/plasteel
 	overlay_state_prefix = "iron"
 	mineral_name = "plasteel"
-	applied_fluff = "Plasteel plates seal you tight. You feel insulated!"
+	applied_fluff = "Plasteel plates reinforce your body and your will!"
 	alert_icon_state = "sheet-plasteel"
-	alert_desc = "You are sealed against the cold, and against low pressure environments."
+	alert_desc = "You won't take damage while in crit; finding some way to heal out of it is another problem."
 
 /datum/status_effect/golem/plasteel/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
-	owner.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_NOCRITDAMAGE), TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/golem/plasteel/on_remove()
-	owner.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_NOCRITDAMAGE), TRAIT_STATUS_EFFECT(id))
 	return ..()
+
+/// Makes you push through the pain; beyond the ultimate!
+/datum/status_effect/golem/plastitanium
+	overlay_state_prefix = "iron"
+	mineral_name = "plastitanium"
+	applied_fluff = "Plastitanium reinforces your body beyond its limits!"
+	alert_icon_state = "sheet-plastitanium"
+	alert_desc = "You won't fall helpless into a critical state, but watch out; you can't eat iron with this buff active!"
+
+/datum/status_effect/golem/plastitanium/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_NOCRITDAMAGE), TRAIT_STATUS_EFFECT(id))
+	return TRUE
+
+/datum/status_effect/golem/plastitanium/on_remove()
+	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_NOCRITDAMAGE), TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 
 /// Makes you reflect energy projectiles
 /datum/status_effect/golem/gold
@@ -275,10 +295,7 @@
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/light_speed)
 
 	var/mob/living/carbon/carbon_owner = owner
-	for (var/obj/item/bodypart/arm/arm in carbon_owner.bodyparts)
-		if (arm.limb_id != SPECIES_GOLEM)
-			continue
-		set_arm_fluff(arm)
+	set_arm_fluff(carbon_owner)
 	return TRUE
 
 /datum/status_effect/golem/diamond/tick(delta_time, times_fired)
@@ -291,32 +308,35 @@
 
 /// Make our arm do slashing effects
 /datum/status_effect/golem/diamond/proc/set_arm_fluff(obj/item/bodypart/arm/arm)
-	arm.unarmed_attack_verbs = list("slash")
-	arm.grappled_attack_verb = "lacerate"
-	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	arm.unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
-	arm.unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
-	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
-	LAZYADD(modified_arms, arm)
+	for (var/obj/item/bodypart/arm/arm in carbon_owner.bodyparts)
+		if (arm.limb_id != SPECIES_GOLEM)
+			continue
+		arm.unarmed_attack_verbs = list("slash")
+		arm.grappled_attack_verb = "lacerate"
+		arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
+		arm.unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
+		arm.unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
+		RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
+		LAZYADD(modified_arms, arm)
 
 /datum/status_effect/golem/diamond/on_remove()
 	owner.alpha = initial(owner.alpha)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/light_speed)
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_THROW, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK))
-	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
-		reset_arm_fluff(arm)
+	reset_arm_fluff(modified_arms)
 	LAZYCLEARLIST(modified_arms)
 	return ..()
 
 /// Make our arm do whatever it originally did
 /datum/status_effect/golem/diamond/proc/reset_arm_fluff(obj/item/bodypart/arm/arm)
-	if (!arm)
-		return
-	arm.unarmed_attack_verbs = initial(arm.unarmed_attack_verbs)
-	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
-	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
-	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
-	UnregisterSignal(arm, COMSIG_QDELETING)
+	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
+		if (!arm)
+			return
+		arm.unarmed_attack_verbs = initial(arm.unarmed_attack_verbs)
+		arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
+		arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
+		arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
+		UnregisterSignal(arm, COMSIG_QDELETING)
 
 /// Remove references to deleted arms
 /datum/status_effect/golem/diamond/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
