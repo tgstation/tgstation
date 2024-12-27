@@ -4,6 +4,7 @@
 
 /datum/uplink_item/stealthy_weapons
 	category = /datum/uplink_category/stealthy
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH
 
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
@@ -13,7 +14,7 @@
 	item = /obj/item/gun/syringe/syndicate
 	cost = 4
 	surplus = 50
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
@@ -27,6 +28,12 @@
 	desc = "A dagger made of energy that looks and functions as a pen when off."
 	item = /obj/item/pen/edagger
 	cost = 2
+
+/datum/uplink_item/stealthy_weapons/slipstick
+	name = "Syndie Lipstick"
+	desc = "Stylish way to kiss to death, isn't it syndiekisser?"
+	item = /obj/item/lipstick/syndie
+	cost = 6
 
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
@@ -65,10 +72,9 @@
 	desc = "This box contains a guide on how to craft masterful works of origami, allowing you to transform normal pieces of paper into \
 			perfectly aerodynamic (and potentially lethal) paper airplanes."
 	item = /obj/item/storage/box/syndie_kit/origami_bundle
-	progression_minimum = 10 MINUTES
 	cost = 4
 	surplus = 0
-	purchasable_from = ~UPLINK_NUKE_OPS //clown ops intentionally left in, because that seems like some s-tier shenanigans.
+	purchasable_from = ~UPLINK_SERIOUS_OPS //clown ops intentionally left in, because that seems like some s-tier shenanigans.
 
 
 /datum/uplink_item/stealthy_weapons/martialarts
@@ -77,9 +83,9 @@
 			and gain the ability to swat bullets from the air, but you will also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
 	progression_minimum = 30 MINUTES
-	cost = 13
+	cost = 17
 	surplus = 0
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/stealthy_weapons/crossbow
 	name = "Miniature Energy Crossbow"
@@ -90,7 +96,17 @@
 	slur as if inebriated. It can produce an infinite number \
 	of bolts, but takes time to automatically recharge after each shot."
 	item = /obj/item/gun/energy/recharge/ebow
-	progression_minimum = 30 MINUTES
 	cost = 10
 	surplus = 50
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
+
+/datum/uplink_item/stealthy_weapons/contrabaton
+	name = "Contractor Baton"
+	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets. \
+	These shocks are capable of affecting the inner circuitry of most robots as well, applying a short stun. \
+	Has the added benefit of affecting the vocal cords of your victim, causing them to slur as if inebriated."
+	item = /obj/item/melee/baton/telescopic/contractor_baton
+	cost = 7
+	surplus = 50
+	limited_stock = 1
+	purchasable_from = UPLINK_TRAITORS | UPLINK_SPY

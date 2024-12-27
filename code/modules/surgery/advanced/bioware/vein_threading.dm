@@ -8,18 +8,31 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/incise,
-		/datum/surgery_step/thread_veins,
+		/datum/surgery_step/apply_bioware/thread_veins,
 		/datum/surgery_step/close,
 	)
 
-	bioware_target = BIOWARE_CIRCULATION
+	status_effect_gained = /datum/status_effect/bioware/heart/threaded_veins
 
-/datum/surgery_step/thread_veins
+/datum/surgery/advanced/bioware/vein_threading/mechanic
+	name = "Hydraulics Routing Optimization"
+	desc = "A robotic upgrade which severely reduces the amount of hydraulic fluid lost in case of injury."
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/apply_bioware/thread_veins,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
+	)
+
+/datum/surgery_step/apply_bioware/thread_veins
 	name = "thread veins (hand)"
-	accept_hand = TRUE
-	time = 125
 
-/datum/surgery_step/thread_veins/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/apply_bioware/thread_veins/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
 		user,
 		target,
@@ -29,7 +42,11 @@
 	)
 	display_pain(target, "Your entire body burns in agony!")
 
-/datum/surgery_step/thread_veins/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+/datum/surgery_step/apply_bioware/thread_veins/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	. = ..()
+	if(!.)
+		return
+
 	display_results(
 		user,
 		target,
@@ -38,18 +55,3 @@
 		span_notice("[user] finishes manipulating [target]'s circulatory system."),
 	)
 	display_pain(target, "You can feel your blood pumping through reinforced veins!")
-	new /datum/bioware/threaded_veins(target)
-	return ..()
-
-/datum/bioware/threaded_veins
-	name = "Threaded Veins"
-	desc = "The circulatory system is woven into a mesh, severely reducing the amount of blood lost from wounds."
-	mod_type = BIOWARE_CIRCULATION
-
-/datum/bioware/threaded_veins/on_gain()
-	..()
-	owner.physiology.bleed_mod *= 0.25
-
-/datum/bioware/threaded_veins/on_lose()
-	..()
-	owner.physiology.bleed_mod *= 4

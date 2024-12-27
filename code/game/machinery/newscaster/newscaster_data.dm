@@ -107,17 +107,17 @@ GLOBAL_LIST_EMPTY(request_list)
 	channel_ID = random_channel_id_setup()
 
 /**
- * This proc assigns each feed_channel a random integer, from 1-999 as a unique identifer.
+ * This proc assigns each feed_channel a random integer, from 1-999 as a unique identifier.
  * Using this value, the TGUI window has a unique identifier to attach to messages that can be used to reattach them
  * to their parent channels back in dreammaker.
- * Based on implementation, we're limiting outselves to only 998 player made channels maximum. How we'd use all of them, I don't know.
+ * Based on implementation, we're limiting ourselves to only 998 player made channels maximum. How we'd use all of them, I don't know.
  */
 /datum/feed_channel/proc/random_channel_id_setup()
 	if(!GLOB.news_network)
 		return //Should only apply to channels made before setup is finished, use hardset_channel for these
 	if(!GLOB.news_network.channel_IDs)
 		GLOB.news_network.channel_IDs += rand(1,999)
-		return //This will almost always be the station annoucements channel here.
+		return //This will almost always be the station announcements channel here.
 	var/channel_id
 	for(var/i in 1 to 10000)
 		channel_id = rand(1, 999)
@@ -155,7 +155,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/active
 	/// What is the criminal in question's name? Not a mob reference as this is a text field.
 	var/criminal
-	/// Message body used to describe what crime has been comitted.
+	/// Message body used to describe what crime has been committed.
 	var/body
 	/// Who was it that created this wanted message?
 	var/scanned_user
@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/message_count = 0
 
 /datum/feed_network/New()
-	create_feed_channel("Station Announcements", "SS13", "Company news, staff annoucements, and all the latest information. Have a secure shift!", locked = TRUE, hardset_channel = 1000)
+	create_feed_channel("Station Announcements", "SS13", "Company news, staff announcements, and all the latest information. Have a secure shift!", locked = TRUE, hardset_channel = 1000)
 	wanted_issue = new /datum/wanted_message
 
 /datum/feed_network/proc/create_feed_channel(channel_name, author, desc, locked, adminChannel = FALSE, hardset_channel)

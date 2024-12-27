@@ -1,6 +1,6 @@
 // Chili
 /obj/item/seeds/chili
-	name = "pack of chili seeds"
+	name = "chili seed pack"
 	desc = "These seeds grow into chili plants. HOT! HOT! HOT!"
 	icon_state = "seed-chili"
 	species = "chili"
@@ -30,7 +30,7 @@
 
 // Ice Chili
 /obj/item/seeds/chili/ice
-	name = "pack of chilly pepper seeds"
+	name = "chilly pepper seed pack"
 	desc = "These seeds grow into chilly pepper plants."
 	icon_state = "seed-icepepper"
 	species = "chiliice"
@@ -39,7 +39,7 @@
 	lifespan = 25
 	maturation = 4
 	production = 4
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 	genes = list(/datum/plant_gene/trait/chem_cooling)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/frostoil = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
@@ -56,7 +56,7 @@
 
 // Ghost Chili
 /obj/item/seeds/chili/ghost
-	name = "pack of ghost chili seeds"
+	name = "ghost chili seed pack"
 	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
 	icon_state = "seed-chilighost"
 	species = "chilighost"
@@ -66,7 +66,7 @@
 	maturation = 10
 	production = 10
 	yield = 3
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 	genes = list(/datum/plant_gene/trait/chem_heating, /datum/plant_gene/trait/backfire/chili_heat)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.3, /datum/reagent/consumable/capsaicin = 0.55, /datum/reagent/consumable/nutriment = 0.04)
@@ -83,7 +83,7 @@
 
 // Bell Pepper
 /obj/item/seeds/chili/bell_pepper
-	name = "pack of bell pepper seeds"
+	name = "bell pepper seed pack"
 	desc = "These seeds grow into bell pepper plants. MILD! MILD! MILD!"
 	icon_state = "seed-bell-pepper"
 	species = "bellpepper"
@@ -93,7 +93,7 @@
 	maturation = 10
 	production = 10
 	yield = 3
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.08, /datum/reagent/consumable/nutriment = 0.04)

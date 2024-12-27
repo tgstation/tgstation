@@ -7,7 +7,7 @@
 	icon_state = "centcom"
 	static_lighting = TRUE
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
@@ -124,6 +124,7 @@
 /area/centcom/tdome/arena
 	name = "Thunderdome Arena"
 	icon_state = "thunder"
+	area_flags = parent_type::area_flags | UNLIMITED_FISHING //for possible testing purposes
 
 /area/centcom/tdome/tdome1
 	name = "Thunderdome (Team 1)"
@@ -150,7 +151,7 @@
 	icon_state = "wizards_den"
 	static_lighting = TRUE
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
@@ -163,7 +164,7 @@
 	area_flags = UNIQUE_AREA | NOTELEPORT
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 
 //Syndicates
@@ -171,7 +172,7 @@
 	name = "Syndicate Mothership"
 	icon_state = "syndie-ship"
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_DANGER
@@ -208,6 +209,18 @@
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
 
+//MAFIA
+/area/centcom/mafia
+	name = "Mafia Minigame"
+	icon_state = "mafia"
+	static_lighting = FALSE
+
+	base_lighting_alpha = 255
+	requires_power = FALSE
+	default_gravity = STANDARD_GRAVITY
+	flags_1 = NONE
+	area_flags = BLOCK_SUICIDE | UNIQUE_AREA
+
 //CAPTURE THE FLAG
 /area/centcom/ctf
 	name = "Capture the Flag"
@@ -215,9 +228,9 @@
 	requires_power = FALSE
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	area_flags = UNIQUE_AREA | NOTELEPORT | NO_DEATH_MESSAGE
+	area_flags = UNIQUE_AREA | NOTELEPORT | NO_DEATH_MESSAGE | BLOCK_SUICIDE
 
 /area/centcom/ctf/control_room
 	name = "Control Room A"
@@ -260,7 +273,7 @@
 	name = "\improper Asteroid"
 	icon_state = "asteroid"
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA
 	ambience_index = AMBIENCE_MINING
 	flags_1 = CAN_BE_DIRTY_1

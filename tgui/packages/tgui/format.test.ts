@@ -1,4 +1,10 @@
-import { formatDb, formatMoney, formatSiBaseTenUnit, formatSiUnit, formatTime } from './format';
+import {
+  formatDb,
+  formatMoney,
+  formatSiBaseTenUnit,
+  formatSiUnit,
+  formatTime,
+} from './format';
 
 describe('formatSiUnit', () => {
   it('formats base values correctly', () => {

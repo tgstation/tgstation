@@ -16,12 +16,13 @@
 	light_power = 0.75
 	light_color = LIGHT_COLOR_LAVA
 	light_on = FALSE
-	bullet_bounce_sound = 'sound/items/welder2.ogg'
+	bullet_bounce_sound = 'sound/items/tools/welder2.ogg'
 
 	footstep = FOOTSTEP_LAVA
 	barefootstep = FOOTSTEP_LAVA
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 	/// How much fire damage we deal to living mobs stepping on us
 	var/lava_damage = 20
 	/// How many firestacks we add to living mobs stepping on us
@@ -38,16 +39,53 @@
 	var/mask_icon = 'icons/turf/floors.dmi'
 	/// The icon state that covers the lava bits of our turf
 	var/mask_state = "lava-lightmask"
-	/// The configuration key for the preset fishing spot for this type of turf.
-	var/fish_source_type = FISHING_SPOT_PRESET_LAVALAND_LAVA
+	/// The type for the preset fishing spot of this type of turf.
+	var/fish_source_type = /datum/fish_source/lavaland
+	/// The color we use for our immersion overlay
+	var/immerse_overlay_color = "#a15e1b"
+	/// Whether the immerse element has been added yet or not
+	var/immerse_added = FALSE
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
 	if(fish_source_type)
-		AddElement(/datum/element/lazy_fishing_spot, fish_source_type)
+		add_lazy_fishing(fish_source_type)
+	// You can release chrabs and lavaloops and likes in lava, or be an absolute scumbag and drop other fish there too.
+	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	refresh_light()
 	if(!smoothing_flags)
 		update_appearance()
+	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_inited))
+
+/turf/open/lava/Destroy()
+	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
+	for(var/mob/living/leaving_mob in contents)
+		leaving_mob.RemoveElement(/datum/element/perma_fire_overlay)
+		REMOVE_TRAIT(leaving_mob, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
+	return ..()
+
+///We lazily add the immerse element when something is spawned or crosses this turf and not before.
+/turf/open/lava/proc/on_atom_inited(datum/source, atom/movable/movable)
+	SIGNAL_HANDLER
+	if(burn_stuff(movable))
+		START_PROCESSING(SSobj, src)
+	if(immerse_added || is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
+		return
+	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
+	immerse_added = TRUE
+
+/**
+ * turf/Initialize() calls Entered on its contents too, however
+ * we need to wait for movables that still need to be initialized
+ * before we add the immerse element.
+ */
+/turf/open/lava/Entered(atom/movable/arrived)
+	. = ..()
+	if(!immerse_added && !is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
+		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
+		immerse_added = TRUE
+	if(burn_stuff(arrived))
+		START_PROCESSING(SSobj, src)
 
 /turf/open/lava/update_overlays()
 	. = ..()
@@ -62,7 +100,7 @@
 	// But that's rare, and I'm ok with that, quartering our light source count is useful
 	var/mutable_appearance/light_mask = mutable_appearance(mask_icon, mask_state, LIGHTING_MASK_LAYER, src, LIGHTING_PLANE)
 	light_mask.blend_mode = BLEND_MULTIPLY
-	light_mask.color = list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0)
+	light_mask.color = COLOR_MATRIX_INVERT
 	. += light_mask
 
 /// Refreshes this lava turf's lighting
@@ -112,6 +150,8 @@
 	update_appearance(~UPDATE_SMOOTHING)
 
 /turf/open/lava/ex_act(severity, target)
+	if(fish_source)
+		GLOB.preset_fish_sources[fish_source].spawn_reward_from_explosion(src, severity)
 	return FALSE
 
 /turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
@@ -127,23 +167,11 @@
 /turf/open/lava/MakeDry(wet_setting = TURF_WET_WATER)
 	return
 
-/turf/open/lava/airless
-	initial_gas_mix = AIRLESS_ATMOS
-
-/turf/open/lava/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(burn_stuff(arrived))
-		START_PROCESSING(SSobj, src)
-
 /turf/open/lava/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(isliving(gone) && !islava(gone.loc))
-		REMOVE_TRAIT(gone, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-
-/turf/open/lava/Destroy()
-	for(var/mob/living/leaving_mob in contents)
-		REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-	return ..()
+		gone.RemoveElement(/datum/element/perma_fire_overlay)
+		REMOVE_TRAIT(gone, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
@@ -151,35 +179,24 @@
 
 /turf/open/lava/process(seconds_per_tick)
 	if(!burn_stuff(null, seconds_per_tick))
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /turf/open/lava/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	switch(the_rcd.mode)
-		if(RCD_FLOORWALL)
-			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
+		return list("delay" = 0, "cost" = 3)
 	return FALSE
 
-/turf/open/lava/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
-		if(RCD_FLOORWALL)
-			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-			return TRUE
-	return FALSE
-
-/turf/open/lava/rust_heretic_act()
+/turf/open/lava/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		return TRUE
 	return FALSE
 
 /turf/open/lava/singularity_act()
 	return
 
-/turf/open/lava/singularity_pull(S, current_size)
+/turf/open/lava/singularity_pull(atom/singularity, current_size)
 	return
-
-/turf/open/lava/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/floors.dmi'
-	underlay_appearance.icon_state = "basalt"
-	return TRUE
 
 /turf/open/lava/GetHeatCapacity()
 	. = 700000
@@ -199,30 +216,28 @@
 			return
 		if(R.use(1))
 			to_chat(user, span_notice("You construct a lattice."))
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 			new /obj/structure/lattice/lava(locate(x, y, z))
 		else
 			to_chat(user, span_warning("You need one rod to build a heatproof lattice."))
 		return
 	// Light a cigarette in the lava
-	if(istype(C, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/ciggie = C
+	if(istype(C, /obj/item/cigarette))
+		var/obj/item/cigarette/ciggie = C
 		if(ciggie.lit)
 			to_chat(user, span_warning("The [ciggie.name] is already lit!"))
 			return TRUE
 		var/clumsy_modifier = HAS_TRAIT(user, TRAIT_CLUMSY) ? 2 : 1
-		if(prob(25 * clumsy_modifier ))
+		if(prob(25 * clumsy_modifier) && isliving(user))
 			ciggie.light(span_warning("[user] expertly dips \the [ciggie.name] into [src], along with the rest of [user.p_their()] arm. What a dumbass."))
-			var/obj/item/bodypart/affecting = user.get_active_hand()
-			affecting?.receive_damage(burn = 90)
+			var/mob/living/burned_guy = user
+			burned_guy.apply_damage(90, BURN, user.get_active_hand())
 		else
 			ciggie.light(span_rose("[user] expertly dips \the [ciggie.name] into [src], lighting it with the scorching heat of the planet. Witnessing such a feat is almost enough to make you cry."))
 		return TRUE
 
 /turf/open/lava/proc/is_safe()
-	if(HAS_TRAIT(src, TRAIT_LAVA_STOPPED))
-		return TRUE
-	return FALSE
+	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED)
 
 ///Generic return value of the can_burn_stuff() proc. Does nothing.
 #define LAVA_BE_IGNORING 0
@@ -249,12 +264,11 @@
 		. = TRUE
 
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)
-	if(burn_target.movement_type & (FLYING|FLOATING)) //you're flying over it.
+	if(QDELETED(burn_target))
 		return LAVA_BE_IGNORING
-
+	if((burn_target.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || burn_target.throwing || !burn_target.has_gravity()) //you're flying over it.
+		return LAVA_BE_IGNORING
 	if(isobj(burn_target))
-		if(burn_target.throwing) // to avoid gulag prisoners easily escaping, throwing only works for objects.
-			return LAVA_BE_IGNORING
 		var/obj/burn_obj = burn_target
 		if((burn_obj.resistance_flags & immunity_resistance_flags))
 			return LAVA_BE_PROCESSING
@@ -268,7 +282,7 @@
 	var/mob/living/burn_living = burn_target
 	var/atom/movable/burn_buckled = burn_living.buckled
 	if(burn_buckled)
-		if(burn_buckled.movement_type & (FLYING|FLOATING))
+		if((burn_buckled.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || burn_buckled.throwing || !burn_buckled.has_gravity())
 			return LAVA_BE_PROCESSING
 		if(isobj(burn_buckled))
 			var/obj/burn_buckled_obj = burn_buckled
@@ -291,11 +305,13 @@
 #undef LAVA_BE_BURNING
 
 /turf/open/lava/proc/do_burn(atom/movable/burn_target, seconds_per_tick = 1)
-	. = TRUE
+	if(QDELETED(burn_target))
+		return FALSE
+
 	if(isobj(burn_target))
 		var/obj/burn_obj = burn_target
 		if(burn_obj.resistance_flags & ON_FIRE) // already on fire; skip it.
-			return
+			return TRUE
 		if(!(burn_obj.resistance_flags & FLAMMABLE))
 			burn_obj.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
 		if(burn_obj.resistance_flags & FIRE_PROOF)
@@ -304,19 +320,27 @@
 			burn_obj.set_armor_rating(FIRE, 50)
 		burn_obj.fire_act(temperature_damage, 1000 * seconds_per_tick)
 		if(istype(burn_obj, /obj/structure/closet))
-			var/obj/structure/closet/burn_closet = burn_obj
-			for(var/burn_content in burn_closet.contents)
+			for(var/burn_content in burn_target)
 				burn_stuff(burn_content)
-		return
+		return TRUE
 
-	var/mob/living/burn_living = burn_target
-	ADD_TRAIT(burn_living, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-	burn_living.update_fire()
-
-	burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
-	if(!QDELETED(burn_living)) //mobs turning into object corpses could get deleted here.
+	if(isliving(burn_target))
+		var/mob/living/burn_living = burn_target
+		if(!HAS_TRAIT_FROM(burn_living, TRAIT_NO_EXTINGUISH, TURF_TRAIT))
+			burn_living.AddElement(/datum/element/perma_fire_overlay)
+			ADD_TRAIT(burn_living, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 		burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
 		burn_living.ignite_mob()
+		burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
+		return TRUE
+
+	return FALSE
+
+/turf/open/lava/can_cross_safely(atom/movable/crossing)
+	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED) || HAS_TRAIT(crossing, immunity_trait ) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
+
+/turf/open/lava/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/lava/smooth
 	name = "lava"
@@ -330,6 +354,13 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_LAVA
 	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA
 	underfloor_accessibility = 2 //This avoids strangeness when routing pipes / wires along catwalks over lava
+	immerse_overlay_color = "#F98511"
+
+/// Smooth lava needs to take after basalt in order to blend better. If you make a /turf/open/lava/smooth subtype for an area NOT surrounded by basalt; you should override this proc.
+/turf/open/lava/smooth/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = /turf/open/misc/asteroid/basalt::icon
+	underlay_appearance.icon_state = /turf/open/misc/asteroid/basalt::icon_state
+	return TRUE
 
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -345,7 +376,7 @@
 	icon_state = "liquidplasma"
 	initial_gas_mix = BURNING_COLD
 	baseturfs = /turf/open/lava/plasma
-	fish_source_type = FISHING_SPOT_PRESET_ICEMOON_PLASMA
+	fish_source_type = /datum/fish_source/lavaland/icemoon
 
 	light_range = 3
 	light_power = 0.75
@@ -353,6 +384,7 @@
 	immunity_trait = TRAIT_SNOWSTORM_IMMUNE
 	immunity_resistance_flags = FREEZE_PROOF
 	lava_temperature = 100
+	immerse_overlay_color = "#CD4C9F"
 
 /turf/open/lava/plasma/examine(mob/user)
 	. = ..()
@@ -368,34 +400,40 @@
 
 /turf/open/lava/plasma/do_burn(atom/movable/burn_target, seconds_per_tick = 1)
 	. = TRUE
-	if(isobj(burn_target))
-		return FALSE // Does nothing against objects. Old code.
+	if(!isliving(burn_target))
+		return FALSE
 
 	var/mob/living/burn_living = burn_target
-	burn_living.adjustFireLoss(2)
-	if(QDELETED(burn_living))
+	var/need_mob_update
+	// This is from plasma, so it should obey plasma biotype requirements
+	need_mob_update += burn_living.adjustToxLoss(15, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+	need_mob_update += burn_living.adjustFireLoss(25, updating_health = FALSE)
+	if(need_mob_update)
+		burn_living.updatehealth()
+
+	if(QDELETED(burn_living) \
+		|| !ishuman(burn_living) \
+		|| HAS_TRAIT(burn_living, TRAIT_NODISMEMBER) \
+		|| HAS_TRAIT(burn_living, TRAIT_NO_PLASMA_TRANSFORM) \
+		|| SPT_PROB(65, seconds_per_tick) \
+	)
 		return
-	burn_living.adjust_fire_stacks(20) //dipping into a stream of plasma would probably make you more flammable than usual
-	burn_living.adjust_bodytemperature(-rand(50,65)) //its cold, man
-	if(!ishuman(burn_living) || SPT_PROB(65, seconds_per_tick))
-		return
+
 	var/mob/living/carbon/human/burn_human = burn_living
-	var/datum/species/burn_species = burn_human.dna.species
-	if(istype(burn_species, /datum/species/plasmaman) || istype(burn_species, /datum/species/android)) //ignore plasmamen/robotic species
-		return
 
-	var/list/plasma_parts = list()//a list of the organic parts to be turned into plasma limbs
-	var/list/robo_parts = list()//keep a reference of robotic parts so we know if we can turn them into a plasmaman
+	var/list/immune_parts = list() // Parts we can't transform because they're not organic or can't be dismembered
+	var/list/transform_parts = list() // Parts we want to transform
+
 	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
-		if(IS_ORGANIC_LIMB(burn_limb) && burn_limb.limb_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
-			plasma_parts += burn_limb
-		if(IS_ROBOTIC_LIMB(burn_limb))
-			robo_parts += burn_limb
+		if(!IS_ORGANIC_LIMB(burn_limb) || !burn_limb.can_dismember())
+			immune_parts += burn_limb
+			continue
+		if(burn_limb.limb_id == SPECIES_PLASMAMAN)
+			continue
+		transform_parts += burn_limb
 
-	burn_human.adjustToxLoss(15, required_biotype = MOB_ORGANIC) // This is from plasma, so it should obey plasma biotype requirements
-	burn_human.adjustFireLoss(25)
-	if(plasma_parts.len)
-		var/obj/item/bodypart/burn_limb = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
+	if(length(transform_parts))
+		var/obj/item/bodypart/burn_limb = pick_n_take(transform_parts)
 		burn_human.emote("scream")
 		var/obj/item/bodypart/plasmalimb
 		switch(burn_limb.body_zone) //get plasmaman limb to swap in
@@ -411,16 +449,20 @@
 				plasmalimb = new /obj/item/bodypart/chest/plasmaman
 			if(BODY_ZONE_HEAD)
 				plasmalimb = new /obj/item/bodypart/head/plasmaman
-		burn_human.del_and_replace_bodypart(plasmalimb)
+
+		burn_human.del_and_replace_bodypart(plasmalimb, special = TRUE)
 		burn_human.update_body_parts()
 		burn_human.emote("scream")
 		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.plaintext_zone] melts down to the bone!"), \
-			span_userdanger("You scream out in pain as your [burn_limb.plaintext_zone] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!"))
-	if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
-		burn_human.ignite_mob()
-		burn_human.set_species(/datum/species/plasmaman)
-		burn_human.visible_message(span_warning("[burn_human] bursts into a brilliant purple flame as [burn_human.p_their()] entire body is that of a skeleton!"), \
-			span_userdanger("Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!"))
+			span_userdanger("You scream out in pain as your [burn_limb.plaintext_zone] melts down to the bone, held together only by strands of purple fungus!"))
+
+	// If all of your limbs are plasma then congrats: you are plasma man
+	if(length(immune_parts) || length(transform_parts))
+		return
+	burn_human.ignite_mob()
+	burn_human.set_species(/datum/species/plasmaman)
+	burn_human.visible_message(span_warning("[burn_human] bursts into flame as the last of [burn_human.p_their()] body is coated in fungus!"), \
+		span_userdanger("Your senses numb as what remains of your flesh sloughs off, revealing the plasma-encrusted bone beneath!"))
 
 //mafia specific tame happy plasma (normal atmos, no slowdown)
 /turf/open/lava/plasma/mafia

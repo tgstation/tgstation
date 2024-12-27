@@ -21,12 +21,12 @@
 	var/delay = 1
 	///The next time we should process
 	///Used primarially as a hint to be reasoned about by our [controller], and as the id of our bucket
-	///Should not be modified directly outside of [start_loop]
 	var/timer = 0
-	///Is this loop running or not
-	var/running = FALSE
-	///Track if we're currently paused
-	var/paused = FALSE
+	///The time we are CURRENTLY queued for processing
+	///Do not modify this directly
+	var/queued_time = -1
+	/// Status bitfield for what state the move loop is currently in
+	var/status = NONE
 
 /datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	src.owner = owner
@@ -57,7 +57,7 @@
 /datum/move_loop/proc/loop_started()
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_START)
-	running = TRUE
+	status |= MOVELOOP_STATUS_RUNNING
 	//If this is our first time starting to move with this loop
 	//And we're meant to start instantly
 	if(!timer && flags & MOVEMENT_LOOP_START_FAST)
@@ -68,7 +68,7 @@
 ///Called when a loop is stopped, doesn't stop the loop itself
 /datum/move_loop/proc/loop_stopped()
 	SHOULD_CALL_PARENT(TRUE)
-	running = FALSE
+	status &= ~MOVELOOP_STATUS_RUNNING
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_STOP)
 
 /datum/move_loop/proc/info_deleted(datum/source)
@@ -91,7 +91,7 @@
 ///Pauses the move loop for some passed in period
 ///This functionally means shifting its timer up, and clearing it from its current bucket
 /datum/move_loop/proc/pause_for(time)
-	if(!controller || !running) //No controller or not running? go away
+	if(!controller || !(status & MOVELOOP_STATUS_RUNNING)) //No controller or not running? go away
 		return
 	//Dequeue us from our current bucket
 	controller.dequeue_loop(src)
@@ -101,6 +101,10 @@
 	controller.queue_loop(src)
 
 /datum/move_loop/process()
+	if(isnull(controller))
+		qdel(src)
+		return
+
 	var/old_delay = delay //The signal can sometimes change delay
 
 	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
@@ -141,24 +145,24 @@
 
 ///Pause our loop untill restarted with resume_loop()
 /datum/move_loop/proc/pause_loop()
-	if(!controller || !running || paused) //we dead
+	if(!controller || !(status & MOVELOOP_STATUS_RUNNING) || (status & MOVELOOP_STATUS_PAUSED)) //we dead
 		return
 
 	//Dequeue us from our current bucket
 	controller.dequeue_loop(src)
-	paused = TRUE
+	status |= MOVELOOP_STATUS_PAUSED
 
 ///Resume our loop after being paused by pause_loop()
 /datum/move_loop/proc/resume_loop()
-	if(!controller || !running || !paused)
+	if(!controller || (status & MOVELOOP_STATUS_RUNNING|MOVELOOP_STATUS_PAUSED) != (MOVELOOP_STATUS_RUNNING|MOVELOOP_STATUS_PAUSED))
 		return
 
-	controller.queue_loop(src)
 	timer = world.time
-	paused = FALSE
+	controller.queue_loop(src)
+	status &= ~MOVELOOP_STATUS_PAUSED
 
 ///Removes the atom from some movement subsystem. Defaults to SSmovement
-/datum/controller/subsystem/move_manager/proc/stop_looping(atom/movable/moving, datum/controller/subsystem/movement/subsystem = SSmovement)
+/datum/move_manager/proc/stop_looping(atom/movable/moving, datum/controller/subsystem/movement/subsystem = SSmovement)
 	var/datum/movement_packet/our_info = moving.move_packet
 	if(!our_info)
 		return FALSE
@@ -179,7 +183,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move, priority, flags, extra_info, delay, timeout, direction)
 
 ///Replacement for walk()
@@ -220,7 +224,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/force_move_dir(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/force_move_dir(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move/force, priority, flags, extra_info, delay, timeout, direction)
 
 /datum/move_loop/move/force
@@ -277,7 +281,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/force_move(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/force_move(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, priority, flags, extra_info, delay, timeout, chasing)
 
 ///Used for force-move loops
@@ -301,7 +305,7 @@
  * repath_delay - How often we're allowed to recalculate our path
  * max_path_length - The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)
  * miminum_distance - Minimum distance to the target before path returns, could be used to get near a target, but not right to it - for an AI mob with a gun, for example
- * id - An ID card representing what access we have and what doors we can open
+ * access - A list representing what access we have and what doors we can open
  * simulated_only -  Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
  * avoid - If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
  * skip_first -  Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break things
@@ -311,18 +315,19 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/jps_move(moving,
+/datum/move_manager/proc/jps_move(moving,
 	chasing,
 	delay,
 	timeout,
 	repath_delay,
 	max_path_length,
 	minimum_distance,
-	obj/item/card/id/id,
+	list/access,
 	simulated_only,
 	turf/avoid,
 	skip_first,
 	subsystem,
+	diagonal_handling,
 	priority,
 	flags,
 	datum/extra_info,
@@ -339,10 +344,11 @@
 		repath_delay,
 		max_path_length,
 		minimum_distance,
-		id,
+		access,
 		simulated_only,
 		avoid,
 		skip_first,
+		diagonal_handling,
 		initial_path)
 
 /datum/move_loop/has_target/jps
@@ -352,44 +358,45 @@
 	var/max_path_length
 	///Minimum distance to the target before path returns
 	var/minimum_distance
-	///An ID card representing what access we have and what doors we can open. Kill me
-	var/obj/item/card/id/id
+	///A list representing what access we have and what doors we can open.
+	var/list/access
 	///Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
 	var/simulated_only
 	///A perticular turf to avoid
 	var/turf/avoid
 	///Should we skip the first step? This is the tile we're currently on, which breaks some things
 	var/skip_first
+	///Whether we replace diagonal movements with cardinal movements or follow through with them
+	var/diagonal_handling
 	///A list for the path we're currently following
 	var/list/movement_path
 	///Cooldown for repathing, prevents spam
 	COOLDOWN_DECLARE(repath_cooldown)
 	///Bool used to determine if we're already making a path in JPS. this prevents us from re-pathing while we're already busy.
 	var/is_pathing = FALSE
-	///Callback to invoke once we make a path
-	var/datum/callback/on_finish_callback
+	///Callbacks to invoke once we make a path
+	var/list/datum/callback/on_finish_callbacks = list()
 
 /datum/move_loop/has_target/jps/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	. = ..()
-	on_finish_callback = CALLBACK(src, PROC_REF(on_finish_pathing))
+	on_finish_callbacks += CALLBACK(src, PROC_REF(on_finish_pathing))
 
-/datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first, list/initial_path)
+/datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/initial_path)
 	. = ..()
 	if(!.)
 		return
 	src.repath_delay = repath_delay
 	src.max_path_length = max_path_length
 	src.minimum_distance = minimum_distance
-	src.id = id
+	src.access = access
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 	src.skip_first = skip_first
-	movement_path = initial_path.Copy()
-	if(isidcard(id))
-		RegisterSignal(id, COMSIG_QDELETING, PROC_REF(handle_no_id)) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
+	src.diagonal_handling = diagonal_handling
+	movement_path = initial_path?.Copy()
 
-/datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first, initial_path)
-	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && id == src.id && simulated_only == src.simulated_only && avoid == src.avoid)
+/datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, initial_path)
+	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && access ~= src.access && simulated_only == src.simulated_only && avoid == src.avoid)
 		return TRUE
 	return FALSE
 
@@ -403,20 +410,16 @@
 	movement_path = null
 
 /datum/move_loop/has_target/jps/Destroy()
-	id = null //Kill me
 	avoid = null
+	on_finish_callbacks = null
 	return ..()
-
-/datum/move_loop/has_target/jps/proc/handle_no_id()
-	SIGNAL_HANDLER
-	id = null
 
 ///Tries to calculate a new path for this moveloop.
 /datum/move_loop/has_target/jps/proc/recalculate_path()
 	if(!COOLDOWN_FINISHED(src, repath_cooldown))
 		return
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
-	if(SSpathfinder.pathfind(moving, target, max_path_length, minimum_distance, id, simulated_only, avoid, skip_first, on_finish = on_finish_callback))
+	if(SSpathfinder.pathfind(moving, target, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, on_finish = on_finish_callbacks))
 		is_pathing = TRUE
 		SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_REPATH)
 
@@ -424,6 +427,7 @@
 /datum/move_loop/has_target/jps/proc/on_finish_pathing(list/path)
 	movement_path = path
 	is_pathing = FALSE
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING, path)
 
 /datum/move_loop/has_target/jps/move()
 	if(!length(movement_path))
@@ -441,7 +445,8 @@
 	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
 	// to the side while moving but could maybe still follow their path without needing a whole new path
 	if(get_turf(moving) == next_step)
-		movement_path.Cut(1,2)
+		if(length(movement_path))
+			movement_path.Cut(1,2)
 	else
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE
@@ -488,7 +493,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_to(moving, chasing, min_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_to(moving, chasing, min_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, priority, flags, extra_info, delay, timeout, chasing, min_dist)
 
 ///Wrapper around walk_to()
@@ -522,7 +527,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_away(moving, chasing, max_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_away(moving, chasing, max_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, priority, flags, extra_info, delay, timeout, chasing, max_dist)
 
 ///Wrapper around walk_away()
@@ -557,7 +562,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, priority, flags, extra_info, delay, timeout, chasing, home)
 
 /**
@@ -576,7 +581,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/home_onto(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/home_onto(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return move_towards(moving, chasing, delay, TRUE, timeout, subsystem, priority, flags, extra_info)
 
 ///Used as a alternative to walk_towards
@@ -698,7 +703,7 @@
 		y_rate = 1
 
 /**
- * Wrapper for walk_towards, not reccomended, as it's movement ends up being a bit stilted
+ * Wrapper for walk_towards, not reccomended, as its movement ends up being a bit stilted
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
  *
@@ -712,7 +717,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, priority, flags, extra_info, delay, timeout, chasing)
 
 ///The actual implementation of walk_towards()
@@ -738,7 +743,7 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  */
-/datum/controller/subsystem/move_manager/proc/freeze(moving, halted_turf, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/freeze(moving, halted_turf, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/freeze, priority, flags, extra_info, delay, timeout, halted_turf)
 
 /// As close as you can get to a "do-nothing" move loop, the pure intention of this is to absolutely resist all and any automated movement until the move loop times out.
@@ -762,7 +767,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_rand(moving, directions, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_rand(moving, directions, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	if(!directions)
 		directions = GLOB.alldirs
 	return add_to_loop(moving, subsystem, /datum/move_loop/move_rand, priority, flags, extra_info, delay, timeout, directions)
@@ -814,7 +819,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_to_rand(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_to_rand(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, priority, flags, extra_info, delay, timeout)
 
 ///Wrapper around step_rand
@@ -840,7 +845,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_disposals(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/datum/move_manager/proc/move_disposals(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/disposal_holder, priority, flags, extra_info, delay, timeout)
 
 /// Disposal holders need to move through a chain of pipes
@@ -864,3 +869,95 @@
 	var/atom/old_loc = moving.loc
 	holder.current_pipe = holder.current_pipe.transfer(holder)
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
+
+
+/**
+ * Helper proc for the smooth_move datum
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * angle - Angle at which we want to move
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to INFINITY
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
+ * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
+ *
+**/
+
+/datum/move_manager/proc/smooth_move(moving, angle, delay, timeout, subsystem, priority, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/smooth_move, priority, flags, extra_info, delay, timeout, angle)
+
+/datum/move_loop/smooth_move
+	/// Angle at which we move. 0 is north because byond.
+	var/angle = 0
+	/// When this gets bigger than 1, we move a turf
+	var/x_ticker = 0
+	var/y_ticker = 0
+	/// The rate at which we move, between 0 and 1. Cached to cut down on trig
+	var/x_rate = 0
+	var/y_rate = 1
+	/// Sign for our movement
+	var/x_sign = 1
+	var/y_sign = 1
+	/// Actual move delay, as delay will be modified by move() depending on what direction we move in
+	var/saved_delay
+
+/datum/move_loop/smooth_move/setup(delay, timeout, angle)
+	. = ..()
+	if(!.)
+		return FALSE
+	set_angle(angle)
+	saved_delay = delay
+
+/datum/move_loop/smooth_move/set_delay(new_delay)
+	new_delay = round(new_delay, world.tick_lag)
+	. = ..()
+	saved_delay = delay
+
+/datum/move_loop/smooth_move/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, home = FALSE)
+	if(..() && angle == src.angle)
+		return TRUE
+	return FALSE
+
+/datum/move_loop/smooth_move/move()
+	var/atom/old_loc = moving.loc
+	// Defaulting to 2 because if one rate is 0 the other is guaranteed to be 1, so maxing out at 1 to_move
+	var/x_to_move = x_rate > 0 ? (1 - x_ticker) / x_rate : 2
+	var/y_to_move = y_rate > 0 ? (1 - y_ticker) / y_rate : 2
+	var/move_dist = min(x_to_move, y_to_move)
+	x_ticker += x_rate * move_dist
+	y_ticker += y_rate * move_dist
+
+	// Per Bresenham's, if we are closer to the next tile's center move diagonally. Checked by seeing if we pass into the next tile after moving another half a tile
+	var/move_x = (x_ticker + x_rate * 0.5) > 1
+	var/move_y = (y_ticker + y_rate * 0.5) > 1
+	if (move_x)
+		x_ticker = 0
+	if (move_y)
+		y_ticker = 0
+
+	var/turf/next_turf = locate(moving.x + (move_x ? x_sign : 0), moving.y + (move_y ? y_sign : 0), moving.z)
+	moving.Move(next_turf, get_dir(moving, next_turf), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
+
+	if (old_loc == moving?.loc)
+		return MOVELOOP_FAILURE
+
+	delay = saved_delay
+	if (move_x && move_y)
+		delay *= 1.4
+
+	return MOVELOOP_SUCCESS
+
+/datum/move_loop/smooth_move/proc/set_angle(new_angle)
+	angle = new_angle
+	x_rate = sin(angle)
+	y_rate = cos(angle)
+	x_sign = SIGN(x_rate)
+	y_sign = SIGN(y_rate)
+	x_rate = abs(x_rate)
+	y_rate = abs(y_rate)
+	x_ticker = 0
+	y_ticker = 0

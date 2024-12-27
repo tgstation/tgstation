@@ -85,7 +85,7 @@
 
 	for(var/icon in allowed_icons)
 		var/icon_name = replacetext(icon, "fa-", "")
-		output += "#define FA_ICON_[uppertext(replacetext(icon_name, "-", "_"))] \"[icon]\""
+		output += "#define FA_ICON_[uppertext(replacetext(icon_name, "-", "_"))] \"[icon]\"" // #undef FA_ICON_ // we have this here to avoid define_sanity throwing a fit
 
 	var/output_file = "[output.Join("\n")]\n"
 	rustg_file_write(output_file, "data/font_awesome_icons.dm")

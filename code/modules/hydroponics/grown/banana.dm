@@ -1,6 +1,6 @@
 // Banana
 /obj/item/seeds/banana
-	name = "pack of banana seeds"
+	name = "banana seed pack"
 	desc = "They're seeds that grow into banana trees. When grown, keep away from clown."
 	icon_state = "seed-banana"
 	species = "banana"
@@ -25,7 +25,7 @@
 	trash_type = /obj/item/grown/bananapeel
 	bite_consumption_mod = 3
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/banana = 0)
+	juice_typepath = /datum/reagent/consumable/banana
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
 /obj/item/food/grown/banana/make_edible()
@@ -35,12 +35,11 @@
 /obj/item/food/grown/banana/Initialize(mapload)
 	. = ..()
 	if(prob(1))
-		AddComponent(/datum/component/boomerang, boomerang_throw_range = throw_range + 4, thrower_easy_catch_enabled = TRUE)
-		desc += " The curve on this one looks particularly acute."
+		AddComponent(/datum/component/boomerang, boomerang_throw_range = throw_range + 4, thrower_easy_catch_enabled = TRUE, examine_message = span_green("The curve on this one looks particularly acute."))
 
 ///Clowns will always like bananas.
-/obj/item/food/grown/banana/proc/check_liked(fraction, mob/living/carbon/human/consumer)
-	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
+/obj/item/food/grown/banana/proc/check_liked(mob/living/carbon/human/consumer)
+	var/obj/item/organ/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if (!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
 		return FOOD_LIKED
 
@@ -49,7 +48,6 @@
 	var/obj/item/grown/bananapeel/peel = .
 	if(istype(peel))
 		peel.grind_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
-		peel.juice_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
 
 /obj/item/food/grown/banana/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -93,7 +91,7 @@
 
 // Mimana - invisible sprites are totally a feature!
 /obj/item/seeds/banana/mime
-	name = "pack of mimana seeds"
+	name = "mimana seed pack"
 	desc = "They're seeds that grow into mimana trees. When grown, keep away from mime."
 	icon_state = "seed-mimana"
 	species = "mimana"
@@ -121,7 +119,7 @@
 
 // Bluespace Banana
 /obj/item/seeds/banana/bluespace
-	name = "pack of bluespace banana seeds"
+	name = "bluespace banana seed pack"
 	desc = "They're seeds that grow into bluespace banana trees. When grown, keep away from bluespace clown."
 	icon_state = "seed-banana-blue"
 	species = "bluespacebanana"
@@ -170,6 +168,7 @@
 
 /obj/item/food/grown/banana/bunch/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
+	reagents.clear_reagents()
 	reagents.add_reagent(/datum/reagent/consumable/monkey_energy, 10)
 	reagents.add_reagent(/datum/reagent/consumable/banana, 10)
 
@@ -191,3 +190,18 @@
 	var/obj/effect/decal/cleanable/food/plant_smudge/banana_smudge = new(loc)
 	banana_smudge.color = "#ffe02f"
 	qdel(src)
+
+/obj/item/food/grown/banana/bunch/monkeybomb
+	desc = "Am exquisite bunch of bananas. Their otherwordly plumpness seems to be hiding something."
+
+/obj/item/food/grown/banana/bunch/monkeybomb/examine(mob/user)
+	. = ..()
+	if(!is_simian(user))
+		. += span_notice("There's a banana label on one of the 'nanas you can't quite make out the details of.")
+		return
+	. += span_notice("The banana label on this bunch indicates that monkeys can use this as a sonic grenade with a 3 second timer!")
+
+/obj/item/food/grown/banana/bunch/monkeybomb/attack_self(mob/user, modifiers)
+	if(!is_simian(user))
+		return to_chat(user, span_notice("You don't really know what to do with this."))
+	else start_ripening()

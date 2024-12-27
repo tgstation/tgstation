@@ -58,40 +58,22 @@
 	to_chat(user, span_warning("You are too primitive to use this computer!"))
 	return
 
-/obj/machinery/computer/launchpad/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
-			return
-		var/obj/item/multitool/M = W
-		if(M.buffer && istype(M.buffer, /obj/machinery/launchpad))
-			if(LAZYLEN(launchpads) < maximum_pads)
-				launchpads |= M.buffer
-				M.set_buffer(null)
-				to_chat(user, span_notice("You upload the data from the [W.name]'s buffer."))
-			else
-				to_chat(user, span_warning("[src] cannot handle any more connections!"))
-	else
-		return ..()
+/obj/machinery/computer/launchpad/multitool_act(mob/living/user, obj/item/multitool/tool)
+	. = NONE
+	if(!istype(tool.buffer, /obj/machinery/launchpad))
+		return
+
+	if(LAZYLEN(launchpads) < maximum_pads)
+		launchpads |= tool.buffer
+		tool.set_buffer(null)
+		to_chat(user, span_notice("You upload the data from the [tool] buffer."))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/launchpad/proc/pad_exists(number)
 	var/obj/machinery/launchpad/pad = launchpads[number]
 	if(QDELETED(pad))
 		return FALSE
 	return TRUE
-
-/// Performs checks on whether or not the launch pad can be used.
-/// Returns `null` if there are no errors, otherwise will return the error string.
-/obj/machinery/computer/launchpad/proc/teleport_checks(obj/machinery/launchpad/pad)
-	if(QDELETED(pad))
-		return "ERROR: Launchpad not responding. Check launchpad integrity."
-	if(!pad.isAvailable())
-		return "ERROR: Launchpad not operative. Make sure the launchpad is ready and powered."
-	if(pad.teleporting)
-		return "ERROR: Launchpad busy."
-	var/turf/pad_turf = get_turf(pad)
-	if(pad_turf && is_centcom_level(pad_turf.z))
-		return "ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."
-	return null
 
 /obj/machinery/computer/launchpad/proc/get_pad(number)
 	var/obj/machinery/launchpad/pad = launchpads[number]
@@ -134,7 +116,7 @@
 
 	return data
 
-/obj/machinery/computer/launchpad/ui_act(action, params)
+/obj/machinery/computer/launchpad/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -151,10 +133,16 @@
 		if("move_pos")
 			var/plus_x = text2num(params["x"])
 			var/plus_y = text2num(params["y"])
-			current_pad.set_offset(
-				x = current_pad.x_offset + plus_x,
-				y = current_pad.y_offset + plus_y
-			)
+			if(plus_x || plus_y)
+				current_pad.set_offset(
+					x = current_pad.x_offset + plus_x,
+					y = current_pad.y_offset + plus_y,
+				)
+			else
+				current_pad.set_offset(
+					x = 0,
+					y = 0,
+				)
 			. = TRUE
 		if("rename")
 			. = TRUE
@@ -168,7 +156,7 @@
 				selected_id = null
 			. = TRUE
 		if("launch")
-			var/checks = teleport_checks(current_pad)
+			var/checks = current_pad.teleport_checks()
 			if(isnull(checks))
 				current_pad.doteleport(usr, TRUE)
 			else
@@ -176,7 +164,7 @@
 			. = TRUE
 
 		if("pull")
-			var/checks = teleport_checks(current_pad)
+			var/checks = current_pad.teleport_checks()
 			if(isnull(checks))
 				current_pad.doteleport(usr, FALSE)
 			else

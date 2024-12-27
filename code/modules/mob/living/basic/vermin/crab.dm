@@ -23,7 +23,7 @@
 	///In the case 'melee_damage_upper' is somehow raised above 0
 	attack_verb_continuous = "snips"
 	attack_verb_simple = "snip"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	ai_controller = /datum/ai_controller/basic_controller/crab
 
@@ -34,6 +34,7 @@
 	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_TINY)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
+	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
 
 //COFFEE! SQUEEEEEEEEE!
 /mob/living/basic/crab/coffee
@@ -77,9 +78,9 @@
 ///The basic ai controller for crabs
 /datum/ai_controller/basic_controller/crab
 	blackboard = list(
-		BB_BASIC_MOB_FLEEING = FALSE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller,
-		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
+		BB_ALWAYS_IGNORE_FACTION = TRUE,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/smaller,
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -88,8 +89,8 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/from_flee_key,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
-		/datum/ai_planning_subtree/target_retaliate/to_flee,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/crab,
+		/datum/ai_planning_subtree/go_for_swim,
 	)

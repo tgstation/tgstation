@@ -61,7 +61,6 @@
 	else if(adjacent)
 		try_move_adjacent(tunnel)
 
-	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
 	qdel(src)
 	return FALSE // used for chasm code
 
@@ -102,15 +101,16 @@
 	mech_sized = TRUE //save your ripley
 	innate_accuracy_penalty = 6
 	light_on = FALSE
+	wibbles = FALSE
 
-/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
+/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M, force = FALSE)
 	. = ..()
 	if(.)
 		// KERPLUNK
-		playsound(M,'sound/weapons/resonator_blast.ogg',50,TRUE)
+		playsound(M,'sound/items/weapons/resonator_blast.ogg',50,TRUE)
 		if(iscarbon(M))
 			var/mob/living/carbon/L = M
 			L.Paralyze(60)
 			if(ishuman(L))
 				shake_camera(L, 20, 1)
-				addtimer(CALLBACK(L, TYPE_PROC_REF(/mob/living/carbon, vomit)), 20)
+				addtimer(CALLBACK(L, TYPE_PROC_REF(/mob/living/carbon, vomit)), 2 SECONDS)

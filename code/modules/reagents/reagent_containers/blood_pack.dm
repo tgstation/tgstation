@@ -74,7 +74,7 @@
 /obj/item/reagent_containers/blood/snail
 	blood_type = "S"
 	unique_blood = /datum/reagent/lube
-	
+
 /obj/item/reagent_containers/blood/snail/examine()
 	. = ..()
 	. += span_notice("It's a bit slimy... The label indicates that this is meant for snails.")
@@ -100,10 +100,10 @@
 	blood_type = "U"
 
 /obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, params)
-	if (istype(tool, /obj/item/pen) || istype(tool, /obj/item/toy/crayon))
+	if (IS_WRITING_UTENSIL(tool))
 		if(!user.can_write(tool))
 			return
-		var/custom_label = tgui_input_text(user, "What would you like to label the blood pack?", "Blood Pack", name, MAX_NAME_LEN)
+		var/custom_label = tgui_input_text(user, "What would you like to label the blood pack?", "Blood Pack", name, max_length = MAX_NAME_LEN)
 		if(!user.can_perform_action(src))
 			return
 		if(user.get_active_held_item() != tool)
@@ -111,6 +111,7 @@
 		if(custom_label)
 			labelled = TRUE
 			name = "blood pack - [custom_label]"
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			balloon_alert(user, "new label set")
 		else
 			labelled = FALSE

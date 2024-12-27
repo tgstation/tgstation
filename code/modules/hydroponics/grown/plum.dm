@@ -1,6 +1,6 @@
 // Plum
 /obj/item/seeds/plum
-	name = "pack of plum seeds"
+	name = "plum seed pack"
 	desc = "These seeds grow into plum trees."
 	icon_state = "seed-plum"
 	species = "plum"
@@ -22,13 +22,13 @@
 	desc = "A poet's favorite fruit. Noice."
 	icon_state = "plum"
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/plumjuice = 0)
+	juice_typepath = /datum/reagent/consumable/plumjuice
 	tastes = list("plum" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/plumwine
 
 // Plumb
 /obj/item/seeds/plum/plumb
-	name = "pack of plumb seeds"
+	name = "plumb seed pack"
 	desc = "These seeds grow into plumb trees."
 	icon_state = "seed-plumb"
 	species = "plumb"

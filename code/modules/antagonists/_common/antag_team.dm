@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 		else
 			add_member(starting_members)
 
-/datum/team/Destroy(force, ...)
+/datum/team/Destroy(force)
 	GLOB.antagonist_teams -= src
 	members = null
 	objectives = null
@@ -49,20 +49,18 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 /datum/team/proc/roundend_report()
 	var/list/report = list()
 
-	report += "<span class='header'>\The [name]:</span>"
+	report += span_header("\The [name]:")
 	report += "The [member_name]s were:"
 	report += printplayerlist(members)
 
 	if(objectives.len)
-		report += "<span class='header'>Team had following objectives:</span>"
+		report += span_header("Team had following objectives:")
 		var/win = TRUE
 		var/objective_count = 1
 		for(var/datum/objective/objective as anything in objectives)
-			if(objective.check_completion())
-				report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
-			else
-				report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
+			if(!objective.check_completion())
 				win = FALSE
+			report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			objective_count++
 		if(win)
 			report += span_greentext("The [name] was successful!")

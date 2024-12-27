@@ -8,9 +8,11 @@
 	description = "Syndicate troops pour out of portals."
 
 /datum/round_event/portal_storm/syndicate_shocktroop
-	boss_types = list(/mob/living/basic/syndicate/melee/space/stormtrooper = 2)
-	hostile_types = list(/mob/living/basic/syndicate/melee/space = 8,\
-						/mob/living/basic/syndicate/ranged/space = 2)
+	boss_types = list(/mob/living/basic/trooper/syndicate/melee/space/stormtrooper = 2)
+	hostile_types = list(
+		/mob/living/basic/trooper/syndicate/melee/space = 8,
+		/mob/living/basic/trooper/syndicate/ranged/space = 2,
+	)
 
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Constructs"
@@ -23,9 +25,11 @@
 	max_wizard_trigger_potency = 7
 
 /datum/round_event/portal_storm/portal_storm_narsie
-	boss_types = list(/mob/living/simple_animal/hostile/construct/artificer/hostile = 6)
-	hostile_types = list(/mob/living/simple_animal/hostile/construct/juggernaut/hostile = 8,\
-						/mob/living/simple_animal/hostile/construct/wraith/hostile = 6)
+	boss_types = list(/mob/living/basic/construct/artificer/hostile = 6)
+	hostile_types = list(
+		/mob/living/basic/construct/juggernaut/hostile = 8,
+		/mob/living/basic/construct/wraith/hostile = 6,
+	)
 
 /datum/round_event/portal_storm
 	start_when = 7
@@ -47,7 +51,7 @@
 	for(var/offset in 0 to SSmapping.max_plane_offset)
 		var/mutable_appearance/storm = mutable_appearance('icons/obj/machines/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
 		SET_PLANE_W_SCALAR(storm, ABOVE_GAME_PLANE, offset)
-		storm.color = "#00FF00"
+		storm.color = COLOR_VIBRANT_LIME
 		storm_appearances += storm
 
 	number_of_bosses = 0
@@ -68,11 +72,11 @@
 
 /datum/round_event/portal_storm/announce(fake)
 	set waitfor = 0
-	sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
+	sound_to_playing_players('sound/effects/magic/lightning_chargeup.ogg')
 	sleep(8 SECONDS)
 	priority_announce("Massive bluespace anomaly detected en route to [station_name()]. Brace for impact.")
 	sleep(2 SECONDS)
-	sound_to_playing_players('sound/magic/lightningbolt.ogg')
+	sound_to_playing_players('sound/effects/magic/lightningbolt.ogg')
 
 /datum/round_event/portal_storm/tick()
 	spawn_effects(get_random_station_turf())
@@ -108,7 +112,7 @@
 		return
 	T = get_step(T, SOUTHWEST) //align center of image with turf
 	T.flick_overlay_static(storm_appearances[GET_TURF_PLANE_OFFSET(T) + 1], 15)
-	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)
+	playsound(T, 'sound/effects/magic/lightningbolt.ogg', rand(80, 100), TRUE)
 
 /datum/round_event/portal_storm/proc/spawn_hostile()
 	if(!hostile_types || !hostile_types.len)

@@ -18,6 +18,7 @@
 	icon_screen = "medlaptop"
 	icon_keyboard = "laptop_key"
 	pass_flags = PASSTABLE
+	projectiles_pass_chance = 100
 
 /obj/machinery/computer/records/medical/attacked_by(obj/item/attacking_item, mob/living/user)
 	. = ..()
@@ -31,7 +32,7 @@
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		create_character_preview_view(user)
+		character_preview_view = create_character_preview_view(user)
 		ui = new(user, src, "MedicalRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -65,6 +66,7 @@
 			quirk_notes = target.quirk_notes,
 			rank = target.rank,
 			species = target.species,
+			trim = target.trim,
 		))
 
 	data["records"] = records

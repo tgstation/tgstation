@@ -1,6 +1,6 @@
 // Apple
 /obj/item/seeds/apple
-	name = "pack of apple seeds"
+	name = "apple seed pack"
 	desc = "These seeds grow into apple trees."
 	icon_state = "seed-apple"
 	species = "apple"
@@ -22,13 +22,16 @@
 	desc = "It's a little piece of Eden."
 	icon_state = "apple"
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/applejuice = 0)
+	juice_typepath = /datum/reagent/consumable/applejuice
 	tastes = list("apple" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/hcider
 
+/obj/item/food/grown/apple/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/appleslice, 5, 20, screentip_verb = "Slice")
+
 // Gold Apple
 /obj/item/seeds/apple/gold
-	name = "pack of golden apple seeds"
+	name = "golden apple seed pack"
 	desc = "These seeds grow into golden apple trees. Good thing there are no firebirds in space."
 	icon_state = "seed-goldapple"
 	species = "goldapple"
@@ -40,6 +43,9 @@
 	mutatelist = null
 	reagents_add = list(/datum/reagent/gold = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 40 // Alchemy!
+
+/obj/item/food/grown/apple/gold/make_processable()
+	return // You're going to break your knife!
 
 /obj/item/food/grown/apple/gold
 	seed = /obj/item/seeds/apple/gold

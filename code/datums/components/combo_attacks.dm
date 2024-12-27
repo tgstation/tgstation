@@ -32,6 +32,10 @@
 	src.leniency_time = leniency_time
 	src.can_attack_callback = can_attack_callback
 
+/datum/component/combo_attacks/Destroy(force)
+	can_attack_callback = null
+	return ..()
+
 /datum/component/combo_attacks/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))

@@ -93,6 +93,14 @@
 	loot_type_path = /obj/structure/showcase
 	loot = list()
 
+/obj/effect/spawner/random/decoration/microwave
+	name = "microwave showcase spawner"
+	icon_state = "showcase"
+	loot = list(
+		/obj/structure/showcase/machinery/microwave,
+		/obj/structure/showcase/machinery/microwave_engineering,
+	)
+
 /obj/effect/spawner/random/decoration/glowstick
 	name = "random colored glowstick"
 	icon_state = "glowstick"
@@ -105,6 +113,26 @@
 		/obj/item/flashlight/glowstick/yellow,
 		/obj/item/flashlight/glowstick/pink,
 	)
+
+/obj/effect/spawner/random/decoration/glowstick/on
+	name = "random colored glowstick (on)"
+	icon_state = "glowstick"
+	loot = list(
+		/obj/item/flashlight/glowstick,
+		/obj/item/flashlight/glowstick/red,
+		/obj/item/flashlight/glowstick/blue,
+		/obj/item/flashlight/glowstick/cyan,
+		/obj/item/flashlight/glowstick/orange,
+		/obj/item/flashlight/glowstick/yellow,
+		/obj/item/flashlight/glowstick/pink,
+	)
+
+/obj/effect/spawner/random/decoration/glowstick/on/make_item(spawn_loc, type_path_to_make)
+	. = ..()
+
+	var/obj/item/flashlight/glowstick = .
+
+	glowstick.set_light_on(TRUE)
 
 /obj/effect/spawner/random/decoration/paint
 	name = "paint spawner"

@@ -11,8 +11,6 @@
 	var/mob_name
 	///the type of the mob, you best inherit this
 	var/mob_type = /mob/living/basic/cockroach
-	///Lazy string list of factions that the spawned mob will be in upon spawn
-	var/list/faction
 
 	////Human specific stuff. Don't set these if you aren't using a human, the unit tests will put a stop to your sinful hand.
 
@@ -32,11 +30,19 @@
 	var/facial_haircolor
 	///sets a human's skin tone
 	var/skin_tone
+	/// Weakref to the mob this spawner created - just if you needed to do something with it.
+	var/datum/weakref/spawned_mob_ref
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
 	if(faction)
 		faction = string_list(faction)
+
+/obj/effect/mob_spawn/Destroy()
+	spawned_mob_ref = null
+	if(istype(outfit))
+		QDEL_NULL(outfit)
+	return ..()
 
 /// Creates whatever mob the spawner makes. Return FALSE if we want to exit from here without doing that, returning NULL will be logged to admins.
 /obj/effect/mob_spawn/proc/create(mob/mob_possessor, newname)
@@ -44,6 +50,7 @@
 	name_mob(spawned_mob, newname)
 	special(spawned_mob, mob_possessor)
 	equip(spawned_mob)
+	spawned_mob_ref = WEAKREF(spawned_mob)
 	return spawned_mob
 
 /obj/effect/mob_spawn/proc/special(mob/living/spawned_mob)
@@ -58,26 +65,15 @@
 		spawned_human.underwear = "Nude"
 		spawned_human.undershirt = "Nude"
 		spawned_human.socks = "Nude"
+		randomize_human_normie(spawned_human)
 		if(hairstyle)
-			spawned_human.hairstyle = hairstyle
-		else
-			spawned_human.hairstyle = random_hairstyle(spawned_human.gender)
+			spawned_human.set_hairstyle(hairstyle, update = FALSE)
 		if(facial_hairstyle)
-			spawned_human.facial_hairstyle = facial_hairstyle
-		else
-			spawned_human.facial_hairstyle = random_facial_hairstyle(spawned_human.gender)
+			spawned_human.set_facial_hairstyle(facial_hairstyle, update = FALSE)
 		if(haircolor)
-			spawned_human.hair_color = haircolor
-		else
-			spawned_human.hair_color = "#[random_color()]"
+			spawned_human.set_haircolor(haircolor, update = FALSE)
 		if(facial_haircolor)
-			spawned_human.facial_hair_color = facial_haircolor
-		else
-			spawned_human.facial_hair_color = "#[random_color()]"
-		if(skin_tone)
-			spawned_human.skin_tone = skin_tone
-		else
-			spawned_human.skin_tone = random_skin_tone()
+			spawned_human.set_facial_haircolor(facial_haircolor, update = FALSE)
 		spawned_human.update_body(is_creating = TRUE)
 
 /obj/effect/mob_spawn/proc/name_mob(mob/living/spawned_mob, forced_name)
@@ -138,12 +134,16 @@
 	/// Typepath indicating the kind of job datum this ghost role will have. PLEASE inherit this with a new job datum, it's not hard. jobs come with policy configs.
 	var/spawner_job_path = /datum/job/ghost_role
 
+	/// Whether this offers a temporary body or not. Essentially, you'll be able to reenter your body after using this spawner.
+	var/temp_body = FALSE
+
+
 /obj/effect/mob_spawn/ghost_role/Initialize(mapload)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
 	LAZYADD(GLOB.mob_spawners[name], src)
 
-/obj/effect/mob_spawn/Destroy()
+/obj/effect/mob_spawn/ghost_role/Destroy()
 	var/list/spawners = GLOB.mob_spawners[name]
 	LAZYREMOVE(spawners, src)
 	if(!LAZYLEN(spawners))
@@ -164,7 +164,7 @@
 
 	if(prompt_ghost)
 		var/prompt = "Become [prompt_name]?"
-		if(user.can_reenter_corpse && user.mind)
+		if(!temp_body && user.can_reenter_corpse && user.mind)
 			prompt += " (Warning, You can no longer be revived!)"
 		var/ghost_role = tgui_alert(usr, prompt, buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
@@ -180,7 +180,7 @@
 		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
 
-	if(is_banned_from(user.key, role_ban))
+	if(is_banned_from(user.ckey, role_ban))
 		to_chat(user, span_warning("You are banned from this role!"))
 		LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 		return
@@ -208,11 +208,12 @@
  */
 /obj/effect/mob_spawn/ghost_role/proc/create_from_ghost(mob/dead/user)
 	ASSERT(istype(user))
-	var/user_ckey = user.ckey // We need to do it before everything else, because after the create() the ckey will already have been transfered.
+	var/user_ckey = user.ckey // We need to do it before everything else, because after the create() the ckey will already have been transferred.
 
 	user.log_message("became a [prompt_name].", LOG_GAME)
 	uses -= 1 // Remove a use before trying to spawn to prevent strangeness like the spawner trying to spawn more mobs than it should be able to
-	user.mind = null // dissassociate mind, don't let it follow us to the next life
+	if(!temp_body)
+		user.mind = null // dissassociate mind, don't let it follow us to the next life
 
 	var/created = create(user)
 	LAZYREMOVE(ckeys_trying_to_spawn, user_ckey) // We do this AFTER the create() so that we're basically sure that the user won't be in their ghost body anymore, so they can't click on the spawner again.
@@ -223,6 +224,7 @@
 		if(isnull(created)) // If we explicitly return FALSE instead of just not returning a mob, we don't want to spam the admins
 			CRASH("An instance of [type] didn't return anything when creating a mob, this might be broken!")
 
+	SEND_SIGNAL(src, COMSIG_GHOSTROLE_SPAWNED, created)
 	check_uses() // Now we check if the spawner should delete itself or not
 
 	return created
@@ -243,11 +245,11 @@
 			spawned_mob.key = mob_possessor.key
 	var/datum/mind/spawned_mind = spawned_mob.mind
 	if(spawned_mind)
-		spawned_mob.mind.set_assigned_role_with_greeting(SSjob.GetJobType(spawner_job_path))
+		spawned_mob.mind.set_assigned_role_with_greeting(SSjob.get_job_type(spawner_job_path))
 		spawned_mind.name = spawned_mob.real_name
 
 	if(show_flavor)
-		var/output_message = "<span class='infoplain'><span class='big bold'>[you_are_text]</span></span>"
+		var/output_message = span_infoplain("<span class='big bold'>[you_are_text]</span>")
 		if(flavour_text != "")
 			output_message += "\n<span class='infoplain'><b>[flavour_text]</b></span>"
 		if(important_text != "")
@@ -265,6 +267,7 @@
 
 ///these mob spawn subtypes trigger immediately (New or Initialize) and are not player controlled... since they're dead, you know?
 /obj/effect/mob_spawn/corpse
+	density = FALSE //these are pretty much abstract objects that leave a corpse in their place.
 	///when this mob spawn should auto trigger.
 	var/spawn_when = CORPSE_INSTANT
 
@@ -276,6 +279,11 @@
 	var/oxy_damage = 0
 	///burn damage this corpse will spawn with
 	var/burn_damage = 0
+
+	///what environmental storytelling script should this corpse have
+	var/corpse_description = ""
+	///optionally different text to display if the target is a clown
+	var/naive_corpse_description = ""
 
 /obj/effect/mob_spawn/corpse/Initialize(mapload, no_spawn)
 	. = ..()
@@ -294,6 +302,8 @@
 	spawned_mob.adjustOxyLoss(oxy_damage)
 	spawned_mob.adjustBruteLoss(brute_damage)
 	spawned_mob.adjustFireLoss(burn_damage)
+	if (corpse_description)
+		spawned_mob.AddComponent(/datum/component/temporary_description, corpse_description, naive_corpse_description)
 
 /obj/effect/mob_spawn/corpse/create(mob/mob_possessor, newname)
 	. = ..()

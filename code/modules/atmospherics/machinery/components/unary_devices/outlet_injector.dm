@@ -10,6 +10,7 @@
 	hide = TRUE
 	layer = GAS_SCRUBBER_LAYER
 	pipe_state = "injector"
+	has_cap_visuals = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
@@ -43,40 +44,42 @@
 	. += span_notice("You can link it with an air sensor using a multitool.")
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
-	. = ..()
-
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
 		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
-		sensor.inlet_id = id_tag
-		multi_tool.set_buffer(null)
-		balloon_alert(user, "input linked to sensor")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		multi_tool.set_buffer(src)
+		sensor.multitool_act(user, multi_tool)
+		return ITEM_INTERACT_SUCCESS
 
-	balloon_alert(user, "saved in buffer")
+	balloon_alert(user, "injector saved in buffer")
 	multi_tool.set_buffer(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
-	if(can_interact(user))
+/obj/machinery/atmospherics/components/unary/outlet_injector/click_ctrl(mob/user)
+	if(is_operational)
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_appearance()
-	return ..()
+		return CLICK_ACTION_BLOCKING
+	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/AltClick(mob/user)
-	if(can_interact(user))
-		volume_rate = MAX_TRANSFER_RATE
-		investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "volume output set to [volume_rate] L/s")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/unary/outlet_injector/click_alt(mob/user)
+	if(volume_rate == MAX_TRANSFER_RATE)
+		return CLICK_ACTION_BLOCKING
+
+	volume_rate = MAX_TRANSFER_RATE
+	investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "volume output set to [volume_rate] L/s")
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
 		// everything is already shifted so don't shift the cap
 		add_overlay(get_pipe_image(icon, "inje_cap", initialize_directions, pipe_color))
+	else
+		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
 
 	if(!nodes[1] || !on || !is_operational)
 		icon_state = "inje_off"
@@ -119,7 +122,7 @@
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/ui_act(action, params)
+/obj/machinery/atmospherics/components/unary/outlet_injector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

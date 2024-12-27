@@ -15,7 +15,7 @@
 	name = "pirate ship (Flying Dutchman)"
 
 /datum/map_template/shuttle/pirate/interdyne
-	suffix = "interdyne"
+	suffix = "ex_interdyne"
 	name = "pirate ship (Pharmaceutics Biocraft)"
 
 /datum/map_template/shuttle/pirate/grey
@@ -29,3 +29,7 @@
 /datum/map_template/shuttle/pirate/geode
 	suffix = "geode"
 	name = "pirate ship (Lustrous Geode)"
+
+/datum/map_template/shuttle/pirate/medieval
+	suffix = "medieval"
+	name = "pirate ship (Siege Pod)"

@@ -37,8 +37,12 @@ can next move
 	/// Other modification datums this conflicts with.
 	var/conflicts_with
 
-/datum/actionspeed_modifier/New()
+/datum/actionspeed_modifier/New(init_id)
 	. = ..()
+
+	if(init_id)
+		id = init_id
+
 	if(!id)
 		id = "[type]" //We turn the path into a string.
 
@@ -152,7 +156,7 @@ GLOBAL_LIST_EMPTY(actionspeed_modification_cache)
 		var/amt = M.multiplicative_slowdown
 		if(conflict)
 			// Conflicting modifiers prioritize the larger slowdown or the larger speedup
-			// We purposefuly don't handle mixing speedups and slowdowns on the same id
+			// We purposefully don't handle mixing speedups and slowdowns on the same id
 			if(abs(conflict_tracker[conflict]) < abs(amt))
 				conflict_tracker[conflict] = amt
 			else

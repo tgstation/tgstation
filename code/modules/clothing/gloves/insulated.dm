@@ -13,15 +13,19 @@
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	cut_type = /obj/item/clothing/gloves/cut
-	clothing_traits = list(TRAIT_CHUNKYFINGERS)
+	equip_sound = 'sound/items/equip/glove_equip.ogg'
+
+/obj/item/clothing/gloves/color/yellow/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 10)
 
 /obj/item/clothing/gloves/color/yellow/apply_fantasy_bonuses(bonus)
 	. = ..()
 	if(bonus >= 10)
-		detach_clothing_traits(TRAIT_CHUNKYFINGERS)
+		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
 
 /obj/item/clothing/gloves/color/yellow/remove_fantasy_bonuses(bonus)
-	attach_clothing_traits(TRAIT_CHUNKYFINGERS)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 10)
 	return ..()
 
 /datum/armor/color_yellow
@@ -39,18 +43,20 @@
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "sprayoncan"
 
-/obj/item/toy/sprayoncan/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(iscarbon(target) && proximity)
-		var/mob/living/carbon/C = target
-		var/mob/living/carbon/U = user
-		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, qdel_on_fail = TRUE, disable_warning = TRUE)
-		if(success)
-			if(C == user)
-				C.visible_message(span_notice("[U] sprays their hands with glittery rubber!"))
-			else
-				C.visible_message(span_warning("[U] sprays glittery rubber on the hands of [C]!"))
+/obj/item/toy/sprayoncan/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iscarbon(interacting_with))
+		return NONE
+	var/mob/living/carbon/C = interacting_with
+	var/mob/living/carbon/U = user
+	var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, qdel_on_fail = TRUE, disable_warning = TRUE)
+	if(success)
+		if(C == user)
+			C.visible_message(span_notice("[U] sprays their hands with glittery rubber!"))
 		else
-			C.visible_message(span_warning("The rubber fails to stick to [C]'s hands!"))
+			C.visible_message(span_warning("[U] sprays glittery rubber on the hands of [C]!"))
+	else
+		C.visible_message(span_warning("The rubber fails to stick to [C]'s hands!"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/gloves/color/yellow/sprayon
 	desc = "How're you gonna get 'em off, nerd?"
@@ -58,6 +64,7 @@
 	icon_state = "sprayon"
 	inhand_icon_state = null
 	item_flags = DROPDEL
+	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 	armor_type = /datum/armor/none
 	resistance_flags = ACID_PROOF
 	var/charges_remaining = 10
@@ -114,6 +121,10 @@
 	greyscale_colors = null
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
+/obj/item/clothing/gloves/cut/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+
 /obj/item/clothing/gloves/cut/heirloom
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
 
@@ -129,3 +140,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+
+/obj/item/clothing/gloves/chief_engineer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -6)

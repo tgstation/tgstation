@@ -19,7 +19,7 @@
 #define THERMAL_PROTECTION_HAND_RIGHT 0.025
 
 /mob/living/carbon/human/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	. = ..()
@@ -28,7 +28,7 @@
 
 	//Body temperature stability and damage
 	dna.species.handle_body_temperature(src, seconds_per_tick, times_fired)
-	if(!IS_IN_STASIS(src))
+	if(!HAS_TRAIT(src, TRAIT_STASIS))
 		if(stat != DEAD)
 			//handle active mutations
 			for(var/datum/mutation/human/human_mutation as anything in dna.mutations)
@@ -52,15 +52,21 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	var/chest_covered = FALSE
-	var/head_covered = FALSE
+	var/chest_covered = !get_bodypart(BODY_ZONE_CHEST)
+	var/head_covered = !get_bodypart(BODY_ZONE_HEAD)
+	var/hands_covered = !get_bodypart(BODY_ZONE_L_ARM) && !get_bodypart(BODY_ZONE_R_ARM)
+	var/feet_covered = !get_bodypart(BODY_ZONE_L_LEG) && !get_bodypart(BODY_ZONE_R_LEG)
 	for(var/obj/item/clothing/equipped in get_equipped_items())
-		if((equipped.body_parts_covered & CHEST) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
+		if(!chest_covered && (equipped.body_parts_covered & CHEST) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
 			chest_covered = TRUE
-		if((equipped.body_parts_covered & HEAD) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
+		if(!head_covered && (equipped.body_parts_covered & HEAD) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
 			head_covered = TRUE
+		if(!hands_covered && (equipped.body_parts_covered & HANDS|ARMS) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
+			hands_covered = TRUE
+		if(!feet_covered && (equipped.body_parts_covered & FEET|LEGS) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
+			feet_covered = TRUE
 
-	if(chest_covered && head_covered)
+	if(chest_covered && head_covered && hands_covered && feet_covered)
 		return ONE_ATMOSPHERE
 	if(ismovable(loc))
 		/// If we're in a space with 0.5 content pressure protection, it averages the values, for example.
@@ -73,7 +79,7 @@
 		return ..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-	var/obj/item/organ/internal/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(human_lungs)
 		return human_lungs.check_breath(breath, src)
 
@@ -100,7 +106,7 @@
 /// Environment handlers for species
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	// If we are in a cryo bed do not process life functions
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+	if(istype(loc, /obj/machinery/cryo_cell))
 		return
 
 	dna.species.handle_environment(src, environment, seconds_per_tick, times_fired)
@@ -207,7 +213,7 @@
 		if(thermal_protection_flags & HAND_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
 
-	return min(1, thermal_protection)
+	return min(1, round(thermal_protection, 0.001))
 
 //See proc/get_heat_protection_flags(temperature) for the description of this proc.
 /mob/living/carbon/human/proc/get_cold_protection_flags(temperature)
@@ -268,20 +274,7 @@
 		if(thermal_protection_flags & HAND_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
 
-	return min(1, thermal_protection)
-
-/mob/living/carbon/human/handle_random_events(seconds_per_tick, times_fired)
-	//Puke if toxloss is too high
-	if(stat)
-		return
-	if(getToxLoss() < 45 || nutrition <= 20)
-		return
-
-	lastpuke += SPT_PROB(30, seconds_per_tick)
-	if(lastpuke >= 50) // about 25 second delay I guess // This is actually closer to 150 seconds
-		vomit(20)
-		lastpuke = 0
-
+	return min(1, round(thermal_protection, 0.001))
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(isclothing(wear_mask))

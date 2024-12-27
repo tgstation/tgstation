@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /datum/sm_delam/proc/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return FALSE
 
-#define ROUNDCOUNT_ENGINE_JUST_EXPLODED 0
+#define ROUNDCOUNT_ENGINE_JUST_EXPLODED -1
 
 /// Called when the count down has been finished, do the nasty work.
 /// [/obj/machinery/power/supermatter_crystal/proc/count_down]
@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	if (sm.is_main_engine)
 		SSpersistence.delam_highscore = SSpersistence.rounds_since_engine_exploded
 		SSpersistence.rounds_since_engine_exploded = ROUNDCOUNT_ENGINE_JUST_EXPLODED
-		for (var/obj/machinery/incident_display/sign as anything in GLOB.map_delamination_counters)
+		for (var/obj/machinery/incident_display/sign as anything in GLOB.map_incident_displays)
 			sign.update_delam_count(ROUNDCOUNT_ENGINE_JUST_EXPLODED)
 	qdel(sm)
 
@@ -45,35 +45,42 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		return FALSE
 	sm.lastwarning = REALTIMEOFDAY
 
-	switch(sm.get_status())
-		if(SUPERMATTER_DELAMINATING)
-			playsound(sm, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
-		if(SUPERMATTER_EMERGENCY)
-			playsound(sm, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
-		if(SUPERMATTER_DANGER)
-			playsound(sm, 'sound/machines/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
-		if(SUPERMATTER_WARNING)
-			playsound(sm, 'sound/machines/terminal_alert.ogg', 75)
-
-	if(sm.damage < sm.damage_archived) // Healing
-		sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.damage_archived >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel)
+	if(sm.damage_archived - sm.damage > SUPERMATTER_FAST_HEALING_RATE && sm.damage_archived >= sm.emergency_point) // Fast healing, engineers probably have it all sorted
+		if(sm.should_alert_common()) // We alert common once per cooldown period, otherwise alert engineering
+			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
+		else
+			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
+		playsound(sm, 'sound/machines/terminal/terminal_alert.ogg', 75)
 		return FALSE
 
-	if(sm.damage >= sm.emergency_point) // Taking damage, in emergency
-		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
+	switch(sm.get_status())
+		if(SUPERMATTER_DELAMINATING)
+			playsound(sm, 'sound/announcer/alarm/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
+		if(SUPERMATTER_EMERGENCY)
+			playsound(sm, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+		if(SUPERMATTER_DANGER)
+			playsound(sm, 'sound/machines/engine_alert/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+		if(SUPERMATTER_WARNING)
+			playsound(sm, 'sound/machines/terminal/terminal_alert.ogg', 75)
+
+	if(sm.damage >= sm.emergency_point) // In emergency
+		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT! Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
 		sm.lastwarning = REALTIMEOFDAY - (SUPERMATTER_WARNING_DELAY / 2) // Cut the time to next announcement in half.
+	else if(sm.damage_archived > sm.damage) // Healing, in warning
+		sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
+		return FALSE
 	else // Taking damage, in warning
 		sm.radio.talk_into(sm, "Danger! Crystal hyperstructure integrity faltering! Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
 
 	SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_ALARM)
 	return TRUE
 
-/// Called when a supermatter switches it's strategy from another one to us.
+/// Called when a supermatter switches its strategy from another one to us.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam/proc/on_select(obj/machinery/power/supermatter_crystal/sm)
 	return
 
-/// Called when a supermatter switches it's strategy from us to something else.
+/// Called when a supermatter switches its strategy from us to something else.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam/proc/on_deselect(obj/machinery/power/supermatter_crystal/sm)
 	return

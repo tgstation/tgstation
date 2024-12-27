@@ -11,6 +11,7 @@
 	hitsound = null
 	attack_verb_continuous = list("attacks")
 	attack_verb_simple = list("attack")
+	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	/// The amount of time it takes to shuffle
 	var/shuffle_time = DECK_SHUFFLE_TIME
 	/// Deck shuffling cooldown.
@@ -21,8 +22,6 @@
 	var/decksize = INFINITY
 	/// The description of the cardgame that is played with this deck (used for memories)
 	var/cardgame_desc = "card game"
-	/// Wielding status for holding with two hands
-	var/wielded = FALSE
 	/// The holodeck computer used to spawn a holographic deck (see /obj/item/toy/cards/deck/syndicate/holographic)
 	var/obj/machinery/computer/holodeck/holodeck
 	/// If the cards in the deck have different card faces icons (blank and CAS decks do not)
@@ -33,9 +32,7 @@
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/drag_pickup)
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(on_wield))
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, PROC_REF(on_unwield))
-	AddComponent(/datum/component/two_handed, attacksound='sound/items/cardflip.ogg')
+	AddComponent(/datum/component/two_handed, attacksound='sound/items/cards/cardflip.ogg')
 	register_context()
 
 	if(!is_standard_deck)
@@ -51,21 +48,9 @@
 		for(var/person in list("Jack", "Queen", "King"))
 			initial_cards += "[person] of [suit]"
 
-/// triggered on wield of two handed item
-/obj/item/toy/cards/deck/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/toy/cards/deck/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
-
 /obj/item/toy/cards/deck/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like their luck ran out!"))
-	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
+	playsound(src, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
 	return BRUTELOSS
 
 /obj/item/toy/cards/deck/examine(mob/user)
@@ -87,7 +72,7 @@
 /obj/item/toy/cards/deck/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(src == held_item)
 		var/obj/item/toy/cards/deck/dealer_deck = held_item
-		context[SCREENTIP_CONTEXT_LMB] = dealer_deck.wielded ? "Recycle mode" : "Dealer mode"
+		context[SCREENTIP_CONTEXT_LMB] = HAS_TRAIT(dealer_deck, TRAIT_WIELDED) ? "Recycle mode" : "Dealer mode"
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Shuffle"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -118,7 +103,7 @@
 		return
 	COOLDOWN_START(src, shuffle_cooldown, shuffle_time)
 	shuffle_inplace(fetch_card_atoms())
-	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
+	playsound(src, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
 	user.balloon_alert_to_viewers("shuffles the deck")
 	addtimer(CALLBACK(src, PROC_REF(CardgameEvent), user), 60 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
@@ -132,15 +117,17 @@
 
 	if(length(card_players) >= 2) // need at least 2 people to play a cardgame, duh!
 		for(var/mob/living/carbon/player in card_players)
-			var/other_players = english_list(card_players - player)
+			var/other_players = card_players - player
 			var/obj/item/toy/held_card_item = card_players[player]
 
 			player.add_mood_event("playing_cards", /datum/mood_event/playing_cards)
-			player.add_mob_memory(/datum/memory/playing_cards, \
+			player.add_mob_memory( \
+				/datum/memory/playing_cards, \
 				deuteragonist = dealer, \
 				game = cardgame_desc, \
 				protagonist_held_card = held_card_item, \
-				other_players = other_players)
+				other_players = other_players, \
+			)
 
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers, flip_card = FALSE)
 	if(!ishuman(user) || !user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
@@ -159,13 +146,13 @@
 	attack_hand(user, modifiers, flip_card = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/toy/cards/deck/AltClick(mob/living/user)
-	if(user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
-		if(wielded)
-			shuffle_cards(user)
-		else
-			to_chat(user, span_notice("You must hold the [src] with both hands to shuffle."))
-	return ..()
+/obj/item/toy/cards/deck/click_alt(mob/living/user)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		to_chat(user, span_notice("You must hold the [src] with both hands to shuffle."))
+		return CLICK_ACTION_BLOCKING
+
+	shuffle_cards(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/toy/cards/deck/update_icon_state()
 	switch(count_cards())
@@ -204,10 +191,9 @@
 	if(. || !istype(target)) // was it caught or is the target not a living mob
 		return .
 
-	if(!throwingdatum?.thrower) // if a mob didn't throw it (need two people to play 52 pickup)
+	var/mob/living/thrower = throwingdatum?.get_thrower()
+	if(!thrower) // if a mob didn't throw it (need two people to play 52 pickup)
 		return
-
-	var/mob/living/thrower = throwingdatum.thrower
 
 	target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
 	target.add_mood_event("lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)
@@ -223,7 +209,7 @@
 	cardgame_desc = "suspicious card game"
 	icon_state = "deck_syndicate_full"
 	deckstyle = "syndicate"
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	force = 5
 	throwforce = 10
 	attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")

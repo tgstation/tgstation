@@ -6,3 +6,4 @@
 	default_priority = 50
 
 	icon_state = "xeno"
+	always_use_default_namelist = TRUE // Sssss Ssss?

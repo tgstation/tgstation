@@ -59,7 +59,7 @@
 	icon_state = "backpack-medical"
 	respawn_time = 30 SECONDS
 	pickup_message = "Health restored!"
-	pickup_sound = 'sound/magic/staff_healing.ogg'
+	pickup_sound = 'sound/effects/magic/staff_healing.ogg'
 	/// How much the pickup heals when picked up
 	var/heal_amount = 50
 	/// Does this pickup fully heal when picked up
@@ -89,7 +89,7 @@
 	icon_state = "ammobox"
 	respawn_time = 30 SECONDS
 	pickup_message = "Ammunition reloaded!"
-	pickup_sound = 'sound/weapons/gun/shotgun/rack.ogg'
+	pickup_sound = 'sound/items/weapons/gun/shotgun/rack.ogg'
 
 /obj/effect/powerup/ammo/trigger(mob/living/target)
 	. = ..()
@@ -110,7 +110,7 @@
 	name = "Lightning Orb"
 	desc = "You feel faster just looking at it."
 	icon_state = "speed"
-	pickup_sound = 'sound/magic/lightningshock.ogg'
+	pickup_sound = 'sound/effects/magic/lightningshock.ogg'
 
 /obj/effect/powerup/speed/trigger(mob/living/target)
 	. = ..()

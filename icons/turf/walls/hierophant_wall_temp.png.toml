@@ -1,0 +1,2 @@
+output_name = "hierophant_wall_temp"
+template = "bitmask/diagonal_32x32.toml"

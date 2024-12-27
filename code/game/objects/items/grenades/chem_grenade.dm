@@ -35,7 +35,6 @@
 	set_wires(new /datum/wires/explosive/chem_grenade(src))
 
 /obj/item/grenade/chem_grenade/Destroy(force)
-	QDEL_NULL(wires)
 	QDEL_NULL(landminemode)
 	QDEL_LIST(beakers)
 	return ..()
@@ -235,7 +234,7 @@
 
 	active = TRUE
 	update_icon_state()
-	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
+	playsound(src, 'sound/items/weapons/armbomb.ogg', volume, TRUE)
 	if(landminemode)
 		landminemode.activate()
 		return
@@ -295,7 +294,7 @@
 
 		if(istype(thing, /obj/item/slime_extract))
 			var/obj/item/slime_extract/extract = thing
-			if(!extract.Uses)
+			if(!extract.extract_uses)
 				continue
 
 			extract_total_volume += extract.reagents.total_volume
@@ -313,11 +312,11 @@
 	var/container_ratio = available_extract_volume / beaker_total_volume
 	var/datum/reagents/tmp_holder = new/datum/reagents(beaker_total_volume)
 	for(var/obj/item/container as anything in other_containers)
-		container.reagents.trans_to(tmp_holder, container.reagents.total_volume * container_ratio, 1, preserve_data = TRUE, no_react = TRUE)
+		container.reagents.trans_to(tmp_holder, container.reagents.total_volume * container_ratio, no_react = TRUE)
 
 	for(var/obj/item/slime_extract/extract as anything in extracts)
 		var/available_volume = extract.reagents.maximum_volume - extract.reagents.total_volume
-		tmp_holder.trans_to(extract, beaker_total_volume * (available_volume / available_extract_volume), 1, preserve_data = TRUE, no_react = TRUE)
+		tmp_holder.trans_to(extract, beaker_total_volume * (available_volume / available_extract_volume), no_react = TRUE)
 
 		extract.reagents.handle_reactions() // Reaction handling in the transfer proc is reciprocal and we don't want to blow up the tmp holder early.
 		if(QDELETED(extract))
@@ -390,7 +389,12 @@
 	var/datum/reagents/reactants = new(unit_spread)
 	reactants.my_atom = src
 	for(var/obj/item/reagent_containers/reagent_container in beakers)
-		reagent_container.reagents.trans_to(reactants, reagent_container.reagents.total_volume*fraction, threatscale, 1, 1)
+		reagent_container.reagents.trans_to(
+			reactants,
+			reagent_container.reagents.total_volume * fraction,
+			threatscale,
+			no_react = TRUE
+		)
 	chem_splash(get_turf(src), reagents, affected_area, list(reactants), ignition_temp, threatscale)
 
 	var/turf/detonated_turf = get_turf(src)
@@ -497,7 +501,7 @@
 
 /obj/item/grenade/chem_grenade/ez_clean
 	name = "cleaner grenade"
-	desc = "Waffle Co.-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
+	desc = "Waffle Corp. brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
 	stage = GRENADE_READY
 
 /obj/item/grenade/chem_grenade/ez_clean/Initialize(mapload)

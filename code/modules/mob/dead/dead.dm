@@ -5,6 +5,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	move_resist = INFINITY
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 	throwforce = 0
 
 /mob/dead/Initialize(mapload)
@@ -14,7 +15,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	flags_1 |= INITIALIZED_1
 	// Initial is non standard here, but ghosts move before they get here so it's needed. this is a cold path too so it's ok
 	SET_PLANE_IMPLICIT(src, initial(plane))
-	tag = "mob_[next_mob_id++]"
 	add_to_mob_list()
 
 	prepare_huds()
@@ -46,11 +46,13 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		. += "Players Ready: [SSticker.totalPlayersReady]"
 		. += "Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
 
+#define SERVER_HOPPER_TRAIT "server_hopper"
+
 /mob/dead/proc/server_hop()
 	set category = "OOC"
 	set name = "Server Hop"
 	set desc= "Jump to the other server"
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM)) // in case the round is ending and a cinematic is already playing we don't wanna clash with that (yes i know)
 		return
 	var/list/our_id = CONFIG_GET(string/cross_comms_name)
 	var/list/csa = CONFIG_GET(keyed_list/cross_server) - our_id
@@ -72,31 +74,38 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(tgui_alert(usr, "Jump to server [pick] ([addr])?", "Server Hop", list("Yes", "No")) != "Yes")
 		return
 
-	var/client/C = client
-	to_chat(C, span_notice("Sending you to [pick]."))
-	new /atom/movable/screen/splash(null, null, C)
+	var/client/hopper = client
+	to_chat(hopper, span_notice("Sending you to [pick]."))
+	var/atom/movable/screen/splash/fade_in = new(null, src, hopper, FALSE)
+	fade_in.Fade(FALSE)
 
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, SERVER_HOPPER_TRAIT)
 	sleep(2.9 SECONDS) //let the animation play
-	notransform = FALSE
+	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, SERVER_HOPPER_TRAIT)
 
-	if(!C)
+	if(!hopper)
 		return
 
 	winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
 
-	C << link("[addr]")
+	hopper << link("[addr]")
 
-/mob/dead/proc/update_z(new_z) // 1+ to register, null to unregister
-	if (registered_z != new_z)
-		if (registered_z)
-			SSmobs.dead_players_by_zlevel[registered_z] -= src
-		if (client)
-			if (new_z)
-				SSmobs.dead_players_by_zlevel[new_z] += src
-			registered_z = new_z
-		else
-			registered_z = null
+#undef SERVER_HOPPER_TRAIT
+
+/**
+ * updates the Z level for dead players
+ * If they don't have a new z, we'll keep the old one, preventing bugs from ghosting and re-entering, among others
+ */
+/mob/dead/proc/update_z(new_z)
+	if(registered_z == new_z)
+		return
+	if(registered_z)
+		SSmobs.dead_players_by_zlevel[registered_z] -= src
+	if(isnull(client))
+		registered_z = null
+		return
+	registered_z = new_z
+	SSmobs.dead_players_by_zlevel[new_z] += src
 
 /mob/dead/Login()
 	. = ..()

@@ -114,7 +114,7 @@
 
 /datum/component/rot/proc/rot_react_touch(datum/source, mob/living/react_to)
 	SIGNAL_HANDLER
-	rot_react(source, react_to, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+	rot_react(source, react_to, pick(GLOB.arm_zones))
 
 /// Triggered when something enters the component's parent.
 /datum/component/rot/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)

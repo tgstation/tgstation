@@ -67,21 +67,21 @@
 		data["cyborgs"] += list(cyborg_data)
 
 	data["drones"] = list()
-	for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
-		if(D.hacked)
+	for(var/mob/living/basic/drone/drone in GLOB.drones_list)
+		if(drone.hacked)
 			continue
-		if(!is_valid_z_level(current_turf, get_turf(D)))
+		if(!is_valid_z_level(current_turf, get_turf(drone)))
 			continue
 		var/list/drone_data = list(
-			name = D.name,
-			status = D.stat,
-			ref = REF(D)
+			name = drone.name,
+			status = drone.stat,
+			ref = REF(drone)
 		)
 		data["drones"] += list(drone_data)
 
 	return data
 
-/obj/machinery/computer/robotics/ui_act(action, params)
+/obj/machinery/computer/robotics/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -148,7 +148,7 @@
 
 		if("killdrone")
 			if(allowed(usr))
-				var/mob/living/simple_animal/drone/drone = locate(params["ref"]) in GLOB.mob_list
+				var/mob/living/basic/drone/drone = locate(params["ref"]) in GLOB.mob_list
 				if(drone.hacked)
 					to_chat(usr, span_danger("ERROR: [drone] is not responding to external commands."))
 				else
@@ -176,7 +176,7 @@
 	if(!isnull(console_location))
 		to_chat(R, span_alert("The approximate location of the console that is keeping you locked down is [console_location]"))
 	if(R.connected_ai)
-		to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")
+		to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='byond://?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")
 
 /obj/machinery/computer/robotics/proc/borg_destroyed()
 	SIGNAL_HANDLER

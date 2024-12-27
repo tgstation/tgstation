@@ -1,6 +1,6 @@
 // Finally, peas. Base plant.
 /obj/item/seeds/peas
-	name = "pack of pea pods"
+	name = "pea pod pack"
 	desc = "These seeds grows into vitamin rich peas!"
 	icon_state = "seed-peas"
 	species = "peas"
@@ -29,7 +29,7 @@
 
 // Laughin' Peas
 /obj/item/seeds/peas/laugh
-	name = "pack of laughin' peas"
+	name = "laughin' pea pack"
 	desc = "These seeds give off a very soft purple glow.. they should grow into Laughin' Peas."
 	icon_state = "seed-laughpeas"
 	species = "laughpeas"
@@ -54,14 +54,14 @@
 	desc = "Ridens Cicer, guaranteed to improve your mood dramatically upon consumption!"
 	icon_state = "laughpeas"
 	foodtypes = VEGETABLES
-	juice_results = list (/datum/reagent/consumable/laughsyrup = 0)
+	juice_typepath = /datum/reagent/consumable/laughsyrup
 	tastes = list ("a prancing rabbit" = 1) //Vib Ribbon sends her regards.. wherever she is.
 	wine_power = 90
 	wine_flavor = "a vector-graphic rabbit dancing on your tongue"
 
 // World Peas - Peace at last, peace at last...
 /obj/item/seeds/peas/laugh/peace
-	name = "pack of world peas"
+	name = "world pea pack"
 	desc = "These rather large seeds give off a soothing blue glow..."
 	icon_state = "seed-worldpeas"
 	species = "worldpeas"

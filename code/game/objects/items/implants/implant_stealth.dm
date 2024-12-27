@@ -37,6 +37,9 @@
 
 /obj/structure/closet/cardboard/agent/Bump(atom/A)
 	. = ..()
+	if(istype(A, /obj/machinery/door))
+		for(var/mob/mob_in_box in contents)
+			A.Bumped(mob_in_box)
 	if(isliving(A))
 		reveal()
 

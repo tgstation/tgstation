@@ -23,7 +23,6 @@
 	QDEL_NULL(master.ai_controller)
 	REMOVE_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
 	master.RemoveElement(/datum/element/movetype_handler)
-	return ..()
 
 /atom/movable/proc/make_haunted(source, color) //if not haunted, make haunted
 	if(!HAS_TRAIT(src, TRAIT_HAUNTED))

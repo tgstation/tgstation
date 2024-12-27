@@ -1,4 +1,4 @@
-///Hud type with targetting dol and a nutrition bar
+///Hud type with targeting dol and a nutrition bar
 /datum/hud/ooze/New(mob/living/owner)
 	. = ..()
 

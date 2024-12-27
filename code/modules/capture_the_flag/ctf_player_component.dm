@@ -1,4 +1,4 @@
-///A component added to the mind of anyone who is playing in an ongoing CTF match. Any player specific CTF functionality should be implimented here. (someone should impliment score tracking here)
+///A component added to the mind of anyone who is playing in an ongoing CTF match. Any player specific CTF functionality should be implemented here. (someone should implement score tracking here)
 /datum/component/ctf_player
 	///The team that this player is associated with.
 	var/team
@@ -8,7 +8,7 @@
 	var/can_respawn = TRUE
 	///Reference to the game this player is participating in.
 	var/datum/ctf_controller/ctf_game
-	///Item dropped on death, 
+	///Item dropped on death,
 	var/death_drop = /obj/effect/powerup/ammo/ctf
 	///Reference to players ckey, used for sending messages to them relating to CTF.
 	var/ckey_reference
@@ -22,19 +22,20 @@
 	var/datum/mind/true_parent = parent
 	player_mob = true_parent.current
 	ckey_reference = player_mob.ckey
-	setup_dusting()
-	
-/datum/component/ctf_player/PostTransfer()
-	if(!istype(parent, /datum/mind))
-		return COMPONENT_INCOMPATIBLE
-	var/datum/mind/true_parent = parent
-	player_mob = true_parent.current
-	setup_dusting()
+	register_mob()
 
-///CTF players are dusted upon taking damage that puts them into critical or leaving their body.
-/datum/component/ctf_player/proc/setup_dusting()
+/datum/component/ctf_player/PostTransfer(datum/new_parent)
+	if(!istype(new_parent, /datum/mind))
+		return COMPONENT_INCOMPATIBLE
+	var/datum/mind/true_parent = new_parent
+	player_mob = true_parent.current
+	register_mob()
+
+/// Called when we get a new player mob, register signals and set up the mob.
+/datum/component/ctf_player/proc/register_mob()
 	RegisterSignal(player_mob, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(damage_type_check))
 	RegisterSignal(player_mob, COMSIG_MOB_GHOSTIZED, PROC_REF(ctf_dust))
+	ADD_TRAIT(player_mob, TRAIT_PERMANENTLY_MORTAL, CTF_TRAIT)
 
 ///Stamina and oxygen damage will not dust a player by themself.
 /datum/component/ctf_player/proc/damage_type_check(datum/source, damage, damage_type)
@@ -73,7 +74,7 @@
 		player_mob.dust()
 	qdel(src)
 
-/datum/component/ctf_player/Destroy(force, silent)
+/datum/component/ctf_player/Destroy(force)
 	if(player_mob)
 		UnregisterSignal(player_mob, list(COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_MOB_GHOSTIZED))
 	return ..()

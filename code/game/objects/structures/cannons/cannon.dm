@@ -17,7 +17,7 @@
 	var/charge_ignited = FALSE
 	var/fire_delay = 15
 	var/charge_size = 15
-	var/fire_sound = 'sound/weapons/gun/general/cannon.ogg'
+	var/fire_sound = 'sound/items/weapons/gun/general/cannon.ogg'
 
 /obj/structure/cannon/Initialize(mapload)
 	. = ..()
@@ -51,7 +51,7 @@
 	if(!anchorable_cannon)
 		return FALSE
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/cannon/attackby(obj/item/used_item, mob/user, params)
 	if(charge_ignited)
@@ -101,11 +101,11 @@
 			to_chat(user, span_warning("[powder_keg] doesn't have at least 15u of gunpowder to fill [src]!"))
 			return
 		if(has_enough_gunpowder)
-			powder_keg.reagents.trans_id_to(src, /datum/reagent/gunpowder, amount = charge_size)
+			powder_keg.reagents.trans_to(src, charge_size, target_id = /datum/reagent/gunpowder)
 			balloon_alert(user, "[src] loaded with gunpowder")
 			return
 		if(has_enough_alt_fuel)
-			powder_keg.reagents.trans_id_to(src, /datum/reagent/fuel, amount = charge_size)
+			powder_keg.reagents.trans_to(src, charge_size, target_id = /datum/reagent/fuel)
 			balloon_alert(user, "[src] loaded with welding fuel")
 			return
 	..()
@@ -139,6 +139,18 @@
 	new /obj/item/stack/sheet/iron/five(src.loc)
 	new /obj/item/stack/rods(src.loc)
 	. = ..()
+
+///A cannon found from the fishing mystery box.
+/obj/structure/cannon/mystery_box
+	icon_state = "mystery_box_cannon" //east facing sprite for the presented item, it'll be changed back to normal on init
+	dir = EAST
+	anchored = FALSE
+
+/obj/structure/cannon/mystery_box/Initialize(mapload)
+	. = ..()
+	icon_state = "falconet_patina"
+	reagents.add_reagent(/datum/reagent/gunpowder, charge_size)
+	loaded_cannonball = new(src)
 
 #undef BAD_FUEL_DAMAGE_TAX
 #undef BAD_FUEL_EXPLODE_PROBABILTY

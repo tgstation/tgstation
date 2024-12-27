@@ -18,12 +18,10 @@
 		experience_multiplier += experience_multiplier_reasons[key]
 	known_skills[skill][SKILL_EXP] = max(0, known_skills[skill][SKILL_EXP] + amt*experience_multiplier) //Update exp. Prevent going below 0
 	known_skills[skill][SKILL_LVL] = update_skill_level(skill)//Check what the current skill level is based on that skill's exp
-	if(silent)
-		return
 	if(known_skills[skill][SKILL_LVL] > old_level)
-		S.level_gained(src, known_skills[skill][SKILL_LVL], old_level)
+		S.level_gained(src, known_skills[skill][SKILL_LVL], old_level, silent)
 	else if(known_skills[skill][SKILL_LVL] < old_level)
-		S.level_lost(src, known_skills[skill][SKILL_LVL], old_level)
+		S.level_lost(src, known_skills[skill][SKILL_LVL], old_level, silent)
 
 ///Set experience of a specific skill to a number
 /datum/mind/proc/set_experience(skill, amt, silent = FALSE)
@@ -77,4 +75,4 @@
 		var/datum/skill/the_skill = i
 		msg += "[initial(the_skill.name)] - [get_skill_level_name(the_skill)]\n"
 	msg += "</span>"
-	to_chat(user, examine_block(msg))
+	to_chat(user, boxed_message(msg))

@@ -1,0 +1,5 @@
+/mob/living/simple_animal/parrot : /mob/living/basic/parrot{@OLD}
+/mob/living/simple_animal/parrot/natural : /mob/living/basic/parrot{@OLD}
+/mob/living/simple_animal/parrot/poly : /mob/living/basic/parrot/poly{@OLD}
+
+

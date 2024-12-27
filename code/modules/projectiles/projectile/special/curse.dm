@@ -1,25 +1,23 @@
 /obj/effect/ebeam/curse_arm
 	name = "curse arm"
-	layer = LARGE_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 
 /obj/projectile/curse_hand
 	name = "curse hand"
 	icon_state = "cursehand0"
 	base_icon_state = "cursehand"
-	hitsound = 'sound/effects/curse4.ogg'
+	hitsound = 'sound/effects/curse/curse4.ogg'
 	layer = LARGE_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	damage_type = BURN
 	damage = 10
 	paralyze = 20
-	speed = 2
+	speed = 0.5
 	range = 16
 	var/datum/beam/arm
 	var/handedness = 0
 
 /obj/projectile/curse_hand/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
 	handedness = prob(50)
 	icon_state = "[base_icon_state][handedness]"
 
@@ -46,7 +44,7 @@
 	if(arm)
 		QDEL_NULL(arm)
 	if((movement_type & PHASING))
-		playsound(src, 'sound/effects/curse3.ogg', 25, TRUE, -1)
+		playsound(src, 'sound/effects/curse/curse3.ogg', 25, TRUE, -1)
 	var/turf/T = get_step(src, dir)
 	var/obj/effect/temp_visual/dir_setting/curse/hand/leftover = new(T, dir)
 	leftover.icon_state = icon_state

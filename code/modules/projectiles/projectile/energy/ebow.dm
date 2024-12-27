@@ -4,7 +4,7 @@
 	damage = 15
 	damage_type = TOX
 	stamina = 60
-	eyeblur = 10
+	eyeblur = 20 SECONDS
 	knockdown = 10
 	slur = 10 SECONDS
 

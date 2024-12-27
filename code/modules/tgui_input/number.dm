@@ -23,7 +23,11 @@
 			var/client/client = user
 			user = client.mob
 		else
-			return
+			return null
+
+	if (isnull(user.client))
+		return null
+
 	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		var/input_number = input(user, message, title, default) as null|num
@@ -88,7 +92,7 @@
 	if(default > max_value)
 		CRASH("Default value is greater than max value.")
 
-/datum/tgui_input_number/Destroy(force, ...)
+/datum/tgui_input_number/Destroy(force)
 	SStgui.close_uis(src)
 	state = null
 	return ..()
@@ -132,7 +136,7 @@
 		data["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
 	return data
 
-/datum/tgui_input_number/ui_act(action, list/params)
+/datum/tgui_input_number/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

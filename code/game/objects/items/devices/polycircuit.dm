@@ -40,7 +40,7 @@
 			if("APC")
 				circuit_type = /obj/item/electronics/apc
 		to_chat(user, span_notice("You spot your circuit, and carefully attempt to remove it from [src], hold still!"))
-		if(do_after(user, 30, target = user))
+		if(do_after(user, 3 SECONDS, target = user))
 			if(!src || QDELETED(src))//Sanity Check.
 				return
 			var/returned_circuit = new circuit_type(src)
@@ -51,7 +51,7 @@
 			else
 				to_chat(user, span_notice("You navigate the sharp edges of circuitry and remove a single board from [src]"))
 		else
-			H.apply_damage(15, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+			H.apply_damage(15, BRUTE, pick(GLOB.arm_zones))
 			to_chat(user, span_warning("You give yourself a wicked cut on [src]'s many sharp corners and edges!"))
 
 /obj/item/stack/circuit_stack/full

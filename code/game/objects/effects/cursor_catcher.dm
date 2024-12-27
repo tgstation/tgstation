@@ -3,13 +3,14 @@
 	icon_state = "fullscreen_blocker" // Fullscreen semi transparent icon
 	plane = HUD_PLANE
 	mouse_opacity = MOUSE_OPACITY_ICON
+	default_click = TRUE
 	/// The mob whose cursor we are tracking.
 	var/mob/owner
 	/// Client view size of the scoping mob.
 	var/list/view_list
-	/// Pixel x we send to the scope component.
+	/// Pixel x relative to the hovered tile we send to the scope component.
 	var/given_x
-	/// Pixel y we send to the scope component.
+	/// Pixel y relative to the hovered tile we send to the scope component.
 	var/given_y
 	/// The turf we send to the scope component.
 	var/turf/given_turf
@@ -59,8 +60,8 @@
 	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
 	if(isnull(icon_y))
 		icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
-	var/our_x = round(icon_x / world.icon_size)
-	var/our_y = round(icon_y / world.icon_size)
+	var/our_x = round(icon_x / ICON_SIZE_X)
+	var/our_y = round(icon_y / ICON_SIZE_Y)
 	given_turf = locate(owner.x + our_x - round(view_list[1]/2), owner.y + our_y - round(view_list[2]/2), owner.z)
-	given_x = round(icon_x - world.icon_size * our_x, 1)
-	given_y = round(icon_y - world.icon_size * our_y, 1)
+	given_x = round(icon_x - ICON_SIZE_X * our_x, 1)
+	given_y = round(icon_y - ICON_SIZE_Y * our_y, 1)

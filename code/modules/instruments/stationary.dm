@@ -32,7 +32,7 @@
 /obj/structure/musician/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 4 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/musician/piano
 	name = "space piano"
@@ -52,7 +52,7 @@
 		if(BRUTE)
 			playsound(src, 'sound/effects/piano_hit.ogg', 100, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/musician/piano/atom_break(damage_flag)
 	. = ..()

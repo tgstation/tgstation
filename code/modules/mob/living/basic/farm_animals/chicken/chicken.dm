@@ -38,18 +38,30 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	///boolean deciding whether eggs laid by this chicken can hatch into chicks
 	var/fertile = TRUE
 
+/datum/emote/chicken
+	mob_type_allowed_typecache = /mob/living/basic/chicken
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/chicken/cluck
+	key = "cluck"
+	key_third_person = "clucks"
+	message = "clucks happily!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/chicken/bagawk.ogg'
+
 /mob/living/basic/chicken/Initialize(mapload)
 	. = ..()
 	GLOB.chicken_count++
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/pet_bonus, "clucks happily!")
+	AddElement(/datum/element/pet_bonus, "cluck")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown", "black", "white"), modify_pixels = TRUE)
 	AddComponent(\
 		/datum/component/egg_layer,\
-		/obj/item/food/egg,\
+		/obj/item/food/egg/organic,\
 		list(/obj/item/food/grown/wheat),\
 		feed_messages = list("She clucks contently."),\
 		lay_messages = EGG_LAYING_MESSAGES,\
@@ -78,7 +90,7 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 
 /datum/ai_controller/basic_controller/chicken
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -88,8 +100,6 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/chicken,
 	)
 

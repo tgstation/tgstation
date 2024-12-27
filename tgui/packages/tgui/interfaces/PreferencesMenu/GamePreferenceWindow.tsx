@@ -1,24 +1,21 @@
+import { exhaustiveCheck } from 'common/exhaustive';
+import { useState } from 'react';
+
+import { useBackend } from '../../backend';
 import { Stack } from '../../components';
 import { Window } from '../../layouts';
-import { KeybindingsPage } from './KeybindingsPage';
-import { GamePreferencesPage } from './GamePreferencesPage';
-import { PageButton } from './PageButton';
-import { useBackend, useLocalState } from '../../backend';
 import { GamePreferencesSelectedPage, PreferencesMenuData } from './data';
-import { exhaustiveCheck } from 'common/exhaustive';
+import { GamePreferencesPage } from './GamePreferencesPage';
+import { KeybindingsPage } from './KeybindingsPage';
+import { PageButton } from './PageButton';
 
-export const GamePreferenceWindow = (
-  props: {
-    startingPage?: GamePreferencesSelectedPage;
-  },
-  context
-) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+export const GamePreferenceWindow = (props: {
+  startingPage?: GamePreferencesSelectedPage;
+}) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
 
-  const [currentPage, setCurrentPage] = useLocalState(
-    context,
-    'currentPage',
-    props.startingPage ?? GamePreferencesSelectedPage.Settings
+  const [currentPage, setCurrentPage] = useState(
+    props.startingPage ?? GamePreferencesSelectedPage.Settings,
   );
 
   let pageContents;
@@ -44,7 +41,8 @@ export const GamePreferenceWindow = (
                 <PageButton
                   currentPage={currentPage}
                   page={GamePreferencesSelectedPage.Settings}
-                  setPage={setCurrentPage}>
+                  setPage={setCurrentPage}
+                >
                   Settings
                 </PageButton>
               </Stack.Item>
@@ -53,7 +51,8 @@ export const GamePreferenceWindow = (
                 <PageButton
                   currentPage={currentPage}
                   page={GamePreferencesSelectedPage.Keybindings}
-                  setPage={setCurrentPage}>
+                  setPage={setCurrentPage}
+                >
                   Keybindings
                 </PageButton>
               </Stack.Item>

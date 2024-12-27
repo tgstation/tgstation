@@ -1,14 +1,21 @@
-import { BooleanLike } from 'common/react';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  LabeledList,
+  Section,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
-import { CargoCatalog } from './Cargo';
+import { CargoCatalog } from './Cargo/CargoCatalog';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 type Data = {
   locked: BooleanLike;
   points: number;
-  usingBeacon: BooleanLike;
+  using_beacon: BooleanLike;
   beaconzone: string;
   beaconName: string;
   canBuyBeacon: BooleanLike;
@@ -17,27 +24,27 @@ type Data = {
   message: string;
 };
 
-export const CargoExpress = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export function CargoExpress(props) {
+  const { data } = useBackend<Data>();
   const { locked } = data;
 
   return (
     <Window width={600} height={700}>
       <Window.Content scrollable>
-        <InterfaceLockNoticeBox accessText="a QM-level ID card" />
+        <InterfaceLockNoticeBox accessText="a Cargo Technician-level ID card" />
         {!locked && <CargoExpressContent />}
       </Window.Content>
     </Window>
   );
-};
+}
 
-const CargoExpressContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+function CargoExpressContent(props) {
+  const { act, data } = useBackend<Data>();
   const {
     hasBeacon,
     message,
     points,
-    usingBeacon,
+    using_beacon,
     beaconzone,
     beaconName,
     canBuyBeacon,
@@ -53,25 +60,23 @@ const CargoExpressContent = (props, context) => {
             <AnimatedNumber value={Math.round(points)} />
             {' credits'}
           </Box>
-        }>
+        }
+      >
         <LabeledList>
           <LabeledList.Item label="Landing Location">
-            <Button
-              content="Cargo Bay"
-              selected={!usingBeacon}
-              onClick={() => act('LZCargo')}
-            />
-            <Button
-              selected={usingBeacon}
-              disabled={!hasBeacon}
-              onClick={() => act('LZBeacon')}>
-              {beaconzone} ({beaconName})
+            <Button selected={!using_beacon} onClick={() => act('LZCargo')}>
+              Cargo Bay
             </Button>
             <Button
-              content={printMsg}
-              disabled={!canBuyBeacon}
-              onClick={() => act('printBeacon')}
-            />
+              selected={using_beacon}
+              disabled={!hasBeacon}
+              onClick={() => act('LZBeacon')}
+            >
+              {beaconzone} ({beaconName})
+            </Button>
+            <Button disabled={!canBuyBeacon} onClick={() => act('printBeacon')}>
+              {printMsg}
+            </Button>
           </LabeledList.Item>
           <LabeledList.Item label="Notice">{message}</LabeledList.Item>
         </LabeledList>
@@ -79,4 +84,4 @@ const CargoExpressContent = (props, context) => {
       <CargoCatalog express />
     </>
   );
-};
+}

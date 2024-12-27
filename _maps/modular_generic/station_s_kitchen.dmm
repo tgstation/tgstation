@@ -1,0 +1,204 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table,
+/obj/item/kitchen/rollingpin{
+	pixel_y = 6;
+	pixel_x = -5
+	},
+/obj/item/knife/kitchen{
+	pixel_y = 4;
+	pixel_x = 10
+	},
+/turf/open/floor/iron/kitchen,
+/area/template_noop)
+"c" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/food/flour,
+/turf/open/floor/iron/kitchen,
+/area/template_noop)
+"d" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_y = 6
+	},
+/turf/open/floor/iron/kitchen,
+/area/template_noop)
+"m" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/template_noop)
+"q" = (
+/obj/structure/sink/directional/east,
+/turf/open/floor/iron,
+/area/template_noop)
+"r" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/obj/machinery/grill,
+/turf/open/floor/iron/kitchen,
+/area/template_noop)
+"u" = (
+/obj/effect/turf_decal/siding/dark,
+/obj/item/storage/box/ingredients/random{
+	pixel_y = 14;
+	pixel_x = -7
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/kitchen,
+/area/template_noop)
+"w" = (
+/obj/effect/turf_decal/trimline/green/warning{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/template_noop)
+"y" = (
+/turf/closed/wall,
+/area/template_noop)
+"z" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/structure/closet/secure_closet/freezer/fridge/all_access,
+/turf/open/floor/iron/kitchen,
+/area/template_noop)
+"C" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/condiment/enzyme{
+	pixel_y = 10;
+	pixel_x = -7
+	},
+/obj/item/kitchen/tongs{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"D" = (
+/obj/effect/turf_decal/trimline/green/warning{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"F" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 5
+	},
+/obj/structure/closet/crate/bin{
+	pixel_y = 2
+	},
+/turf/open/floor/iron/kitchen,
+/area/template_noop)
+"G" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"I" = (
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"L" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/condiment/ketchup{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/plate/small{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"M" = (
+/obj/effect/turf_decal/trimline/green/warning{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"P" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/template_noop)
+"S" = (
+/turf/open/floor/iron/kitchen,
+/area/template_noop)
+"U" = (
+/obj/effect/turf_decal/siding/dark,
+/turf/open/floor/iron/kitchen,
+/area/template_noop)
+"V" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+V
+V
+V
+V
+V
+V
+G
+"}
+(2,1,1) = {"
+V
+y
+m
+m
+m
+y
+V
+"}
+(3,1,1) = {"
+V
+q
+z
+a
+u
+C
+V
+"}
+(4,1,1) = {"
+V
+P
+c
+S
+U
+L
+V
+"}
+(5,1,1) = {"
+V
+D
+F
+d
+r
+y
+V
+"}
+(6,1,1) = {"
+V
+I
+w
+M
+w
+D
+V
+"}
+(7,1,1) = {"
+V
+V
+V
+V
+V
+V
+V
+"}

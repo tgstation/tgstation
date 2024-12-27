@@ -27,8 +27,19 @@
 	// changed to allow Z cropping and that's a mess
 	var/z_offset = SSmapping.station_start
 	var/list/bounds
-	for (var/path in SSmapping.config.GetFullMapPaths())
-		var/datum/parsed_map/parsed = load_map(file(path), 1, 1, z_offset, measureOnly = FALSE, no_changeturf = FALSE, cropMap=TRUE, x_lower = mother1.x_low, y_lower = mother1.y_low, x_upper = mother1.x_high, y_upper = mother1.y_high)
+	for (var/path in SSmapping.current_map.GetFullMapPaths())
+		var/datum/parsed_map/parsed = load_map(
+			file(path),
+			1,
+			1,
+			z_offset,
+			no_changeturf = FALSE,
+			crop_map = TRUE,
+			x_lower = mother1.x_low,
+			y_lower = mother1.y_low,
+			x_upper = mother1.x_high,
+			y_upper = mother1.y_high,
+		)
 		bounds = parsed?.bounds
 		z_offset += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
 

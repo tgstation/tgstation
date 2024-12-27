@@ -20,8 +20,6 @@
 	var/ducting_layer = DUCT_LAYER_DEFAULT
 	///In-case we don't want the main machine to get the reagents, but perhaps whoever is buckled to it
 	var/recipient_reagents_holder
-	///How do we apply the new reagents to the receiver? Generally doesn't matter, but some stuff, like people, does care if its injected or whatevs
-	var/methods
 	///What color is our demand connect?
 	var/demand_color = COLOR_RED
 	///What color is our supply connect?
@@ -73,9 +71,9 @@
 
 /datum/component/plumbing/process()
 	if(!demand_connects || !reagents)
-		STOP_PROCESSING(SSplumbing, src)
-		return
-	if(reagents.total_volume < reagents.maximum_volume)
+		return PROCESS_KILL
+
+	if(!reagents.holder_full())
 		for(var/D in GLOB.cardinals)
 			if(D & demand_connects)
 				send_request(D)
@@ -93,28 +91,38 @@
 
 ///called from in process(). only calls process_request(), but can be overwritten for children with special behaviour
 /datum/component/plumbing/proc/send_request(dir)
-	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = null, dir = dir)
+	process_request(dir = dir)
 
 ///check who can give us what we want, and how many each of them will give us
-/datum/component/plumbing/proc/process_request(amount, reagent, dir)
-	var/list/valid_suppliers = list()
+/datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir, round_robin = TRUE)
+	//find the duct to take from
 	var/datum/ductnet/net
 	if(!ducts.Find(num2text(dir)))
-		return
+		return FALSE
 	net = ducts[num2text(dir)]
+
+	//find all valid suppliers in the duct
+	var/list/valid_suppliers = list()
 	for(var/datum/component/plumbing/supplier as anything in net.suppliers)
 		if(supplier.can_give(amount, reagent, net))
 			valid_suppliers += supplier
-	// Need to ask for each in turn very carefully, making sure we get the total volume. This is to avoid a division that would always round down and become 0
-	var/targetVolume = reagents.total_volume + amount
 	var/suppliersLeft = valid_suppliers.len
+	if(!suppliersLeft)
+		return FALSE
+
+	//take an equal amount from each supplier
+	var/currentRequest
+	var/target_volume = reagents.total_volume + amount
 	for(var/datum/component/plumbing/give as anything in valid_suppliers)
-		var/currentRequest = (targetVolume - reagents.total_volume) / suppliersLeft
-		give.transfer_to(src, currentRequest, reagent, net)
+		currentRequest = (target_volume - reagents.total_volume) / suppliersLeft
+		give.transfer_to(src, currentRequest, reagent, net, round_robin)
 		suppliersLeft--
+	return TRUE
 
 ///returns TRUE when they can give the specified amount and reagent. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
+	SHOULD_BE_PURE(TRUE)
+
 	if(amount <= 0)
 		return
 
@@ -122,17 +130,17 @@
 		for(var/datum/reagent/contained_reagent as anything in reagents.reagent_list)
 			if(contained_reagent.type == reagent)
 				return TRUE
-	else if(reagents.total_volume > 0) //take whatever
+	else if(reagents.total_volume) //take whatever
 		return TRUE
 
+	return FALSE
+
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
-/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
+/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
 	if(!reagents || !target || !target.reagents)
 		return FALSE
-	if(reagent)
-		reagents.trans_id_to(target.recipient_reagents_holder, reagent, amount)
-	else
-		reagents.trans_to(target.recipient_reagents_holder, amount, round_robin = TRUE, methods = methods)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
+
+	reagents.trans_to(target.recipient_reagents_holder, amount, target_id = reagent, methods = round_robin ? LINEAR : NONE)
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/parent_movable, list/overlays)
@@ -205,8 +213,11 @@
 
 	STOP_PROCESSING(SSplumbing, src)
 
-	for(var/duct_dir in ducts)
-		var/datum/ductnet/duct = ducts[duct_dir]
+	//remove_plumber() can remove all ducts at once if they all belong to the same pipenet
+	//for e.g. in case of circular connections
+	//so we check if we have ducts to remove after each iteration
+	while(ducts.len)
+		var/datum/ductnet/duct = ducts[ducts[1]] //for maps index 1 will return the 1st key
 		duct.remove_plumber(src)
 
 	active = FALSE
@@ -293,7 +304,7 @@
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
 
-///Give the direction of a pipe, and it'll return wich direction it originally was when it's object pointed SOUTH
+///Give the direction of a pipe, and it'll return wich direction it originally was when its object pointed SOUTH
 /datum/component/plumbing/proc/get_original_direction(dir)
 	var/atom/movable/parent_movable = parent
 	return turn(dir, dir2angle(parent_movable.dir) - 180)
@@ -326,7 +337,7 @@
 		tile_covered = should_hide
 		parent_obj.update_appearance()
 
-/datum/component/plumbing/proc/change_ducting_layer(obj/caller, obj/changer, new_layer = DUCT_LAYER_DEFAULT)
+/datum/component/plumbing/proc/change_ducting_layer(obj/source, obj/changer, new_layer = DUCT_LAYER_DEFAULT)
 	SIGNAL_HANDLER
 	ducting_layer = new_layer
 
@@ -334,7 +345,7 @@
 	parent_movable.update_appearance()
 
 	if(changer)
-		playsound(changer, 'sound/items/ratchet.ogg', 10, TRUE) //sound
+		playsound(changer, 'sound/items/tools/ratchet.ogg', 10, TRUE) //sound
 
 	//quickly disconnect and reconnect the network.
 	if(active)
@@ -366,42 +377,4 @@
 		return
 
 	// Defer to later frame because pixel_* is actually updated after all callbacks
-	addtimer(CALLBACK(parent_obj, TYPE_PROC_REF(/atom/, update_appearance)), 1)
-
-///has one pipe input that only takes, example is manual output pipe
-/datum/component/plumbing/simple_demand
-	demand_connects = SOUTH
-
-///has one pipe output that only supplies. example is liquid pump and manual input pipe
-/datum/component/plumbing/simple_supply
-	supply_connects = SOUTH
-
-///input and output, like a holding tank
-/datum/component/plumbing/tank
-	demand_connects = WEST
-	supply_connects = EAST
-
-/datum/component/plumbing/manifold
-	demand_connects = NORTH
-	supply_connects = SOUTH
-
-/datum/component/plumbing/manifold/change_ducting_layer(obj/caller, obj/changer, new_layer)
-	return
-
-#define READY 2
-///Baby component for the buffer plumbing machine
-/datum/component/plumbing/buffer
-	demand_connects = WEST
-	supply_connects = EAST
-
-/datum/component/plumbing/buffer/Initialize(start=TRUE, _turn_connects=TRUE, _ducting_layer, datum/reagents/custom_receiver)
-	if(!istype(parent, /obj/machinery/plumbing/buffer))
-		return COMPONENT_INCOMPATIBLE
-
-	return ..()
-
-/datum/component/plumbing/buffer/can_give(amount, reagent, datum/ductnet/net)
-	var/obj/machinery/plumbing/buffer/buffer = parent
-	return (buffer.mode == READY) ? ..() : FALSE
-
-#undef READY
+	addtimer(CALLBACK(parent_obj, TYPE_PROC_REF(/atom/, update_appearance)), 0.1 SECONDS)

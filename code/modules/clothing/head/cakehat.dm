@@ -9,16 +9,18 @@
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	armor_type = /datum/armor/none
+	light_system = OVERLAY_LIGHT
 	light_range = 2 //luminosity when on
-	light_system = MOVABLE_LIGHT
+	light_power = 1.3
+	light_color = "#FF964E"
 	flags_cover = HEADCOVERSEYES
 	heat = 999
 	wound_bonus = 10
 	bare_wound_bonus = 5
 	dog_fashion = /datum/dog_fashion/head
-	hitsound = 'sound/weapons/tap.ogg'
-	var/hitsound_on = 'sound/weapons/sear.ogg' //so we can differentiate between cakehat and energyhat
-	var/hitsound_off = 'sound/weapons/tap.ogg'
+	hitsound = 'sound/items/weapons/tap.ogg'
+	var/hitsound_on = 'sound/items/weapons/sear.ogg' //so we can differentiate between cakehat and energyhat
+	var/hitsound_off = 'sound/items/weapons/tap.ogg'
 	var/force_on = 15
 	var/throwforce_on = 15
 	var/damtype_on = BURN
@@ -55,23 +57,30 @@
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake
 	name = "energy cake"
 	desc = "You put the energy sword on your cake. Brilliant."
-	icon_state = "hardhat0_energycake"
+	icon_state = "hardhat1_energycake"
 	inhand_icon_state = "hardhat0_energycake"
 	hat_type = "energycake"
-	hitsound = 'sound/weapons/tap.ogg'
-	hitsound_on = 'sound/weapons/blade1.ogg'
-	hitsound_off = 'sound/weapons/tap.ogg'
+	hitsound = 'sound/items/weapons/tap.ogg'
+	hitsound_on = 'sound/items/weapons/blade1.ogg'
+	hitsound_off = 'sound/items/weapons/tap.ogg'
 	damtype_on = BRUTE
 	force_on = 18 //same as epen (but much more obvious)
 	light_range = 3 //ditto
 	heat = 0
 
+/obj/item/clothing/head/utility/hardhat/cakehat/energycake/Initialize(mapload)
+	. = ..()
+	//the compiled icon state is how it appears when it's on.
+	//That's how we want it to show on orbies (little virtual PDA pets).
+	//However we should reset their appearance on runtime.
+	update_appearance(UPDATE_ICON_STATE)
+
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_on(mob/living/user)
-	playsound(src, 'sound/weapons/saberon.ogg', 5, TRUE)
+	playsound(src, 'sound/items/weapons/saberon.ogg', 5, TRUE)
 	to_chat(user, span_warning("You turn on \the [src]."))
 	return ..()
 
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_off(mob/living/user)
-	playsound(src, 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(src, 'sound/items/weapons/saberoff.ogg', 5, TRUE)
 	to_chat(user, span_warning("You turn off \the [src]."))
 	return ..()

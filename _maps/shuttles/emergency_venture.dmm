@@ -360,7 +360,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "tE" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
@@ -647,7 +647,6 @@
 /area/shuttle/escape)
 "Jz" = (
 /obj/structure/tank_dispenser/oxygen{
-	layer = 2.7;
 	pixel_x = -1;
 	pixel_y = 2
 	},

@@ -21,9 +21,9 @@
 			TEST_FAIL("[worn.DebugName()] is missing a sprite for the worn overlay for [item_path]. Expected icon state: '[worn_icon_state]'")
 
 		var/datum/greyscale_config/belt = SSgreyscale.configurations["[initial(item_path.greyscale_config_belt)]"]
-		var/belt_icon_state = initial(item_path.belt_icon_state) || initial(item_path.icon_state)
-		if(belt && !belt.icon_states[belt_icon_state])
-			TEST_FAIL("[belt.DebugName()] is missing a sprite for the belt overlay for [item_path]. Expected icon state: '[belt_icon_state]'")
+		var/inside_belt_icon_state = initial(item_path.inside_belt_icon_state) || initial(item_path.icon_state)
+		if(belt && !belt.icon_states[inside_belt_icon_state])
+			TEST_FAIL("[belt.DebugName()] is missing a sprite for the belt overlay for [item_path]. Expected icon state: '[inside_belt_icon_state]'")
 
 /// Makes sure objects using greyscale configs have, if any, the correct number of colors
 /datum/unit_test/greyscale_color_count
@@ -38,4 +38,4 @@
 			continue
 		var/number_of_colors = length(colors) - 1
 		if(config.expected_colors != number_of_colors)
-			TEST_FAIL("[thing] has the wrong amount of colors configured for [config.DebugName()]. Expected [config.expected_colors] but only found [number_of_colors].")
+			TEST_FAIL("[thing] has the wrong amount of colors configured for [config.DebugName()]. Expected [config.expected_colors] colors but found [number_of_colors].")

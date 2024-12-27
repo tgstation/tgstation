@@ -17,7 +17,7 @@
 	///This component's personal uid
 	var/personal_uid
 
-/datum/component/seethrough_mob/Initialize(target_alpha = 100, animation_time = 0.5 SECONDS, clickthrough = TRUE)
+/datum/component/seethrough_mob/Initialize(target_alpha = 100, animation_time = 0.5 SECONDS, clickthrough = TRUE, keep_color = FALSE)
 	. = ..()
 
 	if(!ismob(parent))
@@ -33,16 +33,16 @@
 	uid++
 	src.personal_uid = uid
 
-	render_source_atom.appearance_flags |= ( RESET_COLOR | RESET_TRANSFORM)
+	render_source_atom.appearance_flags |= KEEP_APART
 
-	render_source_atom.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE | VIS_INHERIT_LAYER)
+	render_source_atom.vis_flags |= (VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER)
 
 	render_source_atom.render_source = "*transparent_bigmob[personal_uid]"
 
-	var/datum/action/toggle_seethrough/action = new(src)
+	var/datum/action/cooldown/toggle_seethrough/action = new(src)
 	action.Grant(parent)
 
-/datum/component/seethrough_mob/Destroy(force, silent)
+/datum/component/seethrough_mob/Destroy(force)
 	QDEL_NULL(render_source_atom)
 	return ..()
 
@@ -55,9 +55,8 @@
 	for(var/atom/movable/screen/plane_master/seethrough as anything in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))
 		seethrough.unhide_plane(fool)
 
-	var/icon/current_mob_icon = icon(fool.icon, fool.icon_state)
 	render_source_atom.pixel_x = -fool.pixel_x
-	render_source_atom.pixel_y = ((current_mob_icon.Height() - 32) * 0.5)
+	render_source_atom.pixel_y = ((fool.get_cached_height() - ICON_SIZE_Y) * 0.5)
 
 	initial_render_target_value = fool.render_target
 	fool.render_target = "*transparent_bigmob[personal_uid]"
@@ -114,22 +113,23 @@
 	else
 		untrick_mob()
 
-/datum/action/toggle_seethrough
+/datum/action/cooldown/toggle_seethrough
 	name = "Toggle Seethrough"
 	desc = "Allows you to see behind your massive body and click through it."
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "alien_sneak"
 	background_icon_state = "bg_alien"
+	cooldown_time = 1 SECONDS
+	melee_cooldown_time = 0
+	can_be_shared = FALSE
 
-/datum/action/toggle_seethrough/Remove(mob/remove_from)
-	var/datum/component/seethrough_mob/seethroughComp = target
-	if(seethroughComp.is_active)
-		seethroughComp.untrick_mob()
+/datum/action/cooldown/toggle_seethrough/Remove(mob/remove_from)
+	var/datum/component/seethrough_mob/transparency = target
+	if(transparency.is_active)
+		transparency.untrick_mob()
 	return ..()
 
-/datum/action/toggle_seethrough/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
-	var/datum/component/seethrough_mob/seethroughComp = target
-	seethroughComp.toggle_active()
+/datum/action/cooldown/toggle_seethrough/Activate(atom/t)
+	StartCooldown()
+	var/datum/component/seethrough_mob/transparency = target
+	transparency.toggle_active()

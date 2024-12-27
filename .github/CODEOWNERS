@@ -75,12 +75,13 @@
 
 # ninjanomnom
 
-/code/__DEFINES/dcs/ @ninjanomnom
 /code/controllers/subsystem/dcs.dm @ninjanomnom
-/code/controllers/subsystem/shuttle.dm @ninjanomnom
-/code/datums/components/ @ninjanomnom
-/code/datums/elements/ @ninjanomnom
-/code/modules/shuttle/ @ninjanomnom
+/code/datums/signals.dm @ninjanomnom
+/code/datums/components/_component.dm @ninjanomnom
+/code/datums/elements/_element.dm @ninjanomnom
+/code/datums/greyscale/_greyscale_config.dm @ninjanomnom
+/code/datums/greyscale/json_reader.dm @ninjanomnom
+/code/datums/greyscale/layer.dm @ninjanomnom
 
 # Ryll-Ryll/Shaps
 
@@ -92,6 +93,10 @@
 
 /code/game/area/ @san7890
 /icons/area/ @san7890
+
+# SmArtKar
+
+/code/modules/projectiles/projectile.dm @SmArtKar
 
 # stylemistake
 
@@ -124,8 +129,8 @@
 
 # tralezab
 /code/__DEFINES/basic_mobs.dm @tralezab
-/code/datums/ai @tralezab
-/code/modules/mob/living/basic/ @tralezab
+/code/datums/ai/ @tralezab
+/code/modules/religion/ @tralezab
 
 # Watermelon914
 
@@ -141,6 +146,7 @@
 /code/datums/armor/ @ZephyrTFA
 /code/modules/admin/verbs/ @ZephyrTFA
 /code/modules/logging/ @ZephyrTFA
+/tools/ci/check_grep.sh @ZephyrTFA
 
 
 # CONTRIBUTORS
@@ -159,14 +165,7 @@
 
 # MrStonedOne
 
-/code/__DEFINES/MC.dm @MrStonedOne
-/code/controllers/admin.dm @MrStonedOne
-/code/controllers/master.dm @MrStonedOne
-/code/controllers/failsafe.dm @MrStonedOne
-/code/controllers/subsystem.dm @MrStonedOne
 /code/controllers/subsystem/timer.dm @MrStonedOne
-/code/controllers/configuration/entries @MrStonedOne
-/config/ @MrStonedOne
 
 # NamelessFairy
 
@@ -182,26 +181,46 @@
 
 # MULTIPLE OWNERS
 
-/SQL/ @Jordie0608 @MrStonedOne
+/SQL/ @Jordie0608 @MrStonedOne @scriptis
 
 /_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
+
 /icons/ @Imaginos16 @Krysonism @Twaticus @Wallemations
-/icons/ass/ @Ghilker @tralezab
 
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
+
 /code/__HELPERS/logging/ @dragomagol @ZephyrTFA
+
+/code/__DEFINES/MC.dm @LemonInTheDark @MrStonedOne
+/code/controllers/admin.dm @LemonInTheDark @MrStonedOne
+/code/controllers/master.dm @LemonInTheDark @MrStonedOne
+/code/controllers/failsafe.dm @LemonInTheDark @MrStonedOne
+/code/controllers/subsystem.dm @LemonInTheDark @MrStonedOne
+
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
+
 /code/modules/atmospherics/ @Ghilker @LemonInTheDark
+
 /code/modules/client/preferences.dm @Mothblocks @ZephyrTFA
 /code/modules/client/preferences_savefile.dm @Mothblocks @ZephyrTFA
+
 /code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
+
+/code/modules/mob/living/basic/ @Jacquerel @san7890 @tralezab
+
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
-/tools/build/ @MrStonedOne @stylemistake
-/tools/tgs_scripts/ @Cyberboss @MrStonedOne
+
+/tools/build/ @MrStonedOne @scriptis @stylemistake
+/tools/tgs_scripts/ @Cyberboss @MrStonedOne @scriptis
 
 /tools/WebhookProcessor/ @BraveMole @TiviPlus
+
+# Host Hell
+
+/code/controllers/configuration/entries @MrStonedOne @scriptis
+/config/ @MrStonedOne @scriptis
 
 # Expensive files that touching basically always cause performance problems
 ## Init times
@@ -209,4 +228,4 @@
 
 # SIC SEMPER TYRANNIS
 
-/code/modules/hydroponics/grown/citrus.dm @optimumtact
+/code/modules/hydroponics/grown/citrus.dm @LemonInTheDark @optimumtact

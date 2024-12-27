@@ -8,7 +8,7 @@
 	var/desc = "A trauma caused by brain damage, which causes issues to the patient."
 	var/scan_desc = "generic brain trauma" //description when detected by a health scanner
 	var/mob/living/carbon/owner //the poor bastard
-	var/obj/item/organ/internal/brain/brain //the poor bastard's brain
+	var/obj/item/organ/brain/brain //the poor bastard's brain
 	var/gain_text = span_notice("You feel traumatized.")
 	var/lose_text = span_notice("You no longer feel traumatized.")
 	var/can_gain = TRUE
@@ -22,6 +22,7 @@
 	// Handles our references with our brain
 	brain?.remove_trauma_from_traumas(src)
 	if(owner)
+		log_game("[key_name_and_tag(owner)] has lost the following brain trauma: [type]")
 		on_lose()
 		owner = null
 	return ..()
@@ -36,6 +37,7 @@
 
 //Called when given to a mob
 /datum/brain_trauma/proc/on_gain()
+	SHOULD_CALL_PARENT(TRUE)
 	if(gain_text)
 		to_chat(owner, gain_text)
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
@@ -43,6 +45,7 @@
 
 //Called when removed from a mob
 /datum/brain_trauma/proc/on_lose(silent)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!silent && lose_text)
 		to_chat(owner, lose_text)
 	UnregisterSignal(owner, COMSIG_MOB_SAY)

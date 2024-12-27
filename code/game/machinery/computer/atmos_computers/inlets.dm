@@ -4,6 +4,14 @@
 	/// The air sensor type this injector is linked to
 	var/chamber_id
 
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/layer2
+	piping_layer = 2
+	icon_state = "inje_map-2"
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/layer4
+	piping_layer = 4
+	icon_state = "inje_map-4"
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/Initialize(mapload)
 	id_tag = CHAMBER_INPUT_FROM_ID(chamber_id)
 	return ..()

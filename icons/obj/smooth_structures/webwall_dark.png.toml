@@ -1,0 +1,2 @@
+output_name = "webwall_dark"
+template = "bitmask/diagonal_32x32.toml"

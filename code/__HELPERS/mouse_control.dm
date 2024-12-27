@@ -1,18 +1,22 @@
-/proc/mouse_angle_from_client(client/client)
-	var/list/modifiers = params2list(client.mouseParams)
-	if(LAZYACCESS(modifiers, SCREEN_LOC) && client)
-		var/list/screen_loc_params = splittext(LAZYACCESS(modifiers, SCREEN_LOC), ",")
-		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
-		var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
-		var/x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
-		var/y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
-		var/list/screenview = getviewsize(client.view)
-		var/screenviewX = screenview[1] * world.icon_size
-		var/screenviewY = screenview[2] * world.icon_size
-		var/ox = round(screenviewX/2) - client.pixel_x //"origin" x
-		var/oy = round(screenviewY/2) - client.pixel_y //"origin" y
-		var/angle = SIMPLIFY_DEGREES(ATAN2(y - oy, x - ox))
-		return angle
+///Returns an angle in degrees relative to the position of the mouse and that of the client eye.
+/proc/mouse_angle_from_client(client/client, params)
+	if(!client)
+		return
+	var/list/modifiers = params2list(params)
+	if(!LAZYACCESS(modifiers, SCREEN_LOC))
+		return
+	var/list/screen_loc_params = splittext(LAZYACCESS(modifiers, SCREEN_LOC), ",")
+	var/list/screen_loc_X = splittext(screen_loc_params[1],":")
+	var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
+	var/x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
+	var/y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
+	var/list/screenview = getviewsize(client.view)
+	var/screenviewX = screenview[1] * ICON_SIZE_X
+	var/screenviewY = screenview[2] * ICON_SIZE_Y
+	var/ox = round(screenviewX/2) - client.pixel_x //"origin" x
+	var/oy = round(screenviewY/2) - client.pixel_y //"origin" y
+	var/angle = SIMPLIFY_DEGREES(ATAN2(y - oy, x - ox))
+	return angle
 
 //Wow, specific name!
 /proc/mouse_absolute_datum_map_position_from_client(client/client)

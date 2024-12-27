@@ -1,0 +1,205 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_blue/corner,
+/obj/machinery/light/small/broken/directional/west,
+/turf/open/floor/iron/smooth_half{
+	dir = 1
+	},
+/area/template_noop)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_half{
+	dir = 1
+	},
+/area/template_noop)
+"k" = (
+/obj/effect/mob_spawn/corpse/human/generic_assistant,
+/obj/item/clothing/neck/stethoscope{
+	pixel_y = 13;
+	pixel_x = 4
+	},
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_blue/corner,
+/turf/open/floor/iron/smooth_corner{
+	dir = 4
+	},
+/area/template_noop)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/dark_blue/corner,
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_half,
+/area/template_noop)
+"r" = (
+/obj/item/book{
+	desc = "An undeniably handy book.";
+	icon_state = "bookknock";
+	name = "\improper A Simpleton's Guide to Safe-cracking with Stethoscopes";
+	pixel_x = -13;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_blue/warning,
+/turf/open/floor/iron/smooth_half,
+/area/template_noop)
+"t" = (
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
+/area/template_noop)
+"y" = (
+/obj/structure/safe,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 8
+	},
+/obj/item/ammo_box/a357,
+/obj/item/gun/ballistic/revolver/golden,
+/turf/open/floor/iron/smooth_corner{
+	dir = 8
+	},
+/area/template_noop)
+"z" = (
+/obj/structure/closet/crate/preopen,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold{
+	pixel_y = 2;
+	pixel_x = 7
+	},
+/obj/item/coin/gold/doubloon{
+	pixel_x = -8
+	},
+/obj/item/stack/ore/gold,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/trimline/dark_blue/corner,
+/turf/open/floor/iron/smooth_corner,
+/area/template_noop)
+"J" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_blue/corner,
+/obj/effect/turf_decal/trimline/white,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"Q" = (
+/turf/closed/wall/r_wall,
+/area/template_noop)
+"U" = (
+/obj/effect/spawner/random/structure/barricade,
+/obj/structure/door_assembly/door_assembly_vault,
+/turf/open/floor/iron/smooth_large,
+/area/template_noop)
+"Z" = (
+/obj/effect/decal/cleanable/generic,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_blue/corner{
+	dir = 8
+	},
+/obj/machinery/light/small/red/dim/directional/south,
+/turf/open/floor/iron/smooth_corner{
+	dir = 1
+	},
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+J
+"}
+(2,1,1) = {"
+a
+Q
+t
+Q
+Q
+Q
+a
+"}
+(3,1,1) = {"
+a
+Q
+z
+d
+k
+Q
+a
+"}
+(4,1,1) = {"
+a
+Q
+o
+M
+r
+U
+a
+"}
+(5,1,1) = {"
+a
+Q
+y
+e
+Z
+Q
+a
+"}
+(6,1,1) = {"
+a
+Q
+Q
+Q
+t
+Q
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}

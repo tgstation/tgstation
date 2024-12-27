@@ -104,6 +104,7 @@ GLOBAL_LIST_INIT(radiochannels, list(
 	RADIO_CHANNEL_SUPPLY = FREQ_SUPPLY,
 	RADIO_CHANNEL_SERVICE = FREQ_SERVICE,
 	RADIO_CHANNEL_AI_PRIVATE = FREQ_AI_PRIVATE,
+	RADIO_CHANNEL_ENTERTAINMENT = FREQ_ENTERTAINMENT,
 	RADIO_CHANNEL_CTF_RED = FREQ_CTF_RED,
 	RADIO_CHANNEL_CTF_BLUE = FREQ_CTF_BLUE,
 	RADIO_CHANNEL_CTF_GREEN = FREQ_CTF_GREEN,
@@ -123,13 +124,34 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	"[FREQ_SUPPLY]" = RADIO_CHANNEL_SUPPLY,
 	"[FREQ_SERVICE]" = RADIO_CHANNEL_SERVICE,
 	"[FREQ_AI_PRIVATE]" = RADIO_CHANNEL_AI_PRIVATE,
+	"[FREQ_ENTERTAINMENT]" = RADIO_CHANNEL_ENTERTAINMENT,
 	"[FREQ_CTF_RED]" = RADIO_CHANNEL_CTF_RED,
 	"[FREQ_CTF_BLUE]" = RADIO_CHANNEL_CTF_BLUE,
 	"[FREQ_CTF_GREEN]" = RADIO_CHANNEL_CTF_GREEN,
 	"[FREQ_CTF_YELLOW]" = RADIO_CHANNEL_CTF_YELLOW
 ))
 
+GLOBAL_LIST_INIT(radiocolors, list(
+	RADIO_CHANNEL_COMMON = "#008000",
+	RADIO_CHANNEL_SCIENCE = "#993399",
+	RADIO_CHANNEL_COMMAND = "#948f02",
+	RADIO_CHANNEL_MEDICAL = "#337296",
+	RADIO_CHANNEL_ENGINEERING = "#fb5613",
+	RADIO_CHANNEL_SECURITY = "#a30000",
+	RADIO_CHANNEL_CENTCOM = "#686868",
+	RADIO_CHANNEL_SYNDICATE = "#6d3f40",
+	RADIO_CHANNEL_SUPPLY = "#a8732b",
+	RADIO_CHANNEL_SERVICE = "#6eaa2c",
+	RADIO_CHANNEL_AI_PRIVATE = "#ff00ff",
+	RADIO_CHANNEL_ENTERTAINMENT = "#00ff99",
+	RADIO_CHANNEL_CTF_RED = "#ff0000",
+	RADIO_CHANNEL_CTF_BLUE = "#0000ff",
+	RADIO_CHANNEL_CTF_GREEN = "#00ff00",
+	RADIO_CHANNEL_CTF_YELLOW = "#d1ba22",
+))
+
 /datum/radio_frequency
+	/// The frequency of this radio frequency. Of course.
 	var/frequency
 	/// List of filters -> list of devices
 	var/list/list/datum/weakref/devices = list()
@@ -178,6 +200,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 			device.receive_signal(signal)
 			CHECK_TICK
 
+/// Handles adding a listener to the radio frequency.
 /datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
 	if (!filter)
 		filter = "_default"
@@ -190,6 +213,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 		devices[filter] = devices_line = list()
 	devices_line += new_listener
 
+/// Handles removing a listener from this radio frequency.
 /datum/radio_frequency/proc/remove_listener(obj/device)
 	for(var/devices_filter in devices)
 		var/list/devices_line = devices[devices_filter]
@@ -199,15 +223,27 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 		if(!devices_line.len)
 			devices -= devices_filter
 
+/**
+ * Proc for reacting to a received `/datum/signal`. To be implemented as needed,
+ * does nothing by default.
+ */
 /obj/proc/receive_signal(datum/signal/signal)
 	set waitfor = FALSE
 	return
 
 /datum/signal
+	/// The source of this signal.
 	var/obj/source
+	/// The frequency on which this signal was emitted.
 	var/frequency = 0
+	/// The method through which this signal was transmitted.
+	/// See all of the `TRANSMISSION_X` in `code/__DEFINES/radio.dm` for
+	/// all of the possible options.
 	var/transmission_method
+	/// The data carried through this signal. Defaults to `null`, otherwise it's
+	/// an associative list of (string, any).
 	var/list/data
+	/// Logging data, used for logging purposes. Makes sense, right?
 	var/logging_data
 
 /datum/signal/New(data, transmission_method = TRANSMISSION_RADIO, logging_data = null)

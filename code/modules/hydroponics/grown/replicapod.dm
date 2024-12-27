@@ -1,8 +1,8 @@
-// A very special plant, deserving it's own file.
+// A very special plant, deserving its own file.
 
 // Yes, i'm talking about cabbage, baby! No, just kidding, but cabbages are the precursor to replica pods, so they are here as well.
 /obj/item/seeds/cabbage
-	name = "pack of cabbage seeds"
+	name = "cabbage seed pack"
 	desc = "These seeds grow into cabbages."
 	icon_state = "seed-cabbage"
 	species = "cabbage"
@@ -31,13 +31,13 @@
 
 ///The actual replica pods themselves!
 /obj/item/seeds/replicapod
-	name = "pack of replica pod seeds"
+	name = "replica pod seed pack"
 	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
 	icon_state = "seed-replicapod"
 	plant_icon_offset = 2
 	species = "replicapod"
 	plantname = "Replica Pod"
-	product = /mob/living/carbon/human //verrry special -- Urist
+	product = null // the human mob is spawned in harvest()
 	lifespan = 50
 	endurance = 8
 	maturation = 10
@@ -197,7 +197,7 @@
 	if(!features["mcolor"])
 		features["mcolor"] = "#59CE00"
 	if(!features["pod_hair"])
-		features["pod_hair"] = pick(GLOB.pod_hair_list)
+		features["pod_hair"] = pick(SSaccessories.pod_hair_list)
 
 	for(var/V in quirks)
 		new V(podman)

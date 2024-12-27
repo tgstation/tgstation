@@ -39,13 +39,15 @@ Possible to do for anyone motivated enough:
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "holopad0"
 	base_icon_state = "holopad"
-	layer = LOW_OBJ_LAYER
 	/// The plane is set such that it shows up without being covered by pipes/wires in a map editor, we change this on initialize.
-	plane = GAME_PLANE
+	layer = MAP_SWITCH(ABOVE_OPEN_TURF_LAYER, LOW_OBJ_LAYER)
+	plane = MAP_SWITCH(FLOOR_PLANE, GAME_PLANE)
 	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_holopad
 	circuit = /obj/item/circuitboard/machine/holopad
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
+	interaction_flags_click = ALLOW_SILICON_REACH
 	// Blue, dim light
 	light_power = 0.8
 	light_color = LIGHT_COLOR_BLUE
@@ -99,9 +101,6 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/Initialize(mapload)
 	. = ..()
-	/// We set the plane on mapload such that we can see the holopad render over atmospherics pipe and cabling in a map editor (without initialization), but so it gets that "inset" look in the floor in-game.
-	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
-	update_appearance()
 
 	var/static/list/hovering_mob_typechecks = list(
 		/mob/living/silicon = list(
@@ -109,6 +108,9 @@ Possible to do for anyone motivated enough:
 		)
 	)
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
+
+	if(on_network)
+		holopads += src
 
 /obj/machinery/holopad/secure
 	name = "secure holopad"
@@ -123,7 +125,6 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/tutorial
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags_1 = NODECONSTRUCT_1
 	on_network = FALSE
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
@@ -138,6 +139,12 @@ Possible to do for anyone motivated enough:
 		if(new_disk && !disk)
 			new_disk.forceMove(src)
 			disk = new_disk
+
+/obj/machinery/holopad/tutorial/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+	return NONE
+
+/obj/machinery/holopad/tutorial/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
+	return NONE
 
 /obj/machinery/holopad/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -161,7 +168,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/tutorial/attack_hand(mob/user, list/modifiers)
 	if(!istype(user))
 		return
-	if(user.incapacitated() || !is_operational)
+	if(user.incapacitated || !is_operational)
 		return
 	if(replay_mode)
 		replay_stop()
@@ -173,11 +180,6 @@ Possible to do for anyone motivated enough:
 		return
 	if(!replay_mode && (disk?.record))
 		replay_start()
-
-/obj/machinery/holopad/Initialize(mapload)
-	. = ..()
-	if(on_network)
-		holopads += src
 
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
@@ -231,7 +233,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/holopad/set_anchored(anchorvalue)
 	. = ..()
@@ -271,7 +273,7 @@ Possible to do for anyone motivated enough:
 
 	return ..()
 
-/obj/machinery/holopad/ui_status(mob/user)
+/obj/machinery/holopad/ui_status(mob/user, datum/ui_state/state)
 	if(!is_operational)
 		return UI_CLOSE
 	if(outgoing_call && !calling)
@@ -299,14 +301,14 @@ Possible to do for anyone motivated enough:
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		var/list/call_data = list(
-			caller = HC.user,
-			connected = HC.connected_holopad == src ? TRUE : FALSE,
-			ref = REF(HC)
+			"caller" = HC.user,
+			"connected" = HC.connected_holopad == src ? TRUE : FALSE,
+			"ref" = REF(HC)
 		)
 		data["holo_calls"] += list(call_data)
 	return data
 
-/obj/machinery/holopad/ui_act(action, list/params)
+/obj/machinery/holopad/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -325,7 +327,7 @@ Possible to do for anyone motivated enough:
 				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
 					if(!AI.client)
 						continue
-					to_chat(AI, span_info("Your presence is requested at <a href='?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
+					to_chat(AI, span_info("Your presence is requested at <a href='byond://?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='byond://?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
 				return TRUE
 			else
 				to_chat(usr, span_info("A request for AI presence was already sent recently."))
@@ -520,7 +522,7 @@ Possible to do for anyone motivated enough:
 		if(outgoing_call)
 			holocall.Disconnect(src)//can't answer calls while calling
 		else
-			playsound(src, 'sound/machines/twobeep.ogg', 100) //bring, bring!
+			playsound(src, 'sound/machines/beep/twobeep.ogg', 100) //bring, bring!
 			are_ringing = TRUE
 
 	if(ringing != are_ringing)
@@ -578,7 +580,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			if(speaker == holocall_to_update.hologram && holocall_to_update.user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 				holocall_to_update.user.create_chat_message(speaker, message_language, raw_message, spans)
 			else
-				holocall_to_update.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods, message_range)
+				holocall_to_update.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods, message_range = INFINITY)
 
 	if(outgoing_call?.hologram && speaker == outgoing_call.user)
 		outgoing_call.hologram.say(raw_message, sanitize = FALSE)
@@ -589,7 +591,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/proc/SetLightsAndPower()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	update_use_power(total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE)
-	update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage + HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users))
+	update_mode_power_usage(ACTIVE_POWER_USE, initial(active_power_usage) + HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users))
 	if(total_users || replay_mode)
 		set_light(2)
 	else
@@ -673,7 +675,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(!isliving(owner))
 		return TRUE
 	var/mob/living/user = owner
-	if(user.incapacitated() || !user.client)
+	if(user.incapacitated || !user.client)
 		return FALSE
 	return TRUE
 
@@ -689,16 +691,16 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(!LAZYLEN(masters) || !masters[owner])
 		return TRUE
 	var/obj/effect/overlay/holo_pad_hologram/holo = masters[owner]
-	var/transfered = FALSE
+	var/transferred = FALSE
 	if(!validate_location(new_turf))
 		if(!transfer_to_nearby_pad(new_turf, owner))
 			return FALSE
 		else
-			transfered = TRUE
+			transferred = TRUE
 	//All is good.
 	holo.abstract_move(new_turf)
 	SET_PLANE(holo, ABOVE_GAME_PLANE, new_turf)
-	if(!transfered)
+	if(!transferred)
 		update_holoray(owner, new_turf)
 	return TRUE
 

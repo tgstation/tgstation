@@ -3,7 +3,6 @@
 	icon_state = "nothing"
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	///time, in deciseconds, that this object will exist
 	var/duration = 10
@@ -26,7 +25,7 @@
 /obj/effect/temp_visual/singularity_act()
 	return
 
-/obj/effect/temp_visual/singularity_pull()
+/obj/effect/temp_visual/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/temp_visual/dir_setting

@@ -9,7 +9,7 @@
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speak_emote = list("baas","bleats")
 	speed = 1.1
-	butcher_results = list(/obj/item/food/meat/slab = 3)
+	butcher_results = list(/obj/item/food/meat/slab/grassfed = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -18,7 +18,7 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_KICK
 	health = 50
 	maxHealth = 50
@@ -40,7 +40,7 @@
 		item_generation_wait = 3 MINUTES, \
 		item_reduction_time = 30 SECONDS, \
 		item_harvest_time = 5 SECONDS, \
-		item_harvest_sound = 'sound/surgery/scalpel1.ogg', \
+		item_harvest_sound = 'sound/items/handling/surgery/scalpel1.ogg', \
 	)
 	AddElement(/datum/element/ai_retaliate)
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_sacrificed))
@@ -58,11 +58,11 @@
 
 	if(cult_converted)
 		for(var/mob/living/cultist as anything in invokers)
-			to_chat(cultist, span_cultitalic("[src] has already been sacrificed!"))
-		return STOP_SACRIFICE
+			to_chat(cultist, span_cult_italic("[src] has already been sacrificed!"))
+		return STOP_SACRIFICE|SILENCE_SACRIFICE_MESSAGE
 
 	for(var/mob/living/cultist as anything in invokers)
-		to_chat(cultist, span_cultitalic("This feels a bit too cliché, don't you think?"))
+		to_chat(cultist, span_cult_italic("This feels a bit too cliché, don't you think?"))
 
 	cult_converted = TRUE
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "BAAAAAAAAH!")
@@ -81,8 +81,7 @@
 
 /datum/ai_controller/basic_controller/sheep
 	blackboard = list(
-		BB_BASIC_MOB_FLEEING = TRUE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance

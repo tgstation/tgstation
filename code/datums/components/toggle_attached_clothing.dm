@@ -78,13 +78,15 @@
 	if (!destroy_on_removal)
 		create_deployable()
 
-/datum/component/toggle_attached_clothing/Destroy(force, silent)
+/datum/component/toggle_attached_clothing/Destroy(force)
 	unequip_deployable()
 	QDEL_NULL(deployable)
 	QDEL_NULL(toggle_action)
-	QDEL_NULL(on_created)
-	QDEL_NULL(on_deployed)
-	QDEL_NULL(on_removed)
+	undeployed_overlay = null
+	pre_creation_check = null
+	on_created = null
+	on_deployed = null
+	on_removed = null
 	return ..()
 
 /// Toggle deployable when the UI button is clicked
@@ -196,9 +198,9 @@
 	on_removed?.Invoke(deployable)
 
 	var/obj/item/parent_gear = parent
-	if (destroy_on_removal)
+	if(destroy_on_removal)
 		QDEL_NULL(deployable)
-	else if (parent_icon_state_suffix)
+	if(parent_icon_state_suffix)
 		parent_gear.icon_state = "[initial(parent_gear.icon_state)]"
 		parent_gear.worn_icon_state = parent_gear.icon_state
 	parent_gear.update_slot_icon()

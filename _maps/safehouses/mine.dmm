@@ -1,0 +1,168 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 1
+	},
+/area/virtual_domain/safehouse)
+"f" = (
+/turf/closed/wall,
+/area/virtual_domain/safehouse)
+"p" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 5
+	},
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/safehouse)
+"t" = (
+/obj/modular_map_connector,
+/turf/closed/wall,
+/area/virtual_domain/safehouse)
+"w" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"B" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 10
+	},
+/obj/structure/table,
+/obj/item/flashlight/lantern{
+	pixel_x = 8;
+	pixel_y = null
+	},
+/obj/item/flashlight/lantern{
+	pixel_y = 4
+	},
+/obj/item/flashlight/lantern{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/safehouse)
+"C" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/structure/railing,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"H" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all,
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/safehouse)
+"K" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_edge,
+/area/virtual_domain/safehouse)
+"P" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"S" = (
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/safehouse)
+"T" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 6
+	},
+/obj/item/kirbyplants/random,
+/obj/structure/sign/departments/cargo/directional/south,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/safehouse)
+"X" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/machinery/suit_storage_unit/mining,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/virtual_domain/safehouse)
+"Y" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/machinery/suit_storage_unit/mining,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/virtual_domain/safehouse)
+"Z" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 9
+	},
+/obj/machinery/suit_storage_unit/mining,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/safehouse)
+
+(1,1,1) = {"
+f
+f
+f
+P
+P
+t
+"}
+(2,1,1) = {"
+P
+Z
+Y
+X
+B
+f
+"}
+(3,1,1) = {"
+f
+K
+S
+S
+a
+P
+"}
+(4,1,1) = {"
+H
+K
+S
+S
+a
+P
+"}
+(5,1,1) = {"
+f
+K
+S
+S
+a
+P
+"}
+(6,1,1) = {"
+P
+p
+w
+C
+T
+f
+"}
+(7,1,1) = {"
+f
+f
+f
+P
+P
+f
+"}

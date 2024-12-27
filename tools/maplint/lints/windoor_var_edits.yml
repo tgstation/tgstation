@@ -1,0 +1,6 @@
+help: "Use the directional variants when possible."
+/obj/machinery/door/window:
+  banned_variables:
+    dir:
+      deny: [1, 2, 4, 8]
+    icon_state:

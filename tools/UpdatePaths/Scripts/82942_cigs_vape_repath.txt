@@ -1,0 +1,2 @@
+/obj/item/clothing/mask/cigarette/@SUBTYPES : /obj/item/cigarette/@SUBTYPES{@OLD}
+/obj/item/clothing/mask/vape/@SUBTYPES : /obj/item/vape/@SUBTYPES{@OLD}

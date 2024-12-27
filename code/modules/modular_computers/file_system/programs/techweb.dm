@@ -1,15 +1,15 @@
 /datum/computer_file/program/science
 	filename = "experi_track"
 	filedesc = "Nanotrasen Science Hub"
-	category = PROGRAM_CATEGORY_SCI
-	program_icon_state = "research"
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
+	program_open_overlay = "research"
 	extended_desc = "Connect to the internal science server in order to assist in station research efforts."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 10
 	tgui_id = "NtosTechweb"
 	program_icon = "atom"
-	required_access = list(ACCESS_COMMAND, ACCESS_RESEARCH)
-	transfer_access = list(ACCESS_RESEARCH)
+	run_access = list(ACCESS_COMMAND, ACCESS_RESEARCH)
+	download_access = list(ACCESS_RESEARCH)
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
 	/// Access needed to lock/unlock the console
@@ -21,18 +21,21 @@
 	/// Sequence var for the id cache
 	var/id_cache_seq = 1
 
-/datum/computer_file/program/science/on_start(mob/living/user)
+/datum/computer_file/program/science/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		stored_research = SSresearch.science_tech
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, computer)
 
-/datum/computer_file/program/science/application_attackby(obj/item/attacking_item, mob/living/user)
-	if(!istype(attacking_item, /obj/item/multitool))
-		return FALSE
-	var/obj/item/multitool/attacking_tool = attacking_item
-	if(!QDELETED(attacking_tool.buffer) && istype(attacking_tool.buffer, /datum/techweb))
-		stored_research = attacking_tool.buffer
-	return TRUE
+/datum/computer_file/program/science/application_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/multitool))
+		return multitool_act(user, tool)
+
+/datum/computer_file/program/science/proc/multitool_act(mob/living/user, obj/item/multitool/used_multitool)
+	if(QDELETED(used_multitool.buffer) || !istype(used_multitool.buffer, /datum/techweb))
+		return ITEM_INTERACT_BLOCKING
+	stored_research = used_multitool.buffer
+	computer.balloon_alert(user, "buffer linked!")
+	return ITEM_INTERACT_SUCCESS
 
 /datum/computer_file/program/science/ui_assets(mob/user)
 	return list(
@@ -47,6 +50,7 @@
 		return data
 	data += list(
 		"nodes" = list(),
+		"queue_nodes" = stored_research.research_queue_nodes,
 		"experiments" = list(),
 		"researched_designs" = stored_research.researched_designs,
 		"points" = stored_research.research_points,
@@ -61,6 +65,10 @@
 	// Serialize all nodes to display
 	for(var/tier in stored_research.tiers)
 		var/datum/techweb_node/node = SSresearch.techweb_node_by_id(tier)
+		var/enqueued_by_user = FALSE
+
+		if((tier in stored_research.research_queue_nodes) && stored_research.research_queue_nodes[tier] == user)
+			enqueued_by_user = TRUE
 
 		// Ensure node is supposed to be visible
 		if (stored_research.hidden_nodes[tier])
@@ -68,8 +76,11 @@
 
 		data["nodes"] += list(list(
 			"id" = node.id,
+			"is_free" = node.is_free(stored_research),
 			"can_unlock" = stored_research.can_unlock_node(node),
-			"tier" = stored_research.tiers[node.id]
+			"have_experiments_done" = stored_research.have_experiments_for_node(node),
+			"tier" = stored_research.tiers[node.id],
+			"enqueued_by_user" = enqueued_by_user
 		))
 
 	// Get experiments and serialize them
@@ -88,7 +99,8 @@
 		)
 	return data
 
-/datum/computer_file/program/science/ui_act(action, list/params)
+/datum/computer_file/program/science/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	// Check if the console is locked to block any actions occuring
 	if (locked && action != "toggleLock")
 		computer.say("Console is locked, cannot perform further actions.")
@@ -107,10 +119,17 @@
 		if ("researchNode")
 			research_node(params["node_id"], usr)
 			return TRUE
+		if ("enqueueNode")
+			enqueue_node(params["node_id"], usr)
+			return TRUE
+		if ("dequeueNode")
+			dequeue_node(params["node_id"], usr)
+			return TRUE
 
 /datum/computer_file/program/science/ui_static_data(mob/user)
 	. = list(
-		"static_data" = list()
+		"static_data" = list(),
+		"point_types_abbreviations" = SSresearch.point_types,
 	)
 
 	// Build node cache...
@@ -183,6 +202,20 @@
 		id_cache_seq += 1
 	return id_cache[id]
 
+/datum/computer_file/program/science/proc/enqueue_node(id, mob/user)
+	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
+		computer.say("Node enqueue failed: Either no techweb is found, node is already researched or is not available!")
+		return FALSE
+	stored_research.enqueue_node(id, user)
+	return TRUE
+
+/datum/computer_file/program/science/proc/dequeue_node(id, mob/user)
+	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
+		computer.say("Node dequeue failed: Either no techweb is found, node is already researched or is not available!")
+		return FALSE
+	stored_research.dequeue_node(id, user)
+	return TRUE
+
 /datum/computer_file/program/science/proc/research_node(id, mob/user)
 	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
 		computer.say("Node unlock failed: Either no techweb is found, node is already researched or is not available!")
@@ -194,12 +227,12 @@
 	var/list/price = tech_node.get_price(stored_research)
 	if(stored_research.can_afford(price))
 		user.investigate_log("researched [id]([json_encode(price)]) on techweb id [stored_research.id] via [computer].", INVESTIGATE_RESEARCH)
-		if(stored_research == SSresearch.science_tech)
-			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = tech_node.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
+		if(istype(stored_research, /datum/techweb/science))
+			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = tech_node.display_name, "price" = "[json_encode(price)]", "time" = ISOtime()))
 		if(stored_research.research_node_id(id))
 			computer.say("Successfully researched [tech_node.display_name].")
 			var/logname = "Unknown"
-			if(isAI(user))
+			if(HAS_AI_ACCESS(user))
 				logname = "AI [user.name]"
 			if(iscyborg(user))
 				logname = "CYBORG [user.name]"
@@ -216,7 +249,7 @@
 						logname = "[id_card_of_human_user.registered_name]"
 			stored_research.research_logs += list(list(
 				"node_name" = tech_node.display_name,
-				"node_cost" = price["General Research"],
+				"node_cost" = price[TECHWEB_POINT_TYPE_GENERIC],
 				"node_researcher" = logname,
 				"node_research_location" = "[get_area(computer)] ([user.x],[user.y],[user.z])",
 			))

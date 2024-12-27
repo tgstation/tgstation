@@ -13,8 +13,9 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	gold_core_spawnable = HOSTILE_SPAWN
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
+	melee_attack_cooldown = 1 SECONDS
 	faction = list(FACTION_NETHER)
 	speak_emote = list("screams")
 	death_message = "gets his head split open."
@@ -26,20 +27,21 @@
 	lighting_cutoff_green = 25
 	lighting_cutoff_blue = 15
 
-	ai_controller = /datum/ai_controller/basic_controller/creature
+	ai_controller = /datum/ai_controller/basic_controller/simple_hostile_obstacles
+	var/health_scaling = TRUE
 
 /mob/living/basic/creature/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
-	AddComponent(
-		/datum/component/health_scaling_effects,\
-		min_health_attack_modifier_lower = 15,\
-		min_health_attack_modifier_upper = 30,\
-		min_health_slowdown = -1.5,\
-	)
+	if(health_scaling)
+		AddComponent(
+			/datum/component/health_scaling_effects,\
+			min_health_attack_modifier_lower = 15,\
+			min_health_attack_modifier_upper = 30,\
+			min_health_slowdown = -1.5,\
+		)
 
-	var/datum/action/cooldown/spell/jaunt/creature_teleport/teleport = new(src)
-	teleport.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/creature_teleport)
 
 /mob/living/basic/creature/proc/can_be_seen(turf/location)
 	// Check for darkness
@@ -55,7 +57,7 @@
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
 		for(var/mob/living/mob_target in oview(src, 7)) // They probably cannot see us if we cannot see them... can they?
-			if(mob_target.client && !mob_target.is_blind() && !mob_target.has_unlimited_silicon_privilege)
+			if(mob_target.client && !mob_target.is_blind() && !HAS_TRAIT(mob_target, TRAIT_UNOBSERVANT))
 				return mob_target
 		for(var/obj/vehicle/sealed/mecha/mecha_mob_target in oview(src, 7))
 			for(var/mob/mechamob_target as anything in mecha_mob_target.occupants)
@@ -79,7 +81,7 @@
 	. = ..()
 	if (!owner)
 		return
-	observed_blocker = owner.AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_ACTIONS)
+	observed_blocker = owner.AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_ACTIONS, affected_actions = list(type))
 
 /datum/action/cooldown/spell/jaunt/creature_teleport/Remove(mob/living/remove_from)
 	QDEL_NULL(observed_blocker)
@@ -101,15 +103,13 @@
 		return
 	enter_jaunt(cast_on)
 
-/datum/ai_controller/basic_controller/creature
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-	)
+/mob/living/basic/creature/tiggles
+	name = "Miss Tiggles"
+	gold_core_spawnable = NO_SPAWN
 
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/average_speed,
-	)
+/mob/living/basic/creature/hatchling
+	name = "hatchling"
+	health = 25
+	maxHealth = 25
+	health_scaling = FALSE
+	initial_size = 0.85

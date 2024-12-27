@@ -17,7 +17,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/mob/living/basic/mining/hivelord,
 /turf/open/floor/mineral/titanium/white/airless,
 /area/ruin/space/has_grav)
 "p" = (
@@ -32,7 +32,7 @@
 /area/ruin/space/has_grav)
 "D" = (
 /obj/structure/chair/comfy/shuttle,
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/mob/living/basic/mining/hivelord,
 /turf/open/floor/mineral/titanium/white/airless,
 /area/ruin/space/has_grav)
 "E" = (
@@ -57,7 +57,7 @@
 /turf/open/floor/mineral/titanium/white/airless,
 /area/ruin/space/has_grav)
 "S" = (
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/mob/living/basic/mining/hivelord,
 /turf/open/floor/mineral/titanium/white/airless,
 /area/ruin/space/has_grav)
 "T" = (

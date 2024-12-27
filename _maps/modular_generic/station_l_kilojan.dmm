@@ -1,0 +1,644 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage";
+	name = "trash belt"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/template_noop)
+"d" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/template_noop)
+"f" = (
+/obj/structure/closet/l3closet/janitor,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+"h" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/closet/crate/trashcart/filled,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+"i" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Custodial Closet"
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"j" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/template_noop)
+"k" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/template_noop)
+"l" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage";
+	name = "trash belt"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"m" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/turf_decal/delivery,
+/obj/structure/mop_bucket/janitorialcart{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"n" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/closet/crate/trashcart/filled,
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/mineral/stacking_unit_console{
+	pixel_x = 64
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"o" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Custodial Closet"
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"p" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"r" = (
+/obj/structure/sink/directional/west,
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/loading_area,
+/obj/machinery/door/window/right/directional/south{
+	name = "Trash Chute";
+	req_access = list("janitor")
+	},
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/mop,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+"s" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/machinery/door/window/left/directional/south{
+	name = "Trash Chute";
+	req_access = list("janitor")
+	},
+/obj/machinery/conveyor_switch/oneway{
+	dir = 4;
+	id = "garbage";
+	name = "trash chute"
+	},
+/obj/effect/turf_decal/loading_area,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/template_noop)
+"t" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/broken_flooring/side/directional/south,
+/turf/open/floor/plating,
+/area/template_noop)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+"v" = (
+/turf/closed/wall/r_wall,
+/area/template_noop)
+"w" = (
+/obj/structure/broken_flooring/pile/directional/west,
+/turf/open/floor/plating,
+/area/template_noop)
+"x" = (
+/turf/closed/wall,
+/area/template_noop)
+"y" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/structure/broken_flooring/side/directional/south,
+/obj/structure/closet/crate/trashcart/filled,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/template_noop)
+"z" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage";
+	name = "trash belt"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/recycler{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"A" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+"B" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/disposal/delivery_chute{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/east,
+/obj/structure/sign/warning/deathsposal/directional/east,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"C" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/template_noop)
+"D" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"E" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage";
+	name = "trash belt"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"F" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"G" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/template_noop)
+"H" = (
+/obj/machinery/mineral/stacking_machine{
+	input_dir = 2
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"I" = (
+/turf/closed/wall/rust,
+/area/template_noop)
+"J" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/sign/poster/random/directional/south,
+/obj/structure/closet/crate/trashcart/filled,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/singular,
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/plating,
+/area/template_noop)
+"L" = (
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/west,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"M" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage";
+	name = "trash belt"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"N" = (
+/obj/machinery/vending/wardrobe/jani_wardrobe,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"O" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/reagent_containers/cup/bucket,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"Q" = (
+/obj/structure/table,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/flashlight{
+	pixel_y = 4
+	},
+/obj/item/flashlight{
+	pixel_y = 4
+	},
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/north{
+	id = "custodialwagon";
+	name = "Custodial Bay Toggle";
+	pixel_x = 8;
+	req_access = list("janitor")
+	},
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/spawner/random/clothing/gloves,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"R" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+"S" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"T" = (
+/obj/vehicle/ridden/janicart{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"U" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/plating,
+/area/template_noop)
+"V" = (
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+"W" = (
+/obj/structure/table,
+/obj/item/storage/box/lights/mixed{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/storage/box/lights/mixed{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"X" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "custodialwagon"
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"Y" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/template_noop)
+"Z" = (
+/obj/structure/table,
+/obj/item/toy/figure/janitor{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/storage/box/mousetraps{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/box/mousetraps{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/restraints/legcuffs/beartrap{
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+D
+"}
+(2,1,1) = {"
+a
+v
+v
+v
+v
+v
+v
+v
+v
+v
+a
+"}
+(3,1,1) = {"
+a
+v
+Z
+u
+W
+N
+f
+p
+L
+v
+a
+"}
+(4,1,1) = {"
+a
+i
+u
+A
+g
+F
+C
+s
+E
+v
+a
+"}
+(5,1,1) = {"
+a
+v
+Q
+c
+e
+Y
+G
+r
+b
+v
+a
+"}
+(6,1,1) = {"
+a
+X
+T
+w
+k
+j
+J
+x
+z
+v
+a
+"}
+(7,1,1) = {"
+a
+X
+S
+U
+U
+K
+h
+x
+l
+v
+a
+"}
+(8,1,1) = {"
+a
+X
+m
+d
+t
+y
+n
+H
+M
+v
+a
+"}
+(9,1,1) = {"
+a
+v
+O
+e
+R
+u
+V
+I
+B
+v
+a
+"}
+(10,1,1) = {"
+a
+v
+v
+o
+o
+v
+v
+v
+v
+v
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

@@ -1,6 +1,6 @@
 // Poppy
 /obj/item/seeds/poppy
-	name = "pack of poppy seeds"
+	name = "poppy seed pack"
 	desc = "These seeds grow into poppies."
 	icon_state = "seed-poppy"
 	species = "poppy"
@@ -23,35 +23,36 @@
 	seed = /obj/item/seeds/poppy
 	name = "poppy"
 	desc = "Long-used as a symbol of rest, peace, and death."
-	icon_state = "map_flower"
+	icon_state = "poppy"
 	slot_flags = ITEM_SLOT_HEAD
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
-	greyscale_config = /datum/greyscale_config/flower_simple
-	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
-	greyscale_colors = "#d23838"
 
 // Lily
 /obj/item/seeds/poppy/lily
-	name = "pack of lily seeds"
+	name = "lily seed pack"
 	desc = "These seeds grow into lilies."
 	icon_state = "seed-lily"
 	species = "lily"
 	plantname = "Lily Plants"
 	product = /obj/item/food/grown/poppy/lily
+	growthstages = 3
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
+	icon_grow = "lily-grow"
+	icon_dead = "lily-dead"
 	mutatelist = list(/obj/item/seeds/poppy/lily/trumpet)
 
 /obj/item/food/grown/poppy/lily
 	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
-	desc = "A beautiful orange flower."
-	greyscale_colors = "#fe881f"
+	desc = "A beautiful white flower."
+	icon_state = "lily"
 
 	//Spacemans's Trumpet
 /obj/item/seeds/poppy/lily/trumpet
-	name = "pack of spaceman's trumpet seeds"
+	name = "spaceman's trumpet seed pack"
 	desc = "A plant sculped by extensive genetic engineering. The spaceman's trumpet is said to bear no resemblance to its wild ancestors. Inside NT AgriSci circles it is better known as NTPW-0372."
 	icon_state = "seed-trumpet"
 	species = "spacemanstrumpet"
@@ -85,23 +86,27 @@
 
 // Geranium
 /obj/item/seeds/poppy/geranium
-	name = "pack of geranium seeds"
+	name = "geranium seed pack"
 	desc = "These seeds grow into geranium."
 	icon_state = "seed-geranium"
 	species = "geranium"
 	plantname = "Geranium Plants"
 	product = /obj/item/food/grown/poppy/geranium
+	growthstages = 3
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
+	icon_grow = "geranium-grow"
+	icon_dead = "geranium-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium/fraxinella)
 
 /obj/item/food/grown/poppy/geranium
 	seed = /obj/item/seeds/poppy/geranium
 	name = "geranium"
 	desc = "A beautiful blue flower."
-	greyscale_colors = "#1499bb"
+	icon_state = "geranium"
 
 ///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
-	name = "pack of fraxinella seeds"
+	name = "fraxinella seed pack"
 	desc = "These seeds grow into fraxinella."
 	icon_state = "seed-fraxinella"
 	species = "fraxinella"
@@ -125,7 +130,7 @@
 
 // Harebell
 /obj/item/seeds/harebell
-	name = "pack of harebell seeds"
+	name = "harebell seed pack"
 	desc = "These seeds grow into pretty little flowers."
 	icon_state = "seed-harebell"
 	plant_icon_offset = 1
@@ -157,7 +162,7 @@
 
 // Sunflower
 /obj/item/seeds/sunflower
-	name = "pack of sunflower seeds"
+	name = "sunflower seed pack"
 	desc = "These seeds grow into sunflowers."
 	icon_state = "seed-sunflower"
 	species = "sunflower"
@@ -173,7 +178,7 @@
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
-	reagents_add = list(/datum/reagent/consumable/cornoil = 0.08, /datum/reagent/consumable/nutriment = 0.04)
+	reagents_add = list(/datum/reagent/consumable/nutriment/fat/oil = 0.08, /datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/food/grown/sunflower // FLOWER POWER!
 	seed = /obj/item/seeds/sunflower
@@ -198,7 +203,7 @@
 
 // Moonflower
 /obj/item/seeds/sunflower/moonflower
-	name = "pack of moonflower seeds"
+	name = "moonflower seed pack"
 	desc = "These seeds grow into moonflowers."
 	icon_state = "seed-moonflower"
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
@@ -226,7 +231,7 @@
 
 // Novaflower
 /obj/item/seeds/sunflower/novaflower
-	name = "pack of novaflower seeds"
+	name = "novaflower seed pack"
 	desc = "These seeds grow into novaflowers."
 	icon_state = "seed-novaflower"
 	species = "novaflower"
@@ -237,7 +242,7 @@
 	genes = list(/datum/plant_gene/trait/backfire/novaflower_heat, /datum/plant_gene/trait/attack/novaflower_attack, /datum/plant_gene/trait/preserved)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0, /datum/reagent/toxin/acid = 0.05)
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 
 /obj/item/grown/novaflower
 	seed = /obj/item/seeds/sunflower/novaflower
@@ -261,7 +266,7 @@
 
 // Rose
 /obj/item/seeds/rose
-	name = "pack of rose seeds"
+	name = "rose seed pack"
 	desc = "These seeds grow into roses."
 	icon_state = "seed-rose"
 	species = "rose"
@@ -306,7 +311,7 @@
 
 // Carbon Rose
 /obj/item/seeds/carbon_rose
-	name = "pack of carbon rose seeds"
+	name = "carbon rose seed pack"
 	desc = "These seeds grow into carbon roses."
 	icon_state = "seed-carbonrose"
 	species = "carbonrose"

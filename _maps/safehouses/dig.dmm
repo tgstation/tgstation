@@ -1,0 +1,169 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/siding/yellow/corner,
+/obj/effect/turf_decal/sand/plating,
+/obj/item/flashlight/glowstick{
+	start_on = 1
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"c" = (
+/obj/effect/turf_decal/siding/yellow/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/virtual_domain/safehouse)
+"h" = (
+/obj/effect/turf_decal/loading_area,
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"i" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/obj/effect/decal/remains/xeno/larva,
+/turf/open/misc/asteroid,
+/area/virtual_domain/safehouse)
+"l" = (
+/obj/structure/table,
+/obj/item/coin/gold{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/flashlight/lantern{
+	pixel_y = 8;
+	pixel_x = 4;
+	start_on = 1
+	},
+/turf/open/misc/asteroid,
+/area/virtual_domain/safehouse)
+"o" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid,
+/area/virtual_domain/safehouse)
+"s" = (
+/obj/modular_map_connector,
+/turf/closed/mineral/asteroid,
+/area/virtual_domain/safehouse)
+"u" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/yellow,
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/misc/asteroid,
+/area/virtual_domain/safehouse)
+"x" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"A" = (
+/turf/closed/wall/rock,
+/area/virtual_domain/safehouse)
+"B" = (
+/turf/open/misc/asteroid,
+/area/virtual_domain/safehouse)
+"H" = (
+/turf/closed/mineral/asteroid,
+/area/virtual_domain/safehouse)
+"I" = (
+/obj/machinery/door/airlock/maintenance/glass,
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"M" = (
+/obj/effect/turf_decal/siding/yellow,
+/obj/effect/decal/remains/xeno,
+/turf/open/misc/asteroid,
+/area/virtual_domain/safehouse)
+"N" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"S" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/loading_area,
+/obj/effect/turf_decal/box/corners,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"T" = (
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/turf/open/misc/asteroid,
+/area/virtual_domain/safehouse)
+"U" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/virtual_domain/safehouse)
+
+(1,1,1) = {"
+H
+H
+A
+A
+H
+s
+"}
+(2,1,1) = {"
+A
+N
+x
+a
+H
+A
+"}
+(3,1,1) = {"
+A
+i
+U
+u
+h
+A
+"}
+(4,1,1) = {"
+I
+B
+B
+M
+S
+A
+"}
+(5,1,1) = {"
+A
+l
+B
+c
+o
+H
+"}
+(6,1,1) = {"
+A
+A
+T
+T
+T
+A
+"}
+(7,1,1) = {"
+H
+A
+H
+H
+A
+A
+"}

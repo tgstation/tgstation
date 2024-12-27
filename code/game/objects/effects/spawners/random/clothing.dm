@@ -172,6 +172,16 @@
 		/obj/item/storage/backpack/duffelbag/sec,
 		/obj/item/storage/backpack/duffelbag/engineering,
 		/obj/item/storage/backpack/duffelbag/clown,
+		/obj/item/storage/backpack/messenger,
+		/obj/item/storage/backpack/messenger/eng,
+		/obj/item/storage/backpack/messenger/med,
+		/obj/item/storage/backpack/messenger/vir,
+		/obj/item/storage/backpack/messenger/chem,
+		/obj/item/storage/backpack/messenger/gen,
+		/obj/item/storage/backpack/messenger/science,
+		/obj/item/storage/backpack/messenger/hyd,
+		/obj/item/storage/backpack/messenger/sec,
+		/obj/item/storage/backpack/messenger/explorer,
 	)
 
 /obj/effect/spawner/random/clothing/funny_hats
@@ -201,7 +211,7 @@
 		/obj/item/clothing/head/costume/lobsterhat,
 		/obj/item/clothing/head/costume/cardborg,
 		/obj/item/clothing/head/costume/football_helmet,
-		/obj/item/clothing/head/costume/tv_head/fov_less,
+		/obj/item/clothing/head/costume/tv_head,
 		/obj/item/clothing/head/costume/tmc,
 		/obj/item/clothing/head/costume/deckers,
 		/obj/item/clothing/head/costume/yuri,

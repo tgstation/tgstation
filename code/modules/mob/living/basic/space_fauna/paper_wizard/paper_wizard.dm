@@ -18,7 +18,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	obj_damage = 50
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/paper_wizard
 	///spell to summon minions
 	var/datum/action/cooldown/spell/conjure/wizard_summon_minions/summon
@@ -36,24 +36,19 @@
 	AddElement(/datum/element/effect_trail, /obj/effect/temp_visual/paper_scatter)
 
 /mob/living/basic/paper_wizard/proc/grant_abilities()
-	summon = new(src)
-	summon.Grant(src)
-	ai_controller.set_blackboard_key(BB_WIZARD_SUMMON_MINIONS, summon)
-	mimic = new(src)
-	mimic.Grant(src)
-	ai_controller.set_blackboard_key(BB_WIZARD_MIMICS, mimic)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/spell/conjure/wizard_summon_minions = BB_WIZARD_SUMMON_MINIONS,
+		/datum/action/cooldown/spell/pointed/wizard_mimic = BB_WIZARD_MIMICS,
+	)
+
+	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/paper_wizard/proc/grant_loot()
 	AddElement(/datum/element/death_drops, dropped_loot)
 
-/mob/living/basic/paper_wizard/Destroy()
-	QDEL_NULL(summon)
-	QDEL_NULL(mimic)
-	return ..()
-
 /datum/ai_controller/basic_controller/paper_wizard
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_WRITING_LIST = list(
 			"I can turn the paper into gold and ink into diamonds!",
 			"Your fate is written and sealed!",
@@ -110,8 +105,7 @@
 	faction = list(FACTION_STICKMAN)
 	melee_damage_lower = 1
 	melee_damage_upper = 5
-
-	ai_controller = /datum/ai_controller/basic_controller/wizard_copy
+	ai_controller = /datum/ai_controller/basic_controller/simple_hostile
 
 /mob/living/basic/paper_wizard/copy/Initialize(mapload)
 	. = ..()
@@ -141,18 +135,6 @@
 		new /obj/effect/temp_visual/small_smoke/halfsecond(get_turf(src))
 		qdel(src) //I see through your ruse!
 
-/datum/ai_controller/basic_controller/wizard_copy
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
 //fancy effects
 /obj/effect/temp_visual/paper_scatter
 	name = "scattering paper"
@@ -178,9 +160,9 @@
 
 /obj/effect/temp_visual/paperwiz_dying/Initialize(mapload)
 	. = ..()
-	visible_message(span_boldannounce("The wizard cries out in pain as a gate appears behind him, sucking him in!"))
-	playsound(get_turf(src), 'sound/magic/mandswap.ogg', 50, vary = TRUE, pressure_affected = TRUE)
-	playsound(get_turf(src), 'sound/hallucinations/wail.ogg', 50, vary = TRUE, pressure_affected = TRUE)
+	visible_message(span_bolddanger("The wizard cries out in pain as a gate appears behind him, sucking him in!"))
+	playsound(get_turf(src), 'sound/effects/magic/mandswap.ogg', 50, vary = TRUE, pressure_affected = TRUE)
+	playsound(get_turf(src), 'sound/effects/hallucinations/wail.ogg', 50, vary = TRUE, pressure_affected = TRUE)
 	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_delete))
 
 /obj/effect/temp_visual/paperwiz_dying/proc/on_delete()
@@ -189,8 +171,7 @@
 	for(var/mob/nearby in range(7, src))
 		shake_camera(nearby, duration = 7 SECONDS, strength = 1)
 	var/turf/current_turf = get_turf(src)
-	playsound(current_turf,'sound/magic/summon_magic.ogg', 50, vary = TRUE, vary = TRUE)
+	playsound(current_turf,'sound/effects/magic/summon_magic.ogg', 50, vary = TRUE, vary = TRUE)
 	new /obj/effect/temp_visual/paper_scatter(current_turf)
 	new /obj/item/clothing/suit/wizrobe/paper(current_turf)
 	new /obj/item/clothing/head/collectable/paper(current_turf)
-

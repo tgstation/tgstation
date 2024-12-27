@@ -20,7 +20,7 @@
 	inhand_icon_state = null
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
-	allowed = list(/obj/item/melee/sickly_blade)
+	allowed = list(/obj/item/melee/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	// Slightly better than normal cult robes
 	armor_type = /datum/armor/cultrobes_eldritch
@@ -34,6 +34,7 @@
 	bio = 20
 	fire = 20
 	acid = 20
+	wound = 20
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/examine(mob/user)
 	. = ..()
@@ -50,8 +51,8 @@
 	name = "void hood"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, \
-		with each flash you loose comprehension of what you are seeing."
+	desc = "Black like tar, reflecting no light. Runic symbols line the outside. \
+		With each flash you lose comprehension of what you are seeing."
 	icon_state = "void_cloak"
 	flags_inv = NONE
 	flags_cover = NONE
@@ -64,6 +65,7 @@
 	laser = 30
 	energy = 30
 	bomb = 15
+	wound = 10
 
 /obj/item/clothing/head/hooded/cult_hoodie/void/Initialize(mapload)
 	. = ..()
@@ -71,8 +73,8 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/void
 	name = "void cloak"
-	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, \
-		with each flash you loose comprehension of what you are seeing."
+	desc = "Black like tar, reflecting no light. Runic symbols line the outside. \
+		With each flash you lose comprehension of what you are seeing."
 	icon_state = "void_cloak"
 	inhand_icon_state = null
 	allowed = list(/obj/item/melee/sickly_blade)
@@ -89,15 +91,32 @@
 	laser = 30
 	energy = 30
 	bomb = 15
+	wound = 10
 
 /obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/void_cloak)
-
-/obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
-	. = ..()
 	make_visible()
+	ADD_TRAIT(src, TRAIT_CONTRABAND_BLOCKER, INNATE_TRAIT)
+
+/obj/item/clothing/suit/hooded/cultrobes/void/equipped(mob/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_OCLOTHING)
+		RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(hide_item))
+		RegisterSignal(user, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(show_item))
+
+/obj/item/clothing/suit/hooded/cultrobes/void/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_MOB_UNEQUIPPED_ITEM, COMSIG_MOB_EQUIPPED_ITEM))
+
+/obj/item/clothing/suit/hooded/cultrobes/void/proc/hide_item(datum/source, obj/item/item, slot)
+	SIGNAL_HANDLER
+	if(slot & ITEM_SLOT_SUITSTORE)
+		ADD_TRAIT(item, TRAIT_NO_STRIP, REF(src)) // i'd use examine hide but its a flag and yeah
+
+/obj/item/clothing/suit/hooded/cultrobes/void/proc/show_item(datum/source, obj/item/item, slot)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(item, TRAIT_NO_STRIP, REF(src))
 
 /obj/item/clothing/suit/hooded/cultrobes/void/examine(mob/user)
 	. = ..()
@@ -134,6 +153,7 @@
 	RemoveElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))
+		REMOVE_TRAIT(loc, TRAIT_RESISTLOWPRESSURE, REF(src))
 		loc.balloon_alert(loc, "cloak hidden")
 		loc.visible_message(span_notice("Light shifts around [loc], making the cloak around them invisible!"))
 
@@ -144,5 +164,6 @@
 	AddElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))
+		ADD_TRAIT(loc, TRAIT_RESISTLOWPRESSURE, REF(src))
 		loc.balloon_alert(loc, "cloak revealed")
 		loc.visible_message(span_notice("A kaleidoscope of colours collapses around [loc], a cloak appearing suddenly around their person!"))

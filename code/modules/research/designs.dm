@@ -32,17 +32,15 @@ other types of metals and chemistry for reagents).
 	/// List of materials required to create one unit of the product. Format is (typepath or caregory) -> amount
 	var/list/materials = list()
 	/// The amount of time required to create one unit of the product.
-	var/construction_time
+	var/construction_time = 3.2 SECONDS
 	/// The typepath of the object produced by this design
 	var/build_path = null
 	/// Reagent produced by this design. Currently only supported by the biogenerator.
 	var/make_reagent
 	/// What categories this design falls under. Used for sorting in production machines.
 	var/list/category = list()
-	/// List of reagents required to create one unit of the product.
+	/// List of reagents required to create one unit of the product. Currently only supported by the limb grower.
 	var/list/reagents_list = list()
-	/// The maximum number of units of whatever is produced by this can be produced in one go.
-	var/maxstack = 1
 	/// How many times faster than normal is this to build on the protolathe
 	var/lathe_time_factor = 1
 	/// Bitflags indicating what departmental lathes should be allowed to process this design.
@@ -115,7 +113,7 @@ other types of metals and chemistry for reagents).
  * Args:
  * - stored_research - The techweb that's storing us.
  */
-/obj/item/disk/design_disk/proc/on_upload(datum/techweb/stored_research)
+/obj/item/disk/design_disk/proc/on_upload(datum/techweb/stored_research, atom/research_source)
 	return
 
 /obj/item/disk/design_disk/bepis
@@ -136,9 +134,9 @@ other types of metals and chemistry for reagents).
 		blueprints += new_entry
 
 ///Unhide and research our node so we show up in the R&D console.
-/obj/item/disk/design_disk/bepis/on_upload(datum/techweb/stored_research)
+/obj/item/disk/design_disk/bepis/on_upload(datum/techweb/stored_research, atom/research_source)
 	stored_research.hidden_nodes -= bepis_node.id
-	stored_research.research_node(bepis_node, force = TRUE, auto_adjust_cost = FALSE)
+	stored_research.research_node(bepis_node, force = TRUE, auto_adjust_cost = FALSE, research_source = research_source)
 
 /**
  * Subtype of Bepis tech disk

@@ -27,31 +27,26 @@ Slimecrossing Weapons
 	throwforce = 15
 	damtype = BRUTE
 
-/obj/item/knife/rainbowknife/afterattack(atom/O, mob/user, proximity)
-	if(proximity && isliving(O))
-		damtype = pick(BRUTE, BURN, TOX, OXY, CLONE)
+/obj/item/knife/rainbowknife/afterattack(atom/target, mob/user, params)
+	if(isliving(target))
+		damtype = pick(BRUTE, BURN, TOX, OXY)
 	switch(damtype)
 		if(BRUTE)
-			hitsound = 'sound/weapons/bladeslice.ogg'
+			hitsound = 'sound/items/weapons/bladeslice.ogg'
 			attack_verb_continuous = string_list(list("slashes", "slices", "cuts"))
 			attack_verb_simple = string_list(list("slash", "slice", "cut"))
 		if(BURN)
-			hitsound = 'sound/weapons/sear.ogg'
+			hitsound = 'sound/items/weapons/sear.ogg'
 			attack_verb_continuous = string_list(list("burns", "singes", "heats"))
 			attack_verb_simple = string_list(list("burn", "singe", "heat"))
 		if(TOX)
-			hitsound = 'sound/weapons/pierce.ogg'
+			hitsound = 'sound/items/weapons/pierce.ogg'
 			attack_verb_continuous = string_list(list("poisons", "doses", "toxifies"))
 			attack_verb_simple = string_list(list("poison", "dose", "toxify"))
 		if(OXY)
 			hitsound = 'sound/effects/space_wind.ogg'
 			attack_verb_continuous = string_list(list("suffocates", "winds", "vacuums"))
 			attack_verb_simple = string_list(list("suffocate", "wind", "vacuum"))
-		if(CLONE)
-			hitsound = 'sound/items/geiger/ext1.ogg'
-			attack_verb_continuous = string_list(list("irradiates", "mutates", "maligns"))
-			attack_verb_simple = string_list(list("irradiate", "mutate", "malign"))
-	return ..()
 
 //Adamantine shield - Chilling Adamantine
 /obj/item/shield/adamantineshield
@@ -71,6 +66,7 @@ Slimecrossing Weapons
 	attack_verb_simple = list("bash", "pound", "slam")
 	item_flags = SLOWS_WHILE_IN_HAND
 	breakable_by_damage = FALSE
+	shield_bash_sound = 'sound/effects/glass/glassknock.ogg'
 
 /datum/armor/shield_adamantineshield
 	melee = 50
@@ -91,16 +87,18 @@ Slimecrossing Weapons
 	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "bloodgun"
 	inhand_icon_state = "bloodgun"
+	icon_angle = 180
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
+	antimagic_flags = NONE
 	force = 5
 	max_charges = 1 //Recharging costs blood.
 	recharge_rate = 1
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
-	fire_sound = 'sound/effects/attackblob.ogg'
+	fire_sound = 'sound/effects/blob/attackblob.ogg'
 
 /obj/item/gun/magic/bloodchill/Initialize(mapload)
 	. = ..()
@@ -127,7 +125,7 @@ Slimecrossing Weapons
 	icon_state = "pulse0_bl"
 	hitsound = 'sound/effects/splat.ogg'
 
-/obj/projectile/magic/bloodchill/on_hit(mob/living/target)
+/obj/projectile/magic/bloodchill/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		target.apply_status_effect(/datum/status_effect/bloodchill)

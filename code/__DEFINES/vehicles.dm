@@ -26,6 +26,8 @@
 #define UNBUCKLE_DISABLED_RIDER (1<<3)
 // For fireman carries, the carrying human needs an arm
 #define CARRIER_NEEDS_ARM (1<<4)
+// This rider must be our friend
+#define JUST_FRIEND_RIDERS (1<<5)
 
 //car_traits flags
 ///Will this car kidnap people by ramming into them?

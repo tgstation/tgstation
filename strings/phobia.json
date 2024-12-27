@@ -113,6 +113,23 @@
 		"transfusion"
 	],
 
+	"carps": [
+		"aquarium",
+		"carp",
+		"carps",
+		"carpotoxin",
+		"fin",
+		"fins",
+		"fish",
+		"fang",
+		"gnash",
+		"migration",
+		"slash",
+		"shred",
+		"teeth",
+		"tooth"
+	],
+
 	"clowns": [
 		"banana",
 		"clown",
@@ -263,6 +280,43 @@
 		"wt550"
 	],
 
+	"heresy": [
+		"armsy",
+		"ash",
+		"blade",
+		"cloak",
+		"codex",
+		"cosmic",
+		"eldritch",
+		"fire shark",
+		"flesh",
+		"focus",
+		"ghoul",
+		"grasp",
+		"hand",
+		"heart",
+		"heresy",
+		"heretic",
+		"lionhunter",
+		"maid in the mirror",
+		"mansus",
+		"offer",
+		"pierced reality",
+		"raw prophet",
+		"reality crack",
+		"reality pierce",
+		"ritual",
+		"robe",
+		"rune",
+		"rust",
+		"sacrifice",
+		"space",
+		"stalker",
+		"star",
+		"void",
+		"worm"
+	],
+
 	"insects": [
 		"bee",
 		"buzz",
@@ -291,33 +345,54 @@
 		"admeme",
 		"admin",
 		"ahelp",
+		"amogus",
 		"antag",
 		"antagonist",
 		"ban",
 		"banned",
+		"chat",
 		"click",
+		"c*der",
+		"coder",
+		"coders",
 		"discord",
+		"erp",
 		"forum",
 		"ick ock",
+		"joever",
 		"k",
 		"kek",
+		"kys",
 		"leddit",
+		"lmao",
+		"lol",
+		"mapper",
 		"moderator",
 		"mods",
+		"muderbone",
+		"murderboning",
 		"ocky",
 		"ooc",
 		"owo",
 		"pwn",
+		"powergame",
 		"reddit",
 		"round",
 		"rule",
+		"rp",
 		"self antag",
 		"selfantag",
+		"sprite",
+		"spriter",
+		"sus",
+		"tide",
 		"u",
+		"ur",
 		"uwa",
 		"uwu",
 		"valid",
-		"y"
+		"y",
+		"5head"
 	],
 
 	"robots": [
@@ -424,7 +499,7 @@
 		"wiz",
 		"wizard",
 		"zombie"
-		]
+	]
 
 
 

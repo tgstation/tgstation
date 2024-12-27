@@ -79,11 +79,10 @@
 	var/datum/gas_mixture/tank_air = internal_tank.return_air()
 	var/datum/gas_mixture/cabin_air = chassis.cabin_air
 	var/release_pressure = internal_tank.release_pressure
-	var/cabin_pressure = cabin_air.return_pressure()
-	if(cabin_pressure < release_pressure)
+	if(cabin_air.return_pressure() < release_pressure)
 		tank_air.release_gas_to(cabin_air, release_pressure)
-	if(cabin_pressure)
-		cabin_air.pump_gas_to(external_air, PUMP_MAX_PRESSURE, GAS_CO2)
+	if(cabin_air.has_gas(/datum/gas/carbon_dioxide))
+		cabin_air.pump_gas_to(external_air, PUMP_MAX_PRESSURE, /datum/gas/carbon_dioxide)
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/proc/process_pump(seconds_per_tick)
 	if(!tank_pump_active)
@@ -107,8 +106,8 @@
 		"auto_pressurize_on_seal" = auto_pressurize_on_seal,
 		"port_connected" = internal_tank?.connected_port ? TRUE : FALSE,
 		"tank_release_pressure" = round(internal_tank.release_pressure),
-		"tank_release_pressure_min" = internal_tank.can_min_release_pressure,
-		"tank_release_pressure_max" = internal_tank.can_max_release_pressure,
+		"tank_release_pressure_min" = CAN_MIN_RELEASE_PRESSURE,
+		"tank_release_pressure_max" = CAN_MAX_RELEASE_PRESSURE,
 		"tank_pump_active" = tank_pump_active,
 		"tank_pump_direction" = tank_pump_direction,
 		"tank_pump_pressure" = round(tank_pump_pressure),
@@ -122,7 +121,7 @@
 	switch(action)
 		if("set_cabin_pressure")
 			var/new_pressure = text2num(params["new_pressure"])
-			internal_tank.release_pressure = clamp(round(new_pressure), internal_tank.can_min_release_pressure, internal_tank.can_max_release_pressure)
+			internal_tank.release_pressure = clamp(round(new_pressure), CAN_MIN_RELEASE_PRESSURE, CAN_MAX_RELEASE_PRESSURE)
 			return TRUE
 		if("toggle_port")
 			if(internal_tank.connected_port)

@@ -11,9 +11,9 @@
 
 	///Output pressure target
 	var/target_pressure = ONE_ATMOSPHERE
-	///Ratio between the node 1 and 2, determines the amount of gas transfered, sums up to 1
+	///Ratio between the node 1 and 2, determines the amount of gas transferred, sums up to 1
 	var/node1_concentration = 0.5
-	///Ratio between the node 1 and 2, determines the amount of gas transfered, sums up to 1
+	///Ratio between the node 1 and 2, determines the amount of gas transferred, sums up to 1
 	var/node2_concentration = 0.5
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
@@ -27,21 +27,24 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target pressure"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)
-	if(can_interact(user))
+/obj/machinery/atmospherics/components/trinary/mixer/click_ctrl(mob/user)
+	if(is_operational)
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_appearance()
-	return ..()
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
-/obj/machinery/atmospherics/components/trinary/mixer/AltClick(mob/user)
-	if(can_interact(user))
-		target_pressure = MAX_OUTPUT_PRESSURE
-		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "pressure output on set to [target_pressure] kPa")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/trinary/mixer/click_alt(mob/user)
+	if(target_pressure == MAX_OUTPUT_PRESSURE)
+		return CLICK_ACTION_BLOCKING
+
+	target_pressure = MAX_OUTPUT_PRESSURE
+	investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "pressure output on set to [target_pressure] kPa")
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_overlays()
 	. = ..()
@@ -84,8 +87,12 @@
 	//Calculate necessary moles to transfer using PV=nRT
 	var/general_transfer = (target_pressure - output_starting_pressure) * air3.volume / R_IDEAL_GAS_EQUATION
 
-	var/transfer_moles1 = air1.temperature ? node1_concentration * general_transfer / air1.temperature : 0
-	var/transfer_moles2 = air2.temperature ? node2_concentration * general_transfer / air2.temperature : 0
+	//Calculate combined temperature for accurate output ratio
+	var/combined_heat_capacity = air1.heat_capacity() + air2.heat_capacity()
+	var/equalized_temperature = combined_heat_capacity ? (air1.thermal_energy() + air2.thermal_energy()) / combined_heat_capacity : 0
+
+	var/transfer_moles1 = equalized_temperature ? (node1_concentration * general_transfer) / equalized_temperature : 0
+	var/transfer_moles2 = equalized_temperature ? (node2_concentration * general_transfer) / equalized_temperature : 0
 
 	var/air1_moles = air1.total_moles()
 	var/air2_moles = air2.total_moles()
@@ -143,7 +150,7 @@
 	data["node2_concentration"] = round(node2_concentration*100, 1)
 	return data
 
-/obj/machinery/atmospherics/components/trinary/mixer/ui_act(action, params)
+/obj/machinery/atmospherics/components/trinary/mixer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -242,6 +249,18 @@
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped
 	icon_state = "mixer_on-0_f"
 	flipped = TRUE
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer1
+	piping_layer = 1
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer2
+	piping_layer = 2
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer4
+	piping_layer = 4
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer5
+	piping_layer = 5
 
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse
 	node1_concentration = O2STANDARD

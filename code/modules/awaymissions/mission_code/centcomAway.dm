@@ -7,32 +7,32 @@
 
 /area/awaymission/centcom_away/general
 	name = "XCC-P5831"
-	ambientsounds = list('sound/ambience/ambigen2.ogg')
+	ambientsounds = list('sound/ambience/general/ambigen2.ogg')
 
 /area/awaymission/centcom_away/maint
 	name = "XCC-P5831 Maintenance"
 	icon_state = "away1"
-	ambientsounds = list('sound/ambience/ambisin1.ogg')
+	ambientsounds = list('sound/ambience/engineering/ambisin1.ogg')
 
 /area/awaymission/centcom_away/thunderdome
 	name = "XCC-P5831 Thunderdome"
 	icon_state = "away2"
-	ambientsounds = list('sound/ambience/ambisin2.ogg')
+	ambientsounds = list('sound/ambience/engineering/ambisin2.ogg')
 
 /area/awaymission/centcom_away/cafe
 	name = "XCC-P5831 Kitchen Arena"
 	icon_state = "away3"
-	ambientsounds = list('sound/ambience/ambisin3.ogg')
+	ambientsounds = list('sound/ambience/engineering/ambisin3.ogg')
 
 /area/awaymission/centcom_away/courtroom
 	name = "XCC-P5831 Courtroom"
 	icon_state = "away4"
-	ambientsounds = list('sound/ambience/ambisin4.ogg')
+	ambientsounds = list('sound/ambience/engineering/ambisin4.ogg')
 
 /area/awaymission/centcom_away/hangar
 	name = "XCC-P5831 Hangars"
 	icon_state = "away4"
-	ambientsounds = list('sound/ambience/ambigen4.ogg')
+	ambientsounds = list('sound/ambience/general/ambigen4.ogg')
 
 //centcomAway items
 

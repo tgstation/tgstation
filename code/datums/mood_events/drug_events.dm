@@ -19,6 +19,10 @@
 	else
 		description = initial(description)
 
+/datum/mood_event/hang_over
+	mood_change = -4
+	description = "I have a killer hang over!"
+	timeout = 1 MINUTES
 
 /datum/mood_event/smoked
 	description = "I have had a smoke recently."
@@ -54,12 +58,6 @@
 
 /datum/mood_event/withdrawal_severe/add_effects(drug_name)
 	description = "Oh god, I need some of that [drug_name]!"
-
-/datum/mood_event/withdrawal_critical
-	mood_change = -10
-
-/datum/mood_event/withdrawal_critical/add_effects(drug_name)
-	description = "[drug_name]! [drug_name]! [drug_name]!"
 
 /datum/mood_event/happiness_drug
 	description = "Can't feel a thing..."

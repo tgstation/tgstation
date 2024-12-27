@@ -9,10 +9,11 @@
 	movedelay = 0.6
 	car_traits = CAN_KIDNAP
 	key_type = /obj/item/bikehorn
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
-	light_range = 8
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	light_range = 6
 	light_power = 2
 	light_on = FALSE
+	access_provider_flags = VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_KIDNAPPED
 	///list of headlight colors we use to pick through when we have party mode due to emag
 	var/headlight_colors = list(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_LIME, COLOR_BRIGHT_BLUE, COLOR_CYAN, COLOR_PURPLE)
 	///Cooldown time inbetween [/obj/vehicle/sealed/car/clowncar/proc/roll_the_dice()] usages
@@ -48,7 +49,7 @@
 	initialize_controller_action_type(/datum/action/vehicle/sealed/thank, VEHICLE_CONTROL_KIDNAPPED)
 
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
-	if(ishuman(M))
+	if(ishuman(M) && driver_amount() < max_drivers)
 		var/mob/living/carbon/human/H = M
 		if(is_clown_job(H.mind?.assigned_role) || !enforce_clown_role) //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(H, VEHICLE_CONTROL_DRIVE)
@@ -59,7 +60,10 @@
 
 /obj/vehicle/sealed/car/clowncar/mob_forced_enter(mob/M, silent = FALSE)
 	. = ..()
-	playsound(src, pick('sound/vehicles/clowncar_load1.ogg', 'sound/vehicles/clowncar_load2.ogg'), 75)
+	playsound(src, pick(
+		'sound/vehicles/clowncar_load1.ogg',
+		'sound/vehicles/clowncar_load2.ogg',
+		), 75)
 	if(iscarbon(M))
 		var/mob/living/carbon/forced_mob = M
 		if(forced_mob.has_reagent(/datum/reagent/consumable/ethanol/irishcarbomb))
@@ -121,12 +125,12 @@
 				if(prob(35)) //Note: The randomstep on dump_mobs throws occupants into each other and often causes wounds regardless.
 					continue
 				for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.bodyparts)
-					var/type_wound = pick(list(
-					/datum/wound/blunt/moderate,
-					/datum/wound/blunt/severe,
-					))
-					head_to_wound.force_wound_upwards(type_wound, wound_source = src)
-					carbon_occupant.playsound_local(src, 'sound/weapons/flash_ring.ogg', 50)
+					var/pick_mode = text2num(pick(list(
+						"[WOUND_PICK_LOWEST_SEVERITY]",
+						"[WOUND_PICK_HIGHEST_SEVERITY]"
+					)))
+					carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
+					carbon_occupant.playsound_local(src, 'sound/items/weapons/flash_ring.ogg', 50)
 					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 
 			hittarget_living.adjustBruteLoss(200)
@@ -142,13 +146,20 @@
 			carb.Paralyze(4 SECONDS) //I play to make sprites go horizontal
 		hittarget_living.visible_message(span_warning("[src] rams into [hittarget_living] and sucks [hittarget_living.p_them()] up!")) //fuck off shezza this isn't ERP.
 		mob_forced_enter(hittarget_living)
-		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
+		playsound(src, pick(
+			'sound/vehicles/clowncar_ram1.ogg',
+			'sound/vehicles/clowncar_ram2.ogg',
+			'sound/vehicles/clowncar_ram3.ogg',
+			), 75)
 		log_combat(src, hittarget_living, "sucked up")
 		return
 	if(!isclosedturf(bumped))
 		return
 	visible_message(span_warning("[src] rams into [bumped] and crashes!"))
-	playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
+	playsound(src, pick(
+		'sound/vehicles/clowncar_crash1.ogg',
+		'sound/vehicles/clowncar_crash2.ogg',
+		), 75)
 	playsound(src, 'sound/vehicles/clowncar_crashpins.ogg', 75)
 	dump_mobs(TRUE)
 	log_combat(src, bumped, "crashed into", null, "dumping all passengers")
@@ -167,7 +178,7 @@
 	target_pancake.visible_message(span_warning("[src] runs over [target_pancake], flattening [target_pancake.p_them()] like a pancake!"))
 	target_pancake.AddElement(/datum/element/squish, 5 SECONDS)
 	target_pancake.Paralyze(2 SECONDS)
-	playsound(target_pancake, 'sound/effects/cartoon_splat.ogg', 75)
+	playsound(target_pancake, 'sound/effects/cartoon_sfx/cartoon_splat.ogg', 75)
 	log_combat(src, crossed, "ran over")
 
 /obj/vehicle/sealed/car/clowncar/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -178,7 +189,7 @@
 	to_chat(user, span_danger("You scramble [src]'s child safety lock, and a panel with six colorful buttons appears!"))
 	initialize_controller_action_type(/datum/action/vehicle/sealed/roll_the_dice, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/cannon, VEHICLE_CONTROL_DRIVE)
-	AddElement(/datum/element/waddling)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	return TRUE
 
 /obj/vehicle/sealed/car/clowncar/atom_destruction(damage_flag)
@@ -198,7 +209,7 @@
  * * Fart and make everyone nearby laugh
  */
 /obj/vehicle/sealed/car/clowncar/proc/roll_the_dice(mob/user)
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
 		to_chat(user, span_notice("The button panel is currently recharging."))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CLOWNCAR_RANDOMNESS, dice_cooldown_time)
@@ -300,7 +311,11 @@
 	var/mob/living/unlucky_sod = pick(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
 	mob_exit(unlucky_sod, silent = TRUE)
 	flick("clowncar_recoil", src)
-	playsound(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg'), 75)
+	playsound(src, pick(
+		'sound/vehicles/carcannon1.ogg',
+		'sound/vehicles/carcannon2.ogg',
+		'sound/vehicles/carcannon3.ogg',
+		), 75)
 	unlucky_sod.throw_at(target, 10, 2)
 	log_combat(user, unlucky_sod, "fired", src, "towards [target]") //this doesn't catch if the mob hits something between the car and the target
 	return COMSIG_MOB_CANCEL_CLICKON

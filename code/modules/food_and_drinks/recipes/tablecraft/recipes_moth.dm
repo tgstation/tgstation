@@ -2,7 +2,8 @@
 	name = "Herby cheese"
 	reqs = list(
 		/obj/item/food/cheese/curd_cheese = 1,
-		/obj/item/food/grown/herbs = 4
+		/obj/item/food/grown/herbs = 4,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/herby_cheese
 	category = CAT_MOTH
@@ -23,7 +24,7 @@
 		/obj/item/seeds/sunflower = 1,
 		/obj/item/seeds/pumpkin = 1,
 		/obj/item/seeds/poppy = 1,
-		/datum/reagent/consumable/quality_oil = 2
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 2
 	)
 	result = /obj/item/food/toasted_seeds
 	category = CAT_MOTH
@@ -187,7 +188,8 @@
 	reqs = list(
 		/datum/reagent/consumable/nutriment/soup/rice_porridge = 10,
 		/obj/item/food/meat/bacon = 1,
-		/obj/item/food/friedegg = 2
+		/obj/item/food/friedegg = 2,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/bowled/hua_mulan_congee
 	category = CAT_MOTH
@@ -199,7 +201,8 @@
 		/obj/item/food/grown/eggplant = 1,
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/tomato_sauce = 1,
-		/obj/item/food/cheese/mozzarella = 1
+		/obj/item/food/cheese/mozzarella = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/bowled/fried_eggplant_polenta
 	category = CAT_MOTH
@@ -210,7 +213,7 @@
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/cheese/mozzarella = 1,
 		/obj/item/food/grown/herbs = 1,
-		/datum/reagent/consumable/quality_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 2,
 		/datum/reagent/consumable/vinegar = 2
 	)
 	result = /obj/item/food/caprese_salad
@@ -219,7 +222,7 @@
 /datum/crafting_recipe/food/fleet_salad
 	name = "Lörtonknusksolt (Fleet salad)"
 	reqs = list(
-		/datum/reagent/consumable/quality_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 2,
 		/datum/reagent/consumable/vinegar = 2,
 		/obj/item/food/breadslice/plain = 1,
 		/obj/item/food/grilled_cheese = 1,
@@ -233,7 +236,7 @@
 /datum/crafting_recipe/food/cotton_salad
 	name = "Flöfrölenknusksolt (Cotton salad)"
 	reqs = list(
-		/datum/reagent/consumable/quality_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 2,
 		/datum/reagent/consumable/vinegar = 2,
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/mothic_salad = 1,

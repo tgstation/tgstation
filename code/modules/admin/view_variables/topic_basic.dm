@@ -37,7 +37,7 @@
 			if(!target)
 				to_chat(usr, span_warning("The object you tried to expose to [C] no longer exists (nulled or hard-deled)"), confidential = TRUE)
 				return
-			message_admins("[key_name_admin(usr)] Showed [key_name_admin(C)] a <a href='?_src_=vars;datumrefresh=[REF(target)]'>VV window</a>")
+			message_admins("[key_name_admin(usr)] Showed [key_name_admin(C)] a <a href='byond://?_src_=vars;datumrefresh=[REF(target)]'>VV window</a>")
 			log_admin("Admin [key_name(usr)] Showed [key_name(C)] a VV window of a [target]")
 			to_chat(C, "[holder.fakekey ? "an Administrator" : "[usr.client.key]"] has granted you access to view a View Variables window", confidential = TRUE)
 			C.debug_variables(target)
@@ -98,9 +98,7 @@
 		if(!check_rights(NONE))
 			return
 		var/mass_remove = href_list[VV_HK_MASS_REMOVECOMPONENT]
-		var/list/components = list()
-		for(var/datum/component/component in target.GetComponents(/datum/component))
-			components += component.type
+		var/list/components = target._datum_components.Copy()
 		var/list/names = list()
 		names += "---Components---"
 		if(length(components))
@@ -142,6 +140,7 @@
 			return
 		var/datum/greyscale_modify_menu/menu = new(target, usr, SSgreyscale.configurations, unlocked = TRUE)
 		menu.ui_interact(usr)
+
 	if(href_list[VV_HK_CALLPROC])
-		usr.client.callproc_datum(target)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/call_proc_datum, target)
 

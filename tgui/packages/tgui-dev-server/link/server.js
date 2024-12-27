@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import http from 'http';
 import { inspect } from 'util';
+
 import { createLogger, directLog } from '../logging.js';
 import { require } from '../require.js';
 import { loadSourceMaps, retrace } from './retrace.js';
@@ -25,7 +25,6 @@ class LinkServer {
     logger.log('setting up');
     this.wss = null;
     this.setupWebSocketLink();
-    this.setupHttpLink();
   }
 
   // WebSocket-based client link
@@ -45,29 +44,6 @@ class LinkServer {
     logger.log(`listening on port ${port} (WebSocket)`);
   }
 
-  // One way HTTP-based client link for IE8
-  setupHttpLink() {
-    const port = 3001;
-    this.httpServer = http.createServer((req, res) => {
-      if (req.method === 'POST') {
-        let body = '';
-        req.on('data', (chunk) => {
-          body += chunk.toString();
-        });
-        req.on('end', () => {
-          const msg = deserializeObject(body);
-          this.handleLinkMessage(null, msg);
-          res.end();
-        });
-        return;
-      }
-      res.write('Hello');
-      res.end();
-    });
-    this.httpServer.listen(port);
-    logger.log(`listening on port ${port} (HTTP)`);
-  }
-
   handleLinkMessage(ws, msg) {
     const { type, payload } = msg;
     if (type === 'log') {
@@ -76,17 +52,20 @@ class LinkServer {
       if (level <= 0 && !DEBUG) {
         return;
       }
-      // prettier-ignore
-      directLog(ns, ...args.map(arg => {
-        if (typeof arg === 'object') {
-          return inspect(arg, {
-            depth: Infinity,
-            colors: true,
-            compact: 8,
-          });
-        }
-        return arg;
-      }));
+
+      directLog(
+        ns,
+        ...args.map((arg) => {
+          if (typeof arg === 'object') {
+            return inspect(arg, {
+              depth: Infinity,
+              colors: true,
+              compact: 8,
+            });
+          }
+          return arg;
+        }),
+      );
       return;
     }
     if (type === 'relay') {

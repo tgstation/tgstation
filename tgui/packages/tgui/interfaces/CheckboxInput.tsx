@@ -1,11 +1,21 @@
-import { Button, Icon, Input, NoticeBox, Section, Stack, Table, Tooltip } from '../components';
-import { TableCell, TableRow } from '../components/Table';
-import { createSearch, decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+import {
+  Button,
+  Icon,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+  Tooltip,
+} from 'tgui-core/components';
+import { createSearch, decodeHtmlEntities } from 'tgui-core/string';
 
+import { useBackend } from '../backend';
+import { TableCell, TableRow } from '../components/Table';
+import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
-import { Window } from '../layouts';
 
 type Data = {
   items: string[];
@@ -17,8 +27,8 @@ type Data = {
 };
 
 /** Renders a list of checkboxes per items for input. */
-export const CheckboxInput = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const CheckboxInput = (props) => {
+  const { data } = useBackend<Data>();
   const {
     items = [],
     min_checked,
@@ -28,17 +38,9 @@ export const CheckboxInput = (props, context) => {
     title,
   } = data;
 
-  const [selections, setSelections] = useLocalState<string[]>(
-    context,
-    'selections',
-    []
-  );
+  const [selections, setSelections] = useState<string[]>([]);
 
-  const [searchQuery, setSearchQuery] = useLocalState<string>(
-    context,
-    'searchQuery',
-    ''
-  );
+  const [searchQuery, setSearchQuery] = useState('');
   const search = createSearch(searchQuery, (item: string) => item);
   const toDisplay = items.filter(search);
 
@@ -49,6 +51,9 @@ export const CheckboxInput = (props, context) => {
 
     setSelections(newSelections);
   };
+  const selectionIndexes = selections.map(
+    (selected: string) => items.indexOf(selected) + 1,
+  );
 
   return (
     <Window title={title} width={425} height={300}>
@@ -75,7 +80,8 @@ export const CheckboxInput = (props, context) => {
                           !selections.includes(item)
                         }
                         fluid
-                        onClick={() => selectItem(item)}>
+                        onClick={() => selectItem(item)}
+                      >
                         {item}
                       </Button.Checkbox>
                     </TableCell>
@@ -100,7 +106,7 @@ export const CheckboxInput = (props, context) => {
           </Stack>
           <Stack.Item mt={0.7}>
             <Section>
-              <InputButtons input={selections} />
+              <InputButtons input={[selections, selectionIndexes]} />
             </Section>
           </Stack.Item>
         </Stack>

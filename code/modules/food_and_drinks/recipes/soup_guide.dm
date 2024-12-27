@@ -28,7 +28,6 @@
 	var/datum/glass_style/has_foodtype/soup_style = GLOB.glass_style_singletons[expected_container][result]
 	if(istype(soup_style))
 		data["foodtypes"] = bitfield_to_list(soup_style.drink_type, FOOD_FLAGS)
-	data["nutriments"] = total_nutriment_factor
 
 	return data
 
@@ -38,10 +37,6 @@
 		return
 	for(var/obj/item/ingredienttype as anything in chemical_reaction.required_ingredients)
 		LAZYSET(reqs, ingredienttype, chemical_reaction.required_ingredients[ingredienttype])
-
-	if(ispath(result, /datum/reagent/consumable))
-		var/datum/reagent/consumable/soup_result = result
-		total_nutriment_factor += initial(soup_result.nutriment_factor) * result_amount
 
 /datum/crafting_recipe/food/reaction/soup/meatball_soup
 	reaction = /datum/chemical_reaction/food/soup/meatballsoup

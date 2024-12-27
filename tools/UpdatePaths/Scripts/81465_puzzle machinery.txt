@@ -1,0 +1,2 @@
+/obj/machinery/puzzle_button/@SUBTYPES : /obj/machinery/puzzle/button/@SUBTYPES{@OLD}
+/obj/machinery/puzzle_keycardpad/@SUBTYPES : /obj/machinery/puzzle/keycardpad/@SUBTYPES{@OLD}

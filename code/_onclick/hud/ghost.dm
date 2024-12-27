@@ -1,5 +1,6 @@
 /atom/movable/screen/ghost
 	icon = 'icons/hud/screen_ghost.dmi'
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/ghost/MouseEntered(location, control, params)
 	. = ..()
@@ -86,6 +87,16 @@
 	using.icon = ui_style
 	static_inventory += using
 
+	using = new /atom/movable/screen/language_menu(null, src)
+	using.screen_loc = ui_ghost_language_menu
+	using.icon = ui_style
+	static_inventory += using
+
+	floor_change = new /atom/movable/screen/floor_changer/vertical(null, src)
+	floor_change.icon = ui_style
+	floor_change.screen_loc = ui_ghost_floor_changer
+	static_inventory += floor_change
+
 /datum/hud/ghost/show_hud(version = 0, mob/viewmob)
 	// don't show this HUD if observing; show the HUD of the observee
 	var/mob/dead/observer/O = mymob
@@ -108,4 +119,3 @@
 	if (istype(O) && O.observetarget)
 		return
 	. = ..()
-

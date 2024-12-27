@@ -1,0 +1,908 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"b" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Escape Pod Airlock"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"c" = (
+/obj/item/gps/computer,
+/obj/structure/tubes,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"d" = (
+/obj/structure/tubes,
+/obj/structure/rack,
+/obj/item/survivalcapsule,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"e" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"f" = (
+/obj/structure/bed/pod{
+	dir = 1
+	},
+/obj/item/bedsheet/black{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"g" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/orange,
+/obj/item/clothing/suit/space/orange,
+/obj/item/clothing/head/helmet/space/fragile,
+/obj/item/clothing/head/helmet/space/fragile,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"h" = (
+/obj/effect/decal/cleanable/rubble,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"i" = (
+/obj/effect/mob_spawn/corpse/goliath,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"j" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/item/bitrunning_disk/item/pka_mods,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"k" = (
+/obj/structure/girder,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered)
+"l" = (
+/turf/open/water/hot_spring/lavaland_atmos,
+/area/lavaland/surface)
+"m" = (
+/obj/machinery/door/airlock/survival_pod/glass,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"n" = (
+/turf/closed/wall/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"o" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface)
+"p" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"q" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/unpowered)
+"r" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Escape Pod Airlock"
+	},
+/turf/open/floor/mineral/titanium/blue/lavaland_atmos,
+/area/ruin/unpowered)
+"s" = (
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"t" = (
+/obj/structure/flora/tree/stump,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"u" = (
+/obj/structure/bonfire/prelit,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"v" = (
+/obj/effect/decal/cleanable/rubble,
+/obj/item/stack/sheet/mineral/titanium,
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"w" = (
+/obj/effect/decal/cleanable/glass/titanium,
+/obj/item/stack/sheet/mineral/titanium,
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"x" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
+/area/lavaland/surface)
+"y" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/mob_spawn/corpse/human/engineer,
+/turf/open/floor/mineral/titanium/blue/lavaland_atmos,
+/area/ruin/unpowered)
+"z" = (
+/obj/item/book/manual/fish_catalog,
+/turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
+/area/lavaland/surface)
+"B" = (
+/mob/living/basic/mining/goliath,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"D" = (
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"E" = (
+/turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
+/area/lavaland/surface)
+"F" = (
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"G" = (
+/turf/template_noop,
+/area/template_noop)
+"H" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/cook,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"I" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue/lavaland_atmos,
+/area/ruin/unpowered)
+"J" = (
+/obj/machinery/smartfridge/survival_pod{
+	desc = "A heated storage unit. This one's seen better days.";
+	name = "dusty survival pod storage"
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"K" = (
+/obj/structure/fans,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"L" = (
+/obj/item/storage/toolbox/fishing,
+/turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
+/area/lavaland/surface)
+"M" = (
+/obj/structure/rack,
+/obj/item/pickaxe/emergency,
+/obj/item/pickaxe/emergency,
+/obj/item/crowbar/large/emergency,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"N" = (
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/ruin/powered)
+"O" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"P" = (
+/obj/effect/mob_spawn/corpse/human/miner,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"Q" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/unpowered)
+"R" = (
+/mob/living/basic/mining/goliath/ancient,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface)
+"S" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/black,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"T" = (
+/obj/structure/tubes,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"U" = (
+/obj/item/bait_can/worm/premium,
+/turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
+/area/lavaland/surface)
+"V" = (
+/obj/structure/table/survival_pod,
+/obj/item/food/meat/steak/goliath,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"Y" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/unpowered)
+"Z" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst,
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+"}
+(2,1,1) = {"
+G
+G
+G
+G
+G
+G
+G
+o
+o
+G
+o
+o
+G
+o
+o
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+"}
+(3,1,1) = {"
+G
+G
+G
+G
+G
+G
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+G
+o
+G
+G
+G
+G
+G
+G
+G
+"}
+(4,1,1) = {"
+G
+G
+G
+G
+G
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+G
+o
+G
+G
+G
+"}
+(5,1,1) = {"
+G
+G
+G
+G
+o
+o
+o
+o
+o
+E
+E
+E
+E
+E
+E
+o
+o
+o
+o
+o
+o
+o
+o
+G
+G
+"}
+(6,1,1) = {"
+G
+G
+G
+o
+o
+o
+o
+a
+a
+E
+l
+l
+l
+l
+E
+E
+F
+N
+N
+N
+N
+N
+o
+G
+G
+"}
+(7,1,1) = {"
+G
+G
+G
+o
+o
+a
+a
+a
+t
+E
+l
+l
+l
+l
+E
+E
+a
+N
+K
+s
+M
+N
+o
+G
+G
+"}
+(8,1,1) = {"
+G
+G
+G
+o
+o
+a
+a
+a
+a
+E
+E
+l
+l
+l
+E
+h
+a
+N
+J
+s
+p
+N
+o
+G
+G
+"}
+(9,1,1) = {"
+G
+G
+G
+o
+n
+q
+q
+Z
+a
+a
+E
+E
+l
+U
+E
+a
+a
+N
+V
+s
+S
+N
+o
+o
+G
+"}
+(10,1,1) = {"
+G
+G
+G
+o
+O
+y
+I
+r
+a
+a
+R
+z
+x
+L
+a
+a
+h
+N
+N
+m
+N
+N
+o
+G
+G
+"}
+(11,1,1) = {"
+G
+G
+G
+o
+n
+q
+k
+Z
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+o
+o
+G
+"}
+(12,1,1) = {"
+G
+G
+G
+o
+o
+v
+a
+B
+a
+a
+i
+a
+a
+a
+a
+a
+a
+a
+B
+a
+a
+a
+G
+G
+G
+"}
+(13,1,1) = {"
+G
+G
+G
+G
+o
+o
+a
+a
+a
+a
+D
+a
+a
+a
+a
+u
+a
+a
+a
+a
+a
+a
+G
+G
+G
+"}
+(14,1,1) = {"
+G
+G
+G
+G
+o
+o
+Y
+b
+Y
+P
+a
+a
+a
+a
+a
+h
+a
+a
+a
+a
+a
+a
+G
+G
+G
+"}
+(15,1,1) = {"
+G
+G
+G
+o
+o
+o
+q
+e
+Q
+N
+N
+m
+N
+N
+t
+a
+a
+a
+a
+a
+a
+a
+G
+G
+G
+"}
+(16,1,1) = {"
+G
+G
+G
+o
+o
+o
+q
+j
+Q
+N
+K
+s
+f
+N
+a
+a
+a
+a
+a
+a
+a
+G
+G
+G
+G
+"}
+(17,1,1) = {"
+G
+G
+G
+o
+o
+o
+n
+o
+Q
+N
+J
+s
+g
+N
+a
+Y
+b
+Y
+a
+a
+a
+o
+o
+G
+G
+"}
+(18,1,1) = {"
+G
+G
+G
+G
+o
+o
+o
+o
+o
+N
+c
+T
+d
+N
+a
+q
+e
+q
+a
+a
+o
+o
+o
+G
+G
+"}
+(19,1,1) = {"
+G
+G
+G
+G
+G
+o
+o
+o
+o
+N
+N
+N
+N
+N
+o
+q
+H
+q
+a
+o
+o
+o
+o
+G
+G
+"}
+(20,1,1) = {"
+G
+G
+G
+G
+G
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+q
+w
+o
+o
+o
+o
+G
+G
+G
+G
+"}
+(21,1,1) = {"
+G
+G
+G
+G
+G
+G
+G
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+G
+G
+G
+G
+G
+"}
+(22,1,1) = {"
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+o
+o
+o
+o
+o
+o
+o
+G
+G
+G
+G
+G
+G
+"}
+(23,1,1) = {"
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+"}
+(24,1,1) = {"
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+"}
+(25,1,1) = {"
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+"}

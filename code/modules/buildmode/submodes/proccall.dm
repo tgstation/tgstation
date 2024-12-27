@@ -6,7 +6,7 @@
 	var/list/proc_args = null
 
 /datum/buildmode_mode/proccall/show_help(client/builder)
-	to_chat(builder, span_purple(examine_block(
+	to_chat(builder, span_purple(boxed_message(
 		"[span_bold("Choose procedure and arguments")] -> Right Mouse Button on buildmode button\n\
 		[span_bold("Apply procedure on object")] -> Left Mouse Button on machinery"))
 	)
@@ -41,7 +41,7 @@
 	log_admin(msg)
 	message_admins(msg)
 	admin_ticket_log(object, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Atom ProcCall") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Atom ProcCall")
 
 	var/returnval = WrapAdminProcCall(object, proc_name, proc_args) // Pass the lst as an argument list to the proc
 	. = target_client.get_callproc_returnval(returnval, proc_name)

@@ -9,13 +9,12 @@
 #define COMSIG_MOVABLE_MOVED "movable_moved"
 ///from base of atom/movable/Cross(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSS "movable_cross"
+	#define COMPONENT_BLOCK_CROSS (1<<0)
 ///from base of atom/movable/Move(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSS_OVER "movable_cross_am"
 ///from base of atom/movable/Bump(): (/atom)
 #define COMSIG_MOVABLE_BUMP "movable_bump"
-///from base of atom/movable/newtonian_move(): (inertia_direction, start_delay)
-#define COMSIG_MOVABLE_NEWTONIAN_MOVE "movable_newtonian_move"
-	#define COMPONENT_MOVABLE_NEWTONIAN_BLOCK (1<<0)
+	#define COMPONENT_INTERCEPT_BUMPED (1<<0)
 ///from datum/component/drift/apply_initial_visuals(): ()
 #define COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT "movable_drift_visual_attempt"
 	#define DRIFT_VISUAL_FAILED (1<<0)
@@ -23,9 +22,11 @@
 #define COMSIG_MOVABLE_DRIFT_BLOCK_INPUT "movable_drift_block_input"
 	#define DRIFT_ALLOW_INPUT (1<<0)
 ///from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)
-#define COMSIG_MOVABLE_IMPACT "movable_impact"
+#define COMSIG_MOVABLE_PRE_IMPACT "movable_pre_impact"
 	#define COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH (1<<0) //if true, flip if the impact will push what it hits
 	#define COMPONENT_MOVABLE_IMPACT_NEVERMIND (1<<1) //return true if you destroyed whatever it was you're impacting and there won't be anything for hitby() to run on
+///from base of atom/movable/throw_impact() after confirming a hit: (/atom/hit_atom, /datum/thrownthing/throwingdatum)
+#define COMSIG_MOVABLE_IMPACT "movable_impact"
 ///from base of mob/living/hitby(): (mob/living/target, hit_zone, blocked, datum/thrownthing/throwingdatum)
 #define COMSIG_MOVABLE_IMPACT_ZONE "item_impact_zone"
 ///from /atom/movable/proc/buckle_mob(): (mob/living/M, force, check_loc, buckle_mob_flags)
@@ -35,6 +36,10 @@
 #define COMSIG_MOVABLE_BUCKLE "buckle"
 ///from base of atom/movable/unbuckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_UNBUCKLE "unbuckle"
+///from /atom/movable/proc/buckle_mob(): (buckled_movable)
+#define COMSIG_MOB_BUCKLED "mob_buckle"
+///from /atom/movable/proc/unbuckle_mob(): (buckled_movable)
+#define COMSIG_MOB_UNBUCKLED "mob_unbuckle"
 ///from /obj/vehicle/proc/driver_move, caught by the riding component to check and execute the driver trying to drive the vehicle
 #define COMSIG_RIDDEN_DRIVER_MOVE "driver_move"
 	#define COMPONENT_DRIVER_BLOCK_MOVE (1<<0)
@@ -47,13 +52,17 @@
 #define COMSIG_MOVABLE_THROW_LANDED "movable_throw_landed"
 ///from base of atom/movable/on_changed_z_level(): (turf/old_turf, turf/new_turf, same_z_layer)
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit"
+///called before hearing a message from atom/movable/Hear():
+#define COMSIG_MOVABLE_PRE_HEAR "movable_pre_hear"
+	///cancel hearing the message because we're doing something else presumably
+	#define COMSIG_MOVABLE_CANCEL_HEARING (1<<0)
 ///from base of atom/movable/Hear(): (proc args list(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range))
 #define COMSIG_MOVABLE_HEAR "movable_hear"
-	//#define HEARING_MESSAGE 1 - (I'm pretty sure this is never really used and can be gutted)
+	#define HEARING_MESSAGE 1
 	#define HEARING_SPEAKER 2
 	#define HEARING_LANGUAGE 3
 	#define HEARING_RAW_MESSAGE 4
-	//#define HEARING_RADIO_FREQ 5
+	#define HEARING_RADIO_FREQ 5
 	#define HEARING_SPANS 6
 	#define HEARING_MESSAGE_MODE 7
 	#define HEARING_RANGE 8
@@ -62,18 +71,10 @@
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
 // called when movable is expelled from a disposal pipe, bin or outlet on obj/pipe_eject: (direction)
 #define COMSIG_MOVABLE_PIPE_EJECTING "movable_pipe_ejecting"
-///called when the movable sucessfully has it's anchored var changed, from base atom/movable/set_anchored(): (value)
+///called when the movable successfully has its anchored var changed, from base atom/movable/set_anchored(): (value)
 #define COMSIG_MOVABLE_SET_ANCHORED "movable_set_anchored"
 ///from base of atom/movable/setGrabState(): (newstate)
 #define COMSIG_MOVABLE_SET_GRAB_STATE "living_set_grab_state"
-///Called when the movable tries to change its dynamic light color setting, from base atom/movable/lighting_overlay_set_color(): (color)
-#define COMSIG_MOVABLE_LIGHT_OVERLAY_SET_RANGE "movable_light_overlay_set_color"
-///Called when the movable tries to change its dynamic light power setting, from base atom/movable/lighting_overlay_set_power(): (power)
-#define COMSIG_MOVABLE_LIGHT_OVERLAY_SET_POWER "movable_light_overlay_set_power"
-///Called when the movable tries to change its dynamic light range setting, from base atom/movable/lighting_overlay_set_range(): (range)
-#define COMSIG_MOVABLE_LIGHT_OVERLAY_SET_COLOR "movable_light_overlay_set_range"
-///Called when the movable tries to toggle its dynamic light LIGHTING_ON status, from base atom/movable/lighting_overlay_toggle_on(): (new_state)
-#define COMSIG_MOVABLE_LIGHT_OVERLAY_TOGGLE_ON "movable_light_overlay_toggle_on"
 ///called when the movable's glide size is updated: (new_glide_size)
 #define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"
 ///Called when a movable is hit by a plunger in layer mode, from /obj/item/plunger/attack_atom()
@@ -114,3 +115,20 @@
 #define COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY "movable_edit_unique_submerge_overlay"
 /// From base of area/Exited(): (area/left, direction)
 #define COMSIG_MOVABLE_EXITED_AREA "movable_exited_area"
+
+///from base of /datum/component/splat/splat: (hit_atom)
+#define COMSIG_MOVABLE_SPLAT "movable_splat"
+
+///from base of /atom/movable/point_at: (atom/A, obj/effect/temp_visual/point/point)
+#define COMSIG_MOVABLE_POINTED "movable_pointed"
+
+///From /datum/component/aquarium/get_content_beauty: (beauty_holder)
+#define COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY "movable_ge_aquarium_beauty"
+
+/// Sent to movables when they are being stolen by a spy: (mob/living/spy, datum/spy_bounty/bounty)
+#define COMSIG_MOVABLE_SPY_STEALING "movable_spy_stealing"
+/// Called when something is pushed by a living mob bumping it: (mob/living/pusher, push force)
+#define COMSIG_MOVABLE_BUMP_PUSHED "movable_bump_pushed"
+	/// Stop it from moving
+	#define COMPONENT_NO_PUSH (1<<0)
+

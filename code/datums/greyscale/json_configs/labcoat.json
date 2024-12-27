@@ -1,0 +1,54 @@
+{
+	"labcoat_job": [
+		{
+			"type": "icon_state",
+			"icon_state": "labcoat_job",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "sash",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "shoulder",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "back",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		}
+	],
+	"labcoat_job_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "labcoat_job_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "sash_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "shoulder",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "back_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		}
+	]
+}

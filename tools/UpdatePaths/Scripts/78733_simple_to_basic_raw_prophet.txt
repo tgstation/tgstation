@@ -1,0 +1,1 @@
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet : /mob/living/basic/heretic_summon/raw_prophet/ruins{@OLD;AIStatus=@SKIP;stop_automated_movement=@SKIP}

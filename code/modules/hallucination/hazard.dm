@@ -29,7 +29,8 @@
 
 /// These hallucination effects cause side effects when the hallucinator walks into them.
 /obj/effect/client_image_holder/hallucination/danger
-	image_layer = TURF_LAYER
+	image_layer = LOW_FLOOR_LAYER
+	image_plane = FLOOR_PLANE
 
 /obj/effect/client_image_holder/hallucination/danger/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
 	. = ..()
@@ -85,6 +86,10 @@
 	image_icon = 'icons/effects/anomalies.dmi'
 	image_state = "flux"
 	image_layer = OBJ_LAYER + 0.01
+
+/obj/effect/client_image_holder/hallucination/danger/anomaly/generate_image()
+	. = ..()
+	apply_wibbly_filters(.)
 
 /obj/effect/client_image_holder/hallucination/danger/anomaly/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
 	. = ..()

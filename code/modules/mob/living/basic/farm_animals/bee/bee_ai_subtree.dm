@@ -1,6 +1,7 @@
 /datum/ai_controller/basic_controller/bee
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/bee,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/bee,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -8,6 +9,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_valid_home,
 		/datum/ai_planning_subtree/enter_exit_home,
 		/datum/ai_planning_subtree/find_and_hunt_target/pollinate,
@@ -23,7 +25,7 @@
 
 /datum/ai_controller/basic_controller/queen_bee
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/bee,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/bee,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -69,7 +71,7 @@
 		return
 
 	var/mob/living/bee_pawn = controller.pawn
-	var/action_prob =  (bee_pawn in current_home.contents) ? exit_chance : flyback_chance
+	var/action_prob =  (bee_pawn.loc == current_home) ? exit_chance : flyback_chance
 
 	if(!SPT_PROB(action_prob, seconds_per_tick))
 		return
@@ -89,3 +91,9 @@
 	hunt_targets = list(/obj/machinery/hydroponics)
 	hunt_range = 10
 	hunt_chance = 85
+
+/datum/ai_planning_subtree/find_and_hunt_target/pollinate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/atom/atom_pawn = controller.pawn
+	if(!isturf(atom_pawn.loc))
+		return
+	return ..()

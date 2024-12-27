@@ -91,7 +91,7 @@
 		span_bolddanger("You were unable to free [victim] from their fiendish prison, leaving them as nothing more than a smattering of mush!"),
 		span_bolddanger("Your compatriates were unable to free you from your fiendish prison, leaving you as nothing more than a smattering of mush!"),
 	)
-	victim.gib()
+	victim.gib(DROP_ALL_REMAINS)
 	victim = null
 
 	qdel(src)

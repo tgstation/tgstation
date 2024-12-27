@@ -22,7 +22,7 @@
 			if(!can_give_in_direction(direction, reagent))
 				return FALSE
 
-/datum/component/plumbing/filter/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
+/datum/component/plumbing/filter/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
 	if(!reagents || !target || !target.reagents)
 		return FALSE
 	var/direction
@@ -31,7 +31,7 @@
 			direction = get_original_direction(text2num(A))
 			break
 	if(reagent)
-		reagents.trans_id_to(target.parent, reagent, amount)
+		reagents.trans_to(target.parent, amount, target_id = reagent, methods = round_robin ? LINEAR : NONE)
 	else
 		for(var/A in reagents.reagent_list)
 			var/datum/reagent/R = A
@@ -40,10 +40,11 @@
 			var/new_amount
 			if(R.volume < amount)
 				new_amount = amount - R.volume
-			reagents.trans_id_to(target.parent, R.type, amount)
+			reagents.trans_to(target.parent, amount, target_id = R.type, methods = round_robin ? LINEAR : NONE)
 			amount = new_amount
 			if(amount <= 0)
 				break
+
 ///We check if the direction and reagent are valid to give. Needed for filters since different outputs have different behaviours
 /datum/component/plumbing/filter/proc/can_give_in_direction(dir, reagent)
 	var/obj/machinery/plumbing/filter/F = parent

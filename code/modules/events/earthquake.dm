@@ -34,7 +34,7 @@
 	var/list/turfs_to_shred
 	///A list of turfs directly under turfs_to_shred, for creating a proper chasm to the floor below.
 	var/list/underbelly = list()
-	///The edges of our fault line, to recieve light damage.
+	///The edges of our fault line, to receive light damage.
 	var/list/edges = list()
 
 /datum/round_event/earthquake/setup()
@@ -93,7 +93,11 @@
 	priority_announce("Planetary monitoring systems indicate a devastating seismic event in the near future.", "Seismic Report")
 
 /datum/round_event/earthquake/start()
-	notify_ghosts("The earthquake's epicenter has been located: [get_area_name(epicenter)]!", source = epicenter, header = "Rumble Rumble Rumble!")
+	notify_ghosts(
+		"The earthquake's epicenter has been located: [get_area_name(epicenter)]!",
+		source = epicenter,
+		header = "Rumble Rumble Rumble!",
+	)
 
 /datum/round_event/earthquake/tick()
 	if(ISMULTIPLE(activeFor, 5))
@@ -108,10 +112,10 @@
 				earthquake_witness.playsound_local(
 					earthquake_witness,
 					pick(
-						'sound/misc/earth_rumble_distant1.ogg',
-						'sound/misc/earth_rumble_distant2.ogg',
-						'sound/misc/earth_rumble_distant3.ogg',
-						'sound/misc/earth_rumble_distant4.ogg',
+						'sound/ambience/earth_rumble/earth_rumble_distant1.ogg',
+						'sound/ambience/earth_rumble/earth_rumble_distant2.ogg',
+						'sound/ambience/earth_rumble/earth_rumble_distant3.ogg',
+						'sound/ambience/earth_rumble/earth_rumble_distant4.ogg',
 					),
 					75,
 				)
@@ -146,12 +150,12 @@
 		playsound(epicenter, 'sound/misc/metal_creak.ogg', 125, TRUE)
 
 /datum/round_event/earthquake/end()
-	playsound(epicenter, 'sound/misc/earth_rumble.ogg', 125)
+	playsound(epicenter, 'sound/ambience/earth_rumble/earth_rumble.ogg', 125)
 	for(var/mob/earthquake_witness as anything in GLOB.player_list)
 		if(!is_station_level(earthquake_witness.z) || !is_mining_level(earthquake_witness.z))
 			continue
 		shake_camera(earthquake_witness, 2 SECONDS, 4)
-		earthquake_witness.playsound_local(earthquake_witness, 'sound/effects/explosionfar.ogg', 75)
+		earthquake_witness.playsound_local(earthquake_witness, 'sound/effects/explosion/explosionfar.ogg', 75)
 
 	// Step two of the destruction, which detonates the turfs in the earthquake zone. There is no actual explosion, meaning stuff around the earthquake zone is perfectly safe.
 	// All turfs, and everything else that IS in the earthquake zone, however, will behave as if it were bombed.

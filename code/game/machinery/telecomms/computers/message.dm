@@ -20,13 +20,16 @@
 	var/obj/machinery/telecomms/message_server/linkedServer = null
 	/// Sparks effect - For emag
 	var/datum/effect_system/spark_spread/spark_system
-	/// Computer properties
-	var/screen = MSG_MON_SCREEN_MAIN // 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
-	var/message = "System bootup complete. Please select an option." // The message that shows on the main menu.
-	var/auth = FALSE // Are they authenticated?
-	/// Error, Success & Notice messages
+	/// Computer properties.
+	/// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
+	var/screen = MSG_MON_SCREEN_MAIN
+	/// The message that shows on the main menu.
+	var/message = "System bootup complete. Please select an option."
+	/// Error message to display in the interface.
 	var/error_message = ""
+	/// Notice message to display in the interface.
 	var/notice_message = ""
+	/// Success message to display in the interface.
 	var/success_message = ""
 	/// Decrypt password
 	var/password = ""
@@ -71,7 +74,8 @@
 	GLOB.telecomms_list += src
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/message_monitor/LateInitialize()
+/obj/machinery/computer/message_monitor/post_machine_initialize()
+	. = ..()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
 		for(var/obj/machinery/telecomms/message_server/message_server in GLOB.telecomms_list)
@@ -89,7 +93,7 @@
 		"error_message" = error_message,
 		"notice_message" = notice_message,
 		"success_message" = success_message,
-		"auth" = auth,
+		"auth" = authenticated,
 		"server_status" = !LINKED_SERVER_NONRESPONSIVE,
 	)
 
@@ -109,11 +113,11 @@
 		if(MSG_MON_SCREEN_REQUEST_LOGS)
 			var/list/request_list = list()
 			for(var/datum/data_rc_msg/rc in linkedServer.rc_msgs)
-				request_list += list(list("ref" = REF(rc), "message" = rc.message, "stamp" = rc.stamp, "id_auth" = rc.id_auth, "departament" = rc.send_dpt))
+				request_list += list(list("ref" = REF(rc), "message" = rc.message, "stamp" = rc.stamp, "id_auth" = rc.id_auth, "departament" = rc.sender_department))
 			data["requests"] = request_list
 	return data
 
-/obj/machinery/computer/message_monitor/ui_act(action, params)
+/obj/machinery/computer/message_monitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return .
@@ -126,16 +130,16 @@
 		if("auth")
 			var/authPass = params["auth_password"]
 
-			if(auth)
-				auth = FALSE
+			if(authenticated)
+				authenticated = FALSE
 				return TRUE
 
 			if(linkedServer.decryptkey != authPass)
 				error_message = "ALERT: Incorrect decryption key!"
 				return TRUE
 
-			auth = TRUE
-			success_message = "YOU SUCCESFULLY LOGGED IN!"
+			authenticated = TRUE
+			success_message = "YOU SUCCESSFULLY LOGGED IN!"
 
 			return TRUE
 		if("link_server")
@@ -176,10 +180,10 @@
 			notice_message = "NOTICE: Logs cleared."
 			return TRUE
 		if("set_key")
-			var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption")
+			var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption", max_length = 16)
 			if(dkey && dkey != "")
 				if(linkedServer.decryptkey == dkey)
-					var/newkey = tgui_input_text(usr, "Please enter the new key (3 - 16 characters max)", "New Key")
+					var/newkey = tgui_input_text(usr, "Please enter the new key (3 - 16 characters max)", "New Key", max_length = 16)
 					if(length(newkey) <= 3)
 						notice_message = "NOTICE: Decryption key too short!"
 					else if(newkey && newkey != "")
@@ -206,8 +210,8 @@
 					break
 			return TRUE
 		if("send_fake_message")
-			var/sender = tgui_input_text(usr, "What is the sender's name?", "Sender")
-			var/job = tgui_input_text(usr, "What is the sender's job?", "Job")
+			var/sender = tgui_input_text(usr, "What is the sender's name?", "Sender", max_length = MAX_NAME_LEN)
+			var/job = tgui_input_text(usr, "What is the sender's job?", "Job", max_length = 60)
 
 			var/recipient
 			var/list/tablet_to_messenger = list()
@@ -225,7 +229,7 @@
 			else
 				recipient = null
 
-			var/message = tgui_input_text(usr, "Please enter your message", "Message")
+			var/message = tgui_input_text(usr, "Please enter your message", "Message", max_length = MAX_MESSAGE_LEN)
 			if(isnull(sender) || sender == "")
 				sender = "UNKNOWN"
 
@@ -246,14 +250,14 @@
 			linkedServer.receive_information(signal, null)
 			usr.log_message("(Tablet: [name] | [usr.real_name]) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
 			return TRUE
-		// Malfunction AI and cyborgs can hack console. This will auth console, but you need to wait password selection
+		// Malfunction AI and cyborgs can hack console. This will authenticate the console, but you need to wait password selection
 		if("hack")
 			var/time = 10 SECONDS * length(linkedServer.decryptkey)
 			addtimer(CALLBACK(src, PROC_REF(unemag_console)), time)
 			screen = MSG_MON_SCREEN_HACKED
 			error_message = "%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!"
 			linkedServer.toggled = FALSE
-			auth = TRUE
+			authenticated = TRUE
 			return TRUE
 	return TRUE
 
@@ -264,6 +268,9 @@
 		ui = new(user, src, "MessageMonitor", name)
 		ui.open()
 
+/obj/machinery/computer/message_monitor/ui_assets(mob/user)
+	. = ..()
+	. += get_asset_datum(/datum/asset/spritesheet/chat)
 
 #undef MSG_MON_SCREEN_MAIN
 #undef MSG_MON_SCREEN_LOGS
@@ -277,13 +284,15 @@
 	name = "monitor decryption key"
 
 /obj/item/paper/monitorkey/Initialize(mapload, obj/machinery/telecomms/message_server/server)
-	..()
+	. = ..()
 	if (server)
 		print(server)
 		return INITIALIZE_HINT_NORMAL
-	else
-		return INITIALIZE_HINT_LATELOAD
+	return INITIALIZE_HINT_LATELOAD
 
+/**
+ * Handles printing the monitor key for a given server onto this piece of paper.
+ */
 /obj/item/paper/monitorkey/proc/print(obj/machinery/telecomms/message_server/server)
 	add_raw_text("<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is <b>[server.decryptkey]</b>.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one.")
 	add_overlay("paper_words")

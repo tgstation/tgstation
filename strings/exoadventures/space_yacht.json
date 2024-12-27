@@ -1,0 +1,257 @@
+{
+	"adventure_name": "There is a yacht cruising through space.",
+	"version": 1,
+	"author": "Kinnebian",
+	"starting_node": "A yacht in space?",
+	"starting_qualities": {},
+	"required_site_traits": [
+		"in space"
+	],
+	"loot_categories": [
+		"cash",
+		"drugs"
+	],
+	"scan_band_mods": {
+		"Plasma absorption band": 5
+	},
+	"deep_scan_description": "",
+	"triggers": [],
+	"nodes": [
+		{
+			"name": "A yacht in space?",
+			"description": "You see a normal looking yacht, floating above you.",
+			"choices": [
+				{
+					"key": "choice 0",
+					"name": "Ignore it, its not worth investigating.",
+					"exit_node": "FAIL",
+					"delay": 10,
+					"delay_message": "You fly on by..."
+				},
+				{
+					"key": "choice 4",
+					"name": "Investigate it closer!",
+					"exit_node": "Looks like the doors are sealed shut.",
+					"delay": 30,
+					"delay_message": "You begin to fly up to and around the yacht.."
+				}
+			],
+			"image": null,
+			"raw_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAMAAAD0WI85AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAzUExURUBAQOUAD/////8AAPgFFvwAB/0ABfwACPsBDP4AAszMzJMyje986cZlwEz/AOIBGOQAEnoV2UoAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAN5SURBVHhe7ZzrepswEERdp7c4TtP3f9rurBZ0QRISXpBEOf2KJcUhcxig9Idzu+iPbyfAiPB2GO7y6hIRib2tf2aRNwsvjYYV4QHIiNxV21LdmSPCVdAmJyKvHeKJkEJepGN8Ea7lBCLiwksDwSe8LwKTUzQCEx2Rw28Locj3H+OLTKiIHI4VIX7++v2Oq2REZpHRuUR6o2ORuhvfayIdPUR23EgdZxTp6DzZwBkbGZsGIg9s1M/jMhHFH/t4sEiCD4PMati3kUVo0rgnTaDwfD7VRV6tgUKbzPOOoEEkRIwGeci8jp0aYQk/s6ykRGaN2aPOaA8RG9kXkbXYuWU1pvTO0CN1nqiLOBaEGzmxbDIbC2ynpc/Plo14FoQ9+I+bLAG3E5NfNDAQjaYigQZhRbyviQklDjR4yBqNG5GgM/bQ+5IPKxFoGAnQ9tSSoBNREXaYsjtDjEUCtBTJVDKLIPkHZZbks0Wg0UTE3hMzIpghuBddBkRgQbRtJDRhEZMfSGrgTWks8S2FIuYoaossKjFXtcR18Z0ku0fTRnwROMQsvFVMJLpPNyJJB2c5JUEc+KzlPvdQIn41Ihx3qREupi1qPfQawQ3VQZJalqtYkNAx6jwURZbZDWwQfpWXJHGcykL0RKImnDdcx5KkTVProSgS3GYxizoUWGzw0BQhTHROa5I7YFFirlLvkRVJ/WcsA1/yktylQmKThnYjJLIATVRYbPTYXcRxKNTZ5lEgUnWC+SK2CgyKiqE3ya4q2UsE59Oc20zclRS+Rs2PXhepAiImtsAjzPFnDXqf7KcebRHHgZOzw7oCgW+VvWxBSwQxgKQCMiup4lULQkUkMEB43uClpI6XLQgNkaUFOxQYcBMaGjuI0KT0qog0seFhQtAQWZgUodTExEJk0zHxROQ1j4aFF1WlkToRVKFaBqMvkmcPB0ZJpMhklyYmdETWK9lVAmiJ5Ex2lwBKIkmTQySAlkjM5DAJUCWS/TeGYxsbMzxOAqRENj4rNDAQqhrpmUukNw4X2f6gnudqpDcukd7oVqT2pnA10huXSG/oiuh+urqKq5He+J9F2l0HOc7YSJ9HupSBG/EP/MEimq03FcnwomNGZKxrZimCD7bLb00Y6ZPtEZE/BBzw2x/GkRER4YvGVoT/QgQVpfgr39ocFnEx+TAYqpHzcLv9A9Y6cLa57YOgAAAAAElFTkSuQmCC"
+		},
+		{
+			"name": "Looks like the doors are sealed shut.",
+			"description": "You fly up to the \"boat\" and find that all the doors are locked tight, and welded shut. You think you hear.. music inside? There is a welded vent, too. You reckon you could force it open if you hit it hard enough, but it would be less risky to unweld it using a welder.",
+			"choices": [
+				{
+					"key": "choice 2",
+					"name": "Try to force the door!",
+					"exit_node": "You destroyed the drone.",
+					"delay": 10,
+					"delay_message": "You begin forcing the door.."
+				},
+				{
+					"key": "choice 3",
+					"name": "Try to force the vent.",
+					"exit_node": "The music grows louder..",
+					"delay": 20,
+					"delay_message": "You begin forcing the vent.."
+				},
+				{
+					"key": "choice 5",
+					"name": "Fly away, no chance in hell of getting in there..",
+					"exit_node": "FAIL",
+					"delay": 5,
+					"delay_message": "Moving.."
+				},
+				{
+					"key": "choice 14",
+					"name": "Unweld the vent.",
+					"exit_node": "The music grows louder..",
+					"requirements": [
+						{
+							"quality": "welder",
+							"operator": "==",
+							"value": 1
+						}
+					],
+					"delay": 5,
+					"delay_message": "Welding.."
+				}
+			],
+			"image": null,
+			"raw_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAMAAAD0WI85AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABRUExURaWMpOUAD/8AAKaNpaaOpaePpqiQp6mRqKmSqEBAQFRPVGddZmVcZeDg4PgFFvwAB4CAgP0ABfwACPsBDP4AAjAwMP/YAMHBwUz/AOIBGOQAEo23xmoAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHASURBVHhe7dwJT8MwDIbh0q5AYWNc4/r/P5TYcdWGmildDE2i75HoMWGJtymHkNYG8nNVAR/C26LVF9JO+KXSTCF8QIoP4aVwm6iQTvbZCEJcghrSNZ3n9nRKdk3XX/c3u/7Wf87WwhDaDO0Q5+5+v+fpLAQh3HJoD9EGns5CGEIldYS4TfStRXg6Cz9DHo5JKyJ9K8hgslmIN6SEDI+rWZVMIc7T88ur28m1WjqN5HxxPXMIGQ1ysaOcZEhc0GFWUnHIKjIkyl2RSkMu6rAqWYacJz+2CJ3KkJdZiFzsKAiZ+6uQkNxGRF4JyJCHFbFQccg5i1tMhry8QhIgxAJCFAixgBAFQiwgRIEQCwhRIMQCQhQIsYAQBUIsbBXi/3fhD2U8zWYhbw5CFAhRIMQCQhQIsYAQRUSI/4UeKDREdu/CZSAk9N8hS/hmDyFEgRALCFEgxAJCFAixgBDFqhD/dxYfyniarUJmEBJAiAIhFhCiQIgFhCgQYgEhCoRYQIgCIRYQokCIhYpD6I3t8tSE8c36kXIL+XD4QRb8+IQVMTmEiE93PIXwB4XQEv3mS0Y3xyFz/uujg6JWxNK2IU3zDauvUlylzN3TAAAAAElFTkSuQmCC"
+		},
+		{
+			"name": "The music grows louder..",
+			"description": "The music gets louder as you enter through the vent... maybe you should turn back?",
+			"choices": [
+				{
+					"key": "choice 6",
+					"name": "Continue onwards!",
+					"exit_node": "You fall down!",
+					"delay": 5,
+					"delay_message": "Moving..."
+				},
+				{
+					"key": "choice 7",
+					"name": "Turn back.",
+					"exit_node": "Looks like the doors are sealed shut.",
+					"delay": 5,
+					"delay_message": "Moving.."
+				}
+			],
+			"image": "default"
+		},
+		{
+			"name": "You fall down!",
+			"description": "As you are crawling through the vents of this Space Yacht, the vent gives way! You're dropped into an empty room, completely filled with plasma! There is a desk and filing cabinet in here, along with a window observing the main portion of the yacht. The music is deafening at this point, it sounds like a horrible mix of sea shanties and EDM. ",
+			"choices": [
+				{
+					"key": "choice 8",
+					"name": "Look through the window.",
+					"exit_node": "A rockin' party.",
+					"delay": 0
+				},
+				{
+					"key": "choice 9",
+					"name": "Fly outta of there.",
+					"exit_node": "The music grows louder..",
+					"delay": 5,
+					"delay_message": "Moving.."
+				},
+				{
+					"key": "choice 10",
+					"name": "Rummage in the desk, using your key to open it.",
+					"exit_node": "Drugs and cash!",
+					"requirements": [
+						{
+							"quality": "HASKEY",
+							"operator": "==",
+							"value": 1
+						}
+					],
+					"delay": 0,
+					"delay_message": "Rummaging.."
+				},
+				{
+					"key": "choice 11",
+					"name": "Take a sample of the atmosphere.",
+					"exit_node": "The atmospherics scan",
+					"delay": 30,
+					"delay_message": "Taking sample.."
+				},
+				{
+					"key": "choice 13",
+					"name": "Trash the place, fuck the police!",
+					"exit_node": "You wrecked yourself.",
+					"delay": 30,
+					"delay_message": "Trashing the place..."
+				}
+			],
+			"image": null,
+			"raw_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAMAAAD0WI85AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADAUExURbyA1eUAD/8AALyB1b2B1b2D1vgFFvwAB/0ABfwACPsBDP4AAr6C2MaJ4NRH7NSU7buA1bp+0rp90bp+0bt/07l8z7h6zbp80bp+07t/1Lp80Lp8z7uA1Lp/07l90bl+0rh80Lh80bd6z7p/1JAiVZAkWZAoX5AnXZAmXZAlW5AkWJA6fpA7f5A4epAnXpA9g7l+07Z6z+WQVZZar5BVqmYqf5BOnZA2dzPlBuIBGLx+0rx80Lx/1L13yr14yuQAErVxUskAAAAJcEhZcwAADsIAAA7CARUoSoAAAAJ8SURBVHhe7dzZctowFIBhky7pElo5pkGkS9qgpBvdoVva5v3fqkfyQciRYbxISPKc70IxxpH9I0iYzISMxGc0AGWIGpM2vJCDDbUriFv4tYNNiNqQAobczu7gVmtGiFoKGAKG9FAJgYSBhKhlGUAItqhdqamGyJJhhKhlUbtSczPk7mH6IWuph4B79x88lK+SFOmQ1LUMORoHdYSXUaNlyPhRUGO8jBqtQx4HRCE2CnGCQmwU4gSF2CjECQqxUYgTFGKjECcoxEYhTlCIjUKcoBAbhTjhNCQodyGD+dtvvCgkNhQSGwqJDYXEhkJiQyGxoZDYtAph+XExeXJyMp0onM9ms6KYnj49neZ5XhQ555MZm8A25wXn/JizjDH2DDb5cziWwU0YWDlZ+ZXl+YuzM85fvjo/53PA2HyuDmincYi46eLy9Zu37/CGB5ca7jDgNZmahoj3i2h86BEiBE4Sgx4rEllH55CoOhZi0TUkso7uIR9xiih8gke1+4pEpUcIPhiW8o79PPH0WfqG4MOh4Zx69E2fBTZahnz+gsqL/lpR7lODPoVX+iywIb5py7XRcpmpcQe83iqcU+6Xm97ps8CGwAszNQ6pI+eEH4Z4y69KyMo2Wq0yNe6wI0QuR4AQfPKbGr/Y65RPq4RCtsOZ98BJCE5hKe+gkFYoxEAhLlGIgUJcohDD7hD8He+dOiOQb/Dwwky9Q+AUeJhfvkOE+I5HeSZ+rE9a/8j1DNnTcoDNivgI2V+H+RYc91Q1CtkOj4hAk5AkDDhEf6RQWv/ZXhPyE8gS+ekP6cRgCPr1O7vahBxkfyDk6u8/GLe6xm8NToWY9O60VmQ4suw/MDqeSvYBdn8AAAAASUVORK5CYII="
+		},
+		{
+			"name": "You wrecked yourself.",
+			"description": "In the midst of trashing the place, a filing cabinet tips over on you, crushing the fragile, expensive drone. Nice job, idiot.",
+			"choices": [
+				{
+					"key": "choice 15",
+					"name": "Shit.",
+					"exit_node": "FAIL_DEATH",
+					"delay": 0
+				}
+			],
+			"image": null,
+			"raw_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAMAAAD0WI85AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAD/UExURTg4OJ2dnYCAgJOTk+Xl5eUAD4WFhYmJibS0tIKCgv8AAIeHh9jY2Do6Oo2NjTs7O62trYODg5+fn5eXl4GBgYaGhv/YAJKSkrGxsTk5OZGRkampqa+vr4uLi7+/v4+Pj9cLC+4EBP///5ubm5WVlcXFxcfHx/IDA+0FBeYGBvgBAfv7+6GhofPz8/7+/pmZmaOjo6WlpdXV1aenp46OjpaWlqioqLOzs6urq7q6us/Pz8zMzISEhLGwspCQkHl5eZycnFNTU6CgoKSkpJ6enmJiYqKioqampqqqqkNDQ3t7e39/fzPlBtMFEzk3Nzo3Nzg3Nz42Nj02Nt4CEG1tbWz50i4AAAAJcEhZcwAADsMAAA7DAcdvqGQAAAT4SURBVHhe3ZwLW+NEFIanp9rKUlkKRaHctOAdLbjKoq6Kuhfv6+3//xYzc74ktCzJzJxvbR7f7pOGPGTmvMlk6PZr6tLpSf8VHn3pod3/Gq4H0+TV/wEqEpaxDIav4VDSGK6h7WxyRJy8BNB0NpXIvZqwqQlZH5Hpq8jrYZlFLRJWPO0iQ0H/NDZU5H7xyOSGSDgVxaJdZJMuImM0nc2CSKEQJeJkK/ROQUW20XI2iyLhtESITCah9503zLwJkV207PbwnMqCCFzCpkZ6ofupoBoDernt15PW/b29Qib9UlkU8SYxIk4OfP8EEVnzDWHSsrAkEk5L2NSMHAaRnSPlAGyBY4DLoJHQEF/krbdVZDabuZlfAbpebdnA2LJzEkRO0W4+N0RKVCQ8asK6t1N29Rpt5Z2Cdz34+Q5kE+36Dupu/drChgZqkYL33v/gQ3+VFAQR34g/M9XZqVvVI0nioBpZLzh61VMzlcgSWry2W66Fh7crmESekii2F0Rm7qOiDz2CYQu6bOZOETx8Y4sP5YwpMlkSmbmPQ0foMMajWSR4+Gf9qVwGZBNVEJCptlmLfOJ7xrr/185dIq0wXwHLPhr11fviyyNYibS7ZIscE8fW8l+R9rJvky3ieCLzFYvMUYeZ8WpFxrRTIodo0kK+yDlP5AJNWsgXcbKPQqwsj6wsLCIDFGKkt2qRPmlsra9ahDUByzraM2ES6aMUE5/KGdozYREZcE4JZWSZRPYpIherF3FyjmIsDLsgMkYxFmSA1myYRLYZY4sU8phEKBMwZ2RZRY5RTT4POiGybj8lCBTM2EQI+YI9UFBsIk7OUE82MkdTRqwiIV+wUAcKNowiJ9axdSNQsGEUcbKLijKZdkZkAxVlQggUFKvIoXFsEQIFxSpyYBUpAwUrVhEnn6GkLD5njSy7yATJUy5oxoxZZEsucXQjOTo6wlpBh0Rs+UIdKFghiAxRVA51oGDFLqIBbya0kUUQeWgQuRUo5GMXseQLtwKFfAgiVb6ACTUK7LGBNuwQRKqAdxz92ZTyrT1KoKAQRJxcaVnFZIpC2yhHI29kcUTKfKEfeUrKjIgTKCgMkWk5tkayhlKbKc0HHROp3966wqXcxkP9dU6goHBETrWwVDiBgkIRyc0XiCOLI3KRJ3LeOREnF6gtCVKgoJBEsgJeUqCgcEROs8YW9f4XjkhevsAcWTSRKYpLgBUoKCSRnHyBFSgoJJGrDBFWoKCQRHLyBVagoNBE0gNeVqCgsETmyWOLFigoLBFXvqKNhhYoKDyR1HyB9yZjgCaSfAMZLVBQaCKbifPWFi1QUGgi6XdZYj8STJFLvb0nii86K1Ic4t6X8XwlzP+wFzBF0nhEfYXCEymmrUe4ZSyGE+lPsCMHnkjq9FvfxkNhJSJf+8U3nRbB+G/D/yoxUvAQRfyH0KLe/NWwjnKPQg1P5Fu5Ho0OJii2gUH43PNczrEjB57IdyGnxthpwmuMRt939i+7kx+0xDged1gkKac+7a7IcZVcRbBDnrSYIk9SPoR2Qp60mCJOnqLKCJ6RJy2uSMJb2T+SRxZV5KefUWUET1++SPWVQrizPYFfUGUE7EnrRSK/FngT/+0PaTLSQ5mtXNd3fpOACPjtd/e8Frnn/ihEnv/5V7G8k7+x68oJIjepNqefkX/k8hrfw9HM4wfsSYsMXk3FgD14OPcv1NBUWmnJzVYAAAAASUVORK5CYII="
+		},
+		{
+			"name": "Drugs and cash!",
+			"description": "Rummaging through the drawer, you find that the person who lives in here stores all his drugs and cash in here too. Good for you!",
+			"choices": [
+				{
+					"key": "choice 17",
+					"name": "Head back with your newly acquired things. ",
+					"exit_node": "WIN",
+					"delay": 30,
+					"delay_message": "Stealing..."
+				},
+				{
+					"key": "choice 18",
+					"name": "Take one last look around the place.",
+					"exit_node": "You fall down!",
+					"delay": 0
+				}
+			],
+			"image": null,
+			"raw_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkBAMAAAAxqGI4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAwUExURW4WTuUAD/8AAPgFFvwAB/0ABfwACPsBDP4AAuex/6526uOxlKt4fUz/AOIBGOQAEqIMSWUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHFSURBVGje7dq/bsIwEAZw15ubpX2DyFLHqkvfqe/BE7AeU9dkyu68gTN1r9RHqX0mf1oMMeIuA7pPQooE4sd3FwJD1B3lmT0BeeJu8bAZom0MNxKPNDeia2X5EbsJUm+A1HYLRNs7WXyt3tmReMSO2JePHfc3XjFHEEEEEUQQQQQRRBBBBBFEEEEEiQHgR+DQ7HkRE4y2bYAVUdDG3KasIbEHBvZciMFZtbeWuYhAmFUzVgnKapnKpXTFCOCoDkcAR7ZiODdgfCFiAoElUpOy9fcBiA+vihAD45DaafXrSj9454LiypDZWCbsCDD55VT94LBJV4TAFJwYLNskLXepqcKwfDFi5o8K6f3M0sGaTRbB1f9fyRVXYYD05tN6TspE4EZELaeIazHY93F6Gk8sd7p3mt8T8xfpWJCUakhnsCdHPudD/Lr7zLQIm1R9Qk6L0CHV8bqVKUKHjEamCBni+vNFiJBpVtkiBEj8oRpr5ItQIMMc7zp2xLv8SwiQ/nINEmQ8ec/VoEGqCyunRc6OigrJ/NMiR9YjiCCCXIPEe3C0ZUZev79qrVmYiMSbo34SUutYZ5k3oluvUnBcWjPexcAbpX4BKG91c2myRoIAAAAASUVORK5CYII="
+		},
+		{
+			"name": "A rockin' party.",
+			"description": "Looking down through the window, you can see up to 20 plasmamen dancing on a disco floor. They look to be enjoying themselves, and none of them have noticed you. Oh, hey! Theres a key on the floor right next to you!",
+			"choices": [
+				{
+					"key": "choice 16",
+					"name": "Swipe the key and head back to the desk.",
+					"exit_node": "You fall down!",
+					"on_selection_effects": [
+						{
+							"effect_type": "Set",
+							"quality": "HASKEY",
+							"value": 1
+						}
+					],
+					"delay": 0
+				},
+				{
+					"key": "choice 19",
+					"name": "Tap on the window!",
+					"exit_node": "Weak.",
+					"delay": 0
+				}
+			],
+			"image": "default"
+		},
+		{
+			"name": "Weak.",
+			"description": "You weakly tap on the window, and nobody hears you through the blasting music.",
+			"choices": [
+				{
+					"key": "choice 20",
+					"name": "Oh well.",
+					"exit_node": "A rockin' party.",
+					"delay": 0
+				}
+			],
+			"image": "default"
+		},
+		{
+			"name": "You destroyed the drone.",
+			"description": "You smash into the door, and your screen goes red. Looks like you managed to destroy your drone, nice job. \n\n\nIdiot.",
+			"choices": [
+				{
+					"key": "choice 21",
+					"name": "Fuck.",
+					"exit_node": "FAIL_DEATH",
+					"delay": 0
+				}
+			],
+			"image": "signal_lost"
+		},
+		{
+			"name": "The atmospherics scan",
+			"description": "100% plasma, jam packed with it. This is definitely the home of some plasma-party-people.",
+			"choices": [
+				{
+					"key": "choice 22",
+					"name": "Huh.",
+					"exit_node": "You fall down!",
+					"delay": 0
+				}
+			],
+			"image": null,
+			"raw_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAMAAAD0WI85AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABRUExURWJoaOUAD/8AAPgFFvwAB/0ABfwACPsBDP4AAhcXFzs7OykpKVFRUQAAAKb//wD//wuKkf/MAP9mALAAADAwMP8AM/vZTwCwAEz/AOIBGOQAEso55t0AAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHDSURBVHhe7dzZbsIwEIXhdK/j2A6Fru//oD0zMYVuEr0YOhOdXyJxg5DyyXbhBgbmr4sVtED0GLr1QS4P6aVoHSA6kMJDdCpwWAEEhJVAdFrWsLQWi16K1meISNYB0WnRS9H6Crm6jg/ZFx2Cbm7v7mWXROwDEj1CvEWItwjxFiHeIsRbhHiLEG8R4i1CvEXIyaV+No6QkyPkbxFycmlc6n9aZQ4BIUvWFGvIOE6pSGmylRhBdBKQOmpttVpLbCA5466XUmltnufWCjZLf9oiI8iky0mrZa61zg1zYikxgoxYTxLWVduUhrW1gSSHhJRWSgPkoTYMG85BIU0CZIsT9knbhp0RmQdsdYFI2xYTsty97JGdjnYx98jxf61lkeGdJI+5P2+QESRP/R0xdw5K2dBhBBly6uWcyuP4ND6Lw/KDsBFkn0rkAyOOpg5rCCQQYHOAkUJDkC4xWwU6A+Q8EeItQrxFiLcI8RYh3iLEW4R4ixBvEeItQrxFiLcI8RYh3iLEW4R4ixBvEeItQrz1HSJfbO+/mhDpm+0/QF6QGOTXH+JgOqT3ivEBog+ByBT91lt/6b+nkOOW+5NBqBlZT8PwDsHEFJFntJj8AAAAAElFTkSuQmCC"
+		}
+	]
+}

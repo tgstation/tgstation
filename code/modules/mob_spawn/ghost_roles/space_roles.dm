@@ -97,7 +97,7 @@
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/Initialize(mapload)
 	. = ..()
 	if(prob(85)) //only has a 15% chance of existing, otherwise it'll just be a NPC syndie.
-		new /mob/living/basic/syndicate/ranged(get_turf(src))
+		new /mob/living/basic/trooper/syndicate/ranged(get_turf(src))
 		return INITIALIZE_HINT_QDEL
 
 ///battlecruiser stuff
@@ -160,6 +160,8 @@
 	l_pocket = /obj/item/uplink/nuclear
 	r_pocket = /obj/item/modular_computer/pda/nukeops
 
+	skillchips = list(/obj/item/skillchip/disk_verifier)
+
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/captain
 	name = "Syndicate Battlecruiser Captain"
 	you_are_text = "You are the captain aboard the syndicate flagship: the SBC Starfury."
@@ -181,6 +183,6 @@
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	head = /obj/item/clothing/head/hats/hos/cap/syndicate
-	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	mask = /obj/item/cigarette/cigar/havana
 	l_pocket = /obj/item/melee/energy/sword/saber/red
 	r_pocket = /obj/item/melee/baton/telescopic

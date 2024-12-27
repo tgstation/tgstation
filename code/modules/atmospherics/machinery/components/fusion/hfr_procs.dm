@@ -301,13 +301,13 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/alarm()
 	switch(get_status())
 		if(HYPERTORUS_MELTING)
-			playsound(src, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
+			playsound(src, 'sound/announcer/alarm/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
 		if(HYPERTORUS_EMERGENCY)
-			playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			playsound(src, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(HYPERTORUS_DANGER)
-			playsound(src, 'sound/machines/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			playsound(src, 'sound/machines/engine_alert/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(HYPERTORUS_WARNING)
-			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
+			playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 75)
 
 /**
  * Getter for the machine integrity
@@ -330,7 +330,7 @@
 	var/obj/machinery/power/apc/apc = area.apc
 	if (!apc)
 		return 0
-	var/obj/item/stock_parts/cell/cell = apc.cell
+	var/obj/item/stock_parts/power_store/cell = apc.cell
 	if (!cell)
 		return 0
 	return cell.percent()
@@ -413,7 +413,7 @@
 	var/critical = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN
 	if(critical)
 		priority_announce("WARNING - The explosion will likely cover a big part of the station and the coming EMP will wipe out most of the electronics. \
-				Get as far away as possible from the reactor or find a way to shut it down.", "Alert")
+				Get as far away as possible from the reactor or find a way to shut it down.", "Alert", 'sound/announcer/notice/notice3.ogg')
 	var/speaking = "[emergency_alert] The Hypertorus fusion reactor has reached critical integrity failure. Emergency magnetic dampeners online."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
 
@@ -421,9 +421,8 @@
 		"The [src] has begun melting down!",
 		source = src,
 		header = "Meltdown Incoming",
-		action = NOTIFY_ORBIT,
 		ghost_sound = 'sound/machines/warning-buzzer.ogg',
-		notify_volume = 75
+		notify_volume = 75,
 	)
 
 	for(var/i in HYPERTORUS_COUNTDOWN_TIME to 0 step -10)
@@ -431,7 +430,7 @@
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
 			final_countdown = FALSE
 			return
-		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
+		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individually
 			sleep(1 SECONDS)
 			continue
 		else if(i > 50)

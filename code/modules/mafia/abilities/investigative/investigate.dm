@@ -20,5 +20,5 @@
 			if(MAFIA_TEAM_SOLO)
 				fluff = "rogue, with their own objectives..."
 
-	to_chat(host_role.body, span_warning("Your investigations reveal that [target_role.body.real_name] is [fluff]"))
+	host_role.send_message_to_player(span_warning("Your investigations reveal that [target_role.body.real_name] is [fluff]"))
 	return TRUE

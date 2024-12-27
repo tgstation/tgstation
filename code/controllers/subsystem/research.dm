@@ -7,13 +7,11 @@ SUBSYSTEM_DEF(research)
 	//TECHWEB STATIC
 	var/list/techweb_nodes = list() //associative id = node datum
 	var/list/techweb_designs = list() //associative id = node datum
+	var/list/list/datum/design/item_to_design = list() //typepath = list of design datums
 
-	///List of all techwebs.
+	///List of all techwebs, generating points or not.
+	///Autolathes, Mechfabs, and others all have shared techwebs, for example.
 	var/list/datum/techweb/techwebs = list()
-	///The default Science Techweb.
-	var/datum/techweb/science/science_tech
-	///The default Admin Techweb.
-	var/datum/techweb/admin/admin_tech
 
 	var/datum/techweb_node/error_node/error_node //These two are what you get if a node/design is deleted and somehow still stored in a console.
 	var/datum/design/error_design/error_design
@@ -30,20 +28,23 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes_starting = list()
 	///category name = list(node.id = TRUE)
 	var/list/techweb_categories = list()
-	///associative double-layer path = list(id = list(point_type = point_discount))
-	var/list/techweb_boost_items = list()
+	///List of all items that can unlock a node. (node.id = list(items))
+	var/list/techweb_unlock_items = list()
 	///Node ids that should be hidden by default.
 	var/list/techweb_nodes_hidden = list()
 	///Node ids that are exclusive to the BEPIS.
 	var/list/techweb_nodes_experimental = list()
 	///path = list(point type = value)
 	var/list/techweb_point_items = list(
-	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+		/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	)
 	var/list/errored_datums = list()
-	var/list/point_types = list() //typecache style type = TRUE list
+	///Associated list of all point types that techwebs will have and their respective 'abbreviated' name.
+	var/list/point_types = list(TECHWEB_POINT_TYPE_GENERIC = "Gen. Res.")
 	//----------------------------------------------
-	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME)
+	var/list/single_server_income = list(
+		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME,
+	)
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
 	//Aiming for 1.5 hours to max R&D
@@ -62,20 +63,21 @@ SUBSYSTEM_DEF(research)
 		/obj/item/assembly/signaler/anomaly/hallucination = MAX_CORES_HALLUCINATION,
 		/obj/item/assembly/signaler/anomaly/bioscrambler = MAX_CORES_BIOSCRAMBLER,
 		/obj/item/assembly/signaler/anomaly/dimensional = MAX_CORES_DIMENSIONAL,
+		/obj/item/assembly/signaler/anomaly/ectoplasm = MAX_CORES_ECTOPLASMIC,
 	)
 
 	/// Lookup list for ordnance briefers.
 	var/list/ordnance_experiments = list()
 	/// Lookup list for scipaper partners.
-	var/list/scientific_partners = list()
+	var/list/datum/scientific_partner/scientific_partners = list()
 
 /datum/controller/subsystem/research/Initialize()
-	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
 	populate_ordnance_experiments()
-	science_tech = new /datum/techweb/science
-	admin_tech = new /datum/techweb/admin
+	new /datum/techweb/science
+	new /datum/techweb/admin
+	new /datum/techweb/oldstation
 	autosort_categories()
 	error_design = new
 	error_node = new
@@ -99,6 +101,14 @@ SUBSYSTEM_DEF(research)
 			techweb_list.add_point_list(bitcoins)
 
 		techweb_list.last_income = world.time
+
+		if(length(techweb_list.research_queue_nodes))
+			techweb_list.research_node_id(techweb_list.research_queue_nodes[1]) // Attempt to research the first node in queue if possible
+
+			for(var/node_id in techweb_list.research_queue_nodes)
+				var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
+				if(node.is_free(techweb_list)) // Automatically research all free nodes in queue if any
+					techweb_list.research_node(node)
 
 /datum/controller/subsystem/research/proc/autosort_categories()
 	for(var/i in techweb_nodes)
@@ -155,12 +165,13 @@ SUBSYSTEM_DEF(research)
 	if (!verify_techweb_nodes()) //Verify all nodes have ids and such.
 		stack_trace("Invalid techweb nodes detected")
 	calculate_techweb_nodes()
-	calculate_techweb_boost_list()
+	calculate_techweb_item_unlocking_requirements()
 	if (!verify_techweb_nodes()) //Verify nodes and designs have been crosslinked properly.
 		CRASH("Invalid techweb nodes detected")
 
 /datum/controller/subsystem/research/proc/initialize_all_techweb_designs(clearall = FALSE)
 	if(islist(techweb_designs) && clearall)
+		item_to_design = list()
 		QDEL_LIST(techweb_designs)
 	var/list/returned = list()
 	for(var/path in subtypesof(/datum/design))
@@ -175,6 +186,11 @@ SUBSYSTEM_DEF(research)
 			stack_trace("WARNING: Design ID clash with ID [initial(DN.id)] detected! Path: [path]")
 			errored_datums[DN] = initial(DN.id)
 			continue
+		var/build_path = initial(DN.build_path)
+		if(!isnull(build_path))
+			if(!(build_path in item_to_design))
+				item_to_design[build_path] = list()
+			item_to_design[build_path] += DN
 		DN.InitializeMaterials() //Initialize the materials in the design
 		returned[initial(DN.id)] = DN
 	techweb_designs = returned
@@ -211,25 +227,15 @@ SUBSYSTEM_DEF(research)
 				N.unlock_ids -= u
 				research_node_id_error(u)
 				. = FALSE
-		for(var/p in N.boost_item_paths)
+		for(var/p in N.required_items_to_unlock)
 			if(!ispath(p))
-				N.boost_item_paths -= p
+				N.required_items_to_unlock -= p
 				WARNING("[p] is not a valid path.")
 				node_boost_error(N.id, "[p] is not a valid path.")
 				. = FALSE
-			var/list/points = N.boost_item_paths[p]
-			if(islist(points))
-				for(var/i in points)
-					if(!isnum(points[i]))
-						WARNING("[points[i]] is not a valid number.")
-						node_boost_error(N.id, "[points[i]] is not a valid number.")
-						. = FALSE
-					else if(!point_types[i])
-						WARNING("[i] is not a valid point type.")
-						node_boost_error(N.id, "[i] is not a valid point type.")
-						. = FALSE
-			else if(!isnull(points))
-				N.boost_item_paths -= p
+			var/list/points = N.required_items_to_unlock[p]
+			if(!isnull(points))
+				N.required_items_to_unlock -= p
 				node_boost_error(N.id, "No valid list.")
 				WARNING("No valid list.")
 				. = FALSE
@@ -283,18 +289,16 @@ SUBSYSTEM_DEF(research)
 			var/datum/techweb_node/prereq_node = techweb_node_by_id(prereq_id)
 			prereq_node.unlock_ids[node.id] = node
 
-/datum/controller/subsystem/research/proc/calculate_techweb_boost_list(clearall = FALSE)
-	if(clearall)
-		techweb_boost_items = list()
+/datum/controller/subsystem/research/proc/calculate_techweb_item_unlocking_requirements()
 	for(var/node_id in techweb_nodes)
 		var/datum/techweb_node/node = techweb_nodes[node_id]
-		for(var/path in node.boost_item_paths)
+		for(var/path in node.required_items_to_unlock)
 			if(!ispath(path))
 				continue
-			if(length(techweb_boost_items[path]))
-				techweb_boost_items[path][node.id] = node.boost_item_paths[path]
+			if(length(techweb_unlock_items[path]))
+				techweb_unlock_items[path][node.id] = node.required_items_to_unlock[path]
 			else
-				techweb_boost_items[path] = list(node.id = node.boost_item_paths[path])
+				techweb_unlock_items[path] = list(node.id = node.required_items_to_unlock[path])
 		CHECK_TICK
 
 /datum/controller/subsystem/research/proc/populate_ordnance_experiments()
@@ -308,3 +312,44 @@ SUBSYSTEM_DEF(research)
 			for (var/datum/experiment/ordnance/ordnance_experiment as anything in ordnance_experiments)
 				partner.accepted_experiments += ordnance_experiment.type
 		scientific_partners += partner
+
+/**
+ * Goes through all techwebs and goes through their servers to find ones on a valid z-level
+ * Returns the full list of all techweb servers.
+ */
+/datum/controller/subsystem/research/proc/get_available_servers(turf/location)
+	var/list/local_servers = list()
+	if(!location)
+		return local_servers
+	for (var/datum/techweb/individual_techweb as anything in techwebs)
+		var/list/servers = find_valid_servers(location, individual_techweb)
+		if(length(servers))
+			local_servers += servers
+	return local_servers
+
+/**
+ * Goes through an individual techweb's servers and finds one on a valid z-level
+ * Returns a list of existing ones, or an empty list otherwise.
+ * Args:
+ * - checking_web - The techweb we're checking the servers of.
+ */
+/datum/controller/subsystem/research/proc/find_valid_servers(turf/location, datum/techweb/checking_web)
+	var/list/valid_servers = list()
+	for(var/obj/machinery/rnd/server/server as anything in checking_web.techweb_servers)
+		if(!is_valid_z_level(get_turf(server), location))
+			continue
+		valid_servers += server
+	return valid_servers
+
+/// Returns true if you can make an anomaly core of the provided type
+/datum/controller/subsystem/research/proc/is_core_available(core_type)
+	if (!ispath(core_type, /obj/item/assembly/signaler/anomaly))
+		return FALSE // The fuck are you checking this random object for?
+	var/already_made = created_anomaly_types[core_type] || 0
+	var/hard_limit = anomaly_hard_limit_by_type[core_type]
+	return already_made < hard_limit
+
+/// Increase our tracked number of cores of this type
+/datum/controller/subsystem/research/proc/increment_existing_anomaly_cores(core_type)
+	var/existing = created_anomaly_types[core_type] || 0
+	created_anomaly_types[core_type] = existing + 1

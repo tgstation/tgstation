@@ -12,6 +12,10 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	ui_name = "AntagInfoWizard"
 	suicide_cry = "FOR THE FEDERATION!!"
 	preview_outfit = /datum/outfit/wizard
+	can_assign_self_objectives = TRUE
+	default_custom_objective = "Demonstrate your incredible and destructive magical powers."
+	hardcore_random_bonus = TRUE
+
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -22,6 +26,10 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	show_to_ghosts = TRUE
 	/// This mob's Grand Ritual ability
 	var/datum/action/cooldown/grand_ritual/ritual
+	/// Perks that wizard learn
+	var/list/perks = list()
+	/// Button that hide perks hud.
+	var/atom/movable/screen/perk/more/compact_button
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
@@ -74,6 +82,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		CRASH("Wizard datum with no owner.")
 	assign_ritual()
 	equip_wizard()
+	owner.current.add_quirk(/datum/quirk/introvert)
 	if(give_objectives)
 		create_objectives()
 	if(move_to_lair)
@@ -118,7 +127,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	if(!owner.current)
 		return
 	if(!GLOB.wizardstart.len)
-		SSjob.SendToLateJoin(owner.current)
+		SSjob.send_to_late_join(owner.current)
 		to_chat(owner, "HOT INSERTION, GO GO GO")
 	owner.current.forceMove(pick(GLOB.wizardstart))
 
@@ -191,9 +200,9 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	H.equipOutfit(outfit_type)
 
 /datum/antagonist/wizard/ui_static_data(mob/user)
-	. = ..()
 	var/list/data = list()
 	data["objectives"] = get_objectives()
+	data["can_change_objective"] = can_assign_self_objectives
 	return data
 
 /datum/antagonist/wizard/ui_data(mob/user)
@@ -252,6 +261,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 /datum/antagonist/wizard/apprentice
 	name = "Wizard Apprentice"
 	antag_hud_name = "apprentice"
+	can_assign_self_objectives = FALSE
+	move_to_lair = FALSE
 	var/datum/mind/master
 	var/school = APPRENTICE_DESTRUCTION
 	outfit_type = /datum/outfit/wizard/apprentice
@@ -369,6 +380,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	show_in_antagpanel = FALSE
 	outfit_type = /datum/outfit/wizard/academy
 	move_to_lair = FALSE
+	can_assign_self_objectives = FALSE
 
 /datum/antagonist/wizard/academy/assign_ritual()
 	return // Has other duties to be getting on with
@@ -403,13 +415,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		parts += "<br><B>Grand Rituals completed:</B> [ritual.times_completed]<br>"
 
 	var/count = 1
-	var/wizardwin = 1
+	var/wizardwin = TRUE
 	for(var/datum/objective/objective in objectives)
-		if(objective.check_completion())
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
-		else
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
-			wizardwin = 0
+		if(!objective.check_completion())
+			wizardwin = FALSE
+		parts += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 		count++
 
 	if(wizardwin)
@@ -436,10 +446,10 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 /datum/team/wizard/roundend_report()
 	var/list/parts = list()
 
-	parts += "<span class='header'>Wizards/witches of [master_wizard.owner.name] team were:</span>"
+	parts += span_header("Wizards/witches of [master_wizard.owner.name] team were:")
 	parts += master_wizard.roundend_report()
 	parts += " "
-	parts += "<span class='header'>[master_wizard.owner.name] apprentices and minions were:</span>"
+	parts += span_header("[master_wizard.owner.name] apprentices and minions were:")
 	parts += printplayerlist(members - master_wizard.owner)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

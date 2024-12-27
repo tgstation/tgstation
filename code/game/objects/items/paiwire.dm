@@ -4,15 +4,15 @@
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "wire1"
 	item_flags = NOBLUDGEON
-	var/obj/machinery/machine //what machine we're currently hacking.
+	///The current machine being hacked by the pAI cable.
+	var/obj/machinery/hacking_machine
 
 /obj/item/pai_cable/Destroy()
-	machine = null
+	hacking_machine = null
 	return ..()
-
 
 /obj/item/pai_cable/proc/plugin(obj/machinery/M, mob/living/user)
 	if(!user.transferItemToLoc(src, M))
 		return
 	user.visible_message(span_notice("[user] inserts [src] into a data port on [M]."), span_notice("You insert [src] into a data port on [M]."), span_hear("You hear the satisfying click of a wire jack fastening into place."))
-	machine = M
+	hacking_machine = M

@@ -24,20 +24,20 @@
 		to_chat(user, span_warning("That's not an augment, silly!"))
 		return SURGERY_STEP_FAIL
 	if(aug.body_zone != target_zone)
-		to_chat(user, span_warning("[tool] isn't the right type for [parse_zone(target_zone)]."))
+		to_chat(user, span_warning("[tool] isn't the right type for [target.parse_zone_with_bodypart(target_zone)]."))
 		return SURGERY_STEP_FAIL
 	target_limb = surgery.operated_bodypart
 	if(target_limb)
 		display_results(
 			user,
 			target,
-			span_notice("You begin to augment [target]'s [parse_zone(user.zone_selected)]..."),
-			span_notice("[user] begins to augment [target]'s [parse_zone(user.zone_selected)] with [aug]."),
-			span_notice("[user] begins to augment [target]'s [parse_zone(user.zone_selected)]."),
+			span_notice("You begin to augment [target]'s [target.parse_zone_with_bodypart(user.zone_selected)]..."),
+			span_notice("[user] begins to augment [target]'s [target.parse_zone_with_bodypart(user.zone_selected)] with [aug]."),
+			span_notice("[user] begins to augment [target]'s [target.parse_zone_with_bodypart(user.zone_selected)]."),
 		)
-		display_pain(target, "You feel a horrible pain in your [parse_zone(user.zone_selected)]!")
+		display_pain(target, "You feel a horrible pain in your [target.parse_zone_with_bodypart(user.zone_selected)]!")
 	else
-		user.visible_message(span_notice("[user] looks for [target]'s [parse_zone(user.zone_selected)]."), span_notice("You look for [target]'s [parse_zone(user.zone_selected)]..."))
+		user.visible_message(span_notice("[user] looks for [target]'s [target.parse_zone_with_bodypart(user.zone_selected)]."), span_notice("You look for [target]'s [target.parse_zone_with_bodypart(user.zone_selected)]..."))
 
 
 //ACTUAL SURGERIES
@@ -74,9 +74,9 @@
 				display_results(
 					user,
 					target,
-					span_warning("You fail in replacing [target]'s [parse_zone(target_zone)]! Their body has rejected [tool]!"),
-					span_warning("[user] fails to replace [target]'s [parse_zone(target_zone)]!"),
-					span_warning("[user] fails to replaces [target]'s [parse_zone(target_zone)]!"),
+					span_warning("You fail in replacing [target]'s [target.parse_zone_with_bodypart(target_zone)]! Their body has rejected [tool]!"),
+					span_warning("[user] fails to replace [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+					span_warning("[user] fails to replaces [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 				)
 				tool.forceMove(target.loc)
 				return
@@ -85,12 +85,12 @@
 		display_results(
 			user,
 			target,
-			span_notice("You successfully augment [target]'s [parse_zone(target_zone)]."),
-			span_notice("[user] successfully augments [target]'s [parse_zone(target_zone)] with [tool]!"),
-			span_notice("[user] successfully augments [target]'s [parse_zone(target_zone)]!"),
+			span_notice("You successfully augment [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+			span_notice("[user] successfully augments [target]'s [target.parse_zone_with_bodypart(target_zone)] with [tool]!"),
+			span_notice("[user] successfully augments [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 		)
-		display_pain(target, "Your [parse_zone(target_zone)] comes awash with synthetic sensation!", mechanical_surgery = TRUE)
-		log_combat(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] COMBAT MODE: [uppertext(user.combat_mode)]")
+		display_pain(target, "Your [target.parse_zone_with_bodypart(target_zone)] comes awash with synthetic sensation!", mechanical_surgery = TRUE)
+		log_combat(user, target, "augmented", addition="by giving him new [target.parse_zone_with_bodypart(target_zone)] COMBAT MODE: [uppertext(user.combat_mode)]")
 	else
-		to_chat(user, span_warning("[target] has no organic [parse_zone(target_zone)] there!"))
+		to_chat(user, span_warning("[target] has no organic [target.parse_zone_with_bodypart(target_zone)] there!"))
 	return ..()

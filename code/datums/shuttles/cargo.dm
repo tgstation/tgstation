@@ -11,10 +11,6 @@
 	suffix = "birdboat"
 	name = "supply shuttle (Birdboat)"
 
-/datum/map_template/shuttle/cargo/donut
-	suffix = "donut"
-	name = "supply shuttle (Donut)"
-
 /datum/map_template/shuttle/cargo/pubby
 	suffix = "pubby"
 	name = "supply shuttle (Pubby)"
@@ -31,6 +27,6 @@
 	suffix = "delta"
 	name = "cargo ferry (Delta)"
 
-/datum/map_template/shuttle/cargo/northstar
-	suffix = "northstar"
-	name = "cargo ferry (North Star)"
+/datum/map_template/shuttle/cargo/nebula
+	suffix = "nebula"
+	name = "supply shuttle (Nebula)"

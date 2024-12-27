@@ -1,0 +1,258 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/plating/snowed,
+/area/virtual_domain/safehouse)
+"c" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/east,
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/safehouse)
+"e" = (
+/obj/modular_map_connector,
+/turf/closed/wall/ice,
+/area/virtual_domain/safehouse)
+"f" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/snowed,
+/area/virtual_domain/safehouse)
+"g" = (
+/obj/effect/spawner/structure/window/ice,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/floor/plating/snowed,
+/area/virtual_domain/safehouse)
+"i" = (
+/turf/closed/wall/ice,
+/area/virtual_domain/safehouse)
+"m" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/trimline/dark_blue/line{
+	dir = 1
+	},
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/turf/open/floor/pod,
+/area/virtual_domain/safehouse)
+"n" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack,
+/obj/item/grown/log,
+/obj/item/grown/log,
+/obj/item/grown/log,
+/obj/item/hatchet/wooden,
+/turf/open/floor/iron,
+/area/virtual_domain/safehouse)
+"o" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"p" = (
+/obj/structure/railing,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"u" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"v" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/trimline/dark_blue/line{
+	dir = 5
+	},
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/turf/open/floor/pod,
+/area/virtual_domain/safehouse)
+"x" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/vending/coffee,
+/turf/open/floor/plating/snowed,
+/area/virtual_domain/safehouse)
+"z" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/plating/snowed,
+/area/virtual_domain/safehouse)
+"A" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner/end{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/snowed,
+/area/virtual_domain/safehouse)
+"B" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/snowed,
+/area/virtual_domain/safehouse)
+"C" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/cup/glass/coffee/no_lid{
+	pixel_x = -4;
+	pixel_y = 14
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"D" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/generic,
+/obj/effect/turf_decal/trimline/dark_blue/line{
+	dir = 9
+	},
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/turf/open/floor/pod,
+/area/virtual_domain/safehouse)
+"I" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain/safehouse)
+"L" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/west,
+/obj/machinery/smartfridge/drying/rack,
+/turf/open/floor/iron,
+/area/virtual_domain/safehouse)
+"O" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/airlock/freezer,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating/snowed,
+/area/virtual_domain/safehouse)
+"S" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/obj/item/trash/chips{
+	pixel_x = 8;
+	pixel_y = 15
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/safehouse)
+"W" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/internals,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/turf/open/floor/iron,
+/area/virtual_domain/safehouse)
+"Z" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/virtual_domain/safehouse)
+
+(1,1,1) = {"
+i
+i
+g
+a
+i
+e
+"}
+(2,1,1) = {"
+i
+L
+n
+W
+Z
+i
+"}
+(3,1,1) = {"
+a
+x
+u
+I
+D
+i
+"}
+(4,1,1) = {"
+O
+z
+B
+I
+m
+i
+"}
+(5,1,1) = {"
+a
+f
+A
+C
+v
+i
+"}
+(6,1,1) = {"
+i
+o
+p
+S
+c
+i
+"}
+(7,1,1) = {"
+i
+i
+g
+g
+i
+i
+"}

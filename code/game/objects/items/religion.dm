@@ -64,15 +64,18 @@
 /obj/item/banner/proc/check_inspiration(mob/living/carbon/human/H) //Banner-specific conditions for being eligible
 	return
 
-/obj/item/banner/proc/inspiration(mob/living/carbon/human/H)
-	H.adjustBruteLoss(-15)
-	H.adjustFireLoss(-15)
-	H.AdjustStun(-40)
-	H.AdjustKnockdown(-40)
-	H.AdjustImmobilized(-40)
-	H.AdjustParalyzed(-40)
-	H.AdjustUnconscious(-40)
-	playsound(H, 'sound/magic/staff_healing.ogg', 25, FALSE)
+/obj/item/banner/proc/inspiration(mob/living/carbon/human/inspired_human)
+	var/need_mob_update = FALSE
+	need_mob_update += inspired_human.adjustBruteLoss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.adjustFireLoss(-15, updating_health = FALSE)
+	if(need_mob_update)
+		inspired_human.updatehealth()
+	inspired_human.AdjustStun(-4 SECONDS)
+	inspired_human.AdjustKnockdown(-4 SECONDS)
+	inspired_human.AdjustImmobilized(-4 SECONDS)
+	inspired_human.AdjustParalyzed(-4 SECONDS)
+	inspired_human.AdjustUnconscious(-4 SECONDS)
+	playsound(inspired_human, 'sound/effects/magic/staff_healing.ogg', 25, FALSE)
 
 /obj/item/banner/proc/special_inspiration(mob/living/carbon/human/H) //Any banner-specific inspiration effects go here
 	return
@@ -128,10 +131,13 @@
 				/obj/item/clothing/under/rank/medical/doctor = 1)
 	category = CAT_MISC
 
-/obj/item/banner/medical/special_inspiration(mob/living/carbon/human/H)
-	H.adjustToxLoss(-15)
-	H.setOxyLoss(0)
-	H.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
+/obj/item/banner/medical/special_inspiration(mob/living/carbon/human/inspired_human)
+	var/need_mob_update = FALSE
+	need_mob_update += inspired_human.adjustToxLoss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.setOxyLoss(0, updating_health = FALSE)
+	if(need_mob_update)
+		inspired_human.updatehealth()
+	inspired_human.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
 
 /obj/item/banner/science
 	name = "sciencia banner"
@@ -331,21 +337,27 @@
 	desc = "It's a stick..?"
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "godstaff-red"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	var/conversion_color = "#ffffff"
 	var/staffcooldown = 0
 	var/staffwait = 30
 
-/obj/item/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/godstaff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/godstaff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(staffcooldown + staffwait > world.time)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+		return ITEM_INTERACT_BLOCKING
+
 	user.visible_message(span_notice("[user] chants deeply and waves [user.p_their()] staff!"))
-	if(do_after(user, 2 SECONDS, src))
-		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
+	if(do_after(user, 2 SECONDS, interacting_with))
+		interacting_with.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/godstaff/red
 	icon_state = "godstaff-red"
@@ -377,6 +389,7 @@
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
 	armor_type = /datum/armor/shoes_plate
+	body_parts_covered = FEET|LEGS
 	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
@@ -412,11 +425,17 @@
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."
-	force = 30
-	armour_penetration = 15
+	force = 24
+	armour_penetration = 10
+
+/obj/item/claymore/weak/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -9)
 
 /obj/item/claymore/weak/ceremonial
 	desc = "A rusted claymore, once at the heart of a powerful scottish clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."
 	force = 15
 	block_chance = 30
 	armour_penetration = 5
+
+/obj/item/claymore/weak/ceremonial/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -5)

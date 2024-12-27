@@ -6,18 +6,60 @@
 	almost anything into a trash can.
 */
 /atom/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if(!usr || !over)
 		return
-	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP) //Whatever is receiving will verify themselves for adjacency.
-		return
+
 	var/proximity_check = usr.client.check_drag_proximity(src, over, src_location, over_location, src_control, over_control, params)
 	if(proximity_check)
 		return proximity_check
 
-	if(!Adjacent(usr) || !over.Adjacent(usr))
-		return // should stop you from dragging through windows
+	base_mouse_drop_handler(over, src_location, over_location, params)
 
-	over.MouseDrop_T(src,usr, params)
+/**
+ * Called when all sanity checks for mouse dropping have passed. Handles adjacency & other sanity checks before delegating the event
+ * down to lower level handlers. Do not override unless you are trying to create hud & screen elements which do not require proximity
+ * or other checks
+ */
+/atom/proc/base_mouse_drop_handler(atom/over, src_location, over_location, params)
+	PROTECTED_PROC(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/mob/user = usr
+
+	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, user) & COMPONENT_CANCEL_MOUSEDROP_ONTO)
+		return
+
+	if(SEND_SIGNAL(over, COMSIG_MOUSEDROPPED_ONTO, src, user, params) & COMPONENT_CANCEL_MOUSEDROPPED_ONTO)
+		return
+
+	// only if both dragged object & receiver agree to do checks do we proceed
+	var/combined_atom_flags = interaction_flags_atom | over.interaction_flags_atom
+	if(!(combined_atom_flags & INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS))
+		//Check for adjacency
+		if(!(combined_atom_flags & INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT) && (!CanReach(user) || !over.CanReach(user)))
+			return // should stop you from dragging through windows
+
+		if(!(combined_atom_flags & INTERACT_ATOM_MOUSEDROP_IGNORE_USABILITY))
+			//Bypass adjacency cause we already checked for it above
+			if(!user.can_perform_action(src, interaction_flags_mouse_drop | over.interaction_flags_mouse_drop | BYPASS_ADJACENCY))
+				return // is the mob not able to drag the object with both sides conditions applied
+
+	mouse_drop_dragged(over, user, src_location, over_location, params)
+
+	over.mouse_drop_receive(src, user, params)
+
+/// The proc that should be overridden by subtypes to handle mouse drop. Called on the atom being dragged
+/atom/proc/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	PROTECTED_PROC(TRUE)
+
+	return
+
+/// The proc that should be overridden by subtypes to handle mouse drop. Called on the atom receiving a dragged object
+/atom/proc/mouse_drop_receive(atom/dropped, mob/user, params)
+	PROTECTED_PROC(TRUE)
+
 	return
 
 /// Handles treating drags as clicks if they're within some conditions
@@ -78,11 +120,6 @@
 
 	return TRUE
 
-// receive a mousedrop
-/atom/proc/MouseDrop_T(atom/dropping, mob/user, params)
-	SEND_SIGNAL(src, COMSIG_MOUSEDROPPED_ONTO, dropping, user, params)
-
-
 /client/MouseDown(datum/object, location, control, params)
 	if(QDELETED(object)) //Yep, you can click on qdeleted things before they have time to nullspace. Fun.
 		return
@@ -96,9 +133,6 @@
 		while(selected_target[1])
 			Click(selected_target[1], location, control, selected_target[2])
 			sleep(delay)
-	active_mousedown_item = mob.canMobMousedown(object, location, params)
-	if(active_mousedown_item)
-		active_mousedown_item.onMouseDown(object, location, params, mob)
 
 /client/MouseUp(object, location, control, params)
 	if(SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params) & COMPONENT_CLIENT_MOUSEUP_INTERCEPT)
@@ -106,9 +140,6 @@
 	if(mouse_up_icon)
 		mouse_pointer_icon = mouse_up_icon
 	selected_target[1] = null
-	if(active_mousedown_item)
-		active_mousedown_item.onMouseUp(object, location, params, mob)
-		active_mousedown_item = null
 
 /mob/proc/CanMobAutoclick(object, location, params)
 
@@ -119,24 +150,7 @@
 	if(h)
 		. = h.CanItemAutoclick(object, location, params)
 
-/mob/proc/canMobMousedown(atom/object, location, params)
-
-/mob/living/carbon/canMobMousedown(atom/object, location, params)
-	var/obj/item/H = get_active_held_item()
-	if(H)
-		. = H.canItemMouseDown(object, location, params)
-
 /obj/item/proc/CanItemAutoclick(object, location, params)
-
-/obj/item/proc/canItemMouseDown(object, location, params)
-	if(canMouseDown)
-		return src
-
-/obj/item/proc/onMouseDown(object, location, params, mob)
-	return
-
-/obj/item/proc/onMouseUp(object, location, params, mob)
-	return
 
 /atom/proc/IsAutoclickable()
 	return TRUE
@@ -165,15 +179,12 @@
 	if(selected_target[1] && over_object?.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
-	if(active_mousedown_item)
-		active_mousedown_item.onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)
 	return ..()
 
-/obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
-	return
-
 /client/MouseDrop(atom/src_object, atom/over_object, atom/src_location, atom/over_location, src_control, over_control, params)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if (IS_WEAKREF_OF(src_object, middle_drag_atom_ref))
 		middragtime = 0
 		middle_drag_atom_ref = null

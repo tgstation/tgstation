@@ -10,6 +10,9 @@
 #define NUKE_RESULT_HIJACK_DISK 9
 #define NUKE_RESULT_HIJACK_NO_DISK 10
 
+/// Min players requireed for nukes to declare war
+#define CHALLENGE_MIN_PLAYERS 50
+
 //fugitive end results
 #define FUGITIVE_RESULT_BADASS_HUNTER 0
 #define FUGITIVE_RESULT_POSTMORTEM_HUNTER 1
@@ -32,6 +35,9 @@
 #define PAYOFF_MIN 20000
 ///How long pirates will wait for a response before attacking
 #define RESPONSE_MAX_TIME 2 MINUTES
+
+/// How long till a spessman should come back after being captured and sent to the holding facility (which some antags use)
+#define COME_BACK_FROM_CAPTURE_TIME 6 MINUTES
 
 //ERT Types
 #define ERT_BLUE "Blue"
@@ -80,6 +86,16 @@
 #define PATH_VOID "Void Path"
 #define PATH_BLADE "Blade Path"
 #define PATH_COSMIC "Cosmic Path"
+#define PATH_LOCK "Lock Path"
+#define PATH_MOON "Moon Path"
+
+//Heretic knowledge tree defines
+#define HKT_NEXT "next"
+#define HKT_BAN "ban"
+#define HKT_DEPTH "depth"
+#define HKT_ROUTE "route"
+#define HKT_UI_BGR "ui_bgr"
+
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
@@ -105,6 +121,7 @@
 #define CONSTRUCT_JUGGERNAUT "Juggernaut"
 #define CONSTRUCT_WRAITH "Wraith"
 #define CONSTRUCT_ARTIFICER "Artificer"
+#define CONSTRUCT_HARVESTER "Harvester"
 
 /// The Classic Wizard wizard loadout.
 #define WIZARD_LOADOUT_CLASSIC "loadout_classic"
@@ -141,6 +158,9 @@
 /// JSON string file for all of our heretic influence flavors
 #define HERETIC_INFLUENCE_FILE "antagonist_flavor/heretic_influences.json"
 
+/// JSON file containing spy objectives
+#define SPY_OBJECTIVE_FILE "antagonist_flavor/spy_objective.json"
+
 ///employers that are from the syndicate
 GLOBAL_LIST_INIT(syndicate_employers, list(
 	"Animal Rights Consortium",
@@ -153,7 +173,7 @@ GLOBAL_LIST_INIT(syndicate_employers, list(
 	"Waffle Corporation Terrorist",
 	"Waffle Corporation",
 ))
-///employers that are from nanotrasen
+///employers that are from Nanotrasen
 GLOBAL_LIST_INIT(nanotrasen_employers, list(
 	"Champions of Evil",
 	"Corporate Climber",
@@ -205,21 +225,49 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a traitor
 #define IS_TRAITOR(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/traitor))
 
+/**
+ * Cult checks
+ */
+
 /// Checks if the given mob is a blood cultist
-#define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
+#define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult) || HAS_TRAIT(mob, TRAIT_ACT_AS_CULTIST))
+
+/// Checks if the given mob is a blood cultist and is guaranteed to return the datum if possible - will cause issues with above trait
+#define GET_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
+
+/// Checks if the mob is a sentient or non-sentient cultist
+#define IS_CULTIST_OR_CULTIST_MOB(mob) ((IS_CULTIST(mob)) || (mob.faction.Find(FACTION_CULT)))
+
+/**
+ * Heretic checks
+ */
+
+/// Checks if the given mob is a heretic.
+#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic) || HAS_TRAIT(mob, TRAIT_ACT_AS_HERETIC))
+/// Checks if the given mob is a heretic and is guaranteed to return the datum if possible - will cause issues with above trait
+#define GET_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
+
+/// Check if the given mob is a heretic monster.
+#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+/// Check if the given mob is a  lunatic
+#define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
+/// Checks if the given mob is either a heretic, heretic monster or a lunatic.
+#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob) || IS_LUNATIC(mob))
+/// CHecks if the given mob is in the mansus realm
+#define IS_IN_MANSUS(mob) (istype(get_area(mob), /area/centcom/heretic_sacrifice))
+
+/**
+ * Etc.
+ */
+
+/// Checks if the given mob is a changeling
+#define IS_CHANGELING(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/changeling))
 
 /// Checks if the given mob is a nuclear operative
 #define IS_NUKE_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop))
 
 //Tells whether or not someone is a space ninja
 #define IS_SPACE_NINJA(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/ninja))
-
-/// Checks if the given mob is a heretic.
-#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
-/// Check if the given mob is a heretic monster.
-#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
-/// Checks if the given mob is either a heretic or a heretic monster.
-#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob))
 
 /// Checks if the given mob is a wizard
 #define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))
@@ -232,6 +280,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 /// Checks if the given mob is a malf ai.
 #define IS_MALF_AI(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
+
+/// Checks if the given mob is a spy!
+#define IS_SPY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/spy))
 
 /// List of human antagonist types which don't spawn directly on the space station
 GLOBAL_LIST_INIT(human_invader_antagonists, list(
@@ -255,6 +306,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define OBJECTIVE_ITEM_TYPE_NORMAL "normal"
 /// Only appears in traitor objectives
 #define OBJECTIVE_ITEM_TYPE_TRAITOR "traitor"
+/// Only appears for spy bounties
+#define OBJECTIVE_ITEM_TYPE_SPY "spy"
 
 // Progression traitor defines
 
@@ -288,6 +341,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define UPLINK_SHARED_STOCK_KITS "uplink_shared_stock_kits"
 #define UPLINK_SHARED_STOCK_SURPLUS "uplink_shared_stock_surplus"
 
+/// Does this item provide illegal tech?
+#define SYNDIE_ILLEGAL_TECH (1 << 0)
+/// Does this item go off when scanned by a contraband scanner?
+#define SYNDIE_TRIPS_CONTRABAND (1 << 1)
+
 // Used for traitor objectives
 /// If the objective hasn't been taken yet
 #define OBJECTIVE_STATE_INACTIVE 1
@@ -317,6 +375,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_BIOHAZARDS "Biohazards"
 #define ANTAG_GROUP_CLOWNOPS "Clown Operatives"
 #define ANTAG_GROUP_ERT "Emergency Response Team"
+#define ANTAG_GROUP_GLITCH "Digital Anomalies"
 #define ANTAG_GROUP_HORRORS "Eldritch Horrors"
 #define ANTAG_GROUP_LEVIATHANS "Spaceborne Leviathans"
 #define ANTAG_GROUP_NINJAS "Ninja Clan"
@@ -328,15 +387,17 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_FUGITIVES "Escaped Fugitives"
 #define ANTAG_GROUP_HUNTERS "Bounty Hunters"
 #define ANTAG_GROUP_PARADOX "Spacetime Aberrations"
+#define ANTAG_GROUP_CREW "Deviant Crew"
 
 
-// If this flag is enabled the antagonist datum allows the antagonist to be inducted into a nuclear operative team.
-#define FLAG_ANTAG_CAN_BE_INDUCTED (1 << 0)
+// This flag disables certain checks that presume antagonist datums mean 'baddie'.
+#define FLAG_FAKE_ANTAG (1 << 0)
 
 #define HUNTER_PACK_COPS "Spacepol Fugitive Hunters"
 #define HUNTER_PACK_RUSSIAN "Russian Fugitive Hunters"
 #define HUNTER_PACK_BOUNTY "Bounty Fugitive Hunters"
 #define HUNTER_PACK_PSYKER "Psyker Fugitive Hunters"
+#define HUNTER_PACK_MI13 "MI13 Fugitive Hunters"
 
 /// Changeling abilities with DNA cost = this are innately given to all changelings
 #define CHANGELING_POWER_INNATE -1
@@ -365,3 +426,16 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define BATON_CUFF 2
 #define BATON_PROBE 3
 #define BATON_MODES 4
+
+#define FREEDOM_IMPLANT_CHARGES 4
+
+// Spy bounty difficulties
+/// Can easily be accomplished by any job without any specialized tools, people won't really miss these things
+#define SPY_DIFFICULTY_EASY "Easy"
+/// Requires some specialized tools, knowledge, or access to accomplish, may require getting into conflict with the crew
+#define SPY_DIFFICULTY_MEDIUM "Medium"
+/// Very difficult to accomplish, almost guaranteed to require crew conflict
+#define SPY_DIFFICULTY_HARD "Hard"
+
+/// Camera net used by battle royale objective
+#define BATTLE_ROYALE_CAMERA_NET "battle_royale_camera_net"

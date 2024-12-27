@@ -41,7 +41,6 @@ GLOBAL_LIST_INIT(integrated_circuit_signal_ids, generate_circuit_signal_list())
 		COMSIG_ITEM_AFTERATTACK = list(cancel_attack, target, user),
 		COMSIG_ITEM_ATTACK_SECONDARY = list(secondary_cancel_attack, secondary_continue_attack, target, user),
 		COMSIG_ITEM_PRE_ATTACK_SECONDARY = list(secondary_cancel_attack, secondary_continue_attack, target, user),
-		COMSIG_ITEM_AFTERATTACK_SECONDARY = list(secondary_cancel_attack, secondary_continue_attack, target, user),
 		COMSIG_ITEM_ATTACK_SELF = list(cancel_attack, user),
 		COMSIG_ITEM_ATTACK_SELF_SECONDARY = list(cancel_attack, user),
 	)

@@ -1,0 +1,10 @@
+{
+	"greyscale_facescarf": [
+		{
+			"type": "icon_state",
+			"icon_state": "greyscale_bandana",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

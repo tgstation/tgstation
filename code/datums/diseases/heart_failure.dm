@@ -43,12 +43,12 @@
 				to_chat(affected_mob, span_warning("You feel [pick("full", "nauseated", "sweaty", "weak", "tired", "short of breath", "uneasy")]."))
 		if(3 to 4)
 			if(!sound)
-				affected_mob.playsound_local(affected_mob, 'sound/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+				affected_mob.playsound_local(affected_mob, 'sound/effects/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 				sound = TRUE
 			if(SPT_PROB(1.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a sharp pain in your chest!"))
 				if(prob(25))
-					affected_mob.vomit(95)
+					affected_mob.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 95)
 				affected_mob.emote("cough")
 				affected_mob.Paralyze(40)
 				affected_mob.losebreath += 4

@@ -43,8 +43,8 @@
 		if (opened == APC_COVER_OPENED && !has_electronics)
 			context[SCREENTIP_CONTEXT_LMB] = "Disassemble the APC"
 
-	else if(istype(held_item, /obj/item/stock_parts/cell) && opened == APC_COVER_OPENED)
-		context[SCREENTIP_CONTEXT_LMB] = "Insert Cell"
+	else if(istype(held_item, /obj/item/stock_parts/power_store/battery) && opened == APC_COVER_OPENED)
+		context[SCREENTIP_CONTEXT_LMB] = "Insert Battery"
 
 	else if(istype(held_item, /obj/item/stack/cable_coil) && opened == APC_COVER_OPENED)
 		context[SCREENTIP_CONTEXT_LMB] = "Create wire terminal"
@@ -56,7 +56,7 @@
 		if (!has_electronics)
 			context[SCREENTIP_CONTEXT_LMB] = "Insert an APC board"
 		else if(!cell)
-			context[SCREENTIP_CONTEXT_LMB] = "Insert a cell"
+			context[SCREENTIP_CONTEXT_LMB] = "Insert a battery"
 
 	else if(istype(held_item, /obj/item/wallframe/apc))
 		context[SCREENTIP_CONTEXT_LMB] = "Replace damaged frame"

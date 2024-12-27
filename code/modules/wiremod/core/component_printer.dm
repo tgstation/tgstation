@@ -22,21 +22,23 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
-		connect_techweb(SSresearch.science_tech)
+	materials = AddComponent(/datum/component/remote_materials, mapload)
 
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+/obj/machinery/component_printer/post_machine_initialize()
+	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb, src)
+	if(techweb)
+		on_connected_techweb()
 
 /obj/machinery/component_printer/proc/connect_techweb(datum/techweb/new_techweb)
 	if(techweb)
 		UnregisterSignal(techweb, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
-
 	techweb = new_techweb
+	if(!isnull(techweb))
+		on_connected_techweb()
 
+/obj/machinery/component_printer/proc/on_connected_techweb()
 	for (var/researched_design_id in techweb.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(researched_design_id)
 		if (!(design.build_type & COMPONENT_PRINTER) || !ispath(design.build_path, /obj/item/circuit_component))
@@ -64,6 +66,19 @@
 		return
 	current_unlocked_designs -= added_design.build_path
 
+/obj/machinery/component_printer/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	//to allow quick recycling of circuits
+	if(istype(tool, /obj/item/circuit_component))
+		var/amount_inserted = materials.insert_item(tool)
+
+		if(amount_inserted)
+			to_chat(user, span_notice("[tool] worth [amount_inserted / SHEET_MATERIAL_AMOUNT] sheets of material was consumed by [src]"))
+		else
+			to_chat(user, span_warning("[tool] was rejected by [src]"))
+
+		return amount_inserted > 0 ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+
+	return ..()
 
 /obj/machinery/component_printer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -112,11 +127,10 @@
 	if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
 		return
 
-	materials.mat_container.use_materials(design.materials, efficiency_coeff)
-	materials.silo_log(src, "printed", -1, design.name, design.materials)
+	materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]")
 	return new design.build_path(drop_location())
 
-/obj/machinery/component_printer/ui_act(action, list/params)
+/obj/machinery/component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -140,8 +154,8 @@
 				return TRUE
 
 			balloon_alert_to_viewers("printed [design.name]")
-			materials.mat_container.use_materials(design.materials, efficiency_coeff)
-			materials.silo_log(src, "printed", -1, design.name, design.materials)
+
+			materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]")
 			var/atom/printed_design = new design.build_path(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
 			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
@@ -183,8 +197,7 @@
 			"cost" = cost,
 			"id" = researched_design_id,
 			"categories" = design.category,
-			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
-			"constructionTime" = -1
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]"
 		)
 
 	data["designs"] = designs
@@ -192,13 +205,22 @@
 	return data
 
 /obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, params)
-	if(istype(weapon, /obj/item/integrated_circuit) && !user.combat_mode)
-		var/obj/item/integrated_circuit/circuit = weapon
-		circuit.linked_component_printer = WEAKREF(src)
-		circuit.update_static_data_for_all_viewers()
-		balloon_alert(user, "successfully linked to the integrated circuit")
-		return
-	return ..()
+	if (user.combat_mode)
+		return ..()
+
+	var/obj/item/integrated_circuit/circuit
+	if(istype(weapon, /obj/item/integrated_circuit))
+		circuit = weapon
+	else if (istype(weapon, /obj/item/circuit_component/module))
+		var/obj/item/circuit_component/module/module = weapon
+		circuit = module.internal_circuit
+	if (isnull(circuit))
+		return ..()
+
+	circuit.linked_component_printer = WEAKREF(src)
+	circuit.update_static_data_for_all_viewers()
+	balloon_alert(user, "successfully linked to the integrated circuit")
+
 
 /obj/machinery/component_printer/crowbar_act(mob/living/user, obj/item/tool)
 	if(..())
@@ -267,7 +289,7 @@
 		get_asset_datum(/datum/asset/spritesheet/research_designs)
 	)
 
-/obj/machinery/debug_component_printer/ui_act(action, list/params)
+/obj/machinery/debug_component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -318,11 +340,7 @@
 /obj/machinery/module_duplicator/Initialize(mapload)
 	. = ..()
 
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload)
 
 /obj/machinery/module_duplicator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -359,7 +377,7 @@
 
 	update_static_data_for_all_viewers()
 
-/obj/machinery/module_duplicator/ui_act(action, list/params)
+/obj/machinery/module_duplicator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -381,10 +399,9 @@
 				say("Not enough materials.")
 				return TRUE
 
-			balloon_alert_to_viewers("printed [design["name"]]")
-			materials.mat_container.use_materials(design["materials"], efficiency_coeff)
-			materials.silo_log(src, "printed", -1, design["name"], design["materials"])
+			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"])
 			print_module(design)
+			balloon_alert_to_viewers("printed [design["name"]]")
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])

@@ -1,5 +1,5 @@
 /obj/item/seeds/nettle
-	name = "pack of nettle seeds"
+	name = "nettle seed pack"
 	desc = "These seeds grow into nettles."
 	icon_state = "seed-nettle"
 	plant_icon_offset = 0
@@ -17,7 +17,7 @@
 	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
 /obj/item/seeds/nettle/death
-	name = "pack of death-nettle seeds"
+	name = "death-nettle seed pack"
 	desc = "These seeds grow into death-nettles."
 	icon_state = "seed-deathnettle"
 	species = "deathnettle"
@@ -29,7 +29,7 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/stinging, /datum/plant_gene/trait/attack/nettle_attack/death, /datum/plant_gene/trait/backfire/nettle_burn/death)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/toxin/acid/fluacid = 0.5, /datum/reagent/toxin/acid = 0.5)
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 	graft_gene = /datum/plant_gene/trait/stinging
 
 /obj/item/food/grown/nettle // "snack"
@@ -43,7 +43,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	damtype = BURN
 	force = 15
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
@@ -58,7 +58,7 @@
 /obj/item/food/grown/nettle/death
 	seed = /obj/item/seeds/nettle/death
 	name = "\improper deathnettle"
-	desc = "The <span class='danger'>glowing</span> nettle incites <span class='boldannounce'>rage</span> in you just from looking at it!"
+	desc = "The <span class='danger'>glowing</span> nettle incites <span class='bolddanger'>rage</span> in you just from looking at it!"
 	icon_state = "deathnettle"
 	inhand_icon_state = "deathnettle"
 	bite_consumption_mod = 4 // I guess if you really wanted to

@@ -22,7 +22,7 @@
 #define EVENT_CATEGORY_FRIENDLY "Friendly"
 ///Events that affect the body and mind
 #define EVENT_CATEGORY_HEALTH "Health"
-///Events reserved for special occassions
+///Events reserved for special occasions
 #define EVENT_CATEGORY_HOLIDAY "Holiday"
 ///Events with enemy groups with a more complex plan
 #define EVENT_CATEGORY_INVASION "Invasion"
@@ -36,6 +36,8 @@
 /// Return from admin setup to stop the event from triggering entirely.
 #define ADMIN_CANCEL_EVENT "cancel event"
 
+/// Event can never be triggered by wizards
+#define NEVER_TRIGGERED_BY_WIZARDS -1
 /// Event can only run on a map set in space
 #define EVENT_SPACE_ONLY (1 << 0)
 /// Event can only run on a map which is a planet

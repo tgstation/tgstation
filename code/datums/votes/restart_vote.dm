@@ -7,7 +7,8 @@
 		CHOICE_RESTART,
 		CHOICE_CONTINUE,
 	)
-	message = "Vote to restart the ongoing round."
+	default_message = "Vote to restart the ongoing round. \
+		Only works if there are no non-AFK admins online."
 
 /// This proc checks to see if any admins are online for the purposes of this vote to see if it can pass. Returns TRUE if there are valid admins online (Has +SERVER and is not AFK), FALSE otherwise.
 /datum/vote/restart_vote/proc/admins_present()
@@ -19,36 +20,24 @@
 
 	return FALSE
 
-/datum/vote/restart_vote/toggle_votable(mob/toggler)
-	if(!toggler)
-		CRASH("[type] wasn't passed a \"toggler\" mob to toggle_votable.")
-
-	if(!check_rights_for(toggler.client, R_ADMIN))
-		return FALSE
-
+/datum/vote/restart_vote/toggle_votable()
 	CONFIG_SET(flag/allow_vote_restart, !CONFIG_GET(flag/allow_vote_restart))
-	return TRUE
 
 /datum/vote/restart_vote/is_config_enabled()
 	return CONFIG_GET(flag/allow_vote_restart)
 
-/datum/vote/restart_vote/can_be_initiated(mob/by_who, forced)
+/datum/vote/restart_vote/create_vote(mob/vote_creator)
 	. = ..()
 	if(!.)
-		return FALSE
+		return
+	if(!admins_present())
+		return
+	async_alert_about_admins(vote_creator)
 
-	if(!forced && !CONFIG_GET(flag/allow_vote_restart))
-		message = "Restart voting is disabled by server configuration settings."
-		return FALSE
-
-	// We still want players to be able to vote to restart even if valid admins are online. Let's update the message just so that the player is aware of this fact.
-	// We don't want to lock-out the vote though, so we'll return TRUE.
-	if(admins_present())
-		message = "Regardless of the results of this vote, the round will not automatically restart because an admin is online."
-		return TRUE
-
-	message = initial(message)
-	return TRUE
+/datum/vote/restart_vote/proc/async_alert_about_admins(mob/vote_creator)
+	set waitfor = FALSE
+	tgui_alert(vote_creator, "Note: Regardless of the results of this vote, \
+		the round will not automatically restart because an active admin is online.")
 
 /datum/vote/restart_vote/get_vote_result(list/non_voters)
 	if(!CONFIG_GET(flag/default_no_vote))
@@ -67,7 +56,14 @@
 			message_admins("A restart vote has passed, but there are active admins on with +SERVER, so it has been canceled. If you wish, you may restart the server.")
 			return
 
-		SSticker.Reboot("Restart vote successful.", "restart vote", 1)
+		// If there was a previous map vote, we revert the change.
+		if(!isnull(SSmap_vote.next_map_config))
+			log_game("The next map has been reset due to successful restart vote.")
+			send_to_playing_players(span_boldannounce("The next map has been reset due to successful restart vote."))
+			SSmap_vote.revert_next_map()
+
+		SSticker.force_ending = FORCE_END_ROUND
+		log_game("End round forced by successful restart vote.")
 		return
 
 	CRASH("[type] wasn't passed a valid winning choice. (Got: [winning_option || "null"])")

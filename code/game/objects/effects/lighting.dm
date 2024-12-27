@@ -8,7 +8,7 @@
 	name = "lighting"
 	desc = "Tell a coder if you're seeing this."
 	icon_state = "nothing"
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = COLOR_WHITE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
@@ -37,6 +37,7 @@
 	name = "mob fire lighting"
 	light_color = LIGHT_COLOR_FIRE
 	light_range = LIGHT_RANGE_FIRE
+	light_power = 2
 
 /obj/effect/dummy/lighting_obj/moblight/species
 	name = "species lighting"

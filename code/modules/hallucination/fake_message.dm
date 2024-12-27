@@ -25,7 +25,7 @@
 			// in the future, this could / should be de-harcoded and
 			// just draw from a pool uplink, theft, and antag item typepaths
 			var/static/list/stash_item_paths = list(
-				/obj/item/areaeditor/blueprints,
+				/obj/item/blueprints,
 				/obj/item/assembly/flash,
 				/obj/item/card/id/advanced/gold/captains_spare,
 				/obj/item/card/emag,

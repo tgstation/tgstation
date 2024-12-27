@@ -41,7 +41,7 @@
 			// Send selected server data
 			var/list/server_out = list()
 			server_out["name"] = SelectedServer.name
-			server_out["traffic"] = SelectedServer.totaltraffic
+			server_out["traffic"] = SelectedServer.total_traffic
 			// Get the messages on this server
 			var/list/packets = list()
 			for(var/datum/comm_log_entry/packet in SelectedServer.log_entries)
@@ -70,7 +70,7 @@
 					race = "Humanoid"
 
 				// NT knows a lot about slimes, but not aliens. Can identify slimes
-				else if(ispath(mobtype, /mob/living/simple_animal/slime))
+				else if(ispath(mobtype, /mob/living/basic/slime))
 					race = "Slime"
 
 				// sometimes M gets deleted prematurely for AIs... just check the job
@@ -95,7 +95,7 @@
 	return data
 
 
-/obj/machinery/computer/telecomms/server/ui_act(action, params)
+/obj/machinery/computer/telecomms/server/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

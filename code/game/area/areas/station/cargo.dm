@@ -1,7 +1,7 @@
 /area/station/cargo
 	name = "Quartermasters"
 	icon_state = "quart"
-	airlock_wires = /datum/wires/airlock/service
+	airlock_wires = /datum/wires/airlock/cargo
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
 /area/station/cargo/sorting
@@ -29,6 +29,14 @@
 	name = "\improper Cargo Office"
 	icon_state = "cargo_office"
 
+/area/station/cargo/lower
+	name = "\improper Lower Cargo Bay"
+	icon_state = "lower_cargo"
+
+/area/station/cargo/breakroom
+	name = "\improper Cargo Break Room"
+	icon_state = "cargo_breakroom"
+
 /area/station/cargo/storage
 	name = "\improper Cargo Bay"
 	icon_state = "cargo_bay"
@@ -53,3 +61,11 @@
 /area/station/cargo/miningoffice
 	name = "\improper Mining Office"
 	icon_state = "mining"
+
+/area/station/cargo/mining_breakroom
+	name = "\improper Mining Break Room"
+	icon_state = "mining_breakroom"
+
+/area/station/cargo/miningfoundry
+	name = "\improper Mining Foundry"
+	icon_state = "mining_foundry"

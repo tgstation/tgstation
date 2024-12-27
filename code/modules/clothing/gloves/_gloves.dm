@@ -12,10 +12,14 @@
 	siemens_coefficient = 0.5
 	body_parts_covered = HANDS
 	slot_flags = ITEM_SLOT_GLOVES
+	drop_sound = 'sound/items/handling/glove_drop.ogg'
+	pickup_sound = 'sound/items/handling/glove_pick_up.ogg'
 	attack_verb_continuous = list("challenges")
 	attack_verb_simple = list("challenge")
 	strip_delay = 20
 	equip_delay_other = 40
+	article = "a pair of"
+
 	// Path variable. If defined, will produced the type through interaction with wirecutters.
 	var/cut_type = null
 	/// Used for handling bloody gloves leaving behind bloodstains on objects. Will be decremented whenever a bloodstain is left behind, and be incremented when the gloves become bloody.
@@ -41,13 +45,13 @@
 
 /obj/item/clothing/gloves/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
-	if(!isinhands)
+	if(isinhands)
 		return
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands")
+		. += mutable_appearance('icons/effects/blood.dmi', "gloveblood")
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()

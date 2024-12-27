@@ -5,7 +5,7 @@
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
 	icon = 'icons/obj/antags/abductor.dmi'
-	buildstacktype = /obj/item/stack/sheet/mineral/abductor
+	build_stack_type = /obj/item/stack/sheet/mineral/abductor
 	icon_state = "bed"
 
 /obj/structure/table_frame/abductor
@@ -31,7 +31,7 @@
 			to_chat(user, span_warning("You need one alien alloy sheet to do this!"))
 			return
 		to_chat(user, span_notice("You start adding [stacked_sheets] to [src]..."))
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			stacked_sheets.use(1)
 			new /obj/structure/table/abductor(src.loc)
 			qdel(src)
@@ -42,7 +42,7 @@
 			to_chat(user, span_warning("You need one sheet of silver to do this!"))
 			return
 		to_chat(user, span_notice("You start adding [stacked_sheets] to [src]..."))
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			stacked_sheets.use(1)
 			new /obj/structure/table/optable/abductor(src.loc)
 			qdel(src)

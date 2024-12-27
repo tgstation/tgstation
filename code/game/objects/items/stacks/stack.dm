@@ -1,9 +1,3 @@
-//stack recipe placement check types
-/// Checks if there is an object of the result type in any of the cardinal directions
-#define STACK_CHECK_CARDINALS (1<<0)
-/// Checks if there is an object of the result type within one tile
-#define STACK_CHECK_ADJACENT (1<<1)
-
 /* Stack type objects!
  * Contains:
  * Stacks
@@ -40,7 +34,7 @@
 	var/merge_type = null
 	/// The weight class the stack has at amount > 2/3rds max_amount
 	var/full_w_class = WEIGHT_CLASS_NORMAL
-	/// Determines whether the item should update it's sprites based on amount.
+	/// Determines whether the item should update its sprites based on amount.
 	var/novariants = TRUE
 	/// List that tells you how much is in a single unit.
 	var/list/mats_per_unit
@@ -83,18 +77,19 @@
 		amount = new_amount
 	while(amount > max_amount)
 		amount -= max_amount
-		new type(loc, max_amount, FALSE)
+		new type(loc, max_amount, FALSE, mat_override, mat_amt)
 	if(!merge_type)
 		merge_type = type
 
-	if(LAZYLEN(mat_override))
-		set_mats_per_unit(mat_override, mat_amt)
-	else if(LAZYLEN(mats_per_unit))
-		set_mats_per_unit(mats_per_unit, 1)
-	else if(LAZYLEN(custom_materials))
-		set_mats_per_unit(custom_materials, amount ? 1/amount : 1)
-
 	. = ..()
+
+	var/materials_mult = amount
+	if(LAZYLEN(mat_override))
+		materials_mult *= mat_amt
+		mats_per_unit = mat_override
+	if(LAZYLEN(mats_per_unit))
+		initialize_materials(mats_per_unit, materials_mult)
+
 	if(merge)
 		for(var/obj/item/stack/item_stack in loc)
 			if(item_stack == src)
@@ -124,38 +119,54 @@
 	if(is_path_in_list(merge_type, GLOB.golem_stack_food_directory))
 		AddComponent(/datum/component/golem_food, golem_food_key = merge_type)
 
-/** Sets the amount of materials per unit for this stack.
- *
- * Arguments:
- * - [mats][/list]: The value to set the mats per unit to.
- * - multiplier: The amount to multiply the mats per unit by. Defaults to 1.
- */
-/obj/item/stack/proc/set_mats_per_unit(list/mats, multiplier=1)
-	mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats, multiplier)
-	update_custom_materials()
-
-/** Updates the custom materials list of this stack.
- */
+///Called to lazily update the materials of the item whenever the used or if more is added
 /obj/item/stack/proc/update_custom_materials()
-	set_custom_materials(mats_per_unit, amount, is_update=TRUE)
+	if(length(mats_per_unit))
+		set_custom_materials(mats_per_unit, amount)
 
-/**
- * Override to make things like metalgen accurately set custom materials
- */
-/obj/item/stack/set_custom_materials(list/materials, multiplier=1, is_update=FALSE)
-	return is_update ? ..() : set_mats_per_unit(materials, multiplier/(amount || 1))
-
-
-/obj/item/stack/on_grind()
+/obj/item/stack/apply_material_effects(list/materials)
 	. = ..()
-	for(var/i in 1 to length(grind_results)) //This should only call if it's ground, so no need to check if grind_results exists
-		grind_results[grind_results[i]] *= get_amount() //Gets the key at position i, then the reagent amount of that key, then multiplies it by stack size
+	if(amount)
+		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(materials, 1/amount)
 
-/obj/item/stack/grind_requirements()
+/obj/item/stack/blend_requirements()
 	if(is_cyborg)
 		to_chat(usr, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
 		return
 	return TRUE
+
+/obj/item/stack/grind_atom(datum/reagents/target_holder, mob/user)
+	var/current_amount = get_amount()
+	if(current_amount <= 0 || QDELETED(src)) //just to get rid of this 0 amount/deleted stack we return success
+		return TRUE
+
+	if(reagents)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	var/available_volume = target_holder.maximum_volume - target_holder.total_volume
+
+	//compute total volume of reagents that will be occupied by grind_results
+	var/total_volume = 0
+	for(var/reagent in grind_results)
+		total_volume += grind_results[reagent]
+
+	//compute number of pieces(or sheets) from available_volume
+	var/available_amount = min(current_amount, round(available_volume / total_volume))
+	if(available_amount <= 0)
+		return FALSE
+
+	//Now transfer the grind results scaled by available_amount
+	var/list/grind_reagents = grind_results.Copy()
+	for(var/reagent in grind_reagents)
+		grind_reagents[reagent] *= available_amount
+	target_holder.add_reagent_list(grind_reagents)
+
+	/**
+	 * use available_amount of sheets/pieces, return TRUE only if all sheets/pieces of this stack were used
+	 * we don't delete this stack when it reaches 0 because we expect the all in one grinder, etc to delete
+	 * this stack if grinding was successful
+	 */
+	use(available_amount, check = FALSE)
+	return available_amount == current_amount
 
 /obj/item/stack/proc/get_main_recipes()
 	RETURN_TYPE(/list)
@@ -165,11 +176,11 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1/3)))
-		w_class = clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
+		update_weight_class(clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class))
 	else if (amount <= (max_amount * (2/3)))
-		w_class = clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
+		update_weight_class(clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class))
 	else
-		w_class = full_w_class
+		update_weight_class(full_w_class)
 
 /obj/item/stack/update_icon_state()
 	if(novariants)
@@ -277,7 +288,7 @@
 	data["recipes"] = recursively_build_recipes(recipes)
 	return data
 
-/obj/item/stack/ui_act(action, params)
+/obj/item/stack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -344,7 +355,7 @@
 /obj/item/stack/proc/radial_check(mob/builder)
 	if(QDELETED(builder) || QDELETED(src))
 		return FALSE
-	if(builder.incapacitated())
+	if(builder.incapacitated)
 		return FALSE
 	if(!builder.is_holding(src))
 		return FALSE
@@ -390,9 +401,9 @@
 		var/turf/covered_turf = builder.drop_location()
 		if(!isturf(covered_turf))
 			return
-		var/turf/created_turf = covered_turf.PlaceOnTop(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
+		var/turf/created_turf = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
 		builder.balloon_alert(builder, "placed [ispath(recipe.result_type, /turf/open) ? "floor" : "wall"]")
-		if(recipe.applies_mats && LAZYLEN(mats_per_unit))
+		if((recipe.crafting_flags & CRAFT_APPLIES_MATS) && LAZYLEN(mats_per_unit))
 			created_turf.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
 	else
@@ -401,16 +412,18 @@
 
 	if(created)
 		created.setDir(builder.dir)
+		SEND_SIGNAL(created, COMSIG_ATOM_CONSTRUCTED, builder)
+		on_item_crafted(builder, created)
 
 	// Use up the material
 	use(recipe.req_amount * multiplier)
 	builder.investigate_log("crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 	// Apply mat datums
-	if(recipe.applies_mats && LAZYLEN(mats_per_unit))
+	if((recipe.crafting_flags & CRAFT_APPLIES_MATS) && LAZYLEN(mats_per_unit))
 		if(isstack(created))
 			var/obj/item/stack/crafted_stack = created
-			crafted_stack.set_mats_per_unit(mats_per_unit, recipe.req_amount / recipe.res_amount)
+			crafted_stack.set_custom_materials(mats_per_unit, (recipe.req_amount / recipe.res_amount) * crafted_stack.amount)
 		else
 			created.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
@@ -431,6 +444,10 @@
 
 	return TRUE
 
+/// Run special logic on created items after they've been successfully crafted.
+/obj/item/stack/proc/on_item_crafted(mob/builder, atom/created)
+	return
+
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))
 		add(clamp(vval, 1-amount, max_amount - amount)) //there must always be one.
@@ -448,30 +465,26 @@
 		return FALSE
 	var/turf/dest_turf = get_turf(builder)
 
-	if(recipe.one_per_turf && (locate(recipe.result_type) in dest_turf))
+	if((recipe.crafting_flags & CRAFT_ONE_PER_TURF) && (locate(recipe.result_type) in dest_turf))
 		builder.balloon_alert(builder, "already one here!")
 		return FALSE
 
-	if(recipe.check_direction)
-		if(!valid_build_direction(dest_turf, builder.dir, is_fulltile = recipe.is_fulltile))
+	if(recipe.crafting_flags & CRAFT_CHECK_DIRECTION)
+		if(!valid_build_direction(dest_turf, builder.dir, is_fulltile = (recipe.crafting_flags & CRAFT_IS_FULLTILE)))
 			builder.balloon_alert(builder, "won't fit here!")
 			return FALSE
 
-	if(recipe.on_tram)
-		if(!locate(/obj/structure/industrial_lift/tram) in dest_turf)
-			builder.balloon_alert(builder, "must be made on a tram!")
-			return FALSE
-
-	if(recipe.on_solid_ground)
+	if(recipe.crafting_flags & CRAFT_ON_SOLID_GROUND)
 		if(isclosedturf(dest_turf))
 			builder.balloon_alert(builder, "cannot be made on a wall!")
 			return FALSE
 
 		if(is_type_in_typecache(dest_turf, GLOB.turfs_without_ground))
-			builder.balloon_alert(builder, "must be made on solid ground!")
-			return FALSE
+			if(!locate(/obj/structure/thermoplastic) in dest_turf) // for tram construction
+				builder.balloon_alert(builder, "must be made on solid ground!")
+				return FALSE
 
-	if(recipe.check_density)
+	if(recipe.crafting_flags & CRAFT_CHECK_DENSITY)
 		for(var/obj/object in dest_turf)
 			if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
 				builder.balloon_alert(builder, "something is in the way!")
@@ -491,6 +504,16 @@
 			builder.balloon_alert(builder, "can't be near another!")
 			return FALSE
 
+	if(recipe.placement_checks & STACK_CHECK_TRAM_FORBIDDEN)
+		if(locate(/obj/structure/transport/linear/tram) in dest_turf || locate(/obj/structure/thermoplastic) in dest_turf)
+			builder.balloon_alert(builder, "can't be on tram!")
+			return FALSE
+
+	if(recipe.placement_checks & STACK_CHECK_TRAM_EXCLUSIVE)
+		if(!locate(/obj/structure/transport/linear/tram) in dest_turf)
+			builder.balloon_alert(builder, "must be made on a tram!")
+			return FALSE
+
 	return TRUE
 
 /obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
@@ -503,13 +526,12 @@
 	amount -= used
 	if(check && is_zero_amount(delete_if_zero = TRUE))
 		return TRUE
-	if(length(mats_per_unit))
-		update_custom_materials()
+	update_custom_materials()
 	update_appearance()
 	update_weight()
 	return TRUE
 
-/obj/item/stack/tool_use_check(mob/living/user, amount)
+/obj/item/stack/tool_use_check(mob/living/user, amount, heat_required)
 	if(get_amount() < amount)
 		// general balloon alert that says they don't have enough
 		user.balloon_alert(user, "not enough material!")
@@ -551,8 +573,7 @@
 		source.add_charge(_amount * cost)
 	else
 		amount += _amount
-	if(length(mats_per_unit))
-		update_custom_materials()
+	update_custom_materials()
 	update_appearance()
 	update_weight()
 
@@ -570,7 +591,7 @@
 		return FALSE
 	if(is_cyborg) // No merging cyborg stacks into other stacks
 		return FALSE
-	if(ismob(loc) && !inhand) // no merging with items that are on the mob
+	if(ismob(loc) && !inhand && !HAS_TRAIT(loc, TRAIT_MOB_MERGE_STACKS)) // no merging with items that are on the mob
 		return FALSE
 	if(istype(loc, /obj/machinery)) // no merging items in machines that aren't both in componentparts
 		var/obj/machinery/machine = loc
@@ -700,6 +721,3 @@
 	add_hiddenprint_list(GET_ATOM_HIDDENPRINTS(from))
 	fingerprintslast = from.fingerprintslast
 	//TODO bloody overlay
-
-#undef STACK_CHECK_CARDINALS
-#undef STACK_CHECK_ADJACENT

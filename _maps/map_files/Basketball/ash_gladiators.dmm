@@ -132,7 +132,7 @@
 /turf/open/floor/fakebasalt,
 /area/centcom/basketball)
 "ie" = (
-/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
+/mob/living/basic/mining/gutlunch/warrior,
 /turf/open/floor/fakebasalt,
 /area/centcom/basketball)
 "ix" = (
@@ -609,7 +609,7 @@
 /turf/open/lava/smooth/basketball,
 /area/centcom/basketball)
 "Fy" = (
-/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
+/mob/living/basic/mining/gutlunch/milk,
 /turf/open/floor/fakebasalt,
 /area/centcom/basketball)
 "FS" = (

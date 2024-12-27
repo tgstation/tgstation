@@ -11,6 +11,7 @@
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	spreading_modifier = 1
 	severity = DISEASE_SEVERITY_BIOHAZARD
+	bypasses_immunity = TRUE
 
 /datum/disease/gbs/stage_act(seconds_per_tick, times_fired)
 	. = ..()
@@ -30,5 +31,5 @@
 			to_chat(affected_mob, span_userdanger("Your body feels as if it's trying to rip itself apart!"))
 			if(SPT_PROB(30, seconds_per_tick))
 				affected_mob.investigate_log("has been gibbed by GBS.", INVESTIGATE_DEATHS)
-				affected_mob.gib()
+				affected_mob.gib(DROP_ALL_REMAINS)
 				return FALSE

@@ -3,7 +3,6 @@
 /// How many items are converted per cycle, per rating point of the manipulator used.
 #define PROCESSED_ITEMS_PER_RATING 5
 
-
 /obj/machinery/biogenerator
 	name = "biogenerator"
 	desc = "Converts plants into biomass, which can be used to construct useful items."
@@ -12,6 +11,7 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/biogenerator
 	processing_flags = START_PROCESSING_MANUALLY
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	/// Whether the biogenerator is currently processing biomass or not.
 	var/processing = FALSE
 	/// The reagent container that is currently inside of the biomass generator. Can be null.
@@ -197,7 +197,7 @@
 /obj/machinery/biogenerator/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/biogenerator/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(user.combat_mode)
@@ -271,10 +271,9 @@
 		to_chat(user, span_warning("You cannot put \the [attacking_item] in \the [src]!"))
 
 
-/obj/machinery/biogenerator/AltClick(mob/living/user)
-	. = ..()
-	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH) && can_interact(user))
-		eject_beaker(user)
+/obj/machinery/biogenerator/click_alt(mob/living/user)
+	eject_beaker(user)
+	return CLICK_ACTION_SUCCESS
 
 
 /// Activates biomass processing and converts all inserted food products into biomass
@@ -314,9 +313,14 @@
 		if(!food_to_convert)
 			break
 
+		if(food_to_convert.flags_1 & HOLOGRAM_1)
+			qdel(food_to_convert)
+			current_item_count = max(current_item_count - 1, 0)
+			continue
+
 		convert_to_biomass(food_to_convert)
 
-	use_power(active_power_usage * seconds_per_tick)
+	use_energy(active_power_usage * seconds_per_tick)
 
 	if(!current_item_count)
 		stop_process(FALSE)
@@ -334,10 +338,7 @@
  * subsequently be deleted.
  */
 /obj/machinery/biogenerator/proc/convert_to_biomass(obj/item/food/food_to_convert)
-	var/static/list/nutrient_subtypes = typesof(/datum/reagent/consumable/nutriment)
-	var/nutriments = 0
-
-	nutriments += ROUND_UP(food_to_convert.reagents.get_multiple_reagent_amounts(nutrient_subtypes))
+	var/nutriments = ROUND_UP(food_to_convert.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, type_check = REAGENT_PARENT_TYPE))
 	qdel(food_to_convert)
 	current_item_count = max(current_item_count - 1, 0)
 	biomass += nutriments * productivity
@@ -387,7 +388,7 @@
 		if(!use_biomass(design.materials, amount))
 			return FALSE
 
-		beaker.reagents.add_reagent(design.make_reagent, amount)
+		beaker.reagents.add_reagent(design.make_reagent, amount, added_purity = BIOGEN_REAGENT_PURITY)
 
 	if(design.build_path)
 		if(!use_biomass(design.materials, amount))
@@ -455,7 +456,7 @@
 	update_appearance(UPDATE_ICON)
 
 
-/obj/machinery/biogenerator/ui_status(mob/user)
+/obj/machinery/biogenerator/ui_status(mob/user, datum/ui_state/state)
 	if(machine_stat & BROKEN || panel_open)
 		return UI_CLOSE
 
@@ -525,7 +526,7 @@
 	return data
 
 
-/obj/machinery/biogenerator/ui_act(action, list/params)
+/obj/machinery/biogenerator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

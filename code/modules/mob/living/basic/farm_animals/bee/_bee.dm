@@ -25,10 +25,6 @@
 	response_harm_continuous = "squashes"
 	response_harm_simple = "squash"
 
-	mob_size = MOB_SIZE_LARGE
-	pixel_x = -16
-	base_pixel_x = -16
-
 	speed = 1
 	maxHealth = 10
 	health = 10
@@ -43,7 +39,7 @@
 	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	environment_smash  = ENVIRONMENT_SMASH_NONE
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	basic_mob_flags = DEL_ON_DEATH
 	ai_controller = /datum/ai_controller/basic_controller/bee
 	///the reagent the bee has
@@ -54,6 +50,16 @@
 	var/icon_base = "bee"
 	///the bee is a queen?
 	var/is_queen = FALSE
+	///commands we follow
+	var/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/beehive/enter,
+		/datum/pet_command/beehive/exit,
+		/datum/pet_command/follow/bee,
+		/datum/pet_command/attack/swirl,
+		/datum/pet_command/scatter,
+	)
 
 /mob/living/basic/bee/Initialize(mapload)
 	. = ..()
@@ -62,8 +68,9 @@
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/clickbox, x_offset = -2, y_offset = -2)
 	AddComponent(/datum/component/swarming)
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	AddElement(/datum/element/basic_allergenic_attack, allergen = BUGS, allergen_chance = 33, histamine_add = 5)
 
 /mob/living/basic/bee/mob_pickup(mob/living/picker)
 	if(flags_1 & HOLOGRAM_1)
@@ -93,27 +100,28 @@
 	return ..()
 
 /mob/living/basic/bee/death(gibbed)
-	if(beehome)
-		beehome.bees -= src
-		beehome = null
-	beegent = null
-	if(flags_1 & HOLOGRAM_1 || gibbed)
-		return ..()
-	new /obj/item/trash/bee(loc, src)
+	if(!(flags_1 & HOLOGRAM_1) && !gibbed)
+		spawn_corpse()
 	return ..()
 
-/mob/living/basic/bee/proc/pre_attack(mob/living/puncher, atom/target)
-	SIGNAL_HANDLER
+/// Leave something to remember us by
+/mob/living/basic/bee/proc/spawn_corpse()
+	new /obj/item/trash/bee(loc, src)
+
+/mob/living/basic/bee/early_melee_attack(atom/target, list/modifiers)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro = target
 		pollinate(hydro)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 	if(istype(target, /obj/structure/beebox))
 		var/obj/structure/beebox/hive = target
 		handle_habitation(hive)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 /mob/living/basic/bee/proc/handle_habitation(obj/structure/beebox/hive)
 	if(hive == beehome) //if its our home, we enter or exit it
@@ -181,11 +189,11 @@
 	if(!injection_range)
 		injection_range = string_numbers_list(list(1, 5))
 	if(beegent) //clear the old since this one is going to have some new value
-		RemoveElement(/datum/element/venomous, beegent.type, injection_range)
+		RemoveElement(/datum/element/venomous, beegent.type, injection_range, thrown_effect = TRUE)
 	beegent = toxin
 	name = "[initial(name)] ([toxin.name])"
 	real_name = name
-	AddElement(/datum/element/venomous, beegent.type, injection_range)
+	AddElement(/datum/element/venomous, beegent.type, injection_range, thrown_effect = TRUE)
 	generate_bee_visuals()
 
 /mob/living/basic/bee/queen
@@ -206,12 +214,20 @@
 	var/datum/reagent/toxin = pick(typesof(/datum/reagent/toxin))
 	assign_reagent(GLOB.chemical_reagents_list[toxin])
 
-/mob/living/basic/bee/short
-	desc = "These bees seem unstable and won't survive for long."
+/// A bee which despawns after a short amount of time (beespawns?)
+/mob/living/basic/bee/timed
+	/// How long do we live?
+	var/lifespan = 50 SECONDS
 
-/mob/living/basic/bee/short/Initialize(mapload, timetolive=50 SECONDS)
+/mob/living/basic/bee/timed/short
+	lifespan = 25 SECONDS
+
+/mob/living/basic/bee/timed/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(death)), timetolive)
+	addtimer(CALLBACK(src, PROC_REF(death)), lifespan)
+
+/mob/living/basic/bee/timed/spawn_corpse()
+	new /obj/effect/temp_visual/despawn_effect(get_turf(src), /* copy_from = */ src)
 
 /obj/item/queen_bee
 	name = "queen bee"
@@ -257,6 +273,9 @@
 		return
 	var/datum/reagent/chemical = needle.reagents.get_master_reagent()
 	if(isnull(chemical))
+		return
+	if(!(chemical.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
+		to_chat(user, span_warning("[chemical.name] cannot be inserted into a bee's genome!"))
 		return
 	if(chemical.type == queen.beegent?.type)
 		to_chat(user, span_warning("[queen] already has this chemical!"))

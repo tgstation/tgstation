@@ -5,6 +5,8 @@
 	var/list/mobs_seen = list()
 	/// List of weakrefs pointing at dead mobs that appear in this photo
 	var/list/dead_seen = list()
+	/// List of strings of face-visible humans in this photo
+	var/list/names_seen = list()
 	var/caption
 	var/icon/picture_image
 	var/icon/picture_icon
@@ -16,7 +18,7 @@
 	///Was this image capable of seeing ghosts?
 	var/see_ghosts = CAMERA_NO_GHOSTS
 
-/datum/picture/New(name, desc, mobs_spotted, dead_spotted, image, icon, size_x, size_y, bp, caption_, autogenerate_icon, can_see_ghosts)
+/datum/picture/New(name, desc, mobs_spotted, dead_spotted, names, image, icon, size_x, size_y, bp, caption_, autogenerate_icon, can_see_ghosts)
 	if(!isnull(name))
 		picture_name = name
 	if(!isnull(desc))
@@ -27,6 +29,9 @@
 	if(!isnull(dead_spotted))
 		for(var/mob/seen as anything in dead_spotted)
 			dead_seen += WEAKREF(seen)
+	if(!isnull(names))
+		for(var/seen in names)
+			names_seen += seen
 	if(!isnull(image))
 		picture_image = image
 	if(!isnull(icon))
@@ -67,7 +72,6 @@
 	.["caption"] = caption
 	.["pixel_size_x"] = psize_x
 	.["pixel_size_y"] = psize_y
-	.["blueprints"] = has_blueprints
 	.["logpath"] = logpath
 
 	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
@@ -88,8 +92,6 @@
 	id = input["id"]
 	psize_x = input["pixel_size_x"]
 	psize_y = input["pixel_size_y"]
-	if(input["blueprints"])
-		has_blueprints = input["blueprints"]
 	if(input["caption"])
 		caption = input["caption"]
 	if(input["desc"])
@@ -175,7 +177,7 @@
 		fdel(jsonpath)
 	else
 		json = list()
-	json[id] = serialize_list()
+	json[id] = serialize_list(semvers = list())
 	WRITE_FILE(jsonpath, json_encode(json))
 
 /datum/picture/proc/Copy(greyscale = FALSE, cropx = 0, cropy = 0)

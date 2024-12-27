@@ -33,7 +33,7 @@
 /area/ruin/unpowered/xenonest)
 "j" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/basic/alien,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "l" = (
@@ -55,7 +55,7 @@
 /area/ruin/unpowered/xenonest)
 "t" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/sentinel,
+/mob/living/basic/alien/sentinel,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "u" = (
@@ -103,18 +103,18 @@
 /area/ruin/unpowered/xenonest)
 "E" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
+/mob/living/basic/alien/drone{
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "F" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/queen/large{
+/mob/living/basic/alien/queen/large{
 	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
 	name = "alien queen";
 	pixel_x = -16;
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
@@ -137,13 +137,13 @@
 /area/ruin/unpowered/xenonest)
 "K" = (
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/basic/alien,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "L" = (
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
+/mob/living/basic/alien/drone{
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
@@ -160,8 +160,8 @@
 "Q" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
+/mob/living/basic/alien/drone{
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)

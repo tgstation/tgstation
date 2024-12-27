@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(lighting)
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
 	var/static/list/corners_queue = list() // List of lighting corners queued for update.
 	var/static/list/objects_queue = list() // List of lighting objects queued for update.
+	var/static/list/current_sources = list()
 #ifdef VISUALIZE_LIGHT_UPDATES
 	var/allow_duped_values = FALSE
 	var/allow_duped_corners = FALSE
@@ -25,16 +26,31 @@ SUBSYSTEM_DEF(lighting)
 
 	return SS_INIT_SUCCESS
 
+
+/datum/controller/subsystem/lighting/proc/create_all_lighting_objects()
+	for(var/area/area as anything in GLOB.areas)
+		if(!area.static_lighting)
+			continue
+		for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+			for(var/turf/area_turf as anything in zlevel_turfs)
+				if(area_turf.space_lit)
+					continue
+				new /datum/lighting_object(area_turf)
+			CHECK_TICK
+		CHECK_TICK
+
 /datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
 	MC_SPLIT_TICK_INIT(3)
 	if(!init_tick_checks)
 		MC_SPLIT_TICK
 
-	var/list/queue
-	var/i = 0
+	if(!resumed)
+		current_sources = sources_queue
+		sources_queue = list()
 
 	// UPDATE SOURCE QUEUE
-	queue = sources_queue
+	var/i = 0
+	var/list/queue = current_sources
 	while(i < length(queue)) //we don't use for loop here because i cannot be changed during an iteration
 		i += 1
 

@@ -26,13 +26,22 @@
 
 
 /datum/round_event/rabbitrelease/start()
-	for(var/obj/effect/landmark/R in GLOB.landmarks_list)
-		if(R.name != "blobspawn")
-			if(prob(35))
-				if(isspaceturf(R.loc))
-					new /mob/living/basic/rabbit/easter/space(R.loc)
-				else
-					new /mob/living/basic/rabbit/easter(R.loc)
+
+	for(var/obj/effect/landmark/event_spawn/spawn_point as anything in GLOB.generic_event_spawns) //Common public bunnies
+		if(prob(35))
+			new /mob/living/basic/rabbit/easter(spawn_point.loc)
+		CHECK_TICK
+
+	for(var/obj/effect/landmark/event_spawn/spawn_point as anything in GLOB.generic_maintenance_landmarks) // The rare maint bunnies
+		if(prob(15))
+			new /mob/living/basic/rabbit/easter(spawn_point.loc)
+		CHECK_TICK
+
+	for(var/obj/effect/landmark/carpspawn/spawn_point in GLOB.landmarks_list) // The rare space bunnies
+		if(prob(15))
+			new /mob/living/basic/rabbit/easter/space(spawn_point.loc)
+		CHECK_TICK
+
 
 //Easter Baskets
 /obj/item/storage/basket/easter
@@ -57,7 +66,7 @@
 
 //Bunny Suit
 /obj/item/clothing/head/costume/bunnyhead
-	name = "Easter Bunny Head"
+	name = "Easter Bunny head"
 	icon_state = "bunnyhead"
 	inhand_icon_state = null
 	desc = "Considerably more cute than 'Frank'."
@@ -66,7 +75,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/suit/costume/bunnysuit
-	name = "Easter Bunny Suit"
+	name = "easter bunny suit"
 	desc = "Hop Hop Hop!"
 	icon_state = "bunnysuit"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
@@ -79,7 +88,7 @@
 
 //Bunny bag!
 /obj/item/storage/backpack/satchel/bunnysatchel
-	name = "Easter Bunny Satchel"
+	name = "easter bunny satchel"
 	desc = "Good for your eyes."
 	icon_state = "satchel_carrot"
 	inhand_icon_state = null
@@ -140,6 +149,7 @@
 	foodtypes = SUGAR | GRAIN | BREAKFAST
 	tastes = list("pastry" = 1, "easter" = 1)
 	bite_consumption = 2
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /datum/crafting_recipe/food/hotcrossbun
 	name = "Hot Cross Bun"
@@ -167,6 +177,7 @@
 	icon_state = "scotchegg"
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /datum/crafting_recipe/food/scotchegg
 	name = "Scotch egg"
@@ -194,6 +205,7 @@
 	desc = "Contains less than 10% real rabbit!"
 	icon_state = "chocolatebunny"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /datum/crafting_recipe/food/chocolatebunny
 	name = "Chocolate bunny"

@@ -11,7 +11,7 @@
 		return
 
 	if(get_dist(target, baby) > minimum_distance)
-		controller.queue_behavior(/datum/ai_behavior/travel_towards, BB_FOUND_MOM)
+		controller.queue_behavior(/datum/ai_behavior/travel_towards/stop_on_arrival, BB_FOUND_MOM)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	if(!SPT_PROB(15, seconds_per_tick))

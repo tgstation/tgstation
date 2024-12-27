@@ -29,6 +29,10 @@
 
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
+/datum/component/squashable/Destroy(force)
+	on_squash_callback = null
+	return ..()
+
 ///Handles the squashing of the mob
 /datum/component/squashable/proc/on_entered(turf/source_turf, atom/movable/crossing_movable)
 	SIGNAL_HANDLER
@@ -50,7 +54,7 @@
 			return //Everything worked, we're done!
 	if(isliving(crossing_movable))
 		var/mob/living/crossing_mob = crossing_movable
-		if(crossing_mob.mob_size > MOB_SIZE_SMALL && !(crossing_mob.movement_type & FLYING))
+		if(crossing_mob.mob_size > MOB_SIZE_SMALL && !(crossing_mob.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 			if(HAS_TRAIT(crossing_mob, TRAIT_PACIFISM))
 				crossing_mob.visible_message(span_notice("[crossing_mob] carefully steps over [parent_as_living]."), span_notice("You carefully step over [parent_as_living] to avoid hurting it."))
 				return
@@ -68,7 +72,7 @@
 
 /datum/component/squashable/proc/Squish(mob/living/target)
 	if(squash_flags & SQUASHED_SHOULD_BE_GIBBED)
-		target.gib()
+		target.gib(DROP_ALL_REMAINS)
 	else
 		target.adjustBruteLoss(squash_damage)
 

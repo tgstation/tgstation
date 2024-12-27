@@ -1,0 +1,12 @@
+template = "bitmask/cardinal_32x32"
+
+# We're diagonal
+smooth_diagonally = true
+
+# And because of that we need a state for all directions
+[positions]
+convex = 0
+vertical = 1
+horizontal = 2
+concave = 3
+flat = 4

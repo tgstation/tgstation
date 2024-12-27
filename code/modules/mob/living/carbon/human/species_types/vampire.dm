@@ -4,7 +4,7 @@
 ///maximum a vampire will drain, they will drain less if they hit their cap
 #define VAMP_DRAIN_AMOUNT 50
 
-/datum/species/vampire
+/datum/species/human/vampire
 	name = "Vampire"
 	id = SPECIES_VAMPIRE
 	examine_limb_id = SPECIES_HUMAN
@@ -17,37 +17,39 @@
 		TRAIT_NO_MIRROR_REFLECTION,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutant_bodyparts = list("wings" = "None")
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
-	exotic_bloodtype = "U"
+	changesource_flags = MIRROR_BADMIN | MIRROR_PRIDE | WABBAJACK | ERT_SPAWN
+	exotic_bloodtype = "V"
 	blood_deficiency_drain_rate = BLOOD_DEFICIENCY_MODIFIER // vampires already passively lose blood, so this just makes them lose it slightly more quickly when they have blood deficiency.
-	mutantheart = /obj/item/organ/internal/heart/vampire
-	mutanttongue = /obj/item/organ/internal/tongue/vampire
-	mutantstomach = null
-	mutantlungs = null
-	skinned_type = /obj/item/stack/sheet/animalhide/human
+	mutantheart = /obj/item/organ/heart/vampire
+	mutanttongue = /obj/item/organ/tongue/vampire
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
 
-/datum/species/vampire/check_roundstart_eligible()
+/datum/species/human/vampire/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 
-/datum/species/vampire/on_species_gain(mob/living/carbon/human/new_vampire, datum/species/old_species)
+/datum/species/human/vampire/on_species_gain(mob/living/carbon/human/new_vampire, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	to_chat(new_vampire, "[info_text]")
 	new_vampire.skin_tone = "albino"
 	new_vampire.update_body(0)
-	new_vampire.set_safe_hunger_level()
+	RegisterSignal(new_vampire, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
 
-/datum/species/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
+/datum/species/human/vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
+
+/datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
 	. = ..()
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
-		vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
-		vampire.adjustToxLoss(-2 * seconds_per_tick)
-		vampire.adjustOxyLoss(-2 * seconds_per_tick)
-		vampire.adjustCloneLoss(-2 * seconds_per_tick)
+		var/need_mob_update = FALSE
+		need_mob_update += vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+		need_mob_update += vampire.adjustToxLoss(-2 * seconds_per_tick, updating_health = FALSE,)
+		need_mob_update += vampire.adjustOxyLoss(-2 * seconds_per_tick, updating_health = FALSE,)
+		if(need_mob_update)
+			vampire.updatehealth()
 		return
 	vampire.blood_volume -= 0.125 * seconds_per_tick
 	if(vampire.blood_volume <= BLOOD_VOLUME_SURVIVE)
@@ -61,22 +63,27 @@
 		vampire.adjust_fire_stacks(3 * seconds_per_tick)
 		vampire.ignite_mob()
 
-/datum/species/vampire/check_species_weakness(obj/item/weapon, mob/living/attacker)
-	if(istype(weapon, /obj/item/nullrod/whip))
-		return 2 //Whips deal 2x damage to vampires. Vampire killer.
-	return 1
+/datum/species/human/vampire/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+	SIGNAL_HANDLER
 
-/datum/species/vampire/get_species_description()
+	if(istype(attacking_item, /obj/item/nullrod/whip))
+		damage_mods += 2
+
+/datum/species/human/vampire/get_physical_attributes()
+	return "Vampires are afflicted with the Thirst, needing to sate it by draining the blood out of another living creature. However, they do not need to breathe or eat normally. \
+		They will instantly turn into dust if they run out of blood or enter a holy area. However, coffins stabilize and heal them, and they can transform into bats!"
+
+/datum/species/human/vampire/get_species_description()
 	return "A classy Vampire! They descend upon Space Station Thirteen Every year to spook the crew! \"Bleeg!!\""
 
-/datum/species/vampire/get_species_lore()
+/datum/species/human/vampire/get_species_lore()
 	return list(
 		"Vampires are unholy beings blessed and cursed with The Thirst. \
 		The Thirst requires them to feast on blood to stay alive, and in return it gives them many bonuses. \
 		Because of this, Vampires have split into two clans, one that embraces their powers as a blessing and one that rejects it.",
 	)
 
-/datum/species/vampire/create_pref_unique_perks()
+/datum/species/human/vampire/create_pref_unique_perks()
 	var/list/to_add = list()
 
 	to_add += list(
@@ -105,7 +112,7 @@
 	return to_add
 
 // Vampire blood is special, so it needs to be handled with its own entry.
-/datum/species/vampire/create_pref_blood_perks()
+/datum/species/human/vampire/create_pref_blood_perks()
 	var/list/to_add = list()
 
 	to_add += list(list(
@@ -122,7 +129,7 @@
 	return to_add
 
 // There isn't a "Minor Undead" biotype, so we have to explain it in an override (see: dullahans)
-/datum/species/vampire/create_pref_biotypes_perks()
+/datum/species/human/vampire/create_pref_biotypes_perks()
 	var/list/to_add = list()
 
 	to_add += list(list(
@@ -137,10 +144,10 @@
 
 	return to_add
 
-/obj/item/organ/internal/tongue/vampire
+/obj/item/organ/tongue/vampire
 	name = "vampire tongue"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
-	color = "#1C1C1C"
+	color = COLOR_CRAYON_BLACK
 	COOLDOWN_DECLARE(drain_cooldown)
 
 /datum/action/item_action/organ_action/vampire
@@ -151,7 +158,7 @@
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/H = owner
-		var/obj/item/organ/internal/tongue/vampire/V = target
+		var/obj/item/organ/tongue/vampire/V = target
 		if(!COOLDOWN_FINISHED(V, drain_cooldown))
 			to_chat(H, span_warning("You just drained blood, wait a few seconds!"))
 			return
@@ -175,7 +182,7 @@
 				victim.show_message(span_warning("[H] tries to bite you, but recoils in disgust!"))
 				to_chat(H, span_warning("[victim] reeks of garlic! you can't bring yourself to drain such tainted blood."))
 				return
-			if(!do_after(H, 3 SECONDS, target = victim))
+			if(!do_after(H, 3 SECONDS, target = victim, hidden = TRUE))
 				return
 			var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume //How much capacity we have left to absorb blood
 			var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
@@ -187,19 +194,19 @@
 			if(!victim.blood_volume)
 				to_chat(H, span_notice("You finish off [victim]'s blood supply."))
 
-/obj/item/organ/internal/heart/vampire
+/obj/item/organ/heart/vampire
 	name = "vampire heart"
-	color = "#1C1C1C"
+	color = COLOR_CRAYON_BLACK
 
-/obj/item/organ/internal/heart/vampire/on_insert(mob/living/carbon/receiver)
+/obj/item/organ/heart/vampire/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
 	RegisterSignal(receiver, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
-/obj/item/organ/internal/heart/vampire/on_remove(mob/living/carbon/heartless)
+/obj/item/organ/heart/vampire/on_mob_remove(mob/living/carbon/heartless)
 	. = ..()
 	UnregisterSignal(heartless, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 
-/obj/item/organ/internal/heart/vampire/proc/get_status_tab_item(mob/living/carbon/source, list/items)
+/obj/item/organ/heart/vampire/proc/get_status_tab_item(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER
 	items += "Blood Level: [source.blood_volume]/[BLOOD_VOLUME_MAXIMUM]"
 

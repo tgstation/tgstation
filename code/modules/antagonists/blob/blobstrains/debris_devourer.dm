@@ -25,20 +25,20 @@
 			I.forceMove(get_turf(spore))
 			I.throw_at(get_edge_target_turf(spore,pick(GLOB.alldirs)), 6, 5, spore, TRUE, FALSE, null, 3)
 
-/datum/blobstrain/debris_devourer/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O, coefficient = 1) //when the blob expands, do this
+/datum/blobstrain/debris_devourer/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/eye/blob/O, coefficient = 1) //when the blob expands, do this
 	for (var/obj/item/I in T)
 		I.forceMove(overmind.blob_core)
 
-/datum/blobstrain/debris_devourer/proc/debris_attack(mob/living/L, source)
+/datum/blobstrain/debris_devourer/proc/debris_attack(atom/attacking, atom/source)
 	var/obj/structure/blob/special/core/core = overmind.blob_core
 	if (prob(40 * DEBRIS_DENSITY)) // Pretend the items are spread through the blob and its mobs and not in the core.
-		var/obj/item/I = pick(core.contents)
-		if (I && !QDELETED(I))
+		var/obj/item/I = length(core.contents) ? pick(core.contents) : null
+		if (!QDELETED(I))
 			I.forceMove(get_turf(source))
-			I.throw_at(L, 6, 5, overmind, TRUE, FALSE, null, 3)
+			I.throw_at(attacking, 6, 5, overmind, TRUE, FALSE, null, 3)
 
-/datum/blobstrain/debris_devourer/blobbernaut_attack(mob/living/L, mob/living/blobbernaut) // When this blob's blobbernaut attacks people
-	debris_attack(L,blobbernaut)
+/datum/blobstrain/debris_devourer/blobbernaut_attack(atom/attacking, mob/living/basic/blobbernaut)
+	debris_attack(attacking, blobbernaut)
 
 /datum/blobstrain/debris_devourer/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag, coefficient = 1) //when the blob takes damage, do this
 	var/obj/structure/blob/special/core/core = overmind.blob_core

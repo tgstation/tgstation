@@ -31,6 +31,8 @@
 	///The image showing the gases inside of the tank
 	var/image/window
 
+	/// The open node directions of the tank, assuming that the tank is facing NORTH.
+	var/open_ports = NONE
 	/// The volume of the gas mixture
 	var/volume = 2500 //in liters
 	/// The max pressure of the gas mixture before damaging the tank
@@ -88,7 +90,6 @@
 	air_contents = new
 	air_contents.temperature = T20C
 	air_contents.volume = volume
-	refresh_pressure_limit()
 
 	if(gas_type)
 		fill_to_pressure(gas_type)
@@ -98,13 +99,14 @@
 
 	// Mapped in tanks should automatically connect to adjacent pipenets in the direction set in dir
 	if(mapload)
-		initialize_directions = dir
+		set_portdir_relative(dir, TRUE)
+		set_init_directions()
 
 	return INITIALIZE_HINT_LATELOAD
 
 // We late initialize here so all stationary tanks have time to set up their
 // initial gas mixes and signal registrations.
-/obj/machinery/atmospherics/components/tank/LateInitialize()
+/obj/machinery/atmospherics/components/tank/post_machine_initialize()
 	. = ..()
 	GetMergeGroup(merger_id, merger_typecache)
 
@@ -121,7 +123,7 @@
 		. += span_notice("The pipe port can be moved or closed with a [wrench_hint].")
 	. += span_notice("A holographic sticker on it says that its maximum safe pressure is: [siunit_pressure(max_pressure, 0)].")
 
-/obj/machinery/atmospherics/components/tank/set_custom_materials(list/materials, multiplier)
+/obj/machinery/atmospherics/components/tank/finalize_material_effects(list/materials)
 	. = ..()
 	refresh_pressure_limit()
 
@@ -152,28 +154,60 @@
 	refresh_window()
 
 ///////////////////////////////////////////////////////////////////
-// Pipenet stuff
+// Port stuff
 
-/obj/machinery/atmospherics/components/tank/return_analyzable_air()
-	return air_contents
+/**
+ * Enables/Disables a port direction in var/open_ports. \
+ * Use this, then call set_init_directions() instead of setting initialize_directions directly \
+ * This system exists because tanks not having all initialize_directions set correctly breaks shuttle rotations
+ */
+/obj/machinery/atmospherics/components/tank/proc/set_portdir_relative(relative_port_dir, enable)
+	ASSERT(!isnull(enable), "Did not receive argument enable")
 
-/obj/machinery/atmospherics/components/tank/return_airs_for_reconcilation(datum/pipeline/requester)
-	. = ..()
-	if(!air_contents)
-		return
-	. += air_contents
-
-/obj/machinery/atmospherics/components/tank/return_pipenets_for_reconcilation(datum/pipeline/requester)
-	. = ..()
-	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
-	for(var/obj/machinery/atmospherics/components/tank/tank as anything in merge_group.members)
-		. += tank.parents
-
-/obj/machinery/atmospherics/components/tank/proc/toggle_side_port(new_dir)
-	if(initialize_directions & new_dir)
-		initialize_directions &= ~new_dir
+	// Rotate the given dir so that it's relative to north
+	var/port_dir
+	if(dir == NORTH) // We're already facing north, no rotation needed
+		port_dir = relative_port_dir
 	else
-		initialize_directions |= new_dir
+		var/offnorth_angle = dir2angle(dir)
+		port_dir = turn(relative_port_dir, offnorth_angle)
+
+	if(enable)
+		open_ports |= port_dir
+	else
+		open_ports &= ~port_dir
+
+/**
+ * Toggles a port direction in var/open_ports \
+ * Use this, then call set_init_directions() instead of setting initialize_directions directly \
+ * This system exists because tanks not having all initialize_directions set correctly breaks shuttle rotations
+ */
+/obj/machinery/atmospherics/components/tank/proc/toggle_portdir_relative(relative_port_dir)
+	var/toggle = ((initialize_directions & relative_port_dir) ? FALSE : TRUE)
+	set_portdir_relative(relative_port_dir, toggle)
+
+/obj/machinery/atmospherics/components/tank/set_init_directions()
+	if(!open_ports)
+		initialize_directions = NONE
+		return
+
+	//We're rotating open_ports relative to dir, and
+	//setting initialize_directions to that rotated dir
+	var/relative_port_dirs = NONE
+	var/dir_angle = dir2angle(dir)
+	for(var/cardinal in GLOB.cardinals)
+		var/current_dir = cardinal & open_ports
+		if(!current_dir)
+			continue
+
+		var/rotated_dir = turn(current_dir, -dir_angle)
+		relative_port_dirs |= rotated_dir
+
+	initialize_directions = relative_port_dirs
+
+/obj/machinery/atmospherics/components/tank/proc/toggle_side_port(port_dir)
+	toggle_portdir_relative(port_dir)
+	set_init_directions()
 
 	for(var/i in 1 to length(nodes))
 		var/obj/machinery/atmospherics/components/node = nodes[i]
@@ -195,6 +229,24 @@
 	SSair.add_to_rebuild_queue(src)
 
 	update_parents()
+
+///////////////////////////////////////////////////////////////////
+// Pipenet stuff
+
+/obj/machinery/atmospherics/components/tank/return_analyzable_air()
+	return air_contents
+
+/obj/machinery/atmospherics/components/tank/return_airs_for_reconcilation(datum/pipeline/requester)
+	. = ..()
+	if(!air_contents)
+		return
+	. += air_contents
+
+/obj/machinery/atmospherics/components/tank/return_pipenets_for_reconcilation(datum/pipeline/requester)
+	. = ..()
+	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
+	for(var/obj/machinery/atmospherics/components/tank/tank as anything in merge_group.members)
+		. += tank.parents
 
 ///////////////////////////////////////////////////////////////////
 // Merger handling
@@ -269,10 +321,14 @@
 
 	window = image(icon, icon_state = "window-bg", layer = FLOAT_LAYER)
 
+	var/static/alpha_filter
+	if(!alpha_filter) // Gotta do this separate since the icon may not be correct at world init
+		alpha_filter = filter(type="alpha", icon = icon('icons/obj/pipes_n_cables/stationary_canisters.dmi', "window-bg"))
+
 	var/list/new_underlays = list()
 	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals(get_turf(src)))
 		var/image/new_underlay = image(gas.icon, icon_state = gas.icon_state, layer = FLOAT_LAYER)
-		new_underlay.filters = alpha_mask_filter(icon = icon(icon, icon_state = "window-bg"))
+		new_underlay.filters = alpha_filter
 		new_underlays += new_underlay
 
 	var/image/foreground = image(icon, icon_state = "window-fg", layer = FLOAT_LAYER)
@@ -304,7 +360,7 @@
 	. = TRUE
 	if(atom_integrity >= max_integrity)
 		return
-	if(!tool.tool_start_check(user, amount = 0))
+	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return
 	to_chat(user, span_notice("You begin to repair the cracks in the gas tank..."))
 	var/repair_amount = max_integrity / 10
@@ -338,7 +394,7 @@
 	deconstruct(disassembled=TRUE)
 	to_chat(user, span_notice("You finish cutting open the sealed gas tank, revealing the innards."))
 
-/obj/machinery/atmospherics/components/tank/deconstruct(disassembled)
+/obj/machinery/atmospherics/components/tank/on_deconstruction(disassembled)
 	var/turf/location = drop_location()
 	. = ..()
 	location.assume_air(air_contents)
@@ -362,6 +418,18 @@
 
 /obj/machinery/atmospherics/components/tank/air
 	name = "pressure tank (Air)"
+
+/obj/machinery/atmospherics/components/tank/air/layer1
+	piping_layer = 1
+
+/obj/machinery/atmospherics/components/tank/air/layer2
+	piping_layer = 2
+
+/obj/machinery/atmospherics/components/tank/air/layer4
+	piping_layer = 4
+
+/obj/machinery/atmospherics/components/tank/air/layer5
+	piping_layer = 5
 
 /obj/machinery/atmospherics/components/tank/air/Initialize(mapload)
 	. = ..()
@@ -459,11 +527,10 @@
 			var/welder_hint = EXAMINE_HINT("welder")
 			. += span_notice("The plating has been firmly attached and would need a [crowbar_hint] to detach, but still needs to be sealed by a [welder_hint].")
 
-/obj/structure/tank_frame/deconstruct(disassembled)
+/obj/structure/tank_frame/atom_deconstruct(disassembled)
 	if(disassembled)
 		for(var/datum/material/mat as anything in custom_materials)
 			new mat.sheet_type(drop_location(), custom_materials[mat] / SHEET_MATERIAL_AMOUNT)
-	return ..()
 
 /obj/structure/tank_frame/update_icon(updates)
 	. = ..()
@@ -481,7 +548,7 @@
 /obj/structure/tank_frame/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tank_frame/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -551,7 +618,7 @@
 	if(!anchored)
 		to_chat(user, span_notice("You need to <b>wrench</b> [src] to the floor before finishing."))
 		return
-	if(!tool.tool_start_check(user, amount = 0))
+	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return
 	to_chat(user, span_notice("You begin sealing the outer plating with the welder..."))
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 60))

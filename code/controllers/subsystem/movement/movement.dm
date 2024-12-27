@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(movement)
 	name = "Movement Loops"
-	flags = SS_NO_INIT|SS_BACKGROUND|SS_TICKER
+	flags = SS_NO_INIT|SS_TICKER
 	wait = 1 //Fire each tick
 	/*
 		A breif aside about the bucketing system here
@@ -52,8 +52,11 @@ SUBSYSTEM_DEF(movement)
 	while(processing.len)
 		var/datum/move_loop/loop = processing[processing.len]
 		processing.len--
+		// No longer queued since we just got removed from the loop
+		loop.queued_time = null
 		loop.process() //This shouldn't get nulls, if it does, runtime
-		if(!QDELETED(loop)) //Re-Insert the loop
+		if(!QDELETED(loop) && loop.status & MOVELOOP_STATUS_QUEUED) //Re-Insert the loop
+			loop.status &= ~MOVELOOP_STATUS_QUEUED
 			loop.timer = world.time + loop.delay
 			queue_loop(loop)
 		if (MC_TICK_CHECK)
@@ -63,7 +66,7 @@ SUBSYSTEM_DEF(movement)
 		return // Still work to be done
 	var/bucket_time = bucket_info[MOVEMENT_BUCKET_TIME]
 	smash_bucket(1, bucket_time) // We assume we're the first bucket in the queue right now
-	visual_delay = MC_AVERAGE_FAST(visual_delay, max((world.time - canonical_time) / wait, 1))
+	visual_delay = MC_AVERAGE_FAST(visual_delay, max((world.time - canonical_time) / TICKS2DS(wait), 1))
 
 /// Removes a bucket from our system. You only need to pass in the time, but if you pass in the index of the list you save us some work
 /datum/controller/subsystem/movement/proc/smash_bucket(index, bucket_time)
@@ -86,26 +89,42 @@ SUBSYSTEM_DEF(movement)
 	buckets -= "[bucket_time]"
 
 /datum/controller/subsystem/movement/proc/queue_loop(datum/move_loop/loop)
-	var/target_time = loop.timer
-	var/string_time = "[target_time]"
+	if(loop.status & MOVELOOP_STATUS_QUEUED)
+		stack_trace("A move loop attempted to queue while already queued")
+		return
+	loop.queued_time = loop.timer
+	loop.status |= MOVELOOP_STATUS_QUEUED
+	var/list/our_bucket = buckets["[loop.queued_time]"]
 	// If there's no bucket for this, lets set them up
-	if(!buckets[string_time])
-		buckets[string_time] = list()
+	if(!our_bucket)
+		buckets["[loop.queued_time]"] = list()
+		our_bucket = buckets["[loop.queued_time]"]
 		// This makes assoc buckets and sorted buckets point to the same place, allowing for quicker inserts
-		var/list/new_bucket = list(list(target_time, buckets[string_time]))
-		BINARY_INSERT_DEFINE(new_bucket, sorted_buckets, SORT_VAR_NO_TYPE, list(target_time), SORT_FIRST_INDEX, COMPARE_KEY)
+		var/list/new_bucket = list(list(loop.queued_time, our_bucket))
+		var/list/compare_item = list(loop.queued_time)
+		BINARY_INSERT_DEFINE(new_bucket, sorted_buckets, SORT_VAR_NO_TYPE, compare_item, SORT_FIRST_INDEX, COMPARE_KEY)
 
-	buckets[string_time] += loop
+	our_bucket += loop
 
 /datum/controller/subsystem/movement/proc/dequeue_loop(datum/move_loop/loop)
-	var/list/our_entries = buckets["[loop.timer]"]
+	// Go home, you're not here anyway
+	if(!(loop.status & MOVELOOP_STATUS_QUEUED))
+		return
+	if(isnull(loop.queued_time)) // This happens if a moveloop is dequeued while handling process()
+		loop.status &= ~MOVELOOP_STATUS_QUEUED
+		return
+	var/list/our_entries = buckets["[loop.queued_time]"]
 	our_entries -= loop
 	if(!length(our_entries))
-		smash_bucket(bucket_time = loop.timer) // We can't pass an index in for context because we don't know our position
+		smash_bucket(bucket_time = loop.queued_time) // We can't pass an index in for context because we don't know our position
+	loop.queued_time = null
+	loop.status &= ~MOVELOOP_STATUS_QUEUED
 
 /datum/controller/subsystem/movement/proc/add_loop(datum/move_loop/add)
+	if(add.status & MOVELOOP_STATUS_QUEUED)
+		CRASH("Loop being added that is already queued.")
 	add.loop_started()
-	if(QDELETED(add))
+	if(QDELETED(add) || add.status & MOVELOOP_STATUS_QUEUED)
 		return
 	queue_loop(add)
 

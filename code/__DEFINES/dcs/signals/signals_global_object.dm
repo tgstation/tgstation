@@ -1,6 +1,9 @@
 /// signals from globally accessible objects
 
-///from SSJob when DivideOccupations is called
+///from SSJob whenever setup_occupations() is called, all occupations are set
+#define COMSIG_OCCUPATIONS_SETUP "occupations_setup"
+
+///from SSJob when divide_occupations() is called
 #define COMSIG_OCCUPATIONS_DIVIDED "occupations_divided"
 
 ///from SSsun when the sun changes position : (azimuth)

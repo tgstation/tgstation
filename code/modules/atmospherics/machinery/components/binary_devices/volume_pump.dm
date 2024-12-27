@@ -5,7 +5,7 @@
 //
 // Thus, the two variables affect pump operation are set in New():
 //   air1.volume
-//     This is the volume of gas available to the pump that may be transfered to the output
+//     This is the volume of gas available to the pump that may be transferred to the output
 //   air2.volume
 //     Higher quantities of this cause more air to be perfected later
 //     but overall network volume is also increased as this increases...
@@ -33,21 +33,24 @@
 	))
 	register_context()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/binary/volume_pump/click_ctrl(mob/user)
 	if(can_interact(user))
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_appearance()
-	return ..()
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
-/obj/machinery/atmospherics/components/binary/volume_pump/AltClick(mob/user)
-	if(can_interact(user))
-		transfer_rate = MAX_TRANSFER_RATE
-		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "volume output set to [transfer_rate] L/s")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/binary/volume_pump/click_alt(mob/user)
+	if(transfer_rate == MAX_TRANSFER_RATE)
+		return CLICK_ACTION_BLOCKING
+
+	transfer_rate = MAX_TRANSFER_RATE
+	investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "volume output set to [transfer_rate] L/s")
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	icon_state = on && is_operational ? "volpump_on-[set_overlay_offset(piping_layer)]" : "volpump_off-[set_overlay_offset(piping_layer)]"
@@ -74,10 +77,6 @@
 
 	if((input_starting_pressure < VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE) || ((output_starting_pressure > VOLUME_PUMP_MAX_OUTPUT_PRESSURE)) && !overclocked)
 		return
-
-	if(overclocked && (output_starting_pressure-input_starting_pressure > VOLUME_PUMP_OVERPRESSURE_ALLOWANCE))//Overclocked pumps can only force gas a certain amount.
-		return
-
 
 	var/transfer_ratio = transfer_rate / air1.volume
 
@@ -123,7 +122,7 @@
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
 
-/obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -178,11 +177,11 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on/layer2
 	piping_layer = 2
-	icon_state = "volpump_map-2"
+	icon_state = "volpump_on_map-2"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on/layer4
 	piping_layer = 4
-	icon_state = "volpump_map-4"
+	icon_state = "volpump_on_map-4"
 
 /obj/item/circuit_component/atmos_volume_pump
 	display_name = "Atmospheric Volume Pump"

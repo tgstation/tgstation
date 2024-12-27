@@ -15,7 +15,7 @@
 /obj/effect/beam/singularity_act()
 	return
 
-/obj/effect/beam/singularity_pull()
+/obj/effect/beam/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/spawner
@@ -37,6 +37,15 @@
 	SHOULD_CALL_PARENT(FALSE)
 	moveToNullspace()
 	return QDEL_HINT_QUEUE
+
+/obj/effect/spawner/forceMove(atom/destination)
+	if(destination && QDELETED(src)) // throw a warning if we try to forceMove a qdeleted spawner to somewhere other than nullspace
+		stack_trace("Warning: something tried to forceMove() a qdeleted [src]([type]) to non-null destination [destination]([destination.type])!")
+	return ..()
+
+/// Override to define loot blacklist behavior
+/obj/effect/spawner/proc/can_spawn(atom/loot)
+	return TRUE
 
 /obj/effect/list_container
 	name = "list container"

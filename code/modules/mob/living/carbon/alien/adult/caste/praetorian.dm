@@ -9,19 +9,20 @@
 /mob/living/carbon/alien/adult/royal/praetorian/Initialize(mapload)
 	real_name = name
 
-	var/datum/action/cooldown/spell/aoe/repulse/xeno/tail_whip = new(src)
-	tail_whip.Grant(src)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/alien/evolve_to_queen,
+		/datum/action/cooldown/spell/aoe/repulse/xeno,
+	)
 
-	var/datum/action/cooldown/alien/evolve_to_queen/evolution = new(src)
-	evolution.Grant(src)
+	grant_actions_by_list(innate_actions)
 
 	return ..()
 
 /mob/living/carbon/alien/adult/royal/praetorian/create_internal_organs()
-	organs += new /obj/item/organ/internal/alien/plasmavessel/large
-	organs += new /obj/item/organ/internal/alien/resinspinner
-	organs += new /obj/item/organ/internal/alien/acid
-	organs += new /obj/item/organ/internal/alien/neurotoxin
+	organs += new /obj/item/organ/alien/plasmavessel/large
+	organs += new /obj/item/organ/alien/resinspinner
+	organs += new /obj/item/organ/alien/acid
+	organs += new /obj/item/organ/alien/neurotoxin
 	return ..()
 
 /datum/action/cooldown/alien/evolve_to_queen
@@ -42,7 +43,7 @@
 		return FALSE
 
 	var/mob/living/carbon/alien/adult/royal/evolver = owner
-	var/obj/item/organ/internal/alien/hivenode/node = evolver.get_organ_by_type(/obj/item/organ/internal/alien/hivenode)
+	var/obj/item/organ/alien/hivenode/node = evolver.get_organ_by_type(/obj/item/organ/alien/hivenode)
 	if(!node || node.recent_queen_death)
 		return FALSE
 

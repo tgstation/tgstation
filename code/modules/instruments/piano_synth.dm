@@ -37,7 +37,7 @@
 	RegisterSignal(src, COMSIG_INSTRUMENT_END, PROC_REF(update_icon_for_playing_music))
 
 // Called by a component signal to update musical note VFX for songs playing while worn.
-/obj/item/instrument/piano_synth/headphones/proc/update_icon_for_playing_music()
+/obj/item/instrument/piano_synth/headphones/proc/update_icon_for_playing_music(datum/source, datum/starting_song, atom/player)
 	SIGNAL_HANDLER
 	update_appearance()
 
@@ -129,7 +129,7 @@
 /obj/item/circuit_component/synth/proc/start_playing(datum/port/input/port)
 	synth.song.start_playing(src)
 
-/obj/item/circuit_component/synth/proc/on_song_start()
+/obj/item/circuit_component/synth/proc/on_song_start(datum/source, datum/starting_song, atom/player)
 	SIGNAL_HANDLER
 	is_playing.set_output(TRUE)
 	started_playing.set_output(COMPONENT_SIGNAL)
@@ -148,7 +148,7 @@
 	stopped_playing.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/synth/proc/import_song()
-	synth.song.ParseSong(song.value)
+	synth.song.ParseSong(new_song = song.value)
 
 /obj/item/circuit_component/synth/proc/set_repetitions()
 	synth.song.set_repeats(repetitions.value)
@@ -169,7 +169,9 @@
 	synth.song.note_shift = clamp(note_shift.value, synth.song.note_shift_min, synth.song.note_shift_max)
 
 /obj/item/circuit_component/synth/proc/set_sustain_mode()
-	synth.song.sustain_mode = SSinstruments.note_sustain_modes[sustain_mode.value]
+	if(!(sustain_mode.value in SSinstruments.note_sustain_modes))
+		return
+	synth.song.sustain_mode = sustain_mode.value
 
 /obj/item/circuit_component/synth/proc/set_sustain_value()
 	switch(synth.song.sustain_mode)

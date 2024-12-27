@@ -15,17 +15,16 @@
 		/mob/living/simple_animal,
 		/mob/living/basic,
 	))
-	types_to_check -= /mob/living/simple_animal/pet/gondola/gondolapod // need a pod, which we don't have
 	types_to_check -= typesof(/mob/living/simple_animal/hostile/megafauna) // no
 	types_to_check -= typesof(/mob/living/basic/mouse) // qdel themselves on death; why dont they use DEL_ON_DEATH you might ask. I-unno
-	types_to_check -= typesof(/mob/living/simple_animal/slime) // if they roll the 50% chance to spawn as an adult, they can just at random split and qdel themselves
+	types_to_check -= typesof(/mob/living/basic/slime) // if they roll the 50% chance to spawn as an adult, they can just at random split and qdel themselves
 
 	for(var/mob/living/type as anything in types_to_check)
 		var/mob/living/target = allocate_new_target(type)
 		var/is_basic = istype(target, /mob/living/basic)
 		var/is_simple = istype(target, /mob/living/simple_animal)
 		// check some basic stuff
-		if(target.status_flags & GODMODE)
+		if(HAS_TRAIT(target, TRAIT_GODMODE))
 			continue
 		if(!(target.mob_biotypes & MOB_ORGANIC))
 			continue
@@ -97,6 +96,8 @@
 /datum/unit_test/strange_reagent/proc/test_death_no_damage(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
 	target.death()
+	if(QDELETED(target))
+		return
 	update_amounts(target)
 	strange_reagent.expose_mob(target, INGEST, amount_needed_to_revive)
 	TEST_ASSERT_NOTEQUAL(target.stat, DEAD, "Strange Reagent did not revive a dead target type [target.type].")
@@ -107,6 +108,8 @@
 		return
 
 	target.death()
+	if(QDELETED(target))
+		return
 	update_amounts(target)
 	strange_reagent.expose_mob(target, INGEST, amount_needed_to_revive)
 	TEST_ASSERT_NOTEQUAL(target.stat, DEAD, "Strange Reagent did not revive a dead target type [target.type].")
@@ -126,6 +129,8 @@
 		return
 
 	target.death()
+	if(QDELETED(target))
+		return
 	update_amounts(target)
 	strange_reagent.expose_mob(target, INGEST, amount_needed_to_full_heal)
 	TEST_ASSERT_EQUAL(target_max_health, get_target_organic_health_manual(target), "Strange Reagent did not fully heal a dead target type [target.type] with the expected amount.")
@@ -133,6 +138,8 @@
 /datum/unit_test/strange_reagent/proc/test_death_from_damage(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
 	if(!damage_target_to_percentage(target, strange_reagent.max_revive_damage_ratio * 0.9)) // 10% under the damage cap
+		return
+	if(QDELETED(target))
 		return
 
 	update_amounts(target)
@@ -142,6 +149,8 @@
 /datum/unit_test/strange_reagent/proc/test_death_from_too_much_damage(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
 	if(!damage_target_to_percentage(target, strange_reagent.max_revive_damage_ratio * 1.1)) // 10% over the damage cap
+		return
+	if(QDELETED(target))
 		return
 
 	update_amounts(target)

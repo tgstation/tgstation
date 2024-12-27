@@ -13,58 +13,14 @@
 	/// Who gave out this medal
 	var/awarder
 
-/// Callback for do_after to check if we can still be pinned
-/obj/item/clothing/accessory/medal/proc/pin_checks(mob/living/pinner, mob/living/carbon/human/pinning_on)
-	if(QDELETED(src) || QDELETED(pinner) || QDELETED(pinning_on))
-		return FALSE
-	if(!pinner.is_holding(src) || !pinner.Adjacent(pinning_on))
-		return FALSE
-	var/obj/item/clothing/under/pinning_on_uniform = pinning_on.w_uniform
-	if(!istype(pinning_on_uniform) || !can_attach_accessory(pinning_on_uniform, pinner))
-		return FALSE
-	return TRUE
-
-/obj/item/clothing/accessory/medal/pre_attack(atom/target, mob/living/user, params)
+/obj/item/clothing/accessory/medal/Initialize(mapload)
 	. = ..()
-	if(.)
-		return
-	if(!ishuman(target) || target == user)
-		return
+	AddComponent(/datum/component/pinnable_accessory, on_pre_pin = CALLBACK(src, PROC_REF(provide_reason)))
 
-	. = TRUE // no attack chain please
-
-	var/mob/living/carbon/human/distinguished = target
-	var/obj/item/clothing/under/distinguished_uniform = distinguished.w_uniform
-	if(!istype(distinguished_uniform))
-		distinguished.balloon_alert(user, "no uniform to pin on!")
-		return .
-	if(!can_attach_accessory(distinguished_uniform, user))
-		// Check handles feedback messages and etc
-		return .
-
-	user.visible_message(
-		span_notice("[user] tries to pin [src] on [distinguished]'s chest."),
-		span_notice("You try to pin [src] on [distinguished]'s chest."),
-	)
-
+/// Input a reason for the medal for the round end screen
+/obj/item/clothing/accessory/medal/proc/provide_reason(mob/living/carbon/human/distinguished, mob/user)
 	commendation_message = tgui_input_text(user, "Reason for this commendation? It will be recorded by Nanotrasen.", "Commendation", max_length = 140)
-	if(!commendation_message || !pin_checks(user, distinguished))
-		return .
-	if(!do_after(user, 2 SECONDS, distinguished, extra_checks = CALLBACK(src, PROC_REF(pin_checks), user, distinguished)))
-		return .
-
-	if(distinguished_uniform.attach_accessory(src, user))
-		user.visible_message(
-			span_notice("[user] pins [src] on [distinguished]'s chest."),
-			span_notice("You pin [src] on [distinguished]'s chest."),
-		)
-	else
-		user.visible_message(
-			span_warning("[user] fails to pin [src] on [distinguished]'s chest, seemingly unable to part with it."),
-			span_warning("You fail to pin [src] on [distinguished]'s chest."),
-		)
-
-	return .
+	return !!commendation_message
 
 /obj/item/clothing/accessory/medal/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	var/mob/living/distinguished = attach_to.loc
@@ -178,3 +134,29 @@
 /obj/item/clothing/accessory/medal/plasma/nobel_science
 	name = "nobel sciences award"
 	desc = "A plasma medal which represents significant contributions to the field of science or engineering."
+
+/obj/item/clothing/accessory/medal/silver/emergency_services
+	name = "emergency services award"
+	desc = "A silver medal awarded to the outstanding emergency service workers of Nanotrasen, those who work tirelessly together through adversity to keep their crew safe and breathing in the harsh environments of outer space."
+	icon_state = "emergencyservices"
+
+	/// Flavor text that is appended to the description.
+	var/insignia_desc = null
+
+/obj/item/clothing/accessory/medal/silver/emergency_services/Initialize(mapload)
+	. = ..()
+	if(istext(insignia_desc))
+		desc += " [insignia_desc]"
+
+/obj/item/clothing/accessory/medal/silver/emergency_services/engineering
+	icon_state = "emergencyservices_engi"
+	insignia_desc = "The back of the medal bears an orange wrench."
+
+/obj/item/clothing/accessory/medal/silver/emergency_services/medical
+	icon_state = "emergencyservices_med"
+	insignia_desc = "The back of the medal bears a dark blue cross."
+
+/obj/item/clothing/accessory/medal/silver/elder_atmosian
+	name = "atmospheric mastery award"
+	desc = "Often referred to as the \"elder atmosian\" award, this medal is awarded to the exemplary scientists and technicians who push the boundaries and demonstrate mastery of atmospherics."
+	icon_state = "elderatmosian"

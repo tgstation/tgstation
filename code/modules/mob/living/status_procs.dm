@@ -10,7 +10,7 @@
 /mob/living/proc/check_stun_immunity(check_flags = CANSTUN, force_stun = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return TRUE
 
 	if(force_stun) // Does not take priority over god mode? I guess
@@ -303,6 +303,7 @@
 	Knockdown(amount)
 	Stun(amount)
 	Immobilize(amount)
+	Unconscious(amount)
 
 
 /mob/living/proc/SetAllImmobility(amount)
@@ -310,6 +311,7 @@
 	SetKnockdown(amount)
 	SetStun(amount)
 	SetImmobilized(amount)
+	SetUnconscious(amount)
 
 
 /mob/living/proc/AdjustAllImmobility(amount)
@@ -317,6 +319,7 @@
 	AdjustKnockdown(amount)
 	AdjustStun(amount)
 	AdjustImmobilized(amount)
+	AdjustUnconscious(amount)
 
 
 /* UNCONSCIOUS */
@@ -382,7 +385,7 @@
 /mob/living/proc/Sleeping(amount) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
@@ -394,7 +397,7 @@
 /mob/living/proc/SetSleeping(amount) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(amount <= 0)
@@ -409,7 +412,7 @@
 /mob/living/proc/AdjustSleeping(amount) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
@@ -418,28 +421,15 @@
 		S = apply_status_effect(/datum/status_effect/incapacitating/sleeping, amount)
 	return S
 
-///Allows us to set a permanent sleep on a player (use with caution and remember to unset it with SetSleeping() after the effect is over)
-/mob/living/proc/PermaSleeping()
-	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, -1) & COMPONENT_NO_STUN)
-		return
-	if(status_flags & GODMODE)
-		return
-	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-	if(S)
-		S.duration = -1
-	else
-		S = apply_status_effect(/datum/status_effect/incapacitating/sleeping, -1)
-	return S
-
 ///////////////////////// CLEAR STATUS /////////////////////////
 
 /mob/living/proc/adjust_status_effects_on_shake_up()
-	AdjustStun(-60)
-	AdjustKnockdown(-60)
-	AdjustUnconscious(-60)
-	AdjustSleeping(-100)
-	AdjustParalyzed(-60)
-	AdjustImmobilized(-60)
+	AdjustStun(-6 SECONDS)
+	AdjustKnockdown(-6 SECONDS)
+	AdjustUnconscious(-6 SECONDS)
+	AdjustSleeping(-10 SECONDS)
+	AdjustParalyzed(-6 SECONDS)
+	AdjustImmobilized(-6 SECONDS)
 
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
@@ -497,30 +487,40 @@
 
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)
-	if(!HAS_TRAIT(src, TRAIT_HUSK))
-		REMOVE_TRAIT(src, TRAIT_DISFIGURED, "husk")
-		update_body()
-		return TRUE
+	if(HAS_TRAIT(src, TRAIT_HUSK))
+		return FALSE
+	REMOVE_TRAIT(src, TRAIT_DISFIGURED, "husk")
+	update_body()
+	UnregisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_UNHUSKABLE))
+	return TRUE
 
 /mob/living/proc/become_husk(source)
-	if(!HAS_TRAIT(src, TRAIT_HUSK))
-		ADD_TRAIT(src, TRAIT_HUSK, source)
-		ADD_TRAIT(src, TRAIT_DISFIGURED, "husk")
-		update_body()
-	else
-		ADD_TRAIT(src, TRAIT_HUSK, source)
+	if(HAS_TRAIT(src, TRAIT_UNHUSKABLE))
+		return
+	var/was_husk = HAS_TRAIT(src, TRAIT_HUSK)
+	ADD_TRAIT(src, TRAIT_HUSK, source)
+	if (was_husk)
+		return
+	ADD_TRAIT(src, TRAIT_DISFIGURED, "husk")
+	update_body()
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_UNHUSKABLE), PROC_REF(became_unhuskable))
+
+/// Called when we become unhuskable while already husked
+/mob/living/proc/became_unhuskable()
+	SIGNAL_HANDLER
+	cure_husk()
 
 /mob/living/proc/cure_fakedeath(source)
 	remove_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 	if(stat != DEAD)
-		tod = null
+		station_timestamp_timeofdeath = null
 
 /// Induces fake death on a living mob.
 /mob/living/proc/fakedeath(source, silent = FALSE)
 	if(stat != DEAD)
 		if(!silent)
 			emote("deathgasp")
-		tod = station_time_timestamp()
+		station_timestamp_timeofdeath = station_time_timestamp()
 
 	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
 
@@ -668,7 +668,7 @@
 		return 0
 	// Infinite duration status effects technically are not "timed status effects"
 	// by name or nature, but support is included just in case.
-	if(existing.duration == -1)
+	if(existing.duration == STATUS_EFFECT_PERMANENT)
 		return INFINITY
 
 	return existing.duration - world.time

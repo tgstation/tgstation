@@ -12,7 +12,7 @@
 	item = /obj/item/soap/syndie
 	cost = 1
 	surplus = 50
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Duffel Bag"
@@ -46,7 +46,7 @@
 	desc = "When linked to a tram's on board computer systems, this device allows the user to manipulate the controls remotely. \
 		Includes direction toggle and a rapid mode to bypass door safety checks and crossing signals. \
 		Perfect for running someone over in the name of a tram malfunction!"
-	item = /obj/item/tram_remote
+	item = /obj/item/assembly/control/transport/remote
 	cost = 2
 
 /datum/uplink_item/device_tools/thermal
@@ -83,14 +83,13 @@
 	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
 	cost = 8
 
-/datum/uplink_item/device_tools/camera_bug
-	name = "Camera Bug"
-	desc = "Enables you to view all cameras on the main network, set up motion alerts and track a target. \
-			Bugging cameras allows you to disable them remotely."
-	item = /obj/item/camera_bug
+/datum/uplink_item/device_tools/camera_app
+	name = "SyndEye Program"
+	desc = "A data disk containing a unique PC app that allows you to watch cameras and track crewmembers."
+	item = /obj/item/computer_disk/syndicate/camera_app
 	cost = 1
 	surplus = 90
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
@@ -112,7 +111,7 @@
 	item = /obj/item/disk/nuclear/fake
 	cost = 1
 	surplus = 1
-	illegal_tech = FALSE
+	uplink_item_flags = NONE
 
 /datum/uplink_item/device_tools/frame
 	name = "F.R.A.M.E. disk"
@@ -123,7 +122,7 @@
 	item = /obj/item/computer_disk/virus/frame
 	cost = 4
 	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
@@ -135,11 +134,11 @@
 /datum/uplink_item/device_tools/failsafe
 	name = "Failsafe Uplink Code"
 	desc = "When entered the uplink will self-destruct immediately."
-	item = /obj/effect/gibspawner/generic
+	item = ABSTRACT_UPLINK_ITEM
 	cost = 1
 	surplus = 0
 	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/device_tools/failsafe/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/datum/component/uplink/uplink = source.GetComponent(/datum/component/uplink)
@@ -164,7 +163,7 @@
 			multitool and combat gloves that are resistant to shocks and heat."
 	item = /obj/item/storage/toolbox/syndicate
 	cost = 1
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
@@ -174,7 +173,7 @@
 			and wavelength, which controls the delay before the effect kicks in."
 	item = /obj/item/healthanalyzer/rad_laser
 	cost = 3
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/device_tools/suspiciousphone
 	name = "Protocol CRAB-17 Phone"
@@ -243,18 +242,18 @@
 			active gravitational singularities or tesla balls towards it. This will not work when the engine is still \
 			in containment. Because of its size, it cannot be carried. Ordering this \
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
-	progression_minimum = 30 MINUTES
+	progression_minimum = 20 MINUTES
 	item = /obj/item/sbeacondrop
-	cost = 10
+	cost = 4
 	surplus = 0 // not while there isnt one on any station
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
 	desc = "When screwed to wiring attached to a power grid and activated, this large device lights up and places excessive \
 			load on the grid, causing a station-wide blackout. The sink is large and cannot be stored in most \
 			traditional bags and boxes. Caution: Will explode if the powernet contains sufficient amounts of energy."
-	progression_minimum = 30 MINUTES
+	progression_minimum = 20 MINUTES
 	item = /obj/item/powersink
 	cost = 11
 
@@ -264,3 +263,9 @@
 			bright lights. Effective, affordable, and nigh undetectable."
 	item = /obj/item/syndicate_contacts
 	cost = 3
+
+/datum/uplink_item/device_tools/syndicate_climbing_hook
+	name = "Syndicate Climbing Hook"
+	desc = "High-tech rope, a refined hook structure, the peak of climbing technology. Only useful for climbing up holes, provided the operation site has any."
+	item = /obj/item/climbing_hook/syndicate
+	cost = 1

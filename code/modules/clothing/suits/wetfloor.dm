@@ -19,7 +19,7 @@
 	allowed = list(
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
-		/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
+		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
 	)
 
 /datum/armor/suit_caution

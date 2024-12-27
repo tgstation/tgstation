@@ -8,7 +8,7 @@
  * * sets lastKnownIP
  * * sets computer_id
  * * logs the login
- * * tells the world to update it's status (for player count)
+ * * tells the world to update its status (for player count)
  * * create mob huds for the mob if needed
  * * reset next_move to 1
  * * Set statobj to our mob
@@ -34,7 +34,7 @@
 	add_to_player_list()
 	lastKnownIP = client.address
 	computer_id = client.computer_id
-	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
+	log_access("Mob Login: [key_name(src)] was assigned to a [type] ([tag])")
 	world.update_status()
 	client.clear_screen() //remove hud items just in case
 	client.images = list()
@@ -91,14 +91,17 @@
 	sync_mind()
 
 	//Reload alternate appearances
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
+		if(!alt_hud.apply_to_new_mob(src))
+			alt_hud.hide_from(src, absolute = TRUE)
 
 	update_client_colour()
 	update_mouse_pointer()
+	update_ambience_area(get_area(src))
+
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
+
 	if(client)
 		if(client.view_size)
 			client.view_size.resetToDefault() // Resets the client.view in case it was changed.
@@ -112,7 +115,13 @@
 		for(var/foo in client.player_details.post_login_callbacks)
 			var/datum/callback/CB = foo
 			CB.Invoke()
-		log_played_names(client.ckey,name,real_name)
+		log_played_names(
+			client.ckey,
+			list(
+				"[name]" = tag,
+				"[real_name]" = tag,
+			),
+		)
 		auto_deadmin_on_login()
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)

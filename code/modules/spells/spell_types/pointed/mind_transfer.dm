@@ -9,9 +9,11 @@
 	cooldown_reduction_per_rank =  10 SECONDS
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_MIND|SPELL_CASTABLE_AS_BRAIN
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED|AB_CHECK_OPEN_TURF
 
 	invocation = "GIN'YU CAPAN"
 	invocation_type = INVOCATION_WHISPER
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 
 	active_msg = "You prepare to swap minds with a target..."
 	deactive_msg = "You dispel mind swap."
@@ -55,11 +57,21 @@
 	if(!isliving(cast_on))
 		to_chat(owner, span_warning("You can only swap minds with living beings!"))
 		return FALSE
+
+	if(HAS_TRAIT(cast_on, TRAIT_MIND_TEMPORARILY_GONE))
+		to_chat(owner, span_warning("This creature's mind is somewhere else entirely!"))
+		return FALSE
+
+	if(HAS_TRAIT(cast_on, TRAIT_NO_MINDSWAP))
+		to_chat(owner, span_warning("This type of magic can't operate on [cast_on.p_their()] mind!"))
+		return FALSE
+
 	if(is_type_in_typecache(cast_on, blacklisted_mobs))
 		to_chat(owner, span_warning("This creature is too [pick("powerful", "strange", "arcane", "obscene")] to control!"))
 		return FALSE
+
 	if(isguardian(cast_on))
-		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
+		var/mob/living/basic/guardian/stand = cast_on
 		if(stand.summoner && stand.summoner == owner)
 			to_chat(owner, span_warning("Swapping minds with your own guardian would just put you back into your own head!"))
 			return FALSE
@@ -86,7 +98,7 @@
 
 	var/mob/living/to_swap = cast_on
 	if(isguardian(cast_on))
-		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
+		var/mob/living/basic/guardian/stand = cast_on
 		if(stand.summoner)
 			to_swap = stand.summoner
 
@@ -127,7 +139,7 @@
 
 	// Only the caster and victim hear the sounds,
 	// that way no one knows for sure if the swap happened
-	SEND_SOUND(caster, sound('sound/magic/mandswap.ogg'))
-	SEND_SOUND(to_swap, sound('sound/magic/mandswap.ogg'))
+	SEND_SOUND(caster, sound('sound/effects/magic/mandswap.ogg'))
+	SEND_SOUND(to_swap, sound('sound/effects/magic/mandswap.ogg'))
 
 	return TRUE

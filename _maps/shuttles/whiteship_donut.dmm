@@ -36,9 +36,7 @@
 /area/shuttle/abandoned)
 "aX" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "be" = (
@@ -55,7 +53,7 @@
 /area/shuttle/abandoned)
 "cm" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "da" = (
@@ -389,7 +387,7 @@
 /area/shuttle/abandoned)
 "NG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "Ot" = (
@@ -468,7 +466,9 @@
 /area/shuttle/abandoned)
 "XY" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	dir = 1
+	dir = 1;
+	x_offset = 0;
+	y_offset = 9
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/disk/holodisk/donutstation/whiteship,

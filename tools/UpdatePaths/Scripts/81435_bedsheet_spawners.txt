@@ -1,0 +1,3 @@
+/obj/item/bedsheet/dorms : /obj/effect/spawner/random/bedsheet{@OLD}
+/obj/item/bedsheet/dorms_double : /obj/effect/spawner/random/bedsheet/double{@OLD}
+/obj/item/bedsheet/random/@SUBTYPES: /obj/effect/spawner/random/bedsheet/any/@SUBTYPES{@OLD}

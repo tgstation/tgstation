@@ -236,3 +236,25 @@
 	speak = list() //they're very patient and focused on holding the butter on 'em
 	emote_see = list("shakes a little.", "looks around.")
 	emote_hear = list("licks a trickle of the butter up.", "smiles.")
+
+/datum/dog_fashion/head/eyepatch
+	name = "Punished %REAL_NAME%"
+	desc = "%REAL_NAME% has really been going through it today."
+	obj_icon_state = "eyepatch"
+	emote_hear = list("sighs gruffly.", "groans.")
+	emote_see = list("considers their own mortality.", "stares bleakly into the middle distance.", "ponders the horrors of warfare.")
+
+/datum/dog_fashion/head/watermelon
+	name = "Watermelon Warrior %REAL_NAME%"
+	desc = "5% safer than normal and ready to take on advantage!"
+	obj_icon_state = "watermelon"
+
+/datum/dog_fashion/head/holymelon
+	name = "Holymelon Paladin %REAL_NAME%"
+	desc = "Extraterrestial powers beware, %NAME% is here to smite you down!"
+	obj_icon_state = "holymelon"
+
+/datum/dog_fashion/head/barrelmelon
+	name = "Barrelmelon Berserk %REAL_NAME%"
+	desc = "Either the sturdiness of the helmet gave %REAL_NAME% a confidence boost, or its bit tight on their head..."
+	obj_icon_state = "barrelmelon"

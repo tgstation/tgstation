@@ -1,0 +1,5 @@
+#updates mapped-in surgery trays to the full subtype, so empty trays can be crafted
+/obj/item/surgery_tray : /obj/item/surgery_tray/full{@OLD}
+/obj/item/surgery_tray/deployed : /obj/item/surgery_tray/full/deployed{@OLD}
+/obj/item/surgery_tray/morgue : /obj/item/surgery_tray/full/morgue{@OLD}
+/obj/item/surgery_tray/advanced : /obj/item/surgery_tray/full/advanced{@OLD}

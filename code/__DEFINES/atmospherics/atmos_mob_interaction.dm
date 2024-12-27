@@ -64,13 +64,13 @@
 /// The maximum number of degrees that your body can heat up in 1 tick, due to the environment, when in a hot area.
 #define BODYTEMP_HEATING_MAX 30
 /// The body temperature limit the human body can take before it starts taking damage from heat.
-/// This also affects how fast the body normalises it's temperature when hot.
+/// This also affects how fast the body normalises its temperature when hot.
 /// 340k is about 66c, and rather high for a human.
 #define BODYTEMP_HEAT_DAMAGE_LIMIT (BODYTEMP_NORMAL + 30)
 /// A temperature limit which is above the maximum lavaland temperature
 #define BODYTEMP_HEAT_LAVALAND_SAFE (LAVALAND_MAX_TEMPERATURE + 5)
 /// The body temperature limit the human body can take before it starts taking damage from cold.
-/// This also affects how fast the body normalises it's temperature when cold.
+/// This also affects how fast the body normalises its temperature when cold.
 /// 270k is about -3c, that is below freezing and would hurt over time.
 #define BODYTEMP_COLD_DAMAGE_LIMIT (BODYTEMP_NORMAL - 40)
 /// A temperature limit which is above the minimum icebox temperature
@@ -95,6 +95,9 @@
 #define BODYTEMP_COLD_WARNING_2 (BODYTEMP_COLD_DAMAGE_LIMIT - 70) //200k
 /// The temperature the blue icon is displayed.
 #define BODYTEMP_COLD_WARNING_3 (BODYTEMP_COLD_DAMAGE_LIMIT - 150) //120k
+
+/// Beyond this temperature, being on fire will increase body temperature by less and less
+#define BODYTEMP_FIRE_TEMP_SOFTCAP 1200
 
 /// The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
 #define PRESSURE_DAMAGE_COEFFICIENT 2

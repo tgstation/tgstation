@@ -55,6 +55,7 @@
 	icon_state = "ltube"
 	base_state = "ltube"
 	inhand_icon_state = "ltube"
+	icon_angle = -45
 	brightness = 8
 	custom_price = PAYCHECK_CREW * 0.5
 
@@ -75,6 +76,7 @@
 	desc = "A replacement light bulb."
 	icon_state = "lbulb"
 	base_state = "lbulb"
+	icon_angle = -90
 	inhand_icon_state = "contvapour"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -116,7 +118,7 @@
 	if(!isliving(moving_atom))
 		return
 	var/mob/living/moving_mob = moving_atom
-	if(!(moving_mob.movement_type & (FLYING|FLOATING)) || moving_mob.buckled)
+	if(!(moving_mob.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || moving_mob.buckled)
 		playsound(src, 'sound/effects/footstep/glass_step.ogg', HAS_TRAIT(moving_mob, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter(moving_mob)
@@ -135,7 +137,7 @@
 		status = LIGHT_BROKEN
 		force = 5
 		sharpness = SHARP_POINTY
-		playsound(loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+		playsound(loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(length(reagents.reagent_list))
 			visible_message(span_danger("The contents of [src] splash onto you as you step on it!"),span_hear("You feel the contents of [src] splash onto you as you step on it!."))
 			reagents.expose(target, TOUCH)

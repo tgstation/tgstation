@@ -11,7 +11,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(new_highlander))
 	sound_to_playing_players('sound/misc/highlander.ogg')
-	send_to_playing_players(span_boldannounce("<font size=6>THERE CAN BE ONLY ONE</font>"))
+	send_to_playing_players(span_bolddanger("<font size=6>THERE CAN BE ONLY ONE</font>"))
 	for(var/obj/item/disk/nuclear/nuke_disk as anything in SSpoints_of_interest.real_nuclear_disks)
 		var/datum/component/stationloving/component = nuke_disk.GetComponent(/datum/component/stationloving)
 		component?.relocate() //Gets it out of bags and such
@@ -36,9 +36,9 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 			robot.gib()
 			continue
 		robot.make_scottish()
-	addtimer(CALLBACK(SSshuttle.emergency, TYPE_PROC_REF(/obj/docking_port/mobile/emergency, request), null, 1), 50)
+	addtimer(CALLBACK(SSshuttle.emergency, TYPE_PROC_REF(/obj/docking_port/mobile/emergency, request), null, 1), 5 SECONDS)
 
-/datum/highlander_controller/Destroy(force, ...)
+/datum/highlander_controller/Destroy(force)
 	. = ..()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 

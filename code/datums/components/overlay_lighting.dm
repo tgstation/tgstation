@@ -62,13 +62,13 @@
 	var/directional = FALSE
 	///Whether we're a beam light
 	var/beam = FALSE
-	///A cone overlay for directional light, it's alpha and color are dependant on the light
+	///A cone overlay for directional light, its alpha and color are dependent on the light
 	var/image/cone
 	///Current tracked direction for the directional cast behaviour
 	var/current_direction
-	///Tracks current directional x offset so we dont update unecessarily
+	///Tracks current directional x offset so we don't update unnecessarily
 	var/directional_offset_x
-	///Tracks current directional y offset so we dont update unecessarily
+	///Tracks current directional y offset so we don't update unnecessarily
 	var/directional_offset_y
 	///Cast range for the directional cast (how far away the atom is moved)
 	var/cast_range = 2
@@ -78,8 +78,8 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/atom/movable/movable_parent = parent
-	if(movable_parent.light_system != MOVABLE_LIGHT && movable_parent.light_system != MOVABLE_LIGHT_DIRECTIONAL && movable_parent.light_system != MOVABLE_LIGHT_BEAM)
-		stack_trace("[type] added to [parent], with [movable_parent.light_system] value for the light_system var. Use [MOVABLE_LIGHT], [MOVABLE_LIGHT_DIRECTIONAL] or [MOVABLE_LIGHT_BEAM] instead.")
+	if(movable_parent.light_system != OVERLAY_LIGHT && movable_parent.light_system != OVERLAY_LIGHT_DIRECTIONAL && movable_parent.light_system != OVERLAY_LIGHT_BEAM)
+		stack_trace("[type] added to [parent], with [movable_parent.light_system] value for the light_system var. Use [OVERLAY_LIGHT], [OVERLAY_LIGHT_DIRECTIONAL] or [OVERLAY_LIGHT_BEAM] instead.")
 		return COMPONENT_INCOMPATIBLE
 
 	. = ..()
@@ -266,6 +266,9 @@
 ///Used to determine the new valid current_holder from the parent's loc.
 /datum/component/overlay_lighting/proc/check_holder()
 	var/atom/movable/movable_parent = GET_PARENT
+	if(QDELETED(movable_parent))
+		set_holder(null)
+		return
 	if(isturf(movable_parent.loc))
 		set_holder(movable_parent)
 		return
@@ -274,7 +277,11 @@
 		set_holder(null)
 		return
 	if(isturf(inside.loc))
-		set_holder(inside)
+		// storage items block light, also don't be moving into a qdeleted item
+		if(QDELETED(inside) || istype(inside, /obj/item/storage))
+			set_holder(null)
+		else
+			set_holder(inside)
 		return
 	set_holder(null)
 
@@ -283,6 +290,7 @@
 /datum/component/overlay_lighting/proc/on_holder_qdel(atom/movable/source, force)
 	SIGNAL_HANDLER
 	if(QDELETED(current_holder))
+		set_holder(null)
 		return
 	UnregisterSignal(current_holder, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	if(directional)
@@ -390,7 +398,7 @@
 		return
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays -= cone
-	cone.alpha = min(200, (abs(new_power) * 90)+20)
+	cone.alpha = min(120, (abs(new_power) * 60) + 15)
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += cone
 

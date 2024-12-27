@@ -2,7 +2,7 @@
 	name = "Command"
 	icon_state = "command"
 	ambientsounds = list(
-		'sound/ambience/signal.ogg',
+		'sound/ambience/misc/signal.ogg',
 		)
 	airlock_wires = /datum/wires/airlock/command
 	sound_environment = SOUND_AREA_STANDARD_STATION
@@ -30,6 +30,11 @@
 	name = "\improper Corporate Guest Suite"
 	icon_state = "command"
 	sound_environment = SOUND_AREA_WOODFLOOR
+
+/area/station/command/emergency_closet
+	name = "\improper Corporate Emergency Closet"
+	icon_state = "command"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /*
 * Command Head Areas

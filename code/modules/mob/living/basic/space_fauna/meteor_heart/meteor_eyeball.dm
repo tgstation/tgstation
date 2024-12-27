@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(meteor_eyeballs)
 	desc = "An eyeball growing out of the ground, gross."
 	icon_state = "eyeball"
 	max_integrity = 15
-	layer = LOW_OBJ_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 
 /obj/structure/meateor_fluff/eyeball/Initialize(mapload)

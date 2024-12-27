@@ -19,7 +19,7 @@
 
 /obj/effect/turf_decal/weather/sand
 	name = "sand siding"
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "sand_side"
 
 /obj/effect/turf_decal/weather/sand/light

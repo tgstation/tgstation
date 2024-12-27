@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	</head>
+	<body>
+		<script>
+			lastseentypedtext = "";
+			function getoutput() {
+				setTimeout(getoutput, 1000);
+				window.location = "byond://winget?callback=checkoutput&id=:Input&property=text";
+			}
+			function checkoutput(props) {
+				if (typeof props !== 'object')
+					return;
+
+				if (typeof props.text !== 'string' && !(props.text instanceof String))
+					return;
+
+				var text = props.text;
+
+				if (text == lastseentypedtext)
+					return;
+
+				lastseentypedtext = text;
+
+				var words = text.split(" ");
+				var verb = words[0];
+				var argument = "";
+				var argument_length = -1;
+
+				if (words.length >= 2) {
+					words.splice(0, 1)
+					argument = words.join(" ");
+					argument_length = argument.length;
+				}
+
+				if (argument_length > 0 && argument[0] == "\"")
+					argument_length -= 1;
+
+				window.location = "byond://?commandbar_typing=1&verb="+encodeURIComponent(verb)+"&argument_length="+argument_length;
+			}
+			setTimeout(getoutput, 2000);
+		</script>
+	</body>
+</html>

@@ -16,8 +16,9 @@
 	melee_damage_upper = 10
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	attack_sound = 'sound/weapons/punch1.ogg'
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	attack_sound = 'sound/items/weapons/punch1.ogg'
+	melee_attack_cooldown = 1.2 SECONDS
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	speak_emote = list("announces")
 
 	unsuitable_atmos_damage = 0
@@ -30,7 +31,7 @@
 	greyscale_config = /datum/greyscale_config/garden_gnome
 	ai_controller = /datum/ai_controller/basic_controller/garden_gnome
 	/// The damage resistence when sinked into the ground
-	var/resistance_when_sinked = list(BRUTE = 0.5, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	var/resistance_when_sinked = list(BRUTE = 0.5, BURN = 0.5, TOX = 1, STAMINA = 0, OXY = 1)
 	/// Realistically weighted list of usual gnome hat colours
 	var/static/list/gnome_hat_colours = list(
 		COLOR_GNOME_RED_ONE = 9,
@@ -103,8 +104,7 @@
 	var/datum/callback/retaliate_callback = CALLBACK(src, PROC_REF(ai_retaliate_behaviour))
 	chosen_hat_colour = pick_weight(gnome_hat_colours)
 	apply_colour()
-	var/static/list/death_loot = list(/obj/effect/gibspawner/generic)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddComponent(/datum/component/ai_retaliate_advanced, retaliate_callback)
 	AddComponent(/datum/component/swarming)
@@ -125,7 +125,7 @@
 
 /datum/ai_controller/basic_controller/garden_gnome
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -133,12 +133,6 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/garden_gnome,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/garden_gnome,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/garden_gnome
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/garden_gnome
-
-/datum/ai_behavior/basic_melee_attack/garden_gnome
-	action_cooldown = 1.2 SECONDS

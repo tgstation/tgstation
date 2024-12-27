@@ -137,7 +137,7 @@
 	name = "RCD anti disruption designs upgrade"
 	desc = "Prevents interruption of RCD construction and deconstruction."
 	id = "rcd_upgrade_anti_interrupt"
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25,
@@ -154,7 +154,7 @@
 	name = "RCD cooling upgrade"
 	desc = "Allows the RCD to more quickly perform multiple actions at once."
 	id = "rcd_upgrade_cooling"
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
@@ -225,17 +225,6 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY_ADVANCED
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
-
-/datum/design/plumbing_rcd_sci
-	name = "Research Plumbing Constructor"
-	id = "plumbing_rcd_sci"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*37.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*18.75, /datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/construction/plumbing/research
-	category = list(
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PLUMBING
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/plumbing_rcd_service
 	name = "Service Plumbing Constructor"

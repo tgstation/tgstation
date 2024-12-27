@@ -32,6 +32,9 @@
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
+"h" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/department/eva)
 "k" = (
 /obj/effect/turf_decal/sand,
 /obj/structure/closet,
@@ -107,6 +110,13 @@
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/eva)
+"X" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Security Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
+/turf/open/floor/plating,
 /area/station/maintenance/department/eva)
 "Y" = (
 /obj/effect/decal/cleanable/dirt,
@@ -276,7 +286,7 @@ N
 N
 "}
 (11,1,1) = {"
-t
+h
 t
 L
 t
@@ -291,7 +301,7 @@ a
 a
 "}
 (12,1,1) = {"
-t
+h
 r
 k
 t
@@ -306,7 +316,7 @@ a
 a
 "}
 (13,1,1) = {"
-t
+h
 d
 d
 t
@@ -321,7 +331,7 @@ a
 a
 "}
 (14,1,1) = {"
-t
+X
 e
 e
 K
@@ -336,7 +346,7 @@ a
 a
 "}
 (15,1,1) = {"
-t
+h
 Y
 e
 t

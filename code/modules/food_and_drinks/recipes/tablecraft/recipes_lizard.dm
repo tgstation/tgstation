@@ -25,11 +25,11 @@
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/onion = 1,
-		/obj/item/organ/internal/lungs = 1,
+		/obj/item/organ/lungs = 1,
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	blacklist = list(
-		/obj/item/organ/internal/lungs/cybernetic,
+		/obj/item/organ/lungs/cybernetic,
 	)
 
 	result = /obj/item/food/shredded_lungs
@@ -38,10 +38,10 @@
 /datum/crafting_recipe/food/tsatsikh
 	name = "Tsatsikh"
 	reqs = list(
-		/obj/item/organ/internal/heart = 1,
-		/obj/item/organ/internal/liver = 1,
-		/obj/item/organ/internal/lungs = 1,
-		/obj/item/organ/internal/stomach = 1,
+		/obj/item/organ/heart = 1,
+		/obj/item/organ/liver = 1,
+		/obj/item/organ/lungs = 1,
+		/obj/item/organ/stomach = 1,
 		/datum/reagent/consumable/salt = 2,
 		/datum/reagent/consumable/blackpepper = 2
 	)
@@ -51,7 +51,7 @@
 /datum/crafting_recipe/food/liver_pate
 	name = "Liver pate"
 	reqs = list(
-		/obj/item/organ/internal/liver = 1,
+		/obj/item/organ/liver = 1,
 		/obj/item/food/meat/rawcutlet = 1,
 		/obj/item/food/grown/onion = 1
 	)
@@ -74,7 +74,8 @@
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/lemonjuice = 3,
 		/datum/reagent/consumable/blackpepper = 2,
-		/datum/reagent/consumable/quality_oil = 3
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 3,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/lizard_escargot
 	category = CAT_LIZARD
@@ -94,7 +95,8 @@
 	reqs = list(
 		/obj/item/food/fries = 1,
 		/obj/item/food/meat/cutlet = 2,
-		/datum/reagent/consumable/bbqsauce = 5
+		/datum/reagent/consumable/bbqsauce = 5,
+		/obj/item/plate = 1,
 	)
 	result = /obj/item/food/lizard_fries
 	category = CAT_LIZARD
@@ -102,8 +104,8 @@
 /datum/crafting_recipe/food/brain_pate
 	name = "Eyeball-and-brain pate"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
-		/obj/item/organ/internal/eyes = 1,
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/eyes = 1,
 		/obj/item/food/grown/onion = 1,
 		/datum/reagent/consumable/salt = 3
 	)
@@ -148,7 +150,7 @@
 		/obj/item/food/steeped_mushrooms = 1,
 		/obj/item/food/grown/mushroom/plumphelmet = 1,
 		/obj/item/food/grown/mushroom/chanterelle = 1,
-		/datum/reagent/consumable/quality_oil = 5
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 5
 	)
 	result = /obj/item/food/mushroomy_stirfry
 	category = CAT_LIZARD
@@ -187,6 +189,17 @@
 	result = /obj/item/food/rootdough
 	category = CAT_LIZARD
 
+/datum/crafting_recipe/food/rootdough2
+	name = "Rootdough"
+	reqs = list(
+		/obj/item/food/grown/potato = 2,
+		/datum/reagent/consumable/soymilk = 15,
+		/datum/reagent/consumable/korta_flour = 5,
+		/datum/reagent/water = 10
+	)
+	result = /obj/item/food/rootdough
+	category = CAT_LIZARD
+
 /datum/crafting_recipe/food/snail_nizaya
 	name = "Desert snail nizaya"
 	reqs = list(
@@ -204,7 +217,7 @@
 		/obj/item/food/spaghetti/nizaya = 1,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/grown/chili = 1,
-		/datum/reagent/consumable/quality_oil = 5
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 5
 	)
 	result = /obj/item/food/spaghetti/garlic_nizaya
 	category = CAT_LIZARD
@@ -228,7 +241,7 @@
 		/obj/item/food/spaghetti/nizaya = 1,
 		/obj/item/food/steeped_mushrooms = 1,
 		/obj/item/food/grown/garlic = 1,
-		/datum/reagent/consumable/quality_oil = 5
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 5
 	)
 	result = /obj/item/food/spaghetti/mushroom_nizaya
 	category = CAT_LIZARD
@@ -239,7 +252,7 @@
 		/obj/item/food/root_flatbread = 1,
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/lemonjuice = 2,
-		/datum/reagent/consumable/quality_oil = 3
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 3
 	)
 	result = /obj/item/food/pizza/flatbread/rustic
 	category = CAT_LIZARD
@@ -251,7 +264,7 @@
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/meatball = 2,
-		/datum/reagent/consumable/quality_oil = 3
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 3
 	)
 	result = /obj/item/food/pizza/flatbread/italic
 	category = CAT_LIZARD
@@ -292,7 +305,7 @@
 		/obj/item/food/root_flatbread = 1,
 		/obj/item/food/grown/cucumber = 2,
 		/obj/item/food/egg = 1,
-		/obj/item/organ/internal/liver = 1
+		/obj/item/organ/liver = 1
 	)
 	result = /obj/item/food/pizza/flatbread/zmorgast
 	category = CAT_LIZARD
@@ -313,7 +326,7 @@
 		/obj/item/food/root_flatbread = 1,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/grown/mushroom = 3,
-		/datum/reagent/consumable/quality_oil = 3
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 3
 	)
 	result = /obj/item/food/pizza/flatbread/mushroom
 	category = CAT_LIZARD
@@ -432,6 +445,25 @@
 	result = /obj/item/food/steeped_mushrooms
 	category = CAT_LIZARD
 
+/datum/crafting_recipe/food/rootbreadpbj
+	name = "Peanut butter and jelly rootwich"
+	reqs = list(
+		/obj/item/food/breadslice/root = 2,
+		/datum/reagent/consumable/peanut_butter = 5,
+		/datum/reagent/consumable/cherryjelly = 5
+	)
+	result = /obj/item/food/rootbread_peanut_butter_jelly
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/rootbreadpbb
+	name = "Peanut butter and banana rootwich"
+	reqs = list(
+		/obj/item/food/breadslice/root = 2,
+		/datum/reagent/consumable/peanut_butter = 5,
+		/obj/item/food/grown/banana = 1
+	)
+	result = /obj/item/food/rootbread_peanut_butter_banana
+	category = CAT_LIZARD
 // Soups
 
 /datum/crafting_recipe/food/reaction/soup/atrakor_dumplings
@@ -448,6 +480,10 @@
 
 /datum/crafting_recipe/food/reaction/soup/jellyfish_stew
 	reaction = /datum/chemical_reaction/food/soup/jellyfish_stew
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/jellyfish_stew_two
+	reaction = /datum/chemical_reaction/food/soup/jellyfish_stew_two
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/reaction/soup/rootbread_soup

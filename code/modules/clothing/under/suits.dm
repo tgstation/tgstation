@@ -84,7 +84,6 @@
 	desc = "It's a very smart uniform with a special pocket for tip."
 	icon_state = "waiter"
 	inhand_icon_state = "waiter"
-	supports_variations_flags = CLOTHING_MONKEY_VARIATION
 
 /obj/item/clothing/under/suit/black_really
 	name = "executive suit"
@@ -108,8 +107,16 @@
 	icon_state = "tuxedo"
 	inhand_icon_state = null
 
+/obj/item/clothing/under/suit/tuxedo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
+
 /obj/item/clothing/under/suit/carpskin
 	name = "carpskin suit"
 	desc = "An luxurious suit made with only the finest scales, perfect for conducting dodgy business deals."
 	icon_state = "carpskin_suit"
 	inhand_icon_state = null
+
+/obj/item/clothing/under/suit/carpskin/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)

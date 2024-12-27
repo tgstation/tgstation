@@ -1,0 +1,1 @@
+/obj/machinery/keycard_auth/directional/@SUBTYPES : /obj/machinery/keycard_auth/wall_mounted/directional/@SUBTYPES{@OLD}

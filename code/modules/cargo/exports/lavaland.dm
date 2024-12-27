@@ -8,10 +8,10 @@
 		/obj/item/immortality_talisman,
 		/obj/item/book_of_babel,
 		/obj/item/wisp_lantern,
-		/obj/item/organ/internal/cyberimp/arm/shard/katana,
+		/obj/item/organ/cyberimp/arm/shard/katana,
 		/obj/item/clothing/glasses/godeye,
 		/obj/item/clothing/neck/necklace/memento_mori,
-		/obj/item/organ/internal/heart/cursed/wizard,
+		/obj/item/organ/heart/cursed/wizard,
 		/obj/item/clothing/suit/hooded/cloak/drake,
 		/obj/item/ship_in_a_bottle,
 		/obj/item/clothing/shoes/clown_shoes/banana_shoes,
@@ -31,12 +31,13 @@
 	cost = CARGO_CRATE_VALUE * 40
 	unit_name = "lava planet artifact"
 	export_types = list(
-		/obj/item/guardiancreator/miner,
-		/obj/item/rod_of_asclepius,
 		/obj/item/dragons_blood,
-		/obj/item/melee/ghost_sword,
+		/obj/item/guardian_creator/miner,
+		/obj/item/drake_remains,
 		/obj/item/lava_staff,
+		/obj/item/melee/ghost_sword,
 		/obj/item/prisoncube,
+		/obj/item/rod_of_asclepius,
 	)
 
 //Megafauna loot, except for ash drakes
@@ -47,7 +48,7 @@
 	export_types = list(
 		/obj/item/hierophant_club,
 		/obj/item/melee/cleaving_saw,
-		/obj/item/organ/internal/vocal_cords/colossus,
+		/obj/item/organ/vocal_cords/colossus,
 		/obj/machinery/anomalous_crystal,
 		/obj/item/mayhem,
 		/obj/item/soulscythe,

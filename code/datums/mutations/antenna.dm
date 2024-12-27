@@ -2,16 +2,16 @@
 	name = "Antenna"
 	desc = "The affected person sprouts an antenna. This is known to allow them to access common radio channels passively."
 	quality = POSITIVE
-	text_gain_indication = "<span class='notice'>You feel an antenna sprout from your forehead.</span>"
-	text_lose_indication = "<span class='notice'>Your antenna shrinks back down.</span>"
-	instability = 5
+	text_gain_indication = span_notice("You feel an antenna sprout from your forehead.")
+	text_lose_indication = span_notice("Your antenna shrinks back down.")
+	instability = POSITIVE_INSTABILITY_MINOR
 	difficulty = 8
 	var/datum/weakref/radio_weakref
 
 /obj/item/implant/radio/antenna
 	name = "internal antenna organ"
 	desc = "The internal organ part of the antenna. Science has not yet given it a good name."
-	icon = 'icons/obj/radio.dmi'//maybe make a unique sprite later. not important
+	icon = 'icons/obj/devices/voice.dmi'//maybe make a unique sprite later. not important
 	icon_state = "walkietalkie"
 
 /obj/item/implant/radio/antenna/Initialize(mapload)
@@ -44,10 +44,10 @@
 	name = "Mind Reader"
 	desc = "The affected person can look into the recent memories of others."
 	quality = POSITIVE
-	text_gain_indication = "<span class='notice'>You hear distant voices at the corners of your mind.</span>"
-	text_lose_indication = "<span class='notice'>The distant voices fade.</span>"
+	text_gain_indication = span_notice("You hear distant voices at the corners of your mind.")
+	text_lose_indication = span_notice("The distant voices fade.")
 	power_path = /datum/action/cooldown/spell/pointed/mindread
-	instability = 40
+	instability = POSITIVE_INSTABILITY_MINOR
 	difficulty = 8
 	locked = TRUE
 
@@ -61,6 +61,16 @@
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
+
+/datum/action/cooldown/spell/pointed/mindread/Grant(mob/grant_to)
+	. = ..()
+	if (!owner)
+		return
+	ADD_TRAIT(grant_to, TRAIT_MIND_READER, GENETIC_MUTATION)
+
+/datum/action/cooldown/spell/pointed/mindread/Remove(mob/remove_from)
+	. = ..()
+	REMOVE_TRAIT(remove_from, TRAIT_MIND_READER, GENETIC_MUTATION)
 
 /datum/action/cooldown/spell/pointed/mindread/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
@@ -86,37 +96,21 @@
 		to_chat(owner, span_warning("You plunge into your mind... Yep, it's your mind."))
 		return
 
+	if(HAS_TRAIT(cast_on, TRAIT_EVIL))
+		to_chat(owner, span_warning("As you reach into [cast_on]'s mind, \
+			you feel the overwhelming emptiness within. A truly evil being. \
+			[HAS_TRAIT(owner, TRAIT_EVIL) ? "It's nice to find someone who is like-minded." : "What is wrong with this person?"]"))
+
 	to_chat(owner, span_boldnotice("You plunge into [cast_on]'s mind..."))
 	if(prob(20))
 		// chance to alert the read-ee
 		to_chat(cast_on, span_danger("You feel something foreign enter your mind."))
 
-	var/list/recent_speech = list()
-	var/list/say_log = list()
-	var/log_source = cast_on.logging
-	//this whole loop puts the read-ee's say logs into say_log in an easy to access way
-	for(var/log_type in log_source)
-		var/nlog_type = text2num(log_type)
-		if(nlog_type & LOG_SAY)
-			var/list/reversed = log_source[log_type]
-			if(islist(reversed))
-				say_log = reverse_range(reversed.Copy())
-				break
-
-	for(var/spoken_memory in say_log)
-		//up to 3 random lines of speech, favoring more recent speech
-		if(length(recent_speech) >= 3)
-			break
-		if(prob(50))
-			continue
-		// log messages with tags like telepathy are displayed like "(Telepathy to Ckey/(target)) "greetings"""
-		// by splitting the text by using a " delimiter, we can grab JUST the greetings part
-		recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
-
+	var/list/recent_speech = cast_on.copy_recent_speech(copy_amount = 3, line_chance = 50)
 	if(length(recent_speech))
 		to_chat(owner, span_boldnotice("You catch some drifting memories of their past conversations..."))
 		for(var/spoken_memory in recent_speech)
-			to_chat(owner, span_notice("[recent_speech[spoken_memory]]"))
+			to_chat(owner, span_notice("[spoken_memory]"))
 
 	if(iscarbon(cast_on))
 		var/mob/living/carbon/carbon_cast_on = cast_on

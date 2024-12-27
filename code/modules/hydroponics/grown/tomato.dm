@@ -1,6 +1,6 @@
 // Tomato
 /obj/item/seeds/tomato
-	name = "pack of tomato seeds"
+	name = "tomato seed pack"
 	desc = "These seeds grow into tomato plants."
 	icon_state = "seed-tomato"
 	species = "tomato"
@@ -24,12 +24,12 @@
 	splat_type = /obj/effect/decal/cleanable/food/tomato_smudge
 	foodtypes = FRUIT
 	grind_results = list(/datum/reagent/consumable/ketchup = 0)
-	juice_results = list(/datum/reagent/consumable/tomatojuice = 0)
+	juice_typepath = /datum/reagent/consumable/tomatojuice
 	distill_reagent = /datum/reagent/consumable/enzyme
 
 // Blood Tomato
 /obj/item/seeds/tomato/blood
-	name = "pack of blood-tomato seeds"
+	name = "blood-tomato seed pack"
 	desc = "These seeds grow into blood-tomato plants."
 	icon_state = "seed-bloodtomato"
 	species = "bloodtomato"
@@ -37,7 +37,7 @@
 	product = /obj/item/food/grown/tomato/blood
 	mutatelist = null
 	reagents_add = list(/datum/reagent/blood = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 
 /obj/item/food/grown/tomato/blood
 	seed = /obj/item/seeds/tomato/blood
@@ -52,7 +52,7 @@
 
 // Blue Tomato
 /obj/item/seeds/tomato/blue
-	name = "pack of blue-tomato seeds"
+	name = "blue-tomato seed pack"
 	desc = "These seeds grow into blue-tomato plants."
 	icon_state = "seed-bluetomato"
 	species = "bluetomato"
@@ -63,7 +63,7 @@
 	mutatelist = list(/obj/item/seeds/tomato/blue/bluespace)
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/lube = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 	graft_gene = /datum/plant_gene/trait/slip
 
 /obj/item/food/grown/tomato/blue
@@ -77,7 +77,7 @@
 
 // Bluespace Tomato
 /obj/item/seeds/tomato/blue/bluespace
-	name = "pack of bluespace tomato seeds"
+	name = "bluespace tomato seed pack"
 	desc = "These seeds grow into bluespace tomato plants."
 	icon_state = "seed-bluespacetomato"
 	species = "bluespacetomato"
@@ -101,7 +101,7 @@
 
 // Killer Tomato
 /obj/item/seeds/tomato/killer
-	name = "pack of killer-tomato seeds"
+	name = "killer-tomato seed pack"
 	desc = "These seeds grow into killer-tomato plants."
 	icon_state = "seed-killertomato"
 	species = "killertomato"

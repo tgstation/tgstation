@@ -1,7 +1,7 @@
 /datum/supply_pack/medical
 	group = "Medical"
 	access_view = ACCESS_MEDICAL
-	crate_type = /obj/structure/closet/crate/medical
+	crate_type = /obj/structure/closet/crate/medical/department
 
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
@@ -29,6 +29,7 @@
 					/obj/item/reagent_containers/hypospray/medipen/ekit = 3,
 					/obj/item/reagent_containers/hypospray/medipen/blood_loss = 3)
 	crate_name = "medipen crate"
+	crate_type = /obj/structure/closet/crate/deforest
 
 /datum/supply_pack/medical/coroner_crate
 	name = "Autopsy Kit"
@@ -70,6 +71,7 @@
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/defibrillator/loaded = 2)
 	crate_name = "defibrillator crate"
+	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
@@ -77,6 +79,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
+	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/medical/supplies
 	name = "Medical Supplies Crate"
@@ -89,6 +92,7 @@
 					/obj/item/reagent_containers/cup/beaker/large,
 					/obj/item/reagent_containers/pill/insulin,
 					/obj/item/stack/medical/gauze,
+					/obj/item/storage/box/bandages,
 					/obj/item/storage/box/beakers,
 					/obj/item/storage/box/medigels,
 					/obj/item/storage/box/syringes,
@@ -107,6 +111,7 @@
 					/obj/item/vending_refill/drugs,
 				)
 	crate_name = "medical supplies crate"
+	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/medical/supplies/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 10)
@@ -116,22 +121,24 @@
 /datum/supply_pack/medical/experimentalmedicine
 	name = "Experimental Medicine Crate"
 	desc = "A crate containing the medication required for living with Hereditary Manifold Sickness, Sansufentanyl."
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/storage/pill_bottle/sansufentanyl = 2)
 	crate_name = "experimental medicine crate"
+	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/medical/surgery
 	name = "Surgical Supplies Crate"
 	desc = "Do you want to perform surgery, but don't have one of those fancy \
-		shmancy degrees? Just get started with this crate containing a medical duffelbag, \
+		shmancy degrees? Just get started with this crate containing a DeForest surgery tray, \
 		Sterilizine spray and collapsible roller bed."
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(
-		/obj/item/storage/backpack/duffelbag/med/surgery,
+		/obj/item/surgery_tray/full,
 		/obj/item/reagent_containers/medigel/sterilizine,
-		/obj/item/roller,
+		/obj/item/emergency_bed,
 	)
 	crate_name = "surgical supplies crate"
+	crate_type = /obj/structure/closet/crate/deforest
 
 /datum/supply_pack/medical/salglucanister
 	name = "Heavy-Duty Saline Canister"
@@ -142,6 +149,7 @@
 	cost = CARGO_CRATE_VALUE * 6
 	access = ACCESS_MEDICAL
 	contains = list(/obj/machinery/iv_drip/saline)
+	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
@@ -180,5 +188,24 @@
 	name = "Strong-Arm Implant Set"
 	desc = "A crate containing two implants, which can be surgically implanted to empower the strength of human arms. Warranty void if exposed to electromagnetic pulses."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/organ/internal/cyberimp/arm/muscle = 2)
+	contains = list(/obj/item/organ/cyberimp/arm/strongarm = 2)
 	crate_name = "Strong-Arm implant crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
+
+/datum/supply_pack/medical/paperwork_implants
+	name = "Paperwork Implant Set"
+	desc = "A crate containing two implants, which can be surgically implanted to effectivize crewmembers at paperwork. Warranty void if exposed to electromagnetic pulses."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/organ/cyberimp/arm/paperwork = 2)
+	crate_name = "Paperwork implant crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
+
+/datum/supply_pack/medical/lost_crew
+	name = "Recovered NT Employee corpse"
+	desc = "We don't have the accomodations to bring them back, could we send them to you? Please revive and employ them. \
+	The price is a downpayment, we will reimburse the medical budget once our employee has been alive again for a bit."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/structure/closet/body_bag/lost_crew/with_body)
+	crate_name = "body freezer"
+	crate_type = /obj/structure/closet/crate/secure/freezer
+

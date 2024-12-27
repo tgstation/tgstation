@@ -2,7 +2,7 @@
 /datum/unit_test/slime_mood
 
 /datum/unit_test/slime_mood/Run()
-	var/mob/living/simple_animal/slime/emoting_slime = allocate(/mob/living/simple_animal/slime)
+	var/mob/living/basic/slime/emoting_slime = allocate(/mob/living/basic/slime)
 
 	for(var/key in GLOB.emote_list)
 		for(var/datum/emote/slime/mood/slime_mood in GLOB.emote_list[key])

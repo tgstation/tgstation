@@ -22,6 +22,10 @@
 	src.on_picked_callback = on_picked_callback
 	build_radial_list()
 
+/datum/component/subtype_picker/Destroy(force)
+	on_picked_callback = null
+	return ..()
+
 /datum/component/subtype_picker/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
@@ -83,6 +87,6 @@
 		return FALSE
 	if(QDELETED(target))
 		return FALSE
-	if(user.incapacitated() || !user.is_holding(target))
+	if(user.incapacitated || !user.is_holding(target))
 		return FALSE
 	return TRUE

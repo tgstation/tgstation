@@ -5,7 +5,7 @@
 	/// If TRUE, leaves a trail of hotspots as it flies, very very chaotic
 	var/leaves_fire_trail = TRUE
 
-/obj/projectile/bullet/incendiary/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/incendiary/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -30,18 +30,18 @@
 	pass_flags = PASSTABLE | PASSMOB
 	sharpness = NONE
 	shrapnel_type = null
-	embedding = null
+	embed_type = null
 	impact_effect_type = null
 	suppressed = SUPPRESSED_VERY
 	damage_type = BURN
 	armor_flag = BOMB
-	speed = 1.2
+	speed = 0.8
 	wound_bonus = 30
 	bare_wound_bonus = 30
 	wound_falloff_tile = -4
 	fire_stacks = 3
 
-/obj/projectile/bullet/incendiary/fire/on_hit(atom/target, blocked)
+/obj/projectile/bullet/incendiary/fire/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/turf/location = get_turf(target)
 	if(isopenturf(location))
@@ -69,7 +69,7 @@
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
 		return
-	var/turf/throw_at_turf = get_turf_in_angle(Angle, current_turf, 7)
+	var/turf/throw_at_turf = get_turf_in_angle(angle, current_turf, 7)
 	var/thrown_items = 0
 
 	for(var/iter in current_turf.contents)

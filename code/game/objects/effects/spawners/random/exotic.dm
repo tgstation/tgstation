@@ -9,15 +9,16 @@
 	loot = list( // Space loot spawner. Couple of random bits of technology-adjacent stuff including anomaly cores and BEPIS techs.
 		/obj/item/raw_anomaly_core/random,
 		/obj/item/disk/design_disk/bepis,
-		/obj/item/camera_bug,
+		/obj/item/computer_disk/syndicate/camera_app,
 	)
 
 /obj/effect/spawner/random/exotic/languagebook
 	name = "language book spawner"
 	icon_state = "book"
 	loot = list( // A single roundstart species language book.
-		/obj/item/language_manual/roundstart_species = 100,
+		/obj/item/language_manual/roundstart_species = 96,
 		/obj/item/book/granter/sign_language = 10,
+		/obj/item/language_manual/piratespeak = 4,
 		/obj/item/language_manual/roundstart_species/five = 3,
 		/obj/item/language_manual/roundstart_species/unlimited = 1,
 	)
@@ -50,7 +51,7 @@
 		/obj/item/storage/medkit/brute = 27,
 		/obj/item/storage/medkit/fire = 27,
 		/obj/item/storage/toolbox/syndicate = 12,
-		/obj/item/borg/upgrade/ddrill = 3,
+		/obj/item/borg/upgrade/diamond_drill = 3,
 		/obj/item/knife/butcher = 14,
 		/obj/item/clothing/glasses/night = 10,
 		/obj/item/pickaxe/drill/diamonddrill = 6,

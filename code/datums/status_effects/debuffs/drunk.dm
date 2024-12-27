@@ -15,6 +15,7 @@
 	tick_interval = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	remove_on_fullheal = TRUE
+	alert_type = null
 	/// The level of drunkness we are currently at.
 	var/drunk_value = 0
 
@@ -63,7 +64,7 @@
 
 /datum/status_effect/inebriated/tick(seconds_between_ticks)
 	// Drunk value does not decrease while dead or in stasis
-	if(owner.stat == DEAD || IS_IN_STASIS(owner))
+	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_STASIS))
 		return
 
 	// Every tick, the drunk value decrases by
@@ -106,6 +107,7 @@
 	. = ..()
 	owner.sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
 	owner.add_mood_event(id, /datum/mood_event/drunk)
+	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, PROC_REF(drunk_gun_fired))
 
 /datum/status_effect/inebriated/drunk/on_remove()
 	clear_effects()
@@ -123,6 +125,19 @@
 	if(owner.sound_environment_override == SOUND_ENVIRONMENT_PSYCHOTIC)
 		owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
 
+	UnregisterSignal(owner, COMSIG_MOB_FIRED_GUN)
+
+/datum/status_effect/inebriated/drunk/proc/drunk_gun_fired(datum/source, obj/item/gun/gun, atom/firing_at, params, zone, bonus_spread_values)
+	SIGNAL_HANDLER
+
+	// excusing the bartender, because shotgun
+	if(HAS_TRAIT(owner, TRAIT_DRUNKEN_BRAWLER))
+		return
+	// what makes me a good demoman?
+	if(istype(gun, /obj/item/gun/grenadelauncher) || istype(gun, /obj/item/gun/ballistic/revolver/grenadelauncher))
+		return
+	bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (drunk_value * 0.5)
+
 /datum/status_effect/inebriated/drunk/set_drunk_value(set_to)
 	. = ..()
 	if(QDELETED(src))
@@ -136,7 +151,7 @@
 	// Handle the Ballmer Peak.
 	// If our owner is a scientist (has the trait "TRAIT_BALLMER_SCIENTIST"), there's a 5% chance
 	// that they'll say one of the special "ballmer message" lines, depending their drunk-ness level.
-	var/obj/item/organ/internal/liver/liver_organ = owner.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver_organ = owner.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver_organ && HAS_TRAIT(liver_organ, TRAIT_BALLMER_SCIENTIST) && prob(5))
 		if(drunk_value >= BALLMER_PEAK_LOW_END && drunk_value <= BALLMER_PEAK_HIGH_END)
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
@@ -166,7 +181,7 @@
 			owner.adjust_confusion(15 SECONDS)
 			if(iscarbon(owner))
 				var/mob/living/carbon/carbon_owner = owner
-				carbon_owner.vomit() // Vomiting clears toxloss - consider this a blessing
+				carbon_owner.vomit(VOMIT_CATEGORY_DEFAULT) // Vomiting clears toxloss - consider this a blessing
 
 	// Over 71, we will constantly have blurry eyes
 	if(drunk_value >= 71)
@@ -182,18 +197,27 @@
 	if(drunk_value >= 91)
 		owner.adjustToxLoss(1)
 		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
-		if(owner.stat == CONSCIOUS && prob(20))
-			// Don't put us in a deep sleep if the shuttle's here. QoL, mainly.
-			if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(owner.z))
-				to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
-
-			else
-				to_chat(owner, span_warning("Just a quick nap..."))
-				owner.Sleeping(90 SECONDS)
+		if(owner.stat == CONSCIOUS)
+			attempt_to_blackout()
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.
 	if(drunk_value >= 101)
 		owner.adjustToxLoss(2)
+
+/datum/status_effect/inebriated/drunk/proc/attempt_to_blackout()
+	var/mob/living/carbon/drunkard = owner
+	if(drunkard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout))// prevent ping spamming
+		if(prob(10))
+			to_chat(owner, span_warning("You stumbled and fall over!"))
+			owner.slip(1 SECONDS)
+		return
+	if(drunkard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout, TRAUMA_LIMIT_ABSOLUTE))
+		drunk_value -= 70 //So that the drunk personality can spice things up without being killed by liver failure
+		return
+	if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(owner.z))// Don't put us in a deep sleep if the shuttle's here. QoL, mainly.
+		to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
+	else
+		owner.Sleeping(90 SECONDS)
 
 /// Status effect for being fully drunk (not tipsy).
 /atom/movable/screen/alert/status_effect/drunk

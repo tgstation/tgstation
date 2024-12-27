@@ -30,6 +30,9 @@
 /proc/cmp_name_dsc(atom/a, atom/b)
 	return sorttext(a.name, b.name)
 
+/proc/cmp_init_name_asc(atom/a, atom/b)
+	return sorttext(initial(b.name), initial(a.name))
+
 /proc/cmp_records_asc(datum/record/a, datum/record/b)
 	return sorttext(b.name, a.name)
 
@@ -189,8 +192,31 @@
 /proc/cmp_assoc_list_name(list/A, list/B)
 	return sorttext(B["name"], A["name"])
 
-/// Used by /datum/achievement_data/load_all_achievements() to determine in which order awards have to be loaded.
-/proc/cmp_award_priority(type_a, type_b)
-	var/datum/award/award_a = SSachievements.awards[type_a]
-	var/datum/award/award_b = SSachievements.awards[type_b]
-	return award_b?.load_priority - award_a?.load_priority
+/// Orders mobs by health
+/proc/cmp_mob_health(mob/living/mob_a, mob/living/mob_b)
+	return mob_b.health - mob_a.health
+
+/proc/cmp_deathmatch_mods(datum/deathmatch_modifier/a, datum/deathmatch_modifier/b)
+	return sorttext(b.name, a.name)
+
+/**
+ * Orders fish types following this order (freshwater -> saltwater -> anadromous -> sulphuric water -> any water -> air)
+ * If both share the same required fluid type, they'll be ordered by name instead.
+ */
+/proc/cmp_fish_fluid(obj/item/fish/a, obj/item/fish/b)
+	var/static/list/fluids_priority = list(
+		AQUARIUM_FLUID_FRESHWATER,
+		AQUARIUM_FLUID_SALTWATER,
+		AQUARIUM_FLUID_ANADROMOUS,
+		AQUARIUM_FLUID_SULPHWATEVER,
+		AQUARIUM_FLUID_ANY_WATER,
+		AQUARIUM_FLUID_AIR,
+	)
+	var/position_a = fluids_priority.Find(initial(a.required_fluid_type))
+	var/position_b = fluids_priority.Find(initial(b.required_fluid_type))
+	return cmp_numeric_asc(position_a, position_b) || cmp_text_asc(initial(b.name), initial(a.name))
+
+///Sorts stock parts based on tier
+/proc/cmp_rped_sort(obj/item/first_item, obj/item/second_item)
+	///even though stacks aren't stock parts, get_part_rating() is defined on the item level (see /obj/item/proc/get_part_rating()) and defaults to returning 0.
+	return second_item.get_part_rating() - first_item.get_part_rating()

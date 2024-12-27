@@ -4,10 +4,10 @@
 	quality = POSITIVE
 	difficulty = 12
 	locked = TRUE
-	text_gain_indication = "<span class='notice'>Your throat is burning!</span>"
-	text_lose_indication = "<span class='notice'>Your throat is cooling down.</span>"
+	text_gain_indication = span_notice("Your throat is burning!")
+	text_lose_indication = span_notice("Your throat is cooling down.")
 	power_path = /datum/action/cooldown/spell/cone/staggered/fire_breath
-	instability = 30
+	instability = POSITIVE_INSTABILITY_MODERATE
 	energy_coeff = 1
 	power_coeff = 1
 
@@ -29,7 +29,7 @@
 	name = "Fire Breath"
 	desc = "You breathe a cone of fire directly in front of you."
 	button_icon_state = "fireball0"
-	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
+	sound = 'sound/effects/magic/demon_dies.ogg' //horrifying lizard noises
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 40 SECONDS

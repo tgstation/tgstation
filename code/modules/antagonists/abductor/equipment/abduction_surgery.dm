@@ -14,10 +14,12 @@
 /datum/surgery/organ_extraction/can_start(mob/user, mob/living/carbon/target)
 	if(!ishuman(user))
 		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(H.dna.species.id == SPECIES_ABDUCTOR)
+	if(!..())
+		return FALSE
+	if(isabductor(user))
 		return TRUE
-	for(var/obj/item/implant/abductor/A in H.implants)
+	var/mob/living/non_abductor = user
+	if(locate(/obj/item/implant/abductor) in non_abductor.implants)
 		return TRUE
 	return FALSE
 
@@ -27,7 +29,7 @@
 	accept_hand = 1
 	time = 32
 	var/obj/item/organ/IC = null
-	var/list/organ_types = list(/obj/item/organ/internal/heart)
+	var/list/organ_types = list(/obj/item/organ/heart)
 
 /datum/surgery_step/extract_organ/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	for(var/atom/A in target.organs)
@@ -48,7 +50,7 @@
 
 /datum/surgery_step/gland_insert
 	name = "insert gland"
-	implements = list(/obj/item/organ/internal/heart/gland = 100)
+	implements = list(/obj/item/organ/heart/gland = 100)
 	time = 32
 
 /datum/surgery_step/gland_insert/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -57,6 +59,6 @@
 /datum/surgery_step/gland_insert/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message(span_notice("[user] inserts [tool] into [target]."), span_notice("You insert [tool] into [target]."))
 	user.temporarilyRemoveItemFromInventory(tool, TRUE)
-	var/obj/item/organ/internal/heart/gland/gland = tool
-	gland.Insert(target, 2)
-	return 1
+	var/obj/item/organ/heart/gland/gland = tool
+	gland.Insert(target, special = TRUE, movement_flags = FROM_ABDUCTOR_SURGERY)
+	return TRUE

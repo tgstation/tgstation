@@ -11,12 +11,14 @@
 	return "Inoculated" //eh, have em try out the mechanic first
 
 /datum/preference/choiced/vampire_status/init_possible_values()
-	var/list/values = list()
+	return list("Inoculated", "Outcast")
 
-	values["Inoculated"] = icon('icons/obj/drinks/drinks.dmi', "bloodglass")
-	values["Outcast"] = icon('icons/obj/medical/bloodpack.dmi', "generic_bloodpack")
-
-	return values
+/datum/preference/choiced/vampire_status/icon_for(value)
+	switch (value)
+		if ("Inoculated")
+			return icon('icons/obj/drinks/drinks.dmi', "bloodglass")
+		if ("Outcast")
+			return icon('icons/obj/medical/bloodpack.dmi', "generic_bloodpack")
 
 ///list that stores a vampire house name for each department
 GLOBAL_LIST_EMPTY(vampire_houses)
@@ -30,7 +32,7 @@ GLOBAL_LIST_EMPTY(vampire_houses)
 
 	//find and setup the house (department) this vampire is joining
 	var/datum/job_department/vampire_house
-	var/datum/job/vampire_job = SSjob.GetJob(target.job)
+	var/datum/job/vampire_job = SSjob.get_job(target.job)
 	if(!vampire_job) //no job or no mind LOSERS
 		return
 	var/list/valid_departments = (SSjob.joinable_departments.Copy()) - list(/datum/job_department/silicon, /datum/job_department/undefined)

@@ -13,5 +13,25 @@
 		"ra", "ar", "re", "er", "ri", "ir", "ro", "or", "ru", "ur", "rs", "sr",
 		"a",  "a",  "e",  "e",  "i",  "i",  "o",  "o",  "u",  "u",  "s",  "s"
 	)
+	special_characters = list("-")
 	icon_state = "lizard"
 	default_priority = 90
+	default_name_syllable_min = 3
+	default_name_syllable_max = 5
+	random_name_spacer = "-"
+
+/datum/language/draconic/get_random_name(
+	gender = NEUTER,
+	name_count = default_name_count,
+	syllable_min = default_name_syllable_min,
+	syllable_max = default_name_syllable_max,
+	force_use_syllables = FALSE,
+)
+	if(force_use_syllables)
+		return ..()
+	if(gender != MALE)
+		gender = pick(MALE, FEMALE)
+
+	if(gender == MALE)
+		return "[pick(GLOB.lizard_names_male)][random_name_spacer][pick(GLOB.lizard_names_male)]"
+	return "[pick(GLOB.lizard_names_female)][random_name_spacer][pick(GLOB.lizard_names_female)]"

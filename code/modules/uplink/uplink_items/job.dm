@@ -4,7 +4,7 @@
 
 /datum/uplink_item/role_restricted
 	category = /datum/uplink_category/role_restricted
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
@@ -18,17 +18,20 @@
 
 /datum/uplink_item/role_restricted/mail_counterfeit_kit
 	name = "GLA Brand Mail Counterfeit Kit"
-	desc = "A box full of mail counterfeit devices. Devices that actually able to counterfeit NT's mail. Those devices also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also counterfieted mail might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs. \nNothing stops the mail."
+	desc = "A box containing five devices capable of counterfeiting NT's mail. Can be used to store items within as an easy means of smuggling contraband. \
+			Additionally, you may choose to \"arm\" the item inside, causing the item to be used the moment the mail is opened as if the person had just used it in hand. \
+			The most common usage of this feature is with grenades, as it forces the grenade to prime. Bonus points if the grenade is set to instantly detonate. \
+			Comes with an integrated micro-computer for configuration purposes."
 	item = /obj/item/storage/box/syndie_kit/mail_counterfeit
 	cost = 2
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	surplus = 5
 
 /datum/uplink_item/role_restricted/bureaucratic_error
 	name = "Organic Capital Disturbance Virus"
 	desc = "Randomizes job positions presented to new hires. May lead to too many/too few security officers and/or clowns. Single use."
-	item = /obj/effect/gibspawner/generic
+	item = ABSTRACT_UPLINK_ITEM
 	surplus = 0
 	limited_stock = 1
 	cost = 2
@@ -45,7 +48,7 @@
 	item = /obj/item/dnainjector/clumsymut
 	cost = 1
 	restricted_roles = list(JOB_CLOWN)
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	surplus = 25
 
 /datum/uplink_item/role_restricted/ancient_jumpsuit
@@ -70,7 +73,7 @@
 	cost = 4
 	item = /obj/item/firing_pin/clown/ultra
 	restricted_roles = list(JOB_CLOWN)
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	surplus = 25
 
 /datum/uplink_item/role_restricted/clownsuperpin
@@ -79,7 +82,7 @@
 	cost = 7
 	item = /obj/item/firing_pin/clown/ultra/selfdestruct
 	restricted_roles = list(JOB_CLOWN)
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	surplus = 25
 
 /datum/uplink_item/role_restricted/syndimmi
@@ -109,7 +112,7 @@
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
-	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. \
+	desc = "A box with three cleaner grenades using the trademark Waffle Corp. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. \
 			The acid only affects carbon-based creatures."
 	item = /obj/item/storage/box/syndie_kit/ez_clean
 	cost = 6
@@ -139,6 +142,14 @@
 	cost = 11
 	restricted_roles = list(JOB_COOK)
 
+/datum/uplink_item/role_restricted/moltobeso
+	name = "Molt'Obeso Sauce Bottle"
+	desc = "A branded bottle of Molt'Obeso sauce. This sauce can stimulate hunger in people, leading them to eat more than they intended. \
+			It also enhances the absorption of calories from the food consumed."
+	item = /obj/item/storage/box/syndie_kit/moltobeso
+	cost = 2
+	restricted_roles = list(JOB_COOK)
+
 /datum/uplink_item/role_restricted/turretbox
 	name = "Disposable Sentry Gun"
 	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
@@ -146,21 +157,27 @@
 	cost = 11
 	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
 
+/datum/uplink_item/role_restricted/rebarxbowsyndie
+	name = "Syndicate Rebar Crossbow"
+	desc = "A much more professional version of the engineer's bootleg rebar crossbow. 3 shot mag, quicker loading, and better ammo. Owners manual included."
+	item = /obj/item/storage/box/syndie_kit/rebarxbowsyndie
+	cost = 12
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
+
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
-			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
-	progression_minimum = 10 MINUTES
+			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas. \
+			Now also contains regenerative chemicals to keep users healthy as they exercise their newfound muscles."
 	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
 	cost = 15
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
-/datum/uplink_item/role_restricted/gorillacubes
-	name = "Box of Gorilla Cubes"
-	desc = "A box with three Waffle Co. brand gorilla cubes. Eat big to get big. \
+/datum/uplink_item/role_restricted/gorillacube
+	name = "Gorilla Cube"
+	desc = "A Waffle Corp. brand gorilla cube. Eat big to get big. \
 			Caution: Product may rehydrate when exposed to water."
-	progression_minimum = 15 MINUTES
-	item = /obj/item/storage/box/gorillacubes
+	item = /obj/item/food/monkeycube/gorilla
 	cost = 6
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
@@ -171,6 +188,16 @@
 	item = /obj/item/disk/surgery/brainwashing
 	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CORONER, JOB_ROBOTICIST)
 	cost = 5
+	surplus = 50
+
+/datum/uplink_item/role_restricted/advanced_plastic_surgery
+	name = "Advanced Plastic Surgery Program"
+	desc = "A bootleg copy of an collector item, this disk contains the procedure to perform advanced plastic surgery, allowing you to model someone's face and voice based on a picture taken by a camera on your offhand. \
+	All changes are superficial and does not change ones genetic makeup. \
+	Insert into an Operating Console to enable the procedure."
+	item = /obj/item/disk/surgery/advanced_plastic_surgery
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_ROBOTICIST)
+	cost = 1
 	surplus = 50
 
 /datum/uplink_item/role_restricted/springlock_module
@@ -199,7 +226,8 @@
 	name = "Kinetic Accelerator Pressure Mod"
 	desc = "A modification kit which allows Kinetic Accelerators to do greatly increased damage while indoors. \
 			Occupies 35% mod capacity."
-	progression_minimum = 30 MINUTES
+	// While less deadly than a revolver it does have infinite ammo
+	progression_minimum = 15 MINUTES
 	item = /obj/item/borg/upgrade/modkit/indoors
 	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 	limited_stock = 2 //you can't use more than two!
@@ -210,7 +238,6 @@
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisible walls, and shoot bullets out of their fingers. \
 			Obviously only works for Mimes."
-	progression_minimum = 20 MINUTES
 	cost = 12
 	item = /obj/item/storage/box/syndie_kit/mimery
 	restricted_roles = list(JOB_MIME)
@@ -228,15 +255,14 @@
 /datum/uplink_item/role_restricted/chemical_gun
 	name = "Reagent Dartgun"
 	desc = "A heavily modified syringe gun which is capable of synthesizing its own chemical darts using input reagents. Can hold 90u of reagents."
-	progression_minimum = 20 MINUTES
+	progression_minimum = 15 MINUTES
 	item = /obj/item/gun/chem
 	cost = 12
-	restricted_roles = list(JOB_CHEMIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BOTANIST)
+	restricted_roles = list(JOB_CHEMIST, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_BOTANIST)
 
 /datum/uplink_item/role_restricted/pie_cannon
 	name = "Banana Cream Pie Cannon"
 	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
-	progression_minimum = 10 MINUTES
 	cost = 10
 	item = /obj/item/pneumatic_cannon/pie/selfcharge
 	restricted_roles = list(JOB_CLOWN)
@@ -266,13 +292,17 @@
 			someone saves them or they manage to crawl out. Be sure not to ram into any walls or vending machines, as the springloaded seats \
 			are very sensitive. Now with our included lube defense mechanism which will protect you against any angry shitcurity! \
 			Premium features can be unlocked with a cryptographic sequencer!"
-	// It has a low progression cost because it's the sort of item that only works well early in the round
-	// Plus, it costs all your TC, and it's not an instant kill tool.
-	progression_minimum = 5 MINUTES
 	item = /obj/vehicle/sealed/car/clowncar
 	cost = 20
 	restricted_roles = list(JOB_CLOWN)
 	surplus = 10
+
+/datum/uplink_item/role_restricted/clowncar/spawn_item_for_generic_use(mob/user)
+	var/obj/vehicle/sealed/car/clowncar/car = ..()
+	car.enforce_clown_role = FALSE
+	var/obj/item/key = new car.key_type(user.loc)
+	car.visible_message(span_notice("[key] drops out of [car] onto the floor."))
+	return car
 
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
@@ -280,15 +310,13 @@
 	His Grace grants gradual regeneration and complete stun immunity to His wielder, but be wary: if He gets too hungry, He will become impossible to drop and eventually kill you if not fed. \
 	However, if left alone for long enough, He will fall back to slumber. \
 	To activate His Grace, simply unlatch Him."
-	// It has a low progression cost because it's the sort of item that only works well early in the round
-	// Plus, it costs all your TC and will lock your uplink.
-	progression_minimum = 5 MINUTES
 	lock_other_purchases = TRUE
 	cant_discount = TRUE
 	item = /obj/item/his_grace
 	cost = 20
 	surplus = 0
 	restricted_roles = list(JOB_CHAPLAIN)
+	purchasable_from = ~UPLINK_SPY
 
 /datum/uplink_item/role_restricted/concealed_weapon_bay
 	name = "Concealed Weapon Bay"
@@ -319,9 +347,59 @@
 	desc = "A highly specialized weapon, the Blast Cannon is actually relatively simple. It contains an attachment for a tank transfer valve mounted to an angled pipe specially constructed \
 			withstand extreme pressure and temperatures, and has a mechanical trigger for triggering the transfer valve. Essentially, it turns the explosive force of a bomb into a narrow-angle \
 			blast wave \"projectile\". Aspiring scientists may find this highly useful, as forcing the pressure shockwave into a narrow angle seems to be able to bypass whatever quirk of physics \
-			disallows explosive ranges above a certain distance, allowing for the device to use the theoretical yield of a transfer valve bomb, instead of the factual yield. It's simple design makes it easy to conceal."
+			disallows explosive ranges above a certain distance, allowing for the device to use the theoretical yield of a transfer valve bomb, instead of the factual yield. Its simple design makes it easy to conceal."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/gun/blastcannon
 	cost = 14 //High cost because of the potential for extreme damage in the hands of a skilled scientist.
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	surplus = 5
+
+/datum/uplink_item/role_restricted/evil_seedling
+	name = "Evil Seedling"
+	desc = "A rare seed we have recovered that grows into a dangerous species that will aid you with your tasks!"
+	item = /obj/item/seeds/seedling/evil
+	cost = 8
+	restricted_roles = list(JOB_BOTANIST)
+
+/datum/uplink_item/role_restricted/bee_smoker
+	name = "Bee Smoker"
+	desc = "A device that runs on cannabis, turning it into a gas that can hypnotize bees to follow our commands."
+	item = /obj/item/bee_smoker
+	cost = 4
+	restricted_roles = list(JOB_BOTANIST)
+
+/datum/uplink_item/role_restricted/monkey_agent
+	name = "Simian Agent Reinforcements"
+	desc = "Call in an extremely well trained monkey secret agent from our Syndicate Banana Department. \
+		They've been trained to operate machinery and can read, but they can't speak Common. \
+		Please note that these are free-range monkeys that don't react with Mutadone. May contain severe allergies to species-changing phenomena."
+	item = /obj/item/antag_spawner/loadout/monkey_man
+	cost = 6
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_ASSISTANT, JOB_MIME, JOB_CLOWN, JOB_PUN_PUN)
+	restricted = TRUE
+	refundable = TRUE
+
+/datum/uplink_item/role_restricted/monkey_supplies
+	name = "Simian Agent Supplies"
+	desc = "Sometimes you need a bit more firepower than a rabid monkey. Such as a rabid, armed monkey! \
+		Monkeys can unpack this kit to receive a bag with a bargain-bin gun, ammunition, and some miscellaneous supplies."
+	item = /obj/item/storage/toolbox/guncase/monkeycase
+	cost = 4
+	limited_stock = 3
+	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN, JOB_PUN_PUN)
+	restricted = TRUE
+	refundable = FALSE
+
+
+/datum/uplink_item/role_restricted/reticence
+	name = "Reticence Cloaked Assasination exosuit"
+	desc = "A silent, fast, and nigh-invisible but exceptionally fragile miming exosuit! \
+	fully equipped with a near-silenced pistol, and a RCD for your best assasination needs, Does not include tools, No refunds."
+	item = /obj/vehicle/sealed/mecha/reticence/loaded
+	cost = 20
+	restricted_roles = list(JOB_MIME)
+	restricted = TRUE
+	refundable = FALSE
+	progression_minimum = 30 MINUTES
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
+

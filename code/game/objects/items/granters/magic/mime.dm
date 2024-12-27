@@ -3,6 +3,7 @@
 	desc = "The missing entry into the legendary saga. Unfortunately it doesn't teach you anything."
 	icon_state ="bookmime"
 	remarks = list("...")
+	book_sounds = list('sound/effects/space_wind.ogg')
 
 /obj/item/book/granter/action/spell/mime/attack_self(mob/user)
 	. = ..()

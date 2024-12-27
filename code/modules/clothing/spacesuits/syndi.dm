@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 	/obj/item/clothing/suit/space/syndicate/black/blue = /obj/item/clothing/head/helmet/space/syndicate/black/blue,
 	/obj/item/clothing/suit/space/syndicate/black/orange = /obj/item/clothing/head/helmet/space/syndicate/black/orange,
 	/obj/item/clothing/suit/space/syndicate/black/red = /obj/item/clothing/head/helmet/space/syndicate/black/red,
+	/obj/item/clothing/suit/space/syndicate/black/white = /obj/item/clothing/head/helmet/space/syndicate/black,
 	/obj/item/clothing/suit/space/syndicate/black/med = /obj/item/clothing/head/helmet/space/syndicate/black/med,
 	/obj/item/clothing/suit/space/syndicate/black/engie = /obj/item/clothing/head/helmet/space/syndicate/black/engie,
 ))
@@ -38,9 +39,9 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 	inhand_icon_state = "space_suit_syndicate"
 	desc = "Has a tag on it: Totally not property of an enemy corporation, honest!"
 	w_class = WEIGHT_CLASS_NORMAL
-	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
+	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/melee/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	armor_type = /datum/armor/space_syndicate
-	cell = /obj/item/stock_parts/cell/hyper
+	cell = /obj/item/stock_parts/power_store/cell/hyper
 	var/helmet_type = /obj/item/clothing/head/helmet/space/syndicate
 
 //Green syndicate space suit
@@ -132,15 +133,22 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 	inhand_icon_state = "syndicate-black-blue"
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/blue
 
+//Black and white syndicate space suit without the medical iconography
+/obj/item/clothing/suit/space/syndicate/black/white
+	name = "black and white space suit"
+	icon_state = "syndicate-black-white"
+	inhand_icon_state = "syndicate-black"
+	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black
+
 
 //Black medical syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/med
-	name = "black space helmet"
+	name = "black medical space helmet"
 	icon_state = "syndicate-helm-black-med"
 	inhand_icon_state = "syndicate-helm-black"
 
 /obj/item/clothing/suit/space/syndicate/black/med
-	name = "green space suit"
+	name = "black medical space suit"
 	icon_state = "syndicate-black-med"
 	inhand_icon_state = "syndicate-black"
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/med
@@ -190,7 +198,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black with yellow/red engineering syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/engie
-	name = "black space helmet"
+	name = "black engineering space helmet"
 	icon_state = "syndicate-helm-black-engie"
 	inhand_icon_state = "syndicate-helm-black"
 

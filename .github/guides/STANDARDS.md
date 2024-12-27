@@ -100,11 +100,11 @@ While we normally encourage (and in some cases, even require) bringing out of da
 ### RegisterSignal()
 
 #### PROC_REF Macros
-When referencing procs in RegisterSignal, Callback and other procs you should use PROC_REF, TYPE_PROC_REF and GLOBAL_PROC_REF macros. 
+When referencing procs in RegisterSignal, Callback and other procs you should use PROC_REF, TYPE_PROC_REF and GLOBAL_PROC_REF macros.
 They ensure compilation fails if the reffered to procs change names or get removed.
 The macro to be used depends on how the proc you're in relates to the proc you want to use:
 
-PROC_REF if the proc you want to use is defined on the current proc type or any of it's ancestor types.
+PROC_REF if the proc you want to use is defined on the current proc type or any of its ancestor types.
 Example:
 ```
 /mob/proc/funny()
@@ -129,7 +129,7 @@ Example:
 /mob/subtype/proc/do_something()
 	var/obj/thing/x = new()
 	// we're referring to /obj/thing proc inside /mob/subtype proc
-	RegisterSignal(x, COMSIG_FAKE, TYPE_PROC_REF(/obj/thing, funny)) 
+	RegisterSignal(x, COMSIG_FAKE, TYPE_PROC_REF(/obj/thing, funny))
 ```
 
 GLOBAL_PROC_REF if the proc you want to use is a global proc.
@@ -154,7 +154,7 @@ All procs that are registered to listen for signals using `RegisterSignal()` mus
 ```
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
-Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
+Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously.
 
 #### `override`
 
@@ -280,7 +280,7 @@ Good:
 		off_overlay = iconstate2appearance(icon, "off")
 		broken_overlay = icon2appearance(broken_icon)
 	if (stat & broken)
-		add_overlay(broken_overlay) 
+		add_overlay(broken_overlay)
 		return
 	if (is_on)
 		add_overlay(on_overlay)
@@ -304,7 +304,7 @@ Bad:
 	if (isnull(our_overlays))
 		our_overlays = list("on" = iconstate2appearance(overlay_icon, "on"), "off" = iconstate2appearance(overlay_icon, "off"), "broken" = iconstate2appearance(overlay_icon, "broken"))
 	if (stat & broken)
-		add_overlay(our_overlays["broken"]) 
+		add_overlay(our_overlays["broken"])
 		return
 	...
 ```
@@ -391,7 +391,7 @@ At its best, it can make some very common patterns easy to use, and harder to me
 		some_code()
 		if (do_something_else())
 			. = TRUE // Uh oh, what's going on!
-	
+
 	// even
 	// more
 	// code
@@ -468,7 +468,7 @@ Meaning:
 	to_chat(world, uh_oh())
 ```
 
-...will print `woah!`. 
+...will print `woah!`.
 
 For this reason, it is acceptable for `.` to be used in places where consumers can reasonably continue in the event of a runtime.
 
@@ -494,7 +494,7 @@ If you are using `.` in this case (or for another case that might be acceptable,
 	. = ..()
 	if (. == BIGGER_SUPER_ATTACK)
 		return BIGGER_SUPER_ATTACK // More readable than `.`
-	
+
 	// Due to how common it is, most uses of `. = ..()` do not need a trailing `return .`
 ```
 
@@ -512,6 +512,30 @@ The following is a list of procs, and their safe replacements.
 * Move in a thing's direction, ignoring turf density `walk_towards()` -> `SSmove_manager.home_onto()` and `SSmove_manager.move_towards_legacy()`, check the documentation to see which you like better
 * Move away from something, taking turf density into account `walk_away()` -> `SSmove_manager.move_away()`
 * Move to a random place nearby. NOT random walk `walk_rand()` -> `SSmove_manager.move_rand()` is random walk, `SSmove_manager.move_to_rand()` is walk to a random place
+
+### Avoid pointer use
+
+BYOND has a variable type called pointers, which allow you to reference a variable rather then its value. As an example of how this works:
+
+```
+var/pointed_at = "text"
+var/value = pointed_at // copies the VALUE of pointed at
+var/reference = &pointed_at // points at pointed_at itself
+
+// so we can retain a reference even if pointed_at changes
+pointed_at = "text AGAIN"
+world << (*reference) // Deref to get the value, outputs "text AGAIN"
+
+// or modify the var remotely
+*reference = "text a THIRD TIME"
+world << pointed_at // outputs "text a THIRD TIME"
+```
+
+The problem with this is twofold.
+- First: if you use a pointer to reference a var on a datum, it is essentially as if you held an invisible reference to that datum. This risks hard deletes in very unclear ways that cannot be tested for.
+- Second: People don't like, understand how pointers work? They mix them up with classical C pointers, when they're more like `std::shared_ptr`. This leads to code that just doesn't work properly, or is hard to follow without first getting your mind around it. It also risks hiding what code does in dumb ways because pointers don't have unique types.
+
+For these reasons and with the hope of avoiding pointers entering general use, be very careful using them, if you use them at all.
 
 ### BYOND hellspawn
 

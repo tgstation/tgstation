@@ -24,9 +24,10 @@
 	obj_damage = 10
 	melee_damage_lower = 13
 	melee_damage_upper = 15
+	melee_attack_cooldown = CLICK_CD_MELEE
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 
 	// Slightly brown red, for the eyes
 	lighting_cutoff_red = 22
@@ -48,11 +49,12 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 
-	AddElement(/datum/element/waddling)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = REGALRAT_INTERACTION)
+	AddElement(/datum/element/poster_tearer, interaction_key = REGALRAT_INTERACTION)
 	AddComponent(\
 		/datum/component/ghost_direct_control,\
 		poll_candidates = poll_ghosts,\
@@ -60,15 +62,21 @@
 		poll_ignore_key = POLL_IGNORE_REGAL_RAT,\
 		assumed_control_message = "You are an independent, invasive force on the station! Hoard coins, trash, cheese, and the like from the safety of darkness!",\
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
+		poll_chat_border_icon = /obj/item/food/cheese/wedge,\
 	)
 
-	var/datum/action/cooldown/mob_cooldown/domain/domain = new(src)
-	domain.Grant(src)
-	ai_controller.set_blackboard_key(BB_DOMAIN_ABILITY, domain)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/domain = BB_DOMAIN_ABILITY,
+		/datum/action/cooldown/mob_cooldown/riot = BB_RAISE_HORDE_ABILITY,
+	)
 
-	var/datum/action/cooldown/mob_cooldown/riot/riot = new(src)
-	riot.Grant(src)
-	ai_controller.set_blackboard_key(BB_RAISE_HORDE_ABILITY, riot)
+	grant_actions_by_list(innate_actions)
+
+/mob/living/basic/regal_rat/death(gibbed)
+	var/datum/component/potential_component = GetComponent(/datum/component/ghost_direct_control)
+	if(!QDELETED(potential_component))
+		qdel(potential_component)
+	return ..()
 
 /mob/living/basic/regal_rat/examine(mob/user)
 	. = ..()
@@ -80,7 +88,7 @@
 		return
 
 	if(ismouse(user))
-		if(user.faction_check_mob(src, exact_match = TRUE))
+		if(user.faction_check_atom(src, exact_match = TRUE))
 			. += span_notice("This is your king. Long live [p_their()] majesty!")
 		else
 			. += span_warning("This is a false king! Strike [p_them()] down!")
@@ -101,9 +109,8 @@
 	notify_ghosts(
 		"All rise for [name], ascendant to the throne in \the [get_area(src)].",
 		source = src,
-		action = NOTIFY_ORBIT,
-		flashwindow = FALSE,
 		header = "Sentient Rat Created",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
 
 /// Supplementary work we do when we login. Done this way so we synchronize with the ai controller shutting off and all that jazz as well as allowing more shit to be passed in if need be in future.
@@ -161,25 +168,24 @@
 	special_moniker = "You better not screw with [p_their()] [selected_kingdom]... How do you become a [selected_title] of that anyways?"
 
 /// Checks if we are able to attack this object, as well as send out the signal to see if we get any special regal rat interactions.
-/mob/living/basic/regal_rat/proc/pre_attack(mob/living/source, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/regal_rat/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(DOING_INTERACTION(src, REGALRAT_INTERACTION) || !allowed_to_attack(target))
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 	if(SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src) & COMPONENT_RAT_INTERACTED)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
-	if(isnull(mind))
-		return
+	if(isnull(mind) || combat_mode)
+		return TRUE
 
-	if(istype(target, /obj/machinery/door/airlock))
-		INVOKE_ASYNC(src, PROC_REF(pry_door), target)
-		return COMPONENT_HOSTILE_NO_ATTACK
+	if(poison_target(target))
+		return FALSE
 
-	if(!combat_mode)
-		INVOKE_ASYNC(src, PROC_REF(poison_target), target)
-		return COMPONENT_HOSTILE_NO_ATTACK
+	return TRUE
 
 /// Checks if we are allowed to attack this mob. Will return TRUE if we are potentially allowed to attack, but if we end up in a case where we should NOT attack, return FALSE.
 /mob/living/basic/regal_rat/proc/allowed_to_attack(atom/the_target)
@@ -194,16 +200,23 @@
 		balloon_alert(src, "already dead!")
 		return FALSE
 
-	if(living_target.faction_check_mob(src, exact_match = TRUE))
+	if(living_target.faction_check_atom(src, exact_match = TRUE))
 		balloon_alert(src, "one of your soldiers!")
 		return FALSE
 
 	return TRUE
 
-/// Attempts to add rat spit to a target, effectively poisoning it to whoever eats it. Yuckers.
+/**
+ * Attempts to add rat spit to a target, effectively poisoning it to whoever eats it. Yuckers.
+ * Returns TRUE if the target is valid for adding rat spit
+ * Returns FALSE if the target is invalid for adding rat spit
+ * Arguments
+ *
+ * * atom/lean_target - the target we try to add the spit to
+ */
 /mob/living/basic/regal_rat/proc/poison_target(atom/target)
 	if(isnull(target.reagents) || !target.is_injectable(src, allowmobs = TRUE))
-		return
+		return FALSE
 
 	visible_message(
 		span_warning("[src] starts licking [target] passionately!"),
@@ -212,10 +225,11 @@
 	)
 
 	if (!do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))
-		return
+		return TRUE // don't return false here because they tried to lick and the do_after was interrupted, otherwise cancelling the do_after will make them hit the target.
 
 	target.reagents.add_reagent(/datum/reagent/rat_spit, rand(1,3), no_react = TRUE)
 	balloon_alert(src, "licked")
+	return TRUE
 
 /**
  * Conditionally "eat" cheese object and heal, if injured.
@@ -234,43 +248,7 @@
 	heal_bodypart_damage(amount)
 	qdel(target)
 
-/**
- * Allows rat king to pry open an airlock if it isn't locked.
- *
- * A proc used for letting the rat king pry open airlocks instead of just attacking them.
- * This allows the rat king to traverse the station when there is a lack of vents or
- * accessible doors, something which is common in certain rat king spawn points.
- *
- * Returns TRUE if the door opens, FALSE otherwise.
- */
-/mob/living/basic/regal_rat/proc/pry_door(target)
-	if(DOING_INTERACTION(src, REGALRAT_INTERACTION))
-		return FALSE
-
-	var/obj/machinery/door/airlock/prying_door = target
-	if(!prying_door.density || prying_door.locked || prying_door.welded || prying_door.seal)
-		return FALSE
-
-	visible_message(
-		span_warning("[src] begins prying open the airlock..."),
-		span_notice("You begin digging your claws into the airlock..."),
-		span_warning("You hear groaning metal..."),
-	)
-	var/time_to_open = 0.5 SECONDS
-
-	if(prying_door.hasPower())
-		time_to_open = 5 SECONDS
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
-
-	if(!do_after(src, time_to_open, prying_door, interaction_key = REGALRAT_INTERACTION))
-		return FALSE
-
-	if(!prying_door.open(BYPASS_DOOR_CHECKS))
-		balloon_alert(src, "failed to open!")
-		return FALSE
-
-	return TRUE
-
+/// Regal rat subtype which can be possessed by ghosts
 /mob/living/basic/regal_rat/controlled
 	poll_ghosts = TRUE
 

@@ -32,6 +32,7 @@
 		"Purple" = "medigel_purple"
 	)
 
+
 /obj/item/reagent_containers/medigel/mode_change_message(mob/user)
 	var/squirt_mode = amount_per_transfer_from_this == initial(amount_per_transfer_from_this)
 	to_chat(user, span_notice("You will now apply the medigel's contents in [squirt_mode ? "extended sprays":"short bursts"]. You'll now use [amount_per_transfer_from_this] units per use."))
@@ -67,7 +68,7 @@
 	else
 		log_combat(user, M, "applied", src, reagents.get_reagent_log_string())
 		playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
-		reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, methods = apply_type)
+		reagents.trans_to(M, amount_per_transfer_from_this, transferred_by = user, methods = apply_type)
 	return
 
 /obj/item/reagent_containers/medigel/libital

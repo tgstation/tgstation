@@ -1,6 +1,7 @@
 /obj/vehicle/sealed/car
 	layer = ABOVE_MOB_LAYER
 	move_resist = MOVE_FORCE_VERY_STRONG
+
 	///Bitflags for special behavior such as kidnapping
 	var/car_traits = NONE
 	///Sound file(s) to play when we drive around
@@ -21,9 +22,9 @@
 	if(car_traits & CAN_KIDNAP)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/dump_kidnapped_mobs, VEHICLE_CONTROL_DRIVE)
 
-/obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
-	if(M.incapacitated() || (HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !is_driver(M)))
-		return FALSE
+/obj/vehicle/sealed/car/mouse_drop_receive(atom/dropping, mob/M, params)
+	if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !is_driver(M))
+		return
 	if((car_traits & CAN_KIDNAP) && isliving(dropping) && M != dropping)
 		var/mob/living/kidnapped = dropping
 		kidnapped.visible_message(span_warning("[M] starts forcing [kidnapped] into [src]!"))

@@ -10,7 +10,7 @@
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	obj_flags = UNIQUE_RENAME
 	grind_results = list()
-	///List of reagents this food gets on creation
+	///List of reagents this food gets on creation during reaction or map spawn
 	var/list/food_reagents
 	///Extra flags for things such as if the food is in a container or not
 	var/food_flags
@@ -30,10 +30,6 @@
 	var/trash_type
 	///How much junkiness this food has? God I should remove junkiness soon
 	var/junkiness
-	///Will this food turn into badrecipe on a grill? Don't use this for everything; preferably mostly for food that is made on a grill to begin with so it burns after some time
-	var/burns_on_grill = FALSE
-	///Will this food turn into badrecipe in an oven? Don't use this for everything; preferably mostly for food that is made in an oven to begin with so it burns after some time
-	var/burns_in_oven = FALSE
 	///Price of this food if sold in a venue
 	var/venue_value
 	///Food that's immune to decomposition.
@@ -48,11 +44,17 @@
 	var/decomposition_time = 0
 	///Used to set decomposition stink particles for food, will have no particles if null
 	var/decomposition_particles = /particles/stink
+	///Used to set custom starting reagent purity for synthetic and natural food. Ignored when set to null.
+	var/starting_reagent_purity = null
+	///How exquisite the meal is. Applicable to crafted food, increasing its quality. Spans from 0 to 5.
+	var/crafting_complexity = 0
+	///Buff given when a hand-crafted version of this item is consumed. Randomized according to crafting_complexity if not assigned.
+	var/datum/status_effect/food/crafted_food_buff = null
 
 /obj/item/food/Initialize(mapload)
-	. = ..()
 	if(food_reagents)
 		food_reagents = string_assoc_list(food_reagents)
+	. = ..()
 	if(tastes)
 		tastes = string_assoc_list(tastes)
 	if(eatverbs)
@@ -80,8 +82,8 @@
 		eatverbs = eatverbs,\
 		bite_consumption = bite_consumption,\
 		junkiness = junkiness,\
+		reagent_purity = starting_reagent_purity,\
 	)
-
 
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
 /obj/item/food/proc/make_processable()
@@ -89,14 +91,12 @@
 
 ///This proc handles grillable components, overwrite if you want different grill results etc.
 /obj/item/food/proc/make_grillable()
-	if(burns_on_grill)
-		AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
+	AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
 	return
 
 ///This proc handles bakeable components, overwrite if you want different bake results etc.
 /obj/item/food/proc/make_bakeable()
-	if(burns_in_oven)
-		AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(25 SECONDS, 40 SECONDS), FALSE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(25 SECONDS, 40 SECONDS), FALSE)
 	return
 
 /// This proc handles the microwave component. Overwrite if you want special microwave results.
@@ -115,7 +115,7 @@
 ///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
 ///Requires /datum/component/germ_sensitive to detect exposure
 /obj/item/food/proc/make_germ_sensitive(mapload)
-	if(istype(src, /obj/item/food/bowled) || istype(src, /obj/item/food/canned) || !isnull(trash_type))
+	if(!isnull(trash_type))
 		return // You don't eat the package and it protects from decomposing
 	AddComponent(/datum/component/germ_sensitive, mapload)
 	if(!preserved_food)

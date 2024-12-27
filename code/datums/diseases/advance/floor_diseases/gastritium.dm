@@ -4,7 +4,7 @@
 	desc = "If left untreated, may manifest in severe Tritium heartburn."
 	form = "Infection"
 	agent = "Atmobacter Polyri"
-	cures = list(/datum/reagent/firefighting_foam)
+	cures = list(/datum/reagent/consumable/milk)
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	severity = DISEASE_SEVERITY_HARMFUL
@@ -21,6 +21,9 @@
 	cures = list(pick(cures))
 	var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
 	cure_text = cure.name
+
+/datum/disease/advance/gastritium/GetDiseaseID()
+	return "[type]"
 
 /datum/disease/advance/gastritium/stage_act(seconds_per_tick, times_fired)
 	. = ..()

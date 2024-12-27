@@ -50,7 +50,7 @@
 	if(istype(starting_light))
 		add_light(starting_light)
 
-/datum/component/seclite_attachable/Destroy(force, silent)
+/datum/component/seclite_attachable/Destroy(force)
 	if(light)
 		remove_light()
 	return ..()
@@ -97,6 +97,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_UI_ACTION_CLICK, PROC_REF(on_action_click))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_SABOTEUR_ACT, PROC_REF(on_hit_by_saboteur))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_deleted))
 
 /datum/component/seclite_attachable/UnregisterFromParent()
@@ -109,6 +110,7 @@
 		COMSIG_ITEM_UI_ACTION_CLICK,
 		COMSIG_ATOM_ATTACKBY,
 		COMSIG_ATOM_EXAMINE,
+		COMSIG_ATOM_SABOTEUR_ACT,
 		COMSIG_QDELETING,
 	))
 
@@ -156,12 +158,10 @@
 	if(!light)
 		return FALSE
 
-	light.on = !light.on
-	light.update_brightness()
-	if(user)
-		user.balloon_alert(user, "[light.name] toggled [light.on ? "on":"off"]")
-
-	playsound(light, 'sound/weapons/empty.ogg', 100, TRUE)
+	var/successful_toggle = light.toggle_light(user)
+	if(!successful_toggle)
+		return TRUE
+	user.balloon_alert(user, "[light.name] toggled [light.light_on ? "on":"off"]")
 	update_light()
 	return TRUE
 
@@ -237,7 +237,7 @@
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(unscrew_light), source, user, tool)
-	return COMPONENT_BLOCK_TOOL_ATTACK
+	return ITEM_INTERACT_BLOCKING
 
 /// Invoked asyncronously from [proc/on_screwdriver]. Handles removing the light from our parent.
 /datum/component/seclite_attachable/proc/unscrew_light(obj/item/source, mob/user, obj/item/tool)
@@ -271,7 +271,7 @@
 	if(!light)
 		return
 
-	var/overlay_state = "[light_overlay][light.on ? "_on":""]"
+	var/overlay_state = "[light_overlay][light.light_on ? "_on":""]"
 	var/mutable_appearance/flashlight_overlay = mutable_appearance(light_overlay_icon, overlay_state)
 	flashlight_overlay.pixel_x = overlay_x
 	flashlight_overlay.pixel_y = overlay_y
@@ -289,10 +289,16 @@
 	var/base_state = source.base_icon_state || initial(source.icon_state)
 	// Updates our icon state based on our light state.
 	if(light)
-		source.icon_state = "[base_state]-[light_icon_state][light.on ? "-on":""]"
+		source.icon_state = "[base_state]-[light_icon_state][light.light_on ? "-on":""]"
 
 	// Reset their icon state when if we've got no light.
 	else if(source.icon_state != base_state)
 		// Yes, this might mess with other icon state alterations,
 		// but that's the downside of using icon states over overlays.
 		source.icon_state = base_state
+
+//turns the light off for a few seconds.
+/datum/component/seclite_attachable/proc/on_hit_by_saboteur(datum/source, disrupt_duration)
+	. = light.on_saboteur(source, disrupt_duration)
+	update_light()
+	return .

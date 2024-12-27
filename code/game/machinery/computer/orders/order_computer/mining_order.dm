@@ -34,14 +34,14 @@
 /obj/machinery/computer/order_console/mining/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
 	var/list/things_to_order = list()
 	for(var/datum/orderable_item/item as anything in groceries)
-		things_to_order[item.item_path] = groceries[item]
+		things_to_order[item.purchase_path] = groceries[item]
 
 	var/datum/supply_pack/custom/mining_pack = new(
 		purchaser = purchaser, \
 		cost = get_total_cost(), \
 		contains = things_to_order,
 	)
-	var/datum/supply_order/new_order = new(
+	var/datum/supply_order/disposable/new_order = new(
 		pack = mining_pack,
 		orderer = purchaser,
 		orderer_rank = "Mining Vendor",
@@ -59,10 +59,10 @@
 	radio.talk_into(src, "A shaft miner has ordered equipment which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!", radio_channel)
 	SSshuttle.shopping_list += new_order
 
-/obj/machinery/computer/order_console/mining/retrive_points(obj/item/card/id/id_card)
+/obj/machinery/computer/order_console/mining/retrieve_points(obj/item/card/id/id_card)
 	return round(id_card.registered_account.mining_points)
 
-/obj/machinery/computer/order_console/mining/ui_act(action, params)
+/obj/machinery/computer/order_console/mining/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(!.)
 		flick("mining-deny", src)
@@ -121,7 +121,7 @@
 /obj/machinery/computer/order_console/mining/proc/check_menu(obj/item/mining_voucher/voucher, mob/living/redeemer)
 	if(!istype(redeemer))
 		return FALSE
-	if(redeemer.incapacitated())
+	if(redeemer.incapacitated)
 		return FALSE
 	if(QDELETED(voucher))
 		return FALSE

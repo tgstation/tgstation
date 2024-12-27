@@ -6,6 +6,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	///Weakref to the library computer we are connected to.
 	var/datum/weakref/computer_ref
 	///The current scanning mode (BARCODE_SCANNER_CHECKIN|BARCODE_SCANNER_INVENTORY)

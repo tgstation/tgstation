@@ -1,5 +1,5 @@
 ///How much power emergency lights will consume per tick
-#define LIGHT_EMERGENCY_POWER_USE 0.2
+#define LIGHT_EMERGENCY_POWER_USE (0.0001 * STANDARD_CELL_RATE)
 // status values shared between lighting fixtures and items
 #define LIGHT_OK 0
 #define LIGHT_EMPTY 1
@@ -14,7 +14,7 @@
 ///Amount of time that takes an ethereal to take energy from the lights
 #define LIGHT_DRAIN_TIME (2.5 SECONDS)
 ///Amount of charge the ethereal gain after the drain
-#define LIGHT_POWER_GAIN 35
+#define LIGHT_POWER_GAIN (0.035 * STANDARD_CELL_CHARGE)
 
 ///How many reagents the lights can hold
 #define LIGHT_REAGENT_CAPACITY 20

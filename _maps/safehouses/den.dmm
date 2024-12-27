@@ -1,0 +1,228 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/pod,
+/area/virtual_domain/safehouse)
+"b" = (
+/obj/modular_map_connector,
+/turf/closed/wall,
+/area/virtual_domain/safehouse)
+"c" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/east,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"e" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/spawner/random/food_or_drink/snack{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/turf/open/floor/pod/dark,
+/area/virtual_domain/safehouse)
+"i" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "safehouseshutter"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"l" = (
+/obj/structure/railing/corner/end{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/virtual_domain/safehouse)
+"p" = (
+/turf/open/floor/pod,
+/area/virtual_domain/safehouse)
+"r" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 9
+	},
+/turf/open/floor/pod/dark,
+/area/virtual_domain/safehouse)
+"u" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/dark,
+/obj/structure/sign/poster/contraband/hacking_guide/directional/east,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"z" = (
+/obj/effect/turf_decal/trimline/yellow/corner{
+	dir = 4
+	},
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/turf/open/floor/pod/light,
+/area/virtual_domain/safehouse)
+"C" = (
+/turf/closed/wall,
+/area/virtual_domain/safehouse)
+"D" = (
+/obj/effect/decal/cleanable/generic,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/corner{
+	dir = 1
+	},
+/turf/open/floor/pod,
+/area/virtual_domain/safehouse)
+"E" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/generic,
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/turf/open/floor/pod/light,
+/area/virtual_domain/safehouse)
+"G" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "safehouseshutter"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"I" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 5
+	},
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/turf/open/floor/pod/light,
+/area/virtual_domain/safehouse)
+"J" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "safehouseshutter"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"K" = (
+/obj/effect/spawner/random/vending/colavend,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/pod,
+/area/virtual_domain/safehouse)
+"M" = (
+/turf/open/floor/pod/dark,
+/area/virtual_domain/safehouse)
+"O" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/virtual_domain/safehouse)
+"R" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/virtual_domain/safehouse)
+"U" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/departments/cargo/directional/west,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/pod,
+/area/virtual_domain/safehouse)
+"W" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "safehouseshutter"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"X" = (
+/obj/machinery/door/airlock/grunge,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"Y" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/button/door{
+	pixel_x = 4;
+	pixel_y = 4;
+	id = "safehouseshutter"
+	},
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage{
+	pixel_y = 6;
+	pixel_x = -10
+	},
+/turf/open/floor/pod/dark,
+/area/virtual_domain/safehouse)
+"Z" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/virtual_domain/safehouse)
+
+(1,1,1) = {"
+C
+C
+C
+G
+G
+b
+"}
+(2,1,1) = {"
+W
+U
+p
+M
+K
+C
+"}
+(3,1,1) = {"
+C
+r
+O
+O
+E
+i
+"}
+(4,1,1) = {"
+X
+D
+Z
+R
+z
+i
+"}
+(5,1,1) = {"
+C
+M
+l
+e
+I
+i
+"}
+(6,1,1) = {"
+W
+c
+u
+Y
+a
+C
+"}
+(7,1,1) = {"
+C
+C
+C
+J
+J
+C
+"}

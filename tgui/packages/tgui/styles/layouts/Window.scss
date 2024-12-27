@@ -4,8 +4,8 @@
  */
 
 @use 'sass:color';
-@use '../base.scss';
-@use '../functions.scss' as *;
+@use '../base';
+@use '../functions' as *;
 
 .Window {
   position: fixed;

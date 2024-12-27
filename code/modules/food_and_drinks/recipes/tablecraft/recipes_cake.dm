@@ -90,7 +90,7 @@
 /datum/crafting_recipe/food/braincake
 	name = "Brain cake"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/brain = 1,
 		/obj/item/food/cake/plain = 1
 	)
 	result = /obj/item/food/cake/brain
@@ -141,14 +141,14 @@
 	result = /obj/item/food/cake/hardware_cake
 	category = CAT_CAKE
 
-/datum/crafting_recipe/food/bscccake
-	name = "blackberry and strawberry chocolate cake"
+/datum/crafting_recipe/food/berry_chocolate_cake
+	name = "strawberry chocolate cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
 		/obj/item/food/chocolatebar = 2,
 		/obj/item/food/grown/berries = 5
 	)
-	result = /obj/item/food/cake/bscc
+	result = /obj/item/food/cake/berry_chocolate_cake
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/pavlovacream
@@ -173,18 +173,17 @@
 	result = /obj/item/food/cake/pavlova/nuts
 	category = CAT_CAKE
 
-/datum/crafting_recipe/food/bscvcake
+/datum/crafting_recipe/food/berry_vanilla_cake
 	name = "blackberry and strawberry vanilla cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
 		/obj/item/food/grown/berries = 5
 	)
-	result = /obj/item/food/cake/bsvc
+	result = /obj/item/food/cake/berry_vanilla_cake
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/clowncake
 	name = "clown cake"
-	always_available = FALSE
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
 		/obj/item/food/sundae = 2,
@@ -192,16 +191,17 @@
 	)
 	result = /obj/item/food/cake/clown_cake
 	category = CAT_CAKE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/food/vanillacake
 	name = "vanilla cake"
-	always_available = FALSE
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
 		/obj/item/food/grown/vanillapod = 2
 	)
 	result = /obj/item/food/cake/vanilla_cake
 	category = CAT_CAKE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/food/trumpetcake
 	name = "Spaceman's Cake"
@@ -218,15 +218,15 @@
 /datum/crafting_recipe/food/cak
 	name = "Living cat/cake hybrid"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/heart = 1,
 		/obj/item/food/cake/birthday = 1,
 		/obj/item/food/meat/slab = 3,
 		/datum/reagent/blood = 30,
 		/datum/reagent/consumable/sprinkles = 5,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
 	)
-	result = /mob/living/simple_animal/pet/cat/cak
+	result = /mob/living/basic/pet/cat/cak
 	category = CAT_CAKE //Cat! Haha, get it? CAT? GET IT? We get it - Love Felines
 
 /datum/crafting_recipe/food/fruitcake

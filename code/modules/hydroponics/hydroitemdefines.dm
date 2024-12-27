@@ -2,7 +2,7 @@
 /obj/item/plant_analyzer
 	name = "plant analyzer"
 	desc = "A scanner used to evaluate a plant's various areas of growth, and genetic traits. Comes with a growth scanning mode and a chemical scanning mode."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "hydro"
 	inhand_icon_state = "analyzer"
 	worn_icon_state = "plantanalyzer"
@@ -74,21 +74,26 @@
  */
 /obj/item/plant_analyzer/proc/do_plant_stats_scan(atom/scan_target, mob/user)
 	if(istype(scan_target, /obj/machinery/hydroponics))
-		to_chat(user, examine_block(scan_tray_stats(scan_target)))
+		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		to_chat(user, boxed_message(scan_tray_stats(scan_target)))
 		return TRUE
 	if(istype(scan_target, /obj/structure/glowshroom))
+		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		var/obj/structure/glowshroom/shroom_plant = scan_target
-		to_chat(user, examine_block(scan_plant_stats(shroom_plant.myseed)))
+		to_chat(user, boxed_message(scan_plant_stats(shroom_plant.myseed)))
 		return TRUE
 	if(istype(scan_target, /obj/item/graft))
-		to_chat(user, examine_block(get_graft_text(scan_target)))
+		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		to_chat(user, boxed_message(get_graft_text(scan_target)))
 		return TRUE
 	if(isitem(scan_target))
+		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		var/obj/item/scanned_object = scan_target
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
-			to_chat(user, examine_block(scan_plant_stats(scanned_object)))
+			to_chat(user, boxed_message(scan_plant_stats(scanned_object)))
 			return TRUE
 	if(isliving(scan_target))
+		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		var/mob/living/L = scan_target
 		if(L.mob_biotypes & MOB_PLANT)
 			plant_biotype_health_scan(scan_target, user)
@@ -107,19 +112,19 @@
  */
 /obj/item/plant_analyzer/proc/do_plant_chem_scan(atom/scan_target, mob/user)
 	if(istype(scan_target, /obj/machinery/hydroponics))
-		to_chat(user, examine_block(scan_tray_chems(scan_target)))
+		to_chat(user, boxed_message(scan_tray_chems(scan_target)))
 		return TRUE
 	if(istype(scan_target, /obj/structure/glowshroom))
 		var/obj/structure/glowshroom/shroom_plant = scan_target
-		to_chat(user, examine_block(scan_plant_chems(shroom_plant.myseed)))
+		to_chat(user, boxed_message(scan_plant_chems(shroom_plant.myseed)))
 		return TRUE
 	if(istype(scan_target, /obj/item/graft))
-		to_chat(user, examine_block(get_graft_text(scan_target)))
+		to_chat(user, boxed_message(get_graft_text(scan_target)))
 		return TRUE
 	if(isitem(scan_target))
 		var/obj/item/scanned_object = scan_target
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
-			to_chat(user, examine_block(scan_plant_chems(scanned_object)))
+			to_chat(user, boxed_message(scan_plant_chems(scanned_object)))
 			return TRUE
 	if(isliving(scan_target))
 		var/mob/living/L = scan_target
@@ -160,7 +165,7 @@
 
 /**
  * This proc is called when we scan a hydroponics tray or soil on left click (stats mode)
- * It formats the plant name, it's age, the plant's stats, and the tray's stats.
+ * It formats the plant name, its age, the plant's stats, and the tray's stats.
  *
  * - scanned_tray - the tray or soil we are scanning.
  *
@@ -419,16 +424,17 @@
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "cultivator"
 	inhand_icon_state = "cultivator"
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.5)
 	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 /obj/item/cultivator/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -437,6 +443,7 @@
 /obj/item/cultivator/rake
 	name = "rake"
 	icon_state = "rake"
+	icon_angle = -45
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("slashes", "slices", "bashes", "claws")
 	attack_verb_simple = list("slash", "slice", "bash", "claw")
@@ -460,9 +467,15 @@
 	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
 		H.set_confusion_if_lower(10 SECONDS)
 		H.Stun(20)
-		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
+		playsound(src, 'sound/items/weapons/punch4.ogg', 50, TRUE)
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
 						  span_userdanger("You step on [src] causing the handle to hit you right in the face!"))
+
+/obj/item/cultivator/cyborg
+	name = "cyborg cultivator"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili_cultivator"
+	icon_angle = 0
 
 /obj/item/hatchet
 	name = "hatchet"
@@ -470,20 +483,26 @@
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hatchet"
 	inhand_icon_state = "hatchet"
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 12
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 15
 	throw_speed = 4
 	throw_range = 7
-	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
+	embed_type = /datum/embed_data/hatchet
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5)
 	attack_verb_continuous = list("chops", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("chop", "tear", "lacerate", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
+
+/datum/embed_data/hatchet
+	pain_mult = 4
+	embed_chance = 35
+	fall_chance = 10
 
 /obj/item/hatchet/Initialize(mapload)
 	. = ..()
@@ -494,7 +513,7 @@
 
 /obj/item/hatchet/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
 /obj/item/hatchet/wooden
@@ -504,12 +523,19 @@
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 
+/obj/item/hatchet/cyborg
+	name = "cyborg hatchet"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili_hatchet"
+	icon_angle = 0
+
 /obj/item/scythe
 	name = "scythe"
 	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "scythe0"
 	inhand_icon_state = "scythe0"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	force = 15
@@ -517,13 +543,13 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	armour_penetration = 20
 	wound_bonus = 10
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	item_flags = CRUEL_IMPLEMENT //maybe they want to use it in surgery
 	var/swiping = FALSE
@@ -574,9 +600,10 @@
 	icon_state = "secateurs"
 	inhand_icon_state = null
 	worn_icon_state = "cutters"
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 5
 	throwforce = 6
 	w_class = WEIGHT_CLASS_SMALL
@@ -584,7 +611,7 @@
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT*2)
 	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 ///Catch right clicks so we can stylize!
 /obj/item/secateurs/pre_attack_secondary(atom/target, mob/living/user, params)
@@ -597,8 +624,14 @@
 /obj/item/secateurs/proc/restyle(atom/target, mob/living/user)
 	SEND_SIGNAL(target, COMSIG_ATOM_RESTYLE, user, target, user.zone_selected, EXTERNAL_RESTYLE_PLANT, 6 SECONDS)
 
+/obj/item/secateurs/cyborg
+	name = "cyborg secateurs"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili_secateur"
+	icon_angle = 0
+
 /obj/item/geneshears
-	name = "Botanogenetic Plant Shears"
+	name = "botanogenetic plant shears"
 	desc = "A high tech, high fidelity pair of plant shears, capable of cutting genetic traits out of a plant."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "genesheers"
@@ -606,7 +639,7 @@
 	worn_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 10
 	throwforce = 8
 	w_class = WEIGHT_CLASS_SMALL
@@ -614,7 +647,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/uranium=HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	attack_verb_continuous = list("slashes", "slices", "cuts")
 	attack_verb_simple = list("slash", "slice", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 // *************************************
 // Nutrient defines for hydroponics

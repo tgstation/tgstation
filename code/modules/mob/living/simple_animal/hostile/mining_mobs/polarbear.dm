@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/asteroid/polarbear
 	name = "polar bear"
-	desc = "An aggressive animal that defends it's territory with incredible power. These beasts don't run from their enemies."
+	desc = "An aggressive animal that defends its territory with incredible power. These beasts don't run from their enemies."
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "polarbear"
 	icon_living = "polarbear"
@@ -19,7 +19,7 @@
 	melee_damage_upper = 25
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	vision_range = 2 // don't aggro unless you basically antagonize it, though they will kill you worse than a goliath will
 	aggro_vision_range = 9
@@ -35,6 +35,15 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	/// Message for when the polar bear starts to attack faster
 	var/aggressive_message_said = FALSE
+
+/mob/living/simple_animal/hostile/asteroid/polarbear/Initialize(mapload)
+	. = ..()
+	AddElement(\
+		/datum/element/change_force_on_death,\
+		move_force = MOVE_FORCE_DEFAULT,\
+		move_resist = MOVE_RESIST_DEFAULT,\
+		pull_force = PULL_FORCE_DEFAULT,\
+	)
 
 /mob/living/simple_animal/hostile/asteroid/polarbear/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -52,38 +61,7 @@
 		return
 	aggressive_message_said = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/polarbear/death(gibbed)
-	move_force = MOVE_FORCE_DEFAULT
-	move_resist = MOVE_RESIST_DEFAULT
-	pull_force = PULL_FORCE_DEFAULT
-	return ..()
-
-/mob/living/simple_animal/hostile/asteroid/polarbear/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
-	. = ..()
-	if(!.)
-		return
-	move_force = initial(move_force)
-	move_resist = initial(move_resist)
-	pull_force = initial(pull_force)
-
 /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
 	name = "magic polar bear"
 	desc = "It seems sentient somehow."
 	faction = list(FACTION_NEUTRAL)
-
-/obj/item/crusher_trophy/bear_paw
-	name = "polar bear paw"
-	desc = "It's a polar bear paw."
-	icon_state = "bear_paw"
-	denied_type = /obj/item/crusher_trophy/bear_paw
-
-/obj/item/crusher_trophy/bear_paw/effect_desc()
-	return "mark detonation to attack twice if you are below half your life"
-
-/obj/item/crusher_trophy/bear_paw/on_mark_detonation(mob/living/target, mob/living/user)
-	if(user.health / user.maxHealth > 0.5)
-		return
-	var/obj/item/I = user.get_active_held_item()
-	if(!I)
-		return
-	I.melee_attack_chain(user, target, null)

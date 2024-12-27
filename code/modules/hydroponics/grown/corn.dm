@@ -1,6 +1,6 @@
 // Corn
 /obj/item/seeds/corn
-	name = "pack of corn seeds"
+	name = "corn seed pack"
 	desc = "I don't mean to sound corny..."
 	icon_state = "seed-corn"
 	species = "corn"
@@ -13,8 +13,8 @@
 	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "corn-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "corn-dead" // Same for the dead icon
-	mutatelist = list(/obj/item/seeds/corn/snapcorn)
-	reagents_add = list(/datum/reagent/consumable/cornoil = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	mutatelist = list(/obj/item/seeds/corn/snapcorn, /obj/item/seeds/corn/pepper)
+	reagents_add = list(/datum/reagent/consumable/nutriment/fat/oil/corn = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/corn
 	seed = /obj/item/seeds/corn
@@ -24,8 +24,8 @@
 	trash_type = /obj/item/grown/corncob
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
-	grind_results = list(/datum/reagent/consumable/cornmeal = 0)
-	juice_results = list(/datum/reagent/consumable/corn_starch = 0)
+	grind_results = list(/datum/reagent/consumable/cornmeal = 0, /datum/reagent/consumable/nutriment/fat/oil/corn = 0)
+	juice_typepath = /datum/reagent/consumable/corn_starch
 	tastes = list("corn" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/whiskey
 
@@ -36,6 +36,7 @@
 	AddElement(/datum/element/microwavable, /obj/item/food/popcorn)
 
 /obj/item/grown/corncob
+	seed = /obj/item/seeds/corn
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
 	icon_state = "corncob"
@@ -49,14 +50,14 @@
 /obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, params)
 	if(W.get_sharpness())
 		to_chat(user, span_notice("You use [W] to fashion a pipe out of the corn cob!"))
-		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
+		new /obj/item/cigarette/pipe/cobpipe (user.loc)
 		qdel(src)
 	else
 		return ..()
 
 // Snapcorn
 /obj/item/seeds/corn/snapcorn
-	name = "pack of snapcorn seeds"
+	name = "snapcorn seed pack"
 	desc = "Oh snap!"
 	icon_state = "seed-snapcorn"
 	species = "snapcorn"
@@ -89,5 +90,36 @@
 		user.put_in_hands(S)
 	snap_pops -= 1
 	if(!snap_pops)
-		new /obj/item/grown/corncob(user.loc)
+		new /obj/item/grown/corncob/snap(user.loc)
 		qdel(src)
+
+/obj/item/grown/corncob/snap
+	seed = /obj/item/seeds/corn/snapcorn
+	name = "snap corn cob"
+	desc = "A reminder of pranks gone by."
+
+//Pepper-corn - Heh funny.
+/obj/item/seeds/corn/pepper
+	name = "pepper-corn seed pack"
+	desc = "If Peter picked a pack of pepper-corn..."
+	icon_state = "seed-peppercorn"
+	species = "peppercorn"
+	plantname = "Pepper-Corn Stalks"
+	product = /obj/item/food/grown/peppercorn
+	mutatelist = null
+	reagents_add = list(/datum/reagent/consumable/blackpepper = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+
+/obj/item/food/grown/peppercorn
+	seed = /obj/item/seeds/corn/pepper
+	name = "ear of pepper-peppercorn"
+	desc = "This dusty monster needs god..."
+	icon_state = "peppercorn"
+	trash_type = /obj/item/grown/corncob/pepper
+	foodtypes = VEGETABLES
+	grind_results = list(/datum/reagent/consumable/blackpepper = 0)
+	tastes = list("pepper" = 1, "sneezing" = 1)
+
+/obj/item/grown/corncob/pepper
+	seed = /obj/item/seeds/corn/pepper
+	name = "pepper corn cob"
+	desc = "A reminder of genetic abominations gone by."

@@ -1,0 +1,448 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/railing/corner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plastic,
+/area/template_noop)
+"d" = (
+/obj/effect/turf_decal/bot/right,
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/plating,
+/area/template_noop)
+"f" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/template_noop)
+"g" = (
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/open/floor/plating,
+/area/template_noop)
+"h" = (
+/obj/item/key/atv{
+	pixel_x = -8;
+	pixel_y = -5
+	},
+/obj/item/key/atv{
+	pixel_y = -9
+	},
+/obj/item/key/atv{
+	pixel_y = -4;
+	pixel_x = 8
+	},
+/turf/closed/wall/ice,
+/area/template_noop)
+"i" = (
+/obj/structure/railing,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/space_heater,
+/turf/open/floor/plastic,
+/area/template_noop)
+"j" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"k" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"l" = (
+/obj/structure/reagent_dispensers/fueltank/large,
+/obj/effect/turf_decal/box,
+/turf/open/floor/plating,
+/area/template_noop)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"n" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/floor/plating,
+/area/template_noop)
+"p" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/plating,
+/area/template_noop)
+"q" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "modular_room_1";
+	name = "Garage Door"
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"r" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/template_noop)
+"s" = (
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/obj/machinery/button/door/directional/north{
+	id = "modular_room_1"
+	},
+/turf/open/floor/plastic,
+/area/template_noop)
+"t" = (
+/obj/structure/table,
+/obj/item/pizzabox/meat{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/turf/open/floor/plastic,
+/area/template_noop)
+"u" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/floor/plating,
+/area/template_noop)
+"v" = (
+/turf/closed/wall,
+/area/template_noop)
+"w" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/template_noop)
+"x" = (
+/obj/item/trash/boritos/red{
+	pixel_y = 9;
+	pixel_x = -17
+	},
+/obj/item/trash/can,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing,
+/turf/open/floor/plastic,
+/area/template_noop)
+"y" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing,
+/turf/open/floor/plastic,
+/area/template_noop)
+"z" = (
+/obj/structure/stairs{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"A" = (
+/obj/structure/rack,
+/obj/item/weldingtool/hugetank,
+/turf/open/floor/plating,
+/area/template_noop)
+"B" = (
+/obj/effect/turf_decal/box,
+/obj/vehicle/ridden/atv{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/plating,
+/area/template_noop)
+"C" = (
+/obj/machinery/door/airlock/mining{
+	name = "Warehouse"
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"D" = (
+/obj/structure/railing,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plastic,
+/area/template_noop)
+"F" = (
+/obj/effect/turf_decal/box,
+/obj/vehicle/ridden/atv{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/template_noop)
+"G" = (
+/turf/closed/wall/ice,
+/area/template_noop)
+"H" = (
+/obj/structure/closet{
+	name = "Fuel Tank Closet"
+	},
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/winterboots{
+	pixel_y = -10
+	},
+/obj/item/clothing/shoes/winterboots{
+	pixel_y = -10
+	},
+/obj/item/clothing/shoes/winterboots{
+	pixel_y = -10
+	},
+/turf/open/floor/plastic,
+/area/template_noop)
+"J" = (
+/obj/structure/chair/plastic{
+	dir = 1
+	},
+/obj/structure/railing,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plastic,
+/area/template_noop)
+"K" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/crate_loot,
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/plating,
+/area/template_noop)
+"L" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plastic,
+/area/template_noop)
+"M" = (
+/obj/effect/turf_decal/bot/right,
+/obj/structure/closet/crate/large,
+/obj/item/crowbar/large/twenty_force,
+/turf/open/floor/plating,
+/area/template_noop)
+"N" = (
+/obj/structure/rack,
+/obj/item/fuel_pellet,
+/obj/item/fuel_pellet{
+	pixel_y = -7;
+	pixel_x = 7
+	},
+/obj/item/fuel_pellet{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"O" = (
+/obj/structure/sign/warning/directional/north,
+/turf/template_noop,
+/area/template_noop)
+"P" = (
+/obj/effect/turf_decal/bot/left,
+/obj/structure/closet/crate/large,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/template_noop)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"R" = (
+/obj/effect/turf_decal/bot/left,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/turf/open/floor/plating,
+/area/template_noop)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stairs{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"U" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/template_noop)
+"V" = (
+/obj/structure/noticeboard/directional/north,
+/obj/structure/broken_flooring/singular/directional/west,
+/turf/open/floor/plating,
+/area/template_noop)
+"W" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/plating,
+/area/template_noop)
+"X" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
+	pixel_x = 11;
+	pixel_y = 4
+	},
+/obj/item/flashlight/lamp,
+/turf/open/floor/plastic,
+/area/template_noop)
+"Y" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/box,
+/obj/vehicle/ridden/atv{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/plating,
+/area/template_noop)
+"Z" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+j
+"}
+(2,1,1) = {"
+a
+G
+v
+v
+G
+G
+v
+v
+G
+G
+a
+"}
+(3,1,1) = {"
+a
+G
+X
+i
+M
+n
+K
+p
+d
+G
+a
+"}
+(4,1,1) = {"
+a
+v
+t
+J
+P
+n
+n
+u
+R
+G
+O
+"}
+(5,1,1) = {"
+a
+v
+s
+x
+Z
+w
+w
+f
+Z
+q
+a
+"}
+(6,1,1) = {"
+a
+C
+L
+U
+T
+k
+r
+r
+Q
+q
+a
+"}
+(7,1,1) = {"
+a
+h
+V
+b
+z
+k
+r
+W
+m
+q
+a
+"}
+(8,1,1) = {"
+a
+G
+g
+D
+l
+k
+k
+k
+k
+v
+O
+"}
+(9,1,1) = {"
+a
+v
+H
+y
+A
+N
+Y
+B
+F
+G
+a
+"}
+(10,1,1) = {"
+a
+v
+G
+G
+G
+v
+v
+v
+G
+G
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

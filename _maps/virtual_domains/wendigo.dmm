@@ -1,0 +1,1651 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"ab" = (
+/turf/closed/indestructible/rock/snow/ice/ore,
+/area/icemoon/underground/explored/virtual_domain)
+"ac" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"ad" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"ae" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/virtual_domain)
+"ag" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"ah" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aj" = (
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/virtual_domain)
+"ak" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"al" = (
+/obj/structure/flora/rock/pile/icy/style_3,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/virtual_domain)
+"am" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"an" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"ar" = (
+/obj/structure/flora/tree/stump,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/virtual_domain)
+"as" = (
+/turf/closed/indestructible/necropolis,
+/area/icemoon/underground/explored/virtual_domain)
+"au" = (
+/obj/structure/flora/rock/pile/icy/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/virtual_domain)
+"av" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/virtual_domain)
+"aw" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"ay" = (
+/obj/effect/mob_spawn/corpse/human/bitrunner,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"az" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aA" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"aB" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/structure/holosign/barrier,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aC" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aD" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aF" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/mob_spawn/corpse/human/bitrunner,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aG" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aH" = (
+/mob/living/simple_animal/hostile/megafauna/wendigo,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aI" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aJ" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aK" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aL" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"aM" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aN" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/structure/holosign/barrier,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/virtual_domain)
+"aO" = (
+/obj/effect/mob_spawn/corpse/human/cyber_police,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aP" = (
+/obj/structure/flora/rock/pile/icy/style_random,
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/virtual_domain)
+"aQ" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aR" = (
+/obj/item/paper/crumpled/bloody{
+	default_raw_text = "for your own sake, do not enter"
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/virtual_domain)
+"aS" = (
+/turf/template_noop,
+/area/template_noop)
+"aT" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aU" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aV" = (
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"aW" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aX" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aY" = (
+/obj/effect/decal/cleanable/blood/drip{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"aZ" = (
+/obj/modular_map_root/safehouse{
+	key = "lavaland_boss"
+	},
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"bX" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"jc" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"lc" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"pl" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/mob_spawn/corpse/human/bitrunner,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"sn" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"yf" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/virtual_domain)
+"KV" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored/virtual_domain)
+"Vt" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/closed/indestructible/rock/snow/ice/ore,
+/area/icemoon/underground/explored/virtual_domain)
+
+(1,1,1) = {"
+aS
+aS
+aS
+aS
+aS
+aS
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+"}
+(2,1,1) = {"
+aS
+aS
+aS
+aS
+aS
+aL
+aL
+ae
+ae
+ae
+ae
+ae
+ar
+ae
+ae
+ad
+ag
+ae
+ae
+ae
+ar
+ae
+aL
+aL
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+"}
+(3,1,1) = {"
+aS
+aS
+aS
+aS
+aL
+aL
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ad
+aI
+aI
+an
+aw
+ae
+ae
+ae
+ae
+aL
+aL
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+"}
+(4,1,1) = {"
+aS
+aS
+aS
+aL
+aL
+ae
+ae
+av
+ab
+ab
+ar
+ae
+au
+ad
+az
+ae
+ae
+ae
+ae
+av
+av
+ae
+ae
+ae
+aL
+aL
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+"}
+(5,1,1) = {"
+aS
+aS
+aL
+aL
+ae
+ae
+av
+ae
+ab
+ab
+ab
+ab
+ab
+aC
+aa
+ag
+ar
+ab
+ab
+ab
+ab
+ab
+ae
+au
+ae
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+"}
+(6,1,1) = {"
+aS
+aL
+aL
+ae
+ae
+ae
+av
+ab
+ab
+ab
+ab
+ab
+ab
+as
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ar
+au
+ae
+ae
+ae
+aL
+aL
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+yf
+aL
+"}
+(7,1,1) = {"
+aL
+aL
+ae
+ae
+ae
+au
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+as
+as
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+ae
+av
+ae
+ae
+ae
+aL
+ae
+ae
+ae
+ae
+ad
+ag
+ae
+ae
+aL
+"}
+(8,1,1) = {"
+aL
+ae
+ae
+ae
+ar
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ar
+aC
+aa
+az
+au
+ab
+ab
+ab
+ab
+ab
+ab
+ar
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aQ
+aa
+aa
+ag
+ae
+aL
+"}
+(9,1,1) = {"
+aL
+ae
+ae
+ae
+av
+ab
+ab
+ab
+ab
+ab
+av
+ae
+ae
+am
+aa
+aF
+av
+av
+ae
+ab
+ab
+ab
+ab
+ab
+av
+av
+ae
+ae
+ae
+ae
+ae
+ae
+am
+aa
+aD
+ae
+aL
+"}
+(10,1,1) = {"
+aL
+ae
+ae
+ar
+av
+ab
+ab
+ab
+ab
+au
+ae
+jc
+ae
+ae
+aC
+aa
+ac
+ak
+au
+ae
+ab
+ab
+ab
+ab
+ab
+au
+ae
+ae
+ad
+aw
+ae
+ae
+ae
+aT
+ae
+ae
+aL
+"}
+(11,1,1) = {"
+aL
+ae
+ae
+ae
+ab
+ab
+ab
+av
+aX
+ae
+ae
+am
+ag
+ae
+aC
+aa
+az
+ae
+ae
+al
+aX
+ae
+ab
+ab
+ab
+ae
+ae
+aQ
+aD
+ae
+ae
+ae
+ae
+aK
+ae
+ae
+aL
+"}
+(12,1,1) = {"
+aL
+ae
+ae
+ab
+ab
+ab
+KV
+ac
+aa
+ag
+ae
+al
+aC
+ac
+aa
+aa
+az
+au
+ad
+ac
+az
+ae
+au
+ab
+ab
+ab
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aL
+"}
+(13,1,1) = {"
+aL
+ae
+ae
+ab
+ab
+ab
+ae
+ae
+aC
+aa
+ag
+ae
+aC
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+ag
+ae
+ab
+ab
+ab
+av
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aL
+"}
+(14,1,1) = {"
+aL
+ae
+ae
+ar
+ab
+ab
+ab
+ar
+aC
+aa
+az
+ae
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ab
+ab
+ab
+al
+ar
+ae
+aV
+aV
+aV
+aV
+aV
+aZ
+ae
+aL
+"}
+(15,1,1) = {"
+aL
+ae
+ae
+au
+ab
+ab
+ab
+as
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ay
+aa
+as
+as
+av
+ae
+aj
+ae
+aV
+aV
+aV
+aV
+aV
+aV
+ae
+aL
+"}
+(16,1,1) = {"
+aL
+ae
+ad
+ac
+ab
+as
+as
+as
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ah
+aM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+as
+aB
+ae
+ae
+av
+aV
+aV
+aV
+aV
+aV
+aV
+ae
+aL
+"}
+(17,1,1) = {"
+aL
+KV
+aI
+aa
+aa
+as
+as
+as
+aa
+aa
+aa
+aa
+aa
+aa
+aH
+aJ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aY
+aw
+aR
+av
+aV
+aV
+aV
+aV
+aV
+aV
+ae
+aL
+"}
+(18,1,1) = {"
+aL
+ae
+ae
+am
+aa
+as
+as
+as
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+sn
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aD
+ae
+ae
+ae
+aV
+aV
+aV
+aV
+aV
+aV
+ae
+aL
+"}
+(19,1,1) = {"
+aL
+ae
+ae
+av
+aC
+ab
+as
+aI
+aI
+aI
+aa
+aa
+aa
+aa
+aa
+aa
+aO
+aa
+aa
+aa
+aa
+aa
+aa
+as
+as
+aN
+ae
+ae
+ar
+aV
+aV
+aV
+aV
+aV
+aV
+ae
+aL
+"}
+(20,1,1) = {"
+aL
+ae
+ae
+ae
+ab
+ab
+ar
+ae
+ae
+al
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+av
+ae
+ae
+aV
+aV
+aV
+aV
+aV
+aA
+ae
+aL
+"}
+(21,1,1) = {"
+aL
+ar
+ae
+au
+ab
+ab
+au
+ae
+ad
+ac
+aa
+aa
+aa
+aa
+aa
+aI
+aa
+aa
+aa
+aI
+aI
+aa
+aa
+ab
+ab
+ab
+av
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aL
+"}
+(22,1,1) = {"
+aL
+ae
+ae
+ab
+ab
+ab
+ac
+lc
+aI
+aa
+aa
+az
+al
+aC
+az
+al
+am
+aa
+az
+ae
+au
+am
+ab
+ab
+ab
+ab
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aL
+"}
+(23,1,1) = {"
+aL
+ae
+ae
+ab
+ab
+ab
+ab
+av
+ae
+pl
+aa
+aD
+au
+aC
+az
+ae
+ae
+aC
+az
+ae
+ae
+ae
+ab
+ab
+ab
+ae
+ae
+aQ
+ag
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aL
+"}
+(24,1,1) = {"
+aL
+ae
+ae
+ae
+ab
+ab
+ab
+Vt
+ar
+aC
+aD
+au
+ae
+aC
+aa
+aW
+ae
+am
+az
+ae
+ae
+ab
+ab
+ab
+ab
+ae
+ae
+ae
+am
+ac
+aW
+ae
+ae
+aU
+ae
+ae
+aL
+"}
+(25,1,1) = {"
+aL
+ae
+ae
+ae
+ae
+ab
+ab
+ab
+ab
+az
+ae
+ae
+ad
+aa
+az
+au
+av
+av
+aC
+ab
+ab
+ab
+ab
+ab
+au
+ae
+ae
+ae
+ae
+aG
+ae
+ae
+ad
+aI
+aW
+ae
+aL
+"}
+(26,1,1) = {"
+aL
+ae
+ae
+ae
+ae
+ae
+ar
+ab
+ab
+ab
+ae
+av
+aC
+as
+as
+ab
+ar
+aP
+ab
+ab
+ab
+ab
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aK
+ae
+ae
+ae
+aL
+"}
+(27,1,1) = {"
+aL
+aL
+ae
+au
+ae
+av
+av
+ab
+ab
+ab
+ab
+ab
+as
+as
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+ae
+ae
+ar
+ae
+aL
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aL
+"}
+(28,1,1) = {"
+aS
+aL
+aL
+ae
+au
+ae
+av
+ae
+ab
+ab
+ab
+ab
+as
+as
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+au
+ae
+ae
+ae
+ae
+aL
+aL
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aL
+"}
+(29,1,1) = {"
+aS
+aS
+aL
+aL
+ae
+ae
+ae
+ae
+ae
+ar
+av
+aC
+as
+as
+ab
+ab
+ab
+ab
+ab
+ab
+ae
+ae
+ae
+ar
+ae
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+"}
+(30,1,1) = {"
+aS
+aS
+aS
+aL
+aL
+ae
+ae
+ae
+ae
+au
+ae
+am
+aa
+aa
+aI
+ab
+ab
+ab
+ab
+ae
+ae
+ae
+ae
+ae
+aL
+aL
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+"}
+(31,1,1) = {"
+aS
+aS
+aS
+aS
+aL
+aL
+ae
+ae
+ae
+ae
+ae
+ae
+aC
+aD
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aL
+aL
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+"}
+(32,1,1) = {"
+aS
+aS
+aS
+aS
+aS
+aL
+aL
+ae
+ae
+ae
+ae
+ae
+bX
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aL
+aL
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+"}
+(33,1,1) = {"
+aS
+aS
+aS
+aS
+aS
+aS
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+aS
+"}

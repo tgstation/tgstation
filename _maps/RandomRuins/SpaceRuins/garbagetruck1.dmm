@@ -1,0 +1,1497 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aF" = (
+/obj/item/trash/can/food/envirochow{
+	pixel_x = 2
+	},
+/obj/item/trash/can/food/envirochow{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/obj/item/trash/can/food/envirochow{
+	pixel_y = -12
+	},
+/obj/effect/decal/cleanable/insectguts,
+/mob/living/basic/cockroach,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"aP" = (
+/obj/item/kitchen/fork{
+	pixel_x = -10;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/ants,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"bj" = (
+/obj/structure/closet/crate/trashcart/filled,
+/obj/item/food/badrecipe/moldy/bacteria,
+/obj/item/food/deadmouse,
+/obj/item/sticker/syndicate/larva,
+/mob/living/basic/mouse/rat,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"bs" = (
+/obj/structure/kitchenspike_frame,
+/obj/item/paper/crumpled,
+/obj/item/restraints/handcuffs/cable/zipties/used,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"bx" = (
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"bF" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"ew" = (
+/obj/item/trash/can/food/peaches/maint,
+/obj/item/food/breadslice/moldy/bacteria,
+/obj/effect/decal/cleanable/food/egg_smudge,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"fb" = (
+/obj/item/trash/boritos/green,
+/obj/effect/decal/cleanable/plastic,
+/obj/item/storage/bag/trash,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"fk" = (
+/obj/item/kirbyplants/fern,
+/obj/item/food/deadmouse,
+/obj/effect/spawner/random/entertainment/money_small,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"fx" = (
+/obj/item/food/badrecipe/moldy/bacteria{
+	pixel_y = -10
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"fI" = (
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"fP" = (
+/obj/item/match,
+/obj/item/trash/popcorn,
+/obj/item/trash/spacers_sidekick,
+/obj/item/food/pizzaslice/moldy/bacteria,
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"fR" = (
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/obj/item/kitchen/spoon/soup_ladle{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/food/badrecipe/moldy{
+	pixel_x = 3;
+	pixel_y = 0
+	},
+/obj/item/food/badrecipe/moldy{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/food/badrecipe/moldy{
+	pixel_y = 3
+	},
+/obj/item/food/badrecipe/moldy,
+/obj/item/food/grown/mushroom/odious_puffball{
+	pixel_y = 3
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"fV" = (
+/obj/item/food/butter{
+	pixel_x = 10;
+	pixel_y = 4
+	},
+/obj/item/food/butter{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/structure/closet/crate/freezer,
+/obj/item/food/butter{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"gb" = (
+/obj/structure/closet/crate/trashcart,
+/obj/item/plate_shard,
+/obj/item/popsicle_stick,
+/obj/item/popsicle_stick,
+/obj/item/food/egg/rotten,
+/obj/effect/decal/cleanable/plastic,
+/obj/item/storage/bag/tray/cafeteria,
+/obj/item/storage/bag/tray/cafeteria,
+/obj/item/storage/bag/tray/cafeteria,
+/obj/item/knife/butcher{
+	name = "antique cleaver";
+	desc = "A huge knife for chopping up and slicing meat. Years of service has scarred its metal and worn grooves into the handle, but its blade is well-maintained and very sharp."
+	},
+/mob/living/basic/cockroach,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"gI" = (
+/obj/item/storage/box/mousetraps,
+/obj/structure/table/reinforced,
+/obj/item/melee/flyswatter,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"hq" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"hH" = (
+/obj/item/clothing/mask/surgical,
+/obj/effect/spawner/random/trash/botanical_waste,
+/obj/structure/closet/crate/trashcart/filled,
+/obj/item/seeds/onion/red{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/seeds/onion{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/food/grown/mushroom/odious_puffball{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/obj/effect/spawner/random/food_or_drink/seed,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"hN" = (
+/obj/item/shard,
+/obj/item/food/pizzaslice/moldy/bacteria,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"iu" = (
+/obj/structure/plasticflaps/opaque,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"iH" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/food/hard_taco_shell/empty{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/food/hard_taco_shell/empty{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/food/hard_taco_shell/empty{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/food/hard_taco_shell/empty{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets_single,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"jo" = (
+/obj/item/trash/can,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"js" = (
+/obj/item/food/egg/rotten{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/item/food/egg/rotten{
+	pixel_x = -10;
+	pixel_y = -8
+	},
+/obj/item/food/egg/rotten{
+	pixel_x = -14;
+	pixel_y = -8
+	},
+/obj/item/food/meat/slab/rawcrab{
+	pixel_x = 2;
+	pixel_y = -8
+	},
+/obj/item/food/meat/slab/rawcrab{
+	pixel_x = 2;
+	pixel_y = -8
+	},
+/obj/item/food/meat/slab/rawcrab{
+	pixel_x = 3;
+	pixel_y = -6
+	},
+/obj/item/food/meat/slab/rawcrab{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/food/meat/slab/rawcrab{
+	pixel_x = 2
+	},
+/obj/item/storage/fancy/pickles_jar{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/structure/closet/secure_closet/freezer/empty,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"ki" = (
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/item/shard,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"ku" = (
+/obj/structure/fermenting_barrel,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"kJ" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/gloves{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/storage/box/masks{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/machinery/recharger{
+	pixel_y = -10
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"kS" = (
+/obj/machinery/light/warm,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"kV" = (
+/obj/machinery/computer/terminal{
+	content = list("Property of Spinward-Upsilon Sanitation Department. Authorised employees only.");
+	desc = "A garbage truck's dusty old control console.";
+	name = "dashboard";
+	upperinfo = "Controls locked."
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"nN" = (
+/obj/item/trash/candy,
+/obj/item/reagent_containers/cup/glass/colocup,
+/obj/item/reagent_containers/cup/glass/colocup,
+/obj/item/reagent_containers/cup/glass/colocup,
+/obj/item/reagent_containers/cup/glass/colocup,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"nQ" = (
+/obj/item/trash/shrimp_chips,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"nS" = (
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/obj/item/vending_refill/dinnerware,
+/obj/item/vending_refill/snack,
+/obj/item/circuitboard/machine/coffeemaker,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"og" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/obj/effect/spawner/random/entertainment/plushie,
+/turf/template_noop,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"oq" = (
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/firm_cheese,
+/obj/item/food/cheese/firm_cheese,
+/obj/item/food/cheese/firm_cheese,
+/obj/item/food/cheese/firm_cheese,
+/obj/item/food/cheese/firm_cheese,
+/obj/item/thermometer,
+/obj/structure/closet/secure_closet/freezer/empty,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"oL" = (
+/obj/structure/table/reinforced,
+/obj/item/analyzer{
+	pixel_y = 6
+	},
+/obj/item/geiger_counter{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/flashlight{
+	pixel_x = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"pp" = (
+/obj/effect/spawner/random/trash/garbage,
+/obj/item/broken_bottle,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"ps" = (
+/obj/item/trash/can/food/larvae,
+/obj/item/food/bait/worm,
+/obj/effect/decal/cleanable/garbage,
+/obj/effect/decal/cleanable/ants,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"pF" = (
+/obj/item/food/badrecipe/moldy/bacteria,
+/obj/item/food/deadmouse/moldy,
+/obj/structure/broken_flooring/pile,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"pP" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"qd" = (
+/obj/item/food/breadslice/moldy/bacteria{
+	pixel_y = -10
+	},
+/obj/structure/reagent_dispensers/servingdish{
+	anchored = 0
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"qm" = (
+/obj/effect/decal/cleanable/food/egg_smudge,
+/obj/item/food/pizzaslice/moldy,
+/mob/living/basic/mouse/brown,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"qM" = (
+/turf/template_noop,
+/area/template_noop)
+"re" = (
+/obj/item/trash/shrimp_chips,
+/obj/item/trash/sosjerky,
+/mob/living/basic/mouse/rat,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"rx" = (
+/obj/item/surprise_egg,
+/obj/structure/closet/crate/trashcart,
+/obj/item/trash/raisins,
+/obj/effect/decal/cleanable/food/egg_smudge,
+/obj/item/book/manual/chef_recipes,
+/obj/item/trash/semki/healthy,
+/mob/living/basic/mouse/rat,
+/obj/item/clothing/shoes/galoshes,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"rL" = (
+/obj/item/food/badrecipe,
+/obj/item/pen/charcoal{
+	desc = "It's just a wooden stick with some compressed ash on the end. At least it can write.";
+	name = "charcoal stick"
+	},
+/obj/effect/decal/cleanable/oil/streak,
+/obj/structure/closet/crate/trashcart,
+/obj/item/food/grown/ash_flora/shavings,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"tr" = (
+/obj/structure/broken_flooring/singular,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"ty" = (
+/obj/item/trash/can/food/peaches,
+/obj/item/trash/boritos/red,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"tU" = (
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"uJ" = (
+/obj/item/trash/cnds,
+/obj/item/food/breadslice/moldy/bacteria,
+/obj/effect/decal/cleanable/wrapping,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"vA" = (
+/obj/machinery/power/terminal,
+/obj/structure/tank_dispenser/oxygen,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"vI" = (
+/obj/item/poster/random_contraband,
+/obj/item/tank/internals/emergency_oxygen/empty,
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"wb" = (
+/obj/effect/spawner/random/trash/bacteria,
+/obj/item/trash/can,
+/obj/item/trash/can{
+	pixel_x = 8;
+	pixel_y = 1
+	},
+/obj/item/trash/can{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/food/badrecipe/moldy/bacteria{
+	pixel_x = 12;
+	pixel_y = -8
+	},
+/obj/effect/decal/cleanable/fuel_pool{
+	desc = "A sticky patch of dried cola. It smells very sweet.";
+	name = "puddle of cola"
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"wv" = (
+/obj/structure/closet/cardboard,
+/obj/item/toy/plush/snakeplushie,
+/obj/item/clothing/glasses/eyepatch,
+/obj/item/cigarette/cigar/havana,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"wR" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/item/food/badrecipe/moldy/bacteria{
+	pixel_x = 2;
+	pixel_y = -8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"xf" = (
+/obj/item/trash/tray,
+/obj/item/food/grown/mushroom/plumphelmet,
+/obj/structure/closet/crate/trashcart,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"xg" = (
+/obj/structure/closet/crate/cardboard,
+/obj/item/knife/kitchen,
+/obj/item/storage/box/mousetraps,
+/obj/structure/broken_flooring/pile,
+/obj/item/food/grown/parsnip,
+/obj/item/food/grown/parsnip,
+/obj/item/food/cheese/wedge,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"xk" = (
+/obj/structure/table/reinforced,
+/obj/item/gps/spaceruin{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/storage/backpack/industrial{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/hazardvest{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"xZ" = (
+/obj/item/restraints/handcuffs/cable/zipties/used,
+/obj/effect/spawner/random/decoration/flower,
+/obj/item/reagent_containers/cup/glass/bottle/wine/unlabeled,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"ye" = (
+/obj/item/trash/semki/healthy,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"yh" = (
+/obj/effect/spawner/random/trash,
+/mob/living/basic/mouse,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"yi" = (
+/obj/structure/sign/warning,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"yv" = (
+/obj/item/trash/can{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/trash/can{
+	pixel_y = -8
+	},
+/obj/effect/decal/cleanable/fuel_pool{
+	desc = "A sticky patch of dried cola. It smells very sweet.";
+	name = "puddle of cola"
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"yC" = (
+/obj/item/trash/popcorn/caramel{
+	pixel_y = -6
+	},
+/mob/living/basic/cockroach,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"zK" = (
+/obj/item/trash/chips{
+	pixel_x = -8
+	},
+/obj/item/broken_bottle{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Ad" = (
+/obj/item/food/canned/beans{
+	desc = "Probably still good.";
+	name = "rust-covered tin of beans"
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Aj" = (
+/obj/effect/decal/cleanable/ants,
+/mob/living/basic/mouse/white,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"An" = (
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"AM" = (
+/obj/item/trash/can{
+	pixel_x = -8;
+	pixel_y = -2;
+	pixel_z = 0
+	},
+/obj/item/reagent_containers/cup/soda_cans/random{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/structure/closet/crate/cardboard,
+/obj/item/vending_refill/cola,
+/obj/item/vending_refill/boozeomat,
+/obj/item/trash/can{
+	pixel_x = 8;
+	pixel_y = 0
+	},
+/obj/item/trash/can{
+	pixel_x = 2;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/cup/soda_cans/random{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/cup/soda_cans/random{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/effect/decal/cleanable/fuel_pool{
+	desc = "A sticky patch of dried cola. It smells very sweet.";
+	name = "puddle of cola"
+	},
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"AR" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/template_noop,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"BS" = (
+/obj/item/storage/bag/trash/filled{
+	pixel_x = -8
+	},
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/food/egg_smudge{
+	pixel_x = -2;
+	pixel_y = -8
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Cc" = (
+/obj/item/trash/tray,
+/obj/item/food/breadslice/moldy/bacteria{
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/obj/item/food/tofu/prison{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/food/tofu/prison{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/effect/decal/cleanable/ants,
+/obj/structure/closet/crate/preopen,
+/obj/item/food/meat/slab/human/mutant/zombie{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/mail/junkmail,
+/obj/item/trash/raisins,
+/obj/item/trash/candy{
+	pixel_x = 10;
+	pixel_y = -6
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Ci" = (
+/obj/item/kitchen/fork/plastic{
+	pixel_x = -8
+	},
+/obj/item/kitchen/spoon/plastic{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/paper/crumpled{
+	pixel_x = 7;
+	pixel_y = -4
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/effect/spawner/random/food_or_drink/condiment,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Ct" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"CF" = (
+/obj/machinery/reagentgrinder{
+	anchored = 0
+	},
+/obj/item/food/badrecipe{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/obj/effect/decal/cleanable/fuel_pool{
+	desc = "A sticky patch of dried cola. It smells very sweet.";
+	name = "puddle of cola"
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Do" = (
+/obj/item/food/badrecipe/moldy/bacteria,
+/obj/item/food/bait/worm,
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Ec" = (
+/obj/effect/spawner/random/trash/bucket,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Fp" = (
+/obj/item/food/badrecipe/moldy/bacteria,
+/obj/item/storage/bag/trash/filled,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Fs" = (
+/obj/structure/closet/cardboard,
+/obj/item/restraints/handcuffs/cable/zipties/used,
+/obj/item/food/cornchips/blue,
+/obj/item/food/cornchips/blue,
+/obj/item/food/cornchips/green,
+/obj/item/food/cornchips/green,
+/obj/item/food/cornchips/purple,
+/obj/item/food/cornchips/purple,
+/obj/item/food/cornchips/red,
+/obj/item/food/cornchips/red,
+/obj/item/food/cornchips/random,
+/obj/item/food/cornchips/random,
+/obj/item/food/cornchips/blue{
+	desc = "Limited edition flavour. Only for sale within the space commonwealth.";
+	name = "\improper Space Salt and Vinegar Boritos corn chips";
+	tastes = list("salt" = 1, "vinegar" = 3)
+	},
+/obj/item/food/cornchips/blue{
+	desc = "Limited edition flavour. Only for sale within the space commonwealth.";
+	name = "\improper Space Salt and Vinegar Boritos corn chips";
+	tastes = list("salt" = 1, "vinegar" = 3)
+	},
+/obj/item/food/cornchips/random,
+/obj/item/food/cornchips/random,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Fz" = (
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/lead,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"FL" = (
+/obj/structure/closet/cardboard,
+/obj/item/pen/blue,
+/obj/item/ph_paper,
+/obj/item/petri_dish,
+/obj/item/healthanalyzer/simple/disease,
+/obj/item/biopsy_tool,
+/obj/effect/spawner/random/medical/surgery_tool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Gh" = (
+/obj/item/trash/semki/healthy,
+/mob/living/basic/mouse,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"GB" = (
+/obj/item/trash/can,
+/obj/item/storage/bag/trash,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"GP" = (
+/obj/effect/decal/cleanable/garbage,
+/obj/item/crowbar/hammer{
+	desc = "It's a heavy iron hammer with a wooden handle. A triangle has been chiselled into it.";
+	name = "heirloom hammer"
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"GU" = (
+/obj/item/reagent_containers/cup/glass/waterbottle/empty,
+/obj/effect/decal/cleanable/wrapping,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Hh" = (
+/obj/structure/closet/crate/trashcart/filled,
+/obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice{
+	desc = "Best before '32";
+	pixel_x = -6
+	},
+/obj/effect/decal/cleanable/insectguts,
+/obj/item/food/grown/mushroom/odious_puffball{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Hu" = (
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/obj/item/knife/plastic{
+	pixel_x = 12
+	},
+/obj/item/food/badrecipe/moldy/bacteria{
+	pixel_x = -6
+	},
+/obj/item/food/meat/slab/pig,
+/obj/item/food/deadmouse,
+/obj/item/food/salami{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/food/salami{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/food/salami{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"HC" = (
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/obj/item/kitchen/fork/plastic{
+	pixel_x = -8
+	},
+/obj/item/kitchen/fork/plastic{
+	pixel_x = 8;
+	pixel_y = 0
+	},
+/obj/item/kitchen/fork/plastic,
+/obj/item/storage/box/papersack/meat,
+/obj/effect/spawner/random/food_or_drink/condiment,
+/obj/item/popsicle_stick,
+/obj/item/popsicle_stick{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Ie" = (
+/obj/machinery/airalarm{
+	pixel_y = 25
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"II" = (
+/obj/structure/closet/crate/trashcart/filled,
+/obj/item/food/cracker,
+/obj/item/food/canned/beans{
+	desc = "Probably still good.";
+	name = "rust-covered tin of beans"
+	},
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"IR" = (
+/obj/structure/table/reinforced,
+/obj/item/gas_filter,
+/obj/item/gas_filter,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/head/utility/hardhat/orange{
+	pixel_y = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"JH" = (
+/obj/item/petri_dish/random,
+/obj/item/petri_dish/random,
+/obj/item/petri_dish,
+/obj/item/petri_dish,
+/obj/item/petri_dish,
+/obj/item/organ/tongue/rat,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass,
+/obj/item/organ/stomach/rat,
+/obj/item/fish/ratfish,
+/obj/structure/closet/crate/freezer,
+/obj/effect/spawner/random/medical/surgery_tool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"KD" = (
+/obj/structure/closet/crate/critter,
+/obj/item/dog_bone{
+	pixel_y = -6
+	},
+/mob/living/basic/cockroach,
+/mob/living/basic/cockroach,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"KT" = (
+/obj/structure/broken_flooring/singular,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Le" = (
+/obj/effect/spawner/random/trash/bacteria,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Mq" = (
+/obj/structure/closet/crate/cardboard,
+/obj/item/stack/tile/bamboo/tatami{
+	amount = 40
+	},
+/obj/item/stack/sticky_tape{
+	pixel_y = -2
+	},
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/item/crowbar/hammer{
+	desc = "It's a heavy claw hammer. The handle is covered in bite marks of varying sizes.";
+	name = "old hammer"
+	},
+/obj/item/food/deadmouse,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"MA" = (
+/obj/item/food/badrecipe/moldy/bacteria,
+/obj/item/food/deadmouse,
+/obj/item/grown/bananapeel,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Nm" = (
+/obj/item/trash/energybar,
+/obj/item/trash/energybar,
+/obj/item/trash/energybar,
+/obj/item/trash/energybar,
+/obj/item/food/candy/bronx,
+/obj/item/food/candy/bronx,
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Od" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Oh" = (
+/obj/effect/spawner/random/trash/bacteria,
+/mob/living/basic/mouse/brown,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Ok" = (
+/obj/item/plate/large,
+/obj/item/plate/large,
+/obj/item/storage/box/drinkingglasses{
+	pixel_x = 10;
+	pixel_y = 2
+	},
+/obj/structure/closet/crate/preopen,
+/obj/item/reagent_containers/cup/glass/coffee_cup{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/mob/living/basic/mouse/brown,
+/mob/living/basic/mouse/brown,
+/mob/living/basic/mouse/brown,
+/mob/living/basic/mouse,
+/mob/living/basic/mouse,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Or" = (
+/obj/item/food/sustenance_bar/cheese{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/structure/closet/crate/large,
+/obj/item/food/sustenance_bar/cheese{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/food/sustenance_bar/neapolitan{
+	maptext_x = 0;
+	maptext_y = 0;
+	pixel_x = -6
+	},
+/obj/item/food/sustenance_bar/neapolitan{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/food/sustenance_bar/mint{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/food/sustenance_bar/mint{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/food/sustenance_bar{
+	pixel_x = 6;
+	pixel_y = -10
+	},
+/obj/item/food/sustenance_bar{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/food/sustenance_bar{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/food/sustenance_bar{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Ox" = (
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/obj/item/trash/candy{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/trash/can/food/desert_snails{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/trash/can/food/envirochow{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/effect/decal/cleanable/food/flour,
+/obj/item/thermometer/pen{
+	pixel_x = 8
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"OD" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"OZ" = (
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/obj/item/plate/small{
+	pixel_x = -6
+	},
+/obj/item/food/meat/slab/human/mutant/zombie{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/food/meat/slab/human/mutant/zombie{
+	pixel_x = 5
+	},
+/obj/item/food/meat/slab/human/mutant/zombie{
+	pixel_x = 2;
+	pixel_y = -5
+	},
+/obj/item/food/meat/slab/human{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/ants,
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"PU" = (
+/obj/item/clothing/head/cone{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/light/warm,
+/obj/machinery/power/apc{
+	locked = 0;
+	pixel_y = -25;
+	start_charge = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Qi" = (
+/obj/item/book/bible,
+/obj/structure/closet/crate/cardboard,
+/obj/item/mail/junkmail{
+	pixel_x = -10;
+	pixel_y = 2
+	},
+/obj/item/mail/junkmail{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/item/mail/junkmail,
+/obj/effect/decal/cleanable/insectguts,
+/mob/living/basic/mouse/rat,
+/mob/living/basic/mouse/rat,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"QH" = (
+/obj/structure/closet/crate/trashcart/filled,
+/obj/effect/decal/cleanable/insectguts,
+/obj/item/pinata,
+/obj/item/food/cornchips/green,
+/obj/effect/spawner/random/food_or_drink/condiment,
+/mob/living/basic/mouse,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"QL" = (
+/obj/item/broken_bottle,
+/obj/item/grown/bananapeel,
+/obj/effect/spawner/random/trash/garbage,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Rq" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Sa" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Sb" = (
+/obj/item/food/deadmouse/moldy,
+/obj/item/reagent_containers/spray/pestspray{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"TB" = (
+/obj/structure/window/reinforced/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"TG" = (
+/obj/item/mop,
+/obj/item/food/deadmouse/moldy,
+/obj/item/pushbroom,
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"TX" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"UX" = (
+/obj/structure/lattice/catwalk,
+/obj/item/crowbar/large/emergency,
+/turf/template_noop,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Vb" = (
+/obj/structure/closet/crate/cardboard/mothic,
+/obj/item/trash/can/food/pine_nuts,
+/obj/item/broken_bottle,
+/obj/item/broken_bottle,
+/obj/effect/decal/cleanable/wrapping,
+/mob/living/basic/mouse/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"VB" = (
+/obj/machinery/power/smes,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"VL" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/template_noop,
+/area/template_noop)
+"Xi" = (
+/obj/item/food/badrecipe/moldy/bacteria,
+/obj/effect/decal/cleanable/food/egg_smudge,
+/mob/living/basic/mouse,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"XF" = (
+/obj/item/shard,
+/obj/item/trash/boritos,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"XY" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/template_noop,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Yu" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/bag/trash{
+	pixel_x = -12;
+	pixel_y = 0
+	},
+/obj/item/storage/bag/trash,
+/obj/item/storage/bag/trash{
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Yx" = (
+/obj/structure/reagent_dispensers/cooking_oil{
+	anchored = 0
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Yz" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"YB" = (
+/obj/item/trash/peanuts{
+	pixel_x = -4;
+	pixel_y = -8
+	},
+/obj/structure/closet/crate/freezer,
+/obj/item/trash/pistachios{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/trash/pistachios,
+/obj/item/c_tube,
+/obj/item/food/uncooked_rice{
+	pixel_y = -4
+	},
+/obj/item/trash/peanuts{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Zb" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/food/deadmouse,
+/mob/living/basic/mouse/rat,
+/obj/item/organ/heart/rat,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+
+(1,1,1) = {"
+qM
+qM
+pP
+pP
+pP
+OD
+VL
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+"}
+(2,1,1) = {"
+qM
+OD
+TB
+TB
+OD
+OD
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+"}
+(3,1,1) = {"
+XY
+Od
+kJ
+Fz
+gI
+OD
+Sa
+Hu
+rL
+HC
+YB
+iH
+wv
+KD
+wR
+nS
+fV
+Vb
+bs
+yi
+"}
+(4,1,1) = {"
+og
+TB
+kV
+hq
+kS
+OD
+Sa
+xf
+An
+OZ
+Fp
+Ok
+MA
+aF
+vI
+xg
+ps
+ye
+GP
+Sa
+"}
+(5,1,1) = {"
+AR
+TB
+xk
+IR
+bF
+OD
+Sa
+Ci
+qm
+qd
+zK
+aP
+GU
+KT
+Ad
+TX
+ki
+Fp
+xZ
+Sa
+"}
+(6,1,1) = {"
+XY
+TB
+Od
+OD
+Ie
+Ct
+tU
+TX
+yh
+bx
+Yz
+Do
+Le
+fx
+wb
+gb
+hH
+QH
+bj
+Sa
+"}
+(7,1,1) = {"
+XY
+Od
+Yu
+oL
+bF
+Ct
+tU
+fb
+pF
+Gh
+hN
+QL
+TX
+Mq
+AM
+CF
+rx
+II
+Hh
+Sa
+"}
+(8,1,1) = {"
+og
+Od
+fI
+fI
+bF
+OD
+Sa
+js
+BS
+Oh
+oq
+XF
+jo
+Aj
+yv
+GB
+pp
+re
+Yx
+Sa
+"}
+(9,1,1) = {"
+XY
+Od
+fI
+bF
+PU
+OD
+Sa
+Qi
+yC
+nN
+Fs
+fk
+TG
+nQ
+ku
+ty
+ew
+tr
+Zb
+Sa
+"}
+(10,1,1) = {"
+AR
+Od
+fI
+vA
+VB
+OD
+Sa
+Cc
+Ox
+fR
+fP
+Or
+Ec
+Sb
+Xi
+uJ
+FL
+Nm
+JH
+yi
+"}
+(11,1,1) = {"
+qM
+OD
+Rq
+Od
+OD
+OD
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+Sa
+iu
+iu
+iu
+Sa
+Sa
+Sa
+Sa
+"}
+(12,1,1) = {"
+qM
+qM
+pP
+pP
+UX
+OD
+VL
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+"}

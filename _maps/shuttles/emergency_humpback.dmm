@@ -1,0 +1,1311 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ao" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"at" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"bL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"bS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"bT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"cK" = (
+/turf/open/floor/iron/smooth_half/airless,
+/area/shuttle/escape)
+"df" = (
+/obj/machinery/door/airlock/external,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "evac3"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"dl" = (
+/obj/structure/chair/sofa/right{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/escape)
+"dF" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape/brig)
+"dP" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/spawner/random/food_or_drink/booze,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"ed" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/toxin{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"ez" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Cyborg Bay"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"eK" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"eU" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "evac3"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"eW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/status_display/evac/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"fu" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"gL" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Brig"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"gW" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"hd" = (
+/obj/machinery/atmospherics/components/binary/pump/on/supply{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"he" = (
+/obj/machinery/vending/wallmed/directional/east,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"hk" = (
+/obj/machinery/light/directional/north,
+/obj/structure/table,
+/obj/machinery/recharger,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"hp" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/shuttle/escape)
+"hs" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"hA" = (
+/turf/open/floor/iron/smooth_half/airless{
+	dir = 1
+	},
+/area/shuttle/escape)
+"ig" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"iW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"ji" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "evac3"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"jJ" = (
+/obj/machinery/computer/arcade/orion_trail{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"kB" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "evac3"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"kZ" = (
+/obj/structure/table,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/brute{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"my" = (
+/obj/machinery/computer/security{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"mF" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"mI" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/turf/template_noop,
+/area/shuttle/escape)
+"mO" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/light/small/dim/directional/east,
+/turf/template_noop,
+/area/shuttle/escape)
+"nm" = (
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"ns" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/cell_charger,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"nG" = (
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"nQ" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/escape/brig)
+"oj" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"oO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/smooth,
+/area/shuttle/escape)
+"oP" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"po" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/smooth_corner/airless,
+/area/shuttle/escape)
+"pE" = (
+/obj/machinery/door/window/brigdoor/left/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"qp" = (
+/obj/machinery/recharge_station,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"qP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"rr" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"rt" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"rw" = (
+/obj/machinery/computer/crew{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"ry" = (
+/obj/structure/table,
+/obj/item/trash/chips,
+/turf/open/floor/iron/smooth,
+/area/shuttle/escape)
+"rA" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"rL" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/jade,
+/turf/template_noop,
+/area/shuttle/escape)
+"sQ" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/bonfire/prelit,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_corner/airless{
+	dir = 1
+	},
+/area/shuttle/escape)
+"tY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/button/flasher{
+	pixel_y = 26;
+	pixel_x = 26;
+	id = "evacflash"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"uw" = (
+/obj/machinery/computer/atmos_control/air_tank{
+	atmos_chambers = list("evacair" = "Mixed Air Supply")
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"uW" = (
+/obj/machinery/recharge_station,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"vk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/smooth_half/airless,
+/area/shuttle/escape)
+"vn" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape/brig)
+"vw" = (
+/turf/template_noop,
+/area/template_noop)
+"vF" = (
+/obj/structure/chair/stool/bar/directional/south{
+	can_buckle = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"vO" = (
+/obj/structure/closet,
+/obj/item/multitool,
+/obj/effect/spawner/random/engineering/toolbox,
+/obj/machinery/light/small/directional/north,
+/obj/effect/spawner/random/contraband/narcotics,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"vR" = (
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"wf" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Emergency Shuttle Cargo Hold"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"xb" = (
+/obj/structure/sign/departments/medbay/alt,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/escape/brig)
+"xy" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/light/small/dim/directional/east,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"yc" = (
+/obj/structure/statue/gold/hos,
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape)
+"yh" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/binoculars,
+/turf/template_noop,
+/area/shuttle/escape)
+"yH" = (
+/obj/structure/chair/sofa/middle{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/smooth,
+/area/shuttle/escape)
+"yN" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"zn" = (
+/obj/structure/table,
+/obj/effect/spawner/surgery_tray/full,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"zr" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_half/airless{
+	dir = 1
+	},
+/area/shuttle/escape)
+"zG" = (
+/obj/machinery/chem_master,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"zH" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"zZ" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/recharger,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"Af" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Ax" = (
+/obj/structure/railing/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/smooth_half/airless{
+	dir = 4
+	},
+/area/shuttle/escape)
+"AA" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"Bu" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Ch" = (
+/obj/structure/chair/sofa/left{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/escape)
+"Cl" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"CA" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/obj/effect/spawner/random/maintenance/seven,
+/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/pill/maintenance,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"CH" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"CW" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/binoculars,
+/turf/open/floor/iron/smooth_corner/airless{
+	dir = 1
+	},
+/area/shuttle/escape)
+"Df" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Dj" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output{
+	dir = 1;
+	chamber_id = "evacair"
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/engine/air,
+/area/shuttle/escape/brig)
+"Ef" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"EJ" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"EO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Fw" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "evac3"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"FG" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Brig"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"FZ" = (
+/obj/structure/railing/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/smooth_half/airless{
+	dir = 1
+	},
+/area/shuttle/escape)
+"GR" = (
+/turf/open/floor/iron/smooth,
+/area/shuttle/escape)
+"IB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape)
+"JB" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"JW" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/computer/operating,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"Kf" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/box/drinkingglasses,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Ko" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Kv" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"KP" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"KX" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"Lk" = (
+/obj/structure/statue/diamond/ai2,
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape)
+"Lp" = (
+/obj/structure/closet/crate/secure/loot,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"LB" = (
+/obj/machinery/door/airlock/command{
+	name = "Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"LC" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"LN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"LY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/flasher/directional/east{
+	id = "evacflash"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"MP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"MU" = (
+/obj/machinery/door/airlock/external,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "evac3"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"MY" = (
+/obj/structure/railing/corner/end/flip,
+/obj/structure/railing/corner/end{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_half/airless{
+	dir = 1
+	},
+/area/shuttle/escape)
+"NR" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Oj" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
+"Oo" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Oq" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"Ot" = (
+/obj/machinery/door/airlock/external,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "evac3"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"OO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"Pt" = (
+/obj/machinery/stasis,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"PS" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/shuttle/escape)
+"PX" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"Qe" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"Sl" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/escape)
+"Sx" = (
+/obj/structure/table/optable,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"SC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"SJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/directional/west,
+/obj/machinery/vending/cigarette,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"Ta" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape)
+"Te" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape/brig)
+"Ty" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	port_direction = 4;
+	preferred_direction = 2
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"UR" = (
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/iron/smooth,
+/area/shuttle/escape)
+"VH" = (
+/obj/structure/railing,
+/turf/open/floor/iron/smooth_corner/airless{
+	dir = 1
+	},
+/area/shuttle/escape)
+"VL" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "evac3"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"WG" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/item/restraints/handcuffs,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Xh" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Xi" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/machinery/light/directional/south,
+/obj/structure/closet/cabinet,
+/obj/item/reagent_containers/cup/glass/shaker,
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/instrument/guitar,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Xv" = (
+/obj/machinery/door/airlock/external/glass,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"XQ" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"Ys" = (
+/obj/machinery/computer/communications{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"YF" = (
+/obj/machinery/air_sensor/air_tank{
+	chamber_id = "evacair"
+	},
+/turf/open/floor/engine/air,
+/area/shuttle/escape/brig)
+"Zs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"ZG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"ZR" = (
+/obj/machinery/light/directional/west,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+vw
+Te
+Te
+Te
+Te
+KX
+nQ
+yN
+Sl
+Ty
+Sl
+mI
+yh
+Sl
+Oj
+yN
+Sl
+yN
+Sl
+Sl
+Oj
+vw
+vw
+vw
+vw
+vw
+"}
+(2,1,1) = {"
+dF
+vn
+WG
+NR
+KX
+YF
+KX
+XQ
+Oj
+XQ
+mF
+hp
+hp
+mF
+SJ
+LN
+ez
+LN
+at
+qp
+Sl
+vw
+vw
+vw
+vw
+vw
+"}
+(3,1,1) = {"
+dF
+vn
+WG
+ao
+Oq
+Dj
+KX
+XQ
+ZR
+XQ
+mF
+hp
+mO
+mF
+iW
+XQ
+Sl
+ns
+XQ
+uW
+Sl
+vw
+vw
+vw
+vw
+vw
+"}
+(4,1,1) = {"
+Te
+nQ
+hk
+hd
+Te
+Te
+nQ
+ZG
+ZG
+ZG
+Sl
+Xv
+Oj
+Sl
+bS
+ZG
+Sl
+Xh
+oP
+KP
+Sl
+Sl
+mF
+mF
+mF
+vw
+"}
+(5,1,1) = {"
+dF
+vn
+uw
+ao
+gL
+bL
+FG
+EO
+vR
+vR
+rr
+vR
+Af
+rA
+EO
+vF
+dP
+vR
+vR
+Kf
+mF
+oj
+my
+zZ
+mF
+mF
+"}
+(6,1,1) = {"
+dF
+vn
+nQ
+Te
+Te
+Te
+xb
+EO
+EO
+EO
+EO
+EO
+EO
+vR
+EO
+vF
+dP
+zH
+EO
+zG
+mF
+XQ
+ig
+XQ
+rw
+mF
+"}
+(7,1,1) = {"
+rt
+eK
+Pt
+EJ
+MP
+OO
+Cl
+EO
+CH
+vR
+vR
+vR
+EO
+EO
+EO
+Df
+Sl
+gW
+pE
+Xi
+Sl
+Qe
+LN
+PX
+fu
+mF
+"}
+(8,1,1) = {"
+rt
+eK
+Pt
+hs
+OO
+nG
+mF
+vR
+vR
+Oo
+Bu
+Oo
+EO
+Oo
+Ko
+EO
+EO
+eW
+EO
+LY
+LB
+tY
+Zs
+XQ
+Ys
+mF
+"}
+(9,1,1) = {"
+Oj
+Sl
+JW
+hs
+PS
+nG
+Ef
+bT
+LC
+Sl
+Sl
+Sl
+wf
+Sl
+Sl
+Oj
+Oj
+Oj
+Oj
+Oj
+Sl
+mF
+Sl
+mF
+mF
+mF
+"}
+(10,1,1) = {"
+rt
+eK
+Sx
+hs
+nG
+ed
+Sl
+nm
+jJ
+Sl
+CA
+SC
+EO
+Sl
+ry
+Ch
+yH
+dl
+GR
+cK
+VL
+XQ
+ji
+Ta
+Lk
+mF
+"}
+(11,1,1) = {"
+rt
+eK
+zn
+hs
+he
+kZ
+Oj
+Sl
+Sl
+Oj
+vO
+EO
+Lp
+Oj
+UR
+GR
+oO
+oO
+oO
+vk
+MU
+LN
+df
+IB
+yc
+mF
+"}
+(12,1,1) = {"
+vw
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+JB
+Kv
+Oj
+Oj
+wf
+Oj
+Sl
+GR
+po
+FZ
+zr
+MY
+CW
+Sl
+mF
+Sl
+mF
+mF
+mF
+"}
+(13,1,1) = {"
+vw
+vw
+vw
+vw
+rt
+eK
+AA
+zH
+EO
+Fw
+qP
+EO
+qP
+Ot
+oO
+Ax
+sQ
+vw
+rL
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+"}
+(14,1,1) = {"
+vw
+vw
+vw
+vw
+rt
+eK
+xy
+vR
+vR
+eU
+vR
+CH
+vR
+kB
+hA
+VH
+vw
+vw
+hp
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+"}
+(15,1,1) = {"
+vw
+vw
+vw
+vw
+vw
+Oj
+Sl
+kB
+kB
+Sl
+mF
+mF
+mF
+Sl
+Oj
+mF
+vw
+vw
+rL
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+"}
+(16,1,1) = {"
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+hp
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+"}
+(17,1,1) = {"
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+rL
+vw
+vw
+vw
+vw
+vw
+vw
+vw
+"}

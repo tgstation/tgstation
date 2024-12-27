@@ -1,0 +1,2 @@
+output_name = "porous_rock"
+template = "bitmask/diagonal_32x32.toml"

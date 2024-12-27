@@ -1,6 +1,6 @@
 /obj/effect/oneway
 	name = "one way effect"
-	desc = "Only lets things in from it's dir."
+	desc = "Only lets things in from its dir."
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = "field_dir"
 	invisibility = INVISIBILITY_MAXIMUM
@@ -13,7 +13,7 @@
 
 /obj/effect/wind
 	name = "wind effect"
-	desc = "Creates pressure effect in it's direction. Use sparingly."
+	desc = "Creates pressure effect in its direction. Use sparingly."
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = "field_dir"
 	invisibility = INVISIBILITY_MAXIMUM
@@ -56,6 +56,7 @@
 	name = "pit grate"
 	icon = 'icons/obj/smooth_structures/lattice.dmi'
 	icon_state = "lattice-255"
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
@@ -80,7 +81,10 @@
 	if(!istype(T))
 		return
 	//Simple way to keep plane conflicts away, could probably be upgraded to something less nuclear with 513
-	T.invisibility = open ? 0 : INVISIBILITY_MAXIMUM
+	if(!open)
+		T.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
+	else
+		T.RemoveInvisibility(type)
 
 /obj/structure/pitgrate/proc/toggle()
 	open = !open
@@ -92,8 +96,9 @@
 		talpha = 255
 		obj_flags |= BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	SET_PLANE_IMPLICIT(src, ABOVE_LIGHTING_PLANE) //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
+	layer = ABOVE_NORMAL_TURF_LAYER
 	animate(src,alpha = talpha,time = 10)
-	addtimer(CALLBACK(src, PROC_REF(reset_plane)),10)
+	addtimer(CALLBACK(src, PROC_REF(reset_plane)), 1 SECONDS)
 	if(hidden)
 		update_openspace()
 	var/turf/T = get_turf(src)
@@ -103,6 +108,7 @@
 
 /obj/structure/pitgrate/proc/reset_plane()
 	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
+	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/pitgrate/Destroy()
 	if(hidden)
@@ -115,3 +121,32 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	hidden = TRUE
+
+/// only player mobs (has ckey) may pass, reverse for the opposite
+/obj/effect/playeronly_barrier
+	name = "player-only barrier"
+	desc = "You shall pass."
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "blocker"
+	anchored = TRUE
+	invisibility = INVISIBILITY_MAXIMUM
+	var/reverse = FALSE //Block if has ckey
+
+/obj/effect/playeronly_barrier/CanAllowThrough(mob/living/mover, border_dir)
+	. = ..()
+	if(!istype(mover))
+		return
+	return isnull(mover.ckey) == reverse
+
+/obj/effect/invisible_wall // why didnt we have this already
+	name = "invisible wall"
+	desc = "You shall not pass"
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "blocker"
+	color = COLOR_BLUE_LIGHT
+	invisibility = INVISIBILITY_MAXIMUM
+	anchored = TRUE
+
+/obj/effect/invisible_wall/CanAllowThrough(mob/living/mover, border_dir)
+	..()
+	return FALSE // NO

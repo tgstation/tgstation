@@ -35,7 +35,7 @@
 		demanders += P
 	return TRUE
 
-///remove a plumber. we dont delete ourselves because ductnets dont persist through plumbing objects
+///remove a plumber. we don't delete ourselves because ductnets don't persist through plumbing objects
 /datum/ductnet/proc/remove_plumber(datum/component/plumbing/P)
 	suppliers.Remove(P) //we're probably only in one of these, but Remove() is inherently sane so this is fine
 	demanders.Remove(P)
@@ -43,6 +43,7 @@
 	for(var/dir in P.ducts)
 		if(P.ducts[dir] == src)
 			P.ducts -= dir
+
 	if(!ducts.len) //there were no ducts, so it was a direct connection. we destroy ourselves since a ductnet with only one plumber and no ducts is worthless
 		destroy_network()
 
@@ -61,7 +62,7 @@
 		var/obj/machinery/duct/M = A
 		M.duct = src //forget your old master
 
-	D.ducts.Cut() //clear this so the other network doesnt clear the ducts along with themselves (this took the life out of me)
+	D.ducts.Cut() //clear this so the other network doesn't clear the ducts along with themselves (this took the life out of me)
 	D.destroy_network()
 
 ///destroy the network and tell all our ducts and plumbers we are gone
@@ -71,5 +72,5 @@
 	for(var/A in ducts)
 		var/obj/machinery/duct/D = A
 		D.duct = null
-	if(delete) //I don't want code to run with qdeleted objects because that can never be good, so keep this in-case the ductnet has some business left to attend to before commiting suicide
+	if(delete) //I don't want code to run with qdeleted objects because that can never be good, so keep this in-case the ductnet has some business left to attend to before committing suicide
 		qdel(src)

@@ -34,7 +34,7 @@ Difficulty: Hard
 	maxHealth = 2500
 	attack_verb_continuous = "rends"
 	attack_verb_simple = "rend"
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	icon_state = "bubblegum"
 	icon_living = "bubblegum"
 	icon_dead = ""
@@ -66,8 +66,9 @@ Difficulty: Hard
 	crusher_achievement_type = /datum/award/achievement/boss/bubblegum_crusher
 	score_achievement_type = /datum/award/score/bubblegum_score
 	death_message = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
-	death_sound = 'sound/magic/enter_blood.ogg'
+	death_sound = 'sound/effects/magic/enter_blood.ogg'
 	faction = list(FACTION_MINING, FACTION_BOSS, FACTION_HELL)
+	summon_line = "GRAAAAAAAHHHHHHHHH!"
 	/// Check to see if we should spawn blood
 	var/spawn_blood = TRUE
 	/// Actual time where enrage ends
@@ -86,10 +87,10 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	triple_charge = new /datum/action/cooldown/mob_cooldown/charge/triple_charge()
-	hallucination_charge = new /datum/action/cooldown/mob_cooldown/charge/hallucination_charge()
-	hallucination_charge_surround = new /datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hallucination_surround()
-	blood_warp = new /datum/action/cooldown/mob_cooldown/blood_warp()
+	triple_charge = new(src)
+	hallucination_charge = new(src)
+	hallucination_charge_surround = new(src)
+	blood_warp = new(src)
 	triple_charge.Grant(src)
 	hallucination_charge.Grant(src)
 	hallucination_charge_surround.Grant(src)
@@ -105,10 +106,10 @@ Difficulty: Hard
 			sound_volume = 200)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Destroy()
-	QDEL_NULL(triple_charge)
-	QDEL_NULL(hallucination_charge)
-	QDEL_NULL(hallucination_charge_surround)
-	QDEL_NULL(blood_warp)
+	triple_charge = null
+	hallucination_charge = null
+	hallucination_charge_surround = null
+	blood_warp = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
@@ -137,7 +138,7 @@ Difficulty: Hard
 	. = list()
 	for(var/mob/living/L in targets)
 		var/list/bloodpool = get_bloodcrawlable_pools(get_turf(L), 0)
-		if(bloodpool.len && (!faction_check_mob(L) || L.stat == DEAD))
+		if(bloodpool.len && (!faction_check_atom(L) || L.stat == DEAD))
 			. += L
 
 /**
@@ -152,8 +153,8 @@ Difficulty: Hard
  */
 /mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, params)
 	. = ..()
-	if(istype(W, /obj/item/organ/internal/tongue))
-		user.client?.give_award(/datum/award/achievement/misc/frenching, user)
+	if(istype(W, /obj/item/organ/tongue))
+		user.client?.give_award(/datum/award/achievement/jobs/frenching, user)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
 	var/list/targets = get_mobs_on_blood()
@@ -201,7 +202,7 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/bubblegum_hands/leftsmack(T)
 	SLEEP_CHECK_DEATH(4, src)
 	for(var/mob/living/L in T)
-		if(!faction_check_mob(L))
+		if(!faction_check_atom(L))
 			to_chat(L, span_userdanger("[src] rends you!"))
 			playsound(T, attack_sound, 100, TRUE, -1)
 			var/limb_to_hit = L.get_bodypart(L.get_random_valid_zone(even_weights = TRUE))
@@ -217,14 +218,14 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/bubblegum_hands/leftthumb(T)
 	SLEEP_CHECK_DEATH(6, src)
 	for(var/mob/living/L in T)
-		if(!faction_check_mob(L))
+		if(!faction_check_atom(L))
 			if(L.stat != CONSCIOUS)
 				to_chat(L, span_userdanger("[src] drags you through the blood!"))
-				playsound(T, 'sound/magic/enter_blood.ogg', 100, TRUE, -1)
+				playsound(T, 'sound/effects/magic/enter_blood.ogg', 100, TRUE, -1)
 				var/turf/targetturf = get_step(src, dir)
 				L.forceMove(targetturf)
-				playsound(targetturf, 'sound/magic/exit_blood.ogg', 100, TRUE, -1)
-				addtimer(CALLBACK(src, PROC_REF(devour), L), 2)
+				playsound(targetturf, 'sound/effects/magic/exit_blood.ogg', 100, TRUE, -1)
+				addtimer(CALLBACK(src, PROC_REF(devour), L), 0.2 SECONDS)
 	SLEEP_CHECK_DEATH(1, src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/devour(mob/living/yummy_food)
@@ -291,15 +292,15 @@ Difficulty: Hard
 	if(!(flags_1 & ADMIN_SPAWNED_1))
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_BUBBLEGUM] = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(.)
 		recovery_time = world.time + 20 // can only attack melee once every 2 seconds but rapid_melee gives higher priority
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/projectile/P)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/projectile/proj)
 	if(BUBBLEGUM_IS_ENRAGED)
-		visible_message(span_danger("[src] deflects the projectile; [p_they()] can't be hit with ranged weapons while enraged!"), span_userdanger("You deflect the projectile!"))
-		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 300, TRUE)
+		visible_message(span_danger("[src] deflects the [proj]! [p_They()] can't be hit with ranged weapons while enraged!"), span_userdanger("You deflect the projectile!"))
+		playsound(src, SFX_BULLET_MISS, 300, TRUE)
 		return BULLET_ACT_BLOCK
 	return ..()
 
@@ -348,7 +349,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/OpenFire()
 	return
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/AttackingTarget(atom/attacked_target)
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/try_bloodattack()

@@ -1,15 +1,15 @@
 /** This structure acts as a source of moisture loving cell lines,
-as well as a location where a hidden item can somtimes be retrieved
+as well as a location where a hidden item can sometimes be retrieved
 at the cost of risking a vicious bite.**/
 /obj/structure/moisture_trap
 	name = "moisture trap"
-	desc = "A device installed in order to control moisture in poorly ventilated areas.\nThe stagnant water inside basin seems to produce serious biofouling issues when improperly maintained.\nThis unit in particular seems to be teeming with life!\nWho thought mother Gaia could assert herself so vigoriously in this sterile and desolate place?"
+	desc = "A device installed in order to control moisture in poorly ventilated areas.\nThe stagnant water inside basin seems to produce serious biofouling issues when improperly maintained.\nThis unit in particular seems to be teeming with life!\nWho thought mother Gaia could assert herself so vigorously in this sterile and desolate place?"
 	icon_state = "moisture_trap"
 	anchored = TRUE
 	density = FALSE
 	///This var stores the hidden item that might be able to be retrieved from the trap
 	var/obj/item/hidden_item
-	///This var determines if there is a chance to recieve a bite when sticking your hand into the water.
+	///This var determines if there is a chance to receive a bite when sticking your hand into the water.
 	var/critter_infested = TRUE
 	///weighted loot table for what loot you can find inside the moisture trap.
 	///the actual loot isn't that great and should probably be improved and expanded later.
@@ -24,15 +24,14 @@ at the cost of risking a vicious bite.**/
 		/obj/item/restraints/handcuffs/cable/green = 1,
 		/obj/item/restraints/handcuffs/cable/pink = 1,
 		/obj/item/restraints/handcuffs/alien = 2,
-		/obj/item/coin/bananium = 9,
+		/obj/item/coin/bananium = 10,
 		/obj/item/knife/butcher = 5,
-		/obj/item/coin/mythril = 1,
 	)
 
 
 /obj/structure/moisture_trap/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC)
+	AddElement(/datum/element/fish_safe_storage)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOIST, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 20)
 	if(prob(40))
 		critter_infested = FALSE
@@ -59,7 +58,7 @@ at the cost of risking a vicious bite.**/
 	if(!isliving(user))
 		return FALSE
 	var/mob/living/living_user = user
-	if(living_user.body_position == STANDING_UP && ishuman(living_user)) //I dont think monkeys can crawl on command.
+	if(living_user.body_position == STANDING_UP && ishuman(living_user)) //I don't think monkeys can crawl on command.
 		return FALSE
 	return TRUE
 
@@ -81,12 +80,11 @@ at the cost of risking a vicious bite.**/
 		return
 	if(critter_infested && prob(50) && iscarbon(user))
 		var/mob/living/carbon/bite_victim = user
-		var/obj/item/bodypart/affecting = bite_victim.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-		to_chat(user, span_danger("You feel a sharp pain as an unseen creature sinks it's [pick("fangs", "beak", "proboscis")] into your arm!"))
-		if(affecting?.receive_damage(30))
-			bite_victim.update_damage_overlays()
-			playsound(src,'sound/weapons/bite.ogg', 70, TRUE)
-			return
+		var/obj/item/bodypart/affecting = bite_victim.get_active_hand()
+		to_chat(user, span_danger("You feel a sharp pain as an unseen creature sinks its [pick("fangs", "beak", "proboscis")] into your [affecting.plaintext_zone]!"))
+		bite_victim.apply_damage(30, BRUTE, affecting)
+		playsound(src,'sound/items/weapons/bite.ogg', 70, TRUE)
+		return
 	to_chat(user, span_warning("You find nothing of value..."))
 
 /obj/structure/moisture_trap/attackby(obj/item/I, mob/user, params)
@@ -123,8 +121,8 @@ at the cost of risking a vicious bite.**/
 	desc = "What is this? Who put it on this station? And why does it emanate <span class='hypnophrase'>strange energy?</span>"
 	icon_state = "altar"
 	cult_examine_tip = "Even you don't understand the eldritch magic behind this."
-	break_message = "<span class='warning'>The structure shatters, leaving only a demonic screech!</span>"
-	break_sound = 'sound/magic/demon_dies.ogg'
+	break_message = span_warning("The structure shatters, leaving only a demonic screech!")
+	break_sound = 'sound/effects/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_range = 2
 	use_cooldown_duration = 1 MINUTES
@@ -189,7 +187,7 @@ at the cost of risking a vicious bite.**/
 	status = ALTAR_STAGEONE
 	update_icon()
 	visible_message(span_warning("[src] starts creating something..."))
-	playsound(src, 'sound/magic/pantsaltar.ogg', 60)
+	playsound(src, 'sound/effects/magic/pantsaltar.ogg', 60)
 	addtimer(CALLBACK(src, PROC_REF(pants_stagetwo)), ALTAR_TIME)
 
 /// Continues the creation, making every mob nearby nauseous.
@@ -227,7 +225,7 @@ at the cost of risking a vicious bite.**/
 /obj/structure/destructible/cult/pants_altar/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -267,6 +265,7 @@ at the cost of risking a vicious bite.**/
 		COMSIG_ATOM_EXIT = PROC_REF(blow_steam),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
 	update_icon_state()
 
 /obj/structure/steam_vent/attack_hand(mob/living/user, list/modifiers)
@@ -283,6 +282,16 @@ at the cost of risking a vicious bite.**/
 		return
 	blow_steam()
 
+/obj/structure/steam_vent/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = vent_active ? "Close valve" : "Open valve"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
+
 /obj/structure/steam_vent/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	if(vent_active)
@@ -293,11 +302,9 @@ at the cost of risking a vicious bite.**/
 		deconstruct()
 		return TRUE
 
-/obj/structure/steam_vent/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 1)
-		new /obj/item/stock_parts/water_recycler(loc, 1)
-	qdel(src)
+/obj/structure/steam_vent/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(loc, 1)
+	new /obj/item/stock_parts/water_recycler(loc, 1)
 
 /**
  * Creates "steam" smoke, and determines when the vent needs to block line of sight via reset_opacity.

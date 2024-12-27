@@ -1,5 +1,6 @@
 /**
  * Automatically shoot at a target if they do anything while this is active on them.
+ * Currently not given to any mob, but retained so admins can use it.
  */
 /datum/action/cooldown/mob_cooldown/watcher_overwatch
 	name = "Overwatch"
@@ -9,7 +10,6 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	cooldown_time = 20 SECONDS
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = TRUE
 	shared_cooldown = NONE
 	/// Furthest range we can activate ability at
@@ -17,7 +17,7 @@
 	/// Type of projectile to fire
 	var/projectile_type = /obj/projectile/temp/watcher
 	/// Sound the projectile we fire makes
-	var/projectile_sound = 'sound/weapons/pierce.ogg'
+	var/projectile_sound = 'sound/items/weapons/pierce.ogg'
 	/// Time to watch for
 	var/overwatch_duration = 3 SECONDS
 
@@ -76,7 +76,7 @@
 		COMSIG_MOB_ITEM_ATTACK,
 		COMSIG_MOB_THROW,
 		COMSIG_MOB_USED_MECH_EQUIPMENT,
-		COMSIG_MOB_USED_MECH_MELEE,
+		COMSIG_MOB_USED_CLICK_MECH_MELEE,
 		COMSIG_MOVABLE_MOVED,
 	)
 
@@ -96,7 +96,7 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	ADD_TRAIT(owner, TRAIT_OVERWATCHED, TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_OVERWATCHED, TRAIT_OVERWATCH_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	owner.do_alert_animation()
 	owner.Immobilize(0.25 SECONDS) // Just long enough that they don't trigger it by mistake
 	owner.playsound_local(owner, 'sound/machines/chime.ogg', 50, TRUE)
@@ -109,7 +109,7 @@
 /datum/status_effect/overwatch/on_remove()
 	UnregisterSignal(owner, forbidden_actions + list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	QDEL_NULL(link)
-	REMOVE_TRAIT(owner, TRAIT_OVERWATCHED, TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_OVERWATCHED, TRAIT_OVERWATCH_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	if (!QDELETED(owner))
 		owner.apply_status_effect(/datum/status_effect/overwatch_immune)
 	return ..()
@@ -135,6 +135,7 @@
 		qdel(src)
 		return
 	overwatch_triggered = TRUE
+	watcher.do_alert_animation()
 	INVOKE_ASYNC(watcher, TYPE_PROC_REF(/atom/, fire_projectile), projectile_type, owner, projectile_sound)
 
 /// Can't overwatch you if I don't exist

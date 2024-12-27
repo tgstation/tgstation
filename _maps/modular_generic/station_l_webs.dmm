@@ -1,0 +1,583 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bq" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/bureaucracy,
+/obj/effect/spawner/random/medical/supplies,
+/obj/structure/spider/stickyweb{
+	plane = -7
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"cP" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/machinery/disposal/bin,
+/turf/open/floor/iron/dark/side,
+/area/template_noop)
+"dy" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 10
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/bureaucracy,
+/obj/structure/spider/stickyweb{
+	plane = -7
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"es" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/chair/sofa/bench{
+	dir = 1;
+	pixel_y = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"fN" = (
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"fS" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"gu" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"gW" = (
+/turf/closed/wall,
+/area/template_noop)
+"hL" = (
+/obj/structure/broken_flooring/singular/directional/north,
+/obj/structure/sign/poster/contraband/random/directional/north,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = -6;
+	pixel_y = 13
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/template_noop)
+"ik" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/obj/structure/flora/bush/jungle/b/style_random,
+/obj/effect/spawner/random/trash/bin,
+/obj/item/fireaxe,
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/template_noop)
+"iB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/tile/iron/dark,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"jd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/poster/contraband/random/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"kF" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"mK" = (
+/turf/template_noop,
+/area/template_noop)
+"qH" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"qU" = (
+/obj/structure/barricade/wooden/crude,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/template_noop)
+"rS" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/broken_flooring/side/directional/west,
+/obj/structure/barricade/sandbags{
+	color = "#737373"
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"sc" = (
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/structure/flora/bush/jungle/c/style_random,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"uC" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/filingcabinet,
+/turf/open/floor/iron/dark/side,
+/area/template_noop)
+"vI" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner/end{
+	dir = 8
+	},
+/obj/structure/barricade/sandbags{
+	color = "#737373"
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 6
+	},
+/area/template_noop)
+"vX" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/broken_flooring/side/directional/north,
+/obj/structure/sign/poster/contraband/random/directional/south,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 9;
+	pixel_y = 13
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"wA" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 8
+	},
+/area/template_noop)
+"xD" = (
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"xF" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/structure/sign/poster/contraband/random/directional/west,
+/obj/machinery/light/warm/dim/directional/west,
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/template_noop)
+"xW" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/light/warm/dim/directional/north,
+/obj/machinery/light_switch/directional/north,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"yf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate,
+/obj/structure/spider/stickyweb{
+	plane = -7
+	},
+/obj/item/multitool,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"zM" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/item/stack/tile/iron/dark,
+/turf/open/floor/plating,
+/area/template_noop)
+"Bi" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/obj/machinery/light/warm/dim/directional/east,
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/template_noop)
+"BB" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/toolbox,
+/turf/open/floor/iron/dark/corner,
+/area/template_noop)
+"Cd" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/structure/barricade/sandbags{
+	color = "#737373"
+	},
+/turf/open/floor/iron/dark/corner,
+/area/template_noop)
+"Dp" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/obj/structure/barricade/sandbags{
+	color = "#737373"
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
+/area/template_noop)
+"Ec" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/effect/spawner/random/contraband/armory,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/template_noop)
+"Gf" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/broken_flooring/side/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/bush/jungle/b/style_2,
+/turf/open/floor/plating,
+/area/template_noop)
+"Gy" = (
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"GW" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/obj/structure/broken_flooring/singular,
+/turf/open/floor/plating,
+/area/template_noop)
+"If" = (
+/obj/structure/flora/bush/jungle/b/style_2,
+/obj/structure/barricade/sandbags{
+	color = "#737373"
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"KL" = (
+/obj/structure/barricade/wooden/crude,
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plating,
+/area/template_noop)
+"Lp" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/template_noop)
+"Mi" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"Nr" = (
+/obj/effect/decal/cleanable/glass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/template_noop)
+"NW" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/bush/jungle/c/style_2,
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/iron/dark/corner{
+	dir = 4
+	},
+/area/template_noop)
+"PB" = (
+/obj/structure/flora/bush/jungle/b/style_2,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"Ql" = (
+/obj/structure/broken_flooring/pile/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/template_noop)
+"RW" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 1
+	},
+/area/template_noop)
+"RY" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/chair/sofa/bench/left{
+	dir = 1;
+	pixel_y = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"Te" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 6
+	},
+/obj/structure/chair/sofa/bench/right{
+	dir = 1;
+	pixel_y = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"Tf" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/structure/guncase/wt550,
+/obj/structure/fireaxecabinet/empty/directional/south,
+/obj/item/gun/ballistic/automatic/wt550,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/template_noop)
+"Uf" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/flora/bush/jungle/c/style_2,
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"UW" = (
+/obj/structure/table,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/obj/structure/sign/clock/directional/east,
+/obj/effect/spawner/random/bureaucracy/folder,
+/obj/effect/spawner/random/bureaucracy/pen,
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
+/area/template_noop)
+"Vf" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/item/stack/tile/iron/dark,
+/turf/open/floor/plating,
+/area/template_noop)
+"VU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"ZE" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/emptysandbag,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/template_noop)
+
+(1,1,1) = {"
+mK
+mK
+mK
+mK
+mK
+mK
+mK
+mK
+mK
+mK
+qH
+"}
+(2,1,1) = {"
+mK
+gW
+gW
+gW
+gW
+qU
+gW
+gW
+gW
+gW
+mK
+"}
+(3,1,1) = {"
+mK
+gW
+gu
+jd
+Ql
+Vf
+BB
+xF
+NW
+gW
+mK
+"}
+(4,1,1) = {"
+mK
+gW
+PB
+Vf
+RY
+wA
+cP
+xD
+Gf
+gW
+mK
+"}
+(5,1,1) = {"
+mK
+gW
+hL
+Nr
+es
+Cd
+vI
+fN
+Ec
+gW
+mK
+"}
+(6,1,1) = {"
+mK
+gW
+xW
+zM
+Te
+rS
+xD
+sc
+Tf
+gW
+mK
+"}
+(7,1,1) = {"
+mK
+KL
+VU
+RW
+If
+Dp
+GW
+Gy
+ZE
+gW
+mK
+"}
+(8,1,1) = {"
+mK
+gW
+iB
+bq
+Mi
+dy
+uC
+fN
+vX
+gW
+mK
+"}
+(9,1,1) = {"
+mK
+gW
+kF
+fS
+yf
+Uf
+UW
+Bi
+ik
+gW
+mK
+"}
+(10,1,1) = {"
+mK
+gW
+gW
+Lp
+Lp
+Lp
+gW
+gW
+gW
+gW
+mK
+"}
+(11,1,1) = {"
+mK
+mK
+mK
+mK
+mK
+mK
+mK
+mK
+mK
+mK
+mK
+"}

@@ -54,7 +54,7 @@
 /obj/item/clothing/head/utility/chefhat/proc/on_mouse_emote(mob/living/source, key, emote_message, type_override)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/wearer = loc
-	if(!wearer || wearer.incapacitated(IGNORE_RESTRAINTS))
+	if(!wearer || INCAPACITATED_IGNORING(wearer, INCAPABLE_RESTRAINTS))
 		return
 	if (!prob(mouse_control_probability))
 		return COMPONENT_CANT_EMOTE
@@ -68,7 +68,7 @@
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Didn't roll well enough or on cooldown
 
 	var/mob/living/carbon/wearer = loc
-	if(!wearer || wearer.incapacitated(IGNORE_RESTRAINTS))
+	if(!wearer || INCAPACITATED_IGNORING(wearer, INCAPABLE_RESTRAINTS))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Not worn or can't move
 
 	var/move_direction = get_dir(wearer, moved_to)
@@ -128,6 +128,7 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#0070B7#FFCE5B"
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM
 
 //Head of Personnel
 /obj/item/clothing/head/hats/hopcap
@@ -154,10 +155,19 @@
 	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
+/obj/item/clothing/head/chaplain/habit_veil
+	name = "nun veil"
+	desc = "No nunsene clothing."
+	icon_state = "nun_hood_alt"
+	flags_inv = HIDEHAIR | HIDEEARS
+	clothing_flags = SNUG_FIT // can't be knocked off by throwing a paper hat.
+
 /obj/item/clothing/head/chaplain/bishopmitre
 	name = "bishop mitre"
 	desc = "An opulent hat that functions as a radio to God. Or as a lightning rod, depending on who you ask."
 	icon_state = "bishopmitre"
+
+#define CANDY_CD_TIME 2 MINUTES
 
 //Detective
 /obj/item/clothing/head/fedora/det_hat
@@ -166,10 +176,13 @@
 	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
-	var/candy_cooldown = 0
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	dog_fashion = /datum/dog_fashion/head/detective
-	///Path for the flask that spawns inside their hat roundstart
+	/// Path for the flask that spawns inside their hat roundstart
 	var/flask_path = /obj/item/reagent_containers/cup/glass/flask/det
+	/// Cooldown for retrieving precious candy corn with rmb
+	COOLDOWN_DECLARE(candy_cooldown)
+
 
 /datum/armor/fedora_det_hat
 	melee = 25
@@ -180,42 +193,207 @@
 	acid = 50
 	wound = 5
 
+
 /obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
 	. = ..()
 
 	create_storage(storage_type = /datum/storage/pockets/small/fedora/detective)
 
+	register_context()
+
 	new flask_path(src)
+
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to take a candy corn.")
 
-/obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
+
+/obj/item/clothing/head/fedora/det_hat/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(loc != user || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
-	if(candy_cooldown < world.time)
-		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
-		user.put_in_hands(CC)
-		to_chat(user, span_notice("You slip a candy corn from your hat."))
-		candy_cooldown = world.time+1200
-	else
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Candy Time"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+
+/// Now to solve where all these keep coming from
+/obj/item/clothing/head/fedora/det_hat/click_alt(mob/user)
+	if(!COOLDOWN_FINISHED(src, candy_cooldown))
 		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
+		return CLICK_ACTION_BLOCKING
+
+	var/obj/item/food/candy_corn/sweets = new /obj/item/food/candy_corn(src)
+	user.put_in_hands(sweets)
+	to_chat(user, span_notice("You slip a candy corn from your hat."))
+	COOLDOWN_START(src, candy_cooldown, CANDY_CD_TIME)
+
+	return CLICK_ACTION_SUCCESS
+
+
+#undef CANDY_CD_TIME
 
 /obj/item/clothing/head/fedora/det_hat/minor
 	flask_path = /obj/item/reagent_containers/cup/glass/flask/det/minor
+
+///Detectives Fedora, but like Inspector Gadget. Not a subtype to not inherit candy corn stuff
+/obj/item/clothing/head/fedora/inspector_hat
+	name = "inspector's fedora"
+	desc = "There's only one man can try to stop an evil villian."
+	armor_type = /datum/armor/fedora_det_hat
+	icon_state = "detective"
+	inhand_icon_state = "det_hat"
+	dog_fashion = /datum/dog_fashion/head/detective
+	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
+	///prefix our phrases must begin with
+	var/prefix = "go go gadget"
+	///an assoc list of regex = item (like regex datum = revolver item)
+	var/list/items_by_regex = list()
+	///A an assoc list of regex = phrase (like regex datum = gun text)
+	var/list/phrases_by_regex = list()
+	///how many gadgets can we hold
+	var/max_items = 4
+	///items above this weight cannot be put in the hat
+	var/max_weight = WEIGHT_CLASS_NORMAL
+
+/obj/item/clothing/head/fedora/inspector_hat/Initialize(mapload)
+	. = ..()
+	become_hearing_sensitive(ROUNDSTART_TRAIT)
+	QDEL_NULL(atom_storage)
+
+/obj/item/clothing/head/fedora/inspector_hat/proc/set_prefix(desired_prefix)
+
+	prefix = desired_prefix
+
+	// Regenerated the phrases here.
+	for(var/old_regex in phrases_by_regex)
+		var/old_phrase = phrases_by_regex[old_regex]
+		var/obj/item/old_item = items_by_regex[old_regex]
+		items_by_regex -= old_regex
+		phrases_by_regex -= old_regex
+		set_phrase(old_phrase,old_item)
+
+	return TRUE
+
+/obj/item/clothing/head/fedora/inspector_hat/proc/set_phrase(desired_phrase,obj/item/associated_item)
+
+	var/regex/phrase_regex = regex("[prefix]\[\\s\\W\]+[desired_phrase]","i")
+
+	phrases_by_regex[phrase_regex] = desired_phrase
+	items_by_regex[phrase_regex] = associated_item
+
+	return TRUE
+
+/obj/item/clothing/head/fedora/inspector_hat/examine(mob/user)
+	. = ..()
+	. += span_notice("You can put items inside, and get them out by saying a phrase, or using it in-hand!")
+	. += span_notice("The prefix is <b>[prefix]</b>, and you can change it with alt-click!\n")
+	for(var/found_regex in phrases_by_regex)
+		var/found_phrase = phrases_by_regex[found_regex]
+		var/obj/item/found_item = items_by_regex[found_regex]
+		. += span_notice("[icon2html(found_item, user)] You can remove [found_item] by saying <b>\"[prefix] [found_phrase]\"</b>!")
+
+/obj/item/clothing/head/fedora/inspector_hat/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+	. = ..()
+	var/mob/living/carbon/wearer = loc
+	if(!istype(wearer) || speaker != wearer) //if we are worn
+		return
+
+	raw_message = htmlrendertext(raw_message)
+
+	for(var/regex/found_regex as anything in phrases_by_regex)
+		if(!found_regex.Find(raw_message))
+			continue
+		var/obj/item/found_item = items_by_regex[found_regex]
+		if(wearer.put_in_hands(found_item))
+			wearer.visible_message(span_warning("[src] drops [found_item] into the hands of [wearer]!"))
+			. = TRUE
+		else
+			balloon_alert(wearer, "can't put in hands!")
+			break
+
+	return .
+
+/obj/item/clothing/head/fedora/inspector_hat/attackby(obj/item/item, mob/user, params)
+	. = ..()
+
+	if(LAZYLEN(contents) >= max_items)
+		balloon_alert(user, "full!")
+		return
+	if(item.w_class > max_weight)
+		balloon_alert(user, "too big!")
+		return
+
+	var/desired_phrase = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
+	if(!desired_phrase || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+
+	if(item.loc != user || !user.transferItemToLoc(item, src))
+		return
+
+	to_chat(user, span_notice("You install [item] into the [thtotext(contents.len)] slot of [src]."))
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	set_phrase(desired_phrase,item)
+
+	return TRUE
+
+/obj/item/clothing/head/fedora/inspector_hat/attack_self(mob/user)
+	. = ..()
+	if(!length(items_by_regex))
+		return CLICK_ACTION_BLOCKING
+	var/list/found_items = list()
+	for(var/found_regex in items_by_regex)
+		found_items += items_by_regex[found_regex]
+	var/obj/found_item = tgui_input_list(user, "What item do you want to remove?", "Item Removal", found_items)
+	if(!found_item || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return CLICK_ACTION_BLOCKING
+	user.put_in_inactive_hand(found_item)
+
+/obj/item/clothing/head/fedora/inspector_hat/click_alt(mob/user)
+	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
+	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return CLICK_ACTION_BLOCKING
+	set_prefix(new_prefix)
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/clothing/head/fedora/inspector_hat/Exited(atom/movable/gone, direction)
+	. = ..()
+	for(var/found_regex in items_by_regex)
+		var/obj/item/found_item = items_by_regex[found_regex]
+		if(gone != found_item)
+			continue
+		items_by_regex -= found_regex
+		phrases_by_regex -= found_regex
+		break
+
+/obj/item/clothing/head/fedora/inspector_hat/atom_destruction(damage_flag)
+
+	var/atom/atom_location = drop_location()
+	for(var/found_regex in items_by_regex)
+		var/obj/item/result = items_by_regex[found_regex]
+		result.forceMove(atom_location)
+		items_by_regex -= found_regex
+		phrases_by_regex -= found_regex
+
+	return ..()
+
+/obj/item/clothing/head/fedora/inspector_hat/Destroy()
+	QDEL_LIST_ASSOC(items_by_regex) //Anything that failed to drop gets deleted.
+	return ..()
 
 //Mime
 /obj/item/clothing/head/beret
 	name = "beret"
 	desc = "A beret, a mime's favorite headwear."
 	icon_state = "beret"
+	icon_preview = 'icons/obj/clothing/head/beret.dmi'
+	icon_state_preview = "beret"
 	dog_fashion = /datum/dog_fashion/head/beret
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM
 
 //Security
 /obj/item/clothing/head/hats/hos
@@ -226,8 +404,20 @@
 
 /obj/item/clothing/head/hats/hos/cap
 	name = "head of security cap"
-	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
+	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge. Looks a bit stout."
 	icon_state = "hoscap"
+
+/obj/item/clothing/head/hats/hos/cap/Initialize(mapload)
+	. = ..()
+	// Give it a little publicity
+	var/static/list/slapcraft_recipe_list = list(\
+		/datum/crafting_recipe/sturdy_shako,\
+		)
+
+	AddElement(
+		/datum/element/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /datum/armor/hats_hos
 	melee = 40
@@ -259,6 +449,7 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#39393f#f0cc8f"
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM
 
 /obj/item/clothing/head/hats/hos/beret/navyhos
 	name = "head of security's formal beret"
@@ -295,19 +486,7 @@
 	name = "warden's hat"
 	desc = "A warden's red hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
 	icon_state = "wardenhat"
-	armor_type = /datum/armor/warden_red
-	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden_red
-
-/datum/armor/warden_red
-	melee = 40
-	bullet = 30
-	laser = 30
-	energy = 40
-	bomb = 25
-	fire = 30
-	acid = 60
-	wound = 6
 
 /obj/item/clothing/head/hats/warden/drill
 	name = "warden's campaign hat"
@@ -428,7 +607,7 @@
 /obj/item/clothing/head/beret/medical
 	name = "medical beret"
 	desc = "A medical-flavored beret for the doctor in you!"
-	greyscale_colors = "#FFFFFF"
+	greyscale_colors = COLOR_WHITE
 	flags_1 = NONE
 
 /obj/item/clothing/head/beret/medical/paramedic
@@ -446,6 +625,11 @@
 	icon_state = "surgicalcap"
 	desc = "A blue medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
 	flags_inv = HIDEHAIR //Cover your head doctor!
+	w_class = WEIGHT_CLASS_SMALL //surgery cap can be easily crumpled
+
+/obj/item/clothing/head/utility/surgerycap/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/head/utility/surgerycap/attack_self(mob/user)
 	. = ..()
@@ -482,6 +666,87 @@
 	icon_state = "surgicalcapblack"
 	desc = "A black medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
 
+/obj/item/clothing/head/utility/head_mirror
+	name = "head mirror"
+	desc = "Used by doctors to look into a patient's eyes, ears, and mouth. \
+		A little useless now, given the technology available, but it certainly completes the look."
+	icon_state = "headmirror"
+	body_parts_covered = NONE
+
+/obj/item/clothing/head/utility/head_mirror/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
+
+/obj/item/clothing/head/utility/head_mirror/examine(mob/user)
+	. = ..()
+	. += span_notice("In a properly lit room, you can use this to examine people's eyes, ears, and mouth <i>closer</i>.")
+
+/obj/item/clothing/head/utility/head_mirror/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & slot_flags)
+		RegisterSignal(user, COMSIG_MOB_EXAMINING_MORE, PROC_REF(examining))
+	else
+		UnregisterSignal(user, COMSIG_MOB_EXAMINING_MORE)
+
+/obj/item/clothing/head/utility/head_mirror/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_EXAMINING_MORE)
+
+/obj/item/clothing/head/utility/head_mirror/proc/examining(mob/living/examiner, atom/examining, list/examine_list)
+	SIGNAL_HANDLER
+	if(!ishuman(examining) || examining == examiner || examiner.is_blind() || !examiner.Adjacent(examining))
+		return
+	var/mob/living/carbon/human/human_examined = examining
+	if(!human_examined.get_bodypart(BODY_ZONE_HEAD))
+		return
+	if(!examiner.has_light_nearby())
+		examine_list += span_warning("You attempt to use your [name] to examine [examining]'s head better... but it's too dark. Should've invested in a head lamp.")
+		return
+	if(examiner.dir == examining.dir) // disallow examine from behind - every other dir is OK
+		examine_list += span_warning("You attempt to use your [name] to examine [examining]'s head better... but [examining.p_theyre()] facing the wrong way.")
+		return
+
+	var/list/final_message = list("You examine [examining]'s head closer with your [name], you notice [examining.p_they()] [examining.p_have()]...")
+	if(human_examined.is_mouth_covered())
+		final_message += "\tYou can't see [examining.p_their()] mouth."
+	else
+		var/obj/item/organ/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
+		var/pill_count = 0
+		for(var/datum/action/item_action/activate_pill/pill in human_examined.actions)
+			pill_count++
+
+		if(pill_count >= 1 && has_tongue)
+			final_message += "\t[pill_count] pill\s in [examining.p_their()] mouth, and \a [has_tongue]."
+		else if(pill_count >= 1)
+			final_message += "\t[pill_count] pill\s in [examining.p_their()] mouth, but oddly no tongue."
+		else if(has_tongue)
+			final_message += "\t\A [has_tongue] in [examining.p_their()] mouth - go figure."
+		else
+			final_message += "\tNo tongue in [examining.p_their()] mouth, oddly enough."
+
+	if(human_examined.is_ears_covered())
+		final_message += "\tYou can't see [examining.p_their()] ears."
+	else
+		var/obj/item/organ/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
+		if(has_ears)
+			if(has_ears.deaf)
+				final_message += "\tDamaged eardrums in [examining.p_their()] ear canals."
+			else
+				final_message += "\tA set of [has_ears.damage ? "" : "healthy "][has_ears.name]."
+		else
+			final_message += "\tNo eardrums and empty ear canals... how peculiar."
+
+	if(human_examined.is_eyes_covered())
+		final_message += "\tYou can't see [examining.p_their()] eyes."
+	else
+		var/obj/item/organ/eyes/has_eyes = human_examined.get_organ_slot(ORGAN_SLOT_EYES)
+		if(has_eyes)
+			final_message += "\tA pair of [has_eyes.damage ? "" : "healthy "][has_eyes.name]."
+		else
+			final_message += "\tEmpty eye sockets."
+
+	examine_list += span_notice("<i>[jointext(final_message, "\n")]</i>")
+
 //Engineering
 /obj/item/clothing/head/beret/engi
 	name = "engineering beret"
@@ -493,7 +758,7 @@
 /obj/item/clothing/head/beret/cargo
 	name = "cargo beret"
 	desc = "No need to compensate when you can wear this beret!"
-	greyscale_colors = "#c99840"
+	greyscale_colors = "#b7723d"
 	flags_1 = NONE
 
 //Curator

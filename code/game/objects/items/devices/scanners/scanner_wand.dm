@@ -1,8 +1,9 @@
 /obj/item/scanner_wand
 	name = "kiosk scanner wand"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "scanner_wand"
 	inhand_icon_state = "healthanalyzer"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A wand that medically scans people. Inserting it into a medical kiosk makes it able to perform a health scan on the patient."

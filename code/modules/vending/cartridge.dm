@@ -13,13 +13,13 @@
 		/obj/item/computer_disk/ordnance = 10,
 		/obj/item/computer_disk/quartermaster = 10,
 		/obj/item/computer_disk/command/captain = 3,
-		/obj/item/modular_computer/pda/heads = 10,
+		/obj/item/modular_computer/pda = 10,
 	)
 	refill_canister = /obj/item/vending_refill/cart
 	default_price = PAYCHECK_COMMAND
 	extra_price = PAYCHECK_COMMAND * 2.5
 	payment_department = ACCOUNT_SRV
-	light_mask="cart-light-mask"
+	light_mask = "cart-light-mask"
 
 /obj/item/vending_refill/cart
 	machine_name = "PTech"

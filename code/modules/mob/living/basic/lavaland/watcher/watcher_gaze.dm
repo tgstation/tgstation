@@ -8,8 +8,7 @@
 	button_icon_state = "gaze"
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
-	cooldown_time = 30 SECONDS
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
+	cooldown_time = 20 SECONDS
 	click_to_activate = FALSE
 	shared_cooldown = NONE
 	/// At what range do we check for vision?
@@ -84,7 +83,8 @@
 /// Display an animated overlay over our head to indicate what's going on
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/show_indicator_overlay(overlay_state)
 	clear_current_overlay()
-	current_overlay = image(icon = 'icons/effects/eldritch.dmi', loc = owner, icon_state = overlay_state, pixel_x = -owner.pixel_x, pixel_y = 28)
+	current_overlay = image(icon = 'icons/effects/eldritch.dmi', loc = owner, icon_state = overlay_state, pixel_x = -owner.pixel_x, pixel_y = 28, layer = ABOVE_ALL_MOB_LAYER)
+	SET_PLANE_EXPLICIT(current_overlay, ABOVE_LIGHTING_PLANE, owner)
 	for(var/client/add_to in GLOB.clients)
 		add_to.images += current_overlay
 
@@ -114,6 +114,8 @@
 	var/max_throw = 3
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/ice/apply_effect(mob/living/viewer)
+	if(!HAS_TRAIT(viewer, TRAIT_RESISTCOLD))
+		return
 	to_chat(viewer, span_warning("You are repulsed by the force of [owner]'s cold stare!"))
 	viewer.apply_status_effect(/datum/status_effect/freon/watcher/extended)
 	viewer.safe_throw_at(

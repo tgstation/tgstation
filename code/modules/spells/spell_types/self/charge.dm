@@ -5,7 +5,7 @@
 		to grant magical power to a fellow magic user."
 	button_icon_state = "charge"
 
-	sound = 'sound/magic/charge.ogg'
+	sound = 'sound/effects/magic/charge.ogg'
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 60 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS

@@ -21,19 +21,19 @@
 	UnregisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER)
 	UnregisterSignal(target, COMSIG_REAGENT_SOLD_TO_CUSTOMER)
 
-/datum/element/venue_price/proc/item_sold(obj/item/thing_sold, mob/living/simple_animal/robot_customer/sold_to)
+/datum/element/venue_price/proc/item_sold(obj/item/thing_sold, mob/living/basic/robot_customer/sold_to)
 	SIGNAL_HANDLER
 
 	produce_cash(sold_to, thing_sold)
 	return TRANSACTION_SUCCESS
 
-/datum/element/venue_price/proc/reagent_sold(datum/reagent/reagent_sold, mob/living/simple_animal/robot_customer/sold_to, obj/item/container)
+/datum/element/venue_price/proc/reagent_sold(datum/reagent/reagent_sold, mob/living/basic/robot_customer/sold_to, obj/item/container)
 	SIGNAL_HANDLER
 
 	produce_cash(sold_to, container)
 	return TRANSACTION_SUCCESS
 
-/datum/element/venue_price/proc/produce_cash(mob/living/simple_animal/robot_customer/sold_to, obj/item/container)
+/datum/element/venue_price/proc/produce_cash(mob/living/basic/robot_customer/sold_to, obj/item/container)
 	new /obj/item/holochip(get_turf(container), venue_price)
 	playsound(container, 'sound/effects/cashregister.ogg', 60, TRUE)
 

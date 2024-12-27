@@ -2,7 +2,7 @@
 	name = "dart"
 	icon_state = "cbbolt"
 	damage = 6
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 	var/inject_flags = null
 
@@ -10,7 +10,7 @@
 	. = ..()
 	create_reagents(50, NO_REACT)
 
-/obj/projectile/bullet/dart/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/dart/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked

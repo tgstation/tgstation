@@ -41,12 +41,27 @@
 		datum/callback/expiration,
 	)
 
-	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
-		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-	else if(ismob(parent))
-		register_antimagic_signals(parent)
-	else
+
+	var/atom/movable/movable = parent
+	if(!istype(movable))
+		return COMPONENT_INCOMPATIBLE
+
+	var/compatible = FALSE
+	if(isitem(movable))
+		RegisterSignal(movable, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+		RegisterSignal(movable, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+		RegisterSignals(movable, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_ATOM), PROC_REF(on_attack))
+		compatible = TRUE
+	else if(ismob(movable))
+		register_antimagic_signals(movable)
+		compatible = TRUE
+
+	if(movable.can_buckle)
+		RegisterSignal(movable, COMSIG_MOVABLE_BUCKLE, PROC_REF(on_buckle))
+		RegisterSignal(movable, COMSIG_MOVABLE_UNBUCKLE, PROC_REF(on_unbuckle))
+		compatible = TRUE
+
+	if(!compatible)
 		return COMPONENT_INCOMPATIBLE
 
 	src.antimagic_flags = antimagic_flags
@@ -55,9 +70,9 @@
 	src.drain_antimagic = drain_antimagic
 	src.expiration = expiration
 
-/datum/component/anti_magic/Destroy(force, silent)
-	QDEL_NULL(drain_antimagic)
-	QDEL_NULL(expiration)
+/datum/component/anti_magic/Destroy(force)
+	drain_antimagic = null
+	expiration = null
 	return ..()
 
 /datum/component/anti_magic/proc/register_antimagic_signals(datum/on_what)
@@ -66,6 +81,14 @@
 
 /datum/component/anti_magic/proc/unregister_antimagic_signals(datum/on_what)
 	UnregisterSignal(on_what, list(COMSIG_MOB_RECEIVE_MAGIC, COMSIG_MOB_RESTRICT_MAGIC))
+
+/datum/component/anti_magic/proc/on_buckle(atom/movable/source, mob/living/bucklee)
+	SIGNAL_HANDLER
+	register_antimagic_signals(bucklee)
+
+/datum/component/anti_magic/proc/on_unbuckle(atom/movable/source, mob/living/bucklee)
+	SIGNAL_HANDLER
+	unregister_antimagic_signals(bucklee)
 
 /datum/component/anti_magic/proc/on_equip(atom/movable/source, mob/equipper, slot)
 	SIGNAL_HANDLER
@@ -131,3 +154,7 @@
 		return COMPONENT_MAGIC_BLOCKED
 
 	return NONE
+
+/datum/component/anti_magic/proc/on_attack(atom/movable/source, atom/target, mob/user)
+	SIGNAL_HANDLER
+	SEND_SIGNAL(target, COMSIG_ATOM_HOLYATTACK, source, user, antimagic_flags)

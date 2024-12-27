@@ -18,7 +18,7 @@
 	var/current_directive = ""
 
 /datum/action/cooldown/mob_cooldown/set_spider_directive/Activate(atom/target)
-	var/new_directive = tgui_input_text(owner, "Enter the new directive", "Create directive", "[current_directive]")
+	var/new_directive = tgui_input_text(owner, "Enter the new directive", "Create directive", "[current_directive]", max_length = MAX_MESSAGE_LEN)
 	if(isnull(new_directive) || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE))
 		return
 
@@ -44,7 +44,7 @@
 	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/command_spiders/Activate(trigger_flags)
-	var/input = tgui_input_text(owner, "Input a command for your legions to follow.", "Command")
+	var/input = tgui_input_text(owner, "Input a command for your legions to follow.", "Command", max_length = MAX_MESSAGE_LEN)
 	if(!input || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE))
 		return
 	spider_command(owner, input)
@@ -84,3 +84,16 @@
 
 /datum/action/cooldown/mob_cooldown/command_spiders/communication_spiders/format_message(mob/living/user, message)
 	return span_spiderscout("<b>Report from [user]:</b> [message]")
+
+/**
+ * Sends a smaller message to all currently living spiders.
+ */
+/datum/action/cooldown/mob_cooldown/command_spiders/warning_spiders
+	name = "Warning"
+	desc = "Send a warning to all living spiders."
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = "warning"
+
+/datum/action/cooldown/mob_cooldown/command_spiders/warning_spiders/format_message(mob/living/user, message)
+	return span_spiderbreacher("<b>Warning from [user]:</b> [message]")
+

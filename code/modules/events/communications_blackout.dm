@@ -23,9 +23,13 @@
 		to_chat(A, "<br>[span_warning("<b>[alert]</b>")]<br>")
 
 	if(prob(30) || fake) //most of the time, we don't want an announcement, so as to allow AIs to fake blackouts.
-		priority_announce(alert)
+		priority_announce(alert, "Anomaly Alert")
 
 
 /datum/round_event/communications_blackout/start()
 	for(var/obj/machinery/telecomms/T in GLOB.telecomms_list)
 		T.emp_act(EMP_HEAVY)
+	for(var/datum/transport_controller/linear/tram/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
+		if(!isnull(transport.home_controller))
+			var/obj/machinery/transport/tram_controller/tcomms/controller = transport.home_controller
+			controller.emp_act(EMP_HEAVY)

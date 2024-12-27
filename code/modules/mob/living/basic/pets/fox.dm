@@ -25,27 +25,51 @@
 	melee_damage_upper = 5
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	ai_controller = /datum/ai_controller/basic_controller/fox
+	///list of our pet commands we follow
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/move,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/attack,
+		/datum/pet_command/perform_trick_sequence,
+	)
+
+/datum/emote/fox
+	mob_type_allowed_typecache = /mob/living/basic/pet/fox
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/fox/yap
+	key = "yap"
+	key_third_person = "yaps"
+	message = "yaps happily!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /mob/living/basic/pet/fox/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "pants and yaps happily!")
+	AddComponent(/datum/component/obeys_commands, pet_commands)
+	AddElement(/datum/element/cultist_pet)
+	AddElement(/datum/element/wears_collar)
+	AddElement(/datum/element/pet_bonus, "yap")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_SMALL)
 	AddElement(/datum/element/ai_retaliate)
 
 /datum/ai_controller/basic_controller/fox
 	blackboard = list(
-		BB_BASIC_MOB_FLEEING = TRUE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller/ignore_faction,
-		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction
+		BB_ALWAYS_IGNORE_FACTION = TRUE,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/ours_or_smaller,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/target_retaliate/to_flee,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/simple_find_target/not_while_observed,
@@ -61,12 +85,6 @@
 		/datum/ai_planning_subtree/random_speech/fox,
 	)
 
-// Foxes will attack other station pets regardless of faction.
-/datum/targetting_datum/basic/of_size/ours_or_smaller/ignore_faction
-
-/datum/targetting_datum/basic/of_size/ours_or_smaller/ignore_faction/faction_check(mob/living/living_mob, mob/living/the_target)
-	return FALSE
-
 // The captain's fox, Renault
 /mob/living/basic/pet/fox/renault
 	name = "Renault"
@@ -78,3 +96,10 @@
 // A more docile subtype that won't attack other animals.
 /mob/living/basic/pet/fox/docile
 	ai_controller = /datum/ai_controller/basic_controller/fox/docile
+
+/mob/living/basic/pet/fox/icemoon
+	name = "icemoon fox"
+	desc = "A fox, scraping by the icemoon hostile atmosphere."
+	gold_core_spawnable = NO_SPAWN
+	habitable_atmos = null
+	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE

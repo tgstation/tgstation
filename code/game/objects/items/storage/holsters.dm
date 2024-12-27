@@ -11,11 +11,11 @@
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()
 	if(slot & (ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE))
-		ADD_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
+		ADD_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
 
 /obj/item/storage/belt/holster/dropped(mob/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
+	REMOVE_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
 
 /obj/item/storage/belt/holster/Initialize(mapload)
 	. = ..()
@@ -30,7 +30,11 @@
 		/obj/item/food/grown/banana,
 		/obj/item/gun/energy/laser/thermal,
 		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
 	))
+	atom_storage.open_sound = 'sound/items/handling/holster_open.ogg'
+	atom_storage.open_sound_vary = TRUE
 
 /obj/item/storage/belt/holster/energy
 	name = "energy shoulder holsters"
@@ -47,6 +51,8 @@
 		/obj/item/food/grown/banana,
 		/obj/item/gun/energy/laser/thermal,
 		/obj/item/gun/energy/recharge/ebow,
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
 	))
 
 /obj/item/storage/belt/holster/energy/thermal
@@ -100,13 +106,15 @@
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
 		/obj/item/gun/energy/laser/thermal,
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
 		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
 	))
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/revolver/c38/detective = 1,
 		/obj/item/ammo_box/c38 = 2,
+		/obj/item/gun/ballistic/revolver/c38/detective = 1,
 	), src)
 
 /obj/item/storage/belt/holster/detective/full/ert
@@ -118,8 +126,8 @@
 
 /obj/item/storage/belt/holster/detective/full/ert/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
 		/obj/item/ammo_box/magazine/m45 = 2,
+		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
 	),src)
 
 /obj/item/storage/belt/holster/chameleon
@@ -150,7 +158,9 @@
 		/obj/item/gun/energy/recharge/ebow,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
-		/obj/item/gun/energy/dueling
+		/obj/item/gun/energy/dueling,
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
 	))
 
 	atom_storage.silent = TRUE
@@ -176,3 +186,20 @@
 		/obj/item/ammo_casing, // For shotgun shells, rockets, launcher grenades, and a few other things.
 		/obj/item/grenade, // All regular grenades, the big grenade launcher fires these.
 	))
+
+/obj/item/storage/belt/holster/nukie/cowboy
+	desc = "A deep shoulder holster capable of holding almost any form of small firearm and its ammo. This one's specialized for handguns."
+
+/obj/item/storage/belt/holster/nukie/cowboy/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 3
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/belt/holster/nukie/cowboy/full/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/ammo_box/a357 = 2,
+		/obj/item/gun/ballistic/revolver/cowboy/nuclear = 1,
+	), src)
+
+
+

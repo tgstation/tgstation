@@ -11,11 +11,12 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 /obj/item/integrated_circuit
 	name = "integrated circuit"
 	desc = "By inserting components and a cell into this, wiring them up, and putting them into a shell, anyone can pretend to be a programmer."
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "integrated_circuit"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	w_class = WEIGHT_CLASS_TINY
 
 	/// The name that appears on the shell.
 	var/display_name = ""
@@ -24,7 +25,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	var/label_max_length = 24
 
 	/// The power of the integrated circuit
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 
 	/// The shell that this circuitboard is attached to. Used by components.
 	var/atom/movable/shell
@@ -59,6 +60,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// List variables stored on this integrated circuit, with a `variable_name = value` structure
 	var/list/datum/circuit_variable/list_variables = list()
 
+	/// Assoc list variables stored on this integrated circuit, with a `variable_name = value` structure
+	var/list/datum/circuit_variable/assoc_list_variables = list()
+
 	/// The maximum amount of setters and getters a circuit can have
 	var/max_setters_and_getters = 30
 
@@ -77,6 +81,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The Y position of the screen. Used for adding components.
 	var/screen_y = 0
 
+	/// The grid mode state for the circuit.
+	var/grid_mode = TRUE
+
 	/// The current size of the circuit.
 	var/current_size = 0
 
@@ -92,7 +99,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/loaded/Initialize(mapload)
 	. = ..()
-	set_cell(new /obj/item/stock_parts/cell/high(src))
+	set_cell(new /obj/item/stock_parts/power_store/cell/high(src))
 
 /obj/item/integrated_circuit/Destroy()
 	for(var/obj/item/circuit_component/to_delete in attached_components)
@@ -126,7 +133,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
  * Arguments:
  * * cell_to_set - The new cell of the circuit. Can be null.
  **/
-/obj/item/integrated_circuit/proc/set_cell(obj/item/stock_parts/cell_to_set)
+/obj/item/integrated_circuit/proc/set_cell(obj/item/stock_parts/power_store/cell_to_set)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_CELL, cell_to_set)
 	cell = cell_to_set
 
@@ -146,7 +153,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		add_component_manually(I, user)
 		return
 
-	if(istype(I, /obj/item/stock_parts/cell))
+	if(istype(I, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			balloon_alert(user, "there already is a cell inside!")
 			return
@@ -397,6 +404,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	.["examined_notices"] = examined?.get_ui_notices()
 	.["examined_rel_x"] = examined_rel_x
 	.["examined_rel_y"] = examined_rel_y
+	.["grid_mode"] = grid_mode
 
 	.["is_admin"] = (admin_only || isAdminGhostAI(user)) && check_rights_for(user.client, R_VAREDIT)
 
@@ -410,7 +418,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		return FALSE
 	return ..()
 
-/obj/item/integrated_circuit/ui_status(mob/user)
+/obj/item/integrated_circuit/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 
 	if (isobserver(user))
@@ -493,8 +501,13 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return
 			component.disconnect()
 			remove_component(component)
+
+			var/mob/user = ui.user
 			if(component.loc == src)
-				usr.put_in_hands(component)
+				user.put_in_hands(component)
+			var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
+			if (!isnull(printer))
+				printer.base_item_interaction(user, component)
 			. = TRUE
 		if("set_component_coordinates")
 			var/component_id = text2num(params["component_id"])
@@ -574,6 +587,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			else
 				set_display_name("")
 			. = TRUE
+		if("toggle_grid_mode")
+			toggle_grid_mode()
+			. = TRUE
 		if("set_examined_component")
 			var/component_id = text2num(params["component_id"])
 			if(!WITHIN_RANGE(component_id, attached_components))
@@ -598,8 +614,13 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return
 			if(params["is_list"])
 				variable_datatype = PORT_TYPE_LIST(variable_datatype)
+			else if(params["is_assoc_list"])
+				variable_datatype = PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, variable_datatype)
 			var/datum/circuit_variable/variable = new /datum/circuit_variable(variable_identifier, variable_datatype)
-			if(params["is_list"])
+			if(params["is_assoc_list"])
+				variable.set_value(list())
+				assoc_list_variables[variable_identifier] = variable
+			else if(params["is_list"])
 				variable.set_value(list())
 				list_variables[variable_identifier] = variable
 			else
@@ -700,6 +721,10 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			shell.name = display_name
 	else
 		shell.name = initial(shell.name)
+
+/// Toggles the grid mode property for this circuit.
+/obj/item/integrated_circuit/proc/toggle_grid_mode()
+	grid_mode = !grid_mode
 
 /**
  * Returns the creator of the integrated circuit. Used in admin messages and other related things.

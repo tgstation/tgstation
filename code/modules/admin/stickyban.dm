@@ -348,15 +348,15 @@
 		return
 	var/timeout
 	if (SSdbcore.Connect())
-		timeout = "<a href='?_src_=holder;[HrefToken()];stickyban=[(ban["timeout"] ? "untimeout" : "timeout")]&ckey=[ckey]'>\[[(ban["timeout"] ? "untimeout" : "timeout" )]\]</a>"
+		timeout = "<a href='byond://?_src_=holder;[HrefToken()];stickyban=[(ban["timeout"] ? "untimeout" : "timeout")]&ckey=[ckey]'>\[[(ban["timeout"] ? "untimeout" : "timeout" )]\]</a>"
 	else
-		timeout = "<a href='?_src_=holder;[HrefToken()];stickyban=revert&ckey=[ckey]'>\[revert\]</a>"
+		timeout = "<a href='byond://?_src_=holder;[HrefToken()];stickyban=revert&ckey=[ckey]'>\[revert\]</a>"
 	. = list({"
-		<a href='?_src_=holder;[HrefToken()];stickyban=remove&ckey=[ckey]'>\[-\]</a>
+		<a href='byond://?_src_=holder;[HrefToken()];stickyban=remove&ckey=[ckey]'>\[-\]</a>
 		[timeout]
 		<b>[ckey]</b>
 		<br />"
-		[ban["message"]] <b><a href='?_src_=holder;[HrefToken()];stickyban=edit&ckey=[ckey]'>\[Edit\]</a></b><br />
+		[ban["message"]] <b><a href='byond://?_src_=holder;[HrefToken()];stickyban=edit&ckey=[ckey]'>\[Edit\]</a></b><br />
 	"})
 	if (ban["admin"])
 		. += "[ban["admin"]]<br />"
@@ -366,12 +366,12 @@
 	for (var/key in ban["keys"])
 		if (ckey(key) == ckey)
 			continue
-		. += "<li><a href='?_src_=holder;[HrefToken()];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key]<a href='?_src_=holder;[HrefToken()];stickyban=exempt&ckey=[ckey]&alt=[ckey(key)]'>\[E\]</a></li>"
+		. += "<li><a href='byond://?_src_=holder;[HrefToken()];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key]<a href='byond://?_src_=holder;[HrefToken()];stickyban=exempt&ckey=[ckey]&alt=[ckey(key)]'>\[E\]</a></li>"
 
 	for (var/key in ban["whitelist"])
 		if (ckey(key) == ckey)
 			continue
-		. += "<li><a href='?_src_=holder;[HrefToken()];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key]<a href='?_src_=holder;[HrefToken()];stickyban=unexempt&ckey=[ckey]&alt=[ckey(key)]'>\[UE\]</a></li>"
+		. += "<li><a href='byond://?_src_=holder;[HrefToken()];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key]<a href='byond://?_src_=holder;[HrefToken()];stickyban=unexempt&ckey=[ckey]&alt=[ckey(key)]'>\[UE\]</a></li>"
 
 	. += "</ol>\n"
 
@@ -390,7 +390,7 @@
 		<title>Sticky Bans</title>
 	</head>
 	<body>
-		<h2>All Sticky Bans:</h2> <a href='?_src_=holder;[HrefToken()];stickyban=add'>\[+\]</a><br>
+		<h2>All Sticky Bans:</h2> <a href='byond://?_src_=holder;[HrefToken()];stickyban=add'>\[+\]</a><br>
 		[banhtml.Join("")]
 	</body>
 	"}
@@ -481,10 +481,5 @@
 
 	. = list2params(.)
 
-
-/client/proc/stickybanpanel()
-	set name = "Sticky Ban Panel"
-	set category = "Admin"
-	if (!holder)
-		return
-	holder.stickyban_show()
+ADMIN_VERB(panel_sticky_ban, R_BAN, "Sticky Ban Panel", "List and manage sticky bans.", ADMIN_CATEGORY_MAIN)
+	user.holder.stickyban_show()

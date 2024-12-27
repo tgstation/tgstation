@@ -4,6 +4,7 @@
 	datatype_flags = DATATYPE_FLAG_ALLOW_MANUAL_INPUT|DATATYPE_FLAG_ALLOW_ATOM_INPUT
 	can_receive_from = list(
 		PORT_TYPE_ATOM,
+		PORT_TYPE_USER
 	)
 
 /datum/circuit_datatype/datum/convert_value(datum/port/port, value_to_convert)

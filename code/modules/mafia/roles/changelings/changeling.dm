@@ -1,6 +1,6 @@
 /datum/mafia_role/mafia
 	name = "Changeling"
-	desc = "You're a member of the changeling hive. Use ':j' talk prefix to talk to your fellow lings."
+	desc = "You're a member of the changeling hive. You may speak with your fellow Changelings at night."
 	team = MAFIA_TEAM_MAFIA
 	role_type = MAFIA_REGULAR
 	role_flags = ROLE_CAN_KILL

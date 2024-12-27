@@ -1,6 +1,6 @@
 // Peanuts!
 /obj/item/seeds/peanut
-	name = "pack of peanut seeds"
+	name = "peanut seed pack"
 	desc = "These seeds grow into peanut plants."
 	icon_state = "seed-peanut"
 	species = "peanut"

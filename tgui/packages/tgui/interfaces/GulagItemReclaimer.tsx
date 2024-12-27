@@ -1,6 +1,7 @@
-import { BooleanLike } from 'common/react';
+import { Button, NoticeBox, Section, Table } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../backend';
-import { Button, NoticeBox, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -8,8 +9,8 @@ type Data = {
   mobs: { mob: string; name: string }[];
 };
 
-export const GulagItemReclaimer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const GulagItemReclaimer = (props) => {
+  const { act, data } = useBackend<Data>();
   const { can_reclaim, mobs = [] } = data;
 
   return (

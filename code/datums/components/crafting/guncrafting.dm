@@ -2,11 +2,26 @@
 
 // PARTS //
 
+/obj/item/weaponcrafting/Initialize(mapload)
+	. = ..()
+	create_slapcraft_component()
+
+/obj/item/weaponcrafting/proc/create_slapcraft_component()
+	return
+
 /obj/item/weaponcrafting/receiver
 	name = "modular receiver"
 	desc = "A prototype modular receiver and trigger assembly for a firearm."
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "receiver"
+
+/obj/item/weaponcrafting/receiver/create_slapcraft_component()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/pipegun)
+
+	AddElement(
+		/datum/element/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/weaponcrafting/stock
 	name = "rifle stock"
@@ -16,17 +31,33 @@
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "riflestock"
 
+/obj/item/weaponcrafting/stock/create_slapcraft_component()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/smoothbore_disabler, /datum/crafting_recipe/laser_musket)
+
+	AddElement(
+		/datum/element/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/weaponcrafting/giant_wrench
 	name = "Big Slappy parts kit"
 	desc = "Illegal parts to make a giant like wrench commonly known as a Big Slappy."
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "weaponkit_gw"
 
+/obj/item/weaponcrafting/giant_wrench/create_slapcraft_component() // slappycraft
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/giant_wrench)
+
+	AddElement(
+		/datum/element/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 ///These gun kits are printed from the security protolathe to then be used in making new weapons
 
 // GUN PART KIT //
 
-/obj/item/weaponcrafting/gunkit
+/obj/item/weaponcrafting/gunkit // These don't get a slapcraft component, it's added to the gun - more intuitive player-facing to slap the kit onto the gun.
 	name = "generic gun parts kit"
 	desc = "It's an empty gun parts container! Why do you have this?"
 	icon = 'icons/obj/weapons/improvised.dmi'
@@ -53,12 +84,8 @@
 	desc = "A suitcase containing the necessary gun parts to tranform a standard energy gun into a temperature gun. Fantastic at birthday parties and killing indigenious populations of lizardpeople."
 
 /obj/item/weaponcrafting/gunkit/beam_rifle
-	name = "particle acceleration rifle part kit (lethal)"
-	desc = "The coup de grace of guncrafting. This suitcase contains the highly experimental rig for a particle acceleration rifle. Requires an energy gun, a stabilized flux anomaly and a stabilized gravity anomaly."
-
-/obj/item/weaponcrafting/gunkit/decloner
-	name = "decloner part kit (lethal)"
-	desc = "An uttery baffling array of gun parts and technology that somehow turns a laser gun into a decloner. Haircut not included."
+	name = "\improper Event Horizon anti-existential beam rifle part kit (DOOMSDAY DEVICE, DO NOT CONSTRUCT)"
+	desc = "What fevered minds wrought this terrible construction kit? To create a frame to harness the strange energies that flow through the Spinward Sector towards such horrible acts of violence?"
 
 /obj/item/weaponcrafting/gunkit/ebow
 	name = "energy crossbow part kit (less lethal)"
@@ -67,3 +94,7 @@
 /obj/item/weaponcrafting/gunkit/hellgun
 	name = "hellfire laser gun degradation kit (warcrime lethal)"
 	desc = "Take a perfectly functioning laser gun. Butcher the inside of the gun so it runs hot and mean. You now have a hellfire laser. You monster."
+
+/obj/item/weaponcrafting/gunkit/photon
+	name = "photon cannon parts kit (nonlethal)"
+	desc = "A suitcase containing the necessary gun parts to construct a photon cannon around a stabilized flux anomaly. Harness the power of the sun, in the palms of your hands."

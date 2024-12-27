@@ -60,10 +60,10 @@
 	if (initial(customer_type.is_unique))
 		customer_types -= customer_type
 
-	var/mob/living/simple_animal/robot_customer/new_customer = new /mob/living/simple_animal/robot_customer(get_turf(restaurant_portal), customer_type, src)
+	var/mob/living/basic/robot_customer/new_customer = new /mob/living/basic/robot_customer(get_turf(restaurant_portal), customer_type, src)
 	current_visitors += new_customer
 
-/datum/venue/proc/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
+/datum/venue/proc/order_food(mob/living/basic/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/order = pick_weight(customer_data.orderable_objects[venue_type])
 	var/list/order_args // Only for custom orders - arguments passed into New
 	var/image/food_image
@@ -113,7 +113,7 @@
 	return "broken venue pls call a coder"
 
 ///Effects for when a customer receives their order at this venue
-/datum/venue/proc/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+/datum/venue/proc/on_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	SHOULD_CALL_PARENT(TRUE)
 
 	// This is an item typepath, a reagent typepath, or a custom order datum instance.
@@ -152,7 +152,7 @@
 	open = FALSE
 	restaurant_portal.update_icon()
 	STOP_PROCESSING(SSobj, src)
-	for(var/mob/living/simple_animal/robot_customer as anything in current_visitors)
+	for(var/mob/living/basic/robot_customer as anything in current_visitors)
 		robot_customer.ai_controller.set_blackboard_key(BB_CUSTOMER_LEAVING, TRUE) //LEAVEEEEEE
 
 /obj/machinery/restaurant_portal
@@ -271,10 +271,10 @@
 /obj/structure/holosign/robot_seat/attack_holosign(mob/living/user, list/modifiers)
 	return
 
-/obj/structure/holosign/robot_seat/attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	if(I.type == projector?.type && !linked_venue.linked_seats[src])
+/obj/structure/holosign/robot_seat/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.type == projector?.type && !linked_venue.linked_seats[src])
 		qdel(src)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/holosign/robot_seat/Destroy()
 	linked_venue.linked_seats -= src

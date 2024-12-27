@@ -17,7 +17,8 @@
 #define ADMIN_IGNORE_CULT_GHOST (1<<21)
 #define SPLIT_ADMIN_TABS (1<<23)
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|MEMBER_PUBLIC|SOUND_PRAYERS)
+#define TOGGLES_DEADMIN_DEFAULT (DEADMIN_ANTAGONIST|DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY|DEADMIN_POSITION_SILICON)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|MEMBER_PUBLIC|SOUND_PRAYERS|TOGGLES_DEADMIN_DEFAULT)
 
 // Legacy chat toggles.
 // !!! DO NOT ADD ANY NEW ONES HERE !!!
@@ -35,7 +36,7 @@
 #define CHAT_GHOSTLAWS (1<<11)
 #define CHAT_LOGIN_LOGOUT (1<<12)
 
-#define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_PULLR|CHAT_GHOSTWHISPER|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD|CHAT_GHOSTLAWS|CHAT_LOGIN_LOGOUT)
+#define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_PRAYER|CHAT_PULLR|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD|CHAT_GHOSTLAWS|CHAT_LOGIN_LOGOUT)
 
 #define PARALLAX_INSANE "Insane"
 #define PARALLAX_HIGH "High"
@@ -74,12 +75,13 @@
 #define EXP_TYPE_ADMIN "Admin"
 
 //Flags in the players table in the db
-#define DB_FLAG_EXEMPT 1
+#define DB_FLAG_EXEMPT (1<<0)
 
 #define DEFAULT_CYBORG_NAME "Default Cyborg Name"
 
 
 //Job preferences levels
+#define JP_ANY 0
 #define JP_LOW 1
 #define JP_MEDIUM 2
 #define JP_HIGH 3
@@ -131,6 +133,9 @@
 /// such as hair color being affixed to hair.
 #define PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES "supplemental_features"
 
+/// These preferences will not be rendered on the preferences page, and are practically invisible unless specifically rendered. Used for quirks, currently.
+#define PREFERENCE_CATEGORY_MANUALLY_RENDERED "manually_rendered_features"
+
 // Playtime is tracked in minutes
 /// The time needed to unlock hardcore random mode in preferences
 #define PLAYTIME_HARDCORE_RANDOM 120 // 2 hours
@@ -139,3 +144,17 @@
 
 /// The key used for sprite accessories that should never actually be applied to the player.
 #define SPRITE_ACCESSORY_NONE "None"
+
+// Loadout
+/// Used to make something not recolorable even if it's capable
+#define DONT_GREYSCALE -1
+// Loadout item info keys
+// Changing these will break existing loadouts
+/// Tracks GAGS color information
+#define INFO_GREYSCALE "greyscale"
+/// Used to set custom names
+#define INFO_NAMED "name"
+/// Used for specific alt-reskins, like the pride pin
+#define INFO_RESKIN "reskin"
+/// Handles which layer the item will be on, for accessories
+#define INFO_LAYER "layer"

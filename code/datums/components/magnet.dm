@@ -40,7 +40,7 @@
 	STOP_PROCESSING(SSdcs, src)
 	UnregisterSignal(parent, COMSIG_MOB_STATCHANGE)
 
-/datum/component/magnet/Destroy(force, silent)
+/datum/component/magnet/Destroy(force)
 	STOP_PROCESSING(SSdcs, src)
 	on_pulled = null
 	on_contact = null

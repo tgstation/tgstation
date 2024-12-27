@@ -25,7 +25,8 @@
 	// Get a sample "melee" weapon.
 	// The energy axe is chosen here due to having a high base force, to make sure we get over the equipment DT.
 	var/obj/item/dummy_melee = allocate(/obj/item/melee/energy/axe)
-	var/expected_melee_damage = round(dummy_melee.force * (1 - expected_melee_armor / 100) * dummy_melee.demolition_mod, DAMAGE_PRECISION)
+	dummy_melee.force = 150
+	var/expected_melee_damage = round(dummy_melee.force * (1 - expected_melee_armor / 100) * dummy_melee.demolition_mod * demo_mech.facing_modifiers[MECHA_FRONT_ARMOUR], DAMAGE_PRECISION)
 
 	// Get a sample laser weapon.
 	// The captain's laser gun here is chosen primarily because it deals more damage than normal lasers.
@@ -83,4 +84,4 @@
 	TEST_ASSERT(post_hit_health < pre_integrity, "[checking] was [hit_by_phrase], but didn't take any damage.")
 
 	var/damage_taken = round(pre_integrity - post_hit_health, DAMAGE_PRECISION)
-	TEST_ASSERT_EQUAL(damage_taken, expected_damage, "[checking] didn't take the expected amount of damage when [hit_by_phrase]. (Expected damage: [expected_damage], recieved damage: [damage_taken])")
+	TEST_ASSERT_EQUAL(damage_taken, expected_damage, "[checking] didn't take the expected amount of damage when [hit_by_phrase]. (Expected damage: [expected_damage], received damage: [damage_taken])")

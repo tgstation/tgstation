@@ -1,9 +1,9 @@
 /datum/computer_file/program/arcade
 	filename = "dsarcade"
 	filedesc = "Donksoft Micro Arcade"
-	program_icon_state = "arcade"
+	program_open_overlay = "arcade"
 	extended_desc = "This port of the classic game 'Outbomb Cuban Pete', redesigned to run on tablets, with thrilling graphics and chilling storytelling."
-	requires_ntnet = FALSE
+	downloader_category = PROGRAM_CATEGORY_GAMES
 	size = 6
 	tgui_id = "NtosArcade"
 	program_icon = "gamepad"
@@ -23,14 +23,28 @@
 	///Determines which boss image to use on the UI.
 	var/boss_id = 1
 
+///Lazy version of the arade that can be found in maintenance disks
+/datum/computer_file/program/arcade/eazy
+	filename = "dsarcadeez"
+	filedesc = "Donksoft Micro Arcade Ez"
+	filetype = "MNT"
+	program_flags = PROGRAM_UNIQUE_COPY
+	extended_desc = "Some sort of fan-made conversion of the classic game 'Outbomb Cuban Pete'. This one has you fight the weaker 'George Melon' instead."
+	boss_hp = 40
+	boss_mp = 10
+	player_hp = 35
+	player_mp = 15
+	heads_up = "Are you a bad enough dude to grief the station?"
+	boss_name = "George Melon"
+
 /datum/computer_file/program/arcade/proc/game_check(mob/user)
 	sleep(0.5 SECONDS)
 	user?.mind?.adjust_experience(/datum/skill/gaming, 1)
 	if(boss_hp <= 0)
 		heads_up = "You have crushed [boss_name]! Rejoice!"
-		playsound(computer.loc, 'sound/arcade/win.ogg', 50)
+		playsound(computer.loc, 'sound/machines/arcade/win.ogg', 50)
 		game_active = FALSE
-		program_icon_state = "arcade_off"
+		program_open_overlay = "arcade_off"
 		if(istype(computer))
 			computer.update_appearance()
 		ticket_count += 1
@@ -39,9 +53,9 @@
 		sleep(1 SECONDS)
 	else if(player_hp <= 0 || player_mp <= 0)
 		heads_up = "You have been defeated... how will the station survive?"
-		playsound(computer.loc, 'sound/arcade/lose.ogg', 50)
+		playsound(computer.loc, 'sound/machines/arcade/lose.ogg', 50)
 		game_active = FALSE
-		program_icon_state = "arcade_off"
+		program_open_overlay = "arcade_off"
 		if(istype(computer))
 			computer.update_appearance()
 		user?.mind?.adjust_experience(/datum/skill/gaming, 10)
@@ -60,17 +74,17 @@
 		return
 	if (boss_mp <= 5)
 		heads_up = "[boss_mpamt] magic power has been stolen from you!"
-		playsound(computer.loc, 'sound/arcade/steal.ogg', 50, TRUE)
+		playsound(computer.loc, 'sound/machines/arcade/steal.ogg', 50, TRUE)
 		player_mp -= boss_mpamt
 		boss_mp += boss_mpamt
 	else if(boss_mp > 5 && boss_hp <12)
 		heads_up = "[boss_name] heals for [bossheal] health!"
-		playsound(computer.loc, 'sound/arcade/heal.ogg', 50, TRUE)
+		playsound(computer.loc, 'sound/machines/arcade/heal.ogg', 50, TRUE)
 		boss_hp += bossheal
 		boss_mp -= boss_mpamt
 	else
 		heads_up = "[boss_name] attacks you for [boss_attackamt] damage!"
-		playsound(computer.loc, 'sound/arcade/hit.ogg', 50, TRUE)
+		playsound(computer.loc, 'sound/machines/arcade/hit.ogg', 50, TRUE)
 		player_hp -= boss_attackamt
 
 	pause_state = FALSE
@@ -93,7 +107,8 @@
 	data["BossID"] = "boss[boss_id].gif"
 	return data
 
-/datum/computer_file/program/arcade/ui_act(action, list/params)
+/datum/computer_file/program/arcade/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	usr.played_game()
 	var/gamerSkillLevel = 0
 	var/gamerSkill = 0
@@ -107,7 +122,7 @@
 				attackamt = rand(2,6) + rand(0, gamerSkill)
 			pause_state = TRUE
 			heads_up = "You attack for [attackamt] damage."
-			playsound(computer.loc, 'sound/arcade/hit.ogg', 50, TRUE)
+			playsound(computer.loc, 'sound/machines/arcade/hit.ogg', 50, TRUE)
 			boss_hp -= attackamt
 			sleep(1 SECONDS)
 			game_check()
@@ -124,7 +139,7 @@
 				healcost = rand(1, maxPointCost)
 			pause_state = TRUE
 			heads_up = "You heal for [healamt] damage."
-			playsound(computer.loc, 'sound/arcade/heal.ogg', 50, TRUE)
+			playsound(computer.loc, 'sound/machines/arcade/heal.ogg', 50, TRUE)
 			player_hp += healamt
 			player_mp -= healcost
 			sleep(1 SECONDS)
@@ -137,7 +152,7 @@
 				rechargeamt = rand(4,7) + rand(0, gamerSkill)
 			pause_state = TRUE
 			heads_up = "You regain [rechargeamt] magic power."
-			playsound(computer.loc, 'sound/arcade/mana.ogg', 50, TRUE)
+			playsound(computer.loc, 'sound/machines/arcade/mana.ogg', 50, TRUE)
 			player_mp += rechargeamt
 			sleep(1 SECONDS)
 			game_check()
@@ -159,11 +174,11 @@
 				return TRUE
 		if("Start_Game")
 			game_active = TRUE
-			boss_hp = 45
-			player_hp = 30
-			player_mp = 10
+			boss_hp = initial(boss_hp)
+			player_hp = initial(player_hp)
+			player_mp = initial(player_mp)
 			heads_up = "You stand before [boss_name]! Prepare for battle!"
-			program_icon_state = "arcade"
+			program_open_overlay = "arcade"
 			boss_id = rand(1,6)
 			pause_state = FALSE
 			if(istype(computer))

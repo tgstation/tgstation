@@ -15,7 +15,7 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_KICK
 	melee_damage_lower = 5
 	melee_damage_upper = 10
@@ -24,22 +24,45 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/pony
+	/// Do we register a unique rider?
+	var/unique_tamer = FALSE
+	/// The person we've been tamed by
+	var/datum/weakref/my_owner
+
+	greyscale_config = /datum/greyscale_config/pony
+	/// Greyscale color config; 1st color is body, 2nd is mane
+	var/list/ponycolors = list("#cc8c5d", "#cc8c5d")
+
+/datum/emote/pony
+	mob_type_allowed_typecache = /mob/living/basic/pony
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/pony/whicker
+	key = "whicker"
+	key_third_person = "whickers"
+	message = "whickers."
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/pony/snort.ogg'
 
 /mob/living/basic/pony/Initialize(mapload)
 	. = ..()
 
-	AddElement(/datum/element/pet_bonus, "whickers.")
+	apply_colour()
+	AddElement(/datum/element/pet_bonus, "whicker")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
-	AddElement(/datum/element/waddling)
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/apple), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)))
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
+	var/static/list/food_types = list(
+		/obj/item/food/grown/apple,
+	)
+	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15, unique = unique_tamer)
 
-/mob/living/basic/pony/proc/tamed(mob/living/tamer)
-	can_buckle = TRUE
-	buckle_lying = 0
-	playsound(src, 'sound/creatures/pony/snort.ogg', 50)
+/mob/living/basic/pony/tamed(mob/living/tamer, atom/food)
+	playsound(src, 'sound/mobs/non-humanoids/pony/snort.ogg', 50)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
 	visible_message(span_notice("[src] snorts happily."))
+	new /obj/effect/temp_visual/heart(loc)
 
 	ai_controller.replace_planning_subtrees(list(
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
@@ -47,13 +70,37 @@
 		/datum/ai_planning_subtree/random_speech/pony/tamed
 	))
 
+	if(unique_tamer)
+		my_owner = WEAKREF(tamer)
+		RegisterSignal(src, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(on_prebuckle))
+
+/mob/living/basic/pony/Destroy()
+	UnregisterSignal(src, COMSIG_MOVABLE_PREBUCKLE)
+	my_owner = null
+	return ..()
+
+/// Only let us get ridden if the buckler is our owner, if we have a unique owner.
+/mob/living/basic/pony/proc/on_prebuckle(mob/source, mob/living/buckler, force, buckle_mob_flags)
+	SIGNAL_HANDLER
+	var/mob/living/tamer = my_owner?.resolve()
+	if(!unique_tamer || (isnull(tamer) && unique_tamer))
+		return
+	if(buckler != tamer)
+		whinny_angrily()
+		return COMPONENT_BLOCK_BUCKLE
+
+/mob/living/basic/pony/proc/apply_colour()
+	if(!greyscale_config)
+		return
+	set_greyscale(colors = ponycolors)
+
 /mob/living/basic/pony/proc/whinny_angrily()
 	manual_emote("whinnies ANGRILY!")
 
 	playsound(src, pick(list(
-		'sound/creatures/pony/whinny01.ogg',
-		'sound/creatures/pony/whinny02.ogg',
-		'sound/creatures/pony/whinny03.ogg'
+		'sound/mobs/non-humanoids/pony/whinny01.ogg',
+		'sound/mobs/non-humanoids/pony/whinny02.ogg',
+		'sound/mobs/non-humanoids/pony/whinny03.ogg'
 	)), 50)
 
 /mob/living/basic/pony/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
@@ -62,7 +109,7 @@
 	if (prob(33))
 		whinny_angrily()
 
-/mob/living/basic/pony/melee_attack(atom/target, list/modifiers)
+/mob/living/basic/pony/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	. = ..()
 
 	if (!.)
@@ -72,7 +119,7 @@
 
 /datum/ai_controller/basic_controller/pony
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -86,3 +133,36 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/pony
 	)
+
+// A stronger horse is required for our strongest cowboys.
+/mob/living/basic/pony/syndicate
+	health = 300
+	maxHealth = 300
+	desc = "A special breed of horse engineered by the syndicate to be capable of surviving in the deep reaches of space. A modern outlaw's best friend."
+	faction = list(ROLE_SYNDICATE)
+	ponycolors = list("#5d566f", COLOR_RED)
+	pressure_resistance = 200
+	habitable_atmos = null
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = 1500
+	unique_tamer = TRUE
+
+/mob/living/basic/pony/syndicate/Initialize(mapload)
+	. = ..()
+	// Help discern your horse from your allies
+	var/mane_colors = list(
+		COLOR_RED=6,
+		COLOR_BLUE=6,
+		COLOR_PINK=3,
+		COLOR_GREEN=3,
+		COLOR_BLACK=3,
+		COLOR_YELLOW=2,
+		COLOR_ORANGE=1,
+		COLOR_WHITE=1,
+		COLOR_DARK_BROWN=1,
+	)
+	ponycolors = list("#5d566f", pick_weight(mane_colors))
+	name = pick("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+	// Only one person can tame these fellas, and they only need one apple
+	var/static/list/food_types = list(/obj/item/food/grown/apple)
+	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 100, bonus_tame_chance = 15, unique = unique_tamer)

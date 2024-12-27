@@ -17,6 +17,7 @@
 /obj/structure/closet/boxinggloves
 	name = "boxing gloves closet"
 	desc = "It's a storage unit for gloves for use in the boxing ring."
+	icon_door = "mixed"
 
 /obj/structure/closet/boxinggloves/PopulateContents()
 	..()
@@ -41,6 +42,7 @@
 	name = "red laser tag equipment"
 	desc = "It's a storage unit for laser tag equipment."
 	icon_door = "red"
+	icon_state = "rack"
 
 /obj/structure/closet/lasertag/red/PopulateContents()
 	..()
@@ -48,13 +50,14 @@
 		new /obj/item/gun/energy/laser/redtag(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/redtag(src)
-	new /obj/item/clothing/head/helmet/redtaghelm(src)
+	new /obj/item/clothing/head/helmet/taghelm/red(src)
 
 
 /obj/structure/closet/lasertag/blue
 	name = "blue laser tag equipment"
 	desc = "It's a storage unit for laser tag equipment."
 	icon_door = "blue"
+	icon_state = "rack"
 
 /obj/structure/closet/lasertag/blue/PopulateContents()
 	..()
@@ -62,4 +65,4 @@
 		new /obj/item/gun/energy/laser/bluetag(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/bluetag(src)
-	new /obj/item/clothing/head/helmet/bluetaghelm(src)
+	new /obj/item/clothing/head/helmet/taghelm/blue(src)

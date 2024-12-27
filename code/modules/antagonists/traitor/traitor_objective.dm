@@ -134,7 +134,7 @@
 		maximum_progression
 	)
 
-/datum/traitor_objective/Destroy(force, ...)
+/datum/traitor_objective/Destroy(force)
 	handler = null
 	return ..()
 
@@ -191,7 +191,7 @@
 	handle_cleanup()
 	log_traitor("[key_name(handler.owner)] [objective_state == OBJECTIVE_STATE_INACTIVE? "missed" : "failed"] [to_debug_string()]")
 	if(penalty_cost)
-		handler.telecrystals -= penalty_cost
+		handler.add_telecrystals(-penalty_cost)
 		objective_state = OBJECTIVE_STATE_FAILED
 	else
 		objective_state = OBJECTIVE_STATE_INVALID
@@ -216,10 +216,10 @@
 /datum/traitor_objective/proc/finish_objective(mob/user)
 	switch(objective_state)
 		if(OBJECTIVE_STATE_FAILED, OBJECTIVE_STATE_INVALID)
-			user.playsound_local(get_turf(user), 'sound/traitor/objective_failed.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+			user.playsound_local(get_turf(user), 'sound/music/antag/traitor/objective_failed.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 			return TRUE
 		if(OBJECTIVE_STATE_COMPLETED)
-			user.playsound_local(get_turf(user), 'sound/traitor/objective_success.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+			user.playsound_local(get_turf(user), 'sound/music/antag/traitor/objective_success.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 			completion_payout()
 			return TRUE
 	return FALSE
@@ -227,7 +227,7 @@
 /// Called when rewards should be given to the user.
 /datum/traitor_objective/proc/completion_payout()
 	handler.progression_points += progression_reward
-	handler.telecrystals += telecrystal_reward
+	handler.add_telecrystals(telecrystal_reward)
 
 /// Used for sending data to the uplink UI
 /datum/traitor_objective/proc/uplink_ui_data(mob/user)

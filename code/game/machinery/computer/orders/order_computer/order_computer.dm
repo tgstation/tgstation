@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	if(GLOB.order_console_products.len)
 		return
 	for(var/datum/orderable_item/path as anything in subtypesof(/datum/orderable_item))
-		if(!initial(path.item_path))
+		if(!initial(path.purchase_path))
 			continue
 		GLOB.order_console_products += new path
 
@@ -74,9 +74,9 @@ GLOBAL_LIST_EMPTY(order_console_products)
 /**
  * points is any type of currency this machine accepts(money, mining points etc) which is displayed on the ui
  * Args:
- * card - The ID card we retrive these points from
+ * card - The ID card we retrieve these points from
  */
-/obj/machinery/computer/order_console/proc/retrive_points(obj/item/card/id/id_card)
+/obj/machinery/computer/order_console/proc/retrieve_points(obj/item/card/id/id_card)
 	return round(id_card.registered_account?.account_balance)
 
 /obj/machinery/computer/order_console/ui_data(mob/user)
@@ -95,7 +95,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		var/mob/living/living_user = user
 		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 		if(id_card)
-			data["points"] = retrive_points(id_card)
+			data["points"] = retrieve_points(id_card)
 
 	return data
 
@@ -120,11 +120,12 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"cat" = item.category_index,
 			"ref" = REF(item),
 			"cost" = round(item.cost_per_order * cargo_cost_multiplier),
-			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(item.item_path.icon), icon_state = initial(item.item_path.icon_state)), no_anim=TRUE))
+			"icon" = item.purchase_path::icon,
+			"icon_state" = item.purchase_path::icon_state,
 		))
 	return data
 
-/obj/machinery/computer/order_console/ui_act(action, params)
+/obj/machinery/computer/order_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -163,7 +164,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			//So miners cant spam buy crates for a very low price
 			if(get_total_cost() < CARGO_CRATE_VALUE)
 				return
-				
+
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
 			if(!used_id_card || !used_id_card.registered_account)
 				say("No bank account detected!")
@@ -198,17 +199,17 @@ GLOBAL_LIST_EMPTY(order_console_products)
 					grocery_list.Remove(item)
 					continue
 				for(var/amt in 1 to grocery_list[item])//every order amount
-					ordered_paths += item.item_path
+					ordered_paths += item.purchase_path
 			podspawn(list(
 				"target" = get_turf(living_user),
-				"style" = STYLE_BLUESPACE,
+				"style" = /datum/pod_style/advanced,
 				"spawn" = ordered_paths,
 			))
 			grocery_list.Cut()
 	return TRUE
 
 /**
- * Checks if an ID card is able to afford the total cost of the current console's grocieries
+ * Checks if an ID card is able to afford the total cost of the current console's groceries
  * and deducts the cost if they can.
  * Args:
  * card - The ID card we check for balance
@@ -223,7 +224,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	return FALSE
 
 /**
- * whatever type of points was retrived in retrive_points() subtract those type of points from the card upon confirming order
+ * whatever type of points was retrieved in retrieve_points() subtract those type of points from the card upon confirming order
  * Args:
  * final_cost - amount of points to subtract from this card
  * card - The ID card to subtract these points from

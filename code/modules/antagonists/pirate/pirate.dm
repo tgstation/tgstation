@@ -85,7 +85,7 @@
 	//Lists notable loot.
 	if(!cargo_hold || !cargo_hold.total_report)
 		return "Nothing"
-	cargo_hold.total_report.total_value = sortTim(cargo_hold.total_report.total_value, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+	sortTim(cargo_hold.total_report.total_value, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 	var/count = 0
 	var/list/loot_texts = list()
 	for(var/datum/export/E in cargo_hold.total_report.total_value)
@@ -104,7 +104,7 @@
 /datum/team/pirate/roundend_report()
 	var/list/parts = list()
 
-	parts += "<span class='header'>Space Pirates were:</span>"
+	parts += span_header("Space Pirates were:")
 
 	var/all_dead = TRUE
 	for(var/datum/mind/M in members)

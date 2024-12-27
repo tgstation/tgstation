@@ -16,9 +16,19 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/L = user.mob
-	L.resist()
+	var/mob/living/owner = user.mob
+	owner.resist()
+	if (owner.hud_used?.resist_icon)
+		owner.hud_used.resist_icon.icon_state = "[owner.hud_used.resist_icon.base_icon_state]_on"
 	return TRUE
+
+/datum/keybinding/living/resist/up(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/owner = user.mob
+	if (owner.hud_used?.resist_icon)
+		owner.hud_used.resist_icon.icon_state = owner.hud_used.resist_icon.base_icon_state
 
 /datum/keybinding/living/look_up
 	hotkey_keys = list("L")
@@ -36,6 +46,7 @@
 	return TRUE
 
 /datum/keybinding/living/look_up/up(client/user)
+	. = ..()
 	var/mob/living/L = user.mob
 	L.end_look_up()
 	return TRUE
@@ -56,6 +67,7 @@
 	return TRUE
 
 /datum/keybinding/living/look_down/up(client/user)
+	. = ..()
 	var/mob/living/L = user.mob
 	L.end_look_down()
 	return TRUE
@@ -117,3 +129,39 @@
 		return
 	var/mob/living/user_mob = user.mob
 	user_mob.set_combat_mode(FALSE, silent = FALSE)
+
+/datum/keybinding/living/toggle_move_intent
+	hotkey_keys = list("C")
+	name = "toggle_move_intent"
+	full_name = "Hold to toggle move intent"
+	description = "Held down to cycle to the other move intent, release to cycle back"
+	keybind_signal = COMSIG_KB_LIVING_TOGGLEMOVEINTENT_DOWN
+
+/datum/keybinding/living/toggle_move_intent/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/M = user.mob
+	M.toggle_move_intent()
+	return TRUE
+
+/datum/keybinding/living/toggle_move_intent/up(client/user)
+	. = ..()
+	var/mob/living/M = user.mob
+	M.toggle_move_intent()
+	return TRUE
+
+/datum/keybinding/living/toggle_move_intent_alternative
+	hotkey_keys = list("Unbound")
+	name = "toggle_move_intent_alt"
+	full_name = "press to cycle move intent"
+	description = "Pressing this cycle to the opposite move intent, does not cycle back"
+	keybind_signal = COMSIG_KB_LIVING_TOGGLEMOVEINTENTALT_DOWN
+
+/datum/keybinding/living/toggle_move_intent_alternative/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/M = user.mob
+	M.toggle_move_intent()
+	return TRUE

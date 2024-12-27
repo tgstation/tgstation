@@ -11,6 +11,7 @@
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /// Counter for number of chicks hatched by throwing eggs, minecraft style. Chicks will not emerge from thrown eggs if this value exceeds the MAX_CHICKENS define.
 GLOBAL_VAR_INIT(chicks_from_eggs, 0)
@@ -27,6 +28,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/egg/rotten
 	decomp_req_handle = TRUE //so laid eggs can actually become chickens
+	/// How likely is it that a chicken will come out of here if we throw it?
 	var/chick_throw_prob = 13
 
 /obj/item/food/egg/make_bakeable()
@@ -34,6 +36,11 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 
 /obj/item/food/egg/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/boiledegg)
+
+/obj/item/food/egg/organic
+	name = "organic egg"
+	desc = "A 100% natural egg from the best hens."
+	starting_reagent_purity = 1
 
 /obj/item/food/egg/rotten
 	food_reagents = list(/datum/reagent/consumable/eggrot = 10, /datum/reagent/consumable/mold = 10)
@@ -62,23 +69,24 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 
 	var/turf/hit_turf = get_turf(hit_atom)
 	new /obj/effect/decal/cleanable/food/egg_smudge(hit_turf)
-	//Chicken code uses this MAX_CHICKENS variable, so I figured that I'd use it again here. Even this check and the check in chicken code both use the MAX_CHICKENS variable, they use independent counter variables and thus are independent of each other.
-	if(GLOB.chicks_from_eggs < MAX_CHICKENS) //Roughly a 1/8 (12.5%) chance to make a chick, as in Minecraft, with a 1/256 (~0.39%) chance to make four chicks instead.
-		var/chance = rand(0, 255)
-		switch(chance)
-			if(0 to 30)
-				new /mob/living/basic/chick(hit_turf)
-				GLOB.chicks_from_eggs++
-				visible_message(span_notice("A chick comes out of the cracked egg!"))
-			if(31)
-				var/spawned_chickens = min(4, MAX_CHICKENS - GLOB.chicks_from_eggs) // We don't want to go over the limit
-				visible_message(span_notice("[spawned_chickens] chicks come out of the egg! Jackpot!"))
-				for(var/i in 1 to spawned_chickens)
-					new /mob/living/basic/chick(hit_turf)
-					GLOB.chicks_from_eggs++
-
+	if (prob(chick_throw_prob))
+		spawn_impact_chick(hit_turf)
 	reagents.expose(hit_atom, TOUCH)
 	qdel(src)
+
+/// Spawn a baby chicken from throwing an egg
+/obj/item/food/egg/proc/spawn_impact_chick(turf/spawn_turf)
+	var/chickens_remaining = MAX_CHICKENS - GLOB.chicks_from_eggs
+	if (chickens_remaining < 1)
+		return
+	var/spawned_chickens = prob(97) ? 1 : min(4, chickens_remaining) // We don't want to go over the limit
+	if (spawned_chickens > 1) // Chicken jackpot!
+		visible_message(span_notice("[spawned_chickens] chicks come out of the egg! Jackpot!"))
+	else
+		visible_message(span_notice("A chick comes out of the cracked egg!"))
+	for(var/i in 1 to spawned_chickens)
+		new /mob/living/basic/chick(spawn_turf)
+		GLOB.chicks_from_eggs++
 
 /obj/item/food/egg/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/toy/crayon))
@@ -112,36 +120,40 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	else
 		..()
 
-/obj/item/food/egg/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+/obj/item/food/egg/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/machinery/griddle))
+		return NONE
 
-	if(!istype(target, /obj/machinery/griddle))
-		return SECONDARY_ATTACK_CALL_NORMAL
+	var/obj/machinery/griddle/hit_griddle = interacting_with
+	if(length(hit_griddle.griddled_objects) >= hit_griddle.max_items)
+		interacting_with.balloon_alert(user, "no room!")
+		return ITEM_INTERACT_BLOCKING
+	var/atom/broken_egg = new /obj/item/food/rawegg(interacting_with.loc)
+	if(LAZYACCESS(modifiers, ICON_X))
+		broken_egg.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
+	if(LAZYACCESS(modifiers, ICON_Y))
+		broken_egg.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
+	playsound(user, 'sound/items/sheath.ogg', 40, TRUE)
+	reagents.copy_to(broken_egg, reagents.total_volume)
 
-	var/atom/broken_egg = new /obj/item/food/rawegg(target.loc)
-	broken_egg.pixel_x = pixel_x
-	broken_egg.pixel_y = pixel_y
-	playsound(get_turf(user), 'sound/items/sheath.ogg', 40, TRUE)
-	reagents.copy_to(broken_egg,reagents.total_volume)
-
-	var/obj/machinery/griddle/hit_griddle = target
 	hit_griddle.AddToGrill(broken_egg, user)
-	target.balloon_alert(user, "cracks [src] open")
+	interacting_with.balloon_alert(user, "cracks [src] open")
 
 	qdel(src)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/food/egg/blue
 	icon_state = "egg-blue"
 	inhand_icon_state = "egg-blue"
+
 /obj/item/food/egg/green
 	icon_state = "egg-green"
 	inhand_icon_state = "egg-green"
+
 /obj/item/food/egg/mime
 	icon_state = "egg-mime"
 	inhand_icon_state = "egg-mime"
+
 /obj/item/food/egg/orange
 	icon_state = "egg-orange"
 	inhand_icon_state = "egg-orange"
@@ -198,14 +210,14 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 4)
 	foodtypes = MEAT | FRIED | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/rawegg
 	name = "raw egg"
 	desc = "Supposedly good for you, if you can stomach it. Better fried."
 	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "rawegg"
-	food_reagents = list() //Recieves all reagents from its whole egg counterpart
+	food_reagents = list() // Receives all reagents from its whole egg counterpart
 	bite_consumption = 1
 	tastes = list("raw egg" = 6, "sliminess" = 1)
 	eatverbs = list("gulp down")
@@ -231,6 +243,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	w_class = WEIGHT_CLASS_SMALL
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/boiledegg/rotten
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/eggsausage
 	name = "egg with sausage"
@@ -241,6 +254,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	foodtypes = MEAT | FRIED | BREAKFAST
 	tastes = list("egg" = 4, "meat" = 4)
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/boiledegg/rotten
 	food_reagents = list(/datum/reagent/consumable/eggrot = 10)
@@ -262,6 +276,8 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 1, "cheese" = 1)
 	foodtypes = MEAT | BREAKFAST | DAIRY
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = FOOD_COMPLEXITY_2
+	crafted_food_buff = /datum/status_effect/food/speech/french
 
 /obj/item/food/omelette/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/kitchen/fork))
@@ -295,6 +311,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
 	foodtypes = MEAT | BREAKFAST | GRAIN
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/eggwrap
 	name = "egg wrap"
@@ -309,6 +326,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/chawanmushi
 	name = "chawanmushi"
@@ -322,3 +340,5 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	)
 	tastes = list("custard" = 1)
 	foodtypes = MEAT | VEGETABLES
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3

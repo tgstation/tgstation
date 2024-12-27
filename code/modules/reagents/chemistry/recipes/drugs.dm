@@ -30,7 +30,7 @@
 
 //The less pure it is, the faster it heats up. tg please don't hate me for making your meth even more dangerous
 /datum/chemical_reaction/methamphetamine/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
-	var/datum/reagent/meth = holder.get_reagent(/datum/reagent/drug/methamphetamine)
+	var/datum/reagent/meth = holder.has_reagent(/datum/reagent/drug/methamphetamine)
 	if(!meth)//First step
 		reaction.thermic_mod = (1-delta_ph)*5
 		return
@@ -45,7 +45,7 @@
 	temp_meth_explosion(holder, equilibrium.reacted_vol)
 
 /datum/chemical_reaction/methamphetamine/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
-	var/datum/reagent/meth = holder.get_reagent(/datum/reagent/drug/methamphetamine)
+	var/datum/reagent/meth = holder.has_reagent(/datum/reagent/drug/methamphetamine)
 	if(!meth)//Other procs before this can already blow us up
 		return ..()
 	if(meth.purity < purity_min)
@@ -63,6 +63,7 @@
 	if(ismob(holder.my_atom))
 		var/mob/M = holder.my_atom
 		inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
+		return
 	var/lastkey = holder.my_atom.fingerprintslast
 	var/touch_msg = "N/A"
 	if(lastkey)
@@ -121,9 +122,10 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 //These drug item reactions should probably be converted to fermichem in the future.
-/datum/chemical_reaction/moon_rock //botany is real easy so it requires a lot of kronkus_extract, make it cheaper if it doesnt get amde.
+/datum/chemical_reaction/moon_rock //botany is real easy so it requires a lot of kronkus_extract, make it cheaper if it doesnt get made.
 	required_reagents = list(/datum/reagent/kronkus_extract = 15, /datum/reagent/fuel = 10, /datum/reagent/ammonia = 5)
 	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/moon_rock/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -136,6 +138,7 @@
 /datum/chemical_reaction/blastoff_ampoule
 	required_reagents = list(/datum/reagent/silver = 10, /datum/reagent/toxin/cyanide = 10, /datum/reagent/lye = 5)
 	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/blastoff_ampoule/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -148,6 +151,7 @@
 /datum/chemical_reaction/saturnx_glob
 	required_reagents = list(/datum/reagent/lead = 5, /datum/reagent/consumable/nothing = 5, /datum/reagent/drug/maint/tar = 10)
 	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/saturnx_glob/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)

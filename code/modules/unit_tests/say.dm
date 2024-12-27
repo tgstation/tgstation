@@ -22,6 +22,46 @@
 	TEST_ASSERT(!expected_mods.len,
 		"Some message mods were expected, but were not returned by get_message_mods: [json_encode(expected_mods)]. Message: [message]")
 
+/// Test to ensure native tongue languages properly impact speech
+/datum/unit_test/speech_modifiers
+	var/mob/living/carbon/human/talking_lizard
+	var/list/handle_speech_result = null
+
+/datum/unit_test/speech_modifiers/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	TEST_ASSERT(speech_args[SPEECH_MESSAGE], "Handle speech signal does not have a message arg")
+	TEST_ASSERT(speech_args[SPEECH_LANGUAGE], "Handle speech signal does not have a language arg")
+
+	// saving hearing_args directly via handle_speech_result = speech_args won't work since the arg list
+	// is a temporary variable that gets garbage collected after it's done being used by procs
+	// therefore we need to create a new list and transfer the args
+	handle_speech_result = list()
+	handle_speech_result += speech_args
+
+/datum/unit_test/speech_modifiers/Run()
+	talking_lizard = allocate(/mob/living/carbon/human/consistent)
+	talking_lizard.set_species(/datum/species/lizard)
+	var/hissed_quote = "SSShe isss ssso sssasssy"
+	var/unhissed_quote = "She is so sassy"
+
+	RegisterSignal(talking_lizard, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+	// lizard's forked tongue causes hissing when speaking common
+	talking_lizard.set_active_language(/datum/language/common)
+	talking_lizard.say(unhissed_quote)
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
+	TEST_ASSERT_EQUAL(hissed_quote, handle_speech_result[SPEECH_MESSAGE], "Speech modifier test failed: [handle_speech_result[SPEECH_LANGUAGE]] did not equal [hissed_quote] when spoken by a lizard in language [handle_speech_result[SPEECH_LANGUAGE]]")
+
+	handle_speech_result = null
+
+	// lizard's forked tongue does not cause hissing when speaking native draconic
+	talking_lizard.set_active_language(/datum/language/draconic)
+	talking_lizard.say(unhissed_quote)
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
+	TEST_ASSERT_EQUAL(unhissed_quote, handle_speech_result[SPEECH_MESSAGE], "Speech modifier test failed: [handle_speech_result[SPEECH_LANGUAGE]] did not equal [unhissed_quote] when spoken by a lizard in language [handle_speech_result[SPEECH_LANGUAGE]]")
+
+
 /// Test to verify COMSIG_MOB_SAY is sent the exact same list as the message args, as they're operated on
 /datum/unit_test/say_signal
 
@@ -58,12 +98,15 @@
 
 /// This runs some simple speech tests on a speaker and listener and determines if a person can hear whispering or speaking as they are moved a distance away
 /datum/unit_test/speech
-	var/list/handle_speech_result = null
-	var/list/handle_hearing_result = null
 	var/mob/living/carbon/human/speaker
 	var/mob/living/carbon/human/listener
+	var/list/handle_speech_result = null
+	var/list/handle_hearing_result = null
+
 	var/obj/item/radio/speaker_radio
 	var/obj/item/radio/listener_radio
+	var/speaker_radio_heard_message = FALSE
+	var/listener_radio_received_message = FALSE
 
 /datum/unit_test/speech/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -73,7 +116,7 @@
 	TEST_ASSERT(speech_args[SPEECH_LANGUAGE], "Handle speech signal does not have a language arg")
 	TEST_ASSERT(speech_args[SPEECH_RANGE], "Handle speech signal does not have a range arg")
 
-	// saving hearing_args directly via handle_speech_result = speech_args won't work since the arg list
+	// saving speech_args directly via handle_speech_result = speech_args won't work since the arg list
 	// is a temporary variable that gets garbage collected after it's done being used by procs
 	// therefore we need to create a new list and transfer the args
 	handle_speech_result = list()
@@ -99,6 +142,16 @@
 	handle_hearing_result = list()
 	handle_hearing_result += hearing_args
 
+/datum/unit_test/speech/proc/handle_radio_hearing(datum/source, mob/living/user, message, channel)
+	SIGNAL_HANDLER
+
+	speaker_radio_heard_message = TRUE
+
+/datum/unit_test/speech/proc/handle_radio_speech(datum/source, list/data)
+	SIGNAL_HANDLER
+
+	listener_radio_received_message = TRUE
+
 /datum/unit_test/speech/Run()
 	speaker = allocate(/mob/living/carbon/human/consistent)
 	// Name changes to make understanding breakpoints easier
@@ -113,8 +166,11 @@
 	var/datum/client_interface/mock_client = new()
 	listener.mock_client = mock_client
 
-	RegisterSignal(speaker, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	RegisterSignal(speaker, COMSIG_MOB_SAY, PROC_REF(handle_speech)) //
+	RegisterSignal(speaker_radio, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(handle_radio_hearing))
+
 	RegisterSignal(listener, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
+	RegisterSignal(listener_radio, COMSIG_RADIO_RECEIVE_MESSAGE, PROC_REF(handle_radio_speech))
 
 	// speaking and whispering should be hearable
 	conversation(distance = 1)
@@ -169,6 +225,9 @@
 	handle_hearing_result = null
 
 /datum/unit_test/speech/proc/radio_test()
+	speaker_radio_heard_message = FALSE
+	listener_radio_received_message = FALSE
+
 	speaker.forceMove(run_loc_floor_bottom_left)
 	listener.forceMove(locate((run_loc_floor_bottom_left.x + 10), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
@@ -178,19 +237,23 @@
 	// Normally speaking, if there isn't a functional telecomms array on the same z-level, then handheld radios
 	// have a short delay before sending the message. We use the centcom frequency to get around this.
 	speaker_radio.set_frequency(FREQ_CENTCOM)
-	speaker_radio.independent = TRUE
+	speaker_radio.special_channels = RADIO_SPECIAL_CENTCOM
 	listener_radio.set_frequency(FREQ_CENTCOM)
-	listener_radio.independent = TRUE
+	listener_radio.special_channels = RADIO_SPECIAL_CENTCOM
 
 	var/pangram_quote = "The quick brown fox jumps over the lazy dog"
 
 	speaker.say(pangram_quote)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired (radio test)")
-	TEST_ASSERT(islist(handle_hearing_result), "Listener failed to hear radio message (radio test)")
+	TEST_ASSERT(speaker_radio_heard_message, "Speaker's radio did not hear them speak (radio test)")
 	TEST_ASSERT_EQUAL(speaker_radio.get_frequency(), listener_radio.get_frequency(), "Radio frequencies were not equal (radio test)")
+	TEST_ASSERT(listener_radio_received_message, "Listener's radio did not receive the broadcast (radio test)")
+	TEST_ASSERT(islist(handle_hearing_result), "Listener failed to hear radio message (radio test)")
 
 	handle_speech_result = null
 	handle_hearing_result = null
+	speaker_radio_heard_message = FALSE
+	listener_radio_received_message = FALSE
 
 	speaker_radio.set_frequency(FREQ_CTF_RED)
 	speaker.say(pangram_quote)
@@ -200,6 +263,8 @@
 
 	handle_speech_result = null
 	handle_hearing_result = null
+	speaker_radio_heard_message = FALSE
+	listener_radio_received_message = FALSE
 	speaker_radio.set_broadcasting(FALSE)
 
 #undef NORMAL_HEARING_RANGE

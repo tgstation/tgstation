@@ -1,4 +1,5 @@
-import { BlockQuote, Stack } from '../components';
+import { BlockQuote, Stack } from 'tgui-core/components';
+
 import { Window } from '../layouts';
 
 const goodstyle = {
@@ -13,7 +14,7 @@ const noticestyle = {
   color: 'lightblue',
 };
 
-export const AntagInfoMorph = (props, context) => {
+export const AntagInfoMorph = (props) => {
   return (
     <Window width={620} height={170} theme="abductor">
       <Window.Content>

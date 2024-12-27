@@ -52,7 +52,7 @@
 	/// If not null the required_condition will be picked from this list
 	var/list/possible_random_site_types
 
-/datum/experiment/exploration_scan/random/New()
+/datum/experiment/exploration_scan/random/New(datum/techweb/techweb)
 	. = ..()
 	if(length(possible_random_site_types))
 		required_site_type = pick(possible_random_site_types)

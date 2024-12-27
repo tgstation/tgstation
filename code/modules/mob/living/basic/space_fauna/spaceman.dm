@@ -21,7 +21,7 @@
 	melee_damage_upper = 10
 	attack_verb_continuous = "hits"
 	attack_verb_simple = "hit"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	ai_controller = /datum/ai_controller/basic_controller/spaceman
@@ -32,7 +32,7 @@
 
 /datum/ai_controller/basic_controller/spaceman
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

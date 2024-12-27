@@ -81,3 +81,18 @@
 		"sleepy_9" = 2, //sleepy theme specific
 		"sleepy_10" = 2, //sleepy theme specific
 	)
+
+/particles/musical_notes/light
+	icon = 'icons/effects/particles/notes/note_light.dmi'
+	icon_state = list(
+		"power_1" = 1,
+		"power_2" = 1,
+		"power_3" = 1,
+		"power_4" = 1,
+		"power_5" = 1,
+		"power_6" = 1,
+		"power_7" = 1,
+		"power_8" = 1,
+		"power_9" = 2, //light theme specific
+		"power_10" = 2, //light theme specific
+	)

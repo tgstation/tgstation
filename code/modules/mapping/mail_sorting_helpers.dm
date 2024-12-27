@@ -3,10 +3,6 @@
 	late = TRUE
 	var/sort_type = SORT_TYPE_WASTE
 
-/obj/effect/mapping_helpers/mail_sorting/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
 /obj/effect/mapping_helpers/mail_sorting/LateInitialize()
 	var/obj/structure/disposalpipe/sorting/mail/mail_sorter = locate(/obj/structure/disposalpipe/sorting/mail) in loc
 	if(mail_sorter)

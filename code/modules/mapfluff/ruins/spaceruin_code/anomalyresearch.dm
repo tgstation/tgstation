@@ -17,7 +17,7 @@
 		/obj/effect/anomaly/flux,
 		/obj/effect/anomaly/bluespace,
 		/obj/effect/anomaly/hallucination,
-		/obj/effect/anomaly/bioscrambler
+		/obj/effect/anomaly/bioscrambler/docile
 	)
 
 	///Do we anchor the anomaly? Set to true if you don't want anomalies drifting away (like if theyre in space or something)
@@ -68,7 +68,7 @@
 	icon_state = "anomaly_research"
 	requires_power = FALSE
 	area_flags = HIDDEN_AREA | UNIQUE_AREA
-	has_gravity = TRUE
+	default_gravity = ZERO_GRAVITY
 
 /obj/item/reagent_containers/cup/bottle/wittel
 	name = "wittel bottle"

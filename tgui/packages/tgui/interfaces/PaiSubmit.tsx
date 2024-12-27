@@ -1,7 +1,8 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import { Box, Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { logger } from '../logging';
 
 type Data = {
   comments: string;
@@ -18,15 +19,14 @@ const PAI_RULES = `You are expected to role play to some degree. Keep in mind:
 Not entering information may lead to you not being selected. Press submit to
 alert pAI cards of your candidacy.`;
 
-export const PaiSubmit = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const PaiSubmit = (props) => {
+  const { data } = useBackend<Data>();
   const { comments, description, name } = data;
-  const [input, setInput] = useLocalState<Data>(context, 'input', {
+  const [input, setInput] = useState({
     comments,
     description,
     name,
   });
-  logger.log(input);
 
   return (
     <Window width={400} height={460} title="pAI Candidacy Menu">
@@ -48,7 +48,7 @@ export const PaiSubmit = (props, context) => {
 };
 
 /** Displays basic info about playing pAI */
-const DetailsDisplay = (props, context) => {
+const DetailsDisplay = (props) => {
   return (
     <Section fill scrollable title="Details">
       <Box color="label">
@@ -62,7 +62,7 @@ const DetailsDisplay = (props, context) => {
 };
 
 /** Input boxes for submission details */
-const InputDisplay = (props, context) => {
+const InputDisplay = (props) => {
   const { input, setInput } = props;
   const { name, description, comments } = input;
 
@@ -108,8 +108,8 @@ const InputDisplay = (props, context) => {
 };
 
 /** Gives the user a submit button */
-const ButtonsDisplay = (props, context) => {
-  const { act } = useBackend<Data>(context);
+const ButtonsDisplay = (props) => {
+  const { act } = useBackend<Data>();
   const { input } = props;
   const { comments, description, name } = input;
 
@@ -119,14 +119,16 @@ const ButtonsDisplay = (props, context) => {
         <Stack.Item>
           <Button
             onClick={() => act('save', { comments, description, name })}
-            tooltip="Saves your candidate data locally.">
+            tooltip="Saves your candidate data locally."
+          >
             SAVE
           </Button>
         </Stack.Item>
         <Stack.Item>
           <Button
             onClick={() => act('load')}
-            tooltip="Loads saved candidate data, if any.">
+            tooltip="Loads saved candidate data, if any."
+          >
             LOAD
           </Button>
         </Stack.Item>
@@ -138,7 +140,8 @@ const ButtonsDisplay = (props, context) => {
                 description,
                 name,
               })
-            }>
+            }
+          >
             SUBMIT
           </Button>
         </Stack.Item>

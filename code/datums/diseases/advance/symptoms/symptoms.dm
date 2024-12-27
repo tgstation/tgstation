@@ -39,6 +39,8 @@
 	var/naturally_occuring = TRUE
 	///If the symptom requires an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present
 	var/required_organ
+	/// How much space does this symptom use?
+	var/weight = 1
 
 /datum/symptom/New()
 	var/list/S = SSdisease.list_symptoms
@@ -106,6 +108,7 @@
 	var/list/data = list()
 	data["name"] = name
 	data["desc"] = desc
+	data["weight"] = weight
 	data["stealth"] = stealth
 	data["resistance"] = resistance
 	data["stage_speed"] = stage_speed

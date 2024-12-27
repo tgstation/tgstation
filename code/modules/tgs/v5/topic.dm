@@ -94,7 +94,7 @@
 		if(DMAPI5_TOPIC_COMMAND_CHANGE_PORT)
 			var/new_port = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_PORT]
 			if (!isnum(new_port) || !(new_port > 0))
-				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_PORT]]")
+				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_PORT]")
 
 			if(event_handler != null)
 				event_handler.HandleEvent(TGS_EVENT_PORT_SWAP, new_port)
@@ -141,7 +141,7 @@
 		if(DMAPI5_TOPIC_COMMAND_SERVER_PORT_UPDATE)
 			var/new_port = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_PORT]
 			if (!isnum(new_port) || !(new_port > 0))
-				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_PORT]]")
+				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_PORT]")
 
 			server_port = new_port
 			return TopicResponse()
@@ -149,7 +149,9 @@
 		if(DMAPI5_TOPIC_COMMAND_HEALTHCHECK)
 			if(event_handler && event_handler.receive_health_checks)
 				event_handler.HandleEvent(TGS_EVENT_HEALTH_CHECK)
-			return TopicResponse()
+			var/list/health_check_response = TopicResponse()
+			health_check_response[DMAPI5_TOPIC_RESPONSE_CLIENT_COUNT] = TGS_CLIENT_COUNT
+			return health_check_response;
 
 		if(DMAPI5_TOPIC_COMMAND_WATCHDOG_REATTACH)
 			detached = FALSE
@@ -157,7 +159,7 @@
 			var/error_message = null
 			if (new_port != null)
 				if (!isnum(new_port) || !(new_port > 0))
-					error_message = "Invalid [DMAPI5_TOPIC_PARAMETER_NEW_PORT]]"
+					error_message = "Invalid [DMAPI5_TOPIC_PARAMETER_NEW_PORT]"
 				else
 					server_port = new_port
 
@@ -165,7 +167,7 @@
 			if (!istext(new_version_string))
 				if(error_message != null)
 					error_message += ", "
-				error_message += "Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_SERVER_VERSION]]"
+				error_message += "Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_SERVER_VERSION]"
 			else
 				var/datum/tgs_version/new_version = new(new_version_string)
 				if (event_handler)
@@ -175,6 +177,11 @@
 
 			var/list/reattach_response = TopicResponse(error_message)
 			reattach_response[DMAPI5_PARAMETER_CUSTOM_COMMANDS] = ListCustomCommands()
+			reattach_response[DMAPI5_PARAMETER_TOPIC_PORT] = GetTopicPort()
+
+			for(var/eventId in pending_events)
+				pending_events[eventId] = TRUE
+
 			return reattach_response
 
 		if(DMAPI5_TOPIC_COMMAND_SEND_CHUNK)
@@ -267,4 +274,25 @@
 
 			return chunk_to_send
 
+		if(DMAPI5_TOPIC_COMMAND_RECEIVE_BROADCAST)
+			var/message = topic_parameters[DMAPI5_TOPIC_PARAMETER_BROADCAST_MESSAGE]
+			if (!istext(message))
+				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_BROADCAST_MESSAGE]")
+
+			TGS_WORLD_ANNOUNCE(message)
+			return TopicResponse()
+
+		if(DMAPI5_TOPIC_COMMAND_COMPLETE_EVENT)
+			var/event_id = topic_parameters[DMAPI5_EVENT_ID]
+			if (!istext(event_id))
+				return TopicResponse("Invalid or missing [DMAPI5_EVENT_ID]")
+
+			TGS_DEBUG_LOG("Completing event ID [event_id]...")
+			pending_events[event_id] = TRUE
+			return TopicResponse()
+
 	return TopicResponse("Unknown command: [command]")
+
+/datum/tgs_api/v5/proc/WorldBroadcast(message)
+	set waitfor = FALSE
+	TGS_WORLD_ANNOUNCE(message)

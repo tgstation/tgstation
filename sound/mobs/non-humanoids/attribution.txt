@@ -1,0 +1,14 @@
+cow.ogg sound adapted from Benboncan on Freesound
+https://freesound.org/people/Benboncan/sounds/58277/
+
+pig1.ogg and pig2.ogg adapted from Jofae on Freesound
+https://freesound.org/people/Jofae/sounds/352698/
+
+sheep1, sheep2, and sheep3.ogg adapted from milkotz on Freesound
+https://freesound.org/people/milkotz/sounds/618865/
+
+snake_hissing1.ogg adapted from schreibsel on Freesound (CC 0)
+https://freesound.org/people/schreibsel/sounds/540162/
+
+snake_hissing2.ogg adapted from xoiziox on Freesound (CC 0)
+https://freesound.org/people/xoiziox/sounds/553374/

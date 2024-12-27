@@ -1,7 +1,7 @@
 
 // Sugarcane
 /obj/item/seeds/sugarcane
-	name = "pack of sugarcane seeds"
+	name = "sugarcane seed pack"
 	desc = "These seeds grow into sugarcane."
 	icon_state = "seed-sugarcane"
 	species = "sugarcane"
@@ -14,8 +14,8 @@
 	yield = 4
 	instability = 15
 	growthstages = 2
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/sugar = 0.25)
-	mutatelist = list(/obj/item/seeds/bamboo)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.25)
+	mutatelist = list(/obj/item/seeds/bamboo, /obj/item/seeds/sugarcane/saltcane)
 
 /obj/item/food/grown/sugarcane
 	seed = /obj/item/seeds/sugarcane
@@ -28,7 +28,7 @@
 
 ///and bamboo!
 /obj/item/seeds/bamboo
-	name = "pack of bamboo seeds"
+	name = "bamboo seed pack"
 	desc = "A plant known for its flexible and resistant logs."
 	icon_state = "seed-bamboo"
 	species = "bamboo"
@@ -56,3 +56,25 @@
 
 /obj/item/grown/log/bamboo/CheckAccepted(obj/item/I)
 	return FALSE
+
+//Saltcane - Gross, salty shafts!
+/obj/item/seeds/sugarcane/saltcane
+	name = "saltcane seed pack"
+	desc = "These seeds grow into saltcane."
+	icon_state = "seed-saltcane"
+	species = "saltcane"
+	plantname = "Saltcane"
+	product = /obj/item/food/grown/sugarcane/saltcane
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/salt = 0.25)
+	mutatelist = null
+
+/obj/item/food/grown/sugarcane/saltcane
+	seed = /obj/item/seeds/sugarcane/saltcane
+	name = "saltcane"
+	desc = "Ungodly salty, bane of slugs, treasure of horses."
+	icon_state = "saltcane"
+	foodtypes = VEGETABLES | GROSS
+
+/obj/item/food/grown/sugarcane/saltcane/make_dryable()
+	AddElement(/datum/element/dryable, /obj/item/food/seaweedsheet/saltcane) //soooshi
