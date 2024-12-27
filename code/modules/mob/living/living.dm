@@ -3008,3 +3008,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/check_hit_limb_zone_name(hit_zone)
 	if(has_limbs)
 		return hit_zone
+
+/mob/living/proc/painful_scream(force = FALSE)
+	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
+		return
+	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
