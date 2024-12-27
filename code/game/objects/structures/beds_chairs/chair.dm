@@ -82,13 +82,6 @@
 	if (armrest)
 		color_atom_overlay(armrest)
 
-/obj/structure/chair/color_atom_overlay(mutable_appearance/overlay)
-	overlay.color = color
-	if (!cached_color_filter)
-		return overlay
-	to_chat(world, "[overlay.icon_state]")
-	return filter_appearance_recursive(overlay, cached_color_filter)
-
 /obj/structure/chair/proc/gen_armrest()
 	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
