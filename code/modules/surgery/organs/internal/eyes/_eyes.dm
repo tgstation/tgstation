@@ -74,7 +74,7 @@
 		affected_human.add_eye_color_left(eye_color_left, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 	if(eye_color_right)
 		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
-	refresh_atom_color_overrides(call_update)
+	refresh_atom_color_overrides()
 
 	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
 		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
@@ -114,10 +114,14 @@
 /obj/item/organ/eyes/update_atom_colour()
 	. = ..()
 	if (ishuman(owner))
-		refresh_atom_color_overrides(TRUE)
+		refresh_atom_color_overrides()
+		human_owner.update_body()
 
 /// Adds eye color overrides to our owner from our atom color
-/obj/item/organ/eyes/proc/refresh_atom_color_overrides(call_update = TRUE)
+/obj/item/organ/eyes/proc/refresh_atom_color_overrides()
+	if (!atom_colours)
+		return
+
 	var/mob/living/carbon/human/human_owner = owner
 	for(var/i in 1 to COLOUR_PRIORITY_AMOUNT)
 		var/list/checked_color = atom_colours[i]
@@ -129,8 +133,6 @@
 			var/color_filter = checked_color[ATOM_COLOR_VALUE_INDEX]
 			actual_color = apply_matrix_to_color(COLOR_WHITE, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
 		human_owner.add_eye_color(actual_color, EYE_COLOR_ATOM_COLOR_PRIORITY + i, update_body = FALSE)
-	if (call_update)
-		human_owner.update_body()
 
 /obj/item/organ/eyes/proc/on_bullet_act(mob/living/carbon/source, obj/projectile/proj, def_zone, piercing_hit, blocked)
 	SIGNAL_HANDLER
