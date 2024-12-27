@@ -26,13 +26,6 @@ export function SettingsGeneral(props) {
   const [freeFont, setFreeFont] = useState(false);
   const [debugInfo, setDebugInfo] = useState('');
 
-  async function handleInfoClick() {
-    let output = (await Byond.winget('output')) as Record<string, any>;
-    let browser = (await Byond.winget('browseroutput')) as Record<string, any>;
-
-    setDebugInfo(`${output.size}, ${browser.size}`);
-  }
-
   return (
     <Section>
       <LabeledList>
@@ -163,17 +156,6 @@ export function SettingsGeneral(props) {
             onClick={() => dispatch(saveChatToDisk())}
           >
             Save chat log
-          </Button>
-        </Stack.Item>
-        <Stack.Item color="label">
-          {debugInfo}
-          <Button
-            ml={1}
-            icon="bug"
-            tooltip="Print chat settings to console"
-            onClick={handleInfoClick}
-          >
-            Print debug info
           </Button>
         </Stack.Item>
         <Stack.Item mt={0.15}>
