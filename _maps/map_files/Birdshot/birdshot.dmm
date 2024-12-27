@@ -18575,15 +18575,6 @@
 	},
 /area/station/hallway/secondary/recreation)
 "gGl" = (
-/obj/structure/bed/double{
-	dir = 1
-	},
-/obj/item/bedsheet/captain/double{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
