@@ -81,7 +81,7 @@ const setupApp = () => {
   Byond.winset('browseroutput', {
     'is-visible': true,
     'is-disabled': false,
-    pos: '0x0',
+    pos: '0,0',
     size: '0x0',
   });
 
