@@ -1,7 +1,7 @@
 /// The amount of time it takes from the last cascade emitter shot until the SM starts healing again.
 #define HEAL_COOLDOWN (10 SECONDS)
 /// The amount of cascade emitter hits it takes until the SM delaminates.
-#define CASCADE_EMITTER_STRIKES 155 // 310 seconds
+#define CASCADE_EMITTER_STRIKES 65 // 130 seconds
 /// The amount of cascade emitter hits left until the emergency point.
 #define CASCADE_EMITTER_STRIKES_EMERGENCY_POINT 15
 /// The amount of strikes it takes until the cascade announcement is made.
