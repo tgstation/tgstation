@@ -15,6 +15,10 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /datum/sm_delam/New(obj/machinery/power/supermatter_crystal/sm)
 	src.sm = sm
 
+/datum/sm_delam/Destroy(force)
+	sm = null
+	return ..()
+
 /// Called when a bullet hits the SM. Returns true to early return normal bullet processing.
 /// Called in [/obj/machinery/power/supermatter_crystal/proc/eat_bullets]
 /datum/sm_delam/proc/on_bullet(obj/projectile/projectile)
