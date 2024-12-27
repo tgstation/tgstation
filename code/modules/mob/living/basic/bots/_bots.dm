@@ -783,11 +783,11 @@ GLOBAL_LIST_INIT(command_strings, list(
 	initial_access = access_card.access.Copy()
 
 
-/mob/living/basic/bot/proc/summon_bot(atom/caller, turf/turf_destination, user_access = list(), grant_all_access = FALSE)
-	if(isAI(caller) && !set_ai_caller(caller))
+/mob/living/basic/bot/proc/summon_bot(atom/summoner, turf/turf_destination, user_access = list(), grant_all_access = FALSE)
+	if(isAI(summoner) && !set_ai_caller(summoner))
 		return FALSE
-	bot_reset(bypass_ai_reset = isAI(caller))
-	var/turf/destination = turf_destination ? turf_destination : get_turf(caller)
+	bot_reset(bypass_ai_reset = isAI(summoner))
+	var/turf/destination = turf_destination ? turf_destination : get_turf(summoner)
 	ai_controller?.set_blackboard_key(BB_BOT_SUMMON_TARGET, destination)
 	var/list/access_to_grant = grant_all_access ? REGION_ACCESS_ALL_STATION : user_access + initial_access
 	access_card.set_access(access_to_grant)
@@ -797,11 +797,11 @@ GLOBAL_LIST_INIT(command_strings, list(
 		addtimer(CALLBACK(src, PROC_REF(bot_reset)), SENTIENT_BOT_RESET_TIMER)
 	return TRUE
 
-/mob/living/basic/bot/proc/set_ai_caller(mob/living/caller)
+/mob/living/basic/bot/proc/set_ai_caller(mob/living/ai_caller)
 	var/atom/calling_ai = calling_ai_ref?.resolve()
 	if(!isnull(calling_ai) && calling_ai != src)
 		return FALSE
-	calling_ai_ref = WEAKREF(caller)
+	calling_ai_ref = WEAKREF(ai_caller)
 	return TRUE
 
 /mob/living/basic/bot/proc/update_bot_mode(new_mode, update_hud = TRUE)

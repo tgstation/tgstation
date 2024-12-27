@@ -411,6 +411,11 @@
 	)
 
 	to_chat(owner, span_userdanger("[item_parent] embedded in your [owner_limb.plaintext_zone] jostles and stings!"))
+	jostle_effects()
+
+/// Effects which should occur when the owner moves, sometimes
+/datum/embedding/proc/jostle_effects()
+	return
 
 /// When someone attempts to pluck us with tweezers or wirecutters
 /datum/embedding/proc/on_attackby(mob/living/carbon/victim, obj/item/tool, mob/user)

@@ -643,3 +643,74 @@
   - bugfix: Fixes alert level changing during a Delta+ scenario
   timothymtorres:
   - bugfix: Fix holodeck computer using wrong power settings and not updating properly
+2024-12-27:
+  00-Steven:
+  - bugfix: Produce, bitrunning, and mining order consoles no longer have broken icons
+      when swapping tabs.
+  - bugfix: Items in produce, bitrunning, and mining order consoles with especially
+      long names no longer make the information tooltip and item order buttons wonky.
+  - qol: The information tooltip button for items in produce, bitrunning, and mining
+      order consoles no longer moves with the item name, and instead sits next to
+      the item order buttons.
+  AyIong:
+  - qol: Now you can hide `Initialized some shit within 0s` messages, by unchecking
+      `Debug Log` checkbox into the chat tabs settings
+  Ghommie:
+  - rscadd: Added fish mounts to the game. They can be crafted with 3 sheets of wood.
+      Otherwise there's one at the bar that stores the fish between rounds.
+  JohnFulpWillard:
+  - bugfix: Smartfridges on grid mode (like botany's) will no longer instantly spit
+      out all the items it has when you try to set how many it should spit out.
+  LT3:
+  - qol: Entertainment and newscaster broadcasts can be toggled in chat tabs
+  OrionTheFox:
+  - image: updated the cartridge coffeemaker + coffeepot sprites, and added bluespace
+      pot overlays to coffeemakers
+  - qol: the coffeemakers can now be interacted with while unpowered! No longer will
+      your coffeepot be stuck inside the machine because it's unplugged! (Still need
+      power to brew)
+  SmArtKar:
+  - refactor: Rewrote some of HUD code so they're no longer colored in their owner's
+      color
+  - bugfix: Space dragons no longer turn invisible when toggling seethrough mode
+  SyncIt21:
+  - bugfix: crowbars can be recycled in lathes only when the panel is closed
+  - balance: turbine now has higher max rpm & increased power output
+  - code_imp: further improved code for turbine
+  - code_imp: removes unused var from reagent code
+  TheRealSpriteMan1337:
+  - spellcheck: Fixes some usages of its, clarifies wording on the syndie medbot,
+      changes span_warning to notice.
+  Xander3359:
+  - rscadd: Bileworm crusher trophy now gives you AOE mining
+  - balance: The pk crusher no longer has click delay after shooting the projectile
+  - balance: The pk crusher gives mining XP when it mines rocks
+  - balance: the pk crusher charges faster when you mine rocks based on your skill
+      as a miner
+  - code_imp: cleaned up some of the kinetic crusher code
+  Y0SH1M4S73R:
+  - bugfix: The "Move Up" and "Move Down" verbs properly respect multi-z connectivity
+      when operating a remote camera.
+  grungussuss:
+  - image: added hat masking for berets
+  - bugfix: fixed being unable to place rpeds on tables
+  - sound: added sounds for locking/unlocking closets
+  necromanceranne:
+  - balance: A new maint-kata has taken shape in the periphery of Spinward control.
+      Borrowing techniques from an ancient Martian martial artist, as well as an entire
+      franchise of extremely muscular acrobats and performance artists, talented assistants
+      have discovered that a swift application of a flimsy chair to the back of the
+      head can end fights more promptly than just bashing the opponent's head in with
+      their foot. That, and it looks awesome.
+  - balance: Chairs start to break apart when you hit someone with them or block an
+      attack with them.
+  - balance: Breaking a chair against a target while attacking from behind or while
+      they're staggered will cause them to get knocked down. Chairs made of more sturdy
+      materials can even cause them to become vulnerable to shove stuns.
+  timothymtorres:
+  - bugfix: Fix holoparasite using gas ability while not summoned
+  - bugfix: Fix kidnapping pod returning a player to unsafe location where air is
+      bad
+  - bugfix: Fix vent clog event triggering on non-station areas
+  - bugfix: Fix custom map loading ignoring JSON values that were ignored previously.
+      (minetype, planetary, etc.)
