@@ -6,10 +6,9 @@
 
 import { useEffect, useRef } from 'react';
 import { Box } from 'tgui-core/components';
+import { addScrollableNode, removeScrollableNode } from 'tgui-core/events';
 import { classes } from 'tgui-core/react';
 import { computeBoxClassName, computeBoxProps } from 'tgui-core/ui';
-
-import { addScrollableNode, removeScrollableNode } from '../events';
 
 type BoxProps = React.ComponentProps<typeof Box>;
 
