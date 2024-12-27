@@ -44,7 +44,7 @@
 		return FALSE
 
 /obj/structure/thing_boss_spike/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
-	if(!istype(pass_info.caller_ref?.resolve(), /mob/living/basic/boss/thing))
+	if(!istype(pass_info.requester_ref?.resolve(), /mob/living/basic/boss/thing))
 		return FALSE
 	return ..()
 

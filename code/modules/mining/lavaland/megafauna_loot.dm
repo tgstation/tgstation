@@ -1238,6 +1238,7 @@
 /obj/item/organ/brain/cybernetic/ai/proc/deploy_init(mob/living/silicon/ai/AI)
 	//todo camera maybe
 	mainframe = AI
+	RegisterSignal(AI, COMSIG_QDELETING, PROC_REF(ai_deleted))
 	undeployment_action.Grant(owner)
 	update_med_hud_status(owner)
 	to_chat(owner, span_boldbig("You are still considered a silicon/cyborg/AI. Follow your laws."))
@@ -1246,7 +1247,7 @@
 	SIGNAL_HANDLER
 	if(!owner?.mind || !mainframe)
 		return
-	mainframe.UnregisterSignal(src, COMSIG_LIVING_DEATH)
+	UnregisterSignal(src, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 	mainframe.redeploy_action.Remove(mainframe)
 	mainframe.redeploy_action.last_used_shell = null
 	owner.mind.transfer_to(mainframe)
@@ -1274,3 +1275,8 @@
 	if(!is_sufficiently_augmented())
 		to_chat(owner, span_danger("Connection failure. Organics detected."))
 		undeploy()
+
+/obj/item/organ/brain/cybernetic/ai/proc/ai_deleted(datum/source)
+	SIGNAL_HANDLER
+	to_chat(owner, span_danger("Your core has been rendered inoperable..."))
+	undeploy()

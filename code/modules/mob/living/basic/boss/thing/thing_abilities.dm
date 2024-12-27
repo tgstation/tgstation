@@ -128,16 +128,15 @@
 	REMOVE_TRAIT(caster, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT)
 	caster.visible_message(span_danger("[caster] shrieks! The sheer frequency of the sound makes your skin hurt and you feel like your brain is on fire!"))
 	SEND_SOUND(caster, sound('sound/effects/screech.ogg'))
-	for(var/turf/open/target_turf in RANGE_TURFS(2, caster))
-		for(var/mob/living/target in target_turf)
-			if(target == owner)
-				continue
-			target.set_confusion_if_lower(5 SECONDS)
-			target.set_jitter_if_lower(5 SECONDS)
-			var/mob/living/carbon/carbon_target = target
-			if(istype(carbon_target))
-				carbon_target.drop_all_held_items()
-			SEND_SOUND(target, sound('sound/effects/screech.ogg'))
+	for(var/mob/living/target in range(2, caster))
+		if(target == owner)
+			continue
+		target.set_confusion_if_lower(5 SECONDS)
+		target.set_jitter_if_lower(5 SECONDS)
+		var/mob/living/carbon/carbon_target = target
+		if(istype(carbon_target))
+			carbon_target.drop_all_held_items()
+		SEND_SOUND(target, sound('sound/effects/screech.ogg'))
 
 // card. tendrils
 
