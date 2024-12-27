@@ -386,6 +386,9 @@
 	bites_amount++
 	var/bites_to_finish = weight / FISH_WEIGHT_BITE_DIVISOR
 	adjust_health(health - (initial(health) / bites_to_finish) * 3)
+	flinch_on_eat(eater, feeder)
+
+/obj/item/fish/proc/flinch_on_eat(mob/living/eater, mob/living/feeder)
 	if(status == FISH_ALIVE && prob(50) && feeder.is_holding(src) && feeder.dropItemToGround(src))
 		to_chat(feeder, span_warning("[src] slips out of your hands in pain!"))
 		var/turf/target_turf = get_ranged_target_turf(get_turf(src), pick(GLOB.alldirs), 2)
@@ -927,6 +930,9 @@
 		stop_flopping()
 
 /obj/item/fish/process(seconds_per_tick)
+	do_fish_process(seconds_per_tick)
+
+/obj/item/fish/proc/do_fish_process(seconds_per_tick)
 	if(HAS_TRAIT(src, TRAIT_FISH_STASIS) || status != FISH_ALIVE)
 		return
 

@@ -4234,6 +4234,7 @@
 #include "code\modules\fishing\fish\types\freshwater.dm"
 #include "code\modules\fishing\fish\types\holographic.dm"
 #include "code\modules\fishing\fish\types\mining.dm"
+#include "code\modules\fishing\fish\types\rift.dm"
 #include "code\modules\fishing\fish\types\ruins.dm"
 #include "code\modules\fishing\fish\types\saltwater.dm"
 #include "code\modules\fishing\fish\types\station.dm"
