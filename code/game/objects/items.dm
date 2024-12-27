@@ -1988,6 +1988,9 @@
 /// Fetches, or lazyloads, our embedding datum
 /obj/item/proc/get_embed()
 	RETURN_TYPE(/datum/embedding)
+	// Something may call this during qdeleting, which would cause a harddel
+	if (QDELETED(src))
+		return null
 	if (embed_data)
 		return embed_data
 	if (embed_type)
@@ -1997,7 +2000,6 @@
 /// Sets our embedding datum to a different one. Can also take types
 /obj/item/proc/set_embed(datum/embedding/new_embed)
 	if (new_embed == embed_data)
-		SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDING_UPDATE)
 		return
 
 	// Needs to be QDELETED as embed data uses this to clean itself up from its parent (us)

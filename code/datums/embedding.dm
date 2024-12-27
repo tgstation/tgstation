@@ -68,7 +68,7 @@
 		var/obj/item/item = parent
 		item.set_embed(null)
 
-	UnregisterSignal(parent, list(COMSIG_QDELETING, COMSIG_PROJECTILE_SELF_ON_HIT, COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ATOM_EXAMINE, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(parent, list(COMSIG_QDELETING, COMSIG_PROJECTILE_SELF_ON_HIT, COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ATOM_EXAMINE))
 	owner = null
 	owner_limb = null
 	parent = null
@@ -431,6 +431,7 @@
 
 /datum/embedding/process(seconds_per_tick)
 	if (!owner || !owner_limb || owner_limb.owner != owner)
+		stack_trace("Attempted to process embedding on [parent] ([parent.type]) without an owner, owner_limb or owner-less limb!")
 		parent.forceMove(get_turf(parent))
 		return
 
