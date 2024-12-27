@@ -9,7 +9,7 @@
 		/obj/item/melee/roastingstick,
 		/obj/item/toy/crayon/spraycan
 	))
-	var/supermatter_effects
+	var/supermatter_effects = FALSE
 
 /datum/component/supermatter_crystal/Initialize(datum/callback/tool_act_callback, datum/callback/consume_callback, supermatter_effects = FALSE)
 
