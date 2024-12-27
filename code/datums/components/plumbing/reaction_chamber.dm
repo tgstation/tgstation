@@ -8,13 +8,29 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
+	. = FALSE
+
 	var/obj/machinery/plumbing/reaction_chamber/reaction_chamber = parent
 
 	//cannot give when we outselves are requesting or reacting the reagents
-	if(!reaction_chamber.emptying || reagents.is_reacting)
-		return FALSE
+	if(amount <= 0 || !reagents.total_volume || !reaction_chamber.emptying || reagents.is_reacting)
+		return
 
-	return ..()
+	//check to see if we can give catalysts only if they are in excess
+	var/list/datum/reagent/catalysts = reaction_chamber.catalysts
+	for(var/datum/reagent/chemical as anything in reagents.reagent_list)
+		if(reagent && chemical.type != reagent)
+			continue
+
+		//we have the exact amounts so no excess to spare
+		if(chemical.volume <= (catalysts[chemical.type] || 0))
+			if(reagent)
+				break
+			else
+				continue
+
+		//atleast 1 reagent to give so take whatever
+		return TRUE
 
 /datum/component/plumbing/reaction_chamber/send_request(dir)
 	var/obj/machinery/plumbing/reaction_chamber/chamber = parent
