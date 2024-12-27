@@ -890,6 +890,44 @@
 	icon_state = "human_like_r_leg"
 	limb_id = "human_like"
 
+///
+// zhenkov-light
+///
+/obj/item/bodypart/leg/right/robot/android/zhenkov
+	should_draw_greyscale = FALSE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "zhenkov_r_leg"
+	limb_id = "zhenkov"
+
+/obj/item/bodypart/leg/left/robot/android/zhenkov
+	should_draw_greyscale = FALSE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "zhenkov_r_leg"
+	limb_id = "zhenkov"
+
+///
+// zhenkov-dark
+///
+/obj/item/bodypart/leg/right/robot/android/zhenkovdark
+	should_draw_greyscale = FALSE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "zhenkovdark_r_leg"
+	limb_id = "zhenkovdark"
+
+/obj/item/bodypart/leg/left/robot/android/zhenkovdark
+	should_draw_greyscale = FALSE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "zhenkovdark_r_leg"
+	limb_id = "zhenkovdark"
+
 #undef HEAD_MONITOR_FACE
 #undef ANDROID_BODYPARTS_DMI
 
