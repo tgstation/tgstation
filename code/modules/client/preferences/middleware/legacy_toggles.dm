@@ -102,7 +102,12 @@
 		else
 			preferences.toggles &= ~legacy_flag
 
-		if(legacy_flag == SOUND_AMBIENCE)
-			user.client.update_ambience_pref()
+	var/legacy_chat_flag = legacy_chat_toggles[preference]
+	if (!isnull(legacy_chat_flag))
+		if (value)
+			preferences.chat_toggles |= legacy_chat_flag
+		else
+			preferences.chat_toggles &= ~legacy_chat_flag
+
 		return TRUE
 	return FALSE
