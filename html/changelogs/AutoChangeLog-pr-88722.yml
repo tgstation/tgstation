@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "plumbing reaction chamber won't waste extra ticks for the pipeline when sending out catalysts"
