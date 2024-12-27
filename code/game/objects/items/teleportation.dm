@@ -225,7 +225,7 @@
 			if(dangerous_turf.y > world.maxy - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.y < PORTAL_DANGEROUS_EDGE_LIMIT)
 				continue
 			var/area/dangerous_area = dangerous_turf.loc
-			if(dangerous_area.area_flags & NOTELEPORT)
+			if(!check_teleport_valid(src, teleport_location))
 				continue
 			dangerous_turfs += dangerous_turf
 
@@ -242,7 +242,7 @@
 		return
 
 	var/area/teleport_area = get_area(teleport_target)
-	if (teleport_area.area_flags & NOTELEPORT)
+	if(!check_teleport_valid(src, teleport_target))
 		to_chat(user, span_notice("[src] is malfunctioning."))
 		return
 
@@ -272,7 +272,7 @@
 /obj/item/hand_tele/proc/can_teleport_notifies(mob/user)
 	var/turf/current_location = get_turf(user)
 	var/area/current_area = current_location.loc
-	if (!current_location || (current_area.area_flags & NOTELEPORT) || is_away_level(current_location.z) || !isturf(user.loc))
+	if (!current_location || check_teleport_valid(src, current_location) || is_away_level(current_location.z) || !isturf(user.loc))
 		to_chat(user, span_notice("[src] is malfunctioning."))
 		return FALSE
 
@@ -433,7 +433,7 @@
 	var/area/current_area = get_area(current_location)
 	if(!current_location)
 		return TRUE
-	if(current_area.area_flags & NOTELEPORT)
+	if(!check_teleport_valid(src, current_location))
 		return TRUE
 	if(is_away_level(current_location.z))
 		return TRUE
