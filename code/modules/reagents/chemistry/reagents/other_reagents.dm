@@ -2191,7 +2191,7 @@
 	. = ..()
 	var/picked_color = pick(random_color_list)
 	var/color_filter = color_transition_filter(picked_color, SATURATION_OVERRIDE)
-	if (can_color_clothing)
+	if (can_color_clothing && (methods & TOUCH|VAPOR|INHALE))
 		var/include_flags = INCLUDE_HELD|INCLUDE_ACCESSORIES
 		if (methods & VAPOR|INHALE)
 			include_flags |= INCLUDE_POCKETS
