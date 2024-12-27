@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - balance: "turbine now has higher max rpm & increased power output"
-  - code_imp: "further improved code for turbine"

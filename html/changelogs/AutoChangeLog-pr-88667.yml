@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - refactor: "Rewrote some of HUD code so they're no longer colored in their owner's color"
-  - bugfix: "Space dragons no longer turn invisible when toggling seethrough mode"
