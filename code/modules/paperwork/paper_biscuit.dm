@@ -48,12 +48,6 @@
 	biscuit_overlay = contents[1].color_atom_overlay(biscuit_overlay)
 	return biscuit_overlay
 
-/obj/item/folder/biscuit/update_overlays()
-	. = ..()
-	if(contents.len) //This is to prevent the unsealed biscuit from having the folder_paper overlay when it gets sealed
-		. -= "folder_paper"
-
-
 ///Checks if the biscuit has been already cracked.
 /obj/item/folder/biscuit/proc/crack_check(mob/user)
 	if (cracked)
