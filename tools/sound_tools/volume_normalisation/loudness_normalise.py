@@ -83,10 +83,11 @@ def normalize_loudness(file_path, target_lufs=-23):
         command = [
             'ffmpeg',
             '-i', file_path,
-            '-filter_complex', f'loudnorm=I={target_lufs}:TP=-1.0:LRA=11.0',
+            '-filter_complex', f'[0:a]loudnorm=I={target_lufs}:TP=-1.0:LRA=11.0[audio]',  # Explicitly label the audio stream
             '-ar', str(sample_rate),  # Use the original sample rate
             '-map_metadata', '0',  # Copy metadata from the input file
-            '-y',  # overwrites the previous file
+            '-map', '[audio]',  # Map the labeled audio stream to the output
+            '-y',  # overwrite the previous file
             temp_file.name
         ]
         subprocess.run(command, check=True)
