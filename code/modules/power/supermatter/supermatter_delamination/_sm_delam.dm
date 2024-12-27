@@ -16,6 +16,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	src.sm = sm
 
 /datum/sm_delam/Destroy(force)
+	sm.delamination_strategy = null
 	sm = null
 	return ..()
 
