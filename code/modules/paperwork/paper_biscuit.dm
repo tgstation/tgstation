@@ -43,8 +43,7 @@
 		return null
 
 	//Shows overlay only when it has contents and is cracked open
-	var/mutable_appearance/biscuit_overlay = mutable_appearance(icon, "paperbiscuit_paper", offset_spokesman = src)
-	biscuit_overlay.appearance_flags |= KEEP_APART
+	var/mutable_appearance/biscuit_overlay = mutable_appearance(icon, "paperbiscuit_paper", offset_spokesman = src, appearance_flags = KEEP_APART)
 	biscuit_overlay = contents[1].color_atom_overlay(biscuit_overlay)
 	return biscuit_overlay
 

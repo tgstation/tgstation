@@ -72,8 +72,7 @@
 			. += to_add
 
 /obj/item/folder/proc/get_paper_overlay()
-	var/mutable_appearance/paper_overlay = mutable_appearance(icon, "folder_paper", offset_spokesman = src)
-	paper_overlay.appearance_flags |= KEEP_APART
+	var/mutable_appearance/paper_overlay = mutable_appearance(icon, "folder_paper", offset_spokesman = src, appearance_flags = KEEP_APART)
 	paper_overlay = contents[1].color_atom_overlay(paper_overlay)
 	return paper_overlay
 
