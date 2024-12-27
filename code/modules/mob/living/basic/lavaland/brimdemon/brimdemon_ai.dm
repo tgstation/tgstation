@@ -31,7 +31,7 @@
 	var/datum/action/cooldown/ability = controller.blackboard[BB_TARGETED_ACTION]
 	if(QDELETED(target) || QDELETED(controller.pawn) || !ability?.IsAvailable())
 		return
-	ability.InterceptClickOn(caller = controller.pawn, target = target)
+	ability.InterceptClickOn(clicker = controller.pawn, target = target)
 
 /datum/ai_planning_subtree/targeted_mob_ability/brimbeam
 	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/brimbeam

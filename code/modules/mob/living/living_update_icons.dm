@@ -61,7 +61,12 @@
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, UPDATE_TRANSFORM_TRAIT)
 	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_NO_FLOATING_ANIM, UPDATE_TRANSFORM_TRAIT), 0.3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 	//if true, we want to avoid any animation time, it'll tween and not rotate at all otherwise.
-	var/is_opposite_angle = SIMPLIFY_DEGREES(lying_angle+180) == lying_prev
-	animate(src, transform = ntransform, time = is_opposite_angle ? 0 : UPDATE_TRANSFORM_ANIMATION_TIME, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT))
+	var/is_opposite_angle = REVERSE_ANGLE(lying_angle) == lying_prev
+	var/animate_time = is_opposite_angle ? 0 : UPDATE_TRANSFORM_ANIMATION_TIME
+	animate(src, transform = ntransform, time = animate_time, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT))
+	for (var/hud_key in hud_list)
+		var/image/hud_image = hud_list[hud_key]
+		if (istype(hud_image))
+			adjust_hud_position(hud_image, animate_time = animate_time)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_UPDATE_TRANSFORM, resize, lying_angle, is_opposite_angle)
