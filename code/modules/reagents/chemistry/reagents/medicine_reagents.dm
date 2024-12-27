@@ -777,7 +777,6 @@
 /datum/reagent/medicine/oculine/flumpuline
 	name = "Flumpuline"
 	description = "Often confused for, or sold as, Oculine or a variation thereof. Slowly transmogrifies the eyes of the patient into grotesque stalks - but you'll never need glasses again."
-	reagent_state = LIQUID
 	color = "#6c596d"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	overdose_threshold = 5

@@ -325,15 +325,6 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	stench.temperature = mob.bodytemperature
 	our_turf.assume_air(stench)
 
-/datum/fish_trait/emulsijack/psychic
-	name = "Psychic Aura"
-	catalog_description = "This fish emits an almost unblockable psychic aura that assaults minds, slowly killing all nearby fish and making humanoids have a bad time."
-	resistance_traits = list(TRAIT_RESIST_PSYCHIC)
-	trait_to_add = TRAIT_RESIST_PSYCHIC
-
-/datum/fish_trait/emulsijack/psychic/on_non_stasis_life(mob/living/basic/mob, seconds_per_tick)
-	return
-
 /datum/fish_trait/necrophage
 	name = "Necrophage"
 	catalog_description = "This fish will eat carcasses of dead fish when hungry."
