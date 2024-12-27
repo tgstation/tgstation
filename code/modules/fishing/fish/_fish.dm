@@ -459,7 +459,7 @@
 	return ..()
 
 /obj/item/fish/update_icon_state()
-	if(status == FISH_DEAD && icon_state_dead)
+	if((status == FISH_DEAD || HAS_TRAIT(src, TRAIT_FISH_STASIS)) && icon_state_dead)
 		icon_state = icon_state_dead
 	else
 		icon_state = base_icon_state
@@ -480,7 +480,7 @@
 
 /obj/item/fish/examine(mob/user)
 	. = ..()
-	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
+	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH) || HAS_TRAIT(loc, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")
 
@@ -827,6 +827,7 @@
 /obj/item/fish/proc/enter_stasis(datum/source)
 	SIGNAL_HANDLER
 	stop_flopping()
+	update_appearance()
 	STOP_PROCESSING(SSobj, src)
 
 /// Start processing again when the stasis trait is removed
@@ -918,7 +919,7 @@
 
 	// Do additional stuff
 	// Start flopping if outside of fish container
-	var/should_be_flopping = status == FISH_ALIVE && !HAS_TRAIT(src, TRAIT_FISH_STASIS) && loc && !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
+	var/should_be_flopping = status == FISH_ALIVE && (loc && !HAS_TRAIT(loc, TRAIT_STOP_FISH_FLOPPING))
 
 	if(should_be_flopping)
 		start_flopping()
@@ -1501,6 +1502,14 @@
 /obj/item/fish/update_atom_colour()
 	. = ..()
 	aquarium_vc_color = color || initial(aquarium_vc_color)
+
+///Proc called in trophy_fishes.dm, when a fish is mounted on persistent trophy mounts
+/obj/item/fish/proc/persistence_save(list/data)
+	return
+
+///Proc called in trophy_fishes.dm, when a persistent fishing trophy mount is spawned and the fish instantiated
+/obj/item/fish/proc/persistence_load(list/data)
+	return
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)

@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix holoparasite using gas ability while not summoned"

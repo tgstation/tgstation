@@ -119,7 +119,7 @@
 /datum/component/jetpack/proc/deactivate(datum/source, mob/old_user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(old_user, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_MOB_CLIENT_MOVE_NOGRAV, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE))
+	UnregisterSignal(old_user, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_MOB_CLIENT_MOVE_NOGRAV, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT))
 	STOP_PROCESSING(SSnewtonian_movement, src)
 	user = null
 
@@ -159,7 +159,7 @@
 
 	last_stabilization_tick = world.time
 
-	if (!should_trigger(user) || !stabilize || isnull(user.drift_handler))
+	if (!should_trigger(user) || !stabilize || !check_on_move.Invoke(FALSE) || isnull(user.drift_handler))
 		return
 
 	var/max_drift_force = MOVE_DELAY_TO_DRIFT(user.cached_multiplicative_slowdown)

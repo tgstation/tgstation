@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - bugfix: "fixed being unable to place rpeds on tables"

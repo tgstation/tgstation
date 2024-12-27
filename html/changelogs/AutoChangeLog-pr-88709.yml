@@ -1,0 +1,4 @@
+author: "TheRealSpriteMan1337"
+delete-after: True
+changes:
+  - spellcheck: "Fixes some usages of its, clarifies wording on the syndie medbot, changes span_warning to notice."

@@ -226,3 +226,13 @@
 	SIGNAL_HANDLER
 	//yes, this means that if we use a spraycan on the fish, the resulting space carp will be of spraycan color
 	result.set_greyscale(colors = list(color))
+
+#define PERSISTENCE_FISH_CARP_COLOR "carp_color"
+
+/obj/item/fish/baby_carp/persistence_save(list/data)
+	data[PERSISTENCE_FISH_CARP_COLOR] = color
+
+/obj/item/fish/baby_carp/persistence_load(list/data)
+	add_atom_colour(data[PERSISTENCE_FISH_CARP_COLOR], FIXED_COLOUR_PRIORITY)
+
+#undef PERSISTENCE_FISH_CARP_COLOR
