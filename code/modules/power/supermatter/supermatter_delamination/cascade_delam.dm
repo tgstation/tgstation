@@ -172,7 +172,7 @@
 		return FALSE // nothing more to be done now
 
 	strikes_remaining--
-	sm.external_damage_immediate += 10
+	sm.external_damage_immediate += 5
 	COOLDOWN_START(src, heal_cooldown, HEAL_COOLDOWN)
 
 	switch(strikes_remaining)
