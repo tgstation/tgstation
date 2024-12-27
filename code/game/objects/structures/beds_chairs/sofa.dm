@@ -28,8 +28,7 @@ path/corner/color_name {\
 
 /obj/structure/chair/sofa/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
-		var/mutable_appearance/echair_overlay = mutable_appearance('icons/obj/chairs.dmi', "echair_over", OBJ_LAYER, src)
-		echair_overlay.appearance_flags |= KEEP_APART
+		var/mutable_appearance/echair_overlay = mutable_appearance('icons/obj/chairs.dmi', "echair_over", OBJ_LAYER, src, appearance_flags = KEEP_APART)
 		echair_overlay.pixel_x = -1
 		overlays_from_child_procs = list(echair_overlay)
 	. = ..()

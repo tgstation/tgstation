@@ -67,8 +67,7 @@
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()
 	if(has_buckled_mobs())
-		var/mutable_appearance/wheel_overlay = mutable_appearance(icon, overlay_icon, ABOVE_MOB_LAYER, src)
-		wheel_overlay.appearance_flags |= KEEP_APART
+		var/mutable_appearance/wheel_overlay = mutable_appearance(icon, overlay_icon, ABOVE_MOB_LAYER, src, appearance_flags = KEEP_APART)
 		wheel_overlay = color_atom_overlay(wheel_overlay)
 		. += wheel_overlay
 	if(bell_attached)

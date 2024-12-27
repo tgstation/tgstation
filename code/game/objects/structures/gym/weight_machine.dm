@@ -152,8 +152,7 @@
 	if(!has_buckled_mobs())
 		end_workout()
 		return FALSE
-	var/mutable_appearance/workout = mutable_appearance(icon, "[base_icon_state]-o", ABOVE_MOB_LAYER, src)
-	workout.appearance_flags |= KEEP_APART
+	var/mutable_appearance/workout = mutable_appearance(icon, "[base_icon_state]-o", ABOVE_MOB_LAYER, src, appearance_flags = KEEP_APART)
 	workout = color_atom_overlay(workout)
 	flick_overlay_view(workout, 0.8 SECONDS)
 	flick("[base_icon_state]-u", src)
