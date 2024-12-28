@@ -54,7 +54,7 @@
 /// Handles the actual shattering part, throwing shards of whatever is defined on the component everywhere
 /datum/element/can_shatter/proc/shatter(atom/movable/source, atom/hit_atom)
 	var/turf/scatter_turf = get_turf(hit_atom)
-	if(!TURF_SHARES(scatter_turf)) //turf blocked(e.g by a wall, airlock, window etc i.e. anything that blocks air) so drop on the source location
+	if(!hit_atom.CanPass(source, get_dir(source, hit_atom))) //Object is too dense to fall apart on
 		scatter_turf = get_turf(source)
 
 	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)
