@@ -20,3 +20,15 @@
 	name = "Neck Gaiter (Worn)"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/face.dmi'
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/face/gaiter_worn.json'
+
+// RESPIRATOR
+
+/datum/greyscale_config/respirator
+	name = "Half-Mask Respirator"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/face.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/face/respirator.json'
+
+/datum/greyscale_config/respirator/worn
+	name = "Half-Mask Respirator (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/face.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/face/respirator_worn.json'

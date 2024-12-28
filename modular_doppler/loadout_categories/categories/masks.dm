@@ -87,3 +87,7 @@
 /datum/loadout_item/mask/kitsune
 	name = "Kitsune Mask"
 	item_path = /obj/item/clothing/mask/kitsune
+
+/datum/loadout_item/mask/respirator
+	name = "Half-Mask Respirator"
+	item_path = /obj/item/clothing/mask/gas/respirator
