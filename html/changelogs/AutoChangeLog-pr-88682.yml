@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "breaking out of a closet won't spam chat or shake like it's having a seizure"

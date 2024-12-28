@@ -714,3 +714,22 @@
   - bugfix: Fix vent clog event triggering on non-station areas
   - bugfix: Fix custom map loading ignoring JSON values that were ignored previously.
       (minetype, planetary, etc.)
+2024-12-28:
+  00-Steven:
+  - bugfix: Lesser quiver actually has less slots as intended.
+  LT3:
+  - bugfix: Premade/vending machine flatpacks now display what board is inside
+  SmArtKar:
+  - bugfix: Fixed forcing open airlocks only working once and then never again
+  - balance: You can no longer check if budget insuls work via examine tags
+  SyncIt21:
+  - bugfix: breaking out of a closet won't spam chat or shake like it's having a seizure
+  - code_imp: plumbing reaction chamber won't waste extra ticks for the pipeline when
+      sending out catalysts
+  carlarctg:
+  - rscadd: Adds rift fishing to the game. Includes new wacky fish!
+  - rscadd: Drained and undrained influences can be fished in, the latter only by
+      heretics. Fishing in an undrained influence shows a bobber floating over nothing
+      to other people, so don't be stupid!
+  - rscadd: influences cannot be bombed for fish.
+  - rscadd: Heretics can now infuse their fishing rod, and fish for knowledge.
