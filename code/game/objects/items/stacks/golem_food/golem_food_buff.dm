@@ -50,7 +50,7 @@
 
 /datum/golem_food_buff/uranium
 	status_effect = /datum/status_effect/golem/uranium
-	added_info = "If consumed this mineral will power you in place of food, pausing your digestion for five minutes."
+	added_info = "If consumed this mineral will power you in place of food and make your fists radioactive."
 
 /datum/golem_food_buff/silver
 	status_effect = /datum/status_effect/golem/silver
@@ -62,7 +62,11 @@
 
 /datum/golem_food_buff/plasteel
 	status_effect = /datum/status_effect/golem/plasteel
-	added_info = "If consumed this mineral will harden you against the hazards of space."
+	added_info = "If consumed this mineral will harden your body, keeping you from slipping into death from critical health."
+
+/datum/golem_food_buff/plastitanium
+	status_effect = /datum/status_effect/golem/plastitanium
+	added_info = "If consumed this mineral will reinforce your body until only death will stop you."
 
 /datum/golem_food_buff/gold
 	status_effect = /datum/status_effect/golem/gold
