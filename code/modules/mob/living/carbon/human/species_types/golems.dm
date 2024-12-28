@@ -103,3 +103,21 @@
 	))
 
 	return to_add
+
+/atom/movable/screen/alert/golem_coldwelding
+	name = "Coldwelding joints"
+	desc = "The lack of atmosphere is preventing your joints from oxidizing apart; they're welding together and it's harder to move!"
+	icon_state = "golem_statued"
+
+/datum/species/golem/handle_environment_pressure(mob/living/carbon/human/golem, datum/gas_mixture/environment, seconds_per_tick, times_fired)
+	var/pressure = environment.return_pressure()
+	var/adjusted_pressure = golem.calculate_affecting_pressure(pressure)
+
+	if(adjusted_pressure <= HAZARD_LOW_PRESSURE)
+		// golems are made of metal, and metal cold welds without a layer of oxidization (i think?)
+		// whatever, it's the future, and uhhh, magic
+		golem.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/golem_coldwelding)
+		golem.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding)
+	else
+		golem.clear_alert(ALERT_PRESSURE)
+		golem.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding)

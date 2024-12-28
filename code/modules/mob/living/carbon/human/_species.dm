@@ -949,6 +949,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(damage >= 9)
 			target.force_say()
 		log_combat(user, target, "punched")
+	SEND_SIGNAL(user, COMSIG_CARBON_BODYPART_ATTACK_PERFORMED, user, target, attacking_bodypart, damage, affecting)
+	SEND_SIGNAL(target, COMSIG_CARBON_BODYPART_ATTACK_VICTIM, user, target, attacking_bodypart, damage, affecting)
 
 	// If our target is staggered and has sustained enough damage, we can apply a randomly determined status effect to inflict when we punch them.
 	// The effects are based on the punching effectiveness of our attacker. Some effects are not reachable by the average human, and require augmentation to reach or being a species with a heavy punch effectiveness.
@@ -1041,7 +1043,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		disarm(owner, target, attacker_style)
 		return // dont attack after
 	if(owner.combat_mode)
-		harm(owner, target, attacker_style)
+		harm(owner, target, attacker_style) // would like to put signals for attacking out here but the harm proc is a disaster
 	else
 		help(owner, target, attacker_style)
 

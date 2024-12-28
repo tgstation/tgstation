@@ -553,6 +553,9 @@
 	else if(w_uniform)
 		w_uniform.add_fingerprint(helper)
 
+	SEND_SIGNAL(helper, COMSIG_CARBON_BODYPART_CONTACT_PERFORMED, helper, src, helper.get_active_hand())
+	SEND_SIGNAL(src, COMSIG_CARBON_BODYPART_CONTACT_RECEIVED, helper, src, helper.get_active_hand())
+
 	return ..()
 
 /mob/living/carbon/human/check_self_for_injuries()
