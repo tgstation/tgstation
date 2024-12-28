@@ -18,7 +18,7 @@
 	suicide_cry = "FOR MY LOVE!!"
 	preview_outfit = /datum/outfit/obsessed
 	hardcore_random_bonus = TRUE
-	stinger_sound = 'sound/ambience/antag/creepalert.ogg'
+	stinger_sound = 'sound/music/antag/creepalert.ogg'
 	/// How many objectives should be generated
 	var/objectives_to_generate = 3
 	/// Brain trauma that causes the obsession
@@ -41,7 +41,7 @@
 	if(!istype(C))
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to at least be a carbon!")
 		return
-	if(!C.get_organ_by_type(/obj/item/organ/internal/brain)) // If only I had a brain
+	if(!C.get_organ_by_type(/obj/item/organ/brain)) // If only I had a brain
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to HAVE A BRAIN.")
 		return
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
@@ -147,7 +147,7 @@
 		O.update_explanation_text()
 
 /datum/antagonist/obsessed/roundend_report_header()
-	return "<span class='header'>Someone became obsessed!</span><br>"
+	return span_header("Someone became obsessed!<br>")
 
 /datum/antagonist/obsessed/roundend_report()
 	var/list/report = list()

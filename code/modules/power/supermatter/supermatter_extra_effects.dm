@@ -91,7 +91,7 @@
 
 /obj/machinery/power/supermatter_crystal/proc/handle_high_power()
 	if(internal_energy <= POWER_PENALTY_THRESHOLD && damage <= danger_point) //If the power is above 5000 or if the damage is above 550
-		last_high_energy_zap_perspective_machines = SSmachines.times_fired //Prevent oddly high initial zap due to high energy zaps not getting triggered via too low energy.
+		last_high_energy_accumulation_perspective_machines = SSmachines.times_fired //Prevent oddly high initial zap due to high energy zaps not getting triggered via too low energy.
 		return
 	var/range = 4
 	zap_cutoff = 1500
@@ -128,11 +128,14 @@
 		zap_count += 1
 
 	if(zap_count >= 1)
-		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
-		var/delta_time = (SSmachines.times_fired - last_high_energy_zap_perspective_machines) * SSmachines.wait / (1 SECONDS)
-		for(var/i in 1 to zap_count)
-			supermatter_zap(src, range, clamp(internal_energy * 3200, 6.4e6, 3.2e7) * delta_time, flags, zap_cutoff = src.zap_cutoff * delta_time, power_level = internal_energy, zap_icon = src.zap_icon)
-		last_high_energy_zap_perspective_machines = SSmachines.times_fired
+		playsound(loc, 'sound/items/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
+		var/delta_time = (SSmachines.times_fired - last_high_energy_accumulation_perspective_machines) * SSmachines.wait / (1 SECONDS)
+		var/accumulated_energy = accumulate_energy(ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY, energy = clamp(internal_energy * 3200, 6.4e6, 3.2e7) * delta_time)
+		if(accumulated_energy)
+			for(var/i in 1 to zap_count)
+				var/discharged_energy = discharge_energy(ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY, portion = 1 - (1 - ZAP_ENERGY_DISCHARGE_PORTION) ** INVERSE(zap_count))
+				supermatter_zap(src, range = range, zap_str = discharged_energy, zap_flags = flags, zap_cutoff = src.zap_cutoff, power_level = internal_energy, zap_icon = src.zap_icon)
+		last_high_energy_accumulation_perspective_machines = SSmachines.times_fired
 	if(prob(5))
 		supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
 	if(prob(5))
@@ -143,7 +146,7 @@
 		supermatter_anomaly_gen(src, PYRO_ANOMALY, rand(5, 10))
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
-	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
+	playsound(center, 'sound/items/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
 	for(var/atom/movable/movable_atom in orange(pull_range,center))
 		if((movable_atom.anchored || movable_atom.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)) //move resist memes.
 			if(istype(movable_atom, /obj/structure/closet))
@@ -157,7 +160,7 @@
 		step_towards(movable_atom,center)
 
 /proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5, has_changed_lifespan = TRUE)
-	var/turf/local_turf = pick(orange(anomalyrange, anomalycenter))
+	var/turf/local_turf = pick(RANGE_TURFS(anomalyrange, anomalycenter))
 	if(!local_turf)
 		return
 	switch(type)

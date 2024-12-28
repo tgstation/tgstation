@@ -80,7 +80,7 @@
 	if(user)
 		target.balloon_alert(user, "access denied until delivery!")
 	if(COOLDOWN_FINISHED(src, deny_cooldown))
-		playsound(target, 'sound/machines/buzz-two.ogg', 30, TRUE)
+		playsound(target, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 		COOLDOWN_START(src, deny_cooldown, DENY_SOUND_COOLDOWN)
 	return BLOCK_OPEN
 

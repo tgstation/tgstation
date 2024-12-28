@@ -85,9 +85,9 @@
 	return get_dir(start, end) & (rand() * (dx+dy) < dy ? 3 : 12)
 
 /**
- * Finds the distance between two atoms, in pixels
- * centered = FALSE counts from turf edge to edge
- * centered = TRUE counts from turf center to turf center
+ * Finds the distance between two atoms, in pixels \
+ * centered = FALSE counts from turf edge to edge \
+ * centered = TRUE counts from turf center to turf center \
  * of course mathematically this is just adding world.icon_size on again
 **/
 /proc/get_pixel_distance(atom/start, atom/end, centered = TRUE)
@@ -95,7 +95,7 @@
 		return 0
 	. = bounds_dist(start, end) + sqrt((((start.pixel_x + end.pixel_x) ** 2) + ((start.pixel_y + end.pixel_y) ** 2)))
 	if(centered)
-		. += world.icon_size
+		. += ICON_SIZE_ALL
 
 /**
  * Check if there is already a wall item on the turf loc
@@ -316,6 +316,46 @@ rough example of the "cone" made by the 3 dirs checked
 		loc = loc.loc
 	return null
 
+/**
+ * Line of sight check!
+ * Spawns a dummy object and then iterates through each turf to see if it's blocked by something not handled by pass_args.
+ * Contains a mid_los_check, meant to be overriden by subtypes.
+ * args:
+ * * user = Origin to start at.
+ * * target = End point.
+ * * pass_args = pass_flags given to dummy object to allow it to ignore certain types of blockades.
+ */
+/proc/los_check(atom/movable/user, mob/target, pass_args = PASSTABLE|PASSGLASS|PASSGRILLE, datum/callback/mid_check)
+	var/turf/user_turf = user.loc
+	if(!istype(user_turf))
+		return FALSE
+	var/obj/dummy = new(user_turf)
+	dummy.pass_flags |= pass_args //Grille/Glass so it can be used through common windows
+	var/turf/previous_step = user_turf
+	var/first_step = TRUE
+	for(var/turf/next_step as anything in (get_line(user_turf, target) - user_turf))
+		if(first_step)
+			for(var/obj/blocker in user_turf)
+				if(!blocker.density || !(blocker.flags_1 & ON_BORDER_1))
+					continue
+				if(blocker.CanPass(dummy, get_dir(user_turf, next_step)))
+					continue
+				return FALSE // Could not leave the first turf.
+			first_step = FALSE
+		if(next_step.density)
+			qdel(dummy)
+			return FALSE
+		for(var/atom/movable/movable as anything in next_step)
+			if(!movable.CanPass(dummy, get_dir(next_step, previous_step)))
+				qdel(dummy)
+				return FALSE
+		if(mid_check?.Invoke(user, target, pass_args, next_step, dummy) == FALSE) // specify false as it may return null if there's no check
+			qdel(dummy)
+			return FALSE
+		previous_step = next_step
+	qdel(dummy)
+	return TRUE
+
 ///Returns true if the src countain the atom target
 /atom/proc/contains(atom/target)
 	if(!target)
@@ -336,6 +376,6 @@ rough example of the "cone" made by the 3 dirs checked
 	var/icon_width = icon_dimensions["width"]
 	var/icon_height = icon_dimensions["height"]
 	return list(
-		"x" = icon_width > world.icon_size && pixel_x != 0 ? (icon_width - world.icon_size) * 0.5 : 0,
-		"y" = icon_height > world.icon_size && pixel_y != 0 ? (icon_height - world.icon_size) * 0.5 : 0,
+		"x" = icon_width > ICON_SIZE_X && pixel_x != 0 ? (icon_width - ICON_SIZE_X) * 0.5 : 0,
+		"y" = icon_height > ICON_SIZE_Y && pixel_y != 0 ? (icon_height - ICON_SIZE_Y) * 0.5 : 0,
 	)

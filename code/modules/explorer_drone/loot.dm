@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 		var/datum/adventure_loot_generator/simple/cash/replacement = new
 		return replacement.generate()
 	var/chosen_pack_type = pick(still_locked_packs)
-	return new /obj/item/trade_chip(null,chosen_pack_type)
+	return list(new /obj/item/trade_chip(null, chosen_pack_type))
 
 /// Just picks and instatiates the path from the list
 /datum/adventure_loot_generator/simple
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	var/chosen_pet_type = pick(possible_pets)
 	var/mob/living/basic/pet/pet = new chosen_pet_type()
 	carrier.add_occupant(pet)
-	return carrier
+	return list(carrier)
 
 /obj/item/antique
 	name = "antique"

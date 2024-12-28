@@ -49,7 +49,7 @@
 	if(!user.combat_mode || pushed_over || !isturf(loc))
 		return ..()
 	user.visible_message(span_warning("[user] pushes over [src]!"), span_danger("You push over [src]!"))
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	push_over()
 
 /obj/item/cardboard_cutout/equipped(mob/living/user, slot)
@@ -360,3 +360,34 @@
 	applied_name = "Private Security Officer"
 	applied_desc = "A cardboard cutout of a private security officer."
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasensoldier
+
+/datum/cardboard_cutout/heretic
+	name = "Heretic"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a Heretic."
+	outfit = /datum/outfit/heretic_hallucination
+
+/datum/cardboard_cutout/changeling
+	name = "Changeling"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a Changeling."
+	outfit = /datum/outfit/changeling
+
+/datum/cardboard_cutout/pirate
+	name = "Pirate"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a space pirate."
+	outfit = /datum/outfit/pirate/space/captain/cardboard
+
+/datum/cardboard_cutout/ninja
+	name = "Space Ninja"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a space ninja."
+	outfit = /datum/outfit/ninja
+
+/datum/cardboard_cutout/abductor
+	name = "Abductor Agent"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of an abductor agent."
+	species = /datum/species/abductor
+	outfit = /datum/outfit/abductor/agent/cardboard

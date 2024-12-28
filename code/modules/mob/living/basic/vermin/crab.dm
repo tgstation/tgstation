@@ -23,7 +23,7 @@
 	///In the case 'melee_damage_upper' is somehow raised above 0
 	attack_verb_continuous = "snips"
 	attack_verb_simple = "snip"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	ai_controller = /datum/ai_controller/basic_controller/crab
 

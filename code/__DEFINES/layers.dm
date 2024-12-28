@@ -32,6 +32,7 @@
 
 #define DEFAULT_PLANE 0 //Marks out the default plane, even if we don't use it
 
+#define WEATHER_PLANE 1
 #define AREA_PLANE 2
 #define MASSIVE_OBJ_PLANE 3
 #define GHOST_PLANE 4
@@ -64,6 +65,8 @@
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 17
+
+#define WEATHER_GLOW_PLANE 18
 
 ///---------------- MISC -----------------------
 
@@ -134,20 +137,33 @@
 
 // NOTICE: we break from the pattern of increasing in steps of like 0.01 here
 // Because TOPDOWN_LAYER is 10000 and that's enough to floating point our modifications away
-#define LOW_FLOOR_LAYER (1 + TOPDOWN_LAYER)
-#define TURF_PLATING_DECAL_LAYER (2 + TOPDOWN_LAYER)
-#define TURF_DECAL_LAYER (3 + TOPDOWN_LAYER) //Makes turf decals appear in DM how they will look inworld.
-#define CULT_OVERLAY_LAYER (4 + TOPDOWN_LAYER)
-#define MID_TURF_LAYER (5 + TOPDOWN_LAYER)
-#define HIGH_TURF_LAYER (6 + TOPDOWN_LAYER)
-#define LATTICE_LAYER (7 + TOPDOWN_LAYER)
-#define DISPOSAL_PIPE_LAYER (8 + TOPDOWN_LAYER)
-#define WIRE_LAYER (9 + TOPDOWN_LAYER)
-#define GLASS_FLOOR_LAYER (10 + TOPDOWN_LAYER)
-#define TRAM_RAIL_LAYER (11 + TOPDOWN_LAYER)
-#define ABOVE_OPEN_TURF_LAYER (12 + TOPDOWN_LAYER)
+
+//lower than LOW_FLOOR_LAYER, for turfs with stuff on the edge that should be covered by other turfs
+#define LOWER_FLOOR_LAYER (1 + TOPDOWN_LAYER)
+#define LOW_FLOOR_LAYER (2 + TOPDOWN_LAYER)
+#define TURF_PLATING_DECAL_LAYER (3 + TOPDOWN_LAYER)
+#define TURF_DECAL_LAYER (4 + TOPDOWN_LAYER) //Makes turf decals appear in DM how they will look inworld.
+#define CULT_OVERLAY_LAYER (5 + TOPDOWN_LAYER)
+#define MID_TURF_LAYER (6 + TOPDOWN_LAYER)
+#define HIGH_TURF_LAYER (7 + TOPDOWN_LAYER)
+#define LATTICE_LAYER (8 + TOPDOWN_LAYER)
+#define DISPOSAL_PIPE_LAYER (9 + TOPDOWN_LAYER)
+#define WIRE_LAYER (10 + TOPDOWN_LAYER)
+#define GLASS_FLOOR_LAYER (11 + TOPDOWN_LAYER)
+#define TRAM_RAIL_LAYER (12 + TOPDOWN_LAYER)
+#define ABOVE_OPEN_TURF_LAYER (13 + TOPDOWN_LAYER)
 ///catwalk overlay of /turf/open/floor/plating/catwalk_floor
-#define CATWALK_LAYER (13 + TOPDOWN_LAYER)
+#define CATWALK_LAYER (14 + TOPDOWN_LAYER)
+#define LOWER_RUNE_LAYER (15 + TOPDOWN_LAYER)
+#define RUNE_LAYER (16 + TOPDOWN_LAYER)
+#define CLEANABLE_FLOOR_OBJECT_LAYER (21 + TOPDOWN_LAYER)
+
+//Placeholders in case the game plane and possibly other things between it and the floor plane are ever made into topdown planes
+
+///Below this level, objects with topdown layers are rendered as if underwater by the immerse element
+#define TOPDOWN_WATER_LEVEL_LAYER 100 + TOPDOWN_LAYER
+///Above this level, objects with topdown layers are unaffected by the immerse element
+#define TOPDOWN_ABOVE_WATER_LAYER 200 + TOPDOWN_LAYER
 
 //WALL_PLANE layers
 #define BELOW_CLOSED_TURF_LAYER 2.053
@@ -166,12 +182,8 @@
 #define PLUMBING_PIPE_VISIBILE_LAYER 2.495//layer = initial(layer) + ducting_layer / 3333 in atmospherics/handle_layer() to determine order of duct overlap
 #define BOT_PATH_LAYER 2.497
 #define LOW_OBJ_LAYER 2.5
-#define LOW_SIGIL_LAYER 2.52
-#define SIGIL_LAYER 2.53
 #define HIGH_PIPE_LAYER 2.54
-// Anything above this layer is not "on" a turf for the purposes of washing
-// I hate this life of ours
-#define FLOOR_CLEAN_LAYER 2.55
+#define CLEANABLE_OBJECT_LAYER 2.55
 #define TRAM_STRUCTURE_LAYER 2.57
 #define TRAM_FLOOR_LAYER 2.58
 #define TRAM_WALL_LAYER 2.59
@@ -185,6 +197,7 @@
 #define DOOR_HELPER_LAYER 2.72 //keep this above DOOR_ACCESS_HELPER_LAYER and OPEN_DOOR_LAYER since the others tend to have tiny sprites that tend to be covered up.
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
+#define GIB_LAYER 2.85 // sit on top of tables, but below machines
 #define BELOW_OBJ_LAYER 2.9
 #define LOW_ITEM_LAYER 2.95
 //#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define

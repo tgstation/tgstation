@@ -26,7 +26,9 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		Reboot(reason = 1)
 		return
 
-	var/static/regex/stack_workaround = regex("[WORKAROUND_IDENTIFIER](.+?)[WORKAROUND_IDENTIFIER]")
+	var/static/regex/stack_workaround
+	if(isnull(stack_workaround))
+		stack_workaround = regex("[WORKAROUND_IDENTIFIER](.+?)[WORKAROUND_IDENTIFIER]")
 	var/static/list/error_last_seen = list()
 	var/static/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
 												If negative, starts at -1, and goes down by 1 each time that error gets skipped*/

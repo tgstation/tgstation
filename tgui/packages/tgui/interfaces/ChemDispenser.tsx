@@ -18,6 +18,7 @@ type DispensableReagent = {
   title: string;
   id: string;
   pH: number;
+  color: string;
   pHCol: string;
 };
 
@@ -43,7 +44,7 @@ export const ChemDispenser = (props) => {
   const { act, data } = useBackend<Data>();
   const recording = !!data.recordingRecipe;
   const { recipeReagents = [], recipes = [], beaker } = data;
-  const [hasCol, setHasCol] = useState(false);
+  const [showPhCol, setShowPhCol] = useState(false);
 
   const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
   const recordedContents =
@@ -84,8 +85,8 @@ export const ChemDispenser = (props) => {
                 icon="cog"
                 tooltip="Color code the reagents by pH"
                 tooltipPosition="bottom-start"
-                selected={hasCol}
-                onClick={() => setHasCol(!hasCol)}
+                selected={showPhCol}
+                onClick={() => setShowPhCol(!showPhCol)}
               />
             </>
           }
@@ -186,17 +187,15 @@ export const ChemDispenser = (props) => {
               <Button
                 key={chemical.id}
                 icon="tint"
+                textColor={showPhCol ? chemical.pHCol : chemical.color}
                 width="129.5px"
                 lineHeight={1.75}
                 tooltip={'pH: ' + chemical.pH}
+                style={{
+                  textShadow: '1px 1px 0 black',
+                }}
                 backgroundColor={
-                  recipeReagents.includes(chemical.id)
-                    ? hasCol
-                      ? 'black'
-                      : 'green'
-                    : hasCol
-                      ? chemical.pHCol
-                      : 'default'
+                  recipeReagents.includes(chemical.id) ? 'green' : 'default'
                 }
                 onClick={() =>
                   act('dispense', {
@@ -204,7 +203,14 @@ export const ChemDispenser = (props) => {
                   })
                 }
               >
-                {chemical.title}
+                <span
+                  style={{
+                    color: 'white',
+                    textShadow: 'none',
+                  }}
+                >
+                  {chemical.title}
+                </span>
               </Button>
             ))}
           </Box>

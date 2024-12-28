@@ -14,6 +14,9 @@
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 	interaction_flags_click = ALLOW_SILICON_REACH
+	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 3
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 3
 	var/stasis_enabled = TRUE
 	var/last_stasis_sound = FALSE
 	var/stasis_can_toggle = 0
@@ -25,6 +28,20 @@
 	AddElement(/datum/element/elevation, pixel_shift = 6)
 	update_buckle_vars(dir)
 
+/obj/machinery/stasis/RefreshParts()
+	. = ..()
+
+	var/energy_rating = 0
+	for(var/datum/stock_part/part in component_parts)
+		energy_rating += part.energy_rating()
+
+	for(var/obj/item/stock_parts/part in component_parts)
+		energy_rating += part.energy_rating
+
+	idle_power_usage = initial(idle_power_usage) / (energy_rating/2)
+	active_power_usage = initial(active_power_usage) / (energy_rating/2)
+	update_current_power_usage()
+
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.")
@@ -34,9 +51,9 @@
 	if(last_stasis_sound != _running)
 		var/sound_freq = rand(5120, 8800)
 		if(_running)
-			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
+			playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
 		else
-			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = sound_freq)
+			playsound(src, 'sound/machines/synth/synth_no.ogg', 50, TRUE, frequency = sound_freq)
 		last_stasis_sound = _running
 
 /obj/machinery/stasis/click_alt(mob/user)

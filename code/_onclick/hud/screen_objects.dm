@@ -103,6 +103,7 @@
 /atom/movable/screen/swap_hand
 	plane = HUD_PLANE
 	name = "swap hand"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/swap_hand/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -123,6 +124,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "navigate"
 	screen_loc = ui_navigate_menu
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/navigate/Click()
 	if(!isliving(usr))
@@ -141,6 +143,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "area_edit"
 	screen_loc = ui_building
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/area_creator/Click()
 	if(usr.incapacitated || (isobserver(usr) && !isAdminGhostAI(usr)))
@@ -156,6 +159,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "talk_wheel"
 	screen_loc = ui_language_menu
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/language_menu/Click()
 	usr.get_language_holder().open_language_menu(usr)
@@ -241,7 +245,7 @@
 	. = ..()
 
 	if(!handcuff_overlay)
-		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
+		var/state = IS_RIGHT_INDEX(held_index) ? "markus" : "gabrielle"
 		handcuff_overlay = mutable_appearance('icons/hud/screen_gen.dmi', state)
 
 	if(!hud?.mymob)
@@ -257,7 +261,7 @@
 				. += blocked_overlay
 
 	if(held_index == hud.mymob.active_hand_index)
-		. += (held_index % 2) ? "lhandactive" : "rhandactive"
+		. += IS_LEFT_INDEX(held_index) ? "lhandactive" : "rhandactive"
 
 /atom/movable/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -285,6 +289,7 @@
 	plane = ABOVE_HUD_PLANE
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "storage_close"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/close/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
@@ -302,6 +307,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_drop"
 	plane = HUD_PLANE
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/drop/Click()
 	if(usr.stat == CONSCIOUS)
@@ -312,6 +318,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "combat_off"
 	screen_loc = ui_combat_toggle
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -357,7 +364,8 @@
 	name = "change floor"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "floor_change"
-	screen_loc = ui_floor_changer
+	screen_loc = ui_above_intent
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/vertical = FALSE
 
 /atom/movable/screen/floor_changer/Click(location,control,params)
@@ -390,6 +398,7 @@
 	name = "run/walk toggle"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "running"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/mov_intent/Click()
 	toggle(usr)
@@ -415,6 +424,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "pull"
 	base_icon_state = "pull"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/pull/Click()
 	if(isobserver(usr))
@@ -429,9 +439,12 @@
 	name = "resist"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_resist"
+	base_icon_state = "act_resist"
 	plane = HUD_PLANE
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/resist/Click()
+	flick("[base_icon_state]_on", src)
 	if(isliving(usr))
 		var/mob/living/L = usr
 		L.resist()
@@ -442,6 +455,7 @@
 	icon_state = "act_rest"
 	base_icon_state = "act_rest"
 	plane = HUD_PLANE
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/rest/Click()
 	if(isliving(usr))
@@ -452,7 +466,7 @@
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return ..()
-	icon_state = "[base_icon_state][user.resting ? 0 : null]"
+	icon_state = "[base_icon_state][user.resting ? "_on" : null]"
 	return ..()
 
 /atom/movable/screen/storage
@@ -525,7 +539,8 @@
 /atom/movable/screen/throw_catch
 	name = "throw/catch"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "act_throw_off"
+	icon_state = "act_throw"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/throw_catch/Click()
 	if(iscarbon(usr))
@@ -536,6 +551,7 @@
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/overlay_icon = 'icons/hud/screen_gen.dmi'
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
@@ -713,6 +729,7 @@
 /atom/movable/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/healthdoll/Click()
 	if (iscarbon(usr))
@@ -724,10 +741,93 @@
 	screen_loc = ui_living_healthdoll
 	var/filtered = FALSE //so we don't repeatedly create the mask of the mob every update
 
+/atom/movable/screen/healthdoll/human
+	/// Tracks components of our doll, each limb is a separate atom in our vis_contents
+	VAR_PRIVATE/list/atom/movable/screen/limbs
+	/// Lazylist, tracks all body zones that are wounded currently
+	/// Used so we can sync animations should the list be updated
+	VAR_PRIVATE/list/animated_zones
+
+/atom/movable/screen/healthdoll/human/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	limbs = list()
+	for(var/i in GLOB.all_body_zones)
+		var/atom/movable/screen/healthdoll_limb/limb = new(src, null)
+		// layer chest above other limbs, it's the center after all
+		limb.layer = i == BODY_ZONE_CHEST ? layer + 0.05 : layer
+		limbs[i] = limb
+		// why viscontents? why not overlays? - because i want to animate filters
+		vis_contents += limb
+	update_appearance()
+
+/atom/movable/screen/healthdoll/human/Destroy()
+	QDEL_LIST_ASSOC_VAL(limbs)
+	vis_contents.Cut()
+	return ..()
+
+/atom/movable/screen/healthdoll/human/update_icon_state()
+	. = ..()
+	var/mob/living/carbon/human/owner = hud?.mymob
+	if(isnull(owner))
+		return
+	if(owner.stat == DEAD)
+		for(var/limb in limbs)
+			limbs[limb].icon_state = "[limb]DEAD"
+		return
+
+	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
+
+	for(var/obj/item/bodypart/body_part as anything in owner.bodyparts)
+		var/icon_key = 0
+		var/part_zone = body_part.body_zone
+
+		var/list/overridable_key = list(icon_key)
+		if(body_part.bodypart_disabled)
+			icon_key = 7
+		else if(owner.stat == DEAD)
+			icon_key = "DEAD"
+		else if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, owner, overridable_key) & OVERRIDE_BODYPART_HEALTH_HUD)
+			icon_key = overridable_key[1] // thanks i hate it
+		else if(!owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
+			var/damage = body_part.get_damage() / body_part.max_damage
+			// calculate what icon state (1-5, or 0 if undamaged) to use based on damage
+			icon_key = clamp(ceil(damage * 5), 0, 5)
+
+		if(length(body_part.wounds))
+			LAZYSET(animated_zones, part_zone, TRUE)
+		else
+			LAZYREMOVE(animated_zones, part_zone)
+		limbs[part_zone].icon_state = "[part_zone][icon_key]"
+	// handle leftovers
+	for(var/missing_zone in owner.get_missing_limbs())
+		limbs[missing_zone].icon_state = "[missing_zone]6"
+		LAZYREMOVE(animated_zones, missing_zone)
+	// time to re-sync animations, something changed
+	if(animated_zones ~! current_animated)
+		for(var/animated_zone in animated_zones)
+			var/atom/wounded_zone = limbs[animated_zone]
+			var/existing_filter = wounded_zone.get_filter("wound_outline")
+			if(existing_filter)
+				animate(existing_filter) // stop animation so we can resync
+			else
+				wounded_zone.add_filter("wound_outline", 1, list("type" = "outline", "color" = "#FF0033", "alpha" = 0, "size" = 1.2))
+				existing_filter = wounded_zone.get_filter("wound_outline")
+			animate(existing_filter, alpha = 200, time = 1.5 SECONDS, loop = -1)
+			animate(alpha = 0, time = 1.5 SECONDS)
+		if(LAZYLEN(current_animated)) // avoid null - list() runtimes please
+			for(var/lost_zone in current_animated - animated_zones)
+				limbs[lost_zone].remove_filter("wound_outline")
+
+// Basically just holds an icon we can put a filter on
+/atom/movable/screen/healthdoll_limb
+	screen_loc = ui_living_healthdoll
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE
+
 /atom/movable/screen/mood
 	name = "mood"
 	icon_state = "mood5"
 	screen_loc = ui_mood
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/splash
 	icon = 'icons/blanks/blank_title.png'
@@ -777,6 +877,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 
 
 /atom/movable/screen/component_button
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/atom/movable/screen/parent
 
 /atom/movable/screen/component_button/Initialize(mapload, atom/movable/screen/parent)
@@ -875,6 +976,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		state = HUNGER_STATE_FAT
 		return
 
+	if(HAS_TRAIT(hungry, TRAIT_GLUTTON))
+		state = HUNGER_STATE_HUNGRY // Can't get enough
+		return
+
 	switch(hungry.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			state = HUNGER_STATE_FULL
@@ -904,7 +1009,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 			animate(get_filter("hunger_outline"), alpha = 200, time = 1.5 SECONDS, loop = -1)
 			animate(alpha = 0, time = 1.5 SECONDS)
 
-	else if(get_filter("hunger_outline"))
+	else
 		remove_filter("hunger_outline")
 
 	// Update color of the food

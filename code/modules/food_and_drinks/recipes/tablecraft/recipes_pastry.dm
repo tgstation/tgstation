@@ -13,6 +13,14 @@
 	result = /obj/item/food/donut/plain
 	category = CAT_PASTRY
 
+// It is so stupid that we have to do this but because food crafting clears all reagents that got added during init,
+// here we are adding it again (but only for crafting, maploaded and spawned donuts work fine).
+// Until the issues with crafted items' reagents are resolved this will have to do
+/datum/crafting_recipe/food/donut/on_craft_completion(mob/user, atom/result)
+	. = ..()
+	var/obj/item/food/donut/donut_result = result
+	if(donut_result.is_decorated)
+		donut_result.reagents.add_reagent(/datum/reagent/consumable/sprinkles, 1)
 
 /datum/crafting_recipe/food/donut/chaos
 	name = "Chaos donut"
@@ -415,7 +423,7 @@
 	time = 15
 	name = "Deluxe Meat-pocket"
 	reqs = list(
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/heart = 1,
 		/obj/item/food/meatball = 1,
 		/obj/item/food/meat/slab = 1,
 		/obj/item/food/grown/herbs = 1

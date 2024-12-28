@@ -33,7 +33,19 @@
 	id = "ai_cam_upgrade"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 10, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 5)
-	build_path = /obj/item/surveillance_upgrade
+	build_path = /obj/item/aiupgrade/surveillance_upgrade
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_UPGRADES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/ai_power_transfer
+	name = "AI Power Transfer Update"
+	desc = "An upgrade package that lets an AI charge an APC from a distance"
+	id = "ai_power_upgrade"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5)
+	build_path = /obj/item/aiupgrade/power_transfer
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_UPGRADES
 	)

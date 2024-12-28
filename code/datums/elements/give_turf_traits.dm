@@ -67,7 +67,7 @@
 		for(var/mob/living/living in location)
 			living.update_turf_movespeed()
 
-/// Signals and components are carried over when the turf is changed, so they've to be readded post-change.
+/// Signals are carried over when the turf is changed, but traits aren't, so they've to be readded post-change.
 /datum/element/give_turf_traits/proc/pre_change_turf(turf/changed, path, list/new_baseturfs, flags, list/post_change_callbacks)
 	SIGNAL_HANDLER
 	post_change_callbacks += CALLBACK(src, PROC_REF(reoccupy_turf))

@@ -103,10 +103,14 @@
  * This should always return TRUE barring a runtime
  */
 /obj/item/detective_scanner/proc/scan(mob/user, atom/scanned_atom)
-	// Can remotely scan objects and mobs.
-	if((get_dist(scanned_atom, user) > range) || (!(scanned_atom in view(range, user)) && view_check) || (loc != user))
+	if(loc != user)
 		return TRUE
-
+	// Can scan items we hold and store
+	if(!(scanned_atom in user.get_all_contents()))
+		// Can remotely scan objects and mobs.
+		if((get_dist(scanned_atom, user) > range) || (!(scanned_atom in view(range, user)) && view_check))
+			return TRUE
+	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	scanner_busy = TRUE
 
 

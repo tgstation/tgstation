@@ -23,8 +23,12 @@
 #define STATIC_TO_DYNAMIC_CHANNEL(static_channel) (static_channel - (AREA_USAGE_STATIC_START - AREA_USAGE_DYNAMIC_START))
 
 //Power use
+
+/// dont use power
 #define NO_POWER_USE 0
+/// use idle_power_usage i.e. the power needed just to keep the machine on
 #define IDLE_POWER_USE 1
+/// use active_power_usage i.e. the power the machine consumes to perform a specific task
 #define ACTIVE_POWER_USE 2
 
 ///Base global power consumption for idling machines
@@ -134,6 +138,15 @@
 
 /// Max length of a status line in the status display
 #define MAX_STATUS_LINE_LENGTH 40
+
+///Define for automated system arrival announcement
+#define AUTO_ANNOUNCE_ARRIVAL "ARRIVAL"
+///Define for automated system announcement when a head of staff arrives
+#define AUTO_ANNOUNCE_NEWHEAD "NEWHEAD"
+///Define for automated system announcement for when the arrival shuttle is broken
+#define AUTO_ANNOUNCE_ARRIVALS_BROKEN "ARRIVALS_BROKEN"
+///Define for automated system announcement for researched nodes
+#define AUTO_ANNOUNCE_NODE "NODE"
 
 /// Blank Status Display
 #define SD_BLANK 0

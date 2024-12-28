@@ -9,7 +9,7 @@
 			to_chat(user, "[B.get_mecha_info()]")
 			break
 		//Nothing like a big, red link to make the player feel powerful!
-		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'>[span_userdanger("ASSUME DIRECT CONTROL?")]</a><br>")
+		to_chat(user, "<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_userdanger("ASSUME DIRECT CONTROL?")]</a><br>")
 		return
 	examine(user)
 	if(length(return_occupants()) >= max_occupants)
@@ -23,7 +23,7 @@
 	if(!can_control_mech)
 		to_chat(user, span_warning("You cannot control exosuits without AI control beacons installed."))
 		return
-	to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'>[span_boldnotice("Take control of exosuit?")]</a><br>")
+	to_chat(user, "<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_boldnotice("Take control of exosuit?")]</a><br>")
 
 /obj/vehicle/sealed/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	. = ..()
@@ -99,7 +99,7 @@
 	mecha_flags |= SILICON_PILOT
 	moved_inside(AI)
 	AI.eyeobj?.forceMove(src)
-	AI.eyeobj?.RegisterSignal(src, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/mob/camera/ai_eye, update_visibility))
+	AI.eyeobj?.RegisterSignal(src, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/mob/eye/camera/ai, update_visibility))
 	AI.controlled_equipment = src
 	AI.remote_control = src
 	add_occupant(AI)

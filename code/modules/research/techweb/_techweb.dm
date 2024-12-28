@@ -361,10 +361,10 @@
 
 	return TRUE
 
-/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id)
-	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id)
+/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id, atom/research_source)
+	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id, research_source)
 
-/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE)
+/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE, atom/research_source)
 	if(!istype(node))
 		return FALSE
 	update_node_status(node)

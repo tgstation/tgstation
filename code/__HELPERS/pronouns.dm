@@ -86,7 +86,8 @@
 		gender = targeted_gender
 	else
 		gender = targeted_atom.gender
-	var/regex/pronoun_regex = regex("%PRONOUN(_(they|They|their|Their|theirs|Theirs|them|Them|have|are|were|do|theyve|Theyve|theyre|Theyre|s|es))")
+	///The pronouns are ordered by their length to avoid %PRONOUN_Theyve being translated to "Heve" instead of "He's", for example
+	var/regex/pronoun_regex = regex("%PRONOUN(_(theirs|Theirs|theyve|Theyve|theyre|Theyre|their|Their|they|They|them|Them|have|were|are|do|es|s))")
 	while(pronoun_regex.Find(target_string))
 		target_string = pronoun_regex.Replace(target_string, GET_TARGET_PRONOUN(targeted_atom, pronoun_regex.match, gender))
 	return target_string

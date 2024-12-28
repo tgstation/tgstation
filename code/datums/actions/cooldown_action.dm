@@ -11,8 +11,8 @@
 	var/panel
 	/// The default cooldown applied when StartCooldown() is called
 	var/cooldown_time = 0
-	/// The default melee cooldown applied after the ability ends
-	var/melee_cooldown_time
+	/// The default melee cooldown applied after the ability ends. If set to null, copies cooldown_time.
+	var/melee_cooldown_time = 0
 	/// The actual next time the owner of this action can melee
 	var/next_melee_use_time = 0
 	/// Whether or not you want the cooldown for the ability to display in text form
@@ -250,7 +250,7 @@
 	return PreActivate(user)
 
 /// Intercepts client owner clicks to activate the ability
-/datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/proc/InterceptClickOn(mob/living/clicker, params, atom/target)
 	if(!IsAvailable(feedback = TRUE))
 		return FALSE
 	if(!target)
@@ -261,8 +261,8 @@
 
 	// And if we reach here, the action was complete successfully
 	if(unset_after_click)
-		unset_click_ability(caller, refund_cooldown = FALSE)
-	caller.next_click = world.time + click_cd_override
+		unset_click_ability(clicker, refund_cooldown = FALSE)
+	clicker.next_click = world.time + click_cd_override
 
 	return TRUE
 

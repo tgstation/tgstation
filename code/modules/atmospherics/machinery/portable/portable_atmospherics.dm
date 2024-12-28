@@ -32,8 +32,8 @@
 	var/suppress_reactions = FALSE
 	/// Is there a hypernoblium crystal inserted into this
 	var/nob_crystal_inserted = FALSE
-	var/insert_sound = 'sound/effects/tank_insert_clunky.ogg'
-	var/remove_sound = 'sound/effects/tank_remove_thunk.ogg'
+	var/insert_sound = 'sound/effects/compressed_air/tank_insert_clunky.ogg'
+	var/remove_sound = 'sound/effects/compressed_air/tank_remove_thunk.ogg'
 	var/sound_vol = 50
 
 /datum/armor/machinery_portable_atmospherics
@@ -220,19 +220,21 @@
 		return FALSE
 	if(!user)
 		return FALSE
-	if(!user.transferItemToLoc(new_tank, src))
+	if(new_tank && !user.transferItemToLoc(new_tank, src))
 		return FALSE
 
-	investigate_log("had its internal [holding] swapped with [new_tank] by [key_name(user)].", INVESTIGATE_ATMOS)
-	to_chat(user, span_notice("[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [new_tank]" : "You insert [new_tank] into [src]"]."))
-
 	if(holding && new_tank)//for when we are actually switching tanks
+		investigate_log("had its internal [holding] swapped with [new_tank] by [key_name(user)].", INVESTIGATE_ATMOS)
+		to_chat(user, span_notice("In one smooth motion you pop [holding] out of [src]'s connector and replace it with [new_tank]."))
 		user.put_in_hands(holding)
 		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = new_tank
 		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))
-		playsound(src, list(insert_sound,remove_sound), sound_vol)
+		playsound(src, insert_sound, sound_vol)
+		playsound(src, remove_sound, sound_vol)
 	else if(holding)//we remove a tank
+		investigate_log("had its internal [holding] removed by [key_name(user)].", INVESTIGATE_ATMOS)
+		to_chat(user, span_notice("You remove [holding] from [src]."))
 		if(Adjacent(user))
 			user.put_in_hands(holding)
 		else
@@ -241,6 +243,8 @@
 		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = null
 	else if(new_tank)//we insert the tank
+		investigate_log("had [new_tank] inserted into it by [key_name(user)].", INVESTIGATE_ATMOS)
+		to_chat(user, span_notice("You insert [new_tank] into [src]."))
 		holding = new_tank
 		playsound(src, insert_sound, sound_vol)
 		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))

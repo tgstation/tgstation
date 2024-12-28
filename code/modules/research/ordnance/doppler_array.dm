@@ -89,7 +89,7 @@
 	if(inserted_disk.add_file(record_data))
 		playsound(src, 'sound/machines/ping.ogg', 25)
 	else
-		playsound(src, 'sound/machines/terminal_error.ogg', 25)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 25)
 
 /**
  * Checks a specified tachyon record for fitting reactions, then returns a list with

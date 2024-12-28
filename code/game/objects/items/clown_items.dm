@@ -209,7 +209,7 @@
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
 	worn_icon_state = "horn_air"
-	sound_file = 'sound/items/airhorn2.ogg'
+	sound_file = 'sound/items/airhorn/airhorn2.ogg'
 
 /datum/crafting_recipe/airhorn
 	name = "Air Horn"

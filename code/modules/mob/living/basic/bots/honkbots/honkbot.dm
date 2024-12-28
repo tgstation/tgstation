@@ -48,7 +48,7 @@
 		can_slip_callback = CALLBACK(src, PROC_REF(pre_slip)),\
 	)
 	AddComponent(/datum/component/stun_n_cuff,\
-		stun_sound = 'sound/items/AirHorn.ogg',\
+		stun_sound = 'sound/items/airhorn/AirHorn.ogg',\
 		post_stun_callback = CALLBACK(src, PROC_REF(post_stun)),\
 		post_arrest_callback = CALLBACK(src, PROC_REF(post_arrest)),\
 		handcuff_type = /obj/item/restraints/handcuffs/cable/zipties/fake,\
@@ -83,7 +83,7 @@
 	if(HAS_TRAIT(current_target, TRAIT_DEAF))
 		return
 
-	var/obj/item/organ/internal/ears/target_ears = current_target.get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/ears/target_ears = current_target.get_organ_slot(ORGAN_SLOT_EARS)
 	target_ears?.adjustEarDamage(0, 5)
 
 /mob/living/basic/bot/honkbot/ui_data(mob/user)

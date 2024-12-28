@@ -32,6 +32,9 @@
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
 	///pacifism check for boolet, set to FALSE if bullet is non-lethal
 	var/harmful = TRUE
+	/// How much force is applied when fired in zero-G
+	var/newtonian_force = 1
+
 	///If set to true or false, this ammunition can or cannot misfire, regardless the gun can_misfire setting
 	var/can_misfire = null
 	///This is how much misfire probability is added to the gun when it fires this casing.
@@ -156,6 +159,6 @@
 	SpinAnimation(10, 1)
 	var/turf/T = get_turf(src)
 	if(still_warm && T?.bullet_sizzle)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/welder.ogg', 20, 1), bounce_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/tools/welder.ogg', 20, 1), bounce_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
 	else if(T?.bullet_bounce_sound)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, T.bullet_bounce_sound, 20, 1), bounce_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.

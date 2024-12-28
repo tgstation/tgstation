@@ -7,6 +7,7 @@
 	armor_type = /datum/armor/space_pirate
 	strip_delay = 40
 	equip_delay_other = 20
+	fishing_modifier = -2
 
 /datum/armor/space_pirate
 	melee = 30
@@ -31,11 +32,15 @@
 	armor_type = /datum/armor/space_pirate
 	strip_delay = 40
 	equip_delay_other = 20
+	fishing_modifier = -3
 
 /obj/item/clothing/head/helmet/space/pirate/tophat
 	name = "designer pirate helmet"
 	desc = "A modified EVA helmet with a five-thousand credit Lizzy Vuitton hat affixed to the top, proving that working in deep space is no excuse for being poor."
 	icon_state = "spacetophat"
+
+/obj/item/clothing/head/helmet/space/pirate/tophat/add_stabilizer(loose_hat = FALSE)
+	return
 
 /obj/item/clothing/suit/space/pirate/silverscale
 	name = "designer pirate suit"

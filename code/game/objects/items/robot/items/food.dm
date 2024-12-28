@@ -112,7 +112,7 @@
 		gumball = new /obj/item/ammo_casing/gumball(src)
 
 	gumball.loaded_projectile.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, TRUE)
+	playsound(src.loc, 'sound/items/weapons/bulletflyby3.ogg', 50, TRUE)
 	gumball.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message(span_warning("[user] shoots a high-velocity gumball at [target]!"))
 	check_amount()
@@ -199,7 +199,7 @@
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
 	damage = 0
-	speed = 0.5
+	speed = 2
 	embed_type = null
 
 /obj/projectile/bullet/gumball/Initialize(mapload)
@@ -232,7 +232,7 @@
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
 	damage = 0
-	speed = 0.5
+	speed = 2
 	embed_type = null
 	var/head_color
 

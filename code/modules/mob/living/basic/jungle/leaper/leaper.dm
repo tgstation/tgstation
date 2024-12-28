@@ -23,7 +23,7 @@
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
 
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	status_flags = NONE
 	lighting_cutoff_red = 5
@@ -40,13 +40,14 @@
 	///list of pet commands we can issue
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
+		/datum/pet_command/move,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
 		/datum/pet_command/untargeted_ability/blood_rain,
 		/datum/pet_command/untargeted_ability/summon_toad,
-		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/use_ability/flop,
-		/datum/pet_command/point_targeting/use_ability/bubble,
+		/datum/pet_command/attack,
+		/datum/pet_command/use_ability/flop,
+		/datum/pet_command/use_ability/bubble,
 	)
 
 /mob/living/basic/leaper/Initialize(mapload)

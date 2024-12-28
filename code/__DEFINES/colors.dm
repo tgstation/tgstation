@@ -11,6 +11,19 @@
 #define FIXED_COLOUR_PRIORITY 4
 ///how many colour priority levels there are.
 #define COLOUR_PRIORITY_AMOUNT 4
+/// If this is a plain atom color
+#define ATOM_COLOR_TYPE_NORMAL "normal"
+/// If this is a color filter
+#define ATOM_COLOR_TYPE_FILTER "filter"
+// Indexes for color arrays
+#define ATOM_COLOR_VALUE_INDEX 1
+#define ATOM_COLOR_TYPE_INDEX 2
+#define ATOM_PRIORITY_COLOR_FILTER "atom_priority_color"
+#define ATOM_PRIORITY_COLOR_FILTER_PRIORITY -1
+/// Multiply pixel's saturation by color's saturation. Paints accents while keeping dim areas dim.
+#define SATURATION_MULTIPLY "multiply"
+/// Always affects the original pixel's saturation and lightness.
+#define SATURATION_OVERRIDE "always"
 
 #define COLOR_DARKMODE_BACKGROUND "#202020"
 #define COLOR_DARKMODE_DARKBACKGROUND "#171717"
@@ -434,9 +447,27 @@ GLOBAL_LIST_INIT(cable_colors, list(
 	CABLE_COLOR_BROWN = CABLE_HEX_COLOR_BROWN
 ))
 
+GLOBAL_LIST_INIT(heretic_path_to_color, list(
+		PATH_START = COLOR_LIME,
+		PATH_RUST = COLOR_CARGO_BROWN,
+		PATH_FLESH = COLOR_SOFT_RED,
+		PATH_ASH = COLOR_VIVID_RED,
+		PATH_VOID = COLOR_CYAN,
+		PATH_BLADE = COLOR_SILVER,
+		PATH_COSMIC = COLOR_PURPLE,
+		PATH_LOCK = COLOR_YELLOW,
+		PATH_MOON = COLOR_BLUE_LIGHT,
+	))
+
 #define HUSK_COLOR_TONE rgb(96, 88, 80)
 
 #define CM_COLOR_SAT_MIN 0.6
 #define CM_COLOR_SAT_MAX 0.7
 #define CM_COLOR_LUM_MIN 0.65
 #define CM_COLOR_LUM_MAX 0.75
+
+// Lowest priority
+#define EYE_COLOR_ORGAN_PRIORITY 1
+#define EYE_COLOR_SPECIES_PRIORITY 10
+#define EYE_COLOR_WEED_PRIORITY 20
+#define EYE_COLOR_CULT_PRIORITY 30

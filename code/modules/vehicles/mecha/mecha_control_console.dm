@@ -55,7 +55,7 @@
 			var/obj/item/mecha_parts/mecha_tracking/MT = locate(params["tracker_ref"])
 			if(!istype(MT))
 				return
-			var/message = tgui_input_text(usr, "Input message", "Transmit message")
+			var/message = tgui_input_text(usr, "Input message", "Transmit message", max_length = MAX_MESSAGE_LEN)
 			var/obj/vehicle/sealed/mecha/M = MT.chassis
 			if(trim(message) && M)
 				to_chat(M.occupants, message)

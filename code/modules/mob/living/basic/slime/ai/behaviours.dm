@@ -25,6 +25,7 @@
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/find_hunt_target/find_slime_food
+	action_cooldown = 7.5 SECONDS
 
 // Check if the slime can drain the target
 /datum/ai_behavior/find_hunt_target/find_slime_food/valid_dinner(mob/living/basic/slime/hunter, mob/living/dinner, radius, datum/ai_controller/controller, seconds_per_tick)
@@ -54,9 +55,9 @@
 	//We are not THAT hungry
 	return FALSE
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/slime
+/datum/ai_behavior/hunt_target/interact_with_target/slime
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/slime/target_caught(mob/living/basic/slime/hunter, mob/living/hunted)
+/datum/ai_behavior/hunt_target/interact_with_target/slime/target_caught(mob/living/basic/slime/hunter, mob/living/hunted)
 	if (!hunter.can_feed_on(hunted)) // Target is no longer edible
 		hunter.UnarmedAttack(hunted, TRUE)
 		return
@@ -71,7 +72,7 @@
 
 	hunter.start_feeding(hunted)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/slime/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
+/datum/ai_behavior/hunt_target/interact_with_target/slime/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
 	. = ..()
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
 	var/atom/target = controller.blackboard[hunting_target_key]

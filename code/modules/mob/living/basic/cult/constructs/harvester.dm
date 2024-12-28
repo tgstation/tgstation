@@ -11,7 +11,7 @@
 	melee_damage_upper = 20
 	attack_verb_continuous = "butchers"
 	attack_verb_simple = "butcher"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
 		/datum/action/cooldown/spell/aoe/area_conversion,
@@ -53,7 +53,8 @@
 
 	carbon_target.Paralyze(6 SECONDS)
 	visible_message(span_danger("[src] knocks [carbon_target] down!"))
-	to_chat(src, span_cult_large("\"Bring [carbon_target.p_them()] to me.\""))
+	if(theme == THEME_CULT)
+		to_chat(src, span_cult_large("\"Bring [carbon_target.p_them()] to me.\""))
 
 /datum/action/innate/seek_master
 	name = "Seek your Master"
@@ -142,8 +143,8 @@
 	can_repair = FALSE
 	slowed_by_drag = FALSE
 	faction = list(FACTION_HERETIC)
-	maxHealth = 35
-	health = 35
+	maxHealth = 45
+	health = 45
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 	// Dim green

@@ -290,6 +290,9 @@
 /obj/item/extinguisher/mini/nozzle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(AttemptRefill(interacting_with, user))
 		return NONE
+	return ..()
+
+/obj/item/extinguisher/mini/nozzle/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(nozzle_mode == EXTINGUISHER)
 		return ..()
 
@@ -371,7 +374,7 @@
 	qdel(src)
 
 // Please don't spacedrift thanks
-/obj/effect/resin_container/newtonian_move(direction, instant = FALSE, start_delay = 0)
+/obj/effect/resin_container/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 0, controlled_cap = null)
 	return TRUE
 
 #undef EXTINGUISHER

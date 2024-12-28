@@ -1,11 +1,12 @@
 //spears
 /obj/item/spear
+	name = "spear"
+	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "spearglass0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	name = "spear"
-	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
+	icon_angle = -45
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -15,10 +16,10 @@
 	embed_type = /datum/embed_data/spear
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass= HALF_SHEET_MATERIAL_AMOUNT * 2)
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
-	sharpness = SHARP_EDGED // i know the whole point of spears is that they're pointy, but edged is more devastating at the moment so
+	sharpness = SHARP_POINTY
 	max_integrity = 200
 	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
@@ -177,10 +178,8 @@
 		return
 	if(target.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
 		return
-	if(ismob(target))
-		var/mob/mob_target = target
-		if(mob_target.status_flags & GODMODE) //no embedding grenade phylacteries inside of ghost poly either
-			return
+	if(HAS_TRAIT(target, TRAIT_GODMODE))
+		return
 	if(iseffect(target)) //and no accidentally wasting your moment of glory on graffiti
 		return
 	user.say("[war_cry]", forced="spear warcry")

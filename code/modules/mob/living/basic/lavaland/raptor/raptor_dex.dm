@@ -32,7 +32,7 @@
 	var/happiness_percentage = my_raptor.ai_controller?.blackboard[BB_BASIC_HAPPINESS]
 	var/obj/effect/overlay/happiness_overlay/display = new
 	display.set_hearts(happiness_percentage)
-	display.pixel_y = world.icon_size * 0.5
+	display.pixel_y = ICON_SIZE_Y * 0.5
 	data["raptor_happiness"] = icon2base64(getFlatIcon(display))
 	qdel(display)
 
@@ -56,7 +56,7 @@
 		return NONE
 
 	raptor = WEAKREF(attacked_atom)
-	playsound(src, 'sound/items/orbie_send_out.ogg', 20)
+	playsound(src, 'sound/mobs/non-humanoids/orbie/orbie_send_out.ogg', 20)
 	balloon_alert(user, "scanned")
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS

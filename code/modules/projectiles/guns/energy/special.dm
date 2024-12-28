@@ -95,7 +95,7 @@
 	can_charge = FALSE
 	gun_flags = NOT_A_REAL_GUN
 	heat = 3800
-	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
+	usesound = list('sound/items/tools/welder.ogg', 'sound/items/tools/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
 
@@ -106,7 +106,7 @@
 		speed = 2.5 SECONDS, \
 		effectiveness = 105, \
 		bonus_modifier = 0, \
-		butcher_sound = 'sound/weapons/plasma_cutter.ogg', \
+		butcher_sound = 'sound/items/weapons/plasma_cutter.ogg', \
 	)
 	AddElement(/datum/element/tool_flash, 1)
 
@@ -379,7 +379,7 @@
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "revolver"
 	ammo_type = list(/obj/item/ammo_casing/energy/marksman)
-	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
 	automatic_charge_overlays = FALSE
 	/// How many coins we can have at a time. Set to 0 for infinite
 	var/max_coins = 4
@@ -431,7 +431,7 @@
 	playsound(user.loc, 'sound/effects/coin2.ogg', 50, TRUE)
 	user.visible_message(span_warning("[user] flips a coin towards [target]!"), span_danger("You flip a coin towards [target]!"))
 	var/obj/projectile/bullet/coin/new_coin = new(get_turf(user), target_turf, user)
-	new_coin.preparePixelProjectile(target_turf, user)
+	new_coin.aim_projectile(target_turf, user)
 	new_coin.fire()
 	return ITEM_INTERACT_SUCCESS
 
@@ -440,7 +440,7 @@
 	desc = "A competitive design to the tesla cannon, that instead of charging latent electrons, releases energy into photons. Eye protection is recommended."
 	icon_state = "photon"
 	inhand_icon_state = "tesla"
-	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
 	ammo_type = list(/obj/item/ammo_casing/energy/photon)
 	shaded_charge = TRUE
 	weapon_weight = WEAPON_HEAVY

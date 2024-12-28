@@ -25,8 +25,7 @@
 	if(ismob(the_target)) //Target is in godmode, ignore it.
 		if(living_mob.loc == the_target)
 			return FALSE // We've either been eaten or are shapeshifted, let's assume the latter because we're still alive
-		var/mob/M = the_target
-		if(M.status_flags & GODMODE)
+		if(HAS_TRAIT(the_target, TRAIT_GODMODE))
 			return FALSE
 
 	if (vision_range && get_dist(living_mob, the_target) > vision_range)

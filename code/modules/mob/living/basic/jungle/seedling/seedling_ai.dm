@@ -19,7 +19,7 @@
 /datum/ai_planning_subtree/find_and_hunt_target/watering_can
 	target_key = BB_WATERCAN_TARGET
 	finding_behavior = /datum/ai_behavior/find_hunt_target
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target
 	hunt_targets = list(/obj/item/reagent_containers/cup/watering_can)
 	hunt_range = 7
 
@@ -32,11 +32,12 @@
 /datum/ai_planning_subtree/find_and_hunt_target/treat_hydroplants
 	target_key = BB_HYDROPLANT_TARGET
 	finding_behavior = /datum/ai_behavior/find_and_set/treatable_hydro
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/treat_hydroplant
 	hunt_targets = list(/obj/machinery/hydroponics)
 	hunt_range = 7
 
 /datum/ai_behavior/find_and_set/treatable_hydro
+	action_cooldown = 5 SECONDS
 
 /datum/ai_behavior/find_and_set/treatable_hydro/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/list/possible_trays = list()
@@ -58,11 +59,11 @@
 	if(possible_trays.len)
 		return pick(possible_trays)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant
+/datum/ai_behavior/hunt_target/interact_with_target/treat_hydroplant
 	hunt_cooldown = 2 SECONDS
 	always_reset_target = TRUE
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant/target_caught(mob/living/living_pawn, obj/machinery/hydroponics/hydro_target)
+/datum/ai_behavior/hunt_target/interact_with_target/treat_hydroplant/target_caught(mob/living/living_pawn, obj/machinery/hydroponics/hydro_target)
 	if(QDELETED(hydro_target) || QDELETED(hydro_target.myseed))
 		return
 
@@ -97,6 +98,9 @@
 		return FALSE
 	set_movement_target(controller, target)
 
+/datum/ai_behavior/find_and_set/beamable_hydroplants
+	action_cooldown = 15 SECONDS
+
 /datum/ai_behavior/find_and_set/beamable_hydroplants/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/list/possible_trays = list()
 
@@ -112,7 +116,7 @@
 /datum/ai_planning_subtree/find_and_hunt_target/fill_watercan
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
 	finding_behavior = /datum/ai_behavior/find_hunt_target/suitable_dispenser
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/water_source
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/water_source
 	hunt_targets = list(/obj/structure/sink, /obj/structure/reagent_dispensers)
 	hunt_range = 7
 
@@ -135,8 +139,9 @@
 
 	return can_see(source, water_source, radius)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/water_source
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+/datum/ai_behavior/hunt_target/interact_with_target/water_source
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
+	always_reset_target = TRUE
 	hunt_cooldown = 5 SECONDS
 
 /datum/ai_controller/basic_controller/seedling/meanie
@@ -161,7 +166,7 @@
 	finish_planning = FALSE
 
 ///pet commands
-/datum/pet_command/point_targeting/use_ability/solarbeam
+/datum/pet_command/use_ability/solarbeam
 	command_name = "Launch solarbeam"
 	command_desc = "Command your pet to launch a solarbeam at your target!"
 	radial_icon = 'icons/effects/beam.dmi'
@@ -169,10 +174,17 @@
 	speech_commands = list("beam", "solar")
 	pet_ability_key = BB_SOLARBEAM_ABILITY
 
-/datum/pet_command/point_targeting/use_ability/rapidseeds
+/datum/pet_command/use_ability/solarbeam/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to use a solar beam on [target]!"
+
+
+/datum/pet_command/use_ability/rapidseeds
 	command_name = "Rapid seeds"
 	command_desc = "Command your pet to launch a volley of seeds at your target!"
 	radial_icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	radial_icon_state = "seedling"
 	speech_commands = list("rapid", "seeds", "volley")
 	pet_ability_key = BB_RAPIDSEEDS_ABILITY
+
+/datum/pet_command/use_ability/rapidseeds/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to unleash a volley of seeds on [target]!"

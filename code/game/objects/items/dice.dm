@@ -89,6 +89,7 @@
 			result = rigged_value
 
 	. = result
+	playsound(src, 'sound/items/dice_roll.ogg', 50, TRUE)
 
 	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
 	var/comment = ""
@@ -507,8 +508,8 @@
 		to_summon,
 		get_turf(cast_on),
 		precision = 1,
-		asoundin = 'sound/magic/wand_teleport.ogg',
-		asoundout = 'sound/magic/wand_teleport.ogg',
+		asoundin = 'sound/effects/magic/wand_teleport.ogg',
+		asoundout = 'sound/effects/magic/wand_teleport.ogg',
 		channel = TELEPORT_CHANNEL_MAGIC,
 	)
 

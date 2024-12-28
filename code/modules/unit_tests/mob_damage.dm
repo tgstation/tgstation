@@ -289,8 +289,8 @@
 /datum/unit_test/mob_damage/proc/test_godmode(mob/living/carbon/human/consistent/dummy)
 	// Heal up, so that errors from the previous tests we won't cause this one to fail
 	dummy.fully_heal(HEAL_DAMAGE)
-	// flip godmode bit to 1
-	dummy.status_flags ^= GODMODE
+	// add godmode
+	ADD_TRAIT(dummy, TRAIT_GODMODE, TRAIT_GENERIC)
 
 	// Apply 9 damage and then heal it
 	if(!test_apply_damage(dummy, amount = 9, expected = 0))
@@ -306,8 +306,8 @@
 	if(!test_apply_damage(dummy, amount = -11, forced = TRUE))
 		TEST_FAIL("ABOVE FAILURE: failed test_godmode! godmode did not respect forced = TRUE")
 
-	// flip godmode bit back to 0
-	dummy.status_flags ^= GODMODE
+	// remove godmode
+	REMOVE_TRAIT(dummy, TRAIT_GODMODE, TRAIT_GENERIC)
 
 /// Testing biotypes
 /datum/unit_test/mob_damage/proc/test_biotypes(mob/living/carbon/human/consistent/dummy)

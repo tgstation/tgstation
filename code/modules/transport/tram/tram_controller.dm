@@ -54,7 +54,7 @@
 	var/recovery_clear_count = 0
 
 	///if the tram's next stop will be the tram malfunction event sequence
-	var/malf_active = FALSE
+	var/malf_active = TRANSPORT_SYSTEM_NORMAL
 
 	///fluff information of the tram, such as ongoing kill count and age
 	var/datum/tram_mfg_info/tram_registration
@@ -144,7 +144,7 @@
 	tram_registration.active = FALSE
 	SSblackbox.record_feedback("amount", "tram_destroyed", 1)
 	SSpersistence.save_tram_history(specific_transport_id)
-	..()
+	return ..()
 
 /**
  * Register transport modules to the controller
@@ -256,17 +256,19 @@
 	set_status_code(PRE_DEPARTURE, FALSE)
 	if(controller_status & EMERGENCY_STOP)
 		set_status_code(EMERGENCY_STOP, FALSE)
-		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
-
-	if(malf_active)
-		addtimer(CALLBACK(src, PROC_REF(announce_malf_event)), 1 SECONDS)
 
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
 		if(transport_module.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
 			return //we don't care to undo cover_locked controls, though, as that will resolve itself
+		if(malf_active == TRANSPORT_LOCAL_WARNING)
+			if(transport_module.check_for_humans())
+				throw_chance *= 1.75
+				malf_active = TRANSPORT_LOCAL_FAULT
+				addtimer(CALLBACK(src, PROC_REF(announce_malf_event)), 1 SECONDS)
 		transport_module.verify_transport_contents()
 		transport_module.glide_size_override = DELAY_TO_GLIDE_SIZE(speed_limiter)
 		transport_module.set_travelling(TRUE)
@@ -296,7 +298,7 @@
 		return PROCESS_KILL
 
 	if(!travel_remaining)
-		if(!controller_operational || malf_active)
+		if(!controller_operational || malf_active == TRANSPORT_LOCAL_FAULT)
 			degraded_stop()
 		else
 			normal_stop()
@@ -346,7 +348,7 @@
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 	if((controller_status & SYSTEM_FAULT) && (nav_beacon.loc == destination_platform.loc)) //position matches between controller and tram, we're back on track
 		set_status_code(SYSTEM_FAULT, FALSE)
-		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset.")
 		speed_limiter = initial(speed_limiter)
@@ -366,16 +368,16 @@
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
-		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset. ")
 		speed_limiter = initial(speed_limiter)
-	if(malf_active)
+	if(malf_active == TRANSPORT_LOCAL_FAULT)
 		set_status_code(SYSTEM_FAULT, TRUE)
 		addtimer(CALLBACK(src, PROC_REF(cycle_doors), CYCLE_OPEN), 2 SECONDS)
-		malf_active = FALSE
+		malf_active = TRANSPORT_SYSTEM_NORMAL
 		throw_chance = initial(throw_chance)
-		playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(paired_cabinet, 'sound/machines/buzz/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller error. Please contact your engineering department.")
 	idle_platform = destination_platform
 	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
@@ -393,7 +395,7 @@
 /datum/transport_controller/linear/tram/proc/halt_and_catch_fire()
 	if(controller_status & SYSTEM_FAULT)
 		if(!isnull(paired_cabinet))
-			playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(paired_cabinet, 'sound/machines/buzz/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 			paired_cabinet.say("Controller error. Please contact your engineering department.")
 		log_transport("TC: [specific_transport_id] Transport Controller failed!")
 
@@ -417,11 +419,12 @@
  * Performs a reset of the tram's position data by finding a predetermined reference landmark, then driving to it.
  */
 /datum/transport_controller/linear/tram/proc/reset_position()
+	malf_active = TRANSPORT_SYSTEM_NORMAL
 	if(idle_platform)
 		if(get_turf(idle_platform) == get_turf(nav_beacon))
 			set_status_code(SYSTEM_FAULT, FALSE)
 			set_status_code(EMERGENCY_STOP, FALSE)
-			playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 			paired_cabinet.say("Controller reset.")
 			log_transport("TC: [specific_transport_id] Transport Controller reset was requested, but the tram nav data seems correct. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([idle_platform.x], [idle_platform.y], [idle_platform.z]).")
 			return
@@ -436,7 +439,7 @@
 	var/reset_beacon = closest_nav_in_travel_dir(nav_beacon, tram_velocity_sign, specific_transport_id)
 
 	if(!reset_beacon)
-		playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(paired_cabinet, 'sound/machines/buzz/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset failed. Contact manufacturer.") // If you screwed up the tram this bad, I don't even
 		log_transport("TC: [specific_transport_id] non-recoverable error! Tram is at ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z] [tram_velocity_sign ? "OUTBOUND" : "INBOUND"]) and can't find a reset beacon.")
 		message_admins("Tram ID [specific_transport_id] is in a non-recoverable error state at [ADMIN_JMP(nav_beacon)]. If it's causing problems, delete the controller datum from the 'Reset Tram' proc in the Debug tab.")
@@ -457,7 +460,7 @@
 	log_transport("TC: [specific_transport_id] trying to reset at [destination_platform].")
 
 /datum/transport_controller/linear/tram/proc/estop()
-	playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(paired_cabinet, 'sound/machines/buzz/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	paired_cabinet.say("Emergency stop activated!")
 	set_status_code(EMERGENCY_STOP, TRUE)
 	log_transport("TC: [specific_transport_id] requested emergency stop.")
@@ -602,7 +605,8 @@
  * Tram malfunction random event. Set comm error, requiring engineering or AI intervention.
  */
 /datum/transport_controller/linear/tram/proc/start_malf_event()
-	malf_active = TRUE
+	malf_active = TRANSPORT_LOCAL_WARNING
+	paired_cabinet.update_appearance()
 	throw_chance *= 1.25
 	log_transport("TC: [specific_transport_id] starting Tram Malfunction event.")
 
@@ -615,7 +619,8 @@
 /datum/transport_controller/linear/tram/proc/end_malf_event()
 	if(!(malf_active))
 		return
-	malf_active = FALSE
+	malf_active = TRANSPORT_SYSTEM_NORMAL
+	paired_cabinet.update_appearance()
 	throw_chance = initial(throw_chance)
 	log_transport("TC: [specific_transport_id] ending Tram Malfunction event.")
 
@@ -887,9 +892,9 @@
 
 /obj/machinery/transport/tram_controller/proc/toggle_door()
 	if(!cover_open)
-		playsound(loc, 'sound/machines/closet_open.ogg', 35, TRUE, -3)
+		playsound(loc, 'sound/machines/closet/closet_open.ogg', 35, TRUE, -3)
 	else
-		playsound(loc, 'sound/machines/closet_close.ogg', 50, TRUE, -3)
+		playsound(loc, 'sound/machines/closet/closet_close.ogg', 50, TRUE, -3)
 	cover_open = !cover_open
 	update_appearance()
 
@@ -978,7 +983,7 @@
 		. += emissive_appearance(icon, "[base_icon_state]-estop", src, alpha = src.alpha)
 		return
 
-	if(controller_datum.controller_status & SYSTEM_FAULT || controller_datum.malf_active)
+	if(controller_datum.controller_status & SYSTEM_FAULT || controller_datum.malf_active != TRANSPORT_SYSTEM_NORMAL)
 		. += mutable_appearance(icon, "[base_icon_state]-fault")
 		. += emissive_appearance(icon, "[base_icon_state]-fault", src, alpha = src.alpha)
 		return
@@ -1079,7 +1084,7 @@
 		"recoveryMode" = controller_datum.recovery_mode,
 		"currentSpeed" = controller_datum.current_speed,
 		"currentLoad" = controller_datum.current_load,
-		"statusSF" = controller_datum.controller_status & SYSTEM_FAULT,
+		"statusSF" = controller_datum.controller_status & SYSTEM_FAULT || controller_datum.malf_active != TRANSPORT_SYSTEM_NORMAL,
 		"statusCE" = controller_datum.controller_status & COMM_ERROR,
 		"statusES" = controller_datum.controller_status & EMERGENCY_STOP,
 		"statusPD" = controller_datum.controller_status & PRE_DEPARTURE,

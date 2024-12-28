@@ -7,19 +7,22 @@
 	category = /datum/uplink_category/dangerous
 
 /datum/uplink_item/dangerous/foampistol
-	name = "Toy Pistol with Riot Darts"
-	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade \
-			darts effective at incapacitating a target."
-	item = /obj/item/gun/ballistic/automatic/pistol/toy/riot
-	cost = 2
+	name = "Donksoft Riot Pistol Case"
+	desc = "A case containing an innocent-looking toy pistol designed to fire foam darts at higher than normal velocity. \
+		Comes loaded with riot-grade darts effective at incapacitating a target, two spare magazines and a box of loose \
+		riot darts. Perfect for nonlethal takedowns at range, as well as deniability. While not included in the kit, the \
+		pistol is compatible with suppressors, which can be purchased separately."
+	item = /obj/item/storage/toolbox/guncase/traitor/donksoft
+	cost = 6
 	surplus = 10
 	purchasable_from = ~UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/dangerous/pistol
-	name = "Makarov Pistol"
-	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
-			with suppressors."
-	item = /obj/item/gun/ballistic/automatic/pistol
+	name = "Makarov Pistol Case"
+	desc = "A weapon case containing an unknown variant of the Makarov pistol, along with two spare magazines and a box of loose 9mm ammunition. \
+		Chambered in 9mm. Perfect for frequent skirmishes with security, as well as ensuring you have enough firepower to outlast the competition. \
+		While not included in the kit, the pistol is compatible with suppressors, which can be purchased seperately."
+	item = /obj/item/storage/toolbox/guncase/traitor
 	cost = 7
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
@@ -37,7 +40,7 @@
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
 	progression_minimum = 20 MINUTES
 	item = /obj/item/melee/energy/sword/saber
-	cost = 8
+	cost = 6
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/powerfist
@@ -91,11 +94,11 @@
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
-	desc = "Waffle Corp's modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum."
-	item = /obj/item/gun/ballistic/revolver/syndicate
+	desc = "A brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
+	item = /obj/item/gun/ballistic/revolver
 	cost = 13
 	surplus = 50
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get their own version
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //only traitors get the original revolver
 
 /datum/uplink_item/dangerous/cat
 	name = "Feral cat grenade"

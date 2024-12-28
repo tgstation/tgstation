@@ -14,7 +14,7 @@
 	icon_living = "grey-baby"
 	icon_dead = "grey-baby-dead"
 
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 
 	//Base physiology
 
@@ -97,7 +97,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack/slime,
+		/datum/pet_command/attack/slime,
 	)
 
 	/// Our evolve action
@@ -353,7 +353,7 @@
 /mob/living/basic/slime/proc/spawn_corecross()
 	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)
 	visible_message(span_danger("[src] shudders, its mutated core consuming the rest of its body!"))
-	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/smoke.ogg', 50, TRUE)
 	var/selected_crossbreed_path
 	for(var/crossbreed_path in crossbreeds)
 		var/obj/item/slimecross/cross_item = crossbreed_path

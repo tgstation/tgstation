@@ -57,6 +57,10 @@
 
 	id_trim = /datum/id_trim/pirate/captain
 
+/datum/outfit/pirate/space/captain/cardboard
+	name = "Space Pirate Captain (EVA)"
+	l_hand = /obj/item/nullrod/claymore/saber/pirate
+
 /datum/outfit/pirate/silverscale
 	name = "Silver Scale Member"
 

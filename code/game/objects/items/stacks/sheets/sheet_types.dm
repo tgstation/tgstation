@@ -353,6 +353,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("bonfire", /obj/structure/bonfire, 10, time = 6 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_TOOLS), \
 	new/datum/stack_recipe("easel", /obj/structure/easel, 5, time = 1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("noticeboard", /obj/item/wallframe/noticeboard, 1, time = 1 SECONDS, crafting_flags = NONE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("fish mount", /obj/item/wallframe/fish, 2, time = 3 SECONDS, crafting_flags = NONE, category = CAT_FURNITURE),\
 	new/datum/stack_recipe("test tube rack", /obj/item/storage/test_tube_rack, 1, time = 1 SECONDS, crafting_flags = NONE, category = CAT_CHEMISTRY), \
 	null, \
 	new/datum/stack_recipe_list("pews", list(
@@ -385,8 +386,8 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	grind_results = list(/datum/reagent/cellulose = 20) //no lignocellulose or lignin reagents yet,
 	walltype = /turf/closed/wall/mineral/wood
 	stairs_type = /obj/structure/stairs/wood
-	pickup_sound = 'sound/items/wood_pick_up.ogg'
-	drop_sound = 'sound/items/wood_drop.ogg'
+	pickup_sound = 'sound/items/handling/materials/wood_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/wood_drop.ogg'
 
 /datum/armor/mineral_wood
 	fire = 50
@@ -684,8 +685,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cardboard
 	grind_results = list(/datum/reagent/cellulose = 10)
 	material_type = /datum/material/cardboard
-	pickup_sound = 'sound/items/cardboard_pick_up.ogg'
-	drop_sound = 'sound/items/cardboard_drop.ogg'
+	pickup_sound = 'sound/items/handling/materials/cardboard_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/cardboard_drop.ogg'
 
 /obj/item/stack/sheet/cardboard/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
@@ -863,8 +864,8 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	throwforce = 7
 	material_type = /datum/material/plastic
 	merge_type = /obj/item/stack/sheet/plastic
-	pickup_sound = 'sound/items/plastic_pick_up.ogg'
-	drop_sound = 'sound/items/plastic_drop.ogg'
+	pickup_sound = 'sound/items/handling/materials/plastic_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/plastic_drop.ogg'
 
 /obj/item/stack/sheet/plastic/fifty
 	amount = 50

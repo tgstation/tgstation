@@ -1,4 +1,4 @@
-/obj/item/organ/internal/cyberimp/arm
+/obj/item/organ/cyberimp/arm
 	name = "arm-mounted implant"
 	desc = "You shouldn't see this! Adminhelp and report this as an issue on github!"
 	zone = BODY_ZONE_R_ARM
@@ -14,15 +14,15 @@
 	/// You can use this var for item path, it would be converted into an item on New().
 	var/obj/item/active_item
 	/// Sound played when extending
-	var/extend_sound = 'sound/mecha/mechmove03.ogg'
+	var/extend_sound = 'sound/vehicles/mecha/mechmove03.ogg'
 	/// Sound played when retracting
-	var/retract_sound = 'sound/mecha/mechmove03.ogg'
+	var/retract_sound = 'sound/vehicles/mecha/mechmove03.ogg'
 	/// Organ slot that the implant occupies for the right arm
 	var/right_arm_organ_slot = ORGAN_SLOT_RIGHT_ARM_AUG
 	/// Organ slot that the implant occupies for the left arm
 	var/left_arm_organ_slot = ORGAN_SLOT_LEFT_ARM_AUG
 
-/obj/item/organ/internal/cyberimp/arm/Initialize(mapload)
+/obj/item/organ/cyberimp/arm/Initialize(mapload)
 	. = ..()
 	if(ispath(active_item))
 		active_item = new active_item(src)
@@ -35,7 +35,7 @@
 	update_appearance()
 	SetSlotFromZone()
 
-/obj/item/organ/internal/cyberimp/arm/Destroy()
+/obj/item/organ/cyberimp/arm/Destroy()
 	hand = null
 	active_item = null
 	for(var/datum/weakref/ref in items_list)
@@ -49,7 +49,7 @@
 /datum/action/item_action/organ_action/toggle/toolkit
 	desc = "You can also activate your empty hand or the tool in your hand to open the tools radial menu."
 
-/obj/item/organ/internal/cyberimp/arm/proc/SetSlotFromZone()
+/obj/item/organ/cyberimp/arm/proc/SetSlotFromZone()
 	switch(zone)
 		if(BODY_ZONE_L_ARM)
 			slot = left_arm_organ_slot
@@ -58,16 +58,16 @@
 		else
 			CRASH("Invalid zone for [type]")
 
-/obj/item/organ/internal/cyberimp/arm/update_icon()
+/obj/item/organ/cyberimp/arm/update_icon()
 	. = ..()
 	transform = (zone == BODY_ZONE_R_ARM) ? null : matrix(-1, 0, 0, 0, 1, 0)
 
-/obj/item/organ/internal/cyberimp/arm/examine(mob/user)
+/obj/item/organ/cyberimp/arm/examine(mob/user)
 	. = ..()
 	if(IS_ROBOTIC_ORGAN(src))
 		. += span_info("[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.")
 
-/obj/item/organ/internal/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/screwtool)
+/obj/item/organ/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/screwtool)
 	. = ..()
 	if(.)
 		return TRUE
@@ -80,19 +80,19 @@
 	to_chat(user, span_notice("You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."))
 	update_appearance()
 
-/obj/item/organ/internal/cyberimp/arm/on_mob_insert(mob/living/carbon/arm_owner)
+/obj/item/organ/cyberimp/arm/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
 	RegisterSignal(arm_owner, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(on_limb_attached))
 	RegisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(dropkey)) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
 	on_limb_attached(arm_owner, arm_owner.hand_bodyparts[zone == BODY_ZONE_R_ARM ? RIGHT_HANDS : LEFT_HANDS])
 
-/obj/item/organ/internal/cyberimp/arm/on_mob_remove(mob/living/carbon/arm_owner)
+/obj/item/organ/cyberimp/arm/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
 	Retract()
 	UnregisterSignal(arm_owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_KB_MOB_DROPITEM_DOWN))
 	on_limb_detached(hand)
 
-/obj/item/organ/internal/cyberimp/arm/proc/on_limb_attached(mob/living/carbon/source, obj/item/bodypart/limb)
+/obj/item/organ/cyberimp/arm/proc/on_limb_attached(mob/living/carbon/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
 	if(!limb || QDELETED(limb) || limb.body_zone != zone)
 		return
@@ -102,18 +102,18 @@
 	RegisterSignal(limb, COMSIG_BODYPART_REMOVED, PROC_REF(on_limb_detached))
 	hand = limb
 
-/obj/item/organ/internal/cyberimp/arm/proc/on_limb_detached(obj/item/bodypart/source)
+/obj/item/organ/cyberimp/arm/proc/on_limb_detached(obj/item/bodypart/source)
 	SIGNAL_HANDLER
 	if(source != hand || QDELETED(hand))
 		return
 	UnregisterSignal(hand, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_BODYPART_REMOVED))
 	hand = null
 
-/obj/item/organ/internal/cyberimp/arm/proc/on_item_attack_self()
+/obj/item/organ/cyberimp/arm/proc/on_item_attack_self()
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(ui_action_click))
 
-/obj/item/organ/internal/cyberimp/arm/emp_act(severity)
+/obj/item/organ/cyberimp/arm/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF || !IS_ROBOTIC_ORGAN(src))
 		return
@@ -129,7 +129,7 @@
  * quick way to store implant items. In this case, we check to make sure the user has the correct arm
  * selected, and that the item is actually owned by us, and then we'll hand off the rest to Retract()
 **/
-/obj/item/organ/internal/cyberimp/arm/proc/dropkey(mob/living/carbon/host)
+/obj/item/organ/cyberimp/arm/proc/dropkey(mob/living/carbon/host)
 	SIGNAL_HANDLER
 	if(!host)
 		return //How did we even get here
@@ -138,7 +138,7 @@
 	if(Retract())
 		return COMSIG_KB_ACTIVATED
 
-/obj/item/organ/internal/cyberimp/arm/proc/Retract()
+/obj/item/organ/cyberimp/arm/proc/Retract()
 	if(!active_item || (active_item in src))
 		return FALSE
 	active_item.resistance_flags = active_item::resistance_flags
@@ -159,7 +159,7 @@
 	playsound(get_turf(owner), retract_sound, 50, TRUE)
 	return TRUE
 
-/obj/item/organ/internal/cyberimp/arm/proc/Extend(obj/item/augment)
+/obj/item/organ/cyberimp/arm/proc/Extend(obj/item/augment)
 	if(!(augment in src))
 		return
 
@@ -198,12 +198,12 @@
 	if(length(items_list) > 1)
 		RegisterSignals(active_item, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_ATTACK_SELF_SECONDARY), PROC_REF(swap_tools)) // secondary for welders
 
-/obj/item/organ/internal/cyberimp/arm/proc/swap_tools(active_item)
+/obj/item/organ/cyberimp/arm/proc/swap_tools(active_item)
 	SIGNAL_HANDLER
 	Retract(active_item)
 	INVOKE_ASYNC(src, PROC_REF(ui_action_click))
 
-/obj/item/organ/internal/cyberimp/arm/ui_action_click()
+/obj/item/organ/cyberimp/arm/ui_action_click()
 	if((organ_flags & ORGAN_FAILING) || (!active_item && !contents.len))
 		to_chat(owner, span_warning("The implant doesn't respond. It seems to be broken..."))
 		return
@@ -228,14 +228,14 @@
 		Retract()
 
 
-/obj/item/organ/internal/cyberimp/arm/gun/emp_act(severity)
+/obj/item/organ/cyberimp/arm/gun/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(prob(30/severity) && owner && !(organ_flags & ORGAN_FAILING))
 		Retract()
 		owner.visible_message(span_danger("A loud bang comes from [owner]\'s [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm!"))
-		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, TRUE)
+		playsound(get_turf(owner), 'sound/items/weapons/flashbang.ogg', 100, TRUE)
 		to_chat(owner, span_userdanger("You feel an explosion erupt inside your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm as your implant breaks!"))
 		owner.adjust_fire_stacks(20)
 		owner.ignite_mob()
@@ -243,25 +243,25 @@
 		organ_flags |= ORGAN_FAILING
 
 
-/obj/item/organ/internal/cyberimp/arm/gun/laser
+/obj/item/organ/cyberimp/arm/gun/laser
 	name = "arm-mounted laser implant"
 	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_laser"
 	items_to_create = list(/obj/item/gun/energy/laser/mounted/augment)
 
-/obj/item/organ/internal/cyberimp/arm/gun/laser/l
+/obj/item/organ/cyberimp/arm/gun/laser/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/internal/cyberimp/arm/gun/taser
+/obj/item/organ/cyberimp/arm/gun/taser
 	name = "arm-mounted taser implant"
 	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_taser"
 	items_to_create = list(/obj/item/gun/energy/e_gun/advtaser/mounted)
 
-/obj/item/organ/internal/cyberimp/arm/gun/taser/l
+/obj/item/organ/cyberimp/arm/gun/taser/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/internal/cyberimp/arm/toolset
+/obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contain advanced versions of every tool."
 	icon_state = "toolkit_engineering"
@@ -275,10 +275,39 @@
 		/obj/item/multitool/cyborg,
 	)
 
-/obj/item/organ/internal/cyberimp/arm/toolset/l
+/obj/item/organ/cyberimp/arm/toolset/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/internal/cyberimp/arm/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
+//The order of the item list for this implant is not alphabetized due to it actually affecting how it shows up playerside when opening the implant
+/obj/item/organ/cyberimp/arm/paperwork
+	name = "integrated paperwork implant"
+	desc = "A highly sought out implant among heads of personnel, and other high up command staff in Nanotrasen. This implant allows the user to always have the tools necesarry for paperwork handy"
+	icon_state = "toolkit_engineering"
+	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
+	items_to_create = list(
+		/obj/item/pen/fountain,
+		/obj/item/clipboard,
+		/obj/item/taperecorder,
+		/obj/item/lighter,
+		/obj/item/laser_pointer,
+		/obj/item/stamp,
+		/obj/item/stamp/denied,
+	)
+
+/obj/item/organ/cyberimp/arm/paperwork/l
+	zone = BODY_ZONE_L_ARM
+
+/obj/item/organ/cyberimp/arm/paperwork/emag_act(mob/user, obj/item/card/emag/emag_card)
+	for(var/datum/weakref/created_item in items_list)
+		var/obj/potential_tool = created_item.resolve()
+		if(istype(/obj/item/stamp/chameleon, potential_tool))
+			return FALSE
+
+	balloon_alert(user, "experimental stamp unlocked")
+	items_list += WEAKREF(new /obj/item/stamp/chameleon(src))
+	return TRUE
+
+/obj/item/organ/cyberimp/arm/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_knife = created_item.resolve()
 		if(istype(/obj/item/knife/combat/cyborg, potential_knife))
@@ -288,23 +317,23 @@
 	items_list += WEAKREF(new /obj/item/knife/combat/cyborg(src))
 	return TRUE
 
-/obj/item/organ/internal/cyberimp/arm/esword
+/obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
 	desc = "An illegal and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
 	items_to_create = list(/obj/item/melee/energy/blade/hardlight)
 
-/obj/item/organ/internal/cyberimp/arm/medibeam
+/obj/item/organ/cyberimp/arm/medibeam
 	name = "integrated medical beamgun"
 	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
 	items_to_create = list(/obj/item/gun/medbeam)
 
 
-/obj/item/organ/internal/cyberimp/arm/flash
+/obj/item/organ/cyberimp/arm/flash
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
 	items_to_create = list(/obj/item/assembly/flash/armimplant)
 
-/obj/item/organ/internal/cyberimp/arm/flash/Initialize(mapload)
+/obj/item/organ/cyberimp/arm/flash/Initialize(mapload)
 	. = ..()
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_flash = created_item.resolve()
@@ -313,22 +342,22 @@
 		var/obj/item/assembly/flash/armimplant/flash = potential_flash
 		flash.arm = WEAKREF(src)
 
-/obj/item/organ/internal/cyberimp/arm/flash/Extend()
+/obj/item/organ/cyberimp/arm/flash/Extend()
 	. = ..()
 	active_item.set_light_range(7)
 	active_item.set_light_on(TRUE)
 
-/obj/item/organ/internal/cyberimp/arm/flash/Retract()
+/obj/item/organ/cyberimp/arm/flash/Retract()
 	if(active_item)
 		active_item.set_light_on(FALSE)
 	return ..()
 
-/obj/item/organ/internal/cyberimp/arm/baton
+/obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
 	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
 	items_to_create = list(/obj/item/borg/stun)
 
-/obj/item/organ/internal/cyberimp/arm/combat
+/obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
 	items_to_create = list(
@@ -338,7 +367,7 @@
 		/obj/item/assembly/flash/armimplant,
 	)
 
-/obj/item/organ/internal/cyberimp/arm/combat/Initialize(mapload)
+/obj/item/organ/cyberimp/arm/combat/Initialize(mapload)
 	. = ..()
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_flash = created_item.resolve()
@@ -347,7 +376,7 @@
 		var/obj/item/assembly/flash/armimplant/flash = potential_flash
 		flash.arm = WEAKREF(src)
 
-/obj/item/organ/internal/cyberimp/arm/surgery
+/obj/item/organ/cyberimp/arm/surgery
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
 	icon_state = "toolkit_surgical"
@@ -362,7 +391,7 @@
 		/obj/item/surgical_drapes,
 	)
 
-/obj/item/organ/internal/cyberimp/arm/surgery/emagged
+/obj/item/organ/cyberimp/arm/surgery/emagged
 	name = "hacked surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm. This one seems to have been tampered with."
 	items_to_create = list(
@@ -376,7 +405,7 @@
 		/obj/item/knife/combat/cyborg,
 	)
 
-/obj/item/organ/internal/cyberimp/arm/strongarm
+/obj/item/organ/cyberimp/arm/strongarm
 	name = "\proper Strong-Arm empowered musculature implant"
 	desc = "When implanted, this cybernetic implant will enhance the muscles of the arm to deliver more power-per-action."
 	icon_state = "muscle_implant"
@@ -409,19 +438,19 @@
 	///Tracks how soon we can perform another slam attack
 	COOLDOWN_DECLARE(slam_cooldown)
 
-/obj/item/organ/internal/cyberimp/arm/strongarm/l
+/obj/item/organ/cyberimp/arm/strongarm/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/internal/cyberimp/arm/strongarm/on_mob_insert(mob/living/carbon/arm_owner)
+/obj/item/organ/cyberimp/arm/strongarm/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
 	if(ishuman(arm_owner)) //Sorry, only humans
 		RegisterSignal(arm_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
-/obj/item/organ/internal/cyberimp/arm/strongarm/on_mob_remove(mob/living/carbon/arm_owner)
+/obj/item/organ/cyberimp/arm/strongarm/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
 	UnregisterSignal(arm_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 
-/obj/item/organ/internal/cyberimp/arm/strongarm/emp_act(severity)
+/obj/item/organ/cyberimp/arm/strongarm/emp_act(severity)
 	. = ..()
 	if((organ_flags & ORGAN_FAILING) || . & EMP_PROTECT_SELF)
 		return
@@ -429,11 +458,11 @@
 	organ_flags |= ORGAN_FAILING
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
-/obj/item/organ/internal/cyberimp/arm/strongarm/proc/reboot()
+/obj/item/organ/cyberimp/arm/strongarm/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
 	owner.balloon_alert(owner, "your arm stops spasming!")
 
-/obj/item/organ/internal/cyberimp/arm/strongarm/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
+/obj/item/organ/cyberimp/arm/strongarm/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
 	if(source.get_active_hand() != hand || !proximity)
@@ -467,7 +496,7 @@
 		var/mob/living/carbon/human/human_target = target
 		if(human_target.check_block(source, punch_damage, "[source]'s' [picked_hit_type]"))
 			source.do_attack_animation(target)
-			playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+			playsound(living_target.loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -480,7 +509,7 @@
 		potential_damage += biotype_bonus_damage
 
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
-	playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(living_target.loc, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 
 	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
 	var/armor_block = living_target.run_armor_check(target_zone, MELEE, armour_penetration = attacking_bodypart.unarmed_effectiveness)

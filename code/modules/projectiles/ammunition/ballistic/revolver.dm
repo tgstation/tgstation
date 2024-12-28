@@ -1,26 +1,31 @@
 // .357 (Syndie Revolver)
 
-/obj/item/ammo_casing/a357
+/obj/item/ammo_casing/c357
 	name = ".357 bullet casing"
 	desc = "A .357 bullet casing."
 	caliber = CALIBER_357
-	projectile_type = /obj/projectile/bullet/a357
+	projectile_type = /obj/projectile/bullet/c357
 
-/obj/item/ammo_casing/a357/spent
+/obj/item/ammo_casing/c357/spent
 	projectile_type = null
 
-/obj/item/ammo_casing/a357/match
+/obj/item/ammo_casing/c357/match
 	name = ".357 match bullet casing"
 	desc = "A .357 bullet casing, manufactured to exceedingly high standards."
-	projectile_type = /obj/projectile/bullet/a357/match
+	projectile_type = /obj/projectile/bullet/c357/match
 
-/obj/item/ammo_casing/a357/phasic
+/obj/item/ammo_casing/c357/phasic
 	name = ".357 phasic bullet casing"
-	projectile_type = /obj/projectile/bullet/a357/phasic
+	projectile_type = /obj/projectile/bullet/c357/phasic
 
-/obj/item/ammo_casing/a357/heartseeker
+/obj/item/ammo_casing/c357/heartseeker
 	name = ".357 heartseeker bullet casing"
-	projectile_type = /obj/projectile/bullet/a357/heartseeker
+	projectile_type = /obj/projectile/bullet/c357/heartseeker
+
+/obj/item/ammo_casing/c357/heartseeker/ready_proj(atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
+	. = ..()
+	if(!isturf(target))
+		loaded_projectile.set_homing_target(target)
 
 // 7.62x38mmR (Nagant Revolver)
 
@@ -53,6 +58,11 @@
 	desc = "A .38 rubber bullet casing, manufactured to exceedingly bouncy standards."
 	projectile_type = /obj/projectile/bullet/c38/match/bouncy
 
+/obj/item/ammo_casing/c38/match/true
+	name = ".38 True Strike bullet casing"
+	desc = "A .38 True Strike bullet casing."
+	projectile_type = /obj/projectile/bullet/c38/match/true
+
 /obj/item/ammo_casing/c38/dumdum
 	name = ".38 DumDum bullet casing"
 	desc = "A .38 DumDum bullet casing."
@@ -67,3 +77,35 @@
 	name = ".38 Iceblox bullet casing"
 	desc = "A .38 Iceblox bullet casing."
 	projectile_type = /obj/projectile/bullet/c38/iceblox
+
+//gatfruit
+/obj/item/ammo_casing/pea
+	name = "pea bullet casing"
+	desc = "A bizarre pea bullet."
+	caliber = CALIBER_PEA
+	icon_state = "pea"
+	projectile_type = /obj/projectile/bullet/pea
+	/// Damage we achieve at 100 potency
+	var/max_damage = 15
+	/// Damage set by the plant
+	var/damage = 15 //max potency, is set
+
+/obj/item/ammo_casing/pea/Initialize(mapload)
+	. = ..()
+	create_reagents(60, SEALED_CONTAINER)
+
+/obj/item/ammo_casing/pea/ready_proj(atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
+	. = ..()
+	if(isnull(loaded_projectile))
+		return
+	loaded_projectile.damage = damage
+
+/obj/item/ammo_casing/pea/attack_self(mob/user)
+	. = ..()
+	if(isnull(loaded_projectile))
+		return
+	var/obj/item/food/grown/peas/peas = new(user.drop_location())
+	user.put_in_hands(peas)
+	to_chat(user, span_notice("You separate [peas] from [src]."))
+	loaded_projectile = null
+	update_appearance()

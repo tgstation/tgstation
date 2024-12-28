@@ -69,14 +69,14 @@
 	going_kaboom = TRUE
 	visible_message(span_danger("\The [src] lets out a shower of sparks as it starts to lose stability!"),\
 		span_hear("You hear a loud electrical crack!"))
-	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+	playsound(src.loc, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 	tesla_zap(source = src, zap_range = 5, power = power_gen * 20)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, 2, 3, 4, null, 8), 10 SECONDS) // Not a normal explosion.
 
-/obj/machinery/power/rtg/abductor/bullet_act(obj/projectile/Proj)
+/obj/machinery/power/rtg/abductor/bullet_act(obj/projectile/proj)
 	. = ..()
-	if(!going_kaboom && istype(Proj) && Proj.damage > 0 && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
-		log_bomber(Proj.firer, "triggered a", src, "explosion via projectile")
+	if(!going_kaboom && istype(proj) && proj.damage > 0 && ((proj.damage_type == BURN) || (proj.damage_type == BRUTE)))
+		log_bomber(proj.firer, "triggered a", src, "explosion via projectile")
 		overload()
 
 /obj/machinery/power/rtg/abductor/blob_act(obj/structure/blob/B)

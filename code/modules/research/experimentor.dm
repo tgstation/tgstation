@@ -363,7 +363,7 @@
 				visible_message(span_danger("[src] dangerously overheats, launching a flaming fuel orb!"))
 				investigate_log("Experimentor has launched a <font color='red'>fireball</font> at [M]!", INVESTIGATE_EXPERIMENTOR)
 				var/obj/projectile/magic/fireball/FB = new /obj/projectile/magic/fireball(start)
-				FB.preparePixelProjectile(MT, start)
+				FB.aim_projectile(MT, start)
 				FB.fire()
 		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src] malfunctions, melting [exp_on] and releasing a burst of flame!"))
@@ -758,7 +758,7 @@
 
 /obj/item/relic/proc/scrambliticus(mob/user)
 	new /obj/effect/temp_visual/circle_wave/bioscrambler/light(get_turf(src))
-	playsound(src, 'sound/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
 	for(var/mob/living/carbon/nearby in range(2, get_turf(src))) //needs get_turf() to work
 		nearby.bioscramble(name)
 		playsound(nearby, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -828,7 +828,6 @@
 	var/datum/dimension_theme/shifter = SSmaterials.dimensional_themes[new_theme_path]
 	for(var/turf/shiftee in range(1, user))
 		shifter.apply_theme(shiftee, show_effect = TRUE)
-	qdel(shifter)
 	// prevent *total* spam conversion
 	min_cooldown += 2 SECONDS
 	max_cooldown += 2 SECONDS

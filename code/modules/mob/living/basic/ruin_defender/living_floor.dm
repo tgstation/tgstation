@@ -26,7 +26,7 @@
 	icon_living = "floor"
 	mob_size = MOB_SIZE_HUGE
 	mob_biotypes = MOB_SPECIAL
-	status_flags = GODMODE //nothing but crowbars may kill us
+	status_flags = NONE
 	death_message = ""
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
@@ -40,7 +40,7 @@
 	faction = list(FACTION_HOSTILE)
 	melee_damage_lower = 20
 	melee_damage_upper = 40 //pranked.....
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
@@ -52,7 +52,7 @@
 
 /mob/living/basic/living_floor/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, INNATE_TRAIT)
+	add_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), INNATE_TRAIT) //nothing but crowbars may kill us
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(look_aggro), COMSIG_ATOM_EXITED = PROC_REF(look_deaggro))
 	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 1, works_in_containers = FALSE)
 
@@ -84,7 +84,7 @@
 	if(weapon.tool_behaviour != TOOL_CROWBAR)
 		return ..()
 	balloon_alert(user, "prying...")
-	playsound(src, 'sound/items/crowbar.ogg', 45, TRUE)
+	playsound(src, 'sound/items/tools/crowbar.ogg', 45, TRUE)
 	if(!do_after(user, 5 SECONDS, src))
 		return
 	new /obj/effect/gibspawner/generic(loc)

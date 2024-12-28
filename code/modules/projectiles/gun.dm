@@ -23,14 +23,14 @@
 	attack_verb_simple = list("strike", "hit", "bash")
 
 	var/gun_flags = NONE
-	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
-	var/dry_fire_sound = 'sound/weapons/gun/general/dry_fire.ogg'
+	var/dry_fire_sound = 'sound/items/weapons/gun/general/dry_fire.ogg'
 	var/dry_fire_sound_volume = 30
 	var/suppressed = null //whether or not a message is displayed when fired
 	var/can_suppress = FALSE
-	var/suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	var/suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	var/suppressed_volume = 60
 	var/can_unsuppress = TRUE /// whether a gun can be unsuppressed. for ballistics, also determines if it generates a suppressor overlay
 	var/recoil = 0 //boom boom shake the room
@@ -54,6 +54,10 @@
 	/// Even snowflakier way to modify projectile wounding bonus/potential for projectiles fired from this gun.
 	var/projectile_wound_bonus = 0
 
+	/// The most reasonable way to modify projectile speed values for projectile fired from this gun. Honest.
+	/// Lower values are better, higher values are worse.
+	var/projectile_speed_multiplier = 1
+
 	var/spread = 0 //Spread induced by the gun itself.
 	var/randomspread = 1 //Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 
@@ -74,8 +78,9 @@
 
 /obj/item/gun/Initialize(mapload)
 	. = ..()
-	if(pin)
-		pin = new pin(src)
+	if(ispath(pin))
+		pin = new pin
+		pin.gun_insert(new_gun = src)
 
 	add_seclight_point()
 	add_bayonet_point()
@@ -228,7 +233,7 @@
 	var/mob/living/holder = loc
 	if(holder.is_holding(src) && holder.stat < UNCONSCIOUS)
 		to_chat(holder, span_boldwarning("[src] breaks down!"))
-		holder.playsound_local(get_turf(src), 'sound/weapons/smash.ogg', 50, TRUE)
+		holder.playsound_local(get_turf(src), 'sound/items/weapons/smash.ogg', 50, TRUE)
 	return ..()
 
 /obj/item/gun/emp_act(severity)
@@ -597,7 +602,8 @@
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
 		qdel(pin)
-	pin = new /obj/item/firing_pin
+	var/obj/item/firing_pin/new_pin = new
+	new_pin.gun_insert(new_gun = src)
 
 //Happens before the actual projectile creation
 /obj/item/gun/proc/before_firing(atom/target,mob/user)

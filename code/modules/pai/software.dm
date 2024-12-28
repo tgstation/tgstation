@@ -171,7 +171,7 @@
 	if(!holder.has_dna())
 		balloon_alert(src, "no dna detected!")
 		return FALSE
-	to_chat(src, span_boldannounce(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
+	to_chat(src, span_bolddanger(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
 	to_chat(src, span_notice("DNA [holder.dna.unique_enzymes == master_dna ? "matches" : "does not match"] our stored Master's DNA."))
 	return TRUE
 

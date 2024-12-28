@@ -141,6 +141,8 @@
 #define COMSIG_LIVING_SLAM_TABLE "living_slam_table"
 ///from /obj/item/hand_item/slapper/attack(): (source=mob/living/slapper, mob/living/slapped)
 #define COMSIG_LIVING_SLAP_MOB "living_slap_mob"
+///from /obj/item/hand_item/slapper/attack(): (source=mob/living/slapper, mob/living/slapped)
+#define COMSIG_LIVING_SLAPPED "living_slapped"
 /// from /mob/living/*/UnarmedAttack(), before sending [COMSIG_LIVING_UNARMED_ATTACK]: (mob/living/source, atom/target, proximity, modifiers)
 /// The only reason this exists is so hulk can fire before Fists of the North Star.
 /// Note that this is called before [/mob/living/proc/can_unarmed_attack] is called, so be wary of that.
@@ -242,6 +244,7 @@
 
 ///from /mob/living/proc/check_block(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration, damage_type)
 #define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
+	#define FAILED_BLOCK NONE
 	#define SUCCESSFUL_BLOCK (1<<0)
 
 ///Hit by successful disarm attack (mob/living/attacker, zone_targeted, item/weapon)
@@ -272,6 +275,9 @@
 #define COMSIG_LIVING_GRAB "living_grab"
 	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab
 
+/// From /datum/component/edible/get_perceived_food_quality(): (datum/component/edible/edible, list/extra_quality)
+#define COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY "get_perceived_food_quality"
+
 ///Called when living finish eat (/datum/component/edible/proc/On_Consume)
 #define COMSIG_LIVING_FINISH_EAT "living_finish_eat"
 
@@ -282,15 +288,24 @@
 
 /// From /datum/element/basic_eating/finish_eating()
 #define COMSIG_MOB_ATE "mob_ate"
+	///cancel post eating
+	#define COMSIG_MOB_TERMINATE_EAT (1<<0)
 
 ///From mob/living/carbon/proc/throw_mode_on and throw_mode_off
 #define COMSIG_LIVING_THROW_MODE_TOGGLE "living_throw_mode_toggle"
+/// From mob/living/proc/on_fall
+#define COMSIG_LIVING_THUD "living_thud"
 ///From /datum/component/happiness()
 #define COMSIG_MOB_HAPPINESS_CHANGE "happiness_change"
 /// From /obj/item/melee/baton/baton_effect(): (datum/source, mob/living/user, /obj/item/melee/baton)
 #define COMSIG_MOB_BATONED "mob_batoned"
 
+/// From /obj/machinery/gibber/startgibbing(): (mob/living/user, /obj/machinery/gibber, list/results)
+#define COMSIG_LIVING_GIBBER_ACT "living_gibber_act"
+
 /// Sent to the mob when their mind is slaved
 #define COMSIG_MOB_ENSLAVED_TO "mob_enslaved_to"
 /// From /obj/item/proc/attack_atom: (mob/living/attacker, atom/attacked)
 #define COMSIG_LIVING_ATTACK_ATOM "living_attack_atom"
+/// From /mob/living/proc/stop_leaning()
+#define COMSIG_LIVING_STOPPED_LEANING "living_stopped_leaning"

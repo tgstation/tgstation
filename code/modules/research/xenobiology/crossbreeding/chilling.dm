@@ -19,8 +19,8 @@ Chilling extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
-	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
-	playsound(src, 'sound/effects/glassbr1.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/glass/glassbr1.ogg', 50, TRUE)
 	do_effect(user)
 
 /obj/item/slimecross/chilling/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -252,9 +252,6 @@ Chilling extracts:
 	effect_desc = "Creates a bone gun in the hand it is used in, which uses blood as ammo."
 
 /obj/item/slimecross/chilling/green/do_effect(mob/user)
-	var/which_hand = "l_hand"
-	if(!(user.active_hand_index % 2))
-		which_hand = "r_hand"
 	var/mob/living/L = user
 	if(!istype(user))
 		return
@@ -267,7 +264,7 @@ Chilling extracts:
 	else
 		user.visible_message(span_danger("[src] chills and snaps off the front of the bone on [user]'s arm, leaving behind a strange, gun-like structure!"))
 	user.emote("scream")
-	L.apply_damage(30,BURN,which_hand)
+	L.apply_damage(30, BURN, L.get_active_hand())
 	..()
 
 /obj/item/slimecross/chilling/pink

@@ -31,13 +31,13 @@
 	melee_damage_upper = 35
 	attack_verb_continuous = "slashes its arms at"
 	attack_verb_simple = "slash your arms at"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	throw_message = "doesn't affect the sturdiness of"
 	speed = 1
 	move_to_delay = 3
 	mouse_opacity = MOUSE_OPACITY_ICON
-	death_sound = 'sound/magic/curse.ogg'
+	death_sound = 'sound/effects/magic/curse.ogg'
 	death_message = "'s arms reach out before it falls apart onto the floor, lifeless."
 	loot_drop = /obj/item/crusher_trophy/legionnaire_spine
 
@@ -55,25 +55,25 @@
 /datum/action/innate/elite_attack/legionnaire_charge
 	name = "Legionnaire Charge"
 	button_icon_state = "legionnaire_charge"
-	chosen_message = "<span class='boldwarning'>You will attempt to grab your opponent and throw them.</span>"
+	chosen_message = span_boldwarning("You will attempt to grab your opponent and throw them.")
 	chosen_attack_num = LEGIONNAIRE_CHARGE
 
 /datum/action/innate/elite_attack/head_detach
 	name = "Release Head"
 	button_icon_state = "head_detach"
-	chosen_message = "<span class='boldwarning'>You will now detach your head or kill it if it is already released.</span>"
+	chosen_message = span_boldwarning("You will now detach your head or kill it if it is already released.")
 	chosen_attack_num = HEAD_DETACH
 
 /datum/action/innate/elite_attack/bonfire_teleport
 	name = "Bonfire Teleport"
 	button_icon_state = "bonfire_teleport"
-	chosen_message = "<span class='boldwarning'>You will leave a bonfire.  Second use will let you swap positions with it indefintiely.  Using this move on the same tile as your active bonfire removes it.</span>"
+	chosen_message = span_boldwarning("You will leave a bonfire.  Second use will let you swap positions with it indefinitely.  Using this move on the same tile as your active bonfire removes it.")
 	chosen_attack_num = BONFIRE_TELEPORT
 
 /datum/action/innate/elite_attack/spew_smoke
 	name = "Spew Smoke"
 	button_icon_state = "spew_smoke"
-	chosen_message = "<span class='boldwarning'>Your head will spew smoke in an area, wherever it may be.</span>"
+	chosen_message = span_boldwarning("Your head will spew smoke in an area, wherever it may be.")
 	chosen_attack_num = SPEW_SMOKE
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/OpenFire()
@@ -121,7 +121,7 @@
 	for(var/i in 1 to 6)
 		new /obj/effect/temp_visual/dragon_swoop/legionnaire(T)
 		T = get_step(T, dir_to_target)
-	playsound(src,'sound/magic/demon_attack1.ogg', 200, 1)
+	playsound(src,'sound/effects/magic/demon_attack1.ogg', 200, 1)
 	visible_message(span_boldwarning("[src] prepares to charge!"))
 	addtimer(CALLBACK(src, PROC_REF(legionnaire_charge_2), dir_to_target, 0), 0.4 SECONDS)
 
@@ -200,7 +200,7 @@
 		var/obj/structure/legionnaire_bonfire/newpile = new /obj/structure/legionnaire_bonfire(loc)
 		mypile = newpile
 		mypile.myowner = src
-		playsound(get_turf(src),'sound/items/fultext_deploy.ogg', 200, 1)
+		playsound(get_turf(src),'sound/items/fulton/fultext_deploy.ogg', 200, 1)
 		visible_message(span_boldwarning("[src] summons a bonfire on [get_turf(src)]!"))
 		return
 	else
@@ -210,8 +210,8 @@
 			mypile.take_damage(100)
 			mypile = null
 			return
-		playsound(pileturf,'sound/items/fultext_deploy.ogg', 200, 1)
-		playsound(legionturf,'sound/items/fultext_deploy.ogg', 200, 1)
+		playsound(pileturf,'sound/items/fulton/fultext_deploy.ogg', 200, 1)
+		playsound(legionturf,'sound/items/fulton/fultext_deploy.ogg', 200, 1)
 		visible_message(span_boldwarning("[src] melts down into a burning pile of bones!"))
 		forceMove(pileturf)
 		visible_message(span_boldwarning("[src] forms from the bonfire!"))
@@ -249,7 +249,7 @@
 	melee_damage_upper = 20
 	attack_verb_continuous = "bites at"
 	attack_verb_simple = "bite at"
-	attack_sound = 'sound/effects/curse1.ogg'
+	attack_sound = 'sound/effects/curse/curse1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	throw_message = "simply misses"
 	speed = 0
@@ -309,42 +309,6 @@
 /obj/effect/temp_visual/dragon_swoop/legionnaire/Initialize(mapload)
 	. = ..()
 	transform *= 0.33
-
-// Legionnaire's loot: Legionnaire Spine
-
-/obj/item/crusher_trophy/legionnaire_spine
-	name = "legionnaire spine"
-	desc = "The spine of a legionnaire. With some creativity, you could use it as a crusher trophy. Alternatively, shaking it might do something as well."
-	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
-	icon_state = "legionnaire_spine"
-	denied_type = /obj/item/crusher_trophy/legionnaire_spine
-	bonus_value = 20
-	/// Time at which the item becomes usable again
-	var/next_use_time
-
-/obj/item/crusher_trophy/legionnaire_spine/effect_desc()
-	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a loyal legion skull"
-
-/obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
-	if(!prob(bonus_value) || target.stat == DEAD)
-		return
-	var/mob/living/basic/legion_brood/minion = new (user.loc)
-	minion.assign_creator(user)
-	minion.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = target
-
-/obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
-	if(!isliving(user))
-		return
-	var/mob/living/LivingUser = user
-	if(next_use_time > world.time)
-		LivingUser.visible_message(span_warning("[LivingUser] shakes the [src], but nothing happens..."))
-		to_chat(LivingUser, "<b>You need to wait longer to use this again.</b>")
-		return
-	LivingUser.visible_message(span_boldwarning("[LivingUser] shakes the [src] and summons a legion skull!"))
-
-	var/mob/living/basic/legion_brood/minion = new (LivingUser.loc)
-	minion.assign_creator(LivingUser)
-	next_use_time = world.time + 4 SECONDS
 
 #undef LEGIONNAIRE_CHARGE
 #undef HEAD_DETACH

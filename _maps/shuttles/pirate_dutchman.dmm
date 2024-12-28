@@ -359,8 +359,31 @@
 	},
 /turf/open/floor/carpet/blue/airless,
 /area/shuttle/pirate/flying_dutchman)
+"nb" = (
+/obj/structure/mounted_gun/canister_gatling,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
 "pG" = (
 /obj/structure/window/reinforced/shuttle/survival_pod,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"qG" = (
+/obj/item/ammo_casing/canister_shot{
+	pixel_y = 8;
+	pixel_x = -8
+	},
+/obj/item/ammo_casing/canister_shot{
+	pixel_y = -8;
+	pixel_x = -8
+	},
+/obj/item/ammo_casing/canister_shot{
+	pixel_x = 6;
+	pixel_y = -8
+	},
+/obj/item/ammo_casing/canister_shot{
+	pixel_y = 8;
+	pixel_x = 6
+	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "rd" = (
@@ -1234,7 +1257,7 @@ fW
 St
 QM
 da
-WB
+nb
 WB
 RQ
 eG
@@ -1261,7 +1284,7 @@ km
 sC
 mG
 bn
-WB
+qG
 WB
 xY
 WR

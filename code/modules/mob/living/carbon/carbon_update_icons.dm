@@ -1,7 +1,6 @@
 /mob/living/carbon/update_obscured_slots(obscured_flags)
 	..()
-	if(obscured_flags & (HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS))
-		update_body()
+	update_body()
 
 /// Updates features and clothing attached to a specific limb with limb-specific offsets
 /mob/living/carbon/proc/update_features(feature_key)
@@ -273,7 +272,7 @@
 							break
 
 		var/icon_file = I.lefthand_file
-		if(get_held_index_of_item(I) % 2 == 0)
+		if(IS_RIGHT_INDEX(get_held_index_of_item(I)))
 			icon_file = I.righthand_file
 
 		hands += I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
@@ -460,11 +459,12 @@
 	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
+///Returns an integer representing the number of limbs that were updated.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
 	update_damage_overlays()
 	update_wound_overlays()
 	var/list/needs_update = list()
-	var/limb_count_update = FALSE
+	var/limb_count_update = 0
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		limb.update_limb(is_creating = update_limb_data) //Update limb actually doesn't do much, get_limb_icon is the cpu eater.
 
@@ -474,13 +474,15 @@
 		if(icon_render_keys[limb.body_zone] != old_key) //If the keys match, that means the limb doesn't need to be redrawn
 			needs_update += limb
 
+	limb_count_update += length(needs_update)
 	var/list/missing_bodyparts = get_missing_limbs()
 	if(((dna ? dna.species.max_bodypart_count : BODYPARTS_DEFAULT_MAXIMUM) - icon_render_keys.len) != missing_bodyparts.len) //Checks to see if the target gained or lost any limbs.
-		limb_count_update = TRUE
+		limb_count_update += 1
 		for(var/missing_limb in missing_bodyparts)
 			icon_render_keys -= missing_limb //Removes dismembered limbs from the key list
 
-	if(!needs_update.len && !limb_count_update)
+	. = limb_count_update
+	if(!.)
 		return
 
 	//GENERATE NEW LIMBS
@@ -578,6 +580,8 @@
 		if(gradient_styles?[GRADIENT_HAIR_KEY])
 			. += "-[gradient_styles[GRADIENT_HAIR_KEY]]"
 			. += "-[gradient_colors[GRADIENT_HAIR_KEY]]"
+		if(LAZYLEN(hair_masks))
+			. += "-[jointext(hair_masks, "-")]"
 
 	return .
 

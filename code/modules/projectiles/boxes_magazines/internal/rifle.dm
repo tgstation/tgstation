@@ -54,11 +54,11 @@
 /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/force
 	name = "two round magazine"
 	max_ammo = 2
-	caliber = CALIBER_REBAR_FORCED
+	caliber = CALIBER_REBAR
 	ammo_type = /obj/item/ammo_casing/rebar
 
 /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
 	max_ammo = 3
-	caliber = CALIBER_REBAR_SYNDIE
+	caliber = CALIBER_REBAR
 	ammo_type = /obj/item/ammo_casing/rebar/syndie
 

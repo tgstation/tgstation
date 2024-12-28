@@ -5,7 +5,7 @@
 /datum/action/innate/construction
 	button_icon = 'icons/mob/actions/actions_construction.dmi'
 	///Console's eye mob
-	var/mob/camera/ai_eye/remote/base_construction/remote_eye
+	var/mob/eye/camera/remote/base_construction/remote_eye
 	///Console itself
 	var/obj/machinery/computer/camera_advanced/base_construction/base_console
 	///Is this used to build only on the station z level?
@@ -120,7 +120,7 @@
 	button_icon_state = "build_turret"
 	structure_name = "turrets"
 	structure_path = /obj/machinery/porta_turret/aux_base
-	place_sound = 'sound/items/drill_use.ogg'
+	place_sound = 'sound/items/tools/drill_use.ogg'
 
 /datum/action/innate/construction/place_structure/turret/after_place(obj/placed_structure, remaining)
 	var/obj/machinery/computer/auxiliary_base/turret_controller = locate() in get_area(placed_structure)

@@ -43,7 +43,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	damtype = BURN
 	force = 15
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
@@ -58,7 +58,7 @@
 /obj/item/food/grown/nettle/death
 	seed = /obj/item/seeds/nettle/death
 	name = "\improper deathnettle"
-	desc = "The <span class='danger'>glowing</span> nettle incites <span class='boldannounce'>rage</span> in you just from looking at it!"
+	desc = "The <span class='danger'>glowing</span> nettle incites <span class='bolddanger'>rage</span> in you just from looking at it!"
 	icon_state = "deathnettle"
 	inhand_icon_state = "deathnettle"
 	bite_consumption_mod = 4 // I guess if you really wanted to

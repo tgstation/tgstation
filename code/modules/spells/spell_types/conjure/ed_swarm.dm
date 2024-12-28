@@ -19,4 +19,4 @@
 	summoned_bot.bot_mode_flags |= BOT_COVER_EMAGGED
 
 	summoned_bot.projectile = /obj/projectile/beam/laser
-	summoned_bot.shoot_sound = 'sound/weapons/laser.ogg'
+	summoned_bot.shoot_sound = 'sound/items/weapons/laser.ogg'

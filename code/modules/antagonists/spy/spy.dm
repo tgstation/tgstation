@@ -30,7 +30,7 @@
 	if(spawn_with_objectives)
 		give_random_objectives()
 	. = ..()
-	SEND_SOUND(owner.current, sound('sound/ambience/antag/spy.ogg'))
+	SEND_SOUND(owner.current, sound('sound/music/antag/spy.ogg'))
 
 /datum/antagonist/spy/ui_static_data(mob/user)
 	var/list/data = ..()

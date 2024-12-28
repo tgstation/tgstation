@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		balloon_alert(user, "too heavy!")
 		return .
 	balloon_alert_to_viewers("attaching...")
-	playsound(thing, 'sound/items/zip.ogg', vol = 50, vary = TRUE)
+	playsound(thing, 'sound/items/zip/zip.ogg', vol = 50, vary = TRUE)
 	if(isliving(thing))
 		var/mob/living/creature = thing
 		if(creature.mind)
@@ -124,7 +124,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.cut_overlay(balloon2)
 	holder_obj.add_overlay(balloon)
-	playsound(holder_obj.loc, 'sound/items/fultext_deploy.ogg', vol = 50, vary = TRUE, extrarange = -3)
+	playsound(holder_obj.loc, 'sound/items/fulton/fultext_deploy.ogg', vol = 50, vary = TRUE, extrarange = -3)
 
 	animate(holder_obj, pixel_z = 10, time = 2 SECONDS, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = 5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 	sleep(6 SECONDS)
 
-	playsound(holder_obj.loc, 'sound/items/fultext_launch.ogg', vol = 50, vary = TRUE, extrarange = -3)
+	playsound(holder_obj.loc, 'sound/items/fulton/fultext_launch.ogg', vol = 50, vary = TRUE, extrarange = -3)
 	animate(holder_obj, pixel_z = 1000, time = 3 SECONDS, flags = ANIMATION_RELATIVE)
 
 	if(ishuman(thing))
@@ -243,7 +243,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/effect/extraction_holder/singularity_act()
 	return
 
-/obj/effect/extraction_holder/singularity_pull()
+/obj/effect/extraction_holder/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/item/extraction_pack/syndicate

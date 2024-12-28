@@ -15,7 +15,7 @@
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
-	block_sound = 'sound/weapons/block_shield.ogg'
+	block_sound = 'sound/items/weapons/block_shield.ogg'
 	/// makes beam projectiles pass through the shield
 	var/transparent = FALSE
 	/// if the shield will break by sustaining damage
@@ -163,11 +163,11 @@
 	custom_materials = list(/datum/material/glass= SHEET_MATERIAL_AMOUNT * 3.75, /datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
 	transparent = TRUE
 	max_integrity = 75
-	shield_break_sound = 'sound/effects/glassbr3.ogg'
+	shield_break_sound = 'sound/effects/glass/glassbr3.ogg'
 	shield_break_leftover = /obj/item/shard
 	armor_type = /datum/armor/item_shield/riot
-	pickup_sound = 'sound/items/plastic_shield_pick_up.ogg'
-	drop_sound = 'sound/items/plastic_shield_drop.ogg'
+	pickup_sound = 'sound/items/handling/shield/plastic_shield_pick_up.ogg'
+	drop_sound = 'sound/items/handling/shield/plastic_shield_drop.ogg'
 
 /obj/item/shield/riot/Initialize(mapload)
 	. = ..()
@@ -305,7 +305,7 @@
 	throwforce = 3
 	throw_speed = 3
 	breakable_by_damage = FALSE
-	block_sound = 'sound/weapons/block_blade.ogg'
+	block_sound = 'sound/items/weapons/block_blade.ogg'
 	is_bashable = FALSE // Gotta wait till it activates y'know
 	shield_bash_sound = 'sound/effects/energyshieldbash.ogg'
 	/// Force of the shield when active.
@@ -355,7 +355,7 @@
 
 	if(user)
 		balloon_alert(user, active ? "activated" : "deactivated")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 35, TRUE)
 	is_bashable = !is_bashable
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -420,7 +420,7 @@
 	slot_flags = active ? ITEM_SLOT_BACK : null
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shield/riot/tele/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message = TRUE)
@@ -472,6 +472,6 @@
 	max_integrity = 35
 	shield_break_leftover = /obj/item/stack/rods/two
 	armor_type = /datum/armor/item_shield/improvised
-	block_sound = 'sound/items/trayhit2.ogg'
+	block_sound = 'sound/items/trayhit/trayhit2.ogg'
 
 #undef BATON_BASH_COOLDOWN

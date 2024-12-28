@@ -39,7 +39,7 @@
 		return
 	// stop swooped target movement
 	swooping = TRUE
-	ADD_TRAIT(owner, TRAIT_UNDENSE, SWOOPING_TRAIT)
+	owner.add_traits(list(TRAIT_GODMODE, TRAIT_UNDENSE), SWOOPING_TRAIT)
 	owner.visible_message(span_boldwarning("[owner] swoops up high!"))
 
 	var/negative
@@ -66,7 +66,6 @@
 				animate(owner, alpha = 255, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW) //reset immediately
 			return
 	animate(owner, alpha = 100, transform = matrix()*0.7, time = 7)
-	owner.status_flags |= GODMODE
 	SEND_SIGNAL(owner, COMSIG_SWOOP_INVULNERABILITY_STARTED)
 
 	owner.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -112,12 +111,11 @@
 	for(var/mob/observer in range(7, owner))
 		shake_camera(observer, 15, 1)
 
-	REMOVE_TRAIT(owner, TRAIT_UNDENSE, SWOOPING_TRAIT)
+	owner.remove_traits(list(TRAIT_GODMODE, TRAIT_UNDENSE), SWOOPING_TRAIT)
 	SLEEP_CHECK_DEATH(1, owner)
 	swooping = FALSE
 	if(!lava_success)
 		SEND_SIGNAL(owner, COMSIG_LAVA_ARENA_FAILED)
-	owner.status_flags &= ~GODMODE
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/proc/lava_pools(atom/target, amount = 30, delay = 0.8)
 	if(!target)
@@ -146,11 +144,17 @@
 	for(var/turf/T in walled)
 		drakewalls += new /obj/effect/temp_visual/drakewall(T) // no people with lava immunity can just run away from the attack for free
 	var/list/indestructible_turfs = list()
-	for(var/turf/T in RANGE_TURFS(2, center))
-		if(isindestructiblefloor(T))
+
+	for(var/turf/turf_target as anything in RANGE_TURFS(2, center))
+		if(isindestructiblefloor(turf_target))
 			continue
-		if(isindestructiblewall(T))
-			indestructible_turfs += T
+		if(isindestructiblewall(turf_target))
+			indestructible_turfs += turf_target
+			continue
+		if(ismineralturf(turf_target))
+			var/turf/closed/mineral/mineral_turf = turf_target
+			mineral_turf.gets_drilled(owner)
+
 	SLEEP_CHECK_DEATH(1 SECONDS, owner) // give them a bit of time to realize what attack is actually happening
 
 	var/list/turfs = RANGE_TURFS(2, center)

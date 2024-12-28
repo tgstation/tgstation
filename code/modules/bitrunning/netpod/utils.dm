@@ -29,7 +29,7 @@
 		open_machine()
 		return
 
-	mob_occupant.playsound_local(src, 'sound/magic/blink.ogg', 25, TRUE)
+	mob_occupant.playsound_local(src, 'sound/effects/magic/blink.ogg', 25, TRUE)
 	mob_occupant.set_static_vision(2 SECONDS)
 	mob_occupant.set_temp_blindness(1 SECONDS)
 	mob_occupant.Paralyze(2 SECONDS)

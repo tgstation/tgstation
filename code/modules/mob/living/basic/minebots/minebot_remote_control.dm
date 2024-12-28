@@ -56,7 +56,7 @@
 	if(isnull(target_turf) || isclosedturf(target_turf) || isgroundlessturf(target_turf))
 		user.balloon_alert(user, "invalid target!")
 		return ITEM_INTERACT_BLOCKING
-	playsound(src, 'sound/machines/beep.ogg', 30)
+	playsound(src, 'sound/machines/beep/beep.ogg', 30)
 	clear_priming()
 	new /obj/effect/temp_visual/minebot_target(target_turf)
 	COOLDOWN_START(src, bomb_timer, BOMB_COOLDOWN)

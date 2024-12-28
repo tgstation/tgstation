@@ -80,8 +80,8 @@
 	var/power_light = TRUE
 	var/power_environ = TRUE
 	var/power_apc_charge = TRUE
-
-	var/has_gravity = FALSE
+	/// The default gravity for the area
+	var/default_gravity = ZERO_GRAVITY
 
 	var/parallax_movedir = 0
 
@@ -91,7 +91,7 @@
 	///Does this area immediately play an ambience track upon enter?
 	var/forced_ambience = FALSE
 	///The background droning loop that plays 24/7
-	var/ambient_buzz = 'sound/ambience/shipambience.ogg'
+	var/ambient_buzz = 'sound/ambience/general/shipambience.ogg'
 	///The volume of the ambient buzz
 	var/ambient_buzz_vol = 35
 	///Used to decide what the minimum time between ambience is

@@ -21,6 +21,7 @@
 	return TOXLOSS
 
 /obj/item/t_scanner/proc/toggle_on()
+	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	on = !on
 	icon_state = copytext_char(icon_state, 1, -1) + "[on]"
 	if(on)

@@ -9,8 +9,8 @@
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 4
 	delivery_icon = "deliverybox"
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 	contents_pressure_protection = 0.8

@@ -17,7 +17,7 @@
 	var/charge_ignited = FALSE
 	var/fire_delay = 15
 	var/charge_size = 15
-	var/fire_sound = 'sound/weapons/gun/general/cannon.ogg'
+	var/fire_sound = 'sound/items/weapons/gun/general/cannon.ogg'
 
 /obj/structure/cannon/Initialize(mapload)
 	. = ..()

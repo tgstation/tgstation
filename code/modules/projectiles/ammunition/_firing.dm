@@ -23,10 +23,10 @@
 	user.changeNext_move(next_delay)
 
 	if(!tk_firing(user, fired_from))
-		user.newtonian_move(get_dir(target, user))
+		user.newtonian_move(get_angle(target, user), drift_force = newtonian_force)
 	else if(ismovable(fired_from))
 		var/atom/movable/firer = fired_from
-		if(!firer.newtonian_move(get_dir(target, fired_from), instant = TRUE))
+		if(!firer.newtonian_move(get_angle(target, fired_from), instant = TRUE, drift_force = newtonian_force))
 			var/throwtarget = get_step(fired_from, get_dir(target, fired_from))
 			firer.safe_throw_at(throwtarget, 1, 2)
 	update_appearance()
@@ -61,6 +61,8 @@
 		loaded_projectile.damage *= gun.projectile_damage_multiplier * integrity_mult
 		loaded_projectile.stamina *= gun.projectile_damage_multiplier * integrity_mult
 
+		loaded_projectile.speed *= gun.projectile_speed_multiplier * integrity_mult
+
 		loaded_projectile.wound_bonus += gun.projectile_wound_bonus
 		loaded_projectile.wound_bonus *= loaded_projectile.wound_bonus >= 0 ? 1 : 2 - integrity_mult
 		loaded_projectile.bare_wound_bonus += gun.projectile_wound_bonus
@@ -83,12 +85,12 @@
 	if(loaded_projectile.firer)
 		firing_dir = get_dir(fired_from, target)
 	if(!loaded_projectile.suppressed && firing_effect_type && !tk_firing(user, fired_from))
-		new firing_effect_type(get_turf(src), firing_dir)
+		new firing_effect_type(user || get_turf(src), firing_dir)
 
 	var/direct_target
 	if(target && curloc.Adjacent(targloc, target=targloc, mover=src)) //if the target is right on our location or adjacent (including diagonally if reachable) we'll skip the travelling code in the proj's fire()
 		direct_target = target
-	loaded_projectile.preparePixelProjectile(target, fired_from, params2list(params), spread)
+	loaded_projectile.aim_projectile(target, fired_from, params2list(params), spread)
 	var/obj/projectile/loaded_projectile_cache = loaded_projectile
 	loaded_projectile = null
 	loaded_projectile_cache.fire(null, direct_target)

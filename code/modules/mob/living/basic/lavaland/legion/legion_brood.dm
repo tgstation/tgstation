@@ -26,7 +26,7 @@
 	attack_verb_simple = "bite"
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("echoes") // who the fuck speaking as this mob it dies 10 seconds after it spawns
-	attack_sound = 'sound/weapons/pierce.ogg'
+	attack_sound = 'sound/items/weapons/pierce.ogg'
 	density = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/legion_brood
 	/// Reference to a guy who made us

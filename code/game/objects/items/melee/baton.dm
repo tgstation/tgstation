@@ -6,6 +6,7 @@
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
 	worn_icon_state = "classic_baton"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -177,7 +178,7 @@
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
 	if (human_target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
-		playsound(human_target, 'sound/weapons/genhit.ogg', 50, TRUE)
+		playsound(human_target, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 		return TRUE
 	return FALSE
 
@@ -306,6 +307,7 @@
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "telebaton"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	inhand_icon_state = null
@@ -327,7 +329,7 @@
 	drop_sound = 'sound/items/baton/telescopic_baton_folded_drop.ogg'
 	sound_vary = TRUE
 	/// The sound effecte played when our baton is extended.
-	var/on_sound = 'sound/weapons/batonextend.ogg'
+	var/on_sound = 'sound/items/weapons/batonextend.ogg'
 	/// The inhand iconstate used when our baton is extended.
 	var/on_inhand_icon_state = "nullrod"
 	/// The force on extension.
@@ -351,7 +353,7 @@
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
-	var/obj/item/organ/internal/brain/our_brain = human_user.get_organ_by_type(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/our_brain = human_user.get_organ_by_type(/obj/item/organ/brain)
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
 	if(active)
@@ -396,6 +398,7 @@
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "contractor_baton"
 	worn_icon_state = "contractor_baton"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -407,12 +410,12 @@
 	stamina_damage = 85
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
-	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
+	on_stun_sound = 'sound/items/weapons/contractor_baton/contractorbatonhit.ogg'
 	unfolded_drop_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
 	unfolded_pickup_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
 
 	on_inhand_icon_state = "contractor_baton_on"
-	on_sound = 'sound/weapons/contractorbatonextend.ogg'
+	on_sound = 'sound/items/weapons/contractorbatonextend.ogg'
 	active_force = 16
 
 /obj/item/melee/baton/telescopic/contractor_baton/get_wait_description()
@@ -431,6 +434,7 @@
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
 	worn_icon_state = "baton"
+	icon_angle = -45
 	force = 10
 	wound_bonus = 0
 	attack_verb_continuous = list("beats")
@@ -442,7 +446,7 @@
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
 	cooldown = 2.5 SECONDS
-	on_stun_sound = 'sound/weapons/egloves.ogg'
+	on_stun_sound = 'sound/items/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
 	context_living_rmb_active = "Harmful Stun"
@@ -507,7 +511,7 @@
 	var/turf/source_turf = get_turf(src)
 	var/obj/item/melee/baton/baton = new (source_turf)
 	baton.alpha = 20
-	playsound(source_turf, 'sound/items/drill_use.ogg', 80, TRUE, -1)
+	playsound(source_turf, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
 	animate(src, alpha = 0, time = 1 SECONDS)
 	animate(baton, alpha = 255, time = 1 SECONDS)
 	qdel(item)
@@ -724,6 +728,7 @@
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	worn_icon_state = null
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE

@@ -9,7 +9,7 @@
 	worn_icon_state = "gun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/rifle/shot.ogg'
 	pinless = TRUE
 	max_charges = 1
 	can_charge = FALSE
@@ -143,7 +143,7 @@
 	victim.visible_message(span_suicide("[victim] holds the barrel of [src] to [victim.p_their()] head, lighting the fuse. It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(!do_after(victim, 1.5 SECONDS))
 		return
-	playsound(src, 'sound/weapons/gun/rifle/shot.ogg', 75, TRUE)
+	playsound(src, 'sound/items/weapons/gun/rifle/shot.ogg', 75, TRUE)
 	to_chat(victim, span_danger("You don't even have the time to register the gunshot by the time your body has completely converted into a golden statue."))
 	var/newcolors = list(rgb(206, 164, 50), rgb(146, 146, 139), rgb(28,28,28), rgb(0,0,0))
 	victim.petrify(statue_timer = INFINITY, save_brain = FALSE, colorlist = newcolors)

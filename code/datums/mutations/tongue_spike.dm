@@ -30,7 +30,7 @@
 		to_chat(cast_on, span_notice("You concentrate really hard, but nothing happens."))
 		return
 
-	var/obj/item/organ/internal/tongue/to_fire = locate() in cast_on.organs
+	var/obj/item/organ/tongue/to_fire = locate() in cast_on.organs
 	if(!to_fire)
 		to_chat(cast_on, span_notice("You don't have a tongue to shoot!"))
 		return
@@ -45,6 +45,7 @@
 	desc = "Hardened biomass, shaped into a spike. Very pointy!"
 	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "tonguespike"
+	icon_angle = 45
 	force = 2
 	throwforce = 25
 	throw_speed = 4

@@ -105,7 +105,7 @@
 			if(params["value"])
 				if(length(params["value"]) > 32)
 					to_chat(current_user, span_warning("Error: Machine ID too long!"))
-					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+					playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 					return
 				else
 					id = params["value"]
@@ -115,7 +115,7 @@
 			if(params["value"])
 				if(length(params["value"]) > 15)
 					to_chat(current_user, span_warning("Error: Network name too long!"))
-					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+					playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 					return
 				else
 					for(var/obj/machinery/telecomms/linked_machine in links)
@@ -130,7 +130,7 @@
 		if("freq")
 			if(tempfreq in banned_frequencies)
 				to_chat(current_user, span_warning("Error: Interference preventing filtering frequency: \"[tempfreq / 10] kHz\""))
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 			else
 				if(!(tempfreq in freq_listening))
 					freq_listening.Add(tempfreq)

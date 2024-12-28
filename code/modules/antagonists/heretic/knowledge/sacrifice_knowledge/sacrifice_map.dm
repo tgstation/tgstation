@@ -84,14 +84,14 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 /area/centcom/heretic_sacrifice
 	name = "Mansus"
 	icon_state = "heretic"
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE
 	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE | NO_BOH
 
 /area/centcom/heretic_sacrifice/Initialize(mapload)
 	if(!ambientsounds)
-		ambientsounds = GLOB.ambience_assoc[ambience_index] + 'sound/ambience/ambiatm1.ogg'
+		ambientsounds = GLOB.ambience_assoc[ambience_index] + 'sound/ambience/misc/ambiatm1.ogg'
 	return ..()
 
 /area/centcom/heretic_sacrifice/ash //also, the default

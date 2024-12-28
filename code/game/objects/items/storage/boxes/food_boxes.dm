@@ -301,7 +301,7 @@
 		new /obj/item/food/fishmeat/armorfish(src)
 		new /obj/item/food/fishmeat/carp(src)
 		new /obj/item/food/fishmeat/moonfish(src)
-	new /obj/item/food/fishmeat/gunner_jellyfish(src)
+	new /obj/item/food/fishmeat/gunner_jellyfish/supply(src)
 
 /obj/item/storage/box/ingredients/salads
 	theme_name = "salads"

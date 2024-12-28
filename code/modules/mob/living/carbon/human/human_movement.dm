@@ -30,7 +30,3 @@
 		if((. && !moving_diagonally) || (!. && moving_diagonally == SECOND_DIAG_STEP))
 			SEND_SIGNAL(shoes, COMSIG_SHOES_STEP_ACTION)
 
-/mob/living/carbon/human/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
-	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
-		return TRUE
-	return ..()

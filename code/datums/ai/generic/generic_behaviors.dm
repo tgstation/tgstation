@@ -49,14 +49,8 @@
 
 	batman.visible_message(span_warning("[batman] gets a slightly too tight hug from [big_guy]!"), span_userdanger("You feel your body break as [big_guy] embraces you!"))
 
-	if(iscarbon(batman))
-		var/mob/living/carbon/carbon_batman = batman
-		for(var/obj/item/bodypart/bodypart_to_break in carbon_batman.bodyparts)
-			if(bodypart_to_break.body_zone == BODY_ZONE_HEAD)
-				continue
-			bodypart_to_break.receive_damage(brute = 15, wound_bonus = 35)
-	else
-		batman.adjustBruteLoss(150)
+	for(var/zone in GLOB.all_body_zones - BODY_ZONE_HEAD)
+		batman.apply_damage(15, BRUTE, zone, wound_bonus = 35)
 
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
@@ -101,11 +95,10 @@
 	if(QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	pawn.set_combat_mode(FALSE)
 	if(held_item)
 		held_item.melee_attack_chain(pawn, target)
 	else
-		pawn.UnarmedAttack(target, TRUE)
+		controller.ai_interact(target = target, combat_mode = FALSE)
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
@@ -181,7 +174,7 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/obj/item/target = controller.blackboard[target_key]
 	if(QDELETED(target))
-		return AI_BEHAVIOR_DELAY
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	if(!(target in living_pawn.held_items))
 		if(!living_pawn.get_empty_held_indexes() || !living_pawn.put_in_hands(target))
@@ -191,7 +184,8 @@
 
 	if(QDELETED(target) || prob(10)) // Even if we don't finish it all we can randomly decide to be done
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_DELAY
+
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /datum/ai_behavior/consume/finish_action(datum/ai_controller/controller, succeeded, target_key, hunger_timer_key)
 	. = ..()
@@ -205,12 +199,11 @@
 
 /datum/ai_behavior/drop_item/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
-	var/obj/item/best_held = GetBestWeapon(controller, null, living_pawn.held_items)
-	for(var/obj/item/held as anything in living_pawn.held_items)
-		if(!held || held == best_held)
-			continue
-		living_pawn.dropItemToGround(held)
-	return AI_BEHAVIOR_DELAY
+	var/list/my_held_items = living_pawn.held_items - GetBestWeapon(controller, null, living_pawn.held_items)
+	if(!length(my_held_items))
+		return AI_BEHAVIOR_FAILED | AI_BEHAVIOR_DELAY
+	living_pawn.dropItemToGround(pick(my_held_items))
+	return AI_BEHAVIOR_SUCCEEDED | AI_BEHAVIOR_DELAY
 
 /// This behavior involves attacking a target.
 /datum/ai_behavior/attack
@@ -276,7 +269,7 @@
 		return AI_BEHAVIOR_INSTANT
 	living_pawn.manual_emote(emote)
 	if(speech_sound) // Only audible emotes will pass in a sound
-		playsound(living_pawn, speech_sound, 80, vary = TRUE)
+		playsound(living_pawn, speech_sound, 80, vary = TRUE, pressure_affected =TRUE, ignore_walls = FALSE)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/perform_speech

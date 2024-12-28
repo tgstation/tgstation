@@ -34,6 +34,8 @@
 	/// A filler object used to fill the space of multi-tile airlocks
 	var/obj/structure/fluff/airlock_filler/filler
 	var/welded = FALSE
+	///Whether this door has a panel or not; FALSE also stops the examine blurb about the panel from showing up
+	var/has_access_panel = TRUE
 	/// For rglass-windowed airlocks and firedoors
 	var/heat_proof = FALSE
 	/// Emergency access override
@@ -122,7 +124,8 @@
 			. += span_notice("Due to a security threat, its access requirements have been lifted!")
 		else
 			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
-	. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
+	if(has_access_panel)
+		. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
 
 /obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -210,7 +213,7 @@
 	if(!red_alert_access)
 		return
 	audible_message(span_notice("[src] whirr[p_s()] as [p_they()] automatically lift[p_s()] access requirements!"))
-	playsound(src, 'sound/machines/boltsup.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/airlock/boltsup.ogg', 50, TRUE)
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
 	return FALSE
@@ -334,7 +337,7 @@
 	return
 
 
-/obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user)
+/obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user, forced = FALSE)
 	return
 
 /// Called when the user right-clicks on the door with a crowbar.
@@ -399,13 +402,13 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(glass)
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+				playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
 			else if(damage_amount)
-				playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE)
+				playsound(loc, 'sound/items/weapons/smash.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/door/emp_act(severity)
 	. = ..()

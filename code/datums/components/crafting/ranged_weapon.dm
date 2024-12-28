@@ -300,6 +300,22 @@
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
+/datum/crafting_recipe/pipe_organ_gun
+	name = "Pipe Organ Gun"
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER)
+	result = /obj/structure/mounted_gun/pipe
+	reqs = list(
+		/obj/item/pipe = 8,
+		/obj/item/stack/sheet/mineral/wood = 15,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/storage/toolbox = 1,
+		/obj/item/stack/rods = 10,
+		/obj/item/assembly/igniter = 2,
+	)
+	time = 15 SECONDS
+	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_CHECK_DENSITY
+
 /datum/crafting_recipe/trash_cannon
 	name = "Trash Cannon"
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER)
@@ -323,8 +339,7 @@
 		/obj/item/stack/rods = 4,
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/clothing/glasses/regular = 1,
-		/obj/item/reagent_containers/cup/glass/drinkingglass = 1,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 2,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	time = 10 SECONDS

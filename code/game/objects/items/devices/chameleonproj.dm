@@ -68,7 +68,7 @@
 	return TRUE
 
 /obj/item/chameleon/proc/make_copy(atom/target, mob/user)
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)
+	playsound(get_turf(src), 'sound/items/weapons/flash.ogg', 100, TRUE, -6)
 	to_chat(user, span_notice("Scanned [target]."))
 	var/obj/temp = new /obj()
 	temp.appearance = target.appearance

@@ -249,7 +249,7 @@
 		spawned_mind.name = spawned_mob.real_name
 
 	if(show_flavor)
-		var/output_message = "<span class='infoplain'><span class='big bold'>[you_are_text]</span></span>"
+		var/output_message = span_infoplain("<span class='big bold'>[you_are_text]</span>")
 		if(flavour_text != "")
 			output_message += "\n<span class='infoplain'><b>[flavour_text]</b></span>"
 		if(important_text != "")

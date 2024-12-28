@@ -26,7 +26,7 @@
 
 /datum/surgery/advanced/pacify/can_start(mob/user, mob/living/carbon/target)
 	. = ..()
-	var/obj/item/organ/internal/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		return FALSE
 
@@ -38,9 +38,9 @@
 		/obj/item/pen = 15,
 	)
 	time = 40
-	preop_sound = 'sound/surgery/hemostat1.ogg'
-	success_sound = 'sound/surgery/hemostat1.ogg'
-	failure_sound = 'sound/surgery/organ2.ogg'
+	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
+	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
+	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 
 /datum/surgery_step/pacify/mechanic
 	name = "delete aggression programming (multitool)"

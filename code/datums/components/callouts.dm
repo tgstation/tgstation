@@ -111,7 +111,7 @@
 	for(var/datum/callout_option/callout_option as anything in callout_options)
 		callout_items[callout_option] = image(icon = 'icons/hud/radial.dmi', icon_state = callout_option::icon_state)
 
-	var/datum/callout_option/selection = show_radial_menu(user, get_turf(clicked_atom), callout_items, entry_animation = FALSE, click_on_hover = TRUE, user_space = TRUE)
+	var/datum/callout_option/selection = show_radial_menu(user, get_turf(clicked_atom), callout_items, button_animation_flags = NONE, click_on_hover = TRUE, user_space = TRUE)
 	if (!selection)
 		return
 
@@ -136,7 +136,7 @@
 	color = colorize_string(creator.GetVoice(), 2, 0.9)
 	update_appearance()
 	var/turf/target_loc = get_turf(target)
-	animate(src, pixel_x = (target_loc.x - loc.x) * world.icon_size + target.pixel_x, pixel_y = (target_loc.y - loc.y) * world.icon_size + target.pixel_y, time = 0.2 SECONDS, easing = EASE_OUT)
+	animate(src, pixel_x = (target_loc.x - loc.x) * ICON_SIZE_X + target.pixel_x, pixel_y = (target_loc.y - loc.y) * ICON_SIZE_Y + target.pixel_y, time = 0.2 SECONDS, easing = EASE_OUT)
 
 /datum/callout_option
 	var/name = "ERROR"

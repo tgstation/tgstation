@@ -26,6 +26,7 @@
 /obj/item/key/janitor
 	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
 	icon_state = "keyjanitor"
+	icon_angle = 90
 	force = 2
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 9
@@ -63,7 +64,7 @@
 		if(SKILL_LEVEL_LEGENDARY to INFINITY) //Holy shit, look at that janny go!
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has epically become one with the janicart, and they're even in overdrive mode! It looks like [user.p_theyre()] trying to commit suicide!"))
 			user.AddElement(/datum/element/cleaning)
-			playsound(src, 'sound//magic/lightning_chargeup.ogg', 50, TRUE, -1)
+			playsound(src, 'sound/effects/magic/lightning_chargeup.ogg', 50, TRUE, -1)
 			user.reagents.add_reagent(/datum/reagent/drug/methamphetamine, 10) //Gotta go fast!
 			for(var/i in 1 to 150)
 				addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, add_atom_colour), (i % 2)? "#a245bb" : "#7a7d82", ADMIN_COLOUR_PRIORITY), i)
@@ -90,5 +91,5 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
-	hitsound = 'sound/weapons/whip.ogg'
+	hitsound = 'sound/items/weapons/whip.ogg'
 	slot_flags = ITEM_SLOT_BELT

@@ -60,6 +60,7 @@
 
 /obj/structure/geyser/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
+		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		return ..() //this runs the plunger code
 
 	if(discovered)
@@ -120,6 +121,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
 	worn_icon_state = "plunger"
+	icon_angle = 90
 
 	slot_flags = ITEM_SLOT_MASK
 	flags_inv = HIDESNOUT

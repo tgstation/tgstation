@@ -34,8 +34,6 @@
 	var/mob/mob_target = parent
 	if(!istype(mob_target))
 		return COMPONENT_INCOMPATIBLE
-	if(initial(mob_target.status_flags) & GODMODE)
-		return COMPONENT_INCOMPATIBLE
 
 	sources_to_area_type = list()
 	src.gain_message = gain_message
@@ -102,11 +100,11 @@
 /datum/component/area_based_godmode/proc/check_area(mob/source)
 	SIGNAL_HANDLER
 
-	var/has_godmode = source.status_flags & GODMODE
+	var/has_godmode = HAS_TRAIT(source, TRAIT_GODMODE)
 	if(!check_in_valid_area(source))
 		if(has_godmode)
 			to_chat(source, lose_message)
-			source.status_flags ^= GODMODE
+			REMOVE_TRAIT(source, TRAIT_GODMODE, REF(src))
 		check_area_cached_state = FALSE
 		return
 
@@ -115,7 +113,7 @@
 		return
 
 	to_chat(source, gain_message)
-	source.status_flags ^= GODMODE
+	ADD_TRAIT(source, TRAIT_GODMODE, REF(src))
 
 #undef MAP_AREA_TYPE
 #undef MAP_ALLOW_AREA_SUBTYPES

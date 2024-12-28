@@ -126,7 +126,7 @@
 	for(var/obj/machinery/atmospherics/components/unary/possible_vent in range(10, get_turf(cast_on)))
 		if(length(possible_vent.parents) && possible_vent.parents[1] == our_pipeline)
 			new gib_type(get_turf(possible_vent))
-			playsound(possible_vent, 'sound/effects/reee.ogg', 75, TRUE)
+			playsound(possible_vent, 'sound/mobs/non-humanoids/frog/reee.ogg', 75, TRUE)
 
 	priority_announce("We detected a pipe blockage around [get_area(get_turf(cast_on))], please dispatch someone to investigate.", "[command_name()]")
 	// Gib our caster, and make sure to leave nothing behind
