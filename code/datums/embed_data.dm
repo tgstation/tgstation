@@ -35,6 +35,8 @@ GLOBAL_LIST_INIT(embed_by_type, generate_embed_type_cache())
 	var/jostle_chance = 5
 	/// Coefficient of multiplication for the damage the item does while
 	var/jostle_pain_mult = 1
+	/// Call this proc on jostling, if it exists!
+	var/datum/callback/jostle_callback
 	/// This percentage of all pain will be dealt as stam damage rather than brute (0-1)
 	var/pain_stam_pct = 0
 
@@ -51,5 +53,6 @@ GLOBAL_LIST_INIT(embed_by_type, generate_embed_type_cache())
 	data.ignore_throwspeed_threshold = !isnull(ignore_throwspeed_threshold) ? ignore_throwspeed_threshold : src.ignore_throwspeed_threshold
 	data.jostle_chance = !isnull(jostle_chance) ? jostle_chance : src.jostle_chance
 	data.jostle_pain_mult = !isnull(jostle_pain_mult) ? jostle_pain_mult : src.jostle_pain_mult
+	data.jostle_callback = !isnull(jostle_callback) ? jostle_callback : src.jostle_callback
 	data.pain_stam_pct = !isnull(pain_stam_pct) ? pain_stam_pct : src.pain_stam_pct
 	return data

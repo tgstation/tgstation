@@ -1226,8 +1226,9 @@
 		prying_so_hard = FALSE
 		return
 
+	prying_so_hard = FALSE
+
 	if(check_electrified && shock(user, 100))
-		prying_so_hard = FALSE
 		return
 
 	open(BYPASS_DOOR_CHECKS)

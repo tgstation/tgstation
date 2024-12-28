@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Iron material tiles can now be used to tile lattice to make plating"

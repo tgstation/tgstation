@@ -1,8 +1,0 @@
-author: "NecromancerAnne (code), SmArtKar (sprites)"
-delete-after: True
-changes:
-  - balance: "Makarovs and Toy Pistols come in weapon cases. Complete with spare ammo."
-  - balance: "Basic ammo for either weapon comes in weapon cases of three extra magazines at an affordable price."
-  - balance: "Donksoft Toy Pistols from the uplink are much stronger than their standard counterparts, but now priced at 6 TC."
-  - balance: "Makarovs and Toy pistols have a magazine capacity of 12 rounds."
-  - balance: "Gun/Ammo cases from the traitor uplink can be destroyed by activating the disposal bomb. Press Alt-Right-Click on the case to start the timer."

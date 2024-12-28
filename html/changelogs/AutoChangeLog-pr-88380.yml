@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Carpenter hammer force 20 -> 17"
-  - balance: "Carpenter hammer throwforce 20 -> 14"
-  - balance: "Carpenter hammer demo mod 1.25 -> 1.15"
