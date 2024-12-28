@@ -798,6 +798,11 @@
 	create_reagents(max_fuel + oxygen_added, DRAWABLE | INJECTABLE)
 	reagents.add_reagent(fuel_type, max_fuel)
 	set_light_color(color)
+	AddComponent(/datum/component/edible,\
+		food_flags = FOOD_NO_EXAMINE,\
+		volume = reagents.total_volume,\
+		bite_consumption = round(reagents.total_volume / (rand(20, 30) / 10)),\
+	)
 
 /obj/item/flashlight/glowstick/proc/get_fuel()
 	return reagents?.get_reagent_amount(fuel_type)
