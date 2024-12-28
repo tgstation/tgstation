@@ -49,6 +49,14 @@
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
+	register_context()
+
+/turf/closed/wall/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(!isnull(held_item))
+		if((initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS) && held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Adjust Wall Corner"
+			return CONTEXTUAL_SCREENTIP_SET
 
 /turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
 	//Adds the component only once. We do it here & not in Initialize() because there are tons of walls & we don't want to add to their init times
