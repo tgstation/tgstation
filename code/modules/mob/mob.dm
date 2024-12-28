@@ -179,7 +179,7 @@
 
 		else
 			var/image/I = image('icons/mob/huds/hud.dmi', src, "")
-			I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+			I.appearance_flags = RESET_COLOR|PIXEL_SCALE|KEEP_APART
 			hud_list[hud] = I
 		set_hud_image_active(hud, update_huds = FALSE) //by default everything is active. but dont add it to huds to keep control.
 

@@ -1034,6 +1034,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		open()
 		return
 
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return
 	//okay, so the closet is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
@@ -1055,7 +1057,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			to_chat(user, span_warning("You fail to break out of [src]!"))
 
 /obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
-	container.container_resist_act()
+	container.container_resist_act(user)
 
 /// Check if someone is still resisting inside, and choose to either keep shaking or stop shaking the closet
 /obj/structure/closet/proc/check_if_shake()

@@ -105,6 +105,13 @@
 	. = ..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
+/obj/item/clothing/gloves/color/fyellow/examine_tags(mob/user)
+	. = ..()
+	// Pretend we're always insulated
+	if (.["partially insulated"])
+		. -= "partially insulated"
+	.["insulated"] = "It is made from a robust electrical insulator and will block any electricity passing through it!"
+
 /obj/item/clothing/gloves/color/fyellow/old
 	desc = "Old and worn out insulated gloves, hopefully they still work."
 	name = "worn out insulated gloves"

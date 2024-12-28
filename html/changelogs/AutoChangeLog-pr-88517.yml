@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - refactor: "Sound has been heavily optimized and will now ignore low volume sounds from far away."
+  - admin: "Add debugging sound earmuffs to admin equipment inside the debug box. Wear them to determine a sounds max range, distance, volume, and sound name. Highly recommended to walk otherwise you will get spammed with footstep sounds."

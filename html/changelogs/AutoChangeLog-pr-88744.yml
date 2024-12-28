@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - code_imp: "Very slightly improved the performance of code related to adding and removing traits."
