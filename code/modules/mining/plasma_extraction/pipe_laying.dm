@@ -154,82 +154,81 @@
 	building_pipes = TRUE
 	var/obj/parent_obj = parent
 	var/list/pipe_locations = get_path_to(parent, ending_location, max_distance = 4, exclude=get_turf(get_step(parent_obj, REVERSE_DIR(parent_obj.dir))), diagonal_handling = DIAGONAL_REMOVE_ALL)
+	if(!length(pipe_locations))
+		clear_click_catch()
+		return
+
 	var/obj/structure/liquid_plasma_extraction_pipe/last_placed_pipe
 	var/should_delete_ourselves = FALSE
-	if(length(pipe_locations))
-		for(var/turf/next_location as anything in pipe_locations)
-			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
-			if(!do_after(pipe_placer, 1.5 SECONDS, next_location, extra_checks = CALLBACK(src, PROC_REF(holding_pipe_check))))
-				break
-			playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
-			var/obj/structure/new_segment
-			var/obj/structure/liquid_plasma_geyser/last_spot = locate() in next_location
-			var/spot_in_list = pipe_locations.Find(next_location)
-			if(last_spot)
-				new_segment = new /obj/structure/liquid_plasma_ending(next_location, part_hub)
-				part_hub.last_pipe = new_segment
-				should_delete_ourselves = TRUE
-				last_placed_pipe = null
+	for(var/turf/next_location as anything in pipe_locations)
+		playsound(user, 'sound/machines/click.ogg', 50, TRUE)
+		if(!do_after(pipe_placer, 1.5 SECONDS, next_location, extra_checks = CALLBACK(src, PROC_REF(holding_pipe_check))))
+			break
+		playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
+		var/obj/structure/new_segment
+		var/obj/structure/liquid_plasma_geyser/last_spot = locate() in next_location
+		var/spot_in_list = pipe_locations.Find(next_location)
+		if(last_spot)
+			new_segment = new /obj/structure/liquid_plasma_ending(next_location, part_hub)
+			part_hub.last_pipe = new_segment
+			should_delete_ourselves = TRUE
+			last_placed_pipe = null
+			var/turf/previous_segment
+			if(spot_in_list == 1) //in case you're only building one pipe
+				previous_segment = get_turf(parent)
+			else
+				previous_segment = pipe_locations[spot_in_list - 1]
+			var/direction_to_place = REVERSE_DIR(get_dir(previous_segment, next_location))
+			new_segment.setDir(direction_to_place)
+		else
+			var/direction_to_place
+			if(spot_in_list == length(pipe_locations)) //last one copies the last one as it's trailing
 				var/turf/previous_segment
 				if(spot_in_list == 1) //in case you're only building one pipe
 					previous_segment = get_turf(parent)
 				else
 					previous_segment = pipe_locations[spot_in_list - 1]
-				var/direction_to_place = REVERSE_DIR(get_dir(previous_segment, next_location))
-				new_segment.setDir(direction_to_place)
+				direction_to_place = get_dir(previous_segment, next_location) //no special diagonal movement cause it can't be diagonal.
 			else
-				var/direction_to_place
-				if(spot_in_list == length(pipe_locations)) //last one copies the last one as it's trailing
-					var/turf/previous_segment
-					if(spot_in_list == 1) //in case you're only building one pipe
-						previous_segment = get_turf(parent)
-					else
-						previous_segment = pipe_locations[spot_in_list - 1]
-					direction_to_place = get_dir(previous_segment, next_location) //no special diagonal movement cause it can't be diagonal.
+				var/turf/previous_segment
+				if(spot_in_list == 1) //first one starts from the extraction hub
+					previous_segment = get_turf(parent)
 				else
-					var/turf/previous_segment
-					if(spot_in_list == 1) //first one starts from the extraction hub
-						previous_segment = get_turf(parent)
-					else
-						previous_segment = pipe_locations[spot_in_list - 1]
-					var/turf/next_segment = pipe_locations[spot_in_list + 1]
-
-					var/next_direction = get_dir(previous_segment, next_segment)
-					var/previous_direction = get_dir(next_location, previous_segment)
-
-					direction_to_place = next_direction
-					if(ISDIAGONALDIR(next_direction) && (NSCOMPONENT(previous_direction)))
-						direction_to_place = REVERSE_DIR(direction_to_place)
-				should_delete_ourselves = TRUE
-				var/obj/structure/liquid_plasma_extraction_pipe/pipe_sharing_tile = locate() in next_location
-				//prevents you from having 2 pipes going the same way.
-				if(pipe_sharing_tile && (pipe_sharing_tile.dir == direction_to_place || pipe_sharing_tile.dir == REVERSE_DIR(direction_to_place)))
-					pipe_sharing_tile.balloon_alert(user, "conflicting pipe!")
-					break
-				new_segment = new /obj/structure/liquid_plasma_extraction_pipe(next_location, part_hub)
-				last_placed_pipe = new_segment
-				new_segment.setDir(direction_to_place)
-				part_hub.connected_pipes += new_segment
-			if(start_one_tile_ahead && spot_in_list == 1)
-				//we are now changing the direction of the first pipe even though it's already been placed.
-				//this requires getting the list of all pipes, getting its location, then the pipe placed before IT was placed.
-				//If there isn't one, that means this was the first pipe, so we'll get the turf from the hub instead.
-				var/obj/structure/liquid_plasma_extraction_pipe/parent_segment = parent
-				var/previous_pipe_in_list = parent_segment.connected_hub.connected_pipes.Find(parent_segment)
-				var/turf/previous_pipe_location = (previous_pipe_in_list == 1) ? get_turf(parent_segment.connected_hub) : get_turf(parent_segment.connected_hub.connected_pipes[previous_pipe_in_list - 1])
-				var/turf/current_turf_location = get_turf(parent)
-
-				var/current_segment = get_dir(previous_pipe_location, next_location)
-				var/previous_direction = get_dir(current_turf_location, previous_pipe_location)
-				var/direction_changed_into = current_segment
-				if(ISDIAGONALDIR(current_segment) && (NSCOMPONENT(previous_direction)))
-					direction_changed_into = REVERSE_DIR(direction_changed_into)
-				parent_segment.setDir(direction_changed_into)
-				parent_segment.update_appearance(UPDATE_OVERLAYS)
-			if(last_spot)
+					previous_segment = pipe_locations[spot_in_list - 1]
+				var/turf/next_segment = pipe_locations[spot_in_list + 1]
+				var/next_direction = get_dir(previous_segment, next_segment)
+				var/previous_direction = get_dir(next_location, previous_segment)
+				direction_to_place = next_direction
+				if(ISDIAGONALDIR(next_direction) && (NSCOMPONENT(previous_direction)))
+					direction_to_place = REVERSE_DIR(direction_to_place)
+			should_delete_ourselves = TRUE
+			var/obj/structure/liquid_plasma_extraction_pipe/pipe_sharing_tile = locate() in next_location
+			//prevents you from having 2 pipes going the same way.
+			if(pipe_sharing_tile && (pipe_sharing_tile.dir == direction_to_place || pipe_sharing_tile.dir == REVERSE_DIR(direction_to_place)))
+				pipe_sharing_tile.balloon_alert(user, "conflicting pipe!")
 				break
+			new_segment = new /obj/structure/liquid_plasma_extraction_pipe(next_location, part_hub)
+			last_placed_pipe = new_segment
+			new_segment.setDir(direction_to_place)
+			part_hub.connected_pipes += new_segment
+		if(start_one_tile_ahead && spot_in_list == 1)
+			//we are now changing the direction of the first pipe even though it's already been placed.
+			//this requires getting the list of all pipes, getting its location, then the pipe placed before IT was placed.
+			//If there isn't one, that means this was the first pipe, so we'll get the turf from the hub instead.
+			var/obj/structure/liquid_plasma_extraction_pipe/parent_segment = parent
+			var/previous_pipe_in_list = parent_segment.connected_hub.connected_pipes.Find(parent_segment)
+			var/turf/previous_pipe_location = (previous_pipe_in_list == 1) ? get_turf(parent_segment.connected_hub) : get_turf(parent_segment.connected_hub.connected_pipes[previous_pipe_in_list - 1])
+			var/turf/current_turf_location = get_turf(parent)
+			var/current_segment = get_dir(previous_pipe_location, next_location)
+			var/previous_direction = get_dir(current_turf_location, previous_pipe_location)
+			var/direction_changed_into = current_segment
+			if(ISDIAGONALDIR(current_segment) && (NSCOMPONENT(previous_direction)))
+				direction_changed_into = REVERSE_DIR(direction_changed_into)
+			parent_segment.setDir(direction_changed_into)
+			parent_segment.update_appearance(UPDATE_OVERLAYS)
+		if(last_spot)
+			break
 
-	pipe_locations = null
 	clear_click_catch()
 
 	if(last_placed_pipe)
