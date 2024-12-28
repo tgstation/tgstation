@@ -187,6 +187,7 @@
 			damagetype = STAMINA,
 		)
 		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.plaintext_zone] jostles and stings!"))
+		embed_data.jostle_callback?.Invoke(victim, weapon, embed_data)
 
 
 /// Called when then item randomly falls out of a carbon. This handles the damage and descriptors, then calls safe_remove()

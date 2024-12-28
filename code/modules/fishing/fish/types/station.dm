@@ -207,18 +207,27 @@
 /obj/item/fish/fryish/fritterish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	variant = pick(FISH_FRITTERISH, FISH_BERNARD, FISH_MATTHEW)
+	load_variant(pick(FISH_FRITTERISH, FISH_BERNARD, FISH_MATTHEW))
+
+/obj/item/fish/fryish/fritterish/proc/load_variant(new_variant)
+	variant = new_variant
 	switch(variant)
 		if(FISH_BERNARD)
-			name = "bernard-fish"
-			desc = "A <u>deliciously</> extremophile alien fish shaped like a dinosaur. Children love it."
-			base_icon_state = icon_state = "bernardfish"
 			sprite_width = 4
 			sprite_height = 6
 		if(FISH_MATTHEW)
-			name = "matthew-fish"
-			desc = "A <u>deliciously</> extremophile alien fish shaped like a pterodactyl. Children love it."
-			base_icon_state = icon_state = "matthewfish"
 			sprite_width = 6
+	update_appearance()
+
+#define PERSISTENCE_FISH_FRITTERISH_VARIANT "fritterish_variant"
+
+/obj/item/fish/fryish/fritterish/persistence_save(list/data)
+	data[PERSISTENCE_FISH_FRITTERISH_VARIANT] = variant
+
+/obj/item/fish/fryish/fritterish/persistence_load(list/data)
+	load_variant(data[PERSISTENCE_FISH_FRITTERISH_VARIANT])
+
+#undef PERSISTENCE_FISH_FRITTERISH_VARIANT
 
 /obj/item/fish/fryish/fritterish/update_name()
 	switch(variant)
