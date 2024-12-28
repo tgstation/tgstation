@@ -37,6 +37,9 @@
 	/// A hint explaining how one may find the target item.
 	var/steal_hint = "The clown might have one."
 
+	///If the item takes special steps to destroy for an objective (e.g. blackbox)
+	var/destruction_method = null
+
 /// For objectives with special checks (does that intellicard have an ai in it? etcetc)
 /datum/objective_item/proc/check_special_completion(obj/item/thing)
 	return TRUE
