@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Tackling resulting in a neutral outcome does not force you to the floor."
+  - bugfix: "Getting up is now properly influenced by spinal implants."

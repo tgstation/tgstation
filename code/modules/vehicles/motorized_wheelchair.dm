@@ -66,7 +66,7 @@
 		speed += servo.tier
 	var/chair_icon = "motorized_wheelchair[speed > delay_multiplier ? "_fast" : ""]"
 	if(icon_state != chair_icon)
-		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER)
+		overlay_icon = chair_icon + "_overlay"
 
 	icon_state = chair_icon
 

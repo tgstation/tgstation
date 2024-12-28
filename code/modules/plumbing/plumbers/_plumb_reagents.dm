@@ -121,12 +121,19 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	. = 0
+
+	//no reagents
 	if(!total_volume)
 		return
 
 	var/obj/machinery/plumbing/reaction_chamber/reactor = my_atom
 	var/list/datum/reagent/catalysts = reactor.catalysts
 
+	//no catalysts
+	if(!catalysts.len)
+		return total_volume
+
+	//filter out catalysts except when we have excess of them
 	var/working_volume
 	var/catalyst_volume
 	var/list/cached_reagents = reagent_list
