@@ -87,6 +87,9 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	/// Extra progression given for holding the item for the required duration of time.
 	var/extra_progression = 0
 
+	///If the item takes special steps to destroy for an objective (e.g. blackbox)
+	var/destruction_method = null
+
 	abstract_type = /datum/traitor_objective/steal_item
 
 /datum/traitor_objective/steal_item/low_risk
