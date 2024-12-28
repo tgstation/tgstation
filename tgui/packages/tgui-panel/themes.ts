@@ -10,14 +10,14 @@ const COLORS = {
   DARK: {
     BG_BASE: '#212020',
     BG_SECOND: '#161515',
-    BUTTON: '#161515',
-    TEXT: '#8A8A8A',
+    BUTTON: '#414040',
+    TEXT: '#A6A6A6',
   },
   LIGHT: {
     BG_BASE: '#EFEEEE',
     BG_SECOND: '#FFFFFF',
-    BUTTON: '#FEFFFF',
-    TEXT: '#7F7F7F',
+    BUTTON: '#FFFEFE',
+    TEXT: '#000000',
   },
 };
 
