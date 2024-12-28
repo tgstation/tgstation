@@ -106,6 +106,12 @@ jobs:
       - name: Check Trait Validity
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python -m trait_validity.check
+      - name: Run sound file loudness normalisation checks
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        run: |
+          sudo apt-get install ffmpeg
+          sudo apt-get install ffmpeg-normalise
+          tools/ci/loudness_analyzation.sh
       - name: Run DreamChecker
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         shell: bash
