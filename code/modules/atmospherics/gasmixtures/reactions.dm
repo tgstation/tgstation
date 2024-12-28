@@ -184,31 +184,30 @@
 	// This reaction should proceed faster at higher temperatures.
 	var/temperature = air.temperature
 	var/temperature_scale = 0
+	// Reaction rate peaks as a fraction of plasma at 1643.15.
 	if(temperature > PLASMA_UPPER_TEMPERATURE)
 		temperature_scale = 1
 	else
 		temperature_scale = (temperature - PLASMA_MINIMUM_BURN_TEMPERATURE) / (PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
-		if(temperature_scale <= 0)
-			return NO_REACTION
-
-	var/oxygen_burn_ratio = OXYGEN_BURN_RATIO_BASE - temperature_scale
+	
+	var/oxygen_burn_ratio = OXYGEN_BURN_RATIO_BASE - temperature_scale // Oxygen consumption decreases with temperature.
 	var/plasma_burn_rate = 0
 	var/super_saturation = FALSE // Whether we should make tritium.
-	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
+	var/list/cached_gases = air.gases // This speeds things up because accessing datum vars is slow
 	switch(cached_gases[/datum/gas/oxygen][MOLES] / cached_gases[/datum/gas/plasma][MOLES])
-		if(SUPER_SATURATION_THRESHOLD to INFINITY)
-			plasma_burn_rate = (cached_gases[/datum/gas/plasma][MOLES] / PLASMA_BURN_RATE_DELTA) * temperature_scale
+		if(SUPER_SATURATION_THRESHOLD to INFINITY) // 96 or above.
+			plasma_burn_rate = (cached_gases[/datum/gas/plasma][MOLES] / PLASMA_BURN_RATE_DELTA) * temperature_scale // At most 1/9 of the plasma per tick.
 			super_saturation = TRUE // Begin to form tritium
 		if(PLASMA_OXYGEN_FULLBURN to SUPER_SATURATION_THRESHOLD)
-			plasma_burn_rate = (cached_gases[/datum/gas/plasma][MOLES] / PLASMA_BURN_RATE_DELTA) * temperature_scale
+			plasma_burn_rate = cached_gases[/datum/gas/plasma][MOLES] / PLASMA_BURN_RATE_DELTA * temperature_scale
 		else
-			plasma_burn_rate = ((cached_gases[/datum/gas/oxygen][MOLES] / PLASMA_OXYGEN_FULLBURN) / PLASMA_BURN_RATE_DELTA) * temperature_scale
+			plasma_burn_rate = cached_gases[/datum/gas/oxygen][MOLES] / PLASMA_OXYGEN_FULLBURN / PLASMA_BURN_RATE_DELTA * temperature_scale
 
 	if(plasma_burn_rate < MINIMUM_HEAT_CAPACITY)
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
-	plasma_burn_rate = min(plasma_burn_rate, cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/oxygen][MOLES] *  INVERSE(oxygen_burn_ratio)) //Ensures matter is conserved properly
+	plasma_burn_rate = min(plasma_burn_rate, cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/oxygen][MOLES] / oxygen_burn_ratio) // Limits burn to current moles.
 	cached_gases[/datum/gas/plasma][MOLES] = QUANTIZE(cached_gases[/datum/gas/plasma][MOLES] - plasma_burn_rate)
 	cached_gases[/datum/gas/oxygen][MOLES] = QUANTIZE(cached_gases[/datum/gas/oxygen][MOLES] - (plasma_burn_rate * oxygen_burn_ratio))
 	if (super_saturation)
@@ -223,8 +222,7 @@
 	SET_REACTION_RESULTS((plasma_burn_rate) * (1 + oxygen_burn_ratio))
 	var/energy_released = FIRE_PLASMA_ENERGY_RELEASED * plasma_burn_rate
 	var/new_heat_capacity = air.heat_capacity()
-	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+	air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
 
 	// Let the floor know a fire is happening
 	var/turf/open/location = holder
