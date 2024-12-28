@@ -3109,6 +3109,8 @@
 	var/obj/item/flashlight/eyelight/glow/glowing
 	/// Previous overlay_ignore_lighting of owner's eyes
 	var/prev_ignore_lighting
+	/// Have we added a flashlight already and it got destroyed by something?
+	var/added_light = FALSE
 
 /datum/reagent/luminescent_fluid/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -3116,6 +3118,7 @@
 		glowing = new(affected_mob)
 		glowing.set_light_color(color)
 		glowing.set_light_on(TRUE)
+		added_light = TRUE
 
 	if (!ishuman(affected_mob))
 		return
@@ -3143,10 +3146,11 @@
 
 /datum/reagent/luminescent_fluid/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if (isnull(glowing) && volume > 20)
+	if (isnull(glowing) && !added_light && volume > 20)
 		glowing = new(affected_mob)
 		glowing.set_light_color(color)
 		glowing.set_light_on(TRUE)
+		added_light = TRUE
 
 /datum/reagent/luminescent_fluid/proc/on_organ_added(mob/living/source, obj/item/organ/eyes/new_eyes)
 	SIGNAL_HANDLER
