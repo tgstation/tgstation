@@ -51,3 +51,25 @@
 		return FALSE
 	if (prob(hit_reflect_chance))
 		return TRUE
+
+/obj/item/clothing/mask/gas/respirator
+	name = "half mask respirator"
+	desc = "A half mask respirator that's really just a standard gas mask with the glass taken off."
+	icon_state = "respirator"
+	icon = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/face.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/face.dmi'
+	supported_bodyshapes = null
+	bodyshape_icon_files = null
+	inhand_icon_state = "sechailer"
+	greyscale_config = /datum/greyscale_config/respirator
+	greyscale_config_worn = /datum/greyscale_config/respirator/worn
+	greyscale_colors = "#666666"
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT|MASKINTERNALS
+	w_class = WEIGHT_CLASS_SMALL
+	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
+	flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH
+	flags_1 = IS_PLAYER_COLORABLE_1
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
