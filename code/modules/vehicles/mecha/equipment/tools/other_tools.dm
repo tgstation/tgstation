@@ -175,7 +175,7 @@
 	armor_mod = /datum/armor/mecha_equipment_ccw_boost
 
 /datum/armor/mecha_equipment_ccw_boost
-	melee = 15
+	melee = 5
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
 	name = "Projectile Shielding"
@@ -202,7 +202,7 @@
 	active = FALSE
 	equipment_slot = MECHA_UTILITY
 	/// Repaired health per second
-	var/health_boost = 0.5
+	var/health_boost = 0.16
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_CABIN_AIR_BREACH)
 
