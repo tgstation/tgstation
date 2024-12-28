@@ -268,7 +268,7 @@
 
 /datum/pet_command/use_ability/lob_charge/set_command_target(mob/living/parent, atom/target)
 	if (!target)
-		return
+		return FALSE
 	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(parent.ai_controller.blackboard[targeting_strategy_key])
 	if(!targeter?.can_attack(parent, target))
 		parent.balloon_alert_to_viewers("shakes head!")
