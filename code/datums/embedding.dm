@@ -196,9 +196,9 @@
 /// We've tried to embed into something and failed
 /// Random being TRUE means we've lost the roulette, FALSE means we've either been blocked or the target is invalid
 /datum/embedding/proc/failed_embed(mob/living/carbon/victim, hit_zone, random = FALSE)
-	SEND_SIGNAL(parent, COMSIG_ITEM_FAILED_EMBED, victim, hit_zone)
-	if (!isitem(parent))
+	if (!istype(parent))
 		return
+	SEND_SIGNAL(parent, COMSIG_ITEM_FAILED_EMBED, victim, hit_zone)
 	if((parent.item_flags & DROPDEL) && !QDELETED(parent))
 		qdel(parent)
 
