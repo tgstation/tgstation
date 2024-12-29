@@ -20,7 +20,7 @@
 	/// The name that gets sent back to IDs that send access requests to this remote. Defaults to the department head's job
 	var/response_name = null
 	var/listening = FALSE
-	/// an asslist of tuples (ID : door)
+	/// an asslist (ID : door)
 	var/open_requests = list()
 	/// When the remote gets dropped, start a ten minute timer before we stop listening for requests
 	var/stop_listening_timer = null
@@ -138,12 +138,12 @@
 		return
 	// Javascript doesn't like when you feed associative arrays from BYOND into its functions that want
 	// primitives so we have to do some value conversion here
-	// open_requests is an asslist of lists(tuples), ( id : door ) of which ID is requesting which door
+	// open_requests is an asslist ( id : door ) of which ID is requesting which door
 	var/list/parsed_requests = list()
 	for(var/obj/item/card/id/request_item in open_requests)
 		var/obj/machinery/camera/nearest_camera = null
-		// checkboxes further down returns an asslist of lists(tuples)
-		// (text : index_value) with the text being some useless cruff from the tgui input
+		// checkboxes further down returns a list of lists
+		// (text, index_value) with the text being some useless cruff from the tgui input // (javascript doesn't support BYOND friendly asslists)
 		// but the index_value is the index of the request in the open_requests list
 		// that we can use to get the actual request and door to operate on
 		var/obj/machinery/door/airlock/requested_door = open_requests[request_item]
@@ -156,7 +156,7 @@
 			if(smile_youre_on_camera.is_operational && (get_dist(smile_youre_on_camera, requested_door) <= smile_youre_on_camera.view_range))
 				nearest_camera = smile_youre_on_camera
 				break
-		parsed_requests += "[request_item.registered_name] -> [open_requests[request_item]] ([get_area(requested_door) + nearest_camera ? "" : "!!NO_CAM!!" ])"
+		parsed_requests += "[request_item.registered_name] -> [open_requests[request_item]] ([get_area(requested_door)])[nearest_camera ? "" : "!!NO_CAM!!"]"
 	var/list/choices = list()
 	choices = tgui_input_checkboxes(
 		user = user,
@@ -167,18 +167,22 @@
 	if(!length(choices))
 		to_chat(user, span_yellowteamradio("The remote buzzes: %NO_SELECTION%"))
 		return
-		//if_set_auto_response_do_that << M_PSEUDOCODE
-
-
-
-
-
+	balloon_alert(user, "Choose batch action:")
+	var/action = show_radial_menu(user, user, list("Approve", "Deny", "Bolt", "Block", "Emergency Access"), radius = 32)
+	for(var/choice in choices)
+		// second index of a given choice is its index in open_requests
+		// first index was just text for the remote user
+		var/open_req_index_from_tgui_selection = choice[2]
+		var/given_request = open_requests[open_req_index_from_tgui_selection]
+		var/obj/item/card/id/given_id = given_request
+		var/obj/machinery/door/airlock/given_door = open_requests[given_request]
+		if(!istype(given_id) || !istype(given_door))
+			to_chat(user, span_yellowteamradio("The remote buzzes:"))
+			to_chat(user, span_yellowteamradio("[choice[1]] %REQUEST_RESPONSE_FAILURE%"))
+			continue
+		to_chat(user, span_yellowteamradio("[choice[1]] %[action]%"))
 
 /obj/item/door_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
-
-/obj/item/door_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/door/door
 
 	if (istype(interacting_with, /obj/machinery/door))
