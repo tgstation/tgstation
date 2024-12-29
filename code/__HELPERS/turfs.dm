@@ -379,31 +379,31 @@ Turf and target are separate in case you want to teleport some distance from a t
 ///Returns a random department of areas to pass into get_safe_random_station_turf() for more equal spawning.
 /proc/get_safe_random_station_turf_equal_weight()
 	// Big list of departments, each with lists of each area subtype.
-	var/static/list/area/department_areas = list(
-				list(subtypesof(/area/station/engineering)), \
-				list(subtypesof(/area/station/medical)), \
-				list(subtypesof(/area/station/science)), \
-				list(subtypesof(/area/station/security)), \
-				list(subtypesof(/area/station/service)), \
-				list(subtypesof(/area/station/command)), \
-				list(subtypesof(/area/station/hallway)), \
-				list(subtypesof(/area/station/ai_monitored)), \
-				list(subtypesof(/area/station/maintenance)), \
-				list(subtypesof(/area/station/cargo)))
+	var/list/department_areas = list(
+				subtypesof(/area/station/engineering), \
+				subtypesof(/area/station/medical), \
+				subtypesof(/area/station/science), \
+				subtypesof(/area/station/security), \
+				subtypesof(/area/station/service), \
+				subtypesof(/area/station/command), \
+				subtypesof(/area/station/hallway), \
+				subtypesof(/area/station/ai_monitored), \
+				subtypesof(/area/station/cargo)
+			)
 
 	var/list/area/final_department = pick(department_areas) // Pick a department
-	var/list/area/finial_area_list
-	for (var/i = 1, i <= final_department.len, i++) // Check each area to make sure it exists on the station
+	var/list/area/final_area_list = list()
+
+	for (var/i = final_department.len, i >= 1, i--) // Check each area to make sure it exists on the station
 		var/area/checked_area = pick_n_take(final_department)
 		if(checked_area in GLOB.the_station_areas)
-			finial_area_list += checked_area
+			final_area_list += checked_area
 
-	return get_safe_random_station_turf(finial_area_list)
+	if(!final_area_list.len) // Failsafe
+		return get_safe_random_station_turf()
 
-ADMIN_VERB(run_random_z_levels, R_DEBUG, "Check Safe Random Turf", "Runs get_safe_random_station_turf() and logs it", ADMIN_CATEGORY_DEBUG)
-	for(var/i in 1 to 10000)
-		var/area/names = get_area(get_safe_random_station_turf_equal_weight())
-		logger.Log(LOG_CATEGORY_RANDOM_TURF, "[names.type]")
+	return get_safe_random_station_turf(final_area_list)
+
 /**
  * Checks whether the target turf is in a valid state to accept a directional construction
  * such as windows or railings.
