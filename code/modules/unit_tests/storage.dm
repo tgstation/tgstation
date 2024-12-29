@@ -50,6 +50,17 @@
 	for(var/storage in subtypesof(/obj/item/storage))
 		var/obj/item/storage/storage_item = allocate(storage)
 		var/datum/storage/storage_type = storage_item.atom_storage
+		//list of debug exempted storage items
+		var/debug_list = typecacheof(list(
+			/obj/item/storage/box/miner_modkits,
+			/obj/item/storage/box/skillchips,
+			/obj/item/storage/box/stockparts/basic,
+			/obj/item/storage/box/stockparts/deluxe,
+			/obj/item/storage/box/fish_debug,
+		))
+
+		if(is_type_in_typecache(storage, debug_list))
+			continue
 
 		var/list/storage_contents = storage_item.contents
 		var/total_weight_in_storage //We shouldn't have to deal with items being heavier than weight limit due to the other unit test
@@ -67,4 +78,4 @@
 			TEST_FAIL("[storage_item] ([storage_item.type]) has loaded slots of [contents_counter], but only holds a max slot of [storage_type.max_slots].")
 
 		if(storage_type.max_total_storage < total_weight_in_storage)
-			TEST_FAIL("[storage_item] ([storage_item.type]) has a total weight of [total_weight_in_storage], but only holds a max slot of [storage_type.max_total_storage].")
+			TEST_FAIL("[storage_item] ([storage_item.type]) has a total weight of [total_weight_in_storage], but only holds a max weight of [storage_type.max_total_storage].")

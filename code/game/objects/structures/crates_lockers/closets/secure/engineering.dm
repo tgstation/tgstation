@@ -6,7 +6,7 @@
 /obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
 	..()
 
-	new /obj/item/storage/bag/garment/engineering_chief (src)
+	new /obj/item/storage/bag/garment/clothing/engineering_chief (src)
 	new /obj/item/computer_disk/command/ce(src)
 	new /obj/item/radio/headset/heads/ce(src)
 	new /obj/item/megaphone/command(src)

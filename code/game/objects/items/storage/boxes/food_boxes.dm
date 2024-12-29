@@ -404,7 +404,7 @@
 	illustration = null
 
 /obj/item/storage/box/tiziran_goods/PopulateContents()
-	for(var/i in 1 to 12)
+	for(var/i in 1 to 7)
 		var/random_food = pick_weight(list(
 			/obj/item/food/bread/root = 2,
 			/obj/item/food/grown/ash_flora/seraka = 2,
@@ -426,7 +426,7 @@
 	illustration = null
 
 /obj/item/storage/box/tiziran_cans/PopulateContents()
-	for(var/i in 1 to 8)
+	for(var/i in 1 to 7)
 		var/random_food = pick_weight(list(
 			/obj/item/food/canned/jellyfish = 5,
 			/obj/item/food/canned/desert_snails = 5,
@@ -441,7 +441,7 @@
 	illustration = null
 
 /obj/item/storage/box/tiziran_meats/PopulateContents()
-	for(var/i in 1 to 10)
+	for(var/i in 1 to 7)
 		var/random_food = pick_weight(list(
 			/obj/item/food/fishmeat/armorfish = 5,
 			/obj/item/food/fishmeat/gunner_jellyfish = 5,
@@ -457,7 +457,7 @@
 	illustration = null
 
 /obj/item/storage/box/mothic_goods/PopulateContents()
-	for(var/i in 1 to 12)
+	for(var/i in 1 to 7)
 		var/random_food = pick_weight(list(
 			/obj/item/food/cheese/cheese_curds = 5,
 			/obj/item/food/cheese/curd_cheese = 5,
@@ -478,7 +478,7 @@
 	illustration = null
 
 /obj/item/storage/box/mothic_cans_sauces/PopulateContents()
-	for(var/i in 1 to 8)
+	for(var/i in 1 to 7)
 		var/random_food = pick_weight(list(
 			/obj/item/food/bechamel_sauce = 5,
 			/obj/item/food/canned/pine_nuts = 5,

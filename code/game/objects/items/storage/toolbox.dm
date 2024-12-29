@@ -292,7 +292,7 @@
 
 /obj/item/storage/toolbox/artistic/Initialize(mapload)
 	. = ..()
-	atom_storage.max_total_storage = 20
+	atom_storage.max_total_storage = 22
 	atom_storage.max_slots = 11
 
 /obj/item/storage/toolbox/artistic/PopulateContents()
@@ -324,9 +324,9 @@
 
 /obj/item/storage/toolbox/medical/Initialize(mapload)
 	. = ..()
-	// what do any of these numbers fucking mean
+	// eh it's fine. it's bulky and limited anyways
 	atom_storage.max_total_storage = 20
-	atom_storage.max_slots = 11
+	atom_storage.max_slots = 13
 
 /obj/item/storage/toolbox/medical/PopulateContents()
 	var/atom/fake_tray = new tray_type(get_turf(src)) // not in src lest it fill storage that we need for its tools later
@@ -455,7 +455,7 @@
 /obj/item/storage/toolbox/guncase/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.max_total_storage = 7 //enough to hold ONE bulky gun and the ammo boxes
+	atom_storage.max_total_storage = 14 //enough to hold a a gun (4) with space for ammo box, restrict with slots
 	atom_storage.max_slots = 4
 
 /obj/item/storage/toolbox/guncase/PopulateContents()
@@ -652,6 +652,7 @@
 /obj/item/storage/toolbox/guncase/monkeycase/Initialize(mapload)
 	. = ..()
 	atom_storage.locked = STORAGE_SOFT_LOCKED
+	atom_storage.max_slots = 6
 
 /obj/item/storage/toolbox/guncase/monkeycase/attack_self(mob/user, modifiers)
 	if(!monkey_check(user))

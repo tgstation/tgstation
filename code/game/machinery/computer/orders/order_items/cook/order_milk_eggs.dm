@@ -123,27 +123,27 @@
 /datum/orderable_item/milk_eggs/tiziran_goods
 	name = "Tiziran Farm-Fresh Pack"
 	purchase_path = /obj/item/storage/box/tiziran_goods
-	cost_per_order = 120
+	cost_per_order = 60
 
 /datum/orderable_item/milk_eggs/tiziran_cans
 	name = "Tiziran Canned Goods Pack"
 	purchase_path = /obj/item/storage/box/tiziran_cans
-	cost_per_order = 120
+	cost_per_order = 100
 
 /datum/orderable_item/milk_eggs/tiziran_meats
 	name = "Tiziran Meatmarket Pack"
 	purchase_path = /obj/item/storage/box/tiziran_meats
-	cost_per_order = 120
+	cost_per_order = 60
 
 /datum/orderable_item/milk_eggs/mothic_goods
 	name = "Mothic Farm-Fresh Pack"
 	purchase_path = /obj/item/storage/box/mothic_goods
-	cost_per_order = 120
+	cost_per_order = 60
 
 /datum/orderable_item/milk_eggs/mothic_cans_sauces
 	name = "Mothic Pantry Pack"
 	purchase_path = /obj/item/storage/box/mothic_cans_sauces
-	cost_per_order = 120
+	cost_per_order = 100
 
 /datum/orderable_item/milk_eggs/armorfish
 	name = "Cleaned Armorfish"
