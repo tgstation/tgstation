@@ -151,6 +151,7 @@
 //////////////////////////// ARMOR BOOSTER MODULES //////////////////////////////////////////////////////////
 /obj/item/mecha_parts/mecha_equipment/armor
 	equipment_slot = MECHA_ARMOR
+	unstackable = TRUE
 	///short protection name to display in the UI
 	var/protect_name = "you're mome"
 	///icon in armor.dmi that shows in the UI
@@ -198,6 +199,7 @@
 	icon_state = "repair_droid"
 	energy_drain = 50
 	range = 0
+	unstackable = TRUE
 	can_be_toggled = TRUE
 	active = FALSE
 	equipment_slot = MECHA_UTILITY
