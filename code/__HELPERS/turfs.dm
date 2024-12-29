@@ -378,7 +378,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 ///Returns a random department of areas to pass into get_safe_random_station_turf() for more equal spawning.
 /proc/get_safe_random_station_turf_equal_weight()
-	var/list/area/department_areas = list(
+	// Big list of departments, each with lists of each area subtype.
+	var/static/list/area/department_areas = list(
 				list(subtypesof(/area/station/engineering)), \
 				list(subtypesof(/area/station/medical)), \
 				list(subtypesof(/area/station/science)), \
@@ -390,9 +391,14 @@ Turf and target are separate in case you want to teleport some distance from a t
 				list(subtypesof(/area/station/maintenance)), \
 				list(subtypesof(/area/station/cargo)))
 
-	var/list/area/final_department = pick(department_areas)
+	var/list/area/final_department = pick(department_areas) // Pick a department
+	var/list/area/finial_area_list
+	for (var/i = 1, i <= final_department.len, i++) // Check each area to make sure it exists on the station
+		var/area/checked_area = pick_n_take(final_department)
+		if(checked_area in GLOB.the_station_areas)
+			finial_area_list += checked_area
 
-	return get_safe_random_station_turf(final_department)
+	return get_safe_random_station_turf(finial_area_list)
 
 ADMIN_VERB(run_random_z_levels, R_DEBUG, "Check Safe Random Turf", "Runs get_safe_random_station_turf() and logs it", ADMIN_CATEGORY_DEBUG)
 	for(var/i in 1 to 10000)
