@@ -376,6 +376,28 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if (target)
 			return target
 
+///Returns a random department of areas to pass into get_safe_random_station_turf() for more equal spawning.
+/proc/get_safe_random_station_turf_equal_weight()
+	var/list/area/department_areas = list(
+				list(subtypesof(/area/station/engineering)), \
+				list(subtypesof(/area/station/medical)), \
+				list(subtypesof(/area/station/science)), \
+				subtypesof(/area/station/security), \
+				subtypesof(/area/station/service), \
+				subtypesof(/area/station/command), \
+				subtypesof(/area/station/hallway), \
+				subtypesof(/area/station/ai_monitored), \
+				subtypesof(/area/station/maintenance), \
+				subtypesof(/area/station/cargo))
+
+	var/list/area/final_department = pick(department_areas)
+
+	return get_safe_random_station_turf(final_department)
+
+ADMIN_VERB(run_random_z_levels, R_DEBUG, "Check Safe Random Turf", "Runs get_safe_random_station_turf() and logs it", ADMIN_CATEGORY_DEBUG)
+	for(var/i in 1 to 10000)
+		var/area/names = get_area(get_safe_random_station_turf_equal_weight())
+		logger.Log(LOG_CATEGORY_RANDOM_TURF, "[names.type]")
 /**
  * Checks whether the target turf is in a valid state to accept a directional construction
  * such as windows or railings.

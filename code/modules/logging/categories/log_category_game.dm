@@ -56,3 +56,7 @@
 	category = LOG_CATEGORY_GAME_ACCESS
 	config_flag = /datum/config_entry/flag/log_access
 	master_category = /datum/log_category/game
+
+/datum/log_category/random_turf
+	category = LOG_CATEGORY_RANDOM_TURF
+	config_flag = /datum/config_entry/flag/log_game

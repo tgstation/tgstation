@@ -149,6 +149,7 @@
 #define LOG_CATEGORY_GAME_TRAITOR "game-traitor"
 #define LOG_CATEGORY_GAME_VOTE "game-vote"
 #define LOG_CATEGORY_GAME_WHISPER "game-whisper"
+#define LOG_CATEGORY_RANDOM_TURF "random_turf"
 
 // HREF categories
 #define LOG_CATEGORY_HREF "href"
