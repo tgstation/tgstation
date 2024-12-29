@@ -53,7 +53,7 @@
 		/obj/effect/spawner/random/entertainment/cigar = 1,
 		/obj/item/stack/ore/gold = 1,
 	)
-/obj/effect/spawner/random/trash/grime/Initialize(mapload)
+/obj/effect/spawner/random/trash/deluxe_garbage/Initialize(mapload)
 	if(mapload)
 		var/turf/location = get_turf(loc)
 		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
