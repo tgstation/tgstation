@@ -83,7 +83,7 @@
 			message += span_notice("Fingerprint: [text]")
 		if(length(fingerprints) > max_storage)
 			message += span_boldwarning("Fingerprint storage full.")
-		to_chat(user, examine_block(jointext(message, "\n")), type = MESSAGE_TYPE_INFO)
+		to_chat(user, boxed_message(jointext(message, "\n")), type = MESSAGE_TYPE_INFO)
 	if(length(fingerprints) < max_storage)
 		while(length(fingerprints) + length(new_prints) > max_storage)
 			var/to_remove = tgui_input_list(user, "Too many prints, cancel to discard all", "What to discard", new_fibers)
