@@ -94,8 +94,9 @@
 		core_mmi.update_appearance()
 
 /obj/structure/ai_core/deactivated/Destroy()
-	attached_ai.linked_core = null
-	attached_ai = null
+	if(attached_ai)
+		attached_ai.linked_core = null
+		attached_ai = null
 	. = ..()
 
 /obj/structure/ai_core/deactivated/proc/disable_doomsday(datum/source)
