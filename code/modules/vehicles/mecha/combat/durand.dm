@@ -29,7 +29,7 @@
 	energy = 10
 	bomb = 20
 	fire = 100
-	acid = 100
+	acid = 70
 
 /obj/vehicle/sealed/mecha/durand/Initialize(mapload)
 	. = ..()
@@ -219,6 +219,9 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	if(!chassis.defense_mode && (!chassis.cell || chassis.cell.charge < 100)) //If it's off, and we have less than 100 units of power
 		chassis.balloon_alert(owner, "insufficient power")
 		return
+	if(chassis.equipment_disabled && !chassis.defense_mode) // Can't turn on when facing a EMP stun
+		chassis.balloon_alert(owner, "shield unavailable")
+		return
 	switching = TRUE
 	chassis.defense_mode = !chassis.defense_mode
 	if(!signal_args[1])
@@ -288,3 +291,31 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 /obj/durand_shield/bullet_act()
 	play_attack_sound()
 	. = ..()
+
+/obj/vehicle/sealed/mecha/durand/emp_act(severity)
+	..()
+	if (defense_mode && shield)
+		log_message("EMP disrupts the Durand's shield!", LOG_MECHA, color="red")
+		shield.disable_via_emp(severity)
+
+/obj/durand_shield/proc/disable_via_emp(severity)
+	if (!chassis || !chassis.defense_mode)  // Only proceed if the shield is active
+		return
+
+	chassis.defense_mode = FALSE  // Turn off defense mode
+	log_message("The shield is disabled by EMP!", LOG_MECHA, color="red")
+
+	// Update the shield visuals and state
+	set_light_on(FALSE)
+	flick("shield_drop", src)
+	playsound(src, 'sound/vehicles/mecha/mech_shield_drop.ogg', 50, FALSE)
+	icon_state = "shield_null"
+	addtimer(CALLBACK(src, PROC_REF(make_invisible)), 1 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	RemoveInvisibility(type)
+
+	// Signal occupants that the shield is disabled
+	for (var/mob/living/occupant in chassis.occupants)
+		var/datum/action/action = LAZYACCESSASSOC(chassis.occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
+		if (action)
+			action.Trigger()
+

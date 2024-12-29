@@ -5,7 +5,7 @@
 	base_icon_state = "odysseus"
 	movedelay = 2
 	max_temperature = 15000
-	max_integrity = 120
+	max_integrity = 200
 	wreckage = /obj/structure/mecha_wreckage/odysseus
 	mech_type = EXOSUIT_MODULE_ODYSSEUS
 	step_energy_drain = 6

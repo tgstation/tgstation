@@ -87,6 +87,10 @@
 /obj/structure/blob/blob_act()
 	return
 
+/obj/structure/blob/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	..()
+	return take_damage(mecha_attacker.force, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker))
+
 /obj/structure/blob/Adjacent(atom/neighbour)
 	. = ..()
 	if(.)

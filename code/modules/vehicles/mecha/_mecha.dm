@@ -22,7 +22,7 @@
 	name = "exosuit"
 	desc = "Exosuit"
 	icon = 'icons/mob/rideables/mecha.dmi'
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = FIRE_PROOF
 	max_integrity = 300
 	armor_type = /datum/armor/sealed_mecha
 	force = 5
@@ -70,6 +70,9 @@
 	var/pivot_step = FALSE
 	///Whether or not the mech destroys walls by running into it.
 	var/bumpsmash = FALSE
+
+	var/can_pry_doors = FALSE
+	// Whether or not the mech is capable of prying flocks or unpowered airlocks
 
 	///////////ATMOS
 	///Whether the cabin exchanges gases with the environment
@@ -223,7 +226,7 @@
 	bullet = 10
 	bomb = 10
 	fire = 100
-	acid = 100
+	acid = 70
 
 /obj/vehicle/sealed/mecha/Initialize(mapload, built_manually)
 	. = ..()

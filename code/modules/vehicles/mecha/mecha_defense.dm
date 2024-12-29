@@ -77,22 +77,26 @@
 
 /obj/vehicle/sealed/mecha/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	log_message("Attack by simple animal. Attacker - [user].", LOG_MECHA, color="red")
-	if(!user.melee_damage_upper && !user.obj_damage)
+
+	// Handle non-damaging interactions
+	if (!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
 		return 0
-	else
-		var/play_soundeffect = 1
-		if(user.environment_smash)
-			play_soundeffect = 0
-			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
-		if(user.obj_damage)
-			animal_damage = user.obj_damage
-		animal_damage = min(animal_damage, 20*user.environment_smash)
-		log_combat(user, src, "attacked")
-		attack_generic(user, animal_damage, user.melee_damage_type, MELEE, play_soundeffect)
-		return 1
 
+	var/play_soundeffect = 1
+	if (user.environment_smash)
+		play_soundeffect = 0
+		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+
+	var/animal_damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+
+	if (user.obj_damage)
+		var/scaled_damage = clamp(user.obj_damage * 0.5 * user.environment_smash, user.obj_damage, 200)  // Scale obj_damage: min (user's damage), max 200
+		animal_damage = max(animal_damage, scaled_damage)  // Use the higher of melee or scaled obj_damage
+
+	log_combat(user, src, "attacked")
+	attack_generic(user, animal_damage, user.melee_damage_type, MELEE, play_soundeffect)
+	return 1
 
 /obj/vehicle/sealed/mecha/hulk_damage()
 	return 15
@@ -105,7 +109,7 @@
 
 /obj/vehicle/sealed/mecha/blob_act(obj/structure/blob/B)
 	log_message("Attack by blob. Attacker - [B].", LOG_MECHA, color="red")
-	take_damage(30, BRUTE, MELEE, 0, get_dir(src, B))
+	take_damage(50, BRUTE, MELEE, 0, get_dir(src, B))
 
 /obj/vehicle/sealed/mecha/attack_tk()
 	return
@@ -187,6 +191,18 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/mecha, restore_equipment)), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = TRUE
 	set_mouse_pointer()
+
+/obj/vehicle/sealed/mecha/acid_act(acidpwr, acid_volume)
+	. = ..()
+
+	var/acid_armor = get_armor_rating("acid")
+	var/acid_damage = ((acidpwr * acid_volume) / 100) * (100 - acid_armor * 0.5) / 100
+
+	if(acid_damage > 0)
+		take_damage(acid_damage, BURN, "acid")
+
+/obj/vehicle/sealed/mecha/acid_melt()
+	return
 
 /obj/vehicle/sealed/mecha/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > max_temperature

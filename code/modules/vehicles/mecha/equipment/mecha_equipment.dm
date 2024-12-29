@@ -7,7 +7,7 @@
 	icon = 'icons/obj/devices/mecha_equipment.dmi'
 	icon_state = "mecha_equip"
 	force = 5
-	max_integrity = 300
+	max_integrity = 50
 	/// Determines what "slot" this attachment will try to attach to on a mech
 	var/equipment_slot = MECHA_WEAPON
 	///Cooldown in ticks required between activations of the equipment

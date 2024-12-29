@@ -105,9 +105,7 @@
 		step_away(src, mecha_attacker, 15)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
-			if(mecha_attacker.force > 35) // durand and other heavy mechas
-				mecha_attacker.melee_attack_effect(src, heavy = TRUE)
-			else if(mecha_attacker.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
+			if(mecha_attacker.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
 				mecha_attacker.melee_attack_effect(src, heavy = FALSE)
 			playsound(src, mecha_attacker.brute_attack_sound, 50, TRUE)
 		if(FIRE)

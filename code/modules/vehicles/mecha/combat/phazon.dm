@@ -30,7 +30,7 @@
 	energy = 30
 	bomb = 30
 	fire = 100
-	acid = 100
+	acid = 70
 
 /obj/vehicle/sealed/mecha/phazon/generate_actions()
 	. = ..()

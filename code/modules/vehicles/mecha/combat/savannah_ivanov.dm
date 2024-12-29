@@ -47,7 +47,7 @@
 	energy = 30
 	bomb = 40
 	fire = 100
-	acid = 100
+	acid = 70
 
 /obj/vehicle/sealed/mecha/savannah_ivanov/get_mecha_occupancy_state()
 	var/driver_present = driver_amount() != 0

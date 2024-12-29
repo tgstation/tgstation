@@ -30,7 +30,7 @@
 	laser = 50
 	energy = 20
 	fire = 100
-	acid = 100
+	acid = 70
 
 /obj/vehicle/sealed/mecha/reticence/loaded
 	equip_by_category = list(

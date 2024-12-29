@@ -343,6 +343,7 @@
 
 	AddElement(/datum/element/wall_tearer)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
+	AddElement(/datum/element/mech_prying)
 
 /**
  * ### Tarantula
