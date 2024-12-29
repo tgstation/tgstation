@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - balance: "When dominating a mech as a Malfunctioning AI, the core you shunted from will disable your Doomsday Counterdown when destroyed. Make sure to protect that core!"
