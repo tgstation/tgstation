@@ -257,7 +257,7 @@
 	var/max = DEPARTMENTAL_ORDER_COOLDOWN_CREDITS_MAX
 	credits = clamp(credits, min, max)
 	var/time_y = (credits - min)/(max - min) + 1 //convert to between 1 and 2
-	time_y = DEPARTMENTAL_ORDER_COOLDOWN_TIME * time_y
+	time_y *= DEPARTMENTAL_ORDER_COOLDOWN_TIME
 	department_cooldowns[linked_department] = world.time + time_y
 
 /datum/computer_file/program/department_order/process_tick(seconds_per_tick)
