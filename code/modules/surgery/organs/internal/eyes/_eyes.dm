@@ -70,9 +70,9 @@
 		return
 
 	var/mob/living/carbon/human/affected_human = eye_owner
-	if(eye_color_left)
+	if(length(eye_color_left))
 		affected_human.add_eye_color_left(eye_color_left, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
-	if(eye_color_right)
+	if(length(eye_color_right))
 		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 	refresh_atom_color_overrides()
 
@@ -128,11 +128,26 @@
 		if (!checked_color)
 			human_owner.remove_eye_color(EYE_COLOR_ATOM_COLOR_PRIORITY + i, update_body = FALSE)
 			continue
-		var/actual_color = checked_color[ATOM_COLOR_VALUE_INDEX]
+
+		var/left_color = COLOR_WHITE
+		var/right_color = COLOR_WHITE
+
+		if (length(eye_color_left))
+			left_color = eye_color_left
+		if (length(eye_color_right))
+			right_color = eye_color_right
+
 		if (checked_color[ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
 			var/color_filter = checked_color[ATOM_COLOR_VALUE_INDEX]
-			actual_color = apply_matrix_to_color(COLOR_WHITE, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
-		human_owner.add_eye_color(actual_color, EYE_COLOR_ATOM_COLOR_PRIORITY + i, update_body = FALSE)
+			left_color = apply_matrix_to_color(left_color, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
+			right_color = apply_matrix_to_color(right_color, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
+		else
+			var/target_color = color_transition_filter(checked_color[ATOM_COLOR_VALUE_INDEX], SATURATION_OVERRIDE)
+			left_color = apply_matrix_to_color(left_color, target_color, COLORSPACE_HSL)
+			right_color = apply_matrix_to_color(right_color, target_color, COLORSPACE_HSL)
+
+		human_owner.add_eye_color_left(left_color, EYE_COLOR_ATOM_COLOR_PRIORITY + i, update_body = FALSE)
+		human_owner.add_eye_color_right(right_color, EYE_COLOR_ATOM_COLOR_PRIORITY + i, update_body = FALSE)
 
 /obj/item/organ/eyes/proc/on_bullet_act(mob/living/carbon/source, obj/projectile/proj, def_zone, piercing_hit, blocked)
 	SIGNAL_HANDLER
