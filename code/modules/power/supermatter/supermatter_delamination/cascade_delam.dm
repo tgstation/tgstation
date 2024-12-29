@@ -13,7 +13,7 @@
 	if(!sm.is_main_engine)
 		return FALSE
 	var/total_moles = sm.absorbed_gasmix.total_moles()
-	if(total_moles < MOLE_PENALTY_THRESHOLD)
+	if(total_moles < MOLE_PENALTY_THRESHOLD * sm.absorption_ratio)
 		return FALSE
 	for (var/gas_path in list(/datum/gas/antinoblium, /datum/gas/hypernoblium))
 		var/percent = sm.gas_percentage[gas_path]
