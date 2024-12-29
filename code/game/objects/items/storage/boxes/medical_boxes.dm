@@ -23,6 +23,12 @@
 	desc = "A box full of epinephrine MediPens."
 	illustration = "epipen"
 
+/obj/item/storage/box/medipens/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 12
+	atom_storage.set_holdable(list(/obj/item/reagent_containers/hypospray/medipen))
+	atom_storage.max_total_storage = 16
+
 /obj/item/storage/box/medipens/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/hypospray/medipen(src)

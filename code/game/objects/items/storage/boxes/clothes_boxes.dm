@@ -120,6 +120,11 @@
 	name = "Followers of the Chaplain Kit"
 	typepath_for_preview = /obj/item/clothing/suit/hooded/chaplain_hoodie/leader
 
+/obj/item/storage/box/holy/follower/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 16
+	atom_storage.set_holdable(/obj/item/clothing/suit/hooded/chaplain_hoodie)
+
 /obj/item/storage/box/holy/follower/PopulateContents()
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)

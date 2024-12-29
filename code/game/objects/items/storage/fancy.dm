@@ -537,6 +537,8 @@
 /obj/item/storage/fancy/pickles_jar/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(/obj/item/food/pickle)
+	atom_storage.max_slots = 12
+	atom_storage.max_total_storage = 24
 
 /obj/item/storage/fancy/pickles_jar/update_icon_state()
 	. = ..()

@@ -452,6 +452,12 @@
 	name = "mail counterfeit kit"
 	desc = "A GLA Postal Service branded box. It's emblazoned with the motto: *Nothing stops the mail*."
 
+/obj/item/storage/box/syndie_kit/mail_counterfeit/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 6
+	atom_storage.set_holdable(/obj/item/storage/mail_counterfeit_device)
+	atom_storage.max_total_storage = 20
+
 /obj/item/storage/box/syndie_kit/mail_counterfeit/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/storage/mail_counterfeit_device(src)
@@ -462,6 +468,7 @@
 /obj/item/storage/box/syndie_kit/chemical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 15
+	atom_storage.max_total_storage = 16
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
 	new /obj/item/reagent_containers/cup/bottle/polonium(src)
@@ -501,6 +508,12 @@
 
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade
 	name = "virus grenade kit"
+
+/obj/item/storage/box/syndie_kit/tuberculosisgrenade/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 8
+	atom_storage.set_holdable(list(/obj/item/grenade/chem_grenade/tuberculosis, /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/cup/bottle/tuberculosiscure))
+	atom_storage.max_total_storage = 12
 
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade/PopulateContents()
 	new /obj/item/grenade/chem_grenade/tuberculosis(src)
@@ -689,6 +702,12 @@
 	for(var/i in implants)
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
+
+/obj/item/storage/box/syndie_kit/imp_deathrattle/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 16
+	atom_storage.set_holdable(list(/obj/item/implanter, /obj/item/implantcase/deathrattle))
+	atom_storage.max_total_storage = 20
 
 /obj/item/storage/box/stickers/syndie_kit/PopulateContents()
 	var/list/types = subtypesof(/obj/item/sticker/syndicate)
