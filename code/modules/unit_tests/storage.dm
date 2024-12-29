@@ -41,3 +41,30 @@
 		var/obj/item/item = allocate(item_type, run_loc_floor_bottom_left)
 		item.melee_attack_chain(dummy, bag)
 		TEST_ASSERT_EQUAL(item.loc, bag, "[item_type] was unable to be inserted into a backpack on click while off combat mode")
+
+/// Test to ensure that all storage containers have enough space to hold any items they spawn in with.
+/// A backpack with only 14 slots should not be able to hold 16 items, as an example. (this also checks for weight)
+/datum/unit_test/storage_sanity
+
+/datum/unit_test/storage_sanity/Run()
+	for(var/storage in subtypesof(/obj/item/storage))
+		var/obj/item/storage/storage_item = allocate(storage)
+		var/datum/storage/storage_type = storage_item.atom_storage
+
+		var/list/storage_contents = storage_item.contents
+		var/total_weight_in_storage //We shouldn't have to deal with items being heavier than weight limit due to the other unit test
+		var/contents_counter
+
+		for(var/obj/item/items as anything in storage_contents)
+			total_weight_in_storage += items.w_class
+			contents_counter++
+
+		if(storage_type == null)
+			TEST_FAIL("[storage_item] ([storage_item.type]) has no storage /datum/")
+			continue
+
+		if(storage_type.max_slots < contents_counter)
+			TEST_FAIL("[storage_item] ([storage_item.type]) has loaded slots of [contents_counter], but only holds a max slot of [storage_type.max_slots].")
+
+		if(storage_type.max_total_storage < total_weight_in_storage)
+			TEST_FAIL("[storage_item] ([storage_item.type]) has a total weight of [total_weight_in_storage], but only holds a max slot of [storage_type.max_total_storage].")
