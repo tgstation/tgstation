@@ -17,8 +17,6 @@
 
 /obj/item/reagent_containers/cup/organ_jar/Initialize(mapload)
 	. = ..()
-	if(!icon_state)
-		icon_state = "bottle"
 	update_appearance()
 
 // Alt click lets you take the organ out, if it's present
@@ -30,6 +28,9 @@
 		held_organ = null
 		name = "organ jar"
 		update_appearance()
+		return CLICK_ACTION_SUCCESS
+	else
+		. = ..()
 
 // Clicking on the jar with an organ lets you put the organ inside, if there isn't one already
 // Otherwise it should act like a normal bottle
@@ -47,6 +48,9 @@
 		else
 			balloon_alert(user, "the jar already contains [held_organ]")
 
+// Organ icon size goes from 32 to this
+// If it's too small, then smaller sprites like the brain would be comically diminutive
+// If it's too large, then large sprites like the voltaic combat cyberheart will go out of the jar's bounds
 #define JAR_INNER_ICON_SIZE 20
 
 /obj/item/reagent_containers/cup/organ_jar/update_overlays()
@@ -81,3 +85,24 @@
 		held_organ.organ_flags |= ORGAN_FROZEN
 	else
 		held_organ.organ_flags &= ~ORGAN_FROZEN
+
+/obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar
+	name = "brain in a jar"
+	desc = "A brain in a jar. You can see it twitching.."
+
+/obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar/Initialize(mapload)
+	. = ..()
+	var/obj/item/organ/brain/scarred_brain = new() // Make a new brain
+	// Make it revivable, scar it if revival is successful
+	scarred_brain.AddComponent( \
+		/datum/component/ghostrole_on_revive,\
+		refuse_revival_if_failed = TRUE, \
+		on_successful_revive = CALLBACK(src, PROC_REF(scar_upon_revival), scarred_brain) \
+		)
+	held_organ = scarred_brain // Put the brain inside the jar
+	reagents.add_reagent(/datum/reagent/toxin/formaldehyde, reagents.maximum_volume) // Fill the jar with formaldehyde
+	update_appearance()
+
+// All this does is add a random special brain trauma
+/obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar/proc/scar_upon_revival(obj/item/organ/brain/brain_to_scar)
+	brain_to_scar.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_ABSOLUTE, natural_gain = TRUE)
