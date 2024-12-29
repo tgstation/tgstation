@@ -52,8 +52,8 @@ export const CheckboxInput = (props) => {
     setSelections(newSelections);
   };
 
-  const selectionsWithIndexes =
-  (selections: string[], items: string[]): [string, number][] => selections.map((selected) => [selected, items.indexOf(selected) + 1]);
+  const selectionsWithIndexes = (selections: string[], items: string[]): [string, number][] =>
+    selections.map((selected) => [selected, items.indexOf(selected) + 1]);
 
   return (
     <Window title={title} width={425} height={300}>
