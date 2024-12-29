@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed chair, echair, wheelchair and vehicle overlays on painted objects"

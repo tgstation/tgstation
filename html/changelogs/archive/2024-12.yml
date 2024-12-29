@@ -733,3 +733,34 @@
       to other people, so don't be stupid!
   - rscadd: influences cannot be bombed for fish.
   - rscadd: Heretics can now infuse their fishing rod, and fish for knowledge.
+2024-12-29:
+  00-Steven:
+  - spellcheck: Give alert 'examiante' > 'examine'.
+  Absolucy:
+  - code_imp: Very slightly improved the performance of code related to adding and
+      removing traits.
+  Ben10Omintrix:
+  - bugfix: radial pet commanding emotes will now not appear if the command is impossible
+      to execute
+  FlufflesTheDog:
+  - bugfix: welding sparks no longer break on transitioning to a different floor
+  LT3:
+  - bugfix: Fixed lead acid cell having extremely high max charge
+  Paxilmaniac:
+  - bugfix: fixes crafting menu-made rice dough being unusable for bread
+  SmArtKar:
+  - qol: Iron material tiles can now be used to tile lattice to make plating
+  - bugfix: Fixed podperson hair not updating
+  - bugfix: Fixed chair, echair, wheelchair and vehicle overlays on painted objects
+  SyncIt21:
+  - bugfix: Changing gather mode on storage items won't drop it's stored items
+  - bugfix: Fixes shattering element dropping stuff on blocked turfs
+  necromanceranne:
+  - bugfix: Tackling resulting in a neutral outcome does not force you to the floor.
+  - bugfix: Getting up is now properly influenced by spinal implants.
+  timothymtorres:
+  - refactor: Sound has been heavily optimized and will now ignore low volume sounds
+      from far away.
+  - admin: Add debugging sound earmuffs to admin equipment inside the debug box. Wear
+      them to determine a sounds max range, distance, volume, and sound name. Highly
+      recommended to walk otherwise you will get spammed with footstep sounds.
