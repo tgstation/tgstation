@@ -109,7 +109,7 @@
 
 /datum/outfit/job/captain/post_equip(mob/living/carbon/human/equipped, visuals_only)
 	. = ..()
-	if(visualsOnly)
+	if(visuals_only)
 		return
 
 	var/obj/item/door_remote/omni/cap_remote = locate() in equipped.get_item_by_slot(ITEM_SLOT_BACK)

@@ -13,18 +13,14 @@
 	name = "control wand"
 	desc = "A remote for controlling a set of airlocks."
 	w_class = WEIGHT_CLASS_TINY
-
 	var/department = "civilian"
 	var/mode = WAND_OPEN
 	var/region_access = REGION_GENERAL
 	var/list/access_list
-	/// The name that gets sent back to IDs that send access requests to this remote. Defaults to department.
+	/// The name that gets sent back to IDs that send access requests to this remote. Defaults to the department head's job
 	var/response_name = null
 	var/listening = FALSE
-	/// A list of paired items, the first being the ID card requesting access, the second being the door that access is requested for.
-	/// They'll only be able to request one door per ID, both so we're not cramming this full of lists that need to be GC'd and to make
-	/// remote requests kind of a pain in the ass and a situation where they should request adding the access to their ID from the relevant
-	/// head of staff.
+	/// an asslist of tuples (ID : door)
 	var/open_requests = list()
 	/// When the remote gets dropped, start a ten minute timer before we stop listening for requests
 	var/stop_listening_timer = null
@@ -36,10 +32,10 @@
 	update_icon_state()
 	if(!response_name)
 		response_name = department
-	setting_callbacks = list(
-	CALLBACK(src, PROC_REF(clear_requests)),
-	CALLBACK(src, PROC_REF(toggle_listen)),
-	CALLBACK(src, PROC_REF(set_auto_response)),
+	setting_callbacks = list( // asslist of callbacks for the config menu, see handle_config
+	"C" = CALLBACK(src, PROC_REF(clear_requests)),
+	"A" = CALLBACK(src, PROC_REF(set_auto_response)),
+	"T" = CALLBACK(src, PROC_REF(toggle_listen)),
 	)
 	// For cases where it spawns on somebody
 	if(get(loc, /mob/living))
@@ -81,8 +77,8 @@
 			listening = !listening
 			SSid_access.remove_listening_remote(region_access, src)
 
-/obj/item/door_remote/proc/clear_requests()
-	return
+/obj/item/door_remote/proc/clear_requests(mob/user)
+	to_chat(user, span_yellowteamradio("The remote buzzes: %CLEARED!%"))
 
 /obj/item/door_remote/proc/set_auto_response()
 	return
@@ -127,17 +123,29 @@
 		return NONE
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
+/obj/item/door_remote/proc/handle_config(mob/user)
+	to_chat(user, span_yellowteamradio("The remote buzzes: %CONFIG%"))												// :3 *meow
+	var/config_choice = tgui_alert(user, "Blocky, flickering text gives you a few options: \n(C)LEAR_REQUESTS\n(A)UTO_RESPONSE\n(T)OGGLE_LISTEN", "%CONFIG:NT_DOOR_WAND%", list("C", "A", "T"))
+	var/datum/callback/chosen_callback = setting_callbacks[config_choice]
+	if(config_choice == "T")
+		return chosen_callback.Invoke(user, /*setting_toggle = */TRUE)
+	else
+		return chosen_callback.Invoke(user)
+
 /obj/item/door_remote/proc/handle_requests(mob/user)
+	if(!length(open_requests))
+		to_chat(user, span_yellowteamradio("The remote buzzes: %NO_REQUESTS%"))
+		return
 	// Javascript doesn't like when you feed associative arrays from BYOND into its functions that want
-	// primitives so we get a little saucy here.
+	// primitives so we have to do some value conversion here
+	// open_requests is an asslist of lists(tuples), ( id : door ) of which ID is requesting which door
 	var/list/parsed_requests = list()
 	for(var/obj/item/card/id/request_item in open_requests)
 		var/obj/machinery/camera/nearest_camera = null
-		// Open requests is an associated list of (id_card : door_requested), but when we
-		// handle requests we'll dynamically check if the door is in-sight of a functional
-		// camera; presumably the remote holder will also have access to those cameras from
-		// their telescreen so they can make sure whoever has that ID is the person in question
-		// It's not like someone would steal the remote, right?
+		// checkboxes further down returns an asslist of lists(tuples)
+		// (text : index_value) with the text being some useless cruff from the tgui input
+		// but the index_value is the index of the request in the open_requests list
+		// that we can use to get the actual request and door to operate on
 		var/obj/machinery/door/airlock/requested_door = open_requests[request_item]
 		// cards and airlocks are not indestructible so we wanna make sure they're still a type
 		if(!istype(request_item, /obj/item/card/id) || !istype(requested_door, /obj/machinery/door/airlock))
@@ -148,47 +156,20 @@
 			if(smile_youre_on_camera.is_operational && (get_dist(smile_youre_on_camera, requested_door) <= smile_youre_on_camera.view_range))
 				nearest_camera = smile_youre_on_camera
 				break
-		parsed_requests += "[request_item.registered_name] -> [open_requests[request_item]] ([nearest_camera ? nearest_camera.c_tag : get_area(requested_door)])"
-	parsed_requests += list(
-		"\[OPERATION\] Clear all requests",
-		"\[OPERATION\] [listening ? "Stop" : "Start"] listening for requests",
-		"\[OPERATION\] !CAUTION!_Set automatic request response_!CAUTION!)")
+		parsed_requests += "[request_item.registered_name] -> [open_requests[request_item]] ([get_area(requested_door) + nearest_camera ? "" : "!!NO_CAM!!" ])"
 	var/list/choices = list()
-	choices = tgui_input_checkboxes(user = user,
-	message = "Please choose either a single operation, or a set of door access requests to perform\
-	 a batch operation on. Nanotrasen Incorporated not liable for any criminal activity or loss of\
-	 profit and/or life resulting from door requests.",
-	   title = "DOOR REQUEST HANDLER AND CONFIGURATION", items = parsed_requests)
-	var/number_of_choices = length(choices)
-	if(!number_of_choices)
+	choices = tgui_input_checkboxes(
+		user = user,
+		message = "A scrollable list sluggishly populates on the screen, helpfully labeled: %LIST%",
+		title = "%ACCESS_REQUESTS%",
+		items = parsed_requests
+	)
+	if(!length(choices))
+		to_chat(user, span_yellowteamradio("The remote buzzes: %NO_SELECTION%"))
 		return
-	else
-		// at minimum, this will be three, because we add three options arbitrarily for config
-		var/parsed_length = length(parsed_requests)
-		// Decouple the index from the returned lists, and also check if they wanted to do an operation
-		/* Check early to see if they only chose one operation option; if so, do that and stop
-		 * NOTE: Due to how BYOND handles lists of list, if they only choose one option, then it won't
-		 * return a list of lists, it will just return the contents of the single returned list and put
-		 * that in var/choices instead.
-		 */
-		// It's either this or a couple dozen more lines to make sure
-		// it's always a list of lists
-		if(number_of_choices == 1 && /*isnum(*/choices[1][2]/*) && choices[2]*/ >= parsed_length - 3)
-			var/index_for_readability = choices[1][2]
-			var/datum/callback/chosen_callback = setting_callbacks[index_for_readability]
-			if(index_for_readability == 2)
-				return chosen_callback.Invoke(user, /*setting_toggle = */TRUE)
-			else
-				return chosen_callback.Invoke(user)
-		for(var/list/operation in choices)
-			// The length of the parsed_requests is 3 at a minimum, and we can see
-			// if they chose to do an operation, but we don't want to muck with priority
-			// if they try to do multiple operations along with door request handling
-			// so it'll have to be mutually exclusive
-			if(operation[2] >= parsed_length - 3)
-				if(number_of_choices > 1)
-					to_chat(user, span_notice("%ERR...% Operations are mutually exclusive with each other and batch handling. %ERR...%"))
-					return
+		//if_set_auto_response_do_that << M_PSEUDOCODE
+
+
 
 
 
