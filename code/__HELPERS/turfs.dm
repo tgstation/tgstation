@@ -382,13 +382,13 @@ Turf and target are separate in case you want to teleport some distance from a t
 				list(subtypesof(/area/station/engineering)), \
 				list(subtypesof(/area/station/medical)), \
 				list(subtypesof(/area/station/science)), \
-				subtypesof(/area/station/security), \
-				subtypesof(/area/station/service), \
-				subtypesof(/area/station/command), \
-				subtypesof(/area/station/hallway), \
-				subtypesof(/area/station/ai_monitored), \
-				subtypesof(/area/station/maintenance), \
-				subtypesof(/area/station/cargo))
+				list(subtypesof(/area/station/security)), \
+				list(subtypesof(/area/station/service)), \
+				list(subtypesof(/area/station/command)), \
+				list(subtypesof(/area/station/hallway)), \
+				list(subtypesof(/area/station/ai_monitored)), \
+				list(subtypesof(/area/station/maintenance)), \
+				list(subtypesof(/area/station/cargo)))
 
 	var/list/area/final_department = pick(department_areas)
 
