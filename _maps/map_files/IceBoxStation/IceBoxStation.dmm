@@ -14874,6 +14874,10 @@
 /obj/structure/noticeboard/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"ehs" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "ehD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -23855,6 +23859,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"gQr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningdock)
 "gQw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -32671,6 +32681,19 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
+"jwp" = (
+/obj/machinery/light/directional/west,
+/obj/item/stack/conveyor/thirty,
+/obj/item/boulder_beacon{
+	pixel_x = -5
+	},
+/obj/item/conveyor_switch_construct{
+	pixel_x = 10
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/structure/rack,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "jwt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -51280,6 +51303,14 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Cargo Bay South"
 	},
+/obj/effect/turf_decal/tile/brown,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/stack/sheet/cardboard{
+	pixel_x = 3
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "oMq" = (
@@ -55531,6 +55562,7 @@
 /area/station/service/janitor)
 "pYT" = (
 /obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "pZh" = (
@@ -67809,6 +67841,7 @@
 	cycle_id = "miner-passthrough"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "tAT" = (
@@ -69840,6 +69873,7 @@
 /obj/machinery/computer/order_console/bitrunning{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/brown,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "ugq" = (
@@ -234460,7 +234494,7 @@ jjk
 jjk
 sOm
 uEI
-ajw
+jhy
 maT
 maT
 qjQ
@@ -234717,11 +234751,11 @@ wam
 wam
 wam
 mWD
-ajw
+jhy
 pYT
-ajw
+ehs
 tAS
-hoD
+gQr
 hoD
 hoD
 wjZ
@@ -235231,7 +235265,7 @@ wam
 wam
 wam
 wxT
-ajw
+jwp
 maT
 bln
 qjQ
