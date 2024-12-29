@@ -71,9 +71,6 @@
 	///Whether or not the mech destroys walls by running into it.
 	var/bumpsmash = FALSE
 
-	var/can_pry_doors = FALSE
-	// Whether or not the mech is capable of prying flocks or unpowered airlocks
-
 	///////////ATMOS
 	///Whether the cabin exchanges gases with the environment
 	var/cabin_sealed = FALSE
