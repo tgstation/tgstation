@@ -170,11 +170,8 @@
 
 /obj/item/storage/bag/garment/hero/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.numerical_stacking = FALSE
 	atom_storage.max_total_storage = 200
-	atom_storage.max_slots = 17
-	atom_storage.insert_preposition = "in"
+	atom_storage.max_slots = 18
 
 /obj/item/storage/bag/garment/hero/astronaut
 	name = "First Man on the Moon - 1960's."
@@ -246,3 +243,4 @@
 	new /obj/item/taperecorder(src)
 	new /obj/item/camera(src)
 	new /obj/item/wallframe/telescreen/entertainment(src)
+

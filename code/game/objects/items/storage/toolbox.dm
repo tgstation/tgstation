@@ -652,7 +652,8 @@
 /obj/item/storage/toolbox/guncase/monkeycase/Initialize(mapload)
 	. = ..()
 	atom_storage.locked = STORAGE_SOFT_LOCKED
-	atom_storage.max_slots = 6
+	atom_storage.max_slots = 7
+	atom_storage.max_total_storage = 16
 
 /obj/item/storage/toolbox/guncase/monkeycase/attack_self(mob/user, modifiers)
 	if(!monkey_check(user))

@@ -161,6 +161,9 @@
 		name = "[name] ([theme_name])"
 		desc = "A box containing supplementary ingredients for the aspiring chef. The box's theme is '[theme_name]'."
 		inhand_icon_state = "syringe_kit"
+	atom_storage.max_slots = 20
+	atom_storage.max_total_storage = 20
+	atom_storage.set_holdable(list(/obj/item/food, /obj/item/reagent_containers))
 
 /obj/item/storage/box/ingredients/wildcard
 	theme_name = "wildcard"

@@ -78,7 +78,7 @@
 			Please note that this kit did NOT pass quality control."
 	purchasable_from = ALL
 	progression_minimum = 90 MINUTES
-	item = /obj/item/storage/box/syndie_kit/chameleon/broken
+	item = /obj/item/storage/bag/garment/chameleon_kit/broken
 
 /datum/uplink_item/badass/costumes/centcom_official
 	name = "CentCom Official Costume"
@@ -86,7 +86,7 @@
 			Radio headset does not include encryption key. No gun included."
 	purchasable_from = ALL
 	progression_minimum = 110 MINUTES
-	item = /obj/item/storage/box/syndie_kit/centcom_costume
+	item = /obj/item/storage/bag/garment/centcom_costume
 
 /datum/uplink_item/badass/stickers
 	name = "Syndicate Sticker Pack"

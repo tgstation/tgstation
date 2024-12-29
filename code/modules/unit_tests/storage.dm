@@ -45,13 +45,15 @@
 /// Test to ensure that all storage containers have enough space to hold any items they spawn in with.
 /// A backpack with only 14 slots should not be able to hold 16 items, as an example. (this also checks for weight)
 /datum/unit_test/storage_sanity
-	///list of debug exempted storage items (these shouldn't spawn naturally anyawys)
+	///list of debug exempted storage items (these shouldn't spawn naturally anyways)
 	var/static/list/debug_list = typecacheof(list(
 		/obj/item/storage/box/miner_modkits,
 		/obj/item/storage/box/skillchips,
 		/obj/item/storage/box/stockparts/basic,
 		/obj/item/storage/box/stockparts/deluxe,
 		/obj/item/storage/box/fish_debug,
+		/obj/item/storage/box/ingredients/random,
+		/obj/item/storage/lockbox/bitrunning/decrypted,
 	))
 
 /datum/unit_test/storage_sanity/Run()

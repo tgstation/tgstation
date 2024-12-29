@@ -314,6 +314,10 @@
 
 /obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
 
+/obj/item/storage/toolbox/emergency/old/ancientbundle/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 8
+
 /obj/item/storage/toolbox/emergency/old/ancientbundle/PopulateContents()
 	new /obj/item/card/emag(src) // 4 tc
 	new /obj/item/card/emag/doorjack(src) //emag used to do both. 3 tc
@@ -522,10 +526,35 @@
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/cup/bottle/tuberculosiscure(src)
 
-/obj/item/storage/box/syndie_kit/chameleon
+//garment bags items, normal sized backpacks but with very restrictive item lock
+//chameleon kit
+/obj/item/storage/bag/garment/chameleon_kit
 	name = "chameleon kit"
+	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/storage/box/syndie_kit/chameleon/PopulateContents()
+/obj/item/storage/bag/garment/chameleon_kit/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(
+		/obj/item/clothing/under/chameleon,
+		/obj/item/clothing/suit/chameleon,
+		/obj/item/clothing/gloves/chameleon,
+		/obj/item/clothing/shoes/chameleon,
+		/obj/item/clothing/glasses/chameleon,
+		/obj/item/clothing/head/chameleon,
+		/obj/item/clothing/mask/chameleon,
+		/obj/item/clothing/neck/chameleon,
+		/obj/item/storage/backpack/chameleon,
+		/obj/item/storage/belt/chameleon,
+		/obj/item/radio/headset/chameleon,
+		/obj/item/stamp/chameleon,
+		/obj/item/modular_computer/pda/chameleon,
+		/obj/item/gun/energy/laser/chameleon,
+		/obj/item/chameleon_scanner,
+	))
+	atom_storage.max_total_storage = 40
+	atom_storage.max_slots = 20
+
+/obj/item/storage/bag/garment/chameleon_kit/PopulateContents()
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/suit/chameleon(src)
 	new /obj/item/clothing/gloves/chameleon(src)
@@ -541,6 +570,37 @@
 	new /obj/item/modular_computer/pda/chameleon(src)
 	new /obj/item/gun/energy/laser/chameleon(src)
 	new /obj/item/chameleon_scanner(src)
+
+/obj/item/storage/bag/garment/chameleon_kit/broken/PopulateContents()
+	new /obj/item/clothing/under/chameleon/broken(src)
+	new /obj/item/clothing/suit/chameleon/broken(src)
+	new /obj/item/clothing/gloves/chameleon/broken(src)
+	new /obj/item/clothing/shoes/chameleon/noslip/broken(src)
+	new /obj/item/clothing/glasses/chameleon/broken(src)
+	new /obj/item/clothing/head/chameleon/broken(src)
+	new /obj/item/clothing/mask/chameleon/broken(src)
+	new /obj/item/clothing/neck/chameleon/broken(src)
+	new /obj/item/storage/backpack/chameleon/broken(src)
+	new /obj/item/storage/belt/chameleon/broken(src)
+	new /obj/item/radio/headset/chameleon/broken(src)
+	new /obj/item/stamp/chameleon/broken(src)
+	new /obj/item/modular_computer/pda/chameleon/broken(src)
+	// No chameleon laser, they can't randomise for //REASONS//
+
+/obj/item/storage/bag/garment/centcom_costume/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 40
+	atom_storage.max_slots = 20
+
+/obj/item/storage/bag/garment/centcom_costume/PopulateContents()
+	new /obj/item/clothing/under/rank/centcom/officer(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/radio/headset/headset_cent/empty(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
+	new /obj/item/storage/backpack/satchel(src)
+	new /obj/item/modular_computer/pda/heads(src)
+	new /obj/item/clipboard(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -594,32 +654,6 @@
 	for(var/i in 1 to 2)
 		new /obj/item/food/croissant/throwing(src)
 	new /obj/item/book/granter/crafting_recipe/combat_baking(src)
-
-/obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
-	new /obj/item/clothing/under/rank/centcom/officer(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/gloves/color/black(src)
-	new /obj/item/radio/headset/headset_cent/empty(src)
-	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/storage/backpack/satchel(src)
-	new /obj/item/modular_computer/pda/heads(src)
-	new /obj/item/clipboard(src)
-
-/obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()
-	new /obj/item/clothing/under/chameleon/broken(src)
-	new /obj/item/clothing/suit/chameleon/broken(src)
-	new /obj/item/clothing/gloves/chameleon/broken(src)
-	new /obj/item/clothing/shoes/chameleon/noslip/broken(src)
-	new /obj/item/clothing/glasses/chameleon/broken(src)
-	new /obj/item/clothing/head/chameleon/broken(src)
-	new /obj/item/clothing/mask/chameleon/broken(src)
-	new /obj/item/clothing/neck/chameleon/broken(src)
-	new /obj/item/storage/backpack/chameleon/broken(src)
-	new /obj/item/storage/belt/chameleon/broken(src)
-	new /obj/item/radio/headset/chameleon/broken(src)
-	new /obj/item/stamp/chameleon/broken(src)
-	new /obj/item/modular_computer/pda/chameleon/broken(src)
-	// No chameleon laser, they can't randomise for //REASONS//
 
 /obj/item/storage/box/syndie_kit/bee_grenades
 	name = "buzzkill grenade box"
