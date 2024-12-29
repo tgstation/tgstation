@@ -3178,6 +3178,8 @@
 /datum/reagent/luminescent_fluid/red
 	name = "Red Luminiscent Fluid"
 	color = COLOR_SOFT_RED
+	// The glow *is* unnatural, so...
+	metabolized_traits = list(TRAIT_MINOR_NIGHT_VISION, TRAIT_UNNATURAL_RED_GLOWY_EYES)
 
 /datum/reagent/luminescent_fluid/blue
 	name = "Blue Luminiscent Fluid"
