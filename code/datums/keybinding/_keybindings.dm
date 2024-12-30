@@ -21,6 +21,8 @@
 	return SEND_SIGNAL(user.mob, keybind_signal) & COMSIG_KB_ACTIVATED
 
 /datum/keybinding/proc/up(client/user)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(user.mob, DEACTIVATE_KEYBIND(keybind_signal))
 	return FALSE
 
 /datum/keybinding/proc/can_use(client/user)

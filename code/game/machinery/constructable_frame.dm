@@ -22,6 +22,11 @@
 	if(circuit)
 		. += "It has \a [circuit] installed."
 
+/obj/structure/frame/CanAllowThrough(atom/movable/mover, border_dir)
+	if(isprojectile(mover))
+		return TRUE
+	return ..()
+
 /obj/structure/frame/atom_deconstruct(disassembled = TRUE)
 	var/atom/movable/drop_loc = drop_location()
 	new /obj/item/stack/sheet/iron(drop_loc, 5)
@@ -112,6 +117,16 @@
 		return install_board(user, tool, by_hand = TRUE) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 	return NONE
 
+/obj/structure/frame/ranged_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+
+	if(!istype(tool, /obj/item/storage/part_replacer/bluespace))
+		return
+
+	. = item_interaction(user, tool, modifiers)
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		user.Beam(tool, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+
 /**
  * Installs the passed circuit board into the frame
  *
@@ -173,7 +188,7 @@
 		if(QDELETED(target_board) || QDELETED(src) || QDELETED(user) || !(target_board in replacer) || !user.is_holding(replacer))
 			return FALSE
 		// User still within range?
-		var/close_enough = replacer.works_from_distance || user.Adjacent(src)
+		var/close_enough = istype(replacer, /obj/item/storage/part_replacer/bluespace) || user.Adjacent(src)
 		if(!close_enough)
 			return FALSE
 
@@ -182,8 +197,6 @@
 		install_parts_from_part_replacer(user, replacer, no_sound = TRUE)
 		if(!no_sound)
 			replacer.play_rped_sound()
-			if(replacer.works_from_distance)
-				user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 		return TRUE
 
 	return FALSE

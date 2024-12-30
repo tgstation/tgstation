@@ -2,10 +2,9 @@
 	name = "chrystarfish"
 	fish_id = "chrystarfish"
 	desc = "This is what happens when a cosmostarfish sneaks into the bluespace compartment of a hyperspace engine. Very pointy and damaging - leading cause of spaceship explosions in 2554."
-	icon = 'icons/obj/aquarium/weird.dmi'
+	icon = 'icons/obj/aquarium/rift.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/rift.dmi'
 	icon_state = "chrystarfish"
-	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
 	force = 12
 	sharpness = SHARP_POINTY
 	wound_bonus = -10
@@ -15,26 +14,24 @@
 	throwforce = 11
 	throw_range = 8
 	throw_speed = 4
-	embed_type = /datum/embed_data/throwing_star
+	embed_type = /datum/embed_data/chrystarfish
 	attack_verb_continuous = list("stabs", "jabs")
 	attack_verb_simple = list("stab", "jab")
-	hitsound = SFX_DEFAULT_FISH_SLAP
-	drop_sound = 'sound/mobs/non-humanoids/fish/fish_drop1.ogg'
-	pickup_sound = SFX_FISH_PICKUP
-	sound_vary = TRUE
-	item_flags = SLOWS_WHILE_IN_HAND
+	hitsound = SFX_SHATTER
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
-	sprite_width = 4
-	sprite_height = 3
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = ""
+	sprite_width = 7
+	sprite_height = 9
 
+	average_size = 40
+	average_weight = 1500
 	food = /datum/reagent/bluespace
 	feeding_frequency = 10 MINUTES
-	health = 300
+	health = 50
 	death_text = "%SRC splinters apart into shards!"
-	random_case_rarity = FISH_RARITY_NOPE
-	fillet_type = /obj/item/stack/sheet/bluespace_crystal
+	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
+	fillet_type = /obj/item/stack/ore/bluespace_crystal
 	num_fillets = 3
 	stable_population = 3
 	compatible_types = list(/obj/item/fish/starfish)
@@ -42,14 +39,32 @@
 	beauty = FISH_BEAUTY_EXCELLENT
 	fish_movement_type = /datum/fish_movement/accelerando
 	fishing_difficulty_modifier = 15
-	favorite_bait = list(/obj/item/stack/sheet/bluespace_crystal)
+	favorite_bait = list(/obj/item/stack/ore/bluespace_crystal)
 	// something something bluespace
 	electrogenesis_power = 9 MEGA JOULES
 
+// Basically a ninja star that's highly likely to embed and teleports you around if you don't stop to remove it. However it doesn't deal that much damage!
 /datum/embed_data/chrystarfish
 	pain_mult = 1
-	embed_chance = 100
+	embed_chance = 85
 	fall_chance = 3
+	pain_chance = 9
+	impact_pain_mult = 1
+	remove_pain_mult = 2
+	rip_time = 1.5 SECONDS
+	ignore_throwspeed_threshold = TRUE // basically shaped like a shuriken
+	jostle_chance = 15
+	jostle_pain_mult = 1
+	// about to be set!
+	jostle_callback = null
+
+/datum/embed_data/chrystarfish/New()
+	..()
+	jostle_callback = CALLBACK(src, PROC_REF(teleport))
+
+/datum/embed_data/chrystarfish/proc/teleport(mob/victim, atom/embed_parent, datum/embed_data/real_data)
+	do_teleport(victim, get_turf(victim), 3, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+	victim.visible_message(span_danger("[victim] teleports as [embed_parent] jostles inside [victim.p_them()]!"))
 
 /obj/item/fish/starfish/chrystarfish/set_status(new_status, silent)
 	. = ..()
@@ -58,7 +73,8 @@
 		playsound(src, SFX_SHATTER, 50)
 		qdel(src)
 
-// todo : embed causes constant teleport
+/obj/item/fish/starfish/chrystarfish/add_emissive()
+	return
 
 /obj/item/fish/starfish/chrystarfish/get_base_edible_reagents_to_add()
 	var/list/return_list = ..()
@@ -79,7 +95,7 @@
 	forceMove(user)
 	// *everything*
 	for(var/obj/thing in user.get_contents())
-		if(istype(thing, /obj/item/bodypart/chest))
+		if(QDELETED(thing) || istype(thing, /obj/item/bodypart/chest))
 			continue // don't want a gib
 		stoplag(0.1 SECONDS)
 		playsound(src, 'sound/effects/phasein.ogg', 15, TRUE)
@@ -87,11 +103,16 @@
 	qdel(src)
 	return MANUAL_SUICIDE
 
+// Prevents the first 2 messages from spamming on each patience update.
+#define PATIENCE_FLINCH "PATIENCE_FLINCH"
+#define PATIENCE_UNCOMFY "PATIENCE_UNCOMFY"
+
 /obj/item/fish/dolphish
 	name = "walro-dolphish"
 	fish_id = "walro-dolphish"
-	desc = "Strange, bloodthirsty apex predator from beyond. A powerful weapon, but it -hates- being held."
+	desc = "Strange bloodthirsty apex predator from beyond. A powerful weapon, but it -hates- being held."
 	icon = 'icons/obj/aquarium/wide.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/rift.dmi'
 	icon_state = "dolphish"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -113,11 +134,8 @@
 
 	base_pixel_x = -16
 	pixel_x = -16
-	sprite_width = 4
-	sprite_height = 3
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = ""
-
+	sprite_width = 13
+	sprite_height = 9
 
 	required_fluid_type = AQUARIUM_FLUID_AIR
 	required_temperature_min = BODYTEMP_COLD_DAMAGE_LIMIT // you mean just like a human? that's odd...
@@ -144,10 +162,12 @@
 	min_pressure = HAZARD_LOW_PRESSURE
 	max_pressure = HAZARD_HIGH_PRESSURE
 	beauty = FISH_BEAUTY_GREAT
-	// Maximum patience for below var.
-	var/max_patience = 15
-	// Counter of how much patience the fish currently has before it attacks its wielder.
-	var/patience
+	/// Maximum patience for below var.
+	var/max_patience = 20
+	/// Counter of how much patience the fish currently has before it attacks its wielder.
+	var/patience = 20
+	/// Ensures the last warning fx isn't repeated
+	var/last_effect
 
 /obj/item/fish/dolphish/get_force_rank()
 	var/multiplier = 1
@@ -175,7 +195,7 @@
 	wound_bonus *= multiplier
 	bare_wound_bonus *= multiplier
 
-/obj/item/fish/dolphish/process(seconds_per_tick)
+/obj/item/fish/dolphish/do_fish_process(seconds_per_tick)
 	. = ..()
 	var/patience_reduction = 1
 
@@ -193,7 +213,7 @@
 	if(!ismob(loc))
 		// dividing by the multiplier nets us an increasing value. happy dolphish gain patience quicker
 		var/patience_bonus = (1 / patience_reduction)
-		patience = FLOOR(patience + patience_bonus * seconds_per_tick, max_patience)
+		patience = clamp(patience + patience_bonus * seconds_per_tick, 0, max_patience)
 		return
 
 	var/mob/living/moc = loc
@@ -202,41 +222,52 @@
 	if(HAS_TRAIT(moc, TRAIT_IS_WET))
 		patience_reduction *= 0.6
 
-	patience = FLOOR(patience - (patience_reduction * seconds_per_tick), max_patience)
+	patience = clamp(patience - (patience_reduction * seconds_per_tick), 0, max_patience)
 
 	switch(patience)
 		if(0)
-			moc.visible_message(span_bolddanger("[src] bites directly into [moc]!"), span_userdanger("[src] bites directly into you!!"))
+			// No check, we always want sharky to bite jerky on 0
+			moc.visible_message(span_bolddanger("[src] bites directly into [moc] and squirms away from [moc.p_their()] grasp!"), span_userdanger("[src] sinks its fangs into you!!"))
 			moc.apply_damage(force, BRUTE, moc.get_active_hand(), wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attacking_item = src)
 			forceMove(moc.drop_location())
-		if(1 to 5)
-			if(prob(60))
-				visible_message(span_bolddanger("[src] thrashes wildly against [moc]'s grasp!"))
-		if(6 to 11)
-			if(prob(40))
-				visible_message(span_danger("[src] flinches away from [moc]!"))
-		if(11 to 15)
-			if(prob(20))
-				visible_message(span_notice("[src] seems uncomfortable in [moc]'s grasp."))
+			moc.painful_scream()
+			patience = max_patience
+			playsound(src, hitsound, 45)
+		if(1 to 10)
+			// No check, final warning as they struggle, also funny.
+			visible_message(span_bolddanger("[src] thrashes against [moc]'s grasp!"))
+			moc.shake_up_animation()
+		if(10 to 15)
+			if(last_effect == PATIENCE_FLINCH)
+				return
+			visible_message(span_danger("[src] flinches away from [moc]!"))
+			moc.shake_up_animation()
+			last_effect = PATIENCE_FLINCH
+		if(15 to 20)
+			if(last_effect == PATIENCE_UNCOMFY)
+				return
+			visible_message(span_notice("[src] seems uncomfortable in [moc]'s grasp."))
+			last_effect = PATIENCE_UNCOMFY
 
 	return
+
+#undef PATIENCE_FLINCH
+#undef PATIENCE_UNCOMFY
 
 /obj/item/fish/flumpulus
 	name = "flumpulus"
 	fish_id = "flumpulus"
 	desc = "You can hardly even guess as to how this possibly counts as a fish. Inexplicably, you get the feeling that it could serve as a fantastic way to cushion a fall."
-	icon = 'icons/obj/aquarium/weird.dmi'
+	icon = 'icons/obj/aquarium/rift.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/rift.dmi'
 	icon_state = "flumpulus"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
 	attack_verb_continuous = list("splats", "splorts")
 	attack_verb_simple = list("splat", "splort")
 
-	sprite_width = 4
-	sprite_height = 3
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = ""
-
+	sprite_width = 10
+	sprite_height = 9
 
 	required_fluid_type = AQUARIUM_FLUID_AIR
 	required_temperature_min = 0
@@ -268,7 +299,7 @@
 	forceMove(user)
 	. = MANUAL_SUICIDE
 	for(var/i in 1 to rand(5, 15))
-		addtimer(CALLBACK(src, PROC_REF(flump_attack), user), 0.1 SECONDS * i)
+		addtimer(CALLBACK(src, PROC_REF(flump_attack), user), 0.4 SECONDS * i)
 
 /obj/item/fish/flumpulus/proc/flump_attack(mob/living/user)
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
@@ -280,8 +311,9 @@
 	ASYNC
 		user.emote("scream")
 		sleep(5 SECONDS)
-		eyes.visible_message(span_danger("[eyes] rapidly turn to dust."))
-		eyes.dust()
+		if(!QDELETED(eyes))
+			eyes.visible_message(span_danger("[eyes] rapidly turn to dust."))
+			eyes.dust()
 
 /obj/item/fish/flumpulus/get_base_edible_reagents_to_add()
 	var/list/return_list = ..()
@@ -306,23 +338,21 @@
 /obj/item/fish/gullion
 	name = "gullion"
 	fish_id = "gullion"
-	desc = "This crystalline fish is actually one of only two known silicon-based lifeforms, alongside xenomorphs.\
-		It avoids death via oxygen-silicate reactions by organically shielding its exterior, allowing the thick scales to calcify into quartz, at the cost of rendering the fish functionally blind. \
-		How xenomorphs manage it is a complete mystery bordering on bullshit."
-	icon = 'icons/obj/aquarium/weird.dmi'
+	desc = "This crystalline fish is actually one of only two known silicon-based lifeforms.\
+		It avoids death via oxygen-silicate reactions by organically shielding its exterior, allowing the thick scales to calcify into quartz and diamond, at the cost of rendering the fish functionally blind. \
+		How xenomorphs manage is a complete mystery bordering on bullshit."
+	icon = 'icons/obj/aquarium/rift.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/rift.dmi'
 	icon_state = "gullion"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
 	attack_verb_continuous = list("stabs", "jabs")
 	attack_verb_simple = list("stab", "jab")
 	hitsound = SFX_DEFAULT_FISH_SLAP
-	drop_sound = 'sound/mobs/non-humanoids/fish/fish_drop1.ogg'
-	pickup_sound = SFX_FISH_PICKUP
-	sprite_width = 4
-	sprite_height = 3
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = ""
-
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
+	sprite_width = 7
+	sprite_height = 5
 
 	food = /datum/reagent/silicon
 	feeding_frequency = 30 SECONDS
@@ -330,17 +360,15 @@
 	death_text = "%SRC calcifies."
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	fillet_type = /obj/item/stack/sheet/mineral/diamond
-	num_fillets = 3
+	num_fillets = 2
 	stable_population = 3
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/parthenogenesis) // this thing is a diamond farm
 	beauty = FISH_BEAUTY_EXCELLENT
 	fish_movement_type = /datum/fish_movement/slow
-	fishing_difficulty_modifier = 45 // thick hide
 	favorite_bait = list(/obj/item/stack/sheet/mineral/diamond)
 	fishing_difficulty_modifier = 22
-	average_size = 60
+	average_size = 30
 	average_weight = 2000
-	material_weight_mult = 4
 	weight_size_deviation = 0.3
 	safe_air_limits = list(
 		/datum/gas/oxygen = list(0, 2), // does NOT like oxygen

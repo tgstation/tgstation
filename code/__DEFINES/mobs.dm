@@ -655,6 +655,7 @@
 // Hair masks
 #define HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM "hide_above_45deg_medium"
 #define HAIR_MASK_HIDE_ABOVE_45_DEG_LOW "hide_above_45deg_low"
+#define HAIR_MASK_HIDE_WINTERHOOD "hide_winterhood"
 
 // Height defines
 // - They are numbers so you can compare height values (x height < y height)
@@ -869,6 +870,10 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
+
+//Lying angles, which way your head points
+#define LYING_ANGLE_EAST 90
+#define LYING_ANGLE_WEST 270
 
 /// Get the client from the var
 #define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
