@@ -152,9 +152,11 @@
 	if(source.obj_flags & EMAGGED)
 		return FALSE
 	source.obj_flags |= EMAGGED
+	can_hack_open = FALSE // since it's broken for good
+
 	source.visible_message(span_warning("Sparks fly from [source]!"), blind_message = span_hear("You hear a faint electrical spark."))
 	source.balloon_alert(user, "lock destroyed")
-	playsound(parent, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(source, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	lock_code = null
 	source.atom_storage.locked = STORAGE_NOT_LOCKED
 	source.update_appearance()
