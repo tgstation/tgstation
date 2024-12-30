@@ -171,7 +171,7 @@
 	end_game()
 
 /datum/deathmatch_lobby/proc/lobby_afk_probably()
-	if (QDELING(src))
+	if (QDELING(src) || playing)
 		return
 	announce(span_warning("Lobby ([host]) was closed due to not starting after 5 minutes, being potentially AFK. Please be faster next time."))
 	GLOB.deathmatch_game.remove_lobby(host)
