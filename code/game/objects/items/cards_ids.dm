@@ -936,11 +936,13 @@
 		stack_trace("ID card with honorifics found with no potential honorific positions!")
 		return
 
+	var/list/readable_names = list()
+
 	var/honorific_position_to_use = tgui_input_list(user, "what position do you want your honorific in?", "Flair!", trim.honorific_positions)
 
 	if(honorific_position_to_use & HONORIFIC_POSITION_NONE)
-		honorific_position = HONORIFIC_POSITION_NONE
-		balloon_alert(user, "honorific disabled")
+		honorific_position = initial(honorific_position) //In case you want to force an honorific on an ID, set a default that isn't NONE.
+		balloon_alert(user, "honorific reset")
 	else
 		trim.chosen_honorific = tgui_input_list(user, "what honorific do you want to use?", "Flair!!!", trim.honorifics)
 
