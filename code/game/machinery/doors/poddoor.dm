@@ -52,6 +52,14 @@
 		else if(deconstruction == BLASTDOOR_NEEDS_WIRES)
 			. += span_notice("The <i>wires</i> have been removed and it's ready to be <b>sliced apart</b>.")
 
+/obj/machinery/door/poddoor/attack_ai(mob/user)
+	. = ..()
+	open(FALSE) // silicons can't open something remotely if it is unpowered
+
+/obj/machinery/door/poddoor/attack_robot(mob/user)
+	. = ..()
+	return attack_ai()
+
 /obj/machinery/door/poddoor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if(isnull(held_item))

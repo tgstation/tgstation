@@ -481,8 +481,12 @@
 	src.animation = animation
 	update_appearance()
 
-/// Public proc that simply handles opening the door. Returns TRUE if the door was opened, FALSE otherwise.
-/// Use argument "forced" in conjunction with try_to_force_door_open if you want/need additional checks depending on how sorely you need the door opened.
+/**
+ * Public proc that simply handles opening the door. Returns TRUE if the door was opened, FALSE otherwise.
+ *
+ * Arguments:
+ * * forced - Use in conjunction with try_to_force_door_open if you want/need additional checks depending on how sorely you need the door opened.
+ */
 /obj/machinery/door/proc/open(forced = DEFAULT_DOOR_CHECKS)
 	if(!density)
 		return TRUE
