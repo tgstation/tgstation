@@ -447,7 +447,7 @@
 	big_pointer = TRUE
 	pointer_color = COLOR_MEDICAL_BLUE
 	honorifics = list(", PhD.", ", MD.")
-	honorific_positions = list(HONORIFIC_POSITION_LAST_FULL, HONORIFIC_POSITION_NONE)
+	honorific_positions = HONORIFIC_POSITION_LAST_FULL | HONORIFIC_POSITION_NONE
 
 /datum/id_trim/job/clown
 	assignment = JOB_CLOWN

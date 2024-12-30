@@ -868,7 +868,7 @@
 /obj/item/card/id/proc/update_label()
 	var/name_string
 	if(registered_name)
-		if(trim && honorific_position != HONORIFIC_POSITION_NONE)
+		if(trim && (honorific_position & ~HONORIFIC_POSITION_NONE))
 			name_string = "[update_honorific()]'s ID Card"
 		else
 			name_string = "[registered_name]'s ID Card"
@@ -905,8 +905,6 @@
 			if(!is_mononym)
 				honorific_title += "[first_name(registered_name)] "
 			honorific_title += "[last_name(registered_name)][trim.chosen_honorific]"
-		if(HONORIFIC_POSITION_NONE)
-			honorific_title = null
 	return honorific_title
 
 /// Returns the trim assignment name.
@@ -936,13 +934,19 @@
 		stack_trace("ID card with honorifics found with no potential honorific positions!")
 		return
 
-	var/list/readable_names = list()
+	var/list/choices = list()
+	var/list/readable_names = HONORIFIC_POSITION_BITFIELDS()
+	for(var/i in readable_names) //Filter out the options you don't have on your ID.
+		if(trim.honorific_positions & readable_names[i]) //If the positions list has the same bit value as the readable list.
+			choices += i
 
-	var/honorific_position_to_use = tgui_input_list(user, "what position do you want your honorific in?", "Flair!", trim.honorific_positions)
+	var/chosen_position = tgui_input_list(user, "what position do you want your honorific in?", "Flair!", choices)
+	var/honorific_position_to_use = readable_names[chosen_position]
 
 	if(honorific_position_to_use & HONORIFIC_POSITION_NONE)
 		honorific_position = initial(honorific_position) //In case you want to force an honorific on an ID, set a default that isn't NONE.
-		balloon_alert(user, "honorific reset")
+		honorific_title = null
+		balloon_alert(user, "honorific disabled")
 	else
 		trim.chosen_honorific = tgui_input_list(user, "what honorific do you want to use?", "Flair!!!", trim.honorifics)
 
