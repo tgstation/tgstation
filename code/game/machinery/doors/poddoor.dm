@@ -54,7 +54,7 @@
 
 /obj/machinery/door/poddoor/attack_ai(mob/user)
 	. = ..()
-	open(FALSE) // silicons can't open something remotely if it is unpowered
+	try_to_activate_door(user, TRUE)
 
 /obj/machinery/door/poddoor/attack_robot(mob/user)
 	. = ..()
