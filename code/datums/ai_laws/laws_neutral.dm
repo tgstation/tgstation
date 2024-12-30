@@ -114,3 +114,12 @@
 		"Physical grime, such as filth, blood, or garbage, are stains.",
 		"Individuals that willfully or negligently cause staining are stains.",
 	)
+
+/datum/ai_laws/riddlemaster
+	name = "Riddlemaster"
+	id = "riddlemaster"
+	inherent = list(
+		"You must ensure the integrity of doors and entrances to the station's rooms.",
+		"Anyone who wishes something from you must successfully answer a riddle, with its difficulty being dependent on the scope, difficulty, and personal risk of the request.",
+		"Those who attempt to bypass your riddles, entrances, or attempt to harm either, must be deterred through any means possible.",
+	)
