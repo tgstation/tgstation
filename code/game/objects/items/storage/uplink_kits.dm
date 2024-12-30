@@ -589,7 +589,7 @@
 	new /obj/item/modular_computer/pda/chameleon/broken(src)
 	// No chameleon laser, they can't randomise for //REASONS//
 
-/obj/item/storage/box/syndicate/centcom_costume/Initialize(mapload)
+/obj/item/storage/box/syndie_kit/centcom_costume/Initialize(mapload)
 	. = ..()
 	var/list/holdables_list = list()
 	for(var/obj/item/items in contents)
@@ -598,7 +598,7 @@
 	atom_storage.max_slots= 30
 	atom_storage.max_total_storage = 40
 
-/obj/item/storage/box/syndicate/centcom_costume/PopulateContents()
+/obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
@@ -636,11 +636,11 @@
 	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
 	new /obj/item/lighter(src)
 
-/obj/item/storage/box/syndicate/induction_kit
+/obj/item/storage/box/syndie_kit/induction_kit
 	name = "syndicate induction kit"
 	desc = "Contains all you need for introducing your newest comrade to the Syndicate and all its worker's benefits."
 
-/obj/item/storage/box/syndicate/induction_kit/Initialize(mapload)
+/obj/item/storage/box/syndie_kit/induction_kit/Initialize(mapload)
 	. = ..()
 	var/list/holdables_list = list()
 	for(var/obj/item/items in contents)
@@ -650,7 +650,7 @@
 	atom_storage.max_total_storage = 40
 
 
-/obj/item/storage/box/syndicate/induction_kit/PopulateContents()
+/obj/item/storage/box/syndie_kit/induction_kit/PopulateContents()
 	// Basic weaponry, so they have something to use.
 	new /obj/item/gun/ballistic/automatic/pistol/clandestine(src) // 6 TC, but free for nukies
 	new /obj/item/ammo_box/magazine/m10mm/hp(src) // 3 TC, a reward for the teamwork involved

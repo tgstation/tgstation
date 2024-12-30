@@ -170,8 +170,12 @@
 
 /obj/item/storage/bag/garment/hero/Initialize(mapload)
 	. = ..()
-	atom_storage.max_total_storage = 200
-	atom_storage.max_slots = 18
+	var/list/holdables_list = list()
+	for(var/obj/item/items in contents)
+		holdables_list += items.type
+	atom_storage.set_holdable(holdables_list)
+	atom_storage.max_slots= 30
+	atom_storage.max_total_storage = 60
 
 /obj/item/storage/bag/garment/hero/astronaut
 	name = "First Man on the Moon - 1960's."

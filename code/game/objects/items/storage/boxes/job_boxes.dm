@@ -89,10 +89,6 @@
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
 
-/obj/item/storage/box/survival/syndie/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 8
-
 /obj/item/storage/box/survival/syndie/PopulateContents()
 	..()
 	new /obj/item/crowbar/red(src)

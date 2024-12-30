@@ -86,7 +86,7 @@
 			Radio headset does not include encryption key. No gun included."
 	purchasable_from = ALL
 	progression_minimum = 110 MINUTES
-	item = /obj/item/storage/box/syndicate/centcom_costume
+	item = /obj/item/storage/box/syndie_kit/centcom_costume
 
 /datum/uplink_item/badass/stickers
 	name = "Syndicate Sticker Pack"
