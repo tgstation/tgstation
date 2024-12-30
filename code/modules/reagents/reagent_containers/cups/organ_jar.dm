@@ -14,6 +14,11 @@
 	var/obj/item/organ/held_organ = null
 	var/full_of_formaldehyde = FALSE
 
+/obj/item/reagent_containers/cup/organ_jar/examine(mob/user)
+	. = ..()
+	. += span_info("Any organ inside the jar will be preserved if it is filled with formaldehyde.")
+	if(!isnull(held_organ) && held_organ.GetComponent(/datum/component/ghostrole_on_revive))
+		. += span_smallnoticeital("The brain is twitching..") // Guaranteed to be a brain if it has that component
 
 /obj/item/reagent_containers/cup/organ_jar/Initialize(mapload)
 	. = ..()
@@ -27,6 +32,7 @@
 		held_organ.organ_flags &= ~ORGAN_FROZEN
 		held_organ = null
 		name = "organ jar"
+		desc = "A jar large enough to put an organ inside it."
 		update_appearance()
 		return CLICK_ACTION_SUCCESS
 	else
@@ -43,21 +49,19 @@
 			balloon_alert(user, "inserted [tool]")
 			held_organ = tool
 			name = "[tool.name] in a jar"
+			desc = "A jar with [tool.name] inside it."
 			check_organ_freeze()
 			update_appearance()
 		else
 			balloon_alert(user, "the jar already contains [held_organ]")
 
 // Organ icon size goes from 32 to this
-// If it's too small, then smaller sprites like the brain would be comically diminutive
-// If it's too large, then large sprites like the voltaic combat cyberheart will go out of the jar's bounds
-#define JAR_INNER_ICON_SIZE 20
+#define JAR_INNER_ICON_SIZE 24
 
 /obj/item/reagent_containers/cup/organ_jar/update_overlays()
 	. = ..()
 	// Draw the organ icon inside the jar, if present
 	if(!isnull(held_organ))
-		// This code was mostly taken from the microwave overlay stuff
 		var/image/organ_img = image(held_organ, src)
 		var/list/icon_dimensions = get_icon_dimensions(held_organ.icon)
 		organ_img.transform = organ_img.transform.Scale( // Make it smaller so it fits
@@ -68,7 +72,6 @@
 		organ_img.layer = FLOAT_LAYER
 		organ_img.plane = FLOAT_PLANE
 		organ_img.blend_mode = BLEND_INSET_OVERLAY
-		//organ_overlay = mutable_appearance(held_organ.icon, held_organ.icon_state)
 		. += organ_img
 
 #undef JAR_INNER_ICON_SIZE
@@ -86,12 +89,44 @@
 	else
 		held_organ.organ_flags &= ~ORGAN_FROZEN
 
+// Defines for note flavor types
+// One of these is picked whenever a brain in a jar is created
+#define NOTE_STUCK_IN_MAIL 0
+#define NOTE_MORBID_GIFT 1
+#define NOTE_DISCARDED_LOST_CREW 2
+
 /obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar
 	name = "brain in a jar"
 	desc = "A brain in a jar. You can see it twitching.."
+	var/note_type = NOTE_STUCK_IN_MAIL
+
+/obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar/examine(mob/user)
+	. = ..()
+	. += span_notice("<i>You can see a note attached to the bottom..</i>")
+
+
+/obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar/examine_more(mob/user)
+	. = ..()
+	// Flavor for why the brain is scarred
+	switch(note_type)
+		if(NOTE_STUCK_IN_MAIL)
+			. += span_notice("According to the note, this jar must've been stuck in the mail for at least 50 years..")
+		if(NOTE_MORBID_GIFT)
+			. += span_notice("It reads..")
+			. += span_notice("Greetings, XXX. I stumbled upon a hermit in my travels, \
+			whose quirks immediately piqued my interest. I'm sure his brain will be as useful to your research \
+			as it has been to mine. Signed, YYY.")
+		if(NOTE_DISCARDED_LOST_CREW)
+			. += span_notice("It reads..")
+			. += span_notice("Hey, XXX. Management wanted me to discard this poor schmuck's brain, \
+			claiming it's 'too damaged to viably recover', so I figured I might as well throw you a bone. \
+			I know you like these sorts of things. Signed, ZZZ.")
+
+
 
 /obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar/Initialize(mapload)
 	. = ..()
+	note_type = rand(0, 2) // Attach a random note to it
 	var/obj/item/organ/brain/scarred_brain = new() // Make a new brain
 	// Make it revivable, scar it if revival is successful
 	scarred_brain.AddComponent( \
@@ -106,3 +141,8 @@
 // All this does is add a random special brain trauma
 /obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar/proc/scar_upon_revival(obj/item/organ/brain/brain_to_scar)
 	brain_to_scar.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_ABSOLUTE, natural_gain = TRUE)
+
+
+#undef NOTE_STUCK_IN_MAIL
+#undef NOTE_MORBID_GIFT
+#undef NOTE_DISCARDED_LOST_CREW
