@@ -68,7 +68,7 @@
 		var/total_weight_in_storage
 		var/contents_counter
 
-		for(var/obj/item/items as anything in storage_contents)
+		for(var/obj/item/items in storage_contents)
 			total_weight_in_storage += items.w_class
 			contents_counter++
 

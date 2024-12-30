@@ -460,7 +460,7 @@
 	illustration = null
 
 /obj/item/storage/box/mothic_goods/PopulateContents()
-	for(var/i in 1 to 7)
+	for(var/i in 1 to 6)
 		var/random_food = pick_weight(list(
 			/obj/item/food/cheese/cheese_curds = 5,
 			/obj/item/food/cheese/curd_cheese = 5,
