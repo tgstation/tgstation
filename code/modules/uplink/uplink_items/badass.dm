@@ -78,7 +78,7 @@
 			Please note that this kit did NOT pass quality control."
 	purchasable_from = ALL
 	progression_minimum = 90 MINUTES
-	item = /obj/item/storage/box/syndicate/chameleon_kit/broken
+	item = /obj/item/storage/box/syndie_kit/chameleon/broken
 
 /datum/uplink_item/badass/costumes/centcom_official
 	name = "CentCom Official Costume"
