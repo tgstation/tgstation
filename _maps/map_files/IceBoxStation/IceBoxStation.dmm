@@ -53032,13 +53032,6 @@
 /obj/structure/chair/stool,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"plN" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/iron,
-/area/station/hallway/primary/port)
 "plQ" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -237171,7 +237164,7 @@ hDU
 hDU
 gRs
 ons
-gpp
+ons
 tmw
 wvK
 aKs
@@ -237428,7 +237421,7 @@ iYe
 hDU
 gpp
 aJA
-aJA
+gpp
 lnc
 kFu
 sJr
@@ -238456,7 +238449,7 @@ kyi
 aNq
 jsF
 ons
-gpp
+aJA
 lxc
 kBz
 aLV
@@ -238713,7 +238706,7 @@ jfR
 aNq
 jsF
 ons
-plN
+xhx
 gst
 pMv
 iTy
