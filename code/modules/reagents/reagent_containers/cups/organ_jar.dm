@@ -27,7 +27,8 @@
 
 /obj/item/reagent_containers/cup/organ_jar/Destroy(force)
 	. = ..()
-	held_organ = null
+	if(!isnull(held_organ))
+		QDEL_NULL(held_organ)
 
 // Alt click lets you take the organ out, if it's present
 /obj/item/reagent_containers/cup/organ_jar/click_alt(mob/user)
