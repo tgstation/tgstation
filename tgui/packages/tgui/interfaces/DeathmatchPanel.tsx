@@ -138,14 +138,11 @@ function LobbyDisplay(props) {
               disabled={isActive}
               color="good"
               onClick={() => act('join', { id: lobby.name })}
+              width="100%"
+              textAlign="center"
             >
               {playing === lobby.name ? 'View' : 'Join'}
             </Button>
-            <Button
-              color="caution"
-              icon="eye"
-              onClick={() => act('spectate', { id: lobby.name })}
-            />
           </>
         ) : (
           <Button
