@@ -142,7 +142,7 @@
 			left_color = apply_matrix_to_color(left_color, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
 			right_color = apply_matrix_to_color(right_color, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
 		else
-			var/target_color = color_transition_filter(checked_color[ATOM_COLOR_VALUE_INDEX], SATURATION_OVERRIDE)
+			var/list/target_color = color_transition_filter(checked_color[ATOM_COLOR_VALUE_INDEX], SATURATION_OVERRIDE)
 			left_color = apply_matrix_to_color(left_color, target_color["color"], COLORSPACE_HSL)
 			right_color = apply_matrix_to_color(right_color, target_color["color"], COLORSPACE_HSL)
 
