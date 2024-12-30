@@ -544,10 +544,10 @@
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/cup/bottle/tuberculosiscure(src)
 
-/obj/item/storage/box/syndicate/chameleon_kit
+/obj/item/storage/box/syndie_kit/chameleon
 	name = "chameleon kit"
 
-/obj/item/storage/box/syndicate/chameleon_kit/Initialize(mapload)
+/obj/item/storage/box/syndie_kit/chameleon/Initialize(mapload)
 	. = ..()
 	var/list/holdables_list = list()
 	for(var/obj/item/items in contents)
@@ -556,7 +556,7 @@
 	atom_storage.max_slots= 30
 	atom_storage.max_total_storage = 40
 
-/obj/item/storage/box/syndicate/chameleon_kit/PopulateContents()
+/obj/item/storage/box/syndie_kit/chameleon/PopulateContents()
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/suit/chameleon(src)
 	new /obj/item/clothing/gloves/chameleon(src)
@@ -573,7 +573,7 @@
 	new /obj/item/gun/energy/laser/chameleon(src)
 	new /obj/item/chameleon_scanner(src)
 
-/obj/item/storage/box/syndicate/chameleon_kit/broken/PopulateContents()
+/obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()
 	new /obj/item/clothing/under/chameleon/broken(src)
 	new /obj/item/clothing/suit/chameleon/broken(src)
 	new /obj/item/clothing/gloves/chameleon/broken(src)
