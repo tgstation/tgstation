@@ -30,7 +30,7 @@
 	name = "Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \
 			Due to budget cuts, the shoes don't provide protection against slipping and skillchips are sold separately."
-	item = /obj/item/storage/bag/garment/chameleon_kit
+	item = /obj/item/storage/box/syndicate/chameleon_kit
 	cost = 2
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops are allowed to buy this kit, since it's basically a costume, loneops can purchase it to blend in.
 

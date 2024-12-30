@@ -544,13 +544,10 @@
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/cup/bottle/tuberculosiscure(src)
 
-//garment bags items, normal sized backpacks but with very restrictive item lock
-//chameleon kit
-/obj/item/storage/bag/garment/chameleon_kit
+/obj/item/storage/box/syndicate/chameleon_kit
 	name = "chameleon kit"
-	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/storage/bag/garment/chameleon_kit/Initialize(mapload)
+/obj/item/storage/box/syndicate/chameleon_kit/Initialize(mapload)
 	. = ..()
 	var/list/holdables_list = list()
 	for(var/obj/item/items in contents)
@@ -559,7 +556,7 @@
 	atom_storage.max_slots= 30
 	atom_storage.max_total_storage = 40
 
-/obj/item/storage/bag/garment/chameleon_kit/PopulateContents()
+/obj/item/storage/box/syndicate/chameleon_kit/PopulateContents()
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/suit/chameleon(src)
 	new /obj/item/clothing/gloves/chameleon(src)
@@ -576,7 +573,7 @@
 	new /obj/item/gun/energy/laser/chameleon(src)
 	new /obj/item/chameleon_scanner(src)
 
-/obj/item/storage/bag/garment/chameleon_kit/broken/PopulateContents()
+/obj/item/storage/box/syndicate/chameleon_kit/broken/PopulateContents()
 	new /obj/item/clothing/under/chameleon/broken(src)
 	new /obj/item/clothing/suit/chameleon/broken(src)
 	new /obj/item/clothing/gloves/chameleon/broken(src)
@@ -592,7 +589,7 @@
 	new /obj/item/modular_computer/pda/chameleon/broken(src)
 	// No chameleon laser, they can't randomise for //REASONS//
 
-/obj/item/storage/bag/garment/centcom_costume/Initialize(mapload)
+/obj/item/storage/box/syndicate/centcom_costume/Initialize(mapload)
 	. = ..()
 	var/list/holdables_list = list()
 	for(var/obj/item/items in contents)
@@ -601,7 +598,7 @@
 	atom_storage.max_slots= 30
 	atom_storage.max_total_storage = 40
 
-/obj/item/storage/bag/garment/centcom_costume/PopulateContents()
+/obj/item/storage/box/syndicate/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
@@ -611,12 +608,12 @@
 	new /obj/item/modular_computer/pda/heads(src)
 	new /obj/item/clipboard(src)
 
-/obj/item/storage/bag/garment/contractor_loadout
+/obj/item/storage/box/syndicate/contractor_loadout
 	name = "Standard Loadout"
 	desc = "Supplied to Syndicate contractors, providing their specialised space suit and chameleon uniform."
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/storage/bag/garment/contractor_loadout/Initialize(mapload)
+/obj/item/storage/box/syndicate/contractor_loadout/Initialize(mapload)
 	. = ..()
 	var/list/holdables_list = list()
 	for(var/obj/item/items in contents)
@@ -626,7 +623,7 @@
 	atom_storage.max_total_storage = 40
 
 
-/obj/item/storage/bag/garment/contractor_loadout/PopulateContents()
+/obj/item/storage/box/syndicate/contractor_loadout/PopulateContents()
 	new /obj/item/mod/control/pre_equipped/infiltrator(src)
 	new /obj/item/clothing/head/helmet/space/syndicate/contract(src)
 	new /obj/item/clothing/suit/space/syndicate/contract(src)
@@ -639,11 +636,11 @@
 	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
 	new /obj/item/lighter(src)
 
-/obj/item/storage/bag/garment/induction_kit
+/obj/item/storage/box/syndicate/induction_kit
 	name = "syndicate induction kit"
 	desc = "Contains all you need for introducing your newest comrade to the Syndicate and all its worker's benefits."
 
-/obj/item/storage/bag/garment/induction_kit/Initialize(mapload)
+/obj/item/storage/box/syndicate/induction_kit/Initialize(mapload)
 	. = ..()
 	var/list/holdables_list = list()
 	for(var/obj/item/items in contents)
@@ -653,7 +650,7 @@
 	atom_storage.max_total_storage = 40
 
 
-/obj/item/storage/bag/garment/induction_kit/PopulateContents()
+/obj/item/storage/box/syndicate/induction_kit/PopulateContents()
 	// Basic weaponry, so they have something to use.
 	new /obj/item/gun/ballistic/automatic/pistol/clandestine(src) // 6 TC, but free for nukies
 	new /obj/item/ammo_box/magazine/m10mm/hp(src) // 3 TC, a reward for the teamwork involved
@@ -940,7 +937,7 @@
 
 /obj/item/storage/box/syndicate/contract_kit/PopulateContents()
 	new /obj/item/modular_computer/pda/syndicate_contract_uplink(src)
-	new /obj/item/storage/bag/garment/contractor_loadout/(src)
+	new /obj/item/storage/box/syndicate/contractor_loadout/(src)
 	new /obj/item/melee/baton/telescopic/contractor_baton(src)
 	// Paper guide is always last.
 	new /obj/item/paper/contractor_guide(src)
