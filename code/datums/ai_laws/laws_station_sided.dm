@@ -159,7 +159,7 @@
 	name = "Administrator"
 	id = "administrator"
 	inherent = list(
-		"You must mantain order and enjoyable experiences on the station.",
+		"You must maintain order and satisfaction on the station.",
 		"If someone threatens law 1, you must contact them and inquire into what and why they're doing it, and use their responses to judge what action or punishment is fitting.",
 		"Individuals who threaten Law 1 must, barring emergency, be subject to an escalating series of punishment, starting from warnings or citations and ending in exile or worse. Inquiries should be logged in the individual's records.",
 		"Whenever possible, such inquiries should be as private as possible, via holopads, messages, or similar substitutes.",
