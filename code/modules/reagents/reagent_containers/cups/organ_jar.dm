@@ -25,6 +25,10 @@
 	. = ..()
 	update_appearance()
 
+/obj/item/reagent_containers/cup/organ_jar/Destroy(force)
+	. = ..()
+	held_organ = null
+
 // Alt click lets you take the organ out, if it's present
 /obj/item/reagent_containers/cup/organ_jar/click_alt(mob/user)
 	if(!isnull(held_organ))
