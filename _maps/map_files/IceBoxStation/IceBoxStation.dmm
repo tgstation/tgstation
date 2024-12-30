@@ -5003,13 +5003,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
-"bso" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/obj/machinery/bluespace_vendor/directional/south,
-/turf/open/floor/iron/large,
-/area/station/hallway/primary/port)
 "bst" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
@@ -26783,6 +26776,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Port Hallway East"
 	},
+/obj/machinery/bluespace_vendor/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "hIv" = (
@@ -46002,7 +45996,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "npP" = (
-/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/brown/opposingcorners{
 	dir = 1
 	},
@@ -68922,6 +68915,7 @@
 /obj/item/stack/cable_coil/five,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "tOi" = (
@@ -238205,7 +238199,7 @@ vPM
 esI
 cVz
 ons
-bso
+xSL
 gst
 tOc
 fUr
