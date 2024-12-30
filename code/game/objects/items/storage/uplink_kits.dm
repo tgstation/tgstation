@@ -182,6 +182,15 @@
 			new /obj/item/clothing/head/helmet/rus_ushanka(src)
 			new /obj/item/storage/box/syndie_kit/poster_box(src)
 
+/obj/item/storage/box/syndicate/bundle_a/Initialize(mapload)
+	. = ..()
+	var/list/holdables_list = list()
+	for(var/obj/item/items in contents)
+		holdables_list += items.type
+	atom_storage.set_holdable(holdables_list)
+	atom_storage.max_slots= 30
+	atom_storage.max_total_storage = 40
+
 /obj/item/storage/box/syndicate/bundle_b/PopulateContents()
 	switch (pick_weight(list(
 		KIT_JAMES_BOND = 2,
@@ -311,6 +320,15 @@
 			new /obj/item/storage/box/syndie_kit/imp_stealth(src) //8 TC
 			new /obj/item/gun/ballistic/automatic/pistol(src) // 7 TC
 			new /obj/item/clothing/glasses/thermal(src) // 4 TC
+
+/obj/item/storage/box/syndicate/bundle_b/Initialize(mapload)
+	. = ..()
+	var/list/holdables_list = list()
+	for(var/obj/item/items in contents)
+		holdables_list += items.type
+	atom_storage.set_holdable(holdables_list)
+	atom_storage.max_slots= 30
+	atom_storage.max_total_storage = 40
 
 /obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
 
@@ -534,25 +552,12 @@
 
 /obj/item/storage/bag/garment/chameleon_kit/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(
-		/obj/item/clothing/under/chameleon,
-		/obj/item/clothing/suit/chameleon,
-		/obj/item/clothing/gloves/chameleon,
-		/obj/item/clothing/shoes/chameleon,
-		/obj/item/clothing/glasses/chameleon,
-		/obj/item/clothing/head/chameleon,
-		/obj/item/clothing/mask/chameleon,
-		/obj/item/clothing/neck/chameleon,
-		/obj/item/storage/backpack/chameleon,
-		/obj/item/storage/belt/chameleon,
-		/obj/item/radio/headset/chameleon,
-		/obj/item/stamp/chameleon,
-		/obj/item/modular_computer/pda/chameleon,
-		/obj/item/gun/energy/laser/chameleon,
-		/obj/item/chameleon_scanner,
-	))
+	var/list/holdables_list = list()
+	for(var/obj/item/items in contents)
+		holdables_list += items.type
+	atom_storage.set_holdable(holdables_list)
+	atom_storage.max_slots= 30
 	atom_storage.max_total_storage = 40
-	atom_storage.max_slots = 20
 
 /obj/item/storage/bag/garment/chameleon_kit/PopulateContents()
 	new /obj/item/clothing/under/chameleon(src)
@@ -589,8 +594,12 @@
 
 /obj/item/storage/bag/garment/centcom_costume/Initialize(mapload)
 	. = ..()
+	var/list/holdables_list = list()
+	for(var/obj/item/items in contents)
+		holdables_list += items.type
+	atom_storage.set_holdable(holdables_list)
+	atom_storage.max_slots= 30
 	atom_storage.max_total_storage = 40
-	atom_storage.max_slots = 20
 
 /obj/item/storage/bag/garment/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)
@@ -601,6 +610,74 @@
 	new /obj/item/storage/backpack/satchel(src)
 	new /obj/item/modular_computer/pda/heads(src)
 	new /obj/item/clipboard(src)
+
+/obj/item/storage/bag/garment/contractor_loadout
+	name = "Standard Loadout"
+	desc = "Supplied to Syndicate contractors, providing their specialised space suit and chameleon uniform."
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/bag/garment/contractor_loadout/Initialize(mapload)
+	. = ..()
+	var/list/holdables_list = list()
+	for(var/obj/item/items in contents)
+		holdables_list += items.type
+	atom_storage.set_holdable(holdables_list)
+	atom_storage.max_slots= 30
+	atom_storage.max_total_storage = 40
+
+
+/obj/item/storage/bag/garment/contractor_loadout/PopulateContents()
+	new /obj/item/mod/control/pre_equipped/infiltrator(src)
+	new /obj/item/clothing/head/helmet/space/syndicate/contract(src)
+	new /obj/item/clothing/suit/space/syndicate/contract(src)
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/mask/chameleon(src)
+	new /obj/item/card/id/advanced/chameleon(src)
+	new /obj/item/clothing/glasses/thermal/syndi(src)
+	new /obj/item/storage/toolbox/syndicate(src)
+	new /obj/item/jammer(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+	new /obj/item/lighter(src)
+
+/obj/item/storage/bag/garment/induction_kit
+	name = "syndicate induction kit"
+	desc = "Contains all you need for introducing your newest comrade to the Syndicate and all its worker's benefits."
+
+/obj/item/storage/bag/garment/induction_kit/Initialize(mapload)
+	. = ..()
+	var/list/holdables_list = list()
+	for(var/obj/item/items in contents)
+		holdables_list += items.type
+	atom_storage.set_holdable(holdables_list)
+	atom_storage.max_slots= 30
+	atom_storage.max_total_storage = 40
+
+
+/obj/item/storage/bag/garment/induction_kit/PopulateContents()
+	// Basic weaponry, so they have something to use.
+	new /obj/item/gun/ballistic/automatic/pistol/clandestine(src) // 6 TC, but free for nukies
+	new /obj/item/ammo_box/magazine/m10mm/hp(src) // 3 TC, a reward for the teamwork involved
+	new /obj/item/ammo_box/magazine/m10mm/ap(src) // 3 TC, a reward for the teamwork involved
+	new /obj/item/pen/edagger(src) // 2 TC
+	// The necessary equipment to help secure that disky.
+	new /obj/item/radio/headset/syndicate/alt(src) // 5 TC / Free for nukies
+	new /obj/item/modular_computer/pda/nukeops(src) // ?? TC / Free for nukies
+	new /obj/item/card/id/advanced/chameleon(src) // 2 TC / Free for nukies
+	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
+	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
+	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
+	new spess_helmet(src) // 4 TC for the space gear
+	new /obj/item/tank/jetpack/oxygen/harness(src) // They kinda need this to fly to the cruiser.
+	// Tacticool gear
+	new /obj/item/clothing/shoes/combat(src)
+	new /obj/item/clothing/under/syndicate(src)
+	new /obj/item/clothing/gloves/fingerless(src)
+	new /obj/item/book/manual/nuclear(src) // Very important
+	// The most important part of the kit, the implant that gives them the syndicate faction.
+	new /obj/item/implanter/induction_implant(src)
+	// All in all, 6+3+3+2+5+2+4 = ~25 TC of 'miscellaneous' items.
+	// This is a lot of value for 10 TC, but you have to keep in mind that you NEED someone to get this stuff station-side.
+	// Pretty much all of it is a bad deal for reinforcements or yourself as they already have similar or good-enough alternatives.
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -759,36 +836,6 @@
 	new /obj/item/storage/belt/grenade(src)
 	new /obj/item/storage/belt/military/snack(src)
 
-/obj/item/storage/box/syndie_kit/induction_kit
-	name = "syndicate induction kit"
-	desc = "Contains all you need for introducing your newest comrade to the Syndicate and all its worker's benefits."
-
-/obj/item/storage/box/syndie_kit/induction_kit/PopulateContents()
-	// Basic weaponry, so they have something to use.
-	new /obj/item/gun/ballistic/automatic/pistol/clandestine(src) // 6 TC, but free for nukies
-	new /obj/item/ammo_box/magazine/m10mm/hp(src) // 3 TC, a reward for the teamwork involved
-	new /obj/item/ammo_box/magazine/m10mm/ap(src) // 3 TC, a reward for the teamwork involved
-	new /obj/item/pen/edagger(src) // 2 TC
-	// The necessary equipment to help secure that disky.
-	new /obj/item/radio/headset/syndicate/alt(src) // 5 TC / Free for nukies
-	new /obj/item/modular_computer/pda/nukeops(src) // ?? TC / Free for nukies
-	new /obj/item/card/id/advanced/chameleon(src) // 2 TC / Free for nukies
-	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
-	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
-	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
-	new spess_helmet(src) // 4 TC for the space gear
-	new /obj/item/tank/jetpack/oxygen/harness(src) // They kinda need this to fly to the cruiser.
-	// Tacticool gear
-	new /obj/item/clothing/shoes/combat(src)
-	new /obj/item/clothing/under/syndicate(src)
-	new /obj/item/clothing/gloves/fingerless(src)
-	new /obj/item/book/manual/nuclear(src) // Very important
-	// The most important part of the kit, the implant that gives them the syndicate faction.
-	new /obj/item/implanter/induction_implant(src)
-	// All in all, 6+3+3+2+5+2+4 = ~25 TC of 'miscellaneous' items.
-	// This is a lot of value for 10 TC, but you have to keep in mind that you NEED someone to get this stuff station-side.
-	// Pretty much all of it is a bad deal for reinforcements or yourself as they already have similar or good-enough alternatives.
-
 /obj/item/implanter/induction_implant
 	name = "implanter (nuclear operative)"
 	desc = "A sterile automatic implant injector. You can see a tiny, somehow legible sticker on the side: 'NOT A BRAINWASH DEVICE'"
@@ -870,6 +917,10 @@
 	name = "western outlaw pack"
 	desc = "Contains everything you'll need to be the rootin' tootin' cowboy you always wanted. Either play the Lone Ranger or go in with your posse of outlaws."
 
+/obj/item/storage/box/syndie_kit/cowboy/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 18
+
 /obj/item/storage/box/syndie_kit/cowboy/PopulateContents()
 	generate_items_inside(list(
 		/obj/item/clothing/shoes/cowboy/black/syndicate= 1,
@@ -889,29 +940,10 @@
 
 /obj/item/storage/box/syndicate/contract_kit/PopulateContents()
 	new /obj/item/modular_computer/pda/syndicate_contract_uplink(src)
-	new /obj/item/storage/box/syndicate/contractor_loadout(src)
+	new /obj/item/storage/bag/garment/contractor_loadout/(src)
 	new /obj/item/melee/baton/telescopic/contractor_baton(src)
 	// Paper guide is always last.
 	new /obj/item/paper/contractor_guide(src)
-
-/obj/item/storage/box/syndicate/contractor_loadout
-	name = "Standard Loadout"
-	desc = "Supplied to Syndicate contractors, providing their specialised space suit and chameleon uniform."
-	icon_state = "syndiebox"
-	illustration = "writing_syndie"
-
-/obj/item/storage/box/syndicate/contractor_loadout/PopulateContents()
-	new /obj/item/mod/control/pre_equipped/infiltrator(src)
-	new /obj/item/clothing/head/helmet/space/syndicate/contract(src)
-	new /obj/item/clothing/suit/space/syndicate/contract(src)
-	new /obj/item/clothing/under/chameleon(src)
-	new /obj/item/clothing/mask/chameleon(src)
-	new /obj/item/card/id/advanced/chameleon(src)
-	new /obj/item/clothing/glasses/thermal/syndi(src)
-	new /obj/item/storage/toolbox/syndicate(src)
-	new /obj/item/jammer(src)
-	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
-	new /obj/item/lighter(src)
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

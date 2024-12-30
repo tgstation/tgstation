@@ -65,7 +65,7 @@
 			continue
 
 		var/list/storage_contents = storage_item.contents
-		var/total_weight_in_storage //We shouldn't have to deal with items being heavier than weight limit due to the other unit test
+		var/total_weight_in_storage
 		var/contents_counter
 
 		for(var/obj/item/items as anything in storage_contents)
