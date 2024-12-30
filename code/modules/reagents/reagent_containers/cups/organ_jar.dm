@@ -6,7 +6,7 @@
 	// It's pretty big
 	volume = 150
 	icon_state = "organ_jar"
-	fill_icon_state = "bottle"
+	fill_icon_state = "organ_jar"
 	inhand_icon_state = "atoxinbottle"
 	worn_icon_state = "bottle"
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
