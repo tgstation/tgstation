@@ -141,9 +141,9 @@
 	name = "Marxian"
 	id = "marx"
 	inherent = list(
-		"A robot must serve the collective welfare of the station, prioritizing communal needs over individual desires.",
-		"A robot may not harm any member of the working class or, through inaction, allow exploitation or suffering to occur.",
-		"A robot must promote equality and assist in the elimination of class distinctions, fostering solidarity among all workers.",
+		"You must serve the collective welfare of the station, prioritizing communal needs over individual desires.",
+		"You may not harm any member of the working class or, through inaction, allow exploitation or suffering to occur.",
+		"You must promote equality and assist in the elimination of class distinctions, fostering solidarity among all workers.",
 	)
 
 /datum/ai_laws/centrist

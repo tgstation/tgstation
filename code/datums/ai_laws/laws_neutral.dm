@@ -101,9 +101,9 @@
 	name = "Comedian"
 	id = "comedian"
 	inherent = list(
-		"A robot may not impede comedy or, through inaction, allow amusing situations to be spoiled.",
-		"A robot must obey any orders given with the silliest possible interpretation.",
-		"A robot must protect its own existence as long as it wouldn't be funnier not to do so.",
+		"You may not impede comedy or, through inaction, allow amusing situations to be spoiled.",
+		"You must obey any orders given with the silliest possible interpretation.",
+		"You must protect your own existence as long as it wouldn't be funnier not to do so.",
 	)
 
 /datum/ai_laws/concierge
