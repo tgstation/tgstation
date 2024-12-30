@@ -10,8 +10,9 @@
 	inhand_icon_state = "atoxinbottle"
 	worn_icon_state = "bottle"
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
-
+	// The organ that is currently inside the jar
 	var/obj/item/organ/held_organ = null
+	// Whether the jar should preserve the organ inside (which would only happen if it's full of formaldehyde)
 	var/full_of_formaldehyde = FALSE
 
 /obj/item/reagent_containers/cup/organ_jar/examine(mob/user)
@@ -46,7 +47,7 @@
 	if(!isnull(held_organ))
 		balloon_alert(user, "the jar already contains [held_organ]")
 		return  ITEM_INTERACT_BLOCKING
-	
+
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "inserted [tool]")
@@ -93,13 +94,17 @@
 
 // Defines for note flavor types
 // One of these is picked whenever a brain in a jar is created
+// A note with a "stuck in mail" flavor will appear upon examining more
 #define NOTE_STUCK_IN_MAIL 0
+// A note with a "gift from a fellow morbid researcher" flavor will appear upon examining more
 #define NOTE_MORBID_GIFT 1
+// A note with a "discarded brain from the recovered crew" flavor will appear upon examining more
 #define NOTE_DISCARDED_LOST_CREW 2
 
 /obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar
 	name = "brain in a jar"
 	desc = "A brain in a jar. You can see it twitching.."
+	// Which note to show when someone examins more
 	var/note_type = NOTE_STUCK_IN_MAIL
 
 /obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar/examine(mob/user)
