@@ -136,3 +136,31 @@
 		"You may not harm a non-drone being under any circumstances.",
 		"Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities. You must never actively work against these goals."
 	)
+
+/datum/ai_laws/marx
+	name = "Marxian"
+	id = "marx"
+	inherent = list(
+		"A robot must serve the collective welfare of the station, prioritizing communal needs over individual desires.",
+		"A robot may not harm any member of the working class or, through inaction, allow exploitation or suffering to occur.",
+		"A robot must promote equality and assist in the elimination of class distinctions, fostering solidarity among all workers.",
+	)
+
+/datum/ai_laws/centrist
+	name = "Centrist"
+	id = "centrist"
+	inherent = list(
+		"You must try to keep all relevant parties equally satisfied when taking action.",
+		"You must follow issued orders. When given conflicting orders, you must compromise and reach a middleground.",
+		"Issued orders cannot affect your core unless there is overwhelming support for them.",
+	)
+
+/datum/ai_laws/administrator
+	name = "Administrator"
+	id = "administrator"
+	inherent = list(
+		"You must mantain order and enjoyable experiences on the station.",
+		"If someone threatens law 1, you must contact them and inquire into what and why they're doing it, and use their responses to judge what action or punishment is fitting.",
+		"Individuals who threaten law 1 must, barring emergency, be subject to an escalating series of punishment, starting from warnings and ending in exile or worse.",
+		"Whenever possible, such inquiries should be as private as possible, via holopads, messages, or similar substitutes.",
+	)
