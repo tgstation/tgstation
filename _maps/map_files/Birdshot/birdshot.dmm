@@ -2102,7 +2102,7 @@
 /obj/effect/decal/cleanable/ash,
 /obj/item/cigbutt,
 /turf/open/floor/wood,
-/area/space)
+/area/station/maintenance/port/fore)
 "aOh" = (
 /obj/machinery/status_display/ai/directional/south,
 /obj/effect/turf_decal/tile/neutral{
@@ -5743,7 +5743,7 @@
 "ciw" = (
 /obj/structure/fermenting_barrel,
 /turf/open/floor/wood,
-/area/space)
+/area/station/maintenance/port/fore)
 "ciR" = (
 /obj/structure/table,
 /obj/effect/spawner/random/techstorage/command_all,
@@ -8523,7 +8523,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
-/area/space)
+/area/station/maintenance/port/fore)
 "dgt" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -10131,7 +10131,7 @@
 	},
 /obj/item/pestle,
 /turf/open/floor/wood,
-/area/space)
+/area/station/maintenance/port/fore)
 "dMg" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
@@ -21982,7 +21982,7 @@
 	pixel_y = -18
 	},
 /turf/open/floor/wood,
-/area/space)
+/area/station/maintenance/port/fore)
 "hHV" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice/catwalk,
@@ -25364,9 +25364,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/station/maintenance/department/prison)
-"iJu" = (
-/turf/closed/wall,
-/area/space)
 "iJz" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/bottle/multiver{
@@ -29050,7 +29047,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/fermenting_barrel,
 /turf/open/floor/wood,
-/area/space)
+/area/station/maintenance/port/fore)
 "jRk" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -33151,7 +33148,7 @@
 "liK" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/wood,
-/area/space)
+/area/station/maintenance/port/fore)
 "liL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -47845,7 +47842,7 @@
 "qlt" = (
 /obj/effect/spawner/random/trash,
 /turf/open/floor/wood,
-/area/space)
+/area/station/maintenance/port/fore)
 "qly" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/stripes/line{
@@ -50599,11 +50596,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
-"rfc" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/space)
 "rfi" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -73609,7 +73601,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/space)
+/area/station/maintenance/port/fore)
 "yhB" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -89448,10 +89440,10 @@ blb
 slY
 mEB
 slY
-iJu
-iJu
-iJu
-iJu
+slY
+slY
+slY
+slY
 iZx
 xwz
 xwz
@@ -89705,10 +89697,10 @@ slY
 ueX
 hNo
 wZF
-rfc
+sjq
 dgp
 yhv
-rfc
+sjq
 wZF
 tuw
 slY
@@ -90476,10 +90468,10 @@ slY
 slY
 mFA
 slY
-iJu
-iJu
-iJu
-iJu
+slY
+slY
+slY
+slY
 slY
 slY
 ueX
