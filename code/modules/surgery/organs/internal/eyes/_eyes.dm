@@ -143,8 +143,8 @@
 			right_color = apply_matrix_to_color(right_color, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
 		else
 			var/target_color = color_transition_filter(checked_color[ATOM_COLOR_VALUE_INDEX], SATURATION_OVERRIDE)
-			left_color = apply_matrix_to_color(left_color, target_color, COLORSPACE_HSL)
-			right_color = apply_matrix_to_color(right_color, target_color, COLORSPACE_HSL)
+			left_color = apply_matrix_to_color(left_color, target_color["color"], COLORSPACE_HSL)
+			right_color = apply_matrix_to_color(right_color, target_color["color"], COLORSPACE_HSL)
 
 		human_owner.add_eye_color_left(left_color, EYE_COLOR_ATOM_COLOR_PRIORITY + i, update_body = FALSE)
 		human_owner.add_eye_color_right(right_color, EYE_COLOR_ATOM_COLOR_PRIORITY + i, update_body = FALSE)
