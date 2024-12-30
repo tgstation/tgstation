@@ -394,8 +394,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/list/area/final_department = pick(department_areas) // Pick a department
 	var/list/area/final_area_list = list()
 
-	for (var/i = final_department.len, i >= 1, i--) // Check each area to make sure it exists on the station
-		var/area/checked_area = pick_n_take(final_department)
+	for (var/area/checked_area as anything in final_department) // Check each area to make sure it exists on the station
 		if(checked_area in GLOB.the_station_areas)
 			final_area_list += checked_area
 
