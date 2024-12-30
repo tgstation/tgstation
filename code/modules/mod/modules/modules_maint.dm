@@ -294,6 +294,9 @@
 	var/you_fucked_up = FALSE
 
 /obj/item/mod/module/atrocinator/on_activation()
+	balloon_alert(src, "flipping gravity...")
+	if(!do_after(mod.wearer, 1 SECONDS))
+		return
 	playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
@@ -310,6 +313,9 @@
 
 /obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!deleting)
+		balloon_alert(src, "flipping gravity...")
+		if(!do_after(mod.wearer, 1 SECONDS))
+			return
 		playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
