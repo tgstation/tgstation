@@ -406,6 +406,11 @@
 		for(var/blood in GET_ATOM_BLOOD_DNA(requirement))
 			blood_samples[blood] = 1
 
+		for(var/datum/reagent/blood/usable_reagent as anything in requirement.reagents?.reagent_list)
+			if(!istype(usable_reagent, /datum/reagent/blood))
+				continue
+			blood_samples[usable_reagent.data["blood_DNA"]] = 1
+
 	return TRUE
 
 /datum/heretic_knowledge/curse/on_finished_recipe(mob/living/user, list/selected_atoms,  turf/loc)
@@ -472,6 +477,15 @@
 
 	fingerprints = null
 	blood_samples = null
+	for(var/atom/to_wash in selected_atoms)
+		to_wash.wash(CLEAN_SCRUB)
+	for(var/atom/to_drain in selected_atoms)
+		if(!to_drain.reagents?.reagent_list)
+			continue
+		for(var/datum/reagent/to_match in to_drain.reagents.reagent_list)
+			if(to_match.data["blood_DNA"] != to_curse.dna.unique_enzymes)
+				continue
+			to_drain.reagents.remove_reagent(to_match.type, 5)
 	return TRUE
 
 /**

@@ -17,8 +17,13 @@
 	has_variable_transfer_amount = FALSE
 	reagent_flags = TRANSPARENT
 	volume = 10
+	/// Cooldown before you can steal blood again
+	COOLDOWN_DECLARE(drain_cooldown)
 
 /obj/item/reagent_containers/phylactery/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+	if(!COOLDOWN_FINISHED(src, drain_cooldown))
+		user.balloon_alert(user, "cant steal so fast!")
+		return NONE
 	if(!isliving(target))
 		return NONE
 	if(reagents.total_volume >= reagents.maximum_volume)
@@ -31,6 +36,7 @@
 	if(living_target.transfer_blood_to(src, drawn_amount))
 		to_chat(user, span_notice("You take a blood sample from [living_target]."))
 		to_chat(living_target, span_warning("You feel a tiny prick!"))
+		COOLDOWN_START(src, drain_cooldown, 5 SECONDS)
 	else
 		to_chat(user, span_warning("You are unable to draw any blood from [living_target]!"))
 	return ITEM_INTERACT_SUCCESS
