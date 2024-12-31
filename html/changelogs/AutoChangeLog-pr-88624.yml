@@ -1,0 +1,4 @@
+author: "Absolucy, S34NW"
+delete-after: True
+changes:
+  - bugfix: "Chat settings properly save on BYOND 516 now. Settings still won't carry over from 515 tho, 515 and 516 settings will be separate."
