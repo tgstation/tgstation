@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Premade/vending machine flatpacks now display what board is inside"

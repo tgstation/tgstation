@@ -714,3 +714,74 @@
   - bugfix: Fix vent clog event triggering on non-station areas
   - bugfix: Fix custom map loading ignoring JSON values that were ignored previously.
       (minetype, planetary, etc.)
+2024-12-28:
+  00-Steven:
+  - bugfix: Lesser quiver actually has less slots as intended.
+  LT3:
+  - bugfix: Premade/vending machine flatpacks now display what board is inside
+  SmArtKar:
+  - bugfix: Fixed forcing open airlocks only working once and then never again
+  - balance: You can no longer check if budget insuls work via examine tags
+  SyncIt21:
+  - bugfix: breaking out of a closet won't spam chat or shake like it's having a seizure
+  - code_imp: plumbing reaction chamber won't waste extra ticks for the pipeline when
+      sending out catalysts
+  carlarctg:
+  - rscadd: Adds rift fishing to the game. Includes new wacky fish!
+  - rscadd: Drained and undrained influences can be fished in, the latter only by
+      heretics. Fishing in an undrained influence shows a bobber floating over nothing
+      to other people, so don't be stupid!
+  - rscadd: influences cannot be bombed for fish.
+  - rscadd: Heretics can now infuse their fishing rod, and fish for knowledge.
+2024-12-29:
+  00-Steven:
+  - spellcheck: Give alert 'examiante' > 'examine'.
+  Absolucy:
+  - code_imp: Very slightly improved the performance of code related to adding and
+      removing traits.
+  Ben10Omintrix:
+  - bugfix: radial pet commanding emotes will now not appear if the command is impossible
+      to execute
+  FlufflesTheDog:
+  - bugfix: welding sparks no longer break on transitioning to a different floor
+  LT3:
+  - bugfix: Fixed lead acid cell having extremely high max charge
+  Paxilmaniac:
+  - bugfix: fixes crafting menu-made rice dough being unusable for bread
+  SmArtKar:
+  - qol: Iron material tiles can now be used to tile lattice to make plating
+  - bugfix: Fixed podperson hair not updating
+  - bugfix: Fixed chair, echair, wheelchair and vehicle overlays on painted objects
+  SyncIt21:
+  - bugfix: Changing gather mode on storage items won't drop it's stored items
+  - bugfix: Fixes shattering element dropping stuff on blocked turfs
+  necromanceranne:
+  - bugfix: Tackling resulting in a neutral outcome does not force you to the floor.
+  - bugfix: Getting up is now properly influenced by spinal implants.
+  timothymtorres:
+  - refactor: Sound has been heavily optimized and will now ignore low volume sounds
+      from far away.
+  - admin: Add debugging sound earmuffs to admin equipment inside the debug box. Wear
+      them to determine a sounds max range, distance, volume, and sound name. Highly
+      recommended to walk otherwise you will get spammed with footstep sounds.
+2024-12-30:
+  00-Steven:
+  - bugfix: Photocopying no longer removes the stamp overlays from the original paper,
+      and actually copies them to the copy.
+  Rhials:
+  - balance: When dominating a mech as a Malfunctioning AI, the core you shunted from
+      will disable your Doomsday Counterdown when destroyed. Make sure to protect
+      that core!
+  grungussuss:
+  - rscadd: computers and airlocks are now leanable
+  - refactor: changed how density/collision of some objects is changed, report any
+      oddities!
+  mc-oofert:
+  - qol: you can adjust diagonal walls to be not diagonal walls with a wrench
+2024-12-31:
+  Kylerace:
+  - bugfix: holodeck is slightly less likely to explode the server
+  SmArtKar:
+  - bugfix: Blood no longer gets colored with the item its attached to
+  mc-oofert:
+  - rscadd: forensics spoofing kit for traitors/whoever with an uplink
