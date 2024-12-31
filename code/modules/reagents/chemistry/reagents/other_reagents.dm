@@ -1632,6 +1632,7 @@
 	description = "A powder that is used for coloring things."
 	color = COLOR_WHITE
 	taste_description = "the back of class"
+	can_color_organs = TRUE
 	var/colorname = "none"
 
 /datum/reagent/colorful_reagent/powder/New()
@@ -1707,51 +1708,51 @@
 	name = "White Powder"
 	colorname = "white"
 	color = COLOR_WHITE
-	random_color_list = list(COLOR_WHITE) //doesn't actually change appearance at all
+	random_color_list = list(COLOR_WHITE)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /* used by crayons, can't color living things but still used for stuff like food recipes */
 
 /datum/reagent/colorful_reagent/powder/red/crayon
 	name = "Red Crayon Powder"
-	can_colour_mobs = FALSE
+	can_color_mobs = FALSE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/orange/crayon
 	name = "Orange Crayon Powder"
-	can_colour_mobs = FALSE
+	can_color_mobs = FALSE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/yellow/crayon
 	name = "Yellow Crayon Powder"
-	can_colour_mobs = FALSE
+	can_color_mobs = FALSE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/green/crayon
 	name = "Green Crayon Powder"
-	can_colour_mobs = FALSE
+	can_color_mobs = FALSE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/blue/crayon
 	name = "Blue Crayon Powder"
-	can_colour_mobs = FALSE
+	can_color_mobs = FALSE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/purple/crayon
 	name = "Purple Crayon Powder"
-	can_colour_mobs = FALSE
+	can_color_mobs = FALSE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 //datum/reagent/colorful_reagent/powder/invisible/crayon
 
 /datum/reagent/colorful_reagent/powder/black/crayon
 	name = "Black Crayon Powder"
-	can_colour_mobs = FALSE
+	can_color_mobs = FALSE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/white/crayon
 	name = "White Crayon Powder"
-	can_colour_mobs = FALSE
+	can_color_mobs = FALSE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 //////////////////////////////////Hydroponics stuff///////////////////////////////
@@ -2163,8 +2164,13 @@
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
 	color = COLOR_GRAY
 	taste_description = "rainbows"
-	var/can_colour_mobs = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	/// Whenever this reagent can color mob limbs and organs upon exposure
+	var/can_color_mobs = TRUE
+	/// Whenever this reagent can color mob equipment when they're exposed to it externally
+	var/can_color_clothing = TRUE
+	/// Whenever this reagent can color mob organs when taken internally
+	var/can_color_organs = FALSE // False by default as this would cause chaotic flickering of victim's eyes
 	var/datum/callback/color_callback
 
 /datum/reagent/colorful_reagent/New()
@@ -2181,15 +2187,63 @@
 	color_callback = null
 	color = pick(random_color_list)
 
+/datum/reagent/colorful_reagent/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	var/picked_color = pick(random_color_list)
+	var/color_filter = color_transition_filter(picked_color, SATURATION_OVERRIDE)
+	if (can_color_clothing && (methods & TOUCH|VAPOR|INHALE))
+		var/include_flags = INCLUDE_HELD|INCLUDE_ACCESSORIES
+		if (methods & VAPOR|INHALE)
+			include_flags |= INCLUDE_POCKETS
+		// Not as anyting because this can produce nulls with the flags we passed
+		for (var/obj/item/to_color in exposed_mob.get_equipped_items(include_flags))
+			to_color.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
+
+	if (ishuman(exposed_mob))
+		var/mob/living/carbon/human/exposed_human = exposed_mob
+		exposed_human.set_facial_haircolor(picked_color, update = FALSE)
+		exposed_human.set_haircolor(picked_color)
+
+	if (!can_color_mobs)
+		return
+
+	if (!iscarbon(exposed_mob))
+		exposed_mob.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
+		return
+
+	if (!(methods & TOUCH|VAPOR|INHALE))
+		return
+
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	for (var/obj/item/bodypart/part as anything in exposed_carbon.bodyparts)
+		part.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
+
+	for (var/obj/item/organ/organ as anything in exposed_carbon.organs)
+		organ.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
+
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(can_colour_mobs)
-		affected_mob.add_atom_colour(color_transition_filter(pick(random_color_list), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
+
+	if (!iscarbon(affected_mob))
+		if (can_color_mobs)
+			affected_mob.add_atom_colour(color_transition_filter(pick(random_color_list), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
+		return
+
+	if(!can_color_organs)
+		return
+
+	var/mob/living/carbon/carbon_mob = affected_mob
+	var/color_priority = WASHABLE_COLOUR_PRIORITY
+	if (current_cycle >= 30) // Seeps deep into your tissues
+		color_priority = FIXED_COLOUR_PRIORITY
+
+	for (var/obj/item/organ/organ as anything in carbon_mob.organs)
+		organ.add_atom_colour(color_transition_filter(pick(random_color_list), SATURATION_OVERRIDE), color_priority)
 
 /// Colors anything it touches a random color.
 /datum/reagent/colorful_reagent/expose_atom(atom/exposed_atom, reac_volume)
 	. = ..()
-	if(!isliving(exposed_atom) || can_colour_mobs)
+	if(!isliving(exposed_atom))
 		exposed_atom.add_atom_colour(color_transition_filter(pick(random_color_list), SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
 
 /datum/reagent/hair_dye
@@ -2210,7 +2264,7 @@
 
 /datum/reagent/hair_dye/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=FALSE)
 	. = ..()
-	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_mob))
+	if(!(methods & (TOUCH|VAPOR|INHALE)) || !ishuman(exposed_mob))
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
