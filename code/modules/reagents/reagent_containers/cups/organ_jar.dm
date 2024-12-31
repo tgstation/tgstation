@@ -142,15 +142,16 @@
 	scarred_brain.AddComponent( \
 		/datum/component/ghostrole_on_revive,\
 		refuse_revival_if_failed = TRUE, \
-		on_successful_revive = CALLBACK(src, PROC_REF(scar_upon_revival), scarred_brain) \
+		on_successful_revive = CALLBACK(src, PROC_REF(handle_revival), scarred_brain) \
 		)
 	held_organ = scarred_brain // Put the brain inside the jar
 	reagents.add_reagent(/datum/reagent/toxin/formaldehyde, reagents.maximum_volume) // Fill the jar with formaldehyde
 	update_appearance()
 
 // All this does is add a random special brain trauma
-/obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar/proc/scar_upon_revival(obj/item/organ/brain/brain_to_scar)
-	brain_to_scar.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_ABSOLUTE, natural_gain = TRUE)
+/obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar/proc/handle_revival(obj/item/organ/brain/brain_to_scar)
+	brain_to_scar.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_ABSOLUTE, natural_gain = TRUE)var/mob/living/carbon/human/owner = brain.owner
+	owner.mind.add_antag_datum(/datum/antagonist/recovered_crew) // for tracking mostly (c)
 
 
 #undef NOTE_STUCK_IN_MAIL
