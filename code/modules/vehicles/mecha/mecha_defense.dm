@@ -119,26 +119,31 @@
 		log_combat(user, src, "punched", "hulk powers")
 
 
+/obj/vehicle/sealed/mecha
 	var/emp_cooldown = FALSE // GUH
 
 /obj/vehicle/sealed/mecha/blob_act(obj/structure/blob/B)
-	if (!B?.overmind?.blobstrain)
+	if(!B?.overmind?.blobstrain)
 		return take_damage(30, BRUTE, MELEE, 0, get_dir(src, B))
 
 	var/datum/blobstrain/strain = B.overmind.blobstrain
 	log_message("Attack by blob strain: [strain.name]. Attacker - [B].", LOG_MECHA, color="red")
 	var/damage = 50
 
+	if(istype(strain, /datum/blobstrain/reagent/electromagnetic_web))
 		damage = 30
 		if(!emp_cooldown)
 			visible_message(span_warning("The [strain.name] blob's tendrils short out!"))
+			emp_act(EMP_HEAVY)
+			emp_cooldown = TRUE
+			addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha/proc/reset_emp_cooldown), 5 SECONDS)
 	else if(istype(strain, /datum/blobstrain/reagent/networked_fibers))
 		damage = 75
 
 	take_damage(damage, BRUTE, MELEE, 0, get_dir(src, B))
 
-/obj/vehicle/sealed/mecha/proc/blob_emp_act()
-	emp_act(EMP_LIGHT)
+/obj/vehicle/sealed/mecha/proc/reset_emp_cooldown()
+	emp_cooldown = FALSE
 
 /obj/vehicle/sealed/mecha/attack_tk()
 	return
