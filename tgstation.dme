@@ -1530,6 +1530,7 @@
 #include "code\datums\elements\living_limb_initialiser.dm"
 #include "code\datums\elements\loomable.dm"
 #include "code\datums\elements\lube_walking.dm"
+#include "code\datums\elements\mech_prying.dm"
 #include "code\datums\elements\mirage_border.dm"
 #include "code\datums\elements\mob_access.dm"
 #include "code\datums\elements\mob_grabber.dm"
