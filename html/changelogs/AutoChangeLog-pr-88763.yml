@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Stamps no longer render below the paper sometimes."
+  - bugfix: "Stamps no longer inherit the color of the paper they're on."
