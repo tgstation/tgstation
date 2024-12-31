@@ -78,25 +78,32 @@
 /obj/vehicle/sealed/mecha/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	log_message("Attack by simple animal. Attacker - [user].", LOG_MECHA, color="red")
 
-	// Handle non-damaging interactions
-	if (!user.melee_damage_upper && !user.obj_damage)
+	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
 		return 0
 
-	var/play_soundeffect = 1
-	if (user.environment_smash)
-		play_soundeffect = 0
+	if(user.environment_smash)
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 
-	var/animal_damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-
-	if (user.obj_damage)
-		var/scaled_damage = clamp(user.obj_damage * 0.5 * user.environment_smash, user.obj_damage, 200)  // Scale obj_damage: min (user's damage), max 200
-		animal_damage = max(animal_damage, scaled_damage)  // Use the higher of melee or scaled obj_damage
-
+	var/final_damage
+	if(user.obj_damage)
+		var/obj_damage = min(user.obj_damage, 200)
+		if(obj_damage > 50)
+			var/excess = obj_damage - 50
+			if(obj_damage <= 100)
+				final_damage = 50 + (excess * 0.55)  // 45% reduction
+			else if(obj_damage < 150)
+				final_damage = 77.5 + ((excess - 50) * 0.65)  // 35% reduction
+			else
+				final_damage = 110 + ((excess - 100) * 0.8)  // 20% reduction
+		else
+			final_damage = obj_damage
+	else
+		final_damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 	log_combat(user, src, "attacked")
-	attack_generic(user, animal_damage, user.melee_damage_type, MELEE, play_soundeffect)
+	attack_generic(user, final_damage, user.melee_damage_type, MELEE, !user.environment_smash)
 	return 1
+
 
 /obj/vehicle/sealed/mecha/hulk_damage()
 	return 15
@@ -108,8 +115,28 @@
 		log_combat(user, src, "punched", "hulk powers")
 
 /obj/vehicle/sealed/mecha/blob_act(obj/structure/blob/B)
-	log_message("Attack by blob. Attacker - [B].", LOG_MECHA, color="red")
-	take_damage(50, BRUTE, MELEE, 0, get_dir(src, B))
+	if (!B?.overmind?.blobstrain)
+		return take_damage(30, BRUTE, MELEE, 0, get_dir(src, B))
+
+	var/datum/blobstrain/strain = B.overmind.blobstrain
+	log_message("Attack by blob strain: [strain.name]. Attacker - [B].", LOG_MECHA, color="red")
+
+	var/damage = 50
+
+	switch (strain.type)
+		if (/datum/blobstrain/reagent/electromagnetic_web)
+			visible_message(span_warning("The [strain.name] blob's tendrils short out!"))
+			damage = 30
+			blob_emp_act()
+			addtimer(CALLBACK(src, PROC_REF(blob_emp_act)), 2 SECONDS)
+
+		if (/datum/blobstrain/reagent/networked_fibers)
+			damage = 75
+
+	take_damage(damage, BRUTE, MELEE, 0, get_dir(src, B))
+
+/obj/vehicle/sealed/mecha/proc/blob_emp_act()
+	emp_act(EMP_LIGHT)
 
 /obj/vehicle/sealed/mecha/attack_tk()
 	return
@@ -191,18 +218,6 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/mecha, restore_equipment)), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = TRUE
 	set_mouse_pointer()
-
-/obj/vehicle/sealed/mecha/acid_act(acidpwr, acid_volume)
-	. = ..()
-
-	var/acid_armor = get_armor_rating("acid")
-	var/acid_damage = ((acidpwr * acid_volume) / 100) * (100 - acid_armor * 0.5) / 100
-
-	if(acid_damage > 0)
-		take_damage(acid_damage, BURN, "acid")
-
-/obj/vehicle/sealed/mecha/acid_melt()
-	return
 
 /obj/vehicle/sealed/mecha/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > max_temperature

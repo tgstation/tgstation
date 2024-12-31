@@ -1,5 +1,5 @@
 /obj/vehicle/sealed/mecha/odysseus
-	desc = "These exosuits are developed and produced by Vey-Med. (&copy; All rights reserved)."
+	desc = "These exosuits are developed and produced by Vey-Med. (&copy; All rights reserved). Their sleek manipulators are capable of prying open unpowered doors in emergencies."
 	name = "\improper Odysseus"
 	icon_state = "odysseus"
 	base_icon_state = "odysseus"
@@ -11,6 +11,14 @@
 	step_energy_drain = 6
 	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_MEDICAL)
 	pivot_step = TRUE
+	can_manipulate_doors = TRUE
+	max_equip_by_category = list(
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
+		MECHA_POWER = 1,
+		MECHA_ARMOR = 0,
+	)
 
 /obj/vehicle/sealed/mecha/odysseus/moved_inside(mob/living/carbon/human/H)
 	. = ..()

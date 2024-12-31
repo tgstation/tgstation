@@ -52,8 +52,10 @@
 	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/machinery/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
-	if(!user.combat_mode)
-		return
+	if(!user.combat_mode && mecha_attacker.can_manipulate_doors && (istype(src, /obj/machinery/door) || istype(src, /obj/machinery/door/firedoor)))
+		var/obj/machinery/door/target_door = src
+		target_door.try_to_crowbar(null, user)
+		return TRUE
 
 	mecha_attacker.do_attack_animation(src)
 	switch(mecha_attacker.damtype)
@@ -105,7 +107,9 @@
 		step_away(src, mecha_attacker, 15)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
-			if(mecha_attacker.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
+			if(mecha_attacker.force > 35) // durand and other heavy mechas
+				mecha_attacker.melee_attack_effect(src, heavy = TRUE)
+			else if(mecha_attacker.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
 				mecha_attacker.melee_attack_effect(src, heavy = FALSE)
 			playsound(src, mecha_attacker.brute_attack_sound, 50, TRUE)
 		if(FIRE)

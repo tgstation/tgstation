@@ -60,7 +60,6 @@
 		basic_mob_flags |= DEL_ON_DEATH
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
-		AddElement(/datum/element/mech_prying)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 
 /mob/living/basic/alien/get_butt_sprite()

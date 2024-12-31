@@ -29,13 +29,6 @@
 		// If in combat mode, let the attack go through normally
 		return
 
-/*
-	// For xenos, check if they're not in disarm mode (if they have that capability)
-	if(istype(source, /mob/living/carbon/alien))
-		var/mob/living/carbon/alien/alien_source = source
-		if(alien_source.a_intent != INTENT_DISARM)
-			return
-*/
 	var/obj/vehicle/sealed/mecha/target_mech = target
 
 	// Check if mech is empty or only has AI pilot
@@ -76,11 +69,4 @@
 	// Also verify the mob hasn't switched to combat mode during the prying
 	if(source.combat_mode)
 		return FALSE
-/*
-	// For xenos, verify they're still in disarm mode
-	if(istype(source, /mob/living/carbon/alien))
-		var/mob/living/carbon/alien/alien_source = source
-		if(alien_source.a_intent != INTENT_DISARM)
-			return FALSE
-*/
 	return LAZYLEN(mech.occupants) && mech.dir == mech_dir

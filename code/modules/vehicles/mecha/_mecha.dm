@@ -70,6 +70,8 @@
 	var/pivot_step = FALSE
 	///Whether or not the mech destroys walls by running into it.
 	var/bumpsmash = FALSE
+	///Whether the mecha can manipulate unpowered alocks or flocks or not
+	var/can_manipulate_doors = FALSE
 
 	///////////ATMOS
 	///Whether the cabin exchanges gases with the environment
@@ -921,6 +923,6 @@
 
 /obj/vehicle/sealed/mecha/proc/melee_attack_effect(mob/living/victim, heavy)
 	if(heavy)
-		victim.Unconscious(2 SECONDS)
+		victim.Knockdown(5 SECONDS)
 	else
-		victim.Knockdown(4 SECONDS)
+		victim.Knockdown(3 SECONDS)
