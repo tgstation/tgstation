@@ -441,7 +441,7 @@
 	cooldown = 2.5 SECONDS
 	force_say_chance = 80 //very high force say chance because it's funny
 	stamina_damage = 85
-	stun_armour_penetration = 100 //not really interested in messing iwth the effectiveness of syndicate gear rn
+	stun_armour_penetration = 40
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
 	on_stun_sound = 'sound/items/weapons/contractor_baton/contractorbatonhit.ogg'
