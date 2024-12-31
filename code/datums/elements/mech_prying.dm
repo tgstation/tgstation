@@ -2,7 +2,7 @@
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 	var/pry_time = 5 SECONDS
-	var/enclosed_time_multiplier = 5/3 // 5 SECONDS vs 3 SECONDS for enclosed mechs
+	var/enclosed_time_multiplier = 0.5 // 5 SECONDS vs 3 SECONDS for enclosed mechs
 
 /datum/element/mech_prying/Attach(datum/target, time_to_pry)
 	. = ..()
