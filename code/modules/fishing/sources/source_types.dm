@@ -781,6 +781,8 @@
 		/obj/item/fish/dolphish = 7,
 		/obj/item/fish/flumpulus = 7,
 		/obj/item/fish/gullion = 7,
+		/obj/item/fish/mossglob = 3,
+		/obj/item/fish/babbelfish = 1,
 		/mob/living/basic/heretic_summon/fire_shark/wild = 3,
 		/obj/item/eldritch_potion/crucible_soul = 1,
 		/obj/item/eldritch_potion/duskndawn = 1,
@@ -788,6 +790,8 @@
 		/obj/item/reagent_containers/cup/beaker/eldritch = 2,
 	)
 	fish_counts = list(
+		/obj/item/fish/mossglob = 3,
+		/obj/item/fish/babbelfish = 1,
 		/mob/living/basic/heretic_summon/fire_shark/wild = 3,
 		/obj/item/eldritch_potion/crucible_soul = 1,
 		/obj/item/eldritch_potion/duskndawn = 1,
@@ -795,7 +799,9 @@
 		/obj/item/reagent_containers/cup/beaker/eldritch = 2,
 	)
 	fish_count_regen = list(
-		/mob/living/basic/heretic_summon/fire_shark/wild = 3 MINUTES,
+		/obj/item/fish/mossglob = 3 MINUTES,
+		/obj/item/fish/babbelfish = 5 MINUTES,
+		/mob/living/basic/heretic_summon/fire_shark/wild = 6 MINUTES,
 		/obj/item/eldritch_potion/crucible_soul = 5 MINUTES,
 		/obj/item/eldritch_potion/duskndawn = 5 MINUTES,
 		/obj/item/eldritch_potion/wounded = 5 MINUTES,

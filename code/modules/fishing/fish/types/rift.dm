@@ -394,88 +394,15 @@
 	qdel(src)
 	return MANUAL_SUICIDE
 
-/obj/item/fish/pete
-	name = "Pete"
-	fish_id = "Pete"
-	desc = "This fish really is just like you. For real."
-	icon = 'icons/obj/aquarium/weird.dmi'
-	icon_state = "pete"
-	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
-	attack_verb_continuous = list("stings", "smokes")
-	attack_verb_simple = list("sting", "smoke")
-	hitsound = SFX_SEAR
-	damtype = BURN
-	drop_sound = 'sound/mobs/non-humanoids/fish/fish_drop1.ogg'
-	pickup_sound = SFX_FISH_PICKUP
-
-	sprite_width = 4
-	sprite_height = 3
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = ""
-
-
-	food = /datum/reagent/drug/nicotine
-	feeding_frequency = 1 MINUTES // addict
-	health = 70 // weak lungs
-	death_text = "%SRC chokes."
-	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
-	fish_traits = list(/datum/fish_trait/wary, /datum/fish_trait/yucky)
-	beauty = FISH_BEAUTY_EXCELLENT
-	fish_movement_type = /datum/fish_movement/slow
-	fishing_difficulty_modifier = 5
-	favorite_bait = list(/obj/item/cigarette)
-	average_size = 45
-	average_weight = 900
-	required_fluid_type = AQUARIUM_FLUID_AIR
-	required_temperature_min = MIN_AQUARIUM_TEMP+33
-	required_temperature_max = MIN_AQUARIUM_TEMP+66
-	safe_air_limits = list(
-		/datum/gas/oxygen,
-	)
-	var/cignited = FALSE
-
-/obj/item/fish/pete/Initialize(mapload, apply_qualities)
-	. = ..()
-	name = GLOB.first_names_male // NO WOMEN
-
-/obj/item/fish/pete/suicide_act(mob/living/carbon/user)
-	visible_message(span_suicide("[user] takes a drag of [src]'s cigarette! It looks like they're trying to commit suicide!"))
-	say("Hey, that's mine!")
-	if(!iscarbon(user))
-		return OXYLOSS
-	var/obj/item/organ/lungs/old_lungs = user.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(!old_lungs)
-		visible_message(span_suicide("[user] has no lungs to smoke with!"))
-		return SHAME
-	visible_message(span_suicide("[user]'s lungs give out! They couldn't handle a fish cigarette!"))
-	var/obj/item/organ/smoker_lungs = new user.dna.species.smoker_lungs
-	smoker_lungs.Insert(user, special = TRUE, movement_flags = DELETE_IF_REPLACED)
-	user.reagents.add_reagent(/datum/reagent/drug/nicotine, 1000)
-	qdel(src)
-	return OXYLOSS
-
-/obj/item/fish/pete/ignition_effect(atom/A, mob/user)
-	. = ..()
-	if(cignited)
-		return .
-	visible_message(span_notice("[src]'s cigarette is ignited by [user ? "[user]. [src] looks at [user.p_them()] and nods." : A]. "))
-	cignited = TRUE
-	update_icon_state()
-
-/obj/item/fish/pete/update_icon_state()
-	if(cignited && status == FISH_ALIVE)
-		icon = "pete_smoking"
-	else return ..()
-
-// The reason you DON'T fish in rifts.
+// The (other) reason you DON'T fish in rifts.
 // This thing is a plague - throws itself around and envenoms those it hits.
 // Worse, it's immune to the environment and revives either way.
 /obj/item/fish/mossglob
 	name = "mossglob"
 	fish_id = "mossglob"
-	desc = "This dreaded, malicious, and unkillable glob of moss is rumoured to be nature's revenge against fishermen."
-	icon = 'icons/obj/aquarium/weird.dmi'
+	desc = "This dreaded, malicious, and nearly unkillable glob of moss is rumoured to be nature's revenge against fishermen."
+	icon = 'icons/obj/aquarium/rift.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/rift.dmi'
 	icon_state = "mossglob"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -484,17 +411,12 @@
 	force = 11
 	damtype = TOX
 	sharpness = SHARP_POINTY
-	wound_bonus = -5
-	bare_wound_bonus = 15
-	armour_penetration = 7
 	throwforce = 9
 	throw_range = 7
 	hitsound = SFX_ALT_FISH_SLAP
 
 	sprite_width = 4
 	sprite_height = 3
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = ""
 
 	health = 500
 	death_text = "%SRC decomposes."
@@ -504,11 +426,11 @@
 		/datum/fish_trait/wary, /datum/fish_trait/nocturnal, /datum/fish_trait/emulsijack, \
 		/datum/fish_trait/yucky, /datum/fish_trait/lubed, /datum/fish_trait/revival, \
 		/datum/fish_trait/toxin_immunity, /datum/fish_trait/hallucinogenic, \
-		/datum/fish_trait/toxic_barbs, /datum/fish_trait/stinger, \
+		/datum/fish_trait/stinger, /datum/fish_trait/toxic_barbs, \
 	)
 	beauty = FISH_BEAUTY_DISGUSTING
-	fish_movement_type = /datum/fish_movement/slow
-	fishing_difficulty_modifier = 0
+	fish_movement_type = /datum/fish_movement/slow // a very easy catch!
+	fishing_difficulty_modifier = -35
 	favorite_bait = list(/obj/item/food/badrecipe)
 	average_size = 150
 	average_weight = 5000
@@ -526,6 +448,30 @@
 	. = ..()
 	AddElement(/datum/element/haunted, COLOR_GREEN)
 
+/obj/item/fish/mossglob/get_force_rank()
+	var/multiplier = 1
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY)
+			multiplier = 0.35
+		if(WEIGHT_CLASS_SMALL)
+			multiplier = 0.5
+		if(WEIGHT_CLASS_NORMAL)
+			multiplier = 0.75
+		if(WEIGHT_CLASS_BULKY)
+			multiplier = 0.85
+		// huge is avergae
+		if(WEIGHT_CLASS_GIGANTIC)
+			multiplier = 1.15
+
+	if(status == FISH_DEAD)
+		multiplier -= 0.35 // huge nerf if dead
+
+	force *= multiplier
+	attack_speed *= multiplier
+	demolition_mod *= multiplier
+	block_chance *= multiplier
+	armour_penetration *= multiplier
+
 // Babbelfish are psychic 'predators' that don't physically attack their prey, but emit a psychic aura that kills them, eating their corpses.
 // When they die they emit a horrendous wail that deafens and debilitates people nearby - let alone fish.
 /obj/item/fish/babbelfish
@@ -533,24 +479,20 @@
 	fish_id = "babbelfish"
 	desc = "Babbelfish are both visually -and- psychically unsettling - their psychic wails damage the minds of those nearby. The effect is negligible on humans, but deadly for fish. \
 		It is said that splitting one in two and inserting the pieces into each ear unlocks your psychic potential."
-	icon = 'icons/obj/aquarium/weird.dmi'
+	icon = 'icons/obj/aquarium/rift.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/rift.dmi'
 	icon_state = "babbelfish"
-	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
 	force = 7
 	damtype = BRAIN
 	attack_verb_continuous = list("screeches", "shrieks")
 	attack_verb_simple = list("screech", "shriek")
 	hitsound = SFX_DEFAULT_FISH_SLAP // todo shriek
 	sound_vary = TRUE
-	item_flags = SLOWS_WHILE_IN_HAND
 
 	sprite_width = 4
 	sprite_height = 3
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = ""
 
-	death_text = "%SRC emits a horrendous wail as it dies!"
+	death_text = span_userdanger("%SRC emits a horrendous wailing as it perishes!")
 	random_case_rarity = FISH_RARITY_NOPE
 	health = 250
 	fillet_type = /obj/item/food/fishmeat/quality
@@ -571,11 +513,12 @@
 
 /obj/item/fish/babbelfish/set_status(new_status, silent)
 	. = ..()
+	// Death message plays here
 	if(new_status != FISH_DEAD)
 		return
-	visible_message(span_userdanger("[src] emits a horrendous wailing as it perishes!"))
+	damtype = BRUTE
 	manual_emote("wails!")
-	playsound(src, 'sound/mobs/non-humanoids/fish/fish_death2.ogg', 100)
+	playsound(src, 'sound/mobs/non-humanoids/fish/fish_psyblast.ogg', 100)
 	var/list/mob/living/mobs_in_range = get_hearers_in_range(7, src)
 	for(var/mob/living/screeched in mobs_in_range)
 		if(screeched.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 1))
@@ -602,17 +545,16 @@
 
 	var/affected = 0
 	for(var/obj/item/fish/fishie in range(7, src))
-		if(!isfish(fishie))
-			continue
 		if(HAS_TRAIT(fishie, TRAIT_RESIST_PSYCHIC))
+			continue
+		if(fishie.status == FISH_DEAD)
 			continue
 		fishie.set_status(FISH_DEAD)
 		affected++
 	if(affected)
 		visible_message(span_bolddanger("[src]'s wail kills [affected] fish nearby!")) // m-m-m-m-m-MONSTER KILL
 
-/obj/item/fish/babbelfish/attack_hand(mob/living/user, list/modifiers)
-	. = ..()
+/obj/item/fish/babbelfish/attack_self(mob/living/user, list/modifiers)
 	if(loc != user)
 		return
 	if((user.usable_hands < 2) && !HAS_TRAIT(user, TRAIT_STRENGTH))
@@ -632,7 +574,7 @@
 // These ears grant amazing and supernatural hearing, but they also screw over your knowledge of language.
 /obj/item/organ/ears/babbelfish
 	name = "split babbelfish halves"
-	icon = 'icons/obj/aquarium/weird.dmi'
+	icon = 'icons/obj/aquarium/rift.dmi'
 	icon_state = "babbelfish"
 //	icon_state = "ears"
 	desc = "Both halves of a babbelfish after being twisted apart. The legends claim these can unlock your psychic potential. It probably wasn't worth hearing that wail, though."
@@ -646,7 +588,7 @@
 
 	low_threshold_passed = span_noticealien("Psychic whispers make it a bit difficult to hear sometimes..")
 	now_failing = span_noticealien("Psychic noise is overcrowding your senses!")
-	now_fixed = span_noticealien("The psychic noise starts to disappear.")
+	now_fixed = span_noticealien("The psychic noise starts to fade.")
 	low_threshold_cleared = span_noticealien("The whispers leave you alone.")
 
 	bang_protect = 5
@@ -694,13 +636,13 @@
 	switch(rand(1, 100))
 		if(1 to 45)
 			// Can understand nothing
-			organ_owner.remove_all_languages(source = ALL)
+			organ_owner.remove_all_languages(source = LANGUAGE_ALL)
 			//but speak everything
 			organ_owner.grant_all_languages(language_flags = SPOKEN_LANGUAGE, grant_omnitongue = FALSE, source = LANGUAGE_BABEL)
 			to_chat(organ_owner, span_noticealien("You feel like you've been given the first half of a cosmic puzzle!"))
 		if(46 to 90)
 			// Can speak nothing
-			organ_owner.remove_all_languages(source = ALL)
+			organ_owner.remove_all_languages(source = LANGUAGE_ALL)
 			// but understand everything
 			organ_owner.grant_all_languages(language_flags = UNDERSTOOD_LANGUAGE, grant_omnitongue = FALSE, source = LANGUAGE_BABEL)
 			to_chat(organ_owner, span_noticealien("You feel like you've been given the second half of a cosmic puzzle!"))
@@ -716,6 +658,8 @@
 /obj/item/organ/ears/babbelfish/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
+	// Reset
+	organ_owner.remove_all_languages(source = LANGUAGE_ALL)
 	organ_owner.copy_languages(removal_holder)
 	to_chat(organ_owner, span_notice("You feel significantly more mundane."))
 	qdel(removal_holder)
