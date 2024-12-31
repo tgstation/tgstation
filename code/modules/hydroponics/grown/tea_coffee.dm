@@ -1,6 +1,6 @@
 // Tea
 /obj/item/seeds/tea
-	name = "pack of tea aspera seeds"
+	name = "tea aspera seed pack"
 	desc = "These seeds grow into tea plants."
 	icon_state = "seed-teaaspera"
 	species = "teaaspera"
@@ -27,7 +27,7 @@
 
 // Tea Astra
 /obj/item/seeds/tea/astra
-	name = "pack of tea astra seeds"
+	name = "tea astra seed pack"
 	icon_state = "seed-teaastra"
 	species = "teaastra"
 	plantname = "Tea Astra Plant"
@@ -46,7 +46,7 @@
 
 // Coffee
 /obj/item/seeds/coffee
-	name = "pack of coffee arabica seeds"
+	name = "coffee arabica seed pack"
 	desc = "These seeds grow into coffee arabica bushes."
 	icon_state = "seed-coffeea"
 	species = "coffeea"
@@ -75,7 +75,7 @@
 
 // Coffee Robusta
 /obj/item/seeds/coffee/robusta
-	name = "pack of coffee robusta seeds"
+	name = "coffee robusta seed pack"
 	desc = "These seeds grow into coffee robusta bushes."
 	icon_state = "seed-coffeer"
 	species = "coffeer"

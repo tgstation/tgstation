@@ -8,7 +8,7 @@
 	laws = list("")
 
 /obj/item/ai_module/core/freeformcore/attack_self(mob/user)
-	var/targName = tgui_input_text(user, "Enter a new core law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
+	var/targName = tgui_input_text(user, "Enter a new core law for the AI.", "Freeform Law Entry", laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName))
@@ -37,7 +37,7 @@
 	if(!newpos || !user.is_holding(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	lawpos = newpos
-	var/targName = tgui_input_text(user, "Enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
+	var/targName = tgui_input_text(user, "Enter a new law for the AI.", "Freeform Law Entry", laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName))

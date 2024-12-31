@@ -1,4 +1,4 @@
-///A component added to the mind of anyone who is playing in an ongoing CTF match. Any player specific CTF functionality should be implimented here. (someone should impliment score tracking here)
+///A component added to the mind of anyone who is playing in an ongoing CTF match. Any player specific CTF functionality should be implemented here. (someone should implement score tracking here)
 /datum/component/ctf_player
 	///The team that this player is associated with.
 	var/team
@@ -24,10 +24,10 @@
 	ckey_reference = player_mob.ckey
 	register_mob()
 
-/datum/component/ctf_player/PostTransfer()
-	if(!istype(parent, /datum/mind))
+/datum/component/ctf_player/PostTransfer(datum/new_parent)
+	if(!istype(new_parent, /datum/mind))
 		return COMPONENT_INCOMPATIBLE
-	var/datum/mind/true_parent = parent
+	var/datum/mind/true_parent = new_parent
 	player_mob = true_parent.current
 	register_mob()
 

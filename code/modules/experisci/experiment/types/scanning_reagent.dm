@@ -31,5 +31,5 @@
 	return TRUE
 
 /datum/experiment/scanning/reagent/serialize_progress_stage(atom/target, list/seen_instances)
-	return EXPERIMENT_PROG_INT("Scan a reagent container with [required_reagent::name] of at least [PERCENT(min_purity)] purity.", \
+	return EXPERIMENT_PROG_INT("Scan a reagent container with [required_reagent::name] of at least [PERCENT(min_purity)]% purity.", \
 		seen_instances.len, required_atoms[target])

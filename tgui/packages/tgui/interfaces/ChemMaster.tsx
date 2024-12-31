@@ -1,14 +1,12 @@
-import { BooleanLike, classes } from 'common/react';
-import { capitalize } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
   Button,
   ColorBox,
   Divider,
+  DmIcon,
+  Icon,
   LabeledList,
   NumberInput,
   ProgressBar,
@@ -16,12 +14,17 @@ import {
   Stack,
   Table,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { capitalize } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Beaker, BeakerReagent } from './common/BeakerDisplay';
 
 type Container = {
   icon: string;
+  icon_state: string;
   ref: string;
   name: string;
   volume: number;
@@ -375,6 +378,8 @@ const ContainerButton = (props: CategoryButtonProps) => {
   const { isPrinting, selectedContainerRef, suggestedContainerRef } = data;
   const { category, container, showPreferredContainer } = props;
   const isPillPatch = ['pills', 'patches'].includes(category.name);
+  const fallback = <Icon m="18px" name="spinner" spin />;
+  const fallbackPillPatch = <Icon m="10px" name="spinner" spin />;
 
   return (
     <Tooltip
@@ -402,12 +407,13 @@ const ContainerButton = (props: CategoryButtonProps) => {
           });
         }}
       >
-        <Box
-          m={isPillPatch ? '0' : '8px'}
-          style={{
-            transform: 'scale(2)',
-          }}
-          className={classes(['chemmaster32x32', container.icon])}
+        <DmIcon
+          m={isPillPatch ? '-16px' : '-8px'}
+          fallback={isPillPatch ? fallbackPillPatch : fallback}
+          icon={container.icon}
+          icon_state={container.icon_state}
+          height="64px"
+          width="64px"
         />
       </Button>
     </Tooltip>

@@ -58,7 +58,6 @@
 	desc = "Launch a missile towards the target!"
 	cooldown_time = 10 SECONDS
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 	///how long before we launch said missile
 	var/wind_up_timer = 1 SECONDS
 
@@ -100,7 +99,6 @@
 	overlay_icon_state = "bg_default_border"
 	cooldown_time = 10 SECONDS
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/drop_landmine/IsAvailable(feedback = TRUE)
@@ -119,7 +117,7 @@
 		return FALSE
 	var/obj/effect/mine/minebot/my_mine = new(my_turf)
 	my_mine.ignore_list = owner.faction.Copy()
-	playsound(my_turf, 'sound/weapons/armbomb.ogg', 20)
+	playsound(my_turf, 'sound/items/weapons/armbomb.ogg', 20)
 	StartCooldown()
 	return TRUE
 
@@ -132,7 +130,7 @@
 
 /obj/effect/temp_visual/rising_rocket/Initialize(mapload)
 	. = ..()
-	playsound(src, 'sound/weapons/minebot_rocket.ogg', 100, FALSE)
+	playsound(src, 'sound/items/weapons/minebot_rocket.ogg', 100, FALSE)
 	animate(src, pixel_y = base_pixel_y + 500, time = duration, easing = EASE_IN)
 
 /obj/effect/temp_visual/falling_rocket
@@ -154,7 +152,7 @@
 	animate(src, pixel_y = 0, time = duration)
 
 /obj/effect/temp_visual/falling_rocket/proc/create_explosion()
-	playsound(src, 'sound/weapons/minebot_rocket.ogg', 100, FALSE)
+	playsound(src, 'sound/items/weapons/minebot_rocket.ogg', 100, FALSE)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(1, holder = src)
 	smoke.start()
@@ -176,7 +174,7 @@
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, holder = src)
 	smoke.start()
-	playsound(src, 'sound/effects/explosion3.ogg', 100)
+	playsound(src, 'sound/effects/explosion/explosion3.ogg', 100)
 	victim.apply_damage(damage_to_apply)
 
 /obj/effect/mine/minebot/can_trigger(atom/movable/on_who)

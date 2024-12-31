@@ -40,7 +40,7 @@
 	///What projectile type are we shooting?
 	var/projectile_type = /obj/projectile/beam/emitter/hitscan
 	///What's the projectile sound?
-	var/projectile_sound = 'sound/weapons/emitter.ogg'
+	var/projectile_sound = 'sound/items/weapons/emitter.ogg'
 	///Sparks emitted with every shot
 	var/datum/effect_system/spark_spread/sparks
 	///Stores the type of gun we are using inside the emitter
@@ -60,6 +60,8 @@
 
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
+	//Add to the early process queue to prioritize power draw
+	SSmachines.processing_early += src
 	RefreshParts()
 	set_wires(new /datum/wires/emitter(src))
 	if(welded)
@@ -187,7 +189,7 @@
 	togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/power/emitter/process(seconds_per_tick)
+/obj/machinery/power/emitter/process_early(seconds_per_tick)
 	var/power_usage = active_power_usage * seconds_per_tick
 	if(machine_stat & (BROKEN))
 		return
@@ -405,7 +407,7 @@
 //BUCKLE HOOKS
 
 /obj/machinery/power/emitter/prototype/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(src,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	manual = FALSE
 	for(var/obj/item/item in buckled_mob.held_items)
 		if(istype(item, /obj/item/turret_control))
@@ -419,14 +421,14 @@
 	. = ..()
 
 /obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/buckled_mob, mob/user, check_loc = TRUE)
-	if(user.incapacitated() || !istype(user))
+	if(user.incapacitated || !istype(user))
 		return
 	for(var/atom/movable/atom in get_turf(src))
 		if(atom.density && (atom != src && atom != buckled_mob))
 			return
 	buckled_mob.forceMove(get_turf(src))
 	..()
-	playsound(src, 'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(src, 'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	buckled_mob.pixel_y = 14
 	layer = 4.1
 	if(buckled_mob.client)
@@ -459,7 +461,7 @@
 
 /datum/action/innate/proto_emitter/firing/Activate()
 	if(proto_emitter.manual)
-		playsound(proto_emitter,'sound/mecha/mechmove01.ogg', 50, TRUE)
+		playsound(proto_emitter,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 		proto_emitter.manual = FALSE
 		name = "Switch to Manual Firing"
 		desc = "The emitter will only fire on your command and at your designated target"
@@ -469,7 +471,7 @@
 				qdel(item)
 		build_all_button_icons()
 		return
-	playsound(proto_emitter,'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(proto_emitter,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	name = "Switch to Automatic Firing"
 	desc = "Emitters will switch to periodic firing at your last target"
 	button_icon_state = "mech_zoom_off"
@@ -502,6 +504,8 @@
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/turret_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/turret_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -549,7 +553,7 @@
 		emitter.fire_beam(user)
 		delay = world.time + 10
 	else if (emitter.charge < 10)
-		playsound(src,'sound/machines/buzz-sigh.ogg', 50, TRUE)
+		playsound(src,'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/emitter/ctf

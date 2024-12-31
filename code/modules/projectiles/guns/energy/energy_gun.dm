@@ -16,8 +16,8 @@
 		return
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/advancedegun, /datum/crafting_recipe/tempgun, /datum/crafting_recipe/beam_rifle)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -136,7 +136,7 @@
 	inhand_icon_state = "turretlaser"
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/ai_turrets, /obj/item/ammo_casing/energy/laser)
 	weapon_weight = WEAPON_HEAVY
 	trigger_guard = TRIGGER_GUARD_NONE
 	ammo_x_offset = 2

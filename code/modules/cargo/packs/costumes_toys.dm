@@ -82,15 +82,15 @@
 					/obj/item/gun/energy/laser/bluetag = 3,
 					/obj/item/clothing/suit/redtag = 3,
 					/obj/item/clothing/suit/bluetag = 3,
-					/obj/item/clothing/head/helmet/redtaghelm = 3,
-					/obj/item/clothing/head/helmet/bluetaghelm = 3,
+					/obj/item/clothing/head/helmet/taghelm/blue = 3,
+					/obj/item/clothing/head/helmet/taghelm/red = 3,
 				)
 	crate_name = "laser tag crate"
 
 /datum/supply_pack/costumes_toys/knucklebones
 	name = "Knucklebones Game Crate"
 	desc = "A fun dice game definitely not invented by a cult. Consult your local chaplain regarding \
-		approved religious activity. Contains eighteen d6, one white crayon, and instructions on how to play."
+		approved religious activity. Contains eighteen d6, one stick of chalk, and instructions on how to play."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/dice/d6 = 18,
 					/obj/item/paper/guides/knucklebone,

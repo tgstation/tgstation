@@ -64,7 +64,8 @@
 #define CIV_JOB_MED 11
 #define CIV_JOB_GROW 12
 #define CIV_JOB_ATMOS 13
-#define CIV_JOB_RANDOM 14
+#define CIV_JOB_BITRUN 14
+#define CIV_JOB_RANDOM 15
 
 //These defines are to be used to with the payment component, determines which lines will be used during a transaction. If in doubt, go with clinical.
 #define PAYMENT_CLINICAL "clinical"

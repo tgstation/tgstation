@@ -10,18 +10,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/design/sparker
-	name = "Sparker WallFrame"
-	id = "sparker"
-	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/wallframe/sparker
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
 /datum/design/tracker_electronics
 	name = "Solar Tracking Electronics"
 	id = "solar_tracker"
@@ -95,18 +83,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/design/turret_control_frame
-	name = "Turret Control Frame"
-	id = "turret_control"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6)
-	build_path = /obj/item/wallframe/turret_control
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
 /datum/design/large_welding_tool
 	name = "Industrial Welding Tool"
 	id = "large_welding_tool"
@@ -116,55 +92,6 @@
 	category = list(
 		RND_CATEGORY_HACKED,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/camera_assembly
-	name = "Camera Assembly"
-	id = "camera_assembly"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*4, /datum/material/glass = SMALL_MATERIAL_AMOUNT*2.5)
-	build_path = /obj/item/wallframe/camera
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/newscaster_frame
-	name = "Newscaster Frame"
-	id = "newscaster_frame"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4)
-	build_path = /obj/item/wallframe/newscaster
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/status_display_frame
-	name = "Status Display Frame"
-	id = "status_display_frame"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4)
-	build_path = /obj/item/wallframe/status_display
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-
-/datum/design/intercom_frame
-	name = "Intercom Frame"
-	id = "intercom_frame"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.75, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.25)
-	build_path = /obj/item/wallframe/intercom
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -321,132 +248,5 @@
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ATMOSPHERICS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/requests_console
-	name = "Requests Console Frame"
-	id = "requests_console"
-	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4)
-	build_path = /obj/item/wallframe/requests_console
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/light_switch_frame
-	name = "Light Switch Frame"
-	id = "light_switch_frame"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.75, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.25)
-	build_path = /obj/item/wallframe/light_switch
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/telescreen_turbine
-	name = "Turbine Telescreen"
-	id = "telescreen_turbine"
-	build_type = PROTOLATHE
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5,
-		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
-	)
-	build_path = /obj/item/wallframe/telescreen/turbine
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/telescreen_engine
-	name = "Engine Telescreen"
-	id = "telescreen_engine"
-	build_type = PROTOLATHE
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5,
-		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
-	)
-	build_path = /obj/item/wallframe/telescreen/engine
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/telescreen_auxbase
-	name = "Auxiliary Base Telescreen"
-	id = "telescreen_auxbase"
-	build_type = PROTOLATHE
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5,
-		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
-	)
-	build_path = /obj/item/wallframe/telescreen/auxbase
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/tram_controller
-	name = "Tram Controller Cabinet"
-	id = "tram_controller"
-	build_type = PROTOLATHE
-	materials = list(
-		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4,
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
-		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 7,
-		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 7,
-		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 4,
-	)
-	build_path = /obj/item/wallframe/tram/controller
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/tram_display
-	name = "Tram Indicator Display"
-	id = "tram_display"
-	build_type = PROTOLATHE
-	materials = list(
-		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4,
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1,
-		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2,
-	)
-	build_path = /obj/item/wallframe/indicator_display
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/tram_floor_dark
-	name = "Dark Tram Tile"
-	id = "tram_floor_dark"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 0.25)
-	build_path = /obj/item/stack/thermoplastic
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/tram_floor_light
-	name = "Light Tram Tile"
-	id = "tram_floor_light"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 0.25)
-	build_path = /obj/item/stack/thermoplastic/light
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING

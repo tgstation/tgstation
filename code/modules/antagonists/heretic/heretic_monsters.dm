@@ -8,7 +8,7 @@
 	antag_hud_name = "heretic_beast"
 	suicide_cry = "MY MASTER SMILES UPON ME!!"
 	show_in_antagpanel = FALSE
-	stinger_sound = 'sound/ambience/antag/heretic/heretic_gain.ogg'
+	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg'
 	/// Our master (a heretic)'s mind.
 	var/datum/mind/master
 
@@ -28,6 +28,7 @@
  */
 /datum/antagonist/heretic_monster/proc/set_owner(datum/mind/master)
 	src.master = master
+	owner.enslave_mind_to_creator(master.current)
 
 	var/datum/objective/master_obj = new()
 	master_obj.owner = owner

@@ -121,10 +121,10 @@
 	icon_state = "pill"
 	loot = list(
 		/obj/item/reagent_containers/cup/glass/bottle/hooch = 50,
-		/obj/item/clothing/mask/cigarette/rollie/cannabis = 15,
+		/obj/item/cigarette/rollie/cannabis = 15,
 		/obj/item/reagent_containers/syringe = 15,
 		/obj/item/cigbutt/roach = 15,
-		/obj/item/clothing/mask/cigarette/rollie/mindbreaker = 5,
+		/obj/item/cigarette/rollie/mindbreaker = 5,
 	)
 
 /obj/effect/spawner/random/entertainment/dice
@@ -157,23 +157,23 @@
 	name = "cigarette spawner"
 	icon_state = "cigarettes"
 	loot = list(
-		/obj/item/clothing/mask/cigarette/space_cigarette = 3,
-		/obj/item/clothing/mask/cigarette/rollie/cannabis = 3,
-		/obj/item/clothing/mask/cigarette/rollie/nicotine = 3,
-		/obj/item/clothing/mask/cigarette/dromedary = 2,
-		/obj/item/clothing/mask/cigarette/uplift = 2,
-		/obj/item/clothing/mask/cigarette/robust = 2,
-		/obj/item/clothing/mask/cigarette/carp = 1,
-		/obj/item/clothing/mask/cigarette/robustgold = 1,
+		/obj/item/cigarette/space_cigarette = 3,
+		/obj/item/cigarette/rollie/cannabis = 3,
+		/obj/item/cigarette/rollie/nicotine = 3,
+		/obj/item/cigarette/dromedary = 2,
+		/obj/item/cigarette/uplift = 2,
+		/obj/item/cigarette/robust = 2,
+		/obj/item/cigarette/carp = 1,
+		/obj/item/cigarette/robustgold = 1,
 	)
 
 /obj/effect/spawner/random/entertainment/cigar
 	name = "cigar spawner"
 	icon_state = "cigarettes"
 	loot = list(
-		/obj/item/clothing/mask/cigarette/cigar = 3,
-		/obj/item/clothing/mask/cigarette/cigar/havana = 2,
-		/obj/item/clothing/mask/cigarette/cigar/cohiba = 1,
+		/obj/item/cigarette/cigar = 3,
+		/obj/item/cigarette/cigar/havana = 2,
+		/obj/item/cigarette/cigar/cohiba = 1,
 	)
 
 /obj/effect/spawner/random/entertainment/wallet_lighter

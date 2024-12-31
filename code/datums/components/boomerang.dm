@@ -1,7 +1,7 @@
-///The cooldown period between last_boomerang_throw and it's methods of implementing a rebound proc.
+///The cooldown period between last_boomerang_throw and its methods of implementing a rebound proc.
 #define BOOMERANG_REBOUND_INTERVAL (1 SECONDS)
 /**
- * If an ojvect is given the boomerang component, it should be thrown back to the thrower after either hitting it's target, or landing on the thrown tile.
+ * If an ojvect is given the boomerang component, it should be thrown back to the thrower after either hitting its target, or landing on the thrown tile.
  * Thrown objects should be thrown back to the original thrower with this component, a number of tiles defined by boomerang_throw_range.
  */
 /datum/component/boomerang
@@ -60,12 +60,11 @@
  * * hit_atom: The atom that has been hit by the boomerang component.
  * * init_throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
  */
-/datum/component/boomerang/proc/return_hit_throw(datum/source, atom/hit_atom, datum/thrownthing/init_throwing_datum)
+/datum/component/boomerang/proc/return_hit_throw(datum/source, atom/hit_atom, datum/thrownthing/init_throwing_datum, caught)
 	SIGNAL_HANDLER
-	if (!COOLDOWN_FINISHED(src, last_boomerang_throw))
+	if (!COOLDOWN_FINISHED(src, last_boomerang_throw) || caught)
 		return
-	var/obj/item/true_parent = parent
-	aerodynamic_swing(init_throwing_datum, true_parent)
+	aerodynamic_swing(init_throwing_datum, parent)
 
 /**
  * Proc that triggers when the thrown boomerang does not hit a target.

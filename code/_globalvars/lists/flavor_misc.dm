@@ -134,21 +134,22 @@ GLOBAL_LIST_EMPTY(female_clothing_icons)
 GLOBAL_LIST_INIT(scarySounds, list(
 	'sound/effects/footstep/clownstep1.ogg',
 	'sound/effects/footstep/clownstep2.ogg',
-	'sound/effects/glassbr1.ogg',
-	'sound/effects/glassbr2.ogg',
-	'sound/effects/glassbr3.ogg',
-	'sound/items/welder.ogg',
-	'sound/items/welder2.ogg',
-	'sound/machines/airlock.ogg',
-	'sound/voice/hiss1.ogg',
-	'sound/voice/hiss2.ogg',
-	'sound/voice/hiss3.ogg',
-	'sound/voice/hiss4.ogg',
-	'sound/voice/hiss5.ogg',
-	'sound/voice/hiss6.ogg',
-	'sound/weapons/armbomb.ogg',
-	'sound/weapons/taser.ogg',
-	'sound/weapons/thudswoosh.ogg',
+	'sound/effects/glass/glassbr1.ogg',
+	'sound/effects/glass/glassbr2.ogg',
+	'sound/effects/glass/glassbr3.ogg',
+	'sound/items/tools/welder.ogg',
+	'sound/items/tools/welder2.ogg',
+	'sound/machines/airlock/airlock.ogg',
+	'sound/mobs/non-humanoids/hiss/hiss1.ogg',
+	'sound/mobs/non-humanoids/hiss/hiss2.ogg',
+	'sound/mobs/non-humanoids/hiss/hiss3.ogg',
+	'sound/mobs/non-humanoids/hiss/hiss4.ogg',
+	'sound/mobs/non-humanoids/hiss/hiss5.ogg',
+	'sound/mobs/non-humanoids/hiss/hiss6.ogg',
+	'sound/items/weapons/armbomb.ogg',
+	'sound/items/weapons/taser.ogg',
+	'sound/items/weapons/thudswoosh.ogg',
+	'sound/items/weapons/shove.ogg',
 ))
 
 
@@ -264,3 +265,5 @@ GLOBAL_LIST_INIT(status_display_state_pictures, list(
 	"blank",
 	"shuttle",
 ))
+
+GLOBAL_LIST_INIT(fishing_tips, world.file2list("strings/fishing_tips.txt"))

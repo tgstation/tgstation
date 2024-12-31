@@ -1,15 +1,15 @@
 import { filter, sortBy } from 'common/collections';
-import { toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   NumberInput,
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Table, TableCell, TableRow } from '../components/Table';
 import { getGasColor } from '../constants';
 import { Window } from '../layouts';

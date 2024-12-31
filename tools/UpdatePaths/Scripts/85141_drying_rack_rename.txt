@@ -1,0 +1,3 @@
+#comment Renames the drying_rack to drying/rack
+
+/obj/machinery/smartfridge/drying_rack : /obj/machinery/smartfridge/drying/rack{@OLD}

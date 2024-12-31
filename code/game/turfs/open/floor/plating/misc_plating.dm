@@ -67,6 +67,10 @@
 /turf/open/floor/plating/snowed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
+/turf/open/floor/plating/snowed/standard_air
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
+
 /turf/open/floor/plating/snowed/smoothed
 	icon = 'icons/turf/floors/snow_turf.dmi'
 	icon_state = "snow_turf-0"

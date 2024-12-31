@@ -41,6 +41,6 @@
 			sent_romerol = TRUE
 			podspawn(list(
 				"target" = get_turf(user),
-				"style" = STYLE_SYNDICATE,
+				"style" = /datum/pod_style/syndicate,
 				"spawn" = /obj/item/storage/box/syndie_kit/romerol,
 			))

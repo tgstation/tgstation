@@ -40,7 +40,7 @@ public functions rely on to implement logic
 When documenting a proc, we give a short one line description (as this is shown
 next to the proc definition in the list of all procs for a type or global
 namespace), then a longer paragraph which will be shown when the user clicks on
-the proc to jump to it's definition
+the proc to jump to its definition
 ```
 /**
  * Short description of the proc
@@ -59,7 +59,7 @@ just going to be the typepath of the class, as dmdoc uses that by default
 
 Then we give a short oneline description of the class
 
-Finally we give a longer multi paragraph description of the class and it's details
+Finally we give a longer multi paragraph description of the class and its details
 ```
 /**
  * # Classname (Can be omitted if it's just going to be the typepath)

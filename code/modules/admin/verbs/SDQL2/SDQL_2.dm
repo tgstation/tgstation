@@ -64,7 +64,7 @@
 	"SELECT /mob/living IN (@[/area/service/bar MAP contents])[1]"
 
 	What if some dumbass admin spawned a bajillion spiders and you need to kill them all?
-	Oh yeah you'd rather not delete all the spiders in maintenace. Only that one room the spiders were
+	Oh yeah you'd rather not delete all the spiders in maintenance. Only that one room the spiders were
 	spawned in.
 
 	"DELETE /mob/living/carbon/superior_animal/giant_spider WHERE loc.loc == marked"
@@ -109,7 +109,7 @@
 	By the way, queries are slow and take a while. Be patient.
 	They don't hang the entire server though.
 
-	With great power comes great responsability.
+	With great power comes great responsibility.
 
 	Here's a slightly more formal quick reference.
 
@@ -722,7 +722,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 
 /datum/sdql2_query/proc/SDQL_print(object, list/text_list, print_nulls = TRUE)
 	if(isdatum(object))
-		text_list += "<A HREF='?_src_=vars;[HrefToken(forceGlobal = TRUE)];Vars=[REF(object)]'>[REF(object)]</A> : [object]"
+		text_list += "<A href='byond://?_src_=vars;[HrefToken(forceGlobal = TRUE)];Vars=[REF(object)]'>[REF(object)]</A> : [object]"
 		if(istype(object, /atom))
 			var/atom/A = object
 			var/turf/T = A.loc

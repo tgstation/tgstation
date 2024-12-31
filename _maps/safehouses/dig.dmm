@@ -20,7 +20,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "i" = (
 /obj/effect/turf_decal/siding/yellow{
@@ -98,7 +98,7 @@
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/box/corners,
 /obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "T" = (
 /obj/effect/landmark/bitrunning/hololadder_spawn,

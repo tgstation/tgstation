@@ -123,6 +123,7 @@ export class InfinitePlane extends Component {
       imageWidth,
       initialLeft = 0,
       initialTop = 0,
+      scalePadding,
       ...rest
     } = this.props;
     const { left, top, zoom } = this.state;
@@ -169,23 +170,25 @@ export class InfinitePlane extends Component {
           {children}
         </div>
 
-        <Stack position="absolute" width="100%">
-          <Stack.Item>
-            <Button icon="minus" onClick={this.handleZoomDecrease} />
-          </Stack.Item>
-          <Stack.Item grow={1}>
-            <ProgressBar
-              minValue={ZOOM_MIN_VAL}
-              value={zoom}
-              maxValue={ZOOM_MAX_VAL}
-            >
-              {zoom}x
-            </ProgressBar>
-          </Stack.Item>
-          <Stack.Item>
-            <Button icon="plus" onClick={this.handleZoomIncrease} />
-          </Stack.Item>
-        </Stack>
+        <div style={{ paddingRight: scalePadding }}>
+          <Stack width="100%">
+            <Stack.Item>
+              <Button icon="minus" onClick={this.handleZoomDecrease} />
+            </Stack.Item>
+            <Stack.Item grow={1}>
+              <ProgressBar
+                minValue={ZOOM_MIN_VAL}
+                value={zoom}
+                maxValue={ZOOM_MAX_VAL}
+              >
+                {zoom.toFixed(1)}x
+              </ProgressBar>
+            </Stack.Item>
+            <Stack.Item>
+              <Button icon="plus" onClick={this.handleZoomIncrease} />
+            </Stack.Item>
+          </Stack>
+        </div>
       </div>
     );
   }

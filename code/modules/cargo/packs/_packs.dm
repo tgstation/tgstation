@@ -77,6 +77,7 @@
 				continue
 			A.flags_1 |= ADMIN_SPAWNED_1
 
+
 /// For generating supply packs at runtime. Returns a list of supply packs to use instead of this one.
 /datum/supply_pack/proc/generate_supply_packs()
 	return
@@ -105,7 +106,7 @@
 	name = "mining order"
 	hidden = TRUE
 	crate_name = "shaft mining delivery crate"
-	access = list(ACCESS_MINING)
+	access = ACCESS_MINING
 
 /datum/supply_pack/custom/New(purchaser, cost, list/contains)
 	. = ..()
@@ -116,7 +117,7 @@
 /datum/supply_pack/custom/minerals
 	name = "materials order"
 	crate_name = "galactic materials market delivery crate"
-	access = list()
+	access = FALSE
 	crate_type = /obj/structure/closet/crate/cardboard
 
 /datum/supply_pack/custom/minerals/New(purchaser, cost, list/contains)

@@ -1,8 +1,8 @@
-import { isEscape, KEY } from 'common/keys';
 import { useState } from 'react';
+import { Autofocus, Box, Button, Section, Stack } from 'tgui-core/components';
+import { isEscape, KEY } from 'tgui-core/keys';
 
 import { useBackend, useLocalState } from '../backend';
-import { Autofocus, Box, Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';

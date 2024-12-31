@@ -74,7 +74,7 @@
 		var/datum/job_department/hater_department = SSjob.get_department_type(hater_department_type)
 		for(var/datum/job/hater_job as anything in hater_department.department_jobs)
 			haters += hater_job.title
-	var/datum/job/quartermaster/fucking_quartermaster = SSjob.GetJobType(/datum/job/quartermaster)
+	var/datum/job/quartermaster/fucking_quartermaster = SSjob.get_job_type(/datum/job/quartermaster)
 	haters += fucking_quartermaster.title
 
 	if(!(user.mind.assigned_role.title in haters))

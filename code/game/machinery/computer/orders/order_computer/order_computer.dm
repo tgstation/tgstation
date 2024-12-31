@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	if(GLOB.order_console_products.len)
 		return
 	for(var/datum/orderable_item/path as anything in subtypesof(/datum/orderable_item))
-		if(!initial(path.item_path))
+		if(!initial(path.purchase_path))
 			continue
 		GLOB.order_console_products += new path
 
@@ -120,11 +120,12 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"cat" = item.category_index,
 			"ref" = REF(item),
 			"cost" = round(item.cost_per_order * cargo_cost_multiplier),
-			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(item.item_path.icon), icon_state = initial(item.item_path.icon_state)), no_anim=TRUE))
+			"icon" = item.purchase_path::icon,
+			"icon_state" = item.purchase_path::icon_state,
 		))
 	return data
 
-/obj/machinery/computer/order_console/ui_act(action, params)
+/obj/machinery/computer/order_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -198,10 +199,10 @@ GLOBAL_LIST_EMPTY(order_console_products)
 					grocery_list.Remove(item)
 					continue
 				for(var/amt in 1 to grocery_list[item])//every order amount
-					ordered_paths += item.item_path
+					ordered_paths += item.purchase_path
 			podspawn(list(
 				"target" = get_turf(living_user),
-				"style" = STYLE_BLUESPACE,
+				"style" = /datum/pod_style/advanced,
 				"spawn" = ordered_paths,
 			))
 			grocery_list.Cut()

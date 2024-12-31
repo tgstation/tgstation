@@ -23,6 +23,7 @@
 	if(length(give_turf_traits))
 		give_turf_traits = string_list(give_turf_traits)
 		AddElement(/datum/element/give_turf_traits, give_turf_traits)
+	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
 
 /datum/armor/structure_lattice
 	melee = 50
@@ -32,6 +33,13 @@
 /obj/structure/lattice/examine(mob/user)
 	. = ..()
 	. += deconstruction_hints(user)
+
+/obj/structure/lattice/Destroy(force) // so items on the lattice fall when the lattice is destroyed
+	var/turf/turfloc = loc
+	. = ..()
+	if(isturf(turfloc))
+		for(var/thing_that_falls as anything in turfloc) // as anything because turfloc can only contain movables
+			turfloc.zFall((thing_that_falls))
 
 /obj/structure/lattice/proc/deconstruction_hints(mob/user)
 	return span_notice("The rods look like they could be <b>cut</b>. There's space for more <i>rods</i> or a <i>tile</i>.")
@@ -81,7 +89,7 @@
 			return TRUE
 	return FALSE
 
-/obj/structure/lattice/singularity_pull(S, current_size)
+/obj/structure/lattice/singularity_pull(atom/singularity, current_size)
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
 
@@ -97,10 +105,6 @@
 	canSmoothWith = SMOOTH_GROUP_CATWALK
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED, TRAIT_HYPERSPACE_STOPPED)
-
-/obj/structure/lattice/catwalk/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
 	return span_notice("The supporting rods look like they could be <b>cut</b>.")
@@ -158,14 +162,14 @@
 
 /obj/structure/lattice/lava/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(!istype(attacking_item, /obj/item/stack/tile/iron))
+	if(!ismetaltile(attacking_item))
 		return
 	var/obj/item/stack/tile/iron/attacking_tiles = attacking_item
 	if(!attacking_tiles.use(1))
 		to_chat(user, span_warning("You need one floor tile to build atop [src]."))
 		return
 	to_chat(user, span_notice("You construct new plating with [src] as support."))
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 
 	var/turf/turf_we_place_on = get_turf(src)
 	turf_we_place_on.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)

@@ -11,6 +11,7 @@ import { ViewMode } from './types';
 export function Orbit(props) {
   const [autoObserve, setAutoObserve] = useState(false);
   const [bladeOpen, setBladeOpen] = useState(false);
+  const [realNameDisplay, setRealNameDisplay] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>(VIEWMODE.Health);
 
@@ -23,6 +24,8 @@ export function Orbit(props) {
         setAutoObserve,
         bladeOpen,
         setBladeOpen,
+        realNameDisplay,
+        setRealNameDisplay,
         searchQuery,
         setSearchQuery,
         viewMode,
@@ -59,6 +62,8 @@ type Context = {
   setAutoObserve: Dispatch<SetStateAction<boolean>>;
   bladeOpen: boolean;
   setBladeOpen: Dispatch<SetStateAction<boolean>>;
+  realNameDisplay: boolean;
+  setRealNameDisplay: Dispatch<SetStateAction<boolean>>;
   searchQuery: string;
   setSearchQuery: Dispatch<SetStateAction<string>>;
   viewMode: ViewMode;

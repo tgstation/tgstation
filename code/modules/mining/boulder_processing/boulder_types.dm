@@ -4,7 +4,7 @@
 	desc = "This boulder is brimming with strange energy. Cracking it open could contain something unusual for science."
 	icon_state = "boulder_artifact"
 	/// This is the type of item that will be inside the boulder. Default is a strange object.
-	var/artifact_type = /obj/item/relic
+	var/artifact_type = /obj/item/relic/lavaland
 	/// References to the relic inside the boulder, if any.
 	var/obj/item/artifact_inside
 
@@ -25,6 +25,10 @@
 	artifact_inside = null
 	return ..()
 
+/obj/item/boulder/artifact/update_icon_state()
+	. = ..()
+	icon_state = "boulder_artifact" // Hardset to artifact sprites for consistency
+
 ///Boulders usually spawned in lavaland labour camp area
 /obj/item/boulder/gulag
 	name = "low-quality boulder"
@@ -34,7 +38,7 @@
 	. = ..()
 
 	/// Static list of all minerals to populate gulag boulders with.
-	var/list/static/gulag_minerals = list(
+	var/static/list/gulag_minerals = list(
 		/datum/material/diamond = 1,
 		/datum/material/gold = 8,
 		/datum/material/iron = 95,
@@ -55,7 +59,7 @@
 	. = ..()
 
 	/// Static list of all minerals to populate gulag boulders with, but with bluespace added where safe.
-	var/list/static/expanded_gulag_minerals = list(
+	var/static/list/expanded_gulag_minerals = list(
 		/datum/material/bluespace = 1,
 		/datum/material/diamond = 1,
 		/datum/material/gold = 8,

@@ -76,7 +76,7 @@
 
 		if(COVER)
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=2))
+				if(!W.tool_start_check(user, amount=2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
 				to_chat(user, span_notice("You begin slicing through the metal cover..."))
 				if(W.use_tool(src, user, 60, volume=100))
@@ -109,7 +109,7 @@
 				return TRUE
 
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=2))
+				if(!W.tool_start_check(user, amount=2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
 				to_chat(user, span_notice("You begin welding the metal cover back to the frame..."))
 				if(W.use_tool(src, user, 60, volume=100))
@@ -143,7 +143,7 @@
 
 		if(SUPPORT_RODS)
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=2))
+				if(!W.tool_start_check(user, amount=2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
 				to_chat(user, span_notice("You begin slicing through the support rods..."))
 				if(W.use_tool(src, user, 100, volume=100))
@@ -176,7 +176,7 @@
 				return TRUE
 
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
 				to_chat(user, span_notice("You begin welding the support rods back together..."))
 				if(W.use_tool(src, user, 100, volume=100))
@@ -215,9 +215,13 @@
 			dismantle_wall()
 
 /turf/closed/wall/r_wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(the_rcd.canRturf || the_rcd.construction_mode == RCD_WALLFRAME)
+	if (the_rcd.construction_mode == RCD_WALLFRAME)
 		return ..()
-
+	if(!the_rcd.canRturf)
+		return
+	. = ..()
+	if (.)
+		.["delay"] *= RCD_RWALL_DELAY_MULT
 
 /turf/closed/wall/r_wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(the_rcd.canRturf || rcd_data["[RCD_DESIGN_MODE]"] == RCD_WALLFRAME)

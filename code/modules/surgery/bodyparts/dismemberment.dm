@@ -4,14 +4,12 @@
 		return FALSE
 	return TRUE
 
-///Remove target limb from it's owner, with side effects.
+///Remove target limb from its owner, with side effects.
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE, wounding_type)
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
 	var/mob/living/carbon/limb_owner = owner
-	if(limb_owner.status_flags & GODMODE)
-		return FALSE
-	if(HAS_TRAIT(limb_owner, TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(limb_owner, TRAIT_GODMODE) || HAS_TRAIT(limb_owner, TRAIT_NODISMEMBER))
 		return FALSE
 
 	var/obj/item/bodypart/affecting = limb_owner.get_bodypart(BODY_ZONE_CHEST)
@@ -72,7 +70,8 @@
 		if(org_zone != BODY_ZONE_CHEST)
 			continue
 		organ.Remove(chest_owner)
-		organ.forceMove(chest_owner.loc)
+		if(chest_owner.loc)
+			organ.forceMove(chest_owner.loc)
 		. += organ
 
 	if(cavity_item)
@@ -123,7 +122,8 @@
 	update_icon_dropped()
 	phantom_owner.update_health_hud() //update the healthdoll
 	phantom_owner.update_body()
-	phantom_owner.update_body_parts()
+	if(!special)
+		phantom_owner.hud_used?.update_locked_slots()
 
 	if(bodypart_flags & BODYPART_PSEUDOPART)
 		drop_organs(phantom_owner) //Psuedoparts shouldn't have organs, but just in case
@@ -193,14 +193,13 @@
 
 /obj/item/bodypart/arm/drop_limb(special, dismembered, move_to_floor = TRUE)
 	var/mob/living/carbon/arm_owner = owner
-
 	if(special || !arm_owner)
 		return ..()
-
 	if(arm_owner.hand_bodyparts[held_index] == src)
 		// We only want to do this if the limb being removed is the active hand part.
 		// This catches situations where limbs are "hot-swapped" such as augmentations and roundstart prosthetics.
 		arm_owner.dropItemToGround(arm_owner.get_item_for_held_index(held_index), 1)
+	. = ..()
 	if(arm_owner.handcuffed)
 		arm_owner.handcuffed.forceMove(drop_location())
 		arm_owner.handcuffed.dropped(arm_owner)
@@ -209,29 +208,28 @@
 	if(arm_owner.hud_used)
 		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots["[held_index]"]
 		associated_hand?.update_appearance()
-	if(arm_owner.gloves)
-		arm_owner.dropItemToGround(arm_owner.gloves, TRUE)
-	. = ..()
+	if(arm_owner.num_hands == 0)
+		arm_owner.dropItemToGround(arm_owner.gloves, force = TRUE)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
 /obj/item/bodypart/leg/drop_limb(special, dismembered, move_to_floor = TRUE)
-	if(owner && !special)
-		if(owner.legcuffed)
-			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
-			owner.legcuffed.dropped(owner)
-			owner.legcuffed = null
-			owner.update_worn_legcuffs()
-		if(owner.shoes)
-			owner.dropItemToGround(owner.shoes, TRUE)
-	return ..()
+	var/mob/living/carbon/leg_owner = owner
+	. = ..()
+	if(special || !leg_owner)
+		return
+	if(leg_owner.legcuffed)
+		leg_owner.legcuffed.forceMove(drop_location())
+		leg_owner.legcuffed.dropped(leg_owner)
+		leg_owner.legcuffed = null
+		leg_owner.update_worn_legcuffs()
+	if(leg_owner.shoes)
+		leg_owner.dropItemToGround(leg_owner.shoes, force = TRUE)
 
 /obj/item/bodypart/head/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(!special)
 		//Drop all worn head items
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			owner.dropItemToGround(head_item, force = TRUE)
-
-	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay flushed emoji
 
 	//Handle dental implants
 	for(var/datum/action/item_action/activate_pill/pill_action in owner.actions)
@@ -324,6 +322,8 @@
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()
 	new_limb_owner.update_damage_overlays()
+	if(!special)
+		new_limb_owner.hud_used?.update_locked_slots()
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_POST_ATTACH_LIMB, src, special)
 	return TRUE
 
@@ -404,12 +404,12 @@
 				qdel(phantom_loss)
 
 		//Copied from /datum/species/proc/on_species_gain()
-		for(var/obj/item/organ/external/organ_path as anything in dna.species.external_organs)
+		for(var/obj/item/organ/organ_path as anything in dna.species.mutant_organs)
 			//Load a persons preferences from DNA
 			var/zone = initial(organ_path.zone)
 			if(zone != limb_zone)
 				continue
-			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
+			var/obj/item/organ/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(src)
 
 		update_body_parts()

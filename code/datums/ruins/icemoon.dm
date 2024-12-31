@@ -61,10 +61,16 @@
 	description = "Moffuchi's Family Pizzeria chain has a reputation for providing affordable artisanal meals of questionable edibility. This particular pizzeria seems to have been abandoned for some time."
 	suffix = "icemoon_surface_pizza.dmm"
 
+/datum/map_template/ruin/icemoon/Lodge
+	name = "Ice-Ruin Hunters Lodge"
+	id = "lodge"
+	description = "An old hunting hunting lodge. I wonder if anyone is still home?"
+	suffix = "icemoon_surface_lodge.dmm"
+
 /datum/map_template/ruin/icemoon/frozen_phonebooth
 	name = "Ice-Ruin Frozen Phonebooth"
 	id = "frozen_phonebooth"
-	description = "A venture by nanotrasen to help popularize the use of holopads. This one was sent to a icemoon."
+	description = "A venture by Nanotrasen to help popularize the use of holopads. This one was sent to a icemoon."
 	suffix = "icemoon_surface_phonebooth.dmm"
 
 /datum/map_template/ruin/icemoon/smoking_room
@@ -123,7 +129,7 @@
 	suffix = "icemoon_underground_hermit.dmm"
 
 /datum/map_template/ruin/icemoon/underground/lavaland
-	name = "Ice-Ruin Lavaland Site"
+	name = "Ice-Ruin Lavaland Incursion"
 	id = "lavalandsite"
 	description = "I guess we never really left you huh?"
 	suffix = "icemoon_underground_lavaland.dmm"
@@ -160,6 +166,12 @@
 	description = "This is where all of your paychecks went. Signed, the management."
 	suffix = "icemoon_underground_mailroom.dmm"
 
+/datum/map_template/ruin/icemoon/underground/biodome
+	name = "Ice-Ruin Syndicate Bio-Dome"
+	id = "biodome"
+	description = "Unchecked experimention gone awry."
+	suffix = "icemoon_underground_syndidome.dmm"
+
 /datum/map_template/ruin/icemoon/underground/frozen_comms
 	name = "Ice-Ruin Frozen Communicatons Outpost"
 	id = "frozen_comms"
@@ -167,10 +179,16 @@
 	suffix = "icemoon_underground_frozen_comms.dmm"
 
 /datum/map_template/ruin/icemoon/underground/comms_agent
-	name = "Icemoon Listening Post"
+	name = "Ice-Ruin Listening Post"
 	id = "icemoon_comms_agent"
 	description = "Radio signals are being detected and the source is this completely innocent pile of snow."
 	suffix = "icemoon_underground_comms_agent.dmm"
+
+/datum/map_template/ruin/icemoon/underground/syndie_lab
+	name = "Ice-Ruin Syndicate Lab"
+	id = "syndie_lab"
+	description = "A small laboratory and living space for Syndicate agents."
+	suffix = "icemoon_underground_syndielab.dmm"
 
 //TODO: Bottom-Level ONLY Spawns after Refactoring Related Code
 /datum/map_template/ruin/icemoon/underground/plasma_facility

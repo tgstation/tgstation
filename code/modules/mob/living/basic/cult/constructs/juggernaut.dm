@@ -14,7 +14,7 @@
 	attack_verb_continuous = "smashes their armored gauntlet into"
 	attack_verb_simple = "smash your armored gauntlet into"
 	speed = 2.5
-	attack_sound = 'sound/weapons/punch3.ogg'
+	attack_sound = 'sound/items/weapons/punch3.ogg'
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
 	construct_spells = list(

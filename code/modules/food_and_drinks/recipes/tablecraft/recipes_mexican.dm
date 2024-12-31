@@ -107,7 +107,7 @@
 	time = 40
 	reqs = list(
 		/obj/item/food/meat/steak/goliath = 1,
-		/obj/item/organ/internal/monster_core/regenerative_core/legion = 1,
+		/obj/item/organ/monster_core/regenerative_core/legion = 1,
 		/datum/reagent/consumable/ketchup = 2,
 		/datum/reagent/consumable/capsaicin = 2
 	)
@@ -120,7 +120,8 @@
 		/obj/item/food/cornchips = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/onion = 1,
-		/obj/item/food/grown/tomato = 1
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/chipsandsalsa
 	category = CAT_MEXICAN
@@ -198,6 +199,7 @@
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/chili = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/pineapple_salsa
 	category = CAT_MEXICAN

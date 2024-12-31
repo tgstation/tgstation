@@ -20,6 +20,8 @@ This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
 
 Space Station 13 is a paranoia-laden round-based roleplaying game set against the backdrop of a nonsensical, metal death trap masquerading as a space station, with charming spritework designed to represent the sci-fi setting and its dangerous undertones. Have fun, and survive!
 
+*All github inquiries (such as moderation actions) may be handled via the /tg/station discord [#coding-general](https://discord.com/channels/326822144233439242/326831214667235328). Simply ping the `@Maintainer` role, following the guide on asking questions located in the channel description, with your issue!*
+
 ## DOWNLOADING
 [Downloading](.github/guides/DOWNLOADING.md)
 
@@ -37,12 +39,15 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 
 **[How to compile in VSCode and other build options](tools/build/README.md).**
 
-## Contributors
-[Guides for Contributors](.github/CONTRIBUTING.md)
+## Getting started
 
-[/tg/station HACKMD account](https://hackmd.io/@tgstation) - Design documentation here
+For contribution guidelines refer to the [Guides for Contributors](.github/CONTRIBUTING.md).
 
-[Interested in some starting lore?](https://github.com/tgstation/common_core)
+For getting started (dev env, compilation) see the HackMD document [here](https://hackmd.io/@tgstation/HJ8OdjNBc#tgstation-Development-Guide).
+
+For overall design documentation see [HackMD](https://hackmd.io/@tgstation).
+
+For lore, [see Common Core](https://github.com/tgstation/common_core).
 
 ## LICENSE
 

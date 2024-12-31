@@ -87,7 +87,7 @@
 	data["oneAccess"] = check_any.value
 	return data
 
-/obj/item/circuit_component/compare/access/ui_act(action, params)
+/obj/item/circuit_component/compare/access/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

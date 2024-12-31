@@ -127,7 +127,7 @@
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targeting/clean,
+		/datum/pet_command/clean,
 	)
 
 /mob/living/basic/bot/cleanbot/Initialize(mapload)
@@ -199,15 +199,11 @@
 	if(var_name == NAMEOF(src, base_icon))
 		update_appearance(UPDATE_ICON)
 
-/mob/living/basic/bot/cleanbot/emag_act(mob/user, obj/item/card/emag/emag_card)
-	. = ..()
-	if(!(bot_access_flags & BOT_COVER_EMAGGED))
-		return
+/mob/living/basic/bot/cleanbot/emag_effects(mob/user)
 	if(weapon)
 		weapon.force = initial(weapon.force)
 	balloon_alert(user, "safeties disabled")
 	audible_message(span_danger("[src] buzzes oddly!"))
-	return TRUE
 
 /mob/living/basic/bot/cleanbot/explode()
 	var/atom/drop_loc = drop_location()
@@ -239,7 +235,8 @@
 // Actions received from TGUI
 /mob/living/basic/bot/cleanbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(ui.user))
+	var/mob/user = ui.user
+	if(. || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
 		return
 
 	switch(action)

@@ -4,7 +4,7 @@ If you're wanting to add easy recolors for your sprite then this is the system f
 
 - Multiple color layers so your sprite can be generated from more than one color.
 - Mixed greyscale and colored sprite layers; You can choose to only greyscale a part of the sprite or have premade filters applied to layers.
-- Blend modes; Instead of just putting layers of sprites on top of eachother you can use the more advanced blend modes.
+- Blend modes; Instead of just putting layers of sprites on top of each other you can use the more advanced blend modes.
 - Reusable configurations; You can reference greyscale sprites from within the configuration of another, allowing you to have a bunch of styles with minimal additional configuration.
 
 ## Other Documents
@@ -31,7 +31,7 @@ This is simply some pointers in the code linking together your dmi and the json 
 
 ## Json Configuration File
 
-The json is made up of some metadata and a list of layers used while creating the sprite. Inner lists are processed as their own chunk before being applied elsewhere, this is useful when you start using more advanced blend modes. Most of the time though you're just going to want a list of icons overlaid on top of eachother.
+The json is made up of some metadata and a list of layers used while creating the sprite. Inner lists are processed as their own chunk before being applied elsewhere, this is useful when you start using more advanced blend modes. Most of the time though you're just going to want a list of icons overlaid on top of each other.
 
 ```json
 {

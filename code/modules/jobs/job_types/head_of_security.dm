@@ -37,6 +37,8 @@
 	rpg_title = "Guard Leader"
 	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
 
+	human_authority = JOB_AUTHORITY_HUMANS_ONLY
+
 	voice_of_god_power = 1.4 //Command staff has authority
 
 
@@ -59,7 +61,7 @@
 	belt = /obj/item/modular_computer/pda/heads/hos
 	ears = /obj/item/radio/headset/heads/hos/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	gloves = /obj/item/clothing/gloves/color/black
+	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/hats/hos/beret
 	shoes = /obj/item/clothing/shoes/jackboots/sec
 	l_pocket = /obj/item/restraints/handcuffs

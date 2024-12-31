@@ -75,6 +75,7 @@
 	plane = GAME_PLANE
 	vis_flags = VIS_INHERIT_PLANE
 	alpha = 180
+	is_mopped = FALSE
 
 /obj/effect/decal/cleanable/blood/splatter/over_window/NeverShouldHaveComeHere(turf/here_turf)
 	return isgroundlessturf(here_turf)
@@ -97,12 +98,21 @@
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
 	return TRUE
 
+// normal version of the above trail holder object for use in less convoluted things
+/obj/effect/decal/cleanable/blood/trails
+	desc = "Looks like a corpse was smeared all over the floor like ketchup. Kinda makes you hungry."
+	random_icon_states = list("trails_1", "trails_2")
+	icon_state = "trails_1"
+	beauty = -50
+	dryname = "dried tracks"
+	drydesc = "Looks like a corpse was smeared all over the floor like ketchup, but it's all dried up and nasty now, ew. You lose some of your appetite."
+
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "They look bloody and gruesome."
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gib1"
-	layer = LOW_OBJ_LAYER
+	layer = GIB_LAYER
 	plane = GAME_PLANE
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
@@ -111,6 +121,8 @@
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
 	decal_reagent = /datum/reagent/consumable/liquidgibs
 	reagent_amount = 5
+
+	is_mopped = TRUE // probably shouldn't be, but janitor powercreep
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -263,9 +275,9 @@
 
 	for(var/Ddir in GLOB.cardinals)
 		if(old_entered_dirs & Ddir)
-			entered_dirs |= angle2dir_cardinal(dir2angle(Ddir) + ang_change)
+			entered_dirs |= turn_cardinal(Ddir, ang_change)
 		if(old_exited_dirs & Ddir)
-			exited_dirs |= angle2dir_cardinal(dir2angle(Ddir) + ang_change)
+			exited_dirs |= turn_cardinal(Ddir, ang_change)
 
 	update_appearance()
 	return ..()
@@ -287,7 +299,7 @@
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	. = ..()
-	alpha = min(BLOODY_FOOTPRINT_BASE_ALPHA + (255 - BLOODY_FOOTPRINT_BASE_ALPHA) * bloodiness / (BLOOD_ITEM_MAX / 2), 255)
+	alpha = max(BLOODY_FOOTPRINT_BASE_ALPHA, min(255 * (bloodiness / 15), 255))
 
 //Cache of bloody footprint images
 //Key:
@@ -345,6 +357,9 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 	pass_flags = PASSTABLE | PASSGRILLE
 	icon_state = "hitsplatter1"
 	random_icon_states = list("hitsplatter1", "hitsplatter2", "hitsplatter3")
+	plane = GAME_PLANE
+	layer = ABOVE_WINDOW_LAYER
+	is_mopped = FALSE
 	/// The turf we just came from, so we can back up when we hit a wall
 	var/turf/prev_loc
 	/// The cached info about the blood

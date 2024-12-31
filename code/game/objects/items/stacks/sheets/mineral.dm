@@ -41,6 +41,8 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/sandstone
 	walltype = /turf/closed/wall/mineral/sandstone
 	material_type = /datum/material/sandstone
+	drop_sound = SFX_STONE_DROP
+	pickup_sound = SFX_STONE_PICKUP
 
 /obj/item/stack/sheet/mineral/sandstone/get_main_recipes()
 	. = ..()
@@ -367,7 +369,7 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 
 
 GLOBAL_LIST_INIT(adamantine_recipes, list(
-	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=1, res_amount=1, category = CAT_ROBOT),
+	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=3, res_amount=1, category = CAT_ROBOT),
 	))
 
 /obj/item/stack/sheet/mineral/adamantine

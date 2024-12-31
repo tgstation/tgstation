@@ -198,7 +198,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	data["credits"] = credits_gained
 	return data
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/ui_act(action, params)
+/obj/machinery/atmospherics/components/unary/bluespace_sender/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

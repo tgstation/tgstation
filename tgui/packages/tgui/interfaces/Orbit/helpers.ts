@@ -126,10 +126,11 @@ export function isJobOrNameMatch(
 ): boolean {
   if (!searchQuery) return true;
 
-  const { full_name, job } = observable;
+  const { full_name, job, name } = observable;
 
   return (
     full_name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+    name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
     job?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
     false
   );

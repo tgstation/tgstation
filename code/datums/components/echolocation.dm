@@ -32,7 +32,7 @@
 	/// Cooldown for the echolocation.
 	COOLDOWN_DECLARE(cooldown_last)
 
-/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, blocking_trait, echo_group, echo_icon = "echo", color_path)
+/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, blocking_trait, echo_group, echo_icon, color_path)
 	. = ..()
 	var/mob/living/echolocator = parent
 	if(!istype(echolocator))
@@ -156,7 +156,7 @@
 		copied_appearance.pixel_x = 0
 		copied_appearance.pixel_y = 0
 		copied_appearance.transform = matrix()
-	if(!iscarbon(input)) //wacky overlay people get generated everytime
+	if(input.icon && input.icon_state)
 		saved_appearances["[input.icon]-[input.icon_state]"] = copied_appearance
 	return copied_appearance
 

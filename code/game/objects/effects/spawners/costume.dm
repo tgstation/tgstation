@@ -40,7 +40,7 @@
 	items = list(
 		/obj/item/clothing/under/rank/captain/suit,
 		/obj/item/clothing/head/flatcap,
-		/obj/item/clothing/mask/cigarette/cigar/havana,
+		/obj/item/cigarette/cigar/havana,
 		/obj/item/clothing/shoes/jackboots,
 	)
 

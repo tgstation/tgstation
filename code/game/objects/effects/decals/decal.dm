@@ -1,5 +1,6 @@
 /obj/effect/decal
 	name = "decal"
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF

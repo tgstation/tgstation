@@ -25,8 +25,10 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/turf_acid_ignores_mobs = FALSE
 	/// The ambient sound of acid eating away at the parent [/atom].
 	var/datum/looping_sound/acid/sizzle
-	/// Particle holder for acid particles (sick)
+	/// Particle holder for acid particles (sick). Still utilized over shared holders because they're movable-only
 	var/obj/effect/abstract/particle_holder/particle_effect
+	/// Particle type we're using for cleaning up our shared holder
+	var/particle_type
 	/// The proc used to handle the parent [/atom] when processing. TODO: Unify damage and resistance flags so that this doesn't need to exist!
 	var/datum/callback/process_effect
 
@@ -68,8 +70,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	sizzle = new(atom_parent, TRUE)
 	if(acid_particles)
-		// acid particles look pretty bad when they stack on mobs, so that behavior is not wanted for items
-		particle_effect = new(atom_parent, acid_particles, isitem(atom_parent) ? NONE : PARTICLE_ATTACH_MOB)
+		if (ismovable(parent))
+			var/atom/movable/movable_parent = parent
+			movable_parent.add_shared_particles(acid_particles, "[acid_particles]_[isitem(parent)]", isitem(parent) ? NONE : PARTICLE_ATTACH_MOB)
+			particle_type = acid_particles
+		else
+			// acid particles look pretty bad when they stack on mobs, so that behavior is not wanted for items
+			particle_effect = new(atom_parent, acid_particles, isitem(atom_parent) ? NONE : PARTICLE_ATTACH_MOB)
 	START_PROCESSING(SSacid, src)
 
 /datum/component/acid/Destroy(force)
@@ -78,6 +85,9 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		QDEL_NULL(sizzle)
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
+	if (ismovable(parent) && particle_type)
+		var/atom/movable/movable_parent = parent
+		movable_parent.remove_shared_particles("[particle_type]_[isitem(parent)]")
 	process_effect = null
 	return ..()
 
@@ -148,7 +158,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/acid_used = min(acid_volume * 0.05, 20) * seconds_per_tick
 	var/applied_targets = 0
 	for(var/atom/movable/target_movable as anything in target_turf)
-		// Dont apply acid to things under the turf
+		// Don't apply acid to things under the turf
 		if(target_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(target_movable, TRAIT_T_RAY_VISIBLE))
 			continue
 		// Ignore mobs if turf_acid_ignores_mobs is TRUE
@@ -233,16 +243,10 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!iscarbon(user) || user.can_touch_acid(source, acid_power, acid_volume))
 		return NONE
 
-	var/obj/item/bodypart/affecting = user.get_active_hand()
-	//Should not happen!
-	if(!affecting)
-		return NONE
-
-	affecting.receive_damage(burn = 5)
+	user.apply_damage(5, BURN, user.get_active_hand())
 	to_chat(user, span_userdanger("The acid on \the [source] burns your hand!"))
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 	playsound(source, SFX_SEAR, 50, TRUE)
-	user.update_damage_overlays()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Handles searing the feet of whoever walks over this without protection. Only active if the parent is a turf.

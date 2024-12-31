@@ -1,6 +1,6 @@
 # External resources
 # Set this to the location of a .zip with the server's .rsc inside of it.
-# If you set this mutiple times, the server will rotate between the links.
+# If you set this multiple times, the server will rotate between the links.
 # To use this, the compile option PRELOAD_RSC must be set to 0 to keep byond from preloading resources
 # Resource urls can not be encrypted (https://), as they are downloaded by byond, not IE, and byond can't into encryption
 

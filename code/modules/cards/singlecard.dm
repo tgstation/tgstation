@@ -103,7 +103,7 @@
 
 /obj/item/toy/singlecard/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] an unlucky card!"))
-	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE)
 	return BRUTELOSS
 
 /**
@@ -170,10 +170,10 @@
 			user.balloon_alert_to_viewers("deals a card")
 
 		var/obj/item/toy/cards/cardhand/new_cardhand = new (drop_location())
-		new_cardhand.insert(src)
-		new_cardhand.insert(card)
 		new_cardhand.pixel_x = pixel_x
 		new_cardhand.pixel_y = pixel_y
+		new_cardhand.insert(src)
+		new_cardhand.insert(card)
 
 		if(!isturf(loc)) // make a cardhand in our active hand
 			user.temporarilyRemoveItemFromInventory(src, TRUE)

@@ -52,6 +52,6 @@
 			sent_crystal = TRUE
 			podspawn(list(
 				"target" = get_turf(user),
-				"style" = STYLE_SYNDICATE,
+				"style" = /datum/pod_style/syndicate,
 				"spawn" = /obj/item/destabilizing_crystal,
 			))

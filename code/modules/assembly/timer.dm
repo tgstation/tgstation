@@ -58,7 +58,7 @@
 		pulse()
 		audible_message(span_infoplain("[icon2html(src, hearers(src))] *beep* *beep* *beep*"), null, hearing_range)
 		for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
-			hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+			hearing_mob.playsound_local(get_turf(src), 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	if(loop)
 		timing = TRUE
 	update_appearance()
@@ -67,6 +67,9 @@
 	if(!timing)
 		return
 	time -= seconds_per_tick
+	if (time ==	9 || time == 19 || time == 29)
+		update_appearance()
+
 	if(time <= 0)
 		timing = FALSE
 		timer_end()
@@ -79,9 +82,14 @@
 /obj/item/assembly/timer/update_overlays()
 	. = ..()
 	attached_overlays = list()
-	if(timing)
-		. += "timer_timing"
-		attached_overlays += "timer_timing"
+	if(!timing)
+		return
+
+	attached_overlays += "timer_timing"
+	for (var/i in 1 to clamp(ceil(time / 10), 1, 3))
+		var/mutable_appearance/timer_light = mutable_appearance(icon, "timer_light", layer, src)
+		timer_light.pixel_x = (i - 1) * 2
+		. += timer_light
 
 /obj/item/assembly/timer/ui_status(mob/user, datum/ui_state/state)
 	if(is_secured(user))
@@ -102,7 +110,7 @@
 	data["loop"] = loop
 	return data
 
-/obj/item/assembly/timer/ui_act(action, params)
+/obj/item/assembly/timer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

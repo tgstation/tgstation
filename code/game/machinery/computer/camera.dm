@@ -67,7 +67,7 @@
 			concurrent_users += user_ref
 		// Turn on the console
 		if(length(concurrent_users) == 1 && is_living)
-			playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 25, FALSE)
 			use_energy(active_power_usage)
 		// Register map objects
 		cam_screen.display_to(user)
@@ -108,7 +108,7 @@
 
 	return data
 
-/obj/machinery/computer/security/ui_act(action, params)
+/obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -116,7 +116,6 @@
 	if(action == "switch_camera")
 		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
 		active_camera = selected_camera
-		playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 
 		if(isnull(active_camera))
 			return TRUE
@@ -133,7 +132,7 @@
 
 	var/list/visible_turfs = list()
 
-	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
+	// Get the camera's turf to correctly gather what's visible from its turf, in case it's located in a moving object (borgs / mechs)
 	var/new_cam_turf = get_turf(active_camera)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
@@ -172,7 +171,7 @@
 	if(length(concurrent_users) == 0 && is_living)
 		active_camera = null
 		last_camera_turf = null
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/security/proc/show_camera_static()
 	cam_screen.vis_contents.Cut()

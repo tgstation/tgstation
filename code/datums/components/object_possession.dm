@@ -8,7 +8,7 @@
 	/**
 	  * back up of the real name during user possession
 	  *
-	  * When a user possesses an object it's real name is set to the user name and this
+	  * When a user possesses an object its real name is set to the user name and this
 	  * stores whatever the real name was previously. When possession ends, the real name
 	  * is reset to this value
 	  */

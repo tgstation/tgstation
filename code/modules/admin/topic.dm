@@ -847,7 +847,7 @@
 		exportable_text += "[special_role_description]<br>"
 		exportable_text += ADMIN_FULLMONTY_NONAME(subject)
 
-		to_chat(src.owner, examine_block(exportable_text), confidential = TRUE)
+		to_chat(src.owner, boxed_message(exportable_text), confidential = TRUE)
 
 	else if(href_list["addjobslot"])
 		if(!check_rights(R_ADMIN))
@@ -1413,7 +1413,7 @@
 			if(response.body == "[]")
 				dat += "<center><b>0 bans detected for [ckey]</b></center>"
 			else
-				bans = json_decode(response["body"])
+				bans = json_decode(response.body)
 
 				//Ignore bans from non-whitelisted sources, if a whitelist exists
 				var/list/valid_sources
@@ -1722,6 +1722,17 @@
 		if(!paper_to_show)
 			return
 		paper_to_show.ui_interact(usr)
+
+	else if (href_list["print_fax"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		for(var/obj/machinery/fax/admin/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax/admin))
+			if(FAX.fax_id != href_list["destination"])
+				continue
+			FAX.receive(locate(href_list["print_fax"]), href_list["sender_name"])
+			return
+
 	else if(href_list["play_internet"])
 		if(!check_rights(R_SOUND))
 			return

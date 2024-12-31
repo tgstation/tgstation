@@ -63,7 +63,7 @@ Existing Calls: `initialiseModules(),generate(),generateOneTurf()`
 
 ### mapGeneratorModule
 
-Desc: a mapGeneratorModule has spawnableAtoms and spawnableTurfs lists which it will generate on turfs in it's mother's map based on cluster variables.
+Desc: a mapGeneratorModule has spawnableAtoms and spawnableTurfs lists which it will generate on turfs in its mother's map based on cluster variables.
 
 ### sync(var/datum/map_generator/mum)
 
@@ -77,7 +77,7 @@ Existing Calls: `mapGenerator/syncModules()`
 
 Example: `generate()`
 
-Desc: Calls place(T) on all turfs in it's mother's map
+Desc: Calls place(T) on all turfs in its mother's map
 
 Existing Calls: `mapGenerator/generate()`
 
@@ -104,9 +104,9 @@ Existing Calls: `place()`
 Simple Workflow:
 
 1. Define a/some mapGeneratorModule(s) to your liking, choosing atoms and turfs to spawn
-   
+
 * I chose to split Turfs and Atoms off into separate modules, but this is NOT required.
-* A mapGeneratorModule may have turfs AND atoms, so long as each is in it's appropriate list
+* A mapGeneratorModule may have turfs AND atoms, so long as each is in its appropriate list
 
 2. Define a mapGenerator type who's modules list contains the typepath(s) of all the module(s) you wish to use
 
@@ -149,15 +149,15 @@ Variable Breakdown (For Mappers):
 
 ### mapGeneratorModule
 * mother - INTERNAL, do not touch
-  
+
 * spawnableAtoms - A list of typepaths and their probability to spawn, eg: `spawnableAtoms = list(/obj/structure/flora/tree/pine = 30)`
-  
+
 * spawnableTurfs - A list of typepaths and their probability to spawn, eg: `spawnableTurfs = list(/turf/unsimulated/floor/grass = 100)`
-  
+
 * clusterMax - The max range to check for something being "too close" for this atom/turf to spawn, the true value is random between clusterMin and clusterMax
-  
+
 * clusterMin - The min range to check for something being "too close" for this atom/turf to spawn, the true value is random between clusterMin and clusterMax
-  
+
 * clusterCheckFlags - A Bitfield that controls how the cluster checks work, All based on clusterMin and clusterMax guides
 
 * allowAtomsOnSpace - A Boolean for if we allow atoms to spawn on space tiles

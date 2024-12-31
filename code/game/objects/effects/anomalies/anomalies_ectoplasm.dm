@@ -132,11 +132,11 @@
 	icon_state = "anom"
 	anchored = TRUE
 	var/static/list/spooky_noises = list(
-		'sound/hallucinations/growl1.ogg',
-		'sound/hallucinations/growl2.ogg',
-		'sound/hallucinations/growl3.ogg',
-		'sound/hallucinations/veryfar_noise.ogg',
-		'sound/hallucinations/wail.ogg'
+		'sound/effects/hallucinations/growl1.ogg',
+		'sound/effects/hallucinations/growl2.ogg',
+		'sound/effects/hallucinations/growl3.ogg',
+		'sound/effects/hallucinations/veryfar_noise.ogg',
+		'sound/effects/hallucinations/wail.ogg'
 	)
 	var/list/ghosts_spawned = list()
 

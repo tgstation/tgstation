@@ -6,7 +6,6 @@
 	fire_range = 20
 	fire_temperature = 700 // Even hotter than a megafauna for some reason
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 
 /datum/action/cooldown/mob_cooldown/fire_breath/carp/on_burn_mob(mob/living/barbecued, mob/living/source)
 	if (!source.faction_check_atom(barbecued))

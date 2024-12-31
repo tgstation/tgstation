@@ -49,6 +49,7 @@
 /obj/effect/temp_visual/cult/turf/floor
 	icon_state = "floorglow"
 	duration = 5
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 
 /obj/effect/temp_visual/cult/portal

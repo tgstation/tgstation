@@ -90,7 +90,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "cM" = (
 /turf/template_noop,
@@ -100,7 +100,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "cY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -372,9 +372,8 @@
 "DT" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	dir = 1;
-	view_range = 14;
-	x_offset = -3;
-	y_offset = -3
+	x_offset = 0;
+	y_offset = -5
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
@@ -523,7 +522,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "WL" = (
 /obj/machinery/light/cold/no_nightlight/directional/west,

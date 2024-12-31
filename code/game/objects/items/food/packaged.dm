@@ -156,6 +156,25 @@
 	tastes = list("seafood" = 7, "tin" = 1)
 	foodtypes = SEAFOOD
 
+/obj/item/food/canned/squid_ink/open_can(mob/user)
+	. = ..()
+	AddComponent(/datum/component/splat, \
+		memory_type = /datum/memory/witnessed_inking, \
+		smudge_type = /obj/effect/decal/cleanable/food/squid_ink, \
+		moodlet_type = /datum/mood_event/inked, \
+		splat_color = COLOR_NEARLY_ALL_BLACK, \
+		hit_callback = CALLBACK(src, PROC_REF(blind_em)), \
+	)
+	ADD_TRAIT(src, TRAIT_UNCATCHABLE, INNATE_TRAIT) //good luck catching the liquid
+
+/obj/item/food/canned/squid_ink/proc/blind_em(mob/living/victim, can_splat_on)
+	if(can_splat_on)
+		victim.adjust_temp_blindness_up_to(7 SECONDS, 10 SECONDS)
+		victim.adjust_confusion_up_to(3.5 SECONDS, 6 SECONDS)
+		victim.Paralyze(2 SECONDS) //splat!
+	victim.visible_message(span_warning("[victim] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
+	playsound(victim, SFX_DESECRATION, 50, TRUE)
+
 /obj/item/food/canned/chap
 	name = "can of CHAP"
 	desc = "CHAP: Chopped Ham And Pork. The classic American canned meat product that won a world war, then sent millions of servicemen home with heart congestion."
@@ -199,7 +218,7 @@
 /obj/item/food/ready_donk
 	name = "\improper Ready-Donk: Bachelor Chow"
 	desc = "A quick Donk-dinner: now with flavour!"
-	icon_state = "ready_donk"
+	icon_state = "ready_donk_bachelor"
 	trash_type = /obj/item/trash/ready_donk
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("food?" = 2, "laziness" = 1)
@@ -230,7 +249,7 @@
 /obj/item/food/ready_donk/warm
 	name = "warm Ready-Donk: Bachelor Chow"
 	desc = "A quick Donk-dinner, now with flavour! And it's even hot!"
-	icon_state = "ready_donk_warm"
+	icon_state = "ready_donk_bachelor_warm"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 5,
 		/datum/reagent/medicine/omnizine = 3,
@@ -243,6 +262,7 @@
 /obj/item/food/ready_donk/mac_n_cheese
 	name = "\improper Ready-Donk: Donk-a-Roni"
 	desc = "Neon-orange mac n' cheese in seconds!"
+	icon_state = "ready_donk_mac"
 	tastes = list("cheesy pasta" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | JUNKFOOD
 
@@ -251,13 +271,14 @@
 /obj/item/food/ready_donk/warm/mac_n_cheese
 	name = "warm Ready-Donk: Donk-a-Roni"
 	desc = "Neon-orange mac n' cheese, ready to eat!"
-	icon_state = "ready_donk_warm_mac"
+	icon_state = "ready_donk_mac_warm"
 	tastes = list("cheesy pasta" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | JUNKFOOD
 
 /obj/item/food/ready_donk/donkhiladas
 	name = "\improper Ready-Donk: Donkhiladas"
 	desc = "Donk Co's signature Donkhiladas with Donk sauce, for an 'authentic' taste of Mexico."
+	icon_state = "ready_donk_mex"
 	tastes = list("enchiladas" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
 
@@ -266,13 +287,14 @@
 /obj/item/food/ready_donk/warm/donkhiladas
 	name = "warm Ready-Donk: Donkhiladas"
 	desc = "Donk Co's signature Donkhiladas with Donk sauce, served as hot as the Mexican sun."
-	icon_state = "ready_donk_warm_mex"
+	icon_state = "ready_donk_mex_warm"
 	tastes = list("enchiladas" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
 
 /obj/item/food/ready_donk/nachos_grandes //which translates to... big nachos
 	name = "\improper Ready-Donk: Donk Sol Series Boritos Nachos Grandes"
 	desc = "Get ready for game day with Donk's classic Nachos Grandes, sponsors of the Donk Sol Series! Boritos chips loaded with cheese, spicy meat and beans, alongside separate guac, pico and donk sauce. Batter up!"
+	icon_state = "ready_donk_nachos"
 	tastes = list("nachos" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
 
@@ -281,24 +303,57 @@
 /obj/item/food/ready_donk/warm/nachos_grandes
 	name = "warm Ready-Donk: Donk Sol Series Boritos Nachos Grandes"
 	desc = "Get ready for game day with Donk's classic Nachos Grandes, sponsors of the Donk Sol Series! Boritos chips loaded with cheese, spicy meat and beans, alongside separate guac, pico and donk sauce. Served hotter than Sakamoto's fastball!"
-	icon_state = "ready_donk_warm_nachos"
+	icon_state = "ready_donk_nachos_warm"
 	tastes = list("nachos" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
 
 /obj/item/food/ready_donk/donkrange_chicken
 	name = "\improper Ready-Donk: Donk-range Chicken"
 	desc = "A Chinese classic, it's Donk's original spicy orange chicken with stir-fried peppers and onions, all over steamed rice."
+	icon_state = "ready_donk_orange"
 	tastes = list("orange chicken" = 2, "laziness" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES | JUNKFOOD
 
 	warm_type = /obj/item/food/ready_donk/warm/donkrange_chicken
 
 /obj/item/food/ready_donk/warm/donkrange_chicken
-	name = "warm Ready-Donk: Ready-Donk: Donk-range Chicken"
+	name = "warm Ready-Donk: Donk-range Chicken"
 	desc = "A Chinese classic, it's Donk's original spicy orange chicken with stir-fried peppers and onions, all over steamed rice and served hotter than a dragon's breath."
-	icon_state = "ready_donk_warm_orange"
+	icon_state = "ready_donk_orange_warm"
 	tastes = list("orange chicken" = 2, "laziness" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES | JUNKFOOD
+
+/obj/item/food/ready_donk/salisbury_steak
+	name = "\improper Ready-Donk Donkriginals: Salisbury Steak"
+	desc = "The original and best: it's a slab of moulded beef, drenched in brown gravy, with a side of mashed potatoes. Better find a TV to eat this in front of."
+	icon_state = "ready_donk_salisbury"
+	tastes = list("salisbury steak" = 2, "laziness" = 1)
+	foodtypes = MEAT | VEGETABLES | JUNKFOOD
+
+	warm_type = /obj/item/food/ready_donk/warm/salisbury_steak
+
+/obj/item/food/ready_donk/warm/salisbury_steak
+	name = "warm Ready-Donk Donkriginals: Salisbury Steak"
+	desc = "The original and best: it's a slab of moulded beef, drenched in brown gravy, with a side of mashed potatoes. It's almost as hot as a season finale."
+	icon_state = "ready_donk_salisbury_warm"
+	tastes = list("salisbury steak" = 2, "laziness" = 1)
+	foodtypes = MEAT | VEGETABLES | JUNKFOOD
+
+/obj/item/food/ready_donk/country_chicken
+	name = "\improper Ready-Donk Donkriginals: Country-Fried Chicken"
+	desc = "A TV dinner classic: \"crispy\" fried chicken in country gravy, mashed potatoes, and green beans."
+	icon_state = "ready_donk_chicken"
+	tastes = list("country-fried chicken" = 2, "laziness" = 1)
+	foodtypes = MEAT | DAIRY | VEGETABLES | JUNKFOOD
+
+	warm_type = /obj/item/food/ready_donk/warm/country_chicken
+
+/obj/item/food/ready_donk/warm/country_chicken
+	name = "warm Ready-Donk Donkriginals: Country-Fried Chicken"
+	desc = "A TV dinner classic: \"crispy\" fried chicken in country gravy, mashed potatoes, and green beans. Get it while it's hot!"
+	icon_state = "ready_donk_chicken_warm"
+	tastes = list("country-fried chicken" = 2, "laziness" = 1)
+	foodtypes = MEAT | DAIRY | VEGETABLES | JUNKFOOD
 
 // Rations
 /obj/item/food/rationpack

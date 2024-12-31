@@ -10,7 +10,7 @@
 	melee_damage_upper = 20
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift,

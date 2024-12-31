@@ -5,6 +5,6 @@
 	flick("intro_malf", screen)
 	stoplag(7.6 SECONDS)
 	flick("station_explode_fade_red", screen)
-	play_cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
+	play_cinematic_sound(sound('sound/effects/explosion/explosion_distant.ogg'))
 	special_callback?.Invoke()
 	screen.icon_state = "summary_malf"

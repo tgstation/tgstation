@@ -60,7 +60,7 @@
 		relay_attacker(target, attacker, ATTACKER_DAMAGING_ATTACK)
 
 /// Even if another component blocked this hit, someone still shot at us
-/datum/element/relay_attackers/proc/on_bullet_act(atom/target, list/bullet_args, obj/projectile/hit_projectile)
+/datum/element/relay_attackers/proc/on_bullet_act(atom/target, obj/projectile/hit_projectile)
 	SIGNAL_HANDLER
 	if(!hit_projectile.is_hostile_projectile())
 		return
@@ -85,7 +85,7 @@
 	SIGNAL_HANDLER
 	relay_attacker(target, attacker, ATTACKER_DAMAGING_ATTACK)
 
-/datum/element/relay_attackers/proc/on_attack_mech(atom/target, obj/vehicle/sealed/mecha/mecha_attacker, mob/living/pilot)
+/datum/element/relay_attackers/proc/on_attack_mech(atom/target, obj/vehicle/sealed/mecha/mecha_attacker, mob/living/pilot, mecha_attack_cooldown)
 	SIGNAL_HANDLER
 	relay_attacker(target, mecha_attacker, ATTACKER_DAMAGING_ATTACK)
 

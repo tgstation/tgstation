@@ -45,11 +45,11 @@
 	var/heart_nominee
 	switch(attempt)
 		if(1)
-			heart_nominee = tgui_input_text(src, "What was their name? Just a first or last name may be enough.", "<3?")
+			heart_nominee = tgui_input_text(src, "What was their name? Just a first or last name may be enough.", "<3?", max_length = MAX_NAME_LEN)
 		if(2)
-			heart_nominee = tgui_input_text(src, "Try again, what was their name? Just a first or last name may be enough.", "<3?")
+			heart_nominee = tgui_input_text(src, "Try again, what was their name? Just a first or last name may be enough.", "<3?", max_length = MAX_NAME_LEN)
 		if(3)
-			heart_nominee = tgui_input_text(src, "One more try, what was their name? Just a first or last name may be enough.", "<3?")
+			heart_nominee = tgui_input_text(src, "One more try, what was their name? Just a first or last name may be enough.", "<3?", max_length = MAX_NAME_LEN)
 
 	if(!heart_nominee)
 		return

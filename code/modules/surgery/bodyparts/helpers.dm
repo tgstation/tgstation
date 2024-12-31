@@ -40,14 +40,24 @@
 
 ///Get the bodypart for whatever hand we have active, Only relevant for carbons
 /mob/proc/get_active_hand()
+	RETURN_TYPE(/obj/item/bodypart)
 	return FALSE
 
 /mob/living/carbon/get_active_hand()
 	var/which_hand = BODY_ZONE_PRECISE_L_HAND
-	if(!(active_hand_index % RIGHT_HANDS))
+	if(IS_RIGHT_INDEX(active_hand_index))
 		which_hand = BODY_ZONE_PRECISE_R_HAND
 	return get_bodypart(check_zone(which_hand))
 
+/// Gets the inactive hand of the mob. Returns FALSE on non-carbons, otherwise returns the /obj/item/bodypart.
+/mob/proc/get_inactive_hand()
+	return null
+
+/mob/living/carbon/get_inactive_hand()
+	var/which_hand = BODY_ZONE_PRECISE_R_HAND
+	if(IS_RIGHT_INDEX(active_hand_index))
+		which_hand = BODY_ZONE_PRECISE_L_HAND
+	return get_bodypart(check_zone(which_hand))
 
 /mob/proc/has_left_hand(check_disabled = TRUE)
 	return TRUE
@@ -55,7 +65,7 @@
 
 /mob/living/carbon/has_left_hand(check_disabled = TRUE)
 	for(var/obj/item/bodypart/hand_instance in hand_bodyparts)
-		if(!(hand_instance.held_index % RIGHT_HANDS) || (check_disabled && hand_instance.bodypart_disabled))
+		if(IS_RIGHT_INDEX(hand_instance.held_index) || (check_disabled && hand_instance.bodypart_disabled))
 			continue
 		return TRUE
 	return FALSE
@@ -71,7 +81,7 @@
 
 /mob/living/carbon/has_right_hand(check_disabled = TRUE)
 	for(var/obj/item/bodypart/hand_instance in hand_bodyparts)
-		if(hand_instance.held_index % RIGHT_HANDS || (check_disabled && hand_instance.bodypart_disabled))
+		if(IS_LEFT_INDEX(hand_instance.held_index) || (check_disabled && hand_instance.bodypart_disabled))
 			continue
 		return TRUE
 	return FALSE
@@ -130,7 +140,7 @@
 /mob/living/carbon/proc/has_embedded_objects(include_harmless=FALSE)
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		for(var/obj/item/embedded in bodypart.embedded_objects)
-			if(!include_harmless && embedded.isEmbedHarmless())
+			if(!include_harmless && embedded.is_embed_harmless())
 				continue
 			return TRUE
 
@@ -169,22 +179,22 @@
 	if(new_bodypart)
 		new_bodypart.update_limb(is_creating = TRUE)
 
-/// Makes sure that the owner's bodytype flags match the flags of all of it's parts and organs
+/// Makes sure that the owner's bodytype flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodytypes()
 	var/all_limb_flags = NONE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		for(var/obj/item/organ/external/ext_organ in limb)
-			all_limb_flags |= ext_organ.external_bodytypes
+		for(var/obj/item/organ/organ in limb)
+			all_limb_flags |= organ.external_bodytypes
 		all_limb_flags |= limb.bodytype
 
 	bodytype = all_limb_flags
 
-/// Makes sure that the owner's bodyshape flags match the flags of all of it's parts and organs
+/// Makes sure that the owner's bodyshape flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodyshapes()
 	var/all_limb_flags = NONE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		for(var/obj/item/organ/external/ext_organ in limb)
-			all_limb_flags |= ext_organ.external_bodyshapes
+		for(var/obj/item/organ/organ in limb)
+			all_limb_flags |= organ.external_bodyshapes
 		all_limb_flags |= limb.bodyshape
 
 	bodyshape = all_limb_flags

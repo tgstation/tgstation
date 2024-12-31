@@ -282,6 +282,7 @@
 /obj/item/paper,
 /obj/item/pen,
 /obj/machinery/light/directional/south,
+/obj/machinery/computer/security/telescreen/forgotten_ship/sci/directional/south,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bp" = (
@@ -466,16 +467,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bT" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen/interrogation{
-	name = "Cameras monitor";
-	network = list("fsci");
-	req_access = list("syndicate");
-	screen_loc = ""
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bV" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
@@ -622,7 +613,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ct" = (
-/obj/machinery/vending/medical/syndicate_access/cybersun,
+/obj/machinery/vending/medical/syndicate/cybersun,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cu" = (
@@ -2067,7 +2058,7 @@ bZ
 co
 bZ
 VF
-bT
+ah
 bg
 aD
 cF

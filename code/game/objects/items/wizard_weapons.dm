@@ -4,6 +4,7 @@
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "singularity_hammer0"
 	base_icon_state = "singularity_hammer"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	worn_icon_state = "singularity_hammer"
@@ -66,7 +67,7 @@
 	if(isliving(target))
 		var/mob/living/smacked = target
 		smacked.take_bodypart_damage(20, 0)
-	playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
+	playsound(user, 'sound/items/weapons/marauder.ogg', 50, TRUE)
 	vortex(get_turf(target), user)
 	addtimer(VARSET_CALLBACK(src, charged, TRUE), 10 SECONDS)
 
@@ -77,6 +78,7 @@
 	icon_state = "mjollnir0"
 	base_icon_state = "mjollnir"
 	worn_icon_state = "mjollnir"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY

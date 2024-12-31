@@ -25,6 +25,6 @@
 
 /datum/action/cooldown/spell/basic_projectile/proc/fire_projectile(atom/target, atom/caster)
 	var/obj/projectile/to_fire = new projectile_type()
-	to_fire.preparePixelProjectile(target, caster)
+	to_fire.aim_projectile(target, caster)
 	SEND_SIGNAL(caster, COMSIG_MOB_SPELL_PROJECTILE, src, target, to_fire)
 	to_fire.fire()

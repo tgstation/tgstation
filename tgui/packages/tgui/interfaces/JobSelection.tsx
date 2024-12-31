@@ -1,8 +1,5 @@
 import { deepMerge } from 'common/collections';
-import { Color } from 'common/color';
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
+import { Color } from 'tgui-core/color';
 import {
   Box,
   Button,
@@ -10,7 +7,10 @@ import {
   NoticeBox,
   Stack,
   StyleableSection,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { JOB2ICON } from './common/JobToIcon';
 

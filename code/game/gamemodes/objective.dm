@@ -210,7 +210,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(LAZYLEN(our_mind.failed_special_equipment))
 		podspawn(list(
 			"target" = get_turf(owner),
-			"style" = STYLE_SYNDICATE,
+			"style" = /datum/pod_style/syndicate,
 			"spawn" = our_mind.failed_special_equipment,
 		))
 		our_mind.failed_special_equipment = null
@@ -348,12 +348,12 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/human_check = TRUE
 
 /datum/objective/protect/check_completion()
-	var/obj/item/organ/internal/brain/brain_target
+	var/obj/item/organ/brain/brain_target
 	if(isnull(target))
 		return FALSE
 	if(human_check)
 		brain_target = target.current?.get_organ_slot(ORGAN_SLOT_BRAIN)
-	//Protect will always suceed when someone suicides
+	//Protect will always succeed when someone suicides
 	return !target || (target.current && HAS_TRAIT(target.current, TRAIT_SUICIDED)) || considered_alive(target, enforce_human = human_check) || (brain_target && HAS_TRAIT(brain_target, TRAIT_SUICIDED))
 
 /datum/objective/protect/update_explanation_text()

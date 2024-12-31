@@ -483,43 +483,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/circuit
-	name = "Blue Circuit Tile"
-	id = "circuit"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
-	build_path = /obj/item/stack/tile/circuit
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
-
-
-/datum/design/circuitgreen
-	name = "Green Circuit Tile"
-	id = "circuitgreen"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
-	build_path = /obj/item/stack/tile/circuit/green
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/circuitred
-	name = "Red Circuit Tile"
-	id = "circuitred"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
-	build_path = /obj/item/stack/tile/circuit/red
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/conveyor_belt
 	name = "Conveyor Belt"
 	id = "conveyor_belt"

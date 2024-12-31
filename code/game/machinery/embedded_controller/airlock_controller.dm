@@ -244,7 +244,7 @@
 
 	return data
 
-/obj/machinery/airlock_controller/ui_act(action, params)
+/obj/machinery/airlock_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

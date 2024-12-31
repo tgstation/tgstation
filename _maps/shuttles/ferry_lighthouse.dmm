@@ -142,7 +142,7 @@
 	dir = 8;
 	shuttle_id = "ferry";
 	name = "The Lighthouse";
-	port_direction = 2
+	preferred_direction = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
@@ -192,8 +192,7 @@
 "bb" = (
 /obj/machinery/conveyor{
 	dir = 1;
-	id = "garbage";
-	layer = 2.5
+	id = "garbage"
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)

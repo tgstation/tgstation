@@ -1,11 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aV" = (
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "bu" = (
 /obj/machinery/oven/range,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "bL" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -14,7 +14,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "bP" = (
 /obj/structure/sign/poster/official/report_crimes,
 /turf/closed/indestructible/reinforced,
@@ -23,7 +23,7 @@
 /obj/machinery/chem_dispenser/drinks/beer,
 /obj/structure/table/wood,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "bW" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -32,7 +32,7 @@
 	pixel_y = 6
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "cn" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -41,40 +41,41 @@
 	pixel_y = 2
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "cp" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /mob/living/basic/bear/snow,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "cY" = (
 /obj/structure/sign/poster/official/no_erp/directional/north,
 /obj/structure/sign/poster/official/no_erp/directional/north,
 /turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "dl" = (
 /obj/structure/sign/poster/contraband/blood_geometer/directional/south,
 /obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "dz" = (
 /obj/structure/table/wood,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "dN" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/decal/cleanable/blood/xtracks,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "dV" = (
 /obj/structure/table/glass,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ex" = (
-/turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/obj/structure/sign/poster/contraband/bountyhunters/directional/south,
+/turf/template_noop,
+/area/virtual_domain)
 "eE" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -83,28 +84,28 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "eW" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "fd" = (
 /obj/structure/table/wood/poker,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "fo" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/shaker{
 	pixel_x = 5
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "fy" = (
 /obj/machinery/stove,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "fz" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -114,15 +115,15 @@
 	pixel_y = 6
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "fU" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "gl" = (
 /obj/structure/sign/poster/contraband/blasto_detergent,
 /turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "gL" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -132,7 +133,7 @@
 	},
 /obj/machinery/light/built/directional/east,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "hq" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/seclite{
@@ -147,11 +148,11 @@
 "hI" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "hK" = (
 /obj/item/trash/popcorn,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "hR" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -160,7 +161,7 @@
 /obj/effect/decal/cleanable/confetti,
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "jE" = (
 /obj/structure/sign/poster/abductor/ayy_over_tizira,
 /obj/structure/sign/poster/official/the_owl,
@@ -174,71 +175,71 @@
 	dir = 4
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "kf" = (
 /obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "km" = (
 /obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "kL" = (
 /obj/machinery/light/built/directional/west,
 /obj/item/light/tube/broken,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "lc" = (
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "lL" = (
 /obj/structure/table,
 /obj/item/kitchen/rollingpin/illegal,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "lP" = (
 /obj/machinery/vending/sovietsoda,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "lS" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ma" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/table,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ms" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "mC" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/table,
 /obj/item/food/pizza,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "mX" = (
 /obj/machinery/computer/arcade/amputation{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ng" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "nF" = (
 /obj/effect/spawner/structure/window/reinforced/indestructible,
 /turf/open/floor/iron,
@@ -251,11 +252,11 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/item/clothing/mask/animal/small/bear/cursed,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "nX" = (
 /obj/structure/chair/sofa/corp/left,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ob" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -263,12 +264,12 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "of" = (
 /obj/structure/railing,
 /obj/effect/decal/cleanable/fuel_pool/hivis,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "oO" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -276,23 +277,23 @@
 	dir = 4
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "pr" = (
 /obj/machinery/light/built/directional/east,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "pK" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "pX" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/item/restraints/legcuffs/beartrap/prearmed,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ql" = (
 /obj/structure/table/reinforced,
 /obj/item/toy/plush/nukeplushie{
@@ -307,20 +308,20 @@
 /area/virtual_domain/protected_space/fullbright)
 "qK" = (
 /turf/closed/indestructible/fakedoor,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "rc" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "re" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ri" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -329,14 +330,14 @@
 	},
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "rB" = (
 /obj/item/trash/boritos/green{
 	pixel_x = 4;
 	pixel_y = 11
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "rD" = (
 /obj/machinery/door/poddoor{
 	id = "door2"
@@ -350,21 +351,20 @@
 	dir = 4
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "sg" = (
-/obj/structure/sign/poster/contraband/bountyhunters/directional/south,
-/turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/turf/template_noop,
+/area/virtual_domain)
 "si" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/table,
 /obj/item/balloon_mallet,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "sk" = (
 /obj/machinery/computer/slot_machine,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "sl" = (
 /obj/effect/spawner/structure/window/reinforced/indestructible,
 /obj/structure/sign/poster/contraband/space_cola/directional/north,
@@ -375,28 +375,28 @@
 	dir = 1
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "td" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/chempuff,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "to" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "tC" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/table,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "tI" = (
 /obj/item/trash/can,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "tN" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
@@ -405,7 +405,7 @@
 /obj/structure/table/wood/poker,
 /obj/item/trash/ready_donk,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ud" = (
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/cafeteria,
@@ -415,40 +415,40 @@
 	dir = 1
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "uZ" = (
 /obj/effect/decal/cleanable/food/salt,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ve" = (
 /turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "vk" = (
 /obj/structure/railing,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "vm" = (
 /obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "vs" = (
 /obj/structure/closet/secure_closet/freezer/cream_pie,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "vw" = (
 /mob/living/basic/bear/butter,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "vy" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "vz" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/iron,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "vF" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -458,18 +458,18 @@
 	id = "door2"
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "vG" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "vR" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/table,
 /obj/item/trash/tray,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "vT" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -478,7 +478,7 @@
 	},
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "wM" = (
 /obj/item/toy/balloon/heart,
 /obj/machinery/light/built/directional/west,
@@ -486,47 +486,47 @@
 	dir = 1
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "xa" = (
 /obj/structure/railing,
 /obj/structure/curtain/cloth/fancy/mechanical/start_closed,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "xk" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/table,
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "xv" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/sign/poster/official/moth_hardhat/directional/west,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "xY" = (
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "yz" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "yB" = (
 /obj/structure/railing,
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "zU" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Ag" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -534,11 +534,11 @@
 	dir = 4
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Ak" = (
 /obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "AF" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/bottle/goldschlager{
@@ -549,23 +549,23 @@
 	pixel_x = -4
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Bc" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "Bf" = (
 /obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Bj" = (
 /obj/machinery/computer/arcade/amputation,
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Bo" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "BU" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/cafeteria,
@@ -578,16 +578,16 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Cm" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "Ct" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/light/built/directional/east,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Dx" = (
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/confetti,
@@ -596,7 +596,7 @@
 "Dz" = (
 /mob/living/basic/bear/fightpit,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "DV" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/iron/cafeteria,
@@ -609,14 +609,14 @@
 	},
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "EP" = (
 /obj/structure/railing{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/leaper_sludge,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Fc" = (
 /turf/closed/indestructible/reinforced,
 /area/virtual_domain/protected_space/fullbright)
@@ -625,29 +625,29 @@
 /obj/machinery/light/built/directional/west,
 /obj/structure/fake_stairs/wood,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "FA" = (
 /obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Gb" = (
 /obj/item/trash/peanuts,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Gn" = (
 /obj/machinery/light/built/directional/east,
 /obj/effect/decal/cleanable/food/tomato_smudge,
 /obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "GD" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "GK" = (
 /obj/structure/closet/crate/trashcart/filled,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Hi" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -655,12 +655,12 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Ho" = (
 /obj/effect/decal/cleanable/fuel_pool/hivis,
 /mob/living/basic/bear/fightpit,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "HE" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/energy/laser{
@@ -685,11 +685,11 @@
 "HG" = (
 /obj/structure/curtain/cloth/fancy/mechanical,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "If" = (
 /mob/living/basic/bear/russian,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Io" = (
 /obj/structure/closet/crate/trashcart/filled,
 /turf/open/misc/dirt/jungle,
@@ -697,12 +697,12 @@
 "IX" = (
 /obj/machinery/computer/arcade/amputation,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "IY" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck/syndicate,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Jh" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -712,13 +712,13 @@
 	pixel_y = 8
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "JD" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "JF" = (
 /obj/modular_map_root/safehouse{
 	key = "wood"
@@ -735,11 +735,11 @@
 	},
 /obj/item/trash/pistachios,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "KJ" = (
 /mob/living/basic/bear/fightpit,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Ln" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -748,11 +748,11 @@
 	},
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "LP" = (
 /obj/item/trash/shrimp_chips,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "LU" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -762,7 +762,7 @@
 	id = "door1"
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Mc" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -774,24 +774,24 @@
 	dir = 8
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Mm" = (
 /obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Mq" = (
 /obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/west,
 /turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ML" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "MO" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "MS" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -800,84 +800,84 @@
 	pixel_y = 2
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Ne" = (
 /turf/closed/indestructible/binary,
-/area/space)
+/area/virtual_domain/fullbright)
 "Nz" = (
 /obj/structure/sign/poster/official/pda_ad/directional/north,
 /turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "NA" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "NE" = (
 /obj/structure/sign/poster/abductor/ayy_cops/directional/north,
 /turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Od" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Ox" = (
 /obj/structure/sign/poster/official/the_owl,
 /turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "OB" = (
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "OD" = (
 /mob/living/basic/bear/russian,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "OM" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/food/salt,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Pm" = (
 /obj/structure/chair/sofa/corp/right,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "PK" = (
 /obj/structure/curtain/cloth/fancy/mechanical,
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Qg" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/item/toy/balloon/heart,
 /obj/machinery/light/built/directional/west,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "RB" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/light/built/directional/west,
 /obj/effect/decal/cleanable/glass/plastitanium,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Sp" = (
 /obj/structure/chair/sofa/corp,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Sr" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "SE" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/light/built/directional/east,
 /obj/effect/decal/cleanable/glass/plastitanium,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "SW" = (
 /obj/machinery/door/poddoor{
 	id = "door1"
@@ -891,11 +891,11 @@
 	pixel_y = 6
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Tp" = (
 /obj/structure/sign/poster/official/soft_cap_pop_art,
 /turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Tq" = (
 /turf/open/misc/dirt/jungle,
 /area/virtual_domain/fullbright)
@@ -907,34 +907,34 @@
 	},
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "TR" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/ants/fire,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "TW" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /mob/living/basic/bear/snow,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Uj" = (
 /obj/structure/curtain/bounty/start_closed,
 /turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain/fullbright)
 "Ux" = (
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "UR" = (
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "UW" = (
 /obj/structure/sign/poster/official/no_erp/directional/north,
 /turf/closed/indestructible/reinforced,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Vd" = (
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain/protected_space/fullbright)
@@ -942,14 +942,14 @@
 /obj/structure/table,
 /obj/item/kitchen/tongs,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Vs" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/machinery/light/built/directional/west,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "VS" = (
 /obj/structure/table/reinforced,
 /obj/item/modular_computer/laptop/preset/civilian,
@@ -958,7 +958,7 @@
 "VW" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Wj" = (
 /obj/structure/sign/poster/contraband/free_key/directional,
 /turf/closed/indestructible/reinforced,
@@ -966,7 +966,7 @@
 "Wy" = (
 /obj/effect/decal/cleanable/molten_object/large,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "WG" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -975,11 +975,11 @@
 	},
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "XG" = (
 /obj/machinery/roulette,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Yd" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -987,26 +987,26 @@
 	dir = 8
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Ye" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/soda_cans/grey_bull,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Yy" = (
 /obj/machinery/computer/arcade/amputation{
 	dir = 1
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "YK" = (
 /obj/effect/spawner/random/trash,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "YL" = (
 /obj/item/trash/raisins,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "YT" = (
 /obj/machinery/button/door/directional/west{
 	id = "door1"
@@ -1016,30 +1016,30 @@
 "Zf" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Zj" = (
 /mob/living/basic/bear/fightpit,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Zp" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ZL" = (
 /obj/structure/railing{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ZU" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "ZZ" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -1047,12 +1047,9 @@
 	dir = 8
 	},
 /turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 
 (1,1,1) = {"
-Cm
-Cm
-Cm
 Cm
 Cm
 Cm
@@ -1115,16 +1112,13 @@ Cm
 Cm
 Cm
 Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+Uj
+Uj
+Uj
+Uj
+Uj
+Uj
+Uj
 Cm
 Cm
 Cm
@@ -1165,16 +1159,13 @@ Cm
 Cm
 Cm
 Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+Uj
+MO
+OB
+OB
+OB
+OB
+Uj
 Cm
 Cm
 Cm
@@ -1215,16 +1206,13 @@ Cm
 Cm
 Cm
 Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Ne
-Ne
-Ne
-Ne
-Cm
+Uj
+OB
+OB
+OB
+OB
+Zj
+Uj
 Cm
 Cm
 Cm
@@ -1265,16 +1253,13 @@ Cm
 Cm
 Cm
 Cm
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
+Uj
+vm
+OB
+OB
+OB
+vm
+Uj
 Cm
 Cm
 Cm
@@ -1305,26 +1290,23 @@ Cm
 Cm
 Cm
 Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Ne
-Uj
-Uj
-Uj
-Uj
-Uj
-Uj
-Uj
-Ne
-Ne
+ve
+ve
+ve
+ve
+ve
+ve
+Ox
+ve
+ve
+ve
+ve
+ve
+OB
+OB
+OB
+ve
+ve
 Cm
 Cm
 Cm
@@ -1355,26 +1337,23 @@ Cm
 Cm
 Cm
 Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Ne
-Ne
-Uj
-MO
-OB
-OB
-OB
-OB
-Uj
-Ne
-Cm
+ve
+sk
+Ux
+Ux
+kL
+Ux
+Ux
+UR
+Ux
+Ux
+Ux
+Fy
+EP
+ZL
+ZL
+wM
+ve
 Cm
 Cm
 Cm
@@ -1405,34 +1384,31 @@ Cm
 Cm
 Cm
 Cm
+ve
+GK
+Gb
+Ux
+IX
+rB
+YL
+mX
+UR
+Ux
+Ux
+Ux
+UR
+UR
+Ux
+Ux
+ve
 Cm
 Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Ne
-Ne
-Uj
-OB
-OB
-OB
-OB
-Zj
-Uj
-Ne
-Ne
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+ve
+ve
+ve
+ve
+ve
+ve
 Cm
 Cm
 Cm
@@ -1455,34 +1431,31 @@ Cm
 Cm
 Cm
 Cm
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Uj
-vm
-OB
-OB
-OB
-vm
-Uj
-Ne
-Ne
-Ne
+gl
+GK
+Ux
+Ux
+Bj
+Ux
+Ux
+Yy
+Bf
+Ux
+Ux
+Ux
+Zp
+rc
+re
+Ux
+ve
 Cm
 Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+ve
+Ux
+Ux
+Ux
+Ux
+ve
 Cm
 Cm
 Cm
@@ -1505,34 +1478,31 @@ Cm
 Cm
 Cm
 Cm
-Ne
 ve
-ve
-ve
-ve
-ve
-ve
-Ox
-ve
-ve
-ve
-ve
-ve
-OB
-OB
-OB
-ve
-ve
-Ne
-Ne
-Ne
-Ne
+GK
+Ux
+Ux
+Bj
+UR
+Ux
+Yy
+Ux
+Ux
+Ux
+Ux
+Ke
+re
+re
+Ux
+Tp
 Cm
 Cm
-Cm
-Cm
-Cm
-Cm
+ve
+Ux
+vw
+Ux
+Ux
+ve
 Cm
 Cm
 Cm
@@ -1555,34 +1525,31 @@ Cm
 Cm
 Cm
 Cm
-Ne
 ve
 sk
 Ux
 Ux
-kL
-Ux
-Ux
-UR
 Ux
 Ux
 Ux
-Fy
-EP
-ZL
-ZL
-wM
+Ux
+Ux
+Ux
+Ux
+Ux
+re
+re
+re
+Ux
 ve
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
 Cm
+Cm
+ve
+Ux
+Ux
+Ux
+Ux
+ve
 Cm
 Cm
 Cm
@@ -1601,207 +1568,6 @@ Cm
 "}
 (12,1,1) = {"
 Cm
-Cm
-Cm
-Cm
-Cm
-Ne
-ve
-GK
-Gb
-Ux
-IX
-rB
-YL
-mX
-UR
-Ux
-Ux
-Ux
-UR
-UR
-Ux
-Ux
-ve
-Ne
-Ne
-ve
-ve
-ve
-ve
-ve
-ve
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(13,1,1) = {"
-Cm
-Cm
-Cm
-Cm
-Cm
-Ne
-gl
-GK
-Ux
-Ux
-Bj
-Ux
-Ux
-Yy
-Bf
-Ux
-Ux
-Ux
-Zp
-rc
-re
-Ux
-ve
-Ne
-Ne
-ve
-Ux
-Ux
-Ux
-Ux
-ve
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(14,1,1) = {"
-Cm
-Cm
-Cm
-Ne
-Ne
-Ne
-ve
-GK
-Ux
-Ux
-Bj
-UR
-Ux
-Yy
-Ux
-Ux
-Ux
-Ux
-Ke
-re
-re
-Ux
-Tp
-Ne
-Ne
-ve
-Ux
-vw
-Ux
-Ux
-ve
-Ne
-Ne
-Ne
-Cm
-Cm
-Cm
-Cm
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(15,1,1) = {"
-Cm
-Ne
-Ne
-Ne
-Ne
-Ne
-ve
-sk
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-re
-re
-re
-Ux
-ve
-Ne
-Ne
-ve
-Ux
-Ux
-Ux
-Ux
-ve
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(16,1,1) = {"
-Cm
-Ne
 Uj
 Uj
 Uj
@@ -1838,20 +1604,17 @@ cY
 UW
 ve
 ve
-Ne
-Ne
 Cm
 Cm
 Cm
 Cm
-Ne
-Ne
+Cm
+Cm
 Cm
 Cm
 "}
-(17,1,1) = {"
+(13,1,1) = {"
 Cm
-Ne
 Uj
 OB
 OB
@@ -1896,12 +1659,9 @@ Ne
 Ne
 Ne
 Ne
-Ne
-Cm
 "}
-(18,1,1) = {"
+(14,1,1) = {"
 Cm
-Ne
 Uj
 OB
 OB
@@ -1946,12 +1706,9 @@ Bc
 Bc
 JF
 Ne
-Cm
-Cm
 "}
-(19,1,1) = {"
+(15,1,1) = {"
 Cm
-Ne
 Uj
 OB
 OB
@@ -1996,12 +1753,9 @@ Bc
 Bc
 Bc
 Ne
-Cm
-Cm
 "}
-(20,1,1) = {"
+(16,1,1) = {"
 Cm
-Ne
 Uj
 OB
 OB
@@ -2026,9 +1780,9 @@ vz
 tI
 VW
 ve
-ex
-ex
-ex
+sg
+sg
+sg
 Fc
 hq
 ud
@@ -2046,12 +1800,9 @@ Bc
 Bc
 Bc
 Ne
-Cm
-Cm
 "}
-(21,1,1) = {"
+(17,1,1) = {"
 Cm
-Ne
 Uj
 OB
 OB
@@ -2076,9 +1827,9 @@ Ux
 Ux
 lP
 qK
-ex
-ex
 sg
+sg
+ex
 jE
 VS
 Vd
@@ -2096,12 +1847,9 @@ Bc
 Bc
 Bc
 Ne
-Cm
-Cm
 "}
-(22,1,1) = {"
+(18,1,1) = {"
 Cm
-Ne
 Uj
 OB
 OB
@@ -2126,9 +1874,9 @@ vz
 LP
 lc
 ve
-ex
-ex
-ex
+sg
+sg
+sg
 JW
 ql
 BU
@@ -2146,12 +1894,9 @@ Bc
 Bc
 Bc
 Ne
-Cm
-Cm
 "}
-(23,1,1) = {"
+(19,1,1) = {"
 Cm
-Ne
 Uj
 OB
 OB
@@ -2196,12 +1941,9 @@ Bc
 Bc
 Bc
 Ne
-Cm
-Cm
 "}
-(24,1,1) = {"
+(20,1,1) = {"
 Cm
-Ne
 Uj
 OB
 OB
@@ -2246,12 +1988,9 @@ Bc
 Bc
 tN
 Ne
-Cm
-Cm
 "}
-(25,1,1) = {"
+(21,1,1) = {"
 Cm
-Ne
 Uj
 OB
 OB
@@ -2296,12 +2035,9 @@ Ne
 Ne
 Ne
 Ne
-Cm
-Cm
 "}
-(26,1,1) = {"
+(22,1,1) = {"
 Cm
-Ne
 Uj
 Uj
 Uj
@@ -2338,24 +2074,21 @@ ve
 ve
 ve
 ve
-Ne
-Ne
-Ne
-Ne
 Cm
 Cm
-Ne
+Cm
+Cm
+Cm
 Cm
 Cm
 Cm
 "}
-(27,1,1) = {"
+(23,1,1) = {"
 Cm
-Ne
-Ne
-Ne
-Ne
-Ne
+Cm
+Cm
+Cm
+Cm
 ve
 OD
 Ux
@@ -2373,23 +2106,21 @@ Ux
 Ux
 Ux
 ve
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
 Cm
 Cm
 Cm
@@ -2399,13 +2130,12 @@ Cm
 Cm
 Cm
 "}
-(28,1,1) = {"
+(24,1,1) = {"
 Cm
 Cm
-Ne
-Ne
-Ne
-Ne
+Cm
+Cm
+Cm
 ve
 kf
 kf
@@ -2429,17 +2159,15 @@ ve
 ve
 ve
 ve
-Ne
-Ne
-Ne
 Cm
 Cm
 Cm
 Cm
-Ne
-Ne
-Ne
-Ne
+Cm
+Cm
+Cm
+Cm
+Cm
 Cm
 Cm
 Cm
@@ -2449,13 +2177,12 @@ Cm
 Cm
 Cm
 "}
-(29,1,1) = {"
+(25,1,1) = {"
 Cm
 Cm
 Cm
 Cm
-Ne
-Ne
+Cm
 ve
 dz
 dz
@@ -2479,15 +2206,13 @@ KJ
 Ve
 lL
 ve
-Ne
-Ne
 Cm
 Cm
 Cm
 Cm
 Cm
 Cm
-Ne
+Cm
 Cm
 Cm
 Cm
@@ -2499,13 +2224,12 @@ Cm
 Cm
 Cm
 "}
-(30,1,1) = {"
+(26,1,1) = {"
 Cm
 Cm
 Cm
 Cm
 Cm
-Ne
 Mq
 bR
 Ux
@@ -2529,8 +2253,194 @@ FA
 aV
 OM
 ve
-Ne
-Ne
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(27,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+lc
+Ux
+fo
+AF
+pr
+dz
+Mm
+Ux
+Ux
+ng
+fU
+fU
+pr
+Ux
+Ux
+ve
+ve
+ve
+vG
+aV
+Zf
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(28,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+ve
+qK
+ve
+ve
+ve
+ve
+ve
+ve
+Ux
+Sr
+ve
+ve
+ve
+ve
+ve
+ve
+Cm
+ve
+vG
+aV
+fy
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(29,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+Ux
+Sr
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+vs
+Gn
+bu
+ve
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+"}
+(30,1,1) = {"
+Cm
+Cm
+Cm
+Cm
+Cm
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+Ux
+Ux
+ve
+ve
+ve
+ve
+ve
+ve
+Cm
+ve
+ve
+ve
+ve
+ve
 Cm
 Cm
 Cm
@@ -2555,32 +2465,29 @@ Cm
 Cm
 Cm
 Cm
-Ne
 ve
-lc
-Ux
-fo
-AF
-pr
-dz
-Mm
 Ux
 Ux
-ng
-fU
-fU
-pr
 Ux
 Ux
+Ux
+Dz
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
 ve
-ve
-ve
-vG
-aV
-Zf
-ve
-Ne
-Ne
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
 Cm
 Cm
 Cm
@@ -2605,32 +2512,29 @@ Cm
 Cm
 Cm
 Cm
-Ne
 ve
-ve
-qK
-ve
-ve
-ve
-ve
-ve
-ve
+Ak
 Ux
-Sr
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
 ve
-ve
-ve
-ve
-ve
-ve
-Ne
-ve
-vG
-aV
-fy
-ve
-Ne
-Ne
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
 Cm
 Cm
 Cm
@@ -2654,208 +2558,7 @@ Cm
 Cm
 Cm
 Cm
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-ve
-Ux
-Sr
-ve
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-ve
-vs
-Gn
-bu
-ve
-Ne
 Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(34,1,1) = {"
-Cm
-Cm
-Cm
-Cm
-Ne
-Ne
-ve
-ve
-ve
-ve
-ve
-ve
-ve
-ve
-ve
-Ux
-Ux
-ve
-ve
-ve
-ve
-ve
-ve
-Ne
-ve
-ve
-ve
-ve
-ve
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(35,1,1) = {"
-Cm
-Cm
-Cm
-Cm
-Ne
-Ne
-ve
-Ux
-Ux
-Ux
-Ux
-Ux
-Dz
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-ve
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(36,1,1) = {"
-Cm
-Cm
-Cm
-Cm
-Ne
-Ne
-ve
-Ak
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-Ux
-ve
-Ne
-Ne
-Ne
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(37,1,1) = {"
-Cm
-Cm
-Cm
-Cm
-Ne
-Ne
 ve
 ve
 ve
@@ -2873,308 +2576,6 @@ qK
 qK
 ve
 ve
-Ne
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(38,1,1) = {"
-Cm
-Cm
-Cm
-Cm
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(39,1,1) = {"
-Cm
-Cm
-Cm
-Ne
-Ne
-Ne
-Ne
-Ne
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(40,1,1) = {"
-Cm
-Cm
-Cm
-Cm
-Ne
-Ne
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(41,1,1) = {"
-Cm
-Cm
-Cm
-Cm
-Cm
-Ne
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(42,1,1) = {"
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-"}
-(43,1,1) = {"
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
 Cm
 Cm
 Cm

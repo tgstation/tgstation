@@ -171,7 +171,7 @@
 	if(!holder.has_dna())
 		balloon_alert(src, "no dna detected!")
 		return FALSE
-	to_chat(src, span_boldannounce(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
+	to_chat(src, span_bolddanger(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
 	to_chat(src, span_notice("DNA [holder.dna.unique_enzymes == master_dna ? "matches" : "does not match"] our stored Master's DNA."))
 	return TRUE
 
@@ -230,11 +230,11 @@
 	var/datum/atom_hud/hud
 	var/hud_on
 	if(mode == PAI_TOGGLE_MEDICAL_HUD)
-		hud = GLOB.huds[med_hud]
+		hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 		medHUD = !medHUD
 		hud_on = medHUD
 	if(mode == PAI_TOGGLE_SECURITY_HUD)
-		hud = GLOB.huds[sec_hud]
+		hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 		secHUD = !secHUD
 		hud_on = secHUD
 	if(hud_on)

@@ -97,4 +97,12 @@ SUBSYSTEM_DEF(parallax)
 /datum/controller/subsystem/parallax/proc/post_station_setup()
 	random_layer?.apply_global_effects()
 
+/// Return the most dominant color, if we have a colored background (mostly nebula gas)
+/datum/controller/subsystem/parallax/proc/get_parallax_color()
+	var/atom/movable/screen/parallax_layer/random/space_gas/gas = random_layer
+	if(!istype(gas))
+		return
+
+	return gas.parallax_color
+
 #undef PARALLAX_NONE

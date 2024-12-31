@@ -161,11 +161,14 @@
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	surgeries = list(
 		/datum/surgery/advanced/lobotomy,
+		/datum/surgery/advanced/lobotomy/mechanic,
 		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/vein_threading/mechanic,
 		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery/advanced/bioware/nerve_splicing/mechanic,
 		/datum/surgery_step/heal/combo/upgraded,
 		/datum/surgery_step/pacify,
-		/datum/surgery_step/revive,
+		/datum/surgery_step/pacify/mechanic,
 	)
 
 //Pad & Pad Terminal
@@ -261,7 +264,7 @@
 	data["status_report"] = status_report
 	return data
 
-/obj/machinery/computer/piratepad_control/ui_act(action, params)
+/obj/machinery/computer/piratepad_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -435,7 +438,7 @@
 	var/mob_cost = get_cost(sold_item)
 	sold_item.process_capture(mob_cost, mob_cost * 1.2)
 	do_sparks(8, FALSE, sold_item)
-	playsound(picked_turf, 'sound/weapons/emitter2.ogg', 25, TRUE)
+	playsound(picked_turf, 'sound/items/weapons/emitter2.ogg', 25, TRUE)
 	sold_item.flash_act()
 	sold_item.adjust_confusion(10 SECONDS)
 	sold_item.adjust_dizzy(10 SECONDS)
@@ -466,12 +469,12 @@
 
 /datum/export/pirate/cash
 	cost = 1
-	unit_name = "bills"
+	unit_name = "bill"
 	export_types = list(/obj/item/stack/spacecash)
 
-/datum/export/pirate/cash/get_amount(obj/exported_item)
+/datum/export/pirate/cash/get_cost(obj/exported_item)
 	var/obj/item/stack/spacecash/cash = exported_item
-	return ..() * cash.amount * cash.value
+	return cash.value * cash.amount
 
 /datum/export/pirate/holochip
 	cost = 1

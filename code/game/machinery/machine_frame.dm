@@ -259,8 +259,7 @@
 
 	if(play_sound && !no_sound)
 		replacer.play_rped_sound()
-		if(replacer.works_from_distance)
-			user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+
 	return TRUE
 
 /obj/structure/frame/machine/can_be_unfasten_wrench(mob/user, silent)
@@ -454,7 +453,7 @@
 		var/obj/item/circuitboard/machine/leaving_circuit = circuit
 		circuit = null
 		// Assign the circuit & parts & move them all at once into the machine
-		// no need to seperatly move circuit board as its already part of the components list
+		// no need to separately move circuit board as its already part of the components list
 		new_machine.circuit = leaving_circuit
 		new_machine.component_parts = components
 		for (var/obj/new_part in components)

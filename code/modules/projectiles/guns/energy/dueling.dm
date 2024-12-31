@@ -298,15 +298,17 @@
 
 /obj/item/ammo_casing/energy/duel/ready_proj(atom/target, mob/living/user, quiet, zone_override)
 	. = ..()
-	var/obj/projectile/energy/duel/D = loaded_projectile
-	D.setting = setting
-	D.update_appearance()
+	var/obj/projectile/energy/duel/dueling_projectile = loaded_projectile
+	dueling_projectile.setting = setting
+	dueling_projectile.update_appearance()
+	if(!isturf(target))
+		dueling_projectile.set_homing_target(target)
 
 /obj/item/ammo_casing/energy/duel/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	. = ..()
-	var/obj/effect/temp_visual/dueling_chaff/C = new(get_turf(user))
-	C.setting = setting
-	C.update_appearance()
+	var/obj/effect/temp_visual/dueling_chaff/chaff = new(get_turf(user))
+	chaff.setting = setting
+	chaff.update_appearance()
 
 //Projectile
 
@@ -314,7 +316,6 @@
 	name = "dueling beam"
 	icon_state = "declone"
 	reflectable = FALSE
-	homing = TRUE
 	var/setting
 
 /obj/projectile/energy/duel/update_icon()
@@ -365,22 +366,13 @@
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
 	base_icon_state = "medalbox"
+	icon_open = "medalboxopen"
 
 /obj/item/storage/lockbox/dueling/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = 2
 	atom_storage.set_holdable(/obj/item/gun/energy/dueling)
-
-/obj/item/storage/lockbox/dueling/update_icon_state()
-	if(atom_storage?.locked)
-		icon_state = icon_locked
-		return ..()
-	if(broken)
-		icon_state = icon_broken
-		return ..()
-	icon_state = open ? "[base_icon_state]open" : icon_closed
-	return ..()
 
 /obj/item/storage/lockbox/dueling/PopulateContents()
 	. = ..()

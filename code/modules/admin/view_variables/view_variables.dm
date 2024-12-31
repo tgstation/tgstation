@@ -3,7 +3,7 @@
 
 ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the variables of a datum.", ADMIN_CATEGORY_DEBUG, datum/thing in world)
 	user.debug_variables(thing)
-// This is kept as a seperate proc because admins are able to show VV to non-admins
+// This is kept as a separate proc because admins are able to show VV to non-admins
 
 /client/proc/debug_variables(datum/thing in world)
 	set category = "Debug"
@@ -23,7 +23,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 
 	if(isappearance(thing))
 		thing = get_vv_appearance(thing) // this is /mutable_appearance/our_bs_subtype
-	var/islist = islist(thing) || (!isdatum(thing) && hascall(thing, "Cut")) // Some special lists dont count as lists, but can be detected by if they have list procs
+	var/islist = islist(thing) || (!isdatum(thing) && hascall(thing, "Cut")) // Some special lists don't count as lists, but can be detected by if they have list procs
 	if(!islist && !isdatum(thing))
 		return
 
@@ -257,7 +257,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 					</td>
 					<td width='50%'>
 						<div align='center'>
-							<a id='refresh_link' href='?_src_=vars;
+							<a id='refresh_link' href='byond://?_src_=vars;
 datumrefresh=[refid];[HrefToken()]'>Refresh</a>
 							<form>
 								<select name="file" size="1"

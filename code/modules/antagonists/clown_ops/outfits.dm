@@ -10,6 +10,7 @@
 	r_pocket = /obj/item/bikehorn
 	id = /obj/item/card/id/advanced/chameleon
 	backpack_contents = list(
+		/obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine = 1, //The clown op equivalent to the Ansem
 		/obj/item/pen/edagger = 1,
 		/obj/item/dnainjector/clumsymut = 1, //in case you want to be clumsy for the memes
 		/obj/item/storage/box/syndie_kit/clownpins = 1, //for any guns that you get your grubby little clown op mitts on
@@ -24,6 +25,7 @@
 	id_trim = /datum/id_trim/chameleon/operative/clown
 
 /datum/outfit/syndicate/clownop/no_crystals
+	name = "Clown Operative - Reinforcement"
 	tc = 0
 
 /datum/outfit/syndicate/clownop/leader

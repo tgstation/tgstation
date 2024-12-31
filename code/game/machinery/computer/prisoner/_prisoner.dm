@@ -35,7 +35,7 @@
 		return
 	contained_id = new_id
 	balloon_alert_to_viewers("id inserted")
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 /obj/machinery/computer/prisoner/proc/id_eject(mob/user)
 	if(isnull(contained_id))
@@ -48,7 +48,7 @@
 		contained_id.forceMove(drop_location())
 
 	balloon_alert_to_viewers("id ejected")
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 /obj/machinery/computer/prisoner/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/card/id/advanced/prisoner))

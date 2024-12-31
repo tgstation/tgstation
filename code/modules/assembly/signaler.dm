@@ -46,7 +46,7 @@
 	user.set_suicide(TRUE)
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(FALSE)
-	playsound(user, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	playsound(user, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	qdel(src)
 
 /obj/item/assembly/signaler/Initialize(mapload)
@@ -169,9 +169,9 @@
 	last_receive_signal_log = istype(holder, /obj/item/transfer_valve) ? signal.logging_data : null
 
 	pulse()
-	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
+	audible_message(span_infoplain("[icon2html(src, hearers(src))] *beep* *beep* *beep*"), null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
-		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+		hearing_mob.playsound_local(get_turf(src), 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	return TRUE
 
 /obj/item/assembly/signaler/proc/set_frequency(new_frequency)

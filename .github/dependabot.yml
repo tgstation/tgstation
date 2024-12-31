@@ -1,0 +1,11 @@
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: master
+    schedule:
+      interval: daily
+    labels:
+      - GitHub
+    open-pull-requests-limit: 10

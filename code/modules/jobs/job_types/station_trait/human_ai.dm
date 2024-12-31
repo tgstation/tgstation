@@ -40,7 +40,7 @@
 	random_spawns_possible = FALSE
 	allow_bureaucratic_error = FALSE
 	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
-	ignore_human_authority = TRUE //we can safely assume NT doesn't care what species AIs are made of, much less if they can't even afford an AI.
+	human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED //we can safely assume NT doesn't care what species AIs are made of, much less if they can't even afford an AI.
 
 /datum/job/human_ai/get_roundstart_spawn_point()
 	return get_latejoin_spawn_point()
@@ -98,9 +98,7 @@
 		/obj/item/door_remote/omni = 1,
 		/obj/item/machine_remote = 1,
 		/obj/item/secure_camera_console_pod = 1,
-	)
-	implants = list(
-		/obj/item/implant/teleport_blocker,
+		/obj/item/sensor_device = 1,
 	)
 
 	uniform = /obj/item/clothing/under/rank/station_trait/human_ai
@@ -108,27 +106,33 @@
 	ears = /obj/item/radio/headset/silicon/human_ai
 	glasses = /obj/item/clothing/glasses/hud/diagnostic
 
-	suit = /obj/item/clothing/suit/costume/cardborg
-	head = /obj/item/clothing/head/costume/cardborg
-
 	l_pocket = /obj/item/laser_pointer/infinite_range //to punish borgs, this works through the camera console.
 	r_pocket = /obj/item/assembly/flash/handheld
 
 	l_hand = /obj/item/paper/default_lawset_list
 
-/datum/outfit/job/human_ai/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+/datum/outfit/job/human_ai/pre_equip(mob/living/carbon/human/equipped, visuals_only)
 	. = ..()
-	if(visualsOnly)
+	if(visuals_only)
+		return
+	if(is_safe_turf(equipped.loc, dense_atoms = TRUE)) //skip this if it's safe. We allow dense atoms because we spawn out of the inactive core.
+		return
+	if(isnull(equipped.dna.species.outfit_important_for_life)) //custom species stuff will handle this for us.
+		internals_slot = ITEM_SLOT_SUITSTORE
+		suit_store = /obj/item/tank/internals/oxygen
+	suit = /obj/item/clothing/suit/space/nasavoid
+	head = /obj/item/clothing/head/helmet/space/nasavoid
+
+/datum/outfit/job/human_ai/post_equip(mob/living/carbon/human/equipped, visuals_only)
+	. = ..()
+	if(visuals_only)
 		return
 	if(!equipped.get_quirk(/datum/quirk/body_purist))
-		var/obj/item/organ/internal/tongue/robot/cybernetic = new()
+		var/obj/item/organ/tongue/robot/cybernetic = new()
 		cybernetic.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 		//you only get respect if you go all the way, man.
 		ADD_TRAIT(equipped, TRAIT_COMMISSIONED, INNATE_TRAIT)
 	equipped.faction |= list(FACTION_SILICON, FACTION_TURRET)
-
-	var/static/list/allowed_areas = typecacheof(list(/area/station/ai_monitored))
-	equipped.AddComponent(/datum/component/hazard_area, area_whitelist = allowed_areas)
 
 /obj/item/paper/default_lawset_list
 	name = "Lawset Note"
@@ -166,6 +170,6 @@
 	user.balloon_alert(user, "unpacking...")
 	if(!do_after(user, 5 SECONDS, src))
 		return
-	playsound(src, 'sound/items/drill_use.ogg', 40, TRUE)
+	playsound(src, 'sound/items/tools/drill_use.ogg', 40, TRUE)
 	new /obj/machinery/computer/camera_advanced/human_ai(get_turf(src))
 	qdel(src)

@@ -28,12 +28,6 @@
 	},
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
-"x" = (
-/obj/structure/foamedmetal,
-/obj/structure/window/spawner/directional/east,
-/obj/structure/bookcase/random/fiction,
-/turf/open/floor/holofloor/asteroid,
-/area/template_noop)
 "I" = (
 /obj/structure/table,
 /obj/item/gun/energy/laser,
@@ -62,7 +56,7 @@ a
 "}
 (2,1,1) = {"
 b
-x
+b
 b
 b
 b

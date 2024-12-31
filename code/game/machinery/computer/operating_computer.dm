@@ -7,6 +7,7 @@
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/operating
+	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_REQUIRES_STANDING
 
 	var/obj/structure/table/optable/table
 	var/list/advanced_surgeries = list()
@@ -77,7 +78,7 @@
 			break
 
 /obj/machinery/computer/operating/ui_state(mob/user)
-	return GLOB.not_incapacitated_state
+	return GLOB.standing_state
 
 /obj/machinery/computer/operating/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -139,15 +140,17 @@
 	data["patient"]["oxyLoss"] = patient.getOxyLoss()
 	if(patient.surgeries.len)
 		for(var/datum/surgery/procedure in patient.surgeries)
-			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
+			var/datum/surgery_step/surgery_step = GLOB.surgery_steps[procedure.steps[procedure.status]]
 			var/chems_needed = surgery_step.get_chem_list()
 			var/alternative_step
 			var/alt_chems_needed = ""
+			var/alt_chems_present = FALSE
 			if(surgery_step.repeatable)
 				var/datum/surgery_step/next_step = procedure.get_surgery_next_step()
 				if(next_step)
 					alternative_step = capitalize(next_step.name)
 					alt_chems_needed = next_step.get_chem_list()
+					alt_chems_present = next_step.chem_check(patient)
 				else
 					alternative_step = "Finish operation"
 			data["procedures"] += list(list(
@@ -155,11 +158,13 @@
 				"next_step" = capitalize(surgery_step.name),
 				"chems_needed" = chems_needed,
 				"alternative_step" = alternative_step,
-				"alt_chems_needed" = alt_chems_needed
+				"alt_chems_needed" = alt_chems_needed,
+				"chems_present" = surgery_step.chem_check(patient),
+				"alt_chems_present" = alt_chems_present
 			))
 	return data
 
-/obj/machinery/computer/operating/ui_act(action, params)
+/obj/machinery/computer/operating/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

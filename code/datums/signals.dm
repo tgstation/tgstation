@@ -4,7 +4,7 @@
  * This sets up a listening relationship such that when the target object emits a signal
  * the source datum this proc is called upon, will receive a callback to the given proctype
  * Use PROC_REF(procname), TYPE_PROC_REF(type,procname) or GLOBAL_PROC_REF(procname) macros to validate the passed in proc at compile time.
- * PROC_REF for procs defined on current type or it's ancestors, TYPE_PROC_REF for procs defined on unrelated type and GLOBAL_PROC_REF for global procs.
+ * PROC_REF for procs defined on current type or its ancestors, TYPE_PROC_REF for procs defined on unrelated type and GLOBAL_PROC_REF for global procs.
  * Return values from procs registered must be a bitfield
  *
  * Arguments:

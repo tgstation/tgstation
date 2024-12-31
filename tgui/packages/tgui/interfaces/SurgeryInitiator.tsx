@@ -5,8 +5,8 @@ import { Component } from 'react';
 
 import { useBackend } from '../backend';
 import { Button, KeyListener, Stack } from '../components';
-import { BodyZone, BodyZoneSelector } from '../components/BodyZoneSelector';
 import { Window } from '../layouts';
+import { BodyZone, BodyZoneSelector } from './common/BodyZoneSelector';
 
 type Surgery = {
   name: string;

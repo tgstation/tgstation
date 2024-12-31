@@ -11,10 +11,19 @@ SUBSYSTEM_DEF(machines)
 	VAR_PRIVATE/list/all_machines = list()
 
 	var/list/processing = list()
+	var/list/processing_early = list()
+	var/list/processing_late = list()
+	var/list/processing_apcs = list()
+
 	var/list/currentrun = list()
-	var/list/apc_early_processing = list()
-	var/list/apc_late_processing = list()
-	var/current_part = SSMACHINES_APCS_EARLY
+	var/current_part = SSMACHINES_MACHINES_EARLY
+	var/list/apc_steps = list(
+		SSMACHINES_APCS_EARLY,
+		SSMACHINES_APCS_ENVIRONMENT,
+		SSMACHINES_APCS_LIGHTS,
+		SSMACHINES_APCS_EQUIPMENT,
+		SSMACHINES_APCS_LATE
+		)
 	///List of all powernets on the server.
 	var/list/datum/powernet/powernets = list()
 
@@ -82,25 +91,53 @@ SUBSYSTEM_DEF(machines)
 	if (!resumed)
 		for(var/datum/powernet/powernet as anything in powernets)
 			powernet.reset() //reset the power state.
-		current_part = SSMACHINES_APCS_EARLY
-		src.currentrun = apc_early_processing.Copy()
+		current_part = SSMACHINES_MACHINES_EARLY
+		src.currentrun = processing_early.Copy()
 
-	//APC early processing. Draws static power usages from their grids.
-	if(current_part == SSMACHINES_APCS_EARLY)
+	//Processing machines that get the priority power draw
+	if(current_part == SSMACHINES_MACHINES_EARLY)
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/obj/machinery/thing = currentrun[currentrun.len]
+			currentrun.len--
+			if(QDELETED(thing) || thing.process_early(wait * 0.1) == PROCESS_KILL)
+				processing_early -= thing
+				thing.datum_flags &= ~DF_ISPROCESSING
+			if (MC_TICK_CHECK)
+				return
+		current_part = apc_steps[1]
+		src.currentrun = processing_apcs.Copy()
+
+	//Processing APCs
+	while(current_part in apc_steps)
 		//cache for sanic speed (lists are references anyways)
 		var/list/currentrun = src.currentrun
 		while(currentrun.len)
 			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
 			currentrun.len--
-			if(QDELETED(apc) || apc.early_process(wait * 0.1) == PROCESS_KILL)
-				apc_early_processing -= apc
+			if(QDELETED(apc))
+				processing_apcs -= apc
 				apc.datum_flags &= ~DF_ISPROCESSING
+			switch(current_part)
+				if(SSMACHINES_APCS_EARLY)
+					apc.early_process(wait * 0.1)
+				if(SSMACHINES_APCS_LATE)
+					apc.charge_channel(null, wait * 0.1)
+					apc.late_process(wait * 0.1)
+				else
+					apc.charge_channel(current_part, wait * 0.1)
 			if(MC_TICK_CHECK)
 				return
-		current_part = SSMACHINES_MACHINES
-		src.currentrun = processing.Copy()
+		var/next_index = apc_steps.Find(current_part) + 1
+		if (next_index > apc_steps.len)
+			current_part = SSMACHINES_MACHINES
+			src.currentrun = processing.Copy()
+			break
+		current_part = apc_steps[next_index]
+		src.currentrun = processing_apcs.Copy()
 
-	//General machine processing. Their power usage can be dynamic and based on surplus power, so they come after static power usage have been applied.
+	//Processing all machines
 	if(current_part == SSMACHINES_MACHINES)
 		//cache for sanic speed (lists are references anyways)
 		var/list/currentrun = src.currentrun
@@ -112,21 +149,20 @@ SUBSYSTEM_DEF(machines)
 				thing.datum_flags &= ~DF_ISPROCESSING
 			if (MC_TICK_CHECK)
 				return
-		current_part = SSMACHINES_APCS_LATE
-		src.currentrun = apc_late_processing.Copy()
+		current_part = SSMACHINES_MACHINES_LATE
+		src.currentrun = processing_late.Copy()
 
-	//APC late processing. APCs will use the remaining power on the grid to charge their cells if needed.
-	//This is applied at the end so charging APCs don't cause others to discharge by taking all the power from the grid before machines use power.
-	if(current_part == SSMACHINES_APCS_LATE)
+	//Processing machines that record the power usage statistics
+	if(current_part == SSMACHINES_MACHINES_LATE)
 		//cache for sanic speed (lists are references anyways)
 		var/list/currentrun = src.currentrun
 		while(currentrun.len)
-			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
+			var/obj/machinery/thing = currentrun[currentrun.len]
 			currentrun.len--
-			if(QDELETED(apc) || apc.late_process(wait * 0.1) == PROCESS_KILL)
-				apc_late_processing -= apc
-				apc.datum_flags &= ~DF_ISPROCESSING
-			if(MC_TICK_CHECK)
+			if(QDELETED(thing) || thing.process_late(wait * 0.1) == PROCESS_KILL)
+				processing_late -= thing
+				thing.datum_flags &= ~DF_ISPROCESSING
+			if (MC_TICK_CHECK)
 				return
 
 /datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)

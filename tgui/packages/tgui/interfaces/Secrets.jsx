@@ -354,13 +354,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={0.0}
+            <Button
+              icon="robot"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Triple AI mode"
+              onClick={() => act('tripleAI')}
+            />
           </Stack.Item>
           <Stack.Item>
             <Button
@@ -425,13 +425,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="house"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Send Shuttle Back"
+              onClick={() => act('send_shuttle_back')}
+            />
           </Stack.Item>
         </Stack>
       </Stack.Item>

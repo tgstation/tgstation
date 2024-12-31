@@ -215,10 +215,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/keycard_auth/directional/west{
+/obj/machinery/keycard_auth/wall_mounted/directional/west{
 	pixel_y = 7
 	},
-/obj/machinery/keycard_auth/directional/west{
+/obj/machinery/keycard_auth/wall_mounted/directional/west{
 	pixel_y = -7
 	},
 /turf/open/indestructible,

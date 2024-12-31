@@ -46,7 +46,7 @@
 
 /obj/item/experi_scanner/proc/make_meat_toilet(mob/living/carbon/user)
 	///The suicide victim's brain that will be placed inside the toilet's cistern
-	var/obj/item/organ/internal/brain/toilet_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/toilet_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	///The toilet we're about to unleash unto this cursed plane of existence
 	var/obj/structure/toilet/greyscale/result_toilet = new (drop_location())
 

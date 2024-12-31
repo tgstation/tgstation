@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/asteroid/polarbear
 	name = "polar bear"
-	desc = "An aggressive animal that defends it's territory with incredible power. These beasts don't run from their enemies."
+	desc = "An aggressive animal that defends its territory with incredible power. These beasts don't run from their enemies."
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "polarbear"
 	icon_living = "polarbear"
@@ -19,7 +19,7 @@
 	melee_damage_upper = 25
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	vision_range = 2 // don't aggro unless you basically antagonize it, though they will kill you worse than a goliath will
 	aggro_vision_range = 9
@@ -65,20 +65,3 @@
 	name = "magic polar bear"
 	desc = "It seems sentient somehow."
 	faction = list(FACTION_NEUTRAL)
-
-/obj/item/crusher_trophy/bear_paw
-	name = "polar bear paw"
-	desc = "It's a polar bear paw."
-	icon_state = "bear_paw"
-	denied_type = /obj/item/crusher_trophy/bear_paw
-
-/obj/item/crusher_trophy/bear_paw/effect_desc()
-	return "mark detonation to attack twice if you are below half your life"
-
-/obj/item/crusher_trophy/bear_paw/on_mark_detonation(mob/living/target, mob/living/user)
-	if(user.health / user.maxHealth > 0.5)
-		return
-	var/obj/item/I = user.get_active_held_item()
-	if(!I)
-		return
-	I.melee_attack_chain(user, target, null)

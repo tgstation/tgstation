@@ -164,6 +164,8 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 ///Creates a given trait of a specific type, while also removing any blacklisted ones from the future pool.
 /datum/controller/subsystem/processing/station/proc/setup_trait(datum/station_trait/trait_type)
+	if(locate(trait_type) in station_traits)
+		return
 	var/datum/station_trait/trait_instance = new trait_type()
 	station_traits += trait_instance
 	log_game("Station Trait: [trait_instance.name] chosen for this round.")
@@ -179,5 +181,4 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		var/datum/hud/new_player/observer_hud = player.hud_used
 		if (!istype(observer_hud))
 			continue
-		observer_hud.add_station_trait_buttons()
-		observer_hud.show_hud(observer_hud.hud_version)
+		observer_hud.show_station_trait_buttons()

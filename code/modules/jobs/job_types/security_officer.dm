@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 	var/ears = null
 	var/accessory = null
-	var/list/dep_trim = null
+	var/datum/id_trim/dep_trim = null
 	var/destination = null
 
 	switch(department)
@@ -218,7 +218,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		)
 	belt = /obj/item/modular_computer/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt
-	gloves = /obj/item/clothing/gloves/color/black
+	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/helmet/sec
 	shoes = /obj/item/clothing/shoes/jackboots/sec
 	l_pocket = /obj/item/restraints/handcuffs

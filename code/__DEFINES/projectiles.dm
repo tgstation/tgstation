@@ -14,8 +14,10 @@
 #define CALIBER_A7MM "a7mm"
 /// The caliber used by the [security auto-rifle][/obj/item/gun/ballistic/automatic/wt550].
 #define CALIBER_46X30MM "4.6x30mm"
-/// The caliber used by the Nanotrasen Saber SMG, PP-95 SMG and Type U3 Uzi. Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.
+/// The caliber used by the Nanotrasen Saber SMG and Type U3 Uzi. Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.
 #define CALIBER_9MM "9mm"
+/// The caliber used by smart SMG ammunition
+#define CALIBER_160SMART ".160 Smart"
 /// The caliber used as the default for ballistic guns. Only not overridden for the [surplus rifle][/obj/item/gun/ballistic/automatic/surplus].
 #define CALIBER_10MM "10mm"
 /// The caliber used by most revolver variants.
@@ -54,16 +56,14 @@
 #define CALIBER_HARPOON "harpoon"
 /// The caliber used by the rebar crossbow.
 #define CALIBER_REBAR "sharpened rod"
-/// The caliber used by the rebar crossbow when forced to hold 2 rods.
-#define CALIBER_REBAR_FORCED "sharpened rod"
-/// The caliber used by the syndicate rebar crossbow.
-#define CALIBER_REBAR_SYNDIE "sharpened rod"
 /// The caliber used by the meat hook.
 #define CALIBER_HOOK "hook"
 /// The caliber used by the changeling tentacle mutation.
 #define CALIBER_TENTACLE "tentacle"
 /// The caliber used by pipeguns and pipe pistols
 #define CALIBER_JUNK "junk"
+/// The caliber used by the (gatfruit) peashooter
+#define CALIBER_PEA "pea"
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2
@@ -79,12 +79,27 @@
 #define RETURN_PRECISE_POSITION(A) new /datum/position(A)
 #define RETURN_PRECISE_POINT(A) new /datum/point(A)
 
-#define RETURN_POINT_VECTOR(ATOM, ANGLE, SPEED) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED))
-#define RETURN_POINT_VECTOR_INCREMENT(ATOM, ANGLE, SPEED, AMT) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED, AMT))
-
 ///The self charging rate of energy guns that magically recharge themselves, in watts.
 #define STANDARD_ENERGY_GUN_SELF_CHARGE_RATE (0.05 * STANDARD_CELL_CHARGE)
 
 /// Macro to turn a number of laser shots into an energy cost, based on the above define
 /// e.g. LASER_SHOTS(12, STANDARD_CELL_CHARGE) means 12 shots
 #define LASER_SHOTS(X, MAX_CHARGE) (((100 * MAX_CHARGE) - ((100 * MAX_CHARGE) % X)) / (100 * X)) // I wish I could just use round, but it can't be used in datum members
+
+/// How far do the projectile hits the prone mob
+#define MAX_RANGE_HIT_PRONE_TARGETS 10
+
+/// Queued for impact deletion (simple qdel)
+#define PROJECTILE_IMPACT_DELETE "impact_delete"
+/// Queued for range deletion (on_range call)
+#define PROJECTILE_RANGE_DELETE "range_delete"
+
+/// Projectile either hasn't impacted anything, or pierced through the target
+#define PROJECTILE_IMPACT_PASSED "impact_passed"
+/// Projectile has been "deleted" before bullet_act call has occured
+#define PROJECTILE_IMPACT_INTERRUPTED "impact_interrupted"
+/// Projectile has successfully impacted something and is scheduled for deletion
+#define PROJECTILE_IMPACT_SUCCESSFUL "impact_successful"
+
+/// For how long projectile tracers linger
+#define PROJECTILE_TRACER_DURATION 0.3 SECONDS

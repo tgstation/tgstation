@@ -3,7 +3,7 @@
 	desc = "This spell opens nearby doors and closets."
 	button_icon_state = "knock"
 
-	sound = 'sound/magic/knock.ogg'
+	sound = 'sound/effects/magic/knock.ogg'
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 2 SECONDS

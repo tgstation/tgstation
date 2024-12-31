@@ -524,7 +524,7 @@ SUBSYSTEM_DEF(timer)
 		2 = timeToRun,
 		3 = wait,
 		4 = flags,
-		5 = callBack, /* Safe to hold this directly becasue it's never del'd */
+		5 = callBack, /* Safe to hold this directly because it's never del'd */
 		6 = "[callBack.object]",
 		7 = text_ref(callBack.object),
 		8 = getcallingtype(),
@@ -539,7 +539,7 @@ SUBSYSTEM_DEF(timer)
 		2 = timeToRun,
 		3 = wait,
 		4 = flags,
-		5 = callBack, /* Safe to hold this directly becasue it's never del'd */
+		5 = callBack, /* Safe to hold this directly because it's never del'd */
 		6 = "[callBack.object]",
 		7 = getcallingtype(),
 		8 = callBack.delegate,
@@ -645,7 +645,7 @@ SUBSYSTEM_DEF(timer)
 				hash_timer.hash = null // but keep it from accidentally deleting us
 			else
 				if (flags & TIMER_OVERRIDE)
-					hash_timer.hash = null // no need having it delete it's hash if we are going to replace it
+					hash_timer.hash = null // no need having it delete its hash if we are going to replace it
 					qdel(hash_timer)
 				else
 					if (hash_timer.flags & TIMER_STOPPABLE)

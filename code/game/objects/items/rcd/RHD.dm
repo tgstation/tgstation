@@ -63,6 +63,8 @@
 	return do_after(user, delay, target, extra_checks = CALLBACK(src, PROC_REF(blueprint_change)))
 
 /obj/item/construction/proc/blueprint_change()
+	PRIVATE_PROC(TRUE)
+
 	return !blueprint_changed
 
 ///used for examining the RCD and for its UI
@@ -71,7 +73,7 @@
 		return silo_mats.mat_container.get_material_amount(/datum/material/iron) / SILO_USE_AMOUNT
 	return 0
 
-///returns local matter units available. overriden by rcd borg to return power units available
+///returns local matter units available. overridden by rcd borg to return power units available
 /obj/item/construction/proc/get_matter(mob/user)
 	return matter
 
@@ -91,6 +93,7 @@
 
 /obj/item/construction/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	SHOULD_CALL_PARENT(TRUE)
+
 	if(istype(interacting_with, /obj/item/rcd_upgrade))
 		install_upgrade(interacting_with, user)
 		return ITEM_INTERACT_SUCCESS
@@ -100,6 +103,7 @@
 
 /obj/item/construction/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	SHOULD_CALL_PARENT(TRUE)
+
 	if(istype(tool, /obj/item/rcd_upgrade))
 		install_upgrade(tool, user)
 		return ITEM_INTERACT_SUCCESS
@@ -292,7 +296,7 @@
 /obj/item/construction/proc/check_menu(mob/living/user, remote_anchor)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(remote_anchor && user.remote_control != remote_anchor)
 		return FALSE

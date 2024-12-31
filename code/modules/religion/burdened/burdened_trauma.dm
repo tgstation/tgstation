@@ -153,8 +153,8 @@
 
 	if(!(organ.slot in critical_slots))
 		return FALSE
-	else if(istype(organ, /obj/item/organ/internal/eyes))
-		var/obj/item/organ/internal/eyes/eyes = organ
+	else if(istype(organ, /obj/item/organ/eyes))
+		var/obj/item/organ/eyes/eyes = organ
 		if(eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
 			return TRUE
 		return FALSE

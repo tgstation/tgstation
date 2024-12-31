@@ -222,6 +222,7 @@ SUBSYSTEM_DEF(air)
 		cost_atoms = MC_AVERAGE(cost_atoms, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
 
+
 	currentpart = SSAIR_PIPENETS
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
@@ -488,29 +489,26 @@ SUBSYSTEM_DEF(air)
 		T.excited = FALSE
 
 ///Adds a turf to active processing, handles duplicates. Call this with blockchanges == TRUE if you want to nuke the assoc excited group
-/datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = FALSE)
-	if(istype(T) && T.air)
-		T.significant_share_ticker = 0
-		if(blockchanges && T.excited_group) //This is used almost exclusivly for shuttles, so the excited group doesn't stay behind
-			T.excited_group.garbage_collect() //Nuke it
-		if(T.excited) //Don't keep doing it if there's no point
+/datum/controller/subsystem/air/proc/add_to_active(turf/open/activate, blockchanges = FALSE)
+	if(istype(activate) && activate.air)
+		activate.significant_share_ticker = 0
+		if(blockchanges && activate.excited_group) //This is used almost exclusivly for shuttles, so the excited group doesn't stay behind
+			activate.excited_group.garbage_collect() //Nuke it
+		if(activate.excited) //Don't keep doing it if there's no point
 			return
 		#ifdef VISUALIZE_ACTIVE_TURFS
-		T.add_atom_colour(COLOR_VIBRANT_LIME, TEMPORARY_COLOUR_PRIORITY)
+		activate.add_atom_colour(COLOR_VIBRANT_LIME, TEMPORARY_COLOUR_PRIORITY)
 		#endif
-		T.excited = TRUE
-		active_turfs += T
-		if(currentpart == SSAIR_ACTIVETURFS)
-			currentrun += T
-	else if(T.flags_1 & INITIALIZED_1)
-		for(var/turf/S in T.atmos_adjacent_turfs)
-			add_to_active(S, TRUE)
+		activate.excited = TRUE
+		active_turfs += activate
+	else if(activate.flags_1 & INITIALIZED_1)
+		for(var/turf/neighbor as anything in activate.atmos_adjacent_turfs)
+			add_to_active(neighbor, TRUE)
 	else if(map_loading)
 		if(queued_for_activation)
-			queued_for_activation[T] = T
-		return
+			queued_for_activation[activate] = activate
 	else
-		T.requires_activation = TRUE
+		activate.requires_activation = TRUE
 
 /datum/controller/subsystem/air/StartLoadingMap()
 	LAZYINITLIST(queued_for_activation)
@@ -554,14 +552,14 @@ SUBSYSTEM_DEF(air)
 	// Taking advantage of current cycle being set to negative before this run to do A->B B->A prevention
 	for(var/turf/open/potential_diff as anything in difference_check)
 		// I can't use 0 here, so we're gonna do this instead. If it ever breaks I'll eat my shoe
-		potential_diff.current_cycle = -INFINITE
+		potential_diff.current_cycle = -INFINITY
 		for(var/turf/open/enemy_tile as anything in potential_diff.atmos_adjacent_turfs)
 			// If it's already been processed, then it's already talked to us
-			if(enemy_tile.current_cycle == -INFINITE)
+			if(enemy_tile.current_cycle == -INFINITY)
 				continue
-			// .air instead of .return_air() because we can guarentee that the proc won't do anything
-			if(potential_diff.air.compare(enemy_tile.air))
-				//testing("Active turf found. Return value of compare(): [T.air.compare(enemy_tile.air)]")
+			// .air instead of .return_air() because we can guarantee that the proc won't do anything
+			if(potential_diff.air.compare(enemy_tile.air, MOLES))
+				//testing("Active turf found. Return value of compare(): [T.air.compare(enemy_tile.air, MOLES)]")
 				if(!potential_diff.excited)
 					potential_diff.excited = TRUE
 					SSair.active_turfs += potential_diff
@@ -707,7 +705,7 @@ SUBSYSTEM_DEF(air)
 		CHECK_TICK
 
 //this can't be done with setup_atmos_machinery() because
-// all atmos machinery has to initalize before the first
+// all atmos machinery has to initialize before the first
 // pipenet can be built.
 /datum/controller/subsystem/air/proc/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)

@@ -99,9 +99,9 @@
 	l_pocket = /obj/item/food/pizzaslice/dank
 	r_pocket = /obj/item/storage/wallet/random
 
-/datum/outfit/beachbum/post_equip(mob/living/carbon/human/bum, visualsOnly = FALSE)
+/datum/outfit/beachbum/post_equip(mob/living/carbon/human/bum, visuals_only = FALSE)
 	. = ..()
-	if(visualsOnly)
+	if(visuals_only)
 		return
 	bum.dna.add_mutation(/datum/mutation/human/stoner)
 
@@ -131,7 +131,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
-/datum/outfit/spacebartender/post_equip(mob/living/carbon/human/bartender, visualsOnly = FALSE)
+/datum/outfit/spacebartender/post_equip(mob/living/carbon/human/bartender, visuals_only = FALSE)
 	. = ..()
 	var/obj/item/card/id/id_card = bartender.wear_id
 	if(bartender.age < AGE_MINOR)
@@ -179,12 +179,12 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+				playsound(loc, 'sound/effects/blob/attackblob.ogg', 100, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
 			if(damage_amount)
-				playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+				playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/ash_walker_eggshell/attack_ghost(mob/user) //Pass on ghost clicks to the mob spawner
 	if(egg)
@@ -312,7 +312,7 @@
 
 	implants = list(/obj/item/implant/weapons_auth)
 
-/datum/outfit/lavaland_syndicate/post_equip(mob/living/carbon/human/syndicate, visualsOnly = FALSE)
+/datum/outfit/lavaland_syndicate/post_equip(mob/living/carbon/human/syndicate, visuals_only = FALSE)
 	syndicate.faction |= ROLE_SYNDICATE
 
 /datum/outfit/lavaland_syndicate/comms

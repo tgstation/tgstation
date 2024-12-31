@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(opened)
 			to_chat(user, span_warning("You must close the cover to swipe an ID card!"))
 		else
-			if(allowed(usr))
+			if(allowed(user))
 				locked = !locked
 				to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] [src]'s cover."))
 				update_icons()
@@ -186,6 +186,45 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 	return ..()
 
+#define LOW_DAMAGE_UPPER_BOUND 1/3
+#define MODERATE_DAMAGE_UPPER_BOUND 2/3
+
+/mob/living/silicon/robot/proc/update_damage_particles()
+	var/brute_percent = bruteloss / maxHealth
+	var/burn_percent = fireloss / maxHealth
+
+	var/old_smoke = smoke_particles
+	if (brute_percent > MODERATE_DAMAGE_UPPER_BOUND)
+		smoke_particles = /particles/smoke/cyborg/heavy_damage
+	else if (brute_percent > LOW_DAMAGE_UPPER_BOUND)
+		smoke_particles = /particles/smoke/cyborg
+	else
+		smoke_particles = null
+
+	if (old_smoke != smoke_particles)
+		if (old_smoke)
+			remove_shared_particles(old_smoke)
+		if (smoke_particles)
+			add_shared_particles(smoke_particles)
+
+	var/old_sparks = spark_particles
+	if (burn_percent > MODERATE_DAMAGE_UPPER_BOUND)
+		spark_particles = /particles/embers/spark/severe
+	else if (burn_percent > LOW_DAMAGE_UPPER_BOUND)
+		spark_particles = /particles/embers/spark
+	else
+		spark_particles = null
+
+	if (old_sparks != spark_particles)
+		if (old_sparks)
+			remove_shared_particles(old_sparks)
+		if (spark_particles)
+			add_shared_particles(spark_particles)
+
+
+#undef LOW_DAMAGE_UPPER_BOUND
+#undef MODERATE_DAMAGE_UPPER_BOUND
+
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if (LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(body_position == STANDING_UP)
@@ -202,7 +241,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				log_combat(user, src, "pushed")
 				visible_message(span_danger("[user] forces back [src]!"), \
 					span_userdanger("[user] forces back [src]!"), null, COMBAT_MESSAGE_RANGE)
-			playsound(loc, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/items/weapons/pierce.ogg', 50, TRUE, -1)
 	else
 		..()
 	return
@@ -214,7 +253,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!wiresexposed && !issilicon(user))
 		if(!cell)
 			return
-		cell.update_appearance()
 		cell.add_fingerprint(user)
 		to_chat(user, span_notice("You remove \the [cell]."))
 		user.put_in_active_hand(cell)
@@ -235,14 +273,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		. &= ~(SHOVE_CAN_MOVE|SHOVE_CAN_HIT_SOMETHING)
 
 /mob/living/silicon/robot/welder_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode && usr != src)
+	if(user.combat_mode && user != src)
 		return FALSE
 	. = TRUE
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!getBruteLoss())
 		to_chat(user, span_warning("[src] is already in good condition!"))
 		return
-	if (!tool.tool_start_check(user, amount=1)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
+	if (!tool.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED)) //The welder has 1u of fuel consumed by its afterattack, so we don't need to worry about taking any away.
 		return
 	if(src == user)
 		to_chat(user, span_notice("You start fixing yourself..."))
@@ -402,7 +440,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(stat != DEAD)
 		adjustBruteLoss(30)
 	else
-		investigate_log("has been gibbed a blob.", INVESTIGATE_DEATHS)
+		investigate_log("has been gibbed by a blob.", INVESTIGATE_DEATHS)
 		gib(DROP_ALL_REMAINS)
 	return TRUE
 
@@ -411,7 +449,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(EXPLODE_DEVASTATE)
 			investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 			gib(DROP_ALL_REMAINS)
-			return
+			return TRUE
 		if(EXPLODE_HEAVY)
 			if (stat != DEAD)
 				adjustBruteLoss(60)
@@ -432,8 +470,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	spark_system.start()
 
-/mob/living/silicon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	. = ..()
-	if (. || AM.throwforce < CYBORG_THROW_SLOWDOWN_THRESHOLD)
-		return
-	apply_status_effect(/datum/status_effect/borg_throw_slow)
+/mob/living/silicon/robot/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
+	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
+		spark_system.start()
+		. = TRUE
+	return ..() || .

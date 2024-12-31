@@ -44,7 +44,7 @@
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it's not damaged!")
 		return
-	if(!W.tool_start_check(user, amount=1))
+	if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
 	audible_message(span_hear("You hear welding."))
@@ -97,9 +97,9 @@
 	return ..()
 
 //bullets will have a 60% chance to hit any riders
-/obj/vehicle/ridden/secway/bullet_act(obj/projectile/P)
+/obj/vehicle/ridden/secway/bullet_act(obj/projectile/proj)
 	if(!buckled_mobs || prob(40))
 		return ..()
 	for(var/mob/rider as anything in buckled_mobs)
-		rider.bullet_act(P)
-	return TRUE
+		return rider.projectile_hit(proj)
+	return ..()

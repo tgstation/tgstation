@@ -1,6 +1,6 @@
 // Cocoa Pod
 /obj/item/seeds/cocoapod
-	name = "pack of cocoa pod seeds"
+	name = "cocoa pod seed pack"
 	desc = "These seeds grow into cacao trees. They look fattening." //SIC: cocoa is the seeds. The trees are spelled cacao.
 	icon_state = "seed-cocoapod"
 	species = "cocoapod"
@@ -31,7 +31,7 @@
 
 // Vanilla Pod
 /obj/item/seeds/cocoapod/vanillapod
-	name = "pack of vanilla pod seeds"
+	name = "vanilla pod seed pack"
 	desc = "These seeds grow into vanilla trees. They look fattening."
 	icon_state = "seed-vanillapod"
 	species = "vanillapod"
@@ -52,7 +52,7 @@
 	distill_reagent = /datum/reagent/consumable/vanilla //Takes longer, but you can get even more vanilla from it.
 
 /obj/item/seeds/cocoapod/bungotree
-	name = "pack of bungo tree seeds"
+	name = "bungo tree seed pack"
 	desc = "These seeds grow into bungo trees. They appear to be heavy and almost perfectly spherical."
 	icon_state = "seed-bungotree"
 	plant_icon_offset = 4

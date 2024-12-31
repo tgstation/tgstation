@@ -6,8 +6,8 @@
 	name = "Biological Emergency Crate"
 	desc = "This crate includes 2 complete bio suits, along with a box containing sterile masks and latex gloves, providing effective protection against viruses."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/clothing/head/bio_hood = 2,
-					/obj/item/clothing/suit/bio_suit = 2,
+	contains = list(/obj/item/clothing/head/bio_hood/general = 2,
+					/obj/item/clothing/suit/bio_suit/general = 2,
 					/obj/item/storage/bag/bio,
 					/obj/item/reagent_containers/syringe/antiviral = 2,
 					/obj/item/clothing/gloves/latex/nitrile = 2,
@@ -24,7 +24,7 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(
 		/mob/living/basic/bot/medbot = 2,
-		/mob/living/simple_animal/bot/floorbot = 2,
+		/mob/living/basic/bot/repairbot = 2,
 		/obj/item/tank/internals/emergency_oxygen = 5,
 		/obj/item/clothing/mask/breath = 5,
 	)

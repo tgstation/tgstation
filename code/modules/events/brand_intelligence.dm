@@ -60,7 +60,7 @@
 	announce_to_ghosts(origin_machine)
 
 /datum/round_event/brand_intelligence/tick()
-	if(!origin_machine || QDELETED(origin_machine) || origin_machine.shut_up || origin_machine.wires.is_all_cut()) //if the original vending machine is missing or has it's voice switch flipped
+	if(!origin_machine || QDELETED(origin_machine) || origin_machine.shut_up || origin_machine.wires.is_all_cut()) //if the original vending machine is missing or has its voice switch flipped
 		for(var/obj/machinery/vending/saved in infected_machines)
 			saved.shoot_inventory = FALSE
 		if(origin_machine)

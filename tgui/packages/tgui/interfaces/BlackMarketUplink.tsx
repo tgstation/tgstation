@@ -1,13 +1,15 @@
-import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
   Button,
+  Image,
   Modal,
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -35,6 +37,7 @@ type Item = {
   desc: string;
   amount: number;
   cost: number;
+  html_icon: string;
 };
 
 type DeliveryMethod = {
@@ -105,8 +108,22 @@ export const BlackMarketUplink = (props) => {
             {items.map((item) => (
               <Box key={item.name} className="candystripe" p={1} pb={2}>
                 <Stack align="baseline">
-                  <Stack.Item grow bold>
-                    {item.name}
+                  <Stack.Item grow>
+                    <Stack align="horizontal">
+                      {!!item.html_icon && (
+                        <Stack.Item>
+                          <Image
+                            m={1}
+                            src={`data:image/jpeg;base64,${item.html_icon}`}
+                            height="64px"
+                            width="64px"
+                          />
+                        </Stack.Item>
+                      )}
+                      <Stack.Item grow bold>
+                        {item.name}
+                      </Stack.Item>
+                    </Stack>
                   </Stack.Item>
                   <Stack.Item color="label">
                     {item.amount ? item.amount + ' in stock' : 'Out of stock'}

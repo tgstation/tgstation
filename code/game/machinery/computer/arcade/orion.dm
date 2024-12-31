@@ -181,7 +181,7 @@
 
 	return static_data
 
-/obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params)
+/obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -421,7 +421,7 @@
 	var/sheriff = remove_crewmember(target) //I shot the sheriff
 	if(target)
 		killed_crew += 1 //if there was no suspected lings, this is just plain murder
-	playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
+	playsound(loc,'sound/items/weapons/gun/pistol/shot.ogg', 100, TRUE)
 	if(!settlers.len || !alive)
 		say("The last crewmember [sheriff], shot themselves, GAME OVER!")
 		if(obj_flags & EMAGGED)
@@ -535,7 +535,7 @@
 			time_for_next_level = 3 SECONDS
 		if(2)
 			say("Oh, God! Code Eight! CODE EIGHT! IT'S GONNA BL-")
-			playsound(loc, 'sound/machines/buzz-sigh.ogg', 25, TRUE)
+			playsound(loc, 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 			time_for_next_level = 0.36 SECONDS
 		if(3 to INFINITY)
 			visible_message(span_userdanger("[src] explodes!"))

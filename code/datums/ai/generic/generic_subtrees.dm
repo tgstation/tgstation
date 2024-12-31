@@ -55,10 +55,16 @@
 	if(world.time < next_eat)
 		return
 
-	if(!controller.blackboard[BB_FOOD_TARGET])
+	var/atom/food_target = controller.blackboard[BB_FOOD_TARGET]
+
+	if(isnull(food_target))
 		controller.queue_behavior(/datum/ai_behavior/find_and_set/edible, BB_FOOD_TARGET, /obj/item, 2)
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/drop_item)
+	var/mob/living/living_pawn = controller.pawn
+	if(!length(living_pawn.get_empty_held_indexes())  && !(food_target in living_pawn.held_items))
+		controller.queue_behavior(/datum/ai_behavior/drop_item)
+		return SUBTREE_RETURN_FINISH_PLANNING
+
 	controller.queue_behavior(/datum/ai_behavior/consume, BB_FOOD_TARGET, BB_NEXT_HUNGRY)
 	return SUBTREE_RETURN_FINISH_PLANNING

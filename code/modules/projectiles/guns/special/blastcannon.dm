@@ -23,7 +23,7 @@
 	base_icon_state = "blastcannon"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
-	fire_sound = 'sound/weapons/blastcannon.ogg'
+	fire_sound = 'sound/items/weapons/blastcannon.ogg'
 	item_flags = NONE
 	clumsy_check = FALSE
 	randomspread = FALSE
@@ -49,8 +49,6 @@
 
 /obj/item/gun/blastcannon/Initialize(mapload)
 	. = ..()
-	if(!pin)
-		pin = new
 	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(channel_blastwave))
 	AddElement(/datum/element/update_icon_updates_onmob)
 
@@ -193,7 +191,7 @@
 	SSexplosions.shake_the_room(start_turf, max(heavy, medium, light, 0), (capped_heavy * 15) + (capped_medium * 20), capped_heavy, capped_medium)
 
 	var/obj/projectile/blastwave/blastwave = new(loc, heavy, medium, light)
-	blastwave.preparePixelProjectile(target, start_turf, params2list(modifiers), spread)
+	blastwave.aim_projectile(target, start_turf, params2list(modifiers), spread)
 	blastwave.fire()
 	cached_firer = null
 	cached_target = null
@@ -263,7 +261,7 @@
  * - light: The light impact range of the blastwave.
  */
 /obj/item/gun/blastcannon/proc/fire_dropped(heavy, medium, light)
-	src.visible_message("<span class='danger'>[src] suddenly goes off!")
+	src.visible_message(span_danger("[src] suddenly goes off!"))
 	var/turf/target = get_edge_target_turf(src, dir)
 	var/mob/firer = cached_firer.resolve()
 	var/turf/start_turf = get_turf(src)
@@ -314,7 +312,7 @@
 /obj/projectile/blastwave/is_hostile_projectile()
 	return TRUE
 
-/obj/projectile/blastwave/Range()
+/obj/projectile/blastwave/reduce_range()
 	. = ..()
 	if(QDELETED(src))
 		return

@@ -49,7 +49,7 @@
 	active = TRUE
 	update_appearance(UPDATE_ICON_STATE)
 	update_transform_action()
-	playsound(src, 'sound/machines/crate_open.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/crate/crate_open.ogg', 50, FALSE)
 
 /obj/item/polymorph_belt/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
@@ -104,8 +104,13 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 	possible_shapes = list(/mob/living/basic/cockroach)
+	can_be_shared = FALSE
 	/// Amount of time it takes us to transform back or forth
 	var/channel_time = 3 SECONDS
+
+/datum/action/cooldown/spell/shapeshift/polymorph_belt/cast(mob/living/cast_on)
+	cast_on = owner //make sure this is only affecting the wearer of the belt
+	return ..()
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/Remove(mob/remove_from)
 	var/datum/status_effect/shapechange_mob/shapechange = remove_from.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
@@ -114,6 +119,7 @@
 	return ..()
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/before_cast(mob/living/cast_on)
+	cast_on = owner
 	. = ..()
 	if (. & SPELL_CANCEL_CAST)
 		return
@@ -139,7 +145,7 @@
 		cast_on.transform = old_transform
 		return . | SPELL_CANCEL_CAST
 	cast_on.visible_message(span_warning("[cast_on]'s body rearranges itself with a horrible crunching sound!"))
-	playsound(cast_on, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	playsound(cast_on, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/after_cast(atom/cast_on)
 	. = ..()

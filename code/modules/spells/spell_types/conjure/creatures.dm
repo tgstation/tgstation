@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/conjure/creature
 	name = "Summon Creature Swarm"
 	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth."
-	sound = 'sound/magic/summonitems_generic.ogg'
+	sound = 'sound/effects/magic/summonitems_generic.ogg'
 
 	school = SCHOOL_CONJURATION
 	cooldown_time = 2 MINUTES

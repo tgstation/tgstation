@@ -4,6 +4,7 @@
 	abstract_path = /datum/market_item/stolen_good
 	stock = 1
 	availability_prob = 100
+	restockable = FALSE
 
 /datum/market_item/stolen_good/New(atom/movable/thing, thing_price)
 	..()

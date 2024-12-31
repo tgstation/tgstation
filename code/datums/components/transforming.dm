@@ -50,7 +50,7 @@
 	throwforce_on = 0,
 	throw_speed_on = 2,
 	sharpness_on = NONE,
-	hitsound_on = 'sound/weapons/blade1.ogg',
+	hitsound_on = 'sound/items/weapons/blade1.ogg',
 	w_class_on = WEIGHT_CLASS_BULKY,
 	clumsy_check = TRUE,
 	clumsy_damage = 10,
@@ -174,7 +174,7 @@
 /datum/component/transforming/proc/default_transform_message(obj/item/source, mob/user)
 	if(user)
 		source.balloon_alert(user, "[active ? "enabled" : "disabled"] [source]")
-	playsound(source, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(source, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 
 /*
  * Toggle active between true and false, and call

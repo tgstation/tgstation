@@ -60,7 +60,7 @@ module.exports = (env = {}, argv) => {
           ],
         },
         {
-          test: /\.scss$/,
+          test: /\.(s)?css$/,
           use: [
             {
               loader: ExtractCssPlugin.loader,

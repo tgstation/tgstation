@@ -30,7 +30,7 @@
 		to_chat(cast_on, span_notice("You concentrate really hard, but nothing happens."))
 		return
 
-	var/obj/item/organ/internal/tongue/to_fire = locate() in cast_on.organs
+	var/obj/item/organ/tongue/to_fire = locate() in cast_on.organs
 	if(!to_fire)
 		to_chat(cast_on, span_notice("You don't have a tongue to shoot!"))
 		return
@@ -45,16 +45,11 @@
 	desc = "Hardened biomass, shaped into a spike. Very pointy!"
 	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "tonguespike"
+	icon_angle = 45
 	force = 2
 	throwforce = 25
 	throw_speed = 4
-	embedding = list(
-		"impact_pain_mult" = 0,
-		"embedded_pain_multiplier" = 15,
-		"embed_chance" = 100,
-		"embedded_fall_chance" = 0,
-		"embedded_ignore_throwspeed_threshold" = TRUE,
-	)
+	embed_type = /datum/embed_data/tongue_spike
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
 	custom_materials = list(/datum/material/biomass = SMALL_MATERIAL_AMOUNT * 5)
@@ -62,6 +57,13 @@
 	var/datum/weakref/fired_by_ref
 	/// if we missed our target
 	var/missed = TRUE
+
+/datum/embed_data/tongue_spike
+	impact_pain_mult = 0
+	pain_mult = 15
+	embed_chance = 100
+	fall_chance = 0
+	ignore_throwspeed_threshold = TRUE
 
 /obj/item/hardened_spike/Initialize(mapload, mob/living/carbon/source)
 	. = ..()
@@ -110,16 +112,13 @@
 	desc = "Hardened biomass, shaped into... something."
 	icon_state = "tonguespikechem"
 	throwforce = 2
-	embedding = list(
-		"impact_pain_mult" = 0,
-		"embedded_pain_multiplier" = 0,
-		"embed_chance" = 100,
-		"embedded_fall_chance" = 0,
-		"embedded_pain_chance" = 0,
-		"embedded_ignore_throwspeed_threshold" = TRUE,  //never hurts once it's in you
-	)
+	embed_type = /datum/embed_data/tongue_spike/chem
 	/// Whether the tongue's already embedded in a target once before
 	var/embedded_once_alread = FALSE
+
+/datum/embed_data/tongue_spike/chem
+	pain_mult = 0
+	pain_chance = 0
 
 /obj/item/hardened_spike/chem/embedded(mob/living/carbon/human/embedded_mob)
 	. = ..()

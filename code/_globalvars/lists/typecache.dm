@@ -1,5 +1,5 @@
 //please store common type caches here.
-//type caches should only be stored here if used in mutiple places or likely to be used in mutiple places.
+//type caches should only be stored here if used in multiple places or likely to be used in multiple places.
 
 //Note: typecache can only replace istype if you know for sure the thing is at least a datum.
 
@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(typecache_elevated_structures, typecacheof(list(
 	/obj/structure/table,
 	//Kitchen
 	/obj/machinery/smartfridge,
-	/obj/machinery/smartfridge/drying_rack, // Redundant, given above, but this is for the sake of explicitness.
+	/obj/machinery/smartfridge/drying, // Redundant, given above, but this is for the sake of explicitness.
 	/obj/structure/bonfire,
 	/obj/machinery/grill,
 	/obj/machinery/griddle,

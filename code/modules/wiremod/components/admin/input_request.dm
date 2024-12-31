@@ -59,7 +59,7 @@
 	var/new_option = input_options.value
 	switch(new_option)
 		if(COMP_INPUT_STRING)
-			var/player_input = tgui_input_text(player, "Input a value", "Input value")
+			var/player_input = tgui_input_text(player, "Input a value", "Input value", max_length = MAX_MESSAGE_LEN)
 			if(isnull(player_input))
 				return
 			input_response.set_output(player_input)

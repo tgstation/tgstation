@@ -32,7 +32,7 @@
 
 		var/skip_left
 		var/skip_right
-		if(initial(item_path.greyscale_colors)) //greyscale stuff has it's own unit test.
+		if(initial(item_path.greyscale_colors)) //greyscale stuff has its own unit test.
 			skip_left = initial(item_path.greyscale_config_inhand_left)
 			skip_right = initial(item_path.greyscale_config_inhand_right)
 			if(skip_left && skip_right)

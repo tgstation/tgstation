@@ -1331,9 +1331,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
-/obj/machinery/vending/medical{
-	onstation = 0
-	},
+/obj/machinery/vending/medical,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "PV" = (

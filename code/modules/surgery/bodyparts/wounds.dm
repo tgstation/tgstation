@@ -1,8 +1,8 @@
 /// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds
-/obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, sharpness=NONE)
+/obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, sharpness=NONE, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(!owner || wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND || (owner.status_flags & GODMODE))
+	if(!owner || wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND || HAS_TRAIT(owner, TRAIT_GODMODE))
 		return
 
 	var/mangled_state = get_mangled_state()
@@ -34,7 +34,7 @@
 			wounding_type = WOUND_BLUNT
 		if ((dismemberable_by_wound() || dismemberable_by_total_damage()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 			return
-	return check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+	return check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, wound_clothing)
 
 /**
  * check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria
@@ -47,12 +47,13 @@
  * * damage- How much damage is tied to this attack, since wounding potential scales with damage in an attack (see: WOUND_DAMAGE_EXPONENT)
  * * wound_bonus- The wound_bonus of an attack
  * * bare_wound_bonus- The bare_wound_bonus of an attack
+ * * wound_clothing- If this should damage clothing.
  */
-/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus, attack_direction, damage_source)
+/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus, attack_direction, damage_source, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/datum/wound)
 
-	if(HAS_TRAIT(owner, TRAIT_NEVER_WOUNDED) || (owner.status_flags & GODMODE))
+	if(HAS_TRAIT(owner, TRAIT_NEVER_WOUNDED) || HAS_TRAIT(owner, TRAIT_GODMODE))
 		return
 
 	// note that these are fed into an exponent, so these are magnified
@@ -72,7 +73,7 @@
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
-	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
+	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus, wound_clothing)
 	var/list/series_wounding_mods = check_series_wounding_mods()
 
 	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100) && can_dismember())
@@ -240,7 +241,7 @@
  * Arguments:
  * * It's the same ones on [/obj/item/bodypart/proc/receive_damage]
  */
-/obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
+/obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/armor_ablation = 0
@@ -252,10 +253,12 @@
 		for(var/obj/item/clothing/clothes as anything in clothing)
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			armor_ablation += clothes.get_armor_rating(WOUND)
-			if(wounding_type == WOUND_SLASH)
-				clothes.take_damage_zone(body_zone, damage, BRUTE)
-			else if(wounding_type == WOUND_BURN && damage >= 10) // lazy way to block freezing from shredding clothes without adding another var onto apply_damage()
-				clothes.take_damage_zone(body_zone, damage, BURN)
+			// Should attack also cause damage to the clothes?
+			if (wound_clothing)
+				if(wounding_type == WOUND_SLASH)
+					clothes.take_damage_zone(body_zone, damage, BRUTE)
+				else if(wounding_type == WOUND_BURN)
+					clothes.take_damage_zone(body_zone, damage, BURN)
 
 		if(!armor_ablation)
 			injury_mod += bare_wound_bonus

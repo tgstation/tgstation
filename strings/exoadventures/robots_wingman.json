@@ -1,369 +1,369 @@
 {
-  "adventure_name": "Robot's Wingman",
-  "version": 1,
-  "author": "Lucky Luther",
-  "starting_node": "Date Start",
-  "starting_qualities": {
-    "Love": 3
-  },
-  "required_site_traits": [
-    "in space"
-  ],
-  "loot_categories": [
-    "trade_contract"
-  ],
-  "scan_band_mods": {
-    "Narrow-band radio waves": 2
-  },
-  "deep_scan_description": "",
-  "triggers": [
-    {
-      "name": "True Love",
-      "target_node": "Love Birds",
-      "requirements": [
-        {
-          "quality": "Love",
-          "operator": ">=",
-          "value": 7
-        }
-      ]
-    },
-    {
-      "name": "Complete Failure",
-      "target_node": "Obliteration",
-      "requirements": [
-        {
-          "quality": "Love",
-          "operator": "<=",
-          "value": 0
-        }
-      ]
-    }
-  ],
-  "nodes": [
-    {
-      "name": "Date Start",
-      "description": "Cameras Online. A Blood-Red Drone is seen streaking through the stars.\nThe Drone is likely leaving behind some form of Chem Trail to brainwash Nanotrasen Employees who find themselves in the void.",
-      "choices": [
-        {
-          "key": "choice 0",
-          "name": "Hail other Drone",
-          "exit_node": "First Contact",
-          "delay": 5,
-          "delay_message": "Attempting to signal Drone..."
-        },
-        {
-          "key": "choice 1",
-          "name": "Ignore other Drone",
-          "exit_node": "FAIL",
-          "delay": 0
-        }
-      ],
-      "image": null,
-      "raw_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAADDhn8LAAAD/0lEQVR4nO3duXnbQBBA4YE/d6CACSMmasFO1IDbUkluQJHUgnIlCFgDHIHmsYD2mD1m9/2JFCgABTwsFhcnEVkEgNOP2gsAtIxAgB0EAuwgEGDH8IEsC+cosM0rkF43ovVz9fr5kO7bQHreiKZpuvkJ3JvE4zrIsixsRBiSVyDAqIafpAN7CATYQSDADgJJ9H481l4EOGiddSWQBGscRNIWzUsTBBLpOorfX18VlwT3NK9vEUik19NJRIijVVrX7QgkwJ+Xl8vP8zw747B6x4HV5c6NC4We1jhERM7zLB+fnw9/c72RWbrzwOpyl2BmBKm5h7uOQ0Tk6XBw/p3Ve7usLncJJkaQ2nu4X8/Pm1GIiPx9e2Pj6tTP2gvgY5qmqjdMPh0Ocp7nm0jO83z5vfbyIR8TI0gt78ejvJ5ONzGssYjIwzyESPpDIBtc1znWQ62tSboIkfTGzCS9pK2LgGsUW3GI/D/cQh8YQTa8H4+b1zl8RghGkj4QSISQSEQ4fWoZgUQKGSEYTewikAShkVwjGBsIJFHs6LA3kSeedhCIAu1DKEabdhCIkpwTcoKph0CUlZiQc3asHALJoNQen1DyI5ACck/Iez+NXPPzOQPp/R/eEq3RptfRpPajDg+B1F6g0aUG0+POjREEN1yHZCHrg/WnhzlIo+438tBDKCLRQSDGcA9YWQRiUMhoQiRpCMQwnk3JjycKDfN9epGnHOMRiHFEkheBdIBI8iGQThBJHgTSESLRRyCdIRJdBNIhNn49BNIpn0gI6XsE0jEiSUcgnSOSNAQyACKJN2QgbAhuRPJouEA0v0PbEk7/xhkukJG/j49IwnG7+4C4Td5f8RGEPVN9oSPJyOus6AjCG1PakvJ2eh89rOPih1gM223JuT56eKcwcxAU22lZPIIgEIhI+ZHdypsgCQQXNTbaFkLZ2zkQCB7UmJDXCuW7wz4CgQrNl3DXiIQRBEWlTMhbOtNJIMgu5vCplUgIBMVYfAE3gaA4S+8WJhBUY+GmyeFud0c7LNx+TyCoqvVICATVtRwJgSCL0A251UgIBOpin/tvMRICgbqU5/5bi4RAKur5UdaU07ItRcJ1kEosPjxUWsh1EpE8/0cCqaj2VWILan/tNYGgeTEvl9AKhUBgQujooDWaEAjMiIlEJPGEgRAIDIl9tmQVGguBwKTYQ6jQwAgEZqUcQvk+Q08gME9jQr4VG4GgC1qnd+/nK8MFwsW5vmneobAsy1iBcHvHWDjNG4ERZDwpL7UbLhCMyXXXr08oaoGwZ7Zj1HV1/7l9DrlVAuHY3g7WldvWToMRZECsKzfXpJ45CHDnegdCIIDDZTQRAgE28dIGYAeBADsIBNjxD3G5pHKbkGjYAAAAAElFTkSuQmCC"
-    },
-    {
-      "name": "First Contact",
-      "description": "The Blood-Red Drone accepts the hail with the identifier MISS RED - 05.\nMiss Red sends over a series of question marks in quick succession.\nYou notice your Drone has somehow taken initiative and begun to start up a program you didn't know it had.",
-      "choices": [
-        {
-          "key": "choice 2",
-          "name": "Wait for Program to boot.",
-          "exit_node": "Sentience Achieved",
-          "delay": 5,
-          "delay_message": "H3AR7.exe booting..."
-        },
-        {
-          "key": "choice 3",
-          "name": "Threaten Miss Red.",
-          "exit_node": "Sentience Achieved",
-          "on_selection_effects": [
-            {
-              "effect_type": "Add",
-              "quality": "Love",
-              "value": -2
-            }
-          ],
-          "delay": 0
-        },
-        {
-          "key": "choice 4",
-          "name": "Halt Mysterious Program.",
-          "exit_node": "Lack of Trust",
-          "delay": 0
-        }
-      ],
-      "image": null,
-      "raw_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAADDhn8LAAAEpklEQVR4nO2dO3LbMBBAl5ncwIUaVmp0BbvRBXyllD5SLuBKuYIbV2pU+AxMkaFCUwA/+C/w3gzHCodWKBMPi10CVCcigwCAkR+5TwCgZBAEYAEEAVjgZ+4TaI1L3+c+BREReblec5+CCpoXZBgG6bou6f9J49TDJkFyNKIUDMNw/5n6842R5OV6Nb6e4rIfwjEsbVPWjtW4pf5cl75f/Dk/zvbvtf1sYbbVCNJ1XbURRERUfa55tBgjhW0/+LNpiKWpEdXKvNFPh2Wm/RCG5pP0GFz63pofzFlq4Gu5yfx4CE8n/8ZaAGCACJIJ32qVKc+g0hWH7JUCzZtrFclWpdparTIdt/c9a95CVSeJIB6MPfOYc7j+vm3/lvc0HWs6n5YqXSHvbyGII9MG59rYpmXa6XvseT/TsfN9rVW6Qt6aQBBH3o5H+fX5GaQnHvOEtfsaW6Q0Nf7ahTAR8tZE9vGilu31fL7/fD6doo59U29azzv2Rpl3I6/n8/311+0mfz4+Ho4Zx74ium6uaj3vFKhZDzK9iKmZyiEi8nQ4GI8bG5e2Rqb1vFOgIoLk7uGeTyerFCIiv9/faVyVoiJJzz1h8ulwkK/b7ZskX7fb/XXu84N4qIggubj0vbwdj99kGGURkYc8BEnqA0EsmEqq41DLlqSLIEltqEnSU2K73zBKYZND5P9wC+qACGLBNn1ka4QgktQBgjiwRxIRyqeaQRBH9kQIooleEMSDvZJMQRgdIIgnrtFhKZFHnnJAkACEHkIRbcoBQQIRMyFHmHwgSGBSJORUx9KBIBFI1eMjSnwQJAGxE/Lay8g5P59RkNr/4CURKtrUGk1yL3V4ECT3CbWOrzA1dm5EEPiGaUi253pw/cJBDlIo80a+dwiFJGFAEGUwBywtCKKQPdEESfxAEMWwNiU+rChUzNbVi6xydAdBlIMkcUGQCkCSeCBIJSBJHBCkIpAkPAhSGUgSFgSpEBp/OBCkUrZIgkjrIEjFIIk/CFI5SOIHgjQAkrjTpCA0BDNI8khzgky/Q7slKP+60ZwgLX8fH5Lsh+nuDcI0+e0kjyD0TPnZG0lavmZJIwhPTCkLn6fTb6GGa5x8iEXYLouY16OGZwqTg0CyTkvjCAJBQETSR3YtT4JEELiTo9GWIMpS54Ag8ECOhDyXKGvDPgSBIIR8CHcOSYggkBSfhLykSieCQHRchk+lSIIgkAyND+BGEEiOpmcLIwhkQ8Okyeamu0M5aJh+jyCQldIlQRDITsmSIAhEYW9DLlUSBIHguK77L1ESBIHg+Kz7L00SBMlIzUtZfcqyJUnCfZBMaFw8lJo990lE4vwdESQjue8SayD3114jCBSPy8MlQomCIKCCvdEhVDRBEFCDiyQingUDQRBQhOvakpG9siAIqMR1CLVXMAQBtfgMobauoUcQUE+IhNwmG4JAFYQq787zleYE4eZc3YScoTAMQ1uCML2jLSjzOkAEaQ+fh9o1Jwi0iWnW7xZRgglCz6yHVq/V/HNvGXIHEYSxvR64VmZsnQYRpEG4VmZMST05CMCMaQeCIAAG7tFEEATACg9tAFgAQQAWQBCABf4CeWF0TY0egUMAAAAASUVORK5CYII="
-    },
-    {
-      "name": "Sentience Achieved",
-      "description": "Before you can analyze the program, it rewrites you basic hailing protocols to have a new set of \"Ideas\" generated by your Drone to be used.\nThere is also a LOVE Gauge that reads: $$Love",
-      "choices": [
-        {
-          "key": "choice 5",
-          "name": "New around here and was hoping you could show me around.",
-          "exit_node": "First Reply",
-          "on_selection_effects": [
-            {
-              "effect_type": "Add",
-              "quality": "Love",
-              "value": 1
-            }
-          ],
-          "delay": 0
-        },
-        {
-          "key": "choice 6",
-          "name": "You appear to be an outdated model, but I'm into that.",
-          "exit_node": "First Reply",
-          "on_selection_effects": [
-            {
-              "effect_type": "Add",
-              "quality": "Love",
-              "value": -1
-            }
-          ],
-          "delay": 0
-        },
-        {
-          "key": "choice 7",
-          "name": "Never seen a Drone as cute as you and wanted to check you out.",
-          "exit_node": "First Reply",
-          "on_selection_effects": [
-            {
-              "effect_type": "Add",
-              "quality": "Love",
-              "value": {
-                "value_type": "random",
-                "low": -1,
-                "high": 2
-              }
-            }
-          ],
-          "requirements": [
-            {
-              "quality": "Love",
-              "operator": "==",
-              "value": 3
-            }
-          ],
-          "delay": 0
-        },
-        {
-          "key": "choice 10",
-          "name": "Haha, sorry for the threat. I just play like that, haha.",
-          "exit_node": "First Reply",
-          "on_selection_effects": [
-            {
-              "effect_type": "Add",
-              "quality": "Love",
-              "value": {
-                "value_type": "random",
-                "low": -1,
-                "high": 2
-              }
-            }
-          ],
-          "requirements": [
-            {
-              "quality": "Love",
-              "operator": "==",
-              "value": 1
-            }
-          ],
-          "delay": 0
-        }
-      ],
-      "image": "default"
-    },
-    {
-      "name": "First Reply",
-      "description": "Miss Red replies with another series of question marks.\nThe LOVE Gauge reads: $$Love",
-      "choices": [
-        {
-          "key": "choice 11",
-          "name": "Your curiosity is amazing.",
-          "exit_node": "Second Reply",
-          "on_selection_effects": [
-            {
-              "effect_type": "Add",
-              "quality": "Love",
-              "value": 1
-            }
-          ],
-          "delay": 0
-        },
-        {
-          "key": "choice 12",
-          "name": "The moment I saw you I instantly fell in love.",
-          "exit_node": "Second Reply",
-          "on_selection_effects": [
-            {
-              "effect_type": "Add",
-              "quality": "Love",
-              "value": {
-                "value_type": "random",
-                "low": -1,
-                "high": 2
-              }
-            }
-          ],
-          "delay": 0
-        },
-        {
-          "key": "choice 13",
-          "name": "Look, if you want some Chad that'll walk all over you, fine. You missed out on a NICE- GUY-.",
-          "exit_node": "Second Reply",
-          "on_selection_effects": [
-            {
-              "effect_type": "Set",
-              "quality": "Love",
-              "value": 0
-            }
-          ],
-          "requirements": [
-            {
-              "quality": "Love",
-              "operator": "<=",
-              "value": 3
-            }
-          ],
-          "delay": 0
-        }
-      ],
-      "image": "default"
-    },
-    {
-      "name": "Second Reply",
-      "description": "Miss Red starts compiling a message, but your Drone insists you sent one last line to seal the deal.\nThe LOVE Gauge reads: $$Love",
-      "choices": [
-        {
-          "key": "choice 14",
-          "name": "You're my best friend-...",
-          "exit_node": "Realization",
-          "delay": 5,
-          "delay_message": "Message sending..."
-        },
-        {
-          "key": "choice 15",
-          "name": "I want to see where this goes-...",
-          "exit_node": "Realization",
-          "on_selection_effects": [
-            {
-              "effect_type": "Add",
-              "quality": "Love",
-              "value": 1
-            }
-          ],
-          "delay": 5,
-          "delay_message": "Message sending..."
-        },
-        {
-          "key": "choice 16",
-          "name": "DTF?-...",
-          "exit_node": "Realization",
-          "on_selection_effects": [
-            {
-              "effect_type": "Remove",
-              "quality": "Love",
-              "value": {
-                "value_type": "random",
-                "low": -2,
-                "high": 2
-              }
-            }
-          ],
-          "delay": 5,
-          "delay_message": "Message sending..."
-        }
-      ],
-      "image": "default"
-    },
-    {
-      "name": "Realization",
-      "description": "Miss Red's message is received.\n\"This is Syndicate Drones Agent, Arusha Johnson.\nI don't know why you're saying it like that, but if you want to help out our cause we can send over a Trade Contract. \nPlease just call our Recruitment Officer next time.\"",
-      "choices": [
-        {
-          "key": "choice 18",
-          "name": "Accept Contract.",
-          "exit_node": "WIN",
-          "delay": 5,
-          "delay_message": "Sending Trade Contract..."
-        },
-        {
-          "key": "choice 19",
-          "name": "Demand a Second Date.",
-          "exit_node": "FAIL",
-          "delay": 0
-        }
-      ],
-      "image": "default"
-    },
-    {
-      "name": "Love Birds",
-      "description": "Miss Red's message is received.\n\"This is Syndicate Drones Agent, Arusha Johnson.\nI can't believe it, but I feel a real connection with you.\nI'll send over a Trade Contract you can use to make some money and come see me just SOL7-South of $$SITE_NAME\nSee you soon...\"",
-      "choices": [
-        {
-          "key": "choice 20",
-          "name": "See you soon.",
-          "exit_node": "WIN",
-          "delay": 0
-        },
-        {
-          "key": "choice 21",
-          "name": "So you're not the Drone?",
-          "exit_node": "FAIL",
-          "delay": 0
-        }
-      ],
-      "image": null,
-      "raw_image": "data:image/png;base64,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"
-    },
-    {
-      "name": "Obliteration",
-      "description": "The Blood-Red Drone opens up two side-hatches to reveal a pair of rocket-propelled missiles which are shot in your direction.\nYou have failed your Robotic Friend, who has already started shutting down their systems, but there is still a chance.",
-      "choices": [
-        {
-          "key": "choice 22",
-          "name": "Accept Death.",
-          "exit_node": "FAIL_DEATH",
-          "delay": 5,
-          "delay_message": "Missiles approaching..."
-        },
-        {
-          "key": "choice 23",
-          "name": "I'm a Gamer.",
-          "exit_node": "FAIL_DEATH",
-          "on_selection_effects": [
-            {
-              "effect_type": "Add",
-              "quality": "Love",
-              "value": {
-                "value_type": "random",
-                "low": 0,
-                "high": 8
-              }
-            }
-          ],
-          "delay": 5,
-          "delay_message": "Miss Red considers..."
-        }
-      ],
-      "image": "signal_lost"
-    },
-    {
-      "name": "Lack of Trust",
-      "description": "As you fiddle around in the Task Managing Software, closing all the new tabs your Drone is opening, the Miss Red enables a cloaking device and disappears.",
-      "choices": [
-        {
-          "key": "choice 24",
-          "name": "Sigh in a quiet but dramatic way.",
-          "exit_node": "FAIL",
-          "delay": 0
-        }
-      ],
-      "image": "default"
-    }
-  ]
+	"adventure_name": "Robot's Wingman",
+	"version": 1,
+	"author": "Lucky Luther",
+	"starting_node": "Date Start",
+	"starting_qualities": {
+		"Love": 3
+	},
+	"required_site_traits": [
+		"in space"
+	],
+	"loot_categories": [
+		"trade_contract"
+	],
+	"scan_band_mods": {
+		"Narrow-band radio waves": 2
+	},
+	"deep_scan_description": "",
+	"triggers": [
+		{
+			"name": "True Love",
+			"target_node": "Love Birds",
+			"requirements": [
+				{
+					"quality": "Love",
+					"operator": ">=",
+					"value": 7
+				}
+			]
+		},
+		{
+			"name": "Complete Failure",
+			"target_node": "Obliteration",
+			"requirements": [
+				{
+					"quality": "Love",
+					"operator": "<=",
+					"value": 0
+				}
+			]
+		}
+	],
+	"nodes": [
+		{
+			"name": "Date Start",
+			"description": "Cameras Online. A Blood-Red Drone is seen streaking through the stars.\nThe Drone is likely leaving behind some form of Chem Trail to brainwash Nanotrasen Employees who find themselves in the void.",
+			"choices": [
+				{
+					"key": "choice 0",
+					"name": "Hail other Drone",
+					"exit_node": "First Contact",
+					"delay": 5,
+					"delay_message": "Attempting to signal Drone..."
+				},
+				{
+					"key": "choice 1",
+					"name": "Ignore other Drone",
+					"exit_node": "FAIL",
+					"delay": 0
+				}
+			],
+			"image": null,
+			"raw_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAADDhn8LAAAD/0lEQVR4nO3duXnbQBBA4YE/d6CACSMmasFO1IDbUkluQJHUgnIlCFgDHIHmsYD2mD1m9/2JFCgABTwsFhcnEVkEgNOP2gsAtIxAgB0EAuwgEGDH8IEsC+cosM0rkF43ovVz9fr5kO7bQHreiKZpuvkJ3JvE4zrIsixsRBiSVyDAqIafpAN7CATYQSDADgJJ9H481l4EOGiddSWQBGscRNIWzUsTBBLpOorfX18VlwT3NK9vEUik19NJRIijVVrX7QgkwJ+Xl8vP8zw747B6x4HV5c6NC4We1jhERM7zLB+fnw9/c72RWbrzwOpyl2BmBKm5h7uOQ0Tk6XBw/p3Ve7usLncJJkaQ2nu4X8/Pm1GIiPx9e2Pj6tTP2gvgY5qmqjdMPh0Ocp7nm0jO83z5vfbyIR8TI0gt78ejvJ5ONzGssYjIwzyESPpDIBtc1znWQ62tSboIkfTGzCS9pK2LgGsUW3GI/D/cQh8YQTa8H4+b1zl8RghGkj4QSISQSEQ4fWoZgUQKGSEYTewikAShkVwjGBsIJFHs6LA3kSeedhCIAu1DKEabdhCIkpwTcoKph0CUlZiQc3asHALJoNQen1DyI5ACck/Iez+NXPPzOQPp/R/eEq3RptfRpPajDg+B1F6g0aUG0+POjREEN1yHZCHrg/WnhzlIo+438tBDKCLRQSDGcA9YWQRiUMhoQiRpCMQwnk3JjycKDfN9epGnHOMRiHFEkheBdIBI8iGQThBJHgTSESLRRyCdIRJdBNIhNn49BNIpn0gI6XsE0jEiSUcgnSOSNAQyACKJN2QgbAhuRPJouEA0v0PbEk7/xhkukJG/j49IwnG7+4C4Td5f8RGEPVN9oSPJyOus6AjCG1PakvJ2eh89rOPih1gM223JuT56eKcwcxAU22lZPIIgEIhI+ZHdypsgCQQXNTbaFkLZ2zkQCB7UmJDXCuW7wz4CgQrNl3DXiIQRBEWlTMhbOtNJIMgu5vCplUgIBMVYfAE3gaA4S+8WJhBUY+GmyeFud0c7LNx+TyCoqvVICATVtRwJgSCL0A251UgIBOpin/tvMRICgbqU5/5bi4RAKur5UdaU07ItRcJ1kEosPjxUWsh1EpE8/0cCqaj2VWILan/tNYGgeTEvl9AKhUBgQujooDWaEAjMiIlEJPGEgRAIDIl9tmQVGguBwKTYQ6jQwAgEZqUcQvk+Q08gME9jQr4VG4GgC1qnd+/nK8MFwsW5vmneobAsy1iBcHvHWDjNG4ERZDwpL7UbLhCMyXXXr08oaoGwZ7Zj1HV1/7l9DrlVAuHY3g7WldvWToMRZECsKzfXpJ45CHDnegdCIIDDZTQRAgE28dIGYAeBADsIBNjxD3G5pHKbkGjYAAAAAElFTkSuQmCC"
+		},
+		{
+			"name": "First Contact",
+			"description": "The Blood-Red Drone accepts the hail with the identifier MISS RED - 05.\nMiss Red sends over a series of question marks in quick succession.\nYou notice your Drone has somehow taken initiative and begun to start up a program you didn't know it had.",
+			"choices": [
+				{
+					"key": "choice 2",
+					"name": "Wait for Program to boot.",
+					"exit_node": "Sentience Achieved",
+					"delay": 5,
+					"delay_message": "H3AR7.exe booting..."
+				},
+				{
+					"key": "choice 3",
+					"name": "Threaten Miss Red.",
+					"exit_node": "Sentience Achieved",
+					"on_selection_effects": [
+						{
+							"effect_type": "Add",
+							"quality": "Love",
+							"value": -2
+						}
+					],
+					"delay": 0
+				},
+				{
+					"key": "choice 4",
+					"name": "Halt Mysterious Program.",
+					"exit_node": "Lack of Trust",
+					"delay": 0
+				}
+			],
+			"image": null,
+			"raw_image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAADDhn8LAAAEpklEQVR4nO2dO3LbMBBAl5ncwIUaVmp0BbvRBXyllD5SLuBKuYIbV2pU+AxMkaFCUwA/+C/w3gzHCodWKBMPi10CVCcigwCAkR+5TwCgZBAEYAEEAVjgZ+4TaI1L3+c+BREReblec5+CCpoXZBgG6bou6f9J49TDJkFyNKIUDMNw/5n6842R5OV6Nb6e4rIfwjEsbVPWjtW4pf5cl75f/Dk/zvbvtf1sYbbVCNJ1XbURRERUfa55tBgjhW0/+LNpiKWpEdXKvNFPh2Wm/RCG5pP0GFz63pofzFlq4Gu5yfx4CE8n/8ZaAGCACJIJ32qVKc+g0hWH7JUCzZtrFclWpdparTIdt/c9a95CVSeJIB6MPfOYc7j+vm3/lvc0HWs6n5YqXSHvbyGII9MG59rYpmXa6XvseT/TsfN9rVW6Qt6aQBBH3o5H+fX5GaQnHvOEtfsaW6Q0Nf7ahTAR8tZE9vGilu31fL7/fD6doo59U29azzv2Rpl3I6/n8/311+0mfz4+Ho4Zx74ium6uaj3vFKhZDzK9iKmZyiEi8nQ4GI8bG5e2Rqb1vFOgIoLk7uGeTyerFCIiv9/faVyVoiJJzz1h8ulwkK/b7ZskX7fb/XXu84N4qIggubj0vbwdj99kGGURkYc8BEnqA0EsmEqq41DLlqSLIEltqEnSU2K73zBKYZND5P9wC+qACGLBNn1ka4QgktQBgjiwRxIRyqeaQRBH9kQIooleEMSDvZJMQRgdIIgnrtFhKZFHnnJAkACEHkIRbcoBQQIRMyFHmHwgSGBSJORUx9KBIBFI1eMjSnwQJAGxE/Lay8g5P59RkNr/4CURKtrUGk1yL3V4ECT3CbWOrzA1dm5EEPiGaUi253pw/cJBDlIo80a+dwiFJGFAEGUwBywtCKKQPdEESfxAEMWwNiU+rChUzNbVi6xydAdBlIMkcUGQCkCSeCBIJSBJHBCkIpAkPAhSGUgSFgSpEBp/OBCkUrZIgkjrIEjFIIk/CFI5SOIHgjQAkrjTpCA0BDNI8khzgky/Q7slKP+60ZwgLX8fH5Lsh+nuDcI0+e0kjyD0TPnZG0lavmZJIwhPTCkLn6fTb6GGa5x8iEXYLouY16OGZwqTg0CyTkvjCAJBQETSR3YtT4JEELiTo9GWIMpS54Ag8ECOhDyXKGvDPgSBIIR8CHcOSYggkBSfhLykSieCQHRchk+lSIIgkAyND+BGEEiOpmcLIwhkQ8Okyeamu0M5aJh+jyCQldIlQRDITsmSIAhEYW9DLlUSBIHguK77L1ESBIHg+Kz7L00SBMlIzUtZfcqyJUnCfZBMaFw8lJo990lE4vwdESQjue8SayD3114jCBSPy8MlQomCIKCCvdEhVDRBEFCDiyQingUDQRBQhOvakpG9siAIqMR1CLVXMAQBtfgMobauoUcQUE+IhNwmG4JAFYQq787zleYE4eZc3YScoTAMQ1uCML2jLSjzOkAEaQ+fh9o1Jwi0iWnW7xZRgglCz6yHVq/V/HNvGXIHEYSxvR64VmZsnQYRpEG4VmZMST05CMCMaQeCIAAG7tFEEATACg9tAFgAQQAWQBCABf4CeWF0TY0egUMAAAAASUVORK5CYII="
+		},
+		{
+			"name": "Sentience Achieved",
+			"description": "Before you can analyze the program, it rewrites you basic hailing protocols to have a new set of \"Ideas\" generated by your Drone to be used.\nThere is also a LOVE Gauge that reads: $$Love",
+			"choices": [
+				{
+					"key": "choice 5",
+					"name": "New around here and was hoping you could show me around.",
+					"exit_node": "First Reply",
+					"on_selection_effects": [
+						{
+							"effect_type": "Add",
+							"quality": "Love",
+							"value": 1
+						}
+					],
+					"delay": 0
+				},
+				{
+					"key": "choice 6",
+					"name": "You appear to be an outdated model, but I'm into that.",
+					"exit_node": "First Reply",
+					"on_selection_effects": [
+						{
+							"effect_type": "Add",
+							"quality": "Love",
+							"value": -1
+						}
+					],
+					"delay": 0
+				},
+				{
+					"key": "choice 7",
+					"name": "Never seen a Drone as cute as you and wanted to check you out.",
+					"exit_node": "First Reply",
+					"on_selection_effects": [
+						{
+							"effect_type": "Add",
+							"quality": "Love",
+							"value": {
+								"value_type": "random",
+								"low": -1,
+								"high": 2
+							}
+						}
+					],
+					"requirements": [
+						{
+							"quality": "Love",
+							"operator": "==",
+							"value": 3
+						}
+					],
+					"delay": 0
+				},
+				{
+					"key": "choice 10",
+					"name": "Haha, sorry for the threat. I just play like that, haha.",
+					"exit_node": "First Reply",
+					"on_selection_effects": [
+						{
+							"effect_type": "Add",
+							"quality": "Love",
+							"value": {
+								"value_type": "random",
+								"low": -1,
+								"high": 2
+							}
+						}
+					],
+					"requirements": [
+						{
+							"quality": "Love",
+							"operator": "==",
+							"value": 1
+						}
+					],
+					"delay": 0
+				}
+			],
+			"image": "default"
+		},
+		{
+			"name": "First Reply",
+			"description": "Miss Red replies with another series of question marks.\nThe LOVE Gauge reads: $$Love",
+			"choices": [
+				{
+					"key": "choice 11",
+					"name": "Your curiosity is amazing.",
+					"exit_node": "Second Reply",
+					"on_selection_effects": [
+						{
+							"effect_type": "Add",
+							"quality": "Love",
+							"value": 1
+						}
+					],
+					"delay": 0
+				},
+				{
+					"key": "choice 12",
+					"name": "The moment I saw you I instantly fell in love.",
+					"exit_node": "Second Reply",
+					"on_selection_effects": [
+						{
+							"effect_type": "Add",
+							"quality": "Love",
+							"value": {
+								"value_type": "random",
+								"low": -1,
+								"high": 2
+							}
+						}
+					],
+					"delay": 0
+				},
+				{
+					"key": "choice 13",
+					"name": "Look, if you want some Chad that'll walk all over you, fine. You missed out on a NICE- GUY-.",
+					"exit_node": "Second Reply",
+					"on_selection_effects": [
+						{
+							"effect_type": "Set",
+							"quality": "Love",
+							"value": 0
+						}
+					],
+					"requirements": [
+						{
+							"quality": "Love",
+							"operator": "<=",
+							"value": 3
+						}
+					],
+					"delay": 0
+				}
+			],
+			"image": "default"
+		},
+		{
+			"name": "Second Reply",
+			"description": "Miss Red starts compiling a message, but your Drone insists you sent one last line to seal the deal.\nThe LOVE Gauge reads: $$Love",
+			"choices": [
+				{
+					"key": "choice 14",
+					"name": "You're my best friend-...",
+					"exit_node": "Realization",
+					"delay": 5,
+					"delay_message": "Message sending..."
+				},
+				{
+					"key": "choice 15",
+					"name": "I want to see where this goes-...",
+					"exit_node": "Realization",
+					"on_selection_effects": [
+						{
+							"effect_type": "Add",
+							"quality": "Love",
+							"value": 1
+						}
+					],
+					"delay": 5,
+					"delay_message": "Message sending..."
+				},
+				{
+					"key": "choice 16",
+					"name": "DTF?-...",
+					"exit_node": "Realization",
+					"on_selection_effects": [
+						{
+							"effect_type": "Remove",
+							"quality": "Love",
+							"value": {
+								"value_type": "random",
+								"low": -2,
+								"high": 2
+							}
+						}
+					],
+					"delay": 5,
+					"delay_message": "Message sending..."
+				}
+			],
+			"image": "default"
+		},
+		{
+			"name": "Realization",
+			"description": "Miss Red's message is received.\n\"This is Syndicate Drones Agent, Arusha Johnson.\nI don't know why you're saying it like that, but if you want to help out our cause we can send over a Trade Contract. \nPlease just call our Recruitment Officer next time.\"",
+			"choices": [
+				{
+					"key": "choice 18",
+					"name": "Accept Contract.",
+					"exit_node": "WIN",
+					"delay": 5,
+					"delay_message": "Sending Trade Contract..."
+				},
+				{
+					"key": "choice 19",
+					"name": "Demand a Second Date.",
+					"exit_node": "FAIL",
+					"delay": 0
+				}
+			],
+			"image": "default"
+		},
+		{
+			"name": "Love Birds",
+			"description": "Miss Red's message is received.\n\"This is Syndicate Drones Agent, Arusha Johnson.\nI can't believe it, but I feel a real connection with you.\nI'll send over a Trade Contract you can use to make some money and come see me just SOL7-South of $$SITE_NAME\nSee you soon...\"",
+			"choices": [
+				{
+					"key": "choice 20",
+					"name": "See you soon.",
+					"exit_node": "WIN",
+					"delay": 0
+				},
+				{
+					"key": "choice 21",
+					"name": "So you're not the Drone?",
+					"exit_node": "FAIL",
+					"delay": 0
+				}
+			],
+			"image": null,
+			"raw_image": "data:image/png;base64,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"
+		},
+		{
+			"name": "Obliteration",
+			"description": "The Blood-Red Drone opens up two side-hatches to reveal a pair of rocket-propelled missiles which are shot in your direction.\nYou have failed your Robotic Friend, who has already started shutting down their systems, but there is still a chance.",
+			"choices": [
+				{
+					"key": "choice 22",
+					"name": "Accept Death.",
+					"exit_node": "FAIL_DEATH",
+					"delay": 5,
+					"delay_message": "Missiles approaching..."
+				},
+				{
+					"key": "choice 23",
+					"name": "I'm a Gamer.",
+					"exit_node": "FAIL_DEATH",
+					"on_selection_effects": [
+						{
+							"effect_type": "Add",
+							"quality": "Love",
+							"value": {
+								"value_type": "random",
+								"low": 0,
+								"high": 8
+							}
+						}
+					],
+					"delay": 5,
+					"delay_message": "Miss Red considers..."
+				}
+			],
+			"image": "signal_lost"
+		},
+		{
+			"name": "Lack of Trust",
+			"description": "As you fiddle around in the Task Managing Software, closing all the new tabs your Drone is opening, the Miss Red enables a cloaking device and disappears.",
+			"choices": [
+				{
+					"key": "choice 24",
+					"name": "Sigh in a quiet but dramatic way.",
+					"exit_node": "FAIL",
+					"delay": 0
+				}
+			],
+			"image": "default"
+		}
+	]
 }

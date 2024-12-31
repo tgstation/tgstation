@@ -124,10 +124,10 @@
  * Used when the quirk has been gained and no client is attached to the mob.
  */
 /datum/quirk/proc/on_quirk_holder_first_login(mob/living/source)
-		SIGNAL_HANDLER
+	SIGNAL_HANDLER
 
-		UnregisterSignal(source, COMSIG_MOB_LOGIN)
-		post_add()
+	UnregisterSignal(source, COMSIG_MOB_LOGIN)
+	post_add()
 
 /// Any effect that should be applied every single time the quirk is added to any mob, even when transferred.
 /datum/quirk/proc/add(client/client_source)

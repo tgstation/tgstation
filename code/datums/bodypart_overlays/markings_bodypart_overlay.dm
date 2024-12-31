@@ -15,7 +15,7 @@
 
 /datum/bodypart_overlay/simple/body_marking/get_image(layer, obj/item/bodypart/limb)
 	var/gender_string = (use_gender && limb.is_dimorphic) ? (limb.gender == MALE ? MALE : FEMALE + "_") : "" //we only got male and female sprites
-	return image(icon, gender_string + icon_state + "_" + limb.body_zone, layer = layer)
+	return mutable_appearance(icon, gender_string + icon_state + "_" + limb.body_zone, layer = layer)
 
 /datum/bodypart_overlay/simple/body_marking/moth
 	dna_feature_key = "moth_markings"

@@ -64,6 +64,11 @@
 	. = ..()
 	chameleon_blacklist |= typecacheof(/obj/item/clothing/mask/changeling, only_root_path = TRUE)
 
+/datum/action/item_action/chameleon/change/mask/initialize_disguises()
+	. = ..()
+	add_chameleon_items(/obj/item/cigarette)
+	add_chameleon_items(/obj/item/vape)
+
 /datum/action/item_action/chameleon/change/hat
 	chameleon_type = /obj/item/clothing/head
 	chameleon_name = "Hat"
@@ -296,3 +301,7 @@
 	. = ..()
 	for(var/other_type in other_cham_types)
 		add_chameleon_items(other_type)
+
+/datum/action/item_action/chameleon/change/gun/ballistic
+	chameleon_type = /obj/item/gun/ballistic
+	chameleon_name = "Gun"

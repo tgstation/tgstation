@@ -146,6 +146,8 @@
 				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_HARMFUL)
 			if(DISEASE_SEVERITY_BIOHAZARD)
 				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_BIOHAZARD)
+			else
+				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_NONTHREAT)
 		peaked_cycles += stage/max_stages //every cycle we spend sick counts towards eventually curing the virus, faster at higher stages
 		recovery_prob += DISEASE_RECOVERY_CONSTANT + (peaked_cycles / (cycles_to_beat / DISEASE_RECOVERY_SCALING)) //more severe viruses are beaten back more aggressively after the peak
 		if(stage_peaked)
@@ -171,9 +173,9 @@
 				if(SANITY_LEVEL_UNSTABLE)
 					recovery_prob += 0
 				if(SANITY_LEVEL_CRAZY)
-					recovery_prob += -0.1
-				if(SANITY_LEVEL_INSANE)
 					recovery_prob += -0.2
+				if(SANITY_LEVEL_INSANE)
+					recovery_prob += -0.4
 
 		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)) && HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT)) //resting starved won't help, but resting helps
 			var/turf/rest_turf = get_turf(affected_mob)

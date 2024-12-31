@@ -1,6 +1,6 @@
 #define MAGICARP_SPELL_TARGET_SEEK_RANGE 4
 
-/datum/pet_command/point_targeting/use_ability/magicarp
+/datum/pet_command/use_ability/magicarp
 	pet_ability_key = BB_MAGICARP_SPELL
 
 /datum/ai_planning_subtree/attack_obstacle_in_path/carp
@@ -54,6 +54,12 @@
 
 /// This subtype only exists because if you queue multiple of the same action with different arguments it deletes their stored arguments
 /datum/ai_behavior/find_potential_targets/nearest/magicarp
+
+/datum/ai_behavior/find_potential_targets/nearest/magicarp/pick_final_target(datum/ai_controller/controller, list/enemies_list)
+	for(var/atom/atom as anything in enemies_list)
+		if(HAS_TRAIT(atom, TRAIT_SCARY_FISHERMAN))
+			enemies_list -= atom
+	return ..()
 
 /// Then use it on that target
 /datum/ai_planning_subtree/targeted_mob_ability/magicarp

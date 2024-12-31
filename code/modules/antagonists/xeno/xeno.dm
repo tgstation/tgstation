@@ -11,7 +11,7 @@
 //Simply lists them.
 /datum/team/xeno/roundend_report()
 	var/list/parts = list()
-	parts += "<span class='header'>The [name] were:</span>"
+	parts += span_header("The [name] were:")
 	parts += printplayerlist(members)
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
@@ -109,7 +109,7 @@
 	var/escape_count = 0 //counts the number of xenomorphs that were born in captivity who ended the round outside of it
 	var/captive_count = 0 //counts the number of xenomorphs born in captivity who remained there until the end of the round (losers)
 
-	parts += "<span class='header'>The [name] were:</span> <br>"
+	parts += span_header("The [name] were: <br>")
 
 	if(check_captivity(progenitor.current) == CAPTIVE_XENO_PASS)
 		parts += span_greentext("The progenitor of this hive was [progenitor.key], as [progenitor], who successfully escaped captivity!") + "<br>"
@@ -160,7 +160,7 @@
 		else
 			mind.add_antag_datum(/datum/antagonist/xeno)
 
-		mind.set_assigned_role(SSjob.GetJobType(/datum/job/xenomorph))
+		mind.set_assigned_role(SSjob.get_job_type(/datum/job/xenomorph))
 		mind.special_role = ROLE_ALIEN
 
 /mob/living/carbon/alien/on_wabbajacked(mob/living/new_mob)
@@ -170,7 +170,7 @@
 	if(isalien(new_mob))
 		return
 	mind.remove_antag_datum(/datum/antagonist/xeno)
-	mind.set_assigned_role(SSjob.GetJobType(/datum/job/unassigned))
+	mind.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
 	mind.special_role = null
 
 #undef CAPTIVE_XENO_DEAD

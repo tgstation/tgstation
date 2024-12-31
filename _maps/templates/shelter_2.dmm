@@ -62,9 +62,7 @@
 /turf/open/floor/pod,
 /area/misc/survivalpod)
 "n" = (
-/obj/structure/window/reinforced/survival_pod/spawner/directional/west{
-	layer = 3
-	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/machinery/door/window/survival_pod/left/directional/north,
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)

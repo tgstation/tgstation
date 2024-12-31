@@ -154,16 +154,16 @@
 		if(HDD_OVERLOADED)
 			. += "The front panel is dangling open. The hdd inside is destroyed and the wires are all burned."
 
-/obj/machinery/rnd/server/master/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/machinery/rnd/server/master/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!tool.tool_behaviour)
-		return NONE
+		return ..()
 	// Only antags are given the training and knowledge to disassemble this thing.
 	if(!is_special_character(user))
 		if(user.combat_mode)
 			return ITEM_INTERACT_SKIP_TO_ATTACK
 		balloon_alert(user, "you can't find an obvious maintenance hatch!")
 		return ITEM_INTERACT_BLOCKING
-	return NONE
+	return ..()
 
 /obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/computer_disk/hdd_theft))

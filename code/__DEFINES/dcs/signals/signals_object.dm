@@ -15,6 +15,8 @@
 /// from /obj/obj_reskin: (mob/user, skin)
 #define COMSIG_OBJ_RESKIN "obj_reskin"
 
+#define COMSIG_LIONHUNTER_ON_HIT "lionhunter_on_hit"
+
 // /obj/machinery signals
 
 ///from /obj/machinery/atom_break(damage_flag): (damage_flag)
@@ -153,12 +155,12 @@
 
 /// Sebt from obj/item/ui_action_click(): (mob/user, datum/action)
 #define COMSIG_ITEM_UI_ACTION_CLICK "item_action_click"
-	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	/// Return to prevent the default behavior (attack_selfing) from occurring.
 	#define COMPONENT_ACTION_HANDLED (1<<0)
 
 /// Sent from obj/item/item_action_slot_check(): (mob/user, datum/action, slot)
 #define COMSIG_ITEM_UI_ACTION_SLOT_CHECKED "item_action_slot_checked"
-	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	/// Return to prevent the default behavior (attack_selfing) from occurring.
 	#define COMPONENT_ITEM_ACTION_SLOT_INVALID (1<<0)
 
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
@@ -194,6 +196,8 @@
 #define COMSIG_TOOL_IN_USE "tool_in_use"
 ///from base of [/obj/item/proc/tool_start_check]: (mob/living/user)
 #define COMSIG_TOOL_START_USE "tool_start_use"
+/// From /obj/item/multitool/remove_buffer(): (buffer)
+#define COMSIG_MULTITOOL_REMOVE_BUFFER "multitool_remove_buffer"
 ///from [/obj/item/proc/disableEmbedding]:
 #define COMSIG_ITEM_DISABLE_EMBED "item_disable_embed"
 ///from [/obj/effect/mine/proc/triggermine]:
@@ -340,6 +344,10 @@
 #define COMSIG_GUN_CHAMBER_PROCESSED "gun_chamber_processed"
 ///called in /obj/item/gun/ballistic/process_chamber (casing)
 #define COMSIG_CASING_EJECTED "casing_ejected"
+///called in /obj/item/gun/ballistic/sawoff(mob/user, obj/item/saw, handle_modifications) : (mob/user)
+#define COMSIG_GUN_BEING_SAWNOFF "gun_being_sawnoff"
+	#define COMPONENT_CANCEL_SAWING_OFF (1<<0)
+#define COMSIG_GUN_SAWN_OFF "gun_sawn_off"
 
 // Jetpack things
 // Please kill me
@@ -350,10 +358,10 @@
 //called in /obj/item/tank/jetpack/proc/turn_off() : ()
 #define COMSIG_JETPACK_DEACTIVATED "jetpack_deactivated"
 
-//called in /obj/item/organ/internal/cyberimp/chest/thrusters/proc/toggle() : ()
+//called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
 #define COMSIG_THRUSTER_ACTIVATED "jetmodule_activated"
 	#define THRUSTER_ACTIVATION_FAILED (1<<0)
-//called in /obj/item/organ/internal/cyberimp/chest/thrusters/proc/toggle() : ()
+//called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
 #define COMSIG_THRUSTER_DEACTIVATED "jetmodule_deactivated"
 
 // /obj/item/camera signals
@@ -372,9 +380,9 @@
 
 // /obj/projectile signals (sent to the firer)
 
-///from base of /obj/projectile/proc/on_hit(), like COMSIG_PROJECTILE_ON_HIT but on the projectile itself and with the hit limb (if any): (atom/movable/firer, atom/target, angle, hit_limb, blocked)
+///from base of /obj/projectile/proc/on_hit(), like COMSIG_PROJECTILE_ON_HIT but on the projectile itself and with the hit limb (if any): (atom/movable/firer, atom/target, angle, hit_limb, blocked, pierce_hit)
 #define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"
-///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, angle, hit_limb, blocked)
+///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, angle, hit_limb, blocked, pierce_hit)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"
 ///from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire"
@@ -385,10 +393,17 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
 	#define PROJECTILE_INTERRUPT_HIT (1<<0)
-///from the base of /obj/projectile/Range(): ()
+	#define PROJECTILE_INTERRUPT_HIT_PHASE (1<<1)
+///from /obj/projectile/process_movement(): ()
+#define COMSIG_PROJECTILE_MOVE_PROCESS_STEP "projectile_move_process_step"
+///sent to self during the process_hit proc of projectiles
+#define COMSIG_PROJECTILE_SELF_PREHIT "com_proj_prehit"
+///from the base of /obj/projectile/reduce_range(): ()
 #define COMSIG_PROJECTILE_RANGE "projectile_range"
 ///from the base of /obj/projectile/on_range(): ()
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"
+///from the base of /obj/projectile/process(): ()
+#define COMSIG_PROJECTILE_BEFORE_MOVE "projectile_before_move"
 ///from [/obj/item/proc/tryEmbed] sent when trying to force an embed (mainly for projectiles and eating glass)
 #define COMSIG_EMBED_TRY_FORCE "item_try_embed"
 	#define COMPONENT_EMBED_SUCCESS (1<<1)
@@ -405,10 +420,8 @@
 #define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
 ///sent to the projectile when spawning the item (shrapnel) that may be embedded: (new_item)
 #define COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED "projectile_on_spawn_embedded"
-
-/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
-#define COMSIG_HIT_BY_SABOTEUR "hit_by_saboteur"
-	#define COMSIG_SABOTEUR_SUCCESS (1<<0)
+///sent to the projectile when successfully embedding into something
+#define COMSIG_PROJECTILE_ON_EMBEDDED "projectile_on_embedded"
 
 // /obj/vehicle/sealed/car/vim signals
 
@@ -520,7 +533,24 @@
 /// from /datum/component/dart_insert/on_reskin()
 #define COMSIG_DART_INSERT_PARENT_RESKINNED "dart_insert_parent_reskinned"
 
+/// from /datum/element/undertile/hide()
+#define COMSIG_UNDERTILE_UPDATED "undertile_updated"
+
 /// Sent from /obj/item/update_weight_class(). (old_w_class, new_w_class)
 #define COMSIG_ITEM_WEIGHT_CLASS_CHANGED "item_weight_class_changed"
-/// Sent from /obj/item/update_weight_class(), to it's loc. (obj/item/changed_item, old_w_class, new_w_class)
+/// Sent from /obj/item/update_weight_class(), to its loc. (obj/item/changed_item, old_w_class, new_w_class)
 #define COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED "atom_contents_weight_class_changed"
+
+///Sent from /obj/item/skillchip/on_implant()
+#define COMSIG_SKILLCHIP_IMPLANTED "skillchip_implanted"
+
+///Sent from /obj/item/skillchip/on_remove()
+#define COMSIG_SKILLCHIP_REMOVED "skillchip_removed"
+
+/// from /obj/machinery/computer/camera_advanced/shuttle_docker/gatherNavComputerOverlays() : (list/images_out)
+#define COMSIG_SHUTTLE_NAV_COMPUTER_IMAGE_REQUESTED "shuttle_nav_computer_image_requested"
+
+/// Sent from /obj/item/organ/wings/functional/proc/open_wings(): (mob/living/carbon/owner)
+#define COMSIG_WINGS_OPENED "wings_opened"
+/// Sent from /obj/item/organ/wings/functional/proc/close_wings(): (mob/living/carbon/owner)
+#define COMSIG_WINGS_CLOSED "wings_closed"

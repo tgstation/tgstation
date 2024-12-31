@@ -7,7 +7,7 @@
 	preview_outfit = /datum/outfit/cultist
 	job_rank = ROLE_CULTIST
 	antag_hud_name = "cult"
-	stinger_sound = 'sound/ambience/antag/bloodcult/bloodcult_gain.ogg'
+	stinger_sound = 'sound/music/antag/bloodcult/bloodcult_gain.ogg'
 
 	///The vote ability Cultists have to elect someone to be the leader.
 	var/datum/action/innate/cult/mastervote/vote_ability
@@ -151,7 +151,8 @@
 
 ///Attempts to make a new item and put it in a potential inventory slot in the provided mob.
 /datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
-	var/item = new item_path(mob)
+	var/obj/item = new item_path(mob)
+	ADD_TRAIT(item, TRAIT_CONTRABAND, INNATE_TRAIT)
 	var/where = mob.equip_conspicuous_item(item)
 	if(!where)
 		to_chat(mob, span_userdanger("Unfortunately, you weren't able to get [item]. This is very bad and you should adminhelp immediately (press F1)."))
@@ -255,7 +256,7 @@
 
 	var/area/current_area = get_area(owner.current)
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
-		SEND_SOUND(cult_mind, sound('sound/hallucinations/veryfar_noise.ogg'))
+		SEND_SOUND(cult_mind, sound('sound/effects/hallucinations/veryfar_noise.ogg'))
 		to_chat(cult_mind, span_cult_large("The Cult's Master, [owner.current.name], has fallen in \the [current_area]!"))
 
 /datum/antagonist/cult/get_preview_icon()
@@ -280,3 +281,4 @@
 ///Used to check if the owner is counted as a secondary invoker for runes.
 /datum/antagonist/cult/proc/check_invoke_validity()
 	return TRUE
+

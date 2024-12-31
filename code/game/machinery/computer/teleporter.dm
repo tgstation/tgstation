@@ -84,7 +84,7 @@
 	power_station.teleporter_hub.update_appearance()
 	power_station.teleporter_hub.calibrated = FALSE
 
-/obj/machinery/computer/teleporter/ui_act(action, params)
+/obj/machinery/computer/teleporter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -116,7 +116,7 @@
 			say("Processing hub calibration to target...")
 			calibrating = TRUE
 			power_station.update_appearance()
-			addtimer(CALLBACK(src, PROC_REF(finish_calibration)), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
+			addtimer(CALLBACK(src, PROC_REF(finish_calibration)), 5 SECONDS * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			return TRUE
 
 /obj/machinery/computer/teleporter/proc/set_teleport_target(new_target)

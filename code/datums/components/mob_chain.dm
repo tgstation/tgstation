@@ -88,7 +88,7 @@
 	var/mob/living/body = parent
 	body.update_appearance(UPDATE_ICON_STATE)
 
-/// Called when something sets us as IT'S front
+/// Called when something sets us as ITS front
 /datum/component/mob_chain/proc/on_gained_tail(mob/living/body, mob/living/tail)
 	SIGNAL_HANDLER
 	back = tail

@@ -31,8 +31,9 @@ export const STORAGE_MODE_ADVINJ = 'injector';
 export const SUBJECT_CONCIOUS = 0;
 export const SUBJECT_SOFT_CRIT = 1;
 export const SUBJECT_UNCONSCIOUS = 2;
-export const SUBJECT_DEAD = 3;
-export const SUBJECT_TRANSFORMING = 4;
+export const SUBJECT_HARD_CRIT = 3;
+export const SUBJECT_DEAD = 4;
+export const SUBJECT_TRANSFORMING = 5;
 
 export const PULSE_STRENGTH_MAX = 15;
 export const PULSE_DURATION_MAX = 30;

@@ -11,8 +11,7 @@
 	var/originalcolor
 
 /datum/status_effect/rainbow_protection/on_apply()
-	owner.status_flags |= GODMODE
-	ADD_TRAIT(owner, TRAIT_PACIFISM, /datum/status_effect/rainbow_protection)
+	owner.add_traits(list(TRAIT_GODMODE, TRAIT_PACIFISM), TRAIT_STATUS_EFFECT(id))
 	owner.visible_message(span_warning("[owner] shines with a brilliant rainbow light."),
 		span_notice("You feel protected by an unknown force!"))
 	originalcolor = owner.color
@@ -23,9 +22,8 @@
 	return ..()
 
 /datum/status_effect/rainbow_protection/on_remove()
-	owner.status_flags &= ~GODMODE
 	owner.color = originalcolor
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, /datum/status_effect/rainbow_protection)
+	owner.remove_traits(list(TRAIT_GODMODE, TRAIT_PACIFISM), TRAIT_STATUS_EFFECT(id))
 	owner.visible_message(span_notice("[owner] stops glowing, the rainbow light fading away."),
 		span_warning("You no longer feel protected..."))
 
@@ -61,8 +59,8 @@
 
 /datum/status_effect/slimerecall
 	id = "slime_recall"
-	duration = -1 //Will be removed by the extract.
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT //Will be removed by the extract.
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = null
 	var/interrupted = FALSE
 	var/mob/target
@@ -98,7 +96,7 @@
 /datum/status_effect/frozenstasis
 	id = "slime_frozen"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = -1 //Will remove self when block breaks.
+	duration = STATUS_EFFECT_PERMANENT //Will remove self when block breaks.
 	alert_type = /atom/movable/screen/alert/status_effect/freon/stasis
 	var/obj/structure/ice_stasis/cube
 
@@ -106,7 +104,7 @@
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(breakCube))
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	owner.forceMove(cube)
-	owner.status_flags |= GODMODE
+	ADD_TRAIT(owner, TRAIT_GODMODE, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/frozenstasis/tick(seconds_between_ticks)
@@ -121,13 +119,13 @@
 /datum/status_effect/frozenstasis/on_remove()
 	if(cube)
 		qdel(cube)
-	owner.status_flags &= ~GODMODE
+	REMOVE_TRAIT(owner, TRAIT_GODMODE, TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 
 /datum/status_effect/slime_clone
 	id = "slime_cloned"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	var/mob/living/clone
 	var/datum/mind/originalmind //For when the clone gibs.
@@ -171,7 +169,7 @@
 /datum/status_effect/slime_clone_decay
 	id = "slime_clonedecay"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = /atom/movable/screen/alert/status_effect/clone_decay
 
 /datum/status_effect/slime_clone_decay/tick(seconds_between_ticks)
@@ -232,7 +230,7 @@
 
 /datum/status_effect/rebreathing
 	id = "rebreathing"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 
 /datum/status_effect/rebreathing/tick(seconds_between_ticks)
@@ -442,7 +440,7 @@
 
 /datum/status_effect/stabilized //The base stabilized extract effect, has no effect of its' own.
 	id = "stabilizedbase"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	/// Item which provides this buff
 	var/obj/item/slimecross/stabilized/linked_extract
@@ -838,7 +836,7 @@
 
 /datum/status_effect/pinkdamagetracker
 	id = "pinkdamagetracker"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	var/damage = 0
 	var/lasthealth

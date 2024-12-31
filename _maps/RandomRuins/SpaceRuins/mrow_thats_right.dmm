@@ -312,7 +312,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "be" = (
-/obj/item/organ/external/tail/cat,
+/obj/item/organ/tail/cat,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/white/corner,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -396,7 +396,7 @@
 "bt" = (
 /obj/structure/table/optable,
 /obj/effect/mob_spawn/corpse/human/damaged,
-/obj/item/organ/internal/ears/cat,
+/obj/item/organ/ears/cat,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -737,12 +737,12 @@
 /obj/structure/closet/crate/freezer{
 	name = "cat ears"
 	},
-/obj/item/organ/internal/ears/cat,
-/obj/item/organ/internal/ears/cat,
-/obj/item/organ/internal/ears/cat,
-/obj/item/organ/internal/ears/cat,
-/obj/item/organ/internal/ears/cat,
-/obj/item/organ/internal/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "cv" = (
@@ -791,12 +791,12 @@
 /obj/structure/closet/crate/freezer{
 	name = "cat tails"
 	},
-/obj/item/organ/external/tail/cat,
-/obj/item/organ/external/tail/cat,
-/obj/item/organ/external/tail/cat,
-/obj/item/organ/external/tail/cat,
-/obj/item/organ/external/tail/cat,
-/obj/item/organ/external/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "jc" = (

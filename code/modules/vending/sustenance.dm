@@ -36,7 +36,7 @@
 	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement. \
 			This one, however, processes labor points for its products if the user is incarcerated."
 	icon_state = "sustenance_labor"
-	onstation_override = TRUE
+	all_products_free = FALSE
 	displayed_currency_icon = "digging"
 	displayed_currency_name = " LP"
 

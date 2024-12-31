@@ -116,3 +116,10 @@
 #define LARGE_TURF_SMOOTHING_X_OFFSET -9
 /// Defines the y offset to apply to larger smoothing turfs (such as grass).
 #define LARGE_TURF_SMOOTHING_Y_OFFSET -9
+
+/// Defines a consistent light power for our various basalt turfs
+#define BASALT_LIGHT_POWER 0.6
+/// Defines a consistent light range for basalt turfs that have a bigger area of lava
+#define BASALT_LIGHT_RANGE_BRIGHT 2
+/// Defines a consistent light range for basalt turfs that have a smaller area of lava
+#define BASALT_LIGHT_RANGE_DIM 1.4

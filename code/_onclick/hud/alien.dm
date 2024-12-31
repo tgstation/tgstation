@@ -39,13 +39,13 @@
 	using = new /atom/movable/screen/swap_hand(null, src)
 	using.icon = ui_style
 	using.icon_state = "swap_1"
-	using.screen_loc = ui_swaphand_position(owner,1)
+	using.screen_loc = ui_swaphand_position(owner, 1)
 	static_inventory += using
 
 	using = new /atom/movable/screen/swap_hand(null, src)
 	using.icon = ui_style
 	using.icon_state = "swap_2"
-	using.screen_loc = ui_swaphand_position(owner,2)
+	using.screen_loc = ui_swaphand_position(owner, 2)
 	static_inventory += using
 
 	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
@@ -59,12 +59,12 @@
 		H.leap_icon.screen_loc = ui_alien_storage_r
 		static_inventory += H.leap_icon
 
+	floor_change = new /atom/movable/screen/floor_changer(null, src)
+	floor_change.icon = ui_style
+	static_inventory += floor_change
+
 	using = new/atom/movable/screen/language_menu(null, src)
 	using.screen_loc = ui_alien_language_menu
-	static_inventory += using
-
-	using = new /atom/movable/screen/floor_menu(null, src)
-	using.screen_loc = ui_alien_floor_menu
 	static_inventory += using
 
 	using = new /atom/movable/screen/navigate(null, src)
@@ -76,10 +76,11 @@
 	using.screen_loc = ui_drop_throw
 	static_inventory += using
 
-	using = new /atom/movable/screen/resist(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_above_movement
-	hotkeybuttons += using
+	resist_icon = new /atom/movable/screen/resist(null, src)
+	resist_icon.icon = ui_style
+	resist_icon.screen_loc = ui_above_movement
+	resist_icon.update_appearance()
+	hotkeybuttons += resist_icon
 
 	throw_icon = new /atom/movable/screen/throw_catch(null, src)
 	throw_icon.icon = ui_style
