@@ -2,6 +2,7 @@
 #define WAND_BOLT "bolt"
 #define WAND_EMERGENCY "emergency"
 #define WAND_HANDLE_REQUESTS "requests"
+#define WAND_SHOCK "shock"
 
 /obj/item/door_remote
 	icon_state = "remote"
@@ -21,10 +22,12 @@
 	var/response_name = null
 	var/listening = FALSE
 	/// an asslist (ID : door)
-	var/open_requests = list()
+	var/list/open_requests = null
 	/// When the remote gets dropped, start a ten minute timer before we stop listening for requests
 	var/stop_listening_timer = null
-	var/setting_callbacks = list()
+	var/list/setting_callbacks = list()
+	var/static/list/response_radials
+
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
@@ -38,10 +41,37 @@
 	"T" = CALLBACK(src, PROC_REF(toggle_listen)),
 	)
 	// For cases where it spawns on somebody
+	setup_radial_images()
 	if(get(loc, /mob/living))
 		toggle_listen(loc)
 	else
 		RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
+
+/obj/item/door_remote/proc/setup_radial_images()
+	if(response_radials) // already setup
+		return
+	response_radials = REMOTE_RESPONSE_RADIALS
+
+/obj/item/door_remote/proc/resolve_radial_options()
+	var/static/list/available_options = list(
+		WAND_OPEN = DOOR_REMOTE_RADIAL_OPERATION_OPENING_INDEX,
+		WAND_BOLT = DOOR_REMOTE_RADIAL_OPERATION_BOLTING_INDEX,
+		WAND_EMERGENCY = DOOR_REMOTE_RADIAL_OPERATION_EA_INDEX,
+		WAND_SHOCK = DOOR_REMOTE_RADIAL_OPERATION_SHOCK_INDEX,
+		WAND_HANDLE_REQUESTS = 5, // fuck off
+	)
+	var/list/image_set = GLOB.door_remote_radial_images?[region_access]
+	var/is_emagged = obj_flags & EMAGGED
+	if(!image_set)
+		image_set = GLOB.door_remote_radial_images[REGION_ALL_STATION]
+	image_set = list(image_set.Copy()) // so we don't end up messing around with the GLOB
+	image_set += response_radials[DOOR_REMOTE_RADIAL_OPERATION_HANDLE_REQUESTS_INDEX]
+	var/list/resolved_options = list()
+	for(var/option in available_options)
+		resolved_options.Add(available_options[option] = image_set[available_options[option]])
+	if(!is_emagged)
+		resolved_options.Remove(WAND_SHOCK) // no shock without emag
+	return resolved_options
 
 /obj/item/door_remote/proc/on_pickup(datum/source, atom/new_hand_touches_the_beacon)
 	SIGNAL_HANDLER
@@ -104,8 +134,8 @@
 		ID_requesting.visible_message(span_notice("A bland banner blinks on [ID_requesting]: RESPONSE TIMEOUT FOR _[response_name]_."), vision_distance = 1)
 
 /obj/item/door_remote/attack_self(mob/user)
-	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access", WAND_HANDLE_REQUESTS = "Handle access requests")
-	var/choice = show_radial_menu(user, user, desc, radius = 32)
+	var/list/radial_options = resolve_radial_options()
+	var/choice = show_radial_menu(user, user, radial_options, radius = 32)
 	switch(choice)
 		if(WAND_OPEN)
 			mode = WAND_OPEN
@@ -115,6 +145,8 @@
 			mode = WAND_EMERGENCY
 		if(WAND_HANDLE_REQUESTS)
 			handle_requests(user)
+		if(WAND_SHOCK) // doorshock not wizard shock
+			mode = WAND_SHOCK
 	update_icon_state()
 	balloon_alert(user, "mode: [desc[mode]]")
 
@@ -133,6 +165,7 @@
 		return chosen_callback.Invoke(user)
 
 /obj/item/door_remote/proc/handle_requests(mob/user)
+	var/is_emagged = obj_flags & EMAGGED
 	if(!length(open_requests))
 		to_chat(user, span_yellowteamradio("The remote buzzes: %NO_REQUESTS%"))
 		return
@@ -168,7 +201,16 @@
 		to_chat(user, span_yellowteamradio("The remote buzzes: %NO_SELECTION%"))
 		return
 	balloon_alert(user, "Choose batch action:")
-	var/action = show_radial_menu(user, user, list("Approve", "Deny", "Bolt", "Block", "Emergency Access"), radius = 32)
+	var/list/available_actions
+	var/radius = 32
+	if(is_emagged)
+		available_actions = SSid_access.remote_request_action_list_nefarious
+		radius = 36 // space it out a bit more with the extra option
+	else
+		available_actions = SSid_access.remote_request_action_list
+	var/action = show_radial_menu(user, user, available_actions, radius = 32)
+	if(!action)
+		return
 	for(var/choice in choices)
 		// second index of a given choice is its index in open_requests
 		// first index was just text for the remote user
@@ -176,12 +218,39 @@
 		var/given_request = open_requests[open_req_index_from_tgui_selection]
 		var/obj/item/card/id/given_id = given_request
 		var/obj/machinery/door/airlock/given_door = open_requests[given_request]
-		if(!istype(given_id) || !istype(given_door))
+		if(!istype(given_id) || !istype(given_door) || !given_door.requiresID() || !given_door.canAIControl())
 			to_chat(user, span_yellowteamradio("The remote buzzes:"))
-			to_chat(user, span_yellowteamradio("[choice[1]] %REQUEST_RESPONSE_FAILURE%"))
+			to_chat(user, span_red("%REQUEST_RESPONSE_FAILURE%[open_requests[given_id]]"))
+			LAZYREMOVE(open_requests, given_id)
 			continue
-		to_chat(user, span_yellowteamradio("[choice[1]] %[action]%"))
+		// primary door behavior for response is handled by SSid_access
+/*		var/SIDE_EFFECTS = SSid_access.handle_request_response(action, given_door, is_emagged)
+		// stagger the sound response randomly because these remotes are janky tchotchkes given
+		// to heads instead of raises but we want to give the player some audio feedback
+		var/sound_delay = (rand(4,20) DECISECONDS * open_requests.Find(given_id))
+		var/datum/callback/side_effect_callback = CALLBACK(src, SIDE_EFFECTS)
+		side_effect_callback.Invoke(user, given_id, given_door, is_emagged)
+		addtimer(CALLBACK(src, PROC_REF(do_handled_request_noise), action), sound_delay)
+		LAZYREMOVE(open_requests, given_id)
 
+/obj/item/door_remote/proc/do_handled_request_noise(action)
+*/
+/*
+*	Side effects for door remote actions
+*	Except for shock, these only occur when performing remote request handling
+*	For some of them, it's as simple as playing a sound
+*/
+/*
+/obj/item/door_remote/proc/block_side_effects(mob/user, obj/item/card/id/given_id, obj/machinery/door/airlock/given_door, sound_delay)
+
+/obj/item/door_remote/proc/deny_side_effects(mob/user, obj/item/card/id/given_id, obj/machinery/door/airlock/given_door, sound_delay)
+
+/obj/item/door_remote/proc/bolt_side_effects(mob/user, obj/item/card/id/given_id, obj/machinery/door/airlock/given_door, sound_delay)
+
+/obj/item/door_remote/proc/shock_side_effects(mob/user, obj/item/card/id/given_id, obj/machinery/door/airlock/given_door, sound_delay)
+
+/obj/item/door_remote/proc/escalate_side_effects(mob/user, obj/item/card/id/given_id, obj/machinery/door/airlock/given_door, sound_delay)
+*/
 /obj/item/door_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/door/door
 
@@ -305,3 +374,5 @@
 #undef WAND_OPEN
 #undef WAND_BOLT
 #undef WAND_EMERGENCY
+#undef WAND_HANDLE_REQUESTS
+#undef WAND_SHOCK

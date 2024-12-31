@@ -39,6 +39,10 @@ SUBSYSTEM_DEF(id_access)
 	var/spare_id_safe_code = ""
 	/// Associated list of regions; entries are null until getting LAZYADD'd a ref to a given remote once it gets registered
 	var/remotes_listening_by_region = list()
+	/// Responses offered when setting automatic responses or handling access request batches.
+	var/static/list/remote_request_action_list
+	/// Above but & EMAGGED
+	var/static/list/remote_request_action_list_nefarious
 
 /datum/controller/subsystem/id_access/Initialize()
 	// We use this because creating the trim singletons requires the config to be loaded.
@@ -48,6 +52,8 @@ SUBSYSTEM_DEF(id_access)
 	setup_wildcard_dict()
 	setup_access_descriptions()
 	setup_tgui_lists()
+//	setup_remote_request_action_lists()
+	setup_door_remote_radials() // code\game\objects\items\door_remotes\door_remote_radial_images.dm
 
 	spare_id_safe_code = "[rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)]"
 
@@ -345,6 +351,21 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_CENT_BAR]"] = "Code Scotch"
 	desc_by_access["[ACCESS_BIT_DEN]"] = "Bitrunner Den"
 
+/datum/controller/subsystem/id_access/proc/setup_remote_request_action_lists()
+/*	remote_request_action_list = list(
+		"Approve" = null,
+		"Deny" = null,
+		"Bolt" = TYPE_PROC_REF(),
+		"Block" = TYPE_PROC_REF(),
+		"Emergency Access" = null,
+		"Clear" = null,
+		"Escalate" = null,
+	)
+	remote_request_action_list_nefarious = list(
+		"SHOCK"
+	) + remote_request_action_list
+PSEUDO_M*/
+
 /**
  * Returns the access bitflags associated with any given access level.
  *
@@ -533,6 +554,34 @@ SUBSYSTEM_DEF(id_access)
 /datum/controller/subsystem/id_access/proc/remove_listening_remote(region_listened_to, obj/item/door_remote/remote_removed)
 	LAZYREMOVE(remotes_listening_by_region[region_listened_to], remote_removed)
 
+/*/datum/controller/subsystem/id_access/proc/handle_request_response(response_from_remote, obj/machinery/door/airlock/door_requested, emagged_remote = FALSE)
+	if(!istext(response_from_remote))
+		CRASH("handle_request_response called with non-text response. How did we get here?")
+	if(!istype(door_requested, /obj/machinery/door/airlock))
+		CRASH("handle_request_response for airlock tried to handle something that wasn't an airlock.")
+	// we don't need to do any more checking on airlock condition at this point; there have been two
+	// rounds of validation and any further procs have their own checks
+	switch (response_from_remote)
+		if("Approve")
+			if(door_requested.locked)
+				door_requested.unbolt()
+			door_requested.open()
+			return TRUE
+		if("Deny")
+			return FALSE
+		if("Bolt")
+			door_requested.secure_close(force_crush = emagged_remote)
+			return FALSE
+		if("Block")
+			return FALSE
+		if("Emergency Access")
+
+		if("Clear")
+
+		if("Escalate")
+
+		if("SHOCK")
+PSEUDO_M*/
 
 /* When someone bops a door with the alternate action of their ID, they will request the door be opened by the door remote.
  * First, we deduce the appropriate region(s) for the access request.
@@ -549,5 +598,3 @@ SUBSYSTEM_DEF(id_access)
 				. = SEND_SIGNAL(remote, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, ID_requesting, door_requested)
 	if(!.)
 		ID_requesting.visible_message("A scroll of text rolls across the front of [ID_requesting]: ACCESS REQUEST ROUTING FAILED, CONSULT ARTIFICIAL INTELLIGENCE FOR ASSISTANCE.", vision_distance = 1)
-
-
