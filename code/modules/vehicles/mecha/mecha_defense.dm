@@ -71,6 +71,11 @@
 	return attack_hand(user, modifiers)
 
 /obj/vehicle/sealed/mecha/attack_alien(mob/living/user, list/modifiers)
+	if(!user.combat_mode)
+		var/datum/element/mech_prying/prying = SSdcs.GetElement(list(/datum/element/mech_prying, user))
+		if(prying && prying.try_pry_mech(user, src) == COMPONENT_HOSTILE_NO_ATTACK)
+			return
+
 	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
 	playsound(loc, 'sound/items/weapons/slash.ogg', 100, TRUE)
 	attack_generic(user, rand(user.melee_damage_lower, user.melee_damage_upper), BRUTE, MELEE, 0)
@@ -128,9 +133,6 @@
 			visible_message(span_warning("The [strain.name] blob's tendrils short out!"))
 			damage = 30
 			blob_emp_act()
-			addtimer(CALLBACK(src, PROC_REF(blob_emp_act)), 2 SECONDS)
-
-		if (/datum/blobstrain/reagent/networked_fibers)
 			damage = 75
 
 	take_damage(damage, BRUTE, MELEE, 0, get_dir(src, B))
