@@ -74,6 +74,10 @@
 
 	register_item_context()
 
+/obj/item/melee/baton/examine(mob/user)
+	. = ..()
+	. += span_notice("\The [src] has an armor penetrative power of [get_stun_penetration_value()]%.")
+
 /**
  * Ok, think of baton attacks like a melee attack chain:
  *
@@ -627,8 +631,28 @@
 
 /// Toggles the stun baton's light
 /obj/item/melee/baton/security/proc/toggle_light()
+	set_baton_light_color()
 	set_light_on(!light_on)
 	return
+
+/// Change our baton's light color based on the contained cell.
+/obj/item/melee/baton/security/proc/set_baton_light_color()
+	if(cell)
+		var/chargepower = cell.maxcharge
+		var/zap_value = clamp(chargepower/STANDARD_CELL_CHARGE, 0, 100)
+		switch(zap_value)
+			if(-INFINITY to 10)
+				set_light_color(LIGHT_COLOR_ORANGE)
+			if(11 to 20)
+				set_light_color(LIGHT_COLOR_INTENSE_RED)
+			if(21 to 30)
+				set_light_color(LIGHT_COLOR_GREEN)
+			if(31 to 40)
+				set_light_color(LIGHT_COLOR_BLUE)
+			if(41 to INFINITY)
+				set_light_color(LIGHT_COLOR_PURPLE)
+	else
+		set_light_color(LIGHT_COLOR_ORANGE)
 
 /obj/item/melee/baton/security/proc/turn_on(mob/user)
 	active = TRUE
