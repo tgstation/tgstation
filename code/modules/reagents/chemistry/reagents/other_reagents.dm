@@ -3146,11 +3146,16 @@
 
 /datum/reagent/luminescent_fluid/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
+
 	if (isnull(glowing) && !added_light && volume > 20)
 		glowing = new(affected_mob)
 		glowing.set_light_color(color)
 		glowing.set_light_on(TRUE)
 		added_light = TRUE
+
+	if (SPT_PROB(8, seconds_per_tick))
+		if(affected_mob.adjustToxLoss(1, updating_health = FALSE))
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/luminescent_fluid/proc/on_organ_added(mob/living/source, obj/item/organ/eyes/new_eyes)
 	SIGNAL_HANDLER
@@ -3180,6 +3185,12 @@
 	color = COLOR_SOFT_RED
 	// The glow *is* unnatural, so...
 	metabolized_traits = list(TRAIT_MINOR_NIGHT_VISION, TRAIT_UNNATURAL_RED_GLOWY_EYES)
+
+/datum/reagent/luminescent_fluid/overdose_start(mob/living/affected_mob)
+	. = ..()
+	if (!ishuman(affected_mob))
+		return
+	ADD_TRAIT(affected_mob, TRAIT_UNNATURAL_RED_GLOWY_EYES, OVERDOSE_TRAIT)
 
 /datum/reagent/luminescent_fluid/blue
 	name = "Blue Luminiscent Fluid"
