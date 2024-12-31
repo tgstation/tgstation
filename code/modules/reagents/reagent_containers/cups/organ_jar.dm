@@ -27,8 +27,7 @@
 
 /obj/item/reagent_containers/cup/organ_jar/Destroy(force)
 	. = ..()
-	if(!isnull(held_organ))
-		QDEL_NULL(held_organ)
+	QDEL_NULL(held_organ)
 
 // Alt click lets you take the organ out, if it's present
 /obj/item/reagent_containers/cup/organ_jar/click_alt(mob/user)
@@ -86,7 +85,7 @@
 
 /obj/item/reagent_containers/cup/organ_jar/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
-	full_of_formaldehyde = !!holder.has_reagent(/datum/reagent/toxin/formaldehyde, amount=holder.maximum_volume)
+	full_of_formaldehyde = !!holder.has_reagent(/datum/reagent/toxin/formaldehyde, amount = holder.maximum_volume)
 	check_organ_freeze()
 
 // Proc that stops the held organ from rotting if the jar is full of formaldehyde
