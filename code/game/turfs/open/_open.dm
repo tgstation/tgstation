@@ -337,11 +337,7 @@
 	for(var/mob/living/basic/slime/M in src)
 		M.apply_water()
 
-	wash(CLEAN_WASH)
-	for(var/atom/movable/movable_content as anything in src)
-		if(ismopable(movable_content)) // Will have already been washed by the wash call above at this point.
-			continue
-		movable_content.wash(CLEAN_WASH)
+	wash(CLEAN_WASH, TRUE)
 	return TRUE
 
 /turf/open/handle_slip(mob/living/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, force_drop)

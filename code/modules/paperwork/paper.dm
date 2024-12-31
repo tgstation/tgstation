@@ -162,7 +162,7 @@
 	new_paper.raw_stamp_data = copy_raw_stamps()
 	new_paper.stamp_cache = stamp_cache?.Copy()
 	new_paper.update_icon_state()
-	copy_overlays(new_paper, TRUE)
+	new_paper.copy_overlays(src)
 	return new_paper
 
 /**

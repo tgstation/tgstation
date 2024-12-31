@@ -169,8 +169,9 @@
 	var/impact_light_color_override
 
 	// Homing
-	/// If the projectile is homing. Warning - this changes projectile's processing logic, reverting it to segmented processing instead of new raymarching logic
-	var/homing = FALSE
+	/// If the projectile is currently homing. Warning - this changes projectile's processing logic, reverting it to segmented processing instead of new raymarching logic
+	/// This does not actually set up the projectile to home in on a target - you need to set that up with set_homing_target() on the projectile!
+	VAR_FINAL/homing = FALSE
 	/// Target the projectile is homing on
 	var/atom/homing_target
 	/// Angles per move segment, distance is based on SSprojectiles.pixels_per_decisecond
@@ -420,11 +421,17 @@
 	// Shooting yourself point-blank
 	if (firer == original)
 		original = null
+	if (firer == fired_from)
+		fired_from = null
 	firer = null
 
 /obj/projectile/proc/original_deleted(datum/source)
 	SIGNAL_HANDLER
 	original = null
+
+/obj/projectile/proc/fired_from_deleted(datum/source)
+	SIGNAL_HANDLER
+	fired_from = null
 
 /obj/projectile/proc/on_ricochet(atom/target)
 	ricochets++
@@ -752,11 +759,13 @@
 
 /obj/projectile/proc/fire(fire_angle, atom/direct_target)
 	LAZYINITLIST(impacted)
-	if (fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	if (firer)
 		RegisterSignal(firer, COMSIG_QDELETING, PROC_REF(firer_deleted))
 		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
+	if (fired_from)
+		if (firer != fired_from)
+			RegisterSignal(fired_from, COMSIG_QDELETING, PROC_REF(fired_from_deleted))
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	if (original)
 		if (firer != original)
 			RegisterSignal(original, COMSIG_QDELETING, PROC_REF(original_deleted))
