@@ -109,7 +109,6 @@
 	attack_generic(user, final_damage, user.melee_damage_type, MELEE, !user.environment_smash)
 	return 1
 
-
 /obj/vehicle/sealed/mecha/hulk_damage()
 	return 15
 
@@ -119,21 +118,22 @@
 		log_message("Attack by hulk. Attacker - [user].", LOG_MECHA, color="red")
 		log_combat(user, src, "punched", "hulk powers")
 
+
+	var/emp_cooldown = FALSE // GUH
+
 /obj/vehicle/sealed/mecha/blob_act(obj/structure/blob/B)
 	if (!B?.overmind?.blobstrain)
 		return take_damage(30, BRUTE, MELEE, 0, get_dir(src, B))
 
 	var/datum/blobstrain/strain = B.overmind.blobstrain
 	log_message("Attack by blob strain: [strain.name]. Attacker - [B].", LOG_MECHA, color="red")
-
 	var/damage = 50
 
-	switch (strain.type)
-		if (/datum/blobstrain/reagent/electromagnetic_web)
+		damage = 30
+		if(!emp_cooldown)
 			visible_message(span_warning("The [strain.name] blob's tendrils short out!"))
-			damage = 30
-			blob_emp_act()
-			damage = 75
+	else if(istype(strain, /datum/blobstrain/reagent/networked_fibers))
+		damage = 75
 
 	take_damage(damage, BRUTE, MELEE, 0, get_dir(src, B))
 
