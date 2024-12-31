@@ -183,6 +183,9 @@ SUBSYSTEM_DEF(tts)
 		var/identifier = current_request.identifier
 		if(current_request.requests_errored())
 			current_request.timed_out = TRUE
+			var/datum/http_response/normal_response = current_request.request.into_response()
+			var/datum/http_response/blips_response = current_request.request_blips.into_response()
+			log_tts("TTS HTTP request errored | Normal: [normal_response.error] | Blips: [blips_response.error]")
 			continue
 		current_request.audio_length = text2num(response.headers["audio-length"]) * 10
 		if(!current_request.audio_length)
