@@ -10,6 +10,7 @@
 	inhand_icon_state = "atoxinbottle"
 	worn_icon_state = "bottle"
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
+	w_class = WEIGHT_CLASS_SMALL // Organs are small by default, so the jar should be at least small as well
 	// The organ that is currently inside the jar
 	var/obj/item/organ/held_organ = null
 	// Whether the jar should preserve the organ inside (which would only happen if it's full of formaldehyde)
