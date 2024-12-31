@@ -921,6 +921,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Debug traits
 /// This object has light debugging tools attached to it
 #define TRAIT_LIGHTING_DEBUGGED "lighting_debugged"
+/// This object has sound debugging tools attached to it
+#define TRAIT_SOUND_DEBUGGED "sound_debugged"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"

@@ -4,6 +4,8 @@
 	var/leaning_offset = 11
 	/// List of mobs currently leaning on our parent
 	var/list/leaning_mobs = list()
+	/// Is this object currently leanable?
+	var/is_currently_leanable = TRUE
 
 /datum/component/leanable/Initialize(mob/living/leaner, leaning_offset = 11)
 	. = ..()
@@ -13,15 +15,32 @@
 /datum/component/leanable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(parent, COMSIG_ATOM_DENSITY_CHANGED, PROC_REF(on_density_change))
+	var/atom/leanable_atom = parent
+	is_currently_leanable = leanable_atom.density
+
+/datum/component/leanable/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, list(
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_MOUSEDROPPED_ONTO,
+		COMSIG_ATOM_DENSITY_CHANGED,
+	))
 
 /datum/component/leanable/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOUSEDROPPED_ONTO, COMSIG_MOVABLE_MOVED))
 
 /datum/component/leanable/Destroy(force)
+	stop_leaning_leaners()
+	return ..()
+
+/datum/component/leanable/proc/stop_leaning_leaners(fall)
 	for (var/mob/living/leaner as anything in leaning_mobs)
 		leaner.stop_leaning()
+		if(fall)
+			to_chat(leaner, span_danger("You lose balance!"))
+			leaner.Paralyze(0.5 SECONDS)
 	leaning_mobs = null
-	return ..()
 
 /datum/component/leanable/proc/on_moved(datum/source)
 	SIGNAL_HANDLER
@@ -42,6 +61,8 @@
 	var/turf/checked_turf = get_step(leaner, REVERSE_DIR(leaner.dir))
 	if (checked_turf != get_turf(source))
 		return
+	if(!is_currently_leanable)
+		return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 	leaner.start_leaning(source, leaning_offset)
 	leaning_mobs += leaner
 	RegisterSignals(leaner, list(COMSIG_LIVING_STOPPED_LEANING, COMSIG_QDELETING), PROC_REF(stopped_leaning))
@@ -118,3 +139,11 @@
 
 	if (old_dir != new_dir)
 		INVOKE_ASYNC(src, PROC_REF(stop_leaning))
+
+/datum/component/leanable/proc/on_density_change()
+	SIGNAL_HANDLER
+	is_currently_leanable = !is_currently_leanable
+	if(!is_currently_leanable)
+		stop_leaning_leaners(fall = TRUE)
+		return
+	stop_leaning_leaners()
