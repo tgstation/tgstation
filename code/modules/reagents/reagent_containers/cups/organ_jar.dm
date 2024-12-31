@@ -149,7 +149,7 @@
 
 // All this does is add a random special brain trauma + add recovered crew antag datum for logging
 /obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar/proc/handle_revival(obj/item/organ/brain/brain_to_scar)
-	brain_to_scar.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_ABSOLUTE, natural_gain = TRUE)var/mob/living/carbon/human/owner = brain.owner
+	brain_to_scar.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_ABSOLUTE, natural_gain = TRUE)
 	var/mob/living/carbon/human/owner = brain_to_scar.owner
 	owner.mind.add_antag_datum(/datum/antagonist/recovered_crew) // for tracking mostly (c)
 
