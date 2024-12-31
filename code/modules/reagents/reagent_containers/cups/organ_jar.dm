@@ -147,11 +147,11 @@
 	reagents.add_reagent(/datum/reagent/toxin/formaldehyde, reagents.maximum_volume) // Fill the jar with formaldehyde
 	update_appearance()
 
-// All this does is add a random special brain trauma
+// All this does is add a random special brain trauma + add recovered crew antag datum for logging
 /obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar/proc/handle_revival(obj/item/organ/brain/brain_to_scar)
 	brain_to_scar.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_ABSOLUTE, natural_gain = TRUE)var/mob/living/carbon/human/owner = brain.owner
+	var/mob/living/carbon/human/owner = brain_to_scar.owner
 	owner.mind.add_antag_datum(/datum/antagonist/recovered_crew) // for tracking mostly (c)
-
 
 #undef NOTE_STUCK_IN_MAIL
 #undef NOTE_MORBID_GIFT
