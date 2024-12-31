@@ -1,0 +1,6 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Changed how colorful reagent and crayon powder work: douse your victims to color their clothing, bodyparts and even internal organs!"
+  - rscadd: "You can wash your eyes when washing your face at a sink"
+  - bugfix: "You can color robotic limbs with left click (again)"
