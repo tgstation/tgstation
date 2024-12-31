@@ -22,7 +22,7 @@
 	name = "exosuit"
 	desc = "Exosuit"
 	icon = 'icons/mob/rideables/mecha.dmi'
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 300
 	armor_type = /datum/armor/sealed_mecha
 	force = 5
@@ -225,7 +225,7 @@
 	bullet = 10
 	bomb = 10
 	fire = 100
-	acid = 70
+	acid = 100
 
 /obj/vehicle/sealed/mecha/Initialize(mapload, built_manually)
 	. = ..()

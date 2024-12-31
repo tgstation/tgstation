@@ -50,7 +50,7 @@
 	energy = 20
 	bomb = 40
 	fire = 100
-	acid = 90
+	acid = 100
 
 /obj/vehicle/sealed/mecha/ripley/Move()
 	. = ..()
@@ -89,7 +89,7 @@
 	energy = 30
 	bomb = 60
 	fire = 100
-	acid = 90
+	acid = 100
 
 /obj/vehicle/sealed/mecha/ripley/paddy
 	desc = "Autonomous Power Loader Unit Subtype Paddy. A Modified MK-I Ripley design intended for light security use."
@@ -125,7 +125,7 @@
 	energy = 20
 	bomb = 40
 	fire = 100
-	acid = 90
+	acid = 100
 
 /obj/vehicle/sealed/mecha/ripley/paddy/Initialize(mapload)
 	. = ..()

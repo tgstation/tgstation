@@ -29,7 +29,7 @@
 	energy = 10
 	bomb = 20
 	fire = 100
-	acid = 70
+	acid = 100
 
 /obj/vehicle/sealed/mecha/durand/Initialize(mapload)
 	. = ..()
