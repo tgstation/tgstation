@@ -91,8 +91,8 @@
 
 /datum/component/aquarium_content/proc/set_vc_base_position()
 	var/atom/movable/movable = parent
+	SEND_SIGNAL(movable.loc, COMSIG_AQUARIUM_SET_VISUAL, vc_obj) //set the necessary layer as well as the pixel bounds first
 	SEND_SIGNAL(movable, COMSIG_AQUARIUM_CONTENT_RANDOMIZE_POSITION, movable.loc, vc_obj)
-	SEND_SIGNAL(movable.loc, COMSIG_AQUARIUM_SET_VISUAL, vc_obj)
 
 /datum/component/aquarium_content/proc/on_removed(atom/movable/aquarium, atom/movable/gone, direction)
 	SIGNAL_HANDLER

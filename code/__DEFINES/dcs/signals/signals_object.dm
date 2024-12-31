@@ -393,6 +393,7 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
 	#define PROJECTILE_INTERRUPT_HIT (1<<0)
+	#define PROJECTILE_INTERRUPT_HIT_PHASE (1<<1)
 ///from /obj/projectile/process_movement(): ()
 #define COMSIG_PROJECTILE_MOVE_PROCESS_STEP "projectile_move_process_step"
 ///sent to self during the process_hit proc of projectiles
@@ -545,3 +546,11 @@
 
 ///Sent from /obj/item/skillchip/on_remove()
 #define COMSIG_SKILLCHIP_REMOVED "skillchip_removed"
+
+/// from /obj/machinery/computer/camera_advanced/shuttle_docker/gatherNavComputerOverlays() : (list/images_out)
+#define COMSIG_SHUTTLE_NAV_COMPUTER_IMAGE_REQUESTED "shuttle_nav_computer_image_requested"
+
+/// Sent from /obj/item/organ/wings/functional/proc/open_wings(): (mob/living/carbon/owner)
+#define COMSIG_WINGS_OPENED "wings_opened"
+/// Sent from /obj/item/organ/wings/functional/proc/close_wings(): (mob/living/carbon/owner)
+#define COMSIG_WINGS_CLOSED "wings_closed"

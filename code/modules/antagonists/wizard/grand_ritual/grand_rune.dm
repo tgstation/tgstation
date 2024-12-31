@@ -79,6 +79,7 @@
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
 	announce_rune()
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
 /// I cast Summon Security
 /obj/effect/grand_rune/proc/announce_rune()

@@ -15,6 +15,7 @@
 	tick_interval = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	remove_on_fullheal = TRUE
+	alert_type = null
 	/// The level of drunkness we are currently at.
 	var/drunk_value = 0
 

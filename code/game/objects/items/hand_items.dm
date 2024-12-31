@@ -218,6 +218,7 @@
 
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
+	SEND_SIGNAL(slapped, COMSIG_LIVING_SLAPPED, user)
 
 	if(iscarbon(slapped))
 		var/mob/living/carbon/potential_tailed = slapped
@@ -257,8 +258,8 @@
 				)
 
 				// Worse than just help intenting people.
-				slapped.AdjustSleeping(-75)
-				slapped.AdjustUnconscious(-50)
+				slapped.AdjustSleeping(-7.5 SECONDS)
+				slapped.AdjustUnconscious(-5 SECONDS)
 
 			else
 				user.visible_message(
@@ -514,7 +515,7 @@
 	to_chat(taker, span_nicegreen("[offerer] gives you \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!"))
 	offerer.face_atom(taker)
 	taker.face_atom(offerer)
-	offerer.do_item_attack_animation(taker, used_item=src)
+	offerer.do_item_attack_animation(taker, used_item = src)
 	//We're still firing a shot here because I don't want to deal with some weird edgecase where direct impacting them with the projectile causes it to freak out because there's no angle or something
 	blown_kiss.original = taker
 	blown_kiss.fired_from = offerer
@@ -537,6 +538,12 @@
 	desc = "oooooo you like syndicate ur a syndiekisser"
 	color = COLOR_SYNDIE_RED
 	kiss_type = /obj/projectile/kiss/syndie
+
+/obj/item/hand_item/kisser/ink
+	name = "ink kiss"
+	desc = "Is that a blot of ink in your pocket or are you just happy to see me?"
+	color = COLOR_ALMOST_BLACK
+	kiss_type = /obj/projectile/kiss/ink
 
 /obj/projectile/kiss
 	name = "kiss"
@@ -637,6 +644,22 @@
 	var/mob/living/carbon/heartbreakee = target
 	var/obj/item/organ/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
 	dont_go_breakin_my_heart.apply_organ_damage(999)
+
+/obj/projectile/kiss/ink
+	name = "ink kiss"
+	color = COLOR_ALMOST_BLACK
+	damage = /obj/projectile/ink_spit::damage
+	damage_type = /obj/projectile/ink_spit::damage_type
+	armor_flag = /obj/projectile/ink_spit::armor_flag
+	armour_penetration = /obj/projectile/ink_spit::armour_penetration
+	impact_effect_type = /obj/projectile/ink_spit::impact_effect_type
+	hitsound = /obj/projectile/ink_spit::hitsound
+	hitsound_wall = /obj/projectile/ink_spit::hitsound_wall
+
+/obj/projectile/kiss/ink/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	var/obj/projectile/ink_spit/ink_spit =  new (target)
+	ink_spit.on_hit(target)
 
 // Based on energy gun characteristics
 /obj/projectile/kiss/syndie

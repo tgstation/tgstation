@@ -1,4 +1,0 @@
-author: "Auris456852"
-delete-after: True
-changes:
-  - bugfix: "Makes a sliced baklava pie keep its complexity after slicing"

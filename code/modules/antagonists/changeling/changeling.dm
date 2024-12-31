@@ -1031,7 +1031,7 @@
 
 /datum/antagonist/changeling/headslug/greet()
 	play_stinger()
-	to_chat(owner, span_boldannounce("You are a fresh changeling birthed from a headslug! \
+	to_chat(owner, span_bolddanger("You are a fresh changeling birthed from a headslug! \
 		You aren't as strong as a normal changeling, as you are newly born."))
 
 

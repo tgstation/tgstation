@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - refactor: "Cleaned up code relating to heretic ascension announcements and traits."

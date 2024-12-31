@@ -1,5 +1,0 @@
-author: "Mifutus"
-delete-after: True
-changes:
-  - bugfix: "fixed the pulse rifle not spawning when won"
-  - code_imp: "added get_turf to the pulserifle  when the odds are beat.\n:cl:"

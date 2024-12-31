@@ -79,7 +79,7 @@
 
 		set_active_hotspot(new /obj/effect/hotspot(src, exposed_volume * 25, exposed_temperature))
 		if(COOLDOWN_FINISHED(src, fire_puff_cooldown))
-			playsound(src, 'sound/effects/fire_puff.ogg', 50)
+			playsound(src, 'sound/effects/fire_puff.ogg', 30)
 			COOLDOWN_START(src, fire_puff_cooldown, 5 SECONDS)
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
@@ -365,7 +365,7 @@
 /datum/looping_sound/fire
 	mid_sounds = list('sound/effects/fireclip1.ogg' = 1, 'sound/effects/fireclip2.ogg' = 1, 'sound/effects/fireclip3.ogg' = 1, 'sound/effects/fireclip4.ogg' = 1,
 	'sound/effects/fireclip5.ogg' = 1, 'sound/effects/fireclip6.ogg' = 1, 'sound/effects/fireclip7.ogg' = 1)
-	volume = 50
+	volume = 30
 	mid_length = 2 SECONDS
 	falloff_distance = 1
 

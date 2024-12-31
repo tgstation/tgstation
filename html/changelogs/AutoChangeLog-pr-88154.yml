@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Reagent grinders display number of material sheets they hold instead of defaulting to 1"

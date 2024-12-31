@@ -420,6 +420,7 @@
 /obj/item/food/baguette/combat
 	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
+	icon_angle = -45
 	/// Force when wielded as a sword by a mime
 	var/active_force = 20
 	/// Block chance when wielded as a sword by a mime

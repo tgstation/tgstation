@@ -85,7 +85,7 @@
 	lines += span_bold(header)
 	lines += payload_string
 
-	var/finalized_string = examine_block(jointext(lines, "\n"))
+	var/finalized_string = boxed_message(jointext(lines, "\n"))
 	to_chat(src, finalized_string)
 
 /// Proc that generates the applicable string to dispatch to the client for adminwho.

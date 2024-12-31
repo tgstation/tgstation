@@ -37,6 +37,15 @@ SUBSYSTEM_DEF(statpanels)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
+
+		if(SSticker.reboot_timer)
+			var/reboot_time = timeleft(SSticker.reboot_timer)
+			if(reboot_time)
+				global_data += "Reboot: [DisplayTimeText(reboot_time, 1)]"
+		// admin must have delayed round end
+		else if(SSticker.ready_for_reboot)
+			global_data += "Reboot: DELAYED"
+
 		src.currentrun = GLOB.clients.Copy()
 		mc_data = null
 
@@ -92,11 +101,14 @@ SUBSYSTEM_DEF(statpanels)
 			return
 
 /datum/controller/subsystem/statpanels/proc/set_status_tab(client/target)
+#if MIN_COMPILER_VERSION > 515
+	#warn 516 is most certainly out of beta, remove this beta notice if you haven't already
+#endif
+	var/static/list/beta_notice = list("", "You are on the BYOND 516 beta, various UIs and such may be broken!", "Please report issues, and switch back to BYOND 515 if things are causing too many issues for you.")
 	if(!global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
 		return
-
 	target.stat_panel.send_message("update_stat", list(
-		"global_data" = global_data,
+		"global_data" = (target.byond_version < 516) ? global_data : (global_data + beta_notice),
 		"ping_str" = "Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)",
 		"other_str" = target.mob?.get_status_tab_items(),
 	))

@@ -558,7 +558,7 @@
 				playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 				do_cancel()
 				return
-			user.visible_message(span_boldannounce("<i>[user] shocks [H] with \the [src]!"), span_warning("You shock [H] with \the [src]!"))
+			user.visible_message(span_bolddanger("<i>[user] shocks [H] with \the [src]!"), span_warning("You shock [H] with \the [src]!"))
 			playsound(src, 'sound/machines/defib/defib_zap.ogg', 100, TRUE, -1)
 			playsound(src, 'sound/items/weapons/egloves.ogg', 100, TRUE, -1)
 			H.emote("scream")

@@ -4,6 +4,7 @@
 	weak_against_armour = TRUE
 	icon = 'icons/obj/debris.dmi'
 	icon_state = "large"
+	icon_angle = -45
 	w_class = WEIGHT_CLASS_TINY
 	item_flags = DROPDEL
 	sharpness = SHARP_EDGED

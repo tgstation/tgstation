@@ -28,7 +28,7 @@
 	. = ..()
 	if(drink_type)
 		var/list/types = bitfield_to_list(drink_type, FOOD_FLAGS)
-		. += span_notice("It is [LOWER_TEXT(english_list(types))].")
+		. += span_notice("The label says it contains [LOWER_TEXT(english_list(types))] ingredients.")
 
 /**
  * Checks if the mob actually liked drinking this cup.
@@ -559,7 +559,7 @@
 	desc = "The most advanced coffeepot the eggheads could cook up: sleek design; graduated lines; connection to a pocket dimension for coffee containment; yep, it's got it all. Contains 8 standard cups."
 	volume = 240
 	icon_state = "coffeepot_bluespace"
-	fill_icon_thresholds = list(0)
+	fill_icon_thresholds = null
 
 ///Test tubes created by chem master and pandemic and placed in racks
 /obj/item/reagent_containers/cup/tube

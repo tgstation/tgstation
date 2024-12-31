@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed meteors freezing in place if they continiously miss the station on a looping z level"
