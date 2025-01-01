@@ -608,5 +608,5 @@
 				qdel(item)
 				continue
 			. += item
-		else if(del_if_nodrop)
+		else if(del_if_nodrop && !(item.item_flags & ABSTRACT))
 			qdel(item)
