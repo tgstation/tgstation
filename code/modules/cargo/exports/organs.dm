@@ -2,9 +2,11 @@
 	include_subtypes = FALSE //CentCom doesn't need organs from non-humans.
 
 /datum/export/organ/get_cost(obj/exported_item, apply_elastic)
-	. = ..()
 	if(HAS_TRAIT(exported_item, TRAIT_CLIENT_STARTING_ORGAN))
-		return . * 10 // 10x export mult for organs that started in a player
+		// 10x export mult for organs that started in a player
+		// Unaffected by price elasticity as there's a limited amount of these in play
+		return round(init_cost * 10)
+	return ..()
 
 /datum/export/organ/heart
 	cost = CARGO_CRATE_VALUE * 0.2 //For the man who has everything and nothing.
