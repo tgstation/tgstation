@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "dropping all the mobs' contents in some special admin cases won't gib the player"
