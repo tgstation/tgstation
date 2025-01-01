@@ -113,7 +113,7 @@
 	if(prob(25))
 		to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
 		their_poor_arm.dismember()
-		qdel(their_poor_arm)
+		forceMove(their_poor_arm, src) // stored for later fishage
 	else
 		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existence itself!"))
 	return TRUE
@@ -130,13 +130,18 @@
 
 	var/mob/living/carbon/human/human_user = user
 
+	// You see, these tendrils are psychic. That's why you can't see them. Definitely not laziness. Just psychic. The character can feel but not see them.
+	// Because they're psychic. Yeah.
+	if(human_user.can_block_magic(MAGIC_RESISTANCE_MIND))
+		visible_message(span_danger("Psychic endrils lash out from [src], batting ineffectively at [user]'s head."))
+		return
+
 	// A very elaborate way to suicide
-	to_chat(human_user, span_userdanger("Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!"))
-	human_user.ghostize()
+	visible_message(span_userdanger("Psychic tendrils lash out from [src], psychically grabbing onto [user]'s psychically sensitive mind and tearing [user.p_their()] head off!"))
 	var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
 	if(head)
 		head.dismember()
-		qdel(head)
+		forceMove(head, src) // stored for later fishage
 	else
 		human_user.gib(DROP_ALL_REMAINS)
 	human_user.investigate_log("has died from using telekinesis on a heretic influence.", INVESTIGATE_DEATHS)

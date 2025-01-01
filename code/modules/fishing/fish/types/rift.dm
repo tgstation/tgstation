@@ -415,13 +415,13 @@
 	throw_range = 7
 	hitsound = SFX_ALT_FISH_SLAP
 
-	sprite_width = 4
-	sprite_height = 3
+	sprite_width = 12
+	sprite_height = 13
 
 	health = 500
 	death_text = "%SRC decomposes."
 	random_case_rarity = FISH_RARITY_NOPE
-	// hand-tuned to be a plague
+	// hand-tuned to be a your worst enemy
 	fish_traits = list(
 		/datum/fish_trait/wary, /datum/fish_trait/nocturnal, /datum/fish_trait/emulsijack, \
 		/datum/fish_trait/yucky, /datum/fish_trait/lubed, /datum/fish_trait/revival, \
@@ -441,12 +441,35 @@
 	max_pressure = INFINITY
 	safe_air_limits = list()
 	fillet_type = /obj/item/food/badrecipe/moldy/bacteria
-	num_fillets = 3
 	stable_population = 0
 
 /obj/item/fish/mossglob/Initialize(mapload, apply_qualities)
 	. = ..()
 	AddElement(/datum/element/haunted, COLOR_GREEN)
+
+/obj/item/fish/mossglob/set_status(new_status, silent)
+	. = ..()
+	if(new_status == FISH_DEAD)
+		RemoveElement(/datum/element/haunted, COLOR_GREEN)
+	else if(new_status == FISH_ALIVE)
+		AddElement(/datum/element/haunted, COLOR_GREEN)
+
+/obj/item/fish/mossglob/suicide_act(mob/living/user)
+	visible_message(span_suicide("[user] sticks [user.p_their()] arm deep into [src]! It looks like they're trying to offer themselves to it!"))
+	user.drop_everything()
+	set_status(FISH_ALIVE)
+	health *= 1.15
+	weight *= 1.15
+	size *= 1.15
+	force *= 1.15
+	throwforce *= 1.15
+	var/matrix/embiggen = matrix()
+	embiggen.Scale(1.15, 1.15)
+	transform = embiggen
+	get_force_rank()
+	visible_message(span_suicide("[user] is absorbed into [src]!"))
+	objectify(user, src)
+	return MANUAL_SUICIDE_NONLETHAL
 
 /obj/item/fish/mossglob/get_force_rank()
 	var/multiplier = 1
@@ -489,12 +512,14 @@
 	hitsound = SFX_DEFAULT_FISH_SLAP // todo shriek
 	sound_vary = TRUE
 
-	sprite_width = 4
-	sprite_height = 3
+	sprite_width = 11
+	sprite_height = 13
 
-	death_text = span_userdanger("%SRC emits a horrendous wailing as it perishes!")
+	death_text = span_big(span_alertalien("%SRC emits a horrendous wailing as it perishes!"))
 	random_case_rarity = FISH_RARITY_NOPE
 	health = 250
+	average_size = 30
+	average_weight = 2000
 	fillet_type = /obj/item/food/fishmeat/quality
 	num_fillets = 2
 	stable_population = 3
@@ -506,17 +531,96 @@
 	fish_movement_type = /datum/fish_movement/slow
 	fishing_difficulty_modifier = 15
 	favorite_bait = list(/obj/item/organ/ears)
+	var/mob/living/moron_inside
 
 // When someone refactors demoralizers to not be omega hardcoded for syndicate this fish should get it
 
-// todo add examine_:more
+/obj/item/fish/babbelfish/examine_more(mob/user)
+	. = ..()
+	. += span_smallnoticeital(
+		"“Sorry, you <i>speak Anglish</i>, how is that possible?\n\
+		“I speak many languages,” the pile of octopuses replied. It was hard to get a handle on where it was speaking from, or how, and that was with me using vibration magic to check. “Those are babel fish in front of you. They're very rare, and available for a good trade.”\n\
+		“Babel fish,” I said, pointing down at the tank with the bright yellow fish. “Meaning … fish capable of letting you hear any language?” That still wouldn't have explained how the octopus pile spoke Anglish.\n\
+		“Ah, no, my apologies, I'm afraid not,” they replied, wiggling some tentacles. “These fish, if put into your ear, will make everything another person says sound like gibberish.”\n\
+		“Ah,” I replied. “Babble fish. And if two people with babble fish in their ears talk to each other, they're suddenly mutually intelligible?”\n\
+		The octopus pile swayed from side to side. “No.”\n\
+		“I don't know your business,” replied the octopus pile. “Why <i>do</i> you want them?”\n\
+		I looked down at the fish. “Uh,” I said. “I guess … it would help to keep me from hearing things I didn't want to hear?”\n\
+		They burst into applause, which in this case was a bunch of tentacles wetly slapping against equally wet flesh. “Very good! I hadn't thought of that.”\n\
+		“But then why,” I began, then thought better of it. “Alright, I''ll buy one. <i>But</i>, you need to explain to me how you speak Anglish.”")
+
+/**
+ * In the suicide:
+ * - If the fish is dead:
+ *  - If someone is already inside, cancel the suicide.
+ * Drop the suicider's items and shove them inside the object. They are now the fish.
+ *
+ * - If the fish is alive:
+ * the idiot uses the babbelfish as a vuvuzela and becomes a god for half a second before their brain is imploded.
+ */
+/obj/item/fish/babbelfish/suicide_act(mob/living/user)
+	if(status == FISH_DEAD)
+		if(moron_inside)
+			visible_message(span_suicide("[user] puts [src] against their lips, but [src] is already full!"))
+			return SHAME
+		visible_message(span_suicide("[user] puts [src] against their lips, but [src]'s psychic afterimage sucks [user.p_them()] inward!"))
+		user.drop_everything()
+		objectify(user, src)
+		user.fully_replace_character_name(null, name) // fish's name
+		set_status(FISH_ALIVE) // RIIIIIISE!!!!!
+		moron_inside = user
+		RegisterSignal(src, COMSIG_FISH_STATUS_CHANGED, PROC_REF(fishes_die_twice))
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_loc))
+		return MANUAL_SUICIDE_NONLETHAL // in case they somehow break out
+
+	visible_message(span_suicide("[user] puts [src] against their lips! It looks like they're preparing to say something!"))
+	var/psychic_speech = tgui_input_text(user, message = "Say something!", title = "What are your last words?", timeout = 15 SECONDS)
+	if(!psychic_speech || !locate(src) in user.get_contents())
+		user.say("Err, umm... uhh... erm...", forced = "blustering like a moron due to babbelfish suicide")
+		visible_message(span_suicide("[user] dies from shame!"))
+		return OXYLOSS
+
+	voice_of_god(psychic_speech, user, list("big", "alertalien"), base_multiplier = 5, include_speaker = TRUE, forced = TRUE, ignore_spam = TRUE)
+	psy_wail()
+	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, INFINITY, INFINITY, ORGAN_SLOT_BRAIN)
+	user.death()
+	return MANUAL_SUICIDE
+
+/**
+ * When the fish dies you die in real life.
+ * Consequently, when the fish is magically resuscitated the bound mob is revived as well.
+ */
+/obj/item/fish/babbelfish/proc/fishes_die_twice()
+	if(isnull(moron_inside))
+		UnregisterSignal(src, COMSIG_FISH_STATUS_CHANGED)
+	if(status == FISH_DEAD)
+		moron_inside.death()
+	if(status == FISH_ALIVE)
+		moron_inside.revive(HEAL_ALL)
+
+/**
+ * If they somehow escaped null the variable.
+ */
+/obj/item/fish/babbelfish/proc/check_loc()
+	if(locate(moron_inside) in src)
+		return
+	UnregisterSignal(moron_inside, COMSIG_MOVABLE_MOVED)
+	moron_inside = null
 
 /obj/item/fish/babbelfish/set_status(new_status, silent)
 	. = ..()
 	// Death message plays here
 	if(new_status != FISH_DEAD)
+		damtype = BRAIN
 		return
+	psy_wail()
 	damtype = BRUTE
+
+/**
+ * When a babbelfish dies, it will let out a wail that kills any fish nearby, alongside severely incapacitating anyone else around.
+ * This is punishment for neglecting your catches.
+ */
+/obj/item/fish/babbelfish/proc/psy_wail()
 	manual_emote("wails!")
 	playsound(src, 'sound/mobs/non-humanoids/fish/fish_psyblast.ogg', 100)
 	var/list/mob/living/mobs_in_range = get_hearers_in_range(7, src)
@@ -528,7 +632,7 @@
 		if(!screeched.can_hear()) // bit weaker if deaf. but its still psychic
 			power *= 0.5
 		var/affect_time = 15 SECONDS * power
-		// it really fucks you over
+		// it really fucks you up
 		screeched.Knockdown(affect_time)
 		screeched.adjust_disgust(affect_time)
 		screeched.adjust_stutter(affect_time)
@@ -542,6 +646,7 @@
 		if(iscarbon(screeched))
 			var/mob/living/carbon/carbon_screeched = screeched
 			carbon_screeched.vomit()
+			carbon_screeched.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50)
 
 	var/affected = 0
 	for(var/obj/item/fish/fishie in range(7, src))
@@ -554,15 +659,17 @@
 	if(affected)
 		visible_message(span_bolddanger("[src]'s wail kills [affected] fish nearby!")) // m-m-m-m-m-MONSTER KILL
 
-/obj/item/fish/babbelfish/attack_self(mob/living/user, list/modifiers)
-	if(loc != user)
-		return
+/obj/item/fish/babbelfish/attack_hand(mob/living/user, list/modifiers)
+
+	if(!locate(src) in user)
+		return ..()
+
 	if((user.usable_hands < 2) && !HAS_TRAIT(user, TRAIT_STRENGTH))
 		to_chat(user, span_notice("[src] is too dense to twist apart with only one hand."))
 		return
 
-	to_chat(user, span_danger("You start pulling and twisting [src], attempting to split it down the middle..."))
-	if(!do_after(user, 2.5 SECONDS, src))
+	to_chat(user, span_danger("You start pulling and twisting [src], trying to split it down the middle..."))
+	if(!do_after(user, 5 SECONDS, src))
 		return
 
 	playsound(get_turf(user), 'sound/effects/wounds/crack1.ogg', 60)
@@ -571,16 +678,17 @@
 	user.put_in_hands(cracked)
 	qdel(src)
 
-// These ears grant amazing and supernatural hearing, but they also screw over your knowledge of language.
+/** These ears grant amazing and supernatural hearing, but they also screw over your knowledge of language.
+ * Three outcomes:
+ * The user is able to speak all languages, but can't understand any. Even their own words come across as unintelligible gibberish.
+ * The user is able to understand all languages, but can't speak any. They can only 'make strange noises'.
+ * The user is able to understand and speak all languages. Rare.
+ * All this to be a curator, this is silly.
+*/
 /obj/item/organ/ears/babbelfish
 	name = "split babbelfish halves"
-	icon = 'icons/obj/aquarium/rift.dmi'
-	icon_state = "babbelfish"
-//	icon_state = "ears"
-	desc = "Both halves of a babbelfish after being twisted apart. The legends claim these can unlock your psychic potential. It probably wasn't worth hearing that wail, though."
-	zone = BODY_ZONE_HEAD
-	slot = ORGAN_SLOT_EARS
-	gender = PLURAL
+	icon_state = "babbearfish"
+	desc = "Both halves of a babbelfish after being twisted apart. The legends claim inserting these can unlock your psychic potential. It probably wasn't worth hearing that wail, though."
 	organ_traits = list(TRAIT_XRAY_HEARING, TRAIT_GOOD_HEARING)
 
 	healing_factor = STANDARD_ORGAN_HEALING * 5
@@ -593,25 +701,59 @@
 
 	bang_protect = 5
 	damage_multiplier = 0.1
+	visual = TRUE
+	/// Overlay for the mob sprite because actual organ overlays are a fucking unusable nightmare
+	var/datum/bodypart_overlay/simple/babbearfish/babbel_overlay
 	var/bound_component
 	var/datum/language_holder/removal_holder
 
+/**
+ * The bodypart overlay for babbearfish.
+ * We don't need anything other than this icon (and to hide it sometimes), so it being mutant is unnecessary and a waste of space..
+ * Which breaks everything else. So we need to make it simple. Which organs don't innately support, so we need to just haphazardly slap it on.
+ */
+/datum/bodypart_overlay/simple/babbearfish
+	icon_state = "babbearfish"
+
+/datum/bodypart_overlay/simple/babbearfish/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if((human.head?.flags_inv & HIDEEARS) || (human.wear_mask?.flags_inv & HIDEEARS))
+		return FALSE
+	return TRUE
+
 /obj/item/organ/ears/babbelfish/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_They %PRONOUN_have weird, deep-rooted obsidian tubes sticking out of where their ears should be.")
+	AddElement(/datum/element/update_icon_blocker) // wats this even do
+	babbel_overlay = new()
 	removal_holder = new(src)
 
-/obj/item/organ/ears/babbelfish/attack_hand(mob/living/user, list/modifiers)
+/obj/item/organ/ears/babbelfish/Destroy()
+	QDEL_NULL(babbel_overlay)
+	return ..()
+
+/obj/item/organ/ears/babbelfish/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()
-	var/obj/item/organ/ears/ears = user.get_organ_slot(ORGAN_SLOT_EARS)
+	limb.add_bodypart_overlay(babbel_overlay)
+
+/obj/item/organ/ears/babbelfish/on_bodypart_remove(obj/item/bodypart/limb)
+	. = ..()
+	limb.remove_bodypart_overlay(babbel_overlay)
+
+/obj/item/organ/ears/babbelfish/attack(mob/living/target_mob, mob/living/user, params)
+	var/obj/item/organ/ears/ears = target_mob.get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)
-		to_chat(user, span_notice("You don't have any ears to shove [src] into!"))
+		to_chat(user, span_notice("[target_mob == user ? "You don't have" : target_mob + "has no"] ears to shove [src] into!"))
 		return
-	to_chat(user, span_danger("You start shoving [src] into your ears. Probably a bad idea."))
-	if(!do_after(user, 2.5 SECONDS, src))
+
+	to_chat(user, span_danger("You start shoving [src] into [target_mob == user ? "your" : target_mob + "'s"] ears. Probably a bad idea."))
+	if(!do_after(user, 2.5 SECONDS * (target_mob == user ? 1 : 3), src))
 		return
+
 	user.apply_damage(25, BRUTE, user.get_bodypart(ears.zone), attacking_item = src)
-	to_chat(user, span_notice("As you're shoving them in, the [src] take on a life of their own and brutishly crawl right into your ears, taking their place entirely while maiming your [ears.zone]!"))
+	to_chat(user, span_notice("As you're shoving them in, the [src] take on a life of their own and brutishly crawl right into [target_mob == user ? "your" : target_mob + "'s"] ears, taking their place entirely while maiming [target_mob == user ? "your" : target_mob.p_their()]  [ears.zone]!"))
+	playsound(user, 'sound/effects/magic/demon_consume.ogg', vol = 100, falloff_exponent = 2, vary = TRUE)
 	// bad moodlet
+	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /obj/item/organ/ears/babbelfish/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
@@ -664,6 +806,7 @@
 	to_chat(organ_owner, span_notice("You feel significantly more mundane."))
 	qdel(removal_holder)
 	qdel(bound_component)
+
 
 /obj/item/organ/ears/babbelfish/proc/on_drain_magic(mob/user)
 	to_chat(user, span_noticealien("Your [src] pop as they protect your mind from psychic phenomena!"))
