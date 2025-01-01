@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Examining a trophy fish no longer shows the current day instead of when it was actually caught and put on the mount."
