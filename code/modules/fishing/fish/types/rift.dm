@@ -311,6 +311,7 @@
 	. = MANUAL_SUICIDE
 	for(var/i in 1 to rand(5, 15))
 		addtimer(CALLBACK(src, PROC_REF(flump_attack), user), 0.4 SECONDS * i)
+		user.death()
 
 /obj/item/fish/flumpulus/proc/flump_attack(mob/living/user)
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
@@ -321,6 +322,7 @@
 	user.visible_message("[user]'s [eyes ? eyes : "eye holes"] suddenly sprout stalks and turn into [new_eyes]!")
 	ASYNC
 		user.emote("scream")
+		eyes.throw_at(get_edge_target_turf(user, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 		sleep(5 SECONDS)
 		if(!QDELETED(eyes))
 			eyes.visible_message(span_danger("[eyes] rapidly turn to dust."))
