@@ -607,6 +607,7 @@
 			if(del_on_drop)
 				qdel(item)
 				continue
-			. += item
+			if(!QDELETED(item)) //DROP_DEL can cause this tiem to be deleted
+				. += item
 		else if(del_if_nodrop && !(item.item_flags & ABSTRACT))
 			qdel(item)
