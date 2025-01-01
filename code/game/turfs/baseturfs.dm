@@ -34,6 +34,8 @@
 	new_baseturfs.Add(baseturfs)
 	if(isopenturf(src))
 		new_baseturfs.Add(type)
+	var/area/our_area = get_area(src)
+	flags = our_area.PlaceOnTopReact(new_baseturfs, added_layer, flags)
 
 	return ChangeTurf(added_layer, new_baseturfs, flags)
 
