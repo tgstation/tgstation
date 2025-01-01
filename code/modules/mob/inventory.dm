@@ -599,15 +599,14 @@
 
 /// Safely drop everything, without deconstructing the mob
 /mob/living/proc/drop_everything(del_on_drop, force, del_if_nodrop)
-	. = list()
+	. = list() //list of items that were successfully dropped
 
 	var/list/obj/item/all_gear = get_all_gear(recursive = FALSE)
 	for(var/obj/item/item in all_gear)
-		if(!dropItemToGround(item, force))
-			if(del_if_nodrop && !(item.item_flags & ABSTRACT))
+		if(dropItemToGround(item, force))
+			if(del_on_drop)
 				qdel(item)
-		if(del_on_drop)
-			qdel(item)
-		//Anything thats not deleted and isn't in the mob, so everything that is succesfully dropped to the ground, is returned
-		if(!QDELETED(item) && !(item in all_gear))
+				continue
 			. += item
+		else if(del_if_nodrop)
+			qdel(item)
