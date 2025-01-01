@@ -24,15 +24,19 @@
 /datum/element/spooky/proc/spectral_attack(datum/source, mob/living/carbon/target, mob/user)
 	SIGNAL_HANDLER
 
-	if(ishuman(user) && !isskeleton(target)) //this weapon wasn't meant for mortals.
-		var/mob/living/carbon/human/human = user
-		if(rattle_bones(human, stam_dam_mult = stam_damage_mult * 2))
-			to_chat(human, span_userdanger("Your ears weren't meant for this spectral sound."))
-			INVOKE_ASYNC(src, PROC_REF(spectral_change), human, user, source)
+	if(ishuman(user) && !isskeleton(user)) //this weapon wasn't meant for mortals.
+		var/mob/living/carbon/human/human_user = user
+		if(rattle_bones(human_user, stam_dam_mult = stam_damage_mult * 2))
+			to_chat(human_user, span_userdanger("Your ears weren't meant for this spectral sound."))
+			INVOKE_ASYNC(src, PROC_REF(spectral_change), human_user, user, source)
+		return
+
+	to_chat(target, span_userdanger("<b>DOOT</b"))
+
+	if(isskeleton(target)) // skeletons are totally immune, no redundant skeletonization or bad mood event.
 		return
 
 	target.add_mood_event("spooked", /datum/mood_event/spooked)
-	to_chat(target, span_userdanger("<b>DOOT</b"))
 
 	if(!ishuman(target))//the sound will spook basic mobs.
 		target.set_jitter_if_lower(30 SECONDS)
