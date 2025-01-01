@@ -1,11 +1,14 @@
+
+#define CLIENT_ORGAN_MULT 10
+
 /datum/export/organ
 	include_subtypes = FALSE //CentCom doesn't need organs from non-humans.
 
 /datum/export/organ/get_cost(obj/exported_item, apply_elastic)
 	if(HAS_TRAIT(exported_item, TRAIT_CLIENT_STARTING_ORGAN))
-		// 10x export mult for organs that started in a player
+		// Multiply value for organs that started in a player
 		// Unaffected by price elasticity as there's a limited amount of these in play
-		return round(init_cost * 10)
+		return round(init_cost * CLIENT_ORGAN_MULT)
 	return ..()
 
 /datum/export/organ/heart
@@ -59,3 +62,5 @@
 	unit_name = "cat ears"
 	export_types = list(/obj/item/organ/ears/cat)
 
+
+#undef CLIENT_ORGAN_MULT
