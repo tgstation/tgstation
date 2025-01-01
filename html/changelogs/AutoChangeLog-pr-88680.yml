@@ -1,5 +1,0 @@
-author: "Namelessfairy and SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "The Extradimensional Blade no longer infinitely scales damage"
-  - bugfix: "The nullblade correctly does increased damage when sharpened"

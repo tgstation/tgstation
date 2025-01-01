@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Mice no longer can spawn in unsafe atmos from garbage spawners"

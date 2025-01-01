@@ -1,4 +1,0 @@
-author: "00-Steven, SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Paper on clipboards uses its own colour rather than that of the clipboard."

@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "holodeck no longer explodes if the server lags while its loading a new sim"

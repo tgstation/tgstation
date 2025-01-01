@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Clearing paper, like by splashing it with ethanol, actually resets its icon state to the cleared version."

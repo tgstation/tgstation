@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "Boulders will no longer randomly run free from smelting pipelines! We have enslaved them once more."
