@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Rust heretic healing (leeching walk, rust ascension) now, so server lag shouldn't fuck you over nearly as much if you're relying on the healing."

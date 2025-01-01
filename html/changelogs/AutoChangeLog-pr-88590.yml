@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Chemmaster no longer rounds reagent amounts when trying to transfer a custom amount"

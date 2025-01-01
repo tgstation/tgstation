@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - rscdel: "screenshake from explosions will no longer happen when it's really far and not on a station area (turf)"

@@ -121,6 +121,8 @@
 
 ///returns TRUE when they can give the specified amount and reagent. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
+	SHOULD_BE_PURE(TRUE)
+
 	if(amount <= 0)
 		return
 
@@ -335,7 +337,7 @@
 		tile_covered = should_hide
 		parent_obj.update_appearance()
 
-/datum/component/plumbing/proc/change_ducting_layer(obj/caller, obj/changer, new_layer = DUCT_LAYER_DEFAULT)
+/datum/component/plumbing/proc/change_ducting_layer(obj/source, obj/changer, new_layer = DUCT_LAYER_DEFAULT)
 	SIGNAL_HANDLER
 	ducting_layer = new_layer
 

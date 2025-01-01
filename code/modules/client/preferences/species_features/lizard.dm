@@ -128,17 +128,6 @@
 	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	return initial(species_type.digitigrade_customization) == DIGITIGRADE_OPTIONAL
 
-
-/datum/preference/choiced/lizard_legs/is_accessible(datum/preferences/preferences)
-	. = ..()
-
-	if(!.)
-		return
-
-	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
-
-	return initial(species_type.digitigrade_customization) & DIGITIGRADE_OPTIONAL
-
 /datum/preference/choiced/lizard_snout
 	savefile_key = "feature_lizard_snout"
 	savefile_identifier = PREFERENCE_CHARACTER

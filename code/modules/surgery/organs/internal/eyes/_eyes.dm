@@ -56,6 +56,7 @@
 	apply_damaged_eye_effects()
 	refresh(receiver, call_update = !special)
 	RegisterSignal(receiver, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
+	RegisterSignal(receiver, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(on_face_wash))
 	if (scarring)
 		apply_scarring_effects()
 
@@ -69,10 +70,11 @@
 		return
 
 	var/mob/living/carbon/human/affected_human = eye_owner
-	if(eye_color_left)
+	if(length(eye_color_left))
 		affected_human.add_eye_color_left(eye_color_left, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
-	if(eye_color_right)
+	if(length(eye_color_right))
 		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
+	refresh_atom_color_overrides()
 
 	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
 		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
@@ -88,6 +90,8 @@
 	if(ishuman(organ_owner))
 		var/mob/living/carbon/human/human_owner = organ_owner
 		human_owner.remove_eye_color(EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
+		for(var/i in 1 to COLOUR_PRIORITY_AMOUNT)
+			human_owner.remove_eye_color(EYE_COLOR_ATOM_COLOR_PRIORITY + i, update_body = FALSE)
 		if(native_fov)
 			organ_owner.remove_fov_trait(type)
 		if(!special)
@@ -105,7 +109,45 @@
 
 	organ_owner.update_tint()
 	organ_owner.update_sight()
-	UnregisterSignal(organ_owner, COMSIG_ATOM_BULLET_ACT)
+	UnregisterSignal(organ_owner, list(COMSIG_ATOM_BULLET_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT))
+
+/obj/item/organ/eyes/update_atom_colour()
+	. = ..()
+	if (ishuman(owner))
+		refresh_atom_color_overrides()
+		owner.update_body()
+
+/// Adds eye color overrides to our owner from our atom color
+/obj/item/organ/eyes/proc/refresh_atom_color_overrides()
+	if (!atom_colours)
+		return
+
+	var/mob/living/carbon/human/human_owner = owner
+	for(var/i in 1 to COLOUR_PRIORITY_AMOUNT)
+		var/list/checked_color = atom_colours[i]
+		if (!checked_color)
+			human_owner.remove_eye_color(EYE_COLOR_ATOM_COLOR_PRIORITY + i, update_body = FALSE)
+			continue
+
+		var/left_color = COLOR_WHITE
+		var/right_color = COLOR_WHITE
+
+		if (length(eye_color_left))
+			left_color = eye_color_left
+		if (length(eye_color_right))
+			right_color = eye_color_right
+
+		if (checked_color[ATOM_COLOR_TYPE_INDEX] == ATOM_COLOR_TYPE_FILTER)
+			var/color_filter = checked_color[ATOM_COLOR_VALUE_INDEX]
+			left_color = apply_matrix_to_color(left_color, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
+			right_color = apply_matrix_to_color(right_color, color_filter["color"], color_filter["space"] || COLORSPACE_RGB)
+		else
+			var/list/target_color = color_transition_filter(checked_color[ATOM_COLOR_VALUE_INDEX], SATURATION_OVERRIDE)
+			left_color = apply_matrix_to_color(left_color, target_color["color"], COLORSPACE_HSL)
+			right_color = apply_matrix_to_color(right_color, target_color["color"], COLORSPACE_HSL)
+
+		human_owner.add_eye_color_left(left_color, EYE_COLOR_ATOM_COLOR_PRIORITY + i, update_body = FALSE)
+		human_owner.add_eye_color_right(right_color, EYE_COLOR_ATOM_COLOR_PRIORITY + i, update_body = FALSE)
 
 /obj/item/organ/eyes/proc/on_bullet_act(mob/living/carbon/source, obj/projectile/proj, def_zone, piercing_hit, blocked)
 	SIGNAL_HANDLER
@@ -133,6 +175,11 @@
 	var/datum/wound/pierce/bleed/severe/eye/eye_puncture = new
 	eye_puncture.apply_wound(bodypart_owner, wound_source = "bullet impact", right_side = picked_side)
 	apply_scar(picked_side)
+
+/// When our owner washes their face. The idea that spessmen wash their eyeballs is highly disturbing but this is the easiest way to get rid of cursed crayon eye coloring
+/obj/item/organ/eyes/proc/on_face_wash()
+	SIGNAL_HANDLER
+	wash(CLEAN_WASH)
 
 #define OFFSET_X 1
 #define OFFSET_Y 2
