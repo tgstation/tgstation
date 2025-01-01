@@ -806,6 +806,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ROD_ATTRACT_SHINY_LOVERS "rod_attract_shiny_lovers"
 /// This rod can be used to fish on lava
 #define TRAIT_ROD_LAVA_USABLE "rod_lava_usable"
+/// This rod was infused by a heretic, making it awesome and improving influence gain
+#define TRAIT_ROD_MANSUS_INFUSED "rod_infused"
 /// Stuff that can go inside fish cases and aquariums
 #define TRAIT_AQUARIUM_CONTENT "aquarium_content"
 /// If the item can be used as a bit.
@@ -838,6 +840,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH "stop_fish_reproduction_and_growth"
 /// This is an aquarium with an open panel
 #define TRAIT_AQUARIUM_PANEL_OPEN "aquarium_panel_open"
+/// For locations that prevent fish flopping animation, namely aquariums
+#define TRAIT_STOP_FISH_FLOPPING "stop_fish_flopping"
 /// Plants that were mutated as a result of passive instability, not a mutation threshold.
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"
 /// If you hit an APC with exposed internals with this item it will try to shock you
@@ -917,6 +921,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Debug traits
 /// This object has light debugging tools attached to it
 #define TRAIT_LIGHTING_DEBUGGED "lighting_debugged"
+/// This object has sound debugging tools attached to it
+#define TRAIT_SOUND_DEBUGGED "sound_debugged"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
@@ -1028,6 +1034,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///fish traits
 #define TRAIT_FISH_STASIS "fish_stasis"
 #define TRAIT_FISH_FLOPPING "fish_flopping"
+#define TRAIT_RESIST_PSYCHIC "resist_psychic"
 #define TRAIT_RESIST_EMULSIFY "resist_emulsify"
 #define TRAIT_FISH_SELF_REPRODUCE "fish_self_reproduce"
 #define TRAIT_FISH_NO_MATING "fish_no_mating"

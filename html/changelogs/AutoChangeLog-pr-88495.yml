@@ -1,5 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - qol: "holding shift and hovering over your pet will display a list of commands you can click from"
-  - bugfix: "fixes the fishing pet command not working"

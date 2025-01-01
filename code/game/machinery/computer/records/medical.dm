@@ -18,6 +18,7 @@
 	icon_screen = "medlaptop"
 	icon_keyboard = "laptop_key"
 	pass_flags = PASSTABLE
+	projectiles_pass_chance = 100
 
 /obj/machinery/computer/records/medical/attacked_by(obj/item/attacking_item, mob/living/user)
 	. = ..()

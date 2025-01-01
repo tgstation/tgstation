@@ -44,13 +44,13 @@
 		dat += "<h1> Unregistered. Swipe ID card to register as voting box operator </h1>"
 	dat += "<h1>[vote_description]</h1>"
 	if(is_operator(user))
-		dat += "Voting: <a href='?src=[REF(src)];act=toggle_vote'>[voting_active ? "Active" : "Maintenance Mode"]</a><br>"
-		dat += "Set Description: <a href='?src=[REF(src)];act=set_desc'>Set Description</a><br>"
-		dat += "One vote per ID: <a href='?src=[REF(src)];act=toggle_auth'>[id_auth ? "Yes" : "No"]</a><br>"
-		dat += "Reset voted ID's: <a href='?src=[REF(src)];act=reset_voted'>Reset</a><br>"
-		dat += "Draw random vote: <a href='?src=[REF(src)];act=raffle'>Raffle</a><br>"
-		dat += "Shred votes: <a href='?src=[REF(src)];act=shred'>Shred</a><br>"
-		dat += "Tally votes: <a href='?src=[REF(src)];act=tally'>Tally</a><br>"
+		dat += "Voting: <a href='byond://?src=[REF(src)];act=toggle_vote'>[voting_active ? "Active" : "Maintenance Mode"]</a><br>"
+		dat += "Set Description: <a href='byond://?src=[REF(src)];act=set_desc'>Set Description</a><br>"
+		dat += "One vote per ID: <a href='byond://?src=[REF(src)];act=toggle_auth'>[id_auth ? "Yes" : "No"]</a><br>"
+		dat += "Reset voted ID's: <a href='byond://?src=[REF(src)];act=reset_voted'>Reset</a><br>"
+		dat += "Draw random vote: <a href='byond://?src=[REF(src)];act=raffle'>Raffle</a><br>"
+		dat += "Shred votes: <a href='byond://?src=[REF(src)];act=shred'>Shred</a><br>"
+		dat += "Tally votes: <a href='byond://?src=[REF(src)];act=tally'>Tally</a><br>"
 
 	var/datum/browser/popup = new(user, "votebox", "Voting Box", 300, 300)
 	popup.set_content(dat.Join())

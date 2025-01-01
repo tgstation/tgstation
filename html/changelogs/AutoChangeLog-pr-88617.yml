@@ -1,4 +1,0 @@
-author: "AyIong"
-delete-after: True
-changes:
-  - bugfix: "Fixed scrollbar colors and background position in TGUI on Byond 516"

@@ -1,5 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - qol: "The time until the server reboots is now visible in the status tab."
-  - admin: "Added a cancel reboot verb to the server tab."
