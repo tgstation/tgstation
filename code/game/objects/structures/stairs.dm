@@ -17,8 +17,6 @@
 	var/force_open_above = FALSE // replaces the turf above this stair obj with /turf/open/openspace
 	var/terminator_mode = STAIR_TERMINATOR_AUTOMATIC
 	var/turf/listeningTo
-	/// were we made indestructible by mapload
-	var/indestructible_by_mapload = FALSE
 
 /obj/structure/stairs/north
 	dir = NORTH
@@ -56,7 +54,6 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 	if(mapload)
-		indestructible_by_mapload = TRUE
 		resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 		desc += " These seem to be reinforced against any sort of damage.. except for a bomb.."
 
@@ -68,7 +65,7 @@
 	return ..()
 
 /obj/structure/stairs/ex_act(severity, target) //makes roundstart stairs only destructible by anything bigger than a light explosion
-	if(!indestructible_by_mapload)
+	if(resistance_flags & INDESTRUCTIBLE)
 		return ..()
 	if(QDELETED(src) || severity <= EXPLODE_LIGHT)
 		return TRUE
