@@ -174,6 +174,9 @@
 ///Called from on_losing(mob/living/carbon/human/owner)
 #define COMSIG_MUTATION_LOST "mutation_lost"
 
+/// Ideally would be called anywhere unarmed damage is performed but it will be an entire project
+/// to sort out the unarmed attack chain
+/// Note the inclusion of how much damage is received
 /// Called from /datum/species/proc/harm() (unarmed attack chain is the Bad Place)
 /// Sent whenever you perform a harmful attack with a bodypart
 /// SEND_SIGNAL(target, signal, user, target, user.get_active_hand, damage_received, attacked_bodypart)
@@ -181,9 +184,6 @@
 /// As above, but sent to the victim of such unprovoked violence
 /// SEND_SIGNAL(target, signal, user, target, user.get_active_hand, damage_received, attacked_bodypart)
 #define COMSIG_CARBON_BODYPART_ATTACK_VICTIM "bodypart_attack_victim"
-/// Ideally would be called anywhere unarmed damage is performed but it will be an entire project
-/// to sort out the unarmed attack chain
-/// Note the inclusion of how much damage is received
 
 /// Called from /mob/living/carbon/human/help_shake_act (help_shake_act click chain is the Bad Place)
 /// Also ideally called anywhere you are touching someone, barehanded, without lethal intent
