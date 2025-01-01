@@ -11,21 +11,21 @@
 	name = "Mechanical Toolbox"
 	item_path = /obj/item/storage/toolbox/mechanical
 
-/datum/loadout_item/inhand/bouquet_mixed
-	name = "Mixed Bouquet"
-	item_path = /obj/item/bouquet
+/datum/loadout_item/inhand/fishing_toolbox
+	name = "Fishing Toolbox"
+	item_path = /obj/item/storage/toolbox/fishing
 
-/datum/loadout_item/inhand/bouquet_sunflower
-	name = "Sunflower Bouquet"
-	item_path = /obj/item/bouquet/sunflower
+/datum/loadout_item/inhand/guncase
+	name = "Weapon Case"
+	item_path = /obj/item/storage/toolbox/guncase/modular/empty
 
-/datum/loadout_item/inhand/bouquet_poppy
-	name = "Poppy Bouquet"
-	item_path = /obj/item/bouquet/poppy
+/datum/loadout_item/inhand/yellow_guncase
+	name = "Yellow Weapon Case"
+	item_path = /obj/item/storage/toolbox/guncase/modular/carwo_large_case/empty
 
-/datum/loadout_item/inhand/bouquet_rose
-	name = "Rose Bouquet"
-	item_path = /obj/item/bouquet/rose
+/datum/loadout_item/inhand/fishing_toolbox
+	name = "Fishing Toolbox"
+	item_path = /obj/item/storage/toolbox/fishing
 
 /datum/loadout_item/inhand/slimpack
 	name = "Custom Flatpack"

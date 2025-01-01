@@ -66,8 +66,7 @@
 */
 
 /datum/loadout_item/undersuit/pants
-	name = "Pants"
-	item_path = /obj/item/clothing/under/pants
+	abstract_type = /datum/loadout_item/undersuit/pants
 
 /datum/loadout_item/undersuit/pants/shorts
 	name = "Shorts"
@@ -153,14 +152,6 @@
 	name = "Charcoal Pencilskirt"
 	item_path = /obj/item/clothing/under/suit/pencil/charcoal
 
-/datum/loadout_item/undersuit/formal/pencil/navy
-	name = "Navy Pencilskirt"
-	item_path = /obj/item/clothing/under/suit/pencil/navy
-
-/datum/loadout_item/undersuit/formal/pencil/burgandy
-	name = "Burgandy Pencilskirt"
-	item_path = /obj/item/clothing/under/suit/pencil/burgandy
-
 /datum/loadout_item/undersuit/formal/pencil/checkered
 	name = "Checkered Pencilskirt with Shirt"
 	item_path = /obj/item/clothing/under/suit/pencil/checkered
@@ -190,8 +181,7 @@
 */
 
 /datum/loadout_item/undersuit/buttondown
-	name = "Buttondown"
-	item_path = /obj/item/clothing/under/costume/buttondown
+	abstract_type = /datum/loadout_item/undersuit/buttondown
 
 /datum/loadout_item/undersuit/buttondown/slacks
 	name = "Buttondown w/ Slacks"
@@ -211,8 +201,7 @@
 */
 
 /datum/loadout_item/undersuit/dress
-	name = "Dress"
-	item_path = /obj/item/clothing/under/dress
+	abstract_type = /datum/loadout_item/undersuit/dress
 
 /datum/loadout_item/undersuit/dress/giantscarf
 	name = "Giant Scarf"
@@ -245,10 +234,6 @@
 /datum/loadout_item/undersuit/dress/skirt/turtle
 	name = "Turtle-Skirt Dress"
 	item_path = /obj/item/clothing/under/dress/skirt/turtleskirt
-
-/datum/loadout_item/undersuit/dress/sailor
-	name = "Heretical Dress"
-	item_path = /obj/item/clothing/under/dress/sailor
 
 /datum/loadout_item/undersuit/dress/tutu
 	name = "Pink Tutu"
@@ -289,48 +274,12 @@
 	item_path = /obj/item/clothing/under/dress/doppler/cheongsam/customtrim
 
 /datum/loadout_item/undersuit/dress/yukata
-	name = "Basic Yukata"
-	item_path = /obj/item/clothing/under/dress/doppler/yukata
-
-/datum/loadout_item/undersuit/dress/yukata/tg
-	name = "Yukata"
-	item_path = /obj/item/clothing/under/costume/yukata
-
-/datum/loadout_item/undersuit/dress/yukata/tg/greyscale
 	name = "Custom Yukata"
 	item_path = /obj/item/clothing/under/costume/yukata/greyscale
 
-/datum/loadout_item/undersuit/dress/yukata/tg/green
-	name = "Aqua Yukata"
-	item_path = /obj/item/clothing/under/costume/yukata/green
-
-/datum/loadout_item/undersuit/dress/yukata/tg/green/greyscale
-	name = "Custom Floral Yukata"
-	item_path = /obj/item/clothing/under/costume/yukata/green/greyscale
-
-/datum/loadout_item/undersuit/dress/yukata/tg/white
-	name = "White Yukata"
-	item_path = /obj/item/clothing/under/costume/yukata/white
-
-/datum/loadout_item/undersuit/dress/yukata/tg/white/greyscale
-	name = "Custom Snowy Yukata"
-	item_path = /obj/item/clothing/under/costume/yukata/white/greyscale
-
 /datum/loadout_item/undersuit/dress/kimono
-	name = "Kimono"
-	item_path = /obj/item/clothing/under/costume/kimono
-
-/datum/loadout_item/undersuit/dress/kimono/greyscale
 	name = "Custom Kimono"
 	item_path = /obj/item/clothing/under/costume/kimono/greyscale
-
-/datum/loadout_item/undersuit/dress/kimono/red
-	name = "Red Kimono"
-	item_path = /obj/item/clothing/under/costume/kimono/red
-
-/datum/loadout_item/undersuit/dress/kimono/purple
-	name = "Purple Kimono"
-	item_path = /obj/item/clothing/under/costume/kimono/purple
 
 /*
 *	MISCELLANEOUS
@@ -348,10 +297,48 @@
 	name = "Colorable Jumpskirt"
 	item_path = /obj/item/clothing/under/color/jumpskirt
 
-/datum/loadout_item/undersuit/jumpsuit/frontier
+/datum/loadout_item/undersuit/frontier
 	name = "Frontier Jumpsuit"
 	item_path = /obj/item/clothing/under/frontier_colonist
+
+/datum/loadout_item/undersuit/osi
+	name = "OSI Jumpsuit"
+	item_path = /obj/item/clothing/under/costume/osi
+
+/datum/loadout_item/undersuit/lost_mc
+	name = "Lost MC Clothing"
+	item_path = /obj/item/clothing/under/costume/tmc
 
 /datum/loadout_item/undersuit/bunnysuit
 	name = "Bunny Suit"
 	item_path = /obj/item/clothing/under/costume/bunnysuit
+
+/datum/loadout_item/undersuit/combat
+	name = "Combat Uniform"
+	item_path = /obj/item/clothing/under/syndicate/combat
+
+/datum/loadout_item/undersuit/turtleneck
+	name = "Tactical Turtleneck"
+	item_path = /obj/item/clothing/under/syndicate
+
+// Man in suit gif
+
+/datum/loadout_item/undersuit/detective_suit
+	name = "Hard-Worn Suit"
+	item_path = /obj/item/clothing/under/rank/security/detective
+
+/datum/loadout_item/undersuit/noir_suit
+	name = "Noir Suit"
+	item_path = /obj/item/clothing/under/rank/security/detective/noir
+
+/datum/loadout_item/undersuit/disco
+	name = "Superstar Cop Uniform"
+	item_path = /obj/item/clothing/under/rank/security/detective/disco
+
+/datum/loadout_item/undersuit/aerostatic
+	name = "Aerostatic Suit"
+	item_path = /obj/item/clothing/under/rank/security/detective/kim
+
+/datum/loadout_item/undersuit/disco
+	name = "Executive Suit"
+	item_path = /obj/item/clothing/under/suit/black_really

@@ -7222,6 +7222,8 @@
 #include "modular_doppler\sprite_swaps\code\bigclosets.dm"
 #include "modular_doppler\stone\code\ore_veins.dm"
 #include "modular_doppler\stone\code\stone.dm"
+#include "modular_doppler\super_glasses\code\glasses_stats_thief.dm"
+#include "modular_doppler\super_glasses\code\techno_visors.dm"
 #include "modular_doppler\tableflip\tableflip.dm"
 #include "modular_doppler\the-business\code\twitch.dm"
 #include "modular_doppler\time_clock\code\console.dm"

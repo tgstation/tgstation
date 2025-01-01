@@ -68,6 +68,10 @@
 	name = "Latex Gloves"
 	item_path = /obj/item/clothing/gloves/latex
 
+/datum/loadout_item/gloves/nitrile
+	name = "Nitrile Gloves"
+	item_path = /obj/item/clothing/gloves/latex/nitrile
+
 /datum/loadout_item/gloves/translationgloves
 	name = "Translation Gloves"
 	item_path = /obj/item/clothing/gloves/radio
@@ -83,3 +87,11 @@
 /datum/loadout_item/gloves/cloth_armwraps
 	name = "Cloth Armwraps"
 	item_path = /obj/item/clothing/gloves/bracer/wraps
+
+/datum/loadout_item/gloves/frontier_gloves
+	name = "Frontier Gloves"
+	item_path = /obj/item/clothing/gloves/frontier_colonist
+
+/datum/loadout_item/gloves/aerostatic
+	name = "Aerostatic Gloves"
+	item_path = /obj/item/clothing/gloves/kim
