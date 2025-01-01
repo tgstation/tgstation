@@ -821,8 +821,8 @@
 		var/obj/machinery/fishing_portal_generator/portal = location
 		location = portal.current_linked_atom
 
-	for(var/obj/item/bodypart/eaten_limb in location.get_all_contents())
-		.[eaten_limb] = 6
+	for(var/obj/item/eaten_thing in location.get_all_contents())
+		.[eaten_thing] = 6
 
 /datum/fish_source/dimensional_rift/on_challenge_completed(mob/user, datum/fishing_challenge/challenge, success)
 	. = ..()
@@ -868,7 +868,7 @@
 		challenge.used_rod.throw_at(challenge.location, 7, 1, null, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(check_item_location), challenge.location, random_arm, challenge.used_rod), 1 SECONDS)
 
-/datum/fish_source/dimensional_rift/proc/check_item_location(datum/source, atom/location, obj/item/bodypart/random_arm, obj/item/used_rod)
+/datum/fish_source/dimensional_rift/proc/check_item_location(atom/location, obj/item/bodypart/random_arm, obj/item/used_rod)
 	for(var/obj/item/thingy in get_turf(location))
 		// If it's not in the list and it's not what we know as the used rod, skip.
 		// This lets fishing gloves be dragged in as well. I mean honestly if you try fishing in here with those you should just Fucking Die but that's for later.
