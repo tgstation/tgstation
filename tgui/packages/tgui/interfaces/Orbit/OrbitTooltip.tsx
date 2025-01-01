@@ -36,7 +36,7 @@ export function OrbitTooltip(props: Props) {
             {!!full_name && (
               <LabeledList.Item label="Real ID">{full_name}</LabeledList.Item>
             )}
-            {!!displayJob && !antag && (
+            {!!displayJob && (
               <LabeledList.Item label="Job">{displayJob}</LabeledList.Item>
             )}
             {!!antag && (
