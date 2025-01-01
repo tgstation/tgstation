@@ -180,5 +180,5 @@
 	maximum = 200
 
 /// default value is max/2 because 100 1x modifier, while 200 is 2x
-/datum/preference/numeric/sound_polling_sound_volume/create_default_value()
+/datum/preference/numeric/sound_ghost_poll_prompt_volume/create_default_value()
 	return maximum/2
