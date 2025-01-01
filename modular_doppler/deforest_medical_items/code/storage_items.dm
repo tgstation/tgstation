@@ -85,6 +85,14 @@
 	)
 	generate_items_inside(items_inside, src)
 
+/obj/item/storage/medkit/civil_defense/the_big_cheese
+
+/obj/item/storage/medkit/civil_defense/the_big_cheese/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/food/cheese/firm_cheese_slice = 4,
+	)
+	generate_items_inside(items_inside, src)
+
 /obj/item/storage/medkit/civil_defense/thunderdome
 	/// List of random medpens we can pick from
 	var/list/random_medpen_options = list(
