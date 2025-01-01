@@ -68,8 +68,6 @@ var/path_type = "/obj/item/baseball_bat"
 
 * You are expected to help maintain the code that you add, meaning that if there is a problem then you are likely to be approached in order to fix any issues, runtimes, or bugs.
 
-* Do not divide when you can easily convert it to multiplication. (ie `4/2` should be done as `4*0.5`)
-
 * Separating single lines into more readable blocks is not banned, however you should use it only where it makes new information more accessible, or aids maintainability. We do not have a column limit, and mass conversions will not be received well.
 
 * If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
