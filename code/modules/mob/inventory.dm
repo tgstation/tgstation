@@ -604,10 +604,11 @@
 	var/list/all_gear = get_all_gear(recursive = FALSE)
 	for(var/obj/item/item in all_gear)
 		if(dropItemToGround(item, force))
+			if(QDELETED(item)) //DROPDEL can cause this item to be deleted
+				continue
 			if(del_on_drop)
 				qdel(item)
 				continue
-			if(!QDELETED(item)) //DROP_DEL can cause this tiem to be deleted
-				. += item
+			. += item
 		else if(del_if_nodrop && !(item.item_flags & ABSTRACT))
 			qdel(item)
