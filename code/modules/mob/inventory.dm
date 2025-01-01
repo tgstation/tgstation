@@ -601,7 +601,7 @@
 /mob/living/proc/drop_everything(del_on_drop, force, del_if_nodrop)
 	. = list() //list of items that were successfully dropped
 
-	var/list/obj/item/all_gear = get_all_gear(recursive = FALSE)
+	var/list/all_gear = get_all_gear(recursive = FALSE)
 	for(var/obj/item/item in all_gear)
 		if(dropItemToGround(item, force))
 			if(del_on_drop)
