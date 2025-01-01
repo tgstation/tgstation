@@ -8,7 +8,7 @@
 	/// THe armor datum path for our upgrade values. This value is added per upgrade item applied
 	var/datum/armor/armor_mod = /datum/armor/armor_plate
 	/// The name of the upgrade item.
-	var/upgrade_name
+	var/upgrade_name = ""
 	/// Adds a prefix to the item, demonstrating that it is upgraded in some way.
 	var/upgrade_prefix = "reinforced"
 	/// Tracks whether or not we've received an upgrade or not.
@@ -35,7 +35,7 @@
 		src.armor_mod = armor_mod
 	if(upgrade_prefix)
 		src.upgrade_prefix = upgrade_prefix
-	var/obj/item/typecast = upgrade_item
+	var/obj/item/typecast = src.upgrade_item
 	src.upgrade_name = initial(typecast.name)
 
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
