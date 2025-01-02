@@ -801,7 +801,7 @@
 	AddComponent(/datum/component/edible,\
 		food_flags = FOOD_NO_EXAMINE,\
 		volume = reagents.total_volume,\
-		bite_consumption = round(reagents.total_volume / (rand(20, 30) / 10)),\
+		bite_consumption = round(reagents.total_volume / (rand(20, 30) * 0.1)),\
 	)
 
 /obj/item/flashlight/glowstick/proc/get_fuel()
