@@ -2446,7 +2446,7 @@
 	name = "Magillitis-"
 	description = "A variant of the experimental serum that turns you into a gorilla. This one unfortunately just barely improves your muscle mass so youre basically just a skinny gorilla."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-	gorilla_type = /mob/living/basic/gorilla/genetics/nostunlock
+	gorilla_type = /mob/living/basic/gorilla/genetics/magilitisminus
 
 /datum/reagent/growthserum
 	name = "Growth Serum"

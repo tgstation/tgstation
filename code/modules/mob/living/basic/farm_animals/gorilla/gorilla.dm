@@ -196,9 +196,11 @@
 	. = ..()
 	qdel(GetComponent(/datum/component/amputating_limbs))
 
-/mob/living/basic/gorilla/genetics/nostunlock
+/mob/living/basic/gorilla/genetics/magilitisminus
 	name = "Gorilla"
 	desc = "You might think this is a normal gorilla, but upon closer inspection theyre rather skinny. Theyre still an actual gorilla though so they might punch your guts out."
 	gentle_throw_punch = TRUE
+	initial_size = 1
+	speed = 0
 
 #undef GORILLA_HANDS_LAYER
