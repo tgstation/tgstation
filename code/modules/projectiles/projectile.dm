@@ -388,8 +388,7 @@
 		new impact_effect_type(target_turf, impact_x, impact_y)
 
 	var/mob/living/living_target = target
-	if (get_embed())
-		get_embed().try_embed_projectile(src, target, hit_limb_zone, blocked, pierce_hit)
+	get_embed()?.try_embed_projectile(src, target, hit_limb_zone, blocked, pierce_hit)
 	var/reagent_note
 	if(reagents?.reagent_list)
 		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
