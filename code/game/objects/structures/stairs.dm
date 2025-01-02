@@ -65,7 +65,7 @@
 	return ..()
 
 /obj/structure/stairs/ex_act(severity, target) //makes roundstart stairs only destructible by anything bigger than a light explosion
-	if(resistance_flags & INDESTRUCTIBLE)
+	if(!(resistance_flags & INDESTRUCTIBLE))
 		return ..()
 	if(QDELETED(src) || severity <= EXPLODE_LIGHT)
 		return TRUE
