@@ -21,9 +21,16 @@
 	/// Golem effects actually come from their organs so if someone wants to do enough mad science,
 	/// they can get golem effects as a (sort of) human or other kind of humanoid
 	var/mob/living/carbon/human/human_owner
+	/// If a golem wants to gorge themselves on a mineral to keep its effect for longer, that's their
+	/// perogative, better hope they don't need to heal or change types for something new
+	status_type = STATUS_EFFECT_REFRESH
 	/// Ideally all golem effects will effect their golem arms, and it's less of a headache to keep
 	/// track of that here to keep our behavior contained instead of suffering from edge cases
 	var/list/obj/item/bodypart/arm/modified_arms
+	/// When we reach this much remaining time we will start animating as a warning
+	var/early_expiry_warning = 30 SECONDS
+	/// When we reach this much remaining time we will start animating more urgently as a warning
+	var/imminent_expiry_warning = 5 SECONDS
 
 
 /atom/movable/screen/alert/status_effect/golem_status
@@ -32,13 +39,9 @@
 	icon_state = "template"
 	/// Overlay we show on top of the template icon
 	var/mutable_appearance/mineral_overlay
-	/// When we reach this much remaining time we will start animating as a warning
-	var/early_expiry_warning = 30 SECONDS
-	/// When we reach this much remaining time we will start animating more urgently as a warning
-	var/imminent_expiry_warning = 5 SECONDS
 
 /// Set up how the alert ACTUALLY looks, based on the effect applied
-/atom/movable/screen/alert/status_effect/golem_status/proc/update_details(buff_time)
+/atom/movable/screen/alert/status_effect/golem_status/proc/update_details()
 	var/datum/status_effect/golem/golem_effect = attached_effect
 	if (!istype(golem_effect))
 		CRASH("Golem status alert attached to invalid status effect.")
@@ -46,11 +49,6 @@
 	desc = golem_effect.alert_desc
 	mineral_overlay = mutable_appearance(golem_effect.alert_icon, golem_effect.alert_icon_state)
 	update_appearance(UPDATE_ICON)
-
-	if (buff_time > early_expiry_warning)
-		addtimer(CALLBACK(src, PROC_REF(early_warning)), buff_time - early_expiry_warning, TIMER_DELETE_ME)
-	if (buff_time > imminent_expiry_warning)
-		addtimer(CALLBACK(src, PROC_REF(imminent_warning)), buff_time - imminent_expiry_warning, TIMER_DELETE_ME)
 
 /// Animate to indicate effect is expiring soon
 /atom/movable/screen/alert/status_effect/golem_status/proc/early_warning()
@@ -95,13 +93,33 @@
 	human_owner.update_body_parts()
 	return TRUE
 
-// Ensure that a human_owner is set
+/datum/status_effect/golem/tick(seconds_between_ticks)
+	var/static/warning = FALSE
+	. = ..()
+	var/time_left = duration - world.time
+	var/atom/movable/screen/alert/status_effect/golem_status/status_alert = linked_alert
+	if(!status_alert)
+		return // our status alert is gone, so we can't animate
+	switch (time_left)
+		if (1 SECONDS to 5 SECONDS)
+			if (warning != "imminent")
+				warning = "imminent"
+				status_alert.imminent_warning()
+		if (6 SECONDS to 30 SECONDS)
+			if (warning != "early")
+				warning = "early"
+				status_alert.early_warning()
+		else
+			if (warning)
+				warning = FALSE
+				animate(status_alert) // stop animating and stop warning; golem probably ate more of the mineral0000
+
 /datum/status_effect/golem/on_creation(mob/living/new_owner)
 	. = ..()
 	if (!.)
 		return FALSE
 	var/atom/movable/screen/alert/status_effect/golem_status/status_alert = linked_alert
-	status_alert?.update_details(buff_time = initial(duration))
+	status_alert?.update_details()
 
 /datum/status_effect/golem/on_remove()
 	to_chat(owner, span_warning("The effect of the [mineral_name] fades."))
@@ -116,11 +134,20 @@
 		if(arm.limb_id != SPECIES_GOLEM)
 			continue
 		LAZYADD(modified_arms, arm)
+		RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 
 /datum/status_effect/golem/proc/reset_arm_effects()
 	SHOULD_CALL_PARENT(TRUE)
+	if(LAZYLEN(modified_arms))
+		for(var/obj/item/bodypart/arm/arm in modified_arms)
+			UnregisterSignal(arm, COMSIG_QDELETING)
+	LAZYNULL(modified_arms)
 
-	LAZYCLEARLIST(modified_arms)
+/// Remove references to deleted arms
+/datum/status_effect/golem/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
+	SIGNAL_HANDLER
+
+	LAZYREMOVE(modified_arms, arm)
 
 /datum/status_effect/golem/get_examine_text()
 	return span_notice("[owner.p_Their()] body has been augmented with veins of [mineral_name].")
@@ -200,6 +227,22 @@
 		ASYNC // async so we can scream without upsetting should_not_sleep
 			target.emote("scream")
 	remove_duration(30 SECONDS) // lessen the duration to avoid uranium golems becoming walking chernobyl
+	var/target_name_word = splittext("[target]", " ")[1] // retrieve the first word of their displayed name
+	owner.balloon_alert_to_viewers("irradiated [target_name_word]!")
+	flash_our_alert()
+
+/datum/status_effect/golem/uranium/proc/flash_our_alert()
+	var/atom/movable/screen/alert/status_effect/golem_status/status_alert = linked_alert
+	if (!status_alert)
+		return
+	var/mean_golem_green = rgb(0, 255, 0)
+	status_alert.add_filter("radioactive_touch", 1, list(
+		"type" = "outline",
+		"color" = mean_golem_green,"alpha" = 0,
+		"size" = 2.2))
+	var/you_did_this_outline = status_alert.get_filter("radioactive_touch")
+	animate(you_did_this_outline, alpha = 255, time = 0.25 SECONDS, loop = 4)
+	animate(alpha = 0, time = 0.25 SECONDS)
 
 
 /// Magic immunity
@@ -374,7 +417,6 @@
 		arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 		arm.unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 		arm.unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
-		RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 
 /datum/status_effect/golem/diamond/on_remove()
 	owner.alpha = initial(owner.alpha)
@@ -390,13 +432,7 @@
 		arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
 		arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
 		arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
-		UnregisterSignal(arm, COMSIG_QDELETING)
 	. = ..()
-
-/// Remove references to deleted arms
-/datum/status_effect/golem/diamond/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
-	SIGNAL_HANDLER
-	modified_arms -= arm
 
 /// Makes you tougher
 /datum/status_effect/golem/titanium
@@ -437,7 +473,6 @@
 	for(var/obj/item/bodypart/arm/arm as anything in modified_arms)
 		arm.unarmed_damage_low += damage_increase
 		arm.unarmed_damage_high += damage_increase
-		RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 
 /datum/status_effect/golem/titanium/on_remove()
 	UnregisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK)
@@ -450,13 +485,7 @@
 	for(var/obj/item/bodypart/arm/arm as anything in modified_arms)
 		arm.unarmed_damage_low -= damage_increase
 		arm.unarmed_damage_high -= damage_increase
-		UnregisterSignal(arm, COMSIG_QDELETING)
-	. = ..()
-
-/// Remove references to deleted arms
-/datum/status_effect/golem/titanium/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
-	SIGNAL_HANDLER
-	modified_arms -= arm
+	return ..()
 
 /// Makes you slippery
 /datum/status_effect/golem/bananium

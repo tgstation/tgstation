@@ -1045,7 +1045,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		disarm(owner, target, attacker_style)
 		return // dont attack after
 	if(owner.combat_mode)
-		harm(owner, target, attacker_style) // would like to put signals for attacking out here but the harm proc is a disaster
+		harm(owner, target, attacker_style)
 	else
 		help(owner, target, attacker_style)
 
