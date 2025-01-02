@@ -2,8 +2,8 @@
 DIRECTORY="./sound"
 
 # LUFS range
-MIN_LUFS=-25
-MAX_LUFS=-20
+MIN_LUFS=-24
+MAX_LUFS=-21
 
 # Arrays to store bad files and files with retrieval errors
 BAD_FILES=()
