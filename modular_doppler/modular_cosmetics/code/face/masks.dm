@@ -39,3 +39,37 @@
 	. += span_notice("[src] can be worn above or below your suit. Alt-Right-click to toggle.")
 	. += span_notice("Alt-click [src] to adjust it.")
 
+/obj/item/clothing/mask/neck_gaiter/cybersun
+	name = "advanced neck gaiter"
+	desc = "A glistening neck accessory, colored in a black pinstripe texture. The material is an attempt to imitate 'heatsilk' technology, but it is barely any <b>laser-reflective</b>. Has a small respirator to be used with internals."
+	unique_death = 'modular_doppler/modular_sounds/sound/machines/hacked.ogg'
+	greyscale_colors = "#333333"
+	var/hit_reflect_chance = 5 // don't count on it, operative
+
+/obj/item/clothing/mask/neck_gaiter/cybersun/IsReflect(def_zone)
+	if(def_zone in list(BODY_ZONE_HEAD))
+		return FALSE
+	if (prob(hit_reflect_chance))
+		return TRUE
+
+/obj/item/clothing/mask/gas/respirator
+	name = "half mask respirator"
+	desc = "A half mask respirator that's really just a standard gas mask with the glass taken off."
+	icon_state = "respirator"
+	icon = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/face.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/face.dmi'
+	supported_bodyshapes = null
+	bodyshape_icon_files = null
+	inhand_icon_state = "sechailer"
+	greyscale_config = /datum/greyscale_config/respirator
+	greyscale_config_worn = /datum/greyscale_config/respirator/worn
+	greyscale_colors = "#666666"
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT|MASKINTERNALS
+	w_class = WEIGHT_CLASS_SMALL
+	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
+	flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH
+	flags_1 = IS_PLAYER_COLORABLE_1
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING

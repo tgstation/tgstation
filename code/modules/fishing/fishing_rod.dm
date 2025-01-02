@@ -5,6 +5,7 @@
 	desc = "You can fish with this."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "fishing_rod"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/equipment/fishing_rod_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/fishing_rod_righthand.dmi'
 	inhand_icon_state = "rod"
@@ -122,7 +123,7 @@
 	if(hook)
 		equipped_stuff += "[icon2html(hook, user)] <b>[hook.name]</b>"
 	if(bait)
-		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b> as bait."
+		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b>"
 	if(length(equipped_stuff))
 		. += span_notice("It has \a [english_list(equipped_stuff)] equipped.")
 	if(!bait)
@@ -140,7 +141,7 @@
 	var/list/block = list()
 	var/get_percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH)
 	block += span_info("You think you can cast it up to [get_cast_range()] tiles away.")
-	block += get_stat_info(get_percent, difficulty_modifier, "Fishing will be", "easier", "harder", "with this fishing rod")
+	block += get_stat_info(get_percent, difficulty_modifier * 0.01, "Fishing will be", "easier", "harder", "with this fishing rod", offset = 0)
 	block += get_stat_info(get_percent, experience_multiplier, "You will gain experience", "faster", "slower")
 	block += get_stat_info(get_percent, completion_speed_mult, "You should complete the minigame", "faster", "slower")
 	block += get_stat_info(get_percent, bait_speed_mult, "Reeling is", "faster", "slower")
@@ -148,6 +149,7 @@
 	block += get_stat_info(get_percent, bounciness_mult, "This fishing rod is ", "bouncier", "less bouncy", "than a normal one", less_is_better = TRUE)
 	block += get_stat_info(get_percent, gravity_mult, "The lure will sink", "faster", "slower", span_info = TRUE)
 
+	list_clear_nulls(block)
 	. += examine_block(block.Join("\n"))
 
 	if(get_percent && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
@@ -172,15 +174,16 @@
 		. += examine_block(block.Join("\n"))
 
 ///Used in examine_more to reduce all the copypasta when getting more information about the various stats of the fishing rod.
-/obj/item/fishing_rod/proc/get_stat_info(get_percent, value, prefix, easier, harder, suffix = "with this fishing rod", span_info = FALSE, less_is_better = FALSE)
+/obj/item/fishing_rod/proc/get_stat_info(get_percent, value, prefix, easier, harder, suffix = "with this fishing rod", span_info = FALSE, less_is_better = FALSE, offset = 1)
 	if(value == 1)
 		return
-	var/percent = get_percent ? "[abs(value)]% " : ""
-	var/harder_easier = value > 1 ? easier : harder
+	value -= offset
+	var/percent = get_percent ? "[abs(value * 100)]% " : ""
+	var/harder_easier = value > 0 ? easier : harder
 	. = "[prefix] [percent][harder_easier] [suffix]."
 	if(span_info)
 		return span_info(.)
-	if(less_is_better ? value < 1 : value > 1)
+	if(less_is_better ? value < 0 : value > 0)
 		return span_nicegreen(.)
 	return span_danger(.)
 
@@ -332,7 +335,7 @@
 		QDEL_NULL(fishing_line)
 	var/beam_color = line?.line_color || default_line_color
 	fishing_line = new(firer, target, icon_state = "fishing_line", beam_color = beam_color, emissive = FALSE, override_target_pixel_y = target_py)
-	fishing_line.lefthand = firer.get_held_index_of_item(src) % 2 == 1
+	fishing_line.lefthand = IS_LEFT_INDEX(firer.get_held_index_of_item(src))
 	RegisterSignal(fishing_line, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
 	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(clear_line))
 	INVOKE_ASYNC(fishing_line, TYPE_PROC_REF(/datum/beam/, Start))
@@ -425,13 +428,13 @@
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
 	cast_projectile.range = get_cast_range(user)
-	cast_projectile.decayedRange = get_cast_range(user)
+	cast_projectile.maximum_range = get_cast_range(user)
 	cast_projectile.owner = src
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
 	cast_projectile.firer = user
 	cast_projectile.impacted = list(WEAKREF(user) = TRUE)
-	cast_projectile.preparePixelProjectile(target, user)
+	cast_projectile.aim_projectile(target, user)
 	cast_projectile.fire()
 	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 
@@ -830,11 +833,12 @@
 /obj/projectile/fishing_cast
 	name = "fishing hook"
 	icon = 'icons/obj/fishing.dmi'
-	icon_state = "hook_projectile"
+	icon_state = "hook"
 	damage = 0
 	range = 5
 	suppressed =  SUPPRESSED_VERY
 	can_hit_turfs = TRUE
+	projectile_angle = 180
 
 	var/obj/item/fishing_rod/owner
 	var/datum/beam/our_line
@@ -842,7 +846,6 @@
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)
 	if(owner.hook)
 		icon_state = owner.hook.icon_state
-		transform = transform.Scale(1, -1)
 	. = ..()
 	if(!QDELETED(src))
 		our_line = owner.create_fishing_line(src, firer)

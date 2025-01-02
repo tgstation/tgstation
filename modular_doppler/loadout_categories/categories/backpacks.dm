@@ -38,6 +38,10 @@
 	name = "Custom Duffelbag"
 	item_path = /obj/item/storage/backpack/duffelbag/custom
 
+/datum/loadout_item/backpack/adventurer
+	name = "Adventurer's Bandolier"
+	item_path = /obj/item/storage/backpack/satchel/crusader
+
 /datum/loadout_item/backpack/duffel/industrial
 	name = "Custom Industrial Duffelbag"
 	item_path = /obj/item/storage/backpack/duffelbag/engineering/custom
@@ -49,3 +53,15 @@
 /datum/loadout_item/backpack/messenger/industrial
 	name = "Custom Industrial Messenger Bag"
 	item_path = /obj/item/storage/backpack/messenger/eng/custom
+
+/datum/loadout_item/backpack/frontier
+	name = "Frontier Backpack"
+	item_path = /obj/item/storage/backpack/industrial/frontier_colonist
+
+/datum/loadout_item/backpack/frontier_messenger
+	name = "Frontier Messenger Bag"
+	item_path = /obj/item/storage/backpack/industrial/frontier_colonist/messenger
+
+/datum/loadout_item/backpack/frontier_satchel
+	name = "Frontier Satchel"
+	item_path = /obj/item/storage/backpack/industrial/frontier_colonist/satchel

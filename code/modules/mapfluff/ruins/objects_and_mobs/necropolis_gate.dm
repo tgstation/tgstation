@@ -16,6 +16,7 @@
 	light_range = 8
 	light_color = LIGHT_COLOR_LAVA
 	can_atmos_pass = ATMOS_PASS_DENSITY
+	move_resist = INFINITY
 	var/open = FALSE
 	var/changing_openness = FALSE
 	var/locked = FALSE
@@ -94,7 +95,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/attack_hand(mob/user, list/modifiers)
 	if(locked)
-		to_chat(user, span_boldannounce("It's [open ? "stuck open":"locked"]."))
+		to_chat(user, span_bolddanger("It's [open ? "stuck open":"locked"]."))
 		return
 	toggle_the_gate(user)
 	return ..()
@@ -163,7 +164,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		var/safety = tgui_alert(user, "You think this might be a bad idea...", "Knock on the door?", list("Proceed", "Abort"))
 		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated)
 			return
-		user.visible_message(span_warning("[user] knocks on [src]..."), span_boldannounce("You tentatively knock on [src]..."))
+		user.visible_message(span_warning("[user] knocks on [src]..."), span_bolddanger("You tentatively knock on [src]..."))
 		playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, TRUE)
 		sleep(5 SECONDS)
 	return ..()

@@ -10,3 +10,13 @@
 	greyscale_config = /datum/greyscale_config/apron
 	greyscale_config_worn = /datum/greyscale_config/apron/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+// Janitor
+/obj/item/clothing/suit/apron/janitor_cloak
+	name = "waterproof poncho"
+	desc = "A transparent, waterproof cloak for your cleaning needs."
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/suit/working.dmi'
+	icon_state = "janicloak"
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/suit/working.dmi'
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|ARMS

@@ -88,7 +88,7 @@ SUBSYSTEM_DEF(blackbox)
 
 	for(var/player_key in GLOB.player_details)
 		var/datum/player_details/PD = GLOB.player_details[player_key]
-		record_feedback("tally", "client_byond_version", 1, PD.byond_version)
+		record_feedback("tally", "client_byond_version", 1, PD.full_byond_version())
 
 /datum/controller/subsystem/blackbox/Shutdown()
 	sealed = FALSE

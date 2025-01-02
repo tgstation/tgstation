@@ -176,7 +176,6 @@
 	icon = 'modular_doppler/modular_medical/icons/implants.dmi'
 	icon_state = "steel"
 	items_to_create = list(/obj/item/pickaxe/drill/implant)
-	implant_overlay = null
 	implant_color = null
 	/// The bodypart overlay datum we should apply to whatever mob we are put into's someone's arm
 	var/datum/bodypart_overlay/simple/steel_drill/drill_overlay

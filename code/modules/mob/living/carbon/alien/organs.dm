@@ -103,7 +103,7 @@
 	. = ..()
 	organ_owner.faction |= ROLE_ALIEN
 
-/obj/item/organ/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	if(organ_owner)
 		organ_owner.faction -= ROLE_ALIEN
 	return ..()
@@ -221,11 +221,11 @@
 	stomach_contents -= source
 	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 
-/obj/item/organ/stomach/alien/mob_insert(mob/living/carbon/stomach_owner, special, movement_flags)
+/obj/item/organ/stomach/alien/on_mob_insert(mob/living/carbon/stomach_owner, special, movement_flags)
 	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, PROC_REF(something_moved))
 	return ..()
 
-/obj/item/organ/stomach/alien/mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
+/obj/item/organ/stomach/alien/on_mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
 	UnregisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE)
 	return ..()
 
@@ -278,7 +278,7 @@
 	if(owner)
 		var/obj/item/bodypart/part = owner.get_bodypart(BODY_ZONE_CHEST)
 		// Brute damage to the mob is less then to the organ, so there's a higher chance of the explosion happening before xeno death
-		part.receive_damage(impact / 2)
+		owner.apply_damage(impact / 2, BRUTE, part)
 		// We choose the option that's best for the check
 		var/part_dam_ratio = part.brute_dam / max(part.max_damage, 1)
 		if(damage_ratio < part_dam_ratio)

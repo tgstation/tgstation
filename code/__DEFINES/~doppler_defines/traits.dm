@@ -37,6 +37,10 @@
 #define TRAIT_PERMITTED_CYBERNETIC "permitted_cybernetic"
 /// No step on glass
 #define TRAIT_HARD_SOLES "hard_soles"
+/// Can detach cybernetic limbs voluntarily
+#define TRAIT_ROBOTIC_LIMBATTACHMENT "robotic_limbattachment"
+/// This person has the same taste in food as a different species
+#define TRAIT_ATYPICAL_TASTER "atypical_taster"
 
 ////
 // Jobs

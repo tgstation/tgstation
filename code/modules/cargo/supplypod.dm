@@ -444,7 +444,7 @@
 	if(ismob(to_insert))
 		if(!reverse_option_list["Mobs"])
 			return FALSE
-		if(!isliving(to_insert)) //let's not put ghosts or camera mobs inside
+		if(!isliving(to_insert)) //let's not put ghosts or eye mobs inside
 			return FALSE
 		var/mob/living/mob_to_insert = to_insert
 		if(mob_to_insert.anchored || mob_to_insert.incorporeal_move)

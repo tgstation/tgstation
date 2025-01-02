@@ -39,8 +39,3 @@
 
 	var/turf/open/t_loc = get_turf(src)
 	SEND_SIGNAL(t_loc, COMSIG_TURF_MAKE_DRY, TURF_WET_WATER, TRUE, INFINITY)
-
-/obj/item/clothing/shoes/galoshes/doppler
-	name = "purple galoshes"
-	desc = "A pair of purple rubber boots, designed to prevent slipping on wet surfaces."
-	icon_state = "galoshes_doppler"

@@ -14,7 +14,7 @@
 	return
 
 /obj/machinery/power/solar/deployable/on_deconstruction(disassembled)
-	var/obj/item/solar_assembly/assembly = locate() in src
+	var/obj/item/solar_assembly/assembly = locate() in contents
 	if(assembly)
 		qdel(assembly)
 	return ..()
@@ -69,7 +69,7 @@
 	return NONE
 
 /obj/machinery/power/tracker/deployable/on_deconstruction(disassembled)
-	var/obj/item/solar_assembly/assembly = locate() in src
+	var/obj/item/solar_assembly/assembly = locate() in contents
 	if(assembly)
 		qdel(assembly)
 	return ..()

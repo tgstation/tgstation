@@ -143,15 +143,17 @@
 /obj/item/clothing/head/utility/hardhat/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 50, TRUE)
+		playsound(src, up ? SFX_VISOR_UP : SFX_VISOR_DOWN, 50, TRUE)
 
 /obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(isinhands)
 		return
 
-	if(!up)
+	if(!up && !mask_overlay_icon) // DOPPLER EDIT - ORIGINAL - if(!up)
 		. += mutable_appearance('icons/mob/clothing/head/utility.dmi', visor_state)
+	else if(!up) // DOPPLER EDIT ADDITION - SEE modular_doppler/modular_cosmetics/code/hats/doppler_command_hats.dm
+		. += mutable_appearance(mask_overlay_icon, visor_state) // DOPPLER EDIT ADDITION
 
 /obj/item/clothing/head/utility/hardhat/welding/update_overlays()
 	. = ..()

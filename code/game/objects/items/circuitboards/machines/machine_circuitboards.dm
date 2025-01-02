@@ -500,6 +500,8 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE //wew lad
 	var/secure = FALSE
+	//DOPPLER EDIT CHANGE - Makes them upgraded by default because who in the hell is going to upgrade all of them manually.
+	def_components = list(/datum/stock_part/capacitor = /datum/stock_part/capacitor/tier4)
 
 /obj/item/circuitboard/machine/holopad/multitool_act(mob/living/user, obj/item/tool)
 	if(secure)
@@ -1470,6 +1472,16 @@
 		/obj/item/stack/cable_coil = 5,
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/card_reader = 1)
+
+/obj/item/circuitboard/machine/mailsorter
+	name = "Mail Sorter"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/mailsorter
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/scanning_module = 1)
+	needs_anchored = TRUE
 
 //Tram
 /obj/item/circuitboard/machine/crossing_signal

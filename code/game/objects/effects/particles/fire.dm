@@ -34,6 +34,9 @@
 	spin = generator(GEN_NUM, list(-15,15), NORMAL_RAND)
 	scale = generator(GEN_VECTOR, list(0.5,0.5), list(2,2), NORMAL_RAND)
 
+/particles/embers/minor
+	spawning = 1
+
 /particles/embers/spark
 	count = 3
 	spawning = 2

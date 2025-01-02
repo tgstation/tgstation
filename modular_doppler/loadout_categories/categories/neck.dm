@@ -18,6 +18,14 @@
 	name = "Ranger Poncho"
 	item_path = /obj/item/clothing/neck/ranger_poncho
 
+/datum/loadout_item/neck/hazard_mantle
+	name = "Hazard Mantle"
+	item_path = /obj/item/clothing/neck/doppler_mantle
+
+/datum/loadout_item/neck/hazard_mantle_light
+	name = "Hazard Mantle (Light)"
+	item_path = /obj/item/clothing/neck/doppler_mantle/light
+
 /datum/loadout_item/neck/face_scarf
 	name = "Face Scarf"
 	item_path = /obj/item/clothing/neck/face_scarf
@@ -25,3 +33,35 @@
 /datum/loadout_item/neck/maid_neck_cover
 	name = "Maid Neck Cover"
 	item_path = /obj/item/clothing/neck/maid_neck_cover
+
+/datum/loadout_item/neck/collar
+	name = "Choker"
+	item_path = /obj/item/clothing/neck/human_petcollar/locked/choker
+
+/datum/loadout_item/neck/collar/bell
+	name = "Bell Collar"
+	item_path = /obj/item/clothing/neck/human_petcollar/locked/bell
+
+/datum/loadout_item/neck/collar/cross
+	name = "Cross Collar"
+	item_path = /obj/item/clothing/neck/human_petcollar/locked/cross
+
+/datum/loadout_item/neck/collar/holo
+	name = "Holocollar"
+	item_path = /obj/item/clothing/neck/human_petcollar/locked/holo
+
+/datum/loadout_item/neck/collar/cow
+	name = "Cowbell Collar"
+	item_path = /obj/item/clothing/neck/human_petcollar/locked/cow
+
+/datum/loadout_item/neck/collar/leather
+	name = "Leather Collar"
+	item_path = /obj/item/clothing/neck/human_petcollar/locked/leather
+
+/datum/loadout_item/neck/collar/spike
+	name = "Spiked Collar"
+	item_path = /obj/item/clothing/neck/human_petcollar/locked/spike
+
+/datum/loadout_item/neck/bowtie
+	name = "Bowtie (Colorable)"
+	item_path = /obj/item/clothing/neck/bowtie

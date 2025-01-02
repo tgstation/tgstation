@@ -13,8 +13,6 @@
 	allowed_buildtypes = COLONY_FABRICATOR
 	/// The item we turn into when repacked
 	var/repacked_type = /obj/item/flatpacked_machine
-	/// The sound loop played while the fabricator is making something
-	var/datum/looping_sound/colony_fabricator_running/soundloop
 
 /obj/machinery/rnd/production/colony_lathe/Initialize(mapload)
 	. = ..()
@@ -22,13 +20,8 @@
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
 	// We don't get new designs but can't print stuff if something's not researched, so we use the web that has everything researched
 	stored_research = locate(/datum/techweb/admin) in SSresearch.techwebs
-	soundloop = new(src, FALSE)
 	if(!mapload)
 		flick("colony_lathe_deploy", src) // Sick ass deployment animation
-
-/obj/machinery/rnd/production/colony_lathe/Destroy()
-	QDEL_NULL(soundloop)
-	return ..()
 
 // formerly NO_DECONSTRUCTION
 /obj/machinery/rnd/production/colony_lathe/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
@@ -45,14 +38,12 @@
 	return
 
 /obj/machinery/rnd/production/colony_lathe/start_printing_visuals()
-	soundloop.start()
 	set_light(l_range = 1.5)
 	icon_state = "colony_lathe_working"
 	update_appearance()
 
 /obj/machinery/rnd/production/colony_lathe/finalize_build()
 	. = ..()
-	soundloop.stop()
 	set_light(l_range = 0)
 	icon_state = base_icon_state
 	update_appearance()

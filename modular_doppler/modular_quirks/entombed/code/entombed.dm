@@ -176,6 +176,7 @@
 		"Mining",
 		"Prototype",
 		"Security",
+		"Elite",
 	)
 
 /datum/preference/choiced/entombed_skin/create_default_value()

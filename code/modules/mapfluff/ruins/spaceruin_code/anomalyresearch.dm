@@ -68,7 +68,7 @@
 	icon_state = "anomaly_research"
 	requires_power = FALSE
 	area_flags = HIDDEN_AREA | UNIQUE_AREA
-	has_gravity = TRUE
+	default_gravity = ZERO_GRAVITY
 
 /obj/item/reagent_containers/cup/bottle/wittel
 	name = "wittel bottle"

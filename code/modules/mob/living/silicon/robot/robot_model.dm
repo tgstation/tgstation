@@ -245,6 +245,8 @@
 	cyborg.diag_hud_set_aishell()
 	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
 
+	new_model.update_tallborg() // DOPPLER EDIT ADDITION - TALLBORGS
+
 	if(transform)
 		INVOKE_ASYNC(new_model, PROC_REF(do_transform_animation))
 	qdel(src)
@@ -268,6 +270,7 @@
 			cyborg_base_icon = details[SKIN_ICON_STATE]
 		if(!isnull(details[SKIN_ICON]))
 			cyborg.icon = details[SKIN_ICON]
+			cyborg_icon_override = details[SKIN_ICON] // DOPPLER EDIT ADDITION
 		if(!isnull(details[SKIN_PIXEL_X]))
 			cyborg.base_pixel_x = details[SKIN_PIXEL_X]
 		if(!isnull(details[SKIN_PIXEL_Y]))
@@ -278,6 +281,8 @@
 			hat_offset = details[SKIN_HAT_OFFSET]
 		if(!isnull(details[SKIN_TRAITS]))
 			model_traits += details[SKIN_TRAITS]
+		if(!isnull(details[SKIN_FEATURES])) // DOPPLER EDIT ADDITION
+			model_features += details[SKIN_FEATURES] // DOPPLER EDIT ADDITION
 	for(var/i in old_model.added_modules)
 		added_modules += i
 		old_model.added_modules -= i

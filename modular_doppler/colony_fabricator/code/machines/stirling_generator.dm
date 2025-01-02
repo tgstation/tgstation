@@ -20,7 +20,7 @@
 	/// What this thing deconstructs into
 	var/deconstruction_type = /obj/item/flatpacked_machine/stirling_generator
 	/// Maximum efficient heat difference, at what heat difference does more difference stop meaning anything for power?
-	var/max_efficient_heat_difference = 8000
+	var/max_efficient_heat_difference = 6000
 	/// Maximum power output from this machine
 	var/max_power_output = 100 KILO WATTS
 	/// How much power the generator is currently making

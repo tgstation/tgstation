@@ -28,7 +28,7 @@
 
 	var/golem_speed_mod = 0.8
 
-/datum/species/golem/on_species_gain(mob/living/carbon/new_golem, datum/species/old_species, pref_load)
+/datum/species/golem/on_species_gain(mob/living/carbon/new_golem, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	new_golem.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/snail, multiplicative_slowdown = golem_speed_mod)
 

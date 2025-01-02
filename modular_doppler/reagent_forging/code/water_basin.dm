@@ -101,7 +101,7 @@
 		/obj/item/fish/cardinal = 15,
 		/obj/item/fish/greenchromis = 15,
 		/obj/item/fish/lanternfish = 5,
-		/obj/item/fish/dwarf_moonfish = 15,
+		/obj/item/fish/moonfish/dwarf = 15,
 		/obj/item/fish/gunner_jellyfish = 15,
 		/obj/item/fish/needlefish = 10,
 		/obj/item/fish/armorfish = 10,

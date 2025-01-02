@@ -281,3 +281,15 @@
 /obj/item/clothing/suit/jacket/doppler/red_trench/Initialize(mapload)
 	. = ..()
 	create_storage(storage_type = /datum/storage/pockets/jacket/jumbo)
+
+/obj/item/clothing/suit/warm_coat
+	name = "warm coat"
+	desc = "A long insulated coat with fur, it looks quite comfortable."
+	icon_state = "warm_coat"
+	greyscale_config = /datum/greyscale_config/warm_coat
+	greyscale_config_worn = /datum/greyscale_config/warm_coat/worn
+	greyscale_colors = "#7a5f4f#d9cec7"
+	flags_1 = IS_PLAYER_COLORABLE_1
+	cold_protection = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT

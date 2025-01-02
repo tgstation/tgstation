@@ -85,7 +85,7 @@
 	for(var/i in 1 to prizes)
 		user.add_mood_event("arcade", /datum/mood_event/arcade)
 		if(prob(0.0001)) //1 in a million
-			new /obj/item/gun/energy/pulse/prize(src)
+			new /obj/item/gun/energy/pulse/prize(get_turf(src))
 			visible_message(span_notice("[src] dispenses.. woah, a gun! Way past cool."), span_notice("You hear a chime and a shot."))
 			user.client.give_award(/datum/award/achievement/misc/pulse, user)
 			continue

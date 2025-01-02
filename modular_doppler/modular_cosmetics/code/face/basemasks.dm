@@ -6,3 +6,7 @@
 /obj/item/clothing/mask/bandana
 	supported_bodyshapes = null
 	bodyshape_icon_files = null
+
+/obj/item/clothing/mask/kitsune
+	supported_bodyshapes = null
+	bodyshape_icon_files = null

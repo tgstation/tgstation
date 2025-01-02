@@ -1,0 +1,10 @@
+{
+	"respirator": [
+		{
+			"type": "icon_state",
+			"icon_state": "respirator",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

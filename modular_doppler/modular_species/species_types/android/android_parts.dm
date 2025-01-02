@@ -40,6 +40,10 @@
 	// var for monitor heads and their emissive states
 	var/monitor_state
 
+/obj/item/bodypart/head/robot/android/Initialize(mapload)
+	. = ..()
+	name = "[GLOB.frame_type_names[limb_id]] [parse_zone(body_zone)]"
+
 /obj/item/bodypart/head/robot/android/get_limb_icon(dropped)
 	. = ..()
 	// emissive handling
@@ -65,6 +69,10 @@
 /obj/item/bodypart/chest/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
 
+/obj/item/bodypart/chest/robot/android/Initialize(mapload)
+	. = ..()
+	name = "[GLOB.frame_type_names[limb_id]] [parse_zone(body_zone)]"
+
 /obj/item/bodypart/chest/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	return change_type(user, tool)
@@ -80,6 +88,10 @@
 /obj/item/bodypart/arm/right/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
 
+/obj/item/bodypart/arm/right/robot/android/Initialize(mapload)
+	. = ..()
+	name = "[GLOB.frame_type_names[limb_id]] [parse_zone(body_zone)]"
+
 /obj/item/bodypart/arm/right/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	return change_type(user, tool)
@@ -91,6 +103,10 @@
 // left arm
 /obj/item/bodypart/arm/left/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
+
+/obj/item/bodypart/arm/left/robot/android/Initialize(mapload)
+	. = ..()
+	name = "[GLOB.frame_type_names[limb_id]] [parse_zone(body_zone)]"
 
 /obj/item/bodypart/arm/left/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -104,6 +120,10 @@
 /obj/item/bodypart/leg/right/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
 
+/obj/item/bodypart/leg/right/robot/android/Initialize(mapload)
+	. = ..()
+	name = "[GLOB.frame_type_names[limb_id]] [parse_zone(body_zone)]"
+
 /obj/item/bodypart/leg/right/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	return change_type(user, tool)
@@ -115,6 +135,10 @@
 // left leg
 /obj/item/bodypart/leg/left/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
+
+/obj/item/bodypart/leg/left/robot/android/Initialize(mapload)
+	. = ..()
+	name = "[GLOB.frame_type_names[limb_id]] [parse_zone(body_zone)]"
 
 /obj/item/bodypart/leg/left/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -836,6 +860,122 @@
 	icon_greyscale = ANDROID_BODYPARTS_DMI
 	icon_state = "synth_lizard_r_leg"
 	limb_id = "synth_lizard"
+
+///
+// Human-Like
+///
+/obj/item/bodypart/head/robot/android/human_like
+	is_dimorphic = TRUE
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "human_like_head_f"
+	limb_id = "human_like"
+
+/obj/item/bodypart/chest/robot/android/human_like
+	is_dimorphic = TRUE
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "human_like_chest_f"
+	limb_id = "human_like"
+
+/obj/item/bodypart/arm/right/robot/android/human_like
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "human_like_r_arm"
+	limb_id = "human_like"
+
+/obj/item/bodypart/arm/left/robot/android/human_like
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "human_like_l_arm"
+	limb_id = "human_like"
+
+/obj/item/bodypart/leg/right/robot/android/human_like
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "human_like_r_leg"
+	limb_id = "human_like"
+
+/obj/item/bodypart/leg/left/robot/android/human_like
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "human_like_r_leg"
+	limb_id = "human_like"
+
+///
+// zhenkov-light
+///
+/obj/item/bodypart/leg/right/robot/android/zhenkov
+	should_draw_greyscale = FALSE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "zhenkov_r_leg"
+	limb_id = "zhenkov"
+
+/obj/item/bodypart/leg/left/robot/android/zhenkov
+	should_draw_greyscale = FALSE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "zhenkov_r_leg"
+	limb_id = "zhenkov"
+
+///
+// zhenkov-dark
+///
+/obj/item/bodypart/leg/right/robot/android/zhenkovdark
+	should_draw_greyscale = FALSE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "zhenkovdark_r_leg"
+	limb_id = "zhenkovdark"
+
+/obj/item/bodypart/leg/left/robot/android/zhenkovdark
+	should_draw_greyscale = FALSE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "zhenkovdark_r_leg"
+	limb_id = "zhenkovdark"
+
+///
+// shard alpha raptor legs
+///
+/obj/item/bodypart/leg/right/robot/android/shard_alpha
+	should_draw_greyscale = FALSE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "shard_alpha_r_leg"
+	limb_id = "shard_alpha"
+	footstep_type = FOOTSTEP_MOB_CLAW
+	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
+	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
+
+/obj/item/bodypart/leg/left/robot/android/shard_alpha
+	should_draw_greyscale = FALSE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "shard_alpha_r_leg"
+	limb_id = "shard_alpha"
+	footstep_type = FOOTSTEP_MOB_CLAW
+	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
+	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
 
 #undef HEAD_MONITOR_FACE
 #undef ANDROID_BODYPARTS_DMI

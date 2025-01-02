@@ -153,6 +153,7 @@ export type PreferencesMenuData = {
     doppler_lore: Record<string, unknown> /* DOPPLER EDIT ADDITION */;
     secondary_features: Record<string, unknown>;
     supplemental_features: Record<string, unknown>;
+    markings: Record<string, unknown> /* DOPPLER EDIT ADDITION */;
     manually_rendered_features: Record<string, string>;
 
     names: Record<string, string>;

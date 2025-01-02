@@ -21,42 +21,6 @@
 	name = "Black Fannypack"
 	item_path = /obj/item/storage/belt/fannypack/black
 
-/datum/loadout_item/belts/fanny_pack_blue
-	name = "Blue Fannypack"
-	item_path = /obj/item/storage/belt/fannypack/blue
-
-/datum/loadout_item/belts/fanny_pack_brown
-	name = "Brown Fannypack"
-	item_path = /obj/item/storage/belt/fannypack
-
-/datum/loadout_item/belts/fanny_pack_cyan
-	name = "Cyan Fannypack"
-	item_path = /obj/item/storage/belt/fannypack/cyan
-
-/datum/loadout_item/belts/fanny_pack_green
-	name = "Green Fannypack"
-	item_path = /obj/item/storage/belt/fannypack/green
-
-/datum/loadout_item/belts/fanny_pack_orange
-	name = "Orange Fannypack"
-	item_path = /obj/item/storage/belt/fannypack/orange
-
-/datum/loadout_item/belts/fanny_pack_pink
-	name = "Pink Fannypack"
-	item_path = /obj/item/storage/belt/fannypack/pink
-
-/datum/loadout_item/belts/fanny_pack_purple
-	name = "Purple Fannypack"
-	item_path = /obj/item/storage/belt/fannypack/purple
-
-/datum/loadout_item/belts/fanny_pack_red
-	name = "Red Fannypack"
-	item_path = /obj/item/storage/belt/fannypack/red
-
-/datum/loadout_item/belts/fanny_pack_yellow
-	name = "Yellow Fannypack"
-	item_path = /obj/item/storage/belt/fannypack/yellow
-
 /datum/loadout_item/belts/fanny_pack_white
 	name = "White Fannypack"
 	item_path = /obj/item/storage/belt/fannypack/white
@@ -68,10 +32,6 @@
 /datum/loadout_item/belts/lantern
 	name = "Lantern"
 	item_path = /obj/item/flashlight/lantern
-
-/datum/loadout_item/belts/candle_box
-	name = "Candle Box"
-	item_path = /obj/item/storage/fancy/candle_box
 
 /datum/loadout_item/belts/champion
 	name = "Champion's Belt"
@@ -105,13 +65,13 @@
 	name = "Compact Utility Belt"
 	item_path = /obj/item/storage/belt/utility/invisible
 
-/datum/loadout_item/belts/utility/chief
-	name = "Chief Engineer's Utility Belt"
-	item_path = /obj/item/storage/belt/utility/chief
-
 /datum/loadout_item/belts/mining
 	name = "Explorer's Webbing"
 	item_path = /obj/item/storage/belt/mining
+
+/datum/loadout_item/belts/mining_alt
+	name = "Explorer's Webbing (Alt)"
+	item_path = /obj/item/storage/belt/mining/alt
 
 /datum/loadout_item/belts/boarding_rig
 	name = "Chest Rig"
@@ -129,10 +89,10 @@
 	name = "Frontier Med-kit"
 	item_path = /obj/item/storage/medkit/frontier/stocked
 
-/datum/loadout_item/belts/deforest_paramed
-	name = "Satchel Tech-kit"
-	item_path = /obj/item/storage/backpack/duffelbag/deforest_paramedic
-
 /datum/loadout_item/belts/deforest_surgical
-	name = "Firest Responder Med-kit"
+	name = "First Responder Med-kit"
 	item_path = /obj/item/storage/backpack/duffelbag/deforest_surgical
+
+/datum/loadout_item/belts/crusader_belt
+	name = "Sword Belt & Sheath"
+	item_path = /obj/item/storage/belt/crusader

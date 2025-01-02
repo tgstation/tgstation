@@ -3,9 +3,6 @@ a contributor who no longer wishes to be named
 specifically for free open source use from the novasector codebase, so don't worry about it.
 
 modular_doppler/colony_fabricator/sound/arc_furnace/arc_furnace_mid_(1 - 4).wav
-modular_doppler/colony_fabricator/sound/fabricator/fabricator_mid_(1 - 4).wav
-modular_doppler/colony_fabricator/sound/fabricator/fabricator_end.wav
-modular_doppler/colony_fabricator/sound/fabricator/fabricator_start.wav
 
 The following sounds are from https://pixabay.com/sound-effects/wall-air-conditioner-43901/
 

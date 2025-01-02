@@ -94,9 +94,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	var/valid_wearer = ismob(loc)
 	var/mob/wearer = loc
 	if(istype(tool, /obj/item/cigarette))
-		if(flags_cover & MASKCOVERSMOUTH)
-			balloon_alert(user, "mask's mouth is covered!")
-			return ..()
 
 		if(max_filters <= 0 || cig)
 			balloon_alert(user, "can't hold that!")
@@ -240,7 +237,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 50, TRUE)
+		playsound(src, up ? SFX_VISOR_UP : SFX_VISOR_DOWN, 50, TRUE)
 	if(!fishing_modifier)
 		return
 	if(up)

@@ -1,4 +1,0 @@
-author: "unit0016"
-delete-after: True
-changes:
-  - code_imp: "Mappers can now opt out of automatically linking their up/down station traits."

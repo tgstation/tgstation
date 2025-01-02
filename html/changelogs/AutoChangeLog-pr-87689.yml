@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "status & newscaster frame won't drop extra glass sheets upon deconstruction"

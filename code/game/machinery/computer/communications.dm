@@ -142,7 +142,7 @@
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 	return TRUE
 
-/obj/machinery/computer/communications/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/computer/communications/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/ui_state)
 	var/static/list/approved_states = list(STATE_BUYING_SHUTTLE, STATE_CHANGING_STATUS, STATE_MAIN, STATE_MESSAGES)
 
 	. = ..()
@@ -408,7 +408,7 @@
 
 			state = STATE_MAIN
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, FALSE)
-			imprint_gps(gps_tag = "Encrypted Communications Channel")
+			imprint_gps("Encrypted Communications Channel")
 
 		if ("toggleEmergencyAccess")
 			if(emergency_access_cooldown(user)) //if were in cooldown, dont allow the following code

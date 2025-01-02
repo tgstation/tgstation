@@ -8,8 +8,10 @@
 	icon_state = "jumpsuit"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
-	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi',
-		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi')
+	bodyshape_icon_files = list(
+		BODYSHAPE_HUMANOID_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi',
+		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi',
+	)
 	worn_icon_state = "jumpsuit"
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
@@ -32,7 +34,7 @@
 		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi')
 	worn_icon_state = "boots"
 	armor_type = /datum/armor/colonist_clothing
-	resistance_flags = NONE
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/shoes/jackboots/frontier_colonist/Initialize(mapload)
 	. = ..()
@@ -176,7 +178,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	resistance_flags = NONE
+	resistance_flags = FIRE_PROOF
 	clothing_traits = list(TRAIT_QUICK_CARRY)
 
 /obj/item/clothing/gloves/frontier_colonist/Initialize(mapload)
@@ -193,6 +195,7 @@
 	icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi'
 	icon_state = "mask"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_SNOUTED)
 	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi',
 		BODYSHAPE_SNOUTED_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi')

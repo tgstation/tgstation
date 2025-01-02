@@ -1,0 +1,978 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aQ" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"aZ" = (
+/obj/structure/fluff/fake_scrubber,
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"bA" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"bM" = (
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/deathmatch)
+"cB" = (
+/obj/structure/fluff/fake_vent,
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"cG" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line,
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"ds" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"dQ" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/shrink_cw{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"eP" = (
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"fS" = (
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 4
+	},
+/turf/closed/wall/r_wall/syndicate,
+/area/deathmatch)
+"gQ" = (
+/obj/structure/fluff/fake_camera{
+	dir = 4
+	},
+/obj/item/storage/medkit/civil_defense/stocked{
+	pixel_y = 3
+	},
+/obj/structure/rack,
+/turf/open/floor/engine,
+/area/deathmatch)
+"hm" = (
+/obj/machinery/light/floor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"hY" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/plating,
+/area/deathmatch)
+"hZ" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/shrink_cw{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"iL" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/engine,
+/area/deathmatch)
+"iO" = (
+/obj/effect/turf_decal/siding/dark/corner,
+/turf/closed/wall/r_wall/syndicate,
+/area/deathmatch)
+"jp" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/deathmatch)
+"jH" = (
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/turf/open/floor/mineral/plastitanium/red,
+/area/deathmatch)
+"kB" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"kY" = (
+/obj/item/forging/reagent_weapon/axe{
+	pixel_y = -3
+	},
+/obj/item/forging/reagent_weapon/axe{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/structure/table/reinforced/ctf,
+/turf/open/floor/engine,
+/area/deathmatch)
+"lg" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/shrink_cw,
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"mq" = (
+/obj/structure/emergency_shield/timer,
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"mv" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/left,
+/turf/open/floor/mineral/plastitanium/red,
+/area/deathmatch)
+"mH" = (
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 8
+	},
+/turf/closed/wall/r_wall/syndicate,
+/area/deathmatch)
+"ne" = (
+/obj/structure/emergency_shield/timer,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"nf" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/deathmatch)
+"nr" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/siding/dark{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"od" = (
+/obj/item/forging/reagent_weapon/spear{
+	pixel_x = 3
+	},
+/obj/item/forging/reagent_weapon/hammer{
+	pixel_x = -3
+	},
+/obj/structure/table/reinforced/ctf,
+/turf/open/floor/engine,
+/area/deathmatch)
+"of" = (
+/obj/structure/emergency_shield/timer,
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"ot" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/warning,
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"pi" = (
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"pp" = (
+/obj/item/forging/reagent_weapon/dagger{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/forging/reagent_weapon/dagger{
+	pixel_y = -3
+	},
+/obj/structure/table/reinforced/ctf,
+/turf/open/floor/engine,
+/area/deathmatch)
+"pM" = (
+/obj/structure/emergency_shield/timer,
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark,
+/turf/open/floor/plating,
+/area/deathmatch)
+"qz" = (
+/obj/structure/lattice,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
+/area/deathmatch)
+"qE" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"qM" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/shrink_cw{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"sn" = (
+/obj/item/forging/reagent_weapon/katana{
+	pixel_x = -6
+	},
+/obj/item/forging/reagent_weapon/sword{
+	pixel_x = 6
+	},
+/obj/structure/table/reinforced/ctf,
+/turf/open/floor/engine,
+/area/deathmatch)
+"sN" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/shrink_ccw{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"te" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/shrink_ccw,
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"tf" = (
+/obj/structure/fluff/fake_camera{
+	dir = 9
+	},
+/obj/item/storage/medkit/civil_defense/stocked{
+	pixel_y = 3
+	},
+/obj/structure/rack,
+/turf/open/floor/engine,
+/area/deathmatch)
+"zA" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"zZ" = (
+/obj/structure/emergency_shield/timer,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark,
+/turf/open/floor/plating,
+/area/deathmatch)
+"AS" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/siding/dark{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"Bc" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"Bg" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/turf/open/floor/mineral/plastitanium/red,
+/area/deathmatch)
+"BI" = (
+/obj/machinery/light/floor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"Cz" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"CG" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/engine,
+/area/deathmatch)
+"CW" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/shrink_ccw{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"Ec" = (
+/obj/structure/emergency_shield/timer,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"Fe" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"Fw" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"Gy" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/floor/engine,
+/area/deathmatch)
+"HH" = (
+/turf/open/floor/engine,
+/area/deathmatch)
+"IG" = (
+/obj/effect/turf_decal/syndicateemblem/top/middle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/deathmatch)
+"IL" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/middle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/deathmatch)
+"Ji" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/turf/open/floor/mineral/plastitanium/red,
+/area/deathmatch)
+"Jy" = (
+/obj/machinery/light/floor,
+/obj/effect/turf_decal/siding/dark,
+/turf/open/floor/plating,
+/area/deathmatch)
+"Ke" = (
+/turf/open/ai_visible,
+/area/deathmatch)
+"KB" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"KD" = (
+/obj/structure/fluff/fake_camera{
+	dir = 10
+	},
+/obj/item/storage/medkit/civil_defense/stocked{
+	pixel_y = 3
+	},
+/obj/structure/rack,
+/turf/open/floor/engine,
+/area/deathmatch)
+"Mj" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/shrink_ccw{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"NM" = (
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"NN" = (
+/obj/effect/turf_decal/stripes/red/corner,
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"NR" = (
+/turf/closed/wall/r_wall/syndicate,
+/area/deathmatch)
+"Pu" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"PI" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/engine,
+/area/deathmatch)
+"PK" = (
+/turf/template_noop,
+/area/deathmatch)
+"Re" = (
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"Ro" = (
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"Rx" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"Tw" = (
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/turf/open/floor/mineral/plastitanium/red,
+/area/deathmatch)
+"Un" = (
+/obj/effect/turf_decal/syndicateemblem/top/right,
+/turf/open/floor/mineral/plastitanium/red,
+/area/deathmatch)
+"Vi" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/engine,
+/area/deathmatch)
+"WB" = (
+/obj/structure/fluff/fake_camera,
+/obj/item/storage/medkit/civil_defense/stocked{
+	pixel_y = 3
+	},
+/obj/structure/rack,
+/turf/open/floor/engine,
+/area/deathmatch)
+"Xt" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+"Yl" = (
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 1
+	},
+/turf/closed/wall/r_wall/syndicate,
+/area/deathmatch)
+"YG" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/siding/dark,
+/turf/open/floor/plating,
+/area/deathmatch)
+"YZ" = (
+/obj/machinery/light/floor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"Zf" = (
+/turf/closed/indestructible/syndicate,
+/area/deathmatch)
+"Zs" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/deathmatch)
+
+(1,1,1) = {"
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+"}
+(2,1,1) = {"
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+NR
+NR
+NR
+NR
+NR
+NR
+NR
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+"}
+(3,1,1) = {"
+Ke
+Ke
+qz
+nf
+nf
+nf
+nf
+NR
+pp
+kY
+KD
+od
+sn
+Zf
+nf
+nf
+nf
+nf
+qz
+Ke
+Ke
+"}
+(4,1,1) = {"
+Ke
+Ke
+nf
+PK
+PK
+PK
+nf
+NR
+PI
+HH
+Gy
+HH
+CG
+Zf
+nf
+PK
+PK
+PK
+nf
+Ke
+Ke
+"}
+(5,1,1) = {"
+Ke
+Ke
+nf
+PK
+jp
+jp
+jp
+iO
+ne
+ne
+mq
+ne
+ne
+fS
+jp
+jp
+jp
+PK
+nf
+Ke
+Ke
+"}
+(6,1,1) = {"
+Ke
+Ke
+nf
+PK
+jp
+hY
+hY
+Jy
+qM
+ds
+Zs
+ds
+sN
+YZ
+hY
+hY
+jp
+PK
+nf
+Ke
+Ke
+"}
+(7,1,1) = {"
+Ke
+Ke
+nf
+nf
+jp
+hY
+hY
+YG
+Ro
+aZ
+Ro
+cB
+Ro
+Rx
+hY
+hY
+jp
+nf
+nf
+Ke
+Ke
+"}
+(8,1,1) = {"
+Ke
+NR
+NR
+NR
+iO
+hm
+aQ
+Cz
+Ro
+Ro
+KB
+Ro
+Ro
+AS
+aQ
+hm
+fS
+Zf
+Zf
+NR
+Ke
+"}
+(9,1,1) = {"
+Ke
+NR
+sn
+Vi
+zZ
+Mj
+Ro
+Ro
+NN
+qE
+qE
+qE
+NM
+Ro
+Ro
+lg
+zZ
+Vi
+pp
+NR
+Ke
+"}
+(10,1,1) = {"
+Ke
+NR
+od
+HH
+zZ
+Fw
+cB
+Ro
+Re
+Ji
+Tw
+mv
+Fe
+Ro
+aZ
+ot
+zZ
+HH
+kY
+NR
+Ke
+"}
+(11,1,1) = {"
+Ke
+NR
+tf
+Gy
+pM
+Pu
+Ro
+KB
+Re
+IG
+bM
+IL
+Fe
+KB
+Ro
+cG
+pM
+Gy
+WB
+NR
+Ke
+"}
+(12,1,1) = {"
+Ke
+NR
+kY
+HH
+zZ
+Fw
+aZ
+Ro
+Re
+Un
+jH
+Bg
+Fe
+Ro
+cB
+ot
+zZ
+HH
+od
+NR
+Ke
+"}
+(13,1,1) = {"
+Ke
+NR
+pp
+iL
+zZ
+hZ
+Ro
+Ro
+pi
+zA
+zA
+zA
+eP
+Ro
+Ro
+te
+zZ
+iL
+sn
+NR
+Ke
+"}
+(14,1,1) = {"
+Ke
+NR
+NR
+NR
+mH
+BI
+kB
+Bc
+Ro
+Ro
+KB
+Ro
+Ro
+nr
+kB
+BI
+Yl
+NR
+NR
+NR
+Ke
+"}
+(15,1,1) = {"
+Ke
+Ke
+nf
+nf
+jp
+hY
+hY
+YG
+Ro
+cB
+Ro
+aZ
+Ro
+Rx
+hY
+hY
+jp
+nf
+nf
+Ke
+Ke
+"}
+(16,1,1) = {"
+Ke
+Ke
+nf
+PK
+jp
+hY
+hY
+Jy
+CW
+Xt
+bA
+Xt
+dQ
+YZ
+hY
+hY
+jp
+PK
+nf
+Ke
+Ke
+"}
+(17,1,1) = {"
+Ke
+Ke
+nf
+PK
+jp
+jp
+jp
+mH
+Ec
+Ec
+of
+Ec
+Ec
+Yl
+jp
+jp
+jp
+PK
+nf
+Ke
+Ke
+"}
+(18,1,1) = {"
+Ke
+Ke
+nf
+PK
+PK
+PK
+nf
+NR
+PI
+HH
+Gy
+HH
+CG
+NR
+nf
+PK
+PK
+PK
+nf
+Ke
+Ke
+"}
+(19,1,1) = {"
+Ke
+Ke
+qz
+nf
+nf
+nf
+nf
+NR
+od
+sn
+gQ
+kY
+pp
+NR
+nf
+nf
+nf
+nf
+qz
+Ke
+Ke
+"}
+(20,1,1) = {"
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+NR
+NR
+NR
+NR
+NR
+NR
+NR
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+"}
+(21,1,1) = {"
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+Ke
+"}

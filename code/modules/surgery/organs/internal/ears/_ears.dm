@@ -52,7 +52,7 @@
 	. = ..()
 	update_temp_deafness()
 
-/obj/item/organ/ears/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/ears/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_MOB_SAY)
 	REMOVE_TRAIT(organ_owner, TRAIT_DEAF, EAR_DAMAGE)
@@ -242,7 +242,7 @@
 /obj/item/organ/ears/cybernetic/xray
 	name = "wall-penetrating cybernetic ears"
 	icon_state = "ears-c-u"
-	desc = "Throguh the power of modern engineering, allows the user to hear speech through walls. The user becomes extra vulnerable to loud noises, however"
+	desc = "Through the power of modern engineering, allows the user to hear speech through walls. The user becomes extra vulnerable to loud noises, however"
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
 

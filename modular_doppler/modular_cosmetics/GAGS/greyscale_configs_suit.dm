@@ -63,6 +63,15 @@
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/shirt.dmi'
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/suit/dagger_mantle_worn.json'
 
+/datum/greyscale_config/warm_coat
+	name = "Warm Coat"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/suit.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/suit/warm_coat.json'
+
+/datum/greyscale_config/warm_coat/worn
+	name = "Warm Coat (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/suit.dmi'
+
 // Apron
 
 /datum/greyscale_config/apron

@@ -1,6 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "NTNRC no longer endlessly duplicates messages with duplicate contents upon switching channels."
-  - bugfix: "The new message header you get when NTNRC runs in the background actually works."
-  - bugfix: "NtOS header actually updates if there are no program headers."

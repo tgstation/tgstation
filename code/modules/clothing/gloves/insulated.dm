@@ -13,6 +13,7 @@
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	cut_type = /obj/item/clothing/gloves/cut
+	equip_sound = 'sound/items/equip/glove_equip.ogg'
 
 /obj/item/clothing/gloves/color/yellow/Initialize(mapload)
 	. = ..()

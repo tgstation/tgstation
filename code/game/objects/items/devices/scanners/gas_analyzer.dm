@@ -136,13 +136,13 @@
 	return list("gasmixes" = last_gasmix_data)
 
 /obj/item/analyzer/attack_self(mob/user, modifiers)
-	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
+	if(user.stat != CONSCIOUS || !user.can_read(src)) //DOPPLER EDIT: Blind People Can Analyze Again
 		return
 	atmos_scan(user=user, target=get_turf(src), silent=FALSE)
 	on_analyze(source=src, target=get_turf(src))
 
 /obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
-	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
+	if(user.stat != CONSCIOUS || !user.can_read(src)) //DOPPLER EDIT: Blind People Can Analyze Again
 		return
 
 	ui_interact(user)
@@ -183,8 +183,8 @@
 
 	var/icon = target
 	var/message = list()
-	playsound(user, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	if(!silent && isliving(user))
+		playsound(user, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		user.visible_message(span_notice("[user] uses the analyzer on [icon2html(icon, viewers(user))] [target]."), span_notice("You use the analyzer on [icon2html(icon, user)] [target]."))
 	message += span_boldnotice("Results of analysis of [icon2html(icon, user)] [target].")
 

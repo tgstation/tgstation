@@ -3,6 +3,7 @@ GLOBAL_LIST_INIT(frame_types, list(
 	"none",
 	"bare",
 	"synth_lizard",
+	"human_like",
 	"bs_one",
 	"bs_two",
 	"classic",
@@ -16,6 +17,9 @@ GLOBAL_LIST_INIT(frame_types, list(
 	"xmg_one",
 	"xmg_two",
 	"zhp",
+	"zhenkov",
+	"zhenkovdark",
+	"shard_alpha",
 	))
 
 // What will be showed in the drop-down
@@ -23,6 +27,7 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 	"none" = "Species Default",
 	"bare" = "Bare",
 	"synth_lizard" = "Synthetic Lizard",
+	"human_like" = "Human-Like",
 	"bs_one" = "Bishop Cyberkinetics",
 	"bs_two" = "Bishop Cyberkinetics 2.0",
 	"classic" = "Android",
@@ -36,6 +41,9 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 	"xmg_one" = "Xion Manufacturing Group",
 	"xmg_two" = "Xion Manufacturing Group 2.0",
 	"zhp" = "Zeng-Hu Pharmaceuticals",
+	"zhenkov" = "Zhenkov & Co. Foundries",
+	"zhenkovdark" = "Zhenkov & Co. Foundries - At Night",
+	"shard_alpha" = "Shard Alpha Raptoral",
 	))
 
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
@@ -252,6 +260,9 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 
 /datum/preference/choiced/leg_l_type/apply_to_human(mob/living/carbon/human/target, value)
 	if(value == "none")
+		for(var/obj/item/bodypart/whatever as anything in target.bodyparts)
+			whatever.change_exempt_flags &= ~BP_BLOCK_CHANGE_SPECIES
+		target.dna?.species?.replace_body(target)
 		return
 	LAZYADDASSOC(target.dna.features["frame_list"], BODY_ZONE_L_LEG, text2path("/obj/item/bodypart/leg/left/robot/android/[value]"))
 

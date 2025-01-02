@@ -6,3 +6,4 @@
 #define TECHWEB_NODE_COLONY_FLATPACKS "colony_fabricator_flatpacks"
 #define TECHWEB_NODE_COLONY_STRUCTURES "colony_fabricator_structures"
 #define TECHWEB_NODE_COLONY_TOOLS "colony_fabricator_tools"
+#define TECHWEB_NODE_EMERGENCY_FAB "emergency_fab_designs"

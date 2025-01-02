@@ -7,7 +7,7 @@
 		<b>not much quicker than unpowered tools</b>."
 	icon = 'modular_doppler/colony_fabricator/icons/tools.dmi'
 	icon_state = "drill"
-	belt_icon_state = null
+	inside_belt_icon_state = null
 	inhand_icon_state = "drill"
 	worn_icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'

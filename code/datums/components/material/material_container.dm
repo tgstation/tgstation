@@ -274,7 +274,7 @@
  * * user - the mob inserting this item
  * * context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED and is used mostly for silo logging
  */
-/datum/component/material_container/proc/user_insert(obj/item/held_item, mob/living/user, atom/context = parent, forced_type = FALSE)
+/datum/component/material_container/proc/user_insert(obj/item/held_item, mob/living/user, atom/context = parent)
 	set waitfor = FALSE
 	. = 0
 
@@ -312,7 +312,7 @@
 		if(SEND_SIGNAL(src, COMSIG_MATCONTAINER_PRE_USER_INSERT, target_item, user) & MATCONTAINER_BLOCK_INSERT)
 			continue
 		//item is either indestructible, not allowed for redemption or not in the allowed types
-		if((target_item.resistance_flags & INDESTRUCTIBLE) || (target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache) && !forced_type))
+		if((target_item.resistance_flags & INDESTRUCTIBLE) || (target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
 			if(!(mat_container_flags & MATCONTAINER_SILENT))
 				var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] || list()
 				var/list/item_data = status_data[target_item.name] || list()

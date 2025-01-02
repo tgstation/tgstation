@@ -8,27 +8,28 @@
 @use 'sass:meta';
 
 // Base colors
-$black: #000000 !default;
-$white: #ffffff !default;
-$red: #db2828 !default;
-$orange: #f2711c !default;
-$yellow: #fbd608 !default;
-$olive: #b5cc18 !default;
-$green: #20b142 !default;
-$teal: #00b5ad !default;
-$blue: #2185d0 !default;
-$violet: #6435c9 !default;
-$purple: #a333c8 !default;
-$pink: #e03997 !default;
-$brown: #a5673f !default;
-$grey: #767676 !default;
-$light-grey: #aaa !default;
 
-$primary: #4972a1 !default;
-$good: #5baa27 !default;
-$average: #f08f11 !default;
-$bad: #db2828 !default;
-$label: #7e90a7 !default;
+$black: hsl(0, 0%, 0%) !default;
+$white: hsl(0, 0%, 100%) !default;
+$red: hsl(3, 100%, 51%) !default;
+$orange: hsl(26, 81%, 62%) !default;
+$yellow: hsl(65, 86%, 77%) !default;
+$olive: hsl(75, 16%, 52%) !default;
+$green: hsl(110, 34%, 60%) !default;
+$teal: hsl(170, 58%, 88%) !default;
+$blue: hsl(230, 81%, 81%) !default;
+$violet: hsl(272, 13%, 57%) !default;
+$purple: hsl(267, 40%, 76%) !default;
+$pink: hsl(333, 55%, 84%) !default;
+$brown: hsl(34, 27%, 60%) !default;
+$grey: hsl(0, 0%, 55%) !default;
+$light-grey: hsl(0, 0%, 77%) !default;
+
+$primary: hsl(202, 51%, 38%) !default;
+$good: hsl(117, 64%, 67%) !default;
+$average: hsl(39, 80%, 67%) !default;
+$bad: hsl(2, 79%, 66%) !default;
+$label: hsl(195, 100%, 79%) !default;
 
 // Background and foreground color lightness ratios
 $bg-lightness: -15% !default;
@@ -74,7 +75,7 @@ $bg-map-keys: map.keys($_gen_map) !default;
 $fg-map: ();
 @each $color-name in $fg-map-keys {
   // prettier-ignore
-  $fg-map: map-merge($fg-map, (
+  $fg-map: map.merge($fg-map, (
     $color-name: fg(map.get($_gen_map, $color-name)),
   ));
 }
@@ -82,7 +83,7 @@ $fg-map: ();
 $bg-map: ();
 @each $color-name in $bg-map-keys {
   // prettier-ignore
-  $bg-map: map-merge($bg-map, (
+  $bg-map: map.merge($bg-map, (
     $color-name: bg(map.get($_gen_map, $color-name)),
   ));
 }

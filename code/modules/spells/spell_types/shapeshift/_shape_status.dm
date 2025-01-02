@@ -194,7 +194,7 @@
 	if(owner?.contents)
 		// Prevent round removal and consuming stuff when losing shapeshift
 		for(var/atom/movable/thing as anything in owner.contents)
-			if(thing == caster_mob)
+			if(thing == caster_mob || HAS_TRAIT(thing, TRAIT_NOT_BARFABLE))
 				continue
 			thing.forceMove(get_turf(owner))
 
@@ -243,6 +243,7 @@
 	desc = "Your form is not your own... you're shapeshifted into another creature! \
 		A wizard could turn you back - or maybe you're stuck like this for good?"
 	icon_state = "shapeshifted"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/shapeshifted/Click(location, control, params)
 	. = ..()

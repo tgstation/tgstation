@@ -1,0 +1,15 @@
+{
+	"pencilskirt": [
+		{
+			"type": "icon_state",
+			"icon_state": "pencilskirt_belt",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pencilskirt_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

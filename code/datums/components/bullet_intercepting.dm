@@ -56,7 +56,7 @@
 	wearer = null
 
 /// Called when wearer is shot, check if we're going to block the hit
-/datum/component/bullet_intercepting/proc/on_wearer_shot(mob/living/victim, list/signal_args, obj/projectile/bullet)
+/datum/component/bullet_intercepting/proc/on_wearer_shot(mob/living/victim, obj/projectile/bullet)
 	SIGNAL_HANDLER
 	if (victim != wearer || victim.stat == DEAD || bullet.armor_flag != block_type)
 		return NONE
