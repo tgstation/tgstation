@@ -8,6 +8,7 @@
 	drop_sound = 'sound/items/handling/disk_drop.ogg'
 	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
 	contents_hidden = TRUE
+	paper_overlay_state = "paperbiscuit_paper"
 	/// Is biscuit cracked open or not?
 	var/cracked = FALSE
 	/// The paper slip inside, if there is one
@@ -41,11 +42,7 @@
 /obj/item/folder/biscuit/get_paper_overlay()
 	if(!cracked)
 		return null
-
-	//Shows overlay only when it has contents and is cracked open
-	var/mutable_appearance/biscuit_overlay = mutable_appearance(icon, "paperbiscuit_paper", offset_spokesman = src, appearance_flags = KEEP_APART)
-	biscuit_overlay = contents[1].color_atom_overlay(biscuit_overlay)
-	return biscuit_overlay
+	return ..()
 
 ///Checks if the biscuit has been already cracked.
 /obj/item/folder/biscuit/proc/crack_check(mob/user)

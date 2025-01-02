@@ -17,6 +17,8 @@
 	))
 	/// Do we hide the contents on examine?
 	var/contents_hidden = FALSE
+	/// icon_state of overlay for papers inside of this folder
+	var/paper_overlay_state = "folder_paper"
 
 /obj/item/folder/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -72,7 +74,7 @@
 			. += to_add
 
 /obj/item/folder/proc/get_paper_overlay()
-	var/mutable_appearance/paper_overlay = mutable_appearance(icon, "folder_paper", offset_spokesman = src, appearance_flags = KEEP_APART)
+	var/mutable_appearance/paper_overlay = mutable_appearance(icon, paper_overlay_state, offset_spokesman = src, appearance_flags = KEEP_APART)
 	paper_overlay = contents[1].color_atom_overlay(paper_overlay)
 	return paper_overlay
 
