@@ -19,8 +19,8 @@
 /obj/item/reagent_containers/cup/organ_jar/examine(mob/user)
 	. = ..()
 	. += span_info("Any organ inside the jar will be preserved if it is filled with formaldehyde.")
-	if(!isnull(held_organ) && held_organ.GetComponent(/datum/component/ghostrole_on_revive))
-		. += span_smallnoticeital("The brain is twitching..") // Guaranteed to be a brain if it has that component
+	if(held_organ && held_organ.GetComponent(/datum/component/ghostrole_on_revive))
+		. += span_smallnoticeital("The brain is twitching...") // Guaranteed to be a brain if it has that component
 
 /obj/item/reagent_containers/cup/organ_jar/Initialize(mapload)
 	. = ..()
@@ -32,13 +32,13 @@
 
 // Alt click lets you take the organ out, if it's present
 /obj/item/reagent_containers/cup/organ_jar/click_alt(mob/user)
-	if(!isnull(held_organ))
+	if(held_organ)
 		balloon_alert(user, "removed [held_organ]")
 		user.put_in_hands(held_organ)
 		held_organ.organ_flags &= ~ORGAN_FROZEN
 		held_organ = null
-		name = "organ jar"
-		desc = "A jar large enough to put an organ inside it."
+		name = initial(name)
+		desc = initial(name)
 		update_appearance()
 		return CLICK_ACTION_SUCCESS
 	return  ..()
@@ -49,7 +49,7 @@
 	. = ..()
 	if(!istype(tool, /obj/item/organ))
 		return
-	if(!isnull(held_organ))
+	if(held_organ)
 		balloon_alert(user, "the jar already contains [held_organ]")
 		return  ITEM_INTERACT_BLOCKING
 
@@ -86,12 +86,13 @@
 
 /obj/item/reagent_containers/cup/organ_jar/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
-	full_of_formaldehyde = !!holder.has_reagent(/datum/reagent/toxin/formaldehyde, amount = holder.maximum_volume)
+	full_of_formaldehyde = holder.has_reagent(/datum/reagent/toxin/formaldehyde, amount = holder.maximum_volume)
 	check_organ_freeze()
 
 // Proc that stops the held organ from rotting if the jar is full of formaldehyde
 /obj/item/reagent_containers/cup/organ_jar/proc/check_organ_freeze()
-	if(isnull(held_organ)) return;
+	if(isnull(held_organ)) 
+		return
 	if(full_of_formaldehyde)
 		held_organ.organ_flags |= ORGAN_FROZEN
 	else
@@ -108,7 +109,7 @@
 
 /obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar
 	name = "brain in a jar"
-	desc = "A brain in a jar. You can see it twitching.."
+	desc = "A brain in a jar. You can see it twitching..."
 	// Which note to show when someone examins more
 	var/note_type = NOTE_STUCK_IN_MAIL
 
@@ -121,14 +122,14 @@
 	// Flavor for why the brain is scarred
 	switch(note_type)
 		if(NOTE_STUCK_IN_MAIL)
-			. += span_notice("According to the note, this jar must've been stuck in the mail for at least 50 years..")
+			. += span_notice("According to the note, this jar must've been stuck in the mail for at least 50 years...")
 		if(NOTE_MORBID_GIFT)
-			. += span_notice("It reads..")
+			. += span_notice("It reads...")
 			. += span_notice("Greetings, XXX. I stumbled upon a hermit in my travels, \
 			whose quirks immediately piqued my interest. I'm sure his brain will be as useful to your research \
 			as it has been to mine. Signed, YYY.")
 		if(NOTE_DISCARDED_LOST_CREW)
-			. += span_notice("It reads..")
+			. += span_notice("It reads...")
 			. += span_notice("Hey, XXX. Management wanted me to discard this poor schmuck's brain, \
 			claiming it's 'too damaged to viably recover', so I figured I might as well throw you a bone. \
 			I know you like these sorts of things. Signed, ZZZ.")
