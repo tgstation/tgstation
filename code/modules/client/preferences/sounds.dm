@@ -164,7 +164,7 @@
 	savefile_key = "sound_ghost_poll_prompt"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/datum/preference/numeric/sound_ghost_poll_prompt/create_default_value()
+/datum/preference/choiced/sound_ghost_poll_prompt/create_default_value()
 	return GHOST_POLL_PROMPT_1
 
 /datum/preference/choiced/sound_ghost_poll_prompt/init_possible_values()
