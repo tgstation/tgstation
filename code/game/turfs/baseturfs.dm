@@ -112,17 +112,16 @@
 /// Replaces all instances of needle_type in baseturfs with replacement_type
 /turf/proc/replace_baseturf(needle_type, replacement_type)
 	if (islist(baseturfs))
-		var/list/new_baseturfs
+		var/list/new_baseturfs = baseturfs.Copy()
 
-		while (TRUE)
-			var/found_index = baseturfs.Find(needle_type)
+		for(var/base_i in 1 to length(new_baseturfs))
+			var/found_index = new_baseturfs.Find(needle_type)
 			if (found_index == 0)
 				break
 
-			new_baseturfs ||= baseturfs.Copy()
 			new_baseturfs[found_index] = replacement_type
 
-		if (!isnull(new_baseturfs))
+		if (length(new_baseturfs))
 			baseturfs = baseturfs_string_list(new_baseturfs, src)
 	else if (baseturfs == needle_type)
 		baseturfs = replacement_type
