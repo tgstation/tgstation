@@ -2431,15 +2431,22 @@
 
 /datum/reagent/magillitis
 	name = "Magillitis"
-	description = "An experimental serum which causes rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
+	description = "An experimental serum which causes rapid muscular growth in Hominidae. Side-effects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	color = "#00f041"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	var/gorilla_type = /mob/living/basic/gorilla
 
 /datum/reagent/magillitis/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if((ishuman(affected_mob)) && current_cycle > 10)
-		var/mob/living/basic/gorilla/new_gorilla = affected_mob.gorillize()
+		var/mob/living/basic/gorilla/new_gorilla = affected_mob.gorillize(gorilla_type)
 		new_gorilla.AddComponent(/datum/component/regenerator, regeneration_delay = 12 SECONDS, brute_per_second = 1.5, outline_colour = COLOR_PALE_GREEN)
+
+/datum/reagent/magillitis/weak
+	name = "Magillitis-"
+	description = "A variant of the experimental serum that turns you into a gorilla. This one unfortunately just barely improves your muscle mass so youre basically just a skinny gorilla."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	gorilla_type = /mob/living/basic/gorilla/genetics/nostunlock
 
 /datum/reagent/growthserum
 	name = "Growth Serum"

@@ -52,6 +52,8 @@
 		/obj/item/food/salad/jungle,
 		/obj/item/food/sundae,
 	)
+	/// does our punch stunlock people via throws
+	var/gentle_throw_punch = FALSE
 
 /mob/living/basic/gorilla/Initialize(mapload)
 	. = ..()
@@ -104,7 +106,7 @@
 		target.Paralyze(2 SECONDS)
 		visible_message(span_danger("[src] knocks [target] down!"))
 	else
-		target.throw_at(get_edge_target_turf(target, dir), range = rand(1, 2), speed = 7, thrower = src)
+		target.throw_at(get_edge_target_turf(target, dir), range = rand(1, 2), speed = 7, thrower = src, gentle = gentle_throw_punch)
 
 /mob/living/basic/gorilla/gib(drop_bitflags = DROP_BRAIN)
 	if(!(drop_bitflags & DROP_BRAIN))
@@ -193,5 +195,10 @@
 /mob/living/basic/gorilla/genetics/Initialize(mapload)
 	. = ..()
 	qdel(GetComponent(/datum/component/amputating_limbs))
+
+/mob/living/basic/gorilla/genetics/nostunlock
+	name = "Gorilla"
+	desc = "You might think this is a normal gorilla, but upon closer inspection theyre rather skinny. Theyre still an actual gorilla though so they might punch your guts out."
+	gentle_throw_punch = TRUE
 
 #undef GORILLA_HANDS_LAYER

@@ -166,10 +166,11 @@
 
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
-	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
+	desc = "A box with an single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas. \
-			Now also contains regenerative chemicals to keep users healthy as they exercise their newfound muscles."
-	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
+			Now also contains regenerative chemicals to keep users healthy as they exercise their newfound muscles. \
+			Also contains a weaker variant of the serum, that does not make gorillas as powerful, but may be synthesized."
+	item = /obj/item/storage/box/syndie_kit/magillitis
 	cost = 15
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 

@@ -448,6 +448,13 @@
 	for(var/i in 1 to 5)
 		new /obj/item/grenade/smokebomb(src)
 
+/obj/item/storage/box/syndie_kit/magillitis
+
+/obj/item/storage/box/syndie_kit/magillitis/PopulateContents()
+	new /obj/item/reagent_containers/hypospray/medipen/magillitis(src)
+	new /obj/item/reagent_containers/cup/bottle/magillitis_weak(src)
+	new /obj/item/reagent_containers/syringe(src)
+
 /obj/item/storage/box/syndie_kit/mail_counterfeit
 	name = "mail counterfeit kit"
 	desc = "A GLA Postal Service branded box. It's emblazoned with the motto: *Nothing stops the mail*."
