@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Added command access requirement to the door between EVA and bridge on Nebula's escape shuttle"
