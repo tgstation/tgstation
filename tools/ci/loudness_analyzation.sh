@@ -60,6 +60,6 @@ fi
 if [ ${#BAD_FILES[@]} -gt 0 ] || [ ${#RETRIEVAL_ERRORS[@]} -gt 0 ]; then
   exit 1
 else
-  echo "All checks passed!"
+  echo "Sound file loudness normalization checks passed!"
   exit 0
 fi
