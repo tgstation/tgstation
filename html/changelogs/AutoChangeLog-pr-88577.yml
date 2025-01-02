@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes Omelettes and Carbonara not making you speak French or Italian, buuut..."
-  - qol: "Omelettes and Carbonara will now only make you speak French or Italian if they were prepared with love (via chef's kiss)"

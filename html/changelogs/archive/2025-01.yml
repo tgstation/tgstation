@@ -29,3 +29,15 @@
   mc-oofert:
   - bugfix: holodeck no longer explodes if the server lags while its loading a new
       sim
+2025-01-02:
+  Ghommie:
+  - bugfix: Examining a trophy fish no longer shows the current day instead of when
+      it was actually caught and put on the mount.
+  Melbert:
+  - bugfix: Fixes Omelettes and Carbonara not making you speak French or Italian,
+      buuut...
+  - qol: Omelettes and Carbonara will now only make you speak French or Italian if
+      they were prepared with love (via chef's kiss)
+  SyncIt21:
+  - bugfix: dropping all the mobs' contents in some special admin cases won't gib
+      the player
