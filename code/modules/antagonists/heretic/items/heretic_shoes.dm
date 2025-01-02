@@ -1,16 +1,34 @@
-/obj/item/clothing/shoes/greaves_of_the_prophet
-	name = "greaves of the prophet"
-	desc = "some nice shoes that negate potential hazards and reduces how long it takes to remove bolas and traps"
+/**
+ * XANTODO ADD LORE WHEN WE MAKE THE KNOWLEDGE FOR THIS:
+ *
+ * "Gristle churns into joint, a pop, and the fool twists a blackened foot from the
+ * jaws of another. At their game for centuries, this mangled tree of limbs twists,
+ * thrashing snares buried into snarling gums, seeking to shred the weight of grafted
+ * neighbors. Weighed down by lacerated feet, this canopy of rancid idiots ever seeks
+ * the undoing of its own bonds. I dread the thought of walking in their wake, but
+ * I must press on all the same. Their rhythms keep the feud fresh with indifference
+ * to barrier or border. Pulling more into their turmoil as they waltz."
+ */
 
-/obj/item/clothing/shoes/greaves_of_the_prophet/Initialize(mapload)
+/obj/item/clothing/shoes/magboots/greaves_of_the_prophet
+	name = "\improper Joint-snap sabatons"
+	desc = "Some nice shoes that allow you to always stay up on your feet."
+	icon_state = "hereticgreaves"
+	resistance_flags = ACID_PROOF | FIRE_PROOF | LAVA_PROOF
+	active_traits = list(TRAIT_NEGATES_GRAVITY)
+	slowdown_active = 0
+	fishing_modifier = 0
+	magpulse_fishing_modifier = 0
+
+/obj/item/clothing/shoes/magboots/greaves_of_the_prophet/Initialize(mapload)
 	. = ..()
-	attach_clothing_traits(list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NO_SLIP_ALL, TRAIT_NEGATES_GRAVITY))
-	// XANTODO Sprite + Figure out bola code
-	// resist_restraints()
-	// breakouttime
-	// Maybe signal?
-	// https://discord.com/channels/326822144233439242/326831214667235328/1323027566222643220
+	attach_clothing_traits(list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NO_SLIP_ALL))
 
+/obj/item/clothing/shoes/magboots/greaves_of_the_prophet/update_icon_state()
+	. = ..()
+	icon_state = initial(icon_state) // Don't give us magboot sprites when we toggle the traction
+
+// XANTODO Move this to its own file (Or find somewhere it belongs)
 /obj/item/ether
 	name = "ether of the newborn"
 	desc = "drink to cleanse your body of all abnormalities. Puts you into an enhanced sleep for a full minute."
