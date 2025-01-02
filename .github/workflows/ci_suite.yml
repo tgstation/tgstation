@@ -111,7 +111,7 @@ jobs:
         run: |
           sudo apt-get install ffmpeg
           pip install ffmpeg-normalize
-          tools/ci/loudness_analyzation.sh
+          ./tools/ci/loudness_analyzation.sh
       - name: Run DreamChecker
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         shell: bash
