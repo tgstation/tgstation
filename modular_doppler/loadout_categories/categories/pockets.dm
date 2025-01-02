@@ -192,6 +192,10 @@
 	name = "Folder"
 	item_path = /obj/item/folder
 
+/datum/loadout_item/pocket_items/gromitmug
+	name = "Gromit mug"
+	item_path = /obj/item/reagent_containers/cup/glass/mug/gromitmug
+
 /*
 *	UTILITY
 */
