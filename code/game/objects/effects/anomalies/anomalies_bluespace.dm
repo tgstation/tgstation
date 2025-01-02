@@ -40,8 +40,7 @@
 			continue
 		if(is_centcom_level(turf.z) || is_away_level(turf.z))
 			continue
-		var/area/area = get_area(turf)
-		if(!area || (area.area_flags & NOTELEPORT))
+		if(!check_teleport_valid(src, turf))
 			continue
 		possible += beacon
 
