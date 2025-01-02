@@ -2443,7 +2443,7 @@
 		new_gorilla.AddComponent(/datum/component/regenerator, regeneration_delay = 12 SECONDS, brute_per_second = 1.5, outline_colour = COLOR_PALE_GREEN)
 
 /datum/reagent/magillitis/weak
-	name = "Magillitis-"
+	name = "Magillitis Minus"
 	description = "A variant of the experimental serum that turns you into a gorilla. This one unfortunately just barely improves your muscle mass so youre basically just a skinny gorilla."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	gorilla_type = /mob/living/basic/gorilla/genetics/magilitisminus
