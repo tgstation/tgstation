@@ -38,7 +38,7 @@
 		held_organ.organ_flags &= ~ORGAN_FROZEN
 		held_organ = null
 		name = initial(name)
-		desc = initial(name)
+		desc = initial(desc)
 		update_appearance()
 		return CLICK_ACTION_SUCCESS
 	return  ..()
@@ -58,7 +58,7 @@
 	balloon_alert(user, "inserted [tool]")
 	held_organ = tool
 	name = "[tool.name] in a jar"
-	desc = "A jar with [tool.name] inside it."
+	desc = "A jar with the [tool.name] inside it."
 	check_organ_freeze()
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -91,7 +91,7 @@
 
 // Proc that stops the held organ from rotting if the jar is full of formaldehyde
 /obj/item/reagent_containers/cup/organ_jar/proc/check_organ_freeze()
-	if(isnull(held_organ)) 
+	if(isnull(held_organ))
 		return
 	if(full_of_formaldehyde)
 		held_organ.organ_flags |= ORGAN_FROZEN
@@ -108,8 +108,6 @@
 #define NOTE_DISCARDED_LOST_CREW 2
 
 /obj/item/reagent_containers/cup/organ_jar/brain_in_a_jar
-	name = "brain in a jar"
-	desc = "A brain in a jar. You can see it twitching..."
 	// Which note to show when someone examins more
 	var/note_type = NOTE_STUCK_IN_MAIL
 
@@ -147,6 +145,8 @@
 		)
 	held_organ = scarred_brain // Put the brain inside the jar
 	reagents.add_reagent(/datum/reagent/toxin/formaldehyde, reagents.maximum_volume) // Fill the jar with formaldehyde
+	name = "brain in a jar" // Set a custom name&description
+	desc = "A brain in a jar. You can see it twitching..."
 	update_appearance()
 
 // All this does is add a random special brain trauma + add recovered crew antag datum for logging
