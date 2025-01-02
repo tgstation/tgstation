@@ -327,7 +327,7 @@
 
 /obj/machinery/scanner_gate/preset_guns
 	locked = TRUE
-	req_access = ACCESS_SECURITY
+	req_access = list(ACCESS_SECURITY)
 	scangate_mode = SCANGATE_GUNS
 
 #undef SCANGATE_NONE

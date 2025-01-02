@@ -836,7 +836,7 @@
 
 /obj/vehicle/sealed/mecha/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
-	if(mecha_flags &= HAS_LIGHTS && light_on)
+	if((mecha_flags & HAS_LIGHTS) && light_on)
 		set_light_on(FALSE)
 		return TRUE
 

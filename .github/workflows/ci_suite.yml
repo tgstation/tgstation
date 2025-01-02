@@ -183,7 +183,7 @@ jobs:
       - name: Find Alternate Tests
         id: alternate_test_finder
         run: |
-          ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>.+)$")]' .github/alternate_byond_versions.txt)
+          ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>[^;]+);?(?<max_client_version>[0-9]+)?$")]' .github/alternate_byond_versions.txt)
           echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
       - name: Collect byond client version configuration
         id: max_required_byond_client
@@ -219,7 +219,7 @@ jobs:
       map: ${{ matrix.setup.map }}
       major: ${{ matrix.setup.major }}
       minor: ${{ matrix.setup.minor }}
-      max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
+      max_required_byond_client: ${{ matrix.setup.max_client_version || needs.collect_data.outputs.max_required_byond_client }}
 
   compare_screenshots:
     if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'
@@ -287,10 +287,11 @@ jobs:
   completion_gate: # Serves as a non-moving target for branch rulesets
     if: always() && !cancelled()
     name: Completion Gate
-    needs: [ test_windows, compare_screenshots, compile_all_maps, run_linters ]
+    needs: [ test_windows, compare_screenshots, compile_all_maps, run_all_tests, run_alternate_tests, run_linters ]
     runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed
         uses: re-actors/alls-green@release/v1
         with:
           jobs: ${{ toJSON(needs) }}
+          allowed-skips: compare_screenshots

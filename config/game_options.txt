@@ -507,6 +507,9 @@ MAXFINE 2000
 ## How many played hours of DRONE_REQUIRED_ROLE required to be a Maintenance Done
 #DRONE_ROLE_PLAYTIME 14
 
+## Will drones be restricted from interacting with the supermatter and atmopherics area?
+#DRONE_AREA_INTERACTION_RESTRICT 1
+
 ## Whether native FoV is enabled for all people.
 #NATIVE_FOV
 

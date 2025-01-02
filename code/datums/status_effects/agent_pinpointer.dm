@@ -22,7 +22,7 @@
 	///The range until you're considered 'too far away'
 	var/range_far = 16
 	///The target we are pointing towards, refreshes every tick.
-	var/mob/scan_target
+	var/atom/movable/scan_target
 
 /datum/status_effect/agent_pinpointer/tick(seconds_between_ticks)
 	if(!owner)

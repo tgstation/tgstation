@@ -1,0 +1,5 @@
+author: "zoomachina"
+delete-after: True
+changes:
+  - rscadd: "brain in a jar, a rare coroner mail goodie"
+  - qol: "soul-less brains that can be revived (like those from recovered crew) now have an examine tip"

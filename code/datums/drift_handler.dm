@@ -36,7 +36,6 @@
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(before_move))
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(after_move))
 	RegisterSignal(drifting_loop, COMSIG_QDELETING, PROC_REF(loop_death))
-	RegisterSignal(parent, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, PROC_REF(attempt_halt))
 	if(drifting_loop.status & MOVELOOP_STATUS_RUNNING)
 		drifting_start(drifting_loop) // There's a good chance it'll autostart, gotta catch that
 
@@ -49,6 +48,9 @@
 		visual_delay = start_delay
 
 	apply_initial_visuals(visual_delay)
+	// Fire the engines!
+	if (drifting_loop.timer <= world.time)
+		SSnewtonian_movement.fire_moveloop(drifting_loop)
 
 /datum/drift_handler/Destroy()
 	inertia_last_loc = null
@@ -76,7 +78,7 @@
 	//It's ok if it's not, it's just important if it is.
 	mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSnewtonian_movement.visual_delay)
 
-/datum/drift_handler/proc/newtonian_impulse(inertia_angle, start_delay, additional_force, controlled_cap)
+/datum/drift_handler/proc/newtonian_impulse(inertia_angle, start_delay, additional_force, controlled_cap, force_loop = TRUE)
 	SIGNAL_HANDLER
 	inertia_last_loc = parent.loc
 	// We've been told to move in the middle of deletion process, tell parent to create a new handler instead
@@ -96,6 +98,9 @@
 
 	drifting_loop.set_angle(delta_to_angle(force_x, force_y))
 	drifting_loop.set_delay(get_loop_delay(parent))
+	// We have to forcefully fire it here to avoid stuttering in case of server lag
+	if (drifting_loop.timer <= world.time && force_loop)
+		SSnewtonian_movement.fire_moveloop(drifting_loop)
 	return TRUE
 
 /datum/drift_handler/proc/drifting_start()
@@ -202,28 +207,28 @@
 	if(world.time < block_inputs_until)
 		return COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE
 
-/datum/drift_handler/proc/attempt_halt(mob/source, movement_dir, continuous_move, atom/backup)
-	SIGNAL_HANDLER
-
-	if ((backup.density || !backup.CanPass(source, get_dir(backup, source))) && (get_dir(source, backup) == movement_dir || source.loc == backup.loc))
+/datum/drift_handler/proc/attempt_halt(movement_dir, continuous_move, atom/backup)
+	if ((backup.density || !backup.CanPass(parent, get_dir(backup, parent))) && (get_dir(parent, backup) == movement_dir || parent.loc == backup.loc))
 		if (drift_force >= INERTIA_FORCE_THROW_FLOOR)
-			source.throw_at(backup, 1, floor(1 + (drift_force - INERTIA_FORCE_THROW_FLOOR) / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
-		return
+			parent.throw_at(backup, 1, floor(1 + (drift_force - INERTIA_FORCE_THROW_FLOOR) / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
+		return FALSE
 
 	if (drift_force < INERTIA_FORCE_SPACEMOVE_GRAB || isnull(drifting_loop))
-		return
+		return FALSE
 
-	if (!isnull(source.client) && source.client.intended_direction)
-		if ((source.client.intended_direction & movement_dir) && !(get_dir(source, backup) & movement_dir))
-			return
+	if (ismob(parent))
+		var/mob/source_user = parent
+		if (!isnull(source_user.client) && source_user.client.intended_direction)
+			if ((source_user.client.intended_direction & movement_dir) && !(get_dir(source_user, backup) & movement_dir))
+				return FALSE
 
-	if (drift_force <= INERTIA_FORCE_SPACEMOVE_REDUCTION / source.inertia_force_weight)
-		glide_to_halt(get_loop_delay(source))
-		return COMPONENT_PREVENT_SPACEMOVE_HALT
+	if (drift_force <= INERTIA_FORCE_SPACEMOVE_REDUCTION / parent.inertia_force_weight)
+		glide_to_halt(get_loop_delay(parent))
+		return TRUE
 
-	drift_force -= INERTIA_FORCE_SPACEMOVE_REDUCTION / source.inertia_force_weight
-	drifting_loop.set_delay(get_loop_delay(source))
-	return COMPONENT_PREVENT_SPACEMOVE_HALT
+	drift_force -= INERTIA_FORCE_SPACEMOVE_REDUCTION / parent.inertia_force_weight
+	drifting_loop.set_delay(get_loop_delay(parent))
+	return TRUE
 
 /datum/drift_handler/proc/get_loop_delay(atom/movable/movable)
 	return (DEFAULT_INERTIA_SPEED / ((1 - INERTIA_SPEED_COEF) + drift_force * INERTIA_SPEED_COEF)) * movable.inertia_move_multiplier
@@ -236,7 +241,7 @@
 	/// Lack of angle means that we are trying to halt movement
 	if (isnull(target_angle))
 		// Going through newtonian_move ensures that all Process_Spacemove code runs properly, instead of directly adjusting forces
-		parent.newtonian_move(reverse_angle(drifting_loop.angle), drift_force = min(drift_force, stabilization_force))
+		parent.newtonian_move(REVERSE_ANGLE(drifting_loop.angle), drift_force = min(drift_force, stabilization_force))
 		return
 
 	// Force required to be applied in order to get to the desired movement vector, with projection of current movement onto desired vector to ensure that we only compensate for excess
@@ -259,4 +264,4 @@
 
 	var/projected_force = max(0, cos(target_angle - drifting_loop.angle)) * drift_force
 	if (projected_force > 0)
-		parent.newtonian_move(reverse_angle(target_angle), projected_force)
+		parent.newtonian_move(REVERSE_ANGLE(target_angle), projected_force)

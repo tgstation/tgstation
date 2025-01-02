@@ -406,6 +406,7 @@
 /datum/status_effect/mayhem
 	id = "Mayhem"
 	duration = 2 MINUTES
+	alert_type = null
 	/// The chainsaw spawned by the status effect
 	var/obj/item/chainsaw/doomslayer/chainsaw
 
@@ -450,6 +451,7 @@
 	duration = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	show_duration = TRUE
+	alert_type = null
 
 /datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -595,6 +597,7 @@
 	id = "radiation_immunity"
 	duration = 1 MINUTES
 	show_duration = TRUE
+	alert_type = null
 
 /datum/status_effect/radiation_immunity/on_apply()
 	ADD_TRAIT(owner, TRAIT_RADIMMUNE, type)

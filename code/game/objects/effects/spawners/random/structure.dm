@@ -260,22 +260,117 @@
 	)
 
 /obj/effect/spawner/random/structure/shipping_container
-	name = "shipping container spawner"
+	name = "random shipping container spawner"
 	icon = 'icons/obj/fluff/containers.dmi'
 	icon_state = "random_container"
 	loot = list(
+		/obj/structure/shipping_container = 3,
+		/obj/structure/shipping_container/amsco = 3,
+		/obj/structure/shipping_container/blue = 3,
 		/obj/structure/shipping_container/conarex = 3,
 		/obj/structure/shipping_container/deforest = 3,
-		/obj/structure/shipping_container/kahraman = 3,
-		/obj/structure/shipping_container/kahraman/alt = 3,
+		/obj/structure/shipping_container/defaced = 3,
+		/obj/structure/shipping_container/great_northern = 3,
+		/obj/structure/shipping_container/green = 3,
+		/obj/structure/shipping_container/kahraman = 2,
+		/obj/structure/shipping_container/kahraman/alt = 1,
 		/obj/structure/shipping_container/kosmologistika = 3,
-		/obj/structure/shipping_container/interdyne = 3,
+		/obj/structure/shipping_container/magenta = 3,
 		/obj/structure/shipping_container/nakamura = 3,
 		/obj/structure/shipping_container/nanotrasen = 3,
-		/obj/structure/shipping_container/nthi = 3,
-		/obj/structure/shipping_container/vitezstvi = 3,
+		/obj/structure/shipping_container/ntfid = 2,
+		/obj/structure/shipping_container/ntfid/defaced = 1,
+		/obj/structure/shipping_container/nthi = 1,
+		/obj/structure/shipping_container/nthi/minor = 1,
+		/obj/structure/shipping_container/nthi/precious = 1,
+		/obj/structure/shipping_container/orange = 3,
+		/obj/structure/shipping_container/purple = 3,
+		/obj/structure/shipping_container/red = 3,
+		/obj/structure/shipping_container/sunda = 3,
+		/obj/structure/shipping_container/vitezstvi = 2,
+		/obj/structure/shipping_container/vitezstvi/flags = 1,
+		/obj/structure/shipping_container/yellow = 3,
+		/obj/structure/shipping_container/biosustain = 3,
 		/obj/structure/shipping_container/cybersun = 2,
-		/obj/structure/shipping_container/donk_co = 2,
-		/obj/structure/shipping_container/gorlex = 1,
+		/obj/structure/shipping_container/cybersun/defaced = 1,
+		/obj/structure/shipping_container/donk_co = 3,
+		/obj/structure/shipping_container/exagon = 1,
+		/obj/structure/shipping_container/exagon/minor = 1,
+		/obj/structure/shipping_container/exagon/precious = 1,
+		/obj/structure/shipping_container/gorlex = 2,
 		/obj/structure/shipping_container/gorlex/red = 1,
+		/obj/structure/shipping_container/interdyne = 3,
+		/obj/structure/shipping_container/oms = 3,
+		/obj/structure/shipping_container/tiger_coop = 2,
+		/obj/structure/shipping_container/tiger_coop = 1,
+	)
+
+/obj/effect/spawner/random/structure/shipping_container/blank
+	name = "random blank shipping container spawner"
+	loot = list(
+		/obj/structure/shipping_container = 3,
+		/obj/structure/shipping_container/blue = 3,
+		/obj/structure/shipping_container/green = 3,
+		/obj/structure/shipping_container/magenta = 3,
+		/obj/structure/shipping_container/orange = 3,
+		/obj/structure/shipping_container/purple = 3,
+		/obj/structure/shipping_container/red = 3,
+		/obj/structure/shipping_container/yellow = 3,
+	)
+
+/obj/effect/spawner/random/structure/syndicate //syndicate containers only
+	name = "random syndicate shipping container spawner"
+	loot = list(
+		/obj/structure/shipping_container/biosustain = 3,
+		/obj/structure/shipping_container/cybersun = 2,
+		/obj/structure/shipping_container/cybersun/defaced = 1,
+		/obj/structure/shipping_container/donk_co = 3,
+		/obj/structure/shipping_container/exagon = 1,
+		/obj/structure/shipping_container/exagon/minor = 1,
+		/obj/structure/shipping_container/exagon/precious = 1,
+		/obj/structure/shipping_container/gorlex = 2,
+		/obj/structure/shipping_container/gorlex/red = 1,
+		/obj/structure/shipping_container/interdyne = 3,
+		/obj/structure/shipping_container/oms = 3,
+		/obj/structure/shipping_container/tiger_coop = 2,
+		/obj/structure/shipping_container/tiger_coop = 1,
+	)
+
+/obj/effect/spawner/random/structure/shipping_container/station_appropriate //places extra emphasis on NT containers, excludes syndicate companies (except Donk. Co.) entirely
+	name = "station-appropriate shipping container spawner"
+	loot = list(
+		/obj/structure/shipping_container/nanotrasen = 5,
+		/obj/structure/shipping_container/nthi = 1,
+		/obj/structure/shipping_container/nthi/minor = 1,
+		/obj/structure/shipping_container/nthi/precious = 1,
+		/obj/structure/shipping_container/ntfid = 3,
+		/obj/structure/shipping_container/nakamura = 2,
+		/obj/structure/shipping_container/deforest = 2,
+		/obj/structure/shipping_container/kosmologistika = 2,
+		/obj/structure/shipping_container/donk_co = 2,
+		/obj/structure/shipping_container/amsco = 1,
+		/obj/structure/shipping_container/conarex = 1,
+		/obj/structure/shipping_container/kahraman = 1,
+		/obj/structure/shipping_container/kahraman/alt = 1,
+		/obj/structure/shipping_container/sunda = 1,
+		/obj/structure/shipping_container/vitezstvi = 1,
+	)
+
+/obj/effect/spawner/random/structure/shipping_container/reefer //reefers only
+	name = "random reefer container spawner"
+	loot = list(
+		/obj/structure/shipping_container/reefer = 3,
+		/obj/structure/shipping_container/reefer/biosustain = 3,
+		/obj/structure/shipping_container/reefer/deforest = 3,
+		/obj/structure/shipping_container/reefer/interdyne = 3,
+	)
+
+/obj/effect/spawner/random/structure/shipping_container/gas //gas cisterns only
+	name = "random gas cistern spawner"
+	loot = list(
+		/obj/structure/shipping_container/gas = 3,
+		/obj/structure/shipping_container/gas/apda = 3,
+		/obj/structure/shipping_container/gas/apda/hydrogen = 3,
+		/obj/structure/shipping_container/gas/exagon = 3,
+		/obj/structure/shipping_container/gas/nthi = 3,
 	)

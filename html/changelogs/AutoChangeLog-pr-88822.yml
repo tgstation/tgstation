@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - qol: "you can now examine the jukebox to see what song is currently playing"

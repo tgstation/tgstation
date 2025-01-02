@@ -18,7 +18,7 @@
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    'pkg:tgui-styles/components/Button',
     $with: (
       'color-default': hsl(345, 96%, 25%),
       'color-disabled': hsl(0, 0%, 21%),
@@ -28,27 +28,27 @@
     )
   );
   @include meta.load-css(
-    '../components/Dimmer.scss',
+    'pkg:tgui-styles/components/Dimmer',
     $with: ('background-dimness': 0.45)
   );
   @include meta.load-css(
-    '../components/Input.scss',
+    'pkg:tgui-styles/components/Input',
     $with: ('border-color': hsl(15, 14%, 26%))
   );
-  @include meta.load-css('../components/Modal.scss');
+  @include meta.load-css('pkg:tgui-styles/components/Modal');
   @include meta.load-css(
-    '../components/NoticeBox.scss',
+    'pkg:tgui-styles/components/NoticeBox',
     $with: ('background-color': hsl(0, 90%, 23%))
   );
-  @include meta.load-css('../components/NumberInput.scss');
-  @include meta.load-css('../components/Section.scss');
-  @include meta.load-css('../components/Table.scss');
+  @include meta.load-css('pkg:tgui-styles/components/NumberInput');
+  @include meta.load-css('pkg:tgui-styles/components/Section');
+  @include meta.load-css('pkg:tgui-styles/components/Table');
   @include meta.load-css(
-    '../components/Tooltip.scss',
+    'pkg:tgui-styles/components/Tooltip',
     $with: ('background-color': hsl(0, 0%, 0%))
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
+    'pkg:tgui-styles/components/ProgressBar',
     $with: (
       'color-default-fill': hsla(0, 100%, 37%, 0.75),
       'background-color': hsla(0, 97%, 7%, 0.5)

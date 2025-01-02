@@ -72,11 +72,11 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	hersens.AddComponent(
 		/datum/component/ghostrole_on_revive, \
 		/* refuse_revival_if_failed = */ TRUE, \
-		/*on_revival = */ CALLBACK(src, PROC_REF(on_succesful_revive), hersens, scenario.death_lore, on_revive_and_player_occupancy) \
+		/*on_revival = */ CALLBACK(src, PROC_REF(on_successful_revive), hersens, scenario.death_lore, on_revive_and_player_occupancy) \
 	)
 
 /// Set a timer for awarding succes and drop some awesome deathlore
-/datum/lost_crew_manager/proc/on_succesful_revive(obj/item/organ/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
+/datum/lost_crew_manager/proc/on_successful_revive(obj/item/organ/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
 	var/mob/living/carbon/human/owner = brain.owner
 
 	owner.mind.add_antag_datum(/datum/antagonist/recovered_crew) //for tracking mostly

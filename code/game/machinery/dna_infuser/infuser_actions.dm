@@ -37,22 +37,24 @@
 // We do this in InterceptClickOn() instead of Activate()
 // because we use the click parameters for aiming the projectile
 // (or something like that)
-/datum/action/cooldown/ink_spit/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/ink_spit/InterceptClickOn(mob/living/clicker, params, atom/target)
 	if(!LAZYACCESS(params2list(params), RIGHT_CLICK))
 		return
 	. = ..()
+	if(!.)
+		return
 
 	var/modifiers = params2list(params)
-	caller.visible_message(
-		span_danger("[caller] spits ink!"),
+	clicker.visible_message(
+		span_danger("[clicker] spits ink!"),
 		span_bold("You spit ink."),
 	)
-	var/obj/projectile/ink_spit/ink = new /obj/projectile/ink_spit(caller.loc)
-	ink.preparePixelProjectile(target, caller, modifiers)
-	ink.firer = caller
+	var/obj/projectile/ink_spit/ink = new /obj/projectile/ink_spit(clicker.loc)
+	ink.aim_projectile(target, clicker, modifiers)
+	ink.firer = clicker
 	ink.fire()
-	playsound(caller, 'sound/items/weapons/pierce.ogg', 20, TRUE, -1)
-	caller.newtonian_move(get_angle(target, caller))
+	playsound(clicker, 'sound/items/weapons/pierce.ogg', 20, TRUE, -1)
+	clicker.newtonian_move(get_angle(target, clicker))
 	StartCooldown()
 	return TRUE
 

@@ -124,9 +124,9 @@
 //Tries to play the carbon a breathing sound when using internals, also invokes check_breath
 /mob/living/carbon/proc/try_breathing_sound(breath)
 	var/should_be_on =  canon_client?.prefs?.read_preference(/datum/preference/toggle/sound_breathing)
-	if(should_be_on && !breathing_loop.timer_id)
+	if(should_be_on && !breathing_loop.timer_id && canon_client?.mob.can_hear())
 		breathing_loop.start()
-	else if(!should_be_on && breathing_loop.timer_id)
+	else if((!should_be_on && breathing_loop.timer_id) || !canon_client?.mob.can_hear())
 		breathing_loop.stop()
 
 /mob/living/carbon/proc/has_smoke_protection()

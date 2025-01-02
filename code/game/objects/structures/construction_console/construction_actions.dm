@@ -5,7 +5,7 @@
 /datum/action/innate/construction
 	button_icon = 'icons/mob/actions/actions_construction.dmi'
 	///Console's eye mob
-	var/mob/eye/ai_eye/remote/base_construction/remote_eye
+	var/mob/eye/camera/remote/base_construction/remote_eye
 	///Console itself
 	var/obj/machinery/computer/camera_advanced/base_construction/base_console
 	///Is this used to build only on the station z level?
