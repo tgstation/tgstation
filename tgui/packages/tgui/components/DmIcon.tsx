@@ -1,20 +1,10 @@
 import { ReactNode, useEffect, useState } from 'react';
 
 import { resolveAsset } from '../assets';
+import { Direction } from '../constants';
 import { fetchRetry } from '../http';
 import { BoxProps } from './Box';
 import { Image } from './Image';
-
-enum Direction {
-  NORTH = 1,
-  SOUTH = 2,
-  EAST = 4,
-  WEST = 8,
-  NORTHEAST = NORTH | EAST,
-  NORTHWEST = NORTH | WEST,
-  SOUTHEAST = SOUTH | EAST,
-  SOUTHWEST = SOUTH | WEST,
-}
 
 type Props = {
   /** Required: The path of the icon */
