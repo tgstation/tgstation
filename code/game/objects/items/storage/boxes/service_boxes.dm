@@ -165,6 +165,7 @@
 	name = "DIY Dish Drive Kit"
 	desc = "Contains everything you need to build your own Dish Drive!"
 	custom_premium_price = PAYCHECK_CREW * 3
+	restrict_contents = TRUE
 
 /obj/item/storage/box/dishdrive/PopulateContents()
 	var/static/items_inside = list(
@@ -216,7 +217,7 @@
 	. = ..()
 	atom_storage.max_slots = 24
 	atom_storage.set_holdable(list(/obj/item/toy/balloon/long))
-	atom_storage.max_total_storage = 24
+	atom_storage.max_total_storage = 72
 	atom_storage.allow_quick_gather = FALSE
 
 /obj/item/storage/box/balloons/PopulateContents()

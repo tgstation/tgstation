@@ -323,7 +323,7 @@
 /obj/item/storage/medkit/tactical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_slots = 21
+	atom_storage.max_slots = 22
 	atom_storage.max_total_storage = 24
 	atom_storage.set_holdable(list_of_everything_medkits_can_hold)
 
@@ -356,8 +356,7 @@
 	. = ..()
 	atom_storage.allow_big_nesting = TRUE // so you can put back the box you took out
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_slots = 21
-	atom_storage.max_total_storage = 34
+	atom_storage.max_total_storage = 36
 	atom_storage.set_holdable(list_of_everything_medkits_can_hold)
 
 /obj/item/storage/medkit/tactical/premium/PopulateContents()
