@@ -9,6 +9,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor_type = /datum/armor/color_plasmaman
+	equip_sound = 'sound/items/equip/glove_equip.ogg'
 
 /datum/armor/color_plasmaman
 	bio = 100

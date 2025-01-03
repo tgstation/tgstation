@@ -1082,7 +1082,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.set_embed(/datum/embed_data/glass_candy)
+				shard.set_embed(/datum/embedding/glass_candy)
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
 				shard.set_embed(initial(shard.embed_type))
 			return TRUE
@@ -1161,15 +1161,15 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	return FALSE
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)
-	if(!istype(replacer))
-		return FALSE
-	if(!component_parts || !refill_canister)
+	if(!istype(replacer) || !component_parts || !refill_canister)
 		return FALSE
 
-	if(!panel_open || replacer.works_from_distance)
+	var/works_from_distance = istype(replacer, /obj/item/storage/part_replacer/bluespace)
+
+	if(!panel_open || works_from_distance)
 		to_chat(user, display_parts(user))
 
-	if(!panel_open && !replacer.works_from_distance)
+	if(!panel_open && !works_from_distance)
 		return FALSE
 
 	var/restocked = 0

@@ -469,12 +469,12 @@
 
 /datum/export/pirate/cash
 	cost = 1
-	unit_name = "bills"
+	unit_name = "bill"
 	export_types = list(/obj/item/stack/spacecash)
 
-/datum/export/pirate/cash/get_amount(obj/exported_item)
+/datum/export/pirate/cash/get_cost(obj/exported_item)
 	var/obj/item/stack/spacecash/cash = exported_item
-	return ..() * cash.amount * cash.value
+	return cash.value * cash.amount
 
 /datum/export/pirate/holochip
 	cost = 1

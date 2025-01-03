@@ -10,10 +10,13 @@
 	var/emotes_blackboard_list = BB_EAT_EMOTES
 
 /datum/ai_planning_subtree/find_food/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/list/foods_list = controller.blackboard[food_list_key]
+	if(!length(foods_list))
+		CRASH("the types of food has not been supplied in the [food_list_key] key!")
 	if(controller.blackboard[BB_NEXT_FOOD_EAT] > world.time)
 		return
 	if(!controller.blackboard_key_exists(found_food_key))
-		controller.queue_behavior(finding_behavior, found_food_key, controller.blackboard[food_list_key])
+		controller.queue_behavior(finding_behavior, found_food_key, foods_list)
 		return
 	controller.queue_behavior(/datum/ai_behavior/interact_with_target/eat_food, found_food_key, emotes_blackboard_list)
 	return SUBTREE_RETURN_FINISH_PLANNING

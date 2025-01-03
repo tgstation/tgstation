@@ -30,6 +30,7 @@
 
 /datum/element/dangerous_organ_removal/proc/on_removal(obj/item/organ/source, mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 	SIGNAL_HANDLER
+
 	if(surgical && source.organ_flags & (ORGAN_FAILING|ORGAN_EMP))
 		return
 	if(user?.Adjacent(source))
@@ -37,5 +38,6 @@
 		user.take_bodypart_damage(15)
 	else
 		source.audible_message("[source] explodes into tiny pieces!")
+
 	explosion(source, light_impact_range = 1, explosion_cause = source)
 	qdel(source)

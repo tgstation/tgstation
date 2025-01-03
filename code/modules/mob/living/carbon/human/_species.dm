@@ -73,23 +73,25 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Internal organs that are unique to this race, like a tail or other cosmetic organs. list(typepath of organ 1, typepath of organ 2 = "Round").
 	var/list/mutant_organs = list()
 	///Replaces default brain with a different organ
-	var/obj/item/organ/internal/brain/mutantbrain = /obj/item/organ/internal/brain
+	var/obj/item/organ/brain/mutantbrain = /obj/item/organ/brain
 	///Replaces default heart with a different organ
-	var/obj/item/organ/internal/heart/mutantheart = /obj/item/organ/internal/heart
+	var/obj/item/organ/heart/mutantheart = /obj/item/organ/heart
 	///Replaces default lungs with a different organ
-	var/obj/item/organ/internal/lungs/mutantlungs = /obj/item/organ/internal/lungs
+	var/obj/item/organ/lungs/mutantlungs = /obj/item/organ/lungs
+	/// Smoker lungs for the quirk, overriden by certain species
+	var/obj/item/organ/lungs/smoker_lungs = /obj/item/organ/lungs/smoker_lungs
 	///Replaces default eyes with a different organ
-	var/obj/item/organ/internal/eyes/mutanteyes = /obj/item/organ/internal/eyes
+	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	///Replaces default ears with a different organ
-	var/obj/item/organ/internal/ears/mutantears = /obj/item/organ/internal/ears
+	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
 	///Replaces default tongue with a different organ
-	var/obj/item/organ/internal/tongue/mutanttongue = /obj/item/organ/internal/tongue
+	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
 	///Replaces default liver with a different organ
-	var/obj/item/organ/internal/liver/mutantliver = /obj/item/organ/internal/liver
+	var/obj/item/organ/liver/mutantliver = /obj/item/organ/liver
 	///Replaces default stomach with a different organ
-	var/obj/item/organ/internal/stomach/mutantstomach = /obj/item/organ/internal/stomach
+	var/obj/item/organ/stomach/mutantstomach = /obj/item/organ/stomach
 	///Replaces default appendix with a different organ.
-	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
+	var/obj/item/organ/appendix/mutantappendix = /obj/item/organ/appendix
 
 	/// Store body marking defines. See mobs.dm for bitflags
 	var/list/body_markings = list()
@@ -142,8 +144,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]
 	var/breathid = GAS_O2
 
-	///What anim to use for dusting
-	var/dust_anim = "dust-h"
 	///What anim to use for gibbing
 	var/gib_anim = "gibbed-h"
 
@@ -243,7 +243,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Arguments:
  * * old_species - The species that the carbon used to be before copying
  */
-/datum/species/proc/copy_properties_from(datum/species/old_species)
+/datum/species/proc/copy_properties_from(datum/species/old_species, pref_load, regenerate_icons)
 	return
 
 /**
@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(remove_existing)
 			health_pct = (existing_organ.maxHealth - existing_organ.damage) / existing_organ.maxHealth
 			if(slot == ORGAN_SLOT_BRAIN)
-				var/obj/item/organ/internal/brain/existing_brain = existing_organ
+				var/obj/item/organ/brain/existing_brain = existing_organ
 				existing_brain.before_organ_replacement(new_organ)
 				existing_brain.Remove(organ_holder, special = TRUE, movement_flags = NO_ID_TRANSFER)
 			else
@@ -366,8 +366,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * C - Carbon, this is whoever became the new species.
  * * old_species - The species that the carbon used to be before becoming this race, used for regenerating organs.
  * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
+ * * regenerate_icons - Whether or not to update the bodies icons
  */
-/datum/species/proc/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+/datum/species/proc/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	human_who_gained_species.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS //Don't call update_body_parts() for every single bodypart overlay added.
@@ -415,7 +416,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		human_who_gained_species.grant_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
 	for(var/language in gaining_holder.blocked_languages)
 		human_who_gained_species.add_blocked_language(language, LANGUAGE_SPECIES)
-	human_who_gained_species.regenerate_icons()
+	if(regenerate_icons)
+		human_who_gained_species.regenerate_icons()
 
 	SEND_SIGNAL(human_who_gained_species, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -489,7 +491,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
 		if(noggin?.head_flags & HEAD_EYESPRITES)
 			// eyes (missing eye sprites get handled by the head itself, but sadly we have to do this stupid shit here, for now)
-			var/obj/item/organ/internal/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
+			var/obj/item/organ/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
 			if(eye_organ)
 				eye_organ.refresh(call_update = FALSE)
 				standing += eye_organ.generate_body_overlay(species_human)
@@ -655,7 +657,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_EYES)
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
-			var/obj/item/organ/internal/eyes/eyes = H.get_organ_slot(ORGAN_SLOT_EYES)
+			var/obj/item/organ/eyes/eyes = H.get_organ_slot(ORGAN_SLOT_EYES)
 			if(eyes?.no_glasses)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
@@ -842,7 +844,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_chat(user, span_warning("You don't want to harm [target]!"))
 		return FALSE
 
-	var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/bodypart/attacking_bodypart
 	if(brain)
 		attacking_bodypart = brain.get_attacking_limb(target)
@@ -1367,7 +1369,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
 	if((H.movement_type & FLYING) && !H.buckled)
-		var/obj/item/organ/external/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+		var/obj/item/organ/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(wings)
 			wings.toggle_flight(H)
 			wings.fly_slip(H)
@@ -1457,6 +1459,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/get_snore_sound(mob/living/carbon/human/human)
 	return
 
+/// Returns the species' hiss sound
+/datum/species/proc/get_hiss_sound(mob/living/carbon/human/human)
+	return
+
 /datum/species/proc/get_mut_organs(include_brain = TRUE)
 	var/list/mut_organs = list()
 	mut_organs += mutant_organs
@@ -1536,7 +1542,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return null
 
 	var/static/list/food_flags = FOOD_FLAGS
-	var/obj/item/organ/internal/tongue/fake_tongue = mutanttongue
+	var/obj/item/organ/tongue/fake_tongue = mutanttongue
 
 	return list(
 		"liked_food" = bitfield_to_list(initial(fake_tongue.liked_foodtypes), food_flags),
@@ -1859,7 +1865,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/to_add = list()
 
 	var/alcohol_tolerance = initial(mutantliver.alcohol_tolerance)
-	var/obj/item/organ/internal/liver/base_liver = /obj/item/organ/internal/liver
+	var/obj/item/organ/liver/base_liver = /obj/item/organ/liver
 	var/tolerance_difference = alcohol_tolerance - initial(base_liver.alcohol_tolerance)
 
 	if (tolerance_difference != 0)

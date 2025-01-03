@@ -29,7 +29,7 @@
 	name = "tesla orb"
 	icon_state = "ice_1"
 	damage = 0
-	speed = 1.5
+	speed = 0.66
 	var/shock_damage = 5
 
 /obj/projectile/energy/tesla_cannon/on_hit(atom/target, blocked = 0, pierce_hit)

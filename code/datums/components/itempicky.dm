@@ -27,8 +27,8 @@
 /datum/component/itempicky/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND)
 
-/datum/component/itempicky/PostTransfer()
-	if(!ismob(parent))
+/datum/component/itempicky/PostTransfer(datum/new_parent)
+	if(!ismob(new_parent))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/itempicky/InheritComponent(datum/component/itempicky/friend, i_am_original, list/arguments)

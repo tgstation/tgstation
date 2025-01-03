@@ -15,6 +15,8 @@
 	var/list/possible_character_types
 	/// Assignments that can be given to the corpse
 	var/list/possible_character_assignments
+	/// Possible flavors that can be applied to the corpse
+	var/list/possible_flavor_types
 	/// Whatever killed us
 	var/list/possible_causes_of_death
 	/// Goddamn space vultures stealing my organs
@@ -27,48 +29,76 @@
 	var/lore_death_time_max = 5 YEARS
 
 /// Generate and apply a possible character (species etc)
-/datum/corpse_damage_class/proc/apply_character(mob/living/carbon/human/fashion_corpse, list/protected_objects, list/datum/callback/on_revive_and_player_occupancy, list/body_data)
+/datum/corpse_damage_class/proc/apply_character(mob/living/carbon/human/fashion_corpse, list/protected_objects, list/recovered_items, list/datum/callback/on_revive_and_player_occupancy, list/body_data)
 	var/datum/corpse_character/character = pick_weight(possible_character_types)
 	character = new character()
-	character.apply_character(fashion_corpse, protected_objects, on_revive_and_player_occupancy)
+	character.apply_character(fashion_corpse, protected_objects, recovered_items, on_revive_and_player_occupancy)
 
 	var/datum/corpse_assignment/assignment = pick_weight(possible_character_assignments)
-	if(assignment)
+	if(ispath(assignment))
 		assignment = new assignment()
 		assignment.apply_assignment(fashion_corpse, protected_objects, on_revive_and_player_occupancy)
+		body_data += assignment.type
+
+	var/datum/corpse_flavor/flavor = pick_weight(possible_flavor_types)
+	if(ispath(flavor))
+		flavor = new flavor()
+		flavor?.apply_flavor(fashion_corpse, protected_objects, on_revive_and_player_occupancy)
+		body_data += flavor.type
 
 	death_lore += assignment?.job_lore
 
 	body_data += character.type
-	body_data += assignment?.type
 
 /// Set up injuries
 /datum/corpse_damage_class/proc/apply_injuries(mob/living/carbon/human/victim, list/saved_objects, list/datum/callback/on_revive_and_player_occupancy, list/body_data)
-	var/datum/corpse_damage/cause_of_death/cause_of_death = pick_damage_type(possible_causes_of_death)
-	cause_of_death.apply_to_body(victim, rand(), saved_objects, on_revive_and_player_occupancy)
+	var/bonus_roll = prob(80) //do an extra turn for cause of death or post mortum effect
+	var/bonus_roll_used = FALSE
+	var/list/used_damage_types = list()
 
-	var/datum/corpse_damage/post_mortem = pick_damage_type(post_mortem_effects)
-	post_mortem?.apply_to_body(victim, rand(), saved_objects, on_revive_and_player_occupancy)
+	var/datum/corpse_damage/cause_of_death/cause_of_death
+	for(var/i in 0 to 2)
+		cause_of_death = pick_damage_type(possible_causes_of_death, used_damage_types, bonus_roll_used)
 
-	var/datum/corpse_damage/decay = pick_damage_type(decays)
+		if(!cause_of_death) //we ran out of causes of death (impressive!)
+			break
+
+		cause_of_death.apply_to_body(victim, rand(), saved_objects, on_revive_and_player_occupancy)
+		body_data += cause_of_death.type
+
+		if(cause_of_death.no_bonus_roll || !bonus_roll || prob(70)) //70% chance to do the bonus roll, otherwise pass the bonus to post mortem
+			break
+
+		bonus_roll = FALSE
+		bonus_roll_used = TRUE
+
+	for(var/i in 0 to 2)
+		var/datum/corpse_damage/post_mortem = pick_damage_type(post_mortem_effects, used_damage_types)
+		if(post_mortem)
+			post_mortem.apply_to_body(victim, rand(), saved_objects, on_revive_and_player_occupancy)
+			body_data += post_mortem.type
+
+		if(!bonus_roll)
+			break
+
+		bonus_roll = FALSE
+
+	var/datum/corpse_damage/decay = pick_damage_type(decays, used_damage_types)
 	decay?.apply_to_body(victim, rand(), saved_objects, on_revive_and_player_occupancy)
+	body_data += decay.type
 
 	// Simulate bloodloss by dragging/moving
 	victim.blood_volume = max(victim.blood_volume - victim.bleedDragAmount() * rand(20, 100), 0)
 	set_death_date(victim)
 
-	body_data += cause_of_death.type
-	body_data += post_mortem?.type
-	body_data += decay.type
-
 	death_lore += area_lore + " " + cause_of_death.cause_of_death
 
 /// Wrapped pickweight so we can have a bit more controle over how we pick our rules
-/datum/corpse_damage_class/proc/pick_damage_type(list/damages, list/used_damage_types)
+/datum/corpse_damage_class/proc/pick_damage_type(list/damages, list/used_damage_types, bonus_roll_used)
 	var/list/possible_damages = list()
 
 	for(var/datum/corpse_damage/damage as anything in damages)
-		if(isdatum(damage) && damage.damage_type && (damage.damage_type in used_damage_types))
+		if(ispath(damage) && initial(damage.damage_type) && (initial(damage.damage_type) in used_damage_types) || bonus_roll_used && initial(damage.no_bonus_roll))
 			continue
 		possible_damages[damage] = damages[damage]
 
@@ -96,6 +126,8 @@
 /datum/corpse_damage
 	/// When given, automatically blacklist corpse_damages with the same damage_type flag to avoid stuff like being delimbed twice (dragon ate me AND I got space vultures???)
 	var/damage_type
+	/// if TRUE this can only be the only cause of death, and not multiple at once
+	var/no_bonus_roll = FALSE
 
 /// Tear IT UPPP!!! Apply any damages to the body that we need to
 /datum/corpse_damage/proc/apply_to_body(mob/living/carbon/human/body, severity, list/storage)

@@ -4,10 +4,10 @@
 	id = SPECIES_MOTH
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	body_markings = list(/datum/bodypart_overlay/simple/body_marking/moth = "None")
-	mutant_organs = list(/obj/item/organ/external/wings/moth = "Plain", /obj/item/organ/external/antennae = "Plain")
+	mutant_organs = list(/obj/item/organ/wings/moth = "Plain", /obj/item/organ/antennae = "Plain")
 	meat = /obj/item/food/meat/slab/human/mutant/moth
-	mutanttongue = /obj/item/organ/internal/tongue/moth
-	mutanteyes = /obj/item/organ/internal/eyes/moth
+	mutanttongue = /obj/item/organ/tongue/moth
+	mutanteyes = /obj/item/organ/eyes/moth
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_cookie = /obj/item/food/muffin/moffin
 	species_language_holder = /datum/language_holder/moth
@@ -24,7 +24,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/moth,
 	)
 
-/datum/species/moth/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+/datum/species/moth/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	RegisterSignal(human_who_gained_species, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
 

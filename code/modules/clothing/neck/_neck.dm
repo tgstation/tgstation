@@ -234,10 +234,10 @@
 	var/heart_strength
 	var/pulse_pressure
 
-	var/obj/item/organ/internal/heart/heart = carbon_patient.get_organ_slot(ORGAN_SLOT_HEART)
-	var/obj/item/organ/internal/lungs/lungs = carbon_patient.get_organ_slot(ORGAN_SLOT_LUNGS)
-	var/obj/item/organ/internal/liver/liver = carbon_patient.get_organ_slot(ORGAN_SLOT_LIVER)
-	var/obj/item/organ/internal/appendix/appendix = carbon_patient.get_organ_slot(ORGAN_SLOT_APPENDIX)
+	var/obj/item/organ/heart/heart = carbon_patient.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/lungs/lungs = carbon_patient.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/liver/liver = carbon_patient.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/appendix/appendix = carbon_patient.get_organ_slot(ORGAN_SLOT_APPENDIX)
 
 	var/render_list = list()//information will be packaged in a list for clean display to the user
 
@@ -336,7 +336,7 @@
 				render_list += "<span class='notice ml-1'>[target.p_Their()] pulse is [pulse_pressure] and [heart_strength].</span>\n"
 
 	//display our packaged information in an examine block for easy reading
-	to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+	to_chat(user, boxed_message(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 
 ///////////
 //SCARVES//

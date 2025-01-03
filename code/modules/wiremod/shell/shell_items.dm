@@ -63,7 +63,7 @@
 /obj/item/shell/bci
 	name = "brain-computer interface assembly"
 	icon_state = "bci-open"
-	shell_to_spawn = /obj/item/organ/internal/cyberimp/bci
+	shell_to_spawn = /obj/item/organ/cyberimp/bci
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/shell/scanner_gate

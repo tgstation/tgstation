@@ -485,3 +485,19 @@
 		return center //Offer the center only as a default case when we don't have a valid circle.
 	return peel
 
+///check if 2 diagonal turfs are blocked by dense objects
+/proc/diagonally_blocked(turf/our_turf, turf/dest_turf)
+	if(get_dist(our_turf, dest_turf) != 1)
+		return FALSE
+	var/direction_to_turf = get_dir(dest_turf, our_turf)
+	if(!ISDIAGONALDIR(direction_to_turf))
+		return FALSE
+	for(var/direction_check in GLOB.cardinals)
+		if(!(direction_check & direction_to_turf))
+			continue
+		var/turf/test_turf = get_step(dest_turf, direction_check)
+		if(isnull(test_turf))
+			continue
+		if(!test_turf.is_blocked_turf(exclude_mobs = TRUE))
+			return FALSE
+	return TRUE

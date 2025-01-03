@@ -7,6 +7,7 @@
 	icon = 'icons/obj/weapons/voidwalker_items.dmi'
 	icon_state = "tentacle"
 	inhand_icon_state = "tentacle"
+	icon_angle = 180
 	force = 25
 	armour_penetration = 35
 	lefthand_file = 'icons/mob/inhands/antag/voidwalker_lefthand.dmi'
@@ -63,7 +64,7 @@
 			hewmon.balloon_alert(user, "shattering...")
 			if(do_after(user, 4 SECONDS, hewmon))
 				new /obj/effect/spawner/random/glass_shards (spawnloc)
-				var/obj/item/organ/brain = hewmon.get_organ_by_type(/obj/item/organ/internal/brain)
+				var/obj/item/organ/brain = hewmon.get_organ_by_type(/obj/item/organ/brain)
 				if(brain)
 					brain.Remove(hewmon)
 					brain.forceMove(spawnloc)

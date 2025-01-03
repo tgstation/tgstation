@@ -188,8 +188,16 @@
 	name = "Strong-Arm Implant Set"
 	desc = "A crate containing two implants, which can be surgically implanted to empower the strength of human arms. Warranty void if exposed to electromagnetic pulses."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/organ/internal/cyberimp/arm/strongarm = 2)
+	contains = list(/obj/item/organ/cyberimp/arm/strongarm = 2)
 	crate_name = "Strong-Arm implant crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
+
+/datum/supply_pack/medical/paperwork_implants
+	name = "Paperwork Implant Set"
+	desc = "A crate containing two implants, which can be surgically implanted to effectivize crewmembers at paperwork. Warranty void if exposed to electromagnetic pulses."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/organ/cyberimp/arm/paperwork = 2)
+	crate_name = "Paperwork implant crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/medical/lost_crew
@@ -200,3 +208,4 @@
 	contains = list(/obj/structure/closet/body_bag/lost_crew/with_body)
 	crate_name = "body freezer"
 	crate_type = /obj/structure/closet/crate/secure/freezer
+

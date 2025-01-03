@@ -35,15 +35,15 @@
 
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_ICLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_BACK | ITEM_SLOT_EARS | ITEM_SLOT_EYES
 
-	mutantbrain = /obj/item/organ/internal/brain/voidwalker
-	mutanteyes = /obj/item/organ/internal/eyes/voidwalker
+	mutantbrain = /obj/item/organ/brain/voidwalker
+	mutanteyes = /obj/item/organ/eyes/voidwalker
 	mutantheart = null
 	mutantlungs = null
 	mutanttongue = null
 
 	siemens_coeff = 0
 
-/datum/species/voidwalker/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+/datum/species/voidwalker/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 
 	human_who_gained_species.AddComponent(/datum/component/glass_passer)

@@ -1,21 +1,21 @@
-import { createSearch, toTitleCase } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend, useSharedState } from '../backend';
 import {
   BlockQuote,
   Box,
   Button,
+  DmIcon,
   Icon,
-  Image,
   Input,
   LabeledList,
   Section,
   Stack,
   Table,
   Tabs,
-} from '../components';
-import { formatSiUnit } from '../format';
+} from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
+import { createSearch, toTitleCase } from 'tgui-core/string';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 export const OreRedemptionMachine = (props) => {
@@ -175,14 +175,7 @@ export const OreRedemptionMachine = (props) => {
 };
 
 const MaterialRow = (props) => {
-  const { data } = useBackend();
-  const { compact } = props;
-  const { material_icons } = data;
-  const { material, onRelease } = props;
-
-  const display = material_icons.find(
-    (mat_icon) => mat_icon.id === material.id,
-  );
+  const { compact, material, onRelease } = props;
 
   const sheet_amounts = Math.floor(material.amount);
   const print_amount = 5;
@@ -192,14 +185,12 @@ const MaterialRow = (props) => {
     <Table.Row className="candystripe" collapsing>
       {!compact && (
         <Table.Cell collapsing>
-          <Image
-            m={1}
-            src={`data:image/jpeg;base64,${display.product_icon}`}
-            height="18px"
-            width="18px"
-            style={{
-              verticalAlign: 'middle',
-            }}
+          <DmIcon
+            height={'18px'}
+            width={'18px'}
+            icon={material.icon}
+            icon_state={material.icon_state}
+            fallback={<Icon name="spinner" size={2} spin />}
           />
         </Table.Cell>
       )}

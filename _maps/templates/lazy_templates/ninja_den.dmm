@@ -1041,7 +1041,6 @@
 /obj/machinery/vending/coffee{
 	default_price = 0;
 	extra_price = 0;
-	fair_market_price = 0;
 	name = "\improper Jim Norton's Quebecois Coffee"
 	},
 /turf/open/floor/wood/large,
@@ -1652,15 +1651,15 @@
 /area/centcom/central_command_areas/holding)
 "Mz" = (
 /obj/structure/closet,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/machinery/iv_drip,
 /obj/item/emergency_bed,
 /obj/item/storage/medkit/regular,
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
-/obj/item/organ/internal/heart/cybernetic/tier2,
-/obj/item/organ/internal/heart/cybernetic/tier2,
+/obj/item/organ/heart/cybernetic/tier2,
+/obj/item/organ/heart/cybernetic/tier2,
 /obj/item/defibrillator,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)

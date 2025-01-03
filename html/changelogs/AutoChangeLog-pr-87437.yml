@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - rscadd: "GPSes now show the general direction of cross-linked z-levels."

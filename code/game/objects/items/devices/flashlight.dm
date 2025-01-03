@@ -112,8 +112,8 @@
 		to_chat(user, span_warning("You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first!"))
 		return
 
-	var/obj/item/organ/internal/eyes/E = M.get_organ_slot(ORGAN_SLOT_EYES)
-	var/obj/item/organ/internal/brain = M.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/eyes/E = M.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/brain = M.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!E)
 		to_chat(user, span_warning("[M] doesn't have any eyes!"))
 		return
@@ -267,7 +267,7 @@
 
 	if(length(render_list))
 		//display our packaged information in an examine block for easy reading
-		to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+		to_chat(user, boxed_message(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
@@ -781,57 +781,69 @@
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	sound_on = 'sound/effects/wounds/crack2.ogg' // the cracking sound isn't just for wounds silly
 	toggle_context = FALSE
-	/// How many seconds of fuel we have left
-	var/fuel = 0
 	/// How much max fuel we have
 	var/max_fuel = 0
+	/// How much oxygen gets added upon cracking the stick. Doesn't actually produce a reaction with the fluid but it does allow for bootleg chemical "grenades"
+	var/oxygen_added = 5
+	/// How much temperature gets added for every unit of fuel burned down
+	var/temp_per_fuel = 3
+	/// Type of reagent we add as fuel
+	var/fuel_type = /datum/reagent/luminescent_fluid
 	/// The timer id powering our burning
 	var/timer_id = TIMER_ID_NULL
 
-/obj/item/flashlight/glowstick/Initialize(mapload)
-	fuel = rand(20 MINUTES, 25 MINUTES)
-	max_fuel = fuel
+/obj/item/flashlight/glowstick/Initialize(mapload, fuel_override = null)
+	. = ..()
+	max_fuel = isnull(fuel_override) ? rand(20, 25) : fuel_override
+	create_reagents(max_fuel + oxygen_added, DRAWABLE | INJECTABLE)
+	reagents.add_reagent(fuel_type, max_fuel)
 	set_light_color(color)
-	return ..()
+	AddComponent(/datum/component/edible,\
+		food_flags = FOOD_NO_EXAMINE,\
+		volume = reagents.total_volume,\
+		bite_consumption = round(reagents.total_volume / (rand(20, 30) * 0.1)),\
+	)
+
+/obj/item/flashlight/glowstick/proc/get_fuel()
+	return reagents?.get_reagent_amount(fuel_type)
 
 /// Burns down the glowstick by the specified time
 /// Returns the amount of time we need to burn before a visual change will occur
 /obj/item/flashlight/glowstick/proc/burn_down(amount = 0)
-	fuel -= amount
-	var/fuel_target = 0
-	if(fuel >= max_fuel)
-		fuel_target = max_fuel * 0.4
-	else if(fuel >= max_fuel * 0.4)
-		fuel_target = max_fuel * 0.3
+	if (!reagents.remove_all(amount))
+		turn_off()
+		return 0
+
+	var/fuel = get_fuel()
+	if (fuel <= 0)
+		turn_off()
+		return 0
+
+	reagents.expose_temperature(amount * temp_per_fuel)
+	if(fuel >= max_fuel * 0.4)
 		set_light_range(3)
 		set_light_power(1.5)
 	else if(fuel >= max_fuel * 0.3)
-		fuel_target = max_fuel * 0.2
 		set_light_range(2)
 		set_light_power(1.25)
 	else if(fuel >= max_fuel * 0.2)
-		fuel_target = max_fuel * 0.1
 		set_light_power(1)
 	else if(fuel >= max_fuel * 0.1)
-		fuel_target = 0
 		set_light_range(1.5)
 		set_light_power(0.5)
 
-	var/time_to_burn = round(fuel - fuel_target)
-	// Less then a ds? go home
-	if(time_to_burn <= 0)
-		turn_off()
-
-	return time_to_burn
+	return round(reagents.total_volume * 0.1)
 
 /obj/item/flashlight/glowstick/proc/burn_loop(amount = 0)
 	timer_id = TIMER_ID_NULL
 	var/burn_next = burn_down(amount)
 	if(burn_next <= 0)
 		return
-	timer_id = addtimer(CALLBACK(src, PROC_REF(burn_loop), burn_next), burn_next, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(burn_loop), burn_next), burn_next MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_OVERRIDE)
 
 /obj/item/flashlight/glowstick/proc/turn_on()
+	reagents.add_reagent(/datum/reagent/oxygen, oxygen_added)
+	grind_results -= /datum/reagent/oxygen
 	set_light_on(TRUE) // Just in case
 	var/datum/action/toggle = locate(/datum/action/item_action/toggle_light) in actions
 	// No sense having a toggle light action that we don't use eh?
@@ -841,7 +853,7 @@
 
 /obj/item/flashlight/glowstick/proc/turn_off()
 	var/datum/action/toggle = locate(/datum/action/item_action/toggle_light) in actions
-	if(fuel && !toggle)
+	if(get_fuel() && !toggle)
 		add_item_action(/datum/action/item_action/toggle_light)
 	if(timer_id != TIMER_ID_NULL)
 		var/expected_burn_time = burn_down(0) // This is dumb I'm sorry
@@ -853,12 +865,12 @@
 
 /obj/item/flashlight/glowstick/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state][(fuel <= 0) ? "-empty" : ""]"
-	inhand_icon_state = "[base_icon_state][((fuel > 0) && light_on) ? "-on" : ""]"
+	icon_state = "[base_icon_state][(get_fuel() <= 0) ? "-empty" : ""]"
+	inhand_icon_state = "[base_icon_state][((get_fuel() > 0) && light_on) ? "-on" : ""]"
 
 /obj/item/flashlight/glowstick/update_overlays()
 	. = ..()
-	if(fuel <= 0 && !light_on)
+	if(get_fuel() <= 0 && !light_on)
 		return
 
 	var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
@@ -866,14 +878,14 @@
 	. += glowstick_overlay
 
 /obj/item/flashlight/glowstick/toggle_light(mob/user)
-	if(fuel <= 0)
+	if(get_fuel() <= 0)
 		return FALSE
 	if(light_on)
 		return FALSE
 	return ..()
 
 /obj/item/flashlight/glowstick/attack_self(mob/user)
-	if(fuel <= 0)
+	if(get_fuel() <= 0)
 		balloon_alert(user, "glowstick is spent!")
 		return
 	if(light_on)
@@ -886,40 +898,46 @@
 		turn_on()
 
 /obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)
-	if(!fuel)
+	if(!get_fuel())
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!"))
 		return SHAME
-	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!"))
 		return SHAME
 	user.visible_message(span_suicide("[user] is squirting [src]'s fluids into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
-	burn_loop(fuel)
+	burn_loop(get_fuel())
 	return FIRELOSS
 
 /obj/item/flashlight/glowstick/red
 	name = "red glowstick"
 	color = COLOR_SOFT_RED
+	fuel_type = /datum/reagent/luminescent_fluid/red
 
 /obj/item/flashlight/glowstick/blue
 	name = "blue glowstick"
 	color = LIGHT_COLOR_BLUE
+	fuel_type = /datum/reagent/luminescent_fluid/blue
 
 /obj/item/flashlight/glowstick/cyan
 	name = "cyan glowstick"
 	color = LIGHT_COLOR_CYAN
+	fuel_type = /datum/reagent/luminescent_fluid/cyan
 
 /obj/item/flashlight/glowstick/orange
 	name = "orange glowstick"
 	color = LIGHT_COLOR_ORANGE
+	fuel_type = /datum/reagent/luminescent_fluid/orange
 
 /obj/item/flashlight/glowstick/yellow
 	name = "yellow glowstick"
 	color = LIGHT_COLOR_DIM_YELLOW
+	fuel_type = /datum/reagent/luminescent_fluid/yellow
 
 /obj/item/flashlight/glowstick/pink
 	name = "pink glowstick"
 	color = LIGHT_COLOR_PINK
+	fuel_type = /datum/reagent/luminescent_fluid/pink
 
 /obj/item/flashlight/spotlight //invisible lighting source
 	name = "disco light"

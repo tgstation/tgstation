@@ -5,18 +5,6 @@
 #define SCANGATE_WANTED "Wanted"
 #define SCANGATE_SPECIES "Species"
 #define SCANGATE_NUTRITION "Nutrition"
-#define SCANGATE_CONTRABAND "Contraband"
-
-#define SCANGATE_HUMAN "human"
-#define SCANGATE_LIZARD "lizard"
-#define SCANGATE_FELINID "felinid"
-#define SCANGATE_FLY "fly"
-#define SCANGATE_PLASMAMAN "plasma"
-#define SCANGATE_MOTH "moth"
-#define SCANGATE_JELLY "jelly"
-#define SCANGATE_POD "pod"
-#define SCANGATE_GOLEM "golem"
-#define SCANGATE_ZOMBIE "zombie"
 
 /obj/machinery/scanner_gate
 	name = "scanner gate"
@@ -35,7 +23,7 @@
 	///Is searching for a disease, what severity is enough to trigger the gate?
 	var/disease_threshold = DISEASE_SEVERITY_MINOR
 	///If scanning for a specific species, what species is it looking for?
-	var/detect_species = SCANGATE_HUMAN
+	var/detect_species_id = SPECIES_HUMAN
 	///Flips all scan results for inverse scanning. Signals if scan returns false.
 	var/reverse = FALSE
 	///If scanning for nutrition, what level of nutrition will trigger the scanner?
@@ -50,8 +38,19 @@
 	var/minus_false_beep = 0
 	///Base false positive/negative chance
 	var/base_false_beep = 5
-	///Is an n-spect scanner attached to the gate? Enables contraband scanning.
-	var/obj/item/inspector/n_spect = null
+	///List of species that can be scanned by the gate. Supports adding more species' IDs during in-game.
+	var/list/available_species = list(
+		SPECIES_HUMAN,
+		SPECIES_LIZARD,
+		SPECIES_FLYPERSON,
+		SPECIES_FELINE,
+		SPECIES_PLASMAMAN,
+		SPECIES_MOTH,
+		SPECIES_JELLYPERSON,
+		SPECIES_PODPERSON,
+		SPECIES_GOLEM,
+		SPECIES_ZOMBIE,
+	)
 	/// Overlay object we're using for scanlines
 	var/obj/effect/overlay/scanline = null
 
@@ -74,12 +73,6 @@
 	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
 		minus_false_beep = scanning_module.tier //The better are scanninning modules - the lower is chance of False Positives
 
-/obj/machinery/scanner_gate/atom_deconstruct(disassembled)
-	. = ..()
-	if(n_spect)
-		n_spect.forceMove(drop_location())
-		n_spect = null
-
 /obj/machinery/scanner_gate/examine(mob/user)
 	. = ..()
 
@@ -88,18 +81,6 @@
 		. += span_notice("The control panel is ID-locked. Swipe a valid ID to unlock it.")
 	else
 		. += span_notice("The control panel is unlocked. Swipe an ID to lock it.")
-	if(n_spect)
-		. += span_notice("The scanner is equipped with an N-Spect scanner. Use a [span_boldnotice("crowbar")] to uninstall.")
-
-/obj/machinery/scanner_gate/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	if(n_spect && held_item?.tool_behaviour == TOOL_CROWBAR)
-		context[SCREENTIP_CONTEXT_LMB] = "Remove N-Spect scanner"
-		return CONTEXTUAL_SCREENTIP_SET
-	if(!n_spect && istype(held_item, /obj/item/inspector))
-		context[SCREENTIP_CONTEXT_LMB] = "Install N-Spect scanner"
-		return CONTEXTUAL_SCREENTIP_SET
-
 
 /obj/machinery/scanner_gate/proc/on_entered(datum/source, atom/movable/thing)
 	SIGNAL_HANDLER
@@ -134,19 +115,6 @@
 		return
 	set_scanline("passive")
 
-/obj/machinery/scanner_gate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/inspector))
-		if(n_spect)
-			to_chat(user, span_warning("The scanner is already equipped with an N-Spect scanner."))
-			return ITEM_INTERACT_BLOCKING
-		else
-			to_chat(user, span_notice("You install an N-Spect scanner on [src]."))
-			n_spect = tool
-			if(!user.transferItemToLoc(tool, src))
-				return ITEM_INTERACT_BLOCKING
-			return ITEM_INTERACT_SUCCESS
-	return NONE
-
 /obj/machinery/scanner_gate/attackby(obj/item/attacking_item, mob/user, params)
 	var/obj/item/card/id/card = attacking_item.GetID()
 	if(card)
@@ -169,24 +137,6 @@
 			wires.interact(user)
 	return ..()
 
-/obj/machinery/scanner_gate/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(n_spect)
-		if(locked)
-			balloon_alert(user, "locked!")
-			return ITEM_INTERACT_BLOCKING
-
-		to_chat(user, span_notice("You uninstall [n_spect] from [src]."))
-		n_spect.forceMove(drop_location())
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/scanner_gate/Exited(atom/gone)
-	. = ..()
-	if(gone == n_spect)
-		n_spect = null
-		if(scangate_mode == SCANGATE_CONTRABAND)
-			scangate_mode = SCANGATE_NONE
-
 /obj/machinery/scanner_gate/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
@@ -200,6 +150,7 @@
 	var/beep = FALSE
 	var/color = null
 	var/detected_thing = null
+	var/bypassed = FALSE
 	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	switch(scangate_mode)
 		if(SCANGATE_NONE)
@@ -228,37 +179,12 @@
 			if(ishuman(thing))
 				var/mob/living/carbon/human/scanned_human = thing
 				var/datum/species/scan_species = /datum/species/human
-				switch(detect_species)
-					if(SCANGATE_LIZARD)
-						detected_thing = "Lizardperson"
-						scan_species = /datum/species/lizard
-					if(SCANGATE_FLY)
-						detected_thing = "Flyperson"
-						scan_species = /datum/species/fly
-					if(SCANGATE_FELINID)
-						detected_thing = "Felinid"
-						scan_species = /datum/species/human/felinid
-					if(SCANGATE_PLASMAMAN)
-						detected_thing = "Plasmaman"
-						scan_species = /datum/species/plasmaman
-					if(SCANGATE_MOTH)
-						detected_thing = "Mothperson"
-						scan_species = /datum/species/moth
-					if(SCANGATE_JELLY)
-						detected_thing = "Jellyperson"
-						scan_species = /datum/species/jelly
-					if(SCANGATE_POD)
-						detected_thing = "Podperson"
-						scan_species = /datum/species/pod
-					if(SCANGATE_GOLEM)
-						detected_thing = "Golem"
-						scan_species = /datum/species/golem
-					if(SCANGATE_ZOMBIE)
-						detected_thing = "Zombie"
-						scan_species = /datum/species/zombie
+				if(detect_species_id && (detect_species_id in available_species))
+					scan_species = GLOB.species_list[detect_species_id]
+					detected_thing = scan_species.name
 				if(is_species(scanned_human, scan_species))
 					beep = TRUE
-				if(detect_species == SCANGATE_ZOMBIE) //Can detect dormant zombies
+				if(detect_species_id == SPECIES_ZOMBIE) //Can detect dormant zombies
 					detected_thing = "Romerol infection"
 					if(scanned_human.get_organ_slot(ORGAN_SLOT_ZOMBIE))
 						beep = TRUE
@@ -274,7 +200,7 @@
 						if((!HAS_TRAIT(scanned_human, TRAIT_MINDSHIELD)) && (isnull(idcard) || !(ACCESS_WEAPONS in idcard.access))) // mindshield or ID card with weapons access, like bartender
 							beep = TRUE
 							break
-						say("[detected_thing] detection bypassed.")
+						bypassed = TRUE
 						break
 			else
 				for(var/obj/item/content in thing.get_all_contents_skipping_traits(TRAIT_CONTRABAND_BLOCKER))
@@ -290,14 +216,6 @@
 				if(scanned_human.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
 					beep = TRUE
 					detected_thing = "Obesity"
-		if(SCANGATE_CONTRABAND)
-			for(var/obj/item/content in thing.get_all_contents_skipping_traits(TRAIT_CONTRABAND_BLOCKER))
-				detected_thing = "Contraband"
-				if(content.is_contraband())
-					beep = TRUE
-					break
-			if(!n_spect.scans_correctly)
-				beep = !beep //We do a little trolling
 
 	if(reverse)
 		beep = !beep
@@ -314,6 +232,8 @@
 			assembly?.activate()
 	else
 		SEND_SIGNAL(src, COMSIG_SCANGATE_PASS_NO_TRIGGER, thing)
+		if(bypassed)
+			say("[detected_thing] detection bypassed.")
 		if(!ignore_signals)
 			color = wires.get_color_of_wire(WIRE_DENY)
 			var/obj/item/assembly/assembly = wires.get_attached(color)
@@ -344,15 +264,24 @@
 		ui = new(user, src, "ScannerGate", name)
 		ui.open()
 
+/obj/machinery/scanner_gate/ui_static_data(mob/user)
+	. = ..()
+	for(var/species_id in available_species)
+		var/datum/species/specie = GLOB.species_list[species_id]
+		.["available_species"] += list(list(
+			"specie_name" = capitalize(format_text(specie.name)),
+			"specie_id" = species_id,
+		))
+
 /obj/machinery/scanner_gate/ui_data()
 	var/list/data = list()
 	data["locked"] = locked
 	data["scan_mode"] = scangate_mode
 	data["reverse"] = reverse
 	data["disease_threshold"] = disease_threshold
-	data["target_species"] = detect_species
+	data["target_species_id"] = detect_species_id
 	data["target_nutrition"] = detect_nutrition
-	data["contraband_enabled"] = !!n_spect
+	data["target_zombie"] = (detect_species_id == SPECIES_ZOMBIE)
 	return data
 
 /obj/machinery/scanner_gate/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -376,10 +305,11 @@
 			var/new_threshold = params["new_threshold"]
 			disease_threshold = new_threshold
 			. = TRUE
-		//Some species are not scannable, like abductors (too unknown), androids (too artificial) or skeletons (too magic)
 		if("set_target_species")
-			var/new_species = params["new_species"]
-			detect_species = new_species
+			var/new_specie_id = params["new_species_id"]
+			if(!(new_specie_id in available_species))
+				return
+			detect_species_id = new_specie_id
 			. = TRUE
 		if("set_target_nutrition")
 			var/new_nutrition = params["new_nutrition"]
@@ -397,7 +327,7 @@
 
 /obj/machinery/scanner_gate/preset_guns
 	locked = TRUE
-	req_access = ACCESS_SECURITY
+	req_access = list(ACCESS_SECURITY)
 	scangate_mode = SCANGATE_GUNS
 
 #undef SCANGATE_NONE
@@ -407,15 +337,3 @@
 #undef SCANGATE_WANTED
 #undef SCANGATE_SPECIES
 #undef SCANGATE_NUTRITION
-#undef SCANGATE_CONTRABAND
-
-#undef SCANGATE_HUMAN
-#undef SCANGATE_LIZARD
-#undef SCANGATE_FELINID
-#undef SCANGATE_FLY
-#undef SCANGATE_PLASMAMAN
-#undef SCANGATE_MOTH
-#undef SCANGATE_JELLY
-#undef SCANGATE_POD
-#undef SCANGATE_GOLEM
-#undef SCANGATE_ZOMBIE

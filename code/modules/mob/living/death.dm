@@ -69,16 +69,26 @@
 /mob/living/proc/spread_bodyparts(drop_bitflags=NONE)
 	return
 
+/// Length of the animation in dust_animation.dmi
+#define DUST_ANIMATION_TIME 1.3 SECONDS
+
 /**
- * This is the proc for turning a mob into ash.
+ * This is the proc for turning an atom into ash.
  * Dusting robots does not eject the MMI, so it's a bit more powerful than gib()
  *
- * Arguments:
+ * Arguments: (Only used for mobs)
  * * just_ash - If TRUE, ash will spawn where the mob was, as opposed to remains
  * * drop_items - Should the mob drop their items before dusting?
  * * force - Should this mob be FORCABLY dusted?
 */
-/mob/living/proc/dust(just_ash, drop_items, force)
+/atom/movable/proc/dust(just_ash, drop_items, force)
+	dust_animation()
+	// since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play.
+	// Looks much nicer and doesn't cause multiple runtimes.
+	QDEL_IN(src, DUST_ANIMATION_TIME)
+
+/mob/living/dust(just_ash, drop_items, force)
+	..()
 	if(body_position == STANDING_UP)
 		// keep us upright so the animation fits.
 		ADD_TRAIT(src, TRAIT_FORCED_STANDING, TRAIT_GENERIC)
@@ -90,16 +100,54 @@
 	if(buckled)
 		buckled.unbuckle_mob(src, force = TRUE)
 
-	dust_animation()
-	spawn_dust(just_ash)
+	addtimer(CALLBACK(src, PROC_REF(spawn_dust), just_ash), DUST_ANIMATION_TIME - 0.3 SECONDS)
 	ghostize()
-	QDEL_IN(src,5) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 
-/mob/living/proc/dust_animation()
-	return
+/// Animates turning into dust.
+/// Does not delete src afterwards, BUT it will become invisible (and grey), so ensure you handle that yourself
+/atom/movable/proc/dust_animation(atom/anim_loc = src.loc)
+	if(isnull(anim_loc)) // the effect breaks if we have a null loc
+		return
+	var/obj/effect/temp_visual/dust_animation_filter/dustfx = new(anim_loc, REF(src))
+	add_filter("dust_animation", 1, displacement_map_filter(render_source = dustfx.render_target, size = 256))
+	add_filter("dust_color", 1, color_matrix_filter())
+	transition_filter("dust_color", color_matrix_filter(COLOR_MATRIX_GRAYSCALE), DUST_ANIMATION_TIME - 0.3 SECONDS)
+	animate(src, alpha = 0, time = DUST_ANIMATION_TIME - 0.1 SECONDS, easing = SINE_EASING | EASE_IN)
 
+/// Holds the dust animation filter effect, so we can animate it
+/obj/effect/temp_visual/dust_animation_filter
+	icon = 'icons/mob/dust_animation.dmi'
+	icon_state = "dust.1"
+	duration = DUST_ANIMATION_TIME
+	randomdir = FALSE
+
+/obj/effect/temp_visual/dust_animation_filter/Initialize(mapload, anim_id = "random_default_anti_collision_text")
+	. = ..()
+	// we manually animate this, rather than just using an animated icon state or flick, to work around byond animated state memes
+	// (normally, all animated icon states are synced to the same time, which would bad here)
+	for(var/i in 2 to duration)
+		if(PERFORM_ALL_TESTS(focus_only/runtime_icon_states) && !icon_exists(icon, "dust.[i]"))
+			stack_trace("Missing dust animation icon state: dust.[i]")
+		animate(src, time = 1, icon_state = "dust.[i]", flags = ANIMATION_CONTINUE)
+	if(PERFORM_ALL_TESTS(focus_only/runtime_icon_states) && icon_exists(icon, "dust.[duration + 1]"))
+		stack_trace("Extra dust animation icon state: dust.[duration + 1]")
+	render_target = "*dust-[anim_id]"
+
+#undef DUST_ANIMATION_TIME
+
+/**
+ * Spawns dust / ash or remains where the mob was
+ *
+ * just_ash: If TRUE, just ash will spawn where the mob was, as opposed to remains
+ */
 /mob/living/proc/spawn_dust(just_ash = FALSE)
-	new /obj/effect/decal/cleanable/ash(loc)
+	var/ash_type = /obj/effect/decal/cleanable/ash
+	if(mob_size >= MOB_SIZE_LARGE)
+		ash_type = /obj/effect/decal/cleanable/ash/large
+
+	var/obj/effect/decal/cleanable/ash/ash = new ash_type(loc)
+	ash.pixel_z = -5
+	ash.pixel_w = rand(-1, 1)
 
 /*
  * Called when the mob dies. Can also be called manually to kill a mob.

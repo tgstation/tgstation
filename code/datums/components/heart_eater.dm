@@ -44,13 +44,13 @@
 /datum/component/heart_eater/proc/prepare_species(mob/living/carbon/human/eater)
 	if(eater.get_liked_foodtypes() & GORE)
 		return
-	var/obj/item/organ/internal/tongue/eater_tongue = eater.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/eater_tongue = eater.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!eater_tongue)
 		return
 	eater_tongue.disliked_foodtypes &= ~GORE
 	eater_tongue.liked_foodtypes |= GORE
 
-/datum/component/heart_eater/proc/on_species_change(mob/living/carbon/human/eater, datum/species/new_species, datum/species/old_species)
+/datum/component/heart_eater/proc/on_species_change(mob/living/carbon/human/eater, datum/species/new_species, datum/species/old_species, pref_load, regenerate_icons)
 	SIGNAL_HANDLER
 
 	eater.dna?.species?.damage_modifier += remember_modifier
@@ -62,10 +62,10 @@
 
 	if(get_area(eater) == GLOB.areas_by_type[/area/centcom/wizard_station])
 		return
-	if(!istype(what_we_ate, /obj/item/organ/internal/heart))
+	if(!istype(what_we_ate, /obj/item/organ/heart))
 		return
-	var/obj/item/organ/internal/heart/we_ate_heart = what_we_ate
-	var/obj/item/organ/internal/heart/previous_heart = last_heart_we_ate?.resolve()
+	var/obj/item/organ/heart/we_ate_heart = what_we_ate
+	var/obj/item/organ/heart/previous_heart = last_heart_we_ate?.resolve()
 	if(we_ate_heart == previous_heart)
 		return
 	if (!HAS_TRAIT(we_ate_heart, TRAIT_USED_ORGAN))

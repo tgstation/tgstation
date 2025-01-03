@@ -14,18 +14,19 @@
 	var/static/list/gas_connections = list(
 		COMSIG_TURF_EXPOSE = PROC_REF(on_wearer_exposed_gas),
 	)
+	var/step_change = 0.5
 
 /obj/item/mod/module/springlock/on_install()
-	mod.activation_step_time *= 0.5
+	mod.activation_step_time *= step_change
 
 /obj/item/mod/module/springlock/on_uninstall(deleting = FALSE)
-	mod.activation_step_time *= 2
+	mod.activation_step_time /= step_change
 
-/obj/item/mod/module/springlock/on_suit_activation()
+/obj/item/mod/module/springlock/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_wearer_exposed))
 	AddComponent(/datum/component/connect_loc_behalf, mod.wearer, gas_connections)
 
-/obj/item/mod/module/springlock/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/springlock/on_part_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
@@ -86,7 +87,6 @@
 	desc = "A Super Cool Awesome Visor (SCAV), intended for modular suits."
 	icon_state = "rave_visor"
 	complexity = 1
-	overlay_state_inactive = "module_rave"
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK)
 	/// The client colors applied to the wearer.
 	var/datum/client_colour/rave_screen
@@ -131,9 +131,13 @@
 	SEND_SOUND(mod.wearer, sound('sound/machines/terminal/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
 
 /obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
-	. = ..()
-	for(var/mutable_appearance/appearance as anything in .)
-		appearance.color = isnull(music_player.active_song_sound) ? null : rainbow_order[rave_number]
+	if (!active)
+		return list()
+	var/mutable_appearance/visor_overlay = mod.get_visor_overlay(standing)
+	visor_overlay.appearance_flags |= RESET_COLOR
+	if (!isnull(music_player.active_song_sound))
+		visor_overlay.color = rainbow_order[rave_number]
+	return list(visor_overlay)
 
 /obj/item/mod/module/visor/rave/on_active_process(seconds_per_tick)
 	rave_number++
@@ -282,7 +286,6 @@
 	complexity = 2
 	active_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/magboot, /obj/item/mod/module/anomaly_locked/antigrav)
-	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_atrocinator"
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// How many steps the user has taken since turning the suit on, used for footsteps.
@@ -295,8 +298,8 @@
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
-	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
-	passtable_on(mod.wearer, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
+	passtable_on(mod.wearer, REF(src))
 	check_upstairs() //todo at some point flip your screen around
 
 /obj/item/mod/module/atrocinator/deactivate(display_message = TRUE, deleting = FALSE)
@@ -312,24 +315,32 @@
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
 	step_count = 0
-	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
-	passtable_off(mod.wearer, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
+	passtable_off(mod.wearer, REF(src))
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
 	if(istype(current_turf))
 		current_turf.zFall(mod.wearer, falling_from_move = TRUE)
 
-/obj/item/mod/module/atrocinator/proc/check_upstairs()
+/obj/item/mod/module/atrocinator/proc/check_upstairs(atom/movable/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
 	if(you_fucked_up || mod.wearer.has_gravity() > NEGATIVE_GRAVITY)
 		return
+
 	var/turf/open/current_turf = get_turf(mod.wearer)
 	var/turf/open/openspace/turf_above = get_step_multiz(mod.wearer, UP)
 	if(current_turf && istype(turf_above))
 		current_turf.zFall(mod.wearer)
+		return
+
 	else if(!turf_above && istype(current_turf) && current_turf.planetary_atmos) //nothing holding you down
 		INVOKE_ASYNC(src, PROC_REF(fly_away))
-	else if(!(step_count % 2))
+		return
+
+	if (forced || (SSlag_switch.measures[DISABLE_FOOTSTEPS] && !(HAS_TRAIT(source, TRAIT_BYPASS_MEASURES))))
+		return
+
+	if(!(step_count % 2))
 		playsound(current_turf, 'sound/items/modsuit/atrocinator_step.ogg', 50)
 	step_count++
 

@@ -477,10 +477,11 @@
 	var/obj/item/mod/control/mod = squaddie.back
 	if(!istype(mod))
 		return
-	var/obj/item/mod/module/hat_stabilizer/hat_holder = locate() in mod.modules
-	var/obj/item/clothing/head/helmet/space/beret/beret = new(hat_holder)
-	hat_holder.attached_hat = beret
-	squaddie.update_clothing(mod.slot_flags)
+	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	var/obj/item/clothing/head/helmet/space/beret/beret = new(helmet)
+	var/datum/component/hat_stabilizer/component = helmet.GetComponent(/datum/component/hat_stabilizer)
+	component.attach_hat(beret)
+	squaddie.update_clothing(helmet.slot_flags)
 
 /datum/outfit/centcom/ert/marine
 	name = "Marine Commander"

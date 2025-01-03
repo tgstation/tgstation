@@ -26,7 +26,7 @@
 	if(!length(buckled_mobs))
 		return
 
-	if(hero.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
+	if(hero.get_organ_by_type(/obj/item/organ/alien/plasmavessel))
 		unbuckle_mob(captive)
 		add_fingerprint(hero)
 		return
@@ -59,9 +59,9 @@
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated || M.buckled )
 		return
 
-	if(M.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
+	if(M.get_organ_by_type(/obj/item/organ/alien/plasmavessel))
 		return
-	if(!user.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
+	if(!user.get_organ_by_type(/obj/item/organ/alien/plasmavessel))
 		return
 
 	if(has_buckled_mobs())

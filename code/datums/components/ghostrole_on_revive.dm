@@ -3,13 +3,13 @@
 	/// If revived and no ghosts, just die again?
 	var/refuse_revival_if_failed
 	/// Callback for when the mob is revived and has their body occupied by a ghost
-	var/datum/callback/on_succesful_revive
+	var/datum/callback/on_successful_revive
 
-/datum/component/ghostrole_on_revive/Initialize(refuse_revival_if_failed, on_succesful_revive)
+/datum/component/ghostrole_on_revive/Initialize(refuse_revival_if_failed, on_successful_revive)
 	. = ..()
 
 	src.refuse_revival_if_failed = refuse_revival_if_failed
-	src.on_succesful_revive = on_succesful_revive
+	src.on_successful_revive = on_successful_revive
 
 	ADD_TRAIT(parent, TRAIT_GHOSTROLE_ON_REVIVE, REF(src)) //for adding an alternate examination
 
@@ -17,10 +17,10 @@
 		prepare_mob(parent)
 		return
 
-	if(!istype(parent, /obj/item/organ/internal/brain))
+	if(!istype(parent, /obj/item/organ/brain))
 		return COMPONENT_INCOMPATIBLE
 
-	var/obj/item/organ/internal/brain/brein = parent
+	var/obj/item/organ/brain/brein = parent
 	if(brein.owner)
 		prepare_mob(brein.owner)
 	else
@@ -34,7 +34,7 @@
 
 	if(iscarbon(liver))
 		var/mob/living/carbon/carbon = liver
-		var/obj/item/organ/brain = carbon.get_organ_by_type(/obj/item/organ/internal/brain)
+		var/obj/item/organ/brain = carbon.get_organ_by_type(/obj/item/organ/brain)
 		if(brain)
 			RegisterSignal(brain, COMSIG_ORGAN_REMOVED, PROC_REF(on_remove))
 
@@ -57,7 +57,7 @@
 	RegisterSignal(brein, COMSIG_ORGAN_IMPLANTED, PROC_REF(prepare_mob_from_brain))
 	UnregisterSignal(brein, COMSIG_ORGAN_REMOVED)
 
-/datum/component/ghostrole_on_revive/proc/prepare_mob_from_brain(obj/item/organ/internal/brain/brein, mob/living/owner)
+/datum/component/ghostrole_on_revive/proc/prepare_mob_from_brain(obj/item/organ/brain/brein, mob/living/owner)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(brein, COMSIG_ORGAN_IMPLANTED)
@@ -102,7 +102,7 @@
 			aliver.visible_message(span_deadsay("[aliver.name]'s soul is struggling to return!"))
 	else
 		aliver.key = chosen_one.key
-		on_succesful_revive?.Invoke(aliver)
+		on_successful_revive?.Invoke(aliver)
 		qdel(src)
 
 /datum/component/ghostrole_on_revive/Destroy(force)
@@ -111,8 +111,8 @@
 	var/mob/living/living
 	if(isliving(parent))
 		living = parent
-	else if(istype(parent, /obj/item/organ/internal/brain))
-		var/obj/item/organ/internal/brain/brain = parent
+	else if(istype(parent, /obj/item/organ/brain))
+		var/obj/item/organ/brain/brain = parent
 		living = brain.owner
 	living?.med_hud_set_status()
 

@@ -28,6 +28,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/datum/action/cooldown/grand_ritual/ritual
 	/// Perks that wizard learn
 	var/list/perks = list()
+	/// Button that hide perks hud.
+	var/atom/movable/screen/perk/more/compact_button
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"

@@ -430,6 +430,7 @@
 	icon_state = "baklavaslice"
 	tastes = list("nuts" = 1, "pie" = 1)
 	foodtypes = NUTS | SUGAR
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pie/frenchsilkpie
 	name = "french silk pie"

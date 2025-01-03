@@ -278,6 +278,9 @@
 		seedify(plant, 1)
 	return CLICK_ACTION_SUCCESS
 
+/obj/item/storage/bag/plants/cyborg
+	name = "cyborg plant bag"
+
 // -----------------------------
 //        Sheet Snatcher
 // -----------------------------

@@ -2,14 +2,14 @@
 #define APPENDICITIS_PROB 100 * (0.1 * (1 / 25) / 3600)
 #define INFLAMATION_ADVANCEMENT_PROB 2
 
-/obj/item/organ/internal/appendix
+/obj/item/organ/appendix
 	name = "appendix"
 	icon_state = "appendix"
 	base_icon_state = "appendix"
 
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_APPENDIX
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/bad_food = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/toxin/bad_food = 5)
 	grind_results = list(/datum/reagent/toxin/bad_food = 5)
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
@@ -19,15 +19,15 @@
 
 	var/inflamation_stage = 0
 
-/obj/item/organ/internal/appendix/update_name()
+/obj/item/organ/appendix/update_name()
 	. = ..()
 	name = "[inflamation_stage ? "inflamed " : null][initial(name)]"
 
-/obj/item/organ/internal/appendix/update_icon_state()
+/obj/item/organ/appendix/update_icon_state()
 	icon_state = "[base_icon_state][inflamation_stage ? "inflamed" : ""]"
 	return ..()
 
-/obj/item/organ/internal/appendix/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/appendix/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(!owner)
 		return
@@ -40,7 +40,7 @@
 	else if(SPT_PROB(APPENDICITIS_PROB, seconds_per_tick) && !HAS_TRAIT(owner, TRAIT_TEMPORARY_BODY))
 		become_inflamed()
 
-/obj/item/organ/internal/appendix/proc/become_inflamed()
+/obj/item/organ/appendix/proc/become_inflamed()
 	inflamation_stage = 1
 	update_appearance()
 	if(owner)
@@ -52,7 +52,7 @@
 			header = "Whoa, Sick!",
 		)
 
-/obj/item/organ/internal/appendix/proc/inflamation(seconds_per_tick)
+/obj/item/organ/appendix/proc/inflamation(seconds_per_tick)
 	var/mob/living/carbon/organ_owner = owner
 	if(inflamation_stage < 3 && SPT_PROB(INFLAMATION_ADVANCEMENT_PROB, seconds_per_tick))
 		inflamation_stage += 1
@@ -73,21 +73,21 @@
 				organ_owner.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 15)
 
 
-/obj/item/organ/internal/appendix/get_availability(datum/species/owner_species, mob/living/owner_mob)
+/obj/item/organ/appendix/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantappendix
 
-/obj/item/organ/internal/appendix/on_mob_remove(mob/living/carbon/organ_owner)
+/obj/item/organ/appendix/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
 	REMOVE_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 	organ_owner.med_hud_set_status()
 
-/obj/item/organ/internal/appendix/on_mob_insert(mob/living/carbon/organ_owner)
+/obj/item/organ/appendix/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	if(inflamation_stage)
 		ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 		organ_owner.med_hud_set_status()
 
-/obj/item/organ/internal/appendix/get_status_text(advanced, add_tooltips)
+/obj/item/organ/appendix/get_status_text(advanced, add_tooltips)
 	if(!(organ_flags & ORGAN_FAILING) && inflamation_stage)
 		return conditional_tooltip("<font color='#ff9933'>Inflamed</font>", "Remove surgically.", add_tooltips)
 	return ..()

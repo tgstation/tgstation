@@ -18,6 +18,8 @@
 	var/debug = FALSE
 
 /obj/structure/closet/body_bag/lost_crew/with_body/PopulateContents()
+	. = ..()
+
 	var/list/recovered_items = list()
 	var/list/protected_items = list()
 	var/list/lost_crew_data = list()

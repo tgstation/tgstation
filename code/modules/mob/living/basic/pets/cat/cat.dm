@@ -12,8 +12,8 @@
 	unsuitable_atmos_damage = 0.5
 	butcher_results = list(
 		/obj/item/food/meat/slab = 1,
-		/obj/item/organ/internal/ears/cat = 1,
-		/obj/item/organ/external/tail/cat = 1,
+		/obj/item/organ/ears/cat = 1,
+		/obj/item/organ/tail/cat = 1,
 		/obj/item/stack/sheet/animalhide/cat = 1
 	)
 	response_help_continuous = "pets"
@@ -181,8 +181,8 @@
 	can_interact_with_stove = TRUE
 	butcher_results = list(
 		/obj/item/food/meat/slab = 2,
-		/obj/item/organ/internal/ears/cat = 1,
-		/obj/item/organ/external/tail/cat = 1,
+		/obj/item/organ/ears/cat = 1,
+		/obj/item/organ/tail/cat = 1,
 		/obj/item/food/breadslice/plain = 1
 	)
 	collar_icon_state = null

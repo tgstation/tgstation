@@ -2,10 +2,11 @@
 	name = "\improper Ethereal"
 	id = SPECIES_ETHEREAL
 	meat = /obj/item/food/meat/slab/human/mutant/ethereal
-	mutantlungs = /obj/item/organ/internal/lungs/ethereal
-	mutantstomach = /obj/item/organ/internal/stomach/ethereal
-	mutanttongue = /obj/item/organ/internal/tongue/ethereal
-	mutantheart = /obj/item/organ/internal/heart/ethereal
+	mutantlungs = /obj/item/organ/lungs/ethereal
+	smoker_lungs = /obj/item/organ/lungs/ethereal/ethereal_smoker
+	mutantstomach = /obj/item/organ/stomach/ethereal
+	mutanttongue = /obj/item/organ/tongue/ethereal
+	mutantheart = /obj/item/organ/heart/ethereal
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	exotic_bloodtype = "LE"
 	siemens_coeff = 0.5 //They thrive on energy
@@ -47,7 +48,7 @@
 	QDEL_NULL(ethereal_light)
 	return ..()
 
-/datum/species/ethereal/on_species_gain(mob/living/carbon/human/new_ethereal, datum/species/old_species, pref_load)
+/datum/species/ethereal/on_species_gain(mob/living/carbon/human/new_ethereal, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	if(!ishuman(new_ethereal))
 		return
@@ -60,7 +61,7 @@
 	ethereal_light = new_ethereal.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
 	refresh_light_color(new_ethereal)
 
-	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = new_ethereal.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/ethereal/ethereal_heart = new_ethereal.get_organ_slot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
 
 	for(var/obj/item/bodypart/limb as anything in new_ethereal.bodyparts)
@@ -181,6 +182,9 @@
 		'sound/mobs/humanoids/ethereal/ethereal_scream_3.ogg',
 	)
 
+/datum/species/ethereal/get_hiss_sound(mob/living/carbon/human/ethereal)
+	return 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg'
+
 /datum/species/ethereal/get_physical_attributes()
 	return "Ethereals process electricity as their power supply, not food, and are somewhat resistant to it.\
 		They do so via their crystal core, their equivalent of a human heart, which will also encase them in a reviving crystal if they die.\
@@ -241,7 +245,7 @@
 	name = "Lustrous"
 	id = SPECIES_ETHEREAL_LUSTROUS
 	examine_limb_id = SPECIES_ETHEREAL
-	mutantbrain = /obj/item/organ/internal/brain/lustrous
+	mutantbrain = /obj/item/organ/brain/lustrous
 	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
@@ -272,7 +276,7 @@
 		'sound/mobs/humanoids/ethereal/lustrous_scream_3.ogg',
 	)
 
-/datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load)
+/datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load, regenerate_icons)
 	..()
 	default_color = new_lustrous.dna.features["ethcolor"]
 	new_lustrous.dna.features["ethcolor"] = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.

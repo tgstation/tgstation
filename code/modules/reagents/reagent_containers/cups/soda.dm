@@ -76,17 +76,17 @@
 		return TRUE
 	return ..()
 
-/obj/item/reagent_containers/cup/soda_cans/bullet_act(obj/projectile/P)
+/obj/item/reagent_containers/cup/soda_cans/bullet_act(obj/projectile/proj)
 	. = ..()
 	if(QDELETED(src))
 		return
-	if(P.damage > 0 && P.damage_type == BRUTE)
-		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
-		crushed_can.icon_state = icon_state
-		var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
-		crushed_can.throw_at(throw_target, rand(1,2), 7)
-		qdel(src)
+	if(!proj.damage || proj.damage_type != BRUTE)
 		return
+	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(loc)
+	crushed_can.icon_state = icon_state
+	var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
+	crushed_can.throw_at(throw_target, rand(1,2), 7)
+	qdel(src)
 
 /obj/item/reagent_containers/cup/soda_cans/proc/open_soda(mob/user)
 	if(prob(fizziness))
@@ -118,7 +118,7 @@
 			if(iter_mob != target)
 				iter_mob.add_mood_event("observed_soda_spill", /datum/mood_event/observed_soda_spill, target, src)
 
-	playsound(src, 'sound/effects/can/can_pop.ogg', 80, TRUE)
+	playsound(src, 'sound/items/can/can_pop.ogg', 80, TRUE)
 	if(!hide_message)
 		visible_message(span_danger("[src] spills over, fizzing its contents all over [target]!"))
 	spillable = TRUE
@@ -138,7 +138,7 @@
 
 	burst_soda(hit_atom, hide_message = TRUE)
 	visible_message(span_danger("[src]'s impact with [hit_atom] causes it to rupture, spilling everywhere!"))
-	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
+	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(loc)
 	crushed_can.icon_state = icon_state
 	moveToNullspace()
 	QDEL_IN(src, 1 SECONDS) // give it a second so it can still be logged for the throw impact
@@ -151,7 +151,7 @@
 
 /obj/item/reagent_containers/cup/soda_cans/attack_self_secondary(mob/user)
 	if(!is_drainable())
-		playsound(src, 'sound/effects/can/can_shake.ogg', 50, TRUE)
+		playsound(src, 'sound/items/can/can_shake.ogg', 50, TRUE)
 		user.visible_message(span_danger("[user] shakes [src]!"), span_danger("You shake up [src]!"), vision_distance=2)
 		fizziness += SODA_FIZZINESS_SHAKE
 		return

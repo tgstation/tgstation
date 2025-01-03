@@ -82,6 +82,7 @@
 		/obj/item/storage/box/material=1,
 		/obj/item/uplink/debug=1,
 		/obj/item/uplink/nuclear/debug=1,
+		/obj/item/clothing/ears/earmuffs/debug = 1,
 		)
 	generate_items_inside(items_inside,src)
 

@@ -62,7 +62,7 @@
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
-	var/mob/camera/ai_eye/eyeobj
+	var/mob/eye/camera/ai/eyeobj
 	var/sprint = 10
 	var/last_moved = 0
 	var/acceleration = TRUE
@@ -120,7 +120,7 @@
 
 	create_eye()
 
-	if(target_ai.mind)
+	if((target_ai.mind && target_ai.mind.active) || SSticker.current_state == GAME_STATE_SETTING_UP)
 		target_ai.mind.transfer_to(src)
 		if(mind.special_role)
 			to_chat(src, span_userdanger("You have been installed as an AI! "))
@@ -241,7 +241,7 @@
 /// Removes all malfunction-related abilities from the AI
 /mob/living/silicon/ai/proc/remove_malf_abilities()
 	QDEL_NULL(modules_action)
-	for(var/datum/ai_module/AM in current_modules)
+	for(var/datum/ai_module/malf/AM in current_modules)
 		for(var/datum/action/A in actions)
 			if(istype(A, initial(AM.power_type)))
 				qdel(A)
@@ -350,6 +350,7 @@
 		"What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)",
 		"Confirm Shuttle Call",
 		max_length = MAX_MESSAGE_LEN,
+		encode = FALSE,
 	)
 
 	if(incapacitated)
@@ -456,7 +457,7 @@
 	if(hack_software)
 		new/obj/item/malf_upgrade(get_turf(src))
 	the_mmi = mmi_type
-	the_mmi.brain = new /obj/item/organ/internal/brain(the_mmi)
+	the_mmi.brain = new /obj/item/organ/brain(the_mmi)
 	the_mmi.brain.organ_flags |= ORGAN_FROZEN
 	the_mmi.brain.name = "[real_name]'s brain"
 	the_mmi.name = "[initial(the_mmi.name)]: [real_name]"
@@ -618,12 +619,12 @@
 	if (length(cameras))
 		var/obj/machinery/camera/cam = cameras[1]
 		if (cam.can_use())
-			queueAlarm("--- [alarm_type] alarm detected in [home_name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(cam)]>[cam.c_tag]</A>)", alarm_type)
+			queueAlarm("--- [alarm_type] alarm detected in [home_name]! (<A href=byond://?src=[REF(src)];switchcamera=[REF(cam)]>[cam.c_tag]</A>)", alarm_type)
 		else
 			var/first_run = FALSE
 			var/dat2 = ""
 			for (var/obj/machinery/camera/camera as anything in cameras)
-				dat2 += "[(!first_run) ? "" : " | "]<A HREF=?src=[REF(src)];switchcamera=[REF(camera)]>[camera.c_tag]</A>"
+				dat2 += "[(!first_run) ? "" : " | "]<A href=byond://?src=[REF(src)];switchcamera=[REF(camera)]>[camera.c_tag]</A>"
 				first_run = TRUE
 			queueAlarm("--- [alarm_type] alarm detected in [home_name]! ([dat2])", alarm_type)
 	else
@@ -918,7 +919,7 @@
 	var/list/stored_name = list(null)
 	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, FALSE)
 	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
-	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
+	var/hrefpart = "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
 	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely
@@ -1139,8 +1140,8 @@
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
 	. = ..()
 
-/mob/living/silicon/ai/proc/camera_visibility(mob/camera/ai_eye/moved_eye)
-	GLOB.cameranet.visibility(moved_eye, client, all_eyes, TRUE)
+/mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
+	GLOB.cameranet.visibility(moved_eye)
 
 /mob/living/silicon/ai/forceMove(atom/destination)
 	. = ..()

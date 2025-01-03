@@ -1,4 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - bugfix: "pointing at stuff on-top of plates, griddles, stoves and ovens will point at the plate and no longer just do nothing"

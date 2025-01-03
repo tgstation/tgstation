@@ -40,8 +40,8 @@
 /// Requires the target mob to have an existing organic organ to "mutate".
 // TODO: In the future, this should have more logic:
 // - Replace non-mutant organs before mutant ones.
-/mob/living/carbon/human/proc/infuse_organ(datum/infuser_entry/entry)
-	var/obj/item/organ/new_organ = pick_infusion_organ(entry)
+/mob/living/carbon/human/proc/infuse_organ(datum/infuser_entry/entry, atom/movable/infused_from)
+	var/obj/item/organ/new_organ = pick_infusion_organ(entry, infused_from)
 	if(!new_organ)
 		return FALSE
 	// Valid organ successfully picked.
@@ -65,7 +65,7 @@
 		if(old_organ)
 			if((old_organ.type != new_organ) && !IS_ROBOTIC_ORGAN(old_organ))
 				continue // Old organ can be mutated!
-		else if(ispath(new_organ, /obj/item/organ/external))
+		else if(new_organ::organ_flags & ORGAN_EXTERNAL)
 			continue // External organ can be grown!
 		// Internal organ is either missing, or is non-organic.
 		potential_new_organs -= new_organ

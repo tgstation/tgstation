@@ -85,6 +85,7 @@
 /obj/effect/visible_heretic_influence/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(show_presence)), 15 SECONDS)
+	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift])
 
 	var/image/silicon_image = image('icons/effects/eldritch.dmi', src, null, OBJ_LAYER)
 	silicon_image.override = TRUE
@@ -114,7 +115,7 @@
 		their_poor_arm.dismember()
 		qdel(their_poor_arm)
 	else
-		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existance itself!"))
+		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existence itself!"))
 	return TRUE
 
 /obj/effect/visible_heretic_influence/attack_tk(mob/user)
@@ -175,6 +176,7 @@
 
 	AddElement(/datum/element/block_turf_fingerprints)
 	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(verify_user_can_see)))
+	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift])
 
 /obj/effect/heretic_influence/proc/verify_user_can_see(mob/user)
 	return (user.mind in GLOB.reality_smash_track.tracked_heretics)

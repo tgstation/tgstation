@@ -1,8 +1,8 @@
 ///Status effect applied when casting a fishing rod at someone, provided the attached fishing hook allows it.
 /datum/status_effect/grouped/hooked
 	id = "hooked"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = /atom/movable/screen/alert/status_effect/hooked
 
@@ -29,6 +29,7 @@
 	name = "Snagged By Hook"
 	desc = "You're being caught like a fish by some asshat! Click to safely remove the hook or move away far enough to snap it off."
 	icon_state = "hooked"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/hooked/Click()
 	. = ..()

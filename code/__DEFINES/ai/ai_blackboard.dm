@@ -49,11 +49,13 @@
 #define BB_BANE_BATMAN "BB_bane_batman"
 //yep that's it
 
-///Hunting BB keys
+//Hunting BB keys
+///key that holds our current hunting target
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
+///key that holds our less priority hunting target
 #define BB_LOW_PRIORITY_HUNTING_TARGET "BB_low_priority_hunting_target"
-#define BB_HUNTING_COOLDOWN "BB_HUNTING_COOLDOWN"
-
+///key that holds the cooldown for our hunting subtree
+#define BB_HUNTING_COOLDOWN(type) "BB_HUNTING_COOLDOWN_[type]"
 ///Basic Mob Keys
 
 ///Targeting subtrees
@@ -192,6 +194,14 @@
 ///drillable ice we can make holes in
 #define BB_DRILLABLE_ICE "BB_drillable_ice"
 
+
+//emotions we displays depending on our happiness
+///emotions we display when happy
+#define BB_HAPPY_EMOTIONS "happy_emotions"
+///emotions we display when neutral
+#define BB_MODERATE_EMOTIONS "moderate_emotions"
+///emotions we display when depressed
+#define BB_SAD_EMOTIONS "sad_emotions"
 
 // Keys used by one and only one behavior
 // Used to hold state without making bigass lists

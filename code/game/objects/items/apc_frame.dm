@@ -35,5 +35,5 @@
 			var/obj/machinery/power/apc/mounted_apc = locate(/obj/machinery/power/apc) in get_turf(user)
 			mounted_apc.wallframe_act(user, src)
 			return ITEM_INTERACT_SUCCESS
-		turf.attackby(src, user)
+		turf.item_interaction(user, src)
 	return ITEM_INTERACT_SUCCESS

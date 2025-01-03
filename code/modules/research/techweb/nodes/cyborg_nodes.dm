@@ -58,6 +58,7 @@
 		"borg_upgrade_service_apparatus",
 		"borg_upgrade_drink_apparatus",
 		"borg_upgrade_service_cookbook",
+		"borg_upgrade_botany",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -147,7 +148,6 @@
 		"implantcase",
 		"implanter",
 		"locator",
-		"c38_trac",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_MEDICAL)

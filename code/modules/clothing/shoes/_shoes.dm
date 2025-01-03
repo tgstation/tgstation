@@ -4,6 +4,10 @@
 	lefthand_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
 	desc = "Comfortable-looking shoes."
+	pickup_sound = 'sound/items/handling/shoes/sneakers_pickup1.ogg'
+	drop_sound = 'sound/items/handling/shoes/sneakers_drop1.ogg'
+	equip_sound = 'sound/items/equip/sneakers_equip1.ogg'
+	sound_vary = TRUE
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 
 	body_parts_covered = FEET
@@ -106,6 +110,9 @@
 		var/mob/M = loc
 		M.update_worn_shoes()
 
+/obj/item/clothing/shoes/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "boots_worn")
+
 /**
  * adjust_laces adjusts whether our shoes (assuming they can_be_tied) and tied, untied, or knotted
  *
@@ -144,17 +151,13 @@
  * *
  * * user: who is the person interacting with the shoes?
  */
-/obj/item/clothing/shoes/proc/handle_tying(mob/user)
+/obj/item/clothing/shoes/proc/handle_tying(mob/living/user)
 	///our_guy here is the wearer, if one exists (and he must exist, or we don't care)
 	var/mob/living/carbon/human/our_guy = loc
 	if(!istype(our_guy))
 		return
 
-	if (!isliving(user))
-		return
-
-	var/mob/living/living_user = user
-	if (!(living_user.mobility_flags & MOBILITY_USE))
+	if (!isliving(user) || !(user.mobility_flags & MOBILITY_USE))
 		return
 
 	if(!in_range(user, our_guy))
@@ -175,7 +178,7 @@
 				adjust_laces(SHOES_UNTIED, user)
 
 	else // if they're someone else's shoes, go knot-wards
-		if(istype(living_user) && living_user.body_position == STANDING_UP)
+		if(user.body_position == STANDING_UP)
 			to_chat(user, span_warning("You must be on the floor to interact with [src]!"))
 			return
 		if(tied == SHOES_KNOTTED)
@@ -200,12 +203,9 @@
 			user.visible_message(span_danger("[our_guy] stamps on [user]'s hand, mid-shoelace [tied ? "knotting" : "untying"]!"), span_userdanger("Ow! [our_guy] stamps on your hand!"), list(our_guy))
 			to_chat(our_guy, span_userdanger("You stamp on [user]'s hand! What the- [user.p_they()] [user.p_were()] [tied ? "knotting" : "untying"] your shoelaces!"))
 			user.emote("scream")
-			if(istype(living_user))
-				var/obj/item/bodypart/ouchie = living_user.get_bodypart(pick(GLOB.arm_zones))
-				if(ouchie)
-					ouchie.receive_damage(brute = 10)
-				living_user.adjustStaminaLoss(40)
-				living_user.Paralyze(10)
+			user.apply_damage(10, BRUTE, user.get_active_hand(), wound_bonus = CANT_WOUND)
+			user.apply_damage(40, STAMINA)
+			user.Paralyze(1 SECONDS)
 
 ///checking to make sure we're still on the person we're supposed to be, for lacing do_after's
 /obj/item/clothing/shoes/proc/still_shoed(mob/living/carbon/our_guy)

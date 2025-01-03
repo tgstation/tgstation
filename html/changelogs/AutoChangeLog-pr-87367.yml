@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Modernizes polymorph types by adding mob types that never entered the wabbajack list."
-  - balance: "Updated a few species' changesource flags"

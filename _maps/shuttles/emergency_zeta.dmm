@@ -198,10 +198,10 @@
 /area/shuttle/escape/brig)
 "IM" = (
 /obj/structure/table/abductor,
-/obj/item/organ/internal/heart/gland/access{
+/obj/item/organ/heart/gland/access{
 	pixel_x = 10
 	},
-/obj/item/organ/internal/heart/gland/egg,
+/obj/item/organ/heart/gland/egg,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "JK" = (

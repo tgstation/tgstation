@@ -19,10 +19,10 @@
 		/mob/living/basic/mining/goliath,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/brain/goliath,
-		/obj/item/organ/internal/eyes/night_vision/goliath,
-		/obj/item/organ/internal/heart/goliath,
-		/obj/item/organ/internal/lungs/lavaland/goliath,
+		/obj/item/organ/brain/goliath,
+		/obj/item/organ/eyes/night_vision/goliath,
+		/obj/item/organ/heart/goliath,
+		/obj/item/organ/lungs/lavaland/goliath,
 	)
 	infusion_desc = "armored tendril-like"
 	tier = DNA_MUTANT_TIER_ONE
@@ -43,10 +43,10 @@
 		/mob/living/basic/carp,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/brain/carp,
-		/obj/item/organ/internal/heart/carp,
-		/obj/item/organ/internal/lungs/carp,
-		/obj/item/organ/internal/tongue/carp,
+		/obj/item/organ/brain/carp,
+		/obj/item/organ/heart/carp,
+		/obj/item/organ/lungs/carp,
+		/obj/item/organ/tongue/carp,
 	)
 	infusion_desc = "nomadic"
 	tier = DNA_MUTANT_TIER_ONE
@@ -67,10 +67,10 @@
 		/obj/item/food/deadmouse,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/eyes/night_vision/rat,
-		/obj/item/organ/internal/heart/rat,
-		/obj/item/organ/internal/stomach/rat,
-		/obj/item/organ/internal/tongue/rat,
+		/obj/item/organ/eyes/night_vision/rat,
+		/obj/item/organ/heart/rat,
+		/obj/item/organ/stomach/rat,
+		/obj/item/organ/tongue/rat,
 	)
 	infusion_desc = "skittish"
 	tier = DNA_MUTANT_TIER_ONE
@@ -97,10 +97,10 @@
 		/mob/living/basic/cockroach,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/heart/roach,
-		/obj/item/organ/internal/stomach/roach,
-		/obj/item/organ/internal/liver/roach,
-		/obj/item/organ/internal/appendix/roach,
+		/obj/item/organ/heart/roach,
+		/obj/item/organ/stomach/roach,
+		/obj/item/organ/liver/roach,
+		/obj/item/organ/appendix/roach,
 	)
 	infusion_desc = "kafkaesque" // Gregor Samsa !!
 	tier = DNA_MUTANT_TIER_ONE
@@ -128,9 +128,9 @@
 		/obj/item/fish,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/lungs/fish,
-		/obj/item/organ/internal/stomach/fish,
-		/obj/item/organ/external/tail/fish,
+		/obj/item/organ/lungs/fish,
+		/obj/item/organ/stomach/fish,
+		/obj/item/organ/tail/fish,
 	)
 	infusion_desc = "piscine"
 	tier = DNA_MUTANT_TIER_ONE
@@ -158,7 +158,7 @@
 
 	var/list/organs = ..()
 	if(infused_from.required_fluid_type == AQUARIUM_FLUID_AIR || HAS_TRAIT(infused_from, TRAIT_FISH_AMPHIBIOUS))
-		organs -= /obj/item/organ/internal/lungs/fish
+		organs -= /obj/item/organ/lungs/fish
 	return organs
 
 
@@ -172,7 +172,7 @@
 		"spit ink to blind foes",
 	)
 	output_organs = list(
-		/obj/item/organ/internal/tongue/inky
+		/obj/item/organ/tongue/inky
 	)
 	tier = DNA_MUTANT_TIER_ONE
 
@@ -187,7 +187,7 @@
 		"drink like a fish",
 	)
 	output_organs = list(
-		/obj/item/organ/internal/liver/fish
+		/obj/item/organ/liver/fish
 	)
 	tier = DNA_MUTANT_TIER_ONE
 	unreachable_effect = TRUE
@@ -208,7 +208,7 @@
 		/mob/living/basic/crab,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/lungs/fish/amphibious,
+		/obj/item/organ/lungs/fish/amphibious,
 	)
 	infusion_desc = "semi-aquatic"
 	tier = DNA_MUTANT_TIER_ONE

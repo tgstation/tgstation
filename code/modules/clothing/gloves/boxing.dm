@@ -6,6 +6,7 @@
 	equip_delay_other = 60
 	species_exception = list(/datum/species/golem) // now you too can be a golem boxing champion
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
+	equip_sound = 'sound/items/equip/glove_equip.ogg'
 	/// Determines the version of boxing (or any martial art for that matter) that the boxing gloves gives
 	var/style_to_give = /datum/martial_art/boxing
 

@@ -47,7 +47,7 @@
 	/// Maximum rate at which a glitch can spawn
 	var/threat_prob_max = 15
 	/// The turfs we can place a hololadder on.
-	var/turf/exit_turfs = list()
+	var/list/turf/exit_turfs = list()
 	/// Determines if we broadcast to entertainment monitors or not
 	var/broadcasting = FALSE
 	/// Determines what bitrunning network of domains we can access.

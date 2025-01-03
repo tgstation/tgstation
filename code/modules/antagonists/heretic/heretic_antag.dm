@@ -7,6 +7,8 @@
  * Used in creating spooky-text for heretic ascension announcements.
  */
 /proc/generate_heretic_text(length = 25)
+	if(!isnum(length)) // stupid thing so we can use this directly in replacetext
+		length = 25
 	. = ""
 	for(var/i in 1 to length)
 		. += pick("!", "$", "^", "@", "&", "#", "*", "(", ")", "?")
@@ -60,19 +62,6 @@
 	var/rust_strength = 0
 	/// Wether we are allowed to ascend
 	var/feast_of_owls = FALSE
-	/// Static list of what each path converts to in the UI (colors are TGUI colors)
-	var/static/list/path_to_ui_bgr = list(
-		PATH_START = "node_side",
-		PATH_SIDE = "node_side",
-		PATH_RUST = "node_rust",
-		PATH_FLESH = "node_flesh",
-		PATH_ASH = "node_ash",
-		PATH_VOID = "node_void",
-		PATH_BLADE = "node_blade",
-		PATH_COSMIC = "node_cosmos",
-		PATH_LOCK = "node_lock",
-		PATH_MOON = "node_moon",
-	)
 
 	/// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
 	var/list/unlocked_heretic_items = list(
@@ -106,9 +95,9 @@
 	//if the knowledge is a spell, use the spell's button
 	else if(ispath(knowledge,/datum/heretic_knowledge/spell))
 		var/datum/heretic_knowledge/spell/spell_knowledge = knowledge
-		var/datum/action/cooldown/spell/result_spell = spell_knowledge.spell_to_add
-		icon_path = result_spell.button_icon
-		icon_state = result_spell.button_icon_state
+		var/datum/action/result_action = spell_knowledge.action_to_add
+		icon_path = result_action.button_icon
+		icon_state = result_action.button_icon_state
 
 	//if the knowledge is a summon, use the mob sprite
 	else if(ispath(knowledge,/datum/heretic_knowledge/summon))
@@ -150,7 +139,7 @@
 	knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 	knowledge_data["cost"] = initial(knowledge.cost)
 	knowledge_data["disabled"] = (!done) && (initial(knowledge.cost) > knowledge_points)
-	knowledge_data["bgr"] = (path_to_ui_bgr[initial(knowledge.route)] || "side")
+	knowledge_data["bgr"] = GLOB.heretic_research_tree[knowledge][HKT_UI_BGR]
 	knowledge_data["finished"] = done
 	knowledge_data["ascension"] = ispath(knowledge,/datum/heretic_knowledge/ultimate)
 
@@ -178,10 +167,10 @@
 	for(var/datum/heretic_knowledge/knowledge as anything in researched_knowledge)
 		var/list/knowledge_data = get_knowledge_data(knowledge,TRUE)
 
-		while(initial(knowledge.depth) > tiers.len)
+		while(GLOB.heretic_research_tree[knowledge][HKT_DEPTH] > tiers.len)
 			tiers += list(list("nodes"=list()))
 
-		tiers[initial(knowledge.depth)]["nodes"] += list(knowledge_data)
+		tiers[GLOB.heretic_research_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
 
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
 		var/list/knowledge_data = get_knowledge_data(knowledge,FALSE)
@@ -190,10 +179,10 @@
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
 			knowledge_data["disabled"] ||= !can_ascend()
 
-		while(initial(knowledge.depth) > tiers.len)
+		while(GLOB.heretic_research_tree[knowledge][HKT_DEPTH] > tiers.len)
 			tiers += list(list("nodes"=list()))
 
-		tiers[initial(knowledge.depth)]["nodes"] += list(knowledge_data)
+		tiers[GLOB.heretic_research_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
 
 	data["knowledge_tiers"] = tiers
 
@@ -272,6 +261,9 @@
 	return ..()
 
 /datum/antagonist/heretic/on_gain()
+	if(!GLOB.heretic_research_tree)
+		GLOB.heretic_research_tree = generate_heretic_research_tree()
+
 	if(give_objectives)
 		forge_primary_objectives()
 
@@ -822,8 +814,8 @@
 	var/list/banned_knowledge = list()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		researchable_knowledge |= knowledge.next_knowledge
-		banned_knowledge |= knowledge.banned_knowledge
+		researchable_knowledge |= GLOB.heretic_research_tree[knowledge_index][HKT_NEXT]
+		banned_knowledge |= GLOB.heretic_research_tree[knowledge_index][HKT_BAN]
 		banned_knowledge |= knowledge.type
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge
@@ -939,7 +931,7 @@
 		// (All the main paths are (should be) the same length, so it doesn't matter.)
 		var/rust_paths_found = 0
 		for(var/datum/heretic_knowledge/knowledge as anything in subtypesof(/datum/heretic_knowledge))
-			if(initial(knowledge.route) == PATH_RUST)
+			if(GLOB.heretic_research_tree[knowledge][HKT_ROUTE] == PATH_RUST)
 				rust_paths_found++
 
 		main_path_length = rust_paths_found

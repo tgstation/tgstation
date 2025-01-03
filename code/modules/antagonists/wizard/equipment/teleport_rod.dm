@@ -174,7 +174,7 @@
 
 	particle_effect.alpha = 200
 	var/original_duration = initial(duration)
-	if(original_duration == -1)
+	if(original_duration == STATUS_EFFECT_PERMANENT)
 		return
 	animate(particle_effect, alpha = 50, time = original_duration)
 
@@ -185,7 +185,7 @@
 /datum/status_effect/teleport_flux/perma
 	id = "perma_teleport_flux"
 	status_type = STATUS_EFFECT_REPLACE
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = /atom/movable/screen/alert/status_effect/teleport_flux/perma
 	remove_on_fullheal = FALSE
 
