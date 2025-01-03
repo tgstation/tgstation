@@ -130,6 +130,8 @@
 
 /// Makes the base of the ladder transparent
 /obj/structure/ladder/proc/make_base_transparent()
+	if(!SSmapping.level_trait(z, ZTRAIT_DOWN)) // Ladders which are actually teleporting you to another z level
+		return
 	base_pixel_z = initial(base_pixel_z) + 12
 	pixel_z = base_pixel_z
 	new /obj/effect/abstract/ladder_hole(loc, src)
