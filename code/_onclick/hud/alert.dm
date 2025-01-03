@@ -268,6 +268,11 @@
 	var/mob/living/carbon/carbon_owner = owner
 	return carbon_owner.check_self_for_injuries()
 
+/atom/movable/screen/alert/nose_stolen
+	name = "No Nose"
+	desc = "You have no nose! Get it back, somehow..."
+	icon_state = ALERT_NOSE_STOLEN
+
 /atom/movable/screen/alert/negative
 	name = "Negative Gravity"
 	desc = "You're getting pulled upwards. While you won't have to worry about falling down anymore, you may accidentally fall upwards!"

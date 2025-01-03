@@ -109,6 +109,60 @@
 		to_chat(sucker, span_userdanger("[owner] bops you with [owner.p_their()] [src.name]!"))
 	qdel(src)
 
+/obj/item/hand_item/nose_stealer
+	name = "nose stealer"
+	desc = "Target the face and use this on someone with a nose."
+	inhand_icon_state = "nothing"
+	attack_verb_continuous = list("steals")
+	attack_verb_simple = list("steal")
+
+/obj/item/hand_item/nose_stealer/attack(mob/living/carbon/target, mob/living/carbon/human/user)
+	. = ..()
+	if(!ishuman(target) || HAS_TRAIT(target, TRAIT_NOSE_STOLEN))
+		to_chat(user, span_warning("[target] doesn't have a nose!"))
+		return
+	if(!HAS_TRAIT(target, TRAIT_NOSE_STOLEN))
+		qdel(src)
+		var/obj/item/hand_item/nose/stolen_nose = new(user)
+		if(user.put_in_hands(stolen_nose))
+			nose_stolen(target, user, stolen_nose)
+		else
+			to_chat(user, span_notice("You were unable to steal [target]'s nose!"))
+
+/obj/item/hand_item/nose_stealer/proc/nose_stolen(mob/living/carbon/human/nose_owner, mob/living/carbon/human/nose_thief, obj/item/hand_item/nose/stolen_nose)
+	to_chat(nose_owner, span_userdanger("[nose_thief] got your nose!"))
+	to_chat(nose_owner, span_danger("Get your nose back!"))
+	to_chat(nose_thief, span_danger("Got [nose_thief]'s nose!"))
+	nose_owner.emote("gasp")
+	nose_owner.throw_alert(ALERT_NOSE_STOLEN, /atom/movable/screen/alert/nose_stolen)
+	ADD_TRAIT(nose_owner, TRAIT_NOSE_STOLEN, "nose_stolen")
+	ADD_TRAIT(nose_owner, TRAIT_ANOSMIA, "nose_stolen")
+	stolen_nose.nose_owner = nose_owner
+	stolen_nose.name = "[nose_owner]'s nose" //named nose :troll:
+	nose_owner.add_mood_event(/datum/mood_event/no_nose)
+
+/obj/item/hand_item/nose
+	name = "nose"
+	desc = "This is someone's nose! You monster!"
+	icon_state = "nose"
+	/// the mob this nose belongs to
+	var/mob/living/carbon/human/nose_owner
+
+/obj/item/hand_item/nose/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/edible, foodtypes = FRIED)
+
+/obj/item/hand_item/nose/Destroy(force)
+	. = ..()
+	return_nose(src.nose_owner)
+
+/obj/item/hand_item/nose/proc/return_nose(mob/living/carbon/human/nose_owner)
+	nose_owner?.add_mood_event(/datum/mood_event/nose_back) // shrodinger's nose owner
+	to_chat(nose_owner, span_notice("My nose is back!"))
+	nose_owner.clear_alert(ALERT_NOSE_STOLEN)
+	REMOVE_TRAIT(nose_owner, TRAIT_NOSE_STOLEN, "nose_stolen")
+	REMOVE_TRAIT(nose_owner, TRAIT_ANOSMIA, "nose_stolen")
+	qdel(src)
 
 /obj/item/hand_item/noogie
 	name = "noogie"
