@@ -1,3 +1,10 @@
+#define WAND_OPEN "open"
+#define WAND_BOLT "bolt"
+#define WAND_EMERGENCY "emergency"
+#define WAND_HANDLE_REQUESTS "requests"
+#define WAND_SHOCK "shock"
+
+// WAND_HANDLE_REQUESTS is the odd one out but it's a radial that every remote uses so it's here
 #define DOOR_REMOTE_RADIAL_IMAGES list( \
 	REGION_ALL_STATION = GENERIC_REMOTE_RADIALS, \
 	REGION_COMMAND = COMMAND_REMOTE_RADIALS, \
@@ -7,99 +14,83 @@
 	REGION_RESEARCH = RESEARCH_REMOTE_RADIALS, \
 	REGION_GENERAL = SERVICE_REMOTE_RADIALS, \
 	REGION_SUPPLY = SUPPLY_REMOTE_RADIALS, \
+	WAND_HANDLE_REQUESTS = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_request_decision") \
 )
-// For the remote-mode radial
-#define DOOR_REMOTE_RADIAL_OPERATION_OPENING_INDEX 1
-#define DOOR_REMOTE_RADIAL_OPERATION_BOLTING_INDEX 2
-#define DOOR_REMOTE_RADIAL_OPERATION_EA_INDEX 3
-#define DOOR_REMOTE_RADIAL_OPERATION_SHOCK_INDEX 4
 // For responses to remote requests
-#define DOOR_REMOTE_RADIAL_RESPONSE_APPROVE_INDEX 1
-#define DOOR_REMOTE_RADIAL_RESPONSE_DENY_INDEX 2
-#define DOOR_REMOTE_RADIAL_RESPONSE_BOLT_INDEX 3
-#define DOOR_REMOTE_RADIAL_RESPONSE_BLOCK_INDEX 4
-#define DOOR_REMOTE_RADIAL_RESPONSE_EA_INDEX 5
-#define DOOR_REMOTE_RADIAL_RESPONSE_CLEAR_INDEX 6
-#define DOOR_REMOTE_RADIAL_RESPONSE_ESCALATE_INDEX 7
-#define DOOR_REMOTE_RADIAL_RESPONSE_SHOCK 8
-// Odd one out, the same for all remotes but technically an operation, not a response
-#define DOOR_REMOTE_RADIAL_OPERATION_HANDLE_REQUESTS_INDEX 9
+#define REMOTE_RESPONSE_APPROVE "response_approve"
+#define REMOTE_RESPONSE_DENY "response_deny"
+#define REMOTE_RESPONSE_BOLT "response_bolt"
+#define REMOTE_RESPONSE_BLOCK "response_block"
+#define REMOTE_RESPONSE_EA "response_emergency"
+#define REMOTE_RESPONSE_CLEAR "response_clear"
+#define REMOTE_RESPONSE_ESCALATE "response_escalate"
+#define REMOTE_RESPONSE_SHOCK "response_shock"
 
 #define GENERIC_REMOTE_RADIALS list( \
-    image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "opening"), \
-    image(icon = 'icons/obj/doors/airlocks/station/public.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/public.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/public.dmi'), \
+    WAND_OPEN = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "opening"), \
+    WAND_BOLT = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed"), \
+    WAND_EMERGENCY = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed"), \
+    WAND_SHOCK = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed"), \
 )
 
 #define COMMAND_REMOTE_RADIALS list( \
-    image(icon = 'icons/obj/doors/airlocks/station/command.dmi', icon_state = "opening"), \
-    image(icon = 'icons/obj/doors/airlocks/station/command.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/command.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/command.dmi'), \
+    WAND_OPEN = image(icon = 'icons/obj/doors/airlocks/station/command.dmi', icon_state = "opening"), \
+    WAND_BOLT = image(icon = 'icons/obj/doors/airlocks/station/command.dmi', icon_state = "closed"), \
+    WAND_EMERGENCY = image(icon = 'icons/obj/doors/airlocks/station/command.dmi', icon_state = "closed"), \
+    WAND_SHOCK = image(icon = 'icons/obj/doors/airlocks/station/command.dmi', icon_state = "closed"), \
 )
 
 #define ENGINEERING_REMOTE_RADIALS list( \
-    image(icon = 'icons/obj/doors/airlocks/station/engineering.dmi', icon_state = "opening"), \
-    image(icon = 'icons/obj/doors/airlocks/station/engineering.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/engineering.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/engineering.dmi'), \
+    WAND_OPEN = image(icon = 'icons/obj/doors/airlocks/station/engineering.dmi', icon_state = "opening"), \
+    WAND_BOLT = image(icon = 'icons/obj/doors/airlocks/station/engineering.dmi', icon_state = "closed"), \
+    WAND_EMERGENCY = image(icon = 'icons/obj/doors/airlocks/station/engineering.dmi', icon_state = "closed"), \
+    WAND_SHOCK = image(icon = 'icons/obj/doors/airlocks/station/engineering.dmi', icon_state = "closed"), \
 )
 
 #define SECURITY_REMOTE_RADIALS list( \
-    image(icon = 'icons/obj/doors/airlocks/station/security.dmi', icon_state = "opening"), \
-    image(icon = 'icons/obj/doors/airlocks/station/security.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/security.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/security.dmi'), \
+    WAND_OPEN = image(icon = 'icons/obj/doors/airlocks/station/security.dmi', icon_state = "opening"), \
+    WAND_BOLT = image(icon = 'icons/obj/doors/airlocks/station/security.dmi', icon_state = "closed"), \
+    WAND_EMERGENCY = image(icon = 'icons/obj/doors/airlocks/station/security.dmi', icon_state = "closed"), \
+    WAND_SHOCK = image(icon = 'icons/obj/doors/airlocks/station/security.dmi', icon_state = "closed"), \
 )
 
 #define MEDBAY_REMOTE_RADIALS list( \
-    image(icon = 'icons/obj/doors/airlocks/station/medical.dmi', icon_state = "opening"), \
-    image(icon = 'icons/obj/doors/airlocks/station/medical.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/medical.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/medical.dmi'), \
+    WAND_OPEN = image(icon = 'icons/obj/doors/airlocks/station/medical.dmi', icon_state = "opening"), \
+    WAND_BOLT = image(icon = 'icons/obj/doors/airlocks/station/medical.dmi', icon_state = "closed"), \
+    WAND_EMERGENCY = image(icon = 'icons/obj/doors/airlocks/station/medical.dmi', icon_state = "closed"), \
+    WAND_SHOCK = image(icon = 'icons/obj/doors/airlocks/station/medical.dmi', icon_state = "closed"), \
 )
 
 #define RESEARCH_REMOTE_RADIALS list( \
-    image(icon = 'icons/obj/doors/airlocks/station/research.dmi', icon_state = "opening"), \
-    image(icon = 'icons/obj/doors/airlocks/station/research.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/research.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/research.dmi'), \
+    WAND_OPEN = image(icon = 'icons/obj/doors/airlocks/station/research.dmi', icon_state = "opening"), \
+    WAND_BOLT = image(icon = 'icons/obj/doors/airlocks/station/research.dmi', icon_state = "closed"), \
+    WAND_EMERGENCY = image(icon = 'icons/obj/doors/airlocks/station/research.dmi', icon_state = "closed"), \
+    WAND_SHOCK = image(icon = 'icons/obj/doors/airlocks/station/research.dmi', icon_state = "closed"), \
 )
 
 #define SERVICE_REMOTE_RADIALS list( \
-    image(icon = 'icons/obj/doors/airlocks/station/bananium.dmi', icon_state = "opening"), \
-    image(icon = 'icons/obj/doors/airlocks/station/bananium.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/bananium.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/bananium.dmi'), \
+    WAND_OPEN = image(icon = 'icons/obj/doors/airlocks/station/bananium.dmi', icon_state = "opening"), \
+    WAND_BOLT = image(icon = 'icons/obj/doors/airlocks/station/bananium.dmi', icon_state = "closed"), \
+    WAND_EMERGENCY = image(icon = 'icons/obj/doors/airlocks/station/bananium.dmi', icon_state = "closed"), \
+    WAND_SHOCK = image(icon = 'icons/obj/doors/airlocks/station/bananium.dmi', icon_state = "closed"), \
 )
 
 #define SUPPLY_REMOTE_RADIALS list( \
-    image(icon = 'icons/obj/doors/airlocks/station/mining.dmi', icon_state = "opening"), \
-    image(icon = 'icons/obj/doors/airlocks/station/mining.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/mining.dmi'), \
-    image(icon = 'icons/obj/doors/airlocks/station/mining.dmi'), \
+    WAND_OPEN = image(icon = 'icons/obj/doors/airlocks/station/mining.dmi', icon_state = "opening"), \
+    WAND_BOLT = image(icon = 'icons/obj/doors/airlocks/station/mining.dmi', icon_state = "closed"), \
+    WAND_EMERGENCY = image(icon = 'icons/obj/doors/airlocks/station/mining.dmi', icon_state = "closed"), \
+    WAND_SHOCK = image(icon = 'icons/obj/doors/airlocks/station/mining.dmi', icon_state = "closed"), \
 )
 
 #define REMOTE_RESPONSE_RADIALS list( \
-    image(icon = 'icons/hud/radial.dmi', icon_state = "radial_big_yes"), \
-    image(icon = 'icons/hud/radial.dmi', icon_state = "radial_big_no"), \
-    image(icon = 'icons/hud/radial.dmi', icon_state = "radial_padlock"), \
-    image(icon = 'icons/hud/radial.dmi', icon_state = "radial_fuck_off"), \
-    image(icon = 'icons/obj/signs.dmi', icon_state = "secure_area"), \
-    image(icon = 'icons/obj/service/bureaucracy.dmi', icon_state = "paper_onfire"), \
-    image(icon = 'icons/mob/landmarks.dmi', icon_state = "Captain"), \
-    image(icon = 'icons/mob/human/human.dmi', icon_state = "electrocuted_generic"), \
-    image(icon = 'icons/hud/radial.dmi', icon_state = "radial_big_yes") \
+	REMOTE_RESPONSE_APPROVE = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_big_yes"), \
+	REMOTE_RESPONSE_DENY = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_big_no"), \
+	REMOTE_RESPONSE_BOLT = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_padlock"), \
+	REMOTE_RESPONSE_BLOCK = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_fuck_off"), \
+	REMOTE_RESPONSE_EMERGENCY = image(icon = 'icons/obj/signs.dmi', icon_state = "secure_area"), \
+	REMOTE_RESPONSE_CLEAR = image(icon = 'icons/obj/service/bureaucracy.dmi', icon_state = "paper_onfire"), \
+	REMOTE_RESPONSE_ESCALATE = image(icon = 'icons/mob/landmarks.dmi', icon_state = "Captain"), \
+	REMOTE_RESPONSE_SHOCK = image(icon = 'icons/mob/human/human.dmi', icon_state = "electrocuted_generic"), \
 )
 
 GLOBAL_LIST_INIT(door_remote_radial_images, DOOR_REMOTE_RADIAL_IMAGES)
-
-/datum/controller/subsystem/id_access/proc/setup_door_remote_radials()
-	for(var/list/image_set in GLOB.door_remote_radial_images)
-		var/image/bolt_radial = image_set[DOOR_REMOTE_RADIAL_OPERATION_BOLTING_INDEX]
-		var/image/EA_radial = image_set[DOOR_REMOTE_RADIAL_OPERATION_EA_INDEX]
-		var/image/shock_radial = image_set[DOOR_REMOTE_RADIAL_OPERATION_SHOCK_INDEX]
-		bolt_radial.add_overlay(image(icon = bolt_radial.icon, icon_state = "lights_bolts"))
-		EA_radial.add_overlay(image(icon = EA_radial.icon, icon_state = "lights_emergency"))
-		shock_radial.add_overlay(image(icon = 'icons/mob/huds/hud.dmi', icon_state = "electrified"))

@@ -1,9 +1,3 @@
-#define WAND_OPEN "open"
-#define WAND_BOLT "bolt"
-#define WAND_EMERGENCY "emergency"
-#define WAND_HANDLE_REQUESTS "requests"
-#define WAND_SHOCK "shock"
-
 /obj/item/door_remote
 	icon_state = "remote"
 	base_icon_state = "remote"
@@ -53,24 +47,23 @@
 	response_radials = REMOTE_RESPONSE_RADIALS
 
 /obj/item/door_remote/proc/resolve_radial_options()
-	var/static/list/available_options = list(
-		WAND_OPEN = DOOR_REMOTE_RADIAL_OPERATION_OPENING_INDEX,
-		WAND_BOLT = DOOR_REMOTE_RADIAL_OPERATION_BOLTING_INDEX,
-		WAND_EMERGENCY = DOOR_REMOTE_RADIAL_OPERATION_EA_INDEX,
-		WAND_SHOCK = DOOR_REMOTE_RADIAL_OPERATION_SHOCK_INDEX,
-		WAND_HANDLE_REQUESTS = 5, // fuck off
+	var/static/list/always_available_options = list(
+		WAND_OPEN,
+		WAND_BOLT,
+		WAND_EMERGENCY,
 	)
+	var/static/handle_requests_option = WAND_HANDLE_REQUESTS
+	var/static/emagged_available_option = WAND_SHOCK
 	var/list/image_set = GLOB.door_remote_radial_images?[region_access]
 	var/is_emagged = obj_flags & EMAGGED
 	if(!image_set)
 		image_set = GLOB.door_remote_radial_images[REGION_ALL_STATION]
-	image_set = list(image_set.Copy()) // so we don't end up messing around with the GLOB
-	image_set += response_radials[DOOR_REMOTE_RADIAL_OPERATION_HANDLE_REQUESTS_INDEX]
 	var/list/resolved_options = list()
-	for(var/option in available_options)
-		resolved_options.Add(available_options[option] = image_set[available_options[option]])
-	if(!is_emagged)
-		resolved_options.Remove(WAND_SHOCK) // no shock without emag
+	for(var/option in always_available_options)
+		resolved_options[option] = image_set[option]
+	resolved_options[handle_requests_option] = GLOB.door_remote_radial_images[WAND_HANDLE_REQUESTS]
+	if(is_emagged)
+		resolved_options[emagged_available_option] = image_set[emagged_available_option]
 	return resolved_options
 
 /obj/item/door_remote/proc/on_pickup(datum/source, atom/new_hand_touches_the_beacon)
@@ -135,7 +128,7 @@
 
 /obj/item/door_remote/attack_self(mob/user)
 	var/list/radial_options = resolve_radial_options()
-	var/choice = show_radial_menu(user, user, radial_options, radius = 32)
+	var/choice = show_radial_menu(user, user, radial_options, radius = 40)
 	switch(choice)
 		if(WAND_OPEN)
 			mode = WAND_OPEN
@@ -370,9 +363,3 @@
 	department = "civilian"
 	response_name = span_servradio("HEAD OF PERSONNEL")
 	region_access = REGION_GENERAL
-
-#undef WAND_OPEN
-#undef WAND_BOLT
-#undef WAND_EMERGENCY
-#undef WAND_HANDLE_REQUESTS
-#undef WAND_SHOCK
