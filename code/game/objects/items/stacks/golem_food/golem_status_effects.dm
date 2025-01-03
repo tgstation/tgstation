@@ -24,10 +24,6 @@
 	/// Ideally all golem effects will effect their golem arms, and it's less of a headache to keep
 	/// track of that here to keep our behavior contained instead of suffering from edge cases
 	var/list/obj/item/bodypart/arm/modified_arms
-	/// When we reach this much remaining time we will start animating as a warning
-	var/early_expiry_warning = 30 SECONDS
-	/// When we reach this much remaining time we will start animating more urgently as a warning
-	var/imminent_expiry_warning = 5 SECONDS
 	/// A var to keep track of if we're warning the owner about the effect expiring, to keep
 	/// the warning animation working properly
 	var/warning = FALSE
@@ -100,11 +96,11 @@
 		return // our status alert is gone, so we can't animate
 	var/time_left = duration - world.time
 	switch (time_left)
-		if (1 SECONDS to imminent_expiry_warning)
+		if (1 SECONDS to 5 SECONDS)
 			if (warning != "imminent")
 				warning = "imminent"
 				status_alert.imminent_warning()
-		if (6 SECONDS to early_expiry_warning)
+		if (6 SECONDS to 30 SECONDS)
 			if (warning != "early")
 				warning = "early"
 				status_alert.early_warning()
