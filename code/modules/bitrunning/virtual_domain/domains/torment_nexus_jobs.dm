@@ -67,6 +67,16 @@
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
 	test_only = FALSE
 
+/datum/lazy_template/virtual_domain/janitor_work/grand_felony
+	name = "Janitorial Work: Grand Felony"
+	desc = "A contract for cleaning up a local pool came through. Make it spotless."
+	help_text = "The completion checker will draw a beam from the scanner to the problem point. If there's no beam, check below the scanner."
+	key = "janitor_work_grand_felony"
+	map_name = "janitor_work_grand_felony"
+	reward_points = BITRUNNER_REWARD_HIGH
+	difficulty = BITRUNNER_DIFFICULTY_HIGH
+	test_only = FALSE
+
 /datum/lazy_template/virtual_domain/janitor_work/capital
 	name = "Janitorial Work: Capital"
 	desc = "A massacre occured at the yearly Nanotrasen Shareholders' feast. Clean up the evidence."

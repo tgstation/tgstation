@@ -117,7 +117,7 @@
 /obj/machinery/netpod/mouse_drop_receive(mob/target, mob/user, params)
 	var/mob/living/carbon/player = user
 
-	if(!iscarbon(player) || !is_operational || !state_open || player.buckled)
+	if(!ismob(target) || !iscarbon(player) || !is_operational || !state_open || player.buckled)
 		return
 
 	if(trapped)
