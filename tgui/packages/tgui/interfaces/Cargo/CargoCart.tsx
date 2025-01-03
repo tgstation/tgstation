@@ -1,4 +1,3 @@
-import { useBackend } from '../../backend';
 import {
   Button,
   Icon,
@@ -8,8 +7,10 @@ import {
   Section,
   Stack,
   Table,
-} from '../../components';
-import { formatMoney } from '../../format';
+} from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
+
+import { useBackend } from '../../backend';
 import { CargoCartButtons } from './CargoButtons';
 import { CargoData } from './types';
 

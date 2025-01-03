@@ -41,3 +41,30 @@
   SyncIt21:
   - bugfix: dropping all the mobs' contents in some special admin cases won't gib
       the player
+2025-01-03:
+  AyIong:
+  - admin: Ticket actions buttons in chat got a little bigger
+  - bugfix: Highlighted PMs, vote results and examine will not have weird black title
+  Hatterhat:
+  - spellcheck: Removed an errant typo on the recharger's readout while recharging
+      the BR-38.
+  SmArtKar:
+  - spellcheck: Removed outdated examine line from spraycans
+  - refactor: Completely rewrote all item and projectile embedding code
+  - bugfix: Instant summons now actually drags people who had the summoned item embedded
+      into them
+  - bugfix: Items embedded into limbs no longer get shoved into limbs deep enough
+      for them to never be found again upon delimbing.
+  - bugfix: You can see scar descriptions upon detailed examination of targets
+  - bugfix: Fixed rolling table being able to carry an infinite amount of dwarves
+  - bugfix: Folders and paper biscuits no longer share their color with their contents
+  - spellcheck: Fixed a typo in battle rifle crate's description
+  - rscadd: You can chug glowstick fluid to get glowing eyes
+  - bugfix: Added command access requirement to the door between EVA and bridge on
+      Nebula's escape shuttle
+  TealSeer:
+  - qol: you can now examine the jukebox to see what song is currently playing
+  zoomachina:
+  - rscadd: brain in a jar, a rare coroner mail goodie
+  - qol: soul-less brains that can be revived (like those from recovered crew) now
+      have an examine tip
