@@ -13,11 +13,12 @@
 
 /obj/item/holochip/Initialize(mapload, amount = 1)
 	. = ..()
-	if(amount)
+	if(!credits && amount)
 		credits = amount
 	if(credits <= 0 && !mapload)
 		stack_trace("Holochip created with 0 or less credits in [get_area_name(src)]!")
 		return INITIALIZE_HINT_QDEL
+	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_BAIT_ALLOW_FISHING_DUD), INNATE_TRAIT)
 	update_appearance()
 
 /obj/item/holochip/examine(mob/user)

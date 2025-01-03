@@ -7,6 +7,9 @@
 ///Used in the dimensional rift fishing spot to define influence gain
 #define FISHING_INFLUENCE "Influence"
 
+///Represents the chance of getting squashed by the vending machine from the vending machine fish source
+#define FISHING_VENDING_CHUCK "thinkfastchucklenuts"
+
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
 #define FISHING_EASY_DIFFICULTY 10
