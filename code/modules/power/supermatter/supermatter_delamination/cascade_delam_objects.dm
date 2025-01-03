@@ -9,9 +9,6 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
-	light_power = 1
-	light_range = 5
-	light_color = COLOR_VIVID_YELLOW
 	move_resist = INFINITY
 	///All dirs we can expand to
 	var/list/available_dirs = list(NORTH,SOUTH,EAST,WEST,UP,DOWN)
@@ -63,10 +60,8 @@
 					[checked_atom.p_their()] body begins to shine with a brilliant light before crystallizing from the inside out and joining \the [src]!"),
 				span_userdanger("The crystal mass lunges on you and hits you in the chest. As your vision is filled with a blinding light, you think to yourself \"Damn it.\""))
 		else if(istype(checked_atom, /obj/cascade_portal))
-			checked_atom.visible_message(span_userdanger("\The [checked_atom] screeches and closes away as it is hit by \a [src]! Too late!"))
-			playsound(get_turf(checked_atom), 'sound/effects/magic/charge.ogg', 50, TRUE)
-			playsound(get_turf(checked_atom), 'sound/effects/supermatter.ogg', 50, TRUE)
-			qdel(checked_atom)
+			var/obj/cascade_portal/portal = checked_atom
+			portal.close_portal(hitter = src)
 		else if(isitem(checked_atom))
 			playsound(get_turf(checked_atom), 'sound/effects/supermatter.ogg', 50, TRUE)
 			qdel(checked_atom)
@@ -77,9 +72,8 @@
 	SIGNAL_HANDLER
 
 	visible_message(
-		span_warning("[hitting_projectile] flies into [src] with a loud crack, before rapidly flashing into ash."),
-		null,
-		span_hear("You hear a loud crack as you are washed with a wave of heat."),
+		message = span_warning("[hitting_projectile] flies into [src] with a loud crack, before rapidly flashing into ash."),
+		blind_message = span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
 
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
@@ -107,7 +101,7 @@
 	return ..()
 
 /obj/cascade_portal
-	name = "Bluespace Rift"
+	name = "bluespace rift"
 	desc = "Your mind begins to spin as it tries to comprehend what it sees."
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "reality"
@@ -122,14 +116,17 @@
 	pixel_x = -96
 	pixel_y = -96
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	var/turf/centcom_turf
 
 /obj/cascade_portal/Initialize(mapload)
 	. = ..()
 	var/turf/location = get_turf(src)
 	var/area_name = get_area_name(src)
+	centcom_turf = get_turf(locate(/obj/effect/landmark/centcom_dock) in GLOB.landmarks_list)
 	message_admins("Exit rift created at [area_name]. [ADMIN_VERBOSEJMP(location)]")
 	log_game("Bluespace Exit Rift was created at [area_name].")
 	investigate_log("created at [area_name].", INVESTIGATE_ENGINE)
+	addtimer(CALLBACK(src, PROC_REF(close_portal)), 45 SECONDS)
 
 /obj/cascade_portal/Destroy(force)
 	var/turf/location = get_turf(src)
@@ -139,10 +136,17 @@
 	investigate_log("was deleted.", INVESTIGATE_ENGINE)
 	return ..()
 
+/obj/cascade_portal/proc/close_portal(atom/hitter)
+	if(hitter)
+		visible_message(span_userdanger("\The [src] screeches and closes away as it is hit by \a [hitter]! Too late!"))
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
+	else
+		visible_message(span_userdanger("\The [src] screeches and closes away! Too late!"))
+	playsound(get_turf(src), 'sound/effects/magic/charge.ogg', 50, TRUE)
+	qdel(src)
+
 /obj/cascade_portal/Bumped(atom/movable/hit_object)
 	consume(hit_object)
-	new /obj/effect/particle_effect/sparks(loc)
-	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /**
  * Proc to consume the objects colliding with the portal
@@ -151,30 +155,37 @@
  */
 /obj/cascade_portal/proc/consume(atom/movable/consumed_object)
 	if(isliving(consumed_object))
-		consumed_object.visible_message(span_danger("\The [consumed_object] walks into \the [src]... \
-			A blinding light covers [consumed_object.p_their()] body before disappearing completely!"),
-			span_userdanger("You walk into \the [src] as your body is washed with a powerful blue light. \
-				You contemplate about this decision before landing face first onto the cold, hard floor."),
-			span_hear("You hear a loud crack as a distortion passes through you."))
+		consumed_object.visible_message(
+			message = span_danger("\The [consumed_object] walks into \the [src]... A blinding light covers \
+				[consumed_object.p_their()] body before disappearing completely!"),
+			self_message = span_userdanger("You walk into \the [src] as your body is washed with a powerful \
+				blue light. You contemplate about this decision before landing face first onto the cold, hard floor."),
+			blind_message = span_hear("You hear a loud crack as a distortion passes through you."))
 
-		var/list/arrival_turfs = get_area_turfs(/area/centcom/central_command_areas/evacuation)
 		var/turf/arrival_turf
-		do
-			arrival_turf = pick_n_take(arrival_turfs)
-		while(!is_safe_turf(arrival_turf))
+
+		if (centcom_turf)
+			arrival_turf = pick(range(3, centcom_turf))
+		else
+			message_admins("No centcom dock landmark found! Performing fallback algorithm, yell at a mapper.")
+			stack_trace("Missing centcom dock landmark, place one in the middle of the centcom evac dock")
+			var/list/arrival_turfs = get_area_turfs(/area/centcom/central_command_areas/evacuation)
+			do
+				arrival_turf = pick_n_take(arrival_turfs)
+			while(!is_safe_turf(arrival_turf)) // if this shit turns out to be null then i will be VERY surprised
 
 		var/mob/living/consumed_mob = consumed_object
 		message_admins("[key_name_admin(consumed_mob)] has entered [src] [ADMIN_VERBOSEJMP(src)].")
 		investigate_log("was entered by [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.forceMove(arrival_turf)
-		consumed_mob.Paralyze(100)
-		consumed_mob.adjustBruteLoss(30)
+		consumed_mob.Paralyze(10 SECONDS)
+		consumed_mob.apply_damage(damage = 30, damagetype = BRUTE, forced = TRUE)
 		consumed_mob.flash_act(1, TRUE, TRUE)
-
 		new /obj/effect/particle_effect/sparks(consumed_object)
-		playsound(consumed_object, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	else if(isitem(consumed_object))
-		consumed_object.visible_message(span_danger("\The [consumed_object] smacks into \the [src] and disappears out of sight."), null,
-			span_hear("You hear a loud crack as a small distortion passes through you."))
+		consumed_object.visible_message(
+			message = span_danger("\The [consumed_object] smacks into \the [src] and disappears out of sight."),
+			blind_message = span_hear("You hear a loud crack as a small distortion passes through you.")
+		)
 
 		qdel(consumed_object)

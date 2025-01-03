@@ -453,6 +453,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.generic_event_spawns -= src
 	return ..()
 
+/// Generic event spawns, but for lavaland. Not subtyped from above for a very good reason, because we do not want i.e. a blob to be placed on lavaland
+/obj/effect/landmark/mining_spawn
+	name = "generic mining spawn"
+	icon_state = "generic_event"
+
+/obj/effect/landmark/mining_spawn/Initialize(mapload)
+	. = ..()
+	GLOB.mining_event_spawns += src
+
+/obj/effect/landmark/mining_spawn/Destroy()
+	GLOB.mining_event_spawns -= src
+	return ..()
+
 /obj/effect/landmark/ruin
 	var/datum/map_template/ruin/ruin_template
 
@@ -472,6 +485,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "portal exit"
 	icon_state = "portal_exit"
 	var/id
+
+/obj/effect/landmark/centcom_dock
+	name = "centcom dock"
 
 /// Marks the bottom left of the testing zone.
 /// In landmarks.dm and not unit_test.dm so it is always active in the mapping tools.

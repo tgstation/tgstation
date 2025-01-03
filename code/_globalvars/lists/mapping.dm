@@ -109,6 +109,8 @@ GLOBAL_LIST_EMPTY(department_security_spawns)
 /// List of generic landmarks placed around the map where there are likely to be players and are identifiable at a glance -
 /// Such as public hallways, department rooms, head of staff offices, and non-generic maintenance locations
 GLOBAL_LIST_EMPTY(generic_event_spawns)
+/// Similar to generic_event_spawns, but for mining specifically
+GLOBAL_LIST_EMPTY(mining_event_spawns)
 /// Assoc list of "job titles" to "job landmarks"
 /// These will take precedence over normal job spawnpoints if created,
 /// essentially allowing a user to override generic job spawnpoints with a specific one

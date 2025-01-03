@@ -12,12 +12,20 @@
 	if(!istype(local_turf))
 		return NONE
 
+	if(delamination_strategy.on_bullet(projectile))
+		return COMPONENT_BULLET_BLOCKED
+
+	if(istype(projectile, /obj/projectile/beam/emitter/hitscan/cascade))
+		set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade/emitter)
+		if(damage + 5 <= emergency_point)
+			external_damage_immediate += 5
+		return
+
 	var/kiss_power = 0
 	if (istype(projectile, /obj/projectile/kiss/death))
 		kiss_power = 20000
 	else if (istype(projectile, /obj/projectile/kiss))
 		kiss_power = 60
-
 
 	if(!istype(projectile.firer, /obj/machinery/power/emitter))
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_ENGINE)
@@ -27,11 +35,9 @@
 		external_power_immediate += projectile.damage * bullet_energy + kiss_power
 		log_activation(who = projectile.firer, how = projectile.fired_from)
 	else
-		external_damage_immediate += projectile.damage * bullet_energy * 0.1
+		external_damage_immediate += projectile.damage * bullet_energy * 0.1 * clamp((emergency_point - (damage + external_damage_immediate)) / emergency_point, 0, 1)
 		// Stop taking damage at emergency point, yell to players at danger point.
-		// This isn't clean and we are repeating [/obj/machinery/power/supermatter_crystal/proc/calculate_damage], sorry for this.
-		var/damage_to_be = damage + external_damage_immediate * clamp((emergency_point - damage) / emergency_point, 0, 1)
-		if(damage_to_be > danger_point)
+		if(damage + external_damage_immediate > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 
@@ -88,7 +94,7 @@
 		to_chat(user, span_warning("You poke [src] with [item]'s hyper-noblium tips. Nothing happens."))
 		return
 
-	if(istype(item, /obj/item/destabilizing_crystal))
+/*	if(istype(item, /obj/item/destabilizing_crystal))
 		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
 
 		if(!is_main_engine)
@@ -110,7 +116,7 @@
 			external_power_trickle += 500
 			log_activation(who = user, how = destabilizing_crystal)
 			qdel(destabilizing_crystal)
-		return
+		return */
 
 	return ..()
 
@@ -124,4 +130,4 @@
 
 /obj/machinery/power/supermatter_crystal/proc/consume_callback(matter_increase, damage_increase)
 	external_power_trickle += matter_increase
-	external_damage_immediate += damage_increase
+	external_damage_immediate += damage_increase * clamp((emergency_point - (damage + external_damage_immediate)) / emergency_point, 0, 1)

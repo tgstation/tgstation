@@ -1,25 +1,36 @@
 /// Priority is top to bottom.
 GLOBAL_LIST_INIT(sm_delam_list, list(
-	/datum/sm_delam/cascade = new /datum/sm_delam/cascade,
-	/datum/sm_delam/singularity = new /datum/sm_delam/singularity,
-	/datum/sm_delam/tesla = new /datum/sm_delam/tesla,
-	/datum/sm_delam/explosive = new /datum/sm_delam/explosive,
+	/datum/sm_delam/cascade = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_cascade_can_select)),
+	/datum/sm_delam/singularity = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_singularity_can_select)),
+	/datum/sm_delam/tesla = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_singularity_can_select)),
+	/datum/sm_delam/explosive = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delam_explosive_can_select)),
 ))
 
 /// Logic holder for supermatter delaminations, goes off the strategy design pattern.
 /// Selected by [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam
+	var/obj/machinery/power/supermatter_crystal/sm
+	var/warn_time = SUPERMATTER_WARNING_DELAY
 
-/// Whether we are eligible for this delamination or not. TRUE if valid, FALSE if not.
-/// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
-/datum/sm_delam/proc/can_select(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/New(obj/machinery/power/supermatter_crystal/sm)
+	src.sm = sm
+
+/datum/sm_delam/Destroy(force)
+	sm.delamination_strategy = null
+	sm = null
+	return ..()
+
+/// Called when a bullet hits the SM. Returns true to early return normal bullet processing.
+/// Called in [/obj/machinery/power/supermatter_crystal/proc/eat_bullets]
+/datum/sm_delam/proc/on_bullet(obj/projectile/projectile)
+	SHOULD_CALL_PARENT(FALSE)
 	return FALSE
 
 #define ROUNDCOUNT_ENGINE_JUST_EXPLODED -1
 
 /// Called when the count down has been finished, do the nasty work.
 /// [/obj/machinery/power/supermatter_crystal/proc/count_down]
-/datum/sm_delam/proc/delaminate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/delaminate()
 	if (sm.is_main_engine)
 		SSpersistence.delam_highscore = SSpersistence.rounds_since_engine_exploded
 		SSpersistence.rounds_since_engine_exploded = ROUNDCOUNT_ENGINE_JUST_EXPLODED
@@ -33,7 +44,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// Mostly just to tell people how useless engi is, and play some alarm sounds.
 /// Returns TRUE if we just told people a delam is going on. FALSE if its healing or we didnt say anything.
 /// [/obj/machinery/power/supermatter_crystal/proc/process_atmos]
-/datum/sm_delam/proc/delam_progress(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/delam_progress()
 	if(sm.damage <= sm.warning_point) // Damage is too low, lets not
 		return FALSE
 
@@ -41,15 +52,15 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		sm.investigate_log("has entered the emergency point.", INVESTIGATE_ENGINE)
 		message_admins("[sm] has entered the emergency point [ADMIN_VERBOSEJMP(sm)].")
 
-	if((REALTIMEOFDAY - sm.lastwarning) < SUPERMATTER_WARNING_DELAY)
+	if((REALTIMEOFDAY - sm.lastwarning) < warn_time)
 		return FALSE
 	sm.lastwarning = REALTIMEOFDAY
 
 	if(sm.damage_archived - sm.damage > SUPERMATTER_FAST_HEALING_RATE && sm.damage_archived >= sm.emergency_point) // Fast healing, engineers probably have it all sorted
 		if(sm.should_alert_common()) // We alert common once per cooldown period, otherwise alert engineering
-			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
+			sm.post_alert("Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%")
 		else
-			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
+			sm.post_alert("Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%")
 		playsound(sm, 'sound/machines/terminal/terminal_alert.ogg', 75)
 		return FALSE
 
@@ -64,42 +75,61 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 			playsound(sm, 'sound/machines/terminal/terminal_alert.ogg', 75)
 
 	if(sm.damage >= sm.emergency_point) // In emergency
-		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT! Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
-		sm.lastwarning = REALTIMEOFDAY - (SUPERMATTER_WARNING_DELAY / 2) // Cut the time to next announcement in half.
+		sm.post_alert("CRYSTAL DELAMINATION IMMINENT! Integrity: [round(sm.get_integrity_percent(), 0.01)]%")
+		sm.lastwarning = REALTIMEOFDAY - (warn_time / 2) // Cut the time to next announcement in half.
 	else if(sm.damage_archived > sm.damage) // Healing, in warning
-		sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
+		sm.post_alert("Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%")
 		return FALSE
 	else // Taking damage, in warning
-		sm.radio.talk_into(sm, "Danger! Crystal hyperstructure integrity faltering! Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
+		sm.post_alert("Danger! Crystal hyperstructure integrity faltering! Integrity: [round(sm.get_integrity_percent(), 0.01)]%")
 
 	SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_ALARM)
 	return TRUE
 
+/datum/sm_delam/proc/modify_damage(damage_to_be_applied)
+	return damage_to_be_applied
+
 /// Called when a supermatter switches its strategy from another one to us.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
-/datum/sm_delam/proc/on_select(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/on_select()
 	return
 
 /// Called when a supermatter switches its strategy from us to something else.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
-/datum/sm_delam/proc/on_deselect(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/on_deselect()
 	return
+
+/// Called when a supermatter enters its final cooldown.
+/datum/sm_delam/proc/on_enter_countdown()
+	return
+
+/// Called when a supermatter leavesits final cooldown.
+/datum/sm_delam/proc/on_leave_countdown()
+	return
+
+/// Returns the
+/datum/sm_delam/proc/get_radio_alert_channel()
+	return sm.damage >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel
+
+/// Returns the spans that should be applied to the radio message.
+/datum/sm_delam/proc/get_radio_alert_spans()
+	return sm.final_countdown ? list(SPAN_COMMAND) : list()
 
 /// Added to an examine return value.
 /// [/obj/machinery/power/supermatter_crystal/examine]
-/datum/sm_delam/proc/examine(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/examine()
 	return list()
 
 /// Add whatever overlay to the sm.
 /// [/obj/machinery/power/supermatter_crystal/update_overlays]
-/datum/sm_delam/proc/overlays(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/overlays()
 	if(sm.final_countdown)
 		return list(mutable_appearance(icon = sm.icon, icon_state = "causality_field", layer = FLOAT_LAYER))
 	return list()
 
 /// Applies filters to the SM.
 /// [/obj/machinery/power/supermatter_crystal/process_atmos]
-/datum/sm_delam/proc/filters(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/filters()
 	var/new_filter = isnull(sm.get_filter("ray"))
 
 	sm.add_filter(name = "ray", priority = 1, params = list(
@@ -118,7 +148,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 
 // Change how bright the rock is.
 /// [/obj/machinery/power/supermatter_crystal/process_atmos]
-/datum/sm_delam/proc/lights(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/lights()
 	sm.set_light(
 		l_range = ROUND_UP(clamp(sm.internal_energy / 500, 4, 10)),
 		l_power = ROUND_UP(clamp(sm.internal_energy / 1000, 1, 5)),
@@ -128,7 +158,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 
 /// Returns a set of messages to be spouted during delams
 /// First message is start of count down, second message is quitting of count down (if sm healed), third is 5 second intervals
-/datum/sm_delam/proc/count_down_messages(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/count_down_messages()
 	var/list/messages = list()
 	messages += "CRYSTAL DELAMINATION IMMINENT. The supermatter has reached critical integrity failure. Emergency causality destabilization field has been activated."
 	messages += "Crystalline hyperstructure returning to safe operating parameters. Failsafe has been disengaged."

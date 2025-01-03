@@ -49,6 +49,8 @@
 	var/list/gun_properties
 	//only used to always have the gun properties on non-letal (no other instances found)
 	var/mode = FALSE
+	///Set if a cascade kit was added to the emitter. Overrides initial projectile type
+	var/contains_cascade_kit = FALSE
 
 	// The following 3 vars are mostly for the prototype
 	///manual shooting? (basically you hop onto the emitter and choose the shooting direction, is very janky since you can only shoot at the 8 directions and i don't think is ever used since you can't build those)
@@ -57,6 +59,15 @@
 	var/charge = 0
 	///stores the direction and orientation of the last projectile
 	var/last_projectile_params
+
+/datum/armor/emitter_cascade
+	melee = 10
+	bullet = 25
+	laser = 50
+	energy = 50
+	fire = 50
+	acid = 25
+	bomb = 25
 
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
@@ -191,13 +202,17 @@
 
 /obj/machinery/power/emitter/process_early(seconds_per_tick)
 	var/power_usage = active_power_usage * seconds_per_tick
-	if(machine_stat & (BROKEN))
+	if((machine_stat & (BROKEN)) || panel_open)
 		return
 	if(!welded || (!powernet && power_usage))
 		active = FALSE
 		update_appearance()
 		return
-	if(!active)
+	if(contains_cascade_kit) // cascade kit skips everything and just fires on
+		if(check_delay())
+			fire_beam()
+		return
+	if(!active) // cascade kit forces the emitter to be on
 		return
 	if(power_usage && surplus() < power_usage)
 		if(powered)
@@ -247,8 +262,8 @@
 		projectile.fire(dir2angle(dir))
 	if(!manual)
 		last_shot = world.time
-		if(shot_number < 3)
-			fire_delay = 20
+		if(shot_number < 3 || contains_cascade_kit)
+			fire_delay = 2 SECONDS
 			shot_number ++
 		else
 			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
@@ -310,6 +325,8 @@
 	return TRUE
 
 /obj/machinery/power/emitter/crowbar_act(mob/living/user, obj/item/item)
+	if(contains_cascade_kit)
+		return
 	if(panel_open && gun)
 		return remove_gun(user)
 	default_deconstruction_crowbar(item)
@@ -318,22 +335,25 @@
 /obj/machinery/power/emitter/screwdriver_act(mob/living/user, obj/item/item)
 	if(..())
 		return TRUE
+	if(contains_cascade_kit && !panel_open)
+		balloon_alert(user, "can't open!")
+		return TRUE
 	default_deconstruction_screwdriver(user, "[base_icon_state]_open", base_icon_state, item)
 	return TRUE
 
 /// Attempt to toggle the controls lock of the emitter
 /obj/machinery/power/emitter/proc/togglelock(mob/user)
 	if(obj_flags & EMAGGED)
-		to_chat(user, span_warning("The lock seems to be broken!"))
+		balloon_alert(user, "lock broken!")
 		return
 	if(!allowed(user))
-		to_chat(user, span_danger("Access denied."))
+		balloon_alert(user, "access denied")
 		return
 	if(!active)
-		to_chat(user, span_warning("The controls can only be locked when \the [src] is online!"))
+		balloon_alert(user, "turn off first!")
 		return
 	locked = !locked
-	to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
+	balloon_alert(user, "controls [src.locked ? "" : "un"]locked")
 
 /obj/machinery/power/emitter/attackby(obj/item/item, mob/user, params)
 	if(item.GetID())
@@ -346,6 +366,21 @@
 	if(panel_open && !gun && istype(item,/obj/item/gun/energy))
 		if(integrate(item,user))
 			return
+	if(panel_open && istype(item, /obj/item/cascade_emitter_kit))
+		visible_message(
+			message = span_warning("[user] tries to install a suspicious device into \the [src]..."),
+			self_message = span_warning("You begin to put \the [item] onto \the [src]")
+		)
+		if(do_after(user, 5 SECONDS, src))
+			visible_message(
+				message = span_danger("[user] successfully installs a device into \the [src]."),
+				self_message = span_danger("You successfully install \the [item] on \the [src].")
+			)
+			contains_cascade_kit = TRUE
+			set_armor(/datum/armor/emitter_cascade)
+			set_projectile()
+			qdel(item)
+		return
 	return ..()
 
 
@@ -370,7 +405,7 @@
 	return TRUE
 
 /obj/machinery/power/emitter/proc/set_projectile()
-	if(LAZYLEN(gun_properties))
+	if(!contains_cascade_kit && LAZYLEN(gun_properties))
 		if(mode || !gun_properties["lethal_projectile"])
 			projectile_type = gun_properties["stun_projectile"]
 			projectile_sound = gun_properties["stun_projectile_sound"]
@@ -378,7 +413,7 @@
 			projectile_type = gun_properties["lethal_projectile"]
 			projectile_sound = gun_properties["lethal_projectile_sound"]
 		return
-	projectile_type = initial(projectile_type)
+	projectile_type = contains_cascade_kit ? /obj/projectile/beam/emitter/hitscan/cascade : initial(projectile_type)
 	projectile_sound = initial(projectile_sound)
 
 /obj/machinery/power/emitter/emag_act(mob/user, obj/item/card/emag/emag_card)

@@ -177,9 +177,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// Only values greater or equal to the current one can change the strat.
 	var/delam_priority = SM_DELAM_PRIO_NONE
 
-	/// Lazy list of the crazy engineers who managed to turn a cascading engine around.
-	var/list/datum/weakref/saviors = null
-
 	/// If a sliver of the supermatter has been removed. Almost certainly by a traitor. Lowers the delamination countdown time.
 	var/supermatter_sliver_removed = FALSE
 
@@ -218,7 +215,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)	//Speficially for the tram, hacky
 
-	AddComponent(/datum/component/supermatter_crystal, CALLBACK(src, PROC_REF(wrench_act_callback)), CALLBACK(src, PROC_REF(consume_callback)))
+	AddComponent(/datum/component/supermatter_crystal, CALLBACK(src, PROC_REF(wrench_act_callback)), CALLBACK(src, PROC_REF(consume_callback)), supermatter_effects = TRUE)
 	soundloop = new(src, TRUE)
 
 	if(!isnull(check_holidays(FESTIVE_SEASON)))
@@ -243,6 +240,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(is_main_engine && GLOB.main_supermatter_engine == src)
 		GLOB.main_supermatter_engine = null
 	QDEL_NULL(soundloop)
+	QDEL_NULL(delamination_strategy)
 	return ..()
 
 /obj/machinery/power/supermatter_crystal/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -267,7 +265,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(holiday_lights)
 		. += span_notice("Radiating both festive cheer and actual radiation, it has a dazzling spectacle lights wrapped lovingly around the base transforming it from a potential doomsday device into a cosmic yuletide centerpiece.")
 
-	. += delamination_strategy.examine(src)
+	. += delamination_strategy.examine()
 	return .
 
 /obj/machinery/power/supermatter_crystal/process_atmos()
@@ -327,7 +325,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		set_delam(SM_DELAM_PRIO_IN_GAME, SM_DELAM_STRATEGY_PURGE)
 	else if(!final_countdown)
 		set_delam(SM_DELAM_PRIO_NONE, SM_DELAM_STRATEGY_PURGE) // This one cant clear any forced delams.
-	delamination_strategy.delam_progress(src)
+	delamination_strategy.delam_progress()
 	if(damage > explosion_point && !final_countdown)
 		count_down()
 
@@ -352,20 +350,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	handle_high_power()
 	psychological_examination()
 
-	// handle the engineers that saved the engine from cascading, if there were any
-	if(get_status() < SUPERMATTER_EMERGENCY && !isnull(saviors))
-		for(var/datum/weakref/savior_ref as anything in saviors)
-			var/mob/living/savior = savior_ref.resolve()
-			if(!istype(savior)) // didn't live to tell the tale, sadly.
-				continue
-			savior.client?.give_award(/datum/award/achievement/jobs/theoretical_limits, savior)
-		LAZYNULL(saviors)
-
 	if(prob(15))
 		supermatter_pull(loc, min(internal_energy/850, 3))//850, 1700, 2550
 	update_appearance()
-	delamination_strategy.lights(src)
-	delamination_strategy.filters(src)
+	delamination_strategy.lights()
+	delamination_strategy.filters()
 	return TRUE
 
 // SupermatterMonitor UI for ghosts only. Inherited attack_ghost will call this.
@@ -512,7 +501,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(psy_coeff > 0)
 		. += mutable_appearance(icon = icon, icon_state = "[base_icon_state]-psy", layer = FLOAT_LAYER - 1, alpha = psy_coeff * 255)
 	if(delamination_strategy)
-		. += delamination_strategy.overlays(src)
+		. += delamination_strategy.overlays()
 	if(holiday_lights)
 		if(istype(src, /obj/machinery/power/supermatter_crystal/shard))
 			. += mutable_appearance(icon, "holiday_lights_shard")
@@ -546,7 +535,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
 	investigate_log("was forcefully delaminated", INVESTIGATE_ENGINE)
-	INVOKE_ASYNC(delamination_strategy, TYPE_PROC_REF(/datum/sm_delam, delaminate), src)
+	INVOKE_ASYNC(delamination_strategy, TYPE_PROC_REF(/datum/sm_delam, delaminate))
 
 /**
  * Count down, spout some messages, and then execute the delam itself.
@@ -565,6 +554,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	final_countdown = TRUE
 
+	delamination_strategy.on_enter_countdown()
+
 	notify_ghosts(
 		"[src] has begun the delamination process!",
 		source = src,
@@ -573,24 +564,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/list/count_down_messages = delamination_strategy.count_down_messages()
 
-	radio.talk_into(
-		src,
-		count_down_messages[1],
-		emergency_channel,
-		list(SPAN_COMMAND)
-	)
+	post_alert(count_down_messages[1])
 
 	var/delamination_countdown_time = SUPERMATTER_COUNTDOWN_TIME
 	// If a sliver was removed from the supermatter, the countdown time is significantly decreased
 	if (supermatter_sliver_removed == TRUE)
 		delamination_countdown_time = SUPERMATTER_SLIVER_REMOVED_COUNTDOWN_TIME
-		radio.talk_into(
-			src,
-			"WARNING: Projected time until full crystal delamination significantly lower than expected. \
-			Please inspect crystal for structural abnormalities or sabotage!",
-			emergency_channel,
-			list(SPAN_COMMAND)
-			)
+		post_alert("WARNING: Projected time until full crystal delamination significantly lower than expected. \
+			Please inspect crystal for structural abnormalities or sabotage!")
 
 	for(var/i in delamination_countdown_time to 0 step -10)
 		var/message
@@ -607,25 +588,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			message = "[i*0.1]..."
 
-		radio.talk_into(src, message, emergency_channel, list(SPAN_COMMAND))
+		post_alert(message)
 
 		if(healed)
 			final_countdown = FALSE
-
-			if(!istype(delamination_strategy, /datum/sm_delam/cascade))
-				return
-
-			for(var/mob/living/lucky_engi as anything in mobs_in_area_type(list(/area/station/engineering/supermatter)))
-				if(isnull(lucky_engi.client))
-					continue
-				if(isanimal_or_basicmob(lucky_engi))
-					continue
-				LAZYADD(saviors, WEAKREF(lucky_engi))
-
+			delamination_strategy.on_leave_countdown()
 			return // delam averted
 		sleep(1 SECONDS)
 
-	delamination_strategy.delaminate(src)
+	delamination_strategy.delaminate()
 
 // All the calculate procs should only update variables.
 // Move the actual real-world effects to [/obj/machinery/power/supermatter_crystal/process_atmos].
@@ -836,7 +807,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	// We dont let external factors deal more damage than the emergency point.
 	// Only cares about the damage before this proc is run. We ignore soon-to-be-applied damage.
-	additive_damage[SM_DAMAGE_EXTERNAL] = external_damage_immediate * clamp((emergency_point - damage) / emergency_point, 0, 1)
+	additive_damage[SM_DAMAGE_EXTERNAL] = external_damage_immediate
 	external_damage_immediate = 0
 
 	additive_damage[SM_DAMAGE_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 24000, 0, 0.15)
@@ -857,6 +828,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/total_damage = 0
 	for (var/damage_type in additive_damage)
 		total_damage += additive_damage[damage_type]
+
+	total_damage = delamination_strategy.modify_damage(total_damage, additive_damage)
 
 	damage += total_damage
 	damage = max(damage, 0)
@@ -879,23 +852,23 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(manual_delam_path == SM_DELAM_STRATEGY_PURGE)
 		for (var/delam_path in GLOB.sm_delam_list)
-			var/datum/sm_delam/delam = GLOB.sm_delam_list[delam_path]
-			if(!delam.can_select(src))
+			var/datum/callback/can_select_delam = GLOB.sm_delam_list[delam_path]
+			if(!can_select_delam.Invoke(src))
 				continue
-			if(delam == delamination_strategy)
+			if(istype(delamination_strategy, delam_path))
 				return FALSE
-			new_delam = delam
+			new_delam = new delam_path(src)
 			break
 		delam_priority = SM_DELAM_PRIO_NONE
 	else
-		new_delam = GLOB.sm_delam_list[manual_delam_path]
+		new_delam = new manual_delam_path(src)
 		delam_priority = priority
 
 	if(!new_delam)
 		return FALSE
-	delamination_strategy?.on_deselect(src)
+	delamination_strategy?.on_deselect()
 	delamination_strategy = new_delam
-	delamination_strategy.on_select(src)
+	delamination_strategy.on_select()
 	return TRUE
 
 /**
@@ -1063,6 +1036,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(zap_count > 1)
 			child_targets_hit = targets_hit.Copy() //Pass by ref begone
 		supermatter_zap(target, new_range, zap_str, zap_flags, child_targets_hit, zap_cutoff, power_level, zap_icon, color)
+
+/obj/machinery/power/supermatter_crystal/proc/post_alert(message)
+	radio.talk_into(
+		src,
+		message,
+		delamination_strategy.get_radio_alert_channel(),
+		delamination_strategy.get_radio_alert_spans()
+	)
 
 // For /datum/sm_delam to check if it should be sending an alert on common radio channel
 /obj/machinery/power/supermatter_crystal/proc/should_alert_common()

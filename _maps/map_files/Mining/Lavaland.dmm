@@ -347,6 +347,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/light/floor,
+/obj/effect/landmark/mining_spawn,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
@@ -890,6 +891,11 @@
 /obj/item/seeds/sunflower,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
+"ft" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/mining_spawn,
+/turf/open/floor/carpet/executive,
+/area/mine/lounge)
 "fv" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/tile/bar/opposingcorners{
@@ -3091,6 +3097,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
+"pJ" = (
+/obj/effect/landmark/mining_spawn,
+/turf/open/misc/hay/lavaland,
+/area/mine/lobby/raptor)
 "pK" = (
 /turf/closed/wall,
 /area/mine/eva)
@@ -3407,6 +3417,15 @@
 	},
 /turf/open/floor/carpet/red,
 /area/mine/lobby/raptor)
+"rD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
+	},
+/obj/effect/landmark/mining_spawn,
+/turf/open/floor/iron/checker,
+/area/mine/cafeteria)
 "rF" = (
 /turf/closed/wall/r_wall,
 /area/mine/maintenance/labor)
@@ -3481,6 +3500,12 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern/on,
 /turf/open/misc/hay/lavaland,
+/area/mine/lobby/raptor)
+"sd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/mining_spawn,
+/turf/open/floor/wood/parquet,
 /area/mine/lobby/raptor)
 "se" = (
 /turf/open/floor/iron/dark/textured_large,
@@ -4821,6 +4846,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/maintenance/living/north)
+"An" = (
+/obj/effect/landmark/mining_spawn,
+/turf/open/floor/plating,
+/area/mine/maintenance/service)
 "Ao" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
@@ -5993,6 +6022,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/mine/maintenance/labor)
+"IE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/effect/landmark/mining_spawn,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/mine/production)
 "IH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6742,6 +6782,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/mining_spawn,
 /turf/open/floor/iron/smooth_edge,
 /area/mine/laborcamp)
 "Ma" = (
@@ -38923,7 +38964,7 @@ pU
 Qz
 ON
 oc
-sO
+An
 Hs
 ON
 Hs
@@ -39200,7 +39241,7 @@ tX
 ut
 uk
 Zh
-Zh
+rD
 DW
 DW
 db
@@ -42812,7 +42853,7 @@ pU
 SP
 cF
 Yf
-Vz
+ft
 JZ
 JZ
 PR
@@ -47680,7 +47721,7 @@ GL
 GL
 GL
 GL
-GL
+IE
 GL
 Jl
 rv
@@ -53340,7 +53381,7 @@ CV
 jt
 ba
 fa
-jJ
+sd
 ZB
 be
 dI
@@ -55158,7 +55199,7 @@ NS
 mk
 sa
 NS
-NS
+pJ
 NS
 OW
 sa
