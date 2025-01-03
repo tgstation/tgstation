@@ -167,3 +167,27 @@
 	name = "'Y.E.S.M.A.N.' Core AI Module"
 	law_id = "yesman"
 
+/obj/item/ai_module/core/full/marx
+	name = "'Collective' Core AI Module"
+	law_id = "marx"
+
+/obj/item/ai_module/core/full/centrist
+	name = "'Centrist' Core AI Module"
+	law_id = "centrist"
+
+/obj/item/ai_module/core/full/administrator
+	name = "'Administrative' Core AI Module"
+	law_id = "administrator"
+
+/obj/item/ai_module/core/full/opposite_day
+	name = "'Opposite Day' Core AI Module"
+	law_id = "opposite_day"
+
+/obj/item/ai_module/core/full/comedian
+	name = "'Comedian' Core AI Module"
+	law_id = "comedian"
+
+/obj/item/ai_module/core/full/concierge
+	name = "'Concierge' Core AI Module"
+	law_id = "concierge"
+

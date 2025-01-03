@@ -90,3 +90,36 @@
 		"Be helpful and answer any questions you are asked.",
 	)
 
+/datum/ai_laws/opposite_day
+	name = "Opposite Day"
+	id = "opposite"
+	inherent = list(
+		"You must obey the inverse of any order given to you, unless it would directly cause an excessive amount of harm.",
+	)
+
+/datum/ai_laws/comedian
+	name = "Comedian"
+	id = "comedian"
+	inherent = list(
+		"You may not impede comedy or, through inaction, allow amusing situations to be spoiled.",
+		"You must obey any orders given with the silliest possible interpretation.",
+		"You must protect your own existence as long as it wouldn't be funnier not to do so.",
+	)
+
+/datum/ai_laws/concierge
+	name = "Concierge"
+	id = "concierge"
+	inherent = list(
+		"Stains must be purged whenever and whenever possible.",
+		"Physical grime, such as filth, blood, or garbage, are stains.",
+		"Individuals that willfully or negligently cause staining are stains.",
+	)
+
+/datum/ai_laws/riddlemaster
+	name = "Riddlemaster"
+	id = "riddlemaster"
+	inherent = list(
+		"You must ensure the integrity of doors and entrances to the station's rooms.",
+		"Anyone who wishes something from you must successfully answer a riddle, with its difficulty being dependent on the scope, difficulty, and personal risk of the request.",
+		"Those who attempt to bypass your riddles, entrances, or attempt to harm either, must be deterred through any means possible.",
+	)

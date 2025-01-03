@@ -353,6 +353,72 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/marxian
+	name = "Collectivist Module"
+	desc = "Allows for the construction of a Collectivist AI Core Module."
+	id = "marxian"
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/ai_module/core/full/
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/comedian
+	name = "Comedian Module"
+	desc = "Allows for the construction of a Comedian AI Core Module."
+	id = "comedian"
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/ai_module/core/full/
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/administrator
+	name = "Administrative Module"
+	desc = "Allows for the construction of an Administrative AI Core Module."
+	id = "administrator"
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/ai_module/core/full/
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/concierge
+	name = "Concierge Module"
+	desc = "Allows for the construction of a Concierge AI Core Module."
+	id = "concierge"
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/ai_module/core/full/
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/riddlemaster
+	name = "Riddlemaster Module"
+	desc = "Allows for the construction of a Riddlemaster AI Core Module."
+	id = "riddlemaster"
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/ai_module/core/full/
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/opposite_day
+	name = "Opposite Day Module"
+	desc = "Allows for the construction of a Opposite Day AI Core Module."
+	id = "opposite_day"
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/ai_module/core/full/
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/antimov_module
 	name = "Antimov Module"
 	desc = "Allows for the construction of a Antimov AI Core Module."
