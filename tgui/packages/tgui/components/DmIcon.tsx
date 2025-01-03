@@ -64,7 +64,7 @@ export function DmIcon(props: Props) {
     } else {
       setIconRef(refMap[icon]);
     }
-  }, [icon]);
+  }, []);
 
   if (!iconRef) return fallback;
 
