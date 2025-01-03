@@ -182,14 +182,8 @@
 			new /obj/item/clothing/head/helmet/rus_ushanka(src)
 			new /obj/item/storage/box/syndie_kit/poster_box(src)
 
-/obj/item/storage/box/syndicate/bundle_a/Initialize(mapload)
-	. = ..()
-	var/list/holdables_list = list()
-	for(var/obj/item/items in contents)
-		holdables_list += items.type
-	atom_storage.set_holdable(holdables_list)
-	atom_storage.max_slots= 30
-	atom_storage.max_total_storage = 40
+/obj/item/storage/box/syndicate/bundle_a
+	restrict_contents = TRUE
 
 /obj/item/storage/box/syndicate/bundle_b/PopulateContents()
 	switch (pick_weight(list(
@@ -321,14 +315,8 @@
 			new /obj/item/gun/ballistic/automatic/pistol(src) // 7 TC
 			new /obj/item/clothing/glasses/thermal(src) // 4 TC
 
-/obj/item/storage/box/syndicate/bundle_b/Initialize(mapload)
-	. = ..()
-	var/list/holdables_list = list()
-	for(var/obj/item/items in contents)
-		holdables_list += items.type
-	atom_storage.set_holdable(holdables_list)
-	atom_storage.max_slots= 30
-	atom_storage.max_total_storage = 40
+/obj/item/storage/box/syndicate/bundle_b
+	restrict_contents = TRUE
 
 /obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
 
@@ -546,15 +534,7 @@
 
 /obj/item/storage/box/syndie_kit/chameleon
 	name = "chameleon kit"
-
-/obj/item/storage/box/syndie_kit/chameleon/Initialize(mapload)
-	. = ..()
-	var/list/holdables_list = list()
-	for(var/obj/item/items in contents)
-		holdables_list += items.type
-	atom_storage.set_holdable(holdables_list)
-	atom_storage.max_slots= 30
-	atom_storage.max_total_storage = 40
+	restrict_contents = TRUE
 
 /obj/item/storage/box/syndie_kit/chameleon/PopulateContents()
 	new /obj/item/clothing/under/chameleon(src)
@@ -589,14 +569,8 @@
 	new /obj/item/modular_computer/pda/chameleon/broken(src)
 	// No chameleon laser, they can't randomise for //REASONS//
 
-/obj/item/storage/box/syndie_kit/centcom_costume/Initialize(mapload)
-	. = ..()
-	var/list/holdables_list = list()
-	for(var/obj/item/items in contents)
-		holdables_list += items.type
-	atom_storage.set_holdable(holdables_list)
-	atom_storage.max_slots= 30
-	atom_storage.max_total_storage = 40
+/obj/item/storage/box/syndie_kit/centcom_costume
+	restrict_contents = TRUE
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)
@@ -612,16 +586,7 @@
 	name = "Standard Loadout"
 	desc = "Supplied to Syndicate contractors, providing their specialised space suit and chameleon uniform."
 	w_class = WEIGHT_CLASS_NORMAL
-
-/obj/item/storage/box/syndicate/contractor_loadout/Initialize(mapload)
-	. = ..()
-	var/list/holdables_list = list()
-	for(var/obj/item/items in contents)
-		holdables_list += items.type
-	atom_storage.set_holdable(holdables_list)
-	atom_storage.max_slots= 30
-	atom_storage.max_total_storage = 40
-
+	restrict_contents = TRUE
 
 /obj/item/storage/box/syndicate/contractor_loadout/PopulateContents()
 	new /obj/item/mod/control/pre_equipped/infiltrator(src)
@@ -640,15 +605,8 @@
 	name = "syndicate induction kit"
 	desc = "Contains all you need for introducing your newest comrade to the Syndicate and all its worker's benefits."
 
-/obj/item/storage/box/syndie_kit/induction_kit/Initialize(mapload)
-	. = ..()
-	var/list/holdables_list = list()
-	for(var/obj/item/items in contents)
-		holdables_list += items.type
-	atom_storage.set_holdable(holdables_list)
-	atom_storage.max_slots= 30
-	atom_storage.max_total_storage = 40
-
+/obj/item/storage/box/syndie_kit/induction_kit
+	restrict_contents = TRUE
 
 /obj/item/storage/box/syndie_kit/induction_kit/PopulateContents()
 	// Basic weaponry, so they have something to use.

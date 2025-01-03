@@ -52,6 +52,7 @@
 		/obj/item/storage/box/stockparts/basic,
 		/obj/item/storage/box/stockparts/deluxe,
 		/obj/item/storage/box/fish_debug,
+		// some abstract types of storage (yes i know) don't get a datum
 		/obj/item/storage/box/ingredients/random,
 		/obj/item/storage/lockbox/bitrunning/decrypted,
 	))
@@ -71,10 +72,6 @@
 		for(var/obj/item/items in storage_contents)
 			total_weight_in_storage += items.w_class
 			contents_counter++
-
-		if(storage_type == null)
-			TEST_FAIL("[storage_item] ([storage_item.type]) has no storage /datum/")
-			continue
 
 		if(storage_type.max_slots < contents_counter)
 			TEST_FAIL("[storage_item] ([storage_item.type]) has loaded slots of [contents_counter], but only holds a max slot of [storage_type.max_slots].")

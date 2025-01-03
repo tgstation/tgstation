@@ -10,6 +10,8 @@
 	var/preload = FALSE
 	/// What storage type to use for this item
 	var/datum/storage/storage_type = /datum/storage
+	/// Do we restrict their holdable items to item paths they spawn with?
+	var/restrict_contents = FALSE
 
 /obj/item/storage/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -40,6 +42,19 @@
 		atom_storage.max_specific_storage = previous_max_storage
 	return ..()
 
+/obj/item/storage/proc/restrict_content()
+	var/list/holdables_list = list()
+	for(var/obj/item/items in contents)
+		holdables_list += items.type
+	atom_storage.set_holdable(holdables_list)
+	atom_storage.max_slots = 30
+	atom_storage.max_total_storage = 40
+
+/obj/item/storage/examine()
+	. = ..()
+	if(restrict_contents)
+		. += span_notice("This storage item seems to have been specially made to fit the items they start out with. It may not fit anything else.")
+
 /obj/item/storage/Initialize(mapload)
 	. = ..()
 
@@ -49,6 +64,9 @@
 
 	for (var/obj/item/item in src)
 		item.item_flags |= IN_STORAGE
+
+	if(restrict_contents)
+		restrict_content()
 
 /obj/item/storage/create_storage(
 	max_slots,

@@ -165,10 +165,7 @@
 	name = "DIY Dish Drive Kit"
 	desc = "Contains everything you need to build your own Dish Drive!"
 	custom_premium_price = PAYCHECK_CREW * 3
-
-/obj/item/storage/box/dishdrive/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 9
+	restrict_contents = TRUE
 
 /obj/item/storage/box/dishdrive/PopulateContents()
 	var/static/items_inside = list(
