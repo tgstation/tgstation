@@ -1,0 +1,4 @@
+author: "Bisar Metek"
+delete-after: True
+changes:
+  - code_imp: "Fixed up the return value of checkbox-input for tgui to behave consistently."

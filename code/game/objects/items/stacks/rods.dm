@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	attack_verb_continuous = list("hits", "bludgeons", "whacks")
 	attack_verb_simple = list("hit", "bludgeon", "whack")
 	hitsound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
-	embed_type = /datum/embed_data/rods
+	embed_type = /datum/embedding/rods
 	novariants = TRUE
 	matter_amount = 2
 	cost = HALF_SHEET_MATERIAL_AMOUNT
@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	drop_sound = 'sound/items/handling/materials/metal_drop.ogg'
 	sound_vary = TRUE
 
-/datum/embed_data/rods
+/datum/embedding/rods
 	embed_chance = 50
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)

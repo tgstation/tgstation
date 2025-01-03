@@ -13,7 +13,6 @@
 	var/delay_multiplier = 6.7
 	/// This variable is used to specify which overlay icon is used for the wheelchair, ensures wheelchair can cover your legs
 	var/overlay_icon = "wheelchair_overlay"
-	var/image/wheels_overlay
 	///Determines the typepath of what the object folds into
 	var/foldabletype = /obj/item/wheelchair
 	///Bell attached to the wheelchair, if we have one.
@@ -36,7 +35,6 @@
 /obj/vehicle/ridden/wheelchair/Initialize(mapload)
 	. = ..()
 	make_ridable()
-	wheels_overlay = image(icon, overlay_icon, ABOVE_MOB_LAYER)
 	ADD_TRAIT(src, TRAIT_NO_IMMOBILIZE, INNATE_TRAIT)
 	AddComponent(/datum/component/simple_rotation) //Since it's technically a chair I want it to have chair properties
 	AddElement(/datum/element/noisy_movement, volume = 75)
@@ -69,7 +67,9 @@
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()
 	if(has_buckled_mobs())
-		. += wheels_overlay
+		var/mutable_appearance/wheel_overlay = mutable_appearance(icon, overlay_icon, ABOVE_MOB_LAYER, src, appearance_flags = KEEP_APART)
+		wheel_overlay = color_atom_overlay(wheel_overlay)
+		. += wheel_overlay
 	if(bell_attached)
 		. += "wheelchair_bell"
 
