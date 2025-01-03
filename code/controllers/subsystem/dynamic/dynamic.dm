@@ -387,12 +387,13 @@ SUBSYSTEM_DEF(dynamic)
 		advisory_string += "Advisory Level: <b>Pulsar Star</b></center><BR>"
 		advisory_string += "Your sector's advisory level is Pulsar Star. A large, unknown electromagnetic field has stormed through nearby surveillance equipment, causing major data loss. Partial data was recovered and showed no credible threats to Nanotrasen assets within the Spinward Sector; however, the Department of Intelligence advises maintaining high alert against potential threats due to the lack of complete data."
 		return advisory_string
-	//a white dwarf shift leads to a green security alert on report and special announcement, this prevents a meta check if the alert report is fake or not.
+	//a white dwarf
+	shift leads to a green security alert on report and special announcement, this prevents a meta check if the alert report is fake or not.
 	if(round(shown_threat) == 0 && round(threat_level) == 0)
 		advisory_string += "Advisory Level: <b>White Dwarf</b></center><BR>"
 		advisory_string += "Your sector's advisory level is White Dwarf. Our surveillance has ruled out any and all potential threats known in our database, eliminating most risks to our assets in the Spinward Sector. We advise a lower level of security, alongside distributing resources on potential profit."
 		return advisory_string
-	return advisory_string = get_threat_level_string(shown_threat, FAKE_GREENSHIFT_FORM_CHANCE)
+	return get_threat_level_string(shown_threat, FAKE_GREENSHIFT_FORM_CHANCE)
 
 /datum/controller/subsystem/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
