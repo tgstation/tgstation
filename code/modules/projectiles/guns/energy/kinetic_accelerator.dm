@@ -16,6 +16,8 @@
 	var/list/obj/item/borg/upgrade/modkit/modkits = list()
 	///The max capacity of modkits the PKA can have installed at once.
 	var/max_mod_capacity = 100
+	// Stores base recharge time to calculate actual time after mods are applied.
+	var/base_recharge_time = 1.6 SECONDS
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
@@ -386,14 +388,27 @@
 	modifier = 3.2
 	minebot_upgrade = FALSE
 
+// Recalculate recharge time after adding or removing cooldown mods.
+/obj/item/borg/upgrade/modkit/cooldown/proc/get_recharge_time(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	
+	var/new_recharge_time = KA.base_recharge_time
+	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
+		if(istype(modkit_upgrade, src))	
+			new_recharge_time -= modifier
+
+	return new_recharge_time
+
+
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()
 	if(.)
-		KA.recharge_time -= modifier
+		KA.recharge_time = get_recharge_time(KA)
+
 
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
-	KA.recharge_time += modifier
 	..()
+	KA.recharge_time = get_recharge_time(KA)
+
 
 /obj/item/borg/upgrade/modkit/cooldown/minebot
 	name = "minebot cooldown decrease"
