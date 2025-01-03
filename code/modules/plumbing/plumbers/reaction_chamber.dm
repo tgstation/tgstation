@@ -214,10 +214,6 @@
 
 /obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
 	if(reagents.ph < acidic_limit || reagents.ph > alkaline_limit)
-		//no power
-		if(!is_operational)
-			return
-
 		//nothing to react with
 		var/num_of_reagents = length(reagents.reagent_list)
 		if(!num_of_reagents)
