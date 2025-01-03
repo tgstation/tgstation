@@ -219,7 +219,6 @@
 		balloon_alert(user, "access overridden")
 	return TRUE
 
-
 /obj/machinery/button/attack_ai(mob/user)
 	if(!silicon_access_disabled && !panel_open)
 		return attempt_press(user)
