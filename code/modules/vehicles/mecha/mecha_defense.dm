@@ -105,7 +105,7 @@
 
 /obj/vehicle/sealed/mecha/blob_act(obj/structure/blob/B)
 	log_message("Attack by blob. Attacker - [B].", LOG_MECHA, color="red")
-	take_damage(30, BRUTE, MELEE, 0, get_dir(src, B))
+	take_damage(damage_amount = 30, damage_type = BRUTE, damage_flag = MELEE, sound_effect = FALSE, armour_penetration = 50)
 
 /obj/vehicle/sealed/mecha/attack_tk()
 	return
