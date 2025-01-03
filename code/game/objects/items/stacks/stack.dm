@@ -656,8 +656,8 @@
 		INVOKE_ASYNC(src, PROC_REF(merge), arrived)
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(can_merge(hitting, inhand = TRUE))
-		merge(hitting)
+	if(can_merge(hitting, inhand = TRUE) && merge(hitting))
+		playsound(src, drop_sound, PICKUP_SOUND_VOLUME, sound_vary, ignore_walls = FALSE) // same settings as pickup
 	. = ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -707,13 +707,14 @@
 
 	is_zero_amount(delete_if_zero = TRUE)
 
-/obj/item/stack/attackby(obj/item/W, mob/user, params)
-	if(can_merge(W, inhand = TRUE))
-		var/obj/item/stack/S = W
-		if(merge(S))
-			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
-	else
-		. = ..()
+/obj/item/stack/item_interaction(mob/living/user, obj/item/stack, list/modifiers)
+	if(!can_merge(stack, inhand = TRUE))
+		return NONE
+	var/obj/item/stack/merging_into = stack
+	if(merge(merging_into))
+		playsound(merging_into, pickup_sound, PICKUP_SOUND_VOLUME, sound_vary, ignore_walls = FALSE) // same settings as pickup
+		to_chat(user, span_notice("Your [merging_into.name] stack now contains [merging_into.get_amount()] [merging_into.singular_name]\s."))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
 	add_blood_DNA(GET_ATOM_BLOOD_DNA(from))
