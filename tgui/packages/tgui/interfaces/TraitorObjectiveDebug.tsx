@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Box, LabeledList, Stack, Tabs, Tooltip } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, LabeledList, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { getDangerLevel } from './Uplink/calculateDangerLevel';
 
