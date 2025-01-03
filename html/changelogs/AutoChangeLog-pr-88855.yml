@@ -1,0 +1,4 @@
+author: "high-speedspin-cycle"
+delete-after: True
+changes:
+  - qol: "The experimental deconstructive scanner can now scan multiple items."
