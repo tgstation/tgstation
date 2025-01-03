@@ -1,5 +1,0 @@
-author: "AyIong"
-delete-after: True
-changes:
-  - admin: "Ticket actions buttons in chat got a little bigger"
-  - bugfix: "Highlighted PMs, vote results and examine will not have weird black title"

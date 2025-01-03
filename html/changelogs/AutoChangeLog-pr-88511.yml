@@ -1,7 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - refactor: "Completely rewrote all item and projectile embedding code"
-  - bugfix: "Instant summons now actually drags people who had the summoned item embedded into them"
-  - bugfix: "Items embedded into limbs no longer get shoved into limbs deep enough for them to never be found again upon delimbing."
-  - bugfix: "You can see scar descriptions upon detailed examination of targets"
