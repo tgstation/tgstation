@@ -276,3 +276,17 @@
 /datum/fantasy_affix/speed/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
 	master.slowdown = initial(master.slowdown)
+
+/datum/fantasy_affix/doot
+	name = "of dooting"
+	placement = AFFIX_SUFFIX
+	alignment = AFFIX_GOOD
+	weight = 1
+
+/datum/fantasy_affix/doot/apply(datum/component/fantasy/comp, newName)
+	. = ..()
+	comp.parent.AddElement(/datum/element/spooky, too_spooky = comp.quality > 17, stam_damage_mult = comp.quality * 0.15)
+	return "[newName] of [pick("dooting", "spooks", "rattling", "the bones")]"
+
+/datum/fantasy_affix/doot/remove(datum/component/fantasy/comp)
+	comp.parent.RemoveElement(/datum/element/spooky, too_spooky = comp.quality > 17, stam_damage_mult = comp.quality * 0.15)
