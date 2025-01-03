@@ -19,9 +19,9 @@
 /obj/structure/ladder/Initialize(mapload, obj/structure/ladder/up, obj/structure/ladder/down)
 	..()
 	GLOB.ladders += src
-	if (up)
+	if(up)
 		link_up(up)
-	if (down)
+	if(down)
 		link_down(down)
 
 	register_context()
@@ -207,15 +207,18 @@
 	// By default, discover ladders above and below us vertically
 	var/turf/base = get_turf(src)
 
-	if (isnull(down))
+	if(isnull(down))
 		var/obj/structure/ladder/new_down = locate() in GET_TURF_BELOW(base)
 		if (new_down && crafted == new_down.crafted)
 			link_down(new_down)
 
-	if (isnull(up))
+	if(isnull(up))
 		var/obj/structure/ladder/new_up = locate() in GET_TURF_ABOVE(base)
 		if (new_up && crafted == new_up.crafted)
 			link_up(new_up)
+
+	if(isnull(down) && isnull(up))
+		update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/ladder/update_icon_state()
 	icon_state = "[base_icon_state][!!up][!!down]"
