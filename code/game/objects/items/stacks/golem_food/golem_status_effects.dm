@@ -18,6 +18,16 @@
 	var/alert_icon_state = "sheet-monkey"
 	/// Tooltip to display when hovering over the alert
 	var/alert_desc = "Something went wrong and this tooltip is not displaying correctly."
+	/// Golem effects actually come from their organs so if someone wants to do enough mad science,
+	/// they can get golem effects as a (sort of) human or other kind of humanoid
+	var/mob/living/carbon/human/human_owner
+	/// Ideally all golem effects will effect their golem arms, and it's less of a headache to keep
+	/// track of that here to keep our behavior contained instead of suffering from edge cases
+	var/list/obj/item/bodypart/arm/modified_arms
+	/// A var to keep track of if we're warning the owner about the effect expiring, to keep
+	/// the warning animation working properly
+	var/warning = FALSE
+
 
 /atom/movable/screen/alert/status_effect/golem_status
 	name = "Metamorphic %SOMETHING%"
@@ -25,13 +35,9 @@
 	icon_state = "template"
 	/// Overlay we show on top of the template icon
 	var/mutable_appearance/mineral_overlay
-	/// When we reach this much remaining time we will start animating as a warning
-	var/early_expiry_warning = 30 SECONDS
-	/// When we reach this much remaining time we will start animating more urgently as a warning
-	var/imminent_expiry_warning = 5 SECONDS
 
 /// Set up how the alert ACTUALLY looks, based on the effect applied
-/atom/movable/screen/alert/status_effect/golem_status/proc/update_details(buff_time)
+/atom/movable/screen/alert/status_effect/golem_status/proc/update_details()
 	var/datum/status_effect/golem/golem_effect = attached_effect
 	if (!istype(golem_effect))
 		CRASH("Golem status alert attached to invalid status effect.")
@@ -39,11 +45,6 @@
 	desc = golem_effect.alert_desc
 	mineral_overlay = mutable_appearance(golem_effect.alert_icon, golem_effect.alert_icon_state)
 	update_appearance(UPDATE_ICON)
-
-	if (buff_time > early_expiry_warning)
-		addtimer(CALLBACK(src, PROC_REF(early_warning)), buff_time - early_expiry_warning, TIMER_DELETE_ME)
-	if (buff_time > imminent_expiry_warning)
-		addtimer(CALLBACK(src, PROC_REF(imminent_warning)), buff_time - imminent_expiry_warning, TIMER_DELETE_ME)
 
 /// Animate to indicate effect is expiring soon
 /atom/movable/screen/alert/status_effect/golem_status/proc/early_warning()
@@ -63,6 +64,10 @@
 	QDEL_NULL(mineral_overlay)
 	return ..()
 
+/*
+* Do some checking against the parent-defined .owner to ensure no fuckery is about
+* But we'll want to use human_owner for most everything once we have that ensured
+*/
 /datum/status_effect/golem/on_apply()
 	. = ..()
 	if (!ishuman(owner))
@@ -73,27 +78,67 @@
 		to_chat(owner, span_notice(applied_fluff))
 	if (!overlay_state_prefix || !iscarbon(owner))
 		return TRUE
-	var/mob/living/carbon/golem_owner = owner
-	for (var/obj/item/bodypart/part in golem_owner.bodyparts)
+	// Make sure to set our human_owner
+	human_owner = owner
+	for (var/obj/item/bodypart/part in human_owner.bodyparts)
 		if (part.limb_id != SPECIES_GOLEM)
 			continue
 		var/datum/bodypart_overlay/simple/golem_overlay/overlay = new()
 		overlay.add_to_bodypart(overlay_state_prefix, part)
 		active_overlays += overlay
-	golem_owner.update_body_parts()
+	human_owner.update_body_parts()
 	return TRUE
+
+/datum/status_effect/golem/tick(seconds_between_ticks)
+	. = ..()
+	var/atom/movable/screen/alert/status_effect/golem_status/status_alert = linked_alert
+	if(!status_alert)
+		return // our status alert is gone, so we can't animate
+	var/time_left = duration - world.time
+	switch (time_left)
+		if (1 SECONDS to 5 SECONDS)
+			if (warning != "imminent")
+				warning = "imminent"
+				status_alert.imminent_warning()
+		if (6 SECONDS to 30 SECONDS)
+			if (warning != "early")
+				warning = "early"
+				status_alert.early_warning()
 
 /datum/status_effect/golem/on_creation(mob/living/new_owner)
 	. = ..()
 	if (!.)
 		return FALSE
 	var/atom/movable/screen/alert/status_effect/golem_status/status_alert = linked_alert
-	status_alert?.update_details(buff_time = initial(duration))
+	status_alert?.update_details()
 
 /datum/status_effect/golem/on_remove()
 	to_chat(owner, span_warning("The effect of the [mineral_name] fades."))
 	QDEL_LIST(active_overlays)
 	return ..()
+
+// Golem's arms are central to their status effects so the golem effects have procs for setting their arms
+/datum/status_effect/golem/proc/set_arm_effects()
+	SHOULD_CALL_PARENT(TRUE)
+
+	for(var/obj/item/bodypart/arm/arm in human_owner.bodyparts)
+		if(arm.limb_id != SPECIES_GOLEM)
+			continue
+		LAZYADD(modified_arms, arm)
+		RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
+
+/datum/status_effect/golem/proc/reset_arm_effects()
+	SHOULD_CALL_PARENT(TRUE)
+	if(LAZYLEN(modified_arms))
+		for(var/obj/item/bodypart/arm/arm in modified_arms)
+			UnregisterSignal(arm, COMSIG_QDELETING)
+	LAZYNULL(modified_arms)
+
+/// Remove references to deleted arms
+/datum/status_effect/golem/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
+	SIGNAL_HANDLER
+
+	LAZYREMOVE(modified_arms, arm)
 
 /datum/status_effect/golem/get_examine_text()
 	return span_notice("[owner.p_Their()] body has been augmented with veins of [mineral_name].")
@@ -123,7 +168,7 @@
 	mineral_name = "uranium"
 	applied_fluff = "Glowing crystals sprout from your body. You feel energised!"
 	alert_icon_state = "sheet-uranium"
-	alert_desc = "Internal radiation is providing all of your nutritional needs."
+	alert_desc = "Internal radiation is providing all of your nutritional needs, and your punches inflict radiation."
 
 /datum/status_effect/golem/uranium/on_apply()
 	. = ..()
@@ -132,11 +177,64 @@
 	ADD_TRAIT(owner, TRAIT_NOHUNGER, TRAIT_STATUS_EFFECT(id))
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/golem_hunger)
 	owner.remove_status_effect(/datum/status_effect/golem_statued) // Instant fix!
+	set_arm_effects()
 	return TRUE
 
 /datum/status_effect/golem/uranium/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, TRAIT_STATUS_EFFECT(id))
+	reset_arm_effects()
 	return ..()
+
+/datum/status_effect/golem/uranium/set_arm_effects()
+	. = ..()
+	RegisterSignals(owner, list(COMSIG_CARBON_BODYPART_ATTACK_PERFORMED, COMSIG_CARBON_BODYPART_CONTACT_PERFORMED), PROC_REF(on_doing_touch))
+
+
+/datum/status_effect/golem/uranium/reset_arm_effects()
+	UnregisterSignal(owner, list(COMSIG_CARBON_BODYPART_ATTACK_PERFORMED, COMSIG_CARBON_BODYPART_CONTACT_PERFORMED))
+	. = ..()
+
+/*
+* on_doing_touch, called by COMSIG_CARBON_BODYPART_ATTACK_PERFORMED or COMSIG_CARBON_BODYPART_CONTACT_PERFORMED
+* Sourced from the most untamed wildernesses of the unarmed attack chain
+* This is only called if someone doesn't successfully block, so shields will protect you
+* but armor won't (however, rad-safe clothing will)
+*/
+/datum/status_effect/golem/uranium/proc/on_doing_touch(datum/source, mob/living/carbon/human/touchy_golem, mob/living/target, obj/item/bodypart/active_bodypart, damage_dealt = 0, obj/item/bodypart/targeted_bodypart = null)
+	SIGNAL_HANDLER
+	if(!CAN_IRRADIATE(target))
+		return
+	if(!modified_arms.Find(active_bodypart)) // maybe you got your arms replaced by a bioscrambler in the time since you got this effect
+		return
+	if(!touchy_golem.combat_mode)
+		if(prob(80)) // 20% chance to irradiate people anyway even if you're only trying to help
+			return	// why does your love kill?
+	if(SSradiation.irradiate(target))
+		target.visible_message(
+		span_danger("Growing green flecks fall from [owner]'s hands onto [target]."),
+		span_priorityalert("After [owner] touches you, your skin starts burning and glowing!"),
+		vision_distance = COMBAT_MESSAGE_RANGE
+		)
+		ASYNC // async so we can scream without upsetting should_not_sleep
+			target.emote("scream")
+	remove_duration(30 SECONDS) // lessen the duration to avoid uranium golems becoming walking chernobyl
+	var/target_name_word = splittext("[target]", " ")[1] // retrieve the first word of their displayed name
+	owner.balloon_alert_to_viewers("irradiated [target_name_word]")
+	flash_our_alert()
+
+/datum/status_effect/golem/uranium/proc/flash_our_alert()
+	var/atom/movable/screen/alert/status_effect/golem_status/status_alert = linked_alert
+	if (!status_alert)
+		return
+	var/mean_golem_green = rgb(0, 255, 0)
+	status_alert.add_filter("radioactive_touch", 1, list(
+		"type" = "outline",
+		"color" = mean_golem_green,"alpha" = 0,
+		"size" = 2.2))
+	var/you_did_this_outline = status_alert.get_filter("radioactive_touch")
+	animate(you_did_this_outline, alpha = 255, time = 0.25 SECONDS, loop = 4)
+	animate(alpha = 0, time = 0.25 SECONDS)
+
 
 /// Magic immunity
 /datum/status_effect/golem/silver
@@ -168,22 +266,20 @@
 	mineral_name = "plasma"
 	applied_fluff = "Plasma cooling rods sprout from your body. You can take the heat!"
 	alert_icon_state = "sheet-plasma"
-	alert_desc = "You are protected from high pressure and can convert heat damage into power."
+	alert_desc = "You can convert heat damage into power."
 
 /datum/status_effect/golem/plasma/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
-	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_burned))
-	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.burn_mod *= BURN_MULTIPLIER
 	return TRUE
 
 /datum/status_effect/golem/plasma/on_remove()
-	owner.remove_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
-	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.burn_mod /= BURN_MULTIPLIER
 	return ..()
 
@@ -213,24 +309,44 @@
 	owner.Beam(target, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
 	playsound(owner, 'sound/effects/magic/lightningshock.ogg', vol = 50, vary = TRUE)
 
-/// Makes you spaceproof
+/// Makes you tenacious, but not invincible
 /datum/status_effect/golem/plasteel
 	overlay_state_prefix = "iron"
 	mineral_name = "plasteel"
-	applied_fluff = "Plasteel plates seal you tight. You feel insulated!"
+	applied_fluff = "Plasteel plates reinforce your body and your will!"
 	alert_icon_state = "sheet-plasteel"
-	alert_desc = "You are sealed against the cold, and against low pressure environments."
+	alert_desc = "You won't take damage while in crit; finding some way to heal out of it is another problem."
 
 /datum/status_effect/golem/plasteel/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
-	owner.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_NOCRITDAMAGE), TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/golem/plasteel/on_remove()
-	owner.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_NOCRITDAMAGE), TRAIT_STATUS_EFFECT(id))
 	return ..()
+
+/// Makes you push through the pain; beyond the ultimate!
+/datum/status_effect/golem/plastitanium
+	overlay_state_prefix = "iron"
+	mineral_name = "plastitanium"
+	applied_fluff = "Plastitanium reinforces your body beyond its limits!"
+	alert_icon_state = "sheet-plastitanium"
+	alert_desc = "You won't fall helpless into a critical state, but watch out; you can't eat iron with this buff active!"
+
+/datum/status_effect/golem/plastitanium/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_NOCRITDAMAGE), TRAIT_STATUS_EFFECT(id))
+	return TRUE
+
+/datum/status_effect/golem/plastitanium/on_remove()
+	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_NOCRITDAMAGE), TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 
 /// Makes you reflect energy projectiles
 /datum/status_effect/golem/gold
@@ -264,7 +380,6 @@
 	/// Alpha to apply while moving
 	var/moving_alpha = 200
 	/// List of arms we have updated
-	var/list/modified_arms
 
 /datum/status_effect/golem/diamond/on_apply()
 	. = ..()
@@ -273,12 +388,7 @@
 	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_THROW, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK), PROC_REF(on_reveal))
 	owner.alpha = moving_alpha
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/light_speed)
-
-	var/mob/living/carbon/carbon_owner = owner
-	for (var/obj/item/bodypart/arm/arm in carbon_owner.bodyparts)
-		if (arm.limb_id != SPECIES_GOLEM)
-			continue
-		set_arm_fluff(arm)
+	set_arm_effects()
 	return TRUE
 
 /datum/status_effect/golem/diamond/tick(delta_time, times_fired)
@@ -290,38 +400,30 @@
 	owner.alpha = moving_alpha
 
 /// Make our arm do slashing effects
-/datum/status_effect/golem/diamond/proc/set_arm_fluff(obj/item/bodypart/arm/arm)
-	arm.unarmed_attack_verbs = list("slash")
-	arm.grappled_attack_verb = "lacerate"
-	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	arm.unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
-	arm.unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
-	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
-	LAZYADD(modified_arms, arm)
+/datum/status_effect/golem/diamond/set_arm_effects()
+	. = ..()
+	for (var/obj/item/bodypart/arm/arm in modified_arms)
+		arm.unarmed_attack_verbs = list("slash")
+		arm.grappled_attack_verb = "lacerate"
+		arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
+		arm.unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
+		arm.unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 
 /datum/status_effect/golem/diamond/on_remove()
 	owner.alpha = initial(owner.alpha)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/light_speed)
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_THROW, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK))
-	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
-		reset_arm_fluff(arm)
-	LAZYCLEARLIST(modified_arms)
+	reset_arm_effects()
 	return ..()
 
 /// Make our arm do whatever it originally did
-/datum/status_effect/golem/diamond/proc/reset_arm_fluff(obj/item/bodypart/arm/arm)
-	if (!arm)
-		return
-	arm.unarmed_attack_verbs = initial(arm.unarmed_attack_verbs)
-	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
-	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
-	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
-	UnregisterSignal(arm, COMSIG_QDELETING)
-
-/// Remove references to deleted arms
-/datum/status_effect/golem/diamond/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
-	SIGNAL_HANDLER
-	modified_arms -= arm
+/datum/status_effect/golem/diamond/reset_arm_effects()
+	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
+		arm.unarmed_attack_verbs = initial(arm.unarmed_attack_verbs)
+		arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
+		arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
+		arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
+	. = ..()
 
 /// Makes you tougher
 /datum/status_effect/golem/titanium
@@ -337,19 +439,14 @@
 	/// Deal this much extra damage to mining mobs, most of which take 0 unarmed damage usually
 	var/mining_bonus = 30
 	/// List of arms we have updated
-	var/list/modified_arms
 
 /datum/status_effect/golem/titanium/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
-	var/mob/living/carbon/human/human_owner = owner
 	RegisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_punched))
 	human_owner.physiology.brute_mod *= brute_modifier
-	for (var/obj/item/bodypart/arm/arm in human_owner.bodyparts)
-		if (arm.limb_id != SPECIES_GOLEM)
-			continue
-		buff_arm(arm)
+	set_arm_effects()
 
 /// Give mining mobs an extra slap
 /datum/status_effect/golem/titanium/proc/on_punched(mob/living/puncher, atom/punchee, proximity)
@@ -362,33 +459,24 @@
 	victim.apply_damage(mining_bonus, BRUTE)
 
 /// Make the targeted arm big and strong
-/datum/status_effect/golem/titanium/proc/buff_arm(obj/item/bodypart/arm/arm)
-	arm.unarmed_damage_low += damage_increase
-	arm.unarmed_damage_high += damage_increase
-	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
-	LAZYADD(modified_arms, arm)
+/datum/status_effect/golem/titanium/set_arm_effects()
+	. = ..()
+	for(var/obj/item/bodypart/arm/arm as anything in modified_arms)
+		arm.unarmed_damage_low += damage_increase
+		arm.unarmed_damage_high += damage_increase
 
 /datum/status_effect/golem/titanium/on_remove()
-	var/mob/living/carbon/human/human_owner = owner
 	UnregisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK)
 	human_owner.physiology.brute_mod /= brute_modifier
-	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
-		debuff_arm(arm)
-	LAZYCLEARLIST(modified_arms)
+	reset_arm_effects()
 	return ..()
 
 /// Make the targeted arm small and weak
-/datum/status_effect/golem/titanium/proc/debuff_arm(obj/item/bodypart/arm/arm)
-	if (!arm)
-		return
-	arm.unarmed_damage_low -= damage_increase
-	arm.unarmed_damage_high -= damage_increase
-	UnregisterSignal(arm, COMSIG_QDELETING)
-
-/// Remove references to deleted arms
-/datum/status_effect/golem/titanium/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
-	SIGNAL_HANDLER
-	modified_arms -= arm
+/datum/status_effect/golem/titanium/reset_arm_effects()
+	for(var/obj/item/bodypart/arm/arm as anything in modified_arms)
+		arm.unarmed_damage_low -= damage_increase
+		arm.unarmed_damage_high -= damage_increase
+	return ..()
 
 /// Makes you slippery
 /datum/status_effect/golem/bananium
