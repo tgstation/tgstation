@@ -35,7 +35,7 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 3,
+		MECHA_ARMOR = 1,
 	)
 	//no tax on flying, since the power cost is in the leap itself.
 	phasing_energy_drain = 0
