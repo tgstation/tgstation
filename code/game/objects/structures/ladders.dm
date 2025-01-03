@@ -81,27 +81,22 @@
 		flags = MASK_INVERSE,
 	))
 	loc.update_appearance(UPDATE_OVERLAYS)
-
-	if(istransparentturf(loc) || HAS_TRAIT_FROM(loc, TURF_Z_TRANSPARENT_TRAIT, SOURCE_LADDER(ladder)))
-		return
-
-	ADD_TRAIT(loc, TURF_Z_TRANSPARENT_TRAIT, SOURCE_LADDER(ladder))
-	loc.AddElement(/datum/element/turf_z_transparency)
+	ADD_TURF_TRANSPARENCY(loc, SOURCE_LADDER(ladder))
 
 /obj/effect/abstract/ladder_hole/Destroy()
-	if(!ladder)
+	if(isnull(ladder))
 		return ..()
+
+	if(isopenturf(loc))
+		UnregisterSignal(loc, list(COMSIG_TURF_CHANGE, COMSIG_ATOM_UPDATE_OVERLAYS))
+		REMOVE_KEEP_TOGETHER(loc, SOURCE_LADDER(ladder))
+		REMOVE_TURF_TRANSPARENCY(loc, SOURCE_LADDER(ladder))
+		loc.remove_filter(SOURCE_LADDER(ladder))
+		loc.update_appearance(UPDATE_OVERLAYS)
+
 	UnregisterSignal(ladder, COMSIG_QDELETING)
 	ladder = null
-	if(!loc)
-		return ..()
-	UnregisterSignal(loc, list(COMSIG_TURF_CHANGE, COMSIG_ATOM_UPDATE_OVERLAYS))
-	REMOVE_KEEP_TOGETHER(loc, SOURCE_LADDER(ladder))
-	loc.remove_filter(SOURCE_LADDER(ladder))
-	loc.update_appearance(UPDATE_OVERLAYS)
-	if(istransparentturf(loc) && HAS_TRAIT_FROM(loc, TURF_Z_TRANSPARENT_TRAIT, SOURCE_LADDER(ladder)))
-		REMOVE_TRAIT(loc, TURF_Z_TRANSPARENT_TRAIT, SOURCE_LADDER(ladder))
-		loc.RemoveElement(/datum/element/turf_z_transparency)
+
 	return ..()
 
 /obj/effect/abstract/ladder_hole/proc/cleanup()
