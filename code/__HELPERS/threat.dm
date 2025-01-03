@@ -1,5 +1,5 @@
 /proc/get_threat_level_string(shown_threat, fake_greenshift)
-	/var/advisory_string = ""
+	var/advisory_string = ""
 	switch(round(shown_threat))
 		if(0 to 19)
 			var/show_core_territory = (GLOB.current_living_antags.len > 0)
