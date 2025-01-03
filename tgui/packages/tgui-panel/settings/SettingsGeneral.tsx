@@ -24,7 +24,6 @@ export function SettingsGeneral(props) {
     useSelector(selectSettings);
   const dispatch = useDispatch();
   const [freeFont, setFreeFont] = useState(false);
-  const [debugInfo, setDebugInfo] = useState('');
 
   return (
     <Section>
