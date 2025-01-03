@@ -6,6 +6,20 @@
 	icon_state = "alienp"
 	alien_speed = 0.5
 
+	default_organ_types_by_slot = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain/alien,
+		ORGAN_SLOT_XENO_HIVENODE = /obj/item/organ/alien/hivenode,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue/alien,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes/alien,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver/alien,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach/alien,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = /obj/item/organ/alien/plasmavessel/large,
+		ORGAN_SLOT_XENO_RESINSPINNER = /obj/item/organ/alien/resinspinner,
+		ORGAN_SLOT_XENO_ACIDGLAND = /obj/item/organ/alien/acid,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = /obj/item/organ/alien/neurotoxin,
+	)
+
 /mob/living/carbon/alien/adult/royal/praetorian/Initialize(mapload)
 	real_name = name
 
@@ -16,13 +30,6 @@
 
 	grant_actions_by_list(innate_actions)
 
-	return ..()
-
-/mob/living/carbon/alien/adult/royal/praetorian/create_internal_organs()
-	organs += new /obj/item/organ/alien/plasmavessel/large
-	organs += new /obj/item/organ/alien/resinspinner
-	organs += new /obj/item/organ/alien/acid
-	organs += new /obj/item/organ/alien/neurotoxin
 	return ..()
 
 /datum/action/cooldown/alien/evolve_to_queen

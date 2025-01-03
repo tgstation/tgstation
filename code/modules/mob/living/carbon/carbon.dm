@@ -1099,10 +1099,6 @@
 		final_modification += bodypart.speed_modifier
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bodypart, update = TRUE, multiplicative_slowdown = final_modification)
 
-/mob/living/carbon/proc/create_internal_organs()
-	for(var/obj/item/organ/internal_organ in organs)
-		internal_organ.Insert(src)
-
 /proc/cmp_organ_slot_asc(slot_a, slot_b)
 	return GLOB.organ_process_order.Find(slot_a) - GLOB.organ_process_order.Find(slot_b)
 
