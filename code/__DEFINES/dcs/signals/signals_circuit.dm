@@ -22,6 +22,9 @@
 /// Sent when a circuit is removed from its shell
 #define COMSIG_CIRCUIT_SHELL_REMOVED "circuit_shell_removed"
 
+/// Send to [/obj/item/circuit_component] when it is added to a circuit. (/obj/item/integrated_circuit)
+#define COMSIG_CIRCUIT_COMPONENT_ADDED "circuit_component_added"
+
 /// Sent to [/obj/item/circuit_component] when it is removed from a circuit. (/obj/item/integrated_circuit)
 #define COMSIG_CIRCUIT_COMPONENT_REMOVED "circuit_component_removed"
 
