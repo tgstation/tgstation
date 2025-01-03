@@ -869,7 +869,7 @@
 			. += "It's roughly [PERCENT(charges_left/charges)]% full."
 		else
 			. += "It is empty."
-	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"]. Right-click a colored object to match its existing color.")
+	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].")
 
 
 /obj/item/toy/crayon/spraycan/can_use_on(atom/target, mob/user, list/modifiers)

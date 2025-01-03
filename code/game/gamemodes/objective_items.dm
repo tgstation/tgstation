@@ -325,10 +325,10 @@
 	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/hos)
 
 /datum/objective_item/steal/compactshotty
-	name = "the head of security's personal compact shotgun"
+	name = "the warden's personal compact shotgun"
 	targetitem = /obj/item/gun/ballistic/shotgun/automatic/combat/compact
-	excludefromjob = list(JOB_HEAD_OF_SECURITY)
-	item_owner = list(JOB_HEAD_OF_SECURITY)
+	excludefromjob = list(JOB_WARDEN)
+	item_owner = list(JOB_WARDEN)
 	exists_on_map = TRUE
 	difficulty = 4
 	steal_hint = "A miniaturized combat shotgun. May be found in Head of Security's locker or strapped to their back."

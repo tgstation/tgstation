@@ -48,19 +48,19 @@
 	armour_penetration = 50
 	wound_bonus = -20
 	bare_wound_bonus = 80
-	embed_type = /datum/embed_data/harpoon
+	embed_type = /datum/embedding/harpoon
 	wound_falloff_tile = -5
 	shrapnel_type = null
 
-/datum/embed_data/harpoon
-	embed_chance=100
-	fall_chance=3
-	jostle_chance=4
-	ignore_throwspeed_threshold=TRUE
-	pain_stam_pct=0.4
-	pain_mult=5
-	jostle_pain_mult=6
-	rip_time=10
+/datum/embedding/harpoon
+	embed_chance = 100
+	fall_chance = 3
+	jostle_chance = 4
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.4
+	pain_mult = 5
+	jostle_pain_mult = 6
+	rip_time = 10
 
 // Rebar (Rebar Crossbow)
 /obj/projectile/bullet/rebar
@@ -72,12 +72,12 @@
 	armour_penetration = 10
 	wound_bonus = -20
 	bare_wound_bonus = 20
-	embed_type = /datum/embed_data/rebar
+	embed_type = /datum/embedding/rebar
 	embed_falloff_tile = -5
 	wound_falloff_tile = -2
 	shrapnel_type = /obj/item/ammo_casing/rebar
 
-/datum/embed_data/rebar
+/datum/embedding/rebar
 	embed_chance = 60
 	fall_chance = 2
 	jostle_chance = 2
@@ -98,10 +98,10 @@
 	wound_bonus = 10
 	bare_wound_bonus = 20
 	embed_falloff_tile = -3
-	embed_type = /datum/embed_data/rebar_syndie
+	embed_type = /datum/embedding/rebar_syndie
 	shrapnel_type = /obj/item/ammo_casing/rebar/syndie
 
-/datum/embed_data/rebar_syndie
+/datum/embedding/rebar_syndie
 	embed_chance = 80
 	fall_chance = 1
 	jostle_chance = 3
@@ -122,11 +122,11 @@
 	armour_penetration = 20 // not nearly as good, as its not as sharp.
 	wound_bonus = 10
 	bare_wound_bonus = 40
-	embed_type = /datum/embed_data/rebar_zaukerite
+	embed_type = /datum/embedding/rebar_zaukerite
 	embed_falloff_tile = 0 // very spiky.
 	shrapnel_type = /obj/item/ammo_casing/rebar/zaukerite
 
-/datum/embed_data/rebar_zaukerite
+/datum/embedding/rebar_zaukerite
 	embed_chance = 100
 	fall_chance = 0
 	jostle_chance = 5
@@ -151,7 +151,7 @@
 	wound_bonus = -100
 	bare_wound_bonus = 0
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
-	embed_type = /datum/embed_data/rebar_hydrogen
+	embed_type = /datum/embedding/rebar_hydrogen
 	embed_falloff_tile = -3
 	accurate_range = 205 //15 tiles before falloff starts to kick in
 
@@ -159,7 +159,7 @@
 	. = ..()
 	def_zone = ran_zone(def_zone, clamp(205-(7*get_dist(get_turf(A), starting)), 5, 100))
 
-/datum/embed_data/rebar_hydrogen
+/datum/embedding/rebar_hydrogen
 	embed_chance = 0
 
 /obj/projectile/bullet/rebar/hydrogen/on_hit(atom/target, blocked, pierce_hit)
