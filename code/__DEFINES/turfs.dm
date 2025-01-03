@@ -126,10 +126,10 @@
 
 /// Makes the set turf transparent
 #define ADD_TURF_TRANSPARENCY(modturf, source) \
-	if(!HAS_TRAIT(modturf, TRAIT_TURF_Z_TRANSPARENCY)) { modturf.AddElement(/datum/element/turf_z_transparency) }; \
-	ADD_TRAIT(modturf, TRAIT_TURF_Z_TRANSPARENCY, (source))
+	if(!HAS_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT)) { modturf.AddElement(/datum/element/turf_z_transparency) }; \
+	ADD_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT, (source))
 
 /// Removes the transparency from the set turf
 #define REMOVE_TURF_TRANSPARENCY(modturf, source) \
-	REMOVE_TRAIT(modturf, TRAIT_TURF_Z_TRANSPARENCY, (source)); \
-	if(!HAS_TRAIT(modturf, TRAIT_TURF_Z_TRANSPARENCY)) { modturf.RemoveElement(/datum/element/turf_z_transparency) }
+	REMOVE_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT, (source)); \
+	if(!HAS_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT)) { modturf.RemoveElement(/datum/element/turf_z_transparency) }
