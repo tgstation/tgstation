@@ -9412,7 +9412,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/circuitboard/computer/stationalert{
+/obj/item/circuitboard/computer/station_alert{
 	pixel_y = 8
 	},
 /turf/open/floor/plating,
@@ -13536,7 +13536,7 @@
 /area/station/ai_monitored/turret_protected/ai)
 "eYk" = (
 /obj/structure/cable,
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -13843,7 +13843,7 @@
 "feu" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/firealarm/directional/north,
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert/station_only,
 /turf/open/floor/iron/small,
 /area/station/engineering/atmos/office)
 "fex" = (
@@ -18660,7 +18660,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/customs)
 "gHm" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth_large,
@@ -19878,7 +19878,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/terracotta{
 	dir = 1
 	},
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer/atmos_alert/station_only{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/yellow,
@@ -19940,7 +19940,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/terracotta{
 	dir = 1
 	},
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/yellow,
@@ -26704,7 +26704,7 @@
 /area/station/security/prison/workout)
 "jhj" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
@@ -43731,7 +43731,7 @@
 /area/station/hallway/secondary/recreation)
 "oYS" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 8
 	},
 /obj/item/radio/intercom/command/directional/east,
@@ -59409,7 +59409,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 1
 	},
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 8
 	},
 /turf/open/floor/wood,

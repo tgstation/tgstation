@@ -6886,7 +6886,7 @@
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "bTq" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert/station_only,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
@@ -26391,7 +26391,7 @@
 	},
 /area/station/service/chapel)
 "hDh" = (
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer/atmos_alert/station_only{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -26538,7 +26538,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/work)
 "hFJ" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert/station_only,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/computer/security/telescreen/engine/directional/north,
 /turf/open/floor/iron/dark,
@@ -57645,7 +57645,7 @@
 /area/station/science/explab)
 "qFu" = (
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -58977,7 +58977,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "qXF" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert/station_only,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -70327,7 +70327,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/processing)
 "unG" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -73514,7 +73514,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "vnt" = (
-/obj/machinery/computer/station_alert{
+/obj/machinery/computer/station_alert/station_only{
 	dir = 8
 	},
 /obj/machinery/button/door/directional/south{
@@ -79020,7 +79020,7 @@
 /turf/open/floor/eighties,
 /area/station/commons/lounge)
 "wUJ" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert/station_only,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},
