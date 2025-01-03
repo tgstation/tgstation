@@ -134,9 +134,8 @@
 
 /obj/unbuckle_mob(mob/living/buckled_mob, force, can_fall)
 	. = ..()
-	if(.)
-		if(unbuckle_sound)
-			playsound(src, unbuckle_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, pressure_affected = TRUE, ignore_walls = FALSE)
+	if(. && unbuckle_sound)
+		playsound(src, unbuckle_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, pressure_affected = TRUE, ignore_walls = FALSE)
 
 /**
  * Set a mob as unbuckled from src
