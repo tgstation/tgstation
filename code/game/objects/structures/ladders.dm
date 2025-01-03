@@ -4,10 +4,14 @@
 	desc = "A sturdy metal ladder."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder11"
+	base_icon_state = "ladder"
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
-	var/obj/structure/ladder/down   //the ladder below this one
-	var/obj/structure/ladder/up     //the ladder above this one
+	///the ladder below this one
+	VAR_FINAL/obj/structure/ladder/down
+	///the ladder above this one
+	VAR_FINAL/obj/structure/ladder/up
+	/// Ladders craft midround can only link to other ladders crafted midround
 	var/crafted = FALSE
 	/// travel time for ladder in deciseconds
 	var/travel_time = 1 SECONDS
@@ -16,13 +20,9 @@
 	..()
 	GLOB.ladders += src
 	if (up)
-		src.up = up
-		up.down = src
-		up.update_appearance()
+		link_up(up)
 	if (down)
-		src.down = down
-		down.up = src
-		down.update_appearance()
+		link_down(down)
 
 	register_context()
 
@@ -37,46 +37,188 @@
 
 /obj/structure/ladder/examine(mob/user)
 	. = ..()
-	. += span_info("<b>Left-click</b> it to start moving up; <b>Right-click</b> to start moving down.")
+	. += span_info("[EXAMINE_HINT("Left-click")] it to start moving up; [EXAMINE_HINT("Right-click")] to start moving down.")
 
 /obj/structure/ladder/Destroy(force)
 	GLOB.ladders -= src
 	disconnect()
 	return ..()
 
+/// Trait source applied by ladder holes
+#define SOURCE_LADDER(ladder) "ladder_[REF(ladder)]"
+
+/// Abstract object used to represent a hole in the floor created by a ladder
+/obj/effect/abstract/ladder_hole
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = TRANSPARENT_FLOOR_PLANE
+	layer = SPACE_LAYER
+	alpha = 254
+	/// The ladder that created this hole
+	VAR_FINAL/obj/structure/ladder/ladder
+
+/obj/effect/abstract/ladder_hole/Initialize(mapload, obj/structure/ladder/ladder)
+	. = ..()
+	if(isnull(ladder) || !isopenturf(loc) || isopenspaceturf(loc))
+		return INITIALIZE_HINT_QDEL
+	for(var/obj/effect/abstract/ladder_hole/hole in loc)
+		if(hole.ladder == ladder)
+			return INITIALIZE_HINT_QDEL
+
+	src.ladder = ladder
+	RegisterSignal(ladder, COMSIG_QDELETING, PROC_REF(cleanup))
+
+	icon = ladder.icon
+	icon_state = "[ladder.base_icon_state]_hole"
+	render_target = "*[SOURCE_LADDER(ladder)]"
+
+	ADD_KEEP_TOGETHER(loc, SOURCE_LADDER(ladder))
+	RegisterSignal(loc, COMSIG_TURF_CHANGE, PROC_REF(turf_changing))
+	RegisterSignal(loc, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_ladder_rim))
+	loc.add_filter(SOURCE_LADDER(ladder), 1, alpha_mask_filter(
+		x = ladder.pixel_x + ladder.pixel_w,
+		y = ladder.pixel_y + ladder.pixel_z,
+		render_source = "*[SOURCE_LADDER(ladder)]",
+		flags = MASK_INVERSE,
+	))
+	loc.update_appearance(UPDATE_OVERLAYS)
+
+	if(istransparentturf(loc) || HAS_TRAIT_FROM(loc, TURF_Z_TRANSPARENT_TRAIT, SOURCE_LADDER(ladder)))
+		return
+
+	ADD_TRAIT(loc, TURF_Z_TRANSPARENT_TRAIT, SOURCE_LADDER(ladder))
+	loc.AddElement(/datum/element/turf_z_transparency)
+
+/obj/effect/abstract/ladder_hole/Destroy()
+	if(ladder)
+		UnregisterSignal(ladder, COMSIG_QDELETING)
+		ladder = null
+	if(loc)
+		UnregisterSignal(loc, list(COMSIG_TURF_CHANGE, COMSIG_ATOM_UPDATE_OVERLAYS))
+		REMOVE_KEEP_TOGETHER(loc, SOURCE_LADDER(ladder))
+		loc.remove_filter(SOURCE_LADDER(ladder))
+		loc.update_appearance(UPDATE_OVERLAYS)
+		if(istransparentturf(loc) && HAS_TRAIT_FROM(loc, TURF_Z_TRANSPARENT_TRAIT, SOURCE_LADDER(ladder)))
+			REMOVE_TRAIT(loc, TURF_Z_TRANSPARENT_TRAIT, SOURCE_LADDER(ladder))
+			loc.RemoveElement(/datum/element/turf_z_transparency)
+	return ..()
+
+/obj/effect/abstract/ladder_hole/proc/cleanup()
+	SIGNAL_HANDLER
+
+	// we will PROBABLY be qdeleted when the ladder is deleted regardless (in the unlinking process),
+	// so this is just a double check for safety
+	if(ladder)
+		UnregisterSignal(ladder, COMSIG_QDELETING)
+		ladder = null
+	if(!QDELING(src))
+		qdel(src)
+
+/obj/effect/abstract/ladder_hole/proc/turf_changing(datum/source, path, new_baseturfs, flags, list/datum/callback/post_change_callbacks)
+	SIGNAL_HANDLER
+
+	post_change_callbacks += CALLBACK(ladder, TYPE_PROC_REF(/obj/structure/ladder, make_base_transparent))
+	qdel(src)
+
+/obj/effect/abstract/ladder_hole/proc/add_ladder_rim(turf/source, list/overlays)
+	SIGNAL_HANDLER
+
+	var/mutable_appearance/rim = mutable_appearance(
+		icon = ladder.icon,
+		icon_state = "[ladder.base_icon_state]_rim",
+		layer = TURF_DECAL_LAYER,
+		plane = FLOOR_PLANE,
+		offset_spokesman = source,
+	)
+	rim.pixel_w = ladder.pixel_w
+	rim.pixel_x = ladder.pixel_x
+	rim.pixel_y = ladder.pixel_y
+	rim.pixel_z = ladder.pixel_z
+
+	overlays += rim
+
+/// Makes the base of the ladder transparent
+/obj/structure/ladder/proc/make_base_transparent()
+	PRIVATE_PROC(TRUE)
+	base_pixel_z = initial(base_pixel_z) + 12
+	pixel_z = base_pixel_z
+	new /obj/effect/abstract/ladder_hole(loc, src)
+
+/// Clears any ladder holes created by this ladder
+/obj/structure/ladder/proc/clear_base_transparency()
+	PRIVATE_PROC(TRUE)
+	base_pixel_z = initial(base_pixel_z)
+	pixel_z = base_pixel_z
+	for(var/obj/effect/abstract/ladder_hole/hole in loc)
+		if(hole.ladder == src)
+			qdel(hole)
+
+#undef SOURCE_LADDER
+
+/// Links this ladder to passed ladder (which should generally be below it)
+/obj/structure/ladder/proc/link_down(obj/structure/ladder/down_ladder)
+	if(down)
+		return
+
+	down = down_ladder
+	down_ladder.up = src
+	down_ladder.update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_ICON_STATE)
+	make_base_transparent()
+
+/// Unlinks this ladder from the ladder below it.
+/obj/structure/ladder/proc/unlink_down()
+	if(!down)
+		return
+
+	down.up = null
+	down.update_appearance(UPDATE_ICON_STATE)
+	down = null
+	update_appearance(UPDATE_ICON_STATE)
+	clear_base_transparency()
+
+/// Links this ladder to passed ladder (which should generally be above it)
+/obj/structure/ladder/proc/link_up(obj/structure/ladder/up_ladder)
+	if(up)
+		return
+
+	up = up_ladder
+	up_ladder.down = src
+	up_ladder.make_base_transparent()
+	up_ladder.update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_ICON_STATE)
+
+/// Unlinks this ladder from the ladder above it.
+/obj/structure/ladder/proc/unlink_up()
+	if(!up)
+		return
+
+	up.down = null
+	up.clear_base_transparency()
+	up.update_appearance(UPDATE_ICON_STATE)
+	up = null
+	update_appearance(UPDATE_ICON_STATE)
+
+/// Helper to unlink everything
+/obj/structure/ladder/proc/disconnect()
+	unlink_down()
+	unlink_up()
+
 /obj/structure/ladder/LateInitialize()
 	// By default, discover ladders above and below us vertically
-	var/turf/T = get_turf(src)
-	var/obj/structure/ladder/L
+	var/turf/base = get_turf(src)
 
-	if (!down)
-		L = locate() in GET_TURF_BELOW(T)
-		if (L)
-			if(crafted == L.crafted)
-				down = L
-				L.up = src  // Don't waste effort looping the other way
-				L.update_appearance()
-	if (!up)
-		L = locate() in GET_TURF_ABOVE(T)
-		if (L)
-			if(crafted == L.crafted)
-				up = L
-				L.down = src  // Don't waste effort looping the other way
-				L.update_appearance()
+	if (isnull(down))
+		var/obj/structure/ladder/new_down = locate() in GET_TURF_BELOW(base)
+		if (new_down && crafted == new_down.crafted)
+			link_down(new_down)
 
-	update_appearance()
-
-/obj/structure/ladder/proc/disconnect()
-	if(up && up.down == src)
-		up.down = null
-		up.update_appearance()
-	if(down && down.up == src)
-		down.up = null
-		down.update_appearance()
-	up = down = null
+	if (isnull(up))
+		var/obj/structure/ladder/new_up = locate() in GET_TURF_ABOVE(base)
+		if (new_up && crafted == new_up.crafted)
+			link_up(new_up)
 
 /obj/structure/ladder/update_icon_state()
-	icon_state = "ladder[up ? 1 : 0][down ? 1 : 0]"
+	icon_state = "[base_icon_state][!!up][!!down]"
 	return ..()
 
 /obj/structure/ladder/singularity_pull(atom/singularity, current_size)
