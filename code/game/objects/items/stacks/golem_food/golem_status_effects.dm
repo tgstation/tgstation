@@ -21,9 +21,6 @@
 	/// Golem effects actually come from their organs so if someone wants to do enough mad science,
 	/// they can get golem effects as a (sort of) human or other kind of humanoid
 	var/mob/living/carbon/human/human_owner
-	/// If a golem wants to gorge themselves on a mineral to keep its effect for longer, that's their
-	/// perogative, better hope they don't need to heal or change types for something new
-	status_type = STATUS_EFFECT_REFRESH
 	/// Ideally all golem effects will effect their golem arms, and it's less of a headache to keep
 	/// track of that here to keep our behavior contained instead of suffering from edge cases
 	var/list/obj/item/bodypart/arm/modified_arms
@@ -31,6 +28,9 @@
 	var/early_expiry_warning = 30 SECONDS
 	/// When we reach this much remaining time we will start animating more urgently as a warning
 	var/imminent_expiry_warning = 5 SECONDS
+	/// A var to keep track of if we're warning the owner about the effect expiring, to keep
+	/// the warning animation working properly
+	var/warning = FALSE
 
 
 /atom/movable/screen/alert/status_effect/golem_status
@@ -94,25 +94,20 @@
 	return TRUE
 
 /datum/status_effect/golem/tick(seconds_between_ticks)
-	var/static/warning = FALSE
 	. = ..()
-	var/time_left = duration - world.time
 	var/atom/movable/screen/alert/status_effect/golem_status/status_alert = linked_alert
 	if(!status_alert)
 		return // our status alert is gone, so we can't animate
+	var/time_left = duration - world.time
 	switch (time_left)
-		if (1 SECONDS to 5 SECONDS)
+		if (1 SECONDS to imminent_expiry_warning)
 			if (warning != "imminent")
 				warning = "imminent"
 				status_alert.imminent_warning()
-		if (6 SECONDS to 30 SECONDS)
+		if (6 SECONDS to early_expiry_warning)
 			if (warning != "early")
 				warning = "early"
 				status_alert.early_warning()
-		else
-			if (warning)
-				warning = FALSE
-				animate(status_alert) // stop animating and stop warning; golem probably ate more of the mineral0000
 
 /datum/status_effect/golem/on_creation(mob/living/new_owner)
 	. = ..()
@@ -133,7 +128,7 @@
 	for(var/obj/item/bodypart/arm/arm in human_owner.bodyparts)
 		if(arm.limb_id != SPECIES_GOLEM)
 			continue
-		LAZYADD(modified_arms, arm)
+ 		LAZYADD(modified_arms, arm)
 		RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 
 /datum/status_effect/golem/proc/reset_arm_effects()
@@ -228,7 +223,7 @@
 			target.emote("scream")
 	remove_duration(30 SECONDS) // lessen the duration to avoid uranium golems becoming walking chernobyl
 	var/target_name_word = splittext("[target]", " ")[1] // retrieve the first word of their displayed name
-	owner.balloon_alert_to_viewers("irradiated [target_name_word]!")
+	owner.balloon_alert_to_viewers("irradiated [target_name_word]")
 	flash_our_alert()
 
 /datum/status_effect/golem/uranium/proc/flash_our_alert()
