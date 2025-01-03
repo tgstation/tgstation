@@ -124,7 +124,7 @@
 	for(var/obj/item/bodypart/arm/arm in human_owner.bodyparts)
 		if(arm.limb_id != SPECIES_GOLEM)
 			continue
- 		LAZYADD(modified_arms, arm)
+		LAZYADD(modified_arms, arm)
 		RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 
 /datum/status_effect/golem/proc/reset_arm_effects()
