@@ -167,8 +167,10 @@
 	if(QDELETED(target))
 		return
 	var/datum/status_effect/crusher_mark/mark = target.has_status_effect(/datum/status_effect/crusher_mark)
-	var/boosted_mark = mark?.boosted
-	if(world.time < mark?.mark_applied + mark?.ready_delay) // Simple way to prevent right+left click at the same time to detonate the mark for free
+	if(!mark)
+		return
+	var/boosted_mark = mark.boosted
+	if(world.time < mark.mark_applied + mark.ready_delay) // Simple way to prevent right+left click at the same time to detonate the mark for free
 		return
 	if(!target.remove_status_effect(mark))
 		return
