@@ -431,6 +431,10 @@
 #define COMSIG_COMPUTER_RECEIVED_MESSAGE "computer_received_message"
 ///from /datum/computer_file/program/virtual_pet/proc/handle_level_up
 #define COMSIG_VIRTUAL_PET_LEVEL_UP "virtual_pet_level_up"
+///from /datum/computer_file/program/virtual_pet/proc/release_pet
+#define COMSIG_VIRTUAL_PET_SUMMONED "virtual_pet_summoned"
+///from /datum/computer_file/program/virtual_pet/proc/recall_pet
+#define COMSIG_VIRTUAL_PET_RECALLED "virtual_pet_recalled"
 
 // /obj/vehicle/sealed/mecha signals
 

@@ -486,7 +486,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 			if(pet.loc == computer)
 				release_pet(ui.user)
 			else
-				recall_pet()
+				recall_pet(ui.user)
 			COOLDOWN_START(src, summon_cooldown, 10 SECONDS)
 
 		if("apply_customization")
@@ -585,9 +585,10 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	var/obj/item/food/virtual_chocolate/chocolate = new(get_turf(computer))
 	chocolate.AddElement(/datum/element/temporary_atom, life_time = 30 SECONDS) //we cant maintain its existence for too long!
 
-/datum/computer_file/program/virtual_pet/proc/recall_pet()
+/datum/computer_file/program/virtual_pet/proc/recall_pet(mob/living/friend)
 	animate(pet, transform = matrix().Scale(0.3, 0.3), time = 1.5 SECONDS)
 	addtimer(CALLBACK(pet, TYPE_PROC_REF(/atom/movable, forceMove), computer), 1.5 SECONDS)
+	SEND_SIGNAL(pet, COMSIG_VIRTUAL_PET_RECALLED, friend)
 
 /datum/computer_file/program/virtual_pet/proc/release_pet(mob/living/our_user)
 	var/turf/drop_zone
@@ -602,6 +603,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	animate(pet, transform = matrix(), time = 1.5 SECONDS)
 	pet.forceMove(final_turf)
 	playsound(computer.loc, 'sound/mobs/non-humanoids/orbie/orbie_send_out.ogg', 20)
+	SEND_SIGNAL(pet, COMSIG_VIRTUAL_PET_SUMMONED, our_user)
 	new /obj/effect/temp_visual/guardian/phase(pet.loc)
 
 #undef PET_MAX_LEVEL
