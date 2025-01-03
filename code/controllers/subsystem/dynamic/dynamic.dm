@@ -203,7 +203,7 @@ SUBSYSTEM_DEF(dynamic)
 
 /datum/controller/subsystem/dynamic/proc/admin_panel()
 	var/list/dat = list()
-	dat += "Dynamic Mode <a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(src)]'>VV</a> <a href='byond://?src=[text_ref(src)];[HrefToken()]'>Refresh</a><BR>"
+	dat += "Dynamic Mode <a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(src)]'>VV</a><a href='byond://?src=[text_ref(src)];[HrefToken()]'>Refresh</a><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
 	dat += "Budgets (Roundstart/Midrounds): <b>[initial_round_start_budget]/[threat_level - initial_round_start_budget]</b><br/>"
 
