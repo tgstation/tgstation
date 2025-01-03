@@ -35,6 +35,10 @@
 			user.say("WHY IS THERE A BAR ON MY HEAD?!!")
 	return OXYLOSS
 
+/obj/item/clothing/glasses/hud/equipped(mob/living/user, slot)
+	. = ..()
+	display_active = TRUE
+
 /obj/item/clothing/glasses/hud/proc/toggle_hud_display(mob/living/carbon/eye_owner)
 	if(display_active)
 		display_active = FALSE
