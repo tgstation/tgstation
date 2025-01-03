@@ -33,7 +33,7 @@
 	var/admin_threat_string = ""
 	switch(round(threat))
 		if(0 to 19)
-			admin_threat_string += ">Green Star"
+			admin_threat_string += "Green Star"
 		if(20 to 39)
 			admin_threat_string += "Yellow Star"
 		if(40 to 65)
