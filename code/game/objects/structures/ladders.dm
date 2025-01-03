@@ -25,7 +25,6 @@
 		link_down(down)
 
 	register_context()
-
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -72,6 +71,7 @@
 	render_target = "*[SOURCE_LADDER(ladder)]"
 
 	ADD_KEEP_TOGETHER(loc, SOURCE_LADDER(ladder))
+	ADD_TURF_TRANSPARENCY(loc, SOURCE_LADDER(ladder))
 	RegisterSignal(loc, COMSIG_TURF_CHANGE, PROC_REF(turf_changing))
 	RegisterSignal(loc, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_ladder_rim))
 	loc.add_filter(SOURCE_LADDER(ladder), 1, alpha_mask_filter(
@@ -81,7 +81,6 @@
 		flags = MASK_INVERSE,
 	))
 	loc.update_appearance(UPDATE_OVERLAYS)
-	ADD_TURF_TRANSPARENCY(loc, SOURCE_LADDER(ladder))
 
 /obj/effect/abstract/ladder_hole/Destroy()
 	if(isnull(ladder))
@@ -102,13 +101,9 @@
 /obj/effect/abstract/ladder_hole/proc/cleanup()
 	SIGNAL_HANDLER
 
-	// we will PROBABLY be qdeleted when the ladder is deleted regardless (in the unlinking process),
-	// so this is just a double check for safety
-	if(ladder)
-		UnregisterSignal(ladder, COMSIG_QDELETING)
-		ladder = null
-	if(!QDELING(src))
-		qdel(src)
+	// the ladder will qdel us in its Destroy regardless, when it unlinks
+	// this is just an extra layer of safety, in case the ladder gets moved or something
+	qdel(src)
 
 /obj/effect/abstract/ladder_hole/proc/turf_changing(datum/source, path, new_baseturfs, flags, list/datum/callback/post_change_callbacks)
 	SIGNAL_HANDLER
@@ -135,14 +130,12 @@
 
 /// Makes the base of the ladder transparent
 /obj/structure/ladder/proc/make_base_transparent()
-	PRIVATE_PROC(TRUE)
 	base_pixel_z = initial(base_pixel_z) + 12
 	pixel_z = base_pixel_z
 	new /obj/effect/abstract/ladder_hole(loc, src)
 
 /// Clears any ladder holes created by this ladder
 /obj/structure/ladder/proc/clear_base_transparency()
-	PRIVATE_PROC(TRUE)
 	base_pixel_z = initial(base_pixel_z)
 	pixel_z = base_pixel_z
 	for(var/obj/effect/abstract/ladder_hole/hole in loc)
@@ -214,6 +207,7 @@
 		if (new_up && crafted == new_up.crafted)
 			link_up(new_up)
 
+	// Linking updates our icon, so if we failed both links we need a manual update
 	if(isnull(down) && isnull(up))
 		update_appearance(UPDATE_ICON_STATE)
 
