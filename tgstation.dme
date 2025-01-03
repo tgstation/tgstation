@@ -3190,6 +3190,7 @@
 #include "code\modules\antagonists\heretic\items\forbidden_book.dm"
 #include "code\modules\antagonists\heretic\items\heretic_armor.dm"
 #include "code\modules\antagonists\heretic\items\heretic_blades.dm"
+#include "code\modules\antagonists\heretic\items\heretic_grenade.dm"
 #include "code\modules\antagonists\heretic\items\heretic_necks.dm"
 #include "code\modules\antagonists\heretic\items\heretic_shoes.dm"
 #include "code\modules\antagonists\heretic\items\hunter_rifle.dm"

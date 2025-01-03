@@ -26,17 +26,23 @@
 		return NONE
 	if(!isliving(target))
 		return NONE
+	var/mob/living/living_target = target
 	if(reagents.total_volume >= reagents.maximum_volume)
 		to_chat(user, span_notice("[src] is full."))
 		return ITEM_INTERACT_BLOCKING
-	if(target == user)
+	if(living_target == user)
 		return ITEM_INTERACT_BLOCKING
-	var/mob/living/living_target = target
+	if(living_target.can_block_magic(MAGIC_RESISTANCE_HOLY))
+		to_chat(user, span_warning("You are unable to draw any blood from [living_target]!"))
+		COOLDOWN_START(src, drain_cooldown, 5 SECONDS)
+		to_chat(living_target, span_warning("You feel a force attempt to steal your blood, but it is repelled!"))
+		return ITEM_INTERACT_BLOCKING
 	var/drawn_amount = max(reagents.maximum_volume - reagents.total_volume, 5)
 	if(living_target.transfer_blood_to(src, drawn_amount))
 		to_chat(user, span_notice("You take a blood sample from [living_target]."))
 		to_chat(living_target, span_warning("You feel a tiny prick!"))
 		COOLDOWN_START(src, drain_cooldown, 5 SECONDS)
+		playsound(src, 'sound/effects/chemistry/catalyst.ogg', 20, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
 	else
 		to_chat(user, span_warning("You are unable to draw any blood from [living_target]!"))
 	return ITEM_INTERACT_SUCCESS

@@ -5,6 +5,7 @@
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/medallion
+	tier2 = /datum/heretic_knowledge/medallion //XANTODO This can't be null, but we removed curses. Putting this in as a placeholder
 	tier3 = /datum/heretic_knowledge/summon/ashy
 
 // Sidepaths for knowledge between Ash and Flesh.

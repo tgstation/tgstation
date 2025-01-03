@@ -37,11 +37,8 @@
 	return TRUE
 
 /datum/heretic_knowledge/curse/on_finished_recipe(mob/living/user, list/selected_atoms,  turf/loc)
-
 	// Potential targets is an assoc list of [names] to [human mob ref].
 	var/list/potential_targets = list()
-	// Boosted targets is a list of human mob references.
-	var/list/boosted_targets = list()
 
 	for(var/datum/mind/crewmember as anything in get_crewmember_minds())
 		var/mob/living/carbon/human/human_to_check = crewmember.current
@@ -49,25 +46,9 @@
 			continue
 		var/their_prints = md5(human_to_check.dna.unique_identity)
 		var/their_blood = human_to_check.dna.unique_enzymes
-		// Having their fingerprints or blood present will boost the curse
-		// and also not run any z or dist checks, as a bonus for those going beyond
-		if(fingerprints[their_prints] || blood_samples[their_blood])
-			boosted_targets += human_to_check
-			potential_targets["[human_to_check.real_name] (Boosted)"] = human_to_check
+		if(!fingerprints[their_prints] && !blood_samples[their_blood])
 			continue
-
-		// No boost present, so we should be a little stricter moving forward
-		var/turf/check_turf = get_turf(human_to_check)
-		// We have to match z-levels.
-		// Otherwise, you could probably hard own miners, which is funny but mean.
-		// Multi-z stations technically work though.
-		if(!is_valid_z_level(check_turf, loc))
-			continue
-		// Also has to abide by our max range.
-		if(get_dist(check_turf, loc) > max_range)
-			continue
-
-		potential_targets[human_to_check.real_name] = human_to_check
+		potential_targets["[human_to_check.real_name]"] = human_to_check
 
 	var/chosen_mob = tgui_input_list(user, "Select the victim you wish to curse.", name, sort_list(potential_targets, GLOBAL_PROC_REF(cmp_text_asc)))
 	if(isnull(chosen_mob))
@@ -87,22 +68,23 @@
 	if(!ask_for_input(user))
 		return FALSE
 
-	var/boosted = (to_curse in boosted_targets)
 	var/turf/curse_turf = get_turf(to_curse)
-	if(!boosted && (!is_valid_z_level(curse_turf, loc) || get_dist(curse_turf, loc) > max_range * 1.5)) // Give a bit of leeway on max range for people moving around
+	if(!is_valid_z_level(curse_turf, loc) || get_dist(curse_turf, loc) > max_range * 1.5) // Give a bit of leeway on max range for people moving around
 		loc.balloon_alert(user, "ritual failed, too far!")
 		return FALSE
+
+	if(IS_HERETIC(to_curse) && to_curse != user)
+		to_chat(user, span_warning("You cannot curse them, their ties to the mansus are too great."))
+		return TRUE
 
 	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, charge_cost = 0))
 		to_chat(to_curse, span_warning("You feel a ghastly chill, but the feeling passes shortly."))
 		return TRUE
 
-	if(IS_HERETIC(to_curse))
-		to_chat(user, span_warning("You cannot curse them, their ties to the mansus are too great."))
-
-	log_combat(user, to_curse, "cursed via heretic ritual", addition = "([boosted ? "Boosted" : ""] [name])")
-	curse(to_curse)
-	to_chat(user, span_hierophant("You cast a[boosted ? "n empowered":""] [name] upon [to_curse.real_name]."))
+	log_combat(user, to_curse, "cursed via heretic ritual", addition = "([name])")
+	var/obj/item/codex_cicatrix/morbus/cursed_book = locate() in selected_atoms
+	curse(to_curse, cursed_book)
+	to_chat(user, span_hierophant("You cast a [name] upon [to_curse.real_name]."))
 
 	fingerprints = null
 	blood_samples = null
@@ -120,10 +102,11 @@
 /**
  * Calls a curse onto [chosen_mob].
  */
-/datum/heretic_knowledge/curse/proc/curse(mob/living/carbon/human/chosen_mob)
+/datum/heretic_knowledge/curse/proc/curse(mob/living/carbon/human/chosen_mob, obj/item/codex_cicatrix/morbus/cursing_book)
 	SHOULD_CALL_PARENT(TRUE)
 
-	addtimer(CALLBACK(src, PROC_REF(uncurse), chosen_mob), duration)
+	if(duration > 0)
+		addtimer(CALLBACK(src, PROC_REF(uncurse), chosen_mob), duration)
 
 	if(!curse_color)
 		return
@@ -201,7 +184,6 @@
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "curse_corrosion"
 
-
 /datum/heretic_knowledge/curse/corrosion/curse(mob/living/carbon/human/chosen_mob)
 	to_chat(chosen_mob, span_danger("You feel very ill..."))
 	chosen_mob.apply_status_effect(/datum/status_effect/corrosion_curse)
@@ -215,12 +197,11 @@
 	to_chat(chosen_mob, span_green("You start to feel better."))
 	return ..()
 
-// XANTODO Fix up these curses and just curse code in general
-
 //---- Curse of Transmutation
 
 /datum/heretic_knowledge/curse/transmutation
 	name = "Curse of Transmutation"
+	duration = 0 // Infinite curse, it breaks when our codex is destroyed
 	/// What species we are going to turn our victim in to
 	var/chosen_species
 
@@ -236,8 +217,12 @@
 	chosen_species = chooseable_races[species_name]
 	return ..()
 
-/datum/heretic_knowledge/curse/transmutation/curse(mob/living/carbon/human/chosen_mob)
-	chosen_mob.set_species(chosen_species)
+/datum/heretic_knowledge/curse/transmutation/curse(mob/living/carbon/human/chosen_mob, obj/item/codex_cicatrix/morbus/cursing_book)
+	if(chosen_mob.dna.species == chosen_species)
+		to_chat(chosen_mob, span_warning("You feel your body morph into... itself?"))
+		return
+	chosen_mob.apply_status_effect(/datum/status_effect/race_swap, chosen_species)
+	cursing_book.transmuted_victims += chosen_mob
 	to_chat(chosen_mob, span_danger("You feel your body morph into a new shape"))
 	return ..()
 
@@ -245,7 +230,38 @@
 	if(QDELETED(chosen_mob))
 		return
 
+	chosen_mob.remove_status_effect(/datum/status_effect/race_swap)
+
 	return ..()
+
+/datum/status_effect/race_swap
+	id = "race_swap"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
+	/// What species were we before this effect
+	var/old_species
+
+/datum/status_effect/race_swap/on_creation(mob/living/new_owner, datum/species/new_species)
+	. = ..()
+	owner.set_species(new_species)
+
+/datum/status_effect/race_swap/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
+	var/mob/living/carbon/carbon_owner = owner
+	if(!old_species)
+		old_species = carbon_owner.dna.species
+	return ..()
+
+/datum/status_effect/race_swap/be_replaced()
+	owner.set_species(old_species)
+	return ..()
+
+/datum/status_effect/race_swap/on_remove()
+	. = ..()
+	owner.set_species(old_species)
 
 //---- Curse of Indulgence
 
@@ -253,12 +269,11 @@
 	name = "Curse of Indulgence"
 
 /datum/heretic_knowledge/curse/indulgence/curse(mob/living/carbon/human/chosen_mob)
-	var/datum/reagent/addiction = pick(GLOB.possible_junkie_addictions)
-	chosen_mob.last_mind?.add_addiction_points(addiction, 1000)
+	chosen_mob.gain_trauma(/datum/brain_trauma/severe/flesh_desire, TRAUMA_RESILIENCE_MAGIC)
 	return ..()
 
 /datum/heretic_knowledge/curse/indulgence/uncurse(mob/living/carbon/human/chosen_mob)
 	if(QDELETED(chosen_mob))
 		return
-
+	chosen_mob.cure_trauma_type(/datum/brain_trauma/severe/flesh_desire, TRAUMA_RESILIENCE_MAGIC)
 	return ..()

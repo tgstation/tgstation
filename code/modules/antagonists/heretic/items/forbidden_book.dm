@@ -79,6 +79,8 @@
 	desc = "An unsightly book, you feel it staring intently at you as you observe it."
 	drain_speed = 7 SECONDS
 	draw_speed = 5 SECONDS
+	/// List of mobs we've cursed with transmutation. When the codex is destroyed all those curses become undone
+	var/list/transmuted_victims = list()
 
 /obj/item/codex_cicatrix/morbus/examine(mob/user)
 	. = ..()
@@ -104,6 +106,9 @@
 	if(!selected_curse)
 		return NONE
 
+	if(!user.Adjacent(interacting_with))
+		return NONE
+
 	var/atom/held_offhand = user.get_inactive_held_item()
 	if(!held_offhand)
 		user.balloon_alert(user, "no catalyst!")
@@ -122,5 +127,15 @@
 	var/curse_type = curse_list[selected_curse]
 	var/datum/heretic_knowledge/curse/to_cast = new curse_type
 	to_cast.recipe_snowflake_check(user, list(held_offhand), loc = get_turf(user))
-	to_cast.on_finished_recipe(user, list(held_offhand), loc = get_turf(user))
+	to_cast.on_finished_recipe(user, list(src, held_offhand), loc = get_turf(user))
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/codex_cicatrix/morbus/Destroy(force)
+	for(var/mob/to_uncurse in transmuted_victims)
+		if(QDELETED(to_uncurse))
+			transmuted_victims -= to_uncurse
+			continue
+		var/datum/heretic_knowledge/curse/transmutation/to_undo = new()
+		to_undo.uncurse(to_uncurse)
+		transmuted_victims -= to_uncurse
+	return ..()
