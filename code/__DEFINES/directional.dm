@@ -3,6 +3,10 @@
 // #define SOUTH 2
 // #define EAST 4
 // #define WEST 8
+// #define NORTHEAST NORTH|EAST // 1|4 // 5
+// #define NORTHWEST NORTH|WEST // 1|8 // 9
+// #define SOUTHEAST SOUTH|EAST // 2|4 // 6
+// #define SOUTHWEST SOUTH|WEST // 2|8 // 10
 
 /// North direction as a string "[1]"
 #define TEXT_NORTH "[NORTH]"
@@ -17,13 +21,13 @@
 ///Returns true if the dir is diagonal, false otherwise
 #define ISDIAGONALDIR(d) (d&(d-1))
 ///True if the dir is north or south, false therwise
-#define NSCOMPONENT(d)   (d&(NORTH|SOUTH))
+#define NSCOMPONENT(d) (d&(NORTH|SOUTH))
 ///True if the dir is east/west, false otherwise
-#define EWCOMPONENT(d)   (d&(EAST|WEST))
+#define EWCOMPONENT(d) (d&(EAST|WEST))
 ///Flips the dir for north/south directions
-#define NSDIRFLIP(d)     (d^(NORTH|SOUTH))
+#define NSDIRFLIP(d) (d^(NORTH|SOUTH))
 ///Flips the dir for east/west directions
-#define EWDIRFLIP(d)     (d^(EAST|WEST))
+#define EWDIRFLIP(d) (d^(EAST|WEST))
 
 /// Inverse direction, taking into account UP|DOWN if necessary.
 #define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )

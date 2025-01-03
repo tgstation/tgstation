@@ -16,6 +16,7 @@
 		/datum/ai_planning_subtree/maintain_distance/cover_minimum_distance/ice_demon,
 		/datum/ai_planning_subtree/teleport_away_from_target,
 		/datum/ai_planning_subtree/find_and_hunt_target/teleport_destination,
+		/datum/ai_planning_subtree/find_and_hunt_target/look_for_functional_pipes,
 		/datum/ai_planning_subtree/targeted_mob_ability/summon_afterimages,
 	)
 

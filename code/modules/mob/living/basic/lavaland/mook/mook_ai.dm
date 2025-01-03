@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		/datum/ai_planning_subtree/find_and_hunt_target/material_stand,
 		/datum/ai_planning_subtree/use_mob_ability/mook_jump,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/mook,
+		/datum/ai_planning_subtree/find_and_hunt_target/look_for_functional_pipes,
 		/datum/ai_planning_subtree/mine_walls/mook,
 		/datum/ai_planning_subtree/wander_away_from_village,
 	)

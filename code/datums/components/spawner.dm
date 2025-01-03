@@ -19,9 +19,23 @@
 	var/spawn_distance
 	/// Distance from the spawner to exclude mobs from spawning
 	var/spawn_distance_exclude
+	/// Boolean on whether we should delete ourselves when the conclusion signal is sent.
+	var/delete_on_conclusion
 	COOLDOWN_DECLARE(spawn_delay)
 
-/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, max_spawn_per_attempt = 1 , faction = list(FACTION_MINING), spawn_text = null, datum/callback/spawn_callback = null, spawn_distance = 1, spawn_distance_exclude = 0, initial_spawn_delay = 0 SECONDS)
+/datum/component/spawner/Initialize(
+	spawn_types = list(),
+	spawn_time = 30 SECONDS,
+	max_spawned = 5,
+	max_spawn_per_attempt = 1,
+	faction = list(FACTION_MINING),
+	spawn_text = null,
+	datum/callback/spawn_callback = null,
+	spawn_distance = 1,
+	spawn_distance_exclude = 0,
+	initial_spawn_delay = 0 SECONDS,
+	delete_on_conclusion = FALSE,
+)
 	if (!islist(spawn_types))
 		CRASH("invalid spawn_types to spawn specified for spawner component!")
 	src.spawn_time = spawn_time
@@ -33,6 +47,7 @@
 	src.max_spawn_per_attempt = max_spawn_per_attempt
 	src.spawn_distance = spawn_distance
 	src.spawn_distance_exclude = spawn_distance_exclude
+	src.delete_on_conclusion = delete_on_conclusion
 	// If set, doesn't instantly spawn a creature when the spawner component is applied.
 	if(initial_spawn_delay)
 		COOLDOWN_START(src, spawn_delay, spawn_time)
@@ -50,6 +65,8 @@
 
 	STOP_PROCESSING(SSprocessing, src)
 	spawned_things = list()
+	if(delete_on_conclusion)
+		qdel(src)
 
 /// Try to create a new mob
 /datum/component/spawner/proc/try_spawn_mob()

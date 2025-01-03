@@ -32,7 +32,7 @@
 	workmech = null
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks, interaction_key)
 	return do_after_mecha(target, user, delay)
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/do_after_checks(atom/target)

@@ -335,7 +335,8 @@ SUBSYSTEM_DEF(dynamic)
 		min_threat = min(ruleset.cost, min_threat)
 
 	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat && shown_threat < min_threat) //if both shown and real threat are below any ruleset, its extended time
-	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
+	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget), STATION_GOAL)
+	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget), MINING_GOAL)
 
 	var/list/datum/station_goal/goals = SSstation.get_station_goals()
 	if(length(goals))

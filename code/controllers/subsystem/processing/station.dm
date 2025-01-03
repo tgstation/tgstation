@@ -43,8 +43,11 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 /// This gets called by SSdynamic during initial gamemode setup.
 /// This is done because for a greenshift we want all goals to be generated
-/datum/controller/subsystem/processing/station/proc/generate_station_goals(goal_budget)
+/datum/controller/subsystem/processing/station/proc/generate_station_goals(goal_budget, goal_type)
 	var/list/possible = subtypesof(/datum/station_goal)
+	for(var/datum/station_goal/goal as anything in possible)
+		if(goal::goal_type != goal_type)
+			possible -= goal
 
 	var/goal_weights = 0
 	var/chosen_goals = list()
@@ -54,7 +57,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		if(picked::requires_space && is_planetary)
 			continue
 
-		goal_weights += initial(picked.weight)
+		goal_weights += picked::report_weight
 		chosen_goals += picked
 
 	for(var/chosen in chosen_goals)

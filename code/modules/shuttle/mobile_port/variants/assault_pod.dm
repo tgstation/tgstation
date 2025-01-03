@@ -12,8 +12,6 @@
 	if(!istype(S1, /obj/docking_port/stationary/transit))
 		playsound(get_turf(src.loc), 'sound/effects/explosion/explosion1.ogg',50,TRUE)
 
-
-
 /obj/item/assault_pod
 	name = "Assault Pod Targeting Device"
 	icon = 'icons/obj/devices/remote.dmi'
