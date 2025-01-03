@@ -38,7 +38,7 @@
 /obj/item/organ/heart/ethereal/update_overlays()
 	. = ..()
 	var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[base_icon_state]_overlay-[beating ? "on" : "off"]")
-	shine.appearance_flags = RESET_COLOR //No color on this, just pure white
+	shine.appearance_flags = RESET_COLOR|KEEP_APART //No color on this, just pure white
 	. += shine
 
 /obj/item/organ/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/healed, heal_flags)
