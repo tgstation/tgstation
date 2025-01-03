@@ -10,9 +10,8 @@
 	var/amount_per_transfer_from_this = 10
 	var/list/possible_transfer_amounts
 	desc = "An infamous knife of syndicate design, \
-	it has a tiny hole going through the blade to the handle which stores toxins. \
-	Use in-hand to to increase or decrease its transfer amount. \
-	Each hit has a 40% chance to transfer reagents from knife's internal storage to your victim"
+	it has a tiny hole going through the blade to the handle which stores toxins."
+
 
 
 /obj/item/knife/poison/Initialize(mapload)
@@ -37,7 +36,15 @@
 /obj/item/knife/poison/afterattack(mob/living/enemy, mob/user)
 	if(!istype(enemy))
 		return
-	if(reagents?.total_volume && enemy.reagents && prob(40))
+	if(enemy.can_inject() && prob(50))
 		reagents.trans_to(enemy, amount_per_transfer_from_this)
 	else
-		return ..()
+		to_chat(usr, span_warning("[enemy]'s armor too thick to penetrate"))
+	return
+
+/obj/item/knife/poison/examine(mob/user)
+	. = ..()
+	. += span_notice("Use in-hand to to increase or decrease its transfer amount. \
+	Each hit has a 50% chance to transfer reagents from knife's internal storage to your victim, \
+	however spaceproof armor, like a MOD-suit will prevent reagent transfer.")
+
