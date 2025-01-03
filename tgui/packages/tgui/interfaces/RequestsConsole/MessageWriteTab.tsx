@@ -1,7 +1,5 @@
 import { sort } from 'common/collections';
 import { useState } from 'react';
-
-import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
@@ -9,7 +7,9 @@ import {
   Section,
   Stack,
   TextArea,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend, useLocalState } from '../../backend';
 import { RequestPriority, RequestsData, RequestType } from './types';
 
 export const MessageWriteTab = (props) => {

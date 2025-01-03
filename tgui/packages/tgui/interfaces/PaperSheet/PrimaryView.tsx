@@ -1,7 +1,7 @@
 import { Component, createRef, RefObject } from 'react';
+import { Box, Button, Flex, Section, TextArea } from 'tgui-core/components';
 
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Flex, Section, TextArea } from '../../components';
 import { TEXTAREA_INPUT_HEIGHT } from './constants';
 import { PreviewView } from './Preview';
 import { PaperSheetStamper } from './Stamper';

@@ -4,15 +4,13 @@
  * @license MIT
  */
 
-import { classes } from 'common/react';
 import { useEffect, useRef } from 'react';
+import { Box } from 'tgui-core/components';
+import { addScrollableNode, removeScrollableNode } from 'tgui-core/events';
+import { classes } from 'tgui-core/react';
+import { computeBoxClassName, computeBoxProps } from 'tgui-core/ui';
 
-import {
-  BoxProps,
-  computeBoxClassName,
-  computeBoxProps,
-} from '../components/Box';
-import { addScrollableNode, removeScrollableNode } from '../events';
+type BoxProps = React.ComponentProps<typeof Box>;
 
 type Props = Partial<{
   theme: string;

@@ -468,6 +468,9 @@ GLOBAL_LIST_INIT(heretic_path_to_color, list(
 
 // Lowest priority
 #define EYE_COLOR_ORGAN_PRIORITY 1
+/// Base priority for atom colors, gets atom priorities added to it
+#define EYE_COLOR_ATOM_COLOR_PRIORITY 2
 #define EYE_COLOR_SPECIES_PRIORITY 10
 #define EYE_COLOR_WEED_PRIORITY 20
-#define EYE_COLOR_CULT_PRIORITY 30
+#define EYE_COLOR_LUMINESCENT_PRIORITY 30
+#define EYE_COLOR_CULT_PRIORITY 40

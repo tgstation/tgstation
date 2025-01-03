@@ -1,5 +1,5 @@
-import { clamp } from 'common/math';
 import { Component, RefObject } from 'react';
+import { clamp } from 'tgui-core/math';
 
 import { useBackend } from '../../backend';
 import { Stamp } from './Stamp';

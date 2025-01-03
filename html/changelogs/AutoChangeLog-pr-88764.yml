@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Photocopying no longer removes the stamp overlays from the original paper, and actually copies them to the copy."

@@ -1,5 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - rscadd: "computers and airlocks are now leanable"
-  - refactor: "changed how density/collision of some objects is changed, report any oddities!"
