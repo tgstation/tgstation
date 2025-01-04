@@ -584,6 +584,9 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 ## Uncomment to block granting profiling privileges to users with R_DEBUG, for performance purposes
 #FORBID_ADMIN_PROFILING
 
+## Uncomment to disable TTS messages on whispering, such as radio messages or the whisper verb. Useful for reducing your TTS load.
+#TTS_NO_WHISPER
+
 ## Link to a HTTP server that's been set up on a server. Docker-compose file can be found in tools/tts
 #TTS_HTTP_URL http://localhost:5002
 
