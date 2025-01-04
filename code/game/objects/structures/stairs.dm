@@ -8,6 +8,7 @@
 
 /obj/structure/stairs
 	name = "stairs"
+	desc = "A set of stairs. Cool!"
 	icon = 'icons/obj/stairs.dmi'
 	icon_state = "stairs"
 	anchored = TRUE
@@ -52,12 +53,24 @@
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+	if(mapload)
+		resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+		desc += " These seem to be reinforced against any sort of damage.. except for a bomb.."
+
 	return ..()
 
 /obj/structure/stairs/Destroy()
 	listeningTo = null
 	GLOB.stairs -= src
 	return ..()
+
+/obj/structure/stairs/ex_act(severity, target) //makes roundstart stairs only destructible by anything bigger than a light explosion
+	if(!(resistance_flags & INDESTRUCTIBLE))
+		return ..()
+	if(QDELETED(src) || severity <= EXPLODE_LIGHT)
+		return TRUE
+	atom_destruction(BOMB)
+	return TRUE
 
 /obj/structure/stairs/Move() //Look this should never happen but...
 	. = ..()
