@@ -65,6 +65,7 @@
 
 ///Handles renaming of the bodybag's examine tag.
 /obj/structure/closet/body_bag/proc/handle_tag(new_name)
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	tag_name = new_name
 	name = tag_name ? "[initial(name)] - [tag_name]" : initial(name)
 	update_appearance()

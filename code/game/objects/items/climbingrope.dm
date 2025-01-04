@@ -24,7 +24,7 @@
 	. = ..()
 	var/list/look_binds = user.client.prefs.key_bindings["look up"]
 	. += span_notice("Firstly, look upwards by holding <b>[english_list(look_binds, nothing_text = "(nothing bound)", and_text = " or ", comma_text = ", or ")]!</b>")
-	. += span_notice("Then, click solid ground adjacent to the hole above you.")
+	. += span_notice("Then, click solid ground (or lattice/catwalk) adjacent to the hole above you.")
 	. += span_notice("The rope looks like you could use it [uses] times before it falls apart.")
 
 /obj/item/climbing_hook/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -32,26 +32,27 @@
 		return NONE
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
-/obj/item/climbing_hook/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/climbing_hook/ranged_interact_with_atom(turf/open/interacting_with, mob/living/user, list/modifiers)
+	interacting_with = get_turf(interacting_with)
 	if(interacting_with.z == user.z)
 		return NONE
-	var/turf/open/target = interacting_with
-	if(!istype(target) || isopenspaceturf(target))
+	if(!istype(interacting_with) || !isturf(user.loc)) //better safe than sorry
 		return ITEM_INTERACT_BLOCKING
 
 	var/turf/user_turf = get_turf(user)
 	var/turf/above = GET_TURF_ABOVE(user_turf)
-	if(target_blocked(target, above))
+	if(target_blocked(interacting_with, above))
+		balloon_alert(user, "cant get there!")
 		return ITEM_INTERACT_BLOCKING
-	if(!isopenspaceturf(above) || !above.Adjacent(target)) //are we below a hole, is the target blocked, is the target adjacent to our hole
-		balloon_alert(user, "blocked!")
+	if(!above.Adjacent(interacting_with)) //is the target adjacent to our hole
+		balloon_alert(user, "too far!")
 		return ITEM_INTERACT_BLOCKING
 
-	var/away_dir = get_dir(above, target)
+	var/away_dir = get_dir(above, interacting_with)
 	user.visible_message(span_notice("[user] begins climbing upwards with [src]."), span_notice("You get to work on properly hooking [src] and going upwards."))
-	playsound(target, 'sound/effects/pickaxe/picaxe1.ogg', 50) //plays twice so people above and below can hear
+	playsound(interacting_with, 'sound/effects/pickaxe/picaxe1.ogg', 50) //plays twice so people above and below can hear
 	playsound(user_turf, 'sound/effects/pickaxe/picaxe1.ogg', 50)
-	var/list/effects = list(new /obj/effect/temp_visual/climbing_hook(target, away_dir), new /obj/effect/temp_visual/climbing_hook(user_turf, away_dir))
+	var/list/effects = list(new /obj/effect/temp_visual/climbing_hook(interacting_with, away_dir), new /obj/effect/temp_visual/climbing_hook(user_turf, away_dir))
 
 	// Our climbers athletics ability
 	var/fitness_level = user.mind?.get_skill_level(/datum/skill/athletics)
@@ -65,8 +66,8 @@
 
 	var/final_climb_time = (climb_time - fitness_level) * misc_multiplier
 
-	if(do_after(user, final_climb_time, target))
-		user.forceMove(target)
+	if(do_after(user, final_climb_time, interacting_with))
+		user.forceMove(interacting_with)
 		uses--
 		user.mind?.adjust_experience(/datum/skill/athletics, 50) //get some experience for our trouble, especially since this costs us a climbing rope use
 
@@ -80,7 +81,7 @@
 // didnt want to mess up is_blocked_turf_ignore_climbable
 /// checks if our target is blocked, also checks for border objects facing the above turf and climbable stuff
 /obj/item/climbing_hook/proc/target_blocked(turf/target, turf/above)
-	if(target.density || above.density)
+	if(target.density || (isopenspaceturf(target) && target.zPassOut(DOWN)) || !above.zPassOut(DOWN) || above.density) // we check if we would fall down from it additionally
 		return TRUE
 
 	for(var/atom/movable/atom_content as anything in target.contents)

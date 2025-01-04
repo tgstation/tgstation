@@ -229,21 +229,27 @@
 		for(var/datum/material/material as anything in mat_container.materials)
 			var/amount = mat_container.materials[material]
 			var/sheet_amount = amount / SHEET_MATERIAL_AMOUNT
+			var/obj/sheet_type = material.sheet_type
 			data["materials"] += list(list(
 				"name" = material.name,
 				"id" = REF(material),
 				"amount" = sheet_amount,
 				"category" = "material",
 				"value" = ore_values[material.type],
+				"icon" = sheet_type::icon,
+				"icon_state" = sheet_type::icon_state,
 			))
 
 		for(var/research in stored_research.researched_designs)
 			var/datum/design/alloy = SSresearch.techweb_design_by_id(research)
+			var/obj/alloy_type = alloy.build_path
 			data["materials"] += list(list(
 				"name" = alloy.name,
 				"id" = alloy.id,
 				"category" = "alloy",
 				"amount" = can_smelt_alloy(alloy),
+				"icon" = alloy_type::icon,
+				"icon_state" = alloy_type::icon_state,
 			))
 
 	data["disconnected"] = null
@@ -273,29 +279,6 @@
 				"cash" = "No valid account",
 			)
 	return data
-
-/obj/machinery/mineral/ore_redemption/ui_static_data(mob/user)
-	var/list/data = list()
-
-	var/datum/component/material_container/mat_container = materials.mat_container
-	if (mat_container)
-		for(var/datum/material/material as anything in mat_container.materials)
-			var/obj/material_display = initial(material.sheet_type)
-			data["material_icons"] += list(list(
-				"id" = REF(material),
-				"product_icon" = icon2base64(getFlatIcon(image(icon = initial(material_display.icon), icon_state = initial(material_display.icon_state)), no_anim=TRUE)),
-			))
-
-	for(var/research in stored_research.researched_designs)
-		var/datum/design/alloy = SSresearch.techweb_design_by_id(research)
-		var/obj/alloy_display = initial(alloy.build_path)
-		data["material_icons"] += list(list(
-			"id" = alloy.id,
-			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(alloy_display.icon), icon_state = initial(alloy_display.icon_state)), no_anim=TRUE)),
-		))
-
-	return data
-
 
 /obj/machinery/mineral/ore_redemption/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

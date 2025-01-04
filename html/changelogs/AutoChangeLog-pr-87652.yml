@@ -1,4 +1,0 @@
-author: "zoomachina"
-delete-after: True
-changes:
-  - bugfix: "e-cigarettes can't be emptied if the cap isn't open"

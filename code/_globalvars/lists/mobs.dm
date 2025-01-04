@@ -59,7 +59,7 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list())) // One for each AI_* status define
 GLOBAL_LIST_EMPTY(spidermobs) //all sentient spider mobs
 GLOBAL_LIST_EMPTY(bots_list)
-GLOBAL_LIST_EMPTY(aiEyes)
+GLOBAL_LIST_EMPTY(camera_eyes)
 GLOBAL_LIST_EMPTY(suit_sensors_list) //all people with suit sensors on
 
 /// All alive mobs with clients.

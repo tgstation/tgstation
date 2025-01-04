@@ -22,11 +22,10 @@
 	///The overlay for tail spines, if any
 	var/datum/bodypart_overlay/mutant/tail_spines/tail_spines_overlay
 
-/obj/item/organ/tail/mob_insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/tail/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-	if(.)
-		receiver.clear_mood_event("tail_lost")
-		receiver.clear_mood_event("tail_balance_lost")
+	receiver.clear_mood_event("tail_lost")
+	receiver.clear_mood_event("tail_balance_lost")
 
 	if(!special) // if some admin wants to give someone tail moodles for tail shenanigans, they can spawn it and do it by hand
 		original_owner ||= WEAKREF(receiver)
@@ -77,7 +76,7 @@
 	bodypart.remove_bodypart_overlay(tail_spines_overlay)
 	QDEL_NULL(tail_spines_overlay)
 
-/obj/item/organ/tail/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/tail/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	if(wag_flags & WAG_WAGGING)

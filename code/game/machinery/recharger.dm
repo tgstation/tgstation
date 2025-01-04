@@ -17,6 +17,7 @@
 		/obj/item/melee/baton/security,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
+		/obj/item/gun/ballistic/automatic/battle_rifle,
 	))
 
 /obj/machinery/recharger/RefreshParts()
@@ -54,6 +55,11 @@
 	if(istype(charging, /obj/item/ammo_box/magazine/recharge))
 		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
 		. += span_notice("- \The [charging]'s cell is at <b>[PERCENT(power_pack.stored_ammo.len/power_pack.max_ammo)]%</b>.")
+		return
+	if(istype(charging, /obj/item/gun/ballistic/automatic/battle_rifle))
+		var/obj/item/gun/ballistic/automatic/battle_rifle/recalibrating_gun = charging
+		. += span_notice("- \The [charging]'s system degradation is at stage [recalibrating_gun.degradation_stage] of [recalibrating_gun.degradation_stage_max]</b>.")
+		. += span_notice("- \The [charging]'s degradation buffer is at <b>[PERCENT(recalibrating_gun.shots_before_degradation/recalibrating_gun.max_shots_before_degradation)]%</b>.")
 		return
 	. += span_notice("- \The [charging] is not reporting a power level.")
 
@@ -158,6 +164,23 @@
 			using_power = TRUE
 		update_appearance()
 		return
+
+	if(istype(charging, /obj/item/gun/ballistic/automatic/battle_rifle))
+		var/obj/item/gun/ballistic/automatic/battle_rifle/recalibrating_gun = charging
+
+		if(recalibrating_gun.degradation_stage)
+			recalibrating_gun.attempt_recalibration(FALSE)
+			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
+			using_power = TRUE
+
+		else if(recalibrating_gun.shots_before_degradation < recalibrating_gun.max_shots_before_degradation)
+			recalibrating_gun.attempt_recalibration(TRUE, 1 * recharge_coeff)
+			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
+			using_power = TRUE
+
+		update_appearance()
+		return
+
 	if(!using_power && !finished_recharging) //Inserted thing is at max charge/ammo, notify those around us
 		finished_recharging = TRUE
 		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)

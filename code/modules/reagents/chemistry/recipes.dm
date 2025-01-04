@@ -207,7 +207,7 @@
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/message = "Mobs have been spawned in [ADMIN_VERBOSEJMP(T)] by a [reaction_name] reaction."
-		message += " (<A HREF='?_src_=vars;Vars=[REF(A)]'>VV</A>)"
+		message += " (<A href='byond://?_src_=vars;Vars=[REF(A)]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
 		if(M)
@@ -248,7 +248,7 @@
 	for(var/atom/movable/X in orange(range, T))
 		if(X.anchored)
 			continue
-		if(iseffect(X) || iscameramob(X) || isdead(X))
+		if(iseffect(X) || iseyemob(X) || isdead(X))
 			continue
 		var/distance = get_dist(X, T)
 		var/moving_power = max(range - distance, 1)
@@ -413,7 +413,7 @@
 			live.apply_damage(damage)//Since this can be called multiple times
 		if(movey.anchored)
 			continue
-		if(iseffect(movey) || iscameramob(movey) || isdead(movey))
+		if(iseffect(movey) || iseyemob(movey) || isdead(movey))
 			continue
 		if(implosion)
 			var/distance = get_dist(movey, this_turf)

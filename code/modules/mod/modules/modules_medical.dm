@@ -77,13 +77,13 @@
 
 /obj/item/mod/module/quick_carry/on_part_activation()
 	. = ..()
-	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, quick_carry_trait, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, REF(src))
+	ADD_TRAIT(mod.wearer, quick_carry_trait, REF(src))
 
 /obj/item/mod/module/quick_carry/on_part_deactivation(deleting = FALSE)
 	. = ..()
-	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, quick_carry_trait, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, REF(src))
+	REMOVE_TRAIT(mod.wearer, quick_carry_trait, REF(src))
 
 /obj/item/mod/module/quick_carry/advanced
 	name = "MOD advanced quick carry module"
@@ -165,7 +165,7 @@
 		return
 	var/atom/movable/fired_organ = pop(organ_list)
 	var/obj/projectile/organ/projectile = new /obj/projectile/organ(mod.wearer.loc, fired_organ)
-	projectile.preparePixelProjectile(target, mod.wearer)
+	projectile.aim_projectile(target, mod.wearer)
 	projectile.firer = mod.wearer
 	playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
 	INVOKE_ASYNC(projectile, TYPE_PROC_REF(/obj/projectile, fire))
@@ -200,13 +200,10 @@
 	var/mob/living/carbon/human/organ_receiver = target
 	var/succeed = FALSE
 	if(organ_receiver.surgeries.len)
-		for(var/datum/surgery/procedure as anything in organ_receiver.surgeries)
+		for(var/datum/surgery/organ_manipulation/procedure in organ_receiver.surgeries)
 			if(procedure.location != organ.zone)
 				continue
-			if(!istype(procedure, /datum/surgery/organ_manipulation))
-				continue
-			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
-			if(!istype(surgery_step, /datum/surgery_step/manipulate_organs))
+			if(!ispath(procedure.steps[procedure.status], /datum/surgery_step/manipulate_organs))
 				continue
 			succeed = TRUE
 			break

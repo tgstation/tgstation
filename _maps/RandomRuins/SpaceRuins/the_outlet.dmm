@@ -249,6 +249,18 @@
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
+"gU" = (
+/obj/structure/closet/secure_closet/freezer/empty,
+/obj/item/organ/tongue/lizard,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/organ/tail/lizard,
+/obj/item/organ/heart,
+/obj/item/organ/brain,
+/obj/item/organ/liver,
+/obj/item/organ/lungs,
+/obj/item/organ/stomach,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
 "gX" = (
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
@@ -687,12 +699,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/the_outlet/employeesection)
-"rF" = (
-/obj/structure/table/reinforced/rglass,
-/obj/item/surgery_tray/full,
-/obj/item/reagent_containers/syringe/lethal/execution,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/the_outlet/researchrooms)
 "rH" = (
 /obj/effect/decal/cleanable/blood{
 	icon_state = "floor1-old"
@@ -994,18 +1000,6 @@
 /obj/effect/decal/cleanable/crayon,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"yA" = (
-/obj/structure/closet/secure_closet/freezer/empty,
-/obj/item/organ/tongue/lizard,
-/obj/item/food/meat/slab/human/mutant/lizard,
-/obj/item/organ/tail/lizard,
-/obj/item/organ/heart,
-/obj/item/organ/brain,
-/obj/item/organ/liver,
-/obj/item/organ/lungs,
-/obj/item/organ/stomach,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/the_outlet/researchrooms)
 "yG" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing,
@@ -1760,6 +1754,12 @@
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
+"Qg" = (
+/obj/structure/table/reinforced/rglass,
+/obj/effect/spawner/surgery_tray/full,
+/obj/item/reagent_containers/syringe/lethal/execution,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
 "Qi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2486,7 +2486,7 @@ UF
 fX
 HZ
 Vx
-yA
+gU
 RV
 Fm
 Pg
@@ -2759,7 +2759,7 @@ Er
 Er
 Er
 Fm
-rF
+Qg
 qo
 zB
 Nb

@@ -225,7 +225,12 @@
 	update_appearance()
 
 /obj/projectile/kinetic/on_range()
-	strike_thing()
+	if(!pressure_decrease_active && !lavaland_equipment_pressure_check(get_turf(src)))
+		name = "weakened [name]"
+		damage = damage * pressure_decrease
+		pressure_decrease_active = TRUE
+
+	strike_thing(loc)
 	..()
 
 /obj/projectile/kinetic/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -258,6 +263,17 @@
 //mecha_kineticgun version of the projectile
 /obj/projectile/kinetic/mech
 	range = 5
+	damage = 80
+
+/obj/projectile/kinetic/mech/strike_thing(atom/target)
+	. = ..()
+	new /obj/effect/temp_visual/explosion/fast(target)
+	for(var/turf/closed/mineral/mineral_turf in RANGE_TURFS(1, target) - target)
+		mineral_turf.gets_drilled(firer, TRUE)
+	for(var/mob/living/living_mob in range(1, target) - firer - target)
+		var/armor = living_mob.run_armor_check(def_zone, armor_flag, armour_penetration = armour_penetration)
+		living_mob.apply_damage(damage, damage_type, def_zone, armor)
+		to_chat(living_mob, span_userdanger("You're struck by a [name]!"))
 
 //Modkits
 /obj/item/borg/upgrade/modkit

@@ -16,7 +16,7 @@
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
 /mob/proc/get_inactive_hand_index()
 	var/other_hand = 0
-	if(!(active_hand_index % 2))
+	if(IS_RIGHT_INDEX(active_hand_index))
 		other_hand = active_hand_index-1 //finding the matching "left" limb
 	else
 		other_hand = active_hand_index+1 //finding the matching "right" limb
@@ -33,7 +33,7 @@
 
 //Odd = left. Even = right
 /mob/proc/held_index_to_dir(i)
-	if(!(i % 2))
+	if(IS_RIGHT_INDEX(i))
 		return "r"
 	return "l"
 
@@ -132,7 +132,7 @@
 	if(i > 2)
 		hand += "upper "
 	var/num = 0
-	if(!(i % 2))
+	if(IS_RIGHT_INDEX(i))
 		num = i-2
 		hand += "right hand"
 	else
@@ -548,19 +548,6 @@
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_quick_equip)))
 
-/// Safely drop everything, without deconstructing the mob
-/mob/proc/drop_everything(del_on_drop, force, del_if_nodrop)
-	. = list()
-	for(var/obj/item/item in src)
-		if(!dropItemToGround(item, force))
-			if(del_if_nodrop && !(item.item_flags & ABSTRACT))
-				qdel(item)
-		if(del_on_drop)
-			qdel(item)
-		//Anything thats not deleted and isn't in the mob, so everything that is succesfully dropped to the ground, is returned
-		if(!QDELETED(item) && !(item in src))
-			. += item
-
 ///proc extender of [/mob/verb/quick_equip] used to make the verb queuable if the server is overloaded
 /mob/proc/execute_quick_equip()
 	var/obj/item/I = get_active_held_item()
@@ -609,3 +596,19 @@
 	for (var/obj/item/implant/storage/internal_bag in implants)
 		belongings += internal_bag.contents
 	return belongings
+
+/// Safely drop everything, without deconstructing the mob
+/mob/living/proc/drop_everything(del_on_drop, force, del_if_nodrop)
+	. = list() //list of items that were successfully dropped
+
+	var/list/all_gear = get_all_gear(recursive = FALSE)
+	for(var/obj/item/item in all_gear)
+		if(dropItemToGround(item, force))
+			if(QDELETED(item)) //DROPDEL can cause this item to be deleted
+				continue
+			if(del_on_drop)
+				qdel(item)
+				continue
+			. += item
+		else if(del_if_nodrop && !(item.item_flags & ABSTRACT))
+			qdel(item)

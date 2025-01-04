@@ -199,7 +199,7 @@
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
 	damage = 0
-	speed = 0.5
+	speed = 2
 	embed_type = null
 
 /obj/projectile/bullet/gumball/Initialize(mapload)
@@ -232,17 +232,17 @@
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
 	damage = 0
-	speed = 0.5
+	speed = 2
 	embed_type = null
 	var/head_color
 
 /obj/projectile/bullet/lollipop/harmful
-	embed_type = /datum/embed_data/lollipop
+	embed_type = /datum/embedding/lollipop
 	damage = 10
 	shrapnel_type = /obj/item/food/lollipop/cyborg
 	embed_falloff_tile = 0
 
-/datum/embed_data/lollipop
+/datum/embedding/lollipop
 	embed_chance = 35
 	fall_chance = 2
 	jostle_chance = 0

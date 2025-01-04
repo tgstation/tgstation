@@ -26,16 +26,11 @@
 /datum/ai_planning_subtree/find_and_hunt_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!SPT_PROB(hunt_chance, seconds_per_tick))
 		return
-	if(controller.blackboard[BB_HUNTING_COOLDOWN] >= world.time)
-		return
-	var/mob/living/living_pawn = controller.pawn
-	// We can't hunt if we're indisposed
-	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED) || living_pawn.stat != CONSCIOUS)
+
+	if(controller.blackboard[BB_HUNTING_COOLDOWN(type)] >= world.time)
 		return
 
-	var/atom/hunted = controller.blackboard[target_key]
-	// We're not hunting anything, look around for something
-	if(isnull(hunted))
+	if(!controller.blackboard_key_exists(target_key))
 		controller.queue_behavior(finding_behavior, target_key, hunt_targets, hunt_range)
 		return
 
@@ -44,7 +39,7 @@
 	// we may accidentally be executing another tree's hunt - not ideal,
 	// try to set a unique target key if you have multiple
 
-	controller.queue_behavior(hunting_behavior, target_key, BB_HUNTING_COOLDOWN)
+	controller.queue_behavior(hunting_behavior, target_key, BB_HUNTING_COOLDOWN(type))
 	if(finish_planning)
 		return SUBTREE_RETURN_FINISH_PLANNING //If we're hunting we're too busy for anything else
 
@@ -115,7 +110,7 @@
 
 /datum/ai_behavior/hunt_target/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
 	. = ..()
-	if(succeeded)
+	if(succeeded && hunting_cooldown_key)
 		controller.set_blackboard_key(hunting_cooldown_key, world.time + hunt_cooldown)
 	else if(hunting_target_key)
 		controller.clear_blackboard_key(hunting_target_key)

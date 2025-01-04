@@ -1,5 +1,0 @@
-author: "Archimus12"
-delete-after: True
-changes:
-  - bugfix: "Made the Research Director's Modsuit's Advanced Reagent Scanner scan reagents."
-  - spellcheck: "Changes description of the Advanced Reagent Scanner to mention its explosion sensor and research scanner."

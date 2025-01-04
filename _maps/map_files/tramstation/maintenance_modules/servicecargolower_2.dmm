@@ -136,10 +136,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/greater)
-"oT" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
-/area/station/asteroid)
 "oV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door/directional/west{
@@ -1112,7 +1108,7 @@ Rk
 cV
 cV
 cV
-oT
+ja
 cV
 sj
 PC
@@ -1135,10 +1131,10 @@ fX
 "}
 (29,1,1) = {"
 Cn
-oT
-oT
-oT
-oT
+ja
+ja
+ja
+ja
 cV
 sj
 sj
@@ -1161,7 +1157,7 @@ fX
 "}
 (30,1,1) = {"
 cV
-oT
+ja
 cV
 cV
 cV
@@ -1186,8 +1182,8 @@ fX
 fX
 "}
 (31,1,1) = {"
-oT
-oT
+ja
+ja
 cV
 cV
 Rk

@@ -2,45 +2,55 @@
 /datum/component/leanable
 	/// How much will mobs that lean onto this object be offset
 	var/leaning_offset = 11
-	/// List of click modifiers that are required to be present for leaning to trigger
-	var/list/click_mods = null
-	/// Callback called for additional checks if a lean is valid
-	var/datum/callback/lean_check = null
-	/// Whenever this object can be leaned on from the same turf as its' own. Do not use without a custom lean_check!
-	var/same_turf = FALSE
 	/// List of mobs currently leaning on our parent
 	var/list/leaning_mobs = list()
+	/// Is this object currently leanable?
+	var/is_currently_leanable = TRUE
 
-/datum/component/leanable/Initialize(leaning_offset = 11, list/click_mods = null, datum/callback/lean_check = null, same_turf = FALSE)
+/datum/component/leanable/Initialize(mob/living/leaner, leaning_offset = 11)
 	. = ..()
 	src.leaning_offset = leaning_offset
-	src.click_mods = click_mods
-	src.lean_check = lean_check
-	src.same_turf = same_turf
+	mousedrop_receive(parent, leaner, leaner)
 
 /datum/component/leanable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(parent, COMSIG_ATOM_DENSITY_CHANGED, PROC_REF(on_density_change))
+	var/atom/leanable_atom = parent
+	is_currently_leanable = leanable_atom.density
+
+/datum/component/leanable/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, list(
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_MOUSEDROPPED_ONTO,
+		COMSIG_ATOM_DENSITY_CHANGED,
+	))
+
+/datum/component/leanable/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_MOUSEDROPPED_ONTO, COMSIG_MOVABLE_MOVED))
 
 /datum/component/leanable/Destroy(force)
+	stop_leaning_leaners()
+	return ..()
+
+/datum/component/leanable/proc/stop_leaning_leaners(fall)
 	for (var/mob/living/leaner as anything in leaning_mobs)
 		leaner.stop_leaning()
+		if(fall)
+			to_chat(leaner, span_danger("You lose balance!"))
+			leaner.Paralyze(0.5 SECONDS)
 	leaning_mobs = null
-	return ..()
 
 /datum/component/leanable/proc/on_moved(datum/source)
 	SIGNAL_HANDLER
+
 	for (var/mob/living/leaner as anything in leaning_mobs)
 		leaner.stop_leaning()
 
 /datum/component/leanable/proc/mousedrop_receive(atom/source, atom/movable/dropped, mob/user, params)
 	if (dropped != user)
 		return
-	if (islist(click_mods))
-		var/list/modifiers = params2list(params)
-		for (var/modifier in click_mods)
-			if (!LAZYACCESS(modifiers, modifier))
-				return
 	if (!iscarbon(dropped) && !iscyborg(dropped))
 		return
 	var/mob/living/leaner = dropped
@@ -49,10 +59,10 @@
 	if (HAS_TRAIT_FROM(leaner, TRAIT_UNDENSE, LEANING_TRAIT))
 		return
 	var/turf/checked_turf = get_step(leaner, REVERSE_DIR(leaner.dir))
-	if (checked_turf != get_turf(source) && (!same_turf || get_turf(source) != get_turf(leaner)))
+	if (checked_turf != get_turf(source))
 		return
-	if (!isnull(lean_check) && !lean_check.Invoke(dropped, params))
-		return
+	if(!is_currently_leanable)
+		return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 	leaner.start_leaning(source, leaning_offset)
 	leaning_mobs += leaner
 	RegisterSignals(leaner, list(COMSIG_LIVING_STOPPED_LEANING, COMSIG_QDELETING), PROC_REF(stopped_leaning))
@@ -63,6 +73,13 @@
 	leaning_mobs -= source
 	UnregisterSignal(source, list(COMSIG_LIVING_STOPPED_LEANING, COMSIG_QDELETING))
 
+/**
+ * Makes the mob lean on an atom
+ * Arguments
+ *
+ * * atom/lean_target - the target the mob is trying to lean on
+ * * leaning_offset - pixel offset to apply on the mob when leaning
+ */
 /mob/living/proc/start_leaning(atom/lean_target, leaning_offset)
 	var/new_x = lean_target.pixel_x + base_pixel_x + body_position_pixel_x_offset
 	var/new_y = lean_target.pixel_y + base_pixel_y + body_position_pixel_y_offset
@@ -86,19 +103,31 @@
 		COMSIG_MOB_CLIENT_PRE_MOVE,
 		COMSIG_LIVING_DISARM_HIT,
 		COMSIG_LIVING_GET_PULLED,
-		COMSIG_MOVABLE_TELEPORTING,
 	), PROC_REF(stop_leaning))
+
+	RegisterSignal(src, COMSIG_MOVABLE_TELEPORTED, PROC_REF(teleport_away_while_leaning))
 	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(lean_dir_changed))
 	update_fov()
 
+/// You fall on your face if you get teleported while leaning
+/mob/living/proc/teleport_away_while_leaning()
+	SIGNAL_HANDLER
+
+	// Make sure we unregister signal handlers and reset animation
+	stop_leaning()
+	// -1000 aura
+	visible_message(span_notice("[src] falls flat on [p_their()] face from losing [p_their()] balance!"), span_warning("You fall suddenly as the object you were leaning on vanishes from contact with you!"))
+	Knockdown(3 SECONDS)
+
 /mob/living/proc/stop_leaning()
 	SIGNAL_HANDLER
+
 	UnregisterSignal(src, list(
 		COMSIG_MOB_CLIENT_PRE_MOVE,
 		COMSIG_LIVING_DISARM_HIT,
 		COMSIG_LIVING_GET_PULLED,
-		COMSIG_MOVABLE_TELEPORTING,
 		COMSIG_ATOM_POST_DIR_CHANGE,
+		COMSIG_MOVABLE_TELEPORTED,
 	))
 	animate(src, 0.2 SECONDS, pixel_x = base_pixel_x + body_position_pixel_x_offset, pixel_y = base_pixel_y + body_position_pixel_y_offset)
 	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
@@ -107,5 +136,14 @@
 
 /mob/living/proc/lean_dir_changed(atom/source, old_dir, new_dir)
 	SIGNAL_HANDLER
+
 	if (old_dir != new_dir)
 		INVOKE_ASYNC(src, PROC_REF(stop_leaning))
+
+/datum/component/leanable/proc/on_density_change()
+	SIGNAL_HANDLER
+	is_currently_leanable = !is_currently_leanable
+	if(!is_currently_leanable)
+		stop_leaning_leaners(fall = TRUE)
+		return
+	stop_leaning_leaners()

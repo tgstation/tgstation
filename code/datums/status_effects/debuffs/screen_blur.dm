@@ -18,7 +18,8 @@
 		return FALSE
 
 	// Refresh the blur when a client jumps into the mob, in case we get put on a clientless mob with no hud
-	RegisterSignal(owner, COMSIG_MOB_LOGIN, PROC_REF(update_blur))
+	RegisterSignals(owner, list(COMSIG_MOB_LOGIN, SIGNAL_ADDTRAIT(TRAIT_SIGHT_BYPASS), SIGNAL_REMOVETRAIT(TRAIT_SIGHT_BYPASS)), PROC_REF(update_blur))
+
 	// Apply initial blur
 	update_blur()
 	return TRUE
@@ -43,10 +44,13 @@
 	if(!owner.hud_used)
 		return
 
+	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	if(HAS_TRAIT(owner, TRAIT_SIGHT_BYPASS))
+		game_plane_master_controller.remove_filter("eye_blur")
+		return
+
 	var/time_left_in_seconds = (duration - world.time) / (1 SECONDS)
 	var/amount_of_blur = clamp(time_left_in_seconds * BLUR_DURATION_TO_INTENSITY, 0.6, 3)
-
-	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.add_filter("eye_blur", 1, gauss_blur_filter(amount_of_blur))
 
 #undef BLUR_DURATION_TO_INTENSITY

@@ -38,14 +38,12 @@
 
 	if (!initial(eyes_organ.eye_color_left))
 		eyes_organ.eye_color_left = value
-	eyes_organ.old_eye_color_left = value
 
 	if(hetero) // Don't override the snowflakes please
 		return
 
 	if (!initial(eyes_organ.eye_color_right))
 		eyes_organ.eye_color_right = value
-	eyes_organ.old_eye_color_right = value
 	eyes_organ.refresh()
 
 /datum/preference/color/eye_color/create_default_value()

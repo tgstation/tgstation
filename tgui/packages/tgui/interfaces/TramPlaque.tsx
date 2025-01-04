@@ -1,5 +1,6 @@
+import { LabeledList, NoticeBox, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { LabeledList, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {

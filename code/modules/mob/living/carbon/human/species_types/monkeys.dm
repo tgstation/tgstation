@@ -35,13 +35,12 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
 	fire_overlay = "monkey"
-	dust_anim = "dust-m"
 	gib_anim = "gibbed-m"
 
 	payday_modifier = 1.5
 	ai_controlled_species = TRUE
 
-/datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+/datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	passtable_on(human_who_gained_species, SPECIES_TRAIT)
 	human_who_gained_species.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
@@ -63,6 +62,10 @@
 
 /datum/species/monkey/get_scream_sound(mob/living/carbon/human/monkey)
 	return get_sfx(SFX_SCREECH)
+
+/datum/species/monkey/get_hiss_sound(mob/living/carbon/human/monkey)
+	return 'sound/mobs/humanoids/human/hiss/human_hiss.ogg'
+	// we're both great apes, or something..
 
 /datum/species/monkey/get_physical_attributes()
 	return "Monkeys are slippery, can crawl into vents, and are more dextrous than humans.. but only when stealing things. \

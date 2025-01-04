@@ -174,7 +174,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Metabolic Inhibition Factor"
 	description = "This enzyme catalyzes crashes the conversion of nutricious food into healing peptides."
 	metabolization_rate = 0.0625  * REAGENTS_METABOLISM //slow metabolism rate so the patient can self heal with food even after the troph has metabolized away for amazing reagent efficency.
-	reagent_state = SOLID
 	color = "#b3ff00"
 	overdose_threshold = 10
 	ph = 1
@@ -480,6 +479,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	overdose_threshold = 20
 	self_consuming = TRUE //No pesky liver shenanigans
 	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
+	affected_organ_flags = NONE
 	///If we brought someone back from the dead
 	var/back_from_the_dead = FALSE
 	/// List of trait buffs to give to the affected mob, and remove as needed.
@@ -693,7 +693,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/oculine
 	name = "Oculater"
 	description = "Temporarily blinds the patient."
-	reagent_state = LIQUID
 	color = "#DDDDDD"
 	metabolization_rate = 0.1 * REM
 	addiction_types = list(/datum/addiction/medicine = 3)
@@ -722,7 +721,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/impurity/inacusiate
 	name = "Tinacusiate"
 	description = "Makes the patient's hearing temporarily funky."
-	reagent_state = LIQUID
 	addiction_types = list(/datum/addiction/medicine = 5.6)
 	color = "#DDDDFF"
 	taste_description = "the heat evaporating from your mouth."
@@ -763,7 +761,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Benzoic Acid"
 	description = "Robust fertilizer that provides a decent range of benefits for plant life."
 	taste_description = "flowers"
-	reagent_state = LIQUID
 	color = "#e6c843"
 	ph = 3.4
 	tox_damage = 0
@@ -777,7 +774,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/oxandrolone
 	name = "Oxymetholone"
 	description = "Anabolic steroid that promotes the growth of muscle during and after exercise."
-	reagent_state = LIQUID
 	color = "#520c23"
 	taste_description = "sweat"
 	metabolization_rate = 0.4 * REM
@@ -804,7 +800,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/salbutamol
 	name = "Bamethan"
 	description = "Blood thinner that drastically increases the chance of receiving bleeding wounds."
-	reagent_state = LIQUID
 	color = "#ecd4d6"
 	taste_description = "paint thinner"
 	ph = 4.5
@@ -815,7 +810,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/pen_acid
 	name = "Pendetide"
 	description = "Purges basic toxin healing medications and increases the severity of radiation poisoning."
-	reagent_state = LIQUID
 	color = "#09ff00"
 	ph = 3.7
 	taste_description = "venom"
@@ -838,7 +832,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/atropine
 	name = "Hyoscyamine"
 	description = "Slowly regenerates all damaged organs, but cannot restore non-functional organs."
-	reagent_state = LIQUID
 	color = "#273333"
 	ph = 13.6
 	metabolization_rate = 0.2 * REM
@@ -874,7 +867,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/ammoniated_mercury
 	name = "Ammoniated Sludge"
 	description = "A ghastly looking mess of mercury by-product. Causes bursts of manic hysteria."
-	reagent_state = LIQUID
 	color = "#353535"
 	ph = 10.2
 	metabolization_rate = 0.4 * REM
@@ -889,7 +881,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/rezadone
 	name = "Inreziniver"
 	description = "Makes the user horribly afraid of all things related to carps."
-	reagent_state = LIQUID
 	color = "#c92eb4"
 	ph = 13.9
 	metabolization_rate = 0.05 * REM

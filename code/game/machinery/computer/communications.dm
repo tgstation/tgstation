@@ -142,7 +142,7 @@
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 	return TRUE
 
-/obj/machinery/computer/communications/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/computer/communications/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/ui_state)
 	var/static/list/approved_states = list(STATE_BUYING_SHUTTLE, STATE_CHANGING_STATUS, STATE_MAIN, STATE_MESSAGES)
 
 	. = ..()
@@ -202,6 +202,9 @@
 
 			var/new_sec_level = SSsecurity_level.text_level_to_number(params["newSecurityLevel"])
 			if (new_sec_level != SEC_LEVEL_GREEN && new_sec_level != SEC_LEVEL_BLUE)
+				return
+			if (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_DELTA)
+				to_chat(user, span_warning("Central Command has placed a lock on the alert level due to a doomsday!"))
 				return
 			if (SSsecurity_level.get_current_level_as_number() == new_sec_level)
 				return
@@ -346,7 +349,7 @@
 				span_adminnotice( \
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to send \
 					the following message to <b>[destination]</b> (will autoapprove in [GLOB.communications_controller.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
-					<b><a href='?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
+					<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
 					[html_encode(message)]" \
 				)
 			)
@@ -408,7 +411,7 @@
 
 			state = STATE_MAIN
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, FALSE)
-			imprint_gps(gps_tag = "Encrypted Communications Channel")
+			imprint_gps("Encrypted Communications Channel")
 
 		if ("toggleEmergencyAccess")
 			if(emergency_access_cooldown(user)) //if were in cooldown, dont allow the following code

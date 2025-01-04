@@ -52,7 +52,8 @@
 		else
 			allowed_item_typecache = typecacheof(allowed_items)
 
-	for(var/mat in init_mats) //Make the assoc list material reference -> amount
+	//Make the assoc list material reference -> amount
+	for(var/mat in init_mats)
 		var/mat_ref = GET_MATERIAL_REF(mat)
 		if(isnull(mat_ref))
 			continue
@@ -66,17 +67,6 @@
 		for(var/signal in container_signals)
 			parent.RegisterSignal(src, signal, container_signals[signal])
 
-	//drop sheets when the object is deconstructed but not deleted
-	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(drop_sheets))
-
-	if(_mat_container_flags & MATCONTAINER_NO_INSERT)
-		return
-
-	var/atom/atom_target = parent
-	atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
-
-	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
-
 /datum/component/material_container/Destroy(force)
 	materials = null
 	allowed_materials = null
@@ -85,10 +75,35 @@
 /datum/component/material_container/RegisterWithParent()
 	. = ..()
 
+	var/atom/atom_target = parent
+
+	//can we insert into this container
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+		//to insert stuff into the container
+		RegisterSignal(atom_target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+
+		//screen tips for inserting items
+		atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+		RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+
+	//to see available materials
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
-		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+		RegisterSignal(atom_target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+	//drop sheets when the object is deconstructed but not deleted
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(drop_sheets))
+
+/datum/component/material_container/UnregisterFromParent()
+	var/list/signals = list()
+
+	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
+		signals += COMSIG_ATOM_ITEM_INTERACTION
+		signals +=  COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM
+	if(mat_container_flags & MATCONTAINER_EXAMINE)
+		signals +=  COMSIG_ATOM_EXAMINE
+	signals += COMSIG_OBJ_DECONSTRUCT
+
+	UnregisterSignal(parent, signals)
 
 /datum/component/material_container/proc/drop_sheets()
 	SIGNAL_HANDLER
@@ -114,9 +129,9 @@
 			UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 		if(old_flags & MATCONTAINER_NO_INSERT && !(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
 		else if(!(old_flags & MATCONTAINER_NO_INSERT) && mat_container_flags & MATCONTAINER_NO_INSERT)
-			UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
+			UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
 
 /**
  * 3 Types of Procs
@@ -259,7 +274,7 @@
  * * user - the mob inserting this item
  * * context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED and is used mostly for silo logging
  */
-/datum/component/material_container/proc/user_insert(obj/item/held_item, mob/living/user, atom/context = parent, forced_type = FALSE)
+/datum/component/material_container/proc/user_insert(obj/item/held_item, mob/living/user, atom/context = parent)
 	set waitfor = FALSE
 	. = 0
 
@@ -297,7 +312,7 @@
 		if(SEND_SIGNAL(src, COMSIG_MATCONTAINER_PRE_USER_INSERT, target_item, user) & MATCONTAINER_BLOCK_INSERT)
 			continue
 		//item is either indestructible, not allowed for redemption or not in the allowed types
-		if((target_item.resistance_flags & INDESTRUCTIBLE) || (target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache) && !forced_type))
+		if((target_item.resistance_flags & INDESTRUCTIBLE) || (target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
 			if(!(mat_container_flags & MATCONTAINER_SILENT))
 				var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] || list()
 				var/list/item_data = status_data[target_item.name] || list()
@@ -471,7 +486,7 @@
 			qdel(deleting)
 
 /// Proc that allows players to fill the parent with mats
-/datum/component/material_container/proc/on_attackby(datum/source, obj/item/weapon, mob/living/user)
+/datum/component/material_container/proc/on_item_insert(datum/source, mob/living/user, obj/item/weapon, list/modifiers)
 	SIGNAL_HANDLER
 
 	//Allows you to attack the machine with iron sheets for e.g.
@@ -480,7 +495,7 @@
 
 	user_insert(weapon, user)
 
-	return COMPONENT_NO_AFTERATTACK
+	return ITEM_INTERACT_SUCCESS
 //===============================================================================================
 
 

@@ -32,7 +32,7 @@
 // Used by wizard magic and tower of babel event
 /datum/status_effect/tower_of_babel/magical
 	id = "tower_of_babel_magic" // do we need a new id?
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	trait_source = TRAUMA_TRAIT
 
 /datum/status_effect/tower_of_babel/magical/on_apply()

@@ -1,4 +1,3 @@
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -7,7 +6,9 @@ import {
   Input,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 // byond defines for the program state
@@ -151,7 +152,7 @@ export const NtosNetChat = (props) => {
                   {(in_channel &&
                     (authorized ? (
                       messages.map((message) => (
-                        <Box key={message.msg}>{message.msg}</Box>
+                        <Box key={message.key}>{message.msg}</Box>
                       ))
                     ) : (
                       <Box textAlign="center">
