@@ -96,8 +96,7 @@
 	//MASSMETA EDIT ADDITION END
 	if(!proj.damage || proj.damage_type != BRUTE)
 		return
-	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(loc)
-	crushed_can.icon_state = icon_state
+
 	var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
 	crushed_can.throw_at(throw_target, rand(1,2), 7)
 	qdel(src)
