@@ -1764,7 +1764,6 @@
 
 	if(!registered_account && ishuman(user))
 		var/mob/living/carbon/human/accountowner = user
-		accountowner.sec_hud_set_security_status()
 
 		var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[accountowner.account_id]"]
 		if(account)
