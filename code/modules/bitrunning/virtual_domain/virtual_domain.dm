@@ -32,6 +32,8 @@
 	var/name = "Virtual Domain"
 	/// Points to reward for completion. Used to purchase new domains and calculate ore rewards.
 	var/reward_points = BITRUNNER_REWARD_MIN
+	/// What bitrunning network does this domain show up on? Used to split between Security's Torment Nexus and normal bitrunning.
+	var/bitrunning_network = BITRUNNER_DOMAIN_DEFAULT
 
 	/**
 	 * Player customization
@@ -56,6 +58,8 @@
 	var/secondary_loot_generated
 	/// Has this domain been beaten with high enough score to spawn a tech disk?
 	var/disk_reward_spawned = FALSE
+	/// What cache path should we spawn?
+	var/cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted
 
 	/**
 	 * Modularity

@@ -68,3 +68,7 @@
 ///speed malus given by the fish organ set when dry
 /datum/movespeed_modifier/fish_waterless
 	multiplicative_slowdown = 0.36
+
+/datum/movespeed_modifier/status_effect/shoving_customer
+	multiplicative_slowdown = 1.5
+

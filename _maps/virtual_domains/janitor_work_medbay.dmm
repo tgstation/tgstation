@@ -1,0 +1,1536 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/chair/sofa/corp{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"an" = (
+/obj/structure/table/reinforced,
+/obj/item/bodybag{
+	pixel_y = 17;
+	pixel_x = 7
+	},
+/obj/item/bodybag{
+	pixel_y = 13;
+	pixel_x = 7
+	},
+/obj/item/bodybag{
+	pixel_y = 9;
+	pixel_x = 7
+	},
+/obj/item/storage/box/bodybags{
+	pixel_y = 15;
+	pixel_x = -6
+	},
+/obj/item/storage/box/bodybags{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"aW" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/chair/sofa/corp/right{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"dj" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/structure/chair/sofa/corp/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"dr" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/item/stack/sticky_tape/surgical{
+	pixel_x = -9;
+	pixel_y = 12
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/vomit,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"dR" = (
+/obj/structure/bed/medical,
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/gibspawner/human,
+/obj/item/bodypart/head,
+/obj/item/bodypart/leg/right,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"dT" = (
+/obj/structure/table_frame,
+/obj/item/shard{
+	pixel_y = -13;
+	pixel_x = -5
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"dU" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"eu" = (
+/obj/structure/sign/poster/official/cleanliness,
+/turf/closed/wall/mineral/silver,
+/area/virtual_domain/fullbright)
+"eF" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/item/retractor,
+/obj/effect/decal/cleanable/vomit,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"fn" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"fu" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"gk" = (
+/obj/machinery/janitorial_submit{
+	unique_id = "game over man game over"
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"hl" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"hZ" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/item/surgery_tray{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/obj/item/blood_filter{
+	pixel_x = 18
+	},
+/obj/item/cautery{
+	pixel_y = 10;
+	pixel_x = -3
+	},
+/obj/item/clothing/mask/surgical{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/obj/item/hemostat{
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/obj/item/surgical_drapes{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"iq" = (
+/obj/machinery/computer/records/medical/laptop,
+/obj/machinery/requests_console/directional/north,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"iz" = (
+/obj/structure/bodycontainer/crematorium{
+	dir = 4;
+	id = "crematoriumBitrunning"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"jw" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"jB" = (
+/obj/structure/bed/medical{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/light/directional/east,
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"lr" = (
+/obj/structure/frame,
+/obj/item/circuitboard/machine/vending,
+/obj/item/stack/cable_coil{
+	amount = 2
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"lU" = (
+/obj/effect/decal/cleanable/blood{
+	pixel_x = 1
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"ma" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"mb" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/xenoblood/xgibs/torso,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"np" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"nK" = (
+/obj/machinery/door/airlock/public/glass{
+	dir = 4;
+	name = "CMO's Office"
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"oa" = (
+/obj/item/stack/medical/mesh{
+	pixel_y = -3;
+	pixel_x = -12
+	},
+/obj/item/stack/medical/mesh{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/stack/medical/gauze{
+	pixel_x = 8;
+	amount = 1
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = 12;
+	pixel_x = -5
+	},
+/obj/item/healthanalyzer/simple{
+	pixel_y = -5;
+	pixel_x = -5
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = -3
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"od" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"oQ" = (
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"po" = (
+/obj/structure/table/reinforced/rglass,
+/obj/effect/turf_decal/siding/blue{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/stack/medical/gauze{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	pixel_y = 7;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	pixel_y = 7;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	pixel_y = 7;
+	pixel_x = -1
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"pz" = (
+/obj/item/storage/briefcase/secure,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"pC" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/item/kirbyplants/random,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"qJ" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/gauze{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"rD" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/item/reagent_containers/pill{
+	pixel_y = -14;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/pill{
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/pill{
+	pixel_y = 2;
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/pill{
+	pixel_y = 7;
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/pill{
+	pixel_y = -1;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/pill{
+	pixel_y = -7;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/pill{
+	pixel_y = -5;
+	pixel_x = -11
+	},
+/obj/item/reagent_containers/pill{
+	pixel_y = 5;
+	pixel_x = -11
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"sO" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/turf_decal/trimline/blue/filled/warning,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"tY" = (
+/obj/machinery/button/crematorium/indestructible{
+	id = "crematoriumBitrunning"
+	},
+/turf/closed/wall/mineral/silver,
+/area/virtual_domain/fullbright)
+"ua" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"uJ" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"vp" = (
+/obj/structure/table_frame,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/decal/cleanable/blood,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"vq" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/chair/sofa/corp{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/doctor,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"vB" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"we" = (
+/obj/structure/mop_bucket/janitorialcart,
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"wl" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/stack/medical/gauze{
+	pixel_x = -5;
+	pixel_y = 13
+	},
+/obj/item/stack/medical/mesh{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"wp" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1;
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"wC" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"wV" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"xk" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/structure/railing,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"xq" = (
+/obj/structure/table_frame,
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"xY" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"yg" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"yp" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/bodybags{
+	pixel_y = 15;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/cup/bucket{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/mop,
+/obj/item/storage/bag/trash{
+	pixel_x = 5;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"yG" = (
+/obj/machinery/iv_drip,
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"yY" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"zF" = (
+/obj/structure/railing/corner/end{
+	dir = 4
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"zG" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"AC" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/bottle/epinephrine{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/syringe,
+/obj/effect/turf_decal/siding/blue{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/defibrillator_mount/directional/north,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"AX" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Bi" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1;
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/item/organ/internal/eyes,
+/obj/item/organ/internal/heart,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Br" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5;
+	pixel_y = -2
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"BQ" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Ca" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/hitsplatter{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1;
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Cx" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = -5
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = -5
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"DH" = (
+/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"DI" = (
+/obj/structure/bed/medical,
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/item/organ/internal/liver,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"DK" = (
+/obj/effect/turf_decal/arrows{
+	dir = 8
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"DU" = (
+/obj/machinery/iv_drip,
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/vomit,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"DY" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1;
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Eo" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/status_display/ai/directional/west,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Er" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/mapping_helpers/atom_injector/bloody_my_shit_up{
+	target_type = /obj/item/knife/butcher
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Fd" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Fm" = (
+/obj/structure/sign/poster/official/help_others,
+/turf/closed/wall/r_wall,
+/area/virtual_domain/fullbright)
+"Fr" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/turf_decal/trimline/blue/filled/warning,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"FK" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"FS" = (
+/obj/structure/table_frame,
+/obj/item/shard,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 5
+	},
+/obj/item/computer_disk/medical{
+	pixel_x = 3
+	},
+/obj/item/toy/figure/cmo,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 8
+	},
+/obj/machinery/newscaster/directional/south,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"FU" = (
+/turf/closed/wall/r_wall,
+/area/virtual_domain/fullbright)
+"GM" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/vomit,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"HD" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = -5
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Ia" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = -3
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"If" = (
+/obj/item/shard{
+	pixel_x = -8
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/structure/frame/computer,
+/obj/item/circuitboard/computer/crew,
+/obj/item/stack/cable_coil{
+	amount = 2
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Jg" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"JT" = (
+/obj/structure/table_frame,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/blood{
+	pixel_x = 5;
+	pixel_y = -10
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 8
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Kf" = (
+/obj/machinery/iv_drip,
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Kj" = (
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Kk" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Lr" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1;
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Ma" = (
+/obj/structure/table/reinforced/rglass,
+/obj/effect/turf_decal/siding/blue{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/bodybag/bluespace{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/storage/box/masks{
+	pixel_y = -1
+	},
+/obj/machinery/defibrillator_mount/directional/north,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"MD" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/space/basic,
+/area/virtual_domain/fullbright)
+"MR" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6;
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"MY" = (
+/obj/vehicle/ridden/wheelchair,
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/digital_clock/directional/north,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Nk" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"Pw" = (
+/obj/structure/chair/office/light,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"PJ" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"PL" = (
+/turf/closed/wall/mineral/silver,
+/area/virtual_domain/fullbright)
+"Qn" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 6
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Qy" = (
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/stack/medical/suture{
+	pixel_y = 7
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"QF" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10;
+	pixel_y = -3;
+	pixel_x = 3
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Sj" = (
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"Sk" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/item/reagent_containers/pill/patch/libital{
+	pixel_x = -11;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/pill/patch/libital{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/pill/patch/libital{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/pill/patch/libital{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1;
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Sm" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/mannequin/skeleton,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/janitorial_scanner{
+	area_name = "Medbay";
+	name = "janitorial CMO's Office scanner";
+	unique_id = "game over man game over"
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"So" = (
+/obj/structure/table_frame,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"SE" = (
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/storage/box/pillbottles,
+/obj/item/stack/medical/mesh{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/stack/medical/bone_gel{
+	pixel_y = 15;
+	pixel_x = -8
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Tb" = (
+/obj/structure/table_frame,
+/obj/item/shard,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Th" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = -3
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"To" = (
+/obj/effect/turf_decal/arrows{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"TP" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"UA" = (
+/obj/structure/bed/medical{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/decal/cleanable/blood,
+/obj/item/surgicaldrill,
+/obj/effect/mob_spawn/corpse/human/security,
+/obj/item/organ/internal/lungs,
+/obj/item/organ/internal/liver,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"UU" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/mob_spawn/corpse/human/security{
+	brute_damage = 500;
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/effect/mob_spawn/corpse/human/security{
+	brute_damage = 500
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"UW" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/doctor,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Vj" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"VD" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"VS" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/table/reinforced/rglass,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"WT" = (
+/obj/structure/table_frame,
+/obj/effect/turf_decal/siding/blue{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/storage/box/beakers,
+/obj/item/reagent_containers/cup/beaker,
+/obj/machinery/janitorial_scanner{
+	area_name = "Medbay";
+	name = "janitorial Medbay scanner";
+	unique_id = "game over man game over"
+	},
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/obj/item/organ/internal/alien/plasmavessel/large/queen,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Xb" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/item/card/id/advanced/silver{
+	name = "Chief Medical Officer's ID card";
+	trim = /datum/id_trim/job/chief_medical_officer
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Xf" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1;
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Xq" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	list_reagents = list(/datum/reagent/space_cleaner = 0);
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Yr" = (
+/obj/structure/table/glass,
+/obj/item/storage/medkit/regular{
+	pixel_y = 13
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"YF" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"YO" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+"Ze" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+"}
+(2,1,1) = {"
+Fd
+FU
+FU
+FU
+FU
+FU
+FU
+FU
+FU
+FU
+FU
+FU
+FU
+Fd
+Fd
+Fd
+Fd
+Fd
+"}
+(3,1,1) = {"
+Fd
+FU
+AC
+dR
+yG
+uJ
+Eo
+Ze
+pC
+DU
+DI
+po
+PL
+PL
+PL
+PL
+PL
+Fd
+"}
+(4,1,1) = {"
+Fd
+FU
+wl
+TP
+Kk
+Vj
+od
+Kj
+Kj
+eF
+hZ
+VS
+PL
+iz
+gk
+yg
+PL
+Fd
+"}
+(5,1,1) = {"
+Fd
+FU
+wp
+Sk
+DY
+DY
+DY
+DY
+DY
+QF
+dr
+GM
+tY
+DK
+oQ
+Jg
+PL
+Fd
+"}
+(6,1,1) = {"
+Fd
+Fm
+rD
+Ia
+DH
+Er
+ua
+ua
+YO
+HD
+vB
+np
+PL
+oQ
+oQ
+yg
+PL
+Fd
+"}
+(7,1,1) = {"
+Fd
+FU
+lr
+oa
+Kj
+wV
+SE
+Qy
+hl
+Cx
+FK
+sO
+Sj
+To
+oQ
+Nk
+PL
+Fd
+"}
+(8,1,1) = {"
+Fd
+FU
+MY
+Ia
+Kj
+VD
+vp
+So
+aa
+HD
+FK
+Fr
+Sj
+To
+oQ
+Nk
+PL
+zG
+"}
+(9,1,1) = {"
+Fd
+FU
+UU
+Th
+fn
+UW
+aW
+vq
+dj
+HD
+FK
+YF
+eu
+oQ
+oQ
+Nk
+PL
+Fd
+"}
+(10,1,1) = {"
+Fd
+FU
+Xq
+Br
+Lr
+Bi
+Ca
+Xf
+Lr
+MR
+PJ
+dU
+PL
+zF
+oQ
+we
+PL
+Fd
+"}
+(11,1,1) = {"
+Fd
+FU
+qJ
+wC
+YO
+DH
+Kj
+fu
+DH
+BQ
+mb
+xq
+PL
+xk
+an
+yp
+PL
+Fd
+"}
+(12,1,1) = {"
+Fd
+FU
+Ma
+UA
+Kf
+xY
+ma
+jw
+ma
+yY
+jB
+WT
+PL
+PL
+PL
+PL
+PL
+Fd
+"}
+(13,1,1) = {"
+Fd
+FU
+FU
+FU
+FU
+FU
+MD
+nK
+MD
+FU
+FU
+FU
+FU
+Fd
+Fd
+Fd
+Fd
+Fd
+"}
+(14,1,1) = {"
+Fd
+Fd
+Fd
+Fd
+Fd
+FU
+JT
+Xb
+Kj
+Yr
+FU
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+"}
+(15,1,1) = {"
+Fd
+Fd
+Fd
+Fd
+Fd
+FU
+dT
+fn
+Pw
+FS
+FU
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+"}
+(16,1,1) = {"
+Fd
+Fd
+Fd
+Fd
+Fd
+FU
+If
+Qn
+lU
+Tb
+FU
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+"}
+(17,1,1) = {"
+Fd
+Fd
+Fd
+Fd
+Fd
+FU
+iq
+AX
+pz
+Sm
+FU
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+"}
+(18,1,1) = {"
+Fd
+Fd
+Fd
+Fd
+Fd
+FU
+FU
+FU
+FU
+FU
+FU
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+"}
+(19,1,1) = {"
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+"}
