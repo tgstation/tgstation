@@ -83,7 +83,7 @@
 
 	last_check = world.time
 
-	var/obj/cur_loc = loc;
+	var/cur_loc = loc;
 	if(mounted) // los_check will fail as the parent loc of the medbeam's own loc would be the mech in this instance.
 		cur_loc = loc.loc
 
