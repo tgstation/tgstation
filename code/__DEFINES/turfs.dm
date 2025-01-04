@@ -123,3 +123,13 @@
 #define BASALT_LIGHT_RANGE_BRIGHT 2
 /// Defines a consistent light range for basalt turfs that have a smaller area of lava
 #define BASALT_LIGHT_RANGE_DIM 1.4
+
+/// Makes the set turf transparent
+#define ADD_TURF_TRANSPARENCY(modturf, source) \
+	if(!HAS_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT)) { modturf.AddElement(/datum/element/turf_z_transparency) }; \
+	ADD_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT, (source))
+
+/// Removes the transparency from the set turf
+#define REMOVE_TURF_TRANSPARENCY(modturf, source) \
+	REMOVE_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT, (source)); \
+	if(!HAS_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT)) { modturf.RemoveElement(/datum/element/turf_z_transparency) }

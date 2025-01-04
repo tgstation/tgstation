@@ -186,8 +186,6 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, PROC_REF(on_multiz_turf_del))
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, PROC_REF(on_multiz_turf_new))
 
-	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, ELEMENT_TRAIT(type))
-
 	if(!mapload)
 		update_multi_z(our_turf)
 
@@ -197,7 +195,6 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	clear_multiz(our_turf)
 
 	UnregisterSignal(our_turf, list(COMSIG_TURF_MULTIZ_NEW, COMSIG_TURF_MULTIZ_DEL))
-	REMOVE_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, ELEMENT_TRAIT(type))
 
 ///Updates the viscontents or underlays below this tile.
 /datum/element/turf_z_transparency/proc/update_multi_z(turf/our_turf)
