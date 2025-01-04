@@ -478,6 +478,7 @@
 #include "code\__HELPERS\string_lists.dm"
 #include "code\__HELPERS\string_numbers_lists.dm"
 #include "code\__HELPERS\text.dm"
+#include "code\__HELPERS\threat.dm"
 #include "code\__HELPERS\time.dm"
 #include "code\__HELPERS\traits.dm"
 #include "code\__HELPERS\tts.dm"
