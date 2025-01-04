@@ -37,7 +37,11 @@
 	job_flags = STATION_JOB_FLAGS
 
 	job_tone = "honk"
-	alternate_name_pref = /datum/preference/name/clown
+
+/datum/job/clown/after_spawn(mob/living/spawned, client/player_client)
+	if (ishuman(spawned))
+		spawned.apply_pref_name(/datum/preference/name/clown, player_client)
+	return ..()
 
 /datum/outfit/job/clown
 	name = "Clown"

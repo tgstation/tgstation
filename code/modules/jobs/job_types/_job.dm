@@ -135,9 +135,6 @@
 	/// If set, look for a policy with this instead of the job title
 	var/policy_override
 
-	/// Pref from which we should fetch an alternate name for this job
-	var/alternate_name_pref
-
 /datum/job/New()
 	. = ..()
 	var/new_spawn_positions = CHECK_MAP_JOB_CHANGE(title, "spawn_positions")
@@ -163,9 +160,6 @@
 
 	var/mob/living/carbon/human/spawned_human = spawned
 	var/list/roundstart_experience
-
-	if (alternate_name_pref)
-		spawned_human.apply_pref_name(alternate_name_pref, player_client)
 
 	if(!config) //Needed for robots.
 		roundstart_experience = minimal_skills
