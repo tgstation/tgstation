@@ -18,7 +18,7 @@
 	if(tgui_alert(user, "Are you sure you want to crash this market with no survivors?", "Protocol CRAB-17", list("Yes", "No")) == "Yes")
 		if(dumped || QDELETED(src)) //Prevents fuckers from cheesing alert
 			return FALSE
-		var/turf/targetturf = get_safe_random_station_turf()
+		var/turf/targetturf = get_safe_random_station_turf_equal_weight()
 		if (!targetturf)
 			return FALSE
 		var/list/accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)

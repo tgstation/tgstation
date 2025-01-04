@@ -41,7 +41,7 @@
 
 	var/location_sanity = 0
 	while((length(smashes) + num_drained) < how_many_can_we_make && location_sanity < 100)
-		var/turf/chosen_location = get_safe_random_station_turf()
+		var/turf/chosen_location = get_safe_random_station_turf_equal_weight()
 
 		// We don't want them close to each other - at least 1 tile of separation
 		var/list/nearby_things = range(1, chosen_location)
