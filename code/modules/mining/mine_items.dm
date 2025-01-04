@@ -177,6 +177,10 @@
 	else
 		. += span_notice("Drag this onto a mine cart rail to set it on its way.")
 
+// We don't want the locked crate overlay show up.
+/obj/structure/closet/crate/miningcar/closet_update_overlays(list/new_overlays)
+	return
+
 /obj/structure/closet/crate/miningcar/Move(atom/newloc, direct, glide_size_override, update_dir)
 	if(isnull(newloc))
 		return ..()
