@@ -51,5 +51,4 @@
 	enc_key = add_input_port("Encryption Key", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/list_literal/wirenet_send/input_received(datum/port/input/port)
-	if(connected_powernet)
-		SEND_SIGNAL(connected_powernet, COMSIG_POWERNET_CIRCUIT_TRANSMISSION, list("data" = list_output.value, "enc_key" = enc_key.value, "port" = WEAKREF(list_output)))
+	connected_powernet?.data_transmission(list_output.value, enc_key.value, WEAKREF(list_output))

@@ -65,5 +65,4 @@
 		data_package.set_datatype(PORT_TYPE_LIST(new_datatype))
 
 /obj/item/circuit_component/wirenet_send/input_received(datum/port/input/port)
-	if(connected_powernet)
-		SEND_SIGNAL(connected_powernet, COMSIG_POWERNET_CIRCUIT_TRANSMISSION, list("data" = data_package.value, "enc_key" = enc_key.value, "port" = WEAKREF(data_package)))
+	connected_powernet?.data_transmission(data_package.value, enc_key.value, WEAKREF(data_package))
