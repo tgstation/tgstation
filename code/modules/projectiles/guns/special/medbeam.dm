@@ -83,7 +83,11 @@
 
 	last_check = world.time
 
-	if(!los_check(loc, current_target, mid_check = CALLBACK(src, PROC_REF(mid_los_check))))
+	var/obj/cur_loc = loc;
+	if(mounted) // los_check will fail as the parent loc of the medbeam's own loc would be the mech in this instance.
+		cur_loc = loc.loc
+
+	if(!los_check(cur_loc, current_target, mid_check = CALLBACK(src, PROC_REF(mid_los_check))))
 		QDEL_NULL(current_beam)//this will give the target lost message
 		return
 
