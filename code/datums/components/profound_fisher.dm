@@ -144,3 +144,4 @@
 	resistance_flags = INDESTRUCTIBLE
 	reel_overlay = null
 	show_in_wiki = FALSE //abstract fishing rod
+	item_flags = ABSTRACT
