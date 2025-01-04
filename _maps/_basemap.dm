@@ -14,6 +14,13 @@
 		#include "map_files\tramstation\tramstation.dmm"
 		#include "map_files\NebulaStation\NebulaStation.dmm"
 		#include "map_files\wawastation\wawastation.dmm"
+		
+		
+		//MASSMETA EDIT ADDITON BEGIN - Compiling our modular maps too!
+		#include "map_files\PubbyStation\PubbyStation.dmm"
+		#include "map_files\KiloStation\KiloStation.dmm"
+		#include "map_files\ProtoBoxStation\ProtoBoxStation.dmm"
+		//MASSMETA EDIT ADDITON END
 
 		#ifdef CIBUILDING
 			#include "templates.dm"

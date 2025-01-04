@@ -58,7 +58,6 @@
 #include "code\modules\projectiles\projectile\bullets\shotgun.dm"
 #include "code\modules\projectiles\projectile\beams.dm"
 #include "code\modules\mining\lavaland\megafauna_loot.dm"
-#include "mapping\_basemap.dm"
 #include "code\modules\vending\wardrobes.dm"
 #include "code\modules\clothing\head\jobs.dm"
 #include "code\modules\clothing\suits\armor.dm"
@@ -98,3 +97,5 @@
 //Testicular_torsion wizard
 #include "code\modules\spells\spell_types\touch\testicular_torsion.dm"
 #include "code\modules\antags\wizard\equipment\spellbook_entries\offensive.dm"
+
+#include "features\revert_spacesuits\spacesuits.dm"

@@ -1,4 +1,4 @@
- /*
+/*
 Really big car with 4х4 sprite.
 
 Can run people over.
@@ -339,7 +339,7 @@ Some memes and gags included.
 					playsound(src, pick('modular_meta/features/cheburek_car/sound/gear_blyat.ogg', 'modular_meta/features/cheburek_car/sound/gear_nah.ogg'), 100)
 					toggle_blinkers()
 				canmove = FALSE
-				balloon_alert(user, "Gearbox broken")
+				balloon_alert(user, "gearbox broken")
 			else
 				gearbox_failure_count++
 			AddElement(/datum/element/waddling) // your gears are juggling like a clown do
