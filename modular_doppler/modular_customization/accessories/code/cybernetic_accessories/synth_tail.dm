@@ -8,3 +8,7 @@
 /datum/sprite_accessory/tails/cybernetic/cable
 	name = "Cable"
 	icon_state = "cable"
+
+/datum/sprite_accessory/tails/cybernetic/shard_beta
+	name = "Shard Beta Raptoral"
+	icon_state = "shard_beta"

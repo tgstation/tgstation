@@ -20,6 +20,8 @@
 	greyscale_config_worn_bodyshapes = list(BODYSHAPE_HUMANOID_T = /datum/greyscale_config/sneakers_marisa/worn,
 		BODYSHAPE_DIGITIGRADE_T = /datum/greyscale_config/sneakers_marisa/worn/digi)
 
+/obj/item/clothing/shoes/glow
+	supported_bodyshapes = null
 
 
 /datum/greyscale_config/sneakers/worn

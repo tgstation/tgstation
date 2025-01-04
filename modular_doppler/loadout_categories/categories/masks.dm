@@ -28,10 +28,6 @@
 	name = "Gas Mask"
 	item_path = /obj/item/clothing/mask/gas
 
-/datum/loadout_item/mask/plaguedoctor
-	name = "Plague Doctor Mask"
-	item_path = /obj/item/clothing/mask/gas/plaguedoctor
-
 /datum/loadout_item/mask/clown
 	name = "Clown Mask"
 	item_path = /obj/item/clothing/mask/gas/clown_hat
@@ -64,9 +60,17 @@
 	name = "Frontier Gas Mask"
 	item_path = /obj/item/clothing/mask/gas/atmos/frontier_colonist
 
+/datum/loadout_item/mask/gas_cooler
+	name = "Alternate Gas Mask"
+	item_path = /obj/item/clothing/mask/gas/breach
+
 /datum/loadout_item/mask/bandana
 	name = "Bandana"
 	item_path = /obj/item/clothing/mask/bandana
+
+/datum/loadout_item/mask/bandana_stripe
+	name = "Bandana (Stripe)"
+	item_path = /obj/item/clothing/mask/bandana/striped
 
 /datum/loadout_item/mask/bandana_skull
 	name = "Bandana (Skull)"
@@ -79,10 +83,6 @@
 /datum/loadout_item/mask/paper
 	name = "Paper Mask"
 	item_path = /obj/item/clothing/mask/paper
-
-/datum/loadout_item/mask/lollipop
-	name = "Lollipop"
-	item_path = /obj/item/food/lollipop
 
 /datum/loadout_item/mask/kitsune
 	name = "Kitsune Mask"

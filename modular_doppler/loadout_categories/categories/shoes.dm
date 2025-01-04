@@ -71,10 +71,6 @@
 	name = "Jester Shoes"
 	item_path = /obj/item/clothing/shoes/jester_shoes
 
-/datum/loadout_item/shoes/ducky_shoes
-	name = "Ducky Shoes"
-	item_path = /obj/item/clothing/shoes/ducky_shoes
-
 /datum/loadout_item/shoes/wheelys
 	name = "Wheelys"
 	item_path = /obj/item/clothing/shoes/wheelys
@@ -86,10 +82,6 @@
 /datum/loadout_item/shoes/cowboy/lizard
 	name = "Lizard Cowboy Boots"
 	item_path = /obj/item/clothing/shoes/cowboy/lizard
-
-/datum/loadout_item/shoes/russian
-	name = "Russian Boots"
-	item_path = /obj/item/clothing/shoes/russian
 
 /datum/loadout_item/shoes/pirate
 	name = "Pirate Boots"
@@ -122,3 +114,23 @@
 /datum/loadout_item/shoes/wraps/leggy
 	name = "Cloth Legwraps"
 	item_path = /obj/item/clothing/shoes/wraps/leggy
+
+/datum/loadout_item/shoes/wraps/aerostatic
+	name = "Aerostatic Boots"
+	item_path = /obj/item/clothing/shoes/kim
+
+/datum/loadout_item/shoes/wraps/disco
+	name = "Green Lizardskin Shoes"
+	item_path = /obj/item/clothing/shoes/discoshoes
+
+/datum/loadout_item/shoes/wraps/glow_shoes
+	name = "Glow Shoes"
+	item_path = /obj/item/clothing/shoes/glow
+
+/datum/loadout_item/shoes/wraps/swag
+	name = "Drip Shoes"
+	item_path = /obj/item/clothing/shoes/swagshoes
+
+/datum/loadout_item/shoes/wraps/skates
+	name = "Roller Skates"
+	item_path = /obj/item/clothing/shoes/wheelys/rollerskates

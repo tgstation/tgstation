@@ -55,6 +55,30 @@
 *	SUITS / SUIT JACKETS
 */
 
+/datum/loadout_item/suit/detective_black
+	name = "Noir Trenchcoat"
+	item_path = /obj/item/clothing/suit/jacket/det_suit/dark
+
+/datum/loadout_item/suit/detective_black_short
+	name = "Noir Suit Jacket"
+	item_path = /obj/item/clothing/suit/jacket/det_suit/noir
+
+/datum/loadout_item/suit/detective_brown
+	name = "Trenchcoat"
+	item_path = /obj/item/clothing/suit/jacket/det_suit
+
+/datum/loadout_item/suit/detective_brown_short
+	name = "Brown Suit Jacket"
+	item_path = /obj/item/clothing/suit/jacket/det_suit/brown
+
+/datum/loadout_item/suit/its_pronounced_stow_ic_not_stoike
+	name = "Disco Blazer"
+	item_path = /obj/item/clothing/suit/jacket/det_suit/disco
+
+/datum/loadout_item/suit/kim_possible
+	name = "Aerostatic Bomber Jacket"
+	item_path = /obj/item/clothing/suit/jacket/det_suit/kim
+
 /datum/loadout_item/suit/recolorable
 	name = "Recolorable Formal Suit Jacket"
 	item_path = /obj/item/clothing/suit/toggle/lawyer/greyscale
@@ -88,14 +112,6 @@
 	item_path = /obj/item/clothing/suit/toggle/suspenders
 
 /*
-*	DRESSES
-*/
-
-/datum/loadout_item/suit/white_dress
-	name = "White Dress"
-	item_path = /obj/item/clothing/suit/costume/whitedress
-
-/*
 *	LABCOATS
 */
 
@@ -110,22 +126,6 @@
 /datum/loadout_item/suit/lalune_labcoat
 	name = "Sleeveless Labcoat"
 	item_path = /obj/item/clothing/suit/toggle/labcoat/lalunevest
-
-/*
-*	PONCHOS
-*/
-
-/datum/loadout_item/suit/poncho
-	name = "Poncho"
-	item_path = /obj/item/clothing/suit/costume/poncho
-
-/datum/loadout_item/suit/poncho_green
-	name = "Green Poncho"
-	item_path = /obj/item/clothing/suit/costume/poncho/green
-
-/datum/loadout_item/suit/poncho_red
-	name = "Red Poncho"
-	item_path = /obj/item/clothing/suit/costume/poncho/red
 
 /*
 *	JACKETS
@@ -190,74 +190,6 @@
 /datum/loadout_item/suit/leather_hoodie
 	name = "Leather Jacket with Hoodie"
 	item_path = /obj/item/clothing/suit/hooded/doppler/leather_hoodie
-
-/*
-*	COSTUMES
-*/
-
-/datum/loadout_item/suit/owl
-	name = "Owl Cloak"
-	item_path = /obj/item/clothing/suit/toggle/owlwings
-
-/datum/loadout_item/suit/griffin
-	name = "Griffon Cloak"
-	item_path = /obj/item/clothing/suit/toggle/owlwings/griffinwings
-
-/datum/loadout_item/suit/syndi
-	name = "Black And Red Space Suit Replica"
-	item_path = /obj/item/clothing/suit/syndicatefake
-
-/datum/loadout_item/suit/bee
-	name = "Bee Outfit"
-	item_path = /obj/item/clothing/suit/hooded/bee_costume
-
-/datum/loadout_item/suit/plague_doctor
-	name = "Plague Doctor Suit"
-	item_path = /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
-
-/datum/loadout_item/suit/snowman
-	name = "Snowman Outfit"
-	item_path = /obj/item/clothing/suit/costume/snowman
-
-/datum/loadout_item/suit/chicken
-	name = "Chicken Suit"
-	item_path = /obj/item/clothing/suit/costume/chickensuit
-
-/datum/loadout_item/suit/monkey
-	name = "Monkey Suit"
-	item_path = /obj/item/clothing/suit/costume/monkeysuit
-
-/datum/loadout_item/suit/cardborg
-	name = "Cardborg Suit"
-	item_path = /obj/item/clothing/suit/costume/cardborg
-
-/datum/loadout_item/suit/xenos
-	name = "Xenos Suit"
-	item_path = /obj/item/clothing/suit/costume/xenos
-
-/datum/loadout_item/suit/ian_costume
-	name = "Corgi Costume"
-	item_path = /obj/item/clothing/suit/hooded/ian_costume
-
-/datum/loadout_item/suit/carp_costume
-	name = "Carp Costume"
-	item_path = /obj/item/clothing/suit/hooded/carp_costume
-
-/datum/loadout_item/suit/shark_costume
-	name = "Shark Costume"
-	item_path = /obj/item/clothing/suit/hooded/shark_costume
-
-/datum/loadout_item/suit/shork_costume
-	name = "Shork Costume"
-	item_path = /obj/item/clothing/suit/hooded/shork_costume
-
-/datum/loadout_item/suit/wizard
-	name = "Wizard Robe"
-	item_path = /obj/item/clothing/suit/wizrobe/fake
-
-/datum/loadout_item/suit/witch
-	name = "Witch Robe"
-	item_path = /obj/item/clothing/suit/wizrobe/marisa/fake
 
 /*
 *	COLONIST
@@ -332,23 +264,42 @@
 	item_path = /obj/item/clothing/suit/costume/hawaiian
 
 /*
-*	MISC
-*/
-
-/datum/loadout_item/suit/frontierjacket
-	abstract_type = /datum/loadout_item/suit/frontierjacket
-
-/*
 *	HOODIES
 */
+
 /datum/loadout_item/suit/hoodie
 	abstract_type = /datum/loadout_item/suit/hoodie
 
 /*
-*	JOB-LOCKED
+*	FAMILIES
 */
 
+/datum/loadout_item/suit/tmc
+	name = "TMC Coat"
+	item_path = /obj/item/clothing/suit/costume/tmc
+
+/datum/loadout_item/suit/pg
+	name = "PG Coat"
+	item_path = /obj/item/clothing/suit/costume/pg
+
+/datum/loadout_item/suit/deckers
+	name = "Deckers Hoodie"
+	item_path = /obj/item/clothing/suit/costume/deckers
+
+/datum/loadout_item/suit/soviet
+	name = "Soviet Coat"
+	item_path = /obj/item/clothing/suit/costume/soviet
+
+/datum/loadout_item/suit/yuri
+	name = "Yuri Coat"
+	item_path = /obj/item/clothing/suit/costume/yuri
+
+/datum/loadout_item/suit/mantella
+	name = "Mothic Mantella"
+	item_path = /obj/item/clothing/suit/mothcoat/winter
+
 // WINTER COATS
+
 /datum/loadout_item/suit/coat_med
 	name = "Medical Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/medical
@@ -386,20 +337,6 @@
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/miner
 
 // JACKETS
-/datum/loadout_item/suit/navybluejacketofficer
-	name = "Security Officer's Navy Blue Formal Jacket"
-	item_path = /obj/item/clothing/suit/jacket/officer/blue
-	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY)
-
-/datum/loadout_item/suit/navybluejacketwarden
-	name = "Warden's Navy Blue Formal Jacket"
-	item_path = /obj/item/clothing/suit/jacket/warden/blue
-	restricted_roles = list(JOB_WARDEN)
-
-/datum/loadout_item/suit/navybluejackethos
-	name = "Head of Security's Navy Blue Formal Jacket"
-	item_path = /obj/item/clothing/suit/jacket/hos/blue
-	restricted_roles = list(JOB_HEAD_OF_SECURITY)
 
 /datum/loadout_item/suit/qm_jacket
 	name = "Quartermaster's Overcoat"
@@ -413,109 +350,15 @@
 /datum/loadout_item/suit/engi_dep_jacket
 	name = "Engineering Department Jacket"
 	item_path = /obj/item/clothing/suit/jacket/doppler/departmental_jacket/engi
-	restricted_roles = list(
-		JOB_CHIEF_ENGINEER,
-		JOB_STATION_ENGINEER,
-		JOB_ATMOSPHERIC_TECHNICIAN,
-		)
 
 /datum/loadout_item/suit/med_dep_jacket
 	name = "Medical Department Jacket"
 	item_path = /obj/item/clothing/suit/jacket/doppler/departmental_jacket/med
-	restricted_roles = list(
-		JOB_CHIEF_MEDICAL_OFFICER,
-		JOB_MEDICAL_DOCTOR,
-		JOB_CHEMIST,
-		JOB_PSYCHOLOGIST,
-	)
 
 /datum/loadout_item/suit/cargo_dep_jacket
 	name = "Cargo Department Jacket"
 	item_path = /obj/item/clothing/suit/jacket/doppler/departmental_jacket/supply
-	restricted_roles = list(
-		JOB_QUARTERMASTER,
-		JOB_CARGO_TECHNICIAN,
-		JOB_SHAFT_MINER,
-	)
-
-/datum/loadout_item/suit/sec_dep_jacket_blu
-	name = "Blue Security Department Jacket"
-	item_path = /obj/item/clothing/suit/jacket/doppler/departmental_jacket/sec
-	restricted_roles = list(
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-		JOB_WARDEN,
-		JOB_DETECTIVE,
-	)
 
 /datum/loadout_item/suit/sec_dep_jacket_red
-	name = "Red Security Department Jacket"
+	name = "Security Department Jacket"
 	item_path = /obj/item/clothing/suit/jacket/doppler/departmental_jacket/sec/red
-	restricted_roles = list(
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-		JOB_WARDEN,
-		JOB_DETECTIVE,
-	)
-
-/datum/loadout_item/suit/sec_dep_jacket_red
-	name = "Security Medic Jacket"
-	item_path = /obj/item/clothing/suit/jacket/doppler/sec_medic
-	restricted_roles = list(
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-		JOB_WARDEN,
-		JOB_DETECTIVE,
-	)
-
-/*
-*	FAMILIES
-*/
-
-/datum/loadout_item/suit/tmc
-	name = "TMC Coat"
-	item_path = /obj/item/clothing/suit/costume/tmc
-
-/datum/loadout_item/suit/pg
-	name = "PG Coat"
-	item_path = /obj/item/clothing/suit/costume/pg
-
-/datum/loadout_item/suit/deckers
-	name = "Deckers Hoodie"
-	item_path = /obj/item/clothing/suit/costume/deckers
-
-/datum/loadout_item/suit/soviet
-	name = "Soviet Coat"
-	item_path = /obj/item/clothing/suit/costume/soviet
-
-/datum/loadout_item/suit/yuri
-	name = "Yuri Coat"
-	item_path = /obj/item/clothing/suit/costume/yuri
-
-/*
-*	CHAPLAIN
-*/
-
-/datum/loadout_item/suit/chap_nun
-	name = "Nun's Habit"
-	item_path = /obj/item/clothing/suit/chaplainsuit/nun
-
-/datum/loadout_item/suit/chap_holiday
-	name = "Chaplain's Holiday Robe"
-	item_path = /obj/item/clothing/suit/chaplainsuit/holidaypriest
-
-/datum/loadout_item/suit/chap_brownmonk
-	name = "Monk's Brown Habit"
-	item_path = /obj/item/clothing/suit/hooded/chaplainsuit/monkhabit
-
-/datum/loadout_item/suit/chap_eastmonk
-	name = "Eastern Monk's Robe"
-	item_path = /obj/item/clothing/suit/chaplainsuit/monkrobeeast
-
-/datum/loadout_item/suit/chap_shrinehand
-	name = "Shrinehand Robe"
-	item_path = /obj/item/clothing/suit/chaplainsuit/shrinehand
-
-/datum/loadout_item/suit/chap_blackmonk
-	name = "Monk's Black Habit"
-	item_path = /obj/item/clothing/suit/chaplainsuit/habit

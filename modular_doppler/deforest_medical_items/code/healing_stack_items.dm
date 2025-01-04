@@ -33,7 +33,7 @@
 	var/treatment_sound = 'sound/items/duct_tape/duct_tape_rip.ogg'
 
 // This is only relevant for the types of wounds defined, we can't work if there are none
-/obj/item/stack/medical/wound_recovery/try_heal/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE)
+/obj/item/stack/medical/wound_recovery/try_heal(mob/living/patient, mob/living/user, healed_zone, silent = FALSE, auto_change_zone = TRUE)
 	if(patient.has_status_effect(/datum/status_effect/vulnerable_to_damage))
 		patient.balloon_alert(user, "still recovering from last use!")
 		return
@@ -84,8 +84,8 @@
 	use(1)
 
 /datum/mood_event/rapid_wound_healing
-	description = "The wound is gone, but that pain was unbearable!\n"
-	mood_change = -3
+	description = "Ah, so this is what hellfire feels like. At least my wounds are healed..."
+	mood_change = -5
 	timeout = 5 MINUTES
 
 // Helps recover bleeding

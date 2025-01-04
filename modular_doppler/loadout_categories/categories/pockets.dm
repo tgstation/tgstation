@@ -49,22 +49,6 @@
 			wallet.forceMove(equipper.drop_location())
 
 /*
-*	GUM
-*/
-
-/datum/loadout_item/pocket_items/gum_pack
-	name = "Pack of Gum"
-	item_path = /obj/item/storage/box/gum
-
-/datum/loadout_item/pocket_items/gum_pack_nicotine
-	name = "Pack of Nicotine Gum"
-	item_path = /obj/item/storage/box/gum/nicotine
-
-/datum/loadout_item/pocket_items/gum_pack_hp
-	name = "Pack of HP+ Gum"
-	item_path = /obj/item/storage/box/gum/happiness
-
-/*
 *	LIPSTICK
 */
 
@@ -97,6 +81,26 @@
 	item_path = /obj/item/lipstick
 
 /*
+*	GUM
+*/
+
+/datum/loadout_item/pocket_items/gum_pack
+	name = "Pack of Gum"
+	item_path = /obj/item/storage/box/gum
+
+/datum/loadout_item/pocket_items/gum_pack_nicotine
+	name = "Pack of Nicotine Gum"
+	item_path = /obj/item/storage/box/gum/nicotine
+
+/datum/loadout_item/pocket_items/gum_pack_hp
+	name = "Pack of HP+ Gum"
+	item_path = /obj/item/storage/box/gum/happiness
+
+/datum/loadout_item/pocket_items/gum_pack_moth
+	name = "Pack of Activin 12 Hour Medicated Gum"
+	item_path = /obj/item/storage/box/gum/wake_up
+
+/*
 *	MISC
 */
 
@@ -104,13 +108,33 @@
 	name = "Rag"
 	item_path = /obj/item/reagent_containers/cup/rag
 
-/datum/loadout_item/pocket_items/razor
-	name = "Razor"
-	item_path = /obj/item/razor
+/datum/loadout_item/pocket_items/mod_painter
+	name = "MOD Paint Kit"
+	item_path = /obj/item/mod/paint
 
-/datum/loadout_item/pocket_items/matches
-	name = "Matchbox"
-	item_path = /obj/item/storage/box/matches
+/datum/loadout_item/pocket_items/super_disk
+	name = "Bootleg Computer Programs Disk"
+	item_path = /obj/item/computer_disk/all_of_them
+
+/datum/loadout_item/pocket_items/london
+	name = "Switchblade"
+	item_path = /obj/item/switchblade
+
+/datum/loadout_item/pocket_items/london_two
+	name = "Survival Knife"
+	item_path = /obj/item/knife/combat/survival
+
+/datum/loadout_item/pocket_items/injector_case
+	name = "Autoinjector Case"
+	item_path = /obj/item/storage/epic_loot_medpen_case
+
+/datum/loadout_item/pocket_items/docs_case
+	name = "Documents Case"
+	item_path = /obj/item/storage/epic_loot_docs_case
+
+/datum/loadout_item/pocket_items/org_case
+	name = "Organizational Pouch"
+	item_path = /obj/item/storage/epic_loot_org_pouch
 
 /datum/loadout_item/pocket_items/cheaplighter
 	name = "Cheap Lighter"
@@ -119,10 +143,6 @@
 /datum/loadout_item/pocket_items/zippolighter
 	name = "Zippo Lighter"
 	item_path = /obj/item/lighter
-
-/*/datum/loadout_item/pocket_items/ttsdevice //To be added
-	name = "Text-to-Speech Device"
-	item_path = /obj/item/ttsdevice*/
 
 /datum/loadout_item/pocket_items/paicard
 	name = "Personal AI Device"
@@ -172,6 +192,10 @@
 	name = "Folder"
 	item_path = /obj/item/folder
 
+/datum/loadout_item/pocket_items/gromitmug
+	name = "Gromit mug"
+	item_path = /obj/item/reagent_containers/cup/glass/mug/gromitmug
+
 /*
 *	UTILITY
 */
@@ -179,14 +203,6 @@
 /datum/loadout_item/pocket_items/moth_mre
 	name = "Mothic Rations Pack"
 	item_path = /obj/item/storage/box/mothic_rations
-
-/datum/loadout_item/pocket_items/cloth_ten
-	name = "Ten Cloth Sheets"
-	item_path = /obj/item/stack/sheet/cloth/ten
-
-/datum/loadout_item/pocket_items/medkit
-	name = "First-Aid Kit"
-	item_path = /obj/item/storage/medkit/regular
 
 /datum/loadout_item/pocket_items/six_beer
 	name = "Beer Six-Pack"
@@ -198,11 +214,11 @@
 
 /datum/loadout_item/pocket_items/power_cell
 	name = "Standard Power Cell"
-	item_path = /obj/item/stock_parts/power_store/cell
+	item_path = /obj/item/stock_parts/power_store/cell/crap
 
 /datum/loadout_item/pocket_items/soap
 	name = "Bar of Soap"
-	item_path = /obj/item/soap
+	item_path = /obj/item/soap/deluxe
 
 /datum/loadout_item/pocket_items/mini_extinguisher
 	name = "Mini Fire Extinguisher"
@@ -212,25 +228,25 @@
 	name = "Pair of Binoculars"
 	item_path = /obj/item/binoculars
 
+/datum/loadout_item/pocket_items/painkillers
+	name = "Amollin Pill Bottle"
+	item_path = /obj/item/storage/pill_bottle/painkiller
+
 /datum/loadout_item/pocket_items/drugs_happy
-	name = "Happy Pills"
-	item_path = /obj/item/storage/pill_bottle/happy
+	name = "Prescription Stimulant Bottle"
+	item_path = /obj/item/storage/pill_bottle/prescription_stimulant
 
-/datum/loadout_item/pocket_items/drugs_lsd
-	name = "Mindbreaker Pills"
-	item_path = /obj/item/storage/pill_bottle/lsd
+/datum/loadout_item/pocket_items/drugs_blastoff
+	name = "bLaSToFF Ampoule"
+	item_path = /obj/item/reagent_containers/cup/blastoff_ampoule
 
-/datum/loadout_item/pocket_items/drugs_weed
-	name = "Cannabis Seeds"
-	item_path = /obj/item/seeds/cannabis
+/datum/loadout_item/pocket_items/drugs_sandy
+	name = "T-WITCH Vial"
+	item_path = /obj/item/reagent_containers/hypospray/medipen/deforest/twitch
 
-/datum/loadout_item/pocket_items/drugs_reishi
-	name = "Reishi Seeds"
-	item_path = /obj/item/seeds/reishi
-
-/datum/loadout_item/pocket_items/drugs_liberty
-	name = "Liberty Cap Seeds"
-	item_path = /obj/item/seeds/liberty
+/datum/loadout_item/pocket_items/drugs_kronkus
+	name = "Kronkus Vine Seeds"
+	item_path = /obj/item/seeds/kronkus
 
 /*
 *	MEDICAL
@@ -239,3 +255,15 @@
 /datum/loadout_item/pocket_items/civil_defense
 	name = "Civil Defense Med-kit"
 	item_path = /obj/item/storage/medkit/civil_defense/stocked
+
+/datum/loadout_item/pocket_items/medkit
+	name = "First-Aid Kit"
+	item_path = /obj/item/storage/medkit/regular
+
+/datum/loadout_item/pocket_items/pocket_medkit
+	name = "Colonial First Aid Kit"
+	item_path = /obj/item/storage/pouch/cin_medkit
+
+/datum/loadout_item/pocket_items/pocket_medpens_evil
+	name = "Colonial Medipen Pouch"
+	item_path = /obj/item/storage/pouch/cin_medipens

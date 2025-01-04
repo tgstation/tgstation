@@ -244,6 +244,7 @@
 	loot = list(
 		/obj/item/storage/medkit/civil_defense/stocked = 2,
 		/obj/item/storage/medkit/civil_defense/comfort/stocked = 2,
+		/obj/item/storage/medkit/civil_defense/the_big_cheese = 1,
 		/obj/item/storage/medkit/frontier/stocked = 2,
 		/obj/item/storage/medkit/combat_surgeon/stocked = 2,
 		/obj/item/storage/medkit/robotic_repair/stocked = 2,

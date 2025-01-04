@@ -500,6 +500,8 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE //wew lad
 	var/secure = FALSE
+	//DOPPLER EDIT CHANGE - Makes them upgraded by default because who in the hell is going to upgrade all of them manually.
+	def_components = list(/datum/stock_part/capacitor = /datum/stock_part/capacitor/tier4)
 
 /obj/item/circuitboard/machine/holopad/multitool_act(mob/living/user, obj/item/tool)
 	if(secure)

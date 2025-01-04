@@ -1,42 +1,18 @@
-/datum/loadout_item/head/chicken
-	name = "Chicken Hat"
-	item_path = /obj/item/clothing/head/costume/chicken
-
-/datum/loadout_item/head/griffin
-	name = "Griffin Hat"
-	item_path = /obj/item/clothing/head/costume/griffin
-
 /datum/loadout_item/head/tv_head
 	name = "TV Head"
 	item_path = /obj/item/clothing/head/costume/tv_head
-
-/datum/loadout_item/head/wizard
-	name = "Wizard Hat"
-	item_path = /obj/item/clothing/head/wizard/fake
 
 /datum/loadout_item/head/witch
 	name = "Witch Hat"
 	item_path = /obj/item/clothing/head/wizard/marisa/fake
 
-/datum/loadout_item/head/wig_random
-	name = "Random Wig"
-	item_path = /obj/item/clothing/head/wig/random
-
 /datum/loadout_item/head/cardborg
 	name = "Cardborg"
 	item_path = /obj/item/clothing/head/costume/cardborg
 
-/datum/loadout_item/head/pirate
-	name = "Pirate Hat"
-	item_path = /obj/item/clothing/head/costume/pirate
-
 /datum/loadout_item/head/cone
-	name = "Cone Hat"
+	name = "Traffic Cone"
 	item_path = /obj/item/clothing/head/cone
-
-/datum/loadout_item/head/party
-	name = "Party Hat"
-	item_path = /obj/item/clothing/head/costume/party
 
 /datum/loadout_item/head/rice_hat
 	name = "Rice Hat"
@@ -101,3 +77,23 @@
 /datum/loadout_item/head/maid_headband
 	name = "Maid Headband"
 	item_path = /obj/item/clothing/head/maid_headband
+
+/datum/loadout_item/head/the_hood
+	name = "Standalone Hood"
+	item_path = /obj/item/clothing/head/standalone_hood
+
+/datum/loadout_item/head/decker_headphones
+	name = "Decker Headphones"
+	item_path = /obj/item/clothing/head/costume/deckers
+
+/datum/loadout_item/head/slim_beret
+	name = "slim Beret"
+	item_path = /obj/item/clothing/head/beret/doppler_command
+
+/datum/loadout_item/head/slim_beret_light
+	name = "Slim Beret (Light)"
+	item_path = /obj/item/clothing/head/beret/doppler_command/light
+
+/datum/loadout_item/head/breach_helmet
+	name = "Breach Helmet"
+	item_path = /obj/item/clothing/head/utility/hardhat/welding/doppler_dc

@@ -141,3 +141,47 @@
 		/datum/material/silver = SMALL_MATERIAL_AMOUNT * 2,
 		/datum/material/gold = SMALL_MATERIAL_AMOUNT * 2,
 	)
+
+/obj/item/computer_disk/all_of_them
+	max_capacity = 128
+	starting_programs = list(
+		/datum/computer_file/program/arcade/eazy, // 6 GQ
+		/datum/computer_file/program/radar/lifeline, // 5 GQ
+		/datum/computer_file/program/radar/custodial_locator, // 2 GQ
+		/datum/computer_file/program/supermatter_monitor, // 5 GQ
+		/datum/computer_file/program/newscaster, // 2 GQ
+		/datum/computer_file/program/secureye/syndicate, // 5 GQ
+		/datum/computer_file/program/status, // 1 GQ
+		/datum/computer_file/program/maintenance/phys_scanner, // 2 GQ
+		/datum/computer_file/program/maintenance/camera, // 4 GQ
+		/datum/computer_file/program/maintenance/modsuit_control, // 2 GQ
+		/datum/computer_file/program/maintenance/spectre_meter, // 7 GQ
+		/datum/computer_file/program/maintenance/cool_sword, // 1 GQ
+		/datum/computer_file/program/maintenance/theme/cat, // 2 GQ
+		/datum/computer_file/program/maintenance/theme/lightmode, // 2 GQ
+		/datum/computer_file/program/maintenance/theme/spooky, // 2 GQ
+		/datum/computer_file/program/ntnet_dos, // 20 GQ
+		/datum/computer_file/program/revelation, // 13 GQ
+		/datum/computer_file/program/ai_restorer, // 12 GQ
+		/datum/computer_file/program/ntnetmonitor, // 12 GQ
+	)
+	/// List of random things that will be mentioned in the desc
+	var/list/hackerman_bits = list(
+		"Some Tunes",
+		"钱",
+		"Software Testing Prototype",
+		"CLASSIFIED",
+		"Free Download",
+		"!! EVIL VIRUS !!",
+		"📸",
+		">;3",
+		"@AOL.com",
+		"$$$",
+		"Comedy",
+		"For Whom The Bell Tolls",
+	)
+
+/obj/item/computer_disk/all_of_them/Initialize(mapload)
+	. = ..()
+	desc = "Removable disk used to store data, with a paper label adhered to the side. \
+		This one has '[pick(hackerman_bits)]' ominously written on it."
