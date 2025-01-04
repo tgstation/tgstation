@@ -1,0 +1,6 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - image: "New souless minecart sprite"
+  - image: "Rail sprites are now more consistent with their shading, and thinner"
+  - bugfix: "The minecart closed icon no longer shows the crate lock overlay"
