@@ -58,6 +58,7 @@
 /mob/living/basic/pet/cat/runtime/Destroy()
 	LAZYREMOVE(SSticker.round_end_events, register_family)
 	register_family = null
+	post_birth_callback = null
 	return ..()
 
 /mob/living/basic/pet/cat/runtime/Write_Memory(dead, gibbed)
