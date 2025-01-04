@@ -1767,12 +1767,12 @@
 
 	var/mob/living/carbon/human/owner = user
 	if (!selected_trim_path) // Ensure that even without a trim update, we update user's sechud
-		accountowner.sec_hud_set_ID()
+		owner.sec_hud_set_ID()
 
 	if (registered_account)
 		return
 
-	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[accountowner.account_id]"]
+	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[owner.account_id]"]
 	if(account)
 		account.bank_cards += src
 		registered_account = account
