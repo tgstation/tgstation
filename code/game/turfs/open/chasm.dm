@@ -79,6 +79,8 @@
 /// Handles adding the chasm component to the turf (So stuff falls into it!)
 /turf/open/chasm/proc/apply_components(mapload)
 	AddComponent(/datum/component/chasm, GET_TURF_BELOW(src), mapload)
+	if(istype(loc, /area/deathmatch)) // dynamite fishing was not very thought out
+		qdel(GetComponent(/datum/component/fishing_spot)) // KILL 6 BILLION DEM- LOBSTROSITIES
 
 /turf/open/chasm/can_cross_safely(atom/movable/crossing)
 	return HAS_TRAIT(src, TRAIT_CHASM_STOPPED) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)

@@ -38,6 +38,7 @@
 		loadouts = GLOB.deathmatch_game.loadouts
 	add_player(player, loadouts[1], TRUE)
 	ui_interact(player)
+	addtimer(CALLBACK(src, PROC_REF(lobby_afk_probably)), 5 MINUTES) // being generous here
 
 /datum/deathmatch_lobby/Destroy(force, ...)
 	. = ..()
@@ -168,6 +169,12 @@
 		return
 	announce(span_reallybig("The players have took too long! Game ending!"))
 	end_game()
+
+/datum/deathmatch_lobby/proc/lobby_afk_probably()
+	if (QDELING(src) || playing)
+		return
+	announce(span_warning("Lobby ([host]) was closed due to not starting after 5 minutes, being potentially AFK. Please be faster next time."))
+	GLOB.deathmatch_game.remove_lobby(host)
 
 /datum/deathmatch_lobby/proc/end_game()
 	if (!location)
@@ -306,7 +313,7 @@
 	var/max_players = map.max_players
 	for (var/possible_unlucky_loser in players)
 		max_players--
-		if (max_players <= 0)
+		if (max_players < 0)
 			var/loser_mob = players[possible_unlucky_loser]["mob"]
 			remove_ckey_from_play(possible_unlucky_loser)
 			add_observer(loser_mob)

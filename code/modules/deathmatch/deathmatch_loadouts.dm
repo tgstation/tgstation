@@ -643,7 +643,7 @@
 	r_hand = /obj/item/sbeacondrop/bomb
 	l_pocket = /obj/item/grenade/syndieminibomb
 	r_pocket = /obj/item/grenade/syndieminibomb
-	implants = list(/obj/item/implanter/explosive_macro)
+	implants = list(/obj/item/implant/explosive/macro)
 	backpack_contents = list(
 		/obj/item/assembly/signaler = 10,
 	)
