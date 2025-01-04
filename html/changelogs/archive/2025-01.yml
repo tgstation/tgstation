@@ -68,3 +68,19 @@
   - rscadd: brain in a jar, a rare coroner mail goodie
   - qol: soul-less brains that can be revived (like those from recovered crew) now
       have an examine tip
+2025-01-04:
+  Bisar Metek:
+  - code_imp: Fixed up the return value of checkbox-input for tgui to behave consistently.
+  LT3:
+  - qol: Wearable HUDs can be toggled on and off
+  SmArtKar:
+  - bugfix: Fixed HUD implant message being reversed
+  SmArtKar, AnturK:
+  - admin: Fixes admin observe showing all antags as revs upon enabling Real Name
+      Display
+  high-speedspin-cycle:
+  - qol: The experimental deconstructive scanner can now scan multiple items.
+  necromanceranne:
+  - balance: The compact combat shotgun is now found in the warden's locker.
+  timothymtorres:
+  - bugfix: Fix pAIs interacting with machinery via alt/ctrl clicking.
