@@ -326,7 +326,7 @@ rough example of the "cone" made by the 3 dirs checked
  * * pass_args = pass_flags given to dummy object to allow it to ignore certain types of blockades.
  */
 /proc/los_check(atom/movable/user, mob/target, pass_args = PASSTABLE|PASSGLASS|PASSGRILLE, datum/callback/mid_check)
-	var/turf/user_turf = get_turf(user)
+	var/turf/user_turf = user.loc
 	if(!istype(user_turf))
 		return FALSE
 	var/obj/dummy = new(user_turf)
