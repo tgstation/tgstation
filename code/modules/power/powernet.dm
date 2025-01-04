@@ -95,4 +95,4 @@
 
 // Mostly just a wrapper for sending the COMSIG_POWERNET_CIRCUIT_TRANSMISSION signal, but could be retooled in the future to give it other uses
 /datum/powernet/proc/data_transmission(list/data, encryption_key, datum/weakref/port)
-	SEND_SIGNAL(connected_powernet, COMSIG_POWERNET_CIRCUIT_TRANSMISSION, list("data" = data, "enc_key" = encryption_key, "port" = port))
+	SEND_SIGNAL(src, COMSIG_POWERNET_CIRCUIT_TRANSMISSION, list("data" = data, "enc_key" = encryption_key, "port" = port))
