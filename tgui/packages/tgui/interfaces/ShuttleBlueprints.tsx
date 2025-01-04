@@ -1,4 +1,3 @@
-import { BooleanLike } from 'common/react';
 import { ReactNode, useState } from 'react';
 import {
   Box,
@@ -9,6 +8,7 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Direction } from '../constants';
