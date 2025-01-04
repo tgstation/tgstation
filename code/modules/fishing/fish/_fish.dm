@@ -10,6 +10,7 @@
 	icon = 'icons/obj/aquarium/fish.dmi'
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
+	icon_angle = 180
 	force = 6
 	throwforce = 6
 	throw_range = 8
@@ -172,6 +173,8 @@
 	var/fish_id
 	///Used to redirect to another fish path so that catching this fish unlocks its entry instead.
 	var/obj/item/fish/fish_id_redirect_path
+	/// only used in the suicide for comedic value
+	var/suicide_slap_text = "*SLAP!*"
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
@@ -207,6 +210,26 @@
 
 	register_context()
 	register_item_context()
+
+/obj/item/fish/suicide_act(mob/living/user)
+	if(force == 0)
+		user.visible_message(span_suicide("[user] slaps [user.p_them()]self with [src], but nothing happens!"))
+		return SHAME
+	user.visible_message(span_suicide("[user] starts rapidly slapping [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.set_combat_mode(TRUE)
+	ADD_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
+	slapperoni(user, iteration = 1)
+	return MANUAL_SUICIDE
+
+/obj/item/fish/proc/slapperoni(mob/living/user, iteration)
+	stoplag(0.1 SECONDS)
+	user.visible_message(span_bolddanger(suicide_slap_text))
+	user.attackby(src, user)
+	if(user.stat > SOFT_CRIT || (iteration > 100))
+		REMOVE_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
+		user.gib(DROP_ORGANS|DROP_BODYPARTS|DROP_ITEMS)
+		return
+	slapperoni(user, iteration++)
 
 /obj/item/fish/add_item_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(HAS_TRAIT(source, TRAIT_CATCH_AND_RELEASE))
@@ -363,6 +386,9 @@
 	bites_amount++
 	var/bites_to_finish = weight / FISH_WEIGHT_BITE_DIVISOR
 	adjust_health(health - (initial(health) / bites_to_finish) * 3)
+	flinch_on_eat(eater, feeder)
+
+/obj/item/fish/proc/flinch_on_eat(mob/living/eater, mob/living/feeder)
 	if(status == FISH_ALIVE && prob(50) && feeder.is_holding(src) && feeder.dropItemToGround(src))
 		to_chat(feeder, span_warning("[src] slips out of your hands in pain!"))
 		var/turf/target_turf = get_ranged_target_turf(get_turf(src), pick(GLOB.alldirs), 2)
@@ -436,7 +462,7 @@
 	return ..()
 
 /obj/item/fish/update_icon_state()
-	if(status == FISH_DEAD && icon_state_dead)
+	if((status == FISH_DEAD || HAS_TRAIT(src, TRAIT_FISH_STASIS)) && icon_state_dead)
 		icon_state = icon_state_dead
 	else
 		icon_state = base_icon_state
@@ -457,7 +483,7 @@
 
 /obj/item/fish/examine(mob/user)
 	. = ..()
-	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
+	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH) || HAS_TRAIT(loc, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")
 
@@ -517,7 +543,7 @@
 	if(!maximum_size)
 		maximum_size = min(base_size * 2, average_size * MAX_FISH_DEVIATION_COEFF)
 	if(!maximum_weight)
-		maximum_weight = min(base_weight * 2, average_size * MAX_FISH_DEVIATION_COEFF)
+		maximum_weight = min(base_weight * 2, average_weight * MAX_FISH_DEVIATION_COEFF)
 
 ///Updates weight and size, along with weight class, number of fillets you can get and grind results.
 /obj/item/fish/proc/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = TRUE)
@@ -804,6 +830,7 @@
 /obj/item/fish/proc/enter_stasis(datum/source)
 	SIGNAL_HANDLER
 	stop_flopping()
+	update_appearance()
 	STOP_PROCESSING(SSobj, src)
 
 /// Start processing again when the stasis trait is removed
@@ -855,30 +882,21 @@
 		return
 	fed_reagents.remove_reagent(wrong_reagent.type, 0.1)
 
-/**
- * Base multiplier of the difference between current size and weight and their maximum value
- * Used to calculate how much fish grow each time they're fed, alongside with the current hunger,
- * and the current size and weight, meaning bigger fish naturally tend to grow way more slowly
- * Growth peaks at 45% hunger but very rapidly wanes past that.
- */
-#define FISH_GROWTH_MULT 0.38
-#define FISH_GROWTH_PEAK 0.45
-#define FISH_SIZE_WEIGHT_GROWTH_MALUS 0.5
-
 ///Proc that should be called when the fish is fed. By default, it grows the fish depending on various variables.
 /obj/item/fish/proc/sate_hunger()
 	if(HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH))
 		last_feeding = world.time
 		return
 	var/hunger = get_hunger()
+	last_feeding = world.time
 	if(hunger < 0.05) //don't bother growing for very small amounts.
-		last_feeding = world.time
 		return
+
 	var/new_size = size
 	var/new_weight = weight
 	var/hunger_mult
-	if(hunger < FISH_GROWTH_PEAK)
-		hunger_mult = hunger * (1/FISH_GROWTH_PEAK)
+	if(hunger <= FISH_GROWTH_PEAK)
+		hunger_mult = hunger / FISH_GROWTH_PEAK
 	else
 		hunger_mult = 1 - (hunger - FISH_GROWTH_PEAK) * 4
 		if(hunger_mult <= 0)
@@ -895,10 +913,6 @@
 	if(new_size != size || new_weight != weight)
 		update_size_and_weight(new_size, new_weight)
 
-#undef FISH_SIZE_WEIGHT_GROWTH_MALUS
-#undef FISH_GROWTH_MULT
-#undef FISH_GROWTH_PEAK
-
 /obj/item/fish/proc/check_flopping()
 	if(QDELETED(src)) //we don't care anymore
 		return
@@ -908,7 +922,7 @@
 
 	// Do additional stuff
 	// Start flopping if outside of fish container
-	var/should_be_flopping = status == FISH_ALIVE && !HAS_TRAIT(src, TRAIT_FISH_STASIS) && loc && !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
+	var/should_be_flopping = status == FISH_ALIVE && (loc && !HAS_TRAIT(loc, TRAIT_STOP_FISH_FLOPPING))
 
 	if(should_be_flopping)
 		start_flopping()
@@ -916,6 +930,9 @@
 		stop_flopping()
 
 /obj/item/fish/process(seconds_per_tick)
+	do_fish_process(seconds_per_tick)
+
+/obj/item/fish/proc/do_fish_process(seconds_per_tick)
 	if(HAS_TRAIT(src, TRAIT_FISH_STASIS) || status != FISH_ALIVE)
 		return
 
@@ -1491,6 +1508,14 @@
 /obj/item/fish/update_atom_colour()
 	. = ..()
 	aquarium_vc_color = color || initial(aquarium_vc_color)
+
+///Proc called in trophy_fishes.dm, when a fish is mounted on persistent trophy mounts
+/obj/item/fish/proc/persistence_save(list/data)
+	return
+
+///Proc called in trophy_fishes.dm, when a persistent fishing trophy mount is spawned and the fish instantiated
+/obj/item/fish/proc/persistence_load(list/data)
+	return
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)

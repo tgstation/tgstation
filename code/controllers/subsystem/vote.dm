@@ -119,7 +119,7 @@ SUBSYSTEM_DEF(vote)
 	)
 	log_vote("vote finalized", vote_log_data)
 	if(to_display)
-		to_chat(world, span_infoplain(vote_font("\n[to_display]")))
+		to_chat(world, span_infoplain(vote_font("[to_display]")))
 
 	// Finally, doing any effects on vote completion
 	current_vote.finalize_vote(final_winner)
@@ -230,9 +230,9 @@ SUBSYSTEM_DEF(vote)
 	var/to_display = current_vote.initiate_vote(vote_initiator_name, duration)
 
 	log_vote(to_display)
-	to_chat(world, span_infoplain(vote_font("\n[span_bold(to_display)]\n\
+	to_chat(world, custom_boxed_message("purple_box center", span_infoplain(vote_font("[span_bold(to_display)]<br>\
 		Type <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\n\
-		You have [DisplayTimeText(duration)] to vote.")))
+		You have [DisplayTimeText(duration)] to vote."))))
 
 	// And now that it's going, give everyone a voter action
 	for(var/client/new_voter as anything in GLOB.clients)

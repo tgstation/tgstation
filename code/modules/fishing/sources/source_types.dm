@@ -29,7 +29,7 @@
 		/obj/item/fish/swordfish = 5 MINUTES,
 		/obj/structure/mystery_box/fishing = 32 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/ocean/beach
@@ -48,7 +48,7 @@
 		/obj/item/fish/chasm_crab/ice = 2,
 		/obj/item/fish/boned = 1,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 30
 
 /datum/fish_source/river
 	catalog_description = "River water"
@@ -58,10 +58,10 @@
 		FISHING_DUD = 4,
 		/obj/item/fish/goldfish = 5,
 		/obj/item/fish/guppy = 5,
+		/obj/item/fish/plasmatetra = 4,
 		/obj/item/fish/perch = 4,
 		/obj/item/fish/angelfish = 4,
 		/obj/item/fish/catfish = 4,
-		/obj/item/fish/perch = 5,
 		/obj/item/fish/slimefish = 2,
 		/obj/item/fish/sockeye_salmon = 1,
 		/obj/item/fish/arctic_char = 1,
@@ -74,7 +74,7 @@
 	fish_count_regen = list(
 		/obj/item/fish/pike = 4 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/sand
@@ -87,7 +87,7 @@
 		/obj/item/fish/bumpy = 10,
 		/obj/item/coin/gold = 3,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 30
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/cursed_spring
@@ -102,7 +102,7 @@
 	fish_counts = list(
 		/obj/item/fishing_rod/telescopic/master = 1,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 35
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/portal
@@ -113,6 +113,7 @@
 		/obj/item/fish/angelfish = 10,
 		/obj/item/fish/perch = 5,
 		/obj/item/fish/goldfish/three_eyes = 3,
+		/obj/item/fish/plasmatetra = 3,
 	)
 	catalog_description = "Aquarium dimension (Fishing portal generator)"
 	radial_state = "fish_tank"
@@ -154,10 +155,11 @@
 		/obj/item/stack/sheet/bone = 5,
 	)
 	catalog_description = "Chasm dimension (Fishing portal generator)"
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	radial_name = "Chasm"
 	overlay_state = "portal_chasm"
 	radial_state = "ground_hole"
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_NONE
 
 /datum/fish_source/portal/ocean
 	fish_table = list(
@@ -182,7 +184,7 @@
 		/obj/item/fish/swordfish = 5 MINUTES,
 	)
 	catalog_description = "Ocean dimension (Fishing portal generator)"
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	radial_name = "Ocean"
 	overlay_state = "portal_ocean"
 	radial_state = "seaboat"
@@ -205,7 +207,7 @@
 		/obj/item/stack/ore/bluespace_crystal = 10,
 	)
 	catalog_description = "Hyperspace dimension (Fishing portal generator)"
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	radial_name = "Hyperspace"
 	overlay_state = "portal_hyperspace"
 	radial_state = "space_rocket"
@@ -231,7 +233,7 @@
 	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
 	overlay_state = "portal_syndicate"
 	radial_state = "syndi_snake"
 
@@ -294,7 +296,7 @@
 	mover.long_jump_velocity_limit += rand(-100, 100)
 
 ///Cherry on top, fish caught from the randomizer portal also have (almost completely) random traits
-/datum/fish_source/portal/random/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot)
+/datum/fish_source/portal/random/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
 	if(!ispath(reward_path, /obj/item/fish))
 		return ..()
 
@@ -324,7 +326,7 @@
 		/obj/item/fish/chasm_crab = 15,
 		/datum/chasm_detritus = 30,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
 
 /datum/fish_source/chasm/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
@@ -340,9 +342,6 @@
 		return rolled_reward
 
 	return rod.hook.chasm_detritus_type
-
-/datum/fish_source/chasm/spawn_reward_from_explosion(atom/location, severity)
-	return //Spawned content would immediately fall back into the chasm, so it wouldn't matter.
 
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
@@ -362,7 +361,7 @@
 	fish_count_regen = list(
 		/obj/structure/closet/crate/necropolis/tendril = 27 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
@@ -404,7 +403,7 @@
 		/obj/item/fish/ratfish = 10,
 		/obj/item/fish/slimefish = 4,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 
 /datum/fish_source/toilet
 	catalog_description = "Station toilets"
@@ -422,7 +421,7 @@
 		/obj/item/storage/wallet/money = 2,
 		/obj/item/survivalcapsule/fishing = 1,
 	)
-	fishing_difficulty = FISHING_EASY_DIFFICULTY //For beginners
+	fishing_difficulty = FISHING_EASY_DIFFICULTY + 10
 
 /datum/fish_source/holographic
 	catalog_description = "Holographic water"
@@ -435,7 +434,7 @@
 		/obj/item/fish/holo/checkered = 5,
 		/obj/item/fish/holo/halffish = 5,
 	)
-	fishing_difficulty = FISHING_EASY_DIFFICULTY
+	fishing_difficulty = FISHING_EASY_DIFFICULTY + 10
 	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD
 
 /datum/fish_source/holographic/on_fishing_spot_init(datum/component/fishing_spot/spot)
@@ -492,7 +491,7 @@
 	fish_count_regen = list(
 		/obj/item/fish/mastodon = 8 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
 
 /datum/fish_source/hydro_tray
 	catalog_description = "Hydroponics trays"
@@ -506,6 +505,7 @@
 		/obj/item/seeds/random = 1,
 		/mob/living/basic/frog = 1,
 		/mob/living/basic/axolotl = 1,
+		/mob/living/basic/turtle = 2,
 	)
 	fish_counts = list(
 		/obj/item/food/grown/grass = 10,
@@ -515,7 +515,7 @@
 		/mob/living/basic/frog = 1,
 		/mob/living/basic/axolotl = 1,
 	)
-	fishing_difficulty = FISHING_EASY_DIFFICULTY - 5
+	fishing_difficulty = FISHING_EASY_DIFFICULTY + 5
 
 /datum/fish_source/hydro_tray/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
 	var/list/data = list()
@@ -580,7 +580,7 @@
 		return
 	return ..()
 
-/datum/fish_source/hydro_tray/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot)
+/datum/fish_source/hydro_tray/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
 	if(reward_path != FISHING_RANDOM_SEED)
 		var/mob/living/created_reward = ..()
 		if(istype(created_reward))
@@ -624,7 +624,7 @@
 	fish_count_regen = list(
 		/mob/living/basic/carp/mega = 9 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 18
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 28
 
 /datum/fish_source/deepfryer
 	catalog_description = "Deep Fryers"
@@ -647,7 +647,7 @@
 		/obj/item/fish/fryish/fritterish = 6 MINUTES,
 		/obj/item/fish/fryish/nessie = 22 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 13
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 23
 
 /datum/fish_source/surgery
 	catalog_description = "Surgery"
@@ -656,11 +656,11 @@
 	background = "background_lavaland" //Kinda red.
 	fish_table = list(FISHING_RANDOM_ORGAN = 10)
 	//This should get you below zero difficulty and skip the minigame phase, unless you're wearing something that counteracts this.
-	fishing_difficulty = -20
+	fishing_difficulty = -10
 	//The range for waiting is also a bit narrower, so it cannot take as few as 3 seconds or as many as 25 to snatch an organ.
 	wait_time_range = list(6 SECONDS, 12 SECONDS)
 
-/datum/fish_source/surgery/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot)
+/datum/fish_source/surgery/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
 	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
 		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
 		fishing_spot = portal.current_linked_atom
@@ -705,8 +705,8 @@
 	fish_table = list(
 		FISHING_DUD = 10,
 	)
-	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD|FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG
-	fishing_difficulty = FISHING_EASY_DIFFICULTY - 5
+	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD|FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG|FISH_SOURCE_FLAG_EXPLOSIVE_NONE
+	fishing_difficulty = FISHING_EASY_DIFFICULTY + 5
 
 #undef RANDOM_AQUARIUM_FISH
 
@@ -722,9 +722,6 @@
 	if(!length(table))
 		return fish_table
 	return table
-
-/datum/fish_source/aquarium/spawn_reward_from_explosion(atom/location, severity)
-	return //If the aquarium breaks, all fish are released anyway.
 
 /datum/fish_source/aquarium/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
 	var/list/data = list()
@@ -756,7 +753,7 @@
 	fish_count_regen = list(
 		/obj/item/fish/sacabambaspis = 4 MINUTES,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 30
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/tizira
@@ -771,5 +768,79 @@
 		/obj/item/fish/moonfish/dwarf = 2,
 		/obj/item/fish/moonfish = 2,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
+
+/datum/fish_source/dimensional_rift
+	catalog_description = null //it's a secret (sorta, I know you're reading this)
+	radial_state = "cursed" // placeholder
+	overlay_state = "portal_rift_2" // yeah good luck adaptin the rift sprite to this template. recolored randomizer's the best you're getting
+	fish_table = list(
+		FISHING_INFLUENCE = 6,
+		/obj/item/fish/starfish/chrystarfish = 7,
+		/obj/item/fish/dolphish = 7,
+		/obj/item/fish/flumpulus = 7,
+		/obj/item/fish/gullion = 7,
+		/mob/living/basic/heretic_summon/fire_shark/wild = 3,
+		/obj/item/eldritch_potion/crucible_soul = 1,
+		/obj/item/eldritch_potion/duskndawn = 1,
+		/obj/item/eldritch_potion/wounded = 1,
+		/obj/item/reagent_containers/cup/beaker/eldritch = 2,
+	)
+	fish_counts = list(
+		/mob/living/basic/heretic_summon/fire_shark/wild = 3,
+		/obj/item/eldritch_potion/crucible_soul = 1,
+		/obj/item/eldritch_potion/duskndawn = 1,
+		/obj/item/eldritch_potion/wounded = 1,
+		/obj/item/reagent_containers/cup/beaker/eldritch = 2,
+	)
+	fish_count_regen = list(
+		/mob/living/basic/heretic_summon/fire_shark/wild = 3 MINUTES,
+		/obj/item/eldritch_potion/crucible_soul = 5 MINUTES,
+		/obj/item/eldritch_potion/duskndawn = 5 MINUTES,
+		/obj/item/eldritch_potion/wounded = 5 MINUTES,
+		/obj/item/reagent_containers/cup/beaker/eldritch = 2.5 MINUTES,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 35
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_NONE
+
+/datum/fish_source/dimensional_rift/on_challenge_completed(mob/user, datum/fishing_challenge/challenge, success)
+	. = ..()
+
+	if(challenge.reward_path != FISHING_INFLUENCE)
+		return
+	var/mob/living/carbon/human/human_user
+	if(ishuman(user))
+		human_user = user
+
+	user.visible_message(span_danger("[user] reels [user.p_their()] [challenge.used_rod] in, catching.. nothing?"), span_notice("You catch.. a glimpse into the workings of the Mansus itself!"))
+	// Heretics that fish in the rift gain knowledge.
+	if(IS_HERETIC(user))
+		human_user?.add_mood_event("rift fishing", /datum/mood_event/rift_fishing)
+		var/obj/effect/heretic_influence/fishfluence = challenge.location
+		// But only if it's an open rift
+		if(!istype(fishfluence))
+			to_chat(user, span_notice("You glimpse something fairly uninteresting."))
+			return
+		fishfluence.after_drain(user)
+		var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+		if(heretic_datum)
+			heretic_datum.knowledge_points++
+			to_chat(user, "[span_hear("You hear a whisper...")] [span_hypnophrase("THE HIGHER I RISE, THE MORE I FISH.")]")
+			// They can also gain an extra influence point if they infused their rod.
+			if(HAS_TRAIT(challenge.used_rod, TRAIT_ROD_MANSUS_INFUSED))
+				heretic_datum.knowledge_points++
+			to_chat(user, span_boldnotice("Your infused rod improves your knowledge gain!"))
+		return
+
+	// Non-heretics instead go crazy
+	human_user?.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+	human_user?.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	// Hand fires at them from the location
+	fire_curse_hand(user, get_turf(challenge.location))
+
+// Handled above
+/datum/fish_source/dimensional_rift/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot)
+	if(reward_path != FISHING_INFLUENCE)
+		return ..()
+	return

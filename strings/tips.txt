@@ -227,6 +227,7 @@ Basketball requires skill. Spinning drains stamina, reduces accuracy, but gives 
 Basketball requires teamwork. Passing the ball with LMB is instant and costs no stamina.
 Clicking on a windoor rather then bumping into it will keep it open, you can click it again to close it.
 Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacked normally.
+Spears are capable of breaking into secure lockers by striking them in melee!
 Don't be afraid to ask for help, whether from your peers or from admins.
 Experiment with different setups of the Supermatter engine to maximize output, but don't risk the crew's safety to do so!
 Felinids get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one.

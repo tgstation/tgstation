@@ -8,7 +8,7 @@
 	slot = ORGAN_SLOT_BUTT
 	throw_speed = 1
 	force = 4
-	embed_type = /datum/embed_data/butt
+	embed_type = /datum/embedding/butt
 	hitsound = 'massmeta/sounds/fartts/fart1.ogg'
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
@@ -18,7 +18,7 @@
 	var/cooling_down = FALSE
 
 
-/datum/embed_data/butt
+/datum/embedding/butt
 	pain_mult = 0
 	jostle_pain_mult = 0
 	ignore_throwspeed_threshold = TRUE

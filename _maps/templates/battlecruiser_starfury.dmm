@@ -1060,6 +1060,10 @@
 	dir = 1
 	},
 /area/shuttle/sbc_starfury)
+"ea" = (
+/obj/machinery/vending/medical/syndicate/cybersun,
+/turf/open/floor/iron,
+/area/shuttle/sbc_starfury)
 "ec" = (
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
@@ -1718,6 +1722,13 @@
 /obj/vehicle/sealed/mecha/marauder/mauler/loaded,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
+"gH" = (
+/obj/machinery/vending/boozeomat/syndicate,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/sbc_starfury)
 "gL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2348,6 +2359,20 @@
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron/dark,
+/area/shuttle/sbc_starfury)
+"io" = (
+/obj/structure/rack{
+	dir = 8
+	},
+/obj/item/gun/ballistic/revolver/badass{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/gun/ballistic/revolver/badass{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "iq" = (
 /obj/machinery/microwave,
@@ -3438,20 +3463,6 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
-"lZ" = (
-/obj/structure/rack{
-	dir = 8
-	},
-/obj/item/gun/ballistic/revolver/badass{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/item/gun/ballistic/revolver/badass{
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/turf/open/floor/pod/light,
-/area/shuttle/sbc_starfury)
 "mp" = (
 /obj/structure/reflector/box{
 	anchored = 1;
@@ -4042,13 +4053,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/sbc_starfury)
-"vx" = (
-/obj/machinery/vending/boozeomat/syndicate,
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/shuttle/sbc_starfury)
 "vC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -4522,6 +4526,17 @@
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
+"Db" = (
+/obj/structure/cable,
+/mob/living/basic/bot/medbot{
+	desc = "A medical bot of syndicate origins. Probably plots about stabbing you full of toxins in its free time.";
+	faction = list("neutral","silicon","turret","Syndicate");
+	name = "Syndicate Medibot";
+	skin = "bezerk";
+	req_one_access = list("syndicate")
+	},
+/turf/open/floor/iron,
+/area/shuttle/sbc_starfury)
 "Dd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark/smooth_large,
@@ -4745,17 +4760,6 @@
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
-"Gz" = (
-/obj/structure/cable,
-/mob/living/basic/bot/medbot{
-	desc = "A medical bot of syndicate origins. Probably plots about how to stab you full of toxins in its free time.";
-	faction = list("neutral","silicon","turret","Syndicate");
-	name = "Syndicate Medibot";
-	skin = "bezerk";
-	req_one_access = list("syndicate")
-	},
-/turf/open/floor/iron,
-/area/shuttle/sbc_starfury)
 "GF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4821,10 +4825,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
-/area/shuttle/sbc_starfury)
-"IB" = (
-/obj/machinery/vending/medical/syndicate/cybersun,
-/turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "ID" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6323,7 +6323,7 @@ hg
 hF
 ae
 ho
-vx
+gH
 ae
 iU
 ji
@@ -6905,7 +6905,7 @@ dh
 cW
 dF
 Wc
-IB
+ea
 ae
 dr
 ec
@@ -7041,7 +7041,7 @@ as
 bp
 dI
 Uy
-Gz
+Db
 xG
 aw
 ec
@@ -7885,7 +7885,7 @@ gR
 Ay
 sB
 ia
-lZ
+io
 ec
 iN
 ae

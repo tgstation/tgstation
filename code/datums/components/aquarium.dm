@@ -100,11 +100,12 @@
 	ADD_KEEP_TOGETHER(movable, AQUARIUM_TRAIT) //render the fish on the same layer of the aquarium.
 
 	if(reagents_size > 0)
-		RegisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
 		if(!movable.reagents)
 			movable.create_reagents(reagents_size, SEALED_CONTAINER)
-		else if(movable.reagents.total_volume)
+		if(movable.reagents.total_volume)
 			start_autofeed(movable.reagents)
+		else
+			RegisterSignal(movable.reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
 		RegisterSignal(movable, COMSIG_PLUNGER_ACT, PROC_REF(on_plunger_act))
 
 	RegisterSignal(movable, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
@@ -128,7 +129,7 @@
 		if(content.flags_1 & INITIALIZED_1)
 			on_entered(movable, content)
 
-	ADD_TRAIT(movable, TRAIT_IS_AQUARIUM, AQUARIUM_TRAIT)
+	movable.add_traits(list(TRAIT_IS_AQUARIUM, TRAIT_STOP_FISH_FLOPPING), AQUARIUM_TRAIT)
 
 /datum/component/aquarium/UnregisterFromParent()
 	var/atom/movable/movable = parent
@@ -155,7 +156,7 @@
 		STOP_PROCESSING(SSobj, src)
 	beauty_by_content = null
 	tracked_fish_by_type = null
-	movable.remove_traits(list(TRAIT_IS_AQUARIUM, TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH), AQUARIUM_TRAIT)
+	movable.remove_traits(list(TRAIT_IS_AQUARIUM, TRAIT_AQUARIUM_PANEL_OPEN, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, TRAIT_STOP_FISH_FLOPPING), AQUARIUM_TRAIT)
 	qdel(movable.GetComponent(/datum/component/fishing_spot))
 	REMOVE_KEEP_TOGETHER(movable, AQUARIUM_TRAIT)
 
@@ -189,6 +190,8 @@
 
 /datum/component/aquarium/proc/on_click_alt(atom/movable/source, mob/living/user)
 	SIGNAL_HANDLER
+	if(!user.can_perform_action(source))
+		return
 	var/closing = HAS_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN)
 	if(closing)
 		REMOVE_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, AQUARIUM_TRAIT)
@@ -238,10 +241,10 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///Called when the feed storage is no longer empty.
-/datum/component/aquarium/proc/start_autofeed(atom/movable/source, new_reagent, amount, reagtemp, data, no_react)
+/datum/component/aquarium/proc/start_autofeed(datum/reagents/source, new_reagent, amount, reagtemp, data, no_react)
 	SIGNAL_HANDLER
 	START_PROCESSING(SSobj, src)
-	UnregisterSignal(source.reagents, COMSIG_REAGENTS_NEW_REAGENT)
+	UnregisterSignal(source, COMSIG_REAGENTS_NEW_REAGENT)
 
 ///Feed the fish at defined intervals until the feed storage is empty.
 /datum/component/aquarium/process(seconds_per_tick)
@@ -358,7 +361,7 @@
 		types_to_mate_with = types_to_mate_with & types_to_check
 
 	for(var/obj/item/fish/fish_type as anything in types_to_mate_with)
-		var/list/type_fishes = types_to_mate_with[fish_type]
+		var/list/type_fishes = tracked_fish_by_type[fish_type]
 		if(length(type_fishes) >= initial(fish_type.stable_population))
 			continue
 		candidates += type_fishes
@@ -473,7 +476,7 @@
 	var/atom/movable/aquarium = parent
 	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
-	.["safe_mode"] = !HAS_TRAIT_FROM(aquarium, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
+	.["safe_mode"] = HAS_TRAIT_FROM(aquarium, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	.["fishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
 	.["propData"] = list()

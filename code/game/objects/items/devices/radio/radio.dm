@@ -120,6 +120,8 @@
 	if(type != /obj/item/radio)
 		return
 	AddElement(/datum/element/slapcrafting, string_list(list(/datum/crafting_recipe/improv_explosive)))
+	if(prob(check_holidays(APRIL_FOOLS) ? 50 : 0.5)) // Extremely rare chance to replace a normal radio with a toy one, because it's funny
+		make_silly()
 
 /obj/item/radio/Destroy()
 	remove_radio_all(src) //Just to be sure
@@ -351,8 +353,9 @@
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
 		var/volume_modifier = (talking_living.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
-		if(radio_noise && talking_living.can_hear() && volume_modifier && signal.frequency != FREQ_COMMON)
-			var/sound/radio_noise = sound(sound('sound/items/radio/radio_talk.ogg', volume = volume_modifier))
+		if(radio_noise && talking_living.can_hear() && volume_modifier && signal.frequency != FREQ_COMMON && !LAZYACCESS(message_mods, MODE_SEQUENTIAL) && COOLDOWN_FINISHED(src, audio_cooldown))
+			COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
+			var/sound/radio_noise = sound('sound/items/radio/radio_talk.ogg', volume = volume_modifier)
 			radio_noise.frequency = get_rand_frequency_low_range()
 			SEND_SOUND(talking_living, radio_noise)
 
@@ -439,7 +442,7 @@
 		COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
 		var/sound/radio_receive = sound('sound/items/radio/radio_receive.ogg', volume = volume_modifier)
 		radio_receive.frequency = get_rand_frequency_low_range()
-		SEND_SOUND(holder, radio_noise)
+		SEND_SOUND(holder, radio_receive)
 	if((SPAN_COMMAND in spans) && COOLDOWN_FINISHED(src, important_audio_cooldown))
 		COOLDOWN_START(src, important_audio_cooldown, 0.5 SECONDS)
 		var/sound/radio_important = sound('sound/items/radio/radio_important.ogg', volume = volume_modifier)
@@ -577,6 +580,15 @@
 	set_on(TRUE)
 	return TRUE
 
+/obj/item/radio/proc/make_silly()
+	name = "\improper Little-Crew: Assistant's First Radio"
+	icon_state = "walkieian"
+	desc = "A Little-Crew branded toy radio in the shape of a lovable pet. After Little-Crew HQ was hit with a Donksoft Nuke, these have become collector's items!"
+	overlay_speaker_idle = null
+	overlay_speaker_active = null
+	overlay_mic_idle = null
+	overlay_mic_active = null
+
 ///////////////////////////////
 //////////Borg Radios//////////
 ///////////////////////////////
@@ -704,5 +716,10 @@
 	icon_state = "microphone"
 	inhand_icon_state = "microphone"
 	canhear_range = 3
+
+// In case you want to map it in/spawn it for some reason
+/obj/item/radio/toy/Initialize(mapload)
+	. = ..()
+	make_silly()
 
 #undef FREQ_LISTENING

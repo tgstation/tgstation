@@ -61,15 +61,6 @@
 /obj/machinery/shower/directional/south,
 /turf/open/floor/iron/freezer,
 /area/centcom/syndicate_mothership/control)
-"bf" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/thinplating_new/light{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "bo" = (
 /obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/east,
@@ -106,17 +97,6 @@
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
-"bE" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 5
-	},
-/obj/structure/table/reinforced/plasmarglass,
-/obj/item/surgery_tray/full{
-	pixel_y = -11
-	},
-/obj/item/storage/belt/medical,
-/turf/open/floor/mineral/titanium/tiled/blue,
-/area/centcom/syndicate_mothership/control)
 "bF" = (
 /obj/effect/turf_decal/siding/wideplating{
 	dir = 10
@@ -689,6 +669,17 @@
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},
+/area/centcom/syndicate_mothership/control)
+"hl" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 5
+	},
+/obj/structure/table/reinforced/plasmarglass,
+/obj/effect/spawner/surgery_tray/full{
+	pixel_y = -11
+	},
+/obj/item/storage/belt/medical,
+/turf/open/floor/mineral/titanium/tiled/blue,
 /area/centcom/syndicate_mothership/control)
 "hp" = (
 /obj/structure/lattice/catwalk,
@@ -1475,6 +1466,33 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/control)
+"qs" = (
+/obj/machinery/light/small/directional/west,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/fishmeat,
+/obj/item/food/fishmeat,
+/obj/item/food/fishmeat,
+/obj/item/food/grown/tomato,
+/obj/item/food/grown/tomato,
+/obj/item/food/grown/tomato,
+/obj/item/reagent_containers/condiment/enzyme,
+/obj/item/storage/fancy/egg_box,
+/obj/item/storage/fancy/egg_box,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/turf/open/floor/plastic,
+/area/centcom/syndicate_mothership/expansion_fridgerummage)
 "qv" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/mineral/titanium,
@@ -2550,6 +2568,32 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
+"DY" = (
+/obj/structure/table/wood/poker,
+/obj/machinery/light/warm/directional/north,
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	pixel_x = -4;
+	pixel_y = 14
+	},
+/obj/item/toy/cards/deck{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/cigarette/robust{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/ash{
+	pixel_x = 12;
+	pixel_y = -6
+	},
+/obj/effect/spawner/random/entertainment/lighter{
+	pixel_x = 9;
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/centcom/syndicate_mothership/control)
 "DZ" = (
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/control)
@@ -2656,32 +2700,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
-"FK" = (
-/obj/structure/table/wood/poker,
-/obj/machinery/light/warm/directional/north,
-/obj/item/reagent_containers/cup/glass/bottle/whiskey{
-	pixel_x = -4;
-	pixel_y = 14
-	},
-/obj/item/toy/cards/deck{
-	pixel_x = 3;
-	pixel_y = 6
-	},
-/obj/item/cigarette/robust{
-	pixel_x = -4;
-	pixel_y = 1
-	},
-/obj/effect/decal/cleanable/ash{
-	pixel_x = 12;
-	pixel_y = -6
-	},
-/obj/effect/spawner/random/entertainment/lighter{
-	pixel_x = 9;
-	pixel_y = -3
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/centcom/syndicate_mothership/control)
 "FM" = (
 /turf/closed/indestructible/opsglass,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
@@ -2978,33 +2996,6 @@
 	},
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
-"HX" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/item/food/meat/slab/rawcrab,
-/obj/item/food/meat/slab/rawcrab,
-/obj/item/food/meat/slab/rawcrab,
-/obj/item/food/fishmeat,
-/obj/item/food/fishmeat,
-/obj/item/food/fishmeat,
-/obj/item/food/grown/tomato,
-/obj/item/food/grown/tomato,
-/obj/item/food/grown/tomato,
-/obj/item/reagent_containers/condiment/enzyme,
-/obj/item/storage/fancy/egg_box,
-/obj/item/storage/fancy/egg_box,
-/obj/item/reagent_containers/condiment/milk,
-/obj/item/reagent_containers/condiment/milk,
-/obj/item/reagent_containers/condiment/flour{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/condiment/flour{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/turf/open/floor/plastic,
-/area/centcom/syndicate_mothership/expansion_fridgerummage)
 "Ia" = (
 /obj/machinery/camera/autoname/directional/north{
 	network = list("nukie")
@@ -3742,6 +3733,26 @@
 /obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
+"PU" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/obj/structure/closet/syndicate/personal,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "Qe" = (
 /obj/machinery/button/door/directional/south{
 	desc = "Looks like the elevator is under maintenance..";
@@ -5190,7 +5201,7 @@ sU
 sU
 Ox
 nQ
-bf
+PU
 Ab
 Ab
 Ab
@@ -6211,7 +6222,7 @@ Bm
 uT
 PN
 DZ
-bE
+hl
 gL
 rS
 iH
@@ -6419,7 +6430,7 @@ rJ
 Cf
 nU
 ek
-HX
+qs
 ek
 DZ
 eK
@@ -7041,7 +7052,7 @@ DZ
 Gr
 tc
 mJ
-FK
+DY
 lQ
 Nb
 VK

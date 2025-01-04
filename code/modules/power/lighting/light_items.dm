@@ -55,6 +55,7 @@
 	icon_state = "ltube"
 	base_state = "ltube"
 	inhand_icon_state = "ltube"
+	icon_angle = -45
 	brightness = 8
 	custom_price = PAYCHECK_CREW * 0.5
 
@@ -75,6 +76,7 @@
 	desc = "A replacement light bulb."
 	icon_state = "lbulb"
 	base_state = "lbulb"
+	icon_angle = -90
 	inhand_icon_state = "contvapour"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'

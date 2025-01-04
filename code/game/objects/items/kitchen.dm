@@ -22,6 +22,7 @@
 	name = "fork"
 	desc = "Pointy."
 	icon_state = "fork"
+	icon_angle = -90
 	force = 4
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
@@ -107,6 +108,7 @@
 	name = "Kitchen Toolset"
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "sili_knife"
+	icon_angle = 0
 	desc = "A breakthrough in synthetic engineering, this tool is a knife programmed to dull when not used for cooking purposes, and can exchange the blade for a rolling pin"
 	force = 0
 	throwforce = 0
@@ -152,6 +154,7 @@
 	icon_state = "rolling_pin"
 	worn_icon_state = "rolling_pin"
 	inhand_icon_state = "rolling_pin"
+	icon_angle = -45
 	force = 8
 	throwforce = 5
 	throw_speed = 3
@@ -185,6 +188,7 @@
 	desc = "Just be careful your food doesn't melt the spoon first."
 	icon_state = "spoon"
 	base_icon_state = "spoon"
+	icon_angle = -90
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = CONDUCTS_ELECTRICITY
 	force = 2
@@ -326,6 +330,7 @@
 	icon_state = "ladle"
 	base_icon_state = "ladle"
 	inhand_icon_state = "spoon"
+	icon_angle = 90
 	custom_price = PAYCHECK_LOWER * 4
 	spoon_sip_size = 3 // just a taste
 

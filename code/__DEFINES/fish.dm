@@ -4,6 +4,8 @@
 #define FISHING_RANDOM_SEED "Random seed"
 ///Used in the surgery fishing spot to define a random organ reward
 #define FISHING_RANDOM_ORGAN "Random organ"
+///Used in the dimensional rift fishing spot to define influence gain
+#define FISHING_INFLUENCE "Influence"
 
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
@@ -135,6 +137,17 @@
 ///The coefficient for maximum weight/size divergence relative to the averages.
 #define MAX_FISH_DEVIATION_COEFF 2.5
 
+/**
+ * Base multiplier of the difference between current size and weight and their maximum value
+ * used to calculate how much fish grow each time they're fed, alongside with the current hunger,
+ * and the current size and weight, meaning bigger fish naturally tend to grow way slowier
+ */
+#define FISH_GROWTH_MULT 0.38
+/// Growth peaks at 45% hunger but very rapidly wanes past that.
+#define FISH_GROWTH_PEAK 0.45
+/// Used as part of the divisor to slow down growth of bigger fish
+#define FISH_SIZE_WEIGHT_GROWTH_MALUS 0.5
+
 ///The volume of the grind results is multiplied by the fish' weight and divided by this.
 #define FISH_GRIND_RESULTS_WEIGHT_DIVISOR 500
 ///The number of fillets is multiplied by the fish' size and divided by this.
@@ -261,6 +274,8 @@
 #define FISH_SOURCE_FLAG_NO_BLUESPACE_ROD (1<<1)
 /// When examined by someone with enough fishing skill, this will also display fish that doesn't have FISH_FLAG_SHOW_IN_CATALOG
 #define FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG (1<<2)
+/// This fish source will not spawn fish on explosions
+#define FISH_SOURCE_FLAG_EXPLOSIVE_NONE (1<<3)
 
 /**
  * A macro to ensure the wikimedia filenames of fish icons are unique, especially since there're a couple fish that have

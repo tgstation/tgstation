@@ -4,7 +4,7 @@
 	bare_wound_bonus = 7.5
 	damage_falloff_tile = -1.2
 	demolition_mod = 2
-	embed_type = /datum/embed_data/shrapnel
+	embed_type = /datum/embeddingmas/shrapnel
 
 /obj/projectile/bullet/pellet/shotgun_improvised/Initialize(mapload)
 	. = ..()

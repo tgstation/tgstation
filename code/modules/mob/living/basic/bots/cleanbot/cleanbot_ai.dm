@@ -200,23 +200,24 @@
 		return
 	return ..()
 
-/datum/pet_command/point_targeting/clean
+/datum/pet_command/clean
 	command_name = "Clean"
 	command_desc = "Command a cleanbot to clean the mess."
+	requires_pointing = TRUE
 	radial_icon = 'icons/obj/service/janitor.dmi'
 	radial_icon_state = "mop"
 	speech_commands = list("clean", "mop")
 
-/datum/pet_command/point_targeting/clean/set_command_target(mob/living/parent, atom/target)
+/datum/pet_command/clean/set_command_target(mob/living/parent, atom/target)
 	if(isnull(target) || !istype(target, /obj/effect/decal/cleanable))
-		return
+		return FALSE
 	if(isnull(parent.ai_controller))
-		return
+		return FALSE
 	if(LAZYACCESS(parent.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], target))
-		return
+		return FALSE
 	return ..()
 
-/datum/pet_command/point_targeting/clean/execute_action(datum/ai_controller/basic_controller/bot/controller)
+/datum/pet_command/clean/execute_action(datum/ai_controller/basic_controller/bot/controller)
 	if(controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_CURRENT_PET_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING

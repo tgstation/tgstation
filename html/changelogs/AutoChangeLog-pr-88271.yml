@@ -1,4 +1,0 @@
-author: "larentoun"
-delete-after: True
-changes:
-  - bugfix: "Printed Moth X-Ray eyes are now correctly named, instead of being just \"robotic eyes\""

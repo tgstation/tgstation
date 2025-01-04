@@ -618,23 +618,6 @@
 "De" = (
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/escape)
-"Df" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/bodypart/arm/left/moth,
-/obj/item/bodypart/arm/left/moth,
-/obj/item/organ/tail/lizard,
-/obj/item/bodypart/leg/right/digitigrade,
-/obj/item/bodypart/leg/right/digitigrade,
-/obj/item/bodypart/leg/left/fly,
-/obj/item/bodypart/leg/left/fly,
-/obj/item/bodypart/arm/right,
-/obj/item/bodypart/arm/right,
-/obj/item/organ/tail/cat,
-/obj/effect/turf_decal/stripes/white/end{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "DH" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium,
@@ -753,6 +736,13 @@
 "Ju" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"JU" = (
+/obj/structure/table/optable,
+/obj/effect/spawner/surgery_tray/full,
+/obj/item/clothing/mask/surgical,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
 "Ke" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/broken_floor,
@@ -763,13 +753,6 @@
 	dir = 4
 	},
 /turf/open/floor/glass/reinforced,
-/area/shuttle/escape)
-"Ko" = (
-/obj/structure/table/optable,
-/obj/item/surgery_tray/full,
-/obj/item/clothing/mask/surgical,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Kp" = (
 /obj/effect/decal/cleanable/glass,
@@ -917,6 +900,23 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"Ve" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/bodypart/arm/left/moth,
+/obj/item/bodypart/arm/left/moth,
+/obj/item/organ/tail/lizard,
+/obj/item/bodypart/leg/right/digitigrade,
+/obj/item/bodypart/leg/right/digitigrade,
+/obj/item/bodypart/leg/left/fly,
+/obj/item/bodypart/leg/left/fly,
+/obj/item/bodypart/arm/right,
+/obj/item/bodypart/arm/right,
+/obj/item/organ/tail/cat,
+/obj/effect/turf_decal/stripes/white/end{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "Vo" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/table,
@@ -1032,7 +1032,7 @@ LX
 LX
 LX
 ON
-Ko
+JU
 eY
 LX
 rZ
@@ -1153,7 +1153,7 @@ LX
 rZ
 rZ
 LX
-Df
+Ve
 pj
 Bm
 lI

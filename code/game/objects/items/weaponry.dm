@@ -3,6 +3,7 @@
 	name = "banhammer"
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "toyhammer"
+	icon_angle = -45
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	force = 1
@@ -47,6 +48,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "balloon_mallet"
 	inhand_icon_state = "balloon_mallet"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	siemens_coefficient = 0
@@ -88,6 +90,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "sord"
 	inhand_icon_state = "sord"
+	icon_angle = -35
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -109,6 +112,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "claymore"
 	inhand_icon_state = "claymore"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
@@ -117,14 +121,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
 	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_claymore
 	resistance_flags = FIRE_PROOF
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
 
 /datum/armor/item_claymore
 	fire = 100
@@ -132,10 +138,17 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/Initialize(mapload)
 	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	make_stabby()
 	AddComponent(/datum/component/butchering, \
 	speed = 4 SECONDS, \
 	effectiveness = 105, \
 	)
+
+// Applies alt sharpness component, for overrides
+/obj/item/claymore/proc/make_stabby()
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -15)
 
 /obj/item/claymore/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -356,6 +369,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "katana"
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -364,14 +378,22 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 10
 	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
 	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_katana
 	resistance_flags = FIRE_PROOF
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
+
+/obj/item/katana/Initialize(mapload)
+	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -15)
 
 /datum/armor/item_katana
 	fire = 100
@@ -395,7 +417,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 2
 	throwforce = 10 //10 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 18 damage on hit due to guaranteed embedding
 	throw_speed = 4
-	embed_type = /datum/embed_data/throwing_star
+	embed_type = /datum/embedding/throwing_star
 	armour_penetration = 40
 
 	w_class = WEIGHT_CLASS_SMALL
@@ -403,7 +425,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	resistance_flags = FIRE_PROOF
 
-/datum/embed_data/throwing_star
+/datum/embedding/throwing_star
 	pain_mult = 4
 	embed_chance = 100
 	fall_chance = 0
@@ -412,9 +434,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "shock throwing star"
 	desc = "An aerodynamic disc designed to cause excruciating pain when stuck inside fleeing targets, hopefully without causing fatal harm."
 	throwforce = 5
-	embed_type = /datum/embed_data/throwing_star/stamina
+	embed_type = /datum/embedding/throwing_star/stamina
 
-/datum/embed_data/throwing_star/stamina
+/datum/embedding/throwing_star/stamina
 	pain_mult = 5
 	jostle_chance = 10
 	pain_stam_pct = 0.8
@@ -426,9 +448,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = NONE
 	force = 0
 	throwforce = 0
-	embed_type = /datum/embed_data/throwing_star/toy
+	embed_type = /datum/embedding/throwing_star/toy
 
-/datum/embed_data/throwing_star/toy
+/datum/embedding/throwing_star/toy
 	pain_mult = 0
 	jostle_pain_mult = 0
 
@@ -438,15 +460,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "carpenter_hammer"
 	inhand_icon_state = "carpenter_hammer"
 	worn_icon_state = "clawhammer" //plaecholder
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	desc = "Uncanny looking hammer."
-	force = 20
-	throwforce = 20
+	force = 17
+	throwforce = 14
 	throw_range = 4
 	w_class = WEIGHT_CLASS_NORMAL
 	wound_bonus = 20
-	demolition_mod = 1.25
+	demolition_mod = 1.15
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/carpenter_hammer/Initialize(mapload)
@@ -475,6 +498,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "switchblade"
 	base_icon_state = "switchblade"
+	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharp, concealable, spring-loaded knife."
@@ -491,6 +515,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	resistance_flags = FIRE_PROOF
 	/// Whether the switchblade starts extended or not.
 	var/start_extended = FALSE
+	var/list/alt_continuous = list("stabs", "pierces", "shanks")
+	var/list/alt_simple = list("stab", "pierce", "shank")
 
 /obj/item/switchblade/get_all_tool_behaviours()
 	return list(TOOL_KNIFE)
@@ -512,9 +538,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		sharpness_on = SHARP_EDGED, \
 		hitsound_on = 'sound/items/weapons/bladeslice.ogg', \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
-		attack_verb_continuous_on = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
-		attack_verb_simple_on = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"), \
+		attack_verb_continuous_on = list("slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
+		attack_verb_simple_on = list("slash", "slice", "tear", "lacerate", "rip", "dice", "cut"), \
 	)
+
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -5, TRAIT_TRANSFORM_ACTIVE)
 
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
@@ -567,6 +597,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	base_icon_state = "bambostaff"
 	inhand_icon_state = "bambostaff0"
 	worn_icon_state = "bambostaff0"
+	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 
@@ -589,6 +620,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "cane"
 	inhand_icon_state = "stick"
+	icon_angle = 135
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 5
@@ -630,6 +662,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "crutch_med"
 	inhand_icon_state = "crutch_med"
+	icon_angle = 45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 12
@@ -682,6 +715,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Traditionally used by the blind to help them see. Folds down to be easier to transport."
 	icon_state = "cane_white"
 	inhand_icon_state = "cane_white"
+	icon_angle = 45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 1
@@ -756,6 +790,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "cane"
 	inhand_icon_state = "stick"
+	icon_angle = 135
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 3
@@ -788,6 +823,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "For the beating to death of lizards with their own tails."
 	icon = 'icons/obj/weapons/club.dmi'
 	icon_state = "tailclub"
+	icon_angle = -25
 	force = 14
 	throwforce = 1 // why are you throwing a club do you even weapon
 	throw_speed = 1
@@ -895,6 +931,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/bat.dmi'
 	icon_state = "baseball_bat"
 	inhand_icon_state = "baseball_bat"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 12
@@ -917,13 +954,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/melee/baseball_bat/Initialize(mapload)
 	. = ..()
-	if(prob(1))
-		name = "cricket bat"
-		icon_state = "baseball_bat_brit"
-		inhand_icon_state = "baseball_bat_brit"
-		desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
-
 	AddElement(/datum/element/kneecapping)
+	// No subtypes
+	if(type != /obj/item/melee/baseball_bat)
+		return
+	if(prob(check_holidays(APRIL_FOOLS) ? 50 : 1))
+		make_silly()
 
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
@@ -1011,6 +1047,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	target.throw_at(target_turf, get_dist(target, target_turf), datum_throw_speed + 1, user, callback = CALLBACK(src, PROC_REF(on_hit), target))
 	thrown_datums[target] = target.throwing
 
+/obj/item/melee/baseball_bat/proc/make_silly()
+	name = "cricket bat"
+	icon_state = "baseball_bat_brit"
+	inhand_icon_state = "baseball_bat_brit"
+	desc = pick("You've got red on you.", "You gotta know what a crumpet is to understand cricket.")
+
 /obj/item/melee/baseball_bat/proc/on_hit(atom/movable/target)
 	target.remove_filter("baseball_launch")
 	target.throwforce *= 0.5
@@ -1039,12 +1081,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
 	return TRUE
 
+// In case you ever want to spawn it via map/admin console
+/obj/item/melee/baseball_bat/british/Initialize(mapload)
+	. = ..()
+	make_silly()
+
 /obj/item/melee/flyswatter
 	name = "flyswatter"
 	desc = "Useful for killing pests of all sizes."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "flyswatter"
 	inhand_icon_state = "flyswatter"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 1
@@ -1135,6 +1183,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/club.dmi'
 	icon_state = "gohei"
 	inhand_icon_state = "gohei"
+	icon_angle = -65
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 
@@ -1145,6 +1194,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "swordon"
 	inhand_icon_state = "swordon"
 	worn_icon_state = "swordon"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -1155,8 +1205,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 14
 	throwforce = 12
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
+
+/obj/item/melee/moonlight_greatsword/Initialize(mapload)
+	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
 //High Frequency Blade
 
@@ -1167,6 +1225,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "hfrequency0"
 	worn_icon_state = "hfrequency0"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 10
@@ -1175,7 +1234,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 25
 	throw_speed = 4
 	attack_speed = CLICK_CD_HYPER_RAPID
-	embed_type = /datum/embed_data/hfr_blade
+	embed_type = /datum/embedding/hfr_blade
 	block_chance = 25
 	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
@@ -1190,7 +1249,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	/// The previous target we attacked
 	var/datum/weakref/previous_target
 
-/datum/embed_data/hfr_blade
+/datum/embedding/hfr_blade
 	embed_chance = 100
 
 /obj/item/highfrequencyblade/Initialize(mapload)
