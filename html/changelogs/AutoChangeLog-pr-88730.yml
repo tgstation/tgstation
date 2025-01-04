@@ -1,0 +1,4 @@
+author: "WebcomicArtist"
+delete-after: True
+changes:
+  - qol: "\"Destroy Blackbox\" objective now tells you how to destroy something invulnerable to conventional means of destruction."
