@@ -77080,7 +77080,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "tpd" = (
-/obj/machinery/rnd/production/circuit_imprinter/department/science,
+/obj/machinery/rnd/production/circuit_imprinter/department/science/robotics,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},

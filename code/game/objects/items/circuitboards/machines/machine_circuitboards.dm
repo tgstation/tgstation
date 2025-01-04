@@ -493,6 +493,11 @@
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/rnd/production/circuit_imprinter/department
 
+/obj/item/circuitboard/machine/circuit_imprinter/department/science/robotics
+	name = "Departmental Circuit Imprinter (Robotics)"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/science/robotics
+
 /obj/item/circuitboard/machine/holopad
 	name = "AI Holopad"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC

@@ -47001,7 +47001,7 @@
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
 "qHR" = (
-/obj/machinery/rnd/production/circuit_imprinter/department/science,
+/obj/machinery/rnd/production/circuit_imprinter/department/science/robotics,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/requests_console/auto_name/directional/east,
 /obj/effect/mapping_helpers/requests_console/ore_update,

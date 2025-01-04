@@ -467,6 +467,7 @@
 	desc = "The circuit board for an Exosuit Fabricator."
 	id = "mechfab"
 	build_path = /obj/item/circuitboard/machine/mechfab
+	build_type = IMPRINTER | ROBO_IMPRINTER
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ROBOTICS
 	)
@@ -477,6 +478,7 @@
 	desc = "The circuit board for a Cyborg Recharger."
 	id = "cyborgrecharger"
 	build_path = /obj/item/circuitboard/machine/cyborgrecharger
+	build_type = IMPRINTER | ROBO_IMPRINTER
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ROBOTICS
 	)
@@ -758,6 +760,7 @@
 	desc = "The circuit board for a suit storage unit."
 	id = "suit_storage_unit"
 	build_path = /obj/item/circuitboard/machine/suit_storage_unit
+	build_type = IMPRINTER | ROBO_IMPRINTER
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ROBOTICS
 	)
@@ -1180,6 +1183,7 @@
 	desc = "The circuit board for a beacon that aids bot navigation."
 	id = "botnavbeacon"
 	build_path = /obj/item/circuitboard/machine/navbeacon
+	build_type = IMPRINTER | ROBO_IMPRINTER
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ROBOTICS
 	)

@@ -71525,7 +71525,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/cargo/lobby)
 "xKq" = (
-/obj/machinery/rnd/production/circuit_imprinter/department/science,
+/obj/machinery/rnd/production/circuit_imprinter/department/science/robotics,
 /obj/effect/turf_decal/bot,
 /obj/structure/fireaxecabinet/mechremoval/directional/west,
 /turf/open/floor/iron,

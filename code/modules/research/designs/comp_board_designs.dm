@@ -62,6 +62,7 @@
 	id = "aiupload"
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/computer/aiupload
+	build_type = IMPRINTER | ROBO_IMPRINTER
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)
@@ -73,6 +74,7 @@
 	id = "borgupload"
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/computer/borgupload
+	build_type = IMPRINTER | ROBO_IMPRINTER
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)
@@ -83,6 +85,7 @@
 	desc = "Allows for the construction of circuit boards used to build a medical records console."
 	id = "med_data"
 	build_path = /obj/item/circuitboard/computer/med_data
+	build_type = IMPRINTER | ROBO_IMPRINTER
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_MEDICAL
 	)
@@ -175,6 +178,7 @@
 	id = "robocontrol"
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/computer/robotics
+	build_type = IMPRINTER | ROBO_IMPRINTER
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)
@@ -236,6 +240,7 @@
 	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."
 	id = "mechapower"
 	build_path = /obj/item/circuitboard/computer/mech_bay_power_console
+	build_type = IMPRINTER | ROBO_IMPRINTER
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)
@@ -318,6 +323,7 @@
 	desc = "Allows for the construction of circuit boards used to build an AI Integrity Restorer."
 	id = "aifixer"
 	build_path = /obj/item/circuitboard/computer/aifixer
+	build_type = IMPRINTER | ROBO_IMPRINTER
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
 	)

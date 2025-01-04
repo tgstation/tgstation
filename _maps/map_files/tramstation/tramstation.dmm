@@ -55277,7 +55277,7 @@
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint/science)
 "syE" = (
-/obj/machinery/rnd/production/circuit_imprinter/department/science,
+/obj/machinery/rnd/production/circuit_imprinter/department/science/robotics,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
