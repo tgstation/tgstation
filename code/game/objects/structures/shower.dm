@@ -193,7 +193,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	. = ..()
 	if(!actually_on)
 		return
-	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
+	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
 	switch(dir)
 		if(NORTH)
@@ -273,7 +273,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	if(!radioactive_shower)
 		// note it is possible to have a clean_shower that is radioactive (+70% water mixed with +20% radiation)
 		wash_flags |= CLEAN_RAD
-	target.wash(wash_flags)
+
+	if (isturf(target))
+		target.wash(wash_flags, TRUE)
+	else
+		target.wash(wash_flags)
 
 	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
 	if(!isliving(target))
@@ -344,7 +348,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
 
 	// Wash up.
-	wash_atom(loc, TRUE)
+	wash_atom(loc)
 	reagents.remove_all(SHOWER_SPRAY_VOLUME)
 
 /obj/machinery/shower/on_deconstruction(disassembled = TRUE)

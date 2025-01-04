@@ -22,6 +22,11 @@
 	if(circuit)
 		. += "It has \a [circuit] installed."
 
+/obj/structure/frame/CanAllowThrough(atom/movable/mover, border_dir)
+	if(isprojectile(mover))
+		return TRUE
+	return ..()
+
 /obj/structure/frame/atom_deconstruct(disassembled = TRUE)
 	var/atom/movable/drop_loc = drop_location()
 	new /obj/item/stack/sheet/iron(drop_loc, 5)

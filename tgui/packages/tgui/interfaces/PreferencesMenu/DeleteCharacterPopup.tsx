@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Box, Button, Modal, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Box, Button, Modal, Stack } from '../../components';
 import { PreferencesMenuData } from './data';
 
 export const DeleteCharacterPopup = (props: { close: () => void }) => {

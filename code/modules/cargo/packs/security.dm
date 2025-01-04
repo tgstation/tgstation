@@ -250,7 +250,7 @@
 
 /datum/supply_pack/security/armory/battle_rifle
 	name = "NT BR-38 Crate"
-	desc = "An experimental energy-based ballistc battle rifle. Only available to \
+	desc = "An experimental energy-based ballistic battle rifle. Only available to \
 		Nanotrasen stations for security purposes. DO NOT RESELL TO OUTSIDE COMPANIES. \
 		Contains three NT BR-38 rifles and three magazines containing .38 Standard."
 	cost = CARGO_CRATE_VALUE * 100

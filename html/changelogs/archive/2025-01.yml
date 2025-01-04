@@ -1,0 +1,86 @@
+2025-01-01:
+  00-Steven:
+  - bugfix: Stamps no longer render below the paper sometimes.
+  - bugfix: Stamps no longer inherit the color of the paper they're on.
+  - bugfix: Clearing paper, like by splashing it with ethanol, actually resets its
+      icon state to the cleared version.
+  00-Steven, SmArtKar:
+  - bugfix: Paper on clipboards uses its own colour rather than that of the clipboard.
+  Absolucy, Flleeppyy:
+  - sound: Added a new, unique sound for polling!
+  Absolucy, S34NW:
+  - bugfix: Chat settings properly save on BYOND 516 now. Settings still won't carry
+      over from 515 tho, 515 and 516 settings will be separate.
+  Arturlang:
+  - bugfix: The unique AI station trait will no longer be able to choose lawsets set
+      as default in the config.
+  LemonInTheDark:
+  - bugfix: Boulders will no longer randomly run free from smelting pipelines! We
+      have enslaved them once more.
+  Namelessfairy and SmArtKar:
+  - bugfix: The Extradimensional Blade no longer infinitely scales damage
+  - bugfix: The nullblade correctly does increased damage when sharpened
+  SmArtKar:
+  - rscadd: 'Changed how colorful reagent and crayon powder work: douse your victims
+      to color their clothing, bodyparts and even internal organs!'
+  - rscadd: You can wash your eyes when washing your face at a sink
+  - bugfix: You can color robotic limbs with left click (again)
+  - bugfix: Mice no longer can spawn in unsafe atmos from garbage spawners
+  mc-oofert:
+  - bugfix: holodeck no longer explodes if the server lags while its loading a new
+      sim
+2025-01-02:
+  Ghommie:
+  - bugfix: Examining a trophy fish no longer shows the current day instead of when
+      it was actually caught and put on the mount.
+  Melbert:
+  - bugfix: Fixes Omelettes and Carbonara not making you speak French or Italian,
+      buuut...
+  - qol: Omelettes and Carbonara will now only make you speak French or Italian if
+      they were prepared with love (via chef's kiss)
+  SyncIt21:
+  - bugfix: dropping all the mobs' contents in some special admin cases won't gib
+      the player
+2025-01-03:
+  AyIong:
+  - admin: Ticket actions buttons in chat got a little bigger
+  - bugfix: Highlighted PMs, vote results and examine will not have weird black title
+  Hatterhat:
+  - spellcheck: Removed an errant typo on the recharger's readout while recharging
+      the BR-38.
+  SmArtKar:
+  - spellcheck: Removed outdated examine line from spraycans
+  - refactor: Completely rewrote all item and projectile embedding code
+  - bugfix: Instant summons now actually drags people who had the summoned item embedded
+      into them
+  - bugfix: Items embedded into limbs no longer get shoved into limbs deep enough
+      for them to never be found again upon delimbing.
+  - bugfix: You can see scar descriptions upon detailed examination of targets
+  - bugfix: Fixed rolling table being able to carry an infinite amount of dwarves
+  - bugfix: Folders and paper biscuits no longer share their color with their contents
+  - spellcheck: Fixed a typo in battle rifle crate's description
+  - rscadd: You can chug glowstick fluid to get glowing eyes
+  - bugfix: Added command access requirement to the door between EVA and bridge on
+      Nebula's escape shuttle
+  TealSeer:
+  - qol: you can now examine the jukebox to see what song is currently playing
+  zoomachina:
+  - rscadd: brain in a jar, a rare coroner mail goodie
+  - qol: soul-less brains that can be revived (like those from recovered crew) now
+      have an examine tip
+2025-01-04:
+  Bisar Metek:
+  - code_imp: Fixed up the return value of checkbox-input for tgui to behave consistently.
+  LT3:
+  - qol: Wearable HUDs can be toggled on and off
+  SmArtKar:
+  - bugfix: Fixed HUD implant message being reversed
+  SmArtKar, AnturK:
+  - admin: Fixes admin observe showing all antags as revs upon enabling Real Name
+      Display
+  high-speedspin-cycle:
+  - qol: The experimental deconstructive scanner can now scan multiple items.
+  necromanceranne:
+  - balance: The compact combat shotgun is now found in the warden's locker.
+  timothymtorres:
+  - bugfix: Fix pAIs interacting with machinery via alt/ctrl clicking.

@@ -7,11 +7,11 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 		return
 	var/datum/asset/asset_cache_datum = get_asset_datum(/datum/asset/group/permissions)
 	asset_cache_datum.send(usr)
-	var/list/output = list("<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url("panels.css")]'><a href='?_src_=holder;[HrefToken()];editrightsbrowser=1'>\[Permissions\]</a>")
+	var/list/output = list("<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url("panels.css")]'><a href='byond://?_src_=holder;[HrefToken()];editrightsbrowser=1'>\[Permissions\]</a>")
 	if(action)
-		output += " | <a href='?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightspage=0'>\[Log\]</a> | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1'>\[Management\]</a><hr style='background:#000000; border:0; height:3px'>"
+		output += " | <a href='byond://?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightspage=0'>\[Log\]</a> | <a href='byond://?_src_=holder;[HrefToken()];editrightsbrowsermanage=1'>\[Management\]</a><hr style='background:#000000; border:0; height:3px'>"
 	else
-		output += "<br><a href='?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightspage=0'>\[Log\]</a><br><a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1'>\[Management\]</a>"
+		output += "<br><a href='byond://?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightspage=0'>\[Log\]</a><br><a href='byond://?_src_=holder;[HrefToken()];editrightsbrowsermanage=1'>\[Management\]</a>"
 	if(action == 1)
 		var/logcount = 0
 		var/logssperpage = 20
@@ -30,7 +30,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 		if(logcount > logssperpage)
 			output += "<br><b>Page: </b>"
 			while(logcount > 0)
-				output += "|<a href='?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightstarget=[target];editrightsoperation=[operation];editrightspage=[pagecount]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
+				output += "|<a href='byond://?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightstarget=[target];editrightsoperation=[operation];editrightspage=[pagecount]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
 				logcount -= logssperpage
 				pagecount++
 			output += "|"
@@ -69,7 +69,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 		while(query_check_admin_errors.NextRow())
 			var/admin_key = query_check_admin_errors.item[1]
 			var/admin_rank = query_check_admin_errors.item[2]
-			output += "[admin_key] has non-existent rank [admin_rank] | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightschange=[admin_key]'>\[Change Rank\]</a> | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremove=[admin_key]'>\[Remove\]</a>"
+			output += "[admin_key] has non-existent rank [admin_rank] | <a href='byond://?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightschange=[admin_key]'>\[Change Rank\]</a> | <a href='byond://?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremove=[admin_key]'>\[Remove\]</a>"
 			output += "<hr style='background:#000000; border:0; height:1px'>"
 		qdel(query_check_admin_errors)
 		output += "<h3>Unused ranks</h3>"
@@ -79,7 +79,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 			return
 		while(query_check_unused_rank.NextRow())
 			var/admin_rank = query_check_unused_rank.item[1]
-			output += {"Rank [admin_rank] is not held by any admin | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremoverank=[admin_rank]'>\[Remove\]</a>
+			output += {"Rank [admin_rank] is not held by any admin | <a href='byond://?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremoverank=[admin_rank]'>\[Remove\]</a>
 			<br>Permissions: [rights2text(text2num(query_check_unused_rank.item[2])," ")]
 			<br>Denied: [rights2text(text2num(query_check_unused_rank.item[3])," ", "-")]
 			<br>Allowed to edit: [rights2text(text2num(query_check_unused_rank.item[4])," ", "*")]
@@ -95,7 +95,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 		<body onload='selectTextField();updateSearch();'>
 		<div id='main'><table id='searchable' cellspacing='0'>
 		<tr class='title'>
-		<th style='width:150px;'>CKEY <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=add'>\[+\]</a></th>
+		<th style='width:150px;'>CKEY <a class='small' href='byond://?src=[REF(src)];[HrefToken()];editrights=add'>\[+\]</a></th>
 		<th style='width:125px;'>RANK</th>
 		<th>PERMISSIONS</th>
 		</tr>
@@ -110,18 +110,18 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 			if(D.owner)
 				adm_ckey = D.owner.key
 			if (D.deadmined)
-				deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=activate;key=[adm_ckey]'>\[RA\]</a>"
+				deadminlink = " <a class='small' href='byond://?src=[REF(src)];[HrefToken()];editrights=activate;key=[adm_ckey]'>\[RA\]</a>"
 			else
-				deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=deactivate;key=[adm_ckey]'>\[DA\]</a>"
+				deadminlink = " <a class='small' href='byond://?src=[REF(src)];[HrefToken()];editrights=deactivate;key=[adm_ckey]'>\[DA\]</a>"
 
 			var/verify_link = ""
 			if (D.blocked_by_2fa)
-				verify_link += " | <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=verify;key=[adm_ckey]'>\[2FA VERIFY\]</a>"
+				verify_link += " | <a class='small' href='byond://?src=[REF(src)];[HrefToken()];editrights=verify;key=[adm_ckey]'>\[2FA VERIFY\]</a>"
 
 			output += "<tr>"
-			output += "<td style='text-align:center;'>[adm_ckey]<br>[deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;key=[adm_ckey]'>\[-\]</a><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=sync;key=[adm_ckey]'>\[SYNC TGDB\]</a>[verify_link]</td>"
-			output += "<td><a href='?src=[REF(src)];[HrefToken()];editrights=rank;key=[adm_ckey]'>[D.rank_names()]</a></td>"
-			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank_flags(), " ")]</a></td>"
+			output += "<td style='text-align:center;'>[adm_ckey]<br>[deadminlink]<a class='small' href='byond://?src=[REF(src)];[HrefToken()];editrights=remove;key=[adm_ckey]'>\[-\]</a><a class='small' href='byond://?src=[REF(src)];[HrefToken()];editrights=sync;key=[adm_ckey]'>\[SYNC TGDB\]</a>[verify_link]</td>"
+			output += "<td><a href='byond://?src=[REF(src)];[HrefToken()];editrights=rank;key=[adm_ckey]'>[D.rank_names()]</a></td>"
+			output += "<td><a class='small' href='byond://?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank_flags(), " ")]</a></td>"
 			output += "</tr>"
 		output += "</table></div><div id='top'><b>Search:</b> <input type='text' id='filter' value='' style='width:70%;' onkeyup='updateSearch();'></div></body>"
 	if(QDELETED(usr))
@@ -140,7 +140,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 	permissions_assets.send(usr.client)
 	var/admin_key = href_list["key"]
 	var/admin_ckey = ckey(admin_key)
-	
+
 	var/task = href_list["editrights"]
 	var/datum/admins/target_admin_datum = GLOB.admin_datums[admin_ckey]
 	if(!target_admin_datum)
@@ -178,7 +178,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 					use_db = FALSE
 			if(QDELETED(usr))
 				return
-	
+
 	if(target_admin_datum && (task != "sync" && task != "verify") && !check_if_greater_rights_than_holder(target_admin_datum))
 		message_admins("[key_name_admin(usr)] attempted to change the rank of [admin_key] without sufficient rights.")
 		log_admin("[key_name(usr)] attempted to change the rank of [admin_key] without sufficient rights.")

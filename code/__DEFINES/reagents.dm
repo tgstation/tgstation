@@ -1,7 +1,3 @@
-#define SOLID 1
-#define LIQUID 2
-#define GAS 3
-
 #define INJECTABLE (1<<0) // Makes it possible to add reagents through droppers and syringes.
 #define DRAWABLE (1<<1) // Makes it possible to remove reagents through syringes.
 
@@ -46,7 +42,8 @@
 ///Health threshold for synthflesh and rezadone to unhusk someone
 #define UNHUSK_DAMAGE_THRESHOLD 50
 ///Amount of synthflesh required to unhusk someone
-#define SYNTHFLESH_UNHUSK_AMOUNT 100
+#define SYNTHFLESH_UNHUSK_AMOUNT 60
+#define SYNTHFLESH_UNHUSK_MAX 100
 
 //used by chem masters and pill presses
 // The categories of reagent packaging

@@ -84,7 +84,7 @@ ADMIN_VERB(show_map_reports, R_DEBUG, "Show Map Reports", "Displays a list of ma
 	var/dat = {"<b>List of all map reports:</b><br>"}
 
 	for(var/datum/map_report/report as anything in GLOB.map_reports)
-		dat += "[report.tag] ([report.original_path]) - <a href='?src=[REF(report)];[HrefToken()];show=1'>View</a><br>"
+		dat += "[report.tag] ([report.original_path]) - <a href='byond://?src=[REF(report)];[HrefToken()];show=1'>View</a><br>"
 
 	user << browse(dat, "window=map_reports")
 
@@ -224,7 +224,7 @@ ADMIN_VERB(create_mapping_job_icons, R_DEBUG, "Generate job landmarks icons", "G
 
 ADMIN_VERB_VISIBILITY(debug_z_levels, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(debug_z_levels, R_DEBUG, "Debug Z-Levels", "Displays a list of all z-levels and their linkages.", ADMIN_CATEGORY_MAPPING)
-	to_chat(user, examine_block(gather_z_level_information(append_grid = TRUE)), confidential = TRUE)
+	to_chat(user, boxed_message(gather_z_level_information(append_grid = TRUE)), confidential = TRUE)
 
 /// Returns all necessary z-level information. Argument `append_grid` allows the user to see a table showing all of the z-level linkages, which is only visible and useful in-game.
 /proc/gather_z_level_information(append_grid = FALSE)

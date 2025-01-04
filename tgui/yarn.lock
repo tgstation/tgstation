@@ -18715,22 +18715,25 @@ __metadata:
   resolution: "tgui-bench@workspace:packages/tgui-bench"
   dependencies:
     "@fastify/static": "npm:^8.0.2"
+    "@types/react-dom": "npm:^18.3.1"
     common: "workspace:*"
     fastify: "npm:^5.1.0"
     lodash: "npm:^4.17.21"
     platform: "npm:^1.3.6"
     react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
+    tgui-core: "npm:^1.5.4"
   languageName: unknown
   linkType: soft
 
-"tgui-core@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "tgui-core@npm:1.3.0"
+"tgui-core@npm:^1.5.4":
+  version: 1.5.4
+  resolution: "tgui-core@npm:1.5.4"
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10c0/448c38a23149a13f80dcbe3688f3edba8dbe25dd65fc1b48036627f6e992996107a7962cd7bca6194f41959dc3aad531fdf3fbe032decaac7989c32721ad99a1
+  checksum: 10c0/c9959690ff905ddf57b241918cfe889bf840efc70271a7e35832f2a5a2854506ad0e9086a02f16a1a2bd02196a311afb0516b0af3769ca1992072fe7d85c2f1b
   languageName: node
   linkType: hard
 
@@ -18758,6 +18761,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
+    tgui-core: "npm:^1.5.4"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
     tgui-styles: "npm:^0.0.10"
@@ -18785,6 +18789,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
+    tgui-core: "npm:^1.5.4"
     tgui-polyfill: "workspace:*"
     tgui-styles: "npm:^0.0.10"
   languageName: unknown
@@ -18854,7 +18859,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     react-popper: "npm:^2.3.0"
-    tgui-core: "npm:^1.3.0"
+    tgui-core: "npm:^1.5.4"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
     tgui-styles: "npm:^0.0.10"

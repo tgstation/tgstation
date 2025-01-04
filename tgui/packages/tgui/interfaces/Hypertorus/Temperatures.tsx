@@ -1,5 +1,5 @@
 import { useBackend } from 'tgui/backend';
-import { Box, Flex, Icon, Section, Stack, Tooltip } from 'tgui/components';
+import { Box, Flex, Icon, Section, Stack, Tooltip } from 'tgui-core/components';
 
 import { HypertorusFuel } from '.';
 import { to_exponential_if_big } from './helpers';

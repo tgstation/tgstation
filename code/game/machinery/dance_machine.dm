@@ -26,6 +26,11 @@
 	QDEL_NULL(music_player)
 	return ..()
 
+/obj/machinery/jukebox/examine(mob/user)
+	. = ..()
+	if(music_player.active_song_sound)
+		. += "Now playing: [music_player.selection.song_name]"
+
 /obj/machinery/jukebox/no_access
 	req_access = null
 
