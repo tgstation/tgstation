@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "You can now try to fish random products out of vending machines with a fishing rod and a few bucks."
+  - bugfix: "Fixing the 1000 cr holochip loot from exploration drones."

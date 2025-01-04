@@ -1,4 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - bugfix: "/datum/gas_machine_connector will abstract_move() if their parent also abstract_move()s, preventing a runtime"

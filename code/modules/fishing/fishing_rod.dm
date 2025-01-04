@@ -132,6 +132,13 @@
 		. += "" //add a new line
 		. += span_notice("Thanks to your fishing skills, you can examine it again for more in-depth information.")
 		return
+	if(HAS_TRAIT(src, TRAIT_ROD_MANSUS_INFUSED))
+		if(IS_HERETIC(user))
+			. += span_purple("This rod has been <b>infused</b> by a heretic, improving its ability to catch glimpses of the Mansus. And fish.")
+		else
+			. += span_purple("It's glowing an eerie purple...")
+	else if(IS_HERETIC(user))
+		. += span_purple("As a Heretic, you can infuse this fishing rod with your <b>Mansus Grasp</b> by activating the spell while wielding it, to enhance its fishing power.")
 
 /obj/item/fishing_rod/examine_more(mob/user)
 	. = ..()
@@ -150,7 +157,7 @@
 	block += get_stat_info(get_percent, gravity_mult, "The lure will sink", "faster", "slower", span_info = TRUE)
 
 	list_clear_nulls(block)
-	. += examine_block(block.Join("\n"))
+	. += boxed_message(block.Join("\n"))
 
 	if(get_percent && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
 		block = list()
@@ -159,7 +166,7 @@
 		if(material.fish_weight_modifier != 1)
 			var/heavier = material.fish_weight_modifier > 1 ? "heavier" : "lighter"
 			block += span_info("Fish made of the same material as this rod tend to be [abs(material.fish_weight_modifier - 1) * 100]% [heavier].")
-		. += examine_block(block.Join("\n"))
+		. += boxed_message(block.Join("\n"))
 
 	block = list()
 	if(HAS_TRAIT(src, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
@@ -171,7 +178,7 @@
 	if(HAS_TRAIT(src, TRAIT_ROD_LAVA_USABLE))
 		block += span_info("This fishing rod can be used to fish on lava.")
 	if(length(block))
-		. += examine_block(block.Join("\n"))
+		. += boxed_message(block.Join("\n"))
 
 ///Used in examine_more to reduce all the copypasta when getting more information about the various stats of the fishing rod.
 /obj/item/fishing_rod/proc/get_stat_info(get_percent, value, prefix, easier, harder, suffix = "with this fishing rod", span_info = FALSE, less_is_better = FALSE, offset = 1)
@@ -256,7 +263,7 @@
 			if(kill_fish)
 				fish.set_status(FISH_DEAD, silent = TRUE)
 
-	QDEL_NULL(bait)
+	qdel(bait)
 	update_icon()
 
 ///Returns the probability that a fish caught by this (custom material) rod will be of the same material.

@@ -1,0 +1,6 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Proto-kinetic crushers no longer cause a runtime every time you hit a mob that doesn't have a mark."
+  - bugfix: "Equipment pieces with upgradable armor (e.g. explorer suits) now properly list what they use to upgrade."
+  - bugfix: "Mobs without targetable limbs no longer have extraneous spaces appear in their hit-by-projectile messages."

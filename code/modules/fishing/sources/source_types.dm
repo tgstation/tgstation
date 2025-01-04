@@ -159,6 +159,7 @@
 	radial_name = "Chasm"
 	overlay_state = "portal_chasm"
 	radial_state = "ground_hole"
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_NONE
 
 /datum/fish_source/portal/ocean
 	fish_table = list(
@@ -295,7 +296,7 @@
 	mover.long_jump_velocity_limit += rand(-100, 100)
 
 ///Cherry on top, fish caught from the randomizer portal also have (almost completely) random traits
-/datum/fish_source/portal/random/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot)
+/datum/fish_source/portal/random/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
 	if(!ispath(reward_path, /obj/item/fish))
 		return ..()
 
@@ -341,9 +342,6 @@
 		return rolled_reward
 
 	return rod.hook.chasm_detritus_type
-
-/datum/fish_source/chasm/spawn_reward_from_explosion(atom/location, severity)
-	return //Spawned content would immediately fall back into the chasm, so it wouldn't matter.
 
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
@@ -507,6 +505,7 @@
 		/obj/item/seeds/random = 1,
 		/mob/living/basic/frog = 1,
 		/mob/living/basic/axolotl = 1,
+		/mob/living/basic/turtle = 2,
 	)
 	fish_counts = list(
 		/obj/item/food/grown/grass = 10,
@@ -581,7 +580,7 @@
 		return
 	return ..()
 
-/datum/fish_source/hydro_tray/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot)
+/datum/fish_source/hydro_tray/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
 	if(reward_path != FISHING_RANDOM_SEED)
 		var/mob/living/created_reward = ..()
 		if(istype(created_reward))
@@ -661,7 +660,7 @@
 	//The range for waiting is also a bit narrower, so it cannot take as few as 3 seconds or as many as 25 to snatch an organ.
 	wait_time_range = list(6 SECONDS, 12 SECONDS)
 
-/datum/fish_source/surgery/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot)
+/datum/fish_source/surgery/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
 	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
 		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
 		fishing_spot = portal.current_linked_atom
@@ -702,11 +701,12 @@
 #define RANDOM_AQUARIUM_FISH "random_aquarium_fish"
 
 /datum/fish_source/aquarium
+	catalog_description = "Aquariums"
 	radial_state = "fish_tank"
 	fish_table = list(
 		FISHING_DUD = 10,
 	)
-	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD|FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG
+	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD|FISH_SOURCE_FLAG_IGNORE_HIDDEN_ON_CATALOG|FISH_SOURCE_FLAG_EXPLOSIVE_NONE
 	fishing_difficulty = FISHING_EASY_DIFFICULTY + 5
 
 #undef RANDOM_AQUARIUM_FISH
@@ -721,11 +721,8 @@
 			continue
 		table[fish] = 10
 	if(!length(table))
-		return fish_table
+		return fish_table.Copy()
 	return table
-
-/datum/fish_source/aquarium/spawn_reward_from_explosion(atom/location, severity)
-	return //If the aquarium breaks, all fish are released anyway.
 
 /datum/fish_source/aquarium/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
 	var/list/data = list()
@@ -774,3 +771,247 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
+
+/datum/fish_source/vending
+	catalog_description = "Vending Machines"
+	radial_state = "vending"
+	overlay_state = "portal_randomizer"
+	fish_table = list(
+		FISHING_DUD = 10,
+	)
+	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD|FISH_SOURCE_FLAG_EXPLOSIVE_NONE
+	fishing_difficulty = FISHING_EASY_DIFFICULTY //with some equipment and just enough dosh, you should be able to skip the minigame
+
+/datum/fish_source/vending/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
+	var/list/data = list()
+
+	data += LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = "Vending Products",
+		FISH_SOURCE_AUTOWIKI_DUD = "",
+		FISH_SOURCE_AUTOWIKI_WEIGHT = 100,
+		FISH_SOURCE_AUTOWIKI_NOTES = "Use chips, bills or coins as bait to get a semi-random vending product, depending on both its and the bait's monetary values",
+	))
+
+	return data
+
+/datum/fish_source/vending/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
+	if(istype(location, /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = location
+		location = portal.current_linked_atom
+	if(!istype(location, /obj/machinery/vending))
+		return list()
+
+	return get_vending_table(rod, fisherman, location)
+
+/datum/fish_source/vending/proc/get_vending_table(obj/item/fishing_rod/rod, mob/fisherman, obj/machinery/vending/location)
+	var/list/table = list()
+	///Create a list of products, ordered by price from highest to lowest
+	var/list/products = location.product_records + location.coin_records + location.hidden_records
+	sortTim(products, GLOBAL_PROC_REF(cmp_vending_prices))
+
+	var/bait_value = rod.bait?.get_item_credit_value() || 1
+
+	var/highest_record_price = 0
+	for(var/datum/data/vending_product/product_record as anything in products)
+		if(product_record.amount <= 0)
+			products -= product_record
+			table[FISHING_DUD] += PAYCHECK_LOWER //it gets harder the emptier the machine is
+			continue
+		if(!highest_record_price)
+			highest_record_price = product_record.price
+		var/high = max(highest_record_price, bait_value)
+		var/low = min(highest_record_price, bait_value)
+
+		//the smaller the difference between product price and bait value, the more likely you're to get it.
+		table[product_record] = low/high * 1000 //multiply the value by 1000 for accuracy. pick_weight() doesn't work with zero decimals yet.
+
+	add_risks(table, bait_value, highest_record_price, length(products) * 0.5)
+	return table
+
+/datum/fish_source/vending/proc/add_risks(list/table, bait_value, highest_price, malus_multiplier)
+	///Using more than the money needed to buy the most expensive item (why would you do it?!) will remove the dud chance.
+	if(bait_value > highest_price)
+		table -= FISHING_DUD
+	else
+		//Makes using 1 cred chips with the minigame skip (negative fishing difficulty) a bit less cheesy.
+		var/malus = min(PAYCHECK_LOWER - bait_value, highest_price)
+		if(malus > 0)
+			table[FISHING_DUD] += malus * malus_multiplier
+			table[FISHING_VENDING_CHUCK] += malus * malus_multiplier
+
+#define FISHING_PRODUCT_DIFFICULTY_MULT 1.6
+
+/datum/fish_source/vending/calculate_difficulty(datum/fishing_challenge/challenge, result, obj/item/fishing_rod/rod, mob/fisherman)
+	//Using less than a minimum paycheck is going to make the challenge a tad harder.
+	var/bait_value = rod.bait?.get_item_credit_value()
+	var/base_diff = PAYCHECK_LOWER - bait_value
+	return ..() + get_product_difficulty(base_diff, result) * FISHING_PRODUCT_DIFFICULTY_MULT
+
+/datum/fish_source/vending/proc/get_product_difficulty(diff, datum/result)
+	if(istype(result, /datum/data/vending_product))
+		var/datum/data/vending_product/product = result
+		diff = min(diff, product.price) // low priced items are easier to catch anyway
+	return diff
+
+#undef FISHING_PRODUCT_DIFFICULTY_MULT
+
+/datum/fish_source/vending/dispense_reward(reward_path, mob/fisherman, atom/fishing_spot, obj/item/fishing_rod/rod)
+	var/obj/machinery/vending/vending = fishing_spot
+	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
+		vending = portal.current_linked_atom
+
+	if(reward_path == FISHING_VENDING_CHUCK)
+		if(fishing_spot != vending) //fishing portals
+			vending.forceMove(get_turf(fishing_spot))
+		vending.tilt(fisherman, range = 4)
+		return null //Don't spawn a reward at all
+
+	var/atom/movable/reward = ..()
+	if(reward)
+		var/creds_value = rod.bait?.get_item_credit_value()
+		if(creds_value)
+			vending.credits_contained += round(creds_value * VENDING_CREDITS_COLLECTION_AMOUNT)
+			qdel(rod.bait)
+	return reward
+
+/datum/fish_source/vending/spawn_reward(reward_path, atom/spawn_location, obj/machinery/vending/fishing_spot, obj/item/fishing_rod/used_rod)
+	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
+		var/obj/machinery/fishing_portal_generator/portal = fishing_spot
+		fishing_spot = portal.current_linked_atom
+	if(!istype(fishing_spot))
+		return null
+	return spawn_vending_reward(reward_path, spawn_location, fishing_spot)
+
+/datum/fish_source/vending/proc/spawn_vending_reward(reward_path, atom/spawn_location, obj/machinery/vending/fishing_spot)
+	var/datum/data/vending_product/product_record = reward_path
+	if(!istype(product_record) || product_record.amount <= 0)
+		return null
+	return fishing_spot.dispense(product_record, spawn_location)
+
+/datum/fish_source/vending/pre_challenge_started(obj/item/fishing_rod/rod, mob/user, datum/fishing_challenge/challenge)
+	RegisterSignal(rod, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(on_reward))
+
+/datum/fish_source/vending/on_challenge_completed(mob/user, datum/fishing_challenge/challenge, success)
+	. = ..()
+	UnregisterSignal(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH)
+
+/datum/fish_source/vending/proc/on_reward(obj/item/fishing_rod/rod, atom/movable/reward, mob/user)
+	SIGNAL_HANDLER
+	if(reward && !QDELETED(rod.bait) && rod.bait.get_item_credit_value()) //you pay for what you get
+		qdel(rod.bait) // fishing_rod.Exited() will handle clearing the hard ref.
+
+///subtype of fish_source/vending for custom vending machines
+/datum/fish_source/vending/custom
+	catalog_description = null //no duplicate entries on autowiki or catalog
+
+/datum/fish_source/vending/custom/get_vending_table(obj/item/fishing_rod/rod, mob/fisherman, obj/machinery/vending/location)
+	var/list/table = list()
+	///Create a list of products, ordered by price from highest to lowest
+	var/list/products = location.vending_machine_input.Copy()
+	sortTim(products, GLOBAL_PROC_REF(cmp_item_vending_prices))
+
+	var/bait_value = rod.bait?.get_item_credit_value() || 1
+
+	var/highest_record_price = 0
+	for(var/obj/item/stocked as anything in products)
+		if(location.vending_machine_input[stocked] <= 0)
+			products -= stocked
+			table[FISHING_DUD] += PAYCHECK_LOWER //it gets harder the emptier the machine is
+			continue
+		if(!highest_record_price)
+			highest_record_price = stocked.custom_price
+		var/high = max(highest_record_price, bait_value)
+		var/low = min(highest_record_price, bait_value)
+
+		//the smaller the difference between product price and bait value, the more likely you're to get it.
+		table[stocked] = low/high * 1000 //multiply the value by 1000 for accuracy. pick_weight() doesn't work with zero decimals yet.
+
+	add_risks(table, bait_value, highest_record_price, length(products) * 0.5)
+	return table
+
+/datum/fish_source/vending/custom/get_product_difficulty(diff, datum/result)
+	if(isitem(result))
+		var/obj/item/product = result
+		diff = min(diff, product.custom_price)
+	return diff
+
+/datum/fish_source/vending/custom/spawn_vending_reward(obj/item/reward, atom/spawn_location, obj/machinery/vending/fishing_spot)
+	if(!isitem(reward))
+		return null
+	reward.forceMove(spawn_location)
+	return reward
+
+/datum/fish_source/dimensional_rift
+	catalog_description = null //it's a secret (sorta, I know you're reading this)
+	radial_state = "cursed" // placeholder
+	overlay_state = "portal_rift_2" // yeah good luck adaptin the rift sprite to this template. recolored randomizer's the best you're getting
+	fish_table = list(
+		FISHING_INFLUENCE = 6,
+		/obj/item/fish/starfish/chrystarfish = 7,
+		/obj/item/fish/dolphish = 7,
+		/obj/item/fish/flumpulus = 7,
+		/obj/item/fish/gullion = 7,
+		/mob/living/basic/heretic_summon/fire_shark/wild = 3,
+		/obj/item/eldritch_potion/crucible_soul = 1,
+		/obj/item/eldritch_potion/duskndawn = 1,
+		/obj/item/eldritch_potion/wounded = 1,
+		/obj/item/reagent_containers/cup/beaker/eldritch = 2,
+	)
+	fish_counts = list(
+		/mob/living/basic/heretic_summon/fire_shark/wild = 3,
+		/obj/item/eldritch_potion/crucible_soul = 1,
+		/obj/item/eldritch_potion/duskndawn = 1,
+		/obj/item/eldritch_potion/wounded = 1,
+		/obj/item/reagent_containers/cup/beaker/eldritch = 2,
+	)
+	fish_count_regen = list(
+		/mob/living/basic/heretic_summon/fire_shark/wild = 3 MINUTES,
+		/obj/item/eldritch_potion/crucible_soul = 5 MINUTES,
+		/obj/item/eldritch_potion/duskndawn = 5 MINUTES,
+		/obj/item/eldritch_potion/wounded = 5 MINUTES,
+		/obj/item/reagent_containers/cup/beaker/eldritch = 2.5 MINUTES,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 35
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_NONE
+
+/datum/fish_source/dimensional_rift/on_challenge_completed(mob/user, datum/fishing_challenge/challenge, success)
+	. = ..()
+
+	if(challenge.reward_path != FISHING_INFLUENCE)
+		return
+	var/mob/living/carbon/human/human_user
+	if(ishuman(user))
+		human_user = user
+
+	user.visible_message(span_danger("[user] reels [user.p_their()] [challenge.used_rod] in, catching.. nothing?"), span_notice("You catch.. a glimpse into the workings of the Mansus itself!"))
+	// Heretics that fish in the rift gain knowledge.
+	if(IS_HERETIC(user))
+		human_user?.add_mood_event("rift fishing", /datum/mood_event/rift_fishing)
+		var/obj/effect/heretic_influence/fishfluence = challenge.location
+		// But only if it's an open rift
+		if(!istype(fishfluence))
+			to_chat(user, span_notice("You glimpse something fairly uninteresting."))
+			return
+		fishfluence.after_drain(user)
+		var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+		if(heretic_datum)
+			heretic_datum.knowledge_points++
+			to_chat(user, "[span_hear("You hear a whisper...")] [span_hypnophrase("THE HIGHER I RISE, THE MORE I FISH.")]")
+			// They can also gain an extra influence point if they infused their rod.
+			if(HAS_TRAIT(challenge.used_rod, TRAIT_ROD_MANSUS_INFUSED))
+				heretic_datum.knowledge_points++
+			to_chat(user, span_boldnotice("Your infused rod improves your knowledge gain!"))
+		return
+
+	// Non-heretics instead go crazy
+	human_user?.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+	human_user?.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	// Hand fires at them from the location
+	fire_curse_hand(user, get_turf(challenge.location))
+
+// Handled above
+/datum/fish_source/dimensional_rift/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
+	if(reward_path != FISHING_INFLUENCE)
+		return ..()
+	return

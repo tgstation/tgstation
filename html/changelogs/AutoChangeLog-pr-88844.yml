@@ -1,0 +1,4 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - qol: "virtual pet holograms now automatically follow you when released rather than having to give it the command post summon"
