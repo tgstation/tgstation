@@ -495,7 +495,7 @@
 
 /obj/item/circuitboard/machine/circuit_imprinter/department/science/robotics
 	name = "Departmental Circuit Imprinter (Robotics)"
-	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/science/robotics
 
 /obj/item/circuitboard/machine/holopad
