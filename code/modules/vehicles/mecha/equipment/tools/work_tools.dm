@@ -228,6 +228,7 @@
 	energy_drain = 0 // internal RCD handles power consumption based on matter use
 	range = MECHA_MELEE | MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
+	mech_flags = EXOSUIT_MODULE_RIPLEY
 
 	///The location the mech was when it began using the rcd
 	var/atom/initial_location = FALSE
