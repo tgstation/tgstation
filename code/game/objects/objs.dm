@@ -38,6 +38,12 @@
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
 
+	/// The sound this obj makes when something is buckled to it
+	var/buckle_sound = null
+
+	/// The sound this obj makes when something is unbuckled from it
+	var/unbuckle_sound = null
+
 	uses_integrity = TRUE
 
 /obj/vv_edit_var(vname, vval)
