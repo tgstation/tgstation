@@ -135,6 +135,9 @@
 	/// If set, look for a policy with this instead of the job title
 	var/policy_override
 
+	/// Pref from which we should fetch an alternate name for this job
+	var/alternate_name_pref
+
 /datum/job/New()
 	. = ..()
 	var/new_spawn_positions = CHECK_MAP_JOB_CHANGE(title, "spawn_positions")
@@ -147,7 +150,6 @@
 /// Executes after the mob has been spawned in the map. Client might not be yet in the mob, and is thus a separate variable.
 /datum/job/proc/after_spawn(mob/living/spawned, client/player_client)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 	if(length(mind_traits))
 		spawned.mind.add_traits(mind_traits, JOB_TRAIT)
 
@@ -156,10 +158,14 @@
 		liver.add_traits(liver_traits, JOB_TRAIT)
 
 	if(!ishuman(spawned))
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 		return
 
 	var/mob/living/carbon/human/spawned_human = spawned
 	var/list/roundstart_experience
+
+	if (alternate_name_pref)
+		spawned_human.apply_pref_name(alternate_name_pref, player_client)
 
 	if(!config) //Needed for robots.
 		roundstart_experience = minimal_skills
@@ -172,6 +178,8 @@
 	if(roundstart_experience)
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
+
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 
 /// Return the outfit to use
 /datum/job/proc/get_outfit(consistent)
