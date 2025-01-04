@@ -9,3 +9,9 @@
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter/department/science
 	allowed_department_flags = DEPARTMENT_BITFLAG_SCIENCE
 	payment_department = ACCOUNT_SCI
+
+/obj/machinery/rnd/production/circuit_imprinter/department/science/robotics
+	name = "department circuit imprinter (Robotics)"
+	desc = "A special circuit imprinter for robotics needs only."
+	allowed_buildtypes = ROBO_IMPRINTER
+	circuit = /obj/item/circuitboard/machine/circuit_imprinter/department/science/robotics
