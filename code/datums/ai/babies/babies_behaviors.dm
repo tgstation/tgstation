@@ -25,7 +25,7 @@
 		if(!is_type_in_list(other, similar_species_types))
 			continue
 
-		if(++nearby_pop >= max_nearby_pop)
+		if(++nearby_pop >= maximum_pop)
 			controller.set_blackboard_key(BB_PARTNER_SEARCH_TIMEOUT, world.time + FIND_PARTNER_COOLDOWN)
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
@@ -67,3 +67,5 @@
 /datum/ai_behavior/make_babies/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
+
+#undef FIND_PARTNER_COOLDOWN
