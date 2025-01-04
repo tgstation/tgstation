@@ -179,7 +179,7 @@
 /datum/component/lockable_storage/ui_interact(mob/user, datum/tgui/ui)
 	var/obj/source = parent
 	if(source.obj_flags & EMAGGED)
-		ui.close()
+		ui?.close()
 		return
 
 	ui = SStgui.try_update_ui(user, src, ui)
