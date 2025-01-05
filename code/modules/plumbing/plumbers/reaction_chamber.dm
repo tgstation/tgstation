@@ -23,9 +23,6 @@
 	///towards which temperature do we build (except during draining)?
 	var/target_temperature = 300
 
-/obj/machinery/plumbing/reaction_chamber/Destroy()
-	return ..()
-
 /obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/reaction_chamber, bolt, layer)
