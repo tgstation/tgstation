@@ -1,6 +1,6 @@
-#define FIRE_BULLETS " Loaded with rounds which ignite targets and leave flaming trails, but inflict less damage."
-#define HP_BULLETS " Loaded with hollow-point rounds which are effective against unarmored targets, but suffer greatly against armor."
-#define AP_BULLETS " Loaded with armor-piercing rounds which are effective against armored targets, but less effective against unarmored targets."
+#define FIRE_BULLETS " Carries rounds which ignite targets and leave flaming trails, but inflict less damage."
+#define HP_BULLETS " Carries hollow-point rounds which are effective against unarmored targets, but suffer greatly against armor."
+#define AP_BULLETS " Carries armor-piercing rounds which are effective against armored targets, but less effective against unarmored targets."
 
 // Makarov (9mm) //
 
