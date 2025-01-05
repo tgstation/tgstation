@@ -278,6 +278,12 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 /mob/living/basic/mimic/copy/animate_atom_living(mob/living/owner)
 	change_owner(owner)
 
+/mob/living/basic/mimic/copy/Exited(atom/movable/gone, direction) // if anything exits us it was 99.99999% the object we were copying
+	. = ..()
+	if(QDELETED(src))
+		return
+	death()
+
 /mob/living/basic/mimic/copy/proc/change_owner(mob/owner)
 	if(isnull(owner) || creator == owner)
 		return
@@ -288,7 +294,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	return ((isitem(target) || isstructure(target)) && !is_type_in_typecache(target, GLOB.animatable_blacklist))
 
 /mob/living/basic/mimic/copy/proc/CopyObject(obj/original, mob/living/user, destroy_original = FALSE)
-	if(!destroy_original || !check_object(original))
+	if(!destroy_original && !check_object(original))
 		return FALSE
 	if(!destroy_original)
 		original.forceMove(src)
@@ -320,7 +326,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	icon = original.icon
 	icon_state = original.icon_state
 	icon_living = icon_state
-	copy_overlays(original)
+	copy_overlays(original, cut_old = TRUE)
 
 /mob/living/basic/mimic/copy/machine
 	ai_controller = /datum/ai_controller/basic_controller/mimic_copy/machine
@@ -330,8 +336,6 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "invisible"
 	ai_controller = /datum/ai_controller/basic_controller/mimic_copy/gun
-	/// the gun we are
-	var/obj/item/gun/gun
 
 /mob/living/basic/mimic/copy/ranged/Destroy()
 	vis_contents.Cut()
@@ -342,6 +346,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	INVOKE_ASYNC(src, PROC_REF(fire_gun), atom_target, modifiers)
 
 /mob/living/basic/mimic/copy/ranged/proc/fire_gun(atom/target, modifiers) // i cant find any better way to do this
+	var/obj/item/gun/gun = locate() in contents
 	if(!gun.can_shoot())
 		if(istype(gun, /obj/item/gun/ballistic))
 			var/obj/item/gun/ballistic/ballistic = gun
