@@ -46930,9 +46930,7 @@
 	dir = 1
 	},
 /obj/item/stack/sheet/mineral/plasma,
-/obj/machinery/reagentgrinder{
-	pixel_y = 4
-	},
+/obj/machinery/reagentgrinder,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "qGN" = (
@@ -48819,9 +48817,7 @@
 /obj/structure/table,
 /obj/effect/turf_decal/stripes/line,
 /obj/item/stack/sheet/mineral/plasma,
-/obj/machinery/reagentgrinder{
-	pixel_y = 4
-	},
+/obj/machinery/reagentgrinder,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "rms" = (
