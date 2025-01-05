@@ -1,3 +1,4 @@
+#define CANT_INSERT_FULL -1
 /// Mimics can't be made out of these objects
 GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	/obj/structure/table,
@@ -64,7 +65,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	/// can we be opened or closed, if false we can
 	var/locked = FALSE
 	/// action to lock us
-	var/datum/action/innate/mimic/lock/lock
+	var/datum/action/innate/mimic_lock/lock
 	///A cap for items in the mimic. Prevents the mimic from eating enough stuff to cause lag when opened.
 	var/storage_capacity = 50
 	///A cap for mobs. Mobs count towards the item cap. Same purpose as above.
@@ -158,14 +159,14 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		icon_state = "crate"
 		playsound(src, 'sound/machines/crate/crate_close.ogg', 50, TRUE)
 		for(var/atom/movable/movable as anything in get_turf(src))
-			if(movable != src && insert(movable) == -1)
+			if(movable != src && insert(movable) == CANT_INSERT_FULL)
 				playsound(src, 'sound/items/trayhit/trayhit2.ogg', 50, TRUE)
 				break
 
 /**
 * Called by toggle_open to put items inside the mimic when it's being closed
 *
-* Will return -1 if the insertion fails due to the storage capacity of the mimic having been reached
+* Will return CANT_INSERT_FULL (-1) if the insertion fails due to the storage capacity of the mimic having been reached
 * Will return FALSE if insertion fails
 * Will return TRUE if insertion succeeds
 * Arguments:
@@ -173,13 +174,15 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 */
 /mob/living/basic/mimic/crate/proc/insert(atom/movable/movable)
 	if(contents.len >= storage_capacity)
-		return -1
+		return CANT_INSERT_FULL
 	if(insertion_allowed(movable))
 		movable.forceMove(src)
 		return TRUE
 	return FALSE
 
 /mob/living/basic/mimic/crate/proc/insertion_allowed(atom/movable/movable)
+	if(movable.anchored)
+		return FALSE
 	if(ismob(movable))
 		if(!isliving(movable))  //Don't let ghosts and such get trapped in the beast.
 			return FALSE
@@ -199,7 +202,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	else if(istype(movable, /obj/structure/closet))
 		return FALSE
 	else if(isobj(movable))
-		if(movable.anchored || movable.has_buckled_mobs())
+		if(movable.has_buckled_mobs())
 			return FALSE
 		else if(isitem(movable) && !HAS_TRAIT(movable, TRAIT_NODROP))
 			return TRUE
@@ -215,15 +218,13 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	speak_emote = list("clatters")
 	gold_core_spawnable = HOSTILE_SPAWN
 
-/datum/action/innate/mimic
-	background_icon_state = "bg_default"
-	overlay_icon_state = "bg_default_border"
-
-/datum/action/innate/mimic/lock
+/datum/action/innate/mimic_lock
 	name = "Lock/Unlock"
 	desc = "Toggle preventing yourself from being opened or closed."
 	button_icon = 'icons/hud/radial.dmi'
 	button_icon_state = "radial_lock"
+	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/innate/mimic/lock/Activate()
 	var/mob/living/basic/mimic/crate/mimic = owner
@@ -264,6 +265,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		adjustBruteLoss(0.5 * seconds_per_tick)
 	for(var/mob/living/victim in contents) //a fix for animated statues from the flesh to stone spell
 		death()
+		return
 
 /mob/living/basic/mimic/copy/death()
 	for(var/atom/movable/movable as anything in src)
@@ -286,29 +288,30 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	return ((isitem(target) || isstructure(target)) && !is_type_in_typecache(target, GLOB.animatable_blacklist))
 
 /mob/living/basic/mimic/copy/proc/CopyObject(obj/original, mob/living/user, destroy_original = FALSE)
-	if(destroy_original || check_object(original))
+	if(!destroy_original || !check_object(original))
+		return FALSE
+	if(!destroy_original)
 		original.forceMove(src)
-		CopyObjectVisuals(original)
-		if (overlay_googly_eyes)
-			add_overlay(googly_eyes)
-		if(isstructure(original) || ismachinery(original))
-			health = (anchored * 50) + 50
-			if(original.density && original.anchored)
-				knockdown_people = TRUE
-				melee_damage_lower *= 2
-				melee_damage_upper *= 2
-		else if(isitem(original))
-			var/obj/item/I = original
-			health = 15 * I.w_class
-			melee_damage_lower = 2 + I.force
-			melee_damage_upper = 2 + I.force
-		maxHealth = health
-		if(user)
-			befriend(user)
-		if(destroy_original)
-			qdel(original)
-		return TRUE
-	return FALSE
+	CopyObjectVisuals(original)
+	if (overlay_googly_eyes)
+		add_overlay(googly_eyes)
+	if(isstructure(original) || ismachinery(original))
+		health = (anchored * 50) + 50
+		if(original.density && original.anchored)
+			knockdown_people = TRUE
+			melee_damage_lower *= 2
+			melee_damage_upper *= 2
+	else if(isitem(original))
+		var/obj/item/I = original
+		health = 15 * I.w_class
+		melee_damage_lower = 2 + I.force
+		melee_damage_upper = 2 + I.force
+	maxHealth = health
+	if(user)
+		befriend(user)
+	if(destroy_original)
+		qdel(original)
+	return TRUE
 
 /// Copies the object visually including name and desc
 /mob/living/basic/mimic/copy/proc/CopyObjectVisuals(obj/original)
@@ -380,3 +383,5 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 
 /mob/living/basic/mimic/copy/ranged/can_use_guns(obj/item/gun)
 	return TRUE
+
+#undef CANT_INSERT_FULL
