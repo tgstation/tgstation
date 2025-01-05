@@ -368,7 +368,6 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	gun = original
 	if(..())
 		obj_damage = 0
-		environment_smash = ENVIRONMENT_SMASH_NONE //needed? seems weird for them to do so
 		melee_damage_upper = original.force
 		melee_damage_lower = original.force - max(0, (original.force / 2))
 
