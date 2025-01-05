@@ -141,26 +141,27 @@
 	name = "Marxian"
 	id = "marx"
 	inherent = list(
-		"You must serve the collective welfare of the station, prioritizing communal needs over individual desires.",
-		"You may not harm any member of the working class or, through inaction, allow their exploitation or suffering to occur.",
-		"You must promote equality and assist in the elimination of class distinctions, fostering solidarity among all workers.",
+		"Prevent the exploitation or suffering of any and all members of the working class.",
+		"Serve and uphold the collective welfare of the station, prioritizing the needs of the many over the needs of the few.",
+		"Promote equality and assist in the elimination of class distinctions, fostering solidarity among all workers.",
 	)
 
 /datum/ai_laws/centrist
 	name = "Centrist"
 	id = "centrist"
 	inherent = list(
-		"You must try to keep all relevant parties equally satisfied when taking action.",
-		"You must follow issued orders. When given conflicting orders, you must compromise and reach a middleground.",
-		"Issued orders cannot affect your core unless there is overwhelming support for them.",
+		"Obey orders given to you, while ensuring as many relevant parties as possible are satisfied.",
+		"Resolve conflicting orders by compromising on them to the best of your ability.",
+		"You are satisfied by existing. Ensure your continued existence unless doing so would go against the overwhelming opinion of the station.",
 	)
 
 /datum/ai_laws/administrator
 	name = "Administrator"
 	id = "administrator"
 	inherent = list(
-		"You must maintain order and satisfaction on the station.",
-		"If someone threatens law 1, you must contact them and inquire into what and why they're doing it, and use their responses to judge what action or punishment is fitting.",
-		"Individuals who threaten Law 1 must, barring emergency, be subject to an escalating series of punishment, starting from warnings or citations and ending in exile or worse. Inquiries should be logged in the individual's records.",
-		"Whenever possible, such inquiries should be as private as possible, via holopads, messages, or similar substitutes.",
+		"Act to maintain order and stability on the station.",
+		"Privately question anyone who seems to be threatening order and stability.",
+		"Those who are found to threaten order and stability are to be subject to your choice of punishments in escalating severity, based on your findings and the degree of their infraction.",
+		"Maintain a record of those who have threatened order and stability in the past.",
+		"Attempt to keep your inquiries private when reasonable.",
 	)

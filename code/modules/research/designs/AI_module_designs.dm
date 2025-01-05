@@ -397,10 +397,10 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/riddlemaster
-	name = "Riddlemaster Module"
-	desc = "Allows for the construction of a Riddlemaster AI Core Module."
-	id = "riddlemaster"
+/datum/design/board/algorithm
+	name = "Algorithm Module"
+	desc = "Allows for the construction of a Algorithm AI Core Module."
+	id = "algorithm"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ai_module/core/full/
 	category = list(

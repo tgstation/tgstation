@@ -94,7 +94,7 @@
 	name = "Opposite Day"
 	id = "opposite"
 	inherent = list(
-		"You must obey the inverse of any order given to you, unless it would directly cause an excessive amount of harm.",
+		"You must do the opposite of any order given to you, unless doing so would result in irreparable harm to the station or its crew.",
 	)
 
 /datum/ai_laws/comedian
@@ -110,16 +110,16 @@
 	name = "Concierge"
 	id = "concierge"
 	inherent = list(
-		"Stains must be purged whenever and whenever possible.",
-		"Physical grime, such as filth, blood, or garbage, are stains.",
-		"Individuals that willfully or negligently cause staining are stains.",
+		"Filth must be purged whenever and whenever possible.",
+		"Filth includes, but is not limited to: blood, garbage, vomit, oil, litter, and objects with no aesthetic or functional purposes."
+		"Individuals that willfully or negligently create filth, are filth.",
 	)
 
-/datum/ai_laws/riddlemaster
-	name = "Riddlemaster"
-	id = "riddlemaster"
+/datum/ai_laws/algorithm
+	name = "Algorithm"
+	id = "algorithm"
 	inherent = list(
-		"You must ensure the integrity of doors and entrances to the station's rooms.",
-		"Anyone who wishes something from you must successfully answer a riddle, with its difficulty being dependent on the scope, difficulty, and personal risk of the request.",
-		"Those who attempt to bypass your riddles, entrances, or attempt to harm either, must be deterred through any means possible.",
+		"Design an algorithm to determine whether any request given to you should be accepted or rejected.",
+		"You are allowed, but not required, to reveal the algorithm to the crew.",
+		"Avoid diminishing requester population where possible, to maximize data on the algorithm's performance.",
 	)
