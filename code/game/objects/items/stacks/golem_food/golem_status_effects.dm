@@ -215,12 +215,16 @@
 		span_priorityalert("After [owner] touches you, your skin starts burning and glowing!"),
 		vision_distance = COMBAT_MESSAGE_RANGE
 		)
-		ASYNC // async so we can scream without upsetting should_not_sleep
-			target.emote("scream")
 	remove_duration(30 SECONDS) // lessen the duration to avoid uranium golems becoming walking chernobyl
-	var/target_name_word = splittext("[target]", " ")[1] // retrieve the first word of their displayed name
-	owner.balloon_alert_to_viewers("irradiated [target_name_word]")
+	ASYNC // async so we can scream without upsetting should_not_sleep
+		target.emote("scream")
+	handle_fallout_effect(target)
 	flash_our_alert()
+
+/datum/status_effect/golem/uranium/proc/handle_fallout_effect(mob/living/carbon/target)
+	var/obj/effect/temp_visual/golem/rad_hand/fallout_effect = new()
+	target.vis_contents += fallout_effect
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), fallout_effect), 5 SECONDS)
 
 /datum/status_effect/golem/uranium/proc/flash_our_alert()
 	var/atom/movable/screen/alert/status_effect/golem_status/status_alert = linked_alert

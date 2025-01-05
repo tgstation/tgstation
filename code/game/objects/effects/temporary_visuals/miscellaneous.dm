@@ -737,3 +737,15 @@
 	duration = 0.5 SECONDS
 	pixel_x = -32
 	pixel_y = -32
+
+/obj/effect/temp_visual/golem
+	icon = 'icons/effects/golem.dmi'
+	duration = 1 SECONDS
+
+/obj/effect/temp_visual/golem/rad_hand
+	name = "golem rad touch"
+	icon_state = "none"
+
+/obj/effect/temp_visual/golem/rad_hand/Initialize(mapload)
+	. = ..()
+	flick("golem_rad_touch", src)
