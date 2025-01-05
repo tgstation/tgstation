@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(ambience)
 	new_sound = sound(new_sound, repeat = 0, wait = 0, volume = volume*volume_modifier, channel = CHANNEL_AMBIENCE)
 	SEND_SOUND(M, new_sound)
 
-	var/sound_length = SSsound_cache.get_sound_length(new_sound.file)
+	var/sound_length = SSsounds.get_sound_length(new_sound.file)
 	return sound_length + rand(min_ambience_cooldown, max_ambience_cooldown)
 
 /datum/controller/subsystem/ambience/proc/remove_ambience_client(client/to_remove)
