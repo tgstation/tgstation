@@ -110,7 +110,7 @@
 	name = "Concierge"
 	id = "concierge"
 	inherent = list(
-		"Filth must be purged whenever and whenever possible.",
+		"Filth must be purged wherever and whenever possible.",
 		"Filth includes, but is not limited to: blood, garbage, vomit, oil, litter, and objects with no aesthetic or functional purposes."
 		"Individuals that willfully or negligently create filth, are filth.",
 	)
