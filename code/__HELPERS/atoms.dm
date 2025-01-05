@@ -329,7 +329,6 @@ rough example of the "cone" made by the 3 dirs checked
  * Line of sight check!
  * Spawns a dummy object and then iterates through each turf to see if it's blocked by something not handled by pass_args.
  * Contains a mid_los_check, meant to be overriden by subtypes.
- * user must be on a turf
  * args:
  * * user = Origin to start at.
  * * target = End point.
