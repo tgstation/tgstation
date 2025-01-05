@@ -84,3 +84,30 @@
   - balance: The compact combat shotgun is now found in the warden's locker.
   timothymtorres:
   - bugfix: Fix pAIs interacting with machinery via alt/ctrl clicking.
+2025-01-05:
+  Ben10Omintrix:
+  - qol: virtual pet holograms now automatically follow you when released rather than
+      having to give it the command post summon
+  Ghommie:
+  - rscadd: You can now try to fish random products out of vending machines with a
+      fishing rod and a few bucks.
+  - bugfix: Fixing the 1000 cr holochip loot from exploration drones.
+  Hatterhat:
+  - bugfix: Proto-kinetic crushers no longer cause a runtime every time you hit a
+      mob that doesn't have a mark.
+  - bugfix: Equipment pieces with upgradable armor (e.g. explorer suits) now properly
+      list what they use to upgrade.
+  - bugfix: Mobs without targetable limbs no longer have extraneous spaces appear
+      in their hit-by-projectile messages.
+  Majkl-J:
+  - image: New souless minecart sprite
+  - image: Rail sprites are now more consistent with their shading, and thinner
+  - bugfix: The minecart closed icon no longer shows the crate lock overlay
+  Pepsilawn:
+  - bugfix: accidentally duplicated disposal pipes on all main maps have been rooted
+      out
+  SmArtKar:
+  - bugfix: Brought back ethereal heart's shine overlay
+  WebcomicArtist:
+  - qol: '"Destroy Blackbox" objective now tells you how to destroy something invulnerable
+      to conventional means of destruction.'
