@@ -443,8 +443,8 @@
 	inhand_icon_state = "gar"
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
-/obj/item/clothing/glasses/sunglasses/nuar
-	name = "nuar glasses"
+/obj/item/clothing/glasses/sunglasses/noir
+	name = "noir glasses"
 	desc = "A pair of sleek, futuristic glasses that allow the wearer to see the world in a different light."
 	glass_colour_type = /datum/client_colour/monochrome/colorblind
 	forced_glass_color =  TRUE
