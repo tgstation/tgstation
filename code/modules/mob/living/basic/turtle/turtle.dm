@@ -49,6 +49,10 @@
 	var/developed_path
 	///our last east/west direction
 	var/last_direction = WEST
+	///seeds our stomach cannot process into fruit, we will spit these seeds out after a short time instead
+	var/static/list/indigestible_seeds = typecacheof(list(
+		/obj/item/seeds/random,
+	))
 
 /mob/living/basic/turtle/Initialize(mapload)
 	. = ..()
@@ -224,7 +228,7 @@
 
 /mob/living/basic/turtle/proc/post_eat(datum/source, obj/item/seeds/potential_food)
 	SIGNAL_HANDLER
-	if(istype(potential_food, /obj/item/seeds/random))
+	if(is_type_in_typecache(potential_food, indigestible_seeds))
 		potential_food.forceMove(src)
 		addtimer(CALLBACK(src, PROC_REF(process_food), potential_food), 20 SECONDS)
 		return COMSIG_MOB_TERMINATE_EAT
