@@ -88,7 +88,6 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_MESSAGE, message)
 	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_DATA, data)
 	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_WORLD_STATE, world.get_world_state_for_logging())
-	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_SEMVER_STORE, semver_store)
 	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_ID, id)
 	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_SCHEMA_VERSION, schema_version)
 	return "{[json_entries.Join(",")]}"

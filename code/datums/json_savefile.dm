@@ -61,7 +61,6 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 
 /datum/json_savefile/serialize_list(list/options, list/semvers)
 	SHOULD_CALL_PARENT(FALSE)
-	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return tree.Copy()
 
 /// Traverses the entire dir tree of the given savefile and dynamically assembles the tree from it

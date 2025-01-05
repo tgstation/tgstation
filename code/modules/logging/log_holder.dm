@@ -181,10 +181,6 @@ ADMIN_VERB(log_viewer_new, R_ADMIN|R_DEBUG, "View Round Logs", "View the rounds 
 			stack_trace("log category type '[category_type]' has duplicate category '[category]', skipping")
 			continue
 
-		if(!initial(category_type.schema_version))
-			stack_trace("log category type '[category_type]' does not have a valid schema version, skipping")
-			continue
-
 		var/master_category = initial(category_type.master_category)
 		if(master_category)
 			sub_categories[master_category] += list(category_type)
@@ -249,19 +245,9 @@ ADMIN_VERB(log_viewer_new, R_ADMIN|R_DEBUG, "View Round Logs", "View the rounds 
 		var/sub_category_actual = sub_category.category
 		sub_category.master_category = category_instance
 		log_categories[sub_category_actual] = sub_category
-
-		if(!semver_to_list(sub_category.schema_version))
-			stack_trace("log category [sub_category_actual] has an invalid schema version '[sub_category.schema_version]'")
-			sub_category.schema_version = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
-
 		contained_categories += sub_category_actual
 
 	log_categories[category_instance.category] = category_instance
-
-	if(!semver_to_list(category_instance.schema_version))
-		stack_trace("log category [category_instance.category] has an invalid schema version '[category_instance.schema_version]'")
-		category_instance.schema_version = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
-
 	contained_categories += category_instance.category
 
 	var/list/category_header = list(
@@ -328,7 +314,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN|R_DEBUG, "View Round Logs", "View the rounds 
 	log_category.create_entry(message, data, semver_store)
 
 /// Recursively converts an associative list of datums into their jsonified(list) form
-/datum/log_holder/proc/recursive_jsonify(list/data_list, list/semvers)
+/datum/log_holder/proc/recursive_jsonify(list/data_list)
 	if(isnull(data_list))
 		return null
 
@@ -340,24 +326,19 @@ ADMIN_VERB(log_viewer_new, R_ADMIN|R_DEBUG, "View Round Logs", "View the rounds 
 			pass() // nulls are allowed
 
 		else if(islist(data))
-			data = recursive_jsonify(data, semvers)
+			data = recursive_jsonify(data)
 
 		else if(isdatum(data))
 			var/list/options_list = list(
 				SCHEMA_VERSION = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET,
 			)
 
-			var/list/serialization_data = data.serialize_list(options_list, semvers)
-			var/current_semver = semvers[data.type]
-			if(!semver_to_list(current_semver))
-				stack_trace("serialization of data had an invalid semver")
-				semvers[data.type] = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET
-
+			var/list/serialization_data = data.serialize_list(options_list)
 			if(!length(serialization_data)) // serialize_list wasn't implemented, and errored
 				stack_trace("serialization data was empty")
 				continue
 
-			data = recursive_jsonify(serialization_data, semvers)
+			data = recursive_jsonify(serialization_data)
 
 		if(islist(data) && !length(data))
 			stack_trace("recursive_jsonify got an empty list after serialization")

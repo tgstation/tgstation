@@ -73,8 +73,6 @@
 	.["pixel_size_x"] = psize_x
 	.["pixel_size_y"] = psize_y
 	.["logpath"] = logpath
-
-	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return .
 
 /datum/picture/deserialize_list(list/input, list/options)

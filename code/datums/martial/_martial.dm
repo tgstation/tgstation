@@ -42,8 +42,6 @@
 	.["name"] = name
 	.["id"] = id
 	.["pacifist_style"] = pacifist_style
-
-	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return .
 
 /// Signal proc for [COMSIG_LIVING_UNARMED_ATTACK] to hook into the appropriate proc
