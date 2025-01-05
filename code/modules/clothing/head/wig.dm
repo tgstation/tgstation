@@ -14,6 +14,7 @@
 /obj/item/clothing/head/wig/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	AddComponent(/datum/component/hat_stabilizer, loose_hat = FALSE)
 
 /obj/item/clothing/head/wig/equipped(mob/user, slot)
 	. = ..()
