@@ -699,10 +699,11 @@
 		return
 
 	if(choice == HOLOGRAM_CHOICE_CHARACTER)
-		switch(tgui_alert(usr,
-			"Would you like to base it off of your current character loadout, or a member on station?", "Customize",
+		var/character_type = tgui_alert(usr,
+			"Would you like to base it off of your current character loadout, or a crewmember on the manifest?", "Customize",
 			list(CHARACTER_TYPE_CREWMEMBER, CHARACTER_TYPE_SELF)
-		))
+		)
+		switch(character_type)
 			if(CHARACTER_TYPE_CREWMEMBER)
 				var/list/personnel_list = list()
 
