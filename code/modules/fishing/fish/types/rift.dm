@@ -723,6 +723,7 @@
 
 /obj/item/organ/ears/babbelfish/Destroy()
 	QDEL_NULL(babbel_overlay)
+	QDEL_NULL(removal_holder)
 	return ..()
 
 /obj/item/organ/ears/babbelfish/on_bodypart_insert(obj/item/bodypart/limb)
