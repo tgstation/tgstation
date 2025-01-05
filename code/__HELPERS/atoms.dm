@@ -316,15 +316,6 @@ rough example of the "cone" made by the 3 dirs checked
 		loc = loc.loc
 	return null
 
-///Returns the closest thing we are in the contents of before a turf (or the turf it you passed a turf) example: wantedobject if: ourobject->something->wantedobject->someturf
-/proc/get_last_holder(atom/object)
-	if(isturf(object.loc) || isturf(object))
-		return object
-	var/atom/last_object = object
-	while(!isturf(last_object.loc))
-		last_object = last_object.loc
-	return last_object
-
 /**
  * Line of sight check!
  * Spawns a dummy object and then iterates through each turf to see if it's blocked by something not handled by pass_args.
