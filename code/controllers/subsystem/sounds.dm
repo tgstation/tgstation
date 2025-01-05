@@ -48,7 +48,6 @@ SUBSYSTEM_DEF(sounds)
 
 	precache_sounds()
 
-	return ..()
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/sounds/proc/setup_available_channels()
