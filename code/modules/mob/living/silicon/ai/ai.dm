@@ -701,8 +701,8 @@
 	if(choice == HOLOGRAM_CHOICE_CHARACTER)
 		switch(tgui_alert(usr,
 			"Would you like to base it off of your current character loadout, or a member on station?", "Customize",
-			list(CHARACTER_TYPE_CREWMEMBER,CHARACTER_TYPE_SELF))
-		)
+			list(CHARACTER_TYPE_CREWMEMBER, CHARACTER_TYPE_SELF)
+		))
 			if(CHARACTER_TYPE_CREWMEMBER)
 				var/list/personnel_list = list()
 
