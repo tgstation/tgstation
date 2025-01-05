@@ -68,7 +68,6 @@
 /datum/component/plumbing/acidic_input
 	demand_connects = WEST
 	demand_color = COLOR_YELLOW
-
 	ducting_layer = SECOND_DUCT_LAYER
 
 /datum/component/plumbing/acidic_input/send_request(dir)
