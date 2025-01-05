@@ -34,11 +34,11 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 
 /mob/living/basic/mimic/melee_attack(mob/living/carbon/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!. || !knockdown_people || !prob(15) || istype(target))
+	if(!. || !knockdown_people || !prob(15) || !istype(target))
 		return
 	target.Paralyze(4 SECONDS)
 	target.visible_message(span_danger("\The [src] knocks down \the [target]!"), \
-			span_userdanger("\The [src] knocks you down!"))
+		span_userdanger("\The [src] knocks you down!"))
 
 
 // ****************************
@@ -116,10 +116,10 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	return ..()
 
 /mob/living/basic/mimic/crate/death()
-	var/obj/structure/closet/crate/C = new(get_turf(src))
+	var/obj/structure/closet/crate/lootbox = new(get_turf(src))
 	// Put loot in crate
-	for(var/obj/O in src)
-		O.forceMove(C)
+	for(var/obj/loot in src)
+		loot.forceMove(lootbox)
 	return ..()
 
 /mob/living/basic/mimic/crate/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
@@ -132,6 +132,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	. = ..()
 	if(istype(mover, /obj/structure/closet))
 		return FALSE
+
 /**
 * Used to open and close the mimic
 *
@@ -160,6 +161,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 			if(movable != src && insert(movable) == -1)
 				playsound(src, 'sound/items/trayhit/trayhit2.ogg', 50, TRUE)
 				break
+
 /**
 * Called by toggle_open to put items inside the mimic when it's being closed
 *
@@ -257,7 +259,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	CopyObject(copy, creator, destroy_original)
 
 /mob/living/basic/mimic/copy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	..()
+	. = ..()
 	if(idledamage && !ckey && !ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET]) //Objects eventually revert to normal if no one is around to terrorize
 		adjustBruteLoss(0.5 * seconds_per_tick)
 	for(var/mob/living/victim in contents) //a fix for animated statues from the flesh to stone spell
