@@ -278,6 +278,8 @@
 		stack_trace("illegal percentage value passed to remove all reagents [amount]")
 		return FALSE
 
+	if(!relative)
+		amount = min(amount, total_volume)
 	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return FALSE
