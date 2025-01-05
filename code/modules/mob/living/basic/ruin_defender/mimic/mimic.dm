@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(user.combat_mode)
 		return ..()
 	if(trigger())
-		to_chat(user, span_danger("As you try to open [src] it stiffens up and nearly clamps down on your fingers!"))
+		to_chat(user, span_danger("As you try to open [src] it [length(contents) ? "stiffens up and " : ""]nearly clamps down on your fingers!"))
 		return TRUE
 	toggle_open(user)
 	return TRUE
