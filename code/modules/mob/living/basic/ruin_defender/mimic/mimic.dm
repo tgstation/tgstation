@@ -27,7 +27,6 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	unsuitable_atmos_damage = 0
 
 	faction = list(FACTION_MIMIC)
-	//move_to_delay = 9
 	basic_mob_flags = DEL_ON_DEATH
 	combat_mode = TRUE
 	/// can we stun people on hit
@@ -79,8 +78,8 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	ADD_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
 	ai_controller?.set_ai_status(AI_STATUS_OFF) //start inert, let gullible people pull us into cargo or something and then go nuts when opened
 	if(mapload) //eat shit
-		for(var/obj/item/I in loc)
-			I.forceMove(src)
+		for(var/obj/item/item in loc)
+			item.forceMove(src)
 
 /mob/living/basic/mimic/crate/Destroy()
 	lock = null
@@ -90,6 +89,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(user.combat_mode)
 		return ..()
 	if(trigger())
+		to_chat(user, span_danger("As you try to open [src] it stiffens up and nearly clamps down on your fingers!"))
 		return TRUE
 	toggle_open(user)
 	return TRUE
@@ -286,12 +286,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 /mob/living/basic/mimic/copy/proc/CopyObject(obj/original, mob/living/user, destroy_original = FALSE)
 	if(destroy_original || check_object(original))
 		original.forceMove(src)
-		name = original.name
-		desc = original.desc
-		icon = original.icon
-		icon_state = original.icon_state
-		icon_living = icon_state
-		copy_overlays(original)
+		CopyObjectVisuals(original)
 		if (overlay_googly_eyes)
 			add_overlay(googly_eyes)
 		if(isstructure(original) || ismachinery(original))
@@ -313,15 +308,28 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		return TRUE
 	return FALSE
 
+/// Copies the object visually including name and desc
+/mob/living/basic/mimic/copy/proc/CopyObjectVisuals(obj/original)
+	name = original.name
+	desc = original.desc
+	icon = original.icon
+	icon_state = original.icon_state
+	icon_living = icon_state
+	copy_overlays(original)
+
 /mob/living/basic/mimic/copy/machine
 	ai_controller = /datum/ai_controller/basic_controller/mimic_copy/machine
 	faction = list(FACTION_MIMIC, FACTION_SILICON)
 
 /mob/living/basic/mimic/copy/ranged
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "invisible"
 	ai_controller = /datum/ai_controller/basic_controller/mimic_copy/gun
+	/// the gun we are
 	var/obj/item/gun/gun
 
 /mob/living/basic/mimic/copy/ranged/Destroy()
+	vis_contents.Cut()
 	gun = null
 	return ..()
 
@@ -334,21 +342,40 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 			var/obj/item/gun/ballistic/ballistic = gun
 			if(!ballistic.chambered || ballistic.bolt_locked)
 				ballistic.rack() //we racked so both checked variables should be something else now
-			if(!ballistic.chambered?.loaded_projectile && (isnull(ballistic.magazine) || !length(ballistic.magazine.stored_ammo))) // ran out of ammo
-				ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, TRUE)
-		else
+			// do we have nothing chambered/chambered is spent AND we have no mag or our mag is empty
+			if(!ballistic.chambered?.loaded_projectile && magazine_useless(gun)) // ran out of ammo
+				ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, TRUE) //BANZAIIIIIIII
+				ai_controller?.CancelActions()
+		else //if we cant fire we probably like ran out of energy or magic charges or whatever the hell idk
 			ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, TRUE)
+			ai_controller?.CancelActions() // Stop our firing behavior so we can plan melee
 	else
 		ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, FALSE)
 	gun.fire_gun(target, user = src, flag = FALSE, params = modifiers) //still make like a cool click click sound if trying to fire empty
 
+/mob/living/basic/mimic/copy/ranged/proc/magazine_useless(obj/item/gun/ballistic/ballistic)
+	if(isnull(ballistic.magazine) || !length(ballistic.magazine.stored_ammo))
+		return TRUE
+	// is there ATLEAST one unspent round (for the sake of revolvers or a magazine somehow having spent rounds in it)
+	for(var/obj/item/ammo_casing/thing as anything in ballistic.magazine.stored_ammo)
+		if(ispath(thing))
+			return FALSE // unspent
+		if(!isnull(thing.loaded_projectile))
+			return FALSE //unspent
+	return TRUE
+
 /mob/living/basic/mimic/copy/ranged/CopyObject(obj/item/gun/original, mob/living/creator, destroy_original = 0)
+	gun = original
 	if(..())
 		obj_damage = 0
 		environment_smash = ENVIRONMENT_SMASH_NONE //needed? seems weird for them to do so
 		melee_damage_upper = original.force
 		melee_damage_lower = original.force - max(0, (original.force / 2))
-		gun = original
+
+/mob/living/basic/mimic/copy/ranged/CopyObjectVisuals(obj/original)
+	name = original.name
+	desc = original.desc
+	vis_contents += original
 
 /mob/living/basic/mimic/copy/ranged/can_use_guns(obj/item/gun)
 	return TRUE

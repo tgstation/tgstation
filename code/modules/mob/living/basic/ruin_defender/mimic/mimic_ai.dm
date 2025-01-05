@@ -75,5 +75,5 @@
 		return
 	if(controller.blackboard[BB_GUNMIMIC_GUN_EMPTY])
 		return
-	controller.queue_behavior(/datum/ai_behavior/basic_ranged_attack, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	controller.queue_behavior(/datum/ai_behavior/basic_ranged_attack/avoid_friendly_fire, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 	return SUBTREE_RETURN_FINISH_PLANNING //we are going into battle...no distractions.
