@@ -430,3 +430,8 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	alpha = 0
+
+/atom/movable/screen/plane_master/examine_balloons/show_to(mob/mymob)
+	. = ..()
+	if(mymob.ckey == "lemoninthedark")
+		alpha = 255

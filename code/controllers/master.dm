@@ -965,6 +965,14 @@ GLOBAL_LIST_INIT(cpu_values, new /list(CPU_SIZE))
 GLOBAL_LIST_INIT(avg_cpu_values, new /list(CPU_SIZE))
 GLOBAL_VAR_INIT(cpu_index, 1)
 GLOBAL_VAR_INIT(last_cpu_update, -1)
+GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
+
+/atom/movable/screen/usage_display
+	screen_loc = "CENTER-2, CENTER+3"
+	maptext_width = 128
+	maptext_height = 128
+	clear_with_screen = FALSE
+	plane = EXAMINE_BALLOONS_PLANE
 
 /// Inserts our current world.cpu value into our rolling lists
 /// Its job is to pull the actual usage last tick instead of the moving average
@@ -978,26 +986,37 @@ GLOBAL_VAR_INIT(last_cpu_update, -1)
 
 	// We need to hook into the INSTANT we start our moving average so we can reconstruct gained/lost cpu values
 	var/lost_value = 0
+	// Defaults to null or 0 so the wrap here is safe for the first 16 entries
 	lost_value = cpu_values[WRAP(cpu_index - WINDOW_SIZE, 1, CPU_SIZE + 1)]
 
-	// avg = (A + B + C + D) / 4
-	// old_avg = (A + B + C) / 3
-	// (avg * 4 - old_avg * 3) roughly = D
-	// avg = (B + C + D) / 3
-	// old_avg = (A + B + C) / 3
-	// (avg * 4 - old_avg * 3) roughly = D - A
-	// so if we aren't moving we need to add the value we are losing
-	// We're trying to do this with as few ops as possible mind
+	// ok so world.cpu is a 16 entry wide moving average of the actual cpu value
+	// because fuck you
+	// I want the ACTUAL unrolle value, so I need to deaverage it. this is possible because we have access to ALL values and also math
+	// yes byond does average against a constant window size, it doesn't account for a lack of values initially it just sorta assumes they exist.
+	// ♪ it ain't me, it ain't me ♪
+
+	// Second tick example
+	// avg = (A + B) / 4
+	// old_avg = (A) / 4
+	// (avg * 4 - old_avg * 4) roughly sans floating point BS = B
+	// Fifth tick example
+	// avg = (B + C + D + E) / 4
+	// old_avg = (A + B + C + D) / 4
+	// (avg * 4 - old_avg * 4) roughly = E - A
+	// so after we start losing numbers we need to add the one we're losing
+	// We're trying to do this with as few ops as possible to avoid noise
 	// soooo
-	// C = (avg * 3 - old_avg * 3) + A
+	// E = (avg * 4 - old_avg * 4) + A
 
 	var/last_avg_cpu = GLOB.avg_cpu_values[WRAP(cpu_index - 1, 1, CPU_SIZE + 1)]
-	var/real_cpu = (avg_cpu *WINDOW_SIZE - last_avg_cpu * WINDOW_SIZE) + lost_value
+	var/real_cpu = (avg_cpu * WINDOW_SIZE - last_avg_cpu * WINDOW_SIZE) + lost_value
 
 	// cache for sonic speed
 	cpu_values[cpu_index] = real_cpu
 	GLOB.avg_cpu_values[cpu_index] = avg_cpu
 	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
+	var/full_time = TICKS2DS(CPU_SIZE) / 10 // convert from ticks to seconds
+	GLOB.cpu_tracker.maptext = "Tick: [world.time / world.tick_lag]\nFrame Behind CPU: [real_cpu]\nMax [full_time]s: [max(cpu_values)]\nMin [full_time]s: [min(cpu_values)]"
 
 /proc/update_glide_size()
 	world.unroll_cpu_value()

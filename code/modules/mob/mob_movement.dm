@@ -157,10 +157,11 @@
 	SSinput.moving_mobs -= src
 	return ..()
 
-
 /mob/proc/bullshit_hell(new_loc, direct)
 	if(world.time < input_move_delay) //do not move anything ahead of this check please
+		color = COLOR_RED
 		return FALSE
+	color = COLOR_BLUE
 	next_move_dir_add = NONE
 	next_move_dir_sub = NONE
 	var/old_move_delay = input_move_delay

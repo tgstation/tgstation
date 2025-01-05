@@ -654,24 +654,26 @@ GLOBAL_LIST_EMPTY(gliding_atoms)
 	glide_text.maptext_y = 32
 	add_overlay(glide_text)
 
-/atom/movable/proc/account_for_glide_error(error)
+GLOBAL_VAR_INIT(glide_correction_enabled, FALSE)
+/atom/movable/proc/account_for_glide_error(last_ticks_error)
 	// Intentionally can go negative to handle being overoptimistic about glide rates
-	accumulated_glide_error += error - built_in_glide_error
-	if(abs(accumulated_glide_error) < world.tick_lag * 0.5)
+	accumulated_glide_error += last_ticks_error - built_in_glide_error
+	if(abs(accumulated_glide_error) < world.tick_lag * 0.5 || !GLOB.glide_correction_enabled)
 		update_glide_text()
 		return
 	// we're trying to account for random spikes in error while gliding
 	// So we're gonna use the known GAME tick we want to stop at,
 	// alongside how much time has visually past to work out
 	// exactly how fast we need to move to make up that distance
-	var/game_time_spent = (world.time - last_glide_start)
+	var/game_time_spent = (world.time - last_glide_start) - 1 // we are thinking one tick in the past here
 	var/visual_time_spent = game_time_spent + accumulated_glide_error + built_in_glide_error * game_time_spent
 	var/distance_covered = glide_size * visual_time_spent
 	var/distance_remaining = world.icon_size - distance_covered
-	var/game_time_remaining = (glide_stopping_time - world.time)
+	var/game_time_remaining = (glide_stopping_time - (world.time - 1))
 	built_in_glide_error += accumulated_glide_error / game_time_remaining
 	accumulated_glide_error = 0
 	#warn is this logic... right? I think we undershoot sometimes
+	// testing, do not touch glide size at all
 	set_glide_size(clamp((((distance_remaining) / max((game_time_remaining) / world.tick_lag, 1))), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE), mid_move = TRUE)
 
 	update_glide_text()

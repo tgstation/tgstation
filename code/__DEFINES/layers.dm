@@ -108,6 +108,7 @@
 /// Plane related to the menu when pressing Escape.
 /// Needed so that we can apply a blur effect to EVERYTHING, and guarantee we are above all UI.
 #define ESCAPE_MENU_PLANE 46
+#define EXAMINE_BALLOONS_PLANE 47
 
 #define RENDER_PLANE_MASTER 50
 

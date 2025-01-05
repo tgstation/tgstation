@@ -248,6 +248,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
+	screen += GLOB.cpu_tracker
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
