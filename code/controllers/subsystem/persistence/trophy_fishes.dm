@@ -32,10 +32,9 @@
 		fish.set_custom_materials(mat_list)
 	fish.persistence_load(data)
 	fish.name = data[PERSISTENCE_FISH_NAME]
-	mount.catcher_name = data[PERSISTENCE_FISH_CATCHER]
-	mount.catch_date = data[PERSISTENCE_FISH_CATCH_DATE]
 	fish.set_status(FISH_DEAD, silent = TRUE)
 	mount.add_fish(fish, from_persistence = TRUE, catcher = data[PERSISTENCE_FISH_CATCHER])
+	mount.catch_date = data[PERSISTENCE_FISH_CATCH_DATE]
 
 /datum/controller/subsystem/persistence/proc/save_trophy_fish(obj/structure/fish_mount/mount)
 	var/obj/item/fish/fish = mount.mounted_fish

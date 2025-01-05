@@ -45,8 +45,8 @@
 /area/station/hallway/primary/central/fore)
 "abc" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	name = "Mix to Gas";
-	dir = 8
+	dir = 8;
+	name = "Mix to Gas"
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -150,8 +150,8 @@
 	pixel_y = -5
 	},
 /obj/structure/flora/bush/flowers_br/style_random{
-	pixel_y = -5;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = -5
 	},
 /obj/effect/light_emitter/fake_outdoors,
 /obj/effect/turf_decal/siding/wood{
@@ -1139,12 +1139,12 @@
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/structure/table/glass,
 /obj/item/food/taco/fish{
-	pixel_y = 9;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 9
 	},
 /obj/item/food/taco{
-	pixel_y = 2;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 2
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/maintenance/central/lesser)
@@ -2029,7 +2029,6 @@
 	req_access = list("engineering")
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment,
 /obj/item/book/manual/wiki/engineering_hacking{
 	pixel_x = -3;
 	pixel_y = 5
@@ -2322,9 +2321,9 @@
 /obj/structure/sign/poster/official/random/directional/west,
 /obj/machinery/button/door/directional/north{
 	id = "Toilet1";
-	specialfunctions = 4;
 	name = "Lock Control";
-	normaldoorcontrol = 1
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/iron/white/small,
 /area/station/commons/toilet/restrooms)
@@ -2424,20 +2423,20 @@
 "aVA" = (
 /obj/structure/closet/secure_closet/freezer/empty,
 /obj/item/food/grown/tomato{
-	pixel_y = 2;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /obj/item/food/grown/tomato{
-	pixel_y = 2;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /obj/item/food/grown/eggplant{
-	pixel_y = 5;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 5
 	},
 /obj/item/food/grown/eggplant{
-	pixel_y = 5;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 5
 	},
 /obj/item/storage/fancy/egg_box,
 /obj/item/storage/fancy/egg_box,
@@ -2448,12 +2447,12 @@
 /obj/item/reagent_containers/condiment/flour,
 /obj/item/reagent_containers/condiment/flour,
 /obj/item/food/grown/tomato{
-	pixel_y = 2;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /obj/item/food/grown/tomato{
-	pixel_y = 2;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
@@ -2913,9 +2912,9 @@
 	},
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/stripes/white/end{
-	name = "blue";
 	color = "#6495ED";
-	dir = 1
+	dir = 1;
+	name = "blue"
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/lobby)
@@ -3509,8 +3508,8 @@
 	pixel_y = 16
 	},
 /obj/item/stack/ore/titanium{
-	pixel_y = 10;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 10
 	},
 /obj/item/stack/ore/diamond{
 	pixel_x = 4;
@@ -4405,8 +4404,8 @@
 	pixel_y = 2
 	},
 /obj/item/food/grown/grapes/green{
-	pixel_y = -4;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -5217,8 +5216,8 @@
 /obj/effect/turf_decal/box/red,
 /obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "Tertiary AI Core Access";
-	req_access = list("ai_upload");
-	pixel_x = 4
+	pixel_x = 4;
+	req_access = list("ai_upload")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
@@ -5361,8 +5360,8 @@
 	pixel_y = 2
 	},
 /obj/item/coffee_cartridge{
-	pixel_y = 8;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/south,
@@ -6306,12 +6305,12 @@
 /obj/effect/spawner/random/structure/crate,
 /obj/item/reagent_containers/cup/soda_cans/lemon_lime,
 /obj/item/reagent_containers/cup/soda_cans/lemon_lime{
-	pixel_y = 4;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 4
 	},
 /obj/item/food/cornchips/purple{
-	pixel_y = -3;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -3
 	},
 /obj/structure/sign/poster/contraband/random/directional/west,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
@@ -6674,8 +6673,8 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/clothing/glasses/meson{
-	pixel_y = 8;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 8
 	},
 /obj/machinery/light/small/directional/south,
 /obj/structure/sign/poster/official/random/directional/west,
@@ -7982,8 +7981,8 @@
 "cYD" = (
 /obj/structure/table/wood,
 /obj/item/hemostat{
-	name = "Totally Not Scissors";
-	desc = "Ah yes, the Haircutting Device."
+	desc = "Ah yes, the Haircutting Device.";
+	name = "Totally Not Scissors"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8963,8 +8962,8 @@
 /obj/structure/cable,
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Secondary AI Core Access";
-	req_access = list("ai_upload");
-	pixel_x = -4
+	pixel_x = -4;
+	req_access = list("ai_upload")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
@@ -9469,12 +9468,12 @@
 	},
 /obj/structure/rack,
 /obj/item/pipe_dispenser{
-	pixel_y = -7;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = -7
 	},
 /obj/item/pipe_dispenser{
-	pixel_y = 5;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 5
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -11100,8 +11099,8 @@
 	},
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
-	pixel_y = 10;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 10
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -11305,12 +11304,12 @@
 	dir = 2
 	},
 /obj/structure/sign/directions/command/directional/east{
-	pixel_y = 8;
-	dir = 2
+	dir = 2;
+	pixel_y = 8
 	},
 /obj/structure/sign/directions/medical/directional/east{
-	pixel_y = -8;
-	dir = 2
+	dir = 2;
+	pixel_y = -8
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
@@ -11442,9 +11441,9 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
 	id = "kitchenshutters";
-	name = "Kitchen Shutters";
-	dir = 4
+	name = "Kitchen Shutters"
 	},
 /obj/effect/turf_decal/siding/end,
 /turf/open/floor/iron/dark/textured_large,
@@ -11731,8 +11730,8 @@
 /area/station/security/tram)
 "eqr" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	name = "Fuel Pipe to Incinerator";
-	dir = 1
+	dir = 1;
+	name = "Fuel Pipe to Incinerator"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -14564,12 +14563,12 @@
 /obj/structure/table/wood,
 /obj/machinery/light/small/dim/directional/north,
 /obj/item/reagent_containers/cup/glass/bottle/vodka{
-	pixel_y = 18;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 18
 	},
 /obj/item/reagent_containers/cup/glass/bottle/rum{
-	pixel_y = 21;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 21
 	},
 /obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	pixel_y = 11
@@ -15378,8 +15377,8 @@
 	pixel_y = 1
 	},
 /obj/item/wirecutters{
-	pixel_y = -1;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = -1
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/engine/atmos)
@@ -15488,9 +15487,9 @@
 "fGk" = (
 /obj/machinery/smartfridge,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
 	id = "kitchenshutters";
-	name = "Kitchen Shutters";
-	dir = 4
+	name = "Kitchen Shutters"
 	},
 /obj/effect/turf_decal/siding/end{
 	dir = 1
@@ -15552,10 +15551,10 @@
 	dir = 4
 	},
 /obj/machinery/button/door/directional/north{
-	name = "Lock Control";
 	id = "Toilet2";
-	specialfunctions = 4;
-	normaldoorcontrol = 1
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/poster/contraband/random/directional/west,
@@ -15900,9 +15899,9 @@
 /obj/machinery/button/door/directional/west{
 	id = "Secure Storage";
 	name = "Engineering Secure Storage";
+	pixel_x = 9;
 	pixel_y = 24;
-	req_access = list("engine_equip");
-	pixel_x = 9
+	req_access = list("engine_equip")
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/box,
@@ -17341,8 +17340,8 @@
 /obj/effect/landmark/event_spawn,
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
-	pixel_y = 9;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 9
 	},
 /obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 3
@@ -18576,15 +18575,6 @@
 	},
 /area/station/hallway/secondary/recreation)
 "gGl" = (
-/obj/structure/bed/double{
-	dir = 1
-	},
-/obj/item/bedsheet/captain/double{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -19687,8 +19677,8 @@
 "gZR" = (
 /obj/structure/sign/poster/random/directional/south,
 /obj/machinery/conveyor{
-	id = "mining";
-	dir = 10
+	dir = 10;
+	id = "mining"
 	},
 /obj/machinery/bouldertech/refinery,
 /obj/structure/sign/poster/random/directional/east,
@@ -19817,8 +19807,8 @@
 	pixel_y = 3
 	},
 /obj/item/reagent_containers/cup/glass/mug/tea{
-	pixel_y = 1;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 1
 	},
 /obj/machinery/requests_console/directional/north{
 	department = "Security";
@@ -20833,9 +20823,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/west,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
 	id = "kitchenshutters";
-	name = "Kitchen Shutters";
-	dir = 8
+	name = "Kitchen Shutters"
 	},
 /obj/effect/turf_decal/siding/end,
 /turf/open/floor/iron/dark/textured_large,
@@ -23012,8 +23002,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/button/door/directional/north{
-	name = "Door Bolt Control";
 	id = "commiss2";
+	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
@@ -23359,9 +23349,9 @@
 	dir = 6
 	},
 /obj/machinery/conveyor_switch/oneway{
+	id = "mining";
 	pixel_x = 4;
-	pixel_y = 10;
-	id = "mining"
+	pixel_y = 10
 	},
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 6
@@ -23967,8 +23957,8 @@
 	},
 /obj/machinery/button/door/directional/west{
 	id = "custodialshutters";
-	pixel_y = 8;
-	pixel_x = 23
+	pixel_x = 23;
+	pixel_y = 8
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/hallway/abandoned_command)
@@ -24432,10 +24422,10 @@
 	dir = 4
 	},
 /obj/machinery/button/door/directional/west{
+	id = "Cabin1";
 	name = "Cabin Bolt Control";
 	normaldoorcontrol = 1;
-	specialfunctions = 4;
-	id = "Cabin1"
+	specialfunctions = 4
 	},
 /turf/open/floor/carpet/orange,
 /area/station/commons/dorms)
@@ -24836,8 +24826,8 @@
 	},
 /obj/item/weldingtool,
 /obj/item/radio{
-	pixel_y = 3;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 3
 	},
 /obj/item/assembly/signaler,
 /turf/open/floor/iron/smooth,
@@ -24926,8 +24916,8 @@
 /area/station/cargo/lobby)
 "iHa" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Gas to Cold Loop";
-	dir = 1
+	dir = 1;
+	name = "Gas to Cold Loop"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -25709,12 +25699,12 @@
 "iRl" = (
 /obj/structure/table/wood,
 /obj/item/food/grown/citrus/lemon{
-	pixel_y = 12;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 12
 	},
 /obj/item/food/grown/citrus/orange{
-	pixel_y = 6;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 6
 	},
 /obj/item/food/grown/citrus/lime{
 	pixel_x = 3
@@ -27097,8 +27087,8 @@
 	pixel_x = 4
 	},
 /obj/item/storage/pill_bottle/potassiodide{
-	pixel_y = 12;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /obj/item/pen/screwdriver,
 /obj/item/radio/intercom/directional/west,
@@ -29148,11 +29138,11 @@
 "jVJ" = (
 /obj/structure/table,
 /obj/item/bikehorn/rubberducky{
-	pixel_y = 9;
-	pixel_x = 6;
 	color = "#a61a11";
+	desc = "Foooo! Ducky is maaaaad. Ducky waaaanna hiiiiiit stuuuuuuf!";
 	name = "Reggie, the Angry Duckling";
-	desc = "Foooo! Ducky is maaaaad. Ducky waaaanna hiiiiiit stuuuuuuf!"
+	pixel_x = 6;
+	pixel_y = 9
 	},
 /obj/item/grenade/firecracker{
 	pixel_x = 1
@@ -29858,8 +29848,8 @@
 	pixel_y = -6
 	},
 /obj/structure/flora/bush/flowers_pp{
-	pixel_y = -5;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = -5
 	},
 /obj/machinery/light/floor,
 /obj/effect/light_emitter/fake_outdoors,
@@ -30067,8 +30057,8 @@
 	pixel_y = 2
 	},
 /obj/item/stack/package_wrap{
-	pixel_y = 6;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = 6
 	},
 /obj/item/paper/crumpled{
 	pixel_x = 5;
@@ -30258,16 +30248,16 @@
 /obj/structure/table,
 /obj/item/radio/intercom/directional/south,
 /obj/item/clothing/head/cone{
-	pixel_y = 5;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 5
 	},
 /obj/item/clothing/head/cone{
-	pixel_y = 7;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 7
 	},
 /obj/item/pipe_dispenser{
-	pixel_y = 9;
-	pixel_x = 14
+	pixel_x = 14;
+	pixel_y = 9
 	},
 /obj/item/cigarette{
 	pixel_y = 2
@@ -32319,8 +32309,8 @@
 	pixel_y = 22
 	},
 /obj/item/flashlight/lamp/bananalamp{
-	pixel_y = 11;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 11
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/department/engine/atmos)
@@ -34852,10 +34842,10 @@
 	pixel_y = 17
 	},
 /obj/item/food/monkeycube/chicken{
-	pixel_y = 15;
-	pixel_x = 6;
+	desc = "A new Nanotrasen classic, the monkey cube. Tastes like everything!";
 	name = "monkey cube";
-	desc = "A new Nanotrasen classic, the monkey cube. Tastes like everything!"
+	pixel_x = 6;
+	pixel_y = 15
 	},
 /obj/item/wirecutters{
 	pixel_y = 6
@@ -35204,8 +35194,8 @@
 /obj/structure/table,
 /obj/machinery/light/small/directional/west,
 /obj/item/clothing/head/costume/paper_hat{
-	pixel_y = 12;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 12
 	},
 /obj/item/clothing/head/collectable/petehat{
 	pixel_x = 5;
@@ -35230,8 +35220,8 @@
 	pixel_y = 3
 	},
 /obj/item/gps{
-	pixel_y = 5;
-	pixel_x = 13
+	pixel_x = 13;
+	pixel_y = 5
 	},
 /obj/item/storage/toolbox/emergency/old,
 /turf/open/floor/iron/dark,
@@ -36756,8 +36746,8 @@
 	dir = 1
 	},
 /obj/structure/flora/rock/pile/jungle/style_5{
-	pixel_y = -5;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = -5
 	},
 /turf/open/floor/grass,
 /area/station/service/chapel)
@@ -40552,9 +40542,9 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
 	id = "kitchenshutters";
-	name = "Kitchen Shutters";
-	dir = 4
+	name = "Kitchen Shutters"
 	},
 /obj/effect/turf_decal/siding{
 	dir = 4
@@ -44238,12 +44228,12 @@
 	dir = 2
 	},
 /obj/structure/sign/directions/science/directional/west{
-	pixel_y = 8;
-	dir = 10
+	dir = 10;
+	pixel_y = 8
 	},
 /obj/structure/sign/directions/upload/directional/west{
-	pixel_y = -8;
-	dir = 10
+	dir = 10;
+	pixel_y = -8
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
@@ -45920,8 +45910,8 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/north{
-	req_access = list("engineering");
-	name = "Engineering Desk"
+	name = "Engineering Desk";
+	req_access = list("engineering")
 	},
 /obj/item/folder/yellow{
 	pixel_x = -10;
@@ -46834,8 +46824,8 @@
 /area/station/ai_monitored/turret_protected/ai)
 "qav" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Unfiltered & Air to Mix";
-	dir = 4
+	dir = 4;
+	name = "Unfiltered & Air to Mix"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -47887,8 +47877,8 @@
 /area/station/command/heads_quarters/captain)
 "qva" = (
 /obj/machinery/door/airlock{
-	name = "Unit B";
-	id_tag = "Toilet3"
+	id_tag = "Toilet3";
+	name = "Unit B"
 	},
 /turf/open/floor/iron/white/small,
 /area/station/commons/toilet/restrooms)
@@ -49866,12 +49856,12 @@
 /obj/effect/landmark/event_spawn,
 /obj/structure/table,
 /obj/item/reagent_containers/cup/bottle/welding_fuel{
-	pixel_y = -3;
-	pixel_x = 13
+	pixel_x = 13;
+	pixel_y = -3
 	},
 /obj/item/stack/sheet/iron/ten{
-	pixel_y = -6;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = -6
 	},
 /obj/item/hand_labeler{
 	pixel_y = -15
@@ -50345,8 +50335,8 @@
 	pixel_y = 6
 	},
 /obj/item/toy/figure/syndie{
-	pixel_y = 5;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 5
 	},
 /obj/item/toy/figure/md{
 	pixel_x = 10
@@ -52023,10 +52013,10 @@
 /obj/structure/table,
 /obj/machinery/computer/arcade/orion_trail{
 	desc = "For gamers only. Casuals need not apply.";
+	dir = 4;
 	icon_screen = "library";
 	icon_state = "oldcomp";
 	name = "Gamer Computer";
-	dir = 4;
 	pixel_y = 7
 	},
 /obj/structure/sign/poster/contraband/random/directional/west,
@@ -52556,9 +52546,9 @@
 	},
 /obj/effect/spawner/random/food_or_drink/condiment,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
 	id = "kitchenshutters";
-	name = "Kitchen Shutters";
-	dir = 4
+	name = "Kitchen Shutters"
 	},
 /obj/effect/turf_decal/siding{
 	dir = 4
@@ -55246,8 +55236,8 @@
 	pixel_y = 6
 	},
 /obj/machinery/button/photobooth{
-	pixel_y = -6;
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = -6
 	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/command/heads_quarters/hop)
@@ -55779,9 +55769,9 @@
 	},
 /obj/effect/spawner/random/food_or_drink/donuts,
 /obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
 	id = "kitchenshutters";
-	name = "Kitchen Shutters";
-	dir = 4
+	name = "Kitchen Shutters"
 	},
 /obj/effect/turf_decal/siding{
 	dir = 4
@@ -57369,8 +57359,8 @@
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/medical/directional/east{
-	pixel_y = -8;
-	dir = 10
+	dir = 10;
+	pixel_y = -8
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
@@ -57926,8 +57916,8 @@
 	pixel_y = 7
 	},
 /obj/item/toy/figure/engineer{
-	pixel_y = 11;
-	pixel_x = 17
+	pixel_x = 17;
+	pixel_y = 11
 	},
 /obj/item/geiger_counter{
 	pixel_x = 7;
@@ -59978,8 +59968,8 @@
 	pixel_x = -4
 	},
 /obj/item/wirecutters{
-	pixel_y = 17;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 17
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/commons/fitness/locker_room)
@@ -62774,8 +62764,8 @@
 "vkD" = (
 /obj/structure/table,
 /obj/item/stack/ore/gold{
-	pixel_y = 13;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 13
 	},
 /obj/item/stack/ore/uranium{
 	pixel_y = 6
@@ -63911,8 +63901,8 @@
 "vzK" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/helium_output{
-	dir = 4;
-	chamber_id = "helium"
+	chamber_id = "helium";
+	dir = 4
 	},
 /turf/open/floor/engine/helium,
 /area/station/ai_monitored/turret_protected/ai)
@@ -65471,8 +65461,8 @@
 /obj/structure/table,
 /obj/item/toy/foamblade,
 /obj/item/analyzer{
-	pixel_y = 8;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = 8
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/commons/fitness/locker_room)
@@ -65618,8 +65608,8 @@
 /obj/structure/table/wood,
 /obj/machinery/light/small/directional/north,
 /obj/machinery/reagentgrinder{
-	pixel_y = 14;
-	pixel_x = -13
+	pixel_x = -13;
+	pixel_y = 14
 	},
 /obj/item/reagent_containers/cup/rag{
 	pixel_x = 7;
@@ -65920,8 +65910,8 @@
 	},
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/stripes/white/end{
-	name = "blue";
-	color = "#6495ED"
+	color = "#6495ED";
+	name = "blue"
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark/small,
@@ -66609,10 +66599,10 @@
 /area/station/hallway/secondary/recreation)
 "wrx" = (
 /obj/machinery/button/door/directional/north{
-	name = "Lock Control";
 	id = "Toilet3";
-	specialfunctions = 4;
-	normaldoorcontrol = 1
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /obj/machinery/recharge_station,
 /obj/structure/sign/poster/official/random/directional/east,
@@ -67267,9 +67257,9 @@
 	pixel_y = 3
 	},
 /obj/machinery/button/curtain{
-	pixel_x = -24;
+	id = "detpriv";
 	name = "Curtains";
-	id = "detpriv"
+	pixel_x = -24
 	},
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
@@ -69413,8 +69403,8 @@
 	},
 /obj/structure/table/wood,
 /obj/item/stack/spacecash/c10{
-	pixel_y = 9;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 9
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/iron/small,
@@ -70159,8 +70149,8 @@
 /obj/machinery/requests_console/directional/north{
 	department = "Chief Engineer's Desk";
 	name = "Chief Engineer's Requests Console";
-	pixel_y = -32;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = -32
 	},
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
@@ -71611,8 +71601,8 @@
 /area/station/maintenance/port/lesser)
 "xLF" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Engine Coolant Bypass";
-	dir = 1
+	dir = 1;
+	name = "Engine Coolant Bypass"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

@@ -1,5 +1,6 @@
 /// Adds a newline to the examine list if the above entry is not empty and it is not the first element in the list
 #define ADD_NEWLINE_IF_NECESSARY(list) if(length(list) > 0 && list[length(list)]) { list += "" }
+#define CARBON_EXAMINE_EMBEDDING_MAX_DIST 4
 
 /mob/living/carbon/human/get_examine_name(mob/user)
 	if(!HAS_TRAIT(user, TRAIT_PROSOPAGNOSIA))
@@ -61,8 +62,16 @@
 			disabled += body_part
 		missing -= body_part.body_zone
 		for(var/obj/item/embedded as anything in body_part.embedded_objects)
-			var/stuck_wordage = embedded.is_embed_harmless() ? "stuck to" : "embedded in"
-			. += span_boldwarning("[t_He] [t_has] [icon2html(embedded, user)] \a [embedded] [stuck_wordage] [t_his] [body_part.plaintext_zone]!")
+			var/harmless = embedded.get_embed().is_harmless()
+			var/stuck_wordage = harmless ? "stuck to" : "embedded in"
+			var/embed_line = "\a [embedded]"
+			if (get_dist(src, user) <= CARBON_EXAMINE_EMBEDDING_MAX_DIST)
+				embed_line = "<a href='byond://?src=[REF(src)];embedded_object=[REF(embedded)];embedded_limb=[REF(body_part)]'>\a [embedded]</a>"
+			var/embed_text = "[t_He] [t_has] [icon2html(embedded, user)] [embed_line] [stuck_wordage] [t_his] [body_part.plaintext_zone]!"
+			if (harmless)
+				. += span_italics(span_notice(embed_text))
+			else
+				. += span_boldwarning(embed_text)
 
 		for(var/datum/wound/iter_wound as anything in body_part.wounds)
 			. += span_danger(iter_wound.get_examine_description(user))
@@ -583,4 +592,9 @@
 		if(undershirt.has_sensor == BROKEN_SENSORS)
 			. += list(span_notice("The [undershirt]'s medical sensors are sparking."))
 
+	for(var/datum/scar/iter_scar as anything in all_scars)
+		if(iter_scar.is_visible(user))
+			. += iter_scar.get_examine_description(user)
+
 #undef ADD_NEWLINE_IF_NECESSARY
+#undef CARBON_EXAMINE_EMBEDDING_MAX_DIST

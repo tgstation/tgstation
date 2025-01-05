@@ -778,3 +778,10 @@
       oddities!
   mc-oofert:
   - qol: you can adjust diagonal walls to be not diagonal walls with a wrench
+2024-12-31:
+  Kylerace:
+  - bugfix: holodeck is slightly less likely to explode the server
+  SmArtKar:
+  - bugfix: Blood no longer gets colored with the item its attached to
+  mc-oofert:
+  - rscadd: forensics spoofing kit for traitors/whoever with an uplink

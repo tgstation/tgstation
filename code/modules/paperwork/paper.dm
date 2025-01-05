@@ -278,9 +278,9 @@
 	if(LAZYLEN(stamp_cache) > MAX_PAPER_STAMPS_OVERLAYS)
 		return
 
-	var/mutable_appearance/stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_[stamp_icon_state]")
-	stamp_overlay.pixel_x = rand(-2, 2)
-	stamp_overlay.pixel_y = rand(-3, 2)
+	var/mutable_appearance/stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_[stamp_icon_state]", appearance_flags = KEEP_APART | RESET_COLOR)
+	stamp_overlay.pixel_w = rand(-2, 2)
+	stamp_overlay.pixel_z = rand(-3, 2)
 	add_overlay(stamp_overlay)
 	LAZYADD(stamp_cache, stamp_icon_state)
 
@@ -306,6 +306,8 @@
 /obj/item/paper/update_icon_state()
 	if(LAZYLEN(raw_text_inputs) && show_written_words)
 		icon_state = "[initial(icon_state)]_words"
+	else
+		icon_state = initial(icon_state)
 	return ..()
 
 /obj/item/paper/verb/rename()

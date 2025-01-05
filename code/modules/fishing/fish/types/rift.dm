@@ -14,7 +14,7 @@
 	throwforce = 11
 	throw_range = 8
 	throw_speed = 4
-	embed_type = /datum/embed_data/chrystarfish
+	embed_type = /datum/embedding/chrystarfish
 	attack_verb_continuous = list("stabs", "jabs")
 	attack_verb_simple = list("stab", "jab")
 	hitsound = SFX_SHATTER
@@ -44,7 +44,7 @@
 	electrogenesis_power = 9 MEGA JOULES
 
 // Basically a ninja star that's highly likely to embed and teleports you around if you don't stop to remove it. However it doesn't deal that much damage!
-/datum/embed_data/chrystarfish
+/datum/embedding/chrystarfish
 	pain_mult = 1
 	embed_chance = 85
 	fall_chance = 3
@@ -55,16 +55,10 @@
 	ignore_throwspeed_threshold = TRUE // basically shaped like a shuriken
 	jostle_chance = 15
 	jostle_pain_mult = 1
-	// about to be set!
-	jostle_callback = null
 
-/datum/embed_data/chrystarfish/New()
-	..()
-	jostle_callback = CALLBACK(src, PROC_REF(teleport))
-
-/datum/embed_data/chrystarfish/proc/teleport(mob/victim, atom/embed_parent, datum/embed_data/real_data)
-	do_teleport(victim, get_turf(victim), 3, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-	victim.visible_message(span_danger("[victim] teleports as [embed_parent] jostles inside [victim.p_them()]!"))
+/datum/embedding/chrystarfish/jostle_effects()
+	do_teleport(owner, get_turf(owner), 3, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+	owner.visible_message(span_danger("[owner] teleports as [parent] jostles inside of [owner.p_them()]!"))
 
 /obj/item/fish/starfish/chrystarfish/set_status(new_status, silent)
 	. = ..()
