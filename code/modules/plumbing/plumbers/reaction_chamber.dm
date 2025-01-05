@@ -32,7 +32,7 @@
 
 /obj/machinery/plumbing/reaction_chamber/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_HOLDER_UPDATED), PROC_REF(on_reagent_change))
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
 /// Handles stopping the emptying process when the chamber empties.
 /obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/plumbing/reaction_chamber/holder, ...)
