@@ -21,7 +21,6 @@
 @use '~tgui/styles/base.scss' with (
   $color-fg: hsl(0, 0%, 0%),
   $color-bg: hsl(0, 0%, 93.3%),
-  $color-bg-section: hsl(0, 0%, 100%),
   $color-bg-grad-spread: 0%
 );
 
@@ -41,7 +40,11 @@
       'tab-color-hovered': rgba(0, 0, 0, 0.075)
     )
   );
-  @include meta.load-css('pkg:tgui-styles/components/Section');
+  @include meta.load-css(
+    'pkg:tgui-styles/components/Section',
+    $with: ('background-color': hsl(0, 0%, 100%))
+  );
+
   @include meta.load-css(
     'pkg:tgui-styles/components/Button',
     $with: (

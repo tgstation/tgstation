@@ -29,6 +29,7 @@
 	name = "Snagged By Hook"
 	desc = "You're being caught like a fish by some asshat! Click to safely remove the hook or move away far enough to snap it off."
 	icon_state = "hooked"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/hooked/Click()
 	. = ..()

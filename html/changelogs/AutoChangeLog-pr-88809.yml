@@ -1,0 +1,7 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - balance: "Reduces chrystarfish fall chance by half"
+  - bugfix: "Fixed a bug that caused predator fish to give the aquarium pet message when out of it and vice versa"
+  - bugfix: "Fixed flumpulus message having no span"
+  - rscadd: "Dolphish now chomp you if you try to pet them"

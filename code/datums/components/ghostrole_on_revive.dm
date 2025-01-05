@@ -3,13 +3,13 @@
 	/// If revived and no ghosts, just die again?
 	var/refuse_revival_if_failed
 	/// Callback for when the mob is revived and has their body occupied by a ghost
-	var/datum/callback/on_succesful_revive
+	var/datum/callback/on_successful_revive
 
-/datum/component/ghostrole_on_revive/Initialize(refuse_revival_if_failed, on_succesful_revive)
+/datum/component/ghostrole_on_revive/Initialize(refuse_revival_if_failed, on_successful_revive)
 	. = ..()
 
 	src.refuse_revival_if_failed = refuse_revival_if_failed
-	src.on_succesful_revive = on_succesful_revive
+	src.on_successful_revive = on_successful_revive
 
 	ADD_TRAIT(parent, TRAIT_GHOSTROLE_ON_REVIVE, REF(src)) //for adding an alternate examination
 
@@ -102,7 +102,7 @@
 			aliver.visible_message(span_deadsay("[aliver.name]'s soul is struggling to return!"))
 	else
 		aliver.key = chosen_one.key
-		on_succesful_revive?.Invoke(aliver)
+		on_successful_revive?.Invoke(aliver)
 		qdel(src)
 
 /datum/component/ghostrole_on_revive/Destroy(force)

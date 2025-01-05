@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Having a broken arm affects your accuracy with ranged weapons fired with that arm. Utilizing a painkiller will nullify this effect, however."
-  - balance: "Painkillers will prevent your punches from being cancelled due to having a broken arm. You'll still take damage, though."
-  - balance: "Being drunk now affects your accuracy with ranged weapon. The bartender is immune to this effect via their skillchip."
-  - code_imp: "A lot of code involving left and right hand handling has been cleaned up, easier to read. Report any oddities, like left and rights being flipped"

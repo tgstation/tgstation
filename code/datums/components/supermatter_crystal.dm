@@ -107,7 +107,7 @@
 	if(iscyborg(user) && atom_source.Adjacent(user))
 		dust_mob(source, user, cause = "cyborg attack")
 		return
-	if(isaicamera(user))
+	if(iscameramob(user))
 		return
 	if(islarva(user))
 		dust_mob(source, user, cause = "larva attack")

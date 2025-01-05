@@ -59,7 +59,7 @@
 
 /obj/item/clothing/under/plasmaman/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (!istype(tool, /obj/item/extinguisher_refill))
-		return
+		return ..()
 
 	if (extinguishes_left == 5)
 		to_chat(user, span_notice("The inbuilt extinguisher is full."))

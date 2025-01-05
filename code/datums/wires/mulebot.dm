@@ -29,24 +29,24 @@
 		if(WIRE_MOTOR1, WIRE_MOTOR2)
 			if(is_cut(WIRE_MOTOR1) && is_cut(WIRE_MOTOR2))
 				ADD_TRAIT(mule, TRAIT_IMMOBILIZED, MOTOR_LACK_TRAIT)
-				holder.audible_message(span_hear("The motors of [src] go silent."), null,  1)
+				holder.audible_message(span_hear("The motors of [mule] go silent."), null,  1)
 			else
 				REMOVE_TRAIT(mule, TRAIT_IMMOBILIZED, MOTOR_LACK_TRAIT)
-				holder.audible_message(span_hear("The motors of [src] whir to life!"), null,  1)
+				holder.audible_message(span_hear("The motors of [mule] whir to life!"), null,  1)
 
 			if(is_cut(WIRE_MOTOR1))
 				mule.set_varspeed(FAST_MOTOR_SPEED)
-				holder.audible_message(span_hear("The motors of [src] speed up!"), null,  1)
+				holder.audible_message(span_hear("The motors of [mule] speed up!"), null,  1)
 			else if(is_cut(WIRE_MOTOR2))
 				mule.set_varspeed(AVERAGE_MOTOR_SPEED)
-				holder.audible_message(span_hear("The motors of [src] whir."), null,  1)
+				holder.audible_message(span_hear("The motors of [mule] whir."), null,  1)
 			else
 				mule.set_varspeed(SLOW_MOTOR_SPEED)
-				holder.audible_message(span_hear("The motors of [src] move gently."), null,  1)
+				holder.audible_message(span_hear("The motors of [mule] move gently."), null,  1)
 		if(WIRE_AVOIDANCE)
 			if (!isnull(source))
 				log_combat(source, mule, "[is_cut(WIRE_AVOIDANCE) ? "cut" : "mended"] the MULE safety wire of")
-				holder.audible_message(span_hear("Something inside [src] clicks ominously!"), null,  1)
+				holder.audible_message(span_hear("Something inside [mule] clicks ominously!"), null,  1)
 
 /datum/wires/mulebot/on_pulse(wire)
 	var/mob/living/simple_animal/bot/mulebot/mule = holder

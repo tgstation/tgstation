@@ -21,14 +21,14 @@
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 	update_appearance()
 
-/obj/item/organ/heart/ethereal/mob_insert(mob/living/carbon/heart_owner, special = FALSE, movement_flags)
+/obj/item/organ/heart/ethereal/on_mob_insert(mob/living/carbon/heart_owner, special = FALSE, movement_flags)
 	. = ..()
 
 	RegisterSignal(heart_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 	RegisterSignal(heart_owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_owner_fully_heal))
 	RegisterSignal(heart_owner, COMSIG_QDELETING, PROC_REF(owner_deleted))
 
-/obj/item/organ/heart/ethereal/mob_remove(mob/living/carbon/heart_owner, special, movement_flags)
+/obj/item/organ/heart/ethereal/on_mob_remove(mob/living/carbon/heart_owner, special, movement_flags)
 	UnregisterSignal(heart_owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_QDELETING))
 	REMOVE_TRAIT(heart_owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(heart_owner)
@@ -37,9 +37,7 @@
 
 /obj/item/organ/heart/ethereal/update_overlays()
 	. = ..()
-	var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[base_icon_state]_overlay-[beating ? "on" : "off"]")
-	shine.appearance_flags = RESET_COLOR //No color on this, just pure white
-	. += shine
+	. += mutable_appearance(icon, icon_state = "[base_icon_state]_overlay-[beating ? "on" : "off"]", appearance_flags = RESET_COLOR|KEEP_APART)
 
 /obj/item/organ/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/healed, heal_flags)
 	SIGNAL_HANDLER
@@ -222,9 +220,7 @@
 /obj/structure/ethereal_crystal/update_overlays()
 	. = ..()
 	if(!being_built)
-		var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[icon_state]_shine")
-		shine.appearance_flags = RESET_COLOR //No color on this, just pure white
-		. += shine
+		. += mutable_appearance(icon, icon_state = "[icon_state]_shine", appearance_flags = RESET_COLOR|KEEP_APART)
 
 /obj/structure/ethereal_crystal/proc/heal_ethereal()
 	var/datum/brain_trauma/picked_trauma

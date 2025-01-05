@@ -1,7 +1,7 @@
-import { isEscape, KEY } from 'common/keys';
-import { BooleanLike } from 'common/react';
 import { Component, createRef, RefObject } from 'react';
 import { dragStartHandler } from 'tgui/drag';
+import { isEscape, KEY } from 'tgui-core/keys';
+import { BooleanLike } from 'tgui-core/react';
 
 import { Channel, ChannelIterator } from './ChannelIterator';
 import { ChatHistory } from './ChatHistory';
@@ -23,7 +23,7 @@ type State = {
   size: WINDOW_SIZES;
 };
 
-const CHANNEL_REGEX = /^:\w\s/;
+const CHANNEL_REGEX = /^[:.]\w\s/;
 
 export class TguiSay extends Component<{}, State> {
   private channelIterator: ChannelIterator;

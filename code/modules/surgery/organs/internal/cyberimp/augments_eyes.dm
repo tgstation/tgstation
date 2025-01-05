@@ -20,20 +20,20 @@
 /obj/item/organ/cyberimp/eyes/hud/proc/toggle_hud(mob/living/carbon/eye_owner)
 	if(toggled_on)
 		toggled_on = FALSE
-		eye_owner.add_traits(HUD_traits, ORGAN_TRAIT)
+		eye_owner.remove_traits(HUD_traits, ORGAN_TRAIT)
 		balloon_alert(eye_owner, "hud disabled")
 		return
 	toggled_on = TRUE
-	eye_owner.remove_traits(HUD_traits, ORGAN_TRAIT)
+	eye_owner.add_traits(HUD_traits, ORGAN_TRAIT)
 	balloon_alert(eye_owner, "hud enabled")
 
-/obj/item/organ/cyberimp/eyes/hud/mob_insert(mob/living/carbon/eye_owner, special = FALSE, movement_flags)
+/obj/item/organ/cyberimp/eyes/hud/on_mob_insert(mob/living/carbon/eye_owner, special = FALSE, movement_flags)
 	. = ..()
 
 	eye_owner.add_traits(HUD_traits, ORGAN_TRAIT)
 	toggled_on = TRUE
 
-/obj/item/organ/cyberimp/eyes/hud/mob_remove(mob/living/carbon/eye_owner, special, movement_flags)
+/obj/item/organ/cyberimp/eyes/hud/on_mob_remove(mob/living/carbon/eye_owner, special, movement_flags)
 	. = ..()
 	eye_owner.remove_traits(HUD_traits, ORGAN_TRAIT)
 	toggled_on = FALSE

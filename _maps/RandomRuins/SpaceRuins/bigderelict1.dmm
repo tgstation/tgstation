@@ -584,7 +584,7 @@
 	name = "dried blood trail"
 	},
 /mob/living/basic/creature{
-	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
+	desc = "Awh, it's so sm-OH GOD, WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;
 	name = "hatchling";

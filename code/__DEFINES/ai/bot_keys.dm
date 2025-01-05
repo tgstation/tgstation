@@ -52,6 +52,8 @@ DEFINE_BITFIELD(repairbot_flags, list(
 #define BB_RADIO_CHANNEL "radio_channel"
 ///list of unreachable things we will temporarily ignore
 #define BB_TEMPORARY_IGNORE_LIST "temporary_ignore_list"
+///penalty cooldown if we are unable to path to any beacons
+#define BB_BOT_BEACON_COOLDOWN "bot_beacon_cooldown"
 
 // medbot keys
 ///the patient we must heal

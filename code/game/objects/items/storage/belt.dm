@@ -46,35 +46,9 @@
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
-	atom_storage.set_holdable(list(
-		/obj/item/airlock_painter,
-		/obj/item/analyzer,
-		/obj/item/assembly/signaler,
+	atom_storage.set_holdable(GLOB.tool_items + list(
 		/obj/item/clothing/gloves,
-		/obj/item/construction/rcd,
-		/obj/item/construction/rld,
-		/obj/item/construction/rtd,
-		/obj/item/crowbar,
-		/obj/item/extinguisher/mini,
-		/obj/item/flashlight,
-		/obj/item/forcefield_projector,
-		/obj/item/geiger_counter,
-		/obj/item/holosign_creator/atmos,
-		/obj/item/holosign_creator/engineering,
-		/obj/item/inducer,
-		/obj/item/lightreplacer,
-		/obj/item/multitool,
-		/obj/item/pipe_dispenser,
-		/obj/item/pipe_painter,
-		/obj/item/plunger,
 		/obj/item/radio,
-		/obj/item/screwdriver,
-		/obj/item/stack/cable_coil,
-		/obj/item/t_scanner,
-		/obj/item/weldingtool,
-		/obj/item/wirecutters,
-		/obj/item/wrench,
-		/obj/item/spess_knife,
 		/obj/item/melee/sickly_blade/lock,
 		/obj/item/reagent_containers/cup/soda_cans,
 	))
@@ -744,7 +718,7 @@
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_casing/strilka310,
 		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_casing/a357,
+		/obj/item/ammo_casing/c357,
 		/obj/item/ammo_casing/junk,
 	))
 

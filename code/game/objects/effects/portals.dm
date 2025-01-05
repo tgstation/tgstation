@@ -146,6 +146,7 @@
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
 		return FALSE
+
 	if(!force && (!ismecha(moving) && !isprojectile(moving) && moving.anchored && !allow_anchored))
 		return
 	var/no_effect = FALSE
@@ -156,8 +157,8 @@
 	var/turf/start_turf = get_turf(moving)
 	if(do_teleport(moving, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = force_teleport))
 		if(isprojectile(moving))
-			var/obj/projectile/P = moving
-			P.ignore_source_check = TRUE
+			var/obj/projectile/proj = moving
+			proj.ignore_source_check = TRUE
 		new /obj/effect/temp_visual/portal_animation(start_turf, src, moving)
 		playsound(start_turf, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(real_target, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

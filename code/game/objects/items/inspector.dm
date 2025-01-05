@@ -8,7 +8,9 @@
  */
 /obj/item/inspector
 	name = "\improper N-spect scanner"
-	desc = "Central Command standard issue inspection device. Can perform either wide area scans that central command can use to verify the security of the station, or detailed scan. Can scan people for contraband on their person or items being contraband."
+	desc = "Central Command standard issue inspection device. \
+	Performs wide area scan reports for inspectors to use to verify the security and integrity of the station. \
+	Can additionally be used for precision scans to determine if an item contains, or is itself, contraband."
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "inspector"
 	worn_icon_state = "salestagger"
@@ -88,14 +90,16 @@
 
 /obj/item/inspector/examine(mob/user)
 	. = ..()
+	. += span_info("Use in-hand to scan the local area, creating an encrypted security inspection.")
+	. += span_info("Use on an item to scan if it contains, or is, contraband.")
 	if(!cell_cover_open)
-		. += "Its cell cover is closed. It looks like it could be <strong>pried</strong> out, but doing so would require an appropriate tool."
+		. += span_notice("Its cell cover is closed. It looks like it could be <strong>pried</strong> out, but doing so would require an appropriate tool.")
 		return
-	. += "Its cell cover is open, exposing the cell slot. It looks like it could be <strong>pried</strong> in, but doing so would require an appropriate tool."
+	. += span_notice("Its cell cover is open, exposing the cell slot. It looks like it could be <strong>pried</strong> in, but doing so would require an appropriate tool.")
 	if(!cell)
-		. += "The slot for a cell is empty."
+		. += span_notice("The slot for a cell is empty.")
 	else
-		. += "\The [cell] is firmly in place. [span_info("Ctrl-click with an empty hand to remove it.")]"
+		. += span_notice("\The [cell] is firmly in place. Ctrl-click with an empty hand to remove it.")
 
 /obj/item/inspector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!user.Adjacent(interacting_with))
