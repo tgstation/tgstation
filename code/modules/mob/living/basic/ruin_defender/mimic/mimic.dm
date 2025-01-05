@@ -340,7 +340,6 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 
 /mob/living/basic/mimic/copy/ranged/Destroy()
 	vis_contents.Cut()
-	gun = null
 	return ..()
 
 /mob/living/basic/mimic/copy/ranged/RangedAttack(atom/atom_target, modifiers)
@@ -376,7 +375,6 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	return TRUE
 
 /mob/living/basic/mimic/copy/ranged/CopyObject(obj/item/gun/original, mob/living/creator, destroy_original = 0)
-	gun = original
 	if(..())
 		obj_damage = 0
 		melee_damage_upper = original.force
