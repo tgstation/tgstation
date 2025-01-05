@@ -290,6 +290,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	unfriend(creator)
 	befriend(owner)
 
+/// Check whether this object can be copied. If destroy_original is true, this proc is ignored.
 /mob/living/basic/mimic/copy/proc/check_object(obj/target)
 	return ((isitem(target) || isstructure(target)) && !is_type_in_typecache(target, GLOB.animatable_blacklist))
 
