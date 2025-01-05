@@ -446,7 +446,7 @@
 /obj/item/clothing/glasses/sunglasses/noir
 	name = "noir glasses"
 	desc = "A pair of sleek, futuristic glasses that allow the wearer to see the world in a different light."
-	glass_colour_type = /datum/client_colour/monochrome/colorblind
+	glass_colour_type = /datum/client_colour/monochrome
 	forced_glass_color =  TRUE
 
 ///Syndicate item that upgrades the flash protection of your eyes.
