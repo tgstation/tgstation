@@ -316,17 +316,27 @@ rough example of the "cone" made by the 3 dirs checked
 		loc = loc.loc
 	return null
 
+///Returns the closest thing we are in the contents of before a turf (or the turf it you passed a turf) example: wantedobject if: ourobject->something->wantedobject->someturf
+/proc/get_last_holder(atom/object)
+	if(isturf(object.loc) || isturf(object))
+		return object
+	var/atom/last_object = object
+	while(!isturf(last_object.loc))
+		last_object = last_object.loc
+	return last_object
+
 /**
  * Line of sight check!
  * Spawns a dummy object and then iterates through each turf to see if it's blocked by something not handled by pass_args.
  * Contains a mid_los_check, meant to be overriden by subtypes.
+ * user must be on a turf
  * args:
  * * user = Origin to start at.
  * * target = End point.
  * * pass_args = pass_flags given to dummy object to allow it to ignore certain types of blockades.
  */
 /proc/los_check(atom/movable/user, mob/target, pass_args = PASSTABLE|PASSGLASS|PASSGRILLE, datum/callback/mid_check)
-	var/turf/user_turf = get_turf(user)
+	var/turf/user_turf = user.loc
 	if(!istype(user_turf))
 		return FALSE
 	var/obj/dummy = new(user_turf)
