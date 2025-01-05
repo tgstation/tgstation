@@ -1,5 +1,9 @@
 #define CALL_BOT_COOLDOWN 900
 
+#define HOLOGRAM_CHOICE_CHARACTER "Existing Character"
+#define CHARACTER_TYPE_SELF "My Character"
+#define CHARACTER_TYPE_CREWMEMBER "Station Member"
+
 /mob/living/silicon/ai
 	name = "AI"
 	real_name = "AI"
@@ -689,12 +693,17 @@
 	if(incapacitated)
 		return
 
-	var/static/list/choices = assoc_to_keys(GLOB.ai_hologram_category_options) + "Existing Character"
+	var/static/list/choices = assoc_to_keys(GLOB.ai_hologram_category_options) + HOLOGRAM_CHOICE_CHARACTER
 	var/choice = tgui_input_list(usr, "What kind of hologram do you want?",	"Customize", choices)
+	if(!choice)
+		return
 
-	if(choice == "Existing Character")
-		switch(tgui_alert(usr,"Would you like to base it off of your current character loadout, or a member on station?", "Customize", list("My Character","Station Member")))
-			if("Station Member")
+	if(choice == HOLOGRAM_CHOICE_CHARACTER)
+		switch(tgui_alert(usr,
+			"Would you like to base it off of your current character loadout, or a member on station?", "Customize",
+			list(CHARACTER_TYPE_CREWMEMBER,CHARACTER_TYPE_SELF))
+		)
+			if(CHARACTER_TYPE_CREWMEMBER)
 				var/list/personnel_list = list()
 
 				for(var/datum/record/locked/record in GLOB.manifest.locked)//Look in data core locked.
@@ -713,16 +722,22 @@
 					character_icon.setDir(SOUTH)
 					hologram_appearance = character_icon
 
-			if("My Character")
-				switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?", "Customize", list("Yes","No")))
-					if("Yes")
-						var/mob/living/carbon/human/dummy/ai_dummy = new
-						var/mutable_appearance/dummy_appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
-						if(dummy_appearance)
-							qdel(ai_dummy)
-							hologram_appearance = dummy_appearance
-					if("No")
-						return FALSE
+			if(CHARACTER_TYPE_SELF)
+				var/confirmation = tgui_alert(usr,
+					"WARNING: Your AI hologram will take the appearance of your currently selected character \
+					([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). \
+					Are you sure you want to proceed?", "Customize",
+					list("Yes","No")
+				)
+				if(confirmation == "Yes")
+					var/mob/living/carbon/human/dummy/ai_dummy = new()
+					var/mutable_appearance/dummy_appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
+					qdel(ai_dummy)
+					if(dummy_appearance)
+						hologram_appearance = dummy_appearance
+					return TRUE
+				else
+					return FALSE
 	else
 		var/list/options = GLOB.ai_hologram_category_options[choice]
 		var/option = tgui_input_list(usr, "Select a hologram", "Hologram", options)
@@ -731,11 +746,11 @@
 
 		var/icon = GLOB.ai_hologram_icons[option]
 		if(!icon)
-			return
+			CRASH("hologram icon for [option] does not exist in global icon list")
 
 		var/icon_state = GLOB.ai_hologram_icon_state[option]
 		if(!istext(icon_state)) //Possible that the icon_state can be "", which is valid
-			return
+			CRASH("hologram icon_state for [option] does not exist in global icon_state list")
 
 		hologram_appearance = mutable_appearance(icon, icon_state)
 	return
@@ -1166,3 +1181,7 @@
 	return
 
 #undef CALL_BOT_COOLDOWN
+
+#undef HOLOGRAM_CHOICE_CHARACTER
+#undef CHARACTER_TYPE_SELF
+#undef CHARACTER_TYPE_CREWMEMBER
