@@ -46,7 +46,7 @@ SUBSYSTEM_DEF(sounds)
 	for(var/key in GLOB.ambience_assoc)
 		sounds_to_precache |= GLOB.ambience_assoc[key]
 
-	PrecacheSounds()
+	precache_sounds()
 
 	return ..()
 	return SS_INIT_SUCCESS
@@ -176,7 +176,7 @@ SUBSYSTEM_DEF(sounds)
 /datum/controller/subsystem/sounds/proc/available_channels_left()
 	return length(channel_list) - random_channels_min
 
-/datum/controller/subsystem/sounds/proc/pre_cache_sounds()
+/datum/controller/subsystem/sounds/proc/precache_sounds()
 	if(!length(sounds_to_precache))
 		return
 
