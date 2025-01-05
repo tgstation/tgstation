@@ -244,13 +244,15 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	mob_biotypes = MOB_SPECIAL
 	ai_controller = /datum/ai_controller/basic_controller/mimic_copy
 	/// our creator
-	var/mob/living/creator = null
+	var/datum/weakref/creator_ref
 	/// googly eyes overlay
 	var/static/mutable_appearance/googly_eyes = mutable_appearance('icons/mob/simple/mob.dmi', "googly_eyes")
 	/// do we overlay googly eyes over whatever we copy
 	var/overlay_googly_eyes = TRUE
 	/// do we take damage when we are not sentient and have no target
 	var/idledamage = TRUE
+	/// copied object
+	var/atom/movable/copied
 
 /mob/living/basic/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = FALSE, no_googlies = FALSE)
 	. = ..()
@@ -258,6 +260,11 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if (no_googlies)
 		overlay_googly_eyes = FALSE
 	CopyObject(copy, creator, destroy_original)
+
+/mob/living/basic/mimic/copy/Destroy()
+	creator_ref = null
+	copied = null
+	return ..()
 
 /mob/living/basic/mimic/copy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
@@ -278,17 +285,21 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 /mob/living/basic/mimic/copy/animate_atom_living(mob/living/owner)
 	change_owner(owner)
 
-/mob/living/basic/mimic/copy/Exited(atom/movable/gone, direction) // if anything exits us it was 99.99999% the object we were copying
+/mob/living/basic/mimic/copy/Exited(atom/movable/gone, direction) // if our object gets deleted it calls Exited
 	. = ..()
-	if(QDELETED(src))
+	if(QDELETED(src) || gone != copied)
 		return
 	death()
 
 /mob/living/basic/mimic/copy/proc/change_owner(mob/owner)
-	if(isnull(owner) || creator == owner)
+	var/mob/creator_resolved = creator_ref?.resolve()
+	if(!creator_resolved)
+		creator_ref = null
+	if(isnull(owner) || creator_resolved == owner)
 		return
-	unfriend(creator)
+	unfriend(creator_resolved)
 	befriend(owner)
+	creator_ref = WEAKREF(owner)
 
 /// Check whether this object can be copied. If destroy_original is true, this proc is ignored.
 /mob/living/basic/mimic/copy/proc/check_object(obj/target)
@@ -299,6 +310,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		return FALSE
 	if(!destroy_original)
 		original.forceMove(src)
+	copied = original
 	CopyObjectVisuals(original)
 	if (overlay_googly_eyes)
 		add_overlay(googly_eyes)
@@ -315,7 +327,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		melee_damage_upper = 2 + I.force
 	maxHealth = health
 	if(user)
-		befriend(user)
+		change_owner(user)
 	if(destroy_original)
 		qdel(original)
 	return TRUE
