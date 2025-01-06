@@ -420,7 +420,7 @@
 	parent.vis_contents += eyelid_left
 	parent.vis_contents += eyelid_right
 	// Randomize order for unsynched animations
-	if (!synchronized_blinking || prob(50))
+	if (synchronized_blinking || prob(50))
 		var/list/anim_times = animate_eyelid(eyelid_left, parent)
 		animate_eyelid(eyelid_right, parent, anim_times)
 	else
