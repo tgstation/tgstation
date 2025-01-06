@@ -125,10 +125,14 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	var/crate_close_sound = 'sound/machines/crate/crate_close.ogg'
 	var/open_sound = 'sound/effects/mysterybox/mbox_full.ogg'
 	var/grant_sound = 'sound/effects/mysterybox/mbox_end.ogg'
+	/// Should we play sounds?
+	var/play_sounds = TRUE
 	/// The box's current state, and whether it can be interacted with in different ways
 	var/box_state = MYSTERY_BOX_STANDBY
 	/// The object that represents the rapidly changing item that will be granted upon being claimed. Is not, itself, an item.
 	var/obj/mystery_box_item/presented_item
+	/// What type of mystery box item should we generate?
+	var/box_item = /obj/mystery_box_item
 	/// A timer for how long it takes for the box to start its expire animation
 	var/box_expire_timer
 	/// A timer for how long it takes for the box to close itself
@@ -145,6 +149,10 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	var/uses_left = INFINITY
 	/// A list of weakrefs to mind datums of people that opened it and how many times.
 	var/list/datum/weakref/minds_that_opened_us
+	/// Does this box open on attack_hand?
+	var/open_on_attackhand = TRUE
+	/// Does this box expire?
+	var/expires = TRUE
 
 /obj/structure/mystery_box/Initialize(mapload)
 	. = ..()
@@ -161,7 +169,8 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	. = ..()
 	switch(box_state)
 		if(MYSTERY_BOX_STANDBY)
-			activate(user)
+			if(open_on_attackhand)
+				activate(user)
 
 		if(MYSTERY_BOX_PRESENTING)
 			if(presented_item.claimable)
@@ -187,11 +196,12 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 /obj/structure/mystery_box/proc/activate(mob/living/user)
 	box_state = MYSTERY_BOX_CHOOSING
 	update_icon_state()
-	presented_item = new(loc)
+	presented_item = new box_item(loc)
 	presented_item.start_animation(src)
-	current_sound_channel = SSsounds.reserve_sound_channel(src)
-	playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
-	playsound(src, crate_open_sound, 80)
+	if(play_sounds)
+		current_sound_channel = SSsounds.reserve_sound_channel(src)
+		playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
+		playsound(src, crate_open_sound, 80)
 	if(user.mind)
 		LAZYINITLIST(minds_that_opened_us)
 		var/datum/weakref/ref = WEAKREF(user.mind)
@@ -202,7 +212,8 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 /obj/structure/mystery_box/proc/present_weapon()
 	visible_message(span_notice("[src] presents [presented_item]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 	box_state = MYSTERY_BOX_PRESENTING
-	box_expire_timer = addtimer(CALLBACK(src, PROC_REF(start_expire_offer)), MBOX_DURATION_PRESENTING, TIMER_STOPPABLE)
+	if(expires)
+		box_expire_timer = addtimer(CALLBACK(src, PROC_REF(start_expire_offer)), MBOX_DURATION_PRESENTING, TIMER_STOPPABLE)
 
 /// The prize is still claimable, but the animation will show it start to recede back into the box
 /obj/structure/mystery_box/proc/start_expire_offer()
@@ -216,7 +227,8 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	QDEL_NULL(presented_item)
 	deltimer(box_close_timer)
 	deltimer(box_expire_timer)
-	playsound(src, crate_close_sound, 100)
+	if(play_sounds)
+		playsound(src, crate_close_sound, 100)
 	box_close_timer = null
 	box_expire_timer = null
 	addtimer(CALLBACK(src, PROC_REF(ready_again)), MBOX_DURATION_STANDBY)
@@ -226,8 +238,9 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 
 /// The cooldown between activations has finished, shake to show that
 /obj/structure/mystery_box/proc/ready_again()
-	SSsounds.free_sound_channel(current_sound_channel)
-	current_sound_channel = null
+	if(play_sounds)
+		SSsounds.free_sound_channel(current_sound_channel)
+		current_sound_channel = null
 	box_state = MYSTERY_BOX_STANDBY
 	Shake(3, 0, 0.5 SECONDS)
 
@@ -235,7 +248,8 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 /obj/structure/mystery_box/proc/grant_weapon(mob/living/user)
 	var/atom/movable/instantiated_weapon = new presented_item.selected_path(loc)
 	user.visible_message(span_notice("[user] takes [presented_item] from [src]."), span_notice("You take [presented_item] from [src]."), vision_distance = COMBAT_MESSAGE_RANGE)
-	playsound(src, grant_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
+	if(play_sounds)
+		playsound(src, grant_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
 	close_box()
 
 	if(!isitem(instantiated_weapon))
@@ -253,6 +267,52 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	if(!instantiated_ballistic.internal_magazine)
 		var/obj/item/ammo_box/magazine/extra_mag = new instantiated_ballistic.spawn_magazine_type(loc)
 		user.put_in_hands(extra_mag)
+
+/obj/item/baton_key
+	name = "baton key"
+	desc = "Thank you for purchasing a Baton Case Key! You can get crates from the Torment Nexus in Security. No refunds. All sales final. Uncrate responsibly."
+	icon = 'icons/obj/weapons/baton.dmi'
+	icon_state = "casecard(tm)"
+	var/being_used = FALSE // no opening multiple crates at once for you, thief
+
+/obj/structure/mystery_box/baton_crate
+	name = "baton crate"
+	desc = "Only opens with a Baton Case Key from Cargo. Buy one today for 249 credits for a chance at an incredibly rare and unique Baton! \
+	Fun for all ages in sectors of space where gambling regulations are unenforced!"
+	icon_state = "case"
+	box_item = /obj/mystery_box_item/baton_crate
+	open_on_attackhand = FALSE
+	expires = FALSE
+	anchored = FALSE
+	max_integrity = 250
+	damage_deflection = 15
+	play_sounds = FALSE
+
+/obj/structure/mystery_box/baton_crate/attackby(obj/item/attacking_item, mob/user, params)
+	. = ..()
+	if(istype(attacking_item, /obj/item/baton_key))
+		var/obj/item/baton_key/key = attacking_item
+		if(key.being_used)
+			return
+		key.being_used = TRUE
+		playsound(src, 'sound/effects/doorcreaky.ogg', 80, FALSE, -1)
+		if(do_after(user, 3.75 SECONDS, src))
+			qdel(attacking_item)
+			anchored = TRUE
+			playsound(src, 'sound/effects/mysterybox/baton_crate_open.ogg', 80, FALSE, -1)
+			activate(user)
+		else
+			key.being_used = FALSE
+
+/obj/structure/mystery_box/baton_crate/grant_weapon(mob/living/user)
+	user.visible_message(span_notice("[user] takes [presented_item] from [src]."), span_notice("You take [presented_item] from [src]."), vision_distance = COMBAT_MESSAGE_RANGE)
+	user.put_in_hands(presented_item.selected_item_final)
+	QDEL_NULL(presented_item)
+	visible_message("[src] breaks down.")
+	deconstruct(disassembled = FALSE)
+
+/obj/structure/mystery_box/baton_crate/generate_valid_types()
+	valid_types = subtypesof(/datum/baton_model)
 
 /obj/structure/mystery_box/guns
 	desc = "A wooden crate that seems equally magical and mysterious, capable of granting the user all kinds of different pieces of gear. This one seems focused on firearms."
@@ -311,6 +371,14 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	var/obj/structure/mystery_box/parent_box
 	/// Whether this prize is currently claimable
 	var/claimable = FALSE
+	/// What color are the hype lights?
+	var/hype_light_color = COLOR_VIVID_YELLOW
+	/// What item did we select?
+	var/selected_item_final
+	/// Do we spawn rays when we're opening?
+	var/spawn_rays = TRUE
+	/// What's the duration of the choosing time?
+	var/choosing_duration = MBOX_DURATION_CHOOSING
 
 
 /obj/mystery_box_item/Initialize(mapload)
@@ -318,7 +386,8 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	var/matrix/starting = matrix()
 	starting.Scale(0.5,0.5)
 	transform = starting
-	add_filter("weapon_rays", 3, list("type" = "rays", "size" = 28, "color" = COLOR_VIVID_YELLOW))
+	if(spawn_rays)
+		add_filter("weapon_rays", 3, list("type" = "rays", "size" = 28, "color" = hype_light_color))
 
 /obj/mystery_box_item/Destroy(force)
 	parent_box = null
@@ -337,20 +406,20 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 
 /// Keep changing the icon and selected path
 /obj/mystery_box_item/proc/loop_icon_changes()
-	var/change_delay = 1 // the running count of the delay
-	var/change_delay_delta = 1 // How much to increment the delay per step so the changing slows down
+	var/change_delay = 0.2 // the running count of the delay
+	var/change_delay_delta = 0.2 // How much to increment the delay per step so the changing slows down
 	var/change_counter = 0 // The running count of the running count
 
 	var/matrix/starting = matrix()
-	animate(src, pixel_y = 6, transform = starting, time = MBOX_DURATION_CHOOSING, easing = QUAD_EASING | EASE_OUT)
+	animate(src, pixel_y = 6, transform = starting, time = choosing_duration, easing = QUAD_EASING | EASE_OUT)
 
-	while((change_counter + change_delay_delta + change_delay) < MBOX_DURATION_CHOOSING)
+	while((change_counter + change_delay_delta + change_delay) < choosing_duration)
 		change_delay += change_delay_delta
 		change_counter += change_delay
 		selected_path = pick(parent_box.valid_types)
 		addtimer(CALLBACK(src, PROC_REF(update_random_icon), selected_path), change_counter)
 
-	addtimer(CALLBACK(src, PROC_REF(present_item)), MBOX_DURATION_CHOOSING)
+	addtimer(CALLBACK(src, PROC_REF(present_item)), choosing_duration)
 
 /// animate() isn't up to the task for queueing up icon changes, so this is the proc we call with timers to update our icon
 /obj/mystery_box_item/proc/update_random_icon(new_item_type)
@@ -360,7 +429,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 
 /obj/mystery_box_item/proc/present_item()
 	var/atom/movable/selected_item = selected_path
-	add_filter("ready_outline", 2, list("type" = "outline", "color" = COLOR_VIVID_YELLOW, "size" = 0.2))
+	add_filter("ready_outline", 2, list("type" = "outline", "color" = hype_light_color, "size" = 0.2))
 	name = selected_item::name
 	parent_box.present_weapon()
 	claimable = TRUE
@@ -370,6 +439,61 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	var/matrix/shrink_back = matrix()
 	shrink_back.Scale(0.5,0.5)
 	animate(src, pixel_y = -8, transform = shrink_back, time = MBOX_DURATION_EXPIRING)
+
+/obj/mystery_box_item/baton_crate
+	name = "Mystery Baton"
+	desc = "Ninety-nine percent of unboxers quit before they win a factory new donut sturambit."
+	hype_light_color = COLOR_SECURITY_RED
+	icon = 'icons/obj/weapons/baton.dmi'
+	icon_state = "stunbaton"
+	choosing_duration = 9.6 SECONDS
+	spawn_rays = FALSE
+
+/obj/mystery_box_item/baton_crate/update_random_icon(new_item_type)
+	var/datum/baton_model/baton_model = new_item_type
+	var/icon/possible_baton = icon('icons/obj/weapons/baton.dmi', initial(baton_model.icon_state))
+	possible_baton.Blend("#000000", ICON_MULTIPLY)
+	icon = possible_baton
+	icon_state = ""
+	playsound(src, 'sound/effects/mysterybox/baton_crate_scroll.ogg', 80, FALSE, -1)
+
+/obj/mystery_box_item/baton_crate/present_item()
+	var/obj/item/melee/baton/security/skin/selected_item = new /obj/item/melee/baton/security/skin
+	name = selected_item.name
+	desc = selected_item.desc
+	icon = selected_item.icon
+	icon_state = "stunbaton"
+	selected_item_final = selected_item
+	var/highest_rarity_found
+	if(selected_item.chosen_model.rarity_hex == "baton_common" || selected_item.chosen_skin.rarity_hex == "baton_common")
+		highest_rarity_found = "baton_common"
+	if(selected_item.chosen_model.rarity_hex == "baton_uncommon" || selected_item.chosen_skin.rarity_hex == "baton_uncommon")
+		highest_rarity_found = "baton_uncommon"
+	if(selected_item.chosen_model.rarity_hex == "baton_rare" || selected_item.chosen_skin.rarity_hex == "baton_rare")
+		highest_rarity_found = "baton_rare"
+	if(selected_item.chosen_model.rarity_hex == "baton_mythical" || selected_item.chosen_skin.rarity_hex == "baton_mythical")
+		highest_rarity_found = "baton_mythical"
+	if(selected_item.chosen_model.rarity_hex == "baton_legendary" || selected_item.chosen_skin.rarity_hex == "baton_legendary")
+		highest_rarity_found = "baton_legendary"
+	if(selected_item.chosen_model.rarity_hex == "baton_ancient" || selected_item.chosen_skin.rarity_hex == "baton_ancient")
+		highest_rarity_found = "baton_ancient"
+	switch(highest_rarity_found)
+		if("baton_common")
+			playsound(src, 'sound/effects/mysterybox/common.ogg', 80, FALSE, -1)
+		if("baton_uncommon")
+			playsound(src, 'sound/effects/mysterybox/uncommon.ogg', 80, FALSE, -1)
+		if("baton_rare")
+			playsound(src, 'sound/effects/mysterybox/rare.ogg', 80, FALSE, -1)
+		if("baton_mythical")
+			playsound(src, 'sound/effects/mysterybox/mythical.ogg', 80, FALSE, -1)
+		if("baton_legendary")
+			playsound(src, 'sound/effects/mysterybox/legendary.ogg', 80, FALSE, -1)
+		if("baton_ancient")
+			playsound(src, 'sound/effects/mysterybox/ancient.ogg', 80, FALSE, -1)
+	add_filter("weapon_rays", 3, list("type" = "rays", "size" = 28, "color" = hype_light_color))
+	add_filter("ready_outline", 2, list("type" = "outline", "color" = hype_light_color, "size" = 0.2))
+	parent_box.present_weapon()
+	claimable = TRUE
 
 #undef MYSTERY_BOX_COOLING_DOWN
 #undef MYSTERY_BOX_STANDBY

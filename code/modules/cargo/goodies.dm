@@ -354,3 +354,9 @@
 	desc = "A single bottle of Interdyne brand experimental medication, used for treating people suffering from hereditary manifold disease."
 	cost = PAYCHECK_CREW * 6.5
 	contains = list(/obj/item/storage/pill_bottle/sansufentanyl)
+
+/datum/supply_pack/goody/baton_key
+	name = "Baton Case Key (ON SALE FOR 249 CREDITS!!!)"
+	desc = "A baton case key, for opening baton cases earned through the Torment Nexus. <b>On sale for 249 credits!!!</b>"
+	cost = 249 // if it's not 250 people will think it's cheaper because marketing
+	contains = list(/obj/item/baton_key)

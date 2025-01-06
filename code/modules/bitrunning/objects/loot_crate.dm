@@ -89,27 +89,6 @@
 
 	return TRUE
 
-/obj/structure/closet/crate/secure/bitrunning/decrypted/security
-	name = "decrypted cache"
-	desc = "Compiled from the virtual domain. The reward of a successful Torment Nexus rehabilitation."
-	icon_state = "weaponcrate"
-	base_icon_state = "weaponcrate"
-	locked = FALSE
-
-/obj/structure/closet/crate/secure/bitrunning/decrypted/security/PopulateContents(reward_points, list/completion_loot, rewards_multiplier)
-	spawn_loot(completion_loot)
-	switch(reward_points)
-		if(BITRUNNER_REWARD_MIN)
-			new /obj/item/reagent_containers/cup/glass/trophy/bronze_cup(src)
-		if(BITRUNNER_REWARD_LOW)
-			new /obj/item/reagent_containers/cup/glass/trophy/bronze_cup(src)
-		if(BITRUNNER_REWARD_MEDIUM)
-			new /obj/item/reagent_containers/cup/glass/trophy/silver_cup(src)
-		if(BITRUNNER_REWARD_HIGH)
-			new /obj/item/reagent_containers/cup/glass/trophy/silver_cup(src)
-		if(BITRUNNER_REWARD_EXTREME)
-			new /obj/item/reagent_containers/cup/glass/trophy/gold_cup(src)
-
 #undef ORE_MULTIPLIER_IRON
 #undef ORE_MULTIPLIER_GLASS
 #undef ORE_MULTIPLIER_PLASMA

@@ -106,10 +106,6 @@
 /obj/item/fish/sand_surfer,
 /turf/open/floor/glass,
 /area/virtual_domain/fullbright)
-"S" = (
-/obj/item/fish/dwarf_moonfish,
-/turf/open/floor/glass,
-/area/virtual_domain/fullbright)
 "U" = (
 /obj/item/fish/clownfish,
 /turf/open/floor/glass,
@@ -335,7 +331,7 @@ u
 J
 l
 s
-S
+J
 s
 l
 g

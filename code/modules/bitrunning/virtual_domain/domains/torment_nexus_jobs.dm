@@ -7,7 +7,6 @@
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
 	forced_outfit = /datum/outfit/job/prisoner/janitor
 	test_only = TRUE
-	cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted/security
 
 /datum/lazy_template/virtual_domain/janitor_work/setup_domain(list/created_atoms)
 	custom_spawns = list()
@@ -96,7 +95,6 @@
 	test_only = TRUE
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
 	forced_outfit = /datum/outfit/job/prisoner/waiter
-	cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted/security
 
 /datum/lazy_template/virtual_domain/customer_push_test/setup_domain(list/created_atoms)
 	custom_spawns = list()
@@ -173,7 +171,6 @@
 	test_only = TRUE
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
 	forced_outfit = /datum/outfit/job/prisoner/scientist
-	cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted/security
 
 /datum/lazy_template/virtual_domain/teleporter_maze_test/setup_domain(list/created_atoms)
 	custom_spawns = list()
@@ -335,7 +332,6 @@
 	var/list/phone_message = list(
 		"ay yo the pizza here",
 	)
-	cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted/security
 
 /datum/outfit/job/prisoner/night_guard
 	name = "Night Guard"

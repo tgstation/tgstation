@@ -1206,6 +1206,43 @@ $border-width-px: $border-width * 1px;
   flex-direction: column;
 }
 
+.baton_common {
+  color: 	hsl(0, 0%, 69%);
+  font-weight: bold;
+  border: 1px solid hsl(0, 0%, 0%);
+}
+
+.baton_uncommon {
+  color: 	hsl(216, 68%, 64%);
+  font-weight: bold;
+  border: 1px solid hsl(0, 0%, 0%);
+}
+
+.baton_rare {
+  color: 	hsl(226, 57%, 55%);
+  font-weight: bold;
+  border: 1px solid hsl(0, 0%, 0%);
+}
+
+.baton_mythical {
+  color: 	hsl(261, 100%, 64%);
+  font-weight: bold;
+  border: 1px solid hsl(0, 0%, 0%);
+}
+
+.baton_legendary {
+  color: 	hsl(294, 79%, 54%);
+  font-weight: bold;
+  border: 1px solid hsl(0, 0%, 0%);
+}
+
+.baton_ancient {
+  color: 	hsl(0, 80%, 61%);
+  font-weight: bold;
+  border: 1px solid hsl(0, 0%, 0%);
+}
+
+
 @each $color-name, $color-value in $alert-stripe-colors {
   .chat_alert_#{$color-name} {
     color: hsl(0, 0%, 100%);

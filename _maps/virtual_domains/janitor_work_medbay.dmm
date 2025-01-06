@@ -598,8 +598,6 @@
 	pixel_x = -3;
 	pixel_y = -4
 	},
-/obj/item/organ/internal/eyes,
-/obj/item/organ/internal/heart,
 /turf/open/floor/iron/white,
 /area/virtual_domain/fullbright)
 "Br" = (
@@ -657,7 +655,6 @@
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/mob_spawn/corpse/human/assistant,
-/obj/item/organ/internal/liver,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/virtual_domain/fullbright)
@@ -1023,8 +1020,6 @@
 /obj/effect/decal/cleanable/blood,
 /obj/item/surgicaldrill,
 /obj/effect/mob_spawn/corpse/human/security,
-/obj/item/organ/internal/lungs,
-/obj/item/organ/internal/liver,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron/white,
 /area/virtual_domain/fullbright)
@@ -1083,7 +1078,6 @@
 	},
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
-/obj/item/organ/internal/alien/plasmavessel/large/queen,
 /turf/open/floor/iron/white,
 /area/virtual_domain/fullbright)
 "Xb" = (

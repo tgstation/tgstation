@@ -133,7 +133,6 @@
 /obj/structure/table/wood,
 /obj/item/clothing/shoes/cowboy,
 /obj/item/clothing/head/cowboy,
-/obj/item/gun/ballistic/revolver/syndicate/cowboy,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},

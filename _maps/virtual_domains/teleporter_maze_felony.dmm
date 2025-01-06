@@ -32,13 +32,6 @@
 /obj/structure/railing,
 /turf/open/floor/iron/dark/small,
 /area/virtual_domain/fullbright)
-"by" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 10
-	},
-/obj/structure/hedge,
-/turf/open/floor/iron/dark/small,
-/area/virtual_domain/fullbright)
 "bW" = (
 /obj/item/flashlight/flare/candle/infinite{
 	pixel_y = 16;
@@ -486,13 +479,6 @@
 /mob/living/basic/mothroach,
 /turf/open/floor/wood/tile,
 /area/virtual_domain/fullbright)
-"xM" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 5
-	},
-/obj/structure/hedge,
-/turf/open/floor/iron/dark/small,
-/area/virtual_domain/fullbright)
 "xO" = (
 /obj/bitrunning/teleporter,
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
@@ -565,6 +551,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/box/corners,
+/obj/structure/hedge,
 /turf/open/floor/iron/dark/textured_large,
 /area/virtual_domain/fullbright)
 "AH" = (
@@ -636,6 +623,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
+/obj/structure/hedge,
 /turf/open/floor/iron/dark/textured_large,
 /area/virtual_domain/fullbright)
 "Et" = (
@@ -1379,9 +1367,9 @@ US
 Ud
 gH
 CX
+hB
 MB
 hB
-by
 CX
 xj
 "}
@@ -1619,9 +1607,9 @@ dk
 SG
 eR
 CX
-xM
 hB
 MB
+hB
 CX
 xj
 "}
