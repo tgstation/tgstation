@@ -258,7 +258,7 @@
 	if(my_head.head_flags & HEAD_EYECOLOR)
 		eye_right.color = parent.get_right_eye_color()
 		eye_left.color = parent.get_left_eye_color()
-		setup_eyelids(eye_left, eye_right, parent)
+		overlays += setup_eyelids(eye_left, eye_right, parent)
 
 	if (scarring & RIGHT_EYE_SCAR)
 		var/mutable_appearance/right_scar = mutable_appearance('icons/mob/human/human_face.dmi', "eye_scar_right", -BODY_LAYER)
@@ -413,6 +413,8 @@
 
 	eyelid_left.color = eyelid_color
 	eyelid_right.color = eyelid_color
+	eyelid_left.render_target = "*[REF(parent)]_eyelid_left"
+	eyelid_right.render_target = "*[REF(parent)]_eyelid_right"
 	parent.vis_contents += eyelid_left
 	parent.vis_contents += eyelid_right
 	// Randomize order for unsynched animations
@@ -422,6 +424,12 @@
 	else
 		var/list/anim_times = animate_eyelid(eyelid_right, parent)
 		animate_eyelid(eyelid_left, parent, anim_times)
+
+	var/mutable_appearance/left_eyelid_overlay = mutable_appearance(layer = -BODY_LAYER, offset_spokesman = parent)
+	var/mutable_appearance/right_eyelid_overlay = mutable_appearance(layer = -BODY_LAYER, offset_spokesman = parent)
+	left_eyelid_overlay.render_source = "*[REF(parent)]_eyelid_left"
+	right_eyelid_overlay.render_source = "*[REF(parent)]_eyelid_right"
+	return list(left_eyelid_overlay, right_eyelid_overlay)
 
 /// Animates one eyelid at a time, thanks BYOND and thanks animation chains
 /obj/item/organ/eyes/proc/animate_eyelid(obj/effect/abstract/eyelid_effect/eyelid, mob/living/carbon/human/parent, list/anim_times = null)
