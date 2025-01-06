@@ -418,8 +418,8 @@
 	SET_PLANE_EXPLICIT(eyelid_right, parent.plane, parent)
 	eyelid_left.layer = -BODY_LAYER
 	eyelid_right.layer = -BODY_LAYER
-	parent.vis_contents += eyelid_left
-	parent.vis_contents += eyelid_right
+	eye_left.vis_contents += eyelid_left
+	eye_right.vis_contents += eyelid_right
 	// Randomize order for unsynched animations
 	if (!synchronized_blinking || prob(50))
 		var/list/anim_times = animate_eyelid(eyelid_left, parent)
