@@ -2560,10 +2560,6 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "alc" = (
-/obj/machinery/door/window/brigdoor/left/directional/north{
-	name = "Byteforge Access";
-	req_access = list("armory")
-	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -35556,8 +35552,6 @@
 "lwE" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/byteforge,
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "lwF" = (

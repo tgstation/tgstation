@@ -3778,13 +3778,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
-"bbF" = (
-/obj/machinery/door/window/brigdoor/left/directional/south{
-	name = "Byteforge";
-	req_access = list("armory")
-	},
-/turf/open/floor/iron/smooth,
-/area/station/security/torment_nexus)
 "bbM" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -78069,8 +78062,6 @@
 /area/icemoon/underground/explored)
 "wED" = (
 /obj/machinery/byteforge,
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/smooth,
 /area/station/security/torment_nexus)
@@ -240021,7 +240012,7 @@ abW
 oEr
 qeI
 uZM
-bbF
+qeI
 wED
 kZX
 sDl

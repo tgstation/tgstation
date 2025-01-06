@@ -4168,11 +4168,6 @@
 /turf/open/floor/iron,
 /area/station/science/lab)
 "buZ" = (
-/obj/machinery/door/window/brigdoor/left/directional/north{
-	name = "Byteforge";
-	req_access = list("armory");
-	dir = 8
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 10
@@ -64875,9 +64870,6 @@
 /area/station/engineering/supermatter/room)
 "wJX" = (
 /obj/machinery/byteforge,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8

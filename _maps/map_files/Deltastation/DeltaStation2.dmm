@@ -7142,8 +7142,6 @@
 "bJC" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/byteforge,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/camera/directional/east,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
@@ -63275,10 +63273,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 4
-	},
-/obj/machinery/door/window/brigdoor/right/directional/east{
-	name = "Byteforge Access";
-	req_access = list("armory")
 	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)

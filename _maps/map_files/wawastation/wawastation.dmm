@@ -67795,6 +67795,7 @@
 /obj/machinery/status_display/ai/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/byteforge,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "xMJ" = (
