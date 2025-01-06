@@ -1,5 +1,6 @@
 /obj/item/ammo_box/magazine/m7mm
 	name = "box magazine (7mm)"
+	desc = "A sizeable 7mm box magazine, suitable for the L6 SAW."
 	icon_state = "a7mm-50"
 	ammo_type = /obj/item/ammo_casing/m7mm
 	caliber = CALIBER_A7MM
