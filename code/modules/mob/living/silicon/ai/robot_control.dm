@@ -84,7 +84,7 @@
 
 	switch(action)
 		if("callbot") //Command a bot to move to a selected location.
-			if(owner.call_bot_cooldown > world.time)
+			if(!COOLDOWN_FINISHED(owner, call_bot_cooldown))
 				to_chat(our_user, span_danger("Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route."))
 				return
 			if(isbasicbot(bot))

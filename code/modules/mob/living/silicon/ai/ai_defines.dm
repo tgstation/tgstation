@@ -34,6 +34,18 @@
 	/// If the AI is currently anchored to the ground, used for checks. Distinct from [atom/movable/anchored]
 	var/is_anchored = TRUE
 
+	/// Raw HTML containing the last page that was loaded from a held-up PDA
+	var/last_tablet_note_seen = null
+	/// The last attempted VOX announcement. Exists so that failed VOXes can be retried easily
+	var/last_announcement = ""
+	/// AI core icon_state selected by the AI through [verb/pick_icon]
+	var/display_icon_override
+
+
+	/* ROBOTS */
+	/// List of robots currently synced to the AI
+	var/list/mob/living/silicon/robot/connected_robots = list()
+
 
 	/* POWER */
 	/// Reserve emergency power, consumed when the AI has no [var/power_requirement][power source]
@@ -49,15 +61,13 @@
 	/* CAMERA */
 	/// The network that the AI is currently viewing
 	var/list/network = list(CAMERANET_NETWORK_SS13)
-	/// The AI's current... holopad?
-	var/obj/machinery/camera/current
 	/// If the AI has their camera light enabled
 	var/camera_light_on = FALSE
 	/// List of cameras that have been illuminated by the AI's [var/camera_light][camera light]
 	var/final/list/obj/machinery/camera/lit_cameras = list()
 	/// List of atoms that the AI can quickly jump to through keys 1-9
 	var/final/list/atom/cam_hotkeys = new/list(9)
-	/// The last camera hotkey we jumped to
+	/// Our last location before jumping.
 	var/final/atom/cam_prev
 
 
@@ -88,20 +98,20 @@
 
 	/// Timer used when hacking an APC
 	var/malfhacking = FALSE //--NeoFite was here
-	/// APC that we are currently hacking.
+	/// APC that we are currently hacking
 	var/obj/machinery/power/apc/malfhack = null
-	/// APCs that the AI has hacked.
+	/// APCs that the AI has already hacked
 	var/list/hacked_apcs = list()
 
 	/// If TRUE, the AI can take control over mechs
 	var/can_dominate_mechs = FALSE
 	/// If TRUE, the AI can shunt themselves into APCs
 	var/can_shunt = TRUE
-	/// TRUE if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
+	/// TRUE if the AI is currently shunted, used to differentiate between shunted and ghosted/braindead
 	var/shunted = FALSE
-	/// If the AI has enabled doomsday.
+	/// If the AI has enabled doomsday
 	var/nuking = FALSE
-	/// Reference to the doomsday device.
+	/// Reference to the doomsday device
 	var/obj/machinery/doomsday_device/doomsday_device = null
 	/// Reference to machine that holds the voicechanger
 	var/obj/machinery/ai_voicechanger/ai_voicechanger = null
@@ -114,7 +124,9 @@
 	var/obj/structure/ai_core/deactivated/linked_core = null
 	/// Robot that this AI is currently using
 	var/mob/living/silicon/robot/deployed_shell = null
+	/// Action to deploy to a shell from a list of options
 	var/datum/action/innate/deploy_shell/deploy_action = new()
+	/// Action to deploy to the last shell the AI used
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new()
 
 
@@ -123,8 +135,10 @@
 	var/multicam_on = FALSE
 	/// Maximum multicamera windows the AI can have open
 	var/max_multicams = 6
+	/// The multicamera window that the AI is currently using
 	var/final/atom/movable/screen/movable/pic_in_pic/ai/master_multicam = null
-	var/final/list/atom/movable/screen/movable/pic_in_pic/ai/multicam_screens = list()
+	/// All of the AI's currently open multicamera windows
+	var/final/list/atom/movable/screen/movable/pic_in_pic/ai/multicam_screens = list(__TYPE__::max_multicams)
 
 
 	/* ROBOT CONTROL */
@@ -132,27 +146,28 @@
 	var/datum/robot_control/robot_control
 	/// Weakref to the bot the AI is currently commanding
 	var/datum/weakref/bot_ref
-	/// If TRUE, the AI will send it's [var/bot_ref][commanded bot] to
+	/// If TRUE, the AI will send it's [var/bot_ref][commanded bot] to the next clicked atom
 	var/waypoint_mode = FALSE
 	/// Cooldown for bot summoning
 	COOLDOWN_DECLARE(call_bot_cooldown)
 
 
-	/* I'M DUMB AND CAN'T SORT */
-	/// remember AI's last location
+	/* HOLOGRAM */
+	/// The AI eye's last location, used when answering a hologram request
 	var/atom/lastloc
-	var/last_tablet_note_seen = null
-	/// The last attempted VOX announcement. Exists so that failed VOXes can be retried easily.
-	var/last_announcement = ""
-	/// The AI's hologram appearance
-	var/mutable_appearance/hologram_appearance //Default is assigned when AI is created.
+	/// The AI's hologram appearance, can be set by a client and is assigned on AI creation
+	var/mutable_appearance/hologram_appearance
+	/// The AI's currently used holopad
+	var/obj/machinery/holopad/current = null
+
+	/* UI */
 	/// UI for station alerts
 	var/datum/station_alert/alert_control
+	/// AI's internal modular PC, used for messenger
 	var/atom/movable/screen/ai/modpc/interfaceButton
-	///Used as a fake multitoool in tcomms machinery
+
+	/* I'M DUMB AND CAN'T SORT */
+	/// Used as a fake multitool in tcomms machinery
 	var/obj/item/multitool/aiMulti
-	/// List of cyborgs currently synced to the AI
-	var/list/connected_robots = list()
-	var/datum/effect_system/spark_spread/spark_system //So they can initialize sparks whenever
-	/// AI core display selected by the AI through [verb/pick_icon]
-	var/display_icon_override
+	/// Helper effect that creates sparks when the AI is damaged
+	var/datum/effect_system/spark_spread/spark_system
