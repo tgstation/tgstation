@@ -124,7 +124,7 @@
 
 	organ_owner.update_tint()
 	organ_owner.update_sight()
-	UnregisterSignal(organ_owner, list(COMSIG_ATOM_BULLET_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT, COMSIG_ATOM_DIR_CHANGE))
+	UnregisterSignal(organ_owner, list(COMSIG_ATOM_BULLET_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT))
 
 /obj/item/organ/eyes/update_atom_colour()
 	. = ..()

@@ -32,4 +32,5 @@
 
 /datum/quirk/item_quirk/fluoride_stare/remove()
 	REMOVE_TRAIT(quirk_holder, TRAIT_NO_EYELIDS, QUIRK_TRAIT)
-	qdel(quirk_holder.GetComponent(/datum/component/manual_blinking))
+	if (!HAS_TRAIT(quirk_holder, TRAIT_NO_EYELIDS))
+		qdel(quirk_holder.GetComponent(/datum/component/manual_blinking))
