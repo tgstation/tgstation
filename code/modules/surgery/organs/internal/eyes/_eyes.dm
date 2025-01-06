@@ -65,6 +65,11 @@
 		eyelid_left = new(src, "[eye_icon_state]_l")
 		eyelid_right = new(src, "[eye_icon_state]_r")
 
+/obj/item/organ/eyes/Destroy()
+	QDEL_NULL(eyelid_left)
+	QDEL_NULL(eyelid_right)
+	return ..()
+
 /obj/item/organ/eyes/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	receiver.cure_blind(NO_EYES)
