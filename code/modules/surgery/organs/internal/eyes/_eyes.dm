@@ -72,7 +72,6 @@
 	refresh(receiver, call_update = !special)
 	RegisterSignal(receiver, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignal(receiver, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(on_face_wash))
-	RegisterSignal(receiver, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
 	if (scarring)
 		apply_scarring_effects()
 
@@ -414,10 +413,8 @@
 
 	eyelid_left.color = eyelid_color
 	eyelid_right.color = eyelid_color
-	SET_PLANE_EXPLICIT(eyelid_left, parent.plane, parent)
-	SET_PLANE_EXPLICIT(eyelid_right, parent.plane, parent)
-	eye_left.vis_contents += eyelid_left
-	eye_right.vis_contents += eyelid_right
+	parent.vis_contents += eyelid_left
+	parent.vis_contents += eyelid_right
 	// Randomize order for unsynched animations
 	if (!synchronized_blinking || prob(50))
 		var/list/anim_times = animate_eyelid(eyelid_left, parent)
@@ -449,15 +446,11 @@
 			animate(time = anim_times[1] - wait_time)
 			anim_times.Cut(1, 2)
 
-/obj/item/organ/eyes/proc/on_dir_change(atom/movable/source, old_dir, new_dir)
-	SIGNAL_HANDLER
-	eyelid_left.dir = new_dir
-	eyelid_right.dir = new_dir
-
 /obj/effect/abstract/eyelid_effect
 	name = "eyelid"
 	icon = 'icons/mob/human/human_face.dmi'
 	layer = -BODY_LAYER
+	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE | VIS_INHERIT_ID
 
 /obj/effect/abstract/eyelid_effect/Initialize(mapload, new_state)
 	. = ..()
