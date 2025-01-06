@@ -390,7 +390,7 @@
 
 #define BASE_BLINKING_DELAY 5 SECONDS
 #define RAND_BLINKING_DELAY 1 SECONDS
-#define BLINK_DURATION 0.15 SECONDS
+#define BLINK_DURATION 0.2 SECONDS
 #define BLINK_LOOPS 5
 
 /// Modifies eye overlays to also act as eyelids, both for blinking and for when you're knocked out cold
