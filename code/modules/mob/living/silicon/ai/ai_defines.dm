@@ -64,24 +64,24 @@
 	/// If the AI has their camera light enabled
 	var/camera_light_on = FALSE
 	/// List of cameras that have been illuminated by the AI's [var/camera_light][camera light]
-	var/final/list/obj/machinery/camera/lit_cameras = list()
+	VAR_FINAL/list/obj/machinery/camera/lit_cameras = list()
 	/// List of atoms that the AI can quickly jump to through keys 1-9
-	var/final/list/atom/cam_hotkeys = new/list(9)
+	VAR_FINAL/list/atom/cam_hotkeys = new/list(9)
 	/// Our last location before jumping.
-	var/final/atom/cam_prev
+	VAR_FINAL/atom/cam_prev
 
 
 	/* CAMERA EYE */
 	/// The AI's **main** eye (bars)
 	var/mob/eye/camera/ai/eyeobj = null
 	/// List of [mob/eye/camera/ai][camera eyes] that the AI has created, including the [var/eyeobj][main eye]
-	var/final/list/mob/eye/camera/ai/all_eyes = list()
+	VAR_FINAL/list/mob/eye/camera/ai/all_eyes = list()
 	/// The internal tool used to track players visible through cameras
 	var/datum/trackable/ai_tracking_tool
 	/// [var/acceleration][Incrementing] value used in [proc/AIMove][movement]
 	var/sprint = 10
 	/// Time since the AI [proc/AIMove][last moved their camera eye], uses world.timeofday
-	var/final/last_moved = 0
+	VAR_FINAL/last_moved = 0
 	/// If the camera eye [proc/AIMove][moves progressively faster] when looking around
 	var/acceleration = TRUE
 
@@ -136,9 +136,9 @@
 	/// Maximum multicamera windows the AI can have open
 	var/max_multicams = 6
 	/// The multicamera window that the AI is currently using
-	var/final/atom/movable/screen/movable/pic_in_pic/ai/master_multicam = null
+	VAR_FINAL/atom/movable/screen/movable/pic_in_pic/ai/master_multicam = null
 	/// All of the AI's currently open multicamera windows
-	var/final/list/atom/movable/screen/movable/pic_in_pic/ai/multicam_screens = list()
+	VAR_FINAL/list/atom/movable/screen/movable/pic_in_pic/ai/multicam_screens = list()
 
 
 	/* ROBOT CONTROL */
