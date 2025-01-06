@@ -62,6 +62,6 @@ ADMIN_VERB(investigate_show, R_NONE, "Investigate", "Browse various detailed log
 		to_chat(user, span_danger("No [selected] logfile was found."), confidential = TRUE)
 		return
 
-	var/datum/browser/browser = new(usr, "investigate[selected]", "Investigation of [selected]", 800, 300)
-	browser.set_content(F)
+	var/datum/browser/browser = new(user, "investigate[selected]", "Investigation of [selected]", 800, 300)
+	browser.set_content(file2text(F))
 	browser.open()
