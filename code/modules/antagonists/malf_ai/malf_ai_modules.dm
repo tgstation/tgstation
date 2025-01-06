@@ -808,7 +808,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	button_icon_state = "reactivate_cameras"
 	uses = 30
 	auto_use_uses = FALSE
-	cooldown_period = 30
+	cooldown_period = 3 SECONDS
 
 /datum/action/innate/ai/reactivate_cameras/New()
 	..()
