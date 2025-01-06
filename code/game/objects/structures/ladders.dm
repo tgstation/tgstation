@@ -11,7 +11,7 @@
 	VAR_FINAL/obj/structure/ladder/down
 	///the ladder above this one
 	VAR_FINAL/obj/structure/ladder/up
-	/// Ladders craft midround can only link to other ladders crafted midround
+	/// Ladders crafted midround can only link to other ladders crafted midround
 	var/crafted = FALSE
 	/// travel time for ladder in deciseconds
 	var/travel_time = 1 SECONDS
