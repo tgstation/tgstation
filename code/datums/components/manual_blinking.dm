@@ -1,29 +1,33 @@
 /datum/component/manual_blinking
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	var/obj/item/organ/eyes/E
+	var/obj/item/organ/eyes/parent_eyes
 	var/warn_grace = FALSE
 	var/warn_dying = FALSE
 	var/last_blink
 	var/check_every = 20 SECONDS
 	var/grace_period = 6 SECONDS
 	var/damage_rate = 1 // organ damage taken per tick
-	var/list/valid_emotes = list(/datum/emote/living/carbon/blink, /datum/emote/living/carbon/blink_r)
+	var/list/valid_emotes = list(/datum/emote/living/carbon/human/blink, /datum/emote/living/carbon/human/blink_r)
 
 /datum/component/manual_blinking/Initialize()
 	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/mob/living/carbon/C = parent
-	E = C.get_organ_slot(ORGAN_SLOT_EYES)
+	var/mob/living/carbon/carbon_parent = parent
+	ADD_TRAIT(carbon_parent, TRAIT_PREVENT_BLINK_LOOPS, REF(src))
+	parent_eyes = carbon_parent.get_organ_slot(ORGAN_SLOT_EYES)
 
-	if(E)
-		START_PROCESSING(SSdcs, src)
-		last_blink = world.time
-		to_chat(C, span_notice("You suddenly realize you're blinking manually."))
+	if(!parent_eyes)
+		return
+
+	START_PROCESSING(SSdcs, src)
+	last_blink = world.time
+	to_chat(carbon_parent, span_notice("You suddenly realize you're blinking manually."))
 
 /datum/component/manual_blinking/Destroy(force)
-	E = null
+	REMOVE_TRAIT(parent, TRAIT_PREVENT_BLINK_LOOPS, REF(src))
+	parent_eyes = null
 	STOP_PROCESSING(SSdcs, src)
 	to_chat(parent, span_notice("You revert back to automatic blinking."))
 	return ..()
@@ -53,35 +57,29 @@
 	STOP_PROCESSING(SSdcs, src)
 
 /datum/component/manual_blinking/process()
-	var/mob/living/carbon/C = parent
-
 	if(world.time > (last_blink + check_every + grace_period))
 		if(!warn_dying)
-			to_chat(C, span_userdanger("Your eyes begin to wither, you need to blink!"))
+			to_chat(parent, span_userdanger("Your eyes begin to wither, you need to blink!"))
 			warn_dying = TRUE
-
-		E.apply_organ_damage(damage_rate)
+		parent_eyes.apply_organ_damage(damage_rate)
 	else if(world.time > (last_blink + check_every))
 		if(!warn_grace)
-			to_chat(C, span_danger("You feel a need to blink!"))
+			to_chat(parent, span_danger("You feel a need to blink!"))
 			warn_grace = TRUE
 
-/datum/component/manual_blinking/proc/check_added_organ(mob/who_cares, obj/item/organ/O)
+/datum/component/manual_blinking/proc/check_added_organ(mob/who_cares, obj/item/organ/added_organ)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/eyes/new_eyes = O
-
-	if(istype(new_eyes,/obj/item/organ/eyes))
-		E = new_eyes
+	if(istype(added_organ, /obj/item/organ/eyes))
+		parent_eyes = added_organ
+		last_blink = world.time
 		START_PROCESSING(SSdcs, src)
 
-/datum/component/manual_blinking/proc/check_removed_organ(mob/who_cares, obj/item/organ/O)
+/datum/component/manual_blinking/proc/check_removed_organ(mob/who_cares, obj/item/organ/removed_organ)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/eyes/bye_beyes = O // oh come on, that's pretty good
-
-	if(istype(bye_beyes, /obj/item/organ/eyes))
-		E = null
+	if(removed_organ == parent_eyes)
+		parent_eyes = null
 		STOP_PROCESSING(SSdcs, src)
 
 /datum/component/manual_blinking/proc/check_emote(mob/living/carbon/user, datum/emote/emote)
