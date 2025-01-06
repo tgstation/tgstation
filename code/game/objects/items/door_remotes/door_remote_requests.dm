@@ -5,24 +5,24 @@
 			listening = !listening
 			RegisterSignal(src, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, PROC_REF(receive_access_request))
 			log_admin("[src] has started listening for door access requests due to being picked up.")
-			SSid_access.add_listening_remote(region_access, src)
+			SSdoor_remotes.add_listening_remote(region_access, src)
 		else
 			listening = !listening
 			UnregisterSignal(src, COMSIG_DOOR_REMOTE_ACCESS_REQUEST)
 			log_admin("[src] has stopped listening for access requests due to being abandoned.")
-			SSid_access.remove_listening_remote(region_access, src)
+			SSdoor_remotes.remove_listening_remote(region_access, src)
 			RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
 	else
 		if(!listening)
 			RegisterSignal(src, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, PROC_REF(receive_access_request))
 			listening = !listening
 			log_admin("[user] has activated [src] to listen to door access requests.")
-			SSid_access.add_listening_remote(region_access, src)
+			SSdoor_remotes.add_listening_remote(region_access, src)
 		else
 			UnregisterSignal(src, COMSIG_DOOR_REMOTE_ACCESS_REQUEST)
 			log_admin("[user] has deactivated [src] listening to door access requests.")
 			listening = !listening
-			SSid_access.remove_listening_remote(region_access, src)
+			SSdoor_remotes.remove_listening_remote(region_access, src)
 
 /obj/item/door_remote/proc/clear_requests(mob/user)
 	to_chat(user, span_yellowteamradio("The remote buzzes: %CLEARED!%"))
@@ -96,8 +96,8 @@
 	if(!length(choices))
 		to_chat(user, span_yellowteamradio("The remote buzzes: %NO_SELECTION%"))
 		return
-	balloon_alert(user, "Choose batch action:")
-	var/list/available_actions
+	balloon_alert(user, "choose batch action")
+	var/list/available_actions // PSEUDO_M use resolve radials here
 	var/radius = 32
 	if(is_emagged)
 		available_actions = SSid_access.remote_request_action_list_nefarious

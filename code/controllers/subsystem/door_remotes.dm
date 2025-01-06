@@ -19,10 +19,10 @@ SUBSYSTEM_DEF(door_remotes)
 
 /datum/controller/subsystem/door_remotes/proc/setup_remote_request_action_lists()
 
-/datum/controller/subsystem/id_access/proc/add_listening_remote(region_listened_to, obj/item/door_remote/remote_added)
+/datum/controller/subsystem/door_remotes/proc/add_listening_remote(region_listened_to, obj/item/door_remote/remote_added)
 	LAZYADD(remotes_listening_by_region[region_listened_to], remote_added)
 
-/datum/controller/subsystem/id_access/proc/remove_listening_remote(region_listened_to, obj/item/door_remote/remote_removed)
+/datum/controller/subsystem/door_remotes/proc/remove_listening_remote(region_listened_to, obj/item/door_remote/remote_removed)
 	LAZYREMOVE(remotes_listening_by_region[region_listened_to], remote_removed)
 	if(LAZYLEN(remotes_listening_by_region[region_listened_to]))
 		return // return if there's other remotes listening for that region
@@ -39,10 +39,11 @@ SUBSYSTEM_DEF(door_remotes)
 	. = FALSE
 	for(var/region in SSid_access.station_regions)
 		if(door_requested.check_access_list(SSid_access.accesses_by_region[region]))
-			for(var/obj/item/door_remote/remote in SSid_access.remotes_listening_by_region[region])
+			for(var/obj/item/door_remote/remote in SSdoor_remotes.remotes_listening_by_region[region])
 				. = SEND_SIGNAL(remote, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, ID_requesting, door_requested)
 	if(!.)
 		ID_requesting.visible_message("A scroll of text rolls across the front of [ID_requesting]: ACCESS REQUEST ROUTING FAILED, CONSULT ARTIFICIAL INTELLIGENCE FOR ASSISTANCE.", vision_distance = 1)
+
 /*/datum/controller/subsystem/id_access/proc/handle_request_response(response_from_remote, obj/machinery/door/airlock/door_requested, emagged_remote = FALSE)
 	if(!istext(response_from_remote))
 		CRASH("handle_request_response called with non-text response. How did we get here?")

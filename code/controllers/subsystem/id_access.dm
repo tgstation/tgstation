@@ -35,12 +35,6 @@ SUBSYSTEM_DEF(id_access)
 
 	/// The roundstart generated code for the spare ID safe. This is given to the Captain on shift start. If there's no Captain, it's given to the HoP. If there's no HoP
 	var/spare_id_safe_code = ""
-	/// Associated list of regions; entries are null until getting LAZYADD'd a ref to a given remote once it gets registered
-	var/remotes_listening_by_region = list()
-	/// Responses offered when setting automatic responses or handling access request batches.
-	var/static/list/remote_request_action_list
-	/// Above but & EMAGGED
-	var/static/list/remote_request_action_list_nefarious
 
 /datum/controller/subsystem/id_access/Initialize()
 	// We use this because creating the trim singletons requires the config to be loaded.
@@ -336,21 +330,6 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_CENT_CAPTAIN]"] = "Code Gold"
 	desc_by_access["[ACCESS_CENT_BAR]"] = "Code Scotch"
 	desc_by_access["[ACCESS_BIT_DEN]"] = "Bitrunner Den"
-
-/datum/controller/subsystem/id_access/proc/setup_remote_request_action_lists()
-/*	remote_request_action_list = list(
-		"Approve" = null,
-		"Deny" = null,
-		"Bolt" = TYPE_PROC_REF(),
-		"Block" = TYPE_PROC_REF(),
-		"Emergency Access" = null,
-		"Clear" = null,
-		"Escalate" = null,
-	)
-	remote_request_action_list_nefarious = list(
-		"SHOCK"
-	) + remote_request_action_list
-PSEUDO_M*/
 
 /**
  * Returns the access bitflags associated with any given access level.
