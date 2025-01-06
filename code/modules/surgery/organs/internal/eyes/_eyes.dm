@@ -416,8 +416,6 @@
 	eyelid_right.color = eyelid_color
 	SET_PLANE_EXPLICIT(eyelid_left, parent.plane, parent)
 	SET_PLANE_EXPLICIT(eyelid_right, parent.plane, parent)
-	eyelid_left.layer = -BODY_LAYER
-	eyelid_right.layer = -BODY_LAYER
 	eye_left.vis_contents += eyelid_left
 	eye_right.vis_contents += eyelid_right
 	// Randomize order for unsynched animations
@@ -459,6 +457,7 @@
 /obj/effect/abstract/eyelid_effect
 	name = "eyelid"
 	icon = 'icons/mob/human/human_face.dmi'
+	layer = -BODY_LAYER
 
 /obj/effect/abstract/eyelid_effect/Initialize(mapload, new_state)
 	. = ..()
