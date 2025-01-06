@@ -1,4 +1,4 @@
-import { Channel } from './ChannelIterator';
+import { Channel } from '../ChannelIterator';
 import { WINDOW_SIZES } from './constants';
 
 /**

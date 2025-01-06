@@ -1,3 +1,5 @@
+import './styles/main.scss';
+
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { dragStartHandler } from 'tgui/drag';
 import { isEscape, KEY } from 'tgui-core/keys';

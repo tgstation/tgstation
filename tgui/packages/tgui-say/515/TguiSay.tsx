@@ -1,13 +1,15 @@
+import './styles/main.scss';
+
 import { Component, createRef, RefObject } from 'react';
 import { dragStartHandler } from 'tgui/drag';
 import { isEscape, KEY } from 'tgui-core/keys';
 import { BooleanLike } from 'tgui-core/react';
 
-import { Channel, ChannelIterator } from './ChannelIterator';
-import { ChatHistory } from './ChatHistory';
+import { Channel, ChannelIterator } from '../ChannelIterator';
+import { ChatHistory } from '../ChatHistory';
+import { byondMessages } from '../timers';
 import { LINE_LENGTHS, RADIO_PREFIXES, WINDOW_SIZES } from './constants';
 import { windowClose, windowOpen, windowSet } from './helpers';
-import { byondMessages } from './timers';
 
 type ByondOpen = {
   channel: Channel;
@@ -314,20 +316,22 @@ export class TguiSay extends Component<{}, State> {
       this.channelIterator.current();
 
     return (
-      <div className={`window window-${theme} window-${this.state.size}`}>
+      <div
+        className={`old-window old-window-${theme} old-window-${this.state.size}`}
+      >
         <Dragzone position="top" theme={theme} />
-        <div className="center">
+        <div className="old-center">
           <Dragzone position="left" theme={theme} />
-          <div className="input">
+          <div className="old-input">
             <button
-              className={`button button-${theme}`}
+              className={`old-button old-button-${theme}`}
               onClick={this.handleIncrementChannel}
               type="button"
             >
               {this.state.buttonContent}
             </button>
             <textarea
-              className={`textarea textarea-${theme}`}
+              className={`old-textarea old-textarea-${theme}`}
               maxLength={this.maxLength}
               onInput={this.handleInput}
               onKeyDown={this.handleKeyDown}
@@ -349,7 +353,7 @@ const Dragzone = ({ theme, position }: { theme: string; position: string }) => {
 
   return (
     <div
-      className={`dragzone-${location} dragzone-${position} dragzone-${theme}`}
+      className={`old-dragzone-${location} old-dragzone-${position} old-dragzone-${theme}`}
       onMouseDown={dragStartHandler}
     />
   );
