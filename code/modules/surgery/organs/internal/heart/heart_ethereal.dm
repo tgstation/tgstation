@@ -37,9 +37,7 @@
 
 /obj/item/organ/heart/ethereal/update_overlays()
 	. = ..()
-	var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[base_icon_state]_overlay-[beating ? "on" : "off"]")
-	shine.appearance_flags = RESET_COLOR //No color on this, just pure white
-	. += shine
+	. += mutable_appearance(icon, icon_state = "[base_icon_state]_overlay-[beating ? "on" : "off"]", appearance_flags = RESET_COLOR|KEEP_APART)
 
 /obj/item/organ/heart/ethereal/proc/on_owner_fully_heal(mob/living/carbon/healed, heal_flags)
 	SIGNAL_HANDLER
@@ -222,9 +220,7 @@
 /obj/structure/ethereal_crystal/update_overlays()
 	. = ..()
 	if(!being_built)
-		var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[icon_state]_shine")
-		shine.appearance_flags = RESET_COLOR //No color on this, just pure white
-		. += shine
+		. += mutable_appearance(icon, icon_state = "[icon_state]_shine", appearance_flags = RESET_COLOR|KEEP_APART)
 
 /obj/structure/ethereal_crystal/proc/heal_ethereal()
 	var/datum/brain_trauma/picked_trauma

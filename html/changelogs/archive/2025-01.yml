@@ -41,3 +41,86 @@
   SyncIt21:
   - bugfix: dropping all the mobs' contents in some special admin cases won't gib
       the player
+2025-01-03:
+  AyIong:
+  - admin: Ticket actions buttons in chat got a little bigger
+  - bugfix: Highlighted PMs, vote results and examine will not have weird black title
+  Hatterhat:
+  - spellcheck: Removed an errant typo on the recharger's readout while recharging
+      the BR-38.
+  SmArtKar:
+  - spellcheck: Removed outdated examine line from spraycans
+  - refactor: Completely rewrote all item and projectile embedding code
+  - bugfix: Instant summons now actually drags people who had the summoned item embedded
+      into them
+  - bugfix: Items embedded into limbs no longer get shoved into limbs deep enough
+      for them to never be found again upon delimbing.
+  - bugfix: You can see scar descriptions upon detailed examination of targets
+  - bugfix: Fixed rolling table being able to carry an infinite amount of dwarves
+  - bugfix: Folders and paper biscuits no longer share their color with their contents
+  - spellcheck: Fixed a typo in battle rifle crate's description
+  - rscadd: You can chug glowstick fluid to get glowing eyes
+  - bugfix: Added command access requirement to the door between EVA and bridge on
+      Nebula's escape shuttle
+  TealSeer:
+  - qol: you can now examine the jukebox to see what song is currently playing
+  zoomachina:
+  - rscadd: brain in a jar, a rare coroner mail goodie
+  - qol: soul-less brains that can be revived (like those from recovered crew) now
+      have an examine tip
+2025-01-04:
+  Bisar Metek:
+  - code_imp: Fixed up the return value of checkbox-input for tgui to behave consistently.
+  LT3:
+  - qol: Wearable HUDs can be toggled on and off
+  SmArtKar:
+  - bugfix: Fixed HUD implant message being reversed
+  SmArtKar, AnturK:
+  - admin: Fixes admin observe showing all antags as revs upon enabling Real Name
+      Display
+  high-speedspin-cycle:
+  - qol: The experimental deconstructive scanner can now scan multiple items.
+  necromanceranne:
+  - balance: The compact combat shotgun is now found in the warden's locker.
+  timothymtorres:
+  - bugfix: Fix pAIs interacting with machinery via alt/ctrl clicking.
+2025-01-05:
+  Ben10Omintrix:
+  - qol: virtual pet holograms now automatically follow you when released rather than
+      having to give it the command post summon
+  Ghommie:
+  - rscadd: You can now try to fish random products out of vending machines with a
+      fishing rod and a few bucks.
+  - bugfix: Fixing the 1000 cr holochip loot from exploration drones.
+  Hatterhat:
+  - bugfix: Proto-kinetic crushers no longer cause a runtime every time you hit a
+      mob that doesn't have a mark.
+  - bugfix: Equipment pieces with upgradable armor (e.g. explorer suits) now properly
+      list what they use to upgrade.
+  - bugfix: Mobs without targetable limbs no longer have extraneous spaces appear
+      in their hit-by-projectile messages.
+  Majkl-J:
+  - image: New souless minecart sprite
+  - image: Rail sprites are now more consistent with their shading, and thinner
+  - bugfix: The minecart closed icon no longer shows the crate lock overlay
+  Pepsilawn:
+  - bugfix: accidentally duplicated disposal pipes on all main maps have been rooted
+      out
+  SmArtKar:
+  - bugfix: Brought back ethereal heart's shine overlay
+  WebcomicArtist:
+  - qol: '"Destroy Blackbox" objective now tells you how to destroy something invulnerable
+      to conventional means of destruction.'
+2025-01-06:
+  carlarctg:
+  - image: Standarizes ammo band colors into defines, makes them brighter, and widens
+      battle rifle bands
+  - balance: Reduces chrystarfish fall chance by half
+  - bugfix: Fixed a bug that caused predator fish to give the aquarium pet message
+      when out of it and vice versa
+  - bugfix: Fixed flumpulus message having no span
+  - rscadd: Dolphish now chomp you if you try to pet them
+  kapu and grungussuss:
+  - bugfix: fixed ambience sounds getting cut off mid play
+  - sound: addes fades for maintenance ambiences
+  - refactor: changed the way maintenance sounds are

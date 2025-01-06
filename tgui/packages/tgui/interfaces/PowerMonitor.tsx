@@ -12,10 +12,10 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
+import { Tooltip } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
-import { Tooltip } from '../components';
 import { Window } from '../layouts';
 import { LoadingScreen } from './common/LoadingToolbox';
 

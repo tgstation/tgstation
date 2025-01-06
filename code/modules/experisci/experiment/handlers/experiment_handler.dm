@@ -148,7 +148,6 @@
 	for(var/scan_target in scanned_atoms)
 		if(action_experiment(source, scan_target))
 			successful_scan = TRUE
-			break
 	if(successful_scan)
 		playsound(our_scanner, 'sound/machines/ping.ogg', 25)
 		to_chat(our_scanner, span_notice("The scan succeeds."))
