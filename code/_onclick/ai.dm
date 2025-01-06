@@ -74,7 +74,7 @@
 		return
 
 	if(waypoint_mode)
-		waypoint_mode = 0
+		waypoint_mode = FALSE
 		set_waypoint(A)
 		return
 
