@@ -100,20 +100,17 @@
 			target_holder.force_stop_reacting()
 			target_holder.clear_reagents()
 			to_chat(usr, span_notice("[src] churns as [inserted_component] has its reagents emptied into bluespace."))
-		target_holder.ui_reaction_index = target_holder.flags //hacky yes but its unused when inside the BRPED so use it to store flags
-		target_holder.flags = NO_REACT //no refilling/injecting/draining reagents
+		target_holder.flags = target_holder.flags << 5 //masks all flags upto DUNKABLE(1<<5) i.e. removes all methods of transfering reagents to/from the object
 /**
  * Signal handler for a part is removed from the BRPED.
- *
  * Restores original reagents of the component part, if it has any.
  */
 /obj/item/storage/part_replacer/bluespace/proc/on_part_exited(datum/source, obj/item/removed_component)
 	SIGNAL_HANDLER
 
 	var/datum/reagents/target_holder = removed_component.reagents
-	if(removed_component.reagents)
-		target_holder.flags = target_holder.ui_reaction_index
-		target_holder.ui_reaction_index = initial(target_holder.ui_reaction_index)
+	if(target_holder)
+		target_holder.flags = target_holder.flags >> 5 //restores all flags upto DUNKABLE(1<<5)
 
 //RPED with tiered contents
 /obj/item/storage/part_replacer/bluespace/tier1/PopulateContents()
