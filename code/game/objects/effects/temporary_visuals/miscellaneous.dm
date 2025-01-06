@@ -744,7 +744,7 @@
 
 /obj/effect/temp_visual/golem/rad_hand
 	name = "golem rad touch"
-	icon_state = "none"
+	icon_state = "nothing"
 
 /obj/effect/temp_visual/golem/rad_hand/Initialize(mapload)
 	. = ..()
