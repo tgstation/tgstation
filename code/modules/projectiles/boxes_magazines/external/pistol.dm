@@ -1,9 +1,14 @@
+#define FIRE_BULLETS " Carries rounds which ignite targets and leave flaming trails, but inflict less damage."
+#define HP_BULLETS " Carries hollow-point rounds which are effective against unarmored targets, but suffer greatly against armor."
+#define AP_BULLETS " Carries armor-piercing rounds which are effective against armored targets, but less effective against unarmored targets."
+
 // Makarov (9mm) //
 
 /obj/item/ammo_box/magazine/m9mm
 	name = "pistol magazine (9mm)"
 	icon_state = "9x19p"
 	base_icon_state = "9x19p"
+	desc = "A 9mm handgun magazine, suitable for the Makarov pistol."
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = CALIBER_9MM
 	max_ammo = 12
@@ -14,27 +19,28 @@
 	name = "pistol magazine (9mm incendiary)"
 	icon_state = "9x19pI"
 	base_icon_state = "9x19pI"
-	desc = "A gun magazine. Loaded with rounds which ignite the target."
+	desc = parent_type::desc + FIRE_BULLETS
 	ammo_type = /obj/item/ammo_casing/c9mm/fire
 
 /obj/item/ammo_box/magazine/m9mm/hp
 	name = "pistol magazine (9mm HP)"
 	icon_state = "9x19pH"
 	base_icon_state = "9x19pH"
-	desc= "A gun magazine. Loaded with hollow-point rounds, extremely effective against unarmored targets, but nearly useless against protective clothing."
+	desc = parent_type::desc + HP_BULLETS
 	ammo_type = /obj/item/ammo_casing/c9mm/hp
 
 /obj/item/ammo_box/magazine/m9mm/ap
 	name = "pistol magazine (9mm AP)"
 	icon_state = "9x19pA"
 	base_icon_state = "9x19pA"
-	desc= "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
+	desc = parent_type::desc + AP_BULLETS
 	ammo_type = /obj/item/ammo_casing/c9mm/ap
 
 // Stechkin APS (9mm) //
 
 /obj/item/ammo_box/magazine/m9mm_aps
 	name = "stechkin pistol magazine (9mm)"
+	desc = "A 9mm handgun magazine, suitable for the Stechkin APS machine pistol."
 	icon_state = "9mmaps-15"
 	base_icon_state = "9mmaps"
 	ammo_type = /obj/item/ammo_casing/c9mm
@@ -47,21 +53,24 @@
 
 /obj/item/ammo_box/magazine/m9mm_aps/fire
 	name = "stechkin pistol magazine (9mm incendiary)"
+	desc = parent_type::desc + FIRE_BULLETS
 	ammo_type = /obj/item/ammo_casing/c9mm/fire
 
 /obj/item/ammo_box/magazine/m9mm_aps/hp
 	name = "stechkin pistol magazine (9mm HP)"
+	desc = parent_type::desc + HP_BULLETS
 	ammo_type = /obj/item/ammo_casing/c9mm/hp
 
 /obj/item/ammo_box/magazine/m9mm_aps/ap
 	name = "stechkin pistol magazine (9mm AP)"
+	desc = parent_type::desc + AP_BULLETS
 	ammo_type = /obj/item/ammo_casing/c9mm/ap
 
 // Ansem (10mm) //
 
 /obj/item/ammo_box/magazine/m10mm
 	name = "pistol magazine (10mm)"
-	desc = "A gun magazine."
+	desc = "A 10mm handgun magazine, suitable for the Ansem pistol."
 	icon_state = "9x19p"
 	base_icon_state = "9x19p"
 	ammo_type = /obj/item/ammo_casing/c10mm
@@ -74,27 +83,28 @@
 	name = "pistol magazine (10mm incendiary)"
 	icon_state = "9x19pI"
 	base_icon_state = "9x19pI"
-	desc = "A 10mm pistol magazine. Loaded with rounds which ignite the target."
+	desc = parent_type::desc + FIRE_BULLETS
 	ammo_type = /obj/item/ammo_casing/c10mm/fire
 
 /obj/item/ammo_box/magazine/m10mm/hp
 	name = "pistol magazine (10mm HP)"
 	icon_state = "9x19pH"
 	base_icon_state = "9x19pH"
-	desc= "A 10mm pistol magazine. Loaded with hollow-point rounds, extremely effective against unarmored targets, but nearly useless against protective clothing."
+	desc = parent_type::desc + HP_BULLETS
 	ammo_type = /obj/item/ammo_casing/c10mm/hp
 
 /obj/item/ammo_box/magazine/m10mm/ap
 	name = "pistol magazine (10mm AP)"
 	icon_state = "9x19pA"
 	base_icon_state = "9x19pA"
-	desc= "A 10mm pistol magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
+	desc = parent_type::desc + AP_BULLETS
 	ammo_type = /obj/item/ammo_casing/c10mm/ap
 
 // Regal Condor (10mm) //
 
 /obj/item/ammo_box/magazine/r10mm
 	name = "regal condor magazine (10mm Reaper)"
+	desc = "A very expensive 10mm handgun magazine, suitable for the Regal Condor. Loaded with \"reaper\" rounds, which are dangerously effective against everything."
 	icon_state = "r10mm-8"
 	base_icon_state = "r10mm"
 	ammo_type = /obj/item/ammo_casing/c10mm/reaper
@@ -107,6 +117,7 @@
 
 /obj/item/ammo_box/magazine/m45
 	name = "handgun magazine (.45)"
+	desc = "A .45 handgun magazine, suitable for the M1911."
 	icon_state = "45-8"
 	base_icon_state = "45"
 	ammo_type = /obj/item/ammo_casing/c45
@@ -118,9 +129,14 @@
 // Desert Eagle (.50 AE) //
 
 /obj/item/ammo_box/magazine/m50
-	name = "handgun magazine (.50ae)"
+	name = "handgun magazine (.50 AE)"
+	desc = "A .50 AE handgun magazine, suitable for the Desert Eagle."
 	icon_state = "50ae"
 	ammo_type = /obj/item/ammo_casing/a50ae
 	caliber = CALIBER_50AE
 	max_ammo = 7
 	multiple_sprites = AMMO_BOX_PER_BULLET
+
+#undef FIRE_BULLETS
+#undef HP_BULLETS
+#undef AP_BULLETS

@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Section, Stack } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
-import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

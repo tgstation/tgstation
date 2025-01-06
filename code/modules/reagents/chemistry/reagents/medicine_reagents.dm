@@ -808,7 +808,7 @@
 	new_eyes = new new_eyes(affected_mob)
 	new_eyes.Insert(affected_mob)
 	playsound(affected_mob, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 50, TRUE)
-	affected_mob.visible_message("[affected_mob]'s [eyes ? eyes : "eye holes"] suddenly sprout stalks and turn into [new_eyes]!")
+	affected_mob.visible_message(span_danger("[affected_mob]'s [eyes ? eyes : "eye holes"] suddenly sprout stalks and turn into [new_eyes]!"))
 	ASYNC
 		affected_mob.emote("scream")
 		sleep(5 SECONDS)

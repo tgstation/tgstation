@@ -8,9 +8,9 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
+import { round } from 'tgui-core/math';
+import { BooleanLike, classes } from 'tgui-core/react';
 
-import { round } from '../../common/math';
-import { BooleanLike, classes } from '../../common/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
@@ -200,7 +200,7 @@ const LightControl = (props: LightControlProps) => {
             color="olive"
             minValue={-1}
             maxValue={5}
-            format={(value) => round(value, 2)}
+            format={(value) => round(value, 2).toString()}
             onChange={(e, value) =>
               act('set_power', {
                 value: value,
