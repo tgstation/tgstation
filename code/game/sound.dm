@@ -775,7 +775,7 @@
 			soundin = pick(
 				'sound/vehicles/clown_car/clowncar_load1.ogg',
 				'sound/vehicles/clown_car/clowncar_load2.ogg',
-      )
+			)
 		if(SFX_SEATBELT_BUCKLE)
 			soundin = pick(
 				'sound/machines/buckle/buckle1.ogg',
