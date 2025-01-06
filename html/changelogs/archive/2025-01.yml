@@ -111,3 +111,16 @@
   WebcomicArtist:
   - qol: '"Destroy Blackbox" objective now tells you how to destroy something invulnerable
       to conventional means of destruction.'
+2025-01-06:
+  carlarctg:
+  - image: Standarizes ammo band colors into defines, makes them brighter, and widens
+      battle rifle bands
+  - balance: Reduces chrystarfish fall chance by half
+  - bugfix: Fixed a bug that caused predator fish to give the aquarium pet message
+      when out of it and vice versa
+  - bugfix: Fixed flumpulus message having no span
+  - rscadd: Dolphish now chomp you if you try to pet them
+  kapu and grungussuss:
+  - bugfix: fixed ambience sounds getting cut off mid play
+  - sound: addes fades for maintenance ambiences
+  - refactor: changed the way maintenance sounds are

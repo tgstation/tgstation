@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - image: "Standarizes ammo band colors into defines, makes them brighter, and widens battle rifle bands"
