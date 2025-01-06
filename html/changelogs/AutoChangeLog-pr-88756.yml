@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - code_imp: "Adds a new area flag, LOCAL_TELEPORT, given to virtual domains and deathmatch arenas."
+  - code_imp: "Re-added Void Phase to Heretic Scribes in Deathmatch's Ragnarok map."
