@@ -39,6 +39,12 @@
 	multiplicative_slowdown = 4 // golem joints start welding together when there's not enough atmosphere to oxidize
 	flags = IGNORE_NOSLOW
 
+/datum/movespeed_modifier/status_effect/golem_coldwelding/plasteel_resisted
+	// plasteel golems are more resistant to cold welding but not immune
+	// diamond golems would also be a little less slow, but the plasteel effect
+	// mitigates the cold welding effect much more effectively
+	multiplicative_slowdown = 2
+
 /datum/movespeed_modifier/status_effect/tired_post_charge
 	multiplicative_slowdown = 3
 

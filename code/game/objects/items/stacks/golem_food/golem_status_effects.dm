@@ -87,12 +87,22 @@
 		overlay.add_to_bodypart(overlay_state_prefix, part)
 		active_overlays += overlay
 	human_owner.update_body_parts()
+	// listen for species changes, for effects that immediately apply to golems or wouldn't apply to humans
+	RegisterSignal(human_owner, COMSIG_SPECIES_GAIN, PROC_REF(species_handling))
 	return TRUE
+
+/datum/status_effect/golem/proc/species_handling(datum/source, datum/species/new_species, datum/species/old_species)
+	SIGNAL_HANDLER
+	SHOULD_CALL_PARENT(TRUE)
+
+	return
 
 /datum/status_effect/golem/tick(seconds_between_ticks)
 	. = ..()
 	var/atom/movable/screen/alert/status_effect/golem_status/status_alert = linked_alert
 	if(!status_alert)
+		src.tick_interval = STATUS_EFFECT_NO_TICK
+		log_admin("[src] status effect has no alert, stopping tick.")
 		return // our status alert is gone, so we can't animate
 	var/time_left = duration - world.time
 	switch (time_left)
@@ -115,6 +125,7 @@
 /datum/status_effect/golem/on_remove()
 	to_chat(owner, span_warning("The effect of the [mineral_name] fades."))
 	QDEL_LIST(active_overlays)
+	UnregisterSignal(human_owner, COMSIG_SPECIES_GAIN)
 	return ..()
 
 // Golem's arms are central to their status effects so the golem effects have procs for setting their arms
@@ -239,7 +250,6 @@
 	animate(you_did_this_outline, alpha = 255, time = 0.25 SECONDS, loop = 4)
 	animate(alpha = 0, time = 0.25 SECONDS)
 
-
 /// Magic immunity
 /datum/status_effect/golem/silver
 	overlay_state_prefix = "silver"
@@ -319,18 +329,114 @@
 	mineral_name = "plasteel"
 	applied_fluff = "Plasteel plates reinforce your body and your will!"
 	alert_icon_state = "sheet-plasteel"
-	alert_desc = "You won't take damage while in crit; finding some way to heal out of it is another problem."
+	alert_desc = "You won't take damage while in crit, and you're resistant (but not immune) to the cold-welding effect of low pressure. Healing out of crit is another problem..."
+	// keep track of an outline for our pressure alerts so we can make sure it gets removed
+	var/active_outline = null
+	// keep track of the alert so we can actually do that
+	var/atom/movable/screen/alert/golem_coldwelding/active_pressure_alert = null
+	// and finally, keep track of if we've faded in the outline yet so we don't needlessly animate it
+	var/effect_faded_in = FALSE
 
 /datum/status_effect/golem/plasteel/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
 	owner.add_traits(list(TRAIT_NOCRITDAMAGE), TRAIT_STATUS_EFFECT(id))
+	start_pressure_slow_resistance_mitigation()
 	return TRUE
 
 /datum/status_effect/golem/plasteel/on_remove()
 	owner.remove_traits(list(TRAIT_NOCRITDAMAGE), TRAIT_STATUS_EFFECT(id))
+	stop_pressure_slow_resistance_mitigation()
 	return ..()
+
+/datum/status_effect/golem/plasteel/proc/start_pressure_slow_resistance_mitigation()
+	var/has_unmitigated_modifier = human_owner.has_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding)
+	if(!has_unmitigated_modifier)
+		return
+	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding)
+	human_owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding/plasteel_resisted)
+	pressure_handled()
+
+/datum/status_effect/golem/plasteel/proc/stop_pressure_slow_resistance_mitigation()
+	var/has_mitigated_modifier = human_owner.has_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding/plasteel_resisted)
+	if(has_mitigated_modifier)
+		// the pattern for this is different from the mitigation proc because we need to make sure we clean up
+		human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding/plasteel_resisted)
+		human_owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding)
+	handle_alert_effect_terminating()
+
+/datum/status_effect/golem/plasteel/proc/handle_alert_effect_terminating()
+	if(active_pressure_alert)
+		var/black = rgb(0, 0, 0)
+		// blink the alert so the player knows why they just slowed down
+		animate(active_pressure_alert, color = black, time = 0.5 SECONDS, loop = 2)
+		animate(color = initial(active_pressure_alert.color), time = 0.5 SECONDS)
+		alert_cleanup()
+
+/datum/status_effect/golem/plasteel/proc/alert_cleanup()
+	animate(active_outline, alpha = 0, time = 5 SECONDS, loop = 1)
+	// remove our references so we don't leave a datum homie hanging
+	addtimer(CALLBACK(active_pressure_alert, TYPE_PROC_REF(/datum, remove_filter), "plasteel_resisted"), 10 SECONDS)
+	active_outline = null
+	active_pressure_alert = null
+	effect_faded_in = FALSE
+
+// Called when our effect starts with a pressure alert active
+// Also called by species pressure handling to handle alert effects and cleanup
+/datum/status_effect/golem/plasteel/proc/pressure_handled()
+	// we only care about handling golem alerts if we're a golem
+	// but we need to check, because stealing golem organs can let you get
+	// some of the status effects still
+	if(!is_species(human_owner, /datum/species/golem))
+		return
+	var/has_pressure_alert = human_owner.has_alert(ALERT_PRESSURE)
+	if(!has_pressure_alert && isnull(active_pressure_alert))
+		// don't worry about cleanup if we don't have an active alert leftover
+		return
+	// we can only end up here if we're still holding on to an old active alert reference
+	if(!has_pressure_alert)
+		// clean up alert efffects and clue the player in that they're no longer being affected
+		alert_cleanup()
+		return
+	if(!active_pressure_alert)
+		active_pressure_alert = owner.alerts[ALERT_PRESSURE]
+		// add the outline here so we don't also have to check for it
+		if(!istype(active_pressure_alert, /atom/movable/screen/alert/golem_coldwelding))
+			CRASH("[owner] shouldn't have any other pressure alert than the golem-exclusive coldwelding type.")
+		active_pressure_alert.add_filter("plasteel_resisted", 1, list(
+			"type" = "outline",
+			"color" = rgb(106, 106, 123),
+			"alpha" = 0,
+			"size" = 2.2))
+		active_outline = active_pressure_alert.get_filter("plasteel_resisted")
+		animate(active_outline, alpha = 255, time = 5 SECONDS, loop = 1)
+	if(effect_faded_in) // we don't need to do anything if we've already faded in
+		return
+	handle_alert_effect()
+
+/datum/status_effect/golem/plasteel/proc/handle_alert_effect()
+	/// Blink both our status effect alert to clue them in that there's interplay
+	linked_alert.add_filter("plasteel_resistance_activated", 1, list(
+		"type" = "ripple",
+		"flags" = WAVE_BOUNDED,
+		"size" = 8,
+		"radius" = 0,
+		"repeat" = 1))
+	var/ripple_effect = linked_alert.get_filter("plasteel_resistance_activated")
+	animate(ripple_effect, size = 8, radius = 0, time = 0.2 SECONDS, loop = 1)
+	animate(radius = 16, time = 2.5 SECONDS)
+	animate(radius = 0, time = 1 SECONDS)
+	/// slowly fade in the outline for a visual effect evocative of pressurization
+	effect_faded_in = TRUE
+
+// for edge cases of turning into or from a golem while this effect is active
+/datum/status_effect/golem/plasteel/species_handling(datum/source, datum/species/new_species, datum/species/old_species)
+	. = ..()
+	if(new_species != /datum/species/golem)
+		if(active_pressure_alert)
+			owner.clear_alert(ALERT_PRESSURE)
+			alert_cleanup()
 
 /// Makes you push through the pain; beyond the ultimate!
 /datum/status_effect/golem/plastitanium

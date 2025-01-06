@@ -111,13 +111,32 @@
 
 /datum/species/golem/handle_environment_pressure(mob/living/carbon/human/golem, datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	var/pressure = environment.return_pressure()
-	var/adjusted_pressure = golem.calculate_affecting_pressure(pressure)
+	var/handle_mitigation = FALSE
+	var/datum/status_effect/golem/plasteel/mitigating_effect = null
+	mitigating_effect = golem.has_status_effect(/datum/status_effect/golem/plasteel)
+	handle_mitigation = !isnull(mitigating_effect)
+	var/pressure_movement_modifier = /datum/movespeed_modifier/status_effect/golem_coldwelding
+	if(mitigating_effect)
+		pressure_movement_modifier = /datum/movespeed_modifier/status_effect/golem_coldwelding/plasteel_resisted
 
-	if(adjusted_pressure <= HAZARD_LOW_PRESSURE)
+
+	if(pressure <= HAZARD_LOW_PRESSURE)
 		// golems are made of metal, and metal cold welds without a layer of oxidization (i think?)
 		// whatever, it's the future, and uhhh, magic
+		// either way, a relatively accessibles station-side ghostrole is slowed by low pressure
+		// to mitigate them being window-smashing menaces; but we let them partially resist it with a status effect
 		golem.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/golem_coldwelding)
-		golem.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding)
+		golem.add_movespeed_modifier(pressure_movement_modifier)
 	else
 		golem.clear_alert(ALERT_PRESSURE)
-		golem.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding)
+		golem.remove_movespeed_modifier(pressure_movement_modifier)
+	if(handle_mitigation)
+		mitigating_effect.pressure_handled()
+
+/datum/species/golem/on_species_loss(mob/living/carbon/human/former_golem, datum/species/new_species, pref_load)
+	. = ..()
+	if(former_golem.has_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding))
+		former_golem.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding)
+	else if(former_golem.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding/plasteel_resisted))
+		former_golem.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_coldwelding/plasteel_resisted)
+	return .
