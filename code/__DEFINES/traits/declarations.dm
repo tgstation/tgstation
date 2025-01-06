@@ -1419,4 +1419,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents animations for blinking from looping
 #define TRAIT_PREVENT_BLINK_LOOPS "prevent_blink_loops"
 
+/// Mob doesn't get closed eyelids overlay when it gets knocked out cold or dies
+#define TRAIT_NO_EYELIDS "no_eyelids"
+
 // END TRAIT DEFINES

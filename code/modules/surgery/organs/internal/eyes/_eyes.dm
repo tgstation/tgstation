@@ -258,7 +258,9 @@
 	if(my_head.head_flags & HEAD_EYECOLOR)
 		eye_right.color = parent.get_right_eye_color()
 		eye_left.color = parent.get_left_eye_color()
-		overlays += setup_eyelids(eye_left, eye_right, parent)
+		var/list/eyelids = setup_eyelids(eye_left, eye_right, parent)
+		if (LAZYLEN(eyelids))
+			overlays += eyelids
 
 	if (scarring & RIGHT_EYE_SCAR)
 		var/mutable_appearance/right_scar = mutable_appearance('icons/mob/human/human_face.dmi', "eye_scar_right", -BODY_LAYER)
@@ -395,7 +397,7 @@
 /obj/item/organ/eyes/proc/setup_eyelids(mutable_appearance/eye_left, mutable_appearance/eye_right, mob/living/carbon/human/parent)
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 	// Robotic eyes or colorless heads don't get the privelege of having eyelids
-	if (IS_ROBOTIC_ORGAN(src) || !my_head.draw_color)
+	if (IS_ROBOTIC_ORGAN(src) || !my_head.draw_color || HAS_TRAIT(parent, TRAIT_NO_EYELIDS))
 		return
 
 	var/list/base_color = rgb2num(my_head.draw_color, COLORSPACE_HSL)

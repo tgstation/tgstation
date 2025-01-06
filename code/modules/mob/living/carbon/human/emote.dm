@@ -177,7 +177,7 @@
 	message = "blinks."
 
 /datum/emote/living/carbon/human/blink/can_run_emote(mob/living/carbon/human/user, status_check, intentional, params)
-	if (!ishuman(user) || HAS_TRAIT(user, TRAIT_PREVENT_BLINKING))
+	if (!ishuman(user) || HAS_TRAIT(user, TRAIT_PREVENT_BLINKING) || HAS_TRAIT(user, TRAIT_NO_EYELIDS))
 		return FALSE
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if (!eyes)
@@ -194,7 +194,7 @@
 	message = "blinks rapidly."
 
 /datum/emote/living/carbon/human/blink_r/can_run_emote(mob/living/carbon/human/user, status_check, intentional, params)
-	if (!ishuman(user) || HAS_TRAIT(user, TRAIT_PREVENT_BLINKING))
+	if (!ishuman(user) || HAS_TRAIT(user, TRAIT_PREVENT_BLINKING) || HAS_TRAIT(user, TRAIT_NO_EYELIDS))
 		return FALSE
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if (!eyes)
