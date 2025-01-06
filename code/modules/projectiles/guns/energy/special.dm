@@ -368,6 +368,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/tesla_cannon)
 	shaded_charge = TRUE
 	weapon_weight = WEAPON_HEAVY
+	selfcharge = TRUE
 
 /obj/item/gun/energy/tesla_cannon/Initialize(mapload)
 	. = ..()
