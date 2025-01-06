@@ -89,6 +89,7 @@
 	grind_results = list(/datum/reagent/bluespace = 10)
 	fillet_type = null
 	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
+	compatible_types = list(/obj/item/fish/starfish/chrystarfish)
 	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/starfish/Initialize(mapload, apply_qualities = TRUE)
@@ -97,8 +98,11 @@
 
 /obj/item/fish/starfish/update_overlays()
 	. = ..()
+	. += add_emissive()
+
+/obj/item/fish/starfish/proc/add_emissive()
 	if(status == FISH_ALIVE)
-		. += emissive_appearance(icon, "starfish_emissive", src)
+		return emissive_appearance(icon, "starfish_emissive", src)
 
 ///It spins, and dimly glows in the dark.
 /obj/item/fish/starfish/flop_animation()

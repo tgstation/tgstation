@@ -108,18 +108,12 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		AddElement(/datum/element/ridable, ridable_component)
 
 	if(can_breed)
-		AddComponent(\
-			/datum/component/breed,\
-			can_breed_with = typecacheof(list(/mob/living/basic/raptor)),\
-			baby_path = /obj/item/food/egg/raptor_egg,\
-			post_birth = CALLBACK(src, PROC_REF(egg_inherit)),\
-			breed_timer = 3 MINUTES,\
-		)
+		add_breeding_component()
+
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
 	adjust_offsets(dir)
 	add_happiness_component()
-
 
 /mob/living/basic/raptor/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
 	if(!iscarbon(target))
@@ -196,6 +190,18 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	melee_damage_upper += melee_damage_lower + 5
 	maxHealth += inherited_stats.health_modifier
 	heal_overall_damage(maxHealth)
+
+/mob/living/basic/raptor/proc/add_breeding_component()
+	var/static/list/partner_types = typecacheof(list(/mob/living/basic/raptor))
+	var/static/list/baby_types = list(/obj/item/food/egg/raptor_egg = 1)
+	AddComponent(\
+		/datum/component/breed,\
+		can_breed_with = typecacheof(list(/mob/living/basic/raptor)),\
+		baby_paths = baby_types,\
+		post_birth = CALLBACK(src, PROC_REF(egg_inherit)),\
+		breed_timer = 3 MINUTES,\
+	)
+
 
 /mob/living/basic/raptor/Destroy()
 	QDEL_NULL(inherited_stats)

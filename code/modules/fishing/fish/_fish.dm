@@ -386,6 +386,9 @@
 	bites_amount++
 	var/bites_to_finish = weight / FISH_WEIGHT_BITE_DIVISOR
 	adjust_health(health - (initial(health) / bites_to_finish) * 3)
+	flinch_on_eat(eater, feeder)
+
+/obj/item/fish/proc/flinch_on_eat(mob/living/eater, mob/living/feeder)
 	if(status == FISH_ALIVE && prob(50) && feeder.is_holding(src) && feeder.dropItemToGround(src))
 		to_chat(feeder, span_warning("[src] slips out of your hands in pain!"))
 		var/turf/target_turf = get_ranged_target_turf(get_turf(src), pick(GLOB.alldirs), 2)
@@ -927,6 +930,9 @@
 		stop_flopping()
 
 /obj/item/fish/process(seconds_per_tick)
+	do_fish_process(seconds_per_tick)
+
+/obj/item/fish/proc/do_fish_process(seconds_per_tick)
 	if(HAS_TRAIT(src, TRAIT_FISH_STASIS) || status != FISH_ALIVE)
 		return
 
@@ -1450,9 +1456,9 @@
 
 /obj/item/fish/attack_self(mob/living/user)
 	. = ..()
-	pet_fish(user)
+	try_pet_fish(user)
 
-/obj/item/fish/proc/pet_fish(mob/living/user)
+/obj/item/fish/proc/try_pet_fish(mob/living/user)
 	var/in_aquarium = loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
 	if(status == FISH_DEAD)
 		to_chat(user, span_warning("You try to pet [src], but [p_theyre()] motionless!"))
@@ -1460,6 +1466,10 @@
 	if(!proper_environment())
 		to_chat(user, span_warning("You try to pet [src], but [p_theyre()] not feeling well!"))
 		return FALSE
+
+	return pet_fish(user, in_aquarium)
+
+/obj/item/fish/proc/pet_fish(mob/living/user, in_aquarium)
 	if(fish_flags & FISH_FLAG_PETTED)
 		if(in_aquarium)
 			to_chat(user, span_warning("[src] runs away from your finger as you dip it into the water!"))
@@ -1471,7 +1481,7 @@
 	fish_flags |= FISH_FLAG_PETTED
 	new /obj/effect/temp_visual/heart(get_turf(src))
 	if((/datum/fish_trait/predator in fish_traits) && prob(50))
-		if(!in_aquarium)
+		if(in_aquarium)
 			user.visible_message(
 				span_warning("[src] dances around before biting [user]!"),
 				span_warning("[src] dances around before biting you!"),

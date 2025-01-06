@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - qol: "Examining a gun or magazine now shows the ammo capacity in bold."
+  - spellcheck: "Standardized pistol magazine descriptions, fixing Makarov magazines having a placeholder description."
