@@ -138,7 +138,7 @@
 	/// The multicamera window that the AI is currently using
 	var/final/atom/movable/screen/movable/pic_in_pic/ai/master_multicam = null
 	/// All of the AI's currently open multicamera windows
-	var/final/list/atom/movable/screen/movable/pic_in_pic/ai/multicam_screens = list(__TYPE__::max_multicams)
+	var/final/list/atom/movable/screen/movable/pic_in_pic/ai/multicam_screens = list()
 
 
 	/* ROBOT CONTROL */
