@@ -439,9 +439,6 @@
 	var/prevent_loops = HAS_TRAIT(parent, TRAIT_PREVENT_BLINK_LOOPS)
 	animate(eyelid, alpha = 0, time = 0, loop = (prevent_loops ? 0 : -1))
 	for (var/i in 1 to (prevent_loops ? 1 : BLINK_LOOPS))
-		animate(alpha = 255, time = 0)
-		animate(time = BLINK_DURATION)
-		animate(alpha = 0, time = 0)
 		var/wait_time = rand(BASE_BLINKING_DELAY - RAND_BLINKING_DELAY, BASE_BLINKING_DELAY + RAND_BLINKING_DELAY)
 		if (anim_times)
 			if (synchronized_blinking)
@@ -450,11 +447,14 @@
 			else
 				wait_time = rand(max(BASE_BLINKING_DELAY - RAND_BLINKING_DELAY, anim_times[1] - RAND_BLINKING_DELAY), anim_times[1])
 		. += wait_time
-		animate(time = wait_time)
 		if (anim_times && !synchronized_blinking)
 			// Make sure that we're somewhat in sync with the other eye
 			animate(time = anim_times[1] - wait_time)
 			anim_times.Cut(1, 2)
+		animate(alpha = 255, time = 0)
+		animate(time = BLINK_DURATION)
+		animate(alpha = 0, time = 0)
+		animate(time = wait_time)
 
 /obj/effect/abstract/eyelid_effect
 	name = "eyelid"
