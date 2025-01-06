@@ -14,6 +14,8 @@
 @include meta.load-css('./dragzone.scss');
 @include meta.load-css('./textarea.scss');
 @include meta.load-css('./window.scss');
+// 516
+@include meta-load-css('./styles.scss');
 
 @keyframes gradient {
   0% {
@@ -66,5 +68,16 @@
       right: 0px;
       z-index: 999;
     }
+  }
+
+  .shine-#{$channel} {
+    background: radial-gradient(
+      circle,
+      color.adjust($color, $lightness: 5%, $space: hsl),
+      color.adjust($color, $lightness: -15%, $space: hsl),
+      color.adjust($color, $lightness: 15%, $space: hsl),
+      color.adjust($color, $lightness: -15%, $space: hsl),
+      color.adjust($color, $lightness: 5%, $space: hsl)
+    );
   }
 }
