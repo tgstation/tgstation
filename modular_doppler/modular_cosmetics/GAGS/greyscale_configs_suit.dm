@@ -72,6 +72,16 @@
 	name = "Warm Coat (Worn)"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/suit.dmi'
 
+/datum/greyscale_config/cold_crop_hoodie
+	name = ""
+	icon_file = ''
+	json_config = ''
+
+/datum/greyscale_config/cold_crop_hoodie/worn
+	name = ""
+	icon_file = ''
+
+
 // Apron
 
 /datum/greyscale_config/apron

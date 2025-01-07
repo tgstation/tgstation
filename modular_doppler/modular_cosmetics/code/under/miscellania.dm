@@ -1,3 +1,5 @@
+//for unusual clothing items that don't fit anywhere else
+
 /obj/item/clothing/under/cowl_neck_shirt
 	name = "cowl neck shirt and trousers"
 	desc = "A fairly conventional broadcloth shirt rendered directional with a loose folded neckline in place of a \
@@ -68,3 +70,14 @@
 	body_parts_covered = CHEST|GROIN
 	can_adjust = TRUE
 	alt_covers_chest = FALSE
+
+/obj/item/clothing/under/athletas_bodysuit
+	name = "ATHLETAS bodysuit"
+	desc = ""
+	icon_state = "athletas_bodysuit"
+	greyscale_config = /datum/greyscale_config/athletas_bodysuit
+	greyscale_config_worn = /datum/greyscale_config/athletas_bodysuit/worn
+	greyscale_colors =
+	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE

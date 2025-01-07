@@ -355,3 +355,14 @@
 /datum/greyscale_config/pencilskirt_withsuit/worn
 	name = "Pencilskirt + Suit (Worn)"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/pencilskirt.dmi'
+
+//bodysuit thing idk
+
+/datum/greyscale_config/athletas_bodysuit
+	name = ""
+	icon_file = ''
+	json_config = ''
+
+/datum/greyscale_config/athletas_bodysuit/worn
+	name = ""
+	icon_file = ''

@@ -293,3 +293,26 @@
 	cold_protection = CHEST|GROIN|ARMS
 	body_parts_covered = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/suit/crop_cold_hoodie
+	name = "cropped cold shoulder hoodie"
+	desc = ""
+	icon_state = ""
+	greyscale_config = /datum/greyscale_config/cold_crop_hoodie
+	greyscale_config_worn = /datum/greyscale_config/cold_crop_hoodie/worn
+	greyscale_colors =
+	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|ARMS
+
+/obj/item/clothing/head/hooded/crop_cold_hoodie_hood
+	name = "cropped cold shoulder hood"
+	desc = ""
+	icon = ''
+	icon_state = ""
+	worn_icon = ''
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	flags_inv = HIDEEARS
+	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
+	greyscale_config =
+	greyscale_config_worn =
