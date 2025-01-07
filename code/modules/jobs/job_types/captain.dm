@@ -116,7 +116,7 @@
 	if(isnull(cap_remote))
 		// failed to give out the remote, plop on the ground
 		cap_remote = new(get_turf(equipped))
-	cap_remote.name = "Captain's door remote"
+	cap_remote.name = "Captain's door remote" // PSEUDO_M just make a subtype dude
 
 	if(!special_charter)
 		return

@@ -1,3 +1,6 @@
+#define RESOLVE_OPERATION_RADIALS (1<<0)
+#define RESOLVE_RESPONSE_RADIALS (1<<1)
+
 /obj/item/door_remote
 	icon_state = "remote"
 	base_icon_state = "remote"
@@ -8,45 +11,37 @@
 	name = "control wand"
 	desc = "A remote for controlling a set of airlocks."
 	w_class = WEIGHT_CLASS_TINY
-	var/department = "civilian"
+	var/department_name = "civilian"
 	var/mode = WAND_OPEN
-	var/region_access = REGION_GENERAL
+	var/job_access = null
 	var/list/access_list
-	/// The name that gets sent back to IDs that send access requests to this remote. Defaults to the department head's job
+	/// The name that gets sent back to IDs that send access requests to this remote. Defaults to the department_name head's job
 	var/response_name = null
-	var/listening = FALSE
-	/// an asslist (ID : door)
-	var/list/open_requests = null
-	/// When the remote gets dropped, start a ten minute timer before we stop listening for requests
-	var/stop_listening_timer = null
+	/// A bitfield to represent regions this remote is listening to requests for
+	/// Will typically be one region; Captain can listen to any station region; down the line
+	/// we may allow remotes to have their access modified by HoP, hacking, science, etc.
+	var/listening_regions = null
+	/// When the remote gets dropped, start a 5 minute timer before we stop listening for requests
 	var/list/setting_callbacks = list()
-	var/static/list/response_radials
-
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
-	access_list = SSid_access.get_region_access_list(list(region_access))
+	access_list = SSid_access.get_region_access_list(list(job_accessnull
 	update_icon_state()
 	if(!response_name)
-		response_name = department
+		response_name = department_name
 	setting_callbacks = list( // asslist of callbacks for the config menu, see handle_config
 	"C" = CALLBACK(src, PROC_REF(clear_requests)),
 	"A" = CALLBACK(src, PROC_REF(set_auto_response)),
 	"T" = CALLBACK(src, PROC_REF(toggle_listen)),
 	)
 	// For cases where it spawns on somebody
-	setup_radial_images()
 	if(get(loc, /mob/living))
 		toggle_listen(loc)
 	else
 		RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
 
-/obj/item/door_remote/proc/setup_radial_images()
-	if(response_radials) // already setup
-		return
-	response_radials = REMOTE_RESPONSE_RADIALS
-
-/obj/item/door_remote/proc/resolve_radial_options()
+/obj/item/door_remote/proc/resolve_mode_radial_options()
 	var/static/list/always_available_options = list(
 		WAND_OPEN,
 		WAND_BOLT,
@@ -54,7 +49,7 @@
 	)
 	var/static/handle_requests_option = WAND_HANDLE_REQUESTS
 	var/static/emagged_available_option = WAND_SHOCK
-	var/list/image_set = GLOB.door_remote_radial_images?[region_access]
+	var/list/image_set = GLOB.door_remote_radial_images?[job_accessnull
 	var/is_emagged = obj_flags & EMAGGED
 	if(!image_set)
 		image_set = GLOB.door_remote_radial_images[REGION_ALL_STATION]
@@ -65,6 +60,9 @@
 	if(is_emagged)
 		resolved_options[emagged_available_option] = image_set[emagged_available_option]
 	return resolved_options
+
+/obj/item/door_remote/proc/resolve_response_radial_options()
+//	for(var/radial_option in )
 
 /obj/item/door_remote/proc/on_pickup(datum/source, atom/new_hand_touches_the_beacon)
 	SIGNAL_HANDLER
@@ -159,38 +157,39 @@
 			icon_state_mode = "bolt"
 		if(WAND_EMERGENCY)
 			icon_state_mode = "emergency"
-
-	icon_state = "[base_icon_state]_[department]_[icon_state_mode]"
+	icon_state = "[base_icon_state]_[department_name]_[icon_state_mode]"
 	return ..()
 
 /obj/item/door_remote/omni
 	name = "omni door remote"
 	desc = "This control wand can access any door on the station."
-	department = "omni"
-	region_access = REGION_ALL_STATION
+	department_name = "omni"
+	job_access = /datum/job/captain
 
-/obj/item/door_remote/command
-	name = "command door remote"
-	department = "command"
+/obj/item/door_remote/omni/captain
+	name = "captain's door remote"
+	desc = "This gaudily decorated remote can access any door on the station. This can only end well."
+	department_name = "Command"
 	response_name = span_comradio("CAPTAIN")
-	region_access = REGION_COMMAND
+	job_access = null
 
 /obj/item/door_remote/chief_engineer
-	name = "engineering door remote"
-	department = "engi"
+	name = "chief engineer's door remote"
+	department_name = "Engineering"
 	response_name = span_engradio("CHIEF ENGINEER")
-	region_access = REGION_ENGINEERING
+	job_access = null
 
 /obj/item/door_remote/research_director
-	name = "research door remote"
-	department = "sci"
+	name = "research director's door remote"
+	department_name = "Science"
 	response_name = span_sciradio("RESEARCH DIRECTOR")
-	region_access = REGION_RESEARCH
+	job_access = null
 
 /obj/item/door_remote/head_of_security
-	name = "security door remote"
-	department = "security"
-	region_access = REGION_SECURITY
+	name = "warden's(?) door remote"
+	desc = "This door remote controls Security airlocks. An indescripable odor emanates from it: fear, sweat, coffee... is that a hint of resentment? It looks like someone has tampered with the identifier."
+	department_name = "Security"
+	job_access = /datum/job/head_of_security
 
 /obj/item/door_remote/head_of_security/Initialize(mapload)
 	/// Warden wishes they were a head
@@ -198,20 +197,23 @@
 	. = ..()
 
 /obj/item/door_remote/quartermaster
-	name = "supply door remote"
+	name = "quartermaster's door remote"
 	desc = "Remotely controls airlocks. This remote has additional Vault access."
-	department = "cargo"
+	department_name = "Cargo"
 	response_name = span_suppradio("QUARTERMASTER")
-	region_access = REGION_SUPPLY
+	job_access = null
 
 /obj/item/door_remote/chief_medical_officer
-	name = "medical door remote"
-	department = "med"
+	name = "chief medical officer's door remote"
+	department_name = "Medical"
 	response_name = span_medradio("CHIEF MEDICAL OFFICER")
-	region_access = REGION_MEDBAY
+	job_access = /datum/job/
 
-/obj/item/door_remote/civilian
-	name = "civilian door remote"
-	department = "civilian"
+/obj/item/door_remote/head_of_personnel
+	name = "head of personnel's remote"
+	department_name = "Service"
 	response_name = span_servradio("HEAD OF PERSONNEL")
-	region_access = REGION_GENERAL
+	job_access = /datum/job/head_of_personnel
+
+#undef RESOLVE_OPERATION_RADIALS
+#undef RESOLVE_RESPONSE_RADIALS

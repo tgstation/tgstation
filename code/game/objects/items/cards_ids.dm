@@ -476,7 +476,7 @@
 	if(!registered_name) // you may not need a job but your ID at least needs a name
 		return .
 	. = TRUE
-	SSdoor_remotes.route_request_to_door_remote(src, to_request, user)
+	SSdoor_remote_routing.route_request_to_door_remote(src, to_request, user)
 	return .
 
 

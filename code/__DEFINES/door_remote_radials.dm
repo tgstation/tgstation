@@ -1,9 +1,3 @@
-#define WAND_OPEN "open"
-#define WAND_BOLT "bolt"
-#define WAND_EMERGENCY "emergency"
-#define WAND_HANDLE_REQUESTS "requests"
-#define WAND_SHOCK "shock"
-
 // WAND_HANDLE_REQUESTS is the odd one out but it's a radial that every remote uses so it's here
 #define DOOR_REMOTE_RADIAL_IMAGES list( \
 	REGION_ALL_STATION = GENERIC_REMOTE_RADIALS, \
@@ -14,17 +8,18 @@
 	REGION_RESEARCH = RESEARCH_REMOTE_RADIALS, \
 	REGION_GENERAL = SERVICE_REMOTE_RADIALS, \
 	REGION_SUPPLY = SUPPLY_REMOTE_RADIALS, \
-	WAND_HANDLE_REQUESTS = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_request_decision") \
+	WAND_HANDLE_REQUESTS = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_request_decision"), \
+	REQUEST_RESPONSES = REMOTE_RESPONSE_RADIALS \
 )
 // For responses to remote requests
-#define REMOTE_RESPONSE_APPROVE "response_approve"
-#define REMOTE_RESPONSE_DENY "response_deny"
-#define REMOTE_RESPONSE_BOLT "response_bolt"
-#define REMOTE_RESPONSE_BLOCK "response_block"
-#define REMOTE_RESPONSE_EA "response_emergency"
-#define REMOTE_RESPONSE_CLEAR "response_clear"
-#define REMOTE_RESPONSE_ESCALATE "response_escalate"
-#define REMOTE_RESPONSE_SHOCK "response_shock"
+#define REMOTE_RESPONSE_APPROVE "Open requested doors"
+#define REMOTE_RESPONSE_DENY "Deny selected requests"
+#define REMOTE_RESPONSE_BOLT "Bolt requested doors"
+#define REMOTE_RESPONSE_BLOCK "Block requesting IDs"
+#define REMOTE_RESPONSE_EA "Set emergency access on requested"
+#define REMOTE_RESPONSE_CLEAR "Delete selected requests"
+#define REMOTE_RESPONSE_ESCALATE "Escalate requests to Captain"
+#define REMOTE_RESPONSE_SHOCK "##ERROR## CAUTION: SERVICE REMOT##ERROR##"
 
 #define GENERIC_REMOTE_RADIALS list( \
     WAND_OPEN = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "opening"), \
