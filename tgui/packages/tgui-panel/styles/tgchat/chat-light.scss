@@ -194,12 +194,6 @@ a.popt {
   padding: 2px 0;
 }
 
-.filterMessages input {
-}
-
-.filterMessages label {
-}
-
 .icon-stack {
   height: 1em;
   line-height: 1em;
@@ -314,13 +308,6 @@ em {
 
 .name {
   font-weight: bold;
-}
-
-.say,
-.emote,
-.infoplain,
-.oocplain,
-.warningplain {
 }
 
 .deadsay {
@@ -1189,37 +1176,37 @@ $border-width-px: $border-width * 1px;
 }
 
 .baton_common {
-  color: 	hsl(0, 0%, 69%);
+  color: hsl(0, 0%, 69%);
   font-weight: bold;
   border: 1px solid hsl(0, 0%, 0%);
 }
 
 .baton_uncommon {
-  color: 	hsl(216, 68%, 64%);
+  color: hsl(216, 68%, 64%);
   font-weight: bold;
   border: 1px solid hsl(0, 0%, 0%);
 }
 
 .baton_rare {
-  color: 	hsl(226, 57%, 55%);
+  color: hsl(226, 57%, 55%);
   font-weight: bold;
   border: 1px solid hsl(0, 0%, 0%);
 }
 
 .baton_mythical {
-  color: 	hsl(261, 100%, 64%);
+  color: hsl(261, 100%, 64%);
   font-weight: bold;
   border: 1px solid hsl(0, 0%, 0%);
 }
 
 .baton_legendary {
-  color: 	hsl(294, 79%, 54%);
+  color: hsl(294, 79%, 54%);
   font-weight: bold;
   border: 1px solid hsl(0, 0%, 0%);
 }
 
 .baton_ancient {
-  color: 	hsl(0, 80%, 61%);
+  color: hsl(0, 80%, 61%);
   font-weight: bold;
   border: 1px solid hsl(0, 0%, 0%);
 }
