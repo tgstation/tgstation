@@ -419,7 +419,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 		selected_path = pick(parent_box.valid_types)
 		addtimer(CALLBACK(src, PROC_REF(update_random_icon), selected_path), change_counter)
 
-	addtimer(CALLBACK(src, PROC_REF(present_item)), choosing_duration)
+	addtimer(CALLBACK(src, PROC_REF(present_item)), choosing_duration + change_delay_delta)
 
 /// animate() isn't up to the task for queueing up icon changes, so this is the proc we call with timers to update our icon
 /obj/mystery_box_item/proc/update_random_icon(new_item_type)
@@ -448,9 +448,17 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	icon_state = "stunbaton"
 	choosing_duration = 9.6 SECONDS
 	spawn_rays = FALSE
+	var/datum/baton_model/baton_model
+	var/list/possible_models = list()
+
+/obj/mystery_box_item/baton_crate/Initialize(mapload)
+	. = ..()
+	if(!length(possible_models))
+		for(var/datum/baton_model/model as anything in subtypesof(/datum/baton_model))
+			possible_models += list(initial(model.type) = initial(model.rarity))
 
 /obj/mystery_box_item/baton_crate/update_random_icon(new_item_type)
-	var/datum/baton_model/baton_model = new_item_type
+	baton_model = pick_weight(possible_models)
 	var/icon/possible_baton = icon('icons/obj/weapons/baton.dmi', initial(baton_model.icon_state))
 	possible_baton.Blend("#000000", ICON_MULTIPLY)
 	icon = possible_baton
@@ -458,7 +466,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	playsound(src, 'sound/effects/mysterybox/baton_crate_scroll.ogg', 80, FALSE, -1)
 
 /obj/mystery_box_item/baton_crate/present_item()
-	var/obj/item/melee/baton/security/skin/selected_item = new /obj/item/melee/baton/security/skin
+	var/obj/item/melee/baton/security/skin/selected_item = new /obj/item/melee/baton/security/skin(src, baton_model)
 	name = selected_item.name
 	desc = selected_item.desc
 	icon = selected_item.icon
@@ -479,19 +487,27 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 		highest_rarity_found = "baton_ancient"
 	switch(highest_rarity_found)
 		if("baton_common")
-			playsound(src, 'sound/effects/mysterybox/common.ogg', 80, FALSE, -1)
+			playsound(src, 'sound/effects/mysterybox/common.ogg', 80, FALSE, -1) // too lame for hype rays
 		if("baton_uncommon")
 			playsound(src, 'sound/effects/mysterybox/uncommon.ogg', 80, FALSE, -1)
+			add_filter("weapon_rays", 3, list("type" = "rays", "size" = 14, "color" = "#6597e2"))
+			add_filter("ready_outline", 2, list("type" = "outline", "color" = "#6597e2", "size" = 0.2))
 		if("baton_rare")
 			playsound(src, 'sound/effects/mysterybox/rare.ogg', 80, FALSE, -1)
+			add_filter("weapon_rays", 3, list("type" = "rays", "size" = 14, "color" = "#4b69ce"))
+			add_filter("ready_outline", 2, list("type" = "outline", "color" = "#4b69ce", "size" = 0.2))
 		if("baton_mythical")
 			playsound(src, 'sound/effects/mysterybox/mythical.ogg', 80, FALSE, -1)
+			add_filter("weapon_rays", 3, list("type" = "rays", "size" = 28, "color" = "#8847ff"))
+			add_filter("ready_outline", 2, list("type" = "outline", "color" = "#8847ff", "size" = 0.2))
 		if("baton_legendary")
 			playsound(src, 'sound/effects/mysterybox/legendary.ogg', 80, FALSE, -1)
+			add_filter("weapon_rays", 3, list("type" = "rays", "size" = 28, "color" = "#d42de6"))
+			add_filter("ready_outline", 2, list("type" = "outline", "color" = hype_light_color, "size" = 0.2))
 		if("baton_ancient")
 			playsound(src, 'sound/effects/mysterybox/ancient.ogg', 80, FALSE, -1)
-	add_filter("weapon_rays", 3, list("type" = "rays", "size" = 28, "color" = hype_light_color))
-	add_filter("ready_outline", 2, list("type" = "outline", "color" = hype_light_color, "size" = 0.2))
+			add_filter("weapon_rays", 3, list("type" = "rays", "size" = 42, "color" = "#eb4c4c"))
+			add_filter("ready_outline", 2, list("type" = "outline", "color" = "#eb4c4c", "size" = 0.2))
 	parent_box.present_weapon()
 	claimable = TRUE
 
