@@ -892,6 +892,22 @@
 	rarity_name = "Engineering-grade"
 	rarity_hex = "baton_uncommon"
 
+/datum/baton_skin/carpscale
+	name = "carpscale"
+	author = "Dragonfruits"
+	rarity = 75
+	icon_state = "Carpscale"
+	rarity_name = "Engineering-grade"
+	rarity_hex = "baton_uncommon"
+
+/datum/baton_skin/durathread
+	name = "durathread"
+	author = "Dragonfruits"
+	rarity = 75
+	icon_state = "Durathread"
+	rarity_name = "Engineering-grade"
+	rarity_hex = "baton_uncommon"
+
 /datum/baton_skin/blood
 	name = "blood"
 	author = "Dragonfruits"
@@ -907,6 +923,62 @@
 	icon_state = "Ornate"
 	rarity_name = "ERT-spec"
 	rarity_hex = "baton_rare"
+
+/datum/baton_skin/donut
+	name = "donut"
+	author = "Dragonfruits"
+	rarity = 50
+	icon_state = "Donut"
+	rarity_name = "ERT-spec"
+	rarity_hex = "baton_rare"
+
+/datum/baton_skin/lodsemone
+	name = "lodesemone"
+	author = "Dragonfruits"
+	rarity = 50
+	icon_state = "Lodesemone"
+	rarity_name = "ERT-spec"
+	rarity_hex = "baton_rare"
+
+/datum/baton_skin/nanotrasen
+	name = "Nanotrasen"
+	author = "Dragonfruits"
+	rarity = 50
+	icon_state = "NT"
+	rarity_name = "ERT-spec"
+	rarity_hex = "baton_rare"
+
+/datum/baton_skin/syndicate
+	name = "Syndicate"
+	author = "Dragonfruits"
+	rarity = 50
+	icon_state = "Syndie"
+	rarity_name = "ERT-spec"
+	rarity_hex = "baton_rare"
+
+/datum/baton_skin/killer
+	name = "killer tomato"
+	author = "Dragonfruits"
+	rarity = 50
+	icon_state = "Killer"
+	rarity_name = "ERT-spec"
+	rarity_hex = "baton_rare"
+
+/datum/baton_skin/bluespace
+	name = "bluespace"
+	author = "Dragonfruits"
+	rarity = 10
+	icon_state = "Bluespace"
+	rarity_name = "Deathsquad-issue"
+	rarity_hex = "baton_mythical"
+
+/datum/baton_skin/fade
+	name = "fade"
+	author = "Dragonfruits"
+	rarity = 10
+	icon_state = "Fade"
+	rarity_name = "Deathsquad-issue"
+	rarity_hex = "baton_mythical"
 
 /datum/baton_skin/toolbox
 	name = "toolbox"
@@ -929,6 +1001,30 @@
 	author = "Dragonfruits"
 	rarity = 5
 	icon_state = "Donut"
+	rarity_name = "Robust"
+	rarity_hex = "baton_legendary"
+
+/datum/baton_skin/plasma
+	name = "plasma"
+	author = "Dragonfruits"
+	rarity = 5
+	icon_state = "Plasma"
+	rarity_name = "Robust"
+	rarity_hex = "baton_legendary"
+
+/datum/baton_skin/oldspess
+	name = "spess"
+	author = "Dragonfruits"
+	rarity = 5
+	icon_state = "Oldspess"
+	rarity_name = "Robust"
+	rarity_hex = "baton_legendary"
+
+/datum/baton_skin/supermatter
+	name = "supermatter"
+	author = "Dragonfruits"
+	rarity = 5
+	icon_state = "Supermatter"
 	rarity_name = "Robust"
 	rarity_hex = "baton_legendary"
 
