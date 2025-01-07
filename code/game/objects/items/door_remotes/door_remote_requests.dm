@@ -137,5 +137,5 @@
 
 /obj/item/door_remote/proc/escalate_side_effects(mob/user, obj/item/card/id/advanced/given_id, obj/machinery/door/airlock/given_door, sound_delay)
 
-#undefine ID_FEEDBACK
-#undefine REMOTE_FEEDBACK
+#undef ID_FEEDBACK
+#undef REMOTE_FEEDBACK

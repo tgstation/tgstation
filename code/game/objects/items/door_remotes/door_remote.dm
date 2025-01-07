@@ -13,9 +13,9 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/department_name = "civilian"
 	var/mode = WAND_OPEN
-	var/job_access = null
+	var/datum/id_trim/job/owner_trim = null
 	var/list/access_list
-	/// The name that gets sent back to IDs that send access requests to this remote. Defaults to the department_name head's job
+	/// The name that gets sent back to IDs that send access requests to this remote. Defaults to the department_name head's id_trim/job
 	var/response_name = null
 	/// A bitfield to represent regions this remote is listening to requests for
 	/// Will typically be one region; Captain can listen to any station region; down the line
@@ -23,65 +23,110 @@
 	var/listening_regions = null
 	/// When the remote gets dropped, start a 5 minute timer before we stop listening for requests
 	var/list/setting_callbacks = list()
+	// Areas that, unless command lifts it, are restricted from other remotes working in
+	var/static/list/departmental_areas = list(
+		/area/station/cargo,
+		/area/station/engineering,
+		/area/station/construction,
+		/area/station/medical,
+		/area/station/science,
+		/area/station/ai_monitored,
+		/area/station/service,
+		/area/station/security,
+		/area/station/comms,
+		/area/station/tcommsat,
+		/area/station/server,
+	)
+	// Areas this remote has unfettered access to
+	var/list/our_departmental_areas = null
 
 /obj/item/door_remote/omni
 	name = "omni door remote"
 	desc = "This control wand can access any door on the station."
 	department_name = "omni"
-	job_access = /datum/job/captain
+	owner_trim = /datum/id_trim/job/captain
+	our_departmental_areas = list(
+		/area/station,	// like a boss
+		)
 
 /obj/item/door_remote/omni/captain
 	name = "captain's door remote"
 	desc = "This gaudily decorated remote can access any door on the station. This can only end well."
-	department_name = "Command"
+	department_name = DEPARTMENT_COMMAND
 	response_name = span_comradio("CAPTAIN")
-	job_access = null
 
 /obj/item/door_remote/chief_engineer
 	name = "chief engineer's door remote"
-	department_name = "Engineering"
+	department_name = DEPARTMENT_ENGINEERING
 	response_name = span_engradio("CHIEF ENGINEER")
-	job_access = null
+	owner_trim = /datum/id_trim/job/chief_engineer
+	our_departmental_areas = list(
+		/area/station/engineering,
+		/area/station/construction,
+		/area/station/server,
+		/area/station/tcommsat,
+		/area/station/server,
+		)
 
 /obj/item/door_remote/research_director
 	name = "research director's door remote"
-	department_name = "Science"
+	department_name = DEPARTMENT_SCIENCE
 	response_name = span_sciradio("RESEARCH DIRECTOR")
-	job_access = null
+	owner_trim = /datum/id_trim/job/research_director
+	our_departmental_areas = list(
+		/area/station/science,
+		/area/station/ai_monitored/aisat,
+		/area/station/ai_monitored/turret_protected,
+	)
 
 /obj/item/door_remote/head_of_security
 	name = "warden's(?) door remote"
 	desc = "This door remote controls Security airlocks. An indescripable odor emanates from it: fear, sweat, coffee... is that a hint of resentment? It looks like someone has tampered with the identifier."
-	department_name = "Security"
-	job_access = /datum/job/head_of_security
+	department_name = DEPARTMENT_SECURITY
+	owner_trim = /datum/id_trim/job/head_of_security
+	our_departmental_areas = list(
+		/area/station/security,
+		/area/station/ai_monitored/security,
+	)
 
 /obj/item/door_remote/head_of_security/Initialize(mapload)
 	/// Warden wishes they were a head
 	response_name = span_secradio("HEAD OF SEC[generate_heretic_text(3)]WARDEN")
-	. = ..()
+	return ..()
 
 /obj/item/door_remote/quartermaster
 	name = "quartermaster's door remote"
-	desc = "Remotely controls airlocks. This remote has additional Vault access."
-	department_name = "Cargo"
+	desc = "Remotely controls airlocks. This remote has additional Vault access. Holding it makes you feel insecure, for some reason."
+	department_name = DEPARTMENT_CARGO
 	response_name = span_suppradio("QUARTERMASTER")
-	job_access = null
+	owner_trim = /datum/id_trim/job/quartermaster
+	our_departmental_areas = list(
+		/area/station/cargo,
+	)
 
 /obj/item/door_remote/chief_medical_officer
 	name = "chief medical officer's door remote"
-	department_name = "Medical"
+	department_name = DEPARTMENT_MEDICAL
 	response_name = span_medradio("CHIEF MEDICAL OFFICER")
-	job_access = /datum/job/
+	owner_trim = /datum/id_trim/job/chief_medical_officer
+	our_departmental_areas = list(
+		/area/station/medical,
+	)
 
 /obj/item/door_remote/head_of_personnel
 	name = "head of personnel's remote"
-	department_name = "Service"
+	department_name = DEPARTMENT_SERVICE
 	response_name = span_servradio("HEAD OF PERSONNEL")
-	job_access = /datum/job/head_of_personnel
+	owner_trim = /datum/id_trim/job/head_of_personnel
+	our_departmental_areas = list(
+		/area/station/service,
+	)
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
-	access_list = SSid_access.get_region_access_list(list(job_accessnull
+	// Trim accesses get updated by configs so we don't set it until all that's done
+	owner_trim = SSid_access.trim_singletons_by_path[owner_trim]
+	access_list = owner_trim.access
 	update_icon_state()
 	if(!response_name)
 		response_name = department_name
@@ -104,7 +149,7 @@
 	)
 	var/static/handle_requests_option = WAND_HANDLE_REQUESTS
 	var/static/emagged_available_option = WAND_SHOCK
-	var/list/image_set = GLOB.door_remote_radial_images?[job_accessnull
+	var/list/image_set = GLOB.door_remote_radial_images?[department_name]
 	var/is_emagged = obj_flags & EMAGGED
 	if(!image_set)
 		image_set = GLOB.door_remote_radial_images[REGION_ALL_STATION]

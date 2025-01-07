@@ -3,13 +3,7 @@ SUBSYSTEM_DEF(door_remote_routing)
 	init_order = INIT_ORDER_DOOR_REMOTES
 	flags = SS_NO_FIRE
 	var/routing_regions = list(
-		REGION_SECURITY = null,
-		REGION_MEDBAY = null,
-		REGION_RESEARCH = null,
-		REGION_ENGINEERING = null,
-		REGION_SUPPLY = null,
-		REGION_COMMAND = null,
-		REGION_GENERAL = null,
+
 	)
 
 /datum/controller/subsystem/door_remote_routing/Initialize()

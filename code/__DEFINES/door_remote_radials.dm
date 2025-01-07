@@ -1,13 +1,13 @@
 // WAND_HANDLE_REQUESTS is the odd one out but it's a radial that every remote uses so it's here
 #define DOOR_REMOTE_RADIAL_IMAGES list( \
 	REGION_ALL_STATION = GENERIC_REMOTE_RADIALS, \
-	REGION_COMMAND = COMMAND_REMOTE_RADIALS, \
-	REGION_ENGINEERING = ENGINEERING_REMOTE_RADIALS, \
-	REGION_SECURITY = SECURITY_REMOTE_RADIALS, \
-	REGION_MEDBAY = MEDBAY_REMOTE_RADIALS, \
-	REGION_RESEARCH = RESEARCH_REMOTE_RADIALS, \
-	REGION_GENERAL = SERVICE_REMOTE_RADIALS, \
-	REGION_SUPPLY = SUPPLY_REMOTE_RADIALS, \
+	DEPARTMENT_COMMAND = COMMAND_REMOTE_RADIALS, \
+	DEPARTMENT_ENGINEERING = ENGINEERING_REMOTE_RADIALS, \
+	DEPARTMENT_SECURITY = SECURITY_REMOTE_RADIALS, \
+	DEPARTMENT_MEDBAY = MEDBAY_REMOTE_RADIALS, \
+	DEPARTMENT_RESEARCH = RESEARCH_REMOTE_RADIALS, \
+	DEPARTMENT_GENERAL = SERVICE_REMOTE_RADIALS, \
+	DEPARTMENT_CARGO = CARGO_REMOTE_RADIALS, \
 	WAND_HANDLE_REQUESTS = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_request_decision"), \
 	REQUEST_RESPONSES = REMOTE_RESPONSE_RADIALS \
 )
@@ -70,7 +70,7 @@
     WAND_SHOCK = image(icon = 'icons/obj/doors/airlocks/station/bananium.dmi', icon_state = "closed"), \
 )
 
-#define SUPPLY_REMOTE_RADIALS list( \
+#define CARGO_REMOTE_RADIALS list( \
     WAND_OPEN = image(icon = 'icons/obj/doors/airlocks/station/mining.dmi', icon_state = "opening"), \
     WAND_BOLT = image(icon = 'icons/obj/doors/airlocks/station/mining.dmi', icon_state = "closed"), \
     WAND_EMERGENCY = image(icon = 'icons/obj/doors/airlocks/station/mining.dmi', icon_state = "closed"), \

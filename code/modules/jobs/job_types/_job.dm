@@ -1,3 +1,4 @@
+/// Datum representing which job is assigned to a given player when they join the round. Also accounts for antagonists.
 /datum/job
 	/// The name of the job , used for preferences, bans and more. Make sure you know what you're doing before changing this.
 	var/title = "NOPE"
@@ -44,7 +45,7 @@
 	/// If you have the use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
-	var/outfit = null
+	var/datum/outfit = null
 
 	/// The job's outfit that will be assigned for plasmamen.
 	var/plasmaman_outfit = null
