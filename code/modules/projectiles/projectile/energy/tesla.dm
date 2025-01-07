@@ -34,7 +34,7 @@
 
 /obj/projectile/energy/tesla_cannon/fire(setAngle)
 	if(firer)
-		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]")
+		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = 0.5 SECONDS)
 	return ..()
 
 /obj/projectile/energy/tesla_cannon/on_hit(atom/target, blocked = 0, pierce_hit)
