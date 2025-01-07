@@ -33,7 +33,8 @@
 
 /obj/bitrunning/target/Destroy(force)
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-	my_spawner.current_targets.Remove(src)
+	if(my_spawner)
+		my_spawner.current_targets.Remove(src)
 	. = ..()
 
 /obj/bitrunning/target/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit)

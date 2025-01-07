@@ -341,7 +341,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	back = null
 	skillchips = null
-	backpack_contents = null
+	backpack_contents = list()
 
 /datum/lazy_template/virtual_domain/pizza_guarding_base/mischief
 	name = "After-Hours Pizzeria Guarding: Mischief"

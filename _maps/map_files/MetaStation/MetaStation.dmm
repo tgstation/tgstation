@@ -5294,6 +5294,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/torment_nexus)
 "bRG" = (
@@ -15641,6 +15642,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"fDA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/execution/transfer)
 "fDC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -17840,7 +17847,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
@@ -18245,6 +18251,7 @@
 	pixel_y = 8
 	},
 /obj/item/storage/box/prisoner,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "gCT" = (
@@ -24204,6 +24211,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/torment_nexus)
 "iFR" = (
@@ -31580,6 +31588,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/torment_nexus)
 "lfc" = (
@@ -34714,6 +34723,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "mru" = (
@@ -42993,6 +43003,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "pkT" = (
@@ -51996,6 +52007,7 @@
 /area/station/engineering/atmos/pumproom)
 "srU" = (
 /obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "ssk" = (
@@ -62669,6 +62681,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "vVz" = (
@@ -66895,6 +66908,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
+"xvh" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/brig)
 "xvn" = (
 /obj/machinery/shower/directional/west,
 /turf/open/floor/iron/freezer,
@@ -93984,7 +94003,7 @@ iRW
 hRv
 rJQ
 pHb
-pXC
+xvh
 lsP
 lsP
 sMB
@@ -94483,7 +94502,7 @@ cWI
 cWI
 gYi
 yey
-yey
+fDA
 swe
 fNh
 sUC

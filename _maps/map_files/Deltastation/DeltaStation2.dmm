@@ -9337,6 +9337,7 @@
 "clG" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "clH" = (
@@ -16516,10 +16517,6 @@
 /area/station/medical/abandoned)
 "ebQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/duct,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/maintenance/department/security)
@@ -32773,6 +32770,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "iem" = (
@@ -35018,14 +35016,6 @@
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/break_room)
-"iJf" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/department/security)
 "iJj" = (
 /obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -42580,10 +42570,6 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/commons/fitness/recreation)
 "kBT" = (
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "kCa" = (
@@ -44698,10 +44684,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "lfm" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/duct,
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
@@ -48670,6 +48652,7 @@
 /obj/effect/turf_decal/trimline/red/filled/warning/corner{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "meJ" = (
@@ -49667,13 +49650,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "mtd" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/duct,
-/turf/open/floor/plating,
-/area/station/maintenance/department/security)
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/torment_nexus)
 "mtf" = (
 /obj/structure/rack,
 /obj/item/book/manual/wiki/engineering_hacking{
@@ -50421,6 +50401,7 @@
 "mBX" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/warning/corner,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "mCa" = (
@@ -52008,6 +51989,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "mWE" = (
@@ -63268,6 +63250,7 @@
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "pQx" = (
@@ -64332,6 +64315,7 @@
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "qcj" = (
@@ -77627,6 +77611,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "tuy" = (
@@ -83381,7 +83366,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
 "uOL" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -89275,6 +89259,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "won" = (
@@ -146458,7 +146443,7 @@ pNz
 uFa
 dth
 svd
-mtd
+vHY
 ijP
 rYA
 lSw
@@ -147229,7 +147214,7 @@ gIn
 amH
 dth
 pdA
-iJf
+vHY
 ijP
 rYA
 rYA
@@ -148517,7 +148502,7 @@ nhC
 avF
 eiU
 avF
-avF
+mtd
 sRt
 qkC
 xyK
@@ -148774,7 +148759,7 @@ apA
 vwb
 avF
 avF
-avF
+mtd
 qJh
 qkC
 yaI

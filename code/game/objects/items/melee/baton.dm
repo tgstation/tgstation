@@ -1249,7 +1249,7 @@
 	rarity_hex = "baton_mythical"
 
 /datum/baton_wear_n_tear/factory_new
-	name = "factory new"
+	name = "roundstart"
 	author = "Dragonfruits"
 	rarity = 25
 	icon_state = "FACTORY NEW"
