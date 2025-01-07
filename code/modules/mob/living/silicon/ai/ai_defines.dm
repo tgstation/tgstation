@@ -163,8 +163,6 @@
 	/* UI */
 	/// UI for station alerts
 	VAR_FINAL/datum/station_alert/alert_control
-	/// AI's internal modular PC, used for messenger
-	VAR_FINAL/atom/movable/screen/ai/modpc/interfaceButton
 
 	/* I'M DUMB AND CAN'T SORT */
 	/// Used as a fake multitool in tcomms machinery
