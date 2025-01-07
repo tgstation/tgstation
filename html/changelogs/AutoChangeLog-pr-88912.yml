@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Hotspots from ash heretic spells should not longer stack inside of walls"
