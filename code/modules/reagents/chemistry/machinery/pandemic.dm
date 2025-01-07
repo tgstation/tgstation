@@ -192,7 +192,7 @@
  *
  * @param {number} disease_id - The id of the disease being replicated.
  *
- * @returns {list} - The cures list for the disease or "none" if this fails for any reason.
+ * @returns {list} - List of two elements - the cures list for the disease and the cure_text associated with it. Will be empty if anything fails.
  *
  */
 /obj/machinery/computer/pandemic/proc/get_beaker_cures(disease_id)
@@ -211,7 +211,8 @@
 	// Only check for cure if there is a beaker AND the beaker contains blood AND the blood contains a virus.
 	for(var/datum/disease/disease as anything in viruses)
 		if(istype(disease, /datum/disease/advance) && (disease.GetDiseaseID() == disease_id))	// Double check the ids match.
-			cures = disease.cures
+			cures.Add(disease.cures)
+			cures.Add(disease.cure_text)
 			return cures
 
 	return cures
@@ -231,9 +232,11 @@
 	var/list/cures = get_beaker_cures(id)
 	if(!cures)
 		return FALSE
+	if(!(cures[1]))
+		return FALSE
 
-	adv_disease.cures = cures
-	adv_disease.cure_text = cures[1].name	// Same as generate_cure() in advance.dm
+	adv_disease.cures = cures[1]
+	adv_disease.cure_text = cures[2]	// Same as generate_cure() in advance.dm
 
 	if(!istype(adv_disease) || !adv_disease.mutable)
 		to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
