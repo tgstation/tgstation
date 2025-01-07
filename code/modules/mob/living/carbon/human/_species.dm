@@ -2067,3 +2067,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(needs_update)
 		remove_body_markings(hooman)
 		add_body_markings(hooman)
+
+/**
+ * Calculates the expected height values for this species
+ *
+ * Return a height value corresponding to a specific height filter
+ * Return null to just use the mob's base height
+ */
+/datum/species/proc/update_species_heights(mob/living/carbon/human/holder)
+	if(HAS_TRAIT(holder, TRAIT_DWARF))
+		return HUMAN_HEIGHT_DWARF
+
+	if(HAS_TRAIT(holder, TRAIT_TOO_TALL))
+		return HUMAN_HEIGHT_TALLEST
+
+	return null
