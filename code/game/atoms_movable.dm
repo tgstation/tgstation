@@ -646,6 +646,9 @@ GLOBAL_LIST_EMPTY(gliding_atoms)
 		buckled_mob.set_glide_size(target, mid_move = mid_move)
 
 /atom/movable/proc/update_glide_text()
+	return
+
+/mob/living/carbon/update_glide_text()
 	cut_overlay(glide_text)
 	glide_text = mutable_appearance(offset_spokesman = src, plane = EXAMINE_BALLOONS_PLANE)
 	glide_text.maptext = "GS: [glide_size]ppt\nMulti: [GLOB.glide_size_multiplier * 100]% \nBIE: [built_in_glide_error]ds \nErr: [accumulated_glide_error]ds"
@@ -653,6 +656,7 @@ GLOBAL_LIST_EMPTY(gliding_atoms)
 	glide_text.maptext_height = 500
 	glide_text.maptext_y = 32
 	add_overlay(glide_text)
+	return ..()
 
 GLOBAL_VAR_INIT(glide_correction_enabled, FALSE)
 /atom/movable/proc/account_for_glide_error(last_ticks_error)

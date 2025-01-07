@@ -1016,7 +1016,8 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	GLOB.avg_cpu_values[cpu_index] = avg_cpu
 	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
 	var/full_time = TICKS2DS(CPU_SIZE) / 10 // convert from ticks to seconds
-	GLOB.cpu_tracker.maptext = "Tick: [world.time / world.tick_lag]\nFrame Behind CPU: [real_cpu]\nMax [full_time]s: [max(cpu_values)]\nMin [full_time]s: [min(cpu_values)]"
+	GLOB.cpu_tracker.maptext = "Tick: [world.time / world.tick_lag]\nMap Cpu: [world.map_cpu]\nFrame Behind CPU: [real_cpu]\nMax [full_time]s: [max(cpu_values)]\nMin [full_time]s: [min(cpu_values)]"
+	// make an animated display of cpu usage to get a better idea of how much we leave on the table
 
 /proc/update_glide_size()
 	world.unroll_cpu_value()
