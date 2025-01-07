@@ -98,6 +98,13 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
+/obj/effect/mob_spawn/corpse/human/syndicatepilot/lessenedgear
+	outfit = /datum/outfit/syndicatepilotcorpse/lessenedgear
+
+/datum/outfit/syndicatepilotcorpse/lessenedgear
+	name = "Syndicate Pilot Corpse (Less Antag Gear)"
+	id = /obj/item/card/id/advanced/black
+
 /obj/effect/mob_spawn/corpse/human/tigercultist
 	name = "Tiger Cooperative Cultist"
 	outfit = /datum/outfit/tigercultcorpse

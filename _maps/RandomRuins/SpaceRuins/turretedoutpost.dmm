@@ -4,6 +4,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
+"aC" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/turretedoutpost)
 "aH" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
@@ -88,6 +94,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "gP" = (
 /obj/effect/decal/cleanable/glass,
+/obj/effect/mob_spawn/corpse/human/syndicatepilot/lessenedgear,
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/turretedoutpost)
 "hr" = (
@@ -1095,7 +1102,7 @@ vD
 ro
 ro
 wQ
-UD
+aC
 XL
 ro
 mf
