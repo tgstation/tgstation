@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - sound: "Add snow pickup and drop sounds to material"
