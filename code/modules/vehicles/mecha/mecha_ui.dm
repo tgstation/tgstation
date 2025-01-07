@@ -10,15 +10,13 @@
 		ui_view.display_to(user)
 
 /obj/vehicle/sealed/mecha/ui_status(mob/user, datum/ui_state/state)
-	if(contains(user))
-		return UI_INTERACTIVE
 	return min(
 		ui_status_user_is_abled(user, src),
 		ui_status_user_has_free_hands(user, src),
 		ui_status_user_is_advanced_tool_user(user),
 		ui_status_only_living(user),
 		max(
-			ui_status_user_is_adjacent(user, src),
+			ui_status_user_inside(user, src),
 			ui_status_silicon_has_access(user, src),
 		)
 	)

@@ -110,3 +110,11 @@
 		return UI_CLOSE
 
 	return UI_INTERACTIVE
+
+/// Return UI_INTERACTIVE if the user is inside the target atom, whether they can see it or not.
+/// Return UI_CLOSE otherwise.
+/proc/ui_status_user_inside(mob/user, atom/target)
+	if(target.contains(user))
+		return UI_INTERACTIVE
+
+	return UI_CLOSE
