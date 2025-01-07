@@ -18,6 +18,7 @@
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
 		/obj/item/gun/ballistic/automatic/battle_rifle,
+		/obj/item/melee/baton/doppler_security, // DOPPLER EDIT ADDITION
 	))
 
 /obj/machinery/recharger/RefreshParts()

@@ -2,8 +2,11 @@
 #define TIME_CLOCK_RETURN_ITEMS list( \
 	/obj/item/melee/baton/security, \
 	/obj/item/melee/baton/security/loaded, \
+	/obj/item/melee/baton/doppler_security, \
+	/obj/item/melee/baton/doppler_security/loaded, \
 	/obj/item/melee/baton/telescopic, \
 	/obj/item/melee/baton, \
+	/obj/item/melee/secblade, \
 	/obj/item/assembly/flash/handheld, \
 	/obj/item/gun/energy/disabler, \
 	/obj/item/megaphone/command, \
@@ -25,6 +28,7 @@
 	/obj/item/clothing/shoes/magboots/advance, \
 	/obj/item/shield/riot/tele, \
 	/obj/item/storage/belt/security/full, \
+	/obj/item/storage/belt/secsword/full, \
 	/obj/item/gun/energy/e_gun/hos, \
 	/obj/item/pinpointer/nuke, \
 	/obj/item/gun/energy/e_gun, \
