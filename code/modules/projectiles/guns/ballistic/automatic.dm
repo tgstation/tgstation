@@ -326,7 +326,7 @@
 	icon_state = "surplus"
 	worn_icon_state = null
 	weapon_weight = WEAPON_HEAVY
-	accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm/rifle
+	accepted_magazine_type = /obj/item/ammo_box/magazine/sr10mm
 	fire_delay = 30
 	burst_size = 1
 	can_unsuppress = TRUE

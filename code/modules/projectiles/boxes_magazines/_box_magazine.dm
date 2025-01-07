@@ -219,7 +219,7 @@
 /obj/item/ammo_box/update_desc(updates)
 	. = ..()
 	var/shells_left = LAZYLEN(stored_ammo)
-	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] [casing_phrasing]\s left!"
+	desc = "[initial(desc)]<br>There [(shells_left == 1) ? "is" : "are"] <b>[shells_left]</b> [casing_phrasing]\s left!"
 
 /obj/item/ammo_box/update_icon_state()
 	. = ..()

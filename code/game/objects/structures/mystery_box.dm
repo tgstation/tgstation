@@ -296,12 +296,15 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 			return
 		key.being_used = TRUE
 		playsound(src, 'sound/effects/doorcreaky.ogg', 80, FALSE, -1)
+		Shake(3, 0, 0.5 SECONDS)
 		if(do_after(user, 3.75 SECONDS, src))
 			qdel(attacking_item)
 			anchored = TRUE
+			Shake(3, 0, 0.5 SECONDS)
 			playsound(src, 'sound/effects/mysterybox/baton_crate_open.ogg', 80, FALSE, -1)
 			activate(user)
 		else
+			Shake(3, 0, 0.5 SECONDS)
 			key.being_used = FALSE
 
 /obj/structure/mystery_box/baton_crate/grant_weapon(mob/living/user)

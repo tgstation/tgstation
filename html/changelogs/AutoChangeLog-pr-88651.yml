@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix pAIs interacting with machinery via alt/ctrl clicking."
