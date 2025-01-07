@@ -339,7 +339,7 @@
 	head = /obj/item/clothing/head/purple_guy
 	ears = /obj/item/radio/headset
 	shoes = /obj/item/clothing/shoes/laceup
-	back = null
+	back = /obj/item/storage/backpack/satchel
 	skillchips = null
 	backpack_contents = list()
 
