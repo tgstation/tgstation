@@ -192,7 +192,7 @@
  *
  * @param {number} disease_id - The id of the disease being replicated.
  *
- * @returns {list} - The cures list for the disease or "none" if this fails for any reason.
+ * @returns {list} - The cures list for the disease, which will be empty if this fails for any reason.
  *
  */
 /obj/machinery/computer/pandemic/proc/get_beaker_cures(disease_id)
