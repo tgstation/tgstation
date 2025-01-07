@@ -139,3 +139,7 @@
 	output = /obj/item/popsicle_stick
 	food_multiplier = 3
 	preserve_materials = FALSE
+
+/datum/food_processor_process/canned_ink
+	input = /obj/item/food/ink_sac
+	output = /obj/item/food/canned/squid_ink

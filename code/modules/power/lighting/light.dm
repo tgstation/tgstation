@@ -99,7 +99,7 @@
 				continue
 			if(on_turf.dir != dir)
 				continue
-			stack_trace("Conflicting double stacked light [on_turf.type] found at ([our_location.x],[our_location.y],[our_location.z])")
+			stack_trace("Conflicting double stacked light [on_turf.type] found at [get_area(our_location)] ([our_location.x],[our_location.y],[our_location.z])")
 			qdel(on_turf)
 
 	if(!mapload) //sync up nightshift lighting for player made lights
@@ -116,7 +116,6 @@
 	// Light projects out backwards from the dir of the light
 	set_light(l_dir = REVERSE_DIR(dir))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove bulb")
 	if(break_if_moved)
@@ -223,6 +222,8 @@
 		var/color_set = bulb_colour
 		if(color)
 			color_set = color
+		if (cached_color_filter)
+			color_set = apply_matrix_to_color(color_set, cached_color_filter["color"], cached_color_filter["space"] || COLORSPACE_RGB)
 		if(reagents)
 			START_PROCESSING(SSmachines, src)
 		var/area/local_area = get_room_area()
@@ -448,13 +449,13 @@
 		if(BRUTE)
 			switch(status)
 				if(LIGHT_EMPTY)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE)
+					playsound(loc, 'sound/items/weapons/smash.ogg', 50, TRUE)
 				if(LIGHT_BROKEN)
 					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, TRUE)
 				else
-					playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+					playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 // returns if the light has power /but/ is manually turned off
 // if a light is turned off, it won't activate emergency power
@@ -549,9 +550,9 @@
 	var/protected = FALSE
 
 	if(istype(user))
-		var/obj/item/organ/internal/stomach/maybe_stomach = user.get_organ_slot(ORGAN_SLOT_STOMACH)
-		if(istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
-			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
+		var/obj/item/organ/stomach/maybe_stomach = user.get_organ_slot(ORGAN_SLOT_STOMACH)
+		if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
+			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
 			if(stomach.drain_time > world.time)
 				return
 			to_chat(user, span_notice("You start channeling some power through the [fitting] into your body."))
@@ -577,15 +578,13 @@
 	else if(istype(user) && user.dna.check_mutation(/datum/mutation/human/telekinesis))
 		to_chat(user, span_notice("You telekinetically remove the light [fitting]."))
 	else
-		var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-		if(affecting?.receive_damage( 0, 5 )) // 5 burn damage
-			user.update_damage_overlays()
+		var/obj/item/bodypart/affecting = user.get_active_hand()
+		user.apply_damage(5, BURN, affecting, wound_bonus = CANT_WOUND)
 		if(HAS_TRAIT(user, TRAIT_LIGHTBULB_REMOVER))
-			to_chat(user, span_notice("You feel your [affecting] burning, and the light beginning to budge."))
+			to_chat(user, span_notice("You feel your [affecting.plaintext_zone] burning, but the light begins to budge..."))
 			if(!do_after(user, 5 SECONDS, target = src))
 				return
-			if(affecting?.receive_damage( 0, 10 )) // 10 more burn damage
-				user.update_damage_overlays()
+			user.apply_damage(10, BURN, user.get_active_hand(), wound_bonus = CANT_WOUND)
 			to_chat(user, span_notice("You manage to remove the light [fitting], shattering it in process."))
 			break_light_tube()
 		else
@@ -642,7 +641,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+			playsound(loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(on)
 			do_sparks(3, TRUE, src)
 	status = LIGHT_BROKEN
@@ -681,17 +680,13 @@
 
 /obj/machinery/light/proc/on_light_eater(obj/machinery/light/source, datum/light_eater)
 	SIGNAL_HANDLER
-	. = COMPONENT_BLOCK_LIGHT_EATER
-	if(status == LIGHT_EMPTY)
-		return
-	var/obj/item/light/tube = drop_light_tube()
-	tube?.burn()
-	return
-
-/obj/machinery/light/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
 	break_light_tube()
-	return COMSIG_SABOTEUR_SUCCESS
+	return COMPONENT_BLOCK_LIGHT_EATER
+
+/obj/machinery/light/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	break_light_tube()
+	return TRUE
 
 /obj/machinery/light/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
@@ -730,7 +725,7 @@
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
-	nightshift_brightness = 3
+	nightshift_brightness = 4
 	fire_brightness = 4.5
 
 /obj/machinery/light/floor/get_light_offset()

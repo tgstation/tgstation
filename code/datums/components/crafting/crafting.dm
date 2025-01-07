@@ -1,16 +1,23 @@
-/datum/component/personal_crafting/Initialize()
+/datum/component/personal_crafting
+	/// Custom screen_loc for our element
+	var/screen_loc_override
+
+/datum/component/personal_crafting/Initialize(screen_loc_override)
+	src.screen_loc_override = screen_loc_override
 	if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(create_mob_button))
 
-/datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
+/datum/component/personal_crafting/proc/create_mob_button(mob/user, client/user_client)
 	SIGNAL_HANDLER
 
-	var/datum/hud/H = user.hud_used
-	var/atom/movable/screen/craft/C = new()
-	C.icon = H.ui_style
-	H.static_inventory += C
-	CL.screen += C
-	RegisterSignal(C, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(component_ui_interact))
+	var/datum/hud/hud = user.hud_used
+	var/atom/movable/screen/craft/craft_ui = new()
+	craft_ui.icon = hud.ui_style
+	if (screen_loc_override)
+		craft_ui.screen_loc = screen_loc_override
+	hud.static_inventory += craft_ui
+	user_client.screen += craft_ui
+	RegisterSignal(craft_ui, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(component_ui_interact))
 
 #define COOKING TRUE
 #define CRAFTING FALSE
@@ -21,6 +28,8 @@
 	var/display_craftable_only = FALSE
 	var/display_compact = FALSE
 	var/forced_mode = FALSE
+	/// crafting flags we ignore when considering a recipe
+	var/ignored_flags = NONE
 
 /* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -205,16 +214,16 @@
 	if(!check_tools(crafter, recipe, contents))
 		return ", missing tool."
 
+	var/considered_flags = recipe.crafting_flags & ~(ignored_flags)
 
-
-	if((recipe.crafting_flags & CRAFT_ONE_PER_TURF) && (locate(recipe.result) in dest_turf))
+	if((considered_flags & CRAFT_ONE_PER_TURF) && (locate(recipe.result) in dest_turf))
 		return ", already one here!"
 
-	if(recipe.crafting_flags & CRAFT_CHECK_DIRECTION)
-		if(!valid_build_direction(dest_turf, crafter.dir, is_fulltile = (recipe.crafting_flags & CRAFT_IS_FULLTILE)))
+	if(considered_flags & CRAFT_CHECK_DIRECTION)
+		if(!valid_build_direction(dest_turf, crafter.dir, is_fulltile = (considered_flags & CRAFT_IS_FULLTILE)))
 			return ", won't fit here!"
 
-	if(recipe.crafting_flags & CRAFT_ON_SOLID_GROUND)
+	if(considered_flags & CRAFT_ON_SOLID_GROUND)
 		if(isclosedturf(dest_turf))
 			return ", cannot be made on a wall!"
 
@@ -222,7 +231,7 @@
 			if(!locate(/obj/structure/thermoplastic) in dest_turf) // for tram construction
 				return ", must be made on solid ground!"
 
-	if(recipe.crafting_flags & CRAFT_CHECK_DENSITY)
+	if(considered_flags & CRAFT_CHECK_DENSITY)
 		for(var/obj/object in dest_turf)
 			if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
 				return ", something is in the way!"
@@ -268,9 +277,11 @@
 				qdel(thing)
 	var/datum/reagents/holder = locate() in parts
 	if(holder) //transfer reagents from ingredients to result
-		if(!ispath(recipe.result,  /obj/item/reagent_containers) && result.reagents)
-			result.reagents.clear_reagents()
-			holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
+		if(!ispath(recipe.result, /obj/item/reagent_containers) && result.reagents)
+			if(recipe.crafting_flags & CRAFT_CLEARS_REAGENTS)
+				result.reagents.clear_reagents()
+			if(recipe.crafting_flags & CRAFT_TRANSFERS_REAGENTS)
+				holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
 		parts -= holder
 		qdel(holder)
 	result.CheckParts(parts, recipe)
@@ -308,7 +319,6 @@
 	var/datum/reagents/holder
 	var/list/surroundings
 	var/list/Deletion = list()
-	var/data
 	var/amt
 	var/list/requirements = list()
 	if(R.reqs)
@@ -345,7 +355,6 @@
 							RC.reagents.trans_to(holder, reagent_volume, target_id = path_key, no_react = TRUE)
 							surroundings -= RC
 							amt -= reagent_volume
-						SEND_SIGNAL(RC.reagents, COMSIG_REAGENTS_CRAFTING_PING) // - [] TODO: Make this entire thing less spaghetti
 					else
 						surroundings -= RC
 					RC.update_appearance(UPDATE_ICON)
@@ -359,7 +368,7 @@
 							SD = new S.type()
 							Deletion += SD
 						S.use(amt)
-						SD = locate(S.type) in Deletion
+						SD = SD || locate(S.type) in Deletion // SD might be already set here, no sense in searching for it again
 						SD.amount += amt
 						continue main_loop
 					else
@@ -367,9 +376,9 @@
 						if(!locate(S.type) in Deletion)
 							Deletion += S
 						else
-							data = S.amount
-							S = locate(S.type) in Deletion
-							S.add(data)
+							SD = SD || locate(S.type) in Deletion
+							SD.add(S.amount) // add the amount to our tally stack, SD
+							qdel(S) // We can just delete it straight away as it's going to be fully consumed anyway, saving some overhead from calling use()
 						surroundings -= S
 			else
 				var/atom/movable/I
@@ -537,7 +546,7 @@
 	return TRUE
 
 
-/datum/component/personal_crafting/ui_act(action, params)
+/datum/component/personal_crafting/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -611,6 +620,9 @@
 			data["name"] = "[data["name"]] [recipe.result_amount]x"
 		data["desc"] = recipe.desc || initial(atom.desc)
 
+	if(ispath(recipe.result, /obj/item/food))
+		var/obj/item/food/food = recipe.result
+		data["has_food_effect"] = !!food.crafted_food_buff
 
 	// Crafting
 	if(recipe.non_craftable)
@@ -700,3 +712,21 @@
 		if(recipe == potential_recipe)
 			return TRUE
 	return FALSE
+
+/datum/component/personal_crafting/machine
+	ignored_flags = CRAFT_CHECK_DENSITY
+
+/datum/component/personal_crafting/machine/get_environment(atom/crafter, list/blacklist = null, radius_range = 1)
+	. = list()
+	var/turf/crafter_loc = get_turf(crafter)
+	for(var/atom/movable/content as anything in crafter_loc.contents)
+		if((content.flags_1 & HOLOGRAM_1) || (blacklist && (content.type in blacklist)))
+			continue
+		if(isitem(content))
+			var/obj/item/item = content
+			if(item.item_flags & ABSTRACT) //let's not tempt fate, shall we?
+				continue
+		. += content
+
+/datum/component/personal_crafting/machine/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings)
+	return TRUE

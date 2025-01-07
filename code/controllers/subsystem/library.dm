@@ -26,14 +26,14 @@ SUBSYSTEM_DEF(library)
 
 /datum/controller/subsystem/library/proc/load_shelves()
 	var/list/datum/callback/load_callbacks = list()
-	
+
 	for(var/obj/structure/bookcase/case_to_load as anything in shelves_to_load)
 		if(!case_to_load)
 			stack_trace("A null bookcase somehow ended up in SSlibrary's shelves_to_load list. Did something harddel?")
 			continue
 		load_callbacks += CALLBACK(case_to_load, TYPE_PROC_REF(/obj/structure/bookcase, load_shelf))
 	shelves_to_load = null
-	
+
 	//Load all of the shelves asyncronously at the same time, blocking until the last one is finished.
 	callback_select(load_callbacks, savereturns = FALSE)
 
@@ -59,6 +59,6 @@ SUBSYSTEM_DEF(library)
 
 /datum/controller/subsystem/library/proc/prepare_library_areas()
 	library_areas = typesof(/area/station/service/library) - /area/station/service/library/abandoned
-	var/list/additional_areas = SSmapping.config.library_areas
+	var/list/additional_areas = SSmapping.current_map.library_areas
 	if(additional_areas)
 		library_areas += additional_areas

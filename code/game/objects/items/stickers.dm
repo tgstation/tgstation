@@ -25,13 +25,15 @@
 	throw_range = 3
 	pressure_resistance = 0
 
-	item_flags = NOBLUDGEON | XENOMORPH_HOLDABLE //funny ~Jimmyl
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 
 	/// `list` or `null`, contains possible alternate `icon_states`.
 	var/list/icon_states
-	/// Whether sticker is legal and allowed to generate inside non-syndicate boxes.
-	var/contraband = FALSE
+	/// This sticker won't be generated inside random sticker packs.
+	var/exclude_from_random = FALSE
+	/// Text added to the atom's examine when stickered.
+	var/examine_text
 
 /obj/item/sticker/Initialize(mapload)
 	. = ..()
@@ -85,7 +87,7 @@
 			user.log_message("stuck [src] to [key_name(victim)]", LOG_ATTACK)
 			victim.log_message("had [src] stuck to them by [key_name(user)]", LOG_ATTACK)
 
-	target.AddComponent(/datum/component/sticker, src, get_dir(target, src), px, py)
+	target.AddComponent(/datum/component/sticker, src, get_dir(target, src), px, py, null, null, examine_text)
 	return TRUE
 
 #undef MAX_STICKER_COUNT
@@ -123,6 +125,7 @@
 	name = "blue R sticker"
 	desc = "A sticker of FUCK THE SYSTEM, the galaxy's premiere hardcore punk band."
 	icon_state = "revhead"
+	examine_text = "There is a sticker displaying <b>FUCK THE SYSTEM</b>, the galaxy's premiere hardcore punk band."
 
 /obj/item/sticker/pslime
 	name = "slime plushie sticker"
@@ -149,6 +152,12 @@
 	name = "toolbox sticker"
 	icon_state = "soul"
 
+/obj/item/sticker/chief_engineer
+	name = "CE approved sticker"
+	icon_state = "ce_approved"
+	exclude_from_random = TRUE
+	examine_text = "There is a sticker displaying the <b>Chief Engineer's SEAL OF APPROVAL.</b>"
+
 /obj/item/sticker/clown
 	name = "clown sticker"
 	icon_state = "honkman"
@@ -164,15 +173,17 @@
 /obj/item/sticker/skub
 	name = "skub sticker"
 	icon_state = "skub"
+	examine_text = "There is a sticker displaying <b>Skubtide, Stationwide!</b>"
 
 /obj/item/sticker/anti_skub
 	name = "anti-skub sticker"
 	icon_state = "anti_skub"
+	examine_text = "There is an <b>anti-skub</b> sticker."
 
 /obj/item/sticker/syndicate
 	name = "syndicate sticker"
 	icon_state = "synd"
-	contraband = TRUE
+	exclude_from_random = TRUE
 
 /obj/item/sticker/syndicate/Initialize(mapload)
 	. = ..()

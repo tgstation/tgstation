@@ -32,7 +32,7 @@
 					M,
 					span_binarysay("\
 						Robotic Talk, \
-						<a href='?src=[REF(M)];track=[html_encode(namepart)]'>[span_name("[namepart] ([designation])")]</a> \
+						<a href='byond://?src=[REF(M)];track=[html_encode(namepart)]'>[span_name("[namepart] ([designation])")]</a> \
 						<span class='message'>[quoted_message]</span>\
 					"),
 					avoid_highlighting = src == M
@@ -82,10 +82,10 @@
 	if(message_mods[MODE_HEADSET])
 		if(radio)
 			radio.talk_into(src, message, , spans, language, message_mods)
-		return REDUCE_RANGE
+		return NOPASS
 	else if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
 		if(radio)
 			radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
-			return ITALICS | REDUCE_RANGE
+			return NOPASS
 
 	return FALSE

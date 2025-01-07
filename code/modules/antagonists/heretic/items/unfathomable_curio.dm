@@ -11,8 +11,8 @@
 	//Vars used for the shield component
 	var/heretic_shield_icon = "unfathomable_shield"
 	var/max_charges = 1
-	var/recharge_start_delay = 60 SECONDS
-	var/charge_increment_delay = 60 SECONDS
+	var/recharge_start_delay = 30 SECONDS
+	var/charge_increment_delay = 30 SECONDS
 	var/charge_recovery = 1
 
 /obj/item/storage/belt/unfathomable_curio/Initialize(mapload)
@@ -21,6 +21,7 @@
 	atom_storage.max_total_storage = 21
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_box/strilka310/lionhunter,
+		/obj/item/heretic_labyrinth_handbook,
 		/obj/item/bodypart, // Bodyparts are often used in rituals.
 		/obj/item/clothing/neck/eldritch_amulet,
 		/obj/item/clothing/neck/heretic_focus,

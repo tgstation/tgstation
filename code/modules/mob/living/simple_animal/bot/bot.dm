@@ -12,7 +12,6 @@
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
 	maxbodytemp = INFINITY
 	minbodytemp = 0
-	has_unlimited_silicon_privilege = TRUE
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 	pass_flags = PASSFLAPS
@@ -118,8 +117,8 @@
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		return paicard ? "<b>pAI Controlled</b>" : "<b>Autonomous</b>"
 	if(!(bot_mode_flags & BOT_MODE_ON))
-		return "<span class='bad'>Inactive</span>"
-	return "<span class='average'>[mode]</span>"
+		return span_bad("Inactive")
+	return span_average("[mode]")
 
 /**
  * Returns a status string about the bot's current status, if it's moving, manually controlled, or idle.
@@ -163,6 +162,7 @@
 
 /mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
+	add_traits(list(TRAIT_SILICON_ACCESS, TRAIT_REAGENT_SCANNER, TRAIT_UNOBSERVANT), INNATE_TRAIT)
 	GLOB.bots_list += src
 
 	path_hud = new /datum/atom_hud/data/bot_path/private()
@@ -378,9 +378,9 @@
 
 	if(HAS_TRAIT(src, TRAIT_COMMISSIONED) && COOLDOWN_FINISHED(src, next_salute_check))
 		COOLDOWN_START(src, next_salute_check, BOT_COMMISSIONED_SALUTE_DELAY)
-		for(var/mob/living/simple_animal/bot/B in view(5, src))
-			if(!HAS_TRAIT(B, TRAIT_COMMISSIONED) && B.bot_mode_flags & BOT_MODE_ON)
-				manual_emote("performs an elaborate salute for [src]!")
+		for(var/mob/living/simple_animal/bot/nearby_bot in view(5, src))
+			if(!HAS_TRAIT(nearby_bot, TRAIT_COMMISSIONED) && nearby_bot.bot_mode_flags & BOT_MODE_ON)
+				manual_emote("performs an elaborate salute for [nearby_bot]!")
 				break
 
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
@@ -686,8 +686,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
 		access_card.set_access(prev_access)
 
-/mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message = TRUE)
-	if(isAI(caller) && calling_ai && calling_ai != src) //Prevents an override if another AI is controlling this bot.
+/mob/living/simple_animal/bot/proc/call_bot(summoner, turf/waypoint, message = TRUE)
+	if(isAI(summoner) && calling_ai && calling_ai != src) //Prevents an override if another AI is controlling this bot.
 		return FALSE
 
 	bot_reset() //Reset a bot before setting it to call mode.
@@ -696,7 +696,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	//Easier then building the list ourselves. I'm sorry.
 	var/static/obj/item/card/id/all_access = new /obj/item/card/id/advanced/gold/captains_spare()
 	set_path(get_path_to(src, waypoint, max_distance=200, access = all_access.GetAccess()))
-	calling_ai = caller //Link the AI to the bot!
+	calling_ai = summoner //Link the AI to the bot!
 	ai_waypoint = waypoint
 
 	if(path?.len) //Ensures that a valid path is calculated!
@@ -706,7 +706,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		access_card.set_access(REGION_ACCESS_ALL_STATION) //Give the bot all-access while under the AI's command.
 		if(client)
 			reset_access_timer_id = addtimer(CALLBACK (src, PROC_REF(bot_reset)), 60 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
-			to_chat(src, span_notice("[span_big("Priority waypoint set by [icon2html(calling_ai, src)] <b>[caller]</b>. Proceed to <b>[end_area]</b>.")]<br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds."))
+			to_chat(src, span_notice("[span_big("Priority waypoint set by [icon2html(calling_ai, src)] <b>[summoner]</b>. Proceed to <b>[end_area]</b>.")]<br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds."))
 		if(message)
 			to_chat(calling_ai, span_notice("[icon2html(src, calling_ai)] [name] called to [end_area]. [path.len-1] meters to destination."))
 		pathset = TRUE
@@ -976,13 +976,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 	return data
 
 // Actions received from TGUI
-/mob/living/simple_animal/bot/ui_act(action, params)
+/mob/living/simple_animal/bot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	var/mob/user = usr
+	var/mob/user = ui.user
 	if(!allowed(user))
-		to_chat(usr, span_warning("Access denied."))
+		to_chat(user, span_warning("Access denied."))
 		return
 
 	if(action == "lock")
@@ -1002,38 +1002,38 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if("airplane")
 			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
 		if("hack")
-			if(!HAS_SILICON_ACCESS(usr))
+			if(!HAS_SILICON_ACCESS(user))
 				return
 			if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 				bot_cover_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED|BOT_COVER_LOCKED)
-				to_chat(usr, span_warning("You overload [src]'s [hackables]."))
-				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
-				usr.log_message("disabled safety lock of [src]", LOG_GAME)
+				to_chat(user, span_warning("You overload [src]'s [hackables]."))
+				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
+				user.log_message("disabled safety lock of [src]", LOG_GAME)
 				bot_reset()
 				to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
 				to_chat(src, span_boldnotice(get_emagged_message()))
 				return
 			if(!(bot_cover_flags & BOT_COVER_HACKED))
-				to_chat(usr, span_boldannounce("You fail to repair [src]'s [hackables]."))
+				to_chat(user, span_bolddanger("You fail to repair [src]'s [hackables]."))
 				return
 			bot_cover_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
-			to_chat(usr, span_notice("You reset the [src]'s [hackables]."))
-			usr.log_message("re-enabled safety lock of [src]", LOG_GAME)
+			to_chat(user, span_notice("You reset the [src]'s [hackables]."))
+			user.log_message("re-enabled safety lock of [src]", LOG_GAME)
 			bot_reset()
 			to_chat(src, span_userdanger("Software restored to standard."))
 			to_chat(src, span_boldnotice(possessed_message))
 		if("eject_pai")
 			if(!paicard)
 				return
-			to_chat(usr, span_notice("You eject [paicard] from [initial(src.name)]."))
-			ejectpai(usr)
+			to_chat(user, span_notice("You eject [paicard] from [initial(src.name)]."))
+			ejectpai(user)
 		if("toggle_personality")
 			if (can_be_possessed)
-				disable_possession(usr)
+				disable_possession(user)
 			else
-				enable_possession(usr)
+				enable_possession(user)
 		if("rename")
-			rename(usr)
+			rename(user)
 
 /mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[isnull(base_icon_state) ? initial(icon_state) : base_icon_state][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"

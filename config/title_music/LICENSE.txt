@@ -19,10 +19,10 @@ Do not remove this notice.
 
 ---EXAMPLES (NOT PART OF ANY LICENSE)---
 
-These are examples of properly attrubuted and licensed sounds. 
+These are examples of properly attributed and licensed sounds. 
 They are not an actual part of any license under any circumstance.
 
-title5.ogg was created by Mya Quinn on Feburary 28, 2557. It is licensed under a Combative Clowning 3.0 HO-NK license (http://example.com/license/url/). 
+title5.ogg was created by Mya Quinn on February 28, 2557. It is licensed under a Combative Clowning 3.0 HO-NK license (http://example.com/license/url/). 
 
 Unless otherwise noted all sounds were created by Cuban Pete on July 26, 2555. They are licensed under the RUMBABEAT Public License.(http://example.com/license/url/).
 

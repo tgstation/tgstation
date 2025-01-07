@@ -1,0 +1,15 @@
+{
+	"fish_tail": [
+		{
+			"type": "icon_state",
+			"icon_state": "fish_tail",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "fish_tail_meat",
+			"blend_mode": "overlay"
+		}
+	]
+}

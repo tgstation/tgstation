@@ -275,7 +275,7 @@
 // Gun procs.
 
 /obj/item/gun/proc/on_autofire_start(mob/living/shooter)
-	if(semicd || shooter.incapacitated() || !can_trigger_gun(shooter))
+	if(semicd || shooter.incapacitated || !can_trigger_gun(shooter))
 		return FALSE
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)
@@ -295,7 +295,7 @@
 
 /obj/item/gun/proc/do_autofire(datum/source, atom/target, mob/living/shooter, allow_akimbo, params)
 	SIGNAL_HANDLER
-	if(semicd || shooter.incapacitated())
+	if(semicd || shooter.incapacitated)
 		return NONE
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)
@@ -309,8 +309,11 @@
 	var/bonus_spread = 0
 	if(istype(akimbo_gun) && weapon_weight < WEAPON_MEDIUM && allow_akimbo)
 		if(akimbo_gun.weapon_weight < WEAPON_MEDIUM && akimbo_gun.can_trigger_gun(shooter))
-			bonus_spread = dual_wield_spread
-			addtimer(CALLBACK(akimbo_gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, shooter, TRUE, params, null, bonus_spread), 0.1 SECONDS)
+			if(!akimbo_gun.can_shoot())
+				addtimer(CALLBACK(akimbo_gun, TYPE_PROC_REF(/obj/item/gun, shoot_with_empty_chamber), shooter), 0.1 SECONDS)
+			else
+				bonus_spread = dual_wield_spread
+				addtimer(CALLBACK(akimbo_gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, shooter, TRUE, params, null, bonus_spread), 0.1 SECONDS)
 	process_fire(target, shooter, TRUE, params, null, bonus_spread)
 
 #undef AUTOFIRE_MOUSEUP

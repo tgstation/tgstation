@@ -63,3 +63,66 @@
 
 /datum/proximity_monitor/advanced/gravity/warns_on_entrance/proc/clear_recent_warning(mob_ref_key)
 	LAZYREMOVE(recently_warned, mob_ref_key)
+
+/obj/gravity_fluff_field
+	icon = 'icons/obj/smooth_structures/grav_field.dmi'
+	icon_state = "grav_field-0"
+	base_icon_state = "grav_field"
+	obj_flags = NONE
+	anchored = TRUE
+	move_resist = INFINITY
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	pass_flags_self = LETPASSCLICKS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_GRAV_FIELD
+	canSmoothWith = SMOOTH_GROUP_GRAV_FIELD
+	alpha = 200
+	/// our emissive appearance
+	var/mutable_appearance/emissive
+	var/particles/particle_type
+
+/obj/gravity_fluff_field/Initialize(mapload, strength)
+	. = ..()
+	if(isnull(strength))
+		return INITIALIZE_HINT_QDEL
+	QUEUE_SMOOTH(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
+	switch(strength)
+		if(2 to INFINITY)
+			particle_type = /particles/grav_field_down/strong
+		if(1 to 2)
+			particle_type = /particles/grav_field_down
+		if(0 to 1)
+			particle_type = /particles/grav_field_float
+		if(-INFINITY to -1)
+			particle_type = /particles/grav_field_up
+	if (particle_type)
+		add_shared_particles(/particles/grav_field_down/strong)
+		color = particle_type::color
+	RegisterSignal(src, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(smoothed))
+
+/obj/gravity_fluff_field/Destroy(force)
+	remove_shared_particles(particle_type)
+	emissive = null
+	return ..()
+
+/obj/gravity_fluff_field/proc/smoothed(datum/source)
+	SIGNAL_HANDLER
+	cut_overlay(emissive)
+	// because it uses a different name
+	emissive = emissive_appearance('icons/obj/smooth_structures/grav_field_emissive.dmi', "grav_field_emissive-[splittext(icon_state, "-")[2]]", src)
+	add_overlay(emissive)
+
+// Subtype which adds a subtle overlay to all turfs
+/datum/proximity_monitor/advanced/gravity/subtle_effect
+
+/datum/proximity_monitor/advanced/gravity/subtle_effect/setup_field_turf(turf/target)
+	. = ..()
+	if(!isopenturf(target))
+		return
+	new /obj/gravity_fluff_field(target, gravity_value)
+
+/datum/proximity_monitor/advanced/gravity/subtle_effect/cleanup_field_turf(turf/target)
+	. = ..()
+	qdel(locate(/obj/gravity_fluff_field) in target)

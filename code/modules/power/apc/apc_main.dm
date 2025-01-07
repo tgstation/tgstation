@@ -223,7 +223,6 @@
 	register_context()
 	addtimer(CALLBACK(src, PROC_REF(update)), 0.5 SECONDS)
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	update_appearance()
 
 	var/static/list/hovering_mob_typechecks = list(
@@ -255,12 +254,11 @@
 		disconnect_terminal()
 	return ..()
 
-/obj/machinery/power/apc/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
-
+/obj/machinery/power/apc/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	disrupt_duration *= 0.1 // so, turns out, failure timer is in seconds, not deciseconds; without this, disruptions last 10 times as long as they probably should
 	energy_fail(disrupt_duration)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/machinery/power/apc/on_set_is_operational(old_value)
 	update_area_power_usage(!old_value)
@@ -422,20 +420,26 @@
 	say("Remote access detected.[locked ? " Interface unlocked." : ""]")
 	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Connected to [src]."))
 	if(locked)
-		playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_on.ogg', 25, FALSE)
 		locked = FALSE
-	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 	update_appearance()
 
-/obj/machinery/power/apc/proc/disconnect_remote_access()
+/**
+ * Disconnects anyone using this APC via an APC control console and locks the interface.
+ * arguments:
+ * mute - whether the APC should announce the disconnection locally
+ */
+/obj/machinery/power/apc/proc/disconnect_remote_access(mute = FALSE)
 	// nothing to disconnect from
 	if(isnull(remote_control_user))
 		return
 	locked = TRUE
-	say("Remote access canceled. Interface locked.")
 	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Disconnected from [src]."))
-	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
-	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+	if(!mute)
+		say("Remote access canceled. Interface locked.")
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 	update_appearance()
 	remote_control_user = null
 
@@ -444,16 +448,17 @@
 	if(!QDELETED(remote_control_user) && user == remote_control_user)
 		. = UI_INTERACTIVE
 
-/obj/machinery/power/apc/ui_act(action, params)
+/obj/machinery/power/apc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	var/mob/user = ui.user
 
-	if(. || !can_use(usr, 1) || (locked && !HAS_SILICON_ACCESS(usr) && !failure_timer && action != "toggle_nightshift"))
+	if(. || !can_use(user, 1) || (locked && !HAS_SILICON_ACCESS(user) && !failure_timer && action != "toggle_nightshift"))
 		return
 	switch(action)
 		if("lock")
-			if(HAS_SILICON_ACCESS(usr))
+			if(HAS_SILICON_ACCESS(user))
 				if((obj_flags & EMAGGED) || (machine_stat & (BROKEN|MAINT)) || remote_control_user)
-					to_chat(usr, span_warning("The APC does not respond to the command!"))
+					to_chat(user, span_warning("The APC does not respond to the command!"))
 				else
 					locked = !locked
 					update_appearance()
@@ -462,10 +467,10 @@
 			coverlocked = !coverlocked
 			. = TRUE
 		if("breaker")
-			toggle_breaker(usr)
+			toggle_breaker(user)
 			. = TRUE
 		if("toggle_nightshift")
-			toggle_nightshift_lights(usr)
+			toggle_nightshift_lights(user)
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
@@ -488,17 +493,17 @@
 				update()
 			. = TRUE
 		if("overload")
-			if(HAS_SILICON_ACCESS(usr))
+			if(HAS_SILICON_ACCESS(user))
 				overload_lighting()
 				. = TRUE
 		if("hack")
-			if(get_malf_status(usr))
-				malfhack(usr)
+			if(get_malf_status(user))
+				malfhack(user)
 		if("occupy")
-			if(get_malf_status(usr))
-				malfoccupy(usr)
+			if(get_malf_status(user))
+				malfoccupy(user)
 		if("deoccupy")
-			if(get_malf_status(usr))
+			if(get_malf_status(user))
 				malfvacate()
 		if("reboot")
 			failure_timer = 0
@@ -526,20 +531,24 @@
  * This adds up the total static power usage for the apc's area, then draw that power usage from the grid or APC cell.
  */
 /obj/machinery/power/apc/proc/early_process()
-	if(cell && cell.charge < cell.maxcharge)
+	if(!QDELETED(cell) && cell.charge < cell.maxcharge)
 		last_charging = charging
 		charging = APC_NOT_CHARGING
 	if(isnull(area))
 		return
 
 	var/total_static_energy_usage = 0
-	total_static_energy_usage += APC_CHANNEL_IS_ON(lighting) * area.energy_usage[AREA_USAGE_STATIC_LIGHT]
-	total_static_energy_usage += APC_CHANNEL_IS_ON(equipment) * area.energy_usage[AREA_USAGE_STATIC_EQUIP]
-	total_static_energy_usage += APC_CHANNEL_IS_ON(environ) * area.energy_usage[AREA_USAGE_STATIC_ENVIRON]
+	if(operating)
+		total_static_energy_usage += APC_CHANNEL_IS_ON(lighting) * area.energy_usage[AREA_USAGE_STATIC_LIGHT]
+		total_static_energy_usage += APC_CHANNEL_IS_ON(equipment) * area.energy_usage[AREA_USAGE_STATIC_EQUIP]
+		total_static_energy_usage += APC_CHANNEL_IS_ON(environ) * area.energy_usage[AREA_USAGE_STATIC_ENVIRON]
 	area.clear_usage()
 
 	if(total_static_energy_usage) //Use power from static power users.
-		draw_energy(total_static_energy_usage)
+		var/grid_used = min(terminal?.surplus(), total_static_energy_usage)
+		terminal?.add_load(grid_used)
+		if(total_static_energy_usage > grid_used && !QDELETED(cell))
+			cell.use(total_static_energy_usage - grid_used, force = TRUE)
 
 /obj/machinery/power/apc/proc/late_process(seconds_per_tick)
 	if(icon_update_needed)
@@ -559,9 +568,15 @@
 			flicker_hacked_icon()
 
 	//dont use any power from that channel if we shut that power channel off
-	lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.energy_usage[AREA_USAGE_LIGHT] + area.energy_usage[AREA_USAGE_STATIC_LIGHT] : 0
-	lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.energy_usage[AREA_USAGE_EQUIP] + area.energy_usage[AREA_USAGE_STATIC_EQUIP] : 0
-	lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.energy_usage[AREA_USAGE_ENVIRON] + area.energy_usage[AREA_USAGE_STATIC_ENVIRON] : 0
+	if(operating)
+		lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.energy_usage[AREA_USAGE_LIGHT] + area.energy_usage[AREA_USAGE_STATIC_LIGHT] : 0
+		lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.energy_usage[AREA_USAGE_EQUIP] + area.energy_usage[AREA_USAGE_STATIC_EQUIP] : 0
+		lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.energy_usage[AREA_USAGE_ENVIRON] + area.energy_usage[AREA_USAGE_STATIC_ENVIRON] : 0
+	else
+		lastused_light = 0
+		lastused_equip = 0
+		lastused_environ = 0
+
 	lastused_charge = charging == APC_CHARGING ? area.energy_usage[AREA_USAGE_APC_CHARGE] : 0
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ + lastused_charge
@@ -684,7 +699,7 @@
 /obj/machinery/power/apc/proc/overload_lighting()
 	if(!operating || shorted)
 		return
-	if(cell && cell.use(0.02 * STANDARD_CELL_CHARGE))
+	if(cell && cell.use(0.02 * STANDARD_BATTERY_CHARGE))
 		INVOKE_ASYNC(src, PROC_REF(break_lights))
 
 /obj/machinery/power/apc/proc/break_lights()
@@ -750,21 +765,6 @@
 /// Returns the cell's current charge.
 /obj/machinery/power/apc/proc/charge()
 	return cell.charge
-
-/// Draws energy from the connected grid. When there isn't enough surplus energy from the grid, draws the rest of the demand from its cell. Returns the energy used.
-/obj/machinery/power/apc/proc/draw_energy(amount)
-	var/grid_used = min(terminal?.surplus(), amount)
-	terminal?.add_load(grid_used)
-	if(QDELETED(cell))
-		return grid_used
-	var/cell_used = 0
-	if(amount > grid_used)
-		cell_used += cell.use(amount - grid_used, force = TRUE)
-	return grid_used + cell_used
-
-/// Draws power from the connected grid. When there isn't enough surplus energy from the grid, draws the rest of the demand from its cell. Returns the energy used.
-/obj/machinery/power/apc/proc/draw_power(amount)
-	return draw_energy(power_to_energy(amount))
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

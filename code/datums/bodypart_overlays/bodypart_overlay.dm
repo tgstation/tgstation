@@ -26,7 +26,7 @@
 	)
 	return all_images
 
-///Generate the image. Needs to be overriden
+///Generate the image. Needs to be overridden
 /datum/bodypart_overlay/proc/get_image(layer, obj/item/bodypart/limb)
 	CRASH("Get image needs to be overridden")
 
@@ -42,7 +42,7 @@
 /datum/bodypart_overlay/proc/removed_from_limb(obj/item/bodypart/limb)
 	return
 
-///Use this to change the appearance (and yes you must overwrite hahahahahah) (or dont use this, I just dont want people directly changing the image)
+///Use this to change the appearance (and yes you must overwrite hahahahahah) (or don't use this, I just don't want people directly changing the image)
 /datum/bodypart_overlay/proc/set_appearance()
 	CRASH("Update appearance needs to be overridden")
 
@@ -73,7 +73,7 @@
 	return TRUE
 
 ///Colorizes the limb it's inserted to, if required.
-/datum/bodypart_overlay/proc/override_color(rgb_value)
+/datum/bodypart_overlay/proc/override_color(obj/item/bodypart/bodypart_owner)
 	CRASH("External organ color set to override with no override proc.")
 
 ///Generate a unique identifier to cache with. If you change something about the image, but the icon cache stays the same, it'll simply pull the unchanged image out of the cache

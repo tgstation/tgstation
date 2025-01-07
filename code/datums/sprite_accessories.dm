@@ -34,8 +34,6 @@
 	 * This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
 	 */
 	var/color_src = MUTANT_COLOR
-	/// Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
-	var/hasinner = FALSE
 	/// Is this part locked from roundstart selection? Used for parts that apply effects.
 	var/locked = FALSE
 	/// Should we center the sprite?
@@ -1746,6 +1744,35 @@
 	/// Describes which tail spine sprites to use, if any.
 	var/spine_key = NONE
 
+///Used for fish-infused tails, which come in different flavors.
+/datum/sprite_accessory/tails/fish
+	icon = 'icons/mob/human/fish_features.dmi'
+	color_src = TRUE
+
+/datum/sprite_accessory/tails/fish/simple
+	name = "Simple"
+	icon_state = "simple"
+
+/datum/sprite_accessory/tails/fish/crescent
+	name = "Crescent"
+	icon_state = "crescent"
+
+/datum/sprite_accessory/tails/fish/long
+	name = "Long"
+	icon_state = "long"
+	center = TRUE
+	dimension_x = 38
+
+/datum/sprite_accessory/tails/fish/shark
+	name = "Shark"
+	icon_state = "shark"
+
+/datum/sprite_accessory/tails/fish/chonky
+	name = "Chonky"
+	icon_state = "chonky"
+	center = TRUE
+	dimension_x = 36
+
 /datum/sprite_accessory/tails/lizard
 	icon = 'icons/mob/human/species/lizard/lizard_tails.dmi'
 	spine_key = SPINE_KEY_LIZARD
@@ -1776,7 +1803,7 @@
 	icon_state = "short"
 	spine_key = NONE
 
-/datum/sprite_accessory/tails/human/cat
+/datum/sprite_accessory/tails/felinid/cat
 	name = "Cat"
 	icon = 'icons/mob/human/cat_features.dmi'
 	icon_state = "default"
@@ -1890,7 +1917,6 @@
 /datum/sprite_accessory/ears/cat
 	name = "Cat"
 	icon_state = "cat"
-	hasinner = TRUE
 	color_src = HAIR_COLOR
 
 /datum/sprite_accessory/ears/cat/big
@@ -1917,7 +1943,6 @@
 	icon = 'icons/mob/human/fox_features.dmi'
 	name = "Fox"
 	icon_state = "fox"
-	hasinner = TRUE
 	color_src = HAIR_COLOR
 	locked = TRUE
 
@@ -2124,16 +2149,6 @@
 	name = "Aquatic"
 	icon_state = "aqua"
 
-/datum/sprite_accessory/legs //legs are a special case, they aren't actually sprite_accessories but are updated with them.
-	icon = null //These datums exist for selecting legs on preference, and little else
-	em_block = TRUE
-
-/datum/sprite_accessory/legs/none
-	name = "Normal Legs"
-
-/datum/sprite_accessory/legs/digitigrade_lizard
-	name = DIGITIGRADE_LEGS
-
 /datum/sprite_accessory/caps
 	icon = 'icons/mob/human/species/mush_cap.dmi'
 	color_src = HAIR_COLOR
@@ -2249,6 +2264,10 @@
 	name = "Lightbearer"
 	icon_state = "lightbearer"
 
+/datum/sprite_accessory/moth_wings/dipped
+	name = "Dipped"
+	icon_state = "dipped"
+
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
 	icon = 'icons/mob/human/species/moth/moth_antennae.dmi'
 	color_src = null
@@ -2340,6 +2359,10 @@
 	name = "Lightbearer"
 	icon_state = "lightbearer"
 
+/datum/sprite_accessory/moth_antennae/dipped
+	name = "Dipped"
+	icon_state = "dipped"
+
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
 	color_src = null
@@ -2403,3 +2426,7 @@
 /datum/sprite_accessory/moth_markings/lightbearer
 	name = "Lightbearer"
 	icon_state = "lightbearer"
+
+/datum/sprite_accessory/moth_markings/dipped
+	name = "Dipped"
+	icon_state = "dipped"

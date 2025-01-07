@@ -1,8 +1,8 @@
-import { BooleanLike } from 'common/react';
-import { capitalizeAll, capitalizeFirst } from 'common/string';
+import { Tooltip } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { capitalizeAll, capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
-import { Tooltip } from '../../components';
 import { IconDisplay } from './IconDisplay';
 import { SearchGroup, SearchItem } from './types';
 
@@ -56,7 +56,7 @@ export function LootBox(props: Props) {
           });
         }}
       >
-        <IconDisplay item={item} />
+        <IconDisplay item={item} size={{ height: 3, width: 3 }} />
         {amount > 1 && <div className="SearchItem--amount">{amount}</div>}
       </div>
       {!is_blind && <span className="SearchItem--text">{name}</span>}

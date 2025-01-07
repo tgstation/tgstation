@@ -71,7 +71,7 @@
 //------------------------
 // INVISIBILITY SOURCE IDS
 // Though don't feel the need to add one here if you have a simple effect that
-// gets added and/or removed in only one place near eachother in the code.
+// gets added and/or removed in only one place near each other in the code.
 
 #define INVISIBILITY_SOURCE_INVISIMIN "invisimin"
 #define INVISIBILITY_SOURCE_STEALTHMODE "stealthmode"

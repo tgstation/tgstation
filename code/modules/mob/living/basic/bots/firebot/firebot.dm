@@ -29,20 +29,20 @@
 
 /mob/living/basic/bot/firebot/generate_speak_list()
 	var/static/list/idle_lines = list(
-		FIREBOT_VOICED_NO_FIRES = 'sound/voice/firebot/nofires.ogg',
-		FIREBOT_VOICED_ONLY_YOU = 'sound/voice/firebot/onlyyou.ogg',
-		FIREBOT_VOICED_TEMPERATURE_NOMINAL = 'sound/voice/firebot/tempnominal.ogg',
-		FIREBOT_VOICED_KEEP_COOL = 'sound/voice/firebot/keepitcool.ogg',
+		FIREBOT_VOICED_NO_FIRES = 'sound/mobs/non-humanoids/firebot/nofires.ogg',
+		FIREBOT_VOICED_ONLY_YOU = 'sound/mobs/non-humanoids/firebot/onlyyou.ogg',
+		FIREBOT_VOICED_TEMPERATURE_NOMINAL = 'sound/mobs/non-humanoids/firebot/tempnominal.ogg',
+		FIREBOT_VOICED_KEEP_COOL = 'sound/mobs/non-humanoids/firebot/keepitcool.ogg',
 	)
 	var/static/list/fire_detected_lines = list(
-		FIREBOT_VOICED_FIRE_DETECTED = 'sound/voice/firebot/detected.ogg',
-		FIREBOT_VOICED_STOP_DROP = 'sound/voice/firebot/stopdropnroll.ogg',
-		FIREBOT_VOICED_EXTINGUISHING = 'sound/voice/firebot/extinguishing.ogg',
+		FIREBOT_VOICED_FIRE_DETECTED = 'sound/mobs/non-humanoids/firebot/detected.ogg',
+		FIREBOT_VOICED_STOP_DROP = 'sound/mobs/non-humanoids/firebot/stopdropnroll.ogg',
+		FIREBOT_VOICED_EXTINGUISHING = 'sound/mobs/non-humanoids/firebot/extinguishing.ogg',
 	)
 	var/static/list/emagged_lines = list(
-		FIREBOT_VOICED_CANDLE_TIP = 'sound/voice/firebot/candle_tip.ogg',
-		FIREBOT_VOICED_ELECTRIC_FIRE = 'sound/voice/firebot/electric_fire_tip.ogg',
-		FIREBOT_VOICED_FUEL_TIP = 'sound/voice/firebot/gasoline_tip.ogg'
+		FIREBOT_VOICED_CANDLE_TIP = 'sound/mobs/non-humanoids/firebot/candle_tip.ogg',
+		FIREBOT_VOICED_ELECTRIC_FIRE = 'sound/mobs/non-humanoids/firebot/electric_fire_tip.ogg',
+		FIREBOT_VOICED_FUEL_TIP = 'sound/mobs/non-humanoids/firebot/gasoline_tip.ogg'
 	)
 	ai_controller.set_blackboard_key(BB_FIREBOT_EMAGGED_LINES, emagged_lines)
 	ai_controller.set_blackboard_key(BB_FIREBOT_IDLE_LINES, idle_lines)
@@ -112,9 +112,10 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/basic/bot/firebot/ui_act(action, params)
+/mob/living/basic/bot/firebot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_access_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
+	var/mob/user = ui.user
+	if(. || (bot_access_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
 		return
 
 	switch(action)

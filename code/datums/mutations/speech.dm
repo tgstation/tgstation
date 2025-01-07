@@ -2,9 +2,6 @@
 //Individual ones aren't commented since their functions should be evident at a glance
 // no they arent bro
 
-#define ALPHABET list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
-#define VOWELS list("a", "e", "i", "o", "u")
-#define CONSONANTS (ALPHABET - VOWELS)
 
 /datum/mutation/human/nervousness
 	name = "Nervousness"
@@ -82,7 +79,7 @@
 		// Used to replace the original later
 		var/og_word = editing_word
 		// Iterating through each replaceable-string in the .json
-		var/list/static/super_wacky_words = strings("heckacious.json", "heckacious")
+		var/static/list/super_wacky_words = strings("heckacious.json", "heckacious")
 
 		// If the word doesn't get replaced we might do something with it later
 		var/word_edited
@@ -300,7 +297,3 @@
 	var/spoken_message = speech_args[SPEECH_MESSAGE]
 	spoken_message = piglatin_sentence(spoken_message)
 	speech_args[SPEECH_MESSAGE] = spoken_message
-
-#undef ALPHABET
-#undef VOWELS
-#undef CONSONANTS

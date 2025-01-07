@@ -67,7 +67,6 @@
 	name = "waffles"
 	desc = "Mmm, waffles."
 	icon_state = "waffles"
-	trash_type = /obj/item/trash/waffles
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 8,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
@@ -85,7 +84,6 @@
 	name = "\improper Soylent Green"
 	desc = "Not made of people. Honest." //Totally people.
 	icon_state = "soylent_green"
-	trash_type = /obj/item/trash/waffles
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 10,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
@@ -100,7 +98,6 @@
 	name = "\improper Soylent Virdians"
 	desc = "Not made of people. Honest." //Actually honest for once.
 	icon_state = "soylent_yellow"
-	trash_type = /obj/item/trash/waffles
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 10,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
@@ -115,7 +112,6 @@
 	name = "roffle waffles"
 	desc = "Waffles from Roffle. Co."
 	icon_state = "rofflewaffles"
-	trash_type = /obj/item/trash/waffles
 	bite_consumption = 4
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 8,
@@ -326,6 +322,20 @@
 	icon_state = "bluecherrycupcake"
 	tastes = list("cake" = 3, "blue cherry" = 1)
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/jupitercupcake
+	name = "jupiter-cup-cake"
+	desc = "A static dessert."
+	icon_state = "jupitercupcake"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/caramel = 3,
+		/datum/reagent/consumable/liquidelectricity/enriched = 3,
+	)
+	tastes = list("cake" = 3, "caramel" = 2, "zap" = 1)
+	crafting_complexity = FOOD_COMPLEXITY_3
+	crafted_food_buff = /datum/status_effect/food/trait/shockimmune
 
 /obj/item/food/honeybun
 	name = "honey bun"

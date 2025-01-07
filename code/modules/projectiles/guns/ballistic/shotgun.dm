@@ -8,10 +8,12 @@
 	inhand_icon_state = "shotgun"
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/shotgun/shot.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/shotgun/rack.ogg'
-	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
+	rack_sound = 'sound/items/weapons/gun/shotgun/rack.ogg'
+	load_sound = 'sound/items/weapons/gun/shotgun/insert_shell.ogg'
+	drop_sound = 'sound/items/handling/gun/ballistics/shotgun/shotgun_drop1.ogg'
+	pickup_sound = 'sound/items/handling/gun/ballistics/shotgun/shotgun_pickup1.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -24,6 +26,7 @@
 	cartridge_wording = "shell"
 	tac_reloads = FALSE
 	weapon_weight = WEAPON_HEAVY
+	misfire_probability_cap = 35 // Even if the misfire probability and increment are both zero, we've some shots that may do that.
 
 	pb_knockback = 2
 
@@ -158,7 +161,7 @@
 	burst_size = 2
 	fire_delay = 1
 	pin = /obj/item/firing_pin/implant/pindicate
-	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/shotgun/shot_alt.ogg'
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	mag_display = TRUE
 	empty_indicator = TRUE
@@ -286,7 +289,6 @@
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
 
-
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
 	. = ..()
 	if(.)
@@ -321,7 +323,7 @@
 	sharpness = SHARP_POINTY //it does in fact, have a hook on it
 	attack_verb_continuous = list("slashes", "hooks", "stabs")
 	attack_verb_simple = list("slash", "hook", "stab")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	//our hook gun!
 	var/obj/item/gun/magic/hook/bounty/hook
 
@@ -342,6 +344,32 @@
 		return hook.try_fire_gun(target, user, params)
 	return ..()
 
+///An underpowered shotgun given to Pun Pun when the station job trait roll.
+/obj/item/gun/ballistic/shotgun/monkey
+	name = "\improper Barback's Shot"
+	desc = "A chimp-sized, single-shot and break-action shotgun with an unpractical stock."
+	icon_state = "chimp_shottie"
+	inhand_icon_state = "shotgun"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+	force = 8
+	obj_flags = CONDUCTS_ELECTRICITY
+	slot_flags = NONE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/single
+	obj_flags = UNIQUE_RENAME
+	w_class = WEIGHT_CLASS_NORMAL
+	weapon_weight = WEAPON_MEDIUM
+	semi_auto = TRUE
+	bolt_type = BOLT_TYPE_NO_BOLT
+	spread = 10
+	projectile_damage_multiplier = 0.5
+	projectile_wound_bonus = -25
+	recoil = 1
+	pin = /obj/item/firing_pin/monkey
+	pb_knockback = 1
+
 /obj/item/gun/ballistic/shotgun/musket
 	name = "\improper Donk Co. Musket"
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
@@ -355,4 +383,4 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	bolt_wording = "bolt"
 	internal_magazine = TRUE
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/musket
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/single/musket

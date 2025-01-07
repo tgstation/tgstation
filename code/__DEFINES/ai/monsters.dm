@@ -288,3 +288,27 @@
 //netguardians
 /// rocket launcher
 #define BB_NETGUARDIAN_ROCKET_ABILITY "netguardian_rocket"
+
+//deer
+///our water target
+#define BB_DEER_WATER_TARGET "deer_water_target"
+///our grass target
+#define BB_DEER_GRASS_TARGET "deer_grass_target"
+///our tree target
+#define BB_DEER_TREE_TARGET "deer_tree_target"
+///our temporary playmate
+#define BB_DEER_PLAYFRIEND "deer_playfriend"
+///our home target
+#define BB_DEER_TREEHOME "deer_home"
+///our resting duration
+#define BB_DEER_RESTING "deer_resting"
+///time till our next rest duration
+#define BB_DEER_NEXT_REST_TIMER "deer_next_rest_timer"
+
+//turtle
+///our tree's ability
+#define BB_TURTLE_TREE_ABILITY "turtle_tree_ability"
+///people we headbutt!
+#define BB_TURTLE_HEADBUTT_VICTIM "turtle_headbutt_victim"
+///flore we must smell
+#define BB_TURTLE_FLORA_TARGET "turtle_flora_target"

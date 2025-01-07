@@ -11,6 +11,7 @@
 
 	can_run_on_flags = PROGRAM_ALL
 	program_flags = PROGRAM_REQUIRES_NTNET
+	detomatix_resistance = DETOMATIX_RESIST_MAJOR
 
 	var/upper_text = ""
 	var/lower_text = ""

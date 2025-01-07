@@ -10,7 +10,6 @@ import {
   Stack,
 } from 'tgui-core/components';
 
-import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
@@ -18,7 +17,7 @@ type typePath = string;
 
 type CellularEmporiumContext = {
   abilities: Ability[];
-  can_readapt: BooleanLike;
+  can_readapt: number;
   genetic_points_count: number;
   owned_abilities: typePath[];
   absorb_count: number;
@@ -40,6 +39,10 @@ export const CellularEmporium = (props) => {
   const [searchAbilities, setSearchAbilities] = useState('');
 
   const { can_readapt, genetic_points_count } = data;
+  const readaptTracker = (can_readapt: number): string => {
+    let firstPart = 'Readapt(';
+    return firstPart.concat(can_readapt.toString(), ')');
+  };
   return (
     <Window width={900} height={480}>
       <Window.Content>
@@ -55,7 +58,6 @@ export const CellularEmporium = (props) => {
               <Stack.Item>
                 <Button
                   icon="undo"
-                  content="Readapt"
                   color="good"
                   disabled={!can_readapt}
                   tooltip={
@@ -65,7 +67,9 @@ export const CellularEmporium = (props) => {
                       : 'We cannot readapt until we absorb more DNA.'
                   }
                   onClick={() => act('readapt')}
-                />
+                >
+                  {readaptTracker(can_readapt)}
+                </Button>
               </Stack.Item>
               <Stack.Item>
                 <Input

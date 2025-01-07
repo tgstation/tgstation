@@ -710,7 +710,7 @@
 /area/shuttle/syndicate/eva)
 "bP" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/medical/syndicate_access,
+/obj/machinery/vending/medical/syndicate,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "bQ" = (

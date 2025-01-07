@@ -1,6 +1,6 @@
 ///all the employers that are syndicate
 #define FLAVOR_FACTION_SYNDICATE "syndicate"
-///all the employers that are nanotrasen
+///all the employers that are Nanotrasen
 #define FLAVOR_FACTION_NANOTRASEN "nanotrasen"
 
 /datum/antagonist/traitor
@@ -17,7 +17,7 @@
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."
 	hardcore_random_bonus = TRUE
-	stinger_sound = 'sound/ambience/antag/tatoralert.ogg'
+	stinger_sound = 'sound/music/antag/traitor/tatoralert.ogg'
 
 	///The flag of uplink that this traitor is supposed to have.
 	var/uplink_flag_given = UPLINK_TRAITORS
@@ -131,16 +131,16 @@
 /datum/antagonist/traitor/proc/traitor_objective_to_html(datum/traitor_objective/to_display)
 	var/string = "[to_display.name]"
 	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE || to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
-		string += " <a href='?src=[REF(owner)];edit_obj_tc=[REF(to_display)]'>[to_display.telecrystal_reward] TC</a>"
-		string += " <a href='?src=[REF(owner)];edit_obj_pr=[REF(to_display)]'>[to_display.progression_reward] PR</a>"
+		string += " <a href='byond://?src=[REF(owner)];edit_obj_tc=[REF(to_display)]'>[to_display.telecrystal_reward] TC</a>"
+		string += " <a href='byond://?src=[REF(owner)];edit_obj_pr=[REF(to_display)]'>[to_display.progression_reward] PR</a>"
 	else
 		string += ", [to_display.telecrystal_reward] TC"
 		string += ", [to_display.progression_reward] PR"
 	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE && !istype(to_display, /datum/traitor_objective/ultimate))
-		string += " <a href='?src=[REF(owner)];fail_objective=[REF(to_display)]'>Fail this objective</a>"
-		string += " <a href='?src=[REF(owner)];succeed_objective=[REF(to_display)]'>Succeed this objective</a>"
+		string += " <a href='byond://?src=[REF(owner)];fail_objective=[REF(to_display)]'>Fail this objective</a>"
+		string += " <a href='byond://?src=[REF(owner)];succeed_objective=[REF(to_display)]'>Succeed this objective</a>"
 	if(to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
-		string += " <a href='?src=[REF(owner)];fail_objective=[REF(to_display)]'>Dispose of this objective</a>"
+		string += " <a href='byond://?src=[REF(owner)];fail_objective=[REF(to_display)]'>Dispose of this objective</a>"
 
 	if(to_display.skipped)
 		string += " - <b>Skipped</b>"
@@ -173,7 +173,7 @@
 		result += "[traitor_objective_to_html(objective)]<br>"
 	if(!length(uplink_handler.potential_objectives))
 		result += "EMPTY<br>"
-	result += "<a href='?src=[REF(owner)];common=give_objective'>Force add objective</a><br>"
+	result += "<a href='byond://?src=[REF(owner)];common=give_objective'>Force add objective</a><br>"
 	return result
 
 /// Returns true if we're allowed to assign ourselves a new objective
@@ -366,7 +366,7 @@
 		result += span_greentext("The [special_role_text] was successful!")
 	else
 		result += span_redtext("The [special_role_text] has failed!")
-		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
+		SEND_SOUND(owner.current, 'sound/ambience/misc/ambifailure.ogg')
 
 	return result.Join("<br>")
 
@@ -408,7 +408,7 @@
 	r_hand = /obj/item/gun/energy/recharge/ebow
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
-/datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visuals_only)
 	var/obj/item/melee/energy/sword/sword = locate() in H.held_items
 	if(sword.flags_1 & INITIALIZED_1)
 		sword.attack_self()

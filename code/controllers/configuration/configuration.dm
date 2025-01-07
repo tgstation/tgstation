@@ -506,7 +506,7 @@ Example config:
 
 	if(!fexists(file(config_toml)))
 		SSjob.legacy_mode = TRUE
-		message += "jobconfig.toml not found, falling back to legacy mode (using jobs.txt). To surpress this warning, generate a jobconfig.toml by running the verb 'Generate Job Configuration' in the Server tab.\n\
+		message += "jobconfig.toml not found, falling back to legacy mode (using jobs.txt). To suppress this warning, generate a jobconfig.toml by running the verb 'Generate Job Configuration' in the Server tab.\n\
 			From there, you can then add it to the /config folder of your server to have it take effect for future rounds."
 
 		if(!fexists(file(config_txt)))

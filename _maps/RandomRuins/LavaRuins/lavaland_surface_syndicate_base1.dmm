@@ -18,19 +18,19 @@
 "aj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/medical/syndicate_access,
+/obj/machinery/vending/medical/syndicate,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
 /area/ruin/syndicate_lava_base/virology)
 "ak" = (
-/obj/machinery/vending/boozeomat/syndicate_access,
+/obj/machinery/vending/boozeomat/syndicate,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/bar)
 "al" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/medical/syndicate_access,
+/obj/machinery/vending/medical/syndicate,
 /turf/open/floor/iron/white,
 /area/ruin/syndicate_lava_base/medbay)
 "ap" = (

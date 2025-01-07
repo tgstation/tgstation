@@ -92,9 +92,9 @@
 		return FALSE
 	next_activate = world.time + (3 SECONDS) // this must happen before anything else
 	pulse()
-	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
+	audible_message(span_infoplain("[icon2html(src, hearers(src))] *beep* *beep* *beep*"), null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
-		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+		hearing_mob.playsound_local(get_turf(src), 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 
 	return TRUE
 
@@ -154,7 +154,7 @@
 	data["sensitivity"] = sensitivity
 	return data
 
-/obj/item/assembly/prox_sensor/ui_act(action, params)
+/obj/item/assembly/prox_sensor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

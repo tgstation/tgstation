@@ -11,9 +11,9 @@
 	/// How long does it take to get a dash charge back?
 	var/charge_rate = 25 SECONDS
 	/// What sound do we play on dash?
-	var/dash_sound = 'sound/magic/blink.ogg'
+	var/dash_sound = 'sound/effects/magic/blink.ogg'
 	/// What sound do we play on recharge?
-	var/recharge_sound = 'sound/magic/charge.ogg'
+	var/recharge_sound = 'sound/effects/magic/charge.ogg'
 	/// What effect does our beam use?
 	var/beam_effect = "blur"
 	/// How long does our beam last?

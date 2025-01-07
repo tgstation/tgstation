@@ -98,7 +98,7 @@
 
 	return data
 
-/obj/machinery/roulette/ui_act(action, params)
+/obj/machinery/roulette/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -127,7 +127,7 @@
 		if(isidcard(W))
 			playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
 		else
-			playsound(src, 'sound/machines/terminal_success.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/terminal/terminal_success.ogg', 50, TRUE)
 
 		if(machine_stat & MAINT || !on || locked)
 			to_chat(user, span_notice("The machine appears to be disabled."))
@@ -135,17 +135,17 @@
 
 		if(!player_card.registered_account)
 			say("You don't have a bank account!")
-			playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 			return FALSE
 
 		if(my_card)
 			if(IS_DEPARTMENTAL_CARD(player_card)) // Are they using a department ID
 				say("You cannot gamble with the department budget!")
-				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 				return FALSE
 			if(player_card.registered_account.account_balance < chosen_bet_amount) //Does the player have enough funds
 				say("You do not have the funds to play! Lower your bet or get more money.")
-				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 				return FALSE
 			if(!chosen_bet_amount || isnull(chosen_bet_type))
 				return FALSE
@@ -181,13 +181,13 @@
 
 			icon_state = "rolling" //Prepare the new icon state for rolling before hand.
 			flick("flick_up", src)
-			playsound(src, 'sound/machines/piston_raise.ogg', 70)
+			playsound(src, 'sound/machines/piston/piston_raise.ogg', 70)
 			playsound(src, 'sound/machines/chime.ogg', 50)
 
 			addtimer(CALLBACK(src, PROC_REF(play), user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
 			return TRUE
 		else
-			var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", MAX_NAME_LEN)
+			var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", max_length = MAX_NAME_LEN)
 			if(!msg)
 				return
 			name = msg
@@ -209,7 +209,7 @@
 	if(!my_card?.registered_account) // Something happened to my_card during the 0.4 seconds delay of the timed callback.
 		icon_state = "idle"
 		flick("flick_down", src)
-		playsound(src, 'sound/machines/piston_lower.ogg', 70)
+		playsound(src, 'sound/machines/piston/piston_lower.ogg', 70)
 		return
 
 	var/payout = potential_payout
@@ -222,7 +222,7 @@
 
 	var/rolled_number = rand(0, 36)
 
-	playsound(src, 'sound/machines/roulettewheel.ogg', 50)
+	playsound(src, 'sound/machines/roulette/roulettewheel.ogg', 50)
 	addtimer(CALLBACK(src, PROC_REF(finish_play), player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
 	addtimer(CALLBACK(src, PROC_REF(finish_play_animation)), 3 SECONDS)
 
@@ -231,7 +231,7 @@
 /obj/machinery/roulette/proc/finish_play_animation()
 	icon_state = "idle"
 	flick("flick_down", src)
-	playsound(src, 'sound/machines/piston_lower.ogg', 70)
+	playsound(src, 'sound/machines/piston/piston_lower.ogg', 70)
 
 ///Ran after a while to check if the player won or not.
 /obj/machinery/roulette/proc/finish_play(obj/item/card/id/player_id, bet_type, bet_amount, potential_payout, rolled_number)
@@ -249,7 +249,7 @@
 
 	if(!is_winner)
 		say("You lost! Better luck next time")
-		playsound(src, 'sound/machines/synth_no.ogg', 50)
+		playsound(src, 'sound/machines/synth/synth_no.ogg', 50)
 		return FALSE
 
 	// Prevents money generation exploits. Doesn't prevent the owner being a scrooge and running away with the money.
@@ -257,7 +257,7 @@
 	potential_payout = (account_balance >= potential_payout) ? potential_payout : account_balance
 
 	say("You have won [potential_payout] credits! Congratulations!")
-	playsound(src, 'sound/machines/synth_yes.ogg', 50)
+	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50)
 
 	dispense_prize(potential_payout)
 
@@ -362,7 +362,7 @@
 	if(my_card.registered_account.account_balance >= payout)
 		return TRUE //We got the betting amount
 	say("The bank account of [my_card.registered_account.account_holder] does not have enough funds to pay out the potential prize, contact them to fill up their account or lower your bet!")
-	playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 	return FALSE
 
 /obj/machinery/roulette/update_overlays()
@@ -456,7 +456,7 @@
 		"path" = /obj/structure/closet/supplypod/centcompod,
 		"spawn" = /obj/machinery/roulette
 	))
-	
+
 	qdel(src)
 
 #undef ROULETTE_DOZ_COL_PAYOUT

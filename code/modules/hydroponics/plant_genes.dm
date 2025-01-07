@@ -202,7 +202,7 @@
 		return
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(squash_plant))
-	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, PROC_REF(squash_plant))
+	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, PROC_REF(squash_plant_if_not_caught))
 	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, PROC_REF(squash_plant))
 
 /*
@@ -238,6 +238,10 @@
 		our_plant.reagents?.expose(things)
 
 	qdel(our_plant)
+
+/datum/plant_gene/trait/squash/proc/squash_plant_if_not_caught(datum/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
+	if(!caught)
+		squash_plant(source, hit_atom)
 
 /*
  * Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
@@ -798,7 +802,7 @@
 	icon = "face-laugh-squint"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// Sounds that play when this trait triggers
-	var/list/sounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
+	var/list/sounds = list('sound/items/sitcom_laugh/sitcomLaugh1.ogg', 'sound/items/sitcom_laugh/sitcomLaugh2.ogg', 'sound/items/sitcom_laugh/sitcomLaugh3.ogg')
 
 /datum/plant_gene/trait/plant_laughter/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -860,14 +864,28 @@
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	our_plant.throwforce = (our_seed.potency/20)
-	if (!our_plant.get_embed())
+	var/datum/embedding/plant_embed = our_plant.get_embed()
+	if (!plant_embed)
+		if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
+			our_plant.set_embed(/datum/embedding/spiky_plant)
+		else
+			our_plant.set_embed(/datum/embedding/sticky_plant)
 		return
 
+	plant_embed.ignore_throwspeed_threshold = TRUE
 	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
-		our_plant.set_embed(our_plant.get_embed().generate_with_values(ignore_throwspeed_threshold = TRUE))
 		return
 
-	our_plant.set_embed(our_plant.get_embed().generate_with_values(ignore_throwspeed_threshold = TRUE, pain_mult = 0, jostle_pain_mult = 0))
+	plant_embed.pain_mult = 0
+	plant_embed.jostle_pain_mult = 0
+
+/datum/embedding/sticky_plant
+	pain_mult = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = TRUE
+
+/datum/embedding/spiky_plant
+	ignore_throwspeed_threshold = TRUE
 
 /**
  * This trait automatically heats up the plant's chemical contents when harvested.

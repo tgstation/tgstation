@@ -3,9 +3,10 @@
 	name = "bioscrambler anomaly"
 	icon_state = "bioscrambler"
 	anomaly_core = /obj/item/assembly/signaler/anomaly/bioscrambler
-	immortal = TRUE
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	layer = ABOVE_MOB_LAYER
+	lifespan = ANOMALY_COUNTDOWN_TIMER * 2
+
 	/// Who are we moving towards?
 	var/datum/weakref/pursuit_target
 	/// Cooldown for every anomaly pulse
@@ -25,7 +26,7 @@
 		return
 
 	new /obj/effect/temp_visual/circle_wave/bioscrambler(get_turf(src))
-	playsound(src, 'sound/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
 	COOLDOWN_START(src, pulse_cooldown, pulse_delay)
 	for(var/mob/living/carbon/nearby in hearers(range, src))
 		nearby.bioscramble(name)
@@ -62,7 +63,7 @@
 	for(var/mob/living/carbon/target in GLOB.player_list)
 		if (target.z != z)
 			continue
-		if (target.status_flags & GODMODE)
+		if (HAS_TRAIT(target, TRAIT_GODMODE))
 			continue
 		if (target.stat >= UNCONSCIOUS)
 			continue // Don't just haunt a corpse
@@ -80,6 +81,10 @@
 /obj/effect/anomaly/bioscrambler/docile/update_target()
 	return
 
+/obj/effect/anomaly/bioscrambler/detonate()
+	COOLDOWN_RESET(src, pulse_cooldown)
+	anomalyEffect()
+
 /// Visual effect spawned when the bioscrambler scrambles your bio
 /obj/effect/temp_visual/circle_wave
 	icon = 'icons/effects/64x64.dmi'
@@ -89,10 +94,12 @@
 	duration = 0.5 SECONDS
 	color = COLOR_LIME
 	var/max_alpha = 255
+	///How far the effect would scale in size
+	var/amount_to_scale = 2
 
 /obj/effect/temp_visual/circle_wave/Initialize(mapload)
 	transform = matrix().Scale(0.1)
-	animate(src, transform = matrix().Scale(2), time = duration, flags = ANIMATION_PARALLEL)
+	animate(src, transform = matrix().Scale(amount_to_scale), time = duration, flags = ANIMATION_PARALLEL)
 	animate(src, alpha = max_alpha, time = duration * 0.6, flags = ANIMATION_PARALLEL)
 	animate(alpha = 0, time = duration * 0.4)
 	apply_wibbly_filters(src)
@@ -104,3 +111,7 @@
 /obj/effect/temp_visual/circle_wave/bioscrambler/light
 	max_alpha = 128
 
+/obj/effect/temp_visual/circle_wave/void_conduit
+	color = COLOR_FULL_TONER_BLACK
+	duration = 12 SECONDS
+	amount_to_scale = 12

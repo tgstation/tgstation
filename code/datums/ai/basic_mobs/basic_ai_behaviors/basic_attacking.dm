@@ -8,8 +8,6 @@
 	. = ..()
 	if(!controller.blackboard[targeting_strategy_key])
 		CRASH("No targeting strategy was supplied in the blackboard for [controller.pawn]")
-	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED))
-		return FALSE
 	//Hiding location is priority
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(QDELETED(target))
@@ -35,11 +33,8 @@
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
-	if(hiding_target) //Slap it!
-		basic_mob.melee_attack(hiding_target)
-	else
-		basic_mob.melee_attack(target)
-
+	var/atom/final_target = hiding_target || target
+	controller.ai_interact(target = final_target, combat_mode = TRUE)
 	if(terminate_after_action)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY

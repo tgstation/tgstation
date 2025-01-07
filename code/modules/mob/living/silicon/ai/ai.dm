@@ -62,7 +62,7 @@
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
-	var/mob/camera/ai_eye/eyeobj
+	var/mob/eye/camera/ai/eyeobj
 	var/sprint = 10
 	var/last_moved = 0
 	var/acceleration = TRUE
@@ -120,7 +120,7 @@
 
 	create_eye()
 
-	if(target_ai.mind)
+	if((target_ai.mind && target_ai.mind.active) || SSticker.current_state == GAME_STATE_SETTING_UP)
 		target_ai.mind.transfer_to(src)
 		if(mind.special_role)
 			to_chat(src, span_userdanger("You have been installed as an AI! "))
@@ -181,7 +181,7 @@
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
-	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED), ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_AI_ACCESS, TRAIT_HANDS_BLOCKED), INNATE_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
@@ -241,7 +241,7 @@
 /// Removes all malfunction-related abilities from the AI
 /mob/living/silicon/ai/proc/remove_malf_abilities()
 	QDEL_NULL(modules_action)
-	for(var/datum/ai_module/AM in current_modules)
+	for(var/datum/ai_module/malf/AM in current_modules)
 		for(var/datum/action/A in actions)
 			if(istype(A, initial(AM.power_type)))
 				qdel(A)
@@ -288,7 +288,7 @@
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
 	set name = "Set AI Core Display"
-	if(incapacitated())
+	if(incapacitated)
 		return
 	icon = initial(icon)
 	icon_state = "ai"
@@ -306,7 +306,7 @@
 	view_core()
 	var/ai_core_icon = show_radial_menu(src, src , iconstates, radius = 42)
 
-	if(!ai_core_icon || incapacitated())
+	if(!ai_core_icon || incapacitated)
 		return
 
 	display_icon_override = ai_core_icon
@@ -345,9 +345,15 @@
 		to_chat(usr, span_alert("[can_evac_or_fail_reason]"))
 		return
 
-	var/reason = tgui_input_text(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call")
+	var/reason = tgui_input_text(
+		src,
+		"What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)",
+		"Confirm Shuttle Call",
+		max_length = MAX_MESSAGE_LEN,
+		encode = FALSE,
+	)
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 
 	if(trim(reason))
@@ -409,7 +415,7 @@
 		return // stop
 	if(stat == DEAD)
 		return
-	if(incapacitated())
+	if(incapacitated)
 		if(battery < 50)
 			to_chat(src, span_warning("Insufficient backup power!"))
 			return
@@ -451,7 +457,7 @@
 	if(hack_software)
 		new/obj/item/malf_upgrade(get_turf(src))
 	the_mmi = mmi_type
-	the_mmi.brain = new /obj/item/organ/internal/brain(the_mmi)
+	the_mmi.brain = new /obj/item/organ/brain(the_mmi)
 	the_mmi.brain.organ_flags |= ORGAN_FROZEN
 	the_mmi.brain.name = "[real_name]'s brain"
 	the_mmi.name = "[initial(the_mmi.name)]: [real_name]"
@@ -481,14 +487,14 @@
 	if(usr != src)
 		return
 
-	if(href_list["emergencyAPC"]) //This check comes before incapacitated() because the only time it would be useful is when we have no power.
+	if(href_list["emergencyAPC"]) //This check comes before incapacitated because the only time it would be useful is when we have no power.
 		if(!apc_override)
 			to_chat(src, span_notice("APC backdoor is no longer available."))
 			return
 		apc_override.ui_interact(src)
 		return
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 
 	if (href_list["switchcamera"])
@@ -613,12 +619,12 @@
 	if (length(cameras))
 		var/obj/machinery/camera/cam = cameras[1]
 		if (cam.can_use())
-			queueAlarm("--- [alarm_type] alarm detected in [home_name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(cam)]>[cam.c_tag]</A>)", alarm_type)
+			queueAlarm("--- [alarm_type] alarm detected in [home_name]! (<A href=byond://?src=[REF(src)];switchcamera=[REF(cam)]>[cam.c_tag]</A>)", alarm_type)
 		else
 			var/first_run = FALSE
 			var/dat2 = ""
 			for (var/obj/machinery/camera/camera as anything in cameras)
-				dat2 += "[(!first_run) ? "" : " | "]<A HREF=?src=[REF(src)];switchcamera=[REF(camera)]>[camera.c_tag]</A>"
+				dat2 += "[(!first_run) ? "" : " | "]<A href=byond://?src=[REF(src)];switchcamera=[REF(camera)]>[camera.c_tag]</A>"
 				first_run = TRUE
 			queueAlarm("--- [alarm_type] alarm detected in [home_name]! ([dat2])", alarm_type)
 	else
@@ -638,7 +644,7 @@
 	ai_tracking_tool.reset_tracking()
 	var/cameralist[0]
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 
 	var/mob/living/silicon/ai/U = usr
@@ -680,7 +686,7 @@
 	set desc = "Change the default hologram available to AI to something else."
 	set category = "AI Commands"
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 	var/input
 	switch(tgui_input_list(usr, "Would you like to select a hologram based on a custom character, an animal, or switch to a unique avatar?", "Customize", list("Custom Character","Unique","Animal")))
@@ -778,12 +784,26 @@
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_malf_core"
 
+/datum/action/innate/core_return/Grant(mob/new_owner)
+	. = ..()
+	RegisterSignal(new_owner, COMSIG_SILICON_AI_VACATE_APC, PROC_REF(returned_to_core))
+
+/datum/action/innate/core_return/proc/returned_to_core(datum/source)
+	SIGNAL_HANDLER
+
+	Remove(source)
+	UnregisterSignal(source, COMSIG_SILICON_AI_VACATE_APC)
+
 /datum/action/innate/core_return/Activate()
 	var/obj/machinery/power/apc/apc = owner.loc
 	if(!istype(apc))
 		to_chat(owner, span_notice("You are already in your Main Core."))
 		return
-	apc.malfvacate()
+	if(SEND_SIGNAL(owner, COMSIG_SILICON_AI_CORE_STATUS) & COMPONENT_CORE_ALL_GOOD)
+		apc.malfvacate()
+	else
+		to_chat(owner, span_danger("Linked core not detected!"))
+		return
 	qdel(src)
 
 /mob/living/silicon/ai/proc/toggle_camera_light()
@@ -830,7 +850,7 @@
 	set desc = "Allows you to change settings of your radio."
 	set category = "AI Commands"
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 
 	to_chat(src, "Accessing Subspace Transceiver control...")
@@ -846,7 +866,7 @@
 	set desc = "Modify the default radio setting for your automatic announcements."
 	set category = "AI Commands"
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 	set_autosay()
 
@@ -899,7 +919,7 @@
 	var/list/stored_name = list(null)
 	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, FALSE)
 	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
-	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
+	var/hrefpart = "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
 	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely
@@ -1011,16 +1031,16 @@
 
 	if(!istype(apc) || QDELETED(apc) || apc.machine_stat & BROKEN)
 		to_chat(src, span_danger("Hack aborted. The designated APC no longer exists on the power network."))
-		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
+		playsound(get_turf(src), 'sound/machines/buzz/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
 		return
 	if(apc.aidisabled)
 		to_chat(src, span_danger("Hack aborted. [apc] is no longer responding to our systems."))
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
+		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
 		return
 
 	malf_picker.processing_time += 10
 	var/area/apcarea = apc.area
-	var/datum/ai_module/destructive/nuke_station/doom_n_boom = locate(/datum/ai_module/destructive/nuke_station) in malf_picker.possible_modules["Destructive Modules"]
+	var/datum/ai_module/malf/destructive/nuke_station/doom_n_boom = locate(/datum/ai_module/malf/destructive/nuke_station) in malf_picker.possible_modules["Destructive Modules"]
 	if(doom_n_boom && (is_type_in_list (apcarea, doom_n_boom.discount_areas)) && !(is_type_in_list (apcarea, doom_n_boom.hacked_command_areas)))
 		doom_n_boom.hacked_command_areas += apcarea
 		doom_n_boom.cost = max(50, 130 - (length(doom_n_boom.hacked_command_areas) * 20))
@@ -1046,7 +1066,7 @@
 	set category = "AI Commands"
 	set name = "Deploy to Shell"
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 	if(control_disabled)
 		to_chat(src, span_warning("Wireless networking module is offline."))
@@ -1120,8 +1140,8 @@
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
 	. = ..()
 
-/mob/living/silicon/ai/proc/camera_visibility(mob/camera/ai_eye/moved_eye)
-	GLOB.cameranet.visibility(moved_eye, client, all_eyes, TRUE)
+/mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
+	GLOB.cameranet.visibility(moved_eye)
 
 /mob/living/silicon/ai/forceMove(atom/destination)
 	. = ..()
@@ -1172,7 +1192,7 @@
 /mob/living/silicon/ai/get_exp_list(minutes)
 	. = ..()
 
-	var/datum/job/ai/ai_job_ref = SSjob.GetJobType(/datum/job/ai)
+	var/datum/job/ai/ai_job_ref = SSjob.get_job_type(/datum/job/ai)
 
 	.[ai_job_ref.title] = minutes
 

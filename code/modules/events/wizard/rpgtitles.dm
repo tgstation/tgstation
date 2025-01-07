@@ -38,7 +38,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 /datum/rpgtitle_controller/proc/on_crewmember_join(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
 
-	var/datum/job/job = SSjob.GetJob(rank)
+	var/datum/job/job = SSjob.get_job(rank)
 
 	//we must prepare for the mother of all strings
 	new_crewmember.maptext_height = max(new_crewmember.maptext_height, 32)

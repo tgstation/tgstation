@@ -116,7 +116,7 @@
 	biological_sample.sample_layers = petri.sample.sample_layers
 	biological_sample.sample_color = petri.sample.sample_color
 	balloon_alert(user, "added sample")
-	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
 	update_appearance()
 	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, PROC_REF(on_sample_growth_completed))
 	return ITEM_INTERACT_SUCCESS

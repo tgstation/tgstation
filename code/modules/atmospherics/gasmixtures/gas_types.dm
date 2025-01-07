@@ -85,7 +85,7 @@
 	rarity = 1000
 	purchaseable = TRUE
 	base_value = 0.1
-	desc = "A very common gas that used to pad artifical atmospheres to habitable pressure."
+	desc = "A very common gas that used to pad artificial atmospheres to habitable pressure."
 	primary_color = "#ffff00"
 
 /datum/gas/carbon_dioxide //what the fuck is this?
@@ -133,7 +133,7 @@
 	fusion_power = 10
 	rarity = 50
 	base_value = 2.5
-	desc = "The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occuring."
+	desc = "The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occurring."
 	primary_color = COLOR_TEAL
 
 /datum/gas/nitrous_oxide
@@ -173,7 +173,7 @@
 	fusion_power = 5
 	rarity = 300
 	base_value = 2.5
-	desc = "A highly flammable and radioctive gas."
+	desc = "A highly flammable and radioactive gas."
 	primary_color = "#32cd32"
 
 /datum/gas/bz
@@ -279,7 +279,7 @@
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 300
 	base_value = 4
-	desc = "A potent fire supressant. Removes oxygen from high temperature fires and cools down the area"
+	desc = "A potent fire suppressant. Removes oxygen from high temperature fires and cools down the area"
 	primary_color = COLOR_PURPLE
 
 /datum/gas/helium
@@ -314,7 +314,7 @@
 	appearance_flags = TILE_BOUND
 	vis_flags = NONE
 	// The visual offset we are "on".
-	// Can't use the tradtional loc because we are stored in nullspace, and we can't set plane before init because of the helping that SET_PLANE_EXPLICIT does IN init
+	// Can't use the traditional loc because we are stored in nullspace, and we can't set plane before init because of the helping that SET_PLANE_EXPLICIT does IN init
 	var/plane_offset = 0
 
 /obj/effect/overlay/gas/New(state, alph, offset)

@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes:
+  - code_imp: "modlink scryers use the nt frequency define rather than just plain text doing it themselves"

@@ -4,12 +4,12 @@
 /datum/quirk/spacer_born
 	name = "Spacer"
 	desc = "You were born in space, and have never known the comfort of a planet's gravity. Your body has adapted to this. \
-		You are more comfortable in zero and artifical gravity and are more resistant to the effects of space, \
+		You are more comfortable in zero and artificial gravity and are more resistant to the effects of space, \
 		but travelling to a planet's surface for an extended period of time will make you feel sick."
 	gain_text = span_notice("You feel at home in space.")
 	lose_text = span_danger("You feel homesick.")
 	icon = FA_ICON_USER_ASTRONAUT
-	value = 7
+	value = 5
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	medical_record_text = "Patient is well-adapted to non-terrestrial environments."
 	mail_goodies = list(
@@ -43,7 +43,7 @@
 	check_z(quirk_holder, skip_timers = TRUE)
 
 	// drift slightly faster through zero G
-	quirk_holder.inertia_move_delay *= 0.8
+	quirk_holder.inertia_move_multiplier *= 0.8
 
 	var/mob/living/carbon/human/human_quirker = quirk_holder
 	human_quirker.set_mob_height(modded_height)
@@ -73,7 +73,7 @@
 	if(QDELING(quirk_holder))
 		return
 
-	quirk_holder.inertia_move_delay /= 0.8
+	quirk_holder.inertia_move_multiplier /= 0.8
 	quirk_holder.clear_mood_event("spacer")
 	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/spacer)
 	quirk_holder.remove_status_effect(/datum/status_effect/spacer)

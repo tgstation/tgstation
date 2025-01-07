@@ -1,3 +1,9 @@
+// Ethereals:
+/// How long it takes an ethereal to drain or charge APCs. Also used as a spam limiter.
+#define ETHEREAL_APC_DRAIN_TIME (3 SECONDS)
+/// How much power ethereals gain/drain from APCs.
+#define ETHEREAL_APC_POWER_GAIN (10 * STANDARD_CELL_CHARGE)
+
 /obj/machinery/power/apc/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(!can_interact(user))
@@ -7,7 +13,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/apc_interactor = user
-	var/obj/item/organ/internal/stomach/ethereal/maybe_ethereal_stomach = apc_interactor.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/ethereal/maybe_ethereal_stomach = apc_interactor.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!istype(maybe_ethereal_stomach))
 		togglelock(user)
 	else
@@ -21,14 +27,14 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/ethereal = user
-	var/obj/item/organ/internal/stomach/maybe_stomach = ethereal.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/maybe_stomach = ethereal.get_organ_slot(ORGAN_SLOT_STOMACH)
 	// how long we wanna wait before we show the balloon alert. don't want it to be very long in case the ethereal wants to opt-out of doing that action, just long enough to where it doesn't collide with previously queued balloon alerts.
 	var/alert_timer_duration = 0.75 SECONDS
 
-	if(!istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
+	if(!istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
 		return
-	var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
-	var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
+	var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - ETHEREAL_APC_POWER_GAIN
+	var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
 	var/obj/item/stock_parts/power_store/stomach_cell = stomach.cell
 	if(!((stomach?.drain_time < world.time) && LAZYACCESS(modifiers, RIGHT_CLICK)))
 		return
@@ -39,33 +45,33 @@
 		if(stomach_cell.charge() > charge_limit)
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "charge is full!"), alert_timer_duration)
 			return
-		stomach.drain_time = world.time + APC_DRAIN_TIME
+		stomach.drain_time = world.time + ETHEREAL_APC_DRAIN_TIME
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "draining power"), alert_timer_duration)
-		while(do_after(user, APC_DRAIN_TIME, target = src))
+		while(do_after(user, ETHEREAL_APC_DRAIN_TIME, target = src))
 			if(cell.charge <= (cell.maxcharge / 2) || (stomach_cell.charge() > charge_limit))
 				return
 			balloon_alert(ethereal, "received charge")
-			stomach.adjust_charge(APC_POWER_GAIN)
-			cell.use(APC_POWER_GAIN)
+			stomach.adjust_charge(ETHEREAL_APC_POWER_GAIN)
+			cell.use(ETHEREAL_APC_POWER_GAIN)
 		return
 
-	if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
+	if(cell.charge >= cell.maxcharge - ETHEREAL_APC_POWER_GAIN)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "APC can't receive more power!"), alert_timer_duration)
 		return
-	if(stomach_cell.charge() < APC_POWER_GAIN)
+	if(stomach_cell.charge() < ETHEREAL_APC_POWER_GAIN)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "charge is too low!"), alert_timer_duration)
 		return
-	stomach.drain_time = world.time + APC_DRAIN_TIME
+	stomach.drain_time = world.time + ETHEREAL_APC_DRAIN_TIME
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), ethereal, "transfering power"), alert_timer_duration)
-	if(!do_after(user, APC_DRAIN_TIME, target = src))
+	if(!do_after(user, ETHEREAL_APC_DRAIN_TIME, target = src))
 		return
-	if((cell.charge >= (cell.maxcharge - APC_POWER_GAIN)) || (stomach_cell.charge() < APC_POWER_GAIN))
+	if((cell.charge >= (cell.maxcharge - ETHEREAL_APC_POWER_GAIN)) || (stomach_cell.charge() < ETHEREAL_APC_POWER_GAIN))
 		balloon_alert(ethereal, "can't transfer power!")
 		return
 	if(istype(stomach))
-		while(do_after(user, APC_DRAIN_TIME, target = src))
+		while(do_after(user, ETHEREAL_APC_DRAIN_TIME, target = src))
 			balloon_alert(ethereal, "transferred power")
-			cell.give(-stomach.adjust_charge(-APC_POWER_GAIN))
+			cell.give(-stomach.adjust_charge(-ETHEREAL_APC_POWER_GAIN))
 	else
 		balloon_alert(ethereal, "can't transfer power!")
 
@@ -125,3 +131,6 @@
 		return TRUE
 	else
 		return FALSE
+
+#undef ETHEREAL_APC_DRAIN_TIME
+#undef ETHEREAL_APC_POWER_GAIN

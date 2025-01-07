@@ -29,7 +29,6 @@
 	desc = "Leap towards the enemy!"
 	cooldown_time = 7 SECONDS
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 	///telegraph time before jumping
 	var/wind_up_time = 2 SECONDS
 	///intervals between each of our attacks
@@ -53,8 +52,8 @@
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/proc/launch_towards_target(atom/target)
 	new /obj/effect/temp_visual/mook_dust(get_turf(owner))
-	playsound(get_turf(owner), 'sound/weapons/thudswoosh.ogg', 25, TRUE)
-	playsound(owner, 'sound/voice/mook_leap_yell.ogg', 100, TRUE)
+	playsound(get_turf(owner), 'sound/items/weapons/thudswoosh.ogg', 25, TRUE)
+	playsound(owner, 'sound/mobs/non-humanoids/mook/mook_leap_yell.ogg', 100, TRUE)
 	var/turf/target_turf = get_turf(target)
 
 	if(!target_turf.is_blocked_turf())
@@ -92,7 +91,6 @@
 	desc = "Soar high in the air!"
 	cooldown_time = 14 SECONDS
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/Activate(atom/target)
@@ -117,7 +115,7 @@
 		var/mob/living/basic/mining/mook/mook_owner = owner
 		mook_owner.change_combatant_state(state = MOOK_ATTACK_ACTIVE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(owner))
-	playsound(get_turf(owner), 'sound/weapons/thudswoosh.ogg', 50, TRUE)
+	playsound(get_turf(owner), 'sound/items/weapons/thudswoosh.ogg', 50, TRUE)
 	animate(owner, pixel_y = owner.base_pixel_y + 146, time = 0.5 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(land_on_turf), target), 0.5 SECONDS)
 

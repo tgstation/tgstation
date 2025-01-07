@@ -202,6 +202,11 @@ SUBSYSTEM_DEF(throwing)
 	if(!thrownthing)
 		return
 	thrownthing.throwing = null
+	var/drift_force = speed
+	if (isitem(thrownthing))
+		var/obj/item/thrownitem = thrownthing
+		drift_force *= WEIGHT_TO_NEWTONS(thrownitem.w_class)
+
 	if (!hit)
 		for (var/atom/movable/obstacle as anything in get_turf(thrownthing)) //looking for our target on the turf we land on.
 			if (obstacle == target)
@@ -214,9 +219,9 @@ SUBSYSTEM_DEF(throwing)
 			thrownthing.throw_impact(get_turf(thrownthing), src)  // we haven't hit something yet and we still must, let's hit the ground.
 			if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
 				return //deletion should already be handled by on_thrownthing_qdel()
-			thrownthing.newtonian_move(init_dir)
+			thrownthing.newtonian_move(delta_to_angle(dist_x, dist_y), drift_force = drift_force)
 	else
-		thrownthing.newtonian_move(init_dir)
+		thrownthing.newtonian_move(delta_to_angle(dist_x, dist_y), drift_force = drift_force)
 
 	if(target)
 		thrownthing.throw_impact(target, src)

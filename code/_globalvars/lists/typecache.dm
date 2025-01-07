@@ -1,5 +1,5 @@
 //please store common type caches here.
-//type caches should only be stored here if used in mutiple places or likely to be used in mutiple places.
+//type caches should only be stored here if used in multiple places or likely to be used in multiple places.
 
 //Note: typecache can only replace istype if you know for sure the thing is at least a datum.
 

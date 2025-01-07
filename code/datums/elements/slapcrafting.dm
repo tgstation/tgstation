@@ -26,7 +26,7 @@
 		return //Don't do anything, it just shouldn't be used in crafting.
 
 	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(attempt_slapcraft))
-	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(get_examine_info))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE_TAGS, PROC_REF(get_examine_info))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(get_examine_more_info))
 	RegisterSignal(target, COMSIG_TOPIC, PROC_REF(topic_handler))
 
@@ -126,7 +126,7 @@
 		already_used_names += initial(result.name)
 		string_results += list("\a [initial(result.name)]")
 
-	examine_list += span_notice("You think [source] could be used to make [english_list(string_results)]! Examine again to look at the details...")
+	examine_list["crafting component"] = "You think [source] could be used to make [english_list(string_results)]! Examine again to look at the details..."
 
 /// Alerts any examiners to the details of the recipe.
 /datum/element/slapcrafting/proc/get_examine_more_info(atom/source, mob/user, list/examine_list)
@@ -134,7 +134,7 @@
 
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
 		var/atom/result = initial(recipe.result)
-		examine_list += "<a href='?src=[REF(source)];check_recipe=[REF(recipe)]'>See Recipe For [initial(result.name)]</a>"
+		examine_list += "<a href='byond://?src=[REF(source)];check_recipe=[REF(recipe)]'>See Recipe For [initial(result.name)]</a>"
 
 /datum/element/slapcrafting/proc/topic_handler(atom/source, user, href_list)
 	SIGNAL_HANDLER
@@ -180,7 +180,7 @@
 	// If we did find ingredients then add them onto the list.
 	if(length(string_ingredient_list))
 		to_chat(user, span_boldnotice("Extra Ingredients:"))
-		to_chat(user, examine_block(span_notice(string_ingredient_list)))
+		to_chat(user, boxed_message(span_notice(string_ingredient_list)))
 
 	var/list/tool_list = ""
 
@@ -194,7 +194,7 @@
 
 	if(length(tool_list))
 		to_chat(user, span_boldnotice("Required Tools:"))
-		to_chat(user, examine_block(span_notice(tool_list)))
+		to_chat(user, boxed_message(span_notice(tool_list)))
 
 	qdel(cur_recipe)
 

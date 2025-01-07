@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 	if(custom_threat == "Yes")
 		declaring_war = TRUE
-		war_declaration = tgui_input_text(user, "Insert your custom declaration", "Declaration", multiline = TRUE, encode = FALSE)
+		war_declaration = tgui_input_text(user, "Insert your custom declaration", "Declaration", max_length = MAX_MESSAGE_LEN, multiline = TRUE, encode = FALSE)
 		declaring_war = FALSE
 
 	if(!check_allowed(user) || !war_declaration)
@@ -63,7 +63,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	var/custom_threat = tgui_alert(usr, "Do you want to customize the declaration?", "Customize?", list("Yes", "No"))
 
 	if(custom_threat == "Yes")
-		war_declaration = tgui_input_text(usr, "Insert your custom declaration", "Declaration", multiline = TRUE, encode = FALSE)
+		war_declaration = tgui_input_text(usr, "Insert your custom declaration", "Declaration", max_length = MAX_MESSAGE_LEN, multiline = TRUE, encode = FALSE)
 
 	if(!war_declaration)
 		tgui_alert(usr, "Invalid war declaration.", "Poor Choice of Words")
@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	priority_announce(
 		text = memo,
 		title = "Declaration of War",
-		sound = 'sound/machines/alarm.ogg',
+		sound = 'sound/announcer/alarm/nuke_alarm.ogg',
 		has_important_message = TRUE,
 		sender_override = "Nuclear Operative Outpost",
 		color_override = "red",
@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	priority_announce(
 		text = memo,
 		title = "Declaration of War",
-		sound = 'sound/machines/alarm.ogg',
+		sound = 'sound/announcer/alarm/nuke_alarm.ogg',
 		has_important_message = TRUE,
 		sender_override = "Nuclear Operative Outpost",
 		color_override = "red",

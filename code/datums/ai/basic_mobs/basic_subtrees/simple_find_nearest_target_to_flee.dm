@@ -21,4 +21,5 @@
 	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list/nearest, BB_BASIC_MOB_RETALIATE_LIST, target_key, targeting_key, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 
 /datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/from_flee_key
+	target_key = BB_BASIC_MOB_FLEE_TARGET
 	targeting_key = BB_FLEE_TARGETING_STRATEGY

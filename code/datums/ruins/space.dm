@@ -49,7 +49,7 @@
 	id = "asteroid6"
 	suffix = "asteroid6.dmm"
 	name = "Space-Ruin Asteroid 6"
-	description = "This asteroid has brittle bone disease, so it is fortunate asteroids dont have bones."
+	description = "This asteroid has brittle bone disease, so it is fortunate asteroids don't have bones."
 
 /datum/map_template/ruin/space/deep_storage
 	id = "deep-storage"
@@ -70,7 +70,7 @@
 	suffix = "derelict_construction.dmm"
 	name = "Space-Ruin Derelict Construction"
 	description = "Construction supplies are in high demand due to non-trivial damage routinely sustained by most space stations in this sector. \
-	Space pirates who dont attempt to rob corporate research stations with only 3 collaborators live long enough to sell captured construction \
+	Space pirates who don't attempt to rob corporate research stations with only 3 collaborators live long enough to sell captured construction \
 	equipment back to the highest bidder."
 
 /datum/map_template/ruin/space/derelict_sulaco
@@ -181,7 +181,7 @@
 	id = "spacehotel"
 	suffix = "spacehotel.dmm"
 	name = "Space-Ruin The Twin-Nexus Hotel"
-	description = "An interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
+	description = "An interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residential staff will not murder them in their sleep. Probably."
 
 /datum/map_template/ruin/space/turreted_outpost
 	id = "turreted-outpost"
@@ -470,7 +470,7 @@
 	id = "Space_phonebooth"
 	suffix = "phonebooth.dmm"
 	name = "Space-Ruin Phonebooth"
-	description = "A venture by nanotrasen to help popularize the use of holopads."
+	description = "A venture by Nanotrasen to help popularize the use of holopads."
 
 /datum/map_template/ruin/space/the_outlet
 	id = "the_outlet"
@@ -500,7 +500,7 @@
 	id = "garbagetruck3"
 	suffix = "garbagetruck3.dmm"
 	name = "Space-Ruin Decommissioned Garbage Truck NX3"
-	description = "An NX-760 interstellar transport barge. At the end of their life cycle, they are often filled with trash and launched into unexplored space to become someone else's problem. This one is full of industrial garbage, and a russian drug den."
+	description = "An NX-760 interstellar transport barge. At the end of their life cycle, they are often filled with trash and launched into unexplored space to become someone else's problem. This one is full of industrial garbage, and a Russian drug den."
 
 /datum/map_template/ruin/space/garbagetruck4
 	id = "garbagetruck4"
@@ -513,3 +513,25 @@
 	suffix = "hauntedtradingpost.dmm"
 	name = "Space-Ruin Donk Co. Interstellar Trading Post 6016"
 	description = "A small station for trading ships to dock at. It's been abandoned for some time, but its security systems have kept looters away. Rumored to be haunted."
+
+/datum/map_template/ruin/space/commsbuoy
+	id = "commsbuoy"
+	suffix = "commsbuoy_lowtech.dmm"
+	name = "Kosmokomm Communications Buoy"
+	description = "One of the SSC's many Comms Buoys, acting as a broadcaster, receiver and relay for interstellar communications. Due to the \
+	shoddy tech available, it does not enable local communications."
+
+/datum/map_template/ruin/space/commsbuoy_pirate
+	id = "commsbuoy_pirate"
+	suffix = "commsbuoy_pirate.dmm"
+	name = "Pirated Communications Buoy"
+	description = "A Comms Buoy satellite that has been hijacked by local criminal elements, acting as a broadcaster, receiver and relay for \
+	evil interstellar communications. Due to the shoddy tech available, it does not enable local communications."
+
+/datum/map_template/ruin/space/commsbuoy_nt
+	id = "commsbuoy_nt"
+	suffix = "commsbuoy_nt.dmm"
+	name = "Nanotrasen Model-7 Communications Buoy"
+	description = "One of Nanotrasen's highly advanced Communication Buoys. Besides acting as a broadcaster, receiver and relay for interstellar \
+	communications, the satellite also includes a Local-Network array and two multi-function satellite dishes, providing the local sector with \
+	connectivity - as long as you have your Employee ID handy. Though, this one has been reported to have some recent malfunctions."

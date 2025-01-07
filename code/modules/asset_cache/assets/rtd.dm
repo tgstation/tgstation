@@ -2,7 +2,7 @@
 	name = "rtd"
 
 /datum/asset/spritesheet/rtd/create_spritesheets()
-	//some tiles may share the same icon but have diffrent properties to animate that icon
+	//some tiles may share the same icon but have different properties to animate that icon
 	//so we keep track of what icons we registered
 	var/list/registered = list()
 

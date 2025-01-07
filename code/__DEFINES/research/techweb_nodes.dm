@@ -14,7 +14,7 @@
 #define TECHWEB_NODE_BEAM_WEAPONS "beam_weapons"
 #define TECHWEB_NODE_BIO_SCAN "bio_scan"
 #define TECHWEB_NODE_BITRUNNING "bitrunning"
-#define TECHWEB_NODE_BLUESPACE "bluespace"
+#define TECHWEB_NODE_MECH_EQUIP_BLUESPACE "mech_equip_bluespace"
 #define TECHWEB_NODE_BLUESPACE_THEORY "bluespace_theory"
 #define TECHWEB_NODE_BLUESPACE_TRAVEL "bluespace_travel"
 #define TECHWEB_NODE_BORG_ENGI "borg_engi"

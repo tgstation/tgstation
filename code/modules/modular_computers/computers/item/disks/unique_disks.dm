@@ -23,7 +23,6 @@
 		/datum/computer_file/program/supermatter_monitor,
 		/datum/computer_file/program/newscaster,
 		/datum/computer_file/program/secureye,
-		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 	)
 	potential_programs += subtypesof(/datum/computer_file/program/maintenance) - /datum/computer_file/program/maintenance/theme

@@ -56,7 +56,10 @@ end
 local function signal_handler(data, ...)
 	local output = 0
 	for func, _ in data.functions do
-		output = bit32.bor(output, func(...))
+		local result = func(...)
+		if type(result) == "number" then
+			output = bit32.bor(output, math.floor(result))
+		end
 	end
 	return output
 end

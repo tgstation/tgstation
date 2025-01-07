@@ -39,7 +39,7 @@
 	name = "Component ( NULL ENTRY )"
 	desc = "A component that goes into an integrated circuit."
 	build_type = COMPONENT_PRINTER
-	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_COMPONENTS
@@ -346,6 +346,16 @@
 	name = "NTNet Transmitter"
 	id = "comp_ntnet_send"
 	build_path = /obj/item/circuit_component/ntnet_send
+
+/datum/design/component/nfc_send
+	name = "NFC Transmitter"
+	id = "comp_nfc_send"
+	build_path = /obj/item/circuit_component/nfc_send
+
+/datum/design/component/nfc_receive
+	name = "NFC Receiver"
+	id = "comp_nfc_receive"
+	build_path = /obj/item/circuit_component/nfc_receive
 
 /datum/design/component/list_literal/ntnet_send
 	name = "NTNet Transmitter List Literal"

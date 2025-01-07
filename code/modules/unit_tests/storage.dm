@@ -20,3 +20,24 @@
 
 	small_thing.update_weight_class(WEIGHT_CLASS_BULKY)
 	TEST_ASSERT_NOTEQUAL(small_thing.loc, storage_item, "A small item changed back into bulky size should have ejected from the backpack")
+
+/datum/unit_test/common_item_inserting
+
+/datum/unit_test/common_item_inserting/Run()
+	var/obj/item/storage/backpack/bag = allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left)
+	var/mob/living/carbon/human/consistent/dummy = allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left)
+	bag.atom_storage.max_slots = INFINITY
+	bag.atom_storage.max_total_storage = INFINITY
+
+	var/list/common_noncombat_insertion_items = list(
+		/obj/item/reagent_containers/cup/rag,
+		/obj/item/soap,
+		/obj/item/card/emag,
+		/obj/item/detective_scanner,
+	)
+
+	dummy.set_combat_mode(TRUE)
+	for(var/item_type in common_noncombat_insertion_items)
+		var/obj/item/item = allocate(item_type, run_loc_floor_bottom_left)
+		item.melee_attack_chain(dummy, bag)
+		TEST_ASSERT_EQUAL(item.loc, bag, "[item_type] was unable to be inserted into a backpack on click while off combat mode")

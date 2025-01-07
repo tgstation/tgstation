@@ -2,7 +2,7 @@
 	name = "Command"
 	icon_state = "command"
 	ambientsounds = list(
-		'sound/ambience/signal.ogg',
+		'sound/ambience/misc/signal.ogg',
 		)
 	airlock_wires = /datum/wires/airlock/command
 	sound_environment = SOUND_AREA_STANDARD_STATION

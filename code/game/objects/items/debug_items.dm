@@ -34,6 +34,7 @@
 	icon = 'icons/obj/weapons/club.dmi'
 	icon_state = "hypertool"
 	inhand_icon_state = "hypertool"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	toolspeed = 0.1
@@ -46,7 +47,7 @@
 /obj/item/debug/omnitool/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -168,7 +169,7 @@
 			return
 		if(!user.client.holder) //safety if the admin readmined to save their ass lol.
 			to_chat(user, span_reallybig("You shouldn't have done that..."))
-			playsound(src, 'sound/voice/borg_deathsound.ogg')
+			playsound(src, 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg')
 			sleep(3 SECONDS)
 			living_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			living_user.gib(DROP_ALL_REMAINS)

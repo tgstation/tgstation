@@ -53,7 +53,7 @@
 	to_wear.suit = null
 	to_wear.suit_store = null
 
-	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
+	avatar.equipOutfit(to_wear, visuals_only = TRUE)
 
 	var/obj/item/clothing/under/jumpsuit = avatar.w_uniform
 	if(istype(jumpsuit))
@@ -116,9 +116,13 @@
 			path = pick(generated_domain.mob_modules)
 
 		var/datum/modular_mob_segment/segment = new path()
-		segment.spawn_mobs(get_turf(landmark))
-		mutation_candidate_refs += segment.spawned_mob_refs
+
+		var/list/mob_spawns = landmark.spawn_mobs(get_turf(landmark), segment)
+		if(length(mob_spawns))
+			mutation_candidate_refs += mob_spawns
+
 		qdel(landmark)
+		qdel(segment)
 
 	return TRUE
 
@@ -174,7 +178,7 @@
 	if(failed)
 		to_chat(neo, span_warning("One of your disks failed to load. Check for duplicate or inactive disks."))
 
-	var/obj/item/organ/internal/brain/neo_brain = neo.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/neo_brain = neo.get_organ_slot(ORGAN_SLOT_BRAIN)
 	for(var/obj/item/skillchip/skill_chip as anything in neo_brain?.skillchips)
 		if(!skill_chip.active)
 			continue

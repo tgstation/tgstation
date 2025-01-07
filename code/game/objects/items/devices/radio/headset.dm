@@ -11,7 +11,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	RADIO_CHANNEL_SUPPLY = RADIO_TOKEN_SUPPLY,
 	RADIO_CHANNEL_SERVICE = RADIO_TOKEN_SERVICE,
 	MODE_BINARY = MODE_TOKEN_BINARY,
-	RADIO_CHANNEL_AI_PRIVATE = RADIO_TOKEN_AI_PRIVATE
+	RADIO_CHANNEL_AI_PRIVATE = RADIO_TOKEN_AI_PRIVATE,
+	RADIO_CHANNEL_ENTERTAINMENT = RADIO_TOKEN_ENTERTAINMENT,
 ))
 
 /obj/item/radio/headset
@@ -49,7 +50,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(item_flags & IN_INVENTORY && loc == user)
 		// construction of frequency description
 		var/list/avail_chans = list("Use [RADIO_KEY_COMMON] for the currently tuned frequency")
-		if(translate_binary)
+		if(special_channels & RADIO_SPECIAL_BINARY)
 			avail_chans += "use [MODE_TOKEN_BINARY] for [MODE_BINARY]"
 		if(length(channels))
 			for(var/i in 1 to length(channels))
@@ -69,6 +70,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(ispath(keyslot2))
 		keyslot2 = new keyslot2()
 	set_listening(TRUE)
+	set_broadcasting(TRUE)
 	recalculateChannels()
 	possibly_deactivate_in_loc()
 
@@ -113,6 +115,22 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		return
 	for(var/language in language_list)
 		user.remove_language(language, language_flags = UNDERSTOOD_LANGUAGE, source = LANGUAGE_RADIOKEY)
+
+// Headsets do not become hearing sensitive as broadcasting instead controls their talk_into capabilities
+/obj/item/radio/headset/set_broadcasting(new_broadcasting, actual_setting = TRUE)
+	broadcasting = new_broadcasting
+	if(actual_setting)
+		should_be_broadcasting = broadcasting
+
+	if (perform_update_icon && !isnull(overlay_mic_idle))
+		update_icon()
+	else if (!perform_update_icon)
+		should_update_icon = TRUE
+
+/obj/item/radio/headset/talk_into_impl(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
+	if (!broadcasting)
+		return
+	return ..()
 
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 
@@ -202,6 +220,13 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "srv_headset"
 	worn_icon_state = "srv_headset"
 	keyslot = /obj/item/encryptionkey/headset_srvmed
+
+/obj/item/radio/headset/headset_srvent
+	name = "press headset"
+	desc = "A headset allowing the wearer to communicate with service and broadcast to entertainment channel."
+	icon_state = "srvent_headset"
+	worn_icon_state = "srv_headset"
+	keyslot = /obj/item/encryptionkey/headset_srvent
 
 /obj/item/radio/headset/headset_com
 	name = "command radio headset"
@@ -430,12 +455,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 			if(!(ch_name in src.channels))
 				LAZYSET(channels, ch_name, keyslot2.channels[ch_name])
 
-		if(keyslot2.translate_binary)
-			translate_binary = TRUE
-		if(keyslot2.syndie)
-			syndie = TRUE
-		if(keyslot2.independent)
-			independent = TRUE
+		special_channels |= keyslot2.special_channels
 
 		for(var/ch_name in channels)
 			secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
@@ -459,7 +479,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		grant_headset_languages(mob_loc)
 
 /obj/item/radio/headset/click_alt(mob/living/user)
-	if (!command)
+	if(!istype(user) || !command)
 		return CLICK_ACTION_BLOCKING
 	use_command = !use_command
 	to_chat(user, span_notice("You toggle high-volume mode [use_command ? "on" : "off"]."))

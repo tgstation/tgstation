@@ -55,10 +55,16 @@
 		qdel(src)
 		return
 
+	if(SSmapping.level_trait(z, ZTRAIT_NOPHASE) || SSmapping.level_trait(destination.z, ZTRAIT_NOPHASE))
+		qdel(src)
+		return
+
 	//get it?
 	var/obj/machinery/door/doorstination = (inverted ? !IS_HERETIC_OR_MONSTER(teleportee) : IS_HERETIC_OR_MONSTER(teleportee)) ? destination.our_airlock : find_random_airlock()
 	if(!do_teleport(teleportee, get_turf(doorstination), channel = TELEPORT_CHANNEL_MAGIC))
 		return
+
+	teleportee.client?.move_delay = 0 //make moving through smoother
 
 	if(!IS_HERETIC_OR_MONSTER(teleportee))
 		teleportee.apply_damage(20, BRUTE) //so they dont roll it like a jackpot machine to see if they can land in the armory
@@ -73,6 +79,9 @@
 		if(airlock.z != z)
 			continue
 		if(airlock.loc == loc)
+			continue
+		var/area/airlock_area = get_area(airlock)
+		if(airlock_area.area_flags & NOTELEPORT)
 			continue
 		possible_destinations += airlock
 	return pick(possible_destinations)
@@ -102,7 +111,7 @@
 	if(!IS_HERETIC_OR_MONSTER(user))
 		return
 	. += span_hypnophrase("Enchanted by the Mansus!")
-	. += span_hypnophrase("Using an ID on this will consume it and allow you to copy its accesses.")
+	. += span_hypnophrase("Using an ID on this or using this ID on another ID will consume it and allow you to copy its accesses.")
 	. += span_hypnophrase("<b>Using this in-hand</b> allows you to change its appearance.")
 	. += span_hypnophrase("<b>Using this on a pair of doors</b>, allows you to link them together. Entering one door will transport you to the other, while heathens are instead teleported to a random airlock.")
 	. += span_hypnophrase("<b>Ctrl-clicking the ID</b>, makes the ID make inverted portals instead, which teleport you onto a random airlock onstation, while heathens are teleported to the destination.")
@@ -162,22 +171,34 @@
 	portal_two.destination = portal_one
 	balloon_alert(user, "[message]")
 
-/obj/item/card/id/advanced/heretic/attackby(obj/item/thing, mob/user, params)
-	if(!istype(thing, /obj/item/card/id/advanced) || !IS_HERETIC(user))
+/obj/item/card/id/advanced/heretic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/card/id/advanced) || !IS_HERETIC(user))
 		return ..()
-	var/obj/item/card/id/card = thing
+	eat_card(tool, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/card/id/advanced/heretic/proc/eat_card(obj/item/card/id/card, mob/user)
+	if(card == src)
+		return //no self vore
 	fused_ids[card.name] = card
 	card.moveToNullspace()
-	playsound(drop_location(),'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	playsound(drop_location(), 'sound/items/eatfood.ogg', rand(10,30), TRUE)
 	access += card.access
+	if(!isnull(user))
+		balloon_alert(user, "consumed card")
 
 /obj/item/card/id/advanced/heretic/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!IS_HERETIC(user))
 		return NONE
+	if(istype(target, /obj/item/card/id))
+		eat_card(target, user)
+		return ITEM_INTERACT_SUCCESS
 	if(istype(target, /obj/effect/lock_portal))
 		clear_portals()
 		return ITEM_INTERACT_SUCCESS
 	if(!istype(target, /obj/machinery/door))
+		return NONE
+	if(SSmapping.level_trait(target.z, ZTRAIT_NOPHASE))
 		return NONE
 	var/reference_resolved = link?.resolve()
 	if(reference_resolved == target)

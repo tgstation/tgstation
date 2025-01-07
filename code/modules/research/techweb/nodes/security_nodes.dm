@@ -7,7 +7,9 @@
 		"toy_armblade",
 		"toygun",
 		"c38_rubber",
-		"sec_38",
+		"c38_rubber_mag",
+		"c38_sec",
+		"c38_mag",
 		"capbox",
 		"foam_dart",
 		"sec_beanbag_slug",
@@ -39,6 +41,8 @@
 		"electropack",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
+
 
 /datum/techweb_node/riot_supression
 	id = TECHWEB_NODE_RIOT_SUPRESSION
@@ -55,6 +59,7 @@
 		"bola_energy",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/explosives
 	id = TECHWEB_NODE_EXPLOSIVES
@@ -68,6 +73,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/ordnance/explosive/lowyieldbomb)
+	announce_channels = list(RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/exotic_ammo
 	id = TECHWEB_NODE_EXOTIC_AMMO
@@ -76,11 +82,18 @@
 	prereq_ids = list(TECHWEB_NODE_EXPLOSIVES)
 	design_ids = list(
 		"c38_hotshot",
+		"c38_hotshot_mag",
 		"c38_iceblox",
+		"c38_iceblox_mag",
+		"c38_trac",
+		"c38_trac_mag",
+		"c38_true_strike",
+		"c38_true_strike_mag",
 		"techshotshell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/ordnance/explosive/highyieldbomb = TECHWEB_TIER_4_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/electric_weapons
 	id = TECHWEB_NODE_ELECTRIC_WEAPONS
@@ -94,6 +107,7 @@
 		"lasershell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/beam_weapons
 	id = TECHWEB_NODE_BEAM_WEAPONS
@@ -105,3 +119,4 @@
 		"nuclear_gun",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)

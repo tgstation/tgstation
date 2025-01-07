@@ -13,14 +13,14 @@
 #define OXY "oxygen"
 /// Exhaustion and nonlethal damage.
 #define STAMINA "stamina"
-/// Brain damage. Should probably be decomissioned and replaced with proper organ damage.
+/// Brain damage. Should probably be decommissioned and replaced with proper organ damage.
 #define BRAIN "brain"
 
 //Damage flag defines //
 
 /// Involves corrosive substances.
 #define ACID "acid"
-/// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
+/// Involved in checking whether a disease can infect or spread. Also involved in xeno neurotoxin.
 #define BIO "bio"
 /// Involves a shockwave, usually from an explosion.
 #define BOMB "bomb"
@@ -36,7 +36,7 @@
 #define LASER "laser"
 /// Involves a melee attack or a thrown object.
 #define MELEE "melee"
-/// Involved in checking the likelyhood of applying a wound to a mob.
+/// Involved in checking the likelihood of applying a wound to a mob.
 #define WOUND "wound"
 
 #define ARMOR_ALL "all_damage_types"
@@ -76,15 +76,12 @@
 #define CANUNCONSCIOUS (1<<2)
 /// If set, this mob can be grabbed or pushed when bumped into
 #define CANPUSH (1<<3)
-/// Mob godmode. Prevents most statuses and damage from being taken, but is more often than not a crapshoot. Use with caution.
-#define GODMODE (1<<4)
 
 DEFINE_BITFIELD(status_flags, list(
 	"CAN STUN" = CANSTUN,
 	"CAN KNOCKDOWN" = CANKNOCKDOWN,
 	"CAN UNCONSCIOUS" = CANUNCONSCIOUS,
 	"CAN PUSH" = CANPUSH,
-	"GOD MODE" = GODMODE,
 ))
 
 //Health Defines
@@ -101,6 +98,7 @@ DEFINE_BITFIELD(status_flags, list(
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_HYPER_RAPID 1
 #define CLICK_CD_SLOW 10
+#define CLICK_CD_ACTIVATE_ABILITY 1
 
 #define CLICK_CD_THROW 8
 #define CLICK_CD_RANGE 4
@@ -157,6 +155,13 @@ DEFINE_BITFIELD(status_flags, list(
 #define ATTACK_EFFECT_MECHTOXIN "mech_toxin"
 #define ATTACK_EFFECT_BOOP "boop" //Honk
 
+/// Attack animation for sharp items
+#define ATTACK_ANIMATION_SLASH "slash"
+/// Attack animation for pointy items
+#define ATTACK_ANIMATION_PIERCE "pierce"
+/// Animation for blunt attacks
+#define ATTACK_ANIMATION_BLUNT "blunt"
+
 //the define for visible message range in combat
 #define SAMETILE_MESSAGE_RANGE 1
 #define COMBAT_MESSAGE_RANGE 3
@@ -186,8 +191,11 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EMBED_CHANCE_SPEED_BONUS 10
 
 //Gun weapon weight
+/// Default normal ol' gun. Akimboable, one handed.
 #define WEAPON_LIGHT 1
+/// Can't be used akimbo, but only needs one hand to fire
 #define WEAPON_MEDIUM 2
+/// Can't be used akimbo, and needs two hands to fire
 #define WEAPON_HEAVY 3
 //Gun trigger guards
 #define TRIGGER_GUARD_ALLOW_ALL -1
@@ -224,10 +232,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define SUPPRESSED_QUIET 1 ///standard suppressed
 #define SUPPRESSED_VERY 2 /// no message
 
-//Projectile Reflect
-#define REFLECT_NORMAL (1<<0)
-#define REFLECT_FAKEPROJECTILE (1<<1)
-
 //His Grace.
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
 #define HIS_GRACE_PECKISH 20 //Slightly hungry.
@@ -242,8 +246,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// ex_act() with EXPLODE_DEVASTATE severity will gib mobs with less than this much bomb armor
 #define EXPLODE_GIB_THRESHOLD 50
 
-#define EMP_HEAVY 1
 #define EMP_LIGHT 2
+#define EMP_HEAVY 1
 
 #define GRENADE_CLUMSY_FUMBLE 1
 #define GRENADE_NONCLUMSY_FUMBLE 2

@@ -7,7 +7,7 @@
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(atom/A, params)
-	if(control_disabled || incapacitated())
+	if(control_disabled || incapacitated)
 		return
 
 	if(ismob(A))
@@ -39,7 +39,7 @@
 	if(check_click_intercept(params,A))
 		return
 
-	if(control_disabled || incapacitated())
+	if(control_disabled || incapacitated)
 		return
 
 	var/turf/pixel_turf = get_turf_pixel(A)

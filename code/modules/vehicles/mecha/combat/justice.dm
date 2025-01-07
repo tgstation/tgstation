@@ -23,8 +23,8 @@
 	mech_type = EXOSUIT_MODULE_JUSTICE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	mecha_flags = ID_LOCK_ON | QUIET_STEPS | QUIET_TURNS | CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE | IS_ENCLOSED
-	destroy_wall_sound = 'sound/mecha/mech_blade_break_wall.ogg'
-	brute_attack_sound = 'sound/mecha/mech_blade_attack.ogg'
+	destroy_wall_sound = 'sound/vehicles/mecha/mech_blade_break_wall.ogg'
+	brute_attack_sound = 'sound/vehicles/mecha/mech_blade_attack.ogg'
 	attack_verbs = list("cut", "cuts", "cutting")
 	weapons_safety = TRUE
 	safety_sound_custom = TRUE
@@ -70,7 +70,7 @@
 	else
 		movedelay = MOVEDELAY_ANGRY
 
-	playsound(src, 'sound/mecha/mech_blade_safty.ogg', 75, FALSE) //everyone need to hear this sound
+	playsound(src, 'sound/vehicles/mecha/mech_blade_safty.ogg', 75, FALSE) //everyone need to hear this sound
 
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -106,7 +106,7 @@
  */
 /obj/vehicle/sealed/mecha/justice/proc/finish_him(obj/vehicle/sealed/mecha/my_mech, mob/finisher, mob/living/him)
 	say(pick("Take my Justice-Slash!", "A falling leaf...", "Justice is quite a lonely path"), forced = "Justice Mech")
-	playsound(src, 'sound/mecha/mech_stealth_pre_attack.ogg', 75, FALSE)
+	playsound(src, 'sound/vehicles/mecha/mech_stealth_pre_attack.ogg', 75, FALSE)
 	if(!do_after(finisher, 1 SECONDS, him))
 		return
 	if(QDELETED(finisher))
@@ -140,13 +140,13 @@
 	if(alpha == 255)
 		return
 	animate(src, alpha = 255, time = 0.5 SECONDS)
-	playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	playsound(src, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 
 /obj/vehicle/sealed/mecha/justice/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	if(LAZYLEN(occupants))
 		if(prob(60))
 			new /obj/effect/temp_visual/mech_sparks(get_turf(src))
-			playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+			playsound(src, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 			return
 	return ..()
 
@@ -162,9 +162,9 @@
 	/// Energy cost to become invisibile
 	var/energy_cost = 200
 	/// Aoe pre attack sound.
-	var/stealth_pre_attack_sound = 'sound/mecha/mech_stealth_pre_attack.ogg'
+	var/stealth_pre_attack_sound = 'sound/vehicles/mecha/mech_stealth_pre_attack.ogg'
 	/// Aoe attack sound.
-	var/stealth_attack_sound = 'sound/mecha/mech_stealth_attack.ogg'
+	var/stealth_attack_sound = 'sound/vehicles/mecha/mech_stealth_attack.ogg'
 
 /datum/action/vehicle/sealed/mecha/invisibility/set_chassis(passed_chassis)
 	. = ..()
@@ -208,7 +208,7 @@
 ///Called when invisibility activated.
 /datum/action/vehicle/sealed/mecha/invisibility/proc/invisibility_on()
 	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
-	playsound(chassis, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	playsound(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 	check_charge_attack()
 	animate(chassis, alpha = 0, time = 0.5 SECONDS)
 	button_icon_state = "mech_stealth_on"
@@ -223,7 +223,7 @@
 ///Called when invisibility deactivated.
 /datum/action/vehicle/sealed/mecha/invisibility/proc/invisibility_off()
 	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
-	playsound(chassis, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	playsound(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 	invisibility_timer = null
 	charge = FALSE
 	addtimer(CALLBACK(src, PROC_REF(charge)), 5 SECONDS)
@@ -369,7 +369,7 @@
 	/// Maximum range of charge attack.
 	var/max_charge_range = 7
 	/// Sound when mech do charge attack.
-	var/charge_attack_sound = 'sound/mecha/mech_charge_attack.ogg'
+	var/charge_attack_sound = 'sound/vehicles/mecha/mech_charge_attack.ogg'
 
 /datum/action/vehicle/sealed/mecha/charge_attack/set_chassis(passed_chassis)
 	. = ..()

@@ -110,7 +110,7 @@
 		if(isnull(choice) \
 			|| !user.is_holding(installing_cable) \
 			|| !user.Adjacent(src) \
-			|| user.incapacitated() \
+			|| user.incapacitated \
 			|| !can_place_terminal(user, installing_cable, silent = TRUE) \
 		)
 			return ITEM_INTERACT_BLOCKING
@@ -379,11 +379,11 @@
 	if((machine_stat & BROKEN) || opened == APC_COVER_REMOVED)
 		new /obj/item/stack/sheet/iron(loc)
 		user.visible_message(span_notice("[user.name] cuts [src] apart with [welder]."))
-		balloon_alert(user, "disassembled the broken frame")
+		user.balloon_alert(user, "disassembled the broken frame")
 	else
 		new /obj/item/wallframe/apc(loc)
 		user.visible_message(span_notice("[user.name] cuts [src] from the wall with [welder]."))
-		balloon_alert(user, "cut the frame from the wall")
+		user.balloon_alert(user, "cut the frame from the wall")
 	qdel(src)
 	return TRUE
 

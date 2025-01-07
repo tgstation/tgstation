@@ -45,7 +45,7 @@
 	/// Maximum rate at which a glitch can spawn
 	var/threat_prob_max = 15
 	/// The turfs we can place a hololadder on.
-	var/turf/exit_turfs = list()
+	var/list/turf/exit_turfs = list()
 	/// Determines if we broadcast to entertainment monitors or not
 	var/broadcasting = FALSE
 	/// Cooldown between being able to toggle broadcasting
@@ -108,7 +108,7 @@
 
 	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
 	balloon_alert(user, "system jailbroken...")
-	playsound(src, 'sound/effects/sparks1.ogg', 35, vary = TRUE)
+	playsound(src, 'sound/effects/sparks/sparks1.ogg', 35, vary = TRUE)
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)

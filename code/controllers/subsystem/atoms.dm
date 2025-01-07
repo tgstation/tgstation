@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(atoms)
 	rustg_file_write(json_encode(mapload_init_times), "[GLOB.log_directory]/init_times.json")
 	#endif
 
-/// Actually creates the list of atoms. Exists soley so a runtime in the creation logic doesn't cause initalized to totally break
+/// Actually creates the list of atoms. Exists solely so a runtime in the creation logic doesn't cause initialized to totally break
 /datum/controller/subsystem/atoms/proc/CreateAtoms(list/atoms, list/atoms_to_return = null, mapload_source = null)
 	if (atoms_to_return)
 		LAZYINITLIST(created_atoms)
@@ -137,8 +137,8 @@ SUBSYSTEM_DEF(atoms)
 		return null
 	return initialized_state[state_length][1]
 
-/// Use this to set initialized to prevent error states where the old initialized is overriden, and we end up losing all context
-/// Accepts a state and a source, the most recent state is used, sources exist to prevent overriding old values accidentially
+/// Use this to set initialized to prevent error states where the old initialized is overridden, and we end up losing all context
+/// Accepts a state and a source, the most recent state is used, sources exist to prevent overriding old values accidentally
 /datum/controller/subsystem/atoms/proc/set_tracked_initalized(state, source)
 	if(!length(initialized_state))
 		base_initialized = initialized
@@ -173,9 +173,6 @@ SUBSYSTEM_DEF(atoms)
 /datum/controller/subsystem/atoms/proc/setupGenetics()
 	var/list/mutations = subtypesof(/datum/mutation/human)
 	shuffle_inplace(mutations)
-	for(var/A in subtypesof(/datum/generecipe))
-		var/datum/generecipe/GR = A
-		GLOB.mutation_recipes[initial(GR.required)] = initial(GR.result)
 	for(var/i in 1 to LAZYLEN(mutations))
 		var/path = mutations[i] //byond gets pissy when we do it in one line
 		var/datum/mutation/human/B = new path ()

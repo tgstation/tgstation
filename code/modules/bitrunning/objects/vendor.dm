@@ -33,7 +33,7 @@
 /obj/machinery/computer/order_console/bitrunning/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
 	var/list/things_to_order = list()
 	for(var/datum/orderable_item/item as anything in groceries)
-		things_to_order[item.item_path] = groceries[item]
+		things_to_order[item.purchase_path] = groceries[item]
 
 	var/datum/supply_pack/bitrunning/pack = new(
 		purchaser = purchaser, \
@@ -62,7 +62,7 @@
 /obj/machinery/computer/order_console/bitrunning/retrieve_points(obj/item/card/id/id_card)
 	return round(id_card.registered_account.bitrunning_points)
 
-/obj/machinery/computer/order_console/bitrunning/ui_act(action, params)
+/obj/machinery/computer/order_console/bitrunning/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(!.)
 		flick("vendor_off", src)

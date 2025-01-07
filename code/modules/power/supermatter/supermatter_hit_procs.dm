@@ -13,11 +13,11 @@
 		return NONE
 
 	var/kiss_power = 0
-	switch(projectile.type)
-		if(/obj/projectile/kiss)
-			kiss_power = 60
-		if(/obj/projectile/kiss/death)
-			kiss_power = 20000
+	if (istype(projectile, /obj/projectile/kiss/death))
+		kiss_power = 20000
+	else if (istype(projectile, /obj/projectile/kiss))
+		kiss_power = 60
+
 
 	if(!istype(projectile.firer, /obj/machinery/power/emitter))
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_ENGINE)
@@ -48,7 +48,7 @@
 		if(!is_valid_z_level(get_turf(hearing_mob), sm_turf))
 			continue
 		SEND_SOUND(hearing_mob, 'sound/effects/supermatter.ogg') //everyone goan know bout this
-		to_chat(hearing_mob, span_boldannounce("A horrible screeching fills your ears, and a wave of dread washes over you..."))
+		to_chat(hearing_mob, span_bolddanger("A horrible screeching fills your ears, and a wave of dread washes over you..."))
 	qdel(src)
 	return gain
 
@@ -59,7 +59,7 @@
 	to_chat(jedi, span_userdanger("That was a really dense idea."))
 	jedi.investigate_log("had [jedi.p_their()] brain dusted by touching [src] with telekinesis.", INVESTIGATE_DEATHS)
 	jedi.ghostize()
-	var/obj/item/organ/internal/brain/rip_u = locate(/obj/item/organ/internal/brain) in jedi.organs
+	var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in jedi.organs
 	if(rip_u)
 		rip_u.Remove(jedi)
 		qdel(rip_u)
@@ -82,6 +82,10 @@
 				to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
 		else
 			to_chat(user, span_warning("You fail to extract a sliver from \The [src]! \the [scalpel] isn't sharp enough anymore."))
+		return
+
+	if(istype(item, /obj/item/hemostat/supermatter))
+		to_chat(user, span_warning("You poke [src] with [item]'s hyper-noblium tips. Nothing happens."))
 		return
 
 	if(istype(item, /obj/item/destabilizing_crystal))

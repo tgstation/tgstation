@@ -3,8 +3,9 @@
 	name = "energy gun"
 	desc = "A basic energy-based gun."
 	icon = 'icons/obj/weapons/guns/energy.dmi'
-	pickup_sound = 'sound/items/gun_pick_up.ogg'
-	drop_sound = 'sound/items/gun_drop.ogg'
+	pickup_sound = 'sound/items/handling/gun/gun_pick_up.ogg'
+	drop_sound = 'sound/items/handling/gun/gun_drop.ogg'
+	sound_vary = TRUE
 
 	/// What type of power cell this uses
 	var/obj/item/stock_parts/power_store/cell
@@ -76,7 +77,10 @@
 		recharge_newshot() //and try to charge a new shot
 		update_appearance()
 
-/obj/item/gun/energy/get_cell()
+/obj/item/gun/energy/get_cell(atom/movable/interface, mob/user)
+	if(istype(interface, /obj/item/inducer))
+		to_chat(user, span_alert("Error: unable to interface with [interface]."))
+		return null
 	return cell
 
 /obj/item/gun/energy/Initialize(mapload)
@@ -332,7 +336,7 @@
 			playsound(user, E.fire_sound, 50, TRUE)
 			playsound(user, loaded_projectile.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
-			. = span_danger("[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.")
+			. = span_rose("[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.")
 
 /obj/item/gun/energy/proc/instant_recharge()
 	SIGNAL_HANDLER

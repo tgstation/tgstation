@@ -345,7 +345,7 @@
 	var/obj/structure/transport/linear/prime_lift = return_closest_platform_to_z(direction == UP ? world.maxz : 0)
 
 	// ...because we use the duration of the sound effect to make it last for roughly the duration of the lift travel
-	playsound(prime_lift, 'sound/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(HYDRAULIC_SFX_DURATION / lift_move_duration, 0.33, 3))
+	playsound(prime_lift, 'sound/vehicles/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(HYDRAULIC_SFX_DURATION / lift_move_duration, 0.33, 3))
 
 	// Move the platform after a timer
 	addtimer(CALLBACK(src, PROC_REF(move_lift_vertically), direction, user), lift_move_duration, TIMER_UNIQUE)

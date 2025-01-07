@@ -1,9 +1,5 @@
 import { filter, sortBy } from 'common/collections';
-import { BooleanLike, classes } from 'common/react';
-import { createSearch } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -16,7 +12,11 @@ import {
   Tabs,
   Tooltip,
   VirtualList,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Food } from './PreferencesMenu/data';
 
@@ -137,6 +137,7 @@ type Recipe = {
   structures: string[];
   steps: string[];
   foodtypes: string[];
+  has_food_effect: BooleanLike;
 };
 
 type Diet = {
@@ -792,10 +793,16 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow={5}>
-              <Box mb={0.5} bold style={{ textTransform: 'capitalize' }}>
+              <Box mb={1} bold style={{ textTransform: 'capitalize' }}>
                 {item.name}
               </Box>
               {item.desc && <Box color={'gray'}>{item.desc}</Box>}
+              {!!item.has_food_effect && (
+                <Box my={2} color={'pink'}>
+                  <Icon name="wand-magic-sparkles" mr={1} />
+                  Special effect on consumption.
+                </Box>
+              )}
               <Box style={{ textTransform: 'capitalize' }}>
                 {item.reqs && (
                   <Box>

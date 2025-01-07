@@ -265,7 +265,7 @@
 		properties["severity"] += round((properties["transmittable"] / 8), 1)
 		properties["severity"] = round((properties["severity"] / 2), 1)
 		properties["severity"] *= (symptoms.len / VIRUS_SYMPTOM_LIMIT) //fewer symptoms, less severity
-		properties["severity"] = clamp(properties["severity"], 1, 7)
+		properties["severity"] = round(clamp(properties["severity"], 1, 7), 1)
 	properties["capacity"] = get_symptom_weights()
 
 // Assign the properties that are in the list.

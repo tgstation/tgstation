@@ -28,15 +28,17 @@
 	var/glass_amount = 1
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/break_sound = SFX_SHATTER
-	var/knock_sound = 'sound/effects/glassknock.ogg'
-	var/bash_sound = 'sound/effects/glassbash.ogg'
-	var/hit_sound = 'sound/effects/glasshit.ogg'
+	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
+	var/bash_sound = 'sound/effects/glass/glassbash.ogg'
+	var/hit_sound = 'sound/effects/glass/glasshit.ogg'
 	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
 	var/bloodied = FALSE
 	///Datum that the shard and debris type is pulled from for when the glass is broken.
 	var/datum/material/glass_material_datum = /datum/material/glass
 	/// Whether or not we're disappearing but dramatically
 	var/dramatically_disappearing = FALSE
+	/// If we added a leaning component to ourselves
+	var/added_leaning = FALSE
 
 /datum/armor/structure_window
 	melee = 50
@@ -78,6 +80,14 @@
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
 
+/obj/structure/window/mouse_drop_receive(atom/dropping, mob/user, params)
+	. = ..()
+	if (flags_1 & ON_BORDER_1)
+		return
+
+	//Adds the component only once. We do it here & not in Initialize() because there are tons of windows & we don't want to add to their init times
+	LoadComponent(/datum/component/leanable, dropping)
+
 /obj/structure/window/examine(mob/user)
 	. = ..()
 
@@ -106,7 +116,7 @@
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
-/obj/structure/window/singularity_pull(S, current_size)
+/obj/structure/window/singularity_pull(atom/singularity, current_size)
 	..()
 	if(anchored && current_size >= STAGE_TWO)
 		set_anchored(FALSE)
@@ -321,9 +331,9 @@
 			if(damage_amount)
 				playsound(src, hit_sound, 75, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 
 /obj/structure/window/atom_deconstruct(disassembled = TRUE)
@@ -450,6 +460,7 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, forceMove), loc), time_to_go + time_to_return) //we back boys
 	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), time_to_go + time_to_return)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), get_turf(src), 'sound/effects/glass/glass_reverse.ogg', 70, TRUE), time_to_go + time_to_return)
 
 	var/obj/structure/grille/grill = take_grill ? (locate(/obj/structure/grille) in loc) : null
 	if(grill)
@@ -501,10 +512,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 	return FALSE
 
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
+	if(resistance_flags & INDESTRUCTIBLE)
+		balloon_alert(user, "too resilient!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	switch(state)
 		if(RWINDOW_SECURE)
 			if(tool.tool_behaviour == TOOL_WELDER)
-				if(tool.tool_start_check(user))
+				if(tool.tool_start_check(user, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					user.visible_message(span_notice("[user] holds \the [tool] to the security screws on \the [src]..."),
 						span_notice("You begin heating the security screws on \the [src]..."))
 					if(tool.use_tool(src, user, 15 SECONDS, volume = 100))
@@ -579,7 +593,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 
 /obj/structure/window/reinforced/examine(mob/user)
 	. = ..()
-
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
 	switch(state)
 		if(RWINDOW_SECURE)
 			. += span_notice("It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out.")
@@ -866,6 +881,32 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	rad_insulation = RAD_EXTREME_INSULATION
 	glass_material_datum = /datum/material/alloy/plastitaniumglass
 
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible
+	name = "plastitanium window"
+	desc = "A durable looking window made of an alloy of of plasma and titanium."
+	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
+	icon_state = "plastitanium_window-0"
+	base_icon_state = "plastitanium_window"
+	max_integrity = 1200
+	wtype = "shuttle"
+	fulltile = TRUE
+	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
+	heat_resistance = 1600
+	armor_type = /datum/armor/plasma_plastitanium
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
+	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
+	explosion_block = 3
+	damage_deflection = 21 //The same as reinforced plasma windows.3
+	glass_type = /obj/item/stack/sheet/plastitaniumglass
+	glass_amount = 2
+	rad_insulation = RAD_EXTREME_INSULATION
+	glass_material_datum = /datum/material/alloy/plastitaniumglass
+	name = "hardened shuttle window"
+	flags_1 = PREVENT_CLICK_UNDER_1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 /datum/armor/plasma_plastitanium
 	melee = 95
 	bomb = 50
@@ -898,9 +939,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/none
 	knock_sound = SFX_PAGE_TURN
-	bash_sound = 'sound/weapons/slashmiss.ogg'
-	break_sound = 'sound/items/poster_ripped.ogg'
-	hit_sound = 'sound/weapons/slashmiss.ogg'
+	bash_sound = 'sound/items/weapons/slashmiss.ogg'
+	break_sound = 'sound/items/poster/poster_ripped.ogg'
+	hit_sound = 'sound/items/weapons/slashmiss.ogg'
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/structure_variations.dmi',icon_state = "paper-torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/structure_variations.dmi',icon_state = "paper-whole", layer = ABOVE_OBJ_LAYER - 0.1)
 

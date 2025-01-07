@@ -195,17 +195,16 @@
 		return FALSE
 	return TRUE
 
+// HO-HO-HOHOHO HU HU-HU HU-HU
 /obj/structure/sign/poster/proc/spring_trap(mob/user)
 	var/obj/item/shard/payload = trap?.resolve()
 	if (!payload)
 		return
 
 	to_chat(user, span_warning("There's something sharp behind this! What the hell?"))
-	if(!can_embed_trap(user) || !payload.tryEmbed(user.get_active_hand(), forced = TRUE))
+	if(!can_embed_trap(user) || !payload.force_embed(user, user.get_active_hand()))
 		visible_message(span_notice("A [payload.name] falls from behind the poster.") )
 		payload.forceMove(user.drop_location())
-	else
-		SEND_SIGNAL(src, COMSIG_POSTER_TRAP_SUCCEED, user)
 
 /obj/structure/sign/poster/proc/can_embed_trap(mob/living/carbon/human/user)
 	if (!istype(user) || HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
@@ -248,7 +247,7 @@
 
 	flick("poster_being_set", placed_poster)
 	placed_poster.forceMove(src) //deletion of the poster is handled in poster/Exited(), so don't have to worry about P anymore.
-	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
+	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
 
 	var/turf/user_drop_location = get_turf(user) //cache this so it just falls to the ground if they move. also no tk memes allowed.
 	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, TYPE_PROC_REF(/obj/structure/sign/poster, snowflake_closed_turf_check), src)))
@@ -266,7 +265,7 @@
 
 /obj/structure/sign/poster/proc/tear_poster(mob/user)
 	visible_message(span_notice("[user] rips [src] in a single, decisive motion!") )
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
+	playsound(src.loc, 'sound/items/poster/poster_ripped.ogg', 100, TRUE)
 	spring_trap(user)
 
 	var/obj/structure/sign/poster/ripped/torn_poster = new(loc)

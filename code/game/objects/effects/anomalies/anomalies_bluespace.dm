@@ -24,6 +24,9 @@
 		do_teleport(AM, locate(AM.x, AM.y, AM.z), 8, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/anomaly/bluespace/detonate()
+	new /obj/effect/temp_visual/circle_wave/bluespace(get_turf(src))
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50)
+
 	var/turf/T = pick(get_area_turfs(impact_area))
 	if(!T)
 		return
@@ -31,8 +34,15 @@
 	// Calculate new position (searches through beacons in world)
 	var/obj/item/beacon/chosen
 	var/list/possible = list()
-	for(var/obj/item/beacon/W in GLOB.teleportbeacons)
-		possible += W
+	for(var/obj/item/beacon/beacon in GLOB.teleportbeacons)
+		var/turf/turf = get_turf(beacon)
+		if(!turf)
+			continue
+		if(is_centcom_level(turf.z) || is_away_level(turf.z))
+			continue
+		if(!check_teleport_valid(src, turf))
+			continue
+		possible += beacon
 
 	if(possible.len > 0)
 		chosen = pick(possible)
@@ -57,7 +67,7 @@
 	for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
 		if(istype(A, /obj/item/beacon))
 			continue // don't teleport beacons because that's just insanely stupid
-		if(iscameramob(A))
+		if(iseyemob(A))
 			continue // Don't mess with AI eye, blob eye, xenobio or advanced cameras
 		if(A.anchored)
 			continue
@@ -102,3 +112,8 @@
 
 	var/mob/living/living = bumpee
 	living.apply_status_effect(/datum/status_effect/teleport_madness)
+
+/obj/effect/temp_visual/circle_wave/bluespace
+	color = COLOR_BLUE_LIGHT
+	duration = 1 SECONDS
+	amount_to_scale = 5

@@ -205,11 +205,11 @@
 
 	to_chat(user, span_notice("You hollow up the chanterelle with [I]."))
 	remove_item_from_storage(user)
-	qdel(src)
 	if(seed.resistance_flags & FIRE_PROOF)
 		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle/fr())
 	else
 		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle())
+	qdel(src)
 
 //Jupiter Cup
 /obj/item/seeds/chanter/jupitercup

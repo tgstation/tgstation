@@ -37,3 +37,6 @@
 
 /obj/docking_port/stationary/laborcamp_home/kilo
 	roundstart_template = /datum/map_template/shuttle/labour/kilo
+
+/obj/docking_port/stationary/laborcamp_home/nebula
+	roundstart_template = /datum/map_template/shuttle/labour/nebula

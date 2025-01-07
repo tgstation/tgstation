@@ -32,7 +32,7 @@
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
-/obj/structure/ui_act(action, params)
+/obj/structure/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	add_fingerprint(usr)
 	return ..()
 
@@ -57,6 +57,9 @@
 		if(0 to 25)
 			if(!broken)
 				return  span_warning("It's falling apart!")
+
+/obj/structure/examine_descriptor(mob/user)
+	return "structure"
 
 /obj/structure/rust_heretic_act()
 	take_damage(500, BRUTE, "melee", 1)

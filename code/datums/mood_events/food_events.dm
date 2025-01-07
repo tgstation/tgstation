@@ -49,3 +49,8 @@
 
 /datum/mood_event/food/top
 	quality = FOOD_QUALITY_TOP
+
+/datum/mood_event/pacifist_eating_fish_item
+	description = "I shouldn't be eating living creatures..."
+	mood_change = -1 //The disgusting food moodlet already has a pretty big negative value, this is just for context.
+	timeout = 4 MINUTES

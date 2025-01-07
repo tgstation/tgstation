@@ -1,6 +1,4 @@
 import { useState } from 'react';
-
-import { useBackend } from '../../backend';
 import {
   Button,
   ByondUi,
@@ -8,8 +6,10 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../../components';
-import { formatSiUnit } from '../../format';
+} from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
+
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { AccessConfig } from '../common/AccessConfig';
 import { AlertPane } from './AlertPane';
@@ -165,8 +165,8 @@ const PowerBar = (props) => {
           ? 'Power cell missing'
           : power_level === 1e31
             ? 'Infinite'
-            : `${formatSiUnit(power_level * 1000, 0, 'J')} of ${formatSiUnit(
-                power_max * 1000,
+            : `${formatSiUnit(power_level, 0, 'J')} of ${formatSiUnit(
+                power_max,
                 0,
                 'J',
               )}`}

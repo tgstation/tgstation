@@ -74,7 +74,7 @@ Asphyxiation
 
 	Very very noticable.
 	Decreases stage speed.
-	Decreases transmittablity.
+	Decreases transmittability.
 
 Bonus
 	Inflicts large spikes of oxyloss

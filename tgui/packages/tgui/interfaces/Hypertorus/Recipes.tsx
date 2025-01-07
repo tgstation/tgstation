@@ -1,6 +1,6 @@
 import { useBackend } from 'tgui/backend';
-import { Box, Button, Icon, Table, Tooltip } from 'tgui/components';
 import { getGasColor, getGasLabel } from 'tgui/constants';
+import { Box, Button, Icon, Table, Tooltip } from 'tgui-core/components';
 
 import { HypertorusData } from '.';
 

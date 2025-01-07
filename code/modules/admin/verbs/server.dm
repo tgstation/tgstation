@@ -66,6 +66,12 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 #undef HARDEST_RESTART
 #undef TGS_RESTART
 
+ADMIN_VERB(cancel_reboot, R_SERVER, "Cancel Reboot", "Cancels a pending world reboot.", ADMIN_CATEGORY_SERVER)
+	if(!SSticker.cancel_reboot(user))
+		return
+	log_admin("[key_name(user)] cancelled the pending world reboot.")
+	message_admins("[key_name_admin(user)] cancelled the pending world reboot.")
+
 ADMIN_VERB(end_round, R_SERVER, "End Round", "Forcibly ends the round and allows the server to restart normally.", ADMIN_CATEGORY_SERVER)
 	var/confirm = tgui_alert(user, "End the round and  restart the game world?", "End Round", list("Yes", "Cancel"))
 	if(confirm != "Yes")
@@ -98,7 +104,7 @@ ADMIN_VERB(start_now, R_SERVER, "Start Now", "Start the round RIGHT NOW.", ADMIN
 		SSticker.start_immediately = FALSE
 		SSticker.SetTimeLeft(3 MINUTES)
 		to_chat(world, span_big(span_notice("The game will start in 3 minutes.")))
-		SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
+		SEND_SOUND(world, sound('sound/announcer/default/attention.ogg'))
 		message_admins(span_adminnotice("[key_name_admin(user)] has cancelled immediate game start. Game will start in 3 minutes."))
 		log_admin("[key_name(user)] has cancelled immediate game start.")
 		return
@@ -131,6 +137,8 @@ ADMIN_VERB(delay_round_end, R_SERVER, "Delay Round End", "Prevent the server fro
 
 	SSticker.delay_end = TRUE
 	SSticker.admin_delay_notice = delay_reason
+	if(SSticker.reboot_timer)
+		SSticker.cancel_reboot(user)
 
 	log_admin("[key_name(user)] delayed the round end for reason: [SSticker.admin_delay_notice]")
 	message_admins("[key_name_admin(user)] delayed the round end for reason: [SSticker.admin_delay_notice]")
@@ -202,11 +210,11 @@ ADMIN_VERB(delay, R_SERVER, "Delay Pre-Game", "Delay the game start.", ADMIN_CAT
 	SSticker.SetTimeLeft(newtime)
 	SSticker.start_immediately = FALSE
 	if(newtime < 0)
-		to_chat(world, "<span class='infoplain'><b>The game start has been delayed.</b></span>", confidential = TRUE)
+		to_chat(world, span_infoplain("<b>The game start has been delayed.</b>"), confidential = TRUE)
 		log_admin("[key_name(user)] delayed the round start.")
 	else
 		to_chat(world, span_infoplain(span_bold("The game will start in [DisplayTimeText(newtime)].")), confidential = TRUE)
-		SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
+		SEND_SOUND(world, sound('sound/announcer/default/attention.ogg'))
 		log_admin("[key_name(user)] set the pre-game delay to [DisplayTimeText(newtime)].")
 	BLACKBOX_LOG_ADMIN_VERB("Delay Game Start")
 

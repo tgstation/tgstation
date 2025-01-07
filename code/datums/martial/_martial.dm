@@ -211,7 +211,7 @@
  * Resets the current streak.
  *
  * Arguments
- * * mob/living/new_target - (Optional) The mob being attacked while the reset is occuring.
+ * * mob/living/new_target - (Optional) The mob being attacked while the reset is occurring.
  * * update_icon - If TRUE, the combo display will be updated.
  */
 /datum/martial_art/proc/reset_streak(mob/living/new_target, update_icon = TRUE)

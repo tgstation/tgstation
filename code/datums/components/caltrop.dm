@@ -30,7 +30,7 @@
 	///So we can update ant damage
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
-/datum/component/caltrop/Initialize(min_damage = 0, max_damage = 0, probability = 100, paralyze_duration = 6 SECONDS, flags = NONE, soundfile = null)
+/datum/component/caltrop/Initialize(min_damage = 0, max_damage = 0, probability = 100, paralyze_duration = 2 SECONDS, flags = NONE, soundfile = null)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE

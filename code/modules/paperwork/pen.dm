@@ -11,12 +11,13 @@
  * Pens
  */
 /obj/item/pen
-	desc = "It's a normal black ink pen."
 	name = "pen"
+	desc = "It's a normal black ink pen."
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "pen"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
+	icon_angle = -135
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -29,7 +30,7 @@
 	var/degrees = 0
 	var/font = PEN_FONT
 	var/requires_gravity = TRUE // can you use this to write in zero-g
-	embed_type = /datum/embed_data/pen
+	embed_type = /datum/embedding/pen
 	sharpness = SHARP_POINTY
 	var/dart_insert_icon = 'icons/obj/weapons/guns/toy.dmi'
 	var/dart_insert_casing_icon_state = "overlay_pen"
@@ -37,7 +38,7 @@
 	/// If this pen can be clicked in order to retract it
 	var/can_click = TRUE
 
-/datum/embed_data/pen
+/datum/embedding/pen
 	embed_chance = 50
 
 /obj/item/pen/Initialize(mapload)
@@ -85,11 +86,11 @@
 /obj/item/pen/proc/on_inserted_into_dart(datum/source, obj/projectile/dart, mob/user, embedded = FALSE)
 	SIGNAL_HANDLER
 
-/obj/item/pen/proc/get_dart_var_modifiers()
+/obj/item/pen/proc/get_dart_var_modifiers(obj/projectile/projectile)
 	return list(
 		"damage" = max(5, throwforce),
 		"speed" = max(0, throw_speed - 3),
-		"embedding" = get_embed(),
+		"embedding" = get_embed().create_copy(projectile),
 		"armour_penetration" = armour_penetration,
 		"wound_bonus" = wound_bonus,
 		"bare_wound_bonus" = bare_wound_bonus,
@@ -194,7 +195,7 @@
 		"Black and Silver" = "pen-fountain-b",
 		"Command Blue" = "pen-fountain-cb"
 	)
-	embed_type = /datum/embed_data/pen/captain
+	embed_type = /datum/embedding/pen/captain
 	dart_insert_casing_icon_state = "overlay_fountainpen_gold"
 	dart_insert_projectile_icon_state = "overlay_fountainpen_gold_proj"
 	var/list/overlay_reskin = list(
@@ -205,7 +206,7 @@
 		"Command Blue" = "overlay_fountainpen_gold"
 	)
 
-/datum/embed_data/pen/captain
+/datum/embedding/pen/captain
 	embed_chance = 50
 
 /obj/item/pen/fountain/captain/Initialize(mapload)
@@ -304,8 +305,8 @@
  * (Alan) Edaggers
  */
 /obj/item/pen/edagger
-	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts") //these won't show up if the pen is off
-	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts") //these won't show up if the pen is off
+	attack_verb_simple = list("slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_POINTY
 	armour_penetration = 20
 	bare_wound_bonus = 10
@@ -322,12 +323,17 @@
 	var/hidden_desc = "It's a normal black ink pe- Wait. That's a thing used to stab people!"
 	/// The real icons used when extended.
 	var/hidden_icon = "edagger"
+	var/list/alt_continuous = list("stabs", "pierces", "shanks")
+	var/list/alt_simple = list("stab", "pierce", "shank")
 
 /obj/item/pen/edagger/Initialize(mapload)
 	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -5, TRAIT_TRANSFORM_ACTIVE)
 	AddComponent(/datum/component/butchering, \
 	speed = 6 SECONDS, \
-	butcher_sound = 'sound/weapons/blade1.ogg', \
+	butcher_sound = 'sound/items/weapons/blade1.ogg', \
 	)
 	RegisterSignal(src, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
 
@@ -363,19 +369,19 @@
 	var/datum/component/transforming/transform_comp = GetComponent(/datum/component/transforming)
 	.["damage"] = max(5, transform_comp.throwforce_on)
 	.["speed"] = max(0, transform_comp.throw_speed_on - 3)
-	var/datum/embed_data/data = .["embedding"]
-	.["embedding"] = data.generate_with_values(embed_chance = 100)
+	var/datum/embedding/data = .["embedding"]
+	data.embed_chance = 100
 
 /obj/item/pen/edagger/proc/on_containing_dart_fired(obj/projectile/source)
 	SIGNAL_HANDLER
-	playsound(source, 'sound/weapons/saberon.ogg', 5, TRUE)
+	playsound(source, 'sound/items/weapons/saberon.ogg', 5, TRUE)
 	var/datum/component/transforming/transform_comp = GetComponent(/datum/component/transforming)
 	source.hitsound = transform_comp.hitsound_on
 	source.set_light(light_range, light_power, light_color, l_on = TRUE)
 
 /obj/item/pen/edagger/proc/on_containing_dart_drop(datum/source, obj/item/ammo_casing/new_casing)
 	SIGNAL_HANDLER
-	playsound(new_casing, 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(new_casing, 'sound/items/weapons/saberoff.ogg', 5, TRUE)
 
 /obj/item/pen/edagger/proc/on_containing_dart_embedded(datum/source, obj/item/ammo_casing/new_casing)
 	SIGNAL_HANDLER
@@ -384,12 +390,12 @@
 
 /obj/item/pen/edagger/proc/on_containing_dart_failed_embed(obj/item/ammo_casing/source)
 	SIGNAL_HANDLER
-	playsound(source, 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(source, 'sound/items/weapons/saberoff.ogg', 5, TRUE)
 	UnregisterSignal(source, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
 
 /obj/item/pen/edagger/proc/on_embedded_removed(obj/item/ammo_casing/source, mob/living/carbon/victim)
 	SIGNAL_HANDLER
-	playsound(source, 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(source, 'sound/items/weapons/saberoff.ogg', 5, TRUE)
 	UnregisterSignal(source, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
 	victim.visible_message(
 		message = span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from [victim]!"),
@@ -420,7 +426,7 @@
 		inhand_icon_state = hidden_icon
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-		set_embed(/datum/embed_data/edagger_active)
+		set_embed(/datum/embedding/edagger_active)
 	else
 		name = initial(name)
 		desc = initial(desc)
@@ -432,11 +438,11 @@
 
 	if(user)
 		balloon_alert(user, "[hidden_name] [active ? "active" : "concealed"]")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 5, TRUE)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-/datum/embed_data/edagger_active
+/datum/embedding/edagger_active
 	embed_chance = 100
 
 /obj/item/pen/edagger/proc/on_scan(datum/source, mob/user, list/extra_data)
@@ -514,7 +520,7 @@
 /obj/item/pen/screwdriver/on_transform(obj/item/source, mob/user, active)
 	if(user)
 		balloon_alert(user, active ? "extended" : "retracted")
-	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 
 	if(!active)
 		tool_behaviour = initial(tool_behaviour)

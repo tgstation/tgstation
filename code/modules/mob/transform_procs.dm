@@ -153,7 +153,7 @@
 	if(mind) //TODO //TODO WHAT
 		if(!transfer_after)
 			mind.active = FALSE
-		mind.transfer_to(new_borg)
+		mind.transfer_to(new_borg, TRUE)
 	else if(transfer_after)
 		new_borg.key = key
 
@@ -261,7 +261,7 @@
 	return new_slime
 
 /mob/proc/become_overmind(starting_points = OVERMIND_STARTING_POINTS)
-	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
+	var/mob/eye/blob/B = new /mob/eye/blob(get_turf(src), starting_points)
 	B.key = key
 	. = B
 	qdel(src)
@@ -311,7 +311,7 @@
 	qdel(src)
 	return new_crab
 
-/mob/living/carbon/proc/gorillize()
+/mob/living/carbon/proc/gorillize(genetics_gorilla = FALSE)
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
@@ -327,7 +327,8 @@
 	regenerate_icons()
 	icon = null
 	SetInvisibility(INVISIBILITY_MAXIMUM)
-	var/mob/living/basic/gorilla/new_gorilla = new (get_turf(src))
+	var/gorilla_type = genetics_gorilla ? /mob/living/basic/gorilla/genetics : /mob/living/basic/gorilla
+	var/mob/living/basic/gorilla/new_gorilla = new gorilla_type(get_turf(src))
 	new_gorilla.set_combat_mode(TRUE)
 	if(mind)
 		mind.transfer_to(new_gorilla)

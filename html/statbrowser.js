@@ -705,15 +705,30 @@ function draw_verbs(cat) {
 function set_theme(which) {
 	if (which == "light") {
 		document.body.className = "";
+		document.documentElement.className = 'light';
 		set_style_sheet("browserOutput_white");
 	} else if (which == "dark") {
 		document.body.className = "dark";
+		document.documentElement.className = 'dark';
 		set_style_sheet("browserOutput");
 	}
 }
 
 function set_font_size(size) {
 	document.body.style.setProperty('font-size', size);
+}
+
+function set_tabs_style(style) {
+	if (style == "default") {
+		menu.classList.add('menu-wrap');
+		menu.classList.remove('tabs-classic');
+	} else if (style == "classic") {
+		menu.classList.add('menu-wrap');
+		menu.classList.add('tabs-classic');
+	} else if (style == "scrollable") {
+		menu.classList.remove('menu-wrap');
+		menu.classList.remove('tabs-classic');
+	}
 }
 
 function set_style_sheet(sheet) {

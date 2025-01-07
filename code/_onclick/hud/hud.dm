@@ -40,7 +40,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/pull_icon
 	var/atom/movable/screen/rest_icon
 	var/atom/movable/screen/throw_icon
+	var/atom/movable/screen/resist_icon
 	var/atom/movable/screen/module_store_icon
+	var/atom/movable/screen/floor_change
 
 	var/list/static_inventory = list() //the screen objects which are static
 	var/list/toggleable_inventory = list() //the screen objects which can be hidden
@@ -93,7 +95,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/healths
 	var/atom/movable/screen/stamina
-	var/atom/movable/screen/healthdoll
+	var/atom/movable/screen/healthdoll/healthdoll
 	var/atom/movable/screen/spacesuit
 	var/atom/movable/screen/hunger
 	// subtypes can override this to force a specific UI style
@@ -150,8 +152,16 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
-	RegisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
-	on_eye_change(null, null, mymob.canon_client.eye)
+	var/client/client = mymob.canon_client
+	if(client.rebuild_plane_masters)
+		var/new_relay_loc = (client.byond_version > 515) ? "1,1" : "CENTER"
+		for(var/group_key as anything in master_groups)
+			var/datum/plane_master_group/group = master_groups[group_key]
+			group.relay_loc = new_relay_loc
+			group.rebuild_plane_masters()
+		client.rebuild_plane_masters = FALSE
+	RegisterSignal(client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
+	on_eye_change(null, null, client.eye)
 
 /datum/hud/proc/clear_client(datum/source)
 	SIGNAL_HANDLER
@@ -197,6 +207,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	SIGNAL_HANDLER
 	update_parallax_pref() // If your eye changes z level, so should your parallax prefs
 	var/turf/eye_turf = get_turf(eye)
+	if(!eye_turf)
+		return
+	SEND_SIGNAL(src, COMSIG_HUD_Z_CHANGED, eye_turf.z)
 	var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
 	if(current_plane_offset == new_offset)
 		return
@@ -228,6 +241,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	zone_select = null
 	pull_icon = null
 	rest_icon = null
+	floor_change = null
 	hand_slots.Cut()
 
 	QDEL_LIST(toggleable_inventory)
@@ -419,6 +433,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		return
 	update_robot_modules_display()
 
+/datum/hud/new_player/show_hud(version = 0, mob/viewmob)
+	. = ..()
+	if(.)
+		show_station_trait_buttons()
+
 /datum/hud/proc/hidden_inventory_update()
 	return
 
@@ -487,16 +506,22 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		static_inventory += hand_box
 		hand_box.update_appearance()
 
-	var/i = 1
-	for(var/atom/movable/screen/swap_hand/SH in static_inventory)
-		SH.screen_loc = ui_swaphand_position(mymob,!(i % 2) ? 2: 1)
-		i++
-	for(var/atom/movable/screen/human/equip/E in static_inventory)
-		E.screen_loc = ui_equip_position(mymob)
+	var/num_of_swaps = 0
+	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+		num_of_swaps += 1
+
+	var/hand_num = 1
+	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+		var/hand_ind = RIGHT_HANDS
+		if (num_of_swaps > 1)
+			hand_ind = IS_RIGHT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
+		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
+		hand_num += 1
 
 	if(ismob(mymob) && mymob.hud_used == src)
 		show_hud(hud_version)
 
+/// Handles dimming inventory slots that a mob can't equip items to in their current state
 /datum/hud/proc/update_locked_slots()
 	return
 
@@ -541,7 +566,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			if(!our_client)
 				position_action(button, button.linked_action.default_button_position)
 				return
-			button.screen_loc = get_valid_screen_location(relative_to.screen_loc, world.icon_size, our_client.view_size.getView()) // Asks for a location adjacent to our button that won't overflow the map
+			button.screen_loc = get_valid_screen_location(relative_to.screen_loc, ICON_SIZE_ALL, our_client.view_size.getView()) // Asks for a location adjacent to our button that won't overflow the map
 
 	button.location = relative_to.location
 
@@ -562,11 +587,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/generate_landings(atom/movable/screen/movable/action_button/button)
 	listed_actions.generate_landing()
 	palette_actions.generate_landing()
+	toggle_palette.activate_landing()
 
 /// Clears all currently visible landings
 /datum/hud/proc/hide_landings()
 	listed_actions.clear_landing()
 	palette_actions.clear_landing()
+	toggle_palette.disable_landing()
 
 // Updates any existing "owned" visuals, ensures they continue to be visible
 /datum/hud/proc/update_our_owner()
@@ -584,7 +611,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	listed_actions.check_against_view()
 	palette_actions.check_against_view()
 	for(var/atom/movable/screen/movable/action_button/floating_button as anything in floating_actions)
-		var/list/current_offsets = screen_loc_to_offset(floating_button.screen_loc)
+		var/list/current_offsets = screen_loc_to_offset(floating_button.screen_loc, our_view)
 		// We set the view arg here, so the output will be properly hemm'd in by our new view
 		floating_button.screen_loc = offset_to_screen_loc(current_offsets[1], current_offsets[2], view = our_view)
 
@@ -705,14 +732,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// We're primarially concerned about width here, if someone makes us 1x2000 I wish them a swift and watery death
 	var/furthest_screen_loc = ButtonNumberToScreenCoords(column_max - 1)
 	var/list/offsets = screen_loc_to_offset(furthest_screen_loc, owner_view)
-	if(offsets[1] > world.icon_size && offsets[1] < view_size[1] && offsets[2] > world.icon_size && offsets[2] < view_size[2]) // We're all good
+	if(offsets[1] > ICON_SIZE_X && offsets[1] < view_size[1] && offsets[2] > ICON_SIZE_Y && offsets[2] < view_size[2]) // We're all good
 		return
 
 	for(column_max in column_max - 1 to 1 step -1) // Yes I could do this by unwrapping ButtonNumberToScreenCoords, but I don't feel like it
 		var/tested_screen_loc = ButtonNumberToScreenCoords(column_max)
 		offsets = screen_loc_to_offset(tested_screen_loc, owner_view)
 		// We've found a valid max length, pack it in
-		if(offsets[1] > world.icon_size && offsets[1] < view_size[1] && offsets[2] > world.icon_size && offsets[2] < view_size[2])
+		if(offsets[1] > ICON_SIZE_X && offsets[1] < view_size[1] && offsets[2] > ICON_SIZE_Y && offsets[2] < view_size[2])
 			break
 	// Use our newly resized column max
 	refresh_actions()

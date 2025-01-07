@@ -44,6 +44,10 @@
 #define VENTCRAWLER_NUDE 1
 #define VENTCRAWLER_ALWAYS 2
 
+// Flags for the mob_flags var on /mob
+/// May override the names used in screentips of OTHER OBJECTS hovered over.
+#define MOB_HAS_SCREENTIPS_NAME_OVERRIDE (1 << 0)
+
 //Mob bio-types flags
 ///The mob is organic, can heal from medical sutures.
 #define MOB_ORGANIC (1 << 0)
@@ -69,6 +73,8 @@
 #define MOB_PLANT (1 << 10)
 ///The mob is a goopy creature, probably coming from xenobiology.
 #define MOB_SLIME (1 << 11)
+/// Mob is fish or water-related.
+#define MOB_AQUATIC (1 << 12)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
@@ -152,7 +158,10 @@
 ///The species is forced to have digitigrade legs in generation.
 #define DIGITIGRADE_FORCED 2
 
-///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
+// Preferences for leg types
+/// Legs that are normal
+#define NORMAL_LEGS "Normal Legs"
+/// Digitgrade legs that are like bended and uhhh no shoes
 #define DIGITIGRADE_LEGS "Digitigrade Legs"
 
 // Health/damage defines
@@ -305,7 +314,7 @@
 
 #define BRUTE_DAMAGE_REQUIRED_TO_STOP_CRYSTALIZATION 30
 
-#define CRYSTALIZE_STAGE_ENGULFING 100 //Cant use second defines
+#define CRYSTALIZE_STAGE_ENGULFING 100 //Can't use second defines
 #define CRYSTALIZE_STAGE_ENCROACHING 300 //In switches
 #define CRYSTALIZE_STAGE_SMALL 600 //Because they're not static
 
@@ -369,6 +378,10 @@
 #define SLIP_WHEN_CRAWLING (1<<4)
 /// the mob won't slip if the turf has the TRAIT_TURF_IGNORE_SLIPPERY trait.
 #define SLIPPERY_TURF (1<<5)
+/// For mobs who are slippery, this requires the mob holding it to be lying down.
+#define SLIPPERY_WHEN_LYING_DOWN (1<<6)
+///Like sliding, but it's short, it doesn't knockdown, it doesn't stun, it just staggers a bit.
+#define WEAK_SLIDE (1<<7)
 
 #define MAX_CHICKENS 50
 
@@ -439,7 +452,7 @@
 #define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
 
 #define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
-#define ETHEREAL_DISCHARGE_RATE (8e-4 * STANDARD_CELL_CHARGE) // Rate at which ethereal stomach charge decreases
+#define ETHEREAL_DISCHARGE_RATE (8e-3 * STANDARD_CELL_CHARGE) // Rate at which ethereal stomach charge decreases
 /// How much nutrition eating clothes as moth gives and drains
 #define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
@@ -503,12 +516,13 @@
 // Ex: (You turn into a "monkey", You turn into a "xenomorph")
 #define WABBAJACK_MONKEY "monkey"
 #define WABBAJACK_ROBOT "robot"
+#define WABBAJACK_CLOWN "clown"
 #define WABBAJACK_SLIME "slime"
 #define WABBAJACK_XENO "xenomorph"
 #define WABBAJACK_HUMAN "humanoid"
 #define WABBAJACK_ANIMAL "animal"
 
-// Reasons a defibrilation might fail
+// Reasons a defibrillation might fail
 #define DEFIB_POSSIBLE (1<<0)
 #define DEFIB_FAIL_SUICIDE (1<<1)
 #define DEFIB_FAIL_HUSK (1<<2)
@@ -638,6 +652,11 @@
 #define GRADIENT_APPLIES_TO_HAIR (1<<0)
 #define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
 
+// Hair masks
+#define HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM "hide_above_45deg_medium"
+#define HAIR_MASK_HIDE_ABOVE_45_DEG_LOW "hide_above_45deg_low"
+#define HAIR_MASK_HIDE_WINTERHOOD "hide_winterhood"
+
 // Height defines
 // - They are numbers so you can compare height values (x height < y height)
 // - They do not start at 0 for futureproofing
@@ -713,7 +732,7 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Glasses layer
 #define GLASSES_LAYER 17
 /// Belt layer
-#define BELT_LAYER 16 //Possible make this an overlay of somethign required to wear a belt?
+#define BELT_LAYER 16 //Possible make this an overlay of something required to wear a belt?
 /// Suit storage layer (tucking a gun or baton underneath your armor)
 #define SUIT_STORE_LAYER 15
 /// Neck layer (for wearing capes and bedsheets)
@@ -844,13 +863,19 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NEED_VENTCRAWL (1<<8)
 /// Skips adjacency checks
 #define BYPASS_ADJACENCY (1<<9)
-/// Skips reccursive loc checks
+/// Skips recursive loc checks
 #define NOT_INSIDE_TARGET (1<<10)
 /// Checks for base adjacency, but silences the error
 #define SILENT_ADJACENCY (1<<11)
+/// Allows pAIs to perform an action
+#define ALLOW_PAI (1<<12)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
+
+//Lying angles, which way your head points
+#define LYING_ANGLE_EAST 90
+#define LYING_ANGLE_WEST 270
 
 /// Get the client from the var
 #define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
@@ -878,6 +903,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
+/// Possible value of [/atom/movable/buckle_dir]. If set to a different (positive-or-zero) value than this, the buckling thing will force a dir on the buckled.
+#define BUCKLE_MATCH_DIR -1
 
 // Flags for fully_heal().
 
@@ -974,6 +1001,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// The duration of the flip emote animation
 #define FLIP_EMOTE_DURATION 0.7 SECONDS
+///The duration of a taunt emote, so how long they can deflect projectiles
+#define TAUNT_EMOTE_DURATION 0.9 SECONDS
 
 // Sprites for photocopying butts
 #define BUTT_SPRITE_HUMAN_MALE "human_male"
@@ -988,3 +1017,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define BUTT_SPRITE_PLASMA "plasma"
 #define BUTT_SPRITE_FUZZY "fuzzy"
 #define BUTT_SPRITE_SLIME "slime"
+
+/// Distance which you can see someone's ID card
+/// Short enough that you can inspect over tables (bartender checking age)
+#define ID_EXAMINE_DISTANCE 3

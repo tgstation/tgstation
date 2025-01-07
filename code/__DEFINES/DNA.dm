@@ -16,8 +16,8 @@
 #define MINOR_NEGATIVE 4
 
 
-//Mutation classes. Normal being on them, extra being additional mutations with instability and other being stuff you dont want people to fuck with like wizard mutate
-/// A mutation that can be activated and deactived by completing a sequence
+//Mutation classes. Normal being on them, extra being additional mutations with instability and other being stuff you don't want people to fuck with like wizard mutate
+/// A mutation that can be activated and deactivated by completing a sequence
 #define MUT_NORMAL 1
 /// A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before its name in the mutation section of the dna console
 #define MUT_EXTRA 2
@@ -60,6 +60,7 @@
 #define DNA_MOTH_MARKINGS_BLOCK 13
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_POD_HAIR_BLOCK 15
+#define DNA_FISH_TAIL_BLOCK 16
 
 // Hey! Listen up if you're here because you're adding a species feature!
 //
@@ -68,7 +69,7 @@
 // (Which means having a DNA block for a feature tied to a mob without DNA is entirely pointless.)
 
 /// Total amount of DNA blocks, must be equal to the highest DNA block number
-#define DNA_FEATURE_BLOCKS 15
+#define DNA_FEATURE_BLOCKS 16
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -78,8 +79,8 @@
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_BRAIN "brain"
-#define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
-#define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
+#define ORGAN_SLOT_BRAIN_CEREBELLUM "brain_antidrop"
+#define ORGAN_SLOT_BRAIN_CNS "brain_antistun"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
 #define ORGAN_SLOT_EARS "ears"
 #define ORGAN_SLOT_EYES "eye_sight"
@@ -162,8 +163,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_VOICE,
 	ORGAN_SLOT_ADAMANTINE_RESONATOR,
 	ORGAN_SLOT_HEART_AID,
-	ORGAN_SLOT_BRAIN_ANTIDROP,
-	ORGAN_SLOT_BRAIN_ANTISTUN,
+	ORGAN_SLOT_BRAIN_CEREBELLUM,
+	ORGAN_SLOT_BRAIN_CNS,
 	ORGAN_SLOT_PARASITE_EGG,
 	ORGAN_SLOT_MONSTER_CORE,
 	ORGAN_SLOT_XENO_PLASMAVESSEL,

@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(vampire_houses)
 
 	//find and setup the house (department) this vampire is joining
 	var/datum/job_department/vampire_house
-	var/datum/job/vampire_job = SSjob.GetJob(target.job)
+	var/datum/job/vampire_job = SSjob.get_job(target.job)
 	if(!vampire_job) //no job or no mind LOSERS
 		return
 	var/list/valid_departments = (SSjob.joinable_departments.Copy()) - list(/datum/job_department/silicon, /datum/job_department/undefined)

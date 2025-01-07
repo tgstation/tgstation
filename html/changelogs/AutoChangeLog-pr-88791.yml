@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - rscadd: "TGUI icons are updated to latest FontAwesome version, v6.7.2."

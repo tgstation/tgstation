@@ -86,6 +86,30 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 		if(length(optional_messages))
 			to_chat(nearby_living, pick(optional_messages))
 
+/**
+ * Emits a hallucinating pulse around the passed atom.
+ * Affects everyone in the passed radius except for those with TRAIT_MADNESS_IMMUNE. This affects blind players.
+ *
+ * center - required, the center of the pulse
+ * radius - the radius around that the pulse reaches
+ * hallucination_duration - how much hallucination is added by the pulse. reduced based on distance to the center.
+ * hallucination_max_duration - a cap on how much hallucination can be added
+ * optional_messages - optional list of messages passed. Those affected by pulses will be given one of the messages in said list.
+ */
+/proc/hallucination_pulse(atom/center, radius = 7, hallucination_duration = 50 SECONDS, hallucination_max_duration, list/optional_messages)
+	for(var/mob/living/nearby_living in range(center, radius))
+		if(HAS_MIND_TRAIT(nearby_living, TRAIT_MADNESS_IMMUNE))
+			continue
+
+		if(nearby_living.mob_biotypes & NO_HALLUCINATION_BIOTYPES)
+			continue
+
+		// Everyone else gets hallucinations.
+		var/dist = sqrt(1 / max(1, get_dist(nearby_living, center)))
+		nearby_living.adjust_hallucinations_up_to(hallucination_duration * dist, hallucination_max_duration)
+		if(length(optional_messages))
+			to_chat(nearby_living, pick(optional_messages))
+
 /// Global weighted list of all hallucinations that can show up randomly.
 GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weighted_list())
 
@@ -226,7 +250,7 @@ ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucinat
 		if(!custom_icon_state)
 			return
 
-		var/custom_name = tgui_input_text(user, "What name should it show up as? (Can be empty)", "Custom Delusion: Name")
+		var/custom_name = tgui_input_text(user, "What name should it show up as? (Can be empty)", "Custom Delusion: Name", max_length = MAX_NAME_LEN)
 
 		delusion_args += list(
 			custom_icon_file = custom_icon_file,

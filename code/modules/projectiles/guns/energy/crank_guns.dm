@@ -13,14 +13,14 @@
 
 /obj/item/gun/energy/laser/musket/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_wielded = 10)
 	AddComponent( \
 		/datum/component/crank_recharge, \
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE * 0.5, \
 		cooldown_time = 2 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
+		charge_move = IGNORE_USER_LOC_CHANGE, \
 	)
 
 /obj/item/gun/energy/laser/musket/update_icon_state()
@@ -52,8 +52,9 @@
 		charging_cell = get_cell(), \
 		charge_amount = STANDARD_CELL_CHARGE, \
 		cooldown_time = 2 SECONDS, \
-		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound = 'sound/items/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
+		charge_move = IGNORE_USER_LOC_CHANGE, \
 	)
 
 /obj/item/gun/energy/disabler/smoothbore/add_seclight_point()
@@ -99,7 +100,7 @@
 		spin_to_win = TRUE, \
 		charge_amount = LASER_SHOTS(8, STANDARD_CELL_CHARGE), \
 		cooldown_time = 0.8 SECONDS, \
-		charge_sound = 'sound/weapons/kinetic_reload.ogg', \
+		charge_sound = 'sound/items/weapons/kinetic_reload.ogg', \
 		charge_sound_cooldown_time = 0.8 SECONDS, \
 	)
 

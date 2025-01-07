@@ -129,7 +129,7 @@
 	data["pressureLimitTank"] = internal_tank.pressure_limit
 	return data
 
-/obj/machinery/portable_atmospherics/pipe_scrubber/ui_act(action, params)
+/obj/machinery/portable_atmospherics/pipe_scrubber/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -153,7 +153,7 @@
 			internal_tank.suppress_reactions = !internal_tank.suppress_reactions
 			SSair.start_processing_machine(internal_tank)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [internal_tank.suppress_reactions ? "on" : "off"] the [internal_tank] reaction suppression.")
-			usr.investigate_log("turned [internal_tank.suppress_reactions ? "on" : "off"] the [internal_tank] reaction suppression.")
+			usr.investigate_log("turned [internal_tank.suppress_reactions ? "on" : "off"] the [internal_tank] reaction suppression.", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_appearance()
 

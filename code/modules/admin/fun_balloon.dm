@@ -64,7 +64,7 @@
 		return UI_INTERACTIVE
 	return ..()
 
-/obj/effect/fun_balloon/sentience/ui_act(action, list/params)
+/obj/effect/fun_balloon/sentience/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

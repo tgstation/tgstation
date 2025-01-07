@@ -132,6 +132,14 @@
 /datum/spy_bounty/proc/clean_up_stolen_item(atom/movable/stealing, mob/living/spy)
 	do_sparks(3, FALSE, stealing)
 
+	if(isitem(stealing) && stealing.loc == spy)
+		// get it out of our inventory before we mess with it to prevent any weirdness.
+		// bypasses nodrop - if you want, add a bespoke check for that higher up the chain
+		spy.temporarilyRemoveItemFromInventory(stealing, force = TRUE)
+		// also check for DROPDEL
+		if(QDELETED(stealing))
+			return
+
 	// Don't mess with it while it's going away
 	var/had_attack_hand_interaction = stealing.interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND
 	stealing.interaction_flags_atom &= ~INTERACT_ATOM_ATTACK_HAND
@@ -529,7 +537,7 @@
 		return TRUE
 	if(IS_WEAKREF_OF(stealing, target_ref))
 		var/mob/living/carbon/human/target = stealing
-		if(!target.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+		if(!INCAPACITATED_IGNORING(target, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 			return FALSE
 		if(find_desired_thing(target))
 			return TRUE
@@ -613,10 +621,10 @@
 		/obj/item/bodypart/arm/right,
 		/obj/item/bodypart/leg/left,
 		/obj/item/bodypart/leg/right,
-		/obj/item/organ/internal/stomach,
-		/obj/item/organ/internal/appendix,
-		/obj/item/organ/internal/liver,
-		/obj/item/organ/internal/eyes,
+		/obj/item/organ/stomach,
+		/obj/item/organ/appendix,
+		/obj/item/organ/liver,
+		/obj/item/organ/eyes,
 	)
 	return ..()
 
@@ -631,7 +639,7 @@
 	theft_time = 10 SECONDS
 	black_market_prob = 0
 	/// What typepath of bot we want to steal.
-	var/mob/living/simple_animal/bot/bot_type
+	var/mob/living/bot_type
 	/// Weakref to the bot we want to steal.
 	VAR_FINAL/datum/weakref/target_bot_ref
 
@@ -647,7 +655,7 @@
 
 /datum/spy_bounty/some_bot/init_bounty(datum/spy_bounty_handler/handler)
 	for(var/datum/spy_bounty/some_bot/existing_bounty in handler.get_all_bounties())
-		var/mob/living/simple_animal/bot/existing_bot_type = existing_bounty.bot_type
+		var/mob/living/existing_bot_type = existing_bounty.bot_type
 		// ensures we don't get two similar bounties.
 		// may occasionally cast a wider net than we'd desire, but it's not that bad.
 		if(ispath(bot_type, initial(existing_bot_type.parent_type)))

@@ -104,7 +104,7 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
-/obj/item/surgery_tray/full{
+/obj/effect/spawner/surgery_tray/full{
 	pixel_y = 4
 	},
 /obj/item/clothing/suit/apron/surgical,
@@ -1272,9 +1272,7 @@
 /area/shuttle/abandoned/medbay)
 "cL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/medical{
-	req_access = null
-	},
+/obj/machinery/vending/medical,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron/white,

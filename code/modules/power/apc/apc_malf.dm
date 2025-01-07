@@ -45,7 +45,7 @@
 	malf.ShutOffDoomsdayDevice()
 	occupier = malf
 	if (isturf(malf.loc)) // create a deactivated AI core if the AI isn't coming from an emergency mech shunt
-		malf.linked_core = new /obj/structure/ai_core/deactivated
+		malf.linked_core = new /obj/structure/ai_core/deactivated(malf.loc)
 		malf.linked_core.remote_ai = malf // note that we do not set the deactivated core's core_mmi.brainmob
 	malf.forceMove(src) // move INTO the APC, not to its tile
 	if(!findtext(occupier.name, "APC Copy"))
@@ -57,22 +57,29 @@
 		disk_pinpointers.switch_mode_to(TRACK_MALF_AI) //Pinpointer will track the shunted AI
 	var/datum/action/innate/core_return/return_action = new
 	return_action.Grant(occupier)
+	SEND_SIGNAL(src, COMSIG_SILICON_AI_OCCUPY_APC, occupier)
+	SEND_SIGNAL(occupier, COMSIG_SILICON_AI_OCCUPY_APC, occupier)
 	occupier.cancel_camera()
 
 /obj/machinery/power/apc/proc/malfvacate(forced)
 	if(!occupier)
+		return
+	SEND_SIGNAL(occupier, COMSIG_SILICON_AI_VACATE_APC, occupier)
+	SEND_SIGNAL(src, COMSIG_SILICON_AI_VACATE_APC, occupier)
+	if(forced)
+		occupier.forceMove(drop_location())
+		INVOKE_ASYNC(occupier, TYPE_PROC_REF(/mob/living, death))
+		occupier.gib(DROP_ALL_REMAINS)
+		occupier = null
 		return
 	if(occupier.linked_core)
 		occupier.shunted = FALSE
 		occupier.forceMove(occupier.linked_core.loc)
 		qdel(occupier.linked_core)
 		occupier.cancel_camera()
-		return
-	to_chat(occupier, span_danger("Primary core damaged, unable to return core processes."))
-	if(forced)
-		occupier.forceMove(drop_location())
-		INVOKE_ASYNC(occupier, TYPE_PROC_REF(/mob/living, death))
-		occupier.gib(DROP_ALL_REMAINS)
+		occupier = null
+	else
+		stack_trace("An AI: [occupier] has vacated an APC with no linked core and without being gibbed.")
 
 	if(!occupier.nuking) //Pinpointers go back to tracking the nuke disk, as long as the AI (somehow) isn't mid-nuking.
 		for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
@@ -106,10 +113,10 @@
 	transfer_in_progress = TRUE
 	user.visible_message(span_notice("[user] slots [card] into [src]..."), span_notice("Transfer process initiated. Sending request for AI approval..."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	SEND_SOUND(occupier, sound('sound/misc/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
+	SEND_SOUND(occupier, sound('sound/announcer/notice/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
 	if(tgui_alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", list("Yes - Transfer Me", "No - Keep Me Here")) == "No - Keep Me Here")
 		to_chat(user, span_danger("AI denied transfer request. Process terminated."))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 		transfer_in_progress = FALSE
 		return FALSE
 	if(user.loc != user_turf)

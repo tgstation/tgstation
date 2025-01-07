@@ -66,6 +66,19 @@
 		return
 	current_unlocked_designs -= added_design.build_path
 
+/obj/machinery/component_printer/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	//to allow quick recycling of circuits
+	if(istype(tool, /obj/item/circuit_component))
+		var/amount_inserted = materials.insert_item(tool)
+
+		if(amount_inserted)
+			to_chat(user, span_notice("[tool] worth [amount_inserted / SHEET_MATERIAL_AMOUNT] sheets of material was consumed by [src]"))
+		else
+			to_chat(user, span_warning("[tool] was rejected by [src]"))
+
+		return amount_inserted > 0 ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+
+	return ..()
 
 /obj/machinery/component_printer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -117,7 +130,7 @@
 	materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]")
 	return new design.build_path(drop_location())
 
-/obj/machinery/component_printer/ui_act(action, list/params)
+/obj/machinery/component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -192,13 +205,22 @@
 	return data
 
 /obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, params)
-	if(istype(weapon, /obj/item/integrated_circuit) && !user.combat_mode)
-		var/obj/item/integrated_circuit/circuit = weapon
-		circuit.linked_component_printer = WEAKREF(src)
-		circuit.update_static_data_for_all_viewers()
-		balloon_alert(user, "successfully linked to the integrated circuit")
-		return
-	return ..()
+	if (user.combat_mode)
+		return ..()
+
+	var/obj/item/integrated_circuit/circuit
+	if(istype(weapon, /obj/item/integrated_circuit))
+		circuit = weapon
+	else if (istype(weapon, /obj/item/circuit_component/module))
+		var/obj/item/circuit_component/module/module = weapon
+		circuit = module.internal_circuit
+	if (isnull(circuit))
+		return ..()
+
+	circuit.linked_component_printer = WEAKREF(src)
+	circuit.update_static_data_for_all_viewers()
+	balloon_alert(user, "successfully linked to the integrated circuit")
+
 
 /obj/machinery/component_printer/crowbar_act(mob/living/user, obj/item/tool)
 	if(..())
@@ -267,7 +289,7 @@
 		get_asset_datum(/datum/asset/spritesheet/research_designs)
 	)
 
-/obj/machinery/debug_component_printer/ui_act(action, list/params)
+/obj/machinery/debug_component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -355,7 +377,7 @@
 
 	update_static_data_for_all_viewers()
 
-/obj/machinery/module_duplicator/ui_act(action, list/params)
+/obj/machinery/module_duplicator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

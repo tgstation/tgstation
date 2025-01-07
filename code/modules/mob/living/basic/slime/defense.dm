@@ -15,11 +15,11 @@
 	if(buckled == attacker ? prob(60) : prob(30)) //its easier to remove the slime from yourself
 		attacker.visible_message(span_warning("[attacker] attempts to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled] !"), \
 		span_danger("[buckled == attacker ? "You attempt" : "[attacker] attempts" ] to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled]!"))
-		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+		playsound(loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 		return
 
 	attacker.visible_message(span_warning("[attacker] manages to wrestle \the [defender_slime.name] off!"), span_notice("You manage to wrestle \the [defender_slime.name] off!"))
-	playsound(loc, 'sound/weapons/shove.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/items/weapons/shove.ogg', 50, TRUE, -1)
 
 	defender_slime.discipline_slime()
 
@@ -87,7 +87,7 @@
 			has_found = TRUE
 		if(applied_crossbreed_amount >= SLIME_EXTRACT_CROSSING_REQUIRED)
 			to_chat(user, span_notice("You feed the slime as many of the extracts from the bag as you can, and it mutates!"))
-			playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
+			playsound(src, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 			spawn_corecross()
 			has_output = TRUE
 			break
@@ -99,7 +99,7 @@
 		to_chat(user, span_warning("There are no extracts in the bag that this slime will accept!"))
 	else
 		to_chat(user, span_notice("You feed the slime some extracts from the bag."))
-		playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 
 ///Handles the adverse effects of water on slimes
 /mob/living/basic/slime/proc/apply_water()

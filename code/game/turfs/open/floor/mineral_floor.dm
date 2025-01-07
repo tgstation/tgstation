@@ -97,6 +97,10 @@
 /turf/open/floor/mineral/titanium/blue/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/mineral/titanium/blue/lavaland_atmos
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+
 /turf/open/floor/mineral/titanium/white
 	icon_state = "titanium_white"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/white

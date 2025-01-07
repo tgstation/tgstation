@@ -1,8 +1,9 @@
 /atom/movable/screen/ai
 	icon = 'icons/hud/screen_ai.dmi'
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/ai/Click()
-	if(isobserver(usr) || usr.incapacitated())
+	if(isobserver(usr) || usr.incapacitated)
 		return TRUE
 
 /atom/movable/screen/ai/aicore

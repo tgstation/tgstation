@@ -360,7 +360,7 @@
 
 /obj/effect/abstract/gas_visual/Initialize(mapload)
 	. = ..()
-	color_filter = filter(type="color", color=matrix())
+	color_filter = filter(type="color", color="white")
 	filters += color_filter
 	color_filter = filters[filters.len]
 	if(current_color)

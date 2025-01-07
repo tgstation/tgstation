@@ -1,10 +1,18 @@
-import { BooleanLike } from 'common/react';
-import { createSearch } from 'common/string';
 import { useState } from 'react';
 import { DmIcon, Icon } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Input,
+  NoticeBox,
+  NumberInput,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { Box, Button, Input, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Item = {
@@ -99,6 +107,7 @@ export const SmartVend = (props) => {
 
 const ItemTile = ({ item }) => {
   const { act } = useBackend<Data>();
+  const [itemCount, setItemCount] = useState(1);
   const fallback = (
     <Icon name="spinner" lineHeight="64px" size={3} spin color="gray" />
   );
@@ -112,22 +121,35 @@ const ItemTile = ({ item }) => {
         tooltipPosition="bottom"
         textAlign="right"
         disabled={item.amount < 1}
-        onClick={() =>
-          act('Release', {
-            path: item.path,
-            amount: 1,
-          })
-        }
       >
+        <Box
+          position="absolute"
+          right="2px"
+          // in case you click on this instead, let it work as a regular click.
+          onClick={() =>
+            act('Release', {
+              path: item.path,
+              amount: itemCount,
+            })
+          }
+        >
+          x{item.amount}
+        </Box>
         <DmIcon
           fallback={fallback}
           icon={item.icon}
           icon_state={item.icon_state}
           height="64px"
           width="64px"
+          onClick={() =>
+            act('Release', {
+              path: item.path,
+              amount: itemCount,
+            })
+          }
         />
         {item.amount > 1 && (
-          <Button
+          <Box
             color="transparent"
             minWidth="24px"
             height="24px"
@@ -138,16 +160,16 @@ const ItemTile = ({ item }) => {
             bottom="0"
             fontWeight="bold"
             fontSize="14px"
-            onClick={(e) => {
-              act('Release', {
-                path: item.path,
-                amount: item.amount,
-              });
-              e.stopPropagation();
-            }}
           >
-            {item.amount}
-          </Button>
+            <NumberInput
+              width="25px"
+              minValue={1}
+              maxValue={item.amount}
+              step={1}
+              value={itemCount}
+              onChange={(value) => setItemCount(value)}
+            />
+          </Box>
         )}
       </Button>
       <Box
@@ -169,6 +191,7 @@ const ItemList = ({ item }) => {
   const fallback = (
     <Icon name="spinner" lineHeight="32px" size={3} spin color="gray" />
   );
+  const [itemCount, setItemCount] = useState(1);
   return (
     <Stack>
       <Stack.Item>
@@ -236,29 +259,20 @@ const ItemList = ({ item }) => {
           onClick={() =>
             act('Release', {
               path: item.path,
-              amount: 1,
+              amount: itemCount,
             })
           }
         >
           Vend
         </Button>
-      </Stack.Item>
-      <Stack.Item>
-        <Button
-          py="4px"
-          mt="4px"
-          height="24px"
-          lineHeight="16px"
-          disabled={item.amount <= 1}
-          onClick={(e) => {
-            act('Release', {
-              path: item.path,
-              amount: item.amount,
-            });
-          }}
-        >
-          Amount
-        </Button>
+        <NumberInput
+          width="25px"
+          minValue={1}
+          maxValue={item.amount}
+          step={1}
+          value={itemCount}
+          onChange={(value) => setItemCount(value)}
+        />
       </Stack.Item>
     </Stack>
   ) as any;

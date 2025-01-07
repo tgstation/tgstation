@@ -39,7 +39,7 @@
 		/obj/item/lighter,
 	)
 
-/datum/outfit/contractor_partner/post_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/contractor_partner/post_equip(mob/living/carbon/human/H, visuals_only)
 	. = ..()
 	var/obj/item/cigarette/syndicate/cig = H.get_item_by_slot(ITEM_SLOT_MASK)
 	cig.light()
