@@ -1140,7 +1140,6 @@
 			pulledby.stop_pulling()
 
 		var/same_loc = oldloc == destination
-		var/movement_successful = TRUE
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 		var/movement_dir = get_dir(src, destination)
@@ -1149,13 +1148,13 @@
 
 		loc = destination
 
-		if(!same_loc && loc == oldloc)
-			// when attempting to move an atom A into an atom B which already contains A, BYOND seems
-			// to silently refuse to move A to the new loc. This can really break stuff (see #77067)
-			stack_trace("Attempt to move [src] to [destination] was rejected by BYOND, possibly due to cyclic contents")
-			movement_successful = FALSE
+		if(!same_loc)
+			if(loc == oldloc)
+				// when attempting to move an atom A into an atom B which already contains A, BYOND seems
+				// to silently refuse to move A to the new loc. This can really break stuff (see #77067)
+				stack_trace("Attempt to move [src] to [destination] was rejected by BYOND, possibly due to cyclic contents")
+				return FALSE
 
-		if(movement_successful && !same_loc)
 			if(is_multi_tile && isturf(destination))
 				var/list/new_locs = block(
 					destination,
@@ -1184,7 +1183,7 @@
 				if(destarea && old_area != destarea)
 					destarea.Entered(src, old_area)
 
-		. = movement_successful
+		. = TRUE
 
 	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
 	else

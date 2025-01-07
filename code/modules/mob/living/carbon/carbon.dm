@@ -244,6 +244,10 @@
 
 		paper_note.show_through_camera(usr)
 
+/mob/living/carbon/on_fall()
+	. = ..()
+	loc?.handle_fall(src) //it's loc so it doesn't call the mob's handle_fall which does nothing
+
 /mob/living/carbon/resist_buckle()
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED))
 		buckled.user_unbuckle_mob(src, src)
@@ -1376,7 +1380,7 @@
 /// Special carbon interaction on lying down, to transform its sprite by a rotation.
 /mob/living/carbon/proc/lying_angle_on_lying_down(new_lying_angle)
 	if(!new_lying_angle)
-		set_lying_angle(pick(90, 270))
+		set_lying_angle(pick(LYING_ANGLE_EAST, LYING_ANGLE_WEST))
 	else
 		set_lying_angle(new_lying_angle)
 

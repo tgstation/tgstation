@@ -367,7 +367,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		final_table[result] *= rod.hook.get_hook_bonus_multiplicative(result)
 		final_table[result] += rod.hook.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
 
-		if(ispath(result, /obj/item/fish) || isfish(result))
+		if(ispath(result, /mob/living) && bait && (HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT) || HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT)))
+			final_table[result] = round(final_table[result] * result_multiplier, 1)
+
+		else if(ispath(result, /obj/item/fish) || isfish(result))
 			if(bait)
 				final_table[result] = round(final_table[result] * result_multiplier, 1)
 				var/mult = bait.check_bait(result)
@@ -501,6 +504,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
 	SIGNAL_HANDLER
+	if(fish_source_flags & FISH_SOURCE_FLAG_EXPLOSIVE_NONE)
+		return
 	var/multiplier = 1
 	if(fish_source_flags & FISH_SOURCE_FLAG_EXPLOSIVE_MALUS)
 		if(explosive_fishing_score <= 0)
