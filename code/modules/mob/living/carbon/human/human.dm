@@ -948,6 +948,12 @@
 		carrydelay *= potential_spine.athletics_boost_multiplier
 		experience_reward += experience_reward * potential_spine.athletics_boost_multiplier
 
+	// DOPPLER EDIT ADDITION BEGIN - Oversized
+	if(HAS_TRAIT(target, TRAIT_OVERSIZED) && !HAS_TRAIT(src, TRAIT_OVERSIZED))
+		visible_message(span_warning("[src] tries to carry [target], but they are too heavy!"))
+		return
+	// DOPPLER EDIT ADDITION END
+
 	if(carrydelay <= 3 SECONDS)
 		skills_space = " very quickly"
 	else if(carrydelay <= 4 SECONDS)
@@ -981,6 +987,30 @@
 	if(INCAPACITATED_IGNORING(target, INCAPABLE_GRAB) || INCAPACITATED_IGNORING(src, INCAPABLE_GRAB))
 		target.visible_message(span_warning("[target] can't hang onto [src]!"))
 		return
+
+	// DOPPLER EDIT ADDITION BEGIN - Oversized
+	if(HAS_TRAIT(target, TRAIT_OVERSIZED) && !HAS_TRAIT(src, TRAIT_OVERSIZED))
+		target.visible_message(span_warning("[target] is too heavy for [src] to carry!"))
+		var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
+		var/wound_bon = 0
+		if(!affecting)
+			affecting = get_bodypart(BODY_ZONE_CHEST)
+		if(prob(50))
+			wound_bon = 100
+			to_chat(src, span_danger("You are crushed under the weight of [target]!"))
+			to_chat(target, span_danger("You accidentally crush [src]!"))
+		else
+			to_chat(src, span_danger("You hurt your [affecting.name] while trying to endure the weight of [target]!"))
+		apply_damage(25, BRUTE, affecting, wound_bonus=wound_bon)
+		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+		AddElement(/datum/element/squish, 20 SECONDS)
+		Knockdown(3 SECONDS)
+		target.Knockdown(1)
+		if(get_turf(target) != get_turf(src))
+			target.throw_at(get_turf(src), 1, 1, spin=FALSE, quickstart=FALSE)
+		return
+	// DOPPLER EDIT ADDITION END
 
 	return buckle_mob(target, TRUE, TRUE, RIDER_NEEDS_ARMS)
 

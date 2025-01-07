@@ -310,6 +310,11 @@
 		to_chat(helper, span_notice("You shake [src] trying to pick [p_them()] up!"))
 		to_chat(src, span_notice("[helper] shakes you to get you up!"))
 	else if(check_zone(helper.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD)) //Headpats!
+		// DOPPLER EDIT ADDITION BEGIN - Oversized
+		if(HAS_TRAIT(src, TRAIT_OVERSIZED) && !HAS_TRAIT(helper, TRAIT_OVERSIZED))
+			visible_message(span_warning("[helper] tries to pat [src] on the head, but can't reach!"))
+			return
+		// DOPPLER EDIT ADDITION END
 		helper.visible_message(span_notice("[helper] gives [src] a pat on the head to make [p_them()] feel better!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 		to_chat(helper, span_notice("You give [src] a pat on the head to make [p_them()] feel better!"))

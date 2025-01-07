@@ -3,3 +3,6 @@
 
 /// The trait given to people with bad vibes.
 #define TRAIT_BAD_VIBES "trait_bad_vibes"
+
+/// The trait corresponding with the oversized quirk.
+#define TRAIT_OVERSIZED "oversized"
