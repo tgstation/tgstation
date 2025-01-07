@@ -4,7 +4,7 @@
 	icon = FA_ICON_EYE_DROPPER
 	value = -6
 	gain_text = span_danger("Your eyes feel itchy and dry...")
-	lose_text = span_notice("You realize that sudden darkness that has just enveloped you was just your eyelids suddenly growing back.")
+	lose_text = span_notice("You realize that sudden darkness that has just enveloped you was just your eyelids growing back.")
 	medical_record_text = "Patient has lost their eyelids following a grueling accident."
 	hardcore_value = 6
 	quirk_flags = QUIRK_HUMAN_ONLY
