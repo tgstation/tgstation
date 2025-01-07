@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Sign language no longer throws a runtime error when repeatedly muted and unmuted."
+  - bugfix: "Sign language no longer fails to hide the action when you get it while mute, stop being mute, and start being mute again."
