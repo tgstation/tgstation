@@ -72,11 +72,6 @@
 		current_power_generation = 0
 		return
 
-	var/input_capacity = hot_air_from_pipe.heat_capacity()
-	var/output_capacity = environment.heat_capacity()
-	var/cooling_heat_amount = CALCULATE_CONDUCTION_ENERGY(gas_temperature_delta, input_capacity, output_capacity)
-	hot_air_from_pipe.temperature = max(hot_air_from_pipe.temperature - (cooling_heat_amount / input_capacity), TCMB)
-
 	/// Takes the amount of heat moved, and divides it by the maximum temperature difference we expect, creating a number to divide power generation by
 	var/effective_energy_transfer = round((max_efficient_heat_difference / min(gas_temperature_delta, max_efficient_heat_difference)), 0.01)
 	current_power_generation = round(max_power_output / effective_energy_transfer)
