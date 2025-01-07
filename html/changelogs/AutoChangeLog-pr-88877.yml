@@ -1,4 +1,0 @@
-author: "warbluke"
-delete-after: True
-changes:
-  - bugfix: "Changed BATTERY to CELL in the mob define file since an ethereal stomach organ works like a power cell despite being called a battery."
