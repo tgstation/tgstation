@@ -404,10 +404,6 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/grenade/chem_grenade/incendiary{
-	pixel_x = 6;
-	pixel_y = 9
-	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "Aw" = (
@@ -508,13 +504,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
-"Ii" = (
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/structure/rack,
-/obj/effect/spawner/random/exotic/syndie,
-/obj/effect/spawner/random/exotic/syndie,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/turretedoutpost)
 "ID" = (
 /obj/structure/girder,
 /obj/structure/grille,
@@ -538,8 +527,6 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "Lf" = (
 /obj/structure/closet/crate,
-/obj/item/ammo_box/c9mm,
-/obj/item/ammo_box/c9mm,
 /obj/item/ammo_box/c9mm,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/dark,
@@ -969,7 +956,7 @@ ro
 ro
 sy
 fF
-Ii
+EA
 ro
 ro
 ID
