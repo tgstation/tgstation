@@ -186,6 +186,37 @@
 			return TRUE
 	return FALSE
 
+
+/**
+ * Supporting proc to get the cures of a replicable virus. This may differ from the archived cures for that disease id.
+ *
+ * @param {number} disease_id - The id of the disease being replicated.
+ *
+ * @returns {list} - The cures list for the disease or "none" if this fails for any reason.
+ *
+ */
+/obj/machinery/computer/pandemic/proc/get_beaker_cures(disease_id)
+	var/list/cures = list()
+	if(!beaker)
+		return cures
+
+	var/datum/reagent/blood/blood = locate() in beaker.reagents.reagent_list
+	if(!blood)
+		return cures
+
+	var/list/viruses = blood.get_diseases()
+	if(!viruses)
+		return cures
+
+	// Only check for cure if there is a beaker AND the beaker contains blood AND the blood contains a virus.
+	for(var/datum/disease/disease as anything in viruses)
+		if(istype(disease, /datum/disease/advance) && (disease.GetDiseaseID() == disease_id))	// Double check the ids match.
+			cures = disease.cures
+			return cures
+
+	return cures
+
+
 /**
  * Creates a culture bottle (ie: replicates) of the the specified disease.
  *
@@ -196,6 +227,14 @@
 /obj/machinery/computer/pandemic/proc/create_culture_bottle(index)
 	var/id = get_virus_id_by_index(text2num(index))
 	var/datum/disease/advance/adv_disease = SSdisease.archive_diseases[id]
+
+	var/list/cures = get_beaker_cures(id)
+	if(!cures)
+		return FALSE
+
+	adv_disease.cures = cures
+	adv_disease.cure_text = cures[1].name	// Same as generate_cure() in advance.dm
+
 	if(!istype(adv_disease) || !adv_disease.mutable)
 		to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
 		return FALSE
