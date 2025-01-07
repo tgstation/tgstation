@@ -92,6 +92,19 @@
 		balloon_alert(src, "need growth!")
 		return
 
+	friends_list = list()
+	for(var/mob/living/basic/slime/friend in loc)
+		if(QDELETED(friend))
+			continue
+		if(friend == src)
+			continue
+		friends_list += friend
+
+	overcrowded = length(friends_list) >= SLIME_OVERCROWD_AMOUNT
+	if(overcrowded)
+		balloon_alert(src, "overcrowded!")
+		return
+
 	var/list/babies = list()
 	var/new_nutrition = round(nutrition * 0.9)
 	var/new_powerlevel = round(powerlevel / 4)
