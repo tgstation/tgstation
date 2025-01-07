@@ -28384,10 +28384,9 @@
 /area/station/cargo/miningoffice)
 "kaC" = (
 /obj/machinery/light_switch/directional/east,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
+/obj/structure/table/wood/fancy,
+/obj/item/gun/energy/taser,
+/turf/open/floor/mineral/gold,
 /area/station/ai_monitored/security/armory)
 "kaF" = (
 /obj/effect/turf_decal/trimline/purple/line{
