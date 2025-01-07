@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { Flex } from 'tgui/components';
+import { Flex } from 'tgui-core/components';
 
 export const Notifications = (props) => {
   const { children } = props;

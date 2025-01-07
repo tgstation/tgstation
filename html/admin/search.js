@@ -23,7 +23,7 @@ function updateSearch(){
 			}
 			if(found == 0) row.style.display='none';
 			else{
-				row.style.display='block';
+				row.style.display='table-row'; /* DON'T make tables with block property */
 				row.className = alt_style;
 				if(alt_style == 'alt') alt_style = 'norm';
 				else alt_style = 'alt';

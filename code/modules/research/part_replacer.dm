@@ -11,7 +11,7 @@
 	storage_type = /datum/storage/rped
 
 /obj/item/storage/part_replacer/interact_with_atom(obj/attacked_object, mob/living/user, list/modifiers)
-	if(user.combat_mode || !istype(attacked_object) || HAS_TRAIT(attacked_object, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+	if(user.combat_mode)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	//its very important to NOT block so frames can still interact with it

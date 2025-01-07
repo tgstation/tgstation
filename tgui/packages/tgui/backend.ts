@@ -13,9 +13,9 @@
 
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
+import { globalEvents } from 'tgui-core/events';
 
 import { setupDrag } from './drag';
-import { globalEvents } from './events';
 import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';

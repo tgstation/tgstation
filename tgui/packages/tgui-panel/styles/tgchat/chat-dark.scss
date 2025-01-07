@@ -42,6 +42,10 @@ a.popt {
   text-decoration: none;
 }
 
+.center {
+  text-align: center;
+}
+
 /* POPUPS */
 
 .popup {
@@ -769,6 +773,10 @@ em {
   font-size: 60%;
 }
 
+.smaller {
+  font-size: 90%;
+}
+
 .slightly_larger {
   font-size: 115%;
 }
@@ -966,16 +974,70 @@ em {
   margin-left: 2.5em;
 }
 
-.examine_block {
-  background: hsl(220, 5.3%, 11.2%);
-  border: 1px solid hsl(213.6, 37.9%, 74.1%);
-  margin: 0.5em;
-  padding: 0.5em 0.75em;
-}
-
 .tooltip {
   font-style: italic;
-  border-bottom: 1px dashed #fff;
+  border-bottom: 1px dashed;
+}
+
+.fieldset_legend {
+  position: relative;
+  max-width: 95%;
+  font-size: 120%;
+  padding: 0.2em 0.5em;
+  background: #151515; // Chat background color
+  border: 1px solid;
+  border-color: inherit;
+  border-radius: 0.33em;
+  z-index: 0;
+
+  // "Mask" a half of the border
+  // It very rough but it only possible way i see with IE compat
+  // Replace it with normal mask-image when 516 got stable
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    height: 1.15em;
+    width: 100%;
+    background: #151515; // Chat background color
+    transform: translateY(-50%) scaleX(1.05);
+    z-index: -1;
+  }
+}
+
+.boxed_message {
+  background: hsl(220, 10%, 10%);
+  border: 1em * calc(1px / 12px) solid;
+  border-left: 1em * calc(4px / 12px) solid;
+  border-color: hsla(220, 40%, 75%, 0.25);
+  margin: 0.5em 0;
+  padding: 0.5em 0.75em;
+  border-radius: 0.33em;
+
+  &.red_box {
+    background: hsl(0, 20%, 10%);
+    border-color: hsla(0, 100%, 50%, 0.5);
+  }
+
+  &.green_box {
+    background: hsl(140, 20%, 10%);
+    border-color: hsla(120, 100%, 50%, 0.5);
+  }
+
+  &.blue_box {
+    background: hsl(220, 20%, 10%);
+    border-color: hsla(225, 90%, 65%, 0.5);
+  }
+
+  &.purple_box {
+    background: hsl(260, 25%, 12.5%);
+    border-color: hsla(260, 100%, 75%, 0.5);
+  }
+
+  hr {
+    margin: 0.5em -0.75em;
+    border-color: inherit;
+  }
 }
 
 // Provides a horizontal bar with text in the middle

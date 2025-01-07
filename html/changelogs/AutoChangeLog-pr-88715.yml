@@ -1,0 +1,4 @@
+author: "tontyGH"
+delete-after: True
+changes:
+  - code_imp: "AIs selecting holograms mid-round now select from the same list as prefs, which should make things easier to keep consistent"

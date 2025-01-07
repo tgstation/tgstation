@@ -1,4 +1,4 @@
-import { debounce, throttle } from 'common/timer';
+import { debounce, throttle } from 'tgui-core/timer';
 
 import { Channel } from './ChannelIterator';
 
