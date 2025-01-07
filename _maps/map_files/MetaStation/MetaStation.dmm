@@ -15642,12 +15642,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"fDA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/security/execution/transfer)
 "fDC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -27617,8 +27611,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "jLw" = (
-/turf/open/space/basic,
-/area/station/security/execution/transfer)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/brig)
 "jLy" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -53044,6 +53041,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
+"sKn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/execution/transfer)
 "sKs" = (
 /obj/structure/closet/bombcloset/security,
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -66908,12 +66911,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
-"xvh" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/security/brig)
 "xvn" = (
 /obj/machinery/shower/directional/west,
 /turf/open/floor/iron/freezer,
@@ -94003,7 +94000,7 @@ iRW
 hRv
 rJQ
 pHb
-xvh
+jLw
 lsP
 lsP
 sMB
@@ -94502,7 +94499,7 @@ cWI
 cWI
 gYi
 yey
-fDA
+sKn
 swe
 fNh
 sUC
@@ -95273,7 +95270,7 @@ mqQ
 gkn
 rgH
 ehZ
-jLw
+aaa
 aaa
 aaa
 aaa
