@@ -24,6 +24,61 @@
 	/// When the remote gets dropped, start a 5 minute timer before we stop listening for requests
 	var/list/setting_callbacks = list()
 
+/obj/item/door_remote/omni
+	name = "omni door remote"
+	desc = "This control wand can access any door on the station."
+	department_name = "omni"
+	job_access = /datum/job/captain
+
+/obj/item/door_remote/omni/captain
+	name = "captain's door remote"
+	desc = "This gaudily decorated remote can access any door on the station. This can only end well."
+	department_name = "Command"
+	response_name = span_comradio("CAPTAIN")
+	job_access = null
+
+/obj/item/door_remote/chief_engineer
+	name = "chief engineer's door remote"
+	department_name = "Engineering"
+	response_name = span_engradio("CHIEF ENGINEER")
+	job_access = null
+
+/obj/item/door_remote/research_director
+	name = "research director's door remote"
+	department_name = "Science"
+	response_name = span_sciradio("RESEARCH DIRECTOR")
+	job_access = null
+
+/obj/item/door_remote/head_of_security
+	name = "warden's(?) door remote"
+	desc = "This door remote controls Security airlocks. An indescripable odor emanates from it: fear, sweat, coffee... is that a hint of resentment? It looks like someone has tampered with the identifier."
+	department_name = "Security"
+	job_access = /datum/job/head_of_security
+
+/obj/item/door_remote/head_of_security/Initialize(mapload)
+	/// Warden wishes they were a head
+	response_name = span_secradio("HEAD OF SEC[generate_heretic_text(3)]WARDEN")
+	. = ..()
+
+/obj/item/door_remote/quartermaster
+	name = "quartermaster's door remote"
+	desc = "Remotely controls airlocks. This remote has additional Vault access."
+	department_name = "Cargo"
+	response_name = span_suppradio("QUARTERMASTER")
+	job_access = null
+
+/obj/item/door_remote/chief_medical_officer
+	name = "chief medical officer's door remote"
+	department_name = "Medical"
+	response_name = span_medradio("CHIEF MEDICAL OFFICER")
+	job_access = /datum/job/
+
+/obj/item/door_remote/head_of_personnel
+	name = "head of personnel's remote"
+	department_name = "Service"
+	response_name = span_servradio("HEAD OF PERSONNEL")
+	job_access = /datum/job/head_of_personnel
+
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
 	access_list = SSid_access.get_region_access_list(list(job_accessnull
@@ -160,60 +215,6 @@
 	icon_state = "[base_icon_state]_[department_name]_[icon_state_mode]"
 	return ..()
 
-/obj/item/door_remote/omni
-	name = "omni door remote"
-	desc = "This control wand can access any door on the station."
-	department_name = "omni"
-	job_access = /datum/job/captain
-
-/obj/item/door_remote/omni/captain
-	name = "captain's door remote"
-	desc = "This gaudily decorated remote can access any door on the station. This can only end well."
-	department_name = "Command"
-	response_name = span_comradio("CAPTAIN")
-	job_access = null
-
-/obj/item/door_remote/chief_engineer
-	name = "chief engineer's door remote"
-	department_name = "Engineering"
-	response_name = span_engradio("CHIEF ENGINEER")
-	job_access = null
-
-/obj/item/door_remote/research_director
-	name = "research director's door remote"
-	department_name = "Science"
-	response_name = span_sciradio("RESEARCH DIRECTOR")
-	job_access = null
-
-/obj/item/door_remote/head_of_security
-	name = "warden's(?) door remote"
-	desc = "This door remote controls Security airlocks. An indescripable odor emanates from it: fear, sweat, coffee... is that a hint of resentment? It looks like someone has tampered with the identifier."
-	department_name = "Security"
-	job_access = /datum/job/head_of_security
-
-/obj/item/door_remote/head_of_security/Initialize(mapload)
-	/// Warden wishes they were a head
-	response_name = span_secradio("HEAD OF SEC[generate_heretic_text(3)]WARDEN")
-	. = ..()
-
-/obj/item/door_remote/quartermaster
-	name = "quartermaster's door remote"
-	desc = "Remotely controls airlocks. This remote has additional Vault access."
-	department_name = "Cargo"
-	response_name = span_suppradio("QUARTERMASTER")
-	job_access = null
-
-/obj/item/door_remote/chief_medical_officer
-	name = "chief medical officer's door remote"
-	department_name = "Medical"
-	response_name = span_medradio("CHIEF MEDICAL OFFICER")
-	job_access = /datum/job/
-
-/obj/item/door_remote/head_of_personnel
-	name = "head of personnel's remote"
-	department_name = "Service"
-	response_name = span_servradio("HEAD OF PERSONNEL")
-	job_access = /datum/job/head_of_personnel
 
 #undef RESOLVE_OPERATION_RADIALS
 #undef RESOLVE_RESPONSE_RADIALS
