@@ -10,6 +10,7 @@
 	name = "toploader magazine (.223)"
 	desc = "A top-loading .223 magazine, suitable for the M-90gl carbine."
 	icon_state = ".223"
+	ammo_band_icon = "+.223ab"
 	ammo_type = /obj/item/ammo_casing/a223
 	caliber = CALIBER_A223
 	max_ammo = 30
