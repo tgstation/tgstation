@@ -739,7 +739,8 @@
 
 /mob/living/carbon/human/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, mob_height))
-		return FALSE
+		// you wanna edit this one not that one
+		var_name = NAMEOF(src, base_mob_height)
 	. = ..()
 	if(!.)
 		return .

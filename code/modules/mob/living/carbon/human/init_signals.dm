@@ -3,7 +3,7 @@
 
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_UNKNOWN), SIGNAL_REMOVETRAIT(TRAIT_UNKNOWN)), PROC_REF(on_unknown_trait))
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_DWARF), SIGNAL_REMOVETRAIT(TRAIT_DWARF)), PROC_REF(on_dwarf_trait))
-	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_TOO_TALL), SIGNAL_REMOVETRAIT(TRAIT_TOO_TALL)), PROC_REF(on_totall_trait))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_TOO_TALL), SIGNAL_REMOVETRAIT(TRAIT_TOO_TALL)), PROC_REF(on_tootall_trait))
 	RegisterSignal(src, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, PROC_REF(get_name_part))
 
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)), PROC_REF(on_fat))
@@ -30,7 +30,7 @@
 		passtable_off(src, TRAIT_DWARF)
 
 /// Gaining or losing [TRAIT_TOO_TALL] updates our height
-/mob/living/carbon/human/proc/on_totall_trait(datum/source)
+/mob/living/carbon/human/proc/on_tootall_trait(datum/source)
 	SIGNAL_HANDLER
 	update_mob_height()
 
