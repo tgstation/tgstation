@@ -103,7 +103,9 @@
 
 /datum/outfit/syndicatepilotcorpse/lessenedgear
 	name = "Syndicate Pilot Corpse (Less Antag Gear)"
+	gloves = /obj/item/clothing/gloves/color/black
 	id = /obj/item/card/id/advanced/black
+	id_trim = null
 
 /obj/effect/mob_spawn/corpse/human/tigercultist
 	name = "Tiger Cooperative Cultist"
