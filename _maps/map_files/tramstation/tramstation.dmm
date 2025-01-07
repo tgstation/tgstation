@@ -18273,10 +18273,12 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
 "fss" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/turf/open/floor/iron/dark/smooth_large/airless,
-/area/station/ai_monitored/security/armory)
+/turf/open/floor/iron,
+/area/station/hallway/secondary/command)
 "fst" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/grunge{
@@ -36871,12 +36873,10 @@
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/right)
 "lVh" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/hallway/secondary/command)
+/area/station/ai_monitored/security/armory)
 "lVi" = (
 /turf/closed/wall,
 /area/station/maintenance/department/science)
@@ -153686,9 +153686,9 @@ yar
 dDm
 uoO
 uoO
-lVh
-lVh
-lVh
+fss
+fss
+fss
 nYr
 rEq
 bSS
@@ -155450,7 +155450,7 @@ kjF
 yjm
 hPs
 juT
-fss
+lVh
 pbo
 aeX
 yjm
