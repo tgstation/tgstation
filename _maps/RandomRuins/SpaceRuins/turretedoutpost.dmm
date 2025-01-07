@@ -56,6 +56,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "fA" = (
@@ -209,6 +210,14 @@
 /obj/machinery/light/dim/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
+"nB" = (
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/turretedoutpost)
 "nM" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 4
@@ -230,6 +239,7 @@
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "oJ" = (
@@ -257,6 +267,15 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "qJ" = (
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/turretedoutpost)
+"qQ" = (
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "qR" = (
@@ -417,6 +436,7 @@
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
 /obj/item/pen/blue,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "BU" = (
@@ -469,6 +489,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "GN" = (
@@ -521,9 +542,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "Lf" = (
-/obj/structure/closet/crate,
-/obj/item/ammo_box/c9mm,
+/obj/machinery/power/smes/full,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "Mv" = (
@@ -544,12 +565,18 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "Oc" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
 	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/turretedoutpost)
+"Of" = (
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "OJ" = (
@@ -648,8 +675,10 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "US" = (
-/obj/item/rack_parts,
+/obj/structure/closet/crate,
+/obj/item/ammo_box/c9mm,
 /obj/machinery/light/small/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "Vn" = (
@@ -1141,7 +1170,7 @@ ro
 ro
 vZ
 TY
-TY
+Of
 bQ
 qJ
 ro
@@ -1169,8 +1198,8 @@ tD
 no
 Gu
 Oc
-Oc
-NU
+nB
+qQ
 NU
 Oc
 QM
