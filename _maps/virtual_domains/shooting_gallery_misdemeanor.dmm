@@ -257,6 +257,10 @@
 /obj/bitrunning/watcher_hunt_teleporter,
 /turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
+"vo" = (
+/obj/structure/sign/poster/wanted,
+/turf/closed/indestructible/wood,
+/area/virtual_domain/fullbright)
 "vH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb,
@@ -543,10 +547,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/sign/poster/wanted{
-	pixel_x = 0;
-	pixel_y = -32
-	},
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "Xy" = (
@@ -682,7 +682,7 @@ aH
 aH
 aH
 Wy
-aY
+vo
 aY
 aY
 aY
