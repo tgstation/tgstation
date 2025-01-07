@@ -803,6 +803,12 @@
 		volume = reagents.total_volume,\
 		bite_consumption = round(reagents.total_volume / (rand(20, 30) * 0.1)),\
 	)
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), PROC_REF(on_reagent_change))
+	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
+
+/obj/item/flashlight/glowstick/proc/on_reagents_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED, COMSIG_QDELETING))
 
 /obj/item/flashlight/glowstick/proc/get_fuel()
 	return reagents?.get_reagent_amount(fuel_type)
@@ -849,19 +855,23 @@
 	// No sense having a toggle light action that we don't use eh?
 	if(toggle)
 		remove_item_action(toggle)
-	burn_loop()
+	burn_loop(round(reagents.total_volume * 0.1))
 
 /obj/item/flashlight/glowstick/proc/turn_off()
 	var/datum/action/toggle = locate(/datum/action/item_action/toggle_light) in actions
 	if(get_fuel() && !toggle)
 		add_item_action(/datum/action/item_action/toggle_light)
 	if(timer_id != TIMER_ID_NULL)
-		var/expected_burn_time = burn_down(0) // This is dumb I'm sorry
-		burn_down(expected_burn_time - timeleft(timer_id))
 		deltimer(timer_id)
 		timer_id = TIMER_ID_NULL
 	set_light_on(FALSE)
 	update_appearance(UPDATE_ICON)
+
+/obj/item/flashlight/glowstick/proc/on_reagent_change(datum/source)
+	SIGNAL_HANDLER
+
+	if (!get_fuel() && light_on)
+		turn_off()
 
 /obj/item/flashlight/glowstick/update_icon_state()
 	. = ..()

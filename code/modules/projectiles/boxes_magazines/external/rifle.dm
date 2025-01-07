@@ -1,14 +1,10 @@
-/obj/item/ammo_box/magazine/m10mm/rifle
+/obj/item/ammo_box/magazine/sr10mm
 	name = "rifle magazine (10mm)"
 	desc = "A well-worn magazine fitted for the surplus rifle."
-	icon_state = "75-full"
-	base_icon_state = "75"
+	icon_state = "75"
 	ammo_type = /obj/item/ammo_casing/c10mm
 	max_ammo = 10
-
-/obj/item/ammo_box/magazine/m10mm/rifle/update_icon_state()
-	. = ..()
-	icon_state = "[base_icon_state]-[LAZYLEN(stored_ammo) ? "full" : "empty"]"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
 
 /obj/item/ammo_box/magazine/m223
 	name = "toploader magazine (.223)"
