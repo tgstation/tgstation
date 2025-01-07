@@ -20,7 +20,7 @@
 	/* INITIALIZATION */
 	/// If FALSE, attempts to [obj/item/aicard][card] the AI will be rejected
 	var/can_be_carded = TRUE
-	/// If TRUE when the AI dies, it will create a devastating explosion
+	/// If TRUE, the AI will explode when killed
 	var/explodes_on_death = FALSE
 	/// Whether its MMI is a posibrain or regular MMI, used when being [obj/structure/ai_core][deconstructed]
 	var/posibrain_inside = TRUE
@@ -50,7 +50,7 @@
 	/* POWER */
 	/// Reserve emergency power, consumed when the AI has no [var/power_requirement][power source]
 	var/battery = 200
-	/// The type of conditions the AI needs to stay powered
+	/// The conditions the AI will check to see if it's powered, can be set to NONE (0) to disable requirements
 	var/power_requirement = POWER_REQ_ALL
 	/// Current stage of the AI's power restoration routine
 	VAR_FINAL/aiRestorePowerRoutine = POWER_RESTORATION_OFF
@@ -63,11 +63,11 @@
 	var/list/network = list(CAMERANET_NETWORK_SS13)
 	/// If the AI has their camera light enabled
 	var/camera_light_on = FALSE
-	/// List of cameras that have been illuminated by the AI's [var/camera_light][camera light]
+	/// List of cameras that have been illuminated by the AI's camera light
 	VAR_FINAL/list/obj/machinery/camera/lit_cameras = list()
-	/// List of atoms that the AI can quickly jump to through keys 1-9
+	/// List of atoms that the AI's camera can quickly jump to through keys 1-9
 	VAR_FINAL/list/atom/cam_hotkeys = new/list(9)
-	/// Our last location before jumping.
+	/// The camera's last location before jumping
 	VAR_FINAL/atom/cam_prev
 
 
@@ -78,7 +78,7 @@
 	VAR_FINAL/list/mob/eye/camera/ai/all_eyes = list()
 	/// The internal tool used to track players visible through cameras
 	VAR_FINAL/datum/trackable/ai_tracking_tool
-	/// [var/acceleration][Incrementing] value used in [proc/AIMove][movement]
+	/// The current movement speed of the camera, it's definition being the base speed. Moves 1 more tile for every 10 sprint.
 	var/sprint = 10
 	/// Time since the AI [proc/AIMove][last moved their camera eye], uses world.timeofday
 	VAR_FINAL/last_moved = 0
