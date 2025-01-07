@@ -33,3 +33,6 @@
 #define BITRUNNER_DOMAIN_DEFAULT "gibson"
 /// Security bitrunning domains, shows up in the Torment Nexus.
 #define BITRUNNER_DOMAIN_SECURITY "torment_nexus"
+
+#define BITRUNNING_DOORBLOCK_RIGHT "right_door"
+#define BITRUNNING_DOORBLOCK_LEFT "left_door"

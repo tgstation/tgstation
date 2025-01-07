@@ -1,3 +1,4 @@
+#define DISPLAY_PIXEL_ALPHA 96
 /obj/bitrunning/target
 	name = "target"
 	desc = "A target for Target Identification."
@@ -470,3 +471,4 @@
 /obj/machinery/conveyor/auto/very_fast/inverted
 	icon_state = "conveyor_map_inverted"
 	flipped = TRUE
+#undef DISPLAY_PIXEL_ALPHA

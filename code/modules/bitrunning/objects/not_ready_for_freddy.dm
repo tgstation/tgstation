@@ -1,5 +1,3 @@
-#define BITRUNNING_DOORBLOCK_RIGHT "right_door"
-#define BITRUNNING_DOORBLOCK_LEFT "left_door"
 #define DISPLAY_PIXEL_ALPHA 96
 /datum/looping_sound/phone_ring
 	mid_sounds = list('sound/items/weapons/ring.ogg' = 1)
@@ -886,6 +884,4 @@
 	blocking_door = BITRUNNING_DOORBLOCK_RIGHT
 	failure_reset_id = "hallway1_engineering"
 
-#undef BITRUNNING_DOORBLOCK_RIGHT
-#undef BITRUNNING_DOORBLOCK_LEFT
 #undef DISPLAY_PIXEL_ALPHA

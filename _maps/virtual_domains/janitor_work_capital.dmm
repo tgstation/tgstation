@@ -11223,7 +11223,7 @@
 /area/virtual_domain/fullbright)
 "Rm" = (
 /obj/structure/hedge,
-/obj/structure/flora/bush/flowers_br/style_3
+/obj/structure/flora/bush/flowers_br/style_3,
 /turf/open/misc/dirt/dark/station,
 /area/virtual_domain/fullbright)
 "Rp" = (
