@@ -57393,6 +57393,7 @@
 	pixel_y = 5
 	},
 /obj/item/clothing/suit/hooded/ablative,
+/obj/item/gun/energy/taser,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
 "tzz" = (

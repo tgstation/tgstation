@@ -18273,12 +18273,10 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
 "fss" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/command)
+/turf/open/floor/iron/dark/smooth_large/airless,
+/area/station/ai_monitored/security/armory)
 "fst" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/grunge{
@@ -58243,6 +58241,7 @@
 /obj/item/gun/energy/temperature/security,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/gun/energy/taser,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "tBa" = (
@@ -153687,7 +153686,7 @@ yar
 dDm
 uoO
 uoO
-fss
+lVh
 lVh
 lVh
 nYr
@@ -155451,7 +155450,7 @@ kjF
 yjm
 hPs
 juT
-lAC
+fss
 pbo
 aeX
 yjm

@@ -38571,6 +38571,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/item/gun/energy/taser,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "lgK" = (

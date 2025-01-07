@@ -10988,7 +10988,9 @@
 /obj/structure/secure_safe/directional/north{
 	name = "armory safe A"
 	},
-/turf/open/floor/iron/dark,
+/obj/structure/table/wood/fancy/red,
+/obj/item/gun/energy/taser,
+/turf/open/floor/mineral/gold,
 /area/station/ai_monitored/security/armory)
 "dXA" = (
 /obj/structure/closet/crate/trashcart,
