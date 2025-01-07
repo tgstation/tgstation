@@ -201,7 +201,7 @@ SUBSYSTEM_DEF(dynamic)
 
 	VAR_PRIVATE/next_midround_injection
 
-/proc/get_threat_level_string(shown_threat, fake_greenshift)
+/datum/controller/subsystem/dynamic/proc/get_threat_level_string(shown_threat, fake_greenshift)
 	var/advisory_string = ""
 	switch(round(shown_threat))
 		if(0 to 19)
