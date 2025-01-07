@@ -609,7 +609,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	CRASH("Bad op: area/drop_location() called")
 
 /// A hook so areas can modify the incoming args of ChangeTurf
-/area/proc/PlaceOnTopReact(list/new_baseturfs, turf/added_layer, flags)
+/area/proc/place_on_top_react(list/new_baseturfs, turf/added_layer, flags)
 	return flags
 
 

@@ -17,7 +17,7 @@
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 
 
-/area/shuttle/PlaceOnTopReact(list/new_baseturfs, turf/added_layer, flags)
+/area/shuttle/place_on_top_react(list/new_baseturfs, turf/added_layer, flags)
 	. = ..()
 	if(ispath(added_layer, /turf/open/floor/plating))
 		new_baseturfs.Add(/turf/baseturf_skipover/shuttle)
