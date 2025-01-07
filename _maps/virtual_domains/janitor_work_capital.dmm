@@ -90,9 +90,7 @@
 /area/virtual_domain/fullbright)
 "ar" = (
 /obj/structure/hedge,
-/obj/structure/flora/bush/flowers_pp{
-	layer = 3
-	},
+/obj/structure/flora/bush/flowers_pp,
 /turf/open/misc/dirt/dark/station,
 /area/virtual_domain/fullbright)
 "au" = (
@@ -455,8 +453,7 @@
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "floor3-old";
 	pixel_x = 14;
-	pixel_y = 6;
-	layer = 2.9
+	pixel_y = 6
 	},
 /turf/open/misc/grass/jungle,
 /area/virtual_domain/fullbright)
@@ -610,12 +607,10 @@
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor4-old"
 	},
 /obj/effect/gibspawner/human,
 /obj/effect/decal/cleanable/glass/titanium{
-	layer = 2.9;
 	pixel_x = -17;
 	pixel_y = 0
 	},
@@ -696,7 +691,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/hedge,
 /obj/structure/flora/grass/brown{
-	layer = 3;
 	pixel_y = 5
 	},
 /turf/open/floor/wood,
@@ -1033,20 +1027,17 @@
 /obj/structure/table/wood/fancy/black,
 /obj/structure/sign/flag/tizira/directional/north,
 /obj/effect/decal/cleanable/blood/drip{
-	layer = 2.9;
 	pixel_x = 10;
 	pixel_y = 7
 	},
 /obj/effect/decal/cleanable/blood/drip{
-	layer = 2.9;
 	pixel_x = 3;
 	pixel_y = 14
 	},
 /obj/effect/decal/cleanable/blood/drip{
 	icon_state = "drip4";
 	pixel_x = 5;
-	pixel_y = 16;
-	layer = 2.9
+	pixel_y = 16
 	},
 /obj/item/trash/candle{
 	pixel_x = -5;
@@ -1545,7 +1536,6 @@
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor3";
 	pixel_x = -4;
 	pixel_y = 0
@@ -1580,21 +1570,18 @@
 "gO" = (
 /obj/structure/table/wood/fancy/black,
 /obj/effect/decal/cleanable/blood/drip{
-	layer = 2.9;
 	pixel_x = 3;
 	pixel_y = 11
 	},
 /obj/effect/decal/cleanable/blood/drip{
 	icon_state = "drip4";
 	pixel_x = 4;
-	pixel_y = 7;
-	layer = 2.9
+	pixel_y = 7
 	},
 /obj/effect/decal/cleanable/blood/drip{
 	icon_state = "drip4";
 	pixel_x = 2;
-	pixel_y = 17;
-	layer = 2.9
+	pixel_y = 17
 	},
 /obj/item/trash/candle{
 	pixel_x = -4;
@@ -1641,18 +1628,15 @@
 /obj/effect/turf_decal/trimline/dark/end,
 /obj/effect/decal/cleanable/ash/large{
 	pixel_x = 16;
-	pixel_y = 5;
-	layer = 2.9
+	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/ash/large{
 	pixel_x = 28;
-	pixel_y = -2;
-	layer = 2.9
+	pixel_y = -2
 	},
 /obj/effect/decal/cleanable/ash/large{
 	pixel_x = 5;
-	pixel_y = -2;
-	layer = 2.9
+	pixel_y = -2
 	},
 /obj/item/kirbyplants/organic/plant17{
 	pixel_x = -7;
@@ -1946,7 +1930,6 @@
 /obj/item/plate,
 /obj/item/food/takoyaki,
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor7"
 	},
 /turf/open/floor/carpet/red,
@@ -2744,12 +2727,10 @@
 	pixel_y = 0
 	},
 /obj/effect/decal/cleanable/blood/drip{
-	layer = 2.9;
 	pixel_x = -5;
 	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/blood/drip{
-	layer = 2.9;
 	pixel_x = 8;
 	pixel_y = 17
 	},
@@ -3074,7 +3055,6 @@
 	},
 /obj/structure/table/wood/fancy,
 /obj/effect/decal/cleanable/blood/gibs/up{
-	layer = 2.9;
 	pixel_x = -1;
 	pixel_y = 7
 	},
@@ -3196,9 +3176,7 @@
 /obj/effect/decal/cleanable/blood{
 	icon_state = "floor2"
 	},
-/obj/effect/decal/cleanable/glass/titanium{
-	layer = 2.9
-	},
+/obj/effect/decal/cleanable/glass/titanium,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -3338,7 +3316,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor5";
 	pixel_x = 6;
 	pixel_y = -9
@@ -3389,7 +3366,6 @@
 	pixel_x = 17
 	},
 /obj/effect/decal/cleanable/food/plant_smudge{
-	layer = 2.9;
 	pixel_x = -1;
 	pixel_y = 10
 	},
@@ -3669,7 +3645,6 @@
 	pixel_y = 0
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor5";
 	pixel_x = -1;
 	pixel_y = 3
@@ -4050,14 +4025,12 @@
 	},
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "gib3";
 	pixel_x = -20;
 	pixel_y = 9
 	},
 /obj/item/bodypart/head,
 /obj/effect/decal/cleanable/food/tomato_smudge{
-	layer = 2.9;
 	pixel_x = 2;
 	pixel_y = 12
 	},
@@ -4655,7 +4628,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/ammo_casing/arrow,
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor3";
 	pixel_x = 11;
 	pixel_y = 2
@@ -4822,7 +4794,6 @@
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	pixel_x = 1;
 	pixel_y = 6
 	},
@@ -6050,13 +6021,11 @@
 /obj/item/food/springroll,
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	pixel_x = -2;
 	pixel_y = 10
 	},
 /obj/item/bodypart/arm/left,
 /obj/effect/decal/cleanable/glass/titanium{
-	layer = 2.9;
 	pixel_x = -9;
 	pixel_y = 14
 	},
@@ -6233,7 +6202,6 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/food/plant_smudge{
-	layer = 2.9;
 	pixel_x = -17;
 	pixel_y = 0
 	},
@@ -6265,12 +6233,10 @@
 	},
 /obj/item/bodypart/leg/right,
 /obj/effect/decal/cleanable/food/tomato_smudge{
-	layer = 2.9;
 	pixel_x = 0;
 	pixel_y = 14
 	},
 /obj/effect/decal/cleanable/food/pie_smudge{
-	layer = 2.9;
 	pixel_x = -12;
 	pixel_y = 16
 	},
@@ -6505,7 +6471,6 @@
 	pixel_y = -4
 	},
 /obj/effect/decal/cleanable/blood/drip{
-	layer = 2.9;
 	pixel_x = -1;
 	pixel_y = 0
 	},
@@ -6552,9 +6517,7 @@
 	pixel_x = 5;
 	pixel_y = 6
 	},
-/obj/effect/decal/cleanable/food/plant_smudge{
-	layer = 2.9
-	},
+/obj/effect/decal/cleanable/food/plant_smudge,
 /turf/open/floor/carpet/red,
 /area/virtual_domain/fullbright)
 "zu" = (
@@ -6726,13 +6689,11 @@
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	pixel_x = 1;
 	pixel_y = 6
 	},
 /obj/item/bodypart/leg/right,
 /obj/effect/decal/cleanable/glass/titanium{
-	layer = 2.9;
 	pixel_x = -9;
 	pixel_y = 14
 	},
@@ -7126,7 +7087,6 @@
 	pixel_x = 17
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor5";
 	pixel_x = 6;
 	pixel_y = -9
@@ -7237,7 +7197,6 @@
 /obj/effect/decal/cleanable/plasma,
 /obj/item/stack/sheet/mineral/sandbags,
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	pixel_x = 1;
 	pixel_y = -9
 	},
@@ -7261,7 +7220,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/hedge,
 /obj/structure/flora/grass/brown{
-	layer = 3;
 	pixel_y = 5
 	},
 /turf/open/floor/wood,
@@ -7704,7 +7662,6 @@
 	pixel_y = -4
 	},
 /obj/effect/decal/cleanable/blood/drip{
-	layer = 2.9;
 	pixel_x = -5;
 	pixel_y = -7
 	},
@@ -7839,7 +7796,6 @@
 "Ez" = (
 /obj/structure/hedge,
 /obj/structure/flora/grass/brown{
-	layer = 3;
 	pixel_y = 5
 	},
 /turf/open/floor/wood/large,
@@ -7880,7 +7836,6 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/decal/cleanable/food/plant_smudge{
-	layer = 2.9;
 	pixel_x = 13;
 	pixel_y = 6
 	},
@@ -7892,12 +7847,10 @@
 /obj/item/food/fried_chicken,
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	pixel_x = 1;
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/glass/titanium{
-	layer = 2.9;
 	pixel_x = 1;
 	pixel_y = 21
 	},
@@ -8277,12 +8230,10 @@
 	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor4-old"
 	},
 /obj/item/bodypart/leg/right,
 /obj/effect/decal/cleanable/food/pie_smudge{
-	layer = 2.9;
 	pixel_x = -17;
 	pixel_y = 4
 	},
@@ -8336,8 +8287,7 @@
 	pixel_x = 0
 	},
 /obj/structure/fence{
-	dir = 4;
-	layer = 3
+	dir = 4
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/fullbright)
@@ -8382,7 +8332,6 @@
 	anchored = 1
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor3";
 	pixel_x = -4;
 	pixel_y = 0
@@ -8476,18 +8425,15 @@
 /obj/effect/turf_decal/trimline/dark/end,
 /obj/effect/decal/cleanable/ash/large{
 	pixel_x = 16;
-	pixel_y = 5;
-	layer = 2.9
+	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/ash/large{
 	pixel_x = 28;
-	pixel_y = -2;
-	layer = 2.9
+	pixel_y = -2
 	},
 /obj/effect/decal/cleanable/ash/large{
 	pixel_x = 5;
-	pixel_y = -2;
-	layer = 2.9
+	pixel_y = -2
 	},
 /obj/structure/railing{
 	dir = 10
@@ -8919,7 +8865,6 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor3";
 	pixel_x = 8;
 	pixel_y = 5
@@ -9745,7 +9690,6 @@
 	pixel_x = 0
 	},
 /obj/effect/decal/cleanable/blood/drip{
-	layer = 2.9;
 	pixel_x = -1;
 	pixel_y = 0
 	},
@@ -9998,9 +9942,7 @@
 /area/virtual_domain/fullbright)
 "Mv" = (
 /obj/structure/hedge,
-/obj/structure/flora/bush/flowers_yw/style_2{
-	layer = 3
-	},
+/obj/structure/flora/bush/flowers_yw/style_2,
 /turf/open/misc/dirt/dark/station,
 /area/virtual_domain/fullbright)
 "Mx" = (
@@ -10459,12 +10401,10 @@
 	},
 /obj/item/clothing/head/costume/crown,
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	pixel_x = 1;
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/food/plant_smudge{
-	layer = 2.9;
 	pixel_x = -17;
 	pixel_y = 0
 	},
@@ -10920,18 +10860,15 @@
 /obj/effect/turf_decal/trimline/dark/end,
 /obj/effect/decal/cleanable/ash/large{
 	pixel_x = 16;
-	pixel_y = 5;
-	layer = 2.9
+	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/ash/large{
 	pixel_x = 28;
-	pixel_y = -2;
-	layer = 2.9
+	pixel_y = -2
 	},
 /obj/effect/decal/cleanable/ash/large{
 	pixel_x = 5;
-	pixel_y = -2;
-	layer = 2.9
+	pixel_y = -2
 	},
 /obj/structure/railing{
 	dir = 10
@@ -10960,13 +10897,11 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "gib3";
 	pixel_x = 10;
 	pixel_y = -1
 	},
 /obj/effect/decal/cleanable/food/pie_smudge{
-	layer = 2.9;
 	pixel_x = -14;
 	pixel_y = -13
 	},
@@ -11288,9 +11223,7 @@
 /area/virtual_domain/fullbright)
 "Rm" = (
 /obj/structure/hedge,
-/obj/structure/flora/bush/flowers_br/style_3{
-	layer = 3
-	},
+/obj/structure/flora/bush/flowers_br/style_3
 /turf/open/misc/dirt/dark/station,
 /area/virtual_domain/fullbright)
 "Rp" = (
@@ -11412,7 +11345,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor7"
 	},
 /obj/item/bodypart/head{
@@ -11814,7 +11746,6 @@
 	},
 /obj/structure/noticeboard/directional/north,
 /obj/structure/flora/grass/brown{
-	layer = 3;
 	pixel_y = 5
 	},
 /turf/open/floor/wood/large,
@@ -11881,7 +11812,6 @@
 	},
 /obj/structure/noticeboard/directional/north,
 /obj/structure/flora/grass/brown{
-	layer = 3;
 	pixel_y = 5
 	},
 /turf/open/floor/wood/large,
@@ -12234,7 +12164,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor3"
 	},
 /turf/open/floor/carpet/red,
@@ -12381,7 +12310,6 @@
 	pixel_y = -1
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	icon_state = "floor2"
 	},
 /obj/effect/turf_decal/siding/wood{
@@ -12950,7 +12878,6 @@
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/blood{
-	layer = 2.9;
 	pixel_x = 1;
 	pixel_y = 6
 	},

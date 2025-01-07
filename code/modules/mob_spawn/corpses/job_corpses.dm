@@ -95,5 +95,5 @@
 	icon_state = "corpsegreytider"
 
 /obj/effect/mob_spawn/corpse/human/security/hos
-    name = JOB_HEAD_OF_SECURITY
-    outfit = /datum/outfit/job/hos
+	name = JOB_HEAD_OF_SECURITY
+	outfit = /datum/outfit/job/hos

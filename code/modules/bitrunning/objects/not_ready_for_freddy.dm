@@ -885,3 +885,7 @@
 	kill_node = TRUE
 	blocking_door = BITRUNNING_DOORBLOCK_RIGHT
 	failure_reset_id = "hallway1_engineering"
+
+#undef BITRUNNING_DOORBLOCK_RIGHT
+#undef BITRUNNING_DOORBLOCK_LEFT
+#undef DISPLAY_PIXEL_ALPHA

@@ -686,10 +686,6 @@
 	},
 /turf/open/floor/fakespace,
 /area/virtual_domain/fullbright)
-"Np" = (
-/obj/structure/lattice/catwalk,
-/turf/closed/wall/mineral/plastitanium,
-/area/virtual_domain/fullbright)
 "NH" = (
 /obj/structure/fluff/tram_rail/end,
 /turf/open/floor/fakespace,
@@ -1172,7 +1168,7 @@ Xg
 FD
 Ed
 YL
-Np
+YL
 YL
 DJ
 Ft
