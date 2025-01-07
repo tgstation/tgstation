@@ -624,16 +624,30 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	if(!(SPT_PROB(creation_purity*10, seconds_per_tick)))
 		return
-	var/traumalist = subtypesof(/datum/brain_trauma)
-	var/list/forbiddentraumas = list(
-		/datum/brain_trauma/severe/split_personality,  // Split personality uses a ghost, I don't want to use a ghost for a temp thing
-		/datum/brain_trauma/special/obsessed, // Obsessed sets the affected_mob as an antag - I presume this will lead to problems, so we'll remove it
-		/datum/brain_trauma/hypnosis, // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neurowhine purges and then turn into "nothing" on the med reading upon a second application
-		/datum/brain_trauma/special/honorbound, // Designed to be chaplain exclusive
-	)
-	traumalist -= forbiddentraumas
+	var/static/list/traumalist
+	if (!traumalist)
+		traumalist = subtypesof(/datum/brain_trauma)
+		var/list/forbiddentraumas = list(
+			/datum/brain_trauma/magic, // Abstract types
+			/datum/brain_trauma/mild,
+			/datum/brain_trauma/severe,
+			/datum/brain_trauma/special,
+			/datum/brain_trauma/severe/split_personality,  // Uses a ghost, I don't want to use a ghost for a temp thing
+			/datum/brain_trauma/severe/split_personality/brainwashing,
+			/datum/brain_trauma/severe/split_personality/blackout,
+			/datum/brain_trauma/special/imaginary_friend,
+			/datum/brain_trauma/special/imaginary_friend/trapped_owner,
+			/datum/brain_trauma/special/obsessed, // Obsessed sets the affected_mob as an antag - I presume this will lead to problems, so we'll remove it
+			/datum/brain_trauma/hypnosis, // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neurowhine purges and then turn into "nothing" on the med reading upon a second application
+			/datum/brain_trauma/special/honorbound, // Designed to be chaplain exclusive
+			/datum/brain_trauma/special/psychotic_brawling/bath_salts, // Subtype which just has a different name for medical scanner
+		)
+		traumalist -= forbiddentraumas
+		traumalist -= subtypesof(/datum/brain_trauma/mild/phobia) // The base type gives out a random subtype, the subtypes shouldn't bne in the list
+		traumalist -= subtypesof(/datum/brain_trauma/severe/paralysis) // Same as above
+		traumalist = shuffle(traumalist)
+
 	var/obj/item/organ/brain/brain = affected_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
-	traumalist = shuffle(traumalist)
 	for(var/trauma in traumalist)
 		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
 			temp_trauma = trauma
