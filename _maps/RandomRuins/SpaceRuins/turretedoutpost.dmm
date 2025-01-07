@@ -149,11 +149,6 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
-"kM" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/template_noop,
-/area/ruin/space/has_grav/turretedoutpost)
 "lw" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -904,7 +899,7 @@ bU
 jM
 jM
 jM
-kM
+bU
 jM
 jM
 jM
