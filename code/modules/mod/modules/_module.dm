@@ -349,9 +349,9 @@
 		return
 	var/mutable_appearance/module_icon
 	if(mask_worn_overlay)
-		module_icon = mutable_appearance(get_module_icon_cache(used_overlay), layer = standing.layer + 0.1)
+		module_icon = mutable_appearance(get_module_icon_cache(used_overlay), layer = standing.layer + 6.1) // DOPPLER EDIT - module_icon = mutable_appearance(get_module_icon_cache(used_overlay), layer = standing.layer + 0.1)
 	else
-		module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
+		module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 6.1) // DOPPLER EDIT - module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
 	if(!use_mod_colors)
 		module_icon.appearance_flags |= RESET_COLOR
 

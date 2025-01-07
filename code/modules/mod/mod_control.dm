@@ -777,4 +777,4 @@
 	SEND_SIGNAL(src, COMSIG_MOD_GET_VISOR_OVERLAY, standing, overrides)
 	if (length(overrides))
 		return overrides[1]
-	return mutable_appearance(worn_icon, "[skin]-helmet-visor", layer = standing.layer + 0.1)
+	return mutable_appearance(worn_icon, "[skin]-helmet-visor", layer = standing.layer + 6.1) // DOPPLER EDIT - return mutable_appearance(worn_icon, "[skin]-helmet-visor", layer = standing.layer + 0.1)
