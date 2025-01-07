@@ -397,6 +397,7 @@
 #define RAND_BLINKING_DELAY 1 SECONDS
 #define BLINK_DURATION 0.2 SECONDS
 #define BLINK_LOOPS 5
+#define ASYNC_BLINKING_BRAIN_DAMAGE 60
 
 /// Modifies eye overlays to also act as eyelids, both for blinking and for when you're knocked out cold
 /obj/item/organ/eyes/proc/setup_eyelids(mutable_appearance/eye_left, mutable_appearance/eye_right, mob/living/carbon/human/parent)
@@ -424,13 +425,14 @@
 	eyelid_right.render_target = "*[REF(parent)]_eyelid_right"
 	parent.vis_contents += eyelid_left
 	parent.vis_contents += eyelid_right
+	var/sync_blinking = synchronized_blinking && (parent.get_organ_loss(ORGAN_SLOT_BRAIN) < ASYNC_BLINKING_BRAIN_DAMAGE)
 	// Randomize order for unsynched animations
-	if (synchronized_blinking || prob(50))
-		var/list/anim_times = animate_eyelid(eyelid_left, parent)
-		animate_eyelid(eyelid_right, parent, anim_times)
+	if (sync_blinking || prob(50))
+		var/list/anim_times = animate_eyelid(eyelid_left, parent, sync_blinking)
+		animate_eyelid(eyelid_right, parent, sync_blinking, anim_times)
 	else
-		var/list/anim_times = animate_eyelid(eyelid_right, parent)
-		animate_eyelid(eyelid_left, parent, anim_times)
+		var/list/anim_times = animate_eyelid(eyelid_right, parent, sync_blinking)
+		animate_eyelid(eyelid_left, parent, sync_blinking, anim_times)
 
 	var/mutable_appearance/left_eyelid_overlay = mutable_appearance(layer = -BODY_LAYER, offset_spokesman = parent)
 	var/mutable_appearance/right_eyelid_overlay = mutable_appearance(layer = -BODY_LAYER, offset_spokesman = parent)
@@ -439,20 +441,20 @@
 	return list(left_eyelid_overlay, right_eyelid_overlay)
 
 /// Animates one eyelid at a time, thanks BYOND and thanks animation chains
-/obj/item/organ/eyes/proc/animate_eyelid(obj/effect/abstract/eyelid_effect/eyelid, mob/living/carbon/human/parent, list/anim_times = null)
+/obj/item/organ/eyes/proc/animate_eyelid(obj/effect/abstract/eyelid_effect/eyelid, mob/living/carbon/human/parent, sync_blinking = TRUE, list/anim_times = null)
 	. = list()
 	var/prevent_loops = HAS_TRAIT(parent, TRAIT_PREVENT_BLINK_LOOPS)
 	animate(eyelid, alpha = 0, time = 0, loop = (prevent_loops ? 0 : -1))
 	for (var/i in 1 to (prevent_loops ? 1 : BLINK_LOOPS))
 		var/wait_time = rand(BASE_BLINKING_DELAY - RAND_BLINKING_DELAY, BASE_BLINKING_DELAY + RAND_BLINKING_DELAY)
 		if (anim_times)
-			if (synchronized_blinking)
+			if (sync_blinking)
 				wait_time = anim_times[1]
 				anim_times.Cut(1, 2)
 			else
 				wait_time = rand(max(BASE_BLINKING_DELAY - RAND_BLINKING_DELAY, anim_times[1] - RAND_BLINKING_DELAY), anim_times[1])
 		. += wait_time
-		if (anim_times && !synchronized_blinking)
+		if (anim_times && !sync_blinking)
 			// Make sure that we're somewhat in sync with the other eye
 			animate(time = anim_times[1] - wait_time)
 			anim_times.Cut(1, 2)
@@ -475,6 +477,7 @@
 #undef RAND_BLINKING_DELAY
 #undef BLINK_DURATION
 #undef BLINK_LOOPS
+#undef ASYNC_BLINKING_BRAIN_DAMAGE
 
 #define NIGHTVISION_LIGHT_OFF 0
 #define NIGHTVISION_LIGHT_LOW 1
