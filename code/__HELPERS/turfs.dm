@@ -379,7 +379,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 ///Returns a random department of areas to pass into get_safe_random_station_turf() for more equal spawning.
 /proc/get_safe_random_station_turf_equal_weight()
 	// Big list of departments, each with lists of each area subtype.
-	var/list/department_areas = list(
+	var/static/list/department_areas
+	if(isnull(department_areas))
+		department_areas = list(
 				subtypesof(/area/station/engineering), \
 				subtypesof(/area/station/medical), \
 				subtypesof(/area/station/science), \
