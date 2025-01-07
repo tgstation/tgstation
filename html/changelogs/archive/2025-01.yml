@@ -111,3 +111,54 @@
   WebcomicArtist:
   - qol: '"Destroy Blackbox" objective now tells you how to destroy something invulnerable
       to conventional means of destruction.'
+2025-01-06:
+  carlarctg:
+  - image: Standarizes ammo band colors into defines, makes them brighter, and widens
+      battle rifle bands
+  - balance: Reduces chrystarfish fall chance by half
+  - bugfix: Fixed a bug that caused predator fish to give the aquarium pet message
+      when out of it and vice versa
+  - bugfix: Fixed flumpulus message having no span
+  - rscadd: Dolphish now chomp you if you try to pet them
+  kapu and grungussuss:
+  - bugfix: fixed ambience sounds getting cut off mid play
+  - sound: addes fades for maintenance ambiences
+  - refactor: changed the way maintenance sounds are
+2025-01-07:
+  AyIong:
+  - qol: Sidebar has lost its bulging white lines. And top right buttons now flat
+  Ben10Omintrix:
+  - bugfix: corgi's population will no longer exponentially grow
+  Hatterhat:
+  - qol: Examining a gun or magazine now shows the ammo capacity in bold.
+  - spellcheck: Standardized pistol magazine descriptions, fixing Makarov magazines
+      having a placeholder description.
+  JohnFulpWillard:
+  - bugfix: The Curator's broadcast camera is now held up in the hand you're holding
+      it with.
+  Melbert:
+  - rscadd: You can light matches on the heel of your boots - Just don't do it too
+      hard.
+  Paxilmaniac:
+  - code_imp: modlink scryers use the nt frequency define rather than just plain text
+      doing it themselves
+  Rhials:
+  - bugfix: Overwatch agent bodycameras (SHOULD) properly install if an agent has
+      already died.
+  SmArtKar:
+  - bugfix: Hotspots from ash heretic spells should not longer stack inside of walls
+  - bugfix: Fixed items not embedding
+  - bugfix: Fixed glowsticks not glowing
+  carlarctg:
+  - code_imp: Adds a new area flag, LOCAL_TELEPORT, given to virtual domains and deathmatch
+      arenas.
+  - code_imp: Re-added Void Phase to Heretic Scribes in Deathmatch's Ragnarok map.
+  grungussuss:
+  - sound: added sounds for buckling to shuttle seats and medical beds
+  jlsnow301:
+  - rscadd: TGUI icons are updated to latest FontAwesome version, v6.7.2.
+  timothymtorres:
+  - code_imp: Add `SECONDS` defines to looping sounds time variables
+  warbluke:
+  - bugfix: Changed BATTERY to CELL in the mob define file since an ethereal stomach
+      organ works like a power cell despite being called a battery.
