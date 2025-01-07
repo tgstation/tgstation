@@ -86803,10 +86803,9 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/station/commons/fitness/recreation)
 "vGM" = (
-/obj/machinery/light_switch/directional/east,
-/obj/structure/table/wood/fancy,
-/obj/item/gun/energy/taser,
-/turf/open/floor/mineral/gold,
+/obj/structure/secure_safe/directional/east,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "vGP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

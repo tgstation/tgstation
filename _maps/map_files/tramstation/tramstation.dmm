@@ -30332,12 +30332,6 @@
 	},
 /turf/open/floor/engine/hull,
 /area/station/solars/starboard/fore)
-"jPs" = (
-/obj/machinery/light_switch/directional/east,
-/obj/structure/table/wood/fancy,
-/obj/item/gun/energy/taser,
-/turf/open/floor/mineral/gold,
-/area/station/ai_monitored/security/armory)
 "jPt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -155457,7 +155451,7 @@ kjF
 yjm
 hPs
 juT
-jPs
+lAC
 pbo
 aeX
 yjm

@@ -7532,6 +7532,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
+"cbz" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory)
 "cbC" = (
 /obj/machinery/meter,
 /obj/effect/turf_decal/trimline/dark_red/arrow_ccw{
@@ -77461,20 +77465,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
-<<<<<<< Updated upstream
-=======
-"wyF" = (
-/obj/structure/rack,
-/obj/item/gun/energy/ionrifle,
-/obj/item/gun/energy/temperature/security,
-/obj/item/clothing/suit/hooded/ablative,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
-/obj/item/gun/energy/taser,
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory)
->>>>>>> Stashed changes
 "wyL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
@@ -176060,7 +176050,7 @@ oAY
 cxO
 pgL
 lab
-cxO
+cbz
 yiL
 fnt
 fJZ
