@@ -1,0 +1,5 @@
+author: "Exester509"
+delete-after: True
+changes:
+  - balance: "The tesla cannon now fires hitscan lightning bolts with buffed damage to non-insulated targets."
+  - balance: "Flux anomalies now have a limit of 5 per round, instead of 8."
