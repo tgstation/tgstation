@@ -263,7 +263,7 @@
 			if(kill_fish)
 				fish.set_status(FISH_DEAD, silent = TRUE)
 
-	QDEL_NULL(bait)
+	qdel(bait)
 	update_icon()
 
 ///Returns the probability that a fish caught by this (custom material) rod will be of the same material.

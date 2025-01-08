@@ -774,7 +774,7 @@ em {
 }
 
 .smaller {
-  font-size: 80%;
+  font-size: 90%;
 }
 
 .slightly_larger {
@@ -988,7 +988,7 @@ em {
   border: 1px solid;
   border-color: inherit;
   border-radius: 0.33em;
-  z-index: 1;
+  z-index: 0;
 
   // "Mask" a half of the border
   // It very rough but it only possible way i see with IE compat

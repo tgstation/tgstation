@@ -131,45 +131,48 @@
 			if(!input_reagent)
 				return FALSE
 
+			if(catalysts[input_reagent])
+				return FALSE
+
+			var/input_amount = text2num(params["amount"])
+			if(!input_amount)
+				return FALSE
+
 			if(!required_reagents[input_reagent])
-				var/input_amount = text2num(params["amount"])
-				if(input_amount)
-					required_reagents[input_reagent] = input_amount
-					return TRUE
-			return FALSE
+				required_reagents[input_reagent] = input_amount
+				return TRUE
 
 		if("remove")
 			var/reagent = get_chem_id(params["chem"])
 			if(reagent)
 				required_reagents.Remove(reagent)
 				return TRUE
-			return FALSE
 
 		if("temperature")
 			var/target = text2num(params["target"])
 			if(!isnull(target))
 				target_temperature = clamp(target, 0, 1000)
 				return TRUE
-			return FALSE
 
 		if("catalyst")
 			var/reagent = get_chem_id(params["chem"])
-
 			if(!reagent)
 				return FALSE
 
-			if(reagent && !catalysts[reagent])
+			if(!catalysts[reagent])
 				catalysts[reagent] = required_reagents[reagent]
+				required_reagents -= reagent
 				return TRUE
-			else
-				return FALSE
 
 		if("catremove")
 			var/reagent = get_chem_id(params["chem"])
-			if(reagent)
+			if(!reagent)
+				return FALSE
+
+			if(catalysts[reagent])
+				required_reagents[reagent] = catalysts[reagent]
 				catalysts -= reagent
 				return TRUE
-			return FALSE
 
 	var/result = handle_ui_act(action, params, ui, state)
 	if(isnull(result))
@@ -213,10 +216,6 @@
 
 /obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
 	if(reagents.ph < acidic_limit || reagents.ph > alkaline_limit)
-		//no power
-		if(machine_stat & NOPOWER)
-			return
-
 		//nothing to react with
 		var/num_of_reagents = length(reagents.reagent_list)
 		if(!num_of_reagents)

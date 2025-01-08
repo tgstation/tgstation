@@ -1,0 +1,4 @@
+author: "StrangeWeirdKitten"
+delete-after: True
+changes:
+  - bugfix: "Things that drop in random places are no longer statistically weighted to drop in security."

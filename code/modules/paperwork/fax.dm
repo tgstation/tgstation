@@ -1,5 +1,4 @@
-//GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department", "NT Complaint Department", "NT Customer Relations", "Nanotrasen Tech Support", "NT Internal Affairs Dept")) // ORIGINAL
-GLOBAL_VAR_INIT(nt_fax_department, pick("PA HR Department", "PA Legal Department", "PA Complaint Department", "PA Customer Relations", "Port Authority Tech Support", "PA Internal Affairs Dept")) // DOPPLER EDIT - NT -> PA
+GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department", "NT Complaint Department", "NT Customer Relations", "Nanotrasen Tech Support", "NT Internal Affairs Dept"))
 GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 
 /obj/machinery/fax
