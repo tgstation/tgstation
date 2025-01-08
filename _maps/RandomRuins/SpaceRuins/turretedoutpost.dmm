@@ -707,7 +707,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/turretedoutpost)
 "VO" = (
-/obj/machinery/porta_turret/syndicate/energy,
+/obj/machinery/porta_turret/syndicate/energy/ruin,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/turretedoutpost)
 "Wa" = (
