@@ -28,7 +28,7 @@
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
 
-	if (!owner.client.is_localhost())
+	if (!owner.client.is_localhost() || !check_rights_for(owner.client, R_SERVER))
 		return
 
 	var/atom/movable/screen/lobby/button/start_now/start_button = new(our_hud = src)
@@ -626,7 +626,7 @@
 
 /atom/movable/screen/lobby/button/start_now/Click(location, control, params)
 	. = ..()
-	if(!. || !usr.client.is_localhost())
+	if(!. || !usr.client.is_localhost() || !check_rights_for(usr.client, R_SERVER))
 		return
 	SSticker.start_immediately = TRUE
 
