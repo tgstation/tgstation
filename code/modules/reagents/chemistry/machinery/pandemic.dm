@@ -200,7 +200,7 @@
 	if(!beaker)
 		return cures
 
-	var/datum/reagent/blood/blood = locate() in beaker.reagents.reagent_list
+	var/datum/reagent/blood/blood = beaker.reagents.has_reagent(/datum/reagent/blood)
 	if(!blood)
 		return cures
 
