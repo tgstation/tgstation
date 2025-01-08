@@ -15,6 +15,7 @@ import {
   NumberInput,
   Slider,
   Stack,
+  TextArea,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
