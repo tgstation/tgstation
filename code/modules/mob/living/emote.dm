@@ -805,7 +805,7 @@
 		return
 	var/mob/living/carbon/human/human_user = user
 	var/obj/item/organ/tongue/tongue = human_user.get_organ_slot(ORGAN_SLOT_TONGUE)
-	if(istype(tongue, /obj/item/organ/tongue/lizard))
-		playsound(user, 'sound/mobs/humanoids/lizard/weh.ogg', 50, TRUE, TRUE)
+	if(istype(tongue, /obj/item/organ/tongue/lizard)) //checks if its a lizzy tounge
+		playsound(user, 'sound/mobs/humanoids/lizard/weh.ogg', 50, TRUE, TRUE) //plays funni sound
 	else
-		return FALSE
+		return FALSE //doesnt play funny sound if no toung
