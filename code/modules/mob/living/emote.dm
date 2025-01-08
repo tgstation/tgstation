@@ -791,3 +791,21 @@
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
 	return 'sound/mobs/humanoids/human/whistle/whistle1.ogg'
+
+
+/datum/emote/living/weh
+	key = "weh"
+	key_third_person = "wehs"
+	message = "wehs."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/weh/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	var/obj/item/organ/tongue/tongue = human_user.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(istype(tongue, /obj/item/organ/tongue/lizard))
+		playsound(user, 'sound/mobs/humanoids/lizard/weh.ogg', 50, TRUE, TRUE)
+	else
+		return FALSE
