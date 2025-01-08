@@ -61372,7 +61372,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/directional/north{
+	pixel_y = 37
+	},
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "rHz" = (
