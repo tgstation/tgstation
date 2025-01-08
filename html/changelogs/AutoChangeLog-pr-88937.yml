@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Burst fire weapons cannot be permanently broken by pacifists attempting to fire them."
