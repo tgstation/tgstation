@@ -1,0 +1,4 @@
+author: "norsvenska"
+delete-after: True
+changes:
+  - bugfix: "The bar and restaurant portals are now distinguishable at a glance."
