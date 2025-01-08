@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Stack } from 'tgui-core/components';
+import { Dropdown, Flex, Stack } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
 import { useBackend } from '../../backend';
