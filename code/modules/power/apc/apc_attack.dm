@@ -101,7 +101,7 @@
 	var/energy_drained = used_stomach.adjust_charge(-to_drain)
 	cell.give(-energy_drained)
 
-	if(cell.used_charge() >= cell.max_charge())
+	if(cell.used_charge() <= 0)
 		to_chat(user, span_warning("APC is full!"))
 		return
 	if(stomach_cell.charge() <= 0)
