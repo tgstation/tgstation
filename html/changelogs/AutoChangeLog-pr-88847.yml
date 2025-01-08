@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - rscadd: "Organ harvesting players is now more rewarding. Increased export value of initial player organs."
