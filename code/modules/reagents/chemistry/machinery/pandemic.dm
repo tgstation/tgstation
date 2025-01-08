@@ -205,7 +205,7 @@
 		return cures
 
 	var/list/viruses = blood.get_diseases()
-	if(!viruses)
+	if(!length(viruses))
 		return cures
 
 	// Only check for cure if there is a beaker AND the beaker contains blood AND the blood contains a virus.
