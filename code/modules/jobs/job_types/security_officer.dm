@@ -212,7 +212,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	id_trim = /datum/id_trim/job/security_officer
 	uniform = /obj/item/clothing/under/rank/security/officer
 	suit = /obj/item/clothing/suit/armor/vest/alt/sec
-	suit_store = /obj/item/gun/energy/disabler
+	suit_store = /obj/item/gun/energy/taser
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
 		)
@@ -233,7 +233,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	chameleon_extras = list(
 		/obj/item/clothing/glasses/hud/security/sunglasses,
 		/obj/item/clothing/head/helmet,
-		/obj/item/gun/energy/disabler,
+		/obj/item/gun/energy/taser,
 		)
 		//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 	implants = list(/obj/item/implant/mindshield)
