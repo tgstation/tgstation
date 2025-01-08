@@ -121,6 +121,8 @@
 	button_icon_state = "mecha_sleeper_miner"
 
 /datum/action/vehicle/sealed/mecha/clarke_scoop_body/Trigger(trigger_flags)
+	if(!..())
+		return
 	var/obj/item/mecha_parts/mecha_equipment/sleeper/clarke/sleeper = locate() in chassis
 	var/mob/living/carbon/human/human_target
 	for(var/mob/living/carbon/human/body in range(1, chassis))
@@ -138,7 +140,9 @@
 	COOLDOWN_DECLARE(search_cooldown)
 
 /datum/action/vehicle/sealed/mecha/mech_search_ruins/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
 		chassis.balloon_alert(owner, "on cooldown!")
