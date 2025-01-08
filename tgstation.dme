@@ -2517,6 +2517,7 @@
 #include "code\game\objects\items\devices\scanners\autopsy_scanner.dm"
 #include "code\game\objects\items\devices\scanners\gas_analyzer.dm"
 #include "code\game\objects\items\devices\scanners\health_analyzer.dm"
+#include "code\game\objects\items\devices\scanners\plant_analyzer.dm"
 #include "code\game\objects\items\devices\scanners\scanner_wand.dm"
 #include "code\game\objects\items\devices\scanners\sequence_scanner.dm"
 #include "code\game\objects\items\devices\scanners\slime_scanner.dm"

@@ -323,7 +323,7 @@ export const SeedExtractor = (props) => {
   );
 };
 
-const Level = (props) => {
+export const Level = (props) => {
   return (
     <ProgressBar
       value={props.value}
@@ -352,7 +352,7 @@ const Level = (props) => {
   );
 };
 
-const ReagentTooltip = (props) => {
+export const ReagentTooltip = (props) => {
   return (
     <Table>
       <Table.Row header>
@@ -388,7 +388,7 @@ const ReagentTooltip = (props) => {
   );
 };
 
-const TraitTooltip = (props) => {
+export const TraitTooltip = (props) => {
   const trait = props.trait_db.find((t) => {
     return t.path === props.path;
   });
