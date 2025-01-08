@@ -1,4 +1,0 @@
-author: "SmArtKar, AnturK"
-delete-after: True
-changes:
-  - admin: "Fixes admin observe showing all antags as revs upon enabling Real Name Display"
