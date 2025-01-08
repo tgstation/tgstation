@@ -213,7 +213,7 @@
 		if(disease.GetDiseaseID() == disease_id)	// Double check the ids match.
 			cures.Add(disease.cures)
 			cures.Add(disease.cure_text)
-			return cures
+			break
 
 	return cures
 
