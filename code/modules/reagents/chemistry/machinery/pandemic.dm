@@ -210,7 +210,7 @@
 
 	// Only check for cure if there is a beaker AND the beaker contains blood AND the blood contains a virus.
 	for(var/datum/disease/advance/disease in viruses)
-		if(istype(disease, /datum/disease/advance) && (disease.GetDiseaseID() == disease_id))	// Double check the ids match.
+		if(disease.GetDiseaseID() == disease_id)	// Double check the ids match.
 			cures.Add(disease.cures)
 			cures.Add(disease.cure_text)
 			return cures
