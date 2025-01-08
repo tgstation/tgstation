@@ -148,8 +148,6 @@
 	VAR_FINAL/datum/weakref/bot_ref
 	/// If TRUE, the AI will send it's [var/bot_ref][commanded bot] to the next clicked atom
 	VAR_FINAL/setting_waypoint = FALSE
-	/// Cooldown for bot summoning
-	COOLDOWN_DECLARE(call_bot_cooldown)
 
 
 	/* HOLOGRAM */

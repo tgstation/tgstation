@@ -1,5 +1,3 @@
-#define CALL_BOT_COOLDOWN 900
-
 #define HOLOGRAM_CHOICE_CHARACTER "Existing Character"
 #define CHARACTER_TYPE_SELF "My Character"
 #define CHARACTER_TYPE_CREWMEMBER "Station Member"
@@ -509,9 +507,7 @@
 		summon_success = basic_bot.summon_bot(src, waypoint, grant_all_access = TRUE)
 	else
 		var/mob/living/simple_animal/bot/simple_bot = bot
-		COOLDOWN_START(src, call_bot_cooldown, CALL_BOT_COOLDOWN)
 		summon_success = simple_bot.call_bot(src, waypoint)
-		COOLDOWN_RESET(src, call_bot_cooldown) //???
 
 	var/chat_message = summon_success ? "Sending command to bot..." : "Interface error. Unit is already in use."
 	to_chat(src, span_notice("[chat_message]"))
