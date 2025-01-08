@@ -133,6 +133,7 @@
 #include "code\__DEFINES\living.dm"
 #include "code\__DEFINES\logging.dm"
 #include "code\__DEFINES\machines.dm"
+#include "code\__DEFINES\magazines.dm"
 #include "code\__DEFINES\magic.dm"
 #include "code\__DEFINES\map_exporter.dm"
 #include "code\__DEFINES\map_switch.dm"
