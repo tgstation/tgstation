@@ -37547,7 +37547,6 @@
 /obj/machinery/computer/atmos_control/nocontrol/incinerator{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet/directional/east,
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
@@ -39663,7 +39662,6 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/radio/intercom/directional/north,
 /obj/item/radio/intercom/directional/north,
 /obj/item/newspaper,
 /obj/machinery/camera/directional/north{
@@ -54950,7 +54948,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/trash/grime,
 /obj/effect/decal/cleanable/generic,
-/obj/structure/sign/departments/maint/directional/west,
 /obj/structure/sign/departments/maint/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/lesser)
