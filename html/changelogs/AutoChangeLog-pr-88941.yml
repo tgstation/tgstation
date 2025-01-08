@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Cult blood rites should not longer create \"empty\" blood or be unable to suck up more than one blood pool at a time."
+  - code_imp: "Blood trails are now considered a subtype of blood pools"
