@@ -160,6 +160,8 @@ export function TguiSay() {
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>): void {
+    if (event.getModifierState('AltGraph')) return;
+
     switch (event.key) {
       case KEY.Up:
       case KEY.Down:
@@ -238,8 +240,7 @@ export function TguiSay() {
 
     if (size !== newSize) {
       setSize(newSize);
-      // TODO: Fix at 516
-      windowSet(newSize as any);
+      windowSet(newSize);
     }
   }, [value]);
 
