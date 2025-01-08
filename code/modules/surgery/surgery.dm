@@ -152,7 +152,7 @@
 	if (isnull(patient_turf))
 		return null
 
-	var/obj/structure/table/optable/operating_table = locate(/obj/structure/table/optable) in patient_turf
+	var/obj/structure/table/optable/operating_table = locate(/obj/structure/table/optable, patient_turf)
 	var/obj/machinery/computer/operating/operating_computer = operating_table?.computer
 
 	if (isnull(operating_computer))
