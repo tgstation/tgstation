@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "MMIs in an odysseus get the medhud, odysseus medical beamgun works properly"
