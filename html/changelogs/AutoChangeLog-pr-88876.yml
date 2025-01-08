@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "You can now look down ladders, both via the look down verb/hotkey and by just looking with your eyes"
