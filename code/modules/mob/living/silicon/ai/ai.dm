@@ -1078,8 +1078,6 @@
 		return ai_voicechanger.say_name
 	return
 
-#undef CALL_BOT_COOLDOWN
-
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF
 #undef CHARACTER_TYPE_CREWMEMBER
