@@ -18,7 +18,7 @@
 	if(ishuman(user))
 		mob_specific_status = min(
 			ui_status_user_inside(user, src),
-			ui_status_user_has_free_hands(user, src, exclude_source = VEHICLE_TRAIT),
+			ui_status_user_has_free_hands(user, src, allowed_source = VEHICLE_TRAIT),
 			ui_status_user_is_advanced_tool_user(user),
 		)
 	if(isAI(user))
