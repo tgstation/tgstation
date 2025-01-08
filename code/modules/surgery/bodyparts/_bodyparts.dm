@@ -956,6 +956,12 @@
 
 	update_draw_color()
 
+	// DOPPLER EDIT ADDITION
+	var/datum/species/owner_species = human_owner.dna.species
+
+	if(owner_species && owner_species.specific_alpha != 255)
+		alpha = owner_species.specific_alpha
+	// DOPPLER EDIT END
 	recolor_bodypart_overlays()
 	return TRUE
 
@@ -1046,9 +1052,10 @@
 			huskify_image(thing_to_husk = aux)
 		draw_color = husk_color
 	if(draw_color)
-		limb.color = "[draw_color]"
+		var/limb_color = alpha != 255 ? "[draw_color][num2hex(alpha, 2)]" : "[draw_color]" // DOPPLER EDIT ADDITION - Alpha values on limbs. We check if the limb is attached and if the owner has an alpha value to append
+		limb.color = limb_color // DOPPLER EDIT CHANGE - ORIGINAL: limb.color = "[draw_color]"
 		if(aux_zone)
-			aux.color = "[draw_color]"
+			aux.color = limb_color // DOPPLER EDIT CHANGE - ORIGINAL: aux.color = "[draw_color]"
 
 		//EMISSIVE CODE START
 		// For some reason this was applied as an overlay on the aux image and limb image before.

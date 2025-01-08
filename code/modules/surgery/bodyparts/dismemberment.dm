@@ -413,4 +413,8 @@
 			new_organ.Insert(src)
 
 		update_body_parts()
+		// DOPPLER ADDITION START
+		dna.species.remove_body_markings(src)
+		dna.species.add_body_markings(src)
+		// DOPPLER ADDITION END
 		return TRUE
