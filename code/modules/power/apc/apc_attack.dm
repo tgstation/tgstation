@@ -73,6 +73,7 @@
 			to_chat(user, span_warning("APC is empty!"))
 			return
 
+/// Handles charging our internal cell from an ethereal and their stomach
 /obj/machinery/power/apc/proc/charge_from_ethereal(mob/living/carbon/human/user, obj/item/organ/stomach/ethereal/used_stomach)
 	if(cell.charge() >= cell.max_charge())
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "APC full!"), ETHEREAL_APC_ALERT_DELAY)
