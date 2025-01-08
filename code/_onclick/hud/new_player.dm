@@ -629,7 +629,7 @@
 	. = ..()
 	if(!. || !usr.client.is_localhost() || !check_rights_for(usr.client, R_SERVER))
 		return
-	SEND_SOUND(hud.mymob, sound('sound/effects/splat.ogg'))
+	SEND_SOUND(hud.mymob, sound('sound/effects/splat.ogg', volume = 50))
 	SSticker.start_immediately = TRUE
 
 #undef SHUTTER_MOVEMENT_DURATION
