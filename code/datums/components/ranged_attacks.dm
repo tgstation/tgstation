@@ -48,8 +48,7 @@
 	RegisterSignal(parent, COMSIG_MOB_ATTACK_RANGED, PROC_REF(fire_ranged_attack))
 	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
 	var/mob/living/living_parent = parent
-	if(living_parent.mob_size >= MOB_SIZE_LARGE)
-		RegisterSignal(parent, COMSIG_MOB_TROPHY_ACTIVATED(TROPHY_WATCHER), PROC_REF(disable_attack))
+	RegisterSignal(parent, COMSIG_MOB_TROPHY_ACTIVATED(TROPHY_WATCHER), PROC_REF(disable_attack))
 
 /datum/component/ranged_attacks/UnregisterFromParent()
 	. = ..()
