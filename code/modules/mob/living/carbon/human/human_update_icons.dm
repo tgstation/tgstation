@@ -989,7 +989,7 @@ generate/load female uniform sprites matching all previously decided variables
 	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi', "Cut3")
 	var/static/icon/lenghten_legs_mask = icon('icons/effects/cut.dmi', "Cut4")
 
-	appearance.remove_filter(list(
+	var/should_update = appearance.remove_filter(list(
 		"Cut_Torso",
 		"Cut_Legs",
 		"Lenghten_Legs",
@@ -1000,7 +1000,7 @@ generate/load female uniform sprites matching all previously decided variables
 		"Monkey_Legs",
 		"Monkey_Gnome_Cut_Torso",
 		"Monkey_Gnome_Cut_Legs",
-	))
+	), update = FALSE)
 
 	switch(get_mob_height())
 		// Don't set this one directly, use TRAIT_DWARF
@@ -1101,6 +1101,10 @@ generate/load female uniform sprites matching all previously decided variables
 					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 2),
 				),
 			))
+		else
+			// as we don't add any filters - we need to make sure to run update_filters ourselves, as we didn't update during our previous remove_filter, and any other case would've ran it at the end of add_filter(s)
+			if(should_update)
+				appearance.update_filters()
 
 	// Kinda gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
 	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kinda breaks
