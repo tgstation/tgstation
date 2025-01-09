@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Window } from 'tgui/layouts';
 import { Stack } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
@@ -31,40 +30,36 @@ export function GamePreferenceWindow(props: Props) {
   }
 
   return (
-    <Window title="Game Preferences" width={920} height={770}>
-      <Window.Content>
-        <Stack vertical fill>
-          <Stack.Item>
-            <Stack fill>
-              <Stack.Item grow>
-                <PageButton
-                  currentPage={currentPage}
-                  page={GamePreferencesSelectedPage.Settings}
-                  setPage={setCurrentPage}
-                >
-                  Settings
-                </PageButton>
-              </Stack.Item>
-
-              <Stack.Item grow>
-                <PageButton
-                  currentPage={currentPage}
-                  page={GamePreferencesSelectedPage.Keybindings}
-                  setPage={setCurrentPage}
-                >
-                  Keybindings
-                </PageButton>
-              </Stack.Item>
-            </Stack>
+    <Stack vertical fill>
+      <Stack.Item>
+        <Stack fill>
+          <Stack.Item grow>
+            <PageButton
+              currentPage={currentPage}
+              page={GamePreferencesSelectedPage.Settings}
+              setPage={setCurrentPage}
+            >
+              Settings
+            </PageButton>
           </Stack.Item>
 
-          <Stack.Divider />
-
-          <Stack.Item grow shrink basis="1px">
-            {pageContents}
+          <Stack.Item grow>
+            <PageButton
+              currentPage={currentPage}
+              page={GamePreferencesSelectedPage.Keybindings}
+              setPage={setCurrentPage}
+            >
+              Keybindings
+            </PageButton>
           </Stack.Item>
         </Stack>
-      </Window.Content>
-    </Window>
+      </Stack.Item>
+
+      <Stack.Divider />
+
+      <Stack.Item grow shrink basis="1px">
+        {pageContents}
+      </Stack.Item>
+    </Stack>
   );
 }

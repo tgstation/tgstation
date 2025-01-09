@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
-import { Window } from 'tgui/layouts';
 import { Button, Stack } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
@@ -89,88 +88,84 @@ export function CharacterPreferenceWindow(props) {
   }
 
   return (
-    <Window title="Character Preferences" width={920} height={770}>
-      <Window.Content scrollable>
-        <Stack vertical fill>
-          <Stack.Item>
-            <CharacterProfiles
-              activeSlot={data.active_slot - 1}
-              onClick={(slot) => {
-                act('change_slot', {
-                  slot: slot + 1,
-                });
-              }}
-              profiles={data.character_profiles}
-            />
+    <Stack vertical fill>
+      <Stack.Item>
+        <CharacterProfiles
+          activeSlot={data.active_slot - 1}
+          onClick={(slot) => {
+            act('change_slot', {
+              slot: slot + 1,
+            });
+          }}
+          profiles={data.character_profiles}
+        />
+      </Stack.Item>
+      {!data.content_unlocked && (
+        <Stack.Item align="center">
+          Buy BYOND premium for more slots!
+        </Stack.Item>
+      )}
+      <Stack.Divider />
+      <Stack.Item>
+        <Stack fill>
+          <Stack.Item grow>
+            <PageButton
+              currentPage={currentPage}
+              page={Page.Main}
+              setPage={setCurrentPage}
+              otherActivePages={[Page.Species]}
+            >
+              Character
+            </PageButton>
           </Stack.Item>
-          {!data.content_unlocked && (
-            <Stack.Item align="center">
-              Buy BYOND premium for more slots!
-            </Stack.Item>
-          )}
-          <Stack.Divider />
-          <Stack.Item>
-            <Stack fill>
-              <Stack.Item grow>
-                <PageButton
-                  currentPage={currentPage}
-                  page={Page.Main}
-                  setPage={setCurrentPage}
-                  otherActivePages={[Page.Species]}
-                >
-                  Character
-                </PageButton>
-              </Stack.Item>
 
-              <Stack.Item grow>
-                <PageButton
-                  currentPage={currentPage}
-                  page={Page.Loadout}
-                  setPage={setCurrentPage}
-                >
-                  Loadout
-                </PageButton>
-              </Stack.Item>
+          <Stack.Item grow>
+            <PageButton
+              currentPage={currentPage}
+              page={Page.Loadout}
+              setPage={setCurrentPage}
+            >
+              Loadout
+            </PageButton>
+          </Stack.Item>
 
-              <Stack.Item grow>
-                <PageButton
-                  currentPage={currentPage}
-                  page={Page.Jobs}
-                  setPage={setCurrentPage}
-                >
-                  {/*
+          <Stack.Item grow>
+            <PageButton
+              currentPage={currentPage}
+              page={Page.Jobs}
+              setPage={setCurrentPage}
+            >
+              {/*
                     Fun fact: This isn't "Jobs" so that it intentionally
                     catches your eyes, because it's really important!
                   */}
-                  Occupations
-                </PageButton>
-              </Stack.Item>
-
-              <Stack.Item grow>
-                <PageButton
-                  currentPage={currentPage}
-                  page={Page.Antags}
-                  setPage={setCurrentPage}
-                >
-                  Antagonists
-                </PageButton>
-              </Stack.Item>
-
-              <Stack.Item grow>
-                <PageButton
-                  currentPage={currentPage}
-                  page={Page.Quirks}
-                  setPage={setCurrentPage}
-                >
-                  Quirks
-                </PageButton>
-              </Stack.Item>
-            </Stack>
+              Occupations
+            </PageButton>
           </Stack.Item>
-          <Stack.Divider />
-          <Stack.Item>{pageContents}</Stack.Item>
+
+          <Stack.Item grow>
+            <PageButton
+              currentPage={currentPage}
+              page={Page.Antags}
+              setPage={setCurrentPage}
+            >
+              Antagonists
+            </PageButton>
+          </Stack.Item>
+
+          <Stack.Item grow>
+            <PageButton
+              currentPage={currentPage}
+              page={Page.Quirks}
+              setPage={setCurrentPage}
+            >
+              Quirks
+            </PageButton>
+          </Stack.Item>
         </Stack>
-      </Window.Content>
-    </Window>
+      </Stack.Item>
+      <Stack.Divider />
+      <Stack.Item>{pageContents}</Stack.Item>
+    </Stack>
   );
 }

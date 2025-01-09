@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Box } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 import { fetchRetry } from 'tgui-core/http';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
-import { Window as WindowOld } from '../../layouts';
+import { Window } from '../../layouts';
 import { logger } from '../../logging';
+import { LoadingScreen } from '../common/LoadingToolbox';
 import { CharacterPreferenceWindow } from './CharacterPreferences';
 import { GamePreferenceWindow } from './GamePreferences';
-import { LoadingPage } from './Loading';
 import {
   GamePreferencesSelectedPage,
   PreferencesMenuData,
+  PrefsWindow,
   ServerData,
-  Window,
 } from './types';
 import { RandomToggleState } from './useRandomToggleState';
 import { ServerPrefs } from './useServerPrefs';
@@ -25,6 +24,29 @@ export function PreferencesMenu(props) {
 
   const [serverData, setServerData] = useState<ServerData>();
   const randomization = useState(false);
+
+  let content;
+  let title;
+  switch (window) {
+    case PrefsWindow.Character:
+      content = <CharacterPreferenceWindow />;
+      title = 'Character Preferences';
+      break;
+    case PrefsWindow.Game:
+      content = <GamePreferenceWindow />;
+      title = 'Game Preferences';
+      break;
+    case PrefsWindow.Keybindings:
+      content = (
+        <GamePreferenceWindow
+          startingPage={GamePreferencesSelectedPage.Keybindings}
+        />
+      );
+      title = 'Keybindings';
+      break;
+    default:
+      exhaustiveCheck(window);
+  }
 
   useEffect(() => {
     fetchRetry(resolveAsset('preferences.json'))
@@ -37,40 +59,14 @@ export function PreferencesMenu(props) {
       });
   }, []);
 
-  if (!serverData) {
-    return (
-      <WindowOld title="Ok">
-        <WindowOld.Content>
-          <Box>Loading...</Box>
-        </WindowOld.Content>
-      </WindowOld>
-    );
-
-    return <LoadingPage />;
-  }
-
-  let content;
-  switch (window) {
-    case Window.Character:
-      content = <CharacterPreferenceWindow />;
-      break;
-    case Window.Game:
-      content = <GamePreferenceWindow />;
-      break;
-    case Window.Keybindings:
-      content = (
-        <GamePreferenceWindow
-          startingPage={GamePreferencesSelectedPage.Keybindings}
-        />
-      );
-      break;
-    default:
-      exhaustiveCheck(window);
-  }
   return (
     <ServerPrefs.Provider value={serverData}>
       <RandomToggleState.Provider value={randomization}>
-        {content}
+        <Window title={title} width={920} height={770}>
+          <Window.Content>
+            {!serverData ? <LoadingScreen /> : content}
+          </Window.Content>
+        </Window>
       </RandomToggleState.Provider>
     </ServerPrefs.Provider>
   );

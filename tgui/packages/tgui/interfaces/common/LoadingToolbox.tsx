@@ -1,4 +1,4 @@
-import { Dimmer, Icon, Stack } from 'tgui-core/components';
+import { Icon, Stack } from 'tgui-core/components';
 
 /** Spinner that represents loading states.
  *
@@ -18,15 +18,13 @@ import { Dimmer, Icon, Stack } from 'tgui-core/components';
  * )
  * ```
  */
-export const LoadingScreen = (props) => {
+export function LoadingScreen(props) {
   return (
-    <Dimmer>
-      <Stack align="center" fill justify="center" vertical>
-        <Stack.Item>
-          <Icon color="blue" name="toolbox" spin size={4} />
-        </Stack.Item>
-        <Stack.Item>Please wait...</Stack.Item>
-      </Stack>
-    </Dimmer>
+    <Stack align="center" fill justify="center" vertical>
+      <Stack.Item>
+        <Icon color="blue" name="toolbox" spin size={4} />
+      </Stack.Item>
+      <Stack.Item>Please wait...</Stack.Item>
+    </Stack>
   );
-};
+}
