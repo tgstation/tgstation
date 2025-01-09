@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "The hand teleporter (and several other items) will now allow you to teleport to and from valid locations and forbid you from teleporting to or from places you can't teleport to or from, instead of the other way around."
