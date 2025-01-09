@@ -26,6 +26,8 @@
 	icon_state = "eyeballs-fly"
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	native_fov = NONE //flies can see all around themselves.
+	blink_animation = FALSE
+	iris_overlays = FALSE
 
 /obj/item/organ/eyes/fly/Initialize(mapload)
 	. = ..()
