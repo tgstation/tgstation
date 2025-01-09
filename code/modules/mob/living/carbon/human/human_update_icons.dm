@@ -1000,7 +1000,7 @@ generate/load female uniform sprites matching all previously decided variables
 		"Monkey_Legs",
 		"Monkey_Gnome_Cut_Torso",
 		"Monkey_Gnome_Cut_Legs",
-	), update = FALSE)
+	), update = FALSE) // note: the add_filter(s) calls after this will call update_filters on their own. so by not calling it here, we avoid calling it twice.
 
 	switch(get_mob_height())
 		// Don't set this one directly, use TRAIT_DWARF
