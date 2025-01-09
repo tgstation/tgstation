@@ -12,7 +12,6 @@ import {
 import { classes } from 'tgui-core/react';
 
 import { CharacterPreview } from '../../common/CharacterPreview';
-import { ServerPreferencesFetcher } from '../ServerPreferencesFetcher';
 import {
   createSetPreference,
   Food,
@@ -21,6 +20,7 @@ import {
   ServerData,
   Species,
 } from '../types';
+import { useServerPrefs } from '../useServerPrefs';
 
 const FOOD_ICONS = {
   [Food.Bugs]: 'bug',
@@ -377,20 +377,15 @@ type SpeciesPageProps = {
 };
 
 export function SpeciesPage(props: SpeciesPageProps) {
+  const serverData = useServerPrefs();
+  if (!serverData) {
+    return <Box>Loading species...</Box>;
+  }
+
   return (
-    <ServerPreferencesFetcher
-      render={(serverData) => {
-        if (serverData) {
-          return (
-            <SpeciesPageInner
-              handleClose={props.closeSpecies}
-              species={serverData.species}
-            />
-          );
-        } else {
-          return <Box>Loading species...</Box>;
-        }
-      }}
+    <SpeciesPageInner
+      handleClose={props.closeSpecies}
+      species={serverData.species}
     />
   );
 }

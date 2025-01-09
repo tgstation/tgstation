@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Box } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 import { fetchRetry } from 'tgui-core/http';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
+import { Window as WindowOld } from '../../layouts';
 import { logger } from '../../logging';
 import { CharacterPreferenceWindow } from './CharacterPreferences';
 import { GamePreferenceWindow } from './GamePreferences';
@@ -36,6 +38,14 @@ export function PreferencesMenu(props) {
   }, []);
 
   if (!serverData) {
+    return (
+      <WindowOld title="Ok">
+        <WindowOld.Content>
+          <Box>Loading...</Box>
+        </WindowOld.Content>
+      </WindowOld>
+    );
+
     return <LoadingPage />;
   }
 

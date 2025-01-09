@@ -19,7 +19,7 @@ import {
 import { BooleanLike } from 'tgui-core/react';
 
 import { createSetPreference, PreferencesMenuData } from '../../types';
-import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
+import { useServerPrefs } from '../../useServerPrefs';
 
 export const sortChoices = (array: [string, ReactNode][]) =>
   sortBy(array, ([name]) => name);
@@ -228,21 +228,18 @@ export const FeatureValueInput = (props: {
     setPredictedValue(props.value);
   }, [data.active_slot, props.value]);
 
-  return (
-    <ServerPreferencesFetcher
-      render={(serverData) => {
-        return createElement(feature.component, {
-          act: props.act,
-          featureId: props.featureId,
-          serverData: serverData?.[props.featureId] as any,
-          shrink: props.shrink,
+  const serverData = useServerPrefs();
+  if (!serverData) return;
 
-          handleSetValue: changeValue,
-          value: predictedValue,
-        });
-      }}
-    />
-  );
+  return createElement(feature.component, {
+    act: props.act,
+    featureId: props.featureId,
+    serverData: serverData?.[props.featureId] as any,
+    shrink: props.shrink,
+
+    handleSetValue: changeValue,
+    value: predictedValue,
+  });
 };
 
 export type FeatureShortTextData = {

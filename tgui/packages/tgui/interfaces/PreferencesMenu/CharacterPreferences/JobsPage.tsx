@@ -4,7 +4,6 @@ import { useBackend } from 'tgui/backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { ServerPreferencesFetcher } from '../ServerPreferencesFetcher';
 import {
   createSetPreference,
   Job,
@@ -12,6 +11,7 @@ import {
   JobPriority,
   PreferencesMenuData,
 } from '../types';
+import { useServerPrefs } from '../useServerPrefs';
 
 function sortJobs(entries: [string, Job][], head?: string) {
   return sortBy(
@@ -266,52 +266,45 @@ function Department(props: DepartmentProps) {
   const { children, department: name } = props;
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 
+  const data = useServerPrefs();
+  if (!data) return;
+
+  const { departments, jobs } = data.jobs;
+  const department = departments[name];
+
+  // This isn't necessarily a bug, it's like this
+  // so that you can remove entire departments without
+  // having to edit the UI.
+  // This is used in events, for instance.
+  if (!department) {
+    return null;
+  }
+
+  const jobsForDepartment = sortJobs(
+    Object.entries(jobs).filter(([_, job]) => job.department === name),
+    department.head,
+  );
+
   return (
-    <ServerPreferencesFetcher
-      render={(data) => {
-        if (!data) {
-          return null;
-        }
+    <Box>
+      <Stack vertical fill>
+        {jobsForDepartment.map(([name, job]) => {
+          return (
+            <JobRow
+              className={classes([
+                className,
+                name === department.head && 'head',
+              ])}
+              key={name}
+              job={job}
+              name={name}
+            />
+          );
+        })}
+      </Stack>
 
-        const { departments, jobs } = data.jobs;
-        const department = departments[name];
-
-        // This isn't necessarily a bug, it's like this
-        // so that you can remove entire departments without
-        // having to edit the UI.
-        // This is used in events, for instance.
-        if (!department) {
-          return null;
-        }
-
-        const jobsForDepartment = sortJobs(
-          Object.entries(jobs).filter(([_, job]) => job.department === name),
-          department.head,
-        );
-
-        return (
-          <Box>
-            <Stack vertical fill>
-              {jobsForDepartment.map(([name, job]) => {
-                return (
-                  <JobRow
-                    className={classes([
-                      className,
-                      name === department.head && 'head',
-                    ])}
-                    key={name}
-                    job={job}
-                    name={name}
-                  />
-                );
-              })}
-            </Stack>
-
-            {children}
-          </Box>
-        );
-      }}
-    />
+      {children}
+    </Box>
   );
 }
 

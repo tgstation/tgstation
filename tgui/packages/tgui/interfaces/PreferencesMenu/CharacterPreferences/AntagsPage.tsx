@@ -16,7 +16,7 @@ import { Antagonist, Category } from '../antagonists/base';
 import { PreferencesMenuData } from '../types';
 
 const requireAntag = require.context(
-  './antagonists/antagonists',
+  '../antagonists/antagonists',
   false,
   /.ts$/,
 );
@@ -31,7 +31,7 @@ function binaryInsertAntag(collection: Antagonist[], value: Antagonist) {
   });
 }
 
-for (const antagKey in requireAntag) {
+for (const antagKey of requireAntag.keys()) {
   const antag = requireAntag<{
     default?: Antagonist;
   }>(antagKey).default;

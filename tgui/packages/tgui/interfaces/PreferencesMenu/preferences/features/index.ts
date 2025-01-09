@@ -10,7 +10,7 @@ export const features: Record<string, Feature<unknown>> = {};
 
 const requireFeature = require.context('./', true, /.tsx$/);
 
-for (const key in requireFeature) {
+for (const key of requireFeature.keys()) {
   if (key === 'index' || key === 'base') {
     continue;
   }

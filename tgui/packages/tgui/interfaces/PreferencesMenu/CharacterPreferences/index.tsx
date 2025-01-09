@@ -8,7 +8,7 @@ import { PageButton } from '../components/PageButton';
 import { PreferencesMenuData } from '../types';
 import { AntagsPage } from './AntagsPage';
 import { JobsPage } from './JobsPage';
-import { LoadoutPage } from './loadout/index';
+import { LoadoutPage } from './loadout';
 import { MainPage } from './MainPage';
 import { QuirksPage } from './QuirksPage';
 import { SpeciesPage } from './SpeciesPage';

@@ -8,6 +8,7 @@ import { useBackend } from './backend';
 import { useDebug } from './debug';
 import { LoadingScreen } from './interfaces/common/LoadingToolbox';
 import { Window } from './layouts';
+import { logger } from './logging';
 
 const requireInterface = require.context('./interfaces');
 
@@ -83,6 +84,7 @@ export const getRoutedComponent = () => {
     try {
       esModule = requireInterface(interfacePath);
     } catch (err) {
+      logger.log(err.message);
       if (err.code !== 'MODULE_NOT_FOUND') {
         throw err;
       }
