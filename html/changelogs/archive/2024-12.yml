@@ -764,3 +764,24 @@
   - admin: Add debugging sound earmuffs to admin equipment inside the debug box. Wear
       them to determine a sounds max range, distance, volume, and sound name. Highly
       recommended to walk otherwise you will get spammed with footstep sounds.
+2024-12-30:
+  00-Steven:
+  - bugfix: Photocopying no longer removes the stamp overlays from the original paper,
+      and actually copies them to the copy.
+  Rhials:
+  - balance: When dominating a mech as a Malfunctioning AI, the core you shunted from
+      will disable your Doomsday Counterdown when destroyed. Make sure to protect
+      that core!
+  grungussuss:
+  - rscadd: computers and airlocks are now leanable
+  - refactor: changed how density/collision of some objects is changed, report any
+      oddities!
+  mc-oofert:
+  - qol: you can adjust diagonal walls to be not diagonal walls with a wrench
+2024-12-31:
+  Kylerace:
+  - bugfix: holodeck is slightly less likely to explode the server
+  SmArtKar:
+  - bugfix: Blood no longer gets colored with the item its attached to
+  mc-oofert:
+  - rscadd: forensics spoofing kit for traitors/whoever with an uplink

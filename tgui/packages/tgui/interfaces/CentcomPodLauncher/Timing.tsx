@@ -1,5 +1,6 @@
+import { Button, Divider, Section } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, Divider, Section } from '../../components';
 import { DELAYS, REV_DELAYS } from './constants';
 import { DelayHelper } from './DelayHelper';
 import { PodLauncherData } from './types';
