@@ -13626,7 +13626,9 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
-/obj/effect/spawner/random/armory/dragnet,
+/obj/item/gun/energy/taser,
+/obj/item/gun/energy/taser,
+/obj/item/gun/energy/taser,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "eQQ" = (
@@ -56655,7 +56657,6 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/obj/item/gun/energy/taser,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "tTE" = (

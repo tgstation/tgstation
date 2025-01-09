@@ -55050,7 +55050,9 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/armory/riot_helmet,
 /obj/effect/spawner/random/armory/bulletproof_helmet,
-/obj/effect/spawner/random/armory/dragnet,
+/obj/item/gun/energy/taser,
+/obj/item/gun/energy/taser,
+/obj/item/gun/energy/taser,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
 "sNz" = (

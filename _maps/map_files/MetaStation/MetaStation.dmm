@@ -10988,9 +10988,7 @@
 /obj/structure/secure_safe/directional/north{
 	name = "armory safe A"
 	},
-/obj/structure/table/wood/fancy/red,
-/obj/item/gun/energy/taser,
-/turf/open/floor/mineral/gold,
+/turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "dXA" = (
 /obj/structure/closet/crate/trashcart,
@@ -31952,13 +31950,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "loY" = (
-/obj/structure/rack,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
-/obj/effect/spawner/random/armory/dragnet,
-/turf/open/floor/iron/dark,
+/obj/structure/table/wood/fancy/red,
+/obj/item/gun/energy/taser,
+/obj/item/gun/energy/taser,
+/obj/item/gun/energy/taser,
+/turf/open/floor/mineral/gold,
 /area/station/ai_monitored/security/armory)
 "lpo" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{

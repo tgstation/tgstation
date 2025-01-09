@@ -28644,7 +28644,9 @@
 /obj/structure/rack,
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/spawner/random/armory/dragnet,
+/obj/item/gun/energy/taser,
+/obj/item/gun/energy/taser,
+/obj/item/gun/energy/taser,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "jlX" = (
@@ -58241,7 +58243,6 @@
 /obj/item/gun/energy/temperature/security,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/gun/energy/taser,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "tBa" = (

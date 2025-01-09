@@ -860,15 +860,16 @@
 /turf/open/floor/iron,
 /area/station/security/prison/visit)
 "ale" = (
-/obj/structure/rack,
-/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/table/wood/fancy,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east{
 	pixel_x = 3
 	},
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/spawner/random/armory/dragnet,
-/turf/open/floor/iron/dark,
+/obj/item/gun/energy/taser,
+/obj/item/gun/energy/taser,
+/obj/item/gun/energy/taser,
+/turf/open/floor/mineral/gold,
 /area/station/ai_monitored/security/armory)
 "alG" = (
 /obj/structure/cable,
@@ -86805,9 +86806,7 @@
 "vGM" = (
 /obj/structure/secure_safe/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/table/wood/fancy,
-/obj/item/gun/energy/taser,
-/turf/open/floor/mineral/gold,
+/turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "vGP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
