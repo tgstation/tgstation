@@ -85,11 +85,11 @@ function LoadoutModifyButtons(props: ButtonsProps) {
   const { loadout_list } = data.character_preferences.misc;
   const { modifyItemDimmer } = props;
 
-  const isActive = (item: LoadoutItem, reskin: ReskinOption) => {
+  function isActive(item: LoadoutItem, reskin: ReskinOption) {
     return loadout_list && loadout_list[item.path]['reskin']
       ? loadout_list[item.path]['reskin'] === reskin.name
       : item.icon_state === reskin.skin_icon_state;
-  };
+  }
 
   return (
     <Stack>

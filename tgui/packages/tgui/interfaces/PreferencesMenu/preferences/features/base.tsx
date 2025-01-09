@@ -21,8 +21,9 @@ import { BooleanLike } from 'tgui-core/react';
 import { createSetPreference, PreferencesMenuData } from '../../types';
 import { useServerPrefs } from '../../useServerPrefs';
 
-export const sortChoices = (array: [string, ReactNode][]) =>
-  sortBy(array, ([name]) => name);
+export function sortChoices(array: [string, ReactNode][]) {
+  return sortBy(array, ([name]) => name);
+}
 
 export type Feature<
   TReceiving,
@@ -60,7 +61,7 @@ export type FeatureValueProps<
   value: TReceiving;
 }>;
 
-export const FeatureColorInput = (props: FeatureValueProps<string>) => {
+export function FeatureColorInput(props: FeatureValueProps<string>) {
   return (
     <Button
       onClick={() => {
@@ -93,13 +94,11 @@ export const FeatureColorInput = (props: FeatureValueProps<string>) => {
       </Stack>
     </Button>
   );
-};
+}
 
 export type FeatureToggle = Feature<BooleanLike, boolean>;
 
-export const CheckboxInput = (
-  props: FeatureValueProps<BooleanLike, boolean>,
-) => {
+export function CheckboxInput(props: FeatureValueProps<BooleanLike, boolean>) {
   return (
     <Button.Checkbox
       checked={!!props.value}
@@ -108,11 +107,11 @@ export const CheckboxInput = (
       }}
     />
   );
-};
+}
 
-export const CheckboxInputInverse = (
+export function CheckboxInputInverse(
   props: FeatureValueProps<BooleanLike, boolean>,
-) => {
+) {
   return (
     <Button.Checkbox
       checked={!props.value}
@@ -121,7 +120,7 @@ export const CheckboxInputInverse = (
       }}
     />
   );
-};
+}
 
 export function createDropdownInput<T extends string | number = string>(
   // Map of value to display texts
@@ -164,9 +163,9 @@ export type FeatureNumericData = {
 
 export type FeatureNumeric = Feature<number, number, FeatureNumericData>;
 
-export const FeatureNumberInput = (
+export function FeatureNumberInput(
   props: FeatureValueProps<number, number, FeatureNumericData>,
-) => {
+) {
   if (!props.serverData) {
     return <Box>Loading...</Box>;
   }
@@ -182,11 +181,11 @@ export const FeatureNumberInput = (
       value={props.value}
     />
   );
-};
+}
 
-export const FeatureSliderInput = (
+export function FeatureSliderInput(
   props: FeatureValueProps<number, number, FeatureNumericData>,
-) => {
+) {
   if (!props.serverData) {
     return <Box>Loading...</Box>;
   }
@@ -203,7 +202,7 @@ export const FeatureSliderInput = (
       stepPixelSize={10}
     />
   );
-};
+}
 
 export const FeatureValueInput = (props: {
   feature: Feature<unknown>;
@@ -219,10 +218,10 @@ export const FeatureValueInput = (props: {
 
   const [predictedValue, setPredictedValue] = useState(props.value);
 
-  const changeValue = (newValue: unknown) => {
+  function changeValue(newValue: unknown) {
     setPredictedValue(newValue);
     createSetPreference(props.act, props.featureId)(newValue);
-  };
+  }
 
   useEffect(() => {
     setPredictedValue(props.value);
@@ -246,9 +245,9 @@ export type FeatureShortTextData = {
   maximum_length: number;
 };
 
-export const FeatureShortTextInput = (
+export function FeatureShortTextInput(
   props: FeatureValueProps<string, string, FeatureShortTextData>,
-) => {
+) {
   if (!props.serverData) {
     return <Box>Loading...</Box>;
   }
@@ -262,4 +261,4 @@ export const FeatureShortTextInput = (
       onChange={(_, value) => props.handleSetValue(value)}
     />
   );
-};
+}

@@ -349,7 +349,7 @@ export function QuirksPage(props) {
     balance += selectedQuirk.value;
   }
 
-  const getReasonToNotAdd = (quirkName: string) => {
+  function getReasonToNotAdd(quirkName: string) {
     const quirk = quirkInfo[quirkName];
 
     if (quirk.value > 0) {
@@ -379,18 +379,18 @@ export function QuirksPage(props) {
       }
     }
 
-    return undefined;
-  };
+    return;
+  }
 
-  const getReasonToNotRemove = (quirkName: string) => {
+  function getReasonToNotRemove(quirkName: string) {
     const quirk = quirkInfo[quirkName];
 
     if (pointsEnabled && balance - quirk.value > 0) {
       return 'You need to remove a positive quirk first!';
     }
 
-    return undefined;
-  };
+    return;
+  }
 
   return (
     <Stack align="center" fill>

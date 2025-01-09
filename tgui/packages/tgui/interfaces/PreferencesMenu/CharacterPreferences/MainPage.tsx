@@ -200,7 +200,7 @@ const ChoicedSelection = (props: {
   );
 };
 
-const searchInCatalog = (searchText = '', catalog: Record<string, string>) => {
+function searchInCatalog(searchText = '', catalog: Record<string, string>) {
   let items = Object.entries(catalog);
   if (searchText) {
     items = filter(
@@ -209,7 +209,7 @@ const searchInCatalog = (searchText = '', catalog: Record<string, string>) => {
     );
   }
   return items;
-};
+}
 
 const GenderButton = (props: {
   handleSetGender: (gender: Gender) => void;

@@ -26,12 +26,13 @@ type GhostForm = {
   value: string;
 };
 
-const insertGhostForm = (collection: GhostForm[], value: GhostForm) =>
-  binaryInsertWith(collection, value, ({ value }) => value);
+function insertGhostForm(collection: GhostForm[], value: GhostForm) {
+  return binaryInsertWith(collection, value, ({ value }) => value);
+}
 
-const GhostFormInput = (
+function GhostFormInput(
   props: FeatureValueProps<string, string, FeatureChoicedServerData>,
-) => {
+) {
   const { data } = useBackend<PreferencesMenuData>();
 
   const serverData = props.serverData;
@@ -89,7 +90,7 @@ const GhostFormInput = (
       options={options}
     />
   );
-};
+}
 
 export const ghost_form: FeatureChoiced = {
   name: 'Ghosts form',

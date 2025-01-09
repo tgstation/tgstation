@@ -9,9 +9,9 @@ import {
 } from '../base';
 import { FeatureDropdownInput } from '../dropdowns';
 
-const FeatureTTSDropdownInput = (
+function FeatureTTSDropdownInput(
   props: FeatureValueProps<string, string, FeatureChoicedServerData>,
-) => {
+) {
   return (
     <Stack>
       <Stack.Item grow>
@@ -39,7 +39,7 @@ const FeatureTTSDropdownInput = (
       </Stack.Item>
     </Stack>
   );
-};
+}
 
 export const tts_voice: FeatureChoiced = {
   name: 'Voice',

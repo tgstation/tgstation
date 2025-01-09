@@ -40,6 +40,7 @@ type MultiNameProps = {
 };
 
 export function MultiNameInput(props: MultiNameProps) {
+  const { handleUpdateName } = props;
   const [currentlyEditingName, setCurrentlyEditingName] = useState<
     string | null
   >(null);
@@ -57,6 +58,12 @@ export function MultiNameInput(props: MultiNameProps) {
         name,
       },
     );
+  }
+
+  function updateName(key, value) {
+    handleUpdateName(key, value);
+
+    setCurrentlyEditingName(null);
   }
 
   return (
@@ -83,17 +90,11 @@ export function MultiNameInput(props: MultiNameProps) {
                     let content;
 
                     if (currentlyEditingName === key) {
-                      const updateName = (event, value) => {
-                        props.handleUpdateName(key, value);
-
-                        setCurrentlyEditingName(null);
-                      };
-
                       content = (
                         <Input
                           autoSelect
-                          onEnter={updateName}
-                          onChange={updateName}
+                          onEnter={(e, value) => updateName(key, value)}
+                          onChange={(e, value) => updateName(key, value)}
                           onEscape={() => {
                             setCurrentlyEditingName(null);
                           }}
