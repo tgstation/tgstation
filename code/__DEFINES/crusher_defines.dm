@@ -1,4 +1,4 @@
-///the IDs of crusher trophies
+//the IDs of crusher trophies
 #define TROPHY_WATCHER "trophy watcher"
 #define TROPHY_BEAR_PAW "trophy bear paw"
 #define TROPHY_LOBSTER_CLAW "trophy lobster claw"
