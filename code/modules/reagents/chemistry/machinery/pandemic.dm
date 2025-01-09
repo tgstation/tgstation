@@ -230,9 +230,7 @@
 	var/datum/disease/advance/adv_disease = SSdisease.archive_diseases[id]
 
 	var/list/cures = get_beaker_cures(id)
-	if(!cures)
-		return FALSE
-	if(!(cures[1]))
+	if(!cures.len)
 		return FALSE
 
 	adv_disease.cures = cures[1]
