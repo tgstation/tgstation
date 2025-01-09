@@ -1,5 +1,6 @@
+import { Box, Button, Flex } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button, Flex } from '../../components';
 
 type InputButtonsData = {
   large_buttons: boolean;
@@ -7,7 +8,7 @@ type InputButtonsData = {
 };
 
 type InputButtonsProps = {
-  input: string | number | string[] | [string[], number[]];
+  input: string | number | string[] | [string, number][];
   on_submit?: () => void;
   on_cancel?: () => void;
   message?: string;

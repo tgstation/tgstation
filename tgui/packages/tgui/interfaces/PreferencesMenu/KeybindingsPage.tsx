@@ -1,9 +1,5 @@
 import { range, sortBy } from 'common/collections';
-import { isEscape, KEY } from 'common/keys';
 import { Component } from 'react';
-
-import { resolveAsset } from '../../assets';
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -11,9 +7,13 @@ import {
   Stack,
   Tooltip,
   TrackOutsideClicks,
-} from '../../components';
-import { KeyEvent } from '../../events';
-import { fetchRetry } from '../../http';
+} from 'tgui-core/components';
+import { KeyEvent } from 'tgui-core/events';
+import { fetchRetry } from 'tgui-core/http';
+import { isEscape, KEY } from 'tgui-core/keys';
+
+import { resolveAsset } from '../../assets';
+import { useBackend } from '../../backend';
 import { PreferencesMenuData } from './data';
 import { TabbedMenu } from './TabbedMenu';
 

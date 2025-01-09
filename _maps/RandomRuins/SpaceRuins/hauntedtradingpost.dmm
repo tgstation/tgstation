@@ -2024,7 +2024,6 @@
 	pixel_x = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/cable/layer1,
 /obj/machinery/cell_charger{
 	pixel_y = -7
 	},
@@ -2769,7 +2768,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/duct,
-/obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	pipe_color = "#FF7B00";
@@ -3705,7 +3703,6 @@
 /obj/structure/cable/layer1,
 /obj/structure/sign/poster/contraband/revolver/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
@@ -5355,7 +5352,6 @@
 /obj/structure/cable/layer1,
 /obj/structure/sign/departments/custodian/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
@@ -5494,7 +5490,6 @@
 	pixel_y = 12
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
