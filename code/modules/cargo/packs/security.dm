@@ -174,7 +174,6 @@
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /// Armory packs
-/datum/supply_pac/security/armory/tasers
 
 /datum/supply_pack/security/armory
 	group = "Armory"
