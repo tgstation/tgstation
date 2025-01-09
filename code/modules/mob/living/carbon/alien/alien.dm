@@ -91,6 +91,9 @@
 	else
 		return pick (list("xttrails_1", "xttrails2"))
 
+/mob/living/carbon/alien/get_trail_blood()
+	return BLOOD_STATE_XENO
+
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
