@@ -110,7 +110,7 @@
 /obj/structure/geyser/random/Initialize(mapload)
 	reagent_id = get_random_reagent_id()
 	var/datum/reagent/R = reagent_id
-	true_name = "[R.name] geyser"
+	true_name = "[initial(R.name)] geyser"
 	discovery_message = "It's a [true_name]! How does any of this even work?" //it doesnt
 	return ..()
 
