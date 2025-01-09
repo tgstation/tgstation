@@ -1,0 +1,4 @@
+author: "high-speedspin-cycle"
+delete-after: True
+changes:
+  - balance: "Overdose thresholds now positively scale with high purity"

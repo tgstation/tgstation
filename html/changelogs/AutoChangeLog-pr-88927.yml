@@ -1,0 +1,6 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Spessmen now blink."
+  - rscadd: "Added a new Fluoride Stare quirk, keep those eyeballs wet, lest they crack!"
+  - image: "Eyes now display their color on their organ sprite, instead of always being displayed as blue."
