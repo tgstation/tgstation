@@ -1,15 +1,15 @@
 import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
+import { Window } from 'tgui/layouts';
 import { Button, Stack } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
-import { useBackend } from '../../backend';
-import { Window } from '../../layouts';
+import { PageButton } from '../components/PageButton';
+import { PreferencesMenuData } from '../types';
 import { AntagsPage } from './AntagsPage';
-import { PreferencesMenuData } from './data';
 import { JobsPage } from './JobsPage';
 import { LoadoutPage } from './loadout/index';
 import { MainPage } from './MainPage';
-import { PageButton } from './PageButton';
 import { QuirksPage } from './QuirksPage';
 import { SpeciesPage } from './SpeciesPage';
 
@@ -22,21 +22,23 @@ enum Page {
   Loadout,
 }
 
-const CharacterProfiles = (props: {
+type ProfileProps = {
   activeSlot: number;
   onClick: (index: number) => void;
   profiles: (string | null)[];
-}) => {
-  const { profiles } = props;
+};
+
+function CharacterProfiles(props: ProfileProps) {
+  const { activeSlot, onClick, profiles } = props;
 
   return (
     <Stack justify="center" wrap>
       {profiles.map((profile, slot) => (
         <Stack.Item key={slot}>
           <Button
-            selected={slot === props.activeSlot}
+            selected={slot === activeSlot}
             onClick={() => {
-              props.onClick(slot);
+              onClick(slot);
             }}
             fluid
           >
@@ -46,9 +48,9 @@ const CharacterProfiles = (props: {
       ))}
     </Stack>
   );
-};
+}
 
-export const CharacterPreferenceWindow = (props) => {
+export function CharacterPreferenceWindow(props) {
   const { act, data } = useBackend<PreferencesMenuData>();
 
   const [currentPage, setCurrentPage] = useState(Page.Main);
@@ -171,4 +173,4 @@ export const CharacterPreferenceWindow = (props) => {
       </Window.Content>
     </Window>
   );
-};
+}

@@ -1,5 +1,6 @@
 import { filter } from 'common/collections';
 import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -9,11 +10,15 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
-import { PreferencesMenuData, Quirk, RandomSetting, ServerData } from './data';
+import { ServerPreferencesFetcher } from '../ServerPreferencesFetcher';
+import {
+  PreferencesMenuData,
+  Quirk,
+  RandomSetting,
+  ServerData,
+} from '../types';
+import { useRandomToggleState } from '../useRandomToggleState';
 import { getRandomization, PreferenceList } from './MainPage';
-import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
-import { useRandomToggleState } from './useRandomToggleState';
 
 function getColorValueClass(quirk: Quirk) {
   if (quirk.value > 0) {

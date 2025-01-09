@@ -1,4 +1,6 @@
 import { Fragment, useState } from 'react';
+import { useBackend } from 'tgui/backend';
+import { CharacterPreview } from 'tgui/interfaces/common/CharacterPreview';
 import {
   Box,
   Button,
@@ -11,10 +13,8 @@ import {
   Tabs,
 } from 'tgui-core/components';
 
-import { useBackend } from '../../../backend';
-import { CharacterPreview } from '../../common/CharacterPreview';
-import { ServerData } from '../data';
-import { ServerPreferencesFetcher } from '../ServerPreferencesFetcher';
+import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
+import { ServerData } from '../../types';
 import {
   LoadoutCategory,
   LoadoutItem,

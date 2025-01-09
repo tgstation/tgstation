@@ -2,7 +2,7 @@ import { Component, ReactNode } from 'react';
 import { fetchRetry } from 'tgui-core/http';
 
 import { resolveAsset } from '../../assets';
-import { ServerData } from './data';
+import { ServerData } from './types';
 
 // Cache response so it's only sent once
 let fetchServerData: Promise<ServerData> | undefined;

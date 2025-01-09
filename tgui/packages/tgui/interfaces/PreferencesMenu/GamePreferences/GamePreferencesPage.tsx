@@ -1,11 +1,11 @@
 import { binaryInsertWith, sortBy } from 'common/collections';
 import { ReactNode } from 'react';
+import { useBackend } from 'tgui/backend';
 import { Box, Flex, Tooltip } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
-import { PreferencesMenuData } from './data';
-import features from './preferences/features';
-import { FeatureValueInput } from './preferences/features/base';
+import { features } from '../preferences/features';
+import { FeatureValueInput } from '../preferences/features/base';
+import { PreferencesMenuData } from '../types';
 import { TabbedMenu } from './TabbedMenu';
 
 type PreferenceChild = {
@@ -13,15 +13,18 @@ type PreferenceChild = {
   children: ReactNode;
 };
 
-const binaryInsertPreference = (
+function binaryInsertPreference(
   collection: PreferenceChild[],
   value: PreferenceChild,
-) => binaryInsertWith(collection, value, (child) => child.name);
+) {
+  return binaryInsertWith(collection, value, (child) => child.name);
+}
 
-const sortByName = (array: [string, PreferenceChild[]][]) =>
-  sortBy(array, ([name]) => name);
+function sortByName(array: [string, PreferenceChild[]][]) {
+  return sortBy(array, ([name]) => name);
+}
 
-export const GamePreferencesPage = (props) => {
+export function GamePreferencesPage(props) {
   const { act, data } = useBackend<PreferencesMenuData>();
 
   const gamePreferences: Record<string, PreferenceChild[]> = {};
@@ -108,4 +111,4 @@ export const GamePreferencesPage = (props) => {
       }}
     />
   );
-};
+}

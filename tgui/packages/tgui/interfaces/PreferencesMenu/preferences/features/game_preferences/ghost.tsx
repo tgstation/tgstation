@@ -4,7 +4,7 @@ import { useBackend } from 'tgui/backend';
 import { Box, Dropdown, Flex } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { PreferencesMenuData } from '../../../data';
+import { PreferencesMenuData } from '../../../types';
 import {
   CheckboxInput,
   FeatureChoiced,

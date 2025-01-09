@@ -1,7 +1,10 @@
 import { BooleanLike } from 'tgui-core/react';
 
 import { sendAct } from '../../backend';
-import { LoadoutCategory, LoadoutList } from './loadout/base';
+import {
+  LoadoutCategory,
+  LoadoutList,
+} from './CharacterPreferences/loadout/base';
 import { Gender } from './preferences/gender';
 
 export enum Food {
@@ -198,5 +201,5 @@ export type ServerData = {
     loadout_tabs: LoadoutCategory[];
   };
   species: Record<string, Species>;
-  [otheyKey: string]: unknown;
+  [otherKey: string]: unknown;
 };

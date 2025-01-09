@@ -1,3 +1,4 @@
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -8,10 +9,14 @@ import {
 } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
 
-import { useBackend } from '../../../backend';
 import { LoadoutCategory, LoadoutItem, LoadoutManagerData } from './base';
 
-export const ItemIcon = (props: { item: LoadoutItem; scale?: number }) => {
+type Props = {
+  item: LoadoutItem;
+  scale?: number;
+};
+
+export function ItemIcon(props: Props) {
   const { item, scale = 3 } = props;
   const icon_to_use = item.icon;
   const icon_state_to_use = item.icon_state;
@@ -41,13 +46,15 @@ export const ItemIcon = (props: { item: LoadoutItem; scale?: number }) => {
       }}
     />
   );
-};
+}
 
-export const ItemDisplay = (props: {
+type DisplayProps = {
   active: boolean;
   item: LoadoutItem;
   scale?: number;
-}) => {
+};
+
+export function ItemDisplay(props: DisplayProps) {
   const { act } = useBackend();
   const { active, item, scale = 3 } = props;
 
@@ -90,11 +97,16 @@ export const ItemDisplay = (props: {
       </Flex>
     </Button>
   );
+}
+
+type ListProps = {
+  items: LoadoutItem[];
 };
 
-const ItemListDisplay = (props: { items: LoadoutItem[] }) => {
+export function ItemListDisplay(props: ListProps) {
   const { data } = useBackend<LoadoutManagerData>();
   const { loadout_list } = data.character_preferences.misc;
+
   return (
     <Flex wrap>
       {props.items.map((item) => (
@@ -107,11 +119,13 @@ const ItemListDisplay = (props: { items: LoadoutItem[] }) => {
       ))}
     </Flex>
   );
+}
+
+type TabProps = {
+  category: LoadoutCategory | undefined;
 };
 
-export const LoadoutTabDisplay = (props: {
-  category: LoadoutCategory | undefined;
-}) => {
+export function LoadoutTabDisplay(props: TabProps) {
   const { category } = props;
   if (!category) {
     return (
@@ -122,12 +136,14 @@ export const LoadoutTabDisplay = (props: {
   }
 
   return <ItemListDisplay items={category.contents} />;
-};
+}
 
-export const SearchDisplay = (props: {
+type SearchProps = {
   loadout_tabs: LoadoutCategory[];
   currentSearch: string;
-}) => {
+};
+
+export function SearchDisplay(props: SearchProps) {
   const { loadout_tabs, currentSearch } = props;
 
   const search = createSearch(
@@ -145,4 +161,4 @@ export const SearchDisplay = (props: {
   }
 
   return <ItemListDisplay items={validLoadoutItems} />;
-};
+}

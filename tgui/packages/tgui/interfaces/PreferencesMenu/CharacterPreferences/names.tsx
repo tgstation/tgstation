@@ -13,26 +13,33 @@ import {
   TrackOutsideClicks,
 } from 'tgui-core/components';
 
-import { Name } from './data';
-import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
+import { ServerPreferencesFetcher } from '../ServerPreferencesFetcher';
+import { Name } from '../types';
 
 type NameWithKey = {
   key: string;
   name: Name;
 };
 
-const binaryInsertName = (collection: NameWithKey[], value: NameWithKey) =>
-  binaryInsertWith(collection, value, ({ key }) => key);
+function binaryInsertName(
+  collection: NameWithKey[],
+  value: NameWithKey,
+): NameWithKey[] {
+  return binaryInsertWith(collection, value, ({ key }) => key);
+}
 
-const sortNameWithKeyEntries = (array: [string, NameWithKey[]][]) =>
-  sortBy(array, ([key]) => key);
+function sortNameWithKeyEntries(array: [string, NameWithKey[]][]) {
+  return sortBy(array, ([key]) => key);
+}
 
-export const MultiNameInput = (props: {
+type MultiNameProps = {
   handleClose: () => void;
   handleRandomizeName: (nameType: string) => void;
   handleUpdateName: (nameType: string, value: string) => void;
   names: Record<string, string>;
-}) => {
+};
+
+export function MultiNameInput(props: MultiNameProps) {
   const [currentlyEditingName, setCurrentlyEditingName] = useState<
     string | null
   >(null);
@@ -153,22 +160,24 @@ export const MultiNameInput = (props: {
       }}
     />
   );
-};
+}
 
-export const NameInput = (props: {
+type NameInputProps = {
   handleUpdateName: (name: string) => void;
   name: string;
   openMultiNameInput: () => void;
-}) => {
+};
+
+export function NameInput(props: NameInputProps) {
   const [lastNameBeforeEdit, setLastNameBeforeEdit] = useState<string | null>(
     null,
   );
   const editing = lastNameBeforeEdit === props.name;
 
-  const updateName = (e, value) => {
+  function updateName(e, value) {
     setLastNameBeforeEdit(null);
     props.handleUpdateName(value);
-  };
+  }
 
   return (
     <Button
@@ -262,4 +271,4 @@ export const NameInput = (props: {
       </Stack>
     </Button>
   );
-};
+}

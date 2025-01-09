@@ -1,19 +1,18 @@
 import { useState } from 'react';
+import { Window } from 'tgui/layouts';
 import { Stack } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
-import { useBackend } from '../../backend';
-import { Window } from '../../layouts';
-import { GamePreferencesSelectedPage, PreferencesMenuData } from './data';
+import { PageButton } from '../components/PageButton';
+import { GamePreferencesSelectedPage } from '../types';
 import { GamePreferencesPage } from './GamePreferencesPage';
 import { KeybindingsPage } from './KeybindingsPage';
-import { PageButton } from './PageButton';
 
-export const GamePreferenceWindow = (props: {
+type Props = {
   startingPage?: GamePreferencesSelectedPage;
-}) => {
-  const { act, data } = useBackend<PreferencesMenuData>();
+};
 
+export function GamePreferenceWindow(props: Props) {
   const [currentPage, setCurrentPage] = useState(
     props.startingPage ?? GamePreferencesSelectedPage.Settings,
   );
@@ -68,4 +67,4 @@ export const GamePreferenceWindow = (props: {
       </Window.Content>
     </Window>
   );
-};
+}

@@ -1,31 +1,67 @@
+import { useEffect, useState } from 'react';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
+import { fetchRetry } from 'tgui-core/http';
 
+import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
-import { CharacterPreferenceWindow } from './CharacterPreferenceWindow';
+import { logger } from '../../logging';
+import { CharacterPreferenceWindow } from './CharacterPreferences';
+import { GamePreferenceWindow } from './GamePreferences';
+import { LoadingPage } from './Loading';
 import {
   GamePreferencesSelectedPage,
   PreferencesMenuData,
+  ServerData,
   Window,
-} from './data';
-import { GamePreferenceWindow } from './GamePreferenceWindow';
+} from './types';
+import { RandomToggleState } from './useRandomToggleState';
+import { ServerPrefs } from './useServerPrefs';
 
-export const PreferencesMenu = (props) => {
+export function PreferencesMenu(props) {
   const { data } = useBackend<PreferencesMenuData>();
+  const { window } = data;
 
-  const window = data.window;
+  const [serverData, setServerData] = useState<ServerData>();
+  const randomization = useState(false);
 
+  useEffect(() => {
+    fetchRetry(resolveAsset('preferences.json'))
+      .then((response) => response.json())
+      .then((data) => {
+        setServerData(data);
+      })
+      .catch((error) => {
+        logger.log('Failed to fetch preferences.json', error);
+      });
+  }, []);
+
+  if (!serverData) {
+    return <LoadingPage />;
+  }
+
+  let content;
   switch (window) {
     case Window.Character:
-      return <CharacterPreferenceWindow />;
+      content = <CharacterPreferenceWindow />;
+      break;
     case Window.Game:
-      return <GamePreferenceWindow />;
+      content = <GamePreferenceWindow />;
+      break;
     case Window.Keybindings:
-      return (
+      content = (
         <GamePreferenceWindow
           startingPage={GamePreferencesSelectedPage.Keybindings}
         />
       );
+      break;
     default:
       exhaustiveCheck(window);
   }
-};
+  return (
+    <ServerPrefs.Provider value={serverData}>
+      <RandomToggleState.Provider value={randomization}>
+        {content}
+      </RandomToggleState.Provider>
+    </ServerPrefs.Provider>
+  );
+}

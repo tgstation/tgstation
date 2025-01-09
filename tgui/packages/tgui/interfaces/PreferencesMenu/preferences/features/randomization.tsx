@@ -1,8 +1,8 @@
 import { useBackend } from 'tgui/backend';
 import { Button, Stack } from 'tgui-core/components';
 
-import { PreferencesMenuData, RandomSetting } from '../../data';
-import { RandomizationButton } from '../../RandomizationButton';
+import { RandomizationButton } from '../../components/RandomizationButton';
+import { PreferencesMenuData, RandomSetting } from '../../types';
 import { useRandomToggleState } from '../../useRandomToggleState';
 import { CheckboxInput, Feature, FeatureToggle } from './base';
 

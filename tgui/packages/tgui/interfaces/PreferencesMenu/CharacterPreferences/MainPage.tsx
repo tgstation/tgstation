@@ -1,5 +1,6 @@
 import { filter, map, sortBy } from 'common/collections';
 import { ReactNode, useState } from 'react';
+import { sendAct, useBackend } from 'tgui/backend';
 import {
   Autofocus,
   Box,
@@ -13,25 +14,24 @@ import {
 import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
-import { sendAct, useBackend } from '../../backend';
-import { CharacterPreview } from '../common/CharacterPreview';
+import { CharacterPreview } from '../../common/CharacterPreview';
+import { RandomizationButton } from '../components/RandomizationButton';
+import { features } from '../preferences/features';
+import {
+  FeatureChoicedServerData,
+  FeatureValueInput,
+} from '../preferences/features/base';
+import { Gender, GENDERS } from '../preferences/gender';
+import { ServerPreferencesFetcher } from '../ServerPreferencesFetcher';
 import {
   createSetPreference,
   PreferencesMenuData,
   RandomSetting,
   ServerData,
-} from './data';
+} from '../types';
+import { useRandomToggleState } from '../useRandomToggleState';
 import { DeleteCharacterPopup } from './DeleteCharacterPopup';
 import { MultiNameInput, NameInput } from './names';
-import features from './preferences/features';
-import {
-  FeatureChoicedServerData,
-  FeatureValueInput,
-} from './preferences/features/base';
-import { Gender, GENDERS } from './preferences/gender';
-import { RandomizationButton } from './RandomizationButton';
-import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
-import { useRandomToggleState } from './useRandomToggleState';
 
 const CLOTHING_CELL_SIZE = 48;
 const CLOTHING_SIDEBAR_ROWS = 9;
@@ -373,19 +373,22 @@ const createSetRandomization =
     });
   };
 
-const sortPreferences = (array: [string, unknown][]) =>
-  sortBy(array, ([featureId, _]) => {
+function sortPreferences(array: [string, unknown][]) {
+  return sortBy(array, ([featureId, _]) => {
     const feature = features[featureId];
     return feature?.name;
   });
+}
 
-export const PreferenceList = (props: {
+type PreferenceListProps = {
   act: typeof sendAct;
   preferences: Record<string, unknown>;
   randomizations: Record<string, RandomSetting>;
   maxHeight: string;
   children?: ReactNode;
-}) => {
+};
+
+export function PreferenceList(props: PreferenceListProps) {
   return (
     <Stack.Item
       basis="50%"
@@ -447,13 +450,13 @@ export const PreferenceList = (props: {
       {props.children}
     </Stack.Item>
   );
-};
+}
 
-export const getRandomization = (
+export function getRandomization(
   preferences: Record<string, unknown>,
   serverData: ServerData | undefined,
   randomBodyEnabled: boolean,
-): Record<string, RandomSetting> => {
+): Record<string, RandomSetting> {
   if (!serverData) {
     return {};
   }
@@ -475,9 +478,13 @@ export const getRandomization = (
       ],
     ),
   );
+}
+
+type MainPageProps = {
+  openSpecies: () => void;
 };
 
-export const MainPage = (props: { openSpecies: () => void }) => {
+export function MainPage(props: MainPageProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
   const [currentClothingMenu, setCurrentClothingMenu] = useState<string | null>(
     null,
@@ -683,4 +690,4 @@ export const MainPage = (props: { openSpecies: () => void }) => {
       }}
     />
   );
-};
+}
