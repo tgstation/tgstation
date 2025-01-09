@@ -1760,9 +1760,11 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		if(vending_machine_input[stocked_item] > 0)
 			var/base64
 			var/price = 0
+			var/itemname = initial(stocked_item.name)
 			for(var/obj/item/stored_item in contents)
 				if(stored_item.type == stocked_item)
 					price = stored_item.custom_price
+					itemname = stored_item.name
 					if(!base64) //generate an icon of the item to use in UI
 						if(base64_cache[stored_item.type])
 							base64 = base64_cache[stored_item.type]
@@ -1772,7 +1774,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 					break
 			var/list/data = list(
 				path = stocked_item,
-				name = initial(stocked_item.name),
+				name = itemname,
 				price = price,
 				img = base64,
 				amount = vending_machine_input[stocked_item],
