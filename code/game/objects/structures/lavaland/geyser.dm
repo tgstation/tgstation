@@ -106,12 +106,12 @@
 
 /obj/structure/geyser/random
 	point_value = 500
-	true_name = "strange geyser"
-	discovery_message = "It's a strange geyser! How does any of this even work?" //it doesnt
 
 /obj/structure/geyser/random/Initialize(mapload)
 	reagent_id = get_random_reagent_id()
-
+	var/datum/reagent/R = reagent_id
+	true_name = "[R.name] geyser"
+	discovery_message = "It's a [true_name]! How does any of this even work?" //it doesnt
 	return ..()
 
 ///A wearable tool that lets you empty plumbing machinery and some other stuff
