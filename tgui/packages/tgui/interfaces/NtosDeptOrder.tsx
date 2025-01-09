@@ -17,7 +17,9 @@ import {
 import { NtosWindow } from '../layouts';
 
 // 15x crate value
-const COST_UPPER_BOUND = 3000;
+const COST_MEDIUM_BOUND = 3000;
+// 40x crate value
+const COST_UPPER_BOUND = 8000;
 
 type typePath = string;
 
@@ -44,12 +46,12 @@ type Info = {
 const CooldownEstimate = (props) => {
   const { cost } = props;
   const cooldownColor =
-    (cost > COST_UPPER_BOUND * 0.75 && 'red') ||
-    (cost > COST_UPPER_BOUND * 0.25 && 'orange') ||
+    (cost >= COST_UPPER_BOUND && 'red') ||
+    (cost >= COST_MEDIUM_BOUND && 'orange') ||
     'green';
   const cooldownText =
-    (cost > COST_UPPER_BOUND * 0.75 && 'long') ||
-    (cost > COST_UPPER_BOUND * 0.25 && 'moderate') ||
+    (cost >= COST_UPPER_BOUND && 'long') ||
+    (cost >= COST_MEDIUM_BOUND && 'moderate') ||
     'short';
   return (
     <Box as="span" textColor={cooldownColor}>

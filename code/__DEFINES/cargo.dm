@@ -49,11 +49,15 @@
 #define EXPORT_SOLD_DONT_DELETE 2
 
 
-/// Minimum almost the lowest value of a crate
-#define DEPARTMENTAL_ORDER_COOLDOWN_CREDITS_MIN (CARGO_CRATE_VALUE * 1.6)
-/// Maximum fairly expensive crate at 3000
-#define DEPARTMENTAL_ORDER_COOLDOWN_CREDITS_MAX (CARGO_CRATE_VALUE * 15)
-/// The base cooldown time for departmental orders. Particularly expensive orders have twice the cooldown.
-#define DEPARTMENTAL_ORDER_COOLDOWN_TIME (10 MINUTES)
-/// Cargo will not gain payouts greater than this, when a crate is delivered
-#define DEPARTMENTAL_ORDER_MAX_PAYOUT (CARGO_CRATE_VALUE * 15)
+//At 320 it's 9.8 minutes, at 1400 it's 13.18 minutes,  at 3000 (around gun crates) it's 14.5 minutes, at 8000 (hat crate) 17 minutes, at 9000 (expensive atmos cans) it's 17.3 minutes, and at the 20k crate it's 19.18 minutes.
+/// Multiplies the logarithmic value calculating the free crate cooldown
+#define DEPARTMENTAL_ORDER_COOLDOWN_COEFFICIENT 200
+/// Used for the power of the logarithmic value for the free crate cooldown
+#define DEPARTMENTAL_ORDER_COOLDOWN_POWER 1.2
+
+//At 320 it's 475 credits, at 1400 it's 669 credits,  at 3000 (around gun crates) its 778, at 8000 (hat crate) it's 925 credits, at 9000 (expensive atmos cans) it's 943 credits, and at the 20k crate it's 1070 credits.
+
+/// Multiplies the logarithmic value calculating the free crate delivery reward
+#define DEPARTMENTAL_ORDER_REWARD_COEFFICIENT 120
+/// Used for the power of the logarithmic value for the free crate delivery reward
+#define DEPARTMENTAL_ORDER_REWARD_POWER 1.5
