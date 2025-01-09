@@ -204,3 +204,32 @@
   tontyGH:
   - code_imp: AIs selecting holograms mid-round now select from the same list as prefs,
       which should make things easier to keep consistent
+2025-01-09:
+  00-Steven:
+  - rscadd: Organ harvesting players is now more rewarding. Increased export value
+      of initial player organs.
+  Exester509:
+  - balance: The tesla cannon now fires hitscan lightning bolts with buffed damage
+      to non-insulated targets.
+  - balance: Flux anomalies now have a limit of 5 per round, instead of 8.
+  Hatterhat:
+  - rscadd: Magazines with defined ammo bands can now have their color changed with
+      a pen, in case you're reloading spent magazines or speedloaders with different
+      ammunition and want to change magazine colors to be appropriate.
+  - qol: C-20r magazines and Stechkin APS magazines now have ammo band support.
+  - qol: Standardized some descriptions for AP, HP, and incendiary magazines.
+  Melbert:
+  - qol: You can now look down ladders, both via the look down verb/hotkey and by
+      just looking with your eyes
+  SmArtKar:
+  - bugfix: Cult blood rites should not longer create "empty" blood or be unable to
+      suck up more than one blood pool at a time.
+  - code_imp: Blood trails are now considered a subtype of blood pools
+  - bugfix: Sticky tape should be sticky again.
+  mc-oofert:
+  - bugfix: MMIs in an odysseus get the medhud, odysseus medical beamgun works properly
+  necromanceranne:
+  - bugfix: Burst fire weapons cannot be permanently broken by pacifists attempting
+      to fire them.
+  norsvenska:
+  - bugfix: The bar and restaurant portals are now distinguishable at a glance.

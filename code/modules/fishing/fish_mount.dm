@@ -52,6 +52,10 @@
 	else
 		RegisterSignal(SSfishing, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(load_trophy_fish))
 
+/obj/structure/fish_mount/Destroy(force)
+	QDEL_NULL(mounted_fish)
+	return ..()
+
 /obj/structure/fish_mount/proc/load_trophy_fish(datum/source)
 	SIGNAL_HANDLER
 	SSpersistence.load_trophy_fish(src)
