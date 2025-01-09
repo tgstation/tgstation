@@ -397,12 +397,22 @@ export const TraitTooltip = (props) => {
       key=""
       content={
         <Table>
+          {!!props.grafting && (
+            <Table.Row>
+              <Table.Cell pb={1}>Graft gains the following trait:</Table.Cell>
+            </Table.Row>
+          )}
           <Table.Row header>
             <Table.Cell>
               <Icon name={trait.icon} mr={1} />
               {trait.name}
             </Table.Cell>
           </Table.Row>
+          {!!props.removable && (
+            <Table.Row>
+              <Table.Cell pb={1}>Removable trait.</Table.Cell>
+            </Table.Row>
+          )}
           {!!trait.description && (
             <Table.Row>
               <Table.Cell>{trait.description}</Table.Cell>
@@ -411,7 +421,7 @@ export const TraitTooltip = (props) => {
         </Table>
       }
     >
-      <Icon name={trait.icon} m={0.5} />
+      <Icon name={props.grafting ? 'scissors' : trait.icon} m={0.5} />
     </Tooltip>
   );
 };

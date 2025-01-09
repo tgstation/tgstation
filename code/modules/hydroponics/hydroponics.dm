@@ -68,7 +68,6 @@
 	var/static/list/hovering_item_typechecks = list(
 		/obj/item/plant_analyzer = list(
 			SCREENTIP_CONTEXT_LMB = "Scan tray stats",
-			SCREENTIP_CONTEXT_RMB = "Scan tray chemicals"
 		),
 		/obj/item/cultivator = list(
 			SCREENTIP_CONTEXT_LMB = "Remove weeds",

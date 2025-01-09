@@ -470,7 +470,7 @@
 /// Traits for plants with a different base max_volume.
 /datum/plant_gene/trait/modified_volume
 	name = "Deep Vesicles"
-	description = "It has more reagents than usual."
+	description = "It has extra reagent volume."
 	icon = "vials"
 	/// The new number we set the plant's max_volume to.
 	var/new_capcity = 100
@@ -487,11 +487,14 @@
 /// Omegaweed's funny 420 max volume gene
 /datum/plant_gene/trait/modified_volume/omega_weed
 	name = "Dank Vesicles"
+	description = "It can hold up to 420 units of reagents."
+	icon = "cannabis"
 	new_capcity = 420
 
 /// Cherry Bomb's increased max volume gene
 /datum/plant_gene/trait/modified_volume/cherry_bomb
 	name = "Powder-Filled Bulbs"
+	description = "It can hold up to 125 units of reagents."
 	new_capcity = 125
 
 /// Plants that explode when used (based on their reagent contents)
