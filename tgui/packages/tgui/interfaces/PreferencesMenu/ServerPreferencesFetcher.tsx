@@ -1,7 +1,7 @@
 import { Component, ReactNode } from 'react';
+import { fetchRetry } from 'tgui-core/http';
 
 import { resolveAsset } from '../../assets';
-import { fetchRetry } from '../../http';
 import { ServerData } from './data';
 
 // Cache response so it's only sent once

@@ -89,6 +89,7 @@
 	grind_results = list(/datum/reagent/bluespace = 10)
 	fillet_type = null
 	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
+	compatible_types = list(/obj/item/fish/starfish/chrystarfish)
 	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/starfish/Initialize(mapload, apply_qualities = TRUE)
@@ -97,8 +98,11 @@
 
 /obj/item/fish/starfish/update_overlays()
 	. = ..()
+	. += add_emissive()
+
+/obj/item/fish/starfish/proc/add_emissive()
 	if(status == FISH_ALIVE)
-		. += emissive_appearance(icon, "starfish_emissive", src)
+		return emissive_appearance(icon, "starfish_emissive", src)
 
 ///It spins, and dimly glows in the dark.
 /obj/item/fish/starfish/flop_animation()
@@ -226,3 +230,13 @@
 	SIGNAL_HANDLER
 	//yes, this means that if we use a spraycan on the fish, the resulting space carp will be of spraycan color
 	result.set_greyscale(colors = list(color))
+
+#define PERSISTENCE_FISH_CARP_COLOR "carp_color"
+
+/obj/item/fish/baby_carp/persistence_save(list/data)
+	data[PERSISTENCE_FISH_CARP_COLOR] = color
+
+/obj/item/fish/baby_carp/persistence_load(list/data)
+	add_atom_colour(data[PERSISTENCE_FISH_CARP_COLOR], FIXED_COLOUR_PRIORITY)
+
+#undef PERSISTENCE_FISH_CARP_COLOR

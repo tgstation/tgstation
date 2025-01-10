@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { Blink, Section } from '../components';
+import { Blink, Section } from 'tgui-core/components';
 
 export const meta = {
   title: 'Blink',

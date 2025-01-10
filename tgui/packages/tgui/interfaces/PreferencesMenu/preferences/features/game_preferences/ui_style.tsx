@@ -1,6 +1,6 @@
-import { classes } from 'common/react';
+import { Box, Dropdown, Stack } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
-import { Box, Dropdown, Stack } from '../../../../../components';
 import {
   FeatureChoiced,
   FeatureChoicedServerData,

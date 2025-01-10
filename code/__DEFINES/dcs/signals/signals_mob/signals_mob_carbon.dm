@@ -73,10 +73,6 @@
 ///from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
 #define COMSIG_CARBON_UNEQUIP_SHOECOVER "carbon_unequip_shoecover"
 #define COMSIG_CARBON_EQUIP_SHOECOVER "carbon_equip_shoecover"
-///defined twice, in carbon and human's topics, fired when interacting with a valid embedded_object to pull it out (mob/living/carbon/target, /obj/item, /obj/item/bodypart/L)
-#define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"
-///called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
-#define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
