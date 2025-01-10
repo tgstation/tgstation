@@ -45,34 +45,38 @@
 	return NONE
 
 /// When we use the analyzer in hand - try to show the results of the last scan
-/obj/item/plant_analyzer/attack_self(mob/user, modifiers)
-	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
-		return
-	if(!last_scan_data)
-		return
-	ui_interact(user)
-
-/// When we attack something, first - try to scan something we hit with left click. Left-clicking uses scans for stats
-/obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
+/obj/item/plant_analyzer/interact(mob/user)
 	. = ..()
-	if(user.combat_mode || !user.can_read(src))
-		return
+	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
+		return ITEM_INTERACT_BLOCKING
+	if(!last_scan_data)
+		return ITEM_INTERACT_BLOCKING
+	ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
 
-	if(isliving(target))
+/// When we attack something, try to scan something we hit with left click. Left-clicking uses scans for stats
+/obj/item/plant_analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!user.can_read(src))
+		return ITEM_INTERACT_BLOCKING
+
+	if(isliving(interacting_with))
 		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
-		var/mob/living/L = target
+		var/mob/living/L = interacting_with
 		if(L.mob_biotypes & MOB_PLANT)
-			plant_biotype_health_scan(target, user)
-			return TRUE
+			plant_biotype_health_scan(interacting_with, user)
+			return ITEM_INTERACT_SUCCESS
 
-	return analyze(user, target)
+	analyze(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /// Same as above, but with right click. Right-clicking scans for chemicals.
-/obj/item/plant_analyzer/pre_attack_secondary(atom/target, mob/living/user)
-	if(user.combat_mode || !user.can_read(src))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+/obj/item/plant_analyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!user.can_read(src))
+		return ITEM_INTERACT_BLOCKING
 
-	return do_plant_chem_scan(target, user) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
+	return do_plant_chem_scan(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /*
  * Scan the target on chemical scan mode. This prints chemical genes and reagents to the user.
