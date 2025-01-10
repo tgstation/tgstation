@@ -115,7 +115,7 @@
 	var/obj/item/held_item = pawn.get_active_held_item()
 	var/atom/target = controller.blackboard[target_key]
 
-	if(!held_item) //if held_item is null, we pretend that action was succesful
+	if(!held_item) //if held_item is null, we pretend that action was successful
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	if(!target || !isliving(target))

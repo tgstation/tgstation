@@ -116,14 +116,14 @@
 	stop_crystalization_process(ethereal, TRUE)
 
 ///Stop the crystalization process, unregistering any signals and resetting any variables.
-/obj/item/organ/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, succesful = FALSE)
+/obj/item/organ/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, successful = FALSE)
 	UnregisterSignal(ethereal, COMSIG_LIVING_DISARM_HIT)
 	UnregisterSignal(ethereal, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(ethereal, COMSIG_MOB_APPLY_DAMAGE)
 
 	crystalization_process_damage = 0 //Reset damage taken during crystalization
 
-	if(!succesful)
+	if(!successful)
 		REMOVE_TRAIT(ethereal, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 		QDEL_NULL(current_crystal)
 
