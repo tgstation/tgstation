@@ -184,7 +184,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	return ..()
 
 /**
- * Proc responsible for registering the signals for difficulty and possible reward.
+ * Proc responsible for registering the signals for difficulty, possible reward, and challenge completion.
  * Call this if you want to override the fish source from which we roll rewards (preferably before the minigame phase).
  */
 /datum/fishing_challenge/proc/register_reward_signals(datum/fish_source/new_fish_source)
