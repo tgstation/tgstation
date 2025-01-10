@@ -47,7 +47,7 @@
 
 	var/obj/item/stock_parts/power_store/stomach_cell = used_stomach.cell
 	used_stomach.drain_time = world.time + ETHEREAL_APC_DRAIN_TIME
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "draining power"), ETHEREAL_APC_ALERT_DELAY)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "draining power..."), ETHEREAL_APC_ALERT_DELAY)
 	while(do_after(user, ETHEREAL_APC_DRAIN_TIME, target = src))
 		if(isnull(used_stomach) || (used_stomach != user.get_organ_slot(ORGAN_SLOT_STOMACH)))
 			balloon_alert(user, "stomach removed!?")
@@ -84,7 +84,7 @@
 		return
 
 	used_stomach.drain_time = world.time + ETHEREAL_APC_DRAIN_TIME
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "transferring power"), ETHEREAL_APC_ALERT_DELAY)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "transferring power..."), ETHEREAL_APC_ALERT_DELAY)
 	if(!do_after(user, ETHEREAL_APC_DRAIN_TIME, target = src))
 		return
 	if(isnull(used_stomach) || (used_stomach != user.get_organ_slot(ORGAN_SLOT_STOMACH)))
