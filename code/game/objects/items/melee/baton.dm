@@ -792,7 +792,6 @@
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	sharpness = SHARP_EDGED
 	force = 15
@@ -802,8 +801,22 @@
 	additional_stun_armour_penetration = 30
 	convertible = FALSE
 
+	obj_flags = UNIQUE_RENAME|UNIQUE_RENAME
+	unique_reskin = list(
+		"Default" = "stunsword",
+		"Energy Stunsword" = "stunsword_energy",
+	)
+	unique_reskin_changes_inhand = TRUE
+
 /obj/item/melee/baton/security/stunsword/loaded
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
+
+/obj/item/melee/baton/security/stunsword/update_icon_state()
+	. = ..()
+	if(active)
+		inhand_icon_state = "[icon_state]_on"
+	else
+		inhand_icon_state = "[icon_state]"
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
