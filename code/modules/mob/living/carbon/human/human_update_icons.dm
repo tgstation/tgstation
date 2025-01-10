@@ -988,119 +988,34 @@ generate/load female uniform sprites matching all previously decided variables
 	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi', "Cut2")
 	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi', "Cut3")
 	var/static/icon/lenghten_legs_mask = icon('icons/effects/cut.dmi', "Cut4")
-
-	appearance.remove_filter(list(
-		"Cut_Torso",
-		"Cut_Legs",
-		"Lenghten_Legs",
-		"Lenghten_Torso",
-		"Gnome_Cut_Torso",
-		"Gnome_Cut_Legs",
-		"Monkey_Torso",
-		"Monkey_Legs",
-		"Monkey_Gnome_Cut_Torso",
-		"Monkey_Gnome_Cut_Legs",
-	))
-
+	appearance.filters = list()
 	switch(mob_height)
-		// Don't set this one directly, use TRAIT_DWARF
 		if(MONKEY_HEIGHT_DWARF)
-			appearance.add_filters(list(
-				list(
-					"name" = "Monkey_Gnome_Cut_Torso",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 3),
-				),
-				list(
-					"name" = "Monkey_Gnome_Cut_Legs",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 4),
-				),
-			))
+			appearance.filters += filter(/*name = "Monkey_Gnome_Cut_Torso", */type = "displace", icon = cut_torso_mask, size = 3)
+			appearance.filters += filter(/*name = "Monkey_Gnome_Cut_Legs", */type = "displace", icon = cut_legs_mask, size = 4)
 		if(MONKEY_HEIGHT_MEDIUM)
-			appearance.add_filters(list(
-				list(
-					"name" = "Monkey_Torso",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2),
-				),
-				list(
-					"name" = "Monkey_Legs",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 4),
-				),
-			))
+			appearance.filters += filter(/*name = "Monkey_Torso", */type = "displace", icon = cut_torso_mask, size = 2)
+			appearance.filters += filter(/*name = "Monkey_Legs", */type = "displace", icon = cut_legs_mask, size = 4)
 		if(HUMAN_HEIGHT_DWARF) // tall monkeys and dwarves use the same value
 			if(ismonkey(src))
-				appearance.add_filters(list(
-					list(
-						"name" = "Monkey_Torso",
-						"priority" = 1,
-						"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1),
-					),
-					list(
-						"name" = "Monkey_Legs",
-						"priority" = 1,
-						"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1),
-					),
-				))
+				appearance.filters += filter(/*name = "Monkey_Torso", */type = "displace", icon = cut_torso_mask, size = 1)
+				appearance.filters += filter(/*name = "Monkey_Legs", */type = "displace", icon = cut_legs_mask, size = 1)
 			else
-				appearance.add_filters(list(
-					list(
-						"name" = "Gnome_Cut_Torso",
-						"priority" = 1,
-						"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2),
-					),
-					list(
-						"name" = "Gnome_Cut_Legs",
-						"priority" = 1,
-						"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3),
-					),
-				))
-		// Don't set this one directly, use TRAIT_DWARF
+				appearance.filters += filter(/*name = "Gnome_Cut_Torso", */type = "displace", icon = cut_torso_mask, size = 2)
+				appearance.filters += filter(/*name = "Gnome_Cut_Legs", */type = "displace", icon = cut_legs_mask, size = 3)
 		if(HUMAN_HEIGHT_SHORTEST)
-			appearance.add_filters(list(
-				list(
-					"name" = "Cut_Torso",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1),
-				),
-				list(
-					"name" = "Cut_Legs",
-					"priority" = 1,
-					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1),
-				),
-			))
+			appearance.filters += filter(/*name = "Cut_Torso", */type = "displace", icon = cut_torso_mask, size = 1)
+			appearance.filters += filter(/*name = "Cut_Legs", */type = "displace", icon = cut_legs_mask, size = 1)
 		if(HUMAN_HEIGHT_SHORT)
-			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+			appearance.filters += filter(/*name = "Cut_Legs", */type = "displace", icon = cut_legs_mask, size = 1)
 		if(HUMAN_HEIGHT_TALL)
-			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
+			appearance.filters += filter(/*name = "Lenghten_Legs", */type = "displace", icon = lenghten_legs_mask, size = 1)
 		if(HUMAN_HEIGHT_TALLER)
-			appearance.add_filters(list(
-				list(
-					"name" = "Lenghten_Torso",
-					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1),
-				),
-				list(
-					"name" = "Lenghten_Legs",
-					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1),
-				),
-			))
+			appearance.filters += filter(/*name = "Lenghten_Torso", */type = "displace", icon = lenghten_torso_mask, size = 1)
+			appearance.filters += filter(/*name = "Lenghten_Legs", */type = "displace", icon = lenghten_legs_mask, size = 1)
 		if(HUMAN_HEIGHT_TALLEST)
-			appearance.add_filters(list(
-				list(
-					"name" = "Lenghten_Torso",
-					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1),
-				),
-				list(
-					"name" = "Lenghten_Legs",
-					"priority" = 1,
-					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 2),
-				),
-			))
+			appearance.filters += filter(/*name = "Lenghten_Torso", */type = "displace", icon = lenghten_torso_mask, size = 1)
+			appearance.filters += filter(/*name = "Lenghten_Legs", */type = "displace", icon = lenghten_legs_mask, size = 2)
 
 	// Kinda gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
 	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kinda breaks
