@@ -117,7 +117,6 @@ const ChoicedSelection = (props: {
             {supplementalFeature && (
               <Stack.Item>
                 <FeatureValueInput
-                  act={act}
                   feature={features[supplementalFeature]}
                   featureId={supplementalFeature}
                   shrink
@@ -259,11 +258,13 @@ const GenderButton = (props: {
   );
 };
 
-const MainFeature = (props: {
-  catalog: FeatureChoicedServerData & {
-    name: string;
-    supplemental_feature?: string;
-  };
+type CatalogItem = {
+  name: string;
+  supplemental_feature?: string;
+};
+
+type MainFeatureProps = {
+  catalog: FeatureChoicedServerData & CatalogItem;
   currentValue: string;
   isOpen: boolean;
   handleClose: () => void;
@@ -271,8 +272,10 @@ const MainFeature = (props: {
   handleSelect: (newClothing: string) => void;
   randomization?: RandomSetting;
   setRandomization: (newSetting: RandomSetting) => void;
-}) => {
-  const { act, data } = useBackend<PreferencesMenuData>();
+};
+
+function MainFeature(props: MainFeatureProps) {
+  const { data } = useBackend<PreferencesMenuData>();
 
   const {
     catalog,
@@ -363,7 +366,7 @@ const MainFeature = (props: {
       </Button>
     </Popper>
   );
-};
+}
 
 const createSetRandomization =
   (act: typeof sendAct, preference: string) => (newSetting: RandomSetting) => {
@@ -381,7 +384,6 @@ function sortPreferences(array: [string, unknown][]) {
 }
 
 type PreferenceListProps = {
-  act: typeof sendAct;
   preferences: Record<string, unknown>;
   randomizations: Record<string, RandomSetting>;
   maxHeight: string;
@@ -389,6 +391,9 @@ type PreferenceListProps = {
 };
 
 export function PreferenceList(props: PreferenceListProps) {
+  const { act } = useBackend<PreferencesMenuData>();
+  const { preferences, randomizations, maxHeight, children } = props;
+
   return (
     <Stack.Item
       basis="50%"
@@ -399,13 +404,13 @@ export function PreferenceList(props: PreferenceListProps) {
       }}
       overflowX="hidden"
       overflowY="auto"
-      maxHeight={props.maxHeight}
+      maxHeight={maxHeight}
     >
       <LabeledList>
-        {sortPreferences(Object.entries(props.preferences)).map(
+        {sortPreferences(Object.entries(preferences)).map(
           ([featureId, value]) => {
             const feature = features[featureId];
-            const randomSetting = props.randomizations[featureId];
+            const randomSetting = randomizations[featureId];
 
             if (feature === undefined) {
               return (
@@ -426,7 +431,7 @@ export function PreferenceList(props: PreferenceListProps) {
                   {randomSetting && (
                     <Stack.Item>
                       <RandomizationButton
-                        setValue={createSetRandomization(props.act, featureId)}
+                        setValue={createSetRandomization(act, featureId)}
                         value={randomSetting}
                       />
                     </Stack.Item>
@@ -434,7 +439,6 @@ export function PreferenceList(props: PreferenceListProps) {
 
                   <Stack.Item grow>
                     <FeatureValueInput
-                      act={props.act}
                       feature={feature}
                       featureId={featureId}
                       value={value}
@@ -447,7 +451,7 @@ export function PreferenceList(props: PreferenceListProps) {
         )}
       </LabeledList>
 
-      {props.children}
+      {children}
     </Stack.Item>
   );
 }
@@ -495,7 +499,6 @@ export function MainPage(props: MainPageProps) {
   const [randomToggleEnabled] = useRandomToggleState();
 
   const serverData = useServerPrefs();
-  if (!serverData) return;
 
   const currentSpeciesData =
     serverData && serverData.species[data.character_preferences.misc.species];
@@ -604,15 +607,18 @@ export function MainPage(props: MainPageProps) {
         <Stack.Item width={`${CLOTHING_CELL_SIZE * 2 + 15}px`}>
           <Stack height="100%" vertical wrap>
             {mainFeatures.map(([clothingKey, clothing]) => {
-              const catalog =
-                serverData &&
-                (serverData[clothingKey] as FeatureChoicedServerData & {
-                  name: string;
-                });
+              const catalog = serverData?.[
+                clothingKey
+              ] as FeatureChoicedServerData & {
+                name: string;
+              };
 
               return (
-                catalog && (
-                  <Stack.Item key={clothingKey} mt={0.5} px={0.5}>
+                <Stack.Item key={clothingKey} mt={0.5} px={0.5}>
+                  {!catalog ? (
+                    // Skeleton button
+                    <Button height={4} width={4} disabled />
+                  ) : (
                     <MainFeature
                       catalog={catalog}
                       currentValue={clothing}
@@ -630,8 +636,8 @@ export function MainPage(props: MainPageProps) {
                         clothingKey,
                       )}
                     />
-                  </Stack.Item>
-                )
+                  )}
+                </Stack.Item>
               );
             })}
           </Stack>
@@ -640,7 +646,6 @@ export function MainPage(props: MainPageProps) {
         <Stack.Item grow basis={0}>
           <Stack vertical fill>
             <PreferenceList
-              act={act}
               randomizations={getRandomization(
                 contextualPreferences,
                 serverData,
@@ -651,7 +656,6 @@ export function MainPage(props: MainPageProps) {
             />
 
             <PreferenceList
-              act={act}
               randomizations={getRandomization(
                 nonContextualPreferences,
                 serverData,

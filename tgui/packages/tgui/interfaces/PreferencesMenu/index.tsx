@@ -75,7 +75,7 @@ function PrefsWindowInner(props) {
   return (
     <ServerPrefs.Provider value={serverData}>
       <RandomToggleState.Provider value={randomization}>
-        {!serverData ? <LoadingScreen /> : content}
+        {content}
       </RandomToggleState.Provider>
     </ServerPrefs.Provider>
   );

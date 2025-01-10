@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ComponentProps, ReactNode, useEffect, useState } from 'react';
 import { Box, Dropdown, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { capitalizeFirst } from 'tgui-core/string';
@@ -23,25 +23,33 @@ type IconnedDropdownInputProps = FeatureValueProps<
 
 export type FeatureWithIcons<T> = Feature<string, T, FeatureChoicedServerData>;
 
+type DropdownOptions = ComponentProps<typeof Dropdown>['options'];
+
 export function FeatureDropdownInput(props: DropdownInputProps) {
   const { serverData, disabled, buttons, handleSetValue, value } = props;
 
-  if (!serverData) {
-    return null;
-  }
+  const display_names = serverData?.display_names || {};
 
-  const { choices, display_names } = serverData;
+  const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>([]);
 
-  const dropdownOptions = choices.map((choice) => {
-    let displayText: ReactNode = display_names
-      ? display_names[choice]
-      : capitalizeFirst(choice);
+  useEffect(() => {
+    if (serverData && display_names && dropdownOptions.length === 0) {
+      let newOptions: DropdownOptions = [];
 
-    return {
-      displayText,
-      value: choice,
-    };
-  });
+      for (const choice of serverData.choices) {
+        let displayText: ReactNode = display_names
+          ? display_names[choice]
+          : capitalizeFirst(choice);
+
+        newOptions.push({
+          displayText,
+          value: choice,
+        });
+      }
+
+      setDropdownOptions(newOptions);
+    }
+  }, [serverData]);
 
   let display_text = value;
   if (display_names) {
@@ -51,9 +59,9 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
   return (
     <Dropdown
       buttons={buttons}
-      disabled={disabled}
+      disabled={disabled || !serverData}
       onSelected={handleSetValue}
-      displayText={capitalizeFirst(display_text)}
+      displayText={display_text ? capitalizeFirst(display_text) : ''}
       options={dropdownOptions}
       selected={value}
       width="100%"
@@ -64,11 +72,10 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
 export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
   const { serverData, handleSetValue, value } = props;
 
-  if (!serverData) {
-    return null;
-  }
-
-  const { choices, display_names, icons } = serverData;
+  // Skeleton arrays so we can load
+  const choices: string[] = serverData?.choices || [];
+  const display_names: Record<string, string> = serverData?.display_names || {};
+  const icons: Record<string, string> = serverData?.icons || {};
 
   const dropdownOptions = choices.map((choice) => {
     let displayText: ReactNode = display_names

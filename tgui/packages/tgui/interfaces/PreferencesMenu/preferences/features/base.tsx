@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { sendAct, useBackend } from 'tgui/backend';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -18,7 +18,6 @@ import {
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
-import { LoadingScreen } from '../../../common/LoadingScreen';
 import { createSetPreference, PreferencesMenuData } from '../../types';
 import { useServerPrefs } from '../../useServerPrefs';
 
@@ -54,7 +53,6 @@ export type FeatureValueProps<
   TSending = TReceiving,
   TServerData = undefined,
 > = Readonly<{
-  act: typeof sendAct;
   featureId: string;
   handleSetValue: (newValue: TSending) => void;
   serverData: TServerData | undefined;
@@ -63,10 +61,12 @@ export type FeatureValueProps<
 }>;
 
 export function FeatureColorInput(props: FeatureValueProps<string>) {
+  const { act } = useBackend<PreferencesMenuData>();
+
   return (
     <Button
       onClick={() => {
-        props.act('set_color_preference', {
+        act('set_color_preference', {
           preference: props.featureId,
         });
       }}
@@ -167,19 +167,18 @@ export type FeatureNumeric = Feature<number, number, FeatureNumericData>;
 export function FeatureNumberInput(
   props: FeatureValueProps<number, number, FeatureNumericData>,
 ) {
-  if (!props.serverData) {
-    return <LoadingScreen />;
-  }
+  const { serverData, handleSetValue, value } = props;
 
   return (
     <NumberInput
       onChange={(value) => {
         props.handleSetValue(value);
       }}
-      minValue={props.serverData.minimum}
-      maxValue={props.serverData.maximum}
-      step={props.serverData.step}
-      value={props.value}
+      disabled={!serverData}
+      minValue={serverData?.minimum || 0}
+      maxValue={serverData?.maximum || 100}
+      step={serverData?.step || 1}
+      value={value}
     />
   );
 }
@@ -187,33 +186,32 @@ export function FeatureNumberInput(
 export function FeatureSliderInput(
   props: FeatureValueProps<number, number, FeatureNumericData>,
 ) {
-  if (!props.serverData) {
-    return <LoadingScreen />;
-  }
+  const { serverData, handleSetValue, value } = props;
 
   return (
     <Slider
       onChange={(e, value) => {
-        props.handleSetValue(value);
+        handleSetValue(value);
       }}
-      minValue={props.serverData.minimum}
-      maxValue={props.serverData.maximum}
-      step={props.serverData.step}
-      value={props.value}
+      disabled={!serverData}
+      minValue={serverData?.minimum || 0}
+      maxValue={serverData?.maximum || 100}
+      step={serverData?.step || 1}
+      value={value}
       stepPixelSize={10}
     />
   );
 }
 
-export const FeatureValueInput = (props: {
+type FeatureValueInputProps = {
   feature: Feature<unknown>;
   featureId: string;
   shrink?: boolean;
   value: unknown;
+};
 
-  act: typeof sendAct;
-}) => {
-  const { data } = useBackend<PreferencesMenuData>();
+export function FeatureValueInput(props: FeatureValueInputProps) {
+  const { act, data } = useBackend<PreferencesMenuData>();
 
   const feature = props.feature;
 
@@ -221,7 +219,7 @@ export const FeatureValueInput = (props: {
 
   function changeValue(newValue: unknown) {
     setPredictedValue(newValue);
-    createSetPreference(props.act, props.featureId)(newValue);
+    createSetPreference(act, props.featureId)(newValue);
   }
 
   useEffect(() => {
@@ -229,37 +227,33 @@ export const FeatureValueInput = (props: {
   }, [data.active_slot, props.value]);
 
   const serverData = useServerPrefs();
-  if (!serverData) return;
 
   return createElement(feature.component, {
-    act: props.act,
     featureId: props.featureId,
     serverData: serverData?.[props.featureId] as any,
     shrink: props.shrink,
-
     handleSetValue: changeValue,
     value: predictedValue,
   });
-};
+}
 
-export type FeatureShortTextData = {
+type FeatureShortTextData = {
   maximum_length: number;
 };
 
 export function FeatureShortTextInput(
   props: FeatureValueProps<string, string, FeatureShortTextData>,
 ) {
-  if (!props.serverData) {
-    return <LoadingScreen />;
-  }
+  const { serverData, value, handleSetValue } = props;
 
   return (
     <Input
+      disabled={!serverData}
       width="100%"
-      value={props.value}
-      maxLength={props.serverData.maximum_length}
+      value={value}
+      maxLength={serverData?.maximum_length}
       updateOnPropsChange
-      onChange={(_, value) => props.handleSetValue(value)}
+      onChange={(_, value) => handleSetValue(value)}
     />
   );
 }
