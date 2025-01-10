@@ -3,9 +3,9 @@
 @use './colors.scss';
 
 // Core styles
-@include meta.load-css('~tgui/styles/reset.scss');
+@include meta.load-css('~tgui-core/styles/reset.scss');
 // Atomic styles
-@include meta.load-css('~tgui/styles/atomic/text.scss');
+@include meta.load-css('~tgui-core/styles/atomic/text.scss');
 // External styles
 @include meta.load-css('~tgui-core/styles/components/TextArea');
 // Local styles
