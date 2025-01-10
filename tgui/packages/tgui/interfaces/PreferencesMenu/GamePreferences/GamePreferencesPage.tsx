@@ -25,7 +25,7 @@ function sortByName(array: [string, PreferenceChild[]][]) {
 }
 
 export function GamePreferencesPage(props) {
-  const { act, data } = useBackend<PreferencesMenuData>();
+  const { data } = useBackend<PreferencesMenuData>();
 
   const gamePreferences: Record<string, PreferenceChild[]> = {};
 
@@ -68,14 +68,13 @@ export function GamePreferencesPage(props) {
         {name}
 
         <Flex.Item grow={1} basis={0}>
-          {(feature && (
+          {feature ? (
             <FeatureValueInput
               feature={feature}
               featureId={featureId}
               value={value}
-              act={act}
             />
-          )) || (
+          ) : (
             <Box as="b" color="red">
               ...is not filled out properly!!!
             </Box>

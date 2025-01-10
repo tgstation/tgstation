@@ -10,6 +10,7 @@ export const random_body: Feature<RandomSetting> = {
   name: 'Random body',
   component: (props) => {
     const [randomToggle, setRandomToggle] = useRandomToggleState();
+    const { act } = useBackend();
 
     return (
       <Stack>
@@ -26,7 +27,7 @@ export const random_body: Feature<RandomSetting> = {
               <Button
                 color="green"
                 onClick={() => {
-                  props.act('randomize_character');
+                  act('randomize_character');
                   setRandomToggle(false);
                 }}
               >

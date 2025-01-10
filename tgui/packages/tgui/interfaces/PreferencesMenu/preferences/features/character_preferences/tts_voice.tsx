@@ -1,3 +1,4 @@
+import { useBackend } from 'tgui/backend';
 import { Button, Stack } from 'tgui-core/components';
 
 import {
@@ -12,6 +13,8 @@ import { FeatureDropdownInput } from '../dropdowns';
 function FeatureTTSDropdownInput(
   props: FeatureValueProps<string, string, FeatureChoicedServerData>,
 ) {
+  const { act } = useBackend();
+
   return (
     <Stack>
       <Stack.Item grow>
@@ -20,7 +23,7 @@ function FeatureTTSDropdownInput(
       <Stack.Item>
         <Button
           onClick={() => {
-            props.act('play_voice');
+            act('play_voice');
           }}
           icon="play"
           width="100%"
@@ -30,7 +33,7 @@ function FeatureTTSDropdownInput(
       <Stack.Item>
         <Button
           onClick={() => {
-            props.act('play_voice_robot');
+            act('play_voice_robot');
           }}
           icon="robot"
           width="100%"

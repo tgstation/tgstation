@@ -244,7 +244,6 @@ function QuirkPopper(props: QuirkPopperProps) {
               >
                 <Stack.Item>
                   <PreferenceList
-                    act={act}
                     preferences={getCorrespondingPreferences(
                       customization_options,
                       character_preferences.manually_rendered_features,
