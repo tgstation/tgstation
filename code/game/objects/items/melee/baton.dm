@@ -788,6 +788,7 @@
 	desc = "A special modification reserved only for the most important of security personnel aboard Nanotrasen stations. It's a sword. It stuns. What more could you want?"
 	icon_state = "stunsword"
 	inhand_icon_state = "stunsword"
+	base_icon_state = "stunsword"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
@@ -801,22 +802,28 @@
 	additional_stun_armour_penetration = 30
 	convertible = FALSE
 
-	obj_flags = UNIQUE_RENAME|UNIQUE_RENAME
+	obj_flags = UNIQUE_RENAME
 	unique_reskin = list(
 		"Default" = "stunsword",
 		"Energy Stunsword" = "stunsword_energy",
 	)
 	unique_reskin_changes_inhand = TRUE
+	unique_reskin_changes_base_icon_state = TRUE
 
 /obj/item/melee/baton/security/stunsword/loaded
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
 
 /obj/item/melee/baton/security/stunsword/update_icon_state()
-	. = ..()
 	if(active)
-		inhand_icon_state = "[icon_state]_on"
-	else
-		inhand_icon_state = "[icon_state]"
+		icon_state = "[base_icon_state]_active"
+		inhand_icon_state = "[base_icon_state]_active"
+		return ..()
+	if(!cell)
+		icon_state = "[base_icon_state]_nocell"
+		return ..()
+	icon_state = "[base_icon_state]"
+	inhand_icon_state = "[base_icon_state]"
+	return ..()
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
