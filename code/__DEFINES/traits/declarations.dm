@@ -1263,6 +1263,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait given to organs that have been inside a living being previously
 #define TRAIT_USED_ORGAN "used_organ"
+///Trait given to organs that have started inside a being with a client
+#define TRAIT_CLIENT_STARTING_ORGAN "client_starting_organ"
 
 /// Trait given while using /datum/action/cooldown/mob_cooldown/wing_buffet
 #define TRAIT_WING_BUFFET "wing_buffet"
@@ -1412,5 +1414,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Apply to movables to say "hey, this movable is technically flat on the floor, so it'd be mopped up by a mop"
 #define TRAIT_MOPABLE "mopable"
+
+/// Humans with this trait do not blink
+#define TRAIT_PREVENT_BLINKING "prevent_blinking"
+
+/// Prevents animations for blinking from looping
+#define TRAIT_PREVENT_BLINK_LOOPS "prevent_blink_loops"
+
+/// Mob doesn't get closed eyelids overlay when it gets knocked out cold or dies
+#define TRAIT_NO_EYELIDS "no_eyelids"
 
 // END TRAIT DEFINES
