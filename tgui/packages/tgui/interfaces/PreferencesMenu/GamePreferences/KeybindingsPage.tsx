@@ -14,6 +14,7 @@ import { KeyEvent } from 'tgui-core/events';
 import { fetchRetry } from 'tgui-core/http';
 import { isEscape, KEY } from 'tgui-core/keys';
 
+import { LoadingScreen } from '../../common/LoadingScreen';
 import { PreferencesMenuData } from '../types';
 import { TabbedMenu } from './TabbedMenu';
 
@@ -392,7 +393,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     const keybindings = this.state.keybindings;
 
     if (!keybindings) {
-      return <Box>Loading keybindings...</Box>;
+      return <LoadingScreen />;
     }
 
     const keybindingEntries = sortKeybindingsByCategory(

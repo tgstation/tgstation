@@ -18,6 +18,7 @@ import {
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
+import { LoadingScreen } from '../../../common/LoadingScreen';
 import { createSetPreference, PreferencesMenuData } from '../../types';
 import { useServerPrefs } from '../../useServerPrefs';
 
@@ -167,7 +168,7 @@ export function FeatureNumberInput(
   props: FeatureValueProps<number, number, FeatureNumericData>,
 ) {
   if (!props.serverData) {
-    return <Box>Loading...</Box>;
+    return <LoadingScreen />;
   }
 
   return (
@@ -187,7 +188,7 @@ export function FeatureSliderInput(
   props: FeatureValueProps<number, number, FeatureNumericData>,
 ) {
   if (!props.serverData) {
-    return <Box>Loading...</Box>;
+    return <LoadingScreen />;
   }
 
   return (
@@ -249,7 +250,7 @@ export function FeatureShortTextInput(
   props: FeatureValueProps<string, string, FeatureShortTextData>,
 ) {
   if (!props.serverData) {
-    return <Box>Loading...</Box>;
+    return <LoadingScreen />;
   }
 
   return (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 import { fetchRetry } from 'tgui-core/http';
 
@@ -6,7 +6,7 @@ import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { logger } from '../../logging';
-import { LoadingScreen } from '../common/LoadingToolbox';
+import { LoadingScreen } from '../common/LoadingScreen';
 import { CharacterPreferenceWindow } from './CharacterPreferences';
 import { GamePreferenceWindow } from './GamePreferences';
 import {
@@ -19,6 +19,19 @@ import { RandomToggleState } from './useRandomToggleState';
 import { ServerPrefs } from './useServerPrefs';
 
 export function PreferencesMenu(props) {
+  return (
+    <Window width={920} height={770}>
+      <Window.Content>
+        <Suspense fallback={<LoadingScreen />}>
+          <PrefsWindowInner />
+        </Suspense>
+      </Window.Content>
+    </Window>
+  );
+}
+
+/** We're abstracting this by one level to use Suspense */
+function PrefsWindowInner(props) {
   const { data } = useBackend<PreferencesMenuData>();
   const { window } = data;
 
@@ -62,11 +75,7 @@ export function PreferencesMenu(props) {
   return (
     <ServerPrefs.Provider value={serverData}>
       <RandomToggleState.Provider value={randomization}>
-        <Window title={title} width={920} height={770}>
-          <Window.Content>
-            {!serverData ? <LoadingScreen /> : content}
-          </Window.Content>
-        </Window>
+        {!serverData ? <LoadingScreen /> : content}
       </RandomToggleState.Provider>
     </ServerPrefs.Provider>
   );
