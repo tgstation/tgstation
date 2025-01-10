@@ -126,7 +126,6 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	RegisterSignal(comp, COMSIG_QDELETING, PROC_REF(on_spot_gone))
 	register_reward_signals(comp.fish_source)
 	RegisterSignal(fish_source, COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE, PROC_REF(interrupt_challenge))
-	fish_source.RegisterSignal(user, COMSIG_MOB_COMPLETE_FISHING, TYPE_PROC_REF(/datum/fish_source, on_challenge_completed))
 	background = comp.fish_source.background
 	if(comp.fish_source.wait_time_range)
 		wait_time_range = comp.fish_source.wait_time_range
@@ -194,9 +193,11 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 			COMSIG_FISHING_CHALLENGE_ROLL_REWARD,
 			COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY,
 		))
+		fish_source.UnregisterSignal(user, COMSIG_MOB_COMPLETE_FISHING)
 	fish_source = new_fish_source
 	fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, TYPE_PROC_REF(/datum/fish_source, roll_reward_minigame))
 	fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, TYPE_PROC_REF(/datum/fish_source, calculate_difficulty_minigame))
+	fish_source.RegisterSignal(user, COMSIG_MOB_COMPLETE_FISHING, TYPE_PROC_REF(/datum/fish_source, on_challenge_completed))
 
 /datum/fishing_challenge/proc/send_alert(message)
 	location?.balloon_alert(user, message)
