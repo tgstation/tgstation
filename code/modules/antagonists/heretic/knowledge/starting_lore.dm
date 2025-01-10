@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	is_starting_knowledge = TRUE
 
 // Heretics can enhance their fishing rods to fish better - fishing content.
-// Lasts until succesfully fishing something up.
+// Lasts until successfully fishing something up.
 /datum/heretic_knowledge/spell/basic/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	..()
 	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
