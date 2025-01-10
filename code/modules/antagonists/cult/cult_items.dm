@@ -1245,7 +1245,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 
 /obj/item/gun/magic/wand/arcane_barrage/blood
-	name = "brimstones bolt barrage"
+	name = "blood bolt barrage"
 	desc = "Blood for blood."
 	color = "#ff0000"
 	ammo_type =  /obj/item/ammo_casing/magic/arcane_barrage/blood
@@ -1256,8 +1256,8 @@ Striking a noncultist, however, will tear their flesh."}
 	firing_effect_type = /obj/effect/temp_visual/cult/sparks
 
 /obj/projectile/magic/arcane_barrage/blood
-	name = "brimstone bolt"
-	icon_state = "brimstone_bolt"
+	name = "blood bolt"
+	icon_state = "blood_bolt"
 	nondirectional_sprite = TRUE
 	damage_type = BRUTE
 	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter

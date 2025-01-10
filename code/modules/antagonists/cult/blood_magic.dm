@@ -912,7 +912,7 @@
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	var/static/list/spells = list(
 		"Bloody Halberd (150)" = image(icon = 'icons/obj/weapons/spear.dmi', icon_state = "occultpoleaxe0"),
-		"Brimstone Bolt Barrage (300)" = image(icon = 'icons/obj/weapons/guns/ballistic.dmi', icon_state = "arcane_barrage"),
+		"Blood Bolt Barrage (300)" = image(icon = 'icons/obj/weapons/guns/ballistic.dmi', icon_state = "arcane_barrage"),
 		"Blood Beam (500)" = image(icon = 'icons/obj/weapons/hand.dmi', icon_state = "disintegrate")
 		)
 	var/choice = show_radial_menu(user, src, spells, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE)
@@ -938,7 +938,7 @@
 				user.visible_message(span_warning("A [rite.name] appears at [user]'s feet!"), \
 					span_cult_italic("A [rite.name] materializes at your feet."))
 
-		if("Brimstone Bolt Barrage (300)")
+		if("Blood Bolt Barrage (300)")
 			if(uses < BLOOD_BARRAGE_COST)
 				to_chat(user, span_cult_italic("You need [BLOOD_BARRAGE_COST] charges to perform this rite."))
 				return
