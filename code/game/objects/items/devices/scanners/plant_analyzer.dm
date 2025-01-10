@@ -242,10 +242,10 @@
 		"maturation" = seed.maturation,
 		"production" = seed.production,
 		"lifespan" = seed.lifespan,
-		"endurance" = seed.endurance,
+		"endurance" = graft.endurance,
 		"weed_rate" = seed.weed_rate,
 		"weed_chance" = seed.weed_chance,
-		"graft_gene" = seed.graft_gene ? seed.graft_gene : /datum/plant_gene/trait/repeated_harvest
+		"graft_gene" = seed.graft_gene || /datum/plant_gene/trait/repeated_harvest,
 	)
 	seed_data["removable_traits"] = list()
 	seed_data["core_traits"] = list()
@@ -260,7 +260,8 @@
 			"name" = reagent.name,
 			"rate" = reagent.rate
 		))
-	seed_data["volume_mod"] = (locate(/datum/plant_gene/trait/maxchem) in seed.genes) ? 2 : 1
+	var/datum/plant_gene/trait/maxchem/volume_trait = locate(/datum/plant_gene/trait/maxchem) in seed.genes
+	seed_data["volume_mod"] = volume_trait ? volume_trait.rate : 1
 	seed_data["mutatelist"] = list()
 	for(var/obj/item/seeds/mutant as anything in seed.mutatelist)
 		seed_data["mutatelist"] += initial(mutant.plantname)
