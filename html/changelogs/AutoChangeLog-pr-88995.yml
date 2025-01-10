@@ -1,0 +1,4 @@
+author: "lukevale"
+delete-after: True
+changes:
+  - bugfix: "Fixes the extra pixals the flooring decal line trim, and the striped version has where it's not ment to."
