@@ -23,7 +23,7 @@
 	set waitfor = FALSE
 	var/datum/dream/chosen_dream
 
-	if (IS_HERETIC(src) && GLOB.reality_smash_track.smashes.len)
+	if (IS_HERETIC(src) && !("mansus_dream_fatigue" in src.mob_mood.mood_events) && GLOB.reality_smash_track.smashes.len)
 		chosen_dream = new /datum/dream/heretic(pick(GLOB.reality_smash_track.smashes))
 	else
 		chosen_dream = pick_weight(GLOB.dreams)
@@ -230,16 +230,23 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 	. += "There is a " + pick("pond", "well", "lake", "puddle", "stream", "spring", "brook", "marsh")
 	. += "In the water reflection you see"
 
+	dreamer.add_mood_event("mansus_dream_fatigue", /datum/mood_event/mansus_dream_fatigue)
+
 	var/list/all_objects = oview(dream_view_range, influence)
 	var/something_found = FALSE
 	for(var/object_type in what_you_can_see)
 		var/list/allowed_only = typecache_filter_list(all_objects, typecacheof(object_type))
 		var/list/filtered_objects = typecache_filter_list_reverse(allowed_only, what_you_cant_see)
-		var/obj/found_object = pick(filtered_objects)
-		if(found_object)
+		if(filtered_objects.len)
+			var/obj/found_object = pick(filtered_objects)
 			. += initial(found_object.name)
 			something_found = TRUE
 	if(!something_found)
 		. += "nothing"
+
+/datum/mood_event/mansus_dream_fatigue
+	description = "I must recover before I can dream of the Mansus again."
+	mood_change = -2
+	timeout = 5 MINUTES
 
 #undef DREAMING_SOURCE
