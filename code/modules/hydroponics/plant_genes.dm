@@ -381,7 +381,6 @@
  */
 /datum/plant_gene/trait/glow/shadow
 	name = "Shadow Emission"
-	icon = FA_ICON_LIGHTBULB_O
 	rate = 0.04
 	glow_color = COLOR_BIOLUMINESCENCE_SHADOW
 

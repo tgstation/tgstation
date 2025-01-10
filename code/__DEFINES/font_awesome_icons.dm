@@ -1035,7 +1035,6 @@
 #define FA_ICON_LEVEL_UP_ALT "fa-level-up-alt"
 #define FA_ICON_LIFE_RING "fa-life-ring"
 #define FA_ICON_LIGHTBULB "fa-lightbulb"
-#define FA_ICON_LIGHTBULB_O "fa-lightbulb-o"
 #define FA_ICON_LINE_CHART "fa-line-chart"
 #define FA_ICON_LINES_LEANING "fa-lines-leaning"
 #define FA_ICON_LINK "fa-link"
