@@ -243,11 +243,11 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 	for(var/object_type in allowed_typecaches_by_root_type)
 		var/list/filtered_objects = typecache_filter_list(all_objects, allowed_typecaches_by_root_type[object_type])
 		if(filtered_objects.len)
-			var/obj/found_object = pick(filtered_objects)
-			. += initial(found_object.name)
 			if (!something_found)
 				. += "Its waters reflect"
 				something_found = TRUE
+			var/obj/found_object = pick(filtered_objects)
+			. += initial(found_object.name)
 	if(!something_found)
 		. += pick("It's pitch black", "The reflections are vague", "You stroll aimlessly")
 	else
