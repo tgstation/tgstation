@@ -70,7 +70,7 @@
 			balloon_alert(user, "your charge is full!")
 			return
 		if(cell.charge() <= 0)
-			to_chat(user, span_warning("APC is empty!"))
+			balloon_alert(user, "APC is empty!")
 			return
 
 /// Handles charging our internal cell from an ethereal and their stomach
@@ -102,7 +102,7 @@
 	cell.give(-energy_drained)
 
 	if(cell.used_charge() <= 0)
-		to_chat(user, span_warning("APC is full!"))
+		balloon_alert(user, "APC is full!")
 		return
 	if(stomach_cell.charge() <= 0)
 		balloon_alert(user, "out of charge!")
