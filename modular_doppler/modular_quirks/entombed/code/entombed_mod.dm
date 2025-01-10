@@ -1,6 +1,3 @@
-/obj/item/mod/control
-	alternate_worn_layer = BACK_LAYER
-
 /datum/mod_theme/entombed
 	name = "fused"
 	desc = "Circumstances have rendered this protective suit into someone's second skin. Literally."
