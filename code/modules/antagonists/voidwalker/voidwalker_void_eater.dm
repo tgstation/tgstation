@@ -35,11 +35,11 @@
 /obj/item/void_eater/equipped(mob/user)
 	. = ..()
 
-	RegisterSignal(user, COMSIG_VOIDWALKER_SUCCESFUL_KIDNAP, PROC_REF(refresh))
+	RegisterSignal(user, COMSIG_VOIDWALKER_SUCCESSFUL_KIDNAP, PROC_REF(refresh))
 
 /obj/item/void_eater/dropped(mob/user, silent)
 	. = ..()
-	UnregisterSignal(user, COMSIG_VOIDWALKER_SUCCESFUL_KIDNAP)
+	UnregisterSignal(user, COMSIG_VOIDWALKER_SUCCESSFUL_KIDNAP)
 
 /obj/item/void_eater/examine(mob/user)
 	. = ..()

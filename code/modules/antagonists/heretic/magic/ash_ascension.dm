@@ -53,7 +53,7 @@
 		return
 
 	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, owner))
-		var/obj/effect/hotspot/flame_tile = locate(nearby_turf) || new(nearby_turf)
+		var/obj/effect/hotspot/flame_tile = (locate() in nearby_turf) || new(nearby_turf)
 		flame_tile.alpha = 125
 		nearby_turf.hotspot_expose(750, 25 * seconds_between_ticks, 1)
 		for(var/mob/living/fried_living in nearby_turf.contents - owner)
@@ -87,7 +87,7 @@
 /datum/action/cooldown/spell/fire_cascade/proc/fire_cascade(atom/centre, flame_radius = 1)
 	for(var/i in 0 to flame_radius)
 		for(var/turf/nearby_turf as anything in spiral_range_turfs(i + 1, centre))
-			var/obj/effect/hotspot/flame_tile = locate(nearby_turf) || new(nearby_turf)
+			var/obj/effect/hotspot/flame_tile = (locate() in nearby_turf) || new(nearby_turf)
 			flame_tile.alpha = 125
 			nearby_turf.hotspot_expose(750, 50, 1)
 			for(var/mob/living/fried_living in nearby_turf.contents - owner)

@@ -771,4 +771,21 @@
 				'sound/effects/writing_pen/writing_pen6.ogg',
 				'sound/effects/writing_pen/writing_pen7.ogg',
 			)
+		if(SFX_CLOWN_CAR_LOAD)
+			soundin = pick(
+				'sound/vehicles/clown_car/clowncar_load1.ogg',
+				'sound/vehicles/clown_car/clowncar_load2.ogg',
+			)
+		if(SFX_SEATBELT_BUCKLE)
+			soundin = pick(
+				'sound/machines/buckle/buckle1.ogg',
+				'sound/machines/buckle/buckle2.ogg',
+				'sound/machines/buckle/buckle3.ogg',
+			)
+		if(SFX_SEATBELT_UNBUCKLE)
+			soundin = pick(
+				'sound/machines/buckle/unbuckle1.ogg',
+				'sound/machines/buckle/unbuckle2.ogg',
+				'sound/machines/buckle/unbuckle3.ogg',
+			)
 	return soundin

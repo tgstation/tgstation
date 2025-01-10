@@ -1,4 +1,3 @@
-import { useBackend } from '../backend';
 import {
   Button,
   DmIcon,
@@ -6,7 +5,9 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -23,6 +24,7 @@ type Stacks = {
   stack_icon_state: string;
   stack_reference: string;
 };
+
 export const RepairbotResources = (props) => {
   const { act, data } = useBackend<Data>();
   const { stacks, repairbot_icon, repairbot_icon_state } = data;
