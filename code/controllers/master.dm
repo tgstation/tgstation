@@ -984,7 +984,6 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	clear_with_screen = FALSE
 	plane = EXAMINE_BALLOONS_PLANE
 
-
 /atom/movable/screen/usage_display/proc/update_display()
 	var/list/cpu_values = GLOB.cpu_values
 	var/last_index = WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)
@@ -1003,21 +1002,23 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 /atom/movable/screen/usage_display/Topic(href, list/href_list)
 	if (..())
 		return
+	if(!check_rights(R_ADMIN))
+		return FALSE
 	switch(href_list["act"])
 		if("set_floor")
-			var/floor_cpu = tgui_input_number(usr, "How low should we allow the cpu to go?", "Floor CPU", max_value = INFINITY, min_value = 0, default = 0)
+			var/floor_cpu = tgui_input_number(usr, "How low should we allow the cpu to go?", "Floor CPU", max_value = INFINITY, min_value = 0, default = 0) || 0
 			Master.floor_cpu = floor_cpu
 			return TRUE
 		if("set_sustain_cpu")
-			var/sustain_cpu = tgui_input_number(usr, "What should we randomly set our cpu to?", "Sustain CPU", max_value = INFINITY, min_value = 0, default = 0)
+			var/sustain_cpu = tgui_input_number(usr, "What should we randomly set our cpu to?", "Sustain CPU", max_value = INFINITY, min_value = 0, default = 0) || 0
 			Master.sustain_cpu = sustain_cpu
 			return TRUE
 		if("set_sustain_chance")
-			var/sustain_cpu_chance = tgui_input_number(usr, "What % of the time should we floor at Sustain CPU", "Sustain CPU %", max_value = 100, min_value = 0, default = 0)
+			var/sustain_cpu_chance = tgui_input_number(usr, "What % of the time should we floor at Sustain CPU", "Sustain CPU %", max_value = 100, min_value = 0, default = 0) || 0
 			Master.sustain_cpu_chance = sustain_cpu_chance
 			return TRUE
 		if("set_spike")
-			var/spike_cpu = tgui_input_number(usr, "How high should we spike cpu usage", "Spike CPU", max_value = INFINITY, min_value = 0, default = 0)
+			var/spike_cpu = tgui_input_number(usr, "How high should we spike cpu usage", "Spike CPU", max_value = INFINITY, min_value = 0, default = 0) || 0
 			Master.spike_cpu = spike_cpu
 			return TRUE
 
