@@ -265,8 +265,7 @@
 	var/list/data = list()
 	data["cycle_seconds"] = HYDROTRAY_CYCLE_DELAY / 10
 	data["trait_db"] = list()
-	for(var/trait_path in subtypesof(/datum/plant_gene/trait))
-		var/datum/plant_gene/trait/trait = new trait_path
+	for(var/datum/plant_gene/trait/trait as anything in GLOB.plant_traits)
 		var/trait_data = list(list(
 			"path" = trait.type,
 			"name" = trait.name,
