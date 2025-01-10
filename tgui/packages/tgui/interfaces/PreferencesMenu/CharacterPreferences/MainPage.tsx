@@ -40,13 +40,15 @@ const CLOTHING_SELECTION_CELL_SIZE = 48;
 const CLOTHING_SELECTION_WIDTH = 5.4;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
-const CharacterControls = (props: {
+type CharacterControlsProps = {
   handleRotate: () => void;
   handleOpenSpecies: () => void;
   gender: Gender;
   setGender: (gender: Gender) => void;
   showGender: boolean;
-}) => {
+};
+
+function CharacterControls(props: CharacterControlsProps) {
   return (
     <Stack>
       <Stack.Item>
@@ -79,9 +81,9 @@ const CharacterControls = (props: {
       )}
     </Stack>
   );
-};
+}
 
-const ChoicedSelection = (props: {
+type ChoicedSelectionProps = {
   name: string;
   catalog: FeatureChoicedServerData;
   selected: string;
@@ -89,9 +91,9 @@ const ChoicedSelection = (props: {
   supplementalValue?: unknown;
   onClose: () => void;
   onSelect: (value: string) => void;
-}) => {
-  const { act } = useBackend<PreferencesMenuData>();
+};
 
+function ChoicedSelection(props: ChoicedSelectionProps) {
   const { catalog, supplementalFeature, supplementalValue } = props;
   const [getSearchText, searchTextSet] = useState('');
 
@@ -197,7 +199,7 @@ const ChoicedSelection = (props: {
       </Stack>
     </Box>
   );
-};
+}
 
 function searchInCatalog(searchText = '', catalog: Record<string, string>) {
   let items = Object.entries(catalog);
@@ -210,10 +212,12 @@ function searchInCatalog(searchText = '', catalog: Record<string, string>) {
   return items;
 }
 
-const GenderButton = (props: {
+type GenderButtonProps = {
   handleSetGender: (gender: Gender) => void;
   gender: Gender;
-}) => {
+};
+
+function GenderButton(props: GenderButtonProps) {
   const [genderMenuOpen, setGenderMenuOpen] = useState(false);
 
   return (
@@ -256,7 +260,7 @@ const GenderButton = (props: {
       />
     </Popper>
   );
-};
+}
 
 type CatalogItem = {
   name: string;
