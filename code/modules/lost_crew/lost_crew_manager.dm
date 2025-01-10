@@ -3,9 +3,9 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 
 /// Handles procs and timers for the lost crew bodies
 /datum/lost_crew_manager
-	/// How many credits we reward the medical budget on a succesful revive
+	/// How many credits we reward the medical budget on a successful revive
 	var/credits_on_succes = /datum/supply_pack/medical/lost_crew::cost + CARGO_CRATE_VALUE * 2
-	/// How long after succesful revival we check to see if theyre still alive, and give rewards
+	/// How long after successful revival we check to see if theyre still alive, and give rewards
 	var/succes_check_time = 3 MINUTES
 	/// How much the revived crew start with on their cards
 	var/starting_funds = 100
