@@ -950,7 +950,7 @@
 	back = /obj/item/storage/backpack/cultpack
 
 	backpack_contents = list(
-		/obj/item/restraints/legcuffs/bola/cult,
+		/obj/item/reagent_containers/cup/beaker/unholywater,
 		/obj/item/reagent_containers/cup/beaker/unholywater,
 	)
 
@@ -978,7 +978,7 @@
 	back = /obj/item/storage/backpack/cultpack
 
 	backpack_contents = list(
-		/obj/item/reagent_containers/cup/beaker/unholywater,
+		/obj/item/restraints/legcuffs/bola/cult,
 		/obj/item/reagent_containers/cup/beaker/unholywater,
 		/obj/item/reagent_containers/cup/beaker/unholywater,
 	)
@@ -1086,15 +1086,14 @@
 
 	knowledge_to_grant = list(
 		/datum/heretic_knowledge/cosmic_grasp,
-		/datum/heretic_knowledge/moon_grasp,
 	)
 
 	spells_to_add = list(
 		/datum/action/cooldown/spell/touch/mansus_grasp,
 		/datum/action/cooldown/spell/pointed/projectile/star_blast,
 		/datum/action/cooldown/spell/touch/star_touch,
-		/datum/action/cooldown/spell/pointed/mind_gate,
 		/datum/action/cooldown/spell/aoe/void_pull,
+		/datum/action/cooldown/spell/pointed/void_phase,
 	)
 
 // Chaplain! No spells (other than smoke), but strong armor and weapons, and immune to others' spells

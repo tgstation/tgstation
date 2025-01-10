@@ -227,6 +227,10 @@
 	if((origin_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))
 		return FALSE
 
+	// If one of the areas you're trying to tp to has local_teleport, and they're not the same, return.
+	if(((origin_area.area_flags & LOCAL_TELEPORT) || (destination_area.area_flags & LOCAL_TELEPORT)) && destination_area != origin_area)
+		return FALSE
+
 	if(SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTING, destination, channel) & COMPONENT_BLOCK_TELEPORT)
 		return FALSE
 
