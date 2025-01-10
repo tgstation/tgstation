@@ -160,6 +160,7 @@ class KeybindingButton extends Component<{
     }
   }
 }
+
 type KeybindingNameProps = {
   keybinding: Keybinding;
 };
