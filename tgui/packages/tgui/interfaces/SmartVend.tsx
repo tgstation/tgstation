@@ -180,6 +180,7 @@ const ItemList = ({ item }) => {
       buttons={
         <Stack
           opacity={disabled && 0.5}
+          backgroundColor={'rgba(175, 175, 175, 0.1)'}
           style={{ pointerEvents: disabled ? 'none' : 'auto' }}
         >
           <NumberInput
