@@ -478,9 +478,9 @@ export const PlantAnalyzerGraft = (props) => {
               <ProgressBar
                 value={graft_data.endurance / 100}
                 ranges={{
-                  good: [0.7, Infinity],
-                  average: [0.3, 0.7],
-                  bad: [0, 0.3],
+                  good: [0.5, Infinity],
+                  average: [0.1, 0.5],
+                  bad: [0, 0.1],
                 }}
               >
                 {graft_data.endurance} / 100
@@ -491,9 +491,9 @@ export const PlantAnalyzerGraft = (props) => {
               <ProgressBar
                 value={graft_data.lifespan / 100}
                 ranges={{
-                  good: [0.7, Infinity],
-                  average: [0.3, 0.7],
-                  bad: [0, 0.3],
+                  good: [0.65, Infinity],
+                  average: [0.25, 0.65],
+                  bad: [0, 0.25],
                 }}
               >
                 {graft_data.lifespan} / 100
