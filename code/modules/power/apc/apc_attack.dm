@@ -70,13 +70,13 @@
 			balloon_alert(user, "your charge is full!")
 			return
 		if(cell.charge() <= 0)
-			balloon_alert(user, "APC is empty!")
+			balloon_alert(user, "apc is empty!")
 			return
 
 /// Handles charging our internal cell from an ethereal and their stomach
 /obj/machinery/power/apc/proc/charge_from_ethereal(mob/living/carbon/human/user, obj/item/organ/stomach/ethereal/used_stomach)
 	if(cell.charge() >= cell.max_charge())
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "APC full!"), ETHEREAL_APC_ALERT_DELAY)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "apc full!"), ETHEREAL_APC_ALERT_DELAY)
 		return
 	var/obj/item/stock_parts/power_store/stomach_cell = used_stomach.cell
 	if(stomach_cell.charge() <= 0)
@@ -102,7 +102,7 @@
 	cell.give(-energy_drained)
 
 	if(cell.used_charge() <= 0)
-		balloon_alert(user, "APC is full!")
+		balloon_alert(user, "apc is full!")
 		return
 	if(stomach_cell.charge() <= 0)
 		balloon_alert(user, "out of charge!")
