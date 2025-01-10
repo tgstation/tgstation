@@ -820,6 +820,7 @@
 		return ..()
 	if(!cell)
 		icon_state = "[base_icon_state]_nocell"
+		inhand_icon_state = "[base_icon_state]"
 		return ..()
 	icon_state = "[base_icon_state]"
 	inhand_icon_state = "[base_icon_state]"
