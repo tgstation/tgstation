@@ -73,19 +73,16 @@
 
 	if (heal_amt > 0)
 		var/healed = heal_amt && eater.health < eater.maxHealth
-		if(heal_amt)
-			eater.heal_overall_damage(heal_amt)
+		eater.heal_overall_damage(heal_amt)
 		eater.visible_message(span_notice("[eater] [eat_verb]s [target]."), span_notice("You [eat_verb] [target][healed ? ", restoring some health" : ""]."))
-		finish_eating(eater, target)
-		return TRUE
 
-	if (damage_amount > 0 && damage_type)
+	else if (damage_amount > 0 && damage_type)
 		eater.apply_damage(damage_amount, damage_type)
 		eater.visible_message(span_notice("[eater] [eat_verb]s [target], and seems to hurt itself."), span_notice("You [eat_verb] [target], hurting yourself in the process."))
-		finish_eating(eater, target, feeder)
-		return TRUE
 
-	eater.visible_message(span_notice("[eater] [eat_verb]s [target]."), span_notice("You [eat_verb] [target]."))
+	else
+		eater.visible_message(span_notice("[eater] [eat_verb]s [target]."), span_notice("You [eat_verb] [target]."))
+
 	finish_eating(eater, target, feeder)
 	return TRUE
 

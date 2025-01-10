@@ -124,3 +124,83 @@
   - bugfix: fixed ambience sounds getting cut off mid play
   - sound: addes fades for maintenance ambiences
   - refactor: changed the way maintenance sounds are
+2025-01-07:
+  AyIong:
+  - qol: Sidebar has lost its bulging white lines. And top right buttons now flat
+  Ben10Omintrix:
+  - bugfix: corgi's population will no longer exponentially grow
+  Hatterhat:
+  - qol: Examining a gun or magazine now shows the ammo capacity in bold.
+  - spellcheck: Standardized pistol magazine descriptions, fixing Makarov magazines
+      having a placeholder description.
+  JohnFulpWillard:
+  - bugfix: The Curator's broadcast camera is now held up in the hand you're holding
+      it with.
+  Melbert:
+  - rscadd: You can light matches on the heel of your boots - Just don't do it too
+      hard.
+  Paxilmaniac:
+  - code_imp: modlink scryers use the nt frequency define rather than just plain text
+      doing it themselves
+  Rhials:
+  - bugfix: Overwatch agent bodycameras (SHOULD) properly install if an agent has
+      already died.
+  SmArtKar:
+  - bugfix: Hotspots from ash heretic spells should not longer stack inside of walls
+  - bugfix: Fixed items not embedding
+  - bugfix: Fixed glowsticks not glowing
+  carlarctg:
+  - code_imp: Adds a new area flag, LOCAL_TELEPORT, given to virtual domains and deathmatch
+      arenas.
+  - code_imp: Re-added Void Phase to Heretic Scribes in Deathmatch's Ragnarok map.
+  grungussuss:
+  - sound: added sounds for buckling to shuttle seats and medical beds
+  jlsnow301:
+  - rscadd: TGUI icons are updated to latest FontAwesome version, v6.7.2.
+  timothymtorres:
+  - code_imp: Add `SECONDS` defines to looping sounds time variables
+  warbluke:
+  - bugfix: Changed BATTERY to CELL in the mob define file since an ethereal stomach
+      organ works like a power cell despite being called a battery.
+2025-01-08:
+  00-Steven:
+  - bugfix: Rave visor music actually works after the first deactivation.
+  - bugfix: Sign language no longer throws a runtime error when repeatedly muted and
+      unmuted.
+  - bugfix: Sign language no longer fails to hide the action when you get it while
+      mute, stop being mute, and start being mute again.
+  - bugfix: Pre-filled test tube racks actually update to look filled.
+  - bugfix: Pre-filled test tube racks are actually fully filled, instead of missing
+      a tube.
+  Absolucy:
+  - bugfix: Fixed graphics getting screwed up when reconnecting with BYOND 515 after
+      playing on BYOND 516.
+  AyIong:
+  - bugfix: Admin/Debug UI's (Especially the Game Panel) now work properly on Byond
+      516, instead of showing raw HTML
+  Ben10Omintrix:
+  - bugfix: goliaths can now be tamed
+  - bugfix: fixes turtles rerolling strange seed chems
+  StrangeWeirdKitten:
+  - bugfix: Things that drop in random places are no longer statistically weighted
+      to drop in security.
+  SyncIt21:
+  - code_imp: improved ui data code for plumbing reaction chamber
+  Y0SH1M4S73R:
+  - bugfix: Replaced floor tiles on shuttles no longer get left behind when the shuttle
+      moves.
+  grungussuss:
+  - sound: added some sounds to clown car
+  - code_imp: improved vehicle code a bit
+  hyperjll:
+  - qol: The Syndie Lipstick's desc in the uplink now actually tells the potential
+      buyer what it does (and how to use it)
+  necromanceranne:
+  - qol: You can now put hats on your wig. I guess that means you can put a wig on
+      your wig? Wigstacking?
+  - spellcheck: The 'Wig' in the loadout is now correctly named 'Natural Wig'.
+  timothymtorres:
+  - sound: Add snow pickup and drop sounds to material
+  tontyGH:
+  - code_imp: AIs selecting holograms mid-round now select from the same list as prefs,
+      which should make things easier to keep consistent

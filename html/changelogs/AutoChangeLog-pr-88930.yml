@@ -1,0 +1,6 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - rscadd: "Magazines with defined ammo bands can now have their color changed with a pen, in case you're reloading spent magazines or speedloaders with different ammunition and want to change magazine colors to be appropriate."
+  - qol: "C-20r magazines and Stechkin APS magazines now have ammo band support."
+  - qol: "Standardized some descriptions for AP, HP, and incendiary magazines."
