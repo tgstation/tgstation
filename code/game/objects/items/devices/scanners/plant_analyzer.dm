@@ -242,7 +242,7 @@
 		"maturation" = seed.maturation,
 		"production" = seed.production,
 		"lifespan" = seed.lifespan,
-		"endurance" = graft.endurance,
+		"endurance" = seed.endurance,
 		"weed_rate" = seed.weed_rate,
 		"weed_chance" = seed.weed_chance,
 		"graft_gene" = seed.graft_gene || /datum/plant_gene/trait/repeated_harvest,
