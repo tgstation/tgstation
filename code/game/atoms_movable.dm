@@ -651,7 +651,10 @@ GLOBAL_LIST_EMPTY(gliding_atoms)
 /mob/living/carbon/update_glide_text()
 	cut_overlay(glide_text)
 	glide_text = mutable_appearance(offset_spokesman = src, plane = EXAMINE_BALLOONS_PLANE)
-	glide_text.maptext = "GS: [glide_size]ppt\nMulti: [GLOB.glide_size_multiplier * 100]% \nBIE: [built_in_glide_error]ds \nErr: [accumulated_glide_error]ds"
+	glide_text.maptext = "GS: [glide_size]ppt\n\
+		Multi: [GLOB.glide_size_multiplier * 100]% \n\
+		BIE: [built_in_glide_error]ds \n\
+		Err: [accumulated_glide_error]ds"
 	glide_text.maptext_width = 500
 	glide_text.maptext_height = 500
 	glide_text.maptext_y = 32

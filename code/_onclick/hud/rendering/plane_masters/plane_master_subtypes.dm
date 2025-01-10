@@ -428,7 +428,9 @@
 	documentation = "The balloons that appear above objects (often wallmounts) when holding shift."
 	plane = EXAMINE_BALLOONS_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
+	critical = PLANE_CRITICAL_DISPLAY
 	alpha = 0
 
 /atom/movable/screen/plane_master/examine_balloons/show_to(mob/mymob)

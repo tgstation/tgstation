@@ -84,8 +84,10 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/rolling_usage_length = 5 SECONDS
 
 	var/spike_cpu = 0
-	var/sustain_chance = 100
+	var/sustain_cpu_chance = 100
 	var/sustain_cpu = 0
+	var/floor_cpu = 0
+	var/final_usage = 0
 
 /datum/controller/master/New()
 	if(!config)
@@ -948,21 +950,29 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	last_profiled = REALTIMEOFDAY
 	SSprofiler.DumpFile(allow_yield = FALSE)
 
+#define CPU_SIZE 20
+#define WINDOW_SIZE 16
+
 /world/Tick()
 	unroll_cpu_value()
-	if(Master.sustain_cpu && prob(Master.sustain_chance))
+	if(Master.floor_cpu)
 		// avoids  byond sleeping the loop and causing the MC to infinistall
+		// Run first to set a floor for sustain to spike up
+		CONSUME_UNTIL(min(Master.floor_cpu, 10000))
+
+	if(Master.sustain_cpu && prob(Master.sustain_cpu_chance))
 		CONSUME_UNTIL(min(Master.sustain_cpu, 10000))
 
 	if(Master.spike_cpu)
 		CONSUME_UNTIL(min(Master.spike_cpu, 10000))
 		Master.spike_cpu = 0
 
+	GLOB.tick_cpu_usage[WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)] = TICK_USAGE
+	GLOB.cpu_tracker.update_display()
 
-#define CPU_SIZE 20
-#define WINDOW_SIZE 16
 GLOBAL_LIST_INIT(cpu_values, new /list(CPU_SIZE))
 GLOBAL_LIST_INIT(avg_cpu_values, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(tick_cpu_usage, new /list(CPU_SIZE))
 GLOBAL_VAR_INIT(cpu_index, 1)
 GLOBAL_VAR_INIT(last_cpu_update, -1)
 GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
@@ -973,6 +983,43 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	maptext_height = 128
 	clear_with_screen = FALSE
 	plane = EXAMINE_BALLOONS_PLANE
+
+
+/atom/movable/screen/usage_display/proc/update_display()
+	var/list/cpu_values = GLOB.cpu_values
+	var/last_index = WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)
+	var/full_time = TICKS2DS(CPU_SIZE) / 10 // convert from ticks to seconds
+	maptext = "Floor: <a href='?src=[REF(src)];act=set_floor'>[Master.floor_cpu]</a>\n\
+		Sustain: <a href='?src=[REF(src)];act=set_sustain_cpu'>[Master.sustain_cpu]</a> <a href='?src=[REF(src)];act=set_sustain_chance'>[Master.sustain_cpu_chance]%</a>\n\
+		Spike: <a href='?src=[REF(src)];act=set_spike'>[Master.spike_cpu]</a>\n\
+		Tick: [world.time / world.tick_lag]\n\
+		Map Cpu: [world.map_cpu]\n\
+		Frame Behind CPU: [cpu_values[last_index]]\n\
+		Max [full_time]s: [max(cpu_values)]\n\
+		Max Tick [full_time]s: [max(GLOB.tick_cpu_usage)]\n\
+		Min [full_time]s: [min(cpu_values)]\n\
+		Min Tick [full_time]s : [min(GLOB.tick_cpu_usage)]"
+
+/atom/movable/screen/usage_display/Topic(href, list/href_list)
+	if (..())
+		return
+	switch(href_list["act"])
+		if("set_floor")
+			var/floor_cpu = tgui_input_number(usr, "How low should we allow the cpu to go?", "Floor CPU", max_value = INFINITY, min_value = 0, default = 0)
+			Master.floor_cpu = floor_cpu
+			return TRUE
+		if("set_sustain_cpu")
+			var/sustain_cpu = tgui_input_number(usr, "What should we randomly set our cpu to?", "Sustain CPU", max_value = INFINITY, min_value = 0, default = 0)
+			Master.sustain_cpu = sustain_cpu
+			return TRUE
+		if("set_sustain_chance")
+			var/sustain_cpu_chance = tgui_input_number(usr, "What % of the time should we floor at Sustain CPU", "Sustain CPU %", max_value = 100, min_value = 0, default = 0)
+			Master.sustain_cpu_chance = sustain_cpu_chance
+			return TRUE
+		if("set_spike")
+			var/spike_cpu = tgui_input_number(usr, "How high should we spike cpu usage", "Spike CPU", max_value = INFINITY, min_value = 0, default = 0)
+			Master.spike_cpu = spike_cpu
+			return TRUE
 
 /// Inserts our current world.cpu value into our rolling lists
 /// Its job is to pull the actual usage last tick instead of the moving average
@@ -1009,14 +1056,13 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	// E = (avg * 4 - old_avg * 4) + A
 
 	var/last_avg_cpu = GLOB.avg_cpu_values[WRAP(cpu_index - 1, 1, CPU_SIZE + 1)]
-	var/real_cpu = (avg_cpu * WINDOW_SIZE - last_avg_cpu * WINDOW_SIZE) + lost_value
+	var/real_cpu = (avg_cpu - last_avg_cpu) * WINDOW_SIZE + lost_value
 
 	// cache for sonic speed
 	cpu_values[cpu_index] = real_cpu
 	GLOB.avg_cpu_values[cpu_index] = avg_cpu
 	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
-	var/full_time = TICKS2DS(CPU_SIZE) / 10 // convert from ticks to seconds
-	GLOB.cpu_tracker.maptext = "Tick: [world.time / world.tick_lag]\nMap Cpu: [world.map_cpu]\nFrame Behind CPU: [real_cpu]\nMax [full_time]s: [max(cpu_values)]\nMin [full_time]s: [min(cpu_values)]"
+	GLOB.cpu_tracker.update_display()
 	// make an animated display of cpu usage to get a better idea of how much we leave on the table
 
 /proc/update_glide_size()
