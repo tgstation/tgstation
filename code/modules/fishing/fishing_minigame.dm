@@ -188,13 +188,13 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
  * Proc responsible for registering the signals for difficulty and possible reward.
  * Call this if you want to override the fish source from which we roll rewards (preferably before the minigame phase).
  */
-/datum/fishing_challenge/proc/register_reward_signals(datum/fish_source/fish_source)
+/datum/fishing_challenge/proc/register_reward_signals(datum/fish_source/new_fish_source)
 	if(fish_source)
 		fish_source.UnregisterSignal(src, list(
 			COMSIG_FISHING_CHALLENGE_ROLL_REWARD,
 			COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY,
 		))
-	src.fish_source = fish_source
+	fish_source = new_fish_source
 	fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, TYPE_PROC_REF(/datum/fish_source, roll_reward_minigame))
 	fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, TYPE_PROC_REF(/datum/fish_source, calculate_difficulty_minigame))
 
