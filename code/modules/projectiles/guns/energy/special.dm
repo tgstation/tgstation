@@ -364,7 +364,7 @@
 	name = "tesla cannon"
 	icon_state = "tesla"
 	inhand_icon_state = "tesla"
-	desc = "A gun that shoots balls of \"tesla\", whatever that is."
+	desc = "A gun powered by a flux anomaly that shoots lightning bolts. Electrically insulating clothing may protect from some of the damage."
 	ammo_type = list(/obj/item/ammo_casing/energy/tesla_cannon)
 	shaded_charge = TRUE
 	weapon_weight = WEAPON_HEAVY

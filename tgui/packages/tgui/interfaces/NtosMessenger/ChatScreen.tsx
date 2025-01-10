@@ -1,7 +1,4 @@
-import { BooleanLike } from 'common/react';
 import { Component, createRef, RefObject } from 'react';
-
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -12,7 +9,10 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../../backend';
 import { NtMessage, NtMessenger, NtPicture } from './types';
 
 type ChatScreenProps = {

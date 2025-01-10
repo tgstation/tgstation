@@ -417,7 +417,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 2
 	throwforce = 10 //10 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 18 damage on hit due to guaranteed embedding
 	throw_speed = 4
-	embed_type = /datum/embed_data/throwing_star
+	embed_type = /datum/embedding/throwing_star
 	armour_penetration = 40
 
 	w_class = WEIGHT_CLASS_SMALL
@@ -425,7 +425,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	resistance_flags = FIRE_PROOF
 
-/datum/embed_data/throwing_star
+/datum/embedding/throwing_star
 	pain_mult = 4
 	embed_chance = 100
 	fall_chance = 0
@@ -434,9 +434,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "shock throwing star"
 	desc = "An aerodynamic disc designed to cause excruciating pain when stuck inside fleeing targets, hopefully without causing fatal harm."
 	throwforce = 5
-	embed_type = /datum/embed_data/throwing_star/stamina
+	embed_type = /datum/embedding/throwing_star/stamina
 
-/datum/embed_data/throwing_star/stamina
+/datum/embedding/throwing_star/stamina
 	pain_mult = 5
 	jostle_chance = 10
 	pain_stam_pct = 0.8
@@ -448,9 +448,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = NONE
 	force = 0
 	throwforce = 0
-	embed_type = /datum/embed_data/throwing_star/toy
+	embed_type = /datum/embedding/throwing_star/toy
 
-/datum/embed_data/throwing_star/toy
+/datum/embedding/throwing_star/toy
 	pain_mult = 0
 	jostle_pain_mult = 0
 
@@ -1234,7 +1234,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 25
 	throw_speed = 4
 	attack_speed = CLICK_CD_HYPER_RAPID
-	embed_type = /datum/embed_data/hfr_blade
+	embed_type = /datum/embedding/hfr_blade
 	block_chance = 25
 	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
@@ -1249,7 +1249,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	/// The previous target we attacked
 	var/datum/weakref/previous_target
 
-/datum/embed_data/hfr_blade
+/datum/embedding/hfr_blade
 	embed_chance = 100
 
 /obj/item/highfrequencyblade/Initialize(mapload)

@@ -601,7 +601,7 @@
 	if(windscreen_casualty.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
 		for(var/i in 1 to speed)
 			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
-			shard.set_embed(/datum/embed_data/glass_candy)
+			shard.set_embed(/datum/embedding/glass_candy)
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
 			shard.set_embed(initial(shard.embed_type))
 		windscreen_casualty.atom_destruction()
