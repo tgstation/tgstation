@@ -503,6 +503,33 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
 	)
 
+/datum/language_holder/carp
+	understood_languages = list(
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+	)
+
+/datum/language_holder/carp/dragon
+	understood_languages = list(
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+		/datum/language/draconic = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+		/datum/language/draconic = list(LANGUAGE_ATOM),
+	)
+
+/datum/language_holder/carp/hear_common
+	understood_languages = list(
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+		/datum/language/common = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
+	)
+
 // Given to atoms by default
 /datum/language_holder/atom_basic
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
