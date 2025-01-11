@@ -950,7 +950,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	last_profiled = REALTIMEOFDAY
 	SSprofiler.DumpFile(allow_yield = FALSE)
 
-#define CPU_SIZE 20
+#define CPU_SIZE 30
 #define WINDOW_SIZE 16
 
 /world/Tick()
@@ -967,7 +967,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 		CONSUME_UNTIL(min(Master.spike_cpu, 10000))
 		Master.spike_cpu = 0
 
-	GLOB.tick_cpu_usage[WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)] = TICK_USAGE
+	GLOB.tick_cpu_usage[WRAP(GLOB.cpu_index, 1, CPU_SIZE + 1)] = TICK_USAGE
 	GLOB.cpu_tracker.update_display()
 
 GLOBAL_LIST_INIT(cpu_values, new /list(CPU_SIZE))
@@ -978,13 +978,16 @@ GLOBAL_VAR_INIT(last_cpu_update, -1)
 GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 
 /atom/movable/screen/usage_display
-	screen_loc = "CENTER-2, CENTER+3"
+	screen_loc = "LEFT, CENTER+3"
 	maptext_width = 128
 	maptext_height = 128
 	clear_with_screen = FALSE
 	plane = EXAMINE_BALLOONS_PLANE
+	var/viewer_count = 0
 
 /atom/movable/screen/usage_display/proc/update_display()
+	if(viewer_count <= 0)
+		return
 	var/list/cpu_values = GLOB.cpu_values
 	var/last_index = WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)
 	var/full_time = TICKS2DS(CPU_SIZE) / 10 // convert from ticks to seconds
@@ -999,10 +1002,25 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		Min [full_time]s: [min(cpu_values)]\n\
 		Min Tick [full_time]s : [min(GLOB.tick_cpu_usage)]"
 
+/atom/movable/screen/usage_display/proc/toggle_cpu_debug(client/modify)
+	if(modify.screen.Find(src)) // I am lazy and this is a cold path
+		modify.screen -= src
+		viewer_count -= 1
+		UnregisterSignal(modify, COMSIG_QDELETING)
+	else
+		modify.screen += src
+		RegisterSignal(modify, COMSIG_QDELETING, PROC_REF(client_disconnected))
+		viewer_count += 1
+		update_display()
+
+/atom/movable/screen/usage_display/proc/client_disconnected(client/disconnected)
+	SIGNAL_HANDLER
+	toggle_cpu_debug(disconnected)
+
 /atom/movable/screen/usage_display/Topic(href, list/href_list)
 	if (..())
 		return
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_DEBUG) || !check_rights(R_SERVER))
 		return FALSE
 	switch(href_list["act"])
 		if("set_floor")
@@ -1028,14 +1046,11 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	if(GLOB.last_cpu_update == world.time)
 		return
 	GLOB.last_cpu_update = world.time
-	var/avg_cpu = world.cpu
 	var/list/cpu_values = GLOB.cpu_values
 	var/cpu_index = GLOB.cpu_index
-
 	// We need to hook into the INSTANT we start our moving average so we can reconstruct gained/lost cpu values
-	var/lost_value = 0
 	// Defaults to null or 0 so the wrap here is safe for the first 16 entries
-	lost_value = cpu_values[WRAP(cpu_index - WINDOW_SIZE, 1, CPU_SIZE + 1)]
+	var/lost_value = cpu_values[WRAP(cpu_index - WINDOW_SIZE, 1, CPU_SIZE + 1)]
 
 	// ok so world.cpu is a 16 entry wide moving average of the actual cpu value
 	// because fuck you
@@ -1056,11 +1071,18 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	// soooo
 	// E = (avg * 4 - old_avg * 4) + A
 
+	var/avg_cpu = world.cpu
 	var/last_avg_cpu = GLOB.avg_cpu_values[WRAP(cpu_index - 1, 1, CPU_SIZE + 1)]
-	var/real_cpu = (avg_cpu - last_avg_cpu) * WINDOW_SIZE + lost_value
+	var/real_cpu = avg_cpu * WINDOW_SIZE - last_avg_cpu * WINDOW_SIZE + lost_value
 
 	// cache for sonic speed
-	cpu_values[cpu_index] = real_cpu
+	// due to I think? compounded floating point error either on our side or internal to byond we somtimes get way too large/small cpu values
+	// I can't correct in place because I need the full history of averages to add back lost values
+	// our cpu value for last tick cannot be lower then the cost of sleeping procs + map cpu, so we'll clamp to that
+	// my hope is this will keep error within a reasonable bound as storing a lower then expected number would cause a higher then expected number as a side effect
+	var/lower_bound = GLOB.tick_cpu_usage[cpu_index] + world.map_cpu
+
+	cpu_values[cpu_index] = max(real_cpu, lower_bound)
 	GLOB.avg_cpu_values[cpu_index] = avg_cpu
 	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
 	GLOB.cpu_tracker.update_display()
