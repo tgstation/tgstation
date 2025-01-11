@@ -347,7 +347,6 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	var/list/cpu_values = GLOB.cpu_values
 	var/sum = 0
 	var/non_zero = 0
-	#warn there's gotta be a better way then this, or at least a less shitty way
 	for(var/value in cpu_values)
 		sum += max(value, 100)
 		if(value != 0)
