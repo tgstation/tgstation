@@ -608,13 +608,13 @@
 	if(!only_pulling && pulledby && moving_diagonally != FIRST_DIAG_STEP && (get_dist(src, pulledby) > 1 || (z != pulledby.z && !z_allowed))) //separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-/atom/movable/proc/set_glide_size(target = 8, mid_move = FALSE)
+/atom/movable/proc/set_glide_size(target = 8)
 	if (HAS_TRAIT(src, TRAIT_NO_GLIDE))
 		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
 	for(var/mob/buckled_mob as anything in buckled_mobs)
-		buckled_mob.set_glide_size(target, mid_move = mid_move)
+		buckled_mob.set_glide_size(target. += "M/S:[round(movements_per_second,0.01)] | C/S:[round(clicks_per_second,0.01)] ([round(delayed_clicks_per_second,0.01)] | CD: [round(average_click_delay / (1 SECONDS),0.01)])")
 
 /**
  * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)

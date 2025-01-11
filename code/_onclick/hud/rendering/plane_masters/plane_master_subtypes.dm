@@ -428,7 +428,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	update_visibility(mymob)
 
 /atom/movable/screen/plane_master/cpu_debug/proc/update_visibility(mob/viewer)
