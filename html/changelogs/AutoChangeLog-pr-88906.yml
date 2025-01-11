@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Significatly tuned down SaturnX's visual filter's strength"
