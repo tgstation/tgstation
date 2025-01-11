@@ -324,10 +324,10 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 /datum/language_holder/lizard/hear_common
 	selected_language = /datum/language/draconic
 	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/draconic = list(LANGUAGE_ATOM),
 	)
 	spoken_languages = list(
-		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/draconic = list(LANGUAGE_ATOM),
 	)
 
