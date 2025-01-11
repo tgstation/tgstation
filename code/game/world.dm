@@ -337,8 +337,8 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	for(var/value in cpu_values)
 		if(!value)
 			continue
-		// If we deviate more then 60% away from the average, skip it
-		if(abs(1 - (max(value, 100) / first_average)) <= 0.3)
+		// If we deviate more then 30% above the average (since we care about filtering spikes), skip us over
+		if(1 - (max(value, 100) / first_average) <= 0.3)
 			trimmed_sum += max(value, 100)
 			used += 1
 
