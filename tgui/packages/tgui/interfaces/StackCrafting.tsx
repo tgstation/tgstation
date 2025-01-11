@@ -8,7 +8,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
-import { toTitleCase, createSearch } from 'tgui-core/string';
+import { createSearch, toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
