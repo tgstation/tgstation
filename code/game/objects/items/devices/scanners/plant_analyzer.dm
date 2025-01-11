@@ -12,6 +12,8 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	/// Cached data from ui_interact
 	var/list/last_scan_data
+	/// Cached data for the product grinder results
+	var/static/list/product_grinder_results = list()
 
 /obj/item/plant_analyzer/Initialize(mapload)
 	. = ..()
@@ -269,14 +271,19 @@
 	for(var/obj/item/seeds/mutant as anything in seed.mutatelist)
 		seed_data["mutatelist"] += initial(mutant.plantname)
 	if(seed.product)
-		var/obj/item/food/grown/product = new seed.product
-		var/datum/reagent/product_distill_reagent = product.distill_reagent
-		seed_data["distill_reagent"] = initial(product_distill_reagent.name)
-		var/datum/reagent/product_juice_typepath = product.juice_typepath
-		seed_data["juice_name"] = initial(product_juice_typepath.name)
-		seed_data["grind_results"] = list()
-		for(var/datum/reagent/reagent as anything in product.grind_results)
-			seed_data["grind_results"] += initial(reagent.name)
-		qdel(product)
+		if(!product_grinder_results[seed.product])
+			product_grinder_results[seed.product] = list()
+			var/obj/item/food/grown/product = new seed.product
+			var/datum/reagent/product_distill_reagent = product.distill_reagent
+			var/datum/reagent/product_juice_typepath = product.juice_typepath
+			product_grinder_results[seed.product]["distill_reagent"] = initial(product_distill_reagent.name)
+			product_grinder_results[seed.product]["juice_name"] = initial(product_juice_typepath.name)
+			product_grinder_results[seed.product]["grind_results"] = list()
+			for(var/datum/reagent/reagent as anything in product.grind_results)
+				product_grinder_results[seed.product]["grind_results"] += initial(reagent.name)
+			qdel(product)
+		seed_data["distill_reagent"] = product_grinder_results[seed.product]["distill_reagent"]
+		seed_data["juice_name"] = product_grinder_results[seed.product]["juice_name"]
+		seed_data["grind_results"] = product_grinder_results[seed.product]["grind_results"]
 
 	return seed_data
