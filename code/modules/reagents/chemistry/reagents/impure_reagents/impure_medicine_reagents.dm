@@ -627,26 +627,40 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/static/list/traumalist
 	if (!traumalist)
 		traumalist = subtypesof(/datum/brain_trauma)
-		var/list/forbiddentraumas = list(
-			/datum/brain_trauma/magic, // Abstract types
+
+		// Don't add these to the list because they're abstract category types
+		var/list/abstracttraumas = list(
+			/datum/brain_trauma/magic,
 			/datum/brain_trauma/mild,
 			/datum/brain_trauma/severe,
 			/datum/brain_trauma/special,
-			/datum/brain_trauma/severe/split_personality,  // Uses a ghost, I don't want to use a ghost for a temp thing
-			/datum/brain_trauma/severe/split_personality/brainwashing,
-			/datum/brain_trauma/severe/split_personality/blackout,
-			/datum/brain_trauma/special/imaginary_friend,
-			/datum/brain_trauma/special/imaginary_friend/trapped_owner,
-			/datum/brain_trauma/special/obsessed, // Obsessed sets the affected_mob as an antag - I presume this will lead to problems, so we'll remove it
-			/datum/brain_trauma/hypnosis, // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neurowhine purges and then turn into "nothing" on the med reading upon a second application
-			/datum/brain_trauma/special/honorbound, // Designed to be chaplain exclusive
-			/datum/brain_trauma/special/psychotic_brawling/bath_salts, // Subtype which just has a different name for medical scanner
 		)
-		traumalist -= forbiddentraumas
-		traumalist -= subtypesof(/datum/brain_trauma/mild/phobia) // The base type gives out a random subtype, the subtypes shouldn't bne in the list
-		traumalist -= subtypesof(/datum/brain_trauma/severe/paralysis) // Same as above
-		traumalist = shuffle(traumalist)
 
+		// Don't give out these traumas or any of their descendants
+		var/list/forbiddentraumas = list(
+			/datum/brain_trauma/severe/split_personality, // Uses a ghost, I don't want to use a ghost for a temp thing
+			/datum/brain_trauma/special/imaginary_friend, // Same as above
+			/datum/brain_trauma/special/obsessed, // Obsessed sets the affected_mob as an antag - I presume this will lead to problems, so we'll remove it
+			/datum/brain_trauma/hypnosis, // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neruwhine purges and then turn into "nothing" on the med reading upon a second application
+			/datum/brain_trauma/severe/hypnotic_stupor, // These apply the above blacklisted trauma
+			/datum/brain_trauma/severe/hypnotic_trigger,
+			/datum/brain_trauma/special/honorbound, // Designed to be chaplain exclusive
+		)
+
+		// Do give out these traumas but not any of their subtypes, usually because the trauma replaces itself with a subtype
+		var/list/forbiddensubtypes = list(
+			/datum/brain_trauma/mild/phobia,
+			/datum/brain_trauma/severe/paralysis,
+			/datum/brain_trauma/special/psychotic_brawling,
+		)
+
+		traumalist -= abstracttraumas
+		for (var/type as anything in forbiddentraumas)
+			traumalist -= typesof(type)
+		for (var/type as anything in forbiddensubtypes)
+			traumalist -= subtypesof(type)
+
+	traumalist = shuffle(traumalist)
 	var/obj/item/organ/brain/brain = affected_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
 	for(var/trauma in traumalist)
 		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
