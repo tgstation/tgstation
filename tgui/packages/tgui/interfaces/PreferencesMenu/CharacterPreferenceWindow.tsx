@@ -1,12 +1,8 @@
-import { exhaustiveCheck } from 'common/exhaustive';
 import { useState } from 'react';
+import { Dropdown, Flex, Stack } from 'tgui-core/components';
+import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
 import { useBackend } from '../../backend';
-import {
-  Dropdown,
-  Flex,
-  Stack,
-} from '../../components'; /* DOPPLER EDIT: Adds in Dropdown and Flex */
 import { Window } from '../../layouts';
 import { AntagsPage } from './AntagsPage';
 import { PreferencesMenuData } from './data';

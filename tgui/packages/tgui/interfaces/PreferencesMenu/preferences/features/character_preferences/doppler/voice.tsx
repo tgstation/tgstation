@@ -1,4 +1,5 @@
-import { Button, Stack } from '../../../../../../components';
+import { Button, Stack } from 'tgui-core/components';
+
 import { FeatureChoiced, FeatureValueProps } from '../../base';
 import { FeatureDropdownInput } from '../../dropdowns';
 

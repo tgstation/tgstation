@@ -1,8 +1,6 @@
+import { Box, LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box } from '../../components/Box';
-import { LabeledList } from '../../components/LabeledList';
-import { Section } from '../../components/Section';
-import { Stack } from '../../components/Stack';
 import { PreferencesMenuData } from './data';
 import { PreferenceSingle } from './SinglePreference';
 

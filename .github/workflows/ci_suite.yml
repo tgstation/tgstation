@@ -75,6 +75,10 @@ jobs:
         with:
           path: tools/icon_cutter/cache
           key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4.2.0
+        with:
+          dotnet-version: 9.x
       - name: Install OpenDream
         uses: robinraju/release-downloader@v1.11
         with:

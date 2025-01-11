@@ -39,9 +39,9 @@
 		/mob/living/basic/wumborian_fugu,
 	)
 	shrapnel_type = /obj/item/ammo_casing/arrow/bone
-	embed_type = /datum/embed_data/bone_arrow
+	embed_type = /datum/embedding/bone_arrow
 
-/datum/embed_data/bone_arrow
+/datum/embedding/bone_arrow
 	embed_chance = 33
 	fall_chance = 3
 	jostle_chance = 4

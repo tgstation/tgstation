@@ -160,8 +160,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 		serialized["antag"] = antag.name
 		serialized["antag_group"] = antag.antagpanel_category
-		serialized["job"] = antag.name
-		serialized["icon"] = antag.antag_hud_name
+		serialized["antag_icon"] = antag.antag_hud_name
 
 		return serialized
 

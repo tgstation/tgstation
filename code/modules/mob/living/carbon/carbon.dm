@@ -228,13 +228,13 @@
 /mob/living/carbon/Topic(href, href_list)
 	..()
 	if(href_list["embedded_object"])
-		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
-		if(!L)
+		var/obj/item/bodypart/limb = locate(href_list["embedded_limb"]) in bodyparts
+		if(!limb)
 			return
-		var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
-		if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
+		var/obj/item/weapon = locate(href_list["embedded_object"]) in limb.embedded_objects
+		if(!weapon || weapon.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 			return
-		SEND_SIGNAL(src, COMSIG_CARBON_EMBED_RIP, I, L)
+		weapon.get_embed().rip_out(usr)
 		return
 
 	if(href_list["show_paper_note"])
@@ -638,6 +638,9 @@
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
 		new_sight |= SEE_MOBS
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
+
+	if (HAS_TRAIT(src, TRAIT_MINOR_NIGHT_VISION))
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_LOW)
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
@@ -1095,10 +1098,6 @@
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		final_modification += bodypart.speed_modifier
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bodypart, update = TRUE, multiplicative_slowdown = final_modification)
-
-/mob/living/carbon/proc/create_internal_organs()
-	for(var/obj/item/organ/internal_organ in organs)
-		internal_organ.Insert(src)
 
 /proc/cmp_organ_slot_asc(slot_a, slot_b)
 	return GLOB.organ_process_order.Find(slot_a) - GLOB.organ_process_order.Find(slot_b)

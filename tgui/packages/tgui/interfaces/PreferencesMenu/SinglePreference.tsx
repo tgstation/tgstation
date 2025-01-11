@@ -1,6 +1,6 @@
+import { LabeledList, Stack } from 'tgui-core/components';
+
 import { sendAct } from '../../backend';
-import { LabeledList } from '../../components/LabeledList';
-import { Stack } from '../../components/Stack';
 import features from './preferences/features';
 import { FeatureValueInput } from './preferences/features/base';
 

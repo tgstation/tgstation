@@ -161,6 +161,10 @@
 	var/mob/living/carbon/human/spawned_human = spawned
 	var/list/roundstart_experience
 
+	if(player_client)
+		for(var/obj/item/organ/our_organ in spawned_human.organs)
+			ADD_TRAIT(our_organ, TRAIT_CLIENT_STARTING_ORGAN, ROUNDSTART_TRAIT)
+
 	if(!config) //Needed for robots.
 		roundstart_experience = minimal_skills
 
