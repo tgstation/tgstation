@@ -3,16 +3,16 @@ import {
   Button,
   Collapsible,
   ImageButton,
-  Input,
   NoticeBox,
   Section,
   Stack,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
-import { capitalize, createSearch } from 'tgui-core/string';
+import { toTitleCase, createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { SearchBar } from './common/SearchBar';
 
 type Recipe = {
   ref: unknown | null;
@@ -111,7 +111,6 @@ export const StackCrafting = (_props) => {
   const { amount, recipes = {} } = data;
 
   const [searchText, setSearchText] = useState('');
-  const [search, setSearch] = useState(false);
   const testSearch = createSearch(searchText, (item: string) => item);
   const filteredRecipes = filterRecipeList(recipes, testSearch);
 
@@ -125,23 +124,11 @@ export const StackCrafting = (_props) => {
           scrollable
           title={'Amount: ' + amount}
           buttons={
-            <>
-              {search && (
-                <Input
-                  autoFocus
-                  value={searchText}
-                  onInput={(e, value) => setSearchText(value)}
-                  mx={1}
-                />
-              )}
-              <Button
-                icon={'magnifying-glass'}
-                selected={search}
-                tooltip={'Toggle search'}
-                tooltipPosition={'bottom-end'}
-                onClick={() => setSearch(!search)}
-              />
-            </>
+            <SearchBar
+              style={{ width: '15em' }}
+              query={searchText}
+              onSearch={(value) => setSearchText(value)}
+            />
           }
         >
           {filteredRecipes ? (
@@ -166,7 +153,7 @@ const RecipeListBox = (props: RecipeListProps) => {
           return (
             <Collapsible
               key={title}
-              title={title}
+              title={toTitleCase(title)}
               child_mt={0}
               childStyles={{
                 padding: '0.5em',
@@ -297,7 +284,7 @@ const RecipeBox = (props: RecipeBoxProps) => {
       }
     >
       <Stack textAlign={'left'}>
-        <Stack.Item grow>{capitalize(buttonName)}</Stack.Item>
+        <Stack.Item grow>{toTitleCase(buttonName)}</Stack.Item>
         <Stack.Item align={'center'} fontSize={0.8} color={'gray'}>
           {reqSheets}
         </Stack.Item>
