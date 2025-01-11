@@ -47,7 +47,7 @@ export const SmartVend = (props) => {
       ? Object.values(data.contents).filter(search)
       : Object.values(data.contents);
   return (
-    <Window width={430} height={575}>
+    <Window width={431} height={575}>
       <Window.Content>
         <Section
           fill
@@ -145,7 +145,7 @@ const ItemTile = ({ item }) => {
       }
       buttonsAlt={
         <Stack bold opacity={0.5} fontSize={0.8} textAlign="right">
-          {item.amount} in stock
+          <Stack.Item grow></Stack.Item>x{item.amount}
         </Stack>
       }
       onClick={() =>
@@ -214,7 +214,7 @@ const ItemList = ({ item }) => {
       <Stack textAlign="left">
         <Stack.Item grow>{item.name}</Stack.Item>
         <Stack.Item opacity={0.5} fontSize={0.8}>
-          {item.amount} in stock
+          x{item.amount}
         </Stack.Item>
       </Stack>
     </ImageButton>
