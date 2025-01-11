@@ -162,6 +162,7 @@
 		return TRUE
 	return mob.resist_grab(TRUE)
 
+
 /**
  * Allows mobs to ignore density and phase through objects
  *
