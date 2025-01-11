@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import {
-  Box,
   Button,
   Collapsible,
+  ImageButton,
   Input,
   NoticeBox,
   Section,
   Stack,
-  ImageButton,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 import { createSearch } from 'tgui-core/string';
@@ -170,16 +169,14 @@ const RecipeListBox = (props: RecipeListProps) => {
               title={title}
               child_mt={0}
               childStyles={{
-                paddingBottom: '0.5em',
+                padding: '0.5em',
                 backgroundColor: 'rgba(62, 97, 137, 0.15)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 borderTop: 'none',
                 borderRadius: '0 0 0.33em 0.33em',
               }}
             >
-              <Box p={1} pb={0.25}>
-                <RecipeListBox recipes={recipe} />
-              </Box>
+              <RecipeListBox recipes={recipe} />
             </Collapsible>
           );
         } else {
