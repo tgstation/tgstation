@@ -456,8 +456,12 @@
 
 /atom/movable/screen/plane_master/cpu_debug/proc/update_visibility(mob/viewer)
 	if(viewer.client?.displaying_cpu_debug)
+		if(force_hidden == FALSE)
+			return
 		unhide_plane(viewer)
 	else
+		if(force_hidden == TRUE)
+			return
 		hide_plane(viewer)
 
 /atom/movable/screen/plane_master/escape_menu
