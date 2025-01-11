@@ -359,10 +359,10 @@
 //bodysuit thing idk
 
 /datum/greyscale_config/athletas_bodysuit
-	name = ""
-	icon_file = ''
-	json_config = ''
+	name = "ATHLETAS bodysuit"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/miscellania.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/athletas_bodysuit.json'
 
 /datum/greyscale_config/athletas_bodysuit/worn
-	name = ""
-	icon_file = ''
+	name = "ATHLETAS bodysuit (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/miscellania.dmi'

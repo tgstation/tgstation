@@ -294,25 +294,38 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
-/obj/item/clothing/suit/crop_cold_hoodie
+/obj/item/clothing/suit/hooded/crop_cold_hoodie
 	name = "cropped cold shoulder hoodie"
-	desc = ""
-	icon_state = ""
-	greyscale_config = /datum/greyscale_config/cold_crop_hoodie
-	greyscale_config_worn = /datum/greyscale_config/cold_crop_hoodie/worn
-	greyscale_colors =
+	desc = "Ringspun sweatshirt fleece has been hemmed raw at elbow height and left to roll upon itself, and \
+	the patternmaker took the time to ensure the cutout shoulders lay just so."
+	icon_state = "crop_cold_hoodie"
+	greyscale_config = /datum/greyscale_config/crop_cold_hoodie
+	greyscale_config_worn = /datum/greyscale_config/crop_cold_hoodie/worn
+	greyscale_colors = "#4fc5c9"
+	hoodtype = /obj/item/clothing/head/hooded/crop_cold_hoodie_hood
 	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|ARMS
 
 /obj/item/clothing/head/hooded/crop_cold_hoodie_hood
 	name = "cropped cold shoulder hood"
-	desc = ""
-	icon = ''
-	icon_state = ""
-	worn_icon = ''
+	desc = "A fleece hood with jersey lining. It's surprisingly warm in spite of the garment that it is \
+	attached to."
+	icon_state = "crop_cold_hoodie_hood"
 	body_parts_covered = HEAD
 	cold_protection = HEAD
-	flags_inv = HIDEEARS
+	flags_inv = HIDEEARS|HIDEHAIR
+	flags_1 = IS_PLAYER_COLORABLE_1
 	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
-	greyscale_config =
-	greyscale_config_worn =
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	greyscale_config = /datum/greyscale_config/crop_cold_hoodie_hood
+	greyscale_config_worn = /datum/greyscale_config/crop_cold_hoodie_hood/worn
+	greyscale_colors = "#4fc5c9"
+
+/obj/item/clothing/suit/hooded/crop_cold_hoodie/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+	. = ..()
+	if(!hood)
+		return
+	var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	var/list/new_coat_colors = coat_colors.Copy(1,4)
+	hood.set_greyscale(new_coat_colors)
+	hood.update_slot_icon()

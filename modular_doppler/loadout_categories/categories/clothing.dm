@@ -270,6 +270,10 @@
 /datum/loadout_item/suit/hoodie
 	abstract_type = /datum/loadout_item/suit/hoodie
 
+/datum/loadout_item/suit/crop_cold_hoodie
+	name = "Cropped Cold Shoulder Hoodie"
+	item_path = /obj/item/clothing/suit/hooded/crop_cold_hoodie
+
 /*
 *	FAMILIES
 */
