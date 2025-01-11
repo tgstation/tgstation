@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes:
+  - sound: "Adds an off-by-default config option to optionally disable TTS audio on whispered speech."
