@@ -526,6 +526,7 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	understood_languages = list(
 		/datum/language/carptongue = list(LANGUAGE_ATOM),
 		/datum/language/draconic = list(LANGUAGE_ATOM),
+		/datum/language/common = list(LANGUAGE_ATOM),
 	)
 	spoken_languages = list(
 		/datum/language/carptongue = list(LANGUAGE_ATOM),
