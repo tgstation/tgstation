@@ -3240,7 +3240,7 @@
 	// The glow *is* unnatural, so...
 	metabolized_traits = list(TRAIT_MINOR_NIGHT_VISION, TRAIT_UNNATURAL_RED_GLOWY_EYES)
 
-/datum/reagent/luminescent_fluid/overdose_start(mob/living/affected_mob)
+/datum/reagent/luminescent_fluid/red/overdose_start(mob/living/affected_mob)
 	. = ..()
 	if (!ishuman(affected_mob))
 		return
