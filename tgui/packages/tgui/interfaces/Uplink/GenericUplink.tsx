@@ -46,7 +46,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
         <Stack vertical fill>
           <Stack.Item>
             <Stack>
-              <Stack.Item grow={1}>
+              <Stack.Item grow>
                 <Button
                   bold
                   fluid
@@ -83,7 +83,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
               fluid
             />
           </Stack.Item>
-          <Stack.Item grow={1}>
+          <Stack.Item grow>
             <Tabs vertical fill>
               {categories.map((category) => (
                 <Tabs.Tab
@@ -104,15 +104,15 @@ export const GenericUplink = (props: GenericUplinkProps) => {
           </Stack.Item>
         </Stack>
       </Stack.Item>
-      <Stack.Item grow={1}>
+      <Stack.Item grow>
         <Box height="100%" pr={1} mr={-1}>
-          {(items.length === 0 && (
+          {items.length === 0 ? (
             <NoticeBox>
               {searchText.length === 0
                 ? 'No items in this category.'
                 : 'No results found.'}
             </NoticeBox>
-          )) || (
+          ) : (
             <ItemList
               compactMode={searchText.length > 0 || compactMode}
               items={items}
@@ -173,12 +173,12 @@ const ItemList = (props: ItemListProps) => {
                     />
                   </Box>
                 </Stack.Item>
-                <Stack.Item grow={1}>
+                <Stack.Item grow>
                   {compactMode ? (
                     <Stack>
                       <Stack.Item
                         bold
-                        grow={1}
+                        grow
                         lineHeight="36px"
                         style={{
                           overflow: 'hidden',
