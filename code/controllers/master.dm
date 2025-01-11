@@ -950,9 +950,12 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	last_profiled = REALTIMEOFDAY
 	SSprofiler.DumpFile(allow_yield = FALSE)
 
-#define CPU_SIZE 30
+#define CPU_SIZE 16
 #define WINDOW_SIZE 16
+#define FORMAT_CPU(cpu) round(cpu, 0.01)
 
+// Should we intentionally consume cpu time to try to keep SendMaps deltas constant?
+GLOBAL_VAR_INIT(attempt_corrective_cpu, FALSE)
 /world/Tick()
 	unroll_cpu_value()
 	if(Master.floor_cpu)
@@ -967,20 +970,26 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 		CONSUME_UNTIL(min(Master.spike_cpu, 10000))
 		Master.spike_cpu = 0
 
-	GLOB.tick_cpu_usage[WRAP(GLOB.cpu_index, 1, CPU_SIZE + 1)] = TICK_USAGE
+	if(GLOB.attempt_corrective_cpu)
+		CONSUME_UNTIL(TICK_EXPECTED_SAFE_MAX)
 	GLOB.cpu_tracker.update_display()
+	// this is for next tick so don't display it yet yeah?
+	GLOB.tick_cpu_usage[WRAP(GLOB.cpu_index, 1, CPU_SIZE + 1)] = TICK_USAGE
 
 GLOBAL_LIST_INIT(cpu_values, new /list(CPU_SIZE))
 GLOBAL_LIST_INIT(avg_cpu_values, new /list(CPU_SIZE))
 GLOBAL_LIST_INIT(tick_cpu_usage, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(map_cpu_usage, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(verb_cost, new /list(CPU_SIZE))
 GLOBAL_VAR_INIT(cpu_index, 1)
 GLOBAL_VAR_INIT(last_cpu_update, -1)
 GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 
 /atom/movable/screen/usage_display
-	screen_loc = "LEFT, CENTER+3"
-	maptext_width = 128
-	maptext_height = 128
+	screen_loc = "LEFT:8, CENTER+2"
+	maptext_width = 256
+	maptext_height = 256
+	alpha = 220
 	clear_with_screen = FALSE
 	plane = EXAMINE_BALLOONS_PLANE
 	var/viewer_count = 0
@@ -989,18 +998,32 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	if(viewer_count <= 0)
 		return
 	var/list/cpu_values = GLOB.cpu_values
+	var/list/verb_cost = GLOB.verb_cost
 	var/last_index = WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)
 	var/full_time = TICKS2DS(CPU_SIZE) / 10 // convert from ticks to seconds
-	maptext = "Floor: <a href='?src=[REF(src)];act=set_floor'>[Master.floor_cpu]</a>\n\
+	maptext = "<div style=\"background-color:#FFFFFF; color:#000000;\">\
+		Floor: <a href='?src=[REF(src)];act=set_floor'>[Master.floor_cpu]</a>\n\
 		Sustain: <a href='?src=[REF(src)];act=set_sustain_cpu'>[Master.sustain_cpu]</a> <a href='?src=[REF(src)];act=set_sustain_chance'>[Master.sustain_cpu_chance]%</a>\n\
 		Spike: <a href='?src=[REF(src)];act=set_spike'>[Master.spike_cpu]</a>\n\
-		Tick: [world.time / world.tick_lag]\n\
-		Map Cpu: [world.map_cpu]\n\
-		Frame Behind CPU: [cpu_values[last_index]]\n\
-		Max [full_time]s: [max(cpu_values)]\n\
-		Max Tick [full_time]s: [max(GLOB.tick_cpu_usage)]\n\
-		Min [full_time]s: [min(cpu_values)]\n\
-		Min Tick [full_time]s : [min(GLOB.tick_cpu_usage)]"
+		Tick: [FORMAT_CPU(world.time / world.tick_lag)]\n\
+		Frame Behind ~CPU: [FORMAT_CPU(cpu_values[last_index])]\n\
+		Frame Behind Tick: [FORMAT_CPU(GLOB.tick_cpu_usage[last_index])]\n\
+		Frame Behind Map Cpu: [FORMAT_CPU(world.map_cpu)]\n\
+		Frame Behind ~Verb: [FORMAT_CPU(verb_cost[last_index])]\n\
+		<div style=\"color:#FF0000;\">\
+			Max ~CPU [full_time]s: [FORMAT_CPU(max(cpu_values))]\n\
+			Max Tick [full_time]s: [FORMAT_CPU(max(GLOB.tick_cpu_usage))]\n\
+			Max Map [full_time]s: [FORMAT_CPU(min(GLOB.map_cpu_usage))]\n\
+			Max ~Verb [full_time]s: [FORMAT_CPU(min(verb_cost))]\n\
+		</div>\
+		<div style=\"color:#0096FF;\">\
+			Min ~CPU [full_time]s: [FORMAT_CPU(min(cpu_values))]\n\
+			Min Tick [full_time]s: [FORMAT_CPU(min(GLOB.tick_cpu_usage))]\n\
+			Min Map [full_time]s: [FORMAT_CPU(min(GLOB.map_cpu_usage))]\n\
+			Min ~Verb [full_time]s: [FORMAT_CPU(min(verb_cost))]\
+		</div>\
+	</div>"
+
 
 /atom/movable/screen/usage_display/proc/toggle_cpu_debug(client/modify)
 	if(modify.screen.Find(src)) // I am lazy and this is a cold path
@@ -1046,8 +1069,11 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	if(GLOB.last_cpu_update == world.time)
 		return
 	GLOB.last_cpu_update = world.time
+	// cache for sonic speed
 	var/list/cpu_values = GLOB.cpu_values
+	var/list/avg_cpu_values = GLOB.avg_cpu_values
 	var/cpu_index = GLOB.cpu_index
+	var/avg_cpu = world.cpu
 	// We need to hook into the INSTANT we start our moving average so we can reconstruct gained/lost cpu values
 	// Defaults to null or 0 so the wrap here is safe for the first 16 entries
 	var/lost_value = cpu_values[WRAP(cpu_index - WINDOW_SIZE, 1, CPU_SIZE + 1)]
@@ -1071,11 +1097,9 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	// soooo
 	// E = (avg * 4 - old_avg * 4) + A
 
-	var/avg_cpu = world.cpu
-	var/last_avg_cpu = GLOB.avg_cpu_values[WRAP(cpu_index - 1, 1, CPU_SIZE + 1)]
+	var/last_avg_cpu = avg_cpu_values[WRAP(cpu_index - 1, 1, CPU_SIZE + 1)]
 	var/real_cpu = avg_cpu * WINDOW_SIZE - last_avg_cpu * WINDOW_SIZE + lost_value
 
-	// cache for sonic speed
 	// due to I think? compounded floating point error either on our side or internal to byond we somtimes get way too large/small cpu values
 	// I can't correct in place because I need the full history of averages to add back lost values
 	// our cpu value for last tick cannot be lower then the cost of sleeping procs + map cpu, so we'll clamp to that
@@ -1083,7 +1107,9 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	var/lower_bound = GLOB.tick_cpu_usage[cpu_index] + world.map_cpu
 
 	cpu_values[cpu_index] = max(real_cpu, lower_bound)
-	GLOB.avg_cpu_values[cpu_index] = avg_cpu
+	avg_cpu_values[cpu_index] = avg_cpu
+	GLOB.map_cpu_usage[cpu_index] = world.map_cpu
+	GLOB.verb_cost[cpu_index] = max(real_cpu - lower_bound, 0)
 	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
 	GLOB.cpu_tracker.update_display()
 	// make an animated display of cpu usage to get a better idea of how much we leave on the table
@@ -1124,3 +1150,5 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 			trouble.glide_tracking = FALSE
 			continue
 		trouble.account_for_glide_error(error)
+
+#undef FORMAT_CPU
