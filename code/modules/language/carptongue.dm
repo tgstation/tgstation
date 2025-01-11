@@ -7,6 +7,6 @@
 	sentence_chance = 0
 	space_chance = 75
 	syllables = list("glub", "blub", "bloop")
-	default_priority = 95
+	default_priority = 25
 	default_name_syllable_min = 1
 	default_name_syllable_max = 2
