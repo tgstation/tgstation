@@ -1,7 +1,7 @@
 import { useContext } from 'react';
+import { Button, Icon, Input, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Button, Icon, Input, Section, Stack } from '../../components';
 import { OrbitContext } from '.';
 import { VIEWMODE } from './constants';
 import { isJobOrNameMatch, sortByOrbiters } from './helpers';

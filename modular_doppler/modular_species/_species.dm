@@ -17,7 +17,8 @@
 	var/reagent_flags = PROCESS_ORGANIC
 	///This is the outfit which will be used by the species its preview portrait
 	var/datum/outfit/preview_outfit = /datum/outfit/job/assistant/consistent
-
+	///Override for the alpha of bodyparts and mutant parts.
+	var/specific_alpha = 255
 
 /// Cybernetic limbs logic here!
 //	Used for most races

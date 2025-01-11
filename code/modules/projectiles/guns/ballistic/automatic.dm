@@ -67,7 +67,7 @@
 	desc = "Recalled by Nanotrasen due to public backlash around heat distribution resulting in unintended discombobulation. \
 		This outcry was fabricated through various Syndicate-backed misinformation operations to force Nanotrasen to abandon \
 		its ballistics weapon program, cornering them into the energy weapons market. Most often found today in the hands of pirates, \
-		underfunded security personnel, cargo technicians, theoritical physicists and gang bangers out on the rim. \
+		underfunded security personnel, cargo technicians, theoretical physicists, and gang bangers out on the rim. \
 		Light-weight and fully automatic. Uses 4.6x30mm rounds."
 	icon_state = "wt550"
 	w_class = WEIGHT_CLASS_BULKY
@@ -326,7 +326,7 @@
 	icon_state = "surplus"
 	worn_icon_state = null
 	weapon_weight = WEAPON_HEAVY
-	accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm/rifle
+	accepted_magazine_type = /obj/item/ammo_box/magazine/sr10mm
 	fire_delay = 30
 	burst_size = 1
 	can_unsuppress = TRUE

@@ -102,6 +102,7 @@
 					add_doppler_markings(target, target.dna.features["markings_list"][i], target.dna.features["markings_list_colors"][i], target.dna.features["markings_list_zones"][i])
 
 /datum/bodypart_overlay/simple/body_marking/body_markings
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 	var/ishand = FALSE
 
 /datum/bodypart_overlay/simple/body_marking/body_markings/get_accessory(name)

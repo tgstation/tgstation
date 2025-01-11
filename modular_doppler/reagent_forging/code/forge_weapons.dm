@@ -68,7 +68,7 @@
 	inside_belt_icon_state = "dagger_belt"
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	throw_speed = 4
-	embed_type = /datum/embed_data/forged_dagger
+	embed_type = /datum/embedding/forged_dagger
 	throwforce = 15
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_SMALL
@@ -78,7 +78,7 @@
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_KNIFE
 
-/datum/embed_data/forged_dagger
+/datum/embedding/forged_dagger
 	embed_chance = 50
 	fall_chance = 1
 	pain_mult = 2
@@ -114,7 +114,7 @@
 	worn_icon_state = "spear_back"
 	throwforce = 22
 	throw_speed = 4
-	embed_data = /datum/embed_data/forged_spear
+	embed_data = /datum/embedding/forged_spear
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FIRE_PROOF
@@ -126,7 +126,7 @@
 	reach = 2
 	sharpness = SHARP_EDGED
 
-/datum/embed_data/forged_spear
+/datum/embedding/forged_spear
 	embed_chance = 75
 	fall_chance = 0
 	pain_mult = 6
@@ -147,7 +147,7 @@
 	worn_icon_state = "axe_back"
 	throwforce = 18
 	throw_speed = 4
-	embed_type = /datum/embed_data/forged_axe
+	embed_type = /datum/embedding/forged_axe
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF
@@ -155,7 +155,7 @@
 	attack_verb_simple = list("slash", "bash")
 	sharpness = SHARP_EDGED
 
-/datum/embed_data/forged_axe
+/datum/embedding/forged_axe
 	embed_chance = 65
 	fall_chance = 10
 	pain_mult = 4

@@ -722,7 +722,7 @@
 		return
 	. = density
 	density = new_value
-
+	SEND_SIGNAL(src, COMSIG_ATOM_DENSITY_CHANGED)
 
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)
@@ -863,6 +863,8 @@
 	var/mob/user = client?.mob
 	if (isnull(user))
 		return
+
+	SEND_SIGNAL(user, COMSIG_ATOM_MOUSE_ENTERED, src)
 
 	if(user.face_mouse) // DOPPLER SHIFT ADDITION
 		user.face_atom(src) // DOPPLER SHIFT ADDITION

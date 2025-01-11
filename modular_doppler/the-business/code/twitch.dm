@@ -44,7 +44,6 @@
 	description = "An invention by the drug ~artists~ of Europa, a wicked stimulant that both slow's the user's \
 		perception of time and speeds of their actions. This is a recipe for some extreme performance, at heavy \
 		cost to the user's health in most cases."
-	reagent_state = LIQUID
 	color = "#91db69"
 	taste_description = "television static"
 	metabolization_rate = 0.65 * REAGENTS_METABOLISM

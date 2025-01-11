@@ -1,6 +1,6 @@
-// THIS IS A NOVA SECTOR UI FILE
+import { Box, Button, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button, Section, Stack } from '../../components';
 import { PreferencesMenuData } from './data';
 
 export const KnownLanguage = (props) => {

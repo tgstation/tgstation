@@ -1064,6 +1064,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	toggle_collection_mode(triggered.owner)
 
+	return COMPONENT_ACTION_BLOCK_TRIGGER
+
 /datum/storage/proc/action_deleted(datum/source)
 	SIGNAL_HANDLER
 

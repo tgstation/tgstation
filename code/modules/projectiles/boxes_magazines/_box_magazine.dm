@@ -20,7 +20,7 @@
 	///type that the magazine will be searching for, rejects if not a subtype of
 	var/ammo_type = /obj/item/ammo_casing
 	/// wording used for individual units of ammo, e.g. cartridges (regular ammo), shells (shotgun shells)
-	var/casing_phrasing = "cartridge"
+	var/casing_phrasing = "round"
 	///maximum amount of ammo in the magazine
 	var/max_ammo = 7
 	///Controls how sprites are updated for the ammo box; see defines in combat.dm: AMMO_BOX_ONE_SPRITE; AMMO_BOX_PER_BULLET; AMMO_BOX_FULL_EMPTY
@@ -162,6 +162,17 @@
 	return TRUE
 
 /obj/item/ammo_box/attackby(obj/item/tool, mob/user, params, silent = FALSE, replace_spent = 0)
+
+	if(IS_WRITING_UTENSIL(tool))
+		if(!ammo_band_icon)
+			balloon_alert(user, "no indicator support!")
+			return
+		var/new_color = input(user, "Set a new ammo band color, cancel to remove indicator", "Ammo Box Indicator Color", ammo_band_color) as color|null
+		ammo_band_color = new_color
+		balloon_alert(user, "indicator updated")
+		update_appearance()
+		return
+
 	var/num_loaded = 0
 	if(!can_load(user))
 		return
@@ -208,18 +219,14 @@
 
 /obj/item/ammo_box/examine(mob/user)
 	. = ..()
+	var/shells_left = LAZYLEN(stored_ammo)
 	var/top_round = get_round()
 	if(!top_round)
 		return
+	. += "It has <b>[shells_left]</b> [casing_phrasing]\s remaining."
 	// this is kind of awkward phrasing, but it's the top/ready ammo in the box
 	// intended for people who have like three mislabeled magazines
 	. += span_notice("The [top_round] is ready in [src].")
-
-
-/obj/item/ammo_box/update_desc(updates)
-	. = ..()
-	var/shells_left = LAZYLEN(stored_ammo)
-	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] [casing_phrasing]\s left!"
 
 /obj/item/ammo_box/update_icon_state()
 	. = ..()

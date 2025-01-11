@@ -75,22 +75,22 @@
 /obj/item/plant_analyzer/proc/do_plant_stats_scan(atom/scan_target, mob/user)
 	if(istype(scan_target, /obj/machinery/hydroponics))
 		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
-		to_chat(user, examine_block(scan_tray_stats(scan_target)))
+		to_chat(user, boxed_message(scan_tray_stats(scan_target)))
 		return TRUE
 	if(istype(scan_target, /obj/structure/glowshroom))
 		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		var/obj/structure/glowshroom/shroom_plant = scan_target
-		to_chat(user, examine_block(scan_plant_stats(shroom_plant.myseed)))
+		to_chat(user, boxed_message(scan_plant_stats(shroom_plant.myseed)))
 		return TRUE
 	if(istype(scan_target, /obj/item/graft))
 		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
-		to_chat(user, examine_block(get_graft_text(scan_target)))
+		to_chat(user, boxed_message(get_graft_text(scan_target)))
 		return TRUE
 	if(isitem(scan_target))
 		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		var/obj/item/scanned_object = scan_target
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
-			to_chat(user, examine_block(scan_plant_stats(scanned_object)))
+			to_chat(user, boxed_message(scan_plant_stats(scanned_object)))
 			return TRUE
 	if(isliving(scan_target))
 		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
@@ -112,19 +112,19 @@
  */
 /obj/item/plant_analyzer/proc/do_plant_chem_scan(atom/scan_target, mob/user)
 	if(istype(scan_target, /obj/machinery/hydroponics))
-		to_chat(user, examine_block(scan_tray_chems(scan_target)))
+		to_chat(user, boxed_message(scan_tray_chems(scan_target)))
 		return TRUE
 	if(istype(scan_target, /obj/structure/glowshroom))
 		var/obj/structure/glowshroom/shroom_plant = scan_target
-		to_chat(user, examine_block(scan_plant_chems(shroom_plant.myseed)))
+		to_chat(user, boxed_message(scan_plant_chems(shroom_plant.myseed)))
 		return TRUE
 	if(istype(scan_target, /obj/item/graft))
-		to_chat(user, examine_block(get_graft_text(scan_target)))
+		to_chat(user, boxed_message(get_graft_text(scan_target)))
 		return TRUE
 	if(isitem(scan_target))
 		var/obj/item/scanned_object = scan_target
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
-			to_chat(user, examine_block(scan_plant_chems(scanned_object)))
+			to_chat(user, boxed_message(scan_plant_chems(scanned_object)))
 			return TRUE
 	if(isliving(scan_target))
 		var/mob/living/L = scan_target
@@ -492,14 +492,14 @@
 	throwforce = 15
 	throw_speed = 4
 	throw_range = 7
-	embed_type = /datum/embed_data/hatchet
+	embed_type = /datum/embedding/hatchet
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5)
 	attack_verb_continuous = list("chops", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("chop", "tear", "lacerate", "cut")
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
-/datum/embed_data/hatchet
+/datum/embedding/hatchet
 	pain_mult = 4
 	embed_chance = 35
 	fall_chance = 10

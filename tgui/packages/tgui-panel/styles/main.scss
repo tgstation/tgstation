@@ -6,7 +6,7 @@
 @use 'sass:meta';
 @use 'sass:color';
 // Components
-@use 'pkg:tgui-styles';
+@use '~tgui-core/styles';
 
 @use '~tgui/styles/colors.scss';
 @use '~tgui/styles/base.scss' with (

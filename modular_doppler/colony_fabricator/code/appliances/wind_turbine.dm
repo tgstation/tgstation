@@ -15,9 +15,9 @@
 	layer = ABOVE_MOB_LAYER
 	can_change_cable_layer = TRUE
 	/// How much power the turbine makes without a storm
-	var/regular_power_production = 1 KILO WATTS
+	var/regular_power_production = 2.5 KILO WATTS
 	/// How much power the turbine makes during a storm
-	var/storm_power_production = 5 KILO WATTS
+	var/storm_power_production = 10 KILO WATTS
 	/// Is our pressure too low to function?
 	var/pressure_too_low = FALSE
 	/// Minimum external pressure needed to work
