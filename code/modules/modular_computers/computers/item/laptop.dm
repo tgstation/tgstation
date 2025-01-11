@@ -26,7 +26,6 @@
 
 /obj/item/modular_computer/laptop/examine(mob/user)
 	. = ..()
-	to_chat(world, "load in 516 please :D")
 	if(screen_on)
 		. += span_notice("Alt-click to close it.")
 
