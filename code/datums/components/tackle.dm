@@ -274,6 +274,7 @@
 	user.visible_message(span_warning("[user] lands a [tackle_word] on [target], briefly staggering them both!"), span_userdanger("You land a [tackle_word] on [target], briefly staggering [target.p_them()] and yourself!"), ignored_mobs = target)
 	to_chat(target, span_userdanger("[user] lands a [tackle_word] on you, briefly staggering you both!"))
 
+	user.SetKnockdown(0, ignore_canstun = TRUE)
 	user.get_up(TRUE)
 	user.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 	target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS) //okay maybe slightly good for the sacker, it's a mild benefit okay?
@@ -399,13 +400,13 @@
 		if(HAS_TRAIT(tackle_target, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)) // riot armor and such
 			defense_mod += 5
 
-		var/obj/item/organ/external/tail/lizard/el_tail = tackle_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+		var/obj/item/organ/tail/lizard/el_tail = tackle_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 		if(HAS_TRAIT(tackle_target, TRAIT_TACKLING_TAILED_DEFENDER) && !el_tail)
 			defense_mod -= 1
 		if(el_tail && (el_tail.wag_flags & WAG_WAGGING)) // lizard tail wagging is robust and can swat away assailants!
 			defense_mod += 1
 
-		var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = tackle_target.get_organ_slot(ORGAN_SLOT_SPINE)
+		var/obj/item/organ/cyberimp/chest/spine/potential_spine = tackle_target.get_organ_slot(ORGAN_SLOT_SPINE)
 		if(istype(potential_spine))
 			defense_mod += potential_spine.strength_bonus
 
@@ -434,14 +435,14 @@
 		attack_mod += 2
 
 	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
-		var/obj/item/organ/external/wings/moth/sacker_moth_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+		var/obj/item/organ/wings/moth/sacker_moth_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(!sacker_moth_wing || sacker_moth_wing.burnt)
 			attack_mod -= 2
-	var/obj/item/organ/external/wings/sacker_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	var/obj/item/organ/wings/sacker_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(sacker_wing)
 		attack_mod += 2
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = sacker.get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = sacker.get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		attack_mod += potential_spine.strength_bonus
 
@@ -508,7 +509,7 @@
 	if(HAS_TRAIT(user, TRAIT_HEAD_INJURY_BLOCKED))
 		oopsie_mod -= 6
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE) // Can't snap that spine if it's made of metal.
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE) // Can't snap that spine if it's made of metal.
 	if(istype(potential_spine))
 		oopsie_mod -= potential_spine.strength_bonus
 
@@ -527,12 +528,8 @@
 		if(99 to INFINITY)
 			// can you imagine standing around minding your own business when all of the sudden some guy fucking launches himself into a wall at full speed and irreparably paralyzes himself?
 			user.visible_message(span_danger("[user] slams face-first into [hit] at an awkward angle, severing [user.p_their()] spinal column with a sickening crack! Fucking shit!"), span_userdanger("You slam face-first into [hit] at an awkward angle, severing your spinal column with a sickening crack! Fucking shit!"))
-			var/obj/item/bodypart/head/hed = user.get_bodypart(BODY_ZONE_HEAD)
-			if(hed)
-				hed.receive_damage(brute=40, updating_health=FALSE, wound_bonus = 40)
-			else
-				user.adjustBruteLoss(40, updating_health=FALSE)
-			user.adjustStaminaLoss(30)
+			user.apply_damage(40, BRUTE, BODY_ZONE_HEAD, wound_bonus = 40)
+			user.apply_damage(30, STAMINA)
 			playsound(user, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
 			playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
@@ -543,12 +540,8 @@
 
 		if(97 to 98)
 			user.visible_message(span_danger("[user] slams skull-first into [hit] with a sound like crumpled paper, revealing a horrifying breakage in [user.p_their()] cranium! Holy shit!"), span_userdanger("You slam skull-first into [hit] and your senses are filled with warm goo flooding across your face! Your skull is open!"))
-			var/obj/item/bodypart/head/hed = user.get_bodypart(BODY_ZONE_HEAD)
-			if(hed)
-				hed.receive_damage(brute = 30, updating_health = FALSE, wound_bonus = 25)
-			else
-				user.adjustBruteLoss(40, updating_health = FALSE)
-			user.adjustStaminaLoss(30)
+			user.apply_damage(30, BRUTE, BODY_ZONE_HEAD, wound_bonus = 25)
+			user.apply_damage(30, STAMINA)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
 			playsound(user, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
@@ -558,8 +551,8 @@
 
 		if(93 to 96)
 			user.visible_message(span_danger("[user] slams face-first into [hit] with a concerning squish, immediately going limp!"), span_userdanger("You slam face-first into [hit], and immediately lose consciousness!"))
-			user.adjustStaminaLoss(30)
-			user.adjustBruteLoss(30)
+			user.apply_damage(30, BRUTE, spread_damage = TRUE)
+			user.apply_damage(30, STAMINA)
 			user.Unconscious(10 SECONDS)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
 			user.playsound_local(get_turf(user), 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8)
@@ -568,8 +561,8 @@
 
 		if(86 to 92)
 			user.visible_message(span_danger("[user] slams head-first into [hit], suffering major cranial trauma!"), span_userdanger("You slam head-first into [hit], and the world explodes around you!"))
-			user.adjustStaminaLoss(30, updating_stamina = FALSE)
-			user.adjustBruteLoss(30)
+			user.apply_damage(30, BRUTE, spread_damage = TRUE)
+			user.apply_damage(30, STAMINA)
 			user.adjust_confusion(15 SECONDS)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
@@ -580,16 +573,16 @@
 
 		if(68 to 85)
 			user.visible_message(span_danger("[user] slams hard into [hit], knocking [user.p_them()] senseless!"), span_userdanger("You slam hard into [hit], knocking yourself senseless!"))
-			user.adjustStaminaLoss(30, updating_stamina = FALSE)
-			user.adjustBruteLoss(10)
+			user.apply_damage(10, BRUTE, spread_damage = TRUE)
+			user.apply_damage(30, STAMINA)
 			user.adjust_confusion(10 SECONDS)
 			user.Knockdown(3 SECONDS)
 			shake_camera(user, 3, 4)
 
 		if(1 to 67)
 			user.visible_message(span_danger("[user] slams into [hit]!"), span_userdanger("You slam into [hit]!"))
-			user.adjustStaminaLoss(20, updating_stamina = FALSE)
-			user.adjustBruteLoss(10)
+			user.apply_damage(10, BRUTE, spread_damage = TRUE)
+			user.apply_damage(20, STAMINA)
 			user.Knockdown(2 SECONDS)
 			shake_camera(user, 2, 2)
 
@@ -602,32 +595,32 @@
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
 ///A special case for splatting for handling windows
-/datum/component/tackler/proc/splatWindow(mob/living/carbon/user, obj/structure/window/W)
+/datum/component/tackler/proc/splatWindow(mob/living/carbon/user, obj/structure/window/windscreen_casualty)
 	playsound(user, 'sound/effects/glass/Glasshit.ogg', 140, TRUE)
 
-	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
+	if(windscreen_casualty.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
 		for(var/i in 1 to speed)
 			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
-			shard.set_embed(/datum/embed_data/glass_candy)
+			shard.set_embed(/datum/embedding/glass_candy)
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
 			shard.set_embed(initial(shard.embed_type))
-		W.atom_destruction()
+		windscreen_casualty.atom_destruction()
 		user.adjustStaminaLoss(10 * speed)
 		user.Paralyze(3 SECONDS)
-		user.visible_message(span_danger("[user] smacks into [W] and shatters it, shredding [user.p_them()]self with glass!"), span_userdanger("You smacks into [W] and shatter it, shredding yourself with glass!"))
+		user.visible_message(span_danger("[user] smacks into [windscreen_casualty] and shatters it, shredding [user.p_them()]self with glass!"), span_userdanger("You smacks into [windscreen_casualty] and shatter it, shredding yourself with glass!"))
 
 	else
-		user.visible_message(span_danger("[user] smacks into [W] like a bug!"), span_userdanger("You smacks into [W] like a bug!"))
+		user.visible_message(span_danger("[user] smacks into [windscreen_casualty] like a bug!"), span_userdanger("You smacks into [windscreen_casualty] like a bug!"))
 		user.Paralyze(1 SECONDS)
 		user.Knockdown(3 SECONDS)
-		W.take_damage(30 * speed)
+		windscreen_casualty.take_damage(30 * speed)
 		user.adjustStaminaLoss(10 * speed, updating_stamina=FALSE)
 		user.adjustBruteLoss(5 * speed)
 
-/datum/component/tackler/proc/delayedSmash(obj/structure/window/W)
-	if(W)
-		W.atom_destruction()
-		playsound(W, SFX_SHATTER, 70, TRUE)
+/datum/component/tackler/proc/delayedSmash(obj/structure/window/windscreen_casualty)
+	if(windscreen_casualty)
+		windscreen_casualty.atom_destruction()
+		playsound(windscreen_casualty, SFX_SHATTER, 70, TRUE)
 
 ///Check to see if we hit a table, and if so, make a big mess!
 /datum/component/tackler/proc/checkObstacle(mob/living/carbon/owner)
@@ -636,8 +629,8 @@
 	if(!tackling)
 		return
 
-	var/turf/T = get_turf(owner)
-	var/obj/structure/table/kevved = locate(/obj/structure/table) in T.contents
+	var/turf/our_turf = get_turf(owner)
+	var/obj/structure/table/kevved = locate(/obj/structure/table) in our_turf.contents
 	if(!kevved)
 		return
 
@@ -645,9 +638,9 @@
 
 	// we split the mess-making into two parts (check what we're gonna send flying, intermission for dealing with the tackler, then actually send stuff flying) for the benefit of making sure the face-slam text
 	// comes before the list of stuff that goes flying, but can still adjust text + damage to how much of a mess it made
-	for(var/obj/item/I in T.contents)
-		if(!I.anchored)
-			messes += I
+	for(var/obj/item/item_in_turf in our_turf.contents)
+		if(!item_in_turf.anchored)
+			messes += item_in_turf
 			if(messes.len >= MAX_TABLE_MESSES)
 				break
 
@@ -672,13 +665,15 @@
 	owner.Knockdown(2 SECONDS + 0.4 SECONDS * messes.len) // 2 seconds of knockdown after the paralyze
 	owner.updatehealth()
 
-	for(var/obj/item/I in messes)
-		var/dist = rand(1, 3)
-		var/sp = 2
+	for(var/obj/item/item_in_mess in messes)
+		// The amount of distance the object flies away when launched by our tackle
+		var/item_launch_distance = rand(1, 3)
+		// The transfered speed at which an item is launched by our tackle
+		var/item_launch_speed = 2
 		if(prob(25 * (src.speed - 1))) // if our tackle speed is higher than 1, with chance (speed - 1 * 25%), throw the thing at our tackle speed + 1
-			sp = speed + 1
-		I.throw_at(get_ranged_target_turf(I, pick(GLOB.alldirs), range = dist), range = dist, speed = sp)
-		I.visible_message(span_danger("[I] goes flying[sp > 3 ? " dangerously fast" : ""]!")) // standard embed speed
+			item_launch_speed = speed + 1
+		item_in_mess.throw_at(get_ranged_target_turf(item_in_mess, pick(GLOB.alldirs), range = item_launch_distance), range = item_launch_distance, speed = item_launch_speed)
+		item_in_mess.visible_message(span_danger("[item_in_mess] goes flying[item_launch_speed < EMBED_THROWSPEED_THRESHOLD ? "" : " dangerously fast" ]!")) // standard embed speed
 
 	var/datum/thrownthing/tackle = tackle_ref?.resolve()
 

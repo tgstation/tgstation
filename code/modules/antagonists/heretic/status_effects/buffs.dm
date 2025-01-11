@@ -4,9 +4,10 @@
 /datum/status_effect/crucible_soul
 	id = "Blessing of Crucible Soul"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = 15 SECONDS
+	duration = 40 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul
 	show_duration = TRUE
+	///Stores the location where the mob drank the potion, used to teleport the drinker back to the spot after expiration
 	var/turf/location
 
 /datum/status_effect/crucible_soul/on_apply()
@@ -14,6 +15,8 @@
 	owner.alpha = 180
 	owner.pass_flags |= PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE
 	location = get_turf(owner)
+	var/datum/action/cancel_crucible_soul/cancel_button = new(src)
+	cancel_button.Grant(owner)
 	return TRUE
 
 /datum/status_effect/crucible_soul/on_remove()
@@ -26,11 +29,25 @@
 /datum/status_effect/crucible_soul/get_examine_text()
 	return span_notice("[owner.p_They()] [owner.p_do()]n't seem to be all here.")
 
+/datum/action/cancel_crucible_soul
+	name = "Recall"
+	desc = "Use to end the blessing early"
+	button_icon = 'icons/obj/antags/eldritch.dmi'
+	button_icon_state = "crucible_soul"
+
+/datum/action/cancel_crucible_soul/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+	var/datum/status_effect/active_effect = owner.has_status_effect(/datum/status_effect/crucible_soul)
+	target = active_effect
+	qdel(target)
+
 // DUSK AND DAWN
 /datum/status_effect/duskndawn
 	id = "Blessing of Dusk and Dawn"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = 60 SECONDS
+	duration = 90 SECONDS
 	show_duration = TRUE
 	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
@@ -58,12 +75,24 @@
 
 /datum/status_effect/marshal/on_remove()
 	owner.remove_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/drinker = owner
+	for(var/obj/item/bodypart/potentially_wounded as anything in drinker.bodyparts)
+		for(var/datum/wound/found_wound as anything in potentially_wounded.wounds)
+			found_wound.remove_wound()
+	if(length(drinker.get_missing_limbs()))
+		drinker.regenerate_limbs()
+		to_chat(drinker, span_hypnophrase("The mansus has given you new limbs."))
+	playsound(drinker, 'sound/effects/chemistry/ahaha.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
 
 /datum/status_effect/marshal/tick(seconds_between_ticks)
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbie = owner
 
+	carbie.adjustBruteLoss(-0.5 * seconds_between_ticks, updating_health = FALSE)
+	carbie.adjustFireLoss(-0.5 * seconds_between_ticks, updating_health = FALSE)
 	for(var/BP in carbie.bodyparts)
 		var/obj/item/bodypart/part = BP
 		for(var/W in part.wounds)
@@ -109,7 +138,7 @@
 	id = "Silver Knives"
 	alert_type = null
 	status_type = STATUS_EFFECT_MULTIPLE
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	/// The number of blades we summon up to.
 	var/max_num_blades = 4
 	/// The radius of the blade's orbit.
@@ -119,13 +148,13 @@
 	/// If TRUE, we self-delete our status effect after all the blades are deleted.
 	var/delete_on_blades_gone = TRUE
 	/// What blade type to create
-	var/blade_type = /obj/effect/floating_blade
+	var/obj/effect/floating_blade/blade_type
 	/// A list of blade effects orbiting / protecting our owner
 	var/list/obj/effect/floating_blade/blades = list()
 
 /datum/status_effect/protective_blades/on_creation(
 	mob/living/new_owner,
-	new_duration = -1,
+	new_duration = STATUS_EFFECT_PERMANENT,
 	max_num_blades = 4,
 	blade_orbit_radius = 20,
 	time_between_initial_blades = 0.25 SECONDS,
@@ -227,12 +256,12 @@
 
 /datum/status_effect/protective_blades/recharging/on_creation(
 	mob/living/new_owner,
-	new_duration = -1,
+	new_duration = STATUS_EFFECT_PERMANENT,
 	max_num_blades = 4,
 	blade_orbit_radius = 20,
 	time_between_initial_blades = 0.25 SECONDS,
+	blade_type = /obj/projectile/floating_blade,
 	blade_recharge_time = 1 MINUTES,
-	blade_type = /obj/effect/floating_blade,
 )
 
 	src.blade_recharge_time = blade_recharge_time
@@ -249,18 +278,18 @@
 /datum/status_effect/caretaker_refuge
 	id = "Caretaker’s Last Refuge"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	var/static/list/caretaking_traits = list(TRAIT_GODMODE, TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
 
 /datum/status_effect/caretaker_refuge/on_apply()
-	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
 	animate(owner, alpha = 45,time = 0.5 SECONDS)
-	owner.density = FALSE
+	owner.set_density(FALSE)
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	RegisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(prevent_spell_usage))
 	RegisterSignal(owner, COMSIG_ATOM_HOLYATTACK, PROC_REF(nullrod_handler))
 	RegisterSignal(owner, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(prevent_cuff))
+	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/caretaker_refuge/on_remove()
@@ -288,7 +317,7 @@
 /datum/status_effect/caretaker_refuge/proc/on_focus_lost()
 	SIGNAL_HANDLER
 	to_chat(owner, span_danger("Without a focus, your refuge weakens and dissipates!"))
-	owner.remove_status_effect(type)
+	qdel(src)
 
 /datum/status_effect/caretaker_refuge/proc/prevent_spell_usage(datum/source, datum/spell)
 	SIGNAL_HANDLER

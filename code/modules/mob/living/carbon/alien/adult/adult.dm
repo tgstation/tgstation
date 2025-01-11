@@ -24,6 +24,16 @@
 		/obj/item/bodypart/leg/left/alien,
 	)
 
+	default_organ_types_by_slot = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain/alien,
+		ORGAN_SLOT_XENO_HIVENODE = /obj/item/organ/alien/hivenode,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue/alien,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes/alien,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver/alien,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach/alien,
+	)
+
 GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	/datum/strippable_item/hand/left,
 	/datum/strippable_item/hand/right,
@@ -35,10 +45,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 	AddElement(/datum/element/strippable, GLOB.strippable_alien_humanoid_items)
-
-/mob/living/carbon/alien/adult/create_internal_organs()
-	organs += new /obj/item/organ/internal/stomach/alien()
-	return ..()
 
 /mob/living/carbon/alien/adult/cuff_resist(obj/item/I)
 	playsound(src, 'sound/mobs/non-humanoids/hiss/hiss5.ogg', 40, TRUE, TRUE)  //Alien roars when starting to break free
@@ -56,18 +62,20 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	..()
 
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
-/proc/get_alien_type(alienpath)
-	for(var/mob/living/carbon/alien/adult/A in GLOB.alive_mob_list)
-		if(!istype(A, alienpath))
+/proc/get_alien_type(alien_path, mob/ignored)
+	for(var/mob/living/carbon/alien/alien in GLOB.carbon_list)
+		if(alien == ignored)
 			continue
-		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
+		if(!istype(alien, alien_path))
 			continue
-		return A
-	return FALSE
+		if(!alien.key || alien.stat == DEAD) //Only living aliens with a ckey are valid.
+			continue
+		return alien
+	return null
 
 /mob/living/carbon/alien/adult/check_breath(datum/gas_mixture/breath)
 	if(breath?.total_moles() > 0 && !HAS_TRAIT(src, TRAIT_SNEAK))
-		playsound(get_turf(src), pick('sound/mobs/non-humanoids/hiss/lowHiss2.ogg', 'sound/mobs/non-humanoids/hiss/lowHiss3.ogg', 'sound/mobs/non-humanoids/hiss/lowHiss4.ogg'), 50, FALSE, -5)
+		playsound(get_turf(src), SFX_LOW_HISS, 50, FALSE, -5)
 	return ..()
 
 /mob/living/carbon/alien/adult/setGrabState(newstate)
@@ -127,7 +135,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	if(!can_consume(lucky_winner))
 		return TRUE
 
-	var/obj/item/organ/internal/stomach/alien/melting_pot = get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/alien/melting_pot = get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!istype(melting_pot))
 		visible_message(span_clown("[src] can't seem to consume [lucky_winner]!"), \
 			span_alien("You feel a pain in your... chest? You can't get [lucky_winner] down."))
@@ -135,7 +143,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 
 	lucky_winner.audible_message(span_danger("You hear a deep groan, and a harsh snap like a mantrap."))
 	lucky_winner.visible_message(span_danger("[src] devours [lucky_winner]!"), \
-			span_userdanger("[lucky_winner] devours you!"))
+			span_userdanger("[src] devours you!"))
 	log_combat(src, lucky_winner, "devoured")
 	melting_pot.consume_thing(lucky_winner)
 	return TRUE

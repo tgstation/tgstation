@@ -165,7 +165,7 @@
 			continue
 
 		to_chat(cultist.current, span_bold(span_cult_large("[marker] has marked [blood_target] in the [target_area.name] as the cult's top priority, get there immediately!")))
-		SEND_SOUND(cultist.current, sound(pick('sound/effects/hallucinations/over_here2.ogg','sound/effects/hallucinations/over_here3.ogg'), 0, 1, 75))
+		SEND_SOUND(cultist.current, sound(SFX_HALLUCINATION_OVER_HERE, 0, 1, 75))
 		cultist.current.client.images += blood_target_image
 
 	if(duration != INFINITY)

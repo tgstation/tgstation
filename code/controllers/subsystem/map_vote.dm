@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(map_vote)
 	last_message_at = world.time
 
 	var/list/messages = args.Copy()
-	to_chat(world, span_purple(examine_block("Map Vote\n<hr>\n[messages.Join("\n")]")))
+	to_chat(world, span_purple(boxed_message("Map Vote\n<hr>[messages.Join("\n")]")))
 
 /datum/controller/subsystem/map_vote/proc/finalize_map_vote(datum/vote/map_vote/map_vote)
 	if(already_voted)
@@ -74,20 +74,33 @@ SUBSYSTEM_DEF(map_vote)
 		send_map_vote_notice("Admin Override is in effect. Map will not be changed.", "Tallies are recorded and saved.")
 		return
 
-	var/list/valid_maps = filter_cache_to_valid_maps()
-	if(!length(valid_maps))
-		send_map_vote_notice("No valid maps.")
-		return
+	var/winner
+	var/winner_amount = 0
+	for(var/map in map_vote.choices)
+		if(!winner_amount)
+			winner = map
+			winner_amount = map_vote_cache[map]
+			continue
+		if(map_vote_cache[map] <= winner_amount)
+			continue
+		winner = map
+		winner_amount = map_vote_cache[map]
 
-	var/winner = pick_weight(filter_cache_to_valid_maps())
+	ASSERT(winner, "No winner found in map vote.")
 	set_next_map(config.maplist[winner])
-	send_map_vote_notice("Map Selected - [span_bold(next_map_config.map_name)]")
+	var/list/messages = list("Map Selected - [span_bold(next_map_config.map_name)]")
+	messages += "Tallies at the time of selection:"
+	messages += tally_printout
 
 	// do not reset tallies if only one map is even possible
-	if(length(valid_maps) > 1)
+	if(length(map_vote.choices) > 1)
 		map_vote_cache[winner] = CONFIG_GET(number/map_vote_minimum_tallies)
 		write_cache()
 		update_tally_printout()
+	else
+		messages += "Only one map was possible, tallies were not reset."
+
+	send_map_vote_notice(arglist(messages))
 
 /// Returns a list of all map options that are invalid for the current population.
 /datum/controller/subsystem/map_vote/proc/get_valid_map_vote_choices()
@@ -157,4 +170,4 @@ SUBSYSTEM_DEF(map_vote)
 	for(var/map_id in map_vote_cache)
 		var/datum/map_config/map = config.maplist[map_id]
 		data += "[map.map_name] - [map_vote_cache[map_id]]"
-	tally_printout = examine_block("Current Tallies\n<hr>\n[data.Join("\n")]")
+	tally_printout = boxed_message("Current Tallies\n<hr>[data.Join("\n")]")

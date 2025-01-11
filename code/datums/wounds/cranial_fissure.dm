@@ -52,12 +52,10 @@
 
 /datum/wound/cranial_fissure/remove_wound(ignore_limb, replaced)
 	REMOVE_TRAIT(limb, TRAIT_IMMUNE_TO_CRANIAL_FISSURE, type)
-	REMOVE_TRAIT(victim, TRAIT_HAS_CRANIAL_FISSURE, type)
-
-	victim.remove_filter(CRANIAL_FISSURE_FILTER_DISPLACEMENT)
-
-	UnregisterSignal(victim, COMSIG_MOB_SLIPPED)
-
+	if (!isnull(victim))
+		REMOVE_TRAIT(victim, TRAIT_HAS_CRANIAL_FISSURE, type)
+		victim.remove_filter(CRANIAL_FISSURE_FILTER_DISPLACEMENT)
+		UnregisterSignal(victim, COMSIG_MOB_SLIPPED)
 	return ..()
 
 /datum/wound/cranial_fissure/proc/on_owner_slipped(mob/source)
@@ -66,7 +64,7 @@
 	if (source.stat == DEAD)
 		return
 
-	var/obj/item/organ/internal/brain/brain = source.get_organ_by_type(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/brain = source.get_organ_by_type(/obj/item/organ/brain)
 	if (isnull(brain))
 		return
 
@@ -91,7 +89,7 @@
 	if (victim.body_position != LYING_DOWN)
 		return FALSE
 
-	var/obj/item/organ/internal/eyes/eyes = victim.get_organ_by_type(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/eyes/eyes = victim.get_organ_by_type(/obj/item/organ/eyes)
 	if (isnull(eyes))
 		victim.balloon_alert(user, "no eyes to take!")
 		return TRUE
@@ -131,9 +129,9 @@
 
 	return TRUE
 
-/datum/wound/cranial_fissure/proc/still_has_eyes(obj/item/organ/internal/eyes/eyes)
+/datum/wound/cranial_fissure/proc/still_has_eyes(obj/item/organ/eyes/eyes)
 	PRIVATE_PROC(TRUE)
 
-	return victim?.get_organ_by_type(/obj/item/organ/internal/eyes) == eyes
+	return victim?.get_organ_by_type(/obj/item/organ/eyes) == eyes
 
 #undef CRANIAL_FISSURE_FILTER_DISPLACEMENT

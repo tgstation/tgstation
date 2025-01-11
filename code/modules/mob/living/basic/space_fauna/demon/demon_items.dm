@@ -1,16 +1,16 @@
 /// The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
-/obj/item/organ/internal/heart/demon
+/obj/item/organ/heart/demon
 	name = "demon heart"
 	desc = "Still it beats furiously, emanating an aura of utter hate."
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "demon_heart-on"
 	decay_factor = 0
 
-/obj/item/organ/internal/heart/demon/Initialize(mapload)
+/obj/item/organ/heart/demon/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
 	return ..()
 
-/obj/item/organ/internal/heart/demon/attack(mob/target_mob, mob/living/carbon/user, obj/target)
+/obj/item/organ/heart/demon/attack(mob/target_mob, mob/living/carbon/user, obj/target)
 	if(target_mob != user)
 		return ..()
 
@@ -33,18 +33,18 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
-/obj/item/organ/internal/heart/demon/on_mob_insert(mob/living/carbon/heart_owner)
+/obj/item/organ/heart/demon/on_mob_insert(mob/living/carbon/heart_owner)
 	. = ..()
 	// Gives a non-eat-people crawl to the new owner
 	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = new(heart_owner)
 	crawl.Grant(heart_owner)
 
-/obj/item/organ/internal/heart/demon/on_mob_remove(mob/living/carbon/heart_owner, special = FALSE)
+/obj/item/organ/heart/demon/on_mob_remove(mob/living/carbon/heart_owner, special = FALSE, movement_flags)
 	. = ..()
 	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = locate() in heart_owner.actions
 	qdel(crawl)
 
-/obj/item/organ/internal/heart/demon/Stop()
+/obj/item/organ/heart/demon/Stop()
 	return FALSE // Always beating.
 
 /obj/effect/decal/cleanable/blood/innards

@@ -145,7 +145,7 @@
 /obj/structure/tram/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
-/obj/structure/tram/singularity_pull(singulo, current_size)
+/obj/structure/tram/singularity_pull(atom/singularity, current_size)
 	..()
 
 	if(current_size >= STAGE_FIVE)
@@ -474,8 +474,8 @@
 	canSmoothWith = null
 	/// Position of the spoiler
 	var/deployed = FALSE
-	/// Malfunctioning due to tampering or emag
-	var/malfunctioning = FALSE
+	/// Locked in position
+	var/locked = FALSE
 	/// Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
 	/// The tram we're attached to
@@ -494,7 +494,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "repair"
 
 	if(held_item?.tool_behaviour == TOOL_WELDER && atom_integrity >= max_integrity)
-		context[SCREENTIP_CONTEXT_LMB] = "[malfunctioning ? "repair" : "lock"]"
+		context[SCREENTIP_CONTEXT_LMB] = "[locked ? "repair" : "sabotage"]"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -503,22 +503,19 @@
 	if(obj_flags & EMAGGED)
 		. += span_warning("The electronics panel is sparking occasionally. It can be reset with a [EXAMINE_HINT("multitool.")]")
 
-	if(malfunctioning)
+	if(locked)
 		. += span_warning("The spoiler is [EXAMINE_HINT("welded")] in place!")
 	else
-		. += span_notice("The spoiler can be locked in to place with a [EXAMINE_HINT("welder.")]")
+		. += span_notice("The spoiler can be locked in place with a [EXAMINE_HINT("welder.")]")
 
 /obj/structure/tram/spoiler/proc/set_spoiler(source, controller, controller_active, controller_status, travel_direction)
 	SIGNAL_HANDLER
 
 	var/spoiler_direction = travel_direction
-	if(obj_flags & EMAGGED && !malfunctioning)
-		malfunctioning = TRUE
-
-	if(malfunctioning || controller_status & COMM_ERROR)
+	if(locked || controller_status & COMM_ERROR || obj_flags & EMAGGED)
 		if(!deployed)
 			// Bring out the blades
-			if(malfunctioning)
+			if(locked)
 				visible_message(span_danger("\the [src] locks up due to its servo overheating!"))
 			do_sparks(3, cardinal_only = FALSE, source = src)
 			deploy_spoiler()
@@ -583,14 +580,14 @@
 		return FALSE
 
 	if(atom_integrity >= max_integrity)
-		to_chat(user, span_warning("You begin to weld \the [src], [malfunctioning ? "repairing damage" : "preventing retraction"]."))
+		to_chat(user, span_warning("You begin to weld \the [src], [locked ? "repairing damage" : "preventing retraction"]."))
 		if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
 			return
-		malfunctioning = !malfunctioning
-		user.visible_message(span_warning("[user] [malfunctioning ? "welds \the [src] in place" : "repairs \the [src]"] with [tool]."), \
-			span_warning("You finish welding \the [src], [malfunctioning ? "locking it in place." : "it can move freely again!"]"), null, COMBAT_MESSAGE_RANGE)
+		locked = !locked
+		user.visible_message(span_warning("[user] [locked ? "welds \the [src] in place" : "repairs \the [src]"] with [tool]."), \
+			span_warning("You finish welding \the [src], [locked ? "locking it in place." : "it can move freely again!"]"), null, COMBAT_MESSAGE_RANGE)
 
-		if(malfunctioning)
+		if(locked)
 			deploy_spoiler()
 
 		update_appearance()
@@ -606,7 +603,7 @@
 
 /obj/structure/tram/spoiler/update_overlays()
 	. = ..()
-	if(deployed && malfunctioning)
+	if(deployed && locked)
 		. += mutable_appearance(icon, "tram-spoiler-welded")
 
 /obj/structure/chair/sofa/bench/tram

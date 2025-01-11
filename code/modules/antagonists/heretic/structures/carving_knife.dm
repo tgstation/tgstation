@@ -5,6 +5,7 @@
 		but only few can evoke the dangers that lurk beneath reality."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "rune_carver"
+	icon_angle = -45
 	obj_flags = CONDUCTS_ELECTRICITY
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
@@ -12,10 +13,10 @@
 	force = 10
 	throwforce = 20
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	actions_types = list(/datum/action/item_action/rune_shatter)
-	embed_type = /datum/embed_data/rune_carver
+	embed_type = /datum/embedding/rune_carver
 
 	/// Whether we're currently drawing a rune
 	var/drawing = FALSE
@@ -25,8 +26,16 @@
 	var/list/datum/weakref/current_runes = list()
 	/// Turfs that you cannot draw carvings on
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava))
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
 
-/datum/embed_data/rune_carver
+/obj/item/melee/rune_carver/Initialize(mapload)
+	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
+
+/datum/embedding/rune_carver
 	ignore_throwspeed_threshold = TRUE
 	embed_chance = 75
 	jostle_chance = 2
@@ -163,6 +172,7 @@
 	name = "elder carving"
 	desc = "Collection of unknown symbols, they remind you of days long gone..."
 	icon = 'icons/obj/service/hand_of_god_structures.dmi'
+	max_integrity = 60
 	/// A tip displayed to heretics who examine the rune carver. Explains what the rune does.
 	var/carver_tip
 	/// Reference to trap owner mob
@@ -175,7 +185,7 @@
 
 /obj/structure/trap/eldritch/on_entered(datum/source, atom/movable/entering_atom)
 	if(!isliving(entering_atom))
-		return ..()
+		return
 	var/mob/living/living_mob = entering_atom
 	if(WEAKREF(living_mob) == owner)
 		return

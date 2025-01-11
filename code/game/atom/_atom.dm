@@ -199,7 +199,7 @@
 	var/turf/p_turf = get_turf(ricocheting_projectile)
 	var/face_direction = get_dir(src, p_turf) || get_dir(src, ricocheting_projectile)
 	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.Angle + 180))
+	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.angle + 180))
 	var/a_incidence_s = abs(incidence_s)
 	if(a_incidence_s > 90 && a_incidence_s < 270)
 		return FALSE
@@ -700,6 +700,9 @@
 /atom/proc/OnCreatedFromProcessing(mob/living/user, obj/item/work_tool, list/chosen_option, atom/original_atom)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(HAS_TRAIT(original_atom, TRAIT_FOOD_SILVER))
+		ADD_TRAIT(src, TRAIT_FOOD_SILVER, INNATE_TRAIT) // stinky food always stinky
+
 	SEND_SIGNAL(src, COMSIG_ATOM_CREATEDBY_PROCESSING, original_atom, chosen_option)
 	if(user.mind)
 		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
@@ -719,7 +722,7 @@
 		return
 	. = density
 	density = new_value
-
+	SEND_SIGNAL(src, COMSIG_ATOM_DENSITY_CHANGED)
 
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)
@@ -760,6 +763,7 @@
  * Gravity situations:
  * * No gravity if you're not in a turf
  * * No gravity if this atom is in is a space turf
+ * * No gravity if the area has NO_GRAVITY flag (space, ordnance bomb site, nearstation, solars)
  * * Gravity if the area it's in always has gravity
  * * Gravity if there's a gravity generator on the z level
  * * Gravity if the Z level has an SSMappingTrait for ZTRAIT_GRAVITY
@@ -787,7 +791,7 @@
 
 	var/area/turf_area = gravity_turf.loc
 
-	return !gravity_turf.force_no_gravity && (SSmapping.gravity_by_z_level[gravity_turf.z] || turf_area.has_gravity)
+	return (!gravity_turf.force_no_gravity && !(turf_area.area_flags & NO_GRAVITY)) && (SSmapping.gravity_by_z_level[gravity_turf.z] || turf_area.default_gravity)
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod
@@ -860,6 +864,8 @@
 	if (isnull(user))
 		return
 
+	SEND_SIGNAL(user, COMSIG_ATOM_MOUSE_ENTERED, src)
+
 	// Screentips
 	var/datum/hud/active_hud = user.hud_used
 	if(!active_hud)
@@ -876,9 +882,17 @@
 	var/shift_lmb_ctrl_shift_lmb_line = ""
 	var/extra_lines = 0
 	var/extra_context = ""
+	var/used_name = name
 
-	if(isliving(user) || isovermind(user) || isaicamera(user) || (ghost_screentips && isobserver(user)))
+	if(isliving(user) || isovermind(user) || iscameramob(user) || (ghost_screentips && isobserver(user)))
 		var/obj/item/held_item = user.get_active_held_item()
+
+		if (user.mob_flags & MOB_HAS_SCREENTIPS_NAME_OVERRIDE)
+			var/list/returned_name = list(used_name)
+
+			var/name_override_returns = SEND_SIGNAL(user, COMSIG_MOB_REQUESTING_SCREENTIP_NAME_FROM_USER, returned_name, held_item, src)
+			if (name_override_returns & SCREENTIP_NAME_SET)
+				used_name = returned_name[1]
 
 		if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)
 			var/list/context = list()
@@ -945,9 +959,9 @@
 		new_maptext = ""
 	else
 		//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
-		new_maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
+		new_maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>[used_name][extra_context]</span>"
 
-	if (length(name) * 10 > active_hud.screentip_text.maptext_width)
+	if (length(used_name) * 10 > active_hud.screentip_text.maptext_width)
 		INVOKE_ASYNC(src, PROC_REF(set_hover_maptext), client, active_hud, new_maptext)
 		return
 

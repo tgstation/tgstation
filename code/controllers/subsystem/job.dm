@@ -73,10 +73,11 @@ SUBSYSTEM_DEF(job)
 
 	/// This is just the message we prepen and put into all of the config files to ensure documentation. We use this in more than one place, so let's put it in the SS to make life a bit easier.
 	var/config_documentation = "## This is the configuration file for the job system.\n## This will only be enabled when the config flag LOAD_JOBS_FROM_TXT is enabled.\n\
-	## We use a system of keys here that directly correlate to the job, just to ensure they don't desync if we choose to change the name of a job.\n## You are able to change (as of now) five different variables in this file.\n\
+	## We use a system of keys here that directly correlate to the job, just to ensure they don't desync if we choose to change the name of a job.\n## You are able to change (as of now) five (six if the job is a command head) different variables in this file.\n\
 	## Total Positions are how many job slots you get in a shift, Spawn Positions are how many you get that load in at spawn. If you set this to -1, it is unrestricted.\n## Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.\n\
 	## However, that can be superseded by Required Account Age, which is a time in days that you need to have had an account on the server for.\n\
-	## Also there is a required character age in years. It prevents player from joining as this job, if their character's age as is lower than required. Setting it to 0 means it is turned off for this job.\n\n\
+	## Also there is a required character age in years. It prevents player from joining as this job, if their character's age as is lower than required. Setting it to 0 means it is turned off for this job.\n\
+	## Lastly there's Human Authority Whitelist Setting. You can set it to either \"HUMANS_ONLY\" or \"NON_HUMANS_ALLOWED\". Check the \"Human Authority\" setting on the game_options file to know which you should choose. Note that this entry only appears on jobs that are marked as heads of staff.\n\n\
 	## As time goes on, more config options may be added to this file.\n\
 	## You can use the admin verb 'Generate Job Configuration' in-game to auto-regenerate this config as a downloadable file without having to manually edit this file if we add more jobs or more things you can edit here.\n\
 	## It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.\n## It's strongly advised you create your own version of this file rather than use the one provisioned on the codebase.\n\n\
@@ -362,13 +363,21 @@ SUBSYSTEM_DEF(job)
 	for(var/datum/job/job as anything in command_department.department_jobs)
 		if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 			continue
+
 		var/list/candidates = find_occupation_candidates(job, level)
 		if(!candidates.len)
 			continue
+
 		var/mob/dead/new_player/candidate = pick(candidates)
-		// Eligibility checks done as part of find_occupation_candidates
-		if(assign_role(candidate, job, do_eligibility_checks = FALSE))
-			.++
+
+		// Eligibility checks done as part of find_occupation_candidates() above.
+		if(!assign_role(candidate, job, do_eligibility_checks = FALSE))
+			continue
+
+		.++
+
+		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
+			job_debug("JOBS: Command Job is now full, Job: [job], Positions: [job.current_positions], Limit: [job.spawn_positions]")
 
 /// Attempts to fill out all available AI positions.
 /datum/controller/subsystem/job/proc/fill_ai_positions()
@@ -443,12 +452,21 @@ SUBSYSTEM_DEF(job)
 	// From assign_all_overflow_positions()
 	// 4. Anyone with the overflow role enabled has been given the overflow role.
 
-	// Shuffle the joinable occupation list and filter out ineligible occupations due to above job assignments.
+	// Copy the joinable occupation list and filter out ineligible occupations due to above job assignments.
 	var/list/available_occupations = joinable_occupations.Copy()
+	var/datum/job_department/command_department = get_department_type(/datum/job_department/command)
+
 	for(var/datum/job/job in available_occupations)
 		// Make sure the job isn't filled. If it is, remove it from the list so it doesn't get checked.
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			job_debug("DO: Job is now filled, Job: [job], Current: [job.current_positions], Limit: [job.spawn_positions]")
+			available_occupations -= job
+			continue
+
+		// Command jobs are handled via fill_all_head_positions_at_priority(...)
+		// Remove these jobs from the list of available occupations to prevent multiple players being assigned to the same
+		// limited role without constantly having to iterate over the available_occupations list and re-check them.
+		if(job in command_department?.department_jobs)
 			available_occupations -= job
 
 	job_debug("DO: Running standard job assignment")

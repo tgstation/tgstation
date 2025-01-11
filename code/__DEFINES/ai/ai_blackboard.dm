@@ -49,11 +49,13 @@
 #define BB_BANE_BATMAN "BB_bane_batman"
 //yep that's it
 
-///Hunting BB keys
+//Hunting BB keys
+///key that holds our current hunting target
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
+///key that holds our less priority hunting target
 #define BB_LOW_PRIORITY_HUNTING_TARGET "BB_low_priority_hunting_target"
-#define BB_HUNTING_COOLDOWN "BB_HUNTING_COOLDOWN"
-
+///key that holds the cooldown for our hunting subtree
+#define BB_HUNTING_COOLDOWN(type) "BB_HUNTING_COOLDOWN_[type]"
 ///Basic Mob Keys
 
 ///Targeting subtrees
@@ -123,6 +125,18 @@
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"
 
+///key holding any food we've found
+#define BB_TARGET_FOOD "BB_TARGET_FOOD"
+
+///key holding emotes we play after eating
+#define BB_EAT_EMOTES "BB_eat_emotes"
+
+///key holding the next time we eat
+#define BB_NEXT_FOOD_EAT "BB_next_food_eat"
+
+///key holding our eating cooldown
+#define BB_EAT_FOOD_COOLDOWN "BB_eat_food_cooldown"
+
 /// Blackboard key for a held item
 #define BB_SIMPLE_CARRY_ITEM "BB_SIMPLE_CARRY_ITEM"
 
@@ -160,13 +174,38 @@
 ///Text we display when we befriend someone
 #define BB_FRIENDLY_MESSAGE "friendly_message"
 
+//fishing!
+
 ///our fishing target
-#define BB_FISHING_TARGET "fishing_target"
+#define BB_FISHING_TARGET "BB_fishing_target"
+
+///key holding the list of things we are able to fish from
+#define BB_FISHABLE_LIST "BB_fishable_list"
+
+///key holding our cooldown between fishing attempts
+#define BB_FISHING_COOLDOWN "BB_fishing_cooldown"
+
+///key that holds the next time we will start fishing
+#define BB_FISHING_TIMER "BB_fishing_timer"
+
+///are we ONLY allowed to fish when we're hungry?
+#define BB_ONLY_FISH_WHILE_HUNGRY "BB_only_fish_while_hungry"
+
+///drillable ice we can make holes in
+#define BB_DRILLABLE_ICE "BB_drillable_ice"
+
+
+//emotions we displays depending on our happiness
+///emotions we display when happy
+#define BB_HAPPY_EMOTIONS "happy_emotions"
+///emotions we display when neutral
+#define BB_MODERATE_EMOTIONS "moderate_emotions"
+///emotions we display when depressed
+#define BB_SAD_EMOTIONS "sad_emotions"
 
 // Keys used by one and only one behavior
 // Used to hold state without making bigass lists
 /// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
 #define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
 
-///mothroach next meal key!
-#define BB_MOTHROACH_NEXT_EAT "mothroach_next_eat"
+

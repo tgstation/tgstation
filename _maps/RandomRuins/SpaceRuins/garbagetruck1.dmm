@@ -316,7 +316,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /obj/effect/spawner/random/entertainment/plushie,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "oq" = (
 /obj/item/food/cheese/wheel,
@@ -367,7 +367,7 @@
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "pP" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "qd" = (
 /obj/item/food/breadslice/moldy/bacteria{
@@ -385,8 +385,8 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "qM" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "re" = (
 /obj/item/trash/shrimp_chips,
 /obj/item/trash/sosjerky,
@@ -626,7 +626,7 @@
 "AR" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "BS" = (
 /obj/item/storage/bag/trash/filled{
@@ -876,10 +876,10 @@
 /obj/item/petri_dish,
 /obj/item/petri_dish,
 /obj/item/petri_dish,
-/obj/item/organ/internal/tongue/rat,
+/obj/item/organ/tongue/rat,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass,
-/obj/item/organ/internal/stomach/rat,
+/obj/item/organ/stomach/rat,
 /obj/item/fish/ratfish,
 /obj/structure/closet/crate/freezer,
 /obj/effect/spawner/random/medical/surgery_tool,
@@ -1143,7 +1143,7 @@
 "UX" = (
 /obj/structure/lattice/catwalk,
 /obj/item/crowbar/large/emergency,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Vb" = (
 /obj/structure/closet/crate/cardboard/mothic,
@@ -1161,8 +1161,8 @@
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "Xi" = (
 /obj/item/food/badrecipe/moldy/bacteria,
 /obj/effect/decal/cleanable/food/egg_smudge,
@@ -1177,7 +1177,7 @@
 "XY" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Yu" = (
 /obj/structure/table/reinforced,
@@ -1227,7 +1227,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/food/deadmouse,
 /mob/living/basic/mouse/rat,
-/obj/item/organ/internal/heart/rat,
+/obj/item/organ/heart/rat,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 

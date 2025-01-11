@@ -51,3 +51,6 @@
 #define RCD_MEMORY_COST_BUFF 8
 /// If set to TRUE in rcd_vals, will bypass the cooldown on slowing down frequent use
 #define RCD_RESULT_BYPASS_FREQUENT_USE_COOLDOWN "bypass_frequent_use_cooldown"
+
+/// How much longer does it take to deconstruct rwalls?
+#define RCD_RWALL_DELAY_MULT 2

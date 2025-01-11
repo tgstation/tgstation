@@ -104,7 +104,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if(isliving(mob_poi))
 			serialized += get_living_data(mob_poi)
 
-		var/list/antag_data = get_antag_data(mob_poi.mind)
+		var/list/antag_data = get_antag_data(mob_poi.mind, user?.client?.holder)
 		if(length(antag_data))
 			serialized += antag_data
 			antagonists += list(serialized)
@@ -151,17 +151,16 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 
 /// Helper function to get threat type, group, overrides for job and icon
-/datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind) as /list
+/datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind, is_admin) as /list
 	var/list/serialized = list()
 
 	for(var/datum/antagonist/antag as anything in poi_mind.antag_datums)
-		if(!antag.show_to_ghosts)
+		if(!antag.show_to_ghosts && !is_admin)
 			continue
 
 		serialized["antag"] = antag.name
 		serialized["antag_group"] = antag.antagpanel_category
-		serialized["job"] = antag.name
-		serialized["icon"] = antag.antag_hud_name
+		serialized["antag_icon"] = antag.antag_hud_name
 
 		return serialized
 
@@ -285,7 +284,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
  * Helper POI validation function passed as a callback to various SSpoints_of_interest procs.
  *
  * Provides extended validation above and beyond standard, limiting mob POIs without minds or ckeys
- * unless they're mobs, camera mobs or megafauna. Also allows exceptions for mobs that are deadchat controlled.
+ * unless they're mobs, eye mobs or megafauna. Also allows exceptions for mobs that are deadchat controlled.
  *
  * If they satisfy that requirement, falls back to default validation for the POI.
  */
@@ -294,7 +293,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	if(!potential_mob_poi.mind && !potential_mob_poi.ckey)
 		if(!mob_allowed_typecache)
 			mob_allowed_typecache = typecacheof(list(
-				/mob/camera,
+				/mob/eye,
 				/mob/living/basic/regal_rat,
 				/mob/living/simple_animal/bot,
 				/mob/living/simple_animal/hostile/megafauna,

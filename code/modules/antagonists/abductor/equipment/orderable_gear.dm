@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	name = "Superlingual Matrix"
 	description = "A mysterious structure that allows for instant communication between users. Using it inhand will attune it to your mothership's channel. Pretty impressive until you need to eat something."
 	id = "superlingual_matrix"
-	build_path = list(/obj/item/organ/internal/tongue/abductor = 1)
+	build_path = list(/obj/item/organ/tongue/abductor = 1)
 	category = CATEGORY_MISC_GEAR
 
 /datum/abductor_gear/mental_interface

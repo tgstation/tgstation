@@ -1,6 +1,6 @@
 
 ///assoc list of ckey -> /datum/player_details
-GLOBAL_LIST_EMPTY(player_details)
+GLOBAL_LIST_EMPTY_TYPED(player_details, /datum/player_details)
 
 /// Tracks information about a client between log in and log outs
 /datum/player_details
@@ -18,8 +18,10 @@ GLOBAL_LIST_EMPTY(player_details)
 	/// Lazylist of preference slots this client has joined the round under
 	/// Numbers are stored as strings
 	var/list/joined_as_slots
-	/// Version of byond this client is using
-	var/byond_version = "Unknown"
+	/// Major version of BYOND this client is using.
+	var/byond_version
+	/// Build number of BYOND this client is using.
+	var/byond_build
 	/// Tracks achievements they have earned
 	var/datum/achievement_data/achievements
 	/// World.time this player last died
@@ -34,6 +36,12 @@ GLOBAL_LIST_EMPTY(player_details)
 	for(var/previous_name in played_names)
 		previous_names += html_encode("[previous_name] ([played_names[previous_name]])")
 	return previous_names.Join("; ")
+
+/// Returns the full version string (i.e 515.1642) of the BYOND version and build.
+/datum/player_details/proc/full_byond_version()
+	if(!byond_version)
+		return "Unknown"
+	return "[byond_version].[byond_build || "xxx"]"
 
 /// Adds the new names to the player's played_names list on their /datum/player_details for use of admins.
 /// `ckey` should be their ckey, and `data` should be an associative list with the keys being the names they played under and the values being the unique mob ID tied to that name.

@@ -297,7 +297,7 @@
 	if(electronics.shell)
 		door.AddComponent( \
 			/datum/component/shell, \
-			unremovable_circuit_components = list(new /obj/item/circuit_component/airlock, new /obj/item/circuit_component/airlock_access_event), \
+			unremovable_circuit_components = list(new /obj/item/circuit_component/airlock, new /obj/item/circuit_component/airlock_access_event, new /obj/item/circuit_component/remotecam/airlock), \
 			capacity = SHELL_CAPACITY_LARGE, \
 			shell_flags = SHELL_FLAG_ALLOW_FAILURE_ACTION|SHELL_FLAG_REQUIRE_ANCHOR \
 		)

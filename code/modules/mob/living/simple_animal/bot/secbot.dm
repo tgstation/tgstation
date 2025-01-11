@@ -297,15 +297,15 @@
 	update_appearance()
 	return TRUE
 
-/mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/Proj)
+/mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/proj)
 	. = ..()
 	if(. != BULLET_ACT_HIT)
 		return
 
-	if(istype(Proj, /obj/projectile/beam) || istype(Proj, /obj/projectile/bullet))
-		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if(Proj.is_hostile_projectile() && Proj.damage < src.health && ishuman(Proj.firer))
-				retaliate(Proj.firer)
+	if(istype(proj, /obj/projectile/beam) || istype(proj, /obj/projectile/bullet))
+		if((proj.damage_type == BURN) || (proj.damage_type == BRUTE))
+			if(proj.is_hostile_projectile() && proj.damage < src.health && ishuman(proj.firer))
+				retaliate(proj.firer)
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))
@@ -509,7 +509,11 @@
 /// React to detecting criminal scum by making some kind of noise
 /mob/living/simple_animal/bot/secbot/proc/threat_react(threatlevel)
 	speak("Level [threatlevel] infraction alert!")
-	playsound(src, pick('sound/mobs/non-humanoids/beepsky/criminal.ogg', 'sound/mobs/non-humanoids/beepsky/justice.ogg', 'sound/mobs/non-humanoids/beepsky/freeze.ogg'), 50, FALSE)
+	playsound(src, pick(
+		'sound/mobs/non-humanoids/beepsky/criminal.ogg',
+		'sound/mobs/non-humanoids/beepsky/justice.ogg',
+		'sound/mobs/non-humanoids/beepsky/freeze.ogg',
+		), 50, FALSE)
 
 /mob/living/simple_animal/bot/secbot/explode()
 	var/atom/Tsec = drop_location()

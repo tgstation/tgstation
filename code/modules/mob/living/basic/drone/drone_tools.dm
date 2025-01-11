@@ -3,31 +3,14 @@
 	desc = "Access your built-in tools."
 	icon = 'icons/hud/screen_drone.dmi'
 	icon_state = "tool_storage"
+	storage_type = /datum/storage/drone
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/storage/drone_tools/Initialize(mapload)
 	. = ..()
+
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-
-	var/static/list/drone_builtins = list(
-		/obj/item/crowbar/drone,
-		/obj/item/screwdriver/drone,
-		/obj/item/wrench/drone,
-		/obj/item/weldingtool/drone,
-		/obj/item/wirecutters/drone,
-		/obj/item/multitool/drone,
-		/obj/item/pipe_dispenser,
-		/obj/item/t_scanner,
-		/obj/item/analyzer,
-		/obj/item/soap/drone,
-	)
-	atom_storage.max_total_storage = 40
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_slots = 10
-	atom_storage.do_rustle = FALSE
-	atom_storage.set_holdable(drone_builtins)
-
 
 /obj/item/storage/drone_tools/PopulateContents()
 	var/list/builtintools = list()
@@ -37,13 +20,13 @@
 	builtintools += new /obj/item/weldingtool/drone(src)
 	builtintools += new /obj/item/wirecutters/drone(src)
 	builtintools += new /obj/item/multitool/drone(src)
-	builtintools += new /obj/item/pipe_dispenser(src)
-	builtintools += new /obj/item/t_scanner(src)
-	builtintools += new /obj/item/analyzer(src)
+	builtintools += new /obj/item/pipe_dispenser/drone(src)
+	builtintools += new /obj/item/t_scanner/drone(src)
+	builtintools += new /obj/item/analyzer/drone(src)
 	builtintools += new /obj/item/soap/drone(src)
-	for(var/obj/item/tool as anything in builtintools)
-		tool.AddComponent(/datum/component/holderloving, src, TRUE)
 
+	for(var/obj/item/tool as anything in builtintools)
+		tool.AddComponent(/datum/component/holderloving, src)
 
 /obj/item/crowbar/drone
 	name = "built-in crowbar"
@@ -51,6 +34,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_crowbar"
 	inhand_icon_state = "crowbar"
+	icon_angle = 0
 	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/screwdriver/drone
@@ -78,6 +62,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_wrench"
 	inhand_icon_state = "wrench"
+	icon_angle = 0
 	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/weldingtool/drone
@@ -101,5 +86,21 @@
 	desc = "A multitool built into your chassis."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_multitool"
+	icon_angle = 0
 	item_flags = NO_MAT_REDEMPTION
 	toolspeed = 0.5
+
+/obj/item/analyzer/drone
+	name = "digital gas analyzer"
+	desc = "A gas analyzer built into your chassis."
+	item_flags = NO_MAT_REDEMPTION
+
+/obj/item/t_scanner/drone
+	name = "digital T-ray scanner"
+	desc = "A T-ray scanner built into your chassis."
+	item_flags = NO_MAT_REDEMPTION
+
+/obj/item/pipe_dispenser/drone
+	name = "built-in rapid pipe dispenser"
+	desc = "A rapid pipe dispenser built into your chassis."
+	item_flags = NO_MAT_REDEMPTION

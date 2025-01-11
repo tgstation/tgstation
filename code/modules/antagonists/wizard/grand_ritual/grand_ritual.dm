@@ -299,8 +299,8 @@
 	pixel_y = 16
 	pixel_z = -48
 	anchored = TRUE
-	layer = SIGIL_LAYER
-	plane = GAME_PLANE
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	duration = 0 SECONDS
 
 /obj/effect/temp_visual/wizard_rune/Initialize(mapload)

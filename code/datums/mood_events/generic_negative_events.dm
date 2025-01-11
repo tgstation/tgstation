@@ -501,3 +501,8 @@
 	// Felinids apparently hate being hit over the head with cardboard
 	if(isfelinid(owner))
 		mood_change = -2
+
+/datum/mood_event/encountered_evil
+	description = "I didn't want to believe it, but there are people out there that are genuinely evil."
+	mood_change = -4
+	timeout = 1 MINUTES

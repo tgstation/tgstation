@@ -24,6 +24,7 @@
 	name = "lionhunter rifle internal magazine"
 	ammo_type = /obj/item/ammo_casing/strilka310/lionhunter
 	caliber = CALIBER_STRILKA310
+	armour_penetration = 100
 	max_ammo = 3
 	multiload = TRUE
 
@@ -32,7 +33,7 @@
 	/// Whether we're currently aiming this casing at something
 	var/currently_aiming = FALSE
 	/// How many seconds it takes to aim per tile of distance between the target
-	var/seconds_per_distance = 0.5 SECONDS
+	var/seconds_per_distance = 0.2 SECONDS
 	/// The minimum distance required to gain a damage bonus from aiming
 	var/min_distance = 4
 
@@ -115,14 +116,13 @@
 	// BUT, if we're at a decent range and the target's a living mob,
 	// the projectile's been channel fired. It has full effects and homes in.
 	if(distance > min_distance && isliving(target) && iscarbon(user))
-		loaded_projectile.damage *= 2
 		loaded_projectile.stamina *= 2
 		loaded_projectile.knockdown = 0.5 SECONDS
 		loaded_projectile.stutter = 6 SECONDS
 		loaded_projectile.projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
 		loaded_projectile.homing = TRUE
-		loaded_projectile.homing_turn_speed = 80
+		loaded_projectile.homing_turn_speed = 150
 		loaded_projectile.set_homing_target(target)
 
 	return ..()
@@ -134,6 +134,46 @@
 	damage = 30
 	stamina = 30
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+	///The mob that is currently inside the bullet
+	var/mob/stored_mob
+
+/obj/projectile/bullet/strilka310/lionhunter/fire(angle, atom/direct_target)
+	. = ..()
+	if(QDELETED(src) || !isliving(firer) || !isliving(original))
+		return
+	var/mob/living/living_firer = firer
+	if(IS_HERETIC(living_firer))
+		living_firer.forceMove(src)
+		stored_mob = living_firer
+
+
+/obj/projectile/bullet/strilka310/lionhunter/Exited(atom/movable/gone)
+	if(gone == stored_mob)
+		stored_mob = null
+	return ..()
+
+/obj/projectile/bullet/strilka310/lionhunter/on_range()
+	stored_mob?.forceMove(loc)
+	return ..()
+
+/obj/projectile/bullet/strilka310/lionhunter/on_hit(atom/target, blocked, pierce_hit)
+	stored_mob?.forceMove(loc) //Pretty important to get our mob out of the bullet
+	. = ..()
+	if(!isliving(target))
+		return BULLET_ACT_HIT
+	var/mob/living/victim = target
+	var/mob/firing_mob = firer
+	if(IS_HERETIC_OR_MONSTER(victim) || !IS_HERETIC(firing_mob))
+		return BULLET_ACT_HIT
+
+	SEND_SIGNAL(firer, COMSIG_LIONHUNTER_ON_HIT, victim)
+	return BULLET_ACT_HIT
+
+/obj/projectile/bullet/strilka310/lionhunter/Destroy()
+	if(stored_mob)
+		stack_trace("Lionhunter bullet qdel'd with its firer still inside!")
+		stored_mob.forceMove(loc)
+	return ..()
 
 // Extra ammunition can be made with a heretic ritual.
 /obj/item/ammo_box/strilka310/lionhunter

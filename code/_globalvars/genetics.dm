@@ -5,5 +5,3 @@ GLOBAL_LIST_EMPTY(bad_mutations) //bad initialized mutations
 GLOBAL_LIST_EMPTY(good_mutations) //good initialized mutations
 GLOBAL_LIST_EMPTY(not_good_mutations) //neutral initialized mutations
 GLOBAL_LIST_EMPTY(alias_mutations) //alias = type
-
-GLOBAL_LIST_EMPTY(mutation_recipes)

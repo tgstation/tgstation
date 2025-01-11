@@ -31,7 +31,13 @@
 	GRANT_ACTION(/datum/action/cooldown/tentacle_slap)
 
 	add_cell_sample()
-	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0)
+	var/static/list/food_types = list(
+		/obj/item/food/fries,
+		/obj/item/food/cheesyfries,
+		/obj/item/food/cornchips,
+		/obj/item/food/carrotfries,
+	)
+	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 30, bonus_tame_chance = 0)
 
 /mob/living/simple_animal/hostile/vatbeast/tamed(mob/living/tamer, obj/item/food)
 	buckle_lying = 0
@@ -52,7 +58,6 @@
 	button_icon_state = "tentacle_slap"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
 	cooldown_time = 12 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = TRUE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 
@@ -80,13 +85,13 @@
 	if(refund_cooldown)
 		to_chat(on_who, span_notice("You stop preparing your [on_who == owner ? "":"steed's "]pimp-tentacle."))
 
-/datum/action/cooldown/tentacle_slap/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/tentacle_slap/InterceptClickOn(mob/living/clicker, params, atom/target)
 	// Check if we can slap
 	if(!isliving(target) || target == owner)
 		return FALSE
 
 	if(!owner.Adjacent(target))
-		owner.balloon_alert(caller, "too far!")
+		owner.balloon_alert(clicker, "too far!")
 		return FALSE
 
 	// Do the slap
@@ -96,8 +101,8 @@
 
 	// Give feedback from the slap.
 	// Additional feedback for if a rider did it
-	if(caller != owner)
-		to_chat(caller, span_notice("You command [owner] to slap [target] with its tentacles."))
+	if(clicker != owner)
+		to_chat(clicker, span_notice("You command [owner] to slap [target] with its tentacles."))
 
 	return TRUE
 

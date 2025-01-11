@@ -26,10 +26,13 @@
 		CRASH("revolver tried to chamber a round without a magazine!")
 	if(chambered)
 		UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
-	if(spin_cylinder)
-		chambered = magazine.get_round(TRUE)
+	if (spin_cylinder)
+		chambered = magazine.get_round()
 	else
 		chambered = magazine.stored_ammo[1]
+		if (ispath(chambered))
+			chambered = new chambered(src)
+			magazine.stored_ammo[1] = chambered
 	if(chambered)
 		RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
 
@@ -100,7 +103,7 @@
 
 /obj/item/gun/ballistic/revolver/ignition_effect(atom/A, mob/user)
 	if(last_fire && last_fire + 15 SECONDS > world.time)
-		. = span_notice("[user] touches the end of [src] to \the [A], using the residual heat to ignite it in a puff of smoke. What a badass.")
+		return span_rose("[user] touches the end of [src] to \the [A], using the residual heat to ignite it in a puff of smoke. What a badass.")
 
 /obj/item/gun/ballistic/revolver/c38
 	name = "\improper .38 revolver"
@@ -135,20 +138,20 @@
 		"Black Panther" = "c38_panther"
 	)
 
-/obj/item/gun/ballistic/revolver/syndicate
-	name = "\improper Syndicate Revolver"
-	desc = "A modernized 7 round revolver manufactured by Waffle Corp. Uses .357 ammo."
+/obj/item/gun/ballistic/revolver/badass
+	name = "\improper Badass Revolver"
+	desc = "A 7-chamber revolver manufactured by Waffle Corp to make their operatives feel Badass. Offers no tactical advantage whatsoever. Uses .357 ammo."
 	icon_state = "revolversyndie"
 
-/obj/item/gun/ballistic/revolver/syndicate/nuclear
+/obj/item/gun/ballistic/revolver/badass/nuclear
 	pin = /obj/item/firing_pin/implant/pindicate
 
-/obj/item/gun/ballistic/revolver/syndicate/cowboy
+/obj/item/gun/ballistic/revolver/cowboy
 	desc = "A classic revolver, refurbished for modern use. Uses .357 ammo."
 	//There's already a cowboy sprite in there!
 	icon_state = "lucky"
 
-/obj/item/gun/ballistic/revolver/syndicate/cowboy/nuclear
+/obj/item/gun/ballistic/revolver/cowboy/nuclear
 	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/revolver/mateba
@@ -296,10 +299,7 @@
 	user.visible_message(span_danger("[user.name]'s soul is captured by \the [src]!"), span_userdanger("You've lost the gamble! Your soul is forfeit!"))
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
-	name = /obj/item/gun/ballistic/revolver/syndicate::name
-	desc = /obj/item/gun/ballistic/revolver/syndicate::desc
 	clumsy_check = FALSE
-	icon_state = "revolversyndie"
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(akimbo_usage)
@@ -318,3 +318,9 @@
 	clumsy_check = FALSE
 	icon_state = "mateba"
 
+/obj/item/gun/ballistic/revolver/peashooter
+	name = "peashooter"
+	icon_state = "peashooter"
+	desc = "A wild plantlife mutation that shoots hardened peas. Incredible."
+	fire_sound = 'sound/items/weapons/peashoot.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/peashooter

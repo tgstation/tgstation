@@ -175,7 +175,7 @@
 		return null
 	return new floor_tile(src)
 
-/turf/open/floor/singularity_pull(S, current_size)
+/turf/open/floor/singularity_pull(atom/singularity, current_size)
 	..()
 	var/sheer = FALSE
 	switch(current_size)
@@ -382,4 +382,4 @@
 	. = ..()
 	if(.)
 		var/obj/item/stack/tile = .
-		tile.set_mats_per_unit(custom_materials, 1)
+		tile.set_custom_materials(custom_materials)

@@ -285,6 +285,17 @@
 		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
 	icon_state = "stone_floor"
 
+/turf/open/floor/stone/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	name = "stone brick floor"
+	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\
+		the ironness of walls or the stoneness of the floors, that's really up to you. But have you really ever seen iron that dull? I mean, it\
+		makes sense for the station to have dull metal walls but we're talking how a rudimentary iron wall would be. Medieval ages didn't even\
+		use iron walls, iron walls are actually not even something that exists because iron is an expensive and not-so-great thing to build walls\
+		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
+		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
+	icon_state = "stone_floor"
+
 /turf/open/floor/vault
 	name = "strange floor"
 	desc = "You feel a strange nostalgia from looking at this..."
@@ -346,6 +357,12 @@
 	desc = "Melted down oil can, in some cases, be used to pave road surfaces."
 	icon_state = "asphalt"
 
+/turf/open/floor/asphalt/outdoors
+	planetary_atmos = TRUE
+
 /turf/open/floor/asphalt/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/misc/asteroid/basalt
+
+/turf/open/floor/asphalt/lavaland/outdoors
+	planetary_atmos = TRUE

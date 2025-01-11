@@ -142,6 +142,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_BOH (1<<18)
 /// This area prevents fishing from removing unique/limited loot from sources that're also used outside of it.
 #define UNLIMITED_FISHING (1<<19)
+/// This area is prevented from having gravity (ie. space, nearstation, or outside solars)
+#define NO_GRAVITY (1<<20)
+/// This area can be teleported in, but -only- to locations within that same area.
+#define LOCAL_TELEPORT (1<<21)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

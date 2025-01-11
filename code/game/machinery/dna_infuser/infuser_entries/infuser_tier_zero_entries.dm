@@ -17,12 +17,12 @@
 		"this is a bad idea",
 	)
 	output_organs = list(
-		/obj/item/organ/internal/appendix/fly,
-		/obj/item/organ/internal/eyes/fly,
-		/obj/item/organ/internal/heart/fly,
-		/obj/item/organ/internal/lungs/fly,
-		/obj/item/organ/internal/stomach/fly,
-		/obj/item/organ/internal/tongue/fly,
+		/obj/item/organ/appendix/fly,
+		/obj/item/organ/eyes/fly,
+		/obj/item/organ/heart/fly,
+		/obj/item/organ/lungs/fly,
+		/obj/item/organ/stomach/fly,
+		/obj/item/organ/tongue/fly,
 	)
 	infusion_desc = "fly-like"
 	tier = DNA_MUTANT_TIER_ZERO
@@ -41,7 +41,7 @@
 		/mob/living/basic/pet/fox,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/ears/fox,
+		/obj/item/organ/ears/fox,
 	)
 	infusion_desc = "inexcusable"
 	tier = DNA_MUTANT_TIER_ZERO
@@ -61,12 +61,36 @@
 		/mob/living/basic/mothroach,
 	)
 	output_organs = list(
-		/obj/item/organ/external/antennae,
-		/obj/item/organ/external/wings/moth,
-		/obj/item/organ/internal/eyes/moth,
-		/obj/item/organ/internal/tongue/moth,
+		/obj/item/organ/antennae,
+		/obj/item/organ/wings/moth,
+		/obj/item/organ/eyes/moth,
+		/obj/item/organ/tongue/moth,
 	)
 	infusion_desc = "fluffy"
+	tier = DNA_MUTANT_TIER_ZERO
+
+/datum/infuser_entry/lizard
+	name = "Lizard"
+	infuse_mob_name = "lacertilia"
+	desc = "Turns out infusing most humanoids with lizard DNA creates features remarkably similar to those of lizardpeople. What a strange coincidence."
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
+	qualities = list(
+		"long tails",
+		"decorative horns",
+		"aesthetic snouts",
+		"not much honestly",
+	)
+	input_obj_or_mob = list(
+		/mob/living/basic/lizard,
+	)
+	output_organs = list(
+		/obj/item/organ/horns,
+		/obj/item/organ/frills,
+		/obj/item/organ/snout,
+		/obj/item/organ/tail/lizard,
+		/obj/item/organ/tongue/lizard,
+	)
+	infusion_desc = "scaly"
 	tier = DNA_MUTANT_TIER_ZERO
 
 /datum/infuser_entry/felinid
@@ -81,8 +105,8 @@
 		/mob/living/basic/pet/cat,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/ears/cat,
-		/obj/item/organ/external/tail/cat,
+		/obj/item/organ/ears/cat,
+		/obj/item/organ/tail/cat,
 	)
 	infusion_desc = "domestic"
 	tier = DNA_MUTANT_TIER_ZERO

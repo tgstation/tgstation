@@ -18,6 +18,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A simple match stick, used for lighting fine smokables."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "match_unlit"
+	inhand_icon_state = "cigoff"
+	base_icon_state = "match"
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
 	grind_results = list(/datum/reagent/phosphorus = 2)
@@ -27,6 +29,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/burnt = FALSE
 	/// How long the match lasts in seconds
 	var/smoketime = 10 SECONDS
+	/// If the match is broken
+	var/broken = FALSE
 
 /obj/item/match/process(seconds_per_tick)
 	smoketime -= seconds_per_tick * (1 SECONDS)
@@ -36,21 +40,66 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		open_flame(heat)
 
 /obj/item/match/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
 	matchignite()
 
+/obj/item/match/update_name(updates)
+	. = ..()
+	if(lit)
+		name = "lit [initial(name)]"
+	else if(burnt)
+		name = "burnt [initial(name)]"
+	else if(broken)
+		name = "broken [initial(name)]"
+	else
+		name = "[initial(name)]"
+
+/obj/item/match/update_desc(updates)
+	. = ..()
+	if(lit)
+		desc = "[initial(desc)]. This one is lit."
+	else if(burnt)
+		desc = "[initial(desc)]. This one has seen better days."
+	else if(broken)
+		desc = "[initial(desc)]. This one is broken."
+	else
+		desc = initial(desc)
+
+/obj/item/match/update_icon_state()
+	. = ..()
+	inhand_icon_state = "cigoff"
+	if(lit)
+		icon_state = "[base_icon_state]_lit"
+		inhand_icon_state = "cigon"
+	else if(burnt)
+		icon_state = "[base_icon_state]_burnt"
+	else if(broken)
+		icon_state = "[base_icon_state]_broken"
+	else
+		icon_state = "[base_icon_state]_unlit"
+
+/obj/item/match/proc/snap()
+	if(broken)
+		return
+	if(lit)
+		matchburnout()
+
+	playsound(src, 'sound/effects/snap.ogg', 15, TRUE)
+	broken = TRUE
+	attack_verb_continuous = string_list(list("flicks"))
+	attack_verb_simple = string_list(list("flick"))
+	STOP_PROCESSING(SSobj, src)
+	update_appearance()
+
 /obj/item/match/proc/matchignite()
-	if(lit || burnt)
+	if(lit || burnt || broken)
 		return
 
 	playsound(src, 'sound/items/match_strike.ogg', 15, TRUE)
 	lit = TRUE
-	icon_state = "match_lit"
 	damtype = BURN
 	force = 3
 	hitsound = 'sound/items/tools/welder.ogg'
-	inhand_icon_state = "cigon"
-	name = "lit [initial(name)]"
-	desc = "A [initial(name)]. This one is lit."
 	attack_verb_continuous = string_list(list("burns", "singes"))
 	attack_verb_simple = string_list(list("burn", "singe"))
 	if(isliving(loc))
@@ -68,13 +117,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	burnt = TRUE
 	damtype = BRUTE
 	force = initial(force)
-	icon_state = "match_burnt"
-	inhand_icon_state = "cigoff"
-	name = "burnt [initial(name)]"
-	desc = "A [initial(name)]. This one has seen better days."
 	attack_verb_continuous = string_list(list("flicks"))
 	attack_verb_simple = string_list(list("flick"))
 	STOP_PROCESSING(SSobj, src)
+	update_appearance()
 
 /obj/item/match/extinguish()
 	. = ..()
@@ -185,11 +231,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette/Initialize(mapload)
 	. = ..()
-	create_reagents(chem_volume, INJECTABLE | NO_REACT)
-	if(list_reagents)
-		reagents.add_reagent_list(list_reagents)
-	if(starts_lit)
-		light()
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
 	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(sparks_touched))
@@ -201,15 +242,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		initial_reagents = list_reagents,\
 		food_flags = FOOD_NO_EXAMINE,\
 		foodtypes = JUNKFOOD,\
-		volume = 50,\
+		volume = chem_volume,\
 		eat_time = 0 SECONDS,\
-		tastes = list("a never before experienced flavour.", "finally sitting down after standing your entire life"),\
+		tastes = list("a never before experienced flavour", "finally sitting down after standing your entire life"),\
 		eatverbs = list("taste"),\
-		bite_consumption = 50,\
+		bite_consumption = chem_volume,\
 		junkiness = 0,\
 		reagent_purity = null,\
 		on_consume = CALLBACK(src, PROC_REF(on_consume)),\
 	)
+	if(starts_lit)
+		light()
 
 /obj/item/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -444,12 +487,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			return
 
 	how_long_have_we_been_smokin += seconds_per_tick * (1 SECONDS)
-	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
-	var/obj/item/organ/internal/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
+	reagents.expose(smoker, INHALE, min(to_smoke / reagents.total_volume, 1))
+	var/obj/item/organ/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(lungs && IS_ORGANIC_ORGAN(lungs))
 		var/smoker_resistance = HAS_TRAIT(smoker, TRAIT_SMOKER) ? 0.5 : 1
 		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm * smoker_resistance)
-	if(!reagents.trans_to(smoker, to_smoke, methods = INGEST, ignore_stomach = TRUE))
+	if(!reagents.trans_to(smoker, to_smoke, methods = INHALE, ignore_stomach = TRUE))
 		reagents.remove_all(to_smoke)
 
 /obj/item/cigarette/process(seconds_per_tick)
@@ -949,6 +992,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return TRUE
 
 /obj/item/vape/attack_self(mob/user)
+	if(!screw)
+		balloon_alert(user, "open the cap first!")
+		return
 	if(reagents.total_volume > 0)
 		to_chat(user, span_notice("You empty [src] of all reagents."))
 		reagents.clear_reagents()
@@ -992,7 +1038,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		e.start(src)
 		qdel(src)
 
-	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INGEST, ignore_stomach = TRUE))
+	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INHALE, ignore_stomach = TRUE))
 		reagents.remove_all(REAGENTS_METABOLISM)
 
 /obj/item/vape/process(seconds_per_tick)

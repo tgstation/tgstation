@@ -1,6 +1,9 @@
 //Use this only for things that aren't a subtype of obj/machinery/power
 //For things that are, override "should_have_node()" on them
-GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/grille)))
+GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
+	/obj/structure/grille,
+	/obj/structure/table/reinforced,
+)))
 
 #define UNDER_SMES -1
 #define UNDER_TERMINAL 1
@@ -218,7 +221,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	else
 		return FALSE
 
-/obj/structure/cable/singularity_pull(S, current_size)
+/obj/structure/cable/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()

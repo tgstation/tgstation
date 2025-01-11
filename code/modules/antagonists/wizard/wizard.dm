@@ -15,6 +15,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Demonstrate your incredible and destructive magical powers."
 	hardcore_random_bonus = TRUE
+
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -27,6 +28,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/datum/action/cooldown/grand_ritual/ritual
 	/// Perks that wizard learn
 	var/list/perks = list()
+	/// Button that hide perks hud.
+	var/atom/movable/screen/perk/more/compact_button
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"

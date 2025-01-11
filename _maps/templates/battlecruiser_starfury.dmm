@@ -2364,11 +2364,11 @@
 /obj/structure/rack{
 	dir = 8
 	},
-/obj/item/gun/ballistic/revolver/syndicate{
+/obj/item/gun/ballistic/revolver/badass{
 	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/item/gun/ballistic/revolver/syndicate{
+/obj/item/gun/ballistic/revolver/badass{
 	pixel_x = -1;
 	pixel_y = 2
 	},
@@ -4752,7 +4752,7 @@
 "Gz" = (
 /obj/structure/cable,
 /mob/living/basic/bot/medbot{
-	desc = "A medical bot of syndicate origins. Probably plots about how to stab you full of toxins in its free time.";
+	desc = "A medical bot of syndicate origins. Probably plots about stabbing you full of toxins in its free time.";
 	faction = list("neutral","silicon","turret","Syndicate");
 	name = "Syndicate Medibot";
 	skin = "bezerk";

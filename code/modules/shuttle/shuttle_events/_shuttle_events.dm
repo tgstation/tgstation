@@ -21,7 +21,11 @@
 	src.port = port
 
 /datum/shuttle_event/proc/start_up_event(evacuation_duration)
-	activate_at = world.time + evacuation_duration * activation_fraction
+	if(port.launch_status == ENDGAME_LAUNCHED)
+		active = TRUE //if added during endgame, instant activate
+		activate()
+	else
+		activate_at = world.time + evacuation_duration * activation_fraction
 
 ///We got activated
 /datum/shuttle_event/proc/activate()

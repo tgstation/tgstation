@@ -1,5 +1,6 @@
 /obj/item/fish/clownfish
 	name = "clownfish"
+	fish_id = "clownfish"
 	desc = "Clownfish catch prey by swimming onto the reef, attracting larger fish, and luring them back to the anemone. The anemone will sting and eat the larger fish, leaving the remains for the clownfish."
 	icon_state = "clownfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
@@ -19,6 +20,7 @@
 
 /obj/item/fish/clownfish/lube
 	name = "lubefish"
+	fish_id = "lube"
 	desc = "A clownfish exposed to cherry-flavored lube for far too long. First discovered the days following a cargo incident around the seas of Europa, when thousands of thousands of thousands..."
 	icon_state = "lubefish"
 	random_case_rarity = FISH_RARITY_VERY_RARE
@@ -29,8 +31,17 @@
 	fishing_difficulty_modifier = 5
 	beauty = FISH_BEAUTY_GREAT
 
+// become lubeman. but you suicide
+/obj/item/fish/clownfish/lube/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] covers themselves in [src]'s residue, then swallows it whole! It looks like [user.p_theyre()] trying to commit lubide!"))
+	user.AddComponent(/datum/component/slippery, 8 SECONDS, SLIDE|GALOSHES_DONT_HELP)
+	user.AddElement(/datum/element/lube_walking)
+	qdel(src)
+	return OXYLOSS
+
 /obj/item/fish/cardinal
 	name = "cardinalfish"
+	fish_id = "cardinal"
 	desc = "Cardinalfish are often found near sea urchins, where the fish hide when threatened."
 	icon_state = "cardinalfish"
 	sprite_width = 6
@@ -45,6 +56,7 @@
 
 /obj/item/fish/greenchromis
 	name = "green chromis"
+	fish_id = "greenchromis"
 	desc = "The Chromis can vary in color from blue to green depending on the lighting and distance from the lights."
 	icon_state = "greenchromis"
 	sprite_width = 5
@@ -60,6 +72,7 @@
 
 /obj/item/fish/firefish
 	name = "firefish goby"
+	fish_id = "firefish"
 	desc = "To communicate in the wild, the firefish uses its dorsal fin to alert others of potential danger."
 	icon_state = "firefish"
 	sprite_width = 5
@@ -75,6 +88,7 @@
 
 /obj/item/fish/pufferfish
 	name = "pufferfish"
+	fish_id = "pufferfish"
 	desc = "They say that one pufferfish contains enough toxins to kill 30 people, although in the last few decades they've been genetically engineered en masse to be less poisonous."
 	icon_state = "pufferfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
@@ -89,8 +103,13 @@
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/toxic)
 	beauty = FISH_BEAUTY_GOOD
 
+/obj/item/fish/pufferfish/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] bites into [src] and starts sucking on it! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return TOXLOSS
+
 /obj/item/fish/lanternfish
 	name = "lanternfish"
+	fish_id = "lanternfish"
 	desc = "Typically found in areas below 6600 feet below the surface of the ocean, they live in complete darkness."
 	icon_state = "lanternfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
@@ -107,6 +126,7 @@
 
 /obj/item/fish/stingray
 	name = "stingray"
+	fish_id = "stingray"
 	desc = "A type of ray, most known for its venomous stinger. Despite that, They're normally docile, if not a bit easily frightened."
 	icon_state = "stingray"
 	stable_population = 4
@@ -121,6 +141,7 @@
 
 /obj/item/fish/swordfish
 	name = "swordfish"
+	fish_id = "swordfish"
 	desc = "A large billfish, most famous for its elongated bill, while also fairly popular for cooking, and as a fearsome weapon in the hands of a veteran spess-fisherman."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "swordfish"
@@ -217,6 +238,7 @@
 
 /obj/item/fish/squid
 	name = "squid"
+	fish_id = "squid"
 	desc = "An elongated mollusk with eight tentacles, natural camouflage and ink clouds to spray at predators. One of the most intelligent, well-equipped invertebrates out there."
 	icon_state = "squid"
 	sprite_width = 4
@@ -230,6 +252,31 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/ink, /datum/fish_trait/camouflage, /datum/fish_trait/wary)
 
+/obj/item/fish/squid/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] points [src]'s ink glands at their face and presses INCREDIBLY hard! It looks like [user.p_theyre()] trying to commit squidcide!"))
+
+	// No head? Bozo.
+	var/obj/item/bodypart/head = user.get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(head))
+		user.visible_message(span_suicide("[user] has no head! The ink goes flying by!"))
+		return SHAME
+
+	// get inked.
+	user.visible_message(span_warning("[user] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
+	user.AddComponent(/datum/component/face_decal/splat, \
+		color = COLOR_NEARLY_ALL_BLACK, \
+		memory_type = /datum/memory/witnessed_inking, \
+		mood_event_type = /datum/mood_event/inked, \
+	)
+	playsound(user, SFX_DESECRATION, 50, TRUE)
+
+	if(!HAS_TRAIT(user, TRAIT_STRENGTH) && !HAS_TRAIT(user, TRAIT_HULK))
+		return OXYLOSS
+
+	head.dismember(silent = FALSE)
+	user.visible_message(span_suicide("[user]'s head goes FLYING OFF from the overpressurized ink jet!"))
+	return MANUAL_SUICIDE
+
 /obj/item/fish/squid/get_fish_taste()
 	return list("raw mollusk" = 2)
 
@@ -238,6 +285,7 @@
 
 /obj/item/fish/monkfish
 	name = "monkfish"
+	fish_id = "monkfish"
 	desc = "A member of the Lophiid family of anglerfish. It goes by several different names, however none of them will make it look any prettier, nor be any less delicious."
 	icon_state = "monkfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
@@ -264,6 +312,7 @@
 
 /obj/item/fish/plaice
 	name = "plaice"
+	fish_id = "plaice"
 	desc = "Perhaps the most prominent flatfish in the space-market. Nature really pulled out the rolling pin on this one."
 	icon_state = "plaice"
 	sprite_height = 7

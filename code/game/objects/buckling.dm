@@ -129,6 +129,13 @@
 		if(resistance_flags & ON_FIRE) //Sets the mob on fire if you buckle them to a burning atom/movableect
 			M.adjust_fire_stacks(1)
 			M.ignite_mob()
+		if(buckle_sound)
+			playsound(src, buckle_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, pressure_affected = TRUE, ignore_walls = FALSE)
+
+/obj/unbuckle_mob(mob/living/buckled_mob, force, can_fall)
+	. = ..()
+	if(. && unbuckle_sound)
+		playsound(src, unbuckle_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, pressure_affected = TRUE, ignore_walls = FALSE)
 
 /**
  * Set a mob as unbuckled from src
@@ -215,21 +222,23 @@
 	if(target == src)
 		return FALSE
 
-	// Check if the target to buckle isn't INSIDE OF A WALL
-	if(!isopenturf(loc) || !isopenturf(target.loc))
-		return FALSE
-
-	// Check if the target to buckle isn't A SOLID OBJECT (not including vehicles)
 	var/turf/ground = get_turf(src)
-	if(ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-		return FALSE
+	// If we're not already on the same turf as our target...
+	if(get_turf(target) != ground)
+		// Check if the target to buckle isn't INSIDE OF A WALL
+		if(!isopenturf(loc) || !isopenturf(target.loc))
+			return FALSE
+
+		// Check if the target to buckle isn't INSIDE A SOLID OBJECT (not including vehicles)
+		if(ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+			return FALSE
+
+		// If we're checking the loc, make sure the target is on the thing we're bucking them to.
+		if(check_loc && !target.Adjacent(src))
+			return FALSE
 
 	// Check if this atom can have things buckled to it.
 	if(!can_buckle && !force)
-		return FALSE
-
-	// If we're checking the loc, make sure the target is on the thing we're bucking them to.
-	if(check_loc && !target.Adjacent(src))
 		return FALSE
 
 	// Make sure the target isn't already buckled to something.

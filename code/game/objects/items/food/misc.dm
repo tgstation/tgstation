@@ -195,7 +195,12 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(OnGrill))
 	if(stink_particles)
-		particles = new stink_particles
+		add_shared_particles(stink_particles)
+
+/obj/item/food/badrecipe/Destroy(force)
+	if (stink_particles)
+		remove_shared_particles(stink_particles)
+	return ..()
 
 // We override the parent procs here to prevent burned messes from cooking into burned messes.
 /obj/item/food/badrecipe/make_grillable()
@@ -361,25 +366,27 @@
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	dog_fashion = /datum/dog_fashion/head/butter
+	var/can_stick = TRUE
 
 /obj/item/food/butter/examine(mob/user)
 	. = ..()
-	. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
+	if (can_stick)
+		. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
 
 /obj/item/food/butter/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stack/rods))
-		var/obj/item/stack/rods/rods = item
-		if(!rods.use(1))//borgs can still fail this if they have no metal
-			to_chat(user, span_warning("You do not have enough iron to put [src] on a stick!"))
-			return ..()
-		to_chat(user, span_notice("You stick the rod into the stick of butter."))
-		var/obj/item/food/butter/on_a_stick/new_item = new(usr.loc)
-		var/replace = (user.get_inactive_held_item() == rods)
-		if(!rods && replace)
-			user.put_in_hands(new_item)
-		qdel(src)
-		return TRUE
-	..()
+	if(!istype(item, /obj/item/stack/rods) || !can_stick)
+		return ..()
+	var/obj/item/stack/rods/rods = item
+	if(!rods.use(1))//borgs can still fail this if they have no metal
+		to_chat(user, span_warning("You do not have enough iron to put [src] on a stick!"))
+		return ..()
+	to_chat(user, span_notice("You stick the rod into the stick of butter."))
+	user.temporarilyRemoveItemFromInventory(src)
+	var/obj/item/food/butter/on_a_stick/new_item = new(drop_location())
+	if (user.CanReach(new_item))
+		user.put_in_hands(new_item)
+	qdel(src)
+	return TRUE
 
 /obj/item/food/butter/on_a_stick //there's something so special about putting it on a stick.
 	name = "butter on a stick"
@@ -388,6 +395,7 @@
 	trash_type = /obj/item/stack/rods
 	food_flags = FOOD_FINGER_FOOD
 	venue_value = FOOD_PRICE_CHEAP
+	can_stick = FALSE
 
 /obj/item/food/butter/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/butterslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
@@ -611,7 +619,7 @@
 	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/pickle/proc/check_liked(mob/living/carbon/human/consumer)
-	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM))
 		return FOOD_LIKED
 

@@ -1,5 +1,6 @@
+import { Button, ColorBox, Section, Stack, Table } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, ColorBox, Section, Stack, Table } from '../components';
 import { NtosWindow } from '../layouts';
 import { NTOSData } from '../layouts/NtosWindow';
 
@@ -114,7 +115,7 @@ export const NtosMain = (props) => {
                   (proposed_login.IDName
                     ? '(' + proposed_login.IDName + ')'
                     : '')
-                : proposed_login.IDName ?? ''}
+                : (proposed_login.IDName ?? '')}
             </Table.Row>
             <Table.Row>
               Assignment:{' '}
@@ -122,7 +123,7 @@ export const NtosMain = (props) => {
                 ? login.IDJob +
                   ' ' +
                   (proposed_login.IDJob ? '(' + proposed_login.IDJob + ')' : '')
-                : proposed_login.IDJob ?? ''}
+                : (proposed_login.IDJob ?? '')}
             </Table.Row>
           </Table>
         </Section>

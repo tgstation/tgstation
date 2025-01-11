@@ -69,6 +69,15 @@
 #define SLIGHTLY_CHARGED_ZAP_ICON_STATE "sm_arc_supercharged"
 #define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_referance" //Witty I know
 
+// Zap energy accumulation keys.
+/// Normal zap energy accumulation key from normal operations.
+#define ZAP_ENERGY_ACCUMULATION_NORMAL "normal"
+/// High energy zap energy accumulation key from high energy extra effects.
+#define ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY "high"
+
+/// Zap energy discharge portion per tick.
+#define ZAP_ENERGY_DISCHARGE_PORTION 0.1
+
 #define SUPERMATTER_DEFAULT_BULLET_ENERGY 2
 
 #define SUPERMATTER_CASCADE_PERCENT 80

@@ -360,3 +360,34 @@
 	applied_name = "Private Security Officer"
 	applied_desc = "A cardboard cutout of a private security officer."
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasensoldier
+
+/datum/cardboard_cutout/heretic
+	name = "Heretic"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a Heretic."
+	outfit = /datum/outfit/heretic_hallucination
+
+/datum/cardboard_cutout/changeling
+	name = "Changeling"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a Changeling."
+	outfit = /datum/outfit/changeling
+
+/datum/cardboard_cutout/pirate
+	name = "Pirate"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a space pirate."
+	outfit = /datum/outfit/pirate/space/captain/cardboard
+
+/datum/cardboard_cutout/ninja
+	name = "Space Ninja"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a space ninja."
+	outfit = /datum/outfit/ninja
+
+/datum/cardboard_cutout/abductor
+	name = "Abductor Agent"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of an abductor agent."
+	species = /datum/species/abductor
+	outfit = /datum/outfit/abductor/agent/cardboard

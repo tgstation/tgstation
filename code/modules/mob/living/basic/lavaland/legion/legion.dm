@@ -50,7 +50,7 @@
 
 /// Create what we want to drop on death, in proc form so we can always return a static list
 /mob/living/basic/mining/legion/proc/get_loot_list()
-	var/static/list/death_loot = list(/obj/item/organ/internal/monster_core/regenerative_core/legion)
+	var/static/list/death_loot = list(/obj/item/organ/monster_core/regenerative_core/legion)
 	return death_loot
 
 /mob/living/basic/mining/legion/Exited(atom/movable/gone, direction)
@@ -88,7 +88,7 @@
 	if (prob(75))
 		return
 	// Congratulations you have won a special prize: cancer
-	var/obj/item/organ/internal/legion_tumour/cancer = new()
+	var/obj/item/organ/legion_tumour/cancer = new()
 	cancer.Insert(consumed, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /// A Legion which only drops skeletons instead of corpses which might have fun loot, so it cannot be farmed
@@ -167,5 +167,5 @@
 
 /// Create what we want to drop on death, in proc form so we can always return a static list
 /mob/living/basic/mining/legion/large/get_loot_list()
-	var/static/list/death_loot = list(/obj/item/organ/internal/monster_core/regenerative_core/legion = 3, /obj/effect/mob_spawn/corpse/human/legioninfested = 4)
+	var/static/list/death_loot = list(/obj/item/organ/monster_core/regenerative_core/legion = 3, /obj/effect/mob_spawn/corpse/human/legioninfested = 4)
 	return death_loot

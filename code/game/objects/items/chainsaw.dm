@@ -4,12 +4,12 @@
 	name = "chainsaw"
 	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
 	icon = 'icons/obj/weapons/chainsaw.dmi'
-	icon_state = "chainsaw_off"
+	icon_state = "chainsaw"
+	icon_angle = 180
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
 	force = 13
-	var/force_on = 24
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 13
 	throw_speed = 2
@@ -23,66 +23,28 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1.5 //Turn it on first you dork
-	var/on = FALSE
-	///The looping sound for our chainsaw when running
+	var/force_on = 24
+	/// The looping sound for our chainsaw when running
 	var/datum/looping_sound/chainsaw/chainsaw_loop
-
-/obj/item/chainsaw/apply_fantasy_bonuses(bonus)
-	. = ..()
-	force_on = modify_fantasy_variable("force_on", force_on, bonus)
-	if(on)
-		force = force_on
-
-/obj/item/chainsaw/remove_fantasy_bonuses(bonus)
-	force_on = reset_fantasy_variable("force_on", force_on)
-	if(on)
-		force = force_on
-	return ..()
+	/// How long it takes to behead someone with this chainsaw.
+	var/behead_time = 15 SECONDS
 
 /obj/item/chainsaw/Initialize(mapload)
 	. = ..()
 	chainsaw_loop = new(src)
 	apply_components()
+	AddComponent( \
+		/datum/component/transforming, \
+		force_on = force_on, \
+		throwforce_on = force_on, \
+		throw_speed_on = throw_speed, \
+		sharpness_on = SHARP_EDGED, \
+		hitsound_on = 'sound/items/weapons/chainsawhit.ogg', \
+		w_class_on = w_class, \
+	)
 
-/obj/item/chainsaw/suicide_act(mob/living/carbon/user)
-	if(on)
-		user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)
-		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
-		if(myhead)
-			myhead.dismember()
-	else
-		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
-	return BRUTELOSS
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/chainsaw/attack_self(mob/user)
-	on = !on
-	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
-	force = on ? force_on : initial(force)
-	throwforce = on ? force_on : initial(force)
-	icon_state = "chainsaw_[on ? "on" : "off"]"
-	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = on
-
-	if(on)
-		hitsound = 'sound/items/weapons/chainsawhit.ogg'
-		chainsaw_loop.start()
-	else
-		hitsound = SFX_SWING_HIT
-		chainsaw_loop.stop()
-
-	toolspeed = on ? 0.5 : initial(toolspeed) //Turning it on halves the speed
-	if(src == user.get_active_held_item()) //update inhands
-		user.update_held_items()
-	update_item_action_buttons()
-
-/**
- * Handles adding components to the chainsaw. Added in Initialize()
- *
- * Applies components to the chainsaw. Added as a separate proc to allow for
- * variance between subtypes
- */
 /obj/item/chainsaw/proc/apply_components()
 	AddComponent(/datum/component/butchering, \
 		speed = 3 SECONDS, \
@@ -91,15 +53,38 @@
 		butcher_sound = 'sound/items/weapons/chainsawhit.ogg', \
 		disabled = TRUE, \
 	)
-	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 
-/obj/item/chainsaw/doomslayer
-	name = "THE GREAT COMMUNICATOR"
-	desc = span_warning("VRRRRRRR!!!")
-	armour_penetration = 100
-	force_on = 30
+/obj/item/chainsaw/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
 
-/obj/item/chainsaw/doomslayer/attack(mob/living/target_mob, mob/living/user, params)
+	to_chat(user, span_notice("As you pull the starting cord dangling from [src], [active ? "it begins to whirr" : "the chain stops moving"]."))
+	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
+	butchering.butchering_enabled = active
+	if (active)
+		chainsaw_loop.start()
+	else
+		chainsaw_loop.stop()
+
+	toolspeed = active ? 0.5 : initial(toolspeed)
+	update_item_action_buttons()
+
+	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/chainsaw/suicide_act(mob/living/carbon/user)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
+		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
+		return BRUTELOSS
+
+	user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)
+	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
+	if(myhead)
+		myhead.dismember()
+	return BRUTELOSS
+
+/obj/item/chainsaw/attack(mob/living/target_mob, mob/living/user, params)
 	if (target_mob.stat != DEAD)
 		return ..()
 
@@ -113,7 +98,7 @@
 	playsound(user, 'sound/items/weapons/slice.ogg', vol = 80, vary = TRUE)
 
 	target_mob.balloon_alert(user, "cutting off head...")
-	if (!do_after(user, 2 SECONDS, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
+	if (!do_after(user, behead_time, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
 		return TRUE
 
 	head.dismember(silent = FALSE)
@@ -121,15 +106,29 @@
 
 	return TRUE
 
+/obj/item/chainsaw/proc/has_same_head(mob/living/target_mob, obj/item/bodypart/head)
+	return target_mob.get_bodypart(BODY_ZONE_HEAD) == head
+
+/**
+ * Handles adding components to the chainsaw. Added in Initialize()
+ *
+ * Applies components to the chainsaw. Added as a separate proc to allow for
+ * variance between subtypes
+ */
+
+/obj/item/chainsaw/doomslayer
+	name = "THE GREAT COMMUNICATOR"
+	desc = span_warning("VRRRRRRR!!!")
+	armour_penetration = 100
+	force_on = 30
+	behead_time = 2 SECONDS
+
 /obj/item/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message(span_danger("Ranged attacks just make [owner] angrier!"))
-		playsound(src, pick('sound/items/weapons/bulletflyby.ogg', 'sound/items/weapons/bulletflyby2.ogg', 'sound/items/weapons/bulletflyby3.ogg'), 75, TRUE)
+		playsound(src, SFX_BULLET_MISS, 75, TRUE)
 		return TRUE
 	return FALSE
-
-/obj/item/chainsaw/doomslayer/proc/has_same_head(mob/living/target_mob, obj/item/bodypart/head)
-	return target_mob.get_bodypart(BODY_ZONE_HEAD) == head
 
 /obj/item/chainsaw/mounted_chainsaw
 	name = "mounted chainsaw"

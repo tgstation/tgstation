@@ -7,7 +7,7 @@
 // Atomic styles
 @include meta.load-css('~tgui/styles/atomic/text.scss');
 // External styles
-@include meta.load-css('~tgui/styles/components/TextArea.scss');
+@include meta.load-css('~tgui-core/styles/components/TextArea');
 // Local styles
 @include meta.load-css('./button.scss');
 @include meta.load-css('./content.scss');
@@ -26,14 +26,14 @@
 }
 
 @each $channel, $color in colors.$channel-map {
-  $darkened: darken($color, 20%);
+  $darkened: color.adjust($color, $lightness: -20%, $space: hsl);
 
   .button-#{$channel} {
-    border-color: darken($color, 10%);
+    border-color: color.adjust($color, $lightness: -10%, $space: hsl);
     color: $color;
     &:hover {
-      border-color: lighten($color, 10%);
-      color: lighten($color, 5%);
+      border-color: color.adjust($color, $lightness: 10%, $space: hsl);
+      color: color.adjust($color, $lightness: 5%, $space: hsl);
     }
   }
 
@@ -50,11 +50,11 @@
       animation: gradient 10s linear infinite;
       background: linear-gradient(
         to right,
-        darken($color, 35%),
+        color.adjust($color, $lightness: -35%, $space: hsl),
         $color,
-        lighten($color, 10%),
+        color.adjust($color, $lightness: 10%, $space: hsl),
         $color,
-        darken($color, 35%)
+        color.adjust($color, $lightness: -35%, $space: hsl)
       );
       background-position: 0% 0%;
       background-size: 500% auto;

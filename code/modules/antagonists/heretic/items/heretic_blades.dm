@@ -5,6 +5,7 @@
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "eldritch_blade"
 	inhand_icon_state = "eldritch_blade"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
@@ -21,8 +22,8 @@
 	demolition_mod = 0.8
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	armour_penetration = 35
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/after_use_message = ""
 
 /obj/item/melee/sickly_blade/examine(mob/user)
@@ -66,13 +67,11 @@
 	qdel(src)
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, click_parameters)
-	if(isliving(target))
-		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
+	SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
 
 /obj/item/melee/sickly_blade/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(isliving(interacting_with))
-		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, interacting_with, src)
-		return ITEM_INTERACT_BLOCKING
+	SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, interacting_with, src)
+	return ITEM_INTERACT_BLOCKING
 
 // Path of Rust's blade
 /obj/item/melee/sickly_blade/rust
@@ -135,8 +134,55 @@
 	desc = "A galliant blade, sundered and torn. \
 		Furiously, the blade cuts. Silver scars bind it forever to its dark purpose."
 	icon_state = "dark_blade"
+	base_icon_state = "dark_blade"
 	inhand_icon_state = "dark_blade"
 	after_use_message = "The Torn Champion hears your call..."
+	///If our blade is currently infused with the mansus grasp
+	var/infused = FALSE
+
+/obj/item/melee/sickly_blade/dark/afterattack(atom/target, mob/user, click_parameters)
+	. = ..()
+	if(!infused || target == user || !isliving(target))
+		return
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/mob/living/living_target = target
+	if(!heretic_datum)
+		return
+
+	//Apply our heretic mark
+	var/datum/heretic_knowledge/mark/blade_mark/mark_to_apply = heretic_datum.get_knowledge(/datum/heretic_knowledge/mark/blade_mark)
+	if(!mark_to_apply)
+		return
+	mark_to_apply.create_mark(user, living_target)
+
+	//Remove the infusion from any blades we own (and update their sprite)
+	for(var/obj/item/melee/sickly_blade/dark/to_infuse in user.get_all_contents_type(/obj/item/melee/sickly_blade/dark))
+		to_infuse.infused = FALSE
+		to_infuse.update_appearance(UPDATE_ICON)
+	user.update_held_items()
+
+	if(!check_behind(user, living_target))
+		return
+	// We're officially behind them, apply effects
+	living_target.AdjustParalyzed(1.5 SECONDS)
+	living_target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
+	living_target.balloon_alert(user, "backstab!")
+	playsound(living_target, 'sound/items/weapons/guillotine.ogg', 100, TRUE)
+
+/obj/item/melee/sickly_blade/dark/dropped(mob/user, silent)
+	. = ..()
+	if(infused)
+		infused = FALSE
+		update_appearance(UPDATE_ICON)
+
+/obj/item/melee/sickly_blade/dark/update_icon_state()
+	. = ..()
+	if(infused)
+		icon_state = base_icon_state + "_infused"
+		inhand_icon_state = base_icon_state + "_infused"
+	else
+		icon_state = base_icon_state
+		inhand_icon_state = base_icon_state
 
 // Path of Cosmos's blade
 /obj/item/melee/sickly_blade/cosmic
@@ -206,10 +252,7 @@
 		return TRUE
 	if(prob(15))
 		to_chat(user, span_cult_large(pick("\"An untouched mind? Amusing.\"", "\" I suppose it isn't worth the effort to stop you.\"", "\"Go ahead. I don't care.\"", "\"You'll be mine soon enough.\"")))
-		var/obj/item/bodypart/affecting = user.get_active_hand()
-		if(!affecting)
-			return
-		affecting.receive_damage(burn = 5)
+		user.apply_damage(5, BURN, user.get_active_hand())
 		playsound(src, SFX_SEAR, 25, TRUE)
 		to_chat(user, span_danger("Your hand sizzles.")) // Nar nar might not care but their essence still doesn't like you
 	else if(prob(15))

@@ -95,6 +95,7 @@
 	name = "glass of amaretto"
 	desc = "A sweet and syrupy looking drink."
 	icon_state = "amarettoglass"
+
 /datum/glass_style/drinking_glass/cognac
 	required_drink_type = /datum/reagent/consumable/ethanol/cognac
 	name = "glass of cognac"
@@ -155,7 +156,6 @@
 	required_drink_type = /datum/reagent/consumable/ethanol/pruno
 	name = "glass of pruno"
 	desc = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."
-	icon_state = "glass_orange"
 
 /datum/glass_style/drinking_glass/navy_rum
 	required_drink_type = /datum/reagent/consumable/ethanol/navy_rum
@@ -187,7 +187,6 @@
 	name = "glass of yūyake"
 	desc = "It's the saccharine essence of the 70s in a glass... the 1970s, that is!"
 	icon = 'icons/obj/drinks/drinks.dmi'
-	icon_state = "glass_red"
 
 /datum/glass_style/drinking_glass/shochu
 	required_drink_type = /datum/reagent/consumable/ethanol/shochu
@@ -255,7 +254,6 @@
 	required_drink_type = /datum/reagent/consumable/ethanol/hooch
 	name = "Hooch"
 	desc = "You've really hit rock bottom now... your liver packed its bags and left last night."
-	icon_state = "glass_brown2"
 
 /datum/glass_style/shot_glass/goldschlager
 	required_drink_type = /datum/reagent/consumable/ethanol/goldschlager

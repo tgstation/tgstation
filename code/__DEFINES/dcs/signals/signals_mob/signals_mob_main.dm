@@ -150,6 +150,10 @@
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
 	#define MOB_DEADSAY_SIGNAL_INTERCEPT (1<<0)
+///from /mob/living/check_cooldown(): ()
+#define COMSIG_MOB_EMOTE_COOLDOWN_CHECK "mob_emote_cd"
+	/// make a wild guess
+	#define COMPONENT_EMOTE_COOLDOWN_BYPASS (1<<0)
 ///from /mob/living/emote(): ()
 #define COMSIG_MOB_EMOTE "mob_emote"
 ///from base of mob/swap_hand(): (obj/item/currently_held_item)
@@ -261,3 +265,6 @@
 
 /// from /mob/update_incapacitated(): (old_incap, new_incap)
 #define COMSIG_MOB_INCAPACITATE_CHANGED "mob_incapacitated"
+
+/// from /obj/item/reagent_containers/dropper/interact_with_atom(atom/target, mob/living/user, list/modifiers): (mob/living/user, atom/dropper, datum/reagents/reagents, fraction)
+#define COMSIG_MOB_REAGENTS_DROPPED_INTO_EYES "mob_reagents_drop_into_eyes"

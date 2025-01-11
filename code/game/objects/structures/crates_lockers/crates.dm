@@ -295,28 +295,37 @@
 	new /obj/item/bodypart/leg/right/robot/surplus(src)
 	new /obj/item/bodypart/leg/right/robot/surplus(src)
 
+/obj/structure/closet/crate/freezer/organ
+	name = "organ freezer"
+	desc = "A freezer containing a set of organic organs."
+
+/obj/structure/closet/crate/freezer/organ/PopulateContents()
+	. = ..()
+	new /obj/item/organ/heart(src)
+	new /obj/item/organ/lungs(src)
+	new /obj/item/organ/eyes(src)
+	new /obj/item/organ/ears(src)
+	new /obj/item/organ/tongue(src)
+	new /obj/item/organ/liver(src)
+	new /obj/item/organ/stomach(src)
+	new /obj/item/organ/appendix(src)
+
 /obj/structure/closet/crate/freezer/food
 	name = "food icebox"
 	icon_state = "food"
 	base_icon_state = "food"
 
 /obj/structure/closet/crate/freezer/donk
-	name = "donk co. fridge"
-	desc = "A Donk Co. brand fridge, keeps your donkpcokets and foam ammunition fresh!"
+	name = "\improper Donk Co. fridge"
+	desc = "A Donk Co. brand fridge, keeps your donkpockets and foam ammunition fresh!"
 	icon_state = "donkcocrate"
 	base_icon_state = "donkcocrate"
 
-/obj/structure/closet/crate/freezer/interdyne
-	name = "interdyne freezer"
-	desc = "Interdyne Pharmauceutics branded freezer. Might or might not contain cold steel, or fresh organs."
-	icon_state = "interdynefreezer"
-	base_icon_state = "interdynefreezer"
-
-/obj/structure/closet/crate/freezer/blood/interdyne
-	name = "interdyne blood freezer"
-	desc = "Interdyne Pharmauceutics branded freezer. Only freshly harvested- I mean, freshly kept blood inside!"
-	icon_state = "interdynefreezer"
-	base_icon_state = "interdynefreezer"
+/obj/structure/closet/crate/self
+	name = "\improper S.E.L.F. crate"
+	desc = "A robust-looking crate with a seemingly decorative holographic display. The front of the crate proudly declares its allegiance to the notorious terrorist group 'S.E.L.F'."
+	icon_state = "selfcrate"
+	base_icon_state = "selfcrate"
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."

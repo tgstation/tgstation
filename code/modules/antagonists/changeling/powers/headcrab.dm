@@ -5,10 +5,16 @@
 	button_icon_state = "last_resort"
 	chemical_cost = 20
 	dna_cost = CHANGELING_POWER_INNATE
-	req_human = TRUE
 	req_stat = DEAD
 	ignores_fakedeath = TRUE
 	disabled_by_fire = FALSE
+
+/datum/action/changeling/headcrab/can_be_used_by(mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_TEMPORARY_BODY))
+		return FALSE
+	if(isanimal_or_basicmob(user) && !istype(user, /mob/living/basic/headslug) && !isconstruct(user) && !(user.mob_biotypes & MOB_SPIRIT))
+		return TRUE
+	return ..()
 
 /datum/action/changeling/headcrab/sting_action(mob/living/user)
 	set waitfor = FALSE
@@ -22,7 +28,7 @@
 
 	explosion(user, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
 	for(var/mob/living/carbon/human/blinded_human in range(2, user))
-		var/obj/item/organ/internal/eyes/eyes = blinded_human.get_organ_slot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/eyes/eyes = blinded_human.get_organ_slot(ORGAN_SLOT_EYES)
 		if(!eyes || blinded_human.is_blind())
 			continue
 		to_chat(blinded_human, span_userdanger("You are blinded by a shower of blood!"))

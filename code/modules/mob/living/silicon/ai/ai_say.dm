@@ -1,7 +1,7 @@
 /mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
 	var/mob/M = speaker.GetSource()
 	if(M)
-		return "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
+		return "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	return ""
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -84,7 +84,7 @@
 	var/index = 0
 	for(var/word in GLOB.vox_sounds)
 		index++
-		dat += "<A href='?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
+		dat += "<A href='byond://?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
 		if(index != GLOB.vox_sounds.len)
 			dat += " / "
 
@@ -148,7 +148,7 @@
 		var/turf/player_turf = get_turf(player_mob)
 		if(is_valid_z_level(ai_turf, player_turf))
 			players += player_mob
-	minor_announce(capitalize(message), "[name] announces:", players = players, should_play_sound = FALSE)
+	minor_announce(capitalize(message), "[name] announces:", players = players, should_play_sound = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(does_target_have_vox_off)))
 
 	for(var/word in words)
 		play_vox_word(word, ai_turf, null)
@@ -168,7 +168,7 @@
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/player_mob as anything in GLOB.player_list)
-				if(!player_mob.can_hear() || !(safe_read_pref(player_mob.client, /datum/preference/toggle/sound_announcements)))
+				if(!player_mob.can_hear() || !safe_read_pref(player_mob.client, /datum/preference/toggle/sound_ai_vox))
 					continue
 
 				var/turf/player_turf = get_turf(player_mob)
@@ -180,6 +180,9 @@
 			SEND_SOUND(only_listener, voice)
 		return TRUE
 	return FALSE
+
+/proc/does_target_have_vox_off(mob/target)
+	return !safe_read_pref(target.client, /datum/preference/toggle/sound_ai_vox)
 
 #undef VOX_DELAY
 #endif

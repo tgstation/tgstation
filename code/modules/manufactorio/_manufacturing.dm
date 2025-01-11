@@ -1,9 +1,5 @@
-#define MANUFACTURING_FAIL_FULL -1
 #define MANUFACTURING_FAIL 0
 #define MANUFACTURING_SUCCESS 1
-
-#define POCKET_INPUT "Input"
-#define POCKET_OUTPUT "Output"
 
 #define MANUFACTURING_TURF_LAG_LIMIT 10 // max items on a turf before we consider it full
 
@@ -28,7 +24,7 @@
 	. = ..()
 	if(may_be_moved)
 		. += "It receives power via cable, but certain buildings do not need power."
-	. += length(contents - circuit) ? "It contains:" : "Its empty."
+	. += length(contents - circuit) ? "It contains:" : "It contains no items."
 	for(var/atom/movable/thing as anything in contents - circuit)
 		var/text = thing.name
 		var/obj/item/stack/possible_stack = thing
@@ -61,6 +57,10 @@
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/power/manufacturing/setDir(newdir)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/power/manufacturing/crowbar_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -102,10 +102,10 @@
 		if(!manufactury.anchored)
 			return MANUFACTURING_FAIL
 		return manufactury.receive_resource(sending, src, isturf(what_or_dir) ? get_dir(src, what_or_dir) : what_or_dir)
-	if(next_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = sending))
+	if(next_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = sending) && !ischasm(next_turf))
 		return MANUFACTURING_FAIL
-	if(length(next_turf.contents) >= MANUFACTURING_TURF_LAG_LIMIT)
-		return MANUFACTURING_FAIL_FULL
+	if(length(get_overfloor_objects(next_turf)) >= MANUFACTURING_TURF_LAG_LIMIT)
+		return MANUFACTURING_FAIL
 	if(isnull(sending))
 		return MANUFACTURING_SUCCESS // for the sake of being used as a check
 	if(isnull(sending.loc) || !sending.Move(next_turf, get_dir(src, next_turf)))
@@ -117,7 +117,22 @@
 	if(!istype(stack))
 		return
 	for(var/obj/item/stack/other in contents - circuit)
-		if(!other.can_merge(stack))
+		if(!stack.can_merge(other))
 			continue
 		if(other.amount + stack.amount <= other.max_amount)
 			return other
+
+/obj/machinery/power/manufacturing/proc/may_merge_in_contents_and_do_so(obj/item/stack/stack)
+	var/merging_into = may_merge_in_contents(stack)
+	if(isnull(merging_into))
+		return
+	return stack.merge(merging_into)
+
+/obj/machinery/power/manufacturing/proc/get_overfloor_objects(turf/target)
+	. = list()
+	if(isnull(target))
+		target = get_turf(src)
+	for(var/atom/movable/thing as anything in target.contents)
+		if(thing == src || isliving(thing) || iseffect(thing) || thing.invisibility >= INVISIBILITY_ABSTRACT || HAS_TRAIT(thing, TRAIT_UNDERFLOOR))
+			continue
+		. += thing

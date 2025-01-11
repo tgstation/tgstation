@@ -10,7 +10,6 @@
 	projectile_type = /obj/projectile/leaper
 	projectile_sound = 'sound/effects/snap.ogg'
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 
 // bubble ability objects and effects
 /obj/projectile/leaper
@@ -119,7 +118,6 @@
 	cooldown_time = 10 SECONDS
 	click_to_activate = FALSE
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 	/// how many droplets we will fire
 	var/volley_count = 8
 	/// time between each droplet launched
@@ -197,7 +195,6 @@
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 
 /datum/action/cooldown/mob_cooldown/belly_flop/Activate(atom/target)
 	var/turf/target_turf = get_turf(target)

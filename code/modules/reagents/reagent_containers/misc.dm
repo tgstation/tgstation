@@ -128,6 +128,7 @@
 	has_variable_transfer_amount = FALSE
 	volume = 5
 	spillable = FALSE
+	reagent_container_liquid_sound = null
 
 /obj/item/reagent_containers/cup/rag/Initialize(mapload)
 	. = ..()

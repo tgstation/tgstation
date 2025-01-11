@@ -21,7 +21,8 @@
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_ATTACK_PAW
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	/// How many prior grand rituals have been completed?
 	var/potency = 0
 	/// Time to take per invocation of rune.
@@ -78,6 +79,7 @@
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
 	announce_rune()
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
 /// I cast Summon Security
 /obj/effect/grand_rune/proc/announce_rune()
@@ -251,7 +253,7 @@
 	var/location_sanity = 0
 	// Copied from the influences manager, but we don't want to obey the cap on influences per heretic.
 	while(created < to_create && location_sanity < 100)
-		var/turf/chosen_location = get_safe_random_station_turf()
+		var/turf/chosen_location = get_safe_random_station_turf_equal_weight()
 
 		// We don't want them close to each other - at least 1 tile of separation
 		var/list/nearby_things = range(1, chosen_location)
@@ -393,7 +395,7 @@
 	mergeable_decal = FALSE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clean_type = CLEAN_TYPE_HARD_DECAL
-	layer = SIGIL_LAYER
+	layer = RUNE_LAYER
 
 /obj/effect/decal/cleanable/grand_remains/cheese
 	name = "cheese soot marks"

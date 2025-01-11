@@ -19,7 +19,7 @@
 	icon_dead = "base_dead"
 	icon_gib = "carp_gib"
 	gold_core_spawnable = HOSTILE_SPAWN
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
 	health = 25
 	maxHealth = 25
 	pressure_resistance = 200
@@ -59,7 +59,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack
+		/datum/pet_command/attack
 	)
 	/// Carp want to eat raw meat
 	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
@@ -81,6 +81,16 @@
 		/obj/structure/window,
 	))
 
+/datum/emote/carp
+	mob_type_allowed_typecache = /mob/living/basic/carp
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/carp/bloop
+	key = "bloop"
+	key_third_person = "bloops"
+	message = "bloops!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
 	. = ..()
@@ -96,11 +106,13 @@
 
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
+	AddComponent(/datum/component/profound_fisher)
 	if (tamer)
 		tamed(tamer, feedback = FALSE)
 		befriend(tamer)
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5)
+		var/static/list/food_types = list(/obj/item/food/meat)
+		AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 10, bonus_tame_chance = 5)
 
 	teleport = new(src)
 	teleport.Grant(src)
@@ -122,7 +134,6 @@
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
 /mob/living/basic/carp/tamed(mob/living/tamer, atom/food, feedback = TRUE)
-	buckle_lying = 0
 	AddElement(/datum/element/ridable, ridable_data)
 	AddComponent(/datum/component/obeys_commands, tamed_commands)
 	if (!feedback)
@@ -185,7 +196,7 @@
 /mob/living/basic/carp/pet/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/pet_bonus, "bloops happily!")
+	AddElement(/datum/element/pet_bonus, "bloop")
 
 /**
  * Lia - Sometimes the pet of the Head of Security.
@@ -290,7 +301,7 @@
 /mob/living/basic/carp/passive/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(on_attacked)))
-	AddElement(/datum/element/pet_bonus, "bloops happily!")
+	AddElement(/datum/element/pet_bonus, "bloop")
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 
 /// If someone slaps one of the school, scatter

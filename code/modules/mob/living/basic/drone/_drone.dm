@@ -131,9 +131,9 @@
 		/obj/item/weldingtool/drone,
 		/obj/item/wirecutters/drone,
 		/obj/item/multitool/drone,
-		/obj/item/pipe_dispenser,
-		/obj/item/t_scanner,
-		/obj/item/analyzer,
+		/obj/item/pipe_dispenser/drone,
+		/obj/item/t_scanner/drone,
+		/obj/item/analyzer/drone,
 		/obj/item/rack_parts,
 	)
 	/// whitelisted drone items, recursive/includes descendants
@@ -219,21 +219,18 @@
 	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
 
 /mob/living/basic/drone/med_hud_set_health()
-	var/image/holder = hud_list[DIAG_HUD]
-	var/icon/hud_icon = icon(icon, icon_state, dir)
-	holder.pixel_y = hud_icon.Height() - ICON_SIZE_Y
-	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
+	set_hud_image_state(DIAG_HUD, "huddiag[RoundDiagBar(health/maxHealth)]")
 
 /mob/living/basic/drone/med_hud_set_status()
-	var/image/holder = hud_list[DIAG_STAT_HUD]
-	var/icon/hud_icon = icon(icon, icon_state, dir)
-	holder.pixel_y = hud_icon.Height() - ICON_SIZE_Y
 	if(stat == DEAD)
-		holder.icon_state = "huddead2"
-	else if(incapacitated)
-		holder.icon_state = "hudoffline"
-	else
-		holder.icon_state = "hudstat"
+		set_hud_image_state(DIAG_STAT_HUD, "huddead2")
+		return
+
+	if(incapacitated)
+		set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
+		return
+
+	set_hud_image_state(DIAG_STAT_HUD, "hudstat")
 
 /mob/living/basic/drone/Destroy()
 	GLOB.drones_list -= src
@@ -348,6 +345,9 @@
 		to_chat(src, span_warning("Using [machine] could break your laws."))
 		return COMPONENT_CANT_INTERACT_WIRES
 
+/mob/living/basic/drone/proc/init_shy_in_room_component(list/drone_bad_areas)
+	if(CONFIG_GET(flag/drone_area_interaction_restrict))
+		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
 
 /mob/living/basic/drone/proc/set_shy(new_shy)
 	shy = new_shy
@@ -366,8 +366,8 @@
 		REMOVE_TRAIT(src, TRAIT_CAN_STRIP, DRONE_SHY_TRAIT) // To shy to touch someone elses hat
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		LoadComponent(/datum/component/shy, mob_whitelist=not_shy_of, shy_range=3, message="Your laws prevent this action near %TARGET.", keyless_shy=FALSE, clientless_shy=TRUE, dead_shy=FALSE, dead_shy_immediate=TRUE, machine_whitelist=shy_machine_whitelist)
-		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
-		LoadComponent(/datum/component/technoshy, 1 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
+		init_shy_in_room_component(drone_bad_areas)
+		LoadComponent(/datum/component/technoshy, 20 SECONDS, "%TARGET was touched by a being recently, using it could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
 		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, PROC_REF(blacklist_on_try_use_machine))
 		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, PROC_REF(blacklist_on_try_wires_interact))

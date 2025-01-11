@@ -19,10 +19,19 @@
 	hitsound = 'sound/items/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5
+	/// How many interactions are we currently performing
+	var/current_interactions = 0
+	/// Items we should not interact with when left clicking
+	var/static/list/lmb_exception_typecache = typecacheof(list(
+		/obj/structure/table,
+		/obj/structure/rack,
+		/obj/structure/closet,
+		/obj/machinery/disposal,
+	))
 
 /obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()
@@ -32,10 +41,78 @@
 			latches = "double_latch"
 			if(prob(1))
 				latches = "triple_latch"
+				if(prob(0.1))
+					latches = "quad_latch" // like winning the lottery, but worse
 	update_appearance()
 	atom_storage.open_sound = 'sound/items/handling/toolbox/toolbox_open.ogg'
 	atom_storage.rustle_sound = 'sound/items/handling/toolbox/toolbox_rustle.ogg'
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
+
+/obj/item/storage/toolbox/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (user.combat_mode || !user.has_hand_for_held_index(user.get_inactive_hand_index()))
+		return NONE
+
+	if (is_type_in_typecache(interacting_with, lmb_exception_typecache) && !LAZYACCESS(modifiers, RIGHT_CLICK))
+		return NONE
+
+	if (current_interactions)
+		var/obj/item/other_tool = user.get_inactive_held_item()
+		if (!istype(other_tool)) // what even
+			return NONE
+		INVOKE_ASYNC(src, PROC_REF(use_tool_on), interacting_with, user, modifiers, other_tool)
+		return ITEM_INTERACT_SUCCESS
+
+	if (user.get_inactive_held_item())
+		user.balloon_alert(user, "hands busy!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/list/item_radial = list()
+	for (var/obj/item/tool in atom_storage.real_location)
+		if(is_type_in_list(tool, GLOB.tool_items))
+			item_radial[tool] = tool.appearance
+
+	if (!length(item_radial))
+		return NONE
+
+	playsound(user, 'sound/items/handling/toolbox/toolbox_open.ogg', 50)
+	var/obj/item/picked_item = show_radial_menu(user, interacting_with, item_radial, require_near = TRUE)
+	if (!picked_item)
+		return ITEM_INTERACT_BLOCKING
+
+	playsound(user, 'sound/items/handling/toolbox/toolbox_rustle.ogg', 50)
+	if (!user.put_in_inactive_hand(picked_item))
+		return ITEM_INTERACT_BLOCKING
+
+	atom_storage.animate_parent()
+	if (istype(picked_item, /obj/item/weldingtool))
+		var/obj/item/weldingtool/welder = picked_item
+		if (!welder.welding)
+			welder.attack_self(user)
+
+	if (istype(picked_item, /obj/item/spess_knife))
+		picked_item.attack_self(user)
+
+	INVOKE_ASYNC(src, PROC_REF(use_tool_on), interacting_with, user, modifiers, picked_item)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/storage/toolbox/proc/use_tool_on(atom/interacting_with, mob/living/user, list/modifiers, obj/item/picked_tool)
+	current_interactions += 1
+	picked_tool.melee_attack_chain(user, interacting_with, list2params(modifiers))
+	current_interactions -= 1
+
+	if (QDELETED(picked_tool) || picked_tool.loc != user || !user.CanReach(picked_tool))
+		current_interactions = 0
+		return
+
+	if (current_interactions)
+		return
+
+	if (istype(picked_tool, /obj/item/weldingtool))
+		var/obj/item/weldingtool/welder = picked_tool
+		if (welder.welding)
+			welder.attack_self(user)
+
+	atom_storage.attempt_insert(picked_tool, user)
 
 /obj/item/storage/toolbox/update_overlays()
 	. = ..()
@@ -106,6 +183,12 @@
 
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
+
+// version of below that isn't a traitor item
+/obj/item/storage/toolbox/mechanical/old/cleaner
+	name = "old blue toolbox"
+	icon_state = "oldtoolboxclean"
+	icon_state = "toolbox_blue_old"
 
 /obj/item/storage/toolbox/mechanical/old/clean // the assistant traitor toolbox, damage scales with TC inside
 	name = "toolbox"
@@ -225,6 +308,51 @@
 	new /obj/item/stack/pipe_cleaner_coil/white(src)
 	new /obj/item/stack/pipe_cleaner_coil/brown(src)
 
+/obj/item/storage/toolbox/medical
+	name = "medical toolbox"
+	desc = "A toolbox painted soft white and light blue. This is getting ridiculous."
+	icon_state = "medical"
+	inhand_icon_state = "toolbox_medical"
+	attack_verb_continuous = list("treats", "surgeries", "tends", "tends wounds on")
+	attack_verb_simple = list("treat", "surgery", "tend", "tend wounds on")
+	w_class = WEIGHT_CLASS_BULKY
+	material_flags = NONE
+	force = 5 // its for healing
+	wound_bonus = 25 // wounds are medical right?
+	/// Tray we steal the og contents from.
+	var/obj/item/surgery_tray/tray_type = /obj/item/surgery_tray
+
+/obj/item/storage/toolbox/medical/Initialize(mapload)
+	. = ..()
+	// what do any of these numbers fucking mean
+	atom_storage.max_total_storage = 20
+	atom_storage.max_slots = 11
+
+/obj/item/storage/toolbox/medical/PopulateContents()
+	var/atom/fake_tray = new tray_type(get_turf(src)) // not in src lest it fill storage that we need for its tools later
+	for(var/atom/movable/thingy in fake_tray)
+		thingy.forceMove(src)
+	qdel(fake_tray)
+
+/obj/item/storage/toolbox/medical/full
+	tray_type = /obj/item/surgery_tray/full
+
+/obj/item/storage/toolbox/medical/coroner
+	name = "coroner toolbox"
+	desc = "A toolbox painted soft white and dark grey. This is getting beyond ridiculous."
+	icon_state = "coroner"
+	inhand_icon_state = "toolbox_coroner"
+	attack_verb_continuous = list("dissects", "autopsies", "corones")
+	attack_verb_simple = list("dissect", "autopsy", "corone")
+	w_class = WEIGHT_CLASS_BULKY
+	material_flags = NONE
+	force = 17 // it's not for healing
+	tray_type = /obj/item/surgery_tray/full/morgue
+
+/obj/item/storage/toolbox/medical/coroner/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, mob_biotypes = MOB_UNDEAD, damage_multiplier = 1) //Just in case one of the tennants get uppity
+
 /obj/item/storage/toolbox/ammobox
 	name = "ammo canister"
 	desc = "A metal canister designed to hold ammunition"
@@ -273,9 +401,9 @@
 	new /obj/item/gun_maintenance_supplies(src)
 	new /obj/item/gun_maintenance_supplies(src)
 
-//floorbot assembly
+//repairbot assembly
 /obj/item/storage/toolbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/stack/tile/iron))
+	if(!istype(tool, /obj/item/assembly/prox_sensor))
 		return ..()
 	var/static/list/allowed_toolbox = list(
 		/obj/item/storage/toolbox/artistic,
@@ -290,26 +418,22 @@
 	if(contents.len >= 1)
 		balloon_alert(user, "not empty!")
 		return ITEM_INTERACT_BLOCKING
-	if(tool.use(10))
-		var/obj/item/bot_assembly/floorbot/B = new
-		B.toolbox = type
-		switch(B.toolbox)
-			if(/obj/item/storage/toolbox)
-				B.toolbox_color = "r"
-			if(/obj/item/storage/toolbox/emergency)
-				B.toolbox_color = "r"
-			if(/obj/item/storage/toolbox/electrical)
-				B.toolbox_color = "y"
-			if(/obj/item/storage/toolbox/artistic)
-				B.toolbox_color = "g"
-			if(/obj/item/storage/toolbox/syndicate)
-				B.toolbox_color = "s"
-		user.put_in_hands(B)
-		B.update_appearance()
-		B.balloon_alert(user, "tiles added")
-		qdel(src)
-		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "needs 10 tiles!")
+	var/static/list/toolbox_colors = list(
+		/obj/item/storage/toolbox = "#445eb3",
+		/obj/item/storage/toolbox/emergency = "#445eb3",
+		/obj/item/storage/toolbox/electrical = "#b77931",
+		/obj/item/storage/toolbox/artistic = "#378752",
+		/obj/item/storage/toolbox/syndicate = "#3d3d3d",
+	)
+	var/obj/item/bot_assembly/repairbot/repair = new
+	repair.toolbox = type
+	var/new_color = toolbox_colors[type] || "#445eb3"
+	repair.set_color(new_color)
+	user.put_in_hands(repair)
+	repair.update_appearance()
+	repair.balloon_alert(user, "sensor added!")
+	qdel(tool)
+	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/toolbox/haunted
@@ -338,6 +462,78 @@
 	new weapon_to_spawn (src)
 	for(var/i in 1 to 3)
 		new extra_to_spawn (src)
+
+/obj/item/storage/toolbox/guncase/traitor
+	name = "makarov gun case"
+	desc = "A weapon's case. Has a blood-red 'S' stamped on the cover. There seems to be a strange switch along the side inside a plastic flap."
+	icon_state = "pistol_case"
+	base_icon_state = "pistol_case"
+	// What ammo box do we spawn in our case?
+	var/ammo_box_to_spawn = /obj/item/ammo_box/c9mm
+	// Timer for the bomb in the case.
+	var/explosion_timer
+	// Whether or not our case is exploding. Used for determining sprite changes.
+	var/currently_exploding = FALSE
+
+/obj/item/storage/toolbox/guncase/traitor/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/storage/toolbox/guncase/traitor/examine(mob/user)
+	. = ..()
+	. += span_notice("Activate the Evidence Disposal Explosive using Alt-Right-Click.")
+
+/obj/item/storage/toolbox/guncase/traitor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Activate Evidence Disposal Explosive"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/storage/toolbox/guncase/traitor/PopulateContents()
+	new weapon_to_spawn (src)
+	for(var/i in 1 to 2)
+		new extra_to_spawn (src)
+	new ammo_box_to_spawn(src)
+
+/obj/item/storage/toolbox/guncase/traitor/update_icon_state()
+	. = ..()
+	if(currently_exploding)
+		icon_state = "[base_icon_state]_exploding"
+	else
+		icon_state = "[base_icon_state]"
+
+/obj/item/storage/toolbox/guncase/traitor/click_alt_secondary(mob/user)
+	. = ..()
+	var/i_dont_even_think_once_about_blowing_stuff_up = tgui_alert(user, "Would you like to activate the evidence disposal bomb now?", "BYE BYE", list("Yes","No"))
+	if(i_dont_even_think_once_about_blowing_stuff_up == "No")
+		return
+	explosion_timer = addtimer(CALLBACK(src, PROC_REF(think_fast_chucklenuts)), 5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE))
+	to_chat(user, span_warning("You prime [src]'s evidence disposal bomb!"))
+	log_bomber(user, "has activated a", src, "for detonation")
+	playsound(src, 'sound/items/weapons/armbomb.ogg', 50, TRUE)
+	currently_exploding = TRUE
+	update_appearance()
+
+/// proc to handle our detonation
+/obj/item/storage/toolbox/guncase/traitor/proc/think_fast_chucklenuts()
+	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 2, explosion_cause = src)
+	qdel(src)
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition
+	name = "makarov 9mm magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/m9mm
+
+/obj/item/storage/toolbox/guncase/traitor/donksoft
+	name = "\improper Donksoft riot pistol gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine
+	extra_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	ammo_box_to_spawn = /obj/item/ammo_box/foambox/riot
+
+/obj/item/storage/toolbox/guncase/traitor/ammunition/donksoft
+	name = "\improper Donksoft riot pistol magazine case"
+	weapon_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	extra_to_spawn = /obj/item/ammo_box/magazine/toy/pistol/riot
+	ammo_box_to_spawn = /obj/item/ammo_box/foambox/riot
 
 /obj/item/storage/toolbox/guncase/bulldog
 	name = "bulldog gun case"
@@ -381,7 +577,7 @@
 
 /obj/item/storage/toolbox/guncase/revolver
 	name = "revolver gun case"
-	weapon_to_spawn = /obj/item/gun/ballistic/revolver/syndicate/nuclear
+	weapon_to_spawn = /obj/item/gun/ballistic/revolver/badass/nuclear
 	extra_to_spawn = /obj/item/ammo_box/a357
 
 /obj/item/storage/toolbox/guncase/sword_and_board

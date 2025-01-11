@@ -44,7 +44,6 @@
 		return
 	var/datum/fish_evolution/evolution = GLOB.fish_evolutions[result_type]
 	evolution.RegisterSignal(parent, COMSIG_FISH_BEFORE_GROWING, TYPE_PROC_REF(/datum/fish_evolution, growth_checks))
-	evolution.register_fish(parent)
 
 /datum/component/fish_growth/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_FISH_LIFE, COMSIG_FISH_BEFORE_GROWING))
@@ -55,7 +54,9 @@
 		return
 	var/deciseconds_elapsed = seconds_per_tick * 10
 	var/growth = growth_rate * deciseconds_elapsed
-	if(SEND_SIGNAL(source, COMSIG_FISH_BEFORE_GROWING, seconds_per_tick, growth) & COMPONENT_DONT_GROW)
+	if(HAS_TRAIT(source, TRAIT_FISH_QUICK_GROWTH))
+		growth *= 2
+	if(SEND_SIGNAL(source, COMSIG_FISH_BEFORE_GROWING, seconds_per_tick, growth, result_type) & COMPONENT_DONT_GROW)
 		return
 	maturation += growth
 	if(maturation >= 100)
@@ -86,15 +87,15 @@
 			addtimer(CALLBACK(result, TYPE_PROC_REF(/mob/living/basic, hop_on_nearby_turf)), 0.1 SECONDS)
 
 	if(is_evo || location == source.loc)
-		var/message_verb = del_on_grow ? "grows into" : "generates"
+		var/message_verb = del_on_grow ? "grows into" : "lays"
 		location.visible_message(span_notice("[source] [message_verb] \a [result]."), vision_distance = 3)
 
-	if(inherit_name && source.name != initial(source.name))
+	if(inherit_name && HAS_TRAIT(source, TRAIT_WAS_RENAMED))
 		if(ismob(result))
 			var/mob/mob = result
 			mob.fully_replace_character_name(mob.name, source.name)
 		else
-			result.name = source.name
+			result.AddComponent(/datum/component/rename, source.name, result.desc)
 
 	SEND_SIGNAL(source, COMSIG_FISH_FINISH_GROWING, result)
 

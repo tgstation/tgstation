@@ -28,8 +28,8 @@
 /obj/machinery/power/manufacturing/crusher/receive_resource(obj/receiving, atom/from, receive_dir)
 	if(istype(receiving, /obj/item/stack/ore) || receiving.resistance_flags & INDESTRUCTIBLE || !isitem(receiving) || surplus() < crush_cost  || receive_dir != REVERSE_DIR(dir))
 		return MANUFACTURING_FAIL
-	if(!may_merge_in_contents(receiving) && length(contents - circuit) >= capacity)
-		return MANUFACTURING_FAIL_FULL
+	if(length(contents - circuit) >= capacity && may_merge_in_contents_and_do_so(receiving))
+		return MANUFACTURING_FAIL
 	receiving.Move(src, get_dir(receiving, src))
 	START_PROCESSING(SSmanufacturing, src)
 	return MANUFACTURING_SUCCESS
@@ -39,7 +39,7 @@
 	if(gone == withholding)
 		withholding = null
 
-/obj/machinery/power/manufacturing/crusher/process(seconds_per_tick) //noot functional
+/obj/machinery/power/manufacturing/crusher/process(seconds_per_tick)
 	if(!isnull(withholding) && !send_resource(withholding, dir))
 		return
 	for(var/material in held_mats)

@@ -36,12 +36,23 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/ant
 
+/datum/emote/ant
+	mob_type_allowed_typecache = /mob/living/basic/ant
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/ant/clack
+	key = "clack"
+	key_third_person = "clacks"
+	message = "clacks happily!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
 /mob/living/basic/ant/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	AddElement(/datum/element/pet_bonus, "clacks happily!")
+	AddElement(/datum/element/pet_bonus, "clack")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/basic_allergenic_attack, allergen = BUGS, allergen_chance = 20, histamine_add = 5)
 
 /datum/ai_controller/basic_controller/ant
 	blackboard = list(

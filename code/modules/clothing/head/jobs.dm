@@ -128,6 +128,7 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#0070B7#FFCE5B"
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM
 
 //Head of Personnel
 /obj/item/clothing/head/hats/hopcap
@@ -392,6 +393,7 @@
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM
 
 //Security
 /obj/item/clothing/head/hats/hos
@@ -447,6 +449,7 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#39393f#f0cc8f"
+	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM
 
 /obj/item/clothing/head/hats/hos/beret/navyhos
 	name = "head of security's formal beret"
@@ -626,7 +629,7 @@
 
 /obj/item/clothing/head/utility/surgerycap/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2) //FISH DOCTOR?!
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/head/utility/surgerycap/attack_self(mob/user)
 	. = ..()
@@ -672,7 +675,7 @@
 
 /obj/item/clothing/head/utility/head_mirror/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2) //FISH DOCTOR?!
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/head/utility/head_mirror/examine(mob/user)
 	. = ..()
@@ -707,7 +710,7 @@
 	if(human_examined.is_mouth_covered())
 		final_message += "\tYou can't see [examining.p_their()] mouth."
 	else
-		var/obj/item/organ/internal/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
+		var/obj/item/organ/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
 		var/pill_count = 0
 		for(var/datum/action/item_action/activate_pill/pill in human_examined.actions)
 			pill_count++
@@ -724,7 +727,7 @@
 	if(human_examined.is_ears_covered())
 		final_message += "\tYou can't see [examining.p_their()] ears."
 	else
-		var/obj/item/organ/internal/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
 		if(has_ears)
 			if(has_ears.deaf)
 				final_message += "\tDamaged eardrums in [examining.p_their()] ear canals."
@@ -736,7 +739,7 @@
 	if(human_examined.is_eyes_covered())
 		final_message += "\tYou can't see [examining.p_their()] eyes."
 	else
-		var/obj/item/organ/internal/eyes/has_eyes = human_examined.get_organ_slot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/eyes/has_eyes = human_examined.get_organ_slot(ORGAN_SLOT_EYES)
 		if(has_eyes)
 			final_message += "\tA pair of [has_eyes.damage ? "" : "healthy "][has_eyes.name]."
 		else

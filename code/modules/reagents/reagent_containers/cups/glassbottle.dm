@@ -4,24 +4,13 @@
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
-/// Initializes GLOB.alcohol_containers, only containers that actually have reagents are added to the list.
-/proc/init_alcohol_containers()
-	var/list/containers = subtypesof(/obj/item/reagent_containers/cup/glass/bottle)
-	for(var/typepath in containers)
-		containers -= typepath
-		var/obj/item/reagent_containers/cup/glass/bottle/instance = new typepath
-		if(!length(instance.list_reagents))
-			qdel(instance)
-			continue
-		containers[typepath] = instance
-	return containers
-
 /obj/item/reagent_containers/cup/glass/bottle
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "glassbottle"
 	worn_icon_state = "bottle"
+	icon_angle = 90
 	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
 	custom_price = PAYCHECK_CREW * 1.1
 	amount_per_transfer_from_this = 10
@@ -33,7 +22,6 @@
 	var/broken_inhand_icon_state = "broken_beer"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
-	drink_type = ALCOHOL
 	age_restricted = TRUE // wrryy can't set an init value to see if drink_type contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
@@ -320,6 +308,7 @@
 	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
 	icon_state = "litebeer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/rootbeer
 	name = "Two-Time root beer"
@@ -345,47 +334,53 @@
 	desc = "A bottle of high quality gin, produced in the New London Space Station."
 	icon_state = "ginbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/gin = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/whiskey
 	name = "Uncle Git's special reserve"
 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/kong
 	name = "Kong"
 	desc = "Makes You Go Ape!&#174;"
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey/kong = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/candycornliquor
 	name = "candy corn liquor"
 	desc = "Like they drank in 2D speakeasies."
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey/candycorn = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/vodka
 	name = "Tunguska triple distilled"
 	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
 	icon_state = "vodkabottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/vodka = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka
 	name = "Badminka vodka"
 	desc = "The label's written in Cyrillic. All you can make out is the name and a word that looks vaguely like 'Vodka'."
 	icon_state = "badminka"
 	list_reagents = list(/datum/reagent/consumable/ethanol/vodka = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/tequila
 	name = "Caccavo guaranteed quality tequila"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
 	icon_state = "tequilabottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/tequila = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/bottleofnothing
 	name = "bottle of nothing"
 	desc = "A bottle filled with nothing."
 	icon_state = "bottleofnothing"
 	list_reagents = list(/datum/reagent/consumable/nothing = 100)
-	drink_type = NONE
 	age_restricted = FALSE
 
 /obj/item/reagent_containers/cup/glass/bottle/patron
@@ -393,18 +388,21 @@
 	desc = "Silver laced tequila, served in space night clubs across the galaxy."
 	icon_state = "patronbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/patron = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/rum
 	name = "Captain Pete's Cuban spiced rum"
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
 	icon_state = "rumbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rum = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/rum/aged
 	name = "Captain Pete's Vintage spiced rum"
 	desc = "Shiver me timbers, a vintage edition of Captain Pete's rum. It's pratically GRIFF in a bottle from over 50 years ago."
 	icon_state = "rumbottle_gold"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rum/aged = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/maltliquor
 	name = "\improper Rabid Bear malt liquor"
@@ -412,6 +410,7 @@
 	icon_state = "maltliquorbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/maltliquor = 100)
 	custom_price = PAYCHECK_CREW
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/holywater
 	name = "flask of holy water"
@@ -421,7 +420,6 @@
 	inhand_icon_state = "holyflask"
 	broken_inhand_icon_state = "broken_holyflask"
 	list_reagents = list(/datum/reagent/water/holywater = 100)
-	drink_type = NONE
 
 /obj/item/reagent_containers/cup/glass/bottle/holywater/add_message_overlay()
 	return //looks too weird...
@@ -436,6 +434,7 @@
 	desc = "Sweet, sweet dryness~"
 	icon_state = "vermouthbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/vermouth = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/kahlua
 	name = "Robert Robust's coffee liqueur"
@@ -449,12 +448,14 @@
 	desc = "Because they are the only ones who will drink 100 proof cinnamon schnapps."
 	icon_state = "goldschlagerbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/goldschlager = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/cognac
 	name = "Chateau de Baton premium cognac"
 	desc = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time."
 	icon_state = "cognacbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/cognac = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/wine
 	name = "Doublebeard's bearded special wine"
@@ -502,6 +503,7 @@
 	desc = "A strong alcoholic drink brewed and distributed by"
 	icon_state = "absinthebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/absinthe/Initialize(mapload)
 	. = ..()
@@ -551,6 +553,7 @@
 	name = "Gwyn's premium absinthe"
 	desc = "A potent alcoholic beverage, almost makes you forget the ash in your lungs."
 	icon_state = "absinthepremium"
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium/redact()
 	return
@@ -568,24 +571,28 @@
 	icon_state = "hcider"
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/ethanol/hcider = 50)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/amaretto
 	name = "Luini Amaretto"
 	desc = "A gentle, syrupy drink that tastes of almonds and apricots."
 	icon_state = "disaronno"
 	list_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/grappa
 	name = "Phillipes well-aged Grappa"
 	desc = "Bottle of Grappa."
 	icon_state = "grappabottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/grappa = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/sake
 	name = "Ryo's traditional sake"
 	desc = "Sweet as can be, and burns like fire going down."
 	icon_state = "sakebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/sake = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/sake/Initialize(mapload)
 	if(prob(10))
@@ -608,6 +615,7 @@
 	desc = "A bottle of pure Fernet Bronca, produced in Cordoba Space Station"
 	icon_state = "fernetbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/fernet = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/bitters
 	name = "Andromeda Bitters"
@@ -615,12 +623,14 @@
 	icon_state = "bitters_bottle"
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/ethanol/bitters = 30)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/curacao
 	name = "Beekhof Blauw Curaçao"
 	desc = "Still produced on the island of Curaçao, after all these years."
 	icon_state = "curacao_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/curacao = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/curacao/add_message_overlay()
 	return //doesn't fit the sprite
@@ -630,6 +640,7 @@
 	desc = "Ironically named, given it's made in Bermuda."
 	icon_state = "navy_rum_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/grenadine
 	name = "Jester Grenadine"
@@ -664,6 +675,7 @@
 	reagent_flags = TRANSPARENT
 	spillable = FALSE
 	list_reagents = list(/datum/reagent/consumable/ethanol/champagne = 100)
+	drink_type = ALCOHOL
 	///Used for sabrage; increases the chance of success per 1 force of the attacking sharp item
 	var/sabrage_success_percentile = 5
 	///Whether this bottle was a victim of a successful sabrage attempt
@@ -688,7 +700,7 @@
 	if(spillable)
 		return
 
-	if(attacking_item.sharpness != SHARP_EDGED)
+	if(attacking_item.get_sharpness() != SHARP_EDGED)
 		return
 
 	if(attacking_item != user.get_active_held_item()) //no TK allowed
@@ -705,7 +717,7 @@
 		return
 
 	//The bonus to success chance that the user gets for being a command role
-	var/obj/item/organ/internal/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
 	var/command_bonus = (!isnull(liver) && HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM)) ? 20 : 0
 
 	//The bonus to success chance that the user gets for having a sabrage skillchip installed/otherwise having the trait through other means
@@ -817,6 +829,7 @@
 	desc = "You feel like you should give the bottle a good rub before opening."
 	icon_state = "blazaambottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/blazaam = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/trappist
 	name = "Mont de Requin Trappistes Bleu"
@@ -824,12 +837,14 @@
 	icon_state = "trappistbottle"
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/ethanol/trappist = 50)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/hooch
 	name = "hooch bottle"
 	desc = "A bottle of rotgut. Its owner has applied some street wisdom to cleverly disguise it as a brown paper bag."
 	icon_state = "hoochbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/hooch = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/hooch/add_message_overlay()
 	return //doesn't fit the sprite
@@ -839,6 +854,7 @@
 	desc = "It is said that the ancient Applalacians used these stoneware jugs to capture lightning in a bottle."
 	icon_state = "moonshinebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/moonshine/add_message_overlay()
 	return //doesn't fit the sprite
@@ -850,6 +866,7 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/ethanol/mushi_kombucha = 30)
 	isGlass = FALSE
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/hakka_mate
 	name = "Hakka-Mate"
@@ -862,18 +879,21 @@
 	desc = "A boozier form of shochu designed for mixing. Comes straight from Mars' Dusty City itself, Shu-Kouba."
 	icon_state = "shochu_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/shochu = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/yuyake
 	name = "Moonlabor Yūyake"
 	desc = "The distilled essence of disco and flared pants, captured like lightning in a bottle."
 	icon_state = "yuyake_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/yuyake = 100)
+	drink_type = ALCOHOL
 
 /obj/item/reagent_containers/cup/glass/bottle/coconut_rum
 	name = "Breezy Shoals Coconut Rum"
 	desc = "Live the breezy life with Breezy Shoals, made with only the *finest Caribbean rum."
 	icon_state = "coconut_rum_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 100)
+	drink_type = ALCOHOL
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/cup/glass/bottle/molotov

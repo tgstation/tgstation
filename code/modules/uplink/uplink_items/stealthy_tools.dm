@@ -19,8 +19,9 @@
 /datum/uplink_item/stealthy_tools/ai_detector
 	name = "Artificial Intelligence Detector"
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it, and can be \
-			activated to get an rough estimate of the AI's presence. Knowing when \
-			an artificial intelligence is watching you is useful for knowing when to maintain cover."
+			activated to display their exact viewing location. Knowing when \
+			an artificial intelligence is watching you is useful for knowing when to maintain cover, and finding nearby \
+			blind spots can help you identify escape routes."
 	item = /obj/item/multitool/ai_detect
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	cost = 1
@@ -95,10 +96,20 @@
 
 /datum/uplink_item/stealthy_tools/mail_counterfeit
 	name = "GLA Brand Mail Counterfeit Device"
-	desc = "Device that actually able to counterfeit NT's mail. This device also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also it might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs."
+	desc = "A device capable of counterfeiting NT's mail. Can be used to store items within as an easy means of smuggling contraband. \
+			Additionally, you may choose to \"arm\" the item inside, causing the item to be used the moment the mail is opened as if the person had just used it in hand. \
+			The most common usage of this feature is with grenades, as it forces the grenade to prime. Bonus points if the grenade is set to instantly detonate. \
+			Comes with an integrated micro-computer for configuration purposes."
 	item = /obj/item/storage/mail_counterfeit_device
 	cost = 1
 	surplus = 30
+
+/datum/uplink_item/stealthy_tools/forensics_spofer
+	name = "Forensics Spoofing Kit"
+	desc = "A box that contains the forensics spoofer (and instructions) which can scan and replicate fingerprints and fibers \
+			and apply them to a target object. Helpful for framing crew. Recommend buying soap with your purchase."
+	item = /obj/item/storage/box/syndie_kit/forensics_spoofer
+	cost = 5
 
 /datum/uplink_item/stealthy_tools/telecomm_blackout
 	name = "Disable Telecomms"

@@ -445,7 +445,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	for(var/type_index as anything in hat_selections)
 		if(level >= hat_selections[type_index])
 			var/obj/item/hat = type_index
-			var/obj/item/hat_name = initial(hat.name)
+			var/hat_name = initial(hat.name)
 			if(length(SSachievements.achievements)) // The Achievements subsystem is active.
 				var/datum/award/required_cheevo = cheevo_hats[hat]
 				if(required_cheevo && !user.client.get_award_status(required_cheevo))
@@ -486,7 +486,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 			if(pet.loc == computer)
 				release_pet(ui.user)
 			else
-				recall_pet()
+				recall_pet(ui.user)
 			COOLDOWN_START(src, summon_cooldown, 10 SECONDS)
 
 		if("apply_customization")
@@ -559,6 +559,9 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 				return TRUE
 			if(!isnull(trick_name))
 				pet.ai_controller.set_blackboard_key(BB_TRICK_NAME, trick_name)
+			for (var/trick_move in trick_sequence)
+				if (!length(GLOB.emote_list[LOWER_TEXT(trick_move)]))
+					trick_sequence -= trick_move
 			pet.ai_controller.override_blackboard_key(BB_TRICK_SEQUENCE, trick_sequence)
 			playsound(computer.loc, 'sound/mobs/non-humanoids/orbie/orbie_trick_learned.ogg', 50)
 
@@ -582,9 +585,10 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	var/obj/item/food/virtual_chocolate/chocolate = new(get_turf(computer))
 	chocolate.AddElement(/datum/element/temporary_atom, life_time = 30 SECONDS) //we cant maintain its existence for too long!
 
-/datum/computer_file/program/virtual_pet/proc/recall_pet()
+/datum/computer_file/program/virtual_pet/proc/recall_pet(mob/living/friend)
 	animate(pet, transform = matrix().Scale(0.3, 0.3), time = 1.5 SECONDS)
 	addtimer(CALLBACK(pet, TYPE_PROC_REF(/atom/movable, forceMove), computer), 1.5 SECONDS)
+	SEND_SIGNAL(pet, COMSIG_VIRTUAL_PET_RECALLED, friend)
 
 /datum/computer_file/program/virtual_pet/proc/release_pet(mob/living/our_user)
 	var/turf/drop_zone
@@ -599,6 +603,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	animate(pet, transform = matrix(), time = 1.5 SECONDS)
 	pet.forceMove(final_turf)
 	playsound(computer.loc, 'sound/mobs/non-humanoids/orbie/orbie_send_out.ogg', 20)
+	SEND_SIGNAL(pet, COMSIG_VIRTUAL_PET_SUMMONED, our_user)
 	new /obj/effect/temp_visual/guardian/phase(pet.loc)
 
 #undef PET_MAX_LEVEL

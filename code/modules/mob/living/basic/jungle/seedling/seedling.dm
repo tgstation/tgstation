@@ -80,23 +80,24 @@
 
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddComponent(/datum/component/obeys_commands, seedling_commands)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_can))
 	update_appearance()
 
-/mob/living/basic/seedling/proc/pre_attack(mob/living/puncher, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/seedling/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(istype(target, /obj/machinery/hydroponics))
 		treat_hydro_tray(target)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 	if(isnull(held_can))
-		return
+		return TRUE
 
 	if(istype(target, /obj/structure/sink) || istype(target, /obj/structure/reagent_dispensers))
-		INVOKE_ASYNC(held_can, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, target)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		held_can.melee_attack_chain(src, target)
+		return FALSE
 
 
 ///seedlings can water trays, remove weeds, or remove dead plants
@@ -213,9 +214,9 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/use_ability/solarbeam,
-		/datum/pet_command/point_targeting/use_ability/rapidseeds,
+		/datum/pet_command/attack,
+		/datum/pet_command/use_ability/solarbeam,
+		/datum/pet_command/use_ability/rapidseeds,
 	)
 
 //abilities
@@ -229,7 +230,6 @@
 	default_projectile_spread = 10
 	shot_count = 10
 	shot_delay = 0.2 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	shared_cooldown = NONE
 	///how long we must charge up before firing off
 	var/charge_up_timer = 3 SECONDS

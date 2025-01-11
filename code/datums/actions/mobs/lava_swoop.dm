@@ -144,11 +144,17 @@
 	for(var/turf/T in walled)
 		drakewalls += new /obj/effect/temp_visual/drakewall(T) // no people with lava immunity can just run away from the attack for free
 	var/list/indestructible_turfs = list()
-	for(var/turf/T in RANGE_TURFS(2, center))
-		if(isindestructiblefloor(T))
+
+	for(var/turf/turf_target as anything in RANGE_TURFS(2, center))
+		if(isindestructiblefloor(turf_target))
 			continue
-		if(isindestructiblewall(T))
-			indestructible_turfs += T
+		if(isindestructiblewall(turf_target))
+			indestructible_turfs += turf_target
+			continue
+		if(ismineralturf(turf_target))
+			var/turf/closed/mineral/mineral_turf = turf_target
+			mineral_turf.gets_drilled(owner)
+
 	SLEEP_CHECK_DEATH(1 SECONDS, owner) // give them a bit of time to realize what attack is actually happening
 
 	var/list/turfs = RANGE_TURFS(2, center)

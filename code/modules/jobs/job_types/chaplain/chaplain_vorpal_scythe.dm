@@ -5,28 +5,22 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 #define SCYTHE_SATED 1
 #define SCYTHE_EMPOWERED 2
 
-/obj/item/organ/internal/cyberimp/arm/shard/scythe
+/obj/item/organ/cyberimp/arm/shard/scythe
 	name = "sinister shard"
 	desc = "This shard seems to be directly linked to some sinister entity. It might be your god! It also gives you a really horrible rash when you hold onto it for too long."
 	items_to_create = list(/obj/item/vorpalscythe)
+	organ_traits = list(TRAIT_MORBID)
 
-/obj/item/organ/internal/cyberimp/arm/shard/scythe/mob_insert(mob/living/carbon/receiver, special, movement_flags)
-	. = ..()
-	if(receiver.mind)
-		ADD_TRAIT(receiver.mind, TRAIT_MORBID, ORGAN_TRAIT)
-
-/obj/item/organ/internal/cyberimp/arm/shard/scythe/Retract()
+/obj/item/organ/cyberimp/arm/shard/scythe/Retract()
 	var/obj/item/vorpalscythe/scythe = active_item
 	if(!scythe)
 		return FALSE
-
-	var/obj/item/bodypart/part = hand
-	if(isnull(part) || scythe.empowerment >= SCYTHE_SATED)
+	if(scythe.empowerment >= SCYTHE_SATED)
 		return ..()
 
 	to_chat(owner, span_userdanger("[scythe] tears into you for your unworthy display of arrogance!"))
 	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
-	part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
+	owner.apply_damage(25, BRUTE, hand, wound_bonus = 10, sharpness = SHARP_EDGED)
 	return ..()
 
 /obj/item/vorpalscythe
@@ -36,6 +30,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	icon_state = "vorpalscythe"
 	inhand_icon_state = "vorpalscythe"
 	worn_icon_state = null
+	icon_angle = -35 // Scythes look better when slightly angled
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64

@@ -344,12 +344,32 @@
 		/datum/stock_part/capacitor = 1)
 	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/high/empty)
 
+/obj/item/circuitboard/machine/smes/connector
+	name = "power connector"
+	build_path = /obj/machinery/power/smes/connector
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/datum/stock_part/capacitor = 1,)
+
+/obj/item/circuitboard/machine/smesbank
+	name = "portable SMES"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	needs_anchored = FALSE
+	build_path = /obj/machinery/power/smesbank
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stock_parts/power_store/battery = 5,)
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/high/empty)
+
 /obj/item/circuitboard/machine/techfab/department/engineering
 	name = "\improper Departmental Techfab - Engineering"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/rnd/production/techfab/department/engineering
 
 /obj/item/circuitboard/machine/smes/super
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/super/empty)
+
+/obj/item/circuitboard/machine/smesbank/super
 	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/super/empty)
 
 /obj/item/circuitboard/machine/thermomachine
@@ -1387,7 +1407,7 @@
 
 /obj/item/circuitboard/machine/fishing_portal_generator/emagged
 	name = "Emagged Fishing Portal Generator"
-	build_path = /obj/machinery/fishing_portal_generator
+	build_path = /obj/machinery/fishing_portal_generator/emagged
 
 //Supply
 /obj/item/circuitboard/machine/ore_redemption
@@ -1445,6 +1465,16 @@
 		/obj/item/stack/cable_coil = 5,
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/card_reader = 1)
+
+/obj/item/circuitboard/machine/mailsorter
+	name = "Mail Sorter"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/mailsorter
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/scanning_module = 1)
+	needs_anchored = TRUE
 
 //Tram
 /obj/item/circuitboard/machine/crossing_signal
@@ -1731,7 +1761,7 @@
 	build_path = /obj/machinery/power/manufacturing/lathe
 	req_components = list(
 		/obj/item/stack/sheet/iron = 5,
-		/datum/stock_part/servo = 1,
+		/datum/stock_part/matter_bin = 1,
 	)
 
 /obj/item/circuitboard/machine/manucrusher

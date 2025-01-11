@@ -14,7 +14,7 @@
 	use_glow = FALSE
 
 	end_duration = 100
-	end_message = span_boldannounce("The snowfall dies down, it should be safe to go outside again.")
+	end_message = span_bolddanger("The snowfall dies down, it should be safe to go outside again.")
 
 	area_type = /area
 	protect_indoors = TRUE

@@ -1,6 +1,6 @@
 // For any /obj/vehicle's that can be ridden
 
-/datum/component/riding/vehicle/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = (RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS), potion_boost = FALSE)
+/datum/component/riding/vehicle/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = (RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS))
 	if(!isvehicle(parent))
 		return COMPONENT_INCOMPATIBLE
 	return ..()

@@ -7,6 +7,7 @@
 	name = "Covered in Slime"
 	desc = "You are covered in slime and it's eating away at you! Click to start cleaning it off, or find a faster way to wash it away!"
 	icon_state = "slimed"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/slimed/Click()
 	. = ..()
@@ -64,6 +65,14 @@
 		return FALSE
 	to_chat(owner, span_userdanger("You have been covered in a thick layer of slime! Find a way to wash it off!"))
 	return ..()
+
+/datum/status_effect/slimed/on_remove()
+	owner.remove_shared_particles(rainbow ? "slimed_rainbow" : "slimed_[slime_color]")
+
+/datum/status_effect/slimed/update_particles()
+	var/obj/effect/abstract/shared_particle_holder/holder = owner.add_shared_particles(rainbow ? /particles/slime/rainbow : /particles/slime, rainbow ? "slimed_rainbow" : "slimed_[slime_color]")
+	if (!rainbow)
+		holder.particles.color = "[slime_color]a0"
 
 /datum/status_effect/slimed/proc/remove_stacks(stacks_to_remove = 1)
 	slime_stacks -= stacks_to_remove // lose 1 stack per second

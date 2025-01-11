@@ -36,11 +36,12 @@
 	///overlay for our happy eyes
 	var/static/mutable_appearance/happy_eyes_overlay = mutable_appearance('icons/mob/simple/pets.dmi', "orbie_happy_eye_overlay")
 	///commands we can give orbie
-	var/list/pet_commands = list(
+	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
+		/datum/pet_command/move,
 		/datum/pet_command/untargeted_ability/pet_lights,
-		/datum/pet_command/point_targeting/use_ability/take_photo,
+		/datum/pet_command/use_ability/take_photo,
 		/datum/pet_command/follow/orbie,
 		/datum/pet_command/perform_trick_sequence,
 	)
@@ -52,24 +53,21 @@
 	AddElement(/datum/element/basic_eating, food_types = food_types)
 	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
 
-	RegisterSignal(src, COMSIG_ATOM_CAN_BE_PULLED, PROC_REF(on_pulled))
 	RegisterSignal(src, COMSIG_VIRTUAL_PET_LEVEL_UP, PROC_REF(on_level_up))
-	RegisterSignal(src, COMSIG_MOB_CLICKON, PROC_REF(on_click))
 	RegisterSignal(src, COMSIG_ATOM_UPDATE_LIGHT_ON, PROC_REF(on_lights))
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
 	update_appearance()
 
-/mob/living/basic/orbie/proc/on_click(mob/living/basic/source, atom/target, params)
-	SIGNAL_HANDLER
-
-	if(!CanReach(target))
-		return
-
+/mob/living/basic/orbie/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(src == target || happy_state || !istype(target))
-		return
+		return TRUE
 
 	toggle_happy_state()
 	addtimer(CALLBACK(src, PROC_REF(toggle_happy_state)), 30 SECONDS)
+	return FALSE
 
 /mob/living/basic/orbie/proc/on_lights(datum/source)
 	SIGNAL_HANDLER
@@ -80,10 +78,8 @@
 	happy_state = !happy_state
 	update_appearance()
 
-/mob/living/basic/orbie/proc/on_pulled(datum/source) //i need move resist at 0, but i also dont want him to be pulled
-	SIGNAL_HANDLER
-
-	return COMSIG_ATOM_CANT_PULL
+/mob/living/basic/orbie/can_be_pulled(user, force)
+	return FALSE
 
 /mob/living/basic/orbie/proc/on_level_up(datum/source, new_level)
 	SIGNAL_HANDLER

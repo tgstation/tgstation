@@ -145,6 +145,10 @@
 	inhand_icon_state = "armor"
 	dog_fashion = null
 
+/obj/item/clothing/suit/armor/vest/cuirass/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
 	desc = "A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence."
@@ -297,6 +301,10 @@
 /obj/item/clothing/suit/armor/riot/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	init_rustle_component()
+
+/obj/item/clothing/suit/armor/riot/proc/init_rustle_component()
+	AddComponent(/datum/component/item_equipped_movement_rustle)
 
 /datum/armor/armor_riot
 	melee = 50
@@ -328,7 +336,7 @@
 /obj/item/clothing/suit/armor/balloon_vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(isitem(hitby))
 		var/obj/item/item_hit = hitby
-		if(item_hit.sharpness)
+		if(item_hit.get_sharpness())
 			pop()
 
 	if(istype(hitby, /obj/projectile/bullet))
@@ -420,6 +428,10 @@
 /obj/item/clothing/suit/armor/swat/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	init_rustle_component()
+
+/obj/item/clothing/suit/armor/swat/proc/init_rustle_component()
+	AddComponent(/datum/component/item_equipped_movement_rustle)
 
 
 //All of the armor below is mostly unused
@@ -519,6 +531,8 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		)
+/obj/item/clothing/suit/armor/riot/knight/init_rustle_component()
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"
@@ -745,8 +759,8 @@
 	take_damage(1, BRUTE, 0, 0)
 
 /obj/item/clothing/suit/armor/durability/watermelon
-	name = "watermelon"
-	desc = "An armour, made from watermelons. Propably won't take too many hits, but at least it looks serious... As serious as worn watermelon can be."
+	name = "watermelon armor"
+	desc = "An armor, made from watermelons. Propably won't take too many hits, but at least it looks serious... As serious as worn watermelon can be."
 	icon_state = "watermelon"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -779,8 +793,8 @@
 	wound = 5
 
 /obj/item/clothing/suit/armor/durability/holymelon
-	name = "holymelon"
-	desc = "An armour, made from holymelons. Inspires you to go on some sort of a crusade... Perhaps spreading spinach to children?"
+	name = "holymelon armor"
+	desc = "An armor, made from holymelons. Inspires you to go on some sort of a crusade... Perhaps spreading spinach to children?"
 	icon_state = "holymelon"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -789,7 +803,6 @@
 	equip_delay_other = 40
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	max_integrity = 15
-	var/decayed = FALSE
 
 /obj/item/clothing/suit/armor/durability/holymelon/fire_resist
 	resistance_flags = FIRE_PROOF
@@ -797,13 +810,10 @@
 
 /obj/item/clothing/suit/armor/durability/holymelon/Initialize(mapload)
 	. = ..()
-	if(decayed)
-		decay()
-		return
 
 	AddComponent(
 		/datum/component/anti_magic, \
-		antimagic_flags = MAGIC_RESISTANCE_HOLY, \
+		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		inventory_flags = ITEM_SLOT_OCLOTHING, \
 		charges = 1, \
 		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
@@ -818,8 +828,8 @@
 
 
 /obj/item/clothing/suit/armor/durability/barrelmelon
-	name = "barrelmelon"
-	desc = "An armour, made from barrelmelons. Reeks of ale, inspiring to courageous deeds. Or, perhaps, a bar brawl."
+	name = "barrelmelon armor"
+	desc = "An armor, made from barrelmelons. Reeks of ale, inspiring to courageous deeds. Or, perhaps, a bar brawl."
 	icon_state = "barrelmelon"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
