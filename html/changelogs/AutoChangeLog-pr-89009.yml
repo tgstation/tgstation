@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Only red glowstick fluid gives permanent unnaturally red eyes on overdose."
