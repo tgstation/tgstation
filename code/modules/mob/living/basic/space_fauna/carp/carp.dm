@@ -120,6 +120,10 @@
 	ai_controller.set_blackboard_key(BB_CARP_RIFT, teleport)
 	ai_controller.set_blackboard_key(BB_OBSTACLE_TARGETING_WHITELIST, allowed_obstacle_targets)
 
+/mob/living/basic/carp/Destroy()
+	QDEL_NULL(teleport)
+	return ..()
+
 /// Tell the elements and the blackboard what food we want to eat
 /mob/living/basic/carp/proc/setup_eating()
 	AddElement(/datum/element/basic_eating, food_types = desired_food)
