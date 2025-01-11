@@ -202,15 +202,16 @@ GLOBAL_LIST_INIT(avg_cpu_values, new /list(CPU_SIZE))
 GLOBAL_LIST_INIT(tick_cpu_usage, new /list(CPU_SIZE))
 GLOBAL_LIST_INIT(map_cpu_usage, new /list(CPU_SIZE))
 GLOBAL_LIST_INIT(verb_cost, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(cpu_error, new /list(CPU_SIZE))
 GLOBAL_VAR_INIT(cpu_index, 1)
 GLOBAL_VAR_INIT(last_cpu_update, -1)
 GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 
 /atom/movable/screen/usage_display
-	screen_loc = "LEFT:8, CENTER+2"
+	screen_loc = "LEFT:8, CENTER+1"
 	plane = CPU_DEBUG_PLANE
 	maptext_width = 256
-	maptext_height = 256
+	maptext_height = 512
 	alpha = 220
 	clear_with_screen = FALSE
 	// how many people are looking at us right now?
@@ -243,7 +244,9 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 			Min Tick [full_time]s: [FORMAT_CPU(min(GLOB.tick_cpu_usage))]\n\
 			Min Map [full_time]s: [FORMAT_CPU(min(GLOB.map_cpu_usage))]\n\
 			Min ~Verb [full_time]s: [FORMAT_CPU(min(verb_cost))]\
-		</div>\
+		</div>\n\
+		CPU Drift Max: [FORMAT_CPU(max(GLOB.cpu_error))]\n\
+		CPU Drift Min: [FORMAT_CPU(min(GLOB.cpu_error))]\
 	</div>"
 
 
@@ -328,16 +331,23 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	var/last_avg_cpu = avg_cpu_values[WRAP(cpu_index - 1, 1, CPU_SIZE + 1)]
 	var/real_cpu = avg_cpu * WINDOW_SIZE - last_avg_cpu * WINDOW_SIZE + lost_value
 
+	var/calculated_avg = real_cpu
+	for(var/i in 1 to WINDOW_SIZE - 1)
+		calculated_avg += cpu_values[WRAP(cpu_index - i, 1, CPU_SIZE + 1)]
+	var/inbuilt_error = world.cpu * WINDOW_SIZE - calculated_avg
+	real_cpu += inbuilt_error
+
 	// due to I think? compounded floating point error either on our side or internal to byond we somtimes get way too large/small cpu values
 	// I can't correct in place because I need the full history of averages to add back lost values
 	// our cpu value for last tick cannot be lower then the cost of sleeping procs + map cpu, so we'll clamp to that
 	// my hope is this will keep error within a reasonable bound as storing a lower then expected number would cause a higher then expected number as a side effect
 	var/lower_bound = GLOB.tick_cpu_usage[cpu_index] + world.map_cpu
 
-	cpu_values[cpu_index] = max(real_cpu, lower_bound)
+	cpu_values[cpu_index] = real_cpu
 	avg_cpu_values[cpu_index] = avg_cpu
 	GLOB.map_cpu_usage[cpu_index] = world.map_cpu
 	GLOB.verb_cost[cpu_index] = max(real_cpu - lower_bound, 0)
+	GLOB.cpu_error[cpu_index] = inbuilt_error
 	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
 	GLOB.cpu_tracker.update_display()
 	// make an animated display of cpu usage to get a better idea of how much we leave on the table
