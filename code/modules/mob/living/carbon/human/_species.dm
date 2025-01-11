@@ -2023,8 +2023,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for(var/markings_type in body_markings) //loop through possible species markings
 		var/datum/bodypart_overlay/simple/body_marking/markings = new markings_type() // made to die... mostly because we cant use initial on lists but its convenient and organized
 		var/accessory_name = hooman.dna.features[markings.dna_feature_key] || body_markings[markings_type] //get the accessory name from dna
-		if(accessory_name == SPRITE_ACCESSORY_NONE)
-			continue
 		for(var/obj/item/bodypart/part as anything in markings.applies_to) //check through our limbs
 			var/obj/item/bodypart/people_part = hooman.get_bodypart(initial(part.body_zone)) // and see if we have a compatible marking for that limb
 			if(isnull(people_part))

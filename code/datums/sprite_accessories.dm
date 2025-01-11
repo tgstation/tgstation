@@ -50,7 +50,7 @@
 
 /datum/sprite_accessory/blank
 	name = SPRITE_ACCESSORY_NONE
-	icon_state = SPRITE_ACCESSORY_NONE
+	icon_state = "None"
 
 //////////////////////
 // Hair Definitions //
