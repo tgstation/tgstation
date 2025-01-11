@@ -100,7 +100,7 @@ type TraitData = {
   description: string;
 };
 
-const fallback_big = (
+const Fallback = (
   <Icon name="spinner" size={2.8} height="32px" width="32px" spin />
 );
 
@@ -134,7 +134,7 @@ export const PlantAnalyzerTray = (props) => {
       <Stack>
         <Stack.Item ml={2} mr={4}>
           <DmIcon
-            fallback={fallback_big}
+            fallback={Fallback}
             icon={tray_data.icon}
             icon_state={tray_data.icon_state}
             height="64px"
@@ -238,7 +238,7 @@ export const PlantAnalyzerSeed = (props) => {
       <Stack>
         <Stack.Item ml={2} mr={4}>
           <DmIcon
-            fallback={fallback_big}
+            fallback={Fallback}
             icon={seed_data.icon}
             icon_state={seed_data.icon_state}
             height="64px"
@@ -247,7 +247,7 @@ export const PlantAnalyzerSeed = (props) => {
           {seed_data.product_icon && seed_data.product_icon_state && (
             <DmIcon
               mt={2}
-              fallback={fallback_big}
+              fallback={Fallback}
               icon={seed_data.product_icon}
               icon_state={seed_data.product_icon_state}
               height="64px"
@@ -465,7 +465,7 @@ export const PlantAnalyzerGraft = (props) => {
       <Stack>
         <Stack.Item ml={2} mr={4}>
           <DmIcon
-            fallback={fallback_big}
+            fallback={Fallback}
             icon={graft_data.icon}
             icon_state={graft_data.icon_state}
             height="64px"
@@ -517,19 +517,6 @@ export const PlantAnalyzerGraft = (props) => {
               </ProgressBar>
             </LabeledList.Item>
 
-            <LabeledList.Item label="Potency">
-              <ProgressBar
-                value={graft_data.weed_rate / 100}
-                ranges={{
-                  good: [0.7, Infinity],
-                  average: [0.3, 0.7],
-                  bad: [0, 0.3],
-                }}
-              >
-                {graft_data.weed_rate} / 100
-              </ProgressBar>
-            </LabeledList.Item>
-
             <LabeledList.Item label="Instability">
               <ProgressBar
                 value={graft_data.weed_chance}
@@ -567,7 +554,7 @@ export const ReagentList = (props) => {
       {props.reagents?.map((reagent, i) => (
         <Table.Row key={i}>
           <Table.Cell>{reagent.name}</Table.Cell>
-          <Table.Cell py={0.5} pl={2} textAlign={'right'}>
+          <Table.Cell py={0.5} pl={2} textAlign="right">
             {reagent.volume}u
           </Table.Cell>
         </Table.Row>
