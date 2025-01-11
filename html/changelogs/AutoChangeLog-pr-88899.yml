@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed chameleon cards not updating sechud icons"
+  - image: "Fixed human AI's and medieval punpun's ID trims"
