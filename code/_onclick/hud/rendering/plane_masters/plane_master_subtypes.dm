@@ -432,7 +432,7 @@
 	update_visibility(mymob)
 
 /atom/movable/screen/plane_master/cpu_debug/proc/update_visibility(mob/viewer)
-	if(viewer.client?.holder?.displaying_cpu_debug)
+	if(viewer.client?.displaying_cpu_debug)
 		unhide_plane(viewer)
 	else
 		hide_plane(viewer)

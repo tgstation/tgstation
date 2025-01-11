@@ -139,6 +139,216 @@ GLOBAL_VAR(tracy_log)
 
 	RunUnattendedFunctions()
 
+#define CPU_SIZE 16
+#define WINDOW_SIZE 16
+#define FORMAT_CPU(cpu) round(cpu, 0.01)
+
+// Should we intentionally consume cpu time to try to keep SendMaps deltas constant?
+GLOBAL_VAR_INIT(attempt_corrective_cpu, FALSE)
+// Debug tool, lets us set the floor of cpu consumption
+GLOBAL_VAR_INIT(floor_cpu, 0)
+// Debug tool, lets us set a sometimes used floor for cpu consumption
+GLOBAL_VAR_INIT(sustain_cpu, 0)
+// Debug tool, sets the chance to use GLOB.sustain_cpu as a floor
+GLOBAL_VAR_INIT(sustain_cpu_chance, 0)
+// Debug tool, floors cpu to its value, then resets itself
+GLOBAL_VAR_INIT(spike_cpu, 0)
+
+/world/Tick()
+	unroll_cpu_value()
+	if(GLOB.floor_cpu)
+		// avoids byond sleeping the loop and causing the MC to infinistall
+		// Run first to set a floor for sustain to spike up to
+		CONSUME_UNTIL(min(GLOB.floor_cpu, 500))
+
+	if(GLOB.sustain_cpu && prob(GLOB.sustain_cpu_chance))
+		CONSUME_UNTIL(min(GLOB.sustain_cpu, 500))
+
+	if(GLOB.spike_cpu)
+		CONSUME_UNTIL(min(GLOB.spike_cpu, 10000))
+		GLOB.spike_cpu = 0
+
+	// attempt to correct cpu overrun
+	if(GLOB.attempt_corrective_cpu)
+		CONSUME_UNTIL(TICK_EXPECTED_SAFE_MAX)
+	GLOB.cpu_tracker.update_display()
+	// this is for next tick so don't display it yet yeah?
+	GLOB.tick_cpu_usage[WRAP(GLOB.cpu_index, 1, CPU_SIZE + 1)] = TICK_USAGE
+
+GLOBAL_LIST_INIT(cpu_values, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(avg_cpu_values, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(tick_cpu_usage, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(map_cpu_usage, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(verb_cost, new /list(CPU_SIZE))
+GLOBAL_VAR_INIT(cpu_index, 1)
+GLOBAL_VAR_INIT(last_cpu_update, -1)
+GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
+
+/atom/movable/screen/usage_display
+	screen_loc = "LEFT:8, CENTER+2"
+	plane = CPU_DEBUG_PLANE
+	maptext_width = 256
+	maptext_height = 256
+	alpha = 220
+	clear_with_screen = FALSE
+	// how many people are looking at us right now?
+	var/viewer_count = 0
+
+/atom/movable/screen/usage_display/proc/update_display()
+	if(viewer_count <= 0)
+		return
+	var/list/cpu_values = GLOB.cpu_values
+	var/list/verb_cost = GLOB.verb_cost
+	var/last_index = WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)
+	var/full_time = TICKS2DS(CPU_SIZE) / 10 // convert from ticks to seconds
+	maptext = "<div style=\"background-color:#FFFFFF; color:#000000;\">\
+		Floor: <a href='?src=[REF(src)];act=set_floor'>[GLOB.floor_cpu]</a>\n\
+		Sustain: <a href='?src=[REF(src)];act=set_sustain_cpu'>[GLOB.sustain_cpu]</a> <a href='?src=[REF(src)];act=set_sustain_chance'>[GLOB.sustain_cpu_chance]%</a>\n\
+		Spike: <a href='?src=[REF(src)];act=set_spike'>[GLOB.spike_cpu]</a>\n\
+		Tick: [FORMAT_CPU(world.time / world.tick_lag)]\n\
+		Frame Behind ~CPU: [FORMAT_CPU(cpu_values[last_index])]\n\
+		Frame Behind Tick: [FORMAT_CPU(GLOB.tick_cpu_usage[last_index])]\n\
+		Frame Behind Map Cpu: [FORMAT_CPU(world.map_cpu)]\n\
+		Frame Behind ~Verb: [FORMAT_CPU(verb_cost[last_index])]\n\
+		<div style=\"color:#FF0000;\">\
+			Max ~CPU [full_time]s: [FORMAT_CPU(max(cpu_values))]\n\
+			Max Tick [full_time]s: [FORMAT_CPU(max(GLOB.tick_cpu_usage))]\n\
+			Max Map [full_time]s: [FORMAT_CPU(min(GLOB.map_cpu_usage))]\n\
+			Max ~Verb [full_time]s: [FORMAT_CPU(min(verb_cost))]\n\
+		</div>\
+		<div style=\"color:#0096FF;\">\
+			Min ~CPU [full_time]s: [FORMAT_CPU(min(cpu_values))]\n\
+			Min Tick [full_time]s: [FORMAT_CPU(min(GLOB.tick_cpu_usage))]\n\
+			Min Map [full_time]s: [FORMAT_CPU(min(GLOB.map_cpu_usage))]\n\
+			Min ~Verb [full_time]s: [FORMAT_CPU(min(verb_cost))]\
+		</div>\
+	</div>"
+
+
+/atom/movable/screen/usage_display/proc/toggle_cpu_debug(client/modify)
+	if(modify?.displaying_cpu_debug) // I am lazy and this is a cold path
+		viewer_count -= 1
+		modify.screen -= src
+		UnregisterSignal(modify, COMSIG_QDELETING)
+		modify?.displaying_cpu_debug = FALSE
+	else
+		viewer_count += 1
+		modify.screen += src
+		RegisterSignal(modify, COMSIG_QDELETING, PROC_REF(client_disconnected))
+		modify?.displaying_cpu_debug = TRUE
+		if(viewer_count == 1)
+			update_display()
+
+	for(var/atom/movable/screen/plane_master/cpu_debug/debuggin as anything in modify.mob?.hud_used?.get_true_plane_masters(CPU_DEBUG_PLANE))
+		debuggin.update_visibility(modify.mob)
+
+/atom/movable/screen/usage_display/proc/client_disconnected(client/disconnected)
+	SIGNAL_HANDLER
+	toggle_cpu_debug(disconnected)
+
+/atom/movable/screen/usage_display/Topic(href, list/href_list)
+	if (..())
+		return
+	if(!check_rights(R_DEBUG) || !check_rights(R_SERVER))
+		return FALSE
+	switch(href_list["act"])
+		if("set_floor")
+			var/floor_cpu = tgui_input_number(usr, "How low should we allow the cpu to go?", "Floor CPU", max_value = INFINITY, min_value = 0, default = 0) || GLOB.floor_cpu
+			GLOB.floor_cpu = floor_cpu
+			return TRUE
+		if("set_sustain_cpu")
+			var/sustain_cpu = tgui_input_number(usr, "What should we randomly set our cpu to?", "Sustain CPU", max_value = INFINITY, min_value = 0, default = 0) || GLOB.sustain_cpu
+			GLOB.sustain_cpu = sustain_cpu
+			return TRUE
+		if("set_sustain_chance")
+			var/sustain_cpu_chance = tgui_input_number(usr, "What % of the time should we floor at Sustain CPU", "Sustain CPU %", max_value = 100, min_value = 0, default = 0) || GLOB.sustain_cpu_chance
+			GLOB.sustain_cpu_chance = sustain_cpu_chance
+			return TRUE
+		if("set_spike")
+			var/spike_cpu = tgui_input_number(usr, "How high should we spike cpu usage", "Spike CPU", max_value = INFINITY, min_value = 0, default = 0) || GLOB.spike_cpu
+			GLOB.spike_cpu = spike_cpu
+			return TRUE
+
+/// Inserts our current world.cpu value into our rolling lists
+/// Its job is to pull the actual usage last tick instead of the moving average
+/world/proc/unroll_cpu_value()
+	if(GLOB.last_cpu_update == world.time)
+		return
+	GLOB.last_cpu_update = world.time
+	// cache for sonic speed
+	var/list/cpu_values = GLOB.cpu_values
+	var/list/avg_cpu_values = GLOB.avg_cpu_values
+	var/cpu_index = GLOB.cpu_index
+	var/avg_cpu = world.cpu
+	// We need to hook into the INSTANT we start our moving average so we can reconstruct gained/lost cpu values
+	// Defaults to null or 0 so the wrap here is safe for the first 16 entries
+	var/lost_value = cpu_values[WRAP(cpu_index - WINDOW_SIZE, 1, CPU_SIZE + 1)]
+
+	// ok so world.cpu is a 16 entry wide moving average of the actual cpu value
+	// because fuck you
+	// I want the ACTUAL unrolle value, so I need to deaverage it. this is possible because we have access to ALL values and also math
+	// yes byond does average against a constant window size, it doesn't account for a lack of values initially it just sorta assumes they exist.
+	// ♪ it ain't me, it ain't me ♪
+
+	// Second tick example
+	// avg = (A + B) / 4
+	// old_avg = (A) / 4
+	// (avg * 4 - old_avg * 4) roughly sans floating point BS = B
+	// Fifth tick example
+	// avg = (B + C + D + E) / 4
+	// old_avg = (A + B + C + D) / 4
+	// (avg * 4 - old_avg * 4) roughly = E - A
+	// so after we start losing numbers we need to add the one we're losing
+	// We're trying to do this with as few ops as possible to avoid noise
+	// soooo
+	// E = (avg * 4 - old_avg * 4) + A
+
+	var/last_avg_cpu = avg_cpu_values[WRAP(cpu_index - 1, 1, CPU_SIZE + 1)]
+	var/real_cpu = avg_cpu * WINDOW_SIZE - last_avg_cpu * WINDOW_SIZE + lost_value
+
+	// due to I think? compounded floating point error either on our side or internal to byond we somtimes get way too large/small cpu values
+	// I can't correct in place because I need the full history of averages to add back lost values
+	// our cpu value for last tick cannot be lower then the cost of sleeping procs + map cpu, so we'll clamp to that
+	// my hope is this will keep error within a reasonable bound as storing a lower then expected number would cause a higher then expected number as a side effect
+	var/lower_bound = GLOB.tick_cpu_usage[cpu_index] + world.map_cpu
+
+	cpu_values[cpu_index] = max(real_cpu, lower_bound)
+	avg_cpu_values[cpu_index] = avg_cpu
+	GLOB.map_cpu_usage[cpu_index] = world.map_cpu
+	GLOB.verb_cost[cpu_index] = max(real_cpu - lower_bound, 0)
+	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
+	GLOB.cpu_tracker.update_display()
+	// make an animated display of cpu usage to get a better idea of how much we leave on the table
+
+/proc/update_glide_size()
+	world.unroll_cpu_value()
+	var/list/cpu_values = GLOB.cpu_values
+	var/sum = 0
+	var/non_zero = 0
+	#warn there's gotta be a better way then this, or at least a less shitty way
+	for(var/value in cpu_values)
+		sum += max(value, 100)
+		if(value != 0)
+			non_zero += 1
+
+	var/first_average = non_zero ? sum / non_zero : 1
+	var/trimmed_sum = 0
+	var/used = 0
+	for(var/value in cpu_values)
+		if(!value)
+			continue
+		// If we deviate more then 60% away from the average, skip it
+		if(abs(1 - (max(value, 100) / first_average)) <= 0.3)
+			trimmed_sum += max(value, 100)
+			used += 1
+
+	var/final_average = trimmed_sum ? trimmed_sum / used : first_average
+	GLOB.glide_size_multiplier = min(100 / final_average, 1)
+
+#undef FORMAT_CPU
+#undef WINDOW_SIZE
+#undef CPU_SIZE
+
 /// Initializes TGS and loads the returned revising info into GLOB.revdata
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
