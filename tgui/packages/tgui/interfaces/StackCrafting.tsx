@@ -6,7 +6,7 @@ import {
   Input,
   NoticeBox,
   Section,
-  Table,
+  Stack,
   ImageButton,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
@@ -218,7 +218,7 @@ const Multipliers = (props: MultiplierProps) => {
         <Button
           bold
           color={'transparent'}
-          fontSize={0.85}
+          fontSize={0.75}
           width={'32px'}
           onClick={() =>
             act('make', {
@@ -238,7 +238,7 @@ const Multipliers = (props: MultiplierProps) => {
       <Button
         bold
         color={'transparent'}
-        fontSize={0.85}
+        fontSize={0.75}
         width={'32px'}
         onClick={() =>
           act('make', {
@@ -272,7 +272,7 @@ const RecipeBox = (props: RecipeBoxProps) => {
   const resAmountLabel = res_amount > 1 ? `${res_amount}x ` : '';
   const sheetSuffix = req_amount > 1 ? 's' : '';
   const buttonName = `${resAmountLabel}${title}`;
-  const tooltipContent = `${req_amount} sheet${sheetSuffix}`;
+  const reqSheets = `${req_amount} sheet${sheetSuffix}`;
 
   const maxMultiplier = buildMultiplier(recipe, amount);
 
@@ -286,7 +286,6 @@ const RecipeBox = (props: RecipeBoxProps) => {
       dmIconState={icon_state}
       imageSize={32}
       disabled={!maxMultiplier}
-      tooltip={tooltipContent}
       buttons={
         max_res_amount > 1 &&
         maxMultiplier > 1 && (
@@ -300,7 +299,12 @@ const RecipeBox = (props: RecipeBoxProps) => {
         })
       }
     >
-      {buttonName}
+      <Stack textAlign={'left'}>
+        <Stack.Item grow>{buttonName}</Stack.Item>
+        <Stack.Item align={'center'} fontSize={0.8} color={'gray'}>
+          {reqSheets}
+        </Stack.Item>
+      </Stack>
     </ImageButton>
   );
 };
