@@ -7,6 +7,7 @@ import {
   NoticeBox,
   Section,
   Table,
+  ImageButton,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 import { createSearch } from 'tgui-core/string';
@@ -17,6 +18,9 @@ import { Window } from '../layouts';
 type Recipe = {
   ref: unknown | null;
   req_amount: number;
+  icon: string;
+  icon_state: string;
+  image?: string;
 
   // for multiplier buttons
   res_amount: number;
@@ -88,7 +92,16 @@ const filterRecipeList = (
 
         return [];
       })
-      .sort(([a], [b]) => (a < b ? -1 : a !== b ? 1 : 0)),
+
+      // Sort items so that lists are on top and recipes underneath.
+      // Plus everything is in alphabetical order.
+      .sort(([aKey, aValue], [bKey, bValue]) =>
+        isRecipeList(aValue) !== isRecipeList(bValue)
+          ? isRecipeList(aValue)
+            ? -1
+            : 1
+          : aKey.localeCompare(bKey),
+      ),
   );
 
   return Object.keys(filteredList).length ? filteredList : undefined;
@@ -99,24 +112,35 @@ export const StackCrafting = (_props) => {
   const { amount, recipes = {} } = data;
 
   const [searchText, setSearchText] = useState('');
+  const [search, setSearch] = useState(false);
   const testSearch = createSearch(searchText, (item: string) => item);
   const filteredRecipes = filterRecipeList(recipes, testSearch);
 
-  const height: number = clamp(94 + Object.keys(recipes).length * 26, 250, 500);
+  const height: number = clamp(96 + Object.keys(recipes).length * 37, 250, 500);
 
   return (
     <Window width={400} height={height}>
-      <Window.Content scrollable>
+      <Window.Content>
         <Section
+          fill
+          scrollable
           title={'Amount: ' + amount}
           buttons={
             <>
-              Search
-              <Input
-                autoFocus
-                value={searchText}
-                onInput={(e, value) => setSearchText(value)}
-                mx={1}
+              {search && (
+                <Input
+                  autoFocus
+                  value={searchText}
+                  onInput={(e, value) => setSearchText(value)}
+                  mx={1}
+                />
+              )}
+              <Button
+                icon={'magnifying-glass'}
+                selected={search}
+                tooltip={'Toggle search'}
+                tooltipPosition={'bottom-end'}
+                onClick={() => setSearch(!search)}
               />
             </>
           }
@@ -141,8 +165,19 @@ const RecipeListBox = (props: RecipeListProps) => {
         const recipe = recipes[title];
         if (isRecipeList(recipe)) {
           return (
-            <Collapsible key={title} ml={1} color="label" title={title}>
-              <Box ml={2}>
+            <Collapsible
+              key={title}
+              title={title}
+              child_mt={0}
+              childStyles={{
+                paddingBottom: '0.5em',
+                backgroundColor: 'rgba(62, 97, 137, 0.15)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderTop: 'none',
+                borderRadius: '0 0 0.33em 0.33em',
+              }}
+            >
+              <Box p={1} pb={0.25}>
                 <RecipeListBox recipes={recipe} />
               </Box>
             </Collapsible>
@@ -181,14 +216,19 @@ const Multipliers = (props: MultiplierProps) => {
     if (maxM >= multiplier) {
       finalResult.push(
         <Button
-          content={multiplier * recipe.res_amount + 'x'}
+          bold
+          color={'transparent'}
+          fontSize={0.85}
+          width={'32px'}
           onClick={() =>
             act('make', {
               ref: recipe.ref,
               multiplier: multiplier,
             })
           }
-        />,
+        >
+          {multiplier * recipe.res_amount + 'x'}
+        </Button>,
       );
     }
   }
@@ -196,14 +236,19 @@ const Multipliers = (props: MultiplierProps) => {
   if (multipliers.indexOf(maxM) === -1) {
     finalResult.push(
       <Button
-        content={maxM * recipe.res_amount + 'x'}
+        bold
+        color={'transparent'}
+        fontSize={0.85}
+        width={'32px'}
         onClick={() =>
           act('make', {
             ref: recipe.ref,
             multiplier: maxM,
           })
         }
-      />,
+      >
+        {maxM * recipe.res_amount + 'x'}
+      </Button>,
     );
   }
 
@@ -212,44 +257,50 @@ const Multipliers = (props: MultiplierProps) => {
 
 const RecipeBox = (props: RecipeBoxProps) => {
   const { act, data } = useBackend<StackCraftingProps>();
-
   const { amount } = data;
-
   const { recipe, title } = props;
-
-  const { res_amount, max_res_amount, req_amount, ref } = recipe;
+  const {
+    res_amount,
+    max_res_amount,
+    req_amount,
+    ref,
+    icon,
+    icon_state,
+    image,
+  } = recipe;
 
   const resAmountLabel = res_amount > 1 ? `${res_amount}x ` : '';
   const sheetSuffix = req_amount > 1 ? 's' : '';
-  const buttonName = `${resAmountLabel}${title} (${req_amount} sheet${sheetSuffix})`;
+  const buttonName = `${resAmountLabel}${title}`;
+  const tooltipContent = `${req_amount} sheet${sheetSuffix}`;
 
   const maxMultiplier = buildMultiplier(recipe, amount);
 
   return (
-    <Box mb={1}>
-      <Table>
-        <Table.Row>
-          <Table.Cell>
-            <Button
-              fluid
-              disabled={!maxMultiplier}
-              icon="wrench"
-              content={buttonName}
-              onClick={() =>
-                act('make', {
-                  ref: ref,
-                  multiplier: 1,
-                })
-              }
-            />
-          </Table.Cell>
-          {max_res_amount > 1 && maxMultiplier > 1 && (
-            <Table.Cell collapsing>
-              <Multipliers recipe={recipe} maxMultiplier={maxMultiplier} />
-            </Table.Cell>
-          )}
-        </Table.Row>
-      </Table>
-    </Box>
+    <ImageButton
+      fluid
+      base64={
+        image
+      } /* Use base64 image if we have it. DmIcon cannot paint grayscale images yet */
+      dmIcon={icon}
+      dmIconState={icon_state}
+      imageSize={32}
+      disabled={!maxMultiplier}
+      tooltip={tooltipContent}
+      buttons={
+        max_res_amount > 1 &&
+        maxMultiplier > 1 && (
+          <Multipliers recipe={recipe} maxMultiplier={maxMultiplier} />
+        )
+      }
+      onClick={() =>
+        act('make', {
+          ref: ref,
+          multiplier: 1,
+        })
+      }
+    >
+      {buttonName}
+    </ImageButton>
   );
 };
