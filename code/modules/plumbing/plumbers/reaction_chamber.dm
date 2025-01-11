@@ -27,17 +27,14 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/reaction_chamber, bolt, layer)
 
-/obj/machinery/plumbing/reaction_chamber/create_reagents(max_vol, flags)
-	. = ..()
-	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
-
 /// Handles stopping the emptying process when the chamber empties.
 /obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/plumbing/reaction_chamber/holder)
 	SIGNAL_HANDLER
 
-	if(emptying && !holder.get_catalyst_excluded_volume()) //we were emptying, but now we aren't
+	if(!holder.get_catalyst_excluded_volume()) //we were emptying, but now we aren't
 		emptying = FALSE
 		holder.flags |= NO_REACT
+		UnregisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED)
 
 /obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
 	if(!is_operational || !reagents.total_volume)
