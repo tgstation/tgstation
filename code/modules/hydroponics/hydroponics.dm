@@ -55,6 +55,8 @@
 	var/self_sustaining = FALSE
 	///The icon state for the overlay used to represent that this tray is self-sustaining.
 	var/self_sustaining_overlay_icon_state = "gaia_blessing"
+	///Whether the plant is currently being pollinated or polinating the nearby plants
+	var/being_pollinated = FALSE
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -788,7 +790,7 @@
  * * Range - The Oview range of trays to which to look for plants to donate reagents.
  */
 /obj/machinery/hydroponics/proc/pollinate(range = 1)
-	var/any_adjacent = FALSE
+	being_pollinated = FALSE
 	for(var/obj/machinery/hydroponics/T in oview(src, range))
 		//Here is where we check for window blocking.
 		if(!Adjacent(T) && range <= 1)
@@ -797,11 +799,11 @@
 			T.myseed.set_potency(round((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency))))
 			T.myseed.set_instability(round((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability))))
 			T.myseed.set_yield(round((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield))))
-			any_adjacent = TRUE
+			being_pollinated = TRUE
 			add_shared_particles(/particles/pollen)
 			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
 				myseed.perform_reagent_pollination(T.myseed)
-	if(!any_adjacent)
+	if(!being_pollinated)
 		remove_shared_particles(/particles/pollen)
 
 /**

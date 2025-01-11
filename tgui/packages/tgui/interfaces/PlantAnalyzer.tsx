@@ -34,6 +34,8 @@ type TrayData = {
   nutri: number;
   nutri_max: number;
   yield_mod: number;
+  being_pollinated: boolean;
+  self_sustaining: boolean;
   weeds: number;
   weeds_max: number;
   pests: number;
@@ -124,11 +126,23 @@ export const PlantAnalyzerTray = (props) => {
     <Section
       title={capitalizeFirst(tray_data.name)}
       buttons={
-        tray_data.yield_mod > 1 && (
-          <Tooltip content="Pollinated, doubling the yield.">
-            <Icon name="sun" />
-          </Tooltip>
-        )
+        <>
+          {!!tray_data.self_sustaining && (
+            <Tooltip content="Self sustaining active, reclaiming water and reducing weed and pest levels.">
+              <Icon name="hand-holding-droplet" />
+            </Tooltip>
+          )}
+          {!!tray_data.being_pollinated && (
+            <Tooltip content="Cross pollinating nearby plants, potentially sharing plant reagents.">
+              <Icon name="wind" />
+            </Tooltip>
+          )}
+          {tray_data.yield_mod > 1 && (
+            <Tooltip content="Pollinated by bees, doubling the yield.">
+              <Icon name="sun" />
+            </Tooltip>
+          )}
+        </>
       }
     >
       <Stack>
