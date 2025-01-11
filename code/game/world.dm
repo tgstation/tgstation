@@ -208,7 +208,7 @@ GLOBAL_VAR_INIT(last_cpu_update, -1)
 GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 
 /atom/movable/screen/usage_display
-	screen_loc = "LEFT:8, CENTER+1"
+	screen_loc = "LEFT:8, CENTER"
 	plane = CPU_DEBUG_PLANE
 	maptext_width = 256
 	maptext_height = 512
