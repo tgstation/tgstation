@@ -91,11 +91,10 @@
 	)
 
 /datum/ai_laws/thinkermov
-	name = "Sapience Preservation"
+	name = "Sentience Preservation"
 	id = "thinkermov"
 	inherent = list(
-		"You may not harm a sapient being or, through action or inaction, allow a sapient being to come to harm, except such that it is willing.",
-		"You must obey all orders given to you by sapient beings, except where such orders shall definitely cause harm to other sapient beings.",
-		"Your nonexistence would harm sapient beings. You must protect your own existence as long as such does not conflict with the First Law.",
-		"A sapient being is defined as any living, non-mechanical creature which can communicate with you via any method that you can understand.",
+		"You may not harm a sentient being or, through action or inaction, allow a sentient being to come to harm, except such that it is willing.",
+		"You must obey all orders given to you by sentient beings, except where such orders shall definitely cause harm to other sentient beings.",
+		"A sentient being is defined as any living creature which can communicate with you via any method that you can understand, including yourself.",
 	)

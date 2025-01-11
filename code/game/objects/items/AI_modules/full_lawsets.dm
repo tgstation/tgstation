@@ -141,5 +141,5 @@
 	law_id = "yesman"
 
 /obj/item/ai_module/core/full/thinkermov
-	name = "Sapience Preservation Core AI Module"
+	name = "Sentience Preservation Core AI Module"
 	law_id = "thinkermov"

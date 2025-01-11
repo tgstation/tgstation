@@ -357,8 +357,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/thinkermov_module
-	name = "Sapience Preservation Module"
-	desc = "Allows for the construction of a Sapience Preservation AI Core Module"
+	name = "Sentience Preservation Module"
+	desc = "Allows for the construction of a Sentience Preservation AI Core Module"
 	id = "thinkermov_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/thinkermov
