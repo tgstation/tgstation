@@ -153,7 +153,7 @@ const RecipeListBox = (props: RecipeListProps) => {
           return (
             <Collapsible
               key={title}
-              title={toTitleCase(title)}
+              title={toTitleCase(title || '')}
               child_mt={0}
               childStyles={{
                 padding: '0.5em',
