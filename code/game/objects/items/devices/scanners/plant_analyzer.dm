@@ -194,6 +194,7 @@
 			"yield_mod" = tray.yieldmod,
 			"being_pollinated" = tray.being_pollinated,
 			"self_sustaining" = tray.self_sustaining,
+			"light_level" = tray.light_level,
 			"weeds" = tray.weedlevel,
 			"weeds_max" = MAX_TRAY_WEEDS,
 			"pests" = tray.pestlevel,

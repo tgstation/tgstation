@@ -36,6 +36,7 @@ type TrayData = {
   yield_mod: number;
   being_pollinated: boolean;
   self_sustaining: boolean;
+  light_level: number;
   weeds: number;
   weeds_max: number;
   pests: number;
@@ -109,7 +110,7 @@ const Fallback = (
 export const PlantAnalyzer = (props) => {
   const { act, data } = useBackend<PlantAnalyzerData>();
   return (
-    <Window width={480} height={500}>
+    <Window width={480} height={520}>
       <Window.Content scrollable>
         {data.graft_data && <PlantAnalyzerGraft />}
         {data.seed_data && <PlantAnalyzerSeed />}
@@ -128,18 +129,18 @@ export const PlantAnalyzerTray = (props) => {
       buttons={
         <>
           {!!tray_data.self_sustaining && (
-            <Tooltip content="Self sustaining active, reclaiming water and reducing weed and pest levels.">
-              <Icon name="hand-holding-droplet" />
+            <Tooltip content="Self sustaining active, providing light, reclaiming water and reducing weed and pest levels.">
+              <Icon name="hand-holding-droplet" m={0.5} />
             </Tooltip>
           )}
           {!!tray_data.being_pollinated && (
             <Tooltip content="Cross pollinating nearby plants, potentially sharing plant reagents.">
-              <Icon name="wind" />
+              <Icon name="wind" m={0.5} />
             </Tooltip>
           )}
           {tray_data.yield_mod > 1 && (
             <Tooltip content="Pollinated by bees, doubling the yield.">
-              <Icon name="sun" />
+              <Icon name="sun" m={0.5} />
             </Tooltip>
           )}
         </>
@@ -157,7 +158,10 @@ export const PlantAnalyzerTray = (props) => {
         </Stack.Item>
         <Stack.Item>
           <LabeledList>
-            <LabeledList.Item label="Water">
+            <LabeledList.Item
+              label="Water"
+              tooltip="The plant starts withering without water, unless it is a mushroom."
+            >
               <ProgressBar
                 value={tray_data.water / tray_data.water_max}
                 ranges={{
@@ -170,7 +174,10 @@ export const PlantAnalyzerTray = (props) => {
               </ProgressBar>
             </LabeledList.Item>
 
-            <LabeledList.Item label="Nutrients">
+            <LabeledList.Item
+              label="Nutrients"
+              tooltip="The plant starts withering without nutrients, unless it is a weed. Nutrients may affect plant and tray stats."
+            >
               <Tooltip
                 content={
                   tray_data.reagents.length > 0 ? (
@@ -193,35 +200,61 @@ export const PlantAnalyzerTray = (props) => {
               </Tooltip>
             </LabeledList.Item>
 
-            <LabeledList.Item label="Weeds">
+            <LabeledList.Item
+              label="Light"
+              tooltip="The plant withers when the light is below 40%. Mushrooms need only 20%."
+            >
+              <ProgressBar
+                value={tray_data.light_level}
+                maxValue={1}
+                ranges={{
+                  bad: [0, 0.2],
+                  average: [0.2, 0.4],
+                  good: [0.4, Infinity],
+                }}
+              >
+                {Math.round(tray_data.light_level * 100)}%
+              </ProgressBar>
+            </LabeledList.Item>
+
+            <LabeledList.Item
+              label="Weeds"
+              tooltip="Damage the Yield stat of the plant. At high level may invade the tray. Remove by cultivating."
+            >
               <ProgressBar
                 value={tray_data.weeds}
                 maxValue={tray_data.weeds_max}
                 ranges={{
-                  good: [-Infinity, 0],
-                  average: [1, Math.round(tray_data.weeds_max * 0.5)],
-                  bad: [Math.round(tray_data.weeds_max * 0.5), Infinity],
+                  good: [-Infinity, 5],
+                  average: [5, 10],
+                  bad: [10, tray_data.weeds_max],
                 }}
               >
                 {tray_data.weeds} / {tray_data.weeds_max}
               </ProgressBar>
             </LabeledList.Item>
 
-            <LabeledList.Item label="Pests">
+            <LabeledList.Item
+              label="Pests"
+              tooltip="Damage the plant and reduce its Potency stat. Remove with pest controlling nutrients."
+            >
               <ProgressBar
                 value={tray_data.pests}
                 maxValue={tray_data.pests_max}
                 ranges={{
-                  good: [-Infinity, 0],
-                  average: [1, Math.round(tray_data.pests_max * 0.5)],
-                  bad: [Math.round(tray_data.pests_max * 0.5), Infinity],
+                  good: [-Infinity, 4],
+                  average: [4, 8],
+                  bad: [8, tray_data.pests_max],
                 }}
               >
                 {tray_data.pests} / {tray_data.pests_max}
               </ProgressBar>
             </LabeledList.Item>
 
-            <LabeledList.Item label="Toxins">
+            <LabeledList.Item
+              label="Toxins"
+              tooltip="Damage the plant. Remove with detoxing nutrients."
+            >
               <ProgressBar
                 value={tray_data.toxins}
                 maxValue={tray_data.toxins_max}
@@ -288,7 +321,7 @@ export const PlantAnalyzerSeed = (props) => {
 
             <LabeledList.Item
               label="Endurance"
-              tooltip="The health pool of the plant that delays death. Improves quality of resulting food & drinks."
+              tooltip="The health pool of the plant that delays withering. Improves quality of resulting food & drinks."
             >
               <ProgressBar
                 value={seed_data.endurance / 100}
@@ -320,22 +353,6 @@ export const PlantAnalyzerSeed = (props) => {
             )}
 
             <LabeledList.Item
-              label="Lifespan"
-              tooltip={`The age at which the plant starts decaying, in ${data.cycle_seconds} second long cycles. Improves quality of resulting food & drinks.`}
-            >
-              <ProgressBar
-                value={seed_data.lifespan / 100}
-                ranges={{
-                  good: [0.7, Infinity],
-                  average: [0.3, 0.7],
-                  bad: [0, 0.3],
-                }}
-              >
-                {seed_data.lifespan} / 100
-              </ProgressBar>
-            </LabeledList.Item>
-
-            <LabeledList.Item
               label="Maturation"
               tooltip="The age at which the plant starts growing products."
             >
@@ -347,6 +364,22 @@ export const PlantAnalyzerSeed = (props) => {
               tooltip="The time needed for a mature plant to (re)grow a product."
             >
               {seed_data.production * data.cycle_seconds} seconds
+            </LabeledList.Item>
+
+            <LabeledList.Item
+              label="Lifespan"
+              tooltip={`The age at which the plant starts withering, in ${data.cycle_seconds} second long cycles. Improves quality of resulting food & drinks.`}
+            >
+              <ProgressBar
+                value={seed_data.lifespan / 100}
+                ranges={{
+                  good: [0.7, Infinity],
+                  average: [0.3, 0.7],
+                  bad: [0, 0.3],
+                }}
+              >
+                {seed_data.lifespan} / 100
+              </ProgressBar>
             </LabeledList.Item>
 
             <LabeledList.Item
@@ -398,7 +431,7 @@ export const PlantAnalyzerSeed = (props) => {
               </ProgressBar>
             </LabeledList.Item>
 
-            <LabeledList.Item label="Weeds">
+            <LabeledList.Item label="Tray weeds">
               {seed_data.weed_chance && seed_data.weed_rate
                 ? seed_data.weed_chance +
                   '% chance to grow by ' +
@@ -514,10 +547,6 @@ export const PlantAnalyzerGraft = (props) => {
               </ProgressBar>
             </LabeledList.Item>
 
-            <LabeledList.Item label="Production">
-              {graft_data.production * data.cycle_seconds} seconds
-            </LabeledList.Item>
-
             <LabeledList.Item label="Yield">
               <ProgressBar
                 value={graft_data.yield / 10}
@@ -543,6 +572,10 @@ export const PlantAnalyzerGraft = (props) => {
               >
                 {graft_data.weed_chance} / 100
               </ProgressBar>
+            </LabeledList.Item>
+
+            <LabeledList.Item label="Production">
+              {graft_data.production * data.cycle_seconds} seconds
             </LabeledList.Item>
 
             <LabeledList.Item label="Weeds">
