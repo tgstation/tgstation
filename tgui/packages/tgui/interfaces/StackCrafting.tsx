@@ -9,7 +9,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
-import { createSearch } from 'tgui-core/string';
+import { capitalize, createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -297,7 +297,7 @@ const RecipeBox = (props: RecipeBoxProps) => {
       }
     >
       <Stack textAlign={'left'}>
-        <Stack.Item grow>{buttonName}</Stack.Item>
+        <Stack.Item grow>{capitalize(buttonName)}</Stack.Item>
         <Stack.Item align={'center'} fontSize={0.8} color={'gray'}>
           {reqSheets}
         </Stack.Item>
