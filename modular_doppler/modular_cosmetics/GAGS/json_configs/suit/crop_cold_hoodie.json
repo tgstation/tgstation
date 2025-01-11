@@ -10,7 +10,7 @@
 	"crop_cold_hoodie_t": [
 		{
 			"type": "icon_state",
-			"icon_state": "crop_cold_hoodie",
+			"icon_state": "crop_cold_hoodie_t",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
