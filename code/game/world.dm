@@ -225,6 +225,9 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	var/last_index = WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)
 	var/full_time = TICKS2DS(CPU_SIZE) / 10 // convert from ticks to seconds
 	maptext = "<div style=\"background-color:#FFFFFF; color:#000000;\">\
+		Toggles: <a href='byond://?src=[REF(src)];act=toggle_movement'>New Glide [GLOB.use_new_glide]</a> <a href='byond://?src=[REF(src)];act=toggle_compensation'>CPU Compensation [GLOB.attempt_corrective_cpu]</a> <a href='byond://?src=[REF(src)];act=catch_negatives'>Catch Negatives [GLOB.negative_printed]</a>\n\
+		Queue Control: <a href='byond://?src=[REF(src)];act=clamp_queue'>CLAMP</a> <a href='byond://?src=[REF(src)];act=flush_queue'>FLUSH</a>\n\
+		Glide: New ([GLOB.glide_size_multiplier]) Old ([GLOB.old_glide_size_multiplier])\n\
 		Floor: <a href='byond://?src=[REF(src)];act=set_floor'>[GLOB.floor_cpu]</a>\n\
 		Sustain: <a href='byond://?src=[REF(src)];act=set_sustain_cpu'>[GLOB.sustain_cpu]</a> <a href='byond://?src=[REF(src)];act=set_sustain_chance'>[GLOB.sustain_cpu_chance]%</a>\n\
 		Spike: <a href='byond://?src=[REF(src)];act=set_spike'>[GLOB.spike_cpu]</a>\n\
@@ -277,6 +280,23 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	if(!check_rights(R_DEBUG) || !check_rights(R_SERVER))
 		return FALSE
 	switch(href_list["act"])
+		if("flush_queue") // last resort for testing, sets queue to the average cpu of the last tick
+			for(var/i in 1 to CPU_SIZE)
+				GLOB.cpu_values[i] = world.cpu
+			return TRUE
+		if("clamp_queue") // last resort for testing, sets queue to the average cpu of the last tick
+			for(var/i in 1 to CPU_SIZE)
+				GLOB.cpu_values[i] = clamp(GLOB.cpu_values[i], 0, 500)
+			return TRUE
+		if("toggle_movement")
+			GLOB.use_new_glide = !GLOB.use_new_glide
+			return TRUE
+		if("toggle_compensation")
+			GLOB.attempt_corrective_cpu = !GLOB.attempt_corrective_cpu
+			return TRUE
+		if("catch_negatives")
+			GLOB.negative_printed = FALSE
+			return TRUE
 		if("set_floor")
 			var/floor_cpu = tgui_input_number(usr, "How low should we allow the cpu to go?", "Floor CPU", max_value = INFINITY, min_value = 0, default = 0) || 0
 			GLOB.floor_cpu = floor_cpu
@@ -294,6 +314,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 			GLOB.spike_cpu = spike_cpu
 			return TRUE
 
+GLOBAL_VAR_INIT(negative_printed, FALSE)
 /// Inserts our current world.cpu value into our rolling lists
 /// Its job is to pull the actual usage last tick instead of the moving average
 /world/proc/unroll_cpu_value()
@@ -335,18 +356,25 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	for(var/i in 1 to WINDOW_SIZE - 1)
 		calculated_avg += cpu_values[WRAP(cpu_index - i, 1, CPU_SIZE + 1)]
 	var/inbuilt_error = world.cpu * WINDOW_SIZE - calculated_avg
-	real_cpu += inbuilt_error
+
+	var/accounted_cpu = real_cpu + inbuilt_error
+	var/tick_and_map = GLOB.tick_cpu_usage[cpu_index] + world.map_cpu
 
 	// due to I think? compounded floating point error either on our side or internal to byond we somtimes get way too large/small cpu values
 	// I can't correct in place because I need the full history of averages to add back lost values
 	// our cpu value for last tick cannot be lower then the cost of sleeping procs + map cpu, so we'll clamp to that
 	// my hope is this will keep error within a reasonable bound as storing a lower then expected number would cause a higher then expected number as a side effect
-	var/lower_bound = GLOB.tick_cpu_usage[cpu_index] + world.map_cpu
 
-	cpu_values[cpu_index] = real_cpu
+	if((real_cpu < 0 || accounted_cpu < 0) && !GLOB.negative_printed)
+		GLOB.negative_printed = TRUE
+		log_runtime("Negative real cpu value extracted\n\
+			AVG [avg_cpu]; LAST AVG [last_avg_cpu]; LOST VAL [lost_value]; NEW VAL [real_cpu] CALC AVG [calculated_avg]; ERROR [inbuilt_error]; ACCOUNTED [accounted_cpu];\n\
+			INDEX [cpu_index]; OLD CPU LIST [json_encode(cpu_values)]")
+
+	cpu_values[cpu_index] = accounted_cpu
 	avg_cpu_values[cpu_index] = avg_cpu
 	GLOB.map_cpu_usage[cpu_index] = world.map_cpu
-	GLOB.verb_cost[cpu_index] = max(real_cpu - lower_bound, 0)
+	GLOB.verb_cost[cpu_index] = max(accounted_cpu - tick_and_map, 0)
 	GLOB.cpu_error[cpu_index] = inbuilt_error
 	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
 	GLOB.cpu_tracker.update_display()
