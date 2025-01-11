@@ -1035,6 +1035,9 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		RegisterSignal(modify, COMSIG_QDELETING, PROC_REF(client_disconnected))
 		viewer_count += 1
 		update_display()
+		
+	for(var/atom/movable/screen/plane_master/cpu_debug/debuggin as anything in modify.mob?.hud_used?.get_true_plane_masters(CPU_DEBUG_PLANE))
+		debuggin.update_visibility(modify.mob)
 
 /atom/movable/screen/usage_display/proc/client_disconnected(client/disconnected)
 	SIGNAL_HANDLER
@@ -1138,17 +1141,5 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 
 	var/final_average = trimmed_sum ? trimmed_sum / used : first_average
 	GLOB.glide_size_multiplier = min(100 / final_average, 1)
-	GLOB.glide_size_multi_error = max((final_average - 100) / 100 * world.tick_lag, 0)
-
-	/// Gets the cpu value we finished the last tick with (since the index reads a step ahead)
-	var/last_cpu = cpu_values[WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)]
-	var/error = max((last_cpu - 100) / 100 * world.tick_lag, 0)
-
-	for(var/atom/movable/trouble as anything in GLOB.gliding_atoms)
-		if(world.time >= trouble.glide_stopping_time || QDELETED(trouble))
-			GLOB.gliding_atoms -= trouble
-			trouble.glide_tracking = FALSE
-			continue
-		trouble.account_for_glide_error(error)
 
 #undef FORMAT_CPU

@@ -21,7 +21,6 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	///running average of the amount of real time clicks take to truly execute after the command is originally sent to the server.
 	///if a click isn't delayed at all then it counts as 0 deciseconds.
 	var/average_click_delay = 0
-	var/list/moving_mobs = list()
 
 /datum/controller/subsystem/verb_manager/input/Initialize()
 	setup_default_macro_sets()
@@ -72,8 +71,6 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	var/moves_this_run = 0
 	for(var/mob/user in GLOB.keyloop_list)
 		moves_this_run += user.focus?.keyLoop(user.client)//only increments if a player moves due to their own input
-	for(var/mob/moving in SSinput.moving_mobs)
-		moves_this_run += moving.keyLoop(gondor_calls_for_aid = TRUE)
 
 	movements_per_second = MC_AVG_SECONDS(movements_per_second, moves_this_run, wait TICKS)
 

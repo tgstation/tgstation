@@ -36,6 +36,7 @@ GLOBAL_PROTECT(href_token)
 	var/datum/colorblind_tester/color_test = new
 	var/datum/plane_master_debug/plane_debug
 	var/obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/library_manager
+	var/displaying_cpu_debug = FALSE
 
 	/// Whether or not the user tried to connect, but was blocked by 2FA
 	var/blocked_by_2fa = FALSE

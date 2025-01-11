@@ -92,6 +92,8 @@
 
 ///Plane of the "splash" icon used that shows on the lobby screen
 #define SPLASHSCREEN_PLANE 37
+//Holds JUST cpu debug maptext, normally not shown
+#define CPU_DEBUG_PLANE 38
 
 // The largest plane here must still be less than RENDER_PLANE_GAME
 
@@ -108,7 +110,6 @@
 /// Plane related to the menu when pressing Escape.
 /// Needed so that we can apply a blur effect to EVERYTHING, and guarantee we are above all UI.
 #define ESCAPE_MENU_PLANE 46
-#define EXAMINE_BALLOONS_PLANE 47
 
 #define RENDER_PLANE_MASTER 50
 
