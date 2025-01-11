@@ -79,7 +79,7 @@
 	icon_state = "athletas_bodysuit"
 	greyscale_config = /datum/greyscale_config/athletas_bodysuit
 	greyscale_config_worn = /datum/greyscale_config/athletas_bodysuit/worn
-	greyscale_colors = "#1c1c1c#eaeaea"
+	greyscale_colors = "#1c1c1c#c0c0c0"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
