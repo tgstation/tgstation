@@ -235,8 +235,8 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		<div style=\"color:#FF0000;\">\
 			Max ~CPU [full_time]s: [FORMAT_CPU(max(cpu_values))]\n\
 			Max Tick [full_time]s: [FORMAT_CPU(max(GLOB.tick_cpu_usage))]\n\
-			Max Map [full_time]s: [FORMAT_CPU(min(GLOB.map_cpu_usage))]\n\
-			Max ~Verb [full_time]s: [FORMAT_CPU(min(verb_cost))]\n\
+			Max Map [full_time]s: [FORMAT_CPU(max(GLOB.map_cpu_usage))]\n\
+			Max ~Verb [full_time]s: [FORMAT_CPU(max(verb_cost))]\n\
 		</div>\
 		<div style=\"color:#0096FF;\">\
 			Min ~CPU [full_time]s: [FORMAT_CPU(min(cpu_values))]\n\
