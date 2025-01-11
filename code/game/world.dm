@@ -224,9 +224,9 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	var/last_index = WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)
 	var/full_time = TICKS2DS(CPU_SIZE) / 10 // convert from ticks to seconds
 	maptext = "<div style=\"background-color:#FFFFFF; color:#000000;\">\
-		Floor: <a href='?src=[REF(src)];act=set_floor'>[GLOB.floor_cpu]</a>\n\
-		Sustain: <a href='?src=[REF(src)];act=set_sustain_cpu'>[GLOB.sustain_cpu]</a> <a href='?src=[REF(src)];act=set_sustain_chance'>[GLOB.sustain_cpu_chance]%</a>\n\
-		Spike: <a href='?src=[REF(src)];act=set_spike'>[GLOB.spike_cpu]</a>\n\
+		Floor: <a href='byond://?src=[REF(src)];act=set_floor'>[GLOB.floor_cpu]</a>\n\
+		Sustain: <a href='byond://?src=[REF(src)];act=set_sustain_cpu'>[GLOB.sustain_cpu]</a> <a href='byond://?src=[REF(src)];act=set_sustain_chance'>[GLOB.sustain_cpu_chance]%</a>\n\
+		Spike: <a href='byond://?src=[REF(src)];act=set_spike'>[GLOB.spike_cpu]</a>\n\
 		Tick: [FORMAT_CPU(world.time / world.tick_lag)]\n\
 		Frame Behind ~CPU: [FORMAT_CPU(cpu_values[last_index])]\n\
 		Frame Behind Tick: [FORMAT_CPU(GLOB.tick_cpu_usage[last_index])]\n\
