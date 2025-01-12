@@ -59,6 +59,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 /datum/orbit_menu/ui_static_data(mob/user)
 	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, PROC_REF(validate_mob_poi)), append_dead_role = FALSE)
 	var/list/new_other_pois = SSpoints_of_interest.get_other_pois()
+	var/is_admin = user?.client?.holder
 
 	var/list/alive = list()
 	var/list/antagonists = list()
@@ -101,10 +102,13 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		serialized["client"] = !!mob_poi.client
 		serialized["name"] = mob_poi.real_name
 
+		if (is_admin)
+			serialized["ckey"] = mob_poi.ckey
+
 		if(isliving(mob_poi))
 			serialized += get_living_data(mob_poi)
 
-		var/list/antag_data = get_antag_data(mob_poi.mind, user?.client?.holder)
+		var/list/antag_data = get_antag_data(mob_poi.mind, is_admin)
 		if(length(antag_data))
 			serialized += antag_data
 			antagonists += list(serialized)

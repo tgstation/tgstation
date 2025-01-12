@@ -1,4 +1,0 @@
-author: "AyIong"
-delete-after: True
-changes:
-  - bugfix: "Admin/Debug UI's (Especially the Game Panel) now work properly on Byond 516, instead of showing raw HTML"

@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Fixed bluespace fishing rods having a lower chance to work than intended by pulling from both the old AND random source."
+  - bugfix: "Bluespace fishing rods actually use the random source instead of the original source for dispensing the reward. Fixes them not working on open organ manipulation surgeries, and several random sources not working properly."

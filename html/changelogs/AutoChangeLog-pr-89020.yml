@@ -1,0 +1,5 @@
+author: "AyIong"
+delete-after: True
+changes:
+  - qol: "Stack crafting UI got images"
+  - qol: "Search in stack crafting UI will not take control from you, feel free to craft on walk"

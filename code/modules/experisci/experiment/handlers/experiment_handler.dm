@@ -210,7 +210,7 @@
 				any_success = TRUE
 		return any_success
 	else
-		// Returns true if the experiment was succesfuly handled
+		// Returns true if the experiment was successfuly handled
 		return selected_experiment.actionable(arglist(arguments)) && selected_experiment.perform_experiment(arglist(arguments))
 
 /**
