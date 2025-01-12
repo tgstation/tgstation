@@ -1,6 +1,0 @@
-author: "kapu and grungussuss"
-delete-after: True
-changes:
-  - bugfix: "fixed ambience sounds getting cut off mid play"
-  - sound: "addes fades for maintenance ambiences"
-  - refactor: "changed the way maintenance sounds are"

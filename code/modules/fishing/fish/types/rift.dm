@@ -47,7 +47,7 @@
 /datum/embedding/chrystarfish
 	pain_mult = 1
 	embed_chance = 85
-	fall_chance = 3
+	fall_chance = 1.5
 	pain_chance = 9
 	impact_pain_mult = 1
 	remove_pain_mult = 2
@@ -248,6 +248,17 @@
 #undef PATIENCE_FLINCH
 #undef PATIENCE_UNCOMFY
 
+/obj/item/fish/dolphish/pet_fish(mob/living/user, in_aquarium)
+	user.visible_message(
+		span_warning("[user] tries to pet [src], but it sinks its fangs into [user.p_their()] hand!"),
+		span_warning("You try to pet [src], but it sinks its fangs into your hand!"),
+		vision_distance = DEFAULT_MESSAGE_RANGE - 3,
+		)
+	user.apply_damage(force, BRUTE, user.get_active_hand(), wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attacking_item = src)
+	if(!in_aquarium)
+		forceMove(user.drop_location())
+	user.painful_scream()
+
 /obj/item/fish/flumpulus
 	name = "flumpulus"
 	fish_id = "flumpulus"
@@ -282,7 +293,7 @@
 	material_weight_mult = 1
 	weight_size_deviation = 0.6
 	safe_air_limits = list(
-		/datum/gas/nitrogen,
+		/datum/gas/nitrogen = list(0, 100),
 	)
 	min_pressure = 0
 	max_pressure = HAZARD_HIGH_PRESSURE
@@ -294,6 +305,7 @@
 	. = MANUAL_SUICIDE
 	for(var/i in 1 to rand(5, 15))
 		addtimer(CALLBACK(src, PROC_REF(flump_attack), user), 0.4 SECONDS * i)
+		user.death()
 
 /obj/item/fish/flumpulus/proc/flump_attack(mob/living/user)
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
@@ -304,6 +316,7 @@
 	user.visible_message("[user]'s [eyes ? eyes : "eye holes"] suddenly sprout stalks and turn into [new_eyes]!")
 	ASYNC
 		user.emote("scream")
+		eyes.throw_at(get_edge_target_turf(user, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 		sleep(5 SECONDS)
 		if(!QDELETED(eyes))
 			eyes.visible_message(span_danger("[eyes] rapidly turn to dust."))

@@ -1,0 +1,4 @@
+author: "warbluke"
+delete-after: True
+changes:
+  - bugfix: "Fake Nuclear Disks and Obviously Fake Nuclear Disks no longer teleport when changing Z-level outside of station."
