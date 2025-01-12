@@ -230,8 +230,6 @@
 	var/datum/disease/advance/adv_disease = SSdisease.archive_diseases[id].Copy()
 
 	var/list/cures = get_beaker_cures(id)
-	if(!cures.len)
-		return FALSE
 
 	adv_disease.cures = cures[1]
 	adv_disease.cure_text = cures[2]	// Same as generate_cure() in advance.dm
