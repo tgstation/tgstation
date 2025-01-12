@@ -1,0 +1,5 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - sound: "added some sounds to clown car"
+  - code_imp: "improved vehicle code a bit"

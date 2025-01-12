@@ -1,5 +1,9 @@
 #define CALL_BOT_COOLDOWN 900
 
+#define HOLOGRAM_CHOICE_CHARACTER "Existing Character"
+#define CHARACTER_TYPE_SELF "My Character"
+#define CHARACTER_TYPE_CREWMEMBER "Station Member"
+
 /mob/living/silicon/ai
 	name = "AI"
 	real_name = "AI"
@@ -688,94 +692,68 @@
 
 	if(incapacitated)
 		return
-	var/input
-	switch(tgui_input_list(usr, "Would you like to select a hologram based on a custom character, an animal, or switch to a unique avatar?", "Customize", list("Custom Character","Unique","Animal")))
-		if("Custom Character")
-			switch(tgui_alert(usr,"Would you like to base it off of your current character loadout, or a member on station?", "Customize", list("My Character","Station Member")))
-				if("Station Member")
-					var/list/personnel_list = list()
 
-					for(var/datum/record/locked/record in GLOB.manifest.locked)//Look in data core locked.
-						personnel_list["[record.name]: [record.rank]"] = record.character_appearance//Pull names, rank, and image.
+	var/static/list/choices = assoc_to_keys(GLOB.ai_hologram_category_options) + HOLOGRAM_CHOICE_CHARACTER
+	var/choice = tgui_input_list(usr, "What kind of hologram do you want?",	"Customize", choices)
+	if(!choice)
+		return
 
-					if(!length(personnel_list))
-						tgui_alert(usr,"No suitable records found. Aborting.")
-						return
-					input = tgui_input_list(usr, "Select a crew member", "Station Member", sort_list(personnel_list))
-					if(isnull(input))
-						return
-					if(isnull(personnel_list[input]))
-						return
-					var/mutable_appearance/character_icon = personnel_list[input]
-					if(character_icon)
-						character_icon.setDir(SOUTH)
-						hologram_appearance = character_icon
+	if(choice == HOLOGRAM_CHOICE_CHARACTER)
+		var/character_type = tgui_alert(usr,
+			"Would you like to base it off of your current character loadout, or a crewmember on the manifest?", "Customize",
+			list(CHARACTER_TYPE_CREWMEMBER, CHARACTER_TYPE_SELF)
+		)
+		switch(character_type)
+			if(CHARACTER_TYPE_CREWMEMBER)
+				var/list/personnel_list = list()
 
-				if("My Character")
-					switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?", "Customize", list("Yes","No")))
-						if("Yes")
-							var/mob/living/carbon/human/dummy/ai_dummy = new
-							var/mutable_appearance/dummy_appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
-							if(dummy_appearance)
-								qdel(ai_dummy)
-								hologram_appearance = dummy_appearance
-						if("No")
-							return FALSE
+				for(var/datum/record/locked/record in GLOB.manifest.locked)//Look in data core locked.
+					personnel_list["[record.name]: [record.rank]"] = record.character_appearance//Pull names, rank, and image.
+				if(!length(personnel_list))
+					tgui_alert(usr,"No suitable records found. Aborting.")
+					return
 
-		if("Animal")
-			var/list/icon_list = list(
-			"bear" = 'icons/mob/simple/animal.dmi',
-			"carp" = 'icons/mob/simple/carp.dmi',
-			"chicken" = 'icons/mob/simple/animal.dmi',
-			"corgi" = 'icons/mob/simple/pets.dmi',
-			"cow" = 'icons/mob/simple/cows.dmi',
-			"crab" = 'icons/mob/simple/animal.dmi',
-			"fox" = 'icons/mob/simple/pets.dmi',
-			"goat" = 'icons/mob/simple/animal.dmi',
-			"cat" = 'icons/mob/simple/pets.dmi',
-			"cat2" = 'icons/mob/simple/pets.dmi',
-			"poly" = 'icons/mob/simple/animal.dmi',
-			"pug" = 'icons/mob/simple/pets.dmi',
-			"spider" = 'icons/mob/simple/arachnoid.dmi'
-			)
+				var/input = tgui_input_list(usr, "Select a crew member", "Station Member", sort_list(personnel_list))
+				if(isnull(input))
+					return
+				if(isnull(personnel_list[input]))
+					return
+				var/mutable_appearance/character_icon = personnel_list[input]
+				if(character_icon)
+					character_icon.setDir(SOUTH)
+					hologram_appearance = character_icon
 
-			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
-			if(isnull(input))
-				return
-			if(isnull(icon_list[input]))
-				return
-			var/working_state = ""
-			switch(input)
-				if("poly")
-					working_state = "parrot_fly"
-				if("chicken")
-					working_state = "chicken_brown"
-				if("spider")
-					working_state = "guard"
-				else
-					working_state = input
-			hologram_appearance = mutable_appearance(icon_list[input], working_state)
-		else
-			var/list/icon_list = list(
-				"default" = 'icons/mob/silicon/ai.dmi',
-				"floating face" = 'icons/mob/silicon/ai.dmi',
-				"xeno queen" = 'icons/mob/nonhuman-player/alien.dmi',
-				"horror" = 'icons/mob/silicon/ai.dmi',
-				"clock" = 'icons/mob/silicon/ai.dmi'
+			if(CHARACTER_TYPE_SELF)
+				var/confirmation = tgui_alert(usr,
+					"WARNING: Your AI hologram will take the appearance of your currently selected character \
+					([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). \
+					Are you sure you want to proceed?", "Customize",
+					list("Yes","No")
 				)
-
-			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
-			if(isnull(input))
-				return
-			if(isnull(icon_list[input]))
-				return
-			var/working_state = ""
-			switch(input)
-				if("xeno queen")
-					working_state = "alienq"
+				if(confirmation == "Yes")
+					var/mob/living/carbon/human/dummy/ai_dummy = new()
+					var/mutable_appearance/dummy_appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
+					qdel(ai_dummy)
+					if(dummy_appearance)
+						hologram_appearance = dummy_appearance
+					return TRUE
 				else
-					working_state = input
-			hologram_appearance = mutable_appearance(icon_list[input], working_state)
+					return FALSE
+	else
+		var/list/options = GLOB.ai_hologram_category_options[choice]
+		var/option = tgui_input_list(usr, "Select a hologram", "Hologram", options)
+		if(!option)
+			return
+
+		var/icon = GLOB.ai_hologram_icons[option]
+		if(!icon)
+			CRASH("hologram icon for [option] does not exist in global icon list")
+
+		var/icon_state = GLOB.ai_hologram_icon_state[option]
+		if(!istext(icon_state)) //Possible that the icon_state can be "", which is valid
+			CRASH("hologram icon_state for [option] does not exist in global icon_state list")
+
+		hologram_appearance = mutable_appearance(icon, icon_state)
 	return
 
 /datum/action/innate/core_return
@@ -1204,3 +1182,7 @@
 	return
 
 #undef CALL_BOT_COOLDOWN
+
+#undef HOLOGRAM_CHOICE_CHARACTER
+#undef CHARACTER_TYPE_SELF
+#undef CHARACTER_TYPE_CREWMEMBER

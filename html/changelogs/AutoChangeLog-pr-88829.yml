@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed graphics getting screwed up when reconnecting with BYOND 515 after playing on BYOND 516."
