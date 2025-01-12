@@ -81,6 +81,7 @@ function JobEntry(props: JobEntryProps) {
           job.description
         ))
       }
+      tooltipPosition="top"
       onClick={() => {
         !job.unavailable_reason && onClick();
       }}
@@ -198,12 +199,12 @@ export function JobSelection(props) {
           fill
           scrollable
           title={
-            <Box m={1}>
+            <>
               {shuttle_status && <NoticeBox info>{shuttle_status}</NoticeBox>}
-              <span style={{ color: 'grey' }}>
+              <Box as="span" color="label">
                 It is currently {round_duration} into the shift.
-              </span>
-            </Box>
+              </Box>
+            </>
           }
         >
           <Box style={{ columns: '20em' }}>
