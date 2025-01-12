@@ -360,13 +360,15 @@ export const ReagentTooltip = (props) => {
     rate_total += reagent.rate;
   });
   let reagent_volumes: number[] = [];
+  let reagent_percentages: number[] = [];
   props.reagents.forEach((reagent) => {
+    reagent_percentages.push(reagent.rate / Math.max(1, rate_total));
     reagent_volumes.push(
       Math.max(
         Math.round(
           props.volume_units *
             (props.potency / 100) *
-            (rate_total > 1 ? reagent.rate / rate_total : reagent.rate) *
+            (reagent.rate / Math.max(1, rate_total)) *
             props.volume_mod,
         ),
         1,
@@ -385,7 +387,8 @@ export const ReagentTooltip = (props) => {
             {reagent_volumes[i]}u
           </Table.Cell>
           <Table.Cell py={0.5} pl={2} textAlign={'right'}>
-            {Math.round(reagent.rate * 100)}%
+            {rate_total > 1 && '~'}
+            {Math.round(reagent_percentages[i] * 100)}%
           </Table.Cell>
         </Table.Row>
       ))}
