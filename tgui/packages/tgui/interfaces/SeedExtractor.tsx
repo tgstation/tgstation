@@ -406,9 +406,7 @@ export const ReagentTooltip = (props) => {
         <Table.Cell py={0.5} pl={2} textAlign={'right'}>
           {props.volume_units}u
         </Table.Cell>
-        <Table.Cell py={0.5} pl={2} textAlign={'right'}>
-          100%
-        </Table.Cell>
+        <Table.Cell />
       </Table.Row>
       {!!props.grind_results.length && (
         <>
