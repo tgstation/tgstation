@@ -1812,8 +1812,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/new_slogan = reject_bad_text(tgui_input_text(user, "Set slogan", "Slogan", "Epic", max_length = 60))
 	if (new_slogan)
 		slogan_list += new_slogan
-	last_slogan = world.time + rand(0, slogan_delay)
-	return
+		last_slogan = world.time + rand(0, slogan_delay)
 
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
 	return FALSE
