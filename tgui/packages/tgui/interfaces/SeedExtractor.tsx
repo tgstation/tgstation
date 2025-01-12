@@ -26,7 +26,7 @@ type TraitData = {
 
 type ReagentData = {
   name: string;
-  rate: string;
+  rate: number;
 };
 
 type SeedData = {
@@ -42,6 +42,7 @@ type SeedData = {
   instability: number;
   icon: string;
   volume_mod: number;
+  volume_units: number;
   traits: string[];
   reagents: ReagentData[];
   mutatelist: string[];
@@ -239,6 +240,7 @@ export const SeedExtractor = (props) => {
                             grind_results={item.grind_results}
                             potency={item.potency}
                             volume_mod={item.volume_mod}
+                            volume_units={item.volume_units}
                           />
                         }
                       >
@@ -353,33 +355,74 @@ export const Level = (props) => {
 };
 
 export const ReagentTooltip = (props) => {
+  let rate_total = 0;
+  props.reagents.forEach((reagent) => {
+    rate_total += reagent.rate;
+  });
+  let reagent_volumes: number[] = [];
+  props.reagents.forEach((reagent) => {
+    reagent_volumes.push(
+      Math.max(
+        Math.round(
+          props.volume_units *
+            (props.potency / 100) *
+            (rate_total > 1 ? reagent.rate / rate_total : reagent.rate) *
+            props.volume_mod,
+        ),
+        1,
+      ),
+    );
+  });
   return (
     <Table>
       <Table.Row header>
-        <Table.Cell colSpan={2}>Reagents on grind:</Table.Cell>
+        <Table.Cell colSpan={3}>Reagents on grind:</Table.Cell>
       </Table.Row>
       {props.reagents?.map((reagent, i) => (
         <Table.Row key={i}>
           <Table.Cell>{reagent.name}</Table.Cell>
           <Table.Cell py={0.5} pl={2} textAlign={'right'}>
-            {Math.max(
-              Math.round(reagent.rate * props.potency * props.volume_mod),
-              1,
-            )}
-            u
+            {reagent_volumes[i]}u
+          </Table.Cell>
+          <Table.Cell py={0.5} pl={2} textAlign={'right'}>
+            {Math.round(reagent.rate * 100)}%
           </Table.Cell>
         </Table.Row>
       ))}
+      <Table.Row>
+        <Table.Cell colSpan={3} style={{ borderTop: '1px dotted gray' }} />
+      </Table.Row>
+      <Table.Row header>
+        <Table.Cell pt={1.5}>Total</Table.Cell>
+        <Table.Cell py={0.5} pl={2} textAlign={'right'}>
+          {Math.round(reagent_volumes.reduce((a, b) => a + b))}u
+        </Table.Cell>
+        <Table.Cell py={0.5} pl={2} textAlign={'right'}>
+          {Math.round(rate_total * 100)}%
+        </Table.Cell>
+      </Table.Row>
+      <Table.Row header>
+        <Table.Cell>Capacity</Table.Cell>
+        <Table.Cell py={0.5} pl={2} textAlign={'right'}>
+          {props.volume_units}u
+        </Table.Cell>
+        <Table.Cell py={0.5} pl={2} textAlign={'right'}>
+          100%
+        </Table.Cell>
+      </Table.Row>
       {!!props.grind_results.length && (
         <>
+          <Table.Row>
+            <Table.Cell colSpan={3} style={{ borderTop: '1px dotted gray' }} />
+          </Table.Row>
           <Table.Row header>
-            <Table.Cell colSpan={2} pt={1}>
+            <Table.Cell colSpan={3} pt={1}>
               Nutriments turn into:
             </Table.Cell>
           </Table.Row>
           {props.grind_results?.map((reagent, i) => (
             <Table.Row key={i}>
-              <Table.Cell colSpan={2}>{reagent}</Table.Cell>
+              <Table.Cell colSpan={3}>{reagent}</Table.Cell>
             </Table.Row>
           ))}
         </>

@@ -63,6 +63,7 @@ type SeedData = {
   weed_rate: number;
   weed_chance: number;
   volume_mod: number;
+  volume_units: number;
   removable_traits: string[];
   core_traits: string[];
   graft_gene: string;
@@ -93,7 +94,7 @@ type ReagentVolume = {
 
 type ReagentData = {
   name: string;
-  rate: string;
+  rate: number;
 };
 
 type TraitData = {
@@ -487,6 +488,7 @@ export const SeedExtraData = (props) => {
               grind_results={seed_data.grind_results}
               potency={seed_data.potency}
               volume_mod={seed_data.volume_mod}
+              volume_units={seed_data.volume_units}
             />
           }
         >
