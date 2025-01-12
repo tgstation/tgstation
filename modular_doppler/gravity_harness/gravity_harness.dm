@@ -38,6 +38,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BACK)
 	if(ispath(current_cell))
 		current_cell = new current_cell(src)
+		current_cell.moveToNullspace() // so it doesn't appear in storage
 	create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 
 /obj/item/gravity_harness/Destroy()
