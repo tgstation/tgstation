@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix emag not working on secure briefcases and safes"
+  - image: "Tweak secure briefcases sprite to have glowing red/green pixels for lock. Added broken black pixels to signal briefcase/safe are emagged."

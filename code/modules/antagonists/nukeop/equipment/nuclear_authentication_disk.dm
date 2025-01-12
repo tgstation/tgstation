@@ -27,9 +27,9 @@
 /obj/item/disk/nuclear/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/bed_tuckable, mapload, 6, -6, 0)
-	AddComponent(/datum/component/stationloving, !fake)
 
 	if(!fake)
+		AddComponent(/datum/component/stationloving, !fake)
 		AddComponent(/datum/component/keep_me_secure, CALLBACK(src, PROC_REF(secured_process)), CALLBACK(src, PROC_REF(unsecured_process)), 10)
 		SSpoints_of_interest.make_point_of_interest(src)
 	else
