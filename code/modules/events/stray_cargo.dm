@@ -149,7 +149,7 @@
 	var/admin_selected_pack = tgui_alert(usr,"Customize Pod contents?", "Pod Contents", list("Yes", "No", "Cancel"))
 	switch(admin_selected_pack)
 		if("Yes")
-			override_contents()
+			return override_contents()
 		if("No")
 			pack_type_override = null
 		else
