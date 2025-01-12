@@ -12,6 +12,7 @@
 
 	outfit = /datum/outfit/job/coroner
 	plasmaman_outfit = /datum/outfit/plasmaman/coroner
+	sechud_icon_state = SECHUD_CORONER
 
 	mind_traits = list(TRAIT_MORBID)
 	liver_traits = list(TRAIT_CORONER_METABOLISM)

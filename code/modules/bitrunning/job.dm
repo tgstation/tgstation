@@ -10,6 +10,7 @@
 	config_tag = "BITRUNNER"
 	outfit = /datum/outfit/job/bitrunner
 	plasmaman_outfit = /datum/outfit/plasmaman/bitrunner
+	sechud_icon_state = SECHUD_BITRUNNER
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 	display_order = JOB_DISPLAY_ORDER_BITRUNNER

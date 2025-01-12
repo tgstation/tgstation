@@ -12,6 +12,7 @@
 
 	outfit = /datum/outfit/job/paramedic
 	plasmaman_outfit = /datum/outfit/plasmaman/paramedic
+	sechud_icon_state = SECHUD_PARAMEDIC
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED

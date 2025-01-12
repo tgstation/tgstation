@@ -12,7 +12,7 @@ import {
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { RADIO_CHANNELS } from '../constants';
+import { RADIO_CHANNELS } from '../constants/radio';
 import { Window } from '../layouts';
 
 type ButtonData = {

@@ -1,9 +1,3 @@
-/**
- * @file
- * @copyright 2020 Aleksej Komarov
- * @license MIT
- */
-
 type Gas = {
   id: string;
   path: string;
@@ -12,145 +6,7 @@ type Gas = {
   color: string;
 };
 
-// UI states, which are mirrored from the BYOND code.
-export const UI_INTERACTIVE = 2;
-export const UI_UPDATE = 1;
-export const UI_DISABLED = 0;
-export const UI_CLOSE = -1;
-
-// All game related colors are stored here
-export const COLORS = {
-  // Department colors
-  department: {
-    captain: '#c06616',
-    security: '#e74c3c',
-    medbay: '#3498db',
-    science: '#9b59b6',
-    engineering: '#f1c40f',
-    cargo: '#f39c12',
-    service: '#7cc46a',
-    centcom: '#00c100',
-    other: '#c38312',
-  },
-  // Damage type colors
-  damageType: {
-    oxy: '#3498db',
-    toxin: '#2ecc71',
-    burn: '#e67e22',
-    brute: '#e74c3c',
-  },
-  // reagent / chemistry related colours
-  reagent: {
-    acidicbuffer: '#fbc314',
-    basicbuffer: '#3853a4',
-  },
-} as const;
-
-// Colors defined in CSS
-export const CSS_COLORS = [
-  'average',
-  'bad',
-  'black',
-  'blue',
-  'brown',
-  'good',
-  'green',
-  'grey',
-  'label',
-  'olive',
-  'orange',
-  'pink',
-  'purple',
-  'red',
-  'teal',
-  'transparent',
-  'violet',
-  'white',
-  'yellow',
-] as const;
-
-export type CssColor = (typeof CSS_COLORS)[number];
-
-/* IF YOU CHANGE THIS KEEP IT IN SYNC WITH CHAT CSS */
-export const RADIO_CHANNELS = [
-  {
-    name: 'Syndicate',
-    freq: 1213,
-    color: '#8f4a4b',
-  },
-  {
-    name: 'Red Team',
-    freq: 1215,
-    color: '#ff4444',
-  },
-  {
-    name: 'Blue Team',
-    freq: 1217,
-    color: '#3434fd',
-  },
-  {
-    name: 'Green Team',
-    freq: 1219,
-    color: '#34fd34',
-  },
-  {
-    name: 'Yellow Team',
-    freq: 1221,
-    color: '#fdfd34',
-  },
-  {
-    name: 'CentCom',
-    freq: 1337,
-    color: '#2681a5',
-  },
-  {
-    name: 'Supply',
-    freq: 1347,
-    color: '#b88646',
-  },
-  {
-    name: 'Service',
-    freq: 1349,
-    color: '#6ca729',
-  },
-  {
-    name: 'Science',
-    freq: 1351,
-    color: '#c68cfa',
-  },
-  {
-    name: 'Command',
-    freq: 1353,
-    color: '#fcdf03',
-  },
-  {
-    name: 'Medical',
-    freq: 1355,
-    color: '#57b8f0',
-  },
-  {
-    name: 'Engineering',
-    freq: 1357,
-    color: '#f37746',
-  },
-  {
-    name: 'Security',
-    freq: 1359,
-    color: '#dd3535',
-  },
-  {
-    name: 'AI Private',
-    freq: 1447,
-    color: '#d65d95',
-  },
-  {
-    name: 'Common',
-    freq: 1459,
-    color: '#1ecc43',
-  },
-] as const;
-
-const GASES = [
+const gases = [
   {
     id: 'o2',
     path: '/datum/gas/oxygen',
@@ -301,55 +157,55 @@ const GASES = [
 ] as const;
 
 // Returns gas label based on gasId
-export const getGasLabel = (gasId: string, fallbackValue?: string) => {
+export function getGasLabel(gasId: string, fallbackValue?: string) {
   if (!gasId) return fallbackValue || 'None';
 
   const gasSearchString = gasId.toLowerCase();
 
-  for (let idx = 0; idx < GASES.length; idx++) {
-    if (GASES[idx].id === gasSearchString) {
-      return GASES[idx].label;
+  for (let idx = 0; idx < gases.length; idx++) {
+    if (gases[idx].id === gasSearchString) {
+      return gases[idx].label;
     }
   }
 
   return fallbackValue || 'None';
-};
+}
 
 // Returns gas color based on gasId
-export const getGasColor = (gasId: string) => {
+export function getGasColor(gasId: string) {
   if (!gasId) return 'black';
 
   const gasSearchString = gasId.toLowerCase();
 
-  for (let idx = 0; idx < GASES.length; idx++) {
-    if (GASES[idx].id === gasSearchString) {
-      return GASES[idx].color;
+  for (let idx = 0; idx < gases.length; idx++) {
+    if (gases[idx].id === gasSearchString) {
+      return gases[idx].color;
     }
   }
 
   return 'black';
-};
+}
 
 // Returns gas object based on gasId
-export const getGasFromId = (gasId: string): Gas | undefined => {
+export function getGasFromId(gasId: string): Gas | undefined {
   if (!gasId) return;
 
   const gasSearchString = gasId.toLowerCase();
 
-  for (let idx = 0; idx < GASES.length; idx++) {
-    if (GASES[idx].id === gasSearchString) {
-      return GASES[idx];
+  for (let idx = 0; idx < gases.length; idx++) {
+    if (gases[idx].id === gasSearchString) {
+      return gases[idx];
     }
   }
-};
+}
 
 // Returns gas object based on gasPath
-export const getGasFromPath = (gasPath: string): Gas | undefined => {
+export function getGasFromPath(gasPath: string): Gas | undefined {
   if (!gasPath) return;
 
-  for (let idx = 0; idx < GASES.length; idx++) {
-    if (GASES[idx].path === gasPath) {
-      return GASES[idx];
+  for (let idx = 0; idx < gases.length; idx++) {
+    if (gases[idx].path === gasPath) {
+      return gases[idx];
     }
   }
-};
+}

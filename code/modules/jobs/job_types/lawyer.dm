@@ -12,6 +12,7 @@
 
 	outfit = /datum/outfit/job/lawyer
 	plasmaman_outfit = /datum/outfit/plasmaman/bar
+	sechud_icon_state = SECHUD_LAWYER
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV

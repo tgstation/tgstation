@@ -19,6 +19,7 @@
 
 	outfit = /datum/outfit/job/hop
 	plasmaman_outfit = /datum/outfit/plasmaman/head_of_personnel
+	sechud_icon_state = SECHUD_HEAD_OF_PERSONNEL
 	departments_list = list(
 		/datum/job_department/service,
 		/datum/job_department/command,

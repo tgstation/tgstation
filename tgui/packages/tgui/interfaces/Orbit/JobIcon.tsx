@@ -1,26 +1,12 @@
 import { DmIcon, Icon } from 'tgui-core/components';
 
+import { ANTAG_ICON, HUD_ICON, IconSettings } from '../../constants/icons';
 import { JOB2ICON } from '../common/JobToIcon';
 import { Antagonist, Observable } from './types';
 
 type Props = {
   item: Observable | Antagonist;
   realNameDisplay: boolean;
-};
-
-type IconSettings = {
-  dmi: string;
-  transform: string;
-};
-
-const normalIcon: IconSettings = {
-  dmi: 'icons/mob/huds/hud.dmi',
-  transform: 'scale(2.3) translateX(9px) translateY(1px)',
-};
-
-const antagIcon: IconSettings = {
-  dmi: 'icons/mob/huds/antag_hud.dmi',
-  transform: 'scale(1.8) translateX(-16px) translateY(7px)',
 };
 
 export function JobIcon(props: Props) {
@@ -33,11 +19,11 @@ export function JobIcon(props: Props) {
 
   let iconSettings: IconSettings;
   if ('antag' in item && !realNameDisplay) {
-    iconSettings = antagIcon;
+    iconSettings = ANTAG_ICON;
     usedJob = item.antag;
     usedIcon = item.antag_icon;
   } else {
-    iconSettings = normalIcon;
+    iconSettings = HUD_ICON;
   }
 
   return (

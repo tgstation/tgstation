@@ -2,7 +2,7 @@ import { Button, Section } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { getGasLabel } from '../constants';
+import { getGasLabel } from '../constants/gases';
 import { Window } from '../layouts';
 import { PortableBasicInfo } from './common/PortableAtmos';
 

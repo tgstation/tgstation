@@ -11,6 +11,7 @@
 
 	outfit = /datum/outfit/job/botanist
 	plasmaman_outfit = /datum/outfit/plasmaman/botany
+	sechud_icon_state = SECHUD_BOTANIST
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV

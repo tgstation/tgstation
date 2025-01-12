@@ -16,6 +16,7 @@
 
 	outfit = /datum/outfit/job/quartermaster
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
+	sechud_icon_state = SECHUD_QUARTERMASTER
 
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_CAR

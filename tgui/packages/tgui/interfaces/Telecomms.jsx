@@ -11,7 +11,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { RADIO_CHANNELS } from '../constants';
+import { RADIO_CHANNELS } from '../constants/radio';
 import { Window } from '../layouts';
 
 export const Telecomms = (props) => {

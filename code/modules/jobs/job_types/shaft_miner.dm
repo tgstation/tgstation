@@ -12,6 +12,7 @@
 
 	outfit = /datum/outfit/job/miner
 	plasmaman_outfit = /datum/outfit/plasmaman/mining
+	sechud_icon_state = SECHUD_SHAFT_MINER
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR

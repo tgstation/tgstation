@@ -13,6 +13,7 @@
 
 	outfit = /datum/outfit/job/cargo_tech
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
+	sechud_icon_state = SECHUD_CARGO_TECHNICIAN
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR

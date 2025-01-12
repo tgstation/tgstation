@@ -14,6 +14,7 @@
 
 	outfit = /datum/outfit/job/engineer
 	plasmaman_outfit = /datum/outfit/plasmaman/engineering
+	sechud_icon_state = SECHUD_STATION_ENGINEER
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_ENG

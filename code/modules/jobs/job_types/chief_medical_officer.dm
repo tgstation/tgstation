@@ -19,6 +19,7 @@
 
 	outfit = /datum/outfit/job/cmo
 	plasmaman_outfit = /datum/outfit/plasmaman/chief_medical_officer
+	sechud_icon_state = SECHUD_CHIEF_MEDICAL_OFFICER
 	departments_list = list(
 		/datum/job_department/medical,
 		/datum/job_department/command,

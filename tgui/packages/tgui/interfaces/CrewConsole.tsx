@@ -4,7 +4,7 @@ import { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { COLORS } from '../constants';
+import { COLORS } from '../constants/colors';
 import { Window } from '../layouts';
 
 const HEALTH_COLOR_BY_LEVEL = [

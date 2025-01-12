@@ -14,7 +14,7 @@ import { round, toFixed } from 'tgui-core/math';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { COLORS } from '../constants';
+import { COLORS } from '../constants/colors';
 import { Window } from '../layouts';
 import { Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
 

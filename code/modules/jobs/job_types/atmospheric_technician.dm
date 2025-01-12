@@ -13,6 +13,7 @@
 
 	outfit = /datum/outfit/job/atmos
 	plasmaman_outfit = /datum/outfit/plasmaman/atmospherics
+	sechud_icon_state = SECHUD_ATMOSPHERIC_TECHNICIAN
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_ENG

@@ -13,6 +13,7 @@
 
 	outfit = /datum/outfit/job/geneticist
 	plasmaman_outfit = /datum/outfit/plasmaman/genetics
+	sechud_icon_state = SECHUD_GENETICIST
 	departments_list = list(
 		/datum/job_department/science,
 		)

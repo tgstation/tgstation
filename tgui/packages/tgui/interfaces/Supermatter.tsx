@@ -12,7 +12,7 @@ import { toFixed } from 'tgui-core/math';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { getGasFromPath } from '../constants';
+import { getGasFromPath } from '../constants/gases';
 import { Window } from '../layouts';
 
 const logScale = (value) => Math.log2(16 + Math.max(0, value)) - 4;

@@ -13,6 +13,7 @@
 
 	outfit = /datum/outfit/job/scientist
 	plasmaman_outfit = /datum/outfit/plasmaman/science
+	sechud_icon_state = SECHUD_SCIENTIST
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SCI

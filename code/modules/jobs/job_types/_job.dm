@@ -135,6 +135,9 @@
 	/// If set, look for a policy with this instead of the job title
 	var/policy_override
 
+	/// Default sec hud icon state for this job
+	var/sechud_icon_state = SECHUD_UNKNOWN
+
 /datum/job/New()
 	. = ..()
 	var/new_spawn_positions = CHECK_MAP_JOB_CHANGE(title, "spawn_positions")

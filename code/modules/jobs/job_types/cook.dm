@@ -8,10 +8,12 @@
 	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "COOK"
-	var/cooks = 0 //Counts cooks amount
+	/// Total cooks in the kitchen
+	var/cooks = 0
 
 	outfit = /datum/outfit/job/cook
 	plasmaman_outfit = /datum/outfit/plasmaman/chef
+	sechud_icon_state = SECHUD_COOK
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV

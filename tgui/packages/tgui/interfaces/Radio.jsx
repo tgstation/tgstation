@@ -9,7 +9,7 @@ import {
 import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
-import { RADIO_CHANNELS } from '../constants';
+import { RADIO_CHANNELS } from '../constants/radio';
 import { Window } from '../layouts';
 
 export const Radio = (props) => {

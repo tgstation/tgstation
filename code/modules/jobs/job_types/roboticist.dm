@@ -14,6 +14,7 @@
 
 	outfit = /datum/outfit/job/roboticist
 	plasmaman_outfit = /datum/outfit/plasmaman/robotics
+	sechud_icon_state = SECHUD_ROBOTICIST
 	departments_list = list(
 		/datum/job_department/science,
 		)

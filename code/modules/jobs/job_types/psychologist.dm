@@ -12,6 +12,7 @@
 
 	outfit = /datum/outfit/job/psychologist
 	plasmaman_outfit = /datum/outfit/plasmaman/psychologist
+	sechud_icon_state = SECHUD_PSYCHOLOGIST
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV

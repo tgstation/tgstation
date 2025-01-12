@@ -114,9 +114,16 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			if((job_datum.job_flags & JOB_HIDE_WHEN_EMPTY) && owner.IsJobUnavailable(job_datum.title, latejoin = TRUE) != JOB_AVAILABLE)
 				continue
 
+			var/job_icon
+			if(department.department_name == DEPARTMENT_SILICON)
+				job_icon = "borg" // assigns the icon in JS
+			else
+				job_icon = job_datum.sechud_icon_state
+
 			var/list/job_data = list(
 				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
 				"description" = job_datum.description,
+				"icon" = job_icon,
 			)
 
 			department_jobs[job_datum.title] = job_data

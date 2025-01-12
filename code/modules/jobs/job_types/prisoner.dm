@@ -12,6 +12,7 @@
 
 	outfit = /datum/outfit/job/prisoner
 	plasmaman_outfit = /datum/outfit/plasmaman/prisoner
+	sechud_icon_state = SECHUD_PRISONER
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
 	department_for_prefs = /datum/job_department/security

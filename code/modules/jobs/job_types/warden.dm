@@ -17,6 +17,7 @@
 
 	outfit = /datum/outfit/job/warden
 	plasmaman_outfit = /datum/outfit/plasmaman/warden
+	sechud_icon_state = SECHUD_WARDEN
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC

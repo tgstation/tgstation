@@ -8,7 +8,7 @@ import { BooleanLike } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
-import { getGasLabel } from '../../constants';
+import { getGasLabel } from '../../constants/gases';
 
 export type VentProps = {
   refID: string;

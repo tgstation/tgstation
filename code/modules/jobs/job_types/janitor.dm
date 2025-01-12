@@ -11,6 +11,7 @@
 
 	outfit = /datum/outfit/job/janitor
 	plasmaman_outfit = /datum/outfit/plasmaman/janitor
+	sechud_icon_state = SECHUD_JANITOR
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
