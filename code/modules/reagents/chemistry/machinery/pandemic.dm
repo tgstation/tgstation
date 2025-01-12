@@ -200,20 +200,20 @@
 	if(!beaker)
 		return cures
 
-	var/datum/reagent/blood/blood = locate() in beaker.reagents.reagent_list
+	var/datum/reagent/blood/blood = beaker.reagents.has_reagent(/datum/reagent/blood)
 	if(!blood)
 		return cures
 
 	var/list/viruses = blood.get_diseases()
-	if(!viruses)
+	if(!length(viruses))
 		return cures
 
 	// Only check for cure if there is a beaker AND the beaker contains blood AND the blood contains a virus.
-	for(var/datum/disease/disease as anything in viruses)
-		if(istype(disease, /datum/disease/advance) && (disease.GetDiseaseID() == disease_id))	// Double check the ids match.
+	for(var/datum/disease/advance/disease in viruses)
+		if(disease.GetDiseaseID() == disease_id)	// Double check the ids match.
 			cures.Add(disease.cures)
 			cures.Add(disease.cure_text)
-			return cures
+			break
 
 	return cures
 
@@ -230,9 +230,7 @@
 	var/datum/disease/advance/adv_disease = SSdisease.archive_diseases[id]
 
 	var/list/cures = get_beaker_cures(id)
-	if(!cures)
-		return FALSE
-	if(!(cures[1]))
+	if(!cures.len)
 		return FALSE
 
 	adv_disease.cures = cures[1]
