@@ -145,7 +145,7 @@ const ItemTile = ({ item }) => {
       }
       buttonsAlt={
         <Stack bold color="rgb(185, 185, 185)" fontSize={0.8}>
-          <Stack.Item grow></Stack.Item>
+          <Stack.Item grow />
           <Stack.Item style={{ textShadow: '0 1px 1px black' }}>
             x{item.amount}
           </Stack.Item>
