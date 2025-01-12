@@ -65,3 +65,7 @@
 /datum/loadout_item/backpack/frontier_satchel
 	name = "Frontier Satchel"
 	item_path = /obj/item/storage/backpack/industrial/frontier_colonist/satchel
+
+/datum/loadout_item/backpack/gravity_harness
+	name = "Gravity Harness"
+	item_path = /obj/item/gravity_harness/with_cell

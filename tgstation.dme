@@ -6731,6 +6731,8 @@
 #include "modular_doppler\food_replicator\code\replicator_designs\replicator_clothing.dm"
 #include "modular_doppler\food_replicator\code\replicator_designs\replicator_food.dm"
 #include "modular_doppler\food_replicator\code\replicator_designs\replicator_medical.dm"
+#include "modular_doppler\gravity_harness\gravity_harness.dm"
+#include "modular_doppler\gravity_harness\supply_packs.dm"
 #include "modular_doppler\hearthkin\primitive_cooking_additions\code\big_mortar.dm"
 #include "modular_doppler\hearthkin\primitive_cooking_additions\code\cauldron.dm"
 #include "modular_doppler\hearthkin\primitive_cooking_additions\code\cookware.dm"
