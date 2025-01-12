@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Station traits no longer use clown and mime's human names (they're not human)"
