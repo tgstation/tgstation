@@ -11,3 +11,4 @@
 		var/datum/export_report/export_log = export_item_and_contents(results, apply_elastic = TRUE)
 		var/value = counterlist_sum(export_log.total_value)
 		TEST_ASSERT(value > CARGO_MINIMUM_COST, "Cargo crate [new_crate.name] had a sale value of [value], lower than [CARGO_MINIMUM_COST]")
+		TEST_ASSERT(value < new_crate.get_cost() , "Cargo crate [new_crate.name] had a sale value of [value], greater than [new_crate.get_cost()]")
