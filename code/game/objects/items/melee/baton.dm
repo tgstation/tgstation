@@ -466,6 +466,7 @@
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "stunbaton"
+	base_icon_state = "stunbaton"
 	inhand_icon_state = "baton"
 	worn_icon_state = "baton"
 	icon_angle = -45
@@ -506,6 +507,7 @@
 	var/cell_hit_cost = STANDARD_CELL_CHARGE
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
+	var/tip_changes_color = TRUE
 
 /datum/armor/baton_security
 	bomb = 50
@@ -571,12 +573,16 @@
 
 /obj/item/melee/baton/security/update_icon_state()
 	if(active)
-		icon_state = "[initial(icon_state)]_active"
+		icon_state = "[base_icon_state]_active"
+		if(tip_changes_color)
+			inhand_icon_state = "[base_icon_state]_active_[set_baton_tip_color()]"
+		else
+			inhand_icon_state = "[base_icon_state]_active"
 		return ..()
 	if(!cell)
-		icon_state = "[initial(icon_state)]_nocell"
+		icon_state = "[base_icon_state]_nocell"
 		return ..()
-	icon_state = "[initial(icon_state)]"
+	icon_state = "[base_icon_state]"
 	return ..()
 
 /obj/item/melee/baton/security/examine(mob/user)
@@ -631,28 +637,31 @@
 
 /// Toggles the stun baton's light
 /obj/item/melee/baton/security/proc/toggle_light()
-	set_baton_light_color()
 	set_light_on(!light_on)
 	return
 
-/// Change our baton's light color based on the contained cell.
-/obj/item/melee/baton/security/proc/set_baton_light_color()
+/// Change our baton's top color based on the contained cell.
+/obj/item/melee/baton/security/proc/set_baton_tip_color()
+	var/tip_type_to_set
+
 	if(cell)
 		var/chargepower = cell.maxcharge
 		var/zap_value = clamp(chargepower/STANDARD_CELL_CHARGE, 0, 100)
 		switch(zap_value)
 			if(-INFINITY to 10)
-				set_light_color(LIGHT_COLOR_ORANGE)
+				tip_type_to_set = "orange"
 			if(11 to 20)
-				set_light_color(LIGHT_COLOR_INTENSE_RED)
+				tip_type_to_set = "red"
 			if(21 to 30)
-				set_light_color(LIGHT_COLOR_GREEN)
+				tip_type_to_set = "green"
 			if(31 to 40)
-				set_light_color(LIGHT_COLOR_BLUE)
+				tip_type_to_set = "blue"
 			if(41 to INFINITY)
-				set_light_color(LIGHT_COLOR_PURPLE)
+				tip_type_to_set = "purple"
 	else
-		set_light_color(LIGHT_COLOR_ORANGE)
+		tip_type_to_set = "orange"
+
+	return tip_type_to_set
 
 /obj/item/melee/baton/security/proc/turn_on(mob/user)
 	active = TRUE
@@ -801,6 +810,7 @@
 	bare_wound_bonus = 15
 	additional_stun_armour_penetration = 30
 	convertible = FALSE
+	tip_changes_color = FALSE
 
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list(
@@ -815,14 +825,9 @@
 
 /obj/item/melee/baton/security/stunsword/update_icon_state()
 	if(active)
-		icon_state = "[base_icon_state]_active"
 		inhand_icon_state = "[base_icon_state]_active"
 		return ..()
-	if(!cell)
-		icon_state = "[base_icon_state]_nocell"
-		inhand_icon_state = "[base_icon_state]"
-		return ..()
-	icon_state = "[base_icon_state]"
+
 	inhand_icon_state = "[base_icon_state]"
 	return ..()
 
@@ -833,6 +838,7 @@
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "stunprod"
+	base_icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	worn_icon_state = null
 	icon_angle = -45
@@ -901,6 +907,7 @@
 	throw_speed = 1
 	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "boomerang"
+	base_icon_state = "boomerang"
 	inhand_icon_state = "boomerang"
 	force = 5
 	throwforce = 5
@@ -930,6 +937,7 @@
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
 	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "teleprod"
+	base_icon_state = "teleprod"
 	inhand_icon_state = "teleprod"
 	slot_flags = null
 	can_upgrade = FALSE
@@ -951,6 +959,7 @@
 	desc = "A prod with a telecrystal on the end. It sparks with a desire for theft and subversion."
 	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "telecrystalprod"
+	base_icon_state = "telecrystalprod"
 	inhand_icon_state = "telecrystalprod"
 	slot_flags = null
 	throw_stun_chance = 50 //I think it'd be funny
