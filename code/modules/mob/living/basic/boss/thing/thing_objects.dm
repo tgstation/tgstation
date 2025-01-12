@@ -53,6 +53,11 @@
 	icon_state = "exclamation"
 	duration = 1 SECONDS
 
+/obj/effect/temp_visual/telegraphing/exclamation/Initialize(mapload, duration)
+	if(!isnull(duration))
+		src.duration = duration
+	return ..()
+
 /obj/effect/temp_visual/telegraphing/exclamation/animated
 	alpha = 0
 
