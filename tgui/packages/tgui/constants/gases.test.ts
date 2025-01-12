@@ -3,7 +3,7 @@ import {
   getGasFromId,
   getGasFromPath,
   getGasLabel,
-} from './constants/gases';
+} from './gases';
 
 describe('gas helper functions', () => {
   it('should get the proper gas label', () => {
