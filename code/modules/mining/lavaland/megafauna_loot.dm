@@ -1133,7 +1133,7 @@
 
 /obj/item/organ/brain/cybernetic/ai
 	name = "AI-uplink brain"
-	desc = "Can be inserted into a body with NO ORGANIC ORGANS (robotics only) to allow AIs to control it. Comes with its own health sensors beacon. MUST be a humanoid or bad things happen to the consciousness."
+	desc = "Can be inserted into a body with NO ORGANIC INTERNAL ORGANS (robotic organs only) to allow AIs to control it. Comes with its own health sensors beacon. MUST be a humanoid or bad things happen to the consciousness."
 	can_smoothen_out = FALSE
 	/// if connected, our AI
 	var/mob/living/silicon/ai/mainframe

@@ -62,7 +62,7 @@
 	icon_living = icon_state
 
 /mob/living/basic/boss/thing/adjust_health(amount, updating_health = TRUE, forced = FALSE)
-	if(!ruin_spawned || phase_invulnerability_timer || phase == 3 || stat || amount <= 0)
+	if(phase_invulnerability_timer || phase == 3 || stat || amount <= 0)
 		return ..()
 	var/potential_excess = bruteloss + amount - (maxHealth/3)*phase
 	if(potential_excess > 0)
@@ -126,6 +126,8 @@
 
 /mob/living/basic/boss/thing/admin_spawn
 	ruin_spawned = FALSE
+	loot = list(/obj/item/organ/brain/cybernetic/ai) // the main loot of the ruin, but if admin spawned the keycard is useless
+	crusher_loot = list(/obj/item/organ/brain/cybernetic/ai, /obj/item/crusher_trophy/flesh_glob)
 
 // special stuff for our ruin to make a cooler bossfight
 

@@ -196,7 +196,7 @@
 	. = ..()
 	var/turf/owner_turf = get_turf(owner)
 	owner.visible_message(span_danger("[owner] spits acid!"))
-	var/list/potential = RANGE_TURFS(6, owner_turf)
+	var/list/potential = RANGE_TURFS(4, owner_turf)
 
 	for(var/i = 1 to rand(2,4))
 		new /obj/effect/temp_visual/incoming_thing_acid(pick(potential))
