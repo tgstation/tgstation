@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - rscadd: "Heretics can now get clues about objects around unused influences in their dreams, with a 5 minute cooldown"

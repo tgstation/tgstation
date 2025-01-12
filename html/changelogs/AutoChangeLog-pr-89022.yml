@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Fixed the ability to scroll for Ore silo's logging, personal crafting's material section, telecomms monitors, and traitor uplinks for clients on 516."
