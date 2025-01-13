@@ -1803,7 +1803,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(!compartmentLoadAccessCheck(user) || !IS_WRITING_UTENSIL(attack_item))
 		return ..()
 
-	var/new_name = reject_bad_text(tgui_input_text(user, "Set name", "Name", name, max_length = 20))
+	var/new_name = reject_bad_name(tgui_input_text(user, "Set name", "Name", name, max_length = 20), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
 	if (new_name)
 		name = new_name
 	var/new_desc = reject_bad_text(tgui_input_text(user, "Set description", "Description", desc, max_length = 60))
