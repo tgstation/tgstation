@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - map: "fixed the lightswitch in Ice Box shared engineering storage being covered by the APC."
