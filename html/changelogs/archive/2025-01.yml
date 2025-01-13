@@ -162,3 +162,172 @@
   warbluke:
   - bugfix: Changed BATTERY to CELL in the mob define file since an ethereal stomach
       organ works like a power cell despite being called a battery.
+2025-01-08:
+  00-Steven:
+  - bugfix: Rave visor music actually works after the first deactivation.
+  - bugfix: Sign language no longer throws a runtime error when repeatedly muted and
+      unmuted.
+  - bugfix: Sign language no longer fails to hide the action when you get it while
+      mute, stop being mute, and start being mute again.
+  - bugfix: Pre-filled test tube racks actually update to look filled.
+  - bugfix: Pre-filled test tube racks are actually fully filled, instead of missing
+      a tube.
+  Absolucy:
+  - bugfix: Fixed graphics getting screwed up when reconnecting with BYOND 515 after
+      playing on BYOND 516.
+  AyIong:
+  - bugfix: Admin/Debug UI's (Especially the Game Panel) now work properly on Byond
+      516, instead of showing raw HTML
+  Ben10Omintrix:
+  - bugfix: goliaths can now be tamed
+  - bugfix: fixes turtles rerolling strange seed chems
+  StrangeWeirdKitten:
+  - bugfix: Things that drop in random places are no longer statistically weighted
+      to drop in security.
+  SyncIt21:
+  - code_imp: improved ui data code for plumbing reaction chamber
+  Y0SH1M4S73R:
+  - bugfix: Replaced floor tiles on shuttles no longer get left behind when the shuttle
+      moves.
+  grungussuss:
+  - sound: added some sounds to clown car
+  - code_imp: improved vehicle code a bit
+  hyperjll:
+  - qol: The Syndie Lipstick's desc in the uplink now actually tells the potential
+      buyer what it does (and how to use it)
+  necromanceranne:
+  - qol: You can now put hats on your wig. I guess that means you can put a wig on
+      your wig? Wigstacking?
+  - spellcheck: The 'Wig' in the loadout is now correctly named 'Natural Wig'.
+  timothymtorres:
+  - sound: Add snow pickup and drop sounds to material
+  tontyGH:
+  - code_imp: AIs selecting holograms mid-round now select from the same list as prefs,
+      which should make things easier to keep consistent
+2025-01-09:
+  00-Steven:
+  - rscadd: Organ harvesting players is now more rewarding. Increased export value
+      of initial player organs.
+  Exester509:
+  - balance: The tesla cannon now fires hitscan lightning bolts with buffed damage
+      to non-insulated targets.
+  - balance: Flux anomalies now have a limit of 5 per round, instead of 8.
+  Hatterhat:
+  - rscadd: Magazines with defined ammo bands can now have their color changed with
+      a pen, in case you're reloading spent magazines or speedloaders with different
+      ammunition and want to change magazine colors to be appropriate.
+  - qol: C-20r magazines and Stechkin APS magazines now have ammo band support.
+  - qol: Standardized some descriptions for AP, HP, and incendiary magazines.
+  Melbert:
+  - qol: You can now look down ladders, both via the look down verb/hotkey and by
+      just looking with your eyes
+  SmArtKar:
+  - bugfix: Cult blood rites should not longer create "empty" blood or be unable to
+      suck up more than one blood pool at a time.
+  - code_imp: Blood trails are now considered a subtype of blood pools
+  - bugfix: Sticky tape should be sticky again.
+  mc-oofert:
+  - bugfix: MMIs in an odysseus get the medhud, odysseus medical beamgun works properly
+  necromanceranne:
+  - bugfix: Burst fire weapons cannot be permanently broken by pacifists attempting
+      to fire them.
+  norsvenska:
+  - bugfix: The bar and restaurant portals are now distinguishable at a glance.
+2025-01-10:
+  Iamgoofball:
+  - qol: Deconverting a revolutionary now throws a balloon alert alongside the chat
+      text.
+  Jacquerel:
+  - bugfix: The hand teleporter (and several other items) will now allow you to teleport
+      to and from valid locations and forbid you from teleporting to or from places
+      you can't teleport to or from, instead of the other way around.
+  SmArtKar:
+  - rscadd: Spessmen now blink.
+  - rscadd: Added a new Fluoride Stare quirk, keep those eyeballs wet, lest they crack!
+  - image: Eyes now display their color on their organ sprite, instead of always being
+      displayed as blue.
+  high-speedspin-cycle:
+  - balance: Overdose thresholds now positively scale with high purity
+2025-01-11:
+  Y0SH1M4S73R:
+  - qol: Xenomorphs that have had their organs removed, or replaced with organs they
+      shouldn't normally have, keep those organs (or lack thereof) when evolving.
+  - bugfix: Xenomorphs that somehow get skillchips or brain traumas will keep them
+      when evolving.
+  lukevale:
+  - bugfix: Fixes the extra pixals the flooring decal line trim, and the striped version
+      has where it's not ment to.
+  timothymtorres:
+  - sound: Add hair clipper sound to hair razor item
+  zoomachina:
+  - spellcheck: succesful -> successful
+2025-01-12:
+  00-Steven:
+  - bugfix: Only red glowstick fluid gives permanent unnaturally red eyes on overdose.
+  - balance: Ethereal hunger rate has been adjusted to be 1/8th of its previous rate,
+      now taking roughly 16-17~ minutes to go down from full to normal or normal to
+      none. Ethereal defines have been standardized to help keep this sane.
+  - refactor: Ethereal APC and power store draining/charging methods have been refactored.
+      Please report any issues.
+  - bugfix: Ethereal APC and power store draining/charging no longer arbitrarily caps
+      out at slightly below or above the max/min.
+  - bugfix: Ethereal APC draining/charging no longer runtimes when there is no cell
+      or it gets removed mid-charge.
+  - bugfix: Ethereals can no longer continue charging their stomach even if it gets
+      surgically removed from them mid-charge.
+  - bugfix: Ethereal power store draining actually updated the charge level overlay.
+  - qol: Ethereal APC and power store draining displays a balloon alert when it can't
+      continue for whatever reason.
+  Iamgoofball:
+  - sound: Adds an off-by-default config option to optionally disable TTS audio on
+      whispered speech.
+  Jacquerel:
+  - bugfix: Due to improved counselling procedures, Ethereals are less likely to develop
+      crippling phobias following a near-death experience.
+  - bugfix: Due to psychiatric budget cuts, Ethereals are more likely to develop other
+      forms of mental instability following a near-death experience.
+  - spellcheck: Foam Force's brand management team require us to remove an erroneous
+      underscore which was in violation of their logo usage terms and conditions.
+  SmArtKar:
+  - bugfix: Station traits no longer use clown and mime's human names (they're not
+      human)
+  - bugfix: Fixed chameleon cards not updating sechud icons
+  - image: Fixed human AI's and medieval punpun's ID trims
+  - balance: Significatly tuned down SaturnX's visual filter's strength
+  - spellcheck: Improved mindbreaker toxin description
+  - admin: Admins can now filter observable mobs by ckey
+  carlarctg:
+  - bugfix: ink kisses now delete the spawned projectile
+  hyperjll:
+  - bugfix: A single enthusiastic chemist hell-bent on selling chemicals to his co-workers
+      single-handedly solved a programming issue with our custom vendors. They'll
+      begin displaying custom names (such as those provided by labels) once more.
+  timothymtorres:
+  - rscadd: Rat kings across the station tremble in fear since mousetraps have been
+      added to the cargo crate via service category.
+2025-01-13:
+  00-Steven:
+  - bugfix: Fixed bluespace fishing rods having a lower chance to work than intended
+      by pulling from both the old AND random source.
+  - bugfix: Bluespace fishing rods actually use the random source instead of the original
+      source for dispensing the reward. Fixes them not working on open organ manipulation
+      surgeries, and several random sources not working properly.
+  AyIong:
+  - qol: Stack crafting UI got images
+  - qol: Search in stack crafting UI will not take control from you, feel free to
+      craft on walk
+  JohnFulpWillard:
+  - bugfix: Fixed the ability to scroll for Ore silo's logging, personal crafting's
+      material section, telecomms monitors, and traitor uplinks for clients on 516.
+  MTandi:
+  - rscadd: Heretics can now get clues about objects around unused influences in their
+      dreams, with a 5 minute cooldown
+  SmArtKar:
+  - image: Cult's blood barrage has received new sprites
+  timothymtorres:
+  - bugfix: Fix emag not working on secure briefcases and safes
+  - image: Tweak secure briefcases sprite to have glowing red/green pixels for lock.
+      Added broken black pixels to signal briefcase/safe are emagged.
+  warbluke:
+  - bugfix: Fake Nuclear Disks and Obviously Fake Nuclear Disks no longer teleport
+      when changing Z-level outside of station.

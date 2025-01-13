@@ -23,7 +23,7 @@
 /datum/embedding/sticky_tape
 	pain_mult = 0
 	jostle_pain_mult = 0
-	ignore_throwspeed_threshold = 0
+	ignore_throwspeed_threshold = TRUE
 	immune_traits = null
 
 /obj/item/stack/sticky_tape/attack_hand(mob/user, list/modifiers)

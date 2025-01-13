@@ -3,6 +3,8 @@
 	name = "blackened orbs"
 	desc = "These orbs will withstand the light of the sun, yet still see within the darkest voids."
 	eye_icon_state = null
+	blink_animation = FALSE
+	iris_overlays = FALSE
 	pepperspray_protect = TRUE
 	flash_protect = FLASH_PROTECTION_WELDER
 	color_cutoffs = list(20, 10, 40)
