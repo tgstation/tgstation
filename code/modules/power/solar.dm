@@ -31,14 +31,16 @@
 	var/obj/effect/overlay/panel
 	var/obj/effect/overlay/panel_edge
 
-	var/glass_type = null
+	//used to keep track of what material our panel currently has
+	var/datum/material/mat_type = /datum/material/glass
+
 	///better glass increases the how much power the solar gives. the power_tier is a multiplier
 	var/power_tier = 1
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 
-	panel_edge = add_panel_overlay("solar_panel_edge_glass", PANEL_EDGE_Z_OFFSET)
+	panel_edge = add_panel_overlay("solar_panel_glass_edge", PANEL_EDGE_Z_OFFSET)
 	panel = add_panel_overlay("solar_panel_glass", PANEL_Z_OFFSET)
 
 	Make(S)
@@ -79,12 +81,14 @@
 	unset_control()
 	control = SC
 	SC.connected_panels += src
+	SC.totalCapacity += SOLAR_GEN_RATE * power_tier
 	queue_turn(SC.azimuth_target)
 
 //set the control of the panel to null and removes it from the control list of the previous control computer if needed
 /obj/machinery/power/solar/proc/unset_control()
 	if(control)
 		control.connected_panels -= src
+		control.totalCapacity -= SOLAR_GEN_RATE * power_tier
 		control = null
 
 /obj/machinery/power/solar/proc/Make(obj/item/solar_assembly/S)
@@ -130,41 +134,25 @@
 
 /obj/machinery/power/solar/on_deconstruction(disassembled)
 	if(disassembled)
-		var/obj/item/solar_assembly/S = locate() in src
-		if(S)
-			S.forceMove(loc)
-			S.give_glass(machine_stat & BROKEN, power_tier)
+		var/obj/item/solar_assembly/assembly = locate() in src
+		if(assembly)
+			assembly.forceMove(loc)
+			//assembly.give_glass(machine_stat & BROKEN, power_tier)
+			new mat_type.shard_type(get_turf(src))
+			new mat_type.shard_type(get_turf(src))
 	else
 		//When smashed to bits
 		playsound(src, SFX_SHATTER, 70, TRUE)
-		if(power_tier == 1)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
-		if(power_tier == 2)
-			new /obj/item/shard/titanium(src.loc)
-			new /obj/item/shard/titanium(src.loc)
-		if(power_tier == 3)
-			new /obj/item/shard/plasma(src.loc)
-			new /obj/item/shard/plasma(src.loc)
-		if(power_tier == 4)
-			new /obj/item/shard/plastitanium(src.loc)
-			new /obj/item/shard/plastitanium(src.loc)
+
+		new mat_type.shard_type(get_turf(src))
+		new mat_type.shard_type(get_turf(src))
+
 
 /obj/machinery/power/solar/update_overlays()
 	. = ..()
+	panel.icon_state = "solar_panel_[mat_type.name][(machine_stat & BROKEN) ? "-b" : null]"
+	panel_edge.icon_state = "solar_panel_[mat_type.name][(machine_stat & BROKEN) ? "-b" : "_edge"]"
 
-	if(power_tier == 1)
-		panel.icon_state = "solar_panel_glass[(machine_stat & BROKEN) ? "-b" : null]"
-		panel_edge.icon_state = "solar_panel_glass[(machine_stat & BROKEN) ? "-b" : "_edge"]"
-	if(power_tier == 2)
-		panel.icon_state = "solar_panel_titaniumglass[(machine_stat & BROKEN) ? "-b" : null]"
-		panel_edge.icon_state = "solar_panel_titaniumglass[(machine_stat & BROKEN) ? "-b" : "_edge"]"
-	if(power_tier == 3)
-		panel.icon_state = "solar_panel_plasmaglass[(machine_stat & BROKEN) ? "-b" : null]"
-		panel_edge.icon_state = "solar_panel_plasmaglass[(machine_stat & BROKEN) ? "-b" : "_edge"]"
-	if(power_tier == 4)
-		panel.icon_state = "solar_panel_plastitaniumglass[(machine_stat & BROKEN) ? "-b" : null]"
-		panel_edge.icon_state = "solar_panel_plastitaniumglass[(machine_stat & BROKEN) ? "-b" : "_edge"]"
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
 	needs_to_turn = TRUE
@@ -346,8 +334,8 @@
 		return
 	randomise_offset(anchored ? 0 : random_offset)
 
-/obj/item/solar_assembly/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH && isturf(loc))
+/obj/item/solar_assembly/attackby(obj/item/itemUsed, mob/user, params)
+	if(itemUsed.tool_behaviour == TOOL_WRENCH && isturf(loc))
 		if(isinspace())
 			to_chat(user, span_warning("You can't secure [src] here."))
 			return
@@ -356,10 +344,10 @@
 			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly [anchored ? "into place" : null]."),
 			span_notice("You [anchored ? null : "un"]wrench the solar assembly [anchored ? "into place" : null]."),
 		)
-		W.play_tool_sound(src, 75)
+		itemUsed.play_tool_sound(src, 75)
 		return TRUE
 
-	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/plasmaglass) || istype(W, /obj/item/stack/sheet/titaniumglass) || istype(W, /obj/item/stack/sheet/plastitaniumglass))
+	if(is_glass_sheet(itemUsed))
 		if(!anchored)
 			to_chat(user, span_warning("You need to secure the assembly before you can add glass."))
 			return
@@ -367,33 +355,35 @@
 		if(locate(/obj/machinery/power/solar) in solarturf)
 			to_chat(user, span_warning("A solar panel is already assembled here."))
 			return
-		var/obj/item/stack/sheet/S = W
-		if(S.use(2))
-			glass_type = W.type
+		var/obj/item/stack/sheet/mySheet = itemUsed
+		if(mySheet.use(2))
+			glass_type = itemUsed.type
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 			user.visible_message(span_notice("[user] places the glass on the solar assembly."), span_notice("You place the glass on the solar assembly."))
 			if(tracker)
 				new /obj/machinery/power/tracker(get_turf(src), src)
 			else
 				var/obj/machinery/power/solar/mySolar = new /obj/machinery/power/solar(get_turf(src), src)
-				if (istype(W, /obj/item/stack/sheet/glass))
+				if (istype(mySheet, /obj/item/stack/sheet/glass) || istype(mySheet, /obj/item/stack/sheet/rglass))
 					mySolar.power_tier = 1
-					mySolar.glass_type = glass_type
+					mySolar.mat_type = /datum/material/glass
 					mySolar.panel.icon_state = "solar_panel_glass"
 					mySolar.panel_edge.icon_state = "solar_panel_glass_edge"
-				if (istype(W, /obj/item/stack/sheet/titaniumglass))
+					//do reinforced things here
+				else if (istype(mySheet, /obj/item/stack/sheet/titaniumglass))
 					mySolar.power_tier = 2
-					mySolar.glass_type = glass_type
+					mySolar.mat_type = /datum/material/alloy/titaniumglass
 					mySolar.panel.icon_state = "solar_panel_titaniumglass"
 					mySolar.panel_edge.icon_state = "solar_panel_titaniumglass_edge"
-				if (istype(W, /obj/item/stack/sheet/plasmaglass))
+				else if (istype(mySheet, /obj/item/stack/sheet/plasmaglass) || istype(mySheet, /obj/item/stack/sheet/plasmarglass))
 					mySolar.power_tier = 3
-					mySolar.glass_type = glass_type
+					mySolar.mat_type = /datum/material/alloy/plasmaglass
 					mySolar.panel.icon_state = "solar_panel_plasmaglass"
 					mySolar.panel_edge.icon_state = "solar_panel_plasmaglass_edge"
-				if (istype(W, /obj/item/stack/sheet/plastitaniumglass))
+					//do reinforced things here
+				else if (istype(mySheet, /obj/item/stack/sheet/plastitaniumglass))
 					mySolar.power_tier = 4
-					mySolar.glass_type = glass_type
+					mySolar.mat_type = /datum/material/alloy/plastitaniumglass
 					mySolar.panel.icon_state = "solar_panel_plastitaniumglass"
 					mySolar.panel_edge.icon_state = "solar_panel_plastitaniumglass_edge"
 
@@ -404,16 +394,16 @@
 		return TRUE
 
 	if(!tracker)
-		if(istype(W, /obj/item/electronics/tracker))
-			if(!user.temporarilyRemoveItemFromInventory(W))
+		if(istype(itemUsed, /obj/item/electronics/tracker))
+			if(!user.temporarilyRemoveItemFromInventory(itemUsed))
 				return
 			tracker = TRUE
 			update_appearance()
-			qdel(W)
+			qdel(itemUsed)
 			user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
 			return TRUE
 	else
-		if(W.tool_behaviour == TOOL_CROWBAR)
+		if(itemUsed.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
 			tracker = FALSE
 			update_appearance()
@@ -447,6 +437,8 @@
 
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
+
+	var/totalCapacity //The total amount of power we could generate with all our connected solars
 
 	///History of power supply
 	var/list/history = list()
@@ -510,11 +502,7 @@
 
 		var/list/capacity = history["capacity"]
 		if(powernet)
-
-			for (var/i=1, i<=connected_panels.len, i++)
-				capacity += connected_panels[i].power_tier * SOLAR_GEN_RATE
-
-			//capacity += round(max(connected_panels.len, 1) * SOLAR_GEN_RATE)
+			capacity += totalCapacity
 		if(capacity.len > record_size)
 			capacity.Cut(1, 2)
 
@@ -539,10 +527,7 @@
 /obj/machinery/power/solar_control/ui_data()
 	var/data = list()
 	data["supply"] = round(lastgen)
-	var/cap = 0
-	for (var/i=1, i<=connected_panels.len, i++)
-		cap += connected_panels[i].power_tier * SOLAR_GEN_RATE
-	data["capacity"] = cap
+	data["capacity"] = totalCapacity
 	data["azimuth_current"] = azimuth_target
 	data["azimuth_rate"] = azimuth_rate
 	data["max_rotation_rate"] = SSsun.base_rotation * 2
