@@ -660,10 +660,8 @@
 				tip_type_to_set = "red"
 			if(21 to 30)
 				tip_type_to_set = "green"
-			if(31 to 40)
+			if(31 to INFINITY)
 				tip_type_to_set = "blue"
-			if(41 to INFINITY)
-				tip_type_to_set = "purple"
 	else
 		tip_type_to_set = "orange"
 
