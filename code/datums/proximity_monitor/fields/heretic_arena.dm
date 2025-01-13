@@ -10,20 +10,25 @@
 	/// Proximity monitor that handles the effects we are looking for
 	var/datum/proximity_monitor/advanced/heretic_arena/arena
 
-/obj/effect/abstract/heretic_arena/Initialize(mapload, range, duration)
+/obj/effect/abstract/heretic_arena/Initialize(mapload, range, duration, caster)
 	. = ..()
 	arena = new(src, range)
 	QDEL_IN(src, duration)
+	arena.set_caster(caster)
 
 /obj/effect/abstract/heretic_arena/Destroy(force)
-	. = ..()
 	QDEL_NULL(arena)
+	. = ..()
 
 /datum/proximity_monitor/advanced/heretic_arena
+	/// Reference to the caster, the spell collapses if they leave the arena
+	var/arena_caster
 	/// List of mobs inside our arena
 	var/list/contained_mobs = list()
 	/// List of border walls we have placed on the edges of the monitor
 	var/list/border_walls = list()
+	/// List of blades we've so generously handed out to the participants
+	var/list/welfare_blades = list()
 	/// List of immunities given to our combatants
 	var/static/list/given_immunities = list(
 		TRAIT_BOMBIMMUNE,
@@ -52,7 +57,9 @@
 		contained_mobs += human_in_range
 		if(!IS_HERETIC(human_in_range))
 			var/obj/item/melee/sickly_blade/training/new_blade = new(get_turf(human_in_range))
+			welfare_blades += new_blade
 			INVOKE_ASYNC(human_in_range, TYPE_PROC_REF(/mob, put_in_hands), new_blade)
+			human_in_range.mind?.add_antag_datum(/datum/antagonist/heretic_arena_participant)
 		human_in_range.apply_status_effect(/datum/status_effect/arena_tracker)
 		RegisterSignal(human_in_range, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(mob_change_z))
 
@@ -61,8 +68,12 @@
 		mob.remove_traits(given_immunities, HERETIC_ARENA_TRAIT)
 		mob.remove_status_effect(/datum/status_effect/arena_tracker)
 		UnregisterSignal(mob, COMSIG_MOVABLE_Z_CHANGED)
+		if(mob.mind?.has_antag_datum(/datum/antagonist/heretic_arena_participant))
+			mob.mind.remove_antag_datum(/datum/antagonist/heretic_arena_participant)
 	for(var/turf/to_restore in border_walls)
 		to_restore.ChangeTurf(border_walls[to_restore])
+	for(var/obj/to_refund as anything in welfare_blades)
+		qdel(to_refund)
 	return ..()
 
 /datum/proximity_monitor/advanced/heretic_arena/setup_edge_turf(turf/target)
@@ -77,6 +88,9 @@
 		var/mob/living/living_mob = movable
 		addtimer(CALLBACK(living_mob, TYPE_PROC_REF(/mob/living, remove_status_effect), /datum/status_effect/arena_tracker), 10 SECONDS)
 		living_mob.remove_traits(given_immunities, HERETIC_ARENA_TRAIT)
+	if(movable == arena_caster)
+		arena_caster = null
+		qdel(host)
 
 /// If a mob tries to change Z level while the arena is active, we teleport them back to the center of the arena
 /datum/proximity_monitor/advanced/heretic_arena/proc/mob_change_z(datum/source, old_turf, new_turf, same_z_layer)
@@ -88,6 +102,9 @@
 		leaver.adjustBruteLoss(10) // Trying to cheese via z levels leads to eventual death
 		leaver.balloon_alert(leaver, "can't escape!")
 	return Z_CHANGE_PREVENTED
+
+/datum/proximity_monitor/advanced/heretic_arena/proc/set_caster(atom/caster)
+	arena_caster = caster
 
 /turf/closed/indestructible/heretic_wall
 	name = "eldritch wall"
@@ -136,6 +153,7 @@
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_enter_crit))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
 	RegisterSignal(owner, "COMSIG_OWNER_ENTERED_CRIT", PROC_REF(on_crit_somebody))
+	ADD_TRAIT(owner, TRAIT_ELDRITCH_ARENA_PARTICIPANT, STATUS_EFFECT_TRAIT)
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_fighter", -HALO_LAYER)
 	crown_overlay.pixel_y = 24
 	owner.add_overlay(crown_overlay)
@@ -199,6 +217,7 @@
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_victor", -HALO_LAYER)
 	crown_overlay.pixel_y = 24
 	owner.add_overlay(crown_overlay)
+	REMOVE_TRAIT(owner, TRAIT_ELDRITCH_ARENA_PARTICIPANT, STATUS_EFFECT_TRAIT)
 
 	// The mansus celebrates your efforts
 	if(IS_HERETIC(owner))
@@ -217,3 +236,22 @@
 	else
 		to_chat(owner, span_hypnophrase("You feel a weight lift off your shoulders."))
 	arena_victor = TRUE
+
+/datum/antagonist/heretic_arena_participant
+	name = "Arena Participant"
+	show_in_roundend = FALSE
+	replace_banned = FALSE
+	objectives = list()
+	antag_hud_name = "brainwashed"
+	block_midrounds = FALSE
+
+/datum/antagonist/heretic_arena_participant/on_gain()
+	forge_objectives()
+	. = ..()
+
+/datum/antagonist/heretic_arena_participant/forge_objectives()
+	var/datum/objective/survive = new /datum/objective
+	survive.owner = owner
+	survive.explanation_text = "You are trapped in a battlefield where each participant must fight to the death. \
+		Defeat your captor, or betray your fellows so you may live to see another day!"
+	objectives += survive

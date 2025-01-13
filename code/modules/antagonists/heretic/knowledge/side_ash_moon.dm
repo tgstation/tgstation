@@ -5,7 +5,7 @@
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/medallion
-	tier2 = /datum/heretic_knowledge/medallion //XANTODO This can't be null, but we removed curses. Putting this in as a placeholder
+	tier2 = /datum/heretic_knowledge/ether
 	tier3 = /datum/heretic_knowledge/summon/ashy
 
 // Sidepaths for knowledge between Ash and Flesh.
@@ -24,6 +24,18 @@
 	cost = 1
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "eye_medalion"
+
+/datum/heretic_knowledge/ether
+	name = "XANTODO PLACEHOLDER NAME"
+	desc = "XANTODO PLACEHOLDER DESC"
+	gain_text = "XANTODO PLACEHOLDER GAIN"
+	required_atoms = list(
+		/obj/item/shard = 1,
+		/obj/effect/decal/cleanable/vomit = 1,
+	)
+	result_atoms = list(/obj/item/ether)
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "poison_flask"
 
 /datum/heretic_knowledge/summon/ashy
 	name = "Ashen Ritual"

@@ -1,3 +1,8 @@
+/*!
+ * Contains the spell "Wolves among Sheep"
+ * Handles the creation of the "arena", in terms of visuals. Banishes windows/airlocks and puts down the floors
+ * For the functionality of the spell itself see [/obj/effect/abstract/heretic_arena] which is created during [/proc/create_arena()]
+ */
 /datum/action/cooldown/spell/wolves_among_sheep
 	name = "Wolves among Sheep"
 	desc = "Locks down an area, making it a death battle. You gain more power the more heathens are nearby."
@@ -77,7 +82,14 @@
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_caster_crit))
 
 	// This is where most of the funcionality of the spell is
-	ongoing_arena = new /obj/effect/abstract/heretic_arena(target, max_range, 60 SECONDS)
+	ongoing_arena = new /obj/effect/abstract/heretic_arena(target, max_range, 60 SECONDS, owner)
+	RegisterSignal(ongoing_arena, COMSIG_QDELETING, PROC_REF(on_arena_delete))
+
+/// Clears the timer if the arena is deleted
+/datum/action/cooldown/spell/wolves_among_sheep/proc/on_arena_delete()
+	deltimer(revert_timer)
+	ongoing_arena = null
+	revert_effects()
 
 /// If the caster goes into crit, the arena falls apart right away
 /datum/action/cooldown/spell/wolves_among_sheep/proc/on_caster_crit()
@@ -94,7 +106,8 @@
 			continue
 		addtimer(CALLBACK(src, PROC_REF(revert_terrain), to_transform["[backwards_iterator]"]), 1 * iterator)
 	addtimer(CALLBACK(src, PROC_REF(revert_terrain), list(center_turf)), 1 SECONDS)
-	QDEL_NULL(ongoing_arena)
+	if(ongoing_arena)
+		QDEL_NULL(ongoing_arena)
 
 /// Transforms all the turfs and restores the airlocks
 /datum/action/cooldown/spell/wolves_among_sheep/proc/revert_terrain(list/turfs)

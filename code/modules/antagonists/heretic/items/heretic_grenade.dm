@@ -1,5 +1,6 @@
 /*!
  * Contains Heretic grenades
+ * They spread rust and obliterate borgs/mechs
  */
 
 /obj/item/grenade/chem_grenade/rust_sower
@@ -7,14 +8,21 @@
 	desc = "A nifty little thing that explodes into rust. Causes borgs and mechs to get utterly obliterated"
 	possible_fuse_time = list("3", "4", "5")
 	stage = GRENADE_READY
+	base_icon_state = "rustgrenade"
+
+/obj/item/grenade/chem_grenade/rust_sower/update_icon_state()
+	. = ..()
+	if(active)
+		icon_state = "[base_icon_state]_active"
+	else
+		icon_state = base_icon_state
 
 /obj/item/grenade/chem_grenade/rust_sower/Initialize(mapload)
 	. = ..()
 	var/obj/item/reagent_containers/cup/beaker/large/beaker_one = new(src)
 	var/obj/item/reagent_containers/cup/beaker/large/beaker_two = new(src)
 
-	beaker_one.reagents.add_reagent(/datum/reagent/consumable/heretic_rust, 25)
-	beaker_one.reagents.add_reagent(/datum/reagent/toxin/spewium, 25)
+	beaker_one.reagents.add_reagent(/datum/reagent/heretic_rust, 50)
 	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 50)
 	beaker_two.reagents.add_reagent(/datum/reagent/phosphorus, 50)
 	beaker_two.reagents.add_reagent(/datum/reagent/consumable/sugar, 50)
@@ -22,7 +30,20 @@
 	beakers += beaker_one
 	beakers += beaker_two
 
-/datum/reagent/consumable/heretic_rust
+/obj/item/grenade/chem_grenade/rust_sower/detonate(mob/living/lanced_by)
+	. = ..()
+	qdel(src)
+
+/obj/item/grenade/chem_grenade/rust_sower/screwdriver_act(mob/living/user, obj/item/tool)
+	return FALSE
+
+/obj/item/grenade/chem_grenade/rust_sower/wrench_act(mob/living/user, obj/item/tool)
+	return FALSE
+
+/obj/item/grenade/chem_grenade/rust_sower/multitool_act(mob/living/user, obj/item/tool)
+	return FALSE
+
+/datum/reagent/heretic_rust
 	name = "Eldritch Rust"
 	description = "A slurry of some off-putting liquid. Just looking at it makes you feel sick."
 	color = COLOR_CARGO_BROWN // Rust color
@@ -32,7 +53,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/bottle/capsaicin
 
-/datum/reagent/consumable/heretic_rust/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+/datum/reagent/heretic_rust/expose_atom(atom/exposed_atom, reac_volume)
+	. = ..()
+	if(ismecha(exposed_atom))
+		var/obj/vehicle/sealed/mecha/to_wreck = exposed_atom
+		to_wreck.take_damage(300, BURN)
+
+/datum/reagent/heretic_rust/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	if(!ishuman(exposed_mob))
 		if(issilicon(exposed_mob) || ismecha(exposed_mob))
 			exposed_mob.adjustBruteLoss(500)
@@ -70,11 +97,11 @@
 				victim.vomit(VOMIT_CATEGORY_DEFAULT)
 	return ..()
 
-/datum/reagent/consumable/heretic_rust/expose_turf(turf/exposed_turf, reac_volume)
+/datum/reagent/heretic_rust/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
 	exposed_turf.rust_turf()
 
-/datum/reagent/consumable/heretic_rust/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/heretic_rust/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(!holder.has_reagent(/datum/reagent/consumable/milk))
 		if(SPT_PROB(5, seconds_per_tick))
