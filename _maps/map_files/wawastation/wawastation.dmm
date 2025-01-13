@@ -18430,7 +18430,8 @@
 /area/station/security/lockers)
 "gAD" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "gAQ" = (
@@ -51779,7 +51780,8 @@
 /obj/effect/spawner/random/trash/mess,
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "skj" = (
@@ -174367,9 +174369,9 @@ nhf
 guk
 jxa
 jxa
-xfK
-mHf
 rHF
+mHf
+xfK
 jxa
 kri
 uWt
