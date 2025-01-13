@@ -31860,12 +31860,16 @@
 "ljU" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/table,
-/obj/item/clothing/head/hats/tophat,
 /obj/item/book/manual/wiki/barman_recipes{
 	pixel_x = -4;
 	pixel_y = 7
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/holosign_creator/robot_seat/bar{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/obj/item/clothing/head/hats/tophat,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "ljZ" = (
@@ -46913,13 +46917,11 @@
 /area/station/medical/exam_room)
 "qGD" = (
 /obj/structure/table,
-/obj/machinery/reagentgrinder{
-	pixel_y = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/item/stack/sheet/mineral/plasma,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "qGN" = (
@@ -48804,11 +48806,9 @@
 /area/station/engineering/atmos/upper)
 "rmi" = (
 /obj/structure/table,
-/obj/machinery/reagentgrinder{
-	pixel_y = 8
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/item/stack/sheet/mineral/plasma,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "rms" = (

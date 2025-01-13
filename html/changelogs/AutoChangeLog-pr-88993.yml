@@ -1,0 +1,4 @@
+author: "Darkened-Earth"
+delete-after: True
+changes:
+  - bugfix: "NanoTrasen telecomms technicians operating on Tram class stations have been reminded not to charge their power tools directly from their TCOMMS SMES"
