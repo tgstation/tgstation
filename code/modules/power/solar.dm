@@ -311,26 +311,6 @@
 	pixel_x = base_pixel_x + rand(-amount, amount)
 	pixel_y = base_pixel_y + rand(-amount, amount)
 
-// Give back the glass type we were supplied with
-/obj/item/solar_assembly/proc/give_glass(device_broken, current_power_tier)
-	var/atom/Tsec = drop_location()
-	if(device_broken)
-		if(current_power_tier == 1)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
-		if(current_power_tier == 2)
-			new /obj/item/shard/titanium(src.loc)
-			new /obj/item/shard/titanium(src.loc)
-		if(current_power_tier == 3)
-			new /obj/item/shard/plasma(src.loc)
-			new /obj/item/shard/plasma(src.loc)
-		if(current_power_tier == 4)
-			new /obj/item/shard/plastitanium(src.loc)
-			new /obj/item/shard/plastitanium(src.loc)
-	else if(glass_type)
-		new glass_type(Tsec, 2)
-	glass_type = null
-
 /obj/item/solar_assembly/set_anchored(anchorvalue)
 	. = ..()
 	if(isnull(.))
