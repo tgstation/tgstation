@@ -61,7 +61,7 @@
 
 /datum/reagent/heretic_rust/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	if(!ishuman(exposed_mob))
-		if(issilicon(exposed_mob) || ismecha(exposed_mob))
+		if(issilicon(exposed_mob) || ismecha(exposed_mob) || isbot(exposed_mob))
 			exposed_mob.adjustBruteLoss(500)
 		return
 	if(IS_HERETIC(exposed_mob))
