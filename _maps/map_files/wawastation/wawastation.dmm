@@ -46917,13 +46917,11 @@
 /area/station/medical/exam_room)
 "qGD" = (
 /obj/structure/table,
-/obj/machinery/reagentgrinder{
-	pixel_y = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/item/stack/sheet/mineral/plasma,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "qGN" = (
@@ -48808,11 +48806,9 @@
 /area/station/engineering/atmos/upper)
 "rmi" = (
 /obj/structure/table,
-/obj/machinery/reagentgrinder{
-	pixel_y = 8
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/item/stack/sheet/mineral/plasma,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "rms" = (
