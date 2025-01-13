@@ -22,6 +22,8 @@
 	var/obj/effect/overlay/tracker_dish_edge
 	var/azimuth_current
 
+	var/datum/material/mat_type = /datum/material/glass
+
 /obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 
@@ -139,14 +141,21 @@
 
 /obj/machinery/power/tracker/on_deconstruction(disassembled)
 	if(disassembled)
-		var/obj/item/solar_assembly/S = locate() in src
-		if(S)
-			S.forceMove(loc)
-			S.give_glass(machine_stat & BROKEN)
+		var/obj/item/solar_assembly/assembly = locate() in src
+		if(assembly)
+			assembly.forceMove(loc)
+			if(machine_stat & BROKEN)
+				new mat_type.shard_type(get_turf(src))
+				new mat_type.shard_type(get_turf(src))
+			else
+				new mat_type.sheet_type(get_turf(src))
+				new mat_type.sheet_type(get_turf(src))
 	else
+		//When smashed to bits
 		playsound(src, SFX_SHATTER, 70, TRUE)
-		new /obj/item/shard(src.loc)
-		new /obj/item/shard(src.loc)
+
+		new mat_type.shard_type(get_turf(src))
+		new mat_type.shard_type(get_turf(src))
 
 // Tracker Electronic
 

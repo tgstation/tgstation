@@ -342,35 +342,46 @@
 
 		if (istype(mySheet, /obj/item/stack/sheet/rglass) || istype(mySheet, /obj/item/stack/sheet/plasmarglass))
 			to_chat(user, span_warning("The solar assembly rejects the reinforced glass."))
+			return
+
+		if(tracker)
+			if(istype(mySheet, /obj/item/stack/sheet/glass) && mySheet.use(2))
+				glass_type = itemUsed.type
+				playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+				user.visible_message(span_notice("[user] places the glass on the solar assembly."), span_notice("You place the glass on the solar assembly."))
+
+				var/obj/machinery/power/tracker/myTracker = new /obj/machinery/power/tracker/(get_turf(src), src)
+				myTracker.mat_type = /datum/material/glass
+				return
+			else
+				to_chat(user, span_warning("The tracker doesnt work with this type of glass"))
+				return
 
 		if(mySheet.use(2))
 			glass_type = itemUsed.type
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 			user.visible_message(span_notice("[user] places the glass on the solar assembly."), span_notice("You place the glass on the solar assembly."))
-			if(tracker)
-				new /obj/machinery/power/tracker(get_turf(src), src)
-			else
-				var/obj/machinery/power/solar/mySolar = new /obj/machinery/power/solar(get_turf(src), src)
-				if (istype(mySheet, /obj/item/stack/sheet/glass))
-					mySolar.power_tier = 1
-					mySolar.mat_type = /datum/material/glass
-					mySolar.panel.icon_state = "solar_panel_glass"
-					mySolar.panel_edge.icon_state = "solar_panel_glass_edge"
-				else if (istype(mySheet, /obj/item/stack/sheet/titaniumglass))
-					mySolar.power_tier = 2
-					mySolar.mat_type = /datum/material/alloy/titaniumglass
-					mySolar.panel.icon_state = "solar_panel_titaniumglass"
-					mySolar.panel_edge.icon_state = "solar_panel_titaniumglass_edge"
-				else if (istype(mySheet, /obj/item/stack/sheet/plasmaglass))
-					mySolar.power_tier = 3
-					mySolar.mat_type = /datum/material/alloy/plasmaglass
-					mySolar.panel.icon_state = "solar_panel_plasmaglass"
-					mySolar.panel_edge.icon_state = "solar_panel_plasmaglass_edge"
-				else if (istype(mySheet, /obj/item/stack/sheet/plastitaniumglass))
-					mySolar.power_tier = 4
-					mySolar.mat_type = /datum/material/alloy/plastitaniumglass
-					mySolar.panel.icon_state = "solar_panel_plastitaniumglass"
-					mySolar.panel_edge.icon_state = "solar_panel_plastitaniumglass_edge"
+			var/obj/machinery/power/solar/mySolar = new /obj/machinery/power/solar(get_turf(src), src)
+			if (istype(mySheet, /obj/item/stack/sheet/glass))
+				mySolar.power_tier = 1
+				mySolar.mat_type = /datum/material/glass
+				mySolar.panel.icon_state = "solar_panel_glass"
+				mySolar.panel_edge.icon_state = "solar_panel_glass_edge"
+			else if (istype(mySheet, /obj/item/stack/sheet/titaniumglass))
+				mySolar.power_tier = 2
+				mySolar.mat_type = /datum/material/alloy/titaniumglass
+				mySolar.panel.icon_state = "solar_panel_titaniumglass"
+				mySolar.panel_edge.icon_state = "solar_panel_titaniumglass_edge"
+			else if (istype(mySheet, /obj/item/stack/sheet/plasmaglass))
+				mySolar.power_tier = 3
+				mySolar.mat_type = /datum/material/alloy/plasmaglass
+				mySolar.panel.icon_state = "solar_panel_plasmaglass"
+				mySolar.panel_edge.icon_state = "solar_panel_plasmaglass_edge"
+			else if (istype(mySheet, /obj/item/stack/sheet/plastitaniumglass))
+				mySolar.power_tier = 4
+				mySolar.mat_type = /datum/material/alloy/plastitaniumglass
+				mySolar.panel.icon_state = "solar_panel_plastitaniumglass"
+				mySolar.panel_edge.icon_state = "solar_panel_plastitaniumglass_edge"
 
 
 		else
