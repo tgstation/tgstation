@@ -31860,12 +31860,16 @@
 "ljU" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/table,
-/obj/item/clothing/head/hats/tophat,
 /obj/item/book/manual/wiki/barman_recipes{
 	pixel_x = -4;
 	pixel_y = 7
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/holosign_creator/robot_seat/bar{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/obj/item/clothing/head/hats/tophat,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "ljZ" = (
