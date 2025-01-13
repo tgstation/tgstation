@@ -52,7 +52,7 @@
 
 /// A flux anomaly which doesn't explode or produce a core
 /obj/effect/anomaly/flux/minor
-	explosive = FLUX_NO_EXPLOSION
+	anomaly_core = null
 
 // We need to override the default arguments here to achieve the desired effect
 /obj/effect/anomaly/flux/minor/Initialize(mapload, new_lifespan, explosive = FLUX_NO_EXPLOSION)
