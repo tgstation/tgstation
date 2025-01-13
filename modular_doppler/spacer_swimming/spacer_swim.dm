@@ -10,9 +10,11 @@
 		// can we just check for an active drift_handler? do they delete themselves once finished?
 		if (!. && !drifting && !has_gravity() && !incapacitated) // have we failed all previous movement paths and are not on a forced movement pattern?
 			var/turf/our_turf = get_turf(src)
+			var/turf/destination = get_step(src, movement_dir)
+			if (destination.density)
+				return FALSE
 			var/datum/gas_mixture/environment = our_turf.return_air()
 			var/environment_pressure = environment.return_pressure()
-			var/turf/destination = get_step(src, movement_dir)
 			if (environment_pressure >= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
 				if (do_after(src, SPACE_SWIM_DELAY_SECONDS, target = destination, interaction_key = "space_swim", max_interact_count = 1))
 					visible_message(span_notice("[src] deftly spacer-swims towards [destination]."), span_notice("You deftly spacer-swim towards [destination]."))
