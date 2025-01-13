@@ -58361,10 +58361,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/cargo)
-"uxA" = (
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
-/turf/open/floor/iron/white,
-/area/station/science/lab)
 "uxH" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -105245,7 +105241,7 @@ raz
 cPt
 toV
 ebU
-uxA
+irJ
 cPt
 cPt
 dmE
