@@ -709,6 +709,8 @@
 		else
 			unbuilt_lock.constructionStep = CONSTRUCTION_NO_CIRCUIT
 			unbuilt_lock.update_integrity(unbuilt_lock.max_integrity * 0.5)
+		if(istype(src, /obj/machinery/door/firedoor/border_only))
+			unbuilt_lock.setDir(dir)
 		unbuilt_lock.update_appearance()
 	else
 		new /obj/item/electronics/firelock (targetloc)
@@ -728,6 +730,7 @@
 	can_crush = FALSE
 	flags_1 = ON_BORDER_1
 	can_atmos_pass = ATMOS_PASS_PROC
+	assemblytype = /obj/structure/firelock_frame/border_only
 
 /obj/machinery/door/firedoor/border_only/closed
 	icon_state = "door_closed"
@@ -810,13 +813,15 @@
 	density = TRUE
 	var/constructionStep = CONSTRUCTION_NO_CIRCUIT
 	var/reinforced = 0
+	/// Is this a border_only firelock? Used in several checks during construction
+	var/directional = FALSE
 
 /obj/structure/firelock_frame/examine(mob/user)
 	. = ..()
 	switch(constructionStep)
 		if(CONSTRUCTION_PANEL_OPEN)
 			. += span_notice("It is <i>unbolted</i> from the floor. The circuit could be removed with a <b>crowbar</b>.")
-			if(!reinforced)
+			if(!reinforced && !directional)
 				. += span_notice("It could be reinforced with plasteel.")
 		if(CONSTRUCTION_NO_CIRCUIT)
 			. += span_notice("There are no <i>firelock electronics</i> in the frame. The frame could be <b>welded</b> apart .")
@@ -859,11 +864,18 @@
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				if(reinforced)
 					new /obj/machinery/door/firedoor/heavy(get_turf(src))
+				else if(directional)
+					var/obj/machinery/door/firedoor/border_only/new_firedoor = new /obj/machinery/door/firedoor/border_only(get_turf(src))
+					new_firedoor.setDir(dir)
+					new_firedoor.adjust_lights_starting_offset()
 				else
 					new /obj/machinery/door/firedoor(get_turf(src))
 				qdel(src)
 				return
 			if(istype(attacking_object, /obj/item/stack/sheet/plasteel))
+				if(directional)
+					to_chat(user, span_warning("[src] can not be reinforced."))
+					return
 				var/obj/item/stack/sheet/plasteel/plasteel_sheet = attacking_object
 				if(reinforced)
 					to_chat(user, span_warning("[src] is already reinforced."))
@@ -910,10 +922,13 @@
 						return
 					user.visible_message(span_notice("[user] cuts apart [src]!"), \
 						span_notice("You cut [src] into metal."))
-					var/turf/tagetloc = get_turf(src)
-					new /obj/item/stack/sheet/iron(tagetloc, 3)
+					var/turf/targetloc = get_turf(src)
+					if(directional)
+						new /obj/item/stack/sheet/iron(targetloc, 2)
+					else
+						new /obj/item/stack/sheet/iron(targetloc, 3)
 					if(reinforced)
-						new /obj/item/stack/sheet/plasteel(tagetloc, 2)
+						new /obj/item/stack/sheet/plasteel(targetloc, 2)
 					qdel(src)
 				return
 			if(istype(attacking_object, /obj/item/electroadaptive_pseudocircuit))
@@ -949,6 +964,21 @@
 /obj/structure/firelock_frame/heavy
 	name = "heavy firelock frame"
 	reinforced = TRUE
+
+/obj/structure/firelock_frame/border_only
+	icon = 'icons/obj/doors/edge_Doorfire.dmi'
+	flags_1 = ON_BORDER_1
+	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
+	directional = TRUE
+
+/obj/structure/firelock_frame/border_only/Initialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+
+/obj/structure/firelock_frame/border_only/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(!border_dir == dir)
+		return TRUE
 
 #undef CONSTRUCTION_PANEL_OPEN
 #undef CONSTRUCTION_NO_CIRCUIT
