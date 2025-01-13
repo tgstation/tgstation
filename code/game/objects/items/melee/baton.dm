@@ -467,8 +467,8 @@
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "stunbaton"
 	base_icon_state = "stunbaton"
-	inhand_icon_state = "baton"
-	worn_icon_state = "baton"
+	inhand_icon_state = "stunbaton"
+	worn_icon_state = "stunbaton"
 	icon_angle = -45
 	force = 10
 	wound_bonus = 0
@@ -507,6 +507,9 @@
 	var/cell_hit_cost = STANDARD_CELL_CHARGE
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
+	///Whether or not our inhand changes when active.
+	var/active_changes_inhand = TRUE
+	///Whether or not our baton visibly changes the inhand sprite based on inserted cell
 	var/tip_changes_color = TRUE
 
 /datum/armor/baton_security
@@ -574,15 +577,18 @@
 /obj/item/melee/baton/security/update_icon_state()
 	if(active)
 		icon_state = "[base_icon_state]_active"
-		if(tip_changes_color)
-			inhand_icon_state = "[base_icon_state]_active_[set_baton_tip_color()]"
-		else
-			inhand_icon_state = "[base_icon_state]_active"
+		if(active_changes_inhand)
+			if(tip_changes_color)
+				inhand_icon_state = "[base_icon_state]_active_[set_baton_tip_color()]"
+			else
+				inhand_icon_state = "[base_icon_state]_active"
 		return ..()
 	if(!cell)
 		icon_state = "[base_icon_state]_nocell"
+		inhand_icon_state = "[base_icon_state]"
 		return ..()
 	icon_state = "[base_icon_state]"
+	inhand_icon_state = "[base_icon_state]"
 	return ..()
 
 /obj/item/melee/baton/security/examine(mob/user)
@@ -823,14 +829,6 @@
 /obj/item/melee/baton/security/stunsword/loaded
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
 
-/obj/item/melee/baton/security/stunsword/update_icon_state()
-	if(active)
-		inhand_icon_state = "[base_icon_state]_active"
-		return ..()
-
-	inhand_icon_state = "[base_icon_state]"
-	return ..()
-
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
 	name = "stunprod"
@@ -851,6 +849,8 @@
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
+	active_changes_inhand = FALSE
+	tip_changes_color = FALSE
 	var/obj/item/assembly/igniter/sparkler
 	///Determines whether or not we can improve the cattleprod into a new type. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
 	var/can_upgrade = TRUE
@@ -915,6 +915,8 @@
 	cell_hit_cost = STANDARD_CELL_CHARGE * 2
 	throw_stun_chance = 99  //Have you prayed today?
 	convertible = FALSE
+	active_changes_inhand = FALSE
+	tip_changes_color = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*5, /datum/material/gold = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/melee/baton/security/boomerang/Initialize(mapload)
