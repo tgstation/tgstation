@@ -12,7 +12,7 @@
 	mark = /datum/heretic_knowledge/mark/blade_mark
 	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/blade
 	unique_ability = /datum/heretic_knowledge/spell/realignment
-	tier2 = /datum/heretic_knowledge/duel_stance
+	tier2 = /datum/heretic_knowledge/spell/wolves_among_sheep // /datum/heretic_knowledge/duel_stance Stance of the torn champions usually goes here
 	blade = /datum/heretic_knowledge/blade_upgrade/blade
 	tier3 =	 /datum/heretic_knowledge/spell/furious_steel
 	ascension = /datum/heretic_knowledge/ultimate/blade_final
@@ -252,6 +252,13 @@
 		return
 
 #undef BLOOD_FLOW_PER_SEVEIRTY
+
+/datum/heretic_knowledge/spell/wolves_among_sheep
+	name = "XANTODO PLACEHOLDER"
+	desc = "XANTODO PLACEHOLDER"
+	gain_text = "XANTODO PLACEHOLDER"
+	cost = 1
+	action_to_add = /datum/action/cooldown/spell/wolves_among_sheep
 
 /datum/heretic_knowledge/blade_upgrade/blade
 	name = "Empowered Blades"

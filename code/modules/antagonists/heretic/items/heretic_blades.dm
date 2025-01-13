@@ -49,6 +49,14 @@
 	return .
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
+	if(HAS_TRAIT(user, TRAIT_ELDRITCH_ARENA_PARTICIPANT))
+		user.balloon_alert(user, "can't escape!")
+		to_chat(user, span_hypnophrase("Sheep exist only to be slaughtered."))
+		playsound(src, SFX_SHATTER, 70, TRUE)
+		var/obj/item/bodypart/to_remove = user.get_active_hand()
+		to_remove.dismember()
+		qdel(src)
+		return
 	if(HAS_TRAIT(user, TRAIT_NO_TELEPORT))
 		user.balloon_alert(user, "can't break!")
 		return
@@ -301,11 +309,3 @@
 
 /obj/item/melee/sickly_blade/training/check_usability(mob/living/user)
 	return isliving(user) // Basically anyone should be able to use this
-
-/obj/item/melee/sickly_blade/training/attack_self(mob/user)
-	user.balloon_alert(user, "can't escape!")
-	to_chat(user, span_hypnophrase("Sheep exist only to be slaughtered."))
-	playsound(src, SFX_SHATTER, 70, TRUE)
-	var/obj/item/bodypart/to_remove = user.get_active_hand()
-	to_remove.dismember()
-	qdel(src)

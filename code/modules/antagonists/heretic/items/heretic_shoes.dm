@@ -1,15 +1,3 @@
-/**
- * XANTODO ADD LORE WHEN WE MAKE THE KNOWLEDGE FOR THIS:
- *
- * "Gristle churns into joint, a pop, and the fool twists a blackened foot from the
- * jaws of another. At their game for centuries, this mangled tree of limbs twists,
- * thrashing snares buried into snarling gums, seeking to shred the weight of grafted
- * neighbors. Weighed down by lacerated feet, this canopy of rancid idiots ever seeks
- * the undoing of its own bonds. I dread the thought of walking in their wake, but
- * I must press on all the same. Their rhythms keep the feud fresh with indifference
- * to barrier or border. Pulling more into their turmoil as they waltz."
- */
-
 /obj/item/clothing/shoes/magboots/greaves_of_the_prophet
 	name = "\improper Joint-snap sabatons"
 	desc = "Some nice shoes that allow you to always stay up on your feet."

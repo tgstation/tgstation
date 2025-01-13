@@ -5,7 +5,7 @@
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/essence
-	tier2 = list(/datum/heretic_knowledge/entropy_pulse)
+	tier2 = list(/datum/heretic_knowledge/entropy_pulse, /datum/heretic_knowledge/rust_sower)
 	tier3 = /datum/heretic_knowledge/summon/rusty
 
 
@@ -28,6 +28,17 @@
 
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "eldritch_flask"
+
+/datum/heretic_knowledge/rust_sower
+	name = "XANTODO PLACEHOLDER"
+	desc = "XANTODO PLACEHOLDER"
+	gain_text = "XANTODO PLACEHOLDER"
+	required_atoms = list(
+		/obj/item/grenade/chem_grenade = 1,
+		/obj/item/organ/liver = 1,
+	)
+	result_atoms = list(/obj/item/grenade/chem_grenade/rust_sower)
+	cost = 1
 
 /datum/heretic_knowledge/entropy_pulse
 	name = "Pulse of Entropy"

@@ -16,7 +16,7 @@
 	base_icon_state = "phylactery"
 	has_variable_transfer_amount = FALSE
 	reagent_flags = TRANSPARENT
-	volume = 10
+	volume = 5
 	/// Cooldown before you can steal blood again
 	COOLDOWN_DECLARE(drain_cooldown)
 
