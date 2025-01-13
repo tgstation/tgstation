@@ -227,18 +227,18 @@
  */
 /obj/machinery/computer/pandemic/proc/create_culture_bottle(index)
 	var/id = get_virus_id_by_index(text2num(index))
-	var/datum/disease/advance/adv_disease = SSdisease.archive_diseases[id].Copy()
+	var/datum/disease/advance/adv_disease = SSdisease.archive_diseases[id]
 
-	var/list/cures = get_beaker_cures(id)
-
-	adv_disease.cures = cures[1]
-	adv_disease.cure_text = cures[2]	// Same as generate_cure() in advance.dm
 
 	if(!istype(adv_disease) || !adv_disease.mutable)
 		to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
 		return FALSE
 	use_energy(active_power_usage)
-	
+	adv_disease = adv_disease.Copy()
+	var/list/cures = get_beaker_cures(id)
+	if(cures.len)
+		adv_disease.cures = cures[1]
+		adv_disease.cure_text = cures[2]	// Same as generate_cure() in advance.dm
 	var/list/data = list("viruses" = list(adv_disease))
 
 	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())
