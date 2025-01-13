@@ -36872,13 +36872,6 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/right)
-"lVh" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/command)
 "lVi" = (
 /turf/closed/wall,
 /area/station/maintenance/department/science)
@@ -57397,10 +57390,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "tms" = (
-/obj/machinery/power/smes{
-	charge = 5e+06
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/full,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "tmz" = (
@@ -153688,8 +153679,8 @@ dDm
 uoO
 uoO
 fss
-lVh
-lVh
+fss
+fss
 nYr
 rEq
 bSS
