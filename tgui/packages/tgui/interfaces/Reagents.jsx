@@ -1,6 +1,4 @@
 import { useState } from 'react';
-
-import { useBackend, useLocalState } from '../backend';
 import {
   Button,
   Icon,
@@ -9,7 +7,9 @@ import {
   Section,
   Stack,
   Table,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 import { ReagentLookup } from './common/ReagentLookup';
 import { RecipeLookup } from './common/RecipeLookup';

@@ -3147,3 +3147,121 @@
 /datum/reagent/gold/cursed
 	name = "Cursed Gold"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+
+/datum/reagent/luminescent_fluid
+	name = "Green Luminiscent Fluid"
+	description = "A colored fluid that produces light as a result of a chemical reaction with oxygen." // Reacts with oxygen in hydrogen peroxide IRL
+	taste_description = "buttery acid" // Best way I can describe glowstick fluid's taste
+	color = LIGHT_COLOR_GREEN
+	metabolization_rate = 0.3 * REAGENTS_METABOLISM
+	ph = 3
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	overdose_threshold = 50 // GLOW GLOW GLOW
+	metabolized_traits = list(TRAIT_MINOR_NIGHT_VISION)
+	self_consuming = TRUE
+	/// Fake flashlight we're using to make owner's eyes glow
+	var/obj/item/flashlight/eyelight/glow/glowing
+	/// Previous overlay_ignore_lighting of owner's eyes
+	var/prev_ignore_lighting
+	/// Have we added a flashlight already and it got destroyed by something?
+	var/added_light = FALSE
+
+/datum/reagent/luminescent_fluid/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	if (volume > 20) // Even if you don't have eyes, your eyeholes still glow :)
+		glowing = new(affected_mob)
+		glowing.set_light_color(color)
+		glowing.set_light_on(TRUE)
+		added_light = TRUE
+
+	if (!ishuman(affected_mob))
+		return
+
+	var/mob/living/carbon/human/affected_human = affected_mob
+	affected_human.add_eye_color(color, EYE_COLOR_LUMINESCENT_PRIORITY)
+	RegisterSignal(affected_human, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_organ_added))
+	RegisterSignal(affected_human, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_organ_removed))
+	var/obj/item/organ/eyes/eyes = affected_human.get_organ_slot(ORGAN_SLOT_EYES)
+	if (eyes && !IS_ROBOTIC_ORGAN(eyes))
+		prev_ignore_lighting = eyes.overlay_ignore_lighting
+		eyes.overlay_ignore_lighting = TRUE
+
+/datum/reagent/luminescent_fluid/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	QDEL_NULL(glowing)
+	if (!ishuman(affected_mob))
+		return
+
+	var/mob/living/carbon/human/affected_human = affected_mob
+	affected_human.remove_eye_color(EYE_COLOR_LUMINESCENT_PRIORITY)
+	var/obj/item/organ/eyes/eyes = affected_human.get_organ_slot(ORGAN_SLOT_EYES)
+	if (eyes && !IS_ROBOTIC_ORGAN(eyes) && !overdosed)
+		eyes.overlay_ignore_lighting = prev_ignore_lighting
+
+/datum/reagent/luminescent_fluid/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+
+	if (isnull(glowing) && !added_light && volume > 20)
+		glowing = new(affected_mob)
+		glowing.set_light_color(color)
+		glowing.set_light_on(TRUE)
+		added_light = TRUE
+
+	if (SPT_PROB(8, seconds_per_tick))
+		if(affected_mob.adjustToxLoss(1, updating_health = FALSE))
+			return UPDATE_MOB_HEALTH
+
+/datum/reagent/luminescent_fluid/proc/on_organ_added(mob/living/source, obj/item/organ/eyes/new_eyes)
+	SIGNAL_HANDLER
+
+	if (istype(new_eyes) && !IS_ROBOTIC_ORGAN(new_eyes))
+		prev_ignore_lighting = new_eyes.overlay_ignore_lighting
+		new_eyes.overlay_ignore_lighting = TRUE
+
+/datum/reagent/luminescent_fluid/proc/on_organ_removed(mob/living/source, obj/item/organ/eyes/old_eyes)
+	SIGNAL_HANDLER
+
+	if (istype(old_eyes) && !IS_ROBOTIC_ORGAN(old_eyes) && !overdosed)
+		old_eyes.overlay_ignore_lighting = prev_ignore_lighting
+
+/datum/reagent/luminescent_fluid/overdose_start(mob/living/affected_mob)
+	. = ..()
+	if (!ishuman(affected_mob))
+		return
+	var/mob/living/carbon/human/affected_human = affected_mob
+	var/obj/item/organ/eyes/eyes = affected_human.get_organ_slot(ORGAN_SLOT_EYES)
+	if (eyes && !IS_ROBOTIC_ORGAN(eyes))
+		eyes.eye_color_left = color
+		eyes.eye_color_right = color
+
+/datum/reagent/luminescent_fluid/red
+	name = "Red Luminiscent Fluid"
+	color = COLOR_SOFT_RED
+	// The glow *is* unnatural, so...
+	metabolized_traits = list(TRAIT_MINOR_NIGHT_VISION, TRAIT_UNNATURAL_RED_GLOWY_EYES)
+
+/datum/reagent/luminescent_fluid/red/overdose_start(mob/living/affected_mob)
+	. = ..()
+	if (!ishuman(affected_mob))
+		return
+	ADD_TRAIT(affected_mob, TRAIT_UNNATURAL_RED_GLOWY_EYES, OVERDOSE_TRAIT)
+
+/datum/reagent/luminescent_fluid/blue
+	name = "Blue Luminiscent Fluid"
+	color = LIGHT_COLOR_BLUE
+
+/datum/reagent/luminescent_fluid/cyan
+	name = "Cyan Luminiscent Fluid"
+	color = LIGHT_COLOR_CYAN
+
+/datum/reagent/luminescent_fluid/yellow
+	name = "Yellow Luminiscent Fluid"
+	color = LIGHT_COLOR_DIM_YELLOW
+
+/datum/reagent/luminescent_fluid/orange
+	name = "Orange Luminiscent Fluid"
+	color = LIGHT_COLOR_ORANGE
+
+/datum/reagent/luminescent_fluid/pink
+	name = "Pink Luminiscent Fluid"
+	color = LIGHT_COLOR_PINK
