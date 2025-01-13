@@ -137,9 +137,12 @@
 		var/obj/item/solar_assembly/assembly = locate() in src
 		if(assembly)
 			assembly.forceMove(loc)
-			//assembly.give_glass(machine_stat & BROKEN, power_tier)
-			new mat_type.shard_type(get_turf(src))
-			new mat_type.shard_type(get_turf(src))
+			if(machine_stat & BROKEN)
+				new mat_type.shard_type(get_turf(src))
+				new mat_type.shard_type(get_turf(src))
+			else
+				new mat_type.sheet_type(get_turf(src))
+				new mat_type.sheet_type(get_turf(src))
 	else
 		//When smashed to bits
 		playsound(src, SFX_SHATTER, 70, TRUE)
@@ -356,6 +359,10 @@
 			to_chat(user, span_warning("A solar panel is already assembled here."))
 			return
 		var/obj/item/stack/sheet/mySheet = itemUsed
+
+		if (istype(mySheet, /obj/item/stack/sheet/rglass) || istype(mySheet, /obj/item/stack/sheet/plasmarglass))
+			to_chat(user, span_warning("The solar assembly rejects the reinforced glass."))
+
 		if(mySheet.use(2))
 			glass_type = itemUsed.type
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -364,23 +371,21 @@
 				new /obj/machinery/power/tracker(get_turf(src), src)
 			else
 				var/obj/machinery/power/solar/mySolar = new /obj/machinery/power/solar(get_turf(src), src)
-				if (istype(mySheet, /obj/item/stack/sheet/glass) || istype(mySheet, /obj/item/stack/sheet/rglass))
+				if (istype(mySheet, /obj/item/stack/sheet/glass))
 					mySolar.power_tier = 1
 					mySolar.mat_type = /datum/material/glass
 					mySolar.panel.icon_state = "solar_panel_glass"
 					mySolar.panel_edge.icon_state = "solar_panel_glass_edge"
-					//do reinforced things here
 				else if (istype(mySheet, /obj/item/stack/sheet/titaniumglass))
 					mySolar.power_tier = 2
 					mySolar.mat_type = /datum/material/alloy/titaniumglass
 					mySolar.panel.icon_state = "solar_panel_titaniumglass"
 					mySolar.panel_edge.icon_state = "solar_panel_titaniumglass_edge"
-				else if (istype(mySheet, /obj/item/stack/sheet/plasmaglass) || istype(mySheet, /obj/item/stack/sheet/plasmarglass))
+				else if (istype(mySheet, /obj/item/stack/sheet/plasmaglass))
 					mySolar.power_tier = 3
 					mySolar.mat_type = /datum/material/alloy/plasmaglass
 					mySolar.panel.icon_state = "solar_panel_plasmaglass"
 					mySolar.panel_edge.icon_state = "solar_panel_plasmaglass_edge"
-					//do reinforced things here
 				else if (istype(mySheet, /obj/item/stack/sheet/plastitaniumglass))
 					mySolar.power_tier = 4
 					mySolar.mat_type = /datum/material/alloy/plastitaniumglass
@@ -652,7 +657,7 @@
 
 /obj/item/paper/guides/jobs/engi/solars
 	name = "paper- 'Going green! Setup your own solar array instructions.'"
-	default_raw_text = "<h1>Welcome</h1><p>At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or plasma! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.</p><p>You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, reinforced or regular glass will do, will finish the construction of your solar panel. It is that easy!</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.</p><p>Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!</p>"
+	default_raw_text = "<h1>Welcome</h1><p>At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or plasma! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.</p><p>You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, any non reinforced glass will do, will finish the construction of your solar panel. It is that easy!</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.</p><p>Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!</p>"
 
 #undef SOLAR_GEN_RATE
 #undef OCCLUSION_DISTANCE
