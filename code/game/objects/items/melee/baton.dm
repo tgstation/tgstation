@@ -468,7 +468,7 @@
 	icon_state = "stunbaton"
 	base_icon_state = "stunbaton"
 	inhand_icon_state = "stunbaton"
-	worn_icon_state = "stunbaton"
+	worn_icon_state = "baton"
 	icon_angle = -45
 	force = 10
 	wound_bonus = 0
