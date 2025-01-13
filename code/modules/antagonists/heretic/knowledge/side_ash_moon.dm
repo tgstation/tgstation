@@ -5,7 +5,7 @@
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/medallion
-	tier2 = /datum/heretic_knowledge/curse/paralysis
+	tier2 = /datum/heretic_knowledge/medallion //XANTODO This can't be null, but we removed curses. Putting this in as a placeholder
 	tier3 = /datum/heretic_knowledge/summon/ashy
 
 // Sidepaths for knowledge between Ash and Flesh.
@@ -24,45 +24,6 @@
 	cost = 1
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "eye_medalion"
-
-/datum/heretic_knowledge/curse/paralysis
-	name = "Curse of Paralysis"
-	desc = "Allows you to transmute a hatchet and both a left and right leg to cast a curse of immobility on a crew member. \
-		While cursed, the victim will be unable to walk. You can additionally supply an item that a victim has touched \
-		or is covered in the victim's blood to make the curse last longer."
-	gain_text = "The flesh of humanity is weak. Make them bleed. Show them their fragility."
-
-	required_atoms = list(
-		/obj/item/bodypart/leg/left = 1,
-		/obj/item/bodypart/leg/right = 1,
-		/obj/item/hatchet = 1,
-	)
-	duration = 3 MINUTES
-	duration_modifier = 2
-	curse_color = "#f19a9a"
-	cost = 1
-
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
-	research_tree_icon_state = "curse_paralysis"
-
-
-/datum/heretic_knowledge/curse/paralysis/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
-	if(chosen_mob.usable_legs <= 0) // What're you gonna do, curse someone who already can't walk?
-		to_chat(chosen_mob, span_notice("You feel a slight pain for a moment, but it passes shortly. Odd."))
-		return
-
-	to_chat(chosen_mob, span_danger("You suddenly lose feeling in your leg[chosen_mob.usable_legs == 1 ? "":"s"]!"))
-	chosen_mob.add_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), type)
-	return ..()
-
-/datum/heretic_knowledge/curse/paralysis/uncurse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
-	if(QDELETED(chosen_mob))
-		return
-
-	chosen_mob.remove_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), type)
-	if(chosen_mob.usable_legs > 1)
-		to_chat(chosen_mob, span_green("You regain feeling in your leg[chosen_mob.usable_legs == 1 ? "":"s"]!"))
-	return ..()
 
 /datum/heretic_knowledge/summon/ashy
 	name = "Ashen Ritual"
