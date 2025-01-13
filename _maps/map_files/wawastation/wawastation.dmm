@@ -11363,6 +11363,14 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
+/obj/item/circuitboard/mecha/ripley/main{
+	pixel_x = -10;
+	pixel_y = -6
+	},
+/obj/item/circuitboard/mecha/ripley/peripherals{
+	pixel_x = -4;
+	pixel_y = -7
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "dZy" = (
@@ -34480,6 +34488,8 @@
 	},
 /obj/structure/fireaxecabinet/mechremoval/directional/east,
 /obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
@@ -58351,6 +58361,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/cargo)
+"uxA" = (
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/turf/open/floor/iron/white,
+/area/station/science/lab)
 "uxH" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -105231,7 +105245,7 @@ raz
 cPt
 toV
 ebU
-irJ
+uxA
 cPt
 cPt
 dmE
