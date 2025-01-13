@@ -2729,8 +2729,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
 "aOE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "aOG" = (
@@ -63703,9 +63702,6 @@
 /turf/open/floor/wood/parquet,
 /area/station/service/bar/atrium)
 "spV" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/effect/spawner/random/trash/bin,
 /obj/item/paper/crumpled{
 	default_raw_text = "We finally got that mecha we asked for. Although it's rusted, badly beaten it's still something. Thank you Nanotrasen!!";
@@ -170848,7 +170844,7 @@ gjq
 aEM
 xHO
 fPB
-aOE
+piV
 aOE
 liB
 rCO
