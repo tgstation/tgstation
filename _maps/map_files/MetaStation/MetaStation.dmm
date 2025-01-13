@@ -2035,6 +2035,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/machinery/camera/directional/south{
+	network = list("ss13","rd");
+	c_tag = "Science Lobby"
+	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "aLW" = (
@@ -16029,10 +16033,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/camera/directional/north{
-	c_tag = "Science Lobby";
-	network = list("ss13","rd")
-	},
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
@@ -19463,9 +19463,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "hab" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -19720,10 +19717,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
-"heR" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/command/heads_quarters/qm)
 "heS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mop_bucket/janitorialcart,
@@ -89201,7 +89194,7 @@ aaa
 jXu
 twr
 nsT
-heR
+kQP
 kQP
 hqD
 kQP
