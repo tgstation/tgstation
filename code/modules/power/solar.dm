@@ -369,7 +369,6 @@
 					mySolar.mat_type = /datum/material/glass
 					mySolar.panel.icon_state = "solar_panel_glass"
 					mySolar.panel_edge.icon_state = "solar_panel_glass_edge"
-					//do reinforced things here
 				else if (istype(mySheet, /obj/item/stack/sheet/titaniumglass))
 					mySolar.power_tier = 2
 					mySolar.mat_type = /datum/material/alloy/titaniumglass
@@ -380,7 +379,6 @@
 					mySolar.mat_type = /datum/material/alloy/plasmaglass
 					mySolar.panel.icon_state = "solar_panel_plasmaglass"
 					mySolar.panel_edge.icon_state = "solar_panel_plasmaglass_edge"
-					//do reinforced things here
 				else if (istype(mySheet, /obj/item/stack/sheet/plastitaniumglass))
 					mySolar.power_tier = 4
 					mySolar.mat_type = /datum/material/alloy/plastitaniumglass
