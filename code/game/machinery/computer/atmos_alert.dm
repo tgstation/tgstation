@@ -62,8 +62,7 @@
 	minor_alarms.Cut()
 
 	// An area list used for station_only circuits, so we only send an alarm if we're in one of the station or mining home areas
-	var/list/station_alert_areas
-	station_alert_areas = GLOB.the_station_areas + typesof(/area/mine)
+	var/list/station_alert_areas = GLOB.the_station_areas + typesof(/area/mine)
 	// Setting up a variable for checking our circuit's station_only
 	var/obj/item/circuitboard/computer/atmos_alert/my_circuit = circuit
 	for (var/obj/machinery/airalarm/air_alarm as anything in GLOB.air_alarms)
