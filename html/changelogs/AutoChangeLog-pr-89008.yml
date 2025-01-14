@@ -1,0 +1,4 @@
+author: "Aniantan"
+delete-after: True
+changes:
+  - bugfix: "Xenobio autoinjectors, such as mending solution from industrial purple crossbreed, cannot be deepfried and thus filled with custom reagents using saltshaker anymore."
