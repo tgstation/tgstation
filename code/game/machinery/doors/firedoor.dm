@@ -971,7 +971,7 @@
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	directional = TRUE
 
-/obj/structure/firelock_frame/border_only/Initialize()
+/obj/structure/firelock_frame/border_only/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
