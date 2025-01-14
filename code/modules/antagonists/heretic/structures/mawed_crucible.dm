@@ -28,6 +28,8 @@
 	if(COOLDOWN_TIMELEFT(src, refill_cooldown))
 		return
 	COOLDOWN_START(src, refill_cooldown, 30 SECONDS)
+	if(current_mass >= max_mass)
+		return
 	current_mass++
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
 	update_appearance(UPDATE_ICON_STATE)
