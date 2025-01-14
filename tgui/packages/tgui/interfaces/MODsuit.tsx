@@ -16,10 +16,10 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
 type MODsuitData = {

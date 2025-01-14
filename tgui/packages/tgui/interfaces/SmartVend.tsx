@@ -1,9 +1,5 @@
-import { BooleanLike } from 'common/react';
-import { createSearch } from 'common/string';
 import { useState } from 'react';
 import { DmIcon, Icon } from 'tgui-core/components';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -12,7 +8,11 @@ import {
   NumberInput,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Item = {

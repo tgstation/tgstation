@@ -113,7 +113,7 @@
 	// SSmarket takes care of the shipping.
 	if(SSmarket.queue_item(purchase))
 		stock--
-		buyer.log_message("has succesfully purchased [name] using [shipping_method] for shipping.", LOG_ECON)
+		buyer.log_message("has successfully purchased [name] using [shipping_method] for shipping.", LOG_ECON)
 		return TRUE
 	return FALSE
 

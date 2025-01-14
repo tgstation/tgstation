@@ -3,9 +3,9 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 
 /// Handles procs and timers for the lost crew bodies
 /datum/lost_crew_manager
-	/// How many credits we reward the medical budget on a succesful revive
+	/// How many credits we reward the medical budget on a successful revive
 	var/credits_on_succes = /datum/supply_pack/medical/lost_crew::cost + CARGO_CRATE_VALUE * 2
-	/// How long after succesful revival we check to see if theyre still alive, and give rewards
+	/// How long after successful revival we check to see if theyre still alive, and give rewards
 	var/succes_check_time = 3 MINUTES
 	/// How much the revived crew start with on their cards
 	var/starting_funds = 100
@@ -72,11 +72,11 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	hersens.AddComponent(
 		/datum/component/ghostrole_on_revive, \
 		/* refuse_revival_if_failed = */ TRUE, \
-		/*on_revival = */ CALLBACK(src, PROC_REF(on_succesful_revive), hersens, scenario.death_lore, on_revive_and_player_occupancy) \
+		/*on_revival = */ CALLBACK(src, PROC_REF(on_successful_revive), hersens, scenario.death_lore, on_revive_and_player_occupancy) \
 	)
 
 /// Set a timer for awarding succes and drop some awesome deathlore
-/datum/lost_crew_manager/proc/on_succesful_revive(obj/item/organ/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
+/datum/lost_crew_manager/proc/on_successful_revive(obj/item/organ/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
 	var/mob/living/carbon/human/owner = brain.owner
 
 	owner.mind.add_antag_datum(/datum/antagonist/recovered_crew) //for tracking mostly

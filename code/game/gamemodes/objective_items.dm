@@ -37,6 +37,9 @@
 	/// A hint explaining how one may find the target item.
 	var/steal_hint = "The clown might have one."
 
+	///If the item takes special steps to destroy for an objective (e.g. blackbox)
+	var/destruction_method = null
+
 /// For objectives with special checks (does that intellicard have an ai in it? etcetc)
 /datum/objective_item/proc/check_special_completion(obj/item/thing)
 	return TRUE
@@ -325,10 +328,10 @@
 	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/hos)
 
 /datum/objective_item/steal/compactshotty
-	name = "the head of security's personal compact shotgun"
+	name = "the warden's personal compact shotgun"
 	targetitem = /obj/item/gun/ballistic/shotgun/automatic/combat/compact
-	excludefromjob = list(JOB_HEAD_OF_SECURITY)
-	item_owner = list(JOB_HEAD_OF_SECURITY)
+	excludefromjob = list(JOB_WARDEN)
+	item_owner = list(JOB_WARDEN)
 	exists_on_map = TRUE
 	difficulty = 4
 	steal_hint = "A miniaturized combat shotgun. May be found in Head of Security's locker or strapped to their back."
@@ -558,6 +561,7 @@
 	exists_on_map = TRUE
 	difficulty = 4
 	steal_hint = "The station's data Blackbox, found solely within Telecommunications."
+	destruction_method = "Too strong to be be destroyed via normal means - needs to be dusted via the supermatter, or burnt in the chapel's crematorium."
 
 /obj/item/blackbox/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/blackbox)
