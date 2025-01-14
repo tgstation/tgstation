@@ -295,8 +295,10 @@
 		var/list/color_left = rgb2num(eye_color_left, COLORSPACE_HSL)
 		var/list/color_right = rgb2num(eye_color_right, COLORSPACE_HSL)
 		// Ugly as sin? Indeed it is! But otherwise eyeballs turn out to be super dark, and this way even lighter colors are mostly preserved
-		color_left[3] /= sqrt(color_left[3] * 0.01)
-		color_right[3] /= sqrt(color_right[3] * 0.01)
+		if (color_left[3])
+			color_left[3] /= sqrt(color_left[3] * 0.01)
+		if (color_right[3])
+			color_right[3] /= sqrt(color_right[3] * 0.01)
 		left_iris.color = rgb(color_left[1], color_left[2], color_left[3], space = COLORSPACE_HSL)
 		right_iris.color = rgb(color_right[1], color_right[2], color_right[3], space = COLORSPACE_HSL)
 		. += left_iris
