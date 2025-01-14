@@ -140,7 +140,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	if (atom_storage.locked && can_unlock(user))
 		toggle_locked(user)
 		return
-	. = ..()
+	return ..()
 
 /obj/item/storage/lockbox/mind/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
 	if (user.mind == mind)
