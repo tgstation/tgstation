@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Custom vendors now sanitize their inputs"
+  - bugfix: "Fixed a division by zero in custom vendor code"
