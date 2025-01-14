@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(possible_uplink_skins, list(
 	if (!..())
 		return FALSE
 
-	return "Underworld Connections" in preferences.all_quirks
+	return "Black Market Smuggler" in preferences.all_quirks
 
 /datum/preference/choiced/uplink_skin/apply_to_human(mob/living/carbon/human/target, value)
 	return
@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(possible_uplink_skins, list(
 	if (!..())
 		return FALSE
 
-	return "Underworld Connections" in preferences.all_quirks
+	return "Black Market Smuggler" in preferences.all_quirks
 
 /datum/preference/text/uplink_name/serialize(input)
 	return htmlrendertext(input)
@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(possible_uplink_skins, list(
 	if (!..())
 		return FALSE
 
-	return "Underworld Connections" in preferences.all_quirks
+	return "Black Market Smuggler" in preferences.all_quirks
 
 /datum/preference/text/uplink_desc/serialize(input)
 	return htmlrendertext(input)
