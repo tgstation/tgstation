@@ -62,12 +62,13 @@ export type FeatureValueProps<
 
 export function FeatureColorInput(props: FeatureValueProps<string>) {
   const { act } = useBackend<PreferencesMenuData>();
+  const { featureId, shrink, value } = props;
 
   return (
     <Button
       onClick={() => {
         act('set_color_preference', {
-          preference: props.featureId,
+          preference: featureId,
         });
       }}
     >
@@ -75,14 +76,12 @@ export function FeatureColorInput(props: FeatureValueProps<string>) {
         <Stack.Item>
           <Box
             style={{
-              background: props.value.startsWith('#')
-                ? props.value
-                : `#${props.value}`,
+              background: value.startsWith('#') ? value : `#${value}`,
               border: '2px solid white',
               boxSizing: 'content-box',
               height: '11px',
               width: '11px',
-              ...(props.shrink
+              ...(shrink
                 ? {
                     margin: '1px',
                   }
@@ -91,7 +90,7 @@ export function FeatureColorInput(props: FeatureValueProps<string>) {
           />
         </Stack.Item>
 
-        {!props.shrink && <Stack.Item>Change</Stack.Item>}
+        {!shrink && <Stack.Item>Change</Stack.Item>}
       </Stack>
     </Button>
   );
@@ -100,11 +99,13 @@ export function FeatureColorInput(props: FeatureValueProps<string>) {
 export type FeatureToggle = Feature<BooleanLike, boolean>;
 
 export function CheckboxInput(props: FeatureValueProps<BooleanLike, boolean>) {
+  const { handleSetValue, value } = props;
+
   return (
     <Button.Checkbox
-      checked={!!props.value}
+      checked={!!value}
       onClick={() => {
-        props.handleSetValue(!props.value);
+        handleSetValue(!value);
       }}
     />
   );
@@ -113,11 +114,13 @@ export function CheckboxInput(props: FeatureValueProps<BooleanLike, boolean>) {
 export function CheckboxInputInverse(
   props: FeatureValueProps<BooleanLike, boolean>,
 ) {
+  const { handleSetValue, value } = props;
+
   return (
     <Button.Checkbox
-      checked={!props.value}
+      checked={!value}
       onClick={() => {
-        props.handleSetValue(!props.value);
+        handleSetValue(!value);
       }}
     />
   );
@@ -129,10 +132,12 @@ export function createDropdownInput<T extends string | number = string>(
   dropdownProps?: Record<T, unknown>,
 ): FeatureValue<T> {
   return (props: FeatureValueProps<T>) => {
+    const { handleSetValue, value } = props;
+
     return (
       <Dropdown
-        selected={choices[props.value] as string}
-        onSelected={props.handleSetValue}
+        selected={choices[value] as string}
+        onSelected={handleSetValue}
         width="100%"
         options={sortChoices(Object.entries(choices)).map(
           ([dataValue, label]) => {
@@ -171,9 +176,7 @@ export function FeatureNumberInput(
 
   return (
     <NumberInput
-      onChange={(value) => {
-        props.handleSetValue(value);
-      }}
+      onChange={(value) => handleSetValue(value)}
       disabled={!serverData}
       minValue={serverData?.minimum || 0}
       maxValue={serverData?.maximum || 100}

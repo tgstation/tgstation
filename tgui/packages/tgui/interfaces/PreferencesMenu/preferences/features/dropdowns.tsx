@@ -28,17 +28,21 @@ type DropdownOptions = ComponentProps<typeof Dropdown>['options'];
 export function FeatureDropdownInput(props: DropdownInputProps) {
   const { serverData, disabled, buttons, handleSetValue, value } = props;
 
-  const display_names = serverData?.display_names || {};
-
   const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>([]);
+
+  let displayNames: Record<string, string> = {};
 
   function populateOptions() {
     if (!serverData) return;
+
+    const { choices = [] } = serverData;
+    displayNames = serverData.display_names as Record<string, string>;
+
     let newOptions: DropdownOptions = [];
 
-    for (const choice of serverData.choices) {
-      let displayText: ReactNode = display_names
-        ? display_names[choice]
+    for (const choice of choices) {
+      let displayText: ReactNode = displayNames
+        ? displayNames[choice]
         : capitalizeFirst(choice);
 
       newOptions.push({
@@ -51,14 +55,14 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
   }
 
   useEffect(() => {
-    if (serverData && dropdownOptions.length === 0) {
+    if (serverData) {
       populateOptions();
     }
   }, [serverData]);
 
-  let display_text = value;
-  if (display_names) {
-    display_text = display_names[value];
+  let displayText = value;
+  if (displayNames) {
+    displayText = displayNames[value];
   }
 
   return (
@@ -66,7 +70,7 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
       buttons={buttons}
       disabled={disabled || !serverData}
       onSelected={handleSetValue}
-      displayText={display_text ? capitalizeFirst(display_text) : ''}
+      displayText={displayText ? capitalizeFirst(displayText) : ''}
       options={dropdownOptions}
       selected={value}
       width="100%"
@@ -77,22 +81,24 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
 export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
   const { serverData, handleSetValue, value } = props;
 
-  // Skeleton arrays so we can load
-  const display_names: Record<string, string> = serverData?.display_names || {};
-  const icons: Record<string, string> = serverData?.icons || {};
+  // Skeletons so we can load
+  let displayNames: Record<string, string> = {};
 
   const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>([]);
 
   function populateOptions() {
     if (!serverData) return;
+    const { icons = {}, choices = [] } = serverData;
+    displayNames = serverData.display_names as Record<string, string>;
+
     let newOptions: DropdownOptions = [];
 
-    for (const choice of serverData.choices) {
-      let displayText: ReactNode = display_names
-        ? display_names[choice]
+    for (const choice of choices) {
+      let displayText: ReactNode = displayNames
+        ? displayNames[choice]
         : capitalizeFirst(choice);
 
-      if (icons?.[choice]) {
+      if (serverData.icons?.[choice]) {
         displayText = (
           <Stack>
             <Stack.Item>
@@ -116,20 +122,20 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
   }
 
   useEffect(() => {
-    if (serverData && dropdownOptions.length === 0) {
+    if (serverData) {
       populateOptions();
     }
   }, [serverData]);
 
-  let display_text = value;
-  if (display_names) {
-    display_text = display_names[value];
+  let displayText = capitalizeFirst(value || '');
+  if (displayNames) {
+    displayText = displayNames[value];
   }
 
   return (
     <Dropdown
       buttons
-      displayText={display_text ? capitalizeFirst(display_text) : ''}
+      displayText={displayText ? capitalizeFirst(displayText) : ''}
       onSelected={handleSetValue}
       options={dropdownOptions}
       selected={value}
