@@ -11,7 +11,7 @@
 		WIRE_ONE_PRIORITY_BUTTON,
 		WIRE_THROW_RANGE
 	)
-	..()
+	return ..()
 
 /datum/wires/big_manipulator/interactable(mob/user)
 	if(!..())
