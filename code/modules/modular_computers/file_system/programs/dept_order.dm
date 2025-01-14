@@ -253,7 +253,7 @@
 
 /// Calculates the cooldown it will take for this department's free order, based on its credit cost
 /datum/computer_file/program/department_order/proc/calculate_cooldown(credits)
-	var/time_y = DEPARTMENTAL_ORDER_COOLDOWN_COEFFICIENT * (log(10, credits) ** DEPARTMENTAL_ORDER_COOLDOWN_POWER) * (1 SECONDS)
+	var/time_y = DEPARTMENTAL_ORDER_COOLDOWN_COEFFICIENT * (log(10, credits) ** DEPARTMENTAL_ORDER_COOLDOWN_EXPONENT) * (1 SECONDS)
 	department_cooldowns[linked_department] = world.time + time_y
 
 /datum/computer_file/program/department_order/process_tick(seconds_per_tick)
