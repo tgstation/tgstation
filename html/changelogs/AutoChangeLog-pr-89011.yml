@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Examining edible items with too high of a perceived food quality no longer runtimes and actually displays a food quality message."

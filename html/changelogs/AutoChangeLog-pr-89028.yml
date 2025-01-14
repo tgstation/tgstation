@@ -1,0 +1,6 @@
+author: "Gaxeer"
+delete-after: True
+changes:
+  - qol: "tokens and channel names in radio headset examine are now color coded and display in list format"
+  - qol: "broadcast frequency in examine is also color coded"
+  - code_imp: "add new `span_class` macro"
