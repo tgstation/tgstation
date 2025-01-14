@@ -71,9 +71,8 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 /obj/machinery/atmospherics/pipe/smart/set_init_directions(init_dir)
 	if(init_dir)
 		initialize_directions = init_dir
-		var/i
 		var/j = 1
-		for (i = 0, i < 4, i++)
+		for (var/i in 1 to 4)
 			if (init_dir & j)
 				volume += UNARY_PIPE_VOLUME
 			j << 1
