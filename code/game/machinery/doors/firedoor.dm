@@ -975,17 +975,36 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
-/obj/structure/firelock_frame/border_only/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(.)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/firelock_frame/border_only/proc/on_exit(datum/source, atom/movable/leaving, direction)
+	SIGNAL_HANDLER
+
+	if(leaving == src)
+		return // Let's not block ourselves.
+
+	if(!(direction & dir))
 		return
 
-	if(border_dir == dir)
-		return FALSE
+	if (!density)
+		return
 
-	if(istype(mover, /obj/structure/firelock_frame/border_only))
-		return valid_build_direction(loc, mover.dir, is_fulltile = FALSE)
+	if (leaving.movement_type & (PHASING))
+		return
 
+	if (leaving.move_force >= MOVE_FORCE_EXTREMELY_STRONG)
+		return
+
+	leaving.Bump(src)
+	return COMPONENT_ATOM_BLOCK_EXIT
+
+/obj/structure/firelock_frame/border_only/CanPass(atom/movable/mover, border_dir)
+	. = ..()
+	if(border_dir & dir)
+		return .
 	return TRUE
 
 #undef CONSTRUCTION_PANEL_OPEN
