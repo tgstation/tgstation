@@ -667,6 +667,7 @@
 		"Stage Speed 5" = "Being obese allows for slow regeneration.",
 	)
 	var/fatregen = FALSE
+	var/fatregenmult = 1
 
 /datum/symptom/heal/calorie/Start(datum/disease/advance/A)
 	. = ..()
@@ -675,15 +676,21 @@
 	if(A.totalStageSpeed() >= 5)
 		fatregen = TRUE
 
-/datum/symptom/heal/calorie/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
-	if(M.getBruteLoss() || M.getFireLoss() || M.getToxLoss())
-		if(!M.reagents.has_reagent(/datum/reagent/medicine/metafactor, 1))
-			M.reagents.add_reagent(/datum/reagent/medicine/metafactor, 0.1)
-
-	if(fatregen && (HAS_TRAIT_FROM(M, TRAIT_FAT, OBESITY)))
-		M.adjustBruteLoss(-0.2)
-		M.adjustFireLoss(-0.2)
-		M.adjustToxLoss(-0.1)
+/datum/symptom/heal/calorie/Heal(mob/living/carbon/my_human, datum/disease/advance/A, actual_power)
+	if(my_human.getBruteLoss() || my_human.getFireLoss() || my_human.getToxLoss())
+		// If we are fat and have fat regen, multiply heals by 2
+		if(fatregen && (HAS_TRAIT_FROM(my_human, TRAIT_FAT, OBESITY)))
+			fatregenmult = 2
+		else
+			fatregenmult = 1
+		// If we have a full stomach, begin healing us && let's also prevent cheese by ensuring you HAVE to be able to get fat.
+		if(my_human.nutrition > NUTRITION_LEVEL_FULL && !HAS_TRAIT(my_human, TRAIT_NOFAT))
+			my_human.adjustBruteLoss(-0.2 * fatregenmult)
+			my_human.adjustFireLoss(-0.2 * fatregenmult)
+			my_human.adjustToxLoss(-0.1 * fatregenmult)
+			// If we have a full stomach, but aren't fat, make us hungry (no free lipliocide)
+			if(!HAS_TRAIT_FROM(my_human, TRAIT_FAT, OBESITY)))
+				my_human.adjust_nutrition(-0.2)
 
 /datum/symptom/heal/calorie/passive_message_condition(mob/living/carbon/infected_mob)
 	if(infected_mob.getBruteLoss() || infected_mob.getFireLoss())
