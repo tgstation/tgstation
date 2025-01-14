@@ -49,7 +49,7 @@
 #define EXPORT_SOLD_DONT_DELETE 2
 
 
-//At 320 it's 7.5 minutes, at 1400 it's 12.44 minutes,  at 3000 (around gun crates) it's 15.5 minutes, at 8000 (hat crate) 20 minutes, at 9000 (expensive atmos cans) it's 20.5 minutes, and at the 20k crate it's 24.45 minutes.
+//At 320 it's 7.5 minutes, at 1400 it's 12.44 minutes,  at 3000 (around gun crates) it's 15.5 minutes, at 8000 (hat crate) 20 minutes, at 9000 (expensive atmos cans) it's 20.58 minutes, and at the 20k crate it's 24.76 minutes.
 /// Multiplies the logarithmic value calculating the free crate cooldown
 #define DEPARTMENTAL_ORDER_COOLDOWN_COEFFICIENT 60
 /// Used for the power of the logarithmic value for the free crate cooldown
