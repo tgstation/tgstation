@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "deathmatch - chasms will no longer do anything when blown up, cuban pete loadout macrobomb fixed, AFK lobbies will close after 5 minutes, fixed changing maps incorrectly taking one more observer than it should"
