@@ -977,8 +977,16 @@
 
 /obj/structure/firelock_frame/border_only/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(!border_dir == dir)
-		return TRUE
+	if(.)
+		return
+
+	if(border_dir == dir)
+		return FALSE
+
+	if(istype(mover, /obj/structure/firelock_frame/border_only))
+		return valid_build_direction(loc, mover.dir, is_fulltile = FALSE)
+
+	return TRUE
 
 #undef CONSTRUCTION_PANEL_OPEN
 #undef CONSTRUCTION_NO_CIRCUIT
