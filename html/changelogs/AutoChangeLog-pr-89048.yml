@@ -1,0 +1,7 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Aquarium/fish tank admiring works again."
+  - bugfix: "Inverted aquarium/fish tank panel opening tooltip to be the right way."
+  - qol: "You can actually admire an in-hand fish tank by clicking on it."
+  - qol: "Aquarium/fish tank admiring tooltips are more consistent."
