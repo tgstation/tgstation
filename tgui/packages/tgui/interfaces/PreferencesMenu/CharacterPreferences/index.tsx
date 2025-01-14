@@ -27,27 +27,12 @@ type ProfileProps = {
   profiles: (string | null)[];
 };
 
-const fakeProfiles = [
-  // Names of the avengers
-  ['Thor Odinson', null, null],
-  ['Natasha Romanoff', null, null],
-  ['Peter Parker', null, null],
-  ['Bruce Banner', null, null],
-  ['Tony Stark', null, null],
-  ['Steve Rogers', null, null],
-  ['Doreen Green', null, null],
-  ['Clint Barton', null, null],
-  ['Steven Strange', null, null],
-  ['Wanda Maximoff', null, null],
-  ['Scott Lang', null, null],
-];
-
 function CharacterProfiles(props: ProfileProps) {
   const { activeSlot, onClick, profiles } = props;
 
   return (
     <Stack justify="center" wrap>
-      {fakeProfiles.map((profile, slot) => (
+      {profiles.map((profile, slot) => (
         <Stack.Item key={slot} mb={1}>
           <Button
             selected={slot === activeSlot}
