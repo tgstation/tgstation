@@ -253,7 +253,7 @@
 
 /datum/reagent/medicine/spaceacillin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	var/need_mob_update
-	need_mob_update += M.adjustToxLoss(-0.1 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += M.adjustToxLoss(-0.1 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
