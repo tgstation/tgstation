@@ -121,15 +121,24 @@
 			/datum/reagent/medicine/modafinil,
 			/datum/reagent/drug/krokodil,
 			/datum/reagent/drug/methamphetamine,
+			/datum/reagent/inverse/cryostylane,
 		),
 		list( //level 12
 			/datum/reagent/pentaerythritol,
 			/datum/reagent/nitroglycerin,
 			/datum/reagent/medicine/rezadone,
+			/datum/reagent/inverse/lentslurri,
+			/datum/reagent/inverse/libitoil,
+			/datum/reagent/inverse/aiuri,
 		),
 		list( //level 13
 			/datum/reagent/drug/bath_salts,
 			/datum/reagent/eigenstate,
+			/datum/reagent/inverse/helgrasp,
+			/datum/reagent/inverse/sal_acid,
+			/datum/reagent/inverse/oxandrolone,
+			/datum/reagent/inverse/salbutamol,
+			/datum/reagent/inverse/pen_acid,
 		),
 	)
 
