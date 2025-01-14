@@ -528,7 +528,7 @@
 /obj/item/radio/examine(mob/user)
 	. = ..()
 	if (frequency && in_range(src, user))
-		. += span_notice("It is set to broadcast over the [frequency/10] frequency.")
+		. += span_notice("It is set to broadcast over the [span_radio("[frequency/10]")] frequency.")
 	if (unscrewed)
 		. += span_notice("It can be attached and modified.")
 	else

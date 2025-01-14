@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - bugfix: "Corpses at the pilot seat of mechs can no longer toggle the lights, safeties, cabin sealing, strafing, overclocking, or durand shields, nor can they rename the mech or configure its equipment."

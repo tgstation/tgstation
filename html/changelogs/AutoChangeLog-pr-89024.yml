@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed an icon smoothing error caused by shuttles during recursive map loading, i.e the nukie shuttles with their base."

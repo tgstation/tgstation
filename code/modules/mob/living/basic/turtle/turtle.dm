@@ -49,6 +49,10 @@
 	var/developed_path
 	///our last east/west direction
 	var/last_direction = WEST
+	///seeds our stomach cannot process into fruit, we will spit these seeds out after a short time instead
+	var/static/list/indigestible_seeds = typecacheof(list(
+		/obj/item/seeds/random,
+	))
 
 /mob/living/basic/turtle/Initialize(mapload)
 	. = ..()
@@ -64,6 +68,7 @@
 	AddElement(/datum/element/basic_eating, food_types = eatable_food)
 	AddComponent(/datum/component/happiness)
 	RegisterSignal(src, COMSIG_MOB_PRE_EAT, PROC_REF(pre_eat_food))
+	RegisterSignal(src, COMSIG_MOB_ATE, PROC_REF(post_eat))
 	update_appearance()
 	create_reagents(150, REAGENT_HOLDER_ALIVE)
 	add_verb(src, /mob/living/proc/toggle_resting)
@@ -218,14 +223,30 @@
 
 	if(!istype(potential_food))
 		return NONE
-	if(ispath(potential_food.product, /obj/item/food/grown))
-		addtimer(CALLBACK(src, PROC_REF(process_food), potential_food.product), 30 SECONDS)
+
+	return ispath(potential_food.product, /obj/item/food/grown) ? NONE : COMSIG_MOB_CANCEL_EAT
+
+/mob/living/basic/turtle/proc/post_eat(datum/source, obj/item/seeds/potential_food)
+	SIGNAL_HANDLER
+	if(is_type_in_typecache(potential_food, indigestible_seeds))
+		potential_food.forceMove(src)
+		addtimer(CALLBACK(src, PROC_REF(process_food), potential_food), 20 SECONDS)
+		return COMSIG_MOB_TERMINATE_EAT
+
+	addtimer(CALLBACK(src, PROC_REF(process_food), potential_food.product), 30 SECONDS)
 	return NONE
 
-/mob/living/basic/turtle/proc/process_food(food_path)
+/mob/living/basic/turtle/proc/process_food(potential_food)
 	if(QDELETED(src) || stat != CONSCIOUS)
 		return
-	new food_path(drop_location())
+
+	if(ispath(potential_food))
+		new potential_food(drop_location())
+
+	else if((!isnull(potential_food)) && (potential_food in contents))
+		var/atom/movable/movable_food = potential_food
+		movable_food.forceMove(drop_location())
+
 	balloon_alert_to_viewers("spits out some food")
 
 /mob/living/basic/turtle/death(gibbed)

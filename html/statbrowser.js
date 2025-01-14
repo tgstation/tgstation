@@ -375,7 +375,7 @@ function draw_mc() {
 		var td2 = document.createElement("td");
 		if (part[2]) {
 			var a = document.createElement("a");
-			a.href = "?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
+			a.href = "byond://?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
 			a.textContent = part[1];
 			td2.appendChild(a);
 		} else {
@@ -460,7 +460,7 @@ function draw_listedturf() {
 			// rather than every onmousedown getting the "part" of the last entry.
 			return function (e) {
 				e.preventDefault();
-				clickcatcher = "?src=" + part[1];
+				clickcatcher = "byond://?src=" + part[1];
 				switch (e.button) {
 					case 1:
 						clickcatcher += ";statpanel_item_click=middle"
@@ -516,7 +516,7 @@ function draw_sdql2() {
 		var td2 = document.createElement("td");
 		if (part[2]) {
 			var a = document.createElement("a");
-			a.href = "?src=" + part[2] + ";statpanel_item_click=left";
+			a.href = "byond://?src=" + part[2] + ";statpanel_item_click=left";
 			a.textContent = part[1];
 			td2.appendChild(a);
 		} else {
@@ -543,12 +543,12 @@ function draw_tickets() {
 		var td2 = document.createElement("td");
 		if (part[2]) {
 			var a = document.createElement("a");
-			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=left;action=ticket";
+			a.href = "byond://?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=left;action=ticket";
 			a.textContent = part[1];
 			td2.appendChild(a);
 		} else if (part[3]) {
 			var a = document.createElement("a");
-			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
+			a.href = "byond://?src=" + part[3] + ";statpanel_item_click=left";
 			a.textContent = part[1];
 			td2.appendChild(a);
 		} else {
@@ -570,7 +570,7 @@ function draw_interviews() {
 	manDiv.className = "interview_panel_controls"
 	var manLink = document.createElement("a");
 	manLink.textContent = "Open Interview Manager Panel";
-	manLink.href = "?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=left";
+	manLink.href = "byond://?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=left";
 	manDiv.appendChild(manLink);
 	body.appendChild(manDiv);
 
@@ -603,7 +603,7 @@ function draw_interviews() {
 		var td = document.createElement("td");
 		var a = document.createElement("a");
 		a.textContent = part["status"];
-		a.href = "?_src_=holder;admin_token=" + href_token + ";interview=" + part["ref"] + ";statpanel_item_click=left";
+		a.href = "byond://?_src_=holder;admin_token=" + href_token + ";interview=" + part["ref"] + ";statpanel_item_click=left";
 		td.appendChild(a);
 		tr.appendChild(td);
 		table.appendChild(tr);
@@ -623,7 +623,7 @@ function draw_spells(cat) {
 		var td2 = document.createElement("td");
 		if (part[3]) {
 			var a = document.createElement("a");
-			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
+			a.href = "byond://?src=" + part[3] + ";statpanel_item_click=left";
 			a.textContent = part[2];
 			td2.appendChild(a);
 		} else {

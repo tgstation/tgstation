@@ -843,6 +843,7 @@
 	do_drop_animation(master_storage.parent)
 
 /obj/item/pre_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	get_embed() // Ensure that embedding is lazyloaded before we impact the target, if we can have it
 	var/impact_flags = ..()
 	if(w_class < WEIGHT_CLASS_BULKY)
 		impact_flags |= COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
