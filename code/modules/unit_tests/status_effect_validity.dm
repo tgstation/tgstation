@@ -22,7 +22,7 @@
 				if(tick_speed < SSprocessing.wait)
 					TEST_FAIL("Status effect [checking] has tick_interval set to [tick_speed], which is faster than SSprocessing can tick ([SSprocessing.wait]).")
 			if(STATUS_EFFECT_PRIORITY)
-				var/priority_wait = world.tick_lag * SSpriority_effects.wait // SSpriority_effects has the SS_TICKER flag, so its wait is in ticks, so we have to convert it to seconds.
+				var/priority_wait = world.tick_lag * SSpriority_effects.wait // SSpriority_effects has the SS_TICKER flag, so its wait is in ticks, so we have to convert it to deciseconds.
 				if(tick_speed < priority_wait)
 					TEST_FAIL("Status effect [checking] has tick_interval set to [tick_speed], which is faster than SSpriority_effects can tick ([priority_wait]).")
 			else
