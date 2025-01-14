@@ -13,13 +13,11 @@
 		"Stage Speed 2" = "Carrying bodies is faster.",
 		"Stage Speed 4" = "Surgery is faster.",
 		"Stage Speed 6" = "Construction is faster.",
-		"Stage Speed 10" = "Shooting guns is faster.",
 	)
 	var/buffed = FALSE
 	var/bodycarryspd = FALSE
 	var/surgeryspd = FALSE
 	var/constructspd = FALSE
-	var/gunspd = FALSE
 
 /datum/symptom/actionspd/Start(datum/disease/advance/A)
 	. = ..()
@@ -33,8 +31,6 @@
 		surgeryspd = TRUE
 	if(A.totalStageSpeed() >= 6)
 		constructspd = TRUE
-	if(A.totalStageSpeed() >= 10)
-		gunspd = TRUE
 
 /datum/symptom/actionspd/on_stage_change(datum/disease/advance/A)
 	. = ..()
@@ -53,8 +49,6 @@
 			ADD_TRAIT(M, TRAIT_FASTMED, DISEASE_TRAIT)
 		if(constructspd)
 			ADD_TRAIT(M, TRAIT_QUICK_BUILD, DISEASE_TRAIT)
-		if(gunspd)
-			ADD_TRAIT(M, TRAIT_DOUBLE_TAP, DISEASE_TRAIT)
 	else
 		M.remove_actionspeed_modifier(/datum/actionspeed_modifier/diseasestimbuffed)
 		M.remove_actionspeed_modifier(/datum/actionspeed_modifier/diseasestim)
@@ -62,7 +56,6 @@
 		REMOVE_TRAIT(M, TRAIT_QUICKER_CARRY, DISEASE_TRAIT)
 		REMOVE_TRAIT(M, TRAIT_FASTMED, DISEASE_TRAIT)
 		REMOVE_TRAIT(M, TRAIT_QUICK_BUILD, DISEASE_TRAIT)
-		REMOVE_TRAIT(M, TRAIT_DOUBLE_TAP, DISEASE_TRAIT)
 	return TRUE
 
 /datum/symptom/actionspd/End(datum/disease/advance/A)
@@ -75,4 +68,3 @@
 	REMOVE_TRAIT(A.affected_mob, TRAIT_QUICKER_CARRY, DISEASE_TRAIT)
 	REMOVE_TRAIT(A.affected_mob, TRAIT_FASTMED, DISEASE_TRAIT)
 	REMOVE_TRAIT(A.affected_mob, TRAIT_QUICK_BUILD, DISEASE_TRAIT)
-	REMOVE_TRAIT(A.affected_mob, TRAIT_DOUBLE_TAP, DISEASE_TRAIT)
