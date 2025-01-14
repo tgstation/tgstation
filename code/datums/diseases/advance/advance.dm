@@ -100,16 +100,12 @@
 			/datum/reagent/drug/happiness,
 			/datum/reagent/medicine/ephedrine,
 			/datum/reagent/pax,
-			/datum/reagent/toxin/amatoxin,
 			/datum/reagent/teslium,
-			/datum/reagent/medicine/silibinin,
-			/datum/reagent/bluespace,
 		),
 		list( // level 9
 			/datum/reagent/medicine/sal_acid,
 			/datum/reagent/medicine/oxandrolone,
 			/datum/reagent/toxin/lipolicide,
-			/datum/reagent/medicine/earthsblood,
 			/datum/reagent/medicine/atropine,
 			/datum/reagent/toxin/cyanide,
 		),
@@ -117,7 +113,6 @@
 			/datum/reagent/drug/aranesp,
 			/datum/reagent/medicine/diphenhydramine,
 			/datum/reagent/pentaerythritol,
-			/datum/reagent/medicine/pyroxadone,
 			/datum/reagent/medicine/salbutamol,
 			/datum/reagent/medicine/pen_acid,
 		),
@@ -130,14 +125,11 @@
 		list( //level 12
 			/datum/reagent/pentaerythritol,
 			/datum/reagent/nitroglycerin,
-			/datum/reagent/medicine/sansufentanyl,
 			/datum/reagent/medicine/rezadone,
 		),
 		list( //level 13
 			/datum/reagent/drug/bath_salts,
 			/datum/reagent/eigenstate,
-			/datum/reagent/wittel,
-			/datum/reagent/plasma_oxide,
 		),
 	)
 
