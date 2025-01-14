@@ -51,7 +51,7 @@
 	/// Here some ui setting we can on/off:
 	/// If activated: after item was used manipulator will also drop it.
 	var/drop_item_after_use = TRUE
-	/// If acrivated: will select only 1 priority and will not continue to look at the priorities below.
+	/// If activated: will select only 1 priority and will not continue to look at the priorities below.
 	var/only_highest_priority = FALSE
 	/// Var for throw item mode: changes the range from which the manipulator throws an object.
 	var/manipulator_throw_range = 1
@@ -90,6 +90,8 @@
 /obj/machinery/big_manipulator/examine(mob/user)
 	. = ..()
 	. += "You can change direction with alternative wrench usage."
+	if(monkey_worker)
+		. += "You can see [monkey_worker.resolve()]: [src] manager."
 
 /obj/machinery/big_manipulator/Destroy(force)
 	. = ..()
@@ -103,6 +105,8 @@
 	if(!isnull(monkey_worker))
 		var/mob/monkey_resolve = monkey_worker?.resolve()
 		monkey_resolve?.forceMove(get_turf(monkey_resolve))
+		monkey_resolve.pixel_x = initial(monkey_resolve.pixel_x)
+		monkey_resolve.pixel_y = initial(monkey_resolve.pixel_y)
 
 /obj/machinery/big_manipulator/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -181,9 +185,7 @@
 
 	manipulator_lvl()
 
-/obj/machinery/big_manipulator/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
-	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
-		return
+/obj/machinery/big_manipulator/mouse_drop_dragged(atom/monkey, mob/user, src_location, over_location, params)
 	if(isnull(monkey_worker))
 		return
 	if(on_work)
@@ -197,22 +199,24 @@
 	balloon_alert(user, "unbuckled")
 	monkey_worker = null
 	poor_monkey.drop_all_held_items()
-	poor_monkey.forceMove(over)
+	poor_monkey.forceMove(monkey)
 	if(manipulate_mode == USE_ITEM_MODE)
 		change_mode()
-	manipulator_hand.set_monkey(FALSE)
-
-/obj/machinery/big_manipulator/mouse_drop_receive(atom/dropped, mob/user, params)
-	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
+	if(!is_type_in_list(poor_monkey, manipulator_hand.vis_contents))
 		return
-	if(!ismonkey(dropped))
+	manipulator_hand.vis_contents -= poor_monkey
+	poor_monkey.pixel_x = initial(poor_monkey.pixel_x)
+	poor_monkey.pixel_y = initial(poor_monkey.pixel_y)
+
+/obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
+	if(!ismonkey(monkey))
 		return
 	if(!isnull(monkey_worker))
 		return
 	if(on_work)
 		balloon_alert(user, "turn it off first!")
 		return
-	var/mob/living/carbon/human/species/monkey/poor_monkey = dropped
+	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey
 	if(poor_monkey.mind)
 		balloon_alert(user, "too smart!")
 		return
@@ -224,7 +228,10 @@
 	monkey_worker = WEAKREF(poor_monkey)
 	poor_monkey.drop_all_held_items()
 	poor_monkey.forceMove(src)
-	manipulator_hand.set_monkey(TRUE)
+	manipulator_hand.vis_contents += poor_monkey
+	poor_monkey.dir = manipulator_hand.dir
+	poor_monkey.pixel_x += 32 + manipulator_hand.calculate_item_offset(TRUE, pixels_to_offset = 16)
+	poor_monkey.pixel_y += 32 + manipulator_hand.calculate_item_offset(FALSE, pixels_to_offset = 16)
 
 /// Creat manipulator hand effect on manipulator core.
 /obj/machinery/big_manipulator/proc/create_manipulator_hand()
@@ -286,6 +293,9 @@
 			take_here = NORTH
 			drop_here = SOUTH
 	manipulator_hand.dir = take_here
+	if(!isnull(monkey_worker))
+		var/mob/monkey = monkey_worker.resolve()
+		monkey.dir = manipulator_hand.dir
 	take_and_drop_turfs_check()
 
 /// Deliting hand will destroy our manipulator core.
@@ -535,12 +545,14 @@
 		UnregisterSignal(take_turf, COMSIG_ATOM_ENTERED)
 		UnregisterSignal(take_turf, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
 
+/// Proc that check if button not cutted when we press on button.
 /obj/machinery/big_manipulator/proc/try_press_on(mob/user)
 	if(on_button_cutted)
 		balloon_alert(user, "button is cut off!")
 		return
 	press_on(pressed_by = TRUE)
 
+/// Drop item that manipulator is manipulating.
 /obj/machinery/big_manipulator/proc/drop_containment_item()
 	if(isnull(containment_obj))
 		return
@@ -548,6 +560,7 @@
 	obj_resolve?.forceMove(get_turf(obj_resolve))
 	finish_manipulation()
 
+/// Changes the type of objects that the manipulator will pick up
 /obj/machinery/big_manipulator/proc/change_what_take_type()
 	selected_type_by_number++
 	if(selected_type_by_number > allowed_types_to_pick_up.len)
@@ -555,6 +568,7 @@
 	selected_type = allowed_types_to_pick_up[selected_type_by_number]
 	is_work_check()
 
+/// Changes range with which the manipulator throws objects, from 1 to 7.
 /obj/machinery/big_manipulator/proc/change_throw_range()
 	manipulator_throw_range++
 	if(manipulator_throw_range > 7)
@@ -667,18 +681,12 @@
 	pixel_y = -32
 	/// We get item from big manipulator and takes its icon to create overlay.
 	var/datum/weakref/item_in_my_claw
-	/// Monkey that we use to add overlay on manipulator claw. We don't need weakref becouse we don't need to take his sprite.
-	var/monkey_here = FALSE
 	/// Var to icon that used as overlay on manipulator claw to show what item it grabs.
 	var/mutable_appearance/icon_overlay
-	/// Our monkey icon that buckled to the manipulator.
-	var/mutable_appearance/monkey_overlay
 
 /obj/effect/big_manipulator_hand/update_overlays()
 	. = ..()
 	. += update_item_overlay()
-	if(monkey_here)
-		. += image('icons/obj/machines/big_manipulator_parts/big_manipulator_hand.dmi', "hand_monkey")
 
 /obj/effect/big_manipulator_hand/proc/update_item_overlay()
 	if(isnull(item_in_my_claw))
@@ -696,23 +704,18 @@
 	item_in_my_claw = clawed_item
 	update_appearance()
 
-/// Updates monkey that buckled in big manipulator.
-/obj/effect/big_manipulator_hand/proc/set_monkey(is_monky)
-	monkey_here = is_monky
-	update_appearance()
-
 /// Calculate x and y coordinates so that the item icon appears in the claw and not somewhere in the corner.
-/obj/effect/big_manipulator_hand/proc/calculate_item_offset(is_x = TRUE)
+/obj/effect/big_manipulator_hand/proc/calculate_item_offset(is_x = TRUE, pixels_to_offset = 32)
 	var/offset
 	switch(dir)
 		if(NORTH)
-			offset = is_x ? 0 : 32
+			offset = is_x ? 0 : pixels_to_offset
 		if(SOUTH)
-			offset = is_x ? 0 : -32
+			offset = is_x ? 0 : -pixels_to_offset
 		if(EAST)
-			offset = is_x ? 32 : 0
+			offset = is_x ? pixels_to_offset : 0
 		if(WEST)
-			offset = is_x ? -32 : 0
+			offset = is_x ? -pixels_to_offset : 0
 	return offset
 
 /// Priorities that manipulator use to choose to work on item with type same with what_type.
@@ -753,6 +756,11 @@
 	name = "Use on Machinery"
 	what_type = /obj/machinery
 	number = 3
+
+/datum/manipulator_priority/for_use/on_items
+	name = "Use on Items"
+	what_type = /obj/item
+	number = 4
 
 #undef DROP_ITEM_MODE
 #undef USE_ITEM_MODE
