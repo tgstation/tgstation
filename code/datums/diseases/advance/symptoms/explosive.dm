@@ -1,4 +1,4 @@
-/datum/symptom/explosive // ~I'm the bomb and i'm about to blow up!~
+/datum/symptom/explosive
 	name = "Explosive Glands"
 	desc = "The virus produces explosive reagents and stores them within various areas of the body."
 	stealth = -2
