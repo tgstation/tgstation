@@ -14,33 +14,12 @@
 	. += span_info("The console is set to [my_circuit.station_only ? "track all station and mining alarms" : "track alarms on the same z-level"].")
 
 /obj/machinery/computer/station_alert/Initialize(mapload)
-	// If the console's circuit is station_only, set up the alert_control to only listen to station areas
-	var/obj/item/circuitboard/computer/station_alert/my_circuit = circuit
-	if(my_circuit.station_only)
-		name = "station alert console"
-		var/list/alert_areas
-		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
-		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), listener_areas = alert_areas, title = name)
-	else // If not station_only, just check the z-level
-		name = "local alert console"
-		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), title = name)
-	RegisterSignals(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
+	link_alerts()
 	return ..()
 
 /obj/machinery/computer/station_alert/on_construction(mob/user)
 	. = ..()
-	var/obj/item/circuitboard/computer/station_alert/my_circuit = circuit
-	// The circuitboard isn't "added" to the machine until this proc, meaning the station_only check
-	// in init isn't valid for consoles built mid-round...
-	// this code checks the board and clears+replaces the alert_control for crew to build them in-round
-	if(my_circuit.station_only)
-		UnregisterSignal(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
-		QDEL_NULL(alert_control)
-		name = "station alert console"
-		var/list/alert_areas
-		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
-		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), listener_areas = alert_areas, title = name)
-		RegisterSignals(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
+	link_alerts()
 
 /obj/machinery/computer/station_alert/Destroy()
 	QDEL_NULL(alert_control)
@@ -62,6 +41,26 @@
 		return
 	if(length(alert_control.listener.alarms))
 		. += "alert:2"
+
+/**
+ * Clears out any active alert_control listeners, then sets up a new one based on the circuit settings
+ */
+/obj/machinery/computer/station_alert/proc/link_alerts()
+	//Start from scratch, clear out the existing alert listeners
+	QDEL_NULL(alert_control)
+
+	//Then we check the circuit to determine if it should show alarms from Station & Mining areas,
+	//or Local (z-level) areas
+	var/obj/item/circuitboard/computer/station_alert/my_circuit = circuit
+	if(my_circuit.station_only)
+		name = "station alert console"
+		var/list/alert_areas
+		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), listener_areas = alert_areas, title = name)
+	else
+		name = "local alert console"
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), title = name)
+	RegisterSignals(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
 
 /**
  * Signal handler for calling an icon update in case an alarm is added or cleared
