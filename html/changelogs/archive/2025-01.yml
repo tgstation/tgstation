@@ -331,3 +331,40 @@
   warbluke:
   - bugfix: Fake Nuclear Disks and Obviously Fake Nuclear Disks no longer teleport
       when changing Z-level outside of station.
+2025-01-14:
+  Darkened-Earth:
+  - bugfix: NanoTrasen telecomms technicians operating on Tram class stations have
+      been reminded not to charge their power tools directly from their TCOMMS SMES
+  Dmeto:
+  - map: Metastation Science lobby camera moved away form Experimental Destructive
+      Scanner(It was geting eaten on scan)
+  - bugfix: Lavaland base hydroponics scrubber attached to its network with missing
+      pipes
+  - map: ' Redundent disconnected scrubber in cargo office removed on Metastation
+
+      map : Cable remove from under wall of Qm office on Metastation'
+  EEASAS:
+  - qol: Gives cargo their APLU Big Bess on Ice Box Station
+  - map: Extended and revamped cargo's warehouse on Ice Box Station
+  Melbert:
+  - rscadd: '[Icebox] Reworked Tech Storage'
+  - rscadd: '[Icebox] Reworked Public Mining'
+  Paxilmaniac:
+  - bugfix: fixes plasma stabilizer module not showing a visor on modsuits
+  - bugfix: makes the plasma stabilizer module actually visible
+  - bugfix: makes rave module grey by default as it was meant to be
+  SmArtKar:
+  - bugfix: Fixed wawa's xenobio reagent grinders being inaccessible
+  - bugfix: Fixed camouflage implant missing icon
+  - bugfix: Added a barboat seat projector to Wawa's bar
+  - map: Updated the Turreted Outpost space ruin
+  TealSeer:
+  - map: fixed the lightswitch in Ice Box shared engineering storage being covered
+      by the APC.
+  Y0SH1M4S73R:
+  - rscadd: Adds circuit wirenet components, allowing data to be transmitted and received
+      over cable networks.
+  - qol: When attached to a machine, mech, modsuit, or borg, assembly circuit shells
+      will use power from those instead of the circuit's own cell.
+  Zytolg:
+  - map: Who turned down Birdshots Thermostat?

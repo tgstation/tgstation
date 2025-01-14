@@ -1,5 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - rscadd: "Adds circuit wirenet components, allowing data to be transmitted and received over cable networks."
-  - qol: "When attached to a machine, mech, modsuit, or borg, assembly circuit shells will use power from those instead of the circuit's own cell."

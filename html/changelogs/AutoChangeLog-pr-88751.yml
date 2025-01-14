@@ -1,6 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes:
-  - bugfix: "fixes plasma stabilizer module not showing a visor on modsuits"
-  - bugfix: "makes the plasma stabilizer module actually visible"
-  - bugfix: "makes rave module grey by default as it was meant to be"
