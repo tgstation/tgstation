@@ -72,6 +72,7 @@
 #include "code\__DEFINES\configuration.dm"
 #include "code\__DEFINES\cooldowns.dm"
 #include "code\__DEFINES\crafting.dm"
+#include "code\__DEFINES\crusher_defines.dm"
 #include "code\__DEFINES\crushing.dm"
 #include "code\__DEFINES\ctf.dm"
 #include "code\__DEFINES\cult.dm"
