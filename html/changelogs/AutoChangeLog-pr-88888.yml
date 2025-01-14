@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - spellcheck: "A handful of machine boards should no longer have two (Machine Board)s showing up in their name."
+  - spellcheck: "Boulder machinery boards are now labeled as boards from autolathes/circuit imprinters."
