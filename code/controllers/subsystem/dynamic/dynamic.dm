@@ -232,7 +232,7 @@ SUBSYSTEM_DEF(dynamic)
 			advisory_string += "Your sector's advisory level is Midnight Sun. Credible information passed to us by GDI suggests that the Syndicate is preparing to mount a major concerted offensive on Nanotrasen assets in the Spinward Sector to cripple our foothold there. All stations should remain on high alert and prepared to defend themselves."
 	return advisory_string
 
-/proc/the_real_threat_level(threat)
+/datum/controller/subsystem/dynamic/proc/get_real_threat_level(threat)
 	var/admin_threat_string = ""
 	switch(round(threat))
 		if(0 to 19)
