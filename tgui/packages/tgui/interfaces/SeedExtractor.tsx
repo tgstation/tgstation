@@ -436,38 +436,39 @@ export const TraitTooltip = (props) => {
   const trait = props.trait_db.find((t) => {
     return t.path === props.path;
   });
+  if (!trait) {
+    return;
+  }
   return (
-    !!trait && (
-      <Tooltip
-        key=""
-        content={
-          <Table>
-            {!!props.grafting && (
-              <Table.Row>
-                <Table.Cell pb={1}>Graft gains the following trait:</Table.Cell>
-              </Table.Row>
-            )}
-            <Table.Row header>
-              <Table.Cell>
-                <Icon name={trait.icon} mr={1} />
-                {trait.name}
-              </Table.Cell>
+    <Tooltip
+      key=""
+      content={
+        <Table>
+          {!!props.grafting && (
+            <Table.Row>
+              <Table.Cell pb={1}>Graft gains the following trait:</Table.Cell>
             </Table.Row>
-            {!!props.removable && (
-              <Table.Row>
-                <Table.Cell pb={1}>Removable trait.</Table.Cell>
-              </Table.Row>
-            )}
-            {!!trait.description && (
-              <Table.Row>
-                <Table.Cell>{trait.description}</Table.Cell>
-              </Table.Row>
-            )}
-          </Table>
-        }
-      >
-        <Icon name={props.grafting ? 'scissors' : trait.icon} m={0.5} />
-      </Tooltip>
-    )
+          )}
+          <Table.Row header>
+            <Table.Cell>
+              <Icon name={trait.icon} mr={1} />
+              {trait.name}
+            </Table.Cell>
+          </Table.Row>
+          {!!props.removable && (
+            <Table.Row>
+              <Table.Cell pb={1}>Removable trait.</Table.Cell>
+            </Table.Row>
+          )}
+          {!!trait.description && (
+            <Table.Row>
+              <Table.Cell>{trait.description}</Table.Cell>
+            </Table.Row>
+          )}
+        </Table>
+      }
+    >
+      <Icon name={props.grafting ? 'scissors' : trait.icon} m={0.5} />
+    </Tooltip>
   );
 };
