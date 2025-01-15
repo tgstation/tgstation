@@ -363,7 +363,7 @@
 	. = max(cast_range, 1)
 	if(!user && !isliving(loc))
 		return
-	user = loc
+	user = !user ? loc : user
 	if(!user.is_holding(src) || !user.mind)
 		return
 	. += round(user.mind.get_skill_level(/datum/skill/fishing) * 0.3)
