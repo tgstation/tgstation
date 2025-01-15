@@ -1,0 +1,5 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - qol: "Added UI for plant analyzer"
+  - rscdel: "Plant analyzer no longer spams scan data into the chat (except, it still works for pod people as before)"

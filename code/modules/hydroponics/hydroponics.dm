@@ -55,6 +55,10 @@
 	var/self_sustaining = FALSE
 	///The icon state for the overlay used to represent that this tray is self-sustaining.
 	var/self_sustaining_overlay_icon_state = "gaia_blessing"
+	///Whether the plant is currently being pollinated or polinating the nearby plants
+	var/being_pollinated = FALSE
+	///The light level on the tray tile
+	var/light_level = 0
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -68,7 +72,6 @@
 	var/static/list/hovering_item_typechecks = list(
 		/obj/item/plant_analyzer = list(
 			SCREENTIP_CONTEXT_LMB = "Scan tray stats",
-			SCREENTIP_CONTEXT_RMB = "Scan tray chemicals"
 		),
 		/obj/item/cultivator = list(
 			SCREENTIP_CONTEXT_LMB = "Remove weeds",
@@ -319,6 +322,10 @@
 			set_self_sustaining(FALSE)
 			visible_message(span_warning("[name]'s auto-grow functionality shuts off!"))
 
+	if(isturf(loc))
+		var/turf/currentTurf = loc
+		light_level = currentTurf.get_lumcount()
+
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
 		if(myseed && plant_status != HYDROTRAY_PLANT_DEAD)
@@ -344,12 +351,9 @@
 
 //Photosynthesis/////////////////////////////////////////////////////////
 			// Lack of light hurts non-mushrooms
-			if(isturf(loc))
-				var/turf/currentTurf = loc
-				var/lightAmt = currentTurf.get_lumcount()
-				var/is_fungus = myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-				if(lightAmt < (is_fungus ? 0.2 : 0.4))
-					adjust_plant_health((is_fungus ? -1 : -2) / rating)
+			var/is_fungus = myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+			if(light_level < (is_fungus ? 0.2 : 0.4))
+				adjust_plant_health((is_fungus ? -1 : -2) / rating)
 
 //Water//////////////////////////////////////////////////////////////////
 			// Drink random amount of water
@@ -789,7 +793,7 @@
  * * Range - The Oview range of trays to which to look for plants to donate reagents.
  */
 /obj/machinery/hydroponics/proc/pollinate(range = 1)
-	var/any_adjacent = FALSE
+	being_pollinated = FALSE
 	for(var/obj/machinery/hydroponics/T in oview(src, range))
 		//Here is where we check for window blocking.
 		if(!Adjacent(T) && range <= 1)
@@ -798,11 +802,11 @@
 			T.myseed.set_potency(round((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency))))
 			T.myseed.set_instability(round((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability))))
 			T.myseed.set_yield(round((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield))))
-			any_adjacent = TRUE
+			being_pollinated = TRUE
 			add_shared_particles(/particles/pollen)
 			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
 				myseed.perform_reagent_pollination(T.myseed)
-	if(!any_adjacent)
+	if(!being_pollinated)
 		remove_shared_particles(/particles/pollen)
 
 /**

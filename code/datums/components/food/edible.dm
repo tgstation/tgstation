@@ -584,7 +584,6 @@ Behavior that's still missing from this component that original food items had t
 	if(food_quality == 0)
 		return // meh
 
-	food_quality = min(food_quality, FOOD_QUALITY_TOP)
 	var/atom/owner = parent
 	var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // mood event duration is 100% at average purity of 50%
 	var/datum/mood_event/event = GLOB.food_quality_events[food_quality]
@@ -640,7 +639,7 @@ Behavior that's still missing from this component that original food items had t
 		food_quality += DISLIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_disliked_foodtypes())
 		food_quality += LIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_liked_foodtypes())
 
-	return food_quality
+	return min(food_quality, FOOD_QUALITY_TOP)
 
 /// Get the number of matching food types in provided bitfields
 /datum/component/edible/proc/count_matching_foodtypes(bitfield_one, bitfield_two)

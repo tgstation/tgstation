@@ -1,0 +1,7 @@
+author: "tontyGH"
+delete-after: True
+changes:
+  - refactor: "Nearsighted has been reworked to track severity applied from each source, as well as allow \"non-correctable\" nearsightedness (for things like scarred eyes)."
+  - qol: "The above being possible now means that you can select the Nearsighted and Scarred eye quirks together"
+  - bugfix: "Any bug that would occur from becoming nearsighted with a scarred eye should be fixed now"
+  - code_imp: "status_effect/grouped merging code has been improved (i hope)"

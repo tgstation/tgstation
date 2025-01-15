@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - bugfix: "Mawed crucible doesn't try to gain charges when they're at maximum"
