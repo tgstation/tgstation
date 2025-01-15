@@ -52,7 +52,7 @@
 		return
 	if(throw_text)
 		to_chat(our_holder, span_warning(throw_text))
-	var/x_position = CEILING(our_holder.get_cached_width() * 0.5, 1)
+	var/x_position = CEILING(our_holder.get_visual_width() * 0.5, 1)
 	our_bar = new()
 	our_bar.maximum_count = maximum_bonus
 	our_bar.pixel_x = x_position

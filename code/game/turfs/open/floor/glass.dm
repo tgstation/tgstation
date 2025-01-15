@@ -31,7 +31,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/floor/glass/LateInitialize()
-	AddElement(/datum/element/turf_z_transparency)
+	ADD_TURF_TRANSPARENCY(src, INNATE_TRAIT)
 	setup_glow()
 
 /turf/open/floor/glass/Destroy()

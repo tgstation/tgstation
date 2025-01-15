@@ -363,7 +363,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	multiz_levels = SSmapping.multiz_levels
 	loaded_lazy_templates = SSmapping.loaded_lazy_templates
 
-#define INIT_ANNOUNCE(X) to_chat(world, span_boldannounce("[X]")); log_world(X)
+#define INIT_ANNOUNCE(X) to_chat(world, span_boldannounce("[X]"), MESSAGE_TYPE_DEBUG); log_world(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE, height_autosetup = TRUE)
 	. = list()
 	var/start_time = REALTIMEOFDAY
@@ -581,13 +581,13 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 			if(!mapfile)
 				return
 			away_name = "[mapfile] custom"
-			to_chat(user,span_notice("Loading [away_name]..."))
+			to_chat(user, span_notice("Loading [away_name]..."), MESSAGE_TYPE_DEBUG)
 			var/datum/map_template/template = new(mapfile, "Away Mission")
 			away_level = template.load_new_z(secret)
 		else
 			if(answer in GLOB.potentialRandomZlevels)
 				away_name = answer
-				to_chat(user,span_notice("Loading [away_name]..."))
+				to_chat(user, span_notice("Loading [away_name]..."), MESSAGE_TYPE_DEBUG)
 				var/datum/map_template/template = new(away_name, "Away Mission")
 				away_level = template.load_new_z(secret)
 			else
@@ -899,7 +899,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	else
 		start_time = REALTIMEOFDAY
 		var/beginning_message = "Loading all away missions..."
-		to_chat(world, span_boldannounce(beginning_message))
+		to_chat(world, span_boldannounce(beginning_message), MESSAGE_TYPE_DEBUG)
 		log_world(beginning_message)
 		log_mapping(beginning_message)
 
@@ -917,7 +917,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	if(!isnull(start_time))
 		var/tracked_time = (REALTIMEOFDAY - start_time) / 10
 		var/finished_message = "Loaded [number_of_away_missions] away missions in [tracked_time] second[tracked_time == 1 ? "" : "s"]!"
-		to_chat(world, span_boldannounce(finished_message))
+		to_chat(world, span_boldannounce(finished_message), MESSAGE_TYPE_DEBUG)
 		log_world(finished_message)
 		log_mapping(finished_message)
 
