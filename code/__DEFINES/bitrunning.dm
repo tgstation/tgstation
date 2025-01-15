@@ -42,6 +42,6 @@
  * COMSIG_BITRUNNER_STOCKING_GEAR Return Bitflags
  */
 /// Something failed to load
-#define LOAD_FAILED (1<<0)
+#define BITRUNNER_GEAR_LOAD_FAILED (1<<0)
 /// The domain restrictions blocked something from loading
-#define LOAD_BLOCKED (1<<1)
+#define BITRUNNER_GEAR_LOAD_BLOCKED (1<<1)

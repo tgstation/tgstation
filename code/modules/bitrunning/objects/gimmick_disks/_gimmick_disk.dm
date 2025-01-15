@@ -11,7 +11,7 @@
 
 /obj/item/bitrunning_disk/gimmick/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
 	if(isnull(granted_loadout))
-		return LOAD_FAILED
+		return BITRUNNER_GEAR_LOAD_FAILED
 	return granted_loadout.grant_loadout(neo, avatar, external_load_flags)
 
 /obj/item/bitrunning_disk/gimmick/attack_self(mob/user, modifiers)
@@ -64,7 +64,7 @@
 		return NONE
 
 	if(external_load_flags & DOMAIN_FORBIDS_ITEMS)
-		return LOAD_BLOCKED
+		return BITRUNNER_GEAR_LOAD_BLOCKED
 
 	var/obj/item/container_item = new container_item_type()
 	if(prefix_container_name)
@@ -82,7 +82,7 @@
 		return NONE
 
 	if(external_load_flags & DOMAIN_FORBIDS_ABILITIES)
-		return LOAD_BLOCKED
+		return BITRUNNER_GEAR_LOAD_BLOCKED
 
 	var/return_flags = NONE
 
@@ -90,7 +90,7 @@
 		var/datum/action/our_action = new granted_action()
 
 		if(locate(our_action.type) in avatar.actions)
-			return_flags |= LOAD_FAILED
+			return_flags |= BITRUNNER_GEAR_LOAD_FAILED
 			continue
 
 		our_action.Grant(avatar)

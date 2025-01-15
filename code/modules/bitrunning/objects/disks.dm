@@ -48,15 +48,15 @@
 
 /obj/item/bitrunning_disk/ability/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
 	if(external_load_flags & DOMAIN_FORBIDS_ABILITIES)
-		return LOAD_BLOCKED
+		return BITRUNNER_GEAR_LOAD_BLOCKED
 
 	if(isnull(granted_action))
-		return LOAD_FAILED
+		return BITRUNNER_GEAR_LOAD_FAILED
 
 	var/datum/action/our_action = new granted_action()
 
 	if(locate(our_action.type) in avatar.actions)
-		return LOAD_FAILED
+		return BITRUNNER_GEAR_LOAD_FAILED
 
 	our_action.Grant(avatar)
 	return NONE
@@ -121,10 +121,10 @@
 
 /obj/item/bitrunning_disk/item/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
 	if(external_load_flags & DOMAIN_FORBIDS_ITEMS)
-		return LOAD_BLOCKED
+		return BITRUNNER_GEAR_LOAD_BLOCKED
 
 	if(isnull(granted_item))
-		return LOAD_FAILED
+		return BITRUNNER_GEAR_LOAD_FAILED
 
 	avatar.put_in_hands(new granted_item())
 	return NONE
