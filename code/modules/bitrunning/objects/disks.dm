@@ -53,11 +53,10 @@
 	if(isnull(granted_action))
 		return BITRUNNER_GEAR_LOAD_FAILED
 
-	var/datum/action/our_action = new granted_action()
-
-	if(locate(our_action.type) in avatar.actions)
+	if(locate(granted_action) in avatar.actions)
 		return BITRUNNER_GEAR_LOAD_FAILED
 
+	var/datum/action/our_action = new granted_action()
 	our_action.Grant(avatar)
 	return NONE
 

@@ -87,12 +87,11 @@
 	var/return_flags = NONE
 
 	for(var/datum/action/granted_action as anything in granted_actions)
-		var/datum/action/our_action = new granted_action()
-
-		if(locate(our_action.type) in avatar.actions)
+		if(locate(granted_action) in avatar.actions)
 			return_flags |= BITRUNNER_GEAR_LOAD_FAILED
 			continue
 
+		var/datum/action/our_action = new granted_action()
 		our_action.Grant(avatar)
 
 	return return_flags
