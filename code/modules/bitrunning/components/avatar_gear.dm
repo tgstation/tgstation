@@ -3,8 +3,8 @@
 /datum/component/loads_avatar_gear
 	/// The callback called when COMSIG_BITRUNNER_STOCKING_GEAR is sent to our host human
 	var/datum/callback/load_callback
-	/// The human we are currently carried by
-	var/mob/living/carbon/human/tracked_human
+	/// Weakref to the human we are currently carried by
+	var/datum/weakref/tracked_human_ref
 
 /datum/component/loads_avatar_gear/Initialize(datum/callback/load_callback)
 	if(!isitem(parent))
@@ -29,6 +29,7 @@
 
 /datum/component/loads_avatar_gear/Destroy(force)
 	load_callback = null
+	tracked_human_ref = null
 	return ..()
 
 
@@ -48,17 +49,19 @@
 			return
 
 	// No humans found, stop tracking
+	var/mob/living/carbon/human/tracked_human = tracked_human_ref?.resolve()
 	if(tracked_human)
 		UnregisterSignal(tracked_human, COMSIG_BITRUNNER_STOCKING_GEAR)
 		tracked_human = null
 
 /datum/component/loads_avatar_gear/proc/start_tracking(mob/living/carbon/human/to_track)
+	var/mob/living/carbon/human/tracked_human = tracked_human_ref?.resolve()
 	if(tracked_human == to_track)
 		return
 
-	if(tracked_human && (tracked_human == to_track))
+	if(tracked_human && (tracked_human != to_track))
 		UnregisterSignal(tracked_human, COMSIG_BITRUNNER_STOCKING_GEAR)
-	tracked_human = to_track
+	tracked_human_ref = WEAKREF(to_track)
 	RegisterSignal(to_track, COMSIG_BITRUNNER_STOCKING_GEAR, PROC_REF(load_onto_avatar))
 
 /datum/component/loads_avatar_gear/proc/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
