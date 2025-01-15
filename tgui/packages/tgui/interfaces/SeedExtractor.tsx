@@ -448,8 +448,8 @@ export const TraitTooltip = (props) => {
           )}
           <Table.Row header>
             <Table.Cell>
-              <Icon name={trait.icon} mr={1} />
-              {trait.name}
+              <Icon name={trait?.icon || 'question'} mr={1} />
+              {trait?.name}
             </Table.Cell>
           </Table.Row>
           {!!props.removable && (
@@ -457,15 +457,18 @@ export const TraitTooltip = (props) => {
               <Table.Cell pb={1}>Removable trait.</Table.Cell>
             </Table.Row>
           )}
-          {!!trait.description && (
+          {!!trait?.description && (
             <Table.Row>
-              <Table.Cell>{trait.description}</Table.Cell>
+              <Table.Cell>{trait?.description}</Table.Cell>
             </Table.Row>
           )}
         </Table>
       }
     >
-      <Icon name={props.grafting ? 'scissors' : trait.icon} m={0.5} />
+      <Icon
+        name={props.grafting ? 'scissors' : trait?.icon || 'question'}
+        m={0.5}
+      />
     </Tooltip>
   );
 };
