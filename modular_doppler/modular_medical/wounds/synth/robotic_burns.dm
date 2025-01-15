@@ -468,7 +468,7 @@
 
 	demotes_to = /datum/wound/burn/robotic/overheat/severe
 
-	wound_flags = (MANGLES_EXTERIOR|ACCEPTS_GAUZE|SPLINT_OVERLAY|CAN_BE_GRASPED)
+	wound_flags = (MANGLES_EXTERIOR|MANGLES_INTERIOR|ACCEPTS_GAUZE|SPLINT_OVERLAY|CAN_BE_GRASPED)
 
 	light_color = COLOR_VERY_SOFT_YELLOW
 	light_power = 1.3

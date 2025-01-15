@@ -39,7 +39,7 @@
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/reagent_containers/pill/robotic_patch/synth_repair = 2,
-		/obj/item/stack/medical/wound_recovery/robofoam = 1,
+		/obj/item/stack/medical/gauze/alu_splint = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants = 1, // Coagulants help electrical damage
 		/obj/item/healthanalyzer/simple = 1,
@@ -65,7 +65,7 @@
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/stack/cable_coil/thirty = 1,
 		/obj/item/reagent_containers/pill/robotic_patch/synth_repair = 4,
-		/obj/item/stack/medical/wound_recovery/robofoam = 1,
+		/obj/item/stack/medical/gauze/alu_splint = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_liquid_solder = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants = 1,

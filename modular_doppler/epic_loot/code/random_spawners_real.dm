@@ -99,7 +99,7 @@
 		/obj/item/stack/medical/bandage = 2,
 		/obj/item/stack/sticky_tape/surgical = 2,
 		/obj/item/reagent_containers/blood/random = 1,
-		/obj/item/stack/medical/wound_recovery/robofoam = 2,
+		/obj/item/stack/medical/gauze/alu_splint = 2,
 		// Pill bottles
 		/obj/item/storage/pill_bottle/iron = 2,
 		/obj/item/storage/pill_bottle/potassiodide = 2,
@@ -136,11 +136,8 @@
 		/obj/item/stack/medical/bandage = 2,
 		/obj/item/stack/sticky_tape/surgical = 2,
 		/obj/item/stack/medical/poultice = 1,
-		/obj/item/stack/medical/wound_recovery = 1,
-		/obj/item/stack/medical/wound_recovery/rapid_coagulant = 1,
+		/obj/item/stack/medical/gauze/alu_splint = 2,
 		/obj/item/reagent_containers/blood/random = 2,
-		/obj/item/stack/medical/wound_recovery/robofoam = 3,
-		/obj/item/stack/medical/wound_recovery/robofoam_super = 2,
 		// Medigels
 		/obj/item/reagent_containers/medigel/libital = 2,
 		/obj/item/reagent_containers/medigel/aiuri = 2,
@@ -422,9 +419,6 @@
 		// stuff
 		/obj/item/storage/epic_loot_cooler = 1,
 		/obj/item/storage/epic_loot_money_case = 1,
-		// Robofoam is a tool, right?
-		/obj/item/stack/medical/wound_recovery/robofoam = 2,
-		/obj/item/stack/medical/wound_recovery/robofoam_super = 1,
 	)
 
 // Random construction stuff
