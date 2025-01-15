@@ -46,13 +46,13 @@
 	for(var/i in length(nested_locs) to 1 step -1)
 		var/atom/container = nested_locs[i]
 		if(ishuman(container))
-			start_tracking(container)
+			switch_tracking(container)
 			return
 
 	// No humans found, stop tracking
-	start_tracking(null)
+	switch_tracking(null)
 
-/datum/component/loads_avatar_gear/proc/start_tracking(mob/living/carbon/human/to_track)
+/datum/component/loads_avatar_gear/proc/switch_tracking(mob/living/carbon/human/to_track)
 	var/mob/living/carbon/human/tracked_human = tracked_human_ref?.resolve()
 	if(tracked_human == to_track)
 		return
