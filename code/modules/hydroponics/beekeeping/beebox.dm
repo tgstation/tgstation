@@ -13,7 +13,7 @@
 
 
 /mob/living/carbon/human/bee_friendly()
-	if(dna && dna.species && ispodperson(src)) //bees pollinate plants, duh.
+	if(ispodperson(src)) //bees pollinate plants, duh.
 		return 1
 	if (wear_suit && head && isclothing(wear_suit) && isclothing(head))
 		var/obj/item/clothing/suit = wear_suit
