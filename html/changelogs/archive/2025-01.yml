@@ -368,3 +368,62 @@
       will use power from those instead of the circuit's own cell.
   Zytolg:
   - map: Who turned down Birdshots Thermostat?
+2025-01-15:
+  00-Steven:
+  - bugfix: Aquarium/fish tank admiring works again.
+  - bugfix: Inverted aquarium/fish tank panel opening tooltip to be the right way.
+  - qol: You can actually admire an in-hand fish tank by clicking on it.
+  - qol: Aquarium/fish tank admiring tooltips are more consistent.
+  - bugfix: Examining edible items with too high of a perceived food quality no longer
+      runtimes and actually displays a food quality message.
+  Absolucy:
+  - bugfix: Fixed an icon smoothing error caused by shuttles during recursive map
+      loading, i.e the nukie shuttles with their base.
+  Aniantan:
+  - bugfix: Xenobio autoinjectors, such as mending solution from industrial purple
+      crossbreed, cannot be deepfried and thus filled with custom reagents using saltshaker
+      anymore.
+  Ben10Omintrix:
+  - bugfix: Fixes the watcher trophy not working on basic mobs
+  Gaxeer:
+  - qol: tokens and channel names in radio headset examine are now color coded and
+      display in list format
+  - qol: broadcast frequency in examine is also color coded
+  - code_imp: add new `span_class` macro
+  Hatterhat:
+  - spellcheck: A handful of machine boards should no longer have two (Machine Board)s
+      showing up in their name.
+  - spellcheck: Boulder machinery boards are now labeled as boards from autolathes/circuit
+      imprinters.
+  Jacquerel:
+  - rscadd: Space Carp now have a more distinctive accent when speaking Common.
+  NamelessFairy:
+  - bugfix: The RCD can print Hydroponics airlocks
+  SmArtKar:
+  - bugfix: Fixed division by zero runtimes caused by black eyes
+  - bugfix: Custom vendors now sanitize their inputs
+  - bugfix: Fixed a division by zero in custom vendor code
+  - admin: Added a localhost-only "Start Now" lobby button
+  - qol: Improved mind lockbox handling
+  - bugfix: Fixed a missing "barricade deconstructed" balloon alert when crowbaring
+      a barricade
+  Y0SH1M4S73R:
+  - bugfix: Corpses at the pilot seat of mechs can no longer toggle the lights, safeties,
+      cabin sealing, strafing, overclocking, or durand shields, nor can they rename
+      the mech or configure its equipment.
+  high-speedspin-cycle:
+  - bugfix: Culture bottles now properly copy their cure from the inserted beaker
+  hyperjll:
+  - spellcheck: We at the Syndicate hereby apologize for our lackluster spellcheck
+      work. (reinforecment -> reinforcement  -- found within the contractor reinforcement
+      listing.)
+  jlsnow301:
+  - bugfix: Fixed icon spacing in the late join menu.
+  mc-oofert:
+  - bugfix: deathmatch - chasms will no longer do anything when blown up, cuban pete
+      loadout macrobomb fixed, AFK lobbies will close after 5 minutes, fixed changing
+      maps incorrectly taking one more observer than it should
+  paganiy:
+  - rscadd: nuar glasses for detective in their detdrobe
+  timothymtorres:
+  - bugfix: Fix airlock authentication card not getting stored in containers

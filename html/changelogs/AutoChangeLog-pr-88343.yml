@@ -1,0 +1,5 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - qol: "Atmospherics/Station Alerts Consoles can now be set to only display station (+mining station) areas. Station-mapped ones are set to this by default. Use a multitool on the circuitboard to toggle between z-level or station-area tracking!"
+  - bugfix: "In turn, Atmospherics Alert Consoles now actually show the whole of multi-z stations instead of ignoring other z-levels"

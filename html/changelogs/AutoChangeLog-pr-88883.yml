@@ -1,0 +1,4 @@
+author: "high-speedspin-cycle"
+delete-after: True
+changes:
+  - bugfix: "Fixed PKA cooldown mods becoming permanent"

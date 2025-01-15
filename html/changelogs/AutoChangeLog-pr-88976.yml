@@ -1,0 +1,4 @@
+author: "high-speedspin-cycle"
+delete-after: True
+changes:
+  - bugfix: "Layer manifold and pipe volumes are now consistent with other pipes"
