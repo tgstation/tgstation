@@ -2,6 +2,8 @@
 /datum/plant_gene
 	/// The name of the gene.
 	var/name
+	/// Bonus lines displayed on examine.
+	var/description = ""
 	/// The font awesome icon name representing the gene in the seed extractor UI
 	var/icon = FA_ICON_DNA
 	/// Flags that determine if a gene can be modified.
@@ -117,8 +119,6 @@
 /datum/plant_gene/trait
 	/// The rate at which this trait affects something. This can be anything really - why? I dunno.
 	var/rate = 0.05
-	/// Bonus lines displayed on examine.
-	var/description = ""
 	/// Flag - Traits that share an ID cannot be placed on the same plant.
 	var/trait_ids
 	/// Flag - Modifications made to the final product.
