@@ -644,6 +644,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "whistles"
 	liked_foodtypes = VEGETABLES | FRUIT | GRAIN
 	disliked_foodtypes = GORE | MEAT | DAIRY | SEAFOOD | BUGS
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 
 /obj/item/organ/tongue/golem
 	name = "golem tongue"
