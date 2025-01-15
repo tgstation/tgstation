@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "on wawastation, fixed the placement of the BCI machine, the maint room south of sci break room can be opened by scientists, robotics gets the ripley boards and 150 iron instead of 50 iron, botany gets 4 more trays"
