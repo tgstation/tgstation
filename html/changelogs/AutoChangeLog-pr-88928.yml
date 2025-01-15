@@ -1,0 +1,5 @@
+author: "tontyGH"
+delete-after: True
+changes:
+  - bugfix: "Malf modules correctly use action cooldown (affects camera repair and detonate RCDs)"
+  - code_imp: "Minor (extremely minor) AI code maintenance"
