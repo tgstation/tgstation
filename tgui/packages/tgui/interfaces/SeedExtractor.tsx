@@ -436,7 +436,7 @@ export const TraitTooltip = (props) => {
   const trait = props.trait_db.find((t) => {
     return t.path === props.path;
   });
-  return (
+  return !!trait && (
     <Tooltip
       key=""
       content={
@@ -448,8 +448,8 @@ export const TraitTooltip = (props) => {
           )}
           <Table.Row header>
             <Table.Cell>
-              <Icon name={trait?.icon || 'question'} mr={1} />
-              {trait?.name}
+              <Icon name={trait.icon} mr={1} />
+              {trait.name}
             </Table.Cell>
           </Table.Row>
           {!!props.removable && (
@@ -459,16 +459,13 @@ export const TraitTooltip = (props) => {
           )}
           {!!trait?.description && (
             <Table.Row>
-              <Table.Cell>{trait?.description}</Table.Cell>
+              <Table.Cell>{trait.description}</Table.Cell>
             </Table.Row>
           )}
         </Table>
       }
     >
-      <Icon
-        name={props.grafting ? 'scissors' : trait?.icon || 'question'}
-        m={0.5}
-      />
+      <Icon name={props.grafting ? 'scissors' : trait.icon} m={0.5} />
     </Tooltip>
   );
 };
