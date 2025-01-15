@@ -698,6 +698,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	)
 	premium = list(
 		/obj/item/clothing/head/flatcap = 1,
+		/obj/item/clothing/glasses/sunglasses/noir = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/det_wardrobe
 	extra_price = PAYCHECK_COMMAND * 1.75

@@ -114,6 +114,7 @@
 
 	if(isitem(movable))
 		RegisterSignal(movable, COMSIG_ITEM_ATTACK_SELF, PROC_REF(interact))
+		RegisterSignal(movable, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(secondary_interact))
 		RegisterSignals(movable, list(COMSIG_ATOM_ATTACK_ROBOT_SECONDARY, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(on_secondary_attack_hand))
 	else
 		RegisterSignal(movable, COMSIG_ATOM_UI_INTERACT, PROC_REF(interact))
@@ -453,15 +454,20 @@
 
 /datum/component/aquarium/proc/interact(atom/movable/source, mob/user)
 	SIGNAL_HANDLER
-
 	if(HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
 		INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
-	else if(!isitem(source))
-		INVOKE_ASYNC(src, PROC_REF(admire), user)
+		return
+	INVOKE_ASYNC(src, PROC_REF(admire), source, user)
+
+/datum/component/aquarium/proc/secondary_interact(atom/movable/source, mob/user)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
+		return
+	INVOKE_ASYNC(src, PROC_REF(admire), source, user)
 
 /datum/component/aquarium/proc/on_secondary_attack_hand(obj/item/source, mob/living/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(admire), user)
+	INVOKE_ASYNC(src, PROC_REF(admire), source, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/aquarium/ui_interact(mob/user, datum/tgui/ui)
@@ -579,13 +585,14 @@
 /datum/component/aquarium/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 	var/open_panel = HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN)
-	if(!held_item)
+	var/is_held_item = (held_item == source)
+	if(!held_item || is_held_item)
 		var/isitem = isitem(source)
-		if(!isitem || open_panel)
+		if(!isitem || is_held_item)
 			context[SCREENTIP_CONTEXT_LMB] = open_panel ? "Adjust settings" : "Admire"
 		if(isitem)
 			context[SCREENTIP_CONTEXT_RMB] = "Admire"
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "[open_panel ? "Open" : "Close"] settings panel"
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "[!open_panel ? "Open" : "Close"] settings panel"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(istype(held_item, /obj/item/plunger))
 		context[SCREENTIP_CONTEXT_LMB] = "Empty feed storage"
