@@ -44,7 +44,7 @@
 	)
 	display_pain(target, "You feel a burning sensation in your chest!")
 
-/datum/surgery_step/autopsy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/autopsy_scanner/tool, datum/surgery/surgery, default_display_results = FALSE)
+/datum/surgery_step/autopsy/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/autopsy_scanner/tool, datum/surgery/surgery, default_display_results = FALSE)
 	ADD_TRAIT(target, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 	ADD_TRAIT(target, TRAIT_SURGICALLY_ANALYZED, AUTOPSY_TRAIT)
 	tool.scan_cadaver(user, target)
