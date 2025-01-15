@@ -36,7 +36,7 @@
 #define DOMAIN_FORBIDS_ABILITIES (1<<1)
 
 /// Combination flag for blocking anything from being loaded onto avatars by external sources
-#define DOMAIN_FORBIDS_ALL (DOMAIN_FORBIDS_ITEMS | DOMAIN_FORBIDS_ABILITIES)
+#define DOMAIN_FORBIDS_ALL ALL
 
 /**
  * COMSIG_BITRUNNER_STOCKING_GEAR Return Bitflags
