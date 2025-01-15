@@ -210,3 +210,5 @@
 	var/speed_modifier = LERP(0.5, 1, temp_scale)
 
 	on_grill(parent, atom_parent.loc, seconds_per_tick * speed_modifier)
+
+#undef IDEAL_GRILLING_TEMPERATURE
