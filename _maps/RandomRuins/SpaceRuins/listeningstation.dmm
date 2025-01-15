@@ -214,13 +214,16 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "lk" = (
-/obj/item/radio/intercom/directional/east{
-	freerange = 1
-	},
 /obj/machinery/computer/camera_advanced{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/item/radio/intercom{
+	freerange = 1;
+	name = "Syndicate Radio Intercom";
+	pixel_x = 27
+	},
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "lu" = (
@@ -400,9 +403,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "xp" = (
-/obj/structure/table/reinforced,
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "xP" = (
