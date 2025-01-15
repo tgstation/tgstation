@@ -282,10 +282,10 @@
 	. = ..()
 	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
 		return
-	if(!(organ_owner.mob_bio_type & MOB_PLANT))
+	if(!(organ_owner.mob_biotypes & MOB_PLANT))
 		return
 	if(chem.type == /datum/reagent/toxin/plantbgone)
-		affected.adjustToxLoss(3 * REM * seconds_per_tick)
+		organ_owner.adjustToxLoss(3 * REM * seconds_per_tick)
 
 #undef LIVER_DEFAULT_TOX_TOLERANCE
 #undef LIVER_DEFAULT_TOX_RESISTANCE

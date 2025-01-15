@@ -334,7 +334,7 @@
 /obj/item/organ/stomach/pod/on_life(seconds_per_tick, times_fired)
 	if(organ_flags & ORGAN_FAILING)
 		return ..()
-	if(isnull(onwer) || !(owner.mob_biotypes & MOB_PLANT))
+	if(isnull(owner) || !(owner.mob_biotypes & MOB_PLANT))
 		return ..()
 
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
