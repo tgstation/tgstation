@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - balance: "Rewards from departmental orders use a logarithmic scale, resulting in less rewards for high tier crates. The cooldown time is also logarithmic  now, which has slightly decreased cooldown values on cheaper crates."

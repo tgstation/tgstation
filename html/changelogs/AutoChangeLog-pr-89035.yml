@@ -1,0 +1,4 @@
+author: "JoshAdamPowell"
+delete-after: True
+changes:
+  - admin: "All admins will now see what is in a classified command report\n:cl:"
