@@ -1,3 +1,5 @@
+#define IDEAL_GRILLING_TEMPERATURE 200 + T0C
+
 /datum/component/grillable
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // So you can change grill results with various cookstuffs
 	///Result atom type of grilling this object
@@ -18,6 +20,8 @@
 	var/turf/open/listening_turf
 	/// Are we grilling right now?
 	var/is_grilling = FALSE
+	/// What's our current air temperature?
+	var/current_temperature = 0
 
 /datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite, list/added_reagents)
 	. = ..()
@@ -188,8 +192,10 @@
 			return
 		on_grill_turned_on(source)
 		START_PROCESSING(SSmachines, src)
+		current_temperature = exposed_temperature
 	else
 		if (exposed_temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			current_temperature = exposed_temperature
 			return
 		on_grill_turned_off(source)
 		STOP_PROCESSING(SSmachines, src)
@@ -197,4 +203,10 @@
 // Grill while exposed to hot air
 /datum/component/grillable/process(seconds_per_tick)
 	var/atom/atom_parent = parent
-	on_grill(parent, atom_parent.loc, seconds_per_tick)
+
+	// Grill faster as we approach 200 degrees celsius
+	var/check_temperature = clamp(current_temperature, FIRE_MINIMUM_TEMPERATURE_TO_EXIST, IDEAL_GRILLING_TEMPERATURE)
+	var/temp_scale = (check_temperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST) / (IDEAL_GRILLING_TEMPERATURE - FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	var/speed_modifier = LERP(0.5, 1, temp_scale)
+
+	on_grill(parent, atom_parent.loc, seconds_per_tick * speed_modifier)
