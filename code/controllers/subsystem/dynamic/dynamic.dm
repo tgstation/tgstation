@@ -234,7 +234,7 @@ SUBSYSTEM_DEF(dynamic)
 
 /datum/controller/subsystem/dynamic/proc/get_real_threat_level(threat)
 	var/admin_threat_string = ""
-	switch(round(threat))
+	switch(threat)
 		if(0 to 19)
 			admin_threat_string += "Green Star"
 		if(20 to 39)
