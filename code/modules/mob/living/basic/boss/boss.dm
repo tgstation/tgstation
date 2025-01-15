@@ -16,7 +16,6 @@
 	pull_force = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	/// List of loot if not killed by crusher.
 	var/list/loot

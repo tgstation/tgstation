@@ -22,6 +22,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/thing_boss
 	loot = list(/obj/item/keycard/thing_boss)
 	crusher_loot = list(/obj/item/keycard/thing_boss, /obj/item/crusher_trophy/flesh_glob)
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	/// Current phase of the boss fight
 	var/phase = 1
 	/// Time the Thing will be invulnerable between phases
@@ -32,7 +33,7 @@
 	// ruin logic
 
 	/// if true, this boss may only be killed proper in its ruin by the associated machines as part of the bossfight. Turn off if admin shitspawn
-	var/ruin_spawned = TRUE
+	var/maploaded = TRUE
 
 /mob/living/basic/boss/thing/Initialize(mapload)
 	. = ..()
@@ -46,7 +47,8 @@
 	)
 	grant_actions_by_list(innate_actions)
 	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.3 SECONDS)
-	if(ruin_spawned)
+	maploaded = mapload
+	if(maploaded)
 		SSqueuelinks.add_to_queue(src, RUIN_QUEUE, 0)
 		return INITIALIZE_HINT_LATELOAD
 
@@ -74,7 +76,7 @@
 /mob/living/basic/boss/thing/proc/phase_health_depleted()
 	if(phase_invulnerability_timer)
 		return //wtf?
-	if(!ruin_spawned)
+	if(!maploaded)
 		phase_successfully_depleted()
 		return
 	add_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), MEGAFAUNA_TRAIT)
@@ -124,8 +126,7 @@
 		ai_controller?.set_blackboard_key(BB_THETHING_NOAOE, phase > 1 ? FALSE : TRUE)
 		update_appearance()
 
-/mob/living/basic/boss/thing/admin_spawn
-	ruin_spawned = FALSE
+/mob/living/basic/boss/thing/with_ruin_loot
 	loot = list(/obj/item/organ/brain/cybernetic/ai) // the main loot of the ruin, but if admin spawned the keycard is useless
 	crusher_loot = list(/obj/item/organ/brain/cybernetic/ai, /obj/item/crusher_trophy/flesh_glob)
 

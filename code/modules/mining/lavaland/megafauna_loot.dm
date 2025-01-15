@@ -1267,6 +1267,8 @@
 	if(!istype(carb_owner))
 		return
 	for(var/obj/item/organ/organ as anything in carb_owner.organs)
+		if(organ.organ_flags & ORGAN_EXTERNAL)
+			continue
 		if(!IS_ROBOTIC_ORGAN(organ) && !istype(organ, /obj/item/organ/tongue)) //tongues are not in the exosuit fab and nobody is going to bother to find them so
 			return FALSE
 
