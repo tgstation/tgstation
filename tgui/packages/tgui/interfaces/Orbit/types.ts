@@ -36,6 +36,7 @@ export type Observable = {
   mind_job: string;
   name: string;
   orbiters: number;
+  ckey: string;
 }>;
 
 type Critical = {

@@ -38,7 +38,7 @@ $scrollbar-color-multiplier: 0.5;
 
   // Components
   @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
+    '~tgui-core/styles/components/Button',
     $with: (
       'color-default': hsl(300, 91%, 52%),
       'color-transparent-text': hsla(210, 100%, 94%, 0.75),
@@ -48,15 +48,15 @@ $scrollbar-color-multiplier: 0.5;
     )
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/ProgressBar',
+    '~tgui-core/styles/components/ProgressBar',
     $with: ('color-default-fill': hsla(350, 100%, 76.5%, 0.75))
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/Section',
+    '~tgui-core/styles/components/Section',
     $with: ('background-color': hsla(24, 56%, 31%, 0.75))
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/Tooltip',
+    '~tgui-core/styles/components/Tooltip',
     $with: ('background-color': hsla(36, 100%, 50%, 0.75))
   );
 
