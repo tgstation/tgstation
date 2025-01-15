@@ -143,7 +143,7 @@
 	for(var/datum/plant_gene/trait as anything in GLOB.plant_traits)
 		var/trait_data = list(list(
 			"path" = trait.type,
-			"name" = trait.name,
+			"name" = trait.get_name(),
 			"icon" = trait.icon,
 			"description" = trait.description
 		))
