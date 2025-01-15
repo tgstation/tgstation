@@ -441,7 +441,6 @@ export const TraitTooltip = (props) => {
   }
   return (
     <Tooltip
-      key=""
       content={
         <Table>
           {!!props.grafting && (
