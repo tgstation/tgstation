@@ -9,6 +9,10 @@
 	/// The list of loadouts that this can grant
 	var/list/datum/bitrunning_gimmick/selectable_loadouts
 
+/obj/item/bitrunning_disk/gimmick/Destroy()
+	QDEL_NULL(granted_loadout)
+	return ..()
+
 /obj/item/bitrunning_disk/gimmick/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
 	if(isnull(granted_loadout))
 		return BITRUNNER_GEAR_LOAD_FAILED
