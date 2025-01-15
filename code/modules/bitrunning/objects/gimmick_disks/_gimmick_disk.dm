@@ -17,7 +17,7 @@
 /obj/item/bitrunning_disk/gimmick/attack_self(mob/user, modifiers)
 	. = ..()
 
-	if(choice_made)
+	if(isnull(granted_loadout))
 		return
 
 	var/names = list()
