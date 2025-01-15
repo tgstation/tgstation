@@ -41,8 +41,9 @@
 		return
 
 	// Iterate over list in reverse so we get the topmost human first
+	// Because it's funnier if you get to use the avatar gear of the people you're carrying
 	var/list/nested_locs = get_nested_locs(parent)
-	for(var/i = length(nested_locs), i > 0, i--)
+	for(var/i in length(nested_locs) to 1 step -1)
 		var/atom/container = nested_locs[i]
 		if(ishuman(container))
 			start_tracking(container)
