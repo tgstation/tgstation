@@ -7,8 +7,6 @@
 		"ayys",
 		"facehugger",
 		"greys",
-		"jelly",
-		"lusty",
 		"mothership",
 		"resin",
 		"slime",
@@ -76,7 +74,6 @@
 		"bird",
 		"birdemic",
 		"chick",
-		"claw",
 		"cracker",
 		"eagle",
 		"feather",
@@ -111,23 +108,6 @@
 		"hemorrhaging",
 		"iv",
 		"transfusion"
-	],
-
-	"carps": [
-		"aquarium",
-		"carp",
-		"carps",
-		"carpotoxin",
-		"fin",
-		"fins",
-		"fish",
-		"fang",
-		"gnash",
-		"migration",
-		"slash",
-		"shred",
-		"teeth",
-		"tooth"
 	],
 
 	"clowns": [
@@ -202,15 +182,40 @@
 
 	"falling": [
 		"chasm",
-		"fall",
-		"fell",
 		"hang in there",
 		"hold on",
 		"hole",
 		"i'll catch you",
 		"let go",
-		"pit",
-		"slip"
+		"pit"
+	],
+
+	"fish": [
+		"angler",
+		"angling",
+		"aquarium",
+		"bait",
+		"carp",
+		"carps",
+		"carpotoxin",
+		"cod",
+		"fin",
+		"fins",
+		"fish",
+		"fishing",
+		"fisherman",
+		"fang",
+		"gnash",
+		"hooked",
+		"minnow",
+		"salmon",
+		"sashimi",
+		"shark",
+		"small fry",
+		"sushi",
+		"trout",
+		"migration",
+		"rod"
 	],
 
 	"greytide": [
@@ -232,7 +237,6 @@
 		"ammo",
 		"armory",
 		"ballistic",
-		"beam",
 		"buckshot",
 		"bulldog",
 		"bullet",
@@ -241,7 +245,6 @@
 		"carbine",
 		"cartridge",
 		"casing",
-		"dart",
 		"deagle",
 		"emitter",
 		"firearm",
@@ -280,43 +283,6 @@
 		"wt550"
 	],
 
-	"heresy": [
-		"armsy",
-		"ash",
-		"blade",
-		"cloak",
-		"codex",
-		"cosmic",
-		"eldritch",
-		"fire shark",
-		"flesh",
-		"focus",
-		"ghoul",
-		"grasp",
-		"hand",
-		"heart",
-		"heresy",
-		"heretic",
-		"lionhunter",
-		"maid in the mirror",
-		"mansus",
-		"offer",
-		"pierced reality",
-		"raw prophet",
-		"reality crack",
-		"reality pierce",
-		"ritual",
-		"robe",
-		"rune",
-		"rust",
-		"sacrifice",
-		"space",
-		"stalker",
-		"star",
-		"void",
-		"worm"
-	],
-
 	"insects": [
 		"bee",
 		"buzz",
@@ -336,9 +302,10 @@
 		"hissed",
 		"hissing",
 		"lizard",
-		"wag",
-		"wagged",
-		"wagging"
+		"scale",
+		"scaly",
+		"scaley",
+		"scalie"
 	],
 
 	"ocky icky": [
@@ -425,7 +392,6 @@
 		"bone",
 		"calcium",
 		"doot",
-		"milk",
 		"skeleton",
 		"the ride never ends",
 		"xylophone"
@@ -433,7 +399,6 @@
 
 	"snakes": [
 		"anaconda",
-		"boop",
 		"fangs",
 		"python",
 		"slither",
@@ -466,11 +431,9 @@
 	],
 
 	"the supernatural": [
-		"brass",
 		"chapel",
 		"chaplain",
 		"chappy",
-		"clockwork",
 		"cult",
 		"cultist",
 		"demon",
@@ -496,6 +459,7 @@
 		"talisman",
 		"tome",
 		"vampire",
+		"voidwalker",
 		"wiz",
 		"wizard",
 		"zombie"
