@@ -144,13 +144,6 @@
 		to_chat(neo, span_warning("This domain forbids the use of [english_list(import_ban)], your externally loaded [english_list(disk_ban)] will not be granted!"))
 
 	var/return_flags = NONE
-
-	// We don't need to bother going over the items if nothing can used.
-	//if(domain_forbids_flags)
-	//	return
-	//for(var/obj/item/potential_sideloader in neo.get_contents())
-	//	return_flags |= SEND_SIGNAL(potential_sideloader, COMSIG_BITRUNNER_STOCKING_GEAR, avatar, neo, domain_forbids_flags)
-
 	return_flags = SEND_SIGNAL(neo, COMSIG_BITRUNNER_STOCKING_GEAR, avatar, domain_forbids_flags)
 
 	if(return_flags & BITRUNNER_GEAR_LOAD_FAILED)
