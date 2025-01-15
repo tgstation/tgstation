@@ -5,7 +5,7 @@
 	set name = "Who"
 	set category = "OOC"
 
-	var/msg = "<b>Current Players:</b>\n"
+	var/msg = ""
 
 	var/list/Lines = list()
 	var/columns_per_row = DEFAULT_WHO_CELLS_PER_ROW
