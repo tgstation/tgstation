@@ -49,10 +49,7 @@
 			return
 
 	// No humans found, stop tracking
-	var/mob/living/carbon/human/tracked_human = tracked_human_ref?.resolve()
-	if(tracked_human)
-		UnregisterSignal(tracked_human, COMSIG_BITRUNNER_STOCKING_GEAR)
-		tracked_human = null
+	start_tracking(null)
 
 /datum/component/loads_avatar_gear/proc/start_tracking(mob/living/carbon/human/to_track)
 	var/mob/living/carbon/human/tracked_human = tracked_human_ref?.resolve()
