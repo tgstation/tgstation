@@ -16,3 +16,27 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+
+/obj/item/clothing/under/rank/medical/scrubs/skirt
+	name = "scrub-skirt"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in a grayish blue, and is a sort of skirt. Or robe. Or scrobe."
+	icon_state = "scrubsblue_skirt"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supported_bodyshapes = null
+
+/obj/item/clothing/under/rank/medical/scrubs/skirt/green
+	name = "green scrub-skirt"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in a neat green, and is a sort of skirt. Or robe. Or scrobe."
+	icon_state = "scrubsgreen_skirt"
+
+/obj/item/clothing/under/rank/medical/scrubs/skirt/purple
+	name = "wine-red scrub-skirt"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is a wine red, and is a sort of skirt. Or robe. Or scrobe."
+	icon_state = "scrubswine_skirt"
+
+/obj/item/clothing/under/rank/medical/chief_medical_officer/skirt/scrubs
+	name = "chief medical officer scrub-skirt"
+	desc = "It's a sort of skirt, robe, or scrobe, worn by those with the experience to be \"Chief Medical Officer\"."
+	icon_state = "cmo_scrubskirt"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supported_bodyshapes = null

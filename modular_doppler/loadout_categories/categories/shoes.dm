@@ -23,6 +23,10 @@
 	else
 		outfit.shoes = item_path
 
+/datum/loadout_item/shoes/medical
+	name = "Medical Shoes"
+	item_path = /obj/item/clothing/shoes/medical
+
 /datum/loadout_item/shoes/sneakers
 	name = "Sneakers"
 	item_path = /obj/item/clothing/shoes/sneakers
