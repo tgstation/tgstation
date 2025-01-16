@@ -222,6 +222,7 @@ const ProductDisplay = (props: {
     displayed_currency_icon,
     displayed_currency_name,
   } = data;
+  const [toggleLayout, setToggleLayout] = useState(false);
 
   return (
     <Section
@@ -244,6 +245,14 @@ const ProductDisplay = (props: {
               value={stockSearch}
             />
           </Stack.Item>
+          <Stack.Item>
+            <Button
+              icon={toggleLayout ? 'border-all' : 'list'}
+              tooltip={toggleLayout ? 'View as Grid' : 'View as List'}
+              tooltipPosition={'bottom-end'}
+              onClick={() => setToggleLayout(!toggleLayout)}
+            />
+          </Stack.Item>
         </Stack>
       }
     >
@@ -258,6 +267,7 @@ const ProductDisplay = (props: {
         .map((product) => (
           <Product
             key={product.path}
+            fluid={toggleLayout}
             custom={custom}
             product={product}
             productStock={stock[product.path]}
@@ -272,8 +282,10 @@ const ProductDisplay = (props: {
  */
 const Product = (props) => {
   const { act, data } = useBackend<VendingData>();
-  const { custom, product, productStock } = props;
+  const { custom, product, productStock, fluid } = props;
   const { access, department, jobDiscount, all_products_free, user } = data;
+
+  const colorable = !!productStock?.colorable;
   const free = all_products_free || product.price === 0;
   const discount = !product.premium && department === user?.department;
   const remaining = custom ? product.amount : productStock.amount;
@@ -285,69 +297,95 @@ const Product = (props) => {
       !access &&
       (discount ? redPrice : product.price) > user?.cash);
 
+  const baseProps = {
+    base64: product.image,
+    dmIcon: product.icon,
+    dmIconState: product.icon_state,
+    asset: ['vending32x32', product.path],
+    disabled: disabled,
+    tooltipPosition: 'bottom',
+    buttons: colorable && (
+      <ProductColorSelect disabled={disabled} product={product} fluid={fluid} />
+    ),
+    product: product,
+    colorable: colorable,
+    remaining: remaining,
+    onClick: () => {
+      custom
+        ? act('dispense', {
+            item: product.path,
+          })
+        : act('vend', {
+            ref: product.ref,
+          });
+    },
+  };
+
+  const priceProps = {
+    custom: custom,
+    discount: discount,
+    free: free,
+    product: product,
+    redPrice: redPrice,
+  };
+
+  return fluid ? (
+    <ProductList {...baseProps} {...priceProps} />
+  ) : (
+    <ProductGrid {...baseProps} {...priceProps} />
+  );
+};
+
+const ProductGrid = (props) => {
+  const { product, remaining, ...baseProps } = props;
+  const { ...priceProps } = props;
+
   return (
     <ImageButton
-      imageSize={64}
-      base64={product.image}
-      dmIcon={product.icon}
-      dmIconState={product.icon_state}
-      asset={['vending32x32', product.path]}
-      color={getStockColor(custom, remaining, product.max_amount)}
-      disabled={disabled}
-      tooltip={
-        <ProductTooltip
-          name={capitalizeAll(product.name)}
-          remaining={remaining}
-        />
-      }
-      tooltipPosition={'bottom'}
-      buttons={
-        !!productStock?.colorable && (
-          <ProductColorSelect disabled={disabled} product={product} />
-        )
-      }
+      {...baseProps}
+      tooltip={capitalizeAll(product.name)}
       buttonsAlt={
-        <Stack fill>
-          <Stack.Item grow />
-          <ProductPrice
-            custom={custom}
-            discount={discount}
-            free={free}
-            product={product}
-            redPrice={redPrice}
-          />
+        <Stack fontSize={0.8} textAlign={'left'}>
+          <Stack.Item grow mt={0} color={'lightgray'}>
+            x{remaining}
+          </Stack.Item>
+          <Stack.Item>
+            <ProductPrice {...priceProps} />
+          </Stack.Item>
         </Stack>
       }
-      onClick={() => {
-        custom
-          ? act('dispense', {
-              item: product.path,
-            })
-          : act('vend', {
-              ref: product.ref,
-            });
-      }}
     >
       {capitalizeAll(product.name)}
     </ImageButton>
   );
 };
 
-/**
- * Returns the color that represents the amount of remaining product
- * If there is less than half or exactly 2 products left, the color will be orange.
- * If there is less than a quarter or 1 product left, the color will be red.
- */
-const getStockColor = (custom, remaining, maxAmount) => {
-  if (!custom) {
-    if (remaining <= maxAmount / 4 || remaining === 1) {
-      return 'bad';
-    }
+const ProductList = (props) => {
+  const { colorable, product, remaining, ...baseProps } = props;
+  const { ...priceProps } = props;
 
-    if (remaining <= maxAmount / 2 || remaining === 2) {
-      return 'average';
-    }
-  }
+  return (
+    <ImageButton {...baseProps} fluid imageSize={32}>
+      <Stack textAlign={'right'} align="center">
+        <Stack.Item grow textAlign={'left'}>
+          {capitalizeAll(product.name)}
+        </Stack.Item>
+        <Stack.Item
+          width={3.5}
+          fontSize={0.8}
+          color={'rgba(255, 255, 255, 0.5)'}
+        >
+          {remaining} left
+        </Stack.Item>
+        <Stack.Item
+          width={3.5}
+          style={{ marginRight: !colorable ? '32px' : '' }}
+        >
+          <ProductPrice {...priceProps} />
+        </Stack.Item>
+      </Stack>
+    </ImageButton>
+  );
 };
 
 /**
@@ -356,11 +394,11 @@ const getStockColor = (custom, remaining, maxAmount) => {
  */
 const ProductColorSelect = (props) => {
   const { act } = useBackend<VendingData>();
-  const { disabled, product } = props;
+  const { disabled, product, fluid } = props;
 
   return (
     <Button
-      width={'20px'}
+      width={fluid ? '32px' : '20px'}
       icon={'palette'}
       color={'transparent'}
       tooltip={'Change color'}
@@ -383,7 +421,7 @@ const ProductPrice = (props) => {
     standardPrice = redPrice;
   }
   return (
-    <Stack.Item fontSize={0.85} color={'gold'}>
+    <Stack.Item fontSize={0.85} color={'gold'} textAlign={'right'}>
       {custom ? (
         <>
           {customPrice}
@@ -396,19 +434,6 @@ const ProductPrice = (props) => {
         </>
       )}
     </Stack.Item>
-  );
-};
-
-const ProductTooltip = (props) => {
-  const { name, remaining } = props;
-
-  return (
-    <Stack vertical>
-      <Stack.Item grow>{name}</Stack.Item>
-      <Stack.Item fontSize={0.8} textAlign={'right'}>
-        {remaining} left
-      </Stack.Item>
-    </Stack>
   );
 };
 
