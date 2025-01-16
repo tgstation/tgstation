@@ -185,7 +185,7 @@
 
 	manipulator_lvl()
 
-/obj/machinery/big_manipulator/mouse_drop_dragged(atom/monkey, mob/user, src_location, over_location, params)
+/obj/machinery/big_manipulator/mouse_drop_dragged(atom/drop_point, mob/user, src_location, over_location, params)
 	if(isnull(monkey_worker))
 		return
 	if(on_work)
