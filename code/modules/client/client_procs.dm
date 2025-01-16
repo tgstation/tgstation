@@ -1193,18 +1193,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	fullscreen = !fullscreen
 
 	if (fullscreen)
-		winset(mob, "mainwindow", "on-size=")
-		winset(mob, "mainwindow", "titlebar=false")
-		winset(mob, "mainwindow", "can-resize=false")
-		winset(mob, "mainwindow", "menu=")
-		winset(mob, "mainwindow", "is-maximized=false")
-		winset(mob, "mainwindow", "is-maximized=true")
+		// ATTN!! ONCE 515.1631 IS REQUIRED REPLACE WITH winset(src, "mainwindow", "menu=;is-fullscreen=true") (and remember to replace the other call of course)
+		// this means no double maximise calls to make sure window fits, and supresses, titlebar, can-resize and is-maximized
+		// both implementations are functionally "windowed borderless"
+		winset(src, "mainwindow", "on-size=;titlebar=false;can-resize=false;menu=;is-maximized=false")
+		winset(src, "mainwindow", "is-maximized=true")
 	else
-		winset(mob, "mainwindow", "menu=menu")
-		winset(mob, "mainwindow", "titlebar=true")
-		winset(mob, "mainwindow", "can-resize=true")
-		winset(mob, "mainwindow", "is-maximized=false")
-		winset(mob, "mainwindow", "on-size=attempt_auto_fit_viewport")
+		winset(src, "mainwindow", "menu=menu;titlebar=true;can-resize=true;is-maximized=true;on-size=attempt_auto_fit_viewport")
+
 	attempt_auto_fit_viewport()
 
 /client/verb/toggle_status_bar()
