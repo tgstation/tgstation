@@ -63,7 +63,7 @@
 	///The target reagents to we are working with. can vary if an reaction requires a specific container
 	var/datum/reagents/target_reagents
 	///The beaker inside this machine, if null will create a new one
-	var/obj/item/reagent_containers/cup/beaker/bluespace/beaker
+	var/obj/item/reagent_containers/container
 	///The default reagent container required for the selected test reaction if any
 	var/obj/item/reagent_containers/required_container
 
@@ -85,7 +85,7 @@
 	reactions_to_test.Cut()
 	target_reagents = null
 	edit_reaction = null
-	QDEL_NULL(beaker)
+	QDEL_NULL(container)
 	QDEL_NULL(required_container)
 	UnregisterSignal(reagents, COMSIG_REAGENTS_REACTION_STEP)
 	. = ..()
@@ -95,37 +95,38 @@
 	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
 		return NONE
 
-	if(!QDELETED(beaker))
+	if(!QDELETED(container))
 		if(is_reagent_container(held_item)  && held_item.is_open_container())
-			context[SCREENTIP_CONTEXT_LMB] = "Replace beaker"
+			context[SCREENTIP_CONTEXT_LMB] = "Replace container"
 			return CONTEXTUAL_SCREENTIP_SET
 	else if(is_reagent_container(held_item)  && held_item.is_open_container())
-		context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
+		context[SCREENTIP_CONTEXT_LMB] = "Insert container"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/chem_recipe_debug/examine(mob/user)
 	. = ..()
-	if(!QDELETED(beaker))
-		. += span_notice("A beaker of [beaker.reagents.maximum_volume]u capacity is inside.")
+	if(!QDELETED(container))
+		. += span_notice("A container of [container.reagents.maximum_volume]u capacity is inside.")
 	else
-		. += span_notice("No beaker is present. A new will be created when ejecting.")
+		. += span_notice("No container is present. A new will be created when ejecting.")
 
 /obj/machinery/chem_recipe_debug/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(gone == beaker)
-		beaker = null
+	if(gone == container)
+		container = null
 
-/obj/machinery/chem_recipe_debug/attackby(obj/item/held_item, mob/user, params)
+/obj/machinery/chem_recipe_debug/item_interaction(mob/living/user, obj/item/held_item, list/modifiers)
+	. = NONE
 	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
-		return ..()
+		return
 
 	if(is_reagent_container(held_item)  && held_item.is_open_container())
-		. = TRUE
-		if(!QDELETED(beaker))
-			try_put_in_hand(beaker, user)
+		if(!QDELETED(container))
+			try_put_in_hand(container, user)
 		if(!user.transferItemToLoc(held_item, src))
-			return
-		beaker = held_item
+			return ITEM_INTERACT_FAILURE
+		container = held_item
+		return ITEM_INTERACT_SUCCESS
 
 /**
  * Extracts a human readable name for this chemical reaction
@@ -155,7 +156,7 @@
 		var/datum/chemical_reaction/test_reaction = reactions_to_test[current_reaction_index || 1]
 		switch(temp_mode)
 			if(USE_MINIMUM_TEMPERATURE)
-				return test_reaction.required_temp + (test_reaction.is_cold_recipe ? - 20 : 20) //20k is good enough offset to account for reaction rate rounding
+				return test_reaction.required_temp
 			if(USE_OPTIMAL_TEMPERATURE)
 				return test_reaction.optimal_temp
 			if(USE_OVERHEAT_TEMPERATURE)
@@ -668,10 +669,27 @@
 		if("eject")
 			if(!target_reagents.total_volume)
 				return
-			if(QDELETED(beaker))
-				beaker = new /obj/item/reagent_containers/cup/beaker/bluespace(src)
-			target_reagents.trans_to(beaker, target_reagents.total_volume)
-			try_put_in_hand(beaker, ui.user)
+
+			//initialize a new container for us
+			if(QDELETED(container))
+				if(QDELETED(required_container))
+					container = new /obj/item/reagent_containers/cup/beaker/bluespace(src)
+				else
+					container = new required_container.type(src)
+
+			//transfer all reagents & ingredients if we are using a soup pot
+			container.reagents.clear_reagents()
+			target_reagents.trans_to(container, target_reagents.total_volume)
+			if(istype(container, /obj/item/reagent_containers/cup/soup_pot) && istype(required_container, /obj/item/reagent_containers/cup/soup_pot))
+				var/obj/item/reagent_containers/cup/soup_pot/pot = container
+				for(var/obj/item as anything in pot.added_ingredients)
+					qdel(item)
+				var/obj/item/reagent_containers/cup/soup_pot/holder = required_container
+				for(var/obj/item as anything in holder.added_ingredients)
+					item.forceMove(pot)
+					LAZYADD(pot.added_ingredients, item)
+			try_put_in_hand(container, ui.user)
+
 			return TRUE
 
 #undef USE_REACTION_TEMPERATURE
