@@ -245,7 +245,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/heating = rand(5, 25) * creation_purity * REM * seconds_per_tick
-	affected_mob.reagents?.chem_temp += heating
+	var/datum/reagents/mob_reagents = affected_mob.reagents
+	if(mob_reagents)
+		mob_reagents.expose_temperature(mob_reagents.chem_temp + heating)
 	affected_mob.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
 	if(!ishuman(affected_mob))
 		return

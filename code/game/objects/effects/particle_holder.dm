@@ -19,6 +19,10 @@
 	if(!loc)
 		stack_trace("particle holder was created with no loc!")
 		return INITIALIZE_HINT_QDEL
+
+	if(PLANE_TO_TRUE(loc.plane) == FLOOR_PLANE)
+		vis_flags &= ~VIS_INHERIT_PLANE // don't yoink the floor plane. we'll just sit on game plane, it's fine
+
 	// We nullspace ourselves because some objects use their contents (e.g. storage) and some items may drop everything in their contents on deconstruct.
 	parent = loc
 	loc = null
