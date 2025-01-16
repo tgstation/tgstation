@@ -192,6 +192,8 @@
 		balloon_alert(user, "turn it off first!")
 		return
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
+	if(isnull(poor_monkey))
+		return
 	balloon_alert(user, "trying unbuckle...")
 	if(!do_after(user, 3 SECONDS, src))
 		balloon_alert(user, "interrupted")
@@ -199,7 +201,7 @@
 	balloon_alert(user, "unbuckled")
 	monkey_worker = null
 	poor_monkey.drop_all_held_items()
-	poor_monkey.forceMove(monkey)
+	poor_monkey.forceMove(drop_point.drop_location())
 	if(manipulate_mode == USE_ITEM_MODE)
 		change_mode()
 	if(!is_type_in_list(poor_monkey, manipulator_hand.vis_contents))
@@ -293,8 +295,8 @@
 			take_here = NORTH
 			drop_here = SOUTH
 	manipulator_hand.dir = take_here
-	if(!isnull(monkey_worker))
-		var/mob/monkey = monkey_worker.resolve()
+	var/mob/monkey = monkey_worker?.resolve()
+	if(!isnull(monkey))
 		monkey.dir = manipulator_hand.dir
 	take_and_drop_turfs_check()
 
@@ -391,6 +393,8 @@
 /// Also can use filter to interact only with obj in filter.
 /obj/machinery/big_manipulator/proc/use_thing(atom/movable/target)
 	var/obj/obj_resolve = containment_obj?.resolve()
+	if(isnull(obj_resolve))
+		return
 	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
 	if(isnull(obj_resolve) || isnull(monkey_resolve))
 		finish_manipulation()
