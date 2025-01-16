@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /// Proc used by both the predator and necrophage traits.
 /datum/fish_trait/proc/eat_fish(obj/item/fish/predator, obj/item/fish/prey)
-	var/message = prey.status == FISH_DEAD ? "[src] eats [prey]'s carcass." : "[src] hunts down and eats [prey]."
+	var/message = prey.status == FISH_DEAD ? "[predator] eats [prey]'s carcass." : "[predator] hunts down and eats [prey]."
 	predator.loc.visible_message(span_warning(message))
 	SEND_SIGNAL(prey, COMSIG_FISH_EATEN_BY_OTHER_FISH, predator)
 	qdel(prey)
@@ -120,12 +120,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/shiny_lover
 	name = "Shiny Lover"
-	catalog_description = "This fish loves shiny things, shiny lure recommended."
+	catalog_description = "This fish loves shiny things and money, shiny lure recommended."
 
 /datum/fish_trait/shiny_lover/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
 	// These fish are easier to catch with shiny hook
-	if(HAS_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
+	if(HAS_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS) || (rod.bait?.get_item_credit_value() >= PAYCHECK_CREW))
 		.[ADDITIVE_FISHING_MOD] -= FISH_TRAIT_MINOR_DIFFICULTY_BOOST
 
 /datum/fish_trait/shiny_lover/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -286,11 +286,13 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/emulsijack
 	name = "Emulsifier"
 	catalog_description = "This fish emits an invisible toxin that emulsifies other fish for it to feed on."
+	var/list/resistance_traits = list(TRAIT_RESIST_EMULSIFY, TRAIT_FISH_TOXIN_IMMUNE)
+	var/trait_to_add = TRAIT_RESIST_EMULSIFY
 
 /datum/fish_trait/emulsijack/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(emulsify))
-	ADD_TRAIT(fish, TRAIT_RESIST_EMULSIFY, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, trait_to_add, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/emulsijack/proc/emulsify(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
@@ -298,8 +300,9 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	var/emulsified = FALSE
 	for(var/obj/item/fish/victim in source.loc)
-		if(HAS_TRAIT(victim, TRAIT_RESIST_EMULSIFY) || HAS_TRAIT(victim, TRAIT_FISH_TOXIN_IMMUNE)) //no team killing
-			continue
+		for(var/trait in resistance_traits)
+			if(HAS_TRAIT(victim, trait))
+				continue
 		victim.adjust_health(victim.health - 3 * seconds_per_tick) //the victim may heal a bit but this will quickly kill
 		emulsified = TRUE
 	if(emulsified)

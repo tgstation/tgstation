@@ -22,7 +22,6 @@
 /datum/reagent/impurity/methanol
 	name = "Methanol"
 	description = "A light, colourless liquid with a distinct smell. Ingestion can lead to blindness. It is a byproduct of organisms processing impure Formaldehyde."
-	reagent_state = LIQUID
 	color = "#aae7e4"
 	ph = 7
 	liver_damage = 0
@@ -37,7 +36,6 @@
 /datum/reagent/impurity/chloralax
 	name = "Chloralax"
 	description = "An oily, colorless and slightly toxic liquid. It is produced when impure choral hydrate is broken down inside an organism."
-	reagent_state = LIQUID
 	color = "#387774"
 	ph = 7
 	liver_damage = 0
@@ -51,7 +49,6 @@
 /datum/reagent/impurity/rosenol
 	name = "Rosenol"
 	description = "A strange, blue liquid that is produced during impure mindbreaker toxin reactions. Historically it has been abused to write poetry."
-	reagent_state = LIQUID
 	color = "#0963ad"
 	ph = 7
 	liver_damage = 0

@@ -1,0 +1,13 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds Carptongue language, spoken by Space Carps."
+  - rscdel: "Space Carps no longer speak or understand Common. Special carps like Cayenne and Lia can still understand common."
+  - rscadd: "Space Dragons can speak Draconic and Carptongue."
+  - rscdel: "Space Dragons no longer speak Common. They can still understand it."
+  - rscadd: "Ash Drakes and Ice Whelps now speak Draconic."
+  - rscdel: "Ash Drakes and Ice Whelps no longer speak Common. They can still understand it."
+  - rscadd: "Fire Sharks now speak Carptongue."
+  - rscdel: "Fire Sharks no longer speak Common. They can still understand it."
+  - rscadd: "Fish and Carp Infusion now grant Carptongue, letting you speak to (and understand) Space Carps."
+  - rscadd: "Sleeping Carp grants you Carptongue, but as most human tongues can't speak it, you'll only be able to understand Space Carps unless you steal a fish tongue."

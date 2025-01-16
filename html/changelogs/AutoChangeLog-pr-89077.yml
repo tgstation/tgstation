@@ -1,0 +1,5 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - bugfix: "The apiary now correctly checks for podpeople, allowing subtypes of the species to also interact with is."
+  - code_imp: "Beebox file single letter vars have been told to buzz off."

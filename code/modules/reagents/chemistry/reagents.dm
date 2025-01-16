@@ -12,8 +12,6 @@
 	var/taste_mult = 1
 	/// reagent holder this belongs to
 	var/datum/reagents/holder = null
-	/// LIQUID, SOLID, GAS
-	var/reagent_state = LIQUID
 	/// Special data associated with the reagent that will be passed on upon transfer to a new holder.
 	var/list/data
 	/// increments everytime on_mob_life is called
@@ -196,7 +194,8 @@ Primarily used in reagents/reaction_agents
 
 /// Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/affected_mob, amount)
-	overdose_threshold /= max(normalise_creation_purity(), 1) //Maybe??? Seems like it would help pure chems be even better but, if I normalised this to 1, then everything would take a 25% reduction
+	// Scale the overdose threshold of the chem by the difference between the default and creation purity.
+	overdose_threshold += (src.creation_purity - initial(purity)) * overdose_threshold	
 	if(added_traits)
 		affected_mob.add_traits(added_traits, "base:[type]")
 

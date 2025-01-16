@@ -9,7 +9,7 @@ import {
   Tabs,
   TextArea,
   Tooltip,
-} from 'tgui/components';
+} from 'tgui-core/components';
 
 import { getMedicalRecord } from './helpers';
 import { MedicalNote, MedicalRecordData } from './types';

@@ -297,14 +297,16 @@
 //Used as an upper limit for species that continuously gain nutriment
 #define NUTRITION_LEVEL_ALMOST_FULL 535
 
-//Charge levels for Ethereals, in joules.
+// The standard charge all other Ethereal charge defines are scaled against.
+#define STANDARD_ETHEREAL_CHARGE (1 * STANDARD_CELL_CHARGE)
+// Charge levels for Ethereals, in joules.
 #define ETHEREAL_CHARGE_NONE 0
-#define ETHEREAL_CHARGE_LOWPOWER (0.4 * STANDARD_BATTERY_CHARGE)
-#define ETHEREAL_CHARGE_NORMAL (1 * STANDARD_BATTERY_CHARGE)
-#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 * STANDARD_BATTERY_CHARGE)
-#define ETHEREAL_CHARGE_FULL (2 * STANDARD_BATTERY_CHARGE)
-#define ETHEREAL_CHARGE_OVERLOAD (2.5 * STANDARD_BATTERY_CHARGE)
-#define ETHEREAL_CHARGE_DANGEROUS (3 * STANDARD_BATTERY_CHARGE)
+#define ETHEREAL_CHARGE_LOWPOWER (0.4 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_NORMAL (1 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_FULL (2 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_OVERLOAD (2.5 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_DANGEROUS (3 * STANDARD_ETHEREAL_CHARGE)
 
 
 #define CRYSTALIZE_COOLDOWN_LENGTH (120 SECONDS)
@@ -452,7 +454,7 @@
 #define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
 
 #define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
-#define ETHEREAL_DISCHARGE_RATE (8e-3 * STANDARD_CELL_CHARGE) // Rate at which ethereal stomach charge decreases
+#define ETHEREAL_DISCHARGE_RATE (1e-3 * STANDARD_ETHEREAL_CHARGE) // Rate at which ethereal stomach charge decreases
 /// How much nutrition eating clothes as moth gives and drains
 #define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
@@ -614,25 +616,28 @@
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
 
-///Defines for AI hologram preferences
-#define AI_HOLOGRAM_BEAR "Bear"
-#define AI_HOLOGRAM_CARP "Carp"
-#define AI_HOLOGRAM_CAT "Cat"
-#define AI_HOLOGRAM_CAT_2 "Cat Alternate"
-#define AI_HOLOGRAM_CHICKEN "Chicken"
-#define AI_HOLOGRAM_CORGI "Corgi"
-#define AI_HOLOGRAM_COW "Cow"
-#define AI_HOLOGRAM_CRAB "Crab"
-#define AI_HOLOGRAM_DEFAULT "Default"
-#define AI_HOLOGRAM_FACE "Floating Face"
-#define AI_HOLOGRAM_FOX "Fox"
-#define AI_HOLOGRAM_GOAT "Goat"
-#define AI_HOLOGRAM_NARSIE "Narsie"
-#define AI_HOLOGRAM_PARROT "Parrot"
-#define AI_HOLOGRAM_PUG "Pug"
-#define AI_HOLOGRAM_RATVAR "Ratvar"
-#define AI_HOLOGRAM_SPIDER "Spider"
-#define AI_HOLOGRAM_XENO "Xeno Queen"
+// Defines for AI holograms
+#define AI_HOLOGRAM_CATEGORY_ANIMAL "Animal"
+	#define AI_HOLOGRAM_BEAR "Bear"
+	#define AI_HOLOGRAM_CARP "Carp"
+	#define AI_HOLOGRAM_CAT "Cat"
+	#define AI_HOLOGRAM_CAT_2 "Cat Alternate"
+	#define AI_HOLOGRAM_CHICKEN "Chicken"
+	#define AI_HOLOGRAM_CORGI "Corgi"
+	#define AI_HOLOGRAM_COW "Cow"
+	#define AI_HOLOGRAM_CRAB "Crab"
+	#define AI_HOLOGRAM_FOX "Fox"
+	#define AI_HOLOGRAM_GOAT "Goat"
+	#define AI_HOLOGRAM_PARROT "Parrot"
+	#define AI_HOLOGRAM_PUG "Pug"
+	#define AI_HOLOGRAM_SPIDER "Spider"
+
+#define AI_HOLOGRAM_CATEGORY_UNIQUE "Unique"
+	#define AI_HOLOGRAM_DEFAULT "Default"
+	#define AI_HOLOGRAM_FACE "Floating Face"
+	#define AI_HOLOGRAM_NARSIE "Narsie"
+	#define AI_HOLOGRAM_RATVAR "Ratvar"
+	#define AI_HOLOGRAM_XENO "Xeno Queen"
 
 /// Icon state to use for ai displays that just turns them off
 #define AI_DISPLAY_DONT_GLOW "ai_off"
@@ -867,9 +872,15 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NOT_INSIDE_TARGET (1<<10)
 /// Checks for base adjacency, but silences the error
 #define SILENT_ADJACENCY (1<<11)
+/// Allows pAIs to perform an action
+#define ALLOW_PAI (1<<12)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
+
+//Lying angles, which way your head points
+#define LYING_ANGLE_EAST 90
+#define LYING_ANGLE_WEST 270
 
 /// Get the client from the var
 #define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
