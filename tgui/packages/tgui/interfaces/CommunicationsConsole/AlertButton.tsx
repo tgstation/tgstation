@@ -7,11 +7,11 @@ import { CommsConsoleData } from './types';
 
 type Props = {
   alertLevel: string;
-  onConfirm: () => void;
+  onClick: () => void;
 };
 
 export function AlertButton(props: Props) {
-  const { alertLevel, onConfirm } = props;
+  const { alertLevel, onClick } = props;
 
   const { act, data } = useBackend<CommsConsoleData>();
   const { canSetAlertLevel } = data;
@@ -28,7 +28,7 @@ export function AlertButton(props: Props) {
         }
 
         if (canSetAlertLevel === SWIPE_NEEDED) {
-          onConfirm?.();
+          onClick();
         } else {
           act('changeSecurityLevel', {
             newSecurityLevel: alertLevel,

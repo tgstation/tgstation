@@ -99,12 +99,12 @@ export function PageMain(props) {
             <Flex.Item>
               <AlertButton
                 alertLevel="green"
-                onConfirm={() => setNewAlertLevel('green')}
+                onClick={() => setNewAlertLevel('green')}
               />
 
               <AlertButton
                 alertLevel="blue"
-                onConfirm={() => setNewAlertLevel('blue')}
+                onClick={() => setNewAlertLevel('blue')}
               />
             </Flex.Item>
           </Flex>
