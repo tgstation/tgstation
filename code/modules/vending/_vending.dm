@@ -359,10 +359,11 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	. = ..()
 	if(isnull(refill_canister))
 		return // you can add the comment here instead
-	if((total_loaded_stock() / total_max_stock()) < 1)
-		. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [initial(refill_canister.machine_name)] [initial(refill_canister.name)]")] with the panel open.")
-	else
-		. += span_notice("\The [src] is fully stocked.")
+	if(total_max_stock())
+		if(total_loaded_stock() < total_max_stock())
+			. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [initial(refill_canister.machine_name)] [initial(refill_canister.name)]")] with the panel open.")
+		else
+			. += span_notice("\The [src] is fully stocked.")
 	if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)
 		. += span_notice("It should have a handfull of credits stored based on the missing items.")
 	else if (credits_contained > PAYCHECK_CREW)
@@ -1760,9 +1761,11 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		if(vending_machine_input[stocked_item] > 0)
 			var/base64
 			var/price = 0
+			var/itemname = initial(stocked_item.name)
 			for(var/obj/item/stored_item in contents)
 				if(stored_item.type == stocked_item)
 					price = stored_item.custom_price
+					itemname = stored_item.name
 					if(!base64) //generate an icon of the item to use in UI
 						if(base64_cache[stored_item.type])
 							base64 = base64_cache[stored_item.type]
@@ -1772,7 +1775,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 					break
 			var/list/data = list(
 				path = stocked_item,
-				name = initial(stocked_item.name),
+				name = itemname,
 				price = price,
 				img = base64,
 				amount = vending_machine_input[stocked_item],
@@ -1799,15 +1802,19 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			linked_account = card_used.registered_account
 			speak("\The [src] has been linked to [card_used].")
 
-	if(compartmentLoadAccessCheck(user))
-		if(IS_WRITING_UTENSIL(attack_item))
-			name = tgui_input_text(user, "Set name", "Name", name, max_length = 20)
-			desc = tgui_input_text(user, "Set description", "Description", desc, max_length = 60)
-			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", max_length = 60)
-			last_slogan = world.time + rand(0, slogan_delay)
-			return
+	if(!compartmentLoadAccessCheck(user) || !IS_WRITING_UTENSIL(attack_item))
+		return ..()
 
-	return ..()
+	var/new_name = reject_bad_name(tgui_input_text(user, "Set name", "Name", name, max_length = 20), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
+	if (new_name)
+		name = new_name
+	var/new_desc = reject_bad_text(tgui_input_text(user, "Set description", "Description", desc, max_length = 60))
+	if (new_desc)
+		desc = new_desc
+	var/new_slogan = reject_bad_text(tgui_input_text(user, "Set slogan", "Slogan", "Epic", max_length = 60))
+	if (new_slogan)
+		slogan_list += new_slogan
+		last_slogan = world.time + rand(0, slogan_delay)
 
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
 	return FALSE

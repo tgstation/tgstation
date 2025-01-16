@@ -32,7 +32,7 @@
 
   // Components
   @include meta.load-css(
-    'pkg:tgui-styles/components/Tabs',
+    '~tgui-core/styles/components/Tabs',
     $with: (
       'text-color': rgba(0, 0, 0, 0.5),
       'color-default': rgba(0, 0, 0, 1),
@@ -41,12 +41,12 @@
     )
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/Section',
+    '~tgui-core/styles/components/Section',
     $with: ('background-color': hsl(0, 0%, 100%))
   );
 
   @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
+    '~tgui-core/styles/components/Button',
     $with: (
       'color-default': hsl(0, 0%, 73.3%),
       'color-disabled': hsl(0, 0%, 21.2%),
@@ -57,17 +57,17 @@
     )
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/Input',
+    '~tgui-core/styles/components/Input',
     $with: (
       'border-color': colors.fg(colors.$label),
       'background-color': hsl(0, 0%, 90.2%)
     )
   );
-  @include meta.load-css('pkg:tgui-styles/components/NumberInput');
-  @include meta.load-css('pkg:tgui-styles/components/TextArea');
-  @include meta.load-css('pkg:tgui-styles/components/Knob');
-  @include meta.load-css('pkg:tgui-styles/components/Slider');
-  @include meta.load-css('pkg:tgui-styles/components/ProgressBar');
+  @include meta.load-css('~tgui-core/styles/components/NumberInput');
+  @include meta.load-css('~tgui-core/styles/components/TextArea');
+  @include meta.load-css('~tgui-core/styles/components/Knob');
+  @include meta.load-css('~tgui-core/styles/components/Slider');
+  @include meta.load-css('~tgui-core/styles/components/ProgressBar');
 
   // Components specific to tgui-panel
   @include meta.load-css(

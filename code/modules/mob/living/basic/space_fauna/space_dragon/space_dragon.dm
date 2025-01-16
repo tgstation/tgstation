@@ -46,6 +46,7 @@
 	death_sound = 'sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg'
 	death_message = "screeches in agony as it collapses to the floor, its life extinguished."
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
+	initial_language_holder = /datum/language_holder/carp/dragon
 	can_buckle_to = FALSE
 	lighting_cutoff_red = 12
 	lighting_cutoff_green = 15

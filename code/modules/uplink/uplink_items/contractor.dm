@@ -83,7 +83,7 @@
 
 /datum/uplink_item/contractor/partner
 	name = "Contractor Reinforcement"
-	desc = "A reinforecment operative will be sent to aid you in your goals, \
+	desc = "A reinforcement operative will be sent to aid you in your goals, \
 		they are paid separately, and will not take a cut from your profits."
 	item = /obj/item/antag_spawner/loadout/contractor
 	limited_stock = 1
