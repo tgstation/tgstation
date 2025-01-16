@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(queuelinks)
 	qdel(src)
 
 /datum/queue_link/proc/link_object_deleted(datum/source) // because CI and stuff
-	COMSIG_QDELETING
+	SIGNAL_HANDLER
 	partners -= source
 
 /datum/queue_link/Destroy()
