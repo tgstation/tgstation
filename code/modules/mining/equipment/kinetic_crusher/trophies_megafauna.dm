@@ -249,4 +249,5 @@
 	user.heal_ordered_damage(bonus_value * 0.2, damage_heal_order)
 
 /obj/item/crusher_trophy/flesh_glob/on_mark_detonation(mob/living/target, mob/living/user)
+	. = ..()
 	user.heal_ordered_damage(bonus_value * 0.5, damage_heal_order)
