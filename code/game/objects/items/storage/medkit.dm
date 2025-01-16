@@ -294,7 +294,7 @@
 
 /obj/item/storage/medkit/tactical_lite
 	name = "combat first aid kit"
-	icon_state = "medkit_tactical"
+	icon_state = "medkit_tactical_lite"
 	inhand_icon_state = "medkit-tactical"
 	damagetype_healed = HEAL_ALL_DAMAGE
 
@@ -350,6 +350,7 @@
 /obj/item/storage/medkit/tactical/premium
 	name = "premium combat medical kit"
 	desc = "May or may not contain traces of lead."
+	icon_state = "medkit_tactical_premium"
 	grind_results = list(/datum/reagent/lead = 10)
 
 /obj/item/storage/medkit/tactical/premium/Initialize(mapload)
