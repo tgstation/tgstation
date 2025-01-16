@@ -938,6 +938,22 @@
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 		return ITEM_INTERACT_SUCCESS
 
+	if(istype(target, /obj/item/clothing/head/utility/welding))
+		var/obj/item/clothing/head/utility/welding/W = target
+		var/choice = show_radial_menu(user,src, W.paintjobs, custom_check = FALSE, radius = 36, require_near = TRUE)
+		if(!choice)
+			return FALSE
+
+		if(src && choice && !user.incapacitated && in_range(user,src))
+			var/list/options = GLOB.welding_paintjobs
+			W.icon_state = options[choice]
+			user.update_worn_head()
+			W.design = options[choice]
+			W.update_item_action_buttons()
+			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+			user.visible_message(span_notice("[user] repaints [W]."), span_notice("You repaint [W] to better suit your tastes."))
+			return TRUE
+
 	if(!isobj(target) || (target.flags_1 & UNPAINTABLE_1))
 		return ..()
 

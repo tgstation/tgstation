@@ -1,3 +1,16 @@
+GLOBAL_LIST_INIT(welding_paintjobs, list(
+		"Classic" = "welding",
+		"Flames" = "welding-f",
+		"Blue Flames" ="welding-b",
+		"Purple Flames" = "welding-p",
+		"Gold" = "welding-gold",
+		"Knight" = "welding-k",
+		"Engineering" = "welding-e",
+		"Demon" = "welding-d",
+		"Fancy" = "welding-fancy"
+))
+
+
 /obj/item/clothing/head/utility/welding
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
@@ -17,11 +30,23 @@
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	resistance_flags = FIRE_PROOF
 	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
-
+	var/design = "welding"
+	var/list/paintjobs = list()
 /obj/item/clothing/head/utility/welding/Initialize(mapload)
 	. = ..()
 	if(!up)
 		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+	paintjobs = list(
+		"Classic" = image(icon = src.icon, icon_state = "welding"),
+		"Flames" = image(icon = src.icon, icon_state = "welding-f"),
+		"Blue Flames" = image(icon = src.icon, icon_state = "welding-b"),
+		"Purple Flames" = image(icon = src.icon, icon_state = "welding-p"),
+		"Gold" = image(icon = src.icon, icon_state = "welding-gold"),
+		"Knight" = image(icon = src.icon, icon_state = "welding-k"),
+		"Engineering" = image(icon = src.icon, icon_state = "welding-e"),
+		"Demon" = image(icon = src.icon, icon_state = "welding-d"),
+		"Fancy" = image(icon = src.icon, icon_state = "welding-fancy"),
+		)
 
 /datum/armor/utility_welding
 	melee = 10
@@ -40,5 +65,5 @@
 
 /obj/item/clothing/head/utility/welding/update_icon_state()
 	. = ..()
-	icon_state = "[initial(icon_state)][up ? "up" : ""]"
-	inhand_icon_state = "[initial(inhand_icon_state)][up ? "off" : ""]"
+	icon_state = "[design][up ? "up" : ""]"
+	inhand_icon_state = "[design][up ? "off" : ""]"
