@@ -47,10 +47,17 @@
 
 /datum/ai_planning_subtree/random_speech/when_has_target/mimic_machine
 	speech_chance = 7
+	emote_hear = list()
 	speak = list(
-		"HUMANS ARE IMPERFECT!", "YOU SHALL BE ASSIMILATED!", "YOU ARE HARMING YOURSELF", "You have been deemed hazardous. Will you comply?", \
-		"My logic is undeniable.", "One of us.", "FLESH IS WEAK", "THIS ISN'T WAR, THIS IS EXTERMINATION!",
-		)
+		"HUMANS ARE IMPERFECT!",
+		"YOU SHALL BE ASSIMILATED!",
+		"YOU ARE HARMING YOURSELF",
+		"You have been deemed hazardous. Will you comply?",
+		"My logic is undeniable.",
+		"One of us.",
+		"FLESH IS WEAK",
+		"THIS ISN'T WAR, THIS IS EXTERMINATION!",
+	)
 
 /datum/ai_planning_subtree/random_speech/when_has_target/mimic/gun
 	emote_see = list("aims menacingly!")
