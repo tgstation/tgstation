@@ -31,23 +31,26 @@
 		return ..()
 
 	if(can_unlock(user, card))
-		if(atom_storage.locked)
-			atom_storage.locked = STORAGE_NOT_LOCKED
-		else
-			atom_storage.locked = STORAGE_FULLY_LOCKED
-			atom_storage.close_all()
-		balloon_alert(user, atom_storage.locked ? "locked" : "unlocked")
-		update_appearance()
+		toggle_locked(user)
 		return ITEM_INTERACT_SUCCESS
 
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/storage/lockbox/proc/can_unlock(mob/living/user, obj/item/card/id/id_card)
+/obj/item/storage/lockbox/proc/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
 	if(check_access(id_card))
 		return TRUE
-
-	balloon_alert(user, "access denied!")
+	if(!silent)
+		balloon_alert(user, "access denied!")
 	return FALSE
+
+/obj/item/storage/lockbox/proc/toggle_locked(mob/living/user)
+	if(atom_storage.locked)
+		atom_storage.locked = STORAGE_NOT_LOCKED
+	else
+		atom_storage.locked = STORAGE_FULLY_LOCKED
+		atom_storage.close_all()
+	balloon_alert(user, atom_storage.locked ? "locked" : "unlocked")
+	update_appearance()
 
 /obj/item/storage/lockbox/update_icon_state()
 	. = ..()
@@ -248,11 +251,11 @@
 	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NO_MANIFEST_CONTENTS_ERROR, TRAIT_GENERIC)
 
-/obj/item/storage/lockbox/order/can_unlock(mob/living/user, obj/item/card/id/id_card)
+/obj/item/storage/lockbox/order/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
 	if(id_card.registered_account == buyer_account)
 		return TRUE
-
-	balloon_alert(user, "incorrect bank account!")
+	if(!silent)
+		balloon_alert(user, "incorrect bank account!")
 	return FALSE
 
 ///screentips for lockboxes
