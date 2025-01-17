@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Flex } from 'tgui-core/components';
+import { Box } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
 
 import { LootBox } from './LootBox';
@@ -36,12 +36,10 @@ export function GroupedContents(props: Props) {
     .map(([_, items]) => ({ amount: items.length, item: items[0] }));
 
   return (
-    <Flex wrap>
+    <Box m={-0.5}>
       {filteredContents.map((group) => (
-        <Flex.Item key={group.item.name} m={1}>
-          <LootBox group={group} />
-        </Flex.Item>
+        <LootBox key={group.item.name} group={group} />
       ))}
-    </Flex>
+    </Box>
   );
 }

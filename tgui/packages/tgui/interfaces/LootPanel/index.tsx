@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, Input, Section, Stack } from 'tgui-core/components';
 import { isEscape } from 'tgui-core/keys';
+import { clamp } from 'tgui-core/math';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
@@ -18,13 +19,15 @@ export function LootPanel(props) {
   const { act, data } = useBackend<Data>();
   const { contents = [], searching } = data;
 
-  const [grouping, setGrouping] = useState(true);
+  const [grouping, setGrouping] = useState(false);
   const [searchText, setSearchText] = useState('');
 
   const total = contents.length ? contents.length - 1 : 0;
 
+  const height: number = clamp(94 + contents.length * 34, 128, 638);
+
   return (
-    <Window height={275} width={190} title={`Contents: ${total}`}>
+    <Window width={300} height={height} title={`Contents: ${total}`}>
       <Window.Content
         onKeyDown={(event) => {
           if (isEscape(event.key)) {
