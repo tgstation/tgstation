@@ -638,6 +638,7 @@
 		var/power = 1
 		if(!screeched.can_hear()) // bit weaker if deaf. but its still psychic
 			power *= 0.5
+		var/affect_time = 15 SECONDS * power
 		// it really fucks you up
 		screeched.Knockdown(affect_time)
 		screeched.adjust_disgust(affect_time)
@@ -747,7 +748,7 @@
 	. = ..()
 	limb.remove_bodypart_overlay(babbel_overlay)
 
-/obj/item/organ/ears/babbelfish/attack_hand(mob/user, list/modifiers)
+/obj/item/organ/ears/babbelfish/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
 	var/obj/item/organ/ears/ears = target_mob.get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)
