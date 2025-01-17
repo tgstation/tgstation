@@ -430,10 +430,10 @@
 	random_case_rarity = FISH_RARITY_NOPE
 	// hand-tuned to be a your worst enemy
 	fish_traits = list(
-		/datum/fish_trait/wary, /datum/fish_trait/nocturnal, /datum/fish_trait/emulsijack, \
-		/datum/fish_trait/yucky, /datum/fish_trait/lubed, /datum/fish_trait/revival, \
-		/datum/fish_trait/toxin_immunity, /datum/fish_trait/hallucinogenic, \
-		/datum/fish_trait/stinger, /datum/fish_trait/toxic_barbs, \
+		/datum/fish_trait/wary, /datum/fish_trait/nocturnal, /datum/fish_trait/emulsijack,
+		/datum/fish_trait/yucky, /datum/fish_trait/lubed, /datum/fish_trait/revival,
+		/datum/fish_trait/toxin_immunity, /datum/fish_trait/hallucinogenic,
+		/datum/fish_trait/stinger, /datum/fish_trait/toxic_barbs,
 	)
 	beauty = FISH_BEAUTY_DISGUSTING
 	fish_movement_type = /datum/fish_movement/slow // a very easy catch!
@@ -638,7 +638,6 @@
 		var/power = 1
 		if(!screeched.can_hear()) // bit weaker if deaf. but its still psychic
 			power *= 0.5
-		var/affect_time = 15 SECONDS * power
 		// it really fucks you up
 		screeched.Knockdown(affect_time)
 		screeched.adjust_disgust(affect_time)
@@ -748,7 +747,8 @@
 	. = ..()
 	limb.remove_bodypart_overlay(babbel_overlay)
 
-/obj/item/organ/ears/babbelfish/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/organ/ears/babbelfish/attack_hand(mob/user, list/modifiers)
+	. = ..()
 	var/obj/item/organ/ears/ears = target_mob.get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)
 		to_chat(user, span_notice("[target_mob == user ? "You don't have" : target_mob + "has no"] ears to shove [src] into!"))
