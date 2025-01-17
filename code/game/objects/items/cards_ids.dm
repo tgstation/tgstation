@@ -935,7 +935,7 @@
 		if(trim.honorific_positions & readable_names[i]) //If the positions list has the same bit value as the readable list.
 			choices += i
 
-	var/chosen_position = tgui_input_list(user, "what position do you want your honorific in?", "Flair!", choices)
+	var/chosen_position = tgui_input_list(user, "What position do you want your honorific in?", "Flair!", choices)
 	var/honorific_position_to_use = readable_names[chosen_position]
 
 	if(honorific_position_to_use & HONORIFIC_POSITION_NONE)
@@ -943,7 +943,7 @@
 		honorific_title = null
 		balloon_alert(user, "honorific disabled")
 	else
-		trim.chosen_honorific = tgui_input_list(user, "what honorific do you want to use?", "Flair!!!", trim.honorifics)
+		trim.chosen_honorific = tgui_input_list(user, "What honorific do you want to use?", "Flair!!!", trim.honorifics)
 
 		switch(honorific_position_to_use)
 			if(HONORIFIC_POSITION_FIRST)
