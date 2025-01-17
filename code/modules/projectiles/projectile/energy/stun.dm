@@ -9,7 +9,7 @@
 	muzzle_type = /obj/effect/projectile/muzzle/stun
 	impact_type = /obj/effect/projectile/impact/stun
 	/// How much stamina damage will the tase deal in 1 second
-	VAR_PROTECTED/tase_stamina = 60
+	VAR_PROTECTED/tase_stamina = 30
 	/// Electrodes that follow the projectile
 	VAR_PRIVATE/datum/weakref/beam_weakref
 	/// We need to track who was the ORIGINAL firer of the projectile specifically to ensure deflects work correctly
