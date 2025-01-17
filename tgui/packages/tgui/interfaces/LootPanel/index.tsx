@@ -44,7 +44,7 @@ export function LootPanel(props) {
   const total = contents.length ? contents.length - 1 : 0;
 
   const minHeight = 126;
-  const maxHeight = 658;
+  const maxHeight = 660;
   const headerHeight = 88;
   const itemHeight = 38;
   const height: number = clamp(
