@@ -4,7 +4,11 @@ import { useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
 import { TechwebDesignDisk, TechwebTechDisk } from './disks';
 
-export function TechwebDiskMenu(props) {
+type Props = {
+  diskType: string;
+};
+
+export function TechwebDiskMenu(props: Props) {
   const { act, data } = useRemappedBackend();
   const { diskType } = props;
   const { t_disk, d_disk } = data;

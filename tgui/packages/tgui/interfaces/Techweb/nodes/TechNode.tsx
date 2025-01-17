@@ -6,13 +6,22 @@ import {
   ProgressBar,
   Section,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { Experiment } from '../../ExperimentConfigure';
 import { useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
 import { LockedExperiment } from '../LockedExperiment';
+import { TechwebNode } from '../types';
 
-export function TechNode(props) {
+type Props = {
+  node: TechwebNode;
+} & Partial<{
+  nocontrols: BooleanLike;
+  nodetails: BooleanLike;
+}>;
+
+export function TechNode(props: Props) {
   const { act, data } = useRemappedBackend();
   const {
     node_cache,

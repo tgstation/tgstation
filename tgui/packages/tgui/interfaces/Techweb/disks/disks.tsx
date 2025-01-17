@@ -2,6 +2,7 @@ import { Section } from 'tgui-core/components';
 
 import { useRemappedBackend } from '../helpers';
 import { TechNode } from '../nodes/TechNode';
+import { TechwebNode } from '../types';
 
 export function TechwebDesignDisk(props) {
   const { data } = useRemappedBackend();
@@ -37,5 +38,5 @@ export function TechwebTechDisk(props) {
 
   return Object.keys(stored_research)
     .map((x) => ({ id: x }))
-    .map((n) => <TechNode key={n.id} nocontrols node={n} />);
+    .map((n) => <TechNode key={n.id} nocontrols node={n as TechwebNode} />);
 }

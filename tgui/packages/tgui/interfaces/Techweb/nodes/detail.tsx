@@ -3,7 +3,7 @@ import { Button, Divider, Flex, Tabs } from 'tgui-core/components';
 
 import { useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
-import { TechWebData } from '../types';
+import { TechwebNode } from '../types';
 import { TechNode } from './TechNode';
 
 type NodeDetailProps = {
@@ -25,7 +25,7 @@ export function TechwebNodeDetail(props: NodeDetailProps) {
 }
 
 type TechNodeDetailProps = {
-  node: TechWebData['nodes'][0];
+  node: TechwebNode;
 };
 
 enum Tab {

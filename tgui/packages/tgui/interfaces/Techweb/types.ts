@@ -38,7 +38,7 @@ type DefaultNode = NodeCache & {
 };
 
 // Available nodes
-type WebNode = {
+export type TechwebNode = {
   can_unlock: BooleanLike;
   enqueued_by_user: BooleanLike;
   have_experiments_done: BooleanLike;
@@ -58,7 +58,7 @@ export type TechWebData = {
   d_disk: DesignDisk | null;
   experiments: Record<string, Experiment>;
   locked: BooleanLike;
-  nodes: WebNode[];
+  nodes: TechwebNode[];
   point_types_abbreviations: Record<string, string>;
   points_last_tick: Record<string, number>;
   points: Record<string, number>;
