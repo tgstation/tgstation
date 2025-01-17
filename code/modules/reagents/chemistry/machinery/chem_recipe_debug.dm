@@ -161,7 +161,6 @@
 			if(USE_OVERHEAT_TEMPERATURE)
 				return test_reaction.overheat_temp
 
-
 /**
  * Adjusts the temperature, ph & purity of the holder
  * Arguments
@@ -173,7 +172,7 @@
 
 	var/target_temperature = decode_target_temperature()
 	if(!isnull(target_temperature))
-		target_reagents.adjust_thermal_energy((target_temperature - target_reagents.chem_temp) * 0.4 * seconds_per_tick * target_reagents.heat_capacity())
+		target_reagents.adjust_thermal_energy((target_temperature - target_reagents.chem_temp) * 0.45 * seconds_per_tick * target_reagents.heat_capacity())
 
 	if(use_forced_purity)
 		target_reagents.set_all_reagents_purity(forced_purity)
@@ -187,7 +186,7 @@
 /obj/machinery/chem_recipe_debug/process(seconds_per_tick)
 	if(!target_reagents.is_reacting)
 		adjust_environment(seconds_per_tick)
-	target_reagents.handle_reactions()
+		target_reagents.handle_reactions()
 
 	//send updates to ui. faster than SStgui.update_uis
 	for(var/datum/tgui/ui in src.open_uis)

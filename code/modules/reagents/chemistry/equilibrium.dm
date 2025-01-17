@@ -328,9 +328,9 @@
 	//keep limited
 	if(delta_chem_factor > step_target_vol)
 		delta_chem_factor = step_target_vol
-	//ensure its above the minimum rate below which rounding errors occur
-	else
-		delta_chem_factor = max(delta_chem_factor, min_rate)
+	//ensure its above minimum rate below which rounding errors occur
+	else if(delta_chem_factor < min_rate)
+		delta_chem_factor = min_rate
 	//Normalise to multiproducts
 	delta_chem_factor = round(delta_chem_factor / product_ratio, CHEMICAL_VOLUME_ROUNDING)
 	if(delta_chem_factor <= 0)
