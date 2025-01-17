@@ -190,7 +190,7 @@
 "mf" = (
 /obj/structure/lattice,
 /obj/structure/girder,
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/rust/airless,
 /area/template_noop)
 "my" = (
 /obj/effect/turf_decal/trimline/red/line{
@@ -204,7 +204,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "nd" = (
 /obj/structure/girder/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/turretedoutpost)
 "no" = (
 /obj/machinery/light/dim/directional/west,
@@ -459,6 +459,9 @@
 /obj/structure/marker_beacon/burgundy,
 /turf/template_noop,
 /area/ruin/space/has_grav/turretedoutpost)
+"Cl" = (
+/turf/open/floor/plating/rust/airless,
+/area/ruin/space/has_grav/turretedoutpost)
 "Cu" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -577,6 +580,11 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
+"NT" = (
+/obj/structure/girder,
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/turretedoutpost)
 "NU" = (
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
@@ -613,6 +621,10 @@
 	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/turretedoutpost)
+"Ps" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/turretedoutpost)
 "Qk" = (
 /obj/structure/chair/plastic{
@@ -721,7 +733,7 @@
 /obj/structure/girder/displaced,
 /obj/structure/grille/broken,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/turretedoutpost)
 "VO" = (
 /obj/machinery/porta_turret/syndicate/energy/ruin,
@@ -904,7 +916,7 @@ ro
 ro
 ro
 nd
-up
+Cl
 ro
 ro
 ro
@@ -931,12 +943,12 @@ jM
 jM
 ro
 ro
-ID
-cD
-ID
-ID
+NT
+Ps
+NT
+NT
 VB
-ID
+NT
 pO
 ro
 ro
@@ -961,8 +973,8 @@ Ci
 bU
 ro
 ro
-ID
-ID
+NT
+NT
 ro
 ro
 ro
@@ -991,8 +1003,8 @@ jM
 jM
 jM
 ro
-ID
-ID
+NT
+NT
 ro
 ro
 sy
@@ -1022,7 +1034,7 @@ jM
 jM
 jM
 ro
-ID
+NT
 ro
 ro
 hr
@@ -1053,7 +1065,7 @@ jM
 jM
 jM
 ro
-ID
+NT
 ro
 Pf
 aH
@@ -1084,7 +1096,7 @@ bU
 jM
 rK
 ro
-ID
+NT
 ro
 gn
 aH
