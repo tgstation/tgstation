@@ -813,8 +813,8 @@
 	organ_owner.remove_all_languages(source = LANGUAGE_ALL)
 	organ_owner.copy_languages(removal_holder)
 	to_chat(organ_owner, span_notice("You feel significantly more mundane."))
-	qdel(removal_holder)
-	qdel(bound_component)
+	QDEL_NULL(removal_holder)
+	QDEL_NULL(bound_component)
 
 /obj/item/organ/ears/babbelfish/proc/on_drain_magic(mob/user)
 	to_chat(user, span_noticealien("Your [src] pop as they protect your mind from psychic phenomena!"))
