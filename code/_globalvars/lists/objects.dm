@@ -103,3 +103,6 @@ GLOBAL_LIST_INIT(prototype_organs, typecacheof(list(
 	/obj/item/organ/tongue/dullahan,
 	/obj/item/organ/eyes/dullahan,
 ), only_root_path = TRUE))
+
+/// list of all plan traits
+GLOBAL_LIST_INIT(plant_traits, init_plant_traits())

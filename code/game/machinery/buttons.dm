@@ -145,6 +145,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	device = new_device
+	SEND_SIGNAL(new_device, COMSIG_ASSEMBLY_ADDED_TO_BUTTON, src, user)
 	to_chat(user, span_notice("You add \the [new_device] to the button."))
 
 	update_appearance()
@@ -219,7 +220,6 @@
 		balloon_alert(user, "access overridden")
 	return TRUE
 
-
 /obj/machinery/button/attack_ai(mob/user)
 	if(!silicon_access_disabled && !panel_open)
 		return attempt_press(user)
@@ -274,6 +274,7 @@
 	return ..()
 
 /obj/machinery/button/proc/remove_assembly(mob/user)
+	SEND_SIGNAL(device, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON, src, user)
 	user.put_in_hands(device)
 	to_chat(user, span_notice("You remove \the [device] from the button frame."))
 	device = null
