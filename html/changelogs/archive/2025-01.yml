@@ -478,3 +478,29 @@
   - bugfix: Any bug that would occur from becoming nearsighted with a scarred eye
       should be fixed now
   - code_imp: status_effect/grouped merging code has been improved (i hope)
+2025-01-17:
+  00-Steven:
+  - spellcheck: Exporting a human tongue no longer calls it a 'tounge'.
+  Majkl-J:
+  - bugfix: The apiary now correctly checks for podpeople, allowing subtypes of the
+      species to also interact with is.
+  - code_imp: Beebox file single letter vars have been told to buzz off.
+  Melbert:
+  - bugfix: Big smoke puff from cigarettes happen
+  - bugfix: Tram now smashes certain objects it should be smashing again
+  - rscadd: Adds Carptongue language, spoken by Space Carps.
+  - rscdel: Space Carps no longer speak or understand Common. Special carps like Cayenne
+      and Lia can still understand common.
+  - rscadd: Space Dragons can speak Draconic and Carptongue.
+  - rscdel: Space Dragons no longer speak Common. They can still understand it.
+  - rscadd: Ash Drakes and Ice Whelps now speak Draconic.
+  - rscdel: Ash Drakes and Ice Whelps no longer speak Common. They can still understand
+      it.
+  - rscadd: Fire Sharks now speak Carptongue.
+  - rscdel: Fire Sharks no longer speak Common. They can still understand it.
+  - rscadd: Fish and Carp Infusion now grant Carptongue, letting you speak to (and
+      understand) Space Carps.
+  - rscadd: Sleeping Carp grants you Carptongue, but as most human tongues can't speak
+      it, you'll only be able to understand Space Carps unless you steal a fish tongue.
+  gleypi:
+  - spellcheck: fixed the tong clacking message
