@@ -12,7 +12,7 @@
 	button_icon_state = "among_sheep"
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 5 SECONDS
+	cooldown_time = 2 MINUTES
 
 	invocation = "D`M``N `XP`NS``N!"
 	invocation_type = INVOCATION_SHOUT
@@ -58,6 +58,17 @@
 	// Loop doesnt catch src.loc so we have to handle it manually
 	apply_visual(list(center_turf))
 
+/datum/action/cooldown/spell/wolves_among_sheep/can_cast_spell(feedback)
+	. = ..()
+	for(var/obj/nearby_arena in GLOB.heretic_arenas)
+		// We can't allow arenas to overlap because they break each other during cleanup.
+		// If any future coder wants to allow arenas to merge or fight like domains, feel free to implement it.
+		if(get_dist(owner, nearby_arena) <= 25)
+			if(feedback)
+				to_chat(owner, span_warning("Can't cast, too close to another arena!"))
+				owner.balloon_alert(owner, "Arena Nearby!")
+			return FALSE
+
 /// Applies a visual to each turf
 /datum/action/cooldown/spell/wolves_among_sheep/proc/apply_visual(list/turfs)
 	for(var/turf/target as anything in turfs)
@@ -79,7 +90,7 @@
 
 /// Sets up the proximity monitor which handles things that are within the area and leave once they get someone to crit
 /datum/action/cooldown/spell/wolves_among_sheep/proc/create_arena(turf/target)
-	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_caster_crit))
+	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOVABLE_POST_TELEPORT), PROC_REF(on_caster_crit))
 
 	// This is where most of the funcionality of the spell is
 	ongoing_arena = new /obj/effect/abstract/heretic_arena(target, max_range, 60 SECONDS, owner)
@@ -95,11 +106,10 @@
 /datum/action/cooldown/spell/wolves_among_sheep/proc/on_caster_crit()
 	deltimer(revert_timer)
 	revert_effects()
-	QDEL_NULL(ongoing_arena)
 
 /// Undoes our changes
 /datum/action/cooldown/spell/wolves_among_sheep/proc/revert_effects()
-	UnregisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION))
+	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOVABLE_POST_TELEPORT))
 	for(var/iterator in 1 to greatest_dist)
 		var/backwards_iterator = greatest_dist - iterator + 1 //We go backwards
 		if(!to_transform["[backwards_iterator]"])

@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(heretic_arenas)
+
 // Invisible effect that doesnt exist outside of containing the prox monitor
 /obj/effect/abstract/heretic_arena
 	icon = null
@@ -15,9 +17,11 @@
 	arena = new(src, range)
 	QDEL_IN(src, duration)
 	arena.set_caster(caster)
+	GLOB.heretic_arenas += src
 
 /obj/effect/abstract/heretic_arena/Destroy(force)
 	QDEL_NULL(arena)
+	GLOB.heretic_arenas -= src
 	. = ..()
 
 /datum/proximity_monitor/advanced/heretic_arena
@@ -45,7 +49,6 @@
 		TRAIT_SHOCKIMMUNE,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_STUNIMMUNE,
-		TRAIT_NO_TELEPORT,
 	)
 
 /datum/proximity_monitor/advanced/heretic_arena/New(atom/_host, range, _ignore_if_not_on_turf)
@@ -153,7 +156,7 @@
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_enter_crit))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
 	RegisterSignal(owner, "COMSIG_OWNER_ENTERED_CRIT", PROC_REF(on_crit_somebody))
-	ADD_TRAIT(owner, TRAIT_ELDRITCH_ARENA_PARTICIPANT, STATUS_EFFECT_TRAIT)
+	owner.add_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), STATUS_EFFECT_TRAIT)
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_fighter", -HALO_LAYER)
 	crown_overlay.pixel_y = 24
 	owner.add_overlay(crown_overlay)
@@ -166,8 +169,9 @@
 
 /datum/status_effect/arena_tracker/proc/on_enter_crit(mob/owner)
 	SIGNAL_HANDLER
-	if(last_attacker) // Safety check in case they somehow enter crit with *nobody* attacking them
-		SEND_SIGNAL(last_attacker, "COMSIG_OWNER_ENTERED_CRIT")
+	if(!last_attacker) // Safety check in case they somehow enter crit with *nobody* attacking them
+		return
+	SEND_SIGNAL(last_attacker, "COMSIG_OWNER_ENTERED_CRIT")
 
 /datum/status_effect/arena_tracker/proc/damage_taken(
 	datum/source,
@@ -217,7 +221,7 @@
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_victor", -HALO_LAYER)
 	crown_overlay.pixel_y = 24
 	owner.add_overlay(crown_overlay)
-	REMOVE_TRAIT(owner, TRAIT_ELDRITCH_ARENA_PARTICIPANT, STATUS_EFFECT_TRAIT)
+	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), STATUS_EFFECT_TRAIT)
 
 	// The mansus celebrates your efforts
 	if(IS_HERETIC(owner))
@@ -232,9 +236,9 @@
 	if(arena_victor) // No need to spam if we've already killed at least 1 person
 		return
 	if(IS_HERETIC(owner))
-		to_chat(owner, span_hypnophrase("The mansus is pleased with your performance."))
+		to_chat(owner, span_big(span_hypnophrase("The mansus is pleased with your performance, you may leave now.")))
 	else
-		to_chat(owner, span_hypnophrase("You feel a weight lift off your shoulders."))
+		to_chat(owner, span_big(span_hypnophrase("You have done well, you may leave now.")))
 	arena_victor = TRUE
 
 /datum/antagonist/heretic_arena_participant
@@ -255,3 +259,8 @@
 	survive.explanation_text = "You are trapped in a battlefield where each participant must fight to the death. \
 		Defeat your captor, or betray your fellows so you may live to see another day!"
 	objectives += survive
+	var/datum/objective/fight_to_escape = new /datum/objective
+	fight_to_escape.owner = owner
+	fight_to_escape.explanation_text = "DO NOT ATTEMPT TO ESCAPE. The only way out is to defeat another participant in a battle to the death. \
+		A pitiful blade has been given to you so you may have a fighting chance, it would be a shame were you to ever break it while unworthy."
+	objectives += fight_to_escape

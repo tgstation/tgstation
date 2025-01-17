@@ -6,9 +6,10 @@
 /obj/item/grenade/chem_grenade/rust_sower
 	name = "\improper Rust sower"
 	desc = "A nifty little thing that explodes into rust. Causes borgs and mechs to get utterly obliterated"
-	possible_fuse_time = list("3", "4", "5")
+	possible_fuse_time = list("5")
 	stage = GRENADE_READY
 	base_icon_state = "rustgrenade"
+	grenade_arm_sound = 'sound/items/weapons/rust_sower_armbomb.ogg'
 
 /obj/item/grenade/chem_grenade/rust_sower/update_icon_state()
 	. = ..()
@@ -32,6 +33,7 @@
 
 /obj/item/grenade/chem_grenade/rust_sower/detonate(mob/living/lanced_by)
 	. = ..()
+	playsound(src, 'sound/items/weapons/rust_sower_explode.ogg', 60, TRUE)
 	qdel(src)
 
 /obj/item/grenade/chem_grenade/rust_sower/screwdriver_act(mob/living/user, obj/item/tool)

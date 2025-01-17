@@ -104,23 +104,6 @@
 	research_tree_icon_path = 'icons/obj/card.dmi'
 	research_tree_icon_state = "card_gold"
 
-// XANTODO - Replace Placeholder Gain text
-/**
- * Phylactery of Damnation
- */
-/datum/heretic_knowledge/phylactery
-	name = "Phylactery of Damnation"
-	desc = "Allows you to transmute a sheet of glass and a poppy into a syringe that can instantly draw blood."
-	gain_text = "XANTODO PLACEHOLDER GAIN"
-	required_atoms = list(
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/food/grown/poppy = 1,
-	)
-	result_atoms = list(/obj/item/reagent_containers/phylactery)
-	cost = 1
-	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
-	research_tree_icon_state = "phylactery_2"
-
 /datum/heretic_knowledge/mark/lock_mark
 	name = "Mark of Lock"
 	desc = "Your Mansus Grasp now applies the Mark of Lock. \

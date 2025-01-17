@@ -12,9 +12,9 @@
 	mark = /datum/heretic_knowledge/mark/blade_mark
 	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/blade
 	unique_ability = /datum/heretic_knowledge/spell/realignment
-	tier2 = /datum/heretic_knowledge/spell/wolves_among_sheep // /datum/heretic_knowledge/duel_stance Stance of the torn champions usually goes here
+	tier2 = /datum/heretic_knowledge/spell/furious_steel // /datum/heretic_knowledge/duel_stance - Stance of the torn champions usually goes here
 	blade = /datum/heretic_knowledge/blade_upgrade/blade
-	tier3 =	 /datum/heretic_knowledge/spell/furious_steel
+	tier3 = /datum/heretic_knowledge/spell/wolves_among_sheep
 	ascension = /datum/heretic_knowledge/ultimate/blade_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_blade
