@@ -34,6 +34,8 @@
 	var/delta_t
 	///How pure our step is
 	var/delta_ph
+	///Min reaction rate possible below which rounding errors occur
+	VAR_PRIVATE/min_rate
 	///Modifiers from catalysts, do not use negative numbers.
 	///I should write a better handiler for modifying these
 	///Speed mod
@@ -66,7 +68,6 @@
 		return
 	LAZYADD(holder.reaction_list, src)
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
-
 
 /datum/equilibrium/Destroy()
 	if(reacted_vol < target_vol) //We did NOT finish from reagents - so we can restart this reaction given property changes in the beaker. (i.e. if it stops due to low temp, this will allow it to fast restart when heated up again)
@@ -114,6 +115,8 @@
 			product_ratio += reaction.results[product]
 	else
 		product_ratio = 1
+	min_rate = product_ratio * (CHEMICAL_VOLUME_ROUNDING / 2)
+
 	return TRUE
 
 /**
@@ -325,9 +328,9 @@
 	//keep limited
 	if(delta_chem_factor > step_target_vol)
 		delta_chem_factor = step_target_vol
-	//ensures rate doesn't go below CHEMICAL_VOLUME_ROUNDING to avoid rounding errors
+	//ensure its above the minimum rate below which rounding errors occur
 	else
-		delta_chem_factor = max(delta_chem_factor, product_ratio * CHEMICAL_VOLUME_ROUNDING)
+		delta_chem_factor = max(delta_chem_factor, min_rate)
 	//Normalise to multiproducts
 	delta_chem_factor = round(delta_chem_factor / product_ratio, CHEMICAL_VOLUME_ROUNDING)
 	if(delta_chem_factor <= 0)
