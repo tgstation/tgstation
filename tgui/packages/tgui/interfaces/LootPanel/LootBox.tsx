@@ -56,7 +56,7 @@ export function LootBox(props: Props) {
     >
       <Stack>
         <Stack.Item mb={-1} minWidth={'32px'}>
-          <IconDisplay item={item} />
+          <IconDisplay item={item} size={{ height: 3, width: 3 }} />
         </Stack.Item>
         <Stack.Item
           grow

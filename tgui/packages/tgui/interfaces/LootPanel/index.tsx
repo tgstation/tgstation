@@ -24,7 +24,7 @@ export function LootPanel(props) {
 
   const total = contents.length ? contents.length - 1 : 0;
 
-  const height: number = clamp(94 + contents.length * 34, 128, 638);
+  const height: number = clamp(95 + contents.length * 37, 132, 650);
 
   return (
     <Window width={300} height={height} title={`Contents: ${total}`}>
