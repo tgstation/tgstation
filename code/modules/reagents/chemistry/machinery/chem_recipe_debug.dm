@@ -29,7 +29,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "HPLC_debug"
 	density = TRUE
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.4
+	use_power = NO_POWER_USE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
 	///Temperature to be imposed on the reaction
@@ -87,8 +87,7 @@
 	edit_reaction = null
 	QDEL_NULL(container)
 	QDEL_NULL(required_container)
-	UnregisterSignal(reagents, COMSIG_REAGENTS_REACTION_STEP)
-	. = ..()
+	return ..()
 
 /obj/machinery/chem_recipe_debug/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -174,7 +173,7 @@
 
 	var/target_temperature = decode_target_temperature()
 	if(!isnull(target_temperature))
-		target_reagents.adjust_thermal_energy((target_temperature - target_reagents.chem_temp) * 0.4 * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * target_reagents.total_volume)
+		target_reagents.adjust_thermal_energy((target_temperature - target_reagents.chem_temp) * 0.4 * seconds_per_tick * target_reagents.heat_capacity())
 
 	if(use_forced_purity)
 		target_reagents.set_all_reagents_purity(forced_purity)
@@ -335,7 +334,7 @@
 	.["editReaction"] = reaction_data
 
 	var/list/beaker_data = null
-	if(target_reagents.reagent_list.len)
+	if(!QDELETED(container) || target_reagents.total_volume)
 		beaker_data = list()
 		beaker_data["maxVolume"] = target_reagents.maximum_volume
 		beaker_data["pH"] = round(target_reagents.ph, 0.01)
@@ -666,9 +665,6 @@
 			tgui_alert(ui.user, "Saved to [dest]")
 
 		if("eject")
-			if(!target_reagents.total_volume)
-				return
-
 			//initialize a new container for us
 			if(QDELETED(container))
 				if(QDELETED(required_container))
