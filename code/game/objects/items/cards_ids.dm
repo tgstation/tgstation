@@ -929,11 +929,6 @@
 		balloon_alert(user, "card has no honorific to use!")
 		return
 
-	if(trim.honorific_positions == NONE)
-		balloon_alert(user, "no honorific positions! Error!")
-		stack_trace("ID card with honorifics found with no potential honorific positions!")
-		return
-
 	var/list/choices = list()
 	var/list/readable_names = HONORIFIC_POSITION_BITFIELDS()
 	for(var/i in readable_names) //Filter out the options you don't have on your ID.
