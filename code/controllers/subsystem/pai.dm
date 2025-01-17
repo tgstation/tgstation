@@ -52,18 +52,18 @@ SUBSYSTEM_DEF(pai)
 		return FALSE
 	switch(action)
 		if("submit")
-			candidate.comments = trim(params["comments"], MAX_BROADCAST_LEN)
-			candidate.description = trim(params["description"], MAX_BROADCAST_LEN)
-			candidate.name = trim(params["name"], MAX_NAME_LEN)
+			candidate.comments = reject_bad_name(params["comments"], allow_numbers = TRUE, max_length = MAX_BROADCAST_LEN, strict = TRUE, cap_after_symbols = FALSE) || "Unknown"
+			candidate.description = reject_bad_name(params["description"], allow_numbers = TRUE, max_length = MAX_BROADCAST_LEN, strict = TRUE, cap_after_symbols = FALSE) || "Unknown"
+			candidate.name = reject_bad_name(params["name"], allow_numbers = TRUE, max_length = MAX_NAME_LEN, strict = TRUE, cap_after_symbols = FALSE) || "Unknown"
 			candidate.ckey = user.ckey
 			candidate.ready = TRUE
 			ui.close()
 			submit_alert(user)
 			return TRUE
 		if("save")
-			candidate.comments = params["comments"]
-			candidate.description = params["description"]
-			candidate.name = params["name"]
+			candidate.comments = reject_bad_name(params["comments"], allow_numbers = TRUE, max_length = MAX_BROADCAST_LEN, strict = TRUE, cap_after_symbols = FALSE) || "Unknown"
+			candidate.description = reject_bad_name(params["description"], allow_numbers = TRUE, max_length = MAX_BROADCAST_LEN, strict = TRUE, cap_after_symbols = FALSE) || "Unknown"
+			candidate.name = reject_bad_name(params["name"], allow_numbers = TRUE, max_length = MAX_NAME_LEN, strict = TRUE, cap_after_symbols = FALSE) || "Unknown"
 			candidate.savefile_save(user)
 			return TRUE
 		if("load")

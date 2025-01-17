@@ -62,6 +62,7 @@
 	//Make carp non-hostile to user
 	if(owner)
 		spawned_mob.faction = list("[REF(owner)]")
+		spawned_mob.grant_language(/datum/language/common, UNDERSTOOD_LANGUAGE, LANGUAGE_ATOM)
 	for(var/mob/living/viewer in viewers(5, get_turf(src)))
 		to_chat(viewer, viewer == owner ? span_notice("The newly grown [spawned_mob.name] looks up at you with friendly eyes.") : span_warning("You have a bad feeling about this."))
 	qdel(src)

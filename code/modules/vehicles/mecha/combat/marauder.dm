@@ -59,7 +59,9 @@
 	button_icon_state = "mech_smoke"
 
 /datum/action/vehicle/sealed/mecha/mech_smoke/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_SMOKE) && chassis.smoke_charges>0)
 		chassis.smoke_system.start()
@@ -71,7 +73,9 @@
 	button_icon_state = "mech_zoom_off"
 
 /datum/action/vehicle/sealed/mecha/mech_zoom/Trigger(trigger_flags)
-	if(!owner?.client || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!owner.client || !chassis || !(owner in chassis.occupants))
 		return
 	chassis.zoom_mode = !chassis.zoom_mode
 	button_icon_state = "mech_zoom_[chassis.zoom_mode ? "on" : "off"]"

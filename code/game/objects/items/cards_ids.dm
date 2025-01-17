@@ -1762,14 +1762,21 @@
 	to_chat(user, span_notice("You successfully forge the ID card."))
 	user.log_message("forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".", LOG_GAME)
 
-	if(!registered_account && ishuman(user))
-		var/mob/living/carbon/human/accountowner = user
+	if(!ishuman(user))
+		return
 
-		var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[accountowner.account_id]"]
-		if(account)
-			account.bank_cards += src
-			registered_account = account
-			to_chat(user, span_notice("Your account number has been automatically assigned."))
+	var/mob/living/carbon/human/owner = user
+	if (!selected_trim_path) // Ensure that even without a trim update, we update user's sechud
+		owner.sec_hud_set_ID()
+
+	if (registered_account)
+		return
+
+	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[owner.account_id]"]
+	if(account)
+		account.bank_cards += src
+		registered_account = account
+		to_chat(user, span_notice("Your account number has been automatically assigned."))
 
 /obj/item/card/id/advanced/chameleon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)
 	. = ..()
