@@ -680,9 +680,8 @@
 	else
 		ph = clamp(total_ph / total_volume, CHEMICAL_MIN_PH, CHEMICAL_MAX_PH)
 
-	//now send the signals after the volume & ph has been computed
-	for(var/datum/reagent/deleted_reagent as anything in deleted_reagents)
-		qdel(deleted_reagent)
+	//clear out deleted reagents
+	QDEL_LIST(deleted_reagents)
 
 	//inform hooks about reagent changes
 	SEND_SIGNAL(src, COMSIG_REAGENTS_HOLDER_UPDATED)
