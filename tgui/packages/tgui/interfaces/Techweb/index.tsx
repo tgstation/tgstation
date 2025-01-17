@@ -4,7 +4,7 @@ import { TechwebStart } from './Start';
 export function Techweb(props) {
   return (
     <Window width={640} height={735}>
-      <Window.Content scrollable>
+      <Window.Content>
         <TechwebStart />
       </Window.Content>
     </Window>
@@ -14,7 +14,7 @@ export function Techweb(props) {
 export function AppTechweb(props) {
   return (
     <NtosWindow width={640} height={735}>
-      <NtosWindow.Content scrollable>
+      <NtosWindow.Content>
         <TechwebStart />
       </NtosWindow.Content>
     </NtosWindow>

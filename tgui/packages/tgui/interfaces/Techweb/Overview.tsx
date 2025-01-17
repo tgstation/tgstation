@@ -2,15 +2,20 @@ import { sortBy } from 'common/collections';
 import { useState } from 'react';
 import { Flex, Input, Tabs, VirtualList } from 'tgui-core/components';
 
-import { useLocalState } from '../../backend';
 import { useRemappedBackend } from './helpers';
 import { TechNode } from './nodes/TechNode';
+
+enum Tab {
+  RESEARCHED,
+  AVAILABLE,
+  FUTURE,
+}
 
 export function TechwebOverview(props) {
   const { data } = useRemappedBackend();
   const { nodes, node_cache, design_cache } = data;
-  const [tabIndex, setTabIndex] = useState(1);
-  const [searchText, setSearchText] = useLocalState('searchText', '');
+  const [tabIndex, setTabIndex] = useState(Tab.AVAILABLE);
+  const [searchText, setSearchText] = useState('');
 
   // Only search when 3 or more characters have been input
   const searching = searchText && searchText.trim().length > 1;
@@ -48,22 +53,22 @@ export function TechwebOverview(props) {
           <Flex.Item align="center" className="Techweb__HeaderTabTitle">
             Web View
           </Flex.Item>
-          <Flex.Item grow={1}>
+          <Flex.Item grow>
             <Tabs>
               <Tabs.Tab
-                selected={!searching && tabIndex === 0}
+                selected={!searching && tabIndex === Tab.RESEARCHED}
                 onClick={() => switchTab(0)}
               >
                 Researched
               </Tabs.Tab>
               <Tabs.Tab
-                selected={!searching && tabIndex === 1}
+                selected={!searching && tabIndex === Tab.AVAILABLE}
                 onClick={() => switchTab(1)}
               >
                 Available
               </Tabs.Tab>
               <Tabs.Tab
-                selected={!searching && tabIndex === 2}
+                selected={!searching && tabIndex === Tab.FUTURE}
                 onClick={() => switchTab(2)}
               >
                 Future
@@ -71,20 +76,20 @@ export function TechwebOverview(props) {
               {!!searching && <Tabs.Tab selected>Search Results</Tabs.Tab>}
             </Tabs>
           </Flex.Item>
-          <Flex.Item align={'center'}>
+          <Flex.Item align="center">
             <Input
               value={searchText}
               onInput={(e, value) => setSearchText(value)}
-              placeholder={'Search...'}
+              placeholder="Search..."
             />
           </Flex.Item>
         </Flex>
       </Flex.Item>
-      <Flex.Item className={'Techweb__OverviewNodes'} height="100%">
+      <Flex.Item className="Techweb__OverviewNodes" height="100%">
         <VirtualList key={tabIndex + searchText}>
-          {displayedNodes.map((n) => {
-            return <TechNode node={n} key={n.id} />;
-          })}
+          {displayedNodes.map((n) => (
+            <TechNode node={n} key={n.id} />
+          ))}
         </VirtualList>
       </Flex.Item>
     </Flex>

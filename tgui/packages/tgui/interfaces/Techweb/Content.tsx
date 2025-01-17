@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { Button, Flex, LabeledList } from 'tgui-core/components';
 
-import { useLocalState } from '../../backend';
 import { useRemappedBackend } from './helpers';
+import { useTechWebRoute } from './hooks';
 import { TechwebRouter } from './Router';
 
 export function TechwebContent(props) {
@@ -16,8 +15,7 @@ export function TechwebContent(props) {
     sec_protocols,
     t_disk,
   } = data;
-  const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
-  const [lastPoints, setLastPoints] = useState({});
+  const [techwebRoute, setTechwebRoute] = useTechWebRoute();
 
   return (
     <Flex direction="column" className="Techweb__Viewport" height="100%">
@@ -54,7 +52,7 @@ export function TechwebContent(props) {
               </LabeledList.Item>
             </LabeledList>
           </Flex.Item>
-          <Flex.Item grow={1} />
+          <Flex.Item grow />
           <Flex.Item>
             <Button fluid onClick={() => act('toggleLock')} icon="lock">
               Lock Console

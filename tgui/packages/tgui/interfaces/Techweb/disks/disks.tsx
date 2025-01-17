@@ -6,6 +6,8 @@ import { TechNode } from '../nodes/TechNode';
 export function TechwebDesignDisk(props) {
   const { data } = useRemappedBackend();
   const { design_cache, d_disk } = data;
+  if (!d_disk) return;
+
   const { blueprints } = d_disk;
 
   return (
@@ -29,6 +31,8 @@ export function TechwebDesignDisk(props) {
 export function TechwebTechDisk(props) {
   const { data } = useRemappedBackend();
   const { t_disk } = data;
+  if (!t_disk) return;
+
   const { stored_research } = t_disk;
 
   return Object.keys(stored_research)

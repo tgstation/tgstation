@@ -1,11 +1,17 @@
+import { useState } from 'react';
 import { Button, Modal } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { TechwebContent } from './Content';
+import { TechWebRoute } from './hooks';
+import { TechWebData } from './types';
 
 export function TechwebStart(props) {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<TechWebData>();
   const { locked, stored_research } = data;
+  const techwebState = useState({
+    route: '',
+  });
 
   if (locked) {
     return (
@@ -30,5 +36,9 @@ export function TechwebStart(props) {
     );
   }
 
-  return <TechwebContent />;
+  return (
+    <TechWebRoute.Provider value={techwebState}>
+      <TechwebContent />
+    </TechWebRoute.Provider>
+  );
 }

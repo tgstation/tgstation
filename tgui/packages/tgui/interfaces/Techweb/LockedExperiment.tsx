@@ -17,7 +17,7 @@ export function LockedExperiment(props) {
           <Flex.Item color="rgba(0, 0, 0, 0.5)">???</Flex.Item>
         </Flex>
       </Button>
-      <Box className={'ExperimentConfigure__ExperimentContent'}>
+      <Box className="ExperimentConfigure__ExperimentContent">
         This experiment has not been discovered yet, continue researching nodes
         in the tree to discover the contents of this experiment.
       </Box>

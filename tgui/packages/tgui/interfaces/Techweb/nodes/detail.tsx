@@ -1,28 +1,48 @@
 import { useState } from 'react';
 import { Button, Divider, Flex, Tabs } from 'tgui-core/components';
 
-import { useLocalState } from '../../../backend';
 import { useRemappedBackend } from '../helpers';
+import { useTechWebRoute } from '../hooks';
+import { TechWebData } from '../types';
 import { TechNode } from './TechNode';
 
-export function TechwebNodeDetail(props) {
+type NodeDetailProps = {
+  selectedNode: string;
+};
+
+export function TechwebNodeDetail(props: NodeDetailProps) {
+  const { selectedNode } = props;
+
   const { data } = useRemappedBackend();
   const { nodes } = data;
-  const { selectedNode } = props;
 
   const selectedNodeData =
     selectedNode && nodes.find((x) => x.id === selectedNode);
+
+  if (!selectedNodeData) return;
+
   return <TechNodeDetail node={selectedNodeData} />;
 }
 
-export function TechNodeDetail(props) {
+type TechNodeDetailProps = {
+  node: TechWebData['nodes'][0];
+};
+
+enum Tab {
+  REQUIRED,
+  UNLOCKS,
+}
+
+export function TechNodeDetail(props: TechNodeDetailProps) {
+  const { node } = props;
+
   const { data } = useRemappedBackend();
   const { nodes, node_cache } = data;
-  const { node } = props;
-  const { id } = node;
-  const { prereq_ids, unlock_ids } = node_cache[id];
-  const [tabIndex, setTabIndex] = useState(0);
-  const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
+
+  const { prereq_ids, unlock_ids } = node_cache[node.id];
+
+  const [tabIndex, setTabIndex] = useState(Tab.REQUIRED);
+  const [techwebRoute, setTechwebRoute] = useTechWebRoute();
 
   const prereqNodes = nodes.filter((x) => prereq_ids.includes(x.id));
   const complPrereq = prereq_ids.filter(
@@ -37,25 +57,25 @@ export function TechNodeDetail(props) {
           <Flex.Item align="center" className="Techweb__HeaderTabTitle">
             Node
           </Flex.Item>
-          <Flex.Item grow={1}>
+          <Flex.Item grow>
             <Tabs>
               <Tabs.Tab
-                selected={tabIndex === 0}
-                onClick={() => setTabIndex(0)}
+                selected={tabIndex === Tab.REQUIRED}
+                onClick={() => setTabIndex(Tab.REQUIRED)}
               >
                 Required ({complPrereq}/{prereqNodes.length})
               </Tabs.Tab>
               <Tabs.Tab
-                selected={tabIndex === 1}
+                selected={tabIndex === Tab.UNLOCKS}
                 // disabled={unlockedNodes.length === 0}
-                onClick={() => setTabIndex(1)}
+                onClick={() => setTabIndex(Tab.UNLOCKS)}
               >
                 Unlocks ({unlockedNodes.length})
               </Tabs.Tab>
             </Tabs>
           </Flex.Item>
           <Flex.Item align="center">
-            <Button icon="home" onClick={() => setTechwebRoute(null)}>
+            <Button icon="home" onClick={() => setTechwebRoute({ route: '' })}>
               Home
             </Button>
           </Flex.Item>
@@ -66,14 +86,14 @@ export function TechNodeDetail(props) {
         <Divider />
       </Flex.Item>
       {tabIndex === 0 && (
-        <Flex.Item className="Techweb__OverviewNodes" grow={1}>
+        <Flex.Item className="Techweb__OverviewNodes" grow>
           {prereqNodes.map((n) => (
             <TechNode key={n.id} node={n} />
           ))}
         </Flex.Item>
       )}
       {tabIndex === 1 && (
-        <Flex.Item className="Techweb__OverviewNodes" grow={1}>
+        <Flex.Item className="Techweb__OverviewNodes" grow>
           {unlockedNodes.map((n) => (
             <TechNode key={n.id} node={n} />
           ))}

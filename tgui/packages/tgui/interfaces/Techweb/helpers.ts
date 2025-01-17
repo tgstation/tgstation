@@ -1,6 +1,22 @@
 import { map } from 'common/collections';
 
 import { useBackend } from '../../backend';
+import { NodeCache, TechWebData } from './types';
+
+type Cost = {
+  type: string;
+  value: number;
+};
+
+type RemappedNode = NodeCache & {
+  id: string;
+  costs: Cost[];
+};
+
+type RemappedDesignCache = {
+  name: string;
+  class: string;
+};
 
 // Data reshaping / ingestion (thanks stylemistake for the help, very cool!)
 // This is primarily necessary due to measures that are taken to reduce the size
@@ -9,20 +25,23 @@ import { useBackend } from '../../backend';
 
 const remappingIdCache = {};
 
-function remapId(id) {
+function remapId(id: string) {
   return remappingIdCache[id];
 }
 
-function selectRemappedStaticData(data) {
+function selectRemappedStaticData(data: TechWebData) {
   // Handle reshaping of node cache to fill in unsent fields, and
   // decompress the node IDs
-  const node_cache = {};
+  const node_cache = {} as RemappedNode;
+
   for (let id of Object.keys(data.static_data.node_cache)) {
     const node = data.static_data.node_cache[id];
+
     const costs = Object.keys(node.costs || {}).map((x) => ({
       type: remapId(x),
       value: node.costs[x],
     }));
+
     node_cache[remapId(id)] = {
       ...node,
       id: remapId(id),
@@ -36,7 +55,7 @@ function selectRemappedStaticData(data) {
   }
 
   // Do the same as the above for the design cache
-  const design_cache = {};
+  const design_cache = {} as RemappedDesignCache;
   for (let id of Object.keys(data.static_data.design_cache)) {
     const [name, classes] = data.static_data.design_cache[id];
     design_cache[remapId(id)] = {
@@ -51,10 +70,11 @@ function selectRemappedStaticData(data) {
   };
 }
 
-let remappedStaticData;
+let remappedStaticData: ReturnType<typeof selectRemappedStaticData>;
 
 export function useRemappedBackend() {
-  const { data, ...rest } = useBackend();
+  const { data, ...rest } = useBackend<TechWebData>();
+
   // Only remap the static data once, cache for future use
   if (!remappedStaticData) {
     const id_cache = data.static_data.id_cache;
@@ -63,9 +83,11 @@ export function useRemappedBackend() {
     }
     remappedStaticData = selectRemappedStaticData(data);
   }
+
   return {
     data: {
       ...data,
+      static_data: undefined,
       ...remappedStaticData,
     },
     ...rest,

@@ -1,14 +1,14 @@
 import { Button, Flex, Tabs } from 'tgui-core/components';
 
-import { useLocalState } from '../../../backend';
 import { useRemappedBackend } from '../helpers';
+import { useTechWebRoute } from '../hooks';
 import { TechwebDesignDisk, TechwebTechDisk } from './disks';
 
 export function TechwebDiskMenu(props) {
   const { act, data } = useRemappedBackend();
   const { diskType } = props;
   const { t_disk, d_disk } = data;
-  const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
+  const [techwebRoute, setTechwebRoute] = useTechWebRoute();
 
   // Check for the disk actually being inserted
   if ((diskType === 'design' && !d_disk) || (diskType === 'tech' && !t_disk)) {
@@ -25,7 +25,7 @@ export function TechwebDiskMenu(props) {
           <Flex.Item align="center" className="Techweb__HeaderTabTitle">
             {diskType.charAt(0).toUpperCase() + diskType.slice(1)} Disk
           </Flex.Item>
-          <Flex.Item grow={1}>
+          <Flex.Item grow>
             <Tabs>
               <Tabs.Tab selected>Stored Data</Tabs.Tab>
             </Tabs>
@@ -46,18 +46,18 @@ export function TechwebDiskMenu(props) {
               icon="eject"
               onClick={() => {
                 act('ejectDisk', { type: diskType });
-                setTechwebRoute(null);
+                setTechwebRoute({ route: '' });
               }}
             >
               Eject
             </Button>
-            <Button icon="home" onClick={() => setTechwebRoute(null)}>
+            <Button icon="home" onClick={() => setTechwebRoute({ route: '' })}>
               Home
             </Button>
           </Flex.Item>
         </Flex>
       </Flex.Item>
-      <Flex.Item grow={1} className="Techweb__OverviewNodes">
+      <Flex.Item grow className="Techweb__OverviewNodes">
         <DiskContent />
       </Flex.Item>
     </Flex>

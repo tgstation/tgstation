@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Box,
   Button,
@@ -8,9 +7,9 @@ import {
   Section,
 } from 'tgui-core/components';
 
-import { useLocalState } from '../../../backend';
 import { Experiment } from '../../ExperimentConfigure';
 import { useRemappedBackend } from '../helpers';
+import { useTechWebRoute } from '../hooks';
 import { LockedExperiment } from '../LockedExperiment';
 
 export function TechNode(props) {
@@ -42,8 +41,7 @@ export function TechNode(props) {
     required_experiments,
     discount_experiments,
   } = node_cache[id];
-  const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
-  const [tabIndex, setTabIndex] = useState(0);
+  const [techwebRoute, setTechwebRoute] = useTechWebRoute();
 
   const expcompl = required_experiments.filter(
     (x) => experiments[x]?.completed,
@@ -131,7 +129,6 @@ export function TechNode(props) {
                 icon="tasks"
                 onClick={() => {
                   setTechwebRoute({ route: 'details', selectedNode: id });
-                  setTabIndex(0);
                 }}
               >
                 Details
@@ -147,7 +144,7 @@ export function TechNode(props) {
             const reqPts = Math.max(0, k.value - nodeDiscount);
             const nodeProg = Math.min(reqPts, points[k.type]) || 0;
             return (
-              <Flex.Item key={k.type} grow={1} basis={0}>
+              <Flex.Item key={k.type} grow basis={0}>
                 <ProgressBar
                   ranges={{
                     good: [0.5, Infinity],
@@ -166,12 +163,12 @@ export function TechNode(props) {
             );
           })}
           {prereq_ids.length > 0 && (
-            <Flex.Item grow={1} basis={0}>
+            <Flex.Item grow basis={0}>
               {techProgress}
             </Flex.Item>
           )}
           {required_experiments.length > 0 && (
-            <Flex.Item grow={1} basis={0}>
+            <Flex.Item grow basis={0}>
               {experimentProgress}
             </Flex.Item>
           )}
