@@ -102,9 +102,9 @@
 	if(!isnull(filter_obj))
 		var/obj/filter_resolve = filter_obj?.resolve()
 		filter_resolve?.forceMove(get_turf(filter_resolve))
-	if(!isnull(monkey_worker))
-		var/mob/monkey_resolve = monkey_worker?.resolve()
-		monkey_resolve?.forceMove(get_turf(monkey_resolve))
+	var/mob/monkey_resolve = monkey_worker?.resolve()
+	if(!isnull(monkey_resolve))
+		monkey_resolve.forceMove(get_turf(monkey_resolve))
 		monkey_resolve.pixel_x = initial(monkey_resolve.pixel_x)
 		monkey_resolve.pixel_y = initial(monkey_resolve.pixel_y)
 
@@ -394,9 +394,10 @@
 /obj/machinery/big_manipulator/proc/use_thing(atom/movable/target)
 	var/obj/obj_resolve = containment_obj?.resolve()
 	if(isnull(obj_resolve))
+		finish_manipulation()
 		return
 	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
-	if(isnull(obj_resolve) || isnull(monkey_resolve))
+	if(isnull(monkey_resolve))
 		finish_manipulation()
 		return
 	/// If we forceMoved from manipulator we are free now.
