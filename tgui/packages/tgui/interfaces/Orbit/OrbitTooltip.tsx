@@ -1,4 +1,5 @@
-import { LabeledList, NoticeBox } from '../../components';
+import { LabeledList, NoticeBox } from 'tgui-core/components';
+
 import { Antagonist, Observable } from './types';
 
 type Props = {
@@ -36,7 +37,7 @@ export function OrbitTooltip(props: Props) {
             {!!full_name && (
               <LabeledList.Item label="Real ID">{full_name}</LabeledList.Item>
             )}
-            {!!displayJob && !antag && (
+            {!!displayJob && (
               <LabeledList.Item label="Job">{displayJob}</LabeledList.Item>
             )}
             {!!antag && (

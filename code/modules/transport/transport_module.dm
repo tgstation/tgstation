@@ -386,7 +386,7 @@
 				if(QDELING(victim_structure))
 					continue
 				if(!is_type_in_typecache(victim_structure, transport_controller_datum.ignored_smashthroughs))
-					if((victim_structure.plane == FLOOR_PLANE && victim_structure.layer > TRAM_RAIL_LAYER) || (victim_structure.plane == GAME_PLANE && victim_structure.layer > LOW_OBJ_LAYER) )
+					if((PLANE_TO_TRUE(victim_structure.plane) == FLOOR_PLANE && victim_structure.layer > TRAM_RAIL_LAYER) || (PLANE_TO_TRUE(victim_structure.plane) == GAME_PLANE && victim_structure.layer > LOW_OBJ_LAYER) )
 						if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
 							visible_message(span_danger("[src] smashes through [victim_structure]!"))
 							victim_structure.deconstruct(FALSE)

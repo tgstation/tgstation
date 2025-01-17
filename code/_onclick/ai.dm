@@ -73,8 +73,8 @@
 	if(world.time <= next_move)
 		return
 
-	if(waypoint_mode)
-		waypoint_mode = 0
+	if(setting_waypoint)
+		setting_waypoint = FALSE
 		set_waypoint(A)
 		return
 

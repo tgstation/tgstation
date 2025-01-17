@@ -1,8 +1,4 @@
-import { classes } from 'common/react';
-import { capitalize } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Icon,
@@ -14,7 +10,11 @@ import {
   Tabs,
   Tooltip,
   VirtualList,
-} from '../components';
+} from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+import { capitalize } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { Material } from './Fabrication/Types';
@@ -210,13 +210,13 @@ const LogsList = (props: LogsListProps) => {
   const { logs } = props;
 
   return logs.length > 0 ? (
-    <Box pr={1} height="100%" overflowY="scroll">
+    <Section fill scrollable pr={1} height="100%">
       <VirtualList>
         {logs.map((log, index) => (
           <LogEntry key={index} log={log} />
         ))}
       </VirtualList>
-    </Box>
+    </Section>
   ) : (
     <NoticeBox>No log entries currently present!</NoticeBox>
   );

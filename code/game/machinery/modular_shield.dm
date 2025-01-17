@@ -240,7 +240,7 @@
 /obj/machinery/modular_shield_generator/proc/finish_field()
 
 	for(var/obj/structure/emergency_shield/modular/current_shield in deployed_shields)
-		current_shield.density = TRUE
+		current_shield.set_density(TRUE)
 		current_shield.alpha = 255
 	initiating = FALSE
 

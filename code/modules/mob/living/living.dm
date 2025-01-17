@@ -703,7 +703,7 @@
 	if(istype(potential_spine))
 		get_up_time *= potential_spine.athletics_boost_multiplier
 
-	if(!instant && !do_after(src, 1 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP, hidden = TRUE))
+	if(!instant && !do_after(src, get_up_time, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP, hidden = TRUE))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -1056,14 +1056,13 @@
 	if(!has_gravity() || !isturf(start) || !blood_volume)
 		return
 
-	var/blood_exists = locate(/obj/effect/decal/cleanable/trail_holder) in start
-
 	var/trail_type = getTrail()
-	if(!trail_type)
+	var/trail_blood_type = get_trail_blood()
+	if(!trail_type || !trail_blood_type)
 		return
 
 	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-	if(blood_volume < max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
+	if(blood_volume < max(BLOOD_VOLUME_NORMAL * (1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
 		return
 
 	var/bleed_amount = bleedDragAmount()
@@ -1075,16 +1074,39 @@
 			newdir = NORTH
 		else if(newdir == (EAST|WEST))
 			newdir = EAST
+
 	if((newdir in GLOB.cardinals) && (prob(50)))
 		newdir = REVERSE_DIR(get_dir(target_turf, start))
-	if(!blood_exists)
-		new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
 
-	for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
-		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-			TH.existing_dirs += newdir
-			TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-			TH.transfer_mob_blood_dna(src)
+	var/found_trail = FALSE
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/trail in start)
+		if (trail.blood_state != trail_blood_type)
+			continue
+
+		// Don't make double trails, even if they're of a different type
+		if(newdir in trail.existing_dirs)
+			found_trail = TRUE
+			break
+
+		trail.existing_dirs += newdir
+		trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+		trail.transfer_mob_blood_dna(src)
+		trail.bloodiness = min(trail.bloodiness + bleed_amount, BLOOD_POOL_MAX)
+		found_trail = TRUE
+		break
+
+	if (found_trail)
+		return
+
+	var/obj/effect/decal/cleanable/blood/trail_holder/trail = new(start, get_static_viruses())
+	trail.blood_state = trail_blood_type
+	trail.existing_dirs += newdir
+	trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+	trail.transfer_mob_blood_dna(src)
+	trail.bloodiness = min(bleed_amount, BLOOD_POOL_MAX)
+
+/mob/living/proc/get_trail_blood()
+	return BLOOD_STATE_HUMAN
 
 /mob/living/carbon/human/makeTrail(turf/T)
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || HAS_TRAIT(src, TRAIT_NOBLOOD))
@@ -1395,6 +1417,10 @@
 		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
 			to_chat(src, span_warning("You don't have the hands for this action!"))
 			return FALSE
+
+	if(!(action_bitflags & ALLOW_PAI) && ispAI(src))
+		to_chat(src, span_warning("Your holochasis does not allow you to do this!"))
+		return FALSE
 
 	if(!(action_bitflags & BYPASS_ADJACENCY) && ((action_bitflags & NOT_INSIDE_TARGET) || !recursive_loc_check(src, target)) && !CanReach(target))
 		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
@@ -3008,3 +3034,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/check_hit_limb_zone_name(hit_zone)
 	if(has_limbs)
 		return hit_zone
+
+/mob/living/proc/painful_scream(force = FALSE)
+	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
+		return
+	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
