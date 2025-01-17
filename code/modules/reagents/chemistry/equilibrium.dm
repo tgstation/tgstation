@@ -321,15 +321,18 @@
 	purity *= purity_modifier
 
 	//Now we calculate how much to add - this is normalised to the rate up limiter
-	var/delta_chem_factor = reaction.rate_up_lim * delta_t * seconds_per_tick//add/remove factor
+	var/delta_chem_factor = reaction.rate_up_lim * delta_t * seconds_per_tick
 	//keep limited
 	if(delta_chem_factor > step_target_vol)
 		delta_chem_factor = step_target_vol
+	//ensures rate doesn't go below CHEMICAL_VOLUME_ROUNDING to avoid rounding errors
+	else
+		delta_chem_factor = max(delta_chem_factor, product_ratio * CHEMICAL_VOLUME_ROUNDING)
 	//Normalise to multiproducts
-	delta_chem_factor /=  product_ratio
-	var/rounded_factor = round(delta_chem_factor, CHEMICAL_VOLUME_ROUNDING)
-	if(rounded_factor > 0)
-		delta_chem_factor = rounded_factor
+	delta_chem_factor = round(delta_chem_factor / product_ratio, CHEMICAL_VOLUME_ROUNDING)
+	if(delta_chem_factor <= 0)
+		to_delete = TRUE
+		return
 
 	//Calculate how much product to make and how much reactant to remove factors..
 	var/required_amount
