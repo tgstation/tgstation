@@ -34,8 +34,9 @@
 	var/turf/drop_turf
 	/// How will manipulator manipulate the object? drop it out by default.
 	var/manipulate_mode = DROP_ITEM_MODE
-	/// Priority settings depending on the manipulator mode that are available to this manipulator. Filled during Initialize.
+	/// Priority settings depending on the manipulator drop mode that are available to this manipulator. Filled during Initialize.
 	var/list/priority_settings_for_drop = list()
+	/// Priority settings depending on the manipulator use mode that are available to this manipulator. Filled during Initialize.
 	var/list/priority_settings_for_use = list()
 	/// What priority settings are available to use at the moment.
 	/// We also use this list to sort priorities from ascending to descending.
