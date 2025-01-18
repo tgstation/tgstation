@@ -2,6 +2,7 @@
 	holder_type = /obj/machinery/scanner_gate
 	proper_name = "Scanner Gate"
 	wires = list(WIRE_ACCEPT, WIRE_DENY, WIRE_DISABLE)
+	wire_behavior = WIRES_ALL
 
 /datum/wires/scanner_gate/on_pulse(wire, user)
 	. = ..()

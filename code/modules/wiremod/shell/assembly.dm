@@ -7,13 +7,13 @@
 	name = "circuit assembly"
 	desc = "A small electronic device that can house an integrated circuit."
 	icon_state = "wiremod"
-	attachable = TRUE
+	assembly_behavior = ASSEMBLY_ALL
 
 	/// A reference to any holder to use power from instead of the circuit's own cell
 	var/atom/movable/power_use_proxy
 
 	/// Valid types for `power_use_proxy` to be
-	var/static/list/power_use_override_types = list(/obj/machinery, /obj/vehicle/sealed/mecha, /obj/item/mod/control, /mob/living/silicon/robot)
+	var/static/list/power_use_override_types = list(/obj/machinery, /obj/vehicle/sealed/mecha, /obj/item/mod/control, /obj/item/pressure_plate, /mob/living/silicon/robot)
 
 /obj/item/assembly/wiremod/Initialize(mapload)
 	. = ..()
@@ -23,8 +23,8 @@
 	), SHELL_CAPACITY_SMALL)
 	RegisterSignal(shell, COMSIG_SHELL_CIRCUIT_ATTACHED, PROC_REF(on_circuit_attached))
 	RegisterSignal(shell, COMSIG_SHELL_CIRCUIT_REMOVED, PROC_REF(on_circuit_removed))
-	RegisterSignals(src, list(COMSIG_ASSEMBLY_ATTACHED, COMSIG_ASSEMBLY_ADDED_TO_BUTTON), PROC_REF(on_attached))
-	RegisterSignals(src, list(COMSIG_ASSEMBLY_DETACHED, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON), PROC_REF(on_detached))
+	RegisterSignals(src, list(COMSIG_ASSEMBLY_ATTACHED, COMSIG_ASSEMBLY_ADDED_TO_OBJECT), PROC_REF(on_attached))
+	RegisterSignals(src, list(COMSIG_ASSEMBLY_DETACHED, COMSIG_ASSEMBLY_REMOVED_FROM_OBJECT), PROC_REF(on_detached))
 
 /obj/item/assembly/wiremod/proc/on_circuit_attached(_source, obj/item/integrated_circuit/circuit)
 	SIGNAL_HANDLER
@@ -58,6 +58,12 @@
 	if(istype(power_use_proxy, /obj/item/mod/control))
 		var/obj/item/mod/control/modsuit = power_use_proxy
 		if(modsuit.subtract_charge(power_to_use))
+			return COMPONENT_OVERRIDE_POWER_USAGE
+	if(istype(power_use_proxy, /obj/item/pressure_plate))
+		if(!power_use_proxy.anchored)
+			return
+		var/area/our_area = get_area(power_use_proxy)
+		if(our_area.apc.use_energy(power_to_use, AREA_USAGE_EQUIP))
 			return COMPONENT_OVERRIDE_POWER_USAGE
 	if(iscyborg(power_use_proxy))
 		var/mob/living/silicon/robot/borg = power_use_proxy

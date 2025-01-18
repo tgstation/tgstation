@@ -140,12 +140,15 @@
 	if(device)
 		to_chat(user, span_warning("The button already contains a device!"))
 		return ITEM_INTERACT_BLOCKING
+	if(!(new_device.assembly_behavior & ASSEMBLY_FUNCTIONAL_OUTPUT))
+		to_chat(user, span_warning("\The [new_device] won't really do anything meaningful inside of the button..."))
+		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(new_device, src, silent = FALSE))
 		to_chat(user, span_warning("\The [new_device] is stuck to you!"))
 		return ITEM_INTERACT_BLOCKING
 
 	device = new_device
-	SEND_SIGNAL(new_device, COMSIG_ASSEMBLY_ADDED_TO_BUTTON, src, user)
+	SEND_SIGNAL(new_device, COMSIG_ASSEMBLY_ADDED_TO_OBJECT, src, user)
 	to_chat(user, span_notice("You add \the [new_device] to the button."))
 
 	update_appearance()
@@ -274,7 +277,7 @@
 	return ..()
 
 /obj/machinery/button/proc/remove_assembly(mob/user)
-	SEND_SIGNAL(device, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON, src, user)
+	SEND_SIGNAL(device, COMSIG_ASSEMBLY_REMOVED_FROM_OBJECT, src, user)
 	user.put_in_hands(device)
 	to_chat(user, span_notice("You remove \the [device] from the button frame."))
 	device = null

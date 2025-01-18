@@ -558,16 +558,16 @@
 #define COMSIG_ASSEMBLY_DETACHED "assembly_detached"
 
 /*
- * The following two signals are separate from the above two because buttons don't set the holder of the inserted assembly.
+ * The following two signals are separate from the above two because buttons and pressure plates don't set the holder of the inserted assembly.
  * This causes subtle behavioral differences that future handlers for these signals may need to account for,
  * even if none of the currently implemented handlers do.
  */
 
-/// Sent from /obj/machinery/button/assembly_act(obj/machinery/button/button, mob/user)
-#define COMSIG_ASSEMBLY_ADDED_TO_BUTTON "assembly_added_to_button"
+/// Sent when an assembly is added to a button or pressure plate : (obj/object, mob/user)
+#define COMSIG_ASSEMBLY_ADDED_TO_OBJECT "assembly_added_to_button"
 
-/// Sent from /obj/machinery/button/remove_assembly(obj/machinery/button/button, mob/user)
-#define COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON "assembly_removed_from_button"
+/// Sent when an assembly is removed from a button or pressure plate : (obj/object, mob/user)
+#define COMSIG_ASSEMBLY_REMOVED_FROM_OBJECT "assembly_removed_from_button"
 
 /// Sent from /datum/powernet/add_cable()
 #define COMSIG_CABLE_ADDED_TO_POWERNET "cable_added_to_powernet"
