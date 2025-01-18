@@ -2,7 +2,7 @@
 	name = "12g shotgun slug"
 	icon_state = "pellet"
 	damage = 25
-	armour_penetration = 40
+	armour_penetration = 30
 	sharpness = SHARP_POINTY
 	wound_bonus = 0
 	bare_wound_bonus = 15
