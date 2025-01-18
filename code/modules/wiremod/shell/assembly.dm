@@ -25,7 +25,7 @@
 	RegisterSignal(shell, COMSIG_SHELL_CIRCUIT_REMOVED, PROC_REF(on_circuit_removed))
 	RegisterSignal(src, COMSIG_ASSEMBLY_ALLOW_WIRE_ATTACHMENT, PROC_REF(allow_wire_attachment))
 	RegisterSignals(src, list(COMSIG_ASSEMBLY_ATTACHED, COMSIG_ASSEMBLY_ADDED_TO_BUTTON, COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE), PROC_REF(on_attached))
-	RegisterSignals(src, list(COMSIG_ASSEMBLY_DETACHED, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON, COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE), PROC_REF(on_detached))
+	RegisterSignals(src, list(COMSIG_ASSEMBLY_DETACHED, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON, COMSIG_ASSEMBLY_REMOVED_FROM_PRESSURE_PLATE), PROC_REF(on_detached))
 
 /obj/item/assembly/wiremod/proc/on_circuit_attached(source, obj/item/integrated_circuit/circuit)
 	SIGNAL_HANDLER
