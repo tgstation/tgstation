@@ -51,6 +51,33 @@
 	stock_max = 2
 	availability_prob = 30
 
+/datum/market_item/misc/atrocinator
+	name = "MOD Anti-Gravity Module"
+	desc = "We found this module in a maintenance tunnel, behind several warning cones and hazard signs, unlabeled. It's probably safe."
+	item = /obj/item/mod/module/atrocinator
+	price_min = CARGO_CRATE_VALUE * 4
+	price_max = CARGO_CRATE_VALUE * 7
+	stock_max = 1
+	availability_prob = 22
+
+/datum/market_item/misc/tanner
+	name = "MOD Tanning Module"
+	desc = "Ever wanted to be at the beach AND at work? Now you can with this snazzy tanning module!"
+	item = /obj/item/mod/module/tanner
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 3
+	stock_max = 2
+	availability_prob = 30
+
+/datum/market_item/misc/hat_stabilizer
+	name = "MOD Hat Stabilizer Module"
+	desc = "Don't sacrifice style for substance with this module! Hats not included."
+	item = /obj/item/mod/module/tanner
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 3
+	stock_max = 2
+	availability_prob = 35
+
 /datum/market_item/misc/shove_blocker
 	name = "MOD Bulwark Module"
 	desc = "You have no idea how much effort it took us to extract this module from that damn safeguard MODsuit last shift."
@@ -124,6 +151,17 @@
 	price_max = CARGO_CRATE_VALUE * 6
 	stock_max = 1
 	availability_prob = 15
+
+/datum/market_item/misc/fishing_capsule
+	name = "Fishing Spot Capsule"
+	//IUU stands for Illegal Unreported and Unregulated fishing. Ironic.
+	desc = "A repurposed mining capsule connected to a selection of exclusive fishing spots. Approved by the Intergalactic IUU Fishing Association."
+	price_min = CARGO_CRATE_VALUE * 1.125
+	price_max = CARGO_CRATE_VALUE * 2.125
+	item = /obj/item/survivalcapsule/fishing
+	stock_min = 1
+	stock_max = 4
+	availability_prob = 80
 
 /datum/market_item/misc/fish
 	name = "Fish"

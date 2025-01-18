@@ -541,7 +541,7 @@
 	RegisterSignal(parent, COMSIG_PROJECTILE_PREHIT, PROC_REF(on_bullet_hit))
 	RegisterSignal(parent, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_attacked))
 
-/datum/component/riding/creature/raptor/proc/on_bullet_hit(atom/target, list/bullet_args, obj/projectile/hit_projectile)
+/datum/component/riding/creature/raptor/proc/on_bullet_hit(atom/target, obj/projectile/hit_projectile)
 	SIGNAL_HANDLER
 
 	if(hit_projectile.armor_flag == ENERGY)

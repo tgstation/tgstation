@@ -12,7 +12,7 @@
 #define COMSIG_ATOM_EXPOSE_REAGENT "atom_expose_reagent"
 ///from base of [/datum/reagent/proc/expose_atom]: (/atom, reac_volume)
 #define COMSIG_REAGENT_EXPOSE_ATOM "reagent_expose_atom"
-///from base of [/datum/reagent/proc/expose_atom]: (/obj, reac_volume)
+///from base of [/datum/reagent/proc/expose_atom]: (/obj, reac_volume, methods, show_message)
 #define COMSIG_REAGENT_EXPOSE_OBJ "reagent_expose_obj"
 ///from base of [/datum/reagent/proc/expose_atom]: (/mob/living, reac_volume, methods, show_message, touch_protection, /mob/eye/blob) // ovemind arg is only used by blob reagents.
 #define COMSIG_REAGENT_EXPOSE_MOB "reagent_expose_mob"

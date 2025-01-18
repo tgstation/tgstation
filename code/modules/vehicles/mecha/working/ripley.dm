@@ -181,6 +181,8 @@
 	button_icon_state = "mech_siren_[secmech?.siren ? "on" : "off"]"
 
 /datum/action/vehicle/sealed/mecha/siren/Trigger(trigger_flags, forced_state = FALSE)
+	if(!..())
+		return
 	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
 	secmech.togglesiren()
 
@@ -301,6 +303,10 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	var/obj/vehicle/sealed/mecha/ripley/workmech = chassis
 	workmech.cargo_hold = src
 
+/obj/item/mecha_parts/mecha_equipment/ejector/detach()
+	var/obj/vehicle/sealed/mecha/ripley/workmech = chassis
+	workmech.cargo_hold = null
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/ejector/Destroy()
 	for(var/atom/stored in contents)

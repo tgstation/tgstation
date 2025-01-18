@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				break
 	else // no blob starts so look for an alternate
 		for(var/i in 1 to 16)
-			var/turf/picked_safe = get_safe_random_station_turf()
+			var/turf/picked_safe = get_safe_random_station_turf_equal_weight()
 			if(is_valid_turf(picked_safe))
 				T = picked_safe
 				break
@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(!placed)
 			if(manualplace_min_time && world.time >= manualplace_min_time)
 				to_chat(src, span_boldnotice("You may now place your blob core."))
-				to_chat(src, span_boldannounce("You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)]."))
+				to_chat(src, span_bolddanger("You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)]."))
 				manualplace_min_time = 0
 			if(autoplace_max_time && world.time >= autoplace_max_time)
 				place_blob_core(BLOB_RANDOM_PLACEMENT)
@@ -261,8 +261,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		return FALSE
 	to_chat(src, span_blobannounce("You are the overmind!"))
 	if(!placed && autoplace_max_time <= world.time)
-		to_chat(src, span_boldannounce("You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)]."))
-		to_chat(src, span_boldannounce("You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen."))
+		to_chat(src, span_bolddanger("You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)]."))
+		to_chat(src, span_bolddanger("You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen."))
 	update_health_hud()
 	add_points(0)
 

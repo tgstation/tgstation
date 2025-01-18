@@ -124,6 +124,10 @@
 		clear_mood_event(MOOD_CATEGORY_NUTRITION)
 		return FALSE
 
+	if(HAS_TRAIT(mob_parent, TRAIT_GLUTTON))
+		add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/hungry) //you'll never get enough
+		return TRUE
+
 	if(HAS_TRAIT(mob_parent, TRAIT_FAT) && !HAS_TRAIT(mob_parent, TRAIT_VORACIOUS))
 		add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/fat)
 		return TRUE
@@ -385,7 +389,7 @@
 					msg += span_boldnicegreen(event.description + "\n")
 	else
 		msg += "[span_grey("I don't have much of a reaction to anything right now.")]\n"
-	to_chat(user, examine_block(msg))
+	to_chat(user, boxed_message(msg))
 
 /// Updates the mob's moodies, if the area provides a mood bonus
 /datum/mood/proc/check_area_mood(datum/source, area/new_area)

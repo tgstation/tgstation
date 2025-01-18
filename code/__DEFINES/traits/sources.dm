@@ -165,7 +165,6 @@
 #define STICKY_NODROP "sticky-nodrop"
 #define SKILLCHIP_TRAIT "skillchip"
 #define SKILL_TRAIT "skill"
-#define BUSY_FLOORBOT_TRAIT "busy-floorbot"
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
 #define LOCKED_BORG_TRAIT "locked-borg"
 /// trait associated to not having locomotion appendages nor the ability to fly or float
@@ -305,5 +304,17 @@
 /// Trait added by style component
 #define STYLE_TRAIT "style"
 
+/// Trait added by a xenobio console
+#define XENOBIO_CONSOLE_TRAIT "xenobio_console_trait"
+
 /// Trait from an engraving
 #define ENGRAVED_TRAIT "engraved"
+
+/// From the aquarium component
+#define AQUARIUM_TRAIT "aquarium"
+
+/// Trait aquired from being painted a certain color
+#define ATOM_COLOR_TRAIT "atom_color"
+
+/// Permanent trait from an overdose effect
+#define OVERDOSE_TRAIT "overdose"

@@ -1,8 +1,8 @@
 /datum/status_effect/speech
-	id = null
+	id = STATUS_EFFECT_ID_ABSTRACT
 	alert_type = null
 	remove_on_fullheal = TRUE
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	/// If TRUE, TTS will say the original message rather than what we changed it to
 	var/make_tts_message_original = FALSE
 	/// If set, this will be appended to the TTS filter of the message

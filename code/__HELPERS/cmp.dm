@@ -30,6 +30,9 @@
 /proc/cmp_name_dsc(atom/a, atom/b)
 	return sorttext(a.name, b.name)
 
+/proc/cmp_init_name_asc(atom/a, atom/b)
+	return sorttext(initial(b.name), initial(a.name))
+
 /proc/cmp_records_asc(datum/record/a, datum/record/b)
 	return sorttext(b.name, a.name)
 
@@ -212,3 +215,15 @@
 	var/position_a = fluids_priority.Find(initial(a.required_fluid_type))
 	var/position_b = fluids_priority.Find(initial(b.required_fluid_type))
 	return cmp_numeric_asc(position_a, position_b) || cmp_text_asc(initial(b.name), initial(a.name))
+
+/// Orders vending products by their price
+/proc/cmp_vending_prices(datum/data/vending_product/a, datum/data/vending_product/b)
+	return b.price - a.price
+
+/proc/cmp_item_vending_prices(obj/item/a, obj/item/b)
+	return b.custom_price - a.custom_price
+
+///Sorts stock parts based on tier
+/proc/cmp_rped_sort(obj/item/first_item, obj/item/second_item)
+	///even though stacks aren't stock parts, get_part_rating() is defined on the item level (see /obj/item/proc/get_part_rating()) and defaults to returning 0.
+	return second_item.get_part_rating() - first_item.get_part_rating()

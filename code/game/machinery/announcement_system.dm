@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	///If true, researched nodes will be announced to the appropriate channels
 	var/announce_research_node = TRUE
 	/// The text that we send when announcing researched nodes.
-	var/node_message = "The '%NODE' techweb node has been researched"
+	var/node_message = "The %NODE techweb node has been researched"
 
 /obj/machinery/announcement_system/Initialize(mapload)
 	. = ..()
@@ -164,7 +164,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 				newhead = new_message
 				usr.log_message("updated the head announcement to: [new_message]", LOG_GAME)
 		if("node_message")
-			var/new_message = trim(html_encode(param["new_text"]), MAX_MESSAGE_LEN)
+			var/new_message = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
 			if(new_message)
 				node_message = new_message
 				usr.log_message("updated the researched node announcement to: [node_message]", LOG_GAME)

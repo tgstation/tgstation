@@ -73,6 +73,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon_state = "asclepius_dormant"
 	inhand_icon_state = "asclepius_dormant"
+	icon_angle = -45
 	var/activated = FALSE
 
 /obj/item/rod_of_asclepius/Initialize(mapload)
@@ -323,8 +324,7 @@
 
 /obj/item/warp_cube/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)
-	var/area/current_area = current_location.loc
-	if(!linked || (current_area.area_flags & NOTELEPORT))
+	if(!linked || !check_teleport_valid(src, current_location))
 		to_chat(user, span_warning("[src] fizzles uselessly."))
 		return
 	if(teleporting)
@@ -533,7 +533,6 @@
 /datum/reagent/flightpotion
 	name = "Flight Potion"
 	description = "Strange mutagenic compound of unknown origins."
-	reagent_state = LIQUID
 	color = "#976230"
 
 /datum/reagent/flightpotion/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
@@ -760,8 +759,10 @@
 		berserk_value *= PROJECTILE_HIT_MULTIPLIER
 	berserk_charge = clamp(round(berserk_charge + berserk_value), 0, MAX_BERSERK_CHARGE)
 	if(berserk_charge >= MAX_BERSERK_CHARGE)
+		var/datum/action/item_action/berserk_mode/ragemode = locate() in actions
 		to_chat(owner, span_notice("Berserk mode is fully charged."))
 		balloon_alert(owner, "berserk charged")
+		ragemode?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /obj/item/clothing/head/hooded/berserker/IsReflect()
 	if(berserk_active)
@@ -769,6 +770,7 @@
 
 /// Starts berserk, reducing incoming brute by 50%, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
 /obj/item/clothing/head/hooded/berserker/proc/berserk_mode(mob/living/carbon/human/user)
+	var/datum/action/item_action/berserk_mode/ragemode = locate() in actions
 	to_chat(user, span_warning("You enter berserk mode."))
 	playsound(user, 'sound/effects/magic/staff_healing.ogg', 50)
 	user.add_movespeed_modifier(/datum/movespeed_modifier/berserk)
@@ -779,6 +781,7 @@
 	ADD_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
 	berserk_active = TRUE
 	START_PROCESSING(SSobj, src)
+	ragemode?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /// Ends berserk, reverting the changes from the proc [berserk_mode]
 /obj/item/clothing/head/hooded/berserker/proc/end_berserk(mob/living/carbon/human/user)
@@ -787,6 +790,8 @@
 	berserk_active = FALSE
 	if(QDELETED(user))
 		return
+	var/datum/action/item_action/berserk_mode/ragemode = locate() in actions
+	ragemode?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	to_chat(user, span_warning("You exit berserk mode."))
 	playsound(user, 'sound/effects/magic/summonitems_generic.ogg', 50)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/berserk)
@@ -811,7 +816,11 @@
 
 /obj/item/drake_remains/Initialize(mapload)
 	. = ..()
-	particles = new /particles/bonfire()
+	add_shared_particles(/particles/bonfire)
+
+/obj/item/drake_remains/Destroy(force)
+	remove_shared_particles(/particles/bonfire)
+	return ..()
 
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"
@@ -962,9 +971,7 @@
 	if(!katana.drew_blood)
 		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
 		playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
-		var/obj/item/bodypart/part = owner.get_holding_bodypart_of_item(katana)
-		if(part)
-			part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
+		owner.apply_damage(25, BRUTE, hand, wound_bonus = 10, sharpness = SHARP_EDGED)
 	katana.drew_blood = FALSE
 	katana.wash(CLEAN_TYPE_BLOOD)
 	return ..()
@@ -982,6 +989,7 @@
 	Even with the weapon destroyed, all the pieces containing the creature have coagulated back together to find a new host."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "cursed_katana"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 15
@@ -990,8 +998,8 @@
 	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_HUGE
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | FREEZE_PROOF
 	var/shattered = FALSE
@@ -1004,9 +1012,14 @@
 		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_ATTACK, RIGHT_ATTACK, LEFT_ATTACK, RIGHT_ATTACK), COMBO_PROC = PROC_REF(cloak)),
 		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_ATTACK, LEFT_ATTACK, RIGHT_ATTACK, LEFT_ATTACK), COMBO_PROC = PROC_REF(shatter)),
 	)
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
 
 /obj/item/cursed_katana/Initialize(mapload)
 	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 	AddComponent( \
 		/datum/component/combo_attacks, \
 		combos = combo_list, \
@@ -1070,6 +1083,7 @@
 	user.visible_message(span_warning("[user] does a wide slice!"),
 		span_notice("You do a wide slice!"))
 	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE)
+	user.do_item_attack_animation(target, used_item = src, animation_type = ATTACK_ANIMATION_SLASH)
 	var/turf/user_turf = get_turf(user)
 	var/dir_to_target = get_dir(user_turf, get_turf(target))
 	var/static/list/cursed_katana_slice_angles = list(0, -45, 45, -90, 90) //so that the animation animates towards the target clicked and not towards a side target
@@ -1109,6 +1123,7 @@
 	user.visible_message(span_warning("[user] cuts [target]'s tendons!"),
 		span_notice("You tendon cut [target]!"))
 	to_chat(target, span_userdanger("Your tendons have been cut by [user]!"))
+	user.do_item_attack_animation(target, used_item = src, animation_type = ATTACK_ANIMATION_SLASH)
 	target.apply_damage(damage = 15, sharpness = SHARP_EDGED, wound_bonus = 15)
 	user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(src, 'sound/items/weapons/rapierhit.ogg', 50, TRUE)

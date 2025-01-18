@@ -21,6 +21,7 @@
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "eyes"
+	iris_overlays = FALSE
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
 	low_light_cutoff = list(16, 11, 0)
@@ -74,7 +75,7 @@
 	//but 1.5 damage
 	human_receiver.physiology?.damage_resistance -= 50
 
-/obj/item/organ/heart/rat/on_mob_remove(mob/living/carbon/heartless, special)
+/obj/item/organ/heart/rat/on_mob_remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
 	if(!ishuman(heartless))
 		return

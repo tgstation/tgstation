@@ -454,9 +454,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
 			"green",
 			"blue",
 			"yellow",
-			"orange",
-			"brown",
+			COLOR_ORANGE, // orange is also not valid
+			COLOR_BROWN, // brown is NOT a valid byond color
 			"gray",
+			"purple",
 		)
 	for(var/digit in 0 to 9)
 		digit_to_color["[digit]"] = pick_n_take(possible_colors)

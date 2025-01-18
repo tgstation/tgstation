@@ -10,11 +10,50 @@
 #define CHANNEL_TRAITOR 1016
 #define CHANNEL_CHARGED_SPELL 1015
 #define CHANNEL_ELEVATOR 1014
+#define CHANNEL_ESCAPEMENU 1013
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
-#define CHANNEL_HIGHEST_AVAILABLE 1013
+#define CHANNEL_HIGHEST_AVAILABLE 1012
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
+
+/// This is the lowest volume that can be used by playsound otherwise it gets ignored
+/// Most sounds around 10 volume can barely be heard. Almost all sounds at 5 volume or below are inaudible
+/// This is to prevent sound being spammed at really low volumes due to distance calculations
+/// Recommend setting this to anywhere from 10-3 (or 0 to disable any sound minimum volume restrictions)
+/// Ex. For a 70 volume sound, 17 tile range, 3 exponent, 2 falloff_distance:
+/// Setting SOUND_AUDIBLE_VOLUME_MIN to 0 for the above will result in 17x17 radius (289 turfs)
+/// Setting SOUND_AUDIBLE_VOLUME_MIN to 5 for the above will result in 14x14 radius (196 turfs)
+/// Setting SOUND_AUDIBLE_VOLUME_MIN to 10 for the above will result in 11x11 radius (121 turfs)
+#define SOUND_AUDIBLE_VOLUME_MIN 3
+
+/* Calculates the max distance of a sound based on audible volume
+ *
+ * Note - you should NEVER pass in a volume that is lower than SOUND_AUDIBLE_VOLUME_MIN otherwise distance will be insanely large (like +250,000)
+ *
+ * Arguments:
+ * * volume: The initial volume of the sound being played
+ * * max_distance: The range of the sound in tiles (technically not real max distance since the furthest areas gets pruned due to SOUND_AUDIBLE_VOLUME_MIN)
+ * * falloff_distance: Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
+ * * falloff_exponent: Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
+ * Returns: The max distance of a sound based on audible volume range
+ */
+#define CALCULATE_MAX_SOUND_AUDIBLE_DISTANCE(volume, max_distance, falloff_distance, falloff_exponent)\
+	floor(((((-(max(max_distance - falloff_distance, 0) ** (1 / falloff_exponent)) / volume) * (SOUND_AUDIBLE_VOLUME_MIN - volume)) ** falloff_exponent) + falloff_distance))
+
+/* Calculates the volume of a sound based on distance
+ *
+ * https://www.desmos.com/calculator/sqdfl8ipgf
+ *
+ * Arguments:
+ * * volume: The initial volume of the sound being played
+ * * distance: How far away the sound is in tiles from the source
+ * * falloff_distance: Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
+ * * falloff_exponent: Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
+ * Returns: The max distance of a sound based on audible volume range
+ */
+#define CALCULATE_SOUND_VOLUME(volume, distance, max_distance, falloff_distance, falloff_exponent)\
+	((max(distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(max_distance, distance) - falloff_distance) ** (1 / falloff_exponent)) * volume)
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
@@ -208,6 +247,10 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_INDUSTRIAL_SCAN "industrial_scan"
 #define SFX_MALE_SIGH "male_sigh"
 #define SFX_FEMALE_SIGH "female_sigh"
+#define SFX_WRITING_PEN "writing_pen"
+#define SFX_CLOWN_CAR_LOAD "clown_car_load"
+#define SFX_SEATBELT_BUCKLE "buckle"
+#define SFX_SEATBELT_UNBUCKLE "unbuckle"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000

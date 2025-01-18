@@ -72,7 +72,13 @@
 	name = "imported fish case"
 
 /obj/item/storage/fish_case/tiziran/get_fish_type()
-	return pick(/obj/item/fish/dwarf_moonfish, /obj/item/fish/gunner_jellyfish, /obj/item/fish/needlefish, /obj/item/fish/armorfish)
+	return pick_weight(list(
+		/obj/item/fish/moonfish/dwarf = 2,
+		/obj/item/fish/gunner_jellyfish = 2,
+		/obj/item/fish/needlefish = 2,
+		/obj/item/fish/armorfish = 2,
+		/obj/item/fish/moonfish = 1,
+	))
 
 ///Subtype bought from the blackmarket at a gratuitously cheap price. The catch? The fish inside it is dead.
 /obj/item/storage/fish_case/blackmarket
@@ -111,20 +117,20 @@
 
 /obj/item/aquarium_kit
 	name = "DIY Aquarium Construction Kit"
-	desc = "Everything you need to build your own aquarium. Raw materials sold separately."
+	desc = "Everything you need to build your own aquarium or fish tank. Raw materials sold separately."
 	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "construction_kit"
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/aquarium_kit/Initialize(mapload)
 	. = ..()
-	var/static/list/recipes = list(/datum/crafting_recipe/aquarium)
+	var/static/list/recipes = list(/datum/crafting_recipe/aquarium, /datum/crafting_recipe/fish_tank)
 	AddElement(/datum/element/slapcrafting, recipes)
 
 /obj/item/aquarium_prop
 	name = "generic aquarium prop"
 	desc = "very boring"
-	icon = 'icons/obj/aquarium/supplies.dmi'
+	icon = 'icons/obj/aquarium/tanks.dmi'
 
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/plastic = COIN_MATERIAL_AMOUNT)
@@ -135,14 +141,20 @@
 	. = ..()
 	//It's important that we register the signals before the component is attached.
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(generate_aquarium_appearance))
-	AddComponent(/datum/component/aquarium_content, beauty = beauty)
+	AddComponent(/datum/component/aquarium_content)
 	ADD_TRAIT(src, TRAIT_UNIQUE_AQUARIUM_CONTENT, INNATE_TRAIT)
 
-/obj/item/aquarium_prop/proc/generate_aquarium_appearance(datum/source, obj/effect/aquarium/visual)
+	RegisterSignal(src, COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY, PROC_REF(get_aquarium_beauty))
+
+/obj/item/aquarium_prop/proc/generate_aquarium_appearance(datum/source, obj/effect/aquarium/visual, atom/movable/aquarium)
 	SIGNAL_HANDLER
-	visual.icon = icon
-	visual.icon_state = icon_state
+	visual.icon = aquarium.icon
+	visual.icon_state = "[icon_state][isitem(aquarium) ? "_fish_tank" : ""]"
 	visual.layer_mode = layer_mode
+
+/obj/item/aquarium_prop/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
+	SIGNAL_HANDLER
+	beauty_holder += beauty
 
 /obj/item/aquarium_prop/rocks
 	name = "decorative rocks"

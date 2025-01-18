@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(economy)
 	var/list/bank_accounts_by_id = list()
 	/// A list of bank accounts indexed by their assigned job typepath.
 	var/list/bank_accounts_by_job = list()
-	///List of the departmental budget cards in existance.
+	///List of the departmental budget cards in existence.
 	var/list/dep_cards = list()
 	/// A var that collects the total amount of credits owned in player accounts on station, reset and recounted on fire()
 	var/station_total = 0
@@ -228,8 +228,8 @@ SUBSYSTEM_DEF(economy)
 			continue
 		prices_to_update += vending_lad
 	for(var/i in 1 to length(prices_to_update))
-		var/obj/machinery/vending/V = prices_to_update[i]
-		V.reset_prices(V.product_records, V.coin_records)
+		var/obj/machinery/vending/vending = prices_to_update[i]
+		vending.reset_prices(vending.product_records, vending.coin_records + vending.hidden_records)
 
 #undef ECON_DEPARTMENT_STEP
 #undef ECON_ACCOUNT_STEP

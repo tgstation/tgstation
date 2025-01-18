@@ -57,6 +57,7 @@
 				/obj/item/reagent_containers/cup/fish_feed = 4,
 				/obj/item/fish_analyzer = 2,
 				/obj/item/fishing_rod/telescopic = 1,
+				/obj/item/fish_tank = 1,
 			),
 		),
 		list(

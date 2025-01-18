@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/pull_icon
 	var/atom/movable/screen/rest_icon
 	var/atom/movable/screen/throw_icon
+	var/atom/movable/screen/resist_icon
 	var/atom/movable/screen/module_store_icon
 	var/atom/movable/screen/floor_change
 
@@ -105,6 +106,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// and avoid needing to make changes to all idk 300 consumers if we want to change the appearance
 	var/list/asset_refs_for_reuse = list()
 
+	/// The BYOND version of the client that was last logged into this mob.
+	/// Currently used to rebuild all plane master groups when going between 515<->516.
+	var/last_byond_version
+
 /datum/hud/New(mob/owner)
 	mymob = owner
 
@@ -151,8 +156,20 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
-	RegisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
-	on_eye_change(null, null, mymob.canon_client.eye)
+	var/client/client = mymob.canon_client
+	var/new_byond_version = client.byond_version
+#if MIN_COMPILER_VERSION > 515
+	#warn Fully change default relay_loc to "1,1", rather than changing it based on client version
+#endif
+	if(!isnull(last_byond_version) && new_byond_version != last_byond_version)
+		var/new_relay_loc = (new_byond_version > 515) ? "1,1" : "CENTER"
+		for(var/group_key as anything in master_groups)
+			var/datum/plane_master_group/group = master_groups[group_key]
+			group.relay_loc = new_relay_loc
+			group.rebuild_hud()
+	last_byond_version = new_byond_version
+	RegisterSignal(client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
+	on_eye_change(null, null, client.eye)
 
 /datum/hud/proc/clear_client(datum/source)
 	SIGNAL_HANDLER
@@ -198,6 +215,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	SIGNAL_HANDLER
 	update_parallax_pref() // If your eye changes z level, so should your parallax prefs
 	var/turf/eye_turf = get_turf(eye)
+	if(!eye_turf)
+		return
 	SEND_SIGNAL(src, COMSIG_HUD_Z_CHANGED, eye_turf.z)
 	var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
 	if(current_plane_offset == new_offset)
@@ -495,12 +514,17 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		static_inventory += hand_box
 		hand_box.update_appearance()
 
-	var/i = 1
-	for(var/atom/movable/screen/swap_hand/SH in static_inventory)
-		SH.screen_loc = ui_swaphand_position(mymob,!(i % 2) ? 2: 1)
-		i++
-	for(var/atom/movable/screen/human/equip/E in static_inventory)
-		E.screen_loc = ui_equip_position(mymob)
+	var/num_of_swaps = 0
+	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+		num_of_swaps += 1
+
+	var/hand_num = 1
+	for(var/atom/movable/screen/swap_hand/swap_hands in static_inventory)
+		var/hand_ind = RIGHT_HANDS
+		if (num_of_swaps > 1)
+			hand_ind = IS_RIGHT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
+		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
+		hand_num += 1
 
 	if(ismob(mymob) && mymob.hud_used == src)
 		show_hud(hud_version)
@@ -571,11 +595,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/generate_landings(atom/movable/screen/movable/action_button/button)
 	listed_actions.generate_landing()
 	palette_actions.generate_landing()
+	toggle_palette.activate_landing()
 
 /// Clears all currently visible landings
 /datum/hud/proc/hide_landings()
 	listed_actions.clear_landing()
 	palette_actions.clear_landing()
+	toggle_palette.disable_landing()
 
 // Updates any existing "owned" visuals, ensures they continue to be visible
 /datum/hud/proc/update_our_owner()

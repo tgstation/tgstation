@@ -227,11 +227,6 @@ Consuming extracts:
 	taste = "sugar and starlight"
 
 /obj/item/slime_cookie/bluespace/do_effect(mob/living/eater, mob/user)
-	var/area/eater_area = get_area(eater)
-	if (eater_area.area_flags & NOTELEPORT)
-		fail_effect(eater)
-		return
-
 	var/list/area_turfs = get_area_turfs(get_area(get_turf(eater)))
 	var/turf/target
 

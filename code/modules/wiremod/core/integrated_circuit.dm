@@ -276,6 +276,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 	to_add.rel_x = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS) - screen_x
 	to_add.rel_y = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS) - screen_y
+	SEND_SIGNAL(to_add, COMSIG_CIRCUIT_COMPONENT_ADDED, src)
 	to_add.parent = src
 	attached_components += to_add
 	current_size += to_add.circuit_size

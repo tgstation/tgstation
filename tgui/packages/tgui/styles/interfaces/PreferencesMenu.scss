@@ -1,6 +1,5 @@
 @use 'sass:color';
 @use 'sass:map';
-@use '../components/Button.scss';
 @use '../colors.scss';
 @use '../base.scss';
 
@@ -10,7 +9,7 @@ $department_map: (
   'Cargo': colors.$brown,
   'Command': colors.$yellow,
   'Security': colors.$red,
-  'Engineering': #f1a839,
+  'Engineering': hsl(36, 89%, 60%),
   'Medical': colors.$teal,
   'Science': colors.fg(colors.$purple),
   'Service': colors.$green,
@@ -110,7 +109,7 @@ $department_map: (
 
         .antagonist-days-left {
           text-align: center;
-          text-shadow: 1px 1px 1px #222;
+          text-shadow: 1px 1px 1px hsl(0, 0%, 13.3%);
 
           width: 100%;
 
@@ -140,9 +139,9 @@ $department_map: (
           }
 
           background: colors.fg($color-value);
-          border-bottom: 2px solid rgba(0, 0, 0, 0.3);
-          border-left: 2px solid rgba(0, 0, 0, 0.3);
-          border-right: 2px solid rgba(0, 0, 0, 0.3);
+          border-bottom: 2px solid hsla(0, 0%, 0%, 0.3);
+          border-left: 2px solid hsla(0, 0%, 0%, 0.3);
+          border-right: 2px solid hsla(0, 0%, 0%, 0.3);
           color: black;
 
           > * {
@@ -151,20 +150,20 @@ $department_map: (
           }
 
           &:first-child {
-            border-top: 2px solid rgba(0, 0, 0, 0.3);
+            border-top: 2px solid hsla(0, 0%, 0%, 0.3);
           }
 
           .options {
-            background: rgba(0, 0, 0, 0.2);
+            background: hsla(0, 0%, 0%, 0.2);
             height: 100%;
           }
         }
 
         &--Captain {
-          border: 3px solid rgba(200, 200, 0, 1);
+          border: 3px solid hsla(60, 100%, 39.2%, 1);
 
           &:first-child {
-            border-top: 3px solid rgba(200, 200, 0, 1);
+            border-top: 3px solid hsla(60, 100%, 39.2%, 1);
           }
 
           .job-name {
@@ -174,12 +173,12 @@ $department_map: (
       }
 
       &__priority {
-        border: 1px solid rgba(0, 0, 0, 0.3);
+        border: 1px solid hsla(0, 0%, 0%, 0.3);
 
         &--off::after {
           content: '';
 
-          background: rgba(0, 0, 0, 0.2);
+          background: hsla(0, 0%, 0%, 0.2);
           display: block;
           height: 80%;
           left: 50%;
@@ -209,7 +208,7 @@ $department_map: (
       &__quirk {
         background-color: colors.$white;
         border-bottom: 1px solid black;
-        color: #111;
+        color: hsl(0, 0%, 6.7%);
         transition: background-color 0.1s ease-in;
 
         $quality_map: (

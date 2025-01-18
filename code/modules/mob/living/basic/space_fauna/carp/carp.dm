@@ -19,7 +19,7 @@
 	icon_dead = "base_dead"
 	icon_gib = "carp_gib"
 	gold_core_spawnable = HOSTILE_SPAWN
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
 	health = 25
 	maxHealth = 25
 	pressure_resistance = 200
@@ -40,6 +40,7 @@
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 1)
 	greyscale_config = /datum/greyscale_config/carp
 	ai_controller = /datum/ai_controller/basic_controller/carp
+	initial_language_holder = /datum/language_holder/carp
 	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
@@ -59,7 +60,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack
+		/datum/pet_command/attack
 	)
 	/// Carp want to eat raw meat
 	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
@@ -104,6 +105,7 @@
 		AddElement(/datum/element/ai_flee_while_injured)
 	setup_eating()
 
+	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	AddComponent(/datum/component/profound_fisher)
@@ -111,12 +113,17 @@
 		tamed(tamer, feedback = FALSE)
 		befriend(tamer)
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5)
+		var/static/list/food_types = list(/obj/item/food/meat)
+		AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 10, bonus_tame_chance = 5)
 
 	teleport = new(src)
 	teleport.Grant(src)
 	ai_controller.set_blackboard_key(BB_CARP_RIFT, teleport)
 	ai_controller.set_blackboard_key(BB_OBSTACLE_TARGETING_WHITELIST, allowed_obstacle_targets)
+
+/mob/living/basic/carp/Destroy()
+	QDEL_NULL(teleport)
+	return ..()
 
 /// Tell the elements and the blackboard what food we want to eat
 /mob/living/basic/carp/proc/setup_eating()
@@ -191,6 +198,7 @@
 	gold_core_spawnable = NO_SPAWN
 	gender = FEMALE // Both current existing pet carp are female but you can remove this if someone else gets a male one?
 	ai_controller = /datum/ai_controller/basic_controller/carp/pet
+	initial_language_holder = /datum/language_holder/carp/hear_common
 
 /mob/living/basic/carp/pet/Initialize(mapload)
 	. = ..()

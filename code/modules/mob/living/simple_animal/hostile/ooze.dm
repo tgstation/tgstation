@@ -352,28 +352,28 @@
 
 	return TRUE
 
-/datum/action/cooldown/globules/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/globules/InterceptClickOn(mob/living/clicker, params, atom/target)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	// Why is this in InterceptClickOn() and not Activate()?
 	// Well, we need to use the params of the click intercept
-	// for passing into preparePixelProjectile, so we'll handle it here instead.
+	// for passing into aim_projectile, so we'll handle it here instead.
 	// We just need to make sure Pre-activate and Activate return TRUE so we make it this far
-	caller.visible_message(
-		span_nicegreen("[caller] launches a mending globule!"),
+	clicker.visible_message(
+		span_nicegreen("[clicker] launches a mending globule!"),
 		span_notice("You launch a mending globule."),
 	)
 
-	var/mob/living/simple_animal/hostile/ooze/oozy = caller
+	var/mob/living/simple_animal/hostile/ooze/oozy = clicker
 	if(istype(oozy))
 		oozy.adjust_ooze_nutrition(-5)
 
 	var/modifiers = params2list(params)
-	var/obj/projectile/globule/globule = new(caller.loc)
-	globule.preparePixelProjectile(target, caller, modifiers)
-	globule.def_zone = caller.zone_selected
+	var/obj/projectile/globule/globule = new(clicker.loc)
+	globule.aim_projectile(target, clicker, modifiers)
+	globule.def_zone = clicker.zone_selected
 	globule.fire()
 
 	StartCooldown()
@@ -389,50 +389,32 @@
 	name = "mending globule"
 	icon_state = "glob_projectile"
 	shrapnel_type = /obj/item/mending_globule
-	embed_type = /datum/embed_data/mending_globule
+	embed_type = /datum/embedding/mending_globule
 	damage = 0
 
-///This item is what is embedded into the mob, and actually handles healing of mending globules
+///This item is what is embedded into the mob
 /obj/item/mending_globule
 	name = "mending globule"
 	desc = "It somehow heals those who touch it."
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "globule"
-	embed_type = /datum/embed_data/mending_globule
-	var/obj/item/bodypart/bodypart
 	var/heals_left = 35
 
-/datum/embed_data/mending_globule
+/datum/embedding/mending_globule
 	embed_chance = 100
 	ignore_throwspeed_threshold = TRUE
 	pain_mult = 0
 	jostle_pain_mult = 0
 	fall_chance = 0.5
 
-/obj/item/mending_globule/Destroy()
+// This already processes, zero logic to add additional tracking to the item
+/datum/embedding/mending_globule/process(seconds_per_tick)
 	. = ..()
-	bodypart = null
-
-/obj/item/mending_globule/embedded(mob/living/carbon/human/embedded_mob, obj/item/bodypart/part)
-	. = ..()
-	if(!istype(part))
-		return
-	bodypart = part
-	START_PROCESSING(SSobj, src)
-
-/obj/item/mending_globule/unembedded()
-	. = ..()
-	bodypart = null
-	STOP_PROCESSING(SSobj, src)
-
-///Handles the healing of the mending globule
-/obj/item/mending_globule/process()
-	if(!bodypart) //this is fucked
-		return FALSE
-	bodypart.heal_damage(1,1)
-	heals_left--
-	if(heals_left <= 0)
-		qdel(src)
+	var/obj/item/mending_globule/globule = parent
+	owner_limb.heal_damage(0.5 * seconds_per_tick, 0.5 * seconds_per_tick)
+	globule.heals_left--
+	if(globule.heals_left <= 0)
+		qdel(globule)
 
 ///This action lets you put a mob inside of a cacoon that will inject it with some chemicals.
 /datum/action/cooldown/gel_cocoon

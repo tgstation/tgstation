@@ -49,14 +49,8 @@
 
 	batman.visible_message(span_warning("[batman] gets a slightly too tight hug from [big_guy]!"), span_userdanger("You feel your body break as [big_guy] embraces you!"))
 
-	if(iscarbon(batman))
-		var/mob/living/carbon/carbon_batman = batman
-		for(var/obj/item/bodypart/bodypart_to_break in carbon_batman.bodyparts)
-			if(bodypart_to_break.body_zone == BODY_ZONE_HEAD)
-				continue
-			bodypart_to_break.receive_damage(brute = 15, wound_bonus = 35)
-	else
-		batman.adjustBruteLoss(150)
+	for(var/zone in GLOB.all_body_zones - BODY_ZONE_HEAD)
+		batman.apply_damage(15, BRUTE, zone, wound_bonus = 35)
 
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
@@ -121,7 +115,7 @@
 	var/obj/item/held_item = pawn.get_active_held_item()
 	var/atom/target = controller.blackboard[target_key]
 
-	if(!held_item) //if held_item is null, we pretend that action was succesful
+	if(!held_item) //if held_item is null, we pretend that action was successful
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	if(!target || !isliving(target))

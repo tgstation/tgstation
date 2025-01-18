@@ -116,6 +116,13 @@
 	labels_left = initial(labels_left) //Yes, it's capped at its initial value
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/hand_labeler/examine()
+	. = ..()
+	if(labels_left > 0)
+		. += span_notice("It looks like it could label [labels_left] more thing\s.")
+	else
+		. += span_notice("It's out of labels.")
+
 /obj/item/hand_labeler/borg
 	name = "cyborg-hand labeler"
 

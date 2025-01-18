@@ -96,6 +96,9 @@
 /datum/status_effect/terrified/proc/comfort_owner(datum/source, mob/living/hugger)
 	SIGNAL_HANDLER
 
+	if(hugger == owner)
+		return
+
 	if(isnightmare(hugger)) //hey wait a minute, that's not a comforting, friendly hug!
 		if(check_surrounding_darkness())
 			addtimer(CALLBACK(src, PROC_REF(freak_out), HUG_TERROR_AMOUNT))

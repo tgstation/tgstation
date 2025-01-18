@@ -15,7 +15,7 @@
 	required_atoms = list(/mob/living/carbon/human = 1)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
-	route = PATH_START
+	is_starting_knowledge = TRUE
 	research_tree_icon_path = 'icons/effects/eldritch.dmi'
 	research_tree_icon_state = "eye_close"
 	research_tree_icon_frame = 1
@@ -519,7 +519,7 @@
 		return
 
 	// Teleport them to a random safe coordinate on the station z level.
-	var/turf/open/floor/safe_turf = get_safe_random_station_turf()
+	var/turf/open/floor/safe_turf = get_safe_random_station_turf_equal_weight()
 	var/obj/effect/landmark/observer_start/backup_loc = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	if(!safe_turf)
 		safe_turf = get_turf(backup_loc)
