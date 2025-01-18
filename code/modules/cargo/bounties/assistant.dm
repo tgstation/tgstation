@@ -41,11 +41,41 @@
 	wanted_types = list(/obj/item/spear = TRUE)
 
 /datum/bounty/item/assistant/toolbox
-	name = "Toolboxes"
-	description = "There's an absence of robustness at Central Command. Hurry up and ship some toolboxes as a solution."
+	name = "Stocked Toolbox"
+	description = "There's an absence of robustness at Central Command. Ship them a fully packed toolbox as a solution, containing a screwdriver, wrench, welding tool, crowbar, analyzer, and wirecutters."
 	reward = CARGO_CRATE_VALUE * 4
-	required_count = 6
 	wanted_types = list(/obj/item/storage/toolbox = TRUE)
+	/// Typecache of tools that we want to see sorted into a toolbox. Unpacked in New(), verified in applies_to(), and then contents are filtered out in ship().
+	var/list/static_packing_list = list(
+		/obj/item/screwdriver = TRUE,
+		/obj/item/wrench = TRUE,
+		/obj/item/weldingtool = TRUE,
+		/obj/item/crowbar = TRUE,
+		/obj/item/analyzer = TRUE,
+		/obj/item/wirecutters = TRUE,
+	)
+
+/datum/bounty/item/assistant/toolbox/New()
+	. = ..()
+	static_packing_list = string_assoc_list(zebra_typecacheof(static_packing_list, only_root_path = FALSE))
+
+/datum/bounty/item/assistant/toolbox/applies_to(obj/shipped)
+	var/list/packing_list = static_packing_list.Copy()
+	for(var/obj/item_contents as anything in shipped.contents)
+		if(is_type_in_typecache(item_contents.type, packing_list))
+			packing_list -= subtypesof(item_contents.type)
+			packing_list -= item_contents.type
+		if(!length(packing_list))
+			return ..()
+
+	return FALSE
+
+/datum/bounty/item/assistant/toolbox/ship(obj/shipped)
+	. = ..()
+	for(var/obj/object as anything in shipped.contents)
+		if(!is_type_in_typecache(object.type, static_packing_list))
+			object.forceMove(shipped.drop_location())
+
 
 /datum/bounty/item/assistant/statue
 	name = "Statue"
@@ -133,7 +163,7 @@
 	name = "Potted Plants"
 	description = "Central Command is looking to commission a new BirdBoat-class station. You've been ordered to supply the potted plants."
 	reward = CARGO_CRATE_VALUE * 4
-	required_count = 8
+	required_count = 3
 	wanted_types = list(/obj/item/kirbyplants = TRUE)
 
 /datum/bounty/item/assistant/monkey_cubes

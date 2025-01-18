@@ -19,26 +19,26 @@
 			D.adjust_money(reward * SSeconomy.bounty_modifier)
 		claimed = TRUE
 
-/// If an item sent in the cargo shuttle can satisfy the bounty.
+/// If an item in question can satisfy the bounty.
 /datum/bounty/proc/applies_to(obj/O)
 	return FALSE
 
-/// Called when an object is shipped on the cargo shuttle.
+/// Called when an object is sent on the bounty pad.
 /datum/bounty/proc/ship(obj/O)
 	return
 
 /** Returns a new bounty of random type, but does not add it to GLOB.bounties_list.
  *
- * *Guided determines what specific catagory of bounty should be chosen.
+ * * Category determines what specific catagory of bounty should be chosen.
  */
-/proc/random_bounty(guided = 0)
+/proc/random_bounty(category = 0)
 	var/bounty_num
 	var/chosen_type
 	var/bounty_succeeded = FALSE
 	var/datum/bounty/item/bounty_ref
 	while(!bounty_succeeded)
-		if(guided && (guided != CIV_JOB_RANDOM))
-			bounty_num = guided
+		if(category && (category != CIV_JOB_RANDOM))
+			bounty_num = category
 		else
 			bounty_num = rand(1, MAXIMUM_BOUNTY_JOBS)
 		switch(bounty_num)
