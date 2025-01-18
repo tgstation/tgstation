@@ -9,10 +9,12 @@
 
 /// The wires interact with their holder when pulsed
 #define WIRES_INPUT (1<<0)
-/// The holder can pulse its wires
-#define WIRES_OUTPUT (1<<1 | 1<<2)
+/// The wires have a reason to toggle whether attached assemblies are armed
+#define WIRES_TOGGLE_ARMED (1<<1)
+/// The wires only want to activate assemblies that do something other than (dis)arming themselves
+#define WIRES_FUNCTIONAL_OUTPUT (1<<2)
 /// The holder can both pulse its wires and be affected by its wires getting pulsed
-#define WIRES_ALL (WIRES_INPUT | WIRES_OUTPUT)
+#define WIRES_ALL (WIRES_INPUT | WIRES_TOGGLE_ARMED | WIRES_FUNCTIONAL_OUTPUT)
 
 /// The assembly can pulse a wire it is attached to
 #define ASSEMBLY_INPUT (1<<0)

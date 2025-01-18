@@ -14,13 +14,6 @@
 		wires += "Port [index]"
 	..()
 
-/datum/wires/wire_bundle_component/attach_assembly(color, obj/item/assembly/assembly)
-	var/datum/component/shell/assembly_shell_comp = assembly.GetComponent(/datum/component/shell)
-	// Recursion prevention - if the circuit is admin-only we are fine with attaching the assembly containing it
-	if(assembly_shell_comp && !assembly_shell_comp.attached_circuit?.admin_only)
-		return
-	. = ..()
-
 /datum/wires/wire_bundle_component/always_reveal_wire(color)
 	return TRUE // Let's not make wiring up this stuff confusing - just give them what wires correspond to what ports.
 

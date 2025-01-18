@@ -1,6 +1,6 @@
 /obj/item/undertile_circuit
 	name = "circuit panel"
-	desc = "An panel for an integrated circuit. It needs to be fit under a floor tile to operate."
+	desc = "A panel for an integrated circuit. It needs to be fit under a floor tile to operate."
 	icon = 'icons/obj/science/circuits.dmi'
 	inhand_icon_state = "flashtool"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'

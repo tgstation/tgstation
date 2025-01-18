@@ -72,8 +72,8 @@
 /datum/component/circuit_component_wirenet_connection/proc/set_shell(atom/movable/new_shell)
 	tracked_shell = new_shell
 	if(isassembly(new_shell))
-		RegisterSignals(new_shell, list(COMSIG_ASSEMBLY_ATTACHED, COMSIG_ASSEMBLY_ADDED_TO_OBJECT), PROC_REF(on_assembly_shell_attached))
-		RegisterSignals(new_shell, list(COMSIG_ASSEMBLY_DETACHED, COMSIG_ASSEMBLY_REMOVED_FROM_OBJECT), PROC_REF(on_assembly_shell_detached))
+		RegisterSignals(new_shell, list(COMSIG_ASSEMBLY_ATTACHED, COMSIG_ASSEMBLY_ADDED_TO_BUTTON), PROC_REF(on_assembly_shell_attached))
+		RegisterSignals(new_shell, list(COMSIG_ASSEMBLY_DETACHED, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON), PROC_REF(on_assembly_shell_detached))
 	else
 		set_tracked_movable(new_shell)
 
@@ -83,7 +83,7 @@
 	if(!tracked_shell)
 		return
 	if(isassembly(tracked_shell))
-		UnregisterSignal(tracked_shell, list(COMSIG_ASSEMBLY_ATTACHED, COMSIG_ASSEMBLY_DETACHED, COMSIG_ASSEMBLY_ADDED_TO_OBJECT, COMSIG_ASSEMBLY_REMOVED_FROM_OBJECT))
+		UnregisterSignal(tracked_shell, list(COMSIG_ASSEMBLY_ATTACHED, COMSIG_ASSEMBLY_DETACHED, COMSIG_ASSEMBLY_ADDED_TO_BUTTON, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON))
 	tracked_shell = null
 
 /datum/component/circuit_component_wirenet_connection/proc/on_assembly_shell_attached(_source, atom/holder)

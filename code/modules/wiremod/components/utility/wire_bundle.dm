@@ -73,7 +73,7 @@
 	var/obj/item/assembly/attached = tracked_wires.get_attached(color)
 	attached?.activate()
 
-/obj/item/circuit_component/wire_bundle/proc/on_pulse_wire(_source, wire)
+/obj/item/circuit_component/wire_bundle/proc/on_pulse_wire(source, wire)
 	SIGNAL_HANDLER
 	if(tracked_wires.is_cut(wire))
 		return
@@ -82,7 +82,7 @@
 		return
 	port.set_output(COMPONENT_SIGNAL)
 
-/obj/item/circuit_component/wire_bundle/proc/extra_wire_accesibility_checks(atom/source)
+/obj/item/circuit_component/wire_bundle/proc/can_access_wires(atom/source)
 	if(ismachinery(source))
 		var/obj/machinery/machine = source
 		return machine.panel_open
@@ -94,7 +94,7 @@
 
 	if(!is_wire_tool(item))
 		return
-	if(!extra_wire_accesibility_checks(source))
+	if(!can_access_wires(source))
 		return
 	context[SCREENTIP_CONTEXT_RMB] = "Interact with wires"
 	return CONTEXTUAL_SCREENTIP_SET
@@ -103,7 +103,7 @@
 	SIGNAL_HANDLER
 	if(!is_wire_tool(tool))
 		return
-	if(!extra_wire_accesibility_checks(source))
+	if(!can_access_wires(source))
 		return
 	var/datum/component/shell/shell_comp = source.GetComponent(/datum/component/shell)
 	if(shell_comp.locked)

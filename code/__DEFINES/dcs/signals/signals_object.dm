@@ -558,19 +558,30 @@
 #define COMSIG_ASSEMBLY_DETACHED "assembly_detached"
 
 /*
- * The following two signals are separate from the above two because buttons and pressure plates don't set the holder of the inserted assembly.
+ * The following four signals are separate from the above two because buttons and pressure plates don't set the holder of the inserted assembly.
  * This causes subtle behavioral differences that future handlers for these signals may need to account for,
  * even if none of the currently implemented handlers do.
  */
 
-/// Sent when an assembly is added to a button or pressure plate : (obj/object, mob/user)
-#define COMSIG_ASSEMBLY_ADDED_TO_OBJECT "assembly_added_to_button"
+/// Sent when an assembly is added to a button : (obj/machinery/button/button, mob/user)
+#define COMSIG_ASSEMBLY_ADDED_TO_BUTTON "assembly_added_to_button"
 
-/// Sent when an assembly is removed from a button or pressure plate : (obj/object, mob/user)
-#define COMSIG_ASSEMBLY_REMOVED_FROM_OBJECT "assembly_removed_from_button"
+/// Sent when an assembly is removed from a button : (obj/machinery/button/button, mob/user)
+#define COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON "assembly_removed_from_button"
+
+/// Sent when an assembly is added to a pressure plate : (obj/item/pressureplate/pressure_plate, mob/user)
+#define COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE "assembly_added_to_pressure_plate"
+
+/// Sent when an assembly is removed from a pressure plate : (obj/item/pressureplate/pressure_plate, mob/user)
+#define COMSIG_ASSEMBLY_REMOVED_FROM_PRESSURE_PLATE "assembly_removed_from_pressure_playe"
 
 /// Sent from /datum/powernet/add_cable()
 #define COMSIG_CABLE_ADDED_TO_POWERNET "cable_added_to_powernet"
 
 /// Sent from /datum/powernet/remove_cable()
 #define COMSIG_CABLE_REMOVED_FROM_POWERNET "cable_removed_from_powernet"
+
+/// Send from /datum/wires/attach_assembly() : (datum/wires/wires)
+#define COMSIG_ASSEMBLY_ALLOW_WIRE_ATTACHMENT "assembly_allow_wire_bundle_attachment"
+	/// Don't allow the assembly to be attached
+	#define COMPONENT_FORBID_ATTACHMENT (1<<0)

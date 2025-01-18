@@ -71,14 +71,14 @@
 			return
 		if(L.transferItemToLoc(item, src))
 			assembly = item
-			SEND_SIGNAL(item, COMSIG_ASSEMBLY_ADDED_TO_OBJECT, src, L)
+			SEND_SIGNAL(item, COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE, src, L)
 		to_chat(L, span_notice("You attach [item] to [src]!"))
 	return ..()
 
 /obj/item/pressure_plate/attack_self(mob/living/L)
 	if(removable_assembly && istype(assembly))
 		to_chat(L, span_notice("You remove [assembly] from [src]."))
-		SEND_SIGNAL(assembly, COMSIG_ASSEMBLY_REMOVED_FROM_OBJECT, src, L)
+		SEND_SIGNAL(assembly, COMSIG_ASSEMBLY_REMOVED_FROM_PRESSURE_PLATE, src, L)
 		if(!L.put_in_hands(assembly))
 			assembly.forceMove(get_turf(src))
 		assembly = null

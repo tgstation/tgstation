@@ -23,10 +23,11 @@
 	), SHELL_CAPACITY_SMALL)
 	RegisterSignal(shell, COMSIG_SHELL_CIRCUIT_ATTACHED, PROC_REF(on_circuit_attached))
 	RegisterSignal(shell, COMSIG_SHELL_CIRCUIT_REMOVED, PROC_REF(on_circuit_removed))
-	RegisterSignals(src, list(COMSIG_ASSEMBLY_ATTACHED, COMSIG_ASSEMBLY_ADDED_TO_OBJECT), PROC_REF(on_attached))
-	RegisterSignals(src, list(COMSIG_ASSEMBLY_DETACHED, COMSIG_ASSEMBLY_REMOVED_FROM_OBJECT), PROC_REF(on_detached))
+	RegisterSignal(src, COMSIG_ASSEMBLY_ALLOW_WIRE_ATTACHMENT, PROC_REF(allow_wire_attachment))
+	RegisterSignals(src, list(COMSIG_ASSEMBLY_ATTACHED, COMSIG_ASSEMBLY_ADDED_TO_BUTTON, COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE), PROC_REF(on_attached))
+	RegisterSignals(src, list(COMSIG_ASSEMBLY_DETACHED, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON, COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE), PROC_REF(on_detached))
 
-/obj/item/assembly/wiremod/proc/on_circuit_attached(_source, obj/item/integrated_circuit/circuit)
+/obj/item/assembly/wiremod/proc/on_circuit_attached(source, obj/item/integrated_circuit/circuit)
 	SIGNAL_HANDLER
 	RegisterSignal(circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(override_circuit_power_usage))
 
@@ -34,12 +35,22 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(source.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE)
 
-/obj/item/assembly/wiremod/proc/on_attached(_source, atom/movable/holder)
+/obj/item/assembly/wiremod/proc/allow_wire_attachment(obj/item/circuit_component/wire_bundle/source, datum/wires/wire_bundle_component/wires)
+	SIGNAL_HANDLER
+	if(source.parent.admin_only)
+		return
+	if(istype(wires))
+		var/datum/component/shell/shell_comp = GetComponent(/datum/component/shell)
+		if(shell_comp.attached_circuit.admin_only)
+			return
+		return COMPONENT_FORBID_ATTACHMENT
+
+/obj/item/assembly/wiremod/proc/on_attached(source, atom/movable/holder)
 	SIGNAL_HANDLER
 	if(is_type_in_list(holder, power_use_override_types))
 		power_use_proxy = holder
 
-/obj/item/assembly/wiremod/proc/on_detached(_source)
+/obj/item/assembly/wiremod/proc/on_detached(source)
 	SIGNAL_HANDLER
 	power_use_proxy = null
 
@@ -63,7 +74,7 @@
 		if(!power_use_proxy.anchored)
 			return
 		var/area/our_area = get_area(power_use_proxy)
-		if(our_area.apc.use_energy(power_to_use, AREA_USAGE_EQUIP))
+		if(our_area.apc?.use_energy(power_to_use, AREA_USAGE_EQUIP))
 			return COMPONENT_OVERRIDE_POWER_USAGE
 	if(iscyborg(power_use_proxy))
 		var/mob/living/silicon/robot/borg = power_use_proxy
