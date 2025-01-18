@@ -58,12 +58,19 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/slime,
 		/mob/living/carbon/alien,
 	)),
-	"anime" = typecacheof(list(/mob/living/basic/guardian)),
+	"anime" = typecacheof(list(
+		/mob/living/basic/guardian,
+		/mob/living/basic/migo/hatsune
+	)),
+	"authority" = typecacheof(list(
+		/mob/living/basic/trooper/nanotrasen,
+	)),
 	"birds" = typecacheof(list(
 		/mob/living/basic/chick,
 		/mob/living/basic/chicken,
 		/mob/living/basic/parrot,
 		/mob/living/basic/pet/penguin,
+		/mob/living/basic/raptor,
 		/mob/living/simple_animal/hostile/retaliate/goose,
 	)),
 	"conspiracies" = typecacheof(list(
@@ -77,20 +84,27 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/space_dragon,
 	)),
 	"insects" = typecacheof(list(
+		/mob/living/basic/ant,
 		/mob/living/basic/bee,
 		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
+		/mob/living/basic/mega_arachnid,
 		/mob/living/basic/mothroach,
 	)),
 	"lizards" = typecacheof(list(/mob/living/basic/lizard)),
 	"robots" = typecacheof(list(
+		/mob/living/basic/bot,
 		/mob/living/basic/drone,
 		/mob/living/silicon/ai,
 		/mob/living/silicon/robot,
 		/mob/living/simple_animal/bot,
 	)),
 	"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
-	"spiders" = typecacheof(list(/mob/living/basic/spider/giant)),
+	"spiders" = typecacheof(list(
+		/mob/living/basic/flesh_spider,
+		/mob/living/basic/mega_arachnid,
+		/mob/living/basic/spider/giant,
+	)),
 	"skeletons" = typecacheof(list(/mob/living/basic/skeleton)),
 	"snakes" = typecacheof(list(/mob/living/basic/snake)),
 	"the supernatural" = typecacheof(list(
@@ -134,6 +148,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/toy/toy_xeno,
 		/obj/item/toy/plush/abductor,
 		/obj/item/toy/plush/abductor/agent,
+		/obj/item/toy/plush/rouny,
 		/obj/item/weldingtool/abductor,
 		/obj/item/wirecutters/abductor,
 		/obj/item/wrench/abductor,
@@ -232,9 +247,12 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/under/costume/griffin,
 		/obj/item/clothing/under/costume/owl,
 		/obj/item/food/cracker,
+		/obj/item/food/egg,
 	)),
 	"blood" = typecacheof(list(
 		/obj/effect/decal/cleanable/blood,
+		/obj/item/food/fried_blood_sausage,
+		/obj/item/food/tiziran_sausage,
 		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/syringe,
 		/obj/machinery/iv_drip,
@@ -249,7 +267,9 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/under/plasmaman/clown,
 		/obj/item/clothing/gloves/color/plasmaman/clown,
 		/obj/item/clothing/under/rank/civilian/clown,
+		/obj/item/food/burger/clown,
 		/obj/item/food/cheesiehonkers,
+		/obj/item/food/meatclown,
 		/obj/item/food/pie/cream,
 		/obj/item/grown/bananapeel,
 		/obj/item/gun/magic/staff/honk,
@@ -427,6 +447,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	"robots" = typecacheof(list(
 		/obj/item/ai_module,
 		/obj/item/aicard,
+		/obj/item/mmi/posibrain,
 		/obj/item/toy/figure/borg,
 		/obj/item/toy/talking/ai,
 		/obj/machinery/computer/upload,
@@ -457,6 +478,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	"skeletons" = typecacheof(list(
 		/obj/effect/decal/remains/human,
 		/obj/item/clothing/suit/armor/bone,
+		/obj/item/dog_bone,
 		/obj/item/food/meat/slab/human/mutant/skeleton,
 		/obj/item/organ/tongue/bone,
 		/obj/item/stack/sheet/bone,
@@ -553,6 +575,8 @@ GLOBAL_LIST_INIT(phobia_species, list(
 		/datum/species/plasmaman,
 		/datum/species/skeleton,
 	)),
+	"space" = typecacheof(list(/datum/species/voidwalker)),
+	"supernatural" = typecacheof(list(/datum/species/voidwalker))
 ))
 
 /// Creates a regular expression to match against the given phobia

@@ -1,6 +1,7 @@
 {
 	"aliens": [
 		"abductee",
+		"abduction",
 		"abductor",
 		"alien",
 		"ayy lmao",
@@ -10,6 +11,7 @@
 		"mothership",
 		"resin",
 		"slime",
+		"ufo",
 		"xeno",
 		"xenobiology",
 		"xenomorph"
@@ -45,11 +47,12 @@
 
 	"authority": [
 		"admiral",
+		"boss",
 		"cap",
 		"captain",
 		"ce",
 		"centcom",
-		"centcom",
+		"centcomm",
 		"chief",
 		"cmo",
 		"comdom",
@@ -73,20 +76,28 @@
 		"beak",
 		"bird",
 		"birdemic",
+		"caw",
 		"chick",
+		"chirp",
 		"cracker",
+		"crow",
 		"eagle",
 		"feather",
 		"flap",
 		"fowl",
 		"griffin",
+		"griffon",
+		"hawk",
 		"ka kaw",
 		"kakaw",
 		"ki ki ya ya",
 		"kiki yaya",
 		"owl",
+		"parrot",
 		"peck",
 		"poly",
+		"raptor",
+		"raven",
 		"vox",
 		"wing"
 	],
@@ -99,6 +110,8 @@
 		"bloodloss",
 		"bloody",
 		"dialysis",
+		"exsanguinate",
+		"exsanguinated",
 		"gib",
 		"gibbed",
 		"gibs",
@@ -107,13 +120,20 @@
 		"hemorrhaged",
 		"hemorrhaging",
 		"iv",
-		"transfusion"
+		"leech",
+		"transfusion",
+		"vampire"
 	],
 
 	"clowns": [
 		"banana",
 		"clown",
+		"creampie",
+		"cream pie",
 		"honk",
+		"horn",
+		"jester",
+		"red nose",
 		"slip",
 		"slipped",
 		"slipping"
@@ -145,8 +165,10 @@
 		"hos",
 		"illuminati",
 		"jet fuel",
+		"mask",
 		"nanotrasen",
 		"qm",
+		"quarantine",
 		"quarter master",
 		"quartermaster",
 		"rd",
@@ -156,6 +178,9 @@
 		"steel beam",
 		"ufo",
 		"globo-homo",
+		"vaccine",
+		"vaccinated",
+		"vaccination",
 		"xeno"
 	],
 
@@ -174,7 +199,11 @@
 		"md",
 		"medicine",
 		"nurse",
+		"pill",
 		"sleeper",
+		"vaccine",
+		"vaccinated",
+		"vaccination",
 		"viro",
 		"virologist",
 		"virology"
@@ -284,17 +313,30 @@
 	],
 
 	"insects": [
+		"ant",
+		"ants",
 		"bee",
+		"butterfly",
 		"buzz",
 		"cockroach",
+		"cocoon",
 		"flutter",
 		"fly",
 		"glockroach",
+		"grub",
+		"hive",
+		"infest",
+		"infested",
+		"infestation",
 		"insect",
+		"insects",
 		"moff",
 		"moth",
+		"mothroach",
 		"roach",
-		"sting"
+		"sting",
+		"swarm",
+		"worm"
 	],
 
 	"lizards": [
@@ -317,6 +359,7 @@
 		"antagonist",
 		"ban",
 		"banned",
+		"batong",
 		"chat",
 		"click",
 		"c*der",
@@ -325,6 +368,10 @@
 		"discord",
 		"erp",
 		"forum",
+		"griff",
+		"griffing",
+		"headmin",
+		"host",
 		"ick ock",
 		"joever",
 		"k",
@@ -333,6 +380,7 @@
 		"leddit",
 		"lmao",
 		"lol",
+		"maintainer",
 		"mapper",
 		"moderator",
 		"mods",
@@ -340,6 +388,7 @@
 		"murderboning",
 		"ocky",
 		"ooc",
+		"omg",
 		"owo",
 		"pwn",
 		"powergame",
@@ -358,6 +407,7 @@
 		"uwa",
 		"uwu",
 		"valid",
+		"wtf",
 		"y",
 		"5head"
 	],
@@ -371,35 +421,55 @@
 		"borg",
 		"bot",
 		"cyborg",
+		"drone",
+		"positronic",
 		"robot",
 		"silicon",
 		"silly cone"
 	],
 
 	"security": [
+		"arrest",
+		"baton",
+		"batong",
+		"behind bars",
+		"beepsky",
+		"brig",
+		"genpop",
+		"gulag",
+		"holding cell",
+		"hos",
+		"jail",
+		"prison",
+		"solitary confinement",
+		"the nick",
+		"the slammer",
 		"sec",
 		"security",
 		"shitcurity",
-		"baton",
-		"taser",
-		"beepsky",
-		"hos",
-		"brig",
-		"gulag"
+		"taser"
 	],
 
 	"skeletons": [
 		"bone",
 		"calcium",
 		"doot",
+		"rib",
+		"ribs",
 		"skeleton",
+		"skull",
+		"tibia",
 		"the ride never ends",
 		"xylophone"
 	],
 
 	"snakes": [
+		"adder",
 		"anaconda",
+		"cobra",
+		"constrictor",
 		"fangs",
+		"mamba",
 		"python",
 		"slither",
 		"snake",
@@ -409,18 +479,31 @@
 	],
 
 	"space": [
+		"asteroid",
+		"EVA",
+		"comet",
+		"cosmic",
+		"galactic",
+		"galaxy",
+		"intergalactic",
+		"meteor",
+		"meteorite",
+		"nebula",
 		"space",
+		"spess",
 		"star",
 		"universe",
 		"void",
-		"galaxy",
-		"spess"
+		"voidwalker"
 	],
 
 	"spiders": [
+		"arachnid",
+		"black widow",
+		"cocoon",
 		"spider",
-		"web",
-		"arachnid"
+		"tarantula",
+		"web"
 	],
 
 	"strangers": [
@@ -431,17 +514,19 @@
 	],
 
 	"the supernatural": [
-		"chapel",
-		"chaplain",
-		"chappy",
 		"cult",
 		"cultist",
+		"curse",
 		"demon",
+		"devil",
 		"ei nath",
 		"eldritch",
+		"ghast",
 		"ghost",
-		"god",
-		"goddess",
+		"ghoul",
+		"haunt",
+		"haunting",
+		"haunted",
 		"heretic",
 		"lich",
 		"magic",
@@ -452,20 +537,22 @@
 		"nar-sie",
 		"nightmare",
 		"ratvar",
-		"religion",
+		"revenant",
 		"ritual",
 		"rune",
 		"sigil",
+		"specter",
+		"spectre",
+		"spell",
+		"summon",
+		"summoning",
 		"talisman",
 		"tome",
 		"vampire",
 		"voidwalker",
+		"witch",
 		"wiz",
 		"wizard",
 		"zombie"
 	]
-
-
-
-
 }
