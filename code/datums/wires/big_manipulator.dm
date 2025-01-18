@@ -14,11 +14,9 @@
 	return ..()
 
 /datum/wires/big_manipulator/interactable(mob/user)
-	if(!..())
-		return FALSE
 	var/obj/machinery/big_manipulator/manipulator_big = holder
-	if(manipulator_big.panel_open)
-		return TRUE
+
+	return manipulator_big.panel_open ? ..() : FALSE
 
 /datum/wires/big_manipulator/get_status()
 	var/obj/machinery/big_manipulator/manipulator_big = holder
