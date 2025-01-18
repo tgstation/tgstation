@@ -5,8 +5,6 @@
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/organ/heart/ethereal/respawn_heart = new()
 	respawn_heart.Insert(victim, special = TRUE, movement_flags = DELETE_IF_REPLACED) // Pretend this guy is an ethereal
-
-	victim.mind_initialize()
 	victim.mock_client = new()
 
 	victim.death()
