@@ -53,6 +53,12 @@
 /.github/guides/VISUALS.md @LemonInTheDark
 /code/_onclick/hud/ @LemonInTheDark
 /code/__DEFINES/layers.dm @LemonInTheDark
+/code/__DEFINES/MC.dm @LemonInTheDark
+/code/controllers/admin.dm @LemonInTheDark
+/code/controllers/failsafe.dm @LemonInTheDark
+/code/controllers/master.dm @LemonInTheDark
+/code/controllers/subsystem.dm @LemonInTheDark
+/code/controllers/subsystem/air.dm @LemonInTheDark
 
 # Mothblocks
 
@@ -187,13 +193,6 @@
 
 /code/__HELPERS/logging/ @dragomagol @ZephyrTFA
 
-/code/__DEFINES/MC.dm @LemonInTheDark
-/code/controllers/admin.dm @LemonInTheDark
-/code/controllers/master.dm @LemonInTheDark
-/code/controllers/failsafe.dm @LemonInTheDark
-/code/controllers/subsystem.dm @LemonInTheDark
-
-/code/controllers/subsystem/air.dm @LemonInTheDark
 /code/modules/atmospherics/ @Ghilker @LemonInTheDark
 
 /code/modules/client/preferences.dm @Mothblocks @ZephyrTFA
