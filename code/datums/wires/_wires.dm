@@ -193,7 +193,7 @@
 			return TRUE
 
 /datum/wires/proc/attach_assembly(color, obj/item/assembly/S)
-	if(S && istype(S) && S.assembly_behavior && !is_attached(color) && !(SEND_SIGNAL(S, COMSIG_ASSEMBLY_ALLOW_WIRE_ATTACHMENT, src) & COMPONENT_FORBID_ATTACHMENT))
+	if(S && istype(S) && S.assembly_behavior && !is_attached(color) && !(SEND_SIGNAL(S, COMSIG_ASSEMBLY_PRE_ATTACH, holder) & COMPONENT_CANCEL_ATTACH))
 		assemblies[color] = S
 		S.forceMove(holder)
 		S.connected = src

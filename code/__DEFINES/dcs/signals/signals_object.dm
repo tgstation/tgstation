@@ -581,7 +581,6 @@
 /// Sent from /datum/powernet/remove_cable()
 #define COMSIG_CABLE_REMOVED_FROM_POWERNET "cable_removed_from_powernet"
 
-/// Send from /datum/wires/attach_assembly() : (datum/wires/wires)
-#define COMSIG_ASSEMBLY_ALLOW_WIRE_ATTACHMENT "assembly_allow_wire_bundle_attachment"
-	/// Don't allow the assembly to be attached
-	#define COMPONENT_FORBID_ATTACHMENT (1<<0)
+/// Sent from /datum/wires/attach_assembly() : (atom/holder)
+#define COMSIG_ASSEMBLY_PRE_ATTACH "assembly_pre_attach"
+	#define COMPONENT_CANCEL_ATTACH (1<<0)

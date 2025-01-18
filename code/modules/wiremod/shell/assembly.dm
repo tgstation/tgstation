@@ -23,7 +23,7 @@
 	), SHELL_CAPACITY_SMALL)
 	RegisterSignal(shell, COMSIG_SHELL_CIRCUIT_ATTACHED, PROC_REF(on_circuit_attached))
 	RegisterSignal(shell, COMSIG_SHELL_CIRCUIT_REMOVED, PROC_REF(on_circuit_removed))
-	RegisterSignal(src, COMSIG_ASSEMBLY_ALLOW_WIRE_ATTACHMENT, PROC_REF(allow_wire_attachment))
+	RegisterSignal(src, COMSIG_ASSEMBLY_PRE_ATTACH, PROC_REF(on_pre_attach))
 	RegisterSignals(src, list(COMSIG_ASSEMBLY_ATTACHED, COMSIG_ASSEMBLY_ADDED_TO_BUTTON, COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE), PROC_REF(on_attached))
 	RegisterSignals(src, list(COMSIG_ASSEMBLY_DETACHED, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON, COMSIG_ASSEMBLY_REMOVED_FROM_PRESSURE_PLATE), PROC_REF(on_detached))
 
@@ -35,15 +35,17 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(source.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE)
 
-/obj/item/assembly/wiremod/proc/allow_wire_attachment(obj/item/circuit_component/wire_bundle/source, datum/wires/wire_bundle_component/wires)
+/obj/item/assembly/wiremod/proc/on_pre_attach(obj/item/circuit_component/wire_bundle/source, atom/holder)
 	SIGNAL_HANDLER
+	if(!istype(source))
+		return
 	if(source.parent.admin_only)
 		return
-	if(istype(wires))
+	if(istype(holder.wires, /datum/wires/wire_bundle_component))
 		var/datum/component/shell/shell_comp = GetComponent(/datum/component/shell)
 		if(shell_comp.attached_circuit.admin_only)
 			return
-		return COMPONENT_FORBID_ATTACHMENT
+		return COMPONENT_CANCEL_ATTACH
 
 /obj/item/assembly/wiremod/proc/on_attached(source, atom/movable/holder)
 	SIGNAL_HANDLER
