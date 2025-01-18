@@ -6,6 +6,9 @@
 	var/obj/item/organ/heart/ethereal/respawn_heart = new()
 	respawn_heart.Insert(victim, special = TRUE, movement_flags = DELETE_IF_REPLACED) // Pretend this guy is an ethereal
 
+	victim.mind_initialize()
+	victim.mock_client = new()
+
 	victim.death()
 	TEST_ASSERT_NOTNULL(respawn_heart.crystalize_timer_id, "Ethereal heart didn't respond to host death.")
 	victim.revive()
