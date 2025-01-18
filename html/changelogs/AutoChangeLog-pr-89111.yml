@@ -1,0 +1,4 @@
+author: "Chowder-McArthor"
+delete-after: True
+changes:
+  - qol: "Strange geysers now say in their name what they produce."
