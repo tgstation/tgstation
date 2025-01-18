@@ -6655,6 +6655,7 @@
 #include "modular_doppler\colony_fabricator\code\machines\stirling_generator.dm"
 #include "modular_doppler\colony_fabricator\code\machines\thermomachine.dm"
 #include "modular_doppler\colony_fabricator\code\tools\tools.dm"
+#include "modular_doppler\common_bilingual\common_bilingual.dm"
 #include "modular_doppler\cryosleep\code\admin.dm"
 #include "modular_doppler\cryosleep\code\ai.dm"
 #include "modular_doppler\cryosleep\code\config.dm"
