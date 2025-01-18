@@ -66,7 +66,7 @@ export function LootBox(props: Props) {
         >
           {!is_blind && name}
         </Stack.Item>
-        <Stack.Item p={1}>{amount > 1 && 'x' + amount}</Stack.Item>
+        {amount > 1 && <Stack.Item p={1}>{'x' + amount}</Stack.Item>}
       </Stack>
     </Button>
   );

@@ -21,16 +21,16 @@ export function LootPanel(props) {
   const { contents = [], searching } = data;
 
   // limitations: items with different stack counts, charges etc.
-  const contentsByPath = useMemo(() => {
+  const contentsByPathName = useMemo(() => {
     const acc: Record<string, SearchItem[]> = {};
 
     for (let i = 0; i < contents.length; i++) {
       const item = contents[i];
       if (item.path) {
-        if (!acc[item.path]) {
-          acc[item.path] = [];
+        if (!acc[item.path + item.name]) {
+          acc[item.path + item.name] = [];
         }
-        acc[item.path].push(item);
+        acc[item.path + item.name].push(item);
       } else {
         acc[item.ref] = [item];
       }
@@ -44,12 +44,12 @@ export function LootPanel(props) {
   const total = contents.length ? contents.length - 1 : 0;
 
   const minHeight = 126;
-  const maxHeight = 660;
+  const maxHeight = 468;
   const headerHeight = 88;
   const itemHeight = 38;
   const height: number = clamp(
     headerHeight +
-      (!grouping ? contents.length : Object.keys(contentsByPath).length) *
+      (!grouping ? contents.length : Object.keys(contentsByPathName).length) *
         itemHeight,
     minHeight,
     maxHeight,
@@ -97,7 +97,7 @@ export function LootPanel(props) {
         >
           {grouping ? (
             <GroupedContents
-              contents={contentsByPath}
+              contents={contentsByPathName}
               searchText={searchText}
             />
           ) : (
