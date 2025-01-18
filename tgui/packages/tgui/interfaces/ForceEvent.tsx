@@ -55,23 +55,6 @@ function paginateEvents(events: Event[], maxPerPage: number): Event[][] {
   return pages;
 }
 
-type FEContext = {
-  announceState: [boolean, (value: boolean) => void];
-  categoryState: [Category, (value: Category) => void];
-  searchQueryState: [string, (value: string) => void];
-};
-
-const ForceEventContext = createContext<FEContext>({
-  announceState: [true, () => {}],
-  categoryState: [{ icon: '', name: '' }, () => {}],
-  searchQueryState: ['', () => {}],
-});
-
-/** Local state hook for ForceEvent */
-function useForceEventContext() {
-  return useContext(ForceEventContext);
-}
-
 type Event = {
   name: string;
   description: string;
@@ -252,4 +235,21 @@ function EventTabs(props) {
       ))}
     </Section>
   );
+}
+
+type ForceEventContextType = {
+  announceState: [boolean, (value: boolean) => void];
+  categoryState: [Category, (value: Category) => void];
+  searchQueryState: [string, (value: string) => void];
+};
+
+const ForceEventContext = createContext<ForceEventContextType>({
+  announceState: [true, () => {}],
+  categoryState: [{ icon: '', name: '' }, () => {}],
+  searchQueryState: ['', () => {}],
+});
+
+/** Local state hook for ForceEvent */
+function useForceEventContext() {
+  return useContext(ForceEventContext);
 }
