@@ -78,7 +78,7 @@
 	if(fish_path.fish_id_redirect_path)
 		fish_path = fish_path.fish_id_redirect_path
 	var/fluff_name = pick("John Trasen III", "a nameless intern", "Pun Pun", AQUARIUM_COMPANY, "Unknown", "Central Command")
-	add_fish(new fish_path(src), from_persistence = TRUE, catcher = fluff_name)
+	add_fish(new fish_path(loc), from_persistence = TRUE, catcher = fluff_name)
 	mounted_fish.randomize_size_and_weight()
 	mounted_fish.set_status(FISH_DEAD)
 	SSpersistence.save_trophy_fish(src)
