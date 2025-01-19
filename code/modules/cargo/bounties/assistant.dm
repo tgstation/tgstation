@@ -207,14 +207,6 @@
 	required_count = 8
 	wanted_types = list(/obj/item/toy/crayon = TRUE)
 
-/datum/bounty/item/assistant/pens
-	name = "Pens"
-	description = "We are hosting the intergalactic pen balancing competition. We need you to send us some standardized black ballpoint pens."
-	reward = CARGO_CRATE_VALUE * 4
-	required_count = 10
-	include_subtypes = FALSE
-	wanted_types = list(/obj/item/pen = TRUE)
-
 /datum/bounty/item/assistant/water_tank
 	name = "Water Tank"
 	description = "We need more water for our hydroponics bay. Find a water tank and ship it out to us."
