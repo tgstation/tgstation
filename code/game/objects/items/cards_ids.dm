@@ -924,6 +924,9 @@
 	return NONE
 
 /obj/item/card/id/item_ctrl_click(mob/user)
+	if(!in_contents_of(user)) //Check if the ID is in the ID slot, so it can be changed from there too.
+		return
+
 	if(!trim)
 		balloon_alert(user, "card has no trim!")
 		return
@@ -939,15 +942,18 @@
 			choices += i
 
 	var/chosen_position = tgui_input_list(user, "What position do you want your honorific in?", "Flair!", choices)
+	if(user.stat < CONSCIOUS || !in_contents_of(user))
+		return
 	var/honorific_position_to_use = readable_names[chosen_position]
 
+	honorific_position = initial(honorific_position) //In case you want to force an honorific on an ID, set a default that won't always be NONE.
+	honorific_title = null //We reset this regardless so that we don't stack titles on accident.
+
 	if(honorific_position_to_use & HONORIFIC_POSITION_NONE)
-		honorific_position = initial(honorific_position) //In case you want to force an honorific on an ID, set a default that isn't NONE.
-		honorific_title = null
 		balloon_alert(user, "honorific disabled")
 	else
 		chosen_honorific = tgui_input_list(user, "What honorific do you want to use?", "Flair!!!", trim.honorifics)
-		if(!chosen_honorific)
+		if(!chosen_honorific || user.stat < CONSCIOUS || !in_contents_of(user))
 			return
 		switch(honorific_position_to_use)
 			if(HONORIFIC_POSITION_FIRST)
