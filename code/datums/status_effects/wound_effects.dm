@@ -55,7 +55,8 @@
 	right = carbon_owner.get_bodypart(BODY_ZONE_R_LEG)
 	update_limp()
 	RegisterSignal(carbon_owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_step))
-	RegisterSignals(carbon_owner, list(COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_POST_LOSE_WOUND, COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB), PROC_REF(update_limp))
+	RegisterSignal(carbon_owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(on_limb_removed))
+	RegisterSignals(carbon_owner, list(COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_POST_LOSE_WOUND, COMSIG_CARBON_ATTACH_LIMB), PROC_REF(update_limp))
 	return TRUE
 
 /datum/status_effect/limp/on_remove()
@@ -87,6 +88,17 @@
 		if(prob(limp_chance_right * determined_mod))
 			owner.client.move_delay += slowdown_right * determined_mod
 		next_leg = left
+
+/// We need to make sure that we properly clear these refs if one of the owner's limbs gets deleted
+/datum/status_effect/limp/proc/on_limb_removed(datum/source, obj/item/bodypart/limb_lost, special, dismembered)
+	SIGNAL_HANDLER
+
+	if(limb_lost == left)
+		left = null
+	if(limb_lost == right)
+		right = null
+
+	update_limp()
 
 /datum/status_effect/limp/proc/update_limp()
 	SIGNAL_HANDLER
