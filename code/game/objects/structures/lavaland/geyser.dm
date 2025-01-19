@@ -11,7 +11,7 @@
 	///set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/erupting_state = null
 	///what chem do we produce?
-	var/reagent_id = /datum/reagent/fuel/oil
+	var/datum/reagent/reagent_id = /datum/reagent/fuel/oil
 	///how much reagents we add every process (2 seconds)
 	var/potency = 2
 	///maximum volume
@@ -28,6 +28,10 @@
 
 /obj/structure/geyser/Initialize(mapload) //if xenobio wants to bother, nethermobs are around geysers.
 	. = ..()
+
+	true_name = "[initial(reagent_id.name)] geyser"
+
+	discovery_message = "It's a [true_name]! How does any of this even work?" //it doesnt
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC, 1, 5)
 
@@ -113,9 +117,6 @@
 
 /obj/structure/geyser/random/Initialize(mapload)
 	reagent_id = get_random_reagent_id()
-	var/datum/reagent/Random_Reagent = reagent_id
-	true_name = "[initial(Random_Reagent.name)] geyser"
-	discovery_message = "It's a [initial(Random_Reagent.name)] geyser! How does any of this even work?" //it doesnt
 
 	return ..()
 
