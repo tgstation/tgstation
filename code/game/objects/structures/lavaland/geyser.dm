@@ -117,7 +117,7 @@
 /obj/structure/geyser/random/Initialize(mapload)
 	reagent_id = get_random_reagent_id()
 
-	return ..()
+	. = ..()
 
 	discovery_message = "It's a [true_name]! How does any of this even work?" //it doesnt
 
