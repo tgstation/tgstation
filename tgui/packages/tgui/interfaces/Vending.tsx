@@ -9,8 +9,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { capitalizeAll } from 'tgui-core/string';
-import { createSearch } from 'tgui-core/string';
+import { capitalizeAll, createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -130,7 +129,7 @@ export const Vending = (props) => {
   );
 
   return (
-    <Window width={430} height={635}>
+    <Window width={431} height={635}>
       <Window.Content>
         <Stack fill vertical>
           {!!onstation && (
@@ -173,7 +172,9 @@ export const UserDetails = (props) => {
   if (!user) {
     return (
       <Section>
-        <NoticeBox>No ID detected! Contact the Head of Personnel.</NoticeBox>
+        <NoticeBox m={0}>
+          No ID detected! Contact the Head of Personnel.
+        </NoticeBox>
       </Section>
     );
   } else {
