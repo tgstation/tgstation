@@ -108,6 +108,11 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/fish_mount/proc/add_fish(obj/item/fish/fish, from_persistence = FALSE, catcher)
+	if(QDELETED(src)) // don't ever try to add a fish to one of these that's already been deleted - and get rid of the one that was created
+		qdel(fish)
+		return
+	if(QDELETED(fish)) // no adding deleted fishies either
+		return
 	if(mounted_fish)
 		mounted_fish.forceMove(loc)
 	fish.forceMove(src)
