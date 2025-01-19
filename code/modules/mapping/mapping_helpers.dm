@@ -1373,6 +1373,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/mob_buckler/Initialize(mapload)
 	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/mob_buckler/LateInitialize()
 	var/atom/movable/buckle_to
 	var/list/mobs = list()
 	for(var/atom/movable/possible_buckle as anything in loc)
@@ -1385,12 +1392,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 	if(isnull(buckle_to))
 		log_mapping("[type] at [x] [y] [z] did not find anything to buckle to")
-		return INITIALIZE_HINT_QDEL
+		qdel(src)
+		return
 
 	for(var/mob/living/mob as anything in mobs)
 		buckle_to.buckle_mob(mob, force = force_buckle)
 
-	return INITIALIZE_HINT_QDEL
+	qdel(src)
 
 ///Basic mob flag helpers for things like deleting on death.
 /obj/effect/mapping_helpers/basic_mob_flags
