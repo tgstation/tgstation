@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Small and tiny mobs no longer trigger squeaking objects when walking over them."

@@ -1,5 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - bugfix: "Fixed plant analyzer UI crashing on plants that have a reagent gene on their graft"
-  - bugfix: "Plants with reagent traits in the graft now properly say the name of the grafted reagent"
