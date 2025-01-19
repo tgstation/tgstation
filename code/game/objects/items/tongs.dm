@@ -40,7 +40,7 @@
 		return TRUE
 	if (!COOLDOWN_FINISHED(src, clack_cooldown))
 		return TRUE
-	user.visible_message(span_notice("[user] clacks [user.p_their()] [src] together like a crab. Click clack!"))
+	user.visible_message(span_notice("[user] clacks [user.p_their()] [name] together like a crab. Click clack!"))
 	click_clack()
 	return TRUE
 

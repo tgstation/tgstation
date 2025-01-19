@@ -140,10 +140,10 @@
 	var/list/data = list()
 	data["cycle_seconds"] = HYDROTRAY_CYCLE_DELAY / 10
 	data["trait_db"] = list()
-	for(var/datum/plant_gene/trait/trait as anything in GLOB.plant_traits)
+	for(var/datum/plant_gene/trait as anything in GLOB.plant_traits)
 		var/trait_data = list(list(
 			"path" = trait.type,
-			"name" = trait.name,
+			"name" = trait.get_name(),
 			"icon" = trait.icon,
 			"description" = trait.description
 		))
