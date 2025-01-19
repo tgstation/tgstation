@@ -104,9 +104,9 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(rod, COMSIG_FISHING_ROD_HOOKED_ITEM)
 
-/obj/item/fishing_line/auto_reel/proc/on_hooked_item(obj/item/fishing_rod/source, atom/target, mob/living/user)
+/obj/item/fishing_line/auto_reel/proc/on_hooked_item(obj/item/fishing_rod/source, atom/movable/target, mob/living/user)
 	SIGNAL_HANDLER
-	if(!ismovable(target))
+	if(!istype(target) || target.anchored || target.move_resist >= MOVE_FORCE_STRONG)
 		return
 	var/atom/movable/movable_target = target
 	var/please_be_gentle = FALSE
@@ -127,6 +127,7 @@
 
 /obj/item/fishing_line/auto_reel/proc/catch_it_chucklenut(obj/item/source, atom/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
+
 	var/mob/living/user = throwingdatum.initial_target.resolve()
 	if(QDELETED(user) || hit_atom != user)
 		return NONE
