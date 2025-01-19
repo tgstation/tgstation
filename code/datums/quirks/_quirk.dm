@@ -44,10 +44,8 @@
 
 /datum/quirk/New()
 	. = ..()
-	if(no_process_traits)
-		LAZYINITLIST(process_update_signals)
-		for(var/trait in no_process_traits)
-			process_update_signals += list(SIGNAL_ADDTRAIT(trait), SIGNAL_REMOVETRAIT(trait))
+	for(var/trait in no_process_traits)
+		LAZYADD(process_update_signals, list(SIGNAL_ADDTRAIT(trait), SIGNAL_REMOVETRAIT(trait)))
 
 /datum/quirk/Destroy()
 	if(quirk_holder)
