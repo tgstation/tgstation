@@ -32,8 +32,6 @@
 	var/list/honorifics
 	/// What positions can our honorific take? To prevent names like "Peter Dr."
 	var/honorific_positions = NONE
-	/// What is our selected honorific?
-	var/chosen_honorific
 
 /datum/id_trim/proc/find_job()
 	return null

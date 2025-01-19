@@ -152,9 +152,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		var/mob/living/carbon/carbon_human = speaker
 		var/obj/item/id_slot = carbon_human.get_item_by_slot(ITEM_SLOT_ID)
 		if(id_slot)
-			var/obj/item/card/id/id_card = id_slot.GetID()
+			var/obj/item/card/id/id_card = id_slot?.GetID()
 			if(id_card)
-				SEND_SIGNAL(id_card, COMSIG_MOVABLE_MESSAGE_GET_HONORIFIC, stored_name, carbon_human)
+				SEND_SIGNAL(id_card, COMSIG_ID_GET_HONORIFIC, stored_name, carbon_human)
 
 	if(!stored_name[NAME_PART_INDEX]) //Otherwise, we just use whatever the name signal gives us.
 		SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, visible_name)

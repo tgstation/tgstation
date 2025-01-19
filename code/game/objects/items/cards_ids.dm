@@ -115,6 +115,9 @@
 	var/pointer_color
 	/// Will this ID card use the first or last name as the name displayed with the honorific?
 	var/honorific_position = HONORIFIC_POSITION_NONE
+	/// What is our selected honorific?
+	var/chosen_honorific
+
 
 /datum/armor/card_id
 	fire = 100
@@ -146,7 +149,7 @@
 	register_context()
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, PROC_REF(update_in_wallet))
-	RegisterSignal(src, COMSIG_MOVABLE_MESSAGE_GET_HONORIFIC, PROC_REF(return_message_name_part))
+	RegisterSignal(src, COMSIG_ID_GET_HONORIFIC, PROC_REF(return_message_name_part))
 	if(prob(1))
 		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
@@ -191,7 +194,7 @@
 		point.add_overlay(highlight)
 
 /obj/item/card/id/dropped(mob/user)
-	UnregisterSignal(user, list(COMSIG_MOVABLE_POINTED, COMSIG_MOVABLE_MESSAGE_GET_HONORIFIC))
+	UnregisterSignal(user, list(COMSIG_MOVABLE_POINTED))
 	return ..()
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
@@ -894,17 +897,17 @@
 		is_mononym = TRUE
 	switch(honorific_position)
 		if(HONORIFIC_POSITION_FIRST)
-			honorific_title = "[trim.chosen_honorific] [first_name(registered_name)]"
+			honorific_title = "[chosen_honorific] [first_name(registered_name)]"
 		if(HONORIFIC_POSITION_LAST)
-			honorific_title = "[trim.chosen_honorific] [last_name(registered_name)]"
+			honorific_title = "[chosen_honorific] [last_name(registered_name)]"
 		if(HONORIFIC_POSITION_FIRST_FULL)
-			honorific_title = "[trim.chosen_honorific] [first_name(registered_name)]"
+			honorific_title = "[chosen_honorific] [first_name(registered_name)]"
 			if(!is_mononym)
 				honorific_title += " [last_name(registered_name)]"
 		if(HONORIFIC_POSITION_LAST_FULL)
 			if(!is_mononym)
 				honorific_title += "[first_name(registered_name)] "
-			honorific_title += "[last_name(registered_name)][trim.chosen_honorific]"
+			honorific_title += "[last_name(registered_name)][chosen_honorific]"
 	return honorific_title
 
 /// Returns the trim assignment name.
@@ -943,8 +946,9 @@
 		honorific_title = null
 		balloon_alert(user, "honorific disabled")
 	else
-		trim.chosen_honorific = tgui_input_list(user, "What honorific do you want to use?", "Flair!!!", trim.honorifics)
-
+		chosen_honorific = tgui_input_list(user, "What honorific do you want to use?", "Flair!!!", trim.honorifics)
+		if(!chosen_honorific)
+			return
 		switch(honorific_position_to_use)
 			if(HONORIFIC_POSITION_FIRST)
 				honorific_position = HONORIFIC_POSITION_FIRST
