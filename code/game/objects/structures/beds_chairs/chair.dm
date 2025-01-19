@@ -92,8 +92,6 @@
 	return mutable_appearance(icon, "[icon_state]_armrest")
 
 /obj/structure/chair/proc/update_armrest()
-	if(isnull(armrest))
-		return
 	armrest = color_atom_overlay(armrest)
 	update_appearance()
 
