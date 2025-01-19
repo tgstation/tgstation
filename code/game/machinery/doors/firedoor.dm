@@ -709,8 +709,7 @@
 		else
 			unbuilt_lock.constructionStep = CONSTRUCTION_NO_CIRCUIT
 			unbuilt_lock.update_integrity(unbuilt_lock.max_integrity * 0.5)
-		if(istype(src, /obj/machinery/door/firedoor/border_only))
-			unbuilt_lock.setDir(dir)
+		unbuilt_lock.setDir(dir)
 		unbuilt_lock.update_appearance()
 	else
 		new /obj/item/electronics/firelock (targetloc)
@@ -923,10 +922,7 @@
 					user.visible_message(span_notice("[user] cuts apart [src]!"), \
 						span_notice("You cut [src] into metal."))
 					var/turf/targetloc = get_turf(src)
-					if(directional)
-						new /obj/item/stack/sheet/iron(targetloc, 2)
-					else
-						new /obj/item/stack/sheet/iron(targetloc, 3)
+					new /obj/item/stack/sheet/iron(targetloc, directional ? 2 : 3)
 					if(reinforced)
 						new /obj/item/stack/sheet/plasteel(targetloc, 2)
 					qdel(src)
@@ -1002,10 +998,7 @@
 	return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/firelock_frame/border_only/CanPass(atom/movable/mover, border_dir)
-	. = ..()
-	if(border_dir & dir)
-		return .
-	return TRUE
+	return border_dir & dir ? ..() : TRUE
 
 #undef CONSTRUCTION_PANEL_OPEN
 #undef CONSTRUCTION_NO_CIRCUIT
