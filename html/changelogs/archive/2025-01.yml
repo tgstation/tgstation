@@ -507,3 +507,22 @@
 2025-01-18:
   EnterTheJake:
   - image: Codex Cicatrix has received a new sprite
+2025-01-19:
+  Absolucy:
+  - qol: Small and tiny mobs no longer trigger squeaking objects when walking over
+      them.
+  AyIong:
+  - qol: SmartFridge got another redesign, and you can dispense all amount of product
+      in one click (RMB on product)
+  Chowder-McArthor:
+  - qol: Strange geysers now say in their name what they produce.
+  Jacquerel:
+  - rscadd: Eggs (and all other edible food) left in a hot place will fry.
+  MTandi:
+  - bugfix: Fixed plant analyzer UI crashing on plants that have a reagent gene on
+      their graft
+  - bugfix: Plants with reagent traits in the graft now properly say the name of the
+      grafted reagent
+  - image: yet another medkit resprite
+  SmArtKar:
+  - bugfix: Fixed active turfs on the new Turreted Outpost ruin.
