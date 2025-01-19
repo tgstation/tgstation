@@ -2655,7 +2655,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * ETHEREAL_DISCHARGE_RATE)
+		stomach.adjust_charge(reac_volume * 5 * ETHEREAL_DISCHARGE_RATE)
 
 /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
@@ -2675,7 +2675,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 8 * ETHEREAL_DISCHARGE_RATE)
+		stomach.adjust_charge(reac_volume * 10 * ETHEREAL_DISCHARGE_RATE)
 
 /datum/reagent/consumable/ethanol/pod_tesla
 	name = "Pod Tesla"
