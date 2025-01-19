@@ -39,6 +39,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/added_difficulty = 0
 	/// Reagents to add to the fish whenever the COMSIG_GENERATE_REAGENTS_TO_ADD signal is sent. Their values will be multiplied later.
 	var/list/reagents_to_add
+	/// If set, the fish may return this infusion entry when get_infusion_entry is called instead of /datum/infuser_entry/fish
+	var/infusion_entry
 
 /// Difficulty modifier from this mod, needs to return a list with two values
 /datum/fish_trait/proc/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -71,7 +73,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /// Proc used by both the predator and necrophage traits.
 /datum/fish_trait/proc/eat_fish(obj/item/fish/predator, obj/item/fish/prey)
-	var/message = prey.status == FISH_DEAD ? "[src] eats [prey]'s carcass." : "[src] hunts down and eats [prey]."
+	var/message = prey.status == FISH_DEAD ? "[predator] eats [prey]'s carcass." : "[predator] hunts down and eats [prey]."
 	predator.loc.visible_message(span_warning(message))
 	SEND_SIGNAL(prey, COMSIG_FISH_EATEN_BY_OTHER_FISH, predator)
 	qdel(prey)
@@ -110,24 +112,26 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/wary/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
+	if(rod.alpha <= /datum/material/glass::alpha)
+		return
 	// Wary fish require transparent line or they're harder
 	if(!rod.line || !(rod.line.fishing_line_traits & FISHING_LINE_CLOAKED))
 		.[ADDITIVE_FISHING_MOD] += FISH_TRAIT_MINOR_DIFFICULTY_BOOST
 
 /datum/fish_trait/shiny_lover
 	name = "Shiny Lover"
-	catalog_description = "This fish loves shiny things, shiny lure recommended."
+	catalog_description = "This fish loves shiny things and money, shiny lure recommended."
 
 /datum/fish_trait/shiny_lover/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
 	// These fish are easier to catch with shiny hook
-	if(rod.hook && rod.hook.fishing_hook_traits & FISHING_HOOK_SHINY)
+	if(HAS_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS) || (rod.bait?.get_item_credit_value() >= PAYCHECK_CREW))
 		.[ADDITIVE_FISHING_MOD] -= FISH_TRAIT_MINOR_DIFFICULTY_BOOST
 
 /datum/fish_trait/shiny_lover/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
 	// These fish are harder to find without a shiny hook
-	if(rod.hook && rod.hook.fishing_hook_traits & FISHING_HOOK_SHINY)
+	if(!HAS_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0.5
 
 /datum/fish_trait/picky_eater
@@ -136,13 +140,18 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/picky_eater/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
+	var/list/fav_baits = SSfishing.fish_properties[fish_type][FISH_PROPERTIES_FAV_BAIT]
+	for(var/list/identifier in fav_baits)
+		if(identifier[FISH_BAIT_TYPE] != FISH_BAIT_FOODTYPE)
+			continue
+		if(is_matching_bait(rod, identifier)) //Bait or no bait, it's a yummy rod.
+			return
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 		return
 	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
 
-	var/list/fav_baits = SSfishing.fish_properties[fish_type][FISH_PROPERTIES_FAV_BAIT]
 	for(var/identifier in fav_baits)
 		if(is_matching_bait(rod.bait, identifier)) //we like this bait anyway
 			return
@@ -162,7 +171,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/nocturnal/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
-	if(rod.bait && HAS_TRAIT(rod.bait, TRAIT_BAIT_IGNORE_ENVIRONMENT))
+	if(HAS_TRAIT(rod, TRAIT_ROD_IGNORE_ENVIRONMENT))
 		return
 	var/turf/turf = get_turf(location)
 	var/light_amount = turf?.get_lumcount()
@@ -175,11 +184,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/nocturnal/proc/check_light(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(isturf(source.loc) || isaquarium(source))
-		var/turf/turf = get_turf(source)
-		var/light_amount = turf.get_lumcount()
-		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
-			source.adjust_health(source.health - 0.5 * seconds_per_tick)
+	if(!source.loc || (!HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) && !isturf(source.loc)))
+		return
+	var/turf/turf = get_turf(source)
+	var/light_amount = turf.get_lumcount()
+	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
+		source.adjust_health(source.health - 0.5 * seconds_per_tick)
 
 /datum/fish_trait/nocturnal/apply_to_mob(mob/living/basic/mob)
 	. = ..()
@@ -205,6 +215,14 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	name = "Demersal"
 	catalog_description = "This fish tends to stay near the waterbed."
 
+/datum/fish_trait/heavy/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
+	. = ..()
+	var/datum/material/material = rod.get_master_material()
+	if(!material)
+		return
+	//the fish weight modifier of the material influences the chance of cathing this type of fish.
+	.[MULTIPLICATIVE_FISHING_MOD] = material.fish_weight_modifier
+
 /datum/fish_trait/heavy/apply_to_mob(mob/living/basic/mob)
 	. = ..()
 	mob.add_movespeed_modifier(/datum/movespeed_modifier/heavy_fish)
@@ -224,18 +242,18 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/carnivore/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
+	if(istype(rod.get_master_material(), /datum/material/meat)) //who cares about the bait, that fishing rod is yummy!
+		return
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 		return
 	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
-	if(isfish(rod.bait))
-		return
-	if(!istype(rod.bait, /obj/item/food))
-		.[MULTIPLICATIVE_FISHING_MOD] = 0
-		return
-	var/obj/item/food/food_bait = rod.bait
-	if(!(food_bait.foodtypes & (MEAT|SEAFOOD|BUGS)))
+	var/list/bait_identifier = list(
+		FISH_BAIT_TYPE = FISH_BAIT_FOODTYPE,
+		FISH_BAIT_VALUE = MEAT|SEAFOOD|BUGS,
+	)
+	if(!is_matching_bait(rod.bait, bait_identifier))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 /datum/fish_trait/vegan
@@ -245,37 +263,46 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/vegan/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
+	if(istype(rod.get_master_material(), /datum/material/bamboo)) //bamboo is technically grass.
+		return
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 		return
 	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
-	if(!istype(rod.bait, /obj/item/food))
-		.[MULTIPLICATIVE_FISHING_MOD] = 0
-		return
 	if(istype(rod.bait, /obj/item/food/grown))
 		return
-	var/obj/item/food/food_bait = rod.bait
-	if(food_bait.foodtypes & (MEAT|SEAFOOD|GORE|BUGS|DAIRY) || !(food_bait.foodtypes & (VEGETABLES|FRUIT)))
+	var/list/bait_liked_identifier = list(
+		FISH_BAIT_TYPE = FISH_BAIT_FOODTYPE,
+		FISH_BAIT_VALUE = VEGETABLES|FRUIT,
+	)
+	var/list/bait_hated_identifier = list(
+		FISH_BAIT_TYPE = FISH_BAIT_FOODTYPE,
+		FISH_BAIT_VALUE = MEAT|SEAFOOD|GORE|BUGS|DAIRY,
+	)
+	if(!is_matching_bait(rod.bait, bait_liked_identifier) || is_matching_bait(rod.bait, bait_hated_identifier))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 /datum/fish_trait/emulsijack
 	name = "Emulsifier"
 	catalog_description = "This fish emits an invisible toxin that emulsifies other fish for it to feed on."
+	var/list/resistance_traits = list(TRAIT_RESIST_EMULSIFY, TRAIT_FISH_TOXIN_IMMUNE)
+	var/trait_to_add = TRAIT_RESIST_EMULSIFY
 
 /datum/fish_trait/emulsijack/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(emulsify))
-	ADD_TRAIT(fish, TRAIT_RESIST_EMULSIFY, FISH_TRAIT_DATUM)
+	ADD_TRAIT(fish, trait_to_add, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/emulsijack/proc/emulsify(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(!isaquarium(source.loc))
+	if(!source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		return
 	var/emulsified = FALSE
 	for(var/obj/item/fish/victim in source.loc)
-		if(HAS_TRAIT(victim, TRAIT_RESIST_EMULSIFY) || HAS_TRAIT(victim, TRAIT_FISH_TOXIN_IMMUNE)) //no team killing
-			continue
+		for(var/trait in resistance_traits)
+			if(HAS_TRAIT(victim, trait))
+				continue
 		victim.adjust_health(victim.health - 3 * seconds_per_tick) //the victim may heal a bit but this will quickly kill
 		emulsified = TRUE
 	if(emulsified)
@@ -309,7 +336,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/necrophage/proc/eat_dead_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(source.get_hunger() > 0.75 || !isaquarium(source.loc))
+	if(source.get_hunger() > 0.75 || !source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		return
 	for(var/obj/item/fish/victim in source.loc)
 		if(victim.status != FISH_DEAD || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH))
@@ -377,7 +404,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	source.set_status(FISH_ALIVE)
 	var/message = span_nicegreen("[source] twitches. It's alive!")
-	if(isaquarium(source.loc))
+	if(source.loc && HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		source.loc.visible_message(message)
 	else
 		source.visible_message(message)
@@ -402,10 +429,9 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/predator/proc/eat_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(source.get_hunger() > 0.75 || !isaquarium(source.loc))
+	if(source.get_hunger() > 0.75 || !source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		return
-	var/obj/structure/aquarium/aquarium = source.loc
-	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
+	for(var/obj/item/fish/victim as anything in source.get_aquarium_fishes(TRUE, source))
 		if(victim.size < source.size * 0.7) // It's a big fish eat small fish world
 			continue
 		if(victim.status != FISH_ALIVE || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH) || SPT_PROB(80, seconds_per_tick))
@@ -427,6 +453,9 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish contains toxins. Feeding it to predatory fishes or people is not recommended."
 	diff_traits_inheritability = 25
 	reagents_to_add = list(/datum/reagent/toxin/tetrodotoxin = 1)
+	infusion_entry = /datum/infuser_entry/ttx_healing
+	///The amount of venom injected if the fish has a stinger is multiplied by this value.
+	var/venom_mult = 1
 
 /datum/fish_trait/toxic/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -438,13 +467,13 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
 		return
-	add_venom(source, /datum/reagent/toxin/tetrodotoxin, new_weight, mult = source.status == FISH_DEAD ? 0.1 : 0.25)
+	add_venom(source, reagents_to_add[1], new_weight, mult = (source.status == FISH_DEAD ? 0.1 : 0.25) * venom_mult)
 
 /datum/fish_trait/toxic/proc/on_status_change(obj/item/fish/source)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
 		return
-	change_venom_on_death(source, /datum/reagent/toxin/tetrodotoxin, 0.25, 0.1)
+	change_venom_on_death(source, reagents_to_add[1], 0.25 * venom_mult, 0.1 * venom_mult)
 
 /datum/fish_trait/toxic/proc/on_eaten(obj/item/fish/source, obj/item/fish/predator)
 	if(HAS_TRAIT(predator, TRAIT_FISH_TOXIN_IMMUNE))
@@ -463,7 +492,15 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/toxic/apply_to_mob(mob/living/basic/mob)
 	. = ..()
-	mob.AddElement(/datum/element/venomous, /datum/reagent/toxin/tetrodotoxin, 0.5 * mob.mob_size)
+	mob.AddElement(/datum/element/venomous, reagents_to_add[1], 0.5 * mob.mob_size * venom_mult)
+
+/datum/fish_trait/toxic/carpotoxin
+	name = "Carpotoxic"
+	catalog_description = "This fish contains carpotoxin. Definitely not safe for consumption."
+	diff_traits_inheritability = 50
+	reagents_to_add = list(/datum/reagent/toxin/carpotoxin = 4)
+	infusion_entry = null
+	venom_mult = 6
 
 /datum/fish_trait/toxin_immunity
 	name = "Toxin Immunity"
@@ -485,25 +522,27 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_CROSSBREEDER, FISH_TRAIT_DATUM)
 
-/datum/fish_trait/aggressive
-	name = "Aggressive"
+/datum/fish_trait/territorial
+	name = "Territorial"
 	inheritability = 80
 	diff_traits_inheritability = 40
-	catalog_description = "This fish is aggressively territorial, and may attack fish that come close to it."
+	catalog_description = "This fish will start attacking other fish if the aquarium has five or more."
 
-/datum/fish_trait/aggressive/apply_to_fish(obj/item/fish/fish)
+/datum/fish_trait/territorial/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(try_attack_fish))
 
-/datum/fish_trait/aggressive/proc/try_attack_fish(obj/item/fish/source, seconds_per_tick)
+/datum/fish_trait/territorial/proc/try_attack_fish(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(!isaquarium(source.loc) || !SPT_PROB(1, seconds_per_tick))
+	if(!source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) || !SPT_PROB(1, seconds_per_tick))
 		return
-	var/obj/structure/aquarium/aquarium = source.loc
-	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
+	var/list/fishes = source.get_aquarium_fishes(TRUE, source)
+	if(length(fishes) < 5)
+		return
+	for(var/obj/item/fish/victim as anything in source.get_aquarium_fishes(TRUE, source))
 		if(victim.status != FISH_ALIVE)
 			continue
-		aquarium.visible_message(span_warning("[source] violently [pick("whips", "bites", "attacks", "slams")] [victim]"))
+		source.loc.visible_message(span_warning("[source] violently [pick("whips", "bites", "attacks", "slams")] [victim]"))
 		var/damage = round(rand(4, 20) * (source.size / victim.size)) //smaller fishes take extra damage.
 		victim.adjust_health(victim.health - damage)
 		return
@@ -516,6 +555,11 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish exudes a viscous, slippery lubrificant. It's recommended not to step on it."
 	added_difficulty = 5
 	reagents_to_add = list(/datum/reagent/lube = 1.2)
+
+/datum/fish_trait/lubed/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
+	. = ..()
+	if(istype(rod.get_master_material(), /datum/material/bananium)) //x5 chance of catching lubefish & co with a bananium rod.
+		.[MULTIPLICATIVE_FISHING_MOD] *= 5
 
 /datum/fish_trait/lubed/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -534,6 +578,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	inheritability = 80
 	diff_traits_inheritability = 40
 	catalog_description = "This fish has developed a primitive adaptation to life on both land and water."
+	infusion_entry = /datum/infuser_entry/amphibious
 
 /datum/fish_trait/amphibious/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -558,6 +603,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	diff_traits_inheritability = 25
 	catalog_description = "This fish will invert the gravity of the bait at random. May fall upward outside after being caught."
 	added_difficulty = 20
+	reagents_to_add = list(/datum/reagent/gravitum = 2.3)
 
 /datum/fish_trait/antigrav/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
 	minigame.special_effects |= FISHING_MINIGAME_RULE_ANTIGRAV
@@ -712,6 +758,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish possess a sac that produces ink."
 	diff_traits_inheritability = 70
 	spontaneous_manifest_types = list(/obj/item/fish/squid = 35)
+	infusion_entry = /datum/infuser_entry/squid
 
 /datum/fish_trait/ink/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -761,6 +808,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/camouflage/proc/reset_alpha(obj/item/fish/source)
 	SIGNAL_HANDLER
+	if(QDELETED(source))
+		return
 	var/init_alpha = initial(source.alpha)
 	if(init_alpha != source.alpha)
-		animate(source.alpha, alpha = init_alpha, time = 1.2 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+		animate(source, alpha = init_alpha, time = 1.2 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)

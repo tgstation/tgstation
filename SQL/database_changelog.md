@@ -2,18 +2,29 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-The latest database version is 5.27; The query to update the schema revision table is:
+The latest database version is 5.28; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 27);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 28);
 ```
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 27);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 28);
 ```
-
 In any query remember to add a prefix to the table names if you use one.
+-----------------------------------------------------
+Version 5.28, 1 November 2024, by Ghommie
+Added `fish_progress` as the first 'progress' subtype of 'datum/award/scores'
+
+```sql
+CREATE TABLE `fish_progress` (
+  `ckey` VARCHAR(32) NOT NULL,
+  `progress_entry` VARCHAR(32) NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ckey`,`progress_entry`)
+) ENGINE=InnoDB;
+```
 -----------------------------------------------------
 Version 5.27, 26 April 2024, by zephyrtfa
 Add the ip intel whitelist table

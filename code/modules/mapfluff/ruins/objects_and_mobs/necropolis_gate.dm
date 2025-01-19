@@ -16,6 +16,7 @@
 	light_range = 8
 	light_color = LIGHT_COLOR_LAVA
 	can_atmos_pass = ATMOS_PASS_DENSITY
+	move_resist = INFINITY
 	var/open = FALSE
 	var/changing_openness = FALSE
 	var/locked = FALSE
@@ -57,7 +58,7 @@
 	qdel(sight_blocker)
 	return ..()
 
-/obj/structure/necropolis_gate/singularity_pull()
+/obj/structure/necropolis_gate/singularity_pull(atom/singularity, current_size)
 	return 0
 
 /obj/structure/necropolis_gate/CanAllowThrough(atom/movable/mover, border_dir)
@@ -88,13 +89,13 @@
 	opacity = TRUE
 	anchored = TRUE
 
-/obj/structure/opacity_blocker/singularity_pull()
+/obj/structure/opacity_blocker/singularity_pull(atom/singularity, current_size)
 	return FALSE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/attack_hand(mob/user, list/modifiers)
 	if(locked)
-		to_chat(user, span_boldannounce("It's [open ? "stuck open":"locked"]."))
+		to_chat(user, span_bolddanger("It's [open ? "stuck open":"locked"]."))
 		return
 	toggle_the_gate(user)
 	return ..()
@@ -163,7 +164,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		var/safety = tgui_alert(user, "You think this might be a bad idea...", "Knock on the door?", list("Proceed", "Abort"))
 		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated)
 			return
-		user.visible_message(span_warning("[user] knocks on [src]..."), span_boldannounce("You tentatively knock on [src]..."))
+		user.visible_message(span_warning("[user] knocks on [src]..."), span_bolddanger("You tentatively knock on [src]..."))
 		playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, TRUE)
 		sleep(5 SECONDS)
 	return ..()
@@ -242,7 +243,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 
 	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_DEFAULT_TWO_TALL)
 
-/obj/structure/necropolis_arch/singularity_pull()
+/obj/structure/necropolis_arch/singularity_pull(atom/singularity, current_size)
 	return 0
 
 //stone tiles for boss arenas
@@ -266,7 +267,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		give_turf_traits = string_list(list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED))
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 
-/obj/structure/stone_tile/singularity_pull()
+/obj/structure/stone_tile/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/structure/stone_tile/block

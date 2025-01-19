@@ -46,35 +46,9 @@
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
-	atom_storage.set_holdable(list(
-		/obj/item/airlock_painter,
-		/obj/item/analyzer,
-		/obj/item/assembly/signaler,
+	atom_storage.set_holdable(GLOB.tool_items + list(
 		/obj/item/clothing/gloves,
-		/obj/item/construction/rcd,
-		/obj/item/construction/rld,
-		/obj/item/construction/rtd,
-		/obj/item/crowbar,
-		/obj/item/extinguisher/mini,
-		/obj/item/flashlight,
-		/obj/item/forcefield_projector,
-		/obj/item/geiger_counter,
-		/obj/item/holosign_creator/atmos,
-		/obj/item/holosign_creator/engineering,
-		/obj/item/inducer,
-		/obj/item/lightreplacer,
-		/obj/item/multitool,
-		/obj/item/pipe_dispenser,
-		/obj/item/pipe_painter,
-		/obj/item/plunger,
 		/obj/item/radio,
-		/obj/item/screwdriver,
-		/obj/item/stack/cable_coil,
-		/obj/item/t_scanner,
-		/obj/item/weldingtool,
-		/obj/item/wirecutters,
-		/obj/item/wrench,
-		/obj/item/spess_knife,
 		/obj/item/melee/sickly_blade/lock,
 		/obj/item/reagent_containers/cup/soda_cans,
 	))
@@ -229,6 +203,8 @@
 	icon_state = "medical"
 	inhand_icon_state = "medical"
 	worn_icon_state = "medical"
+	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 
 /obj/item/storage/belt/medical/Initialize(mapload)
 	. = ..()
@@ -425,7 +401,7 @@
 		/obj/item/lighter,
 		/obj/item/mining_scanner,
 		/obj/item/multitool,
-		/obj/item/organ/internal/monster_core,
+		/obj/item/organ/monster_core,
 		/obj/item/pickaxe,
 		/obj/item/radio,
 		/obj/item/reagent_containers/cup/glass,
@@ -469,7 +445,7 @@
 	for(var/i in 1 to 2)
 		new /obj/item/reagent_containers/hypospray/medipen/survival(src)
 	for(var/i in 1 to 2)
-		var/obj/item/organ/internal/monster_core/core = new /obj/item/organ/internal/monster_core/regenerative_core/legion(src)
+		var/obj/item/organ/monster_core/core = new /obj/item/organ/monster_core/regenerative_core/legion(src)
 		core.preserve()
 
 /obj/item/storage/belt/mining/primitive
@@ -489,6 +465,8 @@
 	icon_state = "soulstonebelt"
 	inhand_icon_state = "soulstonebelt"
 	worn_icon_state = "soulstonebelt"
+	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 
 /obj/item/storage/belt/soulstone/Initialize(mapload)
 	. = ..()
@@ -624,6 +602,8 @@
 	icon_state = "grenadebeltnew"
 	inhand_icon_state = "security"
 	worn_icon_state = "grenadebeltnew"
+	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 
 /obj/item/storage/belt/grenade/Initialize(mapload)
 	. = ..()
@@ -687,6 +667,8 @@
 	icon_state = "janibelt"
 	inhand_icon_state = "janibelt"
 	worn_icon_state = "janibelt"
+	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 
 /obj/item/storage/belt/janitor/Initialize(mapload)
 	. = ..()
@@ -736,7 +718,7 @@
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_casing/strilka310,
 		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_casing/a357,
+		/obj/item/ammo_casing/c357,
 		/obj/item/ammo_casing/junk,
 	))
 

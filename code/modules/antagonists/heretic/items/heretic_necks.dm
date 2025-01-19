@@ -164,7 +164,7 @@
 		user.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
 		user.mob_mood.set_sanity(user.mob_mood.sanity - 50)
 		return
-	if(hit.can_block_magic())
+	if(hit.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
 		return
 	if(!hit.mob_mood)
 		return

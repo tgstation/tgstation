@@ -1,0 +1,263 @@
+2025-01-01:
+  00-Steven:
+  - bugfix: Stamps no longer render below the paper sometimes.
+  - bugfix: Stamps no longer inherit the color of the paper they're on.
+  - bugfix: Clearing paper, like by splashing it with ethanol, actually resets its
+      icon state to the cleared version.
+  00-Steven, SmArtKar:
+  - bugfix: Paper on clipboards uses its own colour rather than that of the clipboard.
+  Absolucy, Flleeppyy:
+  - sound: Added a new, unique sound for polling!
+  Absolucy, S34NW:
+  - bugfix: Chat settings properly save on BYOND 516 now. Settings still won't carry
+      over from 515 tho, 515 and 516 settings will be separate.
+  Arturlang:
+  - bugfix: The unique AI station trait will no longer be able to choose lawsets set
+      as default in the config.
+  LemonInTheDark:
+  - bugfix: Boulders will no longer randomly run free from smelting pipelines! We
+      have enslaved them once more.
+  Namelessfairy and SmArtKar:
+  - bugfix: The Extradimensional Blade no longer infinitely scales damage
+  - bugfix: The nullblade correctly does increased damage when sharpened
+  SmArtKar:
+  - rscadd: 'Changed how colorful reagent and crayon powder work: douse your victims
+      to color their clothing, bodyparts and even internal organs!'
+  - rscadd: You can wash your eyes when washing your face at a sink
+  - bugfix: You can color robotic limbs with left click (again)
+  - bugfix: Mice no longer can spawn in unsafe atmos from garbage spawners
+  mc-oofert:
+  - bugfix: holodeck no longer explodes if the server lags while its loading a new
+      sim
+2025-01-02:
+  Ghommie:
+  - bugfix: Examining a trophy fish no longer shows the current day instead of when
+      it was actually caught and put on the mount.
+  Melbert:
+  - bugfix: Fixes Omelettes and Carbonara not making you speak French or Italian,
+      buuut...
+  - qol: Omelettes and Carbonara will now only make you speak French or Italian if
+      they were prepared with love (via chef's kiss)
+  SyncIt21:
+  - bugfix: dropping all the mobs' contents in some special admin cases won't gib
+      the player
+2025-01-03:
+  AyIong:
+  - admin: Ticket actions buttons in chat got a little bigger
+  - bugfix: Highlighted PMs, vote results and examine will not have weird black title
+  Hatterhat:
+  - spellcheck: Removed an errant typo on the recharger's readout while recharging
+      the BR-38.
+  SmArtKar:
+  - spellcheck: Removed outdated examine line from spraycans
+  - refactor: Completely rewrote all item and projectile embedding code
+  - bugfix: Instant summons now actually drags people who had the summoned item embedded
+      into them
+  - bugfix: Items embedded into limbs no longer get shoved into limbs deep enough
+      for them to never be found again upon delimbing.
+  - bugfix: You can see scar descriptions upon detailed examination of targets
+  - bugfix: Fixed rolling table being able to carry an infinite amount of dwarves
+  - bugfix: Folders and paper biscuits no longer share their color with their contents
+  - spellcheck: Fixed a typo in battle rifle crate's description
+  - rscadd: You can chug glowstick fluid to get glowing eyes
+  - bugfix: Added command access requirement to the door between EVA and bridge on
+      Nebula's escape shuttle
+  TealSeer:
+  - qol: you can now examine the jukebox to see what song is currently playing
+  zoomachina:
+  - rscadd: brain in a jar, a rare coroner mail goodie
+  - qol: soul-less brains that can be revived (like those from recovered crew) now
+      have an examine tip
+2025-01-04:
+  Bisar Metek:
+  - code_imp: Fixed up the return value of checkbox-input for tgui to behave consistently.
+  LT3:
+  - qol: Wearable HUDs can be toggled on and off
+  SmArtKar:
+  - bugfix: Fixed HUD implant message being reversed
+  SmArtKar, AnturK:
+  - admin: Fixes admin observe showing all antags as revs upon enabling Real Name
+      Display
+  high-speedspin-cycle:
+  - qol: The experimental deconstructive scanner can now scan multiple items.
+  necromanceranne:
+  - balance: The compact combat shotgun is now found in the warden's locker.
+  timothymtorres:
+  - bugfix: Fix pAIs interacting with machinery via alt/ctrl clicking.
+2025-01-05:
+  Ben10Omintrix:
+  - qol: virtual pet holograms now automatically follow you when released rather than
+      having to give it the command post summon
+  Ghommie:
+  - rscadd: You can now try to fish random products out of vending machines with a
+      fishing rod and a few bucks.
+  - bugfix: Fixing the 1000 cr holochip loot from exploration drones.
+  Hatterhat:
+  - bugfix: Proto-kinetic crushers no longer cause a runtime every time you hit a
+      mob that doesn't have a mark.
+  - bugfix: Equipment pieces with upgradable armor (e.g. explorer suits) now properly
+      list what they use to upgrade.
+  - bugfix: Mobs without targetable limbs no longer have extraneous spaces appear
+      in their hit-by-projectile messages.
+  Majkl-J:
+  - image: New souless minecart sprite
+  - image: Rail sprites are now more consistent with their shading, and thinner
+  - bugfix: The minecart closed icon no longer shows the crate lock overlay
+  Pepsilawn:
+  - bugfix: accidentally duplicated disposal pipes on all main maps have been rooted
+      out
+  SmArtKar:
+  - bugfix: Brought back ethereal heart's shine overlay
+  WebcomicArtist:
+  - qol: '"Destroy Blackbox" objective now tells you how to destroy something invulnerable
+      to conventional means of destruction.'
+2025-01-06:
+  carlarctg:
+  - image: Standarizes ammo band colors into defines, makes them brighter, and widens
+      battle rifle bands
+  - balance: Reduces chrystarfish fall chance by half
+  - bugfix: Fixed a bug that caused predator fish to give the aquarium pet message
+      when out of it and vice versa
+  - bugfix: Fixed flumpulus message having no span
+  - rscadd: Dolphish now chomp you if you try to pet them
+  kapu and grungussuss:
+  - bugfix: fixed ambience sounds getting cut off mid play
+  - sound: addes fades for maintenance ambiences
+  - refactor: changed the way maintenance sounds are
+2025-01-07:
+  AyIong:
+  - qol: Sidebar has lost its bulging white lines. And top right buttons now flat
+  Ben10Omintrix:
+  - bugfix: corgi's population will no longer exponentially grow
+  Hatterhat:
+  - qol: Examining a gun or magazine now shows the ammo capacity in bold.
+  - spellcheck: Standardized pistol magazine descriptions, fixing Makarov magazines
+      having a placeholder description.
+  JohnFulpWillard:
+  - bugfix: The Curator's broadcast camera is now held up in the hand you're holding
+      it with.
+  Melbert:
+  - rscadd: You can light matches on the heel of your boots - Just don't do it too
+      hard.
+  Paxilmaniac:
+  - code_imp: modlink scryers use the nt frequency define rather than just plain text
+      doing it themselves
+  Rhials:
+  - bugfix: Overwatch agent bodycameras (SHOULD) properly install if an agent has
+      already died.
+  SmArtKar:
+  - bugfix: Hotspots from ash heretic spells should not longer stack inside of walls
+  - bugfix: Fixed items not embedding
+  - bugfix: Fixed glowsticks not glowing
+  carlarctg:
+  - code_imp: Adds a new area flag, LOCAL_TELEPORT, given to virtual domains and deathmatch
+      arenas.
+  - code_imp: Re-added Void Phase to Heretic Scribes in Deathmatch's Ragnarok map.
+  grungussuss:
+  - sound: added sounds for buckling to shuttle seats and medical beds
+  jlsnow301:
+  - rscadd: TGUI icons are updated to latest FontAwesome version, v6.7.2.
+  timothymtorres:
+  - code_imp: Add `SECONDS` defines to looping sounds time variables
+  warbluke:
+  - bugfix: Changed BATTERY to CELL in the mob define file since an ethereal stomach
+      organ works like a power cell despite being called a battery.
+2025-01-08:
+  00-Steven:
+  - bugfix: Rave visor music actually works after the first deactivation.
+  - bugfix: Sign language no longer throws a runtime error when repeatedly muted and
+      unmuted.
+  - bugfix: Sign language no longer fails to hide the action when you get it while
+      mute, stop being mute, and start being mute again.
+  - bugfix: Pre-filled test tube racks actually update to look filled.
+  - bugfix: Pre-filled test tube racks are actually fully filled, instead of missing
+      a tube.
+  Absolucy:
+  - bugfix: Fixed graphics getting screwed up when reconnecting with BYOND 515 after
+      playing on BYOND 516.
+  AyIong:
+  - bugfix: Admin/Debug UI's (Especially the Game Panel) now work properly on Byond
+      516, instead of showing raw HTML
+  Ben10Omintrix:
+  - bugfix: goliaths can now be tamed
+  - bugfix: fixes turtles rerolling strange seed chems
+  StrangeWeirdKitten:
+  - bugfix: Things that drop in random places are no longer statistically weighted
+      to drop in security.
+  SyncIt21:
+  - code_imp: improved ui data code for plumbing reaction chamber
+  Y0SH1M4S73R:
+  - bugfix: Replaced floor tiles on shuttles no longer get left behind when the shuttle
+      moves.
+  grungussuss:
+  - sound: added some sounds to clown car
+  - code_imp: improved vehicle code a bit
+  hyperjll:
+  - qol: The Syndie Lipstick's desc in the uplink now actually tells the potential
+      buyer what it does (and how to use it)
+  necromanceranne:
+  - qol: You can now put hats on your wig. I guess that means you can put a wig on
+      your wig? Wigstacking?
+  - spellcheck: The 'Wig' in the loadout is now correctly named 'Natural Wig'.
+  timothymtorres:
+  - sound: Add snow pickup and drop sounds to material
+  tontyGH:
+  - code_imp: AIs selecting holograms mid-round now select from the same list as prefs,
+      which should make things easier to keep consistent
+2025-01-09:
+  00-Steven:
+  - rscadd: Organ harvesting players is now more rewarding. Increased export value
+      of initial player organs.
+  Exester509:
+  - balance: The tesla cannon now fires hitscan lightning bolts with buffed damage
+      to non-insulated targets.
+  - balance: Flux anomalies now have a limit of 5 per round, instead of 8.
+  Hatterhat:
+  - rscadd: Magazines with defined ammo bands can now have their color changed with
+      a pen, in case you're reloading spent magazines or speedloaders with different
+      ammunition and want to change magazine colors to be appropriate.
+  - qol: C-20r magazines and Stechkin APS magazines now have ammo band support.
+  - qol: Standardized some descriptions for AP, HP, and incendiary magazines.
+  Melbert:
+  - qol: You can now look down ladders, both via the look down verb/hotkey and by
+      just looking with your eyes
+  SmArtKar:
+  - bugfix: Cult blood rites should not longer create "empty" blood or be unable to
+      suck up more than one blood pool at a time.
+  - code_imp: Blood trails are now considered a subtype of blood pools
+  - bugfix: Sticky tape should be sticky again.
+  mc-oofert:
+  - bugfix: MMIs in an odysseus get the medhud, odysseus medical beamgun works properly
+  necromanceranne:
+  - bugfix: Burst fire weapons cannot be permanently broken by pacifists attempting
+      to fire them.
+  norsvenska:
+  - bugfix: The bar and restaurant portals are now distinguishable at a glance.
+2025-01-10:
+  Iamgoofball:
+  - qol: Deconverting a revolutionary now throws a balloon alert alongside the chat
+      text.
+  Jacquerel:
+  - bugfix: The hand teleporter (and several other items) will now allow you to teleport
+      to and from valid locations and forbid you from teleporting to or from places
+      you can't teleport to or from, instead of the other way around.
+  SmArtKar:
+  - rscadd: Spessmen now blink.
+  - rscadd: Added a new Fluoride Stare quirk, keep those eyeballs wet, lest they crack!
+  - image: Eyes now display their color on their organ sprite, instead of always being
+      displayed as blue.
+  high-speedspin-cycle:
+  - balance: Overdose thresholds now positively scale with high purity
+2025-01-11:
+  Y0SH1M4S73R:
+  - qol: Xenomorphs that have had their organs removed, or replaced with organs they
+      shouldn't normally have, keep those organs (or lack thereof) when evolving.
+  - bugfix: Xenomorphs that somehow get skillchips or brain traumas will keep them
+      when evolving.
+  lukevale:
+  - bugfix: Fixes the extra pixals the flooring decal line trim, and the striped version
+      has where it's not ment to.
+  timothymtorres:
+  - sound: Add hair clipper sound to hair razor item
+  zoomachina:
+  - spellcheck: succesful -> successful

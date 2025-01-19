@@ -96,18 +96,19 @@
 /mob/living/basic/hivebot/mechanic/Initialize(mapload)
 	. = ..()
 	GRANT_ACTION(/datum/action/cooldown/spell/conjure/foam_wall)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
-/mob/living/basic/hivebot/mechanic/proc/pre_attack(mob/living/fixer, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/hivebot/mechanic/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(ismachinery(target))
 		repair_machine(target)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 	if(istype(target, /mob/living/basic/hivebot))
 		repair_hivebot(target)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 /mob/living/basic/hivebot/mechanic/proc/repair_machine(obj/machinery/fixable)
 	if(fixable.get_integrity() >= fixable.max_integrity)

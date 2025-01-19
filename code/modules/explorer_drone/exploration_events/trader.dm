@@ -89,7 +89,7 @@
 	requires_translator = FALSE
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE,EXPLORATION_SITE_CIVILIZED)
 	band_values = list(EXOSCANNER_BAND_LIFE=1)
-	required_path = list(/obj/item/organ/internal/heart,/obj/item/organ/internal/liver,/obj/item/organ/internal/stomach,/obj/item/organ/internal/eyes)
+	required_path = list(/obj/item/organ/heart,/obj/item/organ/liver,/obj/item/organ/stomach,/obj/item/organ/eyes)
 	traded_path = list(/obj/item/implanter/explosive)
 	amount = 1
 

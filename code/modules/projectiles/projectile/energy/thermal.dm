@@ -15,6 +15,9 @@
 	if(!ishuman(target))
 		return
 
+	if(HAS_TRAIT(target, TRAIT_RESISTCOLD))
+		return
+
 	var/mob/living/carbon/cold_target = target
 	var/how_cold_is_target = cold_target.bodytemperature
 	var/danger_zone = cold_target.dna.species.bodytemp_cold_damage_limit - 150
@@ -38,6 +41,9 @@
 /obj/projectile/energy/cryo/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!ishuman(target))
+		return
+
+	if(HAS_TRAIT(target, TRAIT_RESISTHEAT))
 		return
 
 	var/mob/living/carbon/hot_target = target

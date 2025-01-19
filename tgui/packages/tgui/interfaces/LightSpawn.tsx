@@ -1,8 +1,16 @@
 import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Knob,
+  Section,
+  Slider,
+  Stack,
+  Tabs,
+} from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
-import { classes } from '../../common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Knob, Section, Slider, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 enum Direction {

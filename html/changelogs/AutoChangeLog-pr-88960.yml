@@ -1,0 +1,10 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - balance: "Ethereal hunger rate has been adjusted to be 1/8th of its previous rate, now taking roughly 16-17~ minutes to go down from full to normal or normal to none. Ethereal defines have been standardized to help keep this sane."
+  - refactor: "Ethereal APC and power store draining/charging methods have been refactored. Please report any issues."
+  - bugfix: "Ethereal APC and power store draining/charging no longer arbitrarily caps out at slightly below or above the max/min."
+  - bugfix: "Ethereal APC draining/charging no longer runtimes when there is no cell or it gets removed mid-charge."
+  - bugfix: "Ethereals can no longer continue charging their stomach even if it gets surgically removed from them mid-charge."
+  - bugfix: "Ethereal power store draining actually updated the charge level overlay."
+  - qol: "Ethereal APC and power store draining displays a balloon alert when it can't continue for whatever reason."

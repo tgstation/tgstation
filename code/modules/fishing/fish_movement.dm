@@ -103,7 +103,31 @@
 		var/acceleration_mult = get_acceleration(seconds_per_tick)
 		var/target_acceleration = distance * acceleration_mult * seconds_per_tick
 
+		if(fish_idle_velocity)
+			var/idle_velocity = fish_idle_velocity
+			var/abs_idle_vel = abs(idle_velocity)
+			//Make sure idle velocity doesn't manage to halt fish to a grind and getting them unable to move.
+			//First, check if the directions of the two forces are oppositve
+			if((idle_velocity / abs_idle_vel) != (target_acceleration / abs(target_acceleration)))
+				//Then, calculate the ratio between absolute idle velocity and halved acceleration multiplier.
+				var/halved_ratio = (acceleration_mult * 0.5) / abs_idle_vel
+				/**
+				 * If the idle velocity is more than half the acceleration,
+				 * proceed to use powers, for diminishing loss of acceleration per additional unit of idle velocity.
+				 * This way you never reach 0 acceleration while allowing more extreme values to keep lowering it.
+				 */
+				if(halved_ratio < 1)
+					var/power = min(halved_ratio + 0.5, 1)
+					target_acceleration *= 1 - (halved_ratio^power)
+				/**
+				 * Otherwise we add the idle velocity (which we know is of opposite sign and
+				 * has an absolute value between 0.ε and 0.5) to the target velocity
+				 */
+				else
+					target_acceleration += idle_velocity
+
 		fish_velocity = fish_velocity * FISH_FRICTION_MULT + target_acceleration
+
 	else if(can_roll && prob(short_chance))
 		var/distance_from_top = FISHING_MINIGAME_AREA - master.fish_position - master.fish_height
 		var/distance_from_bottom = master.fish_position
@@ -115,7 +139,7 @@
 		target_position = clamp(master.fish_position + jump_length, 0, FISHING_MINIGAME_AREA - master.fish_height)
 		current_velocity_limit = short_jump_velocity_limit
 
-	fish_velocity = clamp(fish_velocity + fish_idle_velocity, -current_velocity_limit, current_velocity_limit)
+	fish_velocity = clamp(fish_velocity, -current_velocity_limit, current_velocity_limit)
 	set_fish_position(seconds_per_tick)
 
 ///Proc that returns the acceleration of the fish during the minigame.

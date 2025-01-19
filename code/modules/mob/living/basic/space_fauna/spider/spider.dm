@@ -49,6 +49,18 @@
 	/// If true then you shouldn't be told that you're a spider antagonist as soon as you are placed into this mob
 	var/apply_spider_antag = TRUE
 
+/datum/emote/spider
+	mob_type_allowed_typecache = /mob/living/basic/spider
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/spider/chitter
+	key = "chitter"
+	key_third_person = "chitters"
+	message = "chitters."
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/insect/chitter.ogg'
+
 /mob/living/basic/spider/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_WEB_SURFER, TRAIT_FENCE_CLIMBER), INNATE_TRAIT)
@@ -57,6 +69,7 @@
 	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
 	AddElement(/datum/element/cliff_walking)
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 1.5)
+	AddElement(/datum/element/basic_allergenic_attack, allergen = BUGS, allergen_chance = 20, histamine_add = 5)
 
 	if(poison_per_bite)
 		AddElement(/datum/element/venomous, poison_type, poison_per_bite, injection_flags = bite_injection_flags)
@@ -171,10 +184,18 @@
 	response_harm_simple = "splat"
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider/pest
 	apply_spider_antag = FALSE
+	///list of pet commands we follow
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/perform_trick_sequence,
+	)
 
 /mob/living/basic/spider/maintenance/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 	AddElement(/datum/element/ai_retaliate)
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/tiny_mob_hunter)

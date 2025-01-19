@@ -13,7 +13,7 @@
 	. = ..()
 	set_light(set_luminosity, set_cap)
 
-/obj/effect/light_emitter/singularity_pull()
+/obj/effect/light_emitter/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/light_emitter/singularity_act()
@@ -135,9 +135,9 @@
 	roundstart_template = /datum/map_template/shuttle/mining/kilo
 	height = 10
 
-/obj/docking_port/stationary/mining_home/northstar
-	roundstart_template = /datum/map_template/shuttle/mining/northstar
-	height = 6
+/obj/docking_port/stationary/mining_home/nebula
+	roundstart_template = /datum/map_template/shuttle/mining/nebula
+	height = 10
 
 /obj/docking_port/stationary/mining_home/common
 	name = "SS13: Common Mining Dock"
@@ -146,9 +146,6 @@
 
 /obj/docking_port/stationary/mining_home/common/kilo
 	roundstart_template = /datum/map_template/shuttle/mining_common/kilo
-
-/obj/docking_port/stationary/mining_home/common/northstar
-	roundstart_template = /datum/map_template/shuttle/mining_common/northstar
 
 /obj/structure/closet/crate/miningcar
 	name = "mine cart"
@@ -179,6 +176,10 @@
 		. += span_notice("You can give this a bump to send it on its way, or drag it off the rails to drag it around.")
 	else
 		. += span_notice("Drag this onto a mine cart rail to set it on its way.")
+
+// We don't want the locked crate overlay show up.
+/obj/structure/closet/crate/miningcar/closet_update_overlays(list/new_overlays)
+	return
 
 /obj/structure/closet/crate/miningcar/Move(atom/newloc, direct, glide_size_override, update_dir)
 	if(isnull(newloc))

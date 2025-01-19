@@ -358,18 +358,6 @@
 
 	return FALSE
 
-/mob/living/silicon/robot/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
-	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
-		spark_system.start()
-		. = TRUE
-	return ..() || .
-
-/mob/living/silicon/ai/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
-	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
-		spark_system.start()
-		. = TRUE
-	return ..() || .
-
 /mob/living/carbon/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
 	var/obj/item/bodypart/hit_bodypart = get_bodypart(hit_zone) || bodyparts[1]
 	if(!hit_bodypart.can_bleed())
@@ -456,21 +444,30 @@
 		else
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, def_zone)
-	if(!I.force && !length(I.attack_verb_simple) && !length(I.attack_verb_continuous))
+/mob/living/proc/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
+	if(!weapon.force && !length(weapon.attack_verb_simple) && !length(weapon.attack_verb_continuous))
 		return
-	var/message_verb_continuous = length(I.attack_verb_continuous) ? "[pick(I.attack_verb_continuous)]" : "attacks"
-	var/message_verb_simple = length(I.attack_verb_simple) ? "[pick(I.attack_verb_simple)]" : "attack"
-	var/message_hit_area = get_hit_area_message(hit_area)
 
-	var/attack_message_spectator = "[src] [message_verb_continuous][message_hit_area] with [I]!"
-	var/attack_message_victim = "Something [message_verb_continuous] you[message_hit_area] with [I]!"
-	var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [I]!"
+	// Sanity in case one is null for some reason
+	var/picked_index = rand(max(length(weapon.attack_verb_simple), length(weapon.attack_verb_continuous)))
+
+	var/message_verb_continuous = "attacks"
+	var/message_verb_simple = "attack"
+	var/message_hit_area = get_hit_area_message(hit_area)
+	// Sanity in case one is... longer than the other?
+	if (picked_index && length(weapon.attack_verb_continuous) >= picked_index)
+		message_verb_continuous = weapon.attack_verb_continuous[picked_index]
+	if (picked_index && length(weapon.attack_verb_simple) >= picked_index)
+		message_verb_simple = weapon.attack_verb_simple[picked_index]
+
+	var/attack_message_spectator = "[src] [message_verb_continuous][message_hit_area] with [weapon]!"
+	var/attack_message_victim = "Something [message_verb_continuous] you[message_hit_area] with [weapon]!"
+	var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [weapon]!"
 	if(user in viewers(src, null))
-		attack_message_spectator = "[user] [message_verb_continuous] [src][message_hit_area] with [I]!"
-		attack_message_victim = "[user] [message_verb_continuous] you[message_hit_area] with [I]!"
+		attack_message_spectator = "[user] [message_verb_continuous] [src][message_hit_area] with [weapon]!"
+		attack_message_victim = "[user] [message_verb_continuous] you[message_hit_area] with [weapon]!"
 	if(user == src)
-		attack_message_victim = "You [message_verb_simple] yourself[message_hit_area] with [I]."
+		attack_message_victim = "You [message_verb_simple] yourself[message_hit_area] with [weapon]."
 	visible_message(span_danger("[attack_message_spectator]"),\
 		span_userdanger("[attack_message_victim]"), null, COMBAT_MESSAGE_RANGE, user)
 	if(is_blind())
@@ -484,4 +481,3 @@
 		return " in the [input_area]"
 
 	return ""
-

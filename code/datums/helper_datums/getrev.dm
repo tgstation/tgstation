@@ -87,6 +87,6 @@
 	msg += "<br><b>Current Informational Settings:</b>"
 	msg += "Protect Authority Roles From Traitor: [CONFIG_GET(flag/protect_roles_from_antagonist)]"
 	msg += "Protect Assistant Role From Traitor: [CONFIG_GET(flag/protect_assistant_from_antagonist)]"
-	msg += "Enforce Human Authority: [CONFIG_GET(flag/enforce_human_authority)]"
+	msg += "Enforce Human Authority: [CONFIG_GET(string/human_authority)]"
 	msg += "Allow Latejoin Antagonists: [CONFIG_GET(flag/allow_latejoin_antagonists)]"
 	to_chat(src, span_infoplain(msg.Join("<br>")))

@@ -281,6 +281,9 @@
 	if (SEND_SIGNAL(src, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, movement_dir, continuous_move, backup) & COMPONENT_PREVENT_SPACEMOVE_HALT)
 		return FALSE
 
+	if (drift_handler?.attempt_halt(movement_dir, continuous_move, backup))
+		return FALSE
+
 	if(continuous_move || !istype(backup) || !movement_dir || backup.anchored)
 		return TRUE
 
@@ -293,11 +296,16 @@
 		to_chat(src, span_info("You push off of [backup] to propel yourself."))
 	return TRUE
 
+/// We handle lattices via backups
+/mob/handle_spacemove_grabbing()
+	return
+
 /**
  * Finds a target near a mob that is viable for pushing off when moving.
  * Takes the intended movement direction as input, alongside if the context is checking if we're allowed to continue drifting
+ * If include_floors is TRUE, includes floors *with gravity*
  */
-/mob/get_spacemove_backup(moving_direction, continuous_move)
+/mob/get_spacemove_backup(moving_direction, continuous_move, include_floors = FALSE)
 	var/atom/secondary_backup
 	var/list/priority_dirs = (moving_direction in GLOB.cardinals) ? GLOB.cardinals : GLOB.diagonals
 	for(var/atom/pushover as anything in range(1, get_turf(src)))
@@ -305,13 +313,15 @@
 			continue
 		if(isarea(pushover))
 			continue
+		var/is_priority = pushover.loc == loc || (get_dir(src, pushover) in priority_dirs)
 		if(isturf(pushover))
 			var/turf/turf = pushover
 			if(isspaceturf(turf))
 				continue
 			if(!turf.density && !mob_negates_gravity())
-				continue
-			if (get_dir(src, pushover) in priority_dirs)
+				if (!include_floors || !turf.has_gravity())
+					continue
+			if (is_priority)
 				return pushover
 			secondary_backup = pushover
 			continue
@@ -325,27 +335,27 @@
 				continue
 
 		var/pass_allowed = rebound.CanPass(src, get_dir(rebound, src))
-		if(!rebound.density && pass_allowed)
+		if(!rebound.density && pass_allowed && !istype(rebound, /obj/structure/lattice))
 			continue
 		//Sometime this tick, this pushed off something. Doesn't count as a valid pushoff target
 		if(rebound.last_pushoff == world.time)
 			continue
 		if(continuous_move && !pass_allowed)
-			var/datum/move_loop/move/rebound_engine = GLOB.move_manager.processing_on(rebound, SSnewtonian_movement)
+			var/datum/move_loop/smooth_move/rebound_engine = GLOB.move_manager.processing_on(rebound, SSnewtonian_movement)
 			// If you're moving toward it and you're both going the same direction, stop
-			if(moving_direction == get_dir(src, pushover) && rebound_engine && moving_direction == rebound_engine.direction)
+			if(moving_direction == get_dir(src, pushover) && rebound_engine && moving_direction == angle2dir(rebound_engine.angle))
 				continue
 		else if(!pass_allowed)
 			if(moving_direction == get_dir(src, pushover)) // Can't push "off" of something that you're walking into
 				continue
 		if(rebound.anchored)
-			if (get_dir(src, rebound) in priority_dirs)
+			if (is_priority)
 				return rebound
 			secondary_backup = rebound
 			continue
 		if(pulling == rebound)
 			continue
-		if (get_dir(src, rebound) in priority_dirs)
+		if (is_priority)
 			return rebound
 		secondary_backup = rebound
 	return secondary_backup

@@ -28,20 +28,30 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/pig
 
+/datum/emote/pig
+	mob_type_allowed_typecache = /mob/living/basic/pig
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/pig/oink
+	key = "oink"
+	key_third_person = "oinks"
+	message = "oinks!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = SFX_PIG_OINK
 /mob/living/basic/pig/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "oinks!")
+	AddElement(/datum/element/pet_bonus, "oink")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	make_tameable()
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes
 /mob/living/basic/pig/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 25, bonus_tame_chance = 15)
+	var/list/food_types = string_list(list(/obj/item/food/grown/carrot))
+	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15)
 
 /mob/living/basic/pig/tamed(mob/living/tamer, atom/food)
-	can_buckle = TRUE
-	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pig)
 	visible_message(span_notice("[src] snorts respectfully."))
 

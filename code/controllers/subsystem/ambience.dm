@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(ambience)
 		var/area/current_area = get_area(client_mob)
 		if(!current_area) //Something's gone horribly wrong
 			stack_trace("[key_name(client_mob)] has somehow ended up in nullspace. WTF did you do")
-			ambience_listening_clients -= client_iterator
+			remove_ambience_client(client_iterator)
 			continue
 
 		if(ambience_listening_clients[client_iterator] > world.time)
@@ -54,10 +54,13 @@ SUBSYSTEM_DEF(ambience)
 ///Attempts to play an ambient sound to a mob, returning the cooldown in deciseconds
 /area/proc/play_ambience(mob/M, sound/override_sound, volume = 27)
 	var/sound/new_sound = override_sound || pick(ambientsounds)
-	new_sound = sound(new_sound, repeat = 0, wait = 0, volume = volume, channel = CHANNEL_AMBIENCE)
+	/// volume modifier for ambience as set by the player in preferences.
+	var/volume_modifier = (M.client?.prefs.read_preference(/datum/preference/numeric/sound_ambience_volume))/100
+	new_sound = sound(new_sound, repeat = 0, wait = 0, volume = volume*volume_modifier, channel = CHANNEL_AMBIENCE)
 	SEND_SOUND(M, new_sound)
 
-	return rand(min_ambience_cooldown, max_ambience_cooldown)
+	var/sound_length = SSsounds.get_sound_length(new_sound.file)
+	return sound_length + rand(min_ambience_cooldown, max_ambience_cooldown)
 
 /datum/controller/subsystem/ambience/proc/remove_ambience_client(client/to_remove)
 	ambience_listening_clients -= to_remove
@@ -65,8 +68,6 @@ SUBSYSTEM_DEF(ambience)
 	currentrun -= to_remove
 
 /area/station/maintenance
-	min_ambience_cooldown = 20 SECONDS
-	max_ambience_cooldown = 35 SECONDS
 
 	///A list of rare sound effects to fuck with players. No, it does not contain actual minecraft sounds anymore.
 	var/static/list/minecraft_cave_noises = list(
@@ -108,14 +109,15 @@ SUBSYSTEM_DEF(ambience)
 /mob/proc/refresh_looping_ambience()
 	SIGNAL_HANDLER
 
-	if(!client) // If a tree falls in the woods.
+	if(!client || isobserver(client.mob)) // If a tree falls in the woods. sadboysuss: Don't refresh for ghosts, it sounds bad
 		return
 
 	var/area/my_area = get_area(src)
 	var/sound_to_use = my_area.ambient_buzz
+	var/volume_modifier = client.prefs.read_preference(/datum/preference/numeric/sound_ship_ambience_volume)
 
-	if(!sound_to_use || !(client.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)))
-		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+	if(!sound_to_use || !(client.prefs.read_preference(/datum/preference/numeric/sound_ship_ambience_volume)))
+		SEND_SOUND(src, sound(null, repeat = 0, volume = volume_modifier, wait = 0, channel = CHANNEL_BUZZ))
 		client.current_ambient_sound = null
 		return
 

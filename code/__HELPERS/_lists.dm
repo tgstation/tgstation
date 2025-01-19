@@ -247,6 +247,13 @@
 
 			return "[output][and_text][input[index]]"
 
+///Returns a list of atom types in plain english as a string of each type name
+/proc/type_english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
+	var/list/english_input = list()
+	for(var/atom/type as anything in input)
+		english_input += "[initial(type.name)]"
+	return english_list(english_input, nothing_text, and_text, comma_text, final_comma_text)
+
 /**
  * Checks for specific types in a list.
  *

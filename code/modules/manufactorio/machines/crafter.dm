@@ -1,12 +1,13 @@
 /obj/machinery/power/manufacturing/crafter
 	name = "manufacturing assembling machine"
-	desc = "Assembles (crafts) the set recipe until it runs out of resources. Inputs irrelevant to the recipe are ignored, and it may only hold exactly what the recipe needs."
+	desc = "Assembles (crafts) the set recipe until it runs out of resources. Only resources on it will be used."
 	icon_state = "crafter"
+	density = FALSE
 	circuit = /obj/item/circuitboard/machine/manucrafter
 	/// power used per process() spent crafting
 	var/power_cost = 5 KILO WATTS
-	/// our output, if the way out was blocked is held here
-	var/atom/movable/withheld
+	/// list of weakrefs to crafted items still on the machine that we failed to send forward
+	var/list/datum/weakref/withheld = list()
 	/// current recipe
 	var/datum/crafting_recipe/recipe
 	/// crafting component
@@ -21,6 +22,7 @@
 	craftsman = AddComponent(/datum/component/personal_crafting/machine)
 	if(ispath(recipe))
 		recipe = locate(recipe) in (cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes)
+	START_PROCESSING(SSmanufacturing, src)
 
 /obj/machinery/power/manufacturing/crafter/examine(mob/user)
 	. = ..()
@@ -40,78 +42,36 @@
 
 		. += "[amount > 1 ? ("[amount]" + " of") : "a"] [initial(ingredient.name)]"
 
-/obj/machinery/power/manufacturing/crafter/update_overlays()
-	. = ..()
-	. += generate_io_overlays(dir, COLOR_ORANGE)
-	for(var/target_dir in GLOB.cardinals - dir)
-		. += generate_io_overlays(target_dir, COLOR_MODERATE_BLUE)
-
-/obj/machinery/power/manufacturing/crafter/proc/valid_for_recipe(obj/item/checking)
-	. = FALSE
-	for(var/requirement_path in recipe.reqs)
-		if(!ispath(checking.type, requirement_path) || recipe.blacklist.Find(checking.type))
-			continue
-		var/amount = recipe.reqs[requirement_path]
-		if(count_path(requirement_path) >= amount)
-			continue
-		return TRUE
-
-/obj/machinery/power/manufacturing/crafter/proc/count_path(path)
-	. = 0
-	for(var/atom/content as anything in contents - circuit)
-		if(!ispath(path, content.type))
-			continue
-		.++
-
 /obj/machinery/power/manufacturing/crafter/receive_resource(obj/receiving, atom/from, receive_dir)
-	if(isnull(recipe) || !isitem(receiving) || surplus() < power_cost)
+	var/turf/machine_turf = get_turf(src)
+	if(length(machine_turf.contents) >= MANUFACTURING_TURF_LAG_LIMIT)
 		return MANUFACTURING_FAIL
-	if(receive_dir == dir || !valid_for_recipe(receiving))
-		return MANUFACTURING_FAIL
-	if(isstack(receiving) && count_path(receiving.type) && !may_merge_in_contents_and_do_so(receiving))
-		return MANUFACTURING_FAIL_FULL
-	receiving.Move(src, get_dir(receiving, src))
-	START_PROCESSING(SSmanufacturing, src)
+	receiving.forceMove(machine_turf)
 	return MANUFACTURING_SUCCESS
 
 /obj/machinery/power/manufacturing/crafter/multitool_act(mob/living/user, obj/item/tool)
 	. = NONE
 	var/list/unavailable = list()
 	for(var/datum/crafting_recipe/potential_recipe as anything in cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes)
-		if(craftsman.is_recipe_available(potential_recipe, user))
-			continue
-		var/obj/result = initial(potential_recipe.result)
-		if(istype(result) && initial(result.anchored))
+		var/obj/as_obj = potential_recipe.result
+		if(!(ispath(as_obj, /obj) && !ispath(as_obj, /obj/effect) && initial(as_obj.anchored)) && craftsman.is_recipe_available(potential_recipe, user))
 			continue
 		unavailable += potential_recipe
 	var/result = tgui_input_list(usr, "Recipe", "Select Recipe", (cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes) - unavailable)
 	if(isnull(result) || result == recipe || !user.can_perform_action(src))
 		return ITEM_INTERACT_FAILURE
-	var/dump_target = get_step(src, get_dir(src, user))
-	for(var/atom/movable/thing as anything in contents - circuit)
-		thing.Move(dump_target)
 	recipe = result
 	balloon_alert(user, "set")
 	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/power/manufacturing/crafter/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == withheld)
-		withheld = null
-
-/obj/machinery/power/manufacturing/crafter/atom_destruction(damage_flag)
-	. = ..()
-	withheld?.Move(drop_location(src))
 
 /obj/machinery/power/manufacturing/crafter/Destroy()
 	. = ..()
 	recipe = null
 	craftsman = null
-	QDEL_NULL(withheld)
+	withheld.Cut()
 
 /obj/machinery/power/manufacturing/crafter/process(seconds_per_tick)
-	if(!isnull(withheld) && !send_resource(withheld, dir))
-		return
+	send_withheld() // try send any pending stuff
 	if(!isnull(craft_timer))
 		if(surplus() >= power_cost)
 			add_load()
@@ -125,19 +85,37 @@
 	flick_overlay_view(mutable_appearance(icon, "crafter_printing"), recipe.time)
 	craft_timer = addtimer(CALLBACK(src, PROC_REF(craft), recipe), recipe.time, TIMER_STOPPABLE)
 
+/obj/machinery/power/manufacturing/crafter/proc/send_withheld()
+	if(!length(withheld))
+		return FALSE
+	for(var/datum/weakref/weakref as anything in withheld)
+		var/atom/movable/resolved = weakref?.resolve()
+		if(isnull(resolved))
+			withheld -= weakref
+			continue
+		if(resolved.loc != loc || send_resource(resolved, dir))
+			withheld -= weakref
+	return length(withheld)
+
 /obj/machinery/power/manufacturing/crafter/proc/craft(datum/crafting_recipe/recipe)
 	if(QDELETED(src))
 		return
 	craft_timer = null
-	var/atom/movable/result = craftsman.construct_item(src, recipe)
-	if(istype(result))
-		if(isitem(result))
-			result.pixel_x += rand(-4, 4)
-			result.pixel_y += rand(-4, 4)
-		result.Move(src)
-		send_resource(result, dir)
-	else
-		say(result)
+	var/list/prediff = get_overfloor_objects()
+	var/result = craftsman.construct_item(src, recipe)
+	if(istext(result))
+		say("Crafting failed,[result]")
+		return
+	var/list/diff = get_overfloor_objects() - prediff
+	for(var/atom/movable/diff_result as anything in diff)
+		if(iseffect(diff_result) || ismob(diff_result)) // PLEASE dont stuff cats (or other mobs) into the cat grinder 9000
+			continue
+		if(isitem(diff_result))
+			diff_result.pixel_x += rand(-4, 4)
+			diff_result.pixel_y += rand(-4, 4)
+		withheld += WEAKREF(diff_result)
+		recipe.on_craft_completion(src, diff_result)
+	send_withheld()
 
 /obj/machinery/power/manufacturing/crafter/cooker
 	name = "manufacturing cooking machine" // maybe this shouldnt be available dont wanna make chef useless, though otherwise it would need a sprite

@@ -1,4 +1,4 @@
-/obj/item/organ/internal/stomach/golem
+/obj/item/organ/stomach/golem
 	name = "silicate grinder"
 	icon_state = "stomach-p"
 	desc = "A rocklike organ which grinds and processes nutrition from minerals."
@@ -11,18 +11,18 @@
 	/// How slow are you if you have absolutely nothing in the tank?
 	var/max_hunger_slowdown = 4
 
-/obj/item/organ/internal/stomach/golem/on_mob_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/stomach/golem/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	RegisterSignal(owner, COMSIG_CARBON_ATTEMPT_EAT, PROC_REF(try_eating))
 
-/obj/item/organ/internal/stomach/golem/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/stomach/golem/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_CARBON_ATTEMPT_EAT)
 	organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/golem_hunger)
 	organ_owner.remove_status_effect(/datum/status_effect/golem_statued)
 
 /// Reject food, rocks only
-/obj/item/organ/internal/stomach/golem/proc/try_eating(mob/living/carbon/source, atom/eating)
+/obj/item/organ/stomach/golem/proc/try_eating(mob/living/carbon/source, atom/eating)
 	SIGNAL_HANDLER
 	if(istype(eating, /obj/item/food/golem_food))
 		return
@@ -30,7 +30,7 @@
 	return COMSIG_CARBON_BLOCK_EAT
 
 /// Golem stomach cannot process nutriment except from minerals
-/obj/item/organ/internal/stomach/golem/on_life(delta_time, times_fired)
+/obj/item/organ/stomach/golem/on_life(delta_time, times_fired)
 	for(var/datum/reagent/consumable/food in reagents.reagent_list)
 		if (istype(food, /datum/reagent/consumable/nutriment/mineral))
 			continue
@@ -38,7 +38,7 @@
 	return ..()
 
 /// Slow down based on how full you are
-/obj/item/organ/internal/stomach/golem/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)
+/obj/item/organ/stomach/golem/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)
 	// the effects are all negative, so just don't run them if you have the trait
 	. = ..()
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))

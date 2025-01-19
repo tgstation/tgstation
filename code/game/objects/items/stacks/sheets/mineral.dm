@@ -41,6 +41,8 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/sandstone
 	walltype = /turf/closed/wall/mineral/sandstone
 	material_type = /datum/material/sandstone
+	drop_sound = SFX_STONE_DROP
+	pickup_sound = SFX_STONE_PICKUP
 
 /obj/item/stack/sheet/mineral/sandstone/get_main_recipes()
 	. = ..()
@@ -343,6 +345,8 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/snow
 	walltype = /turf/closed/wall/mineral/snow
 	material_type = /datum/material/snow
+	pickup_sound = 'sound/items/handling/materials/snow_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/snow_drop.ogg'
 
 GLOBAL_LIST_INIT(snow_recipes, list ( \
 	new/datum/stack_recipe("snow wall", /turf/closed/wall/mineral/snow, 5, time = 4 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_STRUCTURE), \

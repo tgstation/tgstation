@@ -1,5 +1,3 @@
-#define LEANING_OFFSET 11
-
 /turf/closed/wall
 	name = "wall"
 	desc = "A huge chunk of iron used to separate rooms."
@@ -31,66 +29,10 @@
 	var/girder_type = /obj/structure/girder
 	/// A turf that will replace this turf when this turf is destroyed
 	var/decon_type
+	/// If we added a leaning component to ourselves
+	var/added_leaning = FALSE
 
 	var/list/dent_decals
-
-/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
-	if(dropping != user)
-		return
-	if(!iscarbon(dropping) && !iscyborg(dropping))
-		return
-	var/mob/living/leaner = dropping
-	if(INCAPACITATED_IGNORING(leaner, INCAPABLE_RESTRAINTS) || leaner.stat != CONSCIOUS || HAS_TRAIT(leaner, TRAIT_NO_TRANSFORM))
-		return
-	if(!leaner.density || leaner.pulledby || leaner.buckled || !(leaner.mobility_flags & MOBILITY_STAND))
-		return
-	if(HAS_TRAIT_FROM(leaner, TRAIT_UNDENSE, LEANING_TRAIT))
-		return
-	var/turf/checked_turf = get_step(leaner, REVERSE_DIR(leaner.dir))
-	if(checked_turf != src)
-		return
-	leaner.start_leaning(src)
-
-/mob/living/proc/start_leaning(turf/closed/wall/wall)
-	var/new_y = base_pixel_y + pixel_y
-	var/new_x = base_pixel_x + pixel_x
-	switch(dir)
-		if(SOUTH)
-			new_y += LEANING_OFFSET
-		if(NORTH)
-			new_y -= LEANING_OFFSET
-		if(WEST)
-			new_x += LEANING_OFFSET
-		if(EAST)
-			new_x -= LEANING_OFFSET
-
-	animate(src, 0.2 SECONDS, pixel_x = new_x, pixel_y = new_y)
-	add_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
-	visible_message(
-		span_notice("[src] leans against [wall]."),
-		span_notice("You lean against [wall]."),
-	)
-	RegisterSignals(src, list(
-		COMSIG_MOB_CLIENT_PRE_MOVE,
-		COMSIG_LIVING_DISARM_HIT,
-		COMSIG_LIVING_GET_PULLED,
-		COMSIG_MOVABLE_TELEPORTING,
-		COMSIG_ATOM_DIR_CHANGE,
-	), PROC_REF(stop_leaning))
-	update_fov()
-
-/mob/living/proc/stop_leaning()
-	SIGNAL_HANDLER
-	UnregisterSignal(src, list(
-		COMSIG_MOB_CLIENT_PRE_MOVE,
-		COMSIG_LIVING_DISARM_HIT,
-		COMSIG_LIVING_GET_PULLED,
-		COMSIG_MOVABLE_TELEPORTING,
-		COMSIG_ATOM_DIR_CHANGE,
-	))
-	animate(src, 0.2 SECONDS, pixel_x = base_pixel_x, pixel_y = base_pixel_y)
-	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
-	update_fov()
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
@@ -107,6 +49,18 @@
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
+	register_context()
+
+/turf/closed/wall/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(!isnull(held_item))
+		if((initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS) && held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Adjust Wall Corner"
+			return CONTEXTUAL_SCREENTIP_SET
+
+/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
+	//Adds the component only once. We do it here & not in Initialize() because there are tons of walls & we don't want to add to their init times
+	LoadComponent(/datum/component/leanable, dropping)
 
 /turf/closed/wall/atom_destruction(damage_flag)
 	. = ..()
@@ -118,7 +72,9 @@
 	return ..()
 
 /turf/closed/wall/examine(mob/user)
-	. += ..()
+	. = ..()
+	if(initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS)
+		. += span_notice("You could adjust its corners with a <b>wrench</b>.")
 	. += deconstruction_hints(user)
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)
@@ -222,7 +178,7 @@
  **arg2 is the hulk
  */
 /turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 20)
-	arm.receive_damage(brute = damage, blocked = 0, wound_bonus = CANT_WOUND)
+	hulkman.apply_damage(damage, BRUTE, arm, wound_bonus = CANT_WOUND)
 	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations
 	if(!smasher || !damage) //sanity check but also snow and wood walls deal no recoil damage, so no arm breaky
 		return
@@ -296,7 +252,7 @@
 
 	return FALSE
 
-/turf/closed/wall/singularity_pull(S, current_size)
+/turf/closed/wall/singularity_pull(atom/singularity, current_size)
 	..()
 	wall_singularity_pull(current_size)
 
@@ -379,4 +335,14 @@
 	. = ..()
 	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
 
-#undef LEANING_OFFSET
+/turf/closed/wall/wrench_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode || !(initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
+		smoothing_flags &= ~SMOOTH_DIAGONAL_CORNERS
+	else
+		smoothing_flags |= SMOOTH_DIAGONAL_CORNERS
+	QUEUE_SMOOTH(src)
+	to_chat(user, span_notice("You adjust [src]."))
+	tool.play_tool_sound(src)
+	return ITEM_INTERACT_SUCCESS

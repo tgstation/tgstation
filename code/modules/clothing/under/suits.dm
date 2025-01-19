@@ -119,4 +119,4 @@
 
 /obj/item/clothing/under/suit/carpskin/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)

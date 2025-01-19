@@ -125,6 +125,14 @@ if $grep 'allocate\(/mob/living/carbon/human[,\)]' $unit_test_files ||
 	st=1
 fi;
 
+section "516 Href Styles"
+part "byond href styles"
+if $grep "href[\s='\"\\\\]*\?" $code_files ; then
+    echo
+    echo -e "${RED}ERROR: BYOND requires internal href links to begin with \"byond://\".${NC}"
+    st=1
+fi;
+
 section "common mistakes"
 part "global vars"
 if $grep '^/*var/' $code_files; then
@@ -137,6 +145,13 @@ part "proc args with var/"
 if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' $code_files; then
 	echo
 	echo -e "${RED}ERROR: Changed files contains a proc argument starting with 'var'.${NC}"
+	st=1
+fi;
+
+part "improperly pathed static lists"
+if $grep -i 'var/list/static/.*' $code_files; then
+	echo
+	echo -e "${RED}ERROR: Found incorrect static list definition 'var/list/static/', it should be 'var/static/list/' instead.${NC}"
 	st=1
 fi;
 

@@ -178,12 +178,12 @@
 			ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 			ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 10 SECONDS)
 			ghostie.adjust_health(50)
-		for(var/mob/living/carbon/C in get_hearers_in_view(effective_size,T))
-			if(IS_CULTIST(C))
-				to_chat(C, span_userdanger("The divine explosion sears you!"))
-				C.Paralyze(40)
-				C.adjust_fire_stacks(5)
-				C.ignite_mob()
+		for(var/mob/living/carbon/evil_motherfucker in get_hearers_in_view(effective_size,T))
+			if(IS_CULTIST(evil_motherfucker) || HAS_TRAIT(evil_motherfucker, TRAIT_EVIL))
+				to_chat(evil_motherfucker, span_userdanger("The divine explosion sears you!"))
+				evil_motherfucker.Paralyze(40)
+				evil_motherfucker.adjust_fire_stacks(5)
+				evil_motherfucker.ignite_mob()
 	..()
 
 /datum/chemical_reaction/gunpowder
@@ -578,7 +578,7 @@
 	required_reagents = list(/datum/reagent/teslium = 1, /datum/reagent/water = 1)
 	strengthdiv = 100
 	modifier = -100
-	mix_message = span_boldannounce("The teslium starts to spark as electricity arcs away from it!")
+	mix_message = span_bolddanger("The teslium starts to spark as electricity arcs away from it!")
 	mix_sound = 'sound/machines/defib/defib_zap.ogg'
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
@@ -640,4 +640,4 @@
 /datum/chemical_reaction/reagent_explosion/patriotism_overload
 	required_reagents = list(/datum/reagent/consumable/ethanol/planet_cracker = 1, /datum/reagent/consumable/ethanol/triumphal_arch = 1)
 	strengthdiv = 20
-	mix_message = span_boldannounce("The two patriotic drinks instantly reject each other!")
+	mix_message = span_bolddanger("The two patriotic drinks instantly reject each other!")

@@ -12,6 +12,7 @@
 	maxHealth = 150
 	health = 150
 	obj_damage = 15
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_AQUATIC
 	melee_damage_lower = 15
 	melee_damage_upper = 19
 	attack_verb_continuous = "snips"
@@ -22,7 +23,7 @@
 	butcher_results = list(
 		/obj/item/food/meat/slab/rawcrab = 2,
 		/obj/item/stack/sheet/bone = 2,
-		/obj/item/organ/internal/monster_core/rush_gland = 1,
+		/obj/item/organ/monster_core/rush_gland = 1,
 	)
 	crusher_loot = /obj/item/crusher_trophy/lobster_claw
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity
@@ -31,7 +32,7 @@
 	/// The type of charging ability we give this mob
 	var/charge_type = /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster
 	/// The pet command for the charging ability we give this mob
-	var/charge_command = /datum/pet_command/point_targeting/use_ability/lob_charge
+	var/charge_command = /datum/pet_command/use_ability/lob_charge
 	/// At which speed do we amputate limbs
 	var/snip_speed = 5 SECONDS
 	///Lobstrosities are natural anglers. This rapresent their proficiency at fishing when not mindless
@@ -55,6 +56,8 @@
 	charge = new charge_type(src)
 	charge.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, charge)
+	var/static/list/fishable_turfs = typecacheof(list(/turf/open/lava))
+	ai_controller.set_blackboard_key(BB_FISHABLE_LIST, fishable_turfs)
 
 /mob/living/basic/mining/lobstrosity/Destroy()
 	QDEL_NULL(charge)
@@ -69,10 +72,11 @@
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/move,
+		/datum/pet_command/attack,
 		charge_command,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/fish,
+		/datum/pet_command/fish,
 	)
 	AddComponent(/datum/component/happiness)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
@@ -144,18 +148,29 @@
 	butcher_results = list(
 		/obj/item/food/meat/slab/rawcrab = 1,
 		/obj/item/stack/sheet/bone = 1,
-		/obj/item/organ/internal/monster_core/rush_gland = 1,
+		/obj/item/organ/monster_core/rush_gland = 1,
 	)
 	crusher_loot = null
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity/juvenile
 	snip_speed = 6.5 SECONDS
 	charge_type = /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/shrimp
-	charge_command = /datum/pet_command/point_targeting/use_ability/lob_charge/shrimp
+	charge_command = /datum/pet_command/use_ability/lob_charge/shrimp
 	base_fishing_level = SKILL_LEVEL_NOVICE
 	/// What do we become when we grow up?
 	var/mob/living/basic/mining/lobstrosity/grow_type = /mob/living/basic/mining/lobstrosity
 	/// Were we tamed? If yes, tame the mob we become when we grow up too.
 	var/was_tamed = FALSE
+
+/datum/emote/lobstrosity_juvenile
+	mob_type_allowed_typecache = /mob/living/basic/mining/lobstrosity/juvenile
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/lobstrosity_juvenile/chitter
+	key = "chitter"
+	key_third_person = "chitters"
+	message = "chitters pleasantly!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	sound = 'sound/mobs/non-humanoids/insect/chitter.ogg'
 
 /mob/living/basic/mining/lobstrosity/juvenile/Initialize(mapload)
 	. = ..()
@@ -170,7 +185,7 @@
 		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
 		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_up))\
 	)
-	AddComponent(/datum/component/tameable, target_foods, tame_chance = 35, bonus_tame_chance = 20)
+	AddComponent(/datum/component/tameable, tame_chance = 35, bonus_tame_chance = 20)
 	AddComponent(/datum/component/swarming, 16, 11)
 	ADD_TRAIT(src, TRAIT_MOB_HIDE_HAPPINESS, INNATE_TRAIT) //Do not let strangers know it gets happy when poked if stray.
 
@@ -203,7 +218,7 @@
 	. = ..()
 	was_tamed = TRUE
 	// They are more pettable I guess
-	AddElement(/datum/element/pet_bonus, "chitters pleasantly!")
+	AddElement(/datum/element/pet_bonus, "chitter")
 	REMOVE_TRAIT(src, TRAIT_MOB_HIDE_HAPPINESS, INNATE_TRAIT)
 
 /mob/living/basic/mining/lobstrosity/juvenile/proc/ready_to_grow()
@@ -240,7 +255,7 @@
 	charger.apply_status_effect(/datum/status_effect/tired_post_charge/lesser)
 
 ///Command the lobster to charge at someone.
-/datum/pet_command/point_targeting/use_ability/lob_charge
+/datum/pet_command/use_ability/lob_charge
 	command_name = "Charge"
 	command_desc = "Command your lobstrosity to charge against someone."
 	radial_icon = 'icons/mob/actions/actions_items.dmi'
@@ -251,14 +266,14 @@
 	pet_ability_key = BB_TARGETED_ACTION
 	ability_behavior = /datum/ai_behavior/pet_use_ability/then_attack/long_ranged
 
-/datum/pet_command/point_targeting/use_ability/lob_charge/set_command_target(mob/living/parent, atom/target)
+/datum/pet_command/use_ability/lob_charge/set_command_target(mob/living/parent, atom/target)
 	if (!target)
-		return
+		return FALSE
 	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(parent.ai_controller.blackboard[targeting_strategy_key])
 	if(!targeter?.can_attack(parent, target))
 		parent.balloon_alert_to_viewers("shakes head!")
 		return FALSE
 	return ..()
 
-/datum/pet_command/point_targeting/use_ability/lob_charge/shrimp
+/datum/pet_command/use_ability/lob_charge/shrimp
 	ability_behavior = /datum/ai_behavior/pet_use_ability/then_attack/short_ranged

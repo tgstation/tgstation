@@ -11,7 +11,7 @@ body {
   padding: 0;
   margin: 0;
   height: 100%;
-  color: #000000;
+  color: hsl(0, 0%, 0%);
 }
 
 body {
@@ -45,15 +45,15 @@ img.icon {
 }
 
 a {
-  color: #0000ff;
+  color: hsl(240, 100%, 50%);
 }
 
 a.visited {
-  color: #ff00ff;
+  color: hsl(300, 100%, 50%);
 }
 
 a:visited {
-  color: #ff00ff;
+  color: hsl(300, 100%, 50%);
 }
 
 a.popt {
@@ -157,7 +157,7 @@ a.popt {
 }
 
 .highlightPopup input.highlightColor {
-  background-color: #ffff00;
+  background-color: hsl(60, 100%, 50%);
 }
 
 .highlightPopup input.highlightTermSubmit {
@@ -217,7 +217,7 @@ a.popt {
 /* MOTD */
 
 .motd {
-  color: #638500;
+  color: hsl(75.3, 100%, 26.1%);
   font-family: Verdana, sans-serif;
   white-space: normal;
 }
@@ -228,7 +228,7 @@ a.popt {
 .motd h4,
 .motd h5,
 .motd h6 {
-  color: #638500;
+  color: hsl(75.3, 100%, 26.1%);
   text-decoration: underline;
 }
 
@@ -237,7 +237,7 @@ a.popt {
 .motd a:visited,
 .motd a:active,
 .motd a:hover {
-  color: #638500;
+  color: hsl(75.3, 100%, 26.1%);
 }
 
 /* ADD HERE FOR BOLD */
@@ -273,13 +273,13 @@ h3,
 h4,
 h5,
 h6 {
-  color: #0000ff;
+  color: hsl(240, 100%, 50%);
   font-family: Georgia, Verdana, sans-serif;
 }
 
 h1.alert,
 h2.alert {
-  color: #000000;
+  color: hsl(0, 0%, 0%);
 }
 
 em {
@@ -288,27 +288,27 @@ em {
 }
 
 .ooc {
-  color: #002eb8;
+  color: hsl(225, 100%, 36.1%);
   font-weight: bold;
 }
 
 .adminobserverooc {
-  color: #0099cc;
+  color: hsl(195, 100%, 40%);
   font-weight: bold;
 }
 
 .adminooc {
-  color: #700038;
+  color: hsl(330, 100%, 22%);
   font-weight: bold;
 }
 
 .adminsay {
-  color: #ff4500;
+  color: hsl(16.2, 100%, 50%);
   font-weight: bold;
 }
 
 .admin {
-  color: #4473ff;
+  color: hsl(224.9, 100%, 63.3%);
   font-weight: bold;
 }
 
@@ -324,90 +324,90 @@ em {
 }
 
 .deadsay {
-  color: #5c00e6;
+  color: hsl(264, 100%, 45.1%);
 }
 
 .binarysay {
-  color: #20c20e;
-  background-color: #000000;
+  color: hsl(114, 86.5%, 40.8%);
+  background-color: hsl(0, 0%, 0%);
   display: block;
 }
 
 .binarysay a {
-  color: #00ff00;
+  color: hsl(120, 100%, 50%);
 }
 
 .binarysay a:active,
 .binarysay a:visited {
-  color: #88ff88;
+  color: hsl(120, 100%, 76.7%);
 }
 
 .radio {
-  color: #008000;
+  color: hsl(120, 100%, 25.1%);
 }
 
 .sciradio {
-  color: #993399;
+  color: hsl(300, 50%, 40%);
 }
 
 .comradio {
-  color: #948f02;
+  color: hsl(57.9, 97.3%, 29.4%);
 }
 
 .secradio {
-  color: #a30000;
+  color: hsl(0, 100%, 32%);
 }
 
 .medradio {
-  color: #337296;
+  color: hsl(201.8, 49.3%, 39.4%);
 }
 
 .engradio {
-  color: #fb5613;
+  color: hsl(17.3, 96.7%, 52.9%);
 }
 
 .suppradio {
-  color: #a8732b;
+  color: hsl(34.6, 59.2%, 41.4%);
 }
 
 .servradio {
-  color: #6eaa2c;
+  color: hsl(88.6, 58.9%, 42%);
 }
 
 .syndradio {
-  color: #6d3f40;
+  color: hsl(358.7, 26.7%, 33.7%);
 }
 
 .gangradio {
-  color: #ac2ea1;
+  color: hsl(305.2, 57.8%, 42.7%);
 }
 
 .centcomradio {
-  color: #686868;
+  color: hsl(0, 0%, 40.8%);
 }
 
 .aiprivradio {
-  color: #ff00ff;
+  color: hsl(300, 100%, 50%);
 }
 
 .enteradio {
-  color: #00d680;
+  color: hsl(176.1, 20%, 45.1%);
 }
 
 .redteamradio {
-  color: #ff0000 !important;
+  color: hsl(0, 100%, 50%) !important;
 }
 
 .blueteamradio {
-  color: #0000ff !important;
+  color: hsl(240, 100%, 50%) !important;
 }
 
 .greenteamradio {
-  color: #00ff00 !important;
+  color: hsl(120, 100%, 50%) !important;
 }
 
 .yellowteamradio {
-  color: #d1ba22 !important;
+  color: hsl(52.1, 72%, 47.6%) !important;
 }
 
 .yell {
@@ -415,345 +415,345 @@ em {
 }
 
 .alert {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
 }
 
 h1.alert,
 h2.alert {
-  color: #000000;
+  color: hsl(0, 0%, 0%);
 }
 
 .userdanger {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-weight: bold;
   font-size: 185%;
 }
 
 .bolddanger {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-weight: bold;
 }
 
 .danger {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
 }
 
 .tinydanger {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-size: 85%;
 }
 
 .smalldanger {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-size: 90%;
 }
 
 .warning {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-style: italic;
 }
 
 .alertwarning {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-weight: bold;
 }
 
 .boldwarning {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-style: italic;
   font-weight: bold;
 }
 
 .announce {
-  color: #228b22;
+  color: hsl(120, 60.7%, 33.9%);
   font-weight: bold;
 }
 
 .boldannounce {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-weight: bold;
 }
 
 .minorannounce {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-weight: bold;
   font-size: 185%;
 }
 
 .minoralert {
-  color: #000000;
+  color: hsl(0, 0%, 0%);
   font-size: 125%;
 }
 
 .priorityannounce {
-  color: #000000;
+  color: hsl(0, 0%, 0%);
   font-weight: bold;
   font-size: 225%;
 }
 
 .prioritytitle {
-  color: #0000ff;
+  color: hsl(240, 100%, 50%);
   font-weight: bold;
   font-size: 185%;
 }
 
 .priorityalert {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-size: 140%;
 }
 
 .greenannounce {
-  color: #00ff00;
+  color: hsl(120, 100%, 50%);
   font-weight: bold;
 }
 
 .rose {
-  color: #ff5050;
+  color: hsl(0, 100%, 65.7%);
 }
 
 .info {
-  color: #0000cc;
+  color: hsl(240, 100%, 40%);
 }
 
 .notice {
-  color: #000099;
+  color: hsl(240, 100%, 30%);
 }
 
 .tinynotice {
-  color: #000099;
+  color: hsl(240, 100%, 30%);
   font-size: 85%;
 }
 
 .tinynoticeital {
-  color: #000099;
+  color: hsl(240, 100%, 30%);
   font-style: italic;
   font-size: 85%;
 }
 
 .smallnotice {
-  color: #000099;
+  color: hsl(240, 100%, 30%);
   font-size: 90%;
 }
 
 .smallnoticeital {
-  color: #000099;
+  color: hsl(240, 100%, 30%);
   font-style: italic;
   font-size: 90%;
 }
 
 .boldnotice {
-  color: #000099;
+  color: hsl(240, 100%, 30%);
   font-weight: bold;
 }
 
 .hear {
-  color: #000099;
+  color: hsl(240, 100%, 30%);
   font-style: italic;
 }
 
 .adminnotice {
-  color: #0000ff;
+  color: hsl(240, 100%, 50%);
 }
 
 .adminhelp {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-weight: bold;
 }
 
 .unconscious {
-  color: #0000ff;
+  color: hsl(240, 100%, 50%);
   font-weight: bold;
 }
 
 .suicide {
-  color: #ff5050;
+  color: hsl(0, 100%, 65.7%);
   font-style: italic;
 }
 
 .green {
-  color: #03ff39;
+  color: hsl(132.9, 100%, 50.6%);
 }
 
 .grey {
-  color: #838383;
+  color: hsl(0, 0%, 51.4%);
 }
 
 .red {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
 }
 
 .blue {
-  color: #0000ff;
+  color: hsl(240, 100%, 50%);
 }
 
 .nicegreen {
-  color: #14a833;
+  color: hsl(132.6, 78.7%, 36.9%);
 }
 
 .boldnicegreen {
-  color: #14a833;
+  color: hsl(132.6, 78.7%, 36.9%);
   font-weight: bold;
 }
 
 .cult {
-  color: #973e3b;
+  color: hsl(2, 43.8%, 41.2%);
 }
 
 .cultitalic {
-  color: #973e3b;
+  color: hsl(2, 43.8%, 41.2%);
   font-style: italic;
 }
 
 .cult_bold {
-  color: #973e3b;
+  color: hsl(2, 43.8%, 41.2%);
   font-style: italic;
   font-weight: bold;
 }
 
 .cult_bold_italic {
-  color: #973e3b;
+  color: hsl(2, 43.8%, 41.2%);
   font-weight: bold;
   font-size: 185%;
 }
 
 .cult_large {
-  color: #973e3b;
+  color: hsl(2, 43.8%, 41.2%);
   font-weight: bold;
   font-size: 185%;
 }
 
 .blob {
-  color: #ee4000;
+  color: hsl(16.1, 100%, 46.7%);
 }
 
 .blobannounce {
-  color: #323f1c;
+  color: hsl(82.3, 38.5%, 17.8%);
   font-weight: bold;
   font-size: 185%;
 }
 
 .narsie {
-  color: #973e3b;
+  color: hsl(2, 43.8%, 41.2%);
   font-weight: bold;
   font-size: 925%;
 }
 
 .narsiesmall {
-  color: #973e3b;
+  color: hsl(2, 43.8%, 41.2%);
   font-weight: bold;
   font-size: 370%;
 }
 
 .colossus {
-  color: #7f282a;
+  color: hsl(358.6, 52.1%, 32.7%);
   font-size: 310%;
 }
 
 .hierophant {
-  color: #660099;
+  color: hsl(280, 100%, 30%);
   font-weight: bold;
   font-style: italic;
 }
 
 .hierophant_warning {
-  color: #660099;
+  color: hsl(280, 100%, 30%);
   font-style: italic;
 }
 
 .purple {
-  color: #5e2d79;
+  color: hsl(278.7, 45.8%, 32.5%);
 }
 
 .holoparasite {
-  color: #35333a;
+  color: hsl(257.1, 6.4%, 21.4%);
 }
 
 .revennotice {
-  color: #1d2953;
+  color: hsl(226.7, 48.2%, 22%);
 }
 
 .revenboldnotice {
-  color: #1d2953;
+  color: hsl(226.7, 48.2%, 22%);
   font-weight: bold;
 }
 
 .revenbignotice {
-  color: #1d2953;
+  color: hsl(226.7, 48.2%, 22%);
   font-weight: bold;
   font-size: 185%;
 }
 
 .revenminor {
-  color: #823abb;
+  color: hsl(273.5, 52.7%, 48%);
 }
 
 .revenwarning {
-  color: #760fbb;
+  color: hsl(275.9, 85.1%, 39.6%);
   font-style: italic;
 }
 
 .revendanger {
-  color: #760fbb;
+  color: hsl(275.9, 85.1%, 39.6%);
   font-weight: bold;
   font-size: 185%;
 }
 
 .deconversion_message {
-  color: #5000a0;
+  color: hsl(270, 100%, 31.4%);
   font-size: 185%;
   font-style: italic;
 }
 
 .ghostalert {
-  color: #5c00e6;
+  color: hsl(264, 100%, 45.1%);
   font-style: italic;
   font-weight: bold;
 }
 
 .alien {
-  color: #543354;
+  color: hsl(300, 24.4%, 26.5%);
 }
 
 .noticealien {
-  color: #00c000;
+  color: hsl(120, 100%, 37.6%);
 }
 
 .alertalien {
-  color: #00c000;
+  color: hsl(120, 100%, 37.6%);
   font-weight: bold;
 }
 
 .changeling {
-  color: #800080;
+  color: hsl(300, 100%, 25.1%);
   font-style: italic;
 }
 
 .alertsyndie {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-size: 185%;
   font-weight: bold;
 }
 
 .spiderbroodmother {
-  color: #4d004d;
+  color: hsl(300, 100%, 15.1%);
   font-weight: bold;
   font-size: 185%;
 }
 
 .spiderbreacher {
-  color: #804b02;
+  color: hsl(34.8, 96.9%, 25.5%);
   font-weight: bold;
   font-size: 140%;
 }
 
 .spiderscout {
-  color: #0c0674;
+  color: hsl(243.3, 90.2%, 23.9%);
   font-weight: bold;
   font-size: 120%;
 }
 
 .interface {
-  color: #330033;
+  color: hsl(300, 100%, 10%);
 }
 
 .sans {
@@ -769,7 +769,7 @@ h2.alert {
 }
 
 .tape_recorder {
-  color: #800000;
+  color: hsl(0, 100%, 25.1%);
   font-family: 'Courier New', cursive, sans-serif;
 }
 
@@ -804,17 +804,17 @@ h2.alert {
 }
 
 .greentext {
-  color: #00ff00;
+  color: hsl(120, 100%, 50%);
   font-size: 185%;
 }
 
 .redtext {
-  color: #ff0000;
+  color: hsl(0, 100%, 50%);
   font-size: 185%;
 }
 
 .clown {
-  color: #ff69bf;
+  color: hsl(325.6, 100%, 70.6%);
   font-size: 160%;
   font-family: 'Comic Sans MS', cursive, sans-serif;
   font-weight: bold;
@@ -826,13 +826,13 @@ h2.alert {
 }
 
 .his_grace {
-  color: #15d512;
+  color: hsl(119.1, 84.4%, 45.3%);
   font-family: 'Courier New', cursive, sans-serif;
   font-style: italic;
 }
 
 .hypnophrase {
-  color: #0d0d0d;
+  color: hsl(0, 0%, 5.1%);
   font-weight: bold;
   animation: hypnocolor 1500ms infinite;
   animation-direction: alternate;
@@ -840,43 +840,43 @@ h2.alert {
 
 @keyframes hypnocolor {
   0% {
-    color: #0d0d0d;
+    color: hsl(0, 0%, 5.1%);
   }
 
   25% {
-    color: #410194;
+    color: hsl(266.1, 98.7%, 29.2%);
   }
 
   50% {
-    color: #7f17d8;
+    color: hsl(272.3, 80.8%, 46.9%);
   }
 
   75% {
-    color: #410194;
+    color: hsl(266.1, 98.7%, 29.2%);
   }
 
   100% {
-    color: #3bb5d3;
+    color: hsl(191.8, 63.3%, 52.9%);
   }
 }
 
 .phobia {
-  color: #dd0000;
+  color: hsl(0, 100%, 43.3%);
   font-weight: bold;
   animation: phobia 750ms infinite;
 }
 
 @keyframes phobia {
   0% {
-    color: #0d0d0d;
+    color: hsl(0, 0%, 5.1%);
   }
 
   50% {
-    color: #dd0000;
+    color: hsl(0, 100%, 43.3%);
   }
 
   100% {
-    color: #0d0d0d;
+    color: hsl(0, 0%, 5.1%);
   }
 }
 
@@ -894,7 +894,7 @@ h2.alert {
 }
 
 .memo {
-  color: #638500;
+  color: hsl(75.3, 100%, 26.1%);
   text-align: center;
 }
 
@@ -904,35 +904,35 @@ h2.alert {
 }
 
 .abductor {
-  color: #800080;
+  color: hsl(300, 100%, 25.1%);
   font-style: italic;
 }
 
 .mind_control {
-  color: #a00d6f;
+  color: hsl(320, 85%, 33.9%);
   font-size: 100%;
   font-weight: bold;
   font-style: italic;
 }
 
 .slime {
-  color: #00ced1;
+  color: hsl(180.9, 100%, 41%);
 }
 
 .drone {
-  color: #848482;
+  color: hsl(60, 0.8%, 51.4%);
 }
 
 .monkey {
-  color: #975032;
+  color: hsl(17.8, 50.2%, 39.4%);
 }
 
 .swarmer {
-  color: #2c75ff;
+  color: hsl(219.2, 100%, 58.6%);
 }
 
 .resonate {
-  color: #298f85;
+  color: hsl(174.1, 55.4%, 36.1%);
 }
 
 .upside_down {
@@ -984,16 +984,42 @@ h2.alert {
   margin-left: 3em;
 }
 
-.examine_block {
-  background: #f2f7fa;
-  border: 1px solid #111a27;
-  margin: 0.5em;
-  padding: 0.5em 0.75em;
-}
-
 .tooltip {
   font-style: italic;
-  border-bottom: 1px dashed #000;
+  border-bottom: 1px dashed;
+}
+
+.fieldset_legend {
+  background: #ffffff; // Chat background color
+
+  &:before {
+    background: #ffffff; // Chat background color
+  }
+}
+
+.boxed_message {
+  background: hsl(220, 100%, 97.5%);
+  border-color: hsla(220, 75%, 25%, 0.5);
+
+  &.red_box {
+    background: hsl(0, 100%, 97.5%);
+    border-color: hsla(0, 100%, 50%, 0.5);
+  }
+
+  &.green_box {
+    background: hsl(140, 100%, 97.5%);
+    border-color: hsl(120, 100%, 33%, 0.5);
+  }
+
+  &.blue_box {
+    background: hsl(220, 100%, 97.5%);
+    border-color: hsla(225, 100%, 50%, 0.5);
+  }
+
+  &.purple_box {
+    background: hsl(260, 100%, 97.5%);
+    border-color: hsla(260, 100%, 50%, 0.5);
+  }
 }
 
 // Provides a horizontal bar with text in the middle
@@ -1008,7 +1034,7 @@ h2.alert {
 .separator::after {
   content: '';
   flex: 1;
-  border-bottom: 1px solid #111a27;
+  border-bottom: 1px solid hsl(215.5, 39.3%, 11%);
 }
 
 .separator:not(:empty)::before {
@@ -1038,51 +1064,51 @@ h2.alert {
 }
 
 $alert-stripe-colors: (
-  'default': #b3bfff,
-  'green': #adffad,
-  'blue': #b3bfff,
-  'pink': #ffb3df,
-  'yellow': #fff3b3,
-  'orange': #ffe2b3,
-  'red': #ffb3b3,
-  'purple': #fac2ff,
-  'grey': #e3e3e3,
+  'default': hsl(230.5, 100%, 85.1%),
+  'green': hsl(120, 100%, 83.9%),
+  'blue': hsl(230.5, 100%, 85.1%),
+  'pink': hsl(325.3, 100%, 85.1%),
+  'yellow': hsl(50.5, 100%, 85.1%),
+  'orange': hsl(37.1, 100%, 85.1%),
+  'red': hsl(0, 100%, 85.1%),
+  'purple': hsl(295.1, 100%, 88%),
+  'grey': hsl(0, 0%, 89%),
 );
 
 $alert-stripe-alternate-colors: (
-  'default': #bdc8ff,
-  'green': #bdffbd,
-  'blue': #bdc8ff,
-  'pink': #ffc2e5,
-  'yellow': #fff5c2,
-  'orange': #ffe8c2,
-  'red': #ffc2c2,
-  'purple': #fbd1ff,
-  'grey': #ebebeb,
+  'default': hsl(230, 100%, 87.1%),
+  'green': hsl(120, 100%, 87.1%),
+  'blue': hsl(230, 100%, 87.1%),
+  'pink': hsl(325.6, 100%, 88%),
+  'yellow': hsl(50.2, 100%, 88%),
+  'orange': hsl(37.4, 100%, 88%),
+  'red': hsl(0, 100%, 88%),
+  'purple': hsl(294.8, 100%, 91%),
+  'grey': hsl(0, 0%, 92.2%),
 );
 
 $alert-major-header-colors: (
-  'default': #003061,
-  'green': #005229,
-  'blue': #003061,
-  'pink': #800033,
-  'yellow': #754900,
-  'orange': #823208,
-  'red': #800029,
-  'purple': #450d8c,
-  'grey': #800033,
+  'default': hsl(210.3, 100%, 19%),
+  'green': hsl(150, 100%, 16.1%),
+  'blue': hsl(210.3, 100%, 19%),
+  'pink': hsl(336.1, 100%, 25.1%),
+  'yellow': hsl(37.4, 100%, 22.9%),
+  'orange': hsl(20.7, 88.4%, 27.1%),
+  'red': hsl(340.8, 100%, 25.1%),
+  'purple': hsl(266.5, 83%, 30%),
+  'grey': hsl(336.1, 100%, 25.1%),
 );
 
 $alert-subheader-header-colors: (
-  'default': #6b0020,
-  'green': #6b0020,
-  'blue': #6b0020,
-  'pink': #002c85,
-  'yellow': #002c85,
-  'orange': #002c85,
-  'red': #002c85,
-  'purple': #002c85,
-  'grey': #002c85,
+  'default': hsl(342.1, 100%, 21%),
+  'green': hsl(342.1, 100%, 21%),
+  'blue': hsl(342.1, 100%, 21%),
+  'pink': hsl(220.2, 100%, 26.1%),
+  'yellow': hsl(220.2, 100%, 26.1%),
+  'orange': hsl(220.2, 100%, 26.1%),
+  'red': hsl(220.2, 100%, 26.1%),
+  'purple': hsl(220.2, 100%, 26.1%),
+  'grey': hsl(220.2, 100%, 26.1%),
 );
 
 $border-width: 4;
@@ -1109,8 +1135,8 @@ $border-width-px: $border-width * 1px;
 }
 
 .major_announcement_text {
-  color: #131313;
-  background-color: #eaeaea;
+  color: hsl(0, 0%, 7.5%);
+  background-color: hsl(0, 0%, 91.8%);
   font-weight: bold;
   font-size: 100%;
   text-align: left;
@@ -1131,8 +1157,8 @@ $border-width-px: $border-width * 1px;
 }
 
 .minor_announcement_text {
-  background-color: #eaeaea;
-  color: #202020;
+  background-color: hsl(0, 0%, 91.8%);
+  color: hsl(0, 0%, 12.5%);
   padding: 0.5rem 0.5rem;
   text-align: left;
   font-size: 100%;
@@ -1145,18 +1171,18 @@ $border-width-px: $border-width * 1px;
 }
 
 .ooc_alert {
-  background: #bdc8ff;
-  border: 1px solid #002eb8;
+  background: hsl(230, 100%, 87.1%);
+  border: 1px solid hsl(225, 100%, 36.1%);
   margin: 0.5em;
   padding: 0.5em 0.5em 0.5em 0.2em;
-  color: #00283a;
+  color: hsl(198.6, 100%, 11.4%);
   font-weight: bold;
   display: flex;
   flex-direction: column;
 }
 
 .ooc_announcement_text {
-  color: #002eb8;
+  color: hsl(225, 100%, 36.1%);
   padding: 0.5em 0 0 0.35em;
   display: flex;
   flex-direction: column;
@@ -1164,7 +1190,7 @@ $border-width-px: $border-width * 1px;
 
 @each $color-name, $color-value in $alert-stripe-colors {
   .chat_alert_#{$color-name} {
-    color: #ffffff;
+    color: hsl(0, 0%, 100%);
     padding: 0.5rem 0.5rem;
     box-shadow: none;
     font-weight: bold;
@@ -1200,16 +1226,18 @@ $border-width-px: $border-width * 1px;
   }
 
   .chat_alert_#{$color-name} .minor_announcement_text {
-    background-color: lighten(
+    background-color: color.adjust(
       map.get($alert-stripe-alternate-colors, $color-name),
-      5
+      $lightness: 5%,
+      $space: hsl
     );
   }
 
   .chat_alert_#{$color-name} .major_announcement_text {
-    background-color: lighten(
+    background-color: color.adjust(
       map.get($alert-stripe-alternate-colors, $color-name),
-      5
+      $lightness: 5%,
+      $space: hsl
     );
   }
 }

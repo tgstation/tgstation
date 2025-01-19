@@ -540,6 +540,13 @@
 	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
 	return affected_addiction.on_lose_addiction_points(src)
 
+/// Whether or not we can roll for midrounds, specifically checking if we have any major antag datums that should block it
+/datum/mind/proc/can_roll_midround()
+	for(var/datum/antagonist/antag as anything in antag_datums)
+		if(antag.block_midrounds)
+			return FALSE
+
+	return TRUE
 
 /// Setter for the assigned_role job datum.
 /datum/mind/proc/set_assigned_role(datum/job/new_role)

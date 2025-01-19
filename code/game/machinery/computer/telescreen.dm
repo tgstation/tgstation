@@ -12,6 +12,7 @@
 	light_power = 0
 	/// The kind of wallframe that this telescreen drops
 	var/frame_type = /obj/item/wallframe/telescreen
+	projectiles_pass_chance = 100
 
 /obj/item/wallframe/telescreen
 	name = "telescreen frame"
@@ -45,6 +46,15 @@
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
+/obj/machinery/computer/security/telescreen/entertainment/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle mute button"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/computer/security/telescreen/entertainment/click_ctrl(mob/user)
+	. = ..()
+	balloon_alert(user, speakers.should_be_listening ? "muted" : "unmuted")
+	speakers.toggle_mute()
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
 
 /obj/item/wallframe/telescreen/entertainment
@@ -56,6 +66,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
 	find_and_hang_on_wall()
+	register_context()
 	speakers = new(src)
 
 /obj/machinery/computer/security/telescreen/entertainment/Destroy()
@@ -65,6 +76,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/entertainment/examine(mob/user)
 	. = ..()
 	. += length(network) ? span_notice("The TV is broadcasting something!") : span_notice("<i>There's nothing on TV.</i>")
+	. += span_notice("The volume is currently [speakers.should_be_listening ? "on" : "off"]")
 
 /obj/machinery/computer/security/telescreen/entertainment/ui_state(mob/user)
 	return GLOB.always_state

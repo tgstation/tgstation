@@ -128,17 +128,6 @@
 	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	return initial(species_type.digitigrade_customization) == DIGITIGRADE_OPTIONAL
 
-
-/datum/preference/choiced/lizard_legs/is_accessible(datum/preferences/preferences)
-	. = ..()
-
-	if(!.)
-		return
-
-	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
-
-	return initial(species_type.digitigrade_customization) & DIGITIGRADE_OPTIONAL
-
 /datum/preference/choiced/lizard_snout
 	savefile_key = "feature_lizard_snout"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -159,7 +148,7 @@
 	savefile_key = "feature_lizard_spines"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_external_organ = /obj/item/organ/external/spines
+	relevant_external_organ = /obj/item/organ/spines
 
 /datum/preference/choiced/lizard_spines/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.spines_list)
@@ -171,7 +160,7 @@
 	savefile_key = "feature_lizard_tail"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_external_organ = /obj/item/organ/external/tail/lizard
+	relevant_external_organ = /obj/item/organ/tail/lizard
 
 /datum/preference/choiced/lizard_tail/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.tails_list_lizard)

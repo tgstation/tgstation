@@ -11,6 +11,19 @@
 #define FIXED_COLOUR_PRIORITY 4
 ///how many colour priority levels there are.
 #define COLOUR_PRIORITY_AMOUNT 4
+/// If this is a plain atom color
+#define ATOM_COLOR_TYPE_NORMAL "normal"
+/// If this is a color filter
+#define ATOM_COLOR_TYPE_FILTER "filter"
+// Indexes for color arrays
+#define ATOM_COLOR_VALUE_INDEX 1
+#define ATOM_COLOR_TYPE_INDEX 2
+#define ATOM_PRIORITY_COLOR_FILTER "atom_priority_color"
+#define ATOM_PRIORITY_COLOR_FILTER_PRIORITY -1
+/// Multiply pixel's saturation by color's saturation. Paints accents while keeping dim areas dim.
+#define SATURATION_MULTIPLY "multiply"
+/// Always affects the original pixel's saturation and lightness.
+#define SATURATION_OVERRIDE "always"
 
 #define COLOR_DARKMODE_BACKGROUND "#202020"
 #define COLOR_DARKMODE_DARKBACKGROUND "#171717"
@@ -422,6 +435,20 @@
 #define COLOR_ICECREAM_CUSTOM "#f3f3f3"
 #define COLOR_ICECREAM_CHERRY_CHOCOLATE "#800000"
 
+// defines for .38 ammo type colors
+#define COLOR_AMMO_TRACK "#bd0ed4"
+#define COLOR_AMMO_MATCH "#ff0000a8"
+#define COLOR_AMMO_RUBBER "#3d3181"
+#define COLOR_AMMO_TRUESTRIKE "#ff05de"
+#define COLOR_AMMO_DUMDUM "#ffe601"
+#define COLOR_AMMO_HOTSHOT "#ff7b00"
+#define COLOR_AMMO_ICEBLOX "#0de3ff"
+
+// defines for other ammo type colors (should this be merged with above?)
+#define COLOR_AMMO_INCENDIARY "#f4001f"
+#define COLOR_AMMO_ARMORPIERCE "#d9d9d9"
+#define COLOR_AMMO_HOLLOWPOINT "#ff9900"
+
 GLOBAL_LIST_INIT(cable_colors, list(
 	CABLE_COLOR_BLUE = CABLE_HEX_COLOR_BLUE,
 	CABLE_COLOR_CYAN = CABLE_HEX_COLOR_CYAN,
@@ -434,9 +461,30 @@ GLOBAL_LIST_INIT(cable_colors, list(
 	CABLE_COLOR_BROWN = CABLE_HEX_COLOR_BROWN
 ))
 
+GLOBAL_LIST_INIT(heretic_path_to_color, list(
+		PATH_START = COLOR_LIME,
+		PATH_RUST = COLOR_CARGO_BROWN,
+		PATH_FLESH = COLOR_SOFT_RED,
+		PATH_ASH = COLOR_VIVID_RED,
+		PATH_VOID = COLOR_CYAN,
+		PATH_BLADE = COLOR_SILVER,
+		PATH_COSMIC = COLOR_PURPLE,
+		PATH_LOCK = COLOR_YELLOW,
+		PATH_MOON = COLOR_BLUE_LIGHT,
+	))
+
 #define HUSK_COLOR_TONE rgb(96, 88, 80)
 
 #define CM_COLOR_SAT_MIN 0.6
 #define CM_COLOR_SAT_MAX 0.7
 #define CM_COLOR_LUM_MIN 0.65
 #define CM_COLOR_LUM_MAX 0.75
+
+// Lowest priority
+#define EYE_COLOR_ORGAN_PRIORITY 1
+/// Base priority for atom colors, gets atom priorities added to it
+#define EYE_COLOR_ATOM_COLOR_PRIORITY 2
+#define EYE_COLOR_SPECIES_PRIORITY 10
+#define EYE_COLOR_WEED_PRIORITY 20
+#define EYE_COLOR_LUMINESCENT_PRIORITY 30
+#define EYE_COLOR_CULT_PRIORITY 40

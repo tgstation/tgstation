@@ -2,17 +2,22 @@
 /datum/component/profound_fisher
 	///the fishing rod this mob will use
 	var/obj/item/fishing_rod/mob_fisher/our_rod
+	///Wether we should delete the fishing rod along with the component or replace it if it's somehow removed from the parent
+	var/delete_rod_when_deleted = TRUE
 
-/datum/component/profound_fisher/Initialize(our_rod)
+/datum/component/profound_fisher/Initialize(our_rod, delete_rod_when_deleted = TRUE)
 	var/isgloves = istype(parent, /obj/item/clothing/gloves)
 	if(!isliving(parent) && !isgloves)
 		return COMPONENT_INCOMPATIBLE
 	src.our_rod = our_rod || new(parent)
 	src.our_rod.internal = TRUE
-	RegisterSignal(src.our_rod, COMSIG_QDELETING, PROC_REF(on_rod_qdel))
+	src.delete_rod_when_deleted = delete_rod_when_deleted
+	ADD_TRAIT(src.our_rod, TRAIT_NOT_BARFABLE, REF(src))
+	RegisterSignal(src.our_rod, COMSIG_MOVABLE_MOVED, PROC_REF(on_rod_moved))
 
 	if(!isgloves)
 		RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+		RegisterSignal(parent, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(stop_fishing))
 	else
 		var/obj/item/clothing/gloves = parent
 		RegisterSignal(gloves, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
@@ -36,13 +41,26 @@
 	examine_list += span_info("When [EXAMINE_HINT("held")] or [EXAMINE_HINT("equipped")], [EXAMINE_HINT("right-click")] with a empty hand to open the integrated fishing rod interface.")
 	examine_list += span_tinynoticeital("To fish, you need to turn combat mode off.")
 
-/datum/component/profound_fisher/proc/on_rod_qdel(datum/source)
+///Handles replacing the fishing rod if somehow removed from the parent movable if delete_rod_when_deleted is TRUE, otherwise delete the component.
+/datum/component/profound_fisher/proc/on_rod_moved(datum/source)
 	SIGNAL_HANDLER
-	qdel(src)
+	if(QDELETED(src) || our_rod.loc == parent)
+		return
+	if(delete_rod_when_deleted)
+		UnregisterSignal(our_rod, COMSIG_MOVABLE_MOVED)
+		if(!QDELETED(our_rod))
+			qdel(our_rod)
+		our_rod = new our_rod.type(parent)
+	else
+		qdel(src)
 
 /datum/component/profound_fisher/Destroy()
-	our_rod.internal = FALSE
-	UnregisterSignal(our_rod, COMSIG_QDELETING)
+	UnregisterSignal(our_rod, COMSIG_MOVABLE_MOVED)
+	if(!delete_rod_when_deleted)
+		our_rod.internal = FALSE
+		REMOVE_TRAIT(our_rod, TRAIT_NOT_BARFABLE, REF(src))
+	else if(!QDELETED(our_rod))
+		QDEL_NULL(our_rod)
 	our_rod = null
 	return ..()
 
@@ -51,6 +69,7 @@
 	if(slot != ITEM_SLOT_GLOVES)
 		return
 	RegisterSignal(equipper, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	RegisterSignal(equipper, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(stop_fishing))
 
 /datum/component/profound_fisher/proc/open_rod_menu(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
@@ -59,7 +78,7 @@
 
 /datum/component/profound_fisher/proc/on_drop(datum/source, atom/dropper)
 	SIGNAL_HANDLER
-	UnregisterSignal(dropper, COMSIG_LIVING_UNARMED_ATTACK)
+	UnregisterSignal(dropper, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_COMPLETE_FISHING))
 	REMOVE_TRAIT(dropper, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC) //this will cancel the current minigame if the fishing rod was internal.
 
 /datum/component/profound_fisher/proc/on_unarmed_attack(mob/living/source, atom/attack_target, proximity_flag, list/modifiers)
@@ -91,19 +110,12 @@
 	return TRUE
 
 /datum/component/profound_fisher/proc/begin_fishing(mob/living/user, atom/target)
-	RegisterSignal(user, COMSIG_MOB_BEGIN_FISHING, PROC_REF(actually_fishing_with_internal_rod))
 	our_rod.melee_attack_chain(user, target)
-	UnregisterSignal(user, COMSIG_MOB_BEGIN_FISHING)
+	ADD_TRAIT(user, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC)
 
-/datum/component/profound_fisher/proc/actually_fishing_with_internal_rod(datum/source)
-	SIGNAL_HANDLER
-	ADD_TRAIT(source, TRAIT_PROFOUND_FISHER, REF(parent))
-	RegisterSignal(source, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(remove_profound_fisher))
-
-/datum/component/profound_fisher/proc/remove_profound_fisher(datum/source)
+/datum/component/profound_fisher/proc/stop_fishing(datum/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(source, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC)
-	UnregisterSignal(source, COMSIG_MOB_COMPLETE_FISHING)
 
 /datum/component/profound_fisher/proc/pretend_fish(mob/living/source, atom/target)
 	if(DOING_INTERACTION_WITH_TARGET(source, target))

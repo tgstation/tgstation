@@ -2,7 +2,7 @@
 	name = "speed loader (.357)"
 	desc = "Designed to quickly reload revolvers."
 	icon_state = "357"
-	ammo_type = /obj/item/ammo_casing/a357
+	ammo_type = /obj/item/ammo_casing/c357
 	max_ammo = 7
 	caliber = CALIBER_357
 	multiple_sprites = AMMO_BOX_PER_BULLET
@@ -13,13 +13,13 @@
 /obj/item/ammo_box/a357/match
 	name = "speed loader (.357 Match)"
 	desc = "Designed to quickly reload revolvers. These rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
-	ammo_type = /obj/item/ammo_casing/a357/match
+	ammo_type = /obj/item/ammo_casing/c357/match
 	ammo_band_color = "#77828a"
 
 /obj/item/ammo_box/a357/phasic
 	name = "speed loader (.357 Phasic)"
 	desc = "Designed to quickly reload revolvers. Holds phasic ammo, also known as 'Ghost Lead', allowing it to pass through non-organic material."
-	ammo_type = /obj/item/ammo_casing/a357/phasic
+	ammo_type = /obj/item/ammo_casing/c357/phasic
 	ammo_band_color = "#693a6a"
 
 /obj/item/ammo_box/a357/heartseeker
@@ -27,7 +27,7 @@
 	desc = "Designed to quickly reload revolvers. Holds heartseeker ammo, which veers into targets with exceptional precision using \
 		an unknown method. It apparently predicts movement using neural pulses in the brain, but that's less marketable. \
 		As seen in the hit NTFlik horror-space western film, Forget-Me-Not! Brought to you by Roseus Galactic!"
-	ammo_type = /obj/item/ammo_casing/a357/heartseeker
+	ammo_type = /obj/item/ammo_casing/c357/heartseeker
 	ammo_band_color = "#a91e1e"
 
 /obj/item/ammo_box/c38
@@ -46,37 +46,43 @@
 	name = "speed loader (.38 TRAC)"
 	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body."
 	ammo_type = /obj/item/ammo_casing/c38/trac
-	ammo_band_color = "#7b6383"
+	ammo_band_color = COLOR_AMMO_TRACK
 
 /obj/item/ammo_box/c38/match
 	name = "speed loader (.38 Match)"
 	desc = "Designed to quickly reload revolvers. These rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
 	ammo_type = /obj/item/ammo_casing/c38/match
-	ammo_band_color = "#77828a"
+	ammo_band_color = COLOR_AMMO_MATCH
 
 /obj/item/ammo_box/c38/match/bouncy
 	name = "speed loader (.38 Rubber)"
 	desc = "Designed to quickly reload revolvers. These rounds are incredibly bouncy and MOSTLY nonlethal, making them great to show off trickshots with."
 	ammo_type = /obj/item/ammo_casing/c38/match/bouncy
-	ammo_band_color = "#556696"
+	ammo_band_color = COLOR_AMMO_RUBBER
+
+/obj/item/ammo_box/c38/true
+	name = "speed loader (.38 True Strike)"
+	desc = "Designed to quickly reload revolvers. Bullets bounce towards new targets with surprising accuracy."
+	ammo_type = /obj/item/ammo_casing/c38/match/true
+	ammo_band_color = COLOR_AMMO_TRUESTRIKE
 
 /obj/item/ammo_box/c38/dumdum
 	name = "speed loader (.38 DumDum)"
 	desc = "Designed to quickly reload revolvers. These rounds expand on impact, allowing them to shred the target and cause massive bleeding. Very weak against armor and distant targets."
 	ammo_type = /obj/item/ammo_casing/c38/dumdum
-	ammo_band_color = "#969578"
+	ammo_band_color = COLOR_AMMO_DUMDUM
 
 /obj/item/ammo_box/c38/hotshot
 	name = "speed loader (.38 Hot Shot)"
 	desc = "Designed to quickly reload revolvers. Hot Shot bullets contain an incendiary payload."
 	ammo_type = /obj/item/ammo_casing/c38/hotshot
-	ammo_band_color = "#805a57"
+	ammo_band_color = COLOR_AMMO_HOTSHOT
 
 /obj/item/ammo_box/c38/iceblox
 	name = "speed loader (.38 Iceblox)"
 	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
-	ammo_band_color = "#658e94"
+	ammo_band_color = COLOR_AMMO_ICEBLOX
 
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"

@@ -1,7 +1,3 @@
-import { round } from 'common/math';
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -10,7 +6,11 @@ import {
   Section,
   Slider,
   Table,
-} from '../components';
+} from 'tgui-core/components';
+import { round } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Reagent = {
@@ -403,7 +403,7 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
         step={graphUpperRange / base_width}
         suppressFlicker
         height={17.2}
-        format={(value: number) => round(value, 2)}
+        format={(value: number) => round(value, 2).toString()}
         width={(centerValue / graphUpperRange) * base_width + 'px'}
         value={lowerRange}
         minValue={graphLowerRange}
@@ -418,7 +418,7 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
       <Slider
         height={17.2}
         suppressFlicker
-        format={(value: number) => round(value, 2)}
+        format={(value: number) => round(value, 2).toString()}
         step={graphUpperRange / base_width}
         width={base_width - (centerValue / graphUpperRange) * base_width + 'px'}
         value={upperRange}
@@ -437,7 +437,7 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
         mt={1.2}
         value={centerValue}
         height={1.9}
-        format={(value: number) => round(value, 2)}
+        format={(value: number) => round(value, 2).toString()}
         width={base_width + 'px'}
         minValue={graphLowerRange + 1}
         maxValue={graphUpperRange - 1}

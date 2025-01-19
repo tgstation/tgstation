@@ -2,9 +2,6 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 /mob/living/carbon/human/gib_animation()
 	new /obj/effect/temp_visual/gib_animation(loc, dna.species.gib_anim)
 
-/mob/living/carbon/human/dust_animation()
-	new /obj/effect/temp_visual/dust_animation(loc, dna.species.dust_anim)
-
 /mob/living/carbon/human/spawn_gibs(drop_bitflags=NONE)
 	if(flags_1 & HOLOGRAM_1)
 		return
@@ -13,17 +10,23 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	else
 		new /obj/effect/gibspawner/human/bodypartless(drop_location(), src, get_static_viruses())
 
-/mob/living/carbon/human/spawn_dust(just_ash = FALSE)
+/mob/living/carbon/human/spawn_dust(just_ash)
 	if(just_ash)
-		new /obj/effect/decal/cleanable/ash(loc)
-	else
-		new /obj/effect/decal/remains/human(loc)
+		return ..()
+
+	var/bone_type = /obj/effect/decal/remains/human
+	if(isplasmaman(src))
+		bone_type = /obj/effect/decal/remains/plasma
+
+	var/obj/effect/decal/remains/human/bones = new bone_type(loc)
+	bones.pixel_z = -6
+	bones.pixel_w = rand(-1, 1)
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
 	stop_sound_channel(CHANNEL_HEARTBEAT)
-	var/obj/item/organ/internal/heart/human_heart = get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/human_heart = get_organ_slot(ORGAN_SLOT_HEART)
 	human_heart?.beat = BEAT_NONE
 	human_heart?.Stop()
 
@@ -49,7 +52,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 		readout += "<br>[round(reagent.volume, 0.001)] units of [reagent.name]"
 
 	readout += "<br>Stomach:"
-	var/obj/item/organ/internal/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
 	for(var/datum/reagent/bile in belly?.reagents?.reagent_list)
 		if(!belly.food_reagents[bile.type])
 			readout += "<br>[round(bile.volume, 0.001)] units of [bile.name]"

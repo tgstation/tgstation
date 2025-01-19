@@ -83,11 +83,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 	bodypart_overlay.set_appearance(typed_accessory)
 
-	if(owner) //are we in a person?
+	if(owner && !(owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS)) //are we a person?
 		owner.update_body_parts()
-	else if(bodypart_owner) //are we in a limb?
-		bodypart_owner.update_icon_dropped()
-	//else if(use_mob_sprite_as_obj_sprite) //are we out in the world, unprotected by flesh?
+	else
+		bodypart_owner?.update_icon_dropped() //are we in a limb?
 
 /obj/item/organ/update_overlays()
 	. = ..()
@@ -101,7 +100,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 			. += bodypart_overlay.get_overlay(external_layer, bodypart_owner)
 
 ///The horns of a lizard!
-/obj/item/organ/external/horns
+/obj/item/organ/horns
 	name = "horns"
 	desc = "Why do lizards even have horns? Well, this one obviously doesn't."
 	icon_state = "horns"
@@ -115,9 +114,12 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/horns
 
+	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
+
 /datum/bodypart_overlay/mutant/horns
 	layers = EXTERNAL_ADJACENT
 	feature_key = "horns"
+	dyable = TRUE
 
 /datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
@@ -129,7 +131,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	return SSaccessories.horns_list
 
 ///The frills of a lizard (like weird fin ears)
-/obj/item/organ/external/frills
+/obj/item/organ/frills
 	name = "frills"
 	desc = "Ear-like external organs often seen on aquatic reptillians."
 	icon_state = "frills"
@@ -142,6 +144,8 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/frills
+
+	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
 
 /datum/bodypart_overlay/mutant/frills
 	layers = EXTERNAL_ADJACENT
@@ -156,7 +160,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	return SSaccessories.frills_list
 
 ///Guess what part of the lizard this is?
-/obj/item/organ/external/snout
+/obj/item/organ/snout
 	name = "lizard snout"
 	desc = "Take a closer look at that snout!"
 	icon_state = "snout"
@@ -172,6 +176,8 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/snout
 
+	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
+
 /datum/bodypart_overlay/mutant/snout
 	layers = EXTERNAL_ADJACENT
 	feature_key = "snout"
@@ -185,7 +191,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	return SSaccessories.snouts_list
 
 ///A moth's antennae
-/obj/item/organ/external/antennae
+/obj/item/organ/antennae
 	name = "moth antennae"
 	desc = "A moths antennae. What is it telling them? What are they sensing?"
 	icon_state = "antennae"
@@ -199,24 +205,26 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/antennae
 
+	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
+
 	///Are we burned?
 	var/burnt = FALSE
 	///Store our old datum here for if our antennae are healed
 	var/original_sprite_datum
 
-/obj/item/organ/external/antennae/mob_insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/antennae/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 
 	RegisterSignal(receiver, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_antennae))
 	RegisterSignal(receiver, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_antennae))
 
-/obj/item/organ/external/antennae/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/antennae/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
 
 ///check if our antennae can burn off ;_;
-/obj/item/organ/external/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)
+/obj/item/organ/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)
 	SIGNAL_HANDLER
 
 	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
@@ -226,13 +234,13 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 		human.update_body_parts()
 
 ///Burn our antennae off ;_;
-/obj/item/organ/external/antennae/proc/burn_antennae()
+/obj/item/organ/antennae/proc/burn_antennae()
 	var/datum/bodypart_overlay/mutant/antennae/antennae = bodypart_overlay
 	antennae.burnt = TRUE
 	burnt = TRUE
 
 ///heal our antennae back up!!
-/obj/item/organ/external/antennae/proc/heal_antennae(datum/source, heal_flags)
+/obj/item/organ/antennae/proc/heal_antennae(datum/source, heal_flags)
 	SIGNAL_HANDLER
 
 	if(!burnt)
@@ -247,6 +255,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 /datum/bodypart_overlay/mutant/antennae
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	feature_key = "moth_antennae"
+	dyable = TRUE
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_antennae/burnt_off
 	///Are we burned? If so we draw differently
@@ -269,7 +278,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	return FALSE
 
 ///The leafy hair of a podperson
-/obj/item/organ/external/pod_hair
+/obj/item/organ/pod_hair
 	name = "podperson hair"
 	desc = "Base for many-o-salads."
 
@@ -284,10 +293,13 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/pod_hair
 
+	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
+
 ///Podperson bodypart overlay, with special coloring functionality to render the flowers in the inverse color
 /datum/bodypart_overlay/mutant/pod_hair
 	layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT
 	feature_key = "pod_hair"
+	dyable = TRUE
 
 	///This layer will be colored differently than the rest of the organ. So we can get differently colored flowers or something
 	var/color_swapped_layer = EXTERNAL_FRONT
@@ -301,8 +313,9 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	if(draw_layer != bitflag_to_layer(color_swapped_layer))
 		return ..()
 
-	if(draw_color) // can someone explain to me why draw_color is allowed to EVER BE AN EMPTY STRING
-		var/list/rgb_list = rgb2num(draw_color)
+	var/color_to_use = dye_color || draw_color
+	if(color_to_use) // can someone explain to me why draw_color is allowed to EVER BE AN EMPTY STRING
+		var/list/rgb_list = rgb2num(color_to_use)
 		overlay.color = rgb(color_inverse_base - rgb_list[1], color_inverse_base - rgb_list[2], color_inverse_base - rgb_list[3]) //inversa da color
 	else
 		overlay.color = null

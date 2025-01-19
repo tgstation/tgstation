@@ -1,8 +1,8 @@
 import { Component } from 'react';
+import { Box, Button, InfinitePlane, Input, Stack } from 'tgui-core/components';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
-import { Box, Button, InfinitePlane, Input, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { Connections } from '../common/Connections';
 import { CircuitInfo } from './CircuitInfo';

@@ -1,7 +1,7 @@
 //Space Ruin Parents
 
 /area/ruin/space
-	has_gravity = FALSE
+	default_gravity = ZERO_GRAVITY
 	area_flags = UNIQUE_AREA
 
 /area/ruin/space/unpowered
@@ -11,7 +11,7 @@
 	power_environ = FALSE
 
 /area/ruin/space/has_grav
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 
 /area/ruin/space/has_grav/powered
 	requires_power = FALSE
@@ -369,9 +369,9 @@
 // Area define for organization
 /area/ruin/space/ks13/engineering
 
-/area/ruin/space/ks13/engineering/singulo
-	name = "\improper Derelict Singulairty Engine"
-	icon_state = "ks13_singulo"
+/area/ruin/space/ks13/engineering/supermatter
+	name = "\improper Derelict Supermatter Engine"
+	icon_state = "ks13_supermatter"
 
 /area/ruin/space/ks13/engineering/atmos
 	name = "\improper Derelict Atmospherics"
@@ -529,18 +529,18 @@
 /area/ruin/space/djstation
 	name = "\improper Ruskie DJ Station"
 	icon_state = "DJ"
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 
 /area/ruin/space/djstation/solars
 	name = "\improper DJ Station Solars"
 	icon_state = "DJ"
 	area_flags = UNIQUE_AREA
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = ZERO_GRAVITY
 
 /area/ruin/space/djstation/service
 	name = "\improper DJ Station Service"
 	icon_state = "DJ"
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 
 //ABANDONED TELEPORTER
 

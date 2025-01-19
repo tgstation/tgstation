@@ -221,7 +221,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	else
 		return FALSE
 
-/obj/structure/cable/singularity_pull(S, current_size)
+/obj/structure/cable/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()

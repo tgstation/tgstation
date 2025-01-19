@@ -299,7 +299,7 @@
 	foodtypes = GRAIN | MEAT | FRIED
 
 /obj/item/food/donkpocket/deluxe/nocarb
-	name = "/improper Meat-pocket"
+	name = "\improper Meat-pocket"
 	desc = "The food of choice for the carnivorous traitor."
 	icon_state = "donkpocketdeluxenocarb"
 	food_reagents = list(
@@ -310,7 +310,6 @@
 	tastes = list("raw meat" = 2, "more meat" = 2, "no carbs" = 1)
 	foodtypes = MEAT | RAW
 	crafting_complexity = FOOD_COMPLEXITY_4
-
 	warm_type = /obj/item/food/donkpocket/warm/deluxe/nocarb
 
 /obj/item/food/donkpocket/deluxe/meat/make_bakeable()
@@ -332,7 +331,7 @@
 	foodtypes = MEAT
 
 /obj/item/food/donkpocket/deluxe/vegan
-	name = "/improper Donk-roll"
+	name = "\improper Donk-roll"
 	desc = "The classic station snack, now with rice! Certified vegan and cruelty free by the Animal Liberation Front."
 	icon_state = "donkpocketdeluxevegan"
 	food_reagents = list(
@@ -343,6 +342,7 @@
 	tastes = list("rice patty" = 2, "dough" = 2, "peppery kick" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_4
+	warm_type = /obj/item/food/donkpocket/warm/deluxe/vegan
 
 /obj/item/food/donkpocket/deluxe/vegan/make_bakeable()
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), TRUE, TRUE, deluxe_added_reagents)

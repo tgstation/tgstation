@@ -337,14 +337,10 @@
 	for(var/mob/living/basic/slime/M in src)
 		M.apply_water()
 
-	wash(CLEAN_WASH)
-	for(var/atom/movable/movable_content as anything in src)
-		if(ismopable(movable_content)) // Will have already been washed by the wash call above at this point.
-			continue
-		movable_content.wash(CLEAN_WASH)
+	wash(CLEAN_WASH, TRUE)
 	return TRUE
 
-/turf/open/handle_slip(mob/living/carbon/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, force_drop)
+/turf/open/handle_slip(mob/living/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, force_drop)
 	if(slipper.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return FALSE
 	if(!has_gravity(src))
@@ -354,13 +350,15 @@
 	if(lube & SLIDE_ICE)
 		// Ice slides only go 1 tile, this is so you will slip across ice until you reach a non-slip tile
 		slide_distance = 1
-	else if(HAS_TRAIT(slipper, TRAIT_CURSED))
+	else if(HAS_TRAIT(slipper, TRAIT_CURSED) && !(lube & WEAK_SLIDE))
 		// When cursed, all slips send you flying
 		lube |= SLIDE
 		slide_distance = rand(5, 9)
 	else if(HAS_TRAIT(slipper, TRAIT_NO_SLIP_SLIDE))
 		// Stops sliding
 		slide_distance = 0
+	else if(lube & WEAK_SLIDE)
+		slide_distance = rand(1, 2)
 
 	var/obj/buckled_obj
 	if(slipper.buckled)
@@ -380,9 +378,10 @@
 
 	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
 	slipper.add_mood_event("slipped", /datum/mood_event/slipped)
-	if(force_drop)
+	if(force_drop && iscarbon(slipper)) //carbon specific behavior that living doesn't have
+		var/mob/living/carbon/carbon = slipper
 		for(var/obj/item/item in slipper.held_items)
-			slipper.accident(item)
+			carbon.accident(item)
 
 	var/olddir = slipper.dir
 	slipper.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
@@ -390,12 +389,14 @@
 		// They need to be kept upright to maintain the combo effect (So don't knockdown)
 		slipper.Immobilize(1 SECONDS)
 		slipper.incapacitate(1 SECONDS)
+	else if(lube & WEAK_SLIDE)
+		slipper.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
+		slipper.stop_pulling()
 	else
 		slipper.Knockdown(knockdown_amount)
 		slipper.Paralyze(paralyze_amount)
-		slipper.stop_pulling()
 
-	if(buckled_obj)
+	if(!isnull(buckled_obj) && !ismob(buckled_obj))
 		buckled_obj.unbuckle_mob(slipper)
 		// This is added onto the end so they slip "out of their chair" (one tile)
 		lube |= SLIDE_ICE
@@ -403,7 +404,7 @@
 
 	if(slide_distance)
 		var/turf/target = get_ranged_target_turf(slipper, olddir, slide_distance)
-		if(lube & SLIDE)
+		if(lube & (SLIDE|WEAK_SLIDE))
 			slipper.AddComponent(/datum/component/force_move, target, TRUE)
 		else if(lube & SLIDE_ICE)
 			slipper.AddComponent(/datum/component/force_move, target, FALSE)//spinning would be bad for ice, fucks up the next dir
@@ -485,6 +486,15 @@
 
 	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	new used_tiles.tile_type(src)
+
+/turf/open/apply_main_material_effects(datum/material/main_material, amount, multipier)
+	. = ..()
+	if(!main_material.turf_sound_override)
+		return
+	footstep = main_material.turf_sound_override
+	barefootstep = main_material.turf_sound_override + "barefoot"
+	clawfootstep = main_material.turf_sound_override + "claw"
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /// Very similar to build_with_rods, this exists to allow building transport/tram girders on openspace
 /turf/open/proc/build_with_titanium(obj/item/stack/sheet/mineral/titanium/used_stack, user)

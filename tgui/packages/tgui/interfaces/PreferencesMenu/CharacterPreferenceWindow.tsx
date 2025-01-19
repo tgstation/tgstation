@@ -1,8 +1,8 @@
-import { exhaustiveCheck } from 'common/exhaustive';
 import { useState } from 'react';
+import { Button, Stack } from 'tgui-core/components';
+import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
 import { useBackend } from '../../backend';
-import { Button, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { AntagsPage } from './AntagsPage';
 import { PreferencesMenuData } from './data';

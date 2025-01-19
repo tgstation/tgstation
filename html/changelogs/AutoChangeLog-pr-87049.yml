@@ -1,5 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "fixed a clientless AI spawning when a ghost poll for syndicate modsuit AI had no volunteers"
-  - admin: "AI rolebanned players can no longer role for Syndicate modsuit AI"

@@ -62,7 +62,7 @@
 /area/shuttle/escape)
 "bV" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/turf_decal/trimline/dark_blue/arrow_ccw{
 	dir = 8
@@ -125,7 +125,7 @@
 /area/shuttle/escape)
 "dW" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -287,7 +287,7 @@
 /area/shuttle/escape)
 "jo" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/turf_decal/trimline/dark_blue/arrow_ccw{
 	dir = 8
@@ -533,7 +533,7 @@
 /area/shuttle/escape)
 "pu" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -573,7 +573,7 @@
 /area/shuttle/escape)
 "qe" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -609,7 +609,7 @@
 /area/shuttle/escape)
 "rw" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -682,7 +682,7 @@
 /area/shuttle/escape)
 "uK" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -868,7 +868,7 @@
 /area/shuttle/escape)
 "Cx" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -887,7 +887,7 @@
 /area/shuttle/escape)
 "CR" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -968,8 +968,8 @@
 /obj/item/book/manual/wiki/surgery{
 	pixel_x = -15
 	},
-/obj/item/surgery_tray/full,
-/obj/item/surgery_tray/full{
+/obj/effect/spawner/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full{
 	pixel_x = 5
 	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -1199,7 +1199,7 @@
 /area/shuttle/escape)
 "LD" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8

@@ -47,6 +47,8 @@
 	var/rustle_vary = TRUE
 	/// Path for the item's rustle sound.
 	var/rustle_sound = SFX_RUSTLE
+	/// Path for the item's rustle sound when removing items.
+	var/remove_rustle_sound = null
 	/// The sound to play when we open/access the storage
 	var/open_sound
 	var/open_sound_vary = TRUE
@@ -171,6 +173,7 @@
 	arrived.item_flags |= IN_STORAGE
 	refresh_views()
 	arrived.on_enter_storage(src)
+	RegisterSignal(arrived, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
 	SEND_SIGNAL(arrived, COMSIG_ITEM_STORED, src)
 	parent.update_appearance()
 
@@ -184,6 +187,7 @@
 	gone.item_flags &= ~IN_STORAGE
 	remove_and_refresh(gone)
 	gone.on_exit_storage(src)
+	UnregisterSignal(gone, COMSIG_MOUSEDROPPED_ONTO)
 	SEND_SIGNAL(gone, COMSIG_ITEM_UNSTORED, src)
 	parent.update_appearance()
 
@@ -451,7 +455,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_STORED_ITEM, to_insert, user, force)
 	SEND_SIGNAL(src, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
-	RegisterSignal(to_insert, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
 	to_insert.forceMove(real_location)
 	item_insertion_feedback(user, to_insert, override)
 	parent.update_appearance()
@@ -468,7 +471,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	if (target.loc != real_location) // what even
-		UnregisterSignal(target, COMSIG_MOUSEDROPPED_ONTO)
 		return
 
 	if(numerical_stacking)
@@ -563,7 +565,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		thing.forceMove(remove_to_loc)
 
 		if(do_rustle && !silent)
-			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+			if(remove_rustle_sound)
+				playsound(parent, remove_rustle_sound, 50, TRUE, -5)
+			else
+				playsound(parent, rustle_sound, 50, TRUE, -5)
 	else
 		thing.moveToNullspace()
 
@@ -573,7 +578,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	refresh_views()
 	parent.update_appearance()
 
-	UnregisterSignal(thing, COMSIG_MOUSEDROPPED_ONTO)
 	SEND_SIGNAL(parent, COMSIG_ATOM_REMOVED_ITEM, thing, remove_to_loc, silent)
 	SEND_SIGNAL(src, COMSIG_STORAGE_REMOVED_ITEM, thing, remove_to_loc, silent)
 	return TRUE
@@ -689,10 +693,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_preattack(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(!istype(thing) || !allow_quick_gather || thing.atom_storage)
+	if(!istype(thing) || thing == parent.loc || !allow_quick_gather || thing.atom_storage)
 		return
 
 	if(collection_mode == COLLECT_ONE)
+		if(thing.loc == user)
+			user.dropItemToGround(thing, silent = TRUE) //this is nessassary to update any inventory slot it is attached to
 		attempt_insert(thing, user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -1057,6 +1063,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	toggle_collection_mode(triggered.owner)
+
+	return COMPONENT_ACTION_BLOCK_TRIGGER
 
 /datum/storage/proc/action_deleted(datum/source)
 	SIGNAL_HANDLER

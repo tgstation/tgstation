@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "Having any wounds no longer gives you an alert in the top right"
-  - qol: "Having any wounds now make the corresponding bodypart on your health doll (the lil dude on the right side of the screen) glow red."
-  - refactor: "Refactored how the hud's health doll shows up for humans. Report any oddities"

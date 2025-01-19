@@ -153,6 +153,10 @@
 	return ..() | SPELL_NO_FEEDBACK | SPELL_NO_IMMEDIATE_COOLDOWN
 
 /datum/action/cooldown/spell/touch/cast(mob/living/carbon/cast_on)
+	if(SEND_SIGNAL(cast_on, COMSIG_TOUCH_HANDLESS_CAST, src) & COMPONENT_CAST_HANDLESS)
+		StartCooldown()
+		return
+
 	if(!QDELETED(attached_hand) && (attached_hand in cast_on.held_items))
 		remove_hand(cast_on, reset_cooldown_after = TRUE)
 		return

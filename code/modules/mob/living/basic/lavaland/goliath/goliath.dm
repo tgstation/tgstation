@@ -68,7 +68,7 @@
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5)
+		AddComponent(/datum/component/tameable, tame_chance = 10, bonus_tame_chance = 5)
 
 	tentacles = new (src)
 	tentacles.Grant(src)
@@ -118,7 +118,6 @@
 
 /mob/living/basic/mining/goliath/proc/make_rideable()
 	saddled = TRUE
-	buckle_lying = 0
 	add_overlay("goliath_saddled")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath)
 

@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed hand tele portals that have been deleted in the process of opening a new portal pair clogging up hand tele's portal pair list. If you try to create portals that would end up like this (i.e. on an active teleporter hub), the hand tele will indicate that."

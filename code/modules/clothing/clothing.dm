@@ -14,6 +14,10 @@
 	var/visor_flags_cover = NONE //same as above, but for flags_cover
 	///What to toggle when toggled with adjust_visor()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_INVISVIEW
+	///Sound this item makes when its visor is flipped down
+	var/visor_toggle_down_sound = null
+	///Sound this item makes when its visor is flipped up
+	var/visor_toggle_up_sound = null
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -114,33 +118,34 @@
 	moth_snack.name = name
 	moth_snack.clothing = WEAKREF(src)
 
-/obj/item/clothing/attackby(obj/item/W, mob/user, params)
-	if(!istype(W, repairable_by))
-		return ..()
+/obj/item/clothing/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+	. = NONE
+	if(!istype(weapon, repairable_by))
+		return
 
 	switch(damaged_clothes)
 		if(CLOTHING_PRISTINE)
-			return..()
+			return
+
 		if(CLOTHING_DAMAGED)
-			var/obj/item/stack/cloth_repair = W
+			var/obj/item/stack/cloth_repair = weapon
 			cloth_repair.use(1)
-			repair(user, params)
-			return TRUE
+			repair(user)
+			return ITEM_INTERACT_SUCCESS
+
 		if(CLOTHING_SHREDDED)
-			var/obj/item/stack/cloth_repair = W
+			var/obj/item/stack/cloth_repair = weapon
 			if(cloth_repair.amount < 3)
 				to_chat(user, span_warning("You require 3 [cloth_repair.name] to repair [src]."))
-				return TRUE
+				return ITEM_INTERACT_BLOCKING
 			to_chat(user, span_notice("You begin fixing the damage to [src] with [cloth_repair]..."))
 			if(!do_after(user, 6 SECONDS, src) || !cloth_repair.use(3))
-				return TRUE
-			repair(user, params)
-			return TRUE
-
-	return ..()
+				return ITEM_INTERACT_BLOCKING
+			repair(user)
+			return ITEM_INTERACT_SUCCESS
 
 /// Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
-/obj/item/clothing/proc/repair(mob/user, params)
+/obj/item/clothing/proc/repair(mob/user)
 	update_clothes_damaged_state(CLOTHING_PRISTINE)
 	atom_integrity = max_integrity
 	name = initial(name) // remove "tattered" or "shredded" if there's a prefix
@@ -335,7 +340,7 @@
 		else
 			how_cool_are_your_threads += "[src]'s storage opens when dragged to yourself.\n"
 		if (atom_storage.can_hold?.len) // If pocket type can hold anything, vs only specific items
-			how_cool_are_your_threads += "[src] can store [atom_storage.max_slots] <a href='?src=[REF(src)];show_valid_pocket_items=1'>item\s</a>.\n"
+			how_cool_are_your_threads += "[src] can store [atom_storage.max_slots] <a href='byond://?src=[REF(src)];show_valid_pocket_items=1'>item\s</a>.\n"
 		else
 			how_cool_are_your_threads += "[src] can store [atom_storage.max_slots] item\s that are [weight_class_to_text(atom_storage.max_specific_storage)] or smaller.\n"
 		if(atom_storage.quickdraw)
@@ -346,7 +351,7 @@
 		. += how_cool_are_your_threads.Join()
 
 	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)) || (clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
-		. += span_notice("It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
+		. += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
 /obj/item/clothing/examine_tags(mob/user)
 	. = ..()
@@ -375,7 +380,7 @@
 				cold_desc = "very low"
 			if (0 to 71)
 				cold_desc = "extremely low"
-		.["thermally insulated"] = "Protects the wearer from [jointext(list(heat_desc, cold_desc), " and ")] temperatures."
+		.["thermally insulated"] = "Protects the wearer from [jointext(list(heat_desc, cold_desc) - null, " and ")] temperatures."
 
 /obj/item/clothing/examine_descriptor(mob/user)
 	return "clothing"
@@ -426,7 +431,11 @@
 				parts_covered += "head"
 			if(body_parts_covered & CHEST)
 				parts_covered += "torso"
-			if(length(parts_covered)) // Just in case someone makes spaceproof gloves or something
+			if(body_parts_covered & (ARMS|HANDS))
+				parts_covered += "arms"
+			if(body_parts_covered & (LEGS|FEET))
+				parts_covered += "legs"
+			if(length(parts_covered))
 				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
 
 		var/heat_prot
@@ -447,7 +456,7 @@
 			readout += "No armor or durability information available."
 
 		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
-		to_chat(usr, examine_block(formatted_readout))
+		to_chat(usr, boxed_message(formatted_readout))
 
 /**
  * Rounds armor_value down to the nearest 10, divides it by 10 and then converts it to Roman numerals.
@@ -532,6 +541,12 @@ BLIND     // can't see anything
 	visor_toggling()
 
 	to_chat(user, span_notice("You push [src] [up ? "out of the way" : "back into place"]."))
+
+	//play sounds when toggling the visor up or down (if there is any)
+	if(visor_toggle_up_sound && up)
+		playsound(src, visor_toggle_up_sound, 20, TRUE, -1)
+	if(visor_toggle_down_sound && !up)
+		playsound(src, visor_toggle_down_sound, 20, TRUE, -1)
 
 	update_item_action_buttons()
 

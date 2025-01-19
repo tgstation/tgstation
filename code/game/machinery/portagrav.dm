@@ -63,7 +63,7 @@
 	if(anchored)
 		. += "portagrav_anchors"
 	if(on)
-		. += "portagrav_o"
+		. += "portagrav_lights"
 		. += "activated"
 
 /obj/machinery/power/portagrav/examine(mob/user)
