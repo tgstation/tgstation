@@ -223,7 +223,7 @@ const ProductDisplay = (props: {
     displayed_currency_icon,
     displayed_currency_name,
   } = data;
-  const [toggleLayout, setToggleLayout] = useState(false);
+  const [toggleLayout, setToggleLayout] = useState(true);
 
   return (
     <Section
@@ -346,13 +346,11 @@ const ProductGrid = (props) => {
       {...baseProps}
       tooltip={capitalizeAll(product.name)}
       buttonsAlt={
-        <Stack fontSize={0.8} textAlign={'left'}>
-          <Stack.Item grow mt={0} color={'lightgray'}>
-            x{remaining}
-          </Stack.Item>
-          <Stack.Item>
+        <Stack fontSize={0.8}>
+          <Stack.Item grow textAlign={'left'}>
             <ProductPrice {...priceProps} />
           </Stack.Item>
+          <Stack.Item color={'lightgray'}>x{remaining}</Stack.Item>
         </Stack>
       }
     >
@@ -422,7 +420,7 @@ const ProductPrice = (props) => {
     standardPrice = redPrice;
   }
   return (
-    <Stack.Item fontSize={0.85} color={'gold'} textAlign={'right'}>
+    <Stack.Item fontSize={0.85} color={'gold'}>
       {custom ? (
         <>
           {customPrice}
