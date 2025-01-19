@@ -1,0 +1,5 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - refactor: "mimics (bolt of animation, malf ai Machine Override, etc) are basicmobs"
+  - bugfix: "crate mimics may now be opened"
