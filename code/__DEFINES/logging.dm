@@ -82,7 +82,6 @@
 #define LOG_ENTRY_KEY_MESSAGE "msg"
 #define LOG_ENTRY_KEY_DATA "data"
 #define LOG_ENTRY_KEY_WORLD_STATE "w-state"
-#define LOG_ENTRY_KEY_SEMVER_STORE "s-store"
 #define LOG_ENTRY_KEY_ID "id"
 #define LOG_ENTRY_KEY_SCHEMA_VERSION "s-ver"
 

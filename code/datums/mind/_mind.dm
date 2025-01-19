@@ -134,7 +134,6 @@
 	var/mob/enslaved_to = src.enslaved_to?.resolve()
 	.["enslaved_to"] = enslaved_to
 
-	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return .
 
 /datum/mind/vv_edit_var(var_name, var_value)

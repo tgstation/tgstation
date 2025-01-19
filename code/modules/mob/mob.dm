@@ -114,8 +114,6 @@
 	.["name"] = name
 	.["ckey"] = ckey
 	.["key"] = key
-
-	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return .
 
 /**
