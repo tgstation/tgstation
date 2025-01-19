@@ -258,6 +258,9 @@
 	AddElement(/datum/element/rust)
 	color = null
 
+/turf/open/floor/plating/rust/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/plating/heretic_rust
 	color = COLOR_GREEN_GRAY
 
