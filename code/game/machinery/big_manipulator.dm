@@ -91,8 +91,9 @@
 /obj/machinery/big_manipulator/examine(mob/user)
 	. = ..()
 	. += "You can change direction with alternative wrench usage."
-	if(monkey_worker)
-		. += "You can see [monkey_worker.resolve()]: [src] manager."
+	var/mob/monkey_resolve = monkey_worker?.resolve()
+	if(!isnull(monkey_resolve))
+		. += "You can see [monkey_resolve]: [src] manager."
 
 /obj/machinery/big_manipulator/Destroy(force)
 	. = ..()
