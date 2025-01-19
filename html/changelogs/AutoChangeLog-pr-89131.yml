@@ -1,0 +1,4 @@
+author: "RengaN02"
+delete-after: True
+changes:
+  - bugfix: "Fixed Engine Diagnostic surgery"
