@@ -186,12 +186,12 @@
 	reward = CARGO_CRATE_VALUE * 6
 	wanted_types = list(/obj/item/food/meat/slab/corgi = TRUE)
 
-/datum/bounty/item/assistant/action_figures
-	name = "Action Figures"
-	description = "The vice president's son saw an ad for action figures on the telescreen and now he won't shut up about them. Ship some to ease his complaints."
+/datum/bounty/item/assistant/toys
+	name = "Arcade Toys"
+	description = "The vice president's son saw an ad for new toys on the telescreen and now he won't shut up about them. Ship some arcade toys over to ease his complaints."
 	reward = CARGO_CRATE_VALUE * 8
 	required_count = 5
-	wanted_types = list(/obj/item/toy/figure = TRUE)
+	wanted_types = list(/obj/item/toy = TRUE)
 
 /datum/bounty/item/assistant/paper_bin
 	name = "Paper Bins"
