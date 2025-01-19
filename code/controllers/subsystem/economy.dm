@@ -185,6 +185,7 @@ SUBSYSTEM_DEF(economy)
 				moneybags = current_acc
 		earning_report += "Our GMM Spotlight would like to alert you that <b>[moneybags.account_holder]</b> is your station's most affulent crewmate! They've hit it big with [moneybags.account_balance] credits saved. "
 		update_alerts = TRUE
+		inflict_moneybags(moneybags)
 	earning_report += "That's all from the <i>Nanotrasen Economist Division</i>."
 	GLOB.news_network.submit_article(earning_report, "Station Earnings Report", "Station Announcements", null, update_alert = update_alerts)
 	return TRUE
@@ -247,13 +248,13 @@ SUBSYSTEM_DEF(economy)
 /datum/controller/subsystem/economy/proc/inflict_moneybags(datum/bank_account/moneybags)
 	if(!moneybags)
 		return FALSE
+	var/mob/living/card_holder
 	for(var/obj/card in moneybags?.bank_cards)
-		var/icon_source = card
 		if(isidcard(card))
-			var/obj/item/card/id/id_card = card
-		var/mob/card_holder = recursive_loc_check(card, /mob)
-		if(ismob(card_holder)) //If on a mob
-			to_chat(world, "Fix me!")
+			card_holder = recursive_loc_check(card, /mob/living)
+	if(!isliving(card_holder)) //If on a living mob
+		return FALSE
+	card_holder.adjust_timed_status_effect(wait, /datum/status_effect/spotlight_light)
 	return TRUE
 
 #undef ECON_DEPARTMENT_STEP
