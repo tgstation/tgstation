@@ -1424,4 +1424,18 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mob doesn't get closed eyelids overlay when it gets knocked out cold or dies
 #define TRAIT_NO_EYELIDS "no_eyelids"
 
+/**
+ * This trait is given to turfs that have had shuttle frame parts built on them, but are not yet part of a shuttle.
+ * When attempting custom shuttle creation, a flood fill algorithm
+ * checks for turfs with this trait to determine the turfs
+ * that will constitute the created shuttle.
+ */
+#define TRAIT_SHUTTLE_CONSTRUCTION_TURF "shuttle_construction_turf"
+
+// Trait given to areas with a shuttle construction turf in them
+#define TRAIT_HAS_SHUTTLE_CONSTRUCTION_TURF "has_shuttle_construction_turf"
+
+///A trait given to users as a mutex to prevent repeated unresolved attempts to christen a shuttle
+#define TRAIT_ATTEMPTING_CHRISTENING "attempting_christening"
+
 // END TRAIT DEFINES
