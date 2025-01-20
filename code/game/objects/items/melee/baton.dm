@@ -877,10 +877,10 @@
 		our_crystal.use(1)
 		our_prod = /obj/item/melee/baton/security/cattleprod/telecrystalprod
 	else
-		to_chat(user, span_notice("You don't think the [item.name] will do anything to improve the [src]."))
+		to_chat(user, span_notice("You don't think \the [item] will do anything to improve \the [src]."))
 		return ..()
 
-	to_chat(user, span_notice("You place the [item.name] firmly into the igniter."))
+	to_chat(user, span_notice("You place \the [item] firmly into \the [sparkler]."))
 	remove_item_from_storage(user)
 	qdel(src)
 	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)

@@ -51,7 +51,7 @@
 
 	busy = TRUE
 	loaded_item = weapon
-	to_chat(user, span_notice("You place the [weapon.name] inside the [name]."))
+	to_chat(user, span_notice("You place \the [weapon] inside the [name]."))
 	flick("[base_icon_state]_la", src)
 	addtimer(CALLBACK(src, PROC_REF(finish_loading)), 1 SECONDS)
 	return ITEM_INTERACT_SUCCESS

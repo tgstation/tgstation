@@ -182,7 +182,7 @@
 		if(amount < 1)
 			to_chat(user, span_notice("The [src.name] is full!"))
 			return
-		to_chat(user, span_notice("You add [amount] sheets to the [src.name]."))
+		to_chat(user, span_notice("You add [amount] sheets to \the [src]."))
 		sheets += amount
 		addstack.use(amount)
 		return

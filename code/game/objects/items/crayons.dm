@@ -508,7 +508,7 @@
 		clicky = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
 
 	if(!instant)
-		to_chat(user, span_notice("You start drawing a [temp] on the [target.name]..."))
+		to_chat(user, span_notice("You start drawing a [temp] on \the [target]..."))
 
 	if(pre_noise)
 		audible_message(span_notice("You hear spraying."))
