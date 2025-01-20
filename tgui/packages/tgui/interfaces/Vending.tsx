@@ -177,7 +177,7 @@ export const UserDetails = (props) => {
         </Stack.Item>
         <Stack.Item>
           {user
-            ? `${user.name} | ${user.job}`
+            ? `${user.name || 'Unknown'} | ${user.job}`
             : 'No ID detected! Contact the Head of Personnel.'}
         </Stack.Item>
       </Stack>
