@@ -56,7 +56,7 @@
 		return
 	if(weapon?.item_flags & NOBLUDGEON)
 		return
-	if(((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK)))
+	if((!weapon || weapon.force <= 0) && !LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
 	if(!(clicked_mob in guilty))
 		check_visible_guilt(clicked_mob)
