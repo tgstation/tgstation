@@ -253,6 +253,7 @@
 			"size" = window_size,
 			"fancy" = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
 			"locked" = user.client.prefs.read_preference(/datum/preference/toggle/tgui_lock),
+			"layout" = user.client.prefs.read_preference(/datum/preference/choiced/tgui_layout),
 		),
 		"client" = list(
 			"ckey" = user.client.ckey,
