@@ -190,6 +190,12 @@
 	description = "A small laboratory and living space for Syndicate agents."
 	suffix = "icemoon_underground_syndielab.dmm"
 
+/datum/map_template/ruin/icemoon/underground/o31
+	name = "Ice-Ruin Outpost 31"
+	id = "o31"
+	description = "Suspiciously dead silent. May or may not contain megafauna"
+	suffix = "icemoon_underground_outpost31.dmm"
+
 //TODO: Bottom-Level ONLY Spawns after Refactoring Related Code
 /datum/map_template/ruin/icemoon/underground/plasma_facility
 	name = "Ice-Ruin Abandoned Plasma Facility"

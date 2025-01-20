@@ -305,6 +305,20 @@
 ///time till our next rest duration
 #define BB_DEER_NEXT_REST_TIMER "deer_next_rest_timer"
 
+//the thing boss
+#define BB_THETHING_CHARGE "BB_THETHING_CHARGE"
+#define BB_THETHING_DECIMATE "BB_THETHING_DECIMATE"
+#define BB_THETHING_BIGTENDRILS "BB_THETHING_BIGTENDRILS"
+#define BB_THETHING_SHRIEK "BB_THETHING_SHRIEK"
+#define BB_THETHING_CARDTENDRILS "BB_THETHING_CARDTENDRILS"
+#define BB_THETHING_ACIDSPIT "BB_THETHING_ACIDSPIT"
+/// Blackboard key for The Thing boss that determines attack mode. TRUE means it will focus on closing the distance and murdering the person in question. Otherwise AOE.
+#define BB_THETHING_ATTACKMODE "BB_THETHING_ATTACKMODE"
+/// The Thing will be in attack mode forever if true
+#define BB_THETHING_NOAOE "BB_THETHING_NOAOE"
+/// What (first in combo) attack was last executed
+#define BB_THETHING_LASTAOE "BB_THETHING_LASTAOE"
+
 //turtle
 ///our tree's ability
 #define BB_TURTLE_TREE_ABILITY "turtle_tree_ability"
