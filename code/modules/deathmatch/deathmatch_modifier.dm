@@ -402,7 +402,7 @@
 		/mob/living/basic/spider/giant/nurse/scrawny = 2,
 		/mob/living/basic/spider/giant/tarantula/scrawny = 2,
 		/mob/living/basic/spider/giant/hunter/scrawny = 2,
-		/mob/living/simple_animal/hostile/dark_wizard = 2,
+		/mob/living/basic/dark_wizard = 2,
 		/mob/living/simple_animal/hostile/retaliate/goose = 2,
 		/mob/living/simple_animal/hostile/ooze = 1,
 		/mob/living/simple_animal/hostile/vatbeast = 1,
