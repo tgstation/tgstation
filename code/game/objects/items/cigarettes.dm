@@ -549,7 +549,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(M == user)
 		cig.attackby(src, user)
 	else
-		cig.light(span_notice("[user] holds the [name] out for [M], and lights [M.p_their()] [cig.name]."))
+		cig.light(span_notice("[user] holds \the [src] out for [M], and lights [M.p_their()] [cig.name]."))
 
 /obj/item/cigarette/fire_act(exposed_temperature, exposed_volume)
 	light()

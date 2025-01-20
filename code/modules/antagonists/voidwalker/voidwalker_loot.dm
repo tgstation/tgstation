@@ -25,7 +25,7 @@
 		to_chat(user, span_bolddanger("OH GOD NOO!!!! WHYYYYYYYYY!!!!! WHO WOULD DO THIS?!!"))
 		return
 
-	to_chat(user, span_purple("You begin staring into the [name]..."))
+	to_chat(user, span_purple("You begin staring into \the [src]..."))
 
 	if(!do_after(user, 10 SECONDS, src))
 		return
