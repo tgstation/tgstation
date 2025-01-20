@@ -48,6 +48,9 @@
 	/// Boolean on whether people with chunky fingers can use this baton.
 	var/chunky_finger_usable = FALSE
 
+	/// What term do we use to describe our baton being 'ready', or the phrase to use when var/active is TRUE.
+	var/activated_word = "ready"
+
 	/// The context to show when the baton is active and targeting a living thing
 	var/context_living_target_active = "Stun"
 
@@ -68,15 +71,30 @@
 
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
-	// Adding an extra break for the sake of presentation
-	if(stamina_damage != 0)
-		offensive_notes = "It takes [span_warning("[CEILING(100 / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
 
 	register_item_context()
 
-/obj/item/melee/baton/examine(mob/user)
-	. = ..()
-	. += span_notice("\The [src] has an armor penetrative power of [get_stun_penetration_value()]%.")
+/obj/item/melee/baton/add_weapon_description()
+	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_baton_notes))
+
+/obj/item/melee/baton/proc/add_baton_notes()
+	var/list/readout = list()
+
+	if(affect_cyborg)
+		readout += "It can stun cyborgs for [round((stun_time_cyborg/10), 1)] seconds."
+
+	readout += "\n[active ? "It is currently [span_warning("[activated_word]")], and capable of stunning." : "It is [span_warning("not [activated_word]")], and not capable of stunning."]"
+
+	if(stamina_damage <= 0) // The advanced baton actually does have 0 stamina damage so...yeah.
+		readout += "Either is is [span_warning("completely unable to perform a stunning strike")], or it [span_warning("attacks via some unusual method")]."
+		return readout.Join("\n")
+
+	readout += "It takes [span_warning("[HITS_TO_CRIT(stamina_damage)] strike\s")] to stun an enemy."
+
+	readout += "\nThe effects of each strike can be mitigated by utilizing [span_warning("[armour_type_against_stun]")] armor."
+
+	readout += "\nIt has a stun armor-piercing capability of [span_warning("[get_stun_penetration_value()]%")]."
+	return readout.Join("\n")
 
 /**
  * Ok, think of baton attacks like a melee attack chain:
@@ -219,9 +237,8 @@
 			if(prob(force_say_chance))
 				human_target.force_say()
 		var/effective_armour_penetration = get_stun_penetration_value()
-		var/chest = target.get_bodypart(BODY_ZONE_CHEST)
-		var/armour_block = target.run_armor_check(chest, armour_type_against_stun, null, null, effective_armour_penetration)
-		target.apply_damage(stamina_damage, STAMINA, chest, armour_block)
+		var/armour_block = target.run_armor_check(null, armour_type_against_stun, null, null, effective_armour_penetration)
+		target.apply_damage(stamina_damage, STAMINA, blocked = armour_block)
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 		additional_effects_non_cyborg(target, user)
@@ -336,6 +353,7 @@
 	bare_wound_bonus = 5
 	clumsy_knockdown_time = 15 SECONDS
 	active = FALSE
+	activated_word = "extended"
 	var/folded_drop_sound = 'sound/items/baton/telescopic_baton_folded_drop.ogg'
 	var/folded_pickup_sound = 'sound/items/baton/telescopic_baton_folded_pickup.ogg'
 	var/unfolded_drop_sound = 'sound/items/baton/telescopic_baton_unfolded_drop.ogg'
@@ -487,6 +505,7 @@
 	on_stun_sound = 'sound/items/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
+	activated_word = "activated"
 	context_living_rmb_active = "Harmful Stun"
 	light_range = 1.5
 	light_system = OVERLAY_LIGHT
@@ -579,7 +598,7 @@
 		icon_state = "[base_icon_state]_active"
 		if(active_changes_inhand)
 			if(tip_changes_color)
-				inhand_icon_state = "[base_icon_state]_active_[set_baton_tip_color()]"
+				inhand_icon_state = "[base_icon_state]_active_[get_baton_tip_color()]"
 			else
 				inhand_icon_state = "[base_icon_state]_active"
 		return ..()
@@ -643,12 +662,14 @@
 
 /// Toggles the stun baton's light
 /obj/item/melee/baton/security/proc/toggle_light()
+	set_light_color(get_baton_tip_color(TRUE))
 	set_light_on(!light_on)
 	return
 
 /// Change our baton's top color based on the contained cell.
-/obj/item/melee/baton/security/proc/set_baton_tip_color()
+/obj/item/melee/baton/security/proc/get_baton_tip_color(set_light = FALSE)
 	var/tip_type_to_set
+	var/tip_light_to_set
 
 	if(cell)
 		var/chargepower = cell.maxcharge
@@ -656,16 +677,20 @@
 		switch(zap_value)
 			if(-INFINITY to 10)
 				tip_type_to_set = "orange"
+				tip_light_to_set = LIGHT_COLOR_ORANGE
 			if(11 to 20)
 				tip_type_to_set = "red"
+				tip_light_to_set = LIGHT_COLOR_INTENSE_RED
 			if(21 to 30)
 				tip_type_to_set = "green"
+				tip_light_to_set = LIGHT_COLOR_GREEN
 			if(31 to INFINITY)
 				tip_type_to_set = "blue"
+				tip_light_to_set = LIGHT_COLOR_BLUE
 	else
 		tip_type_to_set = "orange"
 
-	return tip_type_to_set
+	return set_light ? tip_light_to_set : tip_type_to_set
 
 /obj/item/melee/baton/security/proc/turn_on(mob/user)
 	active = TRUE
