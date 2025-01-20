@@ -21,7 +21,7 @@
 	unsuitable_cold_damage = 0
 	faction = list(FACTION_HOSTILE)
 	basic_mob_flags = DEL_ON_DEATH
-	ai_controller = /datum/ai_controller/basic_controller/simple_hostile_obstacles/zombie
+	ai_controller = /datum/ai_controller/basic_controller/zombie
 	/// Outfit the zombie spawns with for visuals.
 	var/outfit = /datum/outfit/corpse_doctor
 	/// Chance to spread zombieism on hit
@@ -46,7 +46,7 @@
 	health = 60
 	melee_damage_lower = 11
 	melee_damage_upper = 11
-	ai_controller = /datum/ai_controller/basic_controller/simple_hostile/zombie
+	ai_controller = /datum/ai_controller/basic_controller/zombie/stupid
 
 /mob/living/basic/zombie/rotten/assistant
 	outfit = /datum/outfit/corpse_assistant
@@ -70,14 +70,24 @@
 	emote_hear = list("groans.", "moans.", "grunts.")
 	emote_see = list("twitches.", "shudders.")
 
-/datum/ai_controller/basic_controller/simple_hostile/zombie
+/datum/ai_controller/basic_controller/zombie
 	blackboard = list(
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
-/datum/ai_controller/basic_controller/simple_hostile_obstacles/zombie
-	blackboard = list(
-		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/zombie,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
+
+/datum/ai_controller/basic_controller/zombie/stupid
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/zombie,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
