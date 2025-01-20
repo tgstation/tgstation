@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useMemo } from 'react';
 import { Button, Input, Section, Stack } from 'tgui-core/components';
 import { isEscape } from 'tgui-core/keys';
+import { clamp } from 'tgui-core/math';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
@@ -18,13 +20,43 @@ export function LootPanel(props) {
   const { act, data } = useBackend<Data>();
   const { contents = [], searching } = data;
 
+  // limitations: items with different stack counts, charges etc.
+  const contentsByPathName = useMemo(() => {
+    const acc: Record<string, SearchItem[]> = {};
+
+    for (let i = 0; i < contents.length; i++) {
+      const item = contents[i];
+      if (item.path) {
+        if (!acc[item.path + item.name]) {
+          acc[item.path + item.name] = [];
+        }
+        acc[item.path + item.name].push(item);
+      } else {
+        acc[item.ref] = [item];
+      }
+    }
+    return acc;
+  }, [contents]);
+
   const [grouping, setGrouping] = useState(true);
   const [searchText, setSearchText] = useState('');
 
   const total = contents.length ? contents.length - 1 : 0;
 
+  const minHeight = 126;
+  const maxHeight = 468;
+  const headerHeight = 88;
+  const itemHeight = 38;
+  const height: number = clamp(
+    headerHeight +
+      (!grouping ? contents.length : Object.keys(contentsByPathName).length) *
+        itemHeight,
+    minHeight,
+    maxHeight,
+  );
+
   return (
-    <Window height={275} width={190} title={`Contents: ${total}`}>
+    <Window width={300} height={height} title={`Contents: ${total}`}>
       <Window.Content
         onKeyDown={(event) => {
           if (isEscape(event.key)) {
@@ -33,13 +65,12 @@ export function LootPanel(props) {
         }}
       >
         <Section
+          scrollable={height === maxHeight}
           fill
-          scrollable
           title={
             <Stack>
               <Stack.Item grow>
                 <Input
-                  autoFocus
                   fluid
                   onInput={(event, value) => setSearchText(value)}
                   placeholder="Search"
@@ -65,7 +96,10 @@ export function LootPanel(props) {
           }
         >
           {grouping ? (
-            <GroupedContents contents={contents} searchText={searchText} />
+            <GroupedContents
+              contents={contentsByPathName}
+              searchText={searchText}
+            />
           ) : (
             <RawContents contents={contents} searchText={searchText} />
           )}
