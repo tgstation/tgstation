@@ -47,3 +47,5 @@
 // Color priorities for bodyparts
 #define LIMB_COLOR_HULK 10
 #define LIMB_COLOR_CARP_INFUSION 20
+/// Base priority for atom colors, gets atom priorities added to it
+#define LIMB_COLOR_ATOM_COLOR 30

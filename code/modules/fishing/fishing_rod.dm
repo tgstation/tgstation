@@ -263,7 +263,7 @@
 			if(kill_fish)
 				fish.set_status(FISH_DEAD, silent = TRUE)
 
-	QDEL_NULL(bait)
+	qdel(bait)
 	update_icon()
 
 ///Returns the probability that a fish caught by this (custom material) rod will be of the same material.
@@ -361,10 +361,8 @@
 
 /obj/item/fishing_rod/proc/get_cast_range(mob/living/user)
 	. = max(cast_range, 1)
-	if(!user && !isliving(loc))
-		return
-	user = loc
-	if(!user.is_holding(src) || !user.mind)
+	user = user || loc
+	if (!isliving(user) || !user.mind || !user.is_holding(src))
 		return
 	. += round(user.mind.get_skill_level(/datum/skill/fishing) * 0.3)
 	return max(., 1)

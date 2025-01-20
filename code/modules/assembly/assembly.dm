@@ -23,7 +23,7 @@
 	var/secured = TRUE
 	var/list/attached_overlays = null
 	var/obj/item/assembly_holder/holder = null
-	var/attachable = FALSE // can this be attached to wires
+	var/assembly_behavior = ASSEMBLY_FUNCTIONAL_OUTPUT // how does the assembly behave with respect to what it's connected to
 	var/datum/wires/connected = null
 	var/next_activate = 0 //When we're next allowed to activate - for spam control
 
@@ -40,18 +40,22 @@
  * Will also be called if the assembly holder is attached to a plasma (internals) tank or welding fuel (dispenser) tank.
  */
 /obj/item/assembly/proc/on_attach()
+	SHOULD_CALL_PARENT(TRUE)
 	if(!holder && connected)
 		holder = connected.holder
+	SEND_SIGNAL(src, COMSIG_ASSEMBLY_ATTACHED, holder)
 
 /**
  * on_detach: Called when removed from an assembly holder or wiring datum
  */
 /obj/item/assembly/proc/on_detach()
+	SHOULD_CALL_PARENT(TRUE)
 	if(connected)
 		connected = null
 	if(!holder)
 		return FALSE
 	forceMove(holder.drop_location())
+	SEND_SIGNAL(src, COMSIG_ASSEMBLY_DETACHED, holder)
 	holder = null
 	return TRUE
 
@@ -122,7 +126,7 @@
 			balloon_alert(user, "can't attach another of that!")
 			return
 		if(new_assembly.secured || secured)
-			balloon_alert(user, "both devices not attachable!")
+			balloon_alert(user, "both devices not assembly_behavior!")
 			return
 
 		holder = new /obj/item/assembly_holder(drop_location())

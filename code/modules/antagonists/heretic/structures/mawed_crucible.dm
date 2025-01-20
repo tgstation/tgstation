@@ -27,6 +27,8 @@
 /obj/structure/destructible/eldritch_crucible/process(seconds_per_tick)
 	if(COOLDOWN_TIMELEFT(src, refill_cooldown))
 		return
+	if(current_mass >= max_mass)
+		return
 	COOLDOWN_START(src, refill_cooldown, 30 SECONDS)
 	current_mass++
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)

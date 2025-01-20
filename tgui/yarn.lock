@@ -18715,22 +18715,25 @@ __metadata:
   resolution: "tgui-bench@workspace:packages/tgui-bench"
   dependencies:
     "@fastify/static": "npm:^8.0.2"
+    "@types/react-dom": "npm:^18.3.1"
     common: "workspace:*"
     fastify: "npm:^5.1.0"
     lodash: "npm:^4.17.21"
     platform: "npm:^1.3.6"
     react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
+    tgui-core: "npm:^1.7.4"
   languageName: unknown
   linkType: soft
 
-"tgui-core@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "tgui-core@npm:1.3.0"
+"tgui-core@npm:^1.7.4":
+  version: 1.7.4
+  resolution: "tgui-core@npm:1.7.4"
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10c0/448c38a23149a13f80dcbe3688f3edba8dbe25dd65fc1b48036627f6e992996107a7962cd7bca6194f41959dc3aad531fdf3fbe032decaac7989c32721ad99a1
+  checksum: 10c0/06b9d8702d6ae170383b28725bf6308cd320499367ea8ea1f9dd5039ab371cfe34419a7d3d1e0e2b86884326e8d4ab116e5601208d2f85d215b7c464fd32fdbf
   languageName: node
   linkType: hard
 
@@ -18758,9 +18761,9 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
+    tgui-core: "npm:^1.7.4"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
-    tgui-styles: "npm:^0.0.10"
   languageName: unknown
   linkType: soft
 
@@ -18785,17 +18788,10 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     tgui: "workspace:*"
+    tgui-core: "npm:^1.7.4"
     tgui-polyfill: "workspace:*"
-    tgui-styles: "npm:^0.0.10"
   languageName: unknown
   linkType: soft
-
-"tgui-styles@npm:^0.0.10":
-  version: 0.0.10
-  resolution: "tgui-styles@npm:0.0.10"
-  checksum: 10c0/90d3c9d891680289e79fd1f44dcf15a0cc956345e0337b2f89a64ceb1c5192da217dd8ac64566731471684b6bb6d3b4fc92ff6a072f9d8138e71d423c94821a6
-  languageName: node
-  linkType: hard
 
 "tgui-workspace@workspace:.":
   version: 0.0.0-use.local
@@ -18854,10 +18850,9 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     react-popper: "npm:^2.3.0"
-    tgui-core: "npm:^1.3.0"
+    tgui-core: "npm:^1.7.4"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
-    tgui-styles: "npm:^0.0.10"
   languageName: unknown
   linkType: soft
 

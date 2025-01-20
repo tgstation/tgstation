@@ -22,7 +22,7 @@
 
   // Components
   @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
+    '~tgui-core/styles/components/Button',
     $with: (
       'color-default': colors.$primary,
       'color-disabled': hsl(120, 17.78%, 35.29%),
@@ -30,7 +30,7 @@
     )
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/Tabs',
+    '~tgui-core/styles/components/Tabs',
     $with: (
       'color-default': colors.$primary,
       'tab-color-selected': hsla(120, 100%, 50%, 0.25),
@@ -38,11 +38,11 @@
     )
   );
   @include meta.load-css(
-    'pkg:tgui-styles/components/Input',
+    '~tgui-core/styles/components/Input',
     $with: ('border-color': colors.$primary)
   );
-  @include meta.load-css('pkg:tgui-styles/components/Modal');
-  @include meta.load-css('pkg:tgui-styles/components/Section');
+  @include meta.load-css('~tgui-core/styles/components/Modal');
+  @include meta.load-css('~tgui-core/styles/components/Section');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');

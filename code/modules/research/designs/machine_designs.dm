@@ -165,7 +165,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/botpad
-	name = "Machine Design (Bot launchpad)"
+	name = "Bot Launchpad Board"
 	desc = "The circuit board for a bot launchpad."
 	id = "botpad"
 	build_type = IMPRINTER
@@ -299,8 +299,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/chem_mass_spec
-	name = "High-Performance Liquid Chromatography Board"
-	desc = "The circuit board for a High-Performance Liquid Chromatography (Machine Board"
+	name = "High-Performance Liquid Chromatography Machine Board"
+	desc = "The circuit board for a High-Performance Liquid Chromatography machine."
 	id = "chem_mass_spec"
 	build_path = /obj/item/circuitboard/machine/chem_mass_spec
 	category = list(
@@ -1176,7 +1176,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/navbeacon
-	name = "Machine Design (Bot Navigational Beacon)"
+	name = "Bot Navigational Beacon Board"
 	desc = "The circuit board for a beacon that aids bot navigation."
 	id = "botnavbeacon"
 	build_path = /obj/item/circuitboard/machine/navbeacon
@@ -1196,7 +1196,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/brm
-	name = "Boulder Retrieval Matrix"
+	name = "Boulder Retrieval Matrix Board"
 	id = "brm"
 	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
@@ -1349,7 +1349,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/mailsorter
-	name = "Mail Sorter"
+	name = "Mail Sorter Board"
 	desc = "The circuit board for a mail sorting unit."
 	id = "mailsorter"
 	build_path = /obj/item/circuitboard/machine/mailsorter
