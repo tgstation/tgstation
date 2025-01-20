@@ -194,7 +194,7 @@
 		point.add_overlay(highlight)
 
 /obj/item/card/id/dropped(mob/user)
-	UnregisterSignal(user, list(COMSIG_MOVABLE_POINTED))
+	UnregisterSignal(user, COMSIG_MOVABLE_POINTED)
 	return ..()
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
@@ -892,9 +892,7 @@
 
 /// Re-generates the honorific title. Returns the compiled honorific_title value
 /obj/item/card/id/proc/update_honorific()
-	var/is_mononym = FALSE
-	if(is_mononym(registered_name))
-		is_mononym = TRUE
+	var/is_mononym = is_mononym(registered_name)
 	switch(honorific_position)
 		if(HONORIFIC_POSITION_FIRST)
 			honorific_title = "[chosen_honorific] [first_name(registered_name)]"
@@ -952,9 +950,10 @@
 	if(honorific_position_to_use & HONORIFIC_POSITION_NONE)
 		balloon_alert(user, "honorific disabled")
 	else
-		chosen_honorific = tgui_input_list(user, "What honorific do you want to use?", "Flair!!!", trim.honorifics)
-		if(!chosen_honorific || user.incapacitated || !in_contents_of(user))
+		var/new_honorific = tgui_input_list(user, "What honorific do you want to use?", "Flair!!!", trim.honorifics)
+		if(!new_honorific || user.incapacitated || !in_contents_of(user))
 			return
+		chosen_honorific = new_honorific
 		switch(honorific_position_to_use)
 			if(HONORIFIC_POSITION_FIRST)
 				honorific_position = HONORIFIC_POSITION_FIRST
