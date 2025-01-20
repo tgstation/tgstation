@@ -259,6 +259,7 @@ type BackendState<TData> = {
       size: [number, number];
       fancy: boolean;
       locked: boolean;
+      layout: string;
     };
     client: {
       ckey: string;

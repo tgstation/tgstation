@@ -12,7 +12,7 @@ import { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { Window } from '../layouts';
+import { LAYOUT, Window } from '../layouts';
 
 type Item = {
   path: string;
@@ -30,16 +30,15 @@ type Data = {
   default_list_view: BooleanLike;
 };
 
-enum MODE {
-  tile,
-  list,
-}
-
 export const SmartVend = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, config, data } = useBackend<Data>();
   const [searchText, setSearchText] = useState('');
   const [displayMode, setDisplayMode] = useState(
-    data.default_list_view ? MODE.list : MODE.tile,
+    config.window.layout === LAYOUT.Default
+      ? data.default_list_view
+        ? LAYOUT.List
+        : LAYOUT.Grid
+      : config.window.layout,
   );
   const search = createSearch(searchText, (item: Item) => item.name);
   const contents =
@@ -71,16 +70,16 @@ export const SmartVend = (props) => {
                     onInput={(e, value) => setSearchText(value)}
                   />
                   <Button
-                    icon={displayMode === MODE.tile ? 'list' : 'border-all'}
+                    icon={displayMode === LAYOUT.Grid ? 'list' : 'border-all'}
                     tooltip={
-                      displayMode === MODE.tile
+                      displayMode === LAYOUT.Grid
                         ? 'Display as a list'
                         : 'Display as a grid'
                     }
                     tooltipPosition="bottom"
                     onClick={() =>
                       setDisplayMode(
-                        displayMode === MODE.tile ? MODE.list : MODE.tile,
+                        displayMode === LAYOUT.Grid ? LAYOUT.List : LAYOUT.Grid,
                       )
                     }
                   />
@@ -104,7 +103,7 @@ export const SmartVend = (props) => {
             <NoticeBox>Nothing found.</NoticeBox>
           ) : (
             contents.map((item) =>
-              displayMode === MODE.tile ? (
+              displayMode === LAYOUT.Grid ? (
                 <ItemTile key={item.path} item={item} />
               ) : (
                 <ItemList key={item.path} item={item} />
