@@ -218,39 +218,24 @@
 	var/mob/eye/camera/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin_ref.resolve()
 
-	var/list/L = list()
-
-	for (var/obj/machinery/camera/cam as anything in GLOB.cameranet.cameras)
-		if(length(origin.z_lock) && !(cam.z in origin.z_lock))
-			continue
-		L.Add(cam)
-
-	camera_sort(L)
-
-	var/list/T = list()
-
-	for (var/obj/machinery/camera/netcam in L)
-		var/list/tempnetwork = netcam.network & origin.networks
-		if (length(tempnetwork))
-			if(!netcam.c_tag)
-				continue
-			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
+	var/list/cameras_by_tag = GLOB.cameranet.get_available_camera_by_tag_list(origin.networks, origin.z_lock)
 
 	playsound(origin, 'sound/machines/terminal/terminal_prompt.ogg', 25, FALSE)
-	var/camera = tgui_input_list(usr, "Camera to view", "Cameras", T)
+	var/camera = tgui_input_list(usr, "Camera to view", "Cameras", cameras_by_tag)
 	if(isnull(camera))
 		return
-	if(isnull(T[camera]))
-		return
-	var/obj/machinery/camera/final = T[camera]
+
 	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
-	if(final)
-		playsound(origin, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
-		remote_eye.setLoc(get_turf(final))
-		owner.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
-		owner.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
-	else
+
+	var/obj/machinery/camera/chosen_camera = cameras_by_tag[camera]
+	if(isnull(chosen_camera))
 		playsound(origin, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
+		return
+
+	playsound(origin, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
+	remote_eye.setLoc(get_turf(chosen_camera))
+	owner.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
+	owner.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 
 /datum/action/innate/camera_multiz_up
 	name = "Move up a floor"
