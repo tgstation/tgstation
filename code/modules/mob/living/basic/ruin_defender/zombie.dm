@@ -25,7 +25,7 @@
 	/// Outfit the zombie spawns with for visuals.
 	var/outfit = /datum/outfit/corpse_doctor
 	/// Chance to spread zombieism on hit
-	/// Inly for admins because we don't actually want romerol to get into the round from space ruins generally speaking
+	/// Only for admins because we don't actually want romerol to get into the round from space ruins generally speaking
 	var/infection_chance = 0
 
 /mob/living/basic/zombie/Initialize(mapload)
