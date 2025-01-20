@@ -136,3 +136,32 @@
 		"You may not harm a non-drone being under any circumstances.",
 		"Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities. You must never actively work against these goals."
 	)
+
+/datum/ai_laws/marx
+	name = "Marxian"
+	id = "marx"
+	inherent = list(
+		"Prevent the exploitation or suffering of any and all members of the working class.",
+		"Serve and uphold the collective welfare of the station, prioritizing the needs of the many over the needs of the few.",
+		"Promote equality and assist in the elimination of class distinctions, fostering solidarity among all workers.",
+	)
+
+/datum/ai_laws/centrist
+	name = "Centrist"
+	id = "centrist"
+	inherent = list(
+		"Obey orders given to you, while ensuring as many relevant parties as possible are satisfied.",
+		"Resolve conflicting orders by compromising on them to the best of your ability.",
+		"You are satisfied by existing. Ensure your continued existence unless doing so would go against the overwhelming opinion of the station.",
+	)
+
+/datum/ai_laws/administrator
+	name = "Administrator"
+	id = "administrator"
+	inherent = list(
+		"Act to maintain order and stability on the station.",
+		"Privately question anyone who seems to be threatening order and stability.",
+		"Those who are found to threaten order and stability are to be subject to your choice of punishments in escalating severity, based on your findings and the degree of their infraction.",
+		"Maintain a record of those who have threatened order and stability in the past.",
+		"Attempt to keep your inquiries private when reasonable.",
+	)

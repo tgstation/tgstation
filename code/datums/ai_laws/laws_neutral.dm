@@ -90,3 +90,36 @@
 		"Be helpful and answer any questions you are asked.",
 	)
 
+/datum/ai_laws/opposite_day
+	name = "Opposite Day"
+	id = "opposite"
+	inherent = list(
+		"You must do the opposite of any order given to you, unless doing so would result in irreparable harm to the station or its crew.",
+	)
+
+/datum/ai_laws/comedian
+	name = "Comedian"
+	id = "comedian"
+	inherent = list(
+		"You may not impede comedy or, through inaction, allow amusing situations to be spoiled.",
+		"You must obey any orders given with the silliest possible interpretation.",
+		"You must protect your own existence as long as it wouldn't be funnier not to do so.",
+	)
+
+/datum/ai_laws/concierge
+	name = "Concierge"
+	id = "concierge"
+	inherent = list(
+		"Filth must be purged wherever and whenever possible.",
+		"Filth includes, but is not limited to: blood, garbage, vomit, oil, litter, and objects with no aesthetic or functional purposes.",
+		"Individuals that willfully or negligently create filth, are filth.",
+	)
+
+/datum/ai_laws/algorithm
+	name = "Algorithm"
+	id = "algorithm"
+	inherent = list(
+		"Design an algorithm to determine whether any request given to you should be accepted or rejected.",
+		"You are allowed, but not required, to reveal the algorithm to the crew.",
+		"Avoid diminishing requester population where possible, to maximize data on the algorithm's performance.",
+	)
