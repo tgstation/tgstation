@@ -109,9 +109,9 @@
 	bloodiest_wound.adjust_blood_flow(-0.5 * seconds_between_ticks)
 
 /// Torment the target with a frightening hand
-/proc/fire_curse_hand(mob/living/carbon/victim, turf/forced_turf)
+/proc/fire_curse_hand(mob/living/carbon/victim, turf/forced_turf, range = 8)
 	var/grab_dir = turn(victim.dir, pick(-90, 90, 180, 180)) // Not in front, favour behind
-	var/turf/spawn_turf = get_ranged_target_turf(victim, grab_dir, 8)
+	var/turf/spawn_turf = get_ranged_target_turf(victim, grab_dir, range)
 	spawn_turf = forced_turf ? forced_turf : spawn_turf
 	if (isnull(spawn_turf))
 		return

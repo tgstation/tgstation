@@ -21,7 +21,6 @@
 		/mob/living/simple_animal/bot/secbot/pingsky,
 		/mob/living/simple_animal/hostile,
 		/mob/living/simple_animal/hostile/asteroid,
-		/mob/living/simple_animal/hostile/asteroid/curseblob,
 		/mob/living/simple_animal/hostile/asteroid/elite,
 		/mob/living/simple_animal/hostile/asteroid/elite/broodmother,
 		/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child,
