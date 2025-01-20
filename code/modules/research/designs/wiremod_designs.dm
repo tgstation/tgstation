@@ -477,6 +477,11 @@
 	id = "comp_assoc_list_pick"
 	build_path = /obj/item/circuit_component/list_pick/assoc
 
+/datum/design/component/wire_bundle
+	name = "Wire Bundle"
+	id = "comp_wire_bundle"
+	build_path = /obj/item/circuit_component/wire_bundle
+
 /datum/design/component/wirenet_receive
 	name = "Wirenet Receiver Component"
 	id = "comp_wirenet_receive"
@@ -687,6 +692,35 @@
 	id = "module_shell"
 	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/circuit
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
+
+/datum/design/undertile_shell
+	name = "Under-tile Shell"
+	desc = "A small shell that can fit under the floor."
+	id = "undertile_shell"
+	materials = list(
+		/datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*2.5,
+	)
+	build_path = /obj/item/undertile_circuit
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
+
+
+/datum/design/wallmount_shell
+	name = "Wall-mounted Shell"
+	desc = "A large shell that can be mounted on a wall."
+	id = "wallmount_shell"
+	materials = list(
+		/datum/material/glass=SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/wallframe/circuit
 	build_type = COMPONENT_PRINTER
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
