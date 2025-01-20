@@ -325,6 +325,15 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	stench.temperature = mob.bodytemperature
 	our_turf.assume_air(stench)
 
+/datum/fish_trait/emulsijack/psychic
+	name = "Psychic Aura"
+	catalog_description = "This fish emits an almost unblockable psychic aura that assaults minds, slowly killing all nearby fish and making humanoids have a bad time."
+	resistance_traits = list(TRAIT_RESIST_PSYCHIC)
+	trait_to_add = TRAIT_RESIST_PSYCHIC
+
+/datum/fish_trait/emulsijack/psychic/on_non_stasis_life(mob/living/basic/mob, seconds_per_tick)
+	return
+
 /datum/fish_trait/necrophage
 	name = "Necrophage"
 	catalog_description = "This fish will eat carcasses of dead fish when hungry."
@@ -721,7 +730,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/toxic_barbs
 	name = "Toxic Barbs"
-	catalog_description = "This fish' stinger, bill or otherwise, is coated with simple, yet effetive venom."
+	catalog_description = "This fish' stinger, bill or otherwise, is coated with simple, yet effective venom."
 	spontaneous_manifest_types = list(/obj/item/fish/stingray = 35)
 
 /datum/fish_trait/toxic_barbs/apply_to_fish(obj/item/fish/fish)
@@ -752,6 +761,26 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/hallucinogenic/add_reagents(obj/item/fish/fish, list/reagents)
 	if(!HAS_TRAIT(src, TRAIT_FOOD_FRIED) && !HAS_TRAIT(src, TRAIT_FOOD_BBQ_GRILLED))
 		return ..()
+
+/datum/fish_trait/hallucinogenic/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	RegisterSignal(fish, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, PROC_REF(make_venomous))
+	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_status_change))
+
+/datum/fish_trait/hallucinogenic/proc/make_venomous(obj/item/fish/source, new_size, new_weight)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		///Remove the trait from the fish so it doesn't show on the analyzer as it doesn't do anything on stingerless ones.
+		source.fish_traits -= type
+		UnregisterSignal(source, list(COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, COMSIG_FISH_STATUS_CHANGED))
+		return
+	add_venom(source, /datum/reagent/toxin/mindbreaker/fish, new_weight, mult = source.status == FISH_DEAD ? 0.3 : 0.7)
+
+/datum/fish_trait/hallucinogenic/proc/on_status_change(obj/item/fish/source)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		return
+	change_venom_on_death(source, /datum/reagent/toxin/mindbreaker/fish, 0.7, 0.3)
 
 /datum/fish_trait/ink
 	name = "Ink Production"
