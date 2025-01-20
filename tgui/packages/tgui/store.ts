@@ -104,7 +104,7 @@ const createStackAugmentor =
       '\nState: ' +
       JSON.stringify({
         ckey: config?.client?.ckey,
-        interface: config?.interface,
+        interface: config?.interface?.name,
         window: config?.window,
       })
     );

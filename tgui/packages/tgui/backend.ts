@@ -252,14 +252,16 @@ type BackendState<TData> = {
   config: {
     title: string;
     status: number;
-    interface: string;
+    interface: {
+      name: string;
+      layout: string;
+    };
     refreshing: boolean;
     window: {
       key: string;
       size: [number, number];
       fancy: boolean;
       locked: boolean;
-      layout: string;
     };
     client: {
       ckey: string;
