@@ -6,7 +6,7 @@
 		/datum/reagent/fuel = 20,
 		/obj/item/stack/cable_coil = 15,
 		/obj/item/assembly/timer = 1,
-		/obj/item/pipe/quaternary/pipe = 1,
+		/obj/item/pipe = 1,
 	)
 	time = 6 SECONDS
 	category = CAT_CHEMISTRY

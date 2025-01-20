@@ -154,7 +154,7 @@
 	reqs = list(
 		/obj/item/stack/sheet/iron = 4,
 		/obj/item/stack/package_wrap = 8,
-		/obj/item/pipe/quaternary = 2,
+		/obj/item/pipe = 2,
 	)
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED
