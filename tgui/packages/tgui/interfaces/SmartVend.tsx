@@ -54,37 +54,43 @@ export const SmartVend = (props) => {
           scrollable
           title="Storage"
           buttons={
-            <>
+            <Stack>
               {data.isdryer ? (
-                <Button
-                  icon={data.drying ? 'stop' : 'tint'}
-                  onClick={() => act('Dry')}
-                >
-                  {data.drying ? 'Stop drying' : 'Dry'}
-                </Button>
+                <Stack.Item>
+                  <Button
+                    icon={data.drying ? 'stop' : 'tint'}
+                    onClick={() => act('Dry')}
+                  >
+                    {data.drying ? 'Stop drying' : 'Dry'}
+                  </Button>
+                </Stack.Item>
               ) : (
                 <>
-                  <Input
-                    autoFocus
-                    placeholder={'Search...'}
-                    value={searchText}
-                    onInput={(e, value) => setSearchText(value)}
-                  />
+                  <Stack.Item>
+                    <Input
+                      autoFocus
+                      placeholder={'Search...'}
+                      value={searchText}
+                      onInput={(e, value) => setSearchText(value)}
+                    />
+                  </Stack.Item>
                   <LayoutToggle state={displayMode} setState={setDisplayMode} />
                 </>
               )}
-              <Button
-                icon="question"
-                tooltip={
-                  <>
-                    LMB - Vend selected amount
-                    <br />
-                    RMB - Vend all
-                  </>
-                }
-                tooltipPosition={'bottom-end'}
-              />
-            </>
+              <Stack.Item>
+                <Button
+                  icon="question"
+                  tooltip={
+                    <>
+                      LMB - Vend selected amount
+                      <br />
+                      RMB - Vend all
+                    </>
+                  }
+                  tooltipPosition={'bottom-end'}
+                />
+              </Stack.Item>
+            </Stack>
           }
         >
           {!contents.length ? (
