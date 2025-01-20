@@ -25,7 +25,7 @@
 		fusion_process(seconds_per_tick)
 		// Note that we process damage/healing even if the fusion process aborts.
 		// Running out of fuel won't save you if your moderator and coolant are exploding on their own.
-		check_spill()
+		process_moderator_overflow()
 		process_damageheal(seconds_per_tick)
 		check_alert()
 	if (start_power)
