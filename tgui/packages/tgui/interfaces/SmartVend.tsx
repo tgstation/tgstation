@@ -10,7 +10,7 @@ import {
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
-import { LAYOUT, LayoutToggle } from './common/LayoutToggle';
+import { LAYOUT, LayoutToggle, getLayoutState } from './common/LayoutToggle';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -32,14 +32,14 @@ type Data = {
 };
 
 export const SmartVend = (props) => {
-  const { act, config, data } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
   const [searchText, setSearchText] = useState('');
   const [displayMode, setDisplayMode] = useState(
-    config.window.layout === LAYOUT.Default
+    getLayoutState() === LAYOUT.Default
       ? data.default_list_view
         ? LAYOUT.List
         : LAYOUT.Grid
-      : config.window.layout,
+      : getLayoutState(),
   );
   const search = createSearch(searchText, (item: Item) => item.name);
   const contents =
@@ -70,14 +70,7 @@ export const SmartVend = (props) => {
                     value={searchText}
                     onInput={(e, value) => setSearchText(value)}
                   />
-                  <LayoutToggle
-                    state={displayMode}
-                    onToggle={() =>
-                      setDisplayMode(
-                        displayMode === LAYOUT.Grid ? LAYOUT.List : LAYOUT.Grid,
-                      )
-                    }
-                  />
+                  <LayoutToggle state={displayMode} onToggle={setDisplayMode} />
                 </>
               )}
               <Button

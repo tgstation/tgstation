@@ -79,12 +79,12 @@
 
 #define DEFAULT_CYBORG_NAME "Default Cyborg Name"
 
-// TGUI layouts for UI's
-/// Let coder choose. One UI can have list, other grid.
+// Choose grid or list TGUI layouts for UI's, when possible.
+/// Default layout will be used. It can be either a grid or a list
 #define TGUI_LAYOUT_DEFAULT "default"
-/// All UI's will be in grid layout, when possible.
+/// Force grid layout, even if default is a list.
 #define TGUI_LAYOUT_GRID "grid"
-/// All UI's will be in list layout, when possible.
+/// Force list layout, even if default is a grid.
 #define TGUI_LAYOUT_LIST "list"
 
 //Job preferences levels

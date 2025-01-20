@@ -56,7 +56,7 @@
 /datum/preference/choiced/tgui_layout/apply_to_client(client/client, value)
 	for (var/datum/tgui/tgui as anything in client.mob?.tgui_open_uis)
 		// Force it to reload either way
-		tgui.send_full_update(client.mob)
+		tgui.update_static_data(client.mob)
 
 /datum/preference/toggle/tgui_lock
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES

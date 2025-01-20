@@ -30,7 +30,7 @@ export const tgui_input_swapped: FeatureToggle = {
 };
 
 export const tgui_layout: Feature<string> = {
-  name: 'Default UI Layout',
+  name: 'Default TGUI Layout',
   category: 'UI',
   description:
     'Applies the selected layout type to all interfaces where it possible. Like on Smartfridge.',
