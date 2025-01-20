@@ -10,10 +10,10 @@ import {
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
-import { LAYOUT, LayoutToggle, getLayoutState } from './common/LayoutToggle';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { getLayoutState, LAYOUT, LayoutToggle } from './common/LayoutToggle';
 
 type Item = {
   path: string;

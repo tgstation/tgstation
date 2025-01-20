@@ -9,10 +9,10 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { capitalizeAll, createSearch } from 'tgui-core/string';
-import { LAYOUT, LayoutToggle, getLayoutState } from './common/LayoutToggle';
 
 import { useBackend } from '../backend';
-import { Layout, Window } from '../layouts';
+import { Window } from '../layouts';
+import { getLayoutState, LAYOUT, LayoutToggle } from './common/LayoutToggle';
 
 type VendingData = {
   all_products_free: boolean;
