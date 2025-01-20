@@ -11,7 +11,7 @@
 	COOLDOWN_DECLARE(scare_cooldown)
 
 	///What mood event to apply when we see the thing & freak out.
-	var/datum/mood_event/mood_event_type
+	var/datum/mood_event/mood_event_type = /datum/mood_event/phobia
 
 	var/regex/trigger_regex
 	//instead of cycling every atom, only cycle the relevant types
@@ -104,46 +104,48 @@
 		hearing_args[HEARING_RAW_MESSAGE] = trigger_regex.Replace(hearing_args[HEARING_RAW_MESSAGE], "[span_phobia("$2")]$3")
 
 /datum/brain_trauma/mild/phobia/handle_speech(datum/source, list/speech_args)
-	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+	if (HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
-	if(trigger_regex.Find(speech_args[SPEECH_MESSAGE]) != 0)
-		to_chat(owner, span_warning("You can't bring yourself to say the word \"[span_phobia("[trigger_regex.group[2]]")]\"!"))
-		speech_args[SPEECH_MESSAGE] = ""
+	if (trigger_regex.Find(speech_args[SPEECH_MESSAGE]) == 0)
+		return
+
+	var/stutter = prob(50)
+	var/whisper = prob(30)
+
+	if (!stutter && !whisper)
+		return
+
+	if (whisper)
+		speech_args[SPEECH_SPANS] |= SPAN_SMALL_VOICE
+	if (stutter)
+		owner.set_stutter_if_lower(4 SECONDS)
+	to_chat(owner, span_warning("You struggle to say the word \"[span_phobia("[trigger_regex.group[2]]")]\"!"))
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
-	COOLDOWN_START(src, scare_cooldown, 12 SECONDS)
 	if(owner.stat == DEAD)
 		return
+
+	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
+	if(trigger_word)
+		if (owner.has_status_effect(/datum/status_effect/minor_phobia_reaction))
+			return
+		to_chat(owner, span_userdanger("Hearing [span_phobia(trigger_word)] [message]!"))
+		owner.apply_status_effect(/datum/status_effect/minor_phobia_reaction)
+		return
+
+	COOLDOWN_START(src, scare_cooldown, 12 SECONDS)
 	if(mood_event_type)
 		owner.add_mood_event("phobia_[phobia_type]", mood_event_type)
-	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
+
 	if(reason)
 		to_chat(owner, span_userdanger("Seeing [span_phobia(reason.name)] [message]!"))
-	else if(trigger_word)
-		to_chat(owner, span_userdanger("Hearing [span_phobia(trigger_word)] [message]!"))
 	else
 		to_chat(owner, span_userdanger("Something [message]!"))
-	var/reaction = rand(1,4)
-	switch(reaction)
-		if(1)
-			to_chat(owner, span_warning("You are paralyzed with fear!"))
-			owner.Stun(70)
-			owner.set_jitter_if_lower(16 SECONDS)
-		if(2)
-			owner.emote("scream")
-			owner.set_jitter_if_lower(10 SECONDS)
-			owner.say("AAAAH!!", forced = "phobia")
-			if(reason)
-				owner._pointed(reason)
-		if(3)
-			to_chat(owner, span_warning("You shut your eyes in terror!"))
-			owner.set_jitter_if_lower(10 SECONDS)
-			owner.adjust_temp_blindness(20 SECONDS)
-		if(4)
-			owner.adjust_dizzy(20 SECONDS)
-			owner.adjust_confusion(10 SECONDS)
-			owner.set_jitter_if_lower(20 SECONDS)
-			owner.adjust_stutter(20 SECONDS)
+
+	if(reason)
+		owner.face_atom(reason)
+		owner._pointed(reason)
+	owner.apply_status_effect(/datum/status_effect/stacking/phobia_reaction, 1, mood_event_type)
 
 // Defined phobia types for badminry, not included in the RNG trauma pool to avoid diluting.
 
@@ -172,10 +174,6 @@
 		return TRUE
 	return ..()
 
-/datum/brain_trauma/mild/phobia/carps
-	phobia_type = "carps"
-	random_gain = FALSE
-
 /datum/brain_trauma/mild/phobia/clowns
 	phobia_type = "clowns"
 	random_gain = FALSE
@@ -192,17 +190,16 @@
 	phobia_type = "falling"
 	random_gain = FALSE
 
+/datum/brain_trauma/mild/phobia/fish
+	phobia_type = "fish"
+	random_gain = FALSE
+
 /datum/brain_trauma/mild/phobia/greytide
 	phobia_type = "greytide"
 	random_gain = FALSE
 
 /datum/brain_trauma/mild/phobia/guns
 	phobia_type = "guns"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/heresy
-	phobia_type = "heresy"
-	mood_event_type = /datum/mood_event/heresy
 	random_gain = FALSE
 
 /datum/brain_trauma/mild/phobia/insects
