@@ -924,7 +924,7 @@
 	return NONE
 
 /obj/item/card/id/item_ctrl_click(mob/user)
-	if(!in_contents_of(user)) //Check if the ID is in the ID slot, so it can be changed from there too.
+	if(!in_contents_of(user) || user.incapacitated) //Check if the ID is in the ID slot, so it can be changed from there too.
 		return
 
 	if(!trim)
@@ -942,7 +942,7 @@
 			choices += i
 
 	var/chosen_position = tgui_input_list(user, "What position do you want your honorific in?", "Flair!", choices)
-	if(user.stat < CONSCIOUS || !in_contents_of(user))
+	if(user.incapacitated || !in_contents_of(user))
 		return
 	var/honorific_position_to_use = readable_names[chosen_position]
 
@@ -953,7 +953,7 @@
 		balloon_alert(user, "honorific disabled")
 	else
 		chosen_honorific = tgui_input_list(user, "What honorific do you want to use?", "Flair!!!", trim.honorifics)
-		if(!chosen_honorific || user.stat < CONSCIOUS || !in_contents_of(user))
+		if(!chosen_honorific || user.incapacitated || !in_contents_of(user))
 			return
 		switch(honorific_position_to_use)
 			if(HONORIFIC_POSITION_FIRST)
