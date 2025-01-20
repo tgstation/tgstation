@@ -1,0 +1,393 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"c" = (
+/obj/item/stack/tile/iron,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"e" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"g" = (
+/obj/item/stack/tile/mineral/plastitanium/red,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"j" = (
+/obj/structure/table,
+/obj/item/cigbutt/cigarbutt{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/cigarette{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/lighter/greyscale{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"k" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"l" = (
+/obj/structure/barricade/wooden/crude,
+/turf/template_noop,
+/area/template_noop)
+"m" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"n" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"o" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/restraints/handcuffs,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"p" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"q" = (
+/obj/machinery/flasher/directional/west,
+/turf/template_noop,
+/area/template_noop)
+"r" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/computer/crew{
+	dir = 2
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"u" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/escape)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"w" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"x" = (
+/obj/machinery/computer/emergency_shuttle,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"z" = (
+/turf/template_noop,
+/area/template_noop)
+"A" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"B" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"C" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"D" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"F" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"H" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"I" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_y = -8;
+	pixel_x = -24
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"J" = (
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"K" = (
+/obj/structure/closet{
+	name = "evidence storage";
+	anchored = 1
+	},
+/obj/item/poster/traitor,
+/obj/effect/spawner/random/contraband/cannabis,
+/obj/effect/spawner/random/contraband/permabrig_weapon,
+/obj/structure/sign/poster/abductor/random/directional/north,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"L" = (
+/obj/item/kirbyplants/random/fullysynthetic,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"M" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"N" = (
+/obj/item/stack/tile/mineral/plastitanium/red,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"O" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"P" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 9
+	},
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Q" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"R" = (
+/obj/item/restraints/handcuffs{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"S" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"U" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/table,
+/obj/item/extinguisher,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"V" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"X" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
+"Y" = (
+/obj/structure/falsewall/titanium,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Z" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/book/manual/random,
+/obj/effect/spawner/random/bureaucracy/pen,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+z
+z
+z
+a
+a
+M
+a
+l
+a
+"}
+(2,1,1) = {"
+z
+e
+C
+S
+K
+w
+P
+N
+C
+"}
+(3,1,1) = {"
+z
+z
+u
+U
+g
+J
+R
+F
+X
+"}
+(4,1,1) = {"
+z
+z
+u
+o
+m
+O
+B
+v
+p
+"}
+(5,1,1) = {"
+z
+C
+a
+a
+D
+Y
+a
+a
+S
+"}
+(6,1,1) = {"
+C
+C
+A
+I
+f
+f
+n
+q
+z
+"}
+(7,1,1) = {"
+M
+x
+H
+c
+j
+Z
+C
+z
+z
+"}
+(8,1,1) = {"
+M
+V
+W
+k
+z
+z
+z
+z
+z
+"}
+(9,1,1) = {"
+z
+r
+Q
+L
+z
+z
+z
+z
+z
+"}
