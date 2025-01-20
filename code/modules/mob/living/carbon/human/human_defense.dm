@@ -51,8 +51,8 @@
 	if(bullet.reflectable)
 		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 			visible_message(
-				span_danger("The [bullet.name] gets reflected by [src]!"),
-				span_userdanger("The [bullet.name] gets reflected by [src]!"),
+				span_danger("\The [bullet] gets reflected by [src]!"),
+				span_userdanger("\The [bullet] gets reflected by [src]!"),
 			)
 			// Finds and plays the block_sound of item which reflected
 			for(var/obj/item/held_item in held_items)

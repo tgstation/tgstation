@@ -203,7 +203,7 @@
 		return ..()
 
 	if(cig.lit)
-		to_chat(user, span_warning("The [cig.name] is already lit!"))
+		to_chat(user, span_warning("\The [cig] is already lit!"))
 	if(target_mob == user)
 		cig.attackby(src, user)
 		return
