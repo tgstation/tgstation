@@ -61,22 +61,34 @@
 	paper.forceMove(user.loc)
 	user.put_in_hands(paper)
 	to_chat(user, span_notice("You remove [paper] from [src]."))
-	var/obj/item/paper/toppaper = toppaper_ref?.resolve()
-	if(paper == toppaper)
-		UnregisterSignal(toppaper, COMSIG_ATOM_UPDATED_ICON)
-		toppaper_ref = null
-		var/obj/item/paper/newtop = locate(/obj/item/paper) in src
-		if(newtop && (newtop != paper))
-			toppaper_ref = WEAKREF(newtop)
-		else
-			toppaper_ref = null
-	update_icon()
 
 /obj/item/clipboard/proc/remove_pen(mob/user)
 	pen.forceMove(user.loc)
 	user.put_in_hands(pen)
 	to_chat(user, span_notice("You remove [pen] from [src]."))
-	pen = null
+
+/obj/item/clipboard/Exited(atom/movable/gone, direction)
+	. = ..()
+
+	if (gone == pen)
+		pen = null
+		update_icon()
+		return
+
+	if (!istype(gone, /obj/item/paper))
+		return
+
+	var/obj/item/paper/toppaper = toppaper_ref?.resolve()
+	if (gone != toppaper)
+		return
+
+	UnregisterSignal(toppaper, COMSIG_ATOM_UPDATED_ICON)
+	toppaper_ref = null
+	var/obj/item/paper/newtop = locate(/obj/item/paper) in src
+	if(newtop)
+		toppaper_ref = WEAKREF(newtop)
+	else
+		toppaper_ref = null
 	update_icon()
 
 /obj/item/clipboard/click_alt(mob/user)
