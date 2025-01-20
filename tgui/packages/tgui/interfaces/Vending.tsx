@@ -234,7 +234,7 @@ const ProductDisplay = (props: {
             />
           </Stack.Item>
           <Stack.Item>
-            <LayoutToggle state={toggleLayout} onToggle={setToggleLayout} />
+            <LayoutToggle state={toggleLayout} setState={setToggleLayout} />
           </Stack.Item>
         </Stack>
       }

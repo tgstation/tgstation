@@ -5,8 +5,8 @@ import { useBackend } from '../../backend';
 type Props = {
   /** Current layout state, which will be passed. */
   state: string;
-  /** The function to call when the user clicks. */
-  onToggle: (newState: string) => void;
+  /** useState function that must be passed in order to make a toggle functional. */
+  setState: (newState: string) => void;
 };
 
 export enum LAYOUT {
@@ -28,12 +28,12 @@ export function getLayoutState(defaultState?) {
  * Otherwise it'll be controlled by preferences.
  */
 export function LayoutToggle(props: Props) {
-  const { onToggle, state } = props;
+  const { setState, state } = props;
   const { config } = useBackend();
 
   const handleClick = () => {
     const newState = state === LAYOUT.Grid ? LAYOUT.List : LAYOUT.Grid;
-    onToggle(newState);
+    setState(newState);
   };
 
   if (config.interface.layout === LAYOUT.Default) {

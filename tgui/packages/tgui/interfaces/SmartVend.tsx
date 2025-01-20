@@ -70,7 +70,7 @@ export const SmartVend = (props) => {
                     value={searchText}
                     onInput={(e, value) => setSearchText(value)}
                   />
-                  <LayoutToggle state={displayMode} onToggle={setDisplayMode} />
+                  <LayoutToggle state={displayMode} setState={setDisplayMode} />
                 </>
               )}
               <Button
