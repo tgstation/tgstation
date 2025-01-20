@@ -169,33 +169,20 @@ export const UserDetails = (props) => {
   const { data } = useBackend<VendingData>();
   const { user } = data;
 
-  if (!user) {
-    return (
-      <Section>
-        <NoticeBox m={0}>
-          No ID detected! Contact the Head of Personnel.
-        </NoticeBox>
-      </Section>
-    );
-  } else {
-    return (
-      <Section>
-        <Stack>
-          <Stack.Item>
-            <Icon name="id-card" size={3} mr={1} />
-          </Stack.Item>
-          <Stack.Item>
-            <LabeledList>
-              <LabeledList.Item label="User">{user.name}</LabeledList.Item>
-              <LabeledList.Item label="Occupation">
-                {user.job || 'Unemployed'}
-              </LabeledList.Item>
-            </LabeledList>
-          </Stack.Item>
-        </Stack>
-      </Section>
-    );
-  }
+  return (
+    <NoticeBox m={0} color={user && 'blue'}>
+      <Stack align="center">
+        <Stack.Item>
+          <Icon name="id-card" size={1.5} />
+        </Stack.Item>
+        <Stack.Item>
+          {user
+            ? `${user.name} | ${user.job}`
+            : 'No ID detected! Contact the Head of Personnel.'}
+        </Stack.Item>
+      </Stack>
+    </NoticeBox>
+  );
 };
 
 /** Displays  products in a section, with user balance at top */
