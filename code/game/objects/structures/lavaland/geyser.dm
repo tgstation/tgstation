@@ -29,9 +29,6 @@
 /obj/structure/geyser/Initialize(mapload) //if xenobio wants to bother, nethermobs are around geysers.
 	. = ..()
 
-	if(!true_name)
-		true_name = "[initial(reagent_id.name)] geyser"
-
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC, 1, 5)
 
 	create_reagents(max_volume, DRAINABLE)
@@ -117,9 +114,11 @@
 /obj/structure/geyser/random/Initialize(mapload)
 	reagent_id = get_random_reagent_id()
 
-	. = ..()
+	true_name = "[initial(reagent_id.name)] geyser"
 
 	discovery_message = "It's a [true_name]! How does any of this even work?" //it doesnt
+
+	return ..()
 
 ///A wearable tool that lets you empty plumbing machinery and some other stuff
 /obj/item/plunger
