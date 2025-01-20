@@ -531,7 +531,7 @@
 		if(effect_next_activation > world.time)
 			return
 		effect_next_activation = world.time + effect_cooldown
-		fire_curse_hand(owner, range = 5)
+		fire_curse_hand(owner, range = 5, projectile_type = /obj/projectile/curse_hand) // This one stuns people
 
 /obj/effect/temp_visual/curse
 	icon_state = "curse"
