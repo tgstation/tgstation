@@ -56,7 +56,7 @@
 		return
 	if(weapon?.item_flags & NOBLUDGEON)
 		return
-	if(!honorbound.combat_mode && (HAS_TRAIT(clicked_mob, TRAIT_ALLOWED_HONORBOUND_ATTACK) || ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))))
+	if(((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK)))
 		return
 	if(!(clicked_mob in guilty))
 		check_visible_guilt(clicked_mob)
