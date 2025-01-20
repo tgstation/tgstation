@@ -233,9 +233,7 @@ const ProductDisplay = (props: {
               value={stockSearch}
             />
           </Stack.Item>
-          <Stack.Item>
-            <LayoutToggle state={toggleLayout} setState={setToggleLayout} />
-          </Stack.Item>
+          <LayoutToggle state={toggleLayout} setState={setToggleLayout} />
         </Stack>
       }
     >
