@@ -1,0 +1,5 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - bugfix: "Admin fired stray syndicate cargo pods will not rebel against admin whims and launch themselves when cancelled."
+  - admin: "Admins have new categories to fill syndicate cargo pods with."
