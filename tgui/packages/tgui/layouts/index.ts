@@ -8,9 +8,3 @@ export { Layout } from './Layout';
 export { NtosWindow } from './NtosWindow';
 export { Pane } from './Pane';
 export { Window } from './Window';
-
-export enum LayoutType {
-  Default = 'default',
-  Grid = 'grid',
-  List = 'list',
-}

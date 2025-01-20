@@ -10,9 +10,10 @@ import {
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
+import { LAYOUT, LayoutToggle } from './common/LayoutToggle';
 
 import { useBackend } from '../backend';
-import { LAYOUT, Window } from '../layouts';
+import { Window } from '../layouts';
 
 type Item = {
   path: string;
@@ -69,15 +70,9 @@ export const SmartVend = (props) => {
                     value={searchText}
                     onInput={(e, value) => setSearchText(value)}
                   />
-                  <Button
-                    icon={displayMode === LAYOUT.Grid ? 'list' : 'border-all'}
-                    tooltip={
-                      displayMode === LAYOUT.Grid
-                        ? 'Display as a list'
-                        : 'Display as a grid'
-                    }
-                    tooltipPosition="bottom"
-                    onClick={() =>
+                  <LayoutToggle
+                    state={displayMode}
+                    onToggle={() =>
                       setDisplayMode(
                         displayMode === LAYOUT.Grid ? LAYOUT.List : LAYOUT.Grid,
                       )
