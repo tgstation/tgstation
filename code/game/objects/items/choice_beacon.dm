@@ -128,8 +128,8 @@
 	var/static/list/hero_item_list
 	if(!hero_item_list)
 		hero_item_list = list()
-		for(var/obj/item/storage/box/hero/box as anything in typesof(/obj/item/storage/box/hero))
-			hero_item_list[initial(box.name)] = box
+		for(var/obj/item/storage/bag/garment/hero/garment as anything in typesof(/obj/item/storage/bag/garment/hero))
+			hero_item_list[initial(garment.name)] = garment
 	return hero_item_list
 
 /obj/item/choice_beacon/augments
