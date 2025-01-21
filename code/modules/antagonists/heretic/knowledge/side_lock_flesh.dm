@@ -8,7 +8,6 @@
 	tier2 = /datum/heretic_knowledge/spell/opening_blast
 	tier3 = /datum/heretic_knowledge/spell/apetra_vulnera
 
-// XANTODO - Replace Placeholder Gain text
 /**
  * Phylactery of Damnation
  */
