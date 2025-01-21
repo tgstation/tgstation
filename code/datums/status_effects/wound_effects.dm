@@ -122,13 +122,13 @@
 		for(var/thing in left.wounds)
 			var/datum/wound/wound = thing
 			slowdown_left += wound.limp_slowdown
-			limp_chance_left = max(limp_chance_left, W.limp_chance)
+			limp_chance_left = max(limp_chance_left, wound.limp_chance)
 
 	if(right)
 		for(var/thing in right.wounds)
 			var/datum/wound/wound = thing
 			slowdown_right += wound.limp_slowdown
-			limp_chance_right = max(limp_chance_right, W.limp_chance)
+			limp_chance_right = max(limp_chance_right, wound.limp_chance)
 
 	// this handles losing your leg with the limp and the other one being in good shape as well
 	if(!slowdown_left && !slowdown_right)
