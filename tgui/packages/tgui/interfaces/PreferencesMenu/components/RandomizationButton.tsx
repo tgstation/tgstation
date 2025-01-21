@@ -1,7 +1,7 @@
 import { Dropdown } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
-import { RandomSetting } from './data';
+import { RandomSetting } from '../types';
 
 const options = [
   {
@@ -20,11 +20,13 @@ const options = [
   },
 ];
 
-export const RandomizationButton = (props: {
+type Props = {
   dropdownProps?: Record<string, unknown>;
   setValue: (newValue: RandomSetting) => void;
   value: RandomSetting;
-}) => {
+};
+
+export function RandomizationButton(props: Props) {
   const { dropdownProps = {}, setValue, value } = props;
 
   let color;
@@ -57,4 +59,4 @@ export const RandomizationButton = (props: {
       selected="None"
     />
   );
-};
+}

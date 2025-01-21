@@ -1,7 +1,10 @@
 import { BooleanLike } from 'tgui-core/react';
 
 import { sendAct } from '../../backend';
-import { LoadoutCategory, LoadoutList } from './loadout/base';
+import {
+  LoadoutCategory,
+  LoadoutList,
+} from './CharacterPreferences/loadout/base';
 import { Gender } from './preferences/gender';
 
 export enum Food {
@@ -120,7 +123,7 @@ export const createSetPreference =
     });
   };
 
-export enum Window {
+export enum PrefsWindow {
   Character = 0,
   Game = 1,
   Keybindings = 2,
@@ -179,7 +182,7 @@ export type PreferencesMenuData = {
   active_slot: number;
   name_to_use: string;
 
-  window: Window;
+  window: PrefsWindow;
 };
 
 export type ServerData = {
@@ -198,5 +201,5 @@ export type ServerData = {
     loadout_tabs: LoadoutCategory[];
   };
   species: Record<string, Species>;
-  [otheyKey: string]: unknown;
+  [otherKey: string]: unknown;
 };

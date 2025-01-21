@@ -1,5 +1,6 @@
 import { binaryInsertWith } from 'common/collections';
 import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -11,12 +12,11 @@ import {
 } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { useBackend } from '../../backend';
-import { Antagonist, Category } from './antagonists/base';
-import { PreferencesMenuData } from './data';
+import { Antagonist, Category } from '../antagonists/base';
+import { PreferencesMenuData } from '../types';
 
 const requireAntag = require.context(
-  './antagonists/antagonists',
+  '../antagonists/antagonists',
   false,
   /.ts$/,
 );
@@ -25,10 +25,11 @@ const antagsByCategory = new Map<Category, Antagonist[]>();
 
 // This will break at priorities higher than 10, but that almost definitely
 // will not happen.
-const binaryInsertAntag = (collection: Antagonist[], value: Antagonist) =>
-  binaryInsertWith(collection, value, (antag) => {
+function binaryInsertAntag(collection: Antagonist[], value: Antagonist) {
+  return binaryInsertWith(collection, value, (antag) => {
     return `${antag.priority}_${antag.name}`;
   });
+}
 
 for (const antagKey of requireAntag.keys()) {
   const antag = requireAntag<{
@@ -45,7 +46,12 @@ for (const antagKey of requireAntag.keys()) {
   );
 }
 
-const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
+type AntagSelectionProps = {
+  antagonists: Antagonist[];
+  name: string;
+};
+
+function AntagSelection(props: AntagSelectionProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
   const className = 'PreferencesMenu__Antags__antagSelection';
 
@@ -53,7 +59,7 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
     new Set(data.selected_antags),
   );
 
-  const enableAntags = (antags: string[]) => {
+  function enableAntags(antags: string[]) {
     const newState = new Set(predictedState);
 
     for (const antag of antags) {
@@ -66,9 +72,9 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
       antags,
       toggled: true,
     });
-  };
+  }
 
-  const disableAntags = (antags: string[]) => {
+  function disableAntags(antags: string[]) {
     const newState = new Set(predictedState);
 
     for (const antag of antags) {
@@ -81,7 +87,7 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
       antags,
       toggled: false,
     });
-  };
+  }
 
   const antagonistKeys = props.antagonists.map((antagonist) => antagonist.key);
 
@@ -192,9 +198,9 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
       </Flex>
     </Section>
   );
-};
+}
 
-export const AntagsPage = () => {
+export function AntagsPage() {
   return (
     <Box className="PreferencesMenu__Antags">
       <AntagSelection
@@ -213,4 +219,4 @@ export const AntagsPage = () => {
       />
     </Box>
   );
-};
+}

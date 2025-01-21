@@ -1,3 +1,11 @@
-import { useLocalState } from '../../backend';
+import { createContext, Dispatch, SetStateAction, useContext } from 'react';
 
-export const useRandomToggleState = () => useLocalState('randomToggle', false);
+export const RandomToggleState = createContext<
+  [boolean, Dispatch<SetStateAction<boolean>>]
+>([false, () => {}]);
+
+export function useRandomToggleState() {
+  const context = useContext(RandomToggleState);
+
+  return context;
+}
