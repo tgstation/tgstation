@@ -461,26 +461,32 @@
 /datum/status_effect/neck_slice/get_examine_text()
 	return span_warning("[owner.p_Their()] neck is cut and is bleeding profusely!")
 
+/// Applies a curse with various possible effects
 /mob/living/proc/apply_necropolis_curse(set_curse)
-	var/datum/status_effect/necropolis_curse/C = has_status_effect(/datum/status_effect/necropolis_curse)
+	var/datum/status_effect/necropolis_curse/curse = has_status_effect(/datum/status_effect/necropolis_curse)
 	if(!set_curse)
-		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
-	if(QDELETED(C))
+		set_curse = pick(CURSE_BLINDING, CURSE_WASTING, CURSE_GRASPING)
+	if(QDELETED(curse))
 		apply_status_effect(/datum/status_effect/necropolis_curse, set_curse)
 	else
-		C.apply_curse(set_curse)
-		C.duration += 3000 //time added by additional curses
-	return C
+		curse.apply_curse(set_curse)
+		curse.duration += 5 MINUTES //time added by additional curses
+	return curse
 
+/// A curse that does up to three nasty things to you
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
 	duration = 10 MINUTES //you're cursed for 10 minutes have fun
 	tick_interval = 5 SECONDS
 	alert_type = null
+	/// Which nasty things are we doing? [CURSE_BLINDING / CURSE_WASTING / CURSE_GRASPING]]
 	var/curse_flags = NONE
-	var/effect_last_activation = 0
-	var/effect_cooldown = 100
-	var/obj/effect/temp_visual/curse/wasting_effect = new
+	/// When should we next throw hands?
+	var/effect_next_activation = 0
+	/// How long between throwing hands?
+	var/effect_cooldown = 10 SECONDS
+	/// Visuals for the wasting effect
+	var/obj/effect/temp_visual/curse/wasting_effect
 
 /datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
 	. = ..()
@@ -500,6 +506,8 @@
 	curse_flags |= set_curse
 	if(curse_flags & CURSE_BLINDING)
 		owner.overlay_fullscreen("curse", /atom/movable/screen/fullscreen/curse, 1)
+	if(curse_flags & CURSE_WASTING && !wasting_effect)
+		wasting_effect = new
 
 /datum/status_effect/necropolis_curse/proc/remove_curse(remove_curse)
 	if(remove_curse & CURSE_BLINDING)
@@ -509,6 +517,7 @@
 /datum/status_effect/necropolis_curse/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		return
+
 	if(curse_flags & CURSE_WASTING)
 		wasting_effect.forceMove(owner.loc)
 		wasting_effect.setDir(owner.dir)
@@ -517,31 +526,12 @@
 		animate(wasting_effect, alpha = 0, time = 32)
 		playsound(owner, 'sound/effects/curse/curse5.ogg', 20, TRUE, -1)
 		owner.adjustFireLoss(0.75)
-	if(effect_last_activation <= world.time)
-		effect_last_activation = world.time + effect_cooldown
-		if(curse_flags & CURSE_SPAWNING)
-			var/turf/spawn_turf
-			var/sanity = 10
-			while(!spawn_turf && sanity)
-				spawn_turf = locate(owner.x + pick(rand(10, 15), rand(-10, -15)), owner.y + pick(rand(10, 15), rand(-10, -15)), owner.z)
-				sanity--
-			if(spawn_turf)
-				var/mob/living/simple_animal/hostile/asteroid/curseblob/C = new (spawn_turf)
-				C.set_target = owner
-				C.GiveTarget()
-		if(curse_flags & CURSE_GRASPING)
-			var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
-			var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
-			if(spawn_turf)
-				grasp(spawn_turf)
 
-/datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
-	set waitfor = FALSE
-	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
-	playsound(spawn_turf, 'sound/effects/curse/curse2.ogg', 80, TRUE, -1)
-	var/obj/projectile/curse_hand/C = new (spawn_turf)
-	C.aim_projectile(owner, spawn_turf)
-	C.fire()
+	if(curse_flags & CURSE_GRASPING)
+		if(effect_next_activation > world.time)
+			return
+		effect_next_activation = world.time + effect_cooldown
+		fire_curse_hand(owner, range = 5, projectile_type = /obj/projectile/curse_hand) // This one stuns people
 
 /obj/effect/temp_visual/curse
 	icon_state = "curse"

@@ -109,15 +109,15 @@
 	bloodiest_wound.adjust_blood_flow(-0.5 * seconds_between_ticks)
 
 /// Torment the target with a frightening hand
-/proc/fire_curse_hand(mob/living/carbon/victim, turf/forced_turf)
+/proc/fire_curse_hand(mob/living/carbon/victim, turf/forced_turf, range = 8, projectile_type = /obj/projectile/curse_hand/hel)
 	var/grab_dir = turn(victim.dir, pick(-90, 90, 180, 180)) // Not in front, favour behind
-	var/turf/spawn_turf = get_ranged_target_turf(victim, grab_dir, 8)
+	var/turf/spawn_turf = get_ranged_target_turf(victim, grab_dir, range)
 	spawn_turf = forced_turf ? forced_turf : spawn_turf
 	if (isnull(spawn_turf))
 		return
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, victim.dir)
 	playsound(spawn_turf, 'sound/effects/curse/curse2.ogg', 80, TRUE, -1)
-	var/obj/projectile/curse_hand/hel/hand = new (spawn_turf)
+	var/obj/projectile/hand = new projectile_type(spawn_turf)
 	hand.aim_projectile(victim, spawn_turf)
 	if (QDELETED(hand)) // safety check if above fails - above has a stack trace if it does fail
 		return
