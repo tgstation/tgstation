@@ -437,8 +437,7 @@
 
 /obj/item/reagent_containers/condiment/pack/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_add), TRUE)
-	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_del), TRUE)
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_update), TRUE)
 
 /obj/item/reagent_containers/condiment/pack/update_icon()
 	SHOULD_CALL_PARENT(FALSE)
@@ -465,25 +464,22 @@
 	return ..()
 
 /// Handles reagents getting added to the condiment pack.
-/obj/item/reagent_containers/condiment/pack/proc/on_reagent_add(datum/reagents/reagents)
+/obj/item/reagent_containers/condiment/pack/proc/on_reagent_update(datum/reagents/reagents)
 	SIGNAL_HANDLER
 
+	if(!reagents.total_volume)
+		icon_state = "condi_empty"
+		desc = "A small condiment pack. It is empty."
+		return
 	var/datum/reagent/main_reagent = reagents.get_master_reagent()
 
-	var/main_reagent_type = main_reagent?.type
-	if(main_reagent_type in possible_states)
-		var/list/temp_list = possible_states[main_reagent_type]
+	var/list/temp_list = possible_states[main_reagent.type]
+	if(length(temp_list))
 		icon_state = temp_list[1]
 		desc = temp_list[3]
 	else
 		icon_state = "condi_mixed"
 		desc = "A small condiment pack. The label says it contains [originalname]"
-
-/// Handles reagents getting removed from the condiment pack.
-/obj/item/reagent_containers/condiment/pack/proc/on_reagent_del(datum/reagents/reagents)
-	SIGNAL_HANDLER
-	icon_state = "condi_empty"
-	desc = "A small condiment pack. It is empty."
 
 //Ketchup
 /obj/item/reagent_containers/condiment/pack/ketchup

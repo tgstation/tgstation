@@ -63,12 +63,13 @@
 	chamber.emptying = TRUE //If we move this up, it'll instantly get turned off since any reaction always sets the reagent_total to zero. Other option is make the reaction update
 	//everything for every chemical removed, wich isn't a good option either.
 	chamber.on_reagent_change(reagents) //We need to check it now, because some reactions leave nothing left.
+	if(chamber.emptying) //if we are still emptying then keep checking for reagents until we are emptied out
+		chamber.RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, TYPE_PROC_REF(/obj/machinery/plumbing/reaction_chamber, on_reagent_change))
 
 ///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal acid container
 /datum/component/plumbing/acidic_input
 	demand_connects = WEST
 	demand_color = COLOR_YELLOW
-
 	ducting_layer = SECOND_DUCT_LAYER
 
 /datum/component/plumbing/acidic_input/send_request(dir)

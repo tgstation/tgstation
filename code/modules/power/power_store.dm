@@ -103,14 +103,7 @@
 
 /obj/item/stock_parts/power_store/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
-	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
-
-/// Handles properly detaching signal hooks.
-/obj/item/stock_parts/power_store/proc/on_reagents_del(datum/reagents/reagents)
-	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_QDELETING))
-	return NONE
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
 /obj/item/stock_parts/power_store/update_overlays()
 	. = ..()
@@ -205,11 +198,10 @@
 	else if(!isnull(charge_light_type))
 		. += "The charge meter reads [CEILING(percent(), 0.1)]%." //so it doesn't say 0% charge when the overlay indicates it still has charge
 
-/obj/item/stock_parts/power_store/proc/on_reagent_change(datum/reagents/holder, ...)
+/obj/item/stock_parts/power_store/proc/on_reagent_change(datum/reagents/holder)
 	SIGNAL_HANDLER
-	rigged = (corrupted || holder.has_reagent(/datum/reagent/toxin/plasma, 5)) ? TRUE : FALSE //has_reagent returns the reagent datum
-	return NONE
 
+	rigged = corrupted || !!holder.has_reagent(/datum/reagent/toxin/plasma, 5) //has_reagent returns the reagent datum
 
 /obj/item/stock_parts/power_store/proc/explode()
 	if(!charge)

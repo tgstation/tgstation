@@ -11,7 +11,7 @@
 	///set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/erupting_state = null
 	///what chem do we produce?
-	var/reagent_id = /datum/reagent/fuel/oil
+	var/datum/reagent/reagent_id = /datum/reagent/fuel/oil
 	///how much reagents we add every process (2 seconds)
 	var/potency = 2
 	///maximum volume
@@ -34,7 +34,7 @@
 	create_reagents(max_volume, DRAINABLE)
 	reagents.add_reagent(reagent_id, max_volume)
 
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), PROC_REF(start_chemming))
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(start_chemming))
 
 	if(erupting_state)
 		icon_state = erupting_state
@@ -43,20 +43,24 @@
 		I.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(I)
 
-///start making those CHHHHHEEEEEEMS. Called whenever chems are removed, it's fine because START_PROCESSING checks if we arent already processing
+///start making those CHHHHHEEEEEEMS. Called whenever chems are removed
 /obj/structure/geyser/proc/start_chemming()
-	START_PROCESSING(SSplumbing, src) //Its main function is to be plumbed, so use SSplumbing
+	SIGNAL_HANDLER
 
-///We're full so stop processing
-/obj/structure/geyser/proc/stop_chemming()
-	STOP_PROCESSING(SSplumbing, src)
+	UnregisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED)
+
+	START_PROCESSING(SSplumbing, src) //Its main function is to be plumbed, so use SSplumbing
 
 ///Add reagents until we are full
 /obj/structure/geyser/process()
+	//create more
 	if(reagents.total_volume <= reagents.maximum_volume)
 		reagents.add_reagent(reagent_id, potency)
-	else
-		stop_chemming() //we're full
+		return
+
+	//we're full
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(start_chemming))
+	return PROCESS_KILL
 
 /obj/structure/geyser/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
@@ -109,9 +113,10 @@
 
 /obj/structure/geyser/random/Initialize(mapload)
 	reagent_id = get_random_reagent_id()
-	var/datum/reagent/Random_Reagent = reagent_id
-	true_name = "[initial(Random_Reagent.name)] geyser"
-	discovery_message = "It's a [initial(Random_Reagent.name)] geyser! How does any of this even work?" //it doesnt
+
+	true_name = "[initial(reagent_id.name)] geyser"
+
+	discovery_message = "It's a [true_name]! How does any of this even work?" //it doesnt
 
 	return ..()
 

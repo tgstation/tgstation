@@ -780,17 +780,10 @@
 	if(!istype(holder?.my_atom, /obj/item/food))
 		return
 	ADD_TRAIT(holder.my_atom, TRAIT_GREAT_QUALITY_BAIT, type)
-	RegisterSignal(holder, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_clear))
-	RegisterSignal(holder, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_delete))
 
-/datum/reagent/drug/kronkaine/proc/on_reagents_clear(datum/reagents/reagents)
-	SIGNAL_HANDLER
+/datum/reagent/drug/kronkaine/Destroy()
 	REMOVE_TRAIT(holder.my_atom, TRAIT_GREAT_QUALITY_BAIT, type)
-
-/datum/reagent/drug/kronkaine/proc/on_reagent_delete(datum/reagents/reagents, datum/reagent/deleted_reagent)
-	SIGNAL_HANDLER
-	if(deleted_reagent == src)
-		REMOVE_TRAIT(holder.my_atom, TRAIT_GREAT_QUALITY_BAIT, type)
+	return ..()
 
 /datum/reagent/drug/kronkaine/on_mob_metabolize(mob/living/kronkaine_fiend)
 	. = ..()
