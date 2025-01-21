@@ -5,7 +5,7 @@
 	/// If we can try to closed turfs or not
 	var/attack_closed_turf = FALSE
 	/// If we want it to attack ALL OBJECTS
-	var/attack_objs = FALSE
+	var/attack_obj = FALSE
 
 ///Returns true or false depending on if the target can be attacked by the mob
 /datum/targeting_strategy/basic/not_friends/can_attack(mob/living/living_mob, atom/target, vision_range)
