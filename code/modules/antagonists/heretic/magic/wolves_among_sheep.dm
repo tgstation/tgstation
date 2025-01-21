@@ -7,8 +7,8 @@
 	name = "Wolves among Sheep"
 	desc = "Alters the fabric of reality, conjuring a magical arena unpassable to outsiders, \
 		all participants are trapped and immune to any form of crowd control or enviromental hazards; \
-		trapped participants are granted a Blade and are unable to leave or jaunt until they score a critical hit. \"
-	background_icon_state = "bg_rose"
+		trapped participants are granted a Blade and are unable to leave or jaunt until they score a critical hit."
+	background_icon_state = "bg_heretic"
 	overlay_icon_state = null
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "among_sheep"
