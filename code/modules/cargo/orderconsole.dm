@@ -162,25 +162,53 @@
 	var/list/data = list()
 	data["max_order"] = CARGO_MAX_ORDER
 	data["supplies"] = list()
-	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!data["supplies"][P.group])
-			data["supplies"][P.group] = list(
-				"name" = P.group,
-				"packs" = list()
+
+	for(var/pack_id in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		if(!data["supplies"][pack.group])
+			data["supplies"][pack.group] = list(
+				"name" = pack.group,
+				"packs" = get_packs_data(pack.group),
 			)
-		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only)
-			continue
-		data["supplies"][P.group]["packs"] += list(list(
-			"name" = P.name,
-			"cost" = P.get_cost(),
-			"id" = pack,
-			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
-			"goody" = P.goody,
-			"access" = P.access,
-			"contraband" = P.contraband,
-		))
+
 	return data
+
+/obj/machinery/computer/cargo/proc/get_packs_data(group)
+	var/list/packs = list()
+	for(var/pack_id in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		if(pack.group != group)
+			continue
+
+		if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || (pack.special && !pack.special_enabled) || pack.drop_pod_only)
+			continue
+
+		var/obj/structure/closet/crate/crate = pack.crate_type
+		packs += list(list(
+			"name" = pack.name,
+			"cost" = pack.get_cost(),
+			"id" = pack_id,
+			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
+			"crate_icon" = crate.icon,
+			"crate_icon_state" = crate.icon_state,
+			"goody" = pack.goody,
+			"access" = pack.access,
+			"contraband" = pack.contraband,
+			"contains" = get_pack_contains(pack),
+		))
+
+	return packs
+
+/obj/machinery/computer/cargo/proc/get_pack_contains(var/datum/supply_pack/pack)
+	var/list/contains = list()
+	for(var/obj/item/item as anything in pack.contains)
+		contains += list(list(
+			"name" = item.name,
+			"icon" = item.icon,
+			"icon_state" = item.icon_state,
+			"amount" = pack.contains[item],
+		))
+	return contains
 
 /**
  * adds an supply pack to the checkout cart

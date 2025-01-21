@@ -28,9 +28,7 @@ export function Cargo(props) {
 
 export function CargoContent(props) {
   const { data } = useBackend<CargoData>();
-
   const { cart = [], requests = [], requestonly } = data;
-
   const [tab, setTab] = useSharedState('cargotab', TAB.Catalog);
 
   let amount = 0;
@@ -44,7 +42,7 @@ export function CargoContent(props) {
         <CargoStatus />
       </Stack.Item>
       <Stack.Item>
-        <Tabs fluid>
+        <Tabs fluid textAlign="center">
           <Tabs.Tab
             icon="list"
             selected={tab === TAB.Catalog}
@@ -71,6 +69,7 @@ export function CargoContent(props) {
                 Checkout ({amount})
               </Tabs.Tab>
               <Tabs.Tab
+                style={{ flexGrow: 0 }}
                 icon="question"
                 selected={tab === TAB.Help}
                 onClick={() => setTab(TAB.Help)}
