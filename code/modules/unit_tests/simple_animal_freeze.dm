@@ -63,7 +63,6 @@
 		/mob/living/simple_animal/hostile/retaliate,
 		/mob/living/simple_animal/hostile/retaliate/goose,
 		/mob/living/simple_animal/hostile/retaliate/goose/vomit,
-		/mob/living/simple_animal/hostile/vatbeast,
 		/mob/living/simple_animal/hostile/zombie,
 		/mob/living/simple_animal/soulscythe,
 		// DO NOT ADD NEW ENTRIES TO THIS LIST
