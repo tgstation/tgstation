@@ -4,6 +4,7 @@ import {
   Button,
   ColorBox,
   Divider,
+  Icon,
   Input,
   Section,
   Stack,
@@ -16,6 +17,7 @@ import {
   removeHighlightSetting,
   updateHighlightSetting,
 } from './actions';
+import { WARN_AFTER_HIGHLIGHT_AMT } from './constants';
 import {
   selectHighlightSettingById,
   selectHighlightSettings,
@@ -36,15 +38,24 @@ export function TextHighlightSettings(props) {
           />
         ))}
         <Stack.Item>
-          <Button
-            color="transparent"
-            icon="plus"
-            onClick={() => {
-              dispatch(addHighlightSetting());
-            }}
-          >
-            Add Highlight Setting
-          </Button>
+          <Box>
+            <Button
+              color="transparent"
+              icon="plus"
+              onClick={() => {
+                dispatch(addHighlightSetting());
+              }}
+            >
+              Add Highlight Setting
+            </Button>
+            {highlightSettings.length >= WARN_AFTER_HIGHLIGHT_AMT && (
+              <Box inline fontSize="0.9em" ml={1} color="red">
+                <Icon mr={1} name="triangle-exclamation" />
+                Large amounts of highlights can potentially cause performance
+                issues!
+              </Box>
+            )}
+          </Box>
         </Stack.Item>
       </Stack>
       <Divider />

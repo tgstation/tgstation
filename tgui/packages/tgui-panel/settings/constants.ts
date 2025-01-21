@@ -39,3 +39,5 @@ export const FONTS = [
   'Courier New',
   'Lucida Console',
 ];
+
+export const WARN_AFTER_HIGHLIGHT_AMT = 10;
