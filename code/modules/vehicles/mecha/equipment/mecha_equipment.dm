@@ -18,6 +18,8 @@
 	var/can_be_triggered = FALSE
 	///Whether the module is currently active
 	var/active = TRUE
+	///Can we stack multiple types of the same item?
+	var/unstackable = FALSE
 	///Label used in the ui next to the Activate/Enable/Disable buttons
 	var/active_label = "Status"
 	///Chassis power cell quantity used on activation
@@ -157,6 +159,13 @@
 				to_chat(user, span_warning("\The [mech]'s left arm is full![mech.equip_by_category[MECHA_R_ARM] || !mech.max_equip_by_category[MECHA_R_ARM] ? "" : " Try right arm!"]"))
 				return FALSE
 		return TRUE
+	if(unstackable)
+		var/list/obj/item/mecha_parts/mecha_equipment/contents = mech.equip_by_category[equipment_slot]
+		for(var/obj/equipment as anything in contents)
+			if(src.type == equipment.type)
+				to_chat(user, span_warning("You can't stack more of this item ontop itself!"))
+				return FALSE
+
 	if(length(mech.equip_by_category[equipment_slot]) == mech.max_equip_by_category[equipment_slot])
 		to_chat(user, span_warning("This equipment slot is already full!"))
 		return FALSE
