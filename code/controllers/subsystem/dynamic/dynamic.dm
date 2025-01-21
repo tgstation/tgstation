@@ -371,9 +371,12 @@ SUBSYSTEM_DEF(dynamic)
 /datum/controller/subsystem/dynamic/proc/generate_advisory_level()
 	var/advisory_string = ""
 	switch(round(threat_level))
-		if(0 to 80)
+		if(0 to 65)
 			advisory_string += "Advisory Level: <b>Yellow Star</b></center><BR>"
 			advisory_string += "Your sector's advisory level is Yellow Star. Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. We advise a heightened level of security alongside maintaining vigilance against potential threats."
+		if(66 to 79)
+			advisory_string += "Advisory Level: <b>Red Star</b></center><BR>"
+			advisory_string += "Your sector's advisory level is Red Star. The Department of Intelligence has decrypted Cybersun communications suggesting a high likelihood of attacks on Nanotrasen assets within the Spinward Sector. Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
 		if(80 to 99)
 			advisory_string += "Advisory Level: <b>Black Orbit</b></center><BR>"
 			advisory_string += "Your sector's advisory level is Black Orbit. Your sector's local communications network is currently undergoing a blackout, and we are therefore unable to accurately judge enemy movements within the region. However, information passed to us by GDI suggests a high amount of enemy activity in the sector, indicative of an impending attack. Remain on high alert and vigilant against any other potential threats."
