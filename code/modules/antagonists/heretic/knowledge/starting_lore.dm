@@ -376,14 +376,16 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	return .
 
 /**
- * Refuge of the Bookworm
+ * Warren King's Welcome
  * Ritual available at the start. So that heretics can easily gain access to maintenance airlocks without having to rely on a HoP or having to off some poor assistant.
  * Gives access to solars since those doors are especially useful to get in or out of space.
  */
 /datum/heretic_knowledge/bookworm
-	name = "Refuge of the Bookworm"
+	name = "Warren King's Welcome"
 	desc = "Allows you to transmute 5 wires and a piece of paper to infuse any ID access to the maintenace and solars."
-	gain_text = "Door stuck!"
+	gain_text = "Gnawed into vicious-stained fingerbones, my grim invitation snaps my nauseous and clouded mind towards the heavy-set door. \
+	Slowly, the light dances between a crawling darkness, blanketing the fetid promenade with infinite machinations. \
+	But the King will soon take his pound of flesh. Even here, the taxman takes their cut. For there are a thousands mouths to feed."
 	required_atoms = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/paper = 1,

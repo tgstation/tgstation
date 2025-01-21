@@ -5,7 +5,9 @@
  */
 /datum/action/cooldown/spell/wolves_among_sheep
 	name = "Wolves among Sheep"
-	desc = "Locks down an area, making it a death battle. You gain more power the more heathens are nearby."
+	desc = "Alters the fabric of reality, conjuring a magical arena unpassable to outsiders, \
+		all participants are trapped and immune to any form of crowd control or enviromental hazards; \
+		trapped participants are granted a Blade and are unable to leave or jaunt until they score a critical hit. \"
 	background_icon_state = "bg_rose"
 	overlay_icon_state = null
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'

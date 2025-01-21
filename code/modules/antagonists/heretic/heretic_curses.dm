@@ -220,7 +220,7 @@
 
 /datum/heretic_knowledge/curse/transmutation/curse(mob/living/carbon/human/chosen_mob, obj/item/codex_cicatrix/morbus/cursing_book)
 	if(chosen_mob.dna.species == chosen_species)
-		to_chat(chosen_mob, span_warning("You feel your body morph into... itself?"))
+		to_chat(chosen_mob, span_warning("You feel your body morb into... itself?"))
 		return
 	chosen_mob.apply_status_effect(/datum/status_effect/race_swap, chosen_species)
 	cursing_book.transmuted_victims += chosen_mob
