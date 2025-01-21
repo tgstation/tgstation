@@ -1,0 +1,3 @@
+/mob/living/simple_animal/hostile/zombie{health=60;name="Rotting Carcass";outfit=/datum/outfit/corpse_assistant} : /mob/living/basic/zombie/rotten/assistant
+/mob/living/simple_animal/hostile/zombie{health=60;name="Rotting Carcass"} : /mob/living/basic/zombie/rotten
+/mob/living/simple_animal/hostile/zombie : /mob/living/basic/zombie{@OLD}
