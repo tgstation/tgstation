@@ -239,6 +239,8 @@
 	var/current_skin
 	/// List of options to reskin.
 	var/list/unique_reskin
+	/// If reskins change base icon state as well
+	var/unique_reskin_changes_base_icon_state = FALSE
 	/// If reskins change inhands as well
 	var/unique_reskin_changes_inhand = FALSE
 	/// Do we apply a click cooldown when resisting this object if it is restraining them?
