@@ -16,7 +16,6 @@ import {
   removeHighlightSetting,
   updateHighlightSetting,
 } from './actions';
-import { MAX_HIGHLIGHT_SETTINGS } from './constants';
 import {
   selectHighlightSettingById,
   selectHighlightSettings,
@@ -36,19 +35,17 @@ export function TextHighlightSettings(props) {
             mb={i + 1 === highlightSettings.length ? 0 : '10px'}
           />
         ))}
-        {highlightSettings.length < MAX_HIGHLIGHT_SETTINGS && (
-          <Stack.Item>
-            <Button
-              color="transparent"
-              icon="plus"
-              onClick={() => {
-                dispatch(addHighlightSetting());
-              }}
-            >
-              Add Highlight Setting
-            </Button>
-          </Stack.Item>
-        )}
+        <Stack.Item>
+          <Button
+            color="transparent"
+            icon="plus"
+            onClick={() => {
+              dispatch(addHighlightSetting());
+            }}
+          >
+            Add Highlight Setting
+          </Button>
+        </Stack.Item>
       </Stack>
       <Divider />
       <Box>

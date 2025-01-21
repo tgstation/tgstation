@@ -39,5 +39,3 @@ export const FONTS = [
   'Courier New',
   'Lucida Console',
 ];
-
-export const MAX_HIGHLIGHT_SETTINGS = 10;
