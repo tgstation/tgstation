@@ -28,7 +28,7 @@
 @each $channel, $color in colors.$channel-map {
   $darkened: color.adjust($color, $lightness: -20%, $space: hsl);
 
-  .button-#{$channel} {
+  .old-button-#{$channel} {
     border-color: color.adjust($color, $lightness: -10%, $space: hsl);
     color: $color;
     &:hover {
@@ -37,15 +37,15 @@
     }
   }
 
-  .dragzone-#{$channel} {
+  .old-dragzone-#{$channel} {
     border-color: $darkened;
   }
 
-  .textarea-#{$channel} {
+  .old-textarea-#{$channel} {
     color: $color;
   }
 
-  .window-#{$channel} {
+  .old-window-#{$channel} {
     &:after {
       animation: gradient 10s linear infinite;
       background: linear-gradient(

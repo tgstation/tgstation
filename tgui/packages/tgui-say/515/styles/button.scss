@@ -1,7 +1,7 @@
 @use 'sass:color';
 @use './colors.scss';
 
-.button {
+.old-button {
   align-items: center;
   background-color: colors.$button;
   border-radius: 0.3rem;
@@ -23,7 +23,7 @@
   }
 }
 
-.button-lightMode {
+.old-button-lightMode {
   background-color: colors.$lightBorder;
   border: none;
   color: black;

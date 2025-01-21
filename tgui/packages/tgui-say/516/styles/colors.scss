@@ -1,0 +1,43 @@
+@use 'sass:map';
+
+$background: hsl(0, 0%, 7.5%);
+$button: hsl(0, 0%, 12.2%);
+$lightMode: hsl(0, 0%, 100%);
+$lightBorder: hsl(0, 0%, 73.3%);
+$lightHover: hsl(0, 0%, 91.8%);
+$scrollbar-color-multiplier: 1 !default;
+
+$_channel_map: (
+  'Admin': hsl(300, 100%, 86.7%),
+  'AI': hsl(332.2, 59.6%, 60.2%),
+  'CCom': hsl(197, 62.6%, 39.8%),
+  'Cling': hsl(86.7, 56.6%, 28%),
+  'Cmd': hsl(53, 97.6%, 50%),
+  'Engi': hsl(17, 87.8%, 61.4%),
+  'Hive': hsl(300, 17.7%, 44.3%),
+  'io': hsl(209.6, 100%, 55.9%),
+  'Me': hsl(227, 63.5%, 60.2%),
+  'Med': hsl(202, 83.6%, 64.1%),
+  'OOC': hsl(47.9, 100%, 40%),
+  'Ent': hsl(176.1, 20%, 45.1%),
+  'Radio': hsl(132.8, 74.4%, 45.9%),
+  'Say': hsl(213.6, 37.9%, 74.1%),
+  'Sci': hsl(271.6, 91.7%, 76.5%),
+  'Sec': hsl(0, 71.2%, 53.7%),
+  'Supp': hsl(33.7, 44.9%, 49.8%),
+  'Svc': hsl(88.1, 60.6%, 40.8%),
+  'Synd': hsl(359.1, 31.8%, 42.5%),
+);
+
+$channel_keys: map.keys($_channel_map) !default;
+
+$channel-map: ();
+
+@each $channel in $channel_keys {
+  $channel-map: map.merge(
+    $channel-map,
+    (
+      $channel: map.get($_channel_map, $channel),
+    )
+  );
+}
