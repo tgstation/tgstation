@@ -10,6 +10,7 @@
 	max_integrity = 100
 	recipe_type = /datum/crafting_recipe/shutters
 	animation_sound = 'sound/machines/shutter.ogg'
+	show_nav_computer_icon = FALSE
 
 /obj/machinery/door/poddoor/shutters/animation_length(animation)
 	switch(animation)

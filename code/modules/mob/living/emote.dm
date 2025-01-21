@@ -262,12 +262,20 @@
 	if(HAS_TRAIT(user, TRAIT_KISS_OF_DEATH))
 		kiss_type = /obj/item/hand_item/kisser/death
 
+	var/datum/action/cooldown/ink_spit/ink_action = locate() in user.actions
+	if(ink_action?.IsAvailable())
+		kiss_type = /obj/item/hand_item/kisser/ink
+		ink_action.StartCooldown()
+	else
+		ink_action = null
+
 	var/obj/item/kiss_blower = new kiss_type(user)
 	if(user.put_in_hands(kiss_blower))
 		to_chat(user, span_notice("You ready your kiss-blowing hand."))
 	else
 		qdel(kiss_blower)
 		to_chat(user, span_warning("You're incapable of blowing a kiss in your current state."))
+		ink_action?.ResetCooldown()
 
 /datum/emote/living/laugh
 	key = "laugh"
@@ -303,19 +311,43 @@
 	key_third_person = "points"
 	message = "points."
 	message_param = "points at %t."
-	hands_use_check = TRUE
+	cooldown = 1 SECONDS
+	// don't put hands use check here, everything is handled in run_emote
 
 /datum/emote/living/point/run_emote(mob/user, params, type_override, intentional)
 	message_param = initial(message_param) // reset
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.usable_hands == 0)
-			if(H.usable_legs != 0)
-				message_param = "tries to point at %t with a leg, [span_userdanger("falling down")] in the process!"
-				H.Paralyze(20)
+	if(iscarbon(user))
+		var/mob/living/carbon/our_carbon = user
+		if(our_carbon.usable_hands <= 0 || user.incapacitated & INCAPABLE_RESTRAINTS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+			if(our_carbon.usable_legs > 0)
+				var/one_leg = FALSE
+				var/has_shoes = our_carbon.get_item_by_slot(ITEM_SLOT_FEET)
+				if(our_carbon.usable_legs == 1)
+					one_leg = TRUE
+				var/success_prob = 65
+				if(HAS_TRAIT(our_carbon, TRAIT_FREERUNNING))
+					success_prob += 35
+				if(one_leg)
+					success_prob -= 40
+				if(prob(success_prob))
+					message_param = "[one_leg ? "jumps into the air and " : ""]points at %t with their [has_shoes ? "leg" : "toes"]!"
+				else
+					message_param = "[one_leg ? "jumps into the air and " : ""]tries to point at %t with their [has_shoes ? "leg" : "toes"], falling down in the process!"
+					our_carbon.Paralyze(2 SECONDS)
+				TIMER_COOLDOWN_START(user, "point_verb_emote_cooldown", 1 SECONDS)
 			else
-				message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+				if(our_carbon.get_organ_slot(ORGAN_SLOT_EYES))
+					message_param = "gives a meaningful glance at %t!"
+					TIMER_COOLDOWN_START(src, "point_verb_emote_cooldown", 1.5 SECONDS)
+				else
+					if(our_carbon.get_organ_slot(ORGAN_SLOT_TONGUE))
+						message_param = "motions their tongue towards %t!"
+						TIMER_COOLDOWN_START(src, "point_verb_emote_cooldown", 2 SECONDS)
+					else
+						message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
+						our_carbon.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+						playsound(user, 'sound/effects/glass/glassbash.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+						TIMER_COOLDOWN_START(src, "point_verb_emote_cooldown", 2.5 SECONDS)
 	return ..()
 
 /datum/emote/living/sneeze
@@ -647,21 +679,6 @@
 		to_chat(user, span_boldwarning("You cannot send IC messages (muted)."))
 		return FALSE
 
-	var/our_message = params ? params : get_custom_emote_from_user()
-
-	if(!emote_is_valid(user, our_message))
-		return FALSE
-
-	if(!params)
-		var/user_emote_type = get_custom_emote_type_from_user()
-
-		if(!user_emote_type)
-			return FALSE
-
-		emote_type = user_emote_type
-
-	message = our_message
-
 /datum/emote/living/custom/proc/emote_is_valid(mob/user, input)
 	// We're assuming clientless mobs custom emoting is something codebase-driven and not player-driven.
 	// If players ever get the ability to force clientless mobs to emote, we'd need to reconsider this.
@@ -719,9 +736,25 @@
 			return FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null, intentional = FALSE)
-	if(params && type_override)
+	var/our_message = params ? params : get_custom_emote_from_user()
+
+	if(!emote_is_valid(user, our_message))
+		return FALSE
+
+	if(type_override)
 		emote_type = type_override
+
+	if(!params)
+		var/user_emote_type = get_custom_emote_type_from_user()
+
+		if(!user_emote_type)
+			return FALSE
+
+		emote_type = user_emote_type
+
+	message = our_message
 	. = ..()
+
 	///Reset the message and emote type after it's run.
 	message = null
 	emote_type = EMOTE_VISIBLE

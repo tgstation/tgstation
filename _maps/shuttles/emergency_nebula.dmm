@@ -864,6 +864,7 @@
 	name = "Emergency Recovery Airlock"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "sI" = (
@@ -2447,7 +2448,7 @@
 "XV" = (
 /obj/structure/table/reinforced,
 /obj/item/radio/intercom/directional/east,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/machinery/defibrillator_mount/directional/south,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,

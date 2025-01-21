@@ -80,3 +80,13 @@
 
 	var/errored = FALSE
 	var/error
+
+/datum/http_response/serialize_list(list/options, list/semvers)
+	. = ..()
+	.["status_code"] = status_code
+	.["body"] = body
+	.["headers"] = headers
+
+	.["errored"] = errored
+	.["error"] = error
+	return .

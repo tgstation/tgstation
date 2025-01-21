@@ -108,6 +108,7 @@
 
 /obj/item/storage/medkit/emergency
 	icon_state = "medbriefcase"
+	inhand_icon_state = "medkit-emergency"
 	name = "emergency medkit"
 	desc = "A very simple first aid kit meant to secure and stabilize serious wounds for later treatment."
 
@@ -127,7 +128,7 @@
 /obj/item/storage/medkit/surgery
 	name = "surgical medkit"
 	icon_state = "medkit_surgery"
-	inhand_icon_state = "medkit"
+	inhand_icon_state = "medkit-surgical"
 	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment."
 
 /obj/item/storage/medkit/surgery/Initialize(mapload)
@@ -275,7 +276,7 @@
 	name = "advanced first aid kit"
 	desc = "An advanced kit to help deal with advanced wounds."
 	icon_state = "medkit_advanced"
-	inhand_icon_state = "medkit-rad"
+	inhand_icon_state = "medkit-advanced"
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	damagetype_healed = HEAL_ALL_DAMAGE
 
@@ -294,8 +295,8 @@
 
 /obj/item/storage/medkit/tactical_lite
 	name = "combat first aid kit"
-	icon_state = "medkit_tactical"
-	inhand_icon_state = "medkit-tactical"
+	icon_state = "medkit_tactical_lite"
+	inhand_icon_state = "medkit-tactical-lite"
 	damagetype_healed = HEAL_ALL_DAMAGE
 
 /obj/item/storage/medkit/tactical_lite/get_medbot_skin()
@@ -350,6 +351,8 @@
 /obj/item/storage/medkit/tactical/premium
 	name = "premium combat medical kit"
 	desc = "May or may not contain traces of lead."
+	icon_state = "medkit_tactical_premium"
+	inhand_icon_state = "medkit-tactical-premium"
 	grind_results = list(/datum/reagent/lead = 10)
 
 /obj/item/storage/medkit/tactical/premium/Initialize(mapload)
@@ -803,17 +806,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/storage/test_tube_rack/Initialize(mapload)
-	. = ..()
-	atom_storage.allow_quick_gather = TRUE
-	atom_storage.max_slots = 8
-	atom_storage.screen_max_columns = 4
-	atom_storage.screen_max_rows = 2
-	atom_storage.set_holdable(/obj/item/reagent_containers/cup/tube)
-
-/obj/item/storage/test_tube_rack/attack_self(mob/user)
-	emptyStorage()
+	storage_type = /datum/storage/test_tube_rack
 
 /obj/item/storage/test_tube_rack/update_icon_state()
 	icon_state = "[base_icon_state][contents.len > 0 ? contents.len : null]"
@@ -822,4 +815,5 @@
 /obj/item/storage/test_tube_rack/full/PopulateContents()
 	for(var/i in 1 to atom_storage.max_slots)
 		new /obj/item/reagent_containers/cup/tube(src)
+	update_appearance(UPDATE_ICON_STATE)
 

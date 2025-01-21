@@ -176,10 +176,19 @@
 		if(!target)
 			computer.target_ref = null
 			continue
-		var/area/computer_area = get_area(target)
-		if(!computer_area || (computer_area.area_flags & NOTELEPORT))
+		if(!check_teleport_valid(user, get_turf(computer), TELEPORT_CHANNEL_BLUESPACE))
 			continue
-		if(computer.power_station?.teleporter_hub && computer.power_station.engaged)
+
+		if(!computer.power_station || !computer.power_station.teleporter_hub)
+			continue
+
+		if((computer.power_station.machine_stat & (NOPOWER|BROKEN|MAINT)) || computer.power_station.panel_open)
+			continue
+
+		if((computer.power_station.teleporter_hub.machine_stat & (NOPOWER|BROKEN|MAINT)) || computer.power_station.teleporter_hub.panel_open)
+			continue
+
+		if(computer.power_station.engaged)
 			locations["[get_area(target)] (Active)"] = computer
 		else
 			locations["[get_area(target)] (Inactive)"] = computer
@@ -225,8 +234,7 @@
 				continue //putting them at the edge is dumb
 			if(dangerous_turf.y > world.maxy - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.y < PORTAL_DANGEROUS_EDGE_LIMIT)
 				continue
-			var/area/dangerous_area = dangerous_turf.loc
-			if(dangerous_area.area_flags & NOTELEPORT)
+			if(!check_teleport_valid(src, teleport_location))
 				continue
 			dangerous_turfs += dangerous_turf
 
@@ -242,8 +250,7 @@
 		to_chat(user, span_notice("[src] vibrates, then stops. Maybe you should try something else."))
 		return
 
-	var/area/teleport_area = get_area(teleport_target)
-	if (teleport_area.area_flags & NOTELEPORT)
+	if(!check_teleport_valid(src, teleport_target))
 		to_chat(user, span_notice("[src] is malfunctioning."))
 		return
 
@@ -278,8 +285,7 @@
 ///Is, for some reason, separate from the teleport target's check in try_create_portal_to()
 /obj/item/hand_tele/proc/can_teleport_notifies(mob/user)
 	var/turf/current_location = get_turf(user)
-	var/area/current_area = current_location.loc
-	if (!current_location || (current_area.area_flags & NOTELEPORT) || is_away_level(current_location.z) || !isturf(user.loc))
+	if (!current_location || !check_teleport_valid(src, current_location) || is_away_level(current_location.z) || !isturf(user.loc))
 		to_chat(user, span_notice("[src] is malfunctioning."))
 		return FALSE
 
@@ -445,10 +451,9 @@
 		playsound(destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/syndicate_teleporter/proc/malfunctioning(mob/guy_teleporting, turf/current_location)
-	var/area/current_area = get_area(current_location)
 	if(!current_location)
 		return TRUE
-	if(current_area.area_flags & NOTELEPORT)
+	if(!check_teleport_valid(src, current_location))
 		return TRUE
 	if(is_away_level(current_location.z))
 		return TRUE

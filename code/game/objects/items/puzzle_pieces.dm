@@ -168,7 +168,7 @@
 	trigger_mob = FALSE
 	trigger_item = TRUE
 	specific_item = /obj/structure/holobox
-	removable_signaller = FALSE //Being a pressure plate subtype, this can also use signals.
+	removable_assembly = FALSE //Being a pressure plate subtype, this can also use signals.
 	roundstart_signaller_freq = FREQ_HOLOGRID_SOLUTION //Frequency is kept on its own default channel however.
 	active = TRUE
 	trigger_delay = 10

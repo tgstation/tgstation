@@ -38,6 +38,12 @@
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
 
+	/// The sound this obj makes when something is buckled to it
+	var/buckle_sound = null
+
+	/// The sound this obj makes when something is unbuckled from it
+	var/unbuckle_sound = null
+
 	uses_integrity = TRUE
 
 /obj/vv_edit_var(vname, vval)
@@ -69,18 +75,29 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return
 
 	var/total_force = (attacking_item.force * attacking_item.demolition_mod)
+	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, TRUE, get_dir(src, user), attacking_item.armour_penetration)
 
-	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1, get_dir(src, user))
+	// Sanity in case one is null for some reason
+	var/picked_index = rand(max(length(attacking_item.attack_verb_simple), length(attacking_item.attack_verb_continuous)))
 
-	var/damage_verb = "hit"
+	var/message_verb_continuous = "attacks"
+	var/message_verb_simple = "attack"
+	// Sanity in case one is... longer than the other?
+	if (picked_index && length(attacking_item.attack_verb_continuous) >= picked_index)
+		message_verb_continuous = attacking_item.attack_verb_continuous[picked_index]
+	if (picked_index && length(attacking_item.attack_verb_simple) >= picked_index)
+		message_verb_simple = attacking_item.attack_verb_simple[picked_index]
 
-	if(attacking_item.demolition_mod > 1 && damage)
-		damage_verb = "pulverise"
+	if(attacking_item.demolition_mod > 1 && prob(damage * 5))
+		message_verb_simple = "pulverise"
+		message_verb_continuous = "pulverises"
+
 	if(attacking_item.demolition_mod < 1)
-		damage_verb = "ineffectively pierce"
+		message_verb_simple = "ineffectively " + message_verb_simple
+		message_verb_continuous = "ineffectively " + message_verb_continuous
 
-	user.visible_message(span_danger("[user] [damage_verb][plural_s(damage_verb)] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), \
-		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger("[user] [message_verb_continuous] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), \
+		span_danger("You [message_verb_simple] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "attacked", attacking_item)
 
 /obj/assume_air(datum/gas_mixture/giver)

@@ -25,6 +25,39 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	is_starting_knowledge = TRUE
 
+// Heretics can enhance their fishing rods to fish better - fishing content.
+// Lasts until successfully fishing something up.
+/datum/heretic_knowledge/spell/basic/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	..()
+	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
+
+/datum/heretic_knowledge/spell/basic/proc/on_grasp_cast(mob/living/carbon/cast_on, datum/action/cooldown/spell/touch/touch_spell)
+	SIGNAL_HANDLER
+
+	// Not a grasp, we dont want this to activate with say star or mending touch.
+	if(!istype(touch_spell, action_to_add))
+		return NONE
+
+	var/obj/item/fishing_rod/held_rod = cast_on.get_active_held_item()
+	if(!istype(held_rod, /obj/item/fishing_rod) || HAS_TRAIT(held_rod, TRAIT_ROD_MANSUS_INFUSED))
+		return NONE
+
+	INVOKE_ASYNC(cast_on, TYPE_PROC_REF(/atom/movable, say), message = "R'CH T'H F'SH!", forced = "fishing rod infusion invocation")
+	playsound(cast_on, /datum/action/cooldown/spell/touch/mansus_grasp::sound, 15)
+	cast_on.visible_message(span_notice("[cast_on] snaps [cast_on.p_their()] fingers next to [held_rod], covering it in a burst of purple flames!"))
+
+	ADD_TRAIT(held_rod, TRAIT_ROD_MANSUS_INFUSED, REF(held_rod))
+	held_rod.difficulty_modifier -= 20
+	RegisterSignal(held_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(unfuse))
+	held_rod.add_filter("mansus_infusion", 2, list("type" = "outline", "color" = COLOR_VOID_PURPLE, "size" = 1))
+	return COMPONENT_CAST_HANDLESS
+
+/datum/heretic_knowledge/spell/basic/proc/unfuse(obj/item/fishing_rod/item, reward, mob/user)
+	if(reward == FISHING_INFLUENCE || prob(35))
+		item.remove_filter("mansus_infusion")
+		REMOVE_TRAIT(item, TRAIT_ROD_MANSUS_INFUSED, REF(item))
+		item.difficulty_modifier += 20
+
 /**
  * The Living Heart heretic knowledge.
  *
