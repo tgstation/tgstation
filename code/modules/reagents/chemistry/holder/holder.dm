@@ -169,7 +169,7 @@
 				handle_reactions()
 			return amount
 
-	if(amount < CHEMICAL_VOLUME_ROUNDING)
+	if(!is_reacting && amount < CHEMICAL_VOLUME_ROUNDING)
 		return 0
 
 	//otherwise make a new one
@@ -657,7 +657,7 @@
 		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
 
 		//remove very small amounts of reagents
-		if(reagent_volume < CHEMICAL_VOLUME_ROUNDING)
+		if(reagent_volume<= 0 || (!is_reacting && reagent_volume < CHEMICAL_VOLUME_ROUNDING))
 			//end metabolization
 			if(isliving(my_atom))
 				if(reagent.metabolizing)
