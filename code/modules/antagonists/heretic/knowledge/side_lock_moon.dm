@@ -111,8 +111,13 @@
  */
 /datum/heretic_knowledge/codex_morbus
 	name = "Codex Morbus"
-	desc = "Allows you to use a codex cicatrix, and a body upgrades your Codex Cicactrix into a Codex Morbus, It draws runes and siphonss essences a bit faster, Right Click on a rune to curse crewmembers, the target's blood is required for a curse to take effect.."
-	gain_text = "The spine of this leather-bound tome creaks with an eerily pained sigh. To ply page from place takes considerable effort, and I dare not linger on the suggestions the book makes for longer than necessary. It speaks of coming plagues, of waiting supplicants of dead and forgotten gods, and the undoing of mortal kind. It speaks of needles to peel the skin of the world back and leaving it to fester. And it speaks to me by name."
+	desc = "Allows you to use a codex cicatrix, and a body upgrades your Codex Cicactrix into a Codex Morbus. \
+		It draws runes and siphons essences a bit faster. \
+		Right Click on a rune to curse crewmembers, the target's blood is required for a curse to take effect."
+	gain_text = "The spine of this leather-bound tome creaks with an eerily pained sigh. \
+		To ply page from place takes considerable effort, and I dare not linger on the suggestions the book makes for longer than necessary. \
+		It speaks of coming plagues, of waiting supplicants of dead and forgotten gods, and the undoing of mortal kind. \
+		It speaks of needles to peel the skin of the world back and leaving it to fester. And it speaks to me by name."
 	required_atoms = list(
 		/obj/item/codex_cicatrix = 1,
 		/mob/living/carbon/human = 1,
