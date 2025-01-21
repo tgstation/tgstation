@@ -4,7 +4,7 @@ ADMIN_VERB(spawn_obj_as_mob, R_SPAWN, "Spawn Object-Mob", "Spawn an object as if
 	if (!chosen)
 		return
 
-	var/mob/living/simple_animal/hostile/mimic/copy/basemob = /mob/living/simple_animal/hostile/mimic/copy
+	var/mob/living/basic/mimic/copy/basemob = /mob/living/basic/mimic/copy
 
 	var/obj/chosen_obj = text2path(chosen)
 
@@ -54,8 +54,8 @@ ADMIN_VERB(spawn_obj_as_mob, R_SPAWN, "Spawn Object-Mob", "Spawn an object as if
 		"mobtype" = list(
 			"desc" = "Base mob type",
 			"type" = "datum",
-			"path" = "/mob/living/simple_animal/hostile/mimic/copy",
-			"value" = "/mob/living/simple_animal/hostile/mimic/copy",
+			"path" = "/mob/living/basic/mimic/copy",
+			"value" = "/mob/living/basic/mimic/copy",
 		),
 		"ckey" = list(
 			"desc" = "ckey",
@@ -71,13 +71,14 @@ ADMIN_VERB(spawn_obj_as_mob, R_SPAWN, "Spawn Object-Mob", "Spawn an object as if
 		chosen_obj = text2path(mainsettings["objtype"]["value"])
 
 		basemob = text2path(mainsettings["mobtype"]["value"])
-		if (!ispath(basemob, /mob/living/simple_animal/hostile/mimic/copy) || !ispath(chosen_obj, /obj))
+		if (!ispath(basemob, /mob/living/basic/mimic/copy) || !ispath(chosen_obj, /obj))
 			to_chat(user.mob, "Mob or object path invalid", confidential = TRUE)
 
 		basemob = new basemob(get_turf(user.mob), new chosen_obj(get_turf(user.mob)), user.mob, mainsettings["dropitem"]["value"] == "Yes" ? FALSE : TRUE, (mainsettings["googlyeyes"]["value"] == "Yes" ? FALSE : TRUE))
 
 		if (mainsettings["disableai"]["value"] == "Yes")
-			basemob.toggle_ai(AI_OFF)
+			qdel(basemob.ai_controller)
+			basemob.ai_controller = null
 
 		if (mainsettings["idledamage"]["value"] == "No")
 			basemob.idledamage = FALSE
@@ -85,7 +86,9 @@ ADMIN_VERB(spawn_obj_as_mob, R_SPAWN, "Spawn Object-Mob", "Spawn an object as if
 		if (mainsettings["access"])
 			var/newaccess = text2path(mainsettings["access"]["value"])
 			if (ispath(newaccess))
-				basemob.access_card = new newaccess
+				var/obj/item/card/id/id = new newaccess //cant do initial on lists
+				basemob.AddComponent(/datum/component/simple_access, id.access)
+				qdel(id)
 
 		if (mainsettings["maxhealth"]["value"])
 			if (!isnum(mainsettings["maxhealth"]["value"]))
