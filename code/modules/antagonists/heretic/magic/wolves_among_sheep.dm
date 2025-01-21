@@ -67,8 +67,7 @@
 		// If any future coder wants to allow arenas to merge or fight like domains, feel free to implement it.
 		if(get_dist(owner, nearby_arena) <= 25)
 			if(feedback)
-				to_chat(owner, span_warning("Can't cast, too close to another arena!"))
-				owner.balloon_alert(owner, "Arena Nearby!")
+				owner.balloon_alert(owner, "another arena nearby!")
 			return FALSE
 
 /// Applies a visual to each turf
