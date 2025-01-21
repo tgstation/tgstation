@@ -1,9 +1,9 @@
 /obj/item/ammo_box/magazine/m12g
-	name = "shotgun magazine (12g buckshot slugs)"
+	name = "shotgun magazine (12g buckshot shells)"
 	desc = "A drum magazine of shotgun shells, suitable for the Bulldog combat shotgun."
 	icon_state = "m12gb"
 	base_icon_state = "m12gb"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot/milspec
 	caliber = CALIBER_SHOTGUN
 	max_ammo = 8
 	casing_phrasing = "shell"
@@ -22,7 +22,7 @@
 	name = "shotgun magazine (12g slugs)"
 	icon_state = "m12gsl"
 	base_icon_state = "m12gsl"
-	ammo_type = /obj/item/ammo_casing/shotgun
+	ammo_type = /obj/item/ammo_casing/shotgun/milspec
 
 /obj/item/ammo_box/magazine/m12g/dragon
 	name = "shotgun magazine (12g dragon's breath)"
