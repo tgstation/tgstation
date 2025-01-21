@@ -66,6 +66,11 @@
 	///Our slime's current mood
 	var/current_mood = SLIME_MOOD_NONE
 
+	///Other slimes that are on the same tile.
+	var/list/friends_list = list()
+	///If the slime is currently overcrowded and unable to reproduce.
+	var/overcrowded = FALSE
+
 	///The number of /obj/item/slime_extract's the slime has left inside
 	var/cores = 1
 	///Chance of mutating, should be between 25 and 35
@@ -143,6 +148,7 @@
 
 	QDEL_NULL(evolve_action)
 	QDEL_NULL(reproduce_action)
+	friends_list = null
 
 	return ..()
 
@@ -243,6 +249,8 @@
 
 		if(SLIME_MAX_POWER)
 			. += span_boldwarning("It is radiating with massive levels of electrical activity!")
+	if(overcrowded)
+		. += span_warning("It seems too overcroweded to properly reproduce!")
 
 ///Changes the slime's current life state
 /mob/living/basic/slime/proc/set_life_stage(new_life_stage = SLIME_LIFE_STAGE_BABY)
