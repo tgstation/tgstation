@@ -254,9 +254,9 @@
 #undef BLOOD_FLOW_PER_SEVEIRTY
 
 /datum/heretic_knowledge/spell/wolves_among_sheep
-	name = "XANTODO PLACEHOLDER"
-	desc = "XANTODO PLACEHOLDER"
-	gain_text = "XANTODO PLACEHOLDER"
+	name = "WolF Among Sheep"
+	desc = "Alters the fabric of reality, conjuring a magical arena unpassable to outsiders, all partecipants are trapped and immune to any form of crowd control or enviromental hazards; trapped partecipants are granted a Blade and unable to leave or jaunt until they score a critical hit, Critical hits partially restore the Heretic's health "
+	gain_text = "ANNE-DONO TASKETE KURASAI"
 	cost = 1
 	action_to_add = /datum/action/cooldown/spell/wolves_among_sheep
 

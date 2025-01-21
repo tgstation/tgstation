@@ -33,7 +33,7 @@
 
 /obj/item/grenade/chem_grenade/rust_sower/detonate(mob/living/lanced_by)
 	. = ..()
-	playsound(src, 'sound/items/weapons/rust_sower_explode.ogg', 60, TRUE)
+	playsound(src, 'sound/items/weapons/rust_sower_explode.ogg', 70, TRUE)
 	qdel(src)
 
 /obj/item/grenade/chem_grenade/rust_sower/screwdriver_act(mob/living/user, obj/item/tool)
