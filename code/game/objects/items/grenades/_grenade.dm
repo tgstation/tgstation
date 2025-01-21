@@ -26,6 +26,8 @@
 	var/active = FALSE
 	/// Sound played when the grenade is armed
 	var/grenade_arm_sound = 'sound/items/weapons/armbomb.ogg'
+	/// If the sound of the grenade should be varied
+	var/grenade_sound_vary = TRUE
 	///Is it a cluster grenade? We don't wanna spam admin logs with these.
 	var/type_cluster = FALSE
 	///How long it takes for a grenade to explode after being armed
@@ -157,7 +159,7 @@
 	if(shrapnel_type && shrapnel_radius)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
-	playsound(src, grenade_arm_sound, volume, TRUE)
+	playsound(src, grenade_arm_sound, volume, grenade_sound_vary)
 	if(istype(user))
 		user.add_mob_memory(/datum/memory/bomb_planted, antagonist = src)
 	active = TRUE

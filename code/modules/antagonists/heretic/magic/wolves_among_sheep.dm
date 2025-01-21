@@ -79,6 +79,8 @@
 			var/wall_icon = "rose_stone_" + "[pick(1, 2, 3, 4, 5, 6, 7, 8)]"
 			target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/turf/walls/rose_stone_wall.dmi', target, wall_icon, layer = ABOVE_OPEN_TURF_LAYER))
 
+		target.turf_flags |= NOJAUNT // We make the arena a NOJAUNT area so that stinky people cannot teleport in
+
 		// Phase out the doors (restore them afterwards)
 		for(var/obj/machinery/door/airlock/to_banish in target)
 			banished_airlocks += to_banish
@@ -123,6 +125,7 @@
 /datum/action/cooldown/spell/wolves_among_sheep/proc/revert_terrain(list/turfs)
 	for(var/turf/target as anything in turfs)
 		target.remove_alt_appearance("heretic_arena")
+		target.turf_flags = initial(target.turf_flags) // Restore flags to what they were
 		for(var/obj/structure/window/to_revert in target)
 			to_revert.remove_alt_appearance("heretic_arena")
 	for(var/obj/machinery/door/airlock/to_restore in banished_airlocks)

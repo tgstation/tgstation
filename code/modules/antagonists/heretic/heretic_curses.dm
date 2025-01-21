@@ -144,7 +144,7 @@
 		or is covered in the victim's blood to make the curse last longer."
 	gain_text = "The flesh of humanity is weak. Make them bleed. Show them their fragility."
 
-	duration = 3 MINUTES
+	duration = 5 MINUTES
 	curse_color = "#f19a9a"
 
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
@@ -178,7 +178,7 @@
 		that a victim has touched or is covered in the victim's blood to make the curse last longer."
 	gain_text = "The body of humanity is temporary. Their weaknesses cannot be stopped, like iron falling to rust. Show them all."
 
-	duration = 0.5 MINUTES
+	duration = 3 MINUTES
 	curse_color = "#c1ffc9"
 
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
@@ -202,6 +202,7 @@
 /datum/heretic_knowledge/curse/transmutation
 	name = "Curse of Transmutation"
 	duration = 0 // Infinite curse, it breaks when our codex is destroyed
+	curse_color = NONE
 	/// What species we are going to turn our victim in to
 	var/chosen_species
 
@@ -240,7 +241,7 @@
 	alert_type = null
 	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = STATUS_EFFECT_NO_TICK
-	/// What species were we before this effect
+	/// What species were we before this effect was ever applied on us
 	var/old_species
 
 /datum/status_effect/race_swap/on_creation(mob/living/new_owner, datum/species/new_species)
@@ -267,9 +268,12 @@
 
 /datum/heretic_knowledge/curse/indulgence
 	name = "Curse of Indulgence"
+	duration = 8 MINUTES
+	curse_color = COLOR_MAROON
 
 /datum/heretic_knowledge/curse/indulgence/curse(mob/living/carbon/human/chosen_mob)
 	chosen_mob.gain_trauma(/datum/brain_trauma/severe/flesh_desire, TRAUMA_RESILIENCE_MAGIC)
+	chosen_mob.nutrition = NUTRITION_LEVEL_STARVING
 	return ..()
 
 /datum/heretic_knowledge/curse/indulgence/uncurse(mob/living/carbon/human/chosen_mob)

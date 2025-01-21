@@ -8,19 +8,19 @@
 	list_reagents = list(/datum/reagent/eldritch = 50)
 
 // Unique bottle that lets you instantly draw blood from a victim
-/obj/item/reagent_containers/phylactery
+/obj/item/reagent_containers/cup/phylactery
 	name = "phylactery of damnation"
 	desc = "Used to steal blood from your soon to be victims."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "phylactery"
 	base_icon_state = "phylactery"
 	has_variable_transfer_amount = FALSE
-	reagent_flags = TRANSPARENT
+	reagent_flags = OPENCONTAINER | DUNKABLE | TRANSPARENT
 	volume = 10
 	/// Cooldown before you can steal blood again
 	COOLDOWN_DECLARE(drain_cooldown)
 
-/obj/item/reagent_containers/phylactery/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/cup/phylactery/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, drain_cooldown))
 		user.balloon_alert(user, "cant steal so fast!")
 		return NONE
@@ -47,12 +47,12 @@
 		to_chat(user, span_warning("You are unable to draw any blood from [living_target]!"))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/reagent_containers/phylactery/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/cup/phylactery/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(get_dist(user, interacting_with) <= 30)
 		return interact_with_atom_secondary(interacting_with, user, modifiers)
 	return ..()
 
-/obj/item/reagent_containers/phylactery/update_icon_state()
+/obj/item/reagent_containers/cup/phylactery/update_icon_state()
 	. = ..()
 	switch(reagents.total_volume)
 		if(0)

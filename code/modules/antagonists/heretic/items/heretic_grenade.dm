@@ -10,6 +10,7 @@
 	stage = GRENADE_READY
 	base_icon_state = "rustgrenade"
 	grenade_arm_sound = 'sound/items/weapons/rust_sower_armbomb.ogg'
+	grenade_sound_vary = FALSE
 
 /obj/item/grenade/chem_grenade/rust_sower/update_icon_state()
 	. = ..()
@@ -33,7 +34,7 @@
 
 /obj/item/grenade/chem_grenade/rust_sower/detonate(mob/living/lanced_by)
 	. = ..()
-	playsound(src, 'sound/items/weapons/rust_sower_explode.ogg', 70, TRUE)
+	playsound(src, 'sound/items/weapons/rust_sower_explode.ogg', 70, FALSE)
 	qdel(src)
 
 /obj/item/grenade/chem_grenade/rust_sower/screwdriver_act(mob/living/user, obj/item/tool)

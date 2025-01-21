@@ -94,6 +94,9 @@
 		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
 		human_user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
+/obj/item/codex_cicatrix/morbus/examine_more(mob/user)
+	. = ..() // XANTODO - Add a summary of each curse to the description so that the curser knows what will happen the cursee
+
 /obj/item/codex_cicatrix/morbus/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(!istype(interacting_with, /obj/effect/heretic_rune/big))
