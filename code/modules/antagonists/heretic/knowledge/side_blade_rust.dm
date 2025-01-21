@@ -116,8 +116,8 @@
 	cost = 1
 
 /datum/heretic_knowledge/greaves_of_the_prophet
-	name = "XANTODO PLACEHOLDER"
-	desc = "XANTODO PLACEHOLDER"
+	name = "Greaves Of The Prophet"
+	desc = "Conjures a pair of Armored Greaves, they confer to the user fully immunity to slips and the ability resist gravity at will"
 	gain_text = " \
 		Gristle churns into joint, a pop, and the fool twists a blackened foot from the \
 		jaws of another. At their game for centuries, this mangled tree of limbs twists, \

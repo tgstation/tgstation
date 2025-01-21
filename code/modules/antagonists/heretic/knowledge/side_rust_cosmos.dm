@@ -30,9 +30,9 @@
 	research_tree_icon_state = "eldritch_flask"
 
 /datum/heretic_knowledge/rust_sower
-	name = "XANTODO PLACEHOLDER"
-	desc = "XANTODO PLACEHOLDER"
-	gain_text = "XANTODO PLACEHOLDER"
+	name = "Rust Sower Grenade"
+	desc = "Conjures a cursed grenade filled with Eldritch Rust, upon detonating it releases a huge cloud that blinds organics, rusts affected turfs and obliterates Silicons and Mechs."
+	gain_text = "The choked vines of the Rusted Hills are burdened with such overripe fruits. It undoes the markers of progress, leaving a clean slate to work into new shapes."
 	required_atoms = list(
 		/obj/item/grenade/chem_grenade = 1,
 		/obj/item/organ/liver = 1,
