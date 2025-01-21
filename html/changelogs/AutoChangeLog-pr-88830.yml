@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Batons now respect the armor worn by targets. Analog batons respect MELEE armor. Cell-type batons respect ENERGY armor."
+  - balance: "Various batons have differing amounts of armour penetration based on what type of baton it is."
+  - balance: "Heads of staff have color graded batons to denote penetration power. Bronze (Quartermaster), Silver (Chief Engineer, Chief Medical Officer, Head of Personnel, Research Director), Gold (Captain). Contractor batons are equivalent to Gold."
+  - balance: "Cell-type batons gain armor penetration based on their cell's quality. The better it is, the more it penetrates."
