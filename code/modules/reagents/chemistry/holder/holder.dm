@@ -169,6 +169,9 @@
 				handle_reactions()
 			return amount
 
+	if(amount < CHEMICAL_VOLUME_ROUNDING)
+		return 0
+
 	//otherwise make a new one
 	var/datum/reagent/new_reagent = new reagent_type(data)
 	cached_reagents += new_reagent
@@ -266,7 +269,7 @@
 	for(var/datum/reagent/removed_reagent as anything in removed_reagents)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, removed_reagent, removed_reagents[removed_reagent])
 
-	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
+	return total_removed_amount
 
 /**
  * Removes all reagents either proportionally(amount is the direct volume to remove)
@@ -531,7 +534,7 @@
 		target_holder.handle_reactions()
 		src.handle_reactions()
 
-	return round(total_transfered_amount, CHEMICAL_VOLUME_ROUNDING)
+	return total_transfered_amount
 
 /**
  * Copies the reagents to the target object
@@ -651,10 +654,10 @@
 	while(chem_index <= num_reagents)
 		var/datum/reagent/reagent = cached_reagents[chem_index]
 		chem_index += 1
-		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL) //round to this many decimal places
+		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
 
 		//remove very small amounts of reagents
-		if(reagent_volume <= 0 || (!is_reacting && reagent_volume < CHEMICAL_VOLUME_ROUNDING))
+		if(reagent_volume < CHEMICAL_VOLUME_ROUNDING)
 			//end metabolization
 			if(isliving(my_atom))
 				if(reagent.metabolizing)
