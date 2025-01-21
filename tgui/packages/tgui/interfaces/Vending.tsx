@@ -210,7 +210,7 @@ const ProductDisplay = (props: {
     displayed_currency_icon,
     displayed_currency_name,
   } = data;
-  const [toggleLayout, setToggleLayout] = useState(getLayoutState());
+  const [toggleLayout, setToggleLayout] = useState(getLayoutState(LAYOUT.Grid));
 
   return (
     <Section
@@ -222,7 +222,7 @@ const ProductDisplay = (props: {
           {!all_products_free && user && (
             <Stack.Item fontSize="16px" color="green">
               {(user && user.cash) || 0}
-              {displayed_currency_name}{' '}
+              {displayed_currency_name}
               <Icon name={displayed_currency_icon} color="gold" />
             </Stack.Item>
           )}

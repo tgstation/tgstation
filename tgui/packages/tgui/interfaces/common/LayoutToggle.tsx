@@ -18,7 +18,7 @@ export enum LAYOUT {
 export function getLayoutState(defaultState?: LAYOUT) {
   const { config } = useBackend();
   if (config.interface.layout === LAYOUT.Default) {
-    return defaultState || LAYOUT.Grid;
+    return defaultState || LAYOUT.Default;
   }
   return config.interface.layout;
 }
