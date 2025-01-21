@@ -224,7 +224,7 @@
 		return
 	chosen_mob.apply_status_effect(/datum/status_effect/race_swap, chosen_species)
 	cursing_book.transmuted_victims += chosen_mob
-	to_chat(chosen_mob, span_danger("You feel your body morph into a new shape"))
+	to_chat(chosen_mob, span_danger("You feel your body morb into a new shape"))
 	return ..()
 
 /datum/heretic_knowledge/curse/transmutation/uncurse(mob/living/carbon/human/chosen_mob)
