@@ -547,3 +547,15 @@
   mc-oofert:
   - refactor: mimics (bolt of animation, malf ai Machine Override, etc) are basicmobs
   - bugfix: crate mimics may now be opened
+2025-01-21:
+  AyIong:
+  - qol: 'Vending machines got new design with 2 layouts: List and Grid (List by default)'
+  NamelessFairy:
+  - bugfix: Admin fired stray syndicate cargo pods will not rebel against admin whims
+      and launch themselves when cancelled.
+  - admin: Admins have new categories to fill syndicate cargo pods with.
+  Pickle-Coding:
+  - bugfix: Fixes HFR moderator leaking not leaking properly when a part is cracked.
+  Rhials:
+  - rscadd: You can now ctrl-click IDs to set your Honorific, which will change your
+      display name to reflect your TITLE as a WORKING MAN on SPACE STATION 13.
