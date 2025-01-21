@@ -726,3 +726,32 @@
 	name = "Hotspring"
 	desc = "Waaater... FUCK THIS HOT WATER!!"
 	icon_state = "hotspring_regen_catgirl"
+
+#define BEAM_ALPHA 122
+
+///Makes the mob luminescent for the duration of the effect, and project a large spotlight overtop them.
+/datum/status_effect/spotlight_light
+	id = "spotlight_light"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	alert_type = null
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+	var/obj/effect/overlay/spotlight/beam_from_above
+
+/datum/status_effect/spotlight_light/on_creation(mob/living/new_owner, duration)
+	if(duration)
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/spotlight_light/on_apply()
+	mob_light_obj = owner.mob_light(2, 1.5, "#e2e2ca")
+	beam_from_above = new /obj/effect/overlay/spotlight
+	beam_from_above.alpha = BEAM_ALPHA
+	owner.vis_contents += beam_from_above
+	return TRUE
+
+/datum/status_effect/spotlight_light/on_remove()
+	if(beam_from_above)
+		owner.vis_contents -= beam_from_above
+	QDEL_NULL(mob_light_obj)
+
+#undef BEAM_ALPHA
