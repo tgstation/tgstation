@@ -112,16 +112,16 @@
 	var/please_be_gentle = FALSE
 	var/atom/destination
 	var/datum/callback/throw_callback
-	if(isliving(movable_target) || !isitem(movable_target))
+	if(isliving(target) || !isitem(target))
 		destination = get_step_towards(user, target)
 		please_be_gentle = TRUE
 	else
 		destination = user
-		throw_callback = CALLBACK(src, PROC_REF(clear_hitby_signal), movable_target)
-		RegisterSignal(movable_target, COMSIG_MOVABLE_PRE_IMPACT, PROC_REF(catch_it_chucklenut))
+		throw_callback = CALLBACK(src, PROC_REF(clear_hitby_signal), target)
+		RegisterSignal(target, COMSIG_MOVABLE_PRE_IMPACT, PROC_REF(catch_it_chucklenut))
 
-	if(!movable_target.safe_throw_at(destination, source.cast_range, 2, callback = throw_callback, gentle = please_be_gentle))
-		UnregisterSignal(movable_target, COMSIG_MOVABLE_PRE_IMPACT)
+	if(!target.safe_throw_at(destination, source.cast_range, 2, callback = throw_callback, gentle = please_be_gentle))
+		UnregisterSignal(target, COMSIG_MOVABLE_PRE_IMPACT)
 	else
 		playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 
