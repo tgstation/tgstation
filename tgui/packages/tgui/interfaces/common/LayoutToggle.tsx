@@ -29,14 +29,13 @@ export function getLayoutState(defaultState?: LAYOUT) {
  */
 export function LayoutToggle(props: Props) {
   const { setState, state } = props;
-  const { config } = useBackend();
 
   const handleClick = () => {
     const newState = state === LAYOUT.Grid ? LAYOUT.List : LAYOUT.Grid;
     setState(newState);
   };
 
-  if (config.interface.layout === LAYOUT.Default) {
+  if (getLayoutState() === LAYOUT.Default) {
     return (
       <Stack.Item>
         <Button
