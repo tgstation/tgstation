@@ -126,7 +126,6 @@
 	pixel_y = -10
 	},
 /obj/item/stack/sheet/mineral/wood/fifty,
-/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
 /turf/open/floor/carpet/donk,
 /area/ruin/comms_agent)
 "J" = (
