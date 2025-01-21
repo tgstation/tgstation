@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 
 /turf/closed/indestructible/heretic_wall
 	name = "eldritch wall"
-	desc = "A wall? Made of something incomprehensible. You really don't want to be touching this..."
+	desc = "A wall penning in the sheep amongst the wolves. It glows with malevolent energy - prodding it is likely unwise."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "eldritch_forcewall"
 	opacity = FALSE
