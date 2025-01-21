@@ -70,6 +70,13 @@ SUBSYSTEM_DEF(pai)
 			candidate.savefile_load(user)
 			ui.send_full_update()
 			return TRUE
+		if("withdraw")
+			if(!candidate.ready)
+				to_chat(user, span_warning("You need to submit an application before you can withdraw one."))
+				return FALSE
+			candidate.ready = FALSE
+			to_chat(user, span_notice("Your pAI candidacy has been withdrawn."))
+			return TRUE
 	return FALSE
 
 /**

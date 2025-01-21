@@ -145,6 +145,14 @@ const ButtonsDisplay = (props) => {
             SUBMIT
           </Button>
         </Stack.Item>
+        <Stack.Item>
+          <Button
+            onClick={() => act('withdraw')}
+            tooltip="Withdraws your pAI candidacy, if any."
+          >
+            WITHDRAW
+          </Button>
+        </Stack.Item>
       </Stack>
     </Section>
   );
