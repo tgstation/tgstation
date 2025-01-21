@@ -125,9 +125,9 @@
 		to_chat(owner, span_userdanger("Seeing [span_phobia(reason.name)] [message]!"))
 	else if(trigger_word)
 		if(said_not_heard)
-			to_chat(owner, span_userdanger("Saying \"[trigger_word]\" [message]!"))
+			to_chat(owner, span_userdanger("Saying [span_phobia(trigger_word)] [message]!"))
 		else
-			to_chat(owner, span_userdanger("Hearing \"[trigger_word]\" [message]!"))
+			to_chat(owner, span_userdanger("Hearing [span_phobia(trigger_word)] [message]!"))
 	else
 		to_chat(owner, span_userdanger("Something [message]!"))
 	var/reaction = rand(1,4)
