@@ -15,7 +15,7 @@
 			TEST_FAIL("Design [current_design.type] has default or null name var but has an ID")
 		if ((!isnull(current_design.materials) && LAZYLEN(current_design.materials)) || (!isnull(current_design.reagents_list) && LAZYLEN(current_design.reagents_list))) //Design requires materials
 			if ((isnull(current_design.build_path) || current_design.build_path == default_design.build_path) && (isnull(current_design.make_reagent) || current_design.make_reagent == default_design.make_reagent)) //Check if design gives any output
-				TEST_FAIL("Design [current_design.type] requires materials but does not have have any build_path or make_reagent set")
+				TEST_FAIL("Design [current_design.type] requires materials but does not have either build_path or make_reagent set")
 		else if (!isnull(current_design.build_path) || !isnull(current_design.build_path)) // //Design requires no materials but creates stuff
 			TEST_FAIL("Design [current_design.type] requires NO materials but has build_path or make_reagent set")
 		if (length(current_design.reagents_list) && !(current_design.build_type & LIMBGROWER))

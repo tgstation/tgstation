@@ -76,6 +76,6 @@
 
 /obj/item/chromosome/energy
 	name = "energetic chromosome"
-	desc = "A chromosome that reduces action based mutation cooldowns by by 50%."
+	desc = "A chromosome that reduces action based mutation cooldowns by 50%."
 	icon_state = "energy"
 	energy_coeff = 0.5

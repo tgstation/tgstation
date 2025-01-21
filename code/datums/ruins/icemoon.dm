@@ -64,7 +64,7 @@
 /datum/map_template/ruin/icemoon/Lodge
 	name = "Ice-Ruin Hunters Lodge"
 	id = "lodge"
-	description = "An old hunting hunting lodge. I wonder if anyone is still home?"
+	description = "An old hunting lodge. I wonder if anyone is still home?"
 	suffix = "icemoon_surface_lodge.dmm"
 
 /datum/map_template/ruin/icemoon/frozen_phonebooth
