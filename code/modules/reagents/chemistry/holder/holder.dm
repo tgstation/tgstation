@@ -654,10 +654,10 @@
 	while(chem_index <= num_reagents)
 		var/datum/reagent/reagent = cached_reagents[chem_index]
 		chem_index += 1
-		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
+		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL) //round to this many decimal places
 
 		//remove very small amounts of reagents
-		if(reagent_volume<= 0 || (!is_reacting && reagent_volume < CHEMICAL_VOLUME_ROUNDING))
+		if(reagent_volume <= 0 || (!is_reacting && reagent_volume < CHEMICAL_VOLUME_ROUNDING))
 			//end metabolization
 			if(isliving(my_atom))
 				if(reagent.metabolizing)
