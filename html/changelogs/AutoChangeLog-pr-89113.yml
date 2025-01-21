@@ -1,0 +1,4 @@
+author: "kuricityy"
+delete-after: True
+changes:
+  - bugfix: "Blob's can no longer place their core in ruins on Icebox."
