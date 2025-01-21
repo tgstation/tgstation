@@ -125,7 +125,7 @@
 	result_atoms = list(/obj/item/codex_cicatrix/morbus)
 	cost = 1
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
-	research_tree_icon_state = "book"
+	research_tree_icon_state = "book_morbus"
 
 /datum/heretic_knowledge/codex_morbus/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()

@@ -77,6 +77,8 @@
 /obj/item/codex_cicatrix/morbus // I'm morbing all over
 	name = "Codex Morbus"
 	desc = "An unsightly book, you feel it staring intently at you as you observe it."
+	base_icon_state = "book_morbus"
+	icon_state = "book_morbus"
 	drain_speed = 7 SECONDS
 	draw_speed = 5 SECONDS
 	/// List of mobs we've cursed with transmutation. When the codex is destroyed all those curses become undone

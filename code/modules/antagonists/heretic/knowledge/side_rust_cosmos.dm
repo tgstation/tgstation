@@ -39,6 +39,8 @@
 	)
 	result_atoms = list(/obj/item/grenade/chem_grenade/rust_sower)
 	cost = 1
+	research_tree_icon_path = 'icons/obj/weapons/grenade.dmi'
+	research_tree_icon_state = "rustgrenade"
 
 /datum/heretic_knowledge/entropy_pulse
 	name = "Pulse of Entropy"
