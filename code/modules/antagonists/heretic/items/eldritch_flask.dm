@@ -65,7 +65,7 @@
 // Funny potion that is basically an aheal. The downside is that it puts you to sleep for a minute.
 /obj/item/ether
 	name = "ether of the newborn"
-	desc = "drink to cleanse your body of all abnormalities. Puts you into an enhanced sleep for a full minute."
+	desc = "A flask of nausea-inducing, thick green liquid. Restores your body completely, then places you into an enhanced sleep for a full minute."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "poison_flask"
 
