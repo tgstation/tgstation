@@ -25,8 +25,7 @@ type Props = {
 
 export function CargoCatalog(props: Props) {
   const { express } = props;
-  const { act, data } = useBackend<CargoData>();
-  const { self_paid } = data;
+  const { data } = useBackend<CargoData>();
 
   const supplies = Object.values(data.supplies);
   const [showContents, setShowContents] = useState('');
@@ -63,26 +62,7 @@ export function CargoCatalog(props: Props) {
           closeContents={setShowContents}
         />
       )}
-      <Section
-        fill
-        title="Catalog"
-        buttons={
-          !express && (
-            <>
-              <CargoCartButtons />
-              <Button
-                color={self_paid ? 'caution' : 'transparent'}
-                icon={self_paid ? 'check-square-o' : 'square-o'}
-                ml={2}
-                onClick={() => act('toggleprivate')}
-                tooltip="Use your own funds to purchase items."
-              >
-                Buy Privately
-              </Button>
-            </>
-          )
-        }
-      >
+      <Section fill title="Catalog" buttons={!express && <CargoCartButtons />}>
         <Stack fill>
           <Stack.Item grow>
             <CatalogTabs
@@ -111,14 +91,17 @@ type CatalogTabsProps = {
   setSearchText: (text: string) => void;
 };
 
-function CatalogTabs(props: CatalogTabsProps) {
+function CatalogTabs(props: CatalogTabsProps & Props) {
+  const { act, data } = useBackend<CargoData>();
   const {
     activeSupplyName,
     categories,
     searchText,
     setActiveSupplyName,
     setSearchText,
+    express,
   } = props;
+  const { self_paid } = data;
 
   const sorted = sortBy(categories, (supply) => supply.name);
 
@@ -170,6 +153,20 @@ function CatalogTabs(props: CatalogTabsProps) {
           ))}
         </Tabs>
       </Stack.Item>
+      <Stack.Item>
+        {!express && (
+          <Button
+            fluid
+            color={self_paid ? 'caution' : 'transparent'}
+            icon={self_paid ? 'check-square-o' : 'square-o'}
+            onClick={() => act('toggleprivate')}
+            tooltip={'Use your own funds to purchase items.'}
+            tooltipPosition={'top'}
+          >
+            Buy Privately
+          </Button>
+        )}
+      </Stack.Item>
     </Stack>
   );
 }
@@ -196,6 +193,8 @@ function CatalogList(props: CatalogListProps) {
         } else if (digits > 6) {
           color = 'bad';
         }
+
+        const privateBuy = (self_paid && !pack.goody) || app_cost;
 
         return (
           <ImageButton
@@ -242,13 +241,28 @@ function CatalogList(props: CatalogListProps) {
                   )}
                 </Stack.Item>
               )}
-              <Stack.Item width={5.5} color={'gold'} fontSize={0.8}>
-                {formatMoney(
-                  (self_paid && !pack.goody) || app_cost
-                    ? Math.round(pack.cost * 1.1)
-                    : pack.cost,
-                )}{' '}
-                cr
+              <Stack.Item align={'center'} width={5.5} mt={-0.75} mb={-0.75}>
+                <Stack
+                  vertical
+                  color={'gold'}
+                  lineHeight={0.75}
+                  fontSize={0.85}
+                >
+                  <Stack.Item
+                    style={
+                      privateBuy
+                        ? { textDecoration: 'red line-through', opacity: 0.75 }
+                        : undefined
+                    }
+                  >
+                    {formatMoney(pack.cost)} cr
+                  </Stack.Item>
+                  {!!privateBuy && (
+                    <Stack.Item>
+                      {formatMoney(Math.round(pack.cost * 1.1))} cr
+                    </Stack.Item>
+                  )}
+                </Stack>
               </Stack.Item>
             </Stack>
           </ImageButton>
@@ -267,6 +281,7 @@ type CatalogContentsProps = {
 function CatalogPackInfo(props: CatalogContentsProps) {
   const { name, packs, closeContents } = props;
   const pack = packs.find((pack) => pack.name === name);
+  const contains = pack?.contains;
 
   return (
     <Modal p={1} width={'50vw'} height={'50vh'}>
@@ -286,20 +301,36 @@ function CatalogPackInfo(props: CatalogContentsProps) {
             <BlockQuote>{pack?.desc || 'No description available.'}</BlockQuote>
           </Stack.Item>
           <Stack.Item grow overflowY="auto" overflowX="hidden">
-            {pack?.contains?.map((item) => (
-              <ImageButton
-                key={item.name}
-                fluid
-                dmIcon={item.icon}
-                dmIconState={item.icon_state}
-                imageSize={32}
-              >
-                <Stack fill>
-                  <Stack.Item textAlign="left">{item.name}</Stack.Item>
-                  {!!item.amount && <Stack.Item>x{item.amount}</Stack.Item>}
-                </Stack>
-              </ImageButton>
-            ))}
+            {(contains?.length ?? 0) ? (
+              contains?.map((item) => (
+                <ImageButton
+                  key={item.name}
+                  fluid
+                  dmIcon={item.icon}
+                  dmIconState={item.icon_state}
+                  imageSize={32}
+                >
+                  <Stack fill>
+                    <Stack.Item textAlign="left">{item.name}</Stack.Item>
+                    {!!item.amount && <Stack.Item>x{item.amount}</Stack.Item>}
+                  </Stack>
+                </ImageButton>
+              ))
+            ) : (
+              <Stack fill vertical align={'center'} justify={'center'}>
+                <Stack.Item>
+                  <Icon
+                    name={'triangle-exclamation'}
+                    size={6}
+                    color={'orange'}
+                  />
+                </Stack.Item>
+                <Stack.Item mt={2} color={'label'} textAlign={'center'}>
+                  We can't find information about even the approximate contents
+                  of this order.
+                </Stack.Item>
+              </Stack>
+            )}
           </Stack.Item>
         </Stack>
       </Section>

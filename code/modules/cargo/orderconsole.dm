@@ -204,8 +204,8 @@
 	for(var/obj/item/item as anything in pack.contains)
 		contains += list(list(
 			"name" = item.name,
-			"icon" = item.icon,
-			"icon_state" = item.icon_state,
+			"icon" = item.greyscale_config ? null : item.icon,
+			"icon_state" = item.greyscale_config ? null : item.icon_state,
 			"amount" = pack.contains[item],
 		))
 	return contains
