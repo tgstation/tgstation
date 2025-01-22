@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useMemo } from 'react';
-import { Box, Button, Section } from 'tgui-core/components';
+import { Box, Button, Input, Section } from 'tgui-core/components';
 import { isEscape } from 'tgui-core/keys';
 import { clamp } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -12,11 +13,12 @@ import { SearchItem } from './types';
 
 type Data = {
   contents: SearchItem[];
+  searching: BooleanLike;
 };
 
 export function LootPanel(props) {
   const { act, data } = useBackend<Data>();
-  const { contents = [] } = data;
+  const { contents = [], searching } = data;
 
   // limitations: items with different stack counts, charges etc.
   const contentsByPathName = useMemo(() => {
@@ -37,6 +39,7 @@ export function LootPanel(props) {
   }, [contents]);
 
   const [grouping, setGrouping] = useState(true);
+  const [searchText, setSearchText] = useState('');
 
   const total = contents.length ? contents.length - 1 : 0;
 
@@ -56,9 +59,12 @@ export function LootPanel(props) {
     <Window
       width={300}
       height={height}
-      title={`Contents: ${total}`}
       buttons={
         <Box align={'left'}>
+          <Input
+            onInput={(event, value) => setSearchText(value)}
+            placeholder={`Search items...`}
+          />
           <Button
             icon={grouping ? 'layer-group' : 'object-ungroup'}
             selected={grouping}
@@ -84,9 +90,12 @@ export function LootPanel(props) {
       >
         <Section>
           {grouping ? (
-            <GroupedContents contents={contentsByPathName} />
+            <GroupedContents
+              contents={contentsByPathName}
+              searchText={searchText}
+            />
           ) : (
-            <RawContents contents={contents} />
+            <RawContents contents={contents} searchText={searchText} />
           )}
         </Section>
       </Window.Content>
