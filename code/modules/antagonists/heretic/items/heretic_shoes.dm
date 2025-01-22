@@ -1,6 +1,6 @@
 /obj/item/clothing/shoes/magboots/greaves_of_the_prophet
 	name = "\improper Joint-snap sabatons"
-	desc = "Some nice shoes that allow you to always stay up on your feet."
+	desc = "Sabatons made out of rugged, worn iron. Feels more stable than the ground they tread on. They're caked in a thin layer of rust - and yet, the sight of it fills you with odd relief."
 	icon_state = "hereticgreaves"
 	resistance_flags = ACID_PROOF | FIRE_PROOF | LAVA_PROOF
 	active_traits = list(TRAIT_NEGATES_GRAVITY)
