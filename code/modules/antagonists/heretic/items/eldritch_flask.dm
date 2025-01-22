@@ -22,7 +22,7 @@
 
 /obj/item/reagent_containers/cup/phylactery/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, drain_cooldown))
-		user.balloon_alert(user, "cant steal so fast!")
+		user.balloon_alert(user, "can't steal so fast!")
 		return NONE
 	if(!isliving(target))
 		return NONE
