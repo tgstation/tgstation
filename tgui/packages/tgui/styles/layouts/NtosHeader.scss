@@ -18,3 +18,23 @@
   margin-bottom: -0.5em;
   vertical-align: middle;
 }
+
+.alertBlink {
+  color: #FFFFFF;
+  animation: alertBlinkAnimation 1s infinite;
+}
+
+@keyframes alertBlinkAnimation {
+  0% {
+    color: #FFFFFF;
+  }
+  49% {
+    color: #FFFFFF;
+  }
+  50%{
+    color: #000000;
+  }
+  100% {
+    color: #000000;
+  }
+}
