@@ -194,6 +194,7 @@
 		return_string += voice_name //Name on the ID ain't the same as the speaker, so we display their real name with no title.
 	return_string += end_string
 	stored_name[NAME_PART_INDEX] = return_string
+
 /obj/item/card/id/proc/on_loc_equipped(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
