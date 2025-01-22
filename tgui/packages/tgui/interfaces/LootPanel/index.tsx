@@ -41,8 +41,6 @@ export function LootPanel(props) {
   const [grouping, setGrouping] = useState(true);
   const [searchText, setSearchText] = useState('');
 
-  const total = contents.length ? contents.length - 1 : 0;
-
   const headerHeight = 38;
   const itemHeight = 38;
   const minHeight = headerHeight + itemHeight;
