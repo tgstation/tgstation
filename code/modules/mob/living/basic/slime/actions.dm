@@ -77,6 +77,7 @@
 
 ///Splits the slime into multiple children if possible
 /mob/living/basic/slime/proc/reproduce()
+
 	if(stat != CONSCIOUS)
 		balloon_alert(src, "not conscious!")
 		return
@@ -92,7 +93,7 @@
 		balloon_alert(src, "need growth!")
 		return
 
-	friends_list = list()
+	var/list/friends_list = list()
 	for(var/mob/living/basic/slime/friend in loc)
 		if(QDELETED(friend))
 			continue

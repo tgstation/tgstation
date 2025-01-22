@@ -66,8 +66,6 @@
 	///Our slime's current mood
 	var/current_mood = SLIME_MOOD_NONE
 
-	///Other slimes that are on the same tile.
-	var/list/friends_list = list()
 	///If the slime is currently overcrowded and unable to reproduce.
 	var/overcrowded = FALSE
 
@@ -148,7 +146,6 @@
 
 	QDEL_NULL(evolve_action)
 	QDEL_NULL(reproduce_action)
-	friends_list = null
 
 	return ..()
 
