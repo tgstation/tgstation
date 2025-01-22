@@ -89,7 +89,7 @@
 	if(IS_HERETIC(user))
 		. += span_info("Can be used to cast a curse with blood in your offhand by right clicking a rune.")
 		return
-	. += span_danger("The sight of this fills you with dread!")
+	. += span_danger("The eyes stop blinking. They stare at you. Their gaze burns...")
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		to_chat(human_user, span_userdanger("Your mind burns as you stare at the pages!"))
