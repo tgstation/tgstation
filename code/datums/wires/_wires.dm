@@ -7,16 +7,14 @@
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL)
 		return TRUE
 	if(isassembly(I))
-		var/obj/item/assembly/A = I
-		if(A.attachable)
-			return TRUE
+		return TRUE
 
 /atom/proc/attempt_wire_interaction(mob/user)
 	if(!wires)
 		return WIRE_INTERACTION_FAIL
 	if(!user.CanReach(src))
 		return WIRE_INTERACTION_FAIL
-	wires.interact(user)
+	INVOKE_ASYNC(wires, TYPE_PROC_REF(/datum/wires, interact), user)
 	return WIRE_INTERACTION_BLOCK
 
 /datum/wires
@@ -28,6 +26,9 @@
 	var/dictionary_key = null
 	/// The display name for the wire set shown in station blueprints. Not shown in blueprints if randomize is TRUE or it's an item NT wouldn't know about (Explosives/Nuke). Also used in the hacking interface.
 	var/proper_name = "Unknown"
+
+	/// Whether pulsed wires affect the holder, and/or the holder pulses its wires
+	var/wire_behavior = WIRES_INPUT
 
 	/// List of all wires.
 	var/list/wires = list()
@@ -179,6 +180,7 @@
 /datum/wires/proc/pulse(wire, user, force=FALSE)
 	if(!force && is_cut(wire))
 		return
+	SEND_SIGNAL(src, COMSIG_PULSE_WIRE, wire, user)
 	on_pulse(wire, user)
 
 /datum/wires/proc/pulse_color(color, mob/living/user, force=FALSE)
@@ -191,7 +193,7 @@
 			return TRUE
 
 /datum/wires/proc/attach_assembly(color, obj/item/assembly/S)
-	if(S && istype(S) && S.attachable && !is_attached(color))
+	if(S && istype(S) && S.assembly_behavior && !is_attached(color) && !(SEND_SIGNAL(S, COMSIG_ASSEMBLY_PRE_ATTACH, holder) & COMPONENT_CANCEL_ATTACH))
 		assemblies[color] = S
 		S.forceMove(holder)
 		S.connected = src
@@ -384,13 +386,13 @@
 				I = L.get_active_held_item()
 				if(isassembly(I))
 					var/obj/item/assembly/A = I
-					if(A.attachable)
+					if(A.assembly_behavior & wire_behavior)
 						if(!L.temporarilyRemoveItemFromInventory(A))
 							return
 						if(!attach_assembly(target_wire, A))
 							A.forceMove(L.drop_location())
 						. = TRUE
 					else
-						to_chat(L, span_warning("You need an attachable assembly!"))
+						to_chat(L, span_warning("You cannot attach this assembly to these wires!"))
 
 #undef MAXIMUM_EMP_WIRES

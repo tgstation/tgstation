@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "converting reagents now yields more accurate ph values"
-  - code_imp: "code for converting reagents now performs better"
