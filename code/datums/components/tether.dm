@@ -199,7 +199,7 @@
 		location.balloon_alert(user, "tether extended")
 		return
 
-	if (cur_dist <= 1)
+	if (cur_dist <= 0)
 		location.balloon_alert(user, "too short!")
 		return
 
