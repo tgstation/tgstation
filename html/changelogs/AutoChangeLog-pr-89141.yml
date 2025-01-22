@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "pockets update their icons correctly when removing items that have storage (e.g. box of bandages) from them"

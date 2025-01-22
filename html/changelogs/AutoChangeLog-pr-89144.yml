@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "fishing rod auto reel won't rip of intercoms or other anchored/immovable objects"

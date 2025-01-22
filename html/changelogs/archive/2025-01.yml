@@ -559,3 +559,27 @@
   Rhials:
   - rscadd: You can now ctrl-click IDs to set your Honorific, which will change your
       display name to reflect your TITLE as a WORKING MAN on SPACE STATION 13.
+2025-01-22:
+  SyncIt21:
+  - bugfix: pockets update their icons correctly when removing items that have storage
+      (e.g. box of bandages) from them
+  - bugfix: fishing rod auto reel won't rip of intercoms or other anchored/immovable
+      objects
+  kuricityy:
+  - bugfix: Blob's can no longer place their core in ruins on Icebox.
+  necromanceranne:
+  - balance: Batons now respect the armor worn by targets. Analog batons respect MELEE
+      armor. Cell-type batons respect ENERGY armor.
+  - balance: Various batons have differing amounts of armour penetration based on
+      what type of baton it is.
+  - balance: Heads of staff have color graded batons to denote penetration power.
+      Bronze (Quartermaster), Silver (Chief Engineer, Chief Medical Officer, Head
+      of Personnel, Research Director), Gold (Captain). Contractor batons are equivalent
+      to Gold.
+  - balance: Cell-type batons gain armor penetration based on their cell's quality.
+      The better it is, the more it penetrates.
+  - bugfix: The Big Bess cargo hauler no longer magically becomes (visually) a standard
+      Ripley exosuit.
+  the-og-gear:
+  - bugfix: Deluxe Donk Pockets (and their no-carb and vegan variants) are no longer
+      craftable without collecting the recipe.
