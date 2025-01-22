@@ -64,6 +64,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	)),
 	"authority" = typecacheof(list(
 		/mob/living/basic/trooper/nanotrasen,
+		/mob/living/simple_animal/bot/secbot,
 	)),
 	"birds" = typecacheof(list(
 		/mob/living/basic/chick,
