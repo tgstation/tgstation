@@ -4,6 +4,7 @@ import {
   Button,
   LabeledList,
   Section,
+  Stack,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
@@ -30,9 +31,17 @@ export function CargoExpress(props) {
 
   return (
     <Window width={600} height={700}>
-      <Window.Content scrollable>
-        <InterfaceLockNoticeBox accessText="a Cargo Technician-level ID card" />
-        {!locked && <CargoExpressContent />}
+      <Window.Content>
+        <Stack fill vertical>
+          <Stack.Item>
+            <InterfaceLockNoticeBox accessText="a Cargo Technician-level ID card" />
+          </Stack.Item>
+          {!locked && (
+            <Stack.Item grow m={0}>
+              <CargoExpressContent />
+            </Stack.Item>
+          )}
+        </Stack>
       </Window.Content>
     </Window>
   );
@@ -52,36 +61,43 @@ function CargoExpressContent(props) {
   } = data;
 
   return (
-    <>
-      <Section
-        title="Cargo Express"
-        buttons={
-          <Box inline bold>
-            <AnimatedNumber value={Math.round(points)} />
-            {' credits'}
-          </Box>
-        }
-      >
-        <LabeledList>
-          <LabeledList.Item label="Landing Location">
-            <Button selected={!using_beacon} onClick={() => act('LZCargo')}>
-              Cargo Bay
-            </Button>
-            <Button
-              selected={using_beacon}
-              disabled={!hasBeacon}
-              onClick={() => act('LZBeacon')}
-            >
-              {beaconzone} ({beaconName})
-            </Button>
-            <Button disabled={!canBuyBeacon} onClick={() => act('printBeacon')}>
-              {printMsg}
-            </Button>
-          </LabeledList.Item>
-          <LabeledList.Item label="Notice">{message}</LabeledList.Item>
-        </LabeledList>
-      </Section>
-      <CargoCatalog express />
-    </>
+    <Stack fill vertical>
+      <Stack.Item>
+        <Section
+          title="Cargo Express"
+          buttons={
+            <Box inline bold>
+              <AnimatedNumber value={Math.round(points)} />
+              {' credits'}
+            </Box>
+          }
+        >
+          <LabeledList>
+            <LabeledList.Item label="Landing Location">
+              <Button selected={!using_beacon} onClick={() => act('LZCargo')}>
+                Cargo Bay
+              </Button>
+              <Button
+                selected={using_beacon}
+                disabled={!hasBeacon}
+                onClick={() => act('LZBeacon')}
+              >
+                {beaconzone} ({beaconName})
+              </Button>
+              <Button
+                disabled={!canBuyBeacon}
+                onClick={() => act('printBeacon')}
+              >
+                {printMsg}
+              </Button>
+            </LabeledList.Item>
+            <LabeledList.Item label="Notice">{message}</LabeledList.Item>
+          </LabeledList>
+        </Section>
+      </Stack.Item>
+      <Stack.Item grow m={0}>
+        <CargoCatalog express />
+      </Stack.Item>
+    </Stack>
   );
 }

@@ -1,21 +1,20 @@
 import { sortBy } from 'common/collections';
 import { Dispatch, useMemo, useState } from 'react';
 import {
+  BlockQuote,
   Button,
   Icon,
+  ImageButton,
+  Modal,
   Section,
   Stack,
   Tabs,
   Tooltip,
-  ImageButton,
-  Modal,
-  BlockQuote,
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
 
-import { SearchBar } from '../common/SearchBar';
 import { useBackend, useSharedState } from '../../backend';
-import { CargoCartButtons } from './CargoButtons';
+import { SearchBar } from '../common/SearchBar';
 import { searchForSupplies } from './helpers';
 import { CargoData, Supply, SupplyCategory } from './types';
 
@@ -24,8 +23,8 @@ type Props = {
 };
 
 export function CargoCatalog(props: Props) {
-  const { express } = props;
   const { data } = useBackend<CargoData>();
+  const { express } = props;
 
   const supplies = Object.values(data.supplies);
   const [showContents, setShowContents] = useState('');
@@ -62,9 +61,9 @@ export function CargoCatalog(props: Props) {
           closeContents={setShowContents}
         />
       )}
-      <Section fill title="Catalog" buttons={!express && <CargoCartButtons />}>
-        <Stack fill>
-          <Stack.Item grow>
+      <Stack fill>
+        <Stack.Item grow mr={-1.33}>
+          <Section fill>
             <CatalogTabs
               activeSupplyName={activeSupplyName}
               categories={supplies}
@@ -72,13 +71,15 @@ export function CargoCatalog(props: Props) {
               setActiveSupplyName={setActiveSupplyName}
               setSearchText={setSearchText}
             />
-          </Stack.Item>
-          <Stack.Divider />
-          <Stack.Item grow={express ? 2 : 3}>
+          </Section>
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item grow={express ? 2 : 3} m={0}>
+          <Section fill scrollable>
             <CatalogList packs={packs} openContents={setShowContents} />
-          </Stack.Item>
-        </Stack>
-      </Section>
+          </Section>
+        </Stack.Item>
+      </Stack>
     </>
   );
 }
@@ -126,7 +127,7 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
           }}
         />
       </Stack.Item>
-      <Stack.Item grow overflowY="auto" overflowX="hidden">
+      <Stack.Item grow p={1} m={-1} mt={2} overflowY={'auto'}>
         <Tabs vertical>
           <Tabs.Tab
             key="search_results"
@@ -182,7 +183,7 @@ function CatalogList(props: CatalogListProps) {
   const { packs = [], openContents } = props;
 
   return (
-    <Section fill scrollable>
+    <>
       {packs.map((pack) => {
         let color = '';
         const digits = Math.floor(Math.log10(pack.cost) + 1);
@@ -268,7 +269,7 @@ function CatalogList(props: CatalogListProps) {
           </ImageButton>
         );
       })}
-    </Section>
+    </>
   );
 }
 
@@ -285,22 +286,24 @@ function CatalogPackInfo(props: CatalogContentsProps) {
 
   return (
     <Modal p={1} width={'50vw'} height={'50vh'}>
-      <Section
-        fill
-        title={`${name}`}
-        buttons={
-          <Button
-            icon={'close'}
-            color={'bad'}
-            onClick={() => closeContents('')}
-          />
-        }
-      >
-        <Stack fill vertical>
-          <Stack.Item>
+      <Stack fill vertical>
+        <Stack.Item>
+          <Section
+            fill
+            title={`${name}`}
+            buttons={
+              <Button
+                icon={'close'}
+                color={'bad'}
+                onClick={() => closeContents('')}
+              />
+            }
+          >
             <BlockQuote>{pack?.desc || 'No description available.'}</BlockQuote>
-          </Stack.Item>
-          <Stack.Item grow overflowY="auto" overflowX="hidden">
+          </Section>
+        </Stack.Item>
+        <Stack.Item m={0} grow>
+          <Section fill scrollable>
             {(contains?.length ?? 0) ? (
               contains?.map((item) => (
                 <ImageButton
@@ -326,14 +329,14 @@ function CatalogPackInfo(props: CatalogContentsProps) {
                   />
                 </Stack.Item>
                 <Stack.Item mt={2} color={'label'} textAlign={'center'}>
-                  We can't find information about even the approximate contents
-                  of this order.
+                  {`We can't find information about even the approximate contents
+                  of this order.`}
                 </Stack.Item>
               </Stack>
             )}
-          </Stack.Item>
-        </Stack>
-      </Section>
+          </Section>
+        </Stack.Item>
+      </Stack>
     </Modal>
   );
 }
