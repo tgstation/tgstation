@@ -10,7 +10,7 @@
 // Unique bottle that lets you instantly draw blood from a victim
 /obj/item/reagent_containers/cup/phylactery
 	name = "phylactery of damnation"
-	desc = "Used to steal blood from your soon to be victims."
+	desc = "Used to steal blood from soon-to-be victims."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "phylactery"
 	base_icon_state = "phylactery"
