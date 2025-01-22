@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - balance: "The roundstart report will now display a more broad, less specific message about threat levels when between 0 and 80 threat."

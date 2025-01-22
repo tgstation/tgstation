@@ -59,7 +59,7 @@
 	id_trim = /datum/id_trim/job/head_of_personnel
 	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
 	backpack_contents = list(
-		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/melee/baton/telescopic/silver = 1,
 		)
 	belt = /obj/item/modular_computer/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop

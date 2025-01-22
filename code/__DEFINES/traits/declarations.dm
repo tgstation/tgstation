@@ -1424,4 +1424,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mob doesn't get closed eyelids overlay when it gets knocked out cold or dies
 #define TRAIT_NO_EYELIDS "no_eyelids"
 
+/// Trait applied when the wire bundle component is added to an [/obj/item/integrated_circuit]
+#define TRAIT_COMPONENT_WIRE_BUNDLE "component_wire_bundle"
+
 // END TRAIT DEFINES

@@ -1,6 +1,0 @@
-author: "Dmeto"
-delete-after: True
-changes:
-  - map: "Metastation Science lobby camera moved away form Experimental Destructive Scanner(It was geting eaten on scan)"
-  - bugfix: "Lavaland base hydroponics scrubber attached to its network with missing pipes"
-  - map: " Redundent disconnected scrubber in cargo office removed on Metastation\nmap : Cable remove from under wall of Qm office on Metastation"
