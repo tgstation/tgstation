@@ -42,3 +42,22 @@
  * Used to crop the ID card's transparency away when chaching the icon for better use in tgui chat.
  */
 #define ID_ICON_BORDERS 1, 9, 32, 24
+
+///Honorific will display next to the first name.
+#define HONORIFIC_POSITION_FIRST (1<<0)
+///Honorific will display next to the last name.
+#define HONORIFIC_POSITION_LAST (1<<1)
+///Honorific will not be displayed.
+#define HONORIFIC_POSITION_NONE (1<<2)
+///Honorific will be appended to the full name at the start.
+#define HONORIFIC_POSITION_FIRST_FULL (1<<3)
+///Honorific will be appended to the full name at the end.
+#define HONORIFIC_POSITION_LAST_FULL (1<<4)
+
+#define HONORIFIC_POSITION_BITFIELDS(...) list( \
+	"Honorific + First Name" = HONORIFIC_POSITION_FIRST, \
+	"Honorific + Last Name" = HONORIFIC_POSITION_LAST, \
+	"Honorific + Full Name" = HONORIFIC_POSITION_FIRST_FULL, \
+	"Full Name + Honorific" = HONORIFIC_POSITION_LAST_FULL, \
+	"Disable Honorific" = HONORIFIC_POSITION_NONE, \
+)
