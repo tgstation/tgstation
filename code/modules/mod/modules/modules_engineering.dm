@@ -114,8 +114,10 @@
 	.["cut_tethers"] = add_ui_configuration("Cut Tethers", "button", "scissors")
 
 /obj/item/mod/module/tether/configure_edit(key, value)
-	if (key != "cut_tethers")
-		return
+	if (key == "cut_tethers")
+		SEND_SIGNAL(src, COMSIG_MOD_TETHER_SNAP)
+
+/obj/item/mod/module/tether/on_deactivation(display_message, deleting)
 	SEND_SIGNAL(src, COMSIG_MOD_TETHER_SNAP)
 
 /obj/projectile/tether
@@ -197,6 +199,7 @@
 	anchor.pixel_x = hitx
 	anchor.pixel_y = hity
 	anchor.anchored = TRUE
+	anchor.parent_module = parent_module
 	firer.AddComponent(/datum/component/tether, anchor, 7, "MODtether", parent_module = parent_module, tether_trait_source = REF(parent_module))
 
 /obj/projectile/tether/Destroy()
@@ -210,6 +213,17 @@
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	max_integrity = 60
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
+	/// MODsuit tether module that created our projectile
+	var/obj/item/mod/module/tether/parent_module
+
+/obj/item/tether_anchor/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_TETHER_SNAPPED, PROC_REF(tether_snapped))
+
+/obj/item/tether_anchor/Destroy(force)
+	// We don't need to worry about hanging refs in case our parent gets destroyed because then it snaps all tethers, which in turn destroys us
+	parent_module = null
+	return ..()
 
 /obj/item/tether_anchor/examine(mob/user)
 	. = ..()
@@ -229,6 +243,10 @@
 		balloon_alert(user, "already tethered!")
 		return
 
+	if (parent_module && HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(parent_module)))
+		balloon_alert(user, "already tethered!")
+		return
+
 	balloon_alert(user, "attached tether")
 	user.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -241,6 +259,10 @@
 		return
 
 	if(HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(src)))
+		balloon_alert(user, "already tethered!")
+		return
+
+	if (parent_module && HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(parent_module)))
 		balloon_alert(user, "already tethered!")
 		return
 
@@ -258,9 +280,23 @@
 		balloon_alert(user, "already tethered!")
 		return
 
+	if (parent_module && HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(parent_module)))
+		balloon_alert(user, "already tethered!")
+		return
+
 	balloon_alert(user, "attached tether")
 	to_chat(target, span_userdanger("[user] attaches a tether to you!"))
 	target.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src), no_target_trait = TRUE)
+
+/obj/item/tether_anchor/proc/tether_snapped(datum/component/tether/tether, tether_source)
+	SIGNAL_HANDLER
+
+	if (!parent_module || tether_source != REF(parent_module))
+		return
+
+	// Destroy self if we've been created by a tether module
+	do_sparks(3, TRUE, src)
+	qdel(src)
 
 /datum/embedding/tether_projectile
 	embed_chance = 65 //spiky
