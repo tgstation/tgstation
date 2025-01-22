@@ -65,6 +65,7 @@ export function CargoCatalog(props: Props) {
         <Stack.Item grow mr={-1.33}>
           <Section fill>
             <CatalogTabs
+              express={express}
               activeSupplyName={activeSupplyName}
               categories={supplies}
               searchText={searchText}
@@ -127,7 +128,7 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
           }}
         />
       </Stack.Item>
-      <Stack.Item grow p={1} m={-1} mt={2} overflowY={'auto'}>
+      <Stack.Item grow p={1} m={-1} mt={1} overflowY={'auto'}>
         <Tabs vertical>
           <Tabs.Tab
             key="search_results"
