@@ -128,7 +128,6 @@
 
 	if(!isnull(new_skin))
 		skin = new_skin
-	update_appearance()
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
@@ -151,7 +150,7 @@
 		return INITIALIZE_HINT_LATELOAD
 
 	skin = "adv"
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 	damage_type_healer = HEAL_ALL_DAMAGE
 	if(prob(50))
 		name += ", PhD."
@@ -164,6 +163,7 @@
 
 /mob/living/basic/bot/medbot/update_icon_state()
 	. = ..()
+
 	var/mode_suffix = mode == BOT_HEALING ? "active" : "idle"
 	icon_state = "[base_icon_state]_[skin]_[mode_suffix]"
 
@@ -172,7 +172,6 @@
 
 	if(!(medical_mode_flags & MEDBOT_STATIONARY_MODE))
 		. += mutable_appearance(icon, "[base_icon_state]_overlay_wheels")
-
 
 	if(bot_mode_flags & BOT_MODE_ON)
 		var/mode_suffix = mode == BOT_HEALING ? "active" : "idle"
