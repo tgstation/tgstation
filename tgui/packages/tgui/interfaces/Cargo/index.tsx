@@ -42,7 +42,7 @@ export function CargoContent(props) {
         <CargoStatus />
       </Stack.Item>
       <Stack.Item>
-        <Tabs fluid textAlign="center">
+        <Tabs fluid>
           <Tabs.Tab
             icon="list"
             selected={tab === TAB.Catalog}
@@ -69,7 +69,6 @@ export function CargoContent(props) {
                 Checkout ({amount})
               </Tabs.Tab>
               <Tabs.Tab
-                style={{ flexGrow: 0 }}
                 icon="question"
                 selected={tab === TAB.Help}
                 onClick={() => setTab(TAB.Help)}

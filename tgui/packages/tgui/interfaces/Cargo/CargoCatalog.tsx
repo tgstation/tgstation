@@ -3,16 +3,17 @@ import { Dispatch, useMemo, useState } from 'react';
 import {
   Button,
   Icon,
-  Input,
   Section,
   Stack,
   Tabs,
   Tooltip,
   ImageButton,
   Modal,
+  BlockQuote,
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
 
+import { SearchBar } from '../common/SearchBar';
 import { useBackend, useSharedState } from '../../backend';
 import { CargoCartButtons } from './CargoButtons';
 import { searchForSupplies } from './helpers';
@@ -124,32 +125,23 @@ function CatalogTabs(props: CatalogTabsProps) {
   return (
     <Stack fill vertical>
       <Stack.Item>
-        <Stack align="center">
-          <Stack.Item>
-            <Icon name="search" />
-          </Stack.Item>
-          <Stack.Item grow>
-            <Input
-              fluid
-              placeholder="Search..."
-              value={searchText}
-              onInput={(e, value) => {
-                if (value === searchText) {
-                  return;
-                }
+        <SearchBar
+          query={searchText}
+          onSearch={(value) => {
+            if (value === searchText) {
+              return;
+            }
 
-                if (value.length) {
-                  // Start showing results
-                  setActiveSupplyName('search_results');
-                } else if (activeSupplyName === 'search_results') {
-                  // return to normal category
-                  setActiveSupplyName(sorted[0]?.name);
-                }
-                setSearchText(value);
-              }}
-            />
-          </Stack.Item>
-        </Stack>
+            if (value.length) {
+              // Start showing results
+              setActiveSupplyName('search_results');
+            } else if (activeSupplyName === 'search_results') {
+              // return to normal category
+              setActiveSupplyName(sorted[0]?.name);
+            }
+            setSearchText(value);
+          }}
+        />
       </Stack.Item>
       <Stack.Item grow overflowY="auto" overflowX="hidden">
         <Tabs vertical>
@@ -170,10 +162,10 @@ function CatalogTabs(props: CatalogTabsProps) {
                 setSearchText('');
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Stack justify={'space-between'}>
                 <span>{supply.name}</span>
                 <span> {supply.packs.length}</span>
-              </div>
+              </Stack>
             </Tabs.Tab>
           ))}
         </Tabs>
@@ -274,12 +266,10 @@ type CatalogContentsProps = {
 
 function CatalogPackInfo(props: CatalogContentsProps) {
   const { name, packs, closeContents } = props;
-  const [activeTab, setActiveTab] = useState('contents');
-
   const pack = packs.find((pack) => pack.name === name);
 
   return (
-    <Modal p={0} width={'50vw'} height={'50vh'}>
+    <Modal p={1} width={'50vw'} height={'50vh'}>
       <Section
         fill
         title={`${name}`}
@@ -293,39 +283,23 @@ function CatalogPackInfo(props: CatalogContentsProps) {
       >
         <Stack fill vertical>
           <Stack.Item>
-            <Tabs>
-              <Tabs.Tab
-                selected={activeTab === 'contents'}
-                onClick={() => setActiveTab('contents')}
-              >
-                Contents
-              </Tabs.Tab>
-              <Tabs.Tab
-                selected={activeTab === 'description'}
-                onClick={() => setActiveTab('description')}
-              >
-                Description
-              </Tabs.Tab>
-            </Tabs>
+            <BlockQuote>{pack?.desc || 'No description available.'}</BlockQuote>
           </Stack.Item>
-          <Stack.Item grow mt={0} overflowY="auto">
-            {activeTab === 'contents' &&
-              pack?.contains?.map((item) => (
-                <ImageButton
-                  key={item.name}
-                  fluid
-                  dmIcon={item.icon}
-                  dmIconState={item.icon_state}
-                  imageSize={32}
-                >
-                  <Stack fill>
-                    <Stack.Item textAlign="left">{item.name}</Stack.Item>
-                    {!!item.amount && <Stack.Item>x{item.amount}</Stack.Item>}
-                  </Stack>
-                </ImageButton>
-              ))}
-            {activeTab === 'description' &&
-              (pack?.desc || 'No description available.')}
+          <Stack.Item grow overflowY="auto" overflowX="hidden">
+            {pack?.contains?.map((item) => (
+              <ImageButton
+                key={item.name}
+                fluid
+                dmIcon={item.icon}
+                dmIconState={item.icon_state}
+                imageSize={32}
+              >
+                <Stack fill>
+                  <Stack.Item textAlign="left">{item.name}</Stack.Item>
+                  {!!item.amount && <Stack.Item>x{item.amount}</Stack.Item>}
+                </Stack>
+              </ImageButton>
+            ))}
           </Stack.Item>
         </Stack>
       </Section>
