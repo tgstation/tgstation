@@ -312,3 +312,5 @@
 #define BB_TURTLE_HEADBUTT_VICTIM "turtle_headbutt_victim"
 ///flore we must smell
 #define BB_TURTLE_FLORA_TARGET "turtle_flora_target"
+
+#define BB_GUNMIMIC_GUN_EMPTY "BB_GUNMIMIC_GUN_EMPTY"
