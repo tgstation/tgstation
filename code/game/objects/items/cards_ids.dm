@@ -164,9 +164,9 @@
 
 /obj/item/card/id/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	if (isitem(old_loc))
-		UnregisterSignal(loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-		if (ismob(loc.loc))
-			UnregisterSignal(loc.loc, COMSIG_MOVABLE_POINTED)
+		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+		if (ismob(old_loc.loc))
+			UnregisterSignal(old_loc.loc, COMSIG_MOVABLE_POINTED)
 	. = ..()
 	if (isitem(loc))
 		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped))
