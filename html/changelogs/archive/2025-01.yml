@@ -478,3 +478,108 @@
   - bugfix: Any bug that would occur from becoming nearsighted with a scarred eye
       should be fixed now
   - code_imp: status_effect/grouped merging code has been improved (i hope)
+2025-01-17:
+  00-Steven:
+  - spellcheck: Exporting a human tongue no longer calls it a 'tounge'.
+  Majkl-J:
+  - bugfix: The apiary now correctly checks for podpeople, allowing subtypes of the
+      species to also interact with is.
+  - code_imp: Beebox file single letter vars have been told to buzz off.
+  Melbert:
+  - bugfix: Big smoke puff from cigarettes happen
+  - bugfix: Tram now smashes certain objects it should be smashing again
+  - rscadd: Adds Carptongue language, spoken by Space Carps.
+  - rscdel: Space Carps no longer speak or understand Common. Special carps like Cayenne
+      and Lia can still understand common.
+  - rscadd: Space Dragons can speak Draconic and Carptongue.
+  - rscdel: Space Dragons no longer speak Common. They can still understand it.
+  - rscadd: Ash Drakes and Ice Whelps now speak Draconic.
+  - rscdel: Ash Drakes and Ice Whelps no longer speak Common. They can still understand
+      it.
+  - rscadd: Fire Sharks now speak Carptongue.
+  - rscdel: Fire Sharks no longer speak Common. They can still understand it.
+  - rscadd: Fish and Carp Infusion now grant Carptongue, letting you speak to (and
+      understand) Space Carps.
+  - rscadd: Sleeping Carp grants you Carptongue, but as most human tongues can't speak
+      it, you'll only be able to understand Space Carps unless you steal a fish tongue.
+  gleypi:
+  - spellcheck: fixed the tong clacking message
+2025-01-18:
+  EnterTheJake:
+  - image: Codex Cicatrix has received a new sprite
+2025-01-19:
+  Absolucy:
+  - qol: Small and tiny mobs no longer trigger squeaking objects when walking over
+      them.
+  AyIong:
+  - qol: SmartFridge got another redesign, and you can dispense all amount of product
+      in one click (RMB on product)
+  Chowder-McArthor:
+  - qol: Strange geysers now say in their name what they produce.
+  Jacquerel:
+  - rscadd: Eggs (and all other edible food) left in a hot place will fry.
+  MTandi:
+  - bugfix: Fixed plant analyzer UI crashing on plants that have a reagent gene on
+      their graft
+  - bugfix: Plants with reagent traits in the graft now properly say the name of the
+      grafted reagent
+  - image: yet another medkit resprite
+  SmArtKar:
+  - bugfix: Fixed active turfs on the new Turreted Outpost ruin.
+2025-01-20:
+  RengaN02:
+  - bugfix: Fixed Engine Diagnostic surgery
+  SmArtKar:
+  - image: Resprited default and mirage grenades
+  - image: Made the unholy water flask darker
+  Y0SH1M4S73R:
+  - refactor: Wires and assemblies have been refactored to have directionality to
+      them. This mostly makes it so that assemblies can only be attached to wires
+      it would make sense for them to be attached to.
+  - qol: Pressure plates can now also accept igniters, condensers, flashes, assembly
+      shells, and door controllers.
+  - rscadd: Undertile circuit shells. They only work when placed under floor tiles,
+      but support USB cables and use APC power instead of cell power.
+  - rscadd: Wallmounted circuit shells. Large shells that support USB cables and use
+      APC power instead of cell power.
+  - rscadd: Wire bundle component. Adds a number of wires to the circuit proportional
+      to the capacity of the shell, allowing you to use assemblies in circuit logic.
+  mc-oofert:
+  - refactor: mimics (bolt of animation, malf ai Machine Override, etc) are basicmobs
+  - bugfix: crate mimics may now be opened
+2025-01-21:
+  AyIong:
+  - qol: 'Vending machines got new design with 2 layouts: List and Grid (List by default)'
+  NamelessFairy:
+  - bugfix: Admin fired stray syndicate cargo pods will not rebel against admin whims
+      and launch themselves when cancelled.
+  - admin: Admins have new categories to fill syndicate cargo pods with.
+  Pickle-Coding:
+  - bugfix: Fixes HFR moderator leaking not leaking properly when a part is cracked.
+  Rhials:
+  - rscadd: You can now ctrl-click IDs to set your Honorific, which will change your
+      display name to reflect your TITLE as a WORKING MAN on SPACE STATION 13.
+2025-01-22:
+  SyncIt21:
+  - bugfix: pockets update their icons correctly when removing items that have storage
+      (e.g. box of bandages) from them
+  - bugfix: fishing rod auto reel won't rip of intercoms or other anchored/immovable
+      objects
+  kuricityy:
+  - bugfix: Blob's can no longer place their core in ruins on Icebox.
+  necromanceranne:
+  - balance: Batons now respect the armor worn by targets. Analog batons respect MELEE
+      armor. Cell-type batons respect ENERGY armor.
+  - balance: Various batons have differing amounts of armour penetration based on
+      what type of baton it is.
+  - balance: Heads of staff have color graded batons to denote penetration power.
+      Bronze (Quartermaster), Silver (Chief Engineer, Chief Medical Officer, Head
+      of Personnel, Research Director), Gold (Captain). Contractor batons are equivalent
+      to Gold.
+  - balance: Cell-type batons gain armor penetration based on their cell's quality.
+      The better it is, the more it penetrates.
+  - bugfix: The Big Bess cargo hauler no longer magically becomes (visually) a standard
+      Ripley exosuit.
+  the-og-gear:
+  - bugfix: Deluxe Donk Pockets (and their no-carb and vegan variants) are no longer
+      craftable without collecting the recipe.
