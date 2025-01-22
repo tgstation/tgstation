@@ -159,7 +159,6 @@
 	radial_name = "Chasm"
 	overlay_state = "portal_chasm"
 	radial_state = "ground_hole"
-	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_NONE
 
 /datum/fish_source/portal/ocean
 	fish_table = list(
@@ -327,6 +326,7 @@
 		/datum/chasm_detritus = 30,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_NONE
 
 /datum/fish_source/chasm/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
