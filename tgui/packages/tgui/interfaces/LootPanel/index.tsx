@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useMemo } from 'react';
-import { Button, Input, Section, Stack } from 'tgui-core/components';
+import { Box, Button, Section } from 'tgui-core/components';
 import { isEscape } from 'tgui-core/keys';
 import { clamp } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -13,12 +12,11 @@ import { SearchItem } from './types';
 
 type Data = {
   contents: SearchItem[];
-  searching: BooleanLike;
 };
 
 export function LootPanel(props) {
   const { act, data } = useBackend<Data>();
-  const { contents = [], searching } = data;
+  const { contents = [] } = data;
 
   // limitations: items with different stack counts, charges etc.
   const contentsByPathName = useMemo(() => {
@@ -39,14 +37,13 @@ export function LootPanel(props) {
   }, [contents]);
 
   const [grouping, setGrouping] = useState(true);
-  const [searchText, setSearchText] = useState('');
 
   const total = contents.length ? contents.length - 1 : 0;
 
-  const minHeight = 126;
-  const maxHeight = 468;
-  const headerHeight = 88;
+  const headerHeight = 38;
   const itemHeight = 38;
+  const minHeight = headerHeight + itemHeight;
+  const maxHeight = headerHeight + itemHeight * 10;
   const height: number = clamp(
     headerHeight +
       (!grouping ? contents.length : Object.keys(contentsByPathName).length) *
@@ -56,52 +53,40 @@ export function LootPanel(props) {
   );
 
   return (
-    <Window width={300} height={height} title={`Contents: ${total}`}>
+    <Window
+      width={300}
+      height={height}
+      title={`Contents: ${total}`}
+      buttons={
+        <Box align={'left'}>
+          <Button
+            icon={grouping ? 'layer-group' : 'object-ungroup'}
+            selected={grouping}
+            onClick={() => setGrouping(!grouping)}
+            tooltip="Toggle Grouping"
+          />
+          <Button
+            icon="sync"
+            onClick={() => act('refresh')}
+            tooltip="Refresh"
+          />
+        </Box>
+      }
+    >
       <Window.Content
+        fitted
+        scrollable={height === maxHeight}
         onKeyDown={(event) => {
           if (isEscape(event.key)) {
             Byond.sendMessage('close');
           }
         }}
       >
-        <Section
-          scrollable={height === maxHeight}
-          fill
-          title={
-            <Stack>
-              <Stack.Item grow>
-                <Input
-                  fluid
-                  onInput={(event, value) => setSearchText(value)}
-                  placeholder="Search"
-                />
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  icon={grouping ? 'layer-group' : 'object-ungroup'}
-                  selected={grouping}
-                  onClick={() => setGrouping(!grouping)}
-                  tooltip="Toggle Grouping"
-                />
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  disabled={!!searching}
-                  icon="sync"
-                  onClick={() => act('refresh')}
-                  tooltip="Refresh"
-                />
-              </Stack.Item>
-            </Stack>
-          }
-        >
+        <Section fill>
           {grouping ? (
-            <GroupedContents
-              contents={contentsByPathName}
-              searchText={searchText}
-            />
+            <GroupedContents contents={contentsByPathName} />
           ) : (
-            <RawContents contents={contents} searchText={searchText} />
+            <RawContents contents={contents} />
           )}
         </Section>
       </Window.Content>
