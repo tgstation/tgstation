@@ -48,9 +48,9 @@
 
 /datum/reagent/heretic_rust
 	name = "Eldritch Rust"
-	description = "A slurry of some off-putting liquid. Just looking at it makes you feel sick."
+	description = "A slurry of viscous, chunky brown liquid."
 	color = COLOR_CARGO_BROWN // Rust color
-	taste_description = "scorching agony"
+	taste_description = "rotten copper"
 	penetrates_skin = NONE
 	ph = 7.4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
