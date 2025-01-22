@@ -27,6 +27,15 @@ jobs:
       - name: Mandatory Empty Step
         run: exit 0
 
+  setup_caches:
+    name: Setup commonly-used caches
+    needs: start_gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up BYOND cache
+        uses: ./.github/actions/restore_or_install_byond
+
   run_linters:
     name: Run Linters
     needs: start_gate
@@ -143,20 +152,16 @@ jobs:
 
   compile_all_maps:
     name: Compile Maps
-    needs: collect_data
+    needs: [ collect_data, setup_caches ]
     runs-on: ubuntu-22.04
     timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v4
-      - name: Restore BYOND cache
-        uses: actions/cache@v4
-        with:
-          path: ~/BYOND
-          key: ${{ runner.os }}-byond-${{ hashFiles('dependencies.sh') }}
+      - name: Restore BYOND from Cache
+        uses: ./.github/actions/restore_or_install_byond
       - name: Compile All Maps
         run: |
-          bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
       - name: Check client Compatibility
@@ -197,7 +202,7 @@ jobs:
 
   run_all_tests:
     name: Integration Tests
-    needs: collect_data
+    needs: [ collect_data, setup_caches ]
 
     strategy:
       fail-fast: false
