@@ -59,14 +59,17 @@ export function LootBox(props: Props) {
           <IconDisplay item={item} size={{ height: 3, width: 3 }} />
         </Stack.Item>
         <Stack.Item
-          grow
+          lineHeight="32px"
           overflow="hidden"
-          py={1}
           style={{ textOverflow: 'ellipsis' }}
         >
           {!is_blind && name}
         </Stack.Item>
-        {amount > 1 && <Stack.Item p={1}>{'x' + amount}</Stack.Item>}
+        {amount > 1 && (
+          <Stack.Item grow lineHeight="32px">
+            {'x' + amount}
+          </Stack.Item>
+        )}
       </Stack>
     </Button>
   );

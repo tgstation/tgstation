@@ -82,7 +82,7 @@ export function LootPanel(props) {
           }
         }}
       >
-        <Section fill>
+        <Section>
           {grouping ? (
             <GroupedContents contents={contentsByPathName} />
           ) : (
