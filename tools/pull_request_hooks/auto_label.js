@@ -260,6 +260,7 @@ export async function update_labels({ github, context }) {
 	else
 		updated_labels.push('Merge Conflict');
 
+	console.log(`Updating labels: ${updated_labels}`);
 	await github.rest.issues.setLabels({
 		issue_number: number,
 		labels: [... new Set(updated_labels)],
