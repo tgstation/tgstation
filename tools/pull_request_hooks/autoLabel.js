@@ -105,7 +105,6 @@ async function check_diff_for_labels(diff_url) {
 	return { labels_to_add, labels_to_remove };
 }
 
-
 export async function get_updated_label_set({ github, context }) {
 	const {
 		action,
@@ -148,17 +147,42 @@ export async function get_updated_label_set({ github, context }) {
 		}
 	}
 
+	// this is always removed on updates
+	updated_labels.delete('Test Merge Candidate');
+
 	// update merge conflict label
-	// if mergeable is null, it has not been checked
-	switch(mergeable) {
-		case null:
-			break;
-		case true:
-			updated_labels.delete('Merge Conflict');
-			break;
-		case false:
-			updated_labels.add('Merge Conflict');
-			break;
+	let merge_conflict = mergeable === false;
+	// null means it was not reported yet
+	// it is not normally included in the payload - a "get" is needed
+	if(mergeable === null){
+		try {
+			let response = await github.rest.pulls.get({
+				owner: context.repo.owner,
+				repo: context.repo.repo,
+				pull_number: pull_request.number,
+			});
+			// failed to find? still processing? try again in a few seconds
+			if(response.data.mergeable === null){
+				await new Promise(r => setTimeout(r, 10000));
+				response = await github.rest.pulls.get({
+					owner: context.repo.owner,
+					repo: context.repo.repo,
+					pull_number: pull_request.number,
+				});
+				if(response.data.mergeable === null){
+					throw new Error("Merge status not available");
+				}
+			}
+
+			merge_conflict = response.data.mergeable === false;
+		} catch (e) {
+			console.error(e);
+		}
+	}
+	if(merge_conflict){
+		updated_labels.add('Merge Conflict');
+	} else {
+		updated_labels.delete('Merge Conflict');
 	}
 
 	// return the labels to the action, which will apply it
