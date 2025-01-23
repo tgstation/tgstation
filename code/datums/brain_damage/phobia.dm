@@ -56,31 +56,31 @@
 	if(LAZYLEN(trigger_objs))
 		for(var/obj/seen_item in seen_atoms)
 			if(is_scary_item(seen_item))
-				freak_out(seen_item)
+				freak_out_on_seeing(seen_item)
 				return
 		for(var/mob/living/carbon/human/nearby_guy in seen_atoms) //check equipment for trigger items
 			for(var/obj/item/equipped as anything in nearby_guy.get_visible_items())
 				if(is_scary_item(equipped))
-					freak_out(equipped)
+					freak_out_on_seeing(equipped)
 					return
 
 	if(LAZYLEN(trigger_turfs))
 		for(var/turf/T in seen_atoms)
 			if(is_type_in_typecache(T, trigger_turfs))
-				freak_out(T)
+				freak_out_on_seeing(T)
 				return
 
 	seen_atoms -= owner //make sure they aren't afraid of themselves.
 	if(LAZYLEN(trigger_mobs) || LAZYLEN(trigger_species))
 		for(var/mob/M in seen_atoms)
 			if(is_type_in_typecache(M, trigger_mobs))
-				freak_out(M)
+				freak_out_on_seeing(M)
 				return
 
 			else if(ishuman(M)) //check their species
 				var/mob/living/carbon/human/H = M
 				if(LAZYLEN(trigger_species) && H.dna && H.dna.species && is_type_in_typecache(H.dna.species, trigger_species))
-					freak_out(H)
+					freak_out_on_seeing(H)
 					return
 
 /// Returns true if this item should be scary to us
@@ -100,13 +100,17 @@
 		return
 
 	if(trigger_regex.Find(hearing_args[HEARING_RAW_MESSAGE]) != 0)
-		addtimer(CALLBACK(src, PROC_REF(freak_out), null, trigger_regex.group[2]), 1 SECONDS) //to react AFTER the chat message
+		addtimer(CALLBACK(src, PROC_REF(freak_out_on_hear), trigger_regex.group[2]), 1 SECONDS) //to react AFTER the chat message
 		hearing_args[HEARING_RAW_MESSAGE] = trigger_regex.Replace(hearing_args[HEARING_RAW_MESSAGE], "[span_phobia("$2")]$3")
 
 /datum/brain_trauma/mild/phobia/handle_speech(datum/source, list/speech_args)
 	if (HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
 	if (trigger_regex.Find(speech_args[SPEECH_MESSAGE]) == 0)
+		return
+	if (speech_args[SPEECH_FORCED])
+		// If we've been forced to speak a phobia word, allow it to go through - then freak out!
+		addtimer(CALLBACK(src, PROC_REF(freak_out_on_forced_to_say), trigger_regex.group[2]), 1 SECONDS)
 		return
 
 	var/stutter = prob(50)
@@ -121,31 +125,47 @@
 		owner.set_stutter_if_lower(4 SECONDS)
 	to_chat(owner, span_warning("You struggle to say the word \"[span_phobia("[trigger_regex.group[2]]")]\"!"))
 
-/datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
-	if(owner.stat == DEAD)
-		return
+/datum/brain_trauma/mild/phobia/proc/pre_freak_out(atom/reason, trigger_word)
+	COOLDOWN_START(src, scare_cooldown, 12 SECONDS)
+	if(mood_event_type)
+		owner.add_mood_event("phobia_[phobia_type]", mood_event_type)
 
-	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
-	if(trigger_word)
-		if (owner.has_status_effect(/datum/status_effect/minor_phobia_reaction))
-			return
-		to_chat(owner, span_userdanger("Hearing [span_phobia(trigger_word)] [message]!"))
-		owner.apply_status_effect(/datum/status_effect/minor_phobia_reaction)
+/datum/brain_trauma/mild/phobia/proc/get_spooked_message()
+	return pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
+
+/datum/brain_trauma/mild/phobia/proc/freak_out_on_seeing(atom/reason)
+	if(owner.stat == DEAD)
 		return
 
 	COOLDOWN_START(src, scare_cooldown, 12 SECONDS)
 	if(mood_event_type)
 		owner.add_mood_event("phobia_[phobia_type]", mood_event_type)
 
-	if(reason)
-		to_chat(owner, span_userdanger("Seeing [span_phobia(reason.name)] [message]!"))
-	else
-		to_chat(owner, span_userdanger("Something [message]!"))
+	var/message = src.get_spooked_message()
+	to_chat(owner, span_userdanger("Seeing [span_phobia(reason.name)] [message]!"))
+	owner.face_atom(reason)
+	owner._pointed(reason)
 
-	if(reason)
-		owner.face_atom(reason)
-		owner._pointed(reason)
-	owner.apply_status_effect(/datum/status_effect/stacking/phobia_reaction, 1, mood_event_type)
+/datum/brain_trauma/mild/phobia/proc/freak_out_on_hear(trigger_word)
+	if(owner.stat == DEAD)
+		return
+	if (owner.has_status_effect(/datum/status_effect/minor_phobia_reaction))
+		return
+
+	var/message = src.get_spooked_message()
+	to_chat(owner, span_userdanger("Hearing [span_phobia(trigger_word)] [message]!"))
+	owner.apply_status_effect(/datum/status_effect/minor_phobia_reaction)
+
+/datum/brain_trauma/mild/phobia/proc/freak_out_on_forced_to_say(trigger_word)
+	if(owner.stat == DEAD)
+		return
+
+	if (owner.has_status_effect(/datum/status_effect/minor_phobia_reaction))
+		return
+
+	var/message = src.get_spooked_message()
+	to_chat(owner, span_userdanger("Saying [span_phobia(trigger_word)] [message]!"))
+	owner.apply_status_effect(/datum/status_effect/minor_phobia_reaction)
 
 // Defined phobia types for badminry, not included in the RNG trauma pool to avoid diluting.
 
