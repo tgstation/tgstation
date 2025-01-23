@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "AIs can now examine through their eye."
+  - bugfix: "Dullahans can also examine through their head again."
