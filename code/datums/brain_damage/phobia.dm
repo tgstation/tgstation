@@ -125,11 +125,6 @@
 		owner.set_stutter_if_lower(4 SECONDS)
 	to_chat(owner, span_warning("You struggle to say the word \"[span_phobia("[trigger_regex.group[2]]")]\"!"))
 
-/datum/brain_trauma/mild/phobia/proc/pre_freak_out(atom/reason, trigger_word)
-	COOLDOWN_START(src, scare_cooldown, 12 SECONDS)
-	if(mood_event_type)
-		owner.add_mood_event("phobia_[phobia_type]", mood_event_type)
-
 /datum/brain_trauma/mild/phobia/proc/get_spooked_message()
 	return pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
 
