@@ -27,7 +27,6 @@
 		return
 
 	eyes_of_the_holder.eye_color_right = color
-	eyes_of_the_holder.old_eye_color_right = color
 	eyes_of_the_holder.refresh()
 
 	if(was_not_hetero)

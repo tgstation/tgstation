@@ -323,7 +323,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ghostize(FALSE) // FALSE parameter is so we can never re-enter our body. U ded.
 	return TRUE
 
-/mob/camera/verb/ghost()
+/mob/eye/verb/ghost()
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
@@ -436,7 +436,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.add_overlay(source)
 				source.layer = old_layer
 				source.plane = old_plane
-	to_chat(src, span_ghostalert("<a href=?src=[REF(src)];reenter=1>(Click to re-enter)</a>"))
+	to_chat(src, span_ghostalert("<a href=byond://?src=[REF(src)];reenter=1>(Click to re-enter)</a>"))
 	if(sound)
 		SEND_SOUND(src, sound(sound))
 
@@ -704,7 +704,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/mouse_drop_dragged(atom/over, mob/user)
-	if (isobserver(user) && user.client.holder && (isliving(over) || iscameramob(over)))
+	if (isobserver(user) && user.client.holder && (isliving(over) || iseyemob(over)))
 		user.client.holder.cmd_ghost_drag(src, over)
 
 /mob/dead/observer/Topic(href, href_list)

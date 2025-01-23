@@ -502,7 +502,7 @@
 	///The max intensity of a nebula
 	VAR_PROTECTED/maximum_nebula_intensity = 2 HOURS
 	///How long it takes to go to the next nebula level/intensity
-	VAR_PROTECTED/intensity_increment_time = INFINITE
+	VAR_PROTECTED/intensity_increment_time = 30 MINUTES
 	///Objects that we use to calculate the current shielding level
 	var/list/shielding = list()
 

@@ -19,6 +19,7 @@
 		"Black" = "clipboard_black",
 		"White" = "clipboard_white",
 	)
+	unique_reskin_changes_inhand = TRUE
 
 	/// The stored pen
 	var/obj/item/pen/pen
@@ -91,13 +92,22 @@
 
 /obj/item/clipboard/update_overlays()
 	. = ..()
-	var/obj/item/paper/toppaper = toppaper_ref?.resolve()
-	if(toppaper)
-		. += toppaper.icon_state
-		. += toppaper.overlays
+	var/paper_to_add = get_paper_overlay()
+	if(paper_to_add)
+		. += paper_to_add
 	if(pen)
 		. += "clipboard_pen"
 	. += "clipboard_over"
+
+/obj/item/clipboard/proc/get_paper_overlay()
+	var/obj/item/paper/toppaper = toppaper_ref?.resolve()
+	if(isnull(toppaper))
+		return
+
+	var/mutable_appearance/paper_overlay = mutable_appearance(icon, toppaper.icon_state, offset_spokesman = src, appearance_flags = KEEP_APART)
+	paper_overlay = toppaper.color_atom_overlay(paper_overlay)
+	paper_overlay.overlays += toppaper.overlays
+	return paper_overlay
 
 /obj/item/clipboard/attack_hand(mob/user, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))

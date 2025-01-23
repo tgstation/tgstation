@@ -61,8 +61,23 @@
 /obj/item/inducer/examine(mob/living/user)
 	. = ..()
 
-	if(!QDELETED(powerdevice))
-		. += span_notice("Its display shows: [display_energy(powerdevice.charge)].")
+	. += examine_hints(user)
+
+/**
+ * Gives description for this inducer
+ * Arguments
+ *
+ * * mob/living/user - the mob we are returning the description to
+ */
+/obj/item/inducer/proc/examine_hints(mob/living/user)
+	PROTECTED_PROC(TRUE)
+	SHOULD_BE_PURE(TRUE)
+
+	. = list()
+
+	var/obj/item/stock_parts/power_store/our_cell = get_cell(src, user)
+	if(!QDELETED(our_cell))
+		. += span_notice("Its display shows: [display_energy(our_cell.charge)].")
 		if(opened)
 			. += span_notice("The cell can be removed with an empty hand.")
 			. += span_notice("Plasma sheets can be used to recharge the cell.")
@@ -99,14 +114,15 @@
 
 /obj/item/inducer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
+
 	if(user.combat_mode || !istype(tool) || tool.flags_1 & HOLOGRAM_1 || tool.item_flags & ABSTRACT)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
-	if(!opened)
-		balloon_alert(user, "open first!")
-		return ITEM_INTERACT_FAILURE
-
 	if(istype(tool, /obj/item/stock_parts/power_store))
+		if(!opened)
+			balloon_alert(user, "open first!")
+			return ITEM_INTERACT_FAILURE
+
 		if(!QDELETED(powerdevice))
 			balloon_alert(user, "cell already installed!")
 			return ITEM_INTERACT_FAILURE
@@ -118,7 +134,7 @@
 		powerdevice = tool
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/stack/sheet/mineral/plasma) && !QDELETED(powerdevice))
+	else if(istype(tool, /obj/item/stack/sheet/mineral/plasma) && !QDELETED(powerdevice))
 		if(!powerdevice.used_charge())
 			balloon_alert(user, "fully charged!")
 			return ITEM_INTERACT_FAILURE
@@ -131,6 +147,10 @@
 
 /obj/item/inducer/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
 	. = NONE
+
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return
+
 	if(user.combat_mode || !istype(interacting_with) || interacting_with.flags_1 & HOLOGRAM_1)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
@@ -146,11 +166,13 @@
 		to_chat(user, span_warning("You don't have the dexterity to use [src]!"))
 		return ITEM_INTERACT_FAILURE
 
-	if(QDELETED(powerdevice))
+	var/obj/item/stock_parts/power_store/our_cell = get_cell(src, user)
+
+	if(QDELETED(our_cell))
 		balloon_alert(user, "no cell installed!")
 		return ITEM_INTERACT_FAILURE
 
-	if(!powerdevice.charge)
+	if(!our_cell.charge)
 		balloon_alert(user, "no charge!")
 		return ITEM_INTERACT_FAILURE
 
@@ -173,13 +195,13 @@
 			break
 
 		//transfer of charge
-		var/transferred = min(powerdevice.charge, target_cell.used_charge(), (target_cell.rating_base * target_cell.rating * power_transfer_multiplier))
+		var/transferred = min(our_cell.charge, target_cell.used_charge(), target_cell.rating_base * target_cell.rating * power_transfer_multiplier)
 		if(!transferred)
 			break
-		powerdevice.use(target_cell.give(transferred))
+		our_cell.use(target_cell.give(transferred))
 
 		//update all appearances
-		powerdevice.update_appearance()
+		our_cell.update_appearance()
 		target_cell.update_appearance()
 		interacting_with.update_appearance()
 
@@ -223,3 +245,24 @@
 	desc = "A tool for inductively charging internal power cells. This one has a suspicious colour scheme, and seems to be rigged to transfer charge at a much faster rate."
 	power_transfer_multiplier = 2 // 2x the base speed
 	powerdevice = /obj/item/stock_parts/power_store/battery/super
+
+/obj/item/inducer/cyborg
+	name = "internal inducer"
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "inducer-engi"
+	powerdevice = null
+
+/obj/item/inducer/cyborg/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	return NONE
+
+/obj/item/inducer/cyborg/examine_hints(mob/living/user)
+	return list()
+
+/obj/item/inducer/cyborg/get_cell(atom/movable/interface, mob/living/silicon/robot/silicon_friend)
+	return istype(silicon_friend) ? silicon_friend.cell : null
+
+/obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
+	return ITEM_INTERACT_FAILURE
+
+/obj/item/inducer/cyborg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_FAILURE

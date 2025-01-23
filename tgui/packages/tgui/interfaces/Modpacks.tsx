@@ -1,5 +1,4 @@
 // THIS IS A MASSMETA UI FILE
-
 import { useState } from 'react';
 import {
   Box,
@@ -11,7 +10,7 @@ import {
   Stack,
   Table,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
 
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';

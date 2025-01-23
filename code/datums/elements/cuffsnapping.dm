@@ -42,12 +42,19 @@
 	src.snap_time_strong = snap_time_strong
 
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(target, COMSIG_ITEM_ATTACK , PROC_REF(try_cuffsnap_target))
+	RegisterSignal(target, COMSIG_ITEM_ATTACK_SECONDARY, PROC_REF(try_cuffsnap_target))
+	RegisterSignal(target, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_item_context))
 
 /datum/element/cuffsnapping/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK, COMSIG_ATOM_EXAMINE))
-
+	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK_SECONDARY, COMSIG_ATOM_EXAMINE, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
 	return ..()
+
+/datum/element/cuffsnapping/proc/add_item_context(obj/item/source, list/context, mob/living/carbon/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(!iscarbon(target) || !target.handcuffed)
+		return NONE
+	context[SCREENTIP_CONTEXT_RMB] = "Cut Restraints"
+	return CONTEXTUAL_SCREENTIP_SET
 
 ///signal called on parent being examined
 /datum/element/cuffsnapping/proc/on_examine(datum/target, mob/user, list/examine_list)
@@ -56,7 +63,7 @@
 	var/examine_string
 	if(isnull(snap_time_weak))
 		return
-	examine_string = "It looks like it could cut zipties or cable restraints off someone in [snap_time_weak] seconds"
+	examine_string = "It looks like it could be used to cut zipties or cable restraints off someone in [snap_time_weak] seconds"
 
 	if(!isnull(snap_time_strong))
 		examine_string += ", and handcuffs in [snap_time_strong] seconds."
@@ -65,7 +72,7 @@
 
 	examine_list += span_notice(examine_string)
 
-/datum/element/cuffsnapping/proc/try_cuffsnap_target(obj/item/cutter, mob/living/carbon/target, mob/cutter_user, params)
+/datum/element/cuffsnapping/proc/try_cuffsnap_target(obj/item/cutter, mob/living/carbon/target, mob/living/cutter_user, params)
 	SIGNAL_HANDLER
 
 	if(!istype(target)) //we aren't the kind of mob that can even have cuffs, so we skip.

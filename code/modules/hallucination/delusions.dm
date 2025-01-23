@@ -230,6 +230,22 @@
 
 	return ..()
 
+/datum/hallucination/delusion/preset/seccies
+	dynamic_delusion = TRUE
+	random_hallucination_weight = 0
+	delusion_name = "Security"
+	affects_others = TRUE
+	affects_us = FALSE
+
+/datum/hallucination/delusion/preset/seccies/make_delusion_image(mob/over_who)
+	delusion_appearance = get_dynamic_human_appearance(
+		outfit_path = /datum/outfit/job/security,
+		bloody_slots = prob(5) ? ALL : NONE,
+		r_hand = prob(15) ? /obj/item/melee/baton/security/loaded : null,
+		l_hand = prob(15) ? /obj/item/melee/baton/security/loaded : null,
+	)
+	return ..()
+
 /// Hallucination used by the nightmare vision goggles to turn everyone except you into mares
 /datum/hallucination/delusion/preset/mare
 	delusion_icon_file = 'icons/obj/clothing/masks.dmi'

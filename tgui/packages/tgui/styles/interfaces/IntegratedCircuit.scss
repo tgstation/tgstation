@@ -62,7 +62,7 @@ $fg-map: colors.$fg-map !default;
   }
 }
 
-$border-color: #88bfff !default;
+$border-color: hsl(210, 100%, 73%) !default;
 $border-radius: base.$border-radius !default;
 
 .IntegratedCircuit__BlueBorder {

@@ -19,7 +19,7 @@
 	icon_dead = "base_dead"
 	icon_gib = "carp_gib"
 	gold_core_spawnable = HOSTILE_SPAWN
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
 	health = 25
 	maxHealth = 25
 	pressure_resistance = 200
@@ -59,7 +59,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack
+		/datum/pet_command/attack
 	)
 	/// Carp want to eat raw meat
 	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
@@ -111,7 +111,8 @@
 		tamed(tamer, feedback = FALSE)
 		befriend(tamer)
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5)
+		var/static/list/food_types = list(/obj/item/food/meat)
+		AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 10, bonus_tame_chance = 5)
 
 	teleport = new(src)
 	teleport.Grant(src)

@@ -39,8 +39,9 @@
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
+		/datum/pet_command/move,
 		/datum/pet_command/untargeted_ability/pet_lights,
-		/datum/pet_command/point_targeting/use_ability/take_photo,
+		/datum/pet_command/use_ability/take_photo,
 		/datum/pet_command/follow/orbie,
 		/datum/pet_command/perform_trick_sequence,
 	)
@@ -77,7 +78,7 @@
 	happy_state = !happy_state
 	update_appearance()
 
-/mob/living/basic/orbie/can_be_pulled(user, grab_state, force)
+/mob/living/basic/orbie/can_be_pulled(user, force)
 	return FALSE
 
 /mob/living/basic/orbie/proc/on_level_up(datum/source, new_level)

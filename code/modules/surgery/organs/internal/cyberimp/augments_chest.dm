@@ -175,6 +175,7 @@
 		COMSIG_THRUSTER_DEACTIVATED, \
 		THRUSTER_ACTIVATION_FAILED, \
 		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
+		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
 		/datum/effect_system/trail_follow/ion, \
 	)
 
@@ -292,7 +293,7 @@
 		organ_owner.AddElement(/datum/element/forced_gravity, 1)
 		add_organ_trait(TRAIT_STURDY_FRAME)
 
-/obj/item/organ/cyberimp/chest/spine/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/cyberimp/chest/spine/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	remove_organ_trait(TRAIT_BOULDER_BREAKER)
 	if(stone_overlay)

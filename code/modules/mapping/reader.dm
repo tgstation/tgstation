@@ -839,7 +839,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			if(member_string[length(member_string)] == "}")
 				variables_start = findtext(member_string, "{")
 
-			var/path_text = trimtext(copytext(member_string, 1, variables_start))
+			var/path_text = trim(copytext(member_string, 1, variables_start))
 			var/atom_def = text2path(path_text) //path definition, e.g /obj/foo/bar
 
 			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
@@ -1011,7 +1011,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 		// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
 		var/equal_position = findtext(text,"=",old_position, position)
-		var/trim_left = trimtext(copytext(text,old_position,(equal_position ? equal_position : position)))
+		var/trim_left = trim(copytext(text,old_position,(equal_position ? equal_position : position)))
 		var/left_constant = parse_constant(trim_left)
 		if(position)
 			old_position = position + length(text[position])
@@ -1021,7 +1021,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		if(equal_position && !isnum(left_constant))
 			// Associative var, so do the association.
 			// Note that numbers cannot be keys - the RHS is dropped if so.
-			var/trim_right = trimtext(copytext(text, equal_position + length(text[equal_position]), position))
+			var/trim_right = trim(copytext(text, equal_position + length(text[equal_position]), position))
 			var/right_constant = parse_constant(trim_right)
 			.[left_constant] = right_constant
 		else  // simple var

@@ -143,7 +143,7 @@
 /obj/item/clothing/head/utility/hardhat/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 50, TRUE)
+		playsound(src, up ? SFX_VISOR_UP : SFX_VISOR_DOWN, 50, TRUE)
 
 /obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()

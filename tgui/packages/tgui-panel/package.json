@@ -1,16 +1,18 @@
 {
   "private": true,
   "name": "tgui-panel",
-  "version": "5.0.1",
+  "version": "5.0.3",
   "dependencies": {
-    "@types/node": "^20.12.3",
-    "@types/react": "^18.2.74",
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
     "common": "workspace:*",
-    "dompurify": "^2.4.9",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "dompurify": "^2.5.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "tgui": "workspace:*",
+    "tgui-core": "^1.5.4",
     "tgui-dev-server": "workspace:*",
-    "tgui-polyfill": "workspace:*"
+    "tgui-polyfill": "workspace:*",
+    "tgui-styles": "^0.0.10"
   }
 }

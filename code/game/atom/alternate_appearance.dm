@@ -199,17 +199,23 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	return FALSE
 
+/// Only shows the image to one person
 /datum/atom_hud/alternate_appearance/basic/one_person
+	/// The guy who gets to see the image
 	var/mob/seer
 
 /datum/atom_hud/alternate_appearance/basic/one_person/mobShouldSee(mob/M)
-	if(M == seer)
-		return TRUE
-	return FALSE
+	return M == seer
 
 /datum/atom_hud/alternate_appearance/basic/one_person/New(key, image/I, options = NONE, mob/living/seer)
 	src.seer = seer
 	return ..()
+
+/// Shows the image to everyone but one person
+/datum/atom_hud/alternate_appearance/basic/one_person/reversed
+
+/datum/atom_hud/alternate_appearance/basic/one_person/reversed/mobShouldSee(mob/M)
+	return M != seer
 
 /datum/atom_hud/alternate_appearance/basic/food_demands
 

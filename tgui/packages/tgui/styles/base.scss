@@ -6,8 +6,8 @@
 @use 'sass:color';
 @use 'sass:math';
 
-$color-fg: #ffffff !default;
-$color-bg: #252525 !default;
+$color-fg: hsl(0, 0%, 100%) !default;
+$color-bg: hsl(0, 0%, 14%) !default;
 $color-bg-section: rgba(0, 0, 0, 0.33) !default;
 $color-bg-grad-spread: 2% !default;
 $color-bg-start: color.adjust(

@@ -1382,6 +1382,18 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
+"jy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/c357{
+	pixel_x = -2;
+	pixel_y = -7
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron,
+/area/awaymission/moonoutpost19/arrivals)
 "jD" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
@@ -1390,13 +1402,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/syndicate)
-"jE" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/effect/landmark/awaystart/moonoutpost,
-/turf/open/floor/mineral/titanium/blue,
-/area/awaymission/moonoutpost19/arrivals)
 "jH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1909,6 +1914,17 @@
 "mr" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
+"ms" = (
+/obj/effect/landmark/awaystart/moonoutpost,
+/turf/open/floor/mineral/titanium/blue,
+/area/awaymission/moonoutpost19/arrivals)
+"mt" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/landmark/awaystart/moonoutpost,
+/turf/open/floor/mineral/titanium/blue,
+/area/awaymission/moonoutpost19/arrivals)
 "mu" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -1948,6 +1964,20 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Shuttle Cockpit"
 	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/awaymission/moonoutpost19/arrivals)
+"mI" = (
+/obj/effect/landmark/awaystart/moonoutpost,
+/turf/open/floor/mineral/titanium/yellow,
+/area/awaymission/moonoutpost19/arrivals)
+"mJ" = (
+/obj/structure/sign/warning/vacuum{
+	desc = "A beacon used by a teleporter.";
+	icon = 'icons/obj/devices/tracker.dmi';
+	icon_state = "beacon";
+	name = "tracking beacon"
+	},
+/obj/effect/landmark/awaystart/moonoutpost,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "mK" = (
@@ -2863,6 +2893,18 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/mines)
+"sf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/item/ammo_casing/c357{
+	pixel_x = 11;
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/awaymission/moonoutpost19/arrivals)
 "si" = (
 /obj/structure/sign/warning/biohazard{
 	pixel_x = 32
@@ -3428,10 +3470,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/research)
-"vO" = (
-/obj/effect/landmark/awaystart/moonoutpost,
-/turf/open/floor/mineral/titanium/blue,
-/area/awaymission/moonoutpost19/arrivals)
 "vR" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
@@ -4115,18 +4153,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/arrivals/shed)
-"Bf" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/ammo_casing/a357{
-	pixel_x = -2;
-	pixel_y = -7
-	},
-/obj/effect/turf_decal/siding/thinplating_new/light{
-	dir = 1
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron,
-/area/awaymission/moonoutpost19/arrivals)
 "Bg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w{
 	dir = 4
@@ -5614,16 +5640,6 @@
 	},
 /turf/open/misc/asteroid/moon/dug,
 /area/awaymission/moonoutpost19/main)
-"LT" = (
-/obj/structure/sign/warning/vacuum{
-	desc = "A beacon used by a teleporter.";
-	icon = 'icons/obj/devices/tracker.dmi';
-	icon_state = "beacon";
-	name = "tracking beacon"
-	},
-/obj/effect/landmark/awaystart/moonoutpost,
-/turf/open/floor/mineral/titanium/yellow,
-/area/awaymission/moonoutpost19/arrivals)
 "LU" = (
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/iron/white,
@@ -6460,18 +6476,6 @@
 "QS" = (
 /turf/open/misc/asteroid/moon/dug,
 /area/awaymission/moonoutpost19/main)
-"QZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/item/ammo_casing/a357{
-	pixel_x = 11;
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/siding/thinplating_new/light/corner{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/awaymission/moonoutpost19/arrivals)
 "Ra" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/stripes/line{
@@ -6530,10 +6534,6 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/iron,
 /area/awaymission/moonoutpost19/research)
-"RD" = (
-/obj/effect/landmark/awaystart/moonoutpost,
-/turf/open/floor/mineral/titanium/yellow,
-/area/awaymission/moonoutpost19/arrivals)
 "RI" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
@@ -7509,17 +7509,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
-"Yk" = (
-/obj/effect/turf_decal/sand,
-/obj/item/stack/ore/glass{
-	pixel_x = 8
-	},
-/obj/item/ammo_casing/a357{
-	pixel_x = -10;
-	pixel_y = -7
-	},
-/turf/open/floor/iron,
-/area/awaymission/moonoutpost19/arrivals)
 "Ym" = (
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "line";
@@ -7529,6 +7518,17 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
+"Yo" = (
+/obj/effect/turf_decal/sand,
+/obj/item/stack/ore/glass{
+	pixel_x = 8
+	},
+/obj/item/ammo_casing/c357{
+	pixel_x = -10;
+	pixel_y = -7
+	},
+/turf/open/floor/iron,
+/area/awaymission/moonoutpost19/arrivals)
 "Yt" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/tile/bar,
@@ -33419,9 +33419,9 @@ hI
 My
 Jc
 mb
-vO
-RD
-vO
+ms
+mI
+ms
 mb
 Jc
 My
@@ -33676,9 +33676,9 @@ iM
 My
 ld
 mc
-jE
-LT
-jE
+mt
+mJ
+mt
 mc
 ld
 My
@@ -33933,9 +33933,9 @@ iM
 My
 ld
 md
-vO
-RD
-vO
+ms
+mI
+ms
 nh
 ld
 My
@@ -40866,7 +40866,7 @@ xj
 yZ
 hI
 Hg
-QZ
+sf
 qg
 Bk
 Tg
@@ -41122,7 +41122,7 @@ sJ
 Qr
 Zy
 zb
-Bf
+jy
 Ll
 HD
 hJ
@@ -41380,7 +41380,7 @@ Qr
 ym
 hJ
 bo
-Yk
+Yo
 DZ
 MS
 hJ
