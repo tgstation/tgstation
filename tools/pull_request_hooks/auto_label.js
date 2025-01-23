@@ -50,7 +50,7 @@ const title_labels = {
 		keywords: ['refactor'],
 	},
 	'Unit Tests' : {
-		keywords: ['test'],
+		keywords: ['unit test'],
 	},
 	'April Fools' : {
 		keywords: ['[april fools]'],
@@ -62,7 +62,7 @@ const title_labels = {
 		keywords: ['[no gbp]'],
 	},
 	'Test Merge Only' : {
-		keywords: ['[tm only]'],
+		keywords: ['[tm only]', '[test merge only]'],
 	},
 }
 
@@ -257,8 +257,9 @@ export async function update_labels({ github, context }) {
 	// update merge conflict label
 	if(mergeable)
 		updated_labels = updated_labels.filter(label => label !== 'Merge Conflict');
-	else
+	else if(mergeable === false)
 		updated_labels.push('Merge Conflict');
 
+	console.log(mergeable)
 	return [... new Set(updated_labels)];
 }
