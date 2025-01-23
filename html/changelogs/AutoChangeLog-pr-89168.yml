@@ -1,0 +1,4 @@
+author: "MX0739"
+delete-after: True
+changes:
+  - bugfix: "objects with throw_range 0 now properly parried with baseball bats"
