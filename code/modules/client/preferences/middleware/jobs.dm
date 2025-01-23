@@ -1,6 +1,9 @@
 /datum/preference_middleware/jobs
 	action_delegations = list(
 		"set_job_preference" = PROC_REF(set_job_preference),
+		// DOPPLER EDIT
+		"set_job_title" = PROC_REF(set_job_title),
+		// DOPPLER EDIT END
 	)
 
 /datum/preference_middleware/jobs/proc/set_job_preference(list/params, mob/user)
@@ -24,6 +27,24 @@
 	preferences.character_preview_view?.update_body()
 
 	return TRUE
+
+// DOPPLER EDIT ADDITION BEGIN
+/datum/preference_middleware/jobs/proc/set_job_title(list/params, mob/user)
+	var/job_title = params["job"]
+	var/new_job_title = params["new_title"]
+
+	var/datum/job/job = SSjob.get_job(job_title)
+
+	if (isnull(job))
+		return FALSE
+
+	if (!(new_job_title in job.alt_titles))
+		return FALSE
+
+	preferences.alt_job_titles[job_title] = new_job_title
+
+	return TRUE
+// DOPPLER EDIT ADDITION END
 
 /datum/preference_middleware/jobs/get_constant_data()
 	var/list/data = list()
@@ -54,6 +75,7 @@
 		jobs[job.title] = list(
 			"description" = job.description,
 			"department" = department_name,
+			"alt_titles" = job.alt_titles, // DOPPLER EDIT: alternative job titles
 		)
 
 	data["departments"] = departments
@@ -64,7 +86,15 @@
 /datum/preference_middleware/jobs/get_ui_data(mob/user)
 	var/list/data = list()
 
+	// DOPPLER EDIT
+	if(isnull(preferences.alt_job_titles))
+		preferences.alt_job_titles = list()
+	// DOPPLER EDIT END
 	data["job_preferences"] = preferences.job_preferences
+
+	// DOPPLER EDIT
+	data["job_alt_titles"] = preferences.alt_job_titles
+	// DOPPLER EDIT END
 
 	return data
 

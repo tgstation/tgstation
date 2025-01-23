@@ -319,6 +319,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			language = _text2path(language)
 		save_languages[language] = value
 	languages = save_languages
+	alt_job_titles = save_data?["alt_job_titles"]
 	/// DOPPLER SHIFT ADDITION END
 
 	//try to fix any outdated data if necessary
@@ -381,6 +382,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Quirks
 	save_data["all_quirks"] = all_quirks
 	save_data["languages"] = languages /// DOPPLER SHIFT ADDITION - we might want to migrate this
+	save_data["alt_job_titles"] = alt_job_titles /// DOPPLER SHIFT ADDITION: alt job titles
 
 	return TRUE
 

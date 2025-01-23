@@ -560,12 +560,12 @@
 /// Sets us to the passed job datum, then greets them to their new job.
 /// Use this one for when you're assigning this mind to a new job for the first time,
 /// or for when someone's receiving a job they'd really want to be greeted to.
-/datum/mind/proc/set_assigned_role_with_greeting(datum/job/new_role, client/incoming_client)
+/datum/mind/proc/set_assigned_role_with_greeting(datum/job/new_role, client/incoming_client, alt_title) // DOPPLER EDIT - ALTERNATIVE_JOB_TITLES - ORIGINAL: /datum/mind/proc/set_assigned_role_with_greeting(datum/job/new_role, client/incoming_client)
 	. = set_assigned_role(new_role)
 	if(assigned_role != new_role)
 		return
 
-	var/intro_message = new_role.get_spawn_message()
+	var/intro_message = new_role.get_spawn_message(alt_title) // DOPPLER EDIT: alt title support
 	if(incoming_client && intro_message)
 		to_chat(incoming_client, intro_message)
 
