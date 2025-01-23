@@ -145,7 +145,7 @@ function check_body_for_labels(body) {
 	const keywords = keyword_to_cl_label();
 
 	let found_cl = false;
-	for (let line in body.split('\n')) {
+	for (let line of body.split('\n')) {
 		if(line.startsWith(':cl:')) {
 			found_cl = true;
 			continue;
@@ -174,7 +174,7 @@ function check_title_for_labels(title) {
 	const title_lower = title.toLowerCase();
 	for (let label in title_labels) {
 		let found = false;
-		for (let keyword in title_labels[label].keywords) {
+		for (let keyword of title_labels[label].keywords) {
 			if (title_lower.includes(keyword)) {
 				found = true;
 				break;
@@ -203,7 +203,7 @@ async function check_diff_for_labels(diff_url) {
 			for (let label in file_labels) {
 				let found = false;
 				const { filepaths, add_only } = file_labels[label];
-				for (let filepath in filepaths) {
+				for (let filepath of filepaths) {
 					if(check_diff_line_for_element(diff_txt, filepath)) {
 						found = true;
 						break;
