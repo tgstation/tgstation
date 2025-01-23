@@ -37,6 +37,7 @@
 /datum/action/cooldown/spell/wolves_among_sheep/cast(atom/cast_on)
 	. = ..()
 	center_turf = get_turf(owner)
+	playsound(center_turf,'sound/machines/airlock/airlockopen.ogg', 750, TRUE)
 	to_transform = list()
 	new /obj/effect/heretic_rune/big(center_turf)
 	addtimer(CALLBACK(src, PROC_REF(create_arena), center_turf), 1 SECONDS)
@@ -73,10 +74,10 @@
 /// Applies a visual to each turf
 /datum/action/cooldown/spell/wolves_among_sheep/proc/apply_visual(list/turfs)
 	for(var/turf/target as anything in turfs)
-		if(istype(target, /turf/open))
+		if(isopenturf(target))
 			var/turf_icon = "rose_stone_" + "[pick(1, 2, 3, 4, 5, 6, 7, 8)]"
 			target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/turf/floors/rose_stone_turf.dmi', target, turf_icon, layer = ABOVE_OPEN_TURF_LAYER))
-		else if(istype(target, /turf/closed))
+		else if(isclosedturf(target))
 			var/wall_icon = "rose_stone_" + "[pick(1, 2, 3, 4, 5, 6, 7, 8)]"
 			target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "heretic_arena", image('icons/turf/walls/rose_stone_wall.dmi', target, wall_icon, layer = ABOVE_OPEN_TURF_LAYER))
 
@@ -101,12 +102,14 @@
 
 /// Clears the timer if the arena is deleted
 /datum/action/cooldown/spell/wolves_among_sheep/proc/on_arena_delete()
+	SIGNAL_HANDLER
 	deltimer(revert_timer)
 	ongoing_arena = null
 	revert_effects()
 
 /// If the caster goes into crit, the arena falls apart right away
 /datum/action/cooldown/spell/wolves_among_sheep/proc/on_caster_crit()
+	SIGNAL_HANDLER
 	deltimer(revert_timer)
 	revert_effects()
 

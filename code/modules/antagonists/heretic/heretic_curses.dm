@@ -2,10 +2,6 @@
  * Contains all the curses a heretic can cast using their upgraded codex
  */
 
-
-/**
- * No longer a subtype of knowledge, curses are now handed out via the codex morbus using blood at a rune
- */
 /datum/heretic_knowledge/curse
 	abstract_parent_type = /datum/heretic_knowledge/curse
 	/// How far can we curse people?
@@ -220,11 +216,12 @@
 
 /datum/heretic_knowledge/curse/transmutation/curse(mob/living/carbon/human/chosen_mob, obj/item/codex_cicatrix/morbus/cursing_book)
 	if(chosen_mob.dna.species == chosen_species)
-		to_chat(chosen_mob, span_warning("You feel your body morb into... itself?"))
+		to_chat(chosen_mob, span_warning("You feel your body morph into... itself?"))
 		return
 	chosen_mob.apply_status_effect(/datum/status_effect/race_swap, chosen_species)
-	cursing_book.transmuted_victims += chosen_mob
-	to_chat(chosen_mob, span_danger("You feel your body morb into a new shape"))
+	var/datum/weakref/curse_victim = new(chosen_mob)
+	cursing_book.transmuted_victims += curse_victim
+	to_chat(chosen_mob, span_danger("You feel your body morph into a new shape"))
 	return ..()
 
 /datum/heretic_knowledge/curse/transmutation/uncurse(mob/living/carbon/human/chosen_mob)

@@ -100,7 +100,6 @@
 	. = ..() // XANTODO - Add a summary of each curse to the description so that the curser knows what will happen the cursee
 
 /obj/item/codex_cicatrix/morbus/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
 	if(!istype(interacting_with, /obj/effect/heretic_rune/big))
 		return NONE
 
@@ -135,10 +134,10 @@
 	to_cast.on_finished_recipe(user, list(src, held_offhand), loc = get_turf(user))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/codex_cicatrix/morbus/Destroy(force)
-	for(var/mob/to_uncurse in transmuted_victims)
-		if(QDELETED(to_uncurse))
-			transmuted_victims -= to_uncurse
+/obj/item/codex_cicatrix/morbus/atom_destruction(damage_flag)
+	for(var/datum/weakref/to_uncurse_ref as anything in transmuted_victims)
+		var/mob/to_uncurse = to_uncurse_ref.resolve()
+		if(!to_uncurse || !ismob(to_uncurse))
 			continue
 		var/datum/heretic_knowledge/curse/transmutation/to_undo = new()
 		to_undo.uncurse(to_uncurse)

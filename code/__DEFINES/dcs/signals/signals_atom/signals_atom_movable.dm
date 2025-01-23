@@ -53,8 +53,8 @@
 #define COMSIG_MOVABLE_THROW_LANDED "movable_throw_landed"
 ///from base of atom/movable/on_changed_z_level(): (turf/old_turf, turf/new_turf, same_z_layer)
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit"
-	/// Return to prevent Z level changing
-	#define Z_CHANGE_PREVENTED (1<<0)
+	/// Return to prevent visuals from updating
+	#define PREVENT_VISUAL_UPDATE (1<<0)
 ///called before hearing a message from atom/movable/Hear():
 #define COMSIG_MOVABLE_PRE_HEAR "movable_pre_hear"
 	///cancel hearing the message because we're doing something else presumably

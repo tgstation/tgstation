@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		var/mob/living/leaver = source
 		leaver.adjustBruteLoss(10) // Trying to cheese via z levels leads to eventual death
 		leaver.balloon_alert(leaver, "can't escape!")
-	return Z_CHANGE_PREVENTED
+	return PREVENT_VISUAL_UPDATE
 
 /datum/proximity_monitor/advanced/heretic_arena/proc/set_caster(atom/caster)
 	arena_caster = caster
@@ -146,7 +146,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	/// Tracks the last person who dealt damage to this mob
-	var/mob/last_attacker
+	var/datum/weakref/last_attacker
 	/// If our mob is free to leave, set to true
 	var/arena_victor = FALSE
 	/// The overlay for our mob, changes color to indicate that they are a victor and are free to leave
@@ -155,7 +155,6 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 /datum/status_effect/arena_tracker/on_apply()
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_enter_crit))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
-	RegisterSignal(owner, "COMSIG_OWNER_ENTERED_CRIT", PROC_REF(on_crit_somebody))
 	owner.add_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), STATUS_EFFECT_TRAIT)
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_fighter", -HALO_LAYER)
 	crown_overlay.pixel_y = 24
@@ -163,16 +162,20 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	return TRUE
 
 /datum/status_effect/arena_tracker/on_remove()
-	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOB_APPLY_DAMAGE, "COMSIG_OWNER_ENTERED_CRIT"))
+	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOB_APPLY_DAMAGE))
 	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), STATUS_EFFECT_TRAIT)
 	owner.cut_overlay(crown_overlay)
 	crown_overlay = null
 
 /datum/status_effect/arena_tracker/proc/on_enter_crit(mob/owner)
 	SIGNAL_HANDLER
-	if(!last_attacker) // Safety check in case they somehow enter crit with *nobody* attacking them
+	var/mob/living/our_attacker = last_attacker.resolve()
+	if(!our_attacker || !isliving(our_attacker)) // Safety check in case they somehow enter crit with *nobody* attacking them
 		return
-	SEND_SIGNAL(last_attacker, "COMSIG_OWNER_ENTERED_CRIT")
+	var/datum/status_effect/arena_tracker/their_tracker = our_attacker.has_status_effect(/datum/status_effect/arena_tracker)
+	if(!their_tracker)
+		return // Somebody killed us who isn't an arena participant
+	their_tracker.on_crit_somebody()
 
 /datum/status_effect/arena_tracker/proc/damage_taken(
 	datum/source,
@@ -189,7 +192,6 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 )
 	SIGNAL_HANDLER
 	if(isnull(attacking_item))
-		stack_trace("proc/damage_taken() was called but without passing attacking_item")
 		return
 	if(!isobj(attacking_item))
 		return
@@ -197,7 +199,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 
 	// Track being hit by a mob holding a stick
 	if(ismob(attacking_object.loc))
-		last_attacker = attacking_object.loc
+		last_attacker = REF(attacking_object.loc)
 		return
 
 	// Track being hit by a mob throwing a stick
@@ -205,7 +207,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		var/obj/item/thrown_item = attacking_item
 		var/thrown_by = thrown_item.thrownby?.resolve()
 		if(ismob(thrown_by))
-			last_attacker = thrown_by
+			last_attacker = REF(thrown_by)
 			return
 
 	// Edge case. If our attacking_item is a gun which the owner has dropped we need to find out who shot us
@@ -213,11 +215,10 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	if(isprojectile(attacking_object))
 		var/obj/projectile/attacking_projectile = attacking_object
 		if(ismob(attacking_projectile.firer))
-			last_attacker = attacking_projectile.firer
+			last_attacker = REF(attacking_projectile.firer)
 
 /// Called when you crit somebody to update your crown
 /datum/status_effect/arena_tracker/proc/on_crit_somebody()
-	SIGNAL_HANDLER
 	owner.cut_overlay(crown_overlay)
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_victor", -HALO_LAYER)
 	crown_overlay.pixel_y = 24
@@ -227,7 +228,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	// The mansus celebrates your efforts
 	if(IS_HERETIC(owner))
 		owner.heal_overall_damage(60, 60, 60)
-		owner.adjustToxLoss(-60)
+		owner.adjustToxLoss(-60, forced = TRUE) // Slime heretics everywhere...
 		owner.adjustOxyLoss(-60)
 		if(iscarbon(owner))
 			var/mob/living/carbon/carbon_owner = owner

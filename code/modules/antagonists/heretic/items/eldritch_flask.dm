@@ -37,7 +37,7 @@
 		COOLDOWN_START(src, drain_cooldown, 5 SECONDS)
 		to_chat(living_target, span_warning("You feel a force attempt to steal your blood, but it is repelled!"))
 		return ITEM_INTERACT_BLOCKING
-	var/drawn_amount = max(reagents.maximum_volume - reagents.total_volume, 5)
+	var/drawn_amount = min(reagents.maximum_volume - reagents.total_volume, 5)
 	if(living_target.transfer_blood_to(src, drawn_amount))
 		to_chat(user, span_notice("You take a blood sample from [living_target]."))
 		to_chat(living_target, span_warning("You feel a tiny prick!"))
@@ -71,7 +71,7 @@
 
 /obj/item/ether/attack_self(mob/living/user, modifiers)
 	. = ..()
-	user.revive(ADMIN_HEAL_ALL)
+	user.revive(HEAL_ALL)
 	for(var/obj/item/implant/to_remove in user.implants)
 		to_remove.removed(user)
 
@@ -92,11 +92,13 @@
 /datum/status_effect/eldritch_sleep/on_apply()
 	. = ..()
 	owner.add_traits(sleeping_traits, STATUS_EFFECT_TRAIT)
+	owner.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_ELDRITCH_ETHER)
 
 /datum/status_effect/eldritch_sleep/on_remove()
 	owner.SetSleeping(0) // Wake up bookworm, we have some heathens to burn
 	owner.remove_traits(sleeping_traits, STATUS_EFFECT_TRAIT)
 	owner.reagents?.remove_all(100) // If someone gives you over 100 units of poison while you sleep then you deserve this L
+	owner.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_ELDRITCH_ETHER)
 
 /atom/movable/screen/alert/status_effect/eldritch_sleep
 	name = "Eldritch Slumber"

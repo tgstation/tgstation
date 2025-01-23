@@ -52,7 +52,7 @@
 /obj/item/melee/sickly_blade/attack_self(mob/user)
 	if(HAS_TRAIT(user, TRAIT_ELDRITCH_ARENA_PARTICIPANT))
 		user.balloon_alert(user, "can't escape!")
-		to_chat(user, span_hypnophrase("Sheep exist only to be slaughtered."))
+		to_chat(user, span_hypnophrase(span_big("Cowardly sheep will be slaughtered!")))
 		playsound(src, SFX_SHATTER, 70, TRUE)
 		var/obj/item/bodypart/to_remove = user.get_active_hand()
 		to_remove.dismember()
@@ -300,10 +300,6 @@
 		May it act as a blessing in the short time it remains alongside you."
 	force = 17
 	armour_penetration = 0
-
-/obj/item/melee/sickly_blade/training/Initialize(mapload)
-	. = ..()
-	QDEL_IN(src, 60 SECONDS)
 
 /obj/item/melee/sickly_blade/training/check_usability(mob/living/user)
 	return isliving(user) // Basically anyone should be able to use this

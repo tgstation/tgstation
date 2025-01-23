@@ -9,6 +9,7 @@
 	possible_fuse_time = list("5")
 	stage = GRENADE_READY
 	base_icon_state = "rustgrenade"
+	inhand_icon_state = "rustgrenade"
 	grenade_arm_sound = 'sound/items/weapons/rust_sower_armbomb.ogg'
 	grenade_sound_vary = FALSE
 
@@ -38,13 +39,13 @@
 	qdel(src)
 
 /obj/item/grenade/chem_grenade/rust_sower/screwdriver_act(mob/living/user, obj/item/tool)
-	return FALSE
+	return NONE
 
 /obj/item/grenade/chem_grenade/rust_sower/wrench_act(mob/living/user, obj/item/tool)
-	return FALSE
+	return NONE
 
 /obj/item/grenade/chem_grenade/rust_sower/multitool_act(mob/living/user, obj/item/tool)
-	return FALSE
+	return NONE
 
 /datum/reagent/heretic_rust
 	name = "Eldritch Rust"
@@ -63,6 +64,7 @@
 		to_wreck.take_damage(300, BURN)
 
 /datum/reagent/heretic_rust/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
 	if(!ishuman(exposed_mob))
 		if(issilicon(exposed_mob) || ismecha(exposed_mob) || isbot(exposed_mob))
 			exposed_mob.adjustBruteLoss(500)
@@ -98,7 +100,6 @@
 				victim.set_dizzy_if_lower(2 SECONDS)
 			if(prob(5))
 				victim.vomit(VOMIT_CATEGORY_DEFAULT)
-	return ..()
 
 /datum/reagent/heretic_rust/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
