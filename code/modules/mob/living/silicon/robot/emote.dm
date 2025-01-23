@@ -69,3 +69,9 @@
 	message = "activates their slow clap processor."
 	emote_type = EMOTE_AUDIBLE
 	sound = 'sound/machines/slowclap.ogg'
+
+/datum/emote/silicon/meow
+	key = "meow"
+	message = "meows."
+	emote_type = EMOTE_AUDIBLE
+	sound = 'sound/machines/robot_meow.ogg'
