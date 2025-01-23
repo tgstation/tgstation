@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/spider_infestation
 	weight = 10
 	max_occurrences = 1
-	min_players = 20
+	min_players = 30
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns spider eggs, ready to hatch."

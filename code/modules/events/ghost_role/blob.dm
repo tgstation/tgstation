@@ -4,7 +4,7 @@
 	weight = 10
 	max_occurrences = 1
 
-	min_players = 20
+	min_players = 35
 
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES

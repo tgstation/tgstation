@@ -5,7 +5,7 @@
 	antag_flag = ROLE_SPACE_SAPPER
 	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	signup_item_path = /obj/item/wrench/bolter
-	minimum_players = 20
+	minimum_players = 10
 	delay = 1 HOURS
 	requirements = list(14,10,7,7,7,7,7,7,7,7)
 	enemy_roles = list(
@@ -66,7 +66,7 @@
 	name = "Space Sappers"
 	typepath = /datum/round_event/ghost_role/sappers
 	max_occurrences = 1
-	min_players = 15
+	min_players = 10
 	earliest_start = 1 HOURS
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION

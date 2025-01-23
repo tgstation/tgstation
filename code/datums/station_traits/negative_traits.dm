@@ -474,7 +474,7 @@
 /datum/station_trait/nebula
 	name = "Nebula"
 	abstract_type = /datum/station_trait/nebula
-	weight = 0
+	weight = 6
 
 	show_in_report = TRUE
 
