@@ -242,7 +242,7 @@ export async function update_labels({ github, context }) {
 		title,
 	} = pull_request;
 
-	let updated_labels = labels;
+	let updated_labels = labels.map(label => label.name);
 
 	// diff is always checked
 	const diff_tags = await check_diff_for_labels(diff_url);
@@ -255,11 +255,10 @@ export async function update_labels({ github, context }) {
 		updated_labels = updated_labels.concat(check_body_for_labels(body));
 	}
 	// update merge conflict label
-	if(mergeable)
+	if(mergeable === null || mergeable === true)
 		updated_labels = updated_labels.filter(label => label !== 'Merge Conflict');
 	else if(mergeable === false)
 		updated_labels.push('Merge Conflict');
 
-	console.log(mergeable)
 	return [... new Set(updated_labels)];
 }
