@@ -28,10 +28,12 @@ export function CargoCart(props) {
       </Stack.Item>
       {cart.length > 0 && !!can_send && (
         <Stack.Item m={0}>
-          <Section>
+          <Section textAlign="right">
             <Stack fill align="center">
               <Stack.Item grow>
-                {!sendable && <Icon color="blue" name="toolbox" spin />}
+                {!sendable && (
+                  <Icon mr={0.5} size={1.5} color="blue" name="toolbox" spin />
+                )}
               </Stack.Item>
               <Stack.Item>
                 <Button
