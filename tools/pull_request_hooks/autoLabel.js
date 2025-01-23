@@ -163,6 +163,7 @@ export async function get_updated_label_set({ github, context }) {
 			});
 			// failed to find? still processing? try again in a few seconds
 			if(response.data.mergeable === null){
+				console.log("Awaiting GitHub response for merge status...")
 				await new Promise(r => setTimeout(r, 10000));
 				response = await github.rest.pulls.get({
 					owner: context.repo.owner,
