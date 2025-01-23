@@ -5,12 +5,7 @@
 // You can optionally set add_only to make the label one-way -
 // if the edit to the file is removed in a later commit,
 // the label will not be removed
-type file_label = {
-	filepaths: string[],
-	add_only?: boolean,
-}
-
-const file_labels: { [label: string]: file_label } = {
+const file_labels = {
 	'GitHub': {
 		filepaths: ['.github'],
 	},
@@ -44,11 +39,7 @@ const file_labels: { [label: string]: file_label } = {
 // Title Labels
 //
 // Add a label based on keywords in the title
-type title_label = {
-	keywords: string[],
-}
-
-const title_labels: { [label: string]: title_label } = {
+const title_labels = {
 	'Logging' : {
 		keywords: ['log', 'logging'],
 	},
@@ -78,14 +69,8 @@ const title_labels: { [label: string]: title_label } = {
 // Changelog Labels
 //
 // Adds labels based on keywords in the changelog
-type cl_label = {
-	default_text: string,
-	alt_default_text?: string,
-	keywords: string[],
-}
-
 // TODO use the existing changelog parser
-const changelog_labels: { [label: string]: cl_label } = {
+const changelog_labels = {
 	'Fix': {
 		default_text: 'fixed a few things',
 		keywords: ['fix', 'fixes', 'bugfix'],
@@ -138,7 +123,7 @@ const changelog_labels: { [label: string]: cl_label } = {
 }
 
 function keyword_to_cl_label() {
-	const keyword_to_cl_label: { [key: string]: string } = {};
+	const keyword_to_cl_label = {};
 	for (let label in changelog_labels) {
 		for (let keyword of changelog_labels[label].keywords) {
 			keyword_to_cl_label[keyword] = label;
@@ -149,7 +134,7 @@ function keyword_to_cl_label() {
 
 // Checks the body (primarily the changelog) for labels to add
 function check_body_for_labels(body) {
-	const labels_to_add: string[] = [];
+	const labels_to_add = [];
 
 	// if the body contains a github "fixes #1234" line, add the Fix tag
 	const fix_regex = new RegExp(`(?i)(fix[des]*|resolve[sd]*)\s*#[0-9]+/`);
@@ -185,7 +170,7 @@ function check_body_for_labels(body) {
 
 // Checks the title for labels to add
 function check_title_for_labels(title) {
-	const labels_to_add: string[] = [];
+	const labels_to_add = [];
 	const title_lower = title.toLowerCase();
 	for (let label in title_labels) {
 		let found = false;
@@ -209,8 +194,8 @@ function check_diff_line_for_element(diff, element) {
 
 // Checks the file diff for labels to add or remove
 async function check_diff_for_labels(diff_url) {
-	const labels_to_add: string[] = [];
-	const labels_to_remove: string[] = [];
+	const labels_to_add = [];
+	const labels_to_remove = [];
 	try {
 		const diff = await fetch(diff_url);
 		if (diff.ok) {
@@ -258,7 +243,7 @@ export async function update_labels({ github, context }) {
 		title,
 	} = pull_request;
 
-	let labels_to_add, labels_to_remove: string[] = [];
+	let labels_to_add, labels_to_remove = [];
 
 	// diff is always checked
 	const diff_tags = await check_diff_for_labels(diff_url);
