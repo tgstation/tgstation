@@ -242,25 +242,27 @@ export async function update_labels({ github, context }) {
 		title,
 	} = pull_request;
 
+	let updated_labels = labels;
+
 	// diff is always checked
 	const diff_tags = await check_diff_for_labels(diff_url);
-	labels = labels.concat(diff_tags.labels_to_add);
-	labels = labels.filter(label => !diff_tags.labels_to_remove.includes(label));
+	updated_labels = updated_labels.concat(diff_tags.labels_to_add);
+	updated_labels = updated_labels.filter(label => !diff_tags.labels_to_remove.includes(label));
 
 	// body and title are only checked on open, not on sync
 	if(action === 'opened') {
-		labels = labels.concat(check_title_for_labels(title));
-		labels = labels.concat(check_body_for_labels(body));
+		updated_labels = updated_labels.concat(check_title_for_labels(title));
+		updated_labels = updated_labels.concat(check_body_for_labels(body));
 	}
 	// update merge conflict label
 	if(mergeable)
-		labels = labels.filter(label => label !== 'Merge Conflict');
+		updated_labels = updated_labels.filter(label => label !== 'Merge Conflict');
 	else
-		labels.push('Merge Conflict');
+		updated_labels.push('Merge Conflict');
 
 	await github.rest.issues.setLabels({
 		issue_number: number,
-		labels: [... new Set(labels)],
+		labels: [... new Set(updated_labels)],
 		owner: context.repo.owner,
 		repo: context.repo.repo,
 	});
