@@ -6824,6 +6824,8 @@
 #include "modular_doppler\loadout_categories\categories\shoes.dm"
 #include "modular_doppler\loadout_categories\categories\toys.dm"
 #include "modular_doppler\loadout_categories\categories\undersuit.dm"
+#include "modular_doppler\loadout_item_examine\examine.dm"
+#include "modular_doppler\loadout_item_examine\examine_when_worn.dm"
 #include "modular_doppler\lore\overrides\crab17.dm"
 #include "modular_doppler\lore\overrides\ert.dm"
 #include "modular_doppler\lore\overrides\general_memories.dm"

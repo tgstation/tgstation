@@ -70,3 +70,9 @@
 ////
 /// Trait for muting only speech, but allowing emotes.
 #define TRAIT_SPEECH_ONLY_MUTE "speech_only_mute"
+
+////
+// Items
+////
+
+#define TRAIT_WORN_EXAMINE "worn_examine"
