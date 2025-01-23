@@ -134,7 +134,7 @@ export async function get_updated_label_set({ github, context }) {
 		}
 	}
 	// body and title are only checked on open, not on sync
-	if(action === 'opened') {
+	if(action === 'opened' || action === 'reopened') {
 		if(title) {
 			for (let label of check_title_for_labels(title)) {
 				updated_labels.add(label);
