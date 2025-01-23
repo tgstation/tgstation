@@ -243,7 +243,8 @@ export async function update_labels({ github, context }) {
 		title,
 	} = pull_request;
 
-	let labels_to_add, labels_to_remove = [];
+	let labels_to_add = [];
+	let labels_to_remove = [];
 
 	// diff is always checked
 	const diff_tags = await check_diff_for_labels(diff_url);
