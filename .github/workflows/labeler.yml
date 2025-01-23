@@ -20,5 +20,11 @@ jobs:
       with:
         script: |
           const { update_labels } = await import('${{ github.workspace }}/tools/pull_request_hooks/auto_label.js')
-          await update_labels({ github, context })
+          const new_labels = await update_labels({ github, context })
+          github.rest.issues.setLabels({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            labels: new_labels,
+          });
         github-token: ${{ steps.app-token-generation.outputs.token || secrets.GITHUB_TOKEN }}
