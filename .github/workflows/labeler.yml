@@ -1,0 +1,22 @@
+﻿name: Auto Label
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+jobs:
+  labeler:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Run Auto Labeler
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { update_labels } = await import('${{ github.workspace }}/tools/pull_request_hooks/auto_label.ts')
+          await update_labels({ github, context })
+        github-token: ${{ steps.app-token-generation.outputs.token || secrets.GITHUB_TOKEN }}
