@@ -242,41 +242,26 @@ export async function update_labels({ github, context }) {
 		title,
 	} = pull_request;
 
-	let labels_to_add = [];
-	let labels_to_remove = [];
-
 	// diff is always checked
 	const diff_tags = await check_diff_for_labels(diff_url);
-	labels_to_add = labels_to_add.concat(diff_tags.labels_to_add);
-	labels_to_remove = labels_to_remove.concat(diff_tags.labels_to_remove);
+	labels = labels.concat(diff_tags.labels_to_add);
+	labels = labels.filter(label => !diff_tags.labels_to_remove.includes(label));
+
 	// body and title are only checked on open, not on sync
 	if(action === 'opened') {
-		labels_to_add = labels_to_add.concat(check_title_for_labels(title));
-		labels_to_add = labels_to_add.concat(check_body_for_labels(body));
+		labels = labels.concat(check_title_for_labels(title));
+		labels = labels.concat(check_body_for_labels(body));
 	}
 	// update merge conflict label
 	if(mergeable)
-		labels_to_remove.push('Merge Conflict');
+		labels = labels.filter(label => label !== 'Merge Conflict');
 	else
-		labels_to_add.push('Merge Conflict');
+		labels.push('Merge Conflict');
 
-	const labels_to_add_filtered = labels_to_add.filter(label => !labels.includes(label));
-	const labels_to_remove_filtered = labels_to_remove.filter(label => labels.includes(label));
-
-	if (labels_to_add_filtered.length > 0) {
-		await github.rest.issues.addLabels({
-			issue_number: number,
-			labels: labels_to_add,
-			owner: context.repo.owner,
-			repo: context.repo.repo,
-		});
-	}
-	if (labels_to_remove_filtered.length > 0) {
-		await github.rest.issues.removeLabels({
-			issue_number: number,
-			labels: labels_to_remove,
-			owner: context.repo.owner,
-			repo: context.repo.repo,
-		});
-	}
+	await github.rest.issues.setLabels({
+		issue_number: number,
+		labels: [... new Set(labels)],
+		owner: context.repo.owner,
+		repo: context.repo.repo,
+	});
 }
