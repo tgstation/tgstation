@@ -109,7 +109,7 @@
 		return
 	var/mob/living/carbon/human/brian = collar.loc
 	if(brian.get_item_by_slot(ITEM_SLOT_NECK) == collar)
-		brian.investigate_log("has has their [collar] triggered by [user] via yellow button.", INVESTIGATE_DEATHS)
+		brian.investigate_log("has had their [collar] triggered by [user] via yellow button.", INVESTIGATE_DEATHS)
 
 
 /obj/item/collar_bomb_button/Destroy()
