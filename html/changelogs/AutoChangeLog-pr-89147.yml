@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Dark Wizards now teleport when attacked, but are more likely to turn on their allies"
