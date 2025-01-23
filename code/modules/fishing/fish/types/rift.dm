@@ -465,15 +465,8 @@
 	visible_message(span_suicide("[user] sticks [user.p_their()] arm deep into [src]! It looks like they're trying to offer themselves to it!"))
 	user.drop_everything()
 	set_status(FISH_ALIVE)
-	health *= 1.15
-	weight *= 1.15
-	size *= 1.15
-	force *= 1.15
-	throwforce *= 1.15
-	var/matrix/embiggen = matrix()
-	embiggen.Scale(1.15, 1.15)
-	transform = embiggen
-	get_force_rank()
+	transform = transform.Scale(1.15, 1.15)
+	update_size_and_weight(new_size = size * 1.15, new_weight = weight * 1.15)
 	visible_message(span_suicide("[user] is absorbed into [src]!"))
 	objectify(user, src)
 	return MANUAL_SUICIDE_NONLETHAL
