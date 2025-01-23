@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 
 	// Track being hit by a mob holding a stick
 	if(ismob(attacking_object.loc))
-		last_attacker = REF(attacking_object.loc)
+		last_attacker = WEAKREF(attacking_object.loc)
 		return
 
 	// Track being hit by a mob throwing a stick
@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		var/obj/item/thrown_item = attacking_item
 		var/thrown_by = thrown_item.thrownby?.resolve()
 		if(ismob(thrown_by))
-			last_attacker = REF(thrown_by)
+			last_attacker = WEAKREF(thrown_by)
 			return
 
 	// Edge case. If our attacking_item is a gun which the owner has dropped we need to find out who shot us
@@ -215,7 +215,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	if(isprojectile(attacking_object))
 		var/obj/projectile/attacking_projectile = attacking_object
 		if(ismob(attacking_projectile.firer))
-			last_attacker = REF(attacking_projectile.firer)
+			last_attacker = WEAKREF(attacking_projectile.firer)
 
 /// Called when you crit somebody to update your crown
 /datum/status_effect/arena_tracker/proc/on_crit_somebody()
