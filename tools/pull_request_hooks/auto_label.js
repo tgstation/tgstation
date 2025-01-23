@@ -238,7 +238,7 @@ export async function update_labels({ github, context }) {
 		diff_url,
 		labels,
 		mergeable,
-		number,
+		mergeable_state,
 		title,
 	} = pull_request;
 
@@ -255,7 +255,8 @@ export async function update_labels({ github, context }) {
 		updated_labels = updated_labels.concat(check_body_for_labels(body));
 	}
 
-	console.log("Mergable: " + mergeable);
+	console.log("Mergeable: " + mergeable);
+	console.log("Mergeable state: " + mergeable_state);
 	// update merge conflict label
 	if(mergeable === null || mergeable === true)
 		updated_labels = updated_labels.filter(label => label !== 'Merge Conflict');
