@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Phobias are now somewhat less debilitating, although their effects get worse the longer you are near a fear trigger."
+  - balance: "Carphobes are now afraid of all fish."
+  - rscdel: "Remove the Heretic phobia, as it is now basically unused."
