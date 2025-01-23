@@ -137,7 +137,7 @@ function check_body_for_labels(body) {
 	const labels_to_add = [];
 
 	// if the body contains a github "fixes #1234" line, add the Fix tag
-	const fix_regex = new RegExp(`(?i)(fix[des]*|resolve[sd]*)\s*#[0-9]+/`);
+	const fix_regex = new RegExp(`(?i)(fix[des]*|resolve[sd]*)\s*#\d+`);
 	if (fix_regex.test(body)) {
 		labels_to_add.push('Fix');
 	}
