@@ -24,29 +24,13 @@
 	name = "Fox"
 	icon_state = "fox"
 
-/datum/sprite_accessory/tails/fox/sabresune
-	name = "Sabresune"
-	icon_state = "sabresune"
+/datum/sprite_accessory/tails/fox/default/two
+	name = "Fox II"
+	icon_state = "foxann"
 
 /datum/sprite_accessory/tails/fox/kitsune
 	name = "Kitsune"
-	icon_state = "kitsune"
-
-/datum/sprite_accessory/tails/fox/kitsune_nine
-	name = "9sune"
-	icon_state = "9sune"
-
-/datum/sprite_accessory/tails/fox/lunasune
-	name = "Lunasune"
-	icon_state = "lunasune"
-
-/datum/sprite_accessory/tails/fox/kitsune_double
-	name = "Kitsune (Double)"
-	icon_state = "doublekitsune"
-
-/datum/sprite_accessory/tails/fox/kitsune_seven
-	name = "Kitsune (Seven)"
-	icon_state = "sevenkitsune"
+	icon_state = "kitsuann"
 
 /datum/sprite_accessory/tails/fox/raccoon
 	name = "Raccoon"
