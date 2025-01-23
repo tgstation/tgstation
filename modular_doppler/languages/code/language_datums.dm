@@ -3,6 +3,8 @@
 	langs += /datum/language/konjin
 	langs += /datum/language/gutter
 	langs += /datum/language/movespeak
+	langs += /datum/language/carptongue
+	langs += /datum/language/slime
 	langs += /datum/language/primitive_genemod
 	return langs
 

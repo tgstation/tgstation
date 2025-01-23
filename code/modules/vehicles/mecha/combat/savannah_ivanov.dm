@@ -81,6 +81,8 @@
 	var/skyfall_charge_level = 0
 
 /datum/action/vehicle/sealed/mecha/skyfall/Trigger(trigger_flags)
+	if(!..())
+		return
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	if(chassis.phasing)
@@ -251,7 +253,9 @@
 	return ..()
 
 /datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_MISSILE_STRIKE))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_MISSILE_STRIKE)

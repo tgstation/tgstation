@@ -962,13 +962,19 @@
 
 	update_draw_color()
 
-	// DOPPLER EDIT ADDITION
+	// DOPPLER EDIT ADDITION - (roundstart slime) limb opacity
 	var/datum/species/owner_species = human_owner.dna.species
-
 	if(owner_species && owner_species.specific_alpha != 255)
 		alpha = owner_species.specific_alpha
 	// DOPPLER EDIT END
-	recolor_bodypart_overlays()
+
+	// Recolors mutant overlays to match new mutant colors
+	for(var/datum/bodypart_overlay/mutant/overlay in bodypart_overlays)
+		overlay.inherit_color(src, force = TRUE)
+	// Ensures marking overlays are updated accordingly as well
+	for(var/datum/bodypart_overlay/simple/body_marking/marking in bodypart_overlays)
+		marking.set_appearance(human_owner.dna.features[marking.dna_feature_key], species_color)
+
 	return TRUE
 
 /obj/item/bodypart/proc/update_draw_color()
@@ -1331,11 +1337,6 @@
 	if(current_gauze.absorption_capacity <= 0)
 		owner.visible_message(span_danger("\The [current_gauze.name] on [owner]'s [name] falls away in rags."), span_warning("\The [current_gauze.name] on your [name] falls away in rags."), vision_distance=COMBAT_MESSAGE_RANGE)
 		QDEL_NULL(current_gauze)
-
-///Loops through all of the bodypart's external organs and update's their color.
-/obj/item/bodypart/proc/recolor_bodypart_overlays()
-	for(var/datum/bodypart_overlay/mutant/overlay in bodypart_overlays)
-		overlay.inherit_color(src, force = TRUE)
 
 ///A multi-purpose setter for all things immediately important to the icon and iconstate of the limb.
 /obj/item/bodypart/proc/change_appearance(icon, id, greyscale, dimorphic)

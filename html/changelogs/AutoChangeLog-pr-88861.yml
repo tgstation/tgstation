@@ -1,5 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - qol: "Xenomorphs that have had their organs removed, or replaced with organs they shouldn't normally have, keep those organs (or lack thereof) when evolving."
-  - bugfix: "Xenomorphs that somehow get skillchips or brain traumas will keep them when evolving."

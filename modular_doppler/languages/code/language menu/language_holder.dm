@@ -75,6 +75,7 @@ GLOBAL_DATUM_INIT(language_holder_adjustor, /datum/language_holder_adjustor, new
 		/datum/language/voltaic = list(LANGUAGE_ATOM),
 		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
 		/datum/language/gutter = list(LANGUAGE_ATOM),
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
 		/datum/language/konjin = list(LANGUAGE_ATOM),
 		/datum/language/monkey = list(LANGUAGE_ATOM),
 		/datum/language/slime = list(LANGUAGE_ATOM),
@@ -95,6 +96,7 @@ GLOBAL_DATUM_INIT(language_holder_adjustor, /datum/language_holder_adjustor, new
 		/datum/language/voltaic = list(LANGUAGE_ATOM),
 		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
 		/datum/language/gutter = list(LANGUAGE_ATOM),
+		/datum/language/carptongue = list(LANGUAGE_ATOM),
 		/datum/language/konjin = list(LANGUAGE_ATOM),
 		/datum/language/monkey = list(LANGUAGE_ATOM),
 		/datum/language/slime = list(LANGUAGE_ATOM),
@@ -105,7 +107,3 @@ GLOBAL_DATUM_INIT(language_holder_adjustor, /datum/language_holder_adjustor, new
 		/datum/language/terrum = list(LANGUAGE_ATOM),
 		/datum/language/sylvan = list(LANGUAGE_ATOM),
 	)
-
-/datum/language_holder/drone_nova
-	understood_languages = list(/datum/language/drone = list(LANGUAGE_ATOM), /datum/language/common = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/drone = list(LANGUAGE_ATOM))
