@@ -250,7 +250,7 @@ export async function update_labels({ github, context }) {
 	updated_labels = updated_labels.filter(label => !diff_tags.labels_to_remove.includes(label));
 
 	// body and title are only checked on open, not on sync
-	if(action === 'opened') {
+	if(action === 'opened' || action === 'reopened') {
 		updated_labels = updated_labels.concat(check_title_for_labels(title));
 		updated_labels = updated_labels.concat(check_body_for_labels(body));
 	}
@@ -260,6 +260,5 @@ export async function update_labels({ github, context }) {
 	else
 		updated_labels.push('Merge Conflict');
 
-	console.log(`Updating labels: ${updated_labels}`);
 	return [... new Set(updated_labels)];
 }
