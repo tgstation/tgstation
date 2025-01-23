@@ -254,6 +254,8 @@ export async function update_labels({ github, context }) {
 		updated_labels = updated_labels.concat(check_title_for_labels(title));
 		updated_labels = updated_labels.concat(check_body_for_labels(body));
 	}
+
+	console.log("Mergable: " + mergeable);
 	// update merge conflict label
 	if(mergeable === null || mergeable === true)
 		updated_labels = updated_labels.filter(label => label !== 'Merge Conflict');
