@@ -232,7 +232,6 @@ export async function update_labels({ github, context }) {
 	const {
 		action,
 		pull_request,
-		repository,
 	} = context.payload;
 	const {
 		body,
@@ -268,16 +267,16 @@ export async function update_labels({ github, context }) {
 		await github.rest.issues.addLabels({
 			issue_number: number,
 			labels: labels_to_add,
-			owner: repository.owner,
-			repo: repository,
+			owner: context.repo.owner,
+			repo: context.repo.repo,
 		});
 	}
 	if (labels_to_remove_filtered.length > 0) {
 		await github.rest.issues.removeLabels({
 			issue_number: number,
 			labels: labels_to_remove,
-			owner: repository.owner,
-			repo: repository,
+			owner: context.repo.owner,
+			repo: context.repo.repo,
 		});
 	}
 }
