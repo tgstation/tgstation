@@ -238,7 +238,6 @@ export async function update_labels({ github, context }) {
 		diff_url,
 		labels,
 		mergeable,
-		mergeable_state,
 		title,
 	} = pull_request;
 
@@ -255,13 +254,20 @@ export async function update_labels({ github, context }) {
 		updated_labels = updated_labels.concat(check_body_for_labels(body));
 	}
 
-	console.log("Mergeable: " + mergeable);
-	console.log("Mergeable state: " + mergeable_state);
 	// update merge conflict label
-	if(mergeable === null || mergeable === true)
-		updated_labels = updated_labels.filter(label => label !== 'Merge Conflict');
-	else if(mergeable === false)
-		updated_labels.push('Merge Conflict');
+	// if mergeable is null, it has not been checked
+	switch(mergeable) {
+		case null:
+			break;
+		case true:
+			updated_labels = updated_labels.filter(label => label !== 'Merge Conflict');
+			break;
+		case false:
+			updated_labels.push('Merge Conflict');
+			break;
+	}
 
+	// return new set of labels to the action, which will apply it
+	// removes any duplicates (though I don't know if it matters)
 	return [... new Set(updated_labels)];
 }
