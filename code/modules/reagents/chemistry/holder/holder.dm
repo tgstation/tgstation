@@ -254,7 +254,7 @@
 	if(!safety)
 		handle_reactions()
 
-	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
+	return total_removed_amount
 
 /**
  * Removes all reagents either proportionally(amount is the direct volume to remove)

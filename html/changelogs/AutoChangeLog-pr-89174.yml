@@ -1,0 +1,7 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Snapping tethers now also removes their beacons"
+  - qol: "You can now cut tethers that you're attached to while in motion"
+  - qol: "Tethers now snap when you retract your gloves or disable your MODsuit"
+  - bugfix: "Fixed tether stacking issues"

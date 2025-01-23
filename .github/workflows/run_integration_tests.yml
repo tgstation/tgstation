@@ -31,11 +31,6 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v4
-      - name: Restore BYOND cache
-        uses: actions/cache@v4
-        with:
-          path: ~/BYOND
-          key: ${{ runner.os }}-byond-${{ hashFiles('dependencies.sh') }}
       - name: Setup database
         run: |
           sudo systemctl start mysql
@@ -49,15 +44,14 @@ jobs:
       - name: Install dreamluau
         run: |
           bash tools/ci/install_dreamluau.sh
-      - name: Configure version
-        run: |
-          echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
-          echo "BYOND_MINOR=${{ inputs.minor }}" >> $GITHUB_ENV
-        if: ${{ inputs.major }}
+      - name: Restore BYOND from Cache
+        uses: ./.github/actions/restore_or_install_byond
+        with:
+          major: ${{ inputs.major }}
+          minor: ${{ inputs.minor }}
       - name: Compile Tests
         id: compile_tests
         run: |
-          bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
       - name: Run Tests

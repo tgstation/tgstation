@@ -99,6 +99,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/dead/observer,
 		/mob/living/basic/bat,
 		/mob/living/basic/construct,
+		/mob/living/basic/dark_wizard,
 		/mob/living/basic/demon,
 		/mob/living/basic/faithless,
 		/mob/living/basic/ghost,
@@ -107,9 +108,8 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/shade,
 		/mob/living/basic/skeleton,
 		/mob/living/basic/wizard,
+		/mob/living/basic/zombie,
 		/mob/living/simple_animal/bot/mulebot/paranormal,
-		/mob/living/simple_animal/hostile/dark_wizard,
-		/mob/living/simple_animal/hostile/zombie,
 	)),
 ))
 
@@ -584,6 +584,6 @@ GLOBAL_LIST_INIT(phobia_species, list(
 	for(var/word in words)
 		words_match += "[REGEX_QUOTE(word)]|"
 	words_match = copytext(words_match, 1, -1)
-	return regex("(\\b|\\A)([words_match])('?s*)(\\b|\\|)", "ig")
+	return regex("(\\b|\\A)([words_match])('?s*)(\\b|\\|)", "i")
 
 #undef PHOBIA_FILE
