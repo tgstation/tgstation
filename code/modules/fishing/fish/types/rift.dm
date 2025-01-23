@@ -633,7 +633,7 @@
 			power *= 0.5
 		var/affect_time = 15 SECONDS * power
 		// it really fucks you up
-		screeched.Knockdown(affect_time)
+		screeched.Knockdown(affect_time * 0.1)
 		screeched.adjust_disgust(affect_time)
 		screeched.adjust_stutter(affect_time)
 		screeched.adjust_slurring(affect_time)
@@ -645,7 +645,7 @@
 		screeched.adjust_eye_blur(affect_time)
 		if(iscarbon(screeched))
 			var/mob/living/carbon/carbon_screeched = screeched
-			carbon_screeched.vomit()
+			carbon_screeched.vomit(MOB_VOMIT_MESSAGE)
 			carbon_screeched.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50)
 
 	var/affected = 0
@@ -723,7 +723,6 @@
 /obj/item/organ/ears/babbelfish/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_They %PRONOUN_have weird, deep-rooted obsidian tubes sticking out of where their ears should be.")
-	AddElement(/datum/element/update_icon_blocker) // wats this even do
 	babbel_overlay = new()
 	removal_holder = new(src)
 
