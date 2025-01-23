@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Restyled the Who, Adminwho, and Show Server Revision verbs to be prettier."
