@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "chemical reactions can now go all the way to their min required temp/ph"
+  - code_imp: "improved code for debug chem master."

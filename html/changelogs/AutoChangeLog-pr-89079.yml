@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Fixed some bugs in the malf ai screen: one bluescreen, an extra colon, modules view"
