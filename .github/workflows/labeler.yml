@@ -6,16 +6,16 @@ on:
 
 jobs:
   labeler:
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4
 
     - name: Run Auto Labeler
-      permissions:
-        contents: read
-        issues: write
-        pull-requests: write
       uses: actions/github-script@v7
       with:
         script: |
