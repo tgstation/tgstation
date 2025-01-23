@@ -72,7 +72,7 @@
 		to_chat(user, span_warning("You feel like [source] has lost its spookiness..."))
 		Detach(source)
 
-	human.Paralyze(20)
+	human.Paralyze(2 SECONDS)
 	human.set_species(/datum/species/skeleton)
 	human.visible_message(span_warning("[human] has given up on life as a mortal."))
 	to_chat(human, span_boldnotice("You are a spooky skeleton!"))
