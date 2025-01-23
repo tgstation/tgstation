@@ -189,12 +189,16 @@
 	cost = 1
 
 /datum/heretic_knowledge/spell/wolves_among_sheep
-	name = "Wolf Among Sheep"
+	name = "Wolves Among Sheep"
 	desc = "Alters the fabric of reality, conjuring a magical arena unpassable to outsiders, \
 		all participants are trapped and immune to any form of crowd control or enviromental hazards; \
 		trapped participants are granted a Blade and are unable to leave or jaunt until they score a critical hit. \
 		Critical hits partially restore the Heretic's health."
-	gain_text = "ANNE-DONO TASKETE KURASAI"
+	gain_text = "Shadows crawl across the room, casting every chair, table \
+		and console into the looming shape of another traitorous hand. \
+		I have made an enemy of all, and peace will never be known to me \
+		again. I have shattered bonds and severed all alliances. In this truth, \
+		I know now the fragility of comradery. My enemies will be all, divided."
 	cost = 1
 	action_to_add = /datum/action/cooldown/spell/wolves_among_sheep
 
