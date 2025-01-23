@@ -1,7 +1,0 @@
-author: "StrangeWeirdKitten"
-delete-after: True
-changes:
-  - balance: "Reduces armor slots to 1 for all station built mechs except the phazon."
-  - balance: "melee mech armor has been increased to 20 from 15."
-  - balance: "mech bullet and laser armor has both been increased to 15 from 10."
-  - balance: "You can no longer stack the repair droid on mechs."

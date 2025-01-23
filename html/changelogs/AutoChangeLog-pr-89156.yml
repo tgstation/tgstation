@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Clipboards should no longer retain pens that got removed via Instant Recall"

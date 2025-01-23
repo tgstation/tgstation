@@ -583,3 +583,21 @@
   the-og-gear:
   - bugfix: Deluxe Donk Pockets (and their no-carb and vegan variants) are no longer
       craftable without collecting the recipe.
+2025-01-23:
+  Ghommie:
+  - bugfix: Chasms are once again incompatible with explosive fishing.
+  Jacquerel:
+  - refactor: NPC zombies found in ruins now use the basic mob framework. Please make
+      an issue report if they exhibit any unusual behaviour.
+  Melbert:
+  - bugfix: Heads with brains no longer look debrained
+  SmArtKar:
+  - bugfix: Clipboards should no longer retain pens that got removed via Instant Recall
+  StrangeWeirdKitten:
+  - balance: Reduces armor slots to 1 for all station built mechs except the phazon.
+  - balance: melee mech armor has been increased to 20 from 15.
+  - balance: mech bullet and laser armor has both been increased to 15 from 10.
+  - balance: You can no longer stack the repair droid on mechs.
+  Vekter:
+  - balance: The roundstart report will now display a more broad, less specific message
+      about threat levels when between 0 and 80 threat.
