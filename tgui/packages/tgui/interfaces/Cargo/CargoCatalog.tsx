@@ -17,6 +17,7 @@ import { useBackend, useSharedState } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
 import { searchForSupplies } from './helpers';
 import { CargoData, Supply, SupplyCategory } from './types';
+import { logger } from '../../logging';
 
 type Props = {
   express?: boolean;
@@ -197,10 +198,17 @@ function CatalogList(props: CatalogListProps) {
         }
 
         const privateBuy = (self_paid && !pack.goody) || app_cost;
+        const tooltipIcon = (content: string, icon: string, color: string) => (
+          <Stack.Item>
+            <Tooltip content={content}>
+              <Icon color={color} name={icon} />
+            </Tooltip>
+          </Stack.Item>
+        );
 
         return (
           <ImageButton
-            key={pack.name}
+            key={pack.id}
             fluid
             dmIcon={pack.crate_icon}
             dmIconState={pack.crate_icon_state}
@@ -226,21 +234,14 @@ function CatalogList(props: CatalogListProps) {
               </Stack.Item>
               {(!!pack.small_item || !!pack.access || !!pack.contraband) && (
                 <Stack.Item>
-                  {!!pack.small_item && (
-                    <Tooltip content="Small Item">
-                      <Icon color="purple" name="compress-alt" />
-                    </Tooltip>
-                  )}
-                  {!!pack.access && (
-                    <Tooltip content="Restricted">
-                      <Icon color="average" name="lock" />
-                    </Tooltip>
-                  )}
-                  {!!pack.contraband && (
-                    <Tooltip content="Contraband">
-                      <Icon color="bad" name="pastafarianism" />
-                    </Tooltip>
-                  )}
+                  <Stack reverse>
+                    {!!pack.small_item &&
+                      tooltipIcon('Small Item', 'compress-alt', 'purple')}
+                    {!!pack.access &&
+                      tooltipIcon('Restricted', 'lock', 'average')}
+                    {!!pack.contraband &&
+                      tooltipIcon('Contraband', 'pastafarianism', 'bad')}
+                  </Stack>
                 </Stack.Item>
               )}
               <Stack.Item align={'center'} width={5.5} mt={-0.75} mb={-0.75}>
@@ -251,11 +252,8 @@ function CatalogList(props: CatalogListProps) {
                   fontSize={0.85}
                 >
                   <Stack.Item
-                    style={
-                      privateBuy
-                        ? { textDecoration: 'red line-through', opacity: 0.75 }
-                        : undefined
-                    }
+                    opacity={privateBuy && 0.75}
+                    style={{ textDecoration: privateBuy && 'red line-through' }}
                   >
                     {formatMoney(pack.cost)} cr
                   </Stack.Item>

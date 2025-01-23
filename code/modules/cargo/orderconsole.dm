@@ -173,14 +173,21 @@
 
 	return data
 
-/obj/machinery/computer/cargo/proc/get_packs_data(group)
+/obj/machinery/computer/cargo/proc/get_packs_data(group, express = FALSE)
 	var/list/packs = list()
 	for(var/pack_id in SSshuttle.supply_packs)
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
 		if(pack.group != group)
 			continue
 
-		if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || (pack.special && !pack.special_enabled) || pack.drop_pod_only)
+		// Express console packs check
+		if(express && (pack.hidden || pack.special))
+			continue
+
+		if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.drop_pod_only)
+			continue
+
+		if(pack.contraband && !contraband)
 			continue
 
 		var/obj/structure/closet/crate/crate = pack.crate_type
@@ -189,8 +196,8 @@
 			"cost" = pack.get_cost(),
 			"id" = pack_id,
 			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
-			"crate_icon" = crate.icon,
-			"crate_icon_state" = crate.icon_state,
+			"crate_icon" = crate?.icon,
+			"crate_icon_state" = crate?.icon_state,
 			"goody" = pack.goody,
 			"access" = pack.access,
 			"contraband" = pack.contraband,
@@ -206,8 +213,9 @@
 			"name" = item.name,
 			"icon" = item.greyscale_config ? null : item.icon,
 			"icon_state" = item.greyscale_config ? null : item.icon_state,
-			"amount" = pack.contains[item],
+			"amount" = pack.contains[item]
 		))
+
 	return contains
 
 /**
