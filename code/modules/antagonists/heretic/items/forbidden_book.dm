@@ -141,5 +141,5 @@
 			continue
 		var/datum/heretic_knowledge/curse/transmutation/to_undo = new()
 		to_undo.uncurse(to_uncurse)
-		transmuted_victims -= to_uncurse
+		transmuted_victims -= to_uncurse_ref
 	return ..()

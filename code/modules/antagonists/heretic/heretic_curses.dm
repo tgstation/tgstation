@@ -219,8 +219,7 @@
 		to_chat(chosen_mob, span_warning("You feel your body morph into... itself?"))
 		return
 	chosen_mob.apply_status_effect(/datum/status_effect/race_swap, chosen_species)
-	var/datum/weakref/curse_victim = new(chosen_mob)
-	cursing_book.transmuted_victims += curse_victim
+	cursing_book.transmuted_victims += WEAKREF(chosen_mob)
 	to_chat(chosen_mob, span_danger("You feel your body morph into a new shape"))
 	return ..()
 
