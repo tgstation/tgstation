@@ -14,10 +14,14 @@
 				)
 			if(SFX_JINGLEBELL)
 				soundin = pick(
-					'sound/items/collarbell1.ogg',
-					'sound/items/collarbell2.ogg',
-					'sound/items/collarbell3.ogg',
-					'sound/items/collarbell4.ogg',
+					'modular_doppler/modular_sounds/sound/items/collarbell1.ogg',
+					'modular_doppler/modular_sounds/sound/items/collarbell2.ogg',
+					'modular_doppler/modular_sounds/sound/items/collarbell3.ogg',
+					'modular_doppler/modular_sounds/sound/items/collarbell4.ogg',
 				)
-
+			if(SFX_SKATER)
+				soundin = pick(
+					'modular_doppler/modular_sounds/sound/items/rollerblade1.ogg',
+					'modular_doppler/modular_sounds/sound/items/rollerblade2.ogg',
+				)
 	return soundin

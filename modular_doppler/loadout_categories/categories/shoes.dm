@@ -138,3 +138,7 @@
 /datum/loadout_item/shoes/wraps/skates
 	name = "Roller Skates"
 	item_path = /obj/item/clothing/shoes/wheelys/rollerskates
+
+/datum/loadout_item/shoes/rollerblades
+	name = "Inline Skates"
+	item_path = /obj/item/clothing/shoes/rollerblades
