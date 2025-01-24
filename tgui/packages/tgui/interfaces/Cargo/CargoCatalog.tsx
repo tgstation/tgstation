@@ -17,7 +17,6 @@ import { useBackend, useSharedState } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
 import { searchForSupplies } from './helpers';
 import { CargoData, Supply, SupplyCategory } from './types';
-import { logger } from '../../logging';
 
 type Props = {
   express?: boolean;
