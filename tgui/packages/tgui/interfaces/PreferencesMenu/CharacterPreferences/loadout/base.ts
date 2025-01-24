@@ -1,6 +1,6 @@
 import { BooleanLike } from 'tgui-core/react';
 
-import { PreferencesMenuData } from '../data';
+import { PreferencesMenuData } from '../../types';
 import { LoadoutButton } from './ModifyPanel';
 
 // Generic types

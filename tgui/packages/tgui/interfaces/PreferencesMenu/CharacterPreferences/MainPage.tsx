@@ -1,5 +1,6 @@
 import { filter, map, sortBy } from 'common/collections';
 import { ReactNode, useState } from 'react';
+import { sendAct, useBackend } from 'tgui/backend';
 import {
   Autofocus,
   Box,
@@ -13,25 +14,24 @@ import {
 import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
-import { sendAct, useBackend } from '../../backend';
-import { CharacterPreview } from '../common/CharacterPreview';
+import { CharacterPreview } from '../../common/CharacterPreview';
+import { RandomizationButton } from '../components/RandomizationButton';
+import { features } from '../preferences/features';
+import {
+  FeatureChoicedServerData,
+  FeatureValueInput,
+} from '../preferences/features/base';
+import { Gender, GENDERS } from '../preferences/gender';
 import {
   createSetPreference,
   PreferencesMenuData,
   RandomSetting,
   ServerData,
-} from './data';
+} from '../types';
+import { useRandomToggleState } from '../useRandomToggleState';
+import { useServerPrefs } from '../useServerPrefs';
 import { DeleteCharacterPopup } from './DeleteCharacterPopup';
 import { MultiNameInput, NameInput } from './names';
-import features from './preferences/features';
-import {
-  FeatureChoicedServerData,
-  FeatureValueInput,
-} from './preferences/features/base';
-import { Gender, GENDERS } from './preferences/gender';
-import { RandomizationButton } from './RandomizationButton';
-import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
-import { useRandomToggleState } from './useRandomToggleState';
 
 const CLOTHING_CELL_SIZE = 48;
 const CLOTHING_SIDEBAR_ROWS = 9;
@@ -40,13 +40,15 @@ const CLOTHING_SELECTION_CELL_SIZE = 48;
 const CLOTHING_SELECTION_WIDTH = 5.4;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
-const CharacterControls = (props: {
+type CharacterControlsProps = {
   handleRotate: () => void;
   handleOpenSpecies: () => void;
   gender: Gender;
   setGender: (gender: Gender) => void;
   showGender: boolean;
-}) => {
+};
+
+function CharacterControls(props: CharacterControlsProps) {
   return (
     <Stack>
       <Stack.Item>
@@ -79,9 +81,9 @@ const CharacterControls = (props: {
       )}
     </Stack>
   );
-};
+}
 
-const ChoicedSelection = (props: {
+type ChoicedSelectionProps = {
   name: string;
   catalog: FeatureChoicedServerData;
   selected: string;
@@ -89,9 +91,9 @@ const ChoicedSelection = (props: {
   supplementalValue?: unknown;
   onClose: () => void;
   onSelect: (value: string) => void;
-}) => {
-  const { act } = useBackend<PreferencesMenuData>();
+};
 
+function ChoicedSelection(props: ChoicedSelectionProps) {
   const { catalog, supplementalFeature, supplementalValue } = props;
   const [getSearchText, searchTextSet] = useState('');
 
@@ -117,7 +119,6 @@ const ChoicedSelection = (props: {
             {supplementalFeature && (
               <Stack.Item>
                 <FeatureValueInput
-                  act={act}
                   feature={features[supplementalFeature]}
                   featureId={supplementalFeature}
                   shrink
@@ -198,9 +199,9 @@ const ChoicedSelection = (props: {
       </Stack>
     </Box>
   );
-};
+}
 
-const searchInCatalog = (searchText = '', catalog: Record<string, string>) => {
+function searchInCatalog(searchText = '', catalog: Record<string, string>) {
   let items = Object.entries(catalog);
   if (searchText) {
     items = filter(
@@ -209,12 +210,14 @@ const searchInCatalog = (searchText = '', catalog: Record<string, string>) => {
     );
   }
   return items;
-};
+}
 
-const GenderButton = (props: {
+type GenderButtonProps = {
   handleSetGender: (gender: Gender) => void;
   gender: Gender;
-}) => {
+};
+
+function GenderButton(props: GenderButtonProps) {
   const [genderMenuOpen, setGenderMenuOpen] = useState(false);
 
   return (
@@ -257,13 +260,15 @@ const GenderButton = (props: {
       />
     </Popper>
   );
+}
+
+type CatalogItem = {
+  name: string;
+  supplemental_feature?: string;
 };
 
-const MainFeature = (props: {
-  catalog: FeatureChoicedServerData & {
-    name: string;
-    supplemental_feature?: string;
-  };
+type MainFeatureProps = {
+  catalog: FeatureChoicedServerData & CatalogItem;
   currentValue: string;
   isOpen: boolean;
   handleClose: () => void;
@@ -271,8 +276,10 @@ const MainFeature = (props: {
   handleSelect: (newClothing: string) => void;
   randomization?: RandomSetting;
   setRandomization: (newSetting: RandomSetting) => void;
-}) => {
-  const { act, data } = useBackend<PreferencesMenuData>();
+};
+
+function MainFeature(props: MainFeatureProps) {
+  const { data } = useBackend<PreferencesMenuData>();
 
   const {
     catalog,
@@ -363,7 +370,7 @@ const MainFeature = (props: {
       </Button>
     </Popper>
   );
-};
+}
 
 const createSetRandomization =
   (act: typeof sendAct, preference: string) => (newSetting: RandomSetting) => {
@@ -373,19 +380,24 @@ const createSetRandomization =
     });
   };
 
-const sortPreferences = (array: [string, unknown][]) =>
-  sortBy(array, ([featureId, _]) => {
+function sortPreferences(array: [string, unknown][]) {
+  return sortBy(array, ([featureId, _]) => {
     const feature = features[featureId];
     return feature?.name;
   });
+}
 
-export const PreferenceList = (props: {
-  act: typeof sendAct;
+type PreferenceListProps = {
   preferences: Record<string, unknown>;
   randomizations: Record<string, RandomSetting>;
   maxHeight: string;
   children?: ReactNode;
-}) => {
+};
+
+export function PreferenceList(props: PreferenceListProps) {
+  const { act } = useBackend<PreferencesMenuData>();
+  const { preferences, randomizations, maxHeight, children } = props;
+
   return (
     <Stack.Item
       basis="50%"
@@ -396,13 +408,13 @@ export const PreferenceList = (props: {
       }}
       overflowX="hidden"
       overflowY="auto"
-      maxHeight={props.maxHeight}
+      maxHeight={maxHeight}
     >
       <LabeledList>
-        {sortPreferences(Object.entries(props.preferences)).map(
+        {sortPreferences(Object.entries(preferences)).map(
           ([featureId, value]) => {
             const feature = features[featureId];
-            const randomSetting = props.randomizations[featureId];
+            const randomSetting = randomizations[featureId];
 
             if (feature === undefined) {
               return (
@@ -423,7 +435,7 @@ export const PreferenceList = (props: {
                   {randomSetting && (
                     <Stack.Item>
                       <RandomizationButton
-                        setValue={createSetRandomization(props.act, featureId)}
+                        setValue={createSetRandomization(act, featureId)}
                         value={randomSetting}
                       />
                     </Stack.Item>
@@ -431,7 +443,6 @@ export const PreferenceList = (props: {
 
                   <Stack.Item grow>
                     <FeatureValueInput
-                      act={props.act}
                       feature={feature}
                       featureId={featureId}
                       value={value}
@@ -444,16 +455,16 @@ export const PreferenceList = (props: {
         )}
       </LabeledList>
 
-      {props.children}
+      {children}
     </Stack.Item>
   );
-};
+}
 
-export const getRandomization = (
+export function getRandomization(
   preferences: Record<string, unknown>,
   serverData: ServerData | undefined,
   randomBodyEnabled: boolean,
-): Record<string, RandomSetting> => {
+): Record<string, RandomSetting> {
   if (!serverData) {
     return {};
   }
@@ -475,9 +486,13 @@ export const getRandomization = (
       ],
     ),
   );
+}
+
+type MainPageProps = {
+  openSpecies: () => void;
 };
 
-export const MainPage = (props: { openSpecies: () => void }) => {
+export function MainPage(props: MainPageProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
   const [currentClothingMenu, setCurrentClothingMenu] = useState<string | null>(
     null,
@@ -487,200 +502,189 @@ export const MainPage = (props: { openSpecies: () => void }) => {
   const [multiNameInputOpen, setMultiNameInputOpen] = useState(false);
   const [randomToggleEnabled] = useRandomToggleState();
 
-  return (
-    <ServerPreferencesFetcher
-      render={(serverData) => {
-        const currentSpeciesData =
-          serverData &&
-          serverData.species[data.character_preferences.misc.species];
+  const serverData = useServerPrefs();
 
-        const contextualPreferences =
-          data.character_preferences.secondary_features || [];
+  const currentSpeciesData =
+    serverData && serverData.species[data.character_preferences.misc.species];
 
-        const mainFeatures = [
-          ...Object.entries(data.character_preferences.clothing),
-          ...Object.entries(data.character_preferences.features).filter(
-            ([featureName]) => {
-              if (!currentSpeciesData) {
-                return false;
-              }
+  const contextualPreferences =
+    data.character_preferences.secondary_features || [];
 
-              return (
-                currentSpeciesData.enabled_features.indexOf(featureName) !== -1
-              );
-            },
-          ),
-        ];
-
-        const randomBodyEnabled =
-          data.character_preferences.non_contextual.random_body !==
-            RandomSetting.Disabled || randomToggleEnabled;
-
-        const randomizationOfMainFeatures = getRandomization(
-          Object.fromEntries(mainFeatures),
-          serverData,
-          randomBodyEnabled,
-        );
-
-        const nonContextualPreferences = {
-          ...data.character_preferences.non_contextual,
-        };
-
-        if (randomBodyEnabled) {
-          nonContextualPreferences['random_species'] =
-            data.character_preferences.randomization['species'];
-        } else {
-          // We can't use random_name/is_accessible because the
-          // server doesn't know whether the random toggle is on.
-          delete nonContextualPreferences['random_name'];
+  const mainFeatures = [
+    ...Object.entries(data.character_preferences.clothing),
+    ...Object.entries(data.character_preferences.features).filter(
+      ([featureName]) => {
+        if (!currentSpeciesData) {
+          return false;
         }
 
-        return (
-          <>
-            {multiNameInputOpen && (
-              <MultiNameInput
-                handleClose={() => setMultiNameInputOpen(false)}
-                handleRandomizeName={(preference) =>
-                  act('randomize_name', {
-                    preference,
-                  })
-                }
-                handleUpdateName={(nameType, value) =>
-                  act('set_preference', {
-                    preference: nameType,
-                    value,
-                  })
-                }
-                names={data.character_preferences.names}
-              />
-            )}
+        return currentSpeciesData.enabled_features.indexOf(featureName) !== -1;
+      },
+    ),
+  ];
 
-            {deleteCharacterPopupOpen && (
-              <DeleteCharacterPopup
-                close={() => setDeleteCharacterPopupOpen(false)}
-              />
-            )}
+  const randomBodyEnabled =
+    data.character_preferences.non_contextual.random_body !==
+      RandomSetting.Disabled || randomToggleEnabled;
 
-            <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
-              <Stack.Item>
-                <Stack vertical fill>
-                  <Stack.Item>
-                    <CharacterControls
-                      gender={data.character_preferences.misc.gender}
-                      handleOpenSpecies={props.openSpecies}
-                      handleRotate={() => {
-                        act('rotate');
-                      }}
-                      setGender={createSetPreference(act, 'gender')}
-                      showGender={
-                        currentSpeciesData ? !!currentSpeciesData.sexes : true
-                      }
-                    />
-                  </Stack.Item>
-
-                  <Stack.Item grow>
-                    <CharacterPreview
-                      height="100%"
-                      id={data.character_preview_view}
-                    />
-                  </Stack.Item>
-
-                  <Stack.Item position="relative">
-                    <NameInput
-                      name={data.character_preferences.names[data.name_to_use]}
-                      handleUpdateName={createSetPreference(
-                        act,
-                        data.name_to_use,
-                      )}
-                      openMultiNameInput={() => {
-                        setMultiNameInputOpen(true);
-                      }}
-                    />
-                  </Stack.Item>
-                </Stack>
-              </Stack.Item>
-
-              <Stack.Item width={`${CLOTHING_CELL_SIZE * 2 + 15}px`}>
-                <Stack height="100%" vertical wrap>
-                  {mainFeatures.map(([clothingKey, clothing]) => {
-                    const catalog =
-                      serverData &&
-                      (serverData[clothingKey] as FeatureChoicedServerData & {
-                        name: string;
-                      });
-
-                    return (
-                      catalog && (
-                        <Stack.Item key={clothingKey} mt={0.5} px={0.5}>
-                          <MainFeature
-                            catalog={catalog}
-                            currentValue={clothing}
-                            isOpen={currentClothingMenu === clothingKey}
-                            handleClose={() => {
-                              setCurrentClothingMenu(null);
-                            }}
-                            handleOpen={() => {
-                              setCurrentClothingMenu(clothingKey);
-                            }}
-                            handleSelect={createSetPreference(act, clothingKey)}
-                            randomization={
-                              randomizationOfMainFeatures[clothingKey]
-                            }
-                            setRandomization={createSetRandomization(
-                              act,
-                              clothingKey,
-                            )}
-                          />
-                        </Stack.Item>
-                      )
-                    );
-                  })}
-                </Stack>
-              </Stack.Item>
-
-              <Stack.Item grow basis={0}>
-                <Stack vertical fill>
-                  <PreferenceList
-                    act={act}
-                    randomizations={getRandomization(
-                      contextualPreferences,
-                      serverData,
-                      randomBodyEnabled,
-                    )}
-                    preferences={contextualPreferences}
-                    maxHeight="auto"
-                  />
-
-                  <PreferenceList
-                    act={act}
-                    randomizations={getRandomization(
-                      nonContextualPreferences,
-                      serverData,
-                      randomBodyEnabled,
-                    )}
-                    preferences={nonContextualPreferences}
-                    maxHeight="auto"
-                  >
-                    <Box my={0.5}>
-                      <Button
-                        color="red"
-                        disabled={
-                          Object.values(data.character_profiles).filter(
-                            (name) => name,
-                          ).length < 2
-                        } // check if existing chars more than one
-                        onClick={() => setDeleteCharacterPopupOpen(true)}
-                      >
-                        Delete Character
-                      </Button>
-                    </Box>
-                  </PreferenceList>
-                </Stack>
-              </Stack.Item>
-            </Stack>
-          </>
-        );
-      }}
-    />
+  const randomizationOfMainFeatures = getRandomization(
+    Object.fromEntries(mainFeatures),
+    serverData,
+    randomBodyEnabled,
   );
-};
+
+  const nonContextualPreferences = {
+    ...data.character_preferences.non_contextual,
+  };
+
+  if (randomBodyEnabled) {
+    nonContextualPreferences['random_species'] =
+      data.character_preferences.randomization['species'];
+  } else {
+    // We can't use random_name/is_accessible because the
+    // server doesn't know whether the random toggle is on.
+    delete nonContextualPreferences['random_name'];
+  }
+
+  return (
+    <>
+      {multiNameInputOpen && (
+        <MultiNameInput
+          handleClose={() => setMultiNameInputOpen(false)}
+          handleRandomizeName={(preference) =>
+            act('randomize_name', {
+              preference,
+            })
+          }
+          handleUpdateName={(nameType, value) =>
+            act('set_preference', {
+              preference: nameType,
+              value,
+            })
+          }
+          names={data.character_preferences.names}
+        />
+      )}
+
+      {deleteCharacterPopupOpen && (
+        <DeleteCharacterPopup
+          close={() => setDeleteCharacterPopupOpen(false)}
+        />
+      )}
+
+      <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
+        <Stack.Item>
+          <Stack vertical fill>
+            <Stack.Item>
+              <CharacterControls
+                gender={data.character_preferences.misc.gender}
+                handleOpenSpecies={props.openSpecies}
+                handleRotate={() => {
+                  act('rotate');
+                }}
+                setGender={createSetPreference(act, 'gender')}
+                showGender={
+                  currentSpeciesData ? !!currentSpeciesData.sexes : true
+                }
+              />
+            </Stack.Item>
+
+            <Stack.Item grow>
+              <CharacterPreview
+                height="100%"
+                id={data.character_preview_view}
+              />
+            </Stack.Item>
+
+            <Stack.Item position="relative">
+              <NameInput
+                name={data.character_preferences.names[data.name_to_use]}
+                handleUpdateName={createSetPreference(act, data.name_to_use)}
+                openMultiNameInput={() => {
+                  setMultiNameInputOpen(true);
+                }}
+              />
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+
+        <Stack.Item width={`${CLOTHING_CELL_SIZE * 2 + 15}px`}>
+          <Stack height="100%" vertical wrap>
+            {mainFeatures.map(([clothingKey, clothing]) => {
+              const catalog = serverData?.[
+                clothingKey
+              ] as FeatureChoicedServerData & {
+                name: string;
+              };
+
+              return (
+                <Stack.Item key={clothingKey} mt={0.5} px={0.5}>
+                  {!catalog ? (
+                    // Skeleton button
+                    <Button height={4} width={4} disabled />
+                  ) : (
+                    <MainFeature
+                      catalog={catalog}
+                      currentValue={clothing}
+                      isOpen={currentClothingMenu === clothingKey}
+                      handleClose={() => {
+                        setCurrentClothingMenu(null);
+                      }}
+                      handleOpen={() => {
+                        setCurrentClothingMenu(clothingKey);
+                      }}
+                      handleSelect={createSetPreference(act, clothingKey)}
+                      randomization={randomizationOfMainFeatures[clothingKey]}
+                      setRandomization={createSetRandomization(
+                        act,
+                        clothingKey,
+                      )}
+                    />
+                  )}
+                </Stack.Item>
+              );
+            })}
+          </Stack>
+        </Stack.Item>
+
+        <Stack.Item grow basis={0}>
+          <Stack vertical fill>
+            <PreferenceList
+              randomizations={getRandomization(
+                contextualPreferences,
+                serverData,
+                randomBodyEnabled,
+              )}
+              preferences={contextualPreferences}
+              maxHeight="auto"
+            />
+
+            <PreferenceList
+              randomizations={getRandomization(
+                nonContextualPreferences,
+                serverData,
+                randomBodyEnabled,
+              )}
+              preferences={nonContextualPreferences}
+              maxHeight="auto"
+            >
+              <Box my={0.5}>
+                <Button
+                  color="red"
+                  disabled={
+                    Object.values(data.character_profiles).filter(
+                      (name) => name,
+                    ).length < 2
+                  } // check if existing chars more than one
+                  onClick={() => setDeleteCharacterPopupOpen(true)}
+                >
+                  Delete Character
+                </Button>
+              </Box>
+            </PreferenceList>
+          </Stack>
+        </Stack.Item>
+      </Stack>
+    </>
+  );
+}

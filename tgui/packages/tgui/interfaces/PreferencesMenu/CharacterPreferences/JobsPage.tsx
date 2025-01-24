@@ -1,34 +1,37 @@
 import { sortBy } from 'common/collections';
 import { PropsWithChildren, ReactNode } from 'react';
+import { useBackend } from 'tgui/backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { useBackend } from '../../backend';
 import {
   createSetPreference,
   Job,
   JoblessRole,
   JobPriority,
   PreferencesMenuData,
-} from './data';
-import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
+} from '../types';
+import { useServerPrefs } from '../useServerPrefs';
 
-const sortJobs = (entries: [string, Job][], head?: string) =>
-  sortBy(
+function sortJobs(entries: [string, Job][], head?: string) {
+  return sortBy(
     entries,
     ([key, _]) => (key === head ? -1 : 1),
     ([key, _]) => key,
   );
+}
 
 const PRIORITY_BUTTON_SIZE = '18px';
 
-const PriorityButton = (props: {
+type PriorityButtonProps = {
   name: string;
   color: string;
   modifier?: string;
   enabled: boolean;
   onClick: () => void;
-}) => {
+};
+
+function PriorityButton(props: PriorityButtonProps) {
   const className = `PreferencesMenu__Jobs__departments__priority`;
 
   return (
@@ -48,46 +51,44 @@ const PriorityButton = (props: {
       />
     </Stack.Item>
   );
-};
+}
 
 type CreateSetPriority = (priority: JobPriority | null) => () => void;
 
 const createSetPriorityCache: Record<string, CreateSetPriority> = {};
 
-const createCreateSetPriorityFromName = (
-  jobName: string,
-): CreateSetPriority => {
+function createCreateSetPriorityFromName(jobName: string): CreateSetPriority {
   if (createSetPriorityCache[jobName] !== undefined) {
     return createSetPriorityCache[jobName];
   }
 
   const perPriorityCache: Map<JobPriority | null, () => void> = new Map();
 
-  const createSetPriority = (priority: JobPriority | null) => {
+  function createSetPriority(priority: JobPriority | null) {
     const existingCallback = perPriorityCache.get(priority);
     if (existingCallback !== undefined) {
       return existingCallback;
     }
 
-    const setPriority = () => {
+    function setPriority() {
       const { act } = useBackend<PreferencesMenuData>();
 
       act('set_job_preference', {
         job: jobName,
         level: priority,
       });
-    };
+    }
 
     perPriorityCache.set(priority, setPriority);
     return setPriority;
-  };
+  }
 
   createSetPriorityCache[jobName] = createSetPriority;
 
   return createSetPriority;
-};
+}
 
-const PriorityHeaders = () => {
+function PriorityHeaders() {
   const className = 'PreferencesMenu__Jobs__PriorityHeader';
 
   return (
@@ -103,13 +104,15 @@ const PriorityHeaders = () => {
       <Stack.Item className={className}>High</Stack.Item>
     </Stack>
   );
-};
+}
 
-const PriorityButtons = (props: {
+type PriorityButtonsProps = {
   createSetPriority: CreateSetPriority;
   isOverflow: boolean;
   priority: JobPriority;
-}) => {
+};
+
+function PriorityButtons(props: PriorityButtonsProps) {
   const { createSetPriority, isOverflow, priority } = props;
 
   return (
@@ -172,9 +175,15 @@ const PriorityButtons = (props: {
       )}
     </Stack>
   );
+}
+
+type JobRowProps = {
+  className?: string;
+  job: Job;
+  name: string;
 };
 
-const JobRow = (props: { className?: string; job: Job; name: string }) => {
+function JobRow(props: JobRowProps) {
   const { data } = useBackend<PreferencesMenuData>();
   const { className, job, name } = props;
 
@@ -247,71 +256,68 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
       </Stack>
     </Stack.Item>
   );
-};
+}
 
-const Department = (props: { department: string } & PropsWithChildren) => {
+type DepartmentProps = {
+  department: string;
+} & PropsWithChildren;
+
+function Department(props: DepartmentProps) {
   const { children, department: name } = props;
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 
-  return (
-    <ServerPreferencesFetcher
-      render={(data) => {
-        if (!data) {
-          return null;
-        }
+  const data = useServerPrefs();
+  if (!data) return;
 
-        const { departments, jobs } = data.jobs;
-        const department = departments[name];
+  const { departments, jobs } = data.jobs;
+  const department = departments[name];
 
-        // This isn't necessarily a bug, it's like this
-        // so that you can remove entire departments without
-        // having to edit the UI.
-        // This is used in events, for instance.
-        if (!department) {
-          return null;
-        }
+  // This isn't necessarily a bug, it's like this
+  // so that you can remove entire departments without
+  // having to edit the UI.
+  // This is used in events, for instance.
+  if (!department) {
+    return null;
+  }
 
-        const jobsForDepartment = sortJobs(
-          Object.entries(jobs).filter(([_, job]) => job.department === name),
-          department.head,
-        );
-
-        return (
-          <Box>
-            <Stack vertical fill>
-              {jobsForDepartment.map(([name, job]) => {
-                return (
-                  <JobRow
-                    className={classes([
-                      className,
-                      name === department.head && 'head',
-                    ])}
-                    key={name}
-                    job={job}
-                    name={name}
-                  />
-                );
-              })}
-            </Stack>
-
-            {children}
-          </Box>
-        );
-      }}
-    />
+  const jobsForDepartment = sortJobs(
+    Object.entries(jobs).filter(([_, job]) => job.department === name),
+    department.head,
   );
-};
+
+  return (
+    <Box>
+      <Stack vertical fill>
+        {jobsForDepartment.map(([name, job]) => {
+          return (
+            <JobRow
+              className={classes([
+                className,
+                name === department.head && 'head',
+              ])}
+              key={name}
+              job={job}
+              name={name}
+            />
+          );
+        })}
+      </Stack>
+
+      {children}
+    </Box>
+  );
+}
 
 // *Please* find a better way to do this, this is RIDICULOUS.
 // All I want is for a gap to pretend to be an empty space.
 // But in order for everything to align, I also need to add the 0.2em padding.
 // But also, we can't be aligned with names that break into multiple lines!
-const Gap = (props: { amount: number }) => {
+function Gap(props: { amount: number }) {
   // 0.2em comes from the padding-bottom in the department listing
   return <Box height={`calc(${props.amount}px + 0.2em)`} />;
-};
+}
 
-const JoblessRoleDropdown = (props) => {
+function JoblessRoleDropdown(props) {
   const { act, data } = useBackend<PreferencesMenuData>();
   const selected = data.character_preferences.misc.joblessrole;
 
@@ -344,9 +350,9 @@ const JoblessRoleDropdown = (props) => {
       />
     </Box>
   );
-};
+}
 
-export const JobsPage = () => {
+export function JobsPage() {
   return (
     <>
       <JoblessRoleDropdown />
@@ -406,4 +412,4 @@ export const JobsPage = () => {
       </Stack>
     </>
   );
-};
+}

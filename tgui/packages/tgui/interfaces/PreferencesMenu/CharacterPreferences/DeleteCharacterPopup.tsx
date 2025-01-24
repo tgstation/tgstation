@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import { Box, Button, Modal, Stack } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
-import { PreferencesMenuData } from './data';
+import { PreferencesMenuData } from '../types';
 
-export const DeleteCharacterPopup = (props: { close: () => void }) => {
+type Props = {
+  close: () => void;
+};
+
+export function DeleteCharacterPopup(props: Props) {
   const { data, act } = useBackend<PreferencesMenuData>();
   const [secondsLeft, setSecondsLeft] = useState(3);
 
@@ -16,7 +20,7 @@ export const DeleteCharacterPopup = (props: { close: () => void }) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  });
+  }, []);
 
   return (
     <Modal>
@@ -54,4 +58,4 @@ export const DeleteCharacterPopup = (props: { close: () => void }) => {
       </Stack>
     </Modal>
   );
-};
+}

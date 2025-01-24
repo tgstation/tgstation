@@ -1,3 +1,4 @@
+import { useBackend } from 'tgui/backend';
 import {
   BlockQuote,
   Box,
@@ -10,8 +11,8 @@ import {
 } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { useBackend } from '../../backend';
-import { CharacterPreview } from '../common/CharacterPreview';
+import { CharacterPreview } from '../../common/CharacterPreview';
+import { LoadingScreen } from '../../common/LoadingScreen';
 import {
   createSetPreference,
   Food,
@@ -19,8 +20,8 @@ import {
   PreferencesMenuData,
   ServerData,
   Species,
-} from './data';
-import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
+} from '../types';
+import { useServerPrefs } from '../useServerPrefs';
 
 const FOOD_ICONS = {
   [Food.Bugs]: 'bug',
@@ -69,19 +70,23 @@ const IGNORE_UNLESS_LIKED: Set<Food> = new Set([
   Food.Toxic,
 ]);
 
-const notIn = function <T>(set: Set<T>) {
+function notIn<T>(set: Set<T>) {
   return (value: T) => {
     return !set.has(value);
   };
-};
+}
 
-const FoodList = (props: {
+type FoodListProps = {
   food: Food[];
   icon: string;
   name: string;
   className: string;
-}) => {
-  if (props.food.length === 0) {
+};
+
+function FoodList(props: FoodListProps) {
+  const { food = [], icon, name, className } = props;
+
+  if (food.length === 0) {
     return null;
   }
 
@@ -90,10 +95,10 @@ const FoodList = (props: {
       position="bottom-end"
       content={
         <Box>
-          <Icon name={props.icon} /> <b>{props.name}</b>
+          <Icon name={icon} /> <b>{name}</b>
           <Divider />
           <Box>
-            {props.food
+            {food
               .reduce((names, food) => {
                 const foodName = FOOD_NAMES[food];
                 return foodName ? names.concat(foodName) : names;
@@ -104,12 +109,12 @@ const FoodList = (props: {
       }
     >
       <Stack ml={2}>
-        {props.food.map((food) => {
+        {food.map((food) => {
           return (
             FOOD_ICONS[food] && (
               <Stack.Item>
                 <Icon
-                  className={props.className}
+                  className={className}
                   size={1.4}
                   key={food}
                   name={FOOD_ICONS[food]}
@@ -121,14 +126,19 @@ const FoodList = (props: {
       </Stack>
     </Tooltip>
   );
+}
+
+type DietProps = {
+  diet: Species['diet'];
 };
 
-const Diet = (props: { diet: Species['diet'] }) => {
-  if (!props.diet) {
+function Diet(props: DietProps) {
+  const { diet } = props;
+  if (!diet) {
     return null;
   }
 
-  const { liked_food, disliked_food, toxic_food } = props.diet;
+  const { liked_food, disliked_food, toxic_food } = diet;
 
   return (
     <Stack>
@@ -160,9 +170,14 @@ const Diet = (props: { diet: Species['diet'] }) => {
       </Stack.Item>
     </Stack>
   );
+}
+
+type SpeciesPerkProps = {
+  className: string;
+  perk: Perk;
 };
 
-const SpeciesPerk = (props: { className: string; perk: Perk }) => {
+function SpeciesPerk(props: SpeciesPerkProps) {
   const { className, perk } = props;
 
   return (
@@ -191,9 +206,13 @@ const SpeciesPerk = (props: { className: string; perk: Perk }) => {
       </Box>
     </Tooltip>
   );
+}
+
+type SpeciesPerksProps = {
+  perks: Species['perks'];
 };
 
-const SpeciesPerks = (props: { perks: Species['perks'] }) => {
+function SpeciesPerks(props: SpeciesPerksProps) {
   const { positive, negative, neutral } = props.perks;
 
   return (
@@ -231,12 +250,14 @@ const SpeciesPerks = (props: { perks: Species['perks'] }) => {
       </Stack>
     </Stack>
   );
-};
+}
 
-const SpeciesPageInner = (props: {
+type SpeciesPageInnerProps = {
   handleClose: () => void;
   species: ServerData['species'];
-}) => {
+};
+
+function SpeciesPageInner(props: SpeciesPageInnerProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
   const setSpecies = createSetPreference(act, 'species');
 
@@ -259,11 +280,9 @@ const SpeciesPageInner = (props: {
   return (
     <Stack vertical fill>
       <Stack.Item>
-        <Button
-          icon="arrow-left"
-          onClick={props.handleClose}
-          content="Go Back"
-        />
+        <Button icon="arrow-left" onClick={props.handleClose}>
+          Go Back
+        </Button>
       </Stack.Item>
 
       <Stack.Item grow>
@@ -352,23 +371,22 @@ const SpeciesPageInner = (props: {
       </Stack.Item>
     </Stack>
   );
+}
+
+type SpeciesPageProps = {
+  closeSpecies: () => void;
 };
 
-export const SpeciesPage = (props: { closeSpecies: () => void }) => {
+export function SpeciesPage(props: SpeciesPageProps) {
+  const serverData = useServerPrefs();
+  if (!serverData) {
+    return <LoadingScreen />;
+  }
+
   return (
-    <ServerPreferencesFetcher
-      render={(serverData) => {
-        if (serverData) {
-          return (
-            <SpeciesPageInner
-              handleClose={props.closeSpecies}
-              species={serverData.species}
-            />
-          );
-        } else {
-          return <Box>Loading species...</Box>;
-        }
-      }}
+    <SpeciesPageInner
+      handleClose={props.closeSpecies}
+      species={serverData.species}
     />
   );
-};
+}

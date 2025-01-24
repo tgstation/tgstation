@@ -6,7 +6,7 @@
 
 import { useBackend } from './backend';
 import { useDebug } from './debug';
-import { LoadingScreen } from './interfaces/common/LoadingToolbox';
+import { LoadingScreen } from './interfaces/common/LoadingScreen';
 import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces');

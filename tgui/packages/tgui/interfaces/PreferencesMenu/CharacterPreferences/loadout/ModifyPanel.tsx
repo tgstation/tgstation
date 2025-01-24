@@ -1,3 +1,4 @@
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -10,26 +11,28 @@ import {
   Stack,
 } from 'tgui-core/components';
 
-import { useBackend } from '../../../backend';
 import { FAIcon, LoadoutItem, LoadoutManagerData, ReskinOption } from './base';
 import { ItemIcon } from './ItemDisplay';
 
 // Used in LoadoutItem to make buttons relating to how an item can be edited
 export type LoadoutButton = {
   label: string;
-  act_key?: string;
-  button_icon?: FAIcon;
-  button_text?: string;
-  active_key?: string;
-  active_text?: string;
-  inactive_text?: string;
-  tooltip_text?: string;
-};
+} & Partial<{
+  act_key: string;
+  button_icon: FAIcon;
+  button_text: string;
+  active_key: string;
+  active_text: string;
+  inactive_text: string;
+  tooltip_text: string;
+}>;
 
-const LoadoutModifyButton = (props: {
+type ButtonProps = {
   button: LoadoutButton;
   modifyItemDimmer: LoadoutItem;
-}) => {
+};
+
+function LoadoutModifyButton(props: ButtonProps) {
   const { act, data } = useBackend<LoadoutManagerData>();
   const { loadout_list } = data.character_preferences.misc;
   const { button, modifyItemDimmer } = props;
@@ -71,18 +74,22 @@ const LoadoutModifyButton = (props: {
       {button.button_text}
     </Button>
   );
+}
+
+type ButtonsProps = {
+  modifyItemDimmer: LoadoutItem;
 };
 
-const LoadoutModifyButtons = (props: { modifyItemDimmer: LoadoutItem }) => {
+function LoadoutModifyButtons(props: ButtonsProps) {
   const { act, data } = useBackend<LoadoutManagerData>();
   const { loadout_list } = data.character_preferences.misc;
   const { modifyItemDimmer } = props;
 
-  const isActive = (item: LoadoutItem, reskin: ReskinOption) => {
+  function isActive(item: LoadoutItem, reskin: ReskinOption) {
     return loadout_list && loadout_list[item.path]['reskin']
       ? loadout_list[item.path]['reskin'] === reskin.name
       : item.icon_state === reskin.skin_icon_state;
-  };
+  }
 
   return (
     <Stack>
@@ -137,10 +144,15 @@ const LoadoutModifyButtons = (props: { modifyItemDimmer: LoadoutItem }) => {
       </Stack.Item>
     </Stack>
   );
+}
+
+type ItemDisplayProps = {
+  modifyItemDimmer: LoadoutItem;
 };
 
-const LoadoutModifyItemDisplay = (props: { modifyItemDimmer: LoadoutItem }) => {
+function LoadoutModifyItemDisplay(props: ItemDisplayProps) {
   const { modifyItemDimmer } = props;
+
   return (
     <Stack vertical justify="center">
       <Stack.Item>
@@ -153,14 +165,17 @@ const LoadoutModifyItemDisplay = (props: { modifyItemDimmer: LoadoutItem }) => {
       </Stack.Item>
     </Stack>
   );
-};
+}
 
-export const LoadoutModifyDimmer = (props: {
+type DimmerProps = {
   modifyItemDimmer: LoadoutItem;
   setModifyItemDimmer: (dimmer: LoadoutItem | null) => void;
-}) => {
+};
+
+export function LoadoutModifyDimmer(props: DimmerProps) {
   const { act } = useBackend();
   const { modifyItemDimmer, setModifyItemDimmer } = props;
+
   return (
     <Dimmer style={{ zIndex: '100' }}>
       <Stack
@@ -217,4 +232,4 @@ export const LoadoutModifyDimmer = (props: {
       </Stack>
     </Dimmer>
   );
-};
+}
