@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Simultaneously having traits that both make you easier and harder to wound will now act like you have neither, resulting in you taking the normal amount of wound damage."
