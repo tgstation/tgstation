@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - admin: "Added a new function in Lua scripting, SS13.check_tick, to avoid causing too much lag during loops and such."

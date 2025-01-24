@@ -601,3 +601,65 @@
   Vekter:
   - balance: The roundstart report will now display a more broad, less specific message
       about threat levels when between 0 and 80 threat.
+2025-01-24:
+  Absolucy:
+  - qol: Removed the arbitrary limit of 10 maximum highlights.
+  - qol: Restyled the Who, Adminwho, and Show Server Revision verbs to be prettier.
+  - admin: Added a new function in Lua scripting, SS13.check_tick, to avoid causing
+      too much lag during loops and such.
+  Exester509:
+  - bugfix: The Stargazer, a cosmic heretic's ascension, can be properly commanded
+      once more.
+  - code_imp: Basic mob pets can now target objects, or objects and walls by using
+      two new targeting strategies.
+  Ghommie:
+  - bugfix: Fixed single-use spectral instruments losing their powers before skeletonizing
+      anyone.
+  - rscadd: A very rare spooky suffix for mythril items and the wizard RPG event.
+  Jacquerel:
+  - refactor: The Cytology Vatbeast now uses the basic mob framework, please report
+      any unusual behaviour.
+  - balance: Phobias are now somewhat less debilitating, although their effects get
+      worse the longer you are near a fear trigger.
+  - balance: Carphobes are now afraid of all fish.
+  - rscdel: Remove the Heretic phobia, as it is now basically unused.
+  - balance: Dark Wizards now teleport when attacked, but are more likely to turn
+      on their allies
+  JohnFulpWillard:
+  - balance: AIs can now examine through their eye.
+  - bugfix: Dullahans can also examine through their head again.
+  Likteer:
+  - rscdel: Removed vending products shortage station trait
+  MX0739:
+  - bugfix: objects with throw_range 0 now properly parried with baseball bats
+  MichiRecRoom:
+  - qol: pAIs can now withdraw their candidacy at any time.
+  - bugfix: Word phobias should always apply now, rather than occasionally being missed.
+  Seefaaa:
+  - admin: added Space Dragon role to the banning panel
+  SmArtKar:
+  - qol: Action palette no longer disappears while you have floating actions
+  - qol: Snapping tethers now also removes their beacons
+  - qol: You can now cut tethers that you're attached to while in motion
+  - qol: Tethers now snap when you retract your gloves or disable your MODsuit
+  - bugfix: Fixed tether stacking issues
+  StrangeWeirdKitten:
+  - bugfix: Fixes uncapped xenobio slime multiplication which can easily result in
+      hundreds of slimes.
+  SyncIt21:
+  - bugfix: chemical reactions can now go all the way to their min required temp/ph
+  - code_imp: improved code for debug chem master.
+  carlarctg:
+  - rscadd: Added two new fish to heretic rift fishing.
+  - rscadd: You can now fish up arms, heads, and other items lost to heretic rifts!
+  - admin: objectify() now works with instances of objects. Mark a player, then an
+      object, and use those marks to call that global proc and you can turn people
+      into pre-existing items.
+  - rscadd: Psychic resistance now prevents the instadeath from trying to telekinetically
+      grasp at a opened rift.
+  jlsnow301:
+  - bugfix: 'Fixed some bugs in the malf ai screen: one bluescreen, an extra colon,
+      modules view'
+  mc-oofert:
+  - rscadd: outpost 31, the icebox ruin. Also its associated mobs, and megafauna,
+      and loot. Im not spoiling anything, find it yourself.
