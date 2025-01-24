@@ -416,7 +416,6 @@
 #include "code\__HELPERS\atoms.dm"
 #include "code\__HELPERS\auxtools.dm"
 #include "code\__HELPERS\bitflag_lists.dm"
-#include "code\__HELPERS\cameras.dm"
 #include "code\__HELPERS\chat.dm"
 #include "code\__HELPERS\chat_filter.dm"
 #include "code\__HELPERS\clients.dm"
