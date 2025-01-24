@@ -10,9 +10,9 @@ import {
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
-import { useBackend } from '../../backend';
-import { Window } from '../../layouts';
-import { CargoCatalog } from './CargoCatalog';
+import { useBackend } from '../backend';
+import { Window } from '../layouts';
+import { CargoCatalog } from './Cargo/CargoCatalog';
 
 type Data = {
   locked: BooleanLike;
