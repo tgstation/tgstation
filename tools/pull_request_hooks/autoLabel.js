@@ -24,12 +24,12 @@ function check_body_for_labels(body) {
 
 	let found_cl = false;
 	for (let line of body.split('\n')) {
-		if(line.startsWith(':cl:')) {
+		if (line.startsWith(':cl:')) {
 			found_cl = true;
 			continue;
-		} else if(line.startsWith('/:cl:')) {
+		} else if (line.startsWith('/:cl:')) {
 			break;
-		} else if(!found_cl) {
+		} else if (!found_cl) {
 			continue;
 		}
 		// see if the first segment of the line is one of the keywords
@@ -82,7 +82,7 @@ async function check_diff_for_labels(diff_url) {
 				let found = false;
 				const { filepaths, add_only } = autoLabelConfig.file_labels[label];
 				for (let filepath of filepaths) {
-					if(check_diff_line_for_element(diff_txt, filepath)) {
+					if (check_diff_line_for_element(diff_txt, filepath)) {
 						found = true;
 						break;
 					}
@@ -118,6 +118,8 @@ export async function get_updated_label_set({ github, context }) {
 		title = '',
 	} = pull_request;
 
+	console.log("the call is coming from inside the house");
+
 	let updated_labels = new Set();
 	for (let label of labels) {
 		updated_labels.add(label.name);
@@ -134,8 +136,8 @@ export async function get_updated_label_set({ github, context }) {
 		}
 	}
 	// body and title are only checked on open, not on sync
-	if(action === 'opened') {
-		if(title) {
+	if (action === 'opened') {
+		if (title) {
 			for (let label of check_title_for_labels(title)) {
 				updated_labels.add(label);
 			}
@@ -154,7 +156,7 @@ export async function get_updated_label_set({ github, context }) {
 	let merge_conflict = mergeable === false;
 	// null means it was not reported yet
 	// it is not normally included in the payload - a "get" is needed
-	if(mergeable === null){
+	if (mergeable === null) {
 		try {
 			let response = await github.rest.pulls.get({
 				owner: context.repo.owner,
@@ -162,7 +164,7 @@ export async function get_updated_label_set({ github, context }) {
 				pull_number: pull_request.number,
 			});
 			// failed to find? still processing? try again in a few seconds
-			if(response.data.mergeable === null){
+			if (response.data.mergeable === null) {
 				console.log("Awaiting GitHub response for merge status...")
 				await new Promise(r => setTimeout(r, 10000));
 				response = await github.rest.pulls.get({
@@ -170,7 +172,7 @@ export async function get_updated_label_set({ github, context }) {
 					repo: context.repo.repo,
 					pull_number: pull_request.number,
 				});
-				if(response.data.mergeable === null){
+				if (response.data.mergeable === null) {
 					throw new Error("Merge status not available");
 				}
 			}
@@ -180,7 +182,7 @@ export async function get_updated_label_set({ github, context }) {
 			console.error(e);
 		}
 	}
-	if(merge_conflict){
+	if (merge_conflict) {
 		updated_labels.add('Merge Conflict');
 	} else {
 		updated_labels.delete('Merge Conflict');
