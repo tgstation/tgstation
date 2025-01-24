@@ -2,11 +2,11 @@ import {
   AnimatedNumber,
   Box,
   Button,
+  Icon,
   LabeledList,
+  NoticeBox,
   Section,
   Stack,
-  NoticeBox,
-  Icon,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
