@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "TGUI Say window has been tweaked slightly to look and run cleanly."
