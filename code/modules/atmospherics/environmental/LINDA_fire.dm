@@ -132,6 +132,8 @@
 	if(!isnull(starting_temperature))
 		temperature = starting_temperature
 	perform_exposure()
+	if(QDELETED(src)) // It is actually possible for this hotspot to become qdeleted in perform_exposure() if another hotspot gets created (for example in fire_act() of fuel pools)
+		return // In this case, we want to just leave and let the new hotspot take over.
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(FALSE, FALSE)
 	var/static/list/loc_connections = list(
@@ -348,7 +350,8 @@
 	SSair.hotspots -= src
 	var/turf/open/T = loc
 	if(istype(T) && T.active_hotspot == src)
-		our_hot_group.remove_from_group(src)
+		if(our_hot_group)
+			our_hot_group.remove_from_group(src)
 		our_hot_group = null
 		T.set_active_hotspot(null)
 	return ..()
@@ -405,6 +408,8 @@
 		return
 
 /datum/hot_group/proc/add_to_group(obj/effect/hotspot/target)
+	if(QDELETED(target))
+		return
 	spot_list += target
 	target.our_hot_group = src
 	var/turf/open/target_turf = target.loc
